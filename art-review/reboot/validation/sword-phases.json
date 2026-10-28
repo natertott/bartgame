@@ -1,0 +1,3615 @@
+{
+  "rom_sha256": "41dc680068c094416e92152d4c22637c10d6a055d2bee63ce7700c419490e92d",
+  "seed": "0xb4a7",
+  "emulator": "mGBA 0.10.5",
+  "method": "real button actions; frozen-AI HB_SMALL boundary targets and local physical-floor fixture; real hardware OAM/OBJ VRAM inspection",
+  "passed": 435,
+  "total": 435,
+  "checks": [
+    {
+      "name": "action frame occupies one reserved 32px slot",
+      "passed": true,
+      "detail": "tile 38, frame tiles 16"
+    },
+    {
+      "name": "n active effect present in hardware OAM at tick 3",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "n streamed frame agrees with live damage window at tick 3",
+      "passed": true,
+      "detail": "['sword_n1']"
+    },
+    {
+      "name": "n effect anchored to combat box at tick 3",
+      "passed": true,
+      "detail": "(110, 71) == (110, 71)"
+    },
+    {
+      "name": "n visible blade/trail reaches its phase collision boundaries at tick 3",
+      "passed": true,
+      "detail": {
+        "visible": [
+          8,
+          -25,
+          17,
+          -18
+        ],
+        "contact": [
+          8,
+          -25,
+          17,
+          -18
+        ],
+        "age": 2
+      }
+    },
+    {
+      "name": "n sword precedes Bloom in OAM at tick 3",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "n active effect present in hardware OAM at tick 4",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "n streamed frame agrees with live damage window at tick 4",
+      "passed": true,
+      "detail": "['sword_n1']"
+    },
+    {
+      "name": "n effect anchored to combat box at tick 4",
+      "passed": true,
+      "detail": "(110, 71) == (110, 71)"
+    },
+    {
+      "name": "n visible blade/trail reaches its phase collision boundaries at tick 4",
+      "passed": true,
+      "detail": {
+        "visible": [
+          8,
+          -25,
+          17,
+          -18
+        ],
+        "contact": [
+          8,
+          -25,
+          17,
+          -18
+        ],
+        "age": 3
+      }
+    },
+    {
+      "name": "n sword precedes Bloom in OAM at tick 4",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "n active effect present in hardware OAM at tick 5",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "n streamed frame agrees with live damage window at tick 5",
+      "passed": true,
+      "detail": "['sword_n1']"
+    },
+    {
+      "name": "n effect anchored to combat box at tick 5",
+      "passed": true,
+      "detail": "(110, 71) == (110, 71)"
+    },
+    {
+      "name": "n visible blade/trail reaches its phase collision boundaries at tick 5",
+      "passed": true,
+      "detail": {
+        "visible": [
+          8,
+          -25,
+          17,
+          -18
+        ],
+        "contact": [
+          8,
+          -25,
+          17,
+          -18
+        ],
+        "age": 4
+      }
+    },
+    {
+      "name": "n sword precedes Bloom in OAM at tick 5",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "n active effect present in hardware OAM at tick 6",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "n streamed frame agrees with live damage window at tick 6",
+      "passed": true,
+      "detail": "['sword_n2']"
+    },
+    {
+      "name": "n effect anchored to combat box at tick 6",
+      "passed": true,
+      "detail": "(110, 71) == (110, 71)"
+    },
+    {
+      "name": "n visible blade/trail reaches its phase collision boundaries at tick 6",
+      "passed": true,
+      "detail": {
+        "visible": [
+          4,
+          -31,
+          9,
+          -21
+        ],
+        "contact": [
+          4,
+          -31,
+          9,
+          -21
+        ],
+        "age": 5
+      }
+    },
+    {
+      "name": "n sword precedes Bloom in OAM at tick 6",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "n active effect present in hardware OAM at tick 7",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "n streamed frame agrees with live damage window at tick 7",
+      "passed": true,
+      "detail": "['sword_n2']"
+    },
+    {
+      "name": "n effect anchored to combat box at tick 7",
+      "passed": true,
+      "detail": "(110, 71) == (110, 71)"
+    },
+    {
+      "name": "n visible blade/trail reaches its phase collision boundaries at tick 7",
+      "passed": true,
+      "detail": {
+        "visible": [
+          4,
+          -31,
+          9,
+          -21
+        ],
+        "contact": [
+          4,
+          -31,
+          9,
+          -21
+        ],
+        "age": 6
+      }
+    },
+    {
+      "name": "n sword precedes Bloom in OAM at tick 7",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "n active effect present in hardware OAM at tick 8",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "n streamed frame agrees with live damage window at tick 8",
+      "passed": true,
+      "detail": "['sword_n2']"
+    },
+    {
+      "name": "n effect anchored to combat box at tick 8",
+      "passed": true,
+      "detail": "(110, 71) == (110, 71)"
+    },
+    {
+      "name": "n visible blade/trail reaches its phase collision boundaries at tick 8",
+      "passed": true,
+      "detail": {
+        "visible": [
+          4,
+          -31,
+          9,
+          -21
+        ],
+        "contact": [
+          4,
+          -31,
+          9,
+          -21
+        ],
+        "age": 7
+      }
+    },
+    {
+      "name": "n sword precedes Bloom in OAM at tick 8",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "n active effect present in hardware OAM at tick 9",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "n streamed frame agrees with live damage window at tick 9",
+      "passed": true,
+      "detail": "['sword_n2']"
+    },
+    {
+      "name": "n effect anchored to combat box at tick 9",
+      "passed": true,
+      "detail": "(110, 71) == (110, 71)"
+    },
+    {
+      "name": "n visible blade/trail reaches its phase collision boundaries at tick 9",
+      "passed": true,
+      "detail": {
+        "visible": [
+          4,
+          -31,
+          9,
+          -21
+        ],
+        "contact": [
+          4,
+          -31,
+          9,
+          -21
+        ],
+        "age": 8
+      }
+    },
+    {
+      "name": "n sword precedes Bloom in OAM at tick 9",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "n active effect present in hardware OAM at tick 10",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "n streamed frame agrees with live damage window at tick 10",
+      "passed": true,
+      "detail": "['sword_n3']"
+    },
+    {
+      "name": "n effect anchored to combat box at tick 10",
+      "passed": true,
+      "detail": "(110, 71) == (110, 71)"
+    },
+    {
+      "name": "n visible blade/trail reaches its phase collision boundaries at tick 10",
+      "passed": true,
+      "detail": {
+        "visible": [
+          -7,
+          -26,
+          -2,
+          -21
+        ],
+        "contact": [
+          -7,
+          -26,
+          -2,
+          -21
+        ],
+        "age": 9
+      }
+    },
+    {
+      "name": "n sword precedes Bloom in OAM at tick 10",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "n active effect present in hardware OAM at tick 11",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "n streamed frame agrees with live damage window at tick 11",
+      "passed": true,
+      "detail": "['sword_n3']"
+    },
+    {
+      "name": "n effect anchored to combat box at tick 11",
+      "passed": true,
+      "detail": "(110, 71) == (110, 71)"
+    },
+    {
+      "name": "n visible blade/trail reaches its phase collision boundaries at tick 11",
+      "passed": true,
+      "detail": {
+        "visible": [
+          -7,
+          -26,
+          -2,
+          -21
+        ],
+        "contact": [
+          -7,
+          -26,
+          -2,
+          -21
+        ],
+        "age": 10
+      }
+    },
+    {
+      "name": "n sword precedes Bloom in OAM at tick 11",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "n active effect present in hardware OAM at tick 12",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "n streamed frame agrees with live damage window at tick 12",
+      "passed": true,
+      "detail": "['sword_n3']"
+    },
+    {
+      "name": "n effect anchored to combat box at tick 12",
+      "passed": true,
+      "detail": "(110, 71) == (110, 71)"
+    },
+    {
+      "name": "n visible blade/trail reaches its phase collision boundaries at tick 12",
+      "passed": true,
+      "detail": {
+        "visible": [
+          -7,
+          -26,
+          -2,
+          -21
+        ],
+        "contact": [
+          -7,
+          -26,
+          -2,
+          -21
+        ],
+        "age": 11
+      }
+    },
+    {
+      "name": "n sword precedes Bloom in OAM at tick 12",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "n active effect present in hardware OAM at tick 13",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "n streamed frame agrees with live damage window at tick 13",
+      "passed": true,
+      "detail": "['sword_n3']"
+    },
+    {
+      "name": "n effect anchored to combat box at tick 13",
+      "passed": true,
+      "detail": "(110, 71) == (110, 71)"
+    },
+    {
+      "name": "n visible blade/trail reaches its phase collision boundaries at tick 13",
+      "passed": true,
+      "detail": {
+        "visible": [
+          -7,
+          -26,
+          -2,
+          -21
+        ],
+        "contact": [
+          -7,
+          -26,
+          -2,
+          -21
+        ],
+        "age": 12
+      }
+    },
+    {
+      "name": "n sword precedes Bloom in OAM at tick 13",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "n attack starts without an invisible hit",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "n damage window remains timer2 through12",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "n recovery and return to normal",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "e active effect present in hardware OAM at tick 3",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "e streamed frame agrees with live damage window at tick 3",
+      "passed": true,
+      "detail": "['sword_e1']"
+    },
+    {
+      "name": "e effect anchored to combat box at tick 3",
+      "passed": true,
+      "detail": "(118, 76) == (118, 76)"
+    },
+    {
+      "name": "e visible blade/trail reaches its phase collision boundaries at tick 3",
+      "passed": true,
+      "detail": {
+        "visible": [
+          8,
+          -24,
+          15,
+          -15
+        ],
+        "contact": [
+          8,
+          -24,
+          15,
+          -15
+        ],
+        "age": 2
+      }
+    },
+    {
+      "name": "e sword precedes Bloom in OAM at tick 3",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "e active effect present in hardware OAM at tick 4",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "e streamed frame agrees with live damage window at tick 4",
+      "passed": true,
+      "detail": "['sword_e1']"
+    },
+    {
+      "name": "e effect anchored to combat box at tick 4",
+      "passed": true,
+      "detail": "(118, 76) == (118, 76)"
+    },
+    {
+      "name": "e visible blade/trail reaches its phase collision boundaries at tick 4",
+      "passed": true,
+      "detail": {
+        "visible": [
+          8,
+          -24,
+          15,
+          -15
+        ],
+        "contact": [
+          8,
+          -24,
+          15,
+          -15
+        ],
+        "age": 3
+      }
+    },
+    {
+      "name": "e sword precedes Bloom in OAM at tick 4",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "e active effect present in hardware OAM at tick 5",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "e streamed frame agrees with live damage window at tick 5",
+      "passed": true,
+      "detail": "['sword_e1']"
+    },
+    {
+      "name": "e effect anchored to combat box at tick 5",
+      "passed": true,
+      "detail": "(118, 76) == (118, 76)"
+    },
+    {
+      "name": "e visible blade/trail reaches its phase collision boundaries at tick 5",
+      "passed": true,
+      "detail": {
+        "visible": [
+          8,
+          -24,
+          15,
+          -15
+        ],
+        "contact": [
+          8,
+          -24,
+          15,
+          -15
+        ],
+        "age": 4
+      }
+    },
+    {
+      "name": "e sword precedes Bloom in OAM at tick 5",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "e active effect present in hardware OAM at tick 6",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "e streamed frame agrees with live damage window at tick 6",
+      "passed": true,
+      "detail": "['sword_e2']"
+    },
+    {
+      "name": "e effect anchored to combat box at tick 6",
+      "passed": true,
+      "detail": "(118, 76) == (118, 76)"
+    },
+    {
+      "name": "e visible blade/trail reaches its phase collision boundaries at tick 6",
+      "passed": true,
+      "detail": {
+        "visible": [
+          11,
+          -16,
+          21,
+          -11
+        ],
+        "contact": [
+          11,
+          -16,
+          21,
+          -11
+        ],
+        "age": 5
+      }
+    },
+    {
+      "name": "e sword precedes Bloom in OAM at tick 6",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "e active effect present in hardware OAM at tick 7",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "e streamed frame agrees with live damage window at tick 7",
+      "passed": true,
+      "detail": "['sword_e2']"
+    },
+    {
+      "name": "e effect anchored to combat box at tick 7",
+      "passed": true,
+      "detail": "(118, 76) == (118, 76)"
+    },
+    {
+      "name": "e visible blade/trail reaches its phase collision boundaries at tick 7",
+      "passed": true,
+      "detail": {
+        "visible": [
+          11,
+          -16,
+          21,
+          -11
+        ],
+        "contact": [
+          11,
+          -16,
+          21,
+          -11
+        ],
+        "age": 6
+      }
+    },
+    {
+      "name": "e sword precedes Bloom in OAM at tick 7",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "e active effect present in hardware OAM at tick 8",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "e streamed frame agrees with live damage window at tick 8",
+      "passed": true,
+      "detail": "['sword_e2']"
+    },
+    {
+      "name": "e effect anchored to combat box at tick 8",
+      "passed": true,
+      "detail": "(118, 76) == (118, 76)"
+    },
+    {
+      "name": "e visible blade/trail reaches its phase collision boundaries at tick 8",
+      "passed": true,
+      "detail": {
+        "visible": [
+          11,
+          -16,
+          21,
+          -11
+        ],
+        "contact": [
+          11,
+          -16,
+          21,
+          -11
+        ],
+        "age": 7
+      }
+    },
+    {
+      "name": "e sword precedes Bloom in OAM at tick 8",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "e active effect present in hardware OAM at tick 9",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "e streamed frame agrees with live damage window at tick 9",
+      "passed": true,
+      "detail": "['sword_e2']"
+    },
+    {
+      "name": "e effect anchored to combat box at tick 9",
+      "passed": true,
+      "detail": "(118, 76) == (118, 76)"
+    },
+    {
+      "name": "e visible blade/trail reaches its phase collision boundaries at tick 9",
+      "passed": true,
+      "detail": {
+        "visible": [
+          11,
+          -16,
+          21,
+          -11
+        ],
+        "contact": [
+          11,
+          -16,
+          21,
+          -11
+        ],
+        "age": 8
+      }
+    },
+    {
+      "name": "e sword precedes Bloom in OAM at tick 9",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "e active effect present in hardware OAM at tick 10",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "e streamed frame agrees with live damage window at tick 10",
+      "passed": true,
+      "detail": "['sword_e3']"
+    },
+    {
+      "name": "e effect anchored to combat box at tick 10",
+      "passed": true,
+      "detail": "(118, 76) == (118, 76)"
+    },
+    {
+      "name": "e visible blade/trail reaches its phase collision boundaries at tick 10",
+      "passed": true,
+      "detail": {
+        "visible": [
+          8,
+          -9,
+          16,
+          0
+        ],
+        "contact": [
+          8,
+          -9,
+          16,
+          0
+        ],
+        "age": 9
+      }
+    },
+    {
+      "name": "e sword precedes Bloom in OAM at tick 10",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "e active effect present in hardware OAM at tick 11",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "e streamed frame agrees with live damage window at tick 11",
+      "passed": true,
+      "detail": "['sword_e3']"
+    },
+    {
+      "name": "e effect anchored to combat box at tick 11",
+      "passed": true,
+      "detail": "(118, 76) == (118, 76)"
+    },
+    {
+      "name": "e visible blade/trail reaches its phase collision boundaries at tick 11",
+      "passed": true,
+      "detail": {
+        "visible": [
+          8,
+          -9,
+          16,
+          0
+        ],
+        "contact": [
+          8,
+          -9,
+          16,
+          0
+        ],
+        "age": 10
+      }
+    },
+    {
+      "name": "e sword precedes Bloom in OAM at tick 11",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "e active effect present in hardware OAM at tick 12",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "e streamed frame agrees with live damage window at tick 12",
+      "passed": true,
+      "detail": "['sword_e3']"
+    },
+    {
+      "name": "e effect anchored to combat box at tick 12",
+      "passed": true,
+      "detail": "(118, 76) == (118, 76)"
+    },
+    {
+      "name": "e visible blade/trail reaches its phase collision boundaries at tick 12",
+      "passed": true,
+      "detail": {
+        "visible": [
+          8,
+          -9,
+          16,
+          0
+        ],
+        "contact": [
+          8,
+          -9,
+          16,
+          0
+        ],
+        "age": 11
+      }
+    },
+    {
+      "name": "e sword precedes Bloom in OAM at tick 12",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "e active effect present in hardware OAM at tick 13",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "e streamed frame agrees with live damage window at tick 13",
+      "passed": true,
+      "detail": "['sword_e3']"
+    },
+    {
+      "name": "e effect anchored to combat box at tick 13",
+      "passed": true,
+      "detail": "(118, 76) == (118, 76)"
+    },
+    {
+      "name": "e visible blade/trail reaches its phase collision boundaries at tick 13",
+      "passed": true,
+      "detail": {
+        "visible": [
+          8,
+          -9,
+          16,
+          0
+        ],
+        "contact": [
+          8,
+          -9,
+          16,
+          0
+        ],
+        "age": 12
+      }
+    },
+    {
+      "name": "e sword precedes Bloom in OAM at tick 13",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "e attack starts without an invisible hit",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "e damage window remains timer2 through12",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "e recovery and return to normal",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "s active effect present in hardware OAM at tick 3",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "s streamed frame agrees with live damage window at tick 3",
+      "passed": true,
+      "detail": "['sword_s1']"
+    },
+    {
+      "name": "s effect anchored to combat box at tick 3",
+      "passed": true,
+      "detail": "(108, 88) == (108, 88)"
+    },
+    {
+      "name": "s visible blade/trail reaches its phase collision boundaries at tick 3",
+      "passed": true,
+      "detail": {
+        "visible": [
+          -9,
+          -8,
+          0,
+          -1
+        ],
+        "contact": [
+          -9,
+          -8,
+          0,
+          -1
+        ],
+        "age": 2
+      }
+    },
+    {
+      "name": "s sword precedes Bloom in OAM at tick 3",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "s active effect present in hardware OAM at tick 4",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "s streamed frame agrees with live damage window at tick 4",
+      "passed": true,
+      "detail": "['sword_s1']"
+    },
+    {
+      "name": "s effect anchored to combat box at tick 4",
+      "passed": true,
+      "detail": "(108, 88) == (108, 88)"
+    },
+    {
+      "name": "s visible blade/trail reaches its phase collision boundaries at tick 4",
+      "passed": true,
+      "detail": {
+        "visible": [
+          -9,
+          -8,
+          0,
+          -1
+        ],
+        "contact": [
+          -9,
+          -8,
+          0,
+          -1
+        ],
+        "age": 3
+      }
+    },
+    {
+      "name": "s sword precedes Bloom in OAM at tick 4",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "s active effect present in hardware OAM at tick 5",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "s streamed frame agrees with live damage window at tick 5",
+      "passed": true,
+      "detail": "['sword_s1']"
+    },
+    {
+      "name": "s effect anchored to combat box at tick 5",
+      "passed": true,
+      "detail": "(108, 88) == (108, 88)"
+    },
+    {
+      "name": "s visible blade/trail reaches its phase collision boundaries at tick 5",
+      "passed": true,
+      "detail": {
+        "visible": [
+          -9,
+          -8,
+          0,
+          -1
+        ],
+        "contact": [
+          -9,
+          -8,
+          0,
+          -1
+        ],
+        "age": 4
+      }
+    },
+    {
+      "name": "s sword precedes Bloom in OAM at tick 5",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "s active effect present in hardware OAM at tick 6",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "s streamed frame agrees with live damage window at tick 6",
+      "passed": true,
+      "detail": "['sword_s2']"
+    },
+    {
+      "name": "s effect anchored to combat box at tick 6",
+      "passed": true,
+      "detail": "(108, 88) == (108, 88)"
+    },
+    {
+      "name": "s visible blade/trail reaches its phase collision boundaries at tick 6",
+      "passed": true,
+      "detail": {
+        "visible": [
+          -1,
+          -5,
+          4,
+          5
+        ],
+        "contact": [
+          -1,
+          -5,
+          4,
+          5
+        ],
+        "age": 5
+      }
+    },
+    {
+      "name": "s sword precedes Bloom in OAM at tick 6",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "s active effect present in hardware OAM at tick 7",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "s streamed frame agrees with live damage window at tick 7",
+      "passed": true,
+      "detail": "['sword_s2']"
+    },
+    {
+      "name": "s effect anchored to combat box at tick 7",
+      "passed": true,
+      "detail": "(108, 88) == (108, 88)"
+    },
+    {
+      "name": "s visible blade/trail reaches its phase collision boundaries at tick 7",
+      "passed": true,
+      "detail": {
+        "visible": [
+          -1,
+          -5,
+          4,
+          5
+        ],
+        "contact": [
+          -1,
+          -5,
+          4,
+          5
+        ],
+        "age": 6
+      }
+    },
+    {
+      "name": "s sword precedes Bloom in OAM at tick 7",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "s active effect present in hardware OAM at tick 8",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "s streamed frame agrees with live damage window at tick 8",
+      "passed": true,
+      "detail": "['sword_s2']"
+    },
+    {
+      "name": "s effect anchored to combat box at tick 8",
+      "passed": true,
+      "detail": "(108, 88) == (108, 88)"
+    },
+    {
+      "name": "s visible blade/trail reaches its phase collision boundaries at tick 8",
+      "passed": true,
+      "detail": {
+        "visible": [
+          -1,
+          -5,
+          4,
+          5
+        ],
+        "contact": [
+          -1,
+          -5,
+          4,
+          5
+        ],
+        "age": 7
+      }
+    },
+    {
+      "name": "s sword precedes Bloom in OAM at tick 8",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "s active effect present in hardware OAM at tick 9",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "s streamed frame agrees with live damage window at tick 9",
+      "passed": true,
+      "detail": "['sword_s2']"
+    },
+    {
+      "name": "s effect anchored to combat box at tick 9",
+      "passed": true,
+      "detail": "(108, 88) == (108, 88)"
+    },
+    {
+      "name": "s visible blade/trail reaches its phase collision boundaries at tick 9",
+      "passed": true,
+      "detail": {
+        "visible": [
+          -1,
+          -5,
+          4,
+          5
+        ],
+        "contact": [
+          -1,
+          -5,
+          4,
+          5
+        ],
+        "age": 8
+      }
+    },
+    {
+      "name": "s sword precedes Bloom in OAM at tick 9",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "s active effect present in hardware OAM at tick 10",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "s streamed frame agrees with live damage window at tick 10",
+      "passed": true,
+      "detail": "['sword_s3']"
+    },
+    {
+      "name": "s effect anchored to combat box at tick 10",
+      "passed": true,
+      "detail": "(108, 88) == (108, 88)"
+    },
+    {
+      "name": "s visible blade/trail reaches its phase collision boundaries at tick 10",
+      "passed": true,
+      "detail": {
+        "visible": [
+          6,
+          -8,
+          15,
+          0
+        ],
+        "contact": [
+          6,
+          -8,
+          15,
+          0
+        ],
+        "age": 9
+      }
+    },
+    {
+      "name": "s sword precedes Bloom in OAM at tick 10",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "s active effect present in hardware OAM at tick 11",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "s streamed frame agrees with live damage window at tick 11",
+      "passed": true,
+      "detail": "['sword_s3']"
+    },
+    {
+      "name": "s effect anchored to combat box at tick 11",
+      "passed": true,
+      "detail": "(108, 88) == (108, 88)"
+    },
+    {
+      "name": "s visible blade/trail reaches its phase collision boundaries at tick 11",
+      "passed": true,
+      "detail": {
+        "visible": [
+          6,
+          -8,
+          15,
+          0
+        ],
+        "contact": [
+          6,
+          -8,
+          15,
+          0
+        ],
+        "age": 10
+      }
+    },
+    {
+      "name": "s sword precedes Bloom in OAM at tick 11",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "s active effect present in hardware OAM at tick 12",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "s streamed frame agrees with live damage window at tick 12",
+      "passed": true,
+      "detail": "['sword_s3']"
+    },
+    {
+      "name": "s effect anchored to combat box at tick 12",
+      "passed": true,
+      "detail": "(108, 88) == (108, 88)"
+    },
+    {
+      "name": "s visible blade/trail reaches its phase collision boundaries at tick 12",
+      "passed": true,
+      "detail": {
+        "visible": [
+          6,
+          -8,
+          15,
+          0
+        ],
+        "contact": [
+          6,
+          -8,
+          15,
+          0
+        ],
+        "age": 11
+      }
+    },
+    {
+      "name": "s sword precedes Bloom in OAM at tick 12",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "s active effect present in hardware OAM at tick 13",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "s streamed frame agrees with live damage window at tick 13",
+      "passed": true,
+      "detail": "['sword_s3']"
+    },
+    {
+      "name": "s effect anchored to combat box at tick 13",
+      "passed": true,
+      "detail": "(108, 88) == (108, 88)"
+    },
+    {
+      "name": "s visible blade/trail reaches its phase collision boundaries at tick 13",
+      "passed": true,
+      "detail": {
+        "visible": [
+          6,
+          -8,
+          15,
+          0
+        ],
+        "contact": [
+          6,
+          -8,
+          15,
+          0
+        ],
+        "age": 12
+      }
+    },
+    {
+      "name": "s sword precedes Bloom in OAM at tick 13",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "s attack starts without an invisible hit",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "s damage window remains timer2 through12",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "s recovery and return to normal",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "w active effect present in hardware OAM at tick 3",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "w streamed frame agrees with live damage window at tick 3",
+      "passed": true,
+      "detail": "['sword_w1']"
+    },
+    {
+      "name": "w effect anchored to combat box at tick 3",
+      "passed": true,
+      "detail": "(90, 76) == (90, 76)"
+    },
+    {
+      "name": "w visible blade/trail reaches its phase collision boundaries at tick 3",
+      "passed": true,
+      "detail": {
+        "visible": [
+          -16,
+          -24,
+          -9,
+          -15
+        ],
+        "contact": [
+          -16,
+          -24,
+          -9,
+          -15
+        ],
+        "age": 2
+      }
+    },
+    {
+      "name": "w sword precedes Bloom in OAM at tick 3",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "w active effect present in hardware OAM at tick 4",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "w streamed frame agrees with live damage window at tick 4",
+      "passed": true,
+      "detail": "['sword_w1']"
+    },
+    {
+      "name": "w effect anchored to combat box at tick 4",
+      "passed": true,
+      "detail": "(90, 76) == (90, 76)"
+    },
+    {
+      "name": "w visible blade/trail reaches its phase collision boundaries at tick 4",
+      "passed": true,
+      "detail": {
+        "visible": [
+          -16,
+          -24,
+          -9,
+          -15
+        ],
+        "contact": [
+          -16,
+          -24,
+          -9,
+          -15
+        ],
+        "age": 3
+      }
+    },
+    {
+      "name": "w sword precedes Bloom in OAM at tick 4",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "w active effect present in hardware OAM at tick 5",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "w streamed frame agrees with live damage window at tick 5",
+      "passed": true,
+      "detail": "['sword_w1']"
+    },
+    {
+      "name": "w effect anchored to combat box at tick 5",
+      "passed": true,
+      "detail": "(90, 76) == (90, 76)"
+    },
+    {
+      "name": "w visible blade/trail reaches its phase collision boundaries at tick 5",
+      "passed": true,
+      "detail": {
+        "visible": [
+          -16,
+          -24,
+          -9,
+          -15
+        ],
+        "contact": [
+          -16,
+          -24,
+          -9,
+          -15
+        ],
+        "age": 4
+      }
+    },
+    {
+      "name": "w sword precedes Bloom in OAM at tick 5",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "w active effect present in hardware OAM at tick 6",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "w streamed frame agrees with live damage window at tick 6",
+      "passed": true,
+      "detail": "['sword_w2']"
+    },
+    {
+      "name": "w effect anchored to combat box at tick 6",
+      "passed": true,
+      "detail": "(90, 76) == (90, 76)"
+    },
+    {
+      "name": "w visible blade/trail reaches its phase collision boundaries at tick 6",
+      "passed": true,
+      "detail": {
+        "visible": [
+          -22,
+          -16,
+          -12,
+          -11
+        ],
+        "contact": [
+          -22,
+          -16,
+          -12,
+          -11
+        ],
+        "age": 5
+      }
+    },
+    {
+      "name": "w sword precedes Bloom in OAM at tick 6",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "w active effect present in hardware OAM at tick 7",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "w streamed frame agrees with live damage window at tick 7",
+      "passed": true,
+      "detail": "['sword_w2']"
+    },
+    {
+      "name": "w effect anchored to combat box at tick 7",
+      "passed": true,
+      "detail": "(90, 76) == (90, 76)"
+    },
+    {
+      "name": "w visible blade/trail reaches its phase collision boundaries at tick 7",
+      "passed": true,
+      "detail": {
+        "visible": [
+          -22,
+          -16,
+          -12,
+          -11
+        ],
+        "contact": [
+          -22,
+          -16,
+          -12,
+          -11
+        ],
+        "age": 6
+      }
+    },
+    {
+      "name": "w sword precedes Bloom in OAM at tick 7",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "w active effect present in hardware OAM at tick 8",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "w streamed frame agrees with live damage window at tick 8",
+      "passed": true,
+      "detail": "['sword_w2']"
+    },
+    {
+      "name": "w effect anchored to combat box at tick 8",
+      "passed": true,
+      "detail": "(90, 76) == (90, 76)"
+    },
+    {
+      "name": "w visible blade/trail reaches its phase collision boundaries at tick 8",
+      "passed": true,
+      "detail": {
+        "visible": [
+          -22,
+          -16,
+          -12,
+          -11
+        ],
+        "contact": [
+          -22,
+          -16,
+          -12,
+          -11
+        ],
+        "age": 7
+      }
+    },
+    {
+      "name": "w sword precedes Bloom in OAM at tick 8",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "w active effect present in hardware OAM at tick 9",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "w streamed frame agrees with live damage window at tick 9",
+      "passed": true,
+      "detail": "['sword_w2']"
+    },
+    {
+      "name": "w effect anchored to combat box at tick 9",
+      "passed": true,
+      "detail": "(90, 76) == (90, 76)"
+    },
+    {
+      "name": "w visible blade/trail reaches its phase collision boundaries at tick 9",
+      "passed": true,
+      "detail": {
+        "visible": [
+          -22,
+          -16,
+          -12,
+          -11
+        ],
+        "contact": [
+          -22,
+          -16,
+          -12,
+          -11
+        ],
+        "age": 8
+      }
+    },
+    {
+      "name": "w sword precedes Bloom in OAM at tick 9",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "w active effect present in hardware OAM at tick 10",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "w streamed frame agrees with live damage window at tick 10",
+      "passed": true,
+      "detail": "['sword_w3']"
+    },
+    {
+      "name": "w effect anchored to combat box at tick 10",
+      "passed": true,
+      "detail": "(90, 76) == (90, 76)"
+    },
+    {
+      "name": "w visible blade/trail reaches its phase collision boundaries at tick 10",
+      "passed": true,
+      "detail": {
+        "visible": [
+          -17,
+          -9,
+          -9,
+          0
+        ],
+        "contact": [
+          -17,
+          -9,
+          -9,
+          0
+        ],
+        "age": 9
+      }
+    },
+    {
+      "name": "w sword precedes Bloom in OAM at tick 10",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "w active effect present in hardware OAM at tick 11",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "w streamed frame agrees with live damage window at tick 11",
+      "passed": true,
+      "detail": "['sword_w3']"
+    },
+    {
+      "name": "w effect anchored to combat box at tick 11",
+      "passed": true,
+      "detail": "(90, 76) == (90, 76)"
+    },
+    {
+      "name": "w visible blade/trail reaches its phase collision boundaries at tick 11",
+      "passed": true,
+      "detail": {
+        "visible": [
+          -17,
+          -9,
+          -9,
+          0
+        ],
+        "contact": [
+          -17,
+          -9,
+          -9,
+          0
+        ],
+        "age": 10
+      }
+    },
+    {
+      "name": "w sword precedes Bloom in OAM at tick 11",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "w active effect present in hardware OAM at tick 12",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "w streamed frame agrees with live damage window at tick 12",
+      "passed": true,
+      "detail": "['sword_w3']"
+    },
+    {
+      "name": "w effect anchored to combat box at tick 12",
+      "passed": true,
+      "detail": "(90, 76) == (90, 76)"
+    },
+    {
+      "name": "w visible blade/trail reaches its phase collision boundaries at tick 12",
+      "passed": true,
+      "detail": {
+        "visible": [
+          -17,
+          -9,
+          -9,
+          0
+        ],
+        "contact": [
+          -17,
+          -9,
+          -9,
+          0
+        ],
+        "age": 11
+      }
+    },
+    {
+      "name": "w sword precedes Bloom in OAM at tick 12",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "w active effect present in hardware OAM at tick 13",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "w streamed frame agrees with live damage window at tick 13",
+      "passed": true,
+      "detail": "['sword_w3']"
+    },
+    {
+      "name": "w effect anchored to combat box at tick 13",
+      "passed": true,
+      "detail": "(90, 76) == (90, 76)"
+    },
+    {
+      "name": "w visible blade/trail reaches its phase collision boundaries at tick 13",
+      "passed": true,
+      "detail": {
+        "visible": [
+          -17,
+          -9,
+          -9,
+          0
+        ],
+        "contact": [
+          -17,
+          -9,
+          -9,
+          0
+        ],
+        "age": 12
+      }
+    },
+    {
+      "name": "w sword precedes Bloom in OAM at tick 13",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "w attack starts without an invisible hit",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "w damage window remains timer2 through12",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "w recovery and return to normal",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "n phase contact actually tests age2",
+      "passed": true,
+      "detail": 2
+    },
+    {
+      "name": "n age2 left inclusive edge lands",
+      "passed": true,
+      "detail": "target hp 18"
+    },
+    {
+      "name": "n phase contact actually tests age2",
+      "passed": true,
+      "detail": 2
+    },
+    {
+      "name": "n age2 left one pixel outside misses",
+      "passed": true,
+      "detail": "target hp 20"
+    },
+    {
+      "name": "n phase contact actually tests age2",
+      "passed": true,
+      "detail": 2
+    },
+    {
+      "name": "n age2 right inclusive edge lands",
+      "passed": true,
+      "detail": "target hp 18"
+    },
+    {
+      "name": "n phase contact actually tests age2",
+      "passed": true,
+      "detail": 2
+    },
+    {
+      "name": "n age2 right one pixel outside misses",
+      "passed": true,
+      "detail": "target hp 20"
+    },
+    {
+      "name": "n phase contact actually tests age2",
+      "passed": true,
+      "detail": 2
+    },
+    {
+      "name": "n age2 top inclusive edge lands",
+      "passed": true,
+      "detail": "target hp 18"
+    },
+    {
+      "name": "n phase contact actually tests age2",
+      "passed": true,
+      "detail": 2
+    },
+    {
+      "name": "n age2 top one pixel outside misses",
+      "passed": true,
+      "detail": "target hp 20"
+    },
+    {
+      "name": "n phase contact actually tests age2",
+      "passed": true,
+      "detail": 2
+    },
+    {
+      "name": "n age2 bottom inclusive edge lands",
+      "passed": true,
+      "detail": "target hp 18"
+    },
+    {
+      "name": "n phase contact actually tests age2",
+      "passed": true,
+      "detail": 2
+    },
+    {
+      "name": "n age2 bottom one pixel outside misses",
+      "passed": true,
+      "detail": "target hp 20"
+    },
+    {
+      "name": "n phase contact actually tests age5",
+      "passed": true,
+      "detail": 5
+    },
+    {
+      "name": "n age5 left inclusive edge lands",
+      "passed": true,
+      "detail": "target hp 18"
+    },
+    {
+      "name": "n phase contact actually tests age5",
+      "passed": true,
+      "detail": 5
+    },
+    {
+      "name": "n age5 left one pixel outside misses",
+      "passed": true,
+      "detail": "target hp 20"
+    },
+    {
+      "name": "n phase contact actually tests age5",
+      "passed": true,
+      "detail": 5
+    },
+    {
+      "name": "n age5 right inclusive edge lands",
+      "passed": true,
+      "detail": "target hp 18"
+    },
+    {
+      "name": "n phase contact actually tests age5",
+      "passed": true,
+      "detail": 5
+    },
+    {
+      "name": "n age5 right one pixel outside misses",
+      "passed": true,
+      "detail": "target hp 20"
+    },
+    {
+      "name": "n phase contact actually tests age5",
+      "passed": true,
+      "detail": 5
+    },
+    {
+      "name": "n age5 top inclusive edge lands",
+      "passed": true,
+      "detail": "target hp 18"
+    },
+    {
+      "name": "n phase contact actually tests age5",
+      "passed": true,
+      "detail": 5
+    },
+    {
+      "name": "n age5 top one pixel outside misses",
+      "passed": true,
+      "detail": "target hp 20"
+    },
+    {
+      "name": "n phase contact actually tests age5",
+      "passed": true,
+      "detail": 5
+    },
+    {
+      "name": "n age5 bottom inclusive edge lands",
+      "passed": true,
+      "detail": "target hp 18"
+    },
+    {
+      "name": "n phase contact actually tests age5",
+      "passed": true,
+      "detail": 5
+    },
+    {
+      "name": "n age5 bottom one pixel outside misses",
+      "passed": true,
+      "detail": "target hp 20"
+    },
+    {
+      "name": "n phase contact actually tests age9",
+      "passed": true,
+      "detail": 9
+    },
+    {
+      "name": "n age9 left inclusive edge lands",
+      "passed": true,
+      "detail": "target hp 18"
+    },
+    {
+      "name": "n phase contact actually tests age9",
+      "passed": true,
+      "detail": 9
+    },
+    {
+      "name": "n age9 left one pixel outside misses",
+      "passed": true,
+      "detail": "target hp 20"
+    },
+    {
+      "name": "n phase contact actually tests age9",
+      "passed": true,
+      "detail": 9
+    },
+    {
+      "name": "n age9 right inclusive edge lands",
+      "passed": true,
+      "detail": "target hp 18"
+    },
+    {
+      "name": "n phase contact actually tests age9",
+      "passed": true,
+      "detail": 9
+    },
+    {
+      "name": "n age9 right one pixel outside misses",
+      "passed": true,
+      "detail": "target hp 20"
+    },
+    {
+      "name": "n phase contact actually tests age9",
+      "passed": true,
+      "detail": 9
+    },
+    {
+      "name": "n age9 top inclusive edge lands",
+      "passed": true,
+      "detail": "target hp 18"
+    },
+    {
+      "name": "n phase contact actually tests age9",
+      "passed": true,
+      "detail": 9
+    },
+    {
+      "name": "n age9 top one pixel outside misses",
+      "passed": true,
+      "detail": "target hp 20"
+    },
+    {
+      "name": "n phase contact actually tests age9",
+      "passed": true,
+      "detail": 9
+    },
+    {
+      "name": "n age9 bottom inclusive edge lands",
+      "passed": true,
+      "detail": "target hp 18"
+    },
+    {
+      "name": "n phase contact actually tests age9",
+      "passed": true,
+      "detail": 9
+    },
+    {
+      "name": "n age9 bottom one pixel outside misses",
+      "passed": true,
+      "detail": "target hp 20"
+    },
+    {
+      "name": "e phase contact actually tests age2",
+      "passed": true,
+      "detail": 2
+    },
+    {
+      "name": "e age2 left inclusive edge lands",
+      "passed": true,
+      "detail": "target hp 18"
+    },
+    {
+      "name": "e phase contact actually tests age2",
+      "passed": true,
+      "detail": 2
+    },
+    {
+      "name": "e age2 left one pixel outside misses",
+      "passed": true,
+      "detail": "target hp 20"
+    },
+    {
+      "name": "e phase contact actually tests age2",
+      "passed": true,
+      "detail": 2
+    },
+    {
+      "name": "e age2 right inclusive edge lands",
+      "passed": true,
+      "detail": "target hp 18"
+    },
+    {
+      "name": "e phase contact actually tests age2",
+      "passed": true,
+      "detail": 2
+    },
+    {
+      "name": "e age2 right one pixel outside misses",
+      "passed": true,
+      "detail": "target hp 20"
+    },
+    {
+      "name": "e phase contact actually tests age2",
+      "passed": true,
+      "detail": 2
+    },
+    {
+      "name": "e age2 top inclusive edge lands",
+      "passed": true,
+      "detail": "target hp 18"
+    },
+    {
+      "name": "e phase contact actually tests age2",
+      "passed": true,
+      "detail": 2
+    },
+    {
+      "name": "e age2 top one pixel outside misses",
+      "passed": true,
+      "detail": "target hp 20"
+    },
+    {
+      "name": "e phase contact actually tests age2",
+      "passed": true,
+      "detail": 2
+    },
+    {
+      "name": "e age2 bottom inclusive edge lands",
+      "passed": true,
+      "detail": "target hp 18"
+    },
+    {
+      "name": "e phase contact actually tests age2",
+      "passed": true,
+      "detail": 2
+    },
+    {
+      "name": "e age2 bottom one pixel outside misses",
+      "passed": true,
+      "detail": "target hp 20"
+    },
+    {
+      "name": "e phase contact actually tests age5",
+      "passed": true,
+      "detail": 5
+    },
+    {
+      "name": "e age5 left inclusive edge lands",
+      "passed": true,
+      "detail": "target hp 18"
+    },
+    {
+      "name": "e phase contact actually tests age5",
+      "passed": true,
+      "detail": 5
+    },
+    {
+      "name": "e age5 left one pixel outside misses",
+      "passed": true,
+      "detail": "target hp 20"
+    },
+    {
+      "name": "e phase contact actually tests age5",
+      "passed": true,
+      "detail": 5
+    },
+    {
+      "name": "e age5 right inclusive edge lands",
+      "passed": true,
+      "detail": "target hp 18"
+    },
+    {
+      "name": "e phase contact actually tests age5",
+      "passed": true,
+      "detail": 5
+    },
+    {
+      "name": "e age5 right one pixel outside misses",
+      "passed": true,
+      "detail": "target hp 20"
+    },
+    {
+      "name": "e phase contact actually tests age5",
+      "passed": true,
+      "detail": 5
+    },
+    {
+      "name": "e age5 top inclusive edge lands",
+      "passed": true,
+      "detail": "target hp 18"
+    },
+    {
+      "name": "e phase contact actually tests age5",
+      "passed": true,
+      "detail": 5
+    },
+    {
+      "name": "e age5 top one pixel outside misses",
+      "passed": true,
+      "detail": "target hp 20"
+    },
+    {
+      "name": "e phase contact actually tests age5",
+      "passed": true,
+      "detail": 5
+    },
+    {
+      "name": "e age5 bottom inclusive edge lands",
+      "passed": true,
+      "detail": "target hp 18"
+    },
+    {
+      "name": "e phase contact actually tests age5",
+      "passed": true,
+      "detail": 5
+    },
+    {
+      "name": "e age5 bottom one pixel outside misses",
+      "passed": true,
+      "detail": "target hp 20"
+    },
+    {
+      "name": "e phase contact actually tests age9",
+      "passed": true,
+      "detail": 9
+    },
+    {
+      "name": "e age9 left inclusive edge lands",
+      "passed": true,
+      "detail": "target hp 18"
+    },
+    {
+      "name": "e phase contact actually tests age9",
+      "passed": true,
+      "detail": 9
+    },
+    {
+      "name": "e age9 left one pixel outside misses",
+      "passed": true,
+      "detail": "target hp 20"
+    },
+    {
+      "name": "e phase contact actually tests age9",
+      "passed": true,
+      "detail": 9
+    },
+    {
+      "name": "e age9 right inclusive edge lands",
+      "passed": true,
+      "detail": "target hp 18"
+    },
+    {
+      "name": "e phase contact actually tests age9",
+      "passed": true,
+      "detail": 9
+    },
+    {
+      "name": "e age9 right one pixel outside misses",
+      "passed": true,
+      "detail": "target hp 20"
+    },
+    {
+      "name": "e phase contact actually tests age9",
+      "passed": true,
+      "detail": 9
+    },
+    {
+      "name": "e age9 top inclusive edge lands",
+      "passed": true,
+      "detail": "target hp 18"
+    },
+    {
+      "name": "e phase contact actually tests age9",
+      "passed": true,
+      "detail": 9
+    },
+    {
+      "name": "e age9 top one pixel outside misses",
+      "passed": true,
+      "detail": "target hp 20"
+    },
+    {
+      "name": "e phase contact actually tests age9",
+      "passed": true,
+      "detail": 9
+    },
+    {
+      "name": "e age9 bottom inclusive edge lands",
+      "passed": true,
+      "detail": "target hp 18"
+    },
+    {
+      "name": "e phase contact actually tests age9",
+      "passed": true,
+      "detail": 9
+    },
+    {
+      "name": "e age9 bottom one pixel outside misses",
+      "passed": true,
+      "detail": "target hp 20"
+    },
+    {
+      "name": "s phase contact actually tests age2",
+      "passed": true,
+      "detail": 2
+    },
+    {
+      "name": "s age2 left inclusive edge lands",
+      "passed": true,
+      "detail": "target hp 18"
+    },
+    {
+      "name": "s phase contact actually tests age2",
+      "passed": true,
+      "detail": 2
+    },
+    {
+      "name": "s age2 left one pixel outside misses",
+      "passed": true,
+      "detail": "target hp 20"
+    },
+    {
+      "name": "s phase contact actually tests age2",
+      "passed": true,
+      "detail": 2
+    },
+    {
+      "name": "s age2 right inclusive edge lands",
+      "passed": true,
+      "detail": "target hp 18"
+    },
+    {
+      "name": "s phase contact actually tests age2",
+      "passed": true,
+      "detail": 2
+    },
+    {
+      "name": "s age2 right one pixel outside misses",
+      "passed": true,
+      "detail": "target hp 20"
+    },
+    {
+      "name": "s phase contact actually tests age2",
+      "passed": true,
+      "detail": 2
+    },
+    {
+      "name": "s age2 top inclusive edge lands",
+      "passed": true,
+      "detail": "target hp 18"
+    },
+    {
+      "name": "s phase contact actually tests age2",
+      "passed": true,
+      "detail": 2
+    },
+    {
+      "name": "s age2 top one pixel outside misses",
+      "passed": true,
+      "detail": "target hp 20"
+    },
+    {
+      "name": "s phase contact actually tests age2",
+      "passed": true,
+      "detail": 2
+    },
+    {
+      "name": "s age2 bottom inclusive edge lands",
+      "passed": true,
+      "detail": "target hp 18"
+    },
+    {
+      "name": "s phase contact actually tests age2",
+      "passed": true,
+      "detail": 2
+    },
+    {
+      "name": "s age2 bottom one pixel outside misses",
+      "passed": true,
+      "detail": "target hp 20"
+    },
+    {
+      "name": "s phase contact actually tests age5",
+      "passed": true,
+      "detail": 5
+    },
+    {
+      "name": "s age5 left inclusive edge lands",
+      "passed": true,
+      "detail": "target hp 18"
+    },
+    {
+      "name": "s phase contact actually tests age5",
+      "passed": true,
+      "detail": 5
+    },
+    {
+      "name": "s age5 left one pixel outside misses",
+      "passed": true,
+      "detail": "target hp 20"
+    },
+    {
+      "name": "s phase contact actually tests age5",
+      "passed": true,
+      "detail": 5
+    },
+    {
+      "name": "s age5 right inclusive edge lands",
+      "passed": true,
+      "detail": "target hp 18"
+    },
+    {
+      "name": "s phase contact actually tests age5",
+      "passed": true,
+      "detail": 5
+    },
+    {
+      "name": "s age5 right one pixel outside misses",
+      "passed": true,
+      "detail": "target hp 20"
+    },
+    {
+      "name": "s phase contact actually tests age5",
+      "passed": true,
+      "detail": 5
+    },
+    {
+      "name": "s age5 top inclusive edge lands",
+      "passed": true,
+      "detail": "target hp 18"
+    },
+    {
+      "name": "s phase contact actually tests age5",
+      "passed": true,
+      "detail": 5
+    },
+    {
+      "name": "s age5 top one pixel outside misses",
+      "passed": true,
+      "detail": "target hp 20"
+    },
+    {
+      "name": "s phase contact actually tests age5",
+      "passed": true,
+      "detail": 5
+    },
+    {
+      "name": "s age5 bottom inclusive edge lands",
+      "passed": true,
+      "detail": "target hp 18"
+    },
+    {
+      "name": "s phase contact actually tests age5",
+      "passed": true,
+      "detail": 5
+    },
+    {
+      "name": "s age5 bottom one pixel outside misses",
+      "passed": true,
+      "detail": "target hp 20"
+    },
+    {
+      "name": "s phase contact actually tests age9",
+      "passed": true,
+      "detail": 9
+    },
+    {
+      "name": "s age9 left inclusive edge lands",
+      "passed": true,
+      "detail": "target hp 18"
+    },
+    {
+      "name": "s phase contact actually tests age9",
+      "passed": true,
+      "detail": 9
+    },
+    {
+      "name": "s age9 left one pixel outside misses",
+      "passed": true,
+      "detail": "target hp 20"
+    },
+    {
+      "name": "s phase contact actually tests age9",
+      "passed": true,
+      "detail": 9
+    },
+    {
+      "name": "s age9 right inclusive edge lands",
+      "passed": true,
+      "detail": "target hp 18"
+    },
+    {
+      "name": "s phase contact actually tests age9",
+      "passed": true,
+      "detail": 9
+    },
+    {
+      "name": "s age9 right one pixel outside misses",
+      "passed": true,
+      "detail": "target hp 20"
+    },
+    {
+      "name": "s phase contact actually tests age9",
+      "passed": true,
+      "detail": 9
+    },
+    {
+      "name": "s age9 top inclusive edge lands",
+      "passed": true,
+      "detail": "target hp 18"
+    },
+    {
+      "name": "s phase contact actually tests age9",
+      "passed": true,
+      "detail": 9
+    },
+    {
+      "name": "s age9 top one pixel outside misses",
+      "passed": true,
+      "detail": "target hp 20"
+    },
+    {
+      "name": "s phase contact actually tests age9",
+      "passed": true,
+      "detail": 9
+    },
+    {
+      "name": "s age9 bottom inclusive edge lands",
+      "passed": true,
+      "detail": "target hp 18"
+    },
+    {
+      "name": "s phase contact actually tests age9",
+      "passed": true,
+      "detail": 9
+    },
+    {
+      "name": "s age9 bottom one pixel outside misses",
+      "passed": true,
+      "detail": "target hp 20"
+    },
+    {
+      "name": "w phase contact actually tests age2",
+      "passed": true,
+      "detail": 2
+    },
+    {
+      "name": "w age2 left inclusive edge lands",
+      "passed": true,
+      "detail": "target hp 18"
+    },
+    {
+      "name": "w phase contact actually tests age2",
+      "passed": true,
+      "detail": 2
+    },
+    {
+      "name": "w age2 left one pixel outside misses",
+      "passed": true,
+      "detail": "target hp 20"
+    },
+    {
+      "name": "w phase contact actually tests age2",
+      "passed": true,
+      "detail": 2
+    },
+    {
+      "name": "w age2 right inclusive edge lands",
+      "passed": true,
+      "detail": "target hp 18"
+    },
+    {
+      "name": "w phase contact actually tests age2",
+      "passed": true,
+      "detail": 2
+    },
+    {
+      "name": "w age2 right one pixel outside misses",
+      "passed": true,
+      "detail": "target hp 20"
+    },
+    {
+      "name": "w phase contact actually tests age2",
+      "passed": true,
+      "detail": 2
+    },
+    {
+      "name": "w age2 top inclusive edge lands",
+      "passed": true,
+      "detail": "target hp 18"
+    },
+    {
+      "name": "w phase contact actually tests age2",
+      "passed": true,
+      "detail": 2
+    },
+    {
+      "name": "w age2 top one pixel outside misses",
+      "passed": true,
+      "detail": "target hp 20"
+    },
+    {
+      "name": "w phase contact actually tests age2",
+      "passed": true,
+      "detail": 2
+    },
+    {
+      "name": "w age2 bottom inclusive edge lands",
+      "passed": true,
+      "detail": "target hp 18"
+    },
+    {
+      "name": "w phase contact actually tests age2",
+      "passed": true,
+      "detail": 2
+    },
+    {
+      "name": "w age2 bottom one pixel outside misses",
+      "passed": true,
+      "detail": "target hp 20"
+    },
+    {
+      "name": "w phase contact actually tests age5",
+      "passed": true,
+      "detail": 5
+    },
+    {
+      "name": "w age5 left inclusive edge lands",
+      "passed": true,
+      "detail": "target hp 18"
+    },
+    {
+      "name": "w phase contact actually tests age5",
+      "passed": true,
+      "detail": 5
+    },
+    {
+      "name": "w age5 left one pixel outside misses",
+      "passed": true,
+      "detail": "target hp 20"
+    },
+    {
+      "name": "w phase contact actually tests age5",
+      "passed": true,
+      "detail": 5
+    },
+    {
+      "name": "w age5 right inclusive edge lands",
+      "passed": true,
+      "detail": "target hp 18"
+    },
+    {
+      "name": "w phase contact actually tests age5",
+      "passed": true,
+      "detail": 5
+    },
+    {
+      "name": "w age5 right one pixel outside misses",
+      "passed": true,
+      "detail": "target hp 20"
+    },
+    {
+      "name": "w phase contact actually tests age5",
+      "passed": true,
+      "detail": 5
+    },
+    {
+      "name": "w age5 top inclusive edge lands",
+      "passed": true,
+      "detail": "target hp 18"
+    },
+    {
+      "name": "w phase contact actually tests age5",
+      "passed": true,
+      "detail": 5
+    },
+    {
+      "name": "w age5 top one pixel outside misses",
+      "passed": true,
+      "detail": "target hp 20"
+    },
+    {
+      "name": "w phase contact actually tests age5",
+      "passed": true,
+      "detail": 5
+    },
+    {
+      "name": "w age5 bottom inclusive edge lands",
+      "passed": true,
+      "detail": "target hp 18"
+    },
+    {
+      "name": "w phase contact actually tests age5",
+      "passed": true,
+      "detail": 5
+    },
+    {
+      "name": "w age5 bottom one pixel outside misses",
+      "passed": true,
+      "detail": "target hp 20"
+    },
+    {
+      "name": "w phase contact actually tests age9",
+      "passed": true,
+      "detail": 9
+    },
+    {
+      "name": "w age9 left inclusive edge lands",
+      "passed": true,
+      "detail": "target hp 18"
+    },
+    {
+      "name": "w phase contact actually tests age9",
+      "passed": true,
+      "detail": 9
+    },
+    {
+      "name": "w age9 left one pixel outside misses",
+      "passed": true,
+      "detail": "target hp 20"
+    },
+    {
+      "name": "w phase contact actually tests age9",
+      "passed": true,
+      "detail": 9
+    },
+    {
+      "name": "w age9 right inclusive edge lands",
+      "passed": true,
+      "detail": "target hp 18"
+    },
+    {
+      "name": "w phase contact actually tests age9",
+      "passed": true,
+      "detail": 9
+    },
+    {
+      "name": "w age9 right one pixel outside misses",
+      "passed": true,
+      "detail": "target hp 20"
+    },
+    {
+      "name": "w phase contact actually tests age9",
+      "passed": true,
+      "detail": 9
+    },
+    {
+      "name": "w age9 top inclusive edge lands",
+      "passed": true,
+      "detail": "target hp 18"
+    },
+    {
+      "name": "w phase contact actually tests age9",
+      "passed": true,
+      "detail": 9
+    },
+    {
+      "name": "w age9 top one pixel outside misses",
+      "passed": true,
+      "detail": "target hp 20"
+    },
+    {
+      "name": "w phase contact actually tests age9",
+      "passed": true,
+      "detail": 9
+    },
+    {
+      "name": "w age9 bottom inclusive edge lands",
+      "passed": true,
+      "detail": "target hp 18"
+    },
+    {
+      "name": "w phase contact actually tests age9",
+      "passed": true,
+      "detail": 9
+    },
+    {
+      "name": "w age9 bottom one pixel outside misses",
+      "passed": true,
+      "detail": "target hp 20"
+    },
+    {
+      "name": "heart beyond body contact stays before swing",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "heart gathering starts a real sword action",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "sword still gathers a reached heart",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "sword still deflects an incoming seed",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "sword still cuts a reached bush",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "damage interrupts the sword and clears its hitbox",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "hurt Bloom has no lingering action effect",
+      "passed": true,
+      "detail": "first replacement OAM after 1 video frames"
+    },
+    {
+      "name": "roll retains its protected opening",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "late roll still queues a sword input",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "queued sword follows roll recovery",
+      "passed": true,
+      "detail": ""
+    }
+  ],
+  "attack_traces": [
+    {
+      "direction": "n",
+      "frames": [
+        {
+          "state": 2,
+          "timer": 0,
+          "active": 0,
+          "phase": 0,
+          "facing": 0,
+          "position": [
+            256,
+            230
+          ]
+        },
+        {
+          "state": 2,
+          "timer": 1,
+          "active": 0,
+          "phase": 0,
+          "facing": 0,
+          "position": [
+            256,
+            230
+          ]
+        },
+        {
+          "state": 2,
+          "timer": 2,
+          "active": 1,
+          "phase": 0,
+          "facing": 0,
+          "position": [
+            256,
+            230
+          ]
+        },
+        {
+          "state": 2,
+          "timer": 3,
+          "active": 1,
+          "phase": 0,
+          "facing": 0,
+          "position": [
+            256,
+            230
+          ]
+        },
+        {
+          "state": 2,
+          "timer": 4,
+          "active": 1,
+          "phase": 0,
+          "facing": 0,
+          "position": [
+            256,
+            230
+          ]
+        },
+        {
+          "state": 2,
+          "timer": 5,
+          "active": 1,
+          "phase": 1,
+          "facing": 0,
+          "position": [
+            256,
+            230
+          ]
+        },
+        {
+          "state": 2,
+          "timer": 6,
+          "active": 1,
+          "phase": 1,
+          "facing": 0,
+          "position": [
+            256,
+            230
+          ]
+        },
+        {
+          "state": 2,
+          "timer": 7,
+          "active": 1,
+          "phase": 1,
+          "facing": 0,
+          "position": [
+            256,
+            230
+          ]
+        },
+        {
+          "state": 2,
+          "timer": 8,
+          "active": 1,
+          "phase": 1,
+          "facing": 0,
+          "position": [
+            256,
+            230
+          ]
+        },
+        {
+          "state": 2,
+          "timer": 9,
+          "active": 1,
+          "phase": 2,
+          "facing": 0,
+          "position": [
+            256,
+            230
+          ]
+        },
+        {
+          "state": 2,
+          "timer": 10,
+          "active": 1,
+          "phase": 2,
+          "facing": 0,
+          "position": [
+            256,
+            230
+          ]
+        },
+        {
+          "state": 2,
+          "timer": 11,
+          "active": 1,
+          "phase": 2,
+          "facing": 0,
+          "position": [
+            256,
+            230
+          ]
+        },
+        {
+          "state": 2,
+          "timer": 12,
+          "active": 1,
+          "phase": 2,
+          "facing": 0,
+          "position": [
+            256,
+            230
+          ]
+        },
+        {
+          "state": 2,
+          "timer": 13,
+          "active": 0,
+          "phase": 2,
+          "facing": 0,
+          "position": [
+            256,
+            230
+          ]
+        },
+        {
+          "state": 2,
+          "timer": 14,
+          "active": 0,
+          "phase": 2,
+          "facing": 0,
+          "position": [
+            256,
+            230
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 15,
+          "active": 0,
+          "phase": 0,
+          "facing": 0,
+          "position": [
+            256,
+            230
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 15,
+          "active": 0,
+          "phase": 0,
+          "facing": 0,
+          "position": [
+            256,
+            230
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 15,
+          "active": 0,
+          "phase": 0,
+          "facing": 0,
+          "position": [
+            256,
+            230
+          ]
+        }
+      ]
+    },
+    {
+      "direction": "e",
+      "frames": [
+        {
+          "state": 2,
+          "timer": 0,
+          "active": 0,
+          "phase": 0,
+          "facing": 1,
+          "position": [
+            256,
+            230
+          ]
+        },
+        {
+          "state": 2,
+          "timer": 1,
+          "active": 0,
+          "phase": 0,
+          "facing": 1,
+          "position": [
+            256,
+            230
+          ]
+        },
+        {
+          "state": 2,
+          "timer": 2,
+          "active": 1,
+          "phase": 0,
+          "facing": 1,
+          "position": [
+            256,
+            230
+          ]
+        },
+        {
+          "state": 2,
+          "timer": 3,
+          "active": 1,
+          "phase": 0,
+          "facing": 1,
+          "position": [
+            256,
+            230
+          ]
+        },
+        {
+          "state": 2,
+          "timer": 4,
+          "active": 1,
+          "phase": 0,
+          "facing": 1,
+          "position": [
+            256,
+            230
+          ]
+        },
+        {
+          "state": 2,
+          "timer": 5,
+          "active": 1,
+          "phase": 1,
+          "facing": 1,
+          "position": [
+            256,
+            230
+          ]
+        },
+        {
+          "state": 2,
+          "timer": 6,
+          "active": 1,
+          "phase": 1,
+          "facing": 1,
+          "position": [
+            256,
+            230
+          ]
+        },
+        {
+          "state": 2,
+          "timer": 7,
+          "active": 1,
+          "phase": 1,
+          "facing": 1,
+          "position": [
+            256,
+            230
+          ]
+        },
+        {
+          "state": 2,
+          "timer": 8,
+          "active": 1,
+          "phase": 1,
+          "facing": 1,
+          "position": [
+            256,
+            230
+          ]
+        },
+        {
+          "state": 2,
+          "timer": 9,
+          "active": 1,
+          "phase": 2,
+          "facing": 1,
+          "position": [
+            256,
+            230
+          ]
+        },
+        {
+          "state": 2,
+          "timer": 10,
+          "active": 1,
+          "phase": 2,
+          "facing": 1,
+          "position": [
+            256,
+            230
+          ]
+        },
+        {
+          "state": 2,
+          "timer": 11,
+          "active": 1,
+          "phase": 2,
+          "facing": 1,
+          "position": [
+            256,
+            230
+          ]
+        },
+        {
+          "state": 2,
+          "timer": 12,
+          "active": 1,
+          "phase": 2,
+          "facing": 1,
+          "position": [
+            256,
+            230
+          ]
+        },
+        {
+          "state": 2,
+          "timer": 13,
+          "active": 0,
+          "phase": 2,
+          "facing": 1,
+          "position": [
+            256,
+            230
+          ]
+        },
+        {
+          "state": 2,
+          "timer": 14,
+          "active": 0,
+          "phase": 2,
+          "facing": 1,
+          "position": [
+            256,
+            230
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 15,
+          "active": 0,
+          "phase": 0,
+          "facing": 1,
+          "position": [
+            256,
+            230
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 15,
+          "active": 0,
+          "phase": 0,
+          "facing": 1,
+          "position": [
+            256,
+            230
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 15,
+          "active": 0,
+          "phase": 0,
+          "facing": 1,
+          "position": [
+            256,
+            230
+          ]
+        }
+      ]
+    },
+    {
+      "direction": "s",
+      "frames": [
+        {
+          "state": 2,
+          "timer": 0,
+          "active": 0,
+          "phase": 0,
+          "facing": 2,
+          "position": [
+            256,
+            230
+          ]
+        },
+        {
+          "state": 2,
+          "timer": 1,
+          "active": 0,
+          "phase": 0,
+          "facing": 2,
+          "position": [
+            256,
+            230
+          ]
+        },
+        {
+          "state": 2,
+          "timer": 2,
+          "active": 1,
+          "phase": 0,
+          "facing": 2,
+          "position": [
+            256,
+            230
+          ]
+        },
+        {
+          "state": 2,
+          "timer": 3,
+          "active": 1,
+          "phase": 0,
+          "facing": 2,
+          "position": [
+            256,
+            230
+          ]
+        },
+        {
+          "state": 2,
+          "timer": 4,
+          "active": 1,
+          "phase": 0,
+          "facing": 2,
+          "position": [
+            256,
+            230
+          ]
+        },
+        {
+          "state": 2,
+          "timer": 5,
+          "active": 1,
+          "phase": 1,
+          "facing": 2,
+          "position": [
+            256,
+            230
+          ]
+        },
+        {
+          "state": 2,
+          "timer": 6,
+          "active": 1,
+          "phase": 1,
+          "facing": 2,
+          "position": [
+            256,
+            230
+          ]
+        },
+        {
+          "state": 2,
+          "timer": 7,
+          "active": 1,
+          "phase": 1,
+          "facing": 2,
+          "position": [
+            256,
+            230
+          ]
+        },
+        {
+          "state": 2,
+          "timer": 8,
+          "active": 1,
+          "phase": 1,
+          "facing": 2,
+          "position": [
+            256,
+            230
+          ]
+        },
+        {
+          "state": 2,
+          "timer": 9,
+          "active": 1,
+          "phase": 2,
+          "facing": 2,
+          "position": [
+            256,
+            230
+          ]
+        },
+        {
+          "state": 2,
+          "timer": 10,
+          "active": 1,
+          "phase": 2,
+          "facing": 2,
+          "position": [
+            256,
+            230
+          ]
+        },
+        {
+          "state": 2,
+          "timer": 11,
+          "active": 1,
+          "phase": 2,
+          "facing": 2,
+          "position": [
+            256,
+            230
+          ]
+        },
+        {
+          "state": 2,
+          "timer": 12,
+          "active": 1,
+          "phase": 2,
+          "facing": 2,
+          "position": [
+            256,
+            230
+          ]
+        },
+        {
+          "state": 2,
+          "timer": 13,
+          "active": 0,
+          "phase": 2,
+          "facing": 2,
+          "position": [
+            256,
+            230
+          ]
+        },
+        {
+          "state": 2,
+          "timer": 14,
+          "active": 0,
+          "phase": 2,
+          "facing": 2,
+          "position": [
+            256,
+            230
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 15,
+          "active": 0,
+          "phase": 0,
+          "facing": 2,
+          "position": [
+            256,
+            230
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 15,
+          "active": 0,
+          "phase": 0,
+          "facing": 2,
+          "position": [
+            256,
+            230
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 15,
+          "active": 0,
+          "phase": 0,
+          "facing": 2,
+          "position": [
+            256,
+            230
+          ]
+        }
+      ]
+    },
+    {
+      "direction": "w",
+      "frames": [
+        {
+          "state": 2,
+          "timer": 0,
+          "active": 0,
+          "phase": 0,
+          "facing": 3,
+          "position": [
+            256,
+            230
+          ]
+        },
+        {
+          "state": 2,
+          "timer": 1,
+          "active": 0,
+          "phase": 0,
+          "facing": 3,
+          "position": [
+            256,
+            230
+          ]
+        },
+        {
+          "state": 2,
+          "timer": 2,
+          "active": 1,
+          "phase": 0,
+          "facing": 3,
+          "position": [
+            256,
+            230
+          ]
+        },
+        {
+          "state": 2,
+          "timer": 3,
+          "active": 1,
+          "phase": 0,
+          "facing": 3,
+          "position": [
+            256,
+            230
+          ]
+        },
+        {
+          "state": 2,
+          "timer": 4,
+          "active": 1,
+          "phase": 0,
+          "facing": 3,
+          "position": [
+            256,
+            230
+          ]
+        },
+        {
+          "state": 2,
+          "timer": 5,
+          "active": 1,
+          "phase": 1,
+          "facing": 3,
+          "position": [
+            256,
+            230
+          ]
+        },
+        {
+          "state": 2,
+          "timer": 6,
+          "active": 1,
+          "phase": 1,
+          "facing": 3,
+          "position": [
+            256,
+            230
+          ]
+        },
+        {
+          "state": 2,
+          "timer": 7,
+          "active": 1,
+          "phase": 1,
+          "facing": 3,
+          "position": [
+            256,
+            230
+          ]
+        },
+        {
+          "state": 2,
+          "timer": 8,
+          "active": 1,
+          "phase": 1,
+          "facing": 3,
+          "position": [
+            256,
+            230
+          ]
+        },
+        {
+          "state": 2,
+          "timer": 9,
+          "active": 1,
+          "phase": 2,
+          "facing": 3,
+          "position": [
+            256,
+            230
+          ]
+        },
+        {
+          "state": 2,
+          "timer": 10,
+          "active": 1,
+          "phase": 2,
+          "facing": 3,
+          "position": [
+            256,
+            230
+          ]
+        },
+        {
+          "state": 2,
+          "timer": 11,
+          "active": 1,
+          "phase": 2,
+          "facing": 3,
+          "position": [
+            256,
+            230
+          ]
+        },
+        {
+          "state": 2,
+          "timer": 12,
+          "active": 1,
+          "phase": 2,
+          "facing": 3,
+          "position": [
+            256,
+            230
+          ]
+        },
+        {
+          "state": 2,
+          "timer": 13,
+          "active": 0,
+          "phase": 2,
+          "facing": 3,
+          "position": [
+            256,
+            230
+          ]
+        },
+        {
+          "state": 2,
+          "timer": 14,
+          "active": 0,
+          "phase": 2,
+          "facing": 3,
+          "position": [
+            256,
+            230
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 15,
+          "active": 0,
+          "phase": 0,
+          "facing": 3,
+          "position": [
+            256,
+            230
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 15,
+          "active": 0,
+          "phase": 0,
+          "facing": 3,
+          "position": [
+            256,
+            230
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 15,
+          "active": 0,
+          "phase": 0,
+          "facing": 3,
+          "position": [
+            256,
+            230
+          ]
+        }
+      ]
+    }
+  ]
+}

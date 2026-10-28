@@ -1,0 +1,8060 @@
+{
+  "method": "Paired real-ROM HUD/damage latency samples, separate from art gallery runs.\n\nThe disclosed local floor fixture and frozen ordinary beetle isolate contact.\nVideo frames, actual logic counters and hardware OAM distinguish preparation\nlatency from an action effect surviving a replacement upload.\n",
+  "emulator": "mGBA 0.10.5",
+  "before": {
+    "rom_sha256": "bbd08678b1e10fb110e562a6374b0242cb8e73affbdd747f033fd0ce99619eee",
+    "max_hp": 80,
+    "samples": [
+      {
+        "trial": 0,
+        "contact_video": 0,
+        "replacement_video": 1,
+        "replacement_delay_video_frames": 1,
+        "trace": [
+          {
+            "video": 0,
+            "logic": 374,
+            "vblank": 463,
+            "state": 3,
+            "timer": 8,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              230
+            ],
+            "hp": 78,
+            "hardware_sword_effect": true
+          },
+          {
+            "video": 1,
+            "logic": 375,
+            "vblank": 464,
+            "state": 3,
+            "timer": 7,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              231
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 2,
+            "logic": 376,
+            "vblank": 465,
+            "state": 3,
+            "timer": 6,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              233
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 3,
+            "logic": 377,
+            "vblank": 466,
+            "state": 3,
+            "timer": 5,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              234
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 4,
+            "logic": 378,
+            "vblank": 467,
+            "state": 3,
+            "timer": 4,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              236
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 5,
+            "logic": 379,
+            "vblank": 468,
+            "state": 3,
+            "timer": 3,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              237
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 6,
+            "logic": 380,
+            "vblank": 469,
+            "state": 3,
+            "timer": 2,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              239
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 7,
+            "logic": 381,
+            "vblank": 470,
+            "state": 3,
+            "timer": 1,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              240
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 8,
+            "logic": 382,
+            "vblank": 471,
+            "state": 0,
+            "timer": 0,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              242
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 9,
+            "logic": 383,
+            "vblank": 472,
+            "state": 0,
+            "timer": 0,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              242
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 10,
+            "logic": 384,
+            "vblank": 473,
+            "state": 0,
+            "timer": 0,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              242
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 11,
+            "logic": 385,
+            "vblank": 474,
+            "state": 0,
+            "timer": 0,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              242
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          }
+        ]
+      },
+      {
+        "trial": 1,
+        "contact_video": 0,
+        "replacement_video": 1,
+        "replacement_delay_video_frames": 1,
+        "trace": [
+          {
+            "video": 0,
+            "logic": 411,
+            "vblank": 500,
+            "state": 3,
+            "timer": 8,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              230
+            ],
+            "hp": 78,
+            "hardware_sword_effect": true
+          },
+          {
+            "video": 1,
+            "logic": 412,
+            "vblank": 501,
+            "state": 3,
+            "timer": 7,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              231
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 2,
+            "logic": 413,
+            "vblank": 502,
+            "state": 3,
+            "timer": 6,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              233
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 3,
+            "logic": 414,
+            "vblank": 503,
+            "state": 3,
+            "timer": 5,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              234
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 4,
+            "logic": 415,
+            "vblank": 504,
+            "state": 3,
+            "timer": 4,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              236
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 5,
+            "logic": 416,
+            "vblank": 505,
+            "state": 3,
+            "timer": 3,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              237
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 6,
+            "logic": 417,
+            "vblank": 506,
+            "state": 3,
+            "timer": 2,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              239
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 7,
+            "logic": 418,
+            "vblank": 507,
+            "state": 3,
+            "timer": 1,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              240
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 8,
+            "logic": 419,
+            "vblank": 508,
+            "state": 0,
+            "timer": 0,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              242
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 9,
+            "logic": 420,
+            "vblank": 509,
+            "state": 0,
+            "timer": 0,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              242
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 10,
+            "logic": 421,
+            "vblank": 510,
+            "state": 0,
+            "timer": 0,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              242
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 11,
+            "logic": 422,
+            "vblank": 511,
+            "state": 0,
+            "timer": 0,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              242
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          }
+        ]
+      },
+      {
+        "trial": 2,
+        "contact_video": 0,
+        "replacement_video": 1,
+        "replacement_delay_video_frames": 1,
+        "trace": [
+          {
+            "video": 0,
+            "logic": 448,
+            "vblank": 537,
+            "state": 3,
+            "timer": 8,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              230
+            ],
+            "hp": 78,
+            "hardware_sword_effect": true
+          },
+          {
+            "video": 1,
+            "logic": 449,
+            "vblank": 538,
+            "state": 3,
+            "timer": 7,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              231
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 2,
+            "logic": 450,
+            "vblank": 539,
+            "state": 3,
+            "timer": 6,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              233
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 3,
+            "logic": 451,
+            "vblank": 540,
+            "state": 3,
+            "timer": 5,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              234
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 4,
+            "logic": 452,
+            "vblank": 541,
+            "state": 3,
+            "timer": 4,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              236
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 5,
+            "logic": 453,
+            "vblank": 542,
+            "state": 3,
+            "timer": 3,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              237
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 6,
+            "logic": 454,
+            "vblank": 543,
+            "state": 3,
+            "timer": 2,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              239
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 7,
+            "logic": 455,
+            "vblank": 544,
+            "state": 3,
+            "timer": 1,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              240
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 8,
+            "logic": 456,
+            "vblank": 545,
+            "state": 0,
+            "timer": 0,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              242
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 9,
+            "logic": 457,
+            "vblank": 546,
+            "state": 0,
+            "timer": 0,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              242
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 10,
+            "logic": 458,
+            "vblank": 547,
+            "state": 0,
+            "timer": 0,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              242
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 11,
+            "logic": 459,
+            "vblank": 548,
+            "state": 0,
+            "timer": 0,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              242
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          }
+        ]
+      },
+      {
+        "trial": 3,
+        "contact_video": 0,
+        "replacement_video": 1,
+        "replacement_delay_video_frames": 1,
+        "trace": [
+          {
+            "video": 0,
+            "logic": 485,
+            "vblank": 574,
+            "state": 3,
+            "timer": 8,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              230
+            ],
+            "hp": 78,
+            "hardware_sword_effect": true
+          },
+          {
+            "video": 1,
+            "logic": 486,
+            "vblank": 575,
+            "state": 3,
+            "timer": 7,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              231
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 2,
+            "logic": 487,
+            "vblank": 576,
+            "state": 3,
+            "timer": 6,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              233
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 3,
+            "logic": 488,
+            "vblank": 577,
+            "state": 3,
+            "timer": 5,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              234
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 4,
+            "logic": 489,
+            "vblank": 578,
+            "state": 3,
+            "timer": 4,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              236
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 5,
+            "logic": 490,
+            "vblank": 579,
+            "state": 3,
+            "timer": 3,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              237
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 6,
+            "logic": 491,
+            "vblank": 580,
+            "state": 3,
+            "timer": 2,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              239
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 7,
+            "logic": 492,
+            "vblank": 581,
+            "state": 3,
+            "timer": 1,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              240
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 8,
+            "logic": 493,
+            "vblank": 582,
+            "state": 0,
+            "timer": 0,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              242
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 9,
+            "logic": 494,
+            "vblank": 583,
+            "state": 0,
+            "timer": 0,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              242
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 10,
+            "logic": 495,
+            "vblank": 584,
+            "state": 0,
+            "timer": 0,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              242
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 11,
+            "logic": 496,
+            "vblank": 585,
+            "state": 0,
+            "timer": 0,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              242
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          }
+        ]
+      },
+      {
+        "trial": 4,
+        "contact_video": 0,
+        "replacement_video": 1,
+        "replacement_delay_video_frames": 1,
+        "trace": [
+          {
+            "video": 0,
+            "logic": 522,
+            "vblank": 611,
+            "state": 3,
+            "timer": 8,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              230
+            ],
+            "hp": 78,
+            "hardware_sword_effect": true
+          },
+          {
+            "video": 1,
+            "logic": 523,
+            "vblank": 612,
+            "state": 3,
+            "timer": 7,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              231
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 2,
+            "logic": 524,
+            "vblank": 613,
+            "state": 3,
+            "timer": 6,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              233
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 3,
+            "logic": 525,
+            "vblank": 614,
+            "state": 3,
+            "timer": 5,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              234
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 4,
+            "logic": 526,
+            "vblank": 615,
+            "state": 3,
+            "timer": 4,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              236
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 5,
+            "logic": 527,
+            "vblank": 616,
+            "state": 3,
+            "timer": 3,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              237
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 6,
+            "logic": 528,
+            "vblank": 617,
+            "state": 3,
+            "timer": 2,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              239
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 7,
+            "logic": 529,
+            "vblank": 618,
+            "state": 3,
+            "timer": 1,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              240
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 8,
+            "logic": 530,
+            "vblank": 619,
+            "state": 0,
+            "timer": 0,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              242
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 9,
+            "logic": 531,
+            "vblank": 620,
+            "state": 0,
+            "timer": 0,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              242
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 10,
+            "logic": 532,
+            "vblank": 621,
+            "state": 0,
+            "timer": 0,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              242
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 11,
+            "logic": 533,
+            "vblank": 622,
+            "state": 0,
+            "timer": 0,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              242
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          }
+        ]
+      },
+      {
+        "trial": 5,
+        "contact_video": 0,
+        "replacement_video": 1,
+        "replacement_delay_video_frames": 1,
+        "trace": [
+          {
+            "video": 0,
+            "logic": 559,
+            "vblank": 648,
+            "state": 3,
+            "timer": 8,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              230
+            ],
+            "hp": 78,
+            "hardware_sword_effect": true
+          },
+          {
+            "video": 1,
+            "logic": 560,
+            "vblank": 649,
+            "state": 3,
+            "timer": 7,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              231
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 2,
+            "logic": 561,
+            "vblank": 650,
+            "state": 3,
+            "timer": 6,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              233
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 3,
+            "logic": 562,
+            "vblank": 651,
+            "state": 3,
+            "timer": 5,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              234
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 4,
+            "logic": 563,
+            "vblank": 652,
+            "state": 3,
+            "timer": 4,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              236
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 5,
+            "logic": 564,
+            "vblank": 653,
+            "state": 3,
+            "timer": 3,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              237
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 6,
+            "logic": 565,
+            "vblank": 654,
+            "state": 3,
+            "timer": 2,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              239
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 7,
+            "logic": 566,
+            "vblank": 655,
+            "state": 3,
+            "timer": 1,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              240
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 8,
+            "logic": 567,
+            "vblank": 656,
+            "state": 0,
+            "timer": 0,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              242
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 9,
+            "logic": 568,
+            "vblank": 657,
+            "state": 0,
+            "timer": 0,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              242
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 10,
+            "logic": 569,
+            "vblank": 658,
+            "state": 0,
+            "timer": 0,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              242
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 11,
+            "logic": 570,
+            "vblank": 659,
+            "state": 0,
+            "timer": 0,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              242
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          }
+        ]
+      },
+      {
+        "trial": 6,
+        "contact_video": 0,
+        "replacement_video": 1,
+        "replacement_delay_video_frames": 1,
+        "trace": [
+          {
+            "video": 0,
+            "logic": 596,
+            "vblank": 685,
+            "state": 3,
+            "timer": 8,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              230
+            ],
+            "hp": 78,
+            "hardware_sword_effect": true
+          },
+          {
+            "video": 1,
+            "logic": 597,
+            "vblank": 686,
+            "state": 3,
+            "timer": 7,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              231
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 2,
+            "logic": 598,
+            "vblank": 687,
+            "state": 3,
+            "timer": 6,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              233
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 3,
+            "logic": 599,
+            "vblank": 688,
+            "state": 3,
+            "timer": 5,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              234
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 4,
+            "logic": 600,
+            "vblank": 689,
+            "state": 3,
+            "timer": 4,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              236
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 5,
+            "logic": 601,
+            "vblank": 690,
+            "state": 3,
+            "timer": 3,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              237
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 6,
+            "logic": 602,
+            "vblank": 691,
+            "state": 3,
+            "timer": 2,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              239
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 7,
+            "logic": 603,
+            "vblank": 692,
+            "state": 3,
+            "timer": 1,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              240
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 8,
+            "logic": 604,
+            "vblank": 693,
+            "state": 0,
+            "timer": 0,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              242
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 9,
+            "logic": 605,
+            "vblank": 694,
+            "state": 0,
+            "timer": 0,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              242
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 10,
+            "logic": 606,
+            "vblank": 695,
+            "state": 0,
+            "timer": 0,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              242
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 11,
+            "logic": 607,
+            "vblank": 696,
+            "state": 0,
+            "timer": 0,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              242
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          }
+        ]
+      },
+      {
+        "trial": 7,
+        "contact_video": 0,
+        "replacement_video": 1,
+        "replacement_delay_video_frames": 1,
+        "trace": [
+          {
+            "video": 0,
+            "logic": 633,
+            "vblank": 722,
+            "state": 3,
+            "timer": 8,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              230
+            ],
+            "hp": 78,
+            "hardware_sword_effect": true
+          },
+          {
+            "video": 1,
+            "logic": 634,
+            "vblank": 723,
+            "state": 3,
+            "timer": 7,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              231
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 2,
+            "logic": 635,
+            "vblank": 724,
+            "state": 3,
+            "timer": 6,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              233
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 3,
+            "logic": 636,
+            "vblank": 725,
+            "state": 3,
+            "timer": 5,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              234
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 4,
+            "logic": 637,
+            "vblank": 726,
+            "state": 3,
+            "timer": 4,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              236
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 5,
+            "logic": 638,
+            "vblank": 727,
+            "state": 3,
+            "timer": 3,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              237
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 6,
+            "logic": 639,
+            "vblank": 728,
+            "state": 3,
+            "timer": 2,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              239
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 7,
+            "logic": 640,
+            "vblank": 729,
+            "state": 3,
+            "timer": 1,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              240
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 8,
+            "logic": 641,
+            "vblank": 730,
+            "state": 0,
+            "timer": 0,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              242
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 9,
+            "logic": 642,
+            "vblank": 731,
+            "state": 0,
+            "timer": 0,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              242
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 10,
+            "logic": 643,
+            "vblank": 732,
+            "state": 0,
+            "timer": 0,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              242
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 11,
+            "logic": 644,
+            "vblank": 733,
+            "state": 0,
+            "timer": 0,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              242
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          }
+        ]
+      },
+      {
+        "trial": 8,
+        "contact_video": 0,
+        "replacement_video": 1,
+        "replacement_delay_video_frames": 1,
+        "trace": [
+          {
+            "video": 0,
+            "logic": 670,
+            "vblank": 759,
+            "state": 3,
+            "timer": 8,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              230
+            ],
+            "hp": 78,
+            "hardware_sword_effect": true
+          },
+          {
+            "video": 1,
+            "logic": 671,
+            "vblank": 760,
+            "state": 3,
+            "timer": 7,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              231
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 2,
+            "logic": 672,
+            "vblank": 761,
+            "state": 3,
+            "timer": 6,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              233
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 3,
+            "logic": 673,
+            "vblank": 762,
+            "state": 3,
+            "timer": 5,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              234
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 4,
+            "logic": 674,
+            "vblank": 763,
+            "state": 3,
+            "timer": 4,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              236
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 5,
+            "logic": 675,
+            "vblank": 764,
+            "state": 3,
+            "timer": 3,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              237
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 6,
+            "logic": 676,
+            "vblank": 765,
+            "state": 3,
+            "timer": 2,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              239
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 7,
+            "logic": 677,
+            "vblank": 766,
+            "state": 3,
+            "timer": 1,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              240
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 8,
+            "logic": 678,
+            "vblank": 767,
+            "state": 0,
+            "timer": 0,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              242
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 9,
+            "logic": 679,
+            "vblank": 768,
+            "state": 0,
+            "timer": 0,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              242
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 10,
+            "logic": 680,
+            "vblank": 769,
+            "state": 0,
+            "timer": 0,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              242
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 11,
+            "logic": 681,
+            "vblank": 770,
+            "state": 0,
+            "timer": 0,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              242
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          }
+        ]
+      },
+      {
+        "trial": 9,
+        "contact_video": 0,
+        "replacement_video": 1,
+        "replacement_delay_video_frames": 1,
+        "trace": [
+          {
+            "video": 0,
+            "logic": 707,
+            "vblank": 796,
+            "state": 3,
+            "timer": 8,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              230
+            ],
+            "hp": 78,
+            "hardware_sword_effect": true
+          },
+          {
+            "video": 1,
+            "logic": 708,
+            "vblank": 797,
+            "state": 3,
+            "timer": 7,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              231
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 2,
+            "logic": 709,
+            "vblank": 798,
+            "state": 3,
+            "timer": 6,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              233
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 3,
+            "logic": 710,
+            "vblank": 799,
+            "state": 3,
+            "timer": 5,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              234
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 4,
+            "logic": 711,
+            "vblank": 800,
+            "state": 3,
+            "timer": 4,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              236
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 5,
+            "logic": 712,
+            "vblank": 801,
+            "state": 3,
+            "timer": 3,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              237
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 6,
+            "logic": 713,
+            "vblank": 802,
+            "state": 3,
+            "timer": 2,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              239
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 7,
+            "logic": 714,
+            "vblank": 803,
+            "state": 3,
+            "timer": 1,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              240
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 8,
+            "logic": 715,
+            "vblank": 804,
+            "state": 0,
+            "timer": 0,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              242
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 9,
+            "logic": 716,
+            "vblank": 805,
+            "state": 0,
+            "timer": 0,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              242
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 10,
+            "logic": 717,
+            "vblank": 806,
+            "state": 0,
+            "timer": 0,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              242
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 11,
+            "logic": 718,
+            "vblank": 807,
+            "state": 0,
+            "timer": 0,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              242
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          }
+        ]
+      },
+      {
+        "trial": 10,
+        "contact_video": 0,
+        "replacement_video": 1,
+        "replacement_delay_video_frames": 1,
+        "trace": [
+          {
+            "video": 0,
+            "logic": 744,
+            "vblank": 833,
+            "state": 3,
+            "timer": 8,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              230
+            ],
+            "hp": 78,
+            "hardware_sword_effect": true
+          },
+          {
+            "video": 1,
+            "logic": 745,
+            "vblank": 834,
+            "state": 3,
+            "timer": 7,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              231
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 2,
+            "logic": 746,
+            "vblank": 835,
+            "state": 3,
+            "timer": 6,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              233
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 3,
+            "logic": 747,
+            "vblank": 836,
+            "state": 3,
+            "timer": 5,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              234
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 4,
+            "logic": 748,
+            "vblank": 837,
+            "state": 3,
+            "timer": 4,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              236
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 5,
+            "logic": 749,
+            "vblank": 838,
+            "state": 3,
+            "timer": 3,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              237
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 6,
+            "logic": 750,
+            "vblank": 839,
+            "state": 3,
+            "timer": 2,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              239
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 7,
+            "logic": 751,
+            "vblank": 840,
+            "state": 3,
+            "timer": 1,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              240
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 8,
+            "logic": 752,
+            "vblank": 841,
+            "state": 0,
+            "timer": 0,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              242
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 9,
+            "logic": 753,
+            "vblank": 842,
+            "state": 0,
+            "timer": 0,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              242
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 10,
+            "logic": 754,
+            "vblank": 843,
+            "state": 0,
+            "timer": 0,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              242
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 11,
+            "logic": 755,
+            "vblank": 844,
+            "state": 0,
+            "timer": 0,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              242
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          }
+        ]
+      },
+      {
+        "trial": 11,
+        "contact_video": 0,
+        "replacement_video": 1,
+        "replacement_delay_video_frames": 1,
+        "trace": [
+          {
+            "video": 0,
+            "logic": 781,
+            "vblank": 870,
+            "state": 3,
+            "timer": 8,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              230
+            ],
+            "hp": 78,
+            "hardware_sword_effect": true
+          },
+          {
+            "video": 1,
+            "logic": 782,
+            "vblank": 871,
+            "state": 3,
+            "timer": 7,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              231
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 2,
+            "logic": 783,
+            "vblank": 872,
+            "state": 3,
+            "timer": 6,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              233
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 3,
+            "logic": 784,
+            "vblank": 873,
+            "state": 3,
+            "timer": 5,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              234
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 4,
+            "logic": 785,
+            "vblank": 874,
+            "state": 3,
+            "timer": 4,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              236
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 5,
+            "logic": 786,
+            "vblank": 875,
+            "state": 3,
+            "timer": 3,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              237
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 6,
+            "logic": 787,
+            "vblank": 876,
+            "state": 3,
+            "timer": 2,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              239
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 7,
+            "logic": 788,
+            "vblank": 877,
+            "state": 3,
+            "timer": 1,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              240
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 8,
+            "logic": 789,
+            "vblank": 878,
+            "state": 0,
+            "timer": 0,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              242
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 9,
+            "logic": 790,
+            "vblank": 879,
+            "state": 0,
+            "timer": 0,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              242
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 10,
+            "logic": 791,
+            "vblank": 880,
+            "state": 0,
+            "timer": 0,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              242
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 11,
+            "logic": 792,
+            "vblank": 881,
+            "state": 0,
+            "timer": 0,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              242
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          }
+        ]
+      },
+      {
+        "trial": 12,
+        "contact_video": 0,
+        "replacement_video": 1,
+        "replacement_delay_video_frames": 1,
+        "trace": [
+          {
+            "video": 0,
+            "logic": 818,
+            "vblank": 907,
+            "state": 3,
+            "timer": 8,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              230
+            ],
+            "hp": 78,
+            "hardware_sword_effect": true
+          },
+          {
+            "video": 1,
+            "logic": 819,
+            "vblank": 908,
+            "state": 3,
+            "timer": 7,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              231
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 2,
+            "logic": 820,
+            "vblank": 909,
+            "state": 3,
+            "timer": 6,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              233
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 3,
+            "logic": 821,
+            "vblank": 910,
+            "state": 3,
+            "timer": 5,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              234
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 4,
+            "logic": 822,
+            "vblank": 911,
+            "state": 3,
+            "timer": 4,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              236
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 5,
+            "logic": 823,
+            "vblank": 912,
+            "state": 3,
+            "timer": 3,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              237
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 6,
+            "logic": 824,
+            "vblank": 913,
+            "state": 3,
+            "timer": 2,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              239
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 7,
+            "logic": 825,
+            "vblank": 914,
+            "state": 3,
+            "timer": 1,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              240
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 8,
+            "logic": 826,
+            "vblank": 915,
+            "state": 0,
+            "timer": 0,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              242
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 9,
+            "logic": 827,
+            "vblank": 916,
+            "state": 0,
+            "timer": 0,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              242
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 10,
+            "logic": 828,
+            "vblank": 917,
+            "state": 0,
+            "timer": 0,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              242
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 11,
+            "logic": 829,
+            "vblank": 918,
+            "state": 0,
+            "timer": 0,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              242
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          }
+        ]
+      },
+      {
+        "trial": 13,
+        "contact_video": 0,
+        "replacement_video": 1,
+        "replacement_delay_video_frames": 1,
+        "trace": [
+          {
+            "video": 0,
+            "logic": 855,
+            "vblank": 944,
+            "state": 3,
+            "timer": 8,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              230
+            ],
+            "hp": 78,
+            "hardware_sword_effect": true
+          },
+          {
+            "video": 1,
+            "logic": 856,
+            "vblank": 945,
+            "state": 3,
+            "timer": 7,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              231
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 2,
+            "logic": 857,
+            "vblank": 946,
+            "state": 3,
+            "timer": 6,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              233
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 3,
+            "logic": 858,
+            "vblank": 947,
+            "state": 3,
+            "timer": 5,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              234
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 4,
+            "logic": 859,
+            "vblank": 948,
+            "state": 3,
+            "timer": 4,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              236
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 5,
+            "logic": 860,
+            "vblank": 949,
+            "state": 3,
+            "timer": 3,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              237
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 6,
+            "logic": 861,
+            "vblank": 950,
+            "state": 3,
+            "timer": 2,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              239
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 7,
+            "logic": 862,
+            "vblank": 951,
+            "state": 3,
+            "timer": 1,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              240
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 8,
+            "logic": 863,
+            "vblank": 952,
+            "state": 0,
+            "timer": 0,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              242
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 9,
+            "logic": 864,
+            "vblank": 953,
+            "state": 0,
+            "timer": 0,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              242
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 10,
+            "logic": 865,
+            "vblank": 954,
+            "state": 0,
+            "timer": 0,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              242
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 11,
+            "logic": 866,
+            "vblank": 955,
+            "state": 0,
+            "timer": 0,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              242
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          }
+        ]
+      },
+      {
+        "trial": 14,
+        "contact_video": 0,
+        "replacement_video": 1,
+        "replacement_delay_video_frames": 1,
+        "trace": [
+          {
+            "video": 0,
+            "logic": 892,
+            "vblank": 981,
+            "state": 3,
+            "timer": 8,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              230
+            ],
+            "hp": 78,
+            "hardware_sword_effect": true
+          },
+          {
+            "video": 1,
+            "logic": 893,
+            "vblank": 982,
+            "state": 3,
+            "timer": 7,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              231
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 2,
+            "logic": 894,
+            "vblank": 983,
+            "state": 3,
+            "timer": 6,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              233
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 3,
+            "logic": 895,
+            "vblank": 984,
+            "state": 3,
+            "timer": 5,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              234
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 4,
+            "logic": 896,
+            "vblank": 985,
+            "state": 3,
+            "timer": 4,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              236
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 5,
+            "logic": 897,
+            "vblank": 986,
+            "state": 3,
+            "timer": 3,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              237
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 6,
+            "logic": 898,
+            "vblank": 987,
+            "state": 3,
+            "timer": 2,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              239
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 7,
+            "logic": 899,
+            "vblank": 988,
+            "state": 3,
+            "timer": 1,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              240
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 8,
+            "logic": 900,
+            "vblank": 989,
+            "state": 0,
+            "timer": 0,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              242
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 9,
+            "logic": 901,
+            "vblank": 990,
+            "state": 0,
+            "timer": 0,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              242
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 10,
+            "logic": 902,
+            "vblank": 991,
+            "state": 0,
+            "timer": 0,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              242
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 11,
+            "logic": 903,
+            "vblank": 992,
+            "state": 0,
+            "timer": 0,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              242
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          }
+        ]
+      },
+      {
+        "trial": 15,
+        "contact_video": 0,
+        "replacement_video": 1,
+        "replacement_delay_video_frames": 1,
+        "trace": [
+          {
+            "video": 0,
+            "logic": 929,
+            "vblank": 1018,
+            "state": 3,
+            "timer": 8,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              230
+            ],
+            "hp": 78,
+            "hardware_sword_effect": true
+          },
+          {
+            "video": 1,
+            "logic": 930,
+            "vblank": 1019,
+            "state": 3,
+            "timer": 7,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              231
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 2,
+            "logic": 931,
+            "vblank": 1020,
+            "state": 3,
+            "timer": 6,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              233
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 3,
+            "logic": 932,
+            "vblank": 1021,
+            "state": 3,
+            "timer": 5,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              234
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 4,
+            "logic": 933,
+            "vblank": 1022,
+            "state": 3,
+            "timer": 4,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              236
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 5,
+            "logic": 934,
+            "vblank": 1023,
+            "state": 3,
+            "timer": 3,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              237
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 6,
+            "logic": 935,
+            "vblank": 1024,
+            "state": 3,
+            "timer": 2,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              239
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 7,
+            "logic": 936,
+            "vblank": 1025,
+            "state": 3,
+            "timer": 1,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              240
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 8,
+            "logic": 937,
+            "vblank": 1026,
+            "state": 0,
+            "timer": 0,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              242
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 9,
+            "logic": 938,
+            "vblank": 1027,
+            "state": 0,
+            "timer": 0,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              242
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 10,
+            "logic": 939,
+            "vblank": 1028,
+            "state": 0,
+            "timer": 0,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              242
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 11,
+            "logic": 940,
+            "vblank": 1029,
+            "state": 0,
+            "timer": 0,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              242
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          }
+        ]
+      },
+      {
+        "trial": 16,
+        "contact_video": 0,
+        "replacement_video": 1,
+        "replacement_delay_video_frames": 1,
+        "trace": [
+          {
+            "video": 0,
+            "logic": 966,
+            "vblank": 1055,
+            "state": 3,
+            "timer": 8,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              230
+            ],
+            "hp": 78,
+            "hardware_sword_effect": true
+          },
+          {
+            "video": 1,
+            "logic": 967,
+            "vblank": 1056,
+            "state": 3,
+            "timer": 7,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              231
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 2,
+            "logic": 968,
+            "vblank": 1057,
+            "state": 3,
+            "timer": 6,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              233
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 3,
+            "logic": 969,
+            "vblank": 1058,
+            "state": 3,
+            "timer": 5,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              234
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 4,
+            "logic": 970,
+            "vblank": 1059,
+            "state": 3,
+            "timer": 4,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              236
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 5,
+            "logic": 971,
+            "vblank": 1060,
+            "state": 3,
+            "timer": 3,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              237
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 6,
+            "logic": 972,
+            "vblank": 1061,
+            "state": 3,
+            "timer": 2,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              239
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 7,
+            "logic": 973,
+            "vblank": 1062,
+            "state": 3,
+            "timer": 1,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              240
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 8,
+            "logic": 974,
+            "vblank": 1063,
+            "state": 0,
+            "timer": 0,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              242
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 9,
+            "logic": 975,
+            "vblank": 1064,
+            "state": 0,
+            "timer": 0,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              242
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 10,
+            "logic": 976,
+            "vblank": 1065,
+            "state": 0,
+            "timer": 0,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              242
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 11,
+            "logic": 977,
+            "vblank": 1066,
+            "state": 0,
+            "timer": 0,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              242
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          }
+        ]
+      },
+      {
+        "trial": 17,
+        "contact_video": 0,
+        "replacement_video": 1,
+        "replacement_delay_video_frames": 1,
+        "trace": [
+          {
+            "video": 0,
+            "logic": 1003,
+            "vblank": 1092,
+            "state": 3,
+            "timer": 8,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              230
+            ],
+            "hp": 78,
+            "hardware_sword_effect": true
+          },
+          {
+            "video": 1,
+            "logic": 1004,
+            "vblank": 1093,
+            "state": 3,
+            "timer": 7,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              231
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 2,
+            "logic": 1005,
+            "vblank": 1094,
+            "state": 3,
+            "timer": 6,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              233
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 3,
+            "logic": 1006,
+            "vblank": 1095,
+            "state": 3,
+            "timer": 5,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              234
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 4,
+            "logic": 1007,
+            "vblank": 1096,
+            "state": 3,
+            "timer": 4,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              236
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 5,
+            "logic": 1008,
+            "vblank": 1097,
+            "state": 3,
+            "timer": 3,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              237
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 6,
+            "logic": 1009,
+            "vblank": 1098,
+            "state": 3,
+            "timer": 2,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              239
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 7,
+            "logic": 1010,
+            "vblank": 1099,
+            "state": 3,
+            "timer": 1,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              240
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 8,
+            "logic": 1011,
+            "vblank": 1100,
+            "state": 0,
+            "timer": 0,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              242
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 9,
+            "logic": 1012,
+            "vblank": 1101,
+            "state": 0,
+            "timer": 0,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              242
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 10,
+            "logic": 1013,
+            "vblank": 1102,
+            "state": 0,
+            "timer": 0,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              242
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 11,
+            "logic": 1014,
+            "vblank": 1103,
+            "state": 0,
+            "timer": 0,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              242
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          }
+        ]
+      },
+      {
+        "trial": 18,
+        "contact_video": 0,
+        "replacement_video": 1,
+        "replacement_delay_video_frames": 1,
+        "trace": [
+          {
+            "video": 0,
+            "logic": 1040,
+            "vblank": 1129,
+            "state": 3,
+            "timer": 8,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              230
+            ],
+            "hp": 78,
+            "hardware_sword_effect": true
+          },
+          {
+            "video": 1,
+            "logic": 1041,
+            "vblank": 1130,
+            "state": 3,
+            "timer": 7,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              231
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 2,
+            "logic": 1042,
+            "vblank": 1131,
+            "state": 3,
+            "timer": 6,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              233
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 3,
+            "logic": 1043,
+            "vblank": 1132,
+            "state": 3,
+            "timer": 5,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              234
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 4,
+            "logic": 1044,
+            "vblank": 1133,
+            "state": 3,
+            "timer": 4,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              236
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 5,
+            "logic": 1045,
+            "vblank": 1134,
+            "state": 3,
+            "timer": 3,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              237
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 6,
+            "logic": 1046,
+            "vblank": 1135,
+            "state": 3,
+            "timer": 2,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              239
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 7,
+            "logic": 1047,
+            "vblank": 1136,
+            "state": 3,
+            "timer": 1,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              240
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 8,
+            "logic": 1048,
+            "vblank": 1137,
+            "state": 0,
+            "timer": 0,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              242
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 9,
+            "logic": 1049,
+            "vblank": 1138,
+            "state": 0,
+            "timer": 0,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              242
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 10,
+            "logic": 1050,
+            "vblank": 1139,
+            "state": 0,
+            "timer": 0,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              242
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 11,
+            "logic": 1051,
+            "vblank": 1140,
+            "state": 0,
+            "timer": 0,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              242
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          }
+        ]
+      },
+      {
+        "trial": 19,
+        "contact_video": 0,
+        "replacement_video": 1,
+        "replacement_delay_video_frames": 1,
+        "trace": [
+          {
+            "video": 0,
+            "logic": 1077,
+            "vblank": 1166,
+            "state": 3,
+            "timer": 8,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              230
+            ],
+            "hp": 78,
+            "hardware_sword_effect": true
+          },
+          {
+            "video": 1,
+            "logic": 1078,
+            "vblank": 1167,
+            "state": 3,
+            "timer": 7,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              231
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 2,
+            "logic": 1079,
+            "vblank": 1168,
+            "state": 3,
+            "timer": 6,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              233
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 3,
+            "logic": 1080,
+            "vblank": 1169,
+            "state": 3,
+            "timer": 5,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              234
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 4,
+            "logic": 1081,
+            "vblank": 1170,
+            "state": 3,
+            "timer": 4,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              236
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 5,
+            "logic": 1082,
+            "vblank": 1171,
+            "state": 3,
+            "timer": 3,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              237
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 6,
+            "logic": 1083,
+            "vblank": 1172,
+            "state": 3,
+            "timer": 2,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              239
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 7,
+            "logic": 1084,
+            "vblank": 1173,
+            "state": 3,
+            "timer": 1,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              240
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 8,
+            "logic": 1085,
+            "vblank": 1174,
+            "state": 0,
+            "timer": 0,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              242
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 9,
+            "logic": 1086,
+            "vblank": 1175,
+            "state": 0,
+            "timer": 0,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              242
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 10,
+            "logic": 1087,
+            "vblank": 1176,
+            "state": 0,
+            "timer": 0,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              242
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 11,
+            "logic": 1088,
+            "vblank": 1177,
+            "state": 0,
+            "timer": 0,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              242
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          }
+        ]
+      }
+    ],
+    "replacement_delays": [
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1
+    ]
+  },
+  "after": {
+    "rom_sha256": "41dc680068c094416e92152d4c22637c10d6a055d2bee63ce7700c419490e92d",
+    "max_hp": 80,
+    "samples": [
+      {
+        "trial": 0,
+        "contact_video": 0,
+        "replacement_video": 1,
+        "replacement_delay_video_frames": 1,
+        "trace": [
+          {
+            "video": 0,
+            "logic": 364,
+            "vblank": 463,
+            "state": 3,
+            "timer": 8,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              230
+            ],
+            "hp": 78,
+            "hardware_sword_effect": true
+          },
+          {
+            "video": 1,
+            "logic": 365,
+            "vblank": 464,
+            "state": 3,
+            "timer": 7,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              231
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 2,
+            "logic": 366,
+            "vblank": 465,
+            "state": 3,
+            "timer": 6,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              233
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 3,
+            "logic": 367,
+            "vblank": 466,
+            "state": 3,
+            "timer": 5,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              234
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 4,
+            "logic": 368,
+            "vblank": 467,
+            "state": 3,
+            "timer": 4,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              236
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 5,
+            "logic": 369,
+            "vblank": 468,
+            "state": 3,
+            "timer": 3,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              237
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 6,
+            "logic": 370,
+            "vblank": 469,
+            "state": 3,
+            "timer": 2,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              239
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 7,
+            "logic": 371,
+            "vblank": 470,
+            "state": 3,
+            "timer": 1,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              240
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 8,
+            "logic": 372,
+            "vblank": 471,
+            "state": 0,
+            "timer": 0,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              242
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 9,
+            "logic": 373,
+            "vblank": 472,
+            "state": 0,
+            "timer": 0,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              242
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 10,
+            "logic": 374,
+            "vblank": 473,
+            "state": 0,
+            "timer": 0,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              242
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 11,
+            "logic": 375,
+            "vblank": 474,
+            "state": 0,
+            "timer": 0,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              242
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          }
+        ]
+      },
+      {
+        "trial": 1,
+        "contact_video": 0,
+        "replacement_video": 1,
+        "replacement_delay_video_frames": 1,
+        "trace": [
+          {
+            "video": 0,
+            "logic": 401,
+            "vblank": 500,
+            "state": 3,
+            "timer": 8,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              230
+            ],
+            "hp": 78,
+            "hardware_sword_effect": true
+          },
+          {
+            "video": 1,
+            "logic": 402,
+            "vblank": 501,
+            "state": 3,
+            "timer": 7,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              231
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 2,
+            "logic": 403,
+            "vblank": 502,
+            "state": 3,
+            "timer": 6,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              233
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 3,
+            "logic": 404,
+            "vblank": 503,
+            "state": 3,
+            "timer": 5,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              234
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 4,
+            "logic": 405,
+            "vblank": 504,
+            "state": 3,
+            "timer": 4,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              236
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 5,
+            "logic": 406,
+            "vblank": 505,
+            "state": 3,
+            "timer": 3,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              237
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 6,
+            "logic": 407,
+            "vblank": 506,
+            "state": 3,
+            "timer": 2,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              239
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 7,
+            "logic": 408,
+            "vblank": 507,
+            "state": 3,
+            "timer": 1,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              240
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 8,
+            "logic": 409,
+            "vblank": 508,
+            "state": 0,
+            "timer": 0,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              242
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 9,
+            "logic": 410,
+            "vblank": 509,
+            "state": 0,
+            "timer": 0,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              242
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 10,
+            "logic": 411,
+            "vblank": 510,
+            "state": 0,
+            "timer": 0,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              242
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 11,
+            "logic": 412,
+            "vblank": 511,
+            "state": 0,
+            "timer": 0,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              242
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          }
+        ]
+      },
+      {
+        "trial": 2,
+        "contact_video": 0,
+        "replacement_video": 1,
+        "replacement_delay_video_frames": 1,
+        "trace": [
+          {
+            "video": 0,
+            "logic": 438,
+            "vblank": 537,
+            "state": 3,
+            "timer": 8,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              230
+            ],
+            "hp": 78,
+            "hardware_sword_effect": true
+          },
+          {
+            "video": 1,
+            "logic": 439,
+            "vblank": 538,
+            "state": 3,
+            "timer": 7,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              231
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 2,
+            "logic": 440,
+            "vblank": 539,
+            "state": 3,
+            "timer": 6,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              233
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 3,
+            "logic": 441,
+            "vblank": 540,
+            "state": 3,
+            "timer": 5,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              234
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 4,
+            "logic": 442,
+            "vblank": 541,
+            "state": 3,
+            "timer": 4,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              236
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 5,
+            "logic": 443,
+            "vblank": 542,
+            "state": 3,
+            "timer": 3,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              237
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 6,
+            "logic": 444,
+            "vblank": 543,
+            "state": 3,
+            "timer": 2,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              239
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 7,
+            "logic": 445,
+            "vblank": 544,
+            "state": 3,
+            "timer": 1,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              240
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 8,
+            "logic": 446,
+            "vblank": 545,
+            "state": 0,
+            "timer": 0,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              242
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 9,
+            "logic": 447,
+            "vblank": 546,
+            "state": 0,
+            "timer": 0,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              242
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 10,
+            "logic": 448,
+            "vblank": 547,
+            "state": 0,
+            "timer": 0,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              242
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 11,
+            "logic": 449,
+            "vblank": 548,
+            "state": 0,
+            "timer": 0,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              242
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          }
+        ]
+      },
+      {
+        "trial": 3,
+        "contact_video": 0,
+        "replacement_video": 1,
+        "replacement_delay_video_frames": 1,
+        "trace": [
+          {
+            "video": 0,
+            "logic": 475,
+            "vblank": 574,
+            "state": 3,
+            "timer": 8,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              230
+            ],
+            "hp": 78,
+            "hardware_sword_effect": true
+          },
+          {
+            "video": 1,
+            "logic": 476,
+            "vblank": 575,
+            "state": 3,
+            "timer": 7,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              231
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 2,
+            "logic": 477,
+            "vblank": 576,
+            "state": 3,
+            "timer": 6,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              233
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 3,
+            "logic": 478,
+            "vblank": 577,
+            "state": 3,
+            "timer": 5,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              234
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 4,
+            "logic": 479,
+            "vblank": 578,
+            "state": 3,
+            "timer": 4,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              236
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 5,
+            "logic": 480,
+            "vblank": 579,
+            "state": 3,
+            "timer": 3,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              237
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 6,
+            "logic": 481,
+            "vblank": 580,
+            "state": 3,
+            "timer": 2,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              239
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 7,
+            "logic": 482,
+            "vblank": 581,
+            "state": 3,
+            "timer": 1,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              240
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 8,
+            "logic": 483,
+            "vblank": 582,
+            "state": 0,
+            "timer": 0,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              242
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 9,
+            "logic": 484,
+            "vblank": 583,
+            "state": 0,
+            "timer": 0,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              242
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 10,
+            "logic": 485,
+            "vblank": 584,
+            "state": 0,
+            "timer": 0,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              242
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 11,
+            "logic": 486,
+            "vblank": 585,
+            "state": 0,
+            "timer": 0,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              242
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          }
+        ]
+      },
+      {
+        "trial": 4,
+        "contact_video": 0,
+        "replacement_video": 1,
+        "replacement_delay_video_frames": 1,
+        "trace": [
+          {
+            "video": 0,
+            "logic": 512,
+            "vblank": 611,
+            "state": 3,
+            "timer": 8,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              230
+            ],
+            "hp": 78,
+            "hardware_sword_effect": true
+          },
+          {
+            "video": 1,
+            "logic": 513,
+            "vblank": 612,
+            "state": 3,
+            "timer": 7,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              231
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 2,
+            "logic": 514,
+            "vblank": 613,
+            "state": 3,
+            "timer": 6,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              233
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 3,
+            "logic": 515,
+            "vblank": 614,
+            "state": 3,
+            "timer": 5,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              234
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 4,
+            "logic": 516,
+            "vblank": 615,
+            "state": 3,
+            "timer": 4,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              236
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 5,
+            "logic": 517,
+            "vblank": 616,
+            "state": 3,
+            "timer": 3,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              237
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 6,
+            "logic": 518,
+            "vblank": 617,
+            "state": 3,
+            "timer": 2,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              239
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 7,
+            "logic": 519,
+            "vblank": 618,
+            "state": 3,
+            "timer": 1,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              240
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 8,
+            "logic": 520,
+            "vblank": 619,
+            "state": 0,
+            "timer": 0,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              242
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 9,
+            "logic": 521,
+            "vblank": 620,
+            "state": 0,
+            "timer": 0,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              242
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 10,
+            "logic": 522,
+            "vblank": 621,
+            "state": 0,
+            "timer": 0,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              242
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 11,
+            "logic": 523,
+            "vblank": 622,
+            "state": 0,
+            "timer": 0,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              242
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          }
+        ]
+      },
+      {
+        "trial": 5,
+        "contact_video": 0,
+        "replacement_video": 1,
+        "replacement_delay_video_frames": 1,
+        "trace": [
+          {
+            "video": 0,
+            "logic": 549,
+            "vblank": 648,
+            "state": 3,
+            "timer": 8,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              230
+            ],
+            "hp": 78,
+            "hardware_sword_effect": true
+          },
+          {
+            "video": 1,
+            "logic": 550,
+            "vblank": 649,
+            "state": 3,
+            "timer": 7,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              231
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 2,
+            "logic": 551,
+            "vblank": 650,
+            "state": 3,
+            "timer": 6,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              233
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 3,
+            "logic": 552,
+            "vblank": 651,
+            "state": 3,
+            "timer": 5,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              234
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 4,
+            "logic": 553,
+            "vblank": 652,
+            "state": 3,
+            "timer": 4,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              236
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 5,
+            "logic": 554,
+            "vblank": 653,
+            "state": 3,
+            "timer": 3,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              237
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 6,
+            "logic": 555,
+            "vblank": 654,
+            "state": 3,
+            "timer": 2,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              239
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 7,
+            "logic": 556,
+            "vblank": 655,
+            "state": 3,
+            "timer": 1,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              240
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 8,
+            "logic": 557,
+            "vblank": 656,
+            "state": 0,
+            "timer": 0,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              242
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 9,
+            "logic": 558,
+            "vblank": 657,
+            "state": 0,
+            "timer": 0,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              242
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 10,
+            "logic": 559,
+            "vblank": 658,
+            "state": 0,
+            "timer": 0,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              242
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 11,
+            "logic": 560,
+            "vblank": 659,
+            "state": 0,
+            "timer": 0,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              242
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          }
+        ]
+      },
+      {
+        "trial": 6,
+        "contact_video": 0,
+        "replacement_video": 1,
+        "replacement_delay_video_frames": 1,
+        "trace": [
+          {
+            "video": 0,
+            "logic": 586,
+            "vblank": 685,
+            "state": 3,
+            "timer": 8,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              230
+            ],
+            "hp": 78,
+            "hardware_sword_effect": true
+          },
+          {
+            "video": 1,
+            "logic": 587,
+            "vblank": 686,
+            "state": 3,
+            "timer": 7,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              231
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 2,
+            "logic": 588,
+            "vblank": 687,
+            "state": 3,
+            "timer": 6,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              233
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 3,
+            "logic": 589,
+            "vblank": 688,
+            "state": 3,
+            "timer": 5,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              234
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 4,
+            "logic": 590,
+            "vblank": 689,
+            "state": 3,
+            "timer": 4,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              236
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 5,
+            "logic": 591,
+            "vblank": 690,
+            "state": 3,
+            "timer": 3,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              237
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 6,
+            "logic": 592,
+            "vblank": 691,
+            "state": 3,
+            "timer": 2,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              239
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 7,
+            "logic": 593,
+            "vblank": 692,
+            "state": 3,
+            "timer": 1,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              240
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 8,
+            "logic": 594,
+            "vblank": 693,
+            "state": 0,
+            "timer": 0,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              242
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 9,
+            "logic": 595,
+            "vblank": 694,
+            "state": 0,
+            "timer": 0,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              242
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 10,
+            "logic": 596,
+            "vblank": 695,
+            "state": 0,
+            "timer": 0,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              242
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 11,
+            "logic": 597,
+            "vblank": 696,
+            "state": 0,
+            "timer": 0,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              242
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          }
+        ]
+      },
+      {
+        "trial": 7,
+        "contact_video": 0,
+        "replacement_video": 1,
+        "replacement_delay_video_frames": 1,
+        "trace": [
+          {
+            "video": 0,
+            "logic": 623,
+            "vblank": 722,
+            "state": 3,
+            "timer": 8,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              230
+            ],
+            "hp": 78,
+            "hardware_sword_effect": true
+          },
+          {
+            "video": 1,
+            "logic": 624,
+            "vblank": 723,
+            "state": 3,
+            "timer": 7,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              231
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 2,
+            "logic": 625,
+            "vblank": 724,
+            "state": 3,
+            "timer": 6,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              233
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 3,
+            "logic": 626,
+            "vblank": 725,
+            "state": 3,
+            "timer": 5,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              234
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 4,
+            "logic": 627,
+            "vblank": 726,
+            "state": 3,
+            "timer": 4,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              236
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 5,
+            "logic": 628,
+            "vblank": 727,
+            "state": 3,
+            "timer": 3,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              237
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 6,
+            "logic": 629,
+            "vblank": 728,
+            "state": 3,
+            "timer": 2,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              239
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 7,
+            "logic": 630,
+            "vblank": 729,
+            "state": 3,
+            "timer": 1,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              240
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 8,
+            "logic": 631,
+            "vblank": 730,
+            "state": 0,
+            "timer": 0,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              242
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 9,
+            "logic": 632,
+            "vblank": 731,
+            "state": 0,
+            "timer": 0,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              242
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 10,
+            "logic": 633,
+            "vblank": 732,
+            "state": 0,
+            "timer": 0,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              242
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 11,
+            "logic": 634,
+            "vblank": 733,
+            "state": 0,
+            "timer": 0,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              242
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          }
+        ]
+      },
+      {
+        "trial": 8,
+        "contact_video": 0,
+        "replacement_video": 1,
+        "replacement_delay_video_frames": 1,
+        "trace": [
+          {
+            "video": 0,
+            "logic": 659,
+            "vblank": 759,
+            "state": 3,
+            "timer": 8,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              230
+            ],
+            "hp": 78,
+            "hardware_sword_effect": true
+          },
+          {
+            "video": 1,
+            "logic": 660,
+            "vblank": 760,
+            "state": 3,
+            "timer": 7,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              231
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 2,
+            "logic": 661,
+            "vblank": 761,
+            "state": 3,
+            "timer": 6,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              233
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 3,
+            "logic": 662,
+            "vblank": 762,
+            "state": 3,
+            "timer": 5,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              234
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 4,
+            "logic": 663,
+            "vblank": 763,
+            "state": 3,
+            "timer": 4,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              236
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 5,
+            "logic": 664,
+            "vblank": 764,
+            "state": 3,
+            "timer": 3,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              237
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 6,
+            "logic": 665,
+            "vblank": 765,
+            "state": 3,
+            "timer": 2,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              239
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 7,
+            "logic": 666,
+            "vblank": 766,
+            "state": 3,
+            "timer": 1,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              240
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 8,
+            "logic": 667,
+            "vblank": 767,
+            "state": 0,
+            "timer": 0,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              242
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 9,
+            "logic": 668,
+            "vblank": 768,
+            "state": 0,
+            "timer": 0,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              242
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 10,
+            "logic": 669,
+            "vblank": 769,
+            "state": 0,
+            "timer": 0,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              242
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 11,
+            "logic": 670,
+            "vblank": 770,
+            "state": 0,
+            "timer": 0,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              242
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          }
+        ]
+      },
+      {
+        "trial": 9,
+        "contact_video": 0,
+        "replacement_video": 1,
+        "replacement_delay_video_frames": 1,
+        "trace": [
+          {
+            "video": 0,
+            "logic": 696,
+            "vblank": 796,
+            "state": 3,
+            "timer": 8,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              230
+            ],
+            "hp": 78,
+            "hardware_sword_effect": true
+          },
+          {
+            "video": 1,
+            "logic": 697,
+            "vblank": 797,
+            "state": 3,
+            "timer": 7,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              231
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 2,
+            "logic": 698,
+            "vblank": 798,
+            "state": 3,
+            "timer": 6,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              233
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 3,
+            "logic": 699,
+            "vblank": 799,
+            "state": 3,
+            "timer": 5,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              234
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 4,
+            "logic": 700,
+            "vblank": 800,
+            "state": 3,
+            "timer": 4,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              236
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 5,
+            "logic": 701,
+            "vblank": 801,
+            "state": 3,
+            "timer": 3,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              237
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 6,
+            "logic": 702,
+            "vblank": 802,
+            "state": 3,
+            "timer": 2,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              239
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 7,
+            "logic": 703,
+            "vblank": 803,
+            "state": 3,
+            "timer": 1,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              240
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 8,
+            "logic": 704,
+            "vblank": 804,
+            "state": 0,
+            "timer": 0,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              242
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 9,
+            "logic": 705,
+            "vblank": 805,
+            "state": 0,
+            "timer": 0,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              242
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 10,
+            "logic": 706,
+            "vblank": 806,
+            "state": 0,
+            "timer": 0,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              242
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 11,
+            "logic": 707,
+            "vblank": 807,
+            "state": 0,
+            "timer": 0,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              242
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          }
+        ]
+      },
+      {
+        "trial": 10,
+        "contact_video": 0,
+        "replacement_video": 1,
+        "replacement_delay_video_frames": 1,
+        "trace": [
+          {
+            "video": 0,
+            "logic": 733,
+            "vblank": 833,
+            "state": 3,
+            "timer": 8,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              230
+            ],
+            "hp": 78,
+            "hardware_sword_effect": true
+          },
+          {
+            "video": 1,
+            "logic": 734,
+            "vblank": 834,
+            "state": 3,
+            "timer": 7,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              231
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 2,
+            "logic": 735,
+            "vblank": 835,
+            "state": 3,
+            "timer": 6,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              233
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 3,
+            "logic": 736,
+            "vblank": 836,
+            "state": 3,
+            "timer": 5,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              234
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 4,
+            "logic": 737,
+            "vblank": 837,
+            "state": 3,
+            "timer": 4,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              236
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 5,
+            "logic": 738,
+            "vblank": 838,
+            "state": 3,
+            "timer": 3,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              237
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 6,
+            "logic": 739,
+            "vblank": 839,
+            "state": 3,
+            "timer": 2,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              239
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 7,
+            "logic": 740,
+            "vblank": 840,
+            "state": 3,
+            "timer": 1,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              240
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 8,
+            "logic": 741,
+            "vblank": 841,
+            "state": 0,
+            "timer": 0,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              242
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 9,
+            "logic": 742,
+            "vblank": 842,
+            "state": 0,
+            "timer": 0,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              242
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 10,
+            "logic": 743,
+            "vblank": 843,
+            "state": 0,
+            "timer": 0,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              242
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 11,
+            "logic": 744,
+            "vblank": 844,
+            "state": 0,
+            "timer": 0,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              242
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          }
+        ]
+      },
+      {
+        "trial": 11,
+        "contact_video": 0,
+        "replacement_video": 1,
+        "replacement_delay_video_frames": 1,
+        "trace": [
+          {
+            "video": 0,
+            "logic": 770,
+            "vblank": 870,
+            "state": 3,
+            "timer": 8,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              230
+            ],
+            "hp": 78,
+            "hardware_sword_effect": true
+          },
+          {
+            "video": 1,
+            "logic": 771,
+            "vblank": 871,
+            "state": 3,
+            "timer": 7,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              231
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 2,
+            "logic": 772,
+            "vblank": 872,
+            "state": 3,
+            "timer": 6,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              233
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 3,
+            "logic": 773,
+            "vblank": 873,
+            "state": 3,
+            "timer": 5,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              234
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 4,
+            "logic": 774,
+            "vblank": 874,
+            "state": 3,
+            "timer": 4,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              236
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 5,
+            "logic": 775,
+            "vblank": 875,
+            "state": 3,
+            "timer": 3,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              237
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 6,
+            "logic": 776,
+            "vblank": 876,
+            "state": 3,
+            "timer": 2,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              239
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 7,
+            "logic": 777,
+            "vblank": 877,
+            "state": 3,
+            "timer": 1,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              240
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 8,
+            "logic": 778,
+            "vblank": 878,
+            "state": 0,
+            "timer": 0,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              242
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 9,
+            "logic": 779,
+            "vblank": 879,
+            "state": 0,
+            "timer": 0,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              242
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 10,
+            "logic": 780,
+            "vblank": 880,
+            "state": 0,
+            "timer": 0,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              242
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 11,
+            "logic": 781,
+            "vblank": 881,
+            "state": 0,
+            "timer": 0,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              242
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          }
+        ]
+      },
+      {
+        "trial": 12,
+        "contact_video": 0,
+        "replacement_video": 1,
+        "replacement_delay_video_frames": 1,
+        "trace": [
+          {
+            "video": 0,
+            "logic": 807,
+            "vblank": 907,
+            "state": 3,
+            "timer": 8,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              230
+            ],
+            "hp": 78,
+            "hardware_sword_effect": true
+          },
+          {
+            "video": 1,
+            "logic": 808,
+            "vblank": 908,
+            "state": 3,
+            "timer": 7,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              231
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 2,
+            "logic": 809,
+            "vblank": 909,
+            "state": 3,
+            "timer": 6,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              233
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 3,
+            "logic": 810,
+            "vblank": 910,
+            "state": 3,
+            "timer": 5,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              234
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 4,
+            "logic": 811,
+            "vblank": 911,
+            "state": 3,
+            "timer": 4,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              236
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 5,
+            "logic": 812,
+            "vblank": 912,
+            "state": 3,
+            "timer": 3,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              237
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 6,
+            "logic": 813,
+            "vblank": 913,
+            "state": 3,
+            "timer": 2,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              239
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 7,
+            "logic": 814,
+            "vblank": 914,
+            "state": 3,
+            "timer": 1,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              240
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 8,
+            "logic": 815,
+            "vblank": 915,
+            "state": 0,
+            "timer": 0,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              242
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 9,
+            "logic": 816,
+            "vblank": 916,
+            "state": 0,
+            "timer": 0,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              242
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 10,
+            "logic": 817,
+            "vblank": 917,
+            "state": 0,
+            "timer": 0,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              242
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 11,
+            "logic": 818,
+            "vblank": 918,
+            "state": 0,
+            "timer": 0,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              242
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          }
+        ]
+      },
+      {
+        "trial": 13,
+        "contact_video": 0,
+        "replacement_video": 1,
+        "replacement_delay_video_frames": 1,
+        "trace": [
+          {
+            "video": 0,
+            "logic": 844,
+            "vblank": 944,
+            "state": 3,
+            "timer": 8,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              230
+            ],
+            "hp": 78,
+            "hardware_sword_effect": true
+          },
+          {
+            "video": 1,
+            "logic": 845,
+            "vblank": 945,
+            "state": 3,
+            "timer": 7,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              231
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 2,
+            "logic": 846,
+            "vblank": 946,
+            "state": 3,
+            "timer": 6,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              233
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 3,
+            "logic": 847,
+            "vblank": 947,
+            "state": 3,
+            "timer": 5,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              234
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 4,
+            "logic": 848,
+            "vblank": 948,
+            "state": 3,
+            "timer": 4,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              236
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 5,
+            "logic": 849,
+            "vblank": 949,
+            "state": 3,
+            "timer": 3,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              237
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 6,
+            "logic": 850,
+            "vblank": 950,
+            "state": 3,
+            "timer": 2,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              239
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 7,
+            "logic": 851,
+            "vblank": 951,
+            "state": 3,
+            "timer": 1,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              240
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 8,
+            "logic": 852,
+            "vblank": 952,
+            "state": 0,
+            "timer": 0,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              242
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 9,
+            "logic": 853,
+            "vblank": 953,
+            "state": 0,
+            "timer": 0,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              242
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 10,
+            "logic": 854,
+            "vblank": 954,
+            "state": 0,
+            "timer": 0,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              242
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 11,
+            "logic": 855,
+            "vblank": 955,
+            "state": 0,
+            "timer": 0,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              242
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          }
+        ]
+      },
+      {
+        "trial": 14,
+        "contact_video": 0,
+        "replacement_video": 1,
+        "replacement_delay_video_frames": 1,
+        "trace": [
+          {
+            "video": 0,
+            "logic": 881,
+            "vblank": 981,
+            "state": 3,
+            "timer": 8,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              230
+            ],
+            "hp": 78,
+            "hardware_sword_effect": true
+          },
+          {
+            "video": 1,
+            "logic": 882,
+            "vblank": 982,
+            "state": 3,
+            "timer": 7,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              231
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 2,
+            "logic": 883,
+            "vblank": 983,
+            "state": 3,
+            "timer": 6,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              233
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 3,
+            "logic": 884,
+            "vblank": 984,
+            "state": 3,
+            "timer": 5,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              234
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 4,
+            "logic": 885,
+            "vblank": 985,
+            "state": 3,
+            "timer": 4,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              236
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 5,
+            "logic": 886,
+            "vblank": 986,
+            "state": 3,
+            "timer": 3,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              237
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 6,
+            "logic": 887,
+            "vblank": 987,
+            "state": 3,
+            "timer": 2,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              239
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 7,
+            "logic": 888,
+            "vblank": 988,
+            "state": 3,
+            "timer": 1,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              240
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 8,
+            "logic": 889,
+            "vblank": 989,
+            "state": 0,
+            "timer": 0,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              242
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 9,
+            "logic": 890,
+            "vblank": 990,
+            "state": 0,
+            "timer": 0,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              242
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 10,
+            "logic": 891,
+            "vblank": 991,
+            "state": 0,
+            "timer": 0,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              242
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 11,
+            "logic": 892,
+            "vblank": 992,
+            "state": 0,
+            "timer": 0,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              242
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          }
+        ]
+      },
+      {
+        "trial": 15,
+        "contact_video": 0,
+        "replacement_video": 1,
+        "replacement_delay_video_frames": 1,
+        "trace": [
+          {
+            "video": 0,
+            "logic": 918,
+            "vblank": 1018,
+            "state": 3,
+            "timer": 8,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              230
+            ],
+            "hp": 78,
+            "hardware_sword_effect": true
+          },
+          {
+            "video": 1,
+            "logic": 919,
+            "vblank": 1019,
+            "state": 3,
+            "timer": 7,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              231
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 2,
+            "logic": 920,
+            "vblank": 1020,
+            "state": 3,
+            "timer": 6,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              233
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 3,
+            "logic": 921,
+            "vblank": 1021,
+            "state": 3,
+            "timer": 5,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              234
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 4,
+            "logic": 922,
+            "vblank": 1022,
+            "state": 3,
+            "timer": 4,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              236
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 5,
+            "logic": 923,
+            "vblank": 1023,
+            "state": 3,
+            "timer": 3,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              237
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 6,
+            "logic": 924,
+            "vblank": 1024,
+            "state": 3,
+            "timer": 2,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              239
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 7,
+            "logic": 925,
+            "vblank": 1025,
+            "state": 3,
+            "timer": 1,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              240
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 8,
+            "logic": 926,
+            "vblank": 1026,
+            "state": 0,
+            "timer": 0,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              242
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 9,
+            "logic": 927,
+            "vblank": 1027,
+            "state": 0,
+            "timer": 0,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              242
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 10,
+            "logic": 928,
+            "vblank": 1028,
+            "state": 0,
+            "timer": 0,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              242
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 11,
+            "logic": 929,
+            "vblank": 1029,
+            "state": 0,
+            "timer": 0,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              242
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          }
+        ]
+      },
+      {
+        "trial": 16,
+        "contact_video": 0,
+        "replacement_video": 1,
+        "replacement_delay_video_frames": 1,
+        "trace": [
+          {
+            "video": 0,
+            "logic": 955,
+            "vblank": 1055,
+            "state": 3,
+            "timer": 8,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              230
+            ],
+            "hp": 78,
+            "hardware_sword_effect": true
+          },
+          {
+            "video": 1,
+            "logic": 956,
+            "vblank": 1056,
+            "state": 3,
+            "timer": 7,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              231
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 2,
+            "logic": 957,
+            "vblank": 1057,
+            "state": 3,
+            "timer": 6,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              233
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 3,
+            "logic": 958,
+            "vblank": 1058,
+            "state": 3,
+            "timer": 5,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              234
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 4,
+            "logic": 959,
+            "vblank": 1059,
+            "state": 3,
+            "timer": 4,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              236
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 5,
+            "logic": 960,
+            "vblank": 1060,
+            "state": 3,
+            "timer": 3,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              237
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 6,
+            "logic": 961,
+            "vblank": 1061,
+            "state": 3,
+            "timer": 2,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              239
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 7,
+            "logic": 962,
+            "vblank": 1062,
+            "state": 3,
+            "timer": 1,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              240
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 8,
+            "logic": 963,
+            "vblank": 1063,
+            "state": 0,
+            "timer": 0,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              242
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 9,
+            "logic": 964,
+            "vblank": 1064,
+            "state": 0,
+            "timer": 0,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              242
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 10,
+            "logic": 965,
+            "vblank": 1065,
+            "state": 0,
+            "timer": 0,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              242
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 11,
+            "logic": 966,
+            "vblank": 1066,
+            "state": 0,
+            "timer": 0,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              242
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          }
+        ]
+      },
+      {
+        "trial": 17,
+        "contact_video": 0,
+        "replacement_video": 1,
+        "replacement_delay_video_frames": 1,
+        "trace": [
+          {
+            "video": 0,
+            "logic": 992,
+            "vblank": 1092,
+            "state": 3,
+            "timer": 8,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              230
+            ],
+            "hp": 78,
+            "hardware_sword_effect": true
+          },
+          {
+            "video": 1,
+            "logic": 993,
+            "vblank": 1093,
+            "state": 3,
+            "timer": 7,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              231
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 2,
+            "logic": 994,
+            "vblank": 1094,
+            "state": 3,
+            "timer": 6,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              233
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 3,
+            "logic": 995,
+            "vblank": 1095,
+            "state": 3,
+            "timer": 5,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              234
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 4,
+            "logic": 996,
+            "vblank": 1096,
+            "state": 3,
+            "timer": 4,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              236
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 5,
+            "logic": 997,
+            "vblank": 1097,
+            "state": 3,
+            "timer": 3,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              237
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 6,
+            "logic": 998,
+            "vblank": 1098,
+            "state": 3,
+            "timer": 2,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              239
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 7,
+            "logic": 999,
+            "vblank": 1099,
+            "state": 3,
+            "timer": 1,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              240
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 8,
+            "logic": 1000,
+            "vblank": 1100,
+            "state": 0,
+            "timer": 0,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              242
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 9,
+            "logic": 1001,
+            "vblank": 1101,
+            "state": 0,
+            "timer": 0,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              242
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 10,
+            "logic": 1002,
+            "vblank": 1102,
+            "state": 0,
+            "timer": 0,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              242
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 11,
+            "logic": 1003,
+            "vblank": 1103,
+            "state": 0,
+            "timer": 0,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              242
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          }
+        ]
+      },
+      {
+        "trial": 18,
+        "contact_video": 0,
+        "replacement_video": 1,
+        "replacement_delay_video_frames": 1,
+        "trace": [
+          {
+            "video": 0,
+            "logic": 1029,
+            "vblank": 1129,
+            "state": 3,
+            "timer": 8,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              230
+            ],
+            "hp": 78,
+            "hardware_sword_effect": true
+          },
+          {
+            "video": 1,
+            "logic": 1030,
+            "vblank": 1130,
+            "state": 3,
+            "timer": 7,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              231
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 2,
+            "logic": 1031,
+            "vblank": 1131,
+            "state": 3,
+            "timer": 6,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              233
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 3,
+            "logic": 1032,
+            "vblank": 1132,
+            "state": 3,
+            "timer": 5,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              234
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 4,
+            "logic": 1033,
+            "vblank": 1133,
+            "state": 3,
+            "timer": 4,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              236
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 5,
+            "logic": 1034,
+            "vblank": 1134,
+            "state": 3,
+            "timer": 3,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              237
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 6,
+            "logic": 1035,
+            "vblank": 1135,
+            "state": 3,
+            "timer": 2,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              239
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 7,
+            "logic": 1036,
+            "vblank": 1136,
+            "state": 3,
+            "timer": 1,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              240
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 8,
+            "logic": 1037,
+            "vblank": 1137,
+            "state": 0,
+            "timer": 0,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              242
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 9,
+            "logic": 1038,
+            "vblank": 1138,
+            "state": 0,
+            "timer": 0,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              242
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 10,
+            "logic": 1039,
+            "vblank": 1139,
+            "state": 0,
+            "timer": 0,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              242
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 11,
+            "logic": 1040,
+            "vblank": 1140,
+            "state": 0,
+            "timer": 0,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              242
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          }
+        ]
+      },
+      {
+        "trial": 19,
+        "contact_video": 0,
+        "replacement_video": 1,
+        "replacement_delay_video_frames": 1,
+        "trace": [
+          {
+            "video": 0,
+            "logic": 1066,
+            "vblank": 1166,
+            "state": 3,
+            "timer": 8,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              230
+            ],
+            "hp": 78,
+            "hardware_sword_effect": true
+          },
+          {
+            "video": 1,
+            "logic": 1067,
+            "vblank": 1167,
+            "state": 3,
+            "timer": 7,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              231
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 2,
+            "logic": 1068,
+            "vblank": 1168,
+            "state": 3,
+            "timer": 6,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              233
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 3,
+            "logic": 1069,
+            "vblank": 1169,
+            "state": 3,
+            "timer": 5,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              234
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 4,
+            "logic": 1070,
+            "vblank": 1170,
+            "state": 3,
+            "timer": 4,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              236
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 5,
+            "logic": 1071,
+            "vblank": 1171,
+            "state": 3,
+            "timer": 3,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              237
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 6,
+            "logic": 1072,
+            "vblank": 1172,
+            "state": 3,
+            "timer": 2,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              239
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 7,
+            "logic": 1073,
+            "vblank": 1173,
+            "state": 3,
+            "timer": 1,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              240
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 8,
+            "logic": 1074,
+            "vblank": 1174,
+            "state": 0,
+            "timer": 0,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              242
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 9,
+            "logic": 1075,
+            "vblank": 1175,
+            "state": 0,
+            "timer": 0,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              242
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 10,
+            "logic": 1076,
+            "vblank": 1176,
+            "state": 0,
+            "timer": 0,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              242
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          },
+          {
+            "video": 11,
+            "logic": 1077,
+            "vblank": 1177,
+            "state": 0,
+            "timer": 0,
+            "active": 0,
+            "phase": 1,
+            "facing": 0,
+            "position": [
+              256,
+              242
+            ],
+            "hp": 78,
+            "hardware_sword_effect": false
+          }
+        ]
+      }
+    ],
+    "replacement_delays": [
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1
+    ]
+  }
+}

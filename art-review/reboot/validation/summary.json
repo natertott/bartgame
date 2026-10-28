@@ -1,0 +1,365 @@
+{
+  "rom_sha256": "41dc680068c094416e92152d4c22637c10d6a055d2bee63ce7700c419490e92d",
+  "source_commit": "202c75e8ffbfa6079d011a2848f5d9f6305ca9dc",
+  "rom_bytes": 469656,
+  "branch": "art-reboot",
+  "emulator": "mGBA0.10.5",
+  "all_checks_passed": true,
+  "checks": [
+    {
+      "name": "Native ownership, palettes and runtime presentation",
+      "passed": 6577,
+      "total": 6577,
+      "report": "native-ownership.json"
+    },
+    {
+      "name": "Phase-specific sword and interruption checks",
+      "passed": 435,
+      "total": 435,
+      "report": "sword-phases.json"
+    },
+    {
+      "name": "Broader Bloom action suite",
+      "passed": 469,
+      "total": 469,
+      "report": "bloom-suite.json"
+    },
+    {
+      "name": "OBJ allocation and menu cache sweep",
+      "passed": 2046,
+      "total": 2046,
+      "report": "sprite-budget.json"
+    },
+    {
+      "name": "Representative action/glitter performance",
+      "passed": 29,
+      "total": 29,
+      "report": "action-performance.json"
+    },
+    {
+      "name": "Generated room traversal",
+      "passed": 625,
+      "total": 625,
+      "report": "room-traversal.json"
+    },
+    {
+      "name": "mechanics",
+      "passed": 22,
+      "total": 22,
+      "report": "mechanics.log"
+    },
+    {
+      "name": "lift",
+      "passed": 14,
+      "total": 14,
+      "report": "lift.log"
+    },
+    {
+      "name": "critical",
+      "passed": 21,
+      "total": 21,
+      "report": "critical.log"
+    },
+    {
+      "name": "trials",
+      "passed": 54,
+      "total": 54,
+      "report": "trials.log"
+    },
+    {
+      "name": "myst",
+      "passed": 28,
+      "total": 28,
+      "report": "myst.log"
+    },
+    {
+      "name": "pockets",
+      "passed": 18,
+      "total": 18,
+      "report": "pockets.log"
+    },
+    {
+      "name": "quest",
+      "passed": 12,
+      "total": 12,
+      "report": "quest.log"
+    },
+    {
+      "name": "save",
+      "passed": 6,
+      "total": 6,
+      "report": "save.log"
+    },
+    {
+      "name": "Interface: title",
+      "passed": 80,
+      "total": 80,
+      "report": "../actual/interface/validation.json"
+    },
+    {
+      "name": "Interface: hud",
+      "passed": 6,
+      "total": 6,
+      "report": "../actual/interface/validation.json"
+    },
+    {
+      "name": "Interface: menu",
+      "passed": 21,
+      "total": 21,
+      "report": "../actual/interface/validation.json"
+    },
+    {
+      "name": "Interface: portraits",
+      "passed": 6,
+      "total": 6,
+      "report": "../actual/interface/validation.json"
+    },
+    {
+      "name": "Interface: hud_equivalence",
+      "passed": 34,
+      "total": 34,
+      "report": "../actual/interface/validation.json"
+    },
+    {
+      "name": "Interface: latency_normal",
+      "passed": 20,
+      "total": 20,
+      "report": "../actual/interface/validation.json"
+    },
+    {
+      "name": "Interface: latency_maximum_hearts",
+      "passed": 20,
+      "total": 20,
+      "report": "../actual/interface/validation.json"
+    }
+  ],
+  "visual_review": {
+    "screen_clips": 40,
+    "action_clips": 91,
+    "interactive_clips": 40,
+    "canonical_clips": 171,
+    "all_clips": 172,
+    "supplemental_clips": 1,
+    "interface_native_views": {
+      "ui": 13,
+      "hud": 6,
+      "title": 9
+    },
+    "source_atlases": 34,
+    "exact_palette_capture_gifs": 166
+  },
+  "budgets": {
+    "background_subtiles": {
+      "forest": 693,
+      "drain": 532,
+      "interiors": 114
+    },
+    "background_limit": 1024,
+    "obj_dynamic_peak": 716,
+    "obj_dynamic_limit": 876,
+    "obj_dynamic_headroom": 160,
+    "text_bytes": 469656,
+    "bss_bytes": 87076
+  },
+  "timing": {
+    "normal24hp_twenty_trials_video_frames": [
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1
+    ],
+    "maximum80hp_twenty_trials_video_frames": [
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1
+    ],
+    "baseline_video_frames": 1,
+    "hud_pixels_unchanged_cases": 34,
+    "representative_action_contexts": 4,
+    "video_frames_per_context": 192,
+    "logic_updates_per_context": 192,
+    "limit": "Representative quiet/isolated actions and specified dirty-HUD contacts, not a worst-case combat benchmark."
+  },
+  "limits": [
+    "Mixed living/blight edges remain tile-angular in some layouts; large clearings can feel flat.",
+    "99 of101 source Bloom frames are selected by current gameplay; jump_n and jump_e are redrawn legacy descriptors not activated.",
+    "Six GIFs exceed256-colour union; supplied native PNGs stay exact.",
+    "Local physical-floor/position/inventory/health fixtures are disclosed by probes; source mockups and atlases are not emulator screenshots."
+  ],
+  "logs_note": "Published text logs have trailing whitespace normalized; capture images/reports remain byte-for-byte copies.",
+  "files": [
+    {
+      "path": "action-performance.json",
+      "bytes": 249922,
+      "sha256": "7ebda79872d3073050ccd1e2657864dca044c626a826d2c7c7dd60686aa20b5c"
+    },
+    {
+      "path": "action-performance.log",
+      "bytes": 380,
+      "sha256": "81c95ba3c2ea8e22d055befffe1c7a4c78356a48a060a4c86af6f4e170a9bc86"
+    },
+    {
+      "path": "asset-coverage.json",
+      "bytes": 188736,
+      "sha256": "7f212600d5b38a4eec91f20e07eae103c45de6902d2901e18c0137f3908a3754"
+    },
+    {
+      "path": "bloom-suite.json",
+      "bytes": 825529,
+      "sha256": "c33ee251133f1dcad9b5dbfc52bb5b5754e716f0173b6c000cdf96b57e7e8952"
+    },
+    {
+      "path": "bloom-suite.log",
+      "bytes": 29646,
+      "sha256": "f019006441ab2197fd89faf7d7362f70237cd3ef271777d477eed18e11c2fdaf"
+    },
+    {
+      "path": "build.log",
+      "bytes": 7448,
+      "sha256": "1c168f9db20eb564a9c14ebd0eeec8f073c3bb4caa35ffbf3b046b67505c4b68"
+    },
+    {
+      "path": "critical.log",
+      "bytes": 2644,
+      "sha256": "2f90857ac514e1f30da2a8c83dc46d136a8b5ac0532f748560f12ebc88894375"
+    },
+    {
+      "path": "hud-contact-independent-max10.json",
+      "bytes": 92384,
+      "sha256": "6fb63eaada27eaf6468816c63c76ca5f7f4c0b8b2738f4ce377d2a5e64a0004f"
+    },
+    {
+      "path": "hud-contact-independent-normal10.json",
+      "bytes": 92384,
+      "sha256": "9e6e1e34bd9b02fcf6749a5b439442764d62f67a2791497ee42a34c6226efb17"
+    },
+    {
+      "path": "hud-contact-max20.json",
+      "bytes": 184268,
+      "sha256": "bd7e66070fe65195731146ba0648be19e00cf1c66cac9d816ccfb42743140c18"
+    },
+    {
+      "path": "hud-contact-normal20.json",
+      "bytes": 184269,
+      "sha256": "b38d586d69bdc44d5a665548257aa844e6fef5c42975e2d2df3bc264b2390ed2"
+    },
+    {
+      "path": "hud-pixel-equivalence.json",
+      "bytes": 12441,
+      "sha256": "7a13129f49f101d7e718902d617574882774c3cc08f8a08a16a8c19dec8a1a14"
+    },
+    {
+      "path": "lift.log",
+      "bytes": 871,
+      "sha256": "52c1d909491f83584b79608812f6e61121ad8de3b450a0b98d44863f8477a1af"
+    },
+    {
+      "path": "mechanics.log",
+      "bytes": 1559,
+      "sha256": "1cb053b3aa41b6cd79c88d8e0bcb7372b6e01dff1aff2c7f185b4a2e733c6163"
+    },
+    {
+      "path": "myst.log",
+      "bytes": 1866,
+      "sha256": "b0eb8ef5c1b0436efd8d0c11c2c496824ac174408334e6e324d485c5263bb8a3"
+    },
+    {
+      "path": "native-ownership.json",
+      "bytes": 763255,
+      "sha256": "72d406fd13298954feec7e53e3f7765811bfd757611ba95d9f864b729cba6bb3"
+    },
+    {
+      "path": "native-ownership.log",
+      "bytes": 27234,
+      "sha256": "84f1b3339803b07e132d713101b78eda1261e8ab31cdd6ac3a1f0a0abb1384ac"
+    },
+    {
+      "path": "pockets.log",
+      "bytes": 936,
+      "sha256": "f486f02b0b35edc83caf8c34d46bb09738e6b0cd9a27923104349fe9d9b19334"
+    },
+    {
+      "path": "progression.json",
+      "bytes": 3966,
+      "sha256": "646021dcdc3a01ebfb51bf27ee9f7775a7749c72135ff742be00e403c9248209"
+    },
+    {
+      "path": "quest.log",
+      "bytes": 1421,
+      "sha256": "7a46bd033769cdb4d8ceb1b16903394e8b4b591db3196d8c544c10ec378cfc8b"
+    },
+    {
+      "path": "room-traversal.json",
+      "bytes": 233843,
+      "sha256": "f03ff77503df8340a71275d7cf34c6a3b871860baea4d4c905e9c442d7d8e430"
+    },
+    {
+      "path": "room-traversal.log",
+      "bytes": 25479,
+      "sha256": "97f64c139ad647425ef7f7819fc4aa792feb19ce96c131cfeee31d8782f893a7"
+    },
+    {
+      "path": "save.log",
+      "bytes": 372,
+      "sha256": "81634cc17bc354a694ba01c57acd8742b1eef5dbd183f3a91a7b525742287018"
+    },
+    {
+      "path": "sprite-budget.json",
+      "bytes": 554660,
+      "sha256": "e743f527ffe1ba11aba3a2501b48bee498a7912dd93a758ade230b303e46ee01"
+    },
+    {
+      "path": "sprite-budget.log",
+      "bytes": 201383,
+      "sha256": "a79ce6e640e267e00bc11fdba44701c57999f5383983fcc4d141483f5dafd0d1"
+    },
+    {
+      "path": "sword-phases.json",
+      "bytes": 76746,
+      "sha256": "2ae2a601c9e4f03d548dae3782adb664327ebf159e6c7c3d0061e8f887f687cc"
+    },
+    {
+      "path": "sword-phases.log",
+      "bytes": 27674,
+      "sha256": "501f61effe1a0e2f3c1f1f009637774e3dc045eeebc956a08e6710d820a13af9"
+    },
+    {
+      "path": "trials.log",
+      "bytes": 2160,
+      "sha256": "416836147c6bc4ee956fd0daf4a684d1a7770b89e476b4c0c4f19c9961d209f4"
+    }
+  ]
+}

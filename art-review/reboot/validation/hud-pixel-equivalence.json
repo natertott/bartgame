@@ -1,0 +1,452 @@
+{
+  "method": "Compare actual packed vitals pixels before/after the HUD span optimization.\n\nValues are disclosed display fixtures. Real title Start and pause controls\nexercise normal rendering and shared text-pool restoration. The comparison\nreads hardware BG0 entries, all36 displayed4bpp tiles and their live palette;\nno screenshot or renderer-private pixels are substituted for GPU output.",
+  "emulator": "mGBA0.10.5",
+  "before_rom_sha256": "6baf5a3c4f3ed6de5d960075ed405ca108e192f8760449b66e461a25dd06e883",
+  "rom_sha256": "41dc680068c094416e92152d4c22637c10d6a055d2bee63ce7700c419490e92d",
+  "passed": 34,
+  "total": 34,
+  "checks": [
+    {
+      "name": "values-00",
+      "values": [
+        0,
+        24,
+        0,
+        0
+      ],
+      "passed": true,
+      "bytes_compared": 1256,
+      "before_sha256": "32349ca3f3028c9ee92104e09357688aaf8bd60970d4e1a8b506c6a49df5e014",
+      "after_sha256": "32349ca3f3028c9ee92104e09357688aaf8bd60970d4e1a8b506c6a49df5e014"
+    },
+    {
+      "name": "values-01",
+      "values": [
+        1,
+        24,
+        0,
+        0
+      ],
+      "passed": true,
+      "bytes_compared": 1256,
+      "before_sha256": "32349ca3f3028c9ee92104e09357688aaf8bd60970d4e1a8b506c6a49df5e014",
+      "after_sha256": "32349ca3f3028c9ee92104e09357688aaf8bd60970d4e1a8b506c6a49df5e014"
+    },
+    {
+      "name": "values-02",
+      "values": [
+        3,
+        24,
+        0,
+        0
+      ],
+      "passed": true,
+      "bytes_compared": 1256,
+      "before_sha256": "32349ca3f3028c9ee92104e09357688aaf8bd60970d4e1a8b506c6a49df5e014",
+      "after_sha256": "32349ca3f3028c9ee92104e09357688aaf8bd60970d4e1a8b506c6a49df5e014"
+    },
+    {
+      "name": "values-03",
+      "values": [
+        4,
+        24,
+        0,
+        0
+      ],
+      "passed": true,
+      "bytes_compared": 1256,
+      "before_sha256": "5db4a11216fc58f0965acc6c72e4207e6be7e519ceab23f43558562225cae84d",
+      "after_sha256": "5db4a11216fc58f0965acc6c72e4207e6be7e519ceab23f43558562225cae84d"
+    },
+    {
+      "name": "values-04",
+      "values": [
+        7,
+        24,
+        0,
+        0
+      ],
+      "passed": true,
+      "bytes_compared": 1256,
+      "before_sha256": "5db4a11216fc58f0965acc6c72e4207e6be7e519ceab23f43558562225cae84d",
+      "after_sha256": "5db4a11216fc58f0965acc6c72e4207e6be7e519ceab23f43558562225cae84d"
+    },
+    {
+      "name": "values-05",
+      "values": [
+        8,
+        24,
+        0,
+        0
+      ],
+      "passed": true,
+      "bytes_compared": 1256,
+      "before_sha256": "486e49cbf6bb9b78eab993783c4c03ba740adc2bd6b6105f7243708b83978739",
+      "after_sha256": "486e49cbf6bb9b78eab993783c4c03ba740adc2bd6b6105f7243708b83978739"
+    },
+    {
+      "name": "values-06",
+      "values": [
+        15,
+        24,
+        0,
+        0
+      ],
+      "passed": true,
+      "bytes_compared": 1256,
+      "before_sha256": "531ded5cffe035ca224c69a75b00a929d54c3f3965d49c6f82ab824aaea87ad3",
+      "after_sha256": "531ded5cffe035ca224c69a75b00a929d54c3f3965d49c6f82ab824aaea87ad3"
+    },
+    {
+      "name": "values-07",
+      "values": [
+        16,
+        24,
+        0,
+        0
+      ],
+      "passed": true,
+      "bytes_compared": 1256,
+      "before_sha256": "72bbf2358ed9d1e3a2676760e19f0e80b5ae38c6a1ac47c7922e54ee1b2fb372",
+      "after_sha256": "72bbf2358ed9d1e3a2676760e19f0e80b5ae38c6a1ac47c7922e54ee1b2fb372"
+    },
+    {
+      "name": "values-08",
+      "values": [
+        22,
+        24,
+        0,
+        0
+      ],
+      "passed": true,
+      "bytes_compared": 1256,
+      "before_sha256": "622adcde3de2d91ab58d36a64996be31a2aee4d8f52969395d696d30ffa3f456",
+      "after_sha256": "622adcde3de2d91ab58d36a64996be31a2aee4d8f52969395d696d30ffa3f456"
+    },
+    {
+      "name": "values-09",
+      "values": [
+        23,
+        24,
+        0,
+        0
+      ],
+      "passed": true,
+      "bytes_compared": 1256,
+      "before_sha256": "622adcde3de2d91ab58d36a64996be31a2aee4d8f52969395d696d30ffa3f456",
+      "after_sha256": "622adcde3de2d91ab58d36a64996be31a2aee4d8f52969395d696d30ffa3f456"
+    },
+    {
+      "name": "values-10",
+      "values": [
+        24,
+        24,
+        0,
+        0
+      ],
+      "passed": true,
+      "bytes_compared": 1256,
+      "before_sha256": "a8983b0a00a25b0a220fcc6d2276e405db2887d29a23e92b0f0272d2a2a3986d",
+      "after_sha256": "a8983b0a00a25b0a220fcc6d2276e405db2887d29a23e92b0f0272d2a2a3986d"
+    },
+    {
+      "name": "values-11",
+      "values": [
+        0,
+        80,
+        999,
+        255
+      ],
+      "passed": true,
+      "bytes_compared": 1256,
+      "before_sha256": "2dbb861fa7695323fdaa58aea7e3ee5063b3807da7383f9851d6d68202e7ace9",
+      "after_sha256": "2dbb861fa7695323fdaa58aea7e3ee5063b3807da7383f9851d6d68202e7ace9"
+    },
+    {
+      "name": "values-12",
+      "values": [
+        4,
+        80,
+        999,
+        255
+      ],
+      "passed": true,
+      "bytes_compared": 1256,
+      "before_sha256": "5068e4b2fcb937223df65cbf2b947b98b5cfa23f139e58dcec8432ff81455b62",
+      "after_sha256": "5068e4b2fcb937223df65cbf2b947b98b5cfa23f139e58dcec8432ff81455b62"
+    },
+    {
+      "name": "values-13",
+      "values": [
+        8,
+        80,
+        999,
+        255
+      ],
+      "passed": true,
+      "bytes_compared": 1256,
+      "before_sha256": "16cf7e330fc35033a677ecf04757f51ff598d4dfcf5ca30bb4e2fff0cc4d671c",
+      "after_sha256": "16cf7e330fc35033a677ecf04757f51ff598d4dfcf5ca30bb4e2fff0cc4d671c"
+    },
+    {
+      "name": "values-14",
+      "values": [
+        39,
+        80,
+        999,
+        255
+      ],
+      "passed": true,
+      "bytes_compared": 1256,
+      "before_sha256": "523abb82120390dee01b8d366afcd8b8b8e998d791b440897e02b383058bddb4",
+      "after_sha256": "523abb82120390dee01b8d366afcd8b8b8e998d791b440897e02b383058bddb4"
+    },
+    {
+      "name": "values-15",
+      "values": [
+        40,
+        80,
+        999,
+        255
+      ],
+      "passed": true,
+      "bytes_compared": 1256,
+      "before_sha256": "ce4d7ff00ad9e52c43c9501bc48d8ace209c15806110ab5761d70f72dcc7519f",
+      "after_sha256": "ce4d7ff00ad9e52c43c9501bc48d8ace209c15806110ab5761d70f72dcc7519f"
+    },
+    {
+      "name": "values-16",
+      "values": [
+        52,
+        80,
+        999,
+        255
+      ],
+      "passed": true,
+      "bytes_compared": 1256,
+      "before_sha256": "ce047f2ff822859239bf43fd9b356c53afa0bd2dccea5006d5e650f8320b417b",
+      "after_sha256": "ce047f2ff822859239bf43fd9b356c53afa0bd2dccea5006d5e650f8320b417b"
+    },
+    {
+      "name": "values-17",
+      "values": [
+        79,
+        80,
+        999,
+        255
+      ],
+      "passed": true,
+      "bytes_compared": 1256,
+      "before_sha256": "dd8610a3de7c1f6ef219236906a08014fb7d64f3e78e1b4b51a1c2b691a835df",
+      "after_sha256": "dd8610a3de7c1f6ef219236906a08014fb7d64f3e78e1b4b51a1c2b691a835df"
+    },
+    {
+      "name": "values-18",
+      "values": [
+        80,
+        80,
+        999,
+        255
+      ],
+      "passed": true,
+      "bytes_compared": 1256,
+      "before_sha256": "8e5739f76cd3eafa9b8b66c667f6a5ca04420d2247e07bdc725a1f330dac3e1c",
+      "after_sha256": "8e5739f76cd3eafa9b8b66c667f6a5ca04420d2247e07bdc725a1f330dac3e1c"
+    },
+    {
+      "name": "values-19",
+      "values": [
+        24,
+        24,
+        0,
+        255
+      ],
+      "passed": true,
+      "bytes_compared": 1256,
+      "before_sha256": "ffd55436802b01f47a597ffb10ffd35e32dcded9cd61291446d2f1ca33c3f3aa",
+      "after_sha256": "ffd55436802b01f47a597ffb10ffd35e32dcded9cd61291446d2f1ca33c3f3aa"
+    },
+    {
+      "name": "values-20",
+      "values": [
+        24,
+        24,
+        1,
+        255
+      ],
+      "passed": true,
+      "bytes_compared": 1256,
+      "before_sha256": "3e50fe369f55b4b9dfb4faaf4ff619b36d07676d4da6464f480fae59661821e6",
+      "after_sha256": "3e50fe369f55b4b9dfb4faaf4ff619b36d07676d4da6464f480fae59661821e6"
+    },
+    {
+      "name": "values-21",
+      "values": [
+        24,
+        24,
+        9,
+        255
+      ],
+      "passed": true,
+      "bytes_compared": 1256,
+      "before_sha256": "d13f3a0be3baee7493e61aac52745b1ffa9ae771fac5aee978a1e9d1aee588df",
+      "after_sha256": "d13f3a0be3baee7493e61aac52745b1ffa9ae771fac5aee978a1e9d1aee588df"
+    },
+    {
+      "name": "values-22",
+      "values": [
+        24,
+        24,
+        10,
+        255
+      ],
+      "passed": true,
+      "bytes_compared": 1256,
+      "before_sha256": "20eef8f16e4ed5296007a70f00f9f55c85076a01903a493208ae3dcb1a7804dd",
+      "after_sha256": "20eef8f16e4ed5296007a70f00f9f55c85076a01903a493208ae3dcb1a7804dd"
+    },
+    {
+      "name": "values-23",
+      "values": [
+        24,
+        24,
+        99,
+        255
+      ],
+      "passed": true,
+      "bytes_compared": 1256,
+      "before_sha256": "f8c74b84bfe9de021be159c4bcfb209bcd9274692764e416c69178ef4c0df60e",
+      "after_sha256": "f8c74b84bfe9de021be159c4bcfb209bcd9274692764e416c69178ef4c0df60e"
+    },
+    {
+      "name": "values-24",
+      "values": [
+        24,
+        24,
+        100,
+        255
+      ],
+      "passed": true,
+      "bytes_compared": 1256,
+      "before_sha256": "e9fc8e7969d0e84de6058b653979099983d3d1012aa9d677088b50e70a905431",
+      "after_sha256": "e9fc8e7969d0e84de6058b653979099983d3d1012aa9d677088b50e70a905431"
+    },
+    {
+      "name": "values-25",
+      "values": [
+        24,
+        24,
+        999,
+        255
+      ],
+      "passed": true,
+      "bytes_compared": 1256,
+      "before_sha256": "c4a0144d4548800b9e67b13fb07556bd52db3d2624f16c946261f00d7e9b6258",
+      "after_sha256": "c4a0144d4548800b9e67b13fb07556bd52db3d2624f16c946261f00d7e9b6258"
+    },
+    {
+      "name": "values-26",
+      "values": [
+        24,
+        24,
+        65535,
+        255
+      ],
+      "passed": true,
+      "bytes_compared": 1256,
+      "before_sha256": "6b66dfd65e2fefe24095cc41237771225b3b2310f21ed2804437fe3bee7e6601",
+      "after_sha256": "6b66dfd65e2fefe24095cc41237771225b3b2310f21ed2804437fe3bee7e6601"
+    },
+    {
+      "name": "values-27",
+      "values": [
+        24,
+        24,
+        999,
+        0
+      ],
+      "passed": true,
+      "bytes_compared": 1256,
+      "before_sha256": "931b8f329e1a5316d1292fea8fd406cbd6a23c6fc117fb16af3d26a44572f1ed",
+      "after_sha256": "931b8f329e1a5316d1292fea8fd406cbd6a23c6fc117fb16af3d26a44572f1ed"
+    },
+    {
+      "name": "values-28",
+      "values": [
+        24,
+        24,
+        999,
+        1
+      ],
+      "passed": true,
+      "bytes_compared": 1256,
+      "before_sha256": "ff8f1d6dccdfd8a204011d17c4ed2df4cd28d41cf0c7f8d1816130522284c6ef",
+      "after_sha256": "ff8f1d6dccdfd8a204011d17c4ed2df4cd28d41cf0c7f8d1816130522284c6ef"
+    },
+    {
+      "name": "values-29",
+      "values": [
+        24,
+        24,
+        999,
+        9
+      ],
+      "passed": true,
+      "bytes_compared": 1256,
+      "before_sha256": "9a0491f1c5352dfb8e31ef6a86fb856f38825fea7560565b952327c115cfd452",
+      "after_sha256": "9a0491f1c5352dfb8e31ef6a86fb856f38825fea7560565b952327c115cfd452"
+    },
+    {
+      "name": "values-30",
+      "values": [
+        24,
+        24,
+        999,
+        10
+      ],
+      "passed": true,
+      "bytes_compared": 1256,
+      "before_sha256": "90dcb0b948dbfd4e94bfa5884c46dc9eb8cecb91ed50f4280f82e7fcb1e0a805",
+      "after_sha256": "90dcb0b948dbfd4e94bfa5884c46dc9eb8cecb91ed50f4280f82e7fcb1e0a805"
+    },
+    {
+      "name": "values-31",
+      "values": [
+        24,
+        24,
+        999,
+        99
+      ],
+      "passed": true,
+      "bytes_compared": 1256,
+      "before_sha256": "860f390b752ed8cb6bbebc8e1bd9a98db5d7775f02073bf1ec0241c537e725ac",
+      "after_sha256": "860f390b752ed8cb6bbebc8e1bd9a98db5d7775f02073bf1ec0241c537e725ac"
+    },
+    {
+      "name": "values-32",
+      "values": [
+        24,
+        24,
+        999,
+        255
+      ],
+      "passed": true,
+      "bytes_compared": 1256,
+      "before_sha256": "c4a0144d4548800b9e67b13fb07556bd52db3d2624f16c946261f00d7e9b6258",
+      "after_sha256": "c4a0144d4548800b9e67b13fb07556bd52db3d2624f16c946261f00d7e9b6258"
+    },
+    {
+      "name": "after shared pause/map text pool",
+      "values": [
+        24,
+        24,
+        999,
+        255
+      ],
+      "passed": true,
+      "bytes_compared": 1256,
+      "before_sha256": "c4a0144d4548800b9e67b13fb07556bd52db3d2624f16c946261f00d7e9b6258",
+      "after_sha256": "c4a0144d4548800b9e67b13fb07556bd52db3d2624f16c946261f00d7e9b6258"
+    }
+  ]
+}

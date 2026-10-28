@@ -1,0 +1,35 @@
+{
+  "rom_sha256": "41dc680068c094416e92152d4c22637c10d6a055d2bee63ce7700c419490e92d",
+  "groups": [
+    {
+      "group": "drain",
+      "report": "drain/suite.json",
+      "captures": 44,
+      "missing": []
+    },
+    {
+      "group": "forest",
+      "report": "forest/suite.json",
+      "captures": 9,
+      "missing": []
+    },
+    {
+      "group": "blight",
+      "report": "blight/suite.json",
+      "captures": 9,
+      "missing": []
+    },
+    {
+      "group": "cave",
+      "report": "cave/suite.json",
+      "captures": 9,
+      "missing": []
+    },
+    {
+      "group": "special",
+      "report": "special/suite.json",
+      "captures": 20,
+      "missing": []
+    }
+  ]
+}

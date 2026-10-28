@@ -1,0 +1,436 @@
+PASS action frame occupies one reserved 32px slot tile 38, frame tiles 16
+PASS n active effect present in hardware OAM at tick 3
+PASS n streamed frame agrees with live damage window at tick 3 ['sword_n1']
+PASS n effect anchored to combat box at tick 3 (110, 71) == (110, 71)
+PASS n visible blade/trail reaches its phase collision boundaries at tick 3 {'visible': (8, -25, 17, -18), 'contact': (8, -25, 17, -18), 'age': 2}
+PASS n sword precedes Bloom in OAM at tick 3
+PASS n active effect present in hardware OAM at tick 4
+PASS n streamed frame agrees with live damage window at tick 4 ['sword_n1']
+PASS n effect anchored to combat box at tick 4 (110, 71) == (110, 71)
+PASS n visible blade/trail reaches its phase collision boundaries at tick 4 {'visible': (8, -25, 17, -18), 'contact': (8, -25, 17, -18), 'age': 3}
+PASS n sword precedes Bloom in OAM at tick 4
+PASS n active effect present in hardware OAM at tick 5
+PASS n streamed frame agrees with live damage window at tick 5 ['sword_n1']
+PASS n effect anchored to combat box at tick 5 (110, 71) == (110, 71)
+PASS n visible blade/trail reaches its phase collision boundaries at tick 5 {'visible': (8, -25, 17, -18), 'contact': (8, -25, 17, -18), 'age': 4}
+PASS n sword precedes Bloom in OAM at tick 5
+PASS n active effect present in hardware OAM at tick 6
+PASS n streamed frame agrees with live damage window at tick 6 ['sword_n2']
+PASS n effect anchored to combat box at tick 6 (110, 71) == (110, 71)
+PASS n visible blade/trail reaches its phase collision boundaries at tick 6 {'visible': (4, -31, 9, -21), 'contact': (4, -31, 9, -21), 'age': 5}
+PASS n sword precedes Bloom in OAM at tick 6
+PASS n active effect present in hardware OAM at tick 7
+PASS n streamed frame agrees with live damage window at tick 7 ['sword_n2']
+PASS n effect anchored to combat box at tick 7 (110, 71) == (110, 71)
+PASS n visible blade/trail reaches its phase collision boundaries at tick 7 {'visible': (4, -31, 9, -21), 'contact': (4, -31, 9, -21), 'age': 6}
+PASS n sword precedes Bloom in OAM at tick 7
+PASS n active effect present in hardware OAM at tick 8
+PASS n streamed frame agrees with live damage window at tick 8 ['sword_n2']
+PASS n effect anchored to combat box at tick 8 (110, 71) == (110, 71)
+PASS n visible blade/trail reaches its phase collision boundaries at tick 8 {'visible': (4, -31, 9, -21), 'contact': (4, -31, 9, -21), 'age': 7}
+PASS n sword precedes Bloom in OAM at tick 8
+PASS n active effect present in hardware OAM at tick 9
+PASS n streamed frame agrees with live damage window at tick 9 ['sword_n2']
+PASS n effect anchored to combat box at tick 9 (110, 71) == (110, 71)
+PASS n visible blade/trail reaches its phase collision boundaries at tick 9 {'visible': (4, -31, 9, -21), 'contact': (4, -31, 9, -21), 'age': 8}
+PASS n sword precedes Bloom in OAM at tick 9
+PASS n active effect present in hardware OAM at tick 10
+PASS n streamed frame agrees with live damage window at tick 10 ['sword_n3']
+PASS n effect anchored to combat box at tick 10 (110, 71) == (110, 71)
+PASS n visible blade/trail reaches its phase collision boundaries at tick 10 {'visible': (-7, -26, -2, -21), 'contact': (-7, -26, -2, -21), 'age': 9}
+PASS n sword precedes Bloom in OAM at tick 10
+PASS n active effect present in hardware OAM at tick 11
+PASS n streamed frame agrees with live damage window at tick 11 ['sword_n3']
+PASS n effect anchored to combat box at tick 11 (110, 71) == (110, 71)
+PASS n visible blade/trail reaches its phase collision boundaries at tick 11 {'visible': (-7, -26, -2, -21), 'contact': (-7, -26, -2, -21), 'age': 10}
+PASS n sword precedes Bloom in OAM at tick 11
+PASS n active effect present in hardware OAM at tick 12
+PASS n streamed frame agrees with live damage window at tick 12 ['sword_n3']
+PASS n effect anchored to combat box at tick 12 (110, 71) == (110, 71)
+PASS n visible blade/trail reaches its phase collision boundaries at tick 12 {'visible': (-7, -26, -2, -21), 'contact': (-7, -26, -2, -21), 'age': 11}
+PASS n sword precedes Bloom in OAM at tick 12
+PASS n active effect present in hardware OAM at tick 13
+PASS n streamed frame agrees with live damage window at tick 13 ['sword_n3']
+PASS n effect anchored to combat box at tick 13 (110, 71) == (110, 71)
+PASS n visible blade/trail reaches its phase collision boundaries at tick 13 {'visible': (-7, -26, -2, -21), 'contact': (-7, -26, -2, -21), 'age': 12}
+PASS n sword precedes Bloom in OAM at tick 13
+PASS n attack starts without an invisible hit
+PASS n damage window remains timer2 through12
+PASS n recovery and return to normal
+PASS e active effect present in hardware OAM at tick 3
+PASS e streamed frame agrees with live damage window at tick 3 ['sword_e1']
+PASS e effect anchored to combat box at tick 3 (118, 76) == (118, 76)
+PASS e visible blade/trail reaches its phase collision boundaries at tick 3 {'visible': (8, -24, 15, -15), 'contact': (8, -24, 15, -15), 'age': 2}
+PASS e sword precedes Bloom in OAM at tick 3
+PASS e active effect present in hardware OAM at tick 4
+PASS e streamed frame agrees with live damage window at tick 4 ['sword_e1']
+PASS e effect anchored to combat box at tick 4 (118, 76) == (118, 76)
+PASS e visible blade/trail reaches its phase collision boundaries at tick 4 {'visible': (8, -24, 15, -15), 'contact': (8, -24, 15, -15), 'age': 3}
+PASS e sword precedes Bloom in OAM at tick 4
+PASS e active effect present in hardware OAM at tick 5
+PASS e streamed frame agrees with live damage window at tick 5 ['sword_e1']
+PASS e effect anchored to combat box at tick 5 (118, 76) == (118, 76)
+PASS e visible blade/trail reaches its phase collision boundaries at tick 5 {'visible': (8, -24, 15, -15), 'contact': (8, -24, 15, -15), 'age': 4}
+PASS e sword precedes Bloom in OAM at tick 5
+PASS e active effect present in hardware OAM at tick 6
+PASS e streamed frame agrees with live damage window at tick 6 ['sword_e2']
+PASS e effect anchored to combat box at tick 6 (118, 76) == (118, 76)
+PASS e visible blade/trail reaches its phase collision boundaries at tick 6 {'visible': (11, -16, 21, -11), 'contact': (11, -16, 21, -11), 'age': 5}
+PASS e sword precedes Bloom in OAM at tick 6
+PASS e active effect present in hardware OAM at tick 7
+PASS e streamed frame agrees with live damage window at tick 7 ['sword_e2']
+PASS e effect anchored to combat box at tick 7 (118, 76) == (118, 76)
+PASS e visible blade/trail reaches its phase collision boundaries at tick 7 {'visible': (11, -16, 21, -11), 'contact': (11, -16, 21, -11), 'age': 6}
+PASS e sword precedes Bloom in OAM at tick 7
+PASS e active effect present in hardware OAM at tick 8
+PASS e streamed frame agrees with live damage window at tick 8 ['sword_e2']
+PASS e effect anchored to combat box at tick 8 (118, 76) == (118, 76)
+PASS e visible blade/trail reaches its phase collision boundaries at tick 8 {'visible': (11, -16, 21, -11), 'contact': (11, -16, 21, -11), 'age': 7}
+PASS e sword precedes Bloom in OAM at tick 8
+PASS e active effect present in hardware OAM at tick 9
+PASS e streamed frame agrees with live damage window at tick 9 ['sword_e2']
+PASS e effect anchored to combat box at tick 9 (118, 76) == (118, 76)
+PASS e visible blade/trail reaches its phase collision boundaries at tick 9 {'visible': (11, -16, 21, -11), 'contact': (11, -16, 21, -11), 'age': 8}
+PASS e sword precedes Bloom in OAM at tick 9
+PASS e active effect present in hardware OAM at tick 10
+PASS e streamed frame agrees with live damage window at tick 10 ['sword_e3']
+PASS e effect anchored to combat box at tick 10 (118, 76) == (118, 76)
+PASS e visible blade/trail reaches its phase collision boundaries at tick 10 {'visible': (8, -9, 16, 0), 'contact': (8, -9, 16, 0), 'age': 9}
+PASS e sword precedes Bloom in OAM at tick 10
+PASS e active effect present in hardware OAM at tick 11
+PASS e streamed frame agrees with live damage window at tick 11 ['sword_e3']
+PASS e effect anchored to combat box at tick 11 (118, 76) == (118, 76)
+PASS e visible blade/trail reaches its phase collision boundaries at tick 11 {'visible': (8, -9, 16, 0), 'contact': (8, -9, 16, 0), 'age': 10}
+PASS e sword precedes Bloom in OAM at tick 11
+PASS e active effect present in hardware OAM at tick 12
+PASS e streamed frame agrees with live damage window at tick 12 ['sword_e3']
+PASS e effect anchored to combat box at tick 12 (118, 76) == (118, 76)
+PASS e visible blade/trail reaches its phase collision boundaries at tick 12 {'visible': (8, -9, 16, 0), 'contact': (8, -9, 16, 0), 'age': 11}
+PASS e sword precedes Bloom in OAM at tick 12
+PASS e active effect present in hardware OAM at tick 13
+PASS e streamed frame agrees with live damage window at tick 13 ['sword_e3']
+PASS e effect anchored to combat box at tick 13 (118, 76) == (118, 76)
+PASS e visible blade/trail reaches its phase collision boundaries at tick 13 {'visible': (8, -9, 16, 0), 'contact': (8, -9, 16, 0), 'age': 12}
+PASS e sword precedes Bloom in OAM at tick 13
+PASS e attack starts without an invisible hit
+PASS e damage window remains timer2 through12
+PASS e recovery and return to normal
+PASS s active effect present in hardware OAM at tick 3
+PASS s streamed frame agrees with live damage window at tick 3 ['sword_s1']
+PASS s effect anchored to combat box at tick 3 (108, 88) == (108, 88)
+PASS s visible blade/trail reaches its phase collision boundaries at tick 3 {'visible': (-9, -8, 0, -1), 'contact': (-9, -8, 0, -1), 'age': 2}
+PASS s sword precedes Bloom in OAM at tick 3
+PASS s active effect present in hardware OAM at tick 4
+PASS s streamed frame agrees with live damage window at tick 4 ['sword_s1']
+PASS s effect anchored to combat box at tick 4 (108, 88) == (108, 88)
+PASS s visible blade/trail reaches its phase collision boundaries at tick 4 {'visible': (-9, -8, 0, -1), 'contact': (-9, -8, 0, -1), 'age': 3}
+PASS s sword precedes Bloom in OAM at tick 4
+PASS s active effect present in hardware OAM at tick 5
+PASS s streamed frame agrees with live damage window at tick 5 ['sword_s1']
+PASS s effect anchored to combat box at tick 5 (108, 88) == (108, 88)
+PASS s visible blade/trail reaches its phase collision boundaries at tick 5 {'visible': (-9, -8, 0, -1), 'contact': (-9, -8, 0, -1), 'age': 4}
+PASS s sword precedes Bloom in OAM at tick 5
+PASS s active effect present in hardware OAM at tick 6
+PASS s streamed frame agrees with live damage window at tick 6 ['sword_s2']
+PASS s effect anchored to combat box at tick 6 (108, 88) == (108, 88)
+PASS s visible blade/trail reaches its phase collision boundaries at tick 6 {'visible': (-1, -5, 4, 5), 'contact': (-1, -5, 4, 5), 'age': 5}
+PASS s sword precedes Bloom in OAM at tick 6
+PASS s active effect present in hardware OAM at tick 7
+PASS s streamed frame agrees with live damage window at tick 7 ['sword_s2']
+PASS s effect anchored to combat box at tick 7 (108, 88) == (108, 88)
+PASS s visible blade/trail reaches its phase collision boundaries at tick 7 {'visible': (-1, -5, 4, 5), 'contact': (-1, -5, 4, 5), 'age': 6}
+PASS s sword precedes Bloom in OAM at tick 7
+PASS s active effect present in hardware OAM at tick 8
+PASS s streamed frame agrees with live damage window at tick 8 ['sword_s2']
+PASS s effect anchored to combat box at tick 8 (108, 88) == (108, 88)
+PASS s visible blade/trail reaches its phase collision boundaries at tick 8 {'visible': (-1, -5, 4, 5), 'contact': (-1, -5, 4, 5), 'age': 7}
+PASS s sword precedes Bloom in OAM at tick 8
+PASS s active effect present in hardware OAM at tick 9
+PASS s streamed frame agrees with live damage window at tick 9 ['sword_s2']
+PASS s effect anchored to combat box at tick 9 (108, 88) == (108, 88)
+PASS s visible blade/trail reaches its phase collision boundaries at tick 9 {'visible': (-1, -5, 4, 5), 'contact': (-1, -5, 4, 5), 'age': 8}
+PASS s sword precedes Bloom in OAM at tick 9
+PASS s active effect present in hardware OAM at tick 10
+PASS s streamed frame agrees with live damage window at tick 10 ['sword_s3']
+PASS s effect anchored to combat box at tick 10 (108, 88) == (108, 88)
+PASS s visible blade/trail reaches its phase collision boundaries at tick 10 {'visible': (6, -8, 15, 0), 'contact': (6, -8, 15, 0), 'age': 9}
+PASS s sword precedes Bloom in OAM at tick 10
+PASS s active effect present in hardware OAM at tick 11
+PASS s streamed frame agrees with live damage window at tick 11 ['sword_s3']
+PASS s effect anchored to combat box at tick 11 (108, 88) == (108, 88)
+PASS s visible blade/trail reaches its phase collision boundaries at tick 11 {'visible': (6, -8, 15, 0), 'contact': (6, -8, 15, 0), 'age': 10}
+PASS s sword precedes Bloom in OAM at tick 11
+PASS s active effect present in hardware OAM at tick 12
+PASS s streamed frame agrees with live damage window at tick 12 ['sword_s3']
+PASS s effect anchored to combat box at tick 12 (108, 88) == (108, 88)
+PASS s visible blade/trail reaches its phase collision boundaries at tick 12 {'visible': (6, -8, 15, 0), 'contact': (6, -8, 15, 0), 'age': 11}
+PASS s sword precedes Bloom in OAM at tick 12
+PASS s active effect present in hardware OAM at tick 13
+PASS s streamed frame agrees with live damage window at tick 13 ['sword_s3']
+PASS s effect anchored to combat box at tick 13 (108, 88) == (108, 88)
+PASS s visible blade/trail reaches its phase collision boundaries at tick 13 {'visible': (6, -8, 15, 0), 'contact': (6, -8, 15, 0), 'age': 12}
+PASS s sword precedes Bloom in OAM at tick 13
+PASS s attack starts without an invisible hit
+PASS s damage window remains timer2 through12
+PASS s recovery and return to normal
+PASS w active effect present in hardware OAM at tick 3
+PASS w streamed frame agrees with live damage window at tick 3 ['sword_w1']
+PASS w effect anchored to combat box at tick 3 (90, 76) == (90, 76)
+PASS w visible blade/trail reaches its phase collision boundaries at tick 3 {'visible': (-16, -24, -9, -15), 'contact': (-16, -24, -9, -15), 'age': 2}
+PASS w sword precedes Bloom in OAM at tick 3
+PASS w active effect present in hardware OAM at tick 4
+PASS w streamed frame agrees with live damage window at tick 4 ['sword_w1']
+PASS w effect anchored to combat box at tick 4 (90, 76) == (90, 76)
+PASS w visible blade/trail reaches its phase collision boundaries at tick 4 {'visible': (-16, -24, -9, -15), 'contact': (-16, -24, -9, -15), 'age': 3}
+PASS w sword precedes Bloom in OAM at tick 4
+PASS w active effect present in hardware OAM at tick 5
+PASS w streamed frame agrees with live damage window at tick 5 ['sword_w1']
+PASS w effect anchored to combat box at tick 5 (90, 76) == (90, 76)
+PASS w visible blade/trail reaches its phase collision boundaries at tick 5 {'visible': (-16, -24, -9, -15), 'contact': (-16, -24, -9, -15), 'age': 4}
+PASS w sword precedes Bloom in OAM at tick 5
+PASS w active effect present in hardware OAM at tick 6
+PASS w streamed frame agrees with live damage window at tick 6 ['sword_w2']
+PASS w effect anchored to combat box at tick 6 (90, 76) == (90, 76)
+PASS w visible blade/trail reaches its phase collision boundaries at tick 6 {'visible': (-22, -16, -12, -11), 'contact': (-22, -16, -12, -11), 'age': 5}
+PASS w sword precedes Bloom in OAM at tick 6
+PASS w active effect present in hardware OAM at tick 7
+PASS w streamed frame agrees with live damage window at tick 7 ['sword_w2']
+PASS w effect anchored to combat box at tick 7 (90, 76) == (90, 76)
+PASS w visible blade/trail reaches its phase collision boundaries at tick 7 {'visible': (-22, -16, -12, -11), 'contact': (-22, -16, -12, -11), 'age': 6}
+PASS w sword precedes Bloom in OAM at tick 7
+PASS w active effect present in hardware OAM at tick 8
+PASS w streamed frame agrees with live damage window at tick 8 ['sword_w2']
+PASS w effect anchored to combat box at tick 8 (90, 76) == (90, 76)
+PASS w visible blade/trail reaches its phase collision boundaries at tick 8 {'visible': (-22, -16, -12, -11), 'contact': (-22, -16, -12, -11), 'age': 7}
+PASS w sword precedes Bloom in OAM at tick 8
+PASS w active effect present in hardware OAM at tick 9
+PASS w streamed frame agrees with live damage window at tick 9 ['sword_w2']
+PASS w effect anchored to combat box at tick 9 (90, 76) == (90, 76)
+PASS w visible blade/trail reaches its phase collision boundaries at tick 9 {'visible': (-22, -16, -12, -11), 'contact': (-22, -16, -12, -11), 'age': 8}
+PASS w sword precedes Bloom in OAM at tick 9
+PASS w active effect present in hardware OAM at tick 10
+PASS w streamed frame agrees with live damage window at tick 10 ['sword_w3']
+PASS w effect anchored to combat box at tick 10 (90, 76) == (90, 76)
+PASS w visible blade/trail reaches its phase collision boundaries at tick 10 {'visible': (-17, -9, -9, 0), 'contact': (-17, -9, -9, 0), 'age': 9}
+PASS w sword precedes Bloom in OAM at tick 10
+PASS w active effect present in hardware OAM at tick 11
+PASS w streamed frame agrees with live damage window at tick 11 ['sword_w3']
+PASS w effect anchored to combat box at tick 11 (90, 76) == (90, 76)
+PASS w visible blade/trail reaches its phase collision boundaries at tick 11 {'visible': (-17, -9, -9, 0), 'contact': (-17, -9, -9, 0), 'age': 10}
+PASS w sword precedes Bloom in OAM at tick 11
+PASS w active effect present in hardware OAM at tick 12
+PASS w streamed frame agrees with live damage window at tick 12 ['sword_w3']
+PASS w effect anchored to combat box at tick 12 (90, 76) == (90, 76)
+PASS w visible blade/trail reaches its phase collision boundaries at tick 12 {'visible': (-17, -9, -9, 0), 'contact': (-17, -9, -9, 0), 'age': 11}
+PASS w sword precedes Bloom in OAM at tick 12
+PASS w active effect present in hardware OAM at tick 13
+PASS w streamed frame agrees with live damage window at tick 13 ['sword_w3']
+PASS w effect anchored to combat box at tick 13 (90, 76) == (90, 76)
+PASS w visible blade/trail reaches its phase collision boundaries at tick 13 {'visible': (-17, -9, -9, 0), 'contact': (-17, -9, -9, 0), 'age': 12}
+PASS w sword precedes Bloom in OAM at tick 13
+PASS w attack starts without an invisible hit
+PASS w damage window remains timer2 through12
+PASS w recovery and return to normal
+PASS n phase contact actually tests age2 2
+PASS n age2 left inclusive edge lands target hp 18
+PASS n phase contact actually tests age2 2
+PASS n age2 left one pixel outside misses target hp 20
+PASS n phase contact actually tests age2 2
+PASS n age2 right inclusive edge lands target hp 18
+PASS n phase contact actually tests age2 2
+PASS n age2 right one pixel outside misses target hp 20
+PASS n phase contact actually tests age2 2
+PASS n age2 top inclusive edge lands target hp 18
+PASS n phase contact actually tests age2 2
+PASS n age2 top one pixel outside misses target hp 20
+PASS n phase contact actually tests age2 2
+PASS n age2 bottom inclusive edge lands target hp 18
+PASS n phase contact actually tests age2 2
+PASS n age2 bottom one pixel outside misses target hp 20
+PASS n phase contact actually tests age5 5
+PASS n age5 left inclusive edge lands target hp 18
+PASS n phase contact actually tests age5 5
+PASS n age5 left one pixel outside misses target hp 20
+PASS n phase contact actually tests age5 5
+PASS n age5 right inclusive edge lands target hp 18
+PASS n phase contact actually tests age5 5
+PASS n age5 right one pixel outside misses target hp 20
+PASS n phase contact actually tests age5 5
+PASS n age5 top inclusive edge lands target hp 18
+PASS n phase contact actually tests age5 5
+PASS n age5 top one pixel outside misses target hp 20
+PASS n phase contact actually tests age5 5
+PASS n age5 bottom inclusive edge lands target hp 18
+PASS n phase contact actually tests age5 5
+PASS n age5 bottom one pixel outside misses target hp 20
+PASS n phase contact actually tests age9 9
+PASS n age9 left inclusive edge lands target hp 18
+PASS n phase contact actually tests age9 9
+PASS n age9 left one pixel outside misses target hp 20
+PASS n phase contact actually tests age9 9
+PASS n age9 right inclusive edge lands target hp 18
+PASS n phase contact actually tests age9 9
+PASS n age9 right one pixel outside misses target hp 20
+PASS n phase contact actually tests age9 9
+PASS n age9 top inclusive edge lands target hp 18
+PASS n phase contact actually tests age9 9
+PASS n age9 top one pixel outside misses target hp 20
+PASS n phase contact actually tests age9 9
+PASS n age9 bottom inclusive edge lands target hp 18
+PASS n phase contact actually tests age9 9
+PASS n age9 bottom one pixel outside misses target hp 20
+PASS e phase contact actually tests age2 2
+PASS e age2 left inclusive edge lands target hp 18
+PASS e phase contact actually tests age2 2
+PASS e age2 left one pixel outside misses target hp 20
+PASS e phase contact actually tests age2 2
+PASS e age2 right inclusive edge lands target hp 18
+PASS e phase contact actually tests age2 2
+PASS e age2 right one pixel outside misses target hp 20
+PASS e phase contact actually tests age2 2
+PASS e age2 top inclusive edge lands target hp 18
+PASS e phase contact actually tests age2 2
+PASS e age2 top one pixel outside misses target hp 20
+PASS e phase contact actually tests age2 2
+PASS e age2 bottom inclusive edge lands target hp 18
+PASS e phase contact actually tests age2 2
+PASS e age2 bottom one pixel outside misses target hp 20
+PASS e phase contact actually tests age5 5
+PASS e age5 left inclusive edge lands target hp 18
+PASS e phase contact actually tests age5 5
+PASS e age5 left one pixel outside misses target hp 20
+PASS e phase contact actually tests age5 5
+PASS e age5 right inclusive edge lands target hp 18
+PASS e phase contact actually tests age5 5
+PASS e age5 right one pixel outside misses target hp 20
+PASS e phase contact actually tests age5 5
+PASS e age5 top inclusive edge lands target hp 18
+PASS e phase contact actually tests age5 5
+PASS e age5 top one pixel outside misses target hp 20
+PASS e phase contact actually tests age5 5
+PASS e age5 bottom inclusive edge lands target hp 18
+PASS e phase contact actually tests age5 5
+PASS e age5 bottom one pixel outside misses target hp 20
+PASS e phase contact actually tests age9 9
+PASS e age9 left inclusive edge lands target hp 18
+PASS e phase contact actually tests age9 9
+PASS e age9 left one pixel outside misses target hp 20
+PASS e phase contact actually tests age9 9
+PASS e age9 right inclusive edge lands target hp 18
+PASS e phase contact actually tests age9 9
+PASS e age9 right one pixel outside misses target hp 20
+PASS e phase contact actually tests age9 9
+PASS e age9 top inclusive edge lands target hp 18
+PASS e phase contact actually tests age9 9
+PASS e age9 top one pixel outside misses target hp 20
+PASS e phase contact actually tests age9 9
+PASS e age9 bottom inclusive edge lands target hp 18
+PASS e phase contact actually tests age9 9
+PASS e age9 bottom one pixel outside misses target hp 20
+PASS s phase contact actually tests age2 2
+PASS s age2 left inclusive edge lands target hp 18
+PASS s phase contact actually tests age2 2
+PASS s age2 left one pixel outside misses target hp 20
+PASS s phase contact actually tests age2 2
+PASS s age2 right inclusive edge lands target hp 18
+PASS s phase contact actually tests age2 2
+PASS s age2 right one pixel outside misses target hp 20
+PASS s phase contact actually tests age2 2
+PASS s age2 top inclusive edge lands target hp 18
+PASS s phase contact actually tests age2 2
+PASS s age2 top one pixel outside misses target hp 20
+PASS s phase contact actually tests age2 2
+PASS s age2 bottom inclusive edge lands target hp 18
+PASS s phase contact actually tests age2 2
+PASS s age2 bottom one pixel outside misses target hp 20
+PASS s phase contact actually tests age5 5
+PASS s age5 left inclusive edge lands target hp 18
+PASS s phase contact actually tests age5 5
+PASS s age5 left one pixel outside misses target hp 20
+PASS s phase contact actually tests age5 5
+PASS s age5 right inclusive edge lands target hp 18
+PASS s phase contact actually tests age5 5
+PASS s age5 right one pixel outside misses target hp 20
+PASS s phase contact actually tests age5 5
+PASS s age5 top inclusive edge lands target hp 18
+PASS s phase contact actually tests age5 5
+PASS s age5 top one pixel outside misses target hp 20
+PASS s phase contact actually tests age5 5
+PASS s age5 bottom inclusive edge lands target hp 18
+PASS s phase contact actually tests age5 5
+PASS s age5 bottom one pixel outside misses target hp 20
+PASS s phase contact actually tests age9 9
+PASS s age9 left inclusive edge lands target hp 18
+PASS s phase contact actually tests age9 9
+PASS s age9 left one pixel outside misses target hp 20
+PASS s phase contact actually tests age9 9
+PASS s age9 right inclusive edge lands target hp 18
+PASS s phase contact actually tests age9 9
+PASS s age9 right one pixel outside misses target hp 20
+PASS s phase contact actually tests age9 9
+PASS s age9 top inclusive edge lands target hp 18
+PASS s phase contact actually tests age9 9
+PASS s age9 top one pixel outside misses target hp 20
+PASS s phase contact actually tests age9 9
+PASS s age9 bottom inclusive edge lands target hp 18
+PASS s phase contact actually tests age9 9
+PASS s age9 bottom one pixel outside misses target hp 20
+PASS w phase contact actually tests age2 2
+PASS w age2 left inclusive edge lands target hp 18
+PASS w phase contact actually tests age2 2
+PASS w age2 left one pixel outside misses target hp 20
+PASS w phase contact actually tests age2 2
+PASS w age2 right inclusive edge lands target hp 18
+PASS w phase contact actually tests age2 2
+PASS w age2 right one pixel outside misses target hp 20
+PASS w phase contact actually tests age2 2
+PASS w age2 top inclusive edge lands target hp 18
+PASS w phase contact actually tests age2 2
+PASS w age2 top one pixel outside misses target hp 20
+PASS w phase contact actually tests age2 2
+PASS w age2 bottom inclusive edge lands target hp 18
+PASS w phase contact actually tests age2 2
+PASS w age2 bottom one pixel outside misses target hp 20
+PASS w phase contact actually tests age5 5
+PASS w age5 left inclusive edge lands target hp 18
+PASS w phase contact actually tests age5 5
+PASS w age5 left one pixel outside misses target hp 20
+PASS w phase contact actually tests age5 5
+PASS w age5 right inclusive edge lands target hp 18
+PASS w phase contact actually tests age5 5
+PASS w age5 right one pixel outside misses target hp 20
+PASS w phase contact actually tests age5 5
+PASS w age5 top inclusive edge lands target hp 18
+PASS w phase contact actually tests age5 5
+PASS w age5 top one pixel outside misses target hp 20
+PASS w phase contact actually tests age5 5
+PASS w age5 bottom inclusive edge lands target hp 18
+PASS w phase contact actually tests age5 5
+PASS w age5 bottom one pixel outside misses target hp 20
+PASS w phase contact actually tests age9 9
+PASS w age9 left inclusive edge lands target hp 18
+PASS w phase contact actually tests age9 9
+PASS w age9 left one pixel outside misses target hp 20
+PASS w phase contact actually tests age9 9
+PASS w age9 right inclusive edge lands target hp 18
+PASS w phase contact actually tests age9 9
+PASS w age9 right one pixel outside misses target hp 20
+PASS w phase contact actually tests age9 9
+PASS w age9 top inclusive edge lands target hp 18
+PASS w phase contact actually tests age9 9
+PASS w age9 top one pixel outside misses target hp 20
+PASS w phase contact actually tests age9 9
+PASS w age9 bottom inclusive edge lands target hp 18
+PASS w phase contact actually tests age9 9
+PASS w age9 bottom one pixel outside misses target hp 20
+PASS heart beyond body contact stays before swing
+PASS heart gathering starts a real sword action
+PASS sword still gathers a reached heart
+PASS sword still deflects an incoming seed
+PASS sword still cuts a reached bush
+PASS damage interrupts the sword and clears its hitbox
+PASS hurt Bloom has no lingering action effect first replacement OAM after 1 video frames
+PASS roll retains its protected opening
+PASS late roll still queues a sword input
+PASS queued sword follows roll recovery
+RESULT PASS 435/435

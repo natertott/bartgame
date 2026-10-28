@@ -1,0 +1,46 @@
+{
+  "rom_sha256": "41dc680068c094416e92152d4c22637c10d6a055d2bee63ce7700c419490e92d",
+  "emulator": "mGBA 0.10.5",
+  "checks": {
+    "title": {
+      "passed": 80,
+      "total": 80,
+      "report": "title/title.json"
+    },
+    "hud": {
+      "passed": 6,
+      "total": 6,
+      "report": "hud/hud.json"
+    },
+    "menu": {
+      "passed": 21,
+      "total": 21,
+      "report": "menu.log"
+    },
+    "portraits": {
+      "passed": 6,
+      "total": 6,
+      "report": "ui/additional-portraits.json",
+      "method": "Two keeper/shop portraits plus three actual forest NPC talks and a real contact-death Bloom return."
+    },
+    "hud_equivalence": {
+      "passed": 34,
+      "total": 34,
+      "report": "validation/hud_equivalence.json"
+    },
+    "latency_normal": {
+      "passed": 20,
+      "total": 20,
+      "replacement_delay_video_frames": 1,
+      "baseline_delay_video_frames": 1,
+      "report": "validation/latency_normal.json"
+    },
+    "latency_maximum_hearts": {
+      "passed": 20,
+      "total": 20,
+      "replacement_delay_video_frames": 1,
+      "baseline_delay_video_frames": 1,
+      "report": "validation/latency_maximum_hearts.json"
+    }
+  }
+}

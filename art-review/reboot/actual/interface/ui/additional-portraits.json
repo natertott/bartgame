@@ -1,0 +1,29 @@
+{
+  "rom_sha256": "41dc680068c094416e92152d4c22637c10d6a055d2bee63ce7700c419490e92d",
+  "captures": [
+    {
+      "name": "hermit",
+      "cell": 1,
+      "face": 3,
+      "method": "actual A talk at naturally generated NPC; position/cleared enemies are fixtures"
+    },
+    {
+      "name": "nun",
+      "cell": 5,
+      "face": 4,
+      "method": "actual A talk at naturally generated NPC; position/cleared enemies are fixtures"
+    },
+    {
+      "name": "gardener",
+      "cell": 10,
+      "face": 5,
+      "method": "actual A talk at naturally generated NPC; position/cleared enemies are fixtures"
+    },
+    {
+      "name": "bloom",
+      "face": 0,
+      "method": "real contact death from a placed beetle after debug spawn; normal save/return path",
+      "frames_to_dialogue": 142
+    }
+  ]
+}

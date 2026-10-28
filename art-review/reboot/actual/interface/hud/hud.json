@@ -1,0 +1,77 @@
+{
+  "rom_sha256": "41dc680068c094416e92152d4c22637c10d6a055d2bee63ce7700c419490e92d",
+  "emulator": "mGBA 0.10.5",
+  "method": "Real HUD; inventory/resources/position are fixtures. Native screenshots unchanged; hardware BG0 and priority-zero OBJ alpha decoded to prove24px limit.",
+  "passed": 6,
+  "total": 6,
+  "checks": [
+    {
+      "name": "hud_hall all real HUD alpha stays within24px",
+      "passed": true,
+      "detail": {
+        "painted_pixels": 5651,
+        "top": 0,
+        "bottom": 23,
+        "below_band": 0
+      }
+    },
+    {
+      "name": "hud_counts all real HUD alpha stays within24px",
+      "passed": true,
+      "detail": {
+        "painted_pixels": 5913,
+        "top": 0,
+        "bottom": 23,
+        "below_band": 0
+      }
+    },
+    {
+      "name": "hud_others all real HUD alpha stays within24px",
+      "passed": true,
+      "detail": {
+        "painted_pixels": 5890,
+        "top": 0,
+        "bottom": 23,
+        "below_band": 0
+      }
+    },
+    {
+      "name": "hud_empty all real HUD alpha stays within24px",
+      "passed": true,
+      "detail": {
+        "painted_pixels": 5497,
+        "top": 0,
+        "bottom": 23,
+        "below_band": 0
+      }
+    },
+    {
+      "name": "hud_wood all real HUD alpha stays within24px",
+      "passed": true,
+      "detail": {
+        "painted_pixels": 5846,
+        "top": 0,
+        "bottom": 23,
+        "below_band": 0
+      }
+    },
+    {
+      "name": "hud_dark all real HUD alpha stays within24px",
+      "passed": true,
+      "detail": {
+        "painted_pixels": 6600,
+        "top": 0,
+        "bottom": 23,
+        "below_band": 0
+      }
+    }
+  ],
+  "native_frames": [
+    "hud_hall.png",
+    "hud_counts.png",
+    "hud_others.png",
+    "hud_empty.png",
+    "hud_wood.png",
+    "hud_dark.png"
+  ]
+}

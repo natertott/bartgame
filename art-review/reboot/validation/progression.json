@@ -1,0 +1,136 @@
+{
+  "rom_sha256": "41dc680068c094416e92152d4c22637c10d6a055d2bee63ce7700c419490e92d",
+  "results": [
+    {
+      "test": "budget",
+      "exit_code": 0,
+      "tail": [
+        "PASS 0x7 optional boulders mouth {'sNextTile': 536, 'sActionTile': 282, 'sIconTile': 364, 'sMarksTile': 300, 'sDotsTile': 352, 'sArrowTile': 476, 'sMouthTile': 488}",
+        "PASS 0x0 ROM remained unchanged during sweep ",
+        "RESULT PASS 2046/2046, 582 contexts, maximum 716/876 tiles"
+      ],
+      "log": "art-reboot-final-budget.log",
+      "command": [
+        "python3",
+        "tools/bloom_budget.py",
+        "--out",
+        "/workspace/setup/art-reboot-final-budget.json"
+      ]
+    },
+    {
+      "test": "mechanics",
+      "exit_code": 0,
+      "tail": [
+        "PASS BOW: the Peddler sells arrows now              wares 3",
+        "PASS BOW: ten arrows for ten gilt                   arrows 15 gilt 40",
+        "RESULT PASS 22/22"
+      ],
+      "log": "art-reboot-final-mechanics.log",
+      "command": [
+        "python3",
+        "tools/wood_probe.py"
+      ]
+    },
+    {
+      "test": "lift",
+      "exit_code": 0,
+      "tail": [
+        "PASS PAUSE: START closes it                       state 1",
+        "PASS PAUSE: the L trigger uses the bombs          bombs 5 -> 4",
+        "RESULT PASS 14/14"
+      ],
+      "log": "art-reboot-final-lift.log",
+      "command": [
+        "python3",
+        "tools/lift_probe.py"
+      ]
+    },
+    {
+      "test": "critical",
+      "exit_code": 0,
+      "tail": [
+        "PASS BOSS: the Grail drops                        None",
+        "PASS WIN: the Grail ends the run                  state 6",
+        "RESULT PASS 21/21"
+      ],
+      "log": "art-reboot-final-critical.log",
+      "command": [
+        "python3",
+        "tools/critical_path.py",
+        "--boss"
+      ],
+      "fixture_note": "Probe db18dcf replaces a fixed UP poke that caused contact knockback out of the trial with collision/body-checked flanks and real facing/sword inputs. It guards the actual trial area and MF_WON flag before claiming; the lamp is really earned (items0x47). ROM unchanged."
+    },
+    {
+      "test": "trials",
+      "exit_code": 0,
+      "tail": [
+        "PASS reward cannot duplicate bombs ",
+        "PASS completed trial exit stays open ",
+        "RESULT PASS 54/54"
+      ],
+      "log": "art-reboot-final-trials.log",
+      "command": [
+        "python3",
+        "tools/mandatory_trials.py"
+      ]
+    },
+    {
+      "test": "myst",
+      "exit_code": 0,
+      "tail": [
+        "PASS BOULDERS: every boulder lifted, a chest        left 0",
+        "PASS BOULDERS: the way out, and the wood            ",
+        "RESULT PASS 28/28"
+      ],
+      "log": "art-reboot-final-myst.log",
+      "command": [
+        "python3",
+        "tools/myst_probe.py"
+      ]
+    },
+    {
+      "test": "pockets",
+      "exit_code": 0,
+      "tail": [
+        "PASS opened bomb or candle neck stays open ",
+        "PASS seed has all three item pocket types {1, 2, 3}",
+        "RESULT PASS 18/18"
+      ],
+      "log": "art-reboot-final-pockets.log",
+      "command": [
+        "python3",
+        "tools/pocket_probe.py"
+      ]
+    },
+    {
+      "test": "quest",
+      "exit_code": 0,
+      "tail": [
+        "   talk: box 1 state 1 hero (312, 163)",
+        "PASS TORCH: the gardener pays a key               keys 4 -> 5",
+        "RESULT PASS 12/12"
+      ],
+      "log": "art-reboot-final-quest.log",
+      "command": [
+        "python3",
+        "tools/quest_probe.py"
+      ]
+    },
+    {
+      "test": "save",
+      "exit_code": 0,
+      "tail": [
+        "PASS unclaimed trial victory and opened pocket persist without auto-claim",
+        "PASS corrupted checksum rejected",
+        "RESULT PASS 6/6"
+      ],
+      "log": "art-reboot-final-save.log",
+      "command": [
+        "python3",
+        "tools/save_probe.py"
+      ]
+    }
+  ],
+  "critical_probe_commit": "db18dcf51fcb7bf7475de2653c8e377aa6de5092"
+}

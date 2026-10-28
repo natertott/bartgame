@@ -1,0 +1,1780 @@
+{
+  "rom_sha256": "41dc680068c094416e92152d4c22637c10d6a055d2bee63ce7700c419490e92d",
+  "method": "Capture the complete reboot from actual mGBA runs, never source mockups.\n\nSeeds, room navigation, inventory, facing/position and cleared unrelated actors\nare fixtures. Generated terrain and mystery descriptors are not modified.\nOrdinary inputs animate Bloom, use entrances/items, open menus and finish the\nHeart fight. Exact240x160 frames accompany nearest-neighbour2x GIFs.\nControlled ordinary enemy-contact fixtures are labelled in action reports.",
+  "emulator": "mGBA 0.10.5",
+  "captures": [
+    {
+      "name": "heart-full-view",
+      "seed": "0xb4a7",
+      "video_frames": 96,
+      "inputs": {},
+      "note": "Naturally spawned Heart in generated final room; player position and healing are fixtures. Camera follows ordinary game logic; no actor placement or art injection.",
+      "initial": {
+        "game_state": 1,
+        "area": 1,
+        "cell": 20,
+        "state": 0,
+        "state_name": "normal",
+        "hero_pose": 0,
+        "position": [
+          224,
+          200
+        ],
+        "camera": [
+          104,
+          96
+        ],
+        "hp": 24,
+        "oam_count": 14
+      },
+      "passed": true,
+      "image": "heart-full-view.png",
+      "gif": {
+        "frames": 48,
+        "colour_count": 53,
+        "exact_palette": true,
+        "duration_ms": 1600
+      },
+      "native_frames": [
+        "heart-full-view/frame-000.png",
+        "heart-full-view/frame-024.png",
+        "heart-full-view/frame-048.png",
+        "heart-full-view/frame-072.png",
+        "heart-full-view/frame-095.png"
+      ],
+      "filmstrip": "heart-full-view-frames.png",
+      "trace": [
+        {
+          "game_state": 1,
+          "area": 1,
+          "cell": 20,
+          "state": 0,
+          "state_name": "normal",
+          "hero_pose": 0,
+          "position": [
+            224,
+            200
+          ],
+          "camera": [
+            104,
+            96
+          ],
+          "hp": 24,
+          "oam_count": 14
+        },
+        {
+          "game_state": 1,
+          "area": 1,
+          "cell": 20,
+          "state": 0,
+          "state_name": "normal",
+          "hero_pose": 0,
+          "position": [
+            224,
+            200
+          ],
+          "camera": [
+            104,
+            96
+          ],
+          "hp": 24,
+          "oam_count": 12
+        },
+        {
+          "game_state": 1,
+          "area": 1,
+          "cell": 20,
+          "state": 0,
+          "state_name": "normal",
+          "hero_pose": 0,
+          "position": [
+            224,
+            200
+          ],
+          "camera": [
+            104,
+            96
+          ],
+          "hp": 24,
+          "oam_count": 12
+        },
+        {
+          "game_state": 1,
+          "area": 1,
+          "cell": 20,
+          "state": 0,
+          "state_name": "normal",
+          "hero_pose": 0,
+          "position": [
+            224,
+            200
+          ],
+          "camera": [
+            104,
+            96
+          ],
+          "hp": 24,
+          "oam_count": 11
+        },
+        {
+          "game_state": 1,
+          "area": 1,
+          "cell": 20,
+          "state": 0,
+          "state_name": "normal",
+          "hero_pose": 0,
+          "position": [
+            224,
+            200
+          ],
+          "camera": [
+            104,
+            96
+          ],
+          "hp": 24,
+          "oam_count": 12
+        },
+        {
+          "game_state": 1,
+          "area": 1,
+          "cell": 20,
+          "state": 0,
+          "state_name": "normal",
+          "hero_pose": 0,
+          "position": [
+            224,
+            200
+          ],
+          "camera": [
+            104,
+            96
+          ],
+          "hp": 24,
+          "oam_count": 12
+        },
+        {
+          "game_state": 1,
+          "area": 1,
+          "cell": 20,
+          "state": 0,
+          "state_name": "normal",
+          "hero_pose": 0,
+          "position": [
+            224,
+            200
+          ],
+          "camera": [
+            104,
+            96
+          ],
+          "hp": 24,
+          "oam_count": 12
+        },
+        {
+          "game_state": 1,
+          "area": 1,
+          "cell": 20,
+          "state": 0,
+          "state_name": "normal",
+          "hero_pose": 0,
+          "position": [
+            224,
+            200
+          ],
+          "camera": [
+            104,
+            96
+          ],
+          "hp": 24,
+          "oam_count": 20
+        },
+        {
+          "game_state": 1,
+          "area": 1,
+          "cell": 20,
+          "state": 0,
+          "state_name": "normal",
+          "hero_pose": 0,
+          "position": [
+            224,
+            200
+          ],
+          "camera": [
+            104,
+            96
+          ],
+          "hp": 24,
+          "oam_count": 20
+        },
+        {
+          "game_state": 1,
+          "area": 1,
+          "cell": 20,
+          "state": 0,
+          "state_name": "normal",
+          "hero_pose": 0,
+          "position": [
+            224,
+            200
+          ],
+          "camera": [
+            104,
+            96
+          ],
+          "hp": 24,
+          "oam_count": 20
+        },
+        {
+          "game_state": 1,
+          "area": 1,
+          "cell": 20,
+          "state": 0,
+          "state_name": "normal",
+          "hero_pose": 0,
+          "position": [
+            224,
+            200
+          ],
+          "camera": [
+            104,
+            96
+          ],
+          "hp": 24,
+          "oam_count": 21
+        },
+        {
+          "game_state": 1,
+          "area": 1,
+          "cell": 20,
+          "state": 0,
+          "state_name": "normal",
+          "hero_pose": 0,
+          "position": [
+            224,
+            200
+          ],
+          "camera": [
+            104,
+            96
+          ],
+          "hp": 24,
+          "oam_count": 20
+        },
+        {
+          "game_state": 1,
+          "area": 1,
+          "cell": 20,
+          "state": 0,
+          "state_name": "normal",
+          "hero_pose": 0,
+          "position": [
+            224,
+            200
+          ],
+          "camera": [
+            104,
+            96
+          ],
+          "hp": 24,
+          "oam_count": 20
+        },
+        {
+          "game_state": 1,
+          "area": 1,
+          "cell": 20,
+          "state": 0,
+          "state_name": "normal",
+          "hero_pose": 0,
+          "position": [
+            224,
+            200
+          ],
+          "camera": [
+            104,
+            96
+          ],
+          "hp": 24,
+          "oam_count": 20
+        },
+        {
+          "game_state": 1,
+          "area": 1,
+          "cell": 20,
+          "state": 0,
+          "state_name": "normal",
+          "hero_pose": 0,
+          "position": [
+            224,
+            200
+          ],
+          "camera": [
+            104,
+            96
+          ],
+          "hp": 24,
+          "oam_count": 20
+        },
+        {
+          "game_state": 1,
+          "area": 1,
+          "cell": 20,
+          "state": 0,
+          "state_name": "normal",
+          "hero_pose": 0,
+          "position": [
+            224,
+            200
+          ],
+          "camera": [
+            104,
+            96
+          ],
+          "hp": 24,
+          "oam_count": 20
+        },
+        {
+          "game_state": 1,
+          "area": 1,
+          "cell": 20,
+          "state": 0,
+          "state_name": "normal",
+          "hero_pose": 0,
+          "position": [
+            224,
+            200
+          ],
+          "camera": [
+            104,
+            96
+          ],
+          "hp": 24,
+          "oam_count": 20
+        },
+        {
+          "game_state": 1,
+          "area": 1,
+          "cell": 20,
+          "state": 0,
+          "state_name": "normal",
+          "hero_pose": 0,
+          "position": [
+            224,
+            200
+          ],
+          "camera": [
+            104,
+            96
+          ],
+          "hp": 24,
+          "oam_count": 20
+        },
+        {
+          "game_state": 1,
+          "area": 1,
+          "cell": 20,
+          "state": 0,
+          "state_name": "normal",
+          "hero_pose": 0,
+          "position": [
+            224,
+            200
+          ],
+          "camera": [
+            104,
+            96
+          ],
+          "hp": 24,
+          "oam_count": 20
+        },
+        {
+          "game_state": 1,
+          "area": 1,
+          "cell": 20,
+          "state": 0,
+          "state_name": "normal",
+          "hero_pose": 0,
+          "position": [
+            224,
+            200
+          ],
+          "camera": [
+            104,
+            96
+          ],
+          "hp": 24,
+          "oam_count": 20
+        },
+        {
+          "game_state": 1,
+          "area": 1,
+          "cell": 20,
+          "state": 0,
+          "state_name": "normal",
+          "hero_pose": 0,
+          "position": [
+            224,
+            200
+          ],
+          "camera": [
+            104,
+            96
+          ],
+          "hp": 24,
+          "oam_count": 20
+        },
+        {
+          "game_state": 1,
+          "area": 1,
+          "cell": 20,
+          "state": 0,
+          "state_name": "normal",
+          "hero_pose": 0,
+          "position": [
+            224,
+            200
+          ],
+          "camera": [
+            104,
+            96
+          ],
+          "hp": 24,
+          "oam_count": 20
+        },
+        {
+          "game_state": 1,
+          "area": 1,
+          "cell": 20,
+          "state": 0,
+          "state_name": "normal",
+          "hero_pose": 0,
+          "position": [
+            224,
+            200
+          ],
+          "camera": [
+            104,
+            96
+          ],
+          "hp": 24,
+          "oam_count": 19
+        },
+        {
+          "game_state": 1,
+          "area": 1,
+          "cell": 20,
+          "state": 0,
+          "state_name": "normal",
+          "hero_pose": 0,
+          "position": [
+            224,
+            200
+          ],
+          "camera": [
+            104,
+            96
+          ],
+          "hp": 24,
+          "oam_count": 19
+        },
+        {
+          "game_state": 1,
+          "area": 1,
+          "cell": 20,
+          "state": 3,
+          "state_name": "hurt",
+          "hero_pose": 25,
+          "position": [
+            224,
+            200
+          ],
+          "camera": [
+            104,
+            96
+          ],
+          "hp": 22,
+          "oam_count": 17
+        },
+        {
+          "game_state": 1,
+          "area": 1,
+          "cell": 20,
+          "state": 3,
+          "state_name": "hurt",
+          "hero_pose": 25,
+          "position": [
+            222,
+            200
+          ],
+          "camera": [
+            102,
+            96
+          ],
+          "hp": 24,
+          "oam_count": 19
+        },
+        {
+          "game_state": 1,
+          "area": 1,
+          "cell": 20,
+          "state": 3,
+          "state_name": "hurt",
+          "hero_pose": 25,
+          "position": [
+            221,
+            201
+          ],
+          "camera": [
+            101,
+            97
+          ],
+          "hp": 24,
+          "oam_count": 19
+        },
+        {
+          "game_state": 1,
+          "area": 1,
+          "cell": 20,
+          "state": 3,
+          "state_name": "hurt",
+          "hero_pose": 25,
+          "position": [
+            219,
+            201
+          ],
+          "camera": [
+            99,
+            97
+          ],
+          "hp": 24,
+          "oam_count": 18
+        },
+        {
+          "game_state": 1,
+          "area": 1,
+          "cell": 20,
+          "state": 3,
+          "state_name": "hurt",
+          "hero_pose": 25,
+          "position": [
+            218,
+            202
+          ],
+          "camera": [
+            98,
+            98
+          ],
+          "hp": 24,
+          "oam_count": 19
+        },
+        {
+          "game_state": 1,
+          "area": 1,
+          "cell": 20,
+          "state": 3,
+          "state_name": "hurt",
+          "hero_pose": 25,
+          "position": [
+            217,
+            202
+          ],
+          "camera": [
+            97,
+            98
+          ],
+          "hp": 24,
+          "oam_count": 20
+        },
+        {
+          "game_state": 1,
+          "area": 1,
+          "cell": 20,
+          "state": 3,
+          "state_name": "hurt",
+          "hero_pose": 25,
+          "position": [
+            215,
+            203
+          ],
+          "camera": [
+            95,
+            99
+          ],
+          "hp": 24,
+          "oam_count": 20
+        },
+        {
+          "game_state": 1,
+          "area": 1,
+          "cell": 20,
+          "state": 3,
+          "state_name": "hurt",
+          "hero_pose": 25,
+          "position": [
+            214,
+            203
+          ],
+          "camera": [
+            94,
+            99
+          ],
+          "hp": 24,
+          "oam_count": 19
+        },
+        {
+          "game_state": 1,
+          "area": 1,
+          "cell": 20,
+          "state": 0,
+          "state_name": "normal",
+          "hero_pose": 0,
+          "position": [
+            212,
+            204
+          ],
+          "camera": [
+            92,
+            100
+          ],
+          "hp": 24,
+          "oam_count": 19
+        },
+        {
+          "game_state": 1,
+          "area": 1,
+          "cell": 20,
+          "state": 0,
+          "state_name": "normal",
+          "hero_pose": 0,
+          "position": [
+            212,
+            204
+          ],
+          "camera": [
+            92,
+            100
+          ],
+          "hp": 24,
+          "oam_count": 22
+        },
+        {
+          "game_state": 1,
+          "area": 1,
+          "cell": 20,
+          "state": 0,
+          "state_name": "normal",
+          "hero_pose": 0,
+          "position": [
+            212,
+            204
+          ],
+          "camera": [
+            92,
+            100
+          ],
+          "hp": 24,
+          "oam_count": 22
+        },
+        {
+          "game_state": 1,
+          "area": 1,
+          "cell": 20,
+          "state": 0,
+          "state_name": "normal",
+          "hero_pose": 0,
+          "position": [
+            212,
+            204
+          ],
+          "camera": [
+            92,
+            100
+          ],
+          "hp": 24,
+          "oam_count": 22
+        },
+        {
+          "game_state": 1,
+          "area": 1,
+          "cell": 20,
+          "state": 0,
+          "state_name": "normal",
+          "hero_pose": 0,
+          "position": [
+            212,
+            204
+          ],
+          "camera": [
+            92,
+            100
+          ],
+          "hp": 24,
+          "oam_count": 21
+        },
+        {
+          "game_state": 1,
+          "area": 1,
+          "cell": 20,
+          "state": 0,
+          "state_name": "normal",
+          "hero_pose": 0,
+          "position": [
+            212,
+            204
+          ],
+          "camera": [
+            92,
+            100
+          ],
+          "hp": 24,
+          "oam_count": 22
+        },
+        {
+          "game_state": 1,
+          "area": 1,
+          "cell": 20,
+          "state": 0,
+          "state_name": "normal",
+          "hero_pose": 0,
+          "position": [
+            212,
+            204
+          ],
+          "camera": [
+            92,
+            100
+          ],
+          "hp": 24,
+          "oam_count": 22
+        },
+        {
+          "game_state": 1,
+          "area": 1,
+          "cell": 20,
+          "state": 0,
+          "state_name": "normal",
+          "hero_pose": 0,
+          "position": [
+            212,
+            204
+          ],
+          "camera": [
+            92,
+            100
+          ],
+          "hp": 24,
+          "oam_count": 21
+        },
+        {
+          "game_state": 1,
+          "area": 1,
+          "cell": 20,
+          "state": 0,
+          "state_name": "normal",
+          "hero_pose": 0,
+          "position": [
+            212,
+            204
+          ],
+          "camera": [
+            92,
+            100
+          ],
+          "hp": 24,
+          "oam_count": 21
+        },
+        {
+          "game_state": 1,
+          "area": 1,
+          "cell": 20,
+          "state": 0,
+          "state_name": "normal",
+          "hero_pose": 0,
+          "position": [
+            212,
+            204
+          ],
+          "camera": [
+            92,
+            100
+          ],
+          "hp": 24,
+          "oam_count": 22
+        },
+        {
+          "game_state": 1,
+          "area": 1,
+          "cell": 20,
+          "state": 0,
+          "state_name": "normal",
+          "hero_pose": 0,
+          "position": [
+            212,
+            204
+          ],
+          "camera": [
+            92,
+            100
+          ],
+          "hp": 24,
+          "oam_count": 21
+        },
+        {
+          "game_state": 1,
+          "area": 1,
+          "cell": 20,
+          "state": 0,
+          "state_name": "normal",
+          "hero_pose": 0,
+          "position": [
+            212,
+            204
+          ],
+          "camera": [
+            92,
+            100
+          ],
+          "hp": 24,
+          "oam_count": 21
+        },
+        {
+          "game_state": 1,
+          "area": 1,
+          "cell": 20,
+          "state": 0,
+          "state_name": "normal",
+          "hero_pose": 0,
+          "position": [
+            212,
+            204
+          ],
+          "camera": [
+            92,
+            100
+          ],
+          "hp": 24,
+          "oam_count": 21
+        },
+        {
+          "game_state": 1,
+          "area": 1,
+          "cell": 20,
+          "state": 0,
+          "state_name": "normal",
+          "hero_pose": 0,
+          "position": [
+            212,
+            204
+          ],
+          "camera": [
+            92,
+            100
+          ],
+          "hp": 24,
+          "oam_count": 22
+        },
+        {
+          "game_state": 1,
+          "area": 1,
+          "cell": 20,
+          "state": 0,
+          "state_name": "normal",
+          "hero_pose": 0,
+          "position": [
+            212,
+            204
+          ],
+          "camera": [
+            92,
+            100
+          ],
+          "hp": 24,
+          "oam_count": 22
+        },
+        {
+          "game_state": 1,
+          "area": 1,
+          "cell": 20,
+          "state": 0,
+          "state_name": "normal",
+          "hero_pose": 0,
+          "position": [
+            212,
+            204
+          ],
+          "camera": [
+            92,
+            100
+          ],
+          "hp": 24,
+          "oam_count": 21
+        },
+        {
+          "game_state": 1,
+          "area": 1,
+          "cell": 20,
+          "state": 0,
+          "state_name": "normal",
+          "hero_pose": 0,
+          "position": [
+            212,
+            204
+          ],
+          "camera": [
+            92,
+            100
+          ],
+          "hp": 24,
+          "oam_count": 21
+        },
+        {
+          "game_state": 1,
+          "area": 1,
+          "cell": 20,
+          "state": 0,
+          "state_name": "normal",
+          "hero_pose": 0,
+          "position": [
+            212,
+            204
+          ],
+          "camera": [
+            92,
+            100
+          ],
+          "hp": 24,
+          "oam_count": 22
+        },
+        {
+          "game_state": 1,
+          "area": 1,
+          "cell": 20,
+          "state": 0,
+          "state_name": "normal",
+          "hero_pose": 0,
+          "position": [
+            212,
+            204
+          ],
+          "camera": [
+            92,
+            100
+          ],
+          "hp": 24,
+          "oam_count": 22
+        },
+        {
+          "game_state": 1,
+          "area": 1,
+          "cell": 20,
+          "state": 0,
+          "state_name": "normal",
+          "hero_pose": 0,
+          "position": [
+            212,
+            204
+          ],
+          "camera": [
+            92,
+            100
+          ],
+          "hp": 24,
+          "oam_count": 21
+        },
+        {
+          "game_state": 1,
+          "area": 1,
+          "cell": 20,
+          "state": 0,
+          "state_name": "normal",
+          "hero_pose": 0,
+          "position": [
+            212,
+            204
+          ],
+          "camera": [
+            92,
+            100
+          ],
+          "hp": 24,
+          "oam_count": 21
+        },
+        {
+          "game_state": 1,
+          "area": 1,
+          "cell": 20,
+          "state": 0,
+          "state_name": "normal",
+          "hero_pose": 0,
+          "position": [
+            212,
+            204
+          ],
+          "camera": [
+            92,
+            100
+          ],
+          "hp": 24,
+          "oam_count": 22
+        },
+        {
+          "game_state": 1,
+          "area": 1,
+          "cell": 20,
+          "state": 0,
+          "state_name": "normal",
+          "hero_pose": 0,
+          "position": [
+            212,
+            204
+          ],
+          "camera": [
+            92,
+            100
+          ],
+          "hp": 24,
+          "oam_count": 23
+        },
+        {
+          "game_state": 1,
+          "area": 1,
+          "cell": 20,
+          "state": 0,
+          "state_name": "normal",
+          "hero_pose": 0,
+          "position": [
+            212,
+            204
+          ],
+          "camera": [
+            92,
+            100
+          ],
+          "hp": 24,
+          "oam_count": 23
+        },
+        {
+          "game_state": 1,
+          "area": 1,
+          "cell": 20,
+          "state": 0,
+          "state_name": "normal",
+          "hero_pose": 0,
+          "position": [
+            212,
+            204
+          ],
+          "camera": [
+            92,
+            100
+          ],
+          "hp": 24,
+          "oam_count": 23
+        },
+        {
+          "game_state": 1,
+          "area": 1,
+          "cell": 20,
+          "state": 0,
+          "state_name": "normal",
+          "hero_pose": 0,
+          "position": [
+            212,
+            204
+          ],
+          "camera": [
+            92,
+            100
+          ],
+          "hp": 24,
+          "oam_count": 22
+        },
+        {
+          "game_state": 1,
+          "area": 1,
+          "cell": 20,
+          "state": 0,
+          "state_name": "normal",
+          "hero_pose": 0,
+          "position": [
+            212,
+            204
+          ],
+          "camera": [
+            92,
+            100
+          ],
+          "hp": 24,
+          "oam_count": 22
+        },
+        {
+          "game_state": 1,
+          "area": 1,
+          "cell": 20,
+          "state": 0,
+          "state_name": "normal",
+          "hero_pose": 0,
+          "position": [
+            212,
+            204
+          ],
+          "camera": [
+            92,
+            100
+          ],
+          "hp": 24,
+          "oam_count": 22
+        },
+        {
+          "game_state": 1,
+          "area": 1,
+          "cell": 20,
+          "state": 0,
+          "state_name": "normal",
+          "hero_pose": 0,
+          "position": [
+            212,
+            204
+          ],
+          "camera": [
+            92,
+            100
+          ],
+          "hp": 24,
+          "oam_count": 21
+        },
+        {
+          "game_state": 1,
+          "area": 1,
+          "cell": 20,
+          "state": 0,
+          "state_name": "normal",
+          "hero_pose": 0,
+          "position": [
+            212,
+            204
+          ],
+          "camera": [
+            92,
+            100
+          ],
+          "hp": 24,
+          "oam_count": 21
+        },
+        {
+          "game_state": 1,
+          "area": 1,
+          "cell": 20,
+          "state": 0,
+          "state_name": "normal",
+          "hero_pose": 0,
+          "position": [
+            212,
+            204
+          ],
+          "camera": [
+            92,
+            100
+          ],
+          "hp": 24,
+          "oam_count": 21
+        },
+        {
+          "game_state": 1,
+          "area": 1,
+          "cell": 20,
+          "state": 0,
+          "state_name": "normal",
+          "hero_pose": 0,
+          "position": [
+            212,
+            204
+          ],
+          "camera": [
+            92,
+            100
+          ],
+          "hp": 24,
+          "oam_count": 21
+        },
+        {
+          "game_state": 1,
+          "area": 1,
+          "cell": 20,
+          "state": 0,
+          "state_name": "normal",
+          "hero_pose": 0,
+          "position": [
+            212,
+            204
+          ],
+          "camera": [
+            92,
+            100
+          ],
+          "hp": 24,
+          "oam_count": 21
+        },
+        {
+          "game_state": 1,
+          "area": 1,
+          "cell": 20,
+          "state": 0,
+          "state_name": "normal",
+          "hero_pose": 0,
+          "position": [
+            212,
+            204
+          ],
+          "camera": [
+            92,
+            100
+          ],
+          "hp": 24,
+          "oam_count": 19
+        },
+        {
+          "game_state": 1,
+          "area": 1,
+          "cell": 20,
+          "state": 0,
+          "state_name": "normal",
+          "hero_pose": 0,
+          "position": [
+            212,
+            204
+          ],
+          "camera": [
+            92,
+            100
+          ],
+          "hp": 24,
+          "oam_count": 19
+        },
+        {
+          "game_state": 1,
+          "area": 1,
+          "cell": 20,
+          "state": 0,
+          "state_name": "normal",
+          "hero_pose": 0,
+          "position": [
+            212,
+            204
+          ],
+          "camera": [
+            92,
+            100
+          ],
+          "hp": 24,
+          "oam_count": 18
+        },
+        {
+          "game_state": 1,
+          "area": 1,
+          "cell": 20,
+          "state": 0,
+          "state_name": "normal",
+          "hero_pose": 0,
+          "position": [
+            212,
+            204
+          ],
+          "camera": [
+            92,
+            100
+          ],
+          "hp": 24,
+          "oam_count": 19
+        },
+        {
+          "game_state": 1,
+          "area": 1,
+          "cell": 20,
+          "state": 0,
+          "state_name": "normal",
+          "hero_pose": 0,
+          "position": [
+            212,
+            204
+          ],
+          "camera": [
+            92,
+            100
+          ],
+          "hp": 24,
+          "oam_count": 19
+        },
+        {
+          "game_state": 1,
+          "area": 1,
+          "cell": 20,
+          "state": 0,
+          "state_name": "normal",
+          "hero_pose": 0,
+          "position": [
+            212,
+            204
+          ],
+          "camera": [
+            92,
+            100
+          ],
+          "hp": 24,
+          "oam_count": 19
+        },
+        {
+          "game_state": 1,
+          "area": 1,
+          "cell": 20,
+          "state": 0,
+          "state_name": "normal",
+          "hero_pose": 0,
+          "position": [
+            212,
+            204
+          ],
+          "camera": [
+            92,
+            100
+          ],
+          "hp": 24,
+          "oam_count": 19
+        },
+        {
+          "game_state": 1,
+          "area": 1,
+          "cell": 20,
+          "state": 0,
+          "state_name": "normal",
+          "hero_pose": 0,
+          "position": [
+            212,
+            204
+          ],
+          "camera": [
+            92,
+            100
+          ],
+          "hp": 24,
+          "oam_count": 19
+        },
+        {
+          "game_state": 1,
+          "area": 1,
+          "cell": 20,
+          "state": 0,
+          "state_name": "normal",
+          "hero_pose": 0,
+          "position": [
+            212,
+            204
+          ],
+          "camera": [
+            92,
+            100
+          ],
+          "hp": 24,
+          "oam_count": 19
+        },
+        {
+          "game_state": 1,
+          "area": 1,
+          "cell": 20,
+          "state": 0,
+          "state_name": "normal",
+          "hero_pose": 0,
+          "position": [
+            212,
+            204
+          ],
+          "camera": [
+            92,
+            100
+          ],
+          "hp": 24,
+          "oam_count": 20
+        },
+        {
+          "game_state": 1,
+          "area": 1,
+          "cell": 20,
+          "state": 0,
+          "state_name": "normal",
+          "hero_pose": 0,
+          "position": [
+            212,
+            204
+          ],
+          "camera": [
+            92,
+            100
+          ],
+          "hp": 24,
+          "oam_count": 19
+        },
+        {
+          "game_state": 1,
+          "area": 1,
+          "cell": 20,
+          "state": 0,
+          "state_name": "normal",
+          "hero_pose": 0,
+          "position": [
+            212,
+            204
+          ],
+          "camera": [
+            92,
+            100
+          ],
+          "hp": 24,
+          "oam_count": 19
+        },
+        {
+          "game_state": 1,
+          "area": 1,
+          "cell": 20,
+          "state": 0,
+          "state_name": "normal",
+          "hero_pose": 0,
+          "position": [
+            212,
+            204
+          ],
+          "camera": [
+            92,
+            100
+          ],
+          "hp": 24,
+          "oam_count": 19
+        },
+        {
+          "game_state": 1,
+          "area": 1,
+          "cell": 20,
+          "state": 0,
+          "state_name": "normal",
+          "hero_pose": 0,
+          "position": [
+            212,
+            204
+          ],
+          "camera": [
+            92,
+            100
+          ],
+          "hp": 24,
+          "oam_count": 19
+        },
+        {
+          "game_state": 1,
+          "area": 1,
+          "cell": 20,
+          "state": 0,
+          "state_name": "normal",
+          "hero_pose": 0,
+          "position": [
+            212,
+            204
+          ],
+          "camera": [
+            92,
+            100
+          ],
+          "hp": 24,
+          "oam_count": 19
+        },
+        {
+          "game_state": 1,
+          "area": 1,
+          "cell": 20,
+          "state": 0,
+          "state_name": "normal",
+          "hero_pose": 0,
+          "position": [
+            212,
+            204
+          ],
+          "camera": [
+            92,
+            100
+          ],
+          "hp": 24,
+          "oam_count": 19
+        },
+        {
+          "game_state": 1,
+          "area": 1,
+          "cell": 20,
+          "state": 0,
+          "state_name": "normal",
+          "hero_pose": 0,
+          "position": [
+            212,
+            204
+          ],
+          "camera": [
+            92,
+            100
+          ],
+          "hp": 24,
+          "oam_count": 19
+        },
+        {
+          "game_state": 1,
+          "area": 1,
+          "cell": 20,
+          "state": 0,
+          "state_name": "normal",
+          "hero_pose": 0,
+          "position": [
+            212,
+            204
+          ],
+          "camera": [
+            92,
+            100
+          ],
+          "hp": 24,
+          "oam_count": 19
+        },
+        {
+          "game_state": 1,
+          "area": 1,
+          "cell": 20,
+          "state": 0,
+          "state_name": "normal",
+          "hero_pose": 0,
+          "position": [
+            212,
+            204
+          ],
+          "camera": [
+            92,
+            100
+          ],
+          "hp": 24,
+          "oam_count": 19
+        },
+        {
+          "game_state": 1,
+          "area": 1,
+          "cell": 20,
+          "state": 0,
+          "state_name": "normal",
+          "hero_pose": 0,
+          "position": [
+            212,
+            204
+          ],
+          "camera": [
+            92,
+            100
+          ],
+          "hp": 24,
+          "oam_count": 19
+        },
+        {
+          "game_state": 1,
+          "area": 1,
+          "cell": 20,
+          "state": 0,
+          "state_name": "normal",
+          "hero_pose": 0,
+          "position": [
+            212,
+            204
+          ],
+          "camera": [
+            92,
+            100
+          ],
+          "hp": 24,
+          "oam_count": 19
+        },
+        {
+          "game_state": 1,
+          "area": 1,
+          "cell": 20,
+          "state": 0,
+          "state_name": "normal",
+          "hero_pose": 0,
+          "position": [
+            212,
+            204
+          ],
+          "camera": [
+            92,
+            100
+          ],
+          "hp": 24,
+          "oam_count": 18
+        },
+        {
+          "game_state": 1,
+          "area": 1,
+          "cell": 20,
+          "state": 0,
+          "state_name": "normal",
+          "hero_pose": 0,
+          "position": [
+            212,
+            204
+          ],
+          "camera": [
+            92,
+            100
+          ],
+          "hp": 24,
+          "oam_count": 18
+        },
+        {
+          "game_state": 1,
+          "area": 1,
+          "cell": 20,
+          "state": 0,
+          "state_name": "normal",
+          "hero_pose": 0,
+          "position": [
+            212,
+            204
+          ],
+          "camera": [
+            92,
+            100
+          ],
+          "hp": 24,
+          "oam_count": 18
+        },
+        {
+          "game_state": 1,
+          "area": 1,
+          "cell": 20,
+          "state": 0,
+          "state_name": "normal",
+          "hero_pose": 0,
+          "position": [
+            212,
+            204
+          ],
+          "camera": [
+            92,
+            100
+          ],
+          "hp": 24,
+          "oam_count": 19
+        },
+        {
+          "game_state": 1,
+          "area": 1,
+          "cell": 20,
+          "state": 0,
+          "state_name": "normal",
+          "hero_pose": 0,
+          "position": [
+            212,
+            204
+          ],
+          "camera": [
+            92,
+            100
+          ],
+          "hp": 24,
+          "oam_count": 19
+        },
+        {
+          "game_state": 1,
+          "area": 1,
+          "cell": 20,
+          "state": 0,
+          "state_name": "normal",
+          "hero_pose": 0,
+          "position": [
+            212,
+            204
+          ],
+          "camera": [
+            92,
+            100
+          ],
+          "hp": 24,
+          "oam_count": 19
+        },
+        {
+          "game_state": 1,
+          "area": 1,
+          "cell": 20,
+          "state": 0,
+          "state_name": "normal",
+          "hero_pose": 0,
+          "position": [
+            212,
+            204
+          ],
+          "camera": [
+            92,
+            100
+          ],
+          "hp": 24,
+          "oam_count": 18
+        },
+        {
+          "game_state": 1,
+          "area": 1,
+          "cell": 20,
+          "state": 0,
+          "state_name": "normal",
+          "hero_pose": 0,
+          "position": [
+            212,
+            204
+          ],
+          "camera": [
+            92,
+            100
+          ],
+          "hp": 24,
+          "oam_count": 18
+        },
+        {
+          "game_state": 1,
+          "area": 1,
+          "cell": 20,
+          "state": 0,
+          "state_name": "normal",
+          "hero_pose": 0,
+          "position": [
+            212,
+            204
+          ],
+          "camera": [
+            92,
+            100
+          ],
+          "hp": 24,
+          "oam_count": 18
+        },
+        {
+          "game_state": 1,
+          "area": 1,
+          "cell": 20,
+          "state": 0,
+          "state_name": "normal",
+          "hero_pose": 0,
+          "position": [
+            212,
+            204
+          ],
+          "camera": [
+            92,
+            100
+          ],
+          "hp": 24,
+          "oam_count": 18
+        }
+      ]
+    }
+  ],
+  "count": 1,
+  "failures": []
+}

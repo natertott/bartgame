@@ -1,0 +1,15 @@
+PASS ROLL: R while walking rolls                  state 0
+PASS LIFT: the entry room grows a bush            (19, 8, (19, 9), 'UP')
+PASS LIFT: R lifts it and the hero carries it     state 11
+PASS LIFT: the ground under it is bare            verge_1
+PASS THROW: R throws it as an object              object True state 0
+PASS THROW: it breaks and is gone
+PASS BOULDER: a room keeps a boulder              cell 1 (8, 6, (8, 7), 'UP')
+PASS BOULDER: without the gauntlet it only bumps  state 0
+PASS BOULDER: with the gauntlet it lifts          state 11
+PASS BOULDER: thrown, the alcove is open          thicket_floor0
+PASS PAUSE: START opens the pause menu            state 4
+PASS PAUSE: L puts the bombs on the L trigger     equip 0 1 2
+PASS PAUSE: START closes it                       state 1
+PASS PAUSE: the L trigger uses the bombs          bombs 5 -> 4
+RESULT PASS 14/14

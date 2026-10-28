@@ -1,0 +1,10141 @@
+{
+  "schema": 1,
+  "method": "Native generators; contract metadata supplies identifiers only, never old pixels.",
+  "tiles": [
+    {
+      "name": "moss0",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "ground",
+      "glitter": false
+    },
+    {
+      "name": "moss1",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "ground",
+      "glitter": false
+    },
+    {
+      "name": "moss2",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "ground",
+      "glitter": false
+    },
+    {
+      "name": "moss_blight",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "decay_mix",
+      "glitter": false
+    },
+    {
+      "name": "moss_blight2",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "decay_mix",
+      "glitter": false
+    },
+    {
+      "name": "moss_flowers2",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "ground",
+      "glitter": false
+    },
+    {
+      "name": "moss_flowers",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "ground",
+      "glitter": false
+    },
+    {
+      "name": "tall_grass",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "ground",
+      "glitter": false
+    },
+    {
+      "name": "moss_shade",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "ground",
+      "glitter": false
+    },
+    {
+      "name": "path",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "ground",
+      "glitter": false
+    },
+    {
+      "name": "path_edge_n",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "ground",
+      "glitter": false
+    },
+    {
+      "name": "blight_pool",
+      "owner": "reboot_terrain",
+      "frames": 2,
+      "material": "rot_water",
+      "glitter": true
+    },
+    {
+      "name": "canopy",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "foliage",
+      "glitter": true
+    },
+    {
+      "name": "canopy2",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "foliage",
+      "glitter": true
+    },
+    {
+      "name": "canopy_glint",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "foliage",
+      "glitter": true
+    },
+    {
+      "name": "canopy_lantern",
+      "owner": "reboot_terrain",
+      "frames": 2,
+      "material": "foliage",
+      "glitter": true
+    },
+    {
+      "name": "canopy_blight",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "blight",
+      "glitter": true
+    },
+    {
+      "name": "canopy_s",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "foliage",
+      "glitter": true
+    },
+    {
+      "name": "canopy_n",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "foliage",
+      "glitter": true
+    },
+    {
+      "name": "tree_top_nw",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "foliage",
+      "glitter": true
+    },
+    {
+      "name": "tree_top_ne",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "foliage",
+      "glitter": true
+    },
+    {
+      "name": "tree_mid_w",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "foliage",
+      "glitter": true
+    },
+    {
+      "name": "tree_mid_e",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "foliage",
+      "glitter": true
+    },
+    {
+      "name": "tree_trunk_w",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "foliage",
+      "glitter": true
+    },
+    {
+      "name": "tree_trunk_e",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "foliage",
+      "glitter": true
+    },
+    {
+      "name": "lantern_post",
+      "owner": "reboot_terrain",
+      "frames": 2,
+      "material": "stone",
+      "glitter": true
+    },
+    {
+      "name": "fence",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "foliage",
+      "glitter": false
+    },
+    {
+      "name": "log",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "foliage",
+      "glitter": false
+    },
+    {
+      "name": "bridge",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "gold",
+      "glitter": true
+    },
+    {
+      "name": "bridge_v",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "gold",
+      "glitter": true
+    },
+    {
+      "name": "thorn",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "foliage",
+      "glitter": false
+    },
+    {
+      "name": "stump",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "foliage",
+      "glitter": false
+    },
+    {
+      "name": "bush",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "foliage",
+      "glitter": false
+    },
+    {
+      "name": "rock_small",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "stone",
+      "glitter": false
+    },
+    {
+      "name": "boulder",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "stone",
+      "glitter": false
+    },
+    {
+      "name": "rock",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "stone",
+      "glitter": false
+    },
+    {
+      "name": "pillar",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "stone",
+      "glitter": false
+    },
+    {
+      "name": "ruin_wall",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "stone",
+      "glitter": false
+    },
+    {
+      "name": "statue",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "stone",
+      "glitter": true
+    },
+    {
+      "name": "water",
+      "owner": "reboot_terrain",
+      "frames": 2,
+      "material": "water",
+      "glitter": true
+    },
+    {
+      "name": "water_1",
+      "owner": "reboot_terrain",
+      "frames": 2,
+      "material": "water",
+      "glitter": true
+    },
+    {
+      "name": "water_2",
+      "owner": "reboot_terrain",
+      "frames": 2,
+      "material": "water",
+      "glitter": true
+    },
+    {
+      "name": "water_3",
+      "owner": "reboot_terrain",
+      "frames": 2,
+      "material": "water",
+      "glitter": true
+    },
+    {
+      "name": "water_4",
+      "owner": "reboot_terrain",
+      "frames": 2,
+      "material": "water",
+      "glitter": true
+    },
+    {
+      "name": "water_5",
+      "owner": "reboot_terrain",
+      "frames": 2,
+      "material": "water",
+      "glitter": true
+    },
+    {
+      "name": "water_6",
+      "owner": "reboot_terrain",
+      "frames": 2,
+      "material": "water",
+      "glitter": true
+    },
+    {
+      "name": "water_7",
+      "owner": "reboot_terrain",
+      "frames": 2,
+      "material": "water",
+      "glitter": true
+    },
+    {
+      "name": "water_8",
+      "owner": "reboot_terrain",
+      "frames": 2,
+      "material": "water",
+      "glitter": true
+    },
+    {
+      "name": "water_9",
+      "owner": "reboot_terrain",
+      "frames": 2,
+      "material": "water",
+      "glitter": true
+    },
+    {
+      "name": "water_a",
+      "owner": "reboot_terrain",
+      "frames": 2,
+      "material": "water",
+      "glitter": true
+    },
+    {
+      "name": "water_b",
+      "owner": "reboot_terrain",
+      "frames": 2,
+      "material": "water",
+      "glitter": true
+    },
+    {
+      "name": "water_c",
+      "owner": "reboot_terrain",
+      "frames": 2,
+      "material": "water",
+      "glitter": true
+    },
+    {
+      "name": "water_d",
+      "owner": "reboot_terrain",
+      "frames": 2,
+      "material": "water",
+      "glitter": true
+    },
+    {
+      "name": "water_e",
+      "owner": "reboot_terrain",
+      "frames": 2,
+      "material": "water",
+      "glitter": true
+    },
+    {
+      "name": "water_f",
+      "owner": "reboot_terrain",
+      "frames": 2,
+      "material": "water",
+      "glitter": true
+    },
+    {
+      "name": "water_lily",
+      "owner": "reboot_terrain",
+      "frames": 2,
+      "material": "water",
+      "glitter": true
+    },
+    {
+      "name": "pit",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "stone",
+      "glitter": false
+    },
+    {
+      "name": "pit_inner",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "stone",
+      "glitter": false
+    },
+    {
+      "name": "ledge_s",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "stone",
+      "glitter": false
+    },
+    {
+      "name": "ledge_n",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "stone",
+      "glitter": false
+    },
+    {
+      "name": "crack",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "stone",
+      "glitter": false
+    },
+    {
+      "name": "web",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "stone",
+      "glitter": false
+    },
+    {
+      "name": "door_locked",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "stone",
+      "glitter": true
+    },
+    {
+      "name": "door_open",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "stone",
+      "glitter": true
+    },
+    {
+      "name": "torch",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "stone",
+      "glitter": true
+    },
+    {
+      "name": "torch_lit",
+      "owner": "reboot_terrain",
+      "frames": 2,
+      "material": "stone",
+      "glitter": true
+    },
+    {
+      "name": "chest",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "gold",
+      "glitter": true
+    },
+    {
+      "name": "chest_open",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "gold",
+      "glitter": true
+    },
+    {
+      "name": "bones",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "stone",
+      "glitter": false
+    },
+    {
+      "name": "sparkle",
+      "owner": "reboot_terrain",
+      "frames": 3,
+      "material": "gold",
+      "glitter": false
+    },
+    {
+      "name": "relic",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "stone",
+      "glitter": true
+    },
+    {
+      "name": "mossy_stone",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "stone",
+      "glitter": false
+    },
+    {
+      "name": "black",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "ground",
+      "glitter": false
+    },
+    {
+      "name": "stairs_down",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "stone",
+      "glitter": true
+    },
+    {
+      "name": "blight_ground0",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "decay_mix",
+      "glitter": false
+    },
+    {
+      "name": "blight_ground1",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "decay_mix",
+      "glitter": false
+    },
+    {
+      "name": "blight_ground2",
+      "owner": "reboot_terrain",
+      "frames": 2,
+      "material": "decay_mix",
+      "glitter": true
+    },
+    {
+      "name": "blight_floor",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "blight",
+      "glitter": false
+    },
+    {
+      "name": "blight_vein",
+      "owner": "reboot_terrain",
+      "frames": 2,
+      "material": "blight",
+      "glitter": true
+    },
+    {
+      "name": "blight_crystal",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "blight",
+      "glitter": true
+    },
+    {
+      "name": "dead_tree",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "blight",
+      "glitter": true
+    },
+    {
+      "name": "gtree_0",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "foliage",
+      "glitter": true
+    },
+    {
+      "name": "gtree_1",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "foliage",
+      "glitter": true
+    },
+    {
+      "name": "gtree_2",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "foliage",
+      "glitter": true
+    },
+    {
+      "name": "gtree_3",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "foliage",
+      "glitter": true
+    },
+    {
+      "name": "gtree_4",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "foliage",
+      "glitter": true
+    },
+    {
+      "name": "gtree_5",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "foliage",
+      "glitter": true
+    },
+    {
+      "name": "gtree_6",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "foliage",
+      "glitter": true
+    },
+    {
+      "name": "gtree_7",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "foliage",
+      "glitter": true
+    },
+    {
+      "name": "gtree_8",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "foliage",
+      "glitter": true
+    },
+    {
+      "name": "gtree_9",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "foliage",
+      "glitter": true
+    },
+    {
+      "name": "gtree_10",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "foliage",
+      "glitter": true
+    },
+    {
+      "name": "gtree_11",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "foliage",
+      "glitter": true
+    },
+    {
+      "name": "meadow_0",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "ground",
+      "glitter": false
+    },
+    {
+      "name": "meadow_1",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "ground",
+      "glitter": false
+    },
+    {
+      "name": "meadow_2",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "ground",
+      "glitter": false
+    },
+    {
+      "name": "meadow_3",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "ground",
+      "glitter": false
+    },
+    {
+      "name": "meadow_4",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "ground",
+      "glitter": false
+    },
+    {
+      "name": "meadow_5",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "ground",
+      "glitter": false
+    },
+    {
+      "name": "meadow_6",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "ground",
+      "glitter": false
+    },
+    {
+      "name": "meadow_7",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "ground",
+      "glitter": false
+    },
+    {
+      "name": "meadow_8",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "ground",
+      "glitter": false
+    },
+    {
+      "name": "clover_0",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "ground",
+      "glitter": false
+    },
+    {
+      "name": "clover_1",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "ground",
+      "glitter": false
+    },
+    {
+      "name": "clover_2",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "ground",
+      "glitter": false
+    },
+    {
+      "name": "clover_3",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "ground",
+      "glitter": false
+    },
+    {
+      "name": "shroomring_0",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "ground",
+      "glitter": true
+    },
+    {
+      "name": "shroomring_1",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "ground",
+      "glitter": true
+    },
+    {
+      "name": "shroomring_2",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "ground",
+      "glitter": true
+    },
+    {
+      "name": "shroomring_3",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "ground",
+      "glitter": true
+    },
+    {
+      "name": "gboulder_0",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "stone",
+      "glitter": false
+    },
+    {
+      "name": "gboulder_1",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "stone",
+      "glitter": false
+    },
+    {
+      "name": "gboulder_2",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "stone",
+      "glitter": false
+    },
+    {
+      "name": "gboulder_3",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "stone",
+      "glitter": false
+    },
+    {
+      "name": "hlog_0",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "foliage",
+      "glitter": false
+    },
+    {
+      "name": "hlog_1",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "foliage",
+      "glitter": false
+    },
+    {
+      "name": "raft_0",
+      "owner": "reboot_terrain",
+      "frames": 2,
+      "material": "water",
+      "glitter": true
+    },
+    {
+      "name": "raft_1",
+      "owner": "reboot_terrain",
+      "frames": 2,
+      "material": "water",
+      "glitter": true
+    },
+    {
+      "name": "raft_2",
+      "owner": "reboot_terrain",
+      "frames": 2,
+      "material": "water",
+      "glitter": true
+    },
+    {
+      "name": "raft_3",
+      "owner": "reboot_terrain",
+      "frames": 2,
+      "material": "water",
+      "glitter": true
+    },
+    {
+      "name": "ledge_s_w",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "stone",
+      "glitter": false
+    },
+    {
+      "name": "ledge_s_e",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "stone",
+      "glitter": false
+    },
+    {
+      "name": "water_c1",
+      "owner": "reboot_terrain",
+      "frames": 2,
+      "material": "water",
+      "glitter": true
+    },
+    {
+      "name": "water_c2",
+      "owner": "reboot_terrain",
+      "frames": 2,
+      "material": "water",
+      "glitter": true
+    },
+    {
+      "name": "water_c3",
+      "owner": "reboot_terrain",
+      "frames": 2,
+      "material": "water",
+      "glitter": true
+    },
+    {
+      "name": "water_c4",
+      "owner": "reboot_terrain",
+      "frames": 2,
+      "material": "water",
+      "glitter": true
+    },
+    {
+      "name": "water_c5",
+      "owner": "reboot_terrain",
+      "frames": 2,
+      "material": "water",
+      "glitter": true
+    },
+    {
+      "name": "water_c6",
+      "owner": "reboot_terrain",
+      "frames": 2,
+      "material": "water",
+      "glitter": true
+    },
+    {
+      "name": "water_c7",
+      "owner": "reboot_terrain",
+      "frames": 2,
+      "material": "water",
+      "glitter": true
+    },
+    {
+      "name": "water_c8",
+      "owner": "reboot_terrain",
+      "frames": 2,
+      "material": "water",
+      "glitter": true
+    },
+    {
+      "name": "water_c9",
+      "owner": "reboot_terrain",
+      "frames": 2,
+      "material": "water",
+      "glitter": true
+    },
+    {
+      "name": "water_ca",
+      "owner": "reboot_terrain",
+      "frames": 2,
+      "material": "water",
+      "glitter": true
+    },
+    {
+      "name": "water_cb",
+      "owner": "reboot_terrain",
+      "frames": 2,
+      "material": "water",
+      "glitter": true
+    },
+    {
+      "name": "water_cc",
+      "owner": "reboot_terrain",
+      "frames": 2,
+      "material": "water",
+      "glitter": true
+    },
+    {
+      "name": "water_cd",
+      "owner": "reboot_terrain",
+      "frames": 2,
+      "material": "water",
+      "glitter": true
+    },
+    {
+      "name": "water_ce",
+      "owner": "reboot_terrain",
+      "frames": 2,
+      "material": "water",
+      "glitter": true
+    },
+    {
+      "name": "water_cf",
+      "owner": "reboot_terrain",
+      "frames": 2,
+      "material": "water",
+      "glitter": true
+    },
+    {
+      "name": "rock2",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "stone",
+      "glitter": false
+    },
+    {
+      "name": "rock3",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "stone",
+      "glitter": false
+    },
+    {
+      "name": "treerock_0",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "foliage",
+      "glitter": false
+    },
+    {
+      "name": "treerock_1",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "foliage",
+      "glitter": false
+    },
+    {
+      "name": "treerock_2",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "foliage",
+      "glitter": false
+    },
+    {
+      "name": "treerock_3",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "foliage",
+      "glitter": false
+    },
+    {
+      "name": "tree2_0",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "foliage",
+      "glitter": true
+    },
+    {
+      "name": "tree2_1",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "foliage",
+      "glitter": true
+    },
+    {
+      "name": "tree2_2",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "foliage",
+      "glitter": true
+    },
+    {
+      "name": "tree2_3",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "foliage",
+      "glitter": true
+    },
+    {
+      "name": "tree2_4",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "foliage",
+      "glitter": true
+    },
+    {
+      "name": "tree2_5",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "foliage",
+      "glitter": true
+    },
+    {
+      "name": "gtree2_0",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "foliage",
+      "glitter": true
+    },
+    {
+      "name": "gtree2_1",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "foliage",
+      "glitter": true
+    },
+    {
+      "name": "gtree2_2",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "foliage",
+      "glitter": true
+    },
+    {
+      "name": "gtree2_3",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "foliage",
+      "glitter": true
+    },
+    {
+      "name": "gtree2_4",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "foliage",
+      "glitter": true
+    },
+    {
+      "name": "gtree2_5",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "foliage",
+      "glitter": true
+    },
+    {
+      "name": "gtree2_6",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "foliage",
+      "glitter": true
+    },
+    {
+      "name": "gtree2_7",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "foliage",
+      "glitter": true
+    },
+    {
+      "name": "gtree2_8",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "foliage",
+      "glitter": true
+    },
+    {
+      "name": "gtree2_9",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "foliage",
+      "glitter": true
+    },
+    {
+      "name": "gtree2_10",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "foliage",
+      "glitter": true
+    },
+    {
+      "name": "gtree2_11",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "foliage",
+      "glitter": true
+    },
+    {
+      "name": "btree_0",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "blight",
+      "glitter": true
+    },
+    {
+      "name": "btree_1",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "blight",
+      "glitter": true
+    },
+    {
+      "name": "btree_2",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "blight",
+      "glitter": true
+    },
+    {
+      "name": "btree_3",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "blight",
+      "glitter": true
+    },
+    {
+      "name": "btree_4",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "blight",
+      "glitter": true
+    },
+    {
+      "name": "btree_5",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "blight",
+      "glitter": true
+    },
+    {
+      "name": "btree_6",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "blight",
+      "glitter": true
+    },
+    {
+      "name": "btree_7",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "blight",
+      "glitter": true
+    },
+    {
+      "name": "btree_8",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "blight",
+      "glitter": true
+    },
+    {
+      "name": "btree_9",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "blight",
+      "glitter": true
+    },
+    {
+      "name": "btree_10",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "blight",
+      "glitter": true
+    },
+    {
+      "name": "btree_11",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "blight",
+      "glitter": true
+    },
+    {
+      "name": "blight_floor2",
+      "owner": "reboot_terrain",
+      "frames": 2,
+      "material": "blight",
+      "glitter": true
+    },
+    {
+      "name": "blight_mist",
+      "owner": "reboot_terrain",
+      "frames": 2,
+      "material": "blight",
+      "glitter": false
+    },
+    {
+      "name": "canopy_blight2",
+      "owner": "reboot_terrain",
+      "frames": 2,
+      "material": "blight",
+      "glitter": true
+    },
+    {
+      "name": "sparkle_white",
+      "owner": "reboot_terrain",
+      "frames": 2,
+      "material": "stone",
+      "glitter": false
+    },
+    {
+      "name": "waterfall",
+      "owner": "reboot_terrain",
+      "frames": 3,
+      "material": "water",
+      "glitter": true
+    },
+    {
+      "name": "water_foam",
+      "owner": "reboot_terrain",
+      "frames": 2,
+      "material": "water",
+      "glitter": true
+    },
+    {
+      "name": "blight_wall",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "blight",
+      "glitter": true
+    },
+    {
+      "name": "blight_wall2",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "blight",
+      "glitter": true
+    },
+    {
+      "name": "blight_wall_lit",
+      "owner": "reboot_terrain",
+      "frames": 2,
+      "material": "blight",
+      "glitter": true
+    },
+    {
+      "name": "shore_1",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "ground",
+      "glitter": true
+    },
+    {
+      "name": "shore_2",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "ground",
+      "glitter": true
+    },
+    {
+      "name": "shore_3",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "ground",
+      "glitter": true
+    },
+    {
+      "name": "shore_4",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "ground",
+      "glitter": true
+    },
+    {
+      "name": "shore_5",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "ground",
+      "glitter": true
+    },
+    {
+      "name": "shore_6",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "ground",
+      "glitter": true
+    },
+    {
+      "name": "shore_7",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "ground",
+      "glitter": true
+    },
+    {
+      "name": "shore_8",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "ground",
+      "glitter": true
+    },
+    {
+      "name": "shore_9",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "ground",
+      "glitter": true
+    },
+    {
+      "name": "shore_a",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "ground",
+      "glitter": true
+    },
+    {
+      "name": "shore_b",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "ground",
+      "glitter": true
+    },
+    {
+      "name": "shore_c",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "ground",
+      "glitter": true
+    },
+    {
+      "name": "shore_d",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "ground",
+      "glitter": true
+    },
+    {
+      "name": "shore_e",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "ground",
+      "glitter": true
+    },
+    {
+      "name": "shore_f",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "ground",
+      "glitter": true
+    },
+    {
+      "name": "shore_c1",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "ground",
+      "glitter": true
+    },
+    {
+      "name": "shore_c2",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "ground",
+      "glitter": true
+    },
+    {
+      "name": "shore_c3",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "ground",
+      "glitter": true
+    },
+    {
+      "name": "shore_c4",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "ground",
+      "glitter": true
+    },
+    {
+      "name": "shore_c5",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "ground",
+      "glitter": true
+    },
+    {
+      "name": "shore_c6",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "ground",
+      "glitter": true
+    },
+    {
+      "name": "shore_c7",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "ground",
+      "glitter": true
+    },
+    {
+      "name": "shore_c8",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "ground",
+      "glitter": true
+    },
+    {
+      "name": "shore_c9",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "ground",
+      "glitter": true
+    },
+    {
+      "name": "shore_ca",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "ground",
+      "glitter": true
+    },
+    {
+      "name": "shore_cb",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "ground",
+      "glitter": true
+    },
+    {
+      "name": "shore_cc",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "ground",
+      "glitter": true
+    },
+    {
+      "name": "shore_cd",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "ground",
+      "glitter": true
+    },
+    {
+      "name": "shore_ce",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "ground",
+      "glitter": true
+    },
+    {
+      "name": "shore_cf",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "ground",
+      "glitter": true
+    },
+    {
+      "name": "verge_1",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "ground",
+      "glitter": false
+    },
+    {
+      "name": "verge_2",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "ground",
+      "glitter": false
+    },
+    {
+      "name": "verge_3",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "ground",
+      "glitter": false
+    },
+    {
+      "name": "verge_4",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "ground",
+      "glitter": false
+    },
+    {
+      "name": "verge_5",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "ground",
+      "glitter": false
+    },
+    {
+      "name": "verge_6",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "ground",
+      "glitter": false
+    },
+    {
+      "name": "verge_7",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "ground",
+      "glitter": false
+    },
+    {
+      "name": "verge_8",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "ground",
+      "glitter": false
+    },
+    {
+      "name": "verge_9",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "ground",
+      "glitter": false
+    },
+    {
+      "name": "verge_a",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "ground",
+      "glitter": false
+    },
+    {
+      "name": "verge_b",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "ground",
+      "glitter": false
+    },
+    {
+      "name": "verge_c",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "ground",
+      "glitter": false
+    },
+    {
+      "name": "verge_d",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "ground",
+      "glitter": false
+    },
+    {
+      "name": "verge_e",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "ground",
+      "glitter": false
+    },
+    {
+      "name": "verge_f",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "ground",
+      "glitter": false
+    },
+    {
+      "name": "pedge_1",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "ground",
+      "glitter": false
+    },
+    {
+      "name": "pedge_2",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "ground",
+      "glitter": false
+    },
+    {
+      "name": "pedge_3",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "ground",
+      "glitter": false
+    },
+    {
+      "name": "pedge_4",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "ground",
+      "glitter": false
+    },
+    {
+      "name": "pedge_5",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "ground",
+      "glitter": false
+    },
+    {
+      "name": "pedge_6",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "ground",
+      "glitter": false
+    },
+    {
+      "name": "pedge_7",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "ground",
+      "glitter": false
+    },
+    {
+      "name": "pedge_8",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "ground",
+      "glitter": false
+    },
+    {
+      "name": "pedge_9",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "ground",
+      "glitter": false
+    },
+    {
+      "name": "pedge_a",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "ground",
+      "glitter": false
+    },
+    {
+      "name": "pedge_b",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "ground",
+      "glitter": false
+    },
+    {
+      "name": "pedge_c",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "ground",
+      "glitter": false
+    },
+    {
+      "name": "pedge_d",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "ground",
+      "glitter": false
+    },
+    {
+      "name": "pedge_e",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "ground",
+      "glitter": false
+    },
+    {
+      "name": "pedge_f",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "ground",
+      "glitter": false
+    },
+    {
+      "name": "cave_wall",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "stone",
+      "glitter": true
+    },
+    {
+      "name": "cave_face",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "stone",
+      "glitter": true
+    },
+    {
+      "name": "cave_floor0",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "stone",
+      "glitter": true
+    },
+    {
+      "name": "cave_floor1",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "stone",
+      "glitter": true
+    },
+    {
+      "name": "cave_prop",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "stone",
+      "glitter": false
+    },
+    {
+      "name": "cave_glow",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "stone",
+      "glitter": true
+    },
+    {
+      "name": "cave_exit",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "stone",
+      "glitter": false
+    },
+    {
+      "name": "cave_floor_switch",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "stone",
+      "glitter": true
+    },
+    {
+      "name": "cave_floor_lift",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "stone",
+      "glitter": true
+    },
+    {
+      "name": "cave_floor_chest",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "stone",
+      "glitter": true
+    },
+    {
+      "name": "hollow_wall",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "foliage",
+      "glitter": true
+    },
+    {
+      "name": "hollow_face",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "foliage",
+      "glitter": true
+    },
+    {
+      "name": "hollow_floor0",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "foliage",
+      "glitter": false
+    },
+    {
+      "name": "hollow_floor1",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "foliage",
+      "glitter": true
+    },
+    {
+      "name": "hollow_prop",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "foliage",
+      "glitter": false
+    },
+    {
+      "name": "hollow_glow",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "foliage",
+      "glitter": true
+    },
+    {
+      "name": "hollow_exit",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "foliage",
+      "glitter": false
+    },
+    {
+      "name": "hollow_floor_switch",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "foliage",
+      "glitter": false
+    },
+    {
+      "name": "hollow_floor_lift",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "foliage",
+      "glitter": false
+    },
+    {
+      "name": "hollow_floor_chest",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "foliage",
+      "glitter": false
+    },
+    {
+      "name": "thicket_wall",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "foliage",
+      "glitter": true
+    },
+    {
+      "name": "thicket_face",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "foliage",
+      "glitter": true
+    },
+    {
+      "name": "thicket_floor0",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "ground",
+      "glitter": false
+    },
+    {
+      "name": "thicket_floor1",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "ground",
+      "glitter": true
+    },
+    {
+      "name": "thicket_prop",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "foliage",
+      "glitter": false
+    },
+    {
+      "name": "thicket_glow",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "ground",
+      "glitter": true
+    },
+    {
+      "name": "thicket_exit",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "ground",
+      "glitter": false
+    },
+    {
+      "name": "thicket_floor_switch",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "ground",
+      "glitter": false
+    },
+    {
+      "name": "thicket_floor_lift",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "ground",
+      "glitter": false
+    },
+    {
+      "name": "thicket_floor_chest",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "ground",
+      "glitter": false
+    },
+    {
+      "name": "mouth_cave",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "stone",
+      "glitter": true
+    },
+    {
+      "name": "mouth_hollow",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "gold",
+      "glitter": true
+    },
+    {
+      "name": "mouth_thicket",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "gold",
+      "glitter": true
+    },
+    {
+      "name": "myst_switch",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "stone",
+      "glitter": false
+    },
+    {
+      "name": "myst_switch_down",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "stone",
+      "glitter": true
+    },
+    {
+      "name": "myst_pot",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "gold",
+      "glitter": false
+    },
+    {
+      "name": "myst_chest",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "gold",
+      "glitter": true
+    },
+    {
+      "name": "myst_chest_open",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "gold",
+      "glitter": true
+    },
+    {
+      "name": "myst_spring",
+      "owner": "reboot_terrain",
+      "frames": 2,
+      "material": "water",
+      "glitter": true
+    },
+    {
+      "name": "sw_floor0",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": false
+    },
+    {
+      "name": "sw_floor1",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": false
+    },
+    {
+      "name": "sw_floor2",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": false
+    },
+    {
+      "name": "sw_floor_slime",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": false
+    },
+    {
+      "name": "sw_wall",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": true
+    },
+    {
+      "name": "sw_wall_top",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": true
+    },
+    {
+      "name": "sw_wall_slime",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": true
+    },
+    {
+      "name": "sw_water",
+      "owner": "reboot_terrain",
+      "frames": 2,
+      "material": "water",
+      "glitter": true
+    },
+    {
+      "name": "sw_lilypad",
+      "owner": "reboot_terrain",
+      "frames": 2,
+      "material": "water",
+      "glitter": false
+    },
+    {
+      "name": "sw_waterfall",
+      "owner": "reboot_terrain",
+      "frames": 2,
+      "material": "water",
+      "glitter": true
+    },
+    {
+      "name": "sw_water_edge_n",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "water",
+      "glitter": true
+    },
+    {
+      "name": "sw_water_edge_s",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "water",
+      "glitter": true
+    },
+    {
+      "name": "sw_grate",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": true
+    },
+    {
+      "name": "sw_drain_nw",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": true
+    },
+    {
+      "name": "sw_drain_ne",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": true
+    },
+    {
+      "name": "sw_drain_sw",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": true
+    },
+    {
+      "name": "sw_drain_se",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": true
+    },
+    {
+      "name": "sw_pipe",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": true
+    },
+    {
+      "name": "sw_pipe_h",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": true
+    },
+    {
+      "name": "sw_ladder",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": false
+    },
+    {
+      "name": "sw_ladder_down",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": false
+    },
+    {
+      "name": "sw_hole",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": false
+    },
+    {
+      "name": "sw_torch_lit",
+      "owner": "reboot_terrain",
+      "frames": 2,
+      "material": "stone",
+      "glitter": true
+    },
+    {
+      "name": "sw_candles",
+      "owner": "reboot_terrain",
+      "frames": 2,
+      "material": "stone",
+      "glitter": true
+    },
+    {
+      "name": "sw_lantern",
+      "owner": "reboot_terrain",
+      "frames": 2,
+      "material": "stone",
+      "glitter": true
+    },
+    {
+      "name": "sw_banner_teal",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": false
+    },
+    {
+      "name": "sw_banner_red",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": false
+    },
+    {
+      "name": "sw_arch",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": false
+    },
+    {
+      "name": "sw_rubble",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "stone",
+      "glitter": false
+    },
+    {
+      "name": "sw_counter",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": false
+    },
+    {
+      "name": "sw_awning_l",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": false
+    },
+    {
+      "name": "sw_awning_r",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": false
+    },
+    {
+      "name": "sw_rug_nw",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": false
+    },
+    {
+      "name": "sw_rug_ne",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": false
+    },
+    {
+      "name": "sw_rug_sw",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": false
+    },
+    {
+      "name": "sw_rug_se",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": false
+    },
+    {
+      "name": "sw_barrel",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": false
+    },
+    {
+      "name": "sw_crate",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": false
+    },
+    {
+      "name": "sw_skull",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "stone",
+      "glitter": false
+    },
+    {
+      "name": "sw_pot",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "gold",
+      "glitter": false
+    },
+    {
+      "name": "sw_gold",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "gold",
+      "glitter": false
+    },
+    {
+      "name": "sw_floor_grime",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": false
+    },
+    {
+      "name": "sw_floor_grime2",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": false
+    },
+    {
+      "name": "sw_floor_crack",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": false
+    },
+    {
+      "name": "sw_floor_crack2",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": false
+    },
+    {
+      "name": "sw_floor_moss",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": false
+    },
+    {
+      "name": "sw_floor_moss2",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": false
+    },
+    {
+      "name": "sw_floor_puddle",
+      "owner": "reboot_terrain",
+      "frames": 2,
+      "material": "drain",
+      "glitter": true
+    },
+    {
+      "name": "sw_floor_bones",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": false
+    },
+    {
+      "name": "sw_floor_shroom",
+      "owner": "reboot_terrain",
+      "frames": 2,
+      "material": "drain",
+      "glitter": false
+    },
+    {
+      "name": "sw_floor_drip",
+      "owner": "reboot_terrain",
+      "frames": 4,
+      "material": "drain",
+      "glitter": false
+    },
+    {
+      "name": "sw_wall_crack",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": true
+    },
+    {
+      "name": "sw_wall_moss",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": true
+    },
+    {
+      "name": "sw_wall_chain",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": true
+    },
+    {
+      "name": "sw_wall_drip",
+      "owner": "reboot_terrain",
+      "frames": 4,
+      "material": "drain",
+      "glitter": true
+    },
+    {
+      "name": "sw_wall_web",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": true
+    },
+    {
+      "name": "sw_wall_web_r",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": true
+    },
+    {
+      "name": "sw_wall_fungus",
+      "owner": "reboot_terrain",
+      "frames": 2,
+      "material": "drain",
+      "glitter": true
+    },
+    {
+      "name": "sw_wall_tally",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": true
+    },
+    {
+      "name": "sw_wall_window",
+      "owner": "reboot_terrain",
+      "frames": 2,
+      "material": "drain",
+      "glitter": true
+    },
+    {
+      "name": "sw_wall_skull",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": true
+    },
+    {
+      "name": "sw_wall_rust",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": true
+    },
+    {
+      "name": "sw_wall_top_moss",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": true
+    },
+    {
+      "name": "sw_water_scum",
+      "owner": "reboot_terrain",
+      "frames": 2,
+      "material": "water",
+      "glitter": true
+    },
+    {
+      "name": "sw_water_bubble",
+      "owner": "reboot_terrain",
+      "frames": 4,
+      "material": "water",
+      "glitter": true
+    },
+    {
+      "name": "sw_water_glint",
+      "owner": "reboot_terrain",
+      "frames": 2,
+      "material": "water",
+      "glitter": true
+    },
+    {
+      "name": "sw_water_edge_n_moss",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "water",
+      "glitter": true
+    },
+    {
+      "name": "sw_water_edge_s_moss",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "water",
+      "glitter": true
+    },
+    {
+      "name": "sw_glint",
+      "owner": "reboot_terrain",
+      "frames": 3,
+      "material": "drain",
+      "glitter": true
+    },
+    {
+      "name": "sw_glint2",
+      "owner": "reboot_terrain",
+      "frames": 3,
+      "material": "drain",
+      "glitter": true
+    },
+    {
+      "name": "sw_glint3",
+      "owner": "reboot_terrain",
+      "frames": 3,
+      "material": "drain",
+      "glitter": true
+    },
+    {
+      "name": "sw_arch_r",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": false
+    },
+    {
+      "name": "sw_grate_r",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": true
+    },
+    {
+      "name": "sw_counter_r",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": false
+    },
+    {
+      "name": "sw_fall_0",
+      "owner": "reboot_terrain",
+      "frames": 2,
+      "material": "water",
+      "glitter": false
+    },
+    {
+      "name": "sw_fall_1",
+      "owner": "reboot_terrain",
+      "frames": 2,
+      "material": "water",
+      "glitter": false
+    },
+    {
+      "name": "sw_fall_2",
+      "owner": "reboot_terrain",
+      "frames": 2,
+      "material": "water",
+      "glitter": false
+    },
+    {
+      "name": "sw_fall_3",
+      "owner": "reboot_terrain",
+      "frames": 2,
+      "material": "water",
+      "glitter": false
+    },
+    {
+      "name": "sw_fall_4",
+      "owner": "reboot_terrain",
+      "frames": 2,
+      "material": "water",
+      "glitter": false
+    },
+    {
+      "name": "sw_fall_5",
+      "owner": "reboot_terrain",
+      "frames": 2,
+      "material": "water",
+      "glitter": false
+    },
+    {
+      "name": "pedge_c1",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "ground",
+      "glitter": false
+    },
+    {
+      "name": "pedge_c2",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "ground",
+      "glitter": false
+    },
+    {
+      "name": "pedge_c3",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "ground",
+      "glitter": false
+    },
+    {
+      "name": "pedge_c4",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "ground",
+      "glitter": false
+    },
+    {
+      "name": "pedge_c5",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "ground",
+      "glitter": false
+    },
+    {
+      "name": "pedge_c6",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "ground",
+      "glitter": false
+    },
+    {
+      "name": "pedge_c7",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "ground",
+      "glitter": false
+    },
+    {
+      "name": "pedge_c8",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "ground",
+      "glitter": false
+    },
+    {
+      "name": "pedge_c9",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "ground",
+      "glitter": false
+    },
+    {
+      "name": "pedge_ca",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "ground",
+      "glitter": false
+    },
+    {
+      "name": "pedge_cb",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "ground",
+      "glitter": false
+    },
+    {
+      "name": "pedge_cc",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "ground",
+      "glitter": false
+    },
+    {
+      "name": "pedge_cd",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "ground",
+      "glitter": false
+    },
+    {
+      "name": "pedge_ce",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "ground",
+      "glitter": false
+    },
+    {
+      "name": "pedge_cf",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "ground",
+      "glitter": false
+    },
+    {
+      "name": "verge_c1",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "ground",
+      "glitter": false
+    },
+    {
+      "name": "verge_c2",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "ground",
+      "glitter": false
+    },
+    {
+      "name": "verge_c3",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "ground",
+      "glitter": false
+    },
+    {
+      "name": "verge_c4",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "ground",
+      "glitter": false
+    },
+    {
+      "name": "verge_c5",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "ground",
+      "glitter": false
+    },
+    {
+      "name": "verge_c6",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "ground",
+      "glitter": false
+    },
+    {
+      "name": "verge_c7",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "ground",
+      "glitter": false
+    },
+    {
+      "name": "verge_c8",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "ground",
+      "glitter": false
+    },
+    {
+      "name": "verge_c9",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "ground",
+      "glitter": false
+    },
+    {
+      "name": "verge_ca",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "ground",
+      "glitter": false
+    },
+    {
+      "name": "verge_cb",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "ground",
+      "glitter": false
+    },
+    {
+      "name": "verge_cc",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "ground",
+      "glitter": false
+    },
+    {
+      "name": "verge_cd",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "ground",
+      "glitter": false
+    },
+    {
+      "name": "verge_ce",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "ground",
+      "glitter": false
+    },
+    {
+      "name": "verge_cf",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "ground",
+      "glitter": false
+    },
+    {
+      "name": "rot_00",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "decay_mix",
+      "glitter": false
+    },
+    {
+      "name": "rot_01",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "decay_mix",
+      "glitter": false
+    },
+    {
+      "name": "rot_02",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "decay_mix",
+      "glitter": false
+    },
+    {
+      "name": "rot_03",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "decay_mix",
+      "glitter": false
+    },
+    {
+      "name": "rot_04",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "decay_mix",
+      "glitter": false
+    },
+    {
+      "name": "rot_05",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "decay_mix",
+      "glitter": false
+    },
+    {
+      "name": "rot_06",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "decay_mix",
+      "glitter": false
+    },
+    {
+      "name": "rot_07",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "decay_mix",
+      "glitter": false
+    },
+    {
+      "name": "rot_08",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "decay_mix",
+      "glitter": false
+    },
+    {
+      "name": "rot_09",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "decay_mix",
+      "glitter": false
+    },
+    {
+      "name": "rot_0a",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "decay_mix",
+      "glitter": false
+    },
+    {
+      "name": "rot_0b",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "decay_mix",
+      "glitter": false
+    },
+    {
+      "name": "rot_0c",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "decay_mix",
+      "glitter": false
+    },
+    {
+      "name": "rot_0d",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "decay_mix",
+      "glitter": false
+    },
+    {
+      "name": "rot_0e",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "decay_mix",
+      "glitter": false
+    },
+    {
+      "name": "rot_0f",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "decay_mix",
+      "glitter": false
+    },
+    {
+      "name": "rot_10",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "decay_mix",
+      "glitter": false
+    },
+    {
+      "name": "rot_14",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "decay_mix",
+      "glitter": false
+    },
+    {
+      "name": "rot_18",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "decay_mix",
+      "glitter": false
+    },
+    {
+      "name": "rot_1c",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "decay_mix",
+      "glitter": false
+    },
+    {
+      "name": "rot_20",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "decay_mix",
+      "glitter": false
+    },
+    {
+      "name": "rot_21",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "decay_mix",
+      "glitter": false
+    },
+    {
+      "name": "rot_28",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "decay_mix",
+      "glitter": false
+    },
+    {
+      "name": "rot_29",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "decay_mix",
+      "glitter": false
+    },
+    {
+      "name": "rot_30",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "decay_mix",
+      "glitter": false
+    },
+    {
+      "name": "rot_38",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "decay_mix",
+      "glitter": false
+    },
+    {
+      "name": "rot_40",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "decay_mix",
+      "glitter": false
+    },
+    {
+      "name": "rot_41",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "decay_mix",
+      "glitter": false
+    },
+    {
+      "name": "rot_42",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "decay_mix",
+      "glitter": false
+    },
+    {
+      "name": "rot_43",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "decay_mix",
+      "glitter": false
+    },
+    {
+      "name": "rot_50",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "decay_mix",
+      "glitter": false
+    },
+    {
+      "name": "rot_60",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "decay_mix",
+      "glitter": false
+    },
+    {
+      "name": "rot_61",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "decay_mix",
+      "glitter": false
+    },
+    {
+      "name": "rot_70",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "decay_mix",
+      "glitter": false
+    },
+    {
+      "name": "rot_80",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "decay_mix",
+      "glitter": false
+    },
+    {
+      "name": "rot_82",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "decay_mix",
+      "glitter": false
+    },
+    {
+      "name": "rot_84",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "decay_mix",
+      "glitter": false
+    },
+    {
+      "name": "rot_86",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "decay_mix",
+      "glitter": false
+    },
+    {
+      "name": "rot_90",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "decay_mix",
+      "glitter": false
+    },
+    {
+      "name": "rot_94",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "decay_mix",
+      "glitter": false
+    },
+    {
+      "name": "rot_a0",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "decay_mix",
+      "glitter": false
+    },
+    {
+      "name": "rot_b0",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "decay_mix",
+      "glitter": false
+    },
+    {
+      "name": "rot_c0",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "decay_mix",
+      "glitter": false
+    },
+    {
+      "name": "rot_c2",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "decay_mix",
+      "glitter": false
+    },
+    {
+      "name": "rot_d0",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "decay_mix",
+      "glitter": false
+    },
+    {
+      "name": "rot_e0",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "decay_mix",
+      "glitter": false
+    },
+    {
+      "name": "rot_f0",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "decay_mix",
+      "glitter": false
+    },
+    {
+      "name": "cave_crown",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "stone",
+      "glitter": false
+    },
+    {
+      "name": "cave_edge_1",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "stone",
+      "glitter": true
+    },
+    {
+      "name": "cave_edge_2",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "stone",
+      "glitter": true
+    },
+    {
+      "name": "cave_edge_3",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "stone",
+      "glitter": true
+    },
+    {
+      "name": "cave_edge_4",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "stone",
+      "glitter": true
+    },
+    {
+      "name": "cave_edge_5",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "stone",
+      "glitter": true
+    },
+    {
+      "name": "cave_edge_6",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "stone",
+      "glitter": true
+    },
+    {
+      "name": "cave_edge_7",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "stone",
+      "glitter": true
+    },
+    {
+      "name": "cave_edge_8",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "stone",
+      "glitter": true
+    },
+    {
+      "name": "cave_edge_9",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "stone",
+      "glitter": true
+    },
+    {
+      "name": "cave_edge_a",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "stone",
+      "glitter": true
+    },
+    {
+      "name": "cave_edge_b",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "stone",
+      "glitter": true
+    },
+    {
+      "name": "cave_edge_c",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "stone",
+      "glitter": true
+    },
+    {
+      "name": "cave_edge_d",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "stone",
+      "glitter": true
+    },
+    {
+      "name": "cave_edge_e",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "stone",
+      "glitter": true
+    },
+    {
+      "name": "cave_edge_f",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "stone",
+      "glitter": true
+    },
+    {
+      "name": "cave_spring",
+      "owner": "reboot_terrain",
+      "frames": 2,
+      "material": "water",
+      "glitter": true
+    },
+    {
+      "name": "hollow_crown",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "foliage",
+      "glitter": false
+    },
+    {
+      "name": "hollow_edge_1",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "foliage",
+      "glitter": false
+    },
+    {
+      "name": "hollow_edge_2",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "foliage",
+      "glitter": false
+    },
+    {
+      "name": "hollow_edge_3",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "foliage",
+      "glitter": false
+    },
+    {
+      "name": "hollow_edge_4",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "foliage",
+      "glitter": false
+    },
+    {
+      "name": "hollow_edge_5",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "foliage",
+      "glitter": false
+    },
+    {
+      "name": "hollow_edge_6",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "foliage",
+      "glitter": false
+    },
+    {
+      "name": "hollow_edge_7",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "foliage",
+      "glitter": false
+    },
+    {
+      "name": "hollow_edge_8",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "foliage",
+      "glitter": false
+    },
+    {
+      "name": "hollow_edge_9",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "foliage",
+      "glitter": false
+    },
+    {
+      "name": "hollow_edge_a",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "foliage",
+      "glitter": false
+    },
+    {
+      "name": "hollow_edge_b",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "foliage",
+      "glitter": false
+    },
+    {
+      "name": "hollow_edge_c",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "foliage",
+      "glitter": false
+    },
+    {
+      "name": "hollow_edge_d",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "foliage",
+      "glitter": false
+    },
+    {
+      "name": "hollow_edge_e",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "foliage",
+      "glitter": false
+    },
+    {
+      "name": "hollow_edge_f",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "foliage",
+      "glitter": false
+    },
+    {
+      "name": "hollow_spring",
+      "owner": "reboot_terrain",
+      "frames": 2,
+      "material": "water",
+      "glitter": true
+    },
+    {
+      "name": "thicket_crown",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "foliage",
+      "glitter": false
+    },
+    {
+      "name": "thicket_edge_1",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "ground",
+      "glitter": false
+    },
+    {
+      "name": "thicket_edge_2",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "ground",
+      "glitter": false
+    },
+    {
+      "name": "thicket_edge_3",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "ground",
+      "glitter": false
+    },
+    {
+      "name": "thicket_edge_4",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "ground",
+      "glitter": false
+    },
+    {
+      "name": "thicket_edge_5",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "ground",
+      "glitter": false
+    },
+    {
+      "name": "thicket_edge_6",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "ground",
+      "glitter": false
+    },
+    {
+      "name": "thicket_edge_7",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "ground",
+      "glitter": false
+    },
+    {
+      "name": "thicket_edge_8",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "ground",
+      "glitter": false
+    },
+    {
+      "name": "thicket_edge_9",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "ground",
+      "glitter": false
+    },
+    {
+      "name": "thicket_edge_a",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "ground",
+      "glitter": false
+    },
+    {
+      "name": "thicket_edge_b",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "ground",
+      "glitter": false
+    },
+    {
+      "name": "thicket_edge_c",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "ground",
+      "glitter": false
+    },
+    {
+      "name": "thicket_edge_d",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "ground",
+      "glitter": false
+    },
+    {
+      "name": "thicket_edge_e",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "ground",
+      "glitter": false
+    },
+    {
+      "name": "thicket_edge_f",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "ground",
+      "glitter": false
+    },
+    {
+      "name": "thicket_spring",
+      "owner": "reboot_terrain",
+      "frames": 2,
+      "material": "water",
+      "glitter": true
+    },
+    {
+      "name": "forest_rot0",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "decay_mix",
+      "glitter": false
+    },
+    {
+      "name": "forest_rot1",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "decay_mix",
+      "glitter": false
+    },
+    {
+      "name": "forest_rot2",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "decay_mix",
+      "glitter": false
+    },
+    {
+      "name": "forest_rot3",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "decay_mix",
+      "glitter": false
+    },
+    {
+      "name": "forest_rot4",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "decay_mix",
+      "glitter": false
+    },
+    {
+      "name": "forest_rot5",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "decay_mix",
+      "glitter": false
+    },
+    {
+      "name": "forest_rot6",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "decay_mix",
+      "glitter": false
+    },
+    {
+      "name": "forest_rot7",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "decay_mix",
+      "glitter": false
+    },
+    {
+      "name": "forest_canopy0",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "foliage",
+      "glitter": true
+    },
+    {
+      "name": "forest_canopy1",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "foliage",
+      "glitter": true
+    },
+    {
+      "name": "forest_canopy2",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "foliage",
+      "glitter": true
+    },
+    {
+      "name": "forest_canopy3",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "foliage",
+      "glitter": true
+    },
+    {
+      "name": "forest_canopy4",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "foliage",
+      "glitter": true
+    },
+    {
+      "name": "forest_canopy5",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "foliage",
+      "glitter": true
+    },
+    {
+      "name": "birch_0",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "foliage",
+      "glitter": true
+    },
+    {
+      "name": "birch_1",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "foliage",
+      "glitter": true
+    },
+    {
+      "name": "birch_2",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "foliage",
+      "glitter": true
+    },
+    {
+      "name": "birch_3",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "foliage",
+      "glitter": true
+    },
+    {
+      "name": "birch_4",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "stone",
+      "glitter": true
+    },
+    {
+      "name": "birch_5",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "stone",
+      "glitter": true
+    },
+    {
+      "name": "fir_0",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "foliage",
+      "glitter": true
+    },
+    {
+      "name": "fir_1",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "foliage",
+      "glitter": true
+    },
+    {
+      "name": "fir_2",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "foliage",
+      "glitter": true
+    },
+    {
+      "name": "fir_3",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "foliage",
+      "glitter": true
+    },
+    {
+      "name": "fir_4",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "foliage",
+      "glitter": true
+    },
+    {
+      "name": "fir_5",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "foliage",
+      "glitter": true
+    },
+    {
+      "name": "sicktree_0",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "blight",
+      "glitter": true
+    },
+    {
+      "name": "sicktree_1",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "blight",
+      "glitter": true
+    },
+    {
+      "name": "sicktree_2",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "blight",
+      "glitter": true
+    },
+    {
+      "name": "sicktree_3",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "blight",
+      "glitter": true
+    },
+    {
+      "name": "sicktree_4",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "blight",
+      "glitter": true
+    },
+    {
+      "name": "sicktree_5",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "blight",
+      "glitter": true
+    },
+    {
+      "name": "leaf_litter",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "foliage",
+      "glitter": false
+    },
+    {
+      "name": "fern_patch",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "foliage",
+      "glitter": false
+    },
+    {
+      "name": "sick_bones",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "stone",
+      "glitter": false
+    },
+    {
+      "name": "sick_stump",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "blight",
+      "glitter": false
+    },
+    {
+      "name": "sick_rock",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "stone",
+      "glitter": false
+    },
+    {
+      "name": "swh_000",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": true
+    },
+    {
+      "name": "swh_001",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": true
+    },
+    {
+      "name": "swh_002",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": true
+    },
+    {
+      "name": "swh_003",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": true
+    },
+    {
+      "name": "swh_004",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": true
+    },
+    {
+      "name": "swh_005",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": true
+    },
+    {
+      "name": "swh_006",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": true
+    },
+    {
+      "name": "swh_007",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": true
+    },
+    {
+      "name": "swh_008",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": true
+    },
+    {
+      "name": "swh_009",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": true
+    },
+    {
+      "name": "swh_010",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": true
+    },
+    {
+      "name": "swh_011",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": true
+    },
+    {
+      "name": "swh_012",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": true
+    },
+    {
+      "name": "swh_013",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": true
+    },
+    {
+      "name": "swh_014",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": true
+    },
+    {
+      "name": "swh_015",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": true
+    },
+    {
+      "name": "swh_016",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": true
+    },
+    {
+      "name": "swh_017",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": true
+    },
+    {
+      "name": "swh_018",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": true
+    },
+    {
+      "name": "swh_019",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": true
+    },
+    {
+      "name": "swh_020",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": true
+    },
+    {
+      "name": "swh_021",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": true
+    },
+    {
+      "name": "swh_022",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": true
+    },
+    {
+      "name": "swh_023",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": true
+    },
+    {
+      "name": "swh_024",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": true
+    },
+    {
+      "name": "swh_025",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": true
+    },
+    {
+      "name": "swh_026",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": true
+    },
+    {
+      "name": "swh_027",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": true
+    },
+    {
+      "name": "swh_028",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": true
+    },
+    {
+      "name": "swh_029",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": true
+    },
+    {
+      "name": "swh_030",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": true
+    },
+    {
+      "name": "swh_031",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": true
+    },
+    {
+      "name": "swh_032",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": true
+    },
+    {
+      "name": "swh_033",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": true
+    },
+    {
+      "name": "swh_034",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": true
+    },
+    {
+      "name": "swh_035",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": true
+    },
+    {
+      "name": "swh_036",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": true
+    },
+    {
+      "name": "swh_037",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": true
+    },
+    {
+      "name": "swh_038",
+      "owner": "reboot_terrain",
+      "frames": 3,
+      "material": "drain",
+      "glitter": true
+    },
+    {
+      "name": "swh_039",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": true
+    },
+    {
+      "name": "swh_040",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": true
+    },
+    {
+      "name": "swh_041",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": true
+    },
+    {
+      "name": "swh_042",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": true
+    },
+    {
+      "name": "swh_043",
+      "owner": "reboot_terrain",
+      "frames": 3,
+      "material": "drain",
+      "glitter": true
+    },
+    {
+      "name": "swh_044",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": true
+    },
+    {
+      "name": "swh_045",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": true
+    },
+    {
+      "name": "swh_046",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": true
+    },
+    {
+      "name": "swh_047",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": true
+    },
+    {
+      "name": "swh_048",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": true
+    },
+    {
+      "name": "swh_049",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": true
+    },
+    {
+      "name": "swh_050",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": true
+    },
+    {
+      "name": "swh_051",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": true
+    },
+    {
+      "name": "swh_052",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": true
+    },
+    {
+      "name": "swh_053",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": true
+    },
+    {
+      "name": "swh_054",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": true
+    },
+    {
+      "name": "swh_055",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": true
+    },
+    {
+      "name": "swh_056",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": true
+    },
+    {
+      "name": "swh_057",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": true
+    },
+    {
+      "name": "swh_058",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": true
+    },
+    {
+      "name": "swh_059",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": true
+    },
+    {
+      "name": "swh_060",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": true
+    },
+    {
+      "name": "swh_061",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": true
+    },
+    {
+      "name": "swh_062",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": true
+    },
+    {
+      "name": "swh_063",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": true
+    },
+    {
+      "name": "swh_064",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": true
+    },
+    {
+      "name": "swh_065",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": true
+    },
+    {
+      "name": "swh_066",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": true
+    },
+    {
+      "name": "swh_067",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": true
+    },
+    {
+      "name": "swh_068",
+      "owner": "reboot_terrain",
+      "frames": 4,
+      "material": "drain",
+      "glitter": true
+    },
+    {
+      "name": "swh_069",
+      "owner": "reboot_terrain",
+      "frames": 4,
+      "material": "drain",
+      "glitter": true
+    },
+    {
+      "name": "swh_070",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": true
+    },
+    {
+      "name": "swh_071",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": true
+    },
+    {
+      "name": "swh_072",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": true
+    },
+    {
+      "name": "swh_073",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": true
+    },
+    {
+      "name": "swh_074",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": true
+    },
+    {
+      "name": "swh_075",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": true
+    },
+    {
+      "name": "swh_076",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": true
+    },
+    {
+      "name": "swh_077",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": true
+    },
+    {
+      "name": "swh_078",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": true
+    },
+    {
+      "name": "swh_079",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": true
+    },
+    {
+      "name": "swh_080",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": true
+    },
+    {
+      "name": "swh_081",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": true
+    },
+    {
+      "name": "swh_082",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": true
+    },
+    {
+      "name": "swh_083",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": true
+    },
+    {
+      "name": "swh_084",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": true
+    },
+    {
+      "name": "swh_085",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": true
+    },
+    {
+      "name": "swh_086",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": true
+    },
+    {
+      "name": "swh_087",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": true
+    },
+    {
+      "name": "swh_088",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": true
+    },
+    {
+      "name": "swh_089",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": true
+    },
+    {
+      "name": "swh_090",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": true
+    },
+    {
+      "name": "swh_091",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": true
+    },
+    {
+      "name": "swh_092",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": true
+    },
+    {
+      "name": "swh_093",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": true
+    },
+    {
+      "name": "swh_094",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": true
+    },
+    {
+      "name": "swh_095",
+      "owner": "reboot_terrain",
+      "frames": 4,
+      "material": "drain",
+      "glitter": true
+    },
+    {
+      "name": "swh_096",
+      "owner": "reboot_terrain",
+      "frames": 4,
+      "material": "drain",
+      "glitter": true
+    },
+    {
+      "name": "swh_097",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": true
+    },
+    {
+      "name": "swh_098",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": true
+    },
+    {
+      "name": "swh_099",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": true
+    },
+    {
+      "name": "swh_100",
+      "owner": "reboot_terrain",
+      "frames": 3,
+      "material": "drain",
+      "glitter": true
+    },
+    {
+      "name": "swh_101",
+      "owner": "reboot_terrain",
+      "frames": 3,
+      "material": "drain",
+      "glitter": true
+    },
+    {
+      "name": "swh_102",
+      "owner": "reboot_terrain",
+      "frames": 3,
+      "material": "drain",
+      "glitter": true
+    },
+    {
+      "name": "swh_103",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": true
+    },
+    {
+      "name": "swh_104",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": true
+    },
+    {
+      "name": "swh_105",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": true
+    },
+    {
+      "name": "swh_106",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": true
+    },
+    {
+      "name": "swh_107",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": true
+    },
+    {
+      "name": "swh_108",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": true
+    },
+    {
+      "name": "swh_109",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": false
+    },
+    {
+      "name": "swh_110",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": false
+    },
+    {
+      "name": "swh_111",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": true
+    },
+    {
+      "name": "swh_112",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": false
+    },
+    {
+      "name": "swh_113",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": false
+    },
+    {
+      "name": "swh_114",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": false
+    },
+    {
+      "name": "swh_115",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": false
+    },
+    {
+      "name": "swh_116",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": false
+    },
+    {
+      "name": "swh_117",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": false
+    },
+    {
+      "name": "swh_118",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": true
+    },
+    {
+      "name": "swh_119",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": false
+    },
+    {
+      "name": "swh_120",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": false
+    },
+    {
+      "name": "swh_121",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": false
+    },
+    {
+      "name": "swh_122",
+      "owner": "reboot_terrain",
+      "frames": 12,
+      "material": "drain",
+      "glitter": false
+    },
+    {
+      "name": "swh_123",
+      "owner": "reboot_terrain",
+      "frames": 12,
+      "material": "drain",
+      "glitter": false
+    },
+    {
+      "name": "swh_124",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": false
+    },
+    {
+      "name": "swh_125",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": true
+    },
+    {
+      "name": "swh_126",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": false
+    },
+    {
+      "name": "swh_127",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": false
+    },
+    {
+      "name": "swh_128",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": false
+    },
+    {
+      "name": "swh_129",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": false
+    },
+    {
+      "name": "swh_130",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": false
+    },
+    {
+      "name": "swh_131",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": false
+    },
+    {
+      "name": "swh_132",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": true
+    },
+    {
+      "name": "swh_133",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": false
+    },
+    {
+      "name": "swh_134",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": false
+    },
+    {
+      "name": "swh_135",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": false
+    },
+    {
+      "name": "swh_136",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": false
+    },
+    {
+      "name": "swh_137",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": false
+    },
+    {
+      "name": "swh_138",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": true
+    },
+    {
+      "name": "swh_139",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": false
+    },
+    {
+      "name": "swh_140",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": false
+    },
+    {
+      "name": "swh_141",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": false
+    },
+    {
+      "name": "swh_142",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": false
+    },
+    {
+      "name": "swh_143",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": false
+    },
+    {
+      "name": "swh_144",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": false
+    },
+    {
+      "name": "swh_145",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": true
+    },
+    {
+      "name": "swh_146",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": false
+    },
+    {
+      "name": "swh_147",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": false
+    },
+    {
+      "name": "swh_148",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": false
+    },
+    {
+      "name": "swh_149",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": false
+    },
+    {
+      "name": "swh_150",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": false
+    },
+    {
+      "name": "swh_151",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": false
+    },
+    {
+      "name": "swh_152",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": true
+    },
+    {
+      "name": "swh_153",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": false
+    },
+    {
+      "name": "swh_154",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": false
+    },
+    {
+      "name": "swh_155",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": false
+    },
+    {
+      "name": "swh_156",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": false
+    },
+    {
+      "name": "swh_157",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": false
+    },
+    {
+      "name": "swh_158",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": false
+    },
+    {
+      "name": "swh_159",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": true
+    },
+    {
+      "name": "swh_160",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": false
+    },
+    {
+      "name": "swh_161",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": false
+    },
+    {
+      "name": "swh_162",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": false
+    },
+    {
+      "name": "swh_163",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": false
+    },
+    {
+      "name": "swh_164",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": true
+    },
+    {
+      "name": "swh_165",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": false
+    },
+    {
+      "name": "swh_166",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": false
+    },
+    {
+      "name": "swh_167",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": false
+    },
+    {
+      "name": "swh_168",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": false
+    },
+    {
+      "name": "swh_169",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": false
+    },
+    {
+      "name": "swh_170",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": false
+    },
+    {
+      "name": "swh_171",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": true
+    },
+    {
+      "name": "swh_172",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": false
+    },
+    {
+      "name": "swh_173",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": false
+    },
+    {
+      "name": "swh_174",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": false
+    },
+    {
+      "name": "swh_175",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": false
+    },
+    {
+      "name": "swh_176",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": false
+    },
+    {
+      "name": "swh_177",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": false
+    },
+    {
+      "name": "swh_178",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": true
+    },
+    {
+      "name": "swh_179",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": false
+    },
+    {
+      "name": "swh_180",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": false
+    },
+    {
+      "name": "swh_181",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": false
+    },
+    {
+      "name": "swh_182",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": false
+    },
+    {
+      "name": "swh_183",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": false
+    },
+    {
+      "name": "swh_184",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": true
+    },
+    {
+      "name": "swh_185",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": false
+    },
+    {
+      "name": "swh_186",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": false
+    },
+    {
+      "name": "swh_187",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": false
+    },
+    {
+      "name": "swh_188",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": false
+    },
+    {
+      "name": "swh_189",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": false
+    },
+    {
+      "name": "swh_190",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": false
+    },
+    {
+      "name": "swh_191",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": false
+    },
+    {
+      "name": "swh_192",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": false
+    },
+    {
+      "name": "swh_193",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": false
+    },
+    {
+      "name": "swh_194",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": true
+    },
+    {
+      "name": "swh_195",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": false
+    },
+    {
+      "name": "swh_196",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": false
+    },
+    {
+      "name": "swh_197",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": false
+    },
+    {
+      "name": "swh_198",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": false
+    },
+    {
+      "name": "swh_199",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": false
+    },
+    {
+      "name": "swh_200",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": false
+    },
+    {
+      "name": "swh_201",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": false
+    },
+    {
+      "name": "swh_202",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": false
+    },
+    {
+      "name": "swh_203",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": true
+    },
+    {
+      "name": "swh_204",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": false
+    },
+    {
+      "name": "swh_205",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": false
+    },
+    {
+      "name": "swh_206",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": false
+    },
+    {
+      "name": "swh_207",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": false
+    },
+    {
+      "name": "swh_208",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": true
+    },
+    {
+      "name": "swh_209",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": false
+    },
+    {
+      "name": "swh_210",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": false
+    },
+    {
+      "name": "swh_211",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": false
+    },
+    {
+      "name": "swh_212",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": false
+    },
+    {
+      "name": "swh_213",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": false
+    },
+    {
+      "name": "swh_214",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": true
+    },
+    {
+      "name": "swh_215",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": false
+    },
+    {
+      "name": "swh_216",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": false
+    },
+    {
+      "name": "swh_217",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": false
+    },
+    {
+      "name": "swh_218",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": true
+    },
+    {
+      "name": "swh_219",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": true
+    },
+    {
+      "name": "swh_220",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": true
+    },
+    {
+      "name": "swh_221",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": true
+    },
+    {
+      "name": "swh_222",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": true
+    },
+    {
+      "name": "swh_223",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": true
+    },
+    {
+      "name": "swh_224",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": true
+    },
+    {
+      "name": "swh_225",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": true
+    },
+    {
+      "name": "swh_226",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": true
+    },
+    {
+      "name": "swh_227",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": true
+    },
+    {
+      "name": "swh_228",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": true
+    },
+    {
+      "name": "swh_229",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": true
+    },
+    {
+      "name": "swh_230",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": true
+    },
+    {
+      "name": "swh_231",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": true
+    },
+    {
+      "name": "swh_232",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": true
+    },
+    {
+      "name": "swh_233",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": true
+    },
+    {
+      "name": "swh_234",
+      "owner": "reboot_terrain",
+      "frames": 8,
+      "material": "drain",
+      "glitter": true
+    },
+    {
+      "name": "swh_235",
+      "owner": "reboot_terrain",
+      "frames": 8,
+      "material": "drain",
+      "glitter": true
+    },
+    {
+      "name": "swh_236",
+      "owner": "reboot_terrain",
+      "frames": 8,
+      "material": "drain",
+      "glitter": true
+    },
+    {
+      "name": "swh_237",
+      "owner": "reboot_terrain",
+      "frames": 8,
+      "material": "drain",
+      "glitter": true
+    },
+    {
+      "name": "swh_238",
+      "owner": "reboot_terrain",
+      "frames": 8,
+      "material": "drain",
+      "glitter": true
+    },
+    {
+      "name": "swh_239",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": true
+    },
+    {
+      "name": "swh_240",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": true
+    },
+    {
+      "name": "swh_241",
+      "owner": "reboot_terrain",
+      "frames": 8,
+      "material": "drain",
+      "glitter": true
+    },
+    {
+      "name": "swh_242",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": true
+    },
+    {
+      "name": "swh_243",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": true
+    },
+    {
+      "name": "swh_244",
+      "owner": "reboot_terrain",
+      "frames": 8,
+      "material": "drain",
+      "glitter": true
+    },
+    {
+      "name": "swh_245",
+      "owner": "reboot_terrain",
+      "frames": 8,
+      "material": "drain",
+      "glitter": true
+    },
+    {
+      "name": "swh_246",
+      "owner": "reboot_terrain",
+      "frames": 8,
+      "material": "drain",
+      "glitter": true
+    },
+    {
+      "name": "swh_247",
+      "owner": "reboot_terrain",
+      "frames": 8,
+      "material": "drain",
+      "glitter": true
+    },
+    {
+      "name": "swh_248",
+      "owner": "reboot_terrain",
+      "frames": 8,
+      "material": "drain",
+      "glitter": true
+    },
+    {
+      "name": "swh_249",
+      "owner": "reboot_terrain",
+      "frames": 8,
+      "material": "drain",
+      "glitter": true
+    },
+    {
+      "name": "swh_250",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": true
+    },
+    {
+      "name": "swh_251",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": true
+    },
+    {
+      "name": "swh_252",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": true
+    },
+    {
+      "name": "swh_253",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": true
+    },
+    {
+      "name": "swh_254",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": true
+    },
+    {
+      "name": "swh_255",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": true
+    },
+    {
+      "name": "swh_256",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": true
+    },
+    {
+      "name": "swh_257",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": true
+    },
+    {
+      "name": "swh_258",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": true
+    },
+    {
+      "name": "swh_259",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": true
+    },
+    {
+      "name": "swh_260",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": true
+    },
+    {
+      "name": "swh_261",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": true
+    },
+    {
+      "name": "swh_262",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": true
+    },
+    {
+      "name": "swh_263",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": true
+    },
+    {
+      "name": "swh_264",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": false
+    },
+    {
+      "name": "swh_265",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": false
+    },
+    {
+      "name": "swh_266",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": false
+    },
+    {
+      "name": "swh_267",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": true
+    },
+    {
+      "name": "swh_268",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": false
+    },
+    {
+      "name": "swh_269",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": true
+    },
+    {
+      "name": "swh_270",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": true
+    },
+    {
+      "name": "swh_271",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": false
+    },
+    {
+      "name": "swh_272",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": false
+    },
+    {
+      "name": "swh_273",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": false
+    },
+    {
+      "name": "swh_274",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": false
+    },
+    {
+      "name": "swh_275",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": false
+    },
+    {
+      "name": "swh_276",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": false
+    },
+    {
+      "name": "swh_277",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": true
+    },
+    {
+      "name": "swh_278",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": false
+    },
+    {
+      "name": "swh_279",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": false
+    },
+    {
+      "name": "swh_280",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": false
+    },
+    {
+      "name": "swh_281",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": false
+    },
+    {
+      "name": "swh_282",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": false
+    },
+    {
+      "name": "swh_283",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": true
+    },
+    {
+      "name": "swh_284",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": false
+    },
+    {
+      "name": "swh_285",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": false
+    },
+    {
+      "name": "swh_286",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": false
+    },
+    {
+      "name": "swh_287",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": false
+    },
+    {
+      "name": "swh_288",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": true
+    },
+    {
+      "name": "swh_289",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": false
+    },
+    {
+      "name": "swh_290",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": false
+    },
+    {
+      "name": "swh_291",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": false
+    },
+    {
+      "name": "swh_292",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": true
+    },
+    {
+      "name": "swh_293",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": false
+    },
+    {
+      "name": "swh_294",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": false
+    },
+    {
+      "name": "swh_295",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": false
+    },
+    {
+      "name": "swh_296",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": false
+    },
+    {
+      "name": "swh_297",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": false
+    },
+    {
+      "name": "swh_298",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": false
+    },
+    {
+      "name": "swh_299",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": true
+    },
+    {
+      "name": "swh_300",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": false
+    },
+    {
+      "name": "swh_301",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": true
+    },
+    {
+      "name": "swh_302",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": false
+    },
+    {
+      "name": "swh_303",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": false
+    },
+    {
+      "name": "swh_304",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": false
+    },
+    {
+      "name": "swh_305",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": false
+    },
+    {
+      "name": "swh_306",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": false
+    },
+    {
+      "name": "swh_307",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": false
+    },
+    {
+      "name": "swh_308",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": true
+    },
+    {
+      "name": "swh_309",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": false
+    },
+    {
+      "name": "swh_310",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": false
+    },
+    {
+      "name": "swh_311",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": false
+    },
+    {
+      "name": "swh_312",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": false
+    },
+    {
+      "name": "swh_313",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": false
+    },
+    {
+      "name": "swh_314",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": false
+    },
+    {
+      "name": "swh_315",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": false
+    },
+    {
+      "name": "swh_316",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": true
+    },
+    {
+      "name": "swh_317",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": false
+    },
+    {
+      "name": "swh_318",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": false
+    },
+    {
+      "name": "swh_319",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": false
+    },
+    {
+      "name": "swh_320",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": true
+    },
+    {
+      "name": "swh_321",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": true
+    },
+    {
+      "name": "swh_322",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": true
+    },
+    {
+      "name": "swh_323",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": true
+    },
+    {
+      "name": "swh_324",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": true
+    },
+    {
+      "name": "swh_325",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": true
+    },
+    {
+      "name": "swh_326",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": true
+    },
+    {
+      "name": "swh_327",
+      "owner": "reboot_terrain",
+      "frames": 2,
+      "material": "drain",
+      "glitter": true
+    },
+    {
+      "name": "swh_328",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": true
+    },
+    {
+      "name": "swh_329",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": true
+    },
+    {
+      "name": "swh_330",
+      "owner": "reboot_terrain",
+      "frames": 2,
+      "material": "drain",
+      "glitter": true
+    },
+    {
+      "name": "swh_331",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": true
+    },
+    {
+      "name": "swh_332",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": true
+    },
+    {
+      "name": "swh_333",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": true
+    },
+    {
+      "name": "swh_334",
+      "owner": "reboot_terrain",
+      "frames": 8,
+      "material": "drain",
+      "glitter": true
+    },
+    {
+      "name": "swh_335",
+      "owner": "reboot_terrain",
+      "frames": 8,
+      "material": "drain",
+      "glitter": true
+    },
+    {
+      "name": "swh_336",
+      "owner": "reboot_terrain",
+      "frames": 8,
+      "material": "drain",
+      "glitter": true
+    },
+    {
+      "name": "swh_337",
+      "owner": "reboot_terrain",
+      "frames": 24,
+      "material": "drain",
+      "glitter": true
+    },
+    {
+      "name": "swh_338",
+      "owner": "reboot_terrain",
+      "frames": 8,
+      "material": "drain",
+      "glitter": true
+    },
+    {
+      "name": "swh_339",
+      "owner": "reboot_terrain",
+      "frames": 8,
+      "material": "drain",
+      "glitter": true
+    },
+    {
+      "name": "swh_340",
+      "owner": "reboot_terrain",
+      "frames": 8,
+      "material": "drain",
+      "glitter": true
+    },
+    {
+      "name": "swh_341",
+      "owner": "reboot_terrain",
+      "frames": 24,
+      "material": "drain",
+      "glitter": true
+    },
+    {
+      "name": "swh_342",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": true
+    },
+    {
+      "name": "swh_343",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": true
+    },
+    {
+      "name": "swh_344",
+      "owner": "reboot_terrain",
+      "frames": 8,
+      "material": "drain",
+      "glitter": true
+    },
+    {
+      "name": "swh_345",
+      "owner": "reboot_terrain",
+      "frames": 8,
+      "material": "drain",
+      "glitter": true
+    },
+    {
+      "name": "swh_346",
+      "owner": "reboot_terrain",
+      "frames": 8,
+      "material": "drain",
+      "glitter": true
+    },
+    {
+      "name": "swh_347",
+      "owner": "reboot_terrain",
+      "frames": 8,
+      "material": "drain",
+      "glitter": true
+    },
+    {
+      "name": "swh_348",
+      "owner": "reboot_terrain",
+      "frames": 8,
+      "material": "drain",
+      "glitter": true
+    },
+    {
+      "name": "swh_349",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": true
+    },
+    {
+      "name": "swh_350",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": true
+    },
+    {
+      "name": "swh_351",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": true
+    },
+    {
+      "name": "swh_352",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": true
+    },
+    {
+      "name": "swh_353",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": true
+    },
+    {
+      "name": "swh_354",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": true
+    },
+    {
+      "name": "swh_355",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": true
+    },
+    {
+      "name": "swh_356",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": true
+    },
+    {
+      "name": "swh_357",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": true
+    },
+    {
+      "name": "swh_358",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": true
+    },
+    {
+      "name": "swh_359",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": true
+    },
+    {
+      "name": "swh_360",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": true
+    },
+    {
+      "name": "swh_361",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": true
+    },
+    {
+      "name": "swh_362",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": true
+    },
+    {
+      "name": "swh_363",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": true
+    },
+    {
+      "name": "swh_364",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": true
+    },
+    {
+      "name": "swh_365",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": true
+    },
+    {
+      "name": "swh_366",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": true
+    },
+    {
+      "name": "swh_367",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": true
+    },
+    {
+      "name": "swh_368",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": true
+    },
+    {
+      "name": "swh_369",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "drain",
+      "glitter": true
+    },
+    {
+      "name": "forest_blight_pit",
+      "owner": "reboot_terrain",
+      "frames": 2,
+      "material": "blight",
+      "glitter": false
+    },
+    {
+      "name": "forest_blight_dead_tree",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "blight",
+      "glitter": true
+    },
+    {
+      "name": "forest_blight_vein0",
+      "owner": "reboot_terrain",
+      "frames": 2,
+      "material": "blight",
+      "glitter": true
+    },
+    {
+      "name": "forest_blight_vein1",
+      "owner": "reboot_terrain",
+      "frames": 2,
+      "material": "blight",
+      "glitter": true
+    },
+    {
+      "name": "forest_blight_vein2",
+      "owner": "reboot_terrain",
+      "frames": 2,
+      "material": "blight",
+      "glitter": true
+    },
+    {
+      "name": "forest_blight_vein3",
+      "owner": "reboot_terrain",
+      "frames": 2,
+      "material": "blight",
+      "glitter": true
+    },
+    {
+      "name": "forest_blight_vein4",
+      "owner": "reboot_terrain",
+      "frames": 2,
+      "material": "blight",
+      "glitter": true
+    },
+    {
+      "name": "forest_blight_vein5",
+      "owner": "reboot_terrain",
+      "frames": 2,
+      "material": "blight",
+      "glitter": true
+    },
+    {
+      "name": "forest_blight_vein6",
+      "owner": "reboot_terrain",
+      "frames": 2,
+      "material": "blight",
+      "glitter": true
+    },
+    {
+      "name": "forest_blight_vein7",
+      "owner": "reboot_terrain",
+      "frames": 2,
+      "material": "blight",
+      "glitter": true
+    },
+    {
+      "name": "forest_blight_tree0",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "blight",
+      "glitter": true
+    },
+    {
+      "name": "forest_blight_tree1",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "blight",
+      "glitter": true
+    },
+    {
+      "name": "forest_blight_tree2",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "blight",
+      "glitter": true
+    },
+    {
+      "name": "forest_blight_tree3",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "blight",
+      "glitter": true
+    },
+    {
+      "name": "forest_blight_tree4",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "blight",
+      "glitter": true
+    },
+    {
+      "name": "forest_blight_tree5",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "blight",
+      "glitter": true
+    },
+    {
+      "name": "shrine_plate",
+      "owner": "reboot_terrain",
+      "frames": 1,
+      "material": "stone",
+      "glitter": true
+    }
+  ],
+  "sprites": [
+    {
+      "sheet": "hero",
+      "frame": "idle_s",
+      "owner": "reboot_actors",
+      "canvas": [
+        32,
+        32
+      ]
+    },
+    {
+      "sheet": "hero",
+      "frame": "walk_s1",
+      "owner": "reboot_actors",
+      "canvas": [
+        32,
+        32
+      ]
+    },
+    {
+      "sheet": "hero",
+      "frame": "walk_s2",
+      "owner": "reboot_actors",
+      "canvas": [
+        32,
+        32
+      ]
+    },
+    {
+      "sheet": "hero",
+      "frame": "idle_n",
+      "owner": "reboot_actors",
+      "canvas": [
+        32,
+        32
+      ]
+    },
+    {
+      "sheet": "hero",
+      "frame": "walk_n1",
+      "owner": "reboot_actors",
+      "canvas": [
+        32,
+        32
+      ]
+    },
+    {
+      "sheet": "hero",
+      "frame": "walk_n2",
+      "owner": "reboot_actors",
+      "canvas": [
+        32,
+        32
+      ]
+    },
+    {
+      "sheet": "hero",
+      "frame": "idle_e",
+      "owner": "reboot_actors",
+      "canvas": [
+        32,
+        32
+      ]
+    },
+    {
+      "sheet": "hero",
+      "frame": "walk_e1",
+      "owner": "reboot_actors",
+      "canvas": [
+        32,
+        32
+      ]
+    },
+    {
+      "sheet": "hero",
+      "frame": "walk_e2",
+      "owner": "reboot_actors",
+      "canvas": [
+        32,
+        32
+      ]
+    },
+    {
+      "sheet": "hero",
+      "frame": "atk_s",
+      "owner": "reboot_actors",
+      "canvas": [
+        32,
+        32
+      ]
+    },
+    {
+      "sheet": "hero",
+      "frame": "atk_n",
+      "owner": "reboot_actors",
+      "canvas": [
+        32,
+        32
+      ]
+    },
+    {
+      "sheet": "hero",
+      "frame": "atk_e",
+      "owner": "reboot_actors",
+      "canvas": [
+        32,
+        32
+      ]
+    },
+    {
+      "sheet": "hero",
+      "frame": "atk_s1",
+      "owner": "reboot_actors",
+      "canvas": [
+        32,
+        32
+      ]
+    },
+    {
+      "sheet": "hero",
+      "frame": "atk_n1",
+      "owner": "reboot_actors",
+      "canvas": [
+        32,
+        32
+      ]
+    },
+    {
+      "sheet": "hero",
+      "frame": "atk_e1",
+      "owner": "reboot_actors",
+      "canvas": [
+        32,
+        32
+      ]
+    },
+    {
+      "sheet": "hero",
+      "frame": "atk_s3",
+      "owner": "reboot_actors",
+      "canvas": [
+        32,
+        32
+      ]
+    },
+    {
+      "sheet": "hero",
+      "frame": "atk_n3",
+      "owner": "reboot_actors",
+      "canvas": [
+        32,
+        32
+      ]
+    },
+    {
+      "sheet": "hero",
+      "frame": "atk_e3",
+      "owner": "reboot_actors",
+      "canvas": [
+        32,
+        32
+      ]
+    },
+    {
+      "sheet": "hero",
+      "frame": "roll_1",
+      "owner": "reboot_actors",
+      "canvas": [
+        32,
+        32
+      ]
+    },
+    {
+      "sheet": "hero",
+      "frame": "roll_2",
+      "owner": "reboot_actors",
+      "canvas": [
+        32,
+        32
+      ]
+    },
+    {
+      "sheet": "hero",
+      "frame": "roll_3",
+      "owner": "reboot_actors",
+      "canvas": [
+        32,
+        32
+      ]
+    },
+    {
+      "sheet": "hero",
+      "frame": "roll_4",
+      "owner": "reboot_actors",
+      "canvas": [
+        32,
+        32
+      ]
+    },
+    {
+      "sheet": "hero",
+      "frame": "roll_5",
+      "owner": "reboot_actors",
+      "canvas": [
+        32,
+        32
+      ]
+    },
+    {
+      "sheet": "hero",
+      "frame": "roll_6",
+      "owner": "reboot_actors",
+      "canvas": [
+        32,
+        32
+      ]
+    },
+    {
+      "sheet": "hero",
+      "frame": "roll_7",
+      "owner": "reboot_actors",
+      "canvas": [
+        32,
+        32
+      ]
+    },
+    {
+      "sheet": "hero",
+      "frame": "hurt_s",
+      "owner": "reboot_actors",
+      "canvas": [
+        32,
+        32
+      ]
+    },
+    {
+      "sheet": "hero",
+      "frame": "hurt_n",
+      "owner": "reboot_actors",
+      "canvas": [
+        32,
+        32
+      ]
+    },
+    {
+      "sheet": "hero",
+      "frame": "hurt_e",
+      "owner": "reboot_actors",
+      "canvas": [
+        32,
+        32
+      ]
+    },
+    {
+      "sheet": "hero",
+      "frame": "jump_s",
+      "owner": "reboot_actors",
+      "canvas": [
+        32,
+        32
+      ]
+    },
+    {
+      "sheet": "hero",
+      "frame": "jump_n",
+      "owner": "reboot_actors",
+      "canvas": [
+        32,
+        32
+      ]
+    },
+    {
+      "sheet": "hero",
+      "frame": "jump_e",
+      "owner": "reboot_actors",
+      "canvas": [
+        32,
+        32
+      ]
+    },
+    {
+      "sheet": "hero",
+      "frame": "itemget",
+      "owner": "reboot_actors",
+      "canvas": [
+        32,
+        32
+      ]
+    },
+    {
+      "sheet": "hero",
+      "frame": "carry_s",
+      "owner": "reboot_actors",
+      "canvas": [
+        32,
+        32
+      ]
+    },
+    {
+      "sheet": "hero",
+      "frame": "carry_s1",
+      "owner": "reboot_actors",
+      "canvas": [
+        32,
+        32
+      ]
+    },
+    {
+      "sheet": "hero",
+      "frame": "carry_s2",
+      "owner": "reboot_actors",
+      "canvas": [
+        32,
+        32
+      ]
+    },
+    {
+      "sheet": "hero",
+      "frame": "carry_n",
+      "owner": "reboot_actors",
+      "canvas": [
+        32,
+        32
+      ]
+    },
+    {
+      "sheet": "hero",
+      "frame": "carry_n1",
+      "owner": "reboot_actors",
+      "canvas": [
+        32,
+        32
+      ]
+    },
+    {
+      "sheet": "hero",
+      "frame": "carry_n2",
+      "owner": "reboot_actors",
+      "canvas": [
+        32,
+        32
+      ]
+    },
+    {
+      "sheet": "hero",
+      "frame": "carry_e",
+      "owner": "reboot_actors",
+      "canvas": [
+        32,
+        32
+      ]
+    },
+    {
+      "sheet": "hero",
+      "frame": "carry_e1",
+      "owner": "reboot_actors",
+      "canvas": [
+        32,
+        32
+      ]
+    },
+    {
+      "sheet": "hero",
+      "frame": "carry_e2",
+      "owner": "reboot_actors",
+      "canvas": [
+        32,
+        32
+      ]
+    },
+    {
+      "sheet": "hero",
+      "frame": "drown_1",
+      "owner": "reboot_actors",
+      "canvas": [
+        32,
+        32
+      ]
+    },
+    {
+      "sheet": "hero",
+      "frame": "drown_2",
+      "owner": "reboot_actors",
+      "canvas": [
+        32,
+        32
+      ]
+    },
+    {
+      "sheet": "hero",
+      "frame": "drown_3",
+      "owner": "reboot_actors",
+      "canvas": [
+        32,
+        32
+      ]
+    },
+    {
+      "sheet": "hero",
+      "frame": "fall_1",
+      "owner": "reboot_actors",
+      "canvas": [
+        32,
+        32
+      ]
+    },
+    {
+      "sheet": "hero",
+      "frame": "fall_2",
+      "owner": "reboot_actors",
+      "canvas": [
+        32,
+        32
+      ]
+    },
+    {
+      "sheet": "hero",
+      "frame": "fall_3",
+      "owner": "reboot_actors",
+      "canvas": [
+        32,
+        32
+      ]
+    },
+    {
+      "sheet": "hero",
+      "frame": "guard_s",
+      "owner": "reboot_actors",
+      "canvas": [
+        32,
+        32
+      ]
+    },
+    {
+      "sheet": "hero",
+      "frame": "guard_n",
+      "owner": "reboot_actors",
+      "canvas": [
+        32,
+        32
+      ]
+    },
+    {
+      "sheet": "hero",
+      "frame": "guard_e",
+      "owner": "reboot_actors",
+      "canvas": [
+        32,
+        32
+      ]
+    },
+    {
+      "sheet": "hero",
+      "frame": "use_n1",
+      "owner": "reboot_actors",
+      "canvas": [
+        32,
+        32
+      ]
+    },
+    {
+      "sheet": "hero",
+      "frame": "cape_n1",
+      "owner": "reboot_actors",
+      "canvas": [
+        32,
+        32
+      ]
+    },
+    {
+      "sheet": "hero",
+      "frame": "use_n2",
+      "owner": "reboot_actors",
+      "canvas": [
+        32,
+        32
+      ]
+    },
+    {
+      "sheet": "hero",
+      "frame": "cape_n2",
+      "owner": "reboot_actors",
+      "canvas": [
+        32,
+        32
+      ]
+    },
+    {
+      "sheet": "hero",
+      "frame": "use_n3",
+      "owner": "reboot_actors",
+      "canvas": [
+        32,
+        32
+      ]
+    },
+    {
+      "sheet": "hero",
+      "frame": "cape_n3",
+      "owner": "reboot_actors",
+      "canvas": [
+        32,
+        32
+      ]
+    },
+    {
+      "sheet": "hero",
+      "frame": "use_e1",
+      "owner": "reboot_actors",
+      "canvas": [
+        32,
+        32
+      ]
+    },
+    {
+      "sheet": "hero",
+      "frame": "cape_e1",
+      "owner": "reboot_actors",
+      "canvas": [
+        32,
+        32
+      ]
+    },
+    {
+      "sheet": "hero",
+      "frame": "use_e2",
+      "owner": "reboot_actors",
+      "canvas": [
+        32,
+        32
+      ]
+    },
+    {
+      "sheet": "hero",
+      "frame": "cape_e2",
+      "owner": "reboot_actors",
+      "canvas": [
+        32,
+        32
+      ]
+    },
+    {
+      "sheet": "hero",
+      "frame": "use_e3",
+      "owner": "reboot_actors",
+      "canvas": [
+        32,
+        32
+      ]
+    },
+    {
+      "sheet": "hero",
+      "frame": "cape_e3",
+      "owner": "reboot_actors",
+      "canvas": [
+        32,
+        32
+      ]
+    },
+    {
+      "sheet": "hero",
+      "frame": "use_s1",
+      "owner": "reboot_actors",
+      "canvas": [
+        32,
+        32
+      ]
+    },
+    {
+      "sheet": "hero",
+      "frame": "cape_s1",
+      "owner": "reboot_actors",
+      "canvas": [
+        32,
+        32
+      ]
+    },
+    {
+      "sheet": "hero",
+      "frame": "use_s2",
+      "owner": "reboot_actors",
+      "canvas": [
+        32,
+        32
+      ]
+    },
+    {
+      "sheet": "hero",
+      "frame": "cape_s2",
+      "owner": "reboot_actors",
+      "canvas": [
+        32,
+        32
+      ]
+    },
+    {
+      "sheet": "hero",
+      "frame": "use_s3",
+      "owner": "reboot_actors",
+      "canvas": [
+        32,
+        32
+      ]
+    },
+    {
+      "sheet": "hero",
+      "frame": "cape_s3",
+      "owner": "reboot_actors",
+      "canvas": [
+        32,
+        32
+      ]
+    },
+    {
+      "sheet": "hero",
+      "frame": "guard_n1",
+      "owner": "reboot_actors",
+      "canvas": [
+        32,
+        32
+      ]
+    },
+    {
+      "sheet": "hero",
+      "frame": "guard_n2",
+      "owner": "reboot_actors",
+      "canvas": [
+        32,
+        32
+      ]
+    },
+    {
+      "sheet": "hero",
+      "frame": "guard_e1",
+      "owner": "reboot_actors",
+      "canvas": [
+        32,
+        32
+      ]
+    },
+    {
+      "sheet": "hero",
+      "frame": "guard_e2",
+      "owner": "reboot_actors",
+      "canvas": [
+        32,
+        32
+      ]
+    },
+    {
+      "sheet": "hero",
+      "frame": "guard_s1",
+      "owner": "reboot_actors",
+      "canvas": [
+        32,
+        32
+      ]
+    },
+    {
+      "sheet": "hero",
+      "frame": "guard_s2",
+      "owner": "reboot_actors",
+      "canvas": [
+        32,
+        32
+      ]
+    },
+    {
+      "sheet": "hero",
+      "frame": "lift_n0",
+      "owner": "reboot_actors",
+      "canvas": [
+        32,
+        32
+      ]
+    },
+    {
+      "sheet": "hero",
+      "frame": "lift_n1",
+      "owner": "reboot_actors",
+      "canvas": [
+        32,
+        32
+      ]
+    },
+    {
+      "sheet": "hero",
+      "frame": "lift_n2",
+      "owner": "reboot_actors",
+      "canvas": [
+        32,
+        32
+      ]
+    },
+    {
+      "sheet": "hero",
+      "frame": "lift_e0",
+      "owner": "reboot_actors",
+      "canvas": [
+        32,
+        32
+      ]
+    },
+    {
+      "sheet": "hero",
+      "frame": "lift_e1",
+      "owner": "reboot_actors",
+      "canvas": [
+        32,
+        32
+      ]
+    },
+    {
+      "sheet": "hero",
+      "frame": "lift_e2",
+      "owner": "reboot_actors",
+      "canvas": [
+        32,
+        32
+      ]
+    },
+    {
+      "sheet": "hero",
+      "frame": "lift_s0",
+      "owner": "reboot_actors",
+      "canvas": [
+        32,
+        32
+      ]
+    },
+    {
+      "sheet": "hero",
+      "frame": "lift_s1",
+      "owner": "reboot_actors",
+      "canvas": [
+        32,
+        32
+      ]
+    },
+    {
+      "sheet": "hero",
+      "frame": "lift_s2",
+      "owner": "reboot_actors",
+      "canvas": [
+        32,
+        32
+      ]
+    },
+    {
+      "sheet": "hero",
+      "frame": "dead_0",
+      "owner": "reboot_actors",
+      "canvas": [
+        32,
+        32
+      ]
+    },
+    {
+      "sheet": "hero",
+      "frame": "dead_1",
+      "owner": "reboot_actors",
+      "canvas": [
+        32,
+        32
+      ]
+    },
+    {
+      "sheet": "hero",
+      "frame": "dead_2",
+      "owner": "reboot_actors",
+      "canvas": [
+        32,
+        32
+      ]
+    },
+    {
+      "sheet": "hero",
+      "frame": "bow_n0",
+      "owner": "reboot_actors",
+      "canvas": [
+        32,
+        32
+      ]
+    },
+    {
+      "sheet": "hero",
+      "frame": "bow_n1",
+      "owner": "reboot_actors",
+      "canvas": [
+        32,
+        32
+      ]
+    },
+    {
+      "sheet": "hero",
+      "frame": "bow_n2",
+      "owner": "reboot_actors",
+      "canvas": [
+        32,
+        32
+      ]
+    },
+    {
+      "sheet": "hero",
+      "frame": "bow_e0",
+      "owner": "reboot_actors",
+      "canvas": [
+        32,
+        32
+      ]
+    },
+    {
+      "sheet": "hero",
+      "frame": "bow_e1",
+      "owner": "reboot_actors",
+      "canvas": [
+        32,
+        32
+      ]
+    },
+    {
+      "sheet": "hero",
+      "frame": "bow_e2",
+      "owner": "reboot_actors",
+      "canvas": [
+        32,
+        32
+      ]
+    },
+    {
+      "sheet": "hero",
+      "frame": "bow_s0",
+      "owner": "reboot_actors",
+      "canvas": [
+        32,
+        32
+      ]
+    },
+    {
+      "sheet": "hero",
+      "frame": "bow_s1",
+      "owner": "reboot_actors",
+      "canvas": [
+        32,
+        32
+      ]
+    },
+    {
+      "sheet": "hero",
+      "frame": "bow_s2",
+      "owner": "reboot_actors",
+      "canvas": [
+        32,
+        32
+      ]
+    },
+    {
+      "sheet": "hero",
+      "frame": "roll_n1",
+      "owner": "reboot_actors",
+      "canvas": [
+        32,
+        32
+      ]
+    },
+    {
+      "sheet": "hero",
+      "frame": "roll_n6",
+      "owner": "reboot_actors",
+      "canvas": [
+        32,
+        32
+      ]
+    },
+    {
+      "sheet": "hero",
+      "frame": "roll_n7",
+      "owner": "reboot_actors",
+      "canvas": [
+        32,
+        32
+      ]
+    },
+    {
+      "sheet": "hero",
+      "frame": "roll_s1",
+      "owner": "reboot_actors",
+      "canvas": [
+        32,
+        32
+      ]
+    },
+    {
+      "sheet": "hero",
+      "frame": "roll_s6",
+      "owner": "reboot_actors",
+      "canvas": [
+        32,
+        32
+      ]
+    },
+    {
+      "sheet": "hero",
+      "frame": "roll_s7",
+      "owner": "reboot_actors",
+      "canvas": [
+        32,
+        32
+      ]
+    },
+    {
+      "sheet": "sword",
+      "frame": "blade_s",
+      "owner": "reboot_items",
+      "canvas": [
+        16,
+        16
+      ]
+    },
+    {
+      "sheet": "sword",
+      "frame": "blade_e",
+      "owner": "reboot_items",
+      "canvas": [
+        16,
+        16
+      ]
+    },
+    {
+      "sheet": "sword",
+      "frame": "blade_se",
+      "owner": "reboot_items",
+      "canvas": [
+        16,
+        16
+      ]
+    },
+    {
+      "sheet": "shield",
+      "frame": "front",
+      "owner": "reboot_items",
+      "canvas": [
+        16,
+        16
+      ]
+    },
+    {
+      "sheet": "shield",
+      "frame": "side",
+      "owner": "reboot_items",
+      "canvas": [
+        16,
+        16
+      ]
+    },
+    {
+      "sheet": "shield",
+      "frame": "back",
+      "owner": "reboot_items",
+      "canvas": [
+        16,
+        16
+      ]
+    },
+    {
+      "sheet": "shield",
+      "frame": "upgraded_front",
+      "owner": "reboot_items",
+      "canvas": [
+        16,
+        16
+      ]
+    },
+    {
+      "sheet": "shield",
+      "frame": "upgraded_side",
+      "owner": "reboot_items",
+      "canvas": [
+        16,
+        16
+      ]
+    },
+    {
+      "sheet": "shield",
+      "frame": "upgraded_back",
+      "owner": "reboot_items",
+      "canvas": [
+        16,
+        16
+      ]
+    },
+    {
+      "sheet": "items",
+      "frame": "none",
+      "owner": "reboot_items",
+      "canvas": [
+        16,
+        16
+      ]
+    },
+    {
+      "sheet": "items",
+      "frame": "bombs",
+      "owner": "reboot_items",
+      "canvas": [
+        16,
+        16
+      ]
+    },
+    {
+      "sheet": "items",
+      "frame": "lamp",
+      "owner": "reboot_items",
+      "canvas": [
+        16,
+        16
+      ]
+    },
+    {
+      "sheet": "items",
+      "frame": "cloak",
+      "owner": "reboot_items",
+      "canvas": [
+        16,
+        16
+      ]
+    },
+    {
+      "sheet": "items",
+      "frame": "key",
+      "owner": "reboot_items",
+      "canvas": [
+        16,
+        16
+      ]
+    },
+    {
+      "sheet": "items",
+      "frame": "heart_piece",
+      "owner": "reboot_items",
+      "canvas": [
+        16,
+        16
+      ]
+    },
+    {
+      "sheet": "items",
+      "frame": "heart_container",
+      "owner": "reboot_items",
+      "canvas": [
+        16,
+        16
+      ]
+    },
+    {
+      "sheet": "items",
+      "frame": "gilt_big",
+      "owner": "reboot_items",
+      "canvas": [
+        16,
+        16
+      ]
+    },
+    {
+      "sheet": "items",
+      "frame": "relic",
+      "owner": "reboot_items",
+      "canvas": [
+        16,
+        16
+      ]
+    },
+    {
+      "sheet": "items",
+      "frame": "heart",
+      "owner": "reboot_items",
+      "canvas": [
+        16,
+        16
+      ]
+    },
+    {
+      "sheet": "items",
+      "frame": "gilt",
+      "owner": "reboot_items",
+      "canvas": [
+        16,
+        16
+      ]
+    },
+    {
+      "sheet": "items",
+      "frame": "bomb_pickup",
+      "owner": "reboot_items",
+      "canvas": [
+        16,
+        16
+      ]
+    },
+    {
+      "sheet": "items",
+      "frame": "spark",
+      "owner": "reboot_items",
+      "canvas": [
+        16,
+        16
+      ]
+    },
+    {
+      "sheet": "items",
+      "frame": "grail",
+      "owner": "reboot_items",
+      "canvas": [
+        16,
+        16
+      ]
+    },
+    {
+      "sheet": "items",
+      "frame": "gauntlet",
+      "owner": "reboot_items",
+      "canvas": [
+        16,
+        16
+      ]
+    },
+    {
+      "sheet": "items",
+      "frame": "bow",
+      "owner": "reboot_items",
+      "canvas": [
+        16,
+        16
+      ]
+    },
+    {
+      "sheet": "items",
+      "frame": "arrow1",
+      "owner": "reboot_items",
+      "canvas": [
+        16,
+        16
+      ]
+    },
+    {
+      "sheet": "items",
+      "frame": "arrow5",
+      "owner": "reboot_items",
+      "canvas": [
+        16,
+        16
+      ]
+    },
+    {
+      "sheet": "items",
+      "frame": "arrow10",
+      "owner": "reboot_items",
+      "canvas": [
+        16,
+        16
+      ]
+    },
+    {
+      "sheet": "items",
+      "frame": "hubcap",
+      "owner": "reboot_items",
+      "canvas": [
+        16,
+        16
+      ]
+    },
+    {
+      "sheet": "items",
+      "frame": "bomb_lit",
+      "owner": "reboot_items",
+      "canvas": [
+        16,
+        16
+      ]
+    },
+    {
+      "sheet": "beetle",
+      "frame": "walk_s1",
+      "owner": "reboot_actors",
+      "canvas": [
+        16,
+        16
+      ]
+    },
+    {
+      "sheet": "beetle",
+      "frame": "walk_s2",
+      "owner": "reboot_actors",
+      "canvas": [
+        16,
+        16
+      ]
+    },
+    {
+      "sheet": "beetle",
+      "frame": "walk_e1",
+      "owner": "reboot_actors",
+      "canvas": [
+        16,
+        16
+      ]
+    },
+    {
+      "sheet": "beetle",
+      "frame": "walk_e2",
+      "owner": "reboot_actors",
+      "canvas": [
+        16,
+        16
+      ]
+    },
+    {
+      "sheet": "bat",
+      "frame": "fly1",
+      "owner": "reboot_actors",
+      "canvas": [
+        16,
+        16
+      ]
+    },
+    {
+      "sheet": "bat",
+      "frame": "fly2",
+      "owner": "reboot_actors",
+      "canvas": [
+        16,
+        16
+      ]
+    },
+    {
+      "sheet": "bat",
+      "frame": "rest",
+      "owner": "reboot_actors",
+      "canvas": [
+        16,
+        16
+      ]
+    },
+    {
+      "sheet": "slime",
+      "frame": "idle",
+      "owner": "reboot_actors",
+      "canvas": [
+        16,
+        16
+      ]
+    },
+    {
+      "sheet": "slime",
+      "frame": "squash",
+      "owner": "reboot_actors",
+      "canvas": [
+        16,
+        16
+      ]
+    },
+    {
+      "sheet": "slime",
+      "frame": "jump",
+      "owner": "reboot_actors",
+      "canvas": [
+        16,
+        16
+      ]
+    },
+    {
+      "sheet": "spitter",
+      "frame": "idle_s",
+      "owner": "reboot_actors",
+      "canvas": [
+        16,
+        16
+      ]
+    },
+    {
+      "sheet": "spitter",
+      "frame": "walk_s",
+      "owner": "reboot_actors",
+      "canvas": [
+        16,
+        16
+      ]
+    },
+    {
+      "sheet": "spitter",
+      "frame": "spit_s",
+      "owner": "reboot_actors",
+      "canvas": [
+        16,
+        16
+      ]
+    },
+    {
+      "sheet": "spitter",
+      "frame": "idle_n",
+      "owner": "reboot_actors",
+      "canvas": [
+        16,
+        16
+      ]
+    },
+    {
+      "sheet": "spitter",
+      "frame": "walk_n",
+      "owner": "reboot_actors",
+      "canvas": [
+        16,
+        16
+      ]
+    },
+    {
+      "sheet": "spitter",
+      "frame": "spit_n",
+      "owner": "reboot_actors",
+      "canvas": [
+        16,
+        16
+      ]
+    },
+    {
+      "sheet": "spitter",
+      "frame": "idle_e",
+      "owner": "reboot_actors",
+      "canvas": [
+        16,
+        16
+      ]
+    },
+    {
+      "sheet": "spitter",
+      "frame": "walk_e",
+      "owner": "reboot_actors",
+      "canvas": [
+        16,
+        16
+      ]
+    },
+    {
+      "sheet": "spitter",
+      "frame": "spit_e",
+      "owner": "reboot_actors",
+      "canvas": [
+        16,
+        16
+      ]
+    },
+    {
+      "sheet": "knight",
+      "frame": "walk_s1",
+      "owner": "reboot_actors",
+      "canvas": [
+        16,
+        32
+      ]
+    },
+    {
+      "sheet": "knight",
+      "frame": "walk_s2",
+      "owner": "reboot_actors",
+      "canvas": [
+        16,
+        32
+      ]
+    },
+    {
+      "sheet": "knight",
+      "frame": "idle_s",
+      "owner": "reboot_actors",
+      "canvas": [
+        16,
+        32
+      ]
+    },
+    {
+      "sheet": "knight",
+      "frame": "atk_s",
+      "owner": "reboot_actors",
+      "canvas": [
+        16,
+        32
+      ]
+    },
+    {
+      "sheet": "knight",
+      "frame": "walk_n1",
+      "owner": "reboot_actors",
+      "canvas": [
+        16,
+        32
+      ]
+    },
+    {
+      "sheet": "knight",
+      "frame": "walk_n2",
+      "owner": "reboot_actors",
+      "canvas": [
+        16,
+        32
+      ]
+    },
+    {
+      "sheet": "knight",
+      "frame": "idle_n",
+      "owner": "reboot_actors",
+      "canvas": [
+        16,
+        32
+      ]
+    },
+    {
+      "sheet": "knight",
+      "frame": "atk_n",
+      "owner": "reboot_actors",
+      "canvas": [
+        16,
+        32
+      ]
+    },
+    {
+      "sheet": "knight",
+      "frame": "walk_e1",
+      "owner": "reboot_actors",
+      "canvas": [
+        16,
+        32
+      ]
+    },
+    {
+      "sheet": "knight",
+      "frame": "walk_e2",
+      "owner": "reboot_actors",
+      "canvas": [
+        16,
+        32
+      ]
+    },
+    {
+      "sheet": "knight",
+      "frame": "idle_e",
+      "owner": "reboot_actors",
+      "canvas": [
+        16,
+        32
+      ]
+    },
+    {
+      "sheet": "knight",
+      "frame": "atk_e",
+      "owner": "reboot_actors",
+      "canvas": [
+        16,
+        32
+      ]
+    },
+    {
+      "sheet": "ksword",
+      "frame": "blade_e",
+      "owner": "reboot_actors",
+      "canvas": [
+        16,
+        16
+      ]
+    },
+    {
+      "sheet": "ksword",
+      "frame": "blade_s",
+      "owner": "reboot_actors",
+      "canvas": [
+        16,
+        16
+      ]
+    },
+    {
+      "sheet": "fx",
+      "frame": "puff1",
+      "owner": "reboot_actors",
+      "canvas": [
+        16,
+        16
+      ]
+    },
+    {
+      "sheet": "fx",
+      "frame": "puff2",
+      "owner": "reboot_actors",
+      "canvas": [
+        16,
+        16
+      ]
+    },
+    {
+      "sheet": "fx",
+      "frame": "puff3",
+      "owner": "reboot_actors",
+      "canvas": [
+        16,
+        16
+      ]
+    },
+    {
+      "sheet": "fx",
+      "frame": "clang",
+      "owner": "reboot_actors",
+      "canvas": [
+        16,
+        16
+      ]
+    },
+    {
+      "sheet": "fx",
+      "frame": "blast1",
+      "owner": "reboot_actors",
+      "canvas": [
+        16,
+        16
+      ]
+    },
+    {
+      "sheet": "fx",
+      "frame": "blast2",
+      "owner": "reboot_actors",
+      "canvas": [
+        16,
+        16
+      ]
+    },
+    {
+      "sheet": "fx",
+      "frame": "blast3",
+      "owner": "reboot_actors",
+      "canvas": [
+        16,
+        16
+      ]
+    },
+    {
+      "sheet": "fx",
+      "frame": "flame1",
+      "owner": "reboot_actors",
+      "canvas": [
+        16,
+        16
+      ]
+    },
+    {
+      "sheet": "fx",
+      "frame": "flame2",
+      "owner": "reboot_actors",
+      "canvas": [
+        16,
+        16
+      ]
+    },
+    {
+      "sheet": "fx",
+      "frame": "bomb1",
+      "owner": "reboot_actors",
+      "canvas": [
+        16,
+        16
+      ]
+    },
+    {
+      "sheet": "fx",
+      "frame": "bomb2",
+      "owner": "reboot_actors",
+      "canvas": [
+        16,
+        16
+      ]
+    },
+    {
+      "sheet": "fx",
+      "frame": "firefly1",
+      "owner": "reboot_actors",
+      "canvas": [
+        16,
+        16
+      ]
+    },
+    {
+      "sheet": "fx",
+      "frame": "firefly2",
+      "owner": "reboot_actors",
+      "canvas": [
+        16,
+        16
+      ]
+    },
+    {
+      "sheet": "proj",
+      "frame": "seed",
+      "owner": "reboot_actors",
+      "canvas": [
+        8,
+        8
+      ]
+    },
+    {
+      "sheet": "proj",
+      "frame": "spore",
+      "owner": "reboot_actors",
+      "canvas": [
+        8,
+        8
+      ]
+    },
+    {
+      "sheet": "proj",
+      "frame": "shard",
+      "owner": "reboot_actors",
+      "canvas": [
+        8,
+        8
+      ]
+    },
+    {
+      "sheet": "npc",
+      "frame": "sage",
+      "owner": "reboot_actors",
+      "canvas": [
+        32,
+        32
+      ]
+    },
+    {
+      "sheet": "npc",
+      "frame": "merchant",
+      "owner": "reboot_actors",
+      "canvas": [
+        32,
+        32
+      ]
+    },
+    {
+      "sheet": "npc",
+      "frame": "hermit",
+      "owner": "reboot_actors",
+      "canvas": [
+        32,
+        32
+      ]
+    },
+    {
+      "sheet": "npc",
+      "frame": "nun",
+      "owner": "reboot_actors",
+      "canvas": [
+        32,
+        32
+      ]
+    },
+    {
+      "sheet": "npc",
+      "frame": "gardener",
+      "owner": "reboot_actors",
+      "canvas": [
+        32,
+        32
+      ]
+    },
+    {
+      "sheet": "npc",
+      "frame": "sister_mary_grace",
+      "owner": "reboot_actors",
+      "canvas": [
+        32,
+        32
+      ]
+    },
+    {
+      "sheet": "npc",
+      "frame": "brother_mark",
+      "owner": "reboot_actors",
+      "canvas": [
+        32,
+        32
+      ]
+    },
+    {
+      "sheet": "boss",
+      "frame": "pulse1",
+      "owner": "reboot_actors",
+      "canvas": [
+        32,
+        64
+      ]
+    },
+    {
+      "sheet": "boss",
+      "frame": "pulse2",
+      "owner": "reboot_actors",
+      "canvas": [
+        32,
+        64
+      ]
+    },
+    {
+      "sheet": "boss",
+      "frame": "hurt",
+      "owner": "reboot_actors",
+      "canvas": [
+        32,
+        64
+      ]
+    },
+    {
+      "sheet": "lift",
+      "frame": "bush",
+      "owner": "reboot_items",
+      "canvas": [
+        16,
+        16
+      ]
+    },
+    {
+      "sheet": "lift",
+      "frame": "rock",
+      "owner": "reboot_items",
+      "canvas": [
+        16,
+        16
+      ]
+    },
+    {
+      "sheet": "lift",
+      "frame": "boulder",
+      "owner": "reboot_items",
+      "canvas": [
+        16,
+        16
+      ]
+    },
+    {
+      "sheet": "lift",
+      "frame": "pot",
+      "owner": "reboot_items",
+      "canvas": [
+        16,
+        16
+      ]
+    },
+    {
+      "sheet": "arrow",
+      "frame": "e",
+      "owner": "reboot_items",
+      "canvas": [
+        16,
+        16
+      ]
+    },
+    {
+      "sheet": "arrow",
+      "frame": "s",
+      "owner": "reboot_items",
+      "canvas": [
+        16,
+        16
+      ]
+    },
+    {
+      "sheet": "arrow",
+      "frame": "n",
+      "owner": "reboot_items",
+      "canvas": [
+        16,
+        16
+      ]
+    },
+    {
+      "sheet": "mouth",
+      "frame": "m1",
+      "owner": "reboot_actors",
+      "canvas": [
+        32,
+        32
+      ]
+    },
+    {
+      "sheet": "mouth",
+      "frame": "m2",
+      "owner": "reboot_actors",
+      "canvas": [
+        32,
+        32
+      ]
+    },
+    {
+      "sheet": "mouth",
+      "frame": "m3",
+      "owner": "reboot_actors",
+      "canvas": [
+        32,
+        32
+      ]
+    },
+    {
+      "sheet": "marks",
+      "frame": "here",
+      "owner": "reboot_ui",
+      "canvas": [
+        16,
+        16
+      ]
+    },
+    {
+      "sheet": "marks",
+      "frame": "door",
+      "owner": "reboot_ui",
+      "canvas": [
+        16,
+        16
+      ]
+    },
+    {
+      "sheet": "marks",
+      "frame": "folk",
+      "owner": "reboot_ui",
+      "canvas": [
+        16,
+        16
+      ]
+    },
+    {
+      "sheet": "marks",
+      "frame": "quest",
+      "owner": "reboot_ui",
+      "canvas": [
+        16,
+        16
+      ]
+    },
+    {
+      "sheet": "marks",
+      "frame": "relic",
+      "owner": "reboot_ui",
+      "canvas": [
+        16,
+        16
+      ]
+    },
+    {
+      "sheet": "marks",
+      "frame": "chest",
+      "owner": "reboot_ui",
+      "canvas": [
+        16,
+        16
+      ]
+    },
+    {
+      "sheet": "marks",
+      "frame": "heart",
+      "owner": "reboot_ui",
+      "canvas": [
+        16,
+        16
+      ]
+    },
+    {
+      "sheet": "marks",
+      "frame": "boss",
+      "owner": "reboot_ui",
+      "canvas": [
+        16,
+        16
+      ]
+    },
+    {
+      "sheet": "marks",
+      "frame": "crack",
+      "owner": "reboot_ui",
+      "canvas": [
+        16,
+        16
+      ]
+    },
+    {
+      "sheet": "marks",
+      "frame": "web",
+      "owner": "reboot_ui",
+      "canvas": [
+        16,
+        16
+      ]
+    },
+    {
+      "sheet": "marks",
+      "frame": "lock",
+      "owner": "reboot_ui",
+      "canvas": [
+        16,
+        16
+      ]
+    },
+    {
+      "sheet": "marks",
+      "frame": "chasm",
+      "owner": "reboot_ui",
+      "canvas": [
+        16,
+        16
+      ]
+    },
+    {
+      "sheet": "marks",
+      "frame": "thorn",
+      "owner": "reboot_ui",
+      "canvas": [
+        16,
+        16
+      ]
+    },
+    {
+      "sheet": "dots",
+      "frame": "here",
+      "owner": "reboot_ui",
+      "canvas": [
+        8,
+        8
+      ]
+    },
+    {
+      "sheet": "dots",
+      "frame": "door",
+      "owner": "reboot_ui",
+      "canvas": [
+        8,
+        8
+      ]
+    },
+    {
+      "sheet": "dots",
+      "frame": "folk",
+      "owner": "reboot_ui",
+      "canvas": [
+        8,
+        8
+      ]
+    },
+    {
+      "sheet": "dots",
+      "frame": "quest",
+      "owner": "reboot_ui",
+      "canvas": [
+        8,
+        8
+      ]
+    },
+    {
+      "sheet": "dots",
+      "frame": "relic",
+      "owner": "reboot_ui",
+      "canvas": [
+        8,
+        8
+      ]
+    },
+    {
+      "sheet": "dots",
+      "frame": "chest",
+      "owner": "reboot_ui",
+      "canvas": [
+        8,
+        8
+      ]
+    },
+    {
+      "sheet": "dots",
+      "frame": "boss",
+      "owner": "reboot_ui",
+      "canvas": [
+        8,
+        8
+      ]
+    },
+    {
+      "sheet": "dots",
+      "frame": "crack",
+      "owner": "reboot_ui",
+      "canvas": [
+        8,
+        8
+      ]
+    },
+    {
+      "sheet": "dots",
+      "frame": "web",
+      "owner": "reboot_ui",
+      "canvas": [
+        8,
+        8
+      ]
+    },
+    {
+      "sheet": "dots",
+      "frame": "lock",
+      "owner": "reboot_ui",
+      "canvas": [
+        8,
+        8
+      ]
+    },
+    {
+      "sheet": "dots",
+      "frame": "chasm",
+      "owner": "reboot_ui",
+      "canvas": [
+        8,
+        8
+      ]
+    },
+    {
+      "sheet": "dots",
+      "frame": "thorn",
+      "owner": "reboot_ui",
+      "canvas": [
+        8,
+        8
+      ]
+    },
+    {
+      "sheet": "cursor",
+      "frame": "cell",
+      "owner": "reboot_ui",
+      "canvas": [
+        32,
+        32
+      ]
+    },
+    {
+      "sheet": "pick32",
+      "frame": "heart",
+      "owner": "reboot_items",
+      "canvas": [
+        16,
+        16
+      ]
+    },
+    {
+      "sheet": "pick32",
+      "frame": "gilt",
+      "owner": "reboot_items",
+      "canvas": [
+        16,
+        16
+      ]
+    },
+    {
+      "sheet": "pick32",
+      "frame": "bomb_pickup",
+      "owner": "reboot_items",
+      "canvas": [
+        16,
+        16
+      ]
+    },
+    {
+      "sheet": "pick32",
+      "frame": "gilt_big",
+      "owner": "reboot_items",
+      "canvas": [
+        16,
+        16
+      ]
+    },
+    {
+      "sheet": "pick32",
+      "frame": "key",
+      "owner": "reboot_items",
+      "canvas": [
+        16,
+        16
+      ]
+    },
+    {
+      "sheet": "pick32",
+      "frame": "relic",
+      "owner": "reboot_items",
+      "canvas": [
+        16,
+        16
+      ]
+    },
+    {
+      "sheet": "pick32",
+      "frame": "grail",
+      "owner": "reboot_items",
+      "canvas": [
+        16,
+        16
+      ]
+    },
+    {
+      "sheet": "pick32",
+      "frame": "arrow1",
+      "owner": "reboot_items",
+      "canvas": [
+        16,
+        16
+      ]
+    },
+    {
+      "sheet": "pick32",
+      "frame": "arrow5",
+      "owner": "reboot_items",
+      "canvas": [
+        16,
+        16
+      ]
+    },
+    {
+      "sheet": "pick32",
+      "frame": "arrow10",
+      "owner": "reboot_items",
+      "canvas": [
+        16,
+        16
+      ]
+    },
+    {
+      "sheet": "icon32",
+      "frame": "none",
+      "owner": "reboot_items",
+      "canvas": [
+        32,
+        32
+      ]
+    },
+    {
+      "sheet": "icon32",
+      "frame": "bombs",
+      "owner": "reboot_items",
+      "canvas": [
+        32,
+        32
+      ]
+    },
+    {
+      "sheet": "icon32",
+      "frame": "lamp",
+      "owner": "reboot_items",
+      "canvas": [
+        32,
+        32
+      ]
+    },
+    {
+      "sheet": "icon32",
+      "frame": "cloak",
+      "owner": "reboot_items",
+      "canvas": [
+        32,
+        32
+      ]
+    },
+    {
+      "sheet": "icon32",
+      "frame": "key",
+      "owner": "reboot_items",
+      "canvas": [
+        32,
+        32
+      ]
+    },
+    {
+      "sheet": "icon32",
+      "frame": "heart_piece",
+      "owner": "reboot_items",
+      "canvas": [
+        32,
+        32
+      ]
+    },
+    {
+      "sheet": "icon32",
+      "frame": "heart_container",
+      "owner": "reboot_items",
+      "canvas": [
+        32,
+        32
+      ]
+    },
+    {
+      "sheet": "icon32",
+      "frame": "gilt_big",
+      "owner": "reboot_items",
+      "canvas": [
+        32,
+        32
+      ]
+    },
+    {
+      "sheet": "icon32",
+      "frame": "relic",
+      "owner": "reboot_items",
+      "canvas": [
+        32,
+        32
+      ]
+    },
+    {
+      "sheet": "icon32",
+      "frame": "gauntlet",
+      "owner": "reboot_items",
+      "canvas": [
+        32,
+        32
+      ]
+    },
+    {
+      "sheet": "icon32",
+      "frame": "bow",
+      "owner": "reboot_items",
+      "canvas": [
+        32,
+        32
+      ]
+    },
+    {
+      "sheet": "icon32",
+      "frame": "hubcap",
+      "owner": "reboot_items",
+      "canvas": [
+        32,
+        32
+      ]
+    },
+    {
+      "sheet": "icon32",
+      "frame": "map",
+      "owner": "reboot_items",
+      "canvas": [
+        32,
+        32
+      ]
+    },
+    {
+      "sheet": "icon32",
+      "frame": "astrolabe",
+      "owner": "reboot_items",
+      "canvas": [
+        32,
+        32
+      ]
+    },
+    {
+      "sheet": "icon32",
+      "frame": "sword",
+      "owner": "reboot_items",
+      "canvas": [
+        32,
+        32
+      ]
+    },
+    {
+      "sheet": "icon32",
+      "frame": "shield",
+      "owner": "reboot_items",
+      "canvas": [
+        32,
+        32
+      ]
+    },
+    {
+      "sheet": "icon32",
+      "frame": "shield_upgraded",
+      "owner": "reboot_items",
+      "canvas": [
+        32,
+        32
+      ]
+    },
+    {
+      "sheet": "uimarks",
+      "frame": "next",
+      "owner": "reboot_ui",
+      "canvas": [
+        8,
+        8
+      ]
+    },
+    {
+      "sheet": "uimarks",
+      "frame": "pick",
+      "owner": "reboot_ui",
+      "canvas": [
+        8,
+        8
+      ]
+    },
+    {
+      "sheet": "uimarks",
+      "frame": "corner",
+      "owner": "reboot_ui",
+      "canvas": [
+        8,
+        8
+      ]
+    },
+    {
+      "sheet": "uimarks",
+      "frame": "badge_a",
+      "owner": "reboot_ui",
+      "canvas": [
+        8,
+        8
+      ]
+    },
+    {
+      "sheet": "uimarks",
+      "frame": "badge_b",
+      "owner": "reboot_ui",
+      "canvas": [
+        8,
+        8
+      ]
+    },
+    {
+      "sheet": "uimarks",
+      "frame": "badge_l",
+      "owner": "reboot_ui",
+      "canvas": [
+        8,
+        8
+      ]
+    },
+    {
+      "sheet": "face",
+      "frame": "bloom_surprised",
+      "owner": "reboot_ui",
+      "canvas": [
+        64,
+        64
+      ]
+    },
+    {
+      "sheet": "face",
+      "frame": "peddler",
+      "owner": "reboot_ui",
+      "canvas": [
+        64,
+        64
+      ]
+    },
+    {
+      "sheet": "face",
+      "frame": "gatekeeper",
+      "owner": "reboot_ui",
+      "canvas": [
+        64,
+        64
+      ]
+    },
+    {
+      "sheet": "face",
+      "frame": "hermit",
+      "owner": "reboot_ui",
+      "canvas": [
+        64,
+        64
+      ]
+    },
+    {
+      "sheet": "face",
+      "frame": "nun",
+      "owner": "reboot_ui",
+      "canvas": [
+        64,
+        64
+      ]
+    },
+    {
+      "sheet": "face",
+      "frame": "gardener",
+      "owner": "reboot_ui",
+      "canvas": [
+        64,
+        64
+      ]
+    },
+    {
+      "sheet": "peddler_head",
+      "frame": "open",
+      "owner": "reboot_actors",
+      "canvas": [
+        16,
+        16
+      ]
+    },
+    {
+      "sheet": "peddler_head",
+      "frame": "blink",
+      "owner": "reboot_actors",
+      "canvas": [
+        16,
+        16
+      ]
+    },
+    {
+      "sheet": "peddler_head",
+      "frame": "left",
+      "owner": "reboot_actors",
+      "canvas": [
+        16,
+        16
+      ]
+    },
+    {
+      "sheet": "peddler_head",
+      "frame": "down",
+      "owner": "reboot_actors",
+      "canvas": [
+        16,
+        16
+      ]
+    },
+    {
+      "sheet": "peddler_head",
+      "frame": "grin",
+      "owner": "reboot_actors",
+      "canvas": [
+        16,
+        16
+      ]
+    },
+    {
+      "sheet": "peddler_body",
+      "frame": "rest",
+      "owner": "reboot_actors",
+      "canvas": [
+        32,
+        32
+      ]
+    },
+    {
+      "sheet": "peddler_body",
+      "frame": "tap",
+      "owner": "reboot_actors",
+      "canvas": [
+        32,
+        32
+      ]
+    },
+    {
+      "sheet": "peddler_body",
+      "frame": "tap2",
+      "owner": "reboot_actors",
+      "canvas": [
+        32,
+        32
+      ]
+    },
+    {
+      "sheet": "peddler_body",
+      "frame": "lift",
+      "owner": "reboot_actors",
+      "canvas": [
+        32,
+        32
+      ]
+    },
+    {
+      "sheet": "peddler_body",
+      "frame": "spin9",
+      "owner": "reboot_actors",
+      "canvas": [
+        32,
+        32
+      ]
+    },
+    {
+      "sheet": "peddler_body",
+      "frame": "spin7",
+      "owner": "reboot_actors",
+      "canvas": [
+        32,
+        32
+      ]
+    },
+    {
+      "sheet": "peddler_body",
+      "frame": "spin5",
+      "owner": "reboot_actors",
+      "canvas": [
+        32,
+        32
+      ]
+    },
+    {
+      "sheet": "peddler_body",
+      "frame": "spin3",
+      "owner": "reboot_actors",
+      "canvas": [
+        32,
+        32
+      ]
+    },
+    {
+      "sheet": "peddler_body",
+      "frame": "spin5b",
+      "owner": "reboot_actors",
+      "canvas": [
+        32,
+        32
+      ]
+    },
+    {
+      "sheet": "peddler_body",
+      "frame": "spin7b",
+      "owner": "reboot_actors",
+      "canvas": [
+        32,
+        32
+      ]
+    },
+    {
+      "sheet": "peddler_body",
+      "frame": "spin9b",
+      "owner": "reboot_actors",
+      "canvas": [
+        32,
+        32
+      ]
+    },
+    {
+      "sheet": "peddler_body",
+      "frame": "slap",
+      "owner": "reboot_actors",
+      "canvas": [
+        32,
+        32
+      ]
+    },
+    {
+      "sheet": "peddler_body",
+      "frame": "rub0",
+      "owner": "reboot_actors",
+      "canvas": [
+        32,
+        32
+      ]
+    },
+    {
+      "sheet": "peddler_body",
+      "frame": "rub1",
+      "owner": "reboot_actors",
+      "canvas": [
+        32,
+        32
+      ]
+    },
+    {
+      "sheet": "gatekeeper",
+      "frame": "idle",
+      "owner": "reboot_actors",
+      "canvas": [
+        32,
+        32
+      ]
+    },
+    {
+      "sheet": "gatekeeper",
+      "frame": "blink",
+      "owner": "reboot_actors",
+      "canvas": [
+        32,
+        32
+      ]
+    },
+    {
+      "sheet": "gatekeeper",
+      "frame": "breath",
+      "owner": "reboot_actors",
+      "canvas": [
+        32,
+        32
+      ]
+    },
+    {
+      "sheet": "gatekeeper",
+      "frame": "breath_blink",
+      "owner": "reboot_actors",
+      "canvas": [
+        32,
+        32
+      ]
+    },
+    {
+      "sheet": "gatekeeper",
+      "frame": "kindle",
+      "owner": "reboot_actors",
+      "canvas": [
+        32,
+        32
+      ]
+    },
+    {
+      "sheet": "gatekeeper",
+      "frame": "kindle_blink",
+      "owner": "reboot_actors",
+      "canvas": [
+        32,
+        32
+      ]
+    },
+    {
+      "sheet": "wisp",
+      "frame": "w0",
+      "owner": "reboot_actors",
+      "canvas": [
+        8,
+        8
+      ]
+    },
+    {
+      "sheet": "wisp",
+      "frame": "w1",
+      "owner": "reboot_actors",
+      "canvas": [
+        8,
+        8
+      ]
+    },
+    {
+      "sheet": "wisp",
+      "frame": "w2",
+      "owner": "reboot_actors",
+      "canvas": [
+        8,
+        8
+      ]
+    },
+    {
+      "sheet": "wisp",
+      "frame": "w3",
+      "owner": "reboot_actors",
+      "canvas": [
+        8,
+        8
+      ]
+    },
+    {
+      "sheet": "bloomfx",
+      "frame": "sword_n0",
+      "owner": "reboot_actors",
+      "canvas": [
+        32,
+        32
+      ]
+    },
+    {
+      "sheet": "bloomfx",
+      "frame": "sword_n1",
+      "owner": "reboot_actors",
+      "canvas": [
+        32,
+        32
+      ]
+    },
+    {
+      "sheet": "bloomfx",
+      "frame": "sword_n2",
+      "owner": "reboot_actors",
+      "canvas": [
+        32,
+        32
+      ]
+    },
+    {
+      "sheet": "bloomfx",
+      "frame": "sword_n3",
+      "owner": "reboot_actors",
+      "canvas": [
+        32,
+        32
+      ]
+    },
+    {
+      "sheet": "bloomfx",
+      "frame": "sword_n4",
+      "owner": "reboot_actors",
+      "canvas": [
+        32,
+        32
+      ]
+    },
+    {
+      "sheet": "bloomfx",
+      "frame": "sword_e0",
+      "owner": "reboot_actors",
+      "canvas": [
+        32,
+        32
+      ]
+    },
+    {
+      "sheet": "bloomfx",
+      "frame": "sword_e1",
+      "owner": "reboot_actors",
+      "canvas": [
+        32,
+        32
+      ]
+    },
+    {
+      "sheet": "bloomfx",
+      "frame": "sword_e2",
+      "owner": "reboot_actors",
+      "canvas": [
+        32,
+        32
+      ]
+    },
+    {
+      "sheet": "bloomfx",
+      "frame": "sword_e3",
+      "owner": "reboot_actors",
+      "canvas": [
+        32,
+        32
+      ]
+    },
+    {
+      "sheet": "bloomfx",
+      "frame": "sword_e4",
+      "owner": "reboot_actors",
+      "canvas": [
+        32,
+        32
+      ]
+    },
+    {
+      "sheet": "bloomfx",
+      "frame": "sword_s0",
+      "owner": "reboot_actors",
+      "canvas": [
+        32,
+        32
+      ]
+    },
+    {
+      "sheet": "bloomfx",
+      "frame": "sword_s1",
+      "owner": "reboot_actors",
+      "canvas": [
+        32,
+        32
+      ]
+    },
+    {
+      "sheet": "bloomfx",
+      "frame": "sword_s2",
+      "owner": "reboot_actors",
+      "canvas": [
+        32,
+        32
+      ]
+    },
+    {
+      "sheet": "bloomfx",
+      "frame": "sword_s3",
+      "owner": "reboot_actors",
+      "canvas": [
+        32,
+        32
+      ]
+    },
+    {
+      "sheet": "bloomfx",
+      "frame": "sword_s4",
+      "owner": "reboot_actors",
+      "canvas": [
+        32,
+        32
+      ]
+    },
+    {
+      "sheet": "bloomfx",
+      "frame": "sword_w0",
+      "owner": "reboot_actors",
+      "canvas": [
+        32,
+        32
+      ]
+    },
+    {
+      "sheet": "bloomfx",
+      "frame": "sword_w1",
+      "owner": "reboot_actors",
+      "canvas": [
+        32,
+        32
+      ]
+    },
+    {
+      "sheet": "bloomfx",
+      "frame": "sword_w2",
+      "owner": "reboot_actors",
+      "canvas": [
+        32,
+        32
+      ]
+    },
+    {
+      "sheet": "bloomfx",
+      "frame": "sword_w3",
+      "owner": "reboot_actors",
+      "canvas": [
+        32,
+        32
+      ]
+    },
+    {
+      "sheet": "bloomfx",
+      "frame": "sword_w4",
+      "owner": "reboot_actors",
+      "canvas": [
+        32,
+        32
+      ]
+    },
+    {
+      "sheet": "bloomfx",
+      "frame": "bow_n0",
+      "owner": "reboot_actors",
+      "canvas": [
+        32,
+        32
+      ]
+    },
+    {
+      "sheet": "bloomfx",
+      "frame": "bow_n1",
+      "owner": "reboot_actors",
+      "canvas": [
+        32,
+        32
+      ]
+    },
+    {
+      "sheet": "bloomfx",
+      "frame": "bow_n2",
+      "owner": "reboot_actors",
+      "canvas": [
+        32,
+        32
+      ]
+    },
+    {
+      "sheet": "bloomfx",
+      "frame": "bow_e0",
+      "owner": "reboot_actors",
+      "canvas": [
+        32,
+        32
+      ]
+    },
+    {
+      "sheet": "bloomfx",
+      "frame": "bow_e1",
+      "owner": "reboot_actors",
+      "canvas": [
+        32,
+        32
+      ]
+    },
+    {
+      "sheet": "bloomfx",
+      "frame": "bow_e2",
+      "owner": "reboot_actors",
+      "canvas": [
+        32,
+        32
+      ]
+    },
+    {
+      "sheet": "bloomfx",
+      "frame": "bow_s0",
+      "owner": "reboot_actors",
+      "canvas": [
+        32,
+        32
+      ]
+    },
+    {
+      "sheet": "bloomfx",
+      "frame": "bow_s1",
+      "owner": "reboot_actors",
+      "canvas": [
+        32,
+        32
+      ]
+    },
+    {
+      "sheet": "bloomfx",
+      "frame": "bow_s2",
+      "owner": "reboot_actors",
+      "canvas": [
+        32,
+        32
+      ]
+    },
+    {
+      "sheet": "bloomfx",
+      "frame": "lamp_n0",
+      "owner": "reboot_actors",
+      "canvas": [
+        32,
+        32
+      ]
+    },
+    {
+      "sheet": "bloomfx",
+      "frame": "lamp_n1",
+      "owner": "reboot_actors",
+      "canvas": [
+        32,
+        32
+      ]
+    },
+    {
+      "sheet": "bloomfx",
+      "frame": "lamp_n2",
+      "owner": "reboot_actors",
+      "canvas": [
+        32,
+        32
+      ]
+    },
+    {
+      "sheet": "bloomfx",
+      "frame": "lamp_e0",
+      "owner": "reboot_actors",
+      "canvas": [
+        32,
+        32
+      ]
+    },
+    {
+      "sheet": "bloomfx",
+      "frame": "lamp_e1",
+      "owner": "reboot_actors",
+      "canvas": [
+        32,
+        32
+      ]
+    },
+    {
+      "sheet": "bloomfx",
+      "frame": "lamp_e2",
+      "owner": "reboot_actors",
+      "canvas": [
+        32,
+        32
+      ]
+    },
+    {
+      "sheet": "bloomfx",
+      "frame": "lamp_s0",
+      "owner": "reboot_actors",
+      "canvas": [
+        32,
+        32
+      ]
+    },
+    {
+      "sheet": "bloomfx",
+      "frame": "lamp_s1",
+      "owner": "reboot_actors",
+      "canvas": [
+        32,
+        32
+      ]
+    },
+    {
+      "sheet": "bloomfx",
+      "frame": "lamp_s2",
+      "owner": "reboot_actors",
+      "canvas": [
+        32,
+        32
+      ]
+    },
+    {
+      "sheet": "bloomfx",
+      "frame": "cape_n0",
+      "owner": "reboot_actors",
+      "canvas": [
+        32,
+        32
+      ]
+    },
+    {
+      "sheet": "bloomfx",
+      "frame": "cape_n1",
+      "owner": "reboot_actors",
+      "canvas": [
+        32,
+        32
+      ]
+    },
+    {
+      "sheet": "bloomfx",
+      "frame": "cape_n2",
+      "owner": "reboot_actors",
+      "canvas": [
+        32,
+        32
+      ]
+    },
+    {
+      "sheet": "bloomfx",
+      "frame": "cape_e0",
+      "owner": "reboot_actors",
+      "canvas": [
+        32,
+        32
+      ]
+    },
+    {
+      "sheet": "bloomfx",
+      "frame": "cape_e1",
+      "owner": "reboot_actors",
+      "canvas": [
+        32,
+        32
+      ]
+    },
+    {
+      "sheet": "bloomfx",
+      "frame": "cape_e2",
+      "owner": "reboot_actors",
+      "canvas": [
+        32,
+        32
+      ]
+    },
+    {
+      "sheet": "bloomfx",
+      "frame": "cape_s0",
+      "owner": "reboot_actors",
+      "canvas": [
+        32,
+        32
+      ]
+    },
+    {
+      "sheet": "bloomfx",
+      "frame": "cape_s1",
+      "owner": "reboot_actors",
+      "canvas": [
+        32,
+        32
+      ]
+    },
+    {
+      "sheet": "bloomfx",
+      "frame": "cape_s2",
+      "owner": "reboot_actors",
+      "canvas": [
+        32,
+        32
+      ]
+    },
+    {
+      "sheet": "bloomshadow",
+      "frame": "shadow",
+      "owner": "reboot_actors",
+      "canvas": [
+        16,
+        8
+      ]
+    },
+    {
+      "sheet": "interactivechest",
+      "frame": "wooden_closed",
+      "owner": "reboot_items",
+      "canvas": [
+        32,
+        32
+      ]
+    },
+    {
+      "sheet": "interactivechest",
+      "frame": "wooden_open",
+      "owner": "reboot_items",
+      "canvas": [
+        32,
+        32
+      ]
+    },
+    {
+      "sheet": "interactivechest",
+      "frame": "brass_closed",
+      "owner": "reboot_items",
+      "canvas": [
+        32,
+        32
+      ]
+    },
+    {
+      "sheet": "interactivechest",
+      "frame": "brass_open",
+      "owner": "reboot_items",
+      "canvas": [
+        32,
+        32
+      ]
+    },
+    {
+      "sheet": "interactivechest",
+      "frame": "relic_closed",
+      "owner": "reboot_items",
+      "canvas": [
+        32,
+        32
+      ]
+    },
+    {
+      "sheet": "interactivechest",
+      "frame": "relic_open",
+      "owner": "reboot_items",
+      "canvas": [
+        32,
+        32
+      ]
+    },
+    {
+      "sheet": "interactiveentry",
+      "frame": "cave",
+      "owner": "reboot_items",
+      "canvas": [
+        32,
+        64
+      ]
+    },
+    {
+      "sheet": "interactiveentry",
+      "frame": "hollow",
+      "owner": "reboot_items",
+      "canvas": [
+        32,
+        64
+      ]
+    },
+    {
+      "sheet": "interactiveentry",
+      "frame": "thicket",
+      "owner": "reboot_items",
+      "canvas": [
+        32,
+        64
+      ]
+    },
+    {
+      "sheet": "interactiveentry",
+      "frame": "cave_closed",
+      "owner": "reboot_items",
+      "canvas": [
+        32,
+        64
+      ]
+    },
+    {
+      "sheet": "interactiveentry",
+      "frame": "hollow_closed",
+      "owner": "reboot_items",
+      "canvas": [
+        32,
+        64
+      ]
+    },
+    {
+      "sheet": "interactiveentry",
+      "frame": "thicket_closed",
+      "owner": "reboot_items",
+      "canvas": [
+        32,
+        64
+      ]
+    },
+    {
+      "sheet": "huditems",
+      "frame": "none",
+      "owner": "reboot_items",
+      "canvas": [
+        16,
+        16
+      ]
+    },
+    {
+      "sheet": "huditems",
+      "frame": "bombs",
+      "owner": "reboot_items",
+      "canvas": [
+        16,
+        16
+      ]
+    },
+    {
+      "sheet": "huditems",
+      "frame": "lamp",
+      "owner": "reboot_items",
+      "canvas": [
+        16,
+        16
+      ]
+    },
+    {
+      "sheet": "huditems",
+      "frame": "cloak",
+      "owner": "reboot_items",
+      "canvas": [
+        16,
+        16
+      ]
+    },
+    {
+      "sheet": "huditems",
+      "frame": "key",
+      "owner": "reboot_items",
+      "canvas": [
+        16,
+        16
+      ]
+    },
+    {
+      "sheet": "huditems",
+      "frame": "heart_piece",
+      "owner": "reboot_items",
+      "canvas": [
+        16,
+        16
+      ]
+    },
+    {
+      "sheet": "huditems",
+      "frame": "heart_container",
+      "owner": "reboot_items",
+      "canvas": [
+        16,
+        16
+      ]
+    },
+    {
+      "sheet": "huditems",
+      "frame": "gilt_big",
+      "owner": "reboot_items",
+      "canvas": [
+        16,
+        16
+      ]
+    },
+    {
+      "sheet": "huditems",
+      "frame": "relic",
+      "owner": "reboot_items",
+      "canvas": [
+        16,
+        16
+      ]
+    },
+    {
+      "sheet": "huditems",
+      "frame": "gauntlet",
+      "owner": "reboot_items",
+      "canvas": [
+        16,
+        16
+      ]
+    },
+    {
+      "sheet": "huditems",
+      "frame": "bow",
+      "owner": "reboot_items",
+      "canvas": [
+        16,
+        16
+      ]
+    },
+    {
+      "sheet": "huditems",
+      "frame": "hubcap",
+      "owner": "reboot_items",
+      "canvas": [
+        16,
+        16
+      ]
+    },
+    {
+      "sheet": "huditems",
+      "frame": "map",
+      "owner": "reboot_items",
+      "canvas": [
+        16,
+        16
+      ]
+    },
+    {
+      "sheet": "huditems",
+      "frame": "astrolabe",
+      "owner": "reboot_items",
+      "canvas": [
+        16,
+        16
+      ]
+    },
+    {
+      "sheet": "huditems",
+      "frame": "sword",
+      "owner": "reboot_items",
+      "canvas": [
+        16,
+        16
+      ]
+    },
+    {
+      "sheet": "huditems",
+      "frame": "shield",
+      "owner": "reboot_items",
+      "canvas": [
+        16,
+        16
+      ]
+    },
+    {
+      "sheet": "huditems",
+      "frame": "shield_upgraded",
+      "owner": "reboot_items",
+      "canvas": [
+        16,
+        16
+      ]
+    },
+    {
+      "sheet": "glitter",
+      "frame": "none",
+      "owner": "reboot_actors",
+      "canvas": [
+        8,
+        8
+      ]
+    },
+    {
+      "sheet": "glitter",
+      "frame": "dim",
+      "owner": "reboot_actors",
+      "canvas": [
+        8,
+        8
+      ]
+    },
+    {
+      "sheet": "glitter",
+      "frame": "glint",
+      "owner": "reboot_actors",
+      "canvas": [
+        8,
+        8
+      ]
+    },
+    {
+      "sheet": "glitter",
+      "frame": "star",
+      "owner": "reboot_actors",
+      "canvas": [
+        8,
+        8
+      ]
+    },
+    {
+      "sheet": "glitter",
+      "frame": "glint2",
+      "owner": "reboot_actors",
+      "canvas": [
+        8,
+        8
+      ]
+    },
+    {
+      "sheet": "glitter",
+      "frame": "fade",
+      "owner": "reboot_actors",
+      "canvas": [
+        8,
+        8
+      ]
+    }
+  ],
+  "interface": [
+    {
+      "family": "ui_kit",
+      "owner": "reboot_ui",
+      "elements": [
+        "panel_tl",
+        "panel_t",
+        "panel_l",
+        "fill",
+        "div_t",
+        "div_m",
+        "plate_l_top",
+        "plate_l_bot",
+        "plate_m_top",
+        "plate_m_bot",
+        "slot_tl",
+        "slot_t",
+        "slot_l",
+        "slot_fill",
+        "sel_tl",
+        "sel_t",
+        "sel_l",
+        "empty_tl",
+        "empty_t",
+        "empty_l",
+        "tab_l_top",
+        "tab_l_bot",
+        "tab_m_top",
+        "tab_m_bot",
+        "tabon_l_top",
+        "tabon_l_bot",
+        "tabon_m_top",
+        "tabon_m_bot",
+        "badge_a",
+        "badge_b",
+        "badge_l",
+        "badge_r",
+        "row_tl",
+        "row_t",
+        "row_l",
+        "srow_tl",
+        "srow_t",
+        "srow_l",
+        "bub_tl",
+        "bub_t",
+        "bub_l",
+        "bub_fill",
+        "bub_tail",
+        "bub_join",
+        "coin",
+        "rule",
+        "rule_end",
+        "hud_tl",
+        "hud_t",
+        "hud_l",
+        "key"
+      ]
+    },
+    {
+      "family": "hud",
+      "owner": "reboot_ui",
+      "elements": [
+        "heart_full",
+        "heart_half",
+        "heart_empty",
+        "hand"
+      ]
+    },
+    {
+      "family": "font",
+      "owner": "reboot_ui",
+      "elements": [
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49,
+        50,
+        51,
+        52,
+        53,
+        54,
+        55,
+        56,
+        57,
+        58,
+        59,
+        60,
+        61,
+        62,
+        63,
+        64,
+        65,
+        66,
+        67,
+        68,
+        69,
+        70,
+        71,
+        72,
+        73,
+        74,
+        75,
+        76,
+        77,
+        78,
+        79,
+        80,
+        81,
+        82,
+        83,
+        84,
+        85,
+        86,
+        87,
+        88,
+        89,
+        90,
+        91,
+        92,
+        93,
+        94,
+        95,
+        96,
+        97,
+        98,
+        99,
+        100,
+        101,
+        102,
+        103,
+        104,
+        105,
+        106,
+        107,
+        108,
+        109,
+        110,
+        111,
+        112,
+        113,
+        114,
+        115,
+        116,
+        117,
+        118,
+        119,
+        120,
+        121,
+        122,
+        123,
+        124,
+        125,
+        126,
+        127,
+        128
+      ]
+    },
+    {
+      "family": "portraits",
+      "owner": "reboot_ui",
+      "elements": [
+        "bloom_surprised",
+        "peddler",
+        "gatekeeper",
+        "hermit",
+        "nun",
+        "gardener"
+      ]
+    }
+  ],
+  "title": {
+    "authoring": "Native integer pixel geometry; no imported image or resampling",
+    "producer": "art/reboot_ui.py:title_image",
+    "target_size": [
+      240,
+      160
+    ],
+    "pixel_format": "GBA Mode3 RGB555 little-endian",
+    "pixel_count": 38400,
+    "bitmap_bytes": 76800,
+    "bitmap_sha256": "aa775161f33bf13e231893ec8f6b1ded6ce773fac6281b9db86b6e342732d3d7",
+    "unique_rgb555_colours": 27,
+    "palette_limit": 48,
+    "composition": "Native grail/stepped brass title above filthy roots and Drain masonry; quiet dark-water channel for dynamic prompts."
+  },
+  "sword_geometry": {
+    "origins": [
+      [
+        -10,
+        -33
+      ],
+      [
+        -2,
+        -28
+      ],
+      [
+        -12,
+        -16
+      ],
+      [
+        -30,
+        -28
+      ]
+    ],
+    "bounds": [
+      [
+        [
+          9,
+          -18,
+          19,
+          -16
+        ],
+        [
+          8,
+          -25,
+          17,
+          -18
+        ],
+        [
+          4,
+          -31,
+          9,
+          -21
+        ],
+        [
+          -7,
+          -26,
+          -2,
+          -21
+        ],
+        [
+          -8,
+          -14,
+          -6,
+          -12
+        ]
+      ],
+      [
+        [
+          6,
+          -26,
+          8,
+          -16
+        ],
+        [
+          8,
+          -24,
+          15,
+          -15
+        ],
+        [
+          11,
+          -16,
+          21,
+          -11
+        ],
+        [
+          8,
+          -9,
+          16,
+          0
+        ],
+        [
+          2,
+          -8,
+          7,
+          1
+        ]
+      ],
+      [
+        [
+          -11,
+          -10,
+          -1,
+          -8
+        ],
+        [
+          -9,
+          -8,
+          0,
+          -1
+        ],
+        [
+          -1,
+          -5,
+          4,
+          5
+        ],
+        [
+          6,
+          -8,
+          15,
+          0
+        ],
+        [
+          7,
+          -14,
+          16,
+          -9
+        ]
+      ],
+      [
+        [
+          -9,
+          -26,
+          -7,
+          -16
+        ],
+        [
+          -16,
+          -24,
+          -9,
+          -15
+        ],
+        [
+          -22,
+          -16,
+          -12,
+          -11
+        ],
+        [
+          -17,
+          -9,
+          -9,
+          0
+        ],
+        [
+          -8,
+          -8,
+          -3,
+          1
+        ]
+      ]
+    ]
+  }
+}

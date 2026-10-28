@@ -1,6 +1,29 @@
 # BARTGAME downloads
 
-## Latest: readable interactive scenery
+## Latest: complete native art reboot
+
+Every active visual family shares one native-resolution art direction: compact
+Bloom, tile-sized drops, coherent world materials, cleaner actions, legible
+interactions, abundant surface glitter, native title/portraits and a 24px HUD.
+The 5×5 forest, trials, item pockets, quests and saves remain supported.
+
+- [Download the GBA ROM](https://github.com/natertott/bartgame/raw/refs/heads/art-reboot/downloads/art-reboot-202c75e/bartgame-art-reboot-202c75e.gba)
+- [Download the ZIP](https://github.com/natertott/bartgame/raw/refs/heads/art-reboot/downloads/art-reboot-202c75e/bartgame-art-reboot-202c75e.zip)
+- [SHA256 checksums](art-reboot-202c75e/SHA256SUMS.txt)
+- [Actual mGBA gallery, recordings, research and art bible](../art-review/reboot/README.md)
+
+Built from source [`202c75e`](https://github.com/natertott/bartgame/commit/202c75e8ffbfa6079d011a2848f5d9f6305ca9dc) on `art-reboot`.
+Open the `.gba` in mGBA. The ZIP contains the same ROM, controls and checksum.
+This is the first complete shared native direction; some mixed blight edges
+remain angular and further terrain polish is documented in the critique.
+
+ROM SHA256:
+
+```text
+41dc680068c094416e92152d4c22637c10d6a055d2bee63ce7700c419490e92d
+```
+
+## Previous: readable interactive scenery
 
 Larger wooden, brass and relic chests, full-tile switches, tall cave/hollow/
 thicket entrances, clear pits and barriers, larger censers/pots, and explicit

@@ -1,0 +1,347 @@
+{
+  "rom_sha256": "41dc680068c094416e92152d4c22637c10d6a055d2bee63ce7700c419490e92d",
+  "method": "Static compiled-ROM source decoding, NOT an emulator capture. Transparent pixels use neutral grey. Exact menu and per-portrait palettes included.",
+  "sheets": [
+    {
+      "sheet": "hero",
+      "id": 0,
+      "frames": 101,
+      "canvas": [
+        32,
+        32
+      ],
+      "path": "hero.png"
+    },
+    {
+      "sheet": "sword",
+      "id": 1,
+      "frames": 3,
+      "canvas": [
+        16,
+        16
+      ],
+      "path": "sword.png"
+    },
+    {
+      "sheet": "shield",
+      "id": 2,
+      "frames": 6,
+      "canvas": [
+        16,
+        16
+      ],
+      "path": "shield.png"
+    },
+    {
+      "sheet": "items",
+      "id": 3,
+      "frames": 21,
+      "canvas": [
+        16,
+        16
+      ],
+      "path": "items.png"
+    },
+    {
+      "sheet": "beetle",
+      "id": 4,
+      "frames": 4,
+      "canvas": [
+        16,
+        16
+      ],
+      "path": "beetle.png"
+    },
+    {
+      "sheet": "bat",
+      "id": 5,
+      "frames": 3,
+      "canvas": [
+        16,
+        16
+      ],
+      "path": "bat.png"
+    },
+    {
+      "sheet": "slime",
+      "id": 6,
+      "frames": 3,
+      "canvas": [
+        16,
+        16
+      ],
+      "path": "slime.png"
+    },
+    {
+      "sheet": "spitter",
+      "id": 7,
+      "frames": 9,
+      "canvas": [
+        16,
+        16
+      ],
+      "path": "spitter.png"
+    },
+    {
+      "sheet": "knight",
+      "id": 8,
+      "frames": 12,
+      "canvas": [
+        16,
+        32
+      ],
+      "path": "knight.png"
+    },
+    {
+      "sheet": "ksword",
+      "id": 9,
+      "frames": 2,
+      "canvas": [
+        16,
+        16
+      ],
+      "path": "ksword.png"
+    },
+    {
+      "sheet": "fx",
+      "id": 10,
+      "frames": 13,
+      "canvas": [
+        16,
+        16
+      ],
+      "path": "fx.png"
+    },
+    {
+      "sheet": "proj",
+      "id": 11,
+      "frames": 3,
+      "canvas": [
+        8,
+        8
+      ],
+      "path": "proj.png"
+    },
+    {
+      "sheet": "npc",
+      "id": 12,
+      "frames": 7,
+      "canvas": [
+        32,
+        32
+      ],
+      "path": "npc.png"
+    },
+    {
+      "sheet": "boss",
+      "id": 13,
+      "frames": 3,
+      "canvas": [
+        32,
+        64
+      ],
+      "path": "boss.png"
+    },
+    {
+      "sheet": "lift",
+      "id": 14,
+      "frames": 4,
+      "canvas": [
+        16,
+        16
+      ],
+      "path": "lift.png"
+    },
+    {
+      "sheet": "arrow",
+      "id": 15,
+      "frames": 3,
+      "canvas": [
+        16,
+        16
+      ],
+      "path": "arrow.png"
+    },
+    {
+      "sheet": "mouth",
+      "id": 16,
+      "frames": 3,
+      "canvas": [
+        32,
+        32
+      ],
+      "path": "mouth.png"
+    },
+    {
+      "sheet": "marks",
+      "id": 17,
+      "frames": 13,
+      "canvas": [
+        16,
+        16
+      ],
+      "path": "marks.png"
+    },
+    {
+      "sheet": "dots",
+      "id": 18,
+      "frames": 12,
+      "canvas": [
+        8,
+        8
+      ],
+      "path": "dots.png"
+    },
+    {
+      "sheet": "cursor",
+      "id": 19,
+      "frames": 1,
+      "canvas": [
+        32,
+        32
+      ],
+      "path": "cursor.png"
+    },
+    {
+      "sheet": "pick32",
+      "id": 20,
+      "frames": 10,
+      "canvas": [
+        16,
+        16
+      ],
+      "path": "pick32.png"
+    },
+    {
+      "sheet": "icon32",
+      "id": 21,
+      "frames": 17,
+      "canvas": [
+        32,
+        32
+      ],
+      "path": "icon32.png"
+    },
+    {
+      "sheet": "uimarks",
+      "id": 22,
+      "frames": 6,
+      "canvas": [
+        8,
+        8
+      ],
+      "path": "uimarks.png"
+    },
+    {
+      "sheet": "face",
+      "id": 23,
+      "frames": 6,
+      "canvas": [
+        64,
+        64
+      ],
+      "path": "face.png"
+    },
+    {
+      "sheet": "peddler_head",
+      "id": 24,
+      "frames": 5,
+      "canvas": [
+        16,
+        16
+      ],
+      "path": "peddler_head.png"
+    },
+    {
+      "sheet": "peddler_body",
+      "id": 25,
+      "frames": 14,
+      "canvas": [
+        32,
+        32
+      ],
+      "path": "peddler_body.png"
+    },
+    {
+      "sheet": "gatekeeper",
+      "id": 26,
+      "frames": 6,
+      "canvas": [
+        32,
+        32
+      ],
+      "path": "gatekeeper.png"
+    },
+    {
+      "sheet": "wisp",
+      "id": 27,
+      "frames": 4,
+      "canvas": [
+        8,
+        8
+      ],
+      "path": "wisp.png"
+    },
+    {
+      "sheet": "bloomfx",
+      "id": 28,
+      "frames": 47,
+      "canvas": [
+        32,
+        32
+      ],
+      "path": "bloomfx.png"
+    },
+    {
+      "sheet": "bloomshadow",
+      "id": 29,
+      "frames": 1,
+      "canvas": [
+        16,
+        8
+      ],
+      "path": "bloomshadow.png"
+    },
+    {
+      "sheet": "interactivechest",
+      "id": 30,
+      "frames": 6,
+      "canvas": [
+        32,
+        32
+      ],
+      "path": "interactivechest.png"
+    },
+    {
+      "sheet": "interactiveentry",
+      "id": 31,
+      "frames": 6,
+      "canvas": [
+        32,
+        64
+      ],
+      "path": "interactiveentry.png"
+    },
+    {
+      "sheet": "huditems",
+      "id": 32,
+      "frames": 17,
+      "canvas": [
+        16,
+        16
+      ],
+      "path": "huditems.png"
+    },
+    {
+      "sheet": "glitter",
+      "id": 33,
+      "frames": 6,
+      "canvas": [
+        8,
+        8
+      ],
+      "path": "glitter.png"
+    }
+  ],
+  "frame_count": 377
+}

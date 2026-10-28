@@ -1,0 +1,449 @@
+{
+  "rom_sha256": "41dc680068c094416e92152d4c22637c10d6a055d2bee63ce7700c419490e92d",
+  "title_bitmap_sha256": "aa775161f33bf13e231893ec8f6b1ded6ce773fac6281b9db86b6e342732d3d7",
+  "emulator": "mGBA 0.10.5",
+  "rgb555_framebuffer_expansion": "replicated",
+  "method": "Native unmodified240x160 framebuffers. Title and choices use real controls; fixture inventory is saved via death, and the win-return fixture collects a placed Grail.",
+  "passed": 80,
+  "total": 80,
+  "checks": [
+    {
+      "name": "title asset is complete RGB555 bitmap",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "native title uses at most48 shared RGB555 inks",
+      "passed": true,
+      "detail": "27"
+    },
+    {
+      "name": "unobscured framebuffer equals entire native title",
+      "passed": true,
+      "detail": "replicated"
+    },
+    {
+      "name": "fresh title uses Mode3 and BG2",
+      "passed": true,
+      "detail": "0x1443"
+    },
+    {
+      "name": "fresh title VRAM equals every source RGB555 word",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "fresh title bitmap-safe OBJ allocations",
+      "passed": true,
+      "detail": "[]"
+    },
+    {
+      "name": "fresh title keeps name and baked subtitle unobscured",
+      "passed": true,
+      "detail": "[]"
+    },
+    {
+      "name": "fresh title shows blinking prompt",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "title prompt uses Mode3 and BG2",
+      "passed": true,
+      "detail": "0x1443"
+    },
+    {
+      "name": "title prompt VRAM equals every source RGB555 word",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "title prompt bitmap-safe OBJ allocations",
+      "passed": true,
+      "detail": "[{'index': 0, 'x': 88, 'y': 140, 'w': 64, 'h': 32, 'tile': 876}]"
+    },
+    {
+      "name": "title prompt keeps name and baked subtitle unobscured",
+      "passed": true,
+      "detail": "[{'index': 0, 'x': 88, 'y': 140, 'w': 64, 'h': 32, 'tile': 876}]"
+    },
+    {
+      "name": "Start begins a new run",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "new run wakes in Drain",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "new run respects selected seed",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "new run returns to Mode0",
+      "passed": true,
+      "detail": "0x1740"
+    },
+    {
+      "name": "new run restores world display layers",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "new run restores HUD atlas",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "new run restores UI frame atlas",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "new run restores fixed OBJ colours",
+      "passed": true,
+      "detail": "dialogue portraits and the keeper orb have dynamic colours"
+    },
+    {
+      "name": "new run disables title brightness fade",
+      "passed": true,
+      "detail": "0x0"
+    },
+    {
+      "name": "new run has visible native32px Bloom canvas",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "forest transition remains playable",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "forest returns to Mode0",
+      "passed": true,
+      "detail": "0x1740"
+    },
+    {
+      "name": "forest restores world display layers",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "forest restores HUD atlas",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "forest restores UI frame atlas",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "forest restores fixed OBJ colours",
+      "passed": true,
+      "detail": "dialogue portraits and the keeper orb have dynamic colours"
+    },
+    {
+      "name": "forest disables title brightness fade",
+      "passed": true,
+      "detail": "0x0"
+    },
+    {
+      "name": "forest has visible native32px Bloom canvas",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "pause opens after title transition",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "map remains Mode0 after title",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "pause closes to live forest",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "save fixture uses real death/save record",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "saved title recognises record",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "saved title defaults to Continue",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "saved title uses Mode3 and BG2",
+      "passed": true,
+      "detail": "0x1443"
+    },
+    {
+      "name": "saved title VRAM equals every source RGB555 word",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "saved title bitmap-safe OBJ allocations",
+      "passed": true,
+      "detail": "[{'index': 0, 'x': 88, 'y': 120, 'w': 64, 'h': 32, 'tile': 876}, {'index': 1, 'x': 93, 'y': 122, 'w': 8, 'h': 8, 'tile': 937}]"
+    },
+    {
+      "name": "saved title keeps name and baked subtitle unobscured",
+      "passed": true,
+      "detail": "[{'index': 0, 'x': 88, 'y': 120, 'w': 64, 'h': 32, 'tile': 876}, {'index': 1, 'x': 93, 'y': 122, 'w': 8, 'h': 8, 'tile': 937}]"
+    },
+    {
+      "name": "saved title framebuffer preserves unobscured reference",
+      "passed": true,
+      "detail": "0 differing pixels"
+    },
+    {
+      "name": "Down selects New Game",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Up returns selection to Continue",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Continue enters the saved run",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Continue keeps saved inventory",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Continue keeps saved maze",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Continue wakes in Drain",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "continued run returns to Mode0",
+      "passed": true,
+      "detail": "0x1740"
+    },
+    {
+      "name": "continued run restores world display layers",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "continued run restores HUD atlas",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "continued run restores UI frame atlas",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "continued run restores fixed OBJ colours",
+      "passed": true,
+      "detail": "dialogue portraits and the keeper orb have dynamic colours"
+    },
+    {
+      "name": "continued run disables title brightness fade",
+      "passed": true,
+      "detail": "0x0"
+    },
+    {
+      "name": "continued run has visible native32px Bloom canvas",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "New Game selection survives redraw",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "New Game starts from saved title",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "New Game clears old inventory/resources",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "New Game selects a new maze seed",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "fresh run after save returns to Mode0",
+      "passed": true,
+      "detail": "0x1740"
+    },
+    {
+      "name": "fresh run after save restores world display layers",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "fresh run after save restores HUD atlas",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "fresh run after save restores UI frame atlas",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "fresh run after save restores fixed OBJ colours",
+      "passed": true,
+      "detail": "dialogue portraits and the keeper orb have dynamic colours"
+    },
+    {
+      "name": "fresh run after save disables title brightness fade",
+      "passed": true,
+      "detail": "0x0"
+    },
+    {
+      "name": "fresh run after save has visible native32px Bloom canvas",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Grail fixture enters real win path",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "win screen returns to title",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "returned title uses Mode3 and BG2",
+      "passed": true,
+      "detail": "0x1443"
+    },
+    {
+      "name": "returned title VRAM equals every source RGB555 word",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "returned title bitmap-safe OBJ allocations",
+      "passed": true,
+      "detail": "[{'index': 0, 'x': 88, 'y': 120, 'w': 64, 'h': 32, 'tile': 876}, {'index': 1, 'x': 93, 'y': 122, 'w': 8, 'h': 8, 'tile': 937}]"
+    },
+    {
+      "name": "returned title keeps name and baked subtitle unobscured",
+      "passed": true,
+      "detail": "[{'index': 0, 'x': 88, 'y': 120, 'w': 64, 'h': 32, 'tile': 876}, {'index': 1, 'x': 93, 'y': 122, 'w': 8, 'h': 8, 'tile': 937}]"
+    },
+    {
+      "name": "returned title framebuffer preserves unobscured reference",
+      "passed": true,
+      "detail": "0 differing pixels"
+    },
+    {
+      "name": "returned title Continue remains usable",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "second title round trip returns to Mode0",
+      "passed": true,
+      "detail": "0x1740"
+    },
+    {
+      "name": "second title round trip restores world display layers",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "second title round trip restores HUD atlas",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "second title round trip restores UI frame atlas",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "second title round trip restores fixed OBJ colours",
+      "passed": true,
+      "detail": "dialogue portraits and the keeper orb have dynamic colours"
+    },
+    {
+      "name": "second title round trip disables title brightness fade",
+      "passed": true,
+      "detail": "0x0"
+    },
+    {
+      "name": "second title round trip has visible native32px Bloom canvas",
+      "passed": true,
+      "detail": ""
+    }
+  ],
+  "captures": [
+    {
+      "file": "title-clean.png",
+      "context": "actual fresh title during prompt-off blink; no image or pose injection"
+    },
+    {
+      "file": "title-press-start.png",
+      "context": "actual fresh title with the Press Start OBJ"
+    },
+    {
+      "file": "new-game-drain.png",
+      "context": "actual world after leaving full-colour title"
+    },
+    {
+      "file": "forest-after-title.png",
+      "context": "actual generated forest after leaving title"
+    },
+    {
+      "file": "pause-after-title.png",
+      "context": "actual pause page after full-colour title and forest transition"
+    },
+    {
+      "file": "title-continue.png",
+      "context": "actual saved-run title with Continue selected"
+    },
+    {
+      "file": "title-new-game.png",
+      "context": "actual saved-run title with New Game selected"
+    },
+    {
+      "file": "continue-drain.png",
+      "context": "actual saved run after Continue"
+    },
+    {
+      "file": "title-after-win.png",
+      "context": "actual return to title through the win screen Start action"
+    }
+  ]
+}

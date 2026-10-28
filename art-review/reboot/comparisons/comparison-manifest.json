@@ -1,0 +1,126 @@
+{
+  "before_rom_sha256": "bbd08678b1e10fb110e562a6374b0242cb8e73affbdd747f033fd0ce99619eee",
+  "after_rom_sha256": "41dc680068c094416e92152d4c22637c10d6a055d2bee63ce7700c419490e92d",
+  "cases": [
+    {
+      "name": "forest-wood-chest",
+      "same_fixture": {
+        "seed": true,
+        "cell": true,
+        "target": true,
+        "position": true,
+        "facing": true,
+        "physical_contract": true,
+        "inputs": true,
+        "camera": true
+      },
+      "before": "baseline/forest-wood-chest.png",
+      "after": "../actual/interactive/forest-wood-chest.png",
+      "animated_comparison": {
+        "exact_palette": false,
+        "colour_count": 326,
+        "duration_ms": 1860,
+        "timeline_frames": 56
+      }
+    },
+    {
+      "name": "blight-relic-chest",
+      "same_fixture": {
+        "seed": true,
+        "cell": true,
+        "target": true,
+        "position": true,
+        "facing": true,
+        "physical_contract": true,
+        "inputs": true,
+        "camera": true
+      },
+      "before": "baseline/blight-relic-chest.png",
+      "after": "../actual/interactive/blight-relic-chest.png"
+    },
+    {
+      "name": "forest-cave-door",
+      "same_fixture": {
+        "seed": true,
+        "cell": true,
+        "target": true,
+        "position": true,
+        "facing": true,
+        "physical_contract": true,
+        "inputs": true,
+        "camera": true
+      },
+      "before": "baseline/forest-cave-door.png",
+      "after": "../actual/interactive/forest-cave-door.png"
+    },
+    {
+      "name": "forest-bomb-wall",
+      "same_fixture": {
+        "seed": true,
+        "cell": true,
+        "target": true,
+        "position": true,
+        "facing": true,
+        "physical_contract": true,
+        "inputs": true,
+        "camera": true
+      },
+      "before": "baseline/forest-bomb-wall.png",
+      "after": "../actual/interactive/forest-bomb-wall.png"
+    },
+    {
+      "name": "blight-cobweb",
+      "same_fixture": {
+        "seed": true,
+        "cell": true,
+        "target": true,
+        "position": true,
+        "facing": true,
+        "physical_contract": true,
+        "inputs": true,
+        "camera": true
+      },
+      "before": "baseline/blight-cobweb.png",
+      "after": "../actual/interactive/blight-cobweb.png",
+      "animated_comparison": {
+        "exact_palette": false,
+        "colour_count": 319,
+        "duration_ms": 1600,
+        "timeline_frames": 48
+      }
+    },
+    {
+      "name": "blight-cape-hole",
+      "same_fixture": {
+        "seed": true,
+        "cell": true,
+        "target": true,
+        "position": true,
+        "facing": true,
+        "physical_contract": true,
+        "inputs": true,
+        "camera": true
+      },
+      "before": "baseline/blight-cape-hole.png",
+      "after": "../actual/interactive/blight-cape-hole.png"
+    }
+  ],
+  "note": "Initial viewpoints and terrain fixtures match. Later gameplay frames can differ with compact Bloom feet and revised sword reach.",
+  "candidate_refinement": {
+    "initial_rom_sha256": "317ba54af0a5c537ddfa6bd4176969bcd22b8e1bcae4028e42e3019dd4ebb6b0",
+    "cases": [
+      {
+        "name": "forest-cell-20-stage3",
+        "matched_seed_cell_position_camera": true
+      },
+      {
+        "name": "interior-cave",
+        "matched_seed_cell_position_camera": true
+      },
+      {
+        "name": "interior-hollow",
+        "matched_seed_cell_position_camera": true
+      }
+    ]
+  }
+}

@@ -1,0 +1,47 @@
+{
+  "rom_sha256": "41dc680068c094416e92152d4c22637c10d6a055d2bee63ce7700c419490e92d",
+  "method": "Capture the complete reboot from actual mGBA runs, never source mockups.\n\nSeeds, room navigation, inventory, facing/position and cleared unrelated actors\nare fixtures. Generated terrain and mystery descriptors are not modified.\nOrdinary inputs animate Bloom, use entrances/items, open menus and finish the\nHeart fight. Exact240x160 frames accompany nearest-neighbour2x GIFs.\nControlled ordinary enemy-contact fixtures are labelled in action reports.",
+  "groups": [
+    "scenes",
+    "actors",
+    "ending",
+    "death",
+    "actions",
+    "interactive"
+  ],
+  "screens": 40,
+  "screen_report": "screens/review.json",
+  "actions": [
+    {
+      "group": "drain",
+      "report": "drain/suite.json",
+      "captures": 44,
+      "missing": []
+    },
+    {
+      "group": "forest",
+      "report": "forest/suite.json",
+      "captures": 9,
+      "missing": []
+    },
+    {
+      "group": "blight",
+      "report": "blight/suite.json",
+      "captures": 9,
+      "missing": []
+    },
+    {
+      "group": "cave",
+      "report": "cave/suite.json",
+      "captures": 9,
+      "missing": []
+    },
+    {
+      "group": "special",
+      "report": "special/suite.json",
+      "captures": 20,
+      "missing": []
+    }
+  ],
+  "failures": []
+}

@@ -1,0 +1,22 @@
+PASS PAGES: Start opens the items page              state 4 page 0
+PASS PAGES: R turns to the key items                page 1
+PASS PAGES: R turns to the map                      page 2
+PASS PAGES: R turns round to the items              page 0
+PASS GRID: the cursor walks right to the bombs      cursor 2
+PASS GRID: it stops at the last item                cursor 2
+PASS GRID: L puts the bombs on the L trigger        equip 0 1 2
+PASS GRID: A puts the sword on A, off B             equip 1 0 2
+PASS GRID: B takes it back
+PASS GRID: DOWN moves to the second row             cursor 4
+PASS MAP: the cursor starts on this cell            cursor 22 entry 22
+PASS MAP: UP moves the cursor a row                 cursor 17
+PASS MAP: A looks closer                            zoom 1
+PASS MAP: B comes back                              zoom 0
+PASS PAGES: Start closes                            state 1
+PASS SAVE: a death takes the hero home              area 0
+PASS SAVE: after a reset the title knows the file   has 1
+PASS SAVE: CONTINUE wakes in the drain              state 1 area 0
+PASS SAVE: with the items it had                    items 127
+PASS SAVE: the same wood
+PASS SAVE: NEW GAME begins afresh                   gilt 0
+RESULT PASS 21/21
