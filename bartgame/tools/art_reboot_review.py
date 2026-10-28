@@ -258,6 +258,21 @@ class Review:
         C.boss_fight(c)
         self.record('victory-screen',64,note='Actual sword fight and Grail collection reached the completion screen; healing/inventory fixture.',expect=lambda _:C.gstate(c)==6)
 
+    def boss_view(self):
+        """Supplement the entrance view with a complete natural Heart view."""
+        self.boot(0xB4A7);c=self.c;world=C.world(c);P.enter_forest(c)
+        goal=world['goal']
+        L.warp(c,goal,next(i for i,g in enumerate(world['cells'][goal]['gate']) if g))
+        boss=next(P.actor(c,i) for i in range(1,96)
+                  if P.actor(c,i)['kind']==2 and P.actor(c,i)['hp']==40)
+        point=next(((boss['x']+dx,boss['y']+dy)
+                    for dx,dy in ((-48,8),(48,8),(-40,24),(40,24))
+                    if self.safe(boss['x']+dx,boss['y']+dy)),None)
+        assert point is not None,'natural boss arena has no safe full-view position'
+        self.focus(point,clear=False)
+        self.record('heart-full-view',96,
+                    note='Naturally spawned Heart in generated final room; player position and healing are fixtures. Camera follows ordinary game logic; no actor placement or art injection.')
+
     def death_return(self):
         self.boot(0xB4A7);c=self.c;world=C.world(c);P.enter_forest(c)
         found=None
@@ -325,7 +340,7 @@ def main():
     ap.add_argument('--resume',action='store_true',help='retain prior exact-ROM screen captures while adding selected groups')
     args=ap.parse_args();base=Path(args.out);base.mkdir(parents=True,exist_ok=True);groups=args.groups.split(',')
     review=Review(SimpleNamespace(**{**vars(args),'out':str(base/'screens')}))
-    for group,method in (('scenes',review.scenes),('interface',review.interfaces),('actors',review.actors),('ending',review.ending),('death',review.death_return)):
+    for group,method in (('scenes',review.scenes),('interface',review.interfaces),('actors',review.actors),('ending',review.ending),('death',review.death_return),('boss-view',review.boss_view)):
         if group in groups:method()
     action_rows=actions(args,base/'actions') if 'actions' in groups else []
     if 'interactive' in groups:
