@@ -9,6 +9,28 @@ footprint**. They are separate quantities. Existing actor rendering already
 uses a feet point, so small native artwork does not require rescaling the
 world, changing the maze, or shrinking the 16×16 terrain grid.
 
+Production integration now follows the selected mockup: hero 32×32, ordinary
+painted body 14×22, and world pickup canvases 16×16. Resident addresses are
+derived in `actor.h`; damage is 12×20 at `(0,-11)` and movement feet are 10×8
+at `(0,-4)`. Ground sampling and portal triggers use that new foot centre.
+The held-use hands are north `(5,-17)`, east `(7,-12)`, south `(3,-9)` and
+west `(-8,-12)`; guarding south instead grips `(0,-8)`. Exact source grips
+are shared with the native item painter. Carrying retains `z=24` and the
+original continuous release origin. Arrows now have a dedicated 6×6 contact
+box centred 14 pixels above their logical feet, matching their visible
+16-pixel canvas and height; wall collision uses that same box. These physical
+alignment changes are intentional and require new runtime validation rather
+than an assertion that old per-frame gameplay traces remain identical.
+
+Stable painted extents of 18×24, rather than transparent 32×32 canvases,
+control Bloom/NPC depth sampling. The Heart uses a 32×50 painted extent and
+a separate 28×40 contact box. A grounded contact shadow helps the small
+roots meet the floor. Surface-attached glitter is a separate renderer with
+24 potential viewport sites, staggered half-duty cycles, foreground/ground
+depth and no actor-pool or world-RNG consumption. Its observable counters
+are `gAmbientSiteCount`, `gAmbientPotential`, `gAmbientVisible` and
+`gAmbientPeaks`.
+
 ## Proposed shared contract
 
 | Asset | Painted extent | Hardware canvas | Anchor |
