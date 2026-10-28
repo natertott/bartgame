@@ -71,9 +71,19 @@ def main():
                 key=lambda item: item[1]):
             raw = data[frame_index * frame_tiles * 32:(frame_index + 1) * frame_tiles * 32]
             box = alpha_bounds(raw, width, height)
-            frames.append({'id': frame_index, 'name': frame_name, 'bounds_xyxy': box,
-                           'visible_size': [box[2] - box[0], box[3] - box[1]] if box else [0, 0],
-                           'sha256': digest(raw)})
+            frame = {'id': frame_index, 'name': frame_name, 'bounds_xyxy': box,
+                     'visible_size': [box[2] - box[0], box[3] - box[1]] if box else [0, 0],
+                     'sha256': digest(raw), 'display_palette_slot': palette}
+            palette_array = name + '_frame_pal'
+            if palette_array in r.symbols:
+                frame['display_palette_slot'] = r.read(r.symbols[palette_array] + frame_index, 1)[0]
+            if name == 'icon32':
+                exact = r.read(r.symbols['icon32_exact_tiles'] + frame_index * frame_tiles * 32, frame_tiles * 32)
+                frame['exact_menu_pixels_sha256'] = digest(exact)
+                frame['exact_menu_palette_sha256'] = digest(r.read(r.symbols['icon32_exact_pal'] + frame_index * 32, 32))
+            if name == 'face':
+                frame['portrait_palette_sha256'] = digest(r.read(r.symbols['pal_face'] + frame_index * 32, 32))
+            frames.append(frame)
         sheets.append({'id': index, 'name': name, 'canvas': [width, height],
                        'frame_count': len(frames), 'frame_tiles': frame_tiles, 'source_tiles': tile_count,
                        'palette_slot': palette, 'palette_group': palettes.get(palette),
