@@ -262,6 +262,10 @@ def main():
             shutil.rmtree(args.out / family)
     actual = args.out / 'actual'
     sha = G.digest(args.frozen / 'bartgame.gba')
+    freeze = read(args.frozen / 'freeze.json') if (args.frozen / 'freeze.json').exists() else None
+    if freeze:
+        assert freeze['rom_sha256'] == sha
+        copy(args.frozen / 'freeze.json', actual / 'frozen-rom.json')
     index = read(args.review / 'index.json')
     assert index['rom_sha256'] == sha and not index['failures']
     copy(args.review / 'index.json', actual / 'index.json')
@@ -327,6 +331,7 @@ def main():
     captures = screens['captures'] + interactive['captures'] + [row for report in actions for row in report['captures']]
     all_captures = captures + supplement['captures']
     manifest = {'source_rom_sha256': sha, 'source_rom_bytes': (args.frozen / 'bartgame.gba').stat().st_size,
+          'source_commit': freeze.get('source_commit') if freeze else None,
           'emulator': screens['emulator'], 'method': __doc__.strip(),
           'counts': {'screen_clips': len(screens['captures']), 'action_clips': sum(len(r['captures']) for r in actions),
                      'interactive_clips': len(interactive['captures']), 'canonical_clips': len(captures),
