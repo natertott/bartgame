@@ -335,17 +335,27 @@ def held_item(kind,facing='e',phase=0):
         # Ring is the hand anchor; a tiny caged light hangs below it.
         d.ellipse((gx-1,gy-1,gx+1,gy+1),outline=9)
         d.point((gx,gy),fill=8)
-        d.line([(gx,gy+1),(gx,gy+2)],fill=8)
-        d.rectangle((gx-3,gy+2,gx+3,gy+8),fill=1)
-        d.line([(gx-3,gy+2),(gx+3,gy+2)],fill=10)
-        d.line([(gx-3,gy+8),(gx+3,gy+8)],fill=10)
-        d.line([(gx-2,gy+3),(gx-2,gy+7)],fill=8)
-        d.line([(gx+2,gy+3),(gx+2,gy+7)],fill=6)
-        d.rectangle((gx-1,gy+3,gx+1,gy+7),fill=2)
-        d.line([(gx,gy+6),(gx,gy+4)],fill=12)
-        if phase==1:d.point((gx+1,gy+4),fill=11)
-        elif phase==2:d.point((gx-1,gy+5),fill=11)
-        else:d.point((gx+1,gy+5),fill=11)
+        # North's far-side cage hangs from a short outward hook. The
+        # shared hand remains at (21,15), while the light clears the flower's
+        # right edge instead of collapsing into an occluded vertical stroke.
+        cx=gx+4 if facing=='n' else gx
+        top=gy+3 if facing=='n' else gy+2
+        bottom=gy+10 if facing=='n' else gy+8
+        if facing=='n':
+            d.line([(gx,gy+1),(cx-1,gy+1),(cx,gy+2),(cx,top)],fill=8)
+            d.point((cx-1,gy+1),fill=10)
+        else:
+            d.line([(gx,gy+1),(gx,top)],fill=8)
+        d.rectangle((cx-3,top,cx+3,bottom),fill=1)
+        d.line([(cx-3,top),(cx+3,top)],fill=10)
+        d.line([(cx-3,bottom),(cx+3,bottom)],fill=10)
+        d.line([(cx-2,top+1),(cx-2,bottom-1)],fill=8)
+        d.line([(cx+2,top+1),(cx+2,bottom-1)],fill=6)
+        d.rectangle((cx-1,top+1,cx+1,bottom-1),fill=2)
+        d.line([(cx,bottom-2),(cx,top+2)],fill=12)
+        if phase==1:d.point((cx+1,top+2),fill=11)
+        elif phase==2:d.point((cx-1,bottom-2 if facing=='n' else gy+5),fill=11)
+        else:d.point((cx+1,bottom-2 if facing=='n' else gy+5),fill=11)
     else:raise KeyError(kind)
     return im
 
