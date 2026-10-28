@@ -45,7 +45,8 @@ def small(kind):
     if kind in ('bombs','bomb_pickup','bomb_lit'):
         d.ellipse((2,5,13,15),fill=1);d.ellipse((3,6,12,14),fill=4)
         d.polygon([(4,6),(8,6),(9,8),(7,10),(4,9)],fill=6)
-        d.line([(4,7),(6,6)],fill=14)
+        d.line([(4,7),(6,6),(8,7)],fill=14)
+        d.point((5,6),fill=15)
         d.line([(8,5),(8,3),(10,2),(12,3)],fill=10)
         d.line([(9,4),(9,3),(10,3)],fill=11)
         if kind=='bomb_lit':
@@ -121,11 +122,12 @@ def small(kind):
         d.line([(10,7),(11,10)],fill=8,width=2)
         d.line([(5,2),(7,3)],fill=14);d.line([(7,13),(8,12)],fill=14)
     elif kind in ('arrow1','arrow5','arrow10'):
-        offsets=[0] if kind=='arrow1' else [-2,1] if kind=='arrow5' else [-3,0,3]
+        offsets=[0] if kind=='arrow1' else [-1,1] if kind=='arrow5' else [-2,0,2]
         for off in offsets:
-            d.line([(3+off,13),(12+off,4)],fill=1,width=3)
-            d.line([(3+off,13),(11+off,5)],fill=12,width=1)
-            d.polygon([(10+off,3),(14+off,2),(13+off,6),(12+off,5)],fill=7)
+            tip=14 if kind=='arrow1' else 12
+            d.line([(3+off,13),(tip-2+off,4)],fill=1,width=3)
+            d.line([(3+off,13),(tip-3+off,5)],fill=12,width=1)
+            d.polygon([(tip-4+off,3),(tip+off,2),(tip-1+off,6),(tip-2+off,5)],fill=7)
             d.line([(3+off,10),(6+off,12)],fill=5,width=2)
     elif kind=='hubcap':
         d.ellipse((1,1,14,14),fill=1);d.ellipse((2,2,13,13),fill=5)
