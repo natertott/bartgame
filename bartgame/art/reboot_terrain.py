@@ -337,17 +337,27 @@ def spring(phase=0):
 
 
 def myst_floor(style='cave',variant=0,edge=0):
-    if style=='thicket':return ground(variant)
+    if style=='thicket':
+        im=ground(variant)
+        if variant:
+            # This rare floor is fouled and damp; ordinary paths/grass do
+            # not acquire ambient stars merely for being traversable.
+            d=ImageDraw.Draw(im);d.line([(10,6),(12,6)],fill=8);d.point((11,7),fill=9)
+        return im
     im,d=canvas(3 if style=='cave' else 9)
     if style=='cave':
-        # A quiet stone chip; no repeated curved mark that reads as wallpaper.
+        # Cool damp stone carries a tiny low-contrast wet patch and a chip,
+        # not an arc or a large repeating floor motif. This material is an
+        # authored source for the engine's staggered ambient reflections.
         d.line([(4,12),(6,12)],fill=2)
-        if variant:d.line([(11,4),(12,4)],fill=4)
+        d.line([(10,6),(11,6)],fill=4);d.point((10,7),fill=4)
+        if variant:d.point((11,6),fill=6)
     else:
         # Foliate bank indices2..7 are green; wooden floor grain deliberately
         # stays in the bark ramp8..12 and occupies only a few native pixels.
         d.line([(5,11),(7,11)],fill=8)
-        if variant:d.line([(11,4),(13,4)],fill=10)
+        if variant:
+            d.line([(11,4),(13,4)],fill=10);d.point((12,5),fill=15)
     for bit,pts in [(1,[(0,0),(15,0),(15,2),(0,2)]),(2,[(13,0),(15,0),(15,15),(13,15)]),(4,[(0,13),(15,13),(15,15),(0,15)]),(8,[(0,0),(2,0),(2,15),(0,15)])]:
         if edge&bit:d.polygon(pts,fill=2 if style=='cave' else 8)
     return im
@@ -921,7 +931,8 @@ def paint(name,phase=0):
         elif rest=='exit':im=exit_steps(style)
         elif rest=='spring':im=spring(phase);pal='water'
         else:raise KeyError('Unmapped mystery '+name)
-        return im,pal,style+'-interior-'+rest,rest in ('wall','face','glow','spring')
+        wet_floor=(style=='cave' and (rest.startswith('floor') or rest.startswith('edge_'))) or (style in ('hollow','thicket') and rest=='floor1')
+        return im,pal,style+'-interior-'+rest,rest in ('wall','face','glow','spring') or wet_floor
     if name in ('bush','rock_small','boulder','rock','rock2','rock3','mossy_stone','sick_rock','stump','sick_stump','log','fence','thorn','pillar','ruin_wall','statue','bones','sick_bones','leaf_litter','fern_patch','blight_crystal','dead_tree','forest_blight_dead_tree','lantern_post','relic','shrine_plate','myst_pot'):
         im,pal=prop(name,phase);return im,pal,'foreground-'+name,name in ('statue','blight_crystal','dead_tree','forest_blight_dead_tree','lantern_post','relic','shrine_plate')
     raise KeyError('No native painter for '+name)
