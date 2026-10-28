@@ -28,6 +28,7 @@ import tiles  # noqa: E402
 import sprites  # noqa: E402
 import title  # noqa: E402
 import rooms  # noqa: E402
+import reboot_actors  # noqa: E402
 
 OUT = sys.argv[1] if len(sys.argv) > 1 else os.path.join(HERE, '..', 'build', 'gen')
 os.makedirs(OUT, exist_ok=True)
@@ -303,6 +304,18 @@ h.append('#define SHEET_COUNT %d' % len(sheet_names))
 h.append('extern const SpriteSheet sheets[];\n')
 print('sprites: %d sheets, %d tiles' % (len(sheet_names), sum(s[1] for s in sheet_names)))
 
+# The same native painter supplies the blade, its render origin and the
+# phase-specific collision rectangle. No independent reach table can drift
+# away from the compact actor or grow into a permanent range-outline cage.
+sword_geometry = reboot_actors.sword_geometry()
+origins = [value for pair in sword_geometry['origins'] for value in pair]
+hitboxes = [value for facing in sword_geometry['bounds'] for phase in facing for value in phase]
+assert len(origins) == 8 and len(hitboxes) == 80
+for name, values in (('bloom_sword_origin', origins), ('bloom_sword_hit', hitboxes)):
+    assert all(-128 <= value <= 127 for value in values), name
+    c.append('const s8 %s[%d] ALIGN4 = { %s };' % (name, len(values), ', '.join(map(str, values))))
+    h.append('extern const s8 %s[];' % name)
+
 # The supplied item frames select one of four material banks in the world.
 # Paused inventory uses each original frame's own fifteen-colour ramp.
 for sh in sprites.SHEETS:
@@ -470,6 +483,7 @@ coverage = {
         {'family': 'portraits', 'owner': 'reboot_ui', 'elements': list(sprites.SHEETS[next(i for i, s in enumerate(sprites.SHEETS) if s['name'] == 'face')]['frames'])},
     ],
     'title': title.metadata(title_bitmap),
+    'sword_geometry': sword_geometry,
 }
 with open(os.path.join(OUT, 'art-reboot-coverage.json'), 'w') as report:
     json.dump(coverage, report, indent=2)
