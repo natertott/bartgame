@@ -1,10 +1,29 @@
 # UI, title and portrait plan
 
-This is a production plan, not an implemented redesign. The direction and
-shared native palette must be selected from the first mockup critique before
-these assets are drawn.
+Direction A was selected after the native mockup critique. Its implemented
+interface is authored in `art/reboot_ui.py`, with the compact runtime HUD in
+`src/text.c`. The audit and planning notes below explain those decisions.
 
-## What exists
+## Implemented contracts
+
+- All51 named kit tiles,4 HUD tiles,6 UI sprite marks,13 map markers,12 dots
+  and the cursor use the shared native materials; identifiers remain stable.
+- All97 glyph advances match the frozen baseline. New six-pixel capitals and
+  five-pixel lowercase use the existing nine-row storage and text wrapping.
+- Six48×48 portraits match the new world NPC identities and use fifteen shared
+  inks each, padded to legal64×64 hardware canvases.
+- The title is drawn directly at240×160 from27 shared RGB555 colours. Its
+  prompts overlay a dark-water channel integrated with dirty roots and masonry.
+- The24px HUD uses a96×24 fixed BG canvas for ten hearts, currency, keys and
+  the R lifting cue. Equipment uses dedicated16px drawings. The minimap paints
+  a15px cell grid inside its existing32px hardware canvas; its bottom is clear.
+- The vitals canvas reserves36 BG tiles rather than the old six-tile purse.
+  Fullscreen pages reuse that space, and returning to play rebuilds it.
+
+Native source previews are explicitly labelled. Actual title, menu, HUD, shop
+and dialogue output is checked and captured under mGBA after packing.
+
+## Baseline audit
 
 The current interface is one of the more coherent parts of the game. Its
 three pause pages, item descriptions, button assignment language, shop rows,
