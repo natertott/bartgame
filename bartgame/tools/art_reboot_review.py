@@ -61,6 +61,13 @@ class NativeSuite(BS.Suite):
         raise AssertionError('seed %s has no natural medium/large quiet cave'%hex(self.seed))
 
     def record(self,*args,**kwargs):
+        # The compact body intentionally samples its new feet centre. Give
+        # the real south chasm approach a few extra walking updates instead of
+        # ending one pixel before that centre reaches the hole.
+        if args and args[0]=='forest-pit-fall' and len(args)>3:
+            values=list(args);events={tick:list(keys) for tick,keys in values[3].items()}
+            if 30 in events:events[36]=events.pop(30)
+            values[3]=events;args=tuple(values)
         original=self.background;packed=None
         if C.area(self.c)==2:
             packed=actual_mystery(self.c,self.cell)
@@ -98,6 +105,11 @@ class Review:
         self.args=args;P.ROM=args.rom;self.defs=B.configure(args)
         self.out=Path(args.out);self.out.mkdir(parents=True,exist_ok=True)
         self.rows=[];self.failures=[];self.c=None;self.seed=int(args.seed,0)
+        prior=self.out/'review.json'
+        if getattr(args,'resume',False) and prior.exists():
+            report=json.loads(prior.read_text())
+            assert report['rom_sha256']==hashlib.sha256(Path(args.rom).read_bytes()).hexdigest()
+            self.rows=report['captures'];self.failures=report['failures']
         self.pose=B.static_symbol('sLastFrame')
 
     def boot(self,seed=None,title=False):
@@ -263,11 +275,19 @@ class Review:
 
 def actions(args,out):
     rows=[]
+    wanted=set(args.action_groups.split(','))
     for background in ('drain','forest','blight','cave'):
         folder=out/background;ns=SimpleNamespace(rom=args.rom,map=args.map,assets_header=args.assets_header,
             out=str(folder),seed='11' if background=='cave' else args.seed,only=None,match=None)
-        suite=NativeSuite(ns);suite.actions(background);suite.save()
-        rows.append({'group':background,'report':str(folder.relative_to(out)/'suite.json'),'captures':len(suite.rows),'missing':suite.missing})
+        if background in wanted:
+            suite=NativeSuite(ns);suite.actions(background);suite.save()
+        if (folder/'suite.json').exists():
+            report=json.loads((folder/'suite.json').read_text())
+            rows.append({'group':background,'report':str(folder.relative_to(out)/'suite.json'),'captures':len(report['captures']),'missing':report['missing']})
+    if 'special' not in wanted:
+        if (out/'special/suite.json').exists():
+            report=json.loads((out/'special/suite.json').read_text());rows.append({'group':'special','report':'special/suite.json','captures':len(report['captures']),'missing':report['missing']})
+        return rows
     ns=SimpleNamespace(rom=args.rom,map=args.map,assets_header=args.assets_header,out=str(out/'special'),seed=args.seed,only=None,match=None)
     suite=NativeSuite(ns)
     for label,seed,cell,name in [('bush',0xB4A7,16,'BUSH'),('rock',0xB4A7,16,'ROCK_SMALL'),('pot',0xB4A7,12,'CAVE_FLOOR_LIFT'),('boulder',7,17,'BOULDER')]:
@@ -301,6 +321,8 @@ def main():
     ap.add_argument('--assets-header',default=str(Path(P.ROOT)/'build/gen/assets.h'))
     ap.add_argument('--seed',default='0xB4A7')
     ap.add_argument('--groups',default='scenes,interface,actors,actions,interactive,ending,death')
+    ap.add_argument('--action-groups',default='drain,forest,blight,cave,special')
+    ap.add_argument('--resume',action='store_true',help='retain prior exact-ROM screen captures while adding selected groups')
     args=ap.parse_args();base=Path(args.out);base.mkdir(parents=True,exist_ok=True);groups=args.groups.split(',')
     review=Review(SimpleNamespace(**{**vars(args),'out':str(base/'screens')}))
     for group,method in (('scenes',review.scenes),('interface',review.interfaces),('actors',review.actors),('ending',review.ending),('death',review.death_return)):
