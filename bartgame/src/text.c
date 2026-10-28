@@ -37,6 +37,7 @@ static u8 sBg0Dirty;
 
 static void hud_init(void);
 static void hud_stale(void);
+static void hud_panel_base(void);
 
 void text_init(void) {
     const SpriteSheet* marks = &sheets[SHEET_UIMARKS];
@@ -483,6 +484,7 @@ bool8 shop_active(void) {
 
 static Canvas sPurse, sCount[SLOT_COUNT];
 static u32 sCountPix[SLOT_COUNT][4 * 8];
+static u32 sVitalsBase[HUD_PURSE_TW * HUD_VITALS_TH * 8] EWRAM_BSS;
 static s16 sHudHp, sHudHpMax;
 static s16 sPurseGilt, sPurseKeys;       /* what the purse shows */
 static u8 sHudEq[SLOT_COUNT];            /* whose icons are resident */
@@ -498,6 +500,7 @@ static void hud_init(void) {
         sHudIconFrame[s] = 0xFF;
         sHudCount[s] = -1;
     }
+    hud_panel_base();
     hud_stale();
 }
 
@@ -582,19 +585,16 @@ static void vitals_key(int x,int y) {
     vwf_pixel(&sPurse,x+6,y+6,VI_GOLD);vwf_pixel(&sPurse,x+7,y+5,VI_GOLD);
 }
 
-static void hud_purse(void) {
-    char buf[6];int x,y,i,hp=gPl.hp,hearts=MIN(10,(gPl.hp_max+7)/8);
+/* Static packed panel, coin and lifting cue are prepared once per atlas
+   load. Fullscreen pages may borrow the live canvas, never this cache. */
+static void hud_panel_base(void) {
+    int x,y;
     vwf_clear(&sPurse,0);
     vitals_line(1,1,94,22,VI_OUTLINE);vitals_line(2,2,93,21,VI_PANEL);
     vitals_line(3,1,92,1,VI_GOLD_DARK);vitals_line(2,2,2,20,VI_GOLD_DARK);
     vwf_pixel(&sPurse,2,1,VI_GOLD_LIGHT);vwf_pixel(&sPurse,93,21,VI_GOLD);
-    for(i=0;i<hearts;i++,hp-=8)vitals_heart(7+i*8,4,hp);
-    /* Coin and key are native8px symbols in this panel's own colour bank. */
     vitals_line(8,14,12,19,VI_GOLD_DARK);vitals_line(9,13,11,20,VI_GOLD_DARK);
     vitals_line(9,14,12,18,VI_GOLD);vwf_pixel(&sPurse,9,14,VI_IVORY);
-    x=vwf_text(&sPurse,17,13,vwf_num(buf,gPl.gilt,0),VI_TEXT);
-    vitals_key(x+3,13);vwf_text(&sPurse,x+13,13,vwf_num(buf,gPl.keys,0),VI_TEXT);
-    /* R and a lifting hand stay visible without borrowing the heart row. */
     vitals_line(77,13,83,20,VI_OUTLINE);vitals_line(78,14,82,19,VI_EMPTY);
     vwf_glyph(&sPurse,78,13,'R',VI_TEXT);
     for(y=0;y<8;y++)for(x=0;x<8;x++) {
@@ -602,7 +602,35 @@ static void hud_purse(void) {
         int ink=(hud_tiles[at]>>((x&3)*4))&15;
         if(ink)vwf_pixel(&sPurse,85+x,13+y,ink);
     }
-    vwf_flush(&sPurse,FALSE);
+    memcpy32(sVitalsBase,sPurse.px,sizeof(sVitalsBase));
+}
+
+static int vitals_heart_style(int hp) {
+    return hp>=8 ? 2 : hp>=4 ? 1 : 0;
+}
+
+static void hud_purse(void) {
+    char buf[6];int x,i,hearts=MIN(10,(gPl.hp_max+7)/8);
+    bool8 reset=sPurseGilt<0 || sHudHp<0 || sHudHpMax!=gPl.hp_max;
+    bool8 dirty=reset;
+    if(reset)memcpy32(sPurse.px,sVitalsBase,sizeof(sVitalsBase));
+    for(i=0;i<hearts;i++) {
+        int hp=gPl.hp-i*8;
+        if(reset || vitals_heart_style(hp)!=vitals_heart_style(sHudHp-i*8)) {
+            /* The surrounding heart cell is plain panel. Clear old gleams
+               before replacing just this changed full/half/empty heart. */
+            if(!reset)vitals_line(7+i*8,4,14+i*8,10,VI_PANEL);
+            vitals_heart(7+i*8,4,hp);
+            dirty=TRUE;
+        }
+    }
+    if(reset || sPurseGilt!=gPl.gilt || sPurseKeys!=gPl.keys) {
+        if(!reset)vitals_line(17,13,75,20,VI_PANEL);
+        x=vwf_text(&sPurse,17,13,vwf_num(buf,gPl.gilt,0),VI_TEXT);
+        vitals_key(x+3,13);vwf_text(&sPurse,x+13,13,vwf_num(buf,gPl.keys,0),VI_TEXT);
+        dirty=TRUE;
+    }
+    if(dirty)vwf_flush(&sPurse,FALSE);
 }
 
 /* the icons copied in when a button takes another item, the counts set
@@ -611,10 +639,10 @@ static void hud_refresh(void) {
     const SpriteSheet* icons = &sheets[SHEET_HUDITEMS];
     int s;
     if (gPl.gilt != sPurseGilt || gPl.keys != sPurseKeys || gPl.hp != sHudHp || gPl.hp_max != sHudHpMax) {
+        hud_purse();
         sPurseGilt = gPl.gilt;
         sPurseKeys = gPl.keys;
         sHudHp = gPl.hp; sHudHpMax = gPl.hp_max;
-        hud_purse();
     }
     for (s = 0; s < SLOT_COUNT; s++) {
         int eq = gPl.equip[s], n = hud_count(eq), f = hud_icon(eq);
