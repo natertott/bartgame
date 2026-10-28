@@ -107,7 +107,7 @@ def main():
     args.out.write_text(json.dumps(report, indent=2) + '\n')
     csv_path = args.out.with_name('metatile-index.csv')
     with csv_path.open('w', newline='') as stream:
-        writer = csv.writer(stream)
+        writer = csv.writer(stream, lineterminator='\n')
         writer.writerow(['id', 'name', 'type', 'collision_quarters', 'transparent_prop', 'resident_areas', 'direct_runtime_references'])
         for row in metatiles:
             writer.writerow([row['id'], row['name'], row['type'], row['collision_quarters'], row['transparent_prop'],

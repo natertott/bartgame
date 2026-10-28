@@ -5,11 +5,11 @@ outer repository also contains a Minish Cap decompilation; those legacy game
 assets and QuickStart documents are not the current standalone game's asset
 pipeline.
 
-The frozen pre-reboot ROM is `1e66780`'s published build (game source
-`3d3f8aa`), SHA256:
+The frozen pre-reboot ROM is `1 e66780`'s published build (game source
+`3 d3 f8 aa`), SHA256:
 
 ```text
-bbd08678b1e10fb110e562a6374b0242cb8e73affbdd747f033fd0ce99619eee
+bbd08678 b1 e10 fb110 e562 a6374 b0242 cb8 e73 affbdd747 f033 fd0 ce99619 eee
 ```
 
 Paired ROM, map and generated header were frozen under
@@ -47,18 +47,18 @@ portraits, keepers and large interactive scenery stream frames.
 
 ## Measured scale failures
 
-These are alpha extents measured from the frozen packed4bpp pixels, not sprite
+These are alpha extents measured from the frozen packed4 bpp pixels, not sprite
 canvas dimensions or nominal collision boxes:
 
 - Bloom south idle is **23×30**, while normal direction/action bodies range
-  up to29px wide and30px high. The64×32 canvas exaggerates the nominal sprite
+  up to29 px wide and30 px high. The64×32 canvas exaggerates the nominal sprite
   size, but the visible idle itself is still nearly two terrain tiles tall.
-- Every world pickup in `pick32` is **25–30px wide and25–30px high**. A routine
+- Every world pickup in `pick32` is **25–30 px wide and25–30 px high**. A routine
   heart or money drop is therefore about as large as Bloom, and larger than
-  the16px barrier or small enemy beside it. This is the strongest hierarchy
+  the16 px barrier or small enemy beside it. This is the strongest hierarchy
   mismatch; inventory illustrations and world drops currently share enlarged
   design assumptions.
-- Beetles are13×13, spitters12×14 and slimes10–14px wide. Knights are about
+- Beetles are13×13, spitters12×14 and slimes10–14 px wide. Knights are about
  14–16×30. The Heart's27×29 visible body is approximately Bloom's height rather
   than a commanding boss silhouette.
 - Ordinary NPCs are18–26×26–31. The Gatekeeper is32×54–55, and the merchant is
@@ -79,7 +79,7 @@ excluded from the visible range.
 | `hero` | 64×32 | 101 | 32 | 10–29 × 6–30 | `hero` | Bloom body, every action; streamed frame at fixed HERO_TILE0. Source: pack → bloom_animations. |
 | `sword` | 16×16 | 3 | 4 | 8–15 × 8–15 | `gear` | Small sword/equipment display in pause menu; action sword is bloomfx. Source: pack → clean_items/reference_assets. |
 | `shield` | 16×16 | 6 | 4 | 5–14 × 14–14 | `gear` | Held guard in four directions; pause equipment. Front/back/side plus upgrade. Source: reference_assets. |
-| `items` | 16×16 | 21 | 4 | 10–14 × 12–14 | `items` | 16px tool/bomb frames and shop icons. Source: pack → clean_items → reference_assets. |
+| `items` | 16×16 | 21 | 4 | 10–14 × 12–14 | `items` | 16 px tool/bomb frames and shop icons. Source: pack → clean_items → reference_assets. |
 | `beetle` | 16×16 | 4 | 4 | 13–13 × 13–13 | `bugs` | Rot beetle enemy, forest and mystery fights. Source: forest_sprites. |
 | `bat` | 16×16 | 3 | 4 | 7–13 × 10–11 | `bugs` | Flying enemy and shadow-facing sprite. Source: forest_sprites. |
 | `slime` | 16×16 | 3 | 4 | 10–14 × 6–10 | `bugs` | Slime enemy. Source: forest_sprites. |
@@ -99,7 +99,7 @@ excluded from the visible range.
 | `pick32` | 32×32 | 10 | 16 | 25–30 × 25–30 | `pick` | All loose world pickups: hearts, money/hoard, bombs, key, relic, Grail, arrows. Source: reference_assets. |
 | `icon32` | 32×32 | 17 | 16 | 21–30 × 22–30 | `icons` | Inventory/reward/HUD item icons, including per-frame exact menu palette. Source: reference_assets. |
 | `uimarks` | 8×8 | 6 | 1 | 5–8 × 5–8 | `uikit` | Advance arrow, selection pointer, cursor corner, A/B/L badges. Source: ui_kit. |
-| `face` | 64×64 | 6 | 64 | 46–48 × 46–48 | `portrait` | Six dialogue/shop portraits, 48px art inside64px canvas. Source: faces. |
+| `face` | 64×64 | 6 | 64 | 46–48 × 46–48 | `portrait` | Six dialogue/shop portraits, 48 px art inside64 px canvas. Source: faces. |
 | `peddler_head` | 64×32 | 5 | 32 | 39–39 × 24–24 | `peddler` | Streamed merchant head/body composite in Drain. Source: sw_folk. |
 | `peddler_body` | 64×32 | 14 | 32 | 50–50 × 20–20 | `peddler` | Streamed merchant body/gesture component. Source: sw_folk. |
 | `gatekeeper` | 64×64 | 6 | 64 | 32–32 × 54–55 | `gatekeeper` | Streamed tall Drain keeper body. Source: sw_folk. |
@@ -122,7 +122,7 @@ for ownership.
 | Blighted ground/ruins/walls/trees/crystals/veins/pools/mist | `forest_art.py`, atlas-derived `blight_reference.py`, plus its appended clones | Stage-dependent roomgen; stage3/Heart decoration, animated hazard frames and cosmetics share logical contracts |
 | Water/banks/corners/bridges/ledges | Terrain painters plus healthy material remap | `roomgen.c` continuous watersheds, cardinal/corner shore masks, bridges, drop direction; visual edge must match collision/traversal |
 | Bush, small rock, boulder, thorn, stump, bone/litter props | Forest/healthy painters; lift silhouette copied separately | `react.c`, `objects.c`, `player.c`; cutting, lifting and clearing reveal stored underlay. Carried and ground silhouettes need one source |
-| Chests and mouths | Logical16px background placeholders plus `interactive_props.py` OBJ image | `interactive.c` suppresses old background picture while preserving collision/reward/transition tile. Frame tiers read existing loot |
+| Chests and mouths | Logical16 px background placeholders plus `interactive_props.py` OBJ image | `interactive.c` suppresses old background picture while preserving collision/reward/transition tile. Frame tiers read existing loot |
 | Plates, cracks, web, locks, censers, pot, pit, spring, statue/shrine plate | Final `interactive_tiles.py` painter | `myst.c`, `react.c`, `items.c`, `game.c`; open/pressed/burned/lit/spent states. CRACK/WEB display on BG1 over local floor |
 | Cave/hollow/thicket interior wall/face/crown/floor/edges/glow/exit | `tiles.py` + forest/environment painters; final interaction overrides | `myst.c` three styles/sizes and all event variants; floor-switch/lift/chest logical clones carry interaction type under overlays |
 | Painted Drain `swh_000…369` | `sw_hall.py` native480×320 scene → `sw_cut.py` palette/tiles → `sw_drain.py` cell contracts | `rooms.py` ground/overlay map + actual collision quarters. Editing legacy `sw_ladder` does not change the visible hall exit |
@@ -133,13 +133,13 @@ for ownership.
 
 | Surface | Asset source | Runtime/compositor |
 | --- | --- | --- |
-| Title/continue screen | `title.py` resizes `art/ref/title-reference.jpg` with Lanczos to240×160; packed Mode3 RGB555 with **2,070 colours**,76,800bytes | `game.c` title bitmap, fading, PressStart/Continue/New text and pointer. This explicitly violates the proposed native-first production rule and needs a fresh native composition |
+| Title/continue screen | `title.py` resizes `art/ref/title-reference.jpg` with Lanczos to240×160; packed Mode3 RGB555 with **2,070 colours**,76,800 bytes | `game.c` title bitmap, fading, PressStart/Continue/New text and pointer. This explicitly violates the proposed native-first production rule and needs a fresh native composition |
 | HUD panels, slots, dividers, plates, tabs, shop rows, pause frames | **51 8×8 UI kit tiles**, `ui_kit.py` | `ui.c` procedural nine-slice/frame layouts; `text.c` HUD/shop/dialogue; `menu.c` bag/key pages/maps; `game.c` win screen |
 | Hearts and contextualR hand | **4 8×8 HUD tiles**, separate HUD palette | `text.c`; hearts, half-heart, empty-heart and hand. These are not the `pick32` ground heart frames |
-| Text face | **97 glyphs** (ASCII32…128),9rows each; visible letter widths1–5px,3px space,1px tracking | `ui_font.py` → packed `vwf_w`/`vwf_bits`; `vwf.c` rasterizes to BG or OBJ canvas. Dialogue, shop, inventory descriptions, title prompts and win stats all use it |
+| Text face | **97 glyphs** (ASCII32…128),9 rows each; visible letter widths1–5 px,3 px space,1 px tracking | `ui_font.py` → packed `vwf_w`/`vwf_bits`; `vwf.c` rasterizes to BG or OBJ canvas. Dialogue, shop, inventory descriptions, title prompts and win stats all use it |
 | Speaker/shop portraits | Six48×48 faces padded into64×64 OBJ frames; per-face16-colour palette | `faces.py`; `text.c` fixed portrait tile944 and face slot. Portraits must be redrawn with the same characters as overworld bodies |
 | Bag/key-item illustrations and HUD equipment | `icon32`32×32 frames; exact per-frame menu palettes plus four world/HUD palette banks | `objects.c` seven-slot LRU tile/palette cache; `menu.c`, `text.c`, player item-get. Redrawing world pickup size does not require shrinking inventory illustrations |
-| Overworld and zoomed pause maps | `marks`, `dots`, UI corners, UI map palette; map pixels are generated from world state | `menu.c` procedural room thumbnails, gate/event marks, fog, cursor and legend; `text.c` HUD minimap16tiles at1008 |
+| Overworld and zoomed pause maps | `marks`, `dots`, UI corners, UI map palette; map pixels are generated from world state | `menu.c` procedural room thumbnails, gate/event marks, fog, cursor and legend; `text.c` HUD minimap16 tiles at1008 |
 | Dialogue panel, shop, death-return text, completion screen | Reuse the UI kit, VWF font, portraits and item sheets | `text.c`, `npc.c`, `game.c`; they have no independent background PNG that can be overlooked |
 
 ## Why the current pipeline produces mixed styles
@@ -173,10 +173,10 @@ unify these competing source languages.
    `pickup_spawn()` takes its width/height from sheet metadata, so ordinary
    drawing centers automatically. Keep `icon32` separate for inventory/HUD.
 4. Smaller overworld NPCs require explicit special-keeper anchor changes:
-   merchant head at feet−48/body−32; keeper64px canvas and orb coordinates.
+   merchant head at feet−48/body−32; keeper64 px canvas and orb coordinates.
    Reusing these old component offsets would float compact redrawn faces.
 5. Heart/boss growth needs residency planning. Its present three32×32 frames
-   load as48tiles together. Three32×64 frames would load96tiles and exceed
+   load as48 tiles together. Three32×64 frames would load96 tiles and exceed
    current headroom; stream one32-tile frame instead if choosing a taller boss.
 6. Room/UI fonts and layout constants are independent of sprite scale. Keep
    readable layouts, but redraw their source tiles/glyphs, palettes and icons
