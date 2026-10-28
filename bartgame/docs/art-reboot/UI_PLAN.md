@@ -19,7 +19,7 @@ structures.
 | HUD tiles | Four 8×8 tiles: full/half/empty heart and lifting hand | `ui_kit.HUD_TILES`; `text.c` |
 | UI sprite marks | Six 8×8 frames: next, pick, cursor corner, A/B/L badges | `ui_kit.OBJ_MARKS`; `sprites.py`, HUD, shop, map, title menu |
 | Proportional face | 97 glyphs, nine rows each; one-pixel interglyph gap and three-pixel space | `art/ui_font.py`; generated `vwf_w`/`vwf_bits`, `src/vwf.c` |
-| Map markers | Fourteen 16×16 marks; twelve 8×8 dots; one 32×32 cursor with 32×24 painted outline | `marks.py` frame contracts, currently replaced by imported pack; `menu.c` |
+| Map markers | Thirteen 16×16 marks; twelve 8×8 dots; one 32×32 cursor with 32×24 painted outline | `marks.py` frame contracts, currently replaced by imported pack; `menu.c` |
 | Dialogue portraits | Six 48×48 drawings padded to 64×64 OBJ: Bloom, Peddler, Gatekeeper, Hermit, Nun, Gardener | `faces.FACES`; generated `pal_face`, streamed `SHEET_FACE`; `text.c` and `npc.c` |
 | Title bitmap | 240×160 Mode 3; 76,800 bytes of RGB555 | `art/title.py`, `build_assets.py`, `game.c` |
 | Title prompts | 64×32 OBJ text canvas; Press Start at y140, saved-game choices at y120 | `game.c`, VWF, UI palette |
