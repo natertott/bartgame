@@ -269,16 +269,17 @@ void player_item_get(int item_bit, int sprite_frame) {
     sfx_play(SFX_ITEM);
 }
 
-/* Inclusive bounds from the feet. Rendering and every sword interaction
-   use this same reach; the active sweep cannot drift away from combat. */
+/* A single pose clock drives native blade pixels and their contact box.
+   The art builder derives these inclusive bounds from the damaging blade
+   and its short trail, excluding the grip and guard. */
+static int sword_step(int age) {
+    return age<2 ? 0 : age<5 ? 1 : age<9 ? 2 : age<13 ? 3 : 4;
+}
+
 static void sword_bounds(int* x0, int* y0, int* x1, int* y1) {
-    static const s8 reach[4][4] = {
-        { -14, -32, 13, -12 }, { 4, -22, 22, 2 },
-        { -14, -6, 13, 12 }, { -23, -22, -5, 2 }
-    };
     Actor* a = gPlayer;
-    const s8* r = reach[a->facing];
-    int px = PX(a->x), py = PX(a->y);
+    const s8* r = &bloom_sword_hit[(a->facing*5+sword_step(a->timer))*4];
+    int px = PX(a->x), py = PX(a->y)-PX(a->z);
     *x0 = px+r[0]; *y0 = py+r[1]; *x1 = px+r[2]; *y1 = py+r[3];
 }
 
@@ -929,11 +930,10 @@ static void draw_action(Actor* a, bool8 behind) {
         if (behind)
             return;
         static const u8 sword[4] = { F_BLOOMFX_SWORD_N0, F_BLOOMFX_SWORD_E0, F_BLOOMFX_SWORD_S0, F_BLOOMFX_SWORD_W0 };
-        int x0,y0,x1,y1;
-        sword_bounds(&x0,&y0,&x1,&y1);
-        int t=a->timer;
-        int step=t<2?0:t<5?1:t<9?2:t<13?3:4;
-        action_frame(sword[f]+step, x0-gCamX, y0-(f==FACE_S?8:0)-gCamY-PX(a->z), 0, a->prio);
+        const s8* origin=&bloom_sword_origin[f*2];
+        int step=sword_step(a->timer);
+        action_frame(sword[f]+step,PX(a->x)+origin[0]-gCamX,
+                     PX(a->y)+origin[1]-PX(a->z)-gCamY,0,a->prio);
     } else if (a->state == PS_NORMAL && sUseTimer) {
         if (behind != (f == FACE_N))
             return;
