@@ -237,7 +237,9 @@ def portrait(name):
         d.rectangle((21,36,26,39),fill=8);d.point((22,36),fill=12)
     else:
         keeper=name=='gatekeeper';nun=name=='nun';gardener=name=='gardener'
-        coat=3 if keeper else 8;shade=2 if keeper else 9;lit=5 if keeper else 10
+        coat=3 if keeper else 1 if nun else 8
+        shade=2 if keeper else 1 if nun else 9
+        lit=5 if keeper else 13 if nun else 10
         d.polygon([(1,47),(5,33),(13,29),(34,29),(42,35),(47,47)],fill=o)
         d.polygon([(4,47),(8,35),(15,32),(32,32),(39,36),(44,47)],fill=coat)
         d.line([(11,36),(8,46)],fill=lit,width=2);d.line([(33,34),(38,47)],fill=shade,width=2)
@@ -259,7 +261,10 @@ def portrait(name):
             d.polygon([(9,14),(15,8),(17,13),(15,26),(12,36),(8,31)],fill=1)
             d.polygon([(32,11),(38,18),(36,34),(31,37),(32,26)],fill=1)
             d.line([(28,22),(28,25),(27,27)],fill=14);d.point((27,27),fill=15)
-            d.line([(22,36),(25,36),(25,42),(22,42)],fill=6);d.point((23,36),fill=15)
+            d.line([(22,36),(25,36),(25,42),(22,42)],fill=7);d.point((23,36),fill=15)
+            d.line([(35,14),(36,20),(35,29)],fill=13)
+            d.line([(5,45),(11,46),(36,46),(43,45)],fill=13)
+            d.line([(8,45),(11,46)],fill=14)
         else:
             # White-bearded hermit or brown-bearded gardener, matching world.
             beard=11 if gardener else 13;blit=12 if gardener else 14
@@ -272,9 +277,9 @@ def portrait(name):
                 d.line([(12,10),(12,7),(16,10),(16,6)],fill=10,width=2)
     # Two-pixel folds and worn patches belong to clothing; no random noise.
     if name not in ('bloom_surprised','peddler'):
-        coat=3 if name=='gatekeeper' else 8
-        shade=2 if name=='gatekeeper' else 9
-        lit=5 if name=='gatekeeper' else 10
+        coat=3 if name=='gatekeeper' else 1 if name=='nun' else 8
+        shade=2 if name=='gatekeeper' else 1 if name=='nun' else 9
+        lit=5 if name=='gatekeeper' else 13 if name=='nun' else 10
         d.polygon([(7,40),(13,35),(15,38),(12,46),(8,46)],fill=shade)
         d.line([(9,40),(12,37)],fill=lit,width=1)
         d.polygon([(33,38),(39,42),(40,47),(35,47)],fill=1)
