@@ -4,19 +4,23 @@
 #include "room.h"
 #include "actor.h"
 #include "interactive.h"
+#include "ambient.h"
 
 Actor gActors[ACTOR_MAX];
 
 const Hitbox gHitboxes[] = {
-    [HB_HERO] = { 0, -14, 6, 12 },
-    [HB_HERO_FEET] = { 0, -6, 6, 6 },
+    [HB_HERO] = { 0, -11, 6, 10 },
+    [HB_HERO_FEET] = { 0, -4, 5, 4 },
     [HB_SMALL] = { 0, -6, 5, 5 },
     [HB_MED] = { 0, -8, 7, 7 },
-    [HB_TALL] = { 0, -14, 7, 13 },
+    [HB_TALL] = { 0, -13, 7, 13 },
     [HB_BIG] = { 0, -16, 14, 14 },
     [HB_PROJ] = { 0, -6, 3, 3 },
     [HB_SWORD] = { 0, -8, 8, 8 },
     [HB_BLAST] = { 0, -8, 20, 20 },
+    [HB_HEART] = { 0, -22, 14, 20 },
+    [HB_ARROW] = { 0, -14, 3, 3 },
+    [HB_PERSON] = { 0, -12, 7, 12 },
 };
 
 void actors_clear(void) {
@@ -253,7 +257,6 @@ int actor_dist2(const Actor* a, const Actor* b) {
 }
 
 /* ------------------------------------------------------------ sprites -- */
-#define OBJ_TILE_FIRST_FREE 56 /* 0..31 hero frame, 32..43 sword sheet, 44..55 shield */
 static u16 sNextTile;
 static u16 sSheetTile[SHEET_COUNT];
 
@@ -270,6 +273,7 @@ void sprites_reset(void) {
         sSheetTile[i] = 0xFFFF;
     sFrameCount = 0;
     interactive_room_reset();
+    ambient_room_reset();
 }
 
 u16 sprite_load_frame(int sheet, int frame) {

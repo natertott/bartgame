@@ -122,7 +122,7 @@ void interactive_draw(bool8 behind) {
            its black interior. A closed trial grille must cover the old
            foreground wall at the existing solid exit, hence priority one. */
         int priority=sEntryInterior && room_type(sEntryX,sEntryY)!=TT_MYST ? 1 : 2;
-        draw_sprite(sx,sy,SHEET_INTERACTIVEENTRY,sEntryTile,0,0,priority,PAL_OBJ_LIFT);
+        draw_sprite(sx,sy,SHEET_INTERACTIVEENTRY,sEntryTile,0,0,priority,interactiveentry_frame_pal[frame]);
     }
     if (sChestTile && sChestX >= 0) {
         /* At equal priority the earlier OAM entry is in front. Keep the
@@ -137,7 +137,7 @@ void interactive_draw(bool8 behind) {
             stream_frame(SHEET_INTERACTIVECHEST,frame,sChestTile,&sChestFrame);
             /* Flat litter can promote Bloom to priority one. A near chest
                must still cover his feet when he stands north of its lid. */
-            draw_sprite(sx,sy,SHEET_INTERACTIVECHEST,sChestTile,0,0,far ? 2 : 1,PAL_OBJ_LIFT);
+            draw_sprite(sx,sy,SHEET_INTERACTIVECHEST,sChestTile,0,0,far ? 2 : 1,interactivechest_frame_pal[frame]);
         }
     }
 }

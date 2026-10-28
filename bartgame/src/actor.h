@@ -72,9 +72,15 @@ typedef struct Actor {
 #define OBJ_TILE_FACE 944
 #define OBJ_TILE_MINIMAP 1008
 #define OBJ_TILE_SHEETS_END OBJ_TILE_HUD_ICONS
+/* Body, legacy menu blade and one streamed shield view stay resident.
+   Derive their addresses from native sheet metadata, not a 64px hero. */
+#define OBJ_TILE_HERO 0
+#define OBJ_TILE_SWORD (SHEET_HERO_TILES / SHEET_HERO_FRAMES)
+#define OBJ_TILE_SHIELD (OBJ_TILE_SWORD + SHEET_SWORD_TILES)
+#define OBJ_TILE_FIRST_FREE ((OBJ_TILE_SHIELD + SHEET_SHIELD_TILES / SHEET_SHIELD_FRAMES + 1) & ~1)
 extern Actor gActors[ACTOR_MAX];
 extern const Hitbox gHitboxes[];
-enum { HB_HERO, HB_HERO_FEET, HB_SMALL, HB_MED, HB_TALL, HB_BIG, HB_PROJ, HB_SWORD, HB_BLAST };
+enum { HB_HERO, HB_HERO_FEET, HB_SMALL, HB_MED, HB_TALL, HB_BIG, HB_PROJ, HB_SWORD, HB_BLAST, HB_HEART, HB_ARROW, HB_PERSON };
 
 void actors_clear(void);
 Actor* actor_new(u8 kind, u8 type, int px, int py);

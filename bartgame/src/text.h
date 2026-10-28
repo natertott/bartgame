@@ -1,5 +1,6 @@
 #ifndef TEXT_H
 #define TEXT_H
+#define HUD_HEIGHT_PIXELS 24
 #include "gba.h"
 #include "vwf.h"
 

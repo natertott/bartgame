@@ -23,6 +23,7 @@ extern u16 items_sheet_tile(void);
 #include "save.h"
 #include "game.h"
 #include "interactive.h"
+#include "ambient.h"
 
 GameState gGame;
 u32 gSeedOverride; /* probes set this before pressing Start */
@@ -63,7 +64,7 @@ static void dark_update(void) {
         return;
     }
     int r = 40 + (4 - unlit) * 22 + (gPl.lamp_timer ? 14 : 0);
-    int cx = PX(gPlayer->x) - gCamX, cy = PX(gPlayer->y) - 16 - gCamY;
+    int cx = PX(gPlayer->x) - gCamX, cy = PX(gPlayer->y) - 11 - gCamY;
     int x0 = CLAMP(cx - r, 0, 240), x1 = CLAMP(cx + r, 0, 240);
     int y0 = CLAMP(cy - r, 0, 160), y1 = CLAMP(cy + r, 0, 160);
     REG_WIN0H = (x0 << 8) | x1;
@@ -360,22 +361,22 @@ static void check_exits(void) {
     if (a->state == PS_FALL || a->state == PS_DEAD || a->state == PS_ITEMGET)
         return;
     if (gGame.area == AREA_SEWER) {
-        if (room_type_px(px, py - 6) == TT_EXIT)
+        if (room_type_px(px, py - 4) == TT_EXIT)
             begin_transition(AREA_FOREST, gWorld.entry, SIDE_S);
         return;
     }
     int cell = gGame.cell;
     if (gGame.area == AREA_MYST) {
         /* the way out is in the bottom wall; the mouth, back in the wood */
-        if (room_type_px(px, py - 6) == TT_MYST)
+        if (room_type_px(px, py - 4) == TT_MYST)
             begin_transition(AREA_FOREST, cell, SIDE_MOUTH);
         return;
     }
-    if (room_type_px(px, py - 6) == TT_STAIRS) {
+    if (room_type_px(px, py - 4) == TT_STAIRS) {
         begin_transition(AREA_SEWER, 0, 0);
         return;
     }
-    if (room_type_px(px, py - 6) == TT_MYST) {
+    if (room_type_px(px, py - 4) == TT_MYST) {
         begin_transition(AREA_MYST, cell, 0);
         return;
     }
@@ -624,6 +625,7 @@ static void draw_world(void) {
     hud_draw();
     if (sDark)
         dark_spare(gOamCount);
+    ambient_draw(TRUE);
     npcs_draw_front();
     interactive_draw(FALSE);
     player_draw();
@@ -631,6 +633,7 @@ static void draw_world(void) {
     npcs_draw();
     objects_draw();
     interactive_draw(TRUE);
+    ambient_draw(FALSE);
 }
 
 u32 gDbgSpawn; /* probes: (count << 8) | type, spawns around the hero */

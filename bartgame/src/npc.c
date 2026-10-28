@@ -190,17 +190,20 @@ static void gatekeeper_update(void) {
 /* his head over his body, breathing; her wisp over her */
 static void peddler_draw(void) {
     Actor* a = sPed.a;
-    int sx = PX(a->x) - 32 - gCamX, sy = PX(a->y) - gCamY;
+    int sx = PX(a->x) - sheets[SHEET_PEDDLER_BODY].w/2 - gCamX;
+    int hx = PX(a->x) - sheets[SHEET_PEDDLER_HEAD].w/2 - gCamX;
+    int sy = PX(a->y) - gCamY;
     int breath = ((gFrame + 17) >> 6) & 1;
     if (!sPed.head_tile || !sPed.body_tile)
         return; /* no tiles to hold him: better unseen than drawn from another's */
-    draw_sprite(sx, sy - 48 + breath, SHEET_PEDDLER_HEAD, sPed.head_tile, 0, 0, a->prio, PAL_OBJ_PEDDLER);
-    draw_sprite(sx, sy - 32, SHEET_PEDDLER_BODY, sPed.body_tile, 0, 0, a->prio, PAL_OBJ_PEDDLER);
+    draw_sprite(hx, sy - 26 + breath, SHEET_PEDDLER_HEAD, sPed.head_tile, 0, 0, a->prio, PAL_OBJ_PEDDLER);
+    draw_sprite(sx, sy - sheets[SHEET_PEDDLER_BODY].h, SHEET_PEDDLER_BODY, sPed.body_tile, 0, 0, a->prio, PAL_OBJ_PEDDLER);
 }
 
 static void gatekeeper_draw(void) {
     Actor* a = sGate.a;
-    int sx = PX(a->x) - 32 - gCamX, sy = PX(a->y) - 64 - gCamY;
+    int sx = PX(a->x) - sheets[SHEET_GATEKEEPER].w/2 - gCamX;
+    int sy = PX(a->y) - sheets[SHEET_GATEKEEPER].h - gCamY;
     if (!sGate.tile || !sGate.wisp_tile)
         return;
     draw_sprite(sx + WISP_X, sy + WISP_Y, SHEET_WISP, sGate.wisp_tile, (gFrame / 6) & 3, 0, a->prio, PAL_OBJ_GATEKEEPER);
@@ -221,7 +224,7 @@ Actor* npc_spawn(int type, int px, int py) {
         a->frame = 0;
     }
     gDbg[3] = a->kind;
-    a->hitbox = HB_TALL;
+    a->hitbox = HB_PERSON;
     a->flags = AF_SOLID;
     a->prio = 2;
     return a;

@@ -146,7 +146,7 @@ Actor* proj_spawn(int type, int px, int py, int dir, int speed, int damage, bool
     a->dir = dir;
     a->speed = speed;
     a->damage = damage;
-    a->hitbox = HB_PROJ;
+    a->hitbox = type == PJ_ARROW ? HB_ARROW : HB_PROJ;
     a->flags = AF_FLYING | AF_PRIO1;
     a->timer = 0;
     a->v[0] = from_player;
@@ -165,7 +165,8 @@ static void proj_update(Actor* a) {
     if (a->type == PJ_SPORE)
         a->frame = F_PROJ_SPORE;
     /* walls stop seeds and shards; spores drift through canopy */
-    if (a->type != PJ_SPORE && room_solid_px(px, py - 4)) {
+    bool8 wall = a->type == PJ_ARROW ? room_box_solid(px-3,py-17,px+2,py-12) : room_solid_px(px,py-4);
+    if (a->type != PJ_SPORE && wall) {
         fx_spawn(FX_SPARK, px, py);
         actor_free(a);
         return;
@@ -413,7 +414,9 @@ void bomb_place(int px, int py) {
     a->flags = AF_SOLID;
     /* Store the release point for an eight-frame hand-to-ground motion.
        Physics and the 150-frame fuse still start at the planted location. */
-    static const s8 hand[4][2] = { {7,-10}, {10,-7}, {7,-3}, {-10,-7} };
+    /* A 16px item with grip (8,7) has its feet nine pixels below the
+       hand. The visible body eases from that grip into its planted spot. */
+    static const s8 hand[4][2] = { {5,-8}, {7,-3}, {3,0}, {-8,-3} };
     a->vx = PX(gPlayer->x)+hand[gPlayer->facing][0];
     a->vy = PX(gPlayer->y)+hand[gPlayer->facing][1];
     sfx_play(SFX_BOMB_SET);
@@ -438,6 +441,7 @@ Actor* thrown_spawn(int kind, int px, int py, int facing) {
         return NULL;
     actor_set_sheet(a, SHEET_LIFT, sLiftTile);
     a->frame = kind - 1;
+    a->pal = lift_frame_pal[a->frame];
     a->dir = facing * 8;
     a->speed = Q8(2.5);
     a->z = Q16(24);

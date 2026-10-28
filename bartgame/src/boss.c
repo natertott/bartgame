@@ -1,6 +1,6 @@
 /* BARTGAME: the Blight Heart. The thing at the center of the wood.
 
-   A swollen heart, 32x32, 40 hp, in three moods by its health:
+   A swollen heart, drawn at native boss scale, 40 hp, in three moods:
      swollen  (hp > 26)  drifts toward the hero, bursts eight spores
      rotten   (hp > 12)  spawns rot beetles, spits aimed spore fans
      frantic  (hp <= 12) lunges, spores often
@@ -32,7 +32,7 @@ void boss_spawn(int px, int py) {
         return;
     actor_set_sheet(e, SHEET_BOSS, sBossTile);
     e->hp = 40;
-    e->hitbox = HB_BIG;
+    e->hitbox = HB_HEART;
     e->flags = AF_HITTABLE | AF_HURTS | AF_BOSS | AF_FLYING;
     e->state = BS_IDLE;
     e->timer = 60;

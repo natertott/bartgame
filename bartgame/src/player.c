@@ -21,9 +21,9 @@ PlayerState gPl;
 #define ATTACK_FRAMES 15
 #define HURT_FRAMES 8
 #define FALL_FRAMES 36
-#define HERO_TILE 0    /* 64x32: tiles 0..31 */
-#define SWORD_TILE 32  /* the blade and the shield stay resident for the pause page */
-#define SHIELD_TILE 44
+#define HERO_TILE OBJ_TILE_HERO
+#define SWORD_TILE OBJ_TILE_SWORD
+#define SHIELD_TILE OBJ_TILE_SHIELD
 
 static u8 sLastFrame = 0xFF;
 static u8 sLastShieldFrame = 0xFF;
@@ -117,7 +117,7 @@ void player_init(int px, int py, int facing) {
     a->y = py << 16;
     a->facing = facing;
     a->dir = facing_to_dir(facing);
-    a->w = sheets[SHEET_HERO].w; /* 64: the swing's arc reaches past 32 */
+    a->w = sheets[SHEET_HERO].w; /* Native body canvas; weapons are separate. */
     a->h = sheets[SHEET_HERO].h;
     a->pal = PAL_OBJ_HERO;
     a->sheet = SHEET_HERO;
@@ -364,7 +364,7 @@ static int ledge_ahead(int dir) {
     Actor* a = gPlayer;
     if ((dir & 7) != 0)
         return -1;
-    int px = PX(a->x), py = PX(a->y) - 6;
+    int px = PX(a->x), py = PX(a->y) - 4;
     int tx = px, ty = py;
     switch (dir) {
         case DIR_N: ty = py - 8; break;
@@ -412,7 +412,7 @@ static void check_floor(void) {
     if (a->z > 0)
         return;
     /* the feet point: the moment it crosses into water or a hole, in */
-    int px = PX(a->x), py = PX(a->y) - 2;
+    int px = PX(a->x), py = PX(a->y) - 4;
     u8 t = room_type_px(px, py);
     if (t == TT_PIT || t == TT_WATER) {
         start_fall(t == TT_WATER, px >> 4, py >> 4);
@@ -429,7 +429,7 @@ static void check_floor(void) {
 /* the tile one step ahead of the feet, where a bush or a stone would be */
 static void facing_tile(int* tx, int* ty) {
     Actor* a = gPlayer;
-    int px = PX(a->x), py = PX(a->y) - 6;
+    int px = PX(a->x), py = PX(a->y) - 4;
     switch (a->facing) {
         case FACE_N: py -= 11; break;
         case FACE_S: py += 11; break;
@@ -733,13 +733,12 @@ bool8 player_shoot(void) {
     Actor* a = gPlayer;
     if (gPl.arrows == 0)
         return FALSE;
-    int px = PX(a->x), py = PX(a->y) - 4;
-    switch (a->facing) {
-        case FACE_N: py -= 6; break;
-        case FACE_S: py += 6; break;
-        case FACE_E: px += 6; break;
-        default: px -= 6; break;
-    }
+    /* The first rendered nock meets the authored hand after this update's
+       3px movement and the arrow's 6px visual height. Source nocks are
+       N(8,12), E(3,8), S(8,3), with west mirrored from east. */
+    static const s8 origin[4][2]={{5,-4},{9,2},{3,7},{-9,2}};
+    int px = PX(a->x)+origin[a->facing][0];
+    int py = PX(a->y)+origin[a->facing][1];
     gPl.arrows--;
     proj_spawn(PJ_ARROW, px, py, facing_to_dir(a->facing), Q8(3.0), 2, TRUE);
     sfx_play(SFX_SPIT);
@@ -887,7 +886,7 @@ static void draw_load(Actor* a) {
     int ease = t * (2 * LIFT_FRAMES - t);
     int sx = gx + ((cx - gx) * ease) / (LIFT_FRAMES * LIFT_FRAMES) - gCamX;
     int sy = gy + ((cy - gy) * ease) / (LIFT_FRAMES * LIFT_FRAMES) - PX(a->z) - gCamY;
-    draw_sprite(sx, sy, SHEET_LIFT, lift_sheet_tile(), gPl.carry - 1, 0, a->prio, PAL_OBJ_LIFT);
+    draw_sprite(sx, sy, SHEET_LIFT, lift_sheet_tile(), gPl.carry - 1, 0, a->prio, lift_frame_pal[gPl.carry - 1]);
 }
 
 static int use_step(void) {
@@ -942,10 +941,6 @@ static void draw_action(Actor* a, bool8 behind) {
         if (sUseItem == EQ_BOW) {
             static const u8 bow[4] = { F_BLOOMFX_BOW_N0, F_BLOOMFX_BOW_E0, F_BLOOMFX_BOW_S0, F_BLOOMFX_BOW_E0 };
             base=bow[f];
-            /* Raise the far-facing bow just above the petals. Its grip
-               remains in the raised hands and meets the released arrow. */
-            if (f == FACE_N)
-                sy -= 4;
         } else if (sUseItem == EQ_LAMP) {
             static const u8 lamp[4] = { F_BLOOMFX_LAMP_N0, F_BLOOMFX_LAMP_E0, F_BLOOMFX_LAMP_S0, F_BLOOMFX_LAMP_E0 };
             base=lamp[f];
@@ -958,7 +953,9 @@ static void draw_action(Actor* a, bool8 behind) {
     } else if (a->state == PS_NORMAL && gPl.shield_up) {
         if (behind != (f == FACE_N))
             return;
-        static const s8 at[4][2] = { { 2,-24 }, { 2,-24 }, { -8,-16 }, { -18,-24 } };
+        /* Source grip (8,8), or (7,8) when mirrored, meets the same
+           authored hand as the guard body in all four directions. */
+        static const s8 at[4][2] = { { -3,-25 }, { -1,-20 }, { -8,-16 }, { -15,-20 } };
         static const u8 frame[4] = { F_SHIELD_BACK, F_SHIELD_SIDE, F_SHIELD_FRONT, F_SHIELD_SIDE };
         draw_sprite(PX(a->x)+at[f][0]-gCamX, PX(a->y)+at[f][1]-PX(a->z)-gCamY,
                     SHEET_SHIELD, SHIELD_TILE, player_shield_frame(frame[f]), f==FACE_W, a->prio, player_shield_palette(frame[f]));

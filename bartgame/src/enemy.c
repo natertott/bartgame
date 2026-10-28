@@ -488,17 +488,22 @@ void enemies_update(void) {
 }
 
 static void knight_draw_sword(Actor* e) {
-    int px = PX(e->x) - gCamX, py = PX(e->y) - gCamY;
-    int frame = F_KSWORD_BLADE_E, hflip = 0, vflip = 0, sx = px, sy = py;
-    int raised = (e->state == ES_WINDUP);
-    switch (e->facing) {
-        case FACE_E: sx = px + (raised ? 2 : 6); sy = py - (raised ? 36 : 24); frame = raised ? F_KSWORD_BLADE_S : F_KSWORD_BLADE_E; vflip = raised; break;
-        case FACE_W: sx = px - (raised ? 18 : 22); sy = py - (raised ? 36 : 24); frame = raised ? F_KSWORD_BLADE_S : F_KSWORD_BLADE_E; hflip = 1; vflip = raised; break;
-        case FACE_N: sx = px + 2; sy = py - (raised ? 30 : 42); frame = F_KSWORD_BLADE_S; vflip = 1; break;
-        default: sx = px - 10; sy = py - (raised ? 22 : 10); frame = F_KSWORD_BLADE_S; break;
-    }
-    draw_sprite(sx, sy, SHEET_KSWORD, sKswordTile, frame, hflip, 2, PAL_OBJ_IRON);
-    if (vflip && gOamCount)
+    if ((e->flags & AF_HIDDEN) || (e->iframes && (gFrame & 2)))
+        return;
+    static const s8 hand[4][2]={{5,-17},{7,-16},{4,-13},{-8,-16}};
+    int px = PX(e->x) - gCamX, py = PX(e->y) - PX(e->z) - gCamY;
+    int raised=e->state==ES_WINDUP, f=e->facing, hflip=f==FACE_W;
+    int vertical=raised || f==FACE_N || f==FACE_S;
+    int frame=vertical ? F_KSWORD_BLADE_S : F_KSWORD_BLADE_E;
+    int vflip=vertical && (raised || f==FACE_N);
+    int gx=vertical ? 8 : 2, gy=vertical ? 2 : 8;
+    if(hflip)gx=15-gx;
+    if(vflip)gy=15-gy;
+    int sx=px+hand[f][0]-gx,sy=py+hand[f][1]-gy;
+    int priority=room_prop_priority(PX(e->x),PX(e->y),PX(e->z),e->w,e->h,e->prio);
+    int before=gOamCount;
+    draw_sprite(sx, sy, SHEET_KSWORD, sKswordTile, frame, hflip, priority, sheets[SHEET_KSWORD].pal);
+    if (vflip && gOamCount>before)
         gOam[gOamCount - 1].attr1 |= ATTR1_VFLIP;
 }
 
@@ -510,11 +515,11 @@ void enemies_draw(void) {
             continue;
         if (e->type == EN_KNIGHT && (e->state == ES_WINDUP || e->state == ES_SWING)) {
             if (e->facing == FACE_N) {
-                knight_draw_sword(e);
                 actor_draw(e);
+                knight_draw_sword(e);
             } else {
-                actor_draw(e);
                 knight_draw_sword(e);
+                actor_draw(e);
             }
             continue;
         }

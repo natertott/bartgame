@@ -710,11 +710,11 @@ static void grid_move(const MenuItem* list, const u8* idx, int count) {
 
 /* the icon of what a button holds, small, for the side panel; the blade
    and the shield stay resident at these tiles (player.c) */
-#define SWORD_TILE 32
-#define SHIELD_TILE 44
+#define SWORD_TILE OBJ_TILE_SWORD
+#define SHIELD_TILE OBJ_TILE_SHIELD
 static void equip_icon(int eq, int px, int py, int prio) {
     switch (eq) {
-        case EQ_SWORD: draw_sprite(px, py, SHEET_SWORD, SWORD_TILE, F_SWORD_BLADE_S, 0, prio, PAL_OBJ_GEAR); break;
+        case EQ_SWORD: draw_sprite(px, py, SHEET_SWORD, SWORD_TILE, F_SWORD_BLADE_S, 0, prio, sheets[SHEET_SWORD].pal); break;
         case EQ_BOMBS: draw_sprite(px, py, SHEET_ITEMS, items_sheet_tile(), F_ITEMS_BOMBS, 0, prio, items_frame_pal[F_ITEMS_BOMBS]); break;
         case EQ_LAMP: draw_sprite(px, py, SHEET_ITEMS, items_sheet_tile(), F_ITEMS_LAMP, 0, prio, items_frame_pal[F_ITEMS_LAMP]); break;
         case EQ_CLOAK: draw_sprite(px, py, SHEET_ITEMS, items_sheet_tile(), F_ITEMS_CLOAK, 0, prio, items_frame_pal[F_ITEMS_CLOAK]); break;
