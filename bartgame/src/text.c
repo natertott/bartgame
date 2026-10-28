@@ -20,11 +20,12 @@
 #define BG0_MAP SCREENBLOCK(23)
 #define PAL_HUD (PAL_SLOT_HUD << 12) /* the hearts, R's hand */
 #define HUD_PURSE_TILE (UI_BG0 + UI_TILE_COUNT) /* the purse's own tiles */
-#define HUD_PURSE_TW 6
+#define HUD_PURSE_TW 12
+#define HUD_VITALS_TH 3
 /* a box over the world keeps the HUD's purse; the pages that fill the
    screen take its tiles too, and the purse is set again after them */
 #define POOL_FULL HUD_PURSE_TILE
-#define POOL_FIRST (HUD_PURSE_TILE + HUD_PURSE_TW)
+#define POOL_FIRST (HUD_PURSE_TILE + HUD_PURSE_TW * HUD_VITALS_TH)
 #define POOL_END 384
 
 #if HUD_TILE_BASE + HUD_TILE_COUNT > UI_BG0
@@ -476,12 +477,13 @@ bool8 shop_active(void) {
    corner and the count of its seeds or arrows. The frames, the hearts and
    the purse are BG0's; the icons, badges, counts and the mini-map are
    sprites, first in OAM, so nothing of the world cuts into them. */
-#define HUD_H 4
+#define HUD_H (HUD_HEIGHT_PIXELS / 8)
 #define HUD_SLOT_TX(s) (14 + (s) * 4)
 #define HUD_MAP_TX 26
 
 static Canvas sPurse, sCount[SLOT_COUNT];
 static u32 sCountPix[SLOT_COUNT][4 * 8];
+static s16 sHudHp, sHudHpMax;
 static s16 sPurseGilt, sPurseKeys;       /* what the purse shows */
 static u8 sHudEq[SLOT_COUNT];            /* whose icons are resident */
 static u8 sHudIconFrame[SLOT_COUNT];     /* also tracks shield design changes */
@@ -489,7 +491,7 @@ static s16 sHudCount[SLOT_COUNT];        /* what each count shows, -1 none */
 
 static void hud_init(void) {
     int s;
-    vwf_canvas_at(&sPurse, HUD_PURSE_TILE, HUD_PURSE_TW, 1);
+    vwf_canvas_at(&sPurse, HUD_PURSE_TILE, HUD_PURSE_TW, HUD_VITALS_TH);
     for (s = 0; s < SLOT_COUNT; s++) {
         vwf_canvas_obj(&sCount[s], sCountPix[s], OBJ_TILE_HUD_COUNTS + s * 4, 2, 2);
         sHudEq[s] = 0xFF;
@@ -501,6 +503,7 @@ static void hud_init(void) {
 
 static void hud_stale(void) {
     sPurseGilt = -1;
+    sHudHp = sHudHpMax = -1;
 }
 
 /* the icon a button's item has in the pause menu, or -1 */
@@ -522,26 +525,79 @@ static int hud_count(int eq) {
     return eq == EQ_BOMBS ? gPl.bombs : eq == EQ_BOW ? gPl.arrows : -1;
 }
 
-/* the gilt by its coin and the keys by theirs, set again when they change */
+/* A complete native24px vitals panel. Its own palette contains the heart
+   ramp, brass, cream and panel inks, avoiding tile-aligned rows that force
+   the old32px HUD. The fixed36-tile canvas stays outside dialogue's pool. */
+#define VI_OUTLINE 1
+#define VI_PANEL 2
+#define VI_EMPTY 3
+#define VI_RED_DARK 5
+#define VI_RED 6
+#define VI_RED_LIGHT 7
+#define VI_IVORY 8
+#define VI_TEXT 9
+#define VI_GOLD_DARK 11
+#define VI_GOLD 12
+#define VI_BROWN 13
+#define VI_GOLD_LIGHT 14
+
+static void vitals_line(int x0,int y0,int x1,int y1,int ink) {
+    int x,y;
+    for(y=y0;y<=y1;y++)for(x=x0;x<=x1;x++)vwf_pixel(&sPurse,x,y,ink);
+}
+
+static void vitals_heart(int x,int y,int fill) {
+    static const u8 shape[8]={0x66,0xFF,0xFF,0xFF,0x7E,0x3C,0x18,0};
+    int xx,yy;
+    for(yy=0;yy<7;yy++)for(xx=0;xx<8;xx++)if(shape[yy]&(1<<xx)) {
+        bool8 edge=xx==0 || xx==7 || yy==0 || yy==6 ||
+            !(shape[yy]&(1<<(xx?xx-1:0))) || !(shape[yy]&(1<<(xx<7?xx+1:7)));
+        int ink=edge ? VI_OUTLINE : (fill>=8 || (fill>=4 && xx<4)) ? (yy>=4 ? VI_RED_DARK : VI_RED) : VI_EMPTY;
+        vwf_pixel(&sPurse,x+xx,y+yy,ink);
+    }
+    if(fill>=4) {vwf_pixel(&sPurse,x+1,y+1,VI_IVORY);vwf_pixel(&sPurse,x+2,y+1,VI_RED_LIGHT);}
+}
+
+static void vitals_key(int x,int y) {
+    vitals_line(x+1,y+1,x+4,y+4,VI_OUTLINE);
+    vitals_line(x+2,y+2,x+3,y+3,VI_GOLD);
+    vwf_pixel(&sPurse,x+2,y+2,VI_IVORY);
+    vwf_pixel(&sPurse,x+4,y+4,VI_GOLD);vwf_pixel(&sPurse,x+5,y+5,VI_GOLD);
+    vwf_pixel(&sPurse,x+6,y+6,VI_GOLD);vwf_pixel(&sPurse,x+7,y+5,VI_GOLD);
+}
+
 static void hud_purse(void) {
-    char buf[6];
-    int x;
-    vwf_clear(&sPurse, UI_INK_NAVY);
-    vwf_kit_px(&sPurse, 0, 0, UI_COIN, 0);
-    x = vwf_text(&sPurse, 10, 1, vwf_num(buf, gPl.gilt, 0), UI_INK_CREAM);
-    vwf_kit_px(&sPurse, x + 3, 0, UI_KEY, 0);
-    vwf_text(&sPurse, x + 12, 1, vwf_num(buf, gPl.keys, 0), UI_INK_CREAM);
-    vwf_flush(&sPurse, FALSE);
+    char buf[6];int x,y,i,hp=gPl.hp,hearts=MIN(10,(gPl.hp_max+7)/8);
+    vwf_clear(&sPurse,0);
+    vitals_line(1,1,94,22,VI_OUTLINE);vitals_line(2,2,93,21,VI_PANEL);
+    vitals_line(3,1,92,1,VI_GOLD_DARK);vitals_line(2,2,2,20,VI_GOLD_DARK);
+    vwf_pixel(&sPurse,2,1,VI_GOLD_LIGHT);vwf_pixel(&sPurse,93,21,VI_GOLD);
+    for(i=0;i<hearts;i++,hp-=8)vitals_heart(7+i*8,4,hp);
+    /* Coin and key are native8px symbols in this panel's own colour bank. */
+    vitals_line(8,14,12,19,VI_GOLD_DARK);vitals_line(9,13,11,20,VI_GOLD_DARK);
+    vitals_line(9,14,12,18,VI_GOLD);vwf_pixel(&sPurse,9,14,VI_IVORY);
+    x=vwf_text(&sPurse,17,13,vwf_num(buf,gPl.gilt,0),VI_TEXT);
+    vitals_key(x+3,13);vwf_text(&sPurse,x+13,13,vwf_num(buf,gPl.keys,0),VI_TEXT);
+    /* R and a lifting hand stay visible without borrowing the heart row. */
+    vitals_line(77,13,83,20,VI_OUTLINE);vitals_line(78,14,82,19,VI_EMPTY);
+    vwf_glyph(&sPurse,78,13,'R',VI_TEXT);
+    for(y=0;y<8;y++)for(x=0;x<8;x++) {
+        int at=(HT_HAND-HUD_TILE_BASE)*16+y*2+x/4;
+        int ink=(hud_tiles[at]>>((x&3)*4))&15;
+        if(ink)vwf_pixel(&sPurse,85+x,13+y,ink);
+    }
+    vwf_flush(&sPurse,FALSE);
 }
 
 /* the icons copied in when a button takes another item, the counts set
    when they change */
 static void hud_refresh(void) {
-    const SpriteSheet* icons = &sheets[SHEET_ICON32];
+    const SpriteSheet* icons = &sheets[SHEET_HUDITEMS];
     int s;
-    if (gPl.gilt != sPurseGilt || gPl.keys != sPurseKeys) {
+    if (gPl.gilt != sPurseGilt || gPl.keys != sPurseKeys || gPl.hp != sHudHp || gPl.hp_max != sHudHpMax) {
         sPurseGilt = gPl.gilt;
         sPurseKeys = gPl.keys;
+        sHudHp = gPl.hp; sHudHpMax = gPl.hp_max;
         hud_purse();
     }
     for (s = 0; s < SLOT_COUNT; s++) {
@@ -566,25 +622,15 @@ static void hud_refresh(void) {
     }
 }
 
-/* the frames, the hearts, the purse and R on BG0, laid again each frame */
+/* The complete vitals canvas and three24px equipment panels occupy rows0..2.
+   Inventory illustrations remain32px elsewhere; HUD equipment is a distinct
+   native16px drawing, never clipped or filtered down. */
 static void hud_bar(void) {
-    u16* m = bg0_map();
-    int i, s, w, hearts = (gPl.hp_max + 7) / 8, hp = gPl.hp;
-    if (hearts > 10)
-        hearts = 10;
-    w = 2 + (hearts > 8 ? hearts : 8);
-    memset32(m, 0, HUD_H * 32 * 2);
-    ui_frame(m, UI_BG0, 0, 0, w, HUD_H, FR_HUD);
-    for (i = 0; i < hearts; i++) {
-        bg0_put(1 + i, 1, hp >= 8 ? HT_HEART_FULL : hp >= 4 ? HT_HEART_HALF : HT_HEART_EMPTY);
-        hp -= 8;
-    }
-    vwf_map(&sPurse, m, 1, 2, UI_PAL);
-    ui_tile(m, UI_BG0, w - 3, 2, UI_BADGE_R, 0);
-    bg0_put(w - 2, 2, HT_HAND);
-    for (s = 0; s < SLOT_COUNT; s++)
-        ui_frame(m, UI_BG0, HUD_SLOT_TX(s), 0, 4, HUD_H, FR_HUD);
-    ui_frame(m, UI_BG0, HUD_MAP_TX, 0, 4, HUD_H, FR_HUD);
+    u16* m=bg0_map();int s;
+    memset32(m,0,HUD_H*32*2);
+    vwf_map(&sPurse,m,0,0,PAL_SLOT_HUD);
+    for(s=0;s<SLOT_COUNT;s++)ui_frame(m,UI_BG0,HUD_SLOT_TX(s),0,4,HUD_H,FR_HUD);
+    ui_frame(m,UI_BG0,HUD_MAP_TX,0,4,HUD_H,FR_HUD);
 }
 
 static void obj_square(int x, int y, int size, int tile, int pal) {
@@ -603,11 +649,11 @@ static void hud_sprites(void) {
         int x = HUD_SLOT_TX(s) * 8;
         draw_sprite(x + 2, 2, SHEET_UIMARKS, OBJ_TILE_UI, F_UIMARKS_BADGE_A + s, 0, 0, PAL_OBJ_UIKIT);
         if (sHudCount[s] >= 0)
-            obj_square(x + 14, 14, 1, OBJ_TILE_HUD_COUNTS + s * 4, PAL_OBJ_UIKIT);
+            obj_square(x + 14, 8, 1, OBJ_TILE_HUD_COUNTS + s * 4, PAL_OBJ_UIKIT);
     }
     for (s = 0; s < SLOT_COUNT; s++)
         if (hud_icon(sHudEq[s]) >= 0)
-            obj_square(HUD_SLOT_TX(s) * 8, 0, 2, OBJ_TILE_HUD_ICONS + s * 16, icon32_frame_pal[sHudIconFrame[s]]);
+            obj_square(HUD_SLOT_TX(s) * 8 + 8, 4, 1, OBJ_TILE_HUD_ICONS + s * 16, huditems_frame_pal[sHudIconFrame[s]]);
     obj_square(HUD_MAP_TX * 8, 0, 2, OBJ_TILE_MINIMAP, PAL_OBJ_UIKIT);
 }
 
@@ -631,10 +677,10 @@ void minimap_render(void) {
     memset32(buf, 0, sizeof(buf));
     for (i = 0; i < CELLS; i++) {
         Cell* c = &gWorld.cells[i];
-        int cx = 6 + (i % MAZE_W) * 4, cy = 6 + (i / MAZE_W) * 4;
+        int cx = 8 + (i % MAZE_W) * 3, cy = 4 + (i / MAZE_W) * 3;
         bool8 seen = (c->flags & CF_VISITED) != 0, goal = i == gWorld.goal;
-        for (y = 0; y < 4; y++)
-            for (x = 0; x < 4; x++) {
+        for (y = 0; y < 3; y++)
+            for (x = 0; x < 3; x++) {
                 bool8 edge = x == 0 || y == 0;
                 u8 col;
                 if (!seen)
