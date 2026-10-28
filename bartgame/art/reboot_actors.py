@@ -248,6 +248,14 @@ def sword_frame(face,phase):
                 hx=x+origin[0]+16
                 if 0<=hx<32 and head.getpixel((hx,y)):
                     im.putpixel((x,y),arc.getpixel((x,y)))
+    # Pillow centres a three-pixel steel outline around its endpoint. Trim
+    # that stroke after all compositing so its outer pixel cannot promise
+    # reach beyond the shared inclusive damage rectangle. South's upper
+    # eight rows remain available for the harmless grip above the cut.
+    for y in range(32):
+        for x in range(32):
+            if x>w or y>h:
+                im.putpixel((x,y),0)
     return im
 
 
