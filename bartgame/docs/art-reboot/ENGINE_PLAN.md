@@ -1,6 +1,9 @@
 # Native art reboot: engine and artwork contract
 
-This is a planning proposal, before production artwork or runtime changes.
+This document records the initial planning proposal and its integration decisions.
+For the completed build, use [implementation notes](IMPLEMENTATION.md); references
+to “current” below describe the frozen pre-reboot engine unless explicitly marked
+as production integration.
 The frozen baseline is `/workspace/setup/art-reboot-before/`; ROM SHA256 is
 `bbd08678b1e10fb110e562a6374b0242cb8e73affbdd747f033fd0ce99619eee`.
 

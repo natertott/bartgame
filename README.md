@@ -1,3 +1,15 @@
+# BARTGAME
+
+The original standalone GBA game is in **[bartgame/](bartgame/README.md)**.
+See the [native art reboot and actual mGBA recordings](art-review/reboot/README.md),
+[playable ROM downloads](downloads/README.md), and
+[art direction for all nine planned areas](bartgame/docs/art-reboot/ART_BIBLE.md).
+The standalone build uses original native artwork and needs no commercial ROM.
+
+The upstream Minish Cap decompilation documentation is preserved below.
+
+---
+
 # The Legend of Zelda: The Minish Cap
 
 

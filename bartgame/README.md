@@ -1,547 +1,119 @@
 # BARTGAME
 
-A Game Boy Advance game built from scratch: a new engine that plays like
-*The Minish Cap*, a hero who is half man and half plant, a sewer for a
-home, and a blighted wood above it that is a different maze every time.
+An original Game Boy Advance action game: Bloom, a small flower-and-root
+wanderer, lives in the Drain and explores a different Blighted Forest each run.
+The influences are *The Minish Cap*, *Slay the Spire*, Bataille and Boorman’s
+*Excalibur*: wet filth beside brilliant brass, decay beside exquisite flowers,
+and plenty of glitter.
 
-Loosely after Boorman's *Excalibur*, Bataille's sun and rot, *Slay the
-Spire*'s runs and *Zelda*'s rooms. Dark, grungy, medieval, with gold in it.
+The current **native art reboot** replaces the active graphics pipeline.
+Start with the [actual mGBA gallery](../art-review/reboot/README.md),
+[playable downloads](../downloads/README.md),
+[art bible](docs/art-reboot/ART_BIBLE.md) and
+[implementation notes](docs/art-reboot/IMPLEMENTATION.md).
+Historical `forest-review` galleries describe earlier builds.
 
-The current forest engine and artwork rework is described in
-[Forest generation](docs/FOREST_GENERATION.md). See the
-[real mGBA review gallery](../forest-review/README.md) for generated rooms,
-required trials, item-gated pockets and seeded route diagrams.
+## Current game
 
-## The demo
+The Drain is the hub, with the Billious Peddler, Pale Gatekeeper and a
+stone-framed, brass-rung ladder to the forest. The forest is area one of nine;
+the other eight areas have not been implemented.
 
-- **The Drain.** You wake in a sewer hall: brass pipes on the walls, a
-  barred arch whose falls pour into a basin, banners and hanging
-  lanterns, a railed channel with a grate bridge, the great round drain,
-  spouts pouring into the water below. The Pale Gatekeeper on her rug,
-  among candles, books and a crow, a wisp burning over her orb,
-  explains; the Billious Peddler behind his counter under a red awning,
-  spinning a coin between customers, sells Healing Petals and
-  Blightseeds for gilt. The drain hole in the north wall, vines hanging into it, leads
-  up into the wood; the arch in the wood's first glade leads back down.
-- **The Blighted Wood.** A 5x5 maze of rooms, generated from a seed rolled
-  on the title screen: a growing tree that mostly runs in corridors and
-  branches a third of the time, so about half the rooms lie off the way
-  to the Heart. Every room is a glade, a grove, a ruin, a pond, a thicket
-  or a boneyard, full of monsters. Three key gates stand on the way to
-  the Heart: a cracked wall, a pale web, a chasm. Their keys, the
-  Blightseed Bombs, the candle (Grail Lamp) and the Petal Cloak, are earned
-  from three required mystery trials: floor plates, waves and a guardian.
-  Each trial is reachable before its reward is needed; there is no free
-  field chest for these items. The balanced route targets 24–32 room
-  crossings with at least two reward detours and four optional rooms. Locked doors on
-  the side branches want small keys; the keys sit in rooms that need no
-  key, and no lock ever stands between you and a key item, a key chest or
-  the Heart. Dead ends hold chests, shrines and three kinds of quest
-  giver.
-- **The Blight Heart.** At the deepest glade. Cut it out, take the Grail.
-- **The mystery rooms.** Two rooms in five have a mouth in a wall: a
-  cave's dark arch, a hollow in the trunks, a gap in the brambles. Walk
-  in. Behind it is a cave, the hollow of a tree or a thicket of brush,
-  small, medium or large, holding one event: six pots, one with a
-  prize; a chest; a stranger who sells a piece of heart for ten gilt;
-  a spring that fills the hearts; waves of monsters, or a survive-the-
-  clock, or a knight captain, behind a way out that shuts until it is
-  won; stone plates to step on; censers to light; boulders to lift.
-  Every won fight or solved room leaves a chest: ten gilt in a small
-  room, a piece of heart in a medium one, a small key and twenty gilt
-  in a large one. The small rooms deal the quiet kinds and the
-  gauntlets; the captain, the plates, the censers and the boulders need
-  the floor of a medium or large room.
+The forest is a seeded 5×5 maze with a balanced target of 24–32 required room
+crossings. Three required trials award Blightseed Bombs, the candle/Grail Lamp
+and Petal Cloak before their corresponding cracked wall, web and chasm gates.
+The route includes reward detours and optional branches without requiring all
+25 rooms. Side locks use small keys; mandatory rewards remain reachable
+without spending those keys. Item-gated pockets give reasons to revisit rooms.
+Paths offer clues and occasional detours; tool/barrier meanings stay reliable.
+See [forest generation](docs/FOREST_GENERATION.md) for the generation rules.
 
-## The look
-
-Grime and glamour, after the concept boards: a chibi flower-child hero
-with a round cream face in a ring of orange petals, a green hood and
-tunic; the Billious Peddler, hunched in a purple hood specked with gold,
-a beak of a nose; the Pale Gatekeeper in a tall violet hat, her orb
-aglow. A forest falling into sickness: a
-canopy that goes from blue-black to lit green, dark olive turf with
-bright tips, warm soil trails, deep navy water with foam that drifts,
-amber lanterns hung in the trees, white and gold stars on the ground,
-fireflies; rocks in three shapes sunk in moss and soil on a palette of
-their own; and the rot, by depth: a stain in the grass here and there,
-then patches of stained ground in the sick rooms, then whole rooms gone
-over: a dark violet floor pitted and veined with magenta light, a sick
-canopy, walls of blighted stone, under a mist, with crystals, snags,
-pools and the blighted tree. Every material has its own 16-color palette and a
-dark hue outline, three tones and a gleam, light from the upper left.
-The ground is textured turf with hand-placed tufts, flowers and
-pebbles; the canopy walls are leaf masses of lit blobs that wrap at the
-tile edge, with lanterns and fireflies in the leaves; water has a dark
-bank and a drifting foam fringe wherever ground touches it; every
-sprite is drawn pixel by pixel with letter legends in `art/*.py`; every
-word and figure of the UI, the HUD's too, is in a face of its own,
-proportional and nine rows high (`art/ui_font.py`).
-`tools/preview.py` renders any sheet or tile to PNG at 4x.
-
-**The sprite pack.** Every sprite comes from the BARTGAME GBA sprite
-pack, kept as delivered: `art/ref/pack/` holds the fixed, engine-sized
-sheets and `art/ref/pack_art/` the eight illustrated sheets that came
-after (the Bloom, the folk, the hub's two, the portraits, the small
-items, the pickups, the 32px icons, the shields). `tools/import_pack.py`
-imports both into `art/pack/`: one 4-bit indexed strip per sheet and
-`pack.json` with the frame names and palettes, which is all the build
-reads. The exact strips go in index for index with the palette they
-carry. The illustrations are cut by `tools/pack_art.py`: the haze round
-each figure keyed off, the cells cut given how many each row holds,
-each cell area-averaged down to its frame (a box that is mostly dark
-keeps its darks, so outlines and eyes survive), and each palette group
-derived by weighted k-means in Lab so small accents keep a colour.
-They replace the hero, the folk, the hub's two, the portraits, the
-items, the pickups, the icons and the shield, and take five more OBJ
-palette slots (gear, items, pick, icons, folk32), fourteen in all (the
-hub's two have since been drawn by hand, below: `folk32`'s slot is the
-Peddler's, and the Gatekeeper has a fifteenth). The
-importer's docstrings name which cell went to which frame and the
-choices where the art has no exact pose.
-
-The Bloom is 64x32 now, centred on her flower head, so a swing's arc
-fits beside her. Her frames carry the sword she swings and the leaf
-she guards with, so the engine no longer draws a blade or shield over
-her; the sword's hit box is unchanged. A lifted load is drawn over her
-where her carry frames hold their barrel, at the chest or across her
-back facing north. The prize held up is the engine's icon; the coin
-the art drew there is taken out. Small folk stream the one frame they
-show into a cache of eight. The engine's frame order still follows the
-hand-drawn sheets the pack replaced, so code that counts frames keeps
-working; frames the pack appends (Sister Mary Grace and Brother Mark on
-the folk and portrait sheets) come after, and its extra sheets (the
-upgraded shield, the shield menu symbols, the standalone gilt diamond)
-are imported but not yet used. The pack's 32x32 portraits are no longer
-drawn: the dialogue faces are busts of 48x48 drawn by hand
-(`art/faces.py`), after each speaker's sprite, in a palette each. Only
-the speaker's face is resident, in a 64x64 sprite kept above the
-sheets, and the portrait slot is loaded with its palette.
-The pack's HUD tiles are no longer drawn: the HUD is the UI kit's,
-drawn by hand (`art/ui_kit.py`), its slots holding the pack's 32-pixel
-treasure icons.
-
-**The environment art pack.** Every background tile of the wood and the
-mystery rooms is the environment art pack V3's, kept as
-delivered in `art/ref/pack_v3/` (its assets, manifest, palettes,
-previews and handoff; not its build scripts or reference boards). It
-was drawn for the first tile spec: 117 entries, one PNG each, in twelve
-palette groups of fifteen colours. `art/env_pack.py` lays them over the
-metatiles last, in both builds, index for index: every pixel is one of
-its group's colours exactly and every ground tile is opaque, both
-checked, so the tiles are the pack's to the pixel. A PNG's tiles run
-left to right (variants, a family of fifteen in the order 1..15, a
-piece row by row) and its animation frames are further rows below,
-with the pack's frame times. What the game lays that the first spec
-had no entry for takes a pack tile's art: a mystery room's crown is its
-wall and its floor's edges its floor. The
-blighted rooms are built from the pack's blight set: its floor, now and
-then pitted, its vein for the trail, the sick canopy and the blight
-walls, with no edge tiles, since the pack draws its edges in the living
-grass only; what the pack draws on grass (stones, bones, flowers) is
-not scattered there. The sick rooms get patches of the stained ground,
-never a strip one tile wide. The blighted tree is 2x3, as the pack draws
-it, and the fairy's spring lies on the overlay.
-`docs/BARTGAME_TILE_SPEC.md` (written by `tools/tile_spec/`) lists every
-tile laid, marks the pack's, and lists the pieces the pack lacks.
-
-**The Drain, painted.** The hub hall is drawn from scratch at the GBA's
-own resolution, never scaled from a picture: `art/sw_hall.py` paints
-it whole, 30x20 metatiles, pixel by pixel in clusters and clean edges,
-with `art/sw_paint.py`'s tools (a canvas of named colours on the 5-bit
-grid, one hue-shifted grey for every stone and the iron, brass, water,
-moss, wood, two cloths, flame; pipes, posts and domes shaded by their
-surface normal against one light from the upper left) and
-`art/sw_props.py`'s hand-drawn props. Its rows: the back wall (brick,
-brass pipes with collars and a valve, the barred arch and its falls,
-the drain hole with its ladder and vines, two banners, two lanterns),
-the upper floor (the Peddler's stall, the basin, the Gatekeeper's
-corner), the railed channel and its bridge, the lower floor (the great
-drain, two grates, crates and barrels in its corners), the railed
-front edge and the water below with its spouts, a ladder and lily pads;
-brass pipes down both side walls. The floor is random paving, stones of
-one or two courses that never leave a sliver, moss grown in some of its
-joints, a crack in a few. It is painted for every tick of a 24-tick
-clock (a tick is 4 frames): the channel's crests drift with the flow,
-the falls pour, the basin's rings spread, the spouts splash, the
-lanterns and candles flicker.
-
-`art/sw_cut.py` cuts the painting into 16x16 cells, stores each cell's
-animation with the fewest frames and the slowest speed that replay it,
-and shares a metatile between identical cells. Each 8x8 piece takes one
-of 11 hand-set palettes (`TEMPLATES`: wall, water, floor, the far
-railing over water, red, purple, teal, wood, flame, books, lily; the
-area has 13 slots), as the hardware allows; a piece that fits none would give its strays to the
-nearest colours, and the build reports every such pixel. The build
-gives a metatile a palette per quarter (`qpals`). Everything that
-repeats is painted on a period that divides 96 (the floor 96x80, the
-bricks 48, the water and the posts 32, the copings 96), and the right
-side wall is the left one's mirror, so the hall fits: 999 of the
-sewer's 1,024 pieces, 370 metatiles, 38 animated, 11 palettes.
-`art/sw_drain.py` gives each cell its collision by quarter and its
-type; the floor in front of the Peddler's counter is of type `FRONT`,
-where the hero is drawn over the overlay (OAM priority 1) that hides
-the Peddler's legs. `tools/sw_preview.py` renders the painting,
-`tools/hall_shots.py` captures the hall from the ROM.
-
-**The Drain's keepers.** The Billious Peddler and the Pale Gatekeeper
-are drawn by hand at the hall's own scale, not from the pack, in
-`art/sw_folk.py`: letter drawings over a palette each (OBJ slots 13 and
-14), lit from the upper left like the hall and outlined in their
-darkest colour, every frame put together from parts. The Peddler,
-hunched in a purple hood specked with gold, a beak of a pink nose
-under yellow eyes, a chain of red gems, is two sprites of 64x32, his
-head over his body, so what his face does and what his hands do mix
-freely. The awning rides higher to clear his hood, and the counter's
-top lies on the ground layer, so his hands and his coin rest on it
-while its cloth, on the overlay, hides his legs. He breathes and
-blinks, and his eyes follow the hero round to his left; between
-customers he spins his coin and slaps it flat, rubs his hands, drums
-his fingers (`PEDDLER_ACTS`, steps of body, face and frames held), and
-he grins over his wares. The Gatekeeper, gaunt and grey-haired under a
-tall hat with a bent tip, red eyes in its shadow, a gold-trimmed robe
-with a brooch and stars, a twisted staff, is one sprite of 64x64, with
-a wisp of violet flame burning over her orb in a second of 16x16. She
-breathes and blinks and now and then kindles a light over her raised
-palm, and her orb's glow pulses in two entries of her palette
-(`ORB_GLOW`). Their frames stream into tiles held for them, queued for
-the VBlank like the hero's, so all 29 frames cost the VRAM of one
-each. The folk nearer the viewer than the hero are drawn before him,
-so a hero behind the Gatekeeper is hidden by her robe.
-`tools/folk_preview.py` renders their frames and the pair in the hall.
-
-**Before the pack.** The tile atlases (`art/ref/tile_art/`, imported by
-`tools/import_tiles.py` into `art/tile_art/tiles.json` and laid by
-`art/tile_art.py`) and the painted wood (`art/wood_art.py`, with the
-terrain painter `art/paint.py`: tiling value noise, a Bayer dither, lit
-clumps, edge bands local to each quarter tile) still run first; the pack
-covers all they draw, so they only matter for a tile the pack does not.
-`tools/roomgrids.py` dumps many rooms as grids of tile names from the
-ROM and renders them from the art in seconds, for judging art across
-many real rooms.
-
-**The palettes by area.** The hardware's sixteen BG palettes are shared
-out by area: each tileset (the wood, the Drain, the mystery rooms) loads
-up to thirteen groups of its own into slots 0 to 12 when the area is
-entered (up to twelve groups, slots 0 to 11), and the pause map, the UI
-kit and the HUD's hearts keep slots 12, 13 and 15.
-
-**The style boards.** The other tiles come from four reference boards in
-`art/ref/`: the sprite sheets, the Drain, the blighted wood, and the UI
-board. `art/sample.py` cuts them: a crop is scaled to its GBA size,
-keyed from the sheet's grey, and quantized to a palette of fifteen
-colours derived from the boards themselves (median cut over the crops
-a palette serves, each crop weighing the same). `art/style.py` names
-every crop: grass, path, canopy, flowers, bushes, tufts, stumps, logs,
-two oaks at 32x48 cut into crown quarters masked round an ellipse and a
-trunk, water, lilies, falls, bridges, ledges, the well, rocks; the
-blight's ground, veins, crystals, dead trees, walls, the door, the
-arch, the pool, the pillar; the Drain's floors, walls, water, falls,
-pipes, grates, the drain, lanterns, banners, ladders, posts, and the
-stall's props. `art/tiles_style.py` puts them into the metatiles by
-name; every metatile still drawn by hand is remapped, colour by
-nearest colour, into the board palettes (`palettes.REMAP_BG`). The HUD
-and the boxes are drawn in the UI kit's palettes, after the UI board's
-navy and gold.
-
-**The comparison build.** `make pack-tiles` builds
-`bartgame_packtiles.gba` with the sprite pack's own tile sheets instead
-(`art/pack_tiles.py`, switched on by `BART_TILES=pack`).
-The pack calls them representative families: the area palettes become
-the pack's, a pack tile goes on each metatile it names, the pack's
-foam-rimmed water on the engine's banked water (the turf beside it is
-plain grass, as the pack draws the rim on the water side), path edges
-are built from its four one-sided edges, and everything else is
-remapped into the pack's colours.
-
-**The wood's rooms.** Every forest room is 32x24 tiles, planned as a
-grid of 3x3-tile chunks (ten by seven over the carvable part) drawn
-from a bank of pieces: forest, open ground, paths of one, two or three
-tiles' width, water, plank bridges, cliffs and their ramps. The plan is
-laid in strokes that span chunks: a landing inside each door, three or
-four clearings (rectangles of open chunks, rounded off by the trees, a
-lake in the heart of a wide one), winding chunk paths from the doors to
-the clearings and between them that open into pockets of glade here and
-there, then a river meandering across the room, bridged where a path
-crosses it, or a cliff along one row of chunks with ledges you can drop
-from and a ramp wherever a path runs down through it, and water pouring
-off the cliff into a churned pool. Every stroke chooses its pieces to
-meet, so water, ledges and paths are shapes and never a scatter of
-single tiles. What stands on the open ground is laid by the chunk as a
-designed piece: a tree, a ring of bushes, a fall of rocks, a ruined
-wall between its pillars, a colonnade, a hedge of thorns, two dead
-trees and their bones, a cluster of crystals, a lantern among flowers,
-a meadow, a clover patch, a hollow log by its stump, a great boulder, a
-tree on its rock, a fairy ring, a pool; only what reads alone on a tile
-is still scattered alone: bushes, rocks, posts, stumps, logs, pillars,
-flowers and grass. Nothing closes a way, and a hoard is sometimes dug
-into the wall behind a bush or a boulder. Fireflies drift over the
-living rooms. Set pieces span tiles,
-painted whole and sliced: two great trees of 3x4 (one with a hollow in
-its trunk, one lopsided with a lantern on its low branch) and roots
-over three tiles of turf, two 2x3 trees (one with a lantern hung in
-it) and the blight's 2x3 dead tree, a rock wedged in a stump's roots
-(2x2), a flower meadow of 3x3
-round a flat stone, clover and fairy rings of 2x2, a great boulder of
-2x2, a hollow log of 2x1, a lily raft of 2x2 on open water; cliffs end
-in capped stones, lakes have rounded corners and banks on every side
-the ground touches. No generic boundary is a hard line: grass that
-meets water ends in a shore of soil, sand and reeds; grass that meets
-the canopy has a verge of shadow and fallen leaves under a wall,
-undergrowth against its sides and ferns above a crown; a trail has
-grass creeping over its edges; the canopy shows its trunks at the
-water's edge. Each is one tile per combination of sides, chosen by the
-generator from the tiles around it.
-
-## The interface
-
-- **HUD.** Navy panels in a thin double gold line, two pixels in from
-  the screen's edge. At the left the hearts, ten at most, over the purse,
-  the keys and R's glove that lifts. At the right a slot of 32 pixels for
-  each of A, B and L, holding the pause menu's own icon of what the
-  button holds, its badge on the corner and the count of seeds or arrows
-  at its foot; then a mini-map of the wood on the navy grid, green where
-  you have been, gold at the Heart, red where you stand. The icons,
-  badges, counts and the mini-map are sprites, first in OAM; in the
-  gardener's dark rooms they are the OBJ window too, so the dark leaves
-  them lit.
-- **Dialogue.** A navy box in a double gold line along the foot of the
-  screen. A speaker's face at the left behind a gold divider, their name
-  in gold on a plate over the box's top edge; the words type in the UI's
-  own face, wrapped by their width, the words that matter picked out in
-  the highlight and the buttons in gold. A gold arrow bobs while the
-  page waits. A advances, B hurries the typing.
-- **The shop.** The whole screen: the Peddler's face in a gold frame and
-  his words in a parchment bubble that points at him; the wares in rows
-  down the left, each with its icon and its price by a gilt coin (red
-  when you cannot pay it), a pointer at the chosen one and your purse on
-  a plate at the list's top edge; the chosen ware at the right, its
-  name, what it is, what it does in red and how many you carry. A buys,
-  B leaves.
-- **Pause (Start).** Three pages in a navy panel under tabs, the open
-  one gold; R turns the pages, Start closes. ITEMS: everything you own
-  that a button can hold, in slots four to a row, the chosen one rimmed
-  in gold and the empty ones dashed, the bombs and arrows counted in
-  their corners; what A, B and L hold at the right; the chosen item at
-  the foot in its slot, named in gold and described, with the words that
-  matter in the highlight. A, B or L puts it on that button. KEY ITEMS:
-  the worn and carried things in the same slots (the pieces of heart
-  counted out of four, the small keys counted), the hearts grown and the
-  pieces toward the next at the right. MAP: the wood drawn from the
-  rooms themselves at a pixel a tile on a navy grid, the ways green with
-  a lit rim, water blue, the blight violet; the cells not yet seen are
-  only the grid. Four gold corners mark the cell under the cursor; at
-  the right, the cell's name and how much of the wood is seen, and a
-  legend of the marks. A looks closer at five pixels a tile. The marks:
-  a door into a mystery until it is won, a quest giver until the quest
-  is paid, a chest until opened, a shrine until used, the Nun's relic
-  from her asking to its taking, and the Bloom. Nothing is saved from
-  here.
-- **The Map and the Astrolabe.** Two chests of the wood hold them. The
-  Map draws every cell, seen or not. The Astrolabe adds the chests, the
-  Heart and the barriers between rooms (cracked walls, webs, locked
-  doors, chasms, thorns), on the overview as dots at the cell edges and
-  in the close look at the doors themselves.
-- **Items.** The things on the ground and in the menu are drawn at 24
-  pixels in 32-pixel sprites: hearts, coins, a purse, seeds, keys, arrows
-  in ones, fives and quivers, the relic, the Grail; the tools and
-  treasures likewise, and the found thing is held up at that size. The
-  HUD's slots show the same icons.
-- **Boxes.** Every message, the shop, the pause pages, the title's words
-  and the win's tally share one kit of navy panels, gold frames, plates,
-  tabs and slots (`art/ui_kit.py`), after the UI boards.
-- **The save file.** The game saves itself, to SRAM, when the Heart is
-  cut and when the Bloom dies: the wood as generated and as you have
-  changed it, the map's marks, everything you carry and the counts. The
-  title offers CONTINUE and NEW GAME; a continued run wakes in the drain.
+Caves, hollows and thickets contain treasure, healing, merchants, fights,
+floor plates, censers or lifting puzzles. Forest strangers offer quests.
+The deepest room contains the Blight Heart; defeating it releases the Grail.
+Death and victory save to SRAM, and continuing wakes Bloom in the Drain.
 
 ## Controls
 
-| key | action |
-|---|---|
-| D-pad | walk (1.25 px per frame, like Link) |
-| A | what A holds (empty to begin with); talk to someone you face. The Thorn Bow, from a chest near the start, looses an arrow the way you face; the Drain Cap, in the pack from the start, opens a mouth under you that takes you home to the drain |
-| B | what B holds: the sword to begin with; or set a bomb, swing the lamp, leap with the cloak |
-| L | what L holds: the Bark Shield to begin with. Hold it and the Bloom guards: slower, facing fixed, bites and seeds from the front are turned |
-| R | roll while walking (24 frames, invulnerable for the first 18); standing still, lift the bush, small stone or pot you face, held over your head with both arms up; throw what you carry. A sword swing while carrying drops the load at your feet |
-| Start | the pause menu: items, key items, the map |
+| Button | Action |
+| --- | --- |
+| D-pad | Walk. |
+| A | Use assigned item; talk to the person Bloom faces. Initially empty. |
+| B | Use assigned item. Initially the sword. |
+| L | Use/hold assigned item. Initially the Bark Shield; guarding fixes facing and slows walking. |
+| R | Roll while walking; lift while standing; throw a carried object. |
+| Start | Open/close the item, key-item and map pages. |
 
-The Rot Gauntlet from the second lock's chest lifts boulders too. A
-thrown thing flies two and a half pixels a frame, breaks on the ground,
-a wall or a monster (two hearts of damage for a bush or a pot, four for
-a stone) and may leave a heart or a coin. The sword cuts bushes, gathers
-any heart or coin its swing reaches, turns a spitter's seed back the
-way you face (yours now, it hurts what it meets) and lands on a thorn
-knight from any side. Bombs break bushes, stones and pots. Arrows, two
-hearts of damage and stopped by walls, come twenty with the bow, in
-ones, fives and tens from the dead, and ten for ten gilt from the
-Peddler. Walk into a chest from below to open it.
-Walk into a locked door with a key to open it. Push into a ledge for a
-moment to drop off it. The moment your feet cross into water you go
-under where you stand, petals last, rings spreading; into a hole, you
-shrink away into the dark. Either costs a quarter heart and puts you
-back on the last safe ground.
+Assign items to A/B/L in the pause menu. The sword cuts bushes, gathers nearby
+hearts/coins and reflects seeds. Bombs open cracked stone, the candle burns
+webs/brush and lights censers, and the cloak jumps gaps. The bow uses arrows;
+the Drain Cap returns Bloom to the hub. The Rot Gauntlet permits heavy lifting.
+A sword swing while carrying drops the load. Approach a chest from below to
+open it; walk into a locked door with a key. Push into a ledge to drop.
+Water and pits cost a quarter heart and return Bloom to safe ground.
 
-## Building
+## Native art construction
 
-```
-make            # bartgame.gba, from src/ and the art in art/*.py
+Every active visual family comes from the same native generators, not imported
+high-resolution sheets. Screens are 240×160, cells 16×16, hardware tiles 8×8,
+inks RGB555 and world/sprite art 4bpp. The title is drawn directly at 240×160.
+
+Bloom’s ordinary painted body is about 14×22 inside a legal 32×32 canvas.
+World pickups are commonly 10–14 pixels in 16×16 canvases. Dedicated HUD icons
+and larger menu/reward illustrations are separate drawings. All held tools
+share explicit hand anchors with the body. Sword contact bounds are generated
+from each live blade pose; the north-facing shield sits on the far side.
+The 24-pixel HUD keeps the familiar menu structure while freeing playfield.
+
+| Source | Responsibility |
+| --- | --- |
+| `art/reboot_core.py` | Shared RGB555 inks, material roles, perspective and reusable native shapes. |
+| `art/reboot_terrain.py` | Forest, progressive blight, Drain, interiors and interactive metatiles. |
+| `art/reboot_actors.py` | Bloom, weapons/actions, enemies, NPCs, keepers and Heart. |
+| `art/reboot_items.py` | World drops, equipment, liftables, chests and entrances. |
+| `art/reboot_ui.py`, `ui_font.py`, `ui_kit.py`, `faces.py`, `title.py` | Interface, native font, portraits and title. |
+| `art/reboot_contracts.json` | Identifier/physics metadata only; no retained source pixels. |
+| `tools/build_assets.py` | Packed C assets, palette/VRAM checks, sword geometry and coverage report. |
+| `src/ambient.c` | Surface-attached, staggered glitter with bounded OAM use. |
+
+`art/tiles.py`, `sprites.py`, `palettes.py` and `rooms.py` are strict integration
+points. There is no old-art fallback. Older importers/reference sheets remain
+in the repository as history and are not dependencies of `make`.
+The [research](docs/art-reboot/RESEARCH.md) measures native Pokémon examples
+and studies Minish Cap implementation details; no Nintendo graphics are used.
+
+## Build
+
+```sh
+make -j4       # bartgame.gba
+make assets   # generated C assets and build/gen/art-reboot-coverage.json
 make clean
 ```
 
-Needs `arm-none-eabi-gcc` (any modern one; the code is C, Thumb in ROM),
-Python 3 with Pillow (the art pipeline renders the font and the title
-with PIL), and `../tools/bin/gbafix` from the decomp's tools for the
-header checksum.
+Requires `arm-none-eabi-gcc`/binutils, Python 3 with Pillow, and the repository’s
+`../tools/bin/gbafix`. This standalone game needs no commercial base ROM.
 
-## Layout
+Code lives in `src/`; `gba.ld` places hot loops in IWRAM and maps in EWRAM.
+Rooms use scrolling BG maps and per-area deduplicated tilesets. The actor pool
+streams current sprite frames rather than keeping every source frame in VRAM.
 
-```
-src/            the engine and the game
-  crt0.s        boot, IRQ dispatch
-  gba.ld        linker script: ROM, IWRAM (.iwram, .bss), EWRAM
-  gba.h         registers, types, fixed point
-  video.c       VBlank, OAM shadow, palettes, fades
-  room.c        the loaded room: two metatile layers, an 8x8 solidity
-                grid, BG map rendering, camera, animated tiles
-  actor.c       the actor pool, tile collision with corner assist,
-                hit boxes, OBJ VRAM sheets
-  player.c      the Bloom: walk, roll, sword, knockback, falls, jumps
-  items.c       B and L, keys in doors, thorns under the sword
-  react.c       what tiles do when struck, burned, blown up, unlocked
-  world.c       the maze: spanning tree, staged gates, key placement
-  roomgen.c     a room from a cell: border, doors, features, flood check
-  myst.c        the mystery rooms: cave, hollow, thicket; ten event kinds
-  enemy.c       rot beetle, spore bat, blight spitter, gloom slime,
-                thorn knight (ports of TMC's AIs and numbers)
-  boss.c        the Blight Heart
-  objects.c     projectiles, pickups, effects, bombs
-  npc.c         the sage, the merchant, the hermit, the nun, the gardener
-  menu.c        the pause menu: items, key items, the drawn map
-  save.c        the save file in SRAM
-  text.c        BG0: the message box with faces, the shop, the HUD, the
-                mini-map
-  ui.c          the UI kit's frames, plates and tabs on BG0 and BG3
-  vwf.c         the UI's words set a pixel at a time into tiles
-  sound.c       PSG sound effects and a three-track tracker
-  game.c        states: title, play, transitions, map, win
-art/            pixel art as rows of letters mapped to palette indices
-  palettes.py   the 16-color palettes: BG from the boards over the drawn
-                ones, OBJ from the sprite pack, the remap tables
-  ref/          the four style boards; ref/pack/ the sprite pack's exact
-                sheets and ref/pack_art/ its illustrated sheets, as delivered;
-                ref/tile_art/ the Drain's and the blight's tile atlases;
-                ref/pack_v3/ the environment art pack V3
-  pack/         the sprite pack imported: a strip per sheet, pack.json
-  pack.py       reads art/pack/ for the build
-  pack_tiles.py the pack's tiles, for `make pack-tiles`
-  tile_art/     the tile atlases imported: tiles.json, the groups and tiles
-  tile_art.py   lays the atlases' tiles over the metatiles, in both builds
-  sample.py     cutting a board: key, scale, derive a palette, quantize
-  style.py      every tile crop by name, and the palettes derived from them
-  tiles_style.py the sampled tiles into the metatiles; the rest remapped
-  px.py         the painter: legends, outlines, flips, compose, a canvas
-                with lit blobs and shaded balls for round things
-  paint.py      the terrain painter: tiling noise, dither, lit clumps,
-                edge bands and nicks local to each quarter tile
-  wood_art.py   the living wood, the blight and the mystery rooms, painted
-                before the pack came (it covers them all now)
-  env_pack.py   the environment art pack V3, laid over all, index for index
-  tiles.py      metatiles: grass, blight, paths, canopy walls, trees,
-                stones, water, gates, chests, the sewer set
-  hero.py       the drawn Bloom, kept for the engine's frame order
-  monsters.py   beetle, bat, slime, spitter, knight, its sword, the boss
-  items.py      pickups, key items, effects, projectiles
-  folk.py       the five NPCs
-  portraits.py  drawing helpers, once the 32x32 portraits'
-  faces.py      the dialogue faces, 48x48, drawn by hand after the sprites
-  ui_font.py    the UI's own face: proportional, nine rows
-  ui_kit.py     the boxes', pages' and HUD's frames, plates, tabs, slots,
-                marks; the hearts and R's glove
-  sprites.py    the sheet list: the pack's sheets in the engine's frame order
-  title.py      the title screen, painted with PIL in 16 colors
-  rooms.py      the hub room: the Drain's objects (its cells: sw_drain.py)
-  sw_paint.py   the Drain's painter: colours, ramps, a canvas, lit tubes
-  sw_props.py   the Drain's props, drawn by hand
-  sw_hall.py    the Drain's hall, painted whole for every tick of its clock
-  sw_cut.py     cutting the painting into metatiles; the hand-set palettes
-  sw_drain.py   the hall for the build: collision, types, the cut
-  sw_folk.py    the Drain's two keepers, drawn by hand: parts, frames, acts
-tools/
-  build_assets.py   art -> build/gen/assets.c with deduplicated tiles
-  import_pack.py    the sprite pack (art/ref/pack/, art/ref/pack_art/) -> art/pack/
-  pack_art.py       cutting the illustrated sheets: cells, downscaling, palettes
-  import_tiles.py   the tile atlases (art/ref/tile_art/) -> art/tile_art/
-  tile_spec/        the tile spec for the artist: entries, renders, the doc
-  roomgrids.py      many rooms dumped from the ROM as tile names, rendered from the art
-  engine_contract.py the art contract as data: metatiles, banks, budgets, the specs' keys
-  golden_capture.py fixed scenes captured raw from the ROM, with what is on screen
-  compose_frame.py  a scene drawn straight from the art pack's PNGs, for comparing
-  compare_frames.py two 240x160 frames compared pixel for pixel
-  sw_preview.py     the Drain's painting rendered, before it is cut
-  hall_shots.py     the Drain's views and the whole hall, captured from the ROM
-  ui_shots.py       the boxes, the shop, the pause pages and the map, captured from the ROM
-  hud_shots.py      the HUD in the hall, the wood and the dark, captured from the ROM
-  folk_preview.py   the keepers' frames on a sheet, or the pair in the hall
-  hall_probe.py     the Drain walked: hole, shop, talk, drawing order, no falls, the keepers alive
-  preview.py        render art to PNG
-  probe.py          mGBA harness: boot, keys, RAM by symbol, screenshots
-  roomdump.py       render the loaded room from RAM
-  critical_path.py  walks the key chain to the Grail: the regression test
-  quest_probe.py    the three quests
-  perf_probe.py     monsters against the frame
+## Verify and review
+
+Runtime tools use mGBA’s Python bindings and inspect the built ROM by linker
+symbols. Run `--help` for frozen-ROM/map paths and output options.
+
+```sh
+python3 tools/art_reboot_probe.py --help    # ownership, hardware and native scale
+python3 tools/bloom_probe.py --help         # phase contacts, grips and cancellation
+python3 tools/bloom_suite_probe.py --help   # broader action suite
+python3 tools/critical_path.py --boss       # required progression through victory
+python3 tools/wood_probe.py                # bow, gathering, reflection, hub return
+python3 tools/lift_probe.py                # lift/throw and inventory controls
+python3 tools/mandatory_trials.py               # earned mandatory rewards
+python3 tools/art_reboot_review.py --help   # actual screens, actions and interactions
 ```
 
-## The tile budget
-
-A background map entry has ten bits for its tile, so the ground and
-overlay layers can address 1,024 subtiles of 8x8 between them. The
-build therefore makes three tilesets, one per area, each deduplicated
-on its own (flips reused): the forest, the sewer and the mystery rooms.
-A metatile keeps one global id; each set carries its own map entries
-for it, blank where the set does not hold it. `tiles_load` copies the
-area's set into the charblocks when the area changes. The build prints
-each set's count.
-
-## How it is built for speed
-
-- Thumb code in ROM, hot data in IWRAM, the room's maps in EWRAM. No
-  libc, no mixer: sound is the four PSG channels.
-- Rooms render once into 64x64 BG maps; the camera just scrolls. Tile
-  changes rewrite four map entries.
-- One actor pool of 96 with per-kind fields; monsters of a kind share one
-  sprite sheet loaded at room entry; the hero streams one frame.
-- Collision is an 8x8 cell grid derived from tile types at load.
-
-## Testing
-
-Every probe drives the real ROM in mGBA and reads RAM by linker symbol:
-
-```
-python3 tools/critical_path.py --boss     # title to win screen, 18 checks
-python3 tools/critical_path.py --seed 0x1234 --boss
-python3 tools/quest_probe.py --seed 0x28c
-python3 tools/lift_probe.py               # roll, lift, throw, boulder, pause menu
-python3 tools/guard_probe.py              # the loadout, the water's edge, a hole, the shield
-python3 tools/myst_probe.py               # every mystery kind forced, played to its reward
-python3 tools/wood_probe.py               # the bow, the Drain Cap, the sword's gathering and deflecting, open knights
-python3 tools/menu_probe.py               # the three pause pages, the grid, the map's zoom, save and continue
-python3 tools/hall_probe.py               # the Drain walked from the spawn: the hole, the shop, the Gatekeeper, the keepers' idles
-python3 tools/perf_probe.py
-python3 tools/roomshots.py out/           # every room of a seed rendered from RAM, and a sheet
-python3 tools/ui_shots.py out/            # the boxes, the shop, the pause pages and the map, and a sheet
-python3 tools/hud_shots.py out/           # the HUD in six states, a sheet and its bands at 4x
-```
-
-The delivered ROM passed the critical path on three seeds (0xB4A7,
-0x1234, 0x7777), the quests on 0x28c, 0x1234 and 0x3, the hands probe
-14/14, and 64 beetles at full speed. The maze generator is also compiled for the host and checked over
-twenty thousand seeds without an emulator:
-
-```
-make verify-world    # every key item, key chest and the goal reachable
-                     # in order, without a lock; all three quests present
-```
-
-`build/host/dump.c` prints one seed's maze, `build/host/stats.c` the
-averages (path length, side rooms, dead ends, locks, chests).
+Capture tools disclose position/inventory/healing fixtures and keep native
+240×160 framebuffer PNGs. Source mockups/atlases are labelled separately.
+See [probe methods and limits](docs/art-reboot/PROBE_NOTES.md) and the gallery’s
+release validation for measured budgets, tests, contact latency and ROM hash.

@@ -1,8 +1,6 @@
 # BARTGAME: a GBA game built from scratch.
 #
 #   make            builds bartgame.gba
-#   make pack-tiles builds bartgame_packtiles.gba, with the sprite pack's
-#                   own tiles and HUD (a comparison build)
 #   make assets     regenerates build/gen/* from art/*.py
 #   make clean
 #
@@ -51,7 +49,7 @@ assets: $(GEN)/assets.c
 # one run writes both (assets.h last), so a parallel make runs it once
 $(GEN)/assets.c: $(ART)
 	@mkdir -p $(GEN)
-	BART_TILES=$(BART_TILES) $(PYTHON) tools/build_assets.py $(GEN)
+	$(PYTHON) tools/build_assets.py $(GEN)
 
 $(GEN)/assets.h: $(GEN)/assets.c ;
 
@@ -80,13 +78,6 @@ $(TARGET).gba: $(BUILD)/$(TARGET).elf
 
 clean:
 	rm -rf $(BUILD) $(TARGET).gba build_pt bartgame_packtiles.gba
-
-# The comparison build: the sprite pack's own tile sheets and HUD tiles in
-# place of the ones cut from the style boards (art/pack_tiles.py), in a
-# build directory of its own.
-.PHONY: pack-tiles
-pack-tiles:
-	$(MAKE) BUILD=build_pt TARGET=bartgame_packtiles BART_TILES=pack
 
 -include $(OBJS:.o=.d)
 

@@ -1,6 +1,13 @@
 # Forest engine and artwork rework — real mGBA review
 
-## Latest: readable interactive scenery
+## Latest: complete native art reboot
+
+[View the native redesign, actual mGBA recordings and playable ROM](../art-review/reboot/README.md).
+The whole current game now shares one native scale, palette and drawing grammar:
+compact Bloom, tile-sized drops, coherent world materials, clear interactions,
+surface glitter and a true 24px HUD. The galleries below document earlier builds.
+
+## Previous: readable interactive scenery
 
 [View 40 actual mGBA cases, comparisons and the video reel](interactive-scenery/README.md).
 Three larger chest tiers, full-tile pressure plates, tall cave/hollow/thicket
