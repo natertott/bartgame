@@ -119,8 +119,9 @@ as their sources. Add fewer, stronger four-point ivory/gold flares around
 valuable or sacred objects. The mockup cycle has twenty small sites and six
 strong sites, with four strong sites at their bright phase.
 
-Ambient glints are one to three pixels and attached to surfaces. Loot/sacred
-glints have a deliberate three-to-five-pixel cross. Enemy projectiles have a
+Most ambient glints are one to three pixels and attached to surfaces, with
+occasional five-to-seven-pixel specular peaks. Loot/sacred glints use a
+deliberate cross, attached to a distinct object rather than wandering freely. Enemy projectiles have a
 directional body and travel, rather than impersonating stationary treasure
 stars. Damage/attack flashes are brief and tightly attached to their action.
 Glitter belongs on filthy surfaces too: wetness can be beautiful and repellent.

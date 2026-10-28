@@ -112,3 +112,32 @@ for clarity; a production pack may bake static stains into background tiles.
 
 The production acceptance gate is therefore consistency across all active
 assets and actual GBA rendering, not an attractive isolated forest image.
+
+## What actual runs changed
+
+The first packed-ROM review exposed failures the mockup could not establish:
+repeating triangular/diamond floor motifs, too-uniform root/wave patterns,
+black squares beneath interior glow tiles, a hidden north-held lamp, and a
+sword effect that read as a range cage with a changing blade length. These
+were corrected in the next production candidate: quieter floor clusters,
+opaque matching glow floors, an outward lamp hook and a fixed-length blade
+with short local trail and per-pose generated contact bounds.
+
+The smaller Bloom and separate world/menu item scales survive actual motion.
+North shield depth, jump shadows, drowning in the real water and continuous
+lift/throw release have been inspected frame by frame. The compact interface
+retains the successful old information structure. A final identity review
+caught the Nun's green portrait against her black-veiled world sprite; the
+portrait costume was corrected. Paired emulator measurements also caught a
+new HP-redraw stall; static panel caching and changed-cell updates remove it
+without changing the approved HUD pixels.
+
+There are remaining artistic limits. Mixed living/rotten ground still exposes
+tile-angular boundaries in some generated layouts, and large combat clearings
+can feel flat. The quieter floor is a deliberate improvement over the former
+wallpaper noise, but future refinement should add connected, material-specific
+edge shapes and landmarks rather than scatter detail over every cell. Filth,
+gold and abundant glitter now share one construction language; this is the
+first complete shared native direction, not a claim that the Excalibur-like
+vision has no further room to develop. The published real-run gallery is the
+basis for judging that direction.
