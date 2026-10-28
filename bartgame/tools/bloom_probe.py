@@ -134,6 +134,27 @@ def fixed_tiles(c,defs):
             'minimum_free':hero['frame_tiles']+sword['tiles']+shield['frame_tiles']}
 
 
+def sword_step(age):return 0 if age<2 else 1 if age<5 else 2 if age<9 else 3 if age<13 else 4
+
+
+def phase_geometry(c):
+    try:P.sym('bloom_sword_hit');P.sym('bloom_sword_origin');return True
+    except KeyError:return False
+
+
+def phase_box(c,facing,age):
+    if not phase_geometry(c):return BOXES[facing]
+    at=P.sym('bloom_sword_hit')+(facing*5+sword_step(age))*4
+    return tuple((v-256 if v>=128 else v) for v in bytes_at(c,at,4))
+
+
+def sword_origin(c,facing):
+    if not phase_geometry(c):
+        x,y,_,_=BOXES[facing];return x,y-(8 if facing==2 else 0)
+    at=P.sym('bloom_sword_origin')+facing*2
+    return tuple((v-256 if v>=128 else v) for v in bytes_at(c,at,2))
+
+
 def effect(c,tile,hardware=True):
     return next((a for a in oam(c,hardware) if a['tile']==tile and a['shape']==0 and a['size']==2),None)
 
@@ -174,16 +195,27 @@ def timing_and_render(c,defs):
                 check(f'{d} active effect present in hardware OAM at tick {tick}',fx is not None)
                 check(f'{d} streamed frame agrees with live damage window at tick {tick}',any(re.fullmatch('sword_'+d+'[123]',n) for n in matches),str(matches))
                 if fx:
-                    hx,hy=previous['position'];x0,y0,x1,y1=BOXES[f]
+                    hx,hy=previous['position'];x0,y0,x1,y1=phase_box(c,f,previous['timer'])
                     cy=P.r16(c,P.sym('gCamY'));cx=P.r16(c,P.sym('gCamX'))
                     if cx>=32768:cx-=65536
                     if cy>=32768:cy-=65536
-                    want=(hx+x0-cx,hy+y0-cy-(8 if f==2 else 0))
+                    origin=sword_origin(c,f)
+                    want=(hx+origin[0]-cx,hy+origin[1]-cy)
                     check(f'{d} effect anchored to combat box at tick {tick}',(fx['x'],fx['y'])==want,f'{(fx["x"],fx["y"])} == {want}')
                     pts=pixels(blob)
-                    if f==2:pts=[(x,y-8) for x,y in pts if y>=8]
+                    if phase_geometry(c):
+                        # Read the independently rendered pixels inside the
+                        # damaging distal-blade/trail box. The harmless grip
+                        # is deliberately excluded; no old sweep cage is
+                        # required merely to fill an obsolete envelope.
+                        pts=[(x+origin[0],y+origin[1]) for x,y in pts
+                             if x0<=x+origin[0]<=x1 and y0<=y+origin[1]<=y1]
+                        expected=(x0,y0,x1,y1)
+                    else:
+                        if f==2:pts=[(x,y-8) for x,y in pts if y>=8]
+                        expected=(0,0,x1-x0,y1-y0)
                     got=(min(x for x,y in pts),min(y for x,y in pts),max(x for x,y in pts),max(y for x,y in pts)) if pts else None
-                    check(f'{d} visible sweep reaches all collision boundaries at tick {tick}',got==(0,0,x1-x0,y1-y0),str(got))
+                    check(f'{d} visible blade/trail reaches its phase collision boundaries at tick {tick}',got==expected,{'visible':got,'contact':expected,'age':previous['timer']})
                     hero=hero_oam(c)
                     check(f'{d} sword precedes Bloom in OAM at tick {tick}',hero is not None and fx['index']<hero['index'])
             previous=state
@@ -194,8 +226,8 @@ def timing_and_render(c,defs):
     return tile,traces
 
 
-def boundary_targets(f):
-    x0,y0,x1,y1=BOXES[f]
+def boundary_targets(f,box=None):
+    x0,y0,x1,y1=BOXES[f] if box is None else box
     center_x=(x0+x1)//2;center_y=(y0+y1)//2+6
     # HB_SMALL is x[-5..4], y[-11..-2], not a point at its feet.
     return [('left',(x0-4,center_y),(-1,0)),('right',(x1+5,center_y),(1,0)),
@@ -204,26 +236,46 @@ def boundary_targets(f):
 
 def boundaries(c):
     for f,d in enumerate(FACES):
-        for edge,(dx,dy),(ox,oy) in boundary_targets(f):
-            for outside in (False,True):
-                a,pl=reset_player(c,facing=f)
-                i=W.spawn_enemy(c,0,256+dx+(ox if outside else 0),230+dy+(oy if outside else 0))
-                at=P.sym('gActors')+i*64
-                P.w8(c,at+31,2);P.w8(c,at+34,2);P.w16(c,at+26,20)
-                P.w8(c,at+29,200);P.w16(c,at+32,0);P.w8(c,at+28,0)
-                P.press(c,'B',1,15)
-                hp=P.actor(c,i)['hp'] if P.actor(c,i)['kind']==2 else 0
-                check(f'{d} {edge} '+('one pixel outside misses' if outside else 'inclusive edge lands'),hp==(20 if outside else 18),f'target hp {hp}')
+        ages=(2,5,9) if phase_geometry(c) else (None,)
+        for age in ages:
+            box=phase_box(c,f,age) if age is not None else BOXES[f]
+            for edge,(dx,dy),(ox,oy) in boundary_targets(f,box):
+                for outside in (False,True):
+                    a,pl=reset_player(c,facing=f)
+                    target_x=256+dx+(ox if outside else 0)
+                    target_y=230+dy+(oy if outside else 0)
+                    # The debug spawn helper itself advances two updates.
+                    # Spawn before starting the attack, park it outside all
+                    # reach, then move the frozen target into the one tested
+                    # phase rather than silently testing age+2.
+                    i=W.spawn_enemy(c,0,100 if age is not None else target_x,
+                                    100 if age is not None else target_y)
+                    at=P.sym('gActors')+i*64
+                    P.w8(c,at+31,2);P.w8(c,at+34,2);P.w16(c,at+26,20)
+                    P.w8(c,at+29,200);P.w16(c,at+32,0);P.w8(c,at+28,0)
+                    if age is None:P.press(c,'B',1,15)
+                    else:
+                        P.press(c,'B',1,age-1)
+                        P.w16(c,at+8,0);P.w16(c,at+10,target_x)
+                        P.w16(c,at+12,0);P.w16(c,at+14,target_y)
+                        P.run(c,1)
+                        check(f'{d} phase contact actually tests age{age}',P.r8(c,a+4)==age,P.r8(c,a+4))
+                    hp=P.actor(c,i)['hp'] if P.actor(c,i)['kind']==2 else 0
+                    label=f'{d} '+('age%d '%age if age is not None else '')+edge
+                    check(label+' '+('one pixel outside misses' if outside else 'inclusive edge lands'),hp==(20 if outside else 18),f'target hp {hp}')
 
 
 def interactions(c,defs,tile):
     a,pl=reset_player(c)
     # Pickup at the far edge is beyond body contact but within the swing.
-    P.w16(c,pl,16);W.put_actor(c,1,4,0,256,200,2,timer=10)
+    x0,y0,x1,y1=phase_box(c,0,5);tx=256+(x0+x1)//2
+    heart_y=230+y0+2 if phase_geometry(c) else 200
+    P.w16(c,pl,16);W.put_actor(c,1,4,0,tx,heart_y,2,timer=10)
     P.run(c,2);check('heart beyond body contact stays before swing',P.r16(c,pl)==16)
     P.press(c,'B',1,15);check('sword still gathers a reached heart',P.r16(c,pl)==24)
     a,pl=reset_player(c)
-    W.put_actor(c,1,3,0,256,202,6,flags=1,dir_=16,speed=0,damage=2,timer=1)
+    projectile_y=230+y0+4 if phase_geometry(c) else 202
+    W.put_actor(c,1,3,0,tx,projectile_y,6,flags=1,dir_=16,speed=0,damage=2,timer=1)
     P.press(c,'B',1,5)
     at=P.sym('gActors')+64
     check('sword still deflects an incoming seed',P.actor(c,1)['kind']==3 and P.r8(c,at+48)==1 and P.r8(c,at+6)==0)

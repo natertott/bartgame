@@ -8,6 +8,7 @@ import argparse
 import ast
 from collections import Counter
 import json
+import math
 from pathlib import Path
 import struct
 
@@ -172,6 +173,30 @@ def static_checks(args,old,new):
         if allowed:exact_exceptions.append(index)
     details['unchanged_exact_menu_primitives']=exact_exceptions
     check('native_scale','portrait illustrations have six native frames',new.defs['SHEET_FACE_FRAMES']==6)
+    if 'bloom_sword_hit' in new.symbols:
+        origins=new.unpack('<8b',new.symbols['bloom_sword_origin'])
+        boxes=new.unpack('<80b',new.symbols['bloom_sword_hit'])
+        geometry=[]
+        for facing,name in enumerate(('n','e','s','w')):
+            live=[]
+            for phase in (1,2,3):
+                box=boxes[(facing*5+phase)*4:(facing*5+phase+1)*4]
+                live.append(list(box))
+                check('native_sword',name+' phase'+str(phase)+' has a compact current blade region',
+                      0<box[2]-box[0]+1<=20 and 0<box[3]-box[1]+1<=20,list(box))
+            check('native_sword',name+' contact moves with the three cutting poses',len({tuple(b) for b in live})==3,live)
+            geometry.append({'facing':name,'origin':list(origins[facing*2:facing*2+2]),'live_phase_boxes':live})
+        vectors=None
+        for node in ast.walk(ast.parse((ROOT/'art/reboot_actors.py').read_text())):
+            if isinstance(node,ast.Assign) and any(isinstance(t,ast.Name) and t.id=='SWORD_VECTORS' for t in node.targets):
+                vectors=ast.literal_eval(node.value)
+        check('native_sword','fixed-length native weapon vectors are explicit',isinstance(vectors,dict) and set(vectors)=={'n','e','s','w'})
+        if vectors:
+            for facing,poses in vectors.items():
+                for phase,(dx,dy) in enumerate(poses):
+                    length=math.hypot(dx,dy)
+                    check('native_sword',facing+' phase'+str(phase)+' retains the same14px blade',13.6<=length<=14.05,round(length,4))
+        details['phase_sword']=geometry
     glitter=new.named('metatile_glitter',len(expected))
     check('glitter','multiple native materials explicitly support glitter',sum(bool(v) for v in glitter)>=8,sum(bool(v) for v in glitter))
     interfaces={row['family']:row for row in coverage.get('interface',[])}
