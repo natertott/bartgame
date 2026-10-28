@@ -271,8 +271,17 @@ def interactions(c,defs,tile):
     x0,y0,x1,y1=phase_box(c,0,5);tx=256+(x0+x1)//2
     heart_y=230+y0+2 if phase_geometry(c) else 200
     P.w16(c,pl,16);W.put_actor(c,1,4,0,tx,heart_y,2,timer=10)
-    P.run(c,2);check('heart beyond body contact stays before swing',P.r16(c,pl)==16)
-    P.press(c,'B',1,15);check('sword still gathers a reached heart',P.r16(c,pl)==24)
+    # A direct HP fixture dirties the HUD. Let that upload settle, and hold
+    # the key until the ordinary logic actually samples it: one video frame
+    # is not necessarily one logic update while a dirty HUD is being flushed.
+    P.run(c,6);check('heart beyond body contact stays before swing',P.r16(c,pl)==16)
+    c.set_keys(P.key(c,'B'))
+    for _ in range(6):
+        P.run(c,1)
+        if P.r8(c,a+2)==2:break
+    c.clear_keys(P.key(c,'B'))
+    check('heart gathering starts a real sword action',P.r8(c,a+2)==2)
+    P.run(c,18);check('sword still gathers a reached heart',P.r16(c,pl)==24)
     a,pl=reset_player(c)
     projectile_y=230+y0+4 if phase_geometry(c) else 202
     W.put_actor(c,1,3,0,tx,projectile_y,6,flags=1,dir_=16,speed=0,damage=2,timer=1)
@@ -291,8 +300,16 @@ def interactions(c,defs,tile):
     at=P.sym('gActors')+64;P.w8(c,at+29,200);P.w16(c,at+32,0)
     P.run(c,1)
     check('damage interrupts the sword and clears its hitbox',P.r8(c,a+2)==3 and not P.r8(c,pl+PL_ACTIVE))
-    P.run(c,1)
-    check('hurt Bloom has no lingering action effect',effect(c,tile) is None)
+    # The damage HUD flush can span video frames before the prepared OAM is
+    # uploaded. Inspect the first replacement upload, rather than assuming
+    # the next emulator video boundary has already completed a logic update.
+    before=bytes_at(c,0x07000000,1024);waited=0
+    for waited in range(1,7):
+        P.run(c,1)
+        if bytes_at(c,0x07000000,1024)!=before:break
+    replaced=bytes_at(c,0x07000000,1024)!=before
+    check('hurt Bloom has no lingering action effect',replaced and effect(c,tile) is None and P.r8(c,a+2)==3,
+          f'first replacement OAM after {waited} video frames')
     # Keep a harmless test enemy aligned with the rolling player to verify
     # invulnerability while the roll is protected.
     a,pl=reset_player(c)
