@@ -107,6 +107,33 @@ def oam(c,hardware=True):
 def bytes_at(c,at,n):return bytes(P.r8(c,at+i) for i in range(n))
 
 
+def sheet_metadata(c,index):
+    """Read the live ROM descriptor, including native canvas/OAM shape."""
+    at=P.sym('sheets')+index*12
+    return {'source':P.r32(c,at),'tiles':P.r16(c,at+4)&65535,
+            'frame_tiles':P.r8(c,at+6),'shape':P.r8(c,at+7),'size':P.r8(c,at+8),
+            'pal':P.r8(c,at+9),'width':P.r8(c,at+10),'height':P.r8(c,at+11)}
+
+
+def hero_oam(c,hardware=True):
+    # HERO is contract sheet0 and resident tile0 in both the frozen and
+    # reboot builds. Its canvas is metadata, not an assumed64x32 shape.
+    sh=sheet_metadata(c,0)
+    return next((entry for entry in oam(c,hardware) if entry['tile']==0 and
+                 entry['shape']==sh['shape'] and entry['size']==sh['size'] and
+                 entry['pal']==sh['pal']),None)
+
+
+def fixed_tiles(c,defs):
+    """The reboot derives its fixed bases from actual sheet dimensions."""
+    hero=sheet_metadata(c,defs['SHEET_HERO'])
+    sword=sheet_metadata(c,defs['SHEET_SWORD'])
+    shield=sheet_metadata(c,defs['SHEET_SHIELD'])
+    return {'hero':0,'sword':hero['frame_tiles'],
+            'shield':hero['frame_tiles']+sword['tiles'],
+            'minimum_free':hero['frame_tiles']+sword['tiles']+shield['frame_tiles']}
+
+
 def effect(c,tile,hardware=True):
     return next((a for a in oam(c,hardware) if a['tile']==tile and a['shape']==0 and a['size']==2),None)
 
@@ -126,7 +153,8 @@ def effect_contract(c,defs):
     frames={k[len('F_BLOOMFX_'):].lower():v for k,v in defs.items() if k.startswith('F_BLOOMFX_')}
     blobs={name:bytes_at(c,source+idx*frame_tiles*32,frame_tiles*32) for name,idx in frames.items()}
     tile=P.r16(c,static_symbol('sActionTile'))&65535
-    check('action frame occupies one reserved 32px slot',frame_tiles==16 and 56<=tile and tile+16<=defs.get('OBJ_TILE_HUD_ICONS',876),f'tile {tile}, frame tiles {frame_tiles}')
+    minimum=fixed_tiles(c,defs)['minimum_free']
+    check('action frame occupies one reserved 32px slot',frame_tiles==16 and minimum<=tile and tile+16<=defs.get('OBJ_TILE_HUD_ICONS',876),f'tile {tile}, frame tiles {frame_tiles}')
     return tile,blobs
 
 
@@ -156,7 +184,7 @@ def timing_and_render(c,defs):
                     if f==2:pts=[(x,y-8) for x,y in pts if y>=8]
                     got=(min(x for x,y in pts),min(y for x,y in pts),max(x for x,y in pts),max(y for x,y in pts)) if pts else None
                     check(f'{d} visible sweep reaches all collision boundaries at tick {tick}',got==(0,0,x1-x0,y1-y0),str(got))
-                    entries=oam(c);hero=next((a for a in entries if a['tile']==0 and a['pal']==0),None)
+                    hero=hero_oam(c)
                     check(f'{d} sword precedes Bloom in OAM at tick {tick}',hero is not None and fx['index']<hero['index'])
             previous=state
         check(d+' attack starts without an invisible hit',trace[0]['state']==2 and not trace[0]['active'] and not trace[1]['active'])

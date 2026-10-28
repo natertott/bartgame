@@ -84,7 +84,8 @@ def chest_display(c,defs,tier,opened,x,y,label):
     check(label+' painted chest is larger than one tile',all(v>16 for v in dimensions(box)),box)
     part=resident(c,'sChestTile',sh,blob,label)
     if part:
-        hero=next((e for e in B.oam(c) if e['tile']==0 and e['shape']==1 and e['size']==3),None)
+        hero=B.hero_oam(c)
+        check(label+' player is present in hardware OAM',hero is not None)
         if hero:
             check(label+' chest stays behind the approaching player',part['index']>hero['index'],{'chest':part['index'],'hero':hero['index']})
         wx=part['x']+P.r16(c,P.sym('gCamX'));wy=part['y']+P.r16(c,P.sym('gCamY'))
@@ -103,7 +104,7 @@ def near_chest_depth(c,defs,x,y,label):
     for qy in ((y-1)*2,(y-1)*2+1):
         for qx in (x*2,x*2+1):P.w8(c,room+4098+qy*64+qx,0)
     C.teleport(c,x*16+8,y*16);P.w8(c,P.sym('gActors')+7,2);P.run(c,6)
-    hero=next((e for e in B.oam(c) if e['tile']==0 and e['shape']==1 and e['size']==3),None)
+    hero=B.hero_oam(c)
     tile=P.r16(c,B.static_symbol('sChestTile'))&65535
     chest=next((e for e in B.oam(c) if e['tile']==tile and e['shape']==0 and e['size']==2),None)
     check(label+' north-side Bloom and chest are both drawn',hero is not None and chest is not None)
@@ -111,7 +112,8 @@ def near_chest_depth(c,defs,x,y,label):
     check(label+' flat litter raises Bloom to the foreground',hero['priority']==1,hero)
     check(label+' near chest remains above foreground Bloom',chest['priority']==1 and chest['index']<hero['index'],{'chest':chest,'hero':hero})
     cp={(chest['x']+px,chest['y']+py) for px,py in B.pixels(memory(c,0x06010000+tile*32,512),32,32)}
-    hp={(hero['x']+px,hero['y']+py) for px,py in B.pixels(memory(c,0x06010000,1024),64,32)}
+    hs=B.sheet_metadata(c,0)
+    hp={(hero['x']+px,hero['y']+py) for px,py in B.pixels(memory(c,0x06010000,hs['frame_tiles']*32),hs['width'],hs['height'])}
     check(label+' depth fixture exercises actual opaque lid/body overlap',bool(cp&hp),len(cp&hp))
 
 

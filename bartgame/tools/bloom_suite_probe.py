@@ -61,15 +61,16 @@ def entry(c,tile,shape=None,size=None):
                  (size is None or e['size']==size)),None)
 
 
-def hero(c):return entry(c,0,1,3)
+def hero(c):return B.hero_oam(c)
 
 
 def visible_beyond_hero(c,part,w,h):
     """Count real nontransparent tool pixels not hidden by Bloom's alpha."""
     body=hero(c)
     if body is None or part is None:return 0
-    bloom=set(B.pixels(B.bytes_at(c,0x06010000,1024),64,32))
-    if body['flip']:bloom={(63-x,y) for x,y in bloom}
+    sh=B.sheet_metadata(c,0)
+    bloom=set(B.pixels(B.bytes_at(c,0x06010000,sh['frame_tiles']*32),sh['width'],sh['height']))
+    if body['flip']:bloom={(sh['width']-1-x,y) for x,y in bloom}
     pixels=B.pixels(B.bytes_at(c,0x06010000+part['tile']*32,w*h//2),w,h)
     if part['flip']:pixels=[(w-1-x,y) for x,y in pixels]
     return sum((part['x']+x-body['x'],part['y']+y-body['y']) not in bloom for x,y in pixels)
@@ -102,6 +103,7 @@ def tile_set(c,x,y,mt):
 
 def depth_and_guard(c,defs):
     action=P.r16(c,B.static_symbol('sActionTile'))&65535
+    shield_tile=B.fixed_tiles(c,defs)['shield']
     hero_sheet=P.sym('sheets')+defs['SHEET_HERO']*12
     source=P.r32(c,hero_sheet);frame_bytes=P.r8(c,hero_sheet+6)*32
     for f,d in enumerate(FACES):
@@ -109,7 +111,7 @@ def depth_and_guard(c,defs):
             reset(c,defs,f,5)
             P.w8(c,P.sym('gPl')+36,0x0f|(0x10 if upgraded else 0))
             hold(c,'B');P.run(c,6)
-            h,s=hero(c),entry(c,44,0,1)
+            h,s=hero(c),entry(c,shield_tile,0,1)
             check(d+' shield '+('green' if upgraded else 'wood')+' is present',h is not None and s is not None)
             if h and s:
                 check(d+' shield has facing-correct depth',s['index']>h['index'] if f==0 else s['index']<h['index'],{'hero':h,'shield':s})
