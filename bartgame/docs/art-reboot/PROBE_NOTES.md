@@ -1,14 +1,14 @@
 # Native art and emulator verification
 
-Candidate examined here: ROM SHA-256
-`6baf5a3c4f3ed6de5d960075ed405ca108e192f8760449b66e461a25dd06e883`.
+Final ROM examined here: SHA-256
+`41dc680068c094416e92152d4c22637c10d6a055d2bee63ce7700c419490e92d`.
 Frozen comparison: `bbd08678b1e10fb110e562a6374b0242cb8e73affbdd747f033fd0ce99619eee`.
 All runtime observations use mGBA 0.10.5. Later release reports must identify
 their own ROM hash rather than silently attributing these results to another ROM.
 
 ## What the probes establish
 
-`tools/art_reboot_probe.py` passes **6,577/6,577** checks against this candidate.
+`tools/art_reboot_probe.py` passes **6,577/6,577** checks against this final ROM.
 It decodes the built ROM, checks all 913 metatile identifiers and physical
 contracts, and checks native ownership of all 354 original sprite frames plus
 17 small HUD items and six glitter frames. It compares indexed drawings with
@@ -56,6 +56,9 @@ Bloom cannot silently skip a check formerly written for a 64×32 sprite.
 - 40 interactive scenery cases, with all 32 interaction activation checks
   passing and no missing cases.
 
+A separate full-Heart camera clip supplements the 171 canonical cases so the
+whole naturally spawned boss can be inspected at fighting distance.
+
 These use seeded real runs and ordinary buttons. Position, facing, inventory,
 healing and removal of unrelated enemies are disclosed review fixtures.
 Generated terrain, chest contents and mystery descriptors are not replaced.
@@ -70,26 +73,31 @@ They must not be reported as activated animation cases. Unused enum states
 `talk` and `frozen`, swimming and sprinting also remain outside implemented
 gameplay. Separate interface review covers menus, map, shops and portraits.
 
-## Measured HUD contact latency
+## Measured and corrected HUD contact latency
 
 `tools/art_reboot_latency.py` pairs the frozen before/after ROMs with the same
 quiet-floor fixture and a valid, ordinarily spawned beetle. It records video
 boundaries, actual `gGame.run_frames`, VBlank count, state, HP, damage-active
-flag and hardware sword effect. Five trials per ROM gave:
+flag and hardware sword effect. Integration testing found and corrected a
+dirty-HUD regression; these are the actual paired measurements:
 
-| ROM | Video frames from logical hurt to replacement hardware OAM |
+| ROM / HUD load | Video frames from logical hurt to replacement hardware OAM |
 | --- | --- |
 | Frozen before `bbd08678` | 1, 1, 1, 1, 1 |
-| Candidate `6baf5a3c` | 3, 3, 3, 3, 3 |
+| Superseded candidate `6baf5a3c` | 3, 3, 3, 3, 3 |
+| Final `41dc6800`, normal 24 HP | 1 in all 10 trials |
+| Final `41dc6800`, maximum 80 HP / ten hearts | 1 in all 10 trials |
 
 Damage becomes inactive immediately at logical hurt in both builds. The old
 hardware picture remains during preparation, and the sword effect is absent
-at the first replacement OAM upload. This candidate therefore has a measured
-two-video-frame worsening during dirty-HP/HUD contact updates. Representative
-quiet/action performance tests are not proof of worst-case 60 Hz performance.
-The paired sample is a separate performance observation, not a reason to mask
-a lingering effect with a permissive timeout. `bloom_probe.py` explicitly
-checks the first changed hardware OAM after hurt.
+at the first replacement OAM upload. The superseded candidate's measured
+two-video-frame worsening was fixed by packed HUD spans and cached native
+vitals artwork. The final build restores the baseline's one-frame replacement
+at both tested HUD loads, preserving the rendered HUD pixels. Representative
+quiet/action performance tests alone are not proof of worst-case 60 Hz
+performance; the dirty-HUD workload is measured separately. The paired sample
+is not a reason to mask a lingering effect with a permissive timeout:
+`bloom_probe.py` explicitly checks the first changed hardware OAM after hurt.
 
 A manually changed HP fixture can also delay input sampling during the HUD
 flush. The gathering test settles that fixture and holds a real button until
@@ -97,6 +105,6 @@ the attack starts, then checks the reached heart. It first proves the heart
 is outside body contact, so the test cannot pass through body pickup alone.
 
 Raw reports are written by these tools to the requested output paths. The
-frozen candidate review resides at `/workspace/setup/art-reboot-second/review`
+frozen final review resides at `/workspace/setup/art-reboot-final/review`
 in the development workspace; published review links belong in the release
 README, not in these reproducible probe method notes.
