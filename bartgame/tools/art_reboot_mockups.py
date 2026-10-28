@@ -166,7 +166,7 @@ def compose(kind='forest',warm=False,phase=0):
         stamp(world,stair,(176,96),'stone')
         stamp(world,R.portal('hollow' if kind=='forest' else 'thicket'),(152,25),'gold')
         stamp(world,R.chest(0 if kind=='forest' else 2),(41,111),'gold')
-        stamp(world,R.plate(False),(200,91),'gold')
+        stamp(world,R.plate(False),(200,91),'stone')
         # A pristine pale flower grows at the lip of the dirty bank.
         flower,fd=R.indexed(8,8)
         fd.line([(3,4),(3,7)],fill=10);fd.line([(2,6),(0,5)],fill=9)
@@ -344,7 +344,7 @@ def board(images,path,title,scale=3):
 
 
 def calibration():
-    assets=[('Bloom14x22',R.hero(),'hero'),('Bloomback',R.hero('n'),'hero'),('key13x14',R.pickup('key'),'gold'),('coin10x12',R.pickup('coin'),'gold'),('woodenchest',R.chest(),'gold'),('relicchest',R.chest(2),'gold'),('tree',R.tree(),'foliage'),('rottree',R.tree(True),'blight'),('hollow',R.portal(),'gold'),('cave',R.portal('cave'),'stone'),('thicket',R.portal('thicket'),'gold'),('plate',R.plate(),'gold')]
+    assets=[('Bloom14x22',R.hero(),'hero'),('Bloomback',R.hero('n'),'hero'),('key13x14',R.pickup('key'),'gold'),('coin10x12',R.pickup('coin'),'gold'),('woodenchest',R.chest(),'gold'),('relicchest',R.chest(2),'gold'),('tree',R.tree(),'foliage'),('rottree',R.tree(True),'blight'),('hollow',R.portal(),'gold'),('cave',R.portal('cave'),'stone'),('thicket',R.portal('thicket'),'gold'),('plate',R.plate(),'stone')]
     out=Image.new('RGB',(960,42+2*230),'#101820');d=ImageDraw.Draw(out)
     font=ImageFont.truetype('/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf',12)
     d.text((10,10),'Native source assets / 4x and1x / selectedApalette / NOT emulator captures',font=font,fill='#f0d898')
