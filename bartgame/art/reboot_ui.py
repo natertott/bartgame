@@ -351,15 +351,26 @@ def title_image():
     for x in [17,42,67,178,201,224]:
         d.line([(x,110),(x-2,117),(x+1,124),(x-1,131)],fill=ink('gold',3),width=3);d.line([(x-1,110),(x-3,116),(x-1,121)],fill=ink('foliage',4))
         d.line([(x+3,113),(x+5,121)],fill=ink('foliage',3),width=2)
+    # The prompt sits over an open dark-water channel, not a separate UI
+    # plaque. Its banks merge into the same masonry and roots as the sides.
+    d.polygon([(77,115),(86,113),(152,113),(163,116),(170,124),(176,138),
+               (176,153),(64,153),(64,138),(69,124)],fill=ink('drain',2))
+    d.line([(75,116),(70,123),(68,132),(64,138)],fill=ink('drain',4),width=2)
+    d.line([(165,118),(170,125),(172,133),(177,138)],fill=ink('drain',3),width=2)
+    d.line([(72,125),(70,130)],fill=ink('drain',6));d.line([(169,126),(171,132)],fill=ink('foliage',3))
     d.rectangle((7,138,232,153),fill=ink('drain',2))
     for xx,yy,ww in [(8,140,42),(22,144,32),(47,150,18),(179,141,39),(185,146,27),(207,151,20)]:
         d.line([(xx,yy),(xx+ww,yy)],fill=ink('drain',4))
         d.line([(xx+4,yy-1),(xx+ww//2,yy-1)],fill=ink('drain',6))
         d.point((xx+6,yy-1),fill=ink('gold',10))
-    # Quiet prompt well retains both saved-game rows and the y140Start text.
-    d.rounded_rectangle((72,118,169,151),radius=2,fill=ink('ui',1));d.line([(79,117),(161,117)],fill=ink('gold',5))
-    for y,x,w in [(145,8,39),(148,25,29),(143,181,42),(151,185,27),(153,47,18),(151,15,11)]:
-        d.line([(x,y),(x+w,y)],fill=ink('blight',5));d.line([(x+4,y-1),(x+w//2,y-1)],fill=ink('gold',7))
+    # Broad shadowy ripples connect the centre to the filthy side pools.
+    # The actual prompt lettering lives between x90..151, y122..149.
+    for xx,yy,ww in [(11,135,61),(164,136,64),(68,131,20),(155,129,19),
+                     (74,146,12),(159,148,17),(87,153,28),(132,153,22)]:
+        d.line([(xx,yy),(xx+ww,yy)],fill=ink('drain',3))
+    d.line([(70,118),(68,124),(70,128)],fill=ink('foliage',3))
+    d.line([(172,116),(175,123),(174,129)],fill=ink('gold',3),width=2)
+    d.point((70,128),fill=ink('gold',8))
     # The rule is the last material layer, so foliage cannot erase its edge.
     d.rectangle((3,3,236,156),outline=ink('gold',8))
     for xx,yy in [(4,4),(235,4),(4,155),(235,155),(120,4),(120,155)]:

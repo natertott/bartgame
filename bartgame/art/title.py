@@ -15,7 +15,7 @@ def metadata(bitmap=None):
     return {'authoring':'Native integer pixel geometry; no imported image or resampling','producer':'art/reboot_ui.py:title_image',
             'target_size':[WIDTH,HEIGHT],'pixel_format':'GBA Mode3 RGB555 little-endian','pixel_count':len(bitmap),'bitmap_bytes':len(raw),
             'bitmap_sha256':hashlib.sha256(raw).hexdigest(),'unique_rgb555_colours':len(set(bitmap)),
-            'palette_limit':48,'composition':'Native grail/stepped brass title above filthy roots and Drain masonry; quiet dynamic prompt well.'}
+            'palette_limit':48,'composition':'Native grail/stepped brass title above filthy roots and Drain masonry; quiet dark-water channel for dynamic prompts.'}
 
 def write_metadata(path,bitmap=None):Path(path).write_text(json.dumps(metadata(bitmap),indent=2)+'\n')
 
