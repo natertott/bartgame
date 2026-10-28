@@ -127,7 +127,7 @@ class Review:
                 'camera':[P.r16(c,P.sym('gCamX')),P.r16(c,P.sym('gCamY'))],
                 'hp':P.r16(c,P.sym('gPl')),'oam_count':P.r8(c,P.sym('gOamCount'))}
 
-    def record(self,name,frames=64,events=None,note='',expect=None):
+    def record(self,name,frames=64,events=None,note='',expect=None,heal=True):
         c=self.c;events=events or {};images=[];trace=[];held=set();directory=self.out/name;directory.mkdir(exist_ok=True)
         for tick in range(frames):
             for key,down in events.get(tick,[]):
@@ -135,7 +135,8 @@ class Review:
                 else:held.discard(key)
             c.clear_keys(*range(10))
             if held:c.set_keys(*(P.key(c,k) for k in held))
-            C.heal(c);c.run_frame();images.append(c.bg_video.to_pil().convert('RGB').copy());trace.append(self.state())
+            if heal:C.heal(c)
+            c.run_frame();images.append(c.bg_video.to_pil().convert('RGB').copy());trace.append(self.state())
         c.clear_keys(*range(10));selected=sorted({0,frames//4,frames//2,frames*3//4,frames-1})
         for tick in selected:images[tick].save(directory/f'frame-{tick:03}.png')
         images[0].save(self.out/(name+'.png'))
@@ -244,6 +245,20 @@ class Review:
         C.boss_fight(c)
         self.record('victory-screen',64,note='Actual sword fight and Grail collection reached the completion screen; healing/inventory fixture.',expect=lambda _:C.gstate(c)==6)
 
+    def death_return(self):
+        self.boot(0xB4A7);c=self.c;world=C.world(c);P.enter_forest(c)
+        found=None
+        for cell,desc in enumerate(world['cells']):
+            L.warp(c,cell,next(i for i,g in enumerate(desc['gate']) if g))
+            found=next((P.actor(c,i) for i in range(1,96) if P.actor(c,i)['kind']==2 and P.actor(c,i)['type']==0),None)
+            if found:break
+        if found is None:self.failures.append('natural contact enemy for death return');return
+        C.teleport(c,found['x'],found['y']+5);P.w16(c,P.sym('gPl'),2)
+        P.w8(c,P.sym('gActors')+28,0)
+        self.record('bloom-death-and-return',320,heal=False,
+                    note='Actual contact with a naturally spawned beetle; injured2HP and position are fixtures. The game performs death, return and Bloom dialogue.',
+                    expect=lambda trace:any(r['state_name']=='dead' for r in trace) and trace[-1]['area']==0)
+
 
 def actions(args,out):
     rows=[]
@@ -287,7 +302,7 @@ def main():
     ap.add_argument('--groups',default='scenes,interface,actors,actions,interactive,ending')
     args=ap.parse_args();base=Path(args.out);base.mkdir(parents=True,exist_ok=True);groups=args.groups.split(',')
     review=Review(SimpleNamespace(**{**vars(args),'out':str(base/'screens')}))
-    for group,method in (('scenes',review.scenes),('interface',review.interfaces),('actors',review.actors),('ending',review.ending)):
+    for group,method in (('scenes',review.scenes),('interface',review.interfaces),('actors',review.actors),('ending',review.ending),('death',review.death_return)):
         if group in groups:method()
     action_rows=actions(args,base/'actions') if 'actions' in groups else []
     if 'interactive' in groups:
