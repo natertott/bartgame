@@ -29,6 +29,9 @@ if '--rom' in args:
     i = args.index('--rom')
     ROM = args[i + 1]
     del args[i:i + 2]
+if '--map' in args:
+    i=args.index('--map');P.MAP=args[i+1];P._syms=None
+    del args[i:i+2]
 OUT = args[0]
 os.makedirs(OUT, exist_ok=True)
 shots = []
