@@ -1,0 +1,218 @@
+{
+  "Bloom14x22": {
+    "canvas": [
+      16,
+      24
+    ],
+    "visible_bounds": [
+      1,
+      0,
+      15,
+      22
+    ],
+    "visible_size": [
+      14,
+      22
+    ],
+    "inks_including_transparency": 11,
+    "palette": "hero"
+  },
+  "Bloomback": {
+    "canvas": [
+      16,
+      24
+    ],
+    "visible_bounds": [
+      1,
+      0,
+      15,
+      22
+    ],
+    "visible_size": [
+      14,
+      22
+    ],
+    "inks_including_transparency": 10,
+    "palette": "hero"
+  },
+  "key13x14": {
+    "canvas": [
+      16,
+      16
+    ],
+    "visible_bounds": [
+      1,
+      1,
+      14,
+      15
+    ],
+    "visible_size": [
+      13,
+      14
+    ],
+    "inks_including_transparency": 5,
+    "palette": "gold"
+  },
+  "coin10x12": {
+    "canvas": [
+      16,
+      16
+    ],
+    "visible_bounds": [
+      3,
+      2,
+      13,
+      14
+    ],
+    "visible_size": [
+      10,
+      12
+    ],
+    "inks_including_transparency": 5,
+    "palette": "gold"
+  },
+  "woodenchest": {
+    "canvas": [
+      32,
+      32
+    ],
+    "visible_bounds": [
+      6,
+      10,
+      26,
+      29
+    ],
+    "visible_size": [
+      20,
+      19
+    ],
+    "inks_including_transparency": 9,
+    "palette": "gold"
+  },
+  "relicchest": {
+    "canvas": [
+      32,
+      32
+    ],
+    "visible_bounds": [
+      6,
+      10,
+      26,
+      29
+    ],
+    "visible_size": [
+      20,
+      19
+    ],
+    "inks_including_transparency": 10,
+    "palette": "gold"
+  },
+  "tree": {
+    "canvas": [
+      32,
+      48
+    ],
+    "visible_bounds": [
+      0,
+      0,
+      32,
+      48
+    ],
+    "visible_size": [
+      32,
+      48
+    ],
+    "inks_including_transparency": 12,
+    "palette": "foliage"
+  },
+  "rottree": {
+    "canvas": [
+      32,
+      48
+    ],
+    "visible_bounds": [
+      0,
+      1,
+      32,
+      48
+    ],
+    "visible_size": [
+      32,
+      47
+    ],
+    "inks_including_transparency": 8,
+    "palette": "blight"
+  },
+  "hollow": {
+    "canvas": [
+      32,
+      48
+    ],
+    "visible_bounds": [
+      0,
+      0,
+      32,
+      46
+    ],
+    "visible_size": [
+      32,
+      46
+    ],
+    "inks_including_transparency": 9,
+    "palette": "gold"
+  },
+  "cave": {
+    "canvas": [
+      32,
+      48
+    ],
+    "visible_bounds": [
+      1,
+      3,
+      32,
+      45
+    ],
+    "visible_size": [
+      31,
+      42
+    ],
+    "inks_including_transparency": 8,
+    "palette": "stone"
+  },
+  "thicket": {
+    "canvas": [
+      32,
+      48
+    ],
+    "visible_bounds": [
+      0,
+      0,
+      32,
+      46
+    ],
+    "visible_size": [
+      32,
+      46
+    ],
+    "inks_including_transparency": 11,
+    "palette": "gold"
+  },
+  "plate": {
+    "canvas": [
+      16,
+      16
+    ],
+    "visible_bounds": [
+      0,
+      0,
+      16,
+      16
+    ],
+    "visible_size": [
+      16,
+      16
+    ],
+    "inks_including_transparency": 7,
+    "palette": "gold"
+  }
+}

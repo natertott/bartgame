@@ -5,11 +5,11 @@ outer repository also contains a Minish Cap decompilation; those legacy game
 assets and QuickStart documents are not the current standalone game's asset
 pipeline.
 
-The frozen pre-reboot ROM is `1 e66780`'s published build (game source
-`3 d3 f8 aa`), SHA256:
+The frozen pre-reboot ROM is `1e66780`'s published build (game source
+`3d3f8aa`), SHA256:
 
 ```text
-bbd08678 b1 e10 fb110 e562 a6374 b0242 cb8 e73 affbdd747 f033 fd0 ce99619 eee
+bbd08678b1e10fb110e562a6374b0242cb8e73affbdd747f033fd0ce99619eee
 ```
 
 Paired ROM, map and generated header were frozen under
