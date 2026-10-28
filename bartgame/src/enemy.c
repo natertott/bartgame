@@ -500,7 +500,7 @@ static void knight_draw_sword(Actor* e) {
     if(hflip)gx=15-gx;
     if(vflip)gy=15-gy;
     int sx=px+hand[f][0]-gx,sy=py+hand[f][1]-gy;
-    int priority=room_prop_priority(PX(e->x),PX(e->y),PX(e->z),e->w,e->h,e->prio);
+    int priority=room_prop_priority(PX(e->x),PX(e->y),PX(e->z),16,28,e->prio);
     int before=gOamCount;
     draw_sprite(sx, sy, SHEET_KSWORD, sKswordTile, frame, hflip, priority, sheets[SHEET_KSWORD].pal);
     if (vflip && gOamCount>before)

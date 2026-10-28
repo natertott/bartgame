@@ -338,6 +338,20 @@ void draw_sprite(int sx, int sy, int sheet, u16 tile, int frame, int hflip, int 
     o->attr2 = ATTR2_TILE(tile + frame * sh->frame_tiles) | ATTR2_PRIO(prio) | ATTR2_PAL(pal);
 }
 
+void actor_visual_size(const Actor* a,int* width,int* height) {
+    /* Canvas padding is not the character. Use a stable maximum action
+       silhouette so idle/walk pose changes cannot toggle terrain depth. */
+    if(a->kind==AK_PLAYER || a->kind==AK_NPC) {
+        *width=18;*height=24;
+    } else if(a->sheet==SHEET_BOSS) {
+        *width=32;*height=50;
+    } else if(a->sheet==SHEET_KNIGHT) {
+        *width=16;*height=28;
+    } else {
+        *width=a->w;*height=a->h;
+    }
+}
+
 void actor_draw(Actor* a) {
     if (a->flags & AF_HIDDEN)
         return;
@@ -345,7 +359,9 @@ void actor_draw(Actor* a) {
         return; /* hurt blink */
     int sx = PX(a->x) - a->w / 2 - gCamX;
     int sy = PX(a->y) - a->h - PX(a->z) - gCamY;
-    int prio=room_prop_priority(PX(a->x),PX(a->y),PX(a->z),a->w,a->h,a->prio);
+    int width,height;
+    actor_visual_size(a,&width,&height);
+    int prio=room_prop_priority(PX(a->x),PX(a->y),PX(a->z),width,height,a->prio);
     draw_sprite(sx, sy, a->sheet, a->tile, a->frame, a->hflip, prio, a->pal);
 }
 

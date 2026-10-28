@@ -83,8 +83,10 @@ static bool8 actor_in_front(const AmbientSite* site) {
         if(a->flags&AF_HIDDEN)continue;
         int px=PX(a->x),py=PX(a->y),z=PX(a->z);
         if(py<(site->ty+1)*16)continue;
-        if(site->x>=px-MIN(a->w/2,12) && site->x<px+MIN(a->w/2,12) &&
-           site->y>=py-z-MIN(a->h,32) && site->y<py-z)return TRUE;
+        int width,height;
+        actor_visual_size(a,&width,&height);
+        if(site->x>=px-width/2 && site->x<px+width/2 &&
+           site->y>=py-z-height && site->y<py-z)return TRUE;
     }
     return FALSE;
 }

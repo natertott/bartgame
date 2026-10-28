@@ -213,7 +213,7 @@ static void render_cell(int x, int y) {
    Explicit UI, flying-effect and background-shadow priorities stay intact. */
 int room_prop_priority(int px,int py,int z,int width,int height,int priority) {
     int x,y,front=0,behind=0;
-    int half=MIN(width/2,12), top=py-MIN(height,32)-z, bottom=py-z-1;
+    int half=MIN(width/2,16), top=py-MIN(height,64)-z, bottom=py-z-1;
     int x0=MAX(0,(px-half)/16),x1=MIN(gRoom.w-1,(px+half)/16);
     int y0=MAX(0,top/16),y1=MIN(gRoom.h-1,bottom/16);
     if(priority!=2)return priority;

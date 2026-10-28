@@ -963,7 +963,7 @@ static void draw_action(Actor* a, bool8 behind) {
 }
 
 static void draw_ground_shadow(Actor* a) {
-    if (!sShadowTile || a->z <= 0 || a->state == PS_FALL || a->state == PS_DEAD ||
+    if (!sShadowTile || a->state == PS_FALL || a->state == PS_DEAD || a->state == PS_SWALLOWED ||
         (a->flags & (AF_HIDDEN | AF_NOSHADOW)))
         return;
     int px = PX(a->x), py = PX(a->y);
@@ -983,7 +983,7 @@ void player_draw(void) {
     /* in front of a counter the hero is drawn over the overlay that
        hides the shopkeeper's legs (art/sw_hall.py) */
     a->prio = (room_type_px(PX(a->x), PX(a->y) - 1) == TT_FRONT) ? 1 : 2;
-    a->prio=room_prop_priority(PX(a->x),PX(a->y),PX(a->z),a->w,a->h,a->prio);
+    a->prio=room_prop_priority(PX(a->x),PX(a->y),PX(a->z),18,24,a->prio);
     switch (a->state) {
         case PS_ROLL: {
             int t = a->timer;
