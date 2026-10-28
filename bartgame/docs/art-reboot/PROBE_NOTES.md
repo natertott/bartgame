@@ -63,8 +63,10 @@ These use seeded real runs and ordinary buttons. Position, facing, inventory,
 healing and removal of unrelated enemies are disclosed review fixtures.
 Generated terrain, chest contents and mystery descriptors are not replaced.
 Controlled enemy contact used in special action tests is labelled. PNGs are
-exact 240×160 framebuffers; GIFs use nearest-neighbour 2× enlargement and retain
-the frames' colours. Filmstrips display chronological emulator frames.
+exact 240×160 framebuffers. GIFs use nearest-neighbour 2× enlargement; 166 of
+172 including the supplementary clip retain their exact colour union. Six
+clips exceed GIF's 256-colour limit and are quantized; their native PNGs remain
+exact. Filmstrips display chronological emulator frames.
 
 The action trace union reaches **99 of 101 Bloom source frames**. `jump_n` and
 `jump_e` are redrawn legacy descriptor entries that the current renderer does

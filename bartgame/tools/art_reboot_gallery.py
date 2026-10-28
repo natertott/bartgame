@@ -1,6 +1,6 @@
 """Publish frozen real-mGBA art-reboot evidence without painting gameplay.
 
-Native PNGs, capture GIFs, chronological filmstrips and reports are copied
+Native PNGs, capture GIFs, chronological filmstrips and JSON reports are copied
 byte-for-byte. Review boards add captions outside complete 2x nearest-neighbour
 framebuffers. The MP4 samples complete clips at their recorded timing; it is a
 lossy convenience, not the primary pixel evidence. Compiled sprite atlases are
@@ -297,7 +297,9 @@ def main():
     assert all(value['passed'] == value['total'] for value in interface_report['checks'].values())
     copy(args.interface / 'validation.json', actual / 'interface/validation.json')
     if (args.interface / 'menu.log').exists():
-        copy(args.interface / 'menu.log', actual / 'interface/menu.log')
+        # Preserve capture data exactly; normalize ancillary console whitespace.
+        text = (args.interface / 'menu.log').read_text()
+        (actual / 'interface/menu.log').write_text('\n'.join(line.rstrip() for line in text.splitlines()) + '\n')
     for path in sorted((args.interface / 'validation').glob('*.json')):
         copy(path, actual / 'interface/validation' / path.name)
     forest = [(actual / 'screens' / row['image'], row['name'].replace('forest-', '') + ' | seed ' + row['seed'])
@@ -346,7 +348,8 @@ def main():
                      'exact_palette_capture_gifs': sum(c['gif']['exact_palette'] for c in all_captures)},
           'palette_note': 'Original native PNG framebuffers are unchanged. GIFs are 2x nearest-neighbour with their original per-capture exact_palette/colour_count metadata. Combined comparison GIFs record any 256-colour quantization separately.',
           'fixture_note': index['method'], 'comparison_rom_sha256': compared['before_rom_sha256'],
-          'excluded': 'No ROM, linker map, generated C header, mockup or painted concept image is included as actual gameplay evidence.'}
+          'excluded': 'No ROM, linker map, generated C header, mockup or painted concept image is included as actual gameplay evidence.',
+          'console_log_note': 'Only ancillary console-log trailing whitespace is normalized; capture PNGs/GIFs/JSON reports remain unchanged.'}
     if not args.no_video:
         manifest['video'] = reel(actual, args.out / 'play-reel.mp4')
     roots = ('actual', 'comparisons', 'source-atlases')
