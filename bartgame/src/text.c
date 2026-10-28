@@ -543,7 +543,23 @@ static int hud_count(int eq) {
 
 static void vitals_line(int x0,int y0,int x1,int y1,int ink) {
     int x,y;
-    for(y=y0;y<=y1;y++)for(x=x0;x<=x1;x++)vwf_pixel(&sPurse,x,y,ink);
+    u32 pixels=(ink&15)*0x11111111u;
+    x0=MAX(0,x0);y0=MAX(0,y0);
+    x1=MIN(sPurse.tw*8-1,x1);y1=MIN(sPurse.th*8-1,y1);
+    /* A row of eight4bpp pixels is already one aligned word. Repainting
+       the large panel through thousands of individual vwf_pixel calls
+       delayed damage's replacement OAM; write complete spans directly. */
+    for(y=y0;y<=y1;y++)for(x=x0;x<=x1;) {
+        int first=x&7,count=MIN(8-first,x1-x+1);
+        u32* dst=sPurse.px+((y>>3)*sPurse.tw+(x>>3))*8+(y&7);
+        if(count==8) {
+            *dst=pixels;
+        } else {
+            u32 mask=((1u<<(count*4))-1)<<(first*4);
+            *dst=(*dst&~mask)|(pixels&mask);
+        }
+        x+=count;
+    }
 }
 
 static void vitals_heart(int x,int y,int fill) {
