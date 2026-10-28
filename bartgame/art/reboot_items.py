@@ -332,6 +332,7 @@ def held_item(kind,facing='e',phase=0):
     elif kind=='lamp':
         # Ring is the hand anchor; a tiny caged light hangs below it.
         d.ellipse((gx-1,gy-1,gx+1,gy+1),outline=9)
+        d.point((gx,gy),fill=8)
         d.line([(gx,gy+1),(gx,gy+2)],fill=8)
         d.rectangle((gx-3,gy+2,gx+3,gy+8),fill=1)
         d.line([(gx-3,gy+2),(gx+3,gy+2)],fill=10)
