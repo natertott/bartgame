@@ -294,7 +294,12 @@ def main():
         interface_counts[group] = count
     interface_report = read(args.interface / 'validation.json')
     assert interface_report['rom_sha256'] == sha
+    assert all(value['passed'] == value['total'] for value in interface_report['checks'].values())
     copy(args.interface / 'validation.json', actual / 'interface/validation.json')
+    if (args.interface / 'menu.log').exists():
+        copy(args.interface / 'menu.log', actual / 'interface/menu.log')
+    for path in sorted((args.interface / 'validation').glob('*.json')):
+        copy(path, actual / 'interface/validation' / path.name)
     forest = [(actual / 'screens' / row['image'], row['name'].replace('forest-', '') + ' | seed ' + row['seed'])
               for row in screens['captures'] if row['name'].startswith('forest-cell-')]
     board(forest, args.out / 'forest-stages.png', '25 actual forest views / one procedural seed / stages 0 through 3', 5)
