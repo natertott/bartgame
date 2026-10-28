@@ -16,8 +16,15 @@ BANK_ALIASES={'hero':'hero','bugs':'foliage','blight':'blight','iron':'stone',
               'gatekeeper':'stone'}
 HANDS={'n':(5,-17),'e':(7,-12),'s':(3,-9),'w':(-8,-12)}
 CARRY_HANDS=((-5,-24),(5,-24))
-SWORD_BOUNDS={'n':(-14,-32,13,-12),'e':(4,-22,22,2),
-              's':(-14,-6,13,12),'w':(-23,-22,-5,2)}
+SWORD_ORIGINS={'n':(-10,-33),'e':(-2,-28),'s':(-12,-16),'w':(-30,-28)}
+# Every pose is the same14px weapon rotating about the hand. Integer vectors
+# stay within13.6–14px, including recovery; the blade never grows into a fan.
+SWORD_VECTORS={
+    'n':((14,0),(12,-7),(0,-14),(-12,-7),(-13,4)),
+    'e':((0,-14),(7,-12),(14,0),(7,12),(-4,13)),
+    's':((-14,0),(-12,7),(0,14),(12,7),(13,-4)),
+    'w':((0,-14),(-7,-12),(-14,0),(-7,12),(4,13)),
+}
 
 
 def blank(w,h):return Image.new('P',(w,h),0)
@@ -206,57 +213,91 @@ def hero_frame(name):
     raise ValueError('Unhandled hero pose '+name)
 
 
-def sword_frame(face,phase):
+def _sword_parts(face,phase):
+    """Paint a blade and its local damage mask from the same native marks.
+
+    The harmless grip/guard and proximal shaft are excluded from damage.
+    Only a short fading trail near the blade tip is included: there is no
+    full range contour, hemisphere, cage, closed outline or filled fan.
+    """
+    assert face in SWORD_ORIGINS and 0<=phase<5
     im=blank(32,32);d=ImageDraw.Draw(im)
-    bounds=SWORD_BOUNDS[face];x0,y0,x1,y1=bounds
-    origin=(x0,y0-8 if face=='s' else y0)
-    w=x1-x0;h=y1-origin[1]
+    damage=Image.new('1',(32,32))
+    cutting=blank(32,32);cd=ImageDraw.Draw(cutting)
+    trail=blank(32,32);td=ImageDraw.Draw(trail)
+    trailmask=Image.new('1',(32,32))
+    origin=SWORD_ORIGINS[face]
     grip=(HANDS[face][0]-origin[0],HANDS[face][1]-origin[1])
-    # A narrow, low-value sweep establishes reach without an opaque fan.
+    vx,vy=SWORD_VECTORS[face][phase];length=math.hypot(vx,vy)
+    ux,uy=vx/length,vy/length
+    def along(distance):return (round(grip[0]+ux*distance),round(grip[1]+uy*distance))
+    tip=(grip[0]+vx,grip[1]+vy)
+    # A three-pixel distal blade is both visible steel and the cutting mass.
+    # The first4px beyond the grasp are a harmless neck, not extra reach.
+    cd.line([along(4),tip],fill=1,width=3)
+    cd.line([along(4),tip],fill=7,width=1)
+    cd.point(tip,fill=15)
     if 1<=phase<=3:
-        if face=='n':d.arc((0,0,w,h*2),180,360,fill=4)
-        elif face=='s':d.arc((0,8-(h-8),w,h),0,180,fill=4)
-        elif face=='e':d.arc((-w,0,w,h),270,450,fill=4)
-        else:d.arc((0,0,w*2,h),90,270,fill=4)
-    arc=im.copy()
-    tips={
-        'n':[(27,18),(27,3),(13,0),(0,9),(3,19)],
-        'e':[(2,0),(16,0),(18,11),(16,24),(0,23)],
-        's':[(0,10),(0,20),(13,26),(27,20),(27,9)],
-        'w':[(16,0),(2,0),(0,11),(2,24),(18,23)],
-    }
-    tip=tips[face][phase]
-    if 1<=phase<=3:
-        if face in ('n','s'):
-            start=max(0,tip[0]-4);end=min(w,tip[0]+4)
-            d.line([(start,tip[1]),(end,tip[1])],fill=8)
-        else:
-            start=max(0,tip[1]-4);end=min(h,tip[1]+4)
-            d.line([(tip[0],start),(tip[0],end)],fill=8)
-        arc=im.copy()
-    d.line([grip,tip],fill=1,width=3)
-    d.line([grip,tip],fill=7,width=1)
-    # A cream cutting point and simple brass grip distinguish blade and hilt.
-    d.point(tip,fill=15)
-    gx,gy=grip;dx=tip[0]-gx;dy=tip[1]-gy
-    guard=((gx-2,gy),(gx+2,gy)) if abs(dy)>=abs(dx) else ((gx,gy-2),(gx,gy+2))
-    d.line(guard,fill=13);d.point(grip,fill=10)
+        angle=math.atan2(vy,vx)
+        previous_side=-1 if face=='e' else 1
+        points=[]
+        for degrees,radius in ((20,12),(10,13),(0,length)):
+            a=angle+previous_side*math.radians(degrees)
+            points.append((round(grip[0]+math.cos(a)*radius),
+                           round(grip[1]+math.sin(a)*radius)))
+        td.line(points[:2],fill=5);td.line(points[1:],fill=8)
+        trailmask.putdata([bool(value) for value in trail.tobytes()])
+        stamp(im,trail,(0,0))
+    # Blade outline, edge, bright point and understated brass crossguard.
+    d.line([along(2),along(4)],fill=1,width=3)
+    d.line([along(3),along(4)],fill=7,width=1)
+    # The cutting edge catches upper-left light, confined to its own mask.
+    nx,ny=(-uy,ux)
+    if nx+ny>0:nx,ny=-nx,-ny
+    for distance in range(4,13):
+        x,y=along(distance);p=(x+round(nx),y+round(ny))
+        if 0<=p[0]<32 and 0<=p[1]<32 and cutting.getpixel(p):cd.point(p,fill=8)
+    stamp(im,cutting,(0,0))
+    # Mask derives from the exact painted cutting and trail pixels. Drawing
+    # a second Bresenham line could add an invisible corner at a slope join.
+    damage.putdata([bool(a or b) for a,b in zip(cutting.tobytes(),trail.tobytes())])
+    guard_center=along(1)
+    guard=[(round(guard_center[0]+nx*s),round(guard_center[1]+ny*s)) for s in (-2,2)]
+    d.line(guard,fill=13)
+    d.line([along(-2),grip],fill=10);d.point(along(-2),fill=13)
     if face=='n':
-        head=hero_frame('atk_n')
-        for y in range(10,24):
+        body=hero_frame('atk_n1' if phase==0 else 'atk_n3' if phase>=3 else 'atk_n')
+        for y in range(32):
             for x in range(32):
-                hx=x+origin[0]+16
-                if 0<=hx<32 and head.getpixel((hx,y)):
-                    im.putpixel((x,y),arc.getpixel((x,y)))
-    # Pillow centres a three-pixel steel outline around its endpoint. Trim
-    # that stroke after all compositing so its outer pixel cannot promise
-    # reach beyond the shared inclusive damage rectangle. South's upper
-    # eight rows remain available for the harmless grip above the cut.
-    for y in range(32):
-        for x in range(32):
-            if x>w or y>h:
-                im.putpixel((x,y),0)
-    return im
+                hx=x+origin[0]+16;hy=y+origin[1]+32
+                if 0<=hx<32 and 10<=hy<24 and body.getpixel((hx,hy)):
+                    # The near flower occludes the far shaft. A small distal
+                    # trail remains, but no hidden shaft enlarges the box.
+                    im.putpixel((x,y),trail.getpixel((x,y)))
+                    damage.putpixel((x,y),trailmask.getpixel((x,y)))
+    return im,damage
+
+
+def sword_frame(face,phase):return _sword_parts(face,phase)[0]
+
+
+def sword_damage_mask(face,phase):return _sword_parts(face,phase)[1]
+
+
+def sword_geometry():
+    """Shared fixed origins and per-pose inclusive hit boxes for the engine."""
+    origins=[];bounds=[]
+    for face in ('n','e','s','w'):
+        origin=SWORD_ORIGINS[face];origins.append(list(origin));poses=[]
+        for phase in range(5):
+            image,mask=_sword_parts(face,phase);box=mask.getbbox()
+            assert box is not None,(face,phase,'empty distal blade')
+            assert all(not mask.getpixel((x,y)) or image.getpixel((x,y))
+                       for y in range(32) for x in range(32)),(face,phase,'invisible damage')
+            poses.append([origin[0]+box[0],origin[1]+box[1],
+                          origin[0]+box[2]-1,origin[1]+box[3]-1])
+        bounds.append(poses)
+    return {'origins':origins,'bounds':bounds}
 
 
 def cape_frame(face,phase):
@@ -742,12 +783,12 @@ def motion_preview(path='/workspace/setup/reboot-hero-motion.gif',background='gr
                     p=min(4,(tick%20)//4)
                     name='atk_'+nativeface+('1' if p==0 else '3' if p>=3 else '')
                     body=hero_frame(name)
-                    x0,y0,_,_=SWORD_BOUNDS[face]
+                    x0,y0=SWORD_ORIGINS[face]
                     blade=C.rgba(sword_frame(face,p),C.PALETTES['stone'])
                     # Same front OAM compositing as production; the north
                     # shaft mask is authored from the actual posed head.
                     _source_actor(body,face,feet,scene)
-                    scene.alpha_composite(blade,(feet[0]+x0,feet[1]+y0-(8 if face=='s' else 0)))
+                    scene.alpha_composite(blade,(feet[0]+x0,feet[1]+y0))
                     body=None
                 elif action=='guard':
                     body=hero_frame('guard_'+nativeface+('1' if phase==1 else '2' if phase==3 else ''))
