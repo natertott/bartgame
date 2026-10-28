@@ -27,6 +27,11 @@ SHAPES={(8,8),(16,16),(32,32),(64,64),(16,8),(32,8),(32,16),(64,32),
 OAM_DIMS={0:((8,8),(16,16),(32,32),(64,64)),
           1:((16,8),(32,8),(32,16),(64,32)),
           2:((8,16),(8,32),(16,32),(32,64))}
+# Explicit art-direction exceptions: these simple glyphs/rules were freshly
+# authored in the native generators, but retain the same irreducible geometry.
+# Do not hide them inside a broad "all pixels changed" claim.
+SHARED_LETTER_PRIMITIVES=set('cnorsuvxz')
+SHARED_UI_PRIMITIVES={'UI_SLOT_L','UI_ROW_L','UI_BUB_JOIN','UI_RULE'}
 checks=[]
 
 
@@ -170,18 +175,30 @@ def static_checks(args,old,new):
     check('contracts','all 97 native font characters retained',new.defs['VWF_COUNT']==97 and new.defs['VWF_HEIGHT']==9)
     # Shared punctuation primitives are legitimate; report them rather than
     # pretending a dot was redesigned merely because its palette changed.
-    glyph_exceptions=[];changed_letters=0
+    glyph_exceptions=[];shared_letters=[];changed_letters=0
     for i in range(97):
         a=old.read(old.symbols['vwf_bits']+i*9,9);b=new.read(new.symbols['vwf_bits']+i*9,9)
         if a==b:
-            ch=chr(i+32);allowed=not ch.isalnum()
-            check('font_redraw','glyph '+repr(ch),allowed,'shared punctuation/space primitive' if allowed else 'unchanged letter/number')
-            if allowed:glyph_exceptions.append(i+32)
+            ch=chr(i+32);shared=ch in SHARED_LETTER_PRIMITIVES;allowed=not ch.isalnum() or shared
+            check('font_redraw','glyph '+repr(ch),allowed,
+                  'explicit shared five-pixel letter primitive' if shared else 'shared punctuation/space/symbol primitive' if allowed else 'unchanged letter/number')
+            if shared:shared_letters.append(ch)
+            elif allowed:glyph_exceptions.append(i+32)
         else:changed_letters+=1;check('font_redraw','glyph '+repr(chr(i+32)),True)
-    details['font']={'changed_glyphs':changed_letters,'shared_punctuation_or_space':glyph_exceptions}
+    details['font']={'changed_glyphs':changed_letters,'shared_letter_primitives':shared_letters,
+                     'shared_punctuation_space_or_symbol':glyph_exceptions}
+    details['shared_ui_primitives']=[]
     for name in ('ui_tiles','hud_tiles'):
         count=new.defs['UI_TILE_COUNT' if name=='ui_tiles' else 'HUD_TILE_COUNT']
-        check('pixel_redraw',name+' complete native atlas differs',old.named(name,count*32)!=new.named(name,count*32))
+        before=old.named(name,count*32);after=new.named(name,count*32)
+        for index in range(count):
+            a,b=before[index*32:(index+1)*32],after[index*32:(index+1)*32]
+            names={key for key,value in new.defs.items() if key.startswith('UI_') and value==index}
+            shared=name=='ui_tiles' and bool(names&SHARED_UI_PRIMITIVES)
+            same=a==b;allowed=same and (primitive(b,8,8) or shared)
+            check('pixel_redraw',name+' native drawing '+str(index),not same or allowed,
+                  'explicit straight edge/join/rule primitive' if allowed and shared else 'explicit uniform fill/blank exception' if allowed else None)
+            if same and shared:details['shared_ui_primitives'].extend(sorted(names&SHARED_UI_PRIMITIVES))
     title=new.named('title_bitmap',240*160*2);colors=set(struct.unpack('<38400H',title))
     check('native_title','title remains 240x160 RGB555',new.defs['TITLE_BITMAP_PIXELS']==38400 and max(colors)<32768)
     check('native_title','title uses at most 48 deliberate native colours',len(colors)<=48,len(colors))
@@ -251,6 +268,32 @@ def runtime_checks(args,new):
     B.checks.clear();attack_c=B.boot(P.ROM);B.floor_fixture(attack_c,defs)
     _,traces=B.timing_and_render(attack_c,defs);B.boundaries(attack_c)
     for row in B.checks:check('runtime_sword',row['name'],row['passed'],row.get('detail'))
+    arrow_rows=[]
+    hands=((5,-17),(7,-12),(3,-9),(-8,-12))
+    for f,d in enumerate(('n','e','s','w')):
+        B.reset_player(c,256,230,f,equipment=(0,6,0));P.run(c,6)
+        before=P.player_pos(c);c.set_keys(P.key(c,'B'));c.run_frame();c.clear_keys(*range(10))
+        first=None
+        for tick in range(8):
+            c.run_frame()
+            for i in range(1,96):
+                at=P.sym('gActors')+i*64
+                if P.r8(c,at)!=3 or P.r8(c,at+1)!=3:continue
+                sid=P.r8(c,at+36);source_frame=P.r8(c,at+37);sh=B.sheet_metadata(c,sid)
+                tile=(P.r16(c,at+44)&65535)+source_frame*sh['frame_tiles']
+                shot=next((o for o in B.oam(c) if o['tile']==tile and o['shape']==sh['shape'] and o['size']==sh['size']),None)
+                if shot is None:continue
+                nock=(8,12) if f==0 else (8,3) if f==2 else (3,8)
+                if shot['flip']:nock=(sh['width']-1-nock[0],nock[1])
+                anchor=[shot['x']+nock[0]+P.r16(c,P.sym('gCamX')),
+                        shot['y']+nock[1]+P.r16(c,P.sym('gCamY'))]
+                want=[before[0]+hands[f][0],before[1]+hands[f][1]]
+                first={'direction':d,'tick':tick,'nock_world':anchor,'hand_world':want,'oam':shot}
+                check('runtime_grips',d+' first visible arrow nock meets the held bow',anchor==want,first)
+                break
+            if first:break
+        check('runtime_grips',d+' released arrow is actually observed',first is not None)
+        arrow_rows.append(first)
     # Inspect naturally spawned pocket hoards and relics. The sheet's ten
     # source frames are checked above; these prove the real spawn/draw path
     # uses that16px descriptor instead of a manually fabricated actor.
@@ -320,7 +363,7 @@ def runtime_checks(args,new):
     check('runtime_glitter','sparkle animation is actually visible',any(t['visible'] for t in glitter_trace))
     check('runtime_glitter','sparkles do not consume logical actor slots',all(P.r8(c,P.sym('gActors')+i*64)==0 for i in range(1,96)))
     check('runtime_glitter','actual OAM stays inside the hardware limit',all(t['oam_count']<=128 for t in glitter_trace))
-    return {'directions':shapes,'attack_traces':traces,'natural_pickups':pickup_rows,'hud_entries':hud,'obj_next_tile':next_tile,
+    return {'directions':shapes,'attack_traces':traces,'first_arrow_grips':arrow_rows,'natural_pickups':pickup_rows,'hud_entries':hud,'obj_next_tile':next_tile,
             'ambient_glitter':glitter_trace,
             'fixture_note':'Direction/range/pickup checks use an isolated disclosed physical-floor/actor fixture. No such images are published as generated gameplay.'}
 
