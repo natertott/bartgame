@@ -326,7 +326,7 @@ Actor* fx_spawn(int type, int px, int py) {
         case FX_FIREFLY:
             a->frame = F_FX_FIREFLY1;
             a->z = Q16(10);
-            a->prio = 0;
+            a->prio = 1; /* World effects never share the HUD's priority. */
             break;
         case FX_MOUTH:
             /* 32x32, on the ground under the hero's feet, drawn after him

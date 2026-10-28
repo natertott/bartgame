@@ -110,15 +110,8 @@ static void spawn_cell_objects(void) {
     }
     if (gSpots.has_relic)
         pickup_spawn(PK_RELIC, gSpots.relic.x * 16 + 8, gSpots.relic.y * 16 + 12);
-    /* fireflies over the living rooms, a few, each on its own loop */
-    if (c->stage < 3 && c->arch != ARCH_ARENA) {
-        for (i = 0; i < 6; i++) {
-            u32 h = hash32(gWorld.seed, gGame.cell * 97 + i);
-            Actor* f = fx_spawn(FX_FIREFLY, 32 + h % (room_px_w() - 64), 40 + (h >> 8) % (room_px_h() - 72));
-            if (f)
-                f->v[0] = (h >> 16) & 31;
-        }
-    }
+    /* Reflections are surface-attached ambient draws, not wandering actors
+       that can float over a HUD panel or resemble a loose item. */
     /* the alcove's hoard: gilt that waits behind its bush or boulder */
     if (gSpots.has_treasure && !(c->opened & CELL_LOOTED)) {
         Actor* a = pickup_spawn(PK_GILT_BIG, gSpots.treasure.x * 16 + 8, gSpots.treasure.y * 16 + 12);
