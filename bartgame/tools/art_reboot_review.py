@@ -4,6 +4,7 @@ Seeds, room navigation, inventory, facing/position and cleared unrelated actors
 are fixtures. Generated terrain and mystery descriptors are not modified.
 Ordinary inputs animate Bloom, use entrances/items, open menus and finish the
 Heart fight. Exact240x160 frames accompany nearest-neighbour2x GIFs.
+Controlled ordinary enemy-contact fixtures are labelled in action reports.
 """
 import argparse
 import hashlib
@@ -299,7 +300,7 @@ def main():
     ap.add_argument('--rom',default=P.ROM);ap.add_argument('--map',default=P.MAP)
     ap.add_argument('--assets-header',default=str(Path(P.ROOT)/'build/gen/assets.h'))
     ap.add_argument('--seed',default='0xB4A7')
-    ap.add_argument('--groups',default='scenes,interface,actors,actions,interactive,ending')
+    ap.add_argument('--groups',default='scenes,interface,actors,actions,interactive,ending,death')
     args=ap.parse_args();base=Path(args.out);base.mkdir(parents=True,exist_ok=True);groups=args.groups.split(',')
     review=Review(SimpleNamespace(**{**vars(args),'out':str(base/'screens')}))
     for group,method in (('scenes',review.scenes),('interface',review.interfaces),('actors',review.actors),('ending',review.ending),('death',review.death_return)):
