@@ -16,6 +16,7 @@ palette index 0-F, with '.' also meaning 0 (transparent).
 
     python3 tools/build_assets.py build/gen
 """
+import json
 import os
 import sys
 
@@ -208,6 +209,8 @@ c.append(c_array_u8('metatile_coll', mt_coll))
 h.append('extern const u8 metatile_coll[];')
 c.append(c_array_u8('metatile_prop', [int(bool(mt.get('prop'))) for mt in tiles.METATILES]))
 h.append('extern const u8 metatile_prop[];')
+c.append(c_array_u8('metatile_glitter', [int(bool(mt.get('glitter'))) for mt in tiles.METATILES]))
+h.append('extern const u8 metatile_glitter[];')
 h.append('typedef struct { u16 tile; u8 frames; u8 speed; const u16* data; } TileAnim;')
 h.append('typedef struct { const u16* tiles; u16 tile_count; const u16* map; const TileAnim* anims; u8 anim_count; const u16* pals; u8 pal_count; } Tileset;')
 set_rows = []
@@ -455,4 +458,20 @@ h.append('extern const u16 sin_table_u[];\n#define sin_table ((const s16*)sin_ta
 h.append('#endif')
 open(os.path.join(OUT, 'assets.c'), 'w').write('\n'.join(c) + '\n')
 open(os.path.join(OUT, 'assets.h'), 'w').write('\n'.join(h) + '\n')
+coverage = {
+    'schema': 1,
+    'method': 'Native generators; contract metadata supplies identifiers only, never old pixels.',
+    'tiles': tiles.COVERAGE,
+    'sprites': sprites.COVERAGE,
+    'interface': [
+        {'family': 'ui_kit', 'owner': 'reboot_ui', 'elements': list(ui_kit.TILES)},
+        {'family': 'hud', 'owner': 'reboot_ui', 'elements': list(ui_kit.HUD_TILES)},
+        {'family': 'font', 'owner': 'reboot_ui', 'elements': list(range(VWF_FIRST, VWF_LAST + 1))},
+        {'family': 'portraits', 'owner': 'reboot_ui', 'elements': list(sprites.SHEETS[next(i for i, s in enumerate(sprites.SHEETS) if s['name'] == 'face')]['frames'])},
+    ],
+    'title': title.metadata(title_bitmap),
+}
+with open(os.path.join(OUT, 'art-reboot-coverage.json'), 'w') as report:
+    json.dump(coverage, report, indent=2)
+    report.write('\n')
 print('wrote', OUT)

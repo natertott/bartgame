@@ -34,7 +34,9 @@ SRC_C     := $(filter-out %_iwram.c,$(wildcard src/*.c))
 SRC_IWRAM := $(wildcard src/*_iwram.c)
 SRC_S     := $(wildcard src/*.s)
 GEN_C     := $(GEN)/assets.c
-ART       := $(wildcard art/*.py) tools/build_assets.py tools/import_tiles.py tools/pack_art.py art/ref/title-reference.jpg art/ref/items-reference.jpg art/ref/shields-reference.jpg art/ref/blight-reference.jpg art/ref/tile_art/blight.webp art/pack/pack.json art/tile_art/tiles.json $(wildcard art/pack/*.png) $(wildcard art/pack/tiles/*.png)
+ART       := $(wildcard art/reboot_*.py) art/reboot_contracts.json tools/build_assets.py \
+             art/palettes.py art/tiles.py art/sprites.py art/rooms.py art/ui_kit.py \
+             art/ui_font.py art/faces.py art/title.py art/sw_folk.py
 
 OBJS := $(patsubst src/%.c,$(BUILD)/%.o,$(SRC_C)) \
         $(patsubst src/%.c,$(BUILD)/%.o,$(SRC_IWRAM)) \
