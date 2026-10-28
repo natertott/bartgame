@@ -41,23 +41,24 @@ def spark(im,x,y,phase=0,white=15):
 
 
 def ground(variant=0,kind='grass'):
+    # Common floors must survive repetition over an entire room. Larger
+    # stains belong to rare, explicitly named variants, never this base.
     if kind=='rot':
-        im,d=canvas(9)
-        if variant%3==0:d.polygon([(0,5),(5,2),(9,4),(12,10),(7,13),(0,11)],fill=10)
-        if variant%3==1:d.line([(1,10),(6,8),(11,9)],fill=8)
-        if variant%3==2:d.line([(8,3),(13,4),(15,7)],fill=11)
+        im,d=canvas(10)
+        if variant%3==0:d.line([(3,11),(5,11)],fill=9)
+        elif variant%3==1:d.line([(11,4),(12,4)],fill=11)
+        else:d.line([(7,8),(8,9)],fill=9)
         return im
     if kind=='blight':
-        im,d=canvas(2)
-        if variant%3==0:d.polygon([(0,5),(5,2),(10,4),(13,9),(8,12),(0,10)],fill=3)
-        if variant%3==1:d.line([(1,11),(6,9),(11,10)],fill=1)
-        if variant%3==2:d.line([(9,3),(13,4),(15,7)],fill=3)
+        im,d=canvas(4)
+        if variant%3==0:d.line([(3,11),(5,11)],fill=3)
+        elif variant%3==1:d.line([(11,4),(12,4)],fill=5)
+        else:d.line([(7,8),(8,9)],fill=3)
         return im
     im,d=canvas(4)
-    if variant%3==0:d.polygon([(0,11),(4,9),(9,10),(11,15),(0,15)],fill=3)
-    elif variant%3==1:d.line([(2,3),(4,3),(5,4)],fill=5)
-    else:d.line([(10,10),(13,10),(14,11)],fill=3)
-    if variant%7==5:d.line([(3,13),(4,11),(5,13)],fill=6)
+    if variant%3==0:d.line([(3,11),(5,11)],fill=3)
+    elif variant%3==1:d.line([(11,4),(12,4)],fill=5)
+    else:d.line([(7,8),(8,9)],fill=3)
     return im
 
 
@@ -101,11 +102,23 @@ def grass_edge(mask=0,corners=0,kind='verge'):
 
 def rot_edge(sides=0,corners=0,variant=0):
     im=ground(variant,'rot');d=ImageDraw.Draw(im)
-    # A shared bank carries exact living-grass and wine-soil inks together.
-    for bit,pts in [(1,[(0,0),(15,0),(15,3),(12,2),(9,4),(6,2),(3,4),(0,3)]),(2,[(15,0),(15,15),(12,15),(13,12),(11,9),(13,6),(11,3),(12,0)]),(4,[(0,15),(15,15),(15,12),(11,13),(8,11),(5,13),(2,11),(0,12)]),(8,[(0,0),(0,15),(3,15),(2,11),(4,8),(2,5),(4,2),(3,0)])]:
-        if sides&bit:d.polygon(pts,fill=3)
-    for bit,pts in [(1,[(0,0),(6,0),(4,3),(3,4),(0,6)]),(2,[(15,0),(9,0),(11,3),(12,4),(15,6)]),(4,[(15,15),(9,15),(11,12),(12,11),(15,9)]),(8,[(0,15),(6,15),(4,12),(3,11),(0,9)])]:
-        if corners&bit:d.polygon(pts,fill=3)
+    # Shared RGB555 inks match the surrounding grass and deeper soil exactly.
+    # A staggered two-to-four-pixel living verge is a transition, not a large
+    # diagonal wedge pasted into every common floor tile.
+    depth=[2,2,3,4,3,2,2,3,2,1,2,3,3,2,2,3]
+    for y in range(16):
+        for x in range(16):
+            green=False;fringe=False
+            for bit,distance,along in [(1,y,x),(2,15-x,y),(4,15-y,x),(8,x,y)]:
+                if not sides&bit:continue
+                limit=depth[along]
+                if distance<limit:green=True
+                elif distance==limit and along%4==1:fringe=True
+            if green:im.putpixel((x,y),3)
+            elif fringe:im.putpixel((x,y),5)
+    corner_shape=[(0,0),(5,0),(5,1),(4,1),(4,3),(2,3),(2,4),(0,4)]
+    for bit,flipx,flipy in [(1,False,False),(2,True,False),(4,True,True),(8,False,True)]:
+        if corners&bit:d.polygon([(15-x if flipx else x,15-y if flipy else y) for x,y in corner_shape],fill=3)
     return im
 
 
@@ -118,9 +131,11 @@ def canopy(variant=0,face=None,blighted=False,phase=0):
         d.line([(x+4,y+2),(x+w-4,y+2)],fill=5)
         if (x+y+variant)%3==0:d.point((x+4,y+2),fill=6)
     if blighted:
-        d.line([(0,13),(6,9),(8,2)],fill=1,width=3);d.line([(0,13),(6,9),(8,2)],fill=8)
-        d.line([(10,14),(12,10),(15,8)],fill=9)
-        if variant%3==1:d.ellipse((9,3,12,7),fill=12);d.point((10,4),fill=14)
+        # Continuous dark mass with local wet knots. Repeating an edge-to-
+        # edge diagonal here makes the entire procedural wall a wire cage.
+        knots=[[(3,10),(5,8),(6,9)],[(9,4),(11,5),(11,7)],[(5,12),(8,12),(9,10)]]
+        d.line(knots[variant%3],fill=8)
+        if variant%3==2:d.point((8,12),fill=9)
     if face=='s':
         d.rectangle((0,12,15,15),fill=1)
         d.line([(3,12),(3,15)],fill=9);d.line([(12,11),(12,15)],fill=8)
@@ -323,14 +338,18 @@ def spring(phase=0):
 
 def myst_floor(style='cave',variant=0,edge=0):
     if style=='thicket':return ground(variant)
-    im,d=canvas(3 if style=='cave' else 8)
+    im,d=canvas(3 if style=='cave' else 9)
     if style=='cave':
-        d.line([(2,11),(6,10),(10,11)],fill=2)
-        if variant:d.line([(10,3),(13,4),(15,7)],fill=4)
+        # A quiet stone chip; no repeated curved mark that reads as wallpaper.
+        d.line([(4,12),(6,12)],fill=2)
+        if variant:d.line([(11,4),(12,4)],fill=4)
     else:
-        d.line([(0,5),(5,4),(10,6),(15,5)],fill=9);d.line([(2,12),(7,11),(12,12)],fill=7)
+        # Foliate bank indices2..7 are green; wooden floor grain deliberately
+        # stays in the bark ramp8..12 and occupies only a few native pixels.
+        d.line([(5,11),(7,11)],fill=8)
+        if variant:d.line([(11,4),(13,4)],fill=10)
     for bit,pts in [(1,[(0,0),(15,0),(15,2),(0,2)]),(2,[(13,0),(15,0),(15,15),(13,15)]),(4,[(0,13),(15,13),(15,15),(0,15)]),(8,[(0,0),(2,0),(2,15),(0,15)])]:
-        if edge&bit:d.polygon(pts,fill=2 if style=='cave' else 7)
+        if edge&bit:d.polygon(pts,fill=2 if style=='cave' else 8)
     return im
 
 
@@ -780,10 +799,10 @@ def paint(name,phase=0):
     if name in ('moss_blight','moss_blight2'):
         return rot_edge(15 if name=='moss_blight' else 11),'decay_mix','early-decay-stain',False
     if name.startswith('forest_rot'):
-        n=int(name[10:]);im=rot_edge(0,0,n);d=ImageDraw.Draw(im)
-        if n&1:d.polygon([(0,0),(7,0),(4,3),(0,5)],fill=3)
-        if n&2:d.polygon([(15,15),(9,15),(12,12),(15,10)],fill=3)
-        return im,'decay_mix','mixed-decay-earth',False
+        n=int(name[10:]);im=ground(n,'rot');d=ImageDraw.Draw(im)
+        if n==6:d.line([(10,9),(11,8),(12,9)],fill=5)
+        elif n==7:d.line([(3,5),(4,6)],fill=12)
+        return im,'decay_mix','quiet-mixed-decay-earth',False
     if name.startswith('blight_ground'):
         im=ground(int(name[-1]),'rot')
         if name.endswith('2'):
@@ -791,13 +810,18 @@ def paint(name,phase=0):
         return im,'decay_mix','stained-earth',name.endswith('2')
     if name in ('blight_floor','blight_floor2','blight_vein') or name.startswith('forest_blight_vein'):
         im=ground(0,'blight');d=ImageDraw.Draw(im)
-        if name!='blight_floor':
-            n=int(name[-1]) if name.startswith('forest_blight_vein') else 0
-            pts=[(0,11),(4,9),(6,5),(11,3),(15,4)]
-            d.line(pts,fill=1,width=2);d.line([(x,y+1) for x,y in pts],fill=8)
-            if name!='blight_floor2':d.line([(5,9),(8,11),(13,10)],fill=12)
-            d.point((6+n%3,6),fill=12+phase%2)
-        return im,'blight','deep-earth-or-exposed-vein',name!='blight_floor'
+        n=int(name[-1]) if name.startswith('forest_blight_vein') else 0
+        if name=='blight_floor2':
+            d.line([(9,8),(11,8),(12,9)],fill=3)
+            if phase&1:d.point((11,8),fill=8)
+        elif name!='blight_floor':
+            # Eight short, different scars have no edge-to-edge lattice.
+            layouts=[[(2,10),(5,9),(6,6)],[(8,2),(8,6),(11,8)],[(2,5),(5,6),(7,5)],[(9,12),(10,9),(13,8)],[(4,12),(6,9),(5,6)],[(6,3),(8,4),(11,3)],[(3,8),(6,8),(8,11)],[(10,4),(11,7),(9,9)]]
+            pts=layouts[n%8]
+            d.line(pts,fill=2)
+            d.point((pts[1][0]+1,pts[1][1]),fill=8)
+            if phase&1 and n in (0,3,6):d.point(pts[-1],fill=12)
+        return im,'blight','quiet-deep-earth-or-short-scar',name!='blight_floor'
     if name in ('blight_wall','blight_wall2','blight_wall_lit'):
         im=stone_wall(phase,True);d=ImageDraw.Draw(im)
         if name=='blight_wall2':
@@ -890,7 +914,10 @@ def paint(name,phase=0):
         elif rest=='prop':
             im,pal=prop('rock' if style=='cave' else 'stump')
         elif rest=='glow':
-            im=canvas()[0];im=spark(im,8,7,1,8 if style=='cave' else 12);pal='stone' if style=='cave' else 'foliage'
+            # This logical FLOOR is placed on BG2, not an overlay. Its zero
+            # ink would expose a black16px rectangle rather than the floor.
+            im=myst_floor(style,0)
+            im=spark(im,8,7,1,8 if style=='cave' else 12 if style=='hollow' else 15)
         elif rest=='exit':im=exit_steps(style)
         elif rest=='spring':im=spring(phase);pal='water'
         else:raise KeyError('Unmapped mystery '+name)
