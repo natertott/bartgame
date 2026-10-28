@@ -229,6 +229,58 @@ def enter_trial(c):
     return wait_play(c,2)
 
 
+def trial_attack_position(c, enemy, turn):
+    """Choose a safe sword approach using the current actor/room geometry.
+
+    Positioning is a fixture, as it is for crossing the maze. Facing and
+    damage still use real controls. In particular, never place Bloom in a
+    monster's contact box or on the trial's retreat doorway: knockback at
+    that doorway can leave the event before it has been completed.
+    """
+    R=P.sym('gRoom'); types=P.sym('metatile_type')
+    w,h,g=room_tiles(c)
+    hitboxes=P.sym('gHitboxes'); actors=P.sym('gActors')
+
+    def body_box(index, x, y):
+        hb=P.r8(c,actors+index*64+34)
+        values=[P.r8(c,hitboxes+hb*4+i) for i in range(4)]
+        ox,oy,hw,hh=[v-256 if v>=128 else v for v in values]
+        return (x+ox-hw,y+oy-hh,x+ox+hw-1,y+oy+hh-1)
+
+    bodies=[]
+    for i in range(1,96):
+        a=P.actor(c,i)
+        if a['kind']==2:
+            bodies.append(body_box(i,a['x'],a['y']-a['z']))
+
+    # Horizontal flanks give the small avatar clearance from contact
+    # damage. The north-facing fallback also keeps the head below the
+    # target, with the live distal blade reaching its contact box.
+    candidates=[(enemy['x']-24,enemy['y']+6,'RIGHT'),
+                (enemy['x']+24,enemy['y']+6,'LEFT'),
+                (enemy['x']-5,enemy['y']+30,'UP')]
+    for x,y,key in candidates[turn%3:]+candidates[:turn%3]:
+        # Include the next directional-input step around the 10x8 feet.
+        safe=True
+        for px in (x-7,x+6):
+            for py in (y-10,y+1):
+                if not (0<=px<w*16 and 0<=py<h*16):
+                    safe=False; continue
+                tile=g[(px//16,py//16)]
+                if P.r8(c,R+4098+(py//8)*64+px//8) or tile==0xffff or P.r8(c,types+tile) not in (0,15,20,25):
+                    safe=False
+        if not safe:
+            continue
+        hx0,hy0,hx1,hy1=body_box(0,x,y)
+        # A four-pixel margin also covers AI movement during positioning
+        # and the one-frame directional tap that establishes facing.
+        if any(not (hx1+4<ex0 or ex1+4<hx0 or hy1+4<ey0 or ey1+4<hy0)
+               for ex0,ey0,ex1,ey1 in bodies):
+            continue
+        return x,y,key
+    return None
+
+
 def earn_trial(c, claim=True):
     """Solve an actual required event and claim its chest. Combat drives
     sword hits through the game, with healing/debug positioning to isolate
@@ -246,21 +298,35 @@ def earn_trial(c, claim=True):
             for tx,ty in M.tiles_of(c,lambda m:m['name']=='myst_switch',1):
                 heal(c); teleport(c,tx*16+8,ty*16+12); P.run(c,8)
         elif kind in ('waves','miniboss'):
-            for _ in range(240):
+            for turn in range(240):
                 heal(c)
+                if area(c)!=2 or cell(c)!=here:
+                    return False  # do not mistake a forest fight for the trial
                 if M.tiles_of(c,lambda m:m['type']=='CHEST'):
                     break
+                # Let actual knockback/attack recovery finish before the
+                # next positioning fixture, rather than resetting state
+                # while a pending knockback can still move the avatar.
+                if P.actor(c,0)['state']!=0 or P.r8(c,P.sym('gActors')+29):
+                    P.run(c,16)
+                    continue
                 enemy=find_actor(c,2)
                 if enemy:
-                    teleport(c,enemy['x'],enemy['y']+22)
-                    P.hold(c,'UP',2)
+                    approach=trial_attack_position(c,enemy,turn)
+                    if approach is None:
+                        P.run(c,16)
+                        continue
+                    x,y,key=approach
+                    teleport(c,x,y)
+                    P.hold(c,key,1)
                     P.press(c,'B',2,16)
                 else:
                     P.run(c,60)
         else:
             return False  # deliberately no item-dependent trial in this pool
-    if not claim:
-        return bool(P.r8(c,W+M.FLAGS_OFF+here)&4)
+    won=area(c)==2 and cell(c)==here and bool(P.r8(c,W+M.FLAGS_OFF+here)&4)
+    if not won or not claim:
+        return won
     if not M.open_chest(c):
         return False
     dismiss(c)
