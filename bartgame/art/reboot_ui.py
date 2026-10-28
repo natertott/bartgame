@@ -49,7 +49,7 @@ def text(d,x,y,s,ink,scale=1):
     return x
 
 def frame_tile(part,selected=False,empty=False,hud=False,bubble=False):
-    im,d=image(fill=0 if empty else INDEX['p'] if bubble else INDEX['3'] if part.startswith(('slot','row')) else INDEX['2'])
+    im,d=image(fill=0 if empty or part.endswith('_tl') else INDEX['p'] if bubble else INDEX['3'] if part.startswith(('slot','row')) else INDEX['2'])
     edge=INDEX['G'] if selected else INDEX['Y'] if not part.startswith(('slot','row')) else INDEX['4']
     dark=INDEX['o'];light=INDEX['W'] if selected else INDEX['G']
     if part.endswith('_tl'):

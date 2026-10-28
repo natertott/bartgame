@@ -147,7 +147,9 @@ def world_checks(c,rom,defs,label):
     # BLDY is also write-only; BLDCNT's readable mode bits determine
     # whether the title's brightness effect remains enabled.
     check(label+' disables title brightness fade',u16(c,IO+0x50)&0x00C0==0,hex(u16(c,IO+0x50)))
-    check(label+' has visible Bloom',any(o['tile']==0 and o['w']==64 and o['h']==32 for o in visible_objects(c)))
+    hero=P.sym('sheets')+defs['SHEET_HERO']*12
+    hw,hh=P.r8(c,hero+10),P.r8(c,hero+11)
+    check(label+' has visible native32px Bloom canvas',hw==hh==32 and any(o['tile']==0 and o['w']==hw and o['h']==hh for o in visible_objects(c)))
 
 
 def main():
@@ -163,9 +165,10 @@ def main():
     c=P.boot(rom=args.rom,start=False,frames=48)
     raw=source(c,rom,'title_bitmap',WIDTH*HEIGHT*2)
     check('title asset is complete RGB555 bitmap',len(raw)==76800 and defs['TITLE_WIDTH']==WIDTH and defs['TITLE_HEIGHT']==HEIGHT)
+    check('native title uses at most48 shared RGB555 inks',len(set(np.frombuffer(raw,dtype='<u2')))<=48,str(len(set(np.frombuffer(raw,dtype='<u2')))))
     choices={'replicated':picture(raw,True),'shifted':picture(raw,False)}
     conversion=settled_title(c,choices)
-    check('unobscured framebuffer equals entire imported title',conversion is not None,str(conversion))
+    check('unobscured framebuffer equals entire native title',conversion is not None,str(conversion))
     expected=choices[conversion or 'replicated'];bitmap_checks(c,raw,'fresh title')
     snap(c,'title-clean','actual fresh title during prompt-off blink; no image or pose injection')
     check('fresh title shows blinking prompt',wait_prompt(c))
@@ -213,8 +216,9 @@ def main():
     a=P.sym('gActors');slot=next(i for i in range(1,96) if P.r8(c,a+i*64)==0)
     x,y=P.player_pos(c);W.put_actor(c,slot,4,6,x,y,2,timer=10)
     at=a+slot*64;P.w8(c,at+36,defs['SHEET_PICK32']);P.w8(c,at+37,defs['F_PICK32_GRAIL'])
-    P.w8(c,at+42,32);P.w8(c,at+43,32);P.w16(c,at+44,P.r16(c,L.ssym('sPickTile')))
-    P.w8(c,at+46,defs['PAL_OBJ_PICK']);P.run(c,4)
+    pick=P.sym('sheets')+defs['SHEET_PICK32']*12
+    P.w8(c,at+42,P.r8(c,pick+10));P.w8(c,at+43,P.r8(c,pick+11));P.w16(c,at+44,P.r16(c,L.ssym('sPickTile')))
+    P.w8(c,at+46,P.r8(c,P.sym('pick32_frame_pal')+defs['F_PICK32_GRAIL']));P.run(c,4)
     check('Grail fixture enters real win path',C.gstate(c)==6)
     P.run(c,140);P.press(c,'START',3,80)
     check('win screen returns to title',C.gstate(c)==0)
