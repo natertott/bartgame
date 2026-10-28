@@ -89,8 +89,8 @@ def _raised(face,step=0,stage=2):
     for shoulder,grip in zip(((13,24),(19,24)),grips):
         if stage==2:
             sx,sy=shoulder;gx,gy=grip
-            d.line([(sx,sy),(8 if gx<16 else 24,17),(gx,gy)],fill=1,width=3)
-            d.line([(sx,sy),(8 if gx<16 else 24,17),(gx,gy)],fill=10,width=1)
+            d.line([(sx,sy),(8 if gx<16 else 23,17),(gx,gy)],fill=1,width=3)
+            d.line([(sx,sy),(8 if gx<16 else 23,17),(gx,gy)],fill=10,width=1)
         else:_arm(d,shoulder,grip)
     _head(im,face,dy=1 if stage==0 else 0)
     # The palms touch the bottom-aligned16px load at worldy−24.
