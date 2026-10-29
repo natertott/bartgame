@@ -101,7 +101,7 @@ def _pose(variant,face,phase):
     elif face=='n':left=(11-spread,31);right=(21+spread,31-step)
     elif face=='s':left=(11-spread,31-step);right=(21+spread,31)
     shoulders=((chest[0]-3,chest[1]+1),(chest[0]+3,chest[1]+1))
-    hand0={'n':(24,16),'e':(24,20),'s':(20,25),'w':(8,20)}[face]
+    hand0={'n':(24,16),'e':(24,23),'s':(20,25),'w':(8,23)}[face]
     if variant==5 and face=='n':hand0=(8,16)  # visible cross-body backhand load
     # Coil/release grip follows its shoulder and varies slightly through the
     # arc. North lives beyond the flower's right edge, never on the back.
@@ -215,11 +215,14 @@ def _parts(variant,face,phase):
     edge=8 if live else 6
     if trail:
         ld=[local(pt) for pt in trail]
-        ribbon_width=4 if variant==2 else 3
-        d.line(ld,fill=5,width=ribbon_width)
-        d.line(ld[2:],fill=7,width=max(2,ribbon_width-1))
-        d.line(ld[-3:],fill=8,width=2)
-        md=ImageDraw.Draw(damage);md.line(ld,fill=1,width=ribbon_width)
+        # The trail is a faded, tapered ribbon behind the leading steel.
+        # No white perpendicular cap may turn the sword into an axe/hook.
+        ribbon=blank();rd=ImageDraw.Draw(ribbon)
+        widths=(1,2,3,3,2,1) if variant==2 else (1,1,2,2,2,1)
+        for i,width in enumerate(widths):
+            rd.line(ld[i:i+2],fill=5 if i<3 else 6,width=width)
+        stamp(im,ribbon,(0,0))
+        damage.putdata([bool(value) for value in ribbon.tobytes()])
     cd.line([local(proximal),local(tip)],fill=1,width=3)
     cd.line([local(proximal),local(tip)],fill=edge,width=1)
     if live:cd.point(local(tip),fill=15)
