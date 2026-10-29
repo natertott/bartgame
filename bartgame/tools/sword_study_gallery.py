@@ -5,6 +5,8 @@ neighbour and add labels/timing bars outside gameplay. Cyan hitbox versions
 are explicitly diagnostic composites of the aligned runtime damage rectangle.
 Normal GIFs sample two video frames at a time; slow GIFs retain every frame.
 The MP4 is a lossy convenience copy at the recorded GBA video rate.
+Compact case publication retains videos, native keyframes and traces; omitted
+raw-GIF/local-frame references move into explicitly archival report fields.
 """
 import argparse
 import hashlib
@@ -42,6 +44,45 @@ def copy(source,target):
     target.parent.mkdir(parents=True,exist_ok=True)
     shutil.copyfile(source,target)
     assert digest(source)==digest(target),(source,target)
+
+
+CASE_ARCHIVAL_FIELDS=('clean_gif','slow_gif','overlay_gif','full_frame_paths','local_all_frames_dir')
+
+
+def trace_digest(trace):
+    return hashlib.sha256(json.dumps(trace,sort_keys=True,separators=(',',':')).encode()).hexdigest()
+
+
+def publish_capture(source,dest,compact):
+    """Copy pixel/video evidence exactly and make compact omissions explicit."""
+    report=read(source/'capture.json')
+    source_hash=digest(source/'capture.json')
+    if compact:
+        published=json.loads(json.dumps(report))
+        for original,row in zip(report['captures'],published['captures']):
+            archived={key:row.pop(key) for key in CASE_ARCHIVAL_FIELDS if key in row}
+            archived['availability']='Local source capture archive only; not included in this compact publication.'
+            row['archival_formats']=archived
+            row['publication']={'runtime_trace_unchanged':True,'source_trace_sha256':trace_digest(original['trace'])}
+            assert row['trace']==original['trace']
+            assert row['native_frames']==original['native_frames'] and row.get('video')==original.get('video')
+        published['publication']={
+            'compact_case_media':True,'source_report_sha256':source_hash,
+            'source_report_bytes':(source/'capture.json').stat().st_size,
+            'archival_fields':list(CASE_ARCHIVAL_FIELDS),
+            'preserved':'Runtime traces, selected native frame references, filmstrip and video references remain unchanged. Native PNG/MP4/filmstrip files are copied byte-for-byte.',
+            'omitted':'The three duplicate full-window case GIFs and local-only full-frame path references are described under archival_formats, rather than published as downloadable case files.'}
+        write(dest/'capture.json',published)
+    else:
+        copy(source/'capture.json',dest/'capture.json')
+    for row in report['captures']:
+        assert row.get('passed',True)
+        keys=('video','filmstrip') if compact else ('clean_gif','slow_gif','overlay_gif','video','filmstrip')
+        for key in keys:
+            if row.get(key):copy(source/row[key],dest/row[key])
+        for relative in row['native_frames']:
+            copy(source/relative,dest/relative);native(dest/relative)
+    return report
 
 
 def draw_on(image):
@@ -85,7 +126,7 @@ def crop_frame(image,row,tick,diagnostic=False):
     return image.crop(box)
 
 
-def load_studies(captures,out):
+def load_studies(captures,out,compact=False):
     studies=[]
     actual=out/'actual'
     if actual.exists():shutil.rmtree(actual)
@@ -96,14 +137,10 @@ def load_studies(captures,out):
         profile=report['profile']
         assert len(profile['durations'])==len(profile['active_flags'])==8
         dest=actual/('v%d'%variant);dest.mkdir(parents=True)
-        copy(source/'capture.json',dest/'capture.json')
+        publish_capture(source,dest,compact)
         names=set()
         for row in report['captures']:
             assert row['name'] not in names;names.add(row['name'])
-            for key in ('clean_gif','slow_gif','overlay_gif','video','filmstrip'):
-                if row.get(key):copy(source/row[key],dest/row[key])
-            for relative in row['native_frames']:
-                copy(source/relative,dest/relative);native(dest/relative)
         cases={(r['background'],r['facing']):r for r in report['captures']}
         for face in FACES:assert ('forest',face) in cases,(variant,face)
         studies.append({'source':source,'report':report,'profile':profile,'cases':cases})
@@ -254,7 +291,7 @@ def individual_cards(studies,archives,out,fps,suffix='',controlled_target=False)
     return cards
 
 
-def controlled_targets(studies,captures,out,fps):
+def controlled_targets(studies,captures,out,fps,compact=False):
     reports=[];target_studies=[]
     for index,study in enumerate(studies):
         source=captures/('v%d'%(index+1));report=read(source/'capture.json')
@@ -263,15 +300,10 @@ def controlled_targets(studies,captures,out,fps):
         cases={r['facing']:r for r in report['captures']}
         assert set(cases)=={'n','e'},(index+1,list(cases))
         dest=out/'actual/targets'/('v%d'%(index+1));dest.mkdir(parents=True,exist_ok=True)
-        copy(source/'capture.json',dest/'capture.json')
-        for row in report['captures']:
-            assert row.get('passed',True)
-            for key in ('clean_gif','slow_gif','overlay_gif','video','filmstrip'):
-                if row.get(key):copy(source/row[key],dest/row[key])
-            for relative in row['native_frames']:
-                copy(source/relative,dest/relative);native(dest/relative)
+        publish_capture(source,dest,compact)
         target_studies.append({**study,'source':source,'report':report,'target_cases':cases})
         reports.append({'variant':index+1,'rom_sha256':report['rom_sha256'],
+                        'source_report_sha256':digest(source/'capture.json'),
                         'capture_report':f'actual/targets/v{index+1}/capture.json','cases':len(cases)})
     archives={}
     for face in ('e','n'):
@@ -317,16 +349,20 @@ def main():
     ap.add_argument('--targets',type=Path,help='Optional controlled-beetle target captures, v1..v5/capture.json')
     ap.add_argument('--fps',type=float,default=59.727500569606)
     ap.add_argument('--no-video',action='store_true')
+    ap.add_argument('--compact-case-media',action='store_true',help='Publish case MP4s/native keyframes/traces; archive duplicate raw-GIF/local-frame references')
     args=ap.parse_args();args.out.mkdir(parents=True,exist_ok=True)
-    studies=load_studies(args.captures,args.out)
+    studies=load_studies(args.captures,args.out,args.compact_case_media)
     comparison_rows,archives=comparisons(studies,args.out,args.fps)
     still_boards(studies,archives,args.out)
     cards=individual_cards(studies,archives,args.out,args.fps)
     report={'method':__doc__.strip(),'prototypes_only':True,'selected_variant':None,'fps':args.fps,
+            'publication':{'compact_case_media':args.compact_case_media,'runtime_trace_arrays_unchanged':True,
+                           'comparison_pixel_source':'Original full-frame native PNG archive, not the omitted raw case GIFs.'},
             'variants':[{'variant':i+1,'profile':s['profile'],'rom_sha256':s['report']['rom_sha256'],
+                         'source_report_sha256':digest(s['source']/'capture.json'),
                          'capture_report':f'actual/v{i+1}/capture.json','cases':len(s['report']['captures'])} for i,s in enumerate(studies)],
             'comparisons':comparison_rows,'individuals':cards,'palette_note':'Raw native PNGs are unchanged. Comparison GIF metadata records whether its combined colour union fits 256 colours. Video is a lossy convenience.'}
-    if args.targets:report['controlled_targets']=controlled_targets(studies,args.targets,args.out,args.fps)
+    if args.targets:report['controlled_targets']=controlled_targets(studies,args.targets,args.out,args.fps,args.compact_case_media)
     if not args.no_video:report['video']=movie(studies,archives,args.out,args.fps)
     report['files']=[{'path':str(p.relative_to(args.out)),'bytes':p.stat().st_size,'sha256':digest(p)}
                      for p in sorted(args.out.rglob('*')) if p.is_file() and p.name not in ('README.md','gallery-manifest.json')]
