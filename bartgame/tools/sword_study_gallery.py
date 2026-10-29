@@ -218,6 +218,41 @@ def still_boards(studies,archives,out):
     overview.save(out/'overview.png')
 
 
+def individual_cards(studies,archives,out,fps):
+    cards=[]
+    for index,study in enumerate(studies):
+        profile=study['profile'];pictures=[];diagnostics=[]
+        for face in ('e','n'):
+            rows,frames=archives[face];row=rows[index];sequence=frames[index]
+            for tick,image in enumerate(sequence):
+                view=display(row['trace'][tick])
+                pair=[]
+                for diagnostic in (False,True):
+                    crop=crop_frame(image,row,tick,diagnostic);width,height=crop.width*4,crop.height*4
+                    panel=Image.new('RGB',(width,height+100),BG);d=draw_on(panel)
+                    d.text((7,7),str(index+1)+'  '+profile['name'],font=TITLE,fill=FG)
+                    d.text((7,28),NAMES[face]+' / '+('CYAN DAMAGE BOX / diagnostic' if diagnostic else 'actual mGBA crop / 4x native'),font=SMALL,fill=LIVE if diagnostic else DIM)
+                    panel.paste(crop.resize((width,height),Image.Resampling.NEAREST),(0,48))
+                    y=height+53
+                    d.text((7,y),status(view,profile)+' / '+str(sum(profile['durations']))+' total ticks',font=SMALL,fill=LIVE if view['active'] else DIM)
+                    timeline(d,7,y+20,width-14,profile,view)
+                    pair.append(panel)
+                pictures.append(pair[0]);diagnostics.append(pair[1])
+        base='variation-'+str(index+1);length=len(pictures)
+        ticks=list(range(0,length,2));normal=timing(ticks,length,fps)
+        slow=[round((t+1)*300/fps)*10-round(t*300/fps)*10 for t in range(length)]
+        def speed_label(frame,label):
+            tagged=frame.copy();draw_on(tagged).text((7,tagged.height-15),label,font=SMALL,fill=FG);return tagged
+        normal_meta=write_gif([speed_label(pictures[t],'NORMAL SPEED / ~30fps GIF') for t in ticks],normal,out/(base+'.gif'))
+        slow_meta=write_gif([speed_label(frame,'3x SLOW / every original video frame') for frame in pictures],slow,out/(base+'-slow.gif'))
+        box_meta=write_gif([speed_label(frame,'3x SLOW / diagnostic overlay') for frame in diagnostics],slow,out/(base+'-hitbox.gif'))
+        # Captions distinguish speed even when opened outside the README.
+        cards.append({'variant':index+1,'normal_gif':base+'.gif','slow_gif':base+'-slow.gif',
+                      'diagnostic_gif':base+'-hitbox.gif','normal':normal_meta,
+                      'slow':slow_meta,'diagnostic':box_meta})
+    return cards
+
+
 def movie(studies,archives,out,fps):
     first_face='n';rows,frames=archives[first_face]
     example=compose(studies,rows,[f[0] for f in frames],0,first_face,'NORMAL SPEED / native GBA timing')
@@ -255,10 +290,11 @@ def main():
     studies=load_studies(args.captures,args.out)
     comparison_rows,archives=comparisons(studies,args.out,args.fps)
     still_boards(studies,archives,args.out)
+    cards=individual_cards(studies,archives,args.out,args.fps)
     report={'method':__doc__.strip(),'prototypes_only':True,'selected_variant':None,'fps':args.fps,
             'variants':[{'variant':i+1,'profile':s['profile'],'rom_sha256':s['report']['rom_sha256'],
                          'capture_report':f'actual/v{i+1}/capture.json','cases':len(s['report']['captures'])} for i,s in enumerate(studies)],
-            'comparisons':comparison_rows,'palette_note':'Raw native PNGs are unchanged. Comparison GIF metadata records whether its combined colour union fits 256 colours. Video is a lossy convenience.'}
+            'comparisons':comparison_rows,'individuals':cards,'palette_note':'Raw native PNGs are unchanged. Comparison GIF metadata records whether its combined colour union fits 256 colours. Video is a lossy convenience.'}
     if not args.no_video:report['video']=movie(studies,archives,args.out,args.fps)
     report['files']=[{'path':str(p.relative_to(args.out)),'bytes':p.stat().st_size,'sha256':digest(p)}
                      for p in sorted(args.out.rglob('*')) if p.is_file() and p.name not in ('README.md','gallery-manifest.json')]
