@@ -145,6 +145,13 @@ on his back. Held tools are small objects gripped by the hand, never full menu
 icons. Check every facing, interruptions, terrain occlusion and release frames
 in the emulator before expanding an animation family.
 
+Bloom's selected sword gesture is **Step-and-cut**, with eight coordinated
+whole-body/weapon poses per facing: four preparation updates, seven live
+updates and seven recovery updates. The roots, hips, shoulders and flower
+all contribute to the motion. The apparent step is weight transfer, without
+a world-position lunge. Keep this body/blade/contact relationship when adding
+future equipment; see [the sword study notes](../SWORD_STUDIES.md).
+
 ## Interface
 
 Keep the successful menu, shop and dialogue hierarchy. Redraw their materials,

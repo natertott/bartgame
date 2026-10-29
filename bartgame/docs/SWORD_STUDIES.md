@@ -1,8 +1,12 @@
-# Five sword studies for selection
+# Sword studies and the selected Step-and-cut
 
-These are five playable, native-GBA comparison prototypes. No variation has
-been selected for the released game. The normal build (`BART_SWING=0`) produces
-the same ROM bytes as the approved art reboot, SHA256
+The user selected **variation 3, Step-and-cut**, for the game. Normal `make`
+and direct asset generation now select it by default (`BART_SWING=3`). Its
+reviewed poses, timing and matching contact geometry are unchanged from the
+comparison prototype. The other profiles remain explicit comparison options.
+
+The previous sword (`BART_SWING=0`) produces the same ROM bytes as the earlier
+art reboot, SHA256
 `41dc680068c094416e92152d4c22637c10d6a055d2bee63ce7700c419490e92d`.
 
 Start with the [actual mGBA comparison gallery](../../art-review/sword-studies/README.md)
@@ -112,13 +116,16 @@ shown active interval. Normal gameplay still involves spacing and approach.
 The visual critique is deliberately part of selection: 1 has subtler body
 motion, 2 is the broadest and easiest to read, 3 shows effort without actual travel,
 4 demands more anticipation, and 5 has a busier return. These are tradeoffs for
-the user to judge in motion, not a reason to pick a default automatically.
+the user to judge in motion; Step-and-cut is now the selected default.
 
 ## Reproduce
 
 ```sh
-# Default: byte-identical released art reboot.
-make -j4 BART_SWING=0
+# Default: selected Step-and-cut.
+make -j4
+
+# Previous sword, for historical comparison.
+make -j4 BART_SWING=0 BUILD=build_legacy_swing
 
 # One optional study. Use separate build directories when keeping several.
 make -j4 BART_SWING=2 BUILD=build_swing2
@@ -133,4 +140,4 @@ Freeze the ROM, matching linker map and generated header/coverage together.
 Then use `tools/sword_study_probe.py`, `tools/sword_study_review.py` and
 `tools/sword_study_gallery.py` with `--help` for their paths/output options.
 The Makefile records the chosen profile so changing `BART_SWING` cannot silently
-reuse assets from a different study. Rebuilding without the option returns to 0.
+reuse assets from a different study. Rebuilding without the option selects 3.

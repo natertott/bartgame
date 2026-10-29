@@ -2,7 +2,8 @@
 
    Constants are TMC's (docs/newgame/12_FROM_SCRATCH_ENGINE.md):
      walk 1.25 px/f, roll 24 frames (3.0, then 2.0, ramping back to 3.0),
-     sword 15 frames, knockback 1.5 px/f for 8 frames with 30 iframes,
+     sword uses the selected shared body/blade/contact clock (18 frames for
+     Step-and-cut), knockback 1.5 px/f for 8 frames with 30 iframes,
      gravity 0.125 px/f^2, cape jump zvel 2.0, pit fall costs 2. */
 #include "gba.h"
 #include "video.h"

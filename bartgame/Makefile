@@ -18,7 +18,8 @@ PYTHON  := python3
 BUILD   := build
 GEN     := $(BUILD)/gen
 TARGET  := bartgame
-BART_SWING ?= 0
+# Approved production swing: Step-and-cut. Other profiles remain opt-in.
+BART_SWING ?= 3
 ifneq ($(words $(BART_SWING)),1)
 $(error BART_SWING must be one integer in 0..5)
 endif

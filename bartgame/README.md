@@ -13,8 +13,10 @@ Start with the [actual mGBA gallery](../art-review/reboot/README.md),
 [implementation notes](docs/art-reboot/IMPLEMENTATION.md).
 Historical `forest-review` galleries describe earlier builds.
 
-[Five sword-swing comparison prototypes](docs/SWORD_STUDIES.md) are available
-for selection. The default build remains the released art reboot.
+Bloom now uses the selected **Step-and-cut** sword swing: whole-body weight
+transfer, a four-update preparation, seven damaging updates and seven recovery
+updates. Body, blade and damage bounds share one clock in every facing.
+The [five comparison studies](docs/SWORD_STUDIES.md) remain available explicitly.
 
 ## Current game
 
@@ -73,6 +75,7 @@ The 24-pixel HUD keeps the familiar menu structure while freeing playfield.
 | `art/reboot_core.py` | Shared RGB555 inks, material roles, perspective and reusable native shapes. |
 | `art/reboot_terrain.py` | Forest, progressive blight, Drain, interiors and interactive metatiles. |
 | `art/reboot_actors.py` | Bloom, weapons/actions, enemies, NPCs, keepers and Heart. |
+| `art/sword_studies.py` | Selected Step-and-cut body/weapon poses, clock and contact geometry. |
 | `art/reboot_items.py` | World drops, equipment, liftables, chests and entrances. |
 | `art/reboot_ui.py`, `ui_font.py`, `ui_kit.py`, `faces.py`, `title.py` | Interface, native font, portraits and title. |
 | `art/reboot_contracts.json` | Identifier/physics metadata only; no retained source pixels. |
@@ -93,6 +96,11 @@ make assets   # generated C assets and build/gen/art-reboot-coverage.json
 make clean
 ```
 
+`make` selects Step-and-cut (`BART_SWING=3`), including direct asset generation.
+Set `BART_SWING=1..5` explicitly to compare another study, or `BART_SWING=0`
+for the previous sword. The animated step transfers weight without moving
+Bloom's world position. Existing saves and item controls remain compatible.
+
 Requires `arm-none-eabi-gcc`/binutils, Python 3 with Pillow, and the repository’s
 `../tools/bin/gbafix`. This standalone game needs no commercial base ROM.
 
@@ -107,8 +115,8 @@ symbols. Run `--help` for frozen-ROM/map paths and output options.
 
 ```sh
 python3 tools/art_reboot_probe.py --help    # ownership, hardware and native scale
-python3 tools/bloom_probe.py --help         # phase contacts, grips and cancellation
-python3 tools/bloom_suite_probe.py --help   # broader action suite
+python3 tools/sword_study_probe.py --help   # selected sword timing, hardware poses and contacts
+python3 tools/bloom_suite_probe.py --help   # broader actions; --skip-before omits historical trace comparison
 python3 tools/critical_path.py --boss       # required progression through victory
 python3 tools/wood_probe.py                # bow, gathering, reflection, hub return
 python3 tools/lift_probe.py                # lift/throw and inventory controls

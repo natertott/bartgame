@@ -1,7 +1,9 @@
 # Five Bloom sword-swing variations
 
-These are **five prototypes for your feedback**, all recorded from real mGBA
-runs. No option has been selected for the released game.
+These five comparison prototypes were recorded from real mGBA runs.
+**Step-and-cut (variation 3) is now the selected production swing.** Its reviewed
+art, timing and contact geometry are unchanged. The other four remain archived
+comparison options. See [the latest playable release](../../downloads/README.md).
 
 [Watch the 24-second side-by-side video](sword-studies.mp4) ·
 [Download all five playable study ROMs](../../downloads/sword-studies-89978ba/all-five-sword-studies.zip) ·

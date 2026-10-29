@@ -44,9 +44,9 @@ for name in ('huditems','glitter'):
     take(name)
 assert not owned,('unregistered new families',sorted(owned))
 
-# Sword studies are opt-in comparison builds. All original frame identifiers
-# and the default painter path remain untouched until a study is selected.
-SWING_VARIANT=int(os.environ.get('BART_SWING','0'))
+# Step-and-cut is the approved production swing. Explicit BART_SWING values
+# retain the comparison profiles and the pre-selection legacy path (0).
+SWING_VARIANT=int(os.environ.get('BART_SWING','3'))
 assert 0<=SWING_VARIANT<=5,('BART_SWING must be 0..5',SWING_VARIANT)
 SWING_PROFILE=None
 SWING_GEOMETRY=None
