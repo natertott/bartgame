@@ -18,7 +18,11 @@ PlayerState gPl;
 
 #define WALK_SPEED Q8(1.25)
 #define ROLL_FRAMES 24
+#if BLOOM_SWING_STUDY
+#define ATTACK_FRAMES BLOOM_SWING_FRAMES
+#else
 #define ATTACK_FRAMES 15
+#endif
 #define HURT_FRAMES 8
 #define FALL_FRAMES 36
 #define HERO_TILE OBJ_TILE_HERO
@@ -32,6 +36,14 @@ static u8 sWalkTimer;
    streamed 32x32 layer serves the sword, held tools and airborne cape. */
 static u16 sActionTile, sLastActionFrame, sShadowTile;
 static u8 sUseItem, sUseTimer, sUseLength, sUseFacing;
+
+#if BLOOM_SWING_STUDY
+/* Read-only capture diagnostics, outside actor/save data. A completed render
+   snapshot is associated with its queued body/FX frame, then with the next
+   hardware upload; it is never painted into ordinary gameplay. */
+volatile u32 gSwordStudyRenderSequence;
+volatile s16 gSwordStudyRender[16];
+#endif
 
 static void hero_set_frame(int frame) {
     if (frame == sLastFrame)
@@ -273,12 +285,20 @@ void player_item_get(int item_bit, int sprite_frame) {
    The art builder derives these inclusive bounds from the damaging blade
    and its short trail, excluding the grip and guard. */
 static int sword_step(int age) {
+#if BLOOM_SWING_STUDY
+    return bloom_swing_age_phase[CLAMP(age,0,ATTACK_FRAMES-1)];
+#else
     return age<2 ? 0 : age<5 ? 1 : age<9 ? 2 : age<13 ? 3 : 4;
+#endif
 }
 
 static void sword_bounds(int* x0, int* y0, int* x1, int* y1) {
     Actor* a = gPlayer;
+#if BLOOM_SWING_STUDY
+    const s8* r = &bloom_swing_hit[(a->facing*8+sword_step(a->timer))*4];
+#else
     const s8* r = &bloom_sword_hit[(a->facing*5+sword_step(a->timer))*4];
+#endif
     int px = PX(a->x), py = PX(a->y)-PX(a->z);
     *x0 = px+r[0]; *y0 = py+r[1]; *x1 = px+r[2]; *y1 = py+r[3];
 }
@@ -500,7 +520,9 @@ static void state_normal(void) {
         a->speed = 0;
         if (dir != DIR_NONE)
             a->facing = facing_from_dir(dir, a->facing);
+#if !BLOOM_SWING_STUDY
         sfx_play(SFX_SWORD);
+#endif
         return;
     }
     /* R: lift what stands ahead, else roll when moving */
@@ -623,10 +645,17 @@ static void state_carry(void) {
 static void state_attack(void) {
     Actor* a = gPlayer;
     int t = ++a->timer;
+#if BLOOM_SWING_STUDY
+    gPl.sword_phase = sword_step(t);
+    gPl.sword_active = (t<ATTACK_FRAMES && bloom_swing_age_active[t]);
+    if (t==BLOOM_SWING_ACTIVE_FIRST)
+        sfx_play(SFX_SWORD); /* Audible swish belongs to the visible cut. */
+#else
     gPl.sword_phase = t < 5 ? 0 : t < 9 ? 1 : 2;
     /* Two anticipation frames, eleven live frames, then recovery. The
        old input frame dealt an invisible hit before disabling again. */
     gPl.sword_active = (t >= 2 && t <= 12);
+#endif
     if (t >= ATTACK_FRAMES) {
         a->state = PS_NORMAL;
         gPl.sword_active = 0;
@@ -835,11 +864,13 @@ void player_ledge_jump_sub(void) {
 static const u8 sIdleFrame[4] = { F_HERO_IDLE_N, F_HERO_IDLE_E, F_HERO_IDLE_S, F_HERO_IDLE_E };
 static const u8 sWalk1Frame[4] = { F_HERO_WALK_N1, F_HERO_WALK_E1, F_HERO_WALK_S1, F_HERO_WALK_E1 };
 static const u8 sWalk2Frame[4] = { F_HERO_WALK_N2, F_HERO_WALK_E2, F_HERO_WALK_S2, F_HERO_WALK_E2 };
+#if !BLOOM_SWING_STUDY
 static const u8 sAtkFrame[3][4] = {
     { F_HERO_ATK_N1, F_HERO_ATK_E1, F_HERO_ATK_S1, F_HERO_ATK_E1 }, /* the wind-up */
     { F_HERO_ATK_N, F_HERO_ATK_E, F_HERO_ATK_S, F_HERO_ATK_E },     /* the blow */
     { F_HERO_ATK_N3, F_HERO_ATK_E3, F_HERO_ATK_S3, F_HERO_ATK_E3 }, /* the follow-through */
 };
+#endif
 static const u8 sHurtFrame[4] = { F_HERO_HURT_N, F_HERO_HURT_E, F_HERO_HURT_S, F_HERO_HURT_E };
 static const u8 sGuardFrame[4] = { F_HERO_GUARD_N, F_HERO_GUARD_E, F_HERO_GUARD_S, F_HERO_GUARD_E };
 static const u8 sGuardStep[2][4] = {
@@ -929,11 +960,18 @@ static void draw_action(Actor* a, bool8 behind) {
     if (a->state == PS_ATTACK) {
         if (behind)
             return;
+#if BLOOM_SWING_STUDY
+        int step=sword_step(a->timer);
+        const s8* origin=&bloom_swing_origin[(f*8+step)*2];
+        action_frame(F_BLOOMFX_STUDY_N0+f*8+step,PX(a->x)+origin[0]-gCamX,
+                     PX(a->y)+origin[1]-PX(a->z)-gCamY,0,a->prio);
+#else
         static const u8 sword[4] = { F_BLOOMFX_SWORD_N0, F_BLOOMFX_SWORD_E0, F_BLOOMFX_SWORD_S0, F_BLOOMFX_SWORD_W0 };
         const s8* origin=&bloom_sword_origin[f*2];
         int step=sword_step(a->timer);
         action_frame(sword[f]+step,PX(a->x)+origin[0]-gCamX,
                      PX(a->y)+origin[1]-PX(a->z)-gCamY,0,a->prio);
+#endif
     } else if (a->state == PS_NORMAL && sUseTimer) {
         if (behind != (f == FACE_N))
             return;
@@ -1003,7 +1041,12 @@ void player_draw(void) {
             break;
         }
         case PS_ATTACK:
+#if BLOOM_SWING_STUDY
+            frame = F_HERO_STUDY_N0+f*8+sword_step(a->timer);
+            a->hflip = 0; /* All four authored facings have their own grips. */
+#else
             frame = sAtkFrame[gPl.sword_phase][f];
+#endif
             break;
         case PS_HURT:
             frame = sHurtFrame[f];
@@ -1068,6 +1111,24 @@ void player_draw(void) {
             break;
     }
     hero_set_frame(frame);
+#if BLOOM_SWING_STUDY
+    {
+        int x0=0,y0=0,x1=0,y1=0;
+        int step=a->state==PS_ATTACK ? sword_step(a->timer) : -1;
+        gSwordStudyRender[0]=a->state;
+        gSwordStudyRender[1]=a->timer;
+        gSwordStudyRender[2]=step;
+        gSwordStudyRender[3]=player_sword_box(&x0,&y0,&x1,&y1);
+        gSwordStudyRender[4]=x0; gSwordStudyRender[5]=y0;
+        gSwordStudyRender[6]=x1; gSwordStudyRender[7]=y1;
+        gSwordStudyRender[8]=gCamX; gSwordStudyRender[9]=gCamY;
+        gSwordStudyRender[10]=PX(a->x); gSwordStudyRender[11]=PX(a->y);
+        gSwordStudyRender[12]=PX(a->z); gSwordStudyRender[13]=f;
+        gSwordStudyRender[14]=frame;
+        gSwordStudyRender[15]=step>=0 ? F_BLOOMFX_STUDY_N0+f*8+step : -1;
+        gSwordStudyRenderSequence++;
+    }
+#endif
     a->frame = 0;
     if (a->state == PS_FALL) {
         /* going under: the drowning frames in place, the hole's frames

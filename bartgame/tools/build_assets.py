@@ -316,6 +316,39 @@ for name, values in (('bloom_sword_origin', origins), ('bloom_sword_hit', hitbox
     c.append('const s8 %s[%d] ALIGN4 = { %s };' % (name, len(values), ', '.join(map(str, values))))
     h.append('extern const s8 %s[];' % name)
 
+# Experimental studies append native poses without replacing the production
+# frames. One generated age clock drives body, blade and contact together.
+h.append('#define BLOOM_SWING_STUDY %d' % sprites.SWING_VARIANT)
+sword_study_metadata=None
+if sprites.SWING_VARIANT:
+    profile=sprites.SWING_PROFILE
+    geometry=sprites.SWING_GEOMETRY
+    durations=profile['durations']
+    active=profile['active_flags']
+    assert len(durations)==len(active)==8
+    assert all(isinstance(n,int) and n>0 for n in durations)
+    assert 1<sum(durations)<256
+    assert not active[0] and not active[-1] and any(active)
+    assert geometry['durations']==durations and geometry['active_flags']==active
+    age_phase=[phase for phase,length in enumerate(durations) for _ in range(length)]
+    age_active=[int(active[phase]) for phase in age_phase]
+    h.append('#define BLOOM_SWING_PHASES 8')
+    h.append('#define BLOOM_SWING_FRAMES %d' % len(age_phase))
+    h.append('#define BLOOM_SWING_ACTIVE_FIRST %d' % age_active.index(1))
+    h.append('#define BLOOM_SWING_ACTIVE_LAST %d' % (len(age_active)-1-age_active[::-1].index(1)))
+    for name,values in (('bloom_swing_age_phase',age_phase),('bloom_swing_age_active',age_active)):
+        c.append(c_array_u8(name,values))
+        h.append('extern const u8 %s[];' % name)
+    study_origins=[v for facing in geometry['origins'] for phase in facing for v in phase]
+    study_bounds=[v for facing in geometry['bounds'] for phase in facing for v in phase]
+    assert len(study_origins)==64 and len(study_bounds)==128
+    for name,values in (('bloom_swing_origin',study_origins),('bloom_swing_hit',study_bounds)):
+        assert all(-128<=v<=127 for v in values),name
+        c.append('const s8 %s[%d] ALIGN4 = { %s };' % (name,len(values),', '.join(map(str,values))))
+        h.append('extern const s8 %s[];' % name)
+    sword_study_metadata={**profile,'geometry':geometry,'age_phase':age_phase,
+                          'age_active':age_active,'body_frame_base':101,'fx_frame_base':47}
+
 # The supplied item frames select one of four material banks in the world.
 # Paused inventory uses each original frame's own fifteen-colour ramp.
 for sh in sprites.SHEETS:
@@ -485,6 +518,8 @@ coverage = {
     'title': title.metadata(title_bitmap),
     'sword_geometry': sword_geometry,
 }
+if sword_study_metadata:
+    coverage['sword_study']=sword_study_metadata
 with open(os.path.join(OUT, 'art-reboot-coverage.json'), 'w') as report:
     json.dump(coverage, report, indent=2)
     report.write('\n')

@@ -18,6 +18,14 @@ PYTHON  := python3
 BUILD   := build
 GEN     := $(BUILD)/gen
 TARGET  := bartgame
+BART_SWING ?= 0
+ifneq ($(words $(BART_SWING)),1)
+$(error BART_SWING must be one integer in 0..5)
+endif
+ifneq ($(BART_SWING),$(filter $(BART_SWING),0 1 2 3 4 5))
+$(error BART_SWING must be one integer in 0..5)
+endif
+SWING_STAMP := $(GEN)/swing-profile-$(BART_SWING).stamp
 
 ARCH    := -mcpu=arm7tdmi -mtune=arm7tdmi
 CFLAGS  := $(ARCH) -O2 -g -Wall -Wno-unused-function -fno-strict-aliasing \
@@ -34,7 +42,7 @@ SRC_S     := $(wildcard src/*.s)
 GEN_C     := $(GEN)/assets.c
 ART       := $(wildcard art/reboot_*.py) art/reboot_contracts.json tools/build_assets.py \
              art/palettes.py art/tiles.py art/sprites.py art/rooms.py art/ui_kit.py \
-             art/ui_font.py art/faces.py art/title.py art/sw_folk.py
+             art/ui_font.py art/faces.py art/title.py art/sw_folk.py art/sword_studies.py
 
 OBJS := $(patsubst src/%.c,$(BUILD)/%.o,$(SRC_C)) \
         $(patsubst src/%.c,$(BUILD)/%.o,$(SRC_IWRAM)) \
@@ -47,9 +55,14 @@ all: $(TARGET).gba
 assets: $(GEN)/assets.c
 
 # one run writes both (assets.h last), so a parallel make runs it once
-$(GEN)/assets.c: $(ART)
+$(SWING_STAMP):
 	@mkdir -p $(GEN)
-	$(PYTHON) tools/build_assets.py $(GEN)
+	@rm -f $(GEN)/swing-profile-*.stamp
+	@printf '%s\n' '$(BART_SWING)' > $@
+
+$(GEN)/assets.c: $(ART) $(SWING_STAMP)
+	@mkdir -p $(GEN)
+	BART_SWING=$(BART_SWING) $(PYTHON) tools/build_assets.py $(GEN)
 
 $(GEN)/assets.h: $(GEN)/assets.c ;
 

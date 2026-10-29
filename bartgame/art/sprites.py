@@ -4,6 +4,7 @@ The contract file supplies identifiers and ordering, never reference pixels.
 Missing families or frames are errors rather than old-art fallbacks.
 """
 import json
+import os
 from pathlib import Path
 import reboot_actors
 import reboot_items
@@ -42,3 +43,28 @@ for name in ('huditems','glitter'):
     assert name in owned,('missing new family',name)
     take(name)
 assert not owned,('unregistered new families',sorted(owned))
+
+# Sword studies are opt-in comparison builds. All original frame identifiers
+# and the default painter path remain untouched until a study is selected.
+SWING_VARIANT=int(os.environ.get('BART_SWING','0'))
+assert 0<=SWING_VARIANT<=5,('BART_SWING must be 0..5',SWING_VARIANT)
+SWING_PROFILE=None
+SWING_GEOMETRY=None
+if SWING_VARIANT:
+    import sword_studies
+    SWING_PROFILE=sword_studies.profile(SWING_VARIANT)
+    SWING_GEOMETRY=sword_studies.geometry(SWING_VARIANT)
+    for sheet_name,painter,palette in (('hero',sword_studies.body_frame,'hero'),
+                                       ('bloomfx',sword_studies.fx_frame,'iron')):
+        sheet=next(s for s in SHEETS if s['name']==sheet_name)
+        for face in ('n','e','s','w'):
+            for phase in range(8):
+                frame='study_%s%d'%(face,phase)
+                assert frame not in sheet['frames']
+                image=painter(SWING_VARIANT,face,phase)
+                assert image.size==(32,32),(sheet_name,frame,image.size)
+                sheet['frames'][frame]=sword_studies.ink_rows(image)
+                if 'frame_pal' in sheet:
+                    sheet['frame_pal'][frame]=palette
+                COVERAGE.append({'sheet':sheet_name,'frame':frame,'owner':'sword_studies',
+                                 'canvas':[32,32],'study':SWING_VARIANT})
