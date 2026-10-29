@@ -13,6 +13,9 @@ Start with the [actual mGBA gallery](../art-review/reboot/README.md),
 [implementation notes](docs/art-reboot/IMPLEMENTATION.md).
 Historical `forest-review` galleries describe earlier builds.
 
+[Five sword-swing comparison prototypes](docs/SWORD_STUDIES.md) are available
+for selection. The default build remains the released art reboot.
+
 ## Current game
 
 The Drain is the hub, with the Billious Peddler, Pale Gatekeeper and a
