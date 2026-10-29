@@ -8,6 +8,7 @@ snapshot actually uploaded, rather than assuming that current logic is already
 on screen. Source masks define inclusive AABBs, not per-pixel collision.
 """
 import argparse
+from collections import Counter
 import hashlib
 import json
 from pathlib import Path
@@ -201,6 +202,11 @@ class Study:
             self.check(face+' all logical ages are observed once in one button swing',
                        sorted(logic_seen)==list(range(self.total)),sorted(logic_seen))
             self.check(face+' complete attack reaches hardware and recovers',matched>=self.total-1 and P.r8(c,self.a+2)==0)
+            shown=Counter(row['display']['phase'] for row in trace
+                          if row['display'] and row['display']['state']==2)
+            observed=[shown[phase] for phase in range(8)]
+            self.check(face+' actual hardware pose holds equal authored tick durations',
+                       observed==self.profile['durations'],observed)
             self.traces.append({'facing':face,'frames':trace})
 
     def spawn_frozen(self):
