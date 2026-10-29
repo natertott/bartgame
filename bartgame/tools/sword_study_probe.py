@@ -53,7 +53,7 @@ class Study:
         self.meta=self.coverage['sword_study'];self.variant=self.meta['id']
         self.profile=S.profile(self.variant);self.geom=self.meta['geometry']
         self.phases=self.meta['age_phase'];self.active=self.meta['age_active']
-        self.total=len(self.phases);self.checks=[];self.traces=[];self.contacts=[]
+        self.total=len(self.phases);self.checks=[];self.traces=[];self.contacts=[];self.forward_contacts=[]
         self.rom_sha=digest(Path(P.ROM).read_bytes())
         self.c=B.boot(P.ROM,int(args.seed,0));B.floor_fixture(self.c,self.defs)
         self.a=P.sym('gActors');self.pl=P.sym('gPl')
@@ -250,6 +250,46 @@ class Study:
                         self.contacts.append({'facing':face,'phase':phase,'age':age,'edge':edge,'outside':outside,
                                               'target':[x,y],'hit':hit,'native_hp_before':hp,'native_hp_after':after['hp']})
 
+    def forward_contact_sanity(self):
+        """A complete ordinary swing must reach a nearby threat straight ahead.
+
+        Offsets place the native enemy hurt-box centre24px in front of
+        Bloom's hurt-box centre. The differing foot offsets account for
+        their actual vertical hitbox anchors, not a new invisible reach.
+        """
+        offsets=((0,-29),(24,-5),(0,19),(-24,-5))
+        def actor_box(index):
+            at=self.a+index*64;hb=P.r8(self.c,at+34)
+            hp=P.sym('gHitboxes')+hb*4
+            ox=signed(P.r8(self.c,hp),8);oy=signed(P.r8(self.c,hp+1),8)
+            hw=P.r8(self.c,hp+2);hh=P.r8(self.c,hp+3)
+            actor=P.actor(self.c,index);x=actor['x']+ox;y=actor['y']+oy
+            return (x-hw,y-hh,x+hw-1,y+hh-1)
+        for facing,(face,(dx,dy)) in enumerate(zip(FACES,offsets)):
+            self.reset(facing);index,at,hp=self.spawn_frozen()
+            target=(256+dx,230+dy);self.target_at(at,*target)
+            hero=actor_box(0);enemy=actor_box(index)
+            separate=(hero[2]<enemy[0] or enemy[2]<hero[0] or
+                      hero[3]<enemy[1] or enemy[3]<hero[1])
+            self.check(face+' forward sanity target is outside body contact',separate,
+                       {'hero_box':hero,'target_box':enemy})
+            self.start();trace=[];first_hit=None
+            for _ in range(self.total*3):
+                state=B.live(self.c);target_actor=P.actor(self.c,index)
+                hit=target_actor['kind']!=2 or target_actor['hp']<hp
+                trace.append({'state':state,'target_kind':target_actor['kind'],
+                              'target_hp':target_actor['hp'],'hit':hit})
+                if hit and first_hit is None:first_hit=state.copy()
+                if state['state']!=2:break
+                self.single_update()
+            landed=first_hit is not None and first_hit['state']==2 and bool(first_hit['active'])
+            self.check(face+' complete swing hits native beetle24px straight ahead during live pose',
+                       landed,{'target':target,'first_hit':first_hit,'native_hp_before':hp})
+            self.forward_contacts.append({'facing':face,'target_foot':list(target),
+                                          'hero_box':list(hero),'target_box':list(enemy),
+                                          'native_hp_before':hp,'first_hit':first_hit,
+                                          'passed':landed and separate,'trace':trace})
+
     def harmless_poses(self):
         for facing,face in enumerate(FACES):
             first_live=self.phases[self.active.index(1)]
@@ -269,13 +309,14 @@ class Study:
                            {'tested_age':age,'observed':state,'native_hp_before':hp,'after_hp':after['hp']})
 
     def run(self):
-        art=self.tables_and_art();self.timing_and_hardware();self.boundary_contacts();self.harmless_poses()
+        art=self.tables_and_art();self.timing_and_hardware();self.boundary_contacts();self.harmless_poses();self.forward_contact_sanity()
         self.check('frozen ROM remained unchanged throughout probe',digest(Path(P.ROM).read_bytes())==self.rom_sha)
         failures=[row for row in self.checks if not row['passed']]
         report={'rom_sha256':self.rom_sha,'emulator':'mGBA0.10.5','method':__doc__.strip(),
                 'profile':self.profile,'passed':len(self.checks)-len(failures),'total':len(self.checks),
                 'checks':self.checks,'failures':failures,'body_motion_metrics':art,
                 'attack_traces':self.traces,'boundary_contacts':self.contacts,
+                'forward_contact_sanity':self.forward_contacts,
                 'hardware_age_limit':'Repeated ages within an identical pose are visually indistinguishable; matching source body+FX bytes establishes the displayed phase, and logic traces establish exact timing.'}
         Path(self.args.out).parent.mkdir(parents=True,exist_ok=True)
         Path(self.args.out).write_text(json.dumps(report,indent=2)+'\n')
