@@ -67,3 +67,11 @@ docs/sim_runs.json
 # Reviewed native art reboot
 !/downloads/art-reboot-202c75e/bartgame-art-reboot-202c75e.gba
 !/downloads/art-reboot-202c75e/bartgame-art-reboot-202c75e.zip
+
+# Playable sword comparison studies (no production selection)
+!/downloads/sword-studies-89978ba/01-planted-slash.gba
+!/downloads/sword-studies-89978ba/02-broad-sweep.gba
+!/downloads/sword-studies-89978ba/03-step-and-cut.gba
+!/downloads/sword-studies-89978ba/04-overhand-chop.gba
+!/downloads/sword-studies-89978ba/05-flowing-backhand.gba
+!/downloads/sword-studies-89978ba/all-five-sword-studies.zip

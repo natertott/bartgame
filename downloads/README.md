@@ -1,5 +1,12 @@
 # BARTGAME downloads
 
+## Sword-swing comparison prototypes
+
+[Review all five actual mGBA variations](../art-review/sword-studies/README.md) ·
+[Download all five playable ROMs](sword-studies-89978ba/all-five-sword-studies.zip).
+These are optional prototypes for selection. The released native-art build
+below remains the default; no sword variation has been chosen yet.
+
 ## Latest: complete native art reboot
 
 Every active visual family shares one native-resolution art direction: compact

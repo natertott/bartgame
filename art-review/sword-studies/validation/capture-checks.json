@@ -1,0 +1,1086 @@
+{
+  "cases": 90,
+  "all_passed": true,
+  "checks": [
+    {
+      "variant": 1,
+      "category": "final-captures",
+      "name": "forest-n",
+      "checks": {
+        "all_eight_poses_displayed": true,
+        "exactly_one_complete_attack": true,
+        "active_window_matches_clock": true,
+        "all_hardware_frames_matched": true,
+        "forward_enemy_hit": null
+      }
+    },
+    {
+      "variant": 1,
+      "category": "final-captures",
+      "name": "forest-e",
+      "checks": {
+        "all_eight_poses_displayed": true,
+        "exactly_one_complete_attack": true,
+        "active_window_matches_clock": true,
+        "all_hardware_frames_matched": true,
+        "forward_enemy_hit": null
+      }
+    },
+    {
+      "variant": 1,
+      "category": "final-captures",
+      "name": "forest-s",
+      "checks": {
+        "all_eight_poses_displayed": true,
+        "exactly_one_complete_attack": true,
+        "active_window_matches_clock": true,
+        "all_hardware_frames_matched": true,
+        "forward_enemy_hit": null
+      }
+    },
+    {
+      "variant": 1,
+      "category": "final-captures",
+      "name": "forest-w",
+      "checks": {
+        "all_eight_poses_displayed": true,
+        "exactly_one_complete_attack": true,
+        "active_window_matches_clock": true,
+        "all_hardware_frames_matched": true,
+        "forward_enemy_hit": null
+      }
+    },
+    {
+      "variant": 1,
+      "category": "final-captures",
+      "name": "drain-n",
+      "checks": {
+        "all_eight_poses_displayed": true,
+        "exactly_one_complete_attack": true,
+        "active_window_matches_clock": true,
+        "all_hardware_frames_matched": true,
+        "forward_enemy_hit": null
+      }
+    },
+    {
+      "variant": 1,
+      "category": "final-captures",
+      "name": "drain-e",
+      "checks": {
+        "all_eight_poses_displayed": true,
+        "exactly_one_complete_attack": true,
+        "active_window_matches_clock": true,
+        "all_hardware_frames_matched": true,
+        "forward_enemy_hit": null
+      }
+    },
+    {
+      "variant": 1,
+      "category": "final-captures",
+      "name": "drain-s",
+      "checks": {
+        "all_eight_poses_displayed": true,
+        "exactly_one_complete_attack": true,
+        "active_window_matches_clock": true,
+        "all_hardware_frames_matched": true,
+        "forward_enemy_hit": null
+      }
+    },
+    {
+      "variant": 1,
+      "category": "final-captures",
+      "name": "drain-w",
+      "checks": {
+        "all_eight_poses_displayed": true,
+        "exactly_one_complete_attack": true,
+        "active_window_matches_clock": true,
+        "all_hardware_frames_matched": true,
+        "forward_enemy_hit": null
+      }
+    },
+    {
+      "variant": 1,
+      "category": "final-captures",
+      "name": "blight-n",
+      "checks": {
+        "all_eight_poses_displayed": true,
+        "exactly_one_complete_attack": true,
+        "active_window_matches_clock": true,
+        "all_hardware_frames_matched": true,
+        "forward_enemy_hit": null
+      }
+    },
+    {
+      "variant": 1,
+      "category": "final-captures",
+      "name": "blight-e",
+      "checks": {
+        "all_eight_poses_displayed": true,
+        "exactly_one_complete_attack": true,
+        "active_window_matches_clock": true,
+        "all_hardware_frames_matched": true,
+        "forward_enemy_hit": null
+      }
+    },
+    {
+      "variant": 1,
+      "category": "final-captures",
+      "name": "blight-s",
+      "checks": {
+        "all_eight_poses_displayed": true,
+        "exactly_one_complete_attack": true,
+        "active_window_matches_clock": true,
+        "all_hardware_frames_matched": true,
+        "forward_enemy_hit": null
+      }
+    },
+    {
+      "variant": 1,
+      "category": "final-captures",
+      "name": "blight-w",
+      "checks": {
+        "all_eight_poses_displayed": true,
+        "exactly_one_complete_attack": true,
+        "active_window_matches_clock": true,
+        "all_hardware_frames_matched": true,
+        "forward_enemy_hit": null
+      }
+    },
+    {
+      "variant": 1,
+      "category": "final-captures",
+      "name": "cave-n",
+      "checks": {
+        "all_eight_poses_displayed": true,
+        "exactly_one_complete_attack": true,
+        "active_window_matches_clock": true,
+        "all_hardware_frames_matched": true,
+        "forward_enemy_hit": null
+      }
+    },
+    {
+      "variant": 1,
+      "category": "final-captures",
+      "name": "cave-e",
+      "checks": {
+        "all_eight_poses_displayed": true,
+        "exactly_one_complete_attack": true,
+        "active_window_matches_clock": true,
+        "all_hardware_frames_matched": true,
+        "forward_enemy_hit": null
+      }
+    },
+    {
+      "variant": 1,
+      "category": "final-captures",
+      "name": "cave-s",
+      "checks": {
+        "all_eight_poses_displayed": true,
+        "exactly_one_complete_attack": true,
+        "active_window_matches_clock": true,
+        "all_hardware_frames_matched": true,
+        "forward_enemy_hit": null
+      }
+    },
+    {
+      "variant": 1,
+      "category": "final-captures",
+      "name": "cave-w",
+      "checks": {
+        "all_eight_poses_displayed": true,
+        "exactly_one_complete_attack": true,
+        "active_window_matches_clock": true,
+        "all_hardware_frames_matched": true,
+        "forward_enemy_hit": null
+      }
+    },
+    {
+      "variant": 1,
+      "category": "targets",
+      "name": "forest-n",
+      "checks": {
+        "all_eight_poses_displayed": true,
+        "exactly_one_complete_attack": true,
+        "active_window_matches_clock": true,
+        "all_hardware_frames_matched": true,
+        "forward_enemy_hit": true
+      }
+    },
+    {
+      "variant": 1,
+      "category": "targets",
+      "name": "forest-e",
+      "checks": {
+        "all_eight_poses_displayed": true,
+        "exactly_one_complete_attack": true,
+        "active_window_matches_clock": true,
+        "all_hardware_frames_matched": true,
+        "forward_enemy_hit": true
+      }
+    },
+    {
+      "variant": 2,
+      "category": "final-captures",
+      "name": "forest-n",
+      "checks": {
+        "all_eight_poses_displayed": true,
+        "exactly_one_complete_attack": true,
+        "active_window_matches_clock": true,
+        "all_hardware_frames_matched": true,
+        "forward_enemy_hit": null
+      }
+    },
+    {
+      "variant": 2,
+      "category": "final-captures",
+      "name": "forest-e",
+      "checks": {
+        "all_eight_poses_displayed": true,
+        "exactly_one_complete_attack": true,
+        "active_window_matches_clock": true,
+        "all_hardware_frames_matched": true,
+        "forward_enemy_hit": null
+      }
+    },
+    {
+      "variant": 2,
+      "category": "final-captures",
+      "name": "forest-s",
+      "checks": {
+        "all_eight_poses_displayed": true,
+        "exactly_one_complete_attack": true,
+        "active_window_matches_clock": true,
+        "all_hardware_frames_matched": true,
+        "forward_enemy_hit": null
+      }
+    },
+    {
+      "variant": 2,
+      "category": "final-captures",
+      "name": "forest-w",
+      "checks": {
+        "all_eight_poses_displayed": true,
+        "exactly_one_complete_attack": true,
+        "active_window_matches_clock": true,
+        "all_hardware_frames_matched": true,
+        "forward_enemy_hit": null
+      }
+    },
+    {
+      "variant": 2,
+      "category": "final-captures",
+      "name": "drain-n",
+      "checks": {
+        "all_eight_poses_displayed": true,
+        "exactly_one_complete_attack": true,
+        "active_window_matches_clock": true,
+        "all_hardware_frames_matched": true,
+        "forward_enemy_hit": null
+      }
+    },
+    {
+      "variant": 2,
+      "category": "final-captures",
+      "name": "drain-e",
+      "checks": {
+        "all_eight_poses_displayed": true,
+        "exactly_one_complete_attack": true,
+        "active_window_matches_clock": true,
+        "all_hardware_frames_matched": true,
+        "forward_enemy_hit": null
+      }
+    },
+    {
+      "variant": 2,
+      "category": "final-captures",
+      "name": "drain-s",
+      "checks": {
+        "all_eight_poses_displayed": true,
+        "exactly_one_complete_attack": true,
+        "active_window_matches_clock": true,
+        "all_hardware_frames_matched": true,
+        "forward_enemy_hit": null
+      }
+    },
+    {
+      "variant": 2,
+      "category": "final-captures",
+      "name": "drain-w",
+      "checks": {
+        "all_eight_poses_displayed": true,
+        "exactly_one_complete_attack": true,
+        "active_window_matches_clock": true,
+        "all_hardware_frames_matched": true,
+        "forward_enemy_hit": null
+      }
+    },
+    {
+      "variant": 2,
+      "category": "final-captures",
+      "name": "blight-n",
+      "checks": {
+        "all_eight_poses_displayed": true,
+        "exactly_one_complete_attack": true,
+        "active_window_matches_clock": true,
+        "all_hardware_frames_matched": true,
+        "forward_enemy_hit": null
+      }
+    },
+    {
+      "variant": 2,
+      "category": "final-captures",
+      "name": "blight-e",
+      "checks": {
+        "all_eight_poses_displayed": true,
+        "exactly_one_complete_attack": true,
+        "active_window_matches_clock": true,
+        "all_hardware_frames_matched": true,
+        "forward_enemy_hit": null
+      }
+    },
+    {
+      "variant": 2,
+      "category": "final-captures",
+      "name": "blight-s",
+      "checks": {
+        "all_eight_poses_displayed": true,
+        "exactly_one_complete_attack": true,
+        "active_window_matches_clock": true,
+        "all_hardware_frames_matched": true,
+        "forward_enemy_hit": null
+      }
+    },
+    {
+      "variant": 2,
+      "category": "final-captures",
+      "name": "blight-w",
+      "checks": {
+        "all_eight_poses_displayed": true,
+        "exactly_one_complete_attack": true,
+        "active_window_matches_clock": true,
+        "all_hardware_frames_matched": true,
+        "forward_enemy_hit": null
+      }
+    },
+    {
+      "variant": 2,
+      "category": "final-captures",
+      "name": "cave-n",
+      "checks": {
+        "all_eight_poses_displayed": true,
+        "exactly_one_complete_attack": true,
+        "active_window_matches_clock": true,
+        "all_hardware_frames_matched": true,
+        "forward_enemy_hit": null
+      }
+    },
+    {
+      "variant": 2,
+      "category": "final-captures",
+      "name": "cave-e",
+      "checks": {
+        "all_eight_poses_displayed": true,
+        "exactly_one_complete_attack": true,
+        "active_window_matches_clock": true,
+        "all_hardware_frames_matched": true,
+        "forward_enemy_hit": null
+      }
+    },
+    {
+      "variant": 2,
+      "category": "final-captures",
+      "name": "cave-s",
+      "checks": {
+        "all_eight_poses_displayed": true,
+        "exactly_one_complete_attack": true,
+        "active_window_matches_clock": true,
+        "all_hardware_frames_matched": true,
+        "forward_enemy_hit": null
+      }
+    },
+    {
+      "variant": 2,
+      "category": "final-captures",
+      "name": "cave-w",
+      "checks": {
+        "all_eight_poses_displayed": true,
+        "exactly_one_complete_attack": true,
+        "active_window_matches_clock": true,
+        "all_hardware_frames_matched": true,
+        "forward_enemy_hit": null
+      }
+    },
+    {
+      "variant": 2,
+      "category": "targets",
+      "name": "forest-n",
+      "checks": {
+        "all_eight_poses_displayed": true,
+        "exactly_one_complete_attack": true,
+        "active_window_matches_clock": true,
+        "all_hardware_frames_matched": true,
+        "forward_enemy_hit": true
+      }
+    },
+    {
+      "variant": 2,
+      "category": "targets",
+      "name": "forest-e",
+      "checks": {
+        "all_eight_poses_displayed": true,
+        "exactly_one_complete_attack": true,
+        "active_window_matches_clock": true,
+        "all_hardware_frames_matched": true,
+        "forward_enemy_hit": true
+      }
+    },
+    {
+      "variant": 3,
+      "category": "final-captures",
+      "name": "forest-n",
+      "checks": {
+        "all_eight_poses_displayed": true,
+        "exactly_one_complete_attack": true,
+        "active_window_matches_clock": true,
+        "all_hardware_frames_matched": true,
+        "forward_enemy_hit": null
+      }
+    },
+    {
+      "variant": 3,
+      "category": "final-captures",
+      "name": "forest-e",
+      "checks": {
+        "all_eight_poses_displayed": true,
+        "exactly_one_complete_attack": true,
+        "active_window_matches_clock": true,
+        "all_hardware_frames_matched": true,
+        "forward_enemy_hit": null
+      }
+    },
+    {
+      "variant": 3,
+      "category": "final-captures",
+      "name": "forest-s",
+      "checks": {
+        "all_eight_poses_displayed": true,
+        "exactly_one_complete_attack": true,
+        "active_window_matches_clock": true,
+        "all_hardware_frames_matched": true,
+        "forward_enemy_hit": null
+      }
+    },
+    {
+      "variant": 3,
+      "category": "final-captures",
+      "name": "forest-w",
+      "checks": {
+        "all_eight_poses_displayed": true,
+        "exactly_one_complete_attack": true,
+        "active_window_matches_clock": true,
+        "all_hardware_frames_matched": true,
+        "forward_enemy_hit": null
+      }
+    },
+    {
+      "variant": 3,
+      "category": "final-captures",
+      "name": "drain-n",
+      "checks": {
+        "all_eight_poses_displayed": true,
+        "exactly_one_complete_attack": true,
+        "active_window_matches_clock": true,
+        "all_hardware_frames_matched": true,
+        "forward_enemy_hit": null
+      }
+    },
+    {
+      "variant": 3,
+      "category": "final-captures",
+      "name": "drain-e",
+      "checks": {
+        "all_eight_poses_displayed": true,
+        "exactly_one_complete_attack": true,
+        "active_window_matches_clock": true,
+        "all_hardware_frames_matched": true,
+        "forward_enemy_hit": null
+      }
+    },
+    {
+      "variant": 3,
+      "category": "final-captures",
+      "name": "drain-s",
+      "checks": {
+        "all_eight_poses_displayed": true,
+        "exactly_one_complete_attack": true,
+        "active_window_matches_clock": true,
+        "all_hardware_frames_matched": true,
+        "forward_enemy_hit": null
+      }
+    },
+    {
+      "variant": 3,
+      "category": "final-captures",
+      "name": "drain-w",
+      "checks": {
+        "all_eight_poses_displayed": true,
+        "exactly_one_complete_attack": true,
+        "active_window_matches_clock": true,
+        "all_hardware_frames_matched": true,
+        "forward_enemy_hit": null
+      }
+    },
+    {
+      "variant": 3,
+      "category": "final-captures",
+      "name": "blight-n",
+      "checks": {
+        "all_eight_poses_displayed": true,
+        "exactly_one_complete_attack": true,
+        "active_window_matches_clock": true,
+        "all_hardware_frames_matched": true,
+        "forward_enemy_hit": null
+      }
+    },
+    {
+      "variant": 3,
+      "category": "final-captures",
+      "name": "blight-e",
+      "checks": {
+        "all_eight_poses_displayed": true,
+        "exactly_one_complete_attack": true,
+        "active_window_matches_clock": true,
+        "all_hardware_frames_matched": true,
+        "forward_enemy_hit": null
+      }
+    },
+    {
+      "variant": 3,
+      "category": "final-captures",
+      "name": "blight-s",
+      "checks": {
+        "all_eight_poses_displayed": true,
+        "exactly_one_complete_attack": true,
+        "active_window_matches_clock": true,
+        "all_hardware_frames_matched": true,
+        "forward_enemy_hit": null
+      }
+    },
+    {
+      "variant": 3,
+      "category": "final-captures",
+      "name": "blight-w",
+      "checks": {
+        "all_eight_poses_displayed": true,
+        "exactly_one_complete_attack": true,
+        "active_window_matches_clock": true,
+        "all_hardware_frames_matched": true,
+        "forward_enemy_hit": null
+      }
+    },
+    {
+      "variant": 3,
+      "category": "final-captures",
+      "name": "cave-n",
+      "checks": {
+        "all_eight_poses_displayed": true,
+        "exactly_one_complete_attack": true,
+        "active_window_matches_clock": true,
+        "all_hardware_frames_matched": true,
+        "forward_enemy_hit": null
+      }
+    },
+    {
+      "variant": 3,
+      "category": "final-captures",
+      "name": "cave-e",
+      "checks": {
+        "all_eight_poses_displayed": true,
+        "exactly_one_complete_attack": true,
+        "active_window_matches_clock": true,
+        "all_hardware_frames_matched": true,
+        "forward_enemy_hit": null
+      }
+    },
+    {
+      "variant": 3,
+      "category": "final-captures",
+      "name": "cave-s",
+      "checks": {
+        "all_eight_poses_displayed": true,
+        "exactly_one_complete_attack": true,
+        "active_window_matches_clock": true,
+        "all_hardware_frames_matched": true,
+        "forward_enemy_hit": null
+      }
+    },
+    {
+      "variant": 3,
+      "category": "final-captures",
+      "name": "cave-w",
+      "checks": {
+        "all_eight_poses_displayed": true,
+        "exactly_one_complete_attack": true,
+        "active_window_matches_clock": true,
+        "all_hardware_frames_matched": true,
+        "forward_enemy_hit": null
+      }
+    },
+    {
+      "variant": 3,
+      "category": "targets",
+      "name": "forest-n",
+      "checks": {
+        "all_eight_poses_displayed": true,
+        "exactly_one_complete_attack": true,
+        "active_window_matches_clock": true,
+        "all_hardware_frames_matched": true,
+        "forward_enemy_hit": true
+      }
+    },
+    {
+      "variant": 3,
+      "category": "targets",
+      "name": "forest-e",
+      "checks": {
+        "all_eight_poses_displayed": true,
+        "exactly_one_complete_attack": true,
+        "active_window_matches_clock": true,
+        "all_hardware_frames_matched": true,
+        "forward_enemy_hit": true
+      }
+    },
+    {
+      "variant": 4,
+      "category": "final-captures",
+      "name": "forest-n",
+      "checks": {
+        "all_eight_poses_displayed": true,
+        "exactly_one_complete_attack": true,
+        "active_window_matches_clock": true,
+        "all_hardware_frames_matched": true,
+        "forward_enemy_hit": null
+      }
+    },
+    {
+      "variant": 4,
+      "category": "final-captures",
+      "name": "forest-e",
+      "checks": {
+        "all_eight_poses_displayed": true,
+        "exactly_one_complete_attack": true,
+        "active_window_matches_clock": true,
+        "all_hardware_frames_matched": true,
+        "forward_enemy_hit": null
+      }
+    },
+    {
+      "variant": 4,
+      "category": "final-captures",
+      "name": "forest-s",
+      "checks": {
+        "all_eight_poses_displayed": true,
+        "exactly_one_complete_attack": true,
+        "active_window_matches_clock": true,
+        "all_hardware_frames_matched": true,
+        "forward_enemy_hit": null
+      }
+    },
+    {
+      "variant": 4,
+      "category": "final-captures",
+      "name": "forest-w",
+      "checks": {
+        "all_eight_poses_displayed": true,
+        "exactly_one_complete_attack": true,
+        "active_window_matches_clock": true,
+        "all_hardware_frames_matched": true,
+        "forward_enemy_hit": null
+      }
+    },
+    {
+      "variant": 4,
+      "category": "final-captures",
+      "name": "drain-n",
+      "checks": {
+        "all_eight_poses_displayed": true,
+        "exactly_one_complete_attack": true,
+        "active_window_matches_clock": true,
+        "all_hardware_frames_matched": true,
+        "forward_enemy_hit": null
+      }
+    },
+    {
+      "variant": 4,
+      "category": "final-captures",
+      "name": "drain-e",
+      "checks": {
+        "all_eight_poses_displayed": true,
+        "exactly_one_complete_attack": true,
+        "active_window_matches_clock": true,
+        "all_hardware_frames_matched": true,
+        "forward_enemy_hit": null
+      }
+    },
+    {
+      "variant": 4,
+      "category": "final-captures",
+      "name": "drain-s",
+      "checks": {
+        "all_eight_poses_displayed": true,
+        "exactly_one_complete_attack": true,
+        "active_window_matches_clock": true,
+        "all_hardware_frames_matched": true,
+        "forward_enemy_hit": null
+      }
+    },
+    {
+      "variant": 4,
+      "category": "final-captures",
+      "name": "drain-w",
+      "checks": {
+        "all_eight_poses_displayed": true,
+        "exactly_one_complete_attack": true,
+        "active_window_matches_clock": true,
+        "all_hardware_frames_matched": true,
+        "forward_enemy_hit": null
+      }
+    },
+    {
+      "variant": 4,
+      "category": "final-captures",
+      "name": "blight-n",
+      "checks": {
+        "all_eight_poses_displayed": true,
+        "exactly_one_complete_attack": true,
+        "active_window_matches_clock": true,
+        "all_hardware_frames_matched": true,
+        "forward_enemy_hit": null
+      }
+    },
+    {
+      "variant": 4,
+      "category": "final-captures",
+      "name": "blight-e",
+      "checks": {
+        "all_eight_poses_displayed": true,
+        "exactly_one_complete_attack": true,
+        "active_window_matches_clock": true,
+        "all_hardware_frames_matched": true,
+        "forward_enemy_hit": null
+      }
+    },
+    {
+      "variant": 4,
+      "category": "final-captures",
+      "name": "blight-s",
+      "checks": {
+        "all_eight_poses_displayed": true,
+        "exactly_one_complete_attack": true,
+        "active_window_matches_clock": true,
+        "all_hardware_frames_matched": true,
+        "forward_enemy_hit": null
+      }
+    },
+    {
+      "variant": 4,
+      "category": "final-captures",
+      "name": "blight-w",
+      "checks": {
+        "all_eight_poses_displayed": true,
+        "exactly_one_complete_attack": true,
+        "active_window_matches_clock": true,
+        "all_hardware_frames_matched": true,
+        "forward_enemy_hit": null
+      }
+    },
+    {
+      "variant": 4,
+      "category": "final-captures",
+      "name": "cave-n",
+      "checks": {
+        "all_eight_poses_displayed": true,
+        "exactly_one_complete_attack": true,
+        "active_window_matches_clock": true,
+        "all_hardware_frames_matched": true,
+        "forward_enemy_hit": null
+      }
+    },
+    {
+      "variant": 4,
+      "category": "final-captures",
+      "name": "cave-e",
+      "checks": {
+        "all_eight_poses_displayed": true,
+        "exactly_one_complete_attack": true,
+        "active_window_matches_clock": true,
+        "all_hardware_frames_matched": true,
+        "forward_enemy_hit": null
+      }
+    },
+    {
+      "variant": 4,
+      "category": "final-captures",
+      "name": "cave-s",
+      "checks": {
+        "all_eight_poses_displayed": true,
+        "exactly_one_complete_attack": true,
+        "active_window_matches_clock": true,
+        "all_hardware_frames_matched": true,
+        "forward_enemy_hit": null
+      }
+    },
+    {
+      "variant": 4,
+      "category": "final-captures",
+      "name": "cave-w",
+      "checks": {
+        "all_eight_poses_displayed": true,
+        "exactly_one_complete_attack": true,
+        "active_window_matches_clock": true,
+        "all_hardware_frames_matched": true,
+        "forward_enemy_hit": null
+      }
+    },
+    {
+      "variant": 4,
+      "category": "targets",
+      "name": "forest-n",
+      "checks": {
+        "all_eight_poses_displayed": true,
+        "exactly_one_complete_attack": true,
+        "active_window_matches_clock": true,
+        "all_hardware_frames_matched": true,
+        "forward_enemy_hit": true
+      }
+    },
+    {
+      "variant": 4,
+      "category": "targets",
+      "name": "forest-e",
+      "checks": {
+        "all_eight_poses_displayed": true,
+        "exactly_one_complete_attack": true,
+        "active_window_matches_clock": true,
+        "all_hardware_frames_matched": true,
+        "forward_enemy_hit": true
+      }
+    },
+    {
+      "variant": 5,
+      "category": "final-captures",
+      "name": "forest-n",
+      "checks": {
+        "all_eight_poses_displayed": true,
+        "exactly_one_complete_attack": true,
+        "active_window_matches_clock": true,
+        "all_hardware_frames_matched": true,
+        "forward_enemy_hit": null
+      }
+    },
+    {
+      "variant": 5,
+      "category": "final-captures",
+      "name": "forest-e",
+      "checks": {
+        "all_eight_poses_displayed": true,
+        "exactly_one_complete_attack": true,
+        "active_window_matches_clock": true,
+        "all_hardware_frames_matched": true,
+        "forward_enemy_hit": null
+      }
+    },
+    {
+      "variant": 5,
+      "category": "final-captures",
+      "name": "forest-s",
+      "checks": {
+        "all_eight_poses_displayed": true,
+        "exactly_one_complete_attack": true,
+        "active_window_matches_clock": true,
+        "all_hardware_frames_matched": true,
+        "forward_enemy_hit": null
+      }
+    },
+    {
+      "variant": 5,
+      "category": "final-captures",
+      "name": "forest-w",
+      "checks": {
+        "all_eight_poses_displayed": true,
+        "exactly_one_complete_attack": true,
+        "active_window_matches_clock": true,
+        "all_hardware_frames_matched": true,
+        "forward_enemy_hit": null
+      }
+    },
+    {
+      "variant": 5,
+      "category": "final-captures",
+      "name": "drain-n",
+      "checks": {
+        "all_eight_poses_displayed": true,
+        "exactly_one_complete_attack": true,
+        "active_window_matches_clock": true,
+        "all_hardware_frames_matched": true,
+        "forward_enemy_hit": null
+      }
+    },
+    {
+      "variant": 5,
+      "category": "final-captures",
+      "name": "drain-e",
+      "checks": {
+        "all_eight_poses_displayed": true,
+        "exactly_one_complete_attack": true,
+        "active_window_matches_clock": true,
+        "all_hardware_frames_matched": true,
+        "forward_enemy_hit": null
+      }
+    },
+    {
+      "variant": 5,
+      "category": "final-captures",
+      "name": "drain-s",
+      "checks": {
+        "all_eight_poses_displayed": true,
+        "exactly_one_complete_attack": true,
+        "active_window_matches_clock": true,
+        "all_hardware_frames_matched": true,
+        "forward_enemy_hit": null
+      }
+    },
+    {
+      "variant": 5,
+      "category": "final-captures",
+      "name": "drain-w",
+      "checks": {
+        "all_eight_poses_displayed": true,
+        "exactly_one_complete_attack": true,
+        "active_window_matches_clock": true,
+        "all_hardware_frames_matched": true,
+        "forward_enemy_hit": null
+      }
+    },
+    {
+      "variant": 5,
+      "category": "final-captures",
+      "name": "blight-n",
+      "checks": {
+        "all_eight_poses_displayed": true,
+        "exactly_one_complete_attack": true,
+        "active_window_matches_clock": true,
+        "all_hardware_frames_matched": true,
+        "forward_enemy_hit": null
+      }
+    },
+    {
+      "variant": 5,
+      "category": "final-captures",
+      "name": "blight-e",
+      "checks": {
+        "all_eight_poses_displayed": true,
+        "exactly_one_complete_attack": true,
+        "active_window_matches_clock": true,
+        "all_hardware_frames_matched": true,
+        "forward_enemy_hit": null
+      }
+    },
+    {
+      "variant": 5,
+      "category": "final-captures",
+      "name": "blight-s",
+      "checks": {
+        "all_eight_poses_displayed": true,
+        "exactly_one_complete_attack": true,
+        "active_window_matches_clock": true,
+        "all_hardware_frames_matched": true,
+        "forward_enemy_hit": null
+      }
+    },
+    {
+      "variant": 5,
+      "category": "final-captures",
+      "name": "blight-w",
+      "checks": {
+        "all_eight_poses_displayed": true,
+        "exactly_one_complete_attack": true,
+        "active_window_matches_clock": true,
+        "all_hardware_frames_matched": true,
+        "forward_enemy_hit": null
+      }
+    },
+    {
+      "variant": 5,
+      "category": "final-captures",
+      "name": "cave-n",
+      "checks": {
+        "all_eight_poses_displayed": true,
+        "exactly_one_complete_attack": true,
+        "active_window_matches_clock": true,
+        "all_hardware_frames_matched": true,
+        "forward_enemy_hit": null
+      }
+    },
+    {
+      "variant": 5,
+      "category": "final-captures",
+      "name": "cave-e",
+      "checks": {
+        "all_eight_poses_displayed": true,
+        "exactly_one_complete_attack": true,
+        "active_window_matches_clock": true,
+        "all_hardware_frames_matched": true,
+        "forward_enemy_hit": null
+      }
+    },
+    {
+      "variant": 5,
+      "category": "final-captures",
+      "name": "cave-s",
+      "checks": {
+        "all_eight_poses_displayed": true,
+        "exactly_one_complete_attack": true,
+        "active_window_matches_clock": true,
+        "all_hardware_frames_matched": true,
+        "forward_enemy_hit": null
+      }
+    },
+    {
+      "variant": 5,
+      "category": "final-captures",
+      "name": "cave-w",
+      "checks": {
+        "all_eight_poses_displayed": true,
+        "exactly_one_complete_attack": true,
+        "active_window_matches_clock": true,
+        "all_hardware_frames_matched": true,
+        "forward_enemy_hit": null
+      }
+    },
+    {
+      "variant": 5,
+      "category": "targets",
+      "name": "forest-n",
+      "checks": {
+        "all_eight_poses_displayed": true,
+        "exactly_one_complete_attack": true,
+        "active_window_matches_clock": true,
+        "all_hardware_frames_matched": true,
+        "forward_enemy_hit": true
+      }
+    },
+    {
+      "variant": 5,
+      "category": "targets",
+      "name": "forest-e",
+      "checks": {
+        "all_eight_poses_displayed": true,
+        "exactly_one_complete_attack": true,
+        "active_window_matches_clock": true,
+        "all_hardware_frames_matched": true,
+        "forward_enemy_hit": true
+      }
+    }
+  ]
+}

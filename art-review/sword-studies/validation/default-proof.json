@@ -1,0 +1,8 @@
+{
+  "released_default_sha256": "41dc680068c094416e92152d4c22637c10d6a055d2bee63ce7700c419490e92d",
+  "current_default_sha256": "41dc680068c094416e92152d4c22637c10d6a055d2bee63ce7700c419490e92d",
+  "selected_variant": null,
+  "default_profile": 0,
+  "same_bytes": true,
+  "method": "Rebuilt standalone game with default BART_SWING0 and compared exact ROM bytes with the published art reboot."
+}

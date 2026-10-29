@@ -1,0 +1,6 @@
+aa56b2ec84b7cf5ee59c2ba5fabc1268a6bc974983d47a57cf622d6a05691f02  01-planted-slash.gba
+bbf3df456bd7d4eae7c22f0a7ca4b212bd84ebd908b4a6cc2d5ec3ceb7522032  02-broad-sweep.gba
+547674bfd44f79cd5614f3188bad86f8ed8a4a9ea9cee060e1236ca0c832c97a  03-step-and-cut.gba
+8714747e1440bc2a46dccfb0f7290a0864f31378775e57f7486837b152645b8d  04-overhand-chop.gba
+aecf7432514332c238fec164d289395022b1a5ded3efedf983c681425df94a0f  05-flowing-backhand.gba
+eb85e17f01dab2d0f1e020182bf159b89cbc59b51fb65687a59d5ac138f69f29  all-five-sword-studies.zip

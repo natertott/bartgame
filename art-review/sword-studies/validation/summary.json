@@ -1,0 +1,346 @@
+{
+  "emulator": "mGBA 0.10.5",
+  "method": "Real ROM/button actions on a disclosed local physical-floor fixture; ordinary constructor-spawned beetles keep native HP. AI, flags and positions isolate contacts. Hardware body and FX bytes identify coherent rendered snapshots. This is not natural-room gallery evidence or per-pixel collision. Forward targets are 24 pixels from Bloom hurt-box centre, first proven outside body overlap.",
+  "passed": 3878,
+  "total": 3878,
+  "boundary_contact_cases": 544,
+  "forward_contact_cases": 20,
+  "forward_contacts_all_passed": true,
+  "variants": [
+    {
+      "id": 1,
+      "name": "Planted slash",
+      "rom_sha256": "aa56b2ec84b7cf5ee59c2ba5fabc1268a6bc974983d47a57cf622d6a05691f02",
+      "source_commit": "89978badb0f242471f402eeb1da4c65b01892f3a",
+      "passed": 737,
+      "total": 737,
+      "boundary_contacts": 128,
+      "durations": [
+        2,
+        2,
+        1,
+        2,
+        2,
+        2,
+        2,
+        3
+      ],
+      "attack_ticks": 16,
+      "startup_ticks": 4,
+      "live_ticks": 7,
+      "recovery_ticks": 5,
+      "active_ages_inclusive": [
+        4,
+        10
+      ],
+      "hardware_pose_holds_exact_all_four_facings": true,
+      "forward_contacts": {
+        "n": {
+          "age": 5,
+          "phase": 3,
+          "target_foot": [
+            256,
+            201
+          ],
+          "no_body_overlap": true
+        },
+        "e": {
+          "age": 4,
+          "phase": 2,
+          "target_foot": [
+            280,
+            225
+          ],
+          "no_body_overlap": true
+        },
+        "s": {
+          "age": 5,
+          "phase": 3,
+          "target_foot": [
+            256,
+            249
+          ],
+          "no_body_overlap": true
+        },
+        "w": {
+          "age": 4,
+          "phase": 2,
+          "target_foot": [
+            232,
+            225
+          ],
+          "no_body_overlap": true
+        }
+      },
+      "report": "v1.json"
+    },
+    {
+      "id": 2,
+      "name": "Broad sweep",
+      "rom_sha256": "bbf3df456bd7d4eae7c22f0a7ca4b212bd84ebd908b4a6cc2d5ec3ceb7522032",
+      "source_commit": "89978badb0f242471f402eeb1da4c65b01892f3a",
+      "passed": 829,
+      "total": 829,
+      "boundary_contacts": 128,
+      "durations": [
+        2,
+        2,
+        1,
+        2,
+        5,
+        2,
+        3,
+        3
+      ],
+      "attack_ticks": 20,
+      "startup_ticks": 4,
+      "live_ticks": 10,
+      "recovery_ticks": 6,
+      "active_ages_inclusive": [
+        4,
+        13
+      ],
+      "hardware_pose_holds_exact_all_four_facings": true,
+      "forward_contacts": {
+        "n": {
+          "age": 5,
+          "phase": 3,
+          "target_foot": [
+            256,
+            201
+          ],
+          "no_body_overlap": true
+        },
+        "e": {
+          "age": 5,
+          "phase": 3,
+          "target_foot": [
+            280,
+            225
+          ],
+          "no_body_overlap": true
+        },
+        "s": {
+          "age": 7,
+          "phase": 4,
+          "target_foot": [
+            256,
+            249
+          ],
+          "no_body_overlap": true
+        },
+        "w": {
+          "age": 5,
+          "phase": 3,
+          "target_foot": [
+            232,
+            225
+          ],
+          "no_body_overlap": true
+        }
+      },
+      "report": "v2.json"
+    },
+    {
+      "id": 3,
+      "name": "Step-and-cut",
+      "rom_sha256": "547674bfd44f79cd5614f3188bad86f8ed8a4a9ea9cee060e1236ca0c832c97a",
+      "source_commit": "89978badb0f242471f402eeb1da4c65b01892f3a",
+      "passed": 744,
+      "total": 744,
+      "boundary_contacts": 96,
+      "durations": [
+        2,
+        2,
+        2,
+        3,
+        2,
+        2,
+        2,
+        3
+      ],
+      "attack_ticks": 18,
+      "startup_ticks": 4,
+      "live_ticks": 7,
+      "recovery_ticks": 7,
+      "active_ages_inclusive": [
+        4,
+        10
+      ],
+      "hardware_pose_holds_exact_all_four_facings": true,
+      "forward_contacts": {
+        "n": {
+          "age": 6,
+          "phase": 3,
+          "target_foot": [
+            256,
+            201
+          ],
+          "no_body_overlap": true
+        },
+        "e": {
+          "age": 4,
+          "phase": 2,
+          "target_foot": [
+            280,
+            225
+          ],
+          "no_body_overlap": true
+        },
+        "s": {
+          "age": 6,
+          "phase": 3,
+          "target_foot": [
+            256,
+            249
+          ],
+          "no_body_overlap": true
+        },
+        "w": {
+          "age": 4,
+          "phase": 2,
+          "target_foot": [
+            232,
+            225
+          ],
+          "no_body_overlap": true
+        }
+      },
+      "report": "v3.json"
+    },
+    {
+      "id": 4,
+      "name": "Overhand chop",
+      "rom_sha256": "8714747e1440bc2a46dccfb0f7290a0864f31378775e57f7486837b152645b8d",
+      "source_commit": "89978badb0f242471f402eeb1da4c65b01892f3a",
+      "passed": 783,
+      "total": 783,
+      "boundary_contacts": 64,
+      "durations": [
+        3,
+        3,
+        2,
+        2,
+        3,
+        2,
+        3,
+        4
+      ],
+      "attack_ticks": 22,
+      "startup_ticks": 8,
+      "live_ticks": 5,
+      "recovery_ticks": 9,
+      "active_ages_inclusive": [
+        8,
+        12
+      ],
+      "hardware_pose_holds_exact_all_four_facings": true,
+      "forward_contacts": {
+        "n": {
+          "age": 8,
+          "phase": 3,
+          "target_foot": [
+            256,
+            201
+          ],
+          "no_body_overlap": true
+        },
+        "e": {
+          "age": 8,
+          "phase": 3,
+          "target_foot": [
+            280,
+            225
+          ],
+          "no_body_overlap": true
+        },
+        "s": {
+          "age": 10,
+          "phase": 4,
+          "target_foot": [
+            256,
+            249
+          ],
+          "no_body_overlap": true
+        },
+        "w": {
+          "age": 8,
+          "phase": 3,
+          "target_foot": [
+            232,
+            225
+          ],
+          "no_body_overlap": true
+        }
+      },
+      "report": "v4.json"
+    },
+    {
+      "id": 5,
+      "name": "Flowing backhand",
+      "rom_sha256": "aecf7432514332c238fec164d289395022b1a5ded3efedf983c681425df94a0f",
+      "source_commit": "89978badb0f242471f402eeb1da4c65b01892f3a",
+      "passed": 785,
+      "total": 785,
+      "boundary_contacts": 128,
+      "durations": [
+        2,
+        2,
+        1,
+        2,
+        3,
+        3,
+        3,
+        2
+      ],
+      "attack_ticks": 18,
+      "startup_ticks": 4,
+      "live_ticks": 9,
+      "recovery_ticks": 5,
+      "active_ages_inclusive": [
+        4,
+        12
+      ],
+      "hardware_pose_holds_exact_all_four_facings": true,
+      "forward_contacts": {
+        "n": {
+          "age": 5,
+          "phase": 3,
+          "target_foot": [
+            256,
+            201
+          ],
+          "no_body_overlap": true
+        },
+        "e": {
+          "age": 5,
+          "phase": 3,
+          "target_foot": [
+            280,
+            225
+          ],
+          "no_body_overlap": true
+        },
+        "s": {
+          "age": 5,
+          "phase": 3,
+          "target_foot": [
+            256,
+            249
+          ],
+          "no_body_overlap": true
+        },
+        "w": {
+          "age": 5,
+          "phase": 3,
+          "target_foot": [
+            232,
+            225
+          ],
+          "no_body_overlap": true
+        }
+      },
+      "report": "v5.json"
+    }
+  ]
+}

@@ -110,7 +110,7 @@ every enemy at every distance is hit on the same update. All lie within the
 shown active interval. Normal gameplay still involves spacing and approach.
 
 The visual critique is deliberately part of selection: 1 has subtler body
-motion, 2 is the broadest/readiest to read, 3 shows effort without actual travel,
+motion, 2 is the broadest and easiest to read, 3 shows effort without actual travel,
 4 demands more anticipation, and 5 has a busier return. These are tradeoffs for
 the user to judge in motion, not a reason to pick a default automatically.
 
