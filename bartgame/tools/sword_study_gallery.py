@@ -218,7 +218,7 @@ def still_boards(studies,archives,out):
     overview.save(out/'overview.png')
 
 
-def individual_cards(studies,archives,out,fps):
+def individual_cards(studies,archives,out,fps,suffix='',controlled_target=False):
     cards=[]
     for index,study in enumerate(studies):
         profile=study['profile'];pictures=[];diagnostics=[]
@@ -231,14 +231,15 @@ def individual_cards(studies,archives,out,fps):
                     crop=crop_frame(image,row,tick,diagnostic);width,height=crop.width*4,crop.height*4
                     panel=Image.new('RGB',(width,height+100),BG);d=draw_on(panel)
                     d.text((7,7),str(index+1)+'  '+profile['name'],font=TITLE,fill=FG)
-                    d.text((7,28),NAMES[face]+' / '+('CYAN DAMAGE BOX / diagnostic' if diagnostic else 'actual mGBA crop / 4x native'),font=SMALL,fill=LIVE if diagnostic else DIM)
+                    descriptor='CYAN DAMAGE BOX / diagnostic' if diagnostic else 'controlled target / 4x native' if controlled_target else 'actual mGBA crop / 4x native'
+                    d.text((7,28),NAMES[face]+' / '+descriptor,font=SMALL,fill=LIVE if diagnostic else DIM)
                     panel.paste(crop.resize((width,height),Image.Resampling.NEAREST),(0,48))
                     y=height+53
                     d.text((7,y),status(view,profile)+' / '+str(sum(profile['durations']))+' total ticks',font=SMALL,fill=LIVE if view['active'] else DIM)
                     timeline(d,7,y+20,width-14,profile,view)
                     pair.append(panel)
                 pictures.append(pair[0]);diagnostics.append(pair[1])
-        base='variation-'+str(index+1);length=len(pictures)
+        base='variation-'+str(index+1)+suffix;length=len(pictures)
         ticks=list(range(0,length,2));normal=timing(ticks,length,fps)
         slow=[round((t+1)*300/fps)*10-round(t*300/fps)*10 for t in range(length)]
         def speed_label(frame,label):
@@ -251,6 +252,35 @@ def individual_cards(studies,archives,out,fps):
                       'diagnostic_gif':base+'-hitbox.gif','normal':normal_meta,
                       'slow':slow_meta,'diagnostic':box_meta})
     return cards
+
+
+def controlled_targets(studies,captures,out,fps):
+    reports=[];target_studies=[]
+    for index,study in enumerate(studies):
+        source=captures/('v%d'%(index+1));report=read(source/'capture.json')
+        assert report['rom_sha256']==study['report']['rom_sha256'],('target ROM mismatch',index+1)
+        assert int(report['variant'])==index+1 and not report.get('failures')
+        cases={r['facing']:r for r in report['captures']}
+        assert set(cases)=={'n','e'},(index+1,list(cases))
+        dest=out/'actual/targets'/('v%d'%(index+1));dest.mkdir(parents=True,exist_ok=True)
+        copy(source/'capture.json',dest/'capture.json')
+        for row in report['captures']:
+            assert row.get('passed',True)
+            for key in ('clean_gif','slow_gif','overlay_gif','video','filmstrip'):
+                if row.get(key):copy(source/row[key],dest/row[key])
+            for relative in row['native_frames']:
+                copy(source/relative,dest/relative);native(dest/relative)
+        target_studies.append({**study,'source':source,'report':report,'target_cases':cases})
+        reports.append({'variant':index+1,'rom_sha256':report['rom_sha256'],
+                        'capture_report':f'actual/targets/v{index+1}/capture.json','cases':len(cases)})
+    archives={}
+    for face in ('e','n'):
+        rows=[study['target_cases'][face] for study in target_studies]
+        frames=[[native(path) for path in frame_paths(study['source'],row)] for study,row in zip(target_studies,rows)]
+        archives[face]=(rows,frames)
+    cards=individual_cards(target_studies,archives,out,fps,suffix='-target',controlled_target=True)
+    return {'method':'Real sword contacts against ordinary engine-spawned beetles on natural terrain. Target AI/position are disclosed fixtures, native HP and actual contact reactions are retained.',
+            'variants':reports,'cards':cards}
 
 
 def movie(studies,archives,out,fps):
@@ -284,6 +314,7 @@ def main():
     ap=argparse.ArgumentParser(description=__doc__)
     ap.add_argument('--captures',type=Path,required=True)
     ap.add_argument('--out',type=Path,required=True)
+    ap.add_argument('--targets',type=Path,help='Optional controlled-beetle target captures, v1..v5/capture.json')
     ap.add_argument('--fps',type=float,default=59.727500569606)
     ap.add_argument('--no-video',action='store_true')
     args=ap.parse_args();args.out.mkdir(parents=True,exist_ok=True)
@@ -295,6 +326,7 @@ def main():
             'variants':[{'variant':i+1,'profile':s['profile'],'rom_sha256':s['report']['rom_sha256'],
                          'capture_report':f'actual/v{i+1}/capture.json','cases':len(s['report']['captures'])} for i,s in enumerate(studies)],
             'comparisons':comparison_rows,'individuals':cards,'palette_note':'Raw native PNGs are unchanged. Comparison GIF metadata records whether its combined colour union fits 256 colours. Video is a lossy convenience.'}
+    if args.targets:report['controlled_targets']=controlled_targets(studies,args.targets,args.out,args.fps)
     if not args.no_video:report['video']=movie(studies,archives,args.out,args.fps)
     report['files']=[{'path':str(p.relative_to(args.out)),'bytes':p.stat().st_size,'sha256':digest(p)}
                      for p in sorted(args.out.rglob('*')) if p.is_file() and p.name not in ('README.md','gallery-manifest.json')]
