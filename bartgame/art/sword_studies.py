@@ -182,7 +182,12 @@ def _angle(variant,face,phase):
     # downstroke; reusing a rotated side-view arm would only wave sideways.
     if variant==4 and face=='s':
         return math.radians((-100,-94,-75,35,95,113,94,55)[phase])
-    return math.radians(BASE_ANGLE[face]+side*p['angles'][phase])
+    angle=BASE_ANGLE[face]+side*p['angles'][phase]
+    # A far-side hand is displaced from Bloom's centre. Aim the visible
+    # northern cut inward so the held contact pose reaches a centred foe,
+    # rather than requiring the late cross-body follow-through to connect.
+    if face=='n':angle+=32 if variant==5 else -32
+    return math.radians(angle)
 
 
 @lru_cache(maxsize=None)
