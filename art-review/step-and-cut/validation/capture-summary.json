@@ -1,0 +1,69 @@
+{
+  "rom_sha256": "547674bfd44f79cd5614f3188bad86f8ed8a4a9ea9cee060e1236ca0c832c97a",
+  "counts": {
+    "captures": 16,
+    "targets": 4
+  },
+  "checks": {
+    "captures": {
+      "all_eight_poses_displayed": true,
+      "exactly_one_complete_attack": true,
+      "active_window_matches_clock": true,
+      "all_hardware_frames_matched": true,
+      "forward_enemy_hit": null
+    },
+    "targets": {
+      "all_eight_poses_displayed": true,
+      "exactly_one_complete_attack": true,
+      "active_window_matches_clock": true,
+      "all_hardware_frames_matched": true,
+      "forward_enemy_hit": true
+    }
+  },
+  "target_hits": [
+    {
+      "facing": "n",
+      "first_hit": {
+        "video_tick": 22,
+        "age": 6,
+        "phase": 3
+      },
+      "native_hp": 2
+    },
+    {
+      "facing": "e",
+      "first_hit": {
+        "video_tick": 20,
+        "age": 4,
+        "phase": 2
+      },
+      "native_hp": 2
+    },
+    {
+      "facing": "s",
+      "first_hit": {
+        "video_tick": 22,
+        "age": 6,
+        "phase": 3
+      },
+      "native_hp": 2
+    },
+    {
+      "facing": "w",
+      "first_hit": {
+        "video_tick": 20,
+        "age": 4,
+        "phase": 2
+      },
+      "native_hp": 2
+    }
+  ],
+  "native_images_identical_to_approved_study": 198,
+  "method": "Fresh actual mGBA0.10.5 runs of default production build; sixteen clean cases across four natural backgrounds/four facings and four controlled beetle target cases. Safe position, facing, inventory, clearing unrelated actors and paused target AI are disclosed fixtures. No terrain, action poses or attack timers are injected. Targets retain native HP2. Exact hardware body/effect matching precedes diagnostic overlays.",
+  "visual_review": [
+    "Forest east/north chronological eight-pose filmstrips inspected",
+    "Blight west, cave north and Drain south filmstrips inspected",
+    "All retained PNGs checked against their original full-frame archive bytes",
+    "198 shared native selected frames byte-identical to approved study3 capture; target south/west are new coverage"
+  ]
+}

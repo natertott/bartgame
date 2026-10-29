@@ -1,0 +1,5 @@
+drain 192 updates / 192 VBlanks; glitter 12.05 mean, 24 potential; OAM 25; PASS
+forest 192 updates / 192 VBlanks; glitter 11.04 mean, 24 potential; OAM 27; PASS
+blight 192 updates / 192 VBlanks; glitter 12.23 mean, 24 potential; OAM 27; PASS
+cave 192 updates / 192 VBlanks; glitter 12.00 mean, 24 potential; OAM 25; PASS
+RESULT PASS 29/29 representative native performance checks

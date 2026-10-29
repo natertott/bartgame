@@ -1,13 +1,32 @@
 # BARTGAME downloads
 
+## Latest: selected Step-and-cut sword swing
+
+Bloom now uses the selected whole-body Step-and-cut: eight coordinated body
+and blade poses per facing, matching visible reach and damage bounds, and a
+predictable four-update preparation, seven-update cut and seven-update recovery.
+The full game includes all previous native art, areas and gameplay. Existing
+saves remain compatible. Normal builds select this swing automatically.
+
+- [Download the GBA ROM](https://raw.githubusercontent.com/natertott/bartgame/art-reboot/downloads/step-and-cut-7c46553/bartgame-step-and-cut-7c46553.gba)
+- [Download the ZIP](https://raw.githubusercontent.com/natertott/bartgame/art-reboot/downloads/step-and-cut-7c46553/bartgame-step-and-cut-7c46553.zip)
+- [Actual mGBA previews and verification](../art-review/step-and-cut/README.md)
+- [SHA256 checksums](step-and-cut-7c46553/SHA256SUMS.txt)
+
+Built with ordinary `make -j4` from source [`7c46553`](https://github.com/natertott/bartgame/commit/7c46553ff80bf558daa66f02c2b6d4d9f468e888)
+on `art-reboot`. All 1,359 checks and 20 fresh capture cases pass. The ROM is
+byte-identical to the approved Step-and-cut prototype.
+
+ROM SHA256: `547674bfd44f79cd5614f3188bad86f8ed8a4a9ea9cee060e1236ca0c832c97a`
+
 ## Sword-swing comparison prototypes
 
 [Review all five actual mGBA variations](../art-review/sword-studies/README.md) ·
 [Download all five playable ROMs](sword-studies-89978ba/all-five-sword-studies.zip).
-These are optional prototypes for selection. The released native-art build
-below remains the default; no sword variation has been chosen yet.
+Step-and-cut (variation 3) is now the production default. The other four
+remain archived comparison options.
 
-## Latest: complete native art reboot
+## Previous: complete native art reboot
 
 Every active visual family shares one native-resolution art direction: compact
 Bloom, tile-sized drops, coherent world materials, cleaner actions, legible

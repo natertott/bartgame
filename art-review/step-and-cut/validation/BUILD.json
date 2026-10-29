@@ -1,0 +1,23 @@
+{
+  "source_commit": "7c46553ff80bf558daa66f02c2b6d4d9f468e888",
+  "branch": "art-reboot",
+  "build_command": "make -j4",
+  "default_profile": 3,
+  "profile": "Step-and-cut",
+  "updates": {
+    "preparation": 4,
+    "live": 7,
+    "recovery": 7,
+    "total": 18
+  },
+  "live_ages_inclusive": [
+    4,
+    10
+  ],
+  "rom_bytes": 503040,
+  "rom_sha256": "547674bfd44f79cd5614f3188bad86f8ed8a4a9ea9cee060e1236ca0c832c97a",
+  "approved_study_rom_identical": true,
+  "emulator": "mGBA 0.10.5",
+  "world_lunge": false,
+  "save_layout_changed": false
+}

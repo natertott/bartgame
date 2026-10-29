@@ -1,0 +1,6 @@
+tileset forest: 693 tiles, 376 metatiles held, 59 animated, 8 palettes
+tileset sewer: 532 tiles, 370 metatiles held, 38 animated, 1 palettes
+tileset myst: 114 tiles, 97 metatiles held, 6 animated, 5 palettes
+sprites: 34 sheets, 5521 tiles
+title: 240x160 RGB555 bitmap, 27 colours
+wrote /workspace/setup/step-and-cut/direct-assets
