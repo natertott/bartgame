@@ -229,7 +229,7 @@ def movie(studies,archives,out,fps):
     try:
         for face in FACES:
             rows,frames=archives[face];total=len(rows[0]['trace'])
-            # Two synchronized normal cycles, then one clearly labelled3x
+            # Two synchronized normal cycles, then one clearly labelled 3x
             # slow cycle. Every original captured video frame is preserved.
             for repeat in range(2):
                 for tick in range(total):
@@ -242,7 +242,7 @@ def movie(studies,archives,out,fps):
     except BaseException:
         process.kill();raise
     return {'file':target.name,'frames':count,'fps':fps,'seconds':count/fps,'size':[width,height],
-            'method':'Actual native PNG crops enlarged3x, labels/timing bars outside gameplay; two native-timing cycles and one3xslow cycle per facing. Silent lossy convenience copy.'}
+            'method':'Actual native PNG crops enlarged 3x, labels/timing bars outside gameplay; two native-timing cycles and one 3x slow cycle per facing. Silent lossy convenience copy.'}
 
 
 def main():
@@ -258,7 +258,7 @@ def main():
     report={'method':__doc__.strip(),'prototypes_only':True,'selected_variant':None,'fps':args.fps,
             'variants':[{'variant':i+1,'profile':s['profile'],'rom_sha256':s['report']['rom_sha256'],
                          'capture_report':f'actual/v{i+1}/capture.json','cases':len(s['report']['captures'])} for i,s in enumerate(studies)],
-            'comparisons':comparison_rows,'palette_note':'Raw native PNGs are unchanged. Comparison GIF metadata records whether its combined colour union fits256 colours. Video is a lossy convenience.'}
+            'comparisons':comparison_rows,'palette_note':'Raw native PNGs are unchanged. Comparison GIF metadata records whether its combined colour union fits 256 colours. Video is a lossy convenience.'}
     if not args.no_video:report['video']=movie(studies,archives,args.out,args.fps)
     report['files']=[{'path':str(p.relative_to(args.out)),'bytes':p.stat().st_size,'sha256':digest(p)}
                      for p in sorted(args.out.rglob('*')) if p.is_file() and p.name not in ('README.md','gallery-manifest.json')]
