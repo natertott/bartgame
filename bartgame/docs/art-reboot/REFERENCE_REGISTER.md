@@ -70,3 +70,14 @@ missing figure is claimed as inspected. [Final room decisions](references/DRAIN_
 [integration](references/DRAIN_FINAL_INTEGRATION.md), [interface art](references/UI_STUDIES.md)
 and [HUD runtime](references/UI_RUNTIME.md) connect the work to source guidance
 and distinguish adopted user requirements from exploratory visual treatments.
+
+## GBA menu/interface research — 2026-10-30
+
+[Menu research](references/GBA_MENU_RESEARCH.md) records fifteen fetched source
+files at pinned repository revisions, distinguishing ten files actually inspected
+for claims from contextual fetches. The evidence covers Pokémon bags/maps, Minish
+Cap inventory/navigation, Sacred Stones preparations/help and Metroid Fusion map
+knowledge layers. Specific windows, controls and state handling are attributed
+to source lines. Proposed BARTGAME adaptations remain design judgments. Direct
+review pages were inaccessible; ratings or reviewer quotations are not claimed.
+The original six supplied pixel-art PDFs remain the native art foundation.

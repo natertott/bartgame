@@ -420,3 +420,78 @@ remain proposals for user choice. The original room art and three prior study
 branches remain available as historical evidence. Remaining tradeoffs: the
 herringbone repair patch is denser, Wine is intentionally most ornate, Vellum
 most bright, and tiny HUD icons simpler than inventory illustrations.
+
+## Five interface remixes and ten menu layouts — 2026-10-30
+
+**Status:** exploratory prototypes; production UI0 and the final Drain remain
+the baseline. The user likes design structures #2/#4/#5 and primarily palettes
+#4/#5, then explicitly requests new structures using palettes #1/#4/#5. We
+follow that explicit palette set, keeping light-vellum coloring out of the new
+studies. Structure and palette become independent recipes for future regions;
+automatic area changes are not introduced before a palette policy is selected.
+
+**Five new styles:** Winebound Folio (revised folio, wine), Mossbound Fieldbook
+(folio/ledger, green), Ivory Reliquary (restrained brocade, ivory-wire palette),
+Burgundy Archivist (reinforced brocade/ledger, wine), Verdigris Devotional
+(repaired folio/embroidered ledger, green). All new drawings remain native
+4bpp/RGB555. Old UI0–5 exported artwork and the seventeen compact equipment
+glyphs must remain exact. The HUD retains hearts, gilt, equipment, corner
+minimap and ammo only for equipped blightseeds/bow.
+
+**Ten independent menu layouts:** loadout workbench, pocket ledger, fieldbook,
+tactical atlas, toolwheel, twin atlas, expedition dashboard, focus cards,
+barrier/tool index and quick ribbon. Each explores a gameplay or usability
+priority rather than merely rearranging decoration. Compare them using one
+common new skin; compare the five skins using the original menu layout. All
+item/key/map/zoom views remain real interactive prototypes with actual inventory,
+known-map gates and current/generated room data. No new loot or mechanics are
+implied by a presentation change. R changes pages; Start closes; A/B/L assign
+on the item page; map A zooms and B returns.
+
+**Research:** [GBA menu evidence](references/GBA_MENU_RESEARCH.md) studies pinned
+public implementations of Pokémon Emerald/FireRed, The Minish Cap, Fire Emblem
+The Sacred Stones and Metroid Fusion: category focus memory, explicit neighbor
+navigation, anchored help, separate map knowledge layers, zoom continuity and
+visible equipment assignment. It distinguishes source facts from our proposals.
+Review-site requests were blocked; no rating or reviewer endorsement is invented.
+No Nintendo artwork/code or commercial ROM is imported into production assets.
+
+**Implementation:** new style recipes6–10 and independent menu profiles1–10,
+with preserved defaults. Declarative native geometry and a study-only renderer
+restore the playfield charblocks on close. Native/source and actual mGBA review
+will cover selection, all assignments, focus persistence, empty/partial inventory,
+map/zoom and fog, pause-state invariance and restoration. Source hashes, review
+findings, choices/tradeoffs and final evidence are recorded as the work proceeds.
+
+**Native and interactive preflight:** all new UI6–10 structures and HUD pods
+are authored at native size; the 0–5 exported art remains exact (738 independent
+checks) and seventeen compact equipment glyphs stay unchanged. Structure/palette
+recipes explicitly use former2/4/5 forms with former1/4/5 colors.
+
+The ten layouts now run in the real engine. A common native 600-tile pause
+canvas permits distinct compositions without consuming the original font pool.
+It saves/restores world characters and HUD sprite allocation; defaultMENU0
+retains the original path. Early pixel-by-pixel redraws missed short button taps;
+cached tile-word/mask/glyph rendering and an ordered pause-only input queue
+correct that. Actual input remains two-frame taps. Header/page/overview caching
+keeps typical tool focus and cached map motion near two video frames. First
+all-25 terrain chart generation takes about52–54 frames; schematic graph/route
+views avoid that generation. These are measured prototype tradeoffs, not a claim
+that every menu/map opens instantly. Prototype buffers fit native EWRAM; default
+production does not allocate the study renderer.
+
+All ten pilot flows pass 550/550 checks over150 actual presentations: reachable
+items, all A/B/L assignments through the canonical unique-item rule, persistent
+item/key/map focus, empty inventory, no unknown terrain disclosure, unchanged
+world/room/RNG during pause and legal static/live-animated VRAM/palettes after
+close. A new Winebound skin pilot passes98 checks over28 presentations. These
+are preflight results; final committed sixteen builds and fresh captures follow.
+
+Native review corrected generic key labels, clipped compact descriptions, last
+ammo digits, narrow legends, ambiguous Gate/Chest and Door/Relic glyphs, and
+unlabelled dual-map panes. Gate is G, Relic R, and the eight-entry key is fitted
+without inventing map knowledge. Twin Atlas labels Region/Chamber. Quick Ribbon
+leaves room for its caption. Short wide cards show selected consumable quantity
+on the same title line, preserving concise action help. Compact fieldbook/grid
+icons intentionally trade illustration detail for open space; Workbench, Wheel
+and Ribbon offer larger native illustrations for comparison.

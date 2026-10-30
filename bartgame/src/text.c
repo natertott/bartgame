@@ -536,6 +536,45 @@ static void hud_pod(int x,int width) {
     vitals_line(x,1,x+width-1,10,VI_PANEL);
     vwf_pixel(&sPurse,x,1,VI_GOLD_DARK);
     vwf_pixel(&sPurse,x+width-1,10,VI_GOLD_DARK);
+#elif BART_UI_VARIANT == 6
+    /* Rolled folio: softened silhouette and a tiny turned upper leaf. */
+    vitals_line(x+1,1,x+width-2,10,VI_PANEL);
+    vitals_line(x,3,x+width-1,8,VI_PANEL);
+    vwf_pixel(&sPurse,x+width-3,0,VI_GOLD_DARK);
+    vwf_pixel(&sPurse,x+width-2,1,VI_GOLD_LIGHT);
+    vwf_pixel(&sPurse,x+width-1,2,VI_GOLD);
+#elif BART_UI_VARIANT == 7
+    /* Lapped fieldbook: a short stitch at each exposed material join. */
+    vitals_line(x,1,x+width-1,10,VI_PANEL);
+    vitals_line(x,0,x+2,0,VI_GOLD_DARK);
+    vwf_pixel(&sPurse,x+4,1,VI_GOLD);
+    vitals_line(x+width-3,11,x+width-1,11,VI_GOLD_DARK);
+#elif BART_UI_VARIANT == 8
+    /* Restrained brocade: corner beads leave the data field untouched. */
+    vitals_line(x+1,1,x+width-2,10,VI_PANEL);
+    vwf_pixel(&sPurse,x,2,VI_GOLD_DARK);
+    vwf_pixel(&sPurse,x+1,1,VI_GOLD);
+    vwf_pixel(&sPurse,x+2,0,VI_GOLD_LIGHT);
+    vwf_pixel(&sPurse,x+width-2,10,VI_GOLD);
+    vwf_pixel(&sPurse,x+width-3,11,VI_GOLD_DARK);
+#elif BART_UI_VARIANT == 9
+    /* Archival reinforcement: compact riveted corners rather than trim. */
+    vitals_line(x,1,x+width-1,10,VI_PANEL);
+    vwf_pixel(&sPurse,x+1,0,VI_GOLD);
+    vwf_pixel(&sPurse,x+1,1,VI_GOLD_DARK);
+    vwf_pixel(&sPurse,x+2,1,VI_GOLD_LIGHT);
+    vwf_pixel(&sPurse,x+width-2,9,VI_GOLD_LIGHT);
+    vitals_line(x+width-3,10,x+width-1,10,VI_GOLD_DARK);
+#elif BART_UI_VARIANT == 10
+    /* Attached paired leaf: rounded backing, one bright corner at each end. */
+    vitals_line(x+2,1,x+width-3,10,VI_PANEL);
+    vitals_line(x+1,2,x+width-2,9,VI_PANEL);
+    vitals_line(x,3,x+width-1,8,VI_PANEL);
+    vwf_pixel(&sPurse,x,2,VI_GOLD);
+    vwf_pixel(&sPurse,x+1,1,VI_GOLD_DARK);
+    vwf_pixel(&sPurse,x+2,0,VI_GOLD_LIGHT);
+    vwf_pixel(&sPurse,x+width-2,10,VI_GOLD);
+    vwf_pixel(&sPurse,x+width-3,11,VI_GOLD_DARK);
 #else
     vitals_line(x+1,1,x+width-2,10,VI_PANEL);
     vitals_line(x,2,x,4,VI_GOLD_DARK);

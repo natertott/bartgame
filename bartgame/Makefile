@@ -40,12 +40,21 @@ SEWER_STAMP := $(GEN)/sewer-profile-$(BART_SEWER).stamp
 # The five other themes remain comparison choices.
 BART_UI ?= 0
 ifneq ($(words $(BART_UI)),1)
-$(error BART_UI must be one integer in 0..5)
+$(error BART_UI must be one integer in 0..10)
 endif
-ifneq ($(BART_UI),$(filter $(BART_UI),0 1 2 3 4 5))
-$(error BART_UI must be one integer in 0..5)
+ifneq ($(BART_UI),$(filter $(BART_UI),0 1 2 3 4 5 6 7 8 9 10))
+$(error BART_UI must be one integer in 0..10)
 endif
 UI_STAMP := $(GEN)/ui-profile-$(BART_UI).stamp
+# Optional pause-menu layout studies; production keeps the original layout.
+BART_MENU ?= 0
+ifneq ($(words $(BART_MENU)),1)
+$(error BART_MENU must be one integer in 0..10)
+endif
+ifneq ($(BART_MENU),$(filter $(BART_MENU),0 1 2 3 4 5 6 7 8 9 10))
+$(error BART_MENU must be one integer in 0..10)
+endif
+MENU_STAMP := $(GEN)/menu-profile-$(BART_MENU).stamp
 
 ARCH    := -mcpu=arm7tdmi -mtune=arm7tdmi
 CFLAGS  := $(ARCH) -O2 -g -Wall -Wno-unused-function -fno-strict-aliasing \
@@ -92,9 +101,14 @@ $(UI_STAMP):
 	@rm -f $(GEN)/ui-profile-*.stamp
 	@printf '%s\n' '$(BART_UI)' > $@
 
-$(GEN)/assets.c: $(ART) $(SWING_STAMP) $(SEWER_STAMP) $(UI_STAMP)
+$(MENU_STAMP):
 	@mkdir -p $(GEN)
-	BART_SWING=$(BART_SWING) BART_SEWER=$(BART_SEWER) BART_UI=$(BART_UI) $(PYTHON) tools/build_assets.py $(GEN)
+	@rm -f $(GEN)/menu-profile-*.stamp
+	@printf '%s\n' '$(BART_MENU)' > $@
+
+$(GEN)/assets.c: $(ART) $(SWING_STAMP) $(SEWER_STAMP) $(UI_STAMP) $(MENU_STAMP)
+	@mkdir -p $(GEN)
+	BART_SWING=$(BART_SWING) BART_SEWER=$(BART_SEWER) BART_UI=$(BART_UI) BART_MENU=$(BART_MENU) $(PYTHON) tools/build_assets.py $(GEN)
 
 $(GEN)/assets.h: $(GEN)/assets.c ;
 

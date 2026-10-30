@@ -8,8 +8,20 @@ import os
 from PIL import Image, ImageDraw
 
 VARIANT=int(os.environ.get('BART_UI','0'))
-assert 0<=VARIANT<=5,('BART_UI must be0..5',VARIANT)
-STYLE_NAMES={0:'Quiet Brass',1:'Ivory Wire',2:'Moulded Vellum',3:'Black Glass',4:'Wine Reliquary',5:'Salvage Ledger'}
+assert 0<=VARIANT<=10,('BART_UI must be0..10',VARIANT)
+STYLE_NAMES={0:'Quiet Brass',1:'Ivory Wire',2:'Moulded Vellum',3:'Black Glass',4:'Wine Reliquary',5:'Salvage Ledger',
+             6:'Winebound Folio',7:'Mossbound Fieldbook',8:'Ivory Reliquary',
+             9:'Burgundy Archivist',10:'Verdigris Devotional'}
+# Structure and color are separate choices. These five new studies use the
+# requested old1/4/5 palettes exactly; none automatically changes by area yet.
+# A future area can select a palette without replacing navigation or geometry.
+STYLE_RECIPES={
+ 6:{'geometry':'winebound_folio','design_sources':(2,), 'palette':4},
+ 7:{'geometry':'mossbound_fieldbook','design_sources':(2,5), 'palette':5},
+ 8:{'geometry':'ivory_reliquary','design_sources':(4,), 'palette':1},
+ 9:{'geometry':'burgundy_archivist','design_sources':(4,5), 'palette':4},
+ 10:{'geometry':'verdigris_devotional','design_sources':(2,4,5), 'palette':5},
+}
 KEYS=('o','1','2','3','4','y','Y','G','W','c','s','h','r','p','b')
 # Semantic role order is retained so every existing menu, cost, hint and
 # speaker line remains meaningful. Light paper intentionally uses dark type.
@@ -24,9 +36,22 @@ THEMES={
 def q(color):
     return '#'+''.join('%02x'%(int(color[i:i+2],16)//8*8) for i in (1,3,5))
 THEMES={n:{key:q(value) for key,value in theme.items()} for n,theme in THEMES.items()}
+for _profile,_recipe in STYLE_RECIPES.items():
+    THEMES[_profile]=dict(THEMES[_recipe['palette']])
 
 def theme(number=None):
     return THEMES.get(VARIANT if number is None else number)
+
+
+def palette_profile(number=None):
+    """The reusable color recipe, independent of this study's shape recipe."""
+    number=VARIANT if number is None else int(number)
+    return STYLE_RECIPES.get(number,{}).get('palette',number)
+
+
+def geometry_recipe(number=None):
+    number=VARIANT if number is None else int(number)
+    return STYLE_RECIPES.get(number,{}).get('geometry',STYLE_NAMES[number])
 
 def indexed(w=8,h=8,fill=0):
     im=Image.new('P',(w,h),fill)
@@ -39,8 +64,86 @@ def _glint(d,x,y,ink):
     d.line((x-2,y,x+2,y),fill=ink);d.line((x,y-2,x,y+2),fill=ink)
 
 
+def remixed_frame_tile(name,index,style):
+    """Five newly drawn structures informed by folio, brocade and ledger.
+
+    Every coordinate is a final8px tile coordinate. Quiet runs leave a usable
+    text field; the richer motifs stay at the corners or selection boundary.
+    """
+    im,d=indexed();i=index
+    kind,part=name.rsplit('_',1)
+    selected=kind in ('sel','srow');empty=kind=='empty';bubble=kind=='bub'
+    slot=kind in ('slot','sel','row','srow')
+    bg=i['p'] if bubble else i['3'] if slot else i['2']
+    edge=i['G'] if selected else i['Y'];hot=i['W'] if selected else i['G']
+    if part!='tl':d.rectangle((0,0,7,7),fill=bg)
+    if empty:
+        if part=='tl':
+            d.line((1,6,1,2),fill=i['s']);d.line((2,1,6,1),fill=i['s'])
+            if style in (7,9):d.point((2,2),fill=i['y'])
+            if style in (8,10):d.point((3,3),fill=i['4'])
+        elif part=='t':d.line((1,2,3 if style in (7,9) else 5,2),fill=i['s'])
+        else:d.line((2,1,2,3 if style in (7,9) else 5),fill=i['s'])
+        return _letters(im,i)
+    if style==6: # A rolled folio: rounded contour and one turned brass leaf.
+        if part=='tl':
+            d.polygon([(0,5),(1,3),(3,1),(7,1),(7,7),(0,7)],fill=i['o'])
+            d.polygon([(1,5),(2,3),(4,2),(7,2),(7,7),(1,7)],fill=bg)
+            d.line([(1,5),(2,3),(4,1),(7,1)],fill=edge)
+            d.polygon([(3,2),(6,2),(4,4)],fill=i['y']);d.point((4,2),fill=hot)
+        elif part=='t':d.line((0,1,7,1),fill=edge);d.line((1,3,5,3),fill=i['y'])
+        else:d.line((1,0,1,7),fill=edge);d.point((3,5),fill=i['4'])
+    elif style==7: # Mended fieldbook: lapped corner, stitches and broad paper.
+        if part=='tl':
+            d.polygon([(0,3),(2,3),(2,0),(7,0),(7,7),(0,7)],fill=i['o'])
+            d.polygon([(1,4),(4,4),(4,1),(7,1),(7,7),(1,7)],fill=bg)
+            d.line((4,1,7,1),fill=edge);d.line((1,4,1,7),fill=edge)
+            d.line((2,2,5,2),fill=i['y']);d.point((3,3),fill=hot)
+        elif part=='t':
+            d.line((0,0,7,0),fill=i['o']);d.line((0,2,2,2),fill=edge);d.line((5,2,7,2),fill=edge)
+            d.point((3,4),fill=i['y'])
+        else:
+            d.line((0,0,0,7),fill=i['o']);d.line((2,0,2,2),fill=edge);d.line((2,5,2,7),fill=edge)
+            d.point((4,3),fill=i['y'])
+    elif style==8: # Restrained reliquary: corner leaves, an otherwise quiet wire.
+        if part=='tl':
+            d.polygon([(0,5),(2,2),(5,0),(7,0),(7,7),(0,7)],fill=bg)
+            d.line([(0,6),(1,3),(3,1),(7,0)],fill=i['y'])
+            d.polygon([(1,4),(3,1),(5,1),(3,3)],fill=edge)
+            d.polygon([(2,6),(4,3),(6,3),(4,5)],fill=i['Y'])
+            d.point((2,2),fill=hot)
+        elif part=='t':d.line((0,1,7,1),fill=edge);d.point((4,3),fill=i['y'])
+        else:d.line((1,0,1,7),fill=edge);d.point((3,4),fill=i['y'])
+    elif style==9: # Archival reinforcement: a rivet and broken double rail.
+        if part=='tl':
+            d.rectangle((0,0,7,7),fill=bg)
+            d.line((0,5,0,0),fill=i['o']);d.line((0,0,7,0),fill=i['o'])
+            d.line((1,6,1,1),fill=edge);d.line((1,1,7,1),fill=edge)
+            d.rectangle((1,1,3,3),fill=i['y']);d.point((2,2),fill=hot)
+            d.line((5,3,7,3),fill=i['Y']);d.line((3,5,3,7),fill=i['Y'])
+        elif part=='t':
+            d.line((0,0,7,0),fill=i['o']);d.line((0,1,7,1),fill=edge)
+            d.line((0,3,2,3),fill=i['y']);d.line((5,3,7,3),fill=i['y'])
+        else:
+            d.line((0,0,0,7),fill=i['o']);d.line((1,0,1,7),fill=edge)
+            d.line((3,0,3,2),fill=i['y']);d.line((3,5,3,7),fill=i['y'])
+    else: # Verdigris devotional: folio shape with attached paired leaf growth.
+        if part=='tl':
+            d.polygon([(0,4),(1,2),(3,0),(7,0),(7,7),(0,7)],fill=bg)
+            d.line([(0,6),(0,3),(3,0),(7,0)],fill=i['y'])
+            d.polygon([(1,4),(2,1),(4,2),(3,4)],fill=edge)
+            d.polygon([(3,6),(4,3),(6,4),(5,6)],fill=i['Y'])
+            d.point((2,2),fill=hot);d.point((4,4),fill=i['4'])
+        elif part=='t':
+            d.line((0,1,7,1),fill=edge);d.line((0,3,3,3),fill=i['y']);d.point((5,2),fill=i['4'])
+        else:
+            d.line((1,0,1,7),fill=edge);d.line((3,0,3,3),fill=i['y']);d.point((2,5),fill=i['4'])
+    return _letters(im,i)
+
+
 def frame_tile(name,index,style):
     """A native corner/edge/side; the engine mirrors each opposite edge."""
+    if style>=6:return remixed_frame_tile(name,index,style)
     im,d=indexed();i=index
     kind,part=name.rsplit('_',1)
     selected=kind in ('sel','srow')
@@ -102,9 +205,87 @@ def frame_tile(name,index,style):
     return _letters(im,i)
 
 
+def remixed_kit(original,index,font,style):
+    """Keep semantic tile IDs while drawing new folio/cloth/repair structure."""
+    base=STYLE_RECIPES[style]['design_sources'][0]
+    out=kit(original,index,font,base);i=index
+    for name in original:
+        part=name.rsplit('_',1)[-1]
+        if part in ('tl','t','l') and name.startswith(('panel_','slot_','sel_','empty_','row_','srow_','bub_','hud_')):
+            out[name]=remixed_frame_tile(name,i,style);continue
+        im,d=indexed(fill=i['2'])
+        if name.startswith(('plate_','tab_','tabon_')):
+            active=name.startswith('tabon');end='_l_' in name;top=name.endswith('top')
+            d.rectangle((0,0,7,7),fill=i['2'] if active else i['3'])
+            yy=0 if top else 7;edge=i['G'] if active else i['Y']
+            if style==6:
+                d.line((0,yy,7,yy),fill=i['y']);d.line((1,2 if top else 5,7,2 if top else 5),fill=edge)
+                if end:d.line((0,3,0,5),fill=i['Y']);d.point((1,2),fill=i['W'])
+                if active and top:d.line((3,4,6,4),fill=i['W'])
+            elif style==7:
+                d.line((0,yy,7,yy),fill=i['o']);d.line((0,2 if top else 5,2,2 if top else 5),fill=edge);d.line((5,2 if top else 5,7,2 if top else 5),fill=edge)
+                if end:d.line((1,3,1,6),fill=i['y']);d.point((2,2),fill=i['G'])
+                if active and top:d.point((3,4),fill=i['W'])
+            elif style==8:
+                d.line((0,yy,7,yy),fill=edge)
+                if end:
+                    d.polygon([(0,3),(2,1),(4,2),(2,4)],fill=i['G']);d.point((2,2),fill=i['W'])
+                if active and top:d.line((4,3,7,3),fill=i['y'])
+            elif style==9:
+                d.line((0,yy,7,yy),fill=i['o']);d.line((0,1 if top else 6,7,1 if top else 6),fill=edge)
+                if end:d.rectangle((1,2,3,4),fill=i['y']);d.point((2,3),fill=i['W'])
+                if active and top:d.line((5,3,7,3),fill=i['G'])
+            else:
+                d.line((0,yy,7,yy),fill=i['y']);d.line((0,2 if top else 5,7,2 if top else 5),fill=edge)
+                if end:d.polygon([(0,4),(1,1),(3,2),(2,4)],fill=i['Y']);d.point((1,2),fill=i['W'])
+                if active and top:d.point((5,4),fill=i['G'])
+        elif name.startswith('badge_'):
+            im,d=indexed()
+            if style==6:
+                d.polygon([(0,3),(2,1),(7,1),(7,6),(5,7),(0,7)],fill=i['3']);d.line((2,1,6,1),fill=i['G'])
+            elif style==7:
+                d.rectangle((0,1,7,7),fill=i['3']);d.line((1,1,3,1),fill=i['Y']);d.point((6,6),fill=i['y'])
+            elif style==8:
+                d.rounded_rectangle((0,0,7,7),radius=2,fill=i['2']);d.point((1,1),fill=i['G']);d.point((6,6),fill=i['Y'])
+            elif style==9:
+                d.rectangle((0,0,7,7),fill=i['3']);d.rectangle((0,0,2,2),fill=i['y']);d.point((1,1),fill=i['G'])
+            else:
+                d.polygon([(0,3),(2,0),(7,0),(7,5),(5,7),(0,7)],fill=i['3']);d.line((1,3,3,1),fill=i['Y'])
+            _,rows=font.glyph(name[-1].upper())
+            for y,row in enumerate(rows[1:7]):
+                for x,v in enumerate(row):
+                    if v=='#' and x<5:d.point((x+1,y+1),fill=i['W'])
+        elif name.startswith('div_'):
+            d.line((2,0,2,7),fill=i['Y'])
+            if style in (6,9,10):d.line((4,0,4,3),fill=i['y']);d.line((4,6,4,7),fill=i['y'])
+            if name=='div_t':
+                if style in (8,10):d.polygon([(0,4),(2,1),(4,3),(2,5)],fill=i['G'])
+                elif style==9:d.rectangle((1,1,3,3),fill=i['y']);d.point((2,2),fill=i['W'])
+                elif style==7:d.line((0,2,4,2),fill=i['G'])
+                else:d.point((2,2),fill=i['W'])
+        elif name=='bub_tail':
+            im,d=indexed()
+            if style in (7,9):outline=[(7,0),(7,7),(3,6),(3,4),(1,4)]
+            else:outline=[(7,0),(7,6),(1,4)]
+            d.polygon(outline,fill=i['Y'] if style==8 else i['y']);d.polygon([(7,1),(7,5),(3,4)],fill=i['p'])
+        elif name=='bub_join':d.rectangle((0,0,7,7),fill=i['p'])
+        elif name.startswith('rule'):
+            y=2 if style in (7,9) else 3
+            d.line((0,y,6 if name.endswith('end') else 7,y),fill=i['Y'])
+            if style in (6,9):d.line((0,y+2,2,y+2),fill=i['y'])
+            if name.endswith('end'):
+                if style in (8,10):d.polygon([(4,y-1),(6,y),(4,y+2),(3,y)],fill=i['G'])
+                elif style==9:d.point((5,y),fill=i['W']);d.point((6,y+1),fill=i['y'])
+                else:d.point((6,y),fill=i['W'])
+        else:continue
+        out[name]=_letters(im,i)
+    return out
+
+
 def kit(original,index,font,style):
     """Reauthor every interface tile without changing the C-facing IDs."""
     if not style:return original
+    if style>=6:return remixed_kit(original,index,font,style)
     result={};i=index
     for name in original:
         im,d=indexed(fill=i['2'])
@@ -177,6 +358,7 @@ def kit(original,index,font,style):
 
 def marks(original,index,style):
     if not style:return original
+    if style>=6:return remixed_marks(index,style)
     out={};i=index
     for name in ('next','pick','corner'):
         im,d=indexed()
@@ -195,6 +377,49 @@ def marks(original,index,style):
             elif style==3:d.line([(0,7),(0,4),(4,0),(7,0)],fill=i['G'])
             elif style==5:d.line([(1,6),(1,1),(6,1)],fill=i['Y']);d.rectangle((0,0,2,2),fill=i['G'])
             else:d.line([(0,6),(0,0),(6,0)],fill=i['G']);d.point((1,1),fill=i['W'])
+        out[name]=_letters(im,i)
+    return out
+
+
+def remixed_marks(index,style):
+    """The same down/right/corner meanings, in five related constructions."""
+    out={};i=index
+    for name in ('next','pick','corner'):
+        im,d=indexed()
+        if name=='next':
+            if style==6:
+                d.line([(1,2),(3,5),(6,2)],fill=i['o'],width=3)
+                d.line([(1,2),(3,5),(6,2)],fill=i['G']);d.point((3,6),fill=i['W'])
+            elif style==7:
+                d.polygon([(1,1),(6,1),(6,3),(4,6),(2,4)],fill=i['Y']);d.line((2,2,5,2),fill=i['W'])
+            elif style==8:
+                d.line([(0,2),(3,5),(6,2)],fill=i['G']);d.point((3,6),fill=i['W']);d.point((3,1),fill=i['y'])
+            elif style==9:
+                d.rectangle((1,1,6,3),fill=i['y']);d.polygon([(1,3),(6,3),(4,6),(3,6)],fill=i['G']);d.point((3,3),fill=i['W'])
+            else:
+                d.polygon([(0,2),(3,1),(3,4),(6,2),(5,5),(3,7),(1,5)],fill=i['G']);d.point((3,5),fill=i['W'])
+        elif name=='pick':
+            if style==6:
+                d.polygon([(1,0),(6,3),(6,4),(1,7)],fill=i['o']);d.line([(2,1),(5,3),(2,6)],fill=i['G']);d.line((2,2,2,5),fill=i['W'])
+            elif style==7:
+                d.polygon([(0,1),(3,1),(6,3),(6,4),(3,6),(0,6)],fill=i['Y']);d.line((1,2,3,2),fill=i['W'])
+            elif style==8:
+                d.polygon([(1,1),(4,2),(7,3),(4,5),(1,6),(3,3)],fill=i['G']);d.point((4,3),fill=i['W'])
+            elif style==9:
+                d.rectangle((0,1,2,6),fill=i['y']);d.polygon([(2,1),(7,3),(7,4),(2,6)],fill=i['G']);d.point((3,3),fill=i['W'])
+            else:
+                d.polygon([(1,0),(3,3),(6,3),(5,5),(1,7),(2,4)],fill=i['G']);d.point((3,3),fill=i['W'])
+        else:
+            if style==6:
+                d.line([(0,7),(0,4),(2,1),(6,0)],fill=i['G']);d.line((2,3,5,1),fill=i['y']);d.point((2,2),fill=i['W'])
+            elif style==7:
+                d.line([(0,7),(0,3),(3,3),(3,0),(7,0)],fill=i['Y']);d.point((2,2),fill=i['W'])
+            elif style==8:
+                d.polygon([(0,5),(1,2),(4,0),(4,2),(2,4)],fill=i['G']);d.line((1,6,1,3),fill=i['y']);d.point((2,2),fill=i['W'])
+            elif style==9:
+                d.line([(0,7),(0,0),(7,0)],fill=i['Y']);d.rectangle((0,0,2,2),fill=i['y']);d.point((1,1),fill=i['W'])
+            else:
+                d.polygon([(0,5),(2,1),(4,2),(2,4)],fill=i['Y']);d.polygon([(2,6),(4,3),(6,4),(4,6)],fill=i['G']);d.point((2,2),fill=i['W'])
         out[name]=_letters(im,i)
     return out
 
@@ -299,6 +524,13 @@ def apply(namespace):
             mp[pos]=(mp[pos][0],dict(pal)[key])
         namespace['MAP_PAL']=mp;namespace['MAP_RGB']=dict(mp)
         namespace['OBJ_PAL']=[(k,namespace['MAP_RGB']['g'] if k=='p' else namespace['MAP_RGB']['G'] if k=='b' else col) for k,col in pal]
+        if style>=6:
+            # Dark palette material carries through to the small HUD pods.
+            # Health reds and actual equipment palettes retain their meanings.
+            roles={'o':'o','2':'2','3':'3','4':'4','W':'W','c':'c','s':'s',
+                   'g':'y','G':'G','b':'y','h':'W','n':'2'}
+            namespace['HUD_PAL']=[(key,dict(pal)[roles[key]] if key in roles else color)
+                                  for key,color in namespace['HUD_PAL']]
     namespace['HUD_INDEX']['.']=0
     namespace['HUD_TILES']=heart_tiles(namespace['HUD_TILES'],namespace['HUD_INDEX'],style)
     namespace['GROUPS'].update({'menu':namespace['hexpal'](namespace['PAL']),
@@ -311,6 +543,30 @@ def apply(namespace):
 def selection_cursor(style):
     """Native32px inventory cursor around the existing24px-tall cell."""
     im,d=indexed(32,32)
+    if style>=6:
+        for x,y,sx,sy in ((0,0,1,1),(31,0,-1,1),(0,23,1,-1),(31,23,-1,-1)):
+            if style==6:
+                d.polygon([(x,y+sy*7),(x,y+sy*3),(x+sx*3,y),(x+sx*8,y),(x+sx*3,y+sy*3)],fill=6)
+                d.line([(x,y+sy*7),(x,y+sy*3),(x+sx*3,y),(x+sx*8,y)],fill=8)
+                d.point((x+sx*2,y+sy*2),fill=9)
+            elif style==7:
+                d.line([(x,y+sy*8),(x,y+sy*4),(x+sx*4,y+sy*4),(x+sx*4,y),(x+sx*8,y)],fill=1,width=3)
+                d.line([(x,y+sy*8),(x,y+sy*4),(x+sx*4,y+sy*4),(x+sx*4,y),(x+sx*8,y)],fill=8)
+                d.point((x+sx*2,y+sy*2),fill=9)
+            elif style==8:
+                d.line((x,y+sy*7,x,y),fill=6);d.line((x,y,x+sx*7,y),fill=6)
+                d.polygon([(x+sx,y+sy*5),(x+sx*2,y+sy*2),(x+sx*5,y+sy),(x+sx*4,y+sy*3)],fill=8)
+                d.point((x+sx*2,y+sy*2),fill=9)
+            elif style==9:
+                d.line((x,y,x+sx*9,y),fill=8);d.line((x,y,x,y+sy*9),fill=8)
+                d.line((x+sx*3,y+sy*6,x+sx*3,y+sy*3),fill=6);d.line((x+sx*3,y+sy*3,x+sx*6,y+sy*3),fill=6)
+                d.rectangle((min(x,x+sx*2),min(y,y+sy*2),max(x,x+sx*2),max(y,y+sy*2)),fill=7);d.point((x+sx,y+sy),fill=9)
+            else:
+                d.line([(x,y+sy*8),(x,y+sy*3),(x+sx*3,y),(x+sx*8,y)],fill=6)
+                d.polygon([(x+sx,y+sy*6),(x+sx*2,y+sy*2),(x+sx*5,y+sy),(x+sx*4,y+sy*4)],fill=8)
+                d.polygon([(x+sx*4,y+sy*7),(x+sx*5,y+sy*4),(x+sx*7,y+sy*5)],fill=7)
+                d.point((x+sx*2,y+sy*2),fill=9)
+        return [''.join('%x'%im.getpixel((x,y)) for x in range(32)) for y in range(32)]
     if style==1:
         for x,y,sx,sy in ((0,0,1,1),(31,0,-1,1),(0,23,1,-1),(31,23,-1,-1)):
             d.line((x,y+sy*6,x,y),fill=1);d.line((x,y,x+sx*6,y),fill=8)

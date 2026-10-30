@@ -256,7 +256,11 @@ immediate damage/equipment updates, and contrast on bright and dark areas.
 Five optional interface studies explore thin relic linework, stained vellum,
 black glass, wine-colored reliquary materials and salvaged ledger construction.
 Their exact ornament, palette and frames remain exploratory; the compact
-information hierarchy applies to every version. Keep ornament at panel ends,
+information hierarchy applies to every version. Structure and palette are separate
+recipes: the user prefers folio, brocade and ledger construction, especially wine
+and green, with ivory-wire colors also requested for comparison. Future areas may
+select their own palette without changing layout, control meanings, health colors
+or map/interaction semantics. No automatic regional palette switch is adopted yet. Keep ornament at panel ends,
 corners and selection markers, with clear text fields and consistent controls.
 The title is authored directly at 240×160 with a limited shared palette.
 

@@ -407,6 +407,9 @@ h.append('#define WISP_X %d /* body-relative flame/wisp anchor */' % (23 if SC.V
 h.append('#define WISP_Y %d' % (1 if SC.VARIANT else sw_folk.WISP_AT[1]))
 h.append('#define BART_SEWER_VARIANT %d' % SC.VARIANT)
 h.append('#define BART_UI_VARIANT %d' % UI_STUDIES.VARIANT)
+MENU_VARIANT = int(os.environ.get('BART_MENU', '0'))
+assert 0 <= MENU_VARIANT <= 10, 'BART_MENU must be0..10'
+h.append('#define BART_MENU_VARIANT %d' % MENU_VARIANT)
 h.append('#define HUD_HEIGHT_PIXELS 12 /* compact shared HUD, no full-width slab */')
 # the Peddler's business: steps of (body frame, head frame, frames held),
 # each act ended by a 0 hold
