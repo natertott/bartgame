@@ -1,0 +1,131 @@
+{
+  "source_commit": "87abc1b4aa90d8f993896669a4bbebec8dd2112e",
+  "passed": 59509,
+  "total": 59509,
+  "static_checks": 59095,
+  "runtime_checks": 414,
+  "runtime_passed": 414,
+  "damage_samples": 36,
+  "replacement_delays": [
+    1
+  ],
+  "native_frames_per_build": 1554,
+  "physical_cells": 657,
+  "all_six_code_provenance_checks_pass": true,
+  "manual_selected_tab_contexts": 15,
+  "audit_tool_sha256": "3f3403cfe02cabb219a87942039f4fd480757b445d39ac0b4351ed60aaeaee91",
+  "groups": {
+    "provenance": 13,
+    "profile": 12,
+    "identifiers": 24,
+    "physical_metadata": 24,
+    "retained_forest": 42,
+    "retained_myst": 42,
+    "retained_sprite_contracts": 162,
+    "retained_sprite_pixels": 156,
+    "retained_faces": 24,
+    "retained_scalar_assets": 228,
+    "retained_palettes": 150,
+    "physical_room": 30186,
+    "native_art": 7890,
+    "native_palette": 6,
+    "native_indexed_art": 9324,
+    "native_rgb555_art": 9324,
+    "source_palette": 222,
+    "native_sheet": 846,
+    "ui_source": 342,
+    "font_source": 18,
+    "native_budget": 60,
+    "runtime_hud": 174,
+    "runtime_minimap": 54,
+    "runtime_ammo": 30,
+    "runtime_menu": 12,
+    "runtime_damage": 144
+  },
+  "budgets": {
+    "0": {
+      "forest": {
+        "tiles": 693,
+        "palettes": 8
+      },
+      "myst": {
+        "tiles": 114,
+        "palettes": 5
+      },
+      "sewer": {
+        "tiles": 822,
+        "palettes": 1
+      }
+    },
+    "1": {
+      "forest": {
+        "tiles": 693,
+        "palettes": 8
+      },
+      "myst": {
+        "tiles": 114,
+        "palettes": 5
+      },
+      "sewer": {
+        "tiles": 822,
+        "palettes": 1
+      }
+    },
+    "2": {
+      "forest": {
+        "tiles": 693,
+        "palettes": 8
+      },
+      "myst": {
+        "tiles": 114,
+        "palettes": 5
+      },
+      "sewer": {
+        "tiles": 822,
+        "palettes": 1
+      }
+    },
+    "3": {
+      "forest": {
+        "tiles": 693,
+        "palettes": 8
+      },
+      "myst": {
+        "tiles": 114,
+        "palettes": 5
+      },
+      "sewer": {
+        "tiles": 822,
+        "palettes": 1
+      }
+    },
+    "4": {
+      "forest": {
+        "tiles": 693,
+        "palettes": 8
+      },
+      "myst": {
+        "tiles": 114,
+        "palettes": 5
+      },
+      "sewer": {
+        "tiles": 822,
+        "palettes": 1
+      }
+    },
+    "5": {
+      "forest": {
+        "tiles": 693,
+        "palettes": 8
+      },
+      "myst": {
+        "tiles": 114,
+        "palettes": 5
+      },
+      "sewer": {
+        "tiles": 822,
+        "palettes": 1
+      }
+    }
+  }
+}

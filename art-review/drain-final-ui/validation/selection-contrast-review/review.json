@@ -1,0 +1,116 @@
+{
+  "source_commit": "87abc1b4aa90d8f993896669a4bbebec8dd2112e",
+  "method": "Normal Start/R inputs; no text canvas, font ink, palette or pixels assigned. Exact native PNGs; comparison uses unmodified native top crops with labels outside game pixels. Manual contrast review, not an automated taste score.",
+  "records": [
+    {
+      "ui": 1,
+      "page": 0,
+      "file": "ui1-items.png",
+      "sha256": "aeac539e849f4afdb7f8291ede3390a3918e7e541d4a7b571499589bf3d90822",
+      "actual_page": 0
+    },
+    {
+      "ui": 1,
+      "page": 1,
+      "file": "ui1-keys.png",
+      "sha256": "127c11f4d8084c9842d49b9bd71203c49d14784203317d0712bd5bf0367ec0ae",
+      "actual_page": 1
+    },
+    {
+      "ui": 1,
+      "page": 2,
+      "file": "ui1-map.png",
+      "sha256": "88c92ffd4c6a739bb99289fac4417b743470087eef014d38d8021833cf88e717",
+      "actual_page": 2
+    },
+    {
+      "ui": 2,
+      "page": 0,
+      "file": "ui2-items.png",
+      "sha256": "4f068ca7df02e62b3648106ced0b3279fbd02a165e2b446c83ac6bfe6bc5f3b1",
+      "actual_page": 0
+    },
+    {
+      "ui": 2,
+      "page": 1,
+      "file": "ui2-keys.png",
+      "sha256": "ea3ae2cb8613ba0a227ed40cd061edf0869c76fa080225723fc44369c95dc6df",
+      "actual_page": 1
+    },
+    {
+      "ui": 2,
+      "page": 2,
+      "file": "ui2-map.png",
+      "sha256": "eaeb6a64cca7a7c37b4cd08d05865189d94ff608858e842d66c95d06b1707e68",
+      "actual_page": 2
+    },
+    {
+      "ui": 3,
+      "page": 0,
+      "file": "ui3-items.png",
+      "sha256": "2f15cf6af4a377ab92c611c04c49f821198bb17bdbd995aa723b31782690333c",
+      "actual_page": 0
+    },
+    {
+      "ui": 3,
+      "page": 1,
+      "file": "ui3-keys.png",
+      "sha256": "834d58499a71bfd5ce2cd99222dab334b2a6fd811891f0c92bdb7db32ee7806c",
+      "actual_page": 1
+    },
+    {
+      "ui": 3,
+      "page": 2,
+      "file": "ui3-map.png",
+      "sha256": "0b7ec74447665e5381913c81b6a3022786e4f8b12047b901a4e6f4e3fd6aa5b1",
+      "actual_page": 2
+    },
+    {
+      "ui": 4,
+      "page": 0,
+      "file": "ui4-items.png",
+      "sha256": "71554d427a5a5373a7ee1db8bd3123b54ed452da56ae6802df7a608438496b23",
+      "actual_page": 0
+    },
+    {
+      "ui": 4,
+      "page": 1,
+      "file": "ui4-keys.png",
+      "sha256": "29d15e01250defc68d06cc8afca5b0621a4860ef7a3d60e351c9596ae52b7b00",
+      "actual_page": 1
+    },
+    {
+      "ui": 4,
+      "page": 2,
+      "file": "ui4-map.png",
+      "sha256": "9a67ebe19522b1235ba65f91eb54fe8da332a1966283e7dbfadae7931cd03103",
+      "actual_page": 2
+    },
+    {
+      "ui": 5,
+      "page": 0,
+      "file": "ui5-items.png",
+      "sha256": "ea7285057778575d9e309312d83f87abc7b9406e010827799a2aa7f83f78fec3",
+      "actual_page": 0
+    },
+    {
+      "ui": 5,
+      "page": 1,
+      "file": "ui5-keys.png",
+      "sha256": "b8bacd4b8b166e115f303ba9a7e6132a7bc032269304efd7828a5e5d22f65a2d",
+      "actual_page": 1
+    },
+    {
+      "ui": 5,
+      "page": 2,
+      "file": "ui5-map.png",
+      "sha256": "2d920401e27b1e43f0be6daa6fb85386c92434a3b7d657a48e4947313c2a8edf",
+      "actual_page": 2
+    }
+  ],
+  "manual_review": {
+    "reviewed_contexts": 15,
+    "selected_and_unselected_labels_legible_at_native_size": true,
+    "findings": "All three actual selected tabs retain clear label silhouettes across the five skins. Dark skins use high ivory ink; light vellum uses dark semantic high ink. Selection borders/accents remain visible. This manual finding is distinct from the pixel-fidelity and state/input checks."
+  }
+}

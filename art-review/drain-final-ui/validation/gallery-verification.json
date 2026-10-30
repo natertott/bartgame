@@ -1,0 +1,10 @@
+{
+  "source_commit": "87abc1b4aa90d8f993896669a4bbebec8dd2112e",
+  "source_manifest_hashes": 188,
+  "all_manifest_hashes_match": true,
+  "actual_cases": 234,
+  "runtime_checks": 894,
+  "source_placements": 657,
+  "source_frame_drawings": 1554,
+  "actual_comparison_families": 27
+}

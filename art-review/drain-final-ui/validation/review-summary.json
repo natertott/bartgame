@@ -1,0 +1,72 @@
+{
+  "source_commit": "87abc1b4aa90d8f993896669a4bbebec8dd2112e",
+  "variants": [
+    {
+      "variant": 0,
+      "status": "passed",
+      "passed": 149,
+      "total": 149,
+      "captures": 39
+    },
+    {
+      "variant": 1,
+      "status": "passed",
+      "passed": 149,
+      "total": 149,
+      "captures": 39
+    },
+    {
+      "variant": 2,
+      "status": "passed",
+      "passed": 149,
+      "total": 149,
+      "captures": 39
+    },
+    {
+      "variant": 3,
+      "status": "passed",
+      "passed": 149,
+      "total": 149,
+      "captures": 39
+    },
+    {
+      "variant": 4,
+      "status": "passed",
+      "passed": 149,
+      "total": 149,
+      "captures": 39
+    },
+    {
+      "variant": 5,
+      "status": "passed",
+      "passed": 149,
+      "total": 149,
+      "captures": 39
+    }
+  ],
+  "passed": 894,
+  "total": 894,
+  "captures": 234,
+  "max_oam": 40,
+  "all_gifs_exact_palette": false,
+  "max_individual_gif_colours": 316,
+  "native_framebuffer": [
+    240,
+    160
+  ],
+  "emulator": "mGBA 0.10.5",
+  "coverage": "39 actual presentations per UI profile: final Drain views, conditional ammo/map HUD, menus, shop, dialogue pages, reward, death/save return, title choices and genuine victory.",
+  "visual_review": {
+    "report": "runtime-review.md",
+    "all_five_styles_examined": true,
+    "comparison_screen_families": 27,
+    "no_remaining_sampled_blocker": true,
+    "superseded_pilot": "pilot-443e7aa",
+    "remaining_tradeoffs": [
+      "UI4 has the densest ornament",
+      "16px minimap is deliberately compact",
+      "subtle gray masonry varies with display brightness"
+    ],
+    "quantized_gifs_omitted_from_publication": true
+  }
+}

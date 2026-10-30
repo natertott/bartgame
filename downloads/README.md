@@ -1,5 +1,21 @@
 # BARTGAME downloads
 
+## Final Drain and five interface options
+
+The final sewer combines the selected components, with corrected arches, a
+taller ladder, distinct side walls, a larger leaking pipe and a left-edge
+profile outlet. Five new UI skins share a compact top HUD, bottom-right
+minimap and ammunition counts only for equipped blightseeds/bow.
+
+- [Final room and all five interfaces, actual mGBA gallery](https://github.com/natertott/bartgame/blob/drain-final-ui-studies/art-review/drain-final-ui/README.md)
+- [Download the final neutral-interface ROM](https://raw.githubusercontent.com/natertott/bartgame/drain-final-ui-studies/downloads/drain-final-ui-87abc1b/00-final-drain-quiet-brass.gba)
+- [Download the final room and all five UI options](https://raw.githubusercontent.com/natertott/bartgame/drain-final-ui-studies/downloads/drain-final-ui-87abc1b/final-drain-and-five-ui-studies.zip)
+- [Checksums](drain-final-ui-87abc1b/SHA256SUMS.txt)
+
+Source `87abc1b`. All 234 fresh actual presentations and 60,403 combined
+verification checks pass. The final room is the new build default; UI1–5
+remain options for selection. Earlier branch-specific releases are below.
+
 ## New studies: feedback-led Drain variations
 
 Five new floor, wall, fixture and character treatments respond to the second

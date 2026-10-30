@@ -1,0 +1,41 @@
+{
+  "method": "Independently compare every recorded C/header/build input hash to current bytes and git source-commit bytes for all six freezes. This is source provenance, not a recompilation or visual-quality score.",
+  "variants": [
+    {
+      "ui": 0,
+      "source_commit": "87abc1b4aa90d8f993896669a4bbebec8dd2112e",
+      "code_files": 52,
+      "all_recorded_hashes_match_current_and_commit": true
+    },
+    {
+      "ui": 1,
+      "source_commit": "87abc1b4aa90d8f993896669a4bbebec8dd2112e",
+      "code_files": 52,
+      "all_recorded_hashes_match_current_and_commit": true
+    },
+    {
+      "ui": 2,
+      "source_commit": "87abc1b4aa90d8f993896669a4bbebec8dd2112e",
+      "code_files": 52,
+      "all_recorded_hashes_match_current_and_commit": true
+    },
+    {
+      "ui": 3,
+      "source_commit": "87abc1b4aa90d8f993896669a4bbebec8dd2112e",
+      "code_files": 52,
+      "all_recorded_hashes_match_current_and_commit": true
+    },
+    {
+      "ui": 4,
+      "source_commit": "87abc1b4aa90d8f993896669a4bbebec8dd2112e",
+      "code_files": 52,
+      "all_recorded_hashes_match_current_and_commit": true
+    },
+    {
+      "ui": 5,
+      "source_commit": "87abc1b4aa90d8f993896669a4bbebec8dd2112e",
+      "code_files": 52,
+      "all_recorded_hashes_match_current_and_commit": true
+    }
+  ]
+}

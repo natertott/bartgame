@@ -1,0 +1,97 @@
+{
+  "source_commit": "87abc1b4aa90d8f993896669a4bbebec8dd2112e",
+  "ui_names": {
+    "0": "Quiet Brass",
+    "1": "Ivory Wire",
+    "2": "Moulded Vellum",
+    "3": "Black Glass",
+    "4": "Wine Reliquary",
+    "5": "Salvage Ledger"
+  },
+  "captures": 234,
+  "runtime_passed": 894,
+  "runtime_total": 894,
+  "composite_gifs": {
+    "hud-sewer-max": {
+      "exact_palette": true,
+      "colour_count": 79,
+      "duration_ms": 1070,
+      "timeline_frames": 32,
+      "published": true,
+      "source": "Five actual mGBA framebuffers, captions outside the240x160 game pixels."
+    },
+    "dialogue-wizard": {
+      "exact_palette": true,
+      "colour_count": 94,
+      "duration_ms": 2680,
+      "timeline_frames": 80,
+      "published": true,
+      "source": "Five actual mGBA framebuffers, captions outside the240x160 game pixels."
+    },
+    "shop": {
+      "exact_palette": true,
+      "colour_count": 101,
+      "duration_ms": 1340,
+      "timeline_frames": 40,
+      "published": true,
+      "source": "Five actual mGBA framebuffers, captions outside the240x160 game pixels."
+    },
+    "reward-chest": {
+      "exact_palette": true,
+      "colour_count": 99,
+      "duration_ms": 2410,
+      "timeline_frames": 72,
+      "published": true,
+      "source": "Five actual mGBA framebuffers, captions outside the240x160 game pixels."
+    }
+  },
+  "video": {
+    "path": "five-ui-studies-mgba.mp4",
+    "frames": 464,
+    "fps": 59.72750056960583,
+    "lossy": true
+  },
+  "rom_files": {
+    "0": "00-final-drain-quiet-brass.gba",
+    "1": "01-ui-1-ivory-wire.gba",
+    "2": "02-ui-2-moulded-vellum.gba",
+    "3": "03-ui-3-black-glass.gba",
+    "4": "04-ui-4-wine-reliquary.gba",
+    "5": "05-ui-5-salvage-ledger.gba"
+  },
+  "zip": "final-drain-and-five-ui-studies.zip",
+  "source_assemblies_are_not_screenshots": true,
+  "published_individual_gifs_exact_palette": true,
+  "omitted_quantized_gifs": [
+    {
+      "variant": 0,
+      "name": "death-return",
+      "colour_count": 298
+    },
+    {
+      "variant": 1,
+      "name": "death-return",
+      "colour_count": 310
+    },
+    {
+      "variant": 2,
+      "name": "death-return",
+      "colour_count": 315
+    },
+    {
+      "variant": 3,
+      "name": "death-return",
+      "colour_count": 312
+    },
+    {
+      "variant": 4,
+      "name": "death-return",
+      "colour_count": 316
+    },
+    {
+      "variant": 5,
+      "name": "death-return",
+      "colour_count": 316
+    }
+  ]
+}

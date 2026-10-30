@@ -1,110 +1,92 @@
-# Drain art concepts for selection
+# Final Drain and interface studies
 
-The current [third-pass gallery](../../art-review/sewer-concepts-v3/README.md)
-responds to the user's component-by-component feedback on the second pass.
-Its five new treatments keep exploring the preferred #1 frog and #5 wizard;
-neither actor is fixed across all five rooms. Floors, damaged walls, water,
-ladder markers, stalls and storage are reconsidered together. The shared
-[direction log](art-reboot/ART_DIRECTION_LOG.md) records the feedback and review. Game/art source `22b0af6` passes all 22,125
-packed/runtime checks, with 88 fresh mGBA cases and eight playable study ROMs.
+The [current review gallery](../../art-review/drain-final-ui/README.md) contains
+one final Drain room and five optional interface skins. Normal `make` now uses
+Drain profile 9 and the neutral compact interface, UI0. UI1–5 remain choices
+for feedback. [The direction log](art-reboot/ART_DIRECTION_LOG.md) records the
+user's selections, follow-up HUD requirements and actual-screen corrections.
 
-The [reference-led second pass](art-reboot/REFERENCE_APPLICATION.md) reauthors
-all five sets from the six uploaded PDFs. The shared [art bible](art-reboot/ART_BIBLE.md),
-[decision log](art-reboot/ART_DIRECTION_LOG.md) and [source register](art-reboot/REFERENCE_REGISTER.md)
-record the reasoning continuously. The published first study remains the
-before reference; new source/value/silhouette comparisons and actual-run
-captures are generated rather than relabelling old media.
+## Final room
 
-[Open the regenerated second-pass gallery](../../art-review/sewer-concepts-v2/README.md)
-for every option, native before/after comparisons, actual mGBA recordings and
-eight playable builds. The game/art source is `476d1ed`; all 21,971 static and
-runtime checks pass. The normal released room remains unchanged during selection.
+The final art combines v3 floor/debris #1/#5, north-wall language #1/#3, market
+#1/#3, wizard corner #2, crossing/rail #2/#5, storage #2/#3 and lower rail #4.
+The larger ladder has a taller arch and rungs, with the up-arrow above it.
+Both brass arches have a continuous face, connected upper-left highlight and
+narrow depth return. The enlarged severed wall pipe visibly leaks. A side-view
+outlet projects from the left edge and pours rightward into the channel.
+Left/right walls have their own capped inward-facing perspective.
 
-These are native-GBA comparison builds, not a selected replacement for the
-released room. `BART_SEWER=0` keeps the current Step-and-cut release intact.
-The [review gallery](../../art-review/sewer-concepts/README.md) provides full
-room assemblies, real mGBA views, complete inventories and five alternatives
-for each Drain-specific asset.
+The room remains 30×20 cells, 480×320 pixels. Its bridge, channel, market,
+ladder trigger, wizard, spawn and NPC anchors keep their physical arrangement.
+All 657 ground/foreground placements retain their resolved collision, type,
+prop and glitter flags. Bloom, Step-and-cut, other areas and save formats stay
+intact. Art is authored in native 16×16 cells and 8×8 hardware subtiles, with
+one RGB555 4bpp area palette. Source room assemblies omit runtime glitter and
+are explicitly distinguished from 240×160 actual mGBA output.
 
-## Fixed construction
+Previous pictures were reused between north/side walls and unrelated floors,
+which prevented independent perspective and erased fixtures. The final pack
+appends 657 placement-specific picture IDs while keeping original IDs 0–912
+stable. All 1,554 native frame drawings survive ROM encoding. Exact complete
+animation sequences may share a resident allocation only when every frame,
+orientation, palette and timing agree. This preserves motion while fitting
+822/1024 BG subtiles and 69 animation allocations. It applies only to final
+Drain packing; forest/interior packing stays unchanged.
 
-The Drain remains 30×20 cells, 480×320 pixels. Metatiles remain 16×16; hardware
-tiles remain 8×8. Ground, foreground, collisions, type/prop flags, animated
-frame counts/speeds and the four object anchors keep their existing contracts.
-The bridge, market, stream, ladder, wizard and spawn keep their positions.
-Bloom uses the selected Step-and-cut animation unchanged. Existing glitter
-drawings, emitter rules, placement metadata and viewport budget remain intact.
+[Art decisions](art-reboot/references/DRAIN_FINAL.md) ·
+[Integration and save compatibility](art-reboot/references/DRAIN_FINAL_INTEGRATION.md)
 
-All new pixels start on these native canvases. Sixteen indexed inks per
-hardware bank use RGB555 colours. Enlarged review images use nearest-neighbour
-scaling. A 480×320 source room assembly displays the scrolling map at once;
-the actual GBA screen is 240×160 and shows part of that map.
+## Compact HUD and five interface choices
 
-## Five material and character directions
+The HUD shows hearts, gilt, equipped items, the minimap, and ammunition only
+for equipped blightseeds or the bow. Its top paint stays within 12 rows; the
+16×16 explored/current-room minimap sits separately at screen (222,142).
+Equipment occupies fixed x148/178/208 anchors with smaller backplates when
+no ammo count is needed. Counts include zero and can display all 0–255 values.
+Keys, unrelated ammo, the R prompt and the old full-width bar remain absent.
+The center at x116–147 stays transparent, exposing northern game content.
 
-| Option | Direction | Design emphasis |
-| --- | --- | --- |
-| 1 | Ashlar & Amber | Broad running-bond gray brick, worn brass and the closest preferred actor anchors. |
-| 2 | Crooked Brickwork | Unequal old brick courses, patched market canvas and lopsided characters. |
-| 3 | Floodworn Flags | Long worn setts, narrow pouring water and a timber-canopied market. |
-| 4 | Crumbling Vault | Chipped flags, decayed masonry, ragged cloth and broken-lip water. |
-| 5 | Silted Cloister | Denser herringbone paving, worn orderly brass and compact pointed-cowl wizard. |
+| UI profile | Direction |
+| --- | --- |
+| 0 | Quiet Brass: neutral established theme with the new compact HUD. |
+| 1 | Ivory Wire: thin relic linework and restrained gilt fragments. |
+| 2 | Moulded Vellum: light stained paper, torn contours and dark body type. |
+| 3 | Black Glass: clipped angular panels and controlled metallic steps. |
+| 4 | Wine Reliquary: dark wine fields and ornate worn embroidery. |
+| 5 | Salvage Ledger: repaired green ledger material, seams and rivets. |
 
-These are shape/material studies, not five palette swaps. The material banks
-share index roles so components can be mixed without exceeding GBA limits.
-Each has an absentminded cartoon frog Peddler, a market and wares, an old
-purple-robed wizard, a shadowed hood and a staff-top flame. The Peddler uses
-short, concrete phrases; shop prices, stock and ownership rules stay stable.
+All skins preserve the native font and input hierarchy. Their panels, tabs,
+selections, markers and cursors change geometry as well as material/color.
+Menus, key items, maps/zoom, shops, dialogue, rewards, title choices, death and
+victory are reviewed in actual runs. Selected tabs use semantic contrast;
+backed paper prose avoids dark title outlines. Floating prompts use pale ink.
 
-Recipes 1–5 use one direction throughout. Recipes 6–8 mix floor, masonry,
-water, metal, bridge, market, sanctum, props, Peddler and wizard choices.
-The exact combinations live in `art/sewer_concepts.py` and the gallery.
-Choose an option per component when giving feedback, rather than needing
-to select one entire room unchanged.
+[Interface art](art-reboot/references/UI_STUDIES.md) ·
+[HUD layout/cache/runtime](art-reboot/references/UI_RUNTIME.md) ·
+[Shared art bible](art-reboot/ART_BIBLE.md)
 
-## Complete scope
-
-The active room has 350 ground IDs plus 20 foreground IDs, placed 657 times.
-Their 623 native frame drawings include 38 animated tile IDs. The keeper
-sheets retain 29 original world animation frames, plus two 48×48 portraits.
-The second pass appends a fifteenth Peddler body pose, `breathe`, making
-30 world keeper frames. It coordinates the existing one-pixel head bob with
-upper-body compression while leaving the bottom three foot rows unchanged.
-The original action-frame IDs and live streamed body allocation remain stable.
-The review separately inventories 80 unused named sewer catalogue tiles.
-
-A new 16×8 decorative rail sprite joins the north-bank posts. It uses two
-resident OBJ tiles and the existing gold palette, with a clear opening at
-the bridge. Keeping this handrail in a separate foreground layer avoids
-repeating it across walkable floor cells that share background tile IDs.
-It changes neither the room's physical layout nor its glitter surfaces.
-
-Repeated IDs remain reusable material panels: arbitrary crops from a large
-fixture would repeat its corners elsewhere in the room. Only declared
-animated metatiles move in gameplay. Foreground silhouettes and transparent
-apertures must continue to agree with the room's collision and depth rules.
-
-The shared HUD, menus, merchandise icons, font and conditional item effects
-belong to the common game art. They are listed in the inventory for context.
-The concept comparison focuses on Drain world materials, fixtures, keepers
-and their matching portraits.
-
-## Reproduce
+## Build choices
 
 ```sh
-# Current released room and selected Step-and-cut sword.
+# Final room, neutral compact UI and selected Step-and-cut sword.
 make -j4
 
-# One complete Drain concept.
-make -j4 BART_SEWER=3 BUILD=build_sewer3
+# Final room with a proposed interface skin.
+make -j4 BART_UI=2 BUILD=build_vellum
 
-# A mixed recipe.
-make -j4 BART_SEWER=6 BUILD=build_sewer6
+# Historical room art with the current compact interface/runtime.
+make -j4 BART_SEWER=3 BART_UI=0 BUILD=build_old_room
 ```
 
-Freeze the ROM, map, generated header and coverage report together before
-capturing. `tools/sewer_concept_review.py` records real mGBA views and
-`tools/sewer_concept_gallery.py` assembles source art comparisons. Each
-presentation identifies its source, timing and any capture fixtures.
-`tools/sewer_concept_audit.py` independently decodes the frozen ROM pixels and
-verifies the unchanged assets and room contracts against the default build.
+`BART_SEWER=0` retains original room art, 1–5 the third-pass concepts, 6–8 the
+mixed concepts, and 9 the final room. Historical profiles do not revert current
+HUD/runtime code. `BART_SWING=3` remains Step-and-cut. Profile stamps and all
+painter dependencies prevent stale asset reuse.
+
+## Earlier studies
+
+The [first five concepts](../../art-review/sewer-concepts/README.md),
+[reference-led second pass](../../art-review/sewer-concepts-v2/README.md), and
+[feedback-led third pass](../../art-review/sewer-concepts-v3/README.md) remain
+immutable review evidence on their original branches. Their ROMs keep their
+own recorded source/runtime versions. They are not the final production room.

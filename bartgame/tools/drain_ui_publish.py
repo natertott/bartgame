@@ -61,9 +61,10 @@ def main():
     source=builds[0]['source_commit'];assert all(b['source_commit']==source for b in builds)
     shutil.copytree(work/'gallery',out,dirs_exist_ok=True)
     validation=out/'validation';validation.mkdir(exist_ok=True)
-    for name in ('builds.json','review-summary.json','audit.json','audit-summary.json','audit.log','build-all.log','default-restore.log'):
+    for name in ('builds.json','review-summary.json','audit.json','audit-summary.json','audit.log','build-all.log','default-restore.log',
+                 'gallery-verification.json','runtime-review.md','review-plan.md'):
         if (work/name).exists():shutil.copy2(work/name,validation/name)
-    rows=[]
+    rows=[];omitted_gifs=[]
     for number in range(6):
         src=work/f'captures/v{number}';dst=out/f'actual/v{number}';dst.mkdir(parents=True,exist_ok=True)
         report=json.loads((src/'capture.json').read_text())
@@ -80,6 +81,7 @@ def main():
                 if not row['gif_metadata']['exact_palette']:
                     archive['gif']=row.pop('gif')
                     archive['gif_note']='Quantized GIF omitted from publication; native PNGs and full-rate MP4 preserve the actual output.'
+                    omitted_gifs.append({'variant':number,'name':row['name'],'colour_count':row['gif_metadata']['colour_count']})
                     if (dst/archive['gif']).exists():(dst/archive['gif']).unlink()
                 elif number==0 or not row['name'].startswith('drain-'):
                     shutil.copy2(src/row['gif'],dst/row['gif'])
@@ -144,7 +146,8 @@ https://github.com/natertott/bartgame/blob/{args.branch}/{out.relative_to(REPO)}
     summary={'source_commit':source,'ui_names':U.STYLE_NAMES,'captures':sum(r['capture_count'] for r in rows),
              'runtime_passed':sum(r['passed'] for r in rows),'runtime_total':sum(r['total'] for r in rows),
              'composite_gifs':composites,'video':{'path':video.name,'frames':video_frames,'fps':FPS,'lossy':True},
-             'rom_files':roms,'zip':archive,'source_assemblies_are_not_screenshots':True}
+             'rom_files':roms,'zip':archive,'source_assemblies_are_not_screenshots':True,
+             'published_individual_gifs_exact_palette':True,'omitted_quantized_gifs':omitted_gifs}
     (validation/'publication-summary.json').write_text(json.dumps(summary,indent=2)+'\n')
     print(json.dumps(summary,indent=2))
 

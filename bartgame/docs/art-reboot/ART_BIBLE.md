@@ -180,8 +180,10 @@ streaks and a landing splash; a static branching contour can read as roots.
 An exit arrow uses a filled arrowhead and shaft separated from both the ladder
 rungs and surrounding trim. Grime belongs in attached deposits and must not
 hide a crate lid, grate bars, a sign or another object's identifying structure.
-These readability refinements come from the user's third Drain review. Exact
-pipe, arrow and masonry treatments remain exploratory local concepts.
+These readability refinements come from the user's Drain reviews. Final Drain
+profile 9 adopts the requested taller ladder, consistent arches, distinct side
+walls and left-facing plumbing synthesis. Future areas reuse the semantic
+readability rules while choosing their own local architecture.
 
 ## Glitter is abundant, with a grammar
 

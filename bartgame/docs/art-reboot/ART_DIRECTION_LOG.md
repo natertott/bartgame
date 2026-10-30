@@ -386,3 +386,37 @@ after these narrow UI-runtime fixes. Native art/palettes remain frozen.
 A death-and-return GIF crosses palette fades/areas and exceeds GIF's 256 colors;
 publish its exact native PNGs and full-rate MP4 instead of presenting a
 quantized GIF as faithful framebuffer colors.
+
+**Final corrected review complete:** game/art source `87abc1b` is frozen in six
+ROMs: the final Drain with neutral UI0, plus the five optional skins. The
+independent decoder/provenance/regression audit passes 59,509/59,509 checks,
+including 414 mGBA runtime checks. All 36 normal-enemy damage samples replace
+sword OAM one video frame after hurt. Exact minimap states, conditional ammo,
+hidden keys, cache updates and menu restoration pass across all six builds.
+All 52 code inputs match the frozen git commit and every art input hash is
+recorded. The UI cursor is explicitly a permitted styled interface asset and
+is decoded against its source; it is not exempted as an unchecked world sprite.
+
+The separate visual-capture suite passes 894/894 checks in 234 fresh real mGBA
+cases (39 per profile). All 27 five-way screen families were visually examined,
+including menus/key items/maps/zoom, shop choices/purchases/unaffordable state,
+two dialogue pages, rewards, title choices, death/return and actual Heart
+victory. An additional 15 native selected-tab contexts confirm readability.
+Maximum sampled OAM is 40/128; ordinary idle updates match VBlanks. The Drain
+uses 822/1024 BG subtiles in one bank; forest 693 and interior 114 stay exact.
+These are sample evidence and preservation checks, not aesthetic scores or
+worst-case guarantees.
+
+The [final room/interface gallery](../../../art-review/drain-final-ui/README.md)
+publishes the full native room, 14 fixture crops, every placement/frame atlas,
+five material/geometry UI directions, and original native framebuffers. All
+quantized death/return GIFs are omitted; exact PNGs and full-rate lossy MP4
+viewing copies remain. Earlier pilots are kept separately, never relabelled
+as final. Source assemblies and mGBA captures are explicitly distinguished.
+
+**Adoption:** normal builds now use final Drain profile 9 and the neutral
+compact UI0, with minimap and relevant ammunition retained. The five skins
+remain proposals for user choice. The original room art and three prior study
+branches remain available as historical evidence. Remaining tradeoffs: the
+herringbone repair patch is denser, Wine is intentionally most ornate, Vellum
+most bright, and tiny HUD icons simpler than inventory illustrations.
