@@ -1,0 +1,38 @@
+arm-none-eabi-gcc -mcpu=arm7tdmi -mtune=arm7tdmi -c src/crt0.s -o build/crt0.o
+BART_SWING=3 BART_SEWER=0 python3 tools/build_assets.py build/gen
+tileset forest: 693 tiles, 376 metatiles held, 59 animated, 8 palettes
+tileset sewer: 532 tiles, 370 metatiles held, 38 animated, 1 palettes
+tileset myst: 114 tiles, 97 metatiles held, 6 animated, 5 palettes
+sprites: 34 sheets, 5521 tiles
+title: 240x160 RGB555 bitmap, 27 colours
+wrote build/gen
+arm-none-eabi-gcc -mcpu=arm7tdmi -mtune=arm7tdmi -O2 -g -Wall -Wno-unused-function -fno-strict-aliasing -fomit-frame-pointer -ffunction-sections -fdata-sections -fno-builtin -nostdlib -Isrc -Ibuild/gen -MMD -MP -mthumb -c src/actor.c -o build/actor.o
+arm-none-eabi-gcc -mcpu=arm7tdmi -mtune=arm7tdmi -O2 -g -Wall -Wno-unused-function -fno-strict-aliasing -fomit-frame-pointer -ffunction-sections -fdata-sections -fno-builtin -nostdlib -Isrc -Ibuild/gen -MMD -MP -mthumb -c src/ambient.c -o build/ambient.o
+arm-none-eabi-gcc -mcpu=arm7tdmi -mtune=arm7tdmi -O2 -g -Wall -Wno-unused-function -fno-strict-aliasing -fomit-frame-pointer -ffunction-sections -fdata-sections -fno-builtin -nostdlib -Isrc -Ibuild/gen -MMD -MP -mthumb -c src/boss.c -o build/boss.o
+arm-none-eabi-gcc -mcpu=arm7tdmi -mtune=arm7tdmi -O2 -g -Wall -Wno-unused-function -fno-strict-aliasing -fomit-frame-pointer -ffunction-sections -fdata-sections -fno-builtin -nostdlib -Isrc -Ibuild/gen -MMD -MP -mthumb -c src/enemy.c -o build/enemy.o
+arm-none-eabi-gcc -mcpu=arm7tdmi -mtune=arm7tdmi -O2 -g -Wall -Wno-unused-function -fno-strict-aliasing -fomit-frame-pointer -ffunction-sections -fdata-sections -fno-builtin -nostdlib -Isrc -Ibuild/gen -MMD -MP -mthumb -c src/game.c -o build/game.o
+arm-none-eabi-gcc -mcpu=arm7tdmi -mtune=arm7tdmi -O2 -g -Wall -Wno-unused-function -fno-strict-aliasing -fomit-frame-pointer -ffunction-sections -fdata-sections -fno-builtin -nostdlib -Isrc -Ibuild/gen -MMD -MP -mthumb -c src/interactive.c -o build/interactive.o
+arm-none-eabi-gcc -mcpu=arm7tdmi -mtune=arm7tdmi -O2 -g -Wall -Wno-unused-function -fno-strict-aliasing -fomit-frame-pointer -ffunction-sections -fdata-sections -fno-builtin -nostdlib -Isrc -Ibuild/gen -MMD -MP -mthumb -c src/items.c -o build/items.o
+arm-none-eabi-gcc -mcpu=arm7tdmi -mtune=arm7tdmi -O2 -g -Wall -Wno-unused-function -fno-strict-aliasing -fomit-frame-pointer -ffunction-sections -fdata-sections -fno-builtin -nostdlib -Isrc -Ibuild/gen -MMD -MP -mthumb -c src/main.c -o build/main.o
+arm-none-eabi-gcc -mcpu=arm7tdmi -mtune=arm7tdmi -O2 -g -Wall -Wno-unused-function -fno-strict-aliasing -fomit-frame-pointer -ffunction-sections -fdata-sections -fno-builtin -nostdlib -Isrc -Ibuild/gen -MMD -MP -mthumb -c src/menu.c -o build/menu.o
+arm-none-eabi-gcc -mcpu=arm7tdmi -mtune=arm7tdmi -O2 -g -Wall -Wno-unused-function -fno-strict-aliasing -fomit-frame-pointer -ffunction-sections -fdata-sections -fno-builtin -nostdlib -Isrc -Ibuild/gen -MMD -MP -mthumb -c src/myst.c -o build/myst.o
+arm-none-eabi-gcc -mcpu=arm7tdmi -mtune=arm7tdmi -O2 -g -Wall -Wno-unused-function -fno-strict-aliasing -fomit-frame-pointer -ffunction-sections -fdata-sections -fno-builtin -nostdlib -Isrc -Ibuild/gen -MMD -MP -mthumb -c src/npc.c -o build/npc.o
+arm-none-eabi-gcc -mcpu=arm7tdmi -mtune=arm7tdmi -O2 -g -Wall -Wno-unused-function -fno-strict-aliasing -fomit-frame-pointer -ffunction-sections -fdata-sections -fno-builtin -nostdlib -Isrc -Ibuild/gen -MMD -MP -mthumb -c src/objects.c -o build/objects.o
+arm-none-eabi-gcc -mcpu=arm7tdmi -mtune=arm7tdmi -O2 -g -Wall -Wno-unused-function -fno-strict-aliasing -fomit-frame-pointer -ffunction-sections -fdata-sections -fno-builtin -nostdlib -Isrc -Ibuild/gen -MMD -MP -mthumb -c src/player.c -o build/player.o
+arm-none-eabi-gcc -mcpu=arm7tdmi -mtune=arm7tdmi -O2 -g -Wall -Wno-unused-function -fno-strict-aliasing -fomit-frame-pointer -ffunction-sections -fdata-sections -fno-builtin -nostdlib -Isrc -Ibuild/gen -MMD -MP -mthumb -c src/react.c -o build/react.o
+arm-none-eabi-gcc -mcpu=arm7tdmi -mtune=arm7tdmi -O2 -g -Wall -Wno-unused-function -fno-strict-aliasing -fomit-frame-pointer -ffunction-sections -fdata-sections -fno-builtin -nostdlib -Isrc -Ibuild/gen -MMD -MP -mthumb -c src/room.c -o build/room.o
+arm-none-eabi-gcc -mcpu=arm7tdmi -mtune=arm7tdmi -O2 -g -Wall -Wno-unused-function -fno-strict-aliasing -fomit-frame-pointer -ffunction-sections -fdata-sections -fno-builtin -nostdlib -Isrc -Ibuild/gen -MMD -MP -mthumb -c src/roomgen.c -o build/roomgen.o
+arm-none-eabi-gcc -mcpu=arm7tdmi -mtune=arm7tdmi -O2 -g -Wall -Wno-unused-function -fno-strict-aliasing -fomit-frame-pointer -ffunction-sections -fdata-sections -fno-builtin -nostdlib -Isrc -Ibuild/gen -MMD -MP -mthumb -c src/save.c -o build/save.o
+arm-none-eabi-gcc -mcpu=arm7tdmi -mtune=arm7tdmi -O2 -g -Wall -Wno-unused-function -fno-strict-aliasing -fomit-frame-pointer -ffunction-sections -fdata-sections -fno-builtin -nostdlib -Isrc -Ibuild/gen -MMD -MP -mthumb -c src/sound.c -o build/sound.o
+arm-none-eabi-gcc -mcpu=arm7tdmi -mtune=arm7tdmi -O2 -g -Wall -Wno-unused-function -fno-strict-aliasing -fomit-frame-pointer -ffunction-sections -fdata-sections -fno-builtin -nostdlib -Isrc -Ibuild/gen -MMD -MP -mthumb -c src/text.c -o build/text.o
+arm-none-eabi-gcc -mcpu=arm7tdmi -mtune=arm7tdmi -O2 -g -Wall -Wno-unused-function -fno-strict-aliasing -fomit-frame-pointer -ffunction-sections -fdata-sections -fno-builtin -nostdlib -Isrc -Ibuild/gen -MMD -MP -mthumb -c src/ui.c -o build/ui.o
+arm-none-eabi-gcc -mcpu=arm7tdmi -mtune=arm7tdmi -O2 -g -Wall -Wno-unused-function -fno-strict-aliasing -fomit-frame-pointer -ffunction-sections -fdata-sections -fno-builtin -nostdlib -Isrc -Ibuild/gen -MMD -MP -mthumb -c src/util.c -o build/util.o
+arm-none-eabi-gcc -mcpu=arm7tdmi -mtune=arm7tdmi -O2 -g -Wall -Wno-unused-function -fno-strict-aliasing -fomit-frame-pointer -ffunction-sections -fdata-sections -fno-builtin -nostdlib -Isrc -Ibuild/gen -MMD -MP -mthumb -c src/video.c -o build/video.o
+arm-none-eabi-gcc -mcpu=arm7tdmi -mtune=arm7tdmi -O2 -g -Wall -Wno-unused-function -fno-strict-aliasing -fomit-frame-pointer -ffunction-sections -fdata-sections -fno-builtin -nostdlib -Isrc -Ibuild/gen -MMD -MP -mthumb -c src/vwf.c -o build/vwf.o
+arm-none-eabi-gcc -mcpu=arm7tdmi -mtune=arm7tdmi -O2 -g -Wall -Wno-unused-function -fno-strict-aliasing -fomit-frame-pointer -ffunction-sections -fdata-sections -fno-builtin -nostdlib -Isrc -Ibuild/gen -MMD -MP -mthumb -c src/world.c -o build/world.o
+arm-none-eabi-gcc -mcpu=arm7tdmi -mtune=arm7tdmi -O2 -g -Wall -Wno-unused-function -fno-strict-aliasing -fomit-frame-pointer -ffunction-sections -fdata-sections -fno-builtin -nostdlib -Isrc -Ibuild/gen -MMD -MP -mthumb -c build/gen/assets.c -o build/assets.o
+arm-none-eabi-gcc -mcpu=arm7tdmi -mtune=arm7tdmi -mthumb -nostdlib -Wl,-T,gba.ld -Wl,--gc-sections -Wl,-Map,build/bartgame.map build/actor.o build/ambient.o build/boss.o build/enemy.o build/game.o build/interactive.o build/items.o build/main.o build/menu.o build/myst.o build/npc.o build/objects.o build/player.o build/react.o build/room.o build/roomgen.o build/save.o build/sound.o build/text.o build/ui.o build/util.o build/video.o build/vwf.o build/world.o  build/crt0.o build/assets.o -lgcc -o build/bartgame.elf
+arm-none-eabi-objcopy -O binary build/bartgame.elf bartgame.gba
+../tools/bin/gbafix bartgame.gba -tBARTGAME -cBART -m00 >/dev/null
+   text	   data	    bss	    dec	    hex	filename
+ 503040	      0	  87108	 590148	  90144	build/bartgame.elf

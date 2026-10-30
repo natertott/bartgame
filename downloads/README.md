@@ -1,5 +1,19 @@
 # BARTGAME downloads
 
+## New studies: feedback-led Drain variations
+
+Five new floor, wall, fixture and character treatments respond to the second
+pass's feedback. Frog variations retain the preferred #1 identity; wizards
+start from #5. Water has descending streaks and impact foam, the ladder has
+a visible filled up-arrow below the HUD, and outlet/storage shapes are clearer.
+
+- [Five new options, all asset atlases and fresh mGBA recordings](https://github.com/natertott/bartgame/blob/sewer-concepts-v3/art-review/sewer-concepts-v3/README.md)
+- [Download all eight playable study ROMs](https://raw.githubusercontent.com/natertott/bartgame/sewer-concepts-v3/downloads/sewer-concepts-v3-22b0af6/all-eight-sewer-concepts.zip)
+- [Source and checksums](sewer-concepts-v3-22b0af6/README.txt)
+
+Game/art source: `22b0af6`. These remain selection studies; the released
+Step-and-cut game below stays unchanged.
+
 ## Updated studies: reference-led Drain redesign
 
 All five Drain styles and three mixed rooms have been redesigned using the

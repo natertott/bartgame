@@ -76,7 +76,7 @@ background/occlusion and mGBA motion review are performed by the parent task.
 retention exceptions, fixed feet, connected head/body and flame shapes, five
 distinct actor composites, legal canvases/palettes and the frozen painter hash.
 An initial validator incorrectly required every world frame to differ from
-v2; that assertion was replaced by an explicit check that only the approved
+v2; that assertion was replaced by an explicit check that only the intentionally retained
 fifteen option1 body/action frames are retained. The changed-frame count is a
 descriptive finding, not a reason to add arbitrary pixels. These checks
 establish native source integrity and scope, not a subjective quality score.

@@ -1,0 +1,92 @@
+{
+  "files": 185,
+  "hashed_files": 184,
+  "bytes": 8495496,
+  "all_manifest_hashes_match": true,
+  "all_painter_sources_match": true,
+  "all_before_images_unchanged": true,
+  "all_markdown_links_resolve_at_publication_location": true,
+  "source_water_animation": {
+    "frames": 32,
+    "duration_ms": 2140
+  },
+  "rooms": [
+    {
+      "recipe": 1,
+      "colors": 48,
+      "size": [
+        480,
+        320
+      ]
+    },
+    {
+      "recipe": 2,
+      "colors": 48,
+      "size": [
+        480,
+        320
+      ]
+    },
+    {
+      "recipe": 3,
+      "colors": 48,
+      "size": [
+        480,
+        320
+      ]
+    },
+    {
+      "recipe": 4,
+      "colors": 48,
+      "size": [
+        480,
+        320
+      ]
+    },
+    {
+      "recipe": 5,
+      "colors": 48,
+      "size": [
+        480,
+        320
+      ]
+    },
+    {
+      "recipe": 6,
+      "colors": 48,
+      "size": [
+        480,
+        320
+      ]
+    },
+    {
+      "recipe": 7,
+      "colors": 48,
+      "size": [
+        480,
+        320
+      ]
+    },
+    {
+      "recipe": 8,
+      "colors": 48,
+      "size": [
+        480,
+        320
+      ]
+    }
+  ],
+  "coverage": {
+    "active_tile_ids": 370,
+    "active_frame_alternatives": 3115,
+    "unused_catalogue_ids": 80,
+    "unused_frame_alternatives": 565,
+    "world_npc_frame_alternatives": 150,
+    "retained_world_npc_frame_alternatives": 145,
+    "new_breathing_frame_alternatives": 5,
+    "portrait_alternatives": 10,
+    "new_foreground_rail_alternatives": 5,
+    "unchanged_bloom": true,
+    "ambient_glitter_in_source_assemblies": false
+  }
+}

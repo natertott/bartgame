@@ -44,8 +44,14 @@ for name in ['audit-scope.json','audit-scope-summary.json','audit-scope.log','re
     shutil.copy2(local/name,validation/name)
 for name,destination in (('terrain/terrain-validation.json','terrain-validation.json'),
                          ('terrain/validation.json','terrain-validation.json'),
+                         ('terrain/animation-difference.json','terrain-animation-difference.json'),
+                         ('gallery-verification.json','gallery-verification.json'),
                          ('npcs/native-review.json','native-review.json')):
     if (local/name).exists():shutil.copy2(local/name,validation/destination)
+preferred_npcs=local/'npcs/preferred-to-new-characters.png'
+if preferred_npcs.exists():
+    (validation/'npcs').mkdir(exist_ok=True)
+    shutil.copy2(preferred_npcs,validation/'npcs'/preferred_npcs.name)
 
 reports={}
 for n in range(1,9):

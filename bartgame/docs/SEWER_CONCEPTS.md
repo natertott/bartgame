@@ -5,7 +5,8 @@ responds to the user's component-by-component feedback on the second pass.
 Its five new treatments keep exploring the preferred #1 frog and #5 wizard;
 neither actor is fixed across all five rooms. Floors, damaged walls, water,
 ladder markers, stalls and storage are reconsidered together. The shared
-[direction log](art-reboot/ART_DIRECTION_LOG.md) records the feedback and review.
+[direction log](art-reboot/ART_DIRECTION_LOG.md) records the feedback and review. Game/art source `22b0af6` passes all 22,125
+packed/runtime checks, with 88 fresh mGBA cases and eight playable study ROMs.
 
 The [reference-led second pass](art-reboot/REFERENCE_APPLICATION.md) reauthors
 all five sets from the six uploaded PDFs. The shared [art bible](art-reboot/ART_BIBLE.md),

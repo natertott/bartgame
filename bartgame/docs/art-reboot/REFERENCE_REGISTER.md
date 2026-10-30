@@ -56,6 +56,7 @@ iteration, followed by their request to keep varying both NPCs. The existing
 six PDF notes remain the reference basis; this pass does not claim a new
 article or missing illustration was accessed. Concrete applications and
 tradeoffs are recorded in [third-pass characters](references/DRAIN_V3_CHARACTERS.md),
-[fixtures](references/DRAIN_V3_FIXTURES.md) and the [direction log](ART_DIRECTION_LOG.md).
+[fixtures](references/DRAIN_V3_FIXTURES.md), [terrain](references/DRAIN_V3_TERRAIN.md)
+and the [direction log](ART_DIRECTION_LOG.md).
 The preferred second-pass #1 frog and #5 wizard are comparison anchors, not
 new sources or automatic adoption of a whole room.

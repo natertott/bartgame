@@ -1,0 +1,76 @@
+{
+  "source_commit": "22b0af6a3c7739f688daf22cd496f402f13b49f1",
+  "default_rom_sha256": "547674bfd44f79cd5614f3188bad86f8ed8a4a9ea9cee060e1236ca0c832c97a",
+  "default_release_unchanged": true,
+  "static_audit": {
+    "passed": 20845,
+    "total": 20845
+  },
+  "runtime_checks": {
+    "passed": 1280,
+    "total": 1280,
+    "cases": 88
+  },
+  "combined_checks": {
+    "passed": 22125,
+    "total": 22125
+  },
+  "comparisons": {
+    "market": {
+      "exact_palette": true,
+      "colour_count": 127,
+      "duration_ms": 4820,
+      "timeline_frames": 144
+    },
+    "wizard": {
+      "exact_palette": true,
+      "colour_count": 120,
+      "duration_ms": 4820,
+      "timeline_frames": 144
+    },
+    "bridge": {
+      "exact_palette": true,
+      "colour_count": 90,
+      "duration_ms": 2140,
+      "timeline_frames": 64
+    },
+    "ladder": {
+      "exact_palette": true,
+      "colour_count": 125,
+      "duration_ms": 2140,
+      "timeline_frames": 64
+    },
+    "cistern": {
+      "exact_palette": true,
+      "colour_count": 120,
+      "duration_ms": 4820,
+      "timeline_frames": 144
+    }
+  },
+  "video": {
+    "path": "five-concepts-mgba.mp4",
+    "frames": 1120,
+    "fps": 59.72750056960583,
+    "seconds": 18.7518310546875,
+    "lossy": true
+  },
+  "rom_files": {
+    "1": "01-ashlar-amber.gba",
+    "2": "02-crooked-brickwork.gba",
+    "3": "03-floodworn-flags.gba",
+    "4": "04-crumbling-vault.gba",
+    "5": "05-silted-cloister.gba",
+    "6": "06-cloister-masonry-crooked-market.gba",
+    "7": "07-floodworn-stone-amber-brass.gba",
+    "8": "08-vault-grime-cloister-crossing.gba"
+  },
+  "source_assembly_world_size": [
+    480,
+    320
+  ],
+  "native_game_screen": [
+    240,
+    160
+  ],
+  "limits": "Source assemblies omit ambient glitter and are not screenshots. Actual video frames are real mGBA output; captions are outside gameplay. Static art coverage exceeds the idle NPC poses activated in the runtime clips."
+}

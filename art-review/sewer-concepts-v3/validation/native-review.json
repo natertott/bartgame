@@ -1,0 +1,2541 @@
+{
+  "scope": "v3 native source NPCs, not emulator evidence",
+  "source_sha256": "3ac84ca8f1024bfbbbb391f3c817d06d73609e82d17239aa05981e0633b130bb",
+  "world_frames": 150,
+  "portraits": 10,
+  "passed": 273,
+  "total": 273,
+  "preferred_frog_v2": 1,
+  "preferred_wizard_v2": 5,
+  "frame_ids_preserved": true,
+  "flame_origin": [
+    23,
+    1
+  ],
+  "head_anchors": {
+    "rest": [
+      8,
+      6
+    ],
+    "breathe": [
+      8,
+      7
+    ]
+  },
+  "checks": [
+    {
+      "name": "palette1/peddler",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "palette1/wizard",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "canvas1/peddler_head/open",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "canvas1/peddler_head/blink",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "canvas1/peddler_head/left",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "canvas1/peddler_head/down",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "canvas1/peddler_head/grin",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "canvas1/peddler_body/rest",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "canvas1/peddler_body/tap",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "canvas1/peddler_body/tap2",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "canvas1/peddler_body/lift",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "canvas1/peddler_body/spin9",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "canvas1/peddler_body/spin7",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "canvas1/peddler_body/spin5",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "canvas1/peddler_body/spin3",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "canvas1/peddler_body/spin5b",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "canvas1/peddler_body/spin7b",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "canvas1/peddler_body/spin9b",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "canvas1/peddler_body/slap",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "canvas1/peddler_body/rub0",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "canvas1/peddler_body/rub1",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "canvas1/peddler_body/breathe",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "canvas1/wizard/idle",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "cloth_not_emissive1/idle",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "canvas1/wizard/blink",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "cloth_not_emissive1/blink",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "canvas1/wizard/breath",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "cloth_not_emissive1/breath",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "canvas1/wizard/breath_blink",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "cloth_not_emissive1/breath_blink",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "canvas1/wizard/kindle",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "cloth_not_emissive1/kindle",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "canvas1/wizard/kindle_blink",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "cloth_not_emissive1/kindle_blink",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "canvas1/flame/w0",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "flame_connected1/w0",
+      "passed": true,
+      "details": [
+        30
+      ]
+    },
+    {
+      "name": "flame_base1/w0",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "canvas1/flame/w1",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "flame_connected1/w1",
+      "passed": true,
+      "details": [
+        29
+      ]
+    },
+    {
+      "name": "flame_base1/w1",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "canvas1/flame/w2",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "flame_connected1/w2",
+      "passed": true,
+      "details": [
+        31
+      ]
+    },
+    {
+      "name": "flame_base1/w2",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "canvas1/flame/w3",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "flame_connected1/w3",
+      "passed": true,
+      "details": [
+        29
+      ]
+    },
+    {
+      "name": "flame_base1/w3",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "portrait_canvas1/peddler",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "portrait_changed1/peddler",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "portrait_canvas1/wizard",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "portrait_changed1/wizard",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "fixedfeet1",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "body_breath_distinct1",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "head_body_join1/rest",
+      "passed": true,
+      "details": 40
+    },
+    {
+      "name": "head_body_join1/breathe",
+      "passed": true,
+      "details": 40
+    },
+    {
+      "name": "palette2/peddler",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "palette2/wizard",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "canvas2/peddler_head/open",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "canvas2/peddler_head/blink",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "canvas2/peddler_head/left",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "canvas2/peddler_head/down",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "canvas2/peddler_head/grin",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "canvas2/peddler_body/rest",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "canvas2/peddler_body/tap",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "canvas2/peddler_body/tap2",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "canvas2/peddler_body/lift",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "canvas2/peddler_body/spin9",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "canvas2/peddler_body/spin7",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "canvas2/peddler_body/spin5",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "canvas2/peddler_body/spin3",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "canvas2/peddler_body/spin5b",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "canvas2/peddler_body/spin7b",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "canvas2/peddler_body/spin9b",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "canvas2/peddler_body/slap",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "canvas2/peddler_body/rub0",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "canvas2/peddler_body/rub1",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "canvas2/peddler_body/breathe",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "canvas2/wizard/idle",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "cloth_not_emissive2/idle",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "canvas2/wizard/blink",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "cloth_not_emissive2/blink",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "canvas2/wizard/breath",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "cloth_not_emissive2/breath",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "canvas2/wizard/breath_blink",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "cloth_not_emissive2/breath_blink",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "canvas2/wizard/kindle",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "cloth_not_emissive2/kindle",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "canvas2/wizard/kindle_blink",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "cloth_not_emissive2/kindle_blink",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "canvas2/flame/w0",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "flame_connected2/w0",
+      "passed": true,
+      "details": [
+        32
+      ]
+    },
+    {
+      "name": "flame_base2/w0",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "canvas2/flame/w1",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "flame_connected2/w1",
+      "passed": true,
+      "details": [
+        31
+      ]
+    },
+    {
+      "name": "flame_base2/w1",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "canvas2/flame/w2",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "flame_connected2/w2",
+      "passed": true,
+      "details": [
+        33
+      ]
+    },
+    {
+      "name": "flame_base2/w2",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "canvas2/flame/w3",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "flame_connected2/w3",
+      "passed": true,
+      "details": [
+        31
+      ]
+    },
+    {
+      "name": "flame_base2/w3",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "portrait_canvas2/peddler",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "portrait_changed2/peddler",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "portrait_canvas2/wizard",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "portrait_changed2/wizard",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "fixedfeet2",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "body_breath_distinct2",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "head_body_join2/rest",
+      "passed": true,
+      "details": 33
+    },
+    {
+      "name": "head_body_join2/breathe",
+      "passed": true,
+      "details": 33
+    },
+    {
+      "name": "palette3/peddler",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "palette3/wizard",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "canvas3/peddler_head/open",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "canvas3/peddler_head/blink",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "canvas3/peddler_head/left",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "canvas3/peddler_head/down",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "canvas3/peddler_head/grin",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "canvas3/peddler_body/rest",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "canvas3/peddler_body/tap",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "canvas3/peddler_body/tap2",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "canvas3/peddler_body/lift",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "canvas3/peddler_body/spin9",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "canvas3/peddler_body/spin7",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "canvas3/peddler_body/spin5",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "canvas3/peddler_body/spin3",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "canvas3/peddler_body/spin5b",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "canvas3/peddler_body/spin7b",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "canvas3/peddler_body/spin9b",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "canvas3/peddler_body/slap",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "canvas3/peddler_body/rub0",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "canvas3/peddler_body/rub1",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "canvas3/peddler_body/breathe",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "canvas3/wizard/idle",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "cloth_not_emissive3/idle",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "canvas3/wizard/blink",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "cloth_not_emissive3/blink",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "canvas3/wizard/breath",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "cloth_not_emissive3/breath",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "canvas3/wizard/breath_blink",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "cloth_not_emissive3/breath_blink",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "canvas3/wizard/kindle",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "cloth_not_emissive3/kindle",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "canvas3/wizard/kindle_blink",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "cloth_not_emissive3/kindle_blink",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "canvas3/flame/w0",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "flame_connected3/w0",
+      "passed": true,
+      "details": [
+        26
+      ]
+    },
+    {
+      "name": "flame_base3/w0",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "canvas3/flame/w1",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "flame_connected3/w1",
+      "passed": true,
+      "details": [
+        25
+      ]
+    },
+    {
+      "name": "flame_base3/w1",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "canvas3/flame/w2",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "flame_connected3/w2",
+      "passed": true,
+      "details": [
+        26
+      ]
+    },
+    {
+      "name": "flame_base3/w2",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "canvas3/flame/w3",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "flame_connected3/w3",
+      "passed": true,
+      "details": [
+        25
+      ]
+    },
+    {
+      "name": "flame_base3/w3",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "portrait_canvas3/peddler",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "portrait_changed3/peddler",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "portrait_canvas3/wizard",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "portrait_changed3/wizard",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "fixedfeet3",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "body_breath_distinct3",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "head_body_join3/rest",
+      "passed": true,
+      "details": 26
+    },
+    {
+      "name": "head_body_join3/breathe",
+      "passed": true,
+      "details": 26
+    },
+    {
+      "name": "palette4/peddler",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "palette4/wizard",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "canvas4/peddler_head/open",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "canvas4/peddler_head/blink",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "canvas4/peddler_head/left",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "canvas4/peddler_head/down",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "canvas4/peddler_head/grin",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "canvas4/peddler_body/rest",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "canvas4/peddler_body/tap",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "canvas4/peddler_body/tap2",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "canvas4/peddler_body/lift",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "canvas4/peddler_body/spin9",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "canvas4/peddler_body/spin7",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "canvas4/peddler_body/spin5",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "canvas4/peddler_body/spin3",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "canvas4/peddler_body/spin5b",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "canvas4/peddler_body/spin7b",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "canvas4/peddler_body/spin9b",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "canvas4/peddler_body/slap",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "canvas4/peddler_body/rub0",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "canvas4/peddler_body/rub1",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "canvas4/peddler_body/breathe",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "canvas4/wizard/idle",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "cloth_not_emissive4/idle",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "canvas4/wizard/blink",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "cloth_not_emissive4/blink",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "canvas4/wizard/breath",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "cloth_not_emissive4/breath",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "canvas4/wizard/breath_blink",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "cloth_not_emissive4/breath_blink",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "canvas4/wizard/kindle",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "cloth_not_emissive4/kindle",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "canvas4/wizard/kindle_blink",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "cloth_not_emissive4/kindle_blink",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "canvas4/flame/w0",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "flame_connected4/w0",
+      "passed": true,
+      "details": [
+        32
+      ]
+    },
+    {
+      "name": "flame_base4/w0",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "canvas4/flame/w1",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "flame_connected4/w1",
+      "passed": true,
+      "details": [
+        31
+      ]
+    },
+    {
+      "name": "flame_base4/w1",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "canvas4/flame/w2",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "flame_connected4/w2",
+      "passed": true,
+      "details": [
+        33
+      ]
+    },
+    {
+      "name": "flame_base4/w2",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "canvas4/flame/w3",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "flame_connected4/w3",
+      "passed": true,
+      "details": [
+        31
+      ]
+    },
+    {
+      "name": "flame_base4/w3",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "portrait_canvas4/peddler",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "portrait_changed4/peddler",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "portrait_canvas4/wizard",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "portrait_changed4/wizard",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "fixedfeet4",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "body_breath_distinct4",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "head_body_join4/rest",
+      "passed": true,
+      "details": 29
+    },
+    {
+      "name": "head_body_join4/breathe",
+      "passed": true,
+      "details": 29
+    },
+    {
+      "name": "palette5/peddler",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "palette5/wizard",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "canvas5/peddler_head/open",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "canvas5/peddler_head/blink",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "canvas5/peddler_head/left",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "canvas5/peddler_head/down",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "canvas5/peddler_head/grin",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "canvas5/peddler_body/rest",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "canvas5/peddler_body/tap",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "canvas5/peddler_body/tap2",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "canvas5/peddler_body/lift",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "canvas5/peddler_body/spin9",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "canvas5/peddler_body/spin7",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "canvas5/peddler_body/spin5",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "canvas5/peddler_body/spin3",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "canvas5/peddler_body/spin5b",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "canvas5/peddler_body/spin7b",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "canvas5/peddler_body/spin9b",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "canvas5/peddler_body/slap",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "canvas5/peddler_body/rub0",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "canvas5/peddler_body/rub1",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "canvas5/peddler_body/breathe",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "canvas5/wizard/idle",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "cloth_not_emissive5/idle",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "canvas5/wizard/blink",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "cloth_not_emissive5/blink",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "canvas5/wizard/breath",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "cloth_not_emissive5/breath",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "canvas5/wizard/breath_blink",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "cloth_not_emissive5/breath_blink",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "canvas5/wizard/kindle",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "cloth_not_emissive5/kindle",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "canvas5/wizard/kindle_blink",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "cloth_not_emissive5/kindle_blink",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "canvas5/flame/w0",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "flame_connected5/w0",
+      "passed": true,
+      "details": [
+        28
+      ]
+    },
+    {
+      "name": "flame_base5/w0",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "canvas5/flame/w1",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "flame_connected5/w1",
+      "passed": true,
+      "details": [
+        26
+      ]
+    },
+    {
+      "name": "flame_base5/w1",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "canvas5/flame/w2",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "flame_connected5/w2",
+      "passed": true,
+      "details": [
+        28
+      ]
+    },
+    {
+      "name": "flame_base5/w2",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "canvas5/flame/w3",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "flame_connected5/w3",
+      "passed": true,
+      "details": [
+        27
+      ]
+    },
+    {
+      "name": "flame_base5/w3",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "portrait_canvas5/peddler",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "portrait_changed5/peddler",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "portrait_canvas5/wizard",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "portrait_changed5/wizard",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "fixedfeet5",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "body_breath_distinct5",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "head_body_join5/rest",
+      "passed": true,
+      "details": 31
+    },
+    {
+      "name": "head_body_join5/breathe",
+      "passed": true,
+      "details": 31
+    },
+    {
+      "name": "preferred_body_retention_only",
+      "passed": true,
+      "details": {
+        "changed": 135,
+        "total": 150,
+        "reason": "Option1 retains the preferred frog1 body/action family; its head and complete composite are newly drawn."
+      }
+    },
+    {
+      "name": "five_distinct_composites/peddler",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "five_distinct_composites/wizard",
+      "passed": true,
+      "details": null
+    }
+  ],
+  "world": [
+    {
+      "style": 1,
+      "painter": "peddler_head",
+      "frame": "open",
+      "sha256": "313e9b6116a07fa54d8f3ec639a285db2d8ced6b54a8b5e8ed2a6a8d23b9f386",
+      "changed_from_same_number_v2": true
+    },
+    {
+      "style": 1,
+      "painter": "peddler_head",
+      "frame": "blink",
+      "sha256": "269f57a69cc015e24c10a396c106e07c82cb553a08e3014472fece59ddfad742",
+      "changed_from_same_number_v2": true
+    },
+    {
+      "style": 1,
+      "painter": "peddler_head",
+      "frame": "left",
+      "sha256": "f483095fa2877bf3f5fd228bd7cb56945d518d413722fbdf94de5125272f2987",
+      "changed_from_same_number_v2": true
+    },
+    {
+      "style": 1,
+      "painter": "peddler_head",
+      "frame": "down",
+      "sha256": "e7549fee574eb4a6d30d765fb5d069edeabf1db1ed7d1100d6e98df162668093",
+      "changed_from_same_number_v2": true
+    },
+    {
+      "style": 1,
+      "painter": "peddler_head",
+      "frame": "grin",
+      "sha256": "407a08751edab0671963e2bc46e155d48e927acf5ba8440e39962fe58345fdc9",
+      "changed_from_same_number_v2": true
+    },
+    {
+      "style": 1,
+      "painter": "peddler_body",
+      "frame": "rest",
+      "sha256": "8e23eb2c04734c50b6bfc9e564e3a64b82613febc20754b15661ec7412420ff0",
+      "changed_from_same_number_v2": false
+    },
+    {
+      "style": 1,
+      "painter": "peddler_body",
+      "frame": "tap",
+      "sha256": "057e0bd6e86774b9e4c94c9f8e30e3949cc43255197b2d941e86560b0916f439",
+      "changed_from_same_number_v2": false
+    },
+    {
+      "style": 1,
+      "painter": "peddler_body",
+      "frame": "tap2",
+      "sha256": "fd3f1963590f0f9fdca0048920f7d7b65d1ce0e0cf1ee2ca2b11cf07b5248872",
+      "changed_from_same_number_v2": false
+    },
+    {
+      "style": 1,
+      "painter": "peddler_body",
+      "frame": "lift",
+      "sha256": "b63bdaae4fe27686a0d4550575c20d4e3dfdc3caf8ec231d529f008dac3ec833",
+      "changed_from_same_number_v2": false
+    },
+    {
+      "style": 1,
+      "painter": "peddler_body",
+      "frame": "spin9",
+      "sha256": "79a5e428cd0903523f21feb3ba78e2751c52ab013e250b7e8b8da2fcf8b342c1",
+      "changed_from_same_number_v2": false
+    },
+    {
+      "style": 1,
+      "painter": "peddler_body",
+      "frame": "spin7",
+      "sha256": "79a5e428cd0903523f21feb3ba78e2751c52ab013e250b7e8b8da2fcf8b342c1",
+      "changed_from_same_number_v2": false
+    },
+    {
+      "style": 1,
+      "painter": "peddler_body",
+      "frame": "spin5",
+      "sha256": "14bef1aee8c3a4b48c598241085f5a70deb62d77f7c6929d2c1eade9e24d7f33",
+      "changed_from_same_number_v2": false
+    },
+    {
+      "style": 1,
+      "painter": "peddler_body",
+      "frame": "spin3",
+      "sha256": "0575b37241e1896def796865494d90bfbdb2b8d1dbee1ec71b3fc6bcbe8486dc",
+      "changed_from_same_number_v2": false
+    },
+    {
+      "style": 1,
+      "painter": "peddler_body",
+      "frame": "spin5b",
+      "sha256": "334193af5a6e34a97e416c0349f73a47a461ed18bb1550fb36f1c7f4f7bafb24",
+      "changed_from_same_number_v2": false
+    },
+    {
+      "style": 1,
+      "painter": "peddler_body",
+      "frame": "spin7b",
+      "sha256": "03d9c1f49c2c4171abae20542b28f920f4163558315166bacc2757292442e40f",
+      "changed_from_same_number_v2": false
+    },
+    {
+      "style": 1,
+      "painter": "peddler_body",
+      "frame": "spin9b",
+      "sha256": "03d9c1f49c2c4171abae20542b28f920f4163558315166bacc2757292442e40f",
+      "changed_from_same_number_v2": false
+    },
+    {
+      "style": 1,
+      "painter": "peddler_body",
+      "frame": "slap",
+      "sha256": "d205d3063eb1b89478a1c3ea11010c4d833aeb2524b5f1ce884c6060a6bb240a",
+      "changed_from_same_number_v2": false
+    },
+    {
+      "style": 1,
+      "painter": "peddler_body",
+      "frame": "rub0",
+      "sha256": "03bb1e112c2998e0d50735769ac9015c671e1c1e615736109d1db9102f3aa9a1",
+      "changed_from_same_number_v2": false
+    },
+    {
+      "style": 1,
+      "painter": "peddler_body",
+      "frame": "rub1",
+      "sha256": "de5beac9ad672d63c0bfaee7ff284d933fda3140ef2c4f2ababe65ecbc05703d",
+      "changed_from_same_number_v2": false
+    },
+    {
+      "style": 1,
+      "painter": "peddler_body",
+      "frame": "breathe",
+      "sha256": "d5085c10573968beb3d5c3bf8c421e13d8c1297bda4303d9ed737b5c9aef8284",
+      "changed_from_same_number_v2": false
+    },
+    {
+      "style": 1,
+      "painter": "wizard",
+      "frame": "idle",
+      "sha256": "467a01672ccc4c388b0577f65ccb906043052664c90c3546250ef36065e689df",
+      "changed_from_same_number_v2": true
+    },
+    {
+      "style": 1,
+      "painter": "wizard",
+      "frame": "blink",
+      "sha256": "d87ccbfe4fcd80cc542138acf454d731d7e59831382fd7ac170b332c94db3f93",
+      "changed_from_same_number_v2": true
+    },
+    {
+      "style": 1,
+      "painter": "wizard",
+      "frame": "breath",
+      "sha256": "1719b5c814987b4827681aabbb550ff847610463f0082da6be1fdf0576a5ffcb",
+      "changed_from_same_number_v2": true
+    },
+    {
+      "style": 1,
+      "painter": "wizard",
+      "frame": "breath_blink",
+      "sha256": "5749d42dbc64e388abc24d618ad3c2d6e1b2f824ff1700443ab55eff517e9e6f",
+      "changed_from_same_number_v2": true
+    },
+    {
+      "style": 1,
+      "painter": "wizard",
+      "frame": "kindle",
+      "sha256": "522d4bd413e4a93f7e0418354abebdcc02cd249197cd89d7fb127b982c1857a3",
+      "changed_from_same_number_v2": true
+    },
+    {
+      "style": 1,
+      "painter": "wizard",
+      "frame": "kindle_blink",
+      "sha256": "9dea35e144da97e675e3e36762eebb9238c0de620ef736583b27befe220789bc",
+      "changed_from_same_number_v2": true
+    },
+    {
+      "style": 1,
+      "painter": "flame",
+      "frame": "w0",
+      "sha256": "081ea55b34e195b3fd696bcb97b2be350dde4573a5dde2ae8d157e5860a564c8",
+      "changed_from_same_number_v2": true
+    },
+    {
+      "style": 1,
+      "painter": "flame",
+      "frame": "w1",
+      "sha256": "fde0091e3ba479af376e23356f08ed52ef22c0cbee7bc0502a041a4aa6000117",
+      "changed_from_same_number_v2": true
+    },
+    {
+      "style": 1,
+      "painter": "flame",
+      "frame": "w2",
+      "sha256": "1505b93ff42ec546a09a74fff5978cc5bcb7d9a64dc9fd23c59015e1f67c2e52",
+      "changed_from_same_number_v2": true
+    },
+    {
+      "style": 1,
+      "painter": "flame",
+      "frame": "w3",
+      "sha256": "97af97885638b1e38bcc42123a7fb4a31dcbdcc2398234517e49deaa510f22b4",
+      "changed_from_same_number_v2": true
+    },
+    {
+      "style": 2,
+      "painter": "peddler_head",
+      "frame": "open",
+      "sha256": "d5f903a5c82cbb8bbf10feddde107aeb65965791e827200b16b0cf82489d0ae1",
+      "changed_from_same_number_v2": true
+    },
+    {
+      "style": 2,
+      "painter": "peddler_head",
+      "frame": "blink",
+      "sha256": "6690ea382508799044d15a86bf890947125cc4c78b3ec46ca825deffe9fadaff",
+      "changed_from_same_number_v2": true
+    },
+    {
+      "style": 2,
+      "painter": "peddler_head",
+      "frame": "left",
+      "sha256": "2486d64987d1c6a3e64061cac8c0f8799959fd8b8b2f1307eca38b814c387baa",
+      "changed_from_same_number_v2": true
+    },
+    {
+      "style": 2,
+      "painter": "peddler_head",
+      "frame": "down",
+      "sha256": "ef7b5bbc5740ad98f9902441395cfc31ff2184c143e7371f1b984707db2f1597",
+      "changed_from_same_number_v2": true
+    },
+    {
+      "style": 2,
+      "painter": "peddler_head",
+      "frame": "grin",
+      "sha256": "ed80155b4711eb0e8ad29eb4bcfce5712bc189f33fee56ec06d51298abf8b2bd",
+      "changed_from_same_number_v2": true
+    },
+    {
+      "style": 2,
+      "painter": "peddler_body",
+      "frame": "rest",
+      "sha256": "f9d5831bcf7b91be69bf84acec456655492ae869d1670c493864704d58aae99d",
+      "changed_from_same_number_v2": true
+    },
+    {
+      "style": 2,
+      "painter": "peddler_body",
+      "frame": "tap",
+      "sha256": "a8caa7d88f4a98b1f4fb5257f44519c584070916348cc8b5e2e2aeaadbda163d",
+      "changed_from_same_number_v2": true
+    },
+    {
+      "style": 2,
+      "painter": "peddler_body",
+      "frame": "tap2",
+      "sha256": "720591f187c110e41004f54d63a2192a44db207e78855596c7051d38ac0e5470",
+      "changed_from_same_number_v2": true
+    },
+    {
+      "style": 2,
+      "painter": "peddler_body",
+      "frame": "lift",
+      "sha256": "f04175441a59db80208bcff219a15fc763163cb5d1422717f99d5e7816a90c03",
+      "changed_from_same_number_v2": true
+    },
+    {
+      "style": 2,
+      "painter": "peddler_body",
+      "frame": "spin9",
+      "sha256": "6014eb15fc1cf640e2c6bed2554fbf2495735b37d35c00357f0476d0ac35ca4b",
+      "changed_from_same_number_v2": true
+    },
+    {
+      "style": 2,
+      "painter": "peddler_body",
+      "frame": "spin7",
+      "sha256": "6014eb15fc1cf640e2c6bed2554fbf2495735b37d35c00357f0476d0ac35ca4b",
+      "changed_from_same_number_v2": true
+    },
+    {
+      "style": 2,
+      "painter": "peddler_body",
+      "frame": "spin5",
+      "sha256": "8a8569a778b747e90fd62b52f369add3fdb13c69779e0f07af3fe2c0818d8ed8",
+      "changed_from_same_number_v2": true
+    },
+    {
+      "style": 2,
+      "painter": "peddler_body",
+      "frame": "spin3",
+      "sha256": "024b159b282703466376922f95d03ff358136c51840f7f9c6d254dc2feca21be",
+      "changed_from_same_number_v2": true
+    },
+    {
+      "style": 2,
+      "painter": "peddler_body",
+      "frame": "spin5b",
+      "sha256": "4164521809acb412df7f82611297adfbff874ffb720aceec715d71832ad5f558",
+      "changed_from_same_number_v2": true
+    },
+    {
+      "style": 2,
+      "painter": "peddler_body",
+      "frame": "spin7b",
+      "sha256": "fca96871eba92d0d6d35a9ea562e4f1eea0b96b7cf6e916498b54e311633786f",
+      "changed_from_same_number_v2": true
+    },
+    {
+      "style": 2,
+      "painter": "peddler_body",
+      "frame": "spin9b",
+      "sha256": "fca96871eba92d0d6d35a9ea562e4f1eea0b96b7cf6e916498b54e311633786f",
+      "changed_from_same_number_v2": true
+    },
+    {
+      "style": 2,
+      "painter": "peddler_body",
+      "frame": "slap",
+      "sha256": "b8f6cf03e9e2156ddee16020a73be2a58883148ec8c36e7b89a6a68e6e00d39f",
+      "changed_from_same_number_v2": true
+    },
+    {
+      "style": 2,
+      "painter": "peddler_body",
+      "frame": "rub0",
+      "sha256": "3088e8a75e792a6c62bcf481826a120792378758edb4141e3dbab887a58f5a6f",
+      "changed_from_same_number_v2": true
+    },
+    {
+      "style": 2,
+      "painter": "peddler_body",
+      "frame": "rub1",
+      "sha256": "0836de34b7d1decfbbe4774ef06efadeaa1a38c52328930ad5f350ea65265644",
+      "changed_from_same_number_v2": true
+    },
+    {
+      "style": 2,
+      "painter": "peddler_body",
+      "frame": "breathe",
+      "sha256": "f88c39f703c1ee6c8808b9bc51c4f5cb87a28bf6f23c6a5fbb93e17d77dd69c8",
+      "changed_from_same_number_v2": true
+    },
+    {
+      "style": 2,
+      "painter": "wizard",
+      "frame": "idle",
+      "sha256": "d1324c2ebe12df740062736ed76558e79ecb93915140cc458eab9b4dd1295b06",
+      "changed_from_same_number_v2": true
+    },
+    {
+      "style": 2,
+      "painter": "wizard",
+      "frame": "blink",
+      "sha256": "c30591637fb24255777f43d435e0264bddc7e3dc3a07773ac146af7e6539fe22",
+      "changed_from_same_number_v2": true
+    },
+    {
+      "style": 2,
+      "painter": "wizard",
+      "frame": "breath",
+      "sha256": "f4c95bb16fa82760271618e29aef79a27677e9eeae05d7ceb2519b19d11d297e",
+      "changed_from_same_number_v2": true
+    },
+    {
+      "style": 2,
+      "painter": "wizard",
+      "frame": "breath_blink",
+      "sha256": "bec89a5c2f1fdf5b582fc57d25f5467273184514bd154b0b0ba8d37ba21c9046",
+      "changed_from_same_number_v2": true
+    },
+    {
+      "style": 2,
+      "painter": "wizard",
+      "frame": "kindle",
+      "sha256": "63d1684fd976614971a27ec4885be531a5f341869b3524ea735d295cb693b237",
+      "changed_from_same_number_v2": true
+    },
+    {
+      "style": 2,
+      "painter": "wizard",
+      "frame": "kindle_blink",
+      "sha256": "a640d479ee76dccc026ed8b55aed0237ee7e73bbbf9f9b1b0229623c909adf55",
+      "changed_from_same_number_v2": true
+    },
+    {
+      "style": 2,
+      "painter": "flame",
+      "frame": "w0",
+      "sha256": "50fdd516c643ee191befe9840d86c4f623c5f078ff440e08408ddcc2ac401ab3",
+      "changed_from_same_number_v2": true
+    },
+    {
+      "style": 2,
+      "painter": "flame",
+      "frame": "w1",
+      "sha256": "f1adcfecda4cc8c93c1032daba73151a43b2fca79397d21926dd0d4b649d43b6",
+      "changed_from_same_number_v2": true
+    },
+    {
+      "style": 2,
+      "painter": "flame",
+      "frame": "w2",
+      "sha256": "bf68b4c3aff97eab8a4a23441fcb74f39da33929908a233998b11b209d84a59d",
+      "changed_from_same_number_v2": true
+    },
+    {
+      "style": 2,
+      "painter": "flame",
+      "frame": "w3",
+      "sha256": "498d64719b4351e545953c2a3df6abf56024e7268019d8f69eb89067daf8be30",
+      "changed_from_same_number_v2": true
+    },
+    {
+      "style": 3,
+      "painter": "peddler_head",
+      "frame": "open",
+      "sha256": "fbeb18fe85b79e7548247696206114f93913130cfc219b06a492792f1e4bb311",
+      "changed_from_same_number_v2": true
+    },
+    {
+      "style": 3,
+      "painter": "peddler_head",
+      "frame": "blink",
+      "sha256": "277894f162af3c7efbbc64a0eae05253d93ab4e7d89b95d7675151d279ee8a3a",
+      "changed_from_same_number_v2": true
+    },
+    {
+      "style": 3,
+      "painter": "peddler_head",
+      "frame": "left",
+      "sha256": "0619850154ecff511051920db617d7e789313f82d07e8b1735caeb7c3ca01db2",
+      "changed_from_same_number_v2": true
+    },
+    {
+      "style": 3,
+      "painter": "peddler_head",
+      "frame": "down",
+      "sha256": "c72a1335e66accc5c079ba5e26f28d59361cf58355dbe8b30331c982cd61cd59",
+      "changed_from_same_number_v2": true
+    },
+    {
+      "style": 3,
+      "painter": "peddler_head",
+      "frame": "grin",
+      "sha256": "43574b0085dda6c0f6da95f8c086b15bb4d403ce7bc43bbe712fd67d56496a07",
+      "changed_from_same_number_v2": true
+    },
+    {
+      "style": 3,
+      "painter": "peddler_body",
+      "frame": "rest",
+      "sha256": "b0d83d6738b91099d73240545c0511cbbb50b82dd2202750b4a7227fb5ae7314",
+      "changed_from_same_number_v2": true
+    },
+    {
+      "style": 3,
+      "painter": "peddler_body",
+      "frame": "tap",
+      "sha256": "75c261f25c5cbd079ff915768bb14dca1f8cdbac0257d3f3545eaf30b33fde6d",
+      "changed_from_same_number_v2": true
+    },
+    {
+      "style": 3,
+      "painter": "peddler_body",
+      "frame": "tap2",
+      "sha256": "27108fec847176a23ec1d5da9b9ea73cdd2e58b853ae969bc4baf6d0af569973",
+      "changed_from_same_number_v2": true
+    },
+    {
+      "style": 3,
+      "painter": "peddler_body",
+      "frame": "lift",
+      "sha256": "805728a95ed9c6556db907ba798f6d9d91ea40b93e6756d23d2aaabe32790979",
+      "changed_from_same_number_v2": true
+    },
+    {
+      "style": 3,
+      "painter": "peddler_body",
+      "frame": "spin9",
+      "sha256": "41fde59b3644c46bba90b7a290781828a439dbd02a299bc5e53dc1514d6d1493",
+      "changed_from_same_number_v2": true
+    },
+    {
+      "style": 3,
+      "painter": "peddler_body",
+      "frame": "spin7",
+      "sha256": "41fde59b3644c46bba90b7a290781828a439dbd02a299bc5e53dc1514d6d1493",
+      "changed_from_same_number_v2": true
+    },
+    {
+      "style": 3,
+      "painter": "peddler_body",
+      "frame": "spin5",
+      "sha256": "f202e17d5f3435292920df5f2cc9d69c8406128be906834cba3a066e78e42830",
+      "changed_from_same_number_v2": true
+    },
+    {
+      "style": 3,
+      "painter": "peddler_body",
+      "frame": "spin3",
+      "sha256": "0b4b654f3e3670d1b273e9c0c3c1afe7836da22c20afeb5ab6e819b983d9e4b0",
+      "changed_from_same_number_v2": true
+    },
+    {
+      "style": 3,
+      "painter": "peddler_body",
+      "frame": "spin5b",
+      "sha256": "5a7b169a02cff91febd72fabf2b94a9943abff33b9a197fb5c2de496ea983ffe",
+      "changed_from_same_number_v2": true
+    },
+    {
+      "style": 3,
+      "painter": "peddler_body",
+      "frame": "spin7b",
+      "sha256": "74c7c36eec61c704b3c1c98421991bab1a7a84a573ec1e1b1b1367d257261960",
+      "changed_from_same_number_v2": true
+    },
+    {
+      "style": 3,
+      "painter": "peddler_body",
+      "frame": "spin9b",
+      "sha256": "74c7c36eec61c704b3c1c98421991bab1a7a84a573ec1e1b1b1367d257261960",
+      "changed_from_same_number_v2": true
+    },
+    {
+      "style": 3,
+      "painter": "peddler_body",
+      "frame": "slap",
+      "sha256": "38c156ec7a5886ac2b9382caec0c14098e25ad760d8ad0d87add685ddf597578",
+      "changed_from_same_number_v2": true
+    },
+    {
+      "style": 3,
+      "painter": "peddler_body",
+      "frame": "rub0",
+      "sha256": "f6c91ec19db9aeb81248174dbe04340866bf45b9683085486d1d7881b53b57a6",
+      "changed_from_same_number_v2": true
+    },
+    {
+      "style": 3,
+      "painter": "peddler_body",
+      "frame": "rub1",
+      "sha256": "808df79fa81cbfc84255e2b9d66f4cb3fade4a8e39ea6c4ab55dfe04f87c855f",
+      "changed_from_same_number_v2": true
+    },
+    {
+      "style": 3,
+      "painter": "peddler_body",
+      "frame": "breathe",
+      "sha256": "fe066ec5d046a2c29a2a5e3136396fb615ca3eb6a55a2cdc755c11ea26502c8d",
+      "changed_from_same_number_v2": true
+    },
+    {
+      "style": 3,
+      "painter": "wizard",
+      "frame": "idle",
+      "sha256": "178b378fe5f202fd975910384b8ce68c4b897f428b5ed106c62117bc8b9dd372",
+      "changed_from_same_number_v2": true
+    },
+    {
+      "style": 3,
+      "painter": "wizard",
+      "frame": "blink",
+      "sha256": "d0aeb4d392b518949db9a5ae380ba9164e397f524272494192a67f28a5f460c7",
+      "changed_from_same_number_v2": true
+    },
+    {
+      "style": 3,
+      "painter": "wizard",
+      "frame": "breath",
+      "sha256": "01bc1f909915ce608dd161ae7297a46c00500f307b75b328b57f54d4ad39cf57",
+      "changed_from_same_number_v2": true
+    },
+    {
+      "style": 3,
+      "painter": "wizard",
+      "frame": "breath_blink",
+      "sha256": "a0273b88625ca03ab9a006b10dee29e1f5ca694370d4c5deee654b1956c4208e",
+      "changed_from_same_number_v2": true
+    },
+    {
+      "style": 3,
+      "painter": "wizard",
+      "frame": "kindle",
+      "sha256": "33c342f83885d941de49b2c79128a69c63f7aaa8817f2fb16b2805dadb9803e0",
+      "changed_from_same_number_v2": true
+    },
+    {
+      "style": 3,
+      "painter": "wizard",
+      "frame": "kindle_blink",
+      "sha256": "3566d99c4a5c88d47fa63cb5696fb81908e9f3aa6a4fff0cb0a249cfe891a8f0",
+      "changed_from_same_number_v2": true
+    },
+    {
+      "style": 3,
+      "painter": "flame",
+      "frame": "w0",
+      "sha256": "25b8dcb38aec0478ea8a1dbb39c816b1688d7d7b47808aca3d684da8100bc60d",
+      "changed_from_same_number_v2": true
+    },
+    {
+      "style": 3,
+      "painter": "flame",
+      "frame": "w1",
+      "sha256": "8b7cbfe0dd33281be36794ec139e692bac42b534c4c76fc9edc51a6cbcea7802",
+      "changed_from_same_number_v2": true
+    },
+    {
+      "style": 3,
+      "painter": "flame",
+      "frame": "w2",
+      "sha256": "356052de6df1d41050cc5b0f7870a3f782b532b9bbb42ddcbf0000d0de238758",
+      "changed_from_same_number_v2": true
+    },
+    {
+      "style": 3,
+      "painter": "flame",
+      "frame": "w3",
+      "sha256": "8572557392e9b136bd7c0aaa176208ef138fadf8e4e65001b5476f9b1c661ff2",
+      "changed_from_same_number_v2": true
+    },
+    {
+      "style": 4,
+      "painter": "peddler_head",
+      "frame": "open",
+      "sha256": "ce3b88518dcc31b231fd7e16f5d418db82b0220f894caa90b191612bfafab9f5",
+      "changed_from_same_number_v2": true
+    },
+    {
+      "style": 4,
+      "painter": "peddler_head",
+      "frame": "blink",
+      "sha256": "6941be166bee647520dfb3c8cd6f19e61bacbfed0e035d497235cd42120e61e1",
+      "changed_from_same_number_v2": true
+    },
+    {
+      "style": 4,
+      "painter": "peddler_head",
+      "frame": "left",
+      "sha256": "476cb83be98a27b7fecd3e0799f2419395e1c40f2f597c430e3ec0b148b33651",
+      "changed_from_same_number_v2": true
+    },
+    {
+      "style": 4,
+      "painter": "peddler_head",
+      "frame": "down",
+      "sha256": "719f86dbe7f7162ecfcfd1af91677c53976f66759fb7220e80d2d776a72880e5",
+      "changed_from_same_number_v2": true
+    },
+    {
+      "style": 4,
+      "painter": "peddler_head",
+      "frame": "grin",
+      "sha256": "530ad9e79eccfb3e648416d5c00f4d15325ae49a457ed590c90631ce83227d1d",
+      "changed_from_same_number_v2": true
+    },
+    {
+      "style": 4,
+      "painter": "peddler_body",
+      "frame": "rest",
+      "sha256": "fc23943d02ba8d93930ccadd9f862db3fde1a494a36a243c1a7071d7bdb277ce",
+      "changed_from_same_number_v2": true
+    },
+    {
+      "style": 4,
+      "painter": "peddler_body",
+      "frame": "tap",
+      "sha256": "a6c4d5604de41123fae70f0df8ec945067e7881d1b8da5eb50e6eb78d54d2d19",
+      "changed_from_same_number_v2": true
+    },
+    {
+      "style": 4,
+      "painter": "peddler_body",
+      "frame": "tap2",
+      "sha256": "dd91b8671ed9bdf02c88e157650b36adf8f92aabff3521c1084abec80a519329",
+      "changed_from_same_number_v2": true
+    },
+    {
+      "style": 4,
+      "painter": "peddler_body",
+      "frame": "lift",
+      "sha256": "29bfda4fb556b22f594ba06e4537343ce5592e79a50f4aacd80b9b3a4f60f416",
+      "changed_from_same_number_v2": true
+    },
+    {
+      "style": 4,
+      "painter": "peddler_body",
+      "frame": "spin9",
+      "sha256": "8ce8bd4e180113b23a102231968cdbf294f651b4b91633bbfced37f1686fe78e",
+      "changed_from_same_number_v2": true
+    },
+    {
+      "style": 4,
+      "painter": "peddler_body",
+      "frame": "spin7",
+      "sha256": "8ce8bd4e180113b23a102231968cdbf294f651b4b91633bbfced37f1686fe78e",
+      "changed_from_same_number_v2": true
+    },
+    {
+      "style": 4,
+      "painter": "peddler_body",
+      "frame": "spin5",
+      "sha256": "4aadbe80e44c7021821cdbec35148eb8476a8f869051e2fd26cfaacf1e13e44b",
+      "changed_from_same_number_v2": true
+    },
+    {
+      "style": 4,
+      "painter": "peddler_body",
+      "frame": "spin3",
+      "sha256": "b093877f24cc9fb03fa3fff8cc3df67b4436e9d76556a0066aaa7243be88225b",
+      "changed_from_same_number_v2": true
+    },
+    {
+      "style": 4,
+      "painter": "peddler_body",
+      "frame": "spin5b",
+      "sha256": "95d1e4ed69bc4dbc4b05bddbeb0a72e44e7dfe8e9840aa1225303d06b71d4e05",
+      "changed_from_same_number_v2": true
+    },
+    {
+      "style": 4,
+      "painter": "peddler_body",
+      "frame": "spin7b",
+      "sha256": "75b10b82b00a3bfa9ada3ca1fc2285c53287f5534a12cbd99c32e0d1b5d298f3",
+      "changed_from_same_number_v2": true
+    },
+    {
+      "style": 4,
+      "painter": "peddler_body",
+      "frame": "spin9b",
+      "sha256": "75b10b82b00a3bfa9ada3ca1fc2285c53287f5534a12cbd99c32e0d1b5d298f3",
+      "changed_from_same_number_v2": true
+    },
+    {
+      "style": 4,
+      "painter": "peddler_body",
+      "frame": "slap",
+      "sha256": "4c14be5269908278fdf79594bfda3a8d600b1bbf1e7844543c19775cd0a455b5",
+      "changed_from_same_number_v2": true
+    },
+    {
+      "style": 4,
+      "painter": "peddler_body",
+      "frame": "rub0",
+      "sha256": "17ccdf9f0dd3d777ef6be347130ab332d4e1217b3a59279cf929acd4603341bf",
+      "changed_from_same_number_v2": true
+    },
+    {
+      "style": 4,
+      "painter": "peddler_body",
+      "frame": "rub1",
+      "sha256": "6e3c5d7f5410b082bcdbcea032b78e4cfdf17b17e892e85a4f66b7851dfc106c",
+      "changed_from_same_number_v2": true
+    },
+    {
+      "style": 4,
+      "painter": "peddler_body",
+      "frame": "breathe",
+      "sha256": "5b25f97c53afc5fc9965ad8f9e8326385128fc2e6e5f64a42e22a11d443c0be1",
+      "changed_from_same_number_v2": true
+    },
+    {
+      "style": 4,
+      "painter": "wizard",
+      "frame": "idle",
+      "sha256": "4727a346aac0238ab027f7bd51edb7703f97075a3272139e13b88c14d8758713",
+      "changed_from_same_number_v2": true
+    },
+    {
+      "style": 4,
+      "painter": "wizard",
+      "frame": "blink",
+      "sha256": "3b5d58b0e2c1c13b231ae4dff4b54ee3db0b7994bf7482c10392dd637a5ccef6",
+      "changed_from_same_number_v2": true
+    },
+    {
+      "style": 4,
+      "painter": "wizard",
+      "frame": "breath",
+      "sha256": "dd615daba57ec9c05ad6294d00fd50fce0d2bf98e2d8bfa639a72ed5b4573d1a",
+      "changed_from_same_number_v2": true
+    },
+    {
+      "style": 4,
+      "painter": "wizard",
+      "frame": "breath_blink",
+      "sha256": "3e523bdd9f5bbecfbf67edc2f126a2effd36ea99539e239c2a6a2db9d899adba",
+      "changed_from_same_number_v2": true
+    },
+    {
+      "style": 4,
+      "painter": "wizard",
+      "frame": "kindle",
+      "sha256": "624fd538628a3ebbef7f205d542bda15ca03bae866e8b61da2455006f70e7aae",
+      "changed_from_same_number_v2": true
+    },
+    {
+      "style": 4,
+      "painter": "wizard",
+      "frame": "kindle_blink",
+      "sha256": "d6153cbb7cea5a2c7c8fcd9763cd5ac66e4e8b92469b4ff17fef402a0327afdd",
+      "changed_from_same_number_v2": true
+    },
+    {
+      "style": 4,
+      "painter": "flame",
+      "frame": "w0",
+      "sha256": "0c0886993db1b03a99d6d0952bad34576831570ff14f1137bfc02159764fc083",
+      "changed_from_same_number_v2": true
+    },
+    {
+      "style": 4,
+      "painter": "flame",
+      "frame": "w1",
+      "sha256": "7c3bbaa231e736397b0e287a4c7f2321e1a0c491826c625e816bcc35ba3429d2",
+      "changed_from_same_number_v2": true
+    },
+    {
+      "style": 4,
+      "painter": "flame",
+      "frame": "w2",
+      "sha256": "b081b4efbd1afc82a27f9da165d2218e184772371751e5ffde19baaa83101999",
+      "changed_from_same_number_v2": true
+    },
+    {
+      "style": 4,
+      "painter": "flame",
+      "frame": "w3",
+      "sha256": "278eaa03fac6baa67cac24180700124d222cde3e7748fe9513144e0b994c570e",
+      "changed_from_same_number_v2": true
+    },
+    {
+      "style": 5,
+      "painter": "peddler_head",
+      "frame": "open",
+      "sha256": "b67a141c9dd04d960a6d8f1b6696d5478b9d28df05e635ceba60089f994853f5",
+      "changed_from_same_number_v2": true
+    },
+    {
+      "style": 5,
+      "painter": "peddler_head",
+      "frame": "blink",
+      "sha256": "47d7949c9dc1681005b3e98a22db98b4c2e6beb15b2fc1f08f62fd9db317a3ad",
+      "changed_from_same_number_v2": true
+    },
+    {
+      "style": 5,
+      "painter": "peddler_head",
+      "frame": "left",
+      "sha256": "8273ad686774a3c68cde576aab5cda51edfe0aef94f0abd7c1a7e1543656425a",
+      "changed_from_same_number_v2": true
+    },
+    {
+      "style": 5,
+      "painter": "peddler_head",
+      "frame": "down",
+      "sha256": "eb8c7fede2216ad3ead8a1f3d558ae50b7caa1088b4ebdcf1d30fa2e38c3bb6c",
+      "changed_from_same_number_v2": true
+    },
+    {
+      "style": 5,
+      "painter": "peddler_head",
+      "frame": "grin",
+      "sha256": "39fa979d889baf242b2857bc749f5f39b5c86c9ff2489d59d099d80c84212b43",
+      "changed_from_same_number_v2": true
+    },
+    {
+      "style": 5,
+      "painter": "peddler_body",
+      "frame": "rest",
+      "sha256": "8853f68687ac8bb6f55b228b60766527e039f970e752220c1147478e7d6942c0",
+      "changed_from_same_number_v2": true
+    },
+    {
+      "style": 5,
+      "painter": "peddler_body",
+      "frame": "tap",
+      "sha256": "1c8f343c5895f7bcdec620c9fbbf572aac30772659d4349b0eaff5a05e017301",
+      "changed_from_same_number_v2": true
+    },
+    {
+      "style": 5,
+      "painter": "peddler_body",
+      "frame": "tap2",
+      "sha256": "048fa856e6e5a286b61055f0d191eb99930638a2de30775e51bbc980b0977d0d",
+      "changed_from_same_number_v2": true
+    },
+    {
+      "style": 5,
+      "painter": "peddler_body",
+      "frame": "lift",
+      "sha256": "d8497c1dd69cece48a589e2c1e455aabec58bbc212a2464b0e2a6c1ed5665d4c",
+      "changed_from_same_number_v2": true
+    },
+    {
+      "style": 5,
+      "painter": "peddler_body",
+      "frame": "spin9",
+      "sha256": "b9b5ce3756dd10d8d639302e5f76b56487a32ad568243bbddfb1005f1b80affc",
+      "changed_from_same_number_v2": true
+    },
+    {
+      "style": 5,
+      "painter": "peddler_body",
+      "frame": "spin7",
+      "sha256": "b9b5ce3756dd10d8d639302e5f76b56487a32ad568243bbddfb1005f1b80affc",
+      "changed_from_same_number_v2": true
+    },
+    {
+      "style": 5,
+      "painter": "peddler_body",
+      "frame": "spin5",
+      "sha256": "85a15a666ed61013768ed0103a8a68cc8bcf7018285a7a58e89e4b0ca5145a2c",
+      "changed_from_same_number_v2": true
+    },
+    {
+      "style": 5,
+      "painter": "peddler_body",
+      "frame": "spin3",
+      "sha256": "21e813d85f107c961b25b8ec222c5e86c917e9324915a29daca406b6f54d8604",
+      "changed_from_same_number_v2": true
+    },
+    {
+      "style": 5,
+      "painter": "peddler_body",
+      "frame": "spin5b",
+      "sha256": "98d363bbe5a105fff3657570662df6308a64bd6e3ebac2217b9dd98765b6e396",
+      "changed_from_same_number_v2": true
+    },
+    {
+      "style": 5,
+      "painter": "peddler_body",
+      "frame": "spin7b",
+      "sha256": "075f09534e5916dbeac4bd5d1f583a908c5eca102c7b000036c3651973d7bfda",
+      "changed_from_same_number_v2": true
+    },
+    {
+      "style": 5,
+      "painter": "peddler_body",
+      "frame": "spin9b",
+      "sha256": "075f09534e5916dbeac4bd5d1f583a908c5eca102c7b000036c3651973d7bfda",
+      "changed_from_same_number_v2": true
+    },
+    {
+      "style": 5,
+      "painter": "peddler_body",
+      "frame": "slap",
+      "sha256": "114b12902908025339dae61d432fdeae6fffbb3d155f573e751cf20b2f649638",
+      "changed_from_same_number_v2": true
+    },
+    {
+      "style": 5,
+      "painter": "peddler_body",
+      "frame": "rub0",
+      "sha256": "162e0277b931e30997eb98954d6bfb058e1558a2e3a3078304a2305f1887b2eb",
+      "changed_from_same_number_v2": true
+    },
+    {
+      "style": 5,
+      "painter": "peddler_body",
+      "frame": "rub1",
+      "sha256": "c5ea9c2c8ecdad6ce266771089bd760f4a28a2578abb43d28469cfb6601d9a3a",
+      "changed_from_same_number_v2": true
+    },
+    {
+      "style": 5,
+      "painter": "peddler_body",
+      "frame": "breathe",
+      "sha256": "9095a14c0573cb301aa33a8d10d6127552e17d4128a03c5e15bb9104dc952875",
+      "changed_from_same_number_v2": true
+    },
+    {
+      "style": 5,
+      "painter": "wizard",
+      "frame": "idle",
+      "sha256": "4e8fd01e8c721f21e4aae24db6556cc4fbd2db5071bd3896ec4f4f88ae299e65",
+      "changed_from_same_number_v2": true
+    },
+    {
+      "style": 5,
+      "painter": "wizard",
+      "frame": "blink",
+      "sha256": "b5b3e9c2d47c225553680f54137b4deed9d0dc296364441da40ddee1d64556b0",
+      "changed_from_same_number_v2": true
+    },
+    {
+      "style": 5,
+      "painter": "wizard",
+      "frame": "breath",
+      "sha256": "c13f58c716f6af8e538dd30b5631418b744d8e284a9dad61c56b2a5f411cafaa",
+      "changed_from_same_number_v2": true
+    },
+    {
+      "style": 5,
+      "painter": "wizard",
+      "frame": "breath_blink",
+      "sha256": "812217c60edfb720711a924c005bd8d064a0b231ec7214aeed38b56bdfc97e05",
+      "changed_from_same_number_v2": true
+    },
+    {
+      "style": 5,
+      "painter": "wizard",
+      "frame": "kindle",
+      "sha256": "a81c53d76f81c1db4b232132ebf7753d8612540f103bf57036372fa099571746",
+      "changed_from_same_number_v2": true
+    },
+    {
+      "style": 5,
+      "painter": "wizard",
+      "frame": "kindle_blink",
+      "sha256": "d054215a274a34a9672e285f15f271d018bbdaf2ba64914285fb18280b6696b5",
+      "changed_from_same_number_v2": true
+    },
+    {
+      "style": 5,
+      "painter": "flame",
+      "frame": "w0",
+      "sha256": "9e23d6458fa7deec92cd531ec72e07aea07349d74dbd6576f8695ebf1a36338e",
+      "changed_from_same_number_v2": true
+    },
+    {
+      "style": 5,
+      "painter": "flame",
+      "frame": "w1",
+      "sha256": "a1bec13cffda2431b1f46a83d2d5023197debde19ae4f3c87a0744b220419d74",
+      "changed_from_same_number_v2": true
+    },
+    {
+      "style": 5,
+      "painter": "flame",
+      "frame": "w2",
+      "sha256": "3fbf520754cb276e542dd270a5cc8f8220f3d1899c20bd54338a8f70fd55a822",
+      "changed_from_same_number_v2": true
+    },
+    {
+      "style": 5,
+      "painter": "flame",
+      "frame": "w3",
+      "sha256": "e58005bea3e82b7d2e15845908d31a3c5b6b3a0e99f48d9741a2fe23125e1925",
+      "changed_from_same_number_v2": true
+    }
+  ],
+  "portrait_records": [
+    {
+      "style": 1,
+      "who": "peddler",
+      "sha256": "c86f532f43dbb6cbfef6ff501dcfeafddc3c36aa59ed68015f04edaf055c8269"
+    },
+    {
+      "style": 1,
+      "who": "wizard",
+      "sha256": "9b870863b70ac9d6ebce2cfd094185198cc010ca147f28ea6f6a3af2e1e18d2d"
+    },
+    {
+      "style": 2,
+      "who": "peddler",
+      "sha256": "2a0396fb4e867d4798000deccf69c30861643bb170956402587135fdf37e0807"
+    },
+    {
+      "style": 2,
+      "who": "wizard",
+      "sha256": "a4be96bc51546d6600e6ad00b67180621e94f618a1a75d2d2307b438d4330544"
+    },
+    {
+      "style": 3,
+      "who": "peddler",
+      "sha256": "5eeb115a7c90ef7b10bf416f2f760be0ad5e8893b90f94476f22b2738dc4fce7"
+    },
+    {
+      "style": 3,
+      "who": "wizard",
+      "sha256": "39c874e69914c6531ca1f988e304551078e4c55ba6ace6c5b4444ac8a42c7551"
+    },
+    {
+      "style": 4,
+      "who": "peddler",
+      "sha256": "bf8f1c05b148098376f26fa011a5e4b6269c6ce2f1fadce902e148972e65a404"
+    },
+    {
+      "style": 4,
+      "who": "wizard",
+      "sha256": "43c096b91a02592668fc97ce546f65db34781eba5ac6b98b461a276846b12d82"
+    },
+    {
+      "style": 5,
+      "who": "peddler",
+      "sha256": "54895883db41672b06248b2f8708084b2fa30ca1168ccd21977109485f633a8d"
+    },
+    {
+      "style": 5,
+      "who": "wizard",
+      "sha256": "7a159a717ee63ac087a97687267ac34559ddb9b2bf350b802b43266908790973"
+    }
+  ],
+  "review": "Native and4\u00d7 colour/silhouette/three-value boards independently inspected by sewer_v3_review: no blocker. Frog5apronbutton remains subordinate to throat/eyes. Actualcounterocclusion and mGBA motion review pending."
+}

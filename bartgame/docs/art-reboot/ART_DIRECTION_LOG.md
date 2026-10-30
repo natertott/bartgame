@@ -245,3 +245,32 @@ with NPCs unchanged from the preceding native freeze. All final ROMs, atlases
 and mGBA recordings are rebuilt from this corrected source rather than reused
 from the pilot. Runtime review separately checks the actual outlet's animated
 VRAM allocation, not merely another part of the stream changing.
+
+**Final packed and actual-run review:** corrected game/art source `22b0af6`
+produces nine frozen builds: unchanged default zero, five full studies and
+three mixes. The independent decoder/provenance audit passes 20,845/20,845
+checks. All 88 fresh real mGBA cases pass 1,280/1,280 checks, for 22,125 combined.
+The new cistern and outlet checks track their own exact ROM/VRAM allocations;
+another animated stream tile cannot satisfy them. Actual native images confirm
+the visible outlet mouth, continuous wall pipe and below-HUD arrow.
+
+Final Drain BG use across variants 1–8 is 601,598,603,606,587,600,588,606 of 1024,
+one bank each; forest 693/interior 114 remain unchanged. Sampled peak OAM 42/128;
+every idle sample has one game update per VBlank. All 88 source GIF palettes
+are exact (largest individual color union 66). These are sampled measurements,
+not worst-case or subjective-quality guarantees. The default ROM remains
+byte-identical to the released Step-and-cut (`547674bf…832c97a`).
+
+Independent reviewers examined all 12 assembled fixture families, native room
+contexts, all five character silhouettes/values, and actual water/NPC
+chronology. Runtime activated 11/15 frog bodies, 4/5 heads, 5/6 wizard poses and
+all four flame poses; the packed-source audit covers all authored poses. The
+[third-pass gallery](../../../art-review/sewer-concepts-v3/README.md) publishes
+185 source-gallery files, every tile/frame option, all 88 actual cases, fresh
+before/after comparisons and eight playable builds.
+
+Remaining artistic tradeoffs are explicit: #5's herringbone is denser, #4
+leans more filthy, floor joints depend on display brightness, and tiny world
+expressions stay simpler than portraits. No whole Drain treatment is selected
+for production. The user's preferred actor identities guide variation rather
+than freezing the same two drawings across all rooms.

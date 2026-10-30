@@ -1,0 +1,12 @@
+CAPTURE 3 market PASS
+CAPTURE 3 ladder PASS
+CAPTURE 3 wizard PASS
+CAPTURE 3 cistern PASS
+CAPTURE 3 bridge PASS
+CAPTURE 3 left-channel PASS
+CAPTURE 3 right-outfall PASS
+CAPTURE 3 lower-left PASS
+CAPTURE 3 lower-right PASS
+CAPTURE 3 peddler-shop PASS
+CAPTURE 3 wizard-dialogue PASS
+RESULT PASS 160/160

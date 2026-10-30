@@ -49,7 +49,7 @@ FIXTURES = (
     ('wizard','Hooded purple wizard, staff flame and rug',(280,40,392,120)),
     ('bridge','Bridge linking banks across the sewage stream',(208,128,272,224)),
     ('rail','Rail separating the player from flowing sewage',(112,120,224,208)),
-    ('outfall','Open brass waste pipe pouring into the stream',(416,104,464,184)),
+    ('outfall','Open brass waste pipe pouring into the stream',(416,104,480,184)),
     ('storage','Exposed wooden crate lids, barrel and ground filth',(392,56,464,112)),
     ('grate','Walkable floor drain with a clear barred surface',(192,216,288,264)),
     ('bottom-bank','Lower rail, dirty coping, moss and moving water',(64,248,192,320)),
@@ -399,7 +399,7 @@ class Gallery:
         frames=[]
         crops=(('cistern / falling sheet',(176,0,304,112),(8,61)),
                ('stream / bridge',(192,136,288,208),(8,195)),
-               ('open waste pipe',(416,112,464,184),(111,195)))
+               ('open waste pipe',(432,112,480,184),(111,195)))
         for tick in range(0,128,4):
             board=panel((850,280));d=ImageDraw.Draw(board)
             d.fontmode='1'

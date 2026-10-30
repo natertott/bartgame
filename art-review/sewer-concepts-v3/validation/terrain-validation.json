@@ -1,0 +1,164 @@
+{
+  "drawings": 3680,
+  "rails": 5,
+  "styles": {
+    "1": {
+      "drawings": 736,
+      "frame_drawings_by_status": {
+        "active": 623,
+        "unused": 113
+      },
+      "changing_tiles": {
+        "active": 30,
+        "unused": 20
+      },
+      "water_loop_frames": 8,
+      "palette": [
+        "#000000",
+        "#182028",
+        "#485058",
+        "#606870",
+        "#788080",
+        "#909890",
+        "#b0b8a8",
+        "#d0d8c8",
+        "#102830",
+        "#304848",
+        "#789088",
+        "#c0d0c8",
+        "#685038",
+        "#a07838",
+        "#e0b850",
+        "#f8e8b0"
+      ]
+    },
+    "2": {
+      "drawings": 736,
+      "frame_drawings_by_status": {
+        "active": 623,
+        "unused": 113
+      },
+      "changing_tiles": {
+        "active": 30,
+        "unused": 20
+      },
+      "water_loop_frames": 8,
+      "palette": [
+        "#000000",
+        "#202028",
+        "#505858",
+        "#687070",
+        "#808880",
+        "#989890",
+        "#b8b8a8",
+        "#d8d8c0",
+        "#182830",
+        "#384848",
+        "#809888",
+        "#c8d0b8",
+        "#705030",
+        "#a88040",
+        "#e8b858",
+        "#f8e8b0"
+      ]
+    },
+    "3": {
+      "drawings": 736,
+      "frame_drawings_by_status": {
+        "active": 623,
+        "unused": 113
+      },
+      "changing_tiles": {
+        "active": 30,
+        "unused": 20
+      },
+      "water_loop_frames": 8,
+      "palette": [
+        "#000000",
+        "#182028",
+        "#404850",
+        "#586068",
+        "#707880",
+        "#889898",
+        "#a8b8b8",
+        "#d0d8d0",
+        "#102830",
+        "#284850",
+        "#7898a0",
+        "#c0d8d8",
+        "#685038",
+        "#a08040",
+        "#d8b858",
+        "#f8e8b8"
+      ]
+    },
+    "4": {
+      "drawings": 736,
+      "frame_drawings_by_status": {
+        "active": 623,
+        "unused": 113
+      },
+      "changing_tiles": {
+        "active": 30,
+        "unused": 20
+      },
+      "water_loop_frames": 8,
+      "palette": [
+        "#000000",
+        "#182020",
+        "#485048",
+        "#606860",
+        "#788070",
+        "#909880",
+        "#b0b8a0",
+        "#d0d8b8",
+        "#182828",
+        "#384838",
+        "#889880",
+        "#c8d0b0",
+        "#685030",
+        "#a07838",
+        "#d8b050",
+        "#f0e0a8"
+      ]
+    },
+    "5": {
+      "drawings": 736,
+      "frame_drawings_by_status": {
+        "active": 623,
+        "unused": 113
+      },
+      "changing_tiles": {
+        "active": 30,
+        "unused": 20
+      },
+      "water_loop_frames": 8,
+      "palette": [
+        "#000000",
+        "#182028",
+        "#505858",
+        "#606868",
+        "#788080",
+        "#909890",
+        "#b0b8b0",
+        "#d0d8c8",
+        "#102830",
+        "#304840",
+        "#789890",
+        "#c8d8c0",
+        "#705038",
+        "#a88040",
+        "#e0c060",
+        "#f8e8b8"
+      ]
+    }
+  },
+  "source_hashes": {
+    "art/sewer_concepts_terrain.py": "913e22af37f33949d248675b8f3987daf17d989e0c7c8c04e32c76845ae8f561",
+    "art/sewer_v3_fixtures.py": "1f7d4289575f8a4a933ac6fef1b37a5510308a1ed31c4815629cd9a0c5d8ea12",
+    "art/sewer_concepts.py": "94c061429e9e3634fd6528b9277954b458f5db43d4b3cc7394a8edaa79007eda",
+    "art/reboot_contracts.json": "3f3c22aeb93f63308ddc42f79e849145c5e8c12950e37ba14ded67773b44d0d8"
+  },
+  "contracts_unchanged": true,
+  "scope": "Native legal pixel validation and source assemblies, not runtime performance."
+}
