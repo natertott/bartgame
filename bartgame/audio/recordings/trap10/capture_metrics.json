@@ -1,0 +1,28 @@
+{
+  "captured_songs": 10,
+  "passed": 10,
+  "all_first_loops_observed": true,
+  "all_tracks_true_stereo": true,
+  "clipped_sample_count": 0,
+  "maximum_peak_dbfs": -3.05,
+  "stereo_difference_rms_dbfs_range": [
+    -27.955,
+    -20.431
+  ],
+  "source_music_seconds": 661.4708404541016,
+  "captured_review_seconds": 691.4708163265307,
+  "rom_bytes": 21699888,
+  "rom_sha256": "d1c41bbf0c8a910a80d0754b9eb351107c6ba08af4daf2bf1c78f5ee2bc950cd",
+  "driver_object_code_bytes": 2032,
+  "driver_state_bytes": 20,
+  "review_player_total_bss_bytes": 48,
+  "driver_weighted_mean_cycles": 195.6857025273555,
+  "driver_mean_percent_of_frame_range": [
+    0.06966,
+    0.06967
+  ],
+  "maximum_update_cycles": 907,
+  "maximum_update_percent_of_frame": 0.3229,
+  "cpu_scope": "GBA timers2+3 measure sound_update CPU calls under mGBA. DMA stalls during calls included; DMA bus traffic outside those calls excluded. Driver architecture is unchanged from Round2 stereo-DMA benchmark. No physical-hardware timing measurement.",
+  "audio_source": "Actual output of the compiled GBA ROM in mGBA 0.10.5, with no capture gain/EQ/fades. Source PCM is16384Hz,8-bit stereo."
+}

@@ -55,3 +55,7 @@ Verify the audio files from this directory with `sha256sum -c SHA256SUMS`.
 ## Round 2
 
 [Twenty faster tracks with a wider instrument palette](round2/README.md): ten developments, ten left-field experiments, MP3 and FLAC. Original Razor Bloom remains unchanged.
+
+## Trap Circuit
+
+[Ten new trap-style soundtracks](trap10/README.md): 164–184 BPM, custom sliding 808s, MP3 and FLAC.

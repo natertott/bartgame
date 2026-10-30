@@ -1,0 +1,92 @@
+{
+  "status": "PASS",
+  "sample_rate": 32768,
+  "samples": 87381,
+  "repeat_sha256": "281ac39aa9331d7f1a36f9e0d9443fddfe0d6a8615c38ff98ce62294c6e3ca04",
+  "pitch_glide_test": {
+    "from_midi": 36,
+    "to_midi": 48,
+    "from_hz": 65.4064,
+    "to_hz": 130.8128,
+    "glide_seconds": 0.3333333333333333,
+    "measured_target_hz": 130.81278823420124,
+    "median_relative_frequency_error": 1.619073986724418e-06,
+    "p95_relative_frequency_error": 0.0014191095175466024
+  },
+  "max_adjacent_sample_step": 0.0028748400509357452,
+  "mean": -8.41643941384973e-06,
+  "kick_duck_amplitude_ratio": 0.6590948700904846,
+  "models": [
+    {
+      "model": "clean",
+      "rms": 0.03998227547755187,
+      "peak": 0.08436702191829681,
+      "harmonic_ratios_h2_h3_h5": [
+        0.07013424803591875,
+        0.18465046995369333,
+        0.04450001503571468
+      ]
+    },
+    {
+      "model": "warm",
+      "rms": 0.03963483611297257,
+      "peak": 0.08409661799669266,
+      "harmonic_ratios_h2_h3_h5": [
+        0.12400986801212326,
+        0.22832178400107636,
+        0.09622658461702777
+      ]
+    },
+    {
+      "model": "grit",
+      "rms": 0.03593840153555991,
+      "peak": 0.07929032295942307,
+      "harmonic_ratios_h2_h3_h5": [
+        0.14841981385337888,
+        0.29014324110377254,
+        0.16429913548674374
+      ]
+    },
+    {
+      "model": "rubber",
+      "rms": 0.03969494188870504,
+      "peak": 0.08662327378988266,
+      "harmonic_ratios_h2_h3_h5": [
+        0.12591127563369045,
+        0.20666891342673202,
+        0.08672643908207404
+      ]
+    },
+    {
+      "model": "buzz",
+      "rms": 0.037748589343714,
+      "peak": 0.08263511955738068,
+      "harmonic_ratios_h2_h3_h5": [
+        0.127560860106006,
+        0.30194892984362803,
+        0.1681193544227686
+      ]
+    },
+    {
+      "model": "reese",
+      "rms": 0.0386923832982096,
+      "peak": 0.08586469292640686,
+      "harmonic_ratios_h2_h3_h5": [
+        0.12371507565987608,
+        0.21525997799313681,
+        0.0597396928596075
+      ]
+    }
+  ],
+  "checks": [
+    "exact sample count and finite float32",
+    "bit-exact repeat rendering",
+    "independent zero-crossing glide measurement",
+    "continuous frequency curve",
+    "no abrupt sample edge",
+    "mono-centered low end",
+    "all6models different waveforms/harmonic ratios",
+    "bass-only kick duck matches configured envelope",
+    "instrument metadata identifies custom808 ratherthanGM38"
+  ]
+}

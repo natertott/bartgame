@@ -1,0 +1,776 @@
+{
+  "scope": "Read-only compositional inspection of authored event scores and generators; no audio listening claim; no mixer/stem or physical-console validation.",
+  "status": "PASS: no critical composition blockers found; all targeted harmonic clarity refinements applied by composer B before final rendering.",
+  "form": "Six populated 8-bar stages; 48 bars / 192 quarter beats per song; immediate active opening.",
+  "genre_findings": "Every score has a main snare/clap at offset2 of each4-beat bar, syncopated kick patterns locked to all808 note starts, subdivided hats and selective triplet or32nd rolls. The ten principal A hook fingerprints are distinct and every B hook differs from its A after pitch transposition normalization.",
+  "cross_song_distinct_A_fingerprints": 10,
+  "optional_harmonic_review": [
+    {
+      "code": "T06",
+      "location": "GLASS_B offset12 over C-sharp7",
+      "suggestion": "C6->B5 for a clearer dominant seventh",
+      "status": "Applied by composer; score frozen"
+    },
+    {
+      "code": "T07",
+      "location": "EMERALD_B final note over B7",
+      "suggestion": "D6->D-sharp6 for the dominant third",
+      "status": "Applied by composer; score frozen"
+    },
+    {
+      "code": "T09",
+      "location": "COMET_B offset4 over E-flat7 and offset12 over C7",
+      "suggestion": "D6->D-flat6 and B5->B-flat5",
+      "status": "Applied by composer; score frozen"
+    }
+  ],
+  "songs": [
+    {
+      "id": 1,
+      "code": "T01",
+      "title": "Razorwire Run",
+      "bpm": 172,
+      "bars": 48.0,
+      "seconds": 66.977,
+      "events": 1460,
+      "active_on_first_beat": true,
+      "backbeat_bars": 48,
+      "kick_onsets": 192,
+      "bass_notes": 192,
+      "bass_kick_locked_notes": 192,
+      "bass_pitch_range": [
+        31,
+        48
+      ],
+      "bass_overlap_count": 0,
+      "continuous_glide_events": 32,
+      "glide_percent": 16.667,
+      "glide_noop_or_out_of_range_count": 0,
+      "custom_808": {
+        "program": 38,
+        "type": "synth808",
+        "model": "warm",
+        "volume": 0.9,
+        "pan": 0,
+        "drive": 1.7,
+        "brightness": 0.3,
+        "decay": 0.92,
+        "drum": false
+      },
+      "hat_inter_onset_count": {
+        "0.16666": 24,
+        "0.16667": 36,
+        "0.25": 24,
+        "0.5": 270,
+        "0.75": 30
+      },
+      "section_event_counts": [
+        236,
+        252,
+        252,
+        232,
+        236,
+        252
+      ],
+      "main_A_voice": "celesta",
+      "main_B_voice": "celesta",
+      "first_four_bar_A_fingerprint_sha256": "39daa600859f9d94bfd6cae4e2110d8e200725f9ec3cabaa05f101c3c93d062b",
+      "A_equals_B_under_transposition": false,
+      "primary_lead_pitch_range": [
+        65,
+        84
+      ],
+      "part_control_values_valid": true,
+      "event_bounds_or_velocity_errors": 0,
+      "front_end_card": {
+        "flavor": "Angular bell trap",
+        "tonal_color": "D minor",
+        "foreground": "Celesta, marimba and compact brass replies",
+        "bass": "Warm saturated 808",
+        "kit": "TR-808",
+        "listen_for": "The skipping celesta question, dry mallet answers, and triplet hat turn at the phrase joins."
+      },
+      "instrument_palette": [
+        "Celesta: new zigzagging D-minor hook",
+        "Marimba: quick dry answers",
+        "Brass: compact two-note calls",
+        "Muted guitar: offbeat ticks",
+        "Warm custom 808: continuous pitch slides, not GM pitch jumps",
+        "TR-808 kit: half-time clap, broken kicks and selective triplet hat rolls"
+      ],
+      "score_event_sha256": "bc8710b1a3170fa11d0e89cfcb8a9246a146fa8b5897ebd286adf720d5de5a8f"
+    },
+    {
+      "id": 2,
+      "code": "T02",
+      "title": "Chrome Pressure",
+      "bpm": 178,
+      "bars": 48.0,
+      "seconds": 64.719,
+      "events": 1734,
+      "active_on_first_beat": true,
+      "backbeat_bars": 48,
+      "kick_onsets": 232,
+      "bass_notes": 232,
+      "bass_kick_locked_notes": 232,
+      "bass_pitch_range": [
+        34,
+        48
+      ],
+      "bass_overlap_count": 0,
+      "continuous_glide_events": 38,
+      "glide_percent": 16.379,
+      "glide_noop_or_out_of_range_count": 0,
+      "custom_808": {
+        "program": 38,
+        "type": "synth808",
+        "model": "grit",
+        "volume": 0.88,
+        "pan": 0,
+        "drive": 2.2,
+        "brightness": 0.48,
+        "decay": 0.7,
+        "drum": false
+      },
+      "hat_inter_onset_count": {
+        "0.125": 36,
+        "0.25": 192,
+        "0.5": 240
+      },
+      "section_event_counts": [
+        293,
+        293,
+        293,
+        285,
+        277,
+        293
+      ],
+      "main_A_voice": "strings",
+      "main_B_voice": "brass",
+      "first_four_bar_A_fingerprint_sha256": "02a69406ec050e4117a4b8a3d2e880f6d0bf2a0b2bf4499ba6352dd942138526",
+      "A_equals_B_under_transposition": false,
+      "primary_lead_pitch_range": [
+        64,
+        84
+      ],
+      "part_control_values_valid": true,
+      "event_bounds_or_velocity_errors": 0,
+      "front_end_card": {
+        "flavor": "Orchestral chase trap",
+        "tonal_color": "F minor",
+        "foreground": "Short strings, low brass, bright piano and orchestral hits",
+        "bass": "Grit 808",
+        "kit": "Power kit",
+        "listen_for": "The repeated-note string hook gives way to a broader, lower brass B melody."
+      },
+      "instrument_palette": [
+        "Staccato strings: urgent original F-minor hook",
+        "Brass: new eight-bar B melody",
+        "Orchestral hits and bright piano: selective join accents",
+        "Grit custom 808: restrained distortion and real rising/falling slides",
+        "Power kit: half-time snare, offset kicks, short hat bursts and low tom joins"
+      ],
+      "score_event_sha256": "a6b1125d3c0d63fc688478c5c95832e976345236d441955d68658972ff8a7ee9"
+    },
+    {
+      "id": 3,
+      "code": "T03",
+      "title": "Jade Circuit",
+      "bpm": 166,
+      "bars": 48.0,
+      "seconds": 69.398,
+      "events": 1614,
+      "active_on_first_beat": true,
+      "backbeat_bars": 48,
+      "kick_onsets": 152,
+      "bass_notes": 152,
+      "bass_kick_locked_notes": 152,
+      "bass_pitch_range": [
+        33,
+        47
+      ],
+      "bass_overlap_count": 0,
+      "continuous_glide_events": 25,
+      "glide_percent": 16.447,
+      "glide_noop_or_out_of_range_count": 0,
+      "custom_808": {
+        "program": 38,
+        "type": "synth808",
+        "model": "clean",
+        "volume": 0.94,
+        "pan": 0,
+        "drive": 1.18,
+        "brightness": 0.2,
+        "decay": 1.08,
+        "drum": false
+      },
+      "hat_inter_onset_count": {
+        "0.16666": 12,
+        "0.16667": 24,
+        "0.25": 22,
+        "0.5": 272,
+        "0.75": 30
+      },
+      "section_event_counts": [
+        267,
+        267,
+        267,
+        263,
+        283,
+        267
+      ],
+      "main_A_voice": "flute",
+      "main_B_voice": "flute",
+      "first_four_bar_A_fingerprint_sha256": "cca3c441bf8ca516e624cddfe5e0ef0ab1c2f80ecabe31b9c8b500f70404fabb",
+      "A_equals_B_under_transposition": false,
+      "primary_lead_pitch_range": [
+        66,
+        83
+      ],
+      "part_control_values_valid": true,
+      "event_bounds_or_velocity_errors": 0,
+      "front_end_card": {
+        "flavor": "Melodic flute trap",
+        "tonal_color": "F-sharp minor",
+        "foreground": "Flute, koto, electric piano and clean guitar",
+        "bass": "Clean legato 808",
+        "kit": "TR-808",
+        "listen_for": "The winding flute line and koto pickups sit above longer bass gates and spare clap punctuation."
+      },
+      "instrument_palette": [
+        "Flute: melodic original hook and contrasting winding B section",
+        "Koto: clear plucked answers",
+        "Electric piano and clean guitar: small harmonic flashes",
+        "Clean custom 808: longer connected gates and soft continuous pitch glides",
+        "TR-808 kit: single half-time clap, rim ghosts and selective triplet hats"
+      ],
+      "score_event_sha256": "dec38544fbf744b3891c81690c62df4cfc44e4687f80dadc62041aeb6e88865f"
+    },
+    {
+      "id": 4,
+      "code": "T04",
+      "title": "Neon Kickback",
+      "bpm": 174,
+      "bars": 48.0,
+      "seconds": 66.207,
+      "events": 2168,
+      "active_on_first_beat": true,
+      "backbeat_bars": 48,
+      "kick_onsets": 220,
+      "bass_notes": 220,
+      "bass_kick_locked_notes": 220,
+      "bass_pitch_range": [
+        33,
+        48
+      ],
+      "bass_overlap_count": 0,
+      "continuous_glide_events": 36,
+      "glide_percent": 16.364,
+      "glide_noop_or_out_of_range_count": 0,
+      "custom_808": {
+        "program": 38,
+        "type": "synth808",
+        "model": "rubber",
+        "volume": 0.88,
+        "pan": 0,
+        "drive": 1.6,
+        "brightness": 0.56,
+        "decay": 0.78,
+        "drum": false
+      },
+      "hat_inter_onset_count": {
+        "0.125": 60,
+        "0.375": 108,
+        "0.5": 144,
+        "0.625": 84
+      },
+      "section_event_counts": [
+        365,
+        365,
+        365,
+        335,
+        373,
+        365
+      ],
+      "main_A_voice": "clav",
+      "main_B_voice": "ep",
+      "first_four_bar_A_fingerprint_sha256": "37e0a28002634b12425a80611653fb435c77c70ac379ccdd36b0b4f43f8a5dd5",
+      "A_equals_B_under_transposition": false,
+      "primary_lead_pitch_range": [
+        64,
+        83
+      ],
+      "part_control_values_valid": true,
+      "event_bounds_or_velocity_errors": 0,
+      "front_end_card": {
+        "flavor": "Funk-colored bounce trap",
+        "tonal_color": "E Dorian with major-side B colors",
+        "foreground": "Clavinet, electric piano, short brass and Hammond-organ shells",
+        "bass": "Rubber 808",
+        "kit": "Room kit",
+        "listen_for": "The clipped clavinet hook, small conga responses, and displaced springy bass pattern."
+      },
+      "instrument_palette": [
+        "Clavinet: short original E-Dorian bounce hook",
+        "Electric piano: new B melody",
+        "Brass and Hammond organ: compact call-and-response stabs",
+        "Muted guitar: dry rhythmic punctuation",
+        "Rubber custom 808: curved-feeling continuous slides and springy gates",
+        "Room kit: half-time snare/clap, rims, congas and selective 32nd hats"
+      ],
+      "score_event_sha256": "8b9aa5a8f4024b9de5c8ca0ef79514a81780c201129bca96ec6e32a43e130bd6"
+    },
+    {
+      "id": 5,
+      "code": "T05",
+      "title": "Voltage Thorns",
+      "bpm": 182,
+      "bars": 48.0,
+      "seconds": 63.297,
+      "events": 1907,
+      "active_on_first_beat": true,
+      "backbeat_bars": 48,
+      "kick_onsets": 220,
+      "bass_notes": 220,
+      "bass_kick_locked_notes": 220,
+      "bass_pitch_range": [
+        29,
+        48
+      ],
+      "bass_overlap_count": 0,
+      "continuous_glide_events": 36,
+      "glide_percent": 16.364,
+      "glide_noop_or_out_of_range_count": 0,
+      "custom_808": {
+        "program": 38,
+        "type": "synth808",
+        "model": "buzz",
+        "volume": 0.85,
+        "pan": 0,
+        "drive": 2.65,
+        "brightness": 0.7,
+        "decay": 0.6,
+        "drum": false
+      },
+      "hat_inter_onset_count": {
+        "0.16666": 12,
+        "0.16667": 24,
+        "0.25": 432,
+        "0.5": 132
+      },
+      "section_event_counts": [
+        319,
+        319,
+        319,
+        304,
+        327,
+        319
+      ],
+      "main_A_voice": "charang",
+      "main_B_voice": "saw",
+      "first_four_bar_A_fingerprint_sha256": "0125e59cb15894c8ea57ab2365b44d527528bb45ebe5d15c4cbd0b9af22d63ae",
+      "A_equals_B_under_transposition": false,
+      "primary_lead_pitch_range": [
+        67,
+        84
+      ],
+      "part_control_values_valid": true,
+      "event_bounds_or_velocity_errors": 0,
+      "front_end_card": {
+        "flavor": "Rage trap",
+        "tonal_color": "C minor with F-minor / D-flat pressure",
+        "foreground": "Charang, saw lead, overdrive guitar and sparse voice oohs",
+        "bass": "Buzz 808",
+        "kit": "Electronic kit",
+        "listen_for": "The jagged triplet-edged charang riff and the wider saw-led B answer."
+      },
+      "instrument_palette": [
+        "Charang: new angular, triplet-inflected rage hook",
+        "Saw lead: contrasting eight-bar B melody",
+        "Overdrive guitar: short chord impacts",
+        "Voice oohs: sparse two-note harmonic support",
+        "Buzz custom 808: bright driven harmonics and actual continuous pitch glides",
+        "Electronic kit: broken kick locks, half-time snare, clipped hats and 32nd accents"
+      ],
+      "score_event_sha256": "e93e30c401cfebc9dade3b4d2d6000d35bbdf4f693cff227dc78c921479743d9"
+    },
+    {
+      "id": 6,
+      "code": "T06",
+      "title": "Glassfang Sprint",
+      "bpm": 176,
+      "bars": 48.0,
+      "seconds": 65.455,
+      "events": 1731,
+      "active_on_first_beat": true,
+      "backbeat_bars": 48,
+      "kick_onsets": 172,
+      "bass_notes": 172,
+      "bass_kick_locked_notes": 172,
+      "bass_pitch_range": [
+        28,
+        47
+      ],
+      "bass_overlap_count": 0,
+      "continuous_glide_events": 28,
+      "glide_percent": 16.279,
+      "glide_noop_or_out_of_range_count": 0,
+      "custom_808": {
+        "program": 38,
+        "type": "synth808",
+        "model": "grit",
+        "volume": 0.86,
+        "pan": 0,
+        "drive": 2.35,
+        "brightness": 0.57,
+        "decay": 0.72
+      },
+      "hat_inter_onset_count": {
+        "0.125": 42,
+        "0.25": 96,
+        "0.5": 282
+      },
+      "section_event_counts": [
+        290,
+        284,
+        290,
+        282,
+        295,
+        290
+      ],
+      "main_A_voice": "crystal",
+      "main_B_voice": "crystal",
+      "first_four_bar_A_fingerprint_sha256": "13bc281e826da9507d2b4b22c42e64511845bff7fafdc829da43029650c2e7a5",
+      "A_equals_B_under_transposition": false,
+      "primary_lead_pitch_range": [
+        73,
+        88
+      ],
+      "part_control_values_valid": true,
+      "event_bounds_or_velocity_errors": 0,
+      "front_end_card": {
+        "flavor": "Dark crystal trap",
+        "tonal_color": "F-sharp minor",
+        "foreground": "Crystal FX, koto, muted guitar, sparse choir and tubular bells",
+        "bass": "Grit 808",
+        "kit": "Electronic kit",
+        "listen_for": "The etched high crystal hook, short koto pickups, and altered kick pattern in the fifth section."
+      },
+      "instrument_palette": [
+        "Crystal FX98: immediate angular lead",
+        "Koto107: alternating bright pickup notes",
+        "Muted electric guitar28: dry short chord stabs",
+        "Voice oohs53: selective inner harmony",
+        "Tubular bells14: phrase-join punctuation",
+        "Custom grit 808: saturated tuned sub with real portamento",
+        "Electronic kit24: halftime clap, syncopated kick and selective hat rolls"
+      ],
+      "score_event_sha256": "511131908d8c5fbdf1fe49e7e5804e225acf44e0981c6d1258bf80e81e589818"
+    },
+    {
+      "id": 7,
+      "code": "T07",
+      "title": "Emerald Heat",
+      "bpm": 168,
+      "bars": 48.0,
+      "seconds": 68.571,
+      "events": 1798,
+      "active_on_first_beat": true,
+      "backbeat_bars": 48,
+      "kick_onsets": 172,
+      "bass_notes": 172,
+      "bass_kick_locked_notes": 172,
+      "bass_pitch_range": [
+        28,
+        48
+      ],
+      "bass_overlap_count": 0,
+      "continuous_glide_events": 28,
+      "glide_percent": 16.279,
+      "glide_noop_or_out_of_range_count": 0,
+      "custom_808": {
+        "program": 38,
+        "type": "synth808",
+        "model": "clean",
+        "volume": 0.85,
+        "pan": 0,
+        "drive": 1.15,
+        "brightness": 0.26,
+        "decay": 0.88
+      },
+      "hat_inter_onset_count": {
+        "0.125": 42,
+        "0.25": 96,
+        "0.5": 282
+      },
+      "section_event_counts": [
+        303,
+        283,
+        303,
+        299,
+        307,
+        303
+      ],
+      "main_A_voice": "marimba",
+      "main_B_voice": "flute",
+      "first_four_bar_A_fingerprint_sha256": "e956d68c65657f201400f5a4daabd1c40086868eddb146294d63cc0ad59feb59",
+      "A_equals_B_under_transposition": false,
+      "primary_lead_pitch_range": [
+        73,
+        87
+      ],
+      "part_control_values_valid": true,
+      "event_bounds_or_velocity_errors": 0,
+      "front_end_card": {
+        "flavor": "Sunlit mallet trap",
+        "tonal_color": "E minor with bright major-side motion",
+        "foreground": "Marimba, steel pan, koto, electric piano and flute",
+        "bass": "Clean 808",
+        "kit": "TR-808",
+        "listen_for": "The marimba/steel-pan exchange and the new flute B phrase, with rim and conga details."
+      },
+      "instrument_palette": [
+        "Marimba12: clipped lyrical A hook",
+        "Steel drums114: warm answering melody",
+        "Koto107: syncopated accompaniment",
+        "Electric piano1 4: small ninth-chord shells",
+        "Flute73: new B-section line",
+        "Custom clean 808: rounded sub and restrained pitch scoops",
+        "TR808 kit25: sharp clap, tight hats, rim and conga response"
+      ],
+      "score_event_sha256": "ff061c556cf4180cf96fca8034ad77aa857838b47c04e04bae745522fa0a9a8a"
+    },
+    {
+      "id": 8,
+      "code": "T08",
+      "title": "Ghost Rail",
+      "bpm": 180,
+      "bars": 48.0,
+      "seconds": 64.0,
+      "events": 1652,
+      "active_on_first_beat": true,
+      "backbeat_bars": 48,
+      "kick_onsets": 172,
+      "bass_notes": 172,
+      "bass_kick_locked_notes": 172,
+      "bass_pitch_range": [
+        29,
+        48
+      ],
+      "bass_overlap_count": 0,
+      "continuous_glide_events": 28,
+      "glide_percent": 16.279,
+      "glide_noop_or_out_of_range_count": 0,
+      "custom_808": {
+        "program": 38,
+        "type": "synth808",
+        "model": "rubber",
+        "volume": 0.88,
+        "pan": 0,
+        "drive": 1.6,
+        "brightness": 0.29,
+        "decay": 0.96
+      },
+      "hat_inter_onset_count": {
+        "0.16666": 12,
+        "0.16667": 18,
+        "0.25": 30,
+        "0.5": 72,
+        "0.75": 162
+      },
+      "section_event_counts": [
+        266,
+        266,
+        266,
+        314,
+        274,
+        266
+      ],
+      "main_A_voice": "pizz",
+      "main_B_voice": "brass",
+      "first_four_bar_A_fingerprint_sha256": "1198150fafd86eb4e17a6f191ebf899552b9bf35cd6317a94c3581c038ee9434",
+      "A_equals_B_under_transposition": false,
+      "primary_lead_pitch_range": [
+        62,
+        88
+      ],
+      "part_control_values_valid": true,
+      "event_bounds_or_velocity_errors": 0,
+      "front_end_card": {
+        "flavor": "Drill-influenced chamber trap",
+        "tonal_color": "G minor",
+        "foreground": "Pizzicato strings, low brass, choir, celesta and selective bowed strings",
+        "bass": "Rubber 808",
+        "kit": "Room kit",
+        "listen_for": "The 3+3+2 pizzicato hook, dotted sparse kicks, and a low-brass B response."
+      },
+      "instrument_palette": [
+        "Pizzicato strings45: rapid 3+3+2 lead pulse",
+        "Brass section61: lower-register B hook",
+        "Choir aahs52: terse harmonic stabs",
+        "Celesta8: sparse high answer accents",
+        "String ensemble48: selective moving harmonic support",
+        "Custom rubber 808: sustained notes with audible continuous glides",
+        "Room kit8: dotted kick locks, halftime clap, skittering hats and triplet rolls"
+      ],
+      "score_event_sha256": "12ff326dcb651cc014e869d10c108c51429fd9dfd609d54afb51fa25e50b9c51"
+    },
+    {
+      "id": 9,
+      "code": "T09",
+      "title": "Pocket Comet",
+      "bpm": 164,
+      "bars": 48.0,
+      "seconds": 70.244,
+      "events": 1566,
+      "active_on_first_beat": true,
+      "backbeat_bars": 48,
+      "kick_onsets": 152,
+      "bass_notes": 152,
+      "bass_kick_locked_notes": 152,
+      "bass_pitch_range": [
+        29,
+        48
+      ],
+      "bass_overlap_count": 0,
+      "continuous_glide_events": 25,
+      "glide_percent": 16.447,
+      "glide_noop_or_out_of_range_count": 0,
+      "custom_808": {
+        "program": 38,
+        "type": "synth808",
+        "model": "warm",
+        "volume": 0.84,
+        "pan": 0,
+        "drive": 1.35,
+        "brightness": 0.24,
+        "decay": 1.04
+      },
+      "hat_inter_onset_count": {
+        "0.16666": 12,
+        "0.16667": 18,
+        "0.25": 96,
+        "0.5": 282
+      },
+      "section_event_counts": [
+        261,
+        245,
+        261,
+        261,
+        277,
+        261
+      ],
+      "main_A_voice": "ep",
+      "main_B_voice": "harmonics",
+      "first_four_bar_A_fingerprint_sha256": "8427edcbeb45c7c419a7d1f2f145f2be9afa127638165009777d3846c2e0273d",
+      "A_equals_B_under_transposition": false,
+      "primary_lead_pitch_range": [
+        72,
+        87
+      ],
+      "part_control_values_valid": true,
+      "event_bounds_or_velocity_errors": 0,
+      "front_end_card": {
+        "flavor": "Bright electric-piano future trap",
+        "tonal_color": "F minor opening toward relative-major colors",
+        "foreground": "Electric piano, celesta, guitar harmonics, clean guitar and organ shells",
+        "bass": "Warm 808",
+        "kit": "TR-808",
+        "listen_for": "The EP anthem, celesta-filled rests, and independent harmonic-guitar B hook."
+      },
+      "instrument_palette": [
+        "Electric piano1 4: warm main melody",
+        "Celesta8: small upper answers and verse lead",
+        "Guitar harmonics31: separate B-section hook",
+        "Clean guitar27: brief offbeat chord chips",
+        "Drawbar organ16: low-volume inner voice shells",
+        "Custom warm 808: rounded fundamental with restrained pitch scoops",
+        "TR808 kit25: crisp half-time claps, syncopated kick and airy hats"
+      ],
+      "score_event_sha256": "13526827c113d55e5356b251bd5cc4785551ec05a6429b1419a636578b5e4e22"
+    },
+    {
+      "id": 10,
+      "code": "T10",
+      "title": "Boss Rush Protocol",
+      "bpm": 184,
+      "bars": 48.0,
+      "seconds": 62.609,
+      "events": 2538,
+      "active_on_first_beat": true,
+      "backbeat_bars": 48,
+      "kick_onsets": 192,
+      "bass_notes": 192,
+      "bass_kick_locked_notes": 192,
+      "bass_pitch_range": [
+        29,
+        48
+      ],
+      "bass_overlap_count": 0,
+      "continuous_glide_events": 32,
+      "glide_percent": 16.667,
+      "glide_noop_or_out_of_range_count": 0,
+      "custom_808": {
+        "program": 38,
+        "type": "synth808",
+        "model": "reese",
+        "volume": 0.82,
+        "pan": 0,
+        "drive": 2.05,
+        "brightness": 0.48,
+        "decay": 0.94
+      },
+      "hat_inter_onset_count": {
+        "0.125": 42,
+        "0.25": 180,
+        "0.5": 240
+      },
+      "section_event_counts": [
+        422,
+        426,
+        422,
+        418,
+        420,
+        430
+      ],
+      "main_A_voice": "horn",
+      "main_B_voice": "trumpet",
+      "first_four_bar_A_fingerprint_sha256": "dfae9e5ecded93ddfc4221bf04fa68218a5568d66ae6fd98eeebe94a10833e61",
+      "A_equals_B_under_transposition": false,
+      "primary_lead_pitch_range": [
+        60,
+        77
+      ],
+      "part_control_values_valid": true,
+      "event_bounds_or_velocity_errors": 0,
+      "front_end_card": {
+        "flavor": "Cinematic boss-anthem trap",
+        "tonal_color": "C minor",
+        "foreground": "French horn, trumpet, electric guitars, racing strings and cello",
+        "bass": "Reese 808",
+        "kit": "Power kit plus TR-808 clap layer",
+        "listen_for": "The low horn command, distorted-guitar verse and a new upward trumpet B hook."
+      },
+      "instrument_palette": [
+        "French horn60: body-rich main riff in MIDI60\u201375",
+        "Trumpet56: distinct B melody in a realistic upper-brass register",
+        "Overdrive guitar29: short rhythmic riff and power dyads",
+        "String ensemble48 and cello42: racing articulated accompaniment",
+        "Custom Reese 808: thick detuned sub with real pitch slides",
+        "Power kit16 plus TR808 kit25: big halftime claps, electronic layer and selective rolls"
+      ],
+      "score_event_sha256": "9fd2730fde99035fd8c16af2e3ce8f702edf8eef50870362a9399e9dcd4f9124"
+    }
+  ],
+  "source_score_sha256": {
+    "compositions_a.json": "f8fec783ba42b83b4403e60db0c853e0822355c790a2fc6b58966b40ff370a4d",
+    "compositions_b.json": "4a19ffb1c5f74a92a263b4e30f9e787617e9f167005573379cb6aaf6c750031e"
+  },
+  "notes": [
+    "Score-level genre/style conclusions are compositional inferences; no human listening or audio-understanding tool was used.",
+    "T09 retains D-natural over A-flat-major9 only in the deliberate Lydian groove-switch color; E-flat7 and C7 B cadences now use their dominant sevenths.",
+    "Primary melodic registers include some high bell/crystal/mallet notes through MIDI88; brass foregrounds are deliberately lower.",
+    "All main A hook fingerprints are different after normalizing the first note; all B hooks differ from their own A in notes and/or rhythm. This supports authored contrast but is not a standalone musical-quality metric.",
+    "Everytrack has selective hat triplets or32nd subdivisions; the exact subdivision and kit differ by cue."
+  ]
+}

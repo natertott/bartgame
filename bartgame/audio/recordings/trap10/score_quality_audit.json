@@ -1,0 +1,301 @@
+{
+  "status": "PASS",
+  "errors": [],
+  "critical_mix_flags": [],
+  "songs": [
+    {
+      "code": "T01",
+      "title": "Razorwire Run",
+      "bpm": 172,
+      "primary_part": "celesta",
+      "first_lead_beat": 0,
+      "first_bass_beat": 0,
+      "bass_pitch_range": [
+        31,
+        48
+      ],
+      "bass_note_count": 192,
+      "glide_count": 32,
+      "glide_fraction": 0.16666666666666666,
+      "808_model": "warm",
+      "808_rms": 0.03703570658782964,
+      "808_peak": 0.08477280288934708,
+      "glides_clamped": 0,
+      "first16beat_stem_rms": {
+        "celesta": 0.029836324481173054,
+        "drums": 0.04470601915637925
+      },
+      "stem_peaks": {
+        "celesta": 0.128213569521904,
+        "drums": 0.2975599467754364
+      },
+      "drums_relative_to_lead_db": 3.512413565094329,
+      "flags": []
+    },
+    {
+      "code": "T02",
+      "title": "Chrome Pressure",
+      "bpm": 178,
+      "primary_part": "strings",
+      "first_lead_beat": 0,
+      "first_bass_beat": 0,
+      "bass_pitch_range": [
+        34,
+        48
+      ],
+      "bass_note_count": 232,
+      "glide_count": 38,
+      "glide_fraction": 0.16379310344827586,
+      "808_model": "grit",
+      "808_rms": 0.03368585736960997,
+      "808_peak": 0.07406814396381378,
+      "glides_clamped": 0,
+      "first16beat_stem_rms": {
+        "strings": 0.019157392764635545,
+        "drums": 0.04060940952428746
+      },
+      "stem_peaks": {
+        "strings": 0.09783854335546494,
+        "drums": 0.2530388832092285
+      },
+      "drums_relative_to_lead_db": 6.525805430096375,
+      "flags": []
+    },
+    {
+      "code": "T03",
+      "title": "Jade Circuit",
+      "bpm": 166,
+      "primary_part": "flute",
+      "first_lead_beat": 0,
+      "first_bass_beat": 0,
+      "bass_pitch_range": [
+        33,
+        47
+      ],
+      "bass_note_count": 152,
+      "glide_count": 25,
+      "glide_fraction": 0.16447368421052633,
+      "808_model": "clean",
+      "808_rms": 0.03999986564980179,
+      "808_peak": 0.07993972301483154,
+      "glides_clamped": 0,
+      "first16beat_stem_rms": {
+        "flute": 0.023128927313577803,
+        "drums": 0.02938500475563484
+      },
+      "stem_peaks": {
+        "flute": 0.09782076627016068,
+        "drums": 0.22152820229530334
+      },
+      "drums_relative_to_lead_db": 2.0794054810524676,
+      "flags": []
+    },
+    {
+      "code": "T04",
+      "title": "Neon Kickback",
+      "bpm": 174,
+      "primary_part": "clav",
+      "first_lead_beat": 0,
+      "first_bass_beat": 0,
+      "bass_pitch_range": [
+        33,
+        48
+      ],
+      "bass_note_count": 220,
+      "glide_count": 36,
+      "glide_fraction": 0.16363636363636364,
+      "808_model": "rubber",
+      "808_rms": 0.034002994863702965,
+      "808_peak": 0.07871722429990768,
+      "glides_clamped": 0,
+      "first16beat_stem_rms": {
+        "clav": 0.024079972857373108,
+        "drums": 0.017108476844744994
+      },
+      "stem_peaks": {
+        "clav": 0.14189940690994263,
+        "drums": 0.1494406908750534
+      },
+      "drums_relative_to_lead_db": -2.9688929342978065,
+      "flags": []
+    },
+    {
+      "code": "T05",
+      "title": "Voltage Thorns",
+      "bpm": 182,
+      "primary_part": "charang",
+      "first_lead_beat": 0,
+      "first_bass_beat": 0,
+      "bass_pitch_range": [
+        29,
+        48
+      ],
+      "bass_note_count": 220,
+      "glide_count": 36,
+      "glide_fraction": 0.16363636363636364,
+      "808_model": "buzz",
+      "808_rms": 0.03493393880972505,
+      "808_peak": 0.07809951901435852,
+      "glides_clamped": 0,
+      "first16beat_stem_rms": {
+        "charang": 0.02679620034818185,
+        "drums": 0.02940780746074787
+      },
+      "stem_peaks": {
+        "charang": 0.14058120548725128,
+        "drums": 0.21516819298267365
+      },
+      "drums_relative_to_lead_db": 0.8077886011662541,
+      "flags": []
+    },
+    {
+      "code": "T06",
+      "title": "Glassfang Sprint",
+      "bpm": 176,
+      "primary_part": "crystal",
+      "first_lead_beat": 0,
+      "first_bass_beat": 0,
+      "bass_pitch_range": [
+        28,
+        47
+      ],
+      "bass_note_count": 172,
+      "glide_count": 28,
+      "glide_fraction": 0.16279069767441862,
+      "808_model": "grit",
+      "808_rms": 0.030846245276640396,
+      "808_peak": 0.08086780458688736,
+      "glides_clamped": 0,
+      "first16beat_stem_rms": {
+        "crystal": 0.028618380332331144,
+        "drums": 0.021291088882919747
+      },
+      "stem_peaks": {
+        "crystal": 0.13998761773109436,
+        "drums": 0.16756244003772736
+      },
+      "drums_relative_to_lead_db": -2.5689435616677154,
+      "flags": []
+    },
+    {
+      "code": "T07",
+      "title": "Emerald Heat",
+      "bpm": 168,
+      "primary_part": "marimba",
+      "first_lead_beat": 0,
+      "first_bass_beat": 0,
+      "bass_pitch_range": [
+        28,
+        48
+      ],
+      "bass_note_count": 172,
+      "glide_count": 28,
+      "glide_fraction": 0.16279069767441862,
+      "808_model": "clean",
+      "808_rms": 0.03340457663739206,
+      "808_peak": 0.08382526785135269,
+      "glides_clamped": 0,
+      "first16beat_stem_rms": {
+        "marimba": 0.044491518284425186,
+        "drums": 0.04534906487080369
+      },
+      "stem_peaks": {
+        "marimba": 0.16146397590637207,
+        "drums": 0.293432354927063
+      },
+      "drums_relative_to_lead_db": 0.16582219247445948,
+      "flags": []
+    },
+    {
+      "code": "T08",
+      "title": "Ghost Rail",
+      "bpm": 180,
+      "primary_part": "pizz",
+      "first_lead_beat": 0,
+      "first_bass_beat": 0,
+      "bass_pitch_range": [
+        29,
+        48
+      ],
+      "bass_note_count": 172,
+      "glide_count": 28,
+      "glide_fraction": 0.16279069767441862,
+      "808_model": "rubber",
+      "808_rms": 0.03779575482879336,
+      "808_peak": 0.08810479193925858,
+      "glides_clamped": 0,
+      "first16beat_stem_rms": {
+        "pizz": 0.051493747261497795,
+        "drums": 0.01749050009495722
+      },
+      "stem_peaks": {
+        "pizz": 0.3027571737766266,
+        "drums": 0.16440248489379883
+      },
+      "drums_relative_to_lead_db": -9.379045398761303,
+      "flags": []
+    },
+    {
+      "code": "T09",
+      "title": "Pocket Comet",
+      "bpm": 164,
+      "primary_part": "ep",
+      "first_lead_beat": 0,
+      "first_bass_beat": 0,
+      "bass_pitch_range": [
+        29,
+        48
+      ],
+      "bass_note_count": 152,
+      "glide_count": 25,
+      "glide_fraction": 0.16447368421052633,
+      "808_model": "warm",
+      "808_rms": 0.032202097618517084,
+      "808_peak": 0.08177999407052994,
+      "glides_clamped": 0,
+      "first16beat_stem_rms": {
+        "ep": 0.0441137337254028,
+        "drums": 0.038410807247018106
+      },
+      "stem_peaks": {
+        "ep": 0.12031327188014984,
+        "drums": 0.26687148213386536
+      },
+      "drums_relative_to_lead_db": -1.2024076592452564,
+      "flags": []
+    },
+    {
+      "code": "T10",
+      "title": "Boss Rush Protocol",
+      "bpm": 184,
+      "primary_part": "horn",
+      "first_lead_beat": 0,
+      "first_bass_beat": 0,
+      "bass_pitch_range": [
+        29,
+        48
+      ],
+      "bass_note_count": 192,
+      "glide_count": 32,
+      "glide_fraction": 0.16666666666666666,
+      "808_model": "reese",
+      "808_rms": 0.034693192227886444,
+      "808_peak": 0.08343639224767685,
+      "glides_clamped": 0,
+      "first16beat_stem_rms": {
+        "horn": 0.03433504379603623,
+        "drums": 0.030998175805348506
+      },
+      "stem_peaks": {
+        "horn": 0.18562445044517517,
+        "drums": 0.18569757044315338
+      },
+      "drums_relative_to_lead_db": -0.8880293733224678,
+      "flags": []
+    }
+  ],
+  "score_hashes": {
+    "compositions_b.json": "c6ed64b438df51bc18bde2639827105b514830122d16eebc5b0fa51884e5cd98",
+    "compositions_a.json": "f8fec783ba42b83b4403e60db0c853e0822355c790a2fc6b58966b40ff370a4d"
+  }
+}
