@@ -1,0 +1,25 @@
+{
+  "captured_songs": 21,
+  "passed": 21,
+  "all_first_loop_observed": true,
+  "recording_seconds": 976.6326757369615,
+  "rom_bytes": 29337344,
+  "rom_sha256": "ad83e4d35bc84cdc3fb921f37cf907be34df38f527dbea010b9d9608fe3b17f2",
+  "driver_state_bytes": 20,
+  "player_total_bss_bytes": 48,
+  "new_tracks_driver_weighted_mean_cycles": 195.8066528066528,
+  "new_tracks_mean_percent_frame_range": [
+    0.0697,
+    0.06972
+  ],
+  "new_tracks_maximum_update_cycles": 907,
+  "all_tracks_maximum_update_cycles": 1311,
+  "all_tracks_maximum_update_percent_frame": 0.46672,
+  "maximum_peak_dbfs": -2.785,
+  "new_track_stereo_difference_rms_dbfs_range": [
+    -27.177,
+    -15.756
+  ],
+  "cpu_scope": "Driver calls measured with GBA timers2+3 in mGBA; DMA stalls during call included. Outside-call DMA traffic measured separately by paired arithmetic benchmark; no physical hardware benchmark.",
+  "driver_object_code_bytes": 2032
+}

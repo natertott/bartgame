@@ -51,3 +51,7 @@ Verify the audio files from this directory with `sha256sum -c SHA256SUMS`.
 | 28 | Crown of the Afterlight - Violet Cathedral | 96 | 1:20 | [MP3](mp3/28_title_violet_cathedral.mp3) · [FLAC](flac/28_title_violet_cathedral.flac) |
 | 29 | Crown of the Afterlight - Nightfall Ascendant | 132 | 0:58 | [MP3](mp3/29_title_nightfall_ascendant.mp3) · [FLAC](flac/29_title_nightfall_ascendant.flac) |
 | 30 | Crown of the Afterlight - Aurora Apotheosis | 116 | 1:06 | [MP3](mp3/30_title_aurora_apotheosis.mp3) · [FLAC](flac/30_title_aurora_apotheosis.flac) |
+
+## Round 2
+
+[Twenty faster tracks with a wider instrument palette](round2/README.md): ten developments, ten left-field experiments, MP3 and FLAC. Original Razor Bloom remains unchanged.

@@ -1,0 +1,21 @@
+code,title,group,bpm,first_pass_seconds,style,starting_point,palette
+A01,Razor Bloom - Overdrive,anchor,174,44.13377380371094,Neurofunk / guitar drum and bass,Razor Bloom,Overdrive Guitar · Charang · Synth Bass 1 · Percussive Organ · Strings · Bright Yamaha Grand
+A02,Verdant Velocity,anchor,164,46.829349517822266,Mallet-driven jungle / bright Latin pop,Verdant Afterimage,Vibraphone · Rhodes EP · Clean Guitar · Fingered Bass · Flute · Marimba
+A03,Chrome Heartbeat,anchor,182,42.191619873046875,Industrial power-rock / brass chase,Heart of Chrome,Distortion Guitar · Brass Section · Picked Bass · Bright Yamaha Grand · Strings
+A04,Glass Causeway - Prism Sprint,anchor,168,45.70758819580078,Speed garage / crystalline guitar pop,Glass Causeway,Clean Guitar · Crystal · Pop Bass · Legend EP 2 · Palm Muted Guitar · Synth Strings 1
+A05,Neon Market - Flash Sale,anchor,160,48.001338958740234,Uptempo disco-funk / clavinet chase,Neon Market,Clavinet · DrawbarOrgan · Brass Section · Slap Bass · Palm Muted Guitar · Tenor Sax
+A06,Signal Garden - Sunburst,anchor,166,46.26009750366211,Lydian piano-funk sprint with flute and alto-sax call and response,Signal Garden,Flute · Alto Sax · Bright Yamaha Grand · Marimba · Synth Bass 1 · Brass Section · Clean Guitar
+A07,Razor Bloom - Switchblade,anchor,180,42.66041564941406,Brash synth-brass and FM-key trance/acid sprint,Razor Bloom,Synth Brass 1 · Legend EP 2 · Percussive Organ · Synth Bass 2 · Synth Strings 1
+A08,Chromatic Slipstream,anchor,176,43.631492614746094,Fast orchestral-rock traversal with violin/cello ostinato and answering trumpet,Heart of Chrome / Glass Causeway,Violin · Cello · Trumpet · Strings · Yamaha Grand Piano · Picked Bass
+A09,Rooftop Rally,anchor,170,45.17182159423828,"Fast rooftop funk with clean-guitar hook, clavinet and trombone breaks",Neon Market / Signal Garden,Clean Guitar · Trombone · Clavinet · DrawbarOrgan · Vibraphone · Slap Bass
+A10,Bloom Circuit Finale,anchor,188,40.852203369140625,"Immediate orchestral-rock anthem with horns, racing strings and bright major release",Razor Bloom / Verdant Afterimage,French Horns · Violin · Strings · Trumpet · Cello · Harp · Picked Bass
+B01,Brass Knuckle Parade,leftfield,176,43.631492614746094,Big-band swing / brass chase,,Trumpet · Tenor Sax · Tenor Sax · Trombone · Yamaha Grand Piano · Acoustic Bass
+B02,Cactus Rocket,leftfield,186,41.287513732910156,Bluegrass / country chase,,Fiddle · Banjo · Steel String Guitar · Nylon String Guitar · Acoustic Bass · Harmonica · Woodblock
+B03,Papaya Panic,leftfield,172,44.65279769897461,Samba / batucada-inspired arcade sprint,,Steel Drums · Marimba · Brass Section · Nylon String Guitar · Acoustic Bass · Agogo
+B04,Midnight Klezmer Express,leftfield,184,41.739566802978516,Klezmer / polka-inspired chase,,Clarinet · Accordian · Violin · Tuba · Nylon String Guitar
+B05,Circuit Raga,leftfield,180,42.66041564941406,South Asian raga-inspired fast dance,,Shenai · Sitar · Reed Organ · Flute · Acoustic Bass · Pizzicato Section
+B06,Clockwork Gamelan,leftfield,162,47.41534423828125,Interlocking metallic chamber percussion,,Steel Drums · Xylophone · Glockenspiel · Tubular Bells · Agogo · Woodblock · Taiko Drum
+B07,Cathedral Pinball,leftfield,178,43.14595413208008,Baroque counterpoint / orchestral arcade,,Harpsichord · Church Organ · Violin · Cello · Strings · Timpani
+B08,Skank Engine,leftfield,190,40.416893005371094,Brass-led ska-punk,,Trumpet · Trombone · Palm Muted Guitar · DrawbarOrgan · Overdrive Guitar · Picked Bass
+B09,Tin Toy Stampede,leftfield,180,42.66041564941406,Odd-accent circus ragtime,,Honky Tonk · Calliope Lead · Bassoon · Tuba · Honky Tonk · Accordian · Xylophone
+B10,Pixel Highlands,leftfield,188,40.852203369140625,Celtic-reel-inspired folk metal,,Fiddle · BagPipe · Flute · Nylon String Guitar · Distortion Guitar · Picked Bass · Taiko Drum

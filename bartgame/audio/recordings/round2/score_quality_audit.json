@@ -1,0 +1,4831 @@
+{
+  "song_count": 20,
+  "complete_expected_count": 20,
+  "errors": [],
+  "advisories": [],
+  "songs": [
+    {
+      "code": "A01",
+      "title": "Razor Bloom - Overdrive",
+      "bpm": 174,
+      "beats": 128,
+      "events": 1584,
+      "score_peak_polyphony": 12,
+      "primary_part": "guitar",
+      "primary_first_beat": 0,
+      "drums_first_beat": 0,
+      "first_bar_note_onsets": 48,
+      "melodic_fingerprint": [
+        [
+          0,
+          0
+        ],
+        [
+          0.5,
+          7
+        ],
+        [
+          1.5,
+          3
+        ],
+        [
+          2,
+          8
+        ],
+        [
+          3,
+          7
+        ],
+        [
+          4,
+          0
+        ],
+        [
+          4.5,
+          5
+        ],
+        [
+          5.5,
+          2
+        ],
+        [
+          6,
+          7
+        ],
+        [
+          7,
+          5
+        ],
+        [
+          8,
+          3
+        ],
+        [
+          8.5,
+          10
+        ],
+        [
+          9.5,
+          7
+        ],
+        [
+          10,
+          12
+        ],
+        [
+          11,
+          10
+        ],
+        [
+          12,
+          5
+        ],
+        [
+          12.5,
+          2
+        ],
+        [
+          13.5,
+          -2
+        ],
+        [
+          14,
+          0
+        ],
+        [
+          16,
+          0
+        ],
+        [
+          16.5,
+          7
+        ],
+        [
+          17.5,
+          3
+        ],
+        [
+          18,
+          8
+        ],
+        [
+          19,
+          7
+        ]
+      ],
+      "parts": [
+        {
+          "name": "guitar",
+          "program": 29,
+          "preset": "Overdrive Guitar",
+          "drum": false,
+          "event_count": 130,
+          "pitch_range": [
+            58,
+            84
+          ],
+          "max_polyphony": 1,
+          "first_beat": 0,
+          "mean_velocity": 0.7530353846153846,
+          "volume": 0.9,
+          "pan": -0.12
+        },
+        {
+          "name": "charang",
+          "program": 84,
+          "preset": "Charang",
+          "drum": false,
+          "event_count": 74,
+          "pitch_range": [
+            67,
+            86
+          ],
+          "max_polyphony": 1,
+          "first_beat": 6.75,
+          "mean_velocity": 0.6063243243243244,
+          "volume": 0.65,
+          "pan": 0.28
+        },
+        {
+          "name": "bass",
+          "program": 38,
+          "preset": "Synth Bass 1",
+          "drum": false,
+          "event_count": 176,
+          "pitch_range": [
+            29,
+            51
+          ],
+          "max_polyphony": 1,
+          "first_beat": 0,
+          "mean_velocity": 0.7063636363636363,
+          "volume": 0.86,
+          "pan": 0
+        },
+        {
+          "name": "organ",
+          "program": 17,
+          "preset": "Percussive Organ",
+          "drum": false,
+          "event_count": 384,
+          "pitch_range": [
+            58,
+            75
+          ],
+          "max_polyphony": 4,
+          "first_beat": 0,
+          "mean_velocity": 0.39165,
+          "volume": 0.48,
+          "pan": -0.35
+        },
+        {
+          "name": "strings",
+          "program": 48,
+          "preset": "Strings",
+          "drum": false,
+          "event_count": 48,
+          "pitch_range": [
+            63,
+            75
+          ],
+          "max_polyphony": 3,
+          "first_beat": 0.02,
+          "mean_velocity": 0.2483,
+          "volume": 0.38,
+          "pan": 0.35
+        },
+        {
+          "name": "piano",
+          "program": 1,
+          "preset": "Bright Yamaha Grand",
+          "drum": false,
+          "event_count": 32,
+          "pitch_range": [
+            75,
+            80
+          ],
+          "max_polyphony": 1,
+          "first_beat": 64.75,
+          "mean_velocity": 0.4,
+          "volume": 0.35,
+          "pan": 0.12
+        },
+        {
+          "name": "drums",
+          "program": 16,
+          "preset": "Power",
+          "drum": true,
+          "event_count": 740,
+          "pitch_range": [
+            36,
+            50
+          ],
+          "max_polyphony": 3,
+          "first_beat": 0,
+          "mean_velocity": 0.4213513513513514,
+          "volume": 0.9,
+          "pan": 0
+        }
+      ],
+      "anchor_hook_check": {
+        "old_id": 9,
+        "compared_notes": 10,
+        "constant_semitone_shift": 0,
+        "constant_beat_shift": -16,
+        "pass": true
+      }
+    },
+    {
+      "code": "A02",
+      "title": "Verdant Velocity",
+      "bpm": 164,
+      "beats": 128,
+      "events": 1818,
+      "score_peak_polyphony": 9,
+      "primary_part": "vibes",
+      "primary_first_beat": 0,
+      "drums_first_beat": 0,
+      "first_bar_note_onsets": 54,
+      "melodic_fingerprint": [
+        [
+          0,
+          0
+        ],
+        [
+          1,
+          3
+        ],
+        [
+          2,
+          7
+        ],
+        [
+          3.5,
+          9
+        ],
+        [
+          4,
+          7
+        ],
+        [
+          5,
+          3
+        ],
+        [
+          6.5,
+          2
+        ],
+        [
+          7.5,
+          3
+        ],
+        [
+          8,
+          9
+        ],
+        [
+          9.5,
+          7
+        ],
+        [
+          10.5,
+          3
+        ],
+        [
+          12,
+          2
+        ],
+        [
+          13,
+          5
+        ],
+        [
+          14,
+          3
+        ],
+        [
+          16,
+          0
+        ],
+        [
+          17,
+          3
+        ],
+        [
+          18,
+          7
+        ],
+        [
+          19.5,
+          9
+        ],
+        [
+          20,
+          7
+        ],
+        [
+          21,
+          3
+        ],
+        [
+          22.5,
+          2
+        ],
+        [
+          23.5,
+          3
+        ],
+        [
+          24.125,
+          9
+        ],
+        [
+          25.5,
+          19
+        ]
+      ],
+      "parts": [
+        {
+          "name": "vibes",
+          "program": 11,
+          "preset": "Vibraphone",
+          "drum": false,
+          "event_count": 96,
+          "pitch_range": [
+            59,
+            80
+          ],
+          "max_polyphony": 1,
+          "first_beat": 0,
+          "mean_velocity": 0.7017958333333333,
+          "volume": 0.92,
+          "pan": -0.12
+        },
+        {
+          "name": "ep",
+          "program": 4,
+          "preset": "Rhodes EP",
+          "drum": false,
+          "event_count": 384,
+          "pitch_range": [
+            55,
+            74
+          ],
+          "max_polyphony": 4,
+          "first_beat": 0.0,
+          "mean_velocity": 0.3854333333333333,
+          "volume": 0.62,
+          "pan": -0.32
+        },
+        {
+          "name": "guitar",
+          "program": 27,
+          "preset": "Clean Guitar",
+          "drum": false,
+          "event_count": 384,
+          "pitch_range": [
+            59,
+            74
+          ],
+          "max_polyphony": 3,
+          "first_beat": 0.5,
+          "mean_velocity": 0.35049166666666665,
+          "volume": 0.57,
+          "pan": 0.32
+        },
+        {
+          "name": "bass",
+          "program": 33,
+          "preset": "Fingered Bass",
+          "drum": false,
+          "event_count": 192,
+          "pitch_range": [
+            30,
+            52
+          ],
+          "max_polyphony": 1,
+          "first_beat": 0,
+          "mean_velocity": 0.6749999999999999,
+          "volume": 0.83,
+          "pan": 0
+        },
+        {
+          "name": "flute",
+          "program": 73,
+          "preset": "Flute",
+          "drum": false,
+          "event_count": 54,
+          "pitch_range": [
+            64,
+            86
+          ],
+          "max_polyphony": 1,
+          "first_beat": 14,
+          "mean_velocity": 0.5816666666666668,
+          "volume": 0.65,
+          "pan": 0.18
+        },
+        {
+          "name": "marimba",
+          "program": 12,
+          "preset": "Marimba",
+          "drum": false,
+          "event_count": 72,
+          "pitch_range": [
+            67,
+            86
+          ],
+          "max_polyphony": 1,
+          "first_beat": 32.25,
+          "mean_velocity": 0.41333333333333333,
+          "volume": 0.5,
+          "pan": -0.2
+        },
+        {
+          "name": "drums",
+          "program": 8,
+          "preset": "Room",
+          "drum": true,
+          "event_count": 636,
+          "pitch_range": [
+            36,
+            67
+          ],
+          "max_polyphony": 3,
+          "first_beat": 0,
+          "mean_velocity": 0.44402515723270447,
+          "volume": 0.85,
+          "pan": 0
+        }
+      ],
+      "anchor_hook_check": {
+        "old_id": 2,
+        "compared_notes": 10,
+        "constant_semitone_shift": 0,
+        "constant_beat_shift": -16,
+        "pass": true
+      }
+    },
+    {
+      "code": "A03",
+      "title": "Chrome Heartbeat",
+      "bpm": 182,
+      "beats": 128,
+      "events": 1528,
+      "score_peak_polyphony": 11,
+      "primary_part": "guitar",
+      "primary_first_beat": 0,
+      "drums_first_beat": 0,
+      "first_bar_note_onsets": 52,
+      "melodic_fingerprint": [
+        [
+          0,
+          0
+        ],
+        [
+          0.75,
+          0
+        ],
+        [
+          1.5,
+          3
+        ],
+        [
+          2,
+          0
+        ],
+        [
+          2.75,
+          7
+        ],
+        [
+          3.5,
+          3
+        ],
+        [
+          4,
+          2
+        ],
+        [
+          4.75,
+          2
+        ],
+        [
+          5.5,
+          5
+        ],
+        [
+          6,
+          2
+        ],
+        [
+          7,
+          7
+        ],
+        [
+          8,
+          8
+        ],
+        [
+          9,
+          7
+        ],
+        [
+          9.75,
+          3
+        ],
+        [
+          10.5,
+          7
+        ],
+        [
+          11.25,
+          3
+        ],
+        [
+          12,
+          2
+        ],
+        [
+          13,
+          -2
+        ],
+        [
+          13.75,
+          2
+        ],
+        [
+          14.5,
+          0
+        ],
+        [
+          16,
+          0
+        ],
+        [
+          16.75,
+          0
+        ],
+        [
+          17.5,
+          3
+        ],
+        [
+          18,
+          0
+        ]
+      ],
+      "parts": [
+        {
+          "name": "guitar",
+          "program": 30,
+          "preset": "Distortion Guitar",
+          "drum": false,
+          "event_count": 140,
+          "pitch_range": [
+            63,
+            84
+          ],
+          "max_polyphony": 1,
+          "first_beat": 0,
+          "mean_velocity": 0.7568264285714286,
+          "volume": 0.88,
+          "pan": -0.18
+        },
+        {
+          "name": "brass",
+          "program": 61,
+          "preset": "Brass Section",
+          "drum": false,
+          "event_count": 176,
+          "pitch_range": [
+            49,
+            85
+          ],
+          "max_polyphony": 3,
+          "first_beat": 1.25,
+          "mean_velocity": 0.5201409090909092,
+          "volume": 0.8,
+          "pan": 0.2
+        },
+        {
+          "name": "bass",
+          "program": 34,
+          "preset": "Picked Bass",
+          "drum": false,
+          "event_count": 224,
+          "pitch_range": [
+            34,
+            54
+          ],
+          "max_polyphony": 1,
+          "first_beat": 0,
+          "mean_velocity": 0.6699999999999999,
+          "volume": 0.85,
+          "pan": 0
+        },
+        {
+          "name": "piano",
+          "program": 1,
+          "preset": "Bright Yamaha Grand",
+          "drum": false,
+          "event_count": 288,
+          "pitch_range": [
+            56,
+            75
+          ],
+          "max_polyphony": 3,
+          "first_beat": 0,
+          "mean_velocity": 0.3597,
+          "volume": 0.48,
+          "pan": -0.32
+        },
+        {
+          "name": "strings",
+          "program": 48,
+          "preset": "Strings",
+          "drum": false,
+          "event_count": 48,
+          "pitch_range": [
+            61,
+            75
+          ],
+          "max_polyphony": 3,
+          "first_beat": 0,
+          "mean_velocity": 0.2674,
+          "volume": 0.39,
+          "pan": 0.35
+        },
+        {
+          "name": "drums",
+          "program": 16,
+          "preset": "Power",
+          "drum": true,
+          "event_count": 652,
+          "pitch_range": [
+            36,
+            53
+          ],
+          "max_polyphony": 3,
+          "first_beat": 0,
+          "mean_velocity": 0.48993865030674855,
+          "volume": 0.95,
+          "pan": 0
+        }
+      ],
+      "anchor_hook_check": {
+        "old_id": 3,
+        "compared_notes": 10,
+        "constant_semitone_shift": 0,
+        "constant_beat_shift": -16,
+        "pass": true
+      }
+    },
+    {
+      "code": "A04",
+      "title": "Glass Causeway - Prism Sprint",
+      "bpm": 168,
+      "beats": 128,
+      "events": 2106,
+      "score_peak_polyphony": 12,
+      "primary_part": "guitar",
+      "primary_first_beat": 0.5,
+      "drums_first_beat": 0,
+      "first_bar_note_onsets": 65,
+      "melodic_fingerprint": [
+        [
+          0.0,
+          0
+        ],
+        [
+          1.0,
+          3
+        ],
+        [
+          2.0,
+          7
+        ],
+        [
+          3.5,
+          5
+        ],
+        [
+          4.5,
+          3
+        ],
+        [
+          5.5,
+          0
+        ],
+        [
+          6.5,
+          -2
+        ],
+        [
+          7.5,
+          3
+        ],
+        [
+          8.5,
+          7
+        ],
+        [
+          9.5,
+          10
+        ],
+        [
+          11.5,
+          8
+        ],
+        [
+          12.5,
+          7
+        ],
+        [
+          13.5,
+          3
+        ],
+        [
+          14.5,
+          2
+        ],
+        [
+          16.0,
+          0
+        ],
+        [
+          17.0,
+          3
+        ],
+        [
+          18.0,
+          7
+        ],
+        [
+          19.5,
+          5
+        ],
+        [
+          20.5,
+          3
+        ],
+        [
+          21.5,
+          0
+        ],
+        [
+          22.5,
+          -2
+        ],
+        [
+          23.5,
+          3
+        ],
+        [
+          24.625,
+          7
+        ],
+        [
+          25.5,
+          22
+        ]
+      ],
+      "parts": [
+        {
+          "name": "guitar",
+          "program": 27,
+          "preset": "Clean Guitar",
+          "drum": false,
+          "event_count": 92,
+          "pitch_range": [
+            67,
+            91
+          ],
+          "max_polyphony": 1,
+          "first_beat": 0.5,
+          "mean_velocity": 0.7334978260869565,
+          "volume": 0.94,
+          "pan": -0.16
+        },
+        {
+          "name": "crystal",
+          "program": 98,
+          "preset": "Crystal",
+          "drum": false,
+          "event_count": 74,
+          "pitch_range": [
+            68,
+            84
+          ],
+          "max_polyphony": 1,
+          "first_beat": 6.25,
+          "mean_velocity": 0.5314594594594595,
+          "volume": 0.63,
+          "pan": 0.32
+        },
+        {
+          "name": "bass",
+          "program": 37,
+          "preset": "Pop Bass",
+          "drum": false,
+          "event_count": 176,
+          "pitch_range": [
+            29,
+            52
+          ],
+          "max_polyphony": 1,
+          "first_beat": 0,
+          "mean_velocity": 0.6563636363636363,
+          "volume": 0.83,
+          "pan": 0
+        },
+        {
+          "name": "ep",
+          "program": 5,
+          "preset": "Legend EP 2",
+          "drum": false,
+          "event_count": 512,
+          "pitch_range": [
+            55,
+            72
+          ],
+          "max_polyphony": 4,
+          "first_beat": 0.5,
+          "mean_velocity": 0.40097499999999997,
+          "volume": 0.58,
+          "pan": -0.3
+        },
+        {
+          "name": "muted",
+          "program": 28,
+          "preset": "Palm Muted Guitar",
+          "drum": false,
+          "event_count": 384,
+          "pitch_range": [
+            59,
+            72
+          ],
+          "max_polyphony": 3,
+          "first_beat": 0.25,
+          "mean_velocity": 0.2931916666666667,
+          "volume": 0.46,
+          "pan": 0.25
+        },
+        {
+          "name": "strings",
+          "program": 50,
+          "preset": "Synth Strings 1",
+          "drum": false,
+          "event_count": 16,
+          "pitch_range": [
+            60,
+            67
+          ],
+          "max_polyphony": 2,
+          "first_beat": 0,
+          "mean_velocity": 0.24435,
+          "volume": 0.32,
+          "pan": -0.05
+        },
+        {
+          "name": "drums",
+          "program": 24,
+          "preset": "Electronic",
+          "drum": true,
+          "event_count": 852,
+          "pitch_range": [
+            36,
+            69
+          ],
+          "max_polyphony": 3,
+          "first_beat": 0,
+          "mean_velocity": 0.35619718309859155,
+          "volume": 0.88,
+          "pan": 0
+        }
+      ],
+      "anchor_hook_check": {
+        "old_id": 4,
+        "compared_notes": 10,
+        "constant_semitone_shift": 0,
+        "constant_beat_shift": -16.0,
+        "pass": true
+      }
+    },
+    {
+      "code": "A05",
+      "title": "Neon Market - Flash Sale",
+      "bpm": 160,
+      "beats": 128,
+      "events": 2424,
+      "score_peak_polyphony": 9,
+      "primary_part": "clav",
+      "primary_first_beat": 0.5,
+      "drums_first_beat": 0,
+      "first_bar_note_onsets": 76,
+      "melodic_fingerprint": [
+        [
+          0.0,
+          0
+        ],
+        [
+          0.75,
+          4
+        ],
+        [
+          2.0,
+          2
+        ],
+        [
+          3.0,
+          0
+        ],
+        [
+          4.25,
+          -1
+        ],
+        [
+          5.0,
+          4
+        ],
+        [
+          6.5,
+          0
+        ],
+        [
+          8.0,
+          -3
+        ],
+        [
+          8.75,
+          0
+        ],
+        [
+          10.0,
+          4
+        ],
+        [
+          11.0,
+          6
+        ],
+        [
+          12.25,
+          4
+        ],
+        [
+          13.0,
+          0
+        ],
+        [
+          14.5,
+          -3
+        ],
+        [
+          16.0,
+          0
+        ],
+        [
+          16.75,
+          4
+        ],
+        [
+          18.0,
+          2
+        ],
+        [
+          19.0,
+          0
+        ],
+        [
+          20.25,
+          -1
+        ],
+        [
+          21.0,
+          4
+        ],
+        [
+          22.5,
+          0
+        ],
+        [
+          24.0,
+          -3
+        ],
+        [
+          24.875,
+          0
+        ],
+        [
+          26.0,
+          16
+        ]
+      ],
+      "parts": [
+        {
+          "name": "clav",
+          "program": 7,
+          "preset": "Clavinet",
+          "drum": false,
+          "event_count": 96,
+          "pitch_range": [
+            62,
+            83
+          ],
+          "max_polyphony": 1,
+          "first_beat": 0.5,
+          "mean_velocity": 0.7302666666666666,
+          "volume": 0.91,
+          "pan": -0.12
+        },
+        {
+          "name": "organ",
+          "program": 16,
+          "preset": "DrawbarOrgan",
+          "drum": false,
+          "event_count": 512,
+          "pitch_range": [
+            55,
+            69
+          ],
+          "max_polyphony": 4,
+          "first_beat": 0.5,
+          "mean_velocity": 0.3403625,
+          "volume": 0.56,
+          "pan": -0.3
+        },
+        {
+          "name": "brass",
+          "program": 61,
+          "preset": "Brass Section",
+          "drum": false,
+          "event_count": 104,
+          "pitch_range": [
+            72,
+            81
+          ],
+          "max_polyphony": 2,
+          "first_beat": 2.25,
+          "mean_velocity": 0.41355769230769235,
+          "volume": 0.68,
+          "pan": 0.26
+        },
+        {
+          "name": "bass",
+          "program": 36,
+          "preset": "Slap Bass",
+          "drum": false,
+          "event_count": 208,
+          "pitch_range": [
+            28,
+            50
+          ],
+          "max_polyphony": 1,
+          "first_beat": 0,
+          "mean_velocity": 0.6499999999999999,
+          "volume": 0.87,
+          "pan": 0
+        },
+        {
+          "name": "guitar",
+          "program": 28,
+          "preset": "Palm Muted Guitar",
+          "drum": false,
+          "event_count": 384,
+          "pitch_range": [
+            60,
+            69
+          ],
+          "max_polyphony": 3,
+          "first_beat": 0.25,
+          "mean_velocity": 0.2674,
+          "volume": 0.42,
+          "pan": 0.35
+        },
+        {
+          "name": "sax",
+          "program": 66,
+          "preset": "Tenor Sax",
+          "drum": false,
+          "event_count": 36,
+          "pitch_range": [
+            69,
+            81
+          ],
+          "max_polyphony": 1,
+          "first_beat": 64,
+          "mean_velocity": 0.6931333333333334,
+          "volume": 0.78,
+          "pan": 0.12
+        },
+        {
+          "name": "drums",
+          "program": 0,
+          "preset": "Standard",
+          "drum": true,
+          "event_count": 1084,
+          "pitch_range": [
+            36,
+            73
+          ],
+          "max_polyphony": 4,
+          "first_beat": 0,
+          "mean_velocity": 0.37509225092250925,
+          "volume": 0.86,
+          "pan": 0
+        }
+      ],
+      "anchor_hook_check": {
+        "old_id": 5,
+        "compared_notes": 10,
+        "constant_semitone_shift": 0,
+        "constant_beat_shift": -16.0,
+        "pass": true
+      }
+    },
+    {
+      "code": "A06",
+      "title": "Signal Garden - Sunburst",
+      "bpm": 166,
+      "beats": 128,
+      "events": 1716,
+      "score_peak_polyphony": 10,
+      "primary_part": "flute",
+      "primary_first_beat": 0,
+      "drums_first_beat": 0,
+      "first_bar_note_onsets": 55,
+      "melodic_fingerprint": [
+        [
+          0,
+          0
+        ],
+        [
+          1,
+          3
+        ],
+        [
+          1.5,
+          7
+        ],
+        [
+          2.5,
+          10
+        ],
+        [
+          4,
+          9
+        ],
+        [
+          5,
+          5
+        ],
+        [
+          6,
+          2
+        ],
+        [
+          7,
+          0
+        ],
+        [
+          8,
+          3
+        ],
+        [
+          9,
+          7
+        ],
+        [
+          9.5,
+          10
+        ],
+        [
+          10.5,
+          7
+        ],
+        [
+          12,
+          5
+        ],
+        [
+          13,
+          3
+        ],
+        [
+          14,
+          2
+        ],
+        [
+          16,
+          0
+        ],
+        [
+          17,
+          3
+        ],
+        [
+          17.5,
+          7
+        ],
+        [
+          18.5,
+          10
+        ],
+        [
+          20,
+          9
+        ],
+        [
+          21,
+          5
+        ],
+        [
+          22,
+          2
+        ],
+        [
+          23,
+          0
+        ],
+        [
+          24,
+          3
+        ]
+      ],
+      "parts": [
+        {
+          "name": "flute",
+          "program": 73,
+          "preset": "Flute",
+          "drum": false,
+          "event_count": 75,
+          "pitch_range": [
+            76,
+            86
+          ],
+          "max_polyphony": 1,
+          "first_beat": 0,
+          "mean_velocity": 0.88548,
+          "volume": 0.96,
+          "pan": -0.12
+        },
+        {
+          "name": "sax",
+          "program": 65,
+          "preset": "Alto Sax",
+          "drum": false,
+          "event_count": 72,
+          "pitch_range": [
+            62,
+            76
+          ],
+          "max_polyphony": 1,
+          "first_beat": 3.62,
+          "mean_velocity": 0.7665472222222223,
+          "volume": 0.9,
+          "pan": 0.16
+        },
+        {
+          "name": "piano",
+          "program": 1,
+          "preset": "Bright Yamaha Grand",
+          "drum": false,
+          "event_count": 436,
+          "pitch_range": [
+            52,
+            71
+          ],
+          "max_polyphony": 4,
+          "first_beat": 0.5,
+          "mean_velocity": 0.578148623853211,
+          "volume": 0.75,
+          "pan": -0.23
+        },
+        {
+          "name": "marimba",
+          "program": 12,
+          "preset": "Marimba",
+          "drum": false,
+          "event_count": 128,
+          "pitch_range": [
+            48,
+            73
+          ],
+          "max_polyphony": 1,
+          "first_beat": 0.25,
+          "mean_velocity": 0.4700000000000001,
+          "volume": 0.6,
+          "pan": 0.28
+        },
+        {
+          "name": "bass",
+          "program": 38,
+          "preset": "Synth Bass 1",
+          "drum": false,
+          "event_count": 192,
+          "pitch_range": [
+            33,
+            55
+          ],
+          "max_polyphony": 1,
+          "first_beat": 0,
+          "mean_velocity": 0.6866666666666665,
+          "volume": 0.9,
+          "pan": 0
+        },
+        {
+          "name": "brass",
+          "program": 61,
+          "preset": "Brass Section",
+          "drum": false,
+          "event_count": 48,
+          "pitch_range": [
+            48,
+            78
+          ],
+          "max_polyphony": 3,
+          "first_beat": 64,
+          "mean_velocity": 0.4776666666666667,
+          "volume": 0.55,
+          "pan": 0.1
+        },
+        {
+          "name": "guitar",
+          "program": 27,
+          "preset": "Clean Guitar",
+          "drum": false,
+          "event_count": 192,
+          "pitch_range": [
+            48,
+            66
+          ],
+          "max_polyphony": 3,
+          "first_beat": 1,
+          "mean_velocity": 0.4631999999999999,
+          "volume": 0.52,
+          "pan": -0.3
+        },
+        {
+          "name": "drums",
+          "program": 0,
+          "preset": "Standard",
+          "drum": true,
+          "event_count": 573,
+          "pitch_range": [
+            36,
+            64
+          ],
+          "max_polyphony": 3,
+          "first_beat": 0,
+          "mean_velocity": 0.5031064572425828,
+          "volume": 0.9,
+          "pan": 0
+        }
+      ],
+      "anchor_hook_check": {
+        "old_id": 14,
+        "compared_notes": 10,
+        "constant_semitone_shift": 0,
+        "constant_beat_shift": -16,
+        "pass": true
+      }
+    },
+    {
+      "code": "A07",
+      "title": "Razor Bloom - Switchblade",
+      "bpm": 180,
+      "beats": 128,
+      "events": 2103,
+      "score_peak_polyphony": 13,
+      "primary_part": "synth_brass",
+      "primary_first_beat": 0,
+      "drums_first_beat": 0,
+      "first_bar_note_onsets": 64,
+      "melodic_fingerprint": [
+        [
+          0,
+          0
+        ],
+        [
+          0.5,
+          7
+        ],
+        [
+          1.5,
+          3
+        ],
+        [
+          2,
+          8
+        ],
+        [
+          3,
+          7
+        ],
+        [
+          4,
+          0
+        ],
+        [
+          4.5,
+          5
+        ],
+        [
+          5.5,
+          2
+        ],
+        [
+          6,
+          7
+        ],
+        [
+          7,
+          5
+        ],
+        [
+          8,
+          3
+        ],
+        [
+          8.5,
+          10
+        ],
+        [
+          9.5,
+          7
+        ],
+        [
+          10,
+          12
+        ],
+        [
+          11,
+          10
+        ],
+        [
+          12,
+          5
+        ],
+        [
+          12.5,
+          2
+        ],
+        [
+          13.5,
+          -2
+        ],
+        [
+          14,
+          0
+        ],
+        [
+          16,
+          0
+        ],
+        [
+          16.5,
+          7
+        ],
+        [
+          17.5,
+          3
+        ],
+        [
+          18,
+          8
+        ],
+        [
+          19,
+          7
+        ]
+      ],
+      "parts": [
+        {
+          "name": "synth_brass",
+          "program": 62,
+          "preset": "Synth Brass 1",
+          "drum": false,
+          "event_count": 155,
+          "pitch_range": [
+            70,
+            87
+          ],
+          "max_polyphony": 1,
+          "first_beat": 0,
+          "mean_velocity": 0.9019045161290324,
+          "volume": 0.94,
+          "pan": -0.08
+        },
+        {
+          "name": "fm_keys",
+          "program": 5,
+          "preset": "Legend EP 2",
+          "drum": false,
+          "event_count": 384,
+          "pitch_range": [
+            51,
+            72
+          ],
+          "max_polyphony": 1,
+          "first_beat": 0.25,
+          "mean_velocity": 0.4533333333333333,
+          "volume": 0.73,
+          "pan": 0.25
+        },
+        {
+          "name": "organ",
+          "program": 17,
+          "preset": "Percussive Organ",
+          "drum": false,
+          "event_count": 384,
+          "pitch_range": [
+            48,
+            65
+          ],
+          "max_polyphony": 3,
+          "first_beat": 0.5,
+          "mean_velocity": 0.5114333333333333,
+          "volume": 0.55,
+          "pan": -0.23
+        },
+        {
+          "name": "bass",
+          "program": 39,
+          "preset": "Synth Bass 2",
+          "drum": false,
+          "event_count": 448,
+          "pitch_range": [
+            29,
+            51
+          ],
+          "max_polyphony": 1,
+          "first_beat": 0.0,
+          "mean_velocity": 0.6449999999999999,
+          "volume": 0.93,
+          "pan": 0
+        },
+        {
+          "name": "strings",
+          "program": 50,
+          "preset": "Synth Strings 1",
+          "drum": false,
+          "event_count": 55,
+          "pitch_range": [
+            48,
+            68
+          ],
+          "max_polyphony": 4,
+          "first_beat": 64,
+          "mean_velocity": 0.3537327272727273,
+          "volume": 0.48,
+          "pan": 0.1
+        },
+        {
+          "name": "drums",
+          "program": 24,
+          "preset": "Electronic",
+          "drum": true,
+          "event_count": 549,
+          "pitch_range": [
+            36,
+            49
+          ],
+          "max_polyphony": 5,
+          "first_beat": 0,
+          "mean_velocity": 0.5634426229508197,
+          "volume": 0.93,
+          "pan": 0
+        },
+        {
+          "name": "percussion",
+          "program": 25,
+          "preset": "TR-808",
+          "drum": true,
+          "event_count": 128,
+          "pitch_range": [
+            46,
+            46
+          ],
+          "max_polyphony": 1,
+          "first_beat": 0.5,
+          "mean_velocity": 0.32,
+          "volume": 0.6,
+          "pan": 0.12
+        }
+      ],
+      "anchor_hook_check": {
+        "old_id": 9,
+        "compared_notes": 10,
+        "constant_semitone_shift": 12,
+        "constant_beat_shift": -16,
+        "pass": true
+      }
+    },
+    {
+      "code": "A08",
+      "title": "Chromatic Slipstream",
+      "bpm": 176,
+      "beats": 128,
+      "events": 1604,
+      "score_peak_polyphony": 10,
+      "primary_part": "violin",
+      "primary_first_beat": 0,
+      "drums_first_beat": 0,
+      "first_bar_note_onsets": 54,
+      "melodic_fingerprint": [
+        [
+          0,
+          0
+        ],
+        [
+          0.5,
+          0
+        ],
+        [
+          1.25,
+          3
+        ],
+        [
+          2,
+          7
+        ],
+        [
+          3,
+          10
+        ],
+        [
+          4,
+          9
+        ],
+        [
+          4.75,
+          9
+        ],
+        [
+          5.5,
+          5
+        ],
+        [
+          6.5,
+          3
+        ],
+        [
+          7.25,
+          1
+        ],
+        [
+          8.5,
+          3
+        ],
+        [
+          9.5,
+          7
+        ],
+        [
+          10.5,
+          10
+        ],
+        [
+          11.5,
+          7
+        ],
+        [
+          12,
+          6
+        ],
+        [
+          13,
+          3
+        ],
+        [
+          13.75,
+          2
+        ],
+        [
+          14.5,
+          0
+        ],
+        [
+          16,
+          0
+        ],
+        [
+          16.5,
+          0
+        ],
+        [
+          17.25,
+          3
+        ],
+        [
+          18,
+          7
+        ],
+        [
+          19,
+          10
+        ],
+        [
+          20,
+          7
+        ]
+      ],
+      "parts": [
+        {
+          "name": "violin",
+          "program": 40,
+          "preset": "Violin",
+          "drum": false,
+          "event_count": 88,
+          "pitch_range": [
+            76,
+            89
+          ],
+          "max_polyphony": 1,
+          "first_beat": 0,
+          "mean_velocity": 0.8924727272727272,
+          "volume": 0.95,
+          "pan": -0.1
+        },
+        {
+          "name": "cello",
+          "program": 42,
+          "preset": "Cello",
+          "drum": false,
+          "event_count": 256,
+          "pitch_range": [
+            44,
+            66
+          ],
+          "max_polyphony": 1,
+          "first_beat": 0.0,
+          "mean_velocity": 0.5250000000000001,
+          "volume": 0.72,
+          "pan": -0.23
+        },
+        {
+          "name": "trumpet",
+          "program": 56,
+          "preset": "Trumpet",
+          "drum": false,
+          "event_count": 48,
+          "pitch_range": [
+            63,
+            77
+          ],
+          "max_polyphony": 1,
+          "first_beat": 32,
+          "mean_velocity": 0.8808333333333334,
+          "volume": 0.84,
+          "pan": 0.22
+        },
+        {
+          "name": "strings",
+          "program": 48,
+          "preset": "Strings",
+          "drum": false,
+          "event_count": 375,
+          "pitch_range": [
+            48,
+            68
+          ],
+          "max_polyphony": 4,
+          "first_beat": 0,
+          "mean_velocity": 0.4838594666666666,
+          "volume": 0.6,
+          "pan": 0.12
+        },
+        {
+          "name": "piano",
+          "program": 0,
+          "preset": "Yamaha Grand Piano",
+          "drum": false,
+          "event_count": 96,
+          "pitch_range": [
+            61,
+            77
+          ],
+          "max_polyphony": 3,
+          "first_beat": 0.75,
+          "mean_velocity": 0.42458333333333337,
+          "volume": 0.56,
+          "pan": -0.3
+        },
+        {
+          "name": "bass",
+          "program": 34,
+          "preset": "Picked Bass",
+          "drum": false,
+          "event_count": 256,
+          "pitch_range": [
+            32,
+            54
+          ],
+          "max_polyphony": 1,
+          "first_beat": 0.0,
+          "mean_velocity": 0.72,
+          "volume": 0.88,
+          "pan": 0
+        },
+        {
+          "name": "drums",
+          "program": 16,
+          "preset": "Power",
+          "drum": true,
+          "event_count": 485,
+          "pitch_range": [
+            36,
+            51
+          ],
+          "max_polyphony": 3,
+          "first_beat": 0,
+          "mean_velocity": 0.6167422680412371,
+          "volume": 0.78,
+          "pan": 0
+        }
+      ]
+    },
+    {
+      "code": "A09",
+      "title": "Rooftop Rally",
+      "bpm": 170,
+      "beats": 128,
+      "events": 1768,
+      "score_peak_polyphony": 11,
+      "primary_part": "guitar",
+      "primary_first_beat": 0,
+      "drums_first_beat": 0,
+      "first_bar_note_onsets": 55,
+      "melodic_fingerprint": [
+        [
+          0,
+          0
+        ],
+        [
+          0.5,
+          3
+        ],
+        [
+          1.25,
+          7
+        ],
+        [
+          2.5,
+          5
+        ],
+        [
+          3.5,
+          3
+        ],
+        [
+          4.75,
+          2
+        ],
+        [
+          5.5,
+          7
+        ],
+        [
+          7,
+          3
+        ],
+        [
+          8.5,
+          0
+        ],
+        [
+          9.25,
+          3
+        ],
+        [
+          10.5,
+          7
+        ],
+        [
+          11.5,
+          9
+        ],
+        [
+          12.75,
+          7
+        ],
+        [
+          13.5,
+          3
+        ],
+        [
+          15,
+          0
+        ],
+        [
+          16,
+          3
+        ],
+        [
+          16.5,
+          7
+        ],
+        [
+          17.25,
+          10
+        ],
+        [
+          18.5,
+          9
+        ],
+        [
+          19.5,
+          7
+        ],
+        [
+          20.75,
+          5
+        ],
+        [
+          21.5,
+          9
+        ],
+        [
+          23,
+          7
+        ],
+        [
+          24.5,
+          9
+        ]
+      ],
+      "parts": [
+        {
+          "name": "guitar",
+          "program": 27,
+          "preset": "Clean Guitar",
+          "drum": false,
+          "event_count": 75,
+          "pitch_range": [
+            74,
+            86
+          ],
+          "max_polyphony": 1,
+          "first_beat": 0,
+          "mean_velocity": 0.9174399999999999,
+          "volume": 0.97,
+          "pan": -0.1
+        },
+        {
+          "name": "trombone",
+          "program": 57,
+          "preset": "Trombone",
+          "drum": false,
+          "event_count": 60,
+          "pitch_range": [
+            57,
+            74
+          ],
+          "max_polyphony": 1,
+          "first_beat": 32,
+          "mean_velocity": 0.8801333333333334,
+          "volume": 0.93,
+          "pan": 0.2
+        },
+        {
+          "name": "clav",
+          "program": 7,
+          "preset": "Clavinet",
+          "drum": false,
+          "event_count": 480,
+          "pitch_range": [
+            52,
+            69
+          ],
+          "max_polyphony": 3,
+          "first_beat": 0.25,
+          "mean_velocity": 0.5982999999999999,
+          "volume": 0.77,
+          "pan": -0.26
+        },
+        {
+          "name": "organ",
+          "program": 16,
+          "preset": "DrawbarOrgan",
+          "drum": false,
+          "event_count": 256,
+          "pitch_range": [
+            48,
+            69
+          ],
+          "max_polyphony": 4,
+          "first_beat": 0,
+          "mean_velocity": 0.345825,
+          "volume": 0.53,
+          "pan": 0.26
+        },
+        {
+          "name": "vibes",
+          "program": 11,
+          "preset": "Vibraphone",
+          "drum": false,
+          "event_count": 32,
+          "pitch_range": [
+            67,
+            83
+          ],
+          "max_polyphony": 1,
+          "first_beat": 65.5,
+          "mean_velocity": 0.45,
+          "volume": 0.55,
+          "pan": 0.08
+        },
+        {
+          "name": "bass",
+          "program": 36,
+          "preset": "Slap Bass",
+          "drum": false,
+          "event_count": 224,
+          "pitch_range": [
+            33,
+            55
+          ],
+          "max_polyphony": 1,
+          "first_beat": 0,
+          "mean_velocity": 0.6857142857142857,
+          "volume": 0.95,
+          "pan": 0
+        },
+        {
+          "name": "drums",
+          "program": 8,
+          "preset": "Room",
+          "drum": true,
+          "event_count": 641,
+          "pitch_range": [
+            36,
+            56
+          ],
+          "max_polyphony": 3,
+          "first_beat": 0,
+          "mean_velocity": 0.4842277691107644,
+          "volume": 0.92,
+          "pan": 0
+        }
+      ]
+    },
+    {
+      "code": "A10",
+      "title": "Bloom Circuit Finale",
+      "bpm": 188,
+      "beats": 128,
+      "events": 2081,
+      "score_peak_polyphony": 13,
+      "primary_part": "horn",
+      "primary_first_beat": 0,
+      "drums_first_beat": 0,
+      "first_bar_note_onsets": 64,
+      "melodic_fingerprint": [
+        [
+          0,
+          0
+        ],
+        [
+          0.5,
+          7
+        ],
+        [
+          1.5,
+          3
+        ],
+        [
+          2,
+          8
+        ],
+        [
+          3,
+          7
+        ],
+        [
+          4,
+          8
+        ],
+        [
+          5,
+          12
+        ],
+        [
+          5.75,
+          15
+        ],
+        [
+          6.5,
+          12
+        ],
+        [
+          8,
+          12
+        ],
+        [
+          9,
+          15
+        ],
+        [
+          9.75,
+          14
+        ],
+        [
+          10.5,
+          12
+        ],
+        [
+          12,
+          11
+        ],
+        [
+          13,
+          7
+        ],
+        [
+          13.75,
+          2
+        ],
+        [
+          14.5,
+          0
+        ],
+        [
+          16,
+          7
+        ],
+        [
+          17,
+          10
+        ],
+        [
+          17.75,
+          14
+        ],
+        [
+          18.5,
+          15
+        ],
+        [
+          20,
+          14
+        ],
+        [
+          21,
+          12
+        ],
+        [
+          21.75,
+          10
+        ]
+      ],
+      "parts": [
+        {
+          "name": "horn",
+          "program": 60,
+          "preset": "French Horns",
+          "drum": false,
+          "event_count": 82,
+          "pitch_range": [
+            60,
+            76
+          ],
+          "max_polyphony": 1,
+          "first_beat": 0,
+          "mean_velocity": 0.9284682926829269,
+          "volume": 0.99,
+          "pan": -0.1
+        },
+        {
+          "name": "violin",
+          "program": 40,
+          "preset": "Violin",
+          "drum": false,
+          "event_count": 48,
+          "pitch_range": [
+            77,
+            88
+          ],
+          "max_polyphony": 1,
+          "first_beat": 32,
+          "mean_velocity": 0.9091458333333332,
+          "volume": 0.84,
+          "pan": 0.2
+        },
+        {
+          "name": "strings",
+          "program": 48,
+          "preset": "Strings",
+          "drum": false,
+          "event_count": 744,
+          "pitch_range": [
+            48,
+            68
+          ],
+          "max_polyphony": 4,
+          "first_beat": 0,
+          "mean_velocity": 0.43979139784946236,
+          "volume": 0.72,
+          "pan": -0.2
+        },
+        {
+          "name": "trumpet",
+          "program": 56,
+          "preset": "Trumpet",
+          "drum": false,
+          "event_count": 18,
+          "pitch_range": [
+            67,
+            83
+          ],
+          "max_polyphony": 1,
+          "first_beat": 64,
+          "mean_velocity": 0.6199999999999999,
+          "volume": 0.66,
+          "pan": 0.28
+        },
+        {
+          "name": "cello",
+          "program": 42,
+          "preset": "Cello",
+          "drum": false,
+          "event_count": 256,
+          "pitch_range": [
+            43,
+            65
+          ],
+          "max_polyphony": 1,
+          "first_beat": 0.0,
+          "mean_velocity": 0.505,
+          "volume": 0.68,
+          "pan": -0.3
+        },
+        {
+          "name": "harp",
+          "program": 46,
+          "preset": "Harp",
+          "drum": false,
+          "event_count": 64,
+          "pitch_range": [
+            48,
+            79
+          ],
+          "max_polyphony": 2,
+          "first_beat": 14.0,
+          "mean_velocity": 0.539,
+          "volume": 0.51,
+          "pan": 0.18
+        },
+        {
+          "name": "bass",
+          "program": 34,
+          "preset": "Picked Bass",
+          "drum": false,
+          "event_count": 256,
+          "pitch_range": [
+            31,
+            53
+          ],
+          "max_polyphony": 1,
+          "first_beat": 0.0,
+          "mean_velocity": 0.7300000000000001,
+          "volume": 0.91,
+          "pan": 0
+        },
+        {
+          "name": "drums",
+          "program": 16,
+          "preset": "Power",
+          "drum": true,
+          "event_count": 549,
+          "pitch_range": [
+            36,
+            51
+          ],
+          "max_polyphony": 3,
+          "first_beat": 0,
+          "mean_velocity": 0.5813479052823315,
+          "volume": 0.92,
+          "pan": 0
+        },
+        {
+          "name": "percussion",
+          "program": 48,
+          "preset": "Orchestra Kit",
+          "drum": true,
+          "event_count": 64,
+          "pitch_range": [
+            41,
+            41
+          ],
+          "max_polyphony": 1,
+          "first_beat": 0,
+          "mean_velocity": 0.48,
+          "volume": 0.65,
+          "pan": 0
+        }
+      ],
+      "anchor_hook_check": {
+        "old_id": 9,
+        "compared_notes": 5,
+        "constant_semitone_shift": 0,
+        "constant_beat_shift": -16,
+        "pass": true
+      }
+    },
+    {
+      "code": "B01",
+      "title": "Brass Knuckle Parade",
+      "bpm": 176,
+      "beats": 128,
+      "events": 999,
+      "score_peak_polyphony": 8,
+      "primary_part": "trumpet",
+      "primary_first_beat": 0,
+      "drums_first_beat": 0,
+      "first_bar_note_onsets": 32,
+      "melodic_fingerprint": [
+        [
+          0,
+          0
+        ],
+        [
+          0.667,
+          4
+        ],
+        [
+          1,
+          7
+        ],
+        [
+          2,
+          5
+        ],
+        [
+          2.667,
+          4
+        ],
+        [
+          3,
+          2
+        ],
+        [
+          4,
+          -2
+        ],
+        [
+          4.667,
+          -3
+        ],
+        [
+          5,
+          1
+        ],
+        [
+          6,
+          4
+        ],
+        [
+          7,
+          2
+        ],
+        [
+          8,
+          5
+        ],
+        [
+          9,
+          4
+        ],
+        [
+          9.667,
+          2
+        ],
+        [
+          10,
+          0
+        ],
+        [
+          12,
+          -1
+        ],
+        [
+          13,
+          2
+        ],
+        [
+          13.667,
+          5
+        ],
+        [
+          14,
+          6
+        ],
+        [
+          14.667,
+          7
+        ],
+        [
+          16,
+          7
+        ],
+        [
+          17,
+          11
+        ],
+        [
+          18,
+          9
+        ],
+        [
+          18.667,
+          7
+        ]
+      ],
+      "parts": [
+        {
+          "name": "trumpet",
+          "program": 56,
+          "preset": "Trumpet",
+          "drum": false,
+          "event_count": 126,
+          "pitch_range": [
+            65,
+            81
+          ],
+          "max_polyphony": 1,
+          "first_beat": 0,
+          "mean_velocity": 0.7596190476190476,
+          "volume": 0.92,
+          "pan": -0.12
+        },
+        {
+          "name": "tenor",
+          "program": 66,
+          "preset": "Tenor Sax",
+          "drum": false,
+          "event_count": 54,
+          "pitch_range": [
+            65,
+            81
+          ],
+          "max_polyphony": 1,
+          "first_beat": 10.75,
+          "mean_velocity": 0.7029462962962965,
+          "volume": 0.8,
+          "pan": 0.25
+        },
+        {
+          "name": "tenor_harmony",
+          "program": 66,
+          "preset": "Tenor Sax",
+          "drum": false,
+          "event_count": 8,
+          "pitch_range": [
+            67,
+            76
+          ],
+          "max_polyphony": 2,
+          "first_beat": 98.67,
+          "mean_velocity": 0.553,
+          "volume": 0.66,
+          "pan": 0.48
+        },
+        {
+          "name": "trombone",
+          "program": 57,
+          "preset": "Trombone",
+          "drum": false,
+          "event_count": 96,
+          "pitch_range": [
+            43,
+            54
+          ],
+          "max_polyphony": 2,
+          "first_beat": 1.67,
+          "mean_velocity": 0.43450000000000005,
+          "volume": 0.68,
+          "pan": -0.35
+        },
+        {
+          "name": "piano",
+          "program": 0,
+          "preset": "Yamaha Grand Piano",
+          "drum": false,
+          "event_count": 256,
+          "pitch_range": [
+            55,
+            69
+          ],
+          "max_polyphony": 4,
+          "first_beat": 0.66667,
+          "mean_velocity": 0.4317562499999999,
+          "volume": 0.75,
+          "pan": 0.35
+        },
+        {
+          "name": "bass",
+          "program": 32,
+          "preset": "Acoustic Bass",
+          "drum": false,
+          "event_count": 128,
+          "pitch_range": [
+            34,
+            54
+          ],
+          "max_polyphony": 1,
+          "first_beat": 0,
+          "mean_velocity": 0.6950000000000001,
+          "volume": 0.9,
+          "pan": 0
+        },
+        {
+          "name": "drums",
+          "program": 32,
+          "preset": "Jazz",
+          "drum": true,
+          "event_count": 331,
+          "pitch_range": [
+            36,
+            51
+          ],
+          "max_polyphony": 3,
+          "first_beat": 0,
+          "mean_velocity": 0.30084592145015104,
+          "volume": 0.72,
+          "pan": 0
+        }
+      ]
+    },
+    {
+      "code": "B02",
+      "title": "Cactus Rocket",
+      "bpm": 186,
+      "beats": 128,
+      "events": 1341,
+      "score_peak_polyphony": 11,
+      "primary_part": "fiddle",
+      "primary_first_beat": 0,
+      "drums_first_beat": 0,
+      "first_bar_note_onsets": 44,
+      "melodic_fingerprint": [
+        [
+          0,
+          0
+        ],
+        [
+          0.5,
+          4
+        ],
+        [
+          1,
+          7
+        ],
+        [
+          2,
+          5
+        ],
+        [
+          2.5,
+          4
+        ],
+        [
+          3,
+          2
+        ],
+        [
+          4,
+          0
+        ],
+        [
+          4.5,
+          2
+        ],
+        [
+          5,
+          4
+        ],
+        [
+          5.5,
+          7
+        ],
+        [
+          6,
+          12
+        ],
+        [
+          7,
+          7
+        ],
+        [
+          8,
+          9
+        ],
+        [
+          9,
+          7
+        ],
+        [
+          9.5,
+          5
+        ],
+        [
+          10,
+          4
+        ],
+        [
+          10.5,
+          2
+        ],
+        [
+          11,
+          0
+        ],
+        [
+          12,
+          4
+        ],
+        [
+          12.5,
+          7
+        ],
+        [
+          13,
+          12
+        ],
+        [
+          14,
+          7
+        ],
+        [
+          14.5,
+          4
+        ],
+        [
+          15,
+          0
+        ]
+      ],
+      "parts": [
+        {
+          "name": "fiddle",
+          "program": 110,
+          "preset": "Fiddle",
+          "drum": false,
+          "event_count": 146,
+          "pitch_range": [
+            66,
+            79
+          ],
+          "max_polyphony": 1,
+          "first_beat": 0,
+          "mean_velocity": 0.719117808219178,
+          "volume": 0.86,
+          "pan": -0.18
+        },
+        {
+          "name": "banjo",
+          "program": 105,
+          "preset": "Banjo",
+          "drum": false,
+          "event_count": 239,
+          "pitch_range": [
+            55,
+            83
+          ],
+          "max_polyphony": 1,
+          "first_beat": 0.06,
+          "mean_velocity": 0.5214460251046025,
+          "volume": 0.86,
+          "pan": 0.3
+        },
+        {
+          "name": "steel_guitar",
+          "program": 25,
+          "preset": "Steel String Guitar",
+          "drum": false,
+          "event_count": 256,
+          "pitch_range": [
+            55,
+            69
+          ],
+          "max_polyphony": 4,
+          "first_beat": 1.0,
+          "mean_velocity": 0.5298750000000001,
+          "volume": 0.68,
+          "pan": -0.4
+        },
+        {
+          "name": "nylon_guitar",
+          "program": 24,
+          "preset": "Nylon String Guitar",
+          "drum": false,
+          "event_count": 192,
+          "pitch_range": [
+            55,
+            64
+          ],
+          "max_polyphony": 3,
+          "first_beat": 0.5,
+          "mean_velocity": 0.2925,
+          "volume": 0.52,
+          "pan": 0.4
+        },
+        {
+          "name": "bass",
+          "program": 32,
+          "preset": "Acoustic Bass",
+          "drum": false,
+          "event_count": 64,
+          "pitch_range": [
+            31,
+            47
+          ],
+          "max_polyphony": 1,
+          "first_beat": 0,
+          "mean_velocity": 0.6799999999999999,
+          "volume": 0.9,
+          "pan": 0
+        },
+        {
+          "name": "harmonica",
+          "program": 22,
+          "preset": "Harmonica",
+          "drum": false,
+          "event_count": 16,
+          "pitch_range": [
+            67,
+            72
+          ],
+          "max_polyphony": 1,
+          "first_beat": 14.75,
+          "mean_velocity": 0.43,
+          "volume": 0.58,
+          "pan": 0.1
+        },
+        {
+          "name": "woodblock",
+          "program": 115,
+          "preset": "Woodblock",
+          "drum": false,
+          "event_count": 32,
+          "pitch_range": [
+            77,
+            77
+          ],
+          "max_polyphony": 1,
+          "first_beat": 0.75,
+          "mean_velocity": 0.26,
+          "volume": 0.5,
+          "pan": -0.3
+        },
+        {
+          "name": "drums",
+          "program": 40,
+          "preset": "Brush",
+          "drum": true,
+          "event_count": 396,
+          "pitch_range": [
+            36,
+            48
+          ],
+          "max_polyphony": 3,
+          "first_beat": 0,
+          "mean_velocity": 0.2966666666666667,
+          "volume": 0.8,
+          "pan": 0
+        }
+      ]
+    },
+    {
+      "code": "B03",
+      "title": "Papaya Panic",
+      "bpm": 172,
+      "beats": 128,
+      "events": 1897,
+      "score_peak_polyphony": 9,
+      "primary_part": "steel",
+      "primary_first_beat": 0,
+      "drums_first_beat": 0,
+      "first_bar_note_onsets": 57,
+      "melodic_fingerprint": [
+        [
+          0,
+          0
+        ],
+        [
+          0.75,
+          3
+        ],
+        [
+          1.5,
+          5
+        ],
+        [
+          2.25,
+          3
+        ],
+        [
+          3.25,
+          0
+        ],
+        [
+          4.25,
+          -3
+        ],
+        [
+          5,
+          0
+        ],
+        [
+          5.75,
+          3
+        ],
+        [
+          7,
+          0
+        ],
+        [
+          7.75,
+          -3
+        ],
+        [
+          8,
+          1
+        ],
+        [
+          8.75,
+          0
+        ],
+        [
+          9.5,
+          -2
+        ],
+        [
+          10.75,
+          -4
+        ],
+        [
+          11.5,
+          -7
+        ],
+        [
+          12.25,
+          -5
+        ],
+        [
+          13,
+          -2
+        ],
+        [
+          13.75,
+          1
+        ],
+        [
+          14.5,
+          0
+        ],
+        [
+          15.25,
+          -2
+        ],
+        [
+          16,
+          0
+        ],
+        [
+          16.75,
+          3
+        ],
+        [
+          17.5,
+          8
+        ],
+        [
+          18.75,
+          5
+        ]
+      ],
+      "parts": [
+        {
+          "name": "steel",
+          "program": 114,
+          "preset": "Steel Drums",
+          "drum": false,
+          "event_count": 122,
+          "pitch_range": [
+            69,
+            84
+          ],
+          "max_polyphony": 1,
+          "first_beat": 0,
+          "mean_velocity": 0.70577868852459,
+          "volume": 0.88,
+          "pan": -0.2
+        },
+        {
+          "name": "marimba",
+          "program": 12,
+          "preset": "Marimba",
+          "drum": false,
+          "event_count": 63,
+          "pitch_range": [
+            65,
+            81
+          ],
+          "max_polyphony": 1,
+          "first_beat": 2.85,
+          "mean_velocity": 0.6000714285714285,
+          "volume": 0.8,
+          "pan": 0.25
+        },
+        {
+          "name": "brass",
+          "program": 61,
+          "preset": "Brass Section",
+          "drum": false,
+          "event_count": 48,
+          "pitch_range": [
+            59,
+            69
+          ],
+          "max_polyphony": 3,
+          "first_beat": 6.5,
+          "mean_velocity": 0.4875,
+          "volume": 0.64,
+          "pan": 0.1
+        },
+        {
+          "name": "guitar",
+          "program": 24,
+          "preset": "Nylon String Guitar",
+          "drum": false,
+          "event_count": 384,
+          "pitch_range": [
+            59,
+            69
+          ],
+          "max_polyphony": 3,
+          "first_beat": 0.75,
+          "mean_velocity": 0.39975000000000005,
+          "volume": 0.62,
+          "pan": -0.35
+        },
+        {
+          "name": "bass",
+          "program": 32,
+          "preset": "Acoustic Bass",
+          "drum": false,
+          "event_count": 128,
+          "pitch_range": [
+            31,
+            53
+          ],
+          "max_polyphony": 1,
+          "first_beat": 0,
+          "mean_velocity": 0.5700000000000001,
+          "volume": 0.88,
+          "pan": 0
+        },
+        {
+          "name": "agogo",
+          "program": 113,
+          "preset": "Agogo",
+          "drum": false,
+          "event_count": 128,
+          "pitch_range": [
+            79,
+            84
+          ],
+          "max_polyphony": 1,
+          "first_beat": 0,
+          "mean_velocity": 0.29999999999999993,
+          "volume": 0.58,
+          "pan": 0.45
+        },
+        {
+          "name": "drums",
+          "program": 0,
+          "preset": "Standard",
+          "drum": true,
+          "event_count": 1024,
+          "pitch_range": [
+            36,
+            79
+          ],
+          "max_polyphony": 3,
+          "first_beat": 0,
+          "mean_velocity": 0.2628125,
+          "volume": 0.76,
+          "pan": 0
+        }
+      ]
+    },
+    {
+      "code": "B04",
+      "title": "Midnight Klezmer Express",
+      "bpm": 184,
+      "beats": 128,
+      "events": 1102,
+      "score_peak_polyphony": 12,
+      "primary_part": "clarinet",
+      "primary_first_beat": 0,
+      "drums_first_beat": 0,
+      "first_bar_note_onsets": 35,
+      "melodic_fingerprint": [
+        [
+          0,
+          0
+        ],
+        [
+          0.333,
+          1
+        ],
+        [
+          0.667,
+          4
+        ],
+        [
+          1,
+          7
+        ],
+        [
+          2,
+          5
+        ],
+        [
+          2.5,
+          4
+        ],
+        [
+          3,
+          1
+        ],
+        [
+          4,
+          1
+        ],
+        [
+          4.5,
+          5
+        ],
+        [
+          5,
+          8
+        ],
+        [
+          6,
+          7
+        ],
+        [
+          6.5,
+          5
+        ],
+        [
+          7,
+          1
+        ],
+        [
+          8,
+          4
+        ],
+        [
+          8.5,
+          7
+        ],
+        [
+          9,
+          12
+        ],
+        [
+          10,
+          10
+        ],
+        [
+          10.5,
+          7
+        ],
+        [
+          11,
+          4
+        ],
+        [
+          12,
+          5
+        ],
+        [
+          12.5,
+          1
+        ],
+        [
+          13,
+          -2
+        ],
+        [
+          14,
+          1
+        ],
+        [
+          14.5,
+          5
+        ]
+      ],
+      "parts": [
+        {
+          "name": "clarinet",
+          "program": 71,
+          "preset": "Clarinet",
+          "drum": false,
+          "event_count": 158,
+          "pitch_range": [
+            69,
+            86
+          ],
+          "max_polyphony": 1,
+          "first_beat": 0,
+          "mean_velocity": 0.7547291139240506,
+          "volume": 0.93,
+          "pan": -0.15
+        },
+        {
+          "name": "accordion",
+          "program": 21,
+          "preset": "Accordian",
+          "drum": false,
+          "event_count": 240,
+          "pitch_range": [
+            55,
+            82
+          ],
+          "max_polyphony": 4,
+          "first_beat": 1.0,
+          "mean_velocity": 0.53218,
+          "volume": 0.74,
+          "pan": 0.25
+        },
+        {
+          "name": "violin",
+          "program": 40,
+          "preset": "Violin",
+          "drum": false,
+          "event_count": 40,
+          "pitch_range": [
+            70,
+            79
+          ],
+          "max_polyphony": 1,
+          "first_beat": 4.75,
+          "mean_velocity": 0.44800000000000006,
+          "volume": 0.67,
+          "pan": -0.35
+        },
+        {
+          "name": "tuba",
+          "program": 58,
+          "preset": "Tuba",
+          "drum": false,
+          "event_count": 64,
+          "pitch_range": [
+            31,
+            46
+          ],
+          "max_polyphony": 1,
+          "first_beat": 0,
+          "mean_velocity": 0.65,
+          "volume": 0.8,
+          "pan": 0
+        },
+        {
+          "name": "guitar",
+          "program": 24,
+          "preset": "Nylon String Guitar",
+          "drum": false,
+          "event_count": 192,
+          "pitch_range": [
+            55,
+            67
+          ],
+          "max_polyphony": 3,
+          "first_beat": 1.0,
+          "mean_velocity": 0.27299999999999996,
+          "volume": 0.47,
+          "pan": 0.4
+        },
+        {
+          "name": "drums",
+          "program": 0,
+          "preset": "Standard",
+          "drum": true,
+          "event_count": 408,
+          "pitch_range": [
+            35,
+            77
+          ],
+          "max_polyphony": 3,
+          "first_beat": 0,
+          "mean_velocity": 0.3178627450980392,
+          "volume": 0.85,
+          "pan": 0
+        }
+      ]
+    },
+    {
+      "code": "B05",
+      "title": "Circuit Raga",
+      "bpm": 180,
+      "beats": 128,
+      "events": 1269,
+      "score_peak_polyphony": 10,
+      "primary_part": "shanai",
+      "primary_first_beat": 0,
+      "drums_first_beat": 0,
+      "first_bar_note_onsets": 41,
+      "melodic_fingerprint": [
+        [
+          0,
+          0
+        ],
+        [
+          0.5,
+          1
+        ],
+        [
+          0.75,
+          4
+        ],
+        [
+          1.5,
+          5
+        ],
+        [
+          2,
+          7
+        ],
+        [
+          3,
+          5
+        ],
+        [
+          3.5,
+          4
+        ],
+        [
+          4,
+          1
+        ],
+        [
+          4.75,
+          0
+        ],
+        [
+          5.75,
+          -1
+        ],
+        [
+          6,
+          0
+        ],
+        [
+          7,
+          -5
+        ],
+        [
+          8,
+          0
+        ],
+        [
+          8.333,
+          4
+        ],
+        [
+          8.667,
+          5
+        ],
+        [
+          9,
+          7
+        ],
+        [
+          10,
+          8
+        ],
+        [
+          10.75,
+          7
+        ],
+        [
+          11.5,
+          5
+        ],
+        [
+          12,
+          4
+        ],
+        [
+          12.75,
+          1
+        ],
+        [
+          13.5,
+          0
+        ],
+        [
+          14.5,
+          -1
+        ],
+        [
+          15,
+          0
+        ]
+      ],
+      "parts": [
+        {
+          "name": "shanai",
+          "program": 111,
+          "preset": "Shenai",
+          "drum": false,
+          "event_count": 149,
+          "pitch_range": [
+            69,
+            85
+          ],
+          "max_polyphony": 1,
+          "first_beat": 0,
+          "mean_velocity": 0.7019006711409397,
+          "volume": 0.8,
+          "pan": -0.12
+        },
+        {
+          "name": "sitar",
+          "program": 104,
+          "preset": "Sitar",
+          "drum": false,
+          "event_count": 120,
+          "pitch_range": [
+            62,
+            85
+          ],
+          "max_polyphony": 1,
+          "first_beat": 1.25,
+          "mean_velocity": 0.55536,
+          "volume": 0.9,
+          "pan": 0.25
+        },
+        {
+          "name": "drone",
+          "program": 20,
+          "preset": "Reed Organ",
+          "drum": false,
+          "event_count": 48,
+          "pitch_range": [
+            50,
+            62
+          ],
+          "max_polyphony": 3,
+          "first_beat": 0.0,
+          "mean_velocity": 0.28276666666666667,
+          "volume": 0.45,
+          "pan": -0.25
+        },
+        {
+          "name": "flute",
+          "program": 73,
+          "preset": "Flute",
+          "drum": false,
+          "event_count": 32,
+          "pitch_range": [
+            75,
+            81
+          ],
+          "max_polyphony": 1,
+          "first_beat": 5.25,
+          "mean_velocity": 0.42,
+          "volume": 0.63,
+          "pan": 0.4
+        },
+        {
+          "name": "bass",
+          "program": 32,
+          "preset": "Acoustic Bass",
+          "drum": false,
+          "event_count": 96,
+          "pitch_range": [
+            38,
+            45
+          ],
+          "max_polyphony": 1,
+          "first_beat": 0,
+          "mean_velocity": 0.5300000000000001,
+          "volume": 0.74,
+          "pan": 0
+        },
+        {
+          "name": "pizzicato",
+          "program": 45,
+          "preset": "Pizzicato Section",
+          "drum": false,
+          "event_count": 96,
+          "pitch_range": [
+            62,
+            69
+          ],
+          "max_polyphony": 1,
+          "first_beat": 0.5,
+          "mean_velocity": 0.29999999999999993,
+          "volume": 0.52,
+          "pan": -0.4
+        },
+        {
+          "name": "drums",
+          "program": 0,
+          "preset": "Standard",
+          "drum": true,
+          "event_count": 728,
+          "pitch_range": [
+            41,
+            81
+          ],
+          "max_polyphony": 3,
+          "first_beat": 0,
+          "mean_velocity": 0.3590461538461538,
+          "volume": 0.78,
+          "pan": 0
+        }
+      ]
+    },
+    {
+      "code": "B06",
+      "title": "Clockwork Gamelan",
+      "bpm": 162,
+      "beats": 128,
+      "events": 912,
+      "score_peak_polyphony": 7,
+      "primary_part": "steel",
+      "primary_first_beat": 0.0,
+      "drums_first_beat": 0,
+      "first_bar_note_onsets": 27,
+      "melodic_fingerprint": [
+        [
+          0.0,
+          0
+        ],
+        [
+          1.0,
+          5
+        ],
+        [
+          2.0,
+          0
+        ],
+        [
+          3.0,
+          -4
+        ],
+        [
+          4.0,
+          0
+        ],
+        [
+          5.0,
+          8
+        ],
+        [
+          6.0,
+          3
+        ],
+        [
+          7.0,
+          -2
+        ],
+        [
+          8.0,
+          0
+        ],
+        [
+          9.0,
+          5
+        ],
+        [
+          10.0,
+          0
+        ],
+        [
+          11.0,
+          -4
+        ],
+        [
+          12.0,
+          0
+        ],
+        [
+          13.0,
+          8
+        ],
+        [
+          14.0,
+          3
+        ],
+        [
+          15.0,
+          -2
+        ],
+        [
+          16.0,
+          0
+        ],
+        [
+          17.0,
+          5
+        ],
+        [
+          18.0,
+          0
+        ],
+        [
+          19.0,
+          -4
+        ],
+        [
+          20.0,
+          0
+        ],
+        [
+          21.0,
+          8
+        ],
+        [
+          22.0,
+          3
+        ],
+        [
+          23.0,
+          -2
+        ]
+      ],
+      "parts": [
+        {
+          "name": "steel",
+          "program": 114,
+          "preset": "Steel Drums",
+          "drum": false,
+          "event_count": 128,
+          "pitch_range": [
+            62,
+            76
+          ],
+          "max_polyphony": 1,
+          "first_beat": 0.0,
+          "mean_velocity": 0.81,
+          "volume": 0.88,
+          "pan": -0.27
+        },
+        {
+          "name": "xylo",
+          "program": 13,
+          "preset": "Xylophone",
+          "drum": false,
+          "event_count": 136,
+          "pitch_range": [
+            74,
+            90
+          ],
+          "max_polyphony": 1,
+          "first_beat": 0.5,
+          "mean_velocity": 0.7594117647058822,
+          "volume": 0.71,
+          "pan": 0.3
+        },
+        {
+          "name": "glock",
+          "program": 9,
+          "preset": "Glockenspiel",
+          "drum": false,
+          "event_count": 28,
+          "pitch_range": [
+            74,
+            83
+          ],
+          "max_polyphony": 1,
+          "first_beat": 14.5,
+          "mean_velocity": 0.5378571428571428,
+          "volume": 0.48,
+          "pan": 0.45
+        },
+        {
+          "name": "gong",
+          "program": 14,
+          "preset": "Tubular Bells",
+          "drum": false,
+          "event_count": 16,
+          "pitch_range": [
+            50,
+            57
+          ],
+          "max_polyphony": 1,
+          "first_beat": 0,
+          "mean_velocity": 0.6699999999999999,
+          "volume": 0.65,
+          "pan": -0.06
+        },
+        {
+          "name": "agogo",
+          "program": 113,
+          "preset": "Agogo",
+          "drum": false,
+          "event_count": 96,
+          "pitch_range": [
+            69,
+            71
+          ],
+          "max_polyphony": 1,
+          "first_beat": 0,
+          "mean_velocity": 0.5533333333333333,
+          "volume": 0.49,
+          "pan": -0.45
+        },
+        {
+          "name": "wood",
+          "program": 115,
+          "preset": "Woodblock",
+          "drum": false,
+          "event_count": 256,
+          "pitch_range": [
+            67,
+            72
+          ],
+          "max_polyphony": 1,
+          "first_beat": 0.0,
+          "mean_velocity": 0.3849999999999999,
+          "volume": 0.52,
+          "pan": 0.18
+        },
+        {
+          "name": "taiko",
+          "program": 116,
+          "preset": "Taiko Drum",
+          "drum": false,
+          "event_count": 96,
+          "pitch_range": [
+            38,
+            59
+          ],
+          "max_polyphony": 1,
+          "first_beat": 0,
+          "mean_velocity": 0.66,
+          "volume": 0.67,
+          "pan": -0.12
+        },
+        {
+          "name": "drums",
+          "program": 0,
+          "preset": "Standard",
+          "drum": true,
+          "event_count": 156,
+          "pitch_range": [
+            41,
+            81
+          ],
+          "max_polyphony": 2,
+          "first_beat": 0,
+          "mean_velocity": 0.5507692307692307,
+          "volume": 0.66,
+          "pan": 0
+        }
+      ]
+    },
+    {
+      "code": "B07",
+      "title": "Cathedral Pinball",
+      "bpm": 178,
+      "beats": 128,
+      "events": 1352,
+      "score_peak_polyphony": 9,
+      "primary_part": "harpsi",
+      "primary_first_beat": 0,
+      "drums_first_beat": 0,
+      "first_bar_note_onsets": 31,
+      "melodic_fingerprint": [
+        [
+          0,
+          0
+        ],
+        [
+          0.5,
+          7
+        ],
+        [
+          0.75,
+          3
+        ],
+        [
+          1,
+          2
+        ],
+        [
+          1.5,
+          0
+        ],
+        [
+          1.75,
+          -1
+        ],
+        [
+          2,
+          2
+        ],
+        [
+          2.5,
+          7
+        ],
+        [
+          3,
+          5
+        ],
+        [
+          3.25,
+          3
+        ],
+        [
+          3.5,
+          2
+        ],
+        [
+          4,
+          0
+        ],
+        [
+          4.5,
+          3
+        ],
+        [
+          5,
+          7
+        ],
+        [
+          5.25,
+          11
+        ],
+        [
+          5.5,
+          8
+        ],
+        [
+          6,
+          7
+        ],
+        [
+          6.5,
+          5
+        ],
+        [
+          6.75,
+          3
+        ],
+        [
+          7,
+          2
+        ],
+        [
+          7.5,
+          0
+        ],
+        [
+          8,
+          -12
+        ],
+        [
+          8.5,
+          -5
+        ],
+        [
+          8.75,
+          -9
+        ]
+      ],
+      "parts": [
+        {
+          "name": "harpsi",
+          "program": 6,
+          "preset": "Harpsichord",
+          "drum": false,
+          "event_count": 346,
+          "pitch_range": [
+            62,
+            87
+          ],
+          "max_polyphony": 1,
+          "first_beat": 0,
+          "mean_velocity": 0.7685346820809249,
+          "volume": 0.86,
+          "pan": -0.22
+        },
+        {
+          "name": "organ",
+          "program": 19,
+          "preset": "Church Organ",
+          "drum": false,
+          "event_count": 224,
+          "pitch_range": [
+            63,
+            82
+          ],
+          "max_polyphony": 1,
+          "first_beat": 4,
+          "mean_velocity": 0.7209508928571429,
+          "volume": 0.61,
+          "pan": 0.2
+        },
+        {
+          "name": "violin",
+          "program": 40,
+          "preset": "Violin",
+          "drum": false,
+          "event_count": 138,
+          "pitch_range": [
+            62,
+            87
+          ],
+          "max_polyphony": 1,
+          "first_beat": 12,
+          "mean_velocity": 0.6462702898550725,
+          "volume": 0.57,
+          "pan": 0.38
+        },
+        {
+          "name": "cello",
+          "program": 42,
+          "preset": "Cello",
+          "drum": false,
+          "event_count": 256,
+          "pitch_range": [
+            38,
+            60
+          ],
+          "max_polyphony": 1,
+          "first_beat": 0.0,
+          "mean_velocity": 0.7149999999999999,
+          "volume": 0.84,
+          "pan": -0.08
+        },
+        {
+          "name": "strings",
+          "program": 48,
+          "preset": "Strings",
+          "drum": false,
+          "event_count": 192,
+          "pitch_range": [
+            54,
+            64
+          ],
+          "max_polyphony": 3,
+          "first_beat": 0,
+          "mean_velocity": 0.5500333333333333,
+          "volume": 0.48,
+          "pan": -0.38
+        },
+        {
+          "name": "timpani",
+          "program": 47,
+          "preset": "Timpani",
+          "drum": false,
+          "event_count": 48,
+          "pitch_range": [
+            38,
+            54
+          ],
+          "max_polyphony": 1,
+          "first_beat": 0,
+          "mean_velocity": 0.5950000000000001,
+          "volume": 0.63,
+          "pan": 0.05
+        },
+        {
+          "name": "drums",
+          "program": 48,
+          "preset": "Orchestra Kit",
+          "drum": true,
+          "event_count": 148,
+          "pitch_range": [
+            35,
+            81
+          ],
+          "max_polyphony": 2,
+          "first_beat": 0,
+          "mean_velocity": 0.5018918918918919,
+          "volume": 0.61,
+          "pan": 0
+        }
+      ]
+    },
+    {
+      "code": "B08",
+      "title": "Skank Engine",
+      "bpm": 190,
+      "beats": 128,
+      "events": 1656,
+      "score_peak_polyphony": 11,
+      "primary_part": "trumpet",
+      "primary_first_beat": 0,
+      "drums_first_beat": 0,
+      "first_bar_note_onsets": 53,
+      "melodic_fingerprint": [
+        [
+          0,
+          0
+        ],
+        [
+          0.5,
+          4
+        ],
+        [
+          1,
+          7
+        ],
+        [
+          2,
+          9
+        ],
+        [
+          2.5,
+          7
+        ],
+        [
+          3,
+          4
+        ],
+        [
+          4,
+          2
+        ],
+        [
+          4.5,
+          5
+        ],
+        [
+          5,
+          4
+        ],
+        [
+          5.5,
+          2
+        ],
+        [
+          6,
+          0
+        ],
+        [
+          7,
+          -1
+        ],
+        [
+          8,
+          0
+        ],
+        [
+          8.5,
+          4
+        ],
+        [
+          9,
+          7
+        ],
+        [
+          10,
+          9
+        ],
+        [
+          10.5,
+          7
+        ],
+        [
+          11,
+          4
+        ],
+        [
+          12,
+          2
+        ],
+        [
+          12.5,
+          5
+        ],
+        [
+          13,
+          4
+        ],
+        [
+          13.5,
+          2
+        ],
+        [
+          14,
+          0
+        ],
+        [
+          15,
+          -1
+        ]
+      ],
+      "parts": [
+        {
+          "name": "trumpet",
+          "program": 56,
+          "preset": "Trumpet",
+          "drum": false,
+          "event_count": 176,
+          "pitch_range": [
+            73,
+            86
+          ],
+          "max_polyphony": 1,
+          "first_beat": 0,
+          "mean_velocity": 0.7910079545454546,
+          "volume": 0.82,
+          "pan": -0.13
+        },
+        {
+          "name": "trombone",
+          "program": 57,
+          "preset": "Trombone",
+          "drum": false,
+          "event_count": 116,
+          "pitch_range": [
+            59,
+            71
+          ],
+          "max_polyphony": 1,
+          "first_beat": 6,
+          "mean_velocity": 0.6622034482758622,
+          "volume": 0.75,
+          "pan": 0.27
+        },
+        {
+          "name": "muted_guitar",
+          "program": 28,
+          "preset": "Palm Muted Guitar",
+          "drum": false,
+          "event_count": 384,
+          "pitch_range": [
+            59,
+            69
+          ],
+          "max_polyphony": 3,
+          "first_beat": 0.5,
+          "mean_velocity": 0.7913,
+          "volume": 0.77,
+          "pan": -0.42
+        },
+        {
+          "name": "organ",
+          "program": 16,
+          "preset": "DrawbarOrgan",
+          "drum": false,
+          "event_count": 160,
+          "pitch_range": [
+            71,
+            78
+          ],
+          "max_polyphony": 2,
+          "first_beat": 0.5,
+          "mean_velocity": 0.5109,
+          "volume": 0.48,
+          "pan": 0.39
+        },
+        {
+          "name": "grit_guitar",
+          "program": 29,
+          "preset": "Overdrive Guitar",
+          "drum": false,
+          "event_count": 64,
+          "pitch_range": [
+            48,
+            64
+          ],
+          "max_polyphony": 2,
+          "first_beat": 0,
+          "mean_velocity": 0.59935,
+          "volume": 0.45,
+          "pan": -0.22
+        },
+        {
+          "name": "pick_bass",
+          "program": 34,
+          "preset": "Picked Bass",
+          "drum": false,
+          "event_count": 256,
+          "pitch_range": [
+            35,
+            59
+          ],
+          "max_polyphony": 1,
+          "first_beat": 0.0,
+          "mean_velocity": 0.8,
+          "volume": 0.86,
+          "pan": -0.03
+        },
+        {
+          "name": "drums",
+          "program": 16,
+          "preset": "Power",
+          "drum": true,
+          "event_count": 500,
+          "pitch_range": [
+            36,
+            51
+          ],
+          "max_polyphony": 3,
+          "first_beat": 0,
+          "mean_velocity": 0.6398400000000001,
+          "volume": 0.78,
+          "pan": 0
+        }
+      ]
+    },
+    {
+      "code": "B09",
+      "title": "Tin Toy Stampede",
+      "bpm": 180,
+      "beats": 128,
+      "events": 1053,
+      "score_peak_polyphony": 11,
+      "primary_part": "honky",
+      "primary_first_beat": 0,
+      "drums_first_beat": 0,
+      "first_bar_note_onsets": 28,
+      "melodic_fingerprint": [
+        [
+          0,
+          0
+        ],
+        [
+          0.25,
+          4
+        ],
+        [
+          0.5,
+          7
+        ],
+        [
+          1.25,
+          9
+        ],
+        [
+          1.5,
+          7
+        ],
+        [
+          2,
+          6
+        ],
+        [
+          2.25,
+          7
+        ],
+        [
+          2.5,
+          4
+        ],
+        [
+          3.25,
+          2
+        ],
+        [
+          3.5,
+          0
+        ],
+        [
+          4,
+          -1
+        ],
+        [
+          4.25,
+          0
+        ],
+        [
+          4.5,
+          4
+        ],
+        [
+          5.25,
+          7
+        ],
+        [
+          5.5,
+          9
+        ],
+        [
+          6,
+          10
+        ],
+        [
+          6.25,
+          9
+        ],
+        [
+          6.5,
+          7
+        ],
+        [
+          7,
+          4
+        ],
+        [
+          7.5,
+          2
+        ],
+        [
+          8,
+          7
+        ],
+        [
+          8.75,
+          4
+        ],
+        [
+          9,
+          2
+        ],
+        [
+          9.75,
+          0
+        ]
+      ],
+      "parts": [
+        {
+          "name": "honky",
+          "program": 3,
+          "preset": "Honky Tonk",
+          "drum": false,
+          "event_count": 203,
+          "pitch_range": [
+            71,
+            84
+          ],
+          "max_polyphony": 1,
+          "first_beat": 0,
+          "mean_velocity": 0.751270935960591,
+          "volume": 0.84,
+          "pan": -0.18
+        },
+        {
+          "name": "calliope",
+          "program": 82,
+          "preset": "Calliope Lead",
+          "drum": false,
+          "event_count": 94,
+          "pitch_range": [
+            71,
+            86
+          ],
+          "max_polyphony": 1,
+          "first_beat": 2.75,
+          "mean_velocity": 0.6569553191489362,
+          "volume": 0.66,
+          "pan": 0.27
+        },
+        {
+          "name": "bassoon",
+          "program": 70,
+          "preset": "Bassoon",
+          "drum": false,
+          "event_count": 60,
+          "pitch_range": [
+            59,
+            72
+          ],
+          "max_polyphony": 1,
+          "first_beat": 6.75,
+          "mean_velocity": 0.6565466666666667,
+          "volume": 0.64,
+          "pan": -0.36
+        },
+        {
+          "name": "tuba",
+          "program": 58,
+          "preset": "Tuba",
+          "drum": false,
+          "event_count": 72,
+          "pitch_range": [
+            36,
+            56
+          ],
+          "max_polyphony": 1,
+          "first_beat": 0,
+          "mean_velocity": 0.7622222222222222,
+          "volume": 0.8,
+          "pan": -0.03
+        },
+        {
+          "name": "piano_chords",
+          "program": 3,
+          "preset": "Honky Tonk",
+          "drum": false,
+          "event_count": 192,
+          "pitch_range": [
+            59,
+            72
+          ],
+          "max_polyphony": 3,
+          "first_beat": 1,
+          "mean_velocity": 0.6513666666666665,
+          "volume": 0.57,
+          "pan": -0.12
+        },
+        {
+          "name": "accordion",
+          "program": 21,
+          "preset": "Accordian",
+          "drum": false,
+          "event_count": 144,
+          "pitch_range": [
+            59,
+            80
+          ],
+          "max_polyphony": 3,
+          "first_beat": 4,
+          "mean_velocity": 0.4446416666666667,
+          "volume": 0.41,
+          "pan": 0.38
+        },
+        {
+          "name": "xylophone",
+          "program": 13,
+          "preset": "Xylophone",
+          "drum": false,
+          "event_count": 32,
+          "pitch_range": [
+            79,
+            84
+          ],
+          "max_polyphony": 1,
+          "first_beat": 14.5,
+          "mean_velocity": 0.6025,
+          "volume": 0.55,
+          "pan": 0.46
+        },
+        {
+          "name": "drums",
+          "program": 0,
+          "preset": "Standard",
+          "drum": true,
+          "event_count": 256,
+          "pitch_range": [
+            38,
+            81
+          ],
+          "max_polyphony": 3,
+          "first_beat": 0,
+          "mean_velocity": 0.5000000000000001,
+          "volume": 0.61,
+          "pan": 0
+        }
+      ]
+    },
+    {
+      "code": "B10",
+      "title": "Pixel Highlands",
+      "bpm": 188,
+      "beats": 128,
+      "events": 1940,
+      "score_peak_polyphony": 12,
+      "primary_part": "fiddle",
+      "primary_first_beat": 0.0,
+      "drums_first_beat": 0,
+      "first_bar_note_onsets": 58,
+      "melodic_fingerprint": [
+        [
+          0.0,
+          0
+        ],
+        [
+          0.5,
+          4
+        ],
+        [
+          1.0,
+          7
+        ],
+        [
+          1.5,
+          4
+        ],
+        [
+          1.875,
+          4
+        ],
+        [
+          2.0,
+          2
+        ],
+        [
+          2.5,
+          0
+        ],
+        [
+          3.0,
+          -3
+        ],
+        [
+          3.5,
+          -5
+        ],
+        [
+          4.0,
+          -2
+        ],
+        [
+          4.5,
+          2
+        ],
+        [
+          5.0,
+          5
+        ],
+        [
+          5.5,
+          2
+        ],
+        [
+          6.0,
+          0
+        ],
+        [
+          6.5,
+          -2
+        ],
+        [
+          7.0,
+          -5
+        ],
+        [
+          7.5,
+          -7
+        ],
+        [
+          8.0,
+          -3
+        ],
+        [
+          8.5,
+          0
+        ],
+        [
+          9.0,
+          5
+        ],
+        [
+          9.5,
+          4
+        ],
+        [
+          9.875,
+          4
+        ],
+        [
+          10.0,
+          2
+        ],
+        [
+          10.5,
+          0
+        ]
+      ],
+      "parts": [
+        {
+          "name": "fiddle",
+          "program": 110,
+          "preset": "Fiddle",
+          "drum": false,
+          "event_count": 198,
+          "pitch_range": [
+            67,
+            86
+          ],
+          "max_polyphony": 1,
+          "first_beat": 0.0,
+          "mean_velocity": 0.7643434343434345,
+          "volume": 0.88,
+          "pan": -0.2
+        },
+        {
+          "name": "bagpipe",
+          "program": 109,
+          "preset": "BagPipe",
+          "drum": false,
+          "event_count": 98,
+          "pitch_range": [
+            59,
+            86
+          ],
+          "max_polyphony": 1,
+          "first_beat": 32.0,
+          "mean_velocity": 0.6990530612244897,
+          "volume": 0.63,
+          "pan": 0.21
+        },
+        {
+          "name": "flute",
+          "program": 73,
+          "preset": "Flute",
+          "drum": false,
+          "event_count": 64,
+          "pitch_range": [
+            74,
+            86
+          ],
+          "max_polyphony": 1,
+          "first_beat": 6,
+          "mean_velocity": 0.6689,
+          "volume": 0.58,
+          "pan": 0.43
+        },
+        {
+          "name": "nylon",
+          "program": 24,
+          "preset": "Nylon String Guitar",
+          "drum": false,
+          "event_count": 576,
+          "pitch_range": [
+            59,
+            69
+          ],
+          "max_polyphony": 3,
+          "first_beat": 0,
+          "mean_velocity": 0.6690666666666667,
+          "volume": 0.68,
+          "pan": -0.42
+        },
+        {
+          "name": "metal_guitar",
+          "program": 30,
+          "preset": "Distortion Guitar",
+          "drum": false,
+          "event_count": 128,
+          "pitch_range": [
+            48,
+            66
+          ],
+          "max_polyphony": 2,
+          "first_beat": 0,
+          "mean_velocity": 0.64845,
+          "volume": 0.43,
+          "pan": 0.31
+        },
+        {
+          "name": "pick_bass",
+          "program": 34,
+          "preset": "Picked Bass",
+          "drum": false,
+          "event_count": 256,
+          "pitch_range": [
+            36,
+            59
+          ],
+          "max_polyphony": 1,
+          "first_beat": 0.0,
+          "mean_velocity": 0.75,
+          "volume": 0.82,
+          "pan": -0.04
+        },
+        {
+          "name": "taiko",
+          "program": 116,
+          "preset": "Taiko Drum",
+          "drum": false,
+          "event_count": 160,
+          "pitch_range": [
+            42,
+            49
+          ],
+          "max_polyphony": 1,
+          "first_beat": 0,
+          "mean_velocity": 0.6799999999999999,
+          "volume": 0.69,
+          "pan": -0.07
+        },
+        {
+          "name": "drums",
+          "program": 16,
+          "preset": "Power",
+          "drum": true,
+          "event_count": 460,
+          "pitch_range": [
+            36,
+            51
+          ],
+          "max_polyphony": 3,
+          "first_beat": 0,
+          "mean_velocity": 0.5540869565217391,
+          "volume": 0.72,
+          "pan": 0
+        }
+      ]
+    }
+  ],
+  "leftfield_duplicate_opening_hooks": [],
+  "lead_program_variety": 16,
+  "drum_kit_variety": [
+    0,
+    8,
+    16,
+    24,
+    25,
+    32,
+    40,
+    48
+  ],
+  "score_files": {
+    "compositions_c.json": "ac9116f4bab7a1d16be19bda38eb741d6faaa9a705ce08fb2a74314b17b0e664",
+    "compositions_b.json": "efe20c764e2cd938555a5afe4cae4275c8f4e37fd7b54c9265c7bf04fe97fe00",
+    "compositions_d.json": "e4ecfddde6e5e07c1872ea1c690be298c1dbbb317df5694f12c57da7a64d74d4",
+    "compositions_a.json": "94654632bd67bf96b2cb6886f18719d239e6bc617791e85e97a1251400916787"
+  },
+  "render_pipeline_review": {
+    "blocking_technical_issues": [],
+    "verified": [
+      "stereo FIFO routing and preserved-reference per-ear gain",
+      "second-pass natural release/reverb continuity",
+      "resampling before stereo-linked peak control",
+      "1024-sample guards and 16-byte PCM alignment"
+    ],
+    "known_limits": [
+      "FluidSynth command scheduling uses sample indices but synthesis has internal64-sample blocks",
+      "Main-loop GBA FIFO restart is frame scheduled; short loop fades reduce clicks but are not sample-exact"
+    ]
+  },
+  "anchor_stem_review": {
+    "songs": [
+      {
+        "code": "A01",
+        "title": "Razor Bloom - Overdrive",
+        "primary_part": "guitar",
+        "parts": {
+          "guitar": {
+            "rms": 0.019045509778129372,
+            "peak": 0.1242324486374855
+          },
+          "drums": {
+            "rms": 0.035815693407528826,
+            "peak": 0.22335600852966309
+          }
+        },
+        "drums_relative_to_primary_db": 5.485615241836776,
+        "flags": []
+      },
+      {
+        "code": "A02",
+        "title": "Verdant Velocity",
+        "primary_part": "vibes",
+        "parts": {
+          "vibes": {
+            "rms": 0.015065315483602067,
+            "peak": 0.10306303203105927
+          },
+          "drums": {
+            "rms": 0.01438253978459319,
+            "peak": 0.12992361187934875
+          }
+        },
+        "drums_relative_to_primary_db": -0.4028529331284497,
+        "flags": []
+      },
+      {
+        "code": "A03",
+        "title": "Chrome Heartbeat",
+        "primary_part": "guitar",
+        "parts": {
+          "guitar": {
+            "rms": 0.022051394210294728,
+            "peak": 0.16178369522094727
+          },
+          "drums": {
+            "rms": 0.050592781884656386,
+            "peak": 0.3063414692878723
+          }
+        },
+        "drums_relative_to_primary_db": 7.213050138802194,
+        "flags": []
+      },
+      {
+        "code": "A04",
+        "title": "Glass Causeway - Prism Sprint",
+        "primary_part": "guitar",
+        "parts": {
+          "guitar": {
+            "rms": 0.015325857825747309,
+            "peak": 0.11829302459955215
+          },
+          "drums": {
+            "rms": 0.022581584281046035,
+            "peak": 0.16814592480659485
+          }
+        },
+        "drums_relative_to_primary_db": 3.366592310766557,
+        "flags": []
+      },
+      {
+        "code": "A05",
+        "title": "Neon Market - Flash Sale",
+        "primary_part": "clav",
+        "parts": {
+          "clav": {
+            "rms": 0.018989600097194546,
+            "peak": 0.14130443334579468
+          },
+          "drums": {
+            "rms": 0.014687015590491322,
+            "peak": 0.15810677409172058
+          }
+        },
+        "drums_relative_to_primary_db": -2.231645262510302,
+        "flags": []
+      },
+      {
+        "code": "A06",
+        "title": "Signal Garden - Sunburst",
+        "primary_part": "flute",
+        "parts": {
+          "flute": {
+            "rms": 0.0500495593632114,
+            "peak": 0.15925583243370056
+          },
+          "drums": {
+            "rms": 0.018192719140478607,
+            "peak": 0.12440095096826553
+          }
+        },
+        "drums_relative_to_primary_db": -8.79005286756793,
+        "flags": []
+      },
+      {
+        "code": "A07",
+        "title": "Razor Bloom - Switchblade",
+        "primary_part": "synth_brass",
+        "parts": {
+          "synth_brass": {
+            "rms": 0.027576760068977878,
+            "peak": 0.1602727323770523
+          },
+          "drums": {
+            "rms": 0.03471402281180913,
+            "peak": 0.24399735033512115
+          }
+        },
+        "drums_relative_to_primary_db": 1.999234079132599,
+        "flags": []
+      },
+      {
+        "code": "A08",
+        "title": "Chromatic Slipstream",
+        "primary_part": "violin",
+        "parts": {
+          "violin": {
+            "rms": 0.016913569369483475,
+            "peak": 0.10851669311523438
+          },
+          "drums": {
+            "rms": 0.03144776373855278,
+            "peak": 0.16718649864196777
+          }
+        },
+        "drums_relative_to_primary_db": 5.387089981443895,
+        "flags": []
+      },
+      {
+        "code": "A09",
+        "title": "Rooftop Rally",
+        "primary_part": "guitar",
+        "parts": {
+          "guitar": {
+            "rms": 0.023239411774952763,
+            "peak": 0.17146994173526764
+          },
+          "drums": {
+            "rms": 0.02389041759388863,
+            "peak": 0.21151390671730042
+          }
+        },
+        "drums_relative_to_primary_db": 0.23997219781757953,
+        "flags": []
+      },
+      {
+        "code": "A10",
+        "title": "Bloom Circuit Finale",
+        "primary_part": "horn",
+        "parts": {
+          "horn": {
+            "rms": 0.04492179689598139,
+            "peak": 0.21641358733177185
+          },
+          "drums": {
+            "rms": 0.048449083062833145,
+            "peak": 0.24663983285427094
+          }
+        },
+        "drums_relative_to_primary_db": 0.6565688429849077,
+        "flags": []
+      }
+    ],
+    "flags": []
+  },
+  "status": "PASS"
+}
