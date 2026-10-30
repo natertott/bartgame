@@ -2,7 +2,7 @@
    with its speaker's face and name plate, and the shop. BG0 is 32x32
    tiles at screenblock 23 in charblock 2, whose tiles stay under 384
    (screenblocks 22 and 23 follow them): 0 is clear, then the hearts and
-   R's hand, then the UI kit, then the HUD's purse, then the pool the
+   native hearts, then the UI kit, then the transparent HUD canvas, then the pool the
    words are set into a pixel at a time (vwf.c). */
 #include "gba.h"
 #include "video.h"
@@ -18,10 +18,10 @@
 #include "assets.h"
 
 #define BG0_MAP SCREENBLOCK(23)
-#define PAL_HUD (PAL_SLOT_HUD << 12) /* the hearts, R's hand */
+#define PAL_HUD (PAL_SLOT_HUD << 12) /* native heart tiles */
 #define HUD_PURSE_TILE (UI_BG0 + UI_TILE_COUNT) /* the purse's own tiles */
-#define HUD_PURSE_TW 12
-#define HUD_VITALS_TH 3
+#define HUD_PURSE_TW 30
+#define HUD_VITALS_TH 2
 /* a box over the world keeps the HUD's purse; the pages that fill the
    screen take its tiles too, and the purse is set again after them */
 #define POOL_FULL HUD_PURSE_TILE
@@ -471,72 +471,25 @@ bool8 shop_active(void) {
 }
 
 /* ---------------------------------------------------------------- HUD -- */
-/* Panels in the kit's HUD frame, two pixels in from the screen's edge:
-   at the left the hearts over the purse, the keys and R's hand; at the
-   right the three buttons' slots by the mini-map, each holding the pause
-   menu's own 32x32 icon of what it holds, its button's badge on its
-   corner and the count of its seeds or arrows. The frames, the hearts and
-   the purse are BG0's; the icons, badges, counts and the mini-map are
-   sprites, first in OAM, so nothing of the world cuts into them. */
-#define HUD_H (HUD_HEIGHT_PIXELS / 8)
-#define HUD_SLOT_TX(s) (14 + (s) * 4)
-#define HUD_MAP_TX 26
+/* Health, gilt, equipped items, their relevant ammunition and a small map
+   remain on the playfield.
+   Every painted top-HUD pixel fits within twelve rows. The open centre at x116..147
+   leaves northern doors, ladder arrows and enemies visible. Item pictograms
+   are authored at ten pixels inside a hardware-valid16x16 sprite canvas. */
+#define HUD_MAP_ROWS 2
+#define HUD_EQUIP_X(s) (148 + (s) * 30)
 
-static Canvas sPurse, sCount[SLOT_COUNT];
-static u32 sCountPix[SLOT_COUNT][4 * 8];
+static Canvas sPurse;
 static u32 sVitalsBase[HUD_PURSE_TW * HUD_VITALS_TH * 8] EWRAM_BSS;
 static s16 sHudHp, sHudHpMax;
-static s16 sPurseGilt, sPurseKeys;       /* what the purse shows */
-static u8 sHudEq[SLOT_COUNT];            /* whose icons are resident */
-static u8 sHudIconFrame[SLOT_COUNT];     /* also tracks shield design changes */
-static s16 sHudCount[SLOT_COUNT];        /* what each count shows, -1 none */
+static s32 sPurseGilt;
+static u8 sHudEq[SLOT_COUNT];
+static u8 sHudIconFrame[SLOT_COUNT];
+static s16 sHudCount[SLOT_COUNT];
 
-static void hud_init(void) {
-    int s;
-    vwf_canvas_at(&sPurse, HUD_PURSE_TILE, HUD_PURSE_TW, HUD_VITALS_TH);
-    for (s = 0; s < SLOT_COUNT; s++) {
-        vwf_canvas_obj(&sCount[s], sCountPix[s], OBJ_TILE_HUD_COUNTS + s * 4, 2, 2);
-        sHudEq[s] = 0xFF;
-        sHudIconFrame[s] = 0xFF;
-        sHudCount[s] = -1;
-    }
-    hud_panel_base();
-    hud_stale();
-}
-
-static void hud_stale(void) {
-    sPurseGilt = -1;
-    sHudHp = sHudHpMax = -1;
-}
-
-/* the icon a button's item has in the pause menu, or -1 */
-static int hud_icon(int eq) {
-    switch (eq) {
-        case EQ_SWORD: return F_ICON32_SWORD;
-        case EQ_SHIELD: return player_shield_icon();
-        case EQ_BOMBS: return F_ICON32_BOMBS;
-        case EQ_LAMP: return F_ICON32_LAMP;
-        case EQ_CLOAK: return F_ICON32_CLOAK;
-        case EQ_BOW: return F_ICON32_BOW;
-        case EQ_HUBCAP: return F_ICON32_HUBCAP;
-        default: return -1;
-    }
-}
-
-/* what a button's item counts: the seeds, the arrows; else -1 */
-static int hud_count(int eq) {
-    return eq == EQ_BOMBS ? gPl.bombs : eq == EQ_BOW ? gPl.arrows : -1;
-}
-
-/* A complete native24px vitals panel. Its own palette contains the heart
-   ramp, brass, cream and panel inks, avoiding tile-aligned rows that force
-   the old32px HUD. The fixed36-tile canvas stays outside dialogue's pool. */
 #define VI_OUTLINE 1
 #define VI_PANEL 2
 #define VI_EMPTY 3
-#define VI_RED_DARK 5
-#define VI_RED 6
-#define VI_RED_LIGHT 7
 #define VI_IVORY 8
 #define VI_TEXT 9
 #define VI_GOLD_DARK 11
@@ -548,16 +501,12 @@ static void vitals_line(int x0,int y0,int x1,int y1,int ink) {
     int x,y;
     u32 pixels=(ink&15)*0x11111111u;
     x0=MAX(0,x0);y0=MAX(0,y0);
-    x1=MIN(sPurse.tw*8-1,x1);y1=MIN(sPurse.th*8-1,y1);
-    /* A row of eight4bpp pixels is already one aligned word. Repainting
-       the large panel through thousands of individual vwf_pixel calls
-       delayed damage's replacement OAM; write complete spans directly. */
+    x1=MIN(sPurse.tw*8-1,x1);y1=MIN(HUD_HEIGHT_PIXELS-1,y1);
     for(y=y0;y<=y1;y++)for(x=x0;x<=x1;) {
         int first=x&7,count=MIN(8-first,x1-x+1);
         u32* dst=sPurse.px+((y>>3)*sPurse.tw+(x>>3))*8+(y&7);
-        if(count==8) {
-            *dst=pixels;
-        } else {
+        if(count==8)*dst=pixels;
+        else {
             u32 mask=((1u<<(count*4))-1)<<(first*4);
             *dst=(*dst&~mask)|(pixels&mask);
         }
@@ -565,193 +514,212 @@ static void vitals_line(int x0,int y0,int x1,int y1,int ink) {
     }
 }
 
-static void vitals_heart(int x,int y,int fill) {
-    static const u8 shape[8]={0x66,0xFF,0xFF,0xFF,0x7E,0x3C,0x18,0};
+/* A shadowed local backing never becomes an opaque full-width ribbon.
+   Each study borrows its menu's shape language in a few native corner pixels. */
+static void hud_pod(int x,int width) {
+#if BART_UI_VARIANT == 2
+    vitals_line(x+1,1,x+width-2,10,VI_PANEL);
+    vitals_line(x,2,x+width-1,9,VI_PANEL);
+    vwf_pixel(&sPurse,x+width-2,1,VI_GOLD);
+    vwf_pixel(&sPurse,x+width-1,2,VI_GOLD_DARK);
+#elif BART_UI_VARIANT == 3
+    vitals_line(x+2,0,x+width-3,0,VI_GOLD);
+    vitals_line(x+1,1,x+width-2,10,VI_PANEL);
+    vwf_pixel(&sPurse,x,2,VI_GOLD);
+    vwf_pixel(&sPurse,x+width-1,9,VI_GOLD_DARK);
+#elif BART_UI_VARIANT == 4
+    vitals_line(x+1,1,x+width-2,10,VI_PANEL);
+    vwf_pixel(&sPurse,x,2,VI_GOLD_DARK);
+    vwf_pixel(&sPurse,x+1,1,VI_GOLD_LIGHT);
+    vwf_pixel(&sPurse,x+width-2,10,VI_GOLD);
+#elif BART_UI_VARIANT == 5
+    vitals_line(x,1,x+width-1,10,VI_PANEL);
+    vwf_pixel(&sPurse,x,1,VI_GOLD_DARK);
+    vwf_pixel(&sPurse,x+width-1,10,VI_GOLD_DARK);
+#else
+    vitals_line(x+1,1,x+width-2,10,VI_PANEL);
+    vitals_line(x,2,x,4,VI_GOLD_DARK);
+    vitals_line(x+width-1,7,x+width-1,9,VI_GOLD_DARK);
+#endif
+}
+
+static void hud_heart(int x,int fill) {
+    int tile=fill>=8?HT_HEART_FULL:fill>=4?HT_HEART_HALF:HT_HEART_EMPTY;
     int xx,yy;
-    for(yy=0;yy<7;yy++)for(xx=0;xx<8;xx++)if(shape[yy]&(1<<xx)) {
-        bool8 edge=xx==0 || xx==7 || yy==0 || yy==6 ||
-            !(shape[yy]&(1<<(xx?xx-1:0))) || !(shape[yy]&(1<<(xx<7?xx+1:7)));
-        int ink=edge ? VI_OUTLINE : (fill>=8 || (fill>=4 && xx<4)) ? (yy>=4 ? VI_RED_DARK : VI_RED) : VI_EMPTY;
-        vwf_pixel(&sPurse,x+xx,y+yy,ink);
+    for(yy=0;yy<8;yy++)for(xx=0;xx<8;xx++) {
+        int at=(tile-HUD_TILE_BASE)*16+yy*2+xx/4;
+        int ink=(hud_tiles[at]>>((xx&3)*4))&15;
+        vwf_pixel(&sPurse,x+xx,2+yy,ink);
     }
-    if(fill>=4) {vwf_pixel(&sPurse,x+1,y+1,VI_IVORY);vwf_pixel(&sPurse,x+2,y+1,VI_RED_LIGHT);}
-}
-
-static void vitals_key(int x,int y) {
-    vitals_line(x+1,y+1,x+4,y+4,VI_OUTLINE);
-    vitals_line(x+2,y+2,x+3,y+3,VI_GOLD);
-    vwf_pixel(&sPurse,x+2,y+2,VI_IVORY);
-    vwf_pixel(&sPurse,x+4,y+4,VI_GOLD);vwf_pixel(&sPurse,x+5,y+5,VI_GOLD);
-    vwf_pixel(&sPurse,x+6,y+6,VI_GOLD);vwf_pixel(&sPurse,x+7,y+5,VI_GOLD);
-}
-
-/* Static packed panel, coin and lifting cue are prepared once per atlas
-   load. Fullscreen pages may borrow the live canvas, never this cache. */
-static void hud_panel_base(void) {
-    int x,y;
-    vwf_clear(&sPurse,0);
-    vitals_line(1,1,94,22,VI_OUTLINE);vitals_line(2,2,93,21,VI_PANEL);
-    vitals_line(3,1,92,1,VI_GOLD_DARK);vitals_line(2,2,2,20,VI_GOLD_DARK);
-    vwf_pixel(&sPurse,2,1,VI_GOLD_LIGHT);vwf_pixel(&sPurse,93,21,VI_GOLD);
-    vitals_line(8,14,12,19,VI_GOLD_DARK);vitals_line(9,13,11,20,VI_GOLD_DARK);
-    vitals_line(9,14,12,18,VI_GOLD);vwf_pixel(&sPurse,9,14,VI_IVORY);
-    vitals_line(77,13,83,20,VI_OUTLINE);vitals_line(78,14,82,19,VI_EMPTY);
-    vwf_glyph(&sPurse,78,13,'R',VI_TEXT);
-    for(y=0;y<8;y++)for(x=0;x<8;x++) {
-        int at=(HT_HAND-HUD_TILE_BASE)*16+y*2+x/4;
-        int ink=(hud_tiles[at]>>((x&3)*4))&15;
-        if(ink)vwf_pixel(&sPurse,85+x,13+y,ink);
-    }
-    memcpy32(sVitalsBase,sPurse.px,sizeof(sVitalsBase));
 }
 
 static int vitals_heart_style(int hp) {
-    return hp>=8 ? 2 : hp>=4 ? 1 : 0;
+    return hp>=8?2:hp>=4?1:0;
 }
 
-static void hud_purse(void) {
-    char buf[6];int x,i,hearts=MIN(10,(gPl.hp_max+7)/8);
+/* Native3x5 figures keep even the full16-bit gilt amount in a small footprint.
+   Their one-pixel dark outline survives both pale stone and black caves. */
+static void hud_digits(int origin_x,int origin_y,unsigned value) {
+    static const u8 digits[10][5]={
+        {7,5,5,5,7},{2,6,2,2,7},{7,1,7,4,7},{7,1,7,1,7},
+        {5,5,7,1,1},{7,4,7,1,7},{7,4,7,5,7},{7,1,1,1,1},
+        {7,5,7,5,7},{7,5,7,1,7}
+    };
+    char buf[6];int n=0,i,x,y,pass,dx,dy;
+    do {buf[n++]='0'+value%10;value/=10;}while(value && n<5);
+    for(pass=0;pass<2;pass++)for(i=0;i<n;i++)for(y=0;y<5;y++)for(x=0;x<3;x++)
+        if(digits[(int)buf[n-i-1]-'0'][y]&(4>>x)) {
+            int px=origin_x+i*4+x,py=origin_y+y;
+            if(!pass)for(dy=-1;dy<=1;dy++)for(dx=-1;dx<=1;dx++)
+                vwf_pixel(&sPurse,px+dx,py+dy,VI_OUTLINE);
+            else vwf_pixel(&sPurse,px,py,VI_TEXT);
+        }
+}
+
+static void hud_coin(void) {
+    vitals_line(86,2,89,9,VI_OUTLINE);
+    vitals_line(84,4,91,7,VI_OUTLINE);
+    vitals_line(85,3,90,8,VI_GOLD_DARK);
+    vitals_line(86,3,89,7,VI_GOLD);
+    vitals_line(86,3,88,3,VI_IVORY);
+    vitals_line(87,4,87,6,VI_GOLD_LIGHT);
+}
+
+/* Tiny assignment letters belong to their equipped pictograms; empty slots
+   are wholly transparent rather than adding another box to the HUD. */
+static void hud_assignment(int x,int slot) {
+    static const u8 letters[3][5]={{2,5,7,5,5},{6,5,6,5,6},{4,4,4,4,7}};
+    int px,py,pass,dx,dy;
+    for(pass=0;pass<2;pass++)for(py=0;py<5;py++)for(px=0;px<3;px++)
+        if(letters[slot][py]&(4>>px)) {
+            if(!pass)for(dy=-1;dy<=1;dy++)for(dx=-1;dx<=1;dx++)
+                vwf_pixel(&sPurse,x+px+dx,3+py+dy,VI_OUTLINE);
+            else vwf_pixel(&sPurse,x+px,3+py,VI_TEXT);
+        }
+}
+
+static int hud_icon(int eq) {
+    switch(eq) {
+        case EQ_SWORD:return F_ICON32_SWORD;
+        case EQ_SHIELD:return player_shield_icon();
+        case EQ_BOMBS:return F_ICON32_BOMBS;
+        case EQ_LAMP:return F_ICON32_LAMP;
+        case EQ_CLOAK:return F_ICON32_CLOAK;
+        case EQ_BOW:return F_ICON32_BOW;
+        case EQ_HUBCAP:return F_ICON32_HUBCAP;
+        default:return -1;
+    }
+}
+
+static void hud_panel_base(void) {
+    vwf_clear(&sPurse,0);
+    hud_coin();
+    memcpy32(sVitalsBase,sPurse.px,sizeof(sVitalsBase));
+}
+
+static void hud_stale(void) {
+    sPurseGilt=-1;sHudHp=sHudHpMax=-1;
+}
+
+static void hud_init(void) {
+    int s;
+    vwf_canvas_at(&sPurse,HUD_PURSE_TILE,HUD_PURSE_TW,HUD_VITALS_TH);
+    for(s=0;s<SLOT_COUNT;s++) {
+        sHudEq[s]=0xFF;sHudIconFrame[s]=0xFF;sHudCount[s]=-1;
+    }
+    hud_panel_base();hud_stale();
+}
+
+static void hud_refresh(void) {
+    const SpriteSheet* icons=&sheets[SHEET_HUDITEMS];
+    int s,i,hearts=MIN(10,(gPl.hp_max+7)/8);
     bool8 reset=sPurseGilt<0 || sHudHp<0 || sHudHpMax!=gPl.hp_max;
     bool8 dirty=reset;
     if(reset)memcpy32(sPurse.px,sVitalsBase,sizeof(sVitalsBase));
-    for(i=0;i<hearts;i++) {
-        int hp=gPl.hp-i*8;
-        if(reset || vitals_heart_style(hp)!=vitals_heart_style(sHudHp-i*8)) {
-            /* The surrounding heart cell is plain panel. Clear old gleams
-               before replacing just this changed full/half/empty heart. */
-            if(!reset)vitals_line(7+i*8,4,14+i*8,10,VI_PANEL);
-            vitals_heart(7+i*8,4,hp);
+    for(i=0;i<hearts;i++)
+        if(reset || vitals_heart_style(gPl.hp-i*8)!=vitals_heart_style(sHudHp-i*8)) {
+            hud_heart(2+i*8,gPl.hp-i*8);dirty=TRUE;
+        }
+    if(reset || sPurseGilt!=gPl.gilt) {
+        vitals_line(93,1,115,9,0);
+        hud_digits(94,3,gPl.gilt);dirty=TRUE;
+    }
+    for(s=0;s<SLOT_COUNT;s++) {
+        int eq=gPl.equip[s],f=hud_icon(eq),x=HUD_EQUIP_X(s);
+        int count=eq==EQ_BOMBS?gPl.bombs:eq==EQ_BOW?gPl.arrows:-1;
+        if(reset || eq!=sHudEq[s] || sHudIconFrame[s]!=(u8)f || count!=sHudCount[s]) {
+            vitals_line(x,0,x+29,11,0);
+            if(f>=0) {
+                int width=count<0?20:count>=100?30:count>=10?26:22;
+                hud_pod(x,width);hud_assignment(x+1,s);
+                if(count>=0)hud_digits(x+17,3,count);
+            }
+            sHudCount[s]=count;
+            if(eq!=sHudEq[s] || sHudIconFrame[s]!=(u8)f) {
+                sHudEq[s]=eq;sHudIconFrame[s]=f;
+                if(f>=0)vram_queue(icons->tiles+f*icons->frame_tiles*16,
+                    OBJ_TILE(OBJ_TILE_HUD_ICONS+s*16),icons->frame_tiles*32);
+            }
             dirty=TRUE;
         }
     }
-    if(reset || sPurseGilt!=gPl.gilt || sPurseKeys!=gPl.keys) {
-        if(!reset)vitals_line(17,13,75,20,VI_PANEL);
-        x=vwf_text(&sPurse,17,13,vwf_num(buf,gPl.gilt,0),VI_TEXT);
-        vitals_key(x+3,13);vwf_text(&sPurse,x+13,13,vwf_num(buf,gPl.keys,0),VI_TEXT);
-        dirty=TRUE;
-    }
     if(dirty)vwf_flush(&sPurse,FALSE);
+    sPurseGilt=gPl.gilt;sHudHp=gPl.hp;sHudHpMax=gPl.hp_max;
 }
 
-/* the icons copied in when a button takes another item, the counts set
-   when they change */
-static void hud_refresh(void) {
-    const SpriteSheet* icons = &sheets[SHEET_HUDITEMS];
-    int s;
-    if (gPl.gilt != sPurseGilt || gPl.keys != sPurseKeys || gPl.hp != sHudHp || gPl.hp_max != sHudHpMax) {
-        hud_purse();
-        sPurseGilt = gPl.gilt;
-        sPurseKeys = gPl.keys;
-        sHudHp = gPl.hp; sHudHpMax = gPl.hp_max;
-    }
-    for (s = 0; s < SLOT_COUNT; s++) {
-        int eq = gPl.equip[s], n = hud_count(eq), f = hud_icon(eq);
-        if (eq != sHudEq[s] || sHudIconFrame[s] != (u8)f) {
-            sHudEq[s] = eq;
-            sHudIconFrame[s] = f;
-            if (f >= 0)
-                vram_queue(icons->tiles + f * icons->frame_tiles * 16, OBJ_TILE(OBJ_TILE_HUD_ICONS + s * 16),
-                           icons->frame_tiles * 32);
-        }
-        if (n != sHudCount[s]) {
-            sHudCount[s] = n;
-            if (n >= 0) {
-                char buf[6];
-                vwf_num(buf, n, 0);
-                vwf_clear(&sCount[s], 0);
-                vwf_text_fx(&sCount[s], 14 - vwf_width(buf), 5, buf, UI_INK_CREAM, UI_INK_DARK, FX_OUTLINE);
-                vwf_flush(&sCount[s], FALSE);
-            }
-        }
-    }
-}
-
-/* The complete vitals canvas and three24px equipment panels occupy rows0..2.
-   Inventory illustrations remain32px elsewhere; HUD equipment is a distinct
-   native16px drawing, never clipped or filtered down. */
 static void hud_bar(void) {
-    u16* m=bg0_map();int s;
-    memset32(m,0,HUD_H*32*2);
+    u16* m=bg0_map();
+    memset32(m,0,HUD_MAP_ROWS*32*2);
     vwf_map(&sPurse,m,0,0,PAL_SLOT_HUD);
-    for(s=0;s<SLOT_COUNT;s++)ui_frame(m,UI_BG0,HUD_SLOT_TX(s),0,4,HUD_H,FR_HUD);
-    ui_frame(m,UI_BG0,HUD_MAP_TX,0,4,HUD_H,FR_HUD);
 }
 
-static void obj_square(int x, int y, int size, int tile, int pal) {
-    OamEntry* o = oam_alloc();
-    if (!o)
-        return;
-    o->attr0 = ATTR0_Y(y) | ATTR0_SQUARE;
-    o->attr1 = ATTR1_X(x) | ATTR1_SIZE(size);
-    o->attr2 = ATTR2_TILE(tile) | ATTR2_PRIO(0) | ATTR2_PAL(pal);
+static void obj_square(int x,int y,int size,int tile,int pal) {
+    OamEntry* o=oam_alloc();
+    if(!o)return;
+    o->attr0=ATTR0_Y(y)|ATTR0_SQUARE;
+    o->attr1=ATTR1_X(x)|ATTR1_SIZE(size);
+    o->attr2=ATTR2_TILE(tile)|ATTR2_PRIO(0)|ATTR2_PAL(pal);
 }
 
-/* the badges and counts over the icons, then the icons, the mini-map */
 static void hud_sprites(void) {
     int s;
-    for (s = 0; s < SLOT_COUNT; s++) {
-        int x = HUD_SLOT_TX(s) * 8;
-        draw_sprite(x + 2, 2, SHEET_UIMARKS, OBJ_TILE_UI, F_UIMARKS_BADGE_A + s, 0, 0, PAL_OBJ_UIKIT);
-        if (sHudCount[s] >= 0)
-            obj_square(x + 14, 8, 1, OBJ_TILE_HUD_COUNTS + s * 4, PAL_OBJ_UIKIT);
-    }
-    for (s = 0; s < SLOT_COUNT; s++)
-        if (hud_icon(sHudEq[s]) >= 0)
-            obj_square(HUD_SLOT_TX(s) * 8 + 8, 4, 1, OBJ_TILE_HUD_ICONS + s * 16, huditems_frame_pal[sHudIconFrame[s]]);
-    obj_square(HUD_MAP_TX * 8, 0, 2, OBJ_TILE_MINIMAP, PAL_OBJ_UIKIT);
+    for(s=0;s<SLOT_COUNT;s++)if(hud_icon(sHudEq[s])>=0)
+        obj_square(HUD_EQUIP_X(s)+4,0,1,OBJ_TILE_HUD_ICONS+s*16,
+                   huditems_frame_pal[sHudIconFrame[s]]);
+    obj_square(222,142,1,OBJ_TILE_MINIMAP,PAL_OBJ_UIKIT);
 }
 
 void hud_draw(void) {
-    hud_refresh();
-    hud_bar();
-    hud_sprites();
+    hud_refresh();hud_bar();hud_sprites();
 }
 
-/* ----------------------------------------------------------- mini-map -- */
-/* A 32x32 sprite drawn by the CPU inside the HUD's frame: the five by
-   five cells of the wood at four pixels each, the panels' navy with a
-   faint grid where nothing is seen yet, green with a lit edge where the
-   hero has been, gold at the Heart; a red dot where he stands, a pale
-   one at the way in while he is below. */
-static u16 sMapTiles[16 * 16];
+/* The compact map occupies a small lower-right corner, leaving the northern
+   playfield open. Five by five cells are drawn natively, not scaled from the
+   pause-map illustration. Room-entry calls keep fog and the current cell live. */
+static u16 sMapTiles[4 * 16];
 
 void minimap_render(void) {
-    static u8 buf[32 * 32];
-    int x, y, i, here = (gGame.area == AREA_FOREST) ? gGame.cell : gWorld.entry;
-    memset32(buf, 0, sizeof(buf));
-    for (i = 0; i < CELLS; i++) {
-        Cell* c = &gWorld.cells[i];
-        int cx = 8 + (i % MAZE_W) * 3, cy = 4 + (i / MAZE_W) * 3;
-        bool8 seen = (c->flags & CF_VISITED) != 0, goal = i == gWorld.goal;
-        for (y = 0; y < 3; y++)
-            for (x = 0; x < 3; x++) {
-                bool8 edge = x == 0 || y == 0;
-                u8 col;
-                if (!seen)
-                    col = edge ? UI_INK_RAISED : UI_INK_NAVY;
-                else if (goal)
-                    col = edge ? UI_INK_PALE : UI_INK_GOLD;
-                else
-                    col = edge ? OBJ_INK_GREEN_LIT : OBJ_INK_GREEN;
-                buf[(cy + y) * 32 + cx + x] = col;
-            }
-        if (i == here) {
-            u8 dot = (gGame.area == AREA_FOREST) ? UI_INK_RED : UI_INK_CREAM;
-            buf[(cy + 1) * 32 + cx + 1] = UI_INK_PALE;
-            buf[(cy + 1) * 32 + cx + 2] = dot;
-            buf[(cy + 2) * 32 + cx + 1] = dot;
-            buf[(cy + 2) * 32 + cx + 2] = dot;
+    u8 buf[16 * 16];
+    int x,y,i,here=gGame.area==AREA_FOREST?gGame.cell:gWorld.entry;
+    for(y=0;y<16;y++)for(x=0;x<16;x++)
+        buf[y*16+x]=(x==0 || y==0 || x==15 || y==15)?UI_INK_DARK:UI_INK_NAVY;
+    buf[0]=UI_INK_PALE;buf[15]=buf[240]=UI_INK_GOLD;
+    for(i=0;i<CELLS;i++) {
+        Cell* cell=&gWorld.cells[i];
+        int cx=1+(i%MAZE_W)*3,cy=1+(i/MAZE_W)*3;
+        bool8 seen=(cell->flags&CF_VISITED)!=0,goal=i==gWorld.goal;
+        for(y=0;y<2;y++)for(x=0;x<2;x++) {
+            int ink=!seen?UI_INK_RAISED:goal?UI_INK_GOLD:(y==0?OBJ_INK_GREEN_LIT:OBJ_INK_GREEN);
+            if(i==here)ink=gGame.area==AREA_FOREST?(x==0?UI_INK_PALE:UI_INK_RED):UI_INK_CREAM;
+            buf[(cy+y)*16+cx+x]=ink;
         }
     }
-    /* pack to 4bpp tiles, 4x4 tiles in row order */
-    for (i = 0; i < 16; i++) {
-        int tx = (i % 4) * 8, ty = (i / 4) * 8;
-        for (y = 0; y < 8; y++) {
-            for (x = 0; x < 8; x += 4) {
-                const u8* p = &buf[(ty + y) * 32 + tx + x];
-                sMapTiles[i * 16 + y * 2 + x / 4] = p[0] | (p[1] << 4) | (p[2] << 8) | (p[3] << 12);
-            }
+    for(i=0;i<4;i++) {
+        int tx=(i%2)*8,ty=(i/2)*8;
+        for(y=0;y<8;y++)for(x=0;x<8;x+=4) {
+            const u8* row=&buf[(ty+y)*16+tx+x];
+            sMapTiles[i*16+y*2+x/4]=row[0]|(row[1]<<4)|(row[2]<<8)|(row[3]<<12);
         }
     }
-    dma3_copy32(sMapTiles, OBJ_TILE(OBJ_TILE_MINIMAP), sizeof(sMapTiles));
+    dma3_copy32(sMapTiles,OBJ_TILE(OBJ_TILE_MINIMAP),sizeof(sMapTiles));
 }

@@ -60,3 +60,13 @@ tradeoffs are recorded in [third-pass characters](references/DRAIN_V3_CHARACTERS
 and the [direction log](ART_DIRECTION_LOG.md).
 The preferred second-pass #1 frog and #5 wizard are comparison anchors, not
 new sources or automatic adoption of a whole room.
+
+## Final Drain and interface exploration
+
+The next pass uses the user's v3 feedback to synthesize one final Drain, and
+explores five interface skins under the newly specified minimal HUD. The
+already-read six PDFs remain the common reference basis; no new website or
+missing figure is claimed as inspected. [Final room decisions](references/DRAIN_FINAL.md),
+[integration](references/DRAIN_FINAL_INTEGRATION.md), [interface art](references/UI_STUDIES.md)
+and [HUD runtime](references/UI_RUNTIME.md) connect the work to source guidance
+and distinguish adopted user requirements from exploratory visual treatments.

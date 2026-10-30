@@ -238,9 +238,24 @@ font, markers and portraits in this vocabulary. Text has high value contrast
 and deliberate one-pixel strokes; ornament does not compete with labels.
 Use restrained, worn brass frames rather than ornate borders on every object.
 
-A compact 24-pixel HUD uses dedicated 16-pixel icons and a smaller painted
-minimap; it cannot be achieved by clipping existing 32-pixel illustrations.
-Verify ten hearts, three equipment slots, resource counts, currency and keys.
+The user's selected information hierarchy supersedes the original 24-pixel
+HUD: show equipped items, hearts, gilt and a minimap, plus the current ammunition
+count when blightseeds or the bow are equipped. Use small separated pods with
+minimal local backplates and dark contours, leaving the top-center world
+visible. Aim for a maximum 12-pixel painted height along the top. Keep the small
+minimap in a separate bottom corner so it does not obscure northern content.
+Do not show a key count, unrelated ammunition or context-action prompt.
+Non-ammunition equipment uses an icon without an ammunition label.
+Author small icons at their final size rather than clipping large illustrations.
+Verify ten hearts, half/empty hearts, all three equipment slots, zero and maximum
+gilt, conditional ammunition updates, minimap exploration/current-room tracking,
+immediate damage/equipment updates, and contrast on bright and dark areas.
+
+Five optional interface studies explore thin relic linework, stained vellum,
+black glass, wine-colored reliquary materials and salvaged ledger construction.
+Their exact ornament, palette and frames remain exploratory; the compact
+information hierarchy applies to every version. Keep ornament at panel ends,
+corners and selection markers, with clear text fields and consistent controls.
 The title is authored directly at 240×160 with a limited shared palette.
 
 ## Area adaptation sheet

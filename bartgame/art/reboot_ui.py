@@ -421,3 +421,8 @@ def preview(path='/workspace/setup/art-reboot-ui-source.png'):
     out.save(path)
     ti.save('/workspace/setup/art-reboot-title-native.png')
     return path
+
+# Optional native interface studies keep all engine-facing tile/frame IDs.
+# Default zero retains its previous menu aesthetic with transparent HUD hearts.
+import ui_studies as _ui_studies
+_ui_studies.apply(globals())

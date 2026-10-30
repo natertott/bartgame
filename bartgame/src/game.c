@@ -418,11 +418,12 @@ static void title_text_draw(int y) {
     o->attr2 = ATTR2_TILE(TITLE_TEXT_TILE) | ATTR2_PRIO(0) | ATTR2_PAL(PAL_OBJ_UIKIT);
 }
 
-/* the choice when a save exists: the chosen one in gold */
+/* Floating title words always use a light ink over the dark bitmap.
+   The animated picker identifies the selected save/new-run choice. */
 static void title_menu(void) {
     vwf_clear(&sTitleMenu, 0);
-    title_line(&sTitleMenu, 2, "Continue", sTitleCursor == 0 ? UI_INK_GOLD : UI_INK_CREAM);
-    title_line(&sTitleMenu, 14, "New Game", sTitleCursor == 1 ? UI_INK_GOLD : UI_INK_CREAM);
+    title_line(&sTitleMenu, 2, "Continue", UI_INK_PALE);
+    title_line(&sTitleMenu, 14, "New Game", UI_INK_PALE);
     vwf_flush(&sTitleMenu, FALSE);
 }
 
@@ -445,7 +446,7 @@ static void title_show(void) {
     } else {
         vwf_canvas_obj(&sTitlePress, sTitleTextPixels, TITLE_TEXT_TILE, 8, 4);
         vwf_clear(&sTitlePress, 0);
-        title_line(&sTitlePress, 2, "Press Start", UI_INK_CREAM);
+        title_line(&sTitlePress, 2, "Press Start", UI_INK_PALE);
         vwf_flush(&sTitlePress, TRUE);
     }
     dma3_copy32(title_bitmap, MEM_VRAM, TITLE_BITMAP_BYTES);
@@ -597,7 +598,7 @@ static void update_win(void) {
         vwf_text(&stats, 84, 16, "Slain", UI_INK_DIM);
         vwf_text(&stats, 120, 16, vwf_num(buf, gGame.kills, 0), UI_INK_GOLD);
         bg0_canvas(&press, 11, 17, 8, 2);
-        title_line(&press, 3, "Press Start", UI_INK_CREAM);
+        title_line(&press, 3, "Press Start", UI_INK_PALE);
         vwf_flush(&plate, TRUE);
         vwf_flush(&body, TRUE);
         vwf_flush(&stats, TRUE);

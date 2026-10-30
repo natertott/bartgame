@@ -274,3 +274,97 @@ leans more filthy, floor joints depend on display brightness, and tiny world
 expressions stay simpler than portraits. No whole Drain treatment is selected
 for production. The user's preferred actor identities guide variation rather
 than freezing the same two drawings across all rooms.
+
+## Final Drain synthesis and five interface studies — 2026-10-30
+
+**Status:** requested final Drain artwork; five exploratory interface treatments;
+adopted compact HUD information hierarchy. Work in progress.
+
+**Evidence:** the user's review prefers v3 floors/debris #1/#5, top walls #1/#3,
+market #1/#3, wizard corner #2, bridge/rail #2/#5, storage #2/#3 and lower rail
+#4; floor drains are all acceptable. Cistern #2 is preferred, but both arches
+have illogical shading. The ladder/arch should be larger and taller, with the
+arrow above. The wall pipe is unclear and should be larger with visible damage
+and drips. The small outlet must project from the left edge in profile, pouring
+into the river. Side walls need their own perspective, not repeated rear-wall
+faces. These instructions supersede the previous unselected whole-room status.
+
+**Decision:** synthesize one final room, preserving its physical arrangement,
+Bloom, combat, forest and glitter while correcting perspective, flow and upper-left
+lighting. Keep the familiar broad-eyed frog and pointed purple wizard identities.
+Art identifiers may be cloned per placement where sharing prevents distinct side
+walls or erases a fixture; compare resolved physical metadata, not merely ID bytes.
+The previous v3 studies remain immutable comparison evidence.
+
+**Interface request:** five genuinely distinct native styles, ranging beyond the
+current brass vocabulary while retaining filth beside glitter. Gameplay HUD shows
+only equipped items, hearts and gilt, with minimal backing and a clear top-center
+world view. The old 24-pixel full-width HUD/minimap/resource layout is superseded.
+Menus retain useful information and familiar controls. UI0 provides a neutral
+compact baseline; UI1–5 are optional style studies rather than a selected skin.
+
+**Implementation:** new final Drain painter/contracts and profile9, minimal HUD
+runtime, native `ui_studies.py` skin families, six frozen ROMs, independent packed
+audit and fresh real mGBA interface/world captures. Source assemblies and actual
+framebuffers will be labelled separately. Existing six-PDF guidance remains the
+reference basis; no new external source is claimed as read. Final scope, source
+hashes, qualitative review and checks will be appended during the pass.
+
+**Native source review and integration:** the final room now combines a broad
+brick field with a value-matched repaired herringbone patch, preferred market
+and wizard-corner forms, repaired timber, rounded brass rail and worn lower
+rail. Enlarged arches have one continuous front material, a connected upper-left
+bevel and a narrow right return. The taller ladder carries a filled up-arrow
+above its rungs at world y14–24. The larger severed wall pipe has a dark cut
+opening and leak; the side-profile outlet enters from the left and discharges
+rightward into the river. Side walls use narrow capped inward-facing returns.
+
+The original picture IDs are retained; 657 per-placement pictures are appended
+so side-wall perspective and fixtures no longer inherit unrelated repeated
+wall/floor images. All 657 resolved cell types, collision, prop and glitter
+flags remain exact. Save formats and existing picture identifiers stay stable.
+The first resident allocation exceeded capacity; exact whole-animation sharing
+(same every-frame pixels, orientation, palette and timing) reduces it to
+822/1024 BG subtiles, 69 resident animation allocations and one Drain bank.
+This final-profile-only optimization does not simplify or skip authored motion.
+
+The six UI profiles pass 666 native palette/canvas checks. Five study kits have
+distinct frame/tab/marker geometry: Ivory Wire, Moulded Vellum, Black Glass,
+Wine Reliquary and Salvage Ledger. Font metrics remain unchanged. Seventeen
+10-pixel equipment pictograms are separately authored within valid 16-pixel
+canvases; hearts have transparent surrounds. No large icon is cropped down.
+
+The HUD places hearts at x2–81, gilt at x84–115, and equipped item pods on the
+right. Empty slots and x120–175 remain transparent. All paint fits in 12 rows;
+pilot hardware coverage ends at y9. It retains dirty-cache updates and removes
+minimap/ammo/key/R-prompt data from the gameplay HUD. Relevant menu information
+and input flow remain intact. The unchanged glitter emitter can now show glints
+in the newly exposed top band because its HUD exclusion follows the new height.
+
+Source and emulator pilots confirm the direction: the final-room independent
+decoder passes 9,842 checks, and HUD runtime passes 23 checks including hidden
+resource invariance, immediate visible updates, menu restoration and one-frame
+hurt/OAM replacement at normal and maximum health. These are pilots, not the
+final six-build evidence. Final freezes and full-screen review follow.
+
+**User follow-up before freeze:** keep the minimap in the HUD, and show current
+ammunition when the equipped item consumes blightseeds or arrows. This supersedes
+the earlier no-minimap/no-ammo proposal and its corresponding pilot assertions.
+Keep the top band compact: 30-pixel equipment anchors allow a small native
+conditional count beside the icon, while non-ammo items use smaller local
+backplates. Move the native 16-pixel explored/current-room minimap to a bottom
+corner, outside the northern view. Keys and unrelated ammunition stay hidden.
+Validation must check visible ammo changes only for the corresponding equipped
+item, as well as actual maze exploration/current-room updates. The initial HUD
+pilot remains useful history but is not final evidence for these new requirements.
+
+**HUD source freeze after that follow-up:** the top remains at most 12 painted
+rows. Equipment anchors are x148/178/208, with a 20-pixel local pod for normal
+items and a 22/26/30-pixel pod for one/two/three ammunition digits. The actual
+count is shown even at zero; only the corresponding equipped consumable reads
+that count. x116–147 stays transparent. The original 16-pixel visited/fog/current
+minimap now sits at (222,142) in its existing four reserved OBJ tiles. It updates
+on navigation, not through a per-frame redraw. Floating title/continue/new-game
+and victory prompts use an invariant pale ink with dark contours so the light
+vellum theme's dark body ink cannot disappear into the title bitmap.
+The five skin drawings and font metrics remain unchanged by this layout update.

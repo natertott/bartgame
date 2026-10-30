@@ -45,6 +45,23 @@ for name in ('huditems','glitter'):
     take(name)
 assert not owned,('unregistered new families',sorted(owned))
 
+# Compact HUD pictograms are separately authored at their ten-pixel ink size;
+# menu and world item drawings keep their established images and palettes.
+import ui_studies as UI_STUDIES
+for sheet in SHEETS:
+    if sheet['name'] == 'huditems':
+        for frame in sheet['frames']:
+            image = UI_STUDIES.hud_icon(frame)
+            assert image.mode == 'P' and image.size == (16, 16), frame
+            assert set(image.getdata()) <= set(range(16)), frame
+            sheet['frames'][frame] = [
+                ''.join(format(image.getpixel((x, y)), 'x') for x in range(16))
+                for y in range(16)]
+for row in COVERAGE:
+    if row['sheet'] == 'huditems':
+        row['owner'] = 'ui_studies'
+        row['ui_study'] = UI_STUDIES.VARIANT
+
 # Comparison-only Drain keepers use the same streamed canvases and frame IDs.
 if SC.VARIANT:
     import sewer_concepts_npcs as SCN
@@ -117,7 +134,11 @@ if SWING_VARIANT:
 # layout or painting bars onto unrelated floor cells.
 if SC.VARIANT:
     import sewer_concepts_terrain as SCT
-    image=SCT.rail_sprite(SC.RECIPE['metal'])
+    if SC.VARIANT == 9:
+        import sewer_final as SF
+        image = SF.rail_sprite() if hasattr(SF, 'rail_sprite') else SCT.rail_sprite(2)
+    else:
+        image=SCT.rail_sprite(SC.RECIPE['metal'])
     assert image.mode=='P' and image.size==(16,8),('sewerrail',image.mode,image.size)
     SHEETS.append({'name':'sewerrail','w':16,'h':8,'pal':'fx',
                    'frames':{'rail':concept_rows(image)}})

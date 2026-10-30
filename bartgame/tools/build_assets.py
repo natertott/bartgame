@@ -30,6 +30,7 @@ import title  # noqa: E402
 import rooms  # noqa: E402
 import reboot_actors  # noqa: E402
 import sewer_concepts as SC  # noqa: E402
+import ui_studies as UI_STUDIES  # noqa: E402
 
 OUT = sys.argv[1] if len(sys.argv) > 1 else os.path.join(HERE, '..', 'build', 'gen')
 os.makedirs(OUT, exist_ok=True)
@@ -196,7 +197,7 @@ for r in rooms.ROOMS:
 MYST_EXTRA = {'torch', 'torch_lit', 'boulder', 'chest', 'chest_open', 'sparkle', 'black', 'moss0', 'moss1', 'moss2'}
 SETS = [
     ('forest', lambda n, i: not n.startswith(('sw_', 'swh_', 'cave_', 'hollow_', 'thicket_', 'myst_'))),
-    ('sewer', lambda n, i: n.startswith('swh_') or i in hub_used),
+    ('sewer', lambda n, i: i in hub_used or (SC.VARIANT != 9 and n.startswith('swh_'))),
     ('myst', lambda n, i: n.startswith(('cave_', 'hollow_', 'thicket_', 'myst_')) or n in MYST_EXTRA),
 ]
 TYPES_IDX = {t: i for i, t in enumerate(TYPES)}
@@ -221,6 +222,7 @@ for si, (sname, pred) in enumerate(SETS):
     ts.add([[0] * 8 for _ in range(8)], 0, 0)  # tile 0 blank
     entries = []
     anims = []
+    animation_cache = {}
     held = 0
     # the set's palette groups, in the order its metatiles first use them;
     # a metatile may give each of its quarters a palette of its own (qpals)
@@ -240,6 +242,18 @@ for si, (sname, pred) in enumerate(SETS):
         frames = mt.get('frames') or [mt['art']]
         pix = parse_art(frames[0], 16, 16)
         animated = len(frames) > 1
+        # Placement-specific final Drain IDs need not reserve separate VRAM
+        # for identical complete animations. Compare every frame, exact
+        # orientation, timing and quarter palette assignment; a first-frame
+        # match alone would let unrelated moving surfaces overwrite each other.
+        animation_key = None
+        if SC.VARIANT == 9 and sname == 'sewer' and animated:
+            animation_key = (tuple(tuple(fr) for fr in frames),
+                             mt.get('anim_speed', 8), tuple(qpals))
+            if animation_key in animation_cache:
+                base = animation_cache[animation_key]
+                entries += [(base + q) | (qpals[q] << 12) for q in range(4)]
+                continue
         base = None
         for q, (x0, y0) in enumerate(((0, 0), (8, 0), (0, 8), (8, 8))):
             n, hf, vf = ts.add(pix, x0, y0, dedup=not animated)
@@ -253,6 +267,8 @@ for si, (sname, pred) in enumerate(SETS):
                 for (x0, y0) in ((0, 0), (8, 0), (0, 8), (8, 8)):
                     data += tile_bytes(fp, x0, y0)
             anims.append((base, len(frames), data, mt.get('anim_speed', 8)))
+            if animation_key is not None:
+                animation_cache[animation_key] = base
     c.append(c_array_u16('tileset_%s_tiles' % sname, bytes_to_u16(b''.join(ts.tiles))))
     c.append(c_array_u16('metatile_map_%s' % sname, entries, 8))
     c.append(c_array_u16('tileset_%s_pals' % sname, [rgb15(x) for n in set_pals for x in dict(palettes.BG_PALETTES)[n]]))
@@ -267,6 +283,7 @@ for si, (sname, pred) in enumerate(SETS):
     h.append('#define TS_%s %d' % (sname.upper(), si))
     set_rows.append('    { tileset_%s_tiles, %d, metatile_map_%s, tile_anims_%s, %d, tileset_%s_pals, %d },' % (sname, len(ts.tiles), sname, sname, len(anims), sname, len(set_pals)))
     print('tileset %s: %d tiles, %d metatiles held, %d animated, %d palettes' % (sname, len(ts.tiles), held, len(anims), len(set_pals)))
+    assert len(anims) <= 255, ('too many animation allocations', sname, len(anims))
 c.append('const Tileset tilesets[%d] = {' % len(SETS))
 c += set_rows
 c.append('};')
@@ -389,6 +406,8 @@ h.append('extern const u16 orb_glow[];')
 h.append('#define WISP_X %d /* body-relative flame/wisp anchor */' % (23 if SC.VARIANT else sw_folk.WISP_AT[0]))
 h.append('#define WISP_Y %d' % (1 if SC.VARIANT else sw_folk.WISP_AT[1]))
 h.append('#define BART_SEWER_VARIANT %d' % SC.VARIANT)
+h.append('#define BART_UI_VARIANT %d' % UI_STUDIES.VARIANT)
+h.append('#define HUD_HEIGHT_PIXELS 12 /* compact shared HUD, no full-width slab */')
 # the Peddler's business: steps of (body frame, head frame, frames held),
 # each act ended by a 0 hold
 frame_of = {sh['name']: {f: i for i, f in enumerate(sh['frames'])} for sh in sprites.SHEETS}
@@ -535,8 +554,19 @@ if SC.VARIANT:
         'peddler_palette':dict(palettes.OBJ_PALETTES)['peddler'],
         'wizard_palette':dict(palettes.OBJ_PALETTES)['gatekeeper'],
         'staff_flame_anchor':[23,1],
-        'unchanged':'Room IDs, layout, physical metadata, glitter, Bloom and unrelated art.',
+        'unchanged':('Room layout, per-cell physical metadata, glitter, Bloom and unrelated world art; final pictures use appended placement IDs.'
+                     if SC.VARIANT == 9 else 'Room IDs, layout, physical metadata, glitter, Bloom and unrelated world art.'),
     }
+    if SC.VARIANT == 9:
+        import sewer_final_contracts as SFC
+        coverage['sewer_final'] = {'room': SFC.ROOM, 'clone_count': len(SFC.CLONES),
+            'clones': [{**clone, 'frames': len(tiles.METATILES[mt_names[clone['name']]].get('frames', [None])),
+                        'anim_speed': tiles.METATILES[mt_names[clone['name']]].get('anim_speed', 8),
+                        'glitter': bool(tiles.METATILES[mt_names[clone['name']]].get('glitter'))}
+                       for clone in SFC.CLONES]}
+coverage['ui_study'] = {'variant': UI_STUDIES.VARIANT,
+                        'name': UI_STUDIES.STYLE_NAMES.get(UI_STUDIES.VARIANT, 'Compact baseline'),
+                        'hud_fields': ['equipped items', 'hearts', 'gilt']}
 with open(os.path.join(OUT, 'art-reboot-coverage.json'), 'w') as report:
     json.dump(coverage, report, indent=2)
     report.write('\n')

@@ -24,6 +24,10 @@ if SC.VARIANT:
     import sewer_concepts_npcs as SCN
     BG_PALETTES=[(name,SCT.palette(SC.RECIPE['style']) if name=='drain' else colors)
                  for name,colors in BG_PALETTES]
+    if SC.VARIANT == 9:
+        import sewer_final as SF
+        BG_PALETTES = [(name, SF.palette() if name == 'drain' else colors)
+                       for name, colors in BG_PALETTES]
     OBJ_PALETTES=[(name,SCN.peddler_palette(SC.RECIPE['peddler']) if name=='peddler'
                   else SCN.wizard_palette(SC.RECIPE['wizard']) if name=='gatekeeper'
                   else colors) for name,colors in OBJ_PALETTES]
