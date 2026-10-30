@@ -27,6 +27,15 @@ ifneq ($(BART_SWING),$(filter $(BART_SWING),0 1 2 3 4 5))
 $(error BART_SWING must be one integer in 0..5)
 endif
 SWING_STAMP := $(GEN)/swing-profile-$(BART_SWING).stamp
+# Drain art choices remain review prototypes until the user selects one.
+BART_SEWER ?= 0
+ifneq ($(words $(BART_SEWER)),1)
+$(error BART_SEWER must be one integer in 0..8)
+endif
+ifneq ($(BART_SEWER),$(filter $(BART_SEWER),0 1 2 3 4 5 6 7 8))
+$(error BART_SEWER must be one integer in 0..8)
+endif
+SEWER_STAMP := $(GEN)/sewer-profile-$(BART_SEWER).stamp
 
 ARCH    := -mcpu=arm7tdmi -mtune=arm7tdmi
 CFLAGS  := $(ARCH) -O2 -g -Wall -Wno-unused-function -fno-strict-aliasing \
@@ -43,7 +52,8 @@ SRC_S     := $(wildcard src/*.s)
 GEN_C     := $(GEN)/assets.c
 ART       := $(wildcard art/reboot_*.py) art/reboot_contracts.json tools/build_assets.py \
              art/palettes.py art/tiles.py art/sprites.py art/rooms.py art/ui_kit.py \
-             art/ui_font.py art/faces.py art/title.py art/sw_folk.py art/sword_studies.py
+             art/ui_font.py art/faces.py art/title.py art/sw_folk.py art/sword_studies.py \
+             art/sewer_concepts.py art/sewer_concepts_terrain.py art/sewer_concepts_npcs.py
 
 OBJS := $(patsubst src/%.c,$(BUILD)/%.o,$(SRC_C)) \
         $(patsubst src/%.c,$(BUILD)/%.o,$(SRC_IWRAM)) \
@@ -61,9 +71,14 @@ $(SWING_STAMP):
 	@rm -f $(GEN)/swing-profile-*.stamp
 	@printf '%s\n' '$(BART_SWING)' > $@
 
-$(GEN)/assets.c: $(ART) $(SWING_STAMP)
+$(SEWER_STAMP):
 	@mkdir -p $(GEN)
-	BART_SWING=$(BART_SWING) $(PYTHON) tools/build_assets.py $(GEN)
+	@rm -f $(GEN)/sewer-profile-*.stamp
+	@printf '%s\n' '$(BART_SEWER)' > $@
+
+$(GEN)/assets.c: $(ART) $(SWING_STAMP) $(SEWER_STAMP)
+	@mkdir -p $(GEN)
+	BART_SWING=$(BART_SWING) BART_SEWER=$(BART_SEWER) $(PYTHON) tools/build_assets.py $(GEN)
 
 $(GEN)/assets.h: $(GEN)/assets.c ;
 

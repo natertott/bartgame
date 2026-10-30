@@ -9,6 +9,7 @@ from pathlib import Path
 import reboot_actors
 import reboot_items
 import reboot_ui
+import sewer_concepts as SC
 
 CONTRACTS=json.loads((Path(__file__).with_name('reboot_contracts.json')).read_text())
 VALID_SHAPES={(8,8),(16,16),(32,32),(64,64),(16,8),(32,8),(32,16),(64,32),
@@ -44,6 +45,35 @@ for name in ('huditems','glitter'):
     take(name)
 assert not owned,('unregistered new families',sorted(owned))
 
+# Comparison-only Drain keepers use the same streamed canvases and frame IDs.
+if SC.VARIANT:
+    import sewer_concepts_npcs as SCN
+    def concept_rows(image):
+        assert image.mode=='P' and set(image.getdata())<=set(range(16))
+        return [''.join(format(image.getpixel((x,y)),'x') for x in range(image.width))
+                for y in range(image.height)]
+    painters={'peddler_head':(SCN.peddler_head,SC.RECIPE['peddler']),
+              'peddler_body':(SCN.peddler_body,SC.RECIPE['peddler']),
+              'gatekeeper':(SCN.wizard,SC.RECIPE['wizard']),
+              'wisp':(SCN.flame,SC.RECIPE['wizard'])}
+    for sheet in SHEETS:
+        if sheet['name'] in painters:
+            painter,style=painters[sheet['name']]
+            for name in sheet['frames']:
+                image=painter(style,name)
+                assert image.size==(sheet['w'],sheet['h']),(sheet['name'],name,image.size)
+                sheet['frames'][name]=concept_rows(image)
+        elif sheet['name']=='face':
+            for name in ('peddler','gatekeeper'):
+                style=SC.RECIPE['peddler' if name=='peddler' else 'wizard']
+                rows=concept_rows(SCN.portrait(style,name))
+                assert len(rows)==48 and all(len(row)==48 for row in rows)
+                sheet['frames'][name]=[row+'0'*16 for row in rows]+['0'*64]*16
+    for row in COVERAGE:
+        if row['sheet'] in painters or row['sheet']=='face' and row['frame'] in ('peddler','gatekeeper'):
+            row['owner']='sewer_concepts_npcs'
+            row['sewer_concept']=SC.VARIANT
+
 # Step-and-cut is the approved production swing. Explicit BART_SWING values
 # retain the comparison profiles and the pre-selection legacy path (0).
 SWING_VARIANT=int(os.environ.get('BART_SWING','3'))
@@ -68,3 +98,15 @@ if SWING_VARIANT:
                     sheet['frame_pal'][frame]=palette
                 COVERAGE.append({'sheet':sheet_name,'frame':frame,'owner':'sword_studies',
                                  'canvas':[32,32],'study':SWING_VARIANT})
+
+# The fixed BG map reuses its north-bank floor IDs elsewhere. A tiny shared
+# decorative OBJ strip supplies a continuous handrail without changing that
+# layout or painting bars onto unrelated floor cells.
+if SC.VARIANT:
+    import sewer_concepts_terrain as SCT
+    image=SCT.rail_sprite(SC.RECIPE['metal'])
+    assert image.mode=='P' and image.size==(16,8),('sewerrail',image.mode,image.size)
+    SHEETS.append({'name':'sewerrail','w':16,'h':8,'pal':'fx',
+                   'frames':{'rail':concept_rows(image)}})
+    COVERAGE.append({'sheet':'sewerrail','frame':'rail','owner':'sewer_concepts_terrain',
+                     'canvas':[16,8],'sewer_concept':SC.VARIANT})

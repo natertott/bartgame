@@ -18,6 +18,10 @@ transfer, a four-update preparation, seven damaging updates and seven recovery
 updates. Body, blade and damage bounds share one clock in every facing.
 The [five comparison studies](docs/SWORD_STUDIES.md) remain available explicitly.
 
+[Drain concept studies](docs/SEWER_CONCEPTS.md) offer five complete sewer art
+directions and three mixed rooms for feedback. They keep the physical layout,
+Bloom and glitter intact; `BART_SEWER=0` preserves the released room.
+
 ## Current game
 
 The Drain is the hub, with the Billious Peddler, Pale Gatekeeper and a

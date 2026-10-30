@@ -26,6 +26,13 @@ static Actor* sTalking;
 static u8 sDlgState; /* 0 none, 1 text, 2 shop menu, 3 after-menu text */
 static u8 sPendingReward;
 
+/* Concept-only frog diction. The normal release keeps its original dialogue. */
+#if BART_SEWER_VARIANT
+#define PEDDLER_SAYS(original, simple) simple
+#else
+#define PEDDLER_SAYS(original, simple) original
+#endif
+
 static const u8 sFrames[NPC_COUNT] = { F_NPC_SAGE, F_NPC_MERCHANT, F_NPC_HERMIT, F_NPC_NUN, F_NPC_GARDENER, F_NPC_HERMIT };
 
 /* ------------------------------------------------ the hub's two keepers --
@@ -40,6 +47,10 @@ static const u8 sFrames[NPC_COUNT] = { F_NPC_SAGE, F_NPC_MERCHANT, F_NPC_HERMIT,
    so a whole repertoire costs the VRAM of one frame. */
 #define KEEPER_BLINK 6
 static Rng sKeepRng;
+#if BART_SEWER_VARIANT
+/* One two-tile image, reused across the north bank; no actors or collision. */
+static u16 sRailTile;
+#endif
 
 static struct {
     Actor* a;
@@ -72,6 +83,10 @@ static void keeper_frame(int sheet, int frame, u16 tile, bool8 now) {
 static void keeper_spawn(Actor* a) {
     rng_seed(&sKeepRng, 0x6B33 + a->type);
     if (a->type == NPC_MERCHANT) {
+#if BART_SEWER_VARIANT
+        if (gGame.area == 0 && !sRailTile)
+            sRailTile = sprite_load_sheet(SHEET_SEWERRAIL);
+#endif
         sPed.a = a;
         sPed.head_tile = sprite_alloc(sheets[SHEET_PEDDLER_HEAD].frame_tiles);
         sPed.body_tile = sprite_alloc(sheets[SHEET_PEDDLER_BODY].frame_tiles);
@@ -231,6 +246,9 @@ Actor* npc_spawn(int type, int px, int py) {
 }
 
 void npc_room_reset(void) {
+#if BART_SEWER_VARIANT
+    sRailTile = 0;
+#endif
     sPed.a = NULL;
     sGate.a = NULL;
     sTalking = NULL;
@@ -275,6 +293,19 @@ static void npcs_draw_pass(bool8 front) {
 }
 
 void npcs_draw_front(void) {
+#if BART_SEWER_VARIANT
+    /* Foreground strips join at the edges and leave the physical bridge
+       opening completely clear. draw_sprite culls off-screen instances. */
+    if (gGame.area == 0 && sRailTile) {
+        int x;
+        for (x = 16; x < 464; x += 16) {
+            if (x >= 224 && x < 256)
+                continue;
+            draw_sprite(x - gCamX, 136 - gCamY, SHEET_SEWERRAIL,
+                        sRailTile, 0, 0, 2, PAL_OBJ_FX);
+        }
+    }
+#endif
     npcs_draw_pass(TRUE);
 }
 
@@ -334,7 +365,11 @@ static void reward_drop(Actor* a, int kind) {
 
 /* who speaks: a name in gold and a portrait beside the words */
 static const char* const sNames[NPC_COUNT] = {
+#if BART_SEWER_VARIANT
+    "The Drain Wizard", "The Billious Peddler", "The Hermit Knight", "The Weeping Nun", "The Blind Gardener", "A Stranger"
+#else
     "The Pale Gatekeeper", "The Billious Peddler", "The Hermit Knight", "The Weeping Nun", "The Blind Gardener", "A Stranger"
+#endif
 };
 static const u8 sPortraits[NPC_COUNT] = {
     F_FACE_GATEKEEPER, F_FACE_PEDDLER, F_FACE_HERMIT, F_FACE_NUN, F_FACE_GARDENER, F_FACE_HERMIT
@@ -358,14 +393,14 @@ static void talk_sage(void) {
 }
 
 static const ShopItem sShop[3] = {
-    { "Healing Petal", "A preserved bloom, still sweet.", "Restores 2 hearts.", 10, F_ITEMS_HEART, OWN_NONE },
-    { "Blightseeds", "Seeds that burst and open cracked walls.", "Five seeds.", 15, F_ITEMS_BOMBS, OWN_BOMBS },
-    { "Arrows", "Thorn-tipped, fletched with crow. For the bow.", "A bundle of ten.", 10, F_ITEMS_ARROW10, OWN_ARROWS },
+    { "Healing Petal", PEDDLER_SAYS("A preserved bloom, still sweet.", "A snack. Makes you feel better."), "Restores 2 hearts.", 10, F_ITEMS_HEART, OWN_NONE },
+    { "Blightseeds", PEDDLER_SAYS("Seeds that burst and open cracked walls.", "Seeds. They go boom."), "Five seeds.", 15, F_ITEMS_BOMBS, OWN_BOMBS },
+    { "Arrows", PEDDLER_SAYS("Thorn-tipped, fletched with crow. For the bow.", "Pointy sticks. For your bow."), "A bundle of ten.", 10, F_ITEMS_ARROW10, OWN_ARROWS },
 };
 
 /* the third ware, arrows, is on the counter once the hero has the bow */
 static void talk_merchant(void) {
-    shop_open(F_FACE_PEDDLER, "Fine goods for foul places. Touch nothing you can't afford, little petal.", sShop,
+    shop_open(F_FACE_PEDDLER, PEDDLER_SAYS("Fine goods for foul places. Touch nothing you can't afford, little petal.", "Oh. Hello.\nI sell things."), sShop,
               (gPl.items2 & ITEM2_BOW) ? 3 : 2);
     sDlgState = 2;
 }
@@ -376,22 +411,22 @@ static void finish_shop(int choice) {
             gPl.gilt -= 10;
             player_heal(16);
             sfx_play(SFX_HEART);
-            start_text("Hmph. Chew it, don't savour it. Nothing comes for free in the sewers, little petal.");
+            start_text(PEDDLER_SAYS("Hmph. Chew it, don't savour it. Nothing comes for free in the sewers, little petal.", "Here. Eat it."));
         } else {
-            start_text("Ten gilt. You have less. Look with your eyes, not your hands.");
+            start_text(PEDDLER_SAYS("Ten gilt. You have less. Look with your eyes, not your hands.", "Ten gilt. You need more."));
         }
     } else if (choice == 1) {
         if (!(gPl.items & ITEM_BOMBS)) {
-            start_text("Seeds? You would not know how to plant them. Earn the seed trial's gift first.");
+            start_text(PEDDLER_SAYS("Seeds? You would not know how to plant them. Earn the seed trial's gift first.", "Not yet. Do the seed trial first."));
         } else if (gPl.gilt >= 15) {
             gPl.gilt -= 15;
             gPl.bombs += 5;
             if (gPl.bombs > 30)
                 gPl.bombs = 30;
             sfx_play(SFX_PICKUP);
-            start_text("Five seeds. Keep them from the damp.");
+            start_text(PEDDLER_SAYS("Five seeds. Keep them from the damp.", "Five seeds. Boom."));
         } else {
-            start_text("Fifteen gilt. The dead pay better than you. Everything here is mine, and it stays mine.");
+            start_text(PEDDLER_SAYS("Fifteen gilt. The dead pay better than you. Everything here is mine, and it stays mine.", "Fifteen gilt. You need more."));
         }
     } else if (choice == 2) {
         if (gPl.gilt >= 10) {
@@ -400,9 +435,9 @@ static void finish_shop(int choice) {
             if (gPl.arrows > 50)
                 gPl.arrows = 50;
             sfx_play(SFX_PICKUP);
-            start_text("Ten arrows. Aim for the soft parts. Everything has soft parts.");
+            start_text(PEDDLER_SAYS("Ten arrows. Aim for the soft parts. Everything has soft parts.", "Ten arrows. Pointy end first."));
         } else {
-            start_text("Ten gilt the bundle. Come back when the dead have paid you.");
+            start_text(PEDDLER_SAYS("Ten gilt the bundle. Come back when the dead have paid you.", "Ten gilt. You need more."));
         }
     } else {
         sDlgState = 0;

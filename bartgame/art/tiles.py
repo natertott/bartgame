@@ -2,6 +2,7 @@
 import json
 from pathlib import Path
 import reboot_terrain
+import sewer_concepts as SC
 
 CONTRACTS=json.loads((Path(__file__).with_name('reboot_contracts.json')).read_text())
 TYPES=CONTRACTS['types']
@@ -12,6 +13,21 @@ def default_coll(kind):
     return 15 if kind in SOLID_TYPES else 0
 
 METATILES=reboot_terrain.build()
+if SC.VARIANT:
+    import sewer_concepts_terrain as SCT
+    for mt in METATILES:
+        if not mt['name'].startswith(('sw_', 'swh_')):
+            continue
+        count=len(mt['frames']) if 'frames' in mt else 1
+        frames=[]
+        for phase in range(count):
+            image=SCT.paint(mt['name'],phase,SC.RECIPE)
+            assert image.mode=='P' and image.size==(16,16),(mt['name'],image.mode,image.size)
+            assert set(image.getdata())<=set(range(16)),mt['name']
+            frames.append(reboot_terrain.rows(image))
+        if 'frames' in mt:mt['frames']=frames
+        else:mt['art']=frames[0]
+        mt['pal']='drain'
 assert len(METATILES)==len(CONTRACTS['tiles'])
 COVERAGE=[]
 for expected,painted in zip(CONTRACTS['tiles'],METATILES):
@@ -21,5 +37,6 @@ for expected,painted in zip(CONTRACTS['tiles'],METATILES):
         assert actual==expected[field],(painted['name'],field,actual,expected[field])
     frames=painted.get('frames') or [painted['art']]
     assert len(frames)==expected['frames'],painted['name']
-    COVERAGE.append({'name':painted['name'],'owner':'reboot_terrain','frames':len(frames),
+    owner='sewer_concepts_terrain' if SC.VARIANT and painted['name'].startswith(('sw_','swh_')) else 'reboot_terrain'
+    COVERAGE.append({'name':painted['name'],'owner':owner,'frames':len(frames),
                      'material':painted['pal'],'glitter':bool(painted.get('glitter'))})

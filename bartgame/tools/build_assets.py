@@ -29,6 +29,7 @@ import sprites  # noqa: E402
 import title  # noqa: E402
 import rooms  # noqa: E402
 import reboot_actors  # noqa: E402
+import sewer_concepts as SC  # noqa: E402
 
 OUT = sys.argv[1] if len(sys.argv) > 1 else os.path.join(HERE, '..', 'build', 'gen')
 os.makedirs(OUT, exist_ok=True)
@@ -368,19 +369,26 @@ for sh in sprites.SHEETS:
         c.append(c_array_u16('icon32_exact_tiles',bytes_to_u16(data)))
         c.append(c_array_u16('icon32_exact_pal',cols))
         h.append('extern const u16 icon32_exact_tiles[], icon32_exact_pal[];')
-# the Gatekeeper's orb: its two glow colours through one pulse, stepped
-# into her palette (npc.c)
+# The legacy orb and comparison wizard's staff flame share two resident inks.
 import sw_folk  # noqa: E402
 vals = []
-for pair in sw_folk.ORB_GLOW:
-    vals += [rgb15('#%02x%02x%02x' % col) for col in pair]
+if SC.VARIANT:
+    flame_pulse=[('#c86820','#f0b848'),('#e07820','#f8d060'),
+                 ('#f09028','#f8e888'),('#e87820','#f8d060'),
+                 ('#c86820','#f0b848'),('#b85820','#e8a040')]
+    for pair in flame_pulse:
+        vals += [rgb15(color) for color in pair]
+else:
+    for pair in sw_folk.ORB_GLOW:
+        vals += [rgb15('#%02x%02x%02x' % col) for col in pair]
 c.append(c_array_u16('orb_glow', vals))
-h.append('#define ORB_GLOW_STEPS %d' % len(sw_folk.ORB_GLOW))
-h.append('#define ORB_GLOW_INDEX %d /* her palette: the glow, then its light */' % (1 + [k for k, _ in sw_folk.GATEKEEPER_PAL].index('v')))
+h.append('#define ORB_GLOW_STEPS %d' % (len(flame_pulse) if SC.VARIANT else len(sw_folk.ORB_GLOW)))
+h.append('#define ORB_GLOW_INDEX %d /* reserved emissive pair */' % (13 if SC.VARIANT else (1 + [k for k, _ in sw_folk.GATEKEEPER_PAL].index('v'))))
 assert [k for k, _ in sw_folk.GATEKEEPER_PAL].index('V') == [k for k, _ in sw_folk.GATEKEEPER_PAL].index('v') + 1
 h.append('extern const u16 orb_glow[];')
-h.append('#define WISP_X %d /* the wisp over her orb, on her sprite */' % sw_folk.WISP_AT[0])
-h.append('#define WISP_Y %d' % sw_folk.WISP_AT[1])
+h.append('#define WISP_X %d /* body-relative flame/wisp anchor */' % (23 if SC.VARIANT else sw_folk.WISP_AT[0]))
+h.append('#define WISP_Y %d' % (1 if SC.VARIANT else sw_folk.WISP_AT[1]))
+h.append('#define BART_SEWER_VARIANT %d' % SC.VARIANT)
 # the Peddler's business: steps of (body frame, head frame, frames held),
 # each act ended by a 0 hold
 frame_of = {sh['name']: {f: i for i, f in enumerate(sh['frames'])} for sh in sprites.SHEETS}
@@ -520,6 +528,15 @@ coverage = {
 }
 if sword_study_metadata:
     coverage['sword_study']=sword_study_metadata
+if SC.VARIANT:
+    coverage['sewer_concept']={
+        'recipe':SC.RECIPE,
+        'palette':dict(palettes.BG_PALETTES)['drain'],
+        'peddler_palette':dict(palettes.OBJ_PALETTES)['peddler'],
+        'wizard_palette':dict(palettes.OBJ_PALETTES)['gatekeeper'],
+        'staff_flame_anchor':[23,1],
+        'unchanged':'Room IDs, layout, physical metadata, glitter, Bloom and unrelated art.',
+    }
 with open(os.path.join(OUT, 'art-reboot-coverage.json'), 'w') as report:
     json.dump(coverage, report, indent=2)
     report.write('\n')
