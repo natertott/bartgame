@@ -1,0 +1,802 @@
+{
+  "variants": [
+    {
+      "variant": 1,
+      "rom_sha256": "3009541aa0d41b829a6c82b9df44622795add3a3a9a1e95a23272d28a73e1018",
+      "captures": 10,
+      "passed": 140,
+      "total": 140,
+      "max_oam": 42,
+      "idle_updates_vblanks": [
+        {
+          "view": "market",
+          "updates": 288,
+          "vblanks": 288,
+          "frames": 288
+        },
+        {
+          "view": "ladder",
+          "updates": 128,
+          "vblanks": 128,
+          "frames": 128
+        },
+        {
+          "view": "wizard",
+          "updates": 288,
+          "vblanks": 288,
+          "frames": 288
+        },
+        {
+          "view": "bridge",
+          "updates": 128,
+          "vblanks": 128,
+          "frames": 128
+        },
+        {
+          "view": "left-channel",
+          "updates": 128,
+          "vblanks": 128,
+          "frames": 128
+        },
+        {
+          "view": "right-outfall",
+          "updates": 128,
+          "vblanks": 128,
+          "frames": 128
+        },
+        {
+          "view": "lower-left",
+          "updates": 128,
+          "vblanks": 128,
+          "frames": 128
+        },
+        {
+          "view": "lower-right",
+          "updates": 128,
+          "vblanks": 128,
+          "frames": 128
+        }
+      ],
+      "npc_frame_union": {
+        "market": {
+          "peddler_head": [
+            "blink",
+            "down",
+            "grin",
+            "open"
+          ],
+          "peddler_body": [
+            "lift",
+            "rest",
+            "slap",
+            "spin3",
+            "spin5",
+            "spin5b",
+            "spin7",
+            "spin7b",
+            "spin9",
+            "spin9b"
+          ],
+          "gatekeeper": [],
+          "wisp": []
+        },
+        "wizard": {
+          "peddler_head": [],
+          "peddler_body": [],
+          "gatekeeper": [
+            "breath",
+            "idle",
+            "kindle",
+            "kindle_blink"
+          ],
+          "wisp": [
+            "w0",
+            "w1",
+            "w2",
+            "w3"
+          ]
+        }
+      },
+      "max_gif_colour_union": 69
+    },
+    {
+      "variant": 2,
+      "rom_sha256": "87f94dc8dd3d145250e63a51a16fb55fdfc8a8f5cc4aaaeb3754191ad0dd2ca3",
+      "captures": 10,
+      "passed": 140,
+      "total": 140,
+      "max_oam": 42,
+      "idle_updates_vblanks": [
+        {
+          "view": "market",
+          "updates": 288,
+          "vblanks": 288,
+          "frames": 288
+        },
+        {
+          "view": "ladder",
+          "updates": 128,
+          "vblanks": 128,
+          "frames": 128
+        },
+        {
+          "view": "wizard",
+          "updates": 288,
+          "vblanks": 288,
+          "frames": 288
+        },
+        {
+          "view": "bridge",
+          "updates": 128,
+          "vblanks": 128,
+          "frames": 128
+        },
+        {
+          "view": "left-channel",
+          "updates": 128,
+          "vblanks": 128,
+          "frames": 128
+        },
+        {
+          "view": "right-outfall",
+          "updates": 128,
+          "vblanks": 128,
+          "frames": 128
+        },
+        {
+          "view": "lower-left",
+          "updates": 128,
+          "vblanks": 128,
+          "frames": 128
+        },
+        {
+          "view": "lower-right",
+          "updates": 128,
+          "vblanks": 128,
+          "frames": 128
+        }
+      ],
+      "npc_frame_union": {
+        "market": {
+          "peddler_head": [
+            "blink",
+            "down",
+            "grin",
+            "open"
+          ],
+          "peddler_body": [
+            "lift",
+            "rest",
+            "slap",
+            "spin3",
+            "spin5",
+            "spin5b",
+            "spin7",
+            "spin7b",
+            "spin9",
+            "spin9b"
+          ],
+          "gatekeeper": [],
+          "wisp": []
+        },
+        "wizard": {
+          "peddler_head": [],
+          "peddler_body": [],
+          "gatekeeper": [
+            "breath",
+            "idle",
+            "kindle",
+            "kindle_blink"
+          ],
+          "wisp": [
+            "w0",
+            "w1",
+            "w2",
+            "w3"
+          ]
+        }
+      },
+      "max_gif_colour_union": 68
+    },
+    {
+      "variant": 3,
+      "rom_sha256": "b1cf15ed6a6cdbc6bdef393cbd99f976c6e3dfdcb62f09225595c986876236f9",
+      "captures": 10,
+      "passed": 140,
+      "total": 140,
+      "max_oam": 42,
+      "idle_updates_vblanks": [
+        {
+          "view": "market",
+          "updates": 288,
+          "vblanks": 288,
+          "frames": 288
+        },
+        {
+          "view": "ladder",
+          "updates": 128,
+          "vblanks": 128,
+          "frames": 128
+        },
+        {
+          "view": "wizard",
+          "updates": 288,
+          "vblanks": 288,
+          "frames": 288
+        },
+        {
+          "view": "bridge",
+          "updates": 128,
+          "vblanks": 128,
+          "frames": 128
+        },
+        {
+          "view": "left-channel",
+          "updates": 128,
+          "vblanks": 128,
+          "frames": 128
+        },
+        {
+          "view": "right-outfall",
+          "updates": 128,
+          "vblanks": 128,
+          "frames": 128
+        },
+        {
+          "view": "lower-left",
+          "updates": 128,
+          "vblanks": 128,
+          "frames": 128
+        },
+        {
+          "view": "lower-right",
+          "updates": 128,
+          "vblanks": 128,
+          "frames": 128
+        }
+      ],
+      "npc_frame_union": {
+        "market": {
+          "peddler_head": [
+            "blink",
+            "down",
+            "grin",
+            "left",
+            "open"
+          ],
+          "peddler_body": [
+            "lift",
+            "rest",
+            "slap",
+            "spin3",
+            "spin5",
+            "spin5b",
+            "spin7",
+            "spin7b",
+            "spin9",
+            "spin9b"
+          ],
+          "gatekeeper": [],
+          "wisp": []
+        },
+        "wizard": {
+          "peddler_head": [],
+          "peddler_body": [],
+          "gatekeeper": [
+            "breath",
+            "idle",
+            "kindle",
+            "kindle_blink"
+          ],
+          "wisp": [
+            "w0",
+            "w1",
+            "w2",
+            "w3"
+          ]
+        }
+      },
+      "max_gif_colour_union": 65
+    },
+    {
+      "variant": 4,
+      "rom_sha256": "f602ba6e4d1ee36a2ec7a78982a81ba6324b6ed34094f33a686ea8a5c6a4b206",
+      "captures": 10,
+      "passed": 140,
+      "total": 140,
+      "max_oam": 42,
+      "idle_updates_vblanks": [
+        {
+          "view": "market",
+          "updates": 288,
+          "vblanks": 288,
+          "frames": 288
+        },
+        {
+          "view": "ladder",
+          "updates": 128,
+          "vblanks": 128,
+          "frames": 128
+        },
+        {
+          "view": "wizard",
+          "updates": 288,
+          "vblanks": 288,
+          "frames": 288
+        },
+        {
+          "view": "bridge",
+          "updates": 128,
+          "vblanks": 128,
+          "frames": 128
+        },
+        {
+          "view": "left-channel",
+          "updates": 128,
+          "vblanks": 128,
+          "frames": 128
+        },
+        {
+          "view": "right-outfall",
+          "updates": 128,
+          "vblanks": 128,
+          "frames": 128
+        },
+        {
+          "view": "lower-left",
+          "updates": 128,
+          "vblanks": 128,
+          "frames": 128
+        },
+        {
+          "view": "lower-right",
+          "updates": 128,
+          "vblanks": 128,
+          "frames": 128
+        }
+      ],
+      "npc_frame_union": {
+        "market": {
+          "peddler_head": [
+            "blink",
+            "down",
+            "grin",
+            "open"
+          ],
+          "peddler_body": [
+            "lift",
+            "rest",
+            "slap",
+            "spin3",
+            "spin5",
+            "spin5b",
+            "spin7",
+            "spin7b",
+            "spin9",
+            "spin9b"
+          ],
+          "gatekeeper": [],
+          "wisp": []
+        },
+        "wizard": {
+          "peddler_head": [],
+          "peddler_body": [],
+          "gatekeeper": [
+            "breath",
+            "idle",
+            "kindle",
+            "kindle_blink"
+          ],
+          "wisp": [
+            "w0",
+            "w1",
+            "w2",
+            "w3"
+          ]
+        }
+      },
+      "max_gif_colour_union": 66
+    },
+    {
+      "variant": 5,
+      "rom_sha256": "9b3dd489429fb1d609539afc9ea3a415ed4d9ccc3cc220c150d017cc424c9d0a",
+      "captures": 10,
+      "passed": 140,
+      "total": 140,
+      "max_oam": 42,
+      "idle_updates_vblanks": [
+        {
+          "view": "market",
+          "updates": 288,
+          "vblanks": 288,
+          "frames": 288
+        },
+        {
+          "view": "ladder",
+          "updates": 128,
+          "vblanks": 128,
+          "frames": 128
+        },
+        {
+          "view": "wizard",
+          "updates": 288,
+          "vblanks": 288,
+          "frames": 288
+        },
+        {
+          "view": "bridge",
+          "updates": 128,
+          "vblanks": 128,
+          "frames": 128
+        },
+        {
+          "view": "left-channel",
+          "updates": 128,
+          "vblanks": 128,
+          "frames": 128
+        },
+        {
+          "view": "right-outfall",
+          "updates": 128,
+          "vblanks": 128,
+          "frames": 128
+        },
+        {
+          "view": "lower-left",
+          "updates": 128,
+          "vblanks": 128,
+          "frames": 128
+        },
+        {
+          "view": "lower-right",
+          "updates": 128,
+          "vblanks": 128,
+          "frames": 128
+        }
+      ],
+      "npc_frame_union": {
+        "market": {
+          "peddler_head": [
+            "blink",
+            "down",
+            "grin",
+            "open"
+          ],
+          "peddler_body": [
+            "lift",
+            "rest",
+            "slap",
+            "spin3",
+            "spin5",
+            "spin5b",
+            "spin7",
+            "spin7b",
+            "spin9",
+            "spin9b"
+          ],
+          "gatekeeper": [],
+          "wisp": []
+        },
+        "wizard": {
+          "peddler_head": [],
+          "peddler_body": [],
+          "gatekeeper": [
+            "breath",
+            "idle",
+            "kindle",
+            "kindle_blink"
+          ],
+          "wisp": [
+            "w0",
+            "w1",
+            "w2",
+            "w3"
+          ]
+        }
+      },
+      "max_gif_colour_union": 66
+    },
+    {
+      "variant": 6,
+      "rom_sha256": "21c545ddbd2cc9943b8eb20c348d1f0c34fe4ce7552b2829bd050fd73976b13c",
+      "captures": 10,
+      "passed": 140,
+      "total": 140,
+      "max_oam": 42,
+      "idle_updates_vblanks": [
+        {
+          "view": "market",
+          "updates": 288,
+          "vblanks": 288,
+          "frames": 288
+        },
+        {
+          "view": "ladder",
+          "updates": 128,
+          "vblanks": 128,
+          "frames": 128
+        },
+        {
+          "view": "wizard",
+          "updates": 288,
+          "vblanks": 288,
+          "frames": 288
+        },
+        {
+          "view": "bridge",
+          "updates": 128,
+          "vblanks": 128,
+          "frames": 128
+        },
+        {
+          "view": "left-channel",
+          "updates": 128,
+          "vblanks": 128,
+          "frames": 128
+        },
+        {
+          "view": "right-outfall",
+          "updates": 128,
+          "vblanks": 128,
+          "frames": 128
+        },
+        {
+          "view": "lower-left",
+          "updates": 128,
+          "vblanks": 128,
+          "frames": 128
+        },
+        {
+          "view": "lower-right",
+          "updates": 128,
+          "vblanks": 128,
+          "frames": 128
+        }
+      ],
+      "npc_frame_union": {
+        "market": {
+          "peddler_head": [
+            "blink",
+            "down",
+            "grin",
+            "open"
+          ],
+          "peddler_body": [
+            "lift",
+            "rest",
+            "slap",
+            "spin3",
+            "spin5",
+            "spin5b",
+            "spin7",
+            "spin7b",
+            "spin9",
+            "spin9b"
+          ],
+          "gatekeeper": [],
+          "wisp": []
+        },
+        "wizard": {
+          "peddler_head": [],
+          "peddler_body": [],
+          "gatekeeper": [
+            "breath",
+            "idle",
+            "kindle",
+            "kindle_blink"
+          ],
+          "wisp": [
+            "w0",
+            "w1",
+            "w2",
+            "w3"
+          ]
+        }
+      },
+      "max_gif_colour_union": 64
+    },
+    {
+      "variant": 7,
+      "rom_sha256": "292b5d859a1c09667ae6e9dafbf9ae5a942165b85192c5f10679b1eb09bbb86d",
+      "captures": 10,
+      "passed": 140,
+      "total": 140,
+      "max_oam": 42,
+      "idle_updates_vblanks": [
+        {
+          "view": "market",
+          "updates": 288,
+          "vblanks": 288,
+          "frames": 288
+        },
+        {
+          "view": "ladder",
+          "updates": 128,
+          "vblanks": 128,
+          "frames": 128
+        },
+        {
+          "view": "wizard",
+          "updates": 288,
+          "vblanks": 288,
+          "frames": 288
+        },
+        {
+          "view": "bridge",
+          "updates": 128,
+          "vblanks": 128,
+          "frames": 128
+        },
+        {
+          "view": "left-channel",
+          "updates": 128,
+          "vblanks": 128,
+          "frames": 128
+        },
+        {
+          "view": "right-outfall",
+          "updates": 128,
+          "vblanks": 128,
+          "frames": 128
+        },
+        {
+          "view": "lower-left",
+          "updates": 128,
+          "vblanks": 128,
+          "frames": 128
+        },
+        {
+          "view": "lower-right",
+          "updates": 128,
+          "vblanks": 128,
+          "frames": 128
+        }
+      ],
+      "npc_frame_union": {
+        "market": {
+          "peddler_head": [
+            "blink",
+            "down",
+            "grin",
+            "open"
+          ],
+          "peddler_body": [
+            "lift",
+            "rest",
+            "slap",
+            "spin3",
+            "spin5",
+            "spin5b",
+            "spin7",
+            "spin7b",
+            "spin9",
+            "spin9b"
+          ],
+          "gatekeeper": [],
+          "wisp": []
+        },
+        "wizard": {
+          "peddler_head": [],
+          "peddler_body": [],
+          "gatekeeper": [
+            "breath",
+            "idle",
+            "kindle",
+            "kindle_blink"
+          ],
+          "wisp": [
+            "w0",
+            "w1",
+            "w2",
+            "w3"
+          ]
+        }
+      },
+      "max_gif_colour_union": 68
+    },
+    {
+      "variant": 8,
+      "rom_sha256": "75270b517009a998e4d9775704a45200497d9386e8e1bbf92b25ffd9a2a1d590",
+      "captures": 10,
+      "passed": 140,
+      "total": 140,
+      "max_oam": 42,
+      "idle_updates_vblanks": [
+        {
+          "view": "market",
+          "updates": 288,
+          "vblanks": 288,
+          "frames": 288
+        },
+        {
+          "view": "ladder",
+          "updates": 128,
+          "vblanks": 128,
+          "frames": 128
+        },
+        {
+          "view": "wizard",
+          "updates": 288,
+          "vblanks": 288,
+          "frames": 288
+        },
+        {
+          "view": "bridge",
+          "updates": 128,
+          "vblanks": 128,
+          "frames": 128
+        },
+        {
+          "view": "left-channel",
+          "updates": 128,
+          "vblanks": 128,
+          "frames": 128
+        },
+        {
+          "view": "right-outfall",
+          "updates": 128,
+          "vblanks": 128,
+          "frames": 128
+        },
+        {
+          "view": "lower-left",
+          "updates": 128,
+          "vblanks": 128,
+          "frames": 128
+        },
+        {
+          "view": "lower-right",
+          "updates": 128,
+          "vblanks": 128,
+          "frames": 128
+        }
+      ],
+      "npc_frame_union": {
+        "market": {
+          "peddler_head": [
+            "blink",
+            "down",
+            "grin",
+            "open"
+          ],
+          "peddler_body": [
+            "lift",
+            "rest",
+            "slap",
+            "spin3",
+            "spin5",
+            "spin5b",
+            "spin7",
+            "spin7b",
+            "spin9",
+            "spin9b"
+          ],
+          "gatekeeper": [],
+          "wisp": []
+        },
+        "wizard": {
+          "peddler_head": [],
+          "peddler_body": [],
+          "gatekeeper": [
+            "breath",
+            "idle",
+            "kindle",
+            "kindle_blink"
+          ],
+          "wisp": [
+            "w0",
+            "w1",
+            "w2",
+            "w3"
+          ]
+        }
+      },
+      "max_gif_colour_union": 68
+    }
+  ],
+  "passed": 1120,
+  "total": 1120,
+  "captures": 80,
+  "gif_quantized": [],
+  "idle_performance": []
+}

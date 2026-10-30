@@ -1,0 +1,128 @@
+[
+  {
+    "variant": 0,
+    "source_commit": "486c1c3b8c05f33003ce3bf43ab240ecd8414120",
+    "rom_sha256": "547674bfd44f79cd5614f3188bad86f8ed8a4a9ea9cee060e1236ca0c832c97a",
+    "rom_bytes": 503040,
+    "frozen": "/workspace/setup/sewer-concepts/v0",
+    "command": [
+      "make",
+      "-j4",
+      "BUILD=/workspace/setup/sewer-concepts/build-0",
+      "TARGET=bartgame",
+      "BART_SEWER=0"
+    ]
+  },
+  {
+    "variant": 1,
+    "source_commit": "486c1c3b8c05f33003ce3bf43ab240ecd8414120",
+    "rom_sha256": "3009541aa0d41b829a6c82b9df44622795add3a3a9a1e95a23272d28a73e1018",
+    "rom_bytes": 502796,
+    "frozen": "/workspace/setup/sewer-concepts/v1",
+    "command": [
+      "make",
+      "-j4",
+      "BUILD=/workspace/setup/sewer-concepts/build-1",
+      "TARGET=bartgame",
+      "BART_SEWER=1"
+    ]
+  },
+  {
+    "variant": 2,
+    "source_commit": "486c1c3b8c05f33003ce3bf43ab240ecd8414120",
+    "rom_sha256": "87f94dc8dd3d145250e63a51a16fb55fdfc8a8f5cc4aaaeb3754191ad0dd2ca3",
+    "rom_bytes": 502892,
+    "frozen": "/workspace/setup/sewer-concepts/v2",
+    "command": [
+      "make",
+      "-j4",
+      "BUILD=/workspace/setup/sewer-concepts/build-2",
+      "TARGET=bartgame",
+      "BART_SEWER=2"
+    ]
+  },
+  {
+    "variant": 3,
+    "source_commit": "486c1c3b8c05f33003ce3bf43ab240ecd8414120",
+    "rom_sha256": "b1cf15ed6a6cdbc6bdef393cbd99f976c6e3dfdcb62f09225595c986876236f9",
+    "rom_bytes": 502828,
+    "frozen": "/workspace/setup/sewer-concepts/v3",
+    "command": [
+      "make",
+      "-j4",
+      "BUILD=/workspace/setup/sewer-concepts/build-3",
+      "TARGET=bartgame",
+      "BART_SEWER=3"
+    ]
+  },
+  {
+    "variant": 4,
+    "source_commit": "486c1c3b8c05f33003ce3bf43ab240ecd8414120",
+    "rom_sha256": "f602ba6e4d1ee36a2ec7a78982a81ba6324b6ed34094f33a686ea8a5c6a4b206",
+    "rom_bytes": 503852,
+    "frozen": "/workspace/setup/sewer-concepts/v4",
+    "command": [
+      "make",
+      "-j4",
+      "BUILD=/workspace/setup/sewer-concepts/build-4",
+      "TARGET=bartgame",
+      "BART_SEWER=4"
+    ]
+  },
+  {
+    "variant": 5,
+    "source_commit": "486c1c3b8c05f33003ce3bf43ab240ecd8414120",
+    "rom_sha256": "9b3dd489429fb1d609539afc9ea3a415ed4d9ccc3cc220c150d017cc424c9d0a",
+    "rom_bytes": 503532,
+    "frozen": "/workspace/setup/sewer-concepts/v5",
+    "command": [
+      "make",
+      "-j4",
+      "BUILD=/workspace/setup/sewer-concepts/build-5",
+      "TARGET=bartgame",
+      "BART_SEWER=5"
+    ]
+  },
+  {
+    "variant": 6,
+    "source_commit": "486c1c3b8c05f33003ce3bf43ab240ecd8414120",
+    "rom_sha256": "21c545ddbd2cc9943b8eb20c348d1f0c34fe4ce7552b2829bd050fd73976b13c",
+    "rom_bytes": 502892,
+    "frozen": "/workspace/setup/sewer-concepts/v6",
+    "command": [
+      "make",
+      "-j4",
+      "BUILD=/workspace/setup/sewer-concepts/build-6",
+      "TARGET=bartgame",
+      "BART_SEWER=6"
+    ]
+  },
+  {
+    "variant": 7,
+    "source_commit": "486c1c3b8c05f33003ce3bf43ab240ecd8414120",
+    "rom_sha256": "292b5d859a1c09667ae6e9dafbf9ae5a942165b85192c5f10679b1eb09bbb86d",
+    "rom_bytes": 503116,
+    "frozen": "/workspace/setup/sewer-concepts/v7",
+    "command": [
+      "make",
+      "-j4",
+      "BUILD=/workspace/setup/sewer-concepts/build-7",
+      "TARGET=bartgame",
+      "BART_SEWER=7"
+    ]
+  },
+  {
+    "variant": 8,
+    "source_commit": "486c1c3b8c05f33003ce3bf43ab240ecd8414120",
+    "rom_sha256": "75270b517009a998e4d9775704a45200497d9386e8e1bbf92b25ffd9a2a1d590",
+    "rom_bytes": 502924,
+    "frozen": "/workspace/setup/sewer-concepts/v8",
+    "command": [
+      "make",
+      "-j4",
+      "BUILD=/workspace/setup/sewer-concepts/build-8",
+      "TARGET=bartgame",
+      "BART_SEWER=8"
+    ]
+  }
+]

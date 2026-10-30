@@ -82,3 +82,5 @@ Freeze the ROM, map, generated header and coverage report together before
 capturing. `tools/sewer_concept_review.py` records real mGBA views and
 `tools/sewer_concept_gallery.py` assembles source art comparisons. Each
 presentation identifies its source, timing and any capture fixtures.
+`tools/sewer_concept_audit.py` independently decodes the frozen ROM pixels and
+verifies the unchanged assets and room contracts against the default build.

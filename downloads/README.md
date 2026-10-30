@@ -1,5 +1,21 @@
 # BARTGAME downloads
 
+## Optional: five Drain art concepts and three mixed rooms
+
+The `sewer-concepts` branch offers native sewer art choices for feedback:
+gray slimy brick, gold outfalls, moving sewage, clearer rails/bridge/ladder,
+five cartoon frog Peddlers and five hooded purple flame-staff wizards.
+The room layout, Bloom and glitter stay intact. Normal builds still use the
+released room; these studies do not replace the stable release below.
+
+- [Review every asset choice, full rooms and actual mGBA recordings](https://github.com/natertott/bartgame/blob/sewer-concepts/art-review/sewer-concepts/README.md)
+- [Download all eight playable ROMs](https://raw.githubusercontent.com/natertott/bartgame/sewer-concepts/downloads/sewer-concepts-486c1c3/all-eight-sewer-concepts.zip)
+- [ROM names, source and checksums](sewer-concepts-486c1c3/README.txt)
+- [SHA256 checksums](sewer-concepts-486c1c3/SHA256SUMS.txt)
+
+Game/art source: [`486c1c3`](https://github.com/natertott/bartgame/commit/486c1c3b8c05f33003ce3bf43ab240ecd8414120).
+All 21,637 audit/runtime checks and 80 actual-run cases pass.
+
 ## Latest: selected Step-and-cut sword swing
 
 Bloom now uses the selected whole-body Step-and-cut: eight coordinated body

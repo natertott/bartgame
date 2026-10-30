@@ -155,7 +155,7 @@ def npc_hardware(c, defs, catalog):
     anchor = None
     if 'gatekeeper' in positions and 'wisp' in positions:
         anchor = [positions['wisp'][i]-positions['gatekeeper'][i] for i in range(2)]
-    return result, anchor
+    return result, anchor, entries
 
 
 def safe(c, px, py):
@@ -190,7 +190,7 @@ def gif_durations(count, step=2):
 def mp4(directory, destination):
     subprocess.run(['ffmpeg', '-y', '-loglevel', 'error', '-framerate', str(FPS),
                     '-i', str(directory/'frame-%03d.png'), '-vf', 'scale=720:480:flags=neighbor',
-                    '-an', '-c:v', 'libx264', '-crf', '17', '-pix_fmt', 'yuv420p',
+                    '-an', '-c:v', 'libx264', '-threads', '2', '-crf', '17', '-pix_fmt', 'yuv420p',
                     '-movflags', '+faststart', str(destination)], check=True)
 
 
@@ -210,6 +210,10 @@ class Review:
         c, self.defs = boot(self.frozen)
         self.snapshot = static_snapshot(c, self.defs)
         self.ts = tileset(c, self.defs)
+        self.rail = None
+        if 'SHEET_SEWERRAIL' in self.defs:
+            meta = B.sheet_metadata(c, self.defs['SHEET_SEWERRAIL'])
+            self.rail = {**meta, 'pixels_sha256': digest(B.bytes_at(c, meta['source'], meta['tiles']*32))}
         self.validate_static()
 
     def check(self, name, condition, detail=None):
@@ -232,6 +236,10 @@ class Review:
         self.check('native sewer BG budget', self.ts['tile_count'] <= 1024, self.ts['tile_count'])
         self.check('native sewer palette budget', self.ts['palette_count'] <= 12, self.ts['palette_count'])
         self.check('flowing channel has distinct source animation frames', bool(self.ts['flow']), self.ts['flow'])
+        if self.rail:
+            self.check('foreground handrail is a legal two-tile16x8 sprite',
+                       self.rail['width'] == 16 and self.rail['height'] == 8 and
+                       self.rail['tiles'] == self.rail['frame_tiles'] == 2)
 
     def record(self, name, point, facing, total, dialogue=None):
         c, defs = boot(self.frozen)
@@ -239,6 +247,7 @@ class Review:
         position(c, point, facing)
         catalog = frame_catalog(c, defs)
         images, trace = [], []
+        rail_hardware = None
         raw = self.out/'all-frames'/name
         raw.mkdir(parents=True, exist_ok=True)
         directory = self.out/name
@@ -254,7 +263,7 @@ class Review:
             image = c.bg_video.to_pil().convert('RGB').copy()
             image.save(raw/f'frame-{tick:03}.png')
             images.append(image)
-            frames, anchor = npc_hardware(c, defs, catalog)
+            frames, anchor, entries = npc_hardware(c, defs, catalog)
             row = {'video_tick': tick, 'frame': P.r32(c, P.sym('gFrame')),
                    'game_updates': P.r32(c, P.sym('gGame')+8),
                    'state': C.gstate(c), 'area': C.area(c),
@@ -269,6 +278,20 @@ class Review:
                    'textbox': P.r8(c, P.sym('gTbActive')),
                    'shop': P.r8(c, shop_at),
                    'flow_frames': [digest(B.bytes_at(c, 0x06000000+a['tile']*32, 128)) for a in self.ts['flow']]}
+            if self.rail:
+                candidates = [o for o in entries if o['pal'] == self.rail['pal'] and
+                              o['shape'] == self.rail['shape'] and o['size'] == self.rail['size']]
+                cx, cy = row['camera']
+                positions = [[o['x']+cx, o['y']+cy] for o in candidates]
+                row['rail_oam_count'] = len(candidates)
+                row['rail_grid_and_bridge_opening_valid'] = all(
+                    16 <= x < 464 and x%16 == 0 and not 224 <= x < 256 and y == 136
+                    for x, y in positions)
+                if candidates and rail_hardware is None:
+                    o = candidates[0]
+                    hardware_sha = digest(B.bytes_at(c, 0x06010000+o['tile']*32, 64))
+                    rail_hardware = {'positions': positions, 'source_sha256': self.rail['pixels_sha256'],
+                                     'hardware_sha256': hardware_sha, 'sample_video_tick': tick}
             trace.append(row)
         c.clear_keys(*range(10))
         selected = sorted({0, 8, total//4, total//2, total*3//4, total-1})
@@ -312,6 +335,12 @@ class Review:
         # be entirely culled, so no-view clips mark this check inapplicable.
         if not anchors:
             checks['wizard_flame_anchor_matches_authored_staff'] = None
+        if self.rail:
+            checks['foreground_rail_leaves_physical_bridge_opening_clear'] = all(r['rail_grid_and_bridge_opening_valid'] for r in trace)
+            if rail_hardware:
+                checks['foreground_rail_uses_exact_two_tile_rom_art'] = rail_hardware['source_sha256'] == rail_hardware['hardware_sha256']
+            if 0 <= 136-trace[0]['camera'][1] < 160:
+                checks['visible_foreground_rail_is_present_in_hardware_oam'] = bool(rail_hardware)
         for label, condition in checks.items():
             if condition is not None:
                 self.check(name+': '+label, condition)
@@ -325,6 +354,7 @@ class Review:
                'full_frames': str(raw), 'checks': checks, 'trace': trace,
                'vblanks': P.r32(c, P.sym('gFrame'))-gframe,
                'game_updates': P.r32(c, P.sym('gGame')+8)-updates,
+               'foreground_rail_hardware': rail_hardware,
                'npc_frame_union': {who: sorted({f for r in trace for f in r['npc_frames'][who]}) for who in catalog}}
         self.rows.append(row)
         self.save()
@@ -336,6 +366,7 @@ class Review:
                   'emulator': 'mGBA 0.10.5', 'fps': FPS, 'method': __doc__.strip(),
                   'baseline_rom_sha256': digest((Path(self.args.baseline)/'bartgame.gba').read_bytes()),
                   'static_snapshot': self.snapshot, 'tileset': self.ts,
+                  'foreground_rail': self.rail,
                   'captures': self.rows, 'capture_count': len(self.rows),
                   'passed': len(self.checks)-len(failures), 'total': len(self.checks),
                   'checks': self.checks, 'failures': failures}

@@ -1,0 +1,11 @@
+CAPTURE 1 market PASS
+CAPTURE 1 ladder PASS
+CAPTURE 1 wizard PASS
+CAPTURE 1 bridge PASS
+CAPTURE 1 left-channel PASS
+CAPTURE 1 right-outfall PASS
+CAPTURE 1 lower-left PASS
+CAPTURE 1 lower-right PASS
+CAPTURE 1 peddler-shop PASS
+CAPTURE 1 wizard-dialogue PASS
+RESULT PASS 140/140
