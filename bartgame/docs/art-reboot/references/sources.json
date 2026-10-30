@@ -1,0 +1,66 @@
+{
+  "read_date": "2026-10-30",
+  "page_numbers": "PDF pages in the uploaded browser-print files, including navigation and footers",
+  "sources": [
+    {
+      "id": "R1",
+      "filename": "Introduction to Pixel Art • Richard Janes.pdf",
+      "pages": 5,
+      "sha256": "65b1d596e367d6e65f17c4b96d4826b398deb9ad4783795bdbffc0f5769f3219",
+      "url": "http://rjanes.com/tutorials/introduction_to_pixel_art.php",
+      "notes": "JANES_GALVAN_PALEF.md",
+      "status": "read",
+      "illustrations": "Reviewed rendered illustrations."
+    },
+    {
+      "id": "R2",
+      "filename": "Pixel Art Character Design_ A Sprite That Reads at a Glance, Silhouette First — the-pixel.art.pdf",
+      "pages": 10,
+      "sha256": "5e90a8dd2d59df7ea86863647812b4b6643b62db6c195110e126270f2f936a2b",
+      "url": "https://the-pixel.art/articles/pixel-art-character-design/",
+      "notes": "CHARACTER_DESIGN_LIVRESQUARE.md",
+      "status": "read",
+      "illustrations": "Reviewed page illustrations; core source2 figures extracted from PDF image objects when raster rendering hid them."
+    },
+    {
+      "id": "R3",
+      "filename": "Pixel Art Design for Game Development.pdf",
+      "pages": 6,
+      "sha256": "7d419630c02c4af9f7c79baf9aa6973af06c8917bbb1acad37b84771ab7c59e8",
+      "url": "https://alain.xyz/blog/pixel-art-design-for-game-dev",
+      "notes": "JANES_GALVAN_PALEF.md",
+      "status": "read",
+      "illustrations": "Reviewed rendered illustrations."
+    },
+    {
+      "id": "R4",
+      "filename": "Pixel Art Fundamentals _ How To Homebrew Game Boy Games _ Adafruit Learning System.pdf",
+      "pages": 39,
+      "sha256": "ddac0ea777c0da51998d3d35b8b8b0dd20fda37d653a29ac838b7b77a2994cab",
+      "url": "https://learn.adafruit.com/homebrew-game-boy-games/pixel-art-fundamentals",
+      "notes": "ADAfruit_FUNDAMENTALS.md",
+      "status": "read",
+      "illustrations": "Reviewed rendered illustrations."
+    },
+    {
+      "id": "R5",
+      "filename": "Tips to Make Pixel Art for Your Games _ by Thomas Palef _ Medium.pdf",
+      "pages": 9,
+      "sha256": "7e3eb5b95882a0a701caad36974f6e90e118e3b78541a21c6297f395bf3fce1a",
+      "url": "https://medium.com/@thomaspalef/tips-to-make-pixel-art-for-your-games-7b770ffcfde3",
+      "notes": "JANES_GALVAN_PALEF.md",
+      "status": "read",
+      "illustrations": "Reviewed rendered illustrations."
+    },
+    {
+      "id": "R6",
+      "filename": "Creating Pixel Character Art_ from Sketch to Sprite “Pixel art #1” by Livresquare - Make better art _ CLIP STUDIO TIPS.pdf",
+      "pages": 37,
+      "sha256": "3598f14d1a56f9f56a2dcee349daca86a771bab9647c72be40aa80491ecc54c5",
+      "url": "https://tips.clip-studio.com/en-us/articles/11408",
+      "notes": "CHARACTER_DESIGN_LIVRESQUARE.md",
+      "status": "read",
+      "illustrations": "Reviewed available embedded illustrations; later main tutorial demo images are absent from the supplied PDF."
+    }
+  ]
+}

@@ -12,7 +12,7 @@ from pathlib import Path
 import shutil
 import sys
 
-from PIL import Image, ImageDraw, ImageFont
+from PIL import Image, ImageDraw, ImageFont, ImageOps
 
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT / 'art'))
@@ -35,12 +35,44 @@ ROOM = CONTRACTS['rooms'][0]
 STYLE_SHORT = {1: 'Crown of Sludge', 2: 'Crooked Brassworks',
                3: 'Moonlit Cistern', 4: 'Rotten Reliquary', 5: 'Royal Drains'}
 CRITIQUES = {
-    1: 'Broad masonry and weighty royal metalwork. Best for a monumental, filthy palace sewer.',
-    2: 'Rounder, more crooked forms and playful fittings. Best for a cartoony market and broad frog expressions.',
-    3: 'Cooler stone and quieter silhouettes, with warm fittings against dark liquid. Best for a damp night-time cistern.',
-    4: 'Broken, encrusted surfaces and more accumulated grime. Best for decay; inspect floor clutter against small characters.',
-    5: 'Clearer architectural edges and controlled ornament. Best for readable paths, fixtures and strong gold accents.',
+    1: 'Broad ashlar and a heavy gold arch. Compare the focal brass against the quieter travel plane.',
+    2: 'Round cartoon masses and crooked cloth/wood. Keep the frog face clearer than the cobble pattern.',
+    3: 'Cool long flags and restrained current shapes. Check value separation without relying only on hue.',
+    4: 'Broken masonry and attached filth deposits. Keep a quiet route and avoid making debris look like pickups.',
+    5: 'Ordered chamfered construction and gilded fittings. Keep ordinary trim subordinate to ladder, inlet and actors.',
 }
+FIXTURES = (
+    ('floor','Slimy gray bricks, puddles and floor grime',(64,208,192,256)),
+    ('wall','Gray retaining masonry and gold wall pipe',(0,0,128,64)),
+    ('ladder','Forest ladder and unmistakable dark aperture',(128,8,176,80)),
+    ('cistern','Gold wall outfall, bars, flowing fall and basin',(176,0,304,112)),
+    ('market','Market, displayed wares and absentminded frog',(8,48,136,120)),
+    ('wizard','Hooded purple wizard, staff flame and rug',(280,40,392,120)),
+    ('bridge','Bridge linking banks across the sewage stream',(208,128,272,224)),
+    ('rail','Rail separating the player from flowing sewage',(112,120,224,208)),
+    ('outfall','Small gold outfall pouring into moving water',(416,104,464,184)),
+    ('storage','Crates, barrel and ground filth',(392,56,464,112)),
+    ('grate','Walkable floor drain with a clear barred surface',(192,216,288,264)),
+    ('bottom-bank','Lower rail, dirty coping, moss and moving water',(64,248,192,320)),
+)
+REFERENCE_CRITERIA = (
+    ('Silhouette and negative space', 'S2 pp.3–8; S3 p.2; S4 p.18',
+     'Read the frog eye/jaw mass and the wizard hood/staff before texture. Keep deliberate gaps and one primary identity detail.'),
+    ('Native-size economy', 'S2 pp.4–6; S4 pp.9–14 and p.7 embedded chart; S5 pp.2–7',
+     'Judge the real 1× footprint. Use a few strong masses and two or three values per material; a sixteen-ink bank is a ceiling.'),
+    ('Controlled line cadence', 'S1 pp.1–2; S6 pp.7–12',
+     'Clean accidental kinks and inconsistent pixel runs; preserve intentional chipped or organic shape breaks.'),
+    ('Directional volume and material', 'S1 pp.4–5; S6 pp.15–24',
+     'Upper-left light and contact shadows describe planes. Matte stone/cloth and glossy brass/slime need different highlight widths; avoid nested pillow bands.'),
+    ('Value and hue hierarchy', 'S1 pp.2–3; S3 pp.2–5',
+     'Use separated values, cooler shadows and warmer light. Keep the travel plane quieter than characters, ladder and gold focal fittings.'),
+    ('Selective edge treatment', 'S1 pp.4–5; S3 p.3; S4 pp.18–19; S6 pp.11–12',
+     'Keep moving silhouettes crisp. Existing-ink internal anti-aliasing can refine a curve; filtered blur and transparency fringes do not belong in game art.'),
+    ('Texture with a purpose', 'S1 p.3; S3 p.4; S6 pp.16–20',
+     'Use material-shaped clusters and accumulation. Sparse intentional dithering may serve roughness; blanket checker noise and equally strong floor grids do not.'),
+    ('Stable identity in motion', 'S2 pp.6–8; S4 p.17',
+     'Keep feet planted, preserve identifying shapes and inspect complete frame families. Source boards must be followed by actual idle, flame and flow recordings.'),
+)
 
 
 def digest(data):
@@ -91,6 +123,16 @@ class Gallery:
         self.T, self.N = terrain, npcs
         self.out = Path(args.out)
         self.out.mkdir(parents=True, exist_ok=True)
+        self.before = Path(args.before).resolve() if getattr(args, 'before', None) else None
+        if self.before:
+            assert self.before.is_dir(), ('Missing previous source gallery', str(self.before))
+            assert self.before != self.out.resolve() and self.before not in self.out.resolve().parents and self.out.resolve() not in self.before.parents, 'The previous gallery must remain immutable and outside the output tree'
+        self.before_hashes = {}
+        self.review_pages = []
+        self.comparison_pages = []
+        self.painter_paths = (ROOT/'art/sewer_concepts.py', ROOT/'art/sewer_concepts_terrain.py',
+                              ROOT/'art/sewer_concepts_npcs.py', ROOT/'art/reboot_contracts.json')
+        self.painter_snapshot = {str(p.relative_to(ROOT)):digest(p.read_bytes()) for p in self.painter_paths}
         self.inventory_path = Path(args.inventory)
         self.inventory = json.loads(self.inventory_path.read_text())
         self.styles = range(1, 6)
@@ -195,7 +237,9 @@ class Gallery:
             check_image(body,(32,32));check_image(head,(16,16))
             image=Image.new('P',(32,32),0)
             # Exact runtime order: head at foot−26, body at foot−32.
-            A.stamp(image,head,(8,6));A.stamp(image,body,(0,0))
+            # The appended breathing body is selected with the existing
+            # one-pixel head bob; source rest/breathe views use that same join.
+            A.stamp(image,head,(8,7 if frame=='breathe' else 6));A.stamp(image,body,(0,0))
             return image,self.N.peddler_palette(style)
         image=Image.new('P',(32,32),0)
         A.stamp(image,self.N.flame(style,'w0'),(23,1))
@@ -260,7 +304,8 @@ class Gallery:
                      ('gatekeeper',(32,32),self.N.wizard,self.N.wizard_palette),
                      ('wisp',(8,8),self.N.flame,self.N.wizard_palette)]
         for sheet,size,painter,paletter in definitions:
-            frames=next(c['frames'] for c in CONTRACTS['sheets'] if c['name']==sheet)
+            frames=list(next(c['frames'] for c in CONTRACTS['sheets'] if c['name']==sheet))
+            if sheet=='peddler_body':frames.append('breathe')
             scale=3 if size[0]<=16 else 2
             height=max(64,size[1]*scale+12)
             board=panel((1090,78+len(frames)*height));d=self.header(board,sheet+' / all frame IDs',
@@ -268,8 +313,9 @@ class Gallery:
             for row,frame in enumerate(frames):
                 y=78+row*height
                 d.rectangle((8,y,1081,y+height-3),fill=PANEL if row%2==0 else BG)
-                label(d,(12,y+12),frame,FONT)
+                label(d,(12,y+12),frame+' (new in v2)' if sheet=='peddler_body' and frame=='breathe' else frame,FONT)
                 record={'sheet':sheet,'frame':frame,'native_canvas':list(size),'styles':{}}
+                if sheet=='peddler_body' and frame=='breathe':record['new_in_revision']=2
                 for style in self.styles:
                     im=painter(style,frame);check_image(im,size)
                     paste(board,im,(240+(style-1)*174,y+6),paletter(style),scale)
@@ -314,21 +360,7 @@ class Gallery:
         self.npc_pages.append({'sheet':'sewerrail (new foreground handrail)','file':'sprites/sewerrail.png','frames':['rail']})
 
     def fixtures(self):
-        definitions=[
-          ('floor','Slimy gray bricks, puddles and floor grime',(64,208,192,256)),
-          ('wall','Gray retaining masonry and gold wall pipe',(0,0,128,64)),
-          ('ladder','Forest ladder and unmistakable dark aperture',(128,8,176,80)),
-          ('cistern','Gold wall outfall, bars, flowing fall and basin',(176,0,304,112)),
-          ('market','Market, displayed wares and absentminded frog',(8,48,136,120)),
-          ('wizard','Hooded purple wizard, staff flame and rug',(280,40,392,120)),
-          ('bridge','Bridge linking banks across the sewage stream',(208,128,272,224)),
-          ('rail','Rail separating the player from flowing sewage',(112,120,224,208)),
-          ('outfall','Small gold outfall pouring into moving water',(416,104,464,184)),
-          ('storage','Crates, barrel and ground filth',(392,56,464,112)),
-          ('grate','Walkable floor drain with a clear barred surface',(192,216,288,264)),
-          ('bottom-bank','Lower rail, dirty coping, moss and moving water',(64,248,192,320)),
-        ]
-        for slug,title,box in definitions:
+        for slug,title,box in FIXTURES:
             w,h=box[2]-box[0],box[3]-box[1]
             col=max(w*2+12,174)
             board=panel((12+col*5,82+h*2));d=ImageDraw.Draw(board)
@@ -342,12 +374,149 @@ class Gallery:
             path='fixtures/'+slug+'.png';save(board,self.out/path)
             self.fixture_pages.append({'id':slug,'label':title,'source_crop':list(box),'file':path})
 
+    def previous_room(self, style):
+        relative=f'rooms/room-{style}-native.png'
+        path=self.before/relative
+        assert path.is_file(), ('Previous room assembly missing', str(path))
+        self.before_hashes[relative]=digest(path.read_bytes())
+        manifest=self.before/'source-manifest.json'
+        if manifest.is_file():
+            expected=json.loads(manifest.read_text())['files'].get(relative)
+            assert expected==self.before_hashes[relative], ('Previous room differs from its source manifest', relative)
+        with Image.open(path) as image:
+            assert image.size==(480,320), ('Previous room has a different native footprint', str(path), image.size)
+            return image.convert('RGBA')
+
+    def value_image(self, image):
+        # Review diagnostic only: never feed converted pixels into the game.
+        return ImageOps.grayscale(image.convert('RGB')).convert('RGBA')
+
+    def review_diagnostics(self):
+        """Expose value grouping and silhouette; make no automatic taste score."""
+        overview=panel((990,3*354+40));d=ImageDraw.Draw(overview)
+        label(d,(12,8),'VALUE GROUPING / grayscale source diagnostics, not game art',TITLE,GOLD)
+        for number in range(1,9):
+            native=self.value_image(self.rooms[number]['image'])
+            path=f'diagnostics/room-{number}-value-native.png'
+            large=f'diagnostics/room-{number}-value-2x.png'
+            save(native,self.out/path)
+            save(native.resize((960,640),Image.Resampling.NEAREST),self.out/large)
+            self.review_pages.append({'kind':'room value','recipe':number,'native':path,'enlarged':large})
+            if number<=5:
+                x=10+(number-1)%2*490;y=42+(number-1)//2*354
+                label(d,(x,y),f'{number}. {STYLE_SHORT[number]}',FONT,GOLD)
+                overview.alpha_composite(native,(x,y+24))
+        save(overview,self.out/'diagnostics/room-value-overview.png')
+        self.review_pages.append({'kind':'room value overview','file':'diagnostics/room-value-overview.png'})
+
+        # At actual scale each cell contains the same native32px character in
+        # color, value-only and a solid mask. The enlarged sheet repeats those
+        # identical pixels, not a more detailed redraw.
+        native_board=panel((1090,78+2*92));d=self.header(native_board,
+            'CHARACTER READS AT 1× / color · value · silhouette',
+            'Diagnostic views of the exact same native 32×32 composite. Do not judge only the enlargement.')
+        zoom_board=panel((990,82+5*146));zd=ImageDraw.Draw(zoom_board)
+        label(zd,(12,8),'CHARACTER SHAPES AT 3× / nearest-neighbour diagnostic enlargement',TITLE,GOLD)
+        label(zd,(12,34),'Frog: color / value / silhouette                         Wizard: color / value / silhouette',FONT,MUTED)
+        for row,who in enumerate(('peddler','wizard')):
+            y=84+row*92
+            label(d,(12,y+20),'Frog Peddler' if who=='peddler' else 'Purple wizard',FONT)
+            for style in self.styles:
+                indexed,pal=self.world_actor(style,who)
+                color=rgba(indexed,pal)
+                mask=color.getchannel('A')
+                value=self.value_image(color)
+                value.putalpha(mask)
+                silhouette=Image.new('RGBA',indexed.size,'#eee7c8')
+                silhouette.putalpha(mask)
+                images=(color,value,silhouette)
+                x=224+(style-1)*174
+                for k,image in enumerate(images):
+                    native_board.alpha_composite(image,(x+k*48,y+16))
+                zy=82+(style-1)*146
+                if row==0:label(zd,(12,zy+35),f'{style}. {STYLE_SHORT[style]}',FONT,GOLD)
+                zx=208+row*378
+                for k,image in enumerate(images):
+                    zoom_board.alpha_composite(image.resize((96,96),Image.Resampling.NEAREST),(zx+k*116,zy+8))
+                if style==1:
+                    for k,name in enumerate(('color','value','shape')):label(d,(224+k*48,71),name,SMALL,MUTED)
+        save(native_board,self.out/'diagnostics/character-reads-1x.png')
+        save(zoom_board,self.out/'diagnostics/character-reads-3x.png')
+        self.review_pages.extend([
+            {'kind':'native character shape/value','file':'diagnostics/character-reads-1x.png'},
+            {'kind':'enlarged character shape/value','file':'diagnostics/character-reads-3x.png'},
+        ])
+
+        idle=panel((1090,78+112));idraw=self.header(idle,
+            'FROG IDLE JOINS / rest and new breathing pose',
+            'Native 1× pair above, nearest-neighbour 2× pair below. Head bob and torso compress; the feet stay planted.')
+        for style in self.styles:
+            for k,frame in enumerate(('rest','breathe')):
+                indexed,pal=self.world_actor(style,'peddler',frame)
+                x=226+(style-1)*174+k*68
+                paste(idle,indexed,(x,82),pal)
+                paste(idle,indexed,(x,120),pal,2)
+                label(idraw,(x,70),'rest' if k==0 else 'breathe',SMALL,MUTED)
+        save(idle,self.out/'diagnostics/frog-idle-joins.png')
+        self.review_pages.append({'kind':'rest and breathing join','file':'diagnostics/frog-idle-joins.png'})
+
+    def before_after(self):
+        if not self.before:return
+        overview=panel((990,5*354+44));d=ImageDraw.Draw(overview)
+        label(d,(12,8),'PREVIOUS / REVISED / native source assemblies, same physical room',TITLE,GOLD)
+        value_overview=panel(overview.size);vd=ImageDraw.Draw(value_overview)
+        label(vd,(12,8),'PREVIOUS / REVISED VALUE GROUPING / grayscale diagnostics',TITLE,GOLD)
+        previous={style:self.previous_room(style) for style in self.styles}
+        for style in self.styles:
+            old=previous[style];new=self.rooms[style]['image']
+            board=panel((984,366));bd=ImageDraw.Draw(board)
+            label(bd,(12,8),f'{style}. {STYLE_SHORT[style]} / previous and revised source assets',TITLE,GOLD)
+            label(bd,(12,32),'Previous',FONT,MUTED);label(bd,(502,32),'Revised',FONT,MUTED)
+            board.alpha_composite(old,(8,46));board.alpha_composite(new,(498,46))
+            path=f'before-after/room-{style}-1x.png'
+            large=f'before-after/room-{style}-2x.png'
+            save(board,self.out/path)
+            save(board.resize((1968,732),Image.Resampling.NEAREST),self.out/large)
+            value=board.copy();value.paste(self.value_image(old),(8,46));value.paste(self.value_image(new),(498,46))
+            value_path=f'before-after/room-{style}-value-1x.png'
+            save(value,self.out/value_path)
+            y=44+(style-1)*354
+            label(d,(10,y),f'{style}. {STYLE_SHORT[style]} / previous',FONT,MUTED)
+            label(d,(500,y),'Revised',FONT,GOLD)
+            overview.alpha_composite(old,(10,y+24));overview.alpha_composite(new,(500,y+24))
+            label(vd,(10,y),f'{style}. {STYLE_SHORT[style]} / previous',FONT,MUTED)
+            label(vd,(500,y),'Revised',FONT,GOLD)
+            value_overview.alpha_composite(self.value_image(old),(10,y+24))
+            value_overview.alpha_composite(self.value_image(new),(500,y+24))
+            self.comparison_pages.append({'kind':'whole room','style':style,'native':path,'enlarged':large,'value':value_path})
+        save(overview,self.out/'before-after/room-overview.png')
+        save(value_overview,self.out/'before-after/room-value-overview.png')
+
+        for slug,title,box in FIXTURES:
+            if slug not in ('floor','cistern','market','wizard','bridge','rail'):continue
+            w,h=box[2]-box[0],box[3]-box[1];col=max(w*2+12,174)
+            board=panel((12+col*5,100+2*(h*2+30)));bd=ImageDraw.Draw(board)
+            label(bd,(12,8),title+' / previous above, revised below',TITLE,GOLD)
+            label(bd,(12,32),'Matched native source crops enlarged 2×; compare form, plane and focal contrast before texture.',SMALL,MUTED)
+            for style in self.styles:
+                x=6+(style-1)*col
+                label(bd,(x+4,54),f'{style}. {STYLE_SHORT[style]}',SMALL,GOLD)
+                for row,image in enumerate((previous[style],self.rooms[style]['image'])):
+                    y=80+row*(h*2+30)
+                    label(bd,(x+4,y-15),'Previous' if row==0 else 'Revised',SMALL,MUTED)
+                    board.alpha_composite(image.crop(box).resize((w*2,h*2),Image.Resampling.NEAREST),(x+4,y))
+            path=f'before-after/fixture-{slug}.png';save(board,self.out/path)
+            self.comparison_pages.append({'kind':'fixture','id':slug,'label':title,'source_crop':list(box),'file':path})
+
     def finalize(self):
         assert len(self.used)==370 and len(self.unused)==80
         tile_records=[r for r in self.records if 'global_id' in r]
         active_frames=sum(r['frames']*5 for r in tile_records if r['status']=='active')
         unused_frames=sum(r['frames']*5 for r in tile_records if r['status']!='active')
         assert active_frames==623*5 and unused_frames==113*5
+        world_npc_frames=sum(len(row['frames']) for row in self.npc_pages
+                             if row['sheet'] in ('peddler_head','peddler_body','gatekeeper','wisp'))
+        assert world_npc_frames==30, 'v2 retains29 keeper frames and appends one breathing body pose'
         for style in self.styles:
             all_bytes=b''.join(self.tile(t['name'],0,style).tobytes() for t in self.used)
             self.checks.append({'style':style,'active_terrain_indexed_sha256':digest(all_bytes)})
@@ -359,17 +528,25 @@ class Gallery:
                         for r in tile_records if r['status']=='active')
         identical=[r['name'] for r in tile_records if r['status']=='active' and
                    len({tuple(v['indexed_frame_sha256']) for v in r['styles'].values()})==1]
-        painter_hashes={str(p.relative_to(ROOT)):digest(p.read_bytes()) for p in
-            (ROOT/'art/sewer_concepts.py', ROOT/'art/sewer_concepts_terrain.py',
-             ROOT/'art/sewer_concepts_npcs.py', ROOT/'art/reboot_contracts.json')}
+        painter_hashes={str(p.relative_to(ROOT)):digest(p.read_bytes()) for p in self.painter_paths}
+        assert painter_hashes==self.painter_snapshot, 'Painter sources changed during gallery generation; rerun after freezing the art'
+        if self.before:
+            assert all(digest((self.before/name).read_bytes())==value for name,value in self.before_hashes.items()), 'Previous source gallery changed during comparison'
         catalog={'method':__doc__.strip(),'native_screen':[240,160],'native_room':[480,320],
           'painter_source_sha256':painter_hashes,
           'source_assembly_not_emulator':True,'styles':S.STYLE_NAMES,'records':self.records,
           'tile_atlases':self.pages,'animated_tile_filmstrips':self.animation_pages,
           'npc_atlases':self.npc_pages,'fixtures':self.fixture_pages,
+          'review_diagnostics':self.review_pages,'before_after_comparisons':self.comparison_pages,
+          'before_source_room_sha256':self.before_hashes,
+          'reference_review':{'criteria':[{'topic':topic,'pdf_pages':pages,'review_question':question} for topic,pages,question in REFERENCE_CRITERIA],
+              'sources':{'S1':'Richard Janes','S2':'the-pixel.art character design','S3':'Alain Galvan',
+                         'S4':'Adafruit / John Park','S5':'Thomas Palef','S6':'Livresquare / CLIP STUDIO TIPS'},
+              'meaning':'Page citations refer to supplied PDFs. These are review criteria and GBA adaptations, not automatic taste scores or claims that a source prescribed these exact sewer designs.'},
           'rooms':[{k:v for k,v in row.items() if k!='image'} for row in self.rooms.values()],
           'coverage':{'active_tile_ids':370,'active_frame_alternatives':active_frames,'unused_catalogue_ids':80,
-                      'unused_frame_alternatives':unused_frames,'world_npc_frame_alternatives':29*5,
+                      'unused_frame_alternatives':unused_frames,'world_npc_frame_alternatives':world_npc_frames*5,
+                      'retained_world_npc_frame_alternatives':29*5,'new_breathing_frame_alternatives':5,
                       'portrait_alternatives':2*5,'new_foreground_rail_alternatives':5,
                       'unchanged_bloom':True,'ambient_glitter_in_source_assemblies':False},
           'indexed_geometry_sharing':{'number_of_distinct_sequences_to_active_id_count':dict(sorted(sharing.items())),
@@ -447,7 +624,9 @@ metal, water, floors and props can mix while sharing one legal Drain bank.
 ## Every NPC sprite frame and portrait
 
 The head/body split keeps the frog's existing breathing, blinking, looking,
-coin and hand animations. The wizard's existing frame IDs remain stable; its
+coin and hand animations. A new fifteenth body frame, `breathe`, compresses the
+upper body with the one-pixel head bob while keeping the feet planted. The
+fourteen original body IDs retain their ordering. The wizard's frame IDs remain stable; its
 separate four-frame flame now belongs at the staff tip. Portraits are authored
 independently at48×48 and match their world identities.
 
@@ -464,7 +643,7 @@ and leaves the room's physical grid and glitter metadata untouched.
 All370 used metatile identifiers have five alternatives below. These include
 350ground IDs and20foreground IDs, across600ground and57foreground placements.
 Their38animated IDs retain their frame counts and timing contracts, for623
-distinct authored tile frames per option. Atlas rows show phase0; every other
+declared frame drawings per option. Atlas rows show phase0; every other
 animation frame appears in the filmstrip appendix. IDs, collisions, dimensions,
 interactions and room placement remain unchanged.
 
@@ -498,6 +677,67 @@ that these tiles appear in the current room.
             if not row['name'].startswith('swh_'):
                 text+=f"- [{row['name']}: all {row['frames']} frames ×five options]({row['file']})\n"
         text+='''
+## PDF-led review of this revision
+
+The six supplied reference PDFs guide the revised forms, materials and review
+workflow. Their page-specific notes, adaptations and adoption decisions live
+in the shared [reference register](../../../bartgame/docs/art-reboot/REFERENCE_REGISTER.md),
+[art bible](../../../bartgame/docs/art-reboot/ART_BIBLE.md) and
+[direction log](../../../bartgame/docs/art-reboot/ART_DIRECTION_LOG.md).
+The [reference-application matrix](../../../bartgame/docs/art-reboot/REFERENCE_APPLICATION.md)
+connects adopted rules to source pages, explicit GBA adaptations and this pass.
+
+These diagnostics expose the same native source pixels at different review
+views. **Grayscale and silhouette sheets are inspection tools, not replacement
+game art or emulator screenshots.** Native 1× views are the primary readability
+test; enlargements use integer nearest-neighbour scaling.
+
+- [Whole-room value grouping](diagnostics/room-value-overview.png)
+- [NPC color, value and silhouette at native size](diagnostics/character-reads-1x.png)
+- [The same NPC pixels enlarged 3×](diagnostics/character-reads-3x.png)
+- [Rest/breathe joins at native size and 2×](diagnostics/frog-idle-joins.png)
+
+| Topic | Supplied PDF pages | Review question / GBA application |
+| --- | --- | --- |
+'''
+        for topic,pages,question in REFERENCE_CRITERIA:
+            text+=f'| {topic} | {pages} | {question} |\n'
+        text+='''
+S1 is Richard Janes; S2 is the-pixel.art character design; S3 is Alain Galvan;
+S4 is Adafruit/John Park; S5 is Thomas Palef; S6 is Livresquare/CLIP STUDIO TIPS.
+Page numbers refer to the actual supplied print PDFs, not website sections.
+The register distinguishes read text from illustrations unavailable in a print.
+No reference images or Nintendo pixels are used as game assets.
+
+For this GBA pipeline, optional large-canvas sketch reduction, blur, unrestricted
+colors and posterization are translated into native blockouts, controlled
+indexed-palette correction and deliberate pixel edits. Internal hand-placed
+edge treatment is distinct from automatic filtering. The diagnostic questions
+do not manufacture an art-quality score or automatically approve a treatment.
+
+'''
+        if self.before:
+            text+='''
+## Previous and revised source art
+
+Every pair uses the same world coordinates and unchanged room footprint.
+The left column is the previously published source assembly; the right column
+is this revision. The old input images are read only and recorded by hash.
+These comparisons demonstrate iteration; they do not replace actual-run
+animation and occlusion checks.
+
+![Five previous/revised native room pairs](before-after/room-overview.png)
+
+[Previous/revised value grouping](before-after/room-value-overview.png)
+
+'''
+            for row in self.comparison_pages:
+                if row['kind']=='whole room':
+                    text+=f"- [{row['style']}. {STYLE_SHORT[row['style']]}: native pair]({row['native']}) · [2× pair]({row['enlarged']}) · [Value pair]({row['value']})\n"
+                else:
+                    text+=f"- [{row['label']}: all five previous/revised fixture pairs]({row['file']})\n"
+            text+='\n'
+        text+='''
 ## Scope and critique limits
 
 These are choices for feedback. A complete option has not been selected for
@@ -520,6 +760,10 @@ the bridge landings and rail separation in the actual recordings before choosing
                'phase0':'phase 0','×five':'× five','These80':'These 80','their113frame':'their 113 frame',
                'real240':'real 240','new16×8foreground':'new 16×8 foreground'}
         for old,new in fixes.items():text=text.replace(old,new)
+        shortcuts='[PDF-led review and native diagnostics](#pdf-led-review-of-this-revision)'
+        if self.before:shortcuts+=' · [Previous/revised comparisons](#previous-and-revised-source-art)'
+        text=text.replace('[Every alternative and frame hash](catalogue.json)',
+                          '[Every alternative and frame hash](catalogue.json)\n\n'+shortcuts,1)
         (self.out/'README.md').write_text(text)
 
     def run(self):
@@ -527,13 +771,15 @@ the bridge landings and rail separation in the actual recordings before choosing
         self.pages=self.tile_pages(self.used,'tiles','Active Drain metatiles')
         self.unused_pages=self.tile_pages(self.unused,'unused-tiles','Unused retained sewer vocabulary')
         self.animation_pages=self.animations(self.used,'animation-frames')+self.animations(self.unused,'unused-animation-frames')
-        self.room_maps();self.npc_atlases();self.fixtures();self.finalize()
+        self.room_maps();self.npc_atlases();self.fixtures()
+        self.review_diagnostics();self.before_after();self.finalize()
 
 
 def main():
     ap=argparse.ArgumentParser(description=__doc__)
     ap.add_argument('--out',required=True)
     ap.add_argument('--inventory',default='/workspace/setup/sewer-concepts/inventory/inventory.json')
+    ap.add_argument('--before',help='Read-only prior source gallery for matched native before/after room and fixture comparisons')
     Gallery(ap.parse_args()).run()
 
 

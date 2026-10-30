@@ -80,7 +80,9 @@ def source_export(variant):
         output['palettes']['gatekeeper']=[rgb555(c) for c in core.PALETTES['stone']]
     for sheet,(painter,style) in painters.items():
         output['sprites'][sheet]={}
-        for name in sheet_specs[sheet]['frames']:
+        names=list(sheet_specs[sheet]['frames'])
+        if variant and sheet=='peddler_body':names.append('breathe')
+        for name in names:
             image=painter(style,name)
             assert image.mode=='P' and max(image.getdata())<=15
             output['sprites'][sheet][name]={'size':list(image.size),'pixels':bytes(image.getdata()).hex()}
@@ -298,7 +300,25 @@ class Audit:
                 keeper_hashes[sheet][name]=sha(decoded)
                 if sheet=='sewerrail':rail_frames+=1
                 else:keeper_frames+=1
-        self.check(variant,'keeper_native_art','all29world and2portrait frames verified',keeper_frames==31,keeper_frames)
+        expected_keeper_frames=32 if variant else 31
+        self.check(variant,'keeper_native_art','all retained keeper/portrait frames plus concept breathing pose verified',
+                   keeper_frames==expected_keeper_frames,keeper_frames)
+        for spec in CONTRACT['sheets']:
+            if spec['name'] not in KEEPERS:continue
+            for index,name in enumerate(spec['frames']):
+                self.check(variant,'keeper_frame_contract',spec['name']+'.'+name+' retains original frame ID',
+                           rom.defs['F_'+spec['name'].upper()+'_'+name.upper()]==index)
+        self.check(variant,'keeper_frame_contract','Peddler body has only the approved extra breathing frame in concepts',
+                   rom.defs['SHEET_PEDDLER_BODY_FRAMES']==(15 if variant else 14))
+        if variant:
+            self.check(variant,'keeper_frame_contract','new breathing pose appends after the14 retained body frames',
+                       rom.defs['F_PEDDLER_BODY_BREATHE']==14)
+            rest=bytes.fromhex(source['sprites']['peddler_body']['rest']['pixels'])
+            breath=bytes.fromhex(source['sprites']['peddler_body']['breathe']['pixels'])
+            self.check(variant,'keeper_idle_pose','breathing preserves the bottom three foot/contact rows',
+                       rest[-96:]==breath[-96:])
+            self.check(variant,'keeper_idle_pose','breathing articulates the upper mass instead of duplicating rest',
+                       rest[:-96]!=breath[:-96])
         self.check(variant,'rail_native_art','exactly one approved16x8 rail frame in concepts',rail_frames==(1 if variant else 0),rail_frames)
         if variant:
             metadata,_=rom.sheet('sewerrail')

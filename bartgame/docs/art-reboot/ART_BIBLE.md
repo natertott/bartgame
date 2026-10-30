@@ -11,6 +11,20 @@ The [research](RESEARCH.md), [asset audit](ASSET_AUDIT.md) and
 Metadata in `art/reboot_contracts.json` preserves identifiers and physical
 contracts; it contains no source artwork.
 
+## Living direction and decision record
+
+This is the shared, current specification, not a one-time style proposal.
+Keep it updated throughout art work. Record each art-direction decision in
+the [direction log](ART_DIRECTION_LOG.md), including its reason, user feedback
+or reference pages, affected assets, review evidence and remaining tradeoffs.
+Keep experimental and adopted choices distinct. Local area studies become
+shared rules only when that scope is intentional and recorded.
+
+The [reference register](REFERENCE_REGISTER.md) tracks source availability and
+source-specific notes. Incorporate guidance after reading the actual text and
+illustrations, and document how it applies at native GBA scale. An inaccessible
+reference remains pending; do not imply that it has already informed the art.
+
 ## The desired contrast
 
 Excalibur's polished metal and supernatural light exist in the same frame as
@@ -39,12 +53,60 @@ copper, scum green and dark teal belong to the Drain. Gold connects the areas.
   interface banks remain reserved. OBJ has sixteen banks in total.
 - Use valid hardware canvases. A nominal 14×22 body is padded into 32×32 when
   its hands need room; 16×24 is a design box, not a hardware OBJ shape.
-- One-pixel perimeter where a sprite must separate from terrain; two or three
-  deliberate material values inside. Group highlights into clusters. Avoid
-  scattered single pixels masquerading as texture, bevelled clip-art symbols
-  and soft antialiased edges.
+- Use a hue-dark one-pixel contour where a sprite must separate from terrain;
+  quieter material edges on floors and subordinate architecture. Start with
+  two or three deliberate values per small material, rather than filling every
+  palette slot. Group highlights into clusters. Avoid decorative pixel noise,
+  bevelled clip-art symbols and filtered soft edges. Selective hand-placed
+  existing-ink AA on an internal turn is permitted when it reads better at 1×.
 - Light comes from the upper left. Lower/right edges and contact shadows are
   darker. Reflective glints are local exceptions, not a second diffuse light.
+
+## Reference-led design sequence and hierarchy
+
+The six uploaded tutorials were read on 2026-10-30. Their page-cited guidance
+and deliberate GBA adaptations are recorded as G01–G18 in the
+[application matrix](REFERENCE_APPLICATION.md). These principles guide future
+art work; they do not imply that every existing game asset has already been
+redrawn in this pass.
+
+Start with a native filled silhouette and a few material masses. Identify the
+object and its action before adding shadows, surface texture or highlights.
+Inspect negative space, proportions and one main identity detail at actual
+screen size. For the Drain, frog eyes/jaw and the wizard's flame-tipped staff
+carry identity; small outfit marks remain subordinate. A world sprite and its
+48×48 portrait use the same identity with different amounts of information.
+
+Then shade volume with broad light-facing and far-side planes, contact shadows
+and recessed cavities. Do not build shading from concentric rings parallel to
+an outline. Cool shadows and warmer selected highlights should remain clearly
+separated after RGB555 quantization. Narrow specular groups distinguish gold
+from matte cloth and brick; wet grime has its own sparse attached reflections.
+An occasional local reflected-light patch can connect materials without
+turning into a second full rim or competing with the main identity detail.
+
+Keep the playable field quieter than important objects. A floor must still
+read as gray slimy brick, but every mortar joint, crack and wet patch need not
+have equal contrast. Filth accumulates in coherent deposits under plumbing,
+in seams and along banks; it is not a repeating grid of small pickup-like
+symbols. Reserve local dithering for a material transition where its pattern
+and scale help. Neither checkerboard noise nor a blanket anti-dither rule is
+the shared direction.
+
+Refine lines and curves at their final coordinates. Regular pixel runs should
+not acquire accidental kinks; intentional broken masonry, organic anatomy and
+frayed hems may use irregularity to describe their structure. Selective
+palette AA differs from automatic blur: moving external contours must remain
+crisp on different backgrounds, with no fractional-alpha fringe. Inspect at
+1× throughout, using larger integer zooms only to diagnose placement.
+
+Review silhouettes, grayscale value groups, full pose families and actual
+scene motion before declaring the art finished. Preserve old/new comparisons
+and record the reason for each directional change. Correct palettes in their
+authored banks, never by grading a screenshot and calling it an implemented
+improvement. Tall-portrait tracing, optional blur/gradients and unrestricted
+color from one tutorial are translated into native clusters and useful palette
+choices; they do not override the user's GBA-first constraints.
 
 ## Scale and contact
 
@@ -137,6 +199,13 @@ changes in silhouette, not decorative fragments. Walks alternate planted feet;
 rolls remain one connected body. Jumps progress through takeoff, flight and
 landing with the shadow fixed to the ground. Drowning uses the area's actual
 water rather than an opaque blue disk. Death has a distinct settling motion.
+
+Idle breathing keeps the ground contact planted while the head and upper
+body move together by a small amount. Secondary cloth and flame motion may
+lag. Preserve the signature shape, grip and negative-space gaps in all frames;
+do not move the entire sprite up and down to substitute for breathing. The
+second Drain study adds a native frog-body breathing pose to coordinate its
+existing head bob without changing the original action-frame identifiers.
 
 A sword's blade, leading arc and damage interval share direction, frame and
 anchor data. Show actual reach without an opaque fan covering Bloom. The

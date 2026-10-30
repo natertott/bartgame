@@ -63,6 +63,19 @@ if SC.VARIANT:
                 image=painter(style,name)
                 assert image.size==(sheet['w'],sheet['h']),(sheet['name'],name,image.size)
                 sheet['frames'][name]=concept_rows(image)
+            if sheet['name']=='peddler_body':
+                # A second resting pose compresses the upper body with the
+                # existing head bob while keeping all original act IDs intact.
+                name='breathe'
+                assert name not in sheet['frames'] and len(sheet['frames'])==14
+                image=painter(style,name)
+                assert image.size==(32,32),(sheet['name'],name,image.size)
+                sheet['frames'][name]=concept_rows(image)
+                if 'frame_pal' in sheet:
+                    sheet['frame_pal'][name]=sheet['frame_pal']['rest']
+                COVERAGE.append({'sheet':'peddler_body','frame':name,
+                                 'owner':'sewer_concepts_npcs','canvas':[32,32],
+                                 'sewer_concept':SC.VARIANT})
         elif sheet['name']=='face':
             for name in ('peddler','gatekeeper'):
                 style=SC.RECIPE['peddler' if name=='peddler' else 'wizard']

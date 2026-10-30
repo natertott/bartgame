@@ -155,7 +155,13 @@ def npc_hardware(c, defs, catalog):
     anchor = None
     if 'gatekeeper' in positions and 'wisp' in positions:
         anchor = [positions['wisp'][i]-positions['gatekeeper'][i] for i in range(2)]
-    return result, anchor, entries
+    peddler_anchor = None
+    if 'peddler_head' in positions and 'peddler_body' in positions:
+        # OAM positions wrap at512x256. Keep the small relative offset even
+        # when the off-screen head and body straddle a wrapping boundary.
+        delta = [positions['peddler_head'][i]-positions['peddler_body'][i] for i in range(2)]
+        peddler_anchor = [(delta[0]+256)%512-256, (delta[1]+128)%256-128]
+    return result, anchor, peddler_anchor, entries
 
 
 def safe(c, px, py):
@@ -263,7 +269,7 @@ class Review:
             image = c.bg_video.to_pil().convert('RGB').copy()
             image.save(raw/f'frame-{tick:03}.png')
             images.append(image)
-            frames, anchor, entries = npc_hardware(c, defs, catalog)
+            frames, anchor, peddler_anchor, entries = npc_hardware(c, defs, catalog)
             row = {'video_tick': tick, 'frame': P.r32(c, P.sym('gFrame')),
                    'game_updates': P.r32(c, P.sym('gGame')+8),
                    'state': C.gstate(c), 'area': C.area(c),
@@ -271,6 +277,7 @@ class Review:
                    'position': list(P.player_pos(c)),
                    'camera': [P.r16(c, P.sym('gCamX')), P.r16(c, P.sym('gCamY'))],
                    'npc_frames': frames, 'flame_anchor': anchor,
+                   'peddler_head_body_anchor': peddler_anchor,
                    'oam': P.r8(c, P.sym('gOamCount')),
                    'glitter_sites': P.r16(c, P.sym('gAmbientSiteCount')),
                    'glitter_potential': P.r8(c, P.sym('gAmbientPotential')),
@@ -341,6 +348,30 @@ class Review:
                 checks['foreground_rail_uses_exact_two_tile_rom_art'] = rail_hardware['source_sha256'] == rail_hardware['hardware_sha256']
             if 0 <= 136-trace[0]['camera'][1] < 160:
                 checks['visible_foreground_rail_is_present_in_hardware_oam'] = bool(rail_hardware)
+        peddler_idle = None
+        if self.variant and name == 'market' and not dialogue:
+            # Identify the image actually uploaded into OBJ VRAM. The logic
+            # clock may already be preparing the next upload, so it is not a
+            # reliable source for this displayed head/body phase comparison.
+            expected = {'rest': [8, 6], 'breathe': [8, 7]}
+            named = {pose: [r for r in trace if pose in r['npc_frames']['peddler_body']]
+                     for pose in expected}
+            unique = {pose: [r for r in trace if r['npc_frames']['peddler_body'] == [pose]]
+                      for pose in expected}
+            checks['peddler_idle_displays_rest_and_breathe_in_hardware'] = all(named.values())
+            checks['peddler_idle_has_unambiguous_hardware_samples_for_both_poses'] = all(unique.values())
+            checks['peddler_head_and_body_breathing_phase_stays_connected'] = all(unique.values()) and all(
+                r['peddler_head_body_anchor'] == expected[pose]
+                for pose, rows in unique.items() for r in rows)
+            peddler_idle = {
+                'method': 'Exact ROM-body bytes identify displayed rest/breathe; only unique pose matches test the OAM head/body offset. No current-frame timer assumption.',
+                'expected_head_body_anchors': expected,
+                'matched_pose_samples': {pose: len(rows) for pose, rows in named.items()},
+                'unambiguous_pose_samples': {pose: len(rows) for pose, rows in unique.items()},
+                'observed_head_body_anchors': {pose: sorted({tuple(r['peddler_head_body_anchor'])
+                    for r in rows if r['peddler_head_body_anchor'] is not None}) for pose, rows in unique.items()},
+                'unambiguous_video_ticks': {pose: [r['video_tick'] for r in rows] for pose, rows in unique.items()},
+            }
         for label, condition in checks.items():
             if condition is not None:
                 self.check(name+': '+label, condition)
@@ -355,6 +386,7 @@ class Review:
                'vblanks': P.r32(c, P.sym('gFrame'))-gframe,
                'game_updates': P.r32(c, P.sym('gGame')+8)-updates,
                'foreground_rail_hardware': rail_hardware,
+               'peddler_idle_hardware': peddler_idle,
                'npc_frame_union': {who: sorted({f for r in trace for f in r['npc_frames'][who]}) for who in catalog}}
         self.rows.append(row)
         self.save()

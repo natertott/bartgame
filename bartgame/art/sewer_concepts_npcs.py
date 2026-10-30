@@ -1,17 +1,16 @@
-"""Five native-pixel frog Peddlers and hooded, flame-staff wizards.
+"""Reference-led native frog Peddlers and flame-staff wizards.
 
-Comparison art only: importing this module never modifies the live painter.
-All canvases are authored directly in sixteen indexed GBA inks. Portraits
-are independent 48px drawings, not enlarged world sprites. World head/body
-anchors retain the current Peddler's two streamed hardware objects.
+Five proportion/shape studies share one lighting and pixel-cluster grammar.
+Authoring starts on16px heads,32px bodies,8px flames and48px portraits. The
+source2 silhouette/idle advice, Janes' directional form, and the material
+and palette lessons in all six uploaded PDFs guide the deliberately broad
+planes. No high-resolution drawing is resized into these production pixels.
 
-Wizard staff top: body (26,8). Draw the 8px flame at body (23,1), so its core
-rests at (26,6) and its base meets the staff. Indices13/14 belong exclusively
-to the flame; a palette pulse cannot recolour the purple robe.
+The existing head/body anchors and frame identifiers are retained. Staff
+shaft(26,8), flame origin(23,1), and reserved emissive indices13/14 are fixed.
 """
 from pathlib import Path
 from PIL import Image, ImageDraw, ImageFont
-
 
 STYLE_NAMES={1:'Crown of Sludge',2:'Crooked Brassworks',3:'Moonlit Cistern',
              4:'Rotten Reliquary',5:'Royal Drains'}
@@ -20,7 +19,7 @@ PEDDLER_NAMES={1:'Puddle Prince',2:'Dawdling Tinker',3:'Sleepy Minnow',
 WIZARD_NAMES={1:'Bent Cowl',2:'Crooked Hat',3:'Moon Hood',4:'Ragged Pilgrim',5:'Gilt Abbot'}
 HEAD_FRAMES=('open','blink','left','down','grin')
 BODY_FRAMES=('rest','tap','tap2','lift','spin9','spin7','spin5','spin3',
-             'spin5b','spin7b','spin9b','slap','rub0','rub1')
+             'spin5b','spin7b','spin9b','slap','rub0','rub1','breathe')
 WIZARD_FRAMES=('idle','blink','breath','breath_blink','kindle','kindle_blink')
 FLAME_FRAMES=('w0','w1','w2','w3')
 FLAME_ORIGIN=(23,1)
@@ -33,268 +32,386 @@ def _style(style):
 
 
 def _new(w,h):
-    image=Image.new('P',(w,h),0)
-    return image,ImageDraw.Draw(image)
+    im=Image.new('P',(w,h),0)
+    return im,ImageDraw.Draw(im)
+
+
+def _stamp(dst,src,xy):
+    dst.paste(src,xy,src.point(lambda v:255 if v else 0,'1'))
+
+
+def _shift(points,dy=0,dx=0):return [(x+dx,y+dy) for x,y in points]
 
 
 def peddler_palette(style):
-    """1outline;2–7frog/cream;8–11apron;12–14brass;15warmwhite."""
+    """Three greens2/3/4; throat5/6; eyes7; cloth8..11; brass12..14."""
     style=_style(style)
-    greens={
-        1:['#182820','#284830','#487040','#78a050','#a8c878','#d8d898'],
-        2:['#183028','#285038','#408048','#78b058','#b0d880','#e0e0a8'],
-        3:['#183030','#285048','#387860','#60a078','#98c898','#d0e0b8'],
-        4:['#202818','#384828','#586838','#809848','#b0b868','#d8d088'],
-        5:['#183028','#285038','#487848','#78a858','#a8d080','#e0e0b0'],
-    }[style]
-    apron={1:['#282028','#483030','#705040','#987048'],
-           2:['#302020','#583828','#885038','#b07848'],
-           3:['#182830','#284048','#386068','#608080'],
-           4:['#282020','#403028','#605038','#887048'],
-           5:['#202038','#383050','#585078','#8880a0']}[style]
-    return ['#000000','#101820',*greens,*apron,'#885828','#c09040','#f0c868','#f8f0d0']
+    skin={1:['#284038','#507848','#98b860','#a0b078','#d0d898','#f0e8b8'],
+          2:['#204038','#488048','#88b858','#a0b070','#d0d890','#f0e8b0'],
+          3:['#203840','#387868','#78a888','#90b8a0','#c0d8b8','#e8f0c8'],
+          4:['#303828','#687040','#a0a858','#a0a068','#c8c888','#e8e0a8'],
+          5:['#203c30','#487850','#88b878','#a0b878','#d0e0a0','#f0f0c0']}[style]
+    # Every hex component is explicitly quantized to RGB555 below.
+    cloth={1:['#302830','#504038','#806048','#b09060'],
+           2:['#302830','#583828','#986038','#c09058'],
+           3:['#202838','#304850','#507078','#88a098'],
+           4:['#282828','#403828','#685840','#988060'],
+           5:['#282038','#403048','#685078','#a088a8']}[style]
+    colors=['#000000','#101820',*skin,*cloth,'#705030','#b08038','#e8c060','#f8e8b8']
+    return [_q(c) for c in colors]
 
 
 def wizard_palette(style):
-    """Purple2–7, staff8–10, ivory11, ember12, flame13/14, hotwhite15."""
+    """Cloth uses2/3/4 only;1cavity;8..10staff;11hand;12..15flame."""
     style=_style(style)
-    purple={1:['#201828','#382040','#583058','#784078','#a068a0','#c8a0c0'],
-            2:['#201830','#382048','#583068','#804898','#b078c0','#d8b0d8'],
-            3:['#181830','#282848','#403868','#605088','#8870b0','#b8a8d0'],
-            4:['#201820','#382030','#503048','#704060','#906880','#c098b0'],
-            5:['#201830','#382048','#583070','#8050a0','#b080c8','#d8b8e0']}[style]
-    return ['#000000','#101018',*purple,'#483020','#805030','#b88038',
-            '#e0d8b8','#c85020','#f09828','#f8c858','#f8f0c0']
+    purple={1:['#282038','#604068','#a07098'],
+            2:['#282038','#684078','#b078b8'],
+            3:['#202840','#504878','#9890b8'],
+            4:['#282030','#604058','#a07888'],
+            5:['#282038','#684088','#b080c8']}[style]
+    return [_q(c) for c in ['#000000','#101820',*purple,
+            '#786850','#a09070','#c0b898','#483028','#906038','#d0a058',
+            '#c8c098','#c85020','#f09828','#f8c858','#f8f0c0']]
 
 
-def _pupil(d,box,frame,side=0):
-    x0,y0,x1,y1=box
-    d.ellipse(box,fill=1)
-    if frame=='blink':
-        d.line([(x0+1,y1-1),(x1-1,y1-1)],fill=4)
-        return
-    d.ellipse((x0+1,y0+1,x1-1,y1-1),fill=7)
-    px=(x0+x1)//2 + (-1 if frame=='left' else 0)
-    py=(y0+y1)//2 + (1 if frame=='down' else 0)
-    # The two eyes intentionally focus at slightly different heights.
-    py=min(y1-1,max(y0+1,py+side))
-    d.point((px,py),fill=1)
+def _q(color):
+    return '#'+''.join('%02x'%(int(color[i:i+2],16)//8*8) for i in (1,3,5))
+
+
+# Clean, final-size masks: eyes and jaw are the signature; three large green
+# values describe forehead, cheek and far-side plane rather than ellipse rings.
+HEADS={
+1:(
+'................',
+'..2222....2222..',
+'.233332..233332.',
+'.237732..237732.',
+'.23773222377332.',
+'.23333333333332.',
+'.24444333333332.',
+'2344433333333332',
+'2344333333333322',
+'2333333333333222',
+'.23111111111322.',
+'..235555553322..',
+'...2355555322...',
+'....22222222....',
+'................',
+'................'),
+2:(
+'................',
+'..2222..........',
+'.233332...2222..',
+'.237732..233332.',
+'.237732..237732.',
+'.23333222377332.',
+'2344443333333332',
+'2344433333333332',
+'2333333333333322',
+'2331111111133322',
+'.23355555113322.',
+'..235555511322..',
+'...2355555322...',
+'....22222222....',
+'................',
+'................'),
+3:(
+'................',
+'................',
+'..2222....2222..',
+'.233332..233332.',
+'.244332..244332.',
+'.23773222377332.',
+'..3333333333332.',
+'.23443333333332.',
+'.23443333333322.',
+'..331111111332..',
+'...3355555332...',
+'....35555532....',
+'.....222222.....',
+'................',
+'................',
+'................'),
+4:(
+'................',
+'................',
+'.2222......2222.',
+'233332....233332',
+'2377322222237732',
+'2333333333333332',
+'2444433333333332',
+'2344433333333322',
+'2343333333333322',
+'2311111111111322',
+'2335555555553322',
+'.23555555555322.',
+'..235555555322..',
+'...2222222222...',
+'................',
+'................'),
+5:(
+'................',
+'.....111111.....',
+'.....edddd1.....',
+'..222ccccc2222..',
+'.233332..233332.',
+'.237732..237732.',
+'.23773222377332.',
+'..344433333332..',
+'..344333333332..',
+'..331111111332..',
+'...3355555332...',
+'....35555532....',
+'.....222222.....',
+'................',
+'................',
+'................')}
+EYES={1:((3,3,5,4),(10,3,12,4)),2:((3,3,5,4),(10,4,12,5)),
+      3:((3,5,5,5),(10,5,12,5)),4:((2,4,4,4),(11,4,13,4)),
+      5:((3,5,5,6),(10,5,12,6))}
 
 
 def peddler_head(style,name):
     style=_style(style)
     if name not in HEAD_FRAMES:raise ValueError(name)
     im,d=_new(16,16)
-    # Flat, broad muzzles and eyes on top distinguish all five from rats.
-    face={1:(1,5,14,14),2:(1,5,14,14),3:(2,6,14,13),4:(0,6,15,15),5:(2,6,13,14)}[style]
-    d.ellipse(face,fill=1)
-    a,b,c,e=face
-    d.ellipse((a+1,b+1,c-1,e-1),fill=4)
-    d.arc((a+2,b+1,c-2,e-2),185,330,fill=5)
-    chin={1:(3,10,12,14),2:(2,10,13,14),3:(4,10,12,13),4:(1,10,14,15),5:(4,10,11,14)}[style]
-    d.ellipse(chin,fill=3)
-    d.line([(chin[0]+1,chin[3]-2),(7,chin[3]-1),(chin[2]-1,chin[3]-2)],fill=6)
-    eyes={1:((2,2,7,8),(9,2,14,8)),2:((2,1,7,8),(9,3,13,8)),
-          3:((2,3,7,8),(9,3,14,8)),4:((1,3,6,8),(10,3,14,8)),
-          5:((3,3,7,8),(9,3,13,8))}[style]
-    for side,box in enumerate(eyes):
-        _pupil(d,box,name,side if style in (1,2,5) else 0)
-        if style==3 and name!='blink':
-            d.line([(box[0]+1,box[1]+1),(box[2]-1,box[1]+1)],fill=4)
-            d.line([(box[0]+1,box[1]+2),(box[2]-1,box[1]+2)],fill=5)
-    d.point((5,8),fill=2);d.point((10,8),fill=2)
+    for y,row in enumerate(HEADS[style]):
+        assert len(row)==16
+        for x,ink in enumerate(row):
+            if ink!='.':im.putpixel((x,y),int(ink,16))
+    for side,(x0,y0,x1,y1) in enumerate(EYES[style]):
+        if name=='blink':
+            d.rectangle((x0,y0,x1,y1),fill=3)
+            d.line((x0,y1,x1,y1),fill=2)
+            continue
+        px=(x0+x1)//2+(-1 if name=='left' else 0)
+        py=y1 if name=='down' or side and style in (1,2,5) else y0
+        d.point((px,py),fill=1)
     if name=='grin':
-        d.line([(3,10),(5,11),(10,11),(12,10)],fill=1)
-        d.line([(5,12),(9,12)],fill=7)
-    elif style==2:
-        d.line([(4,10),(9,11)],fill=1)
-        d.rectangle((9,11,10,12),fill=1)
-    elif style==3:
-        d.line([(3,10),(10,11),(12,10)],fill=1)
-    elif style==4:
-        d.line([(2,11),(12,11)],fill=1);d.point((13,12),fill=1)
-    else:
-        d.line([(3,10),(10,10)],fill=1)
-        d.rectangle((10,10,11,12),fill=1)
-        d.point((10,13),fill=7)
-    if style==4:
-        for p in ((1,8),(3,7),(12,7),(14,9)):d.point(p,fill=5)
-    if style==5:
-        # A small flat porter cap, perched between the eyes, changes the
-        # silhouette without hiding the characteristic frog eye lobes.
-        d.line([(5,1),(10,1)],fill=1)
-        d.rectangle((5,2,10,3),fill=13);d.line([(4,4),(11,4)],fill=12)
-        d.line([(6,2),(9,2)],fill=14)
+        y={1:10,2:9,3:9,4:9,5:9}[style]
+        left,right={1:(3,11),2:(3,12),3:(4,10),4:(2,13),5:(4,10)}[style]
+        d.line([(left,y),(left+1,y+1),(right-1,y+1),(right,y)],fill=1)
+        d.line((left+2,y+1,right-2,y+1),fill=7)
+    elif name=='down':
+        # One lowered jaw corner is a gesture, not a new face texture.
+        x,y={1:(10,10),2:(11,9),3:(10,9),4:(12,9),5:(10,9)}[style]
+        d.point((x,y+1),fill=1)
     return im
 
 
-def _hand(d,x,y,side):
-    d.ellipse((x-1,y-1,x+1,y+1),fill=1)
-    d.line([(x,y-1),(x,y+1)],fill=5)
-    d.point((x+side,y),fill=6)
+BODY_SHAPES={
+1:{'outline':[(11,17),(20,17),(23,20),(24,25),(22,29),(19,30),(11,30),(8,27),(8,22)],
+   'base':[(11,18),(19,18),(22,21),(23,25),(21,28),(18,29),(12,29),(9,26),(9,22)],
+   'light':[(11,19),(13,18),(16,18),(14,21),(12,25),(10,25),(10,22)],
+   'cloth':[(12,21),(19,21),(21,27),(18,29),(11,27)],'near':(9,24),'far':(23,24)},
+2:{'outline':[(10,18),(20,18),(24,20),(26,24),(25,28),(21,30),(10,30),(6,27),(6,23)],
+   'base':[(10,19),(20,19),(23,21),(25,24),(24,27),(20,29),(10,29),(7,26),(7,23)],
+   'light':[(10,20),(14,19),(16,19),(14,23),(11,25),(8,24),(8,22)],
+   'cloth':[(12,22),(19,22),(22,28),(18,30),(10,28)],'near':(7,24),'far':(25,24)},
+3:{'outline':[(12,16),(18,17),(20,20),(21,25),(19,29),(15,30),(10,29),(9,25),(10,20)],
+   'base':[(12,17),(17,18),(19,21),(20,25),(18,28),(15,29),(11,28),(10,25),(11,21)],
+   'light':[(12,18),(14,18),(13,22),(12,26),(10,25),(11,21)],
+   'cloth':[(13,21),(17,21),(19,28),(16,29),(12,28)],'near':(9,24),'far':(20,23)},
+4:{'outline':[(9,18),(21,18),(25,21),(27,25),(25,28),(21,30),(10,30),(5,28),(4,24),(6,21)],
+   'base':[(9,19),(21,19),(24,22),(26,25),(24,27),(21,29),(10,29),(6,27),(5,24),(7,22)],
+   'light':[(8,21),(11,19),(16,19),(14,22),(10,25),(6,25),(6,23)],
+   'cloth':[(11,22),(20,22),(22,28),(18,30),(10,28)],'near':(6,25),'far':(26,25)},
+5:{'outline':[(12,18),(19,18),(22,21),(23,27),(20,30),(11,30),(9,27),(10,21)],
+   'base':[(12,19),(18,19),(21,22),(22,26),(19,29),(12,29),(10,26),(11,22)],
+   'light':[(12,20),(14,19),(15,20),(13,24),(11,25),(11,22)],
+   'cloth':[(13,21),(18,21),(21,27),(18,29),(12,28)],'near':(10,24),'far':(22,24)}}
+
+
+def _hand(d,x,y,left=False):
+    d.polygon([(x-1,y-1),(x+1,y-1),(x+2,y),(x+1,y+2),(x-1,y+1)],fill=2)
+    d.line((x-1,y,x+1,y),fill=4 if left else 3)
 
 
 def peddler_body(style,name):
     style=_style(style)
     if name not in BODY_FRAMES:raise ValueError(name)
-    im,d=_new(32,32)
-    wide={1:8,2:10,3:6,4:10,5:7}[style]
-    left,right=16-wide,16+wide
-    top={1:17,2:19,3:17,4:19,5:20}[style]
-    # Large webbed feet are connected to the haunches, with no floating flecks.
-    d.polygon([(left+2,25),(left,30),(left-2,31),(left+5,31),(left+6,27)],fill=1)
-    d.polygon([(left+3,26),(left+1,30),(left+4,30),(left+5,27)],fill=4)
-    d.polygon([(right-2,25),(right+1,30),(right+3,31),(right-5,31),(right-6,27)],fill=1)
-    d.polygon([(right-3,26),(right,30),(right-4,30),(right-5,27)],fill=4)
-    if style==2:
-        d.ellipse((left,top,right,30),fill=1)
-        d.ellipse((left+1,top+1,right-1,29),fill=4)
-        d.arc((left+2,top+1,right-2,29),185,320,fill=5)
-    elif style==4:
-        d.polygon([(left+3,top),(right-4,top),(right,24),(right-1,28),
-                   (right-6,30),(left+5,29),(left,27),(left+1,23)],fill=1)
-        d.polygon([(left+4,top+1),(right-5,top+1),(right-1,24),(right-2,27),
-                   (right-6,29),(left+5,28),(left+1,26),(left+2,23)],fill=4)
-    elif style==5:
-        d.polygon([(left+3,top),(right-3,top),(right,26),(right-2,30),(left+2,30),(left,26)],fill=1)
-        d.polygon([(left+4,top+1),(right-4,top+1),(right-1,26),(right-3,29),(left+3,29),(left+1,26)],fill=4)
-    else:
-        d.polygon([(left+2,top),(right-2,top),(right,24),(right-2,29),(left+2,29),(left,24)],fill=1)
-        d.polygon([(left+3,top+1),(right-3,top+1),(right-1,24),(right-3,28),(left+3,28),(left+1,24)],fill=4)
-    # A cream throat meets the separately streamed head at bodyy18..20.
-    throat={1:(12,18,20,23),2:(10,18,22,24),3:(13,18,19,23),4:(10,19,22,24),5:(13,19,19,23)}[style]
-    d.ellipse(throat,fill=6)
-    apron_left,apron_right=left+3,right-3
-    d.polygon([(apron_left,20),(apron_right,20),(apron_right+1,28),(apron_left-1,28)],fill=8)
-    d.polygon([(apron_left+1,21),(apron_right-1,21),(apron_right,27),(apron_left,27)],fill=10)
-    d.line([(apron_left,21),(apron_left,26)],fill=11)
-    d.line([(apron_right-1,22),(apron_right,27)],fill=9)
-    d.line([(12,19),(13,22)],fill=11);d.line([(20,19),(19,22)],fill=9)
-    if style==1:
-        d.rectangle((13,24,19,26),fill=9);d.line([(13,24),(18,24)],fill=12)
-        d.point((17,25),fill=14)
-    elif style==2:
-        d.rectangle((13,23,18,26),fill=9);d.line([(14,24),(17,25)],fill=11)
-        d.point((14,25),fill=12)
+    im,d=_new(32,32);s=BODY_SHAPES[style]
+    # Feet never leave the same baseline. Short filled shins join the haunch
+    # and three-toed flipper; there are no detached horizontal sole fragments.
+    lf,rf={1:(10,21),2:(8,23),3:(12,18),4:(7,24),5:(11,20)}[style]
+    for x,direction in ((lf,-1),(rf,1)):
+        d.polygon([(x-1,26),(x+2,26),(x+2,29),(x+3+direction,30),
+                   (x+3+direction,31),(x-3+direction,31),(x-3+direction,30),(x-1,28)],fill=1)
+        d.polygon([(x,27),(x+1,27),(x+1,30),(x+2+direction,30),
+                   (x-2+direction,30),(x-1,29)],fill=3)
+        d.line((x-1,29,x+direction,30),fill=4)
+    compress=1 if name in ('tap2','slap','rub1','breathe') else 0
+    lift=-1 if name=='lift' or name.startswith('spin') else compress
+    def body_points(points):return [(x,y+lift if y<26 else y) for x,y in points]
+    d.polygon(body_points(s['outline']),fill=1)
+    d.polygon(body_points(s['base']),fill=3)
+    d.polygon(body_points(s['light']),fill=4)
+    # The far haunch is one grouped cool shadow, not a contour-following ring.
+    right=max(x for x,y in s['base'])
+    d.polygon([(right-2,22),(right,24),(right-1,27),(right-4,29),(right-5,27)],fill=2)
+    d.polygon([(12,18+lift),(19,18+lift),(20,20+lift),(18,23+lift),(13,23+lift),(11,21+lift)],fill=5)
+    d.line((13,19+lift,17,19+lift),fill=6)
+    d.polygon(body_points(s['cloth']),fill=10)
+    cp=body_points(s['cloth'])
+    # One cloth shadow plane and one broad shoulder catch replace tiny
+    # pockets, embroidery, buttons and the previous stack of apron borders.
+    cx=sum(x for x,y in cp)//len(cp)
+    d.polygon([(cx+1,22+lift),(cx+4,23+lift),(cx+5,27),(cx+1,29)],fill=9)
+    if style in (1,2):
+        d.line((12,21+lift,12,25+lift),fill=11)
     elif style==3:
-        d.line([(13,24),(18,24)],fill=7)
-        d.line([(13,25),(17,26)],fill=9)
+        d.polygon([(12,20+lift),(14,21+lift),(13,26),(12,27)],fill=11)
     elif style==4:
-        d.polygon([(10,25),(13,24),(14,27),(12,28),(11,27)],fill=9)
-        d.line([(16,24),(19,24)],fill=11)
-    elif style==5:
-        d.line([(12,21),(15,23),(16,21),(18,23),(20,21)],fill=12)
-        d.point((16,24),fill=14);d.point((16,26),fill=13)
-    ly=24;ry=24
-    lx=left;rx=right
-    if name=='tap':ly=23
-    elif name=='tap2':ly=22
-    elif name=='lift':ry=20
-    elif name.startswith('spin'):ry=20
-    elif name=='slap':ry=25;rx=23
+        d.polygon([(11,24),(13,24),(12,28),(10,27)],fill=9)
+    else:
+        d.line((13,22+lift,13,26),fill=11)
+        d.point((17,24),fill=12)
+    lx,ly=s['near'];rx,ry=s['far']
+    if name=='breathe':ly+=1;ry+=1
+    elif name=='tap':ly-=1
+    elif name=='tap2':ly-=2
+    elif name=='lift' or name.startswith('spin'):ry=18
+    elif name=='slap':rx,ry=23,26
     elif name in ('rub0','rub1'):
-        ly=ry=22 if name=='rub0' else 23;lx=15;rx=19
-    d.line([(left+2,20),(lx,ly)],fill=1,width=3)
-    d.line([(left+2,20),(lx,ly)],fill=4,width=1)
-    d.line([(right-2,20),(rx,ry)],fill=1,width=3)
-    d.line([(right-2,20),(rx,ry)],fill=5,width=1)
-    _hand(d,lx,ly,-1);_hand(d,rx,ry,1)
+        lx,rx=14,18;ly=ry=22+compress
+    la=(min(12,lx+2),20+lift);ra=(min(21,rx-2),20+lift)
+    for start,end,left in ((la,(lx,ly),True),(ra,(rx,ry),False)):
+        d.line([start,end],fill=1,width=3)
+        d.line([start,end],fill=3 if left else 2,width=1)
+        _hand(d,*end,left)
     if name.startswith('spin'):
-        width={'9':5,'7':3,'5':2,'3':1}[name[4]]
-        cy=13 if name.endswith('b') else 11
-        d.ellipse((rx-width//2,cy-2,rx+width//2,cy+2),fill=1)
-        d.line([(rx-width//2,cy-1),(rx+width//2,cy-1)],fill=13)
-        d.point((rx,cy),fill=14)
+        width={'9':5,'7':4,'5':3,'3':1}[name[4]]
+        cy=11 if not name.endswith('b') else 13
+        d.polygon([(rx-width//2,cy-1),(rx+width//2,cy-1),(rx+width//2,cy+1),
+                   (rx-width//2,cy+1)],fill=12)
+        d.line((rx-width//2,cy-1,rx+width//2,cy-1),fill=14)
+        d.point((rx,cy),fill=13)
     elif name=='lift':
-        d.ellipse((rx-2,ry-4,rx+2,ry),fill=1)
-        d.ellipse((rx-1,ry-3,rx+1,ry-1),fill=13);d.point((rx,ry-3),fill=15)
+        d.rectangle((rx-1,ry-4,rx+1,ry-1),fill=13)
+        d.line((rx-1,ry-4,rx+1,ry-4),fill=14)
     elif name=='slap':
-        d.ellipse((21,25,25,27),fill=12);d.line([(22,25),(24,25)],fill=14)
+        d.line((22,26,25,26),fill=13)
+        d.point((22,25),fill=14)
     return im
+
+
+WIZARD_SHAPES={
+1:{'coat':[(10,15),(16,14),(20,17),(21,24),(20,28),(17,31),(8,31),(7,28),(8,22)],
+   'base':[(10,17),(16,15),(19,18),(20,24),(18,28),(16,30),(9,30),(8,27),(9,22)],
+   'light':[(10,17),(13,16),(13,21),(11,25),(9,28),(8,26)],
+   'shade':[(17,17),(19,19),(20,24),(18,28),(16,30),(14,28),(16,23)],
+   'hood':[(8,16),(8,11),(10,7),(13,5),(17,6),(19,9),(19,15),(17,19),(11,20)],
+   'hoodbase':[(9,15),(9,11),(11,8),(13,6),(16,7),(18,10),(18,15),(16,18),(11,18)],
+   'hoodlight':[(9,11),(11,8),(13,6),(15,7),(12,9),(11,13),(10,15)],
+   'cavity':[(12,12),(14,10),(16,11),(17,14),(16,17),(12,17)]},
+2:{'coat':[(9,16),(17,16),(20,19),(22,26),(20,30),(16,31),(7,31),(6,28),(7,22)],
+   'base':[(9,17),(17,17),(19,20),(21,26),(19,29),(15,30),(8,30),(7,27),(8,22)],
+   'light':[(9,18),(12,17),(13,20),(11,24),(9,29),(7,27)],
+   'shade':[(17,19),(19,21),(21,26),(19,29),(16,30),(15,27)],
+   'hood':[(7,16),(8,10),(11,6),(15,3),(21,3),(23,5),(20,6),(20,10),(21,16),(18,20),(11,20)],
+   'hoodbase':[(8,15),(9,10),(12,7),(16,4),(20,4),(19,6),(19,10),(20,15),(17,18),(11,19)],
+   'hoodlight':[(9,11),(12,7),(16,4),(19,4),(15,6),(12,10),(11,15)],
+   'cavity':[(12,12),(15,10),(18,12),(18,16),(16,18),(12,17)]},
+3:{'coat':[(11,16),(17,16),(20,19),(21,25),(22,30),(18,31),(9,31),(8,28),(9,23)],
+   'base':[(11,17),(17,17),(19,20),(20,26),(21,29),(17,30),(10,30),(9,27),(10,23)],
+   'light':[(11,18),(13,17),(14,19),(12,24),(11,28),(9,27)],
+   'shade':[(17,19),(19,21),(20,26),(21,29),(17,30),(15,29),(16,24)],
+   'hood':[(9,15),(9,10),(11,7),(14,5),(18,5),(21,8),(22,12),(21,17),(18,20),(12,20)],
+   'hoodbase':[(10,15),(10,10),(12,8),(14,6),(17,6),(20,9),(21,12),(20,16),(17,19),(12,18)],
+   'hoodlight':[(10,11),(12,8),(14,6),(17,6),(17,7),(13,9),(12,13)],
+   'cavity':[(13,12),(15,10),(18,11),(19,14),(18,17),(15,18),(12,16)]},
+4:{'coat':[(8,17),(15,16),(19,18),(21,23),(23,28),(21,29),(19,28),(17,31),(14,30),(11,31),(7,29),(5,29),(6,24)],
+   'base':[(8,18),(15,17),(18,19),(20,23),(22,27),(19,27),(17,30),(14,29),(11,30),(8,28),(6,28),(7,24)],
+   'light':[(8,19),(11,18),(13,18),(12,22),(9,26),(7,27),(6,26)],
+   'shade':[(16,19),(18,20),(20,24),(22,27),(19,27),(17,30),(15,29),(14,26)],
+   'hood':[(7,17),(7,12),(9,9),(12,7),(16,7),(19,9),(20,13),(22,17),(19,18),(17,21),(13,19),(10,20)],
+   'hoodbase':[(8,16),(8,12),(10,10),(13,8),(16,8),(18,10),(19,13),(20,16),(18,17),(16,19),(13,18),(10,19)],
+   'hoodlight':[(8,13),(10,10),(13,8),(15,8),(13,10),(11,13),(10,16)],
+   'cavity':[(12,12),(15,11),(17,13),(18,16),(16,18),(12,17)]},
+5:{'coat':[(11,15),(18,15),(20,19),(22,26),(23,30),(19,31),(8,31),(8,29),(9,23)],
+   'base':[(11,16),(17,16),(19,20),(21,26),(22,29),(18,30),(9,30),(9,28),(10,23)],
+   'light':[(11,17),(13,16),(14,18),(12,24),(11,28),(9,28)],
+   'shade':[(17,18),(19,21),(21,26),(22,29),(18,30),(16,29),(16,24)],
+   'hood':[(8,16),(9,11),(12,6),(15,2),(18,5),(21,9),(22,14),(20,19),(13,20)],
+   'hoodbase':[(9,16),(10,11),(13,7),(15,3),(17,6),(20,10),(21,14),(19,18),(13,19)],
+   'hoodlight':[(10,12),(13,7),(15,3),(16,6),(14,9),(12,14)],
+   'cavity':[(13,12),(16,10),(18,12),(19,15),(17,18),(13,17)]}}
 
 
 def wizard(style,name):
     style=_style(style)
     if name not in WIZARD_FRAMES:raise ValueError(name)
-    im,d=_new(32,32)
-    breathing=name.startswith('breath');kindle=name.startswith('kindle')
-    # A bowed spine and irregular hem make an old figure without a large face.
-    coat={1:[(10,15),(18,15),(21,28),(17,31),(7,30),(8,25)],
-          2:[(10,15),(19,16),(22,28),(19,31),(7,30),(8,22)],
-          3:[(11,15),(19,15),(23,29),(18,31),(7,30),(9,23)],
-          4:[(9,15),(17,16),(22,23),(21,29),(18,28),(16,31),(13,29),(9,31),(6,28),(8,24)],
-          5:[(10,15),(19,15),(23,29),(19,31),(7,30),(8,23)]}[style]
-    d.polygon(coat,fill=1)
-    d.polygon([(11,17),(18,17),(20,27),(17,29),(9,28),(10,23)],fill=3)
-    d.polygon([(11,18),(13,17),(12,25),(10,28),(9,27)],fill=5)
-    d.polygon([(16,18),(18,19),(19,27),(16,29),(14,28)],fill=4)
-    d.line([(15,22),(14,27)],fill=2)
-    d.line([(10,28),(16,29),(19,28)],fill=5 if style!=4 else 4)
-    # One pale boot and beard give small age cues beneath the hidden face.
-    d.line([(10,30),(12,30)],fill=8);d.line([(17,30),(19,30)],fill=8)
-    hood={1:[(8,16),(9,10),(12,6),(16,4),(18,7),(20,10),(20,17),(17,20),(11,19)],
-          2:[(8,15),(10,8),(16,2),(22,2),(20,5),(22,13),(20,18),(12,19)],
-          3:[(9,15),(9,10),(12,6),(17,4),(21,8),(22,15),(19,19),(12,19)],
-          4:[(7,16),(8,11),(11,7),(15,6),(19,9),(20,14),(22,17),(19,18),(17,21),(14,19),(10,20)],
-          5:[(8,16),(10,10),(15,1),(18,5),(22,11),(22,17),(18,20),(11,19)]}[style]
-    d.polygon(hood,fill=1)
-    d.polygon([(10,13),(11,9),(14,6),(17,6),(20,11),(20,16),(17,18),(12,17)],fill=4)
-    d.line([(11,10),(14,7 if style in (1,4) else 6),(17,7 if style in (1,4) else 6)],fill=6)
-    d.polygon([(12,12),(14,10),(17,10),(19,13),(18,17),(13,17)],fill=1)
-    d.line([(13,12),(15,11),(17,12)],fill=2)
+    im,d=_new(32,32);s=WIZARD_SHAPES[style]
+    breath=name.startswith('breath');kindle=name.startswith('kindle')
+    # Planted hem and boots; only upper cloth, hood and arm transfer weight.
+    d.polygon(s['coat'],fill=1)
+    d.polygon(s['base'],fill=3)
+    d.polygon(s['shade'],fill=2)
+    light=[(x,y+1 if breath and y<24 else y) for x,y in s['light']]
+    d.polygon(light,fill=4)
+    d.line((10,30,12,30),fill=8);d.line((17,30,19,30),fill=8)
+    dy=1 if breath else 0
+    for part,ink in (('hood',2),('hoodbase',3),('hoodlight',4),('cavity',1)):
+        d.polygon(_shift(s[part],dy),fill=ink)
     if style in (1,2):
-        d.polygon([(13,17),(17,17),(16,20),(14,19)],fill=11)
-        d.point((14,18),fill=7)
-    elif style==3:
-        d.line([(12,17),(17,18)],fill=6)
-    elif style==4:
-        d.line([(10,14),(10,17),(12,18)],fill=5)
-        d.point((19,9),fill=5)
-    else:
-        d.polygon([(15,3),(17,6),(15,8),(13,8)],fill=5)
-        d.line([(11,11),(14,7),(17,7),(20,12)],fill=10)
-        d.point((15,7),fill=11)
-        d.line([(10,20),(11,26)],fill=10)
-    # Fixed staff and flame anchor permit unchanged streaming/OAM dimensions.
-    d.line([(26,8),(26,30)],fill=1,width=3)
-    d.line([(26,9),(26,29)],fill=9)
-    d.line([(25,12),(26,11)],fill=10)
-    d.line([(25,24),(26,23)],fill=10)
-    if style==1:
-        d.line([(24,8),(28,8)],fill=10);d.point((26,9),fill=11)
-    elif style==2:
-        d.line([(25,9),(28,9),(28,7)],fill=10)
-    elif style==3:
-        d.arc((23,6,29,11),0,180,fill=10,width=1)
-    elif style==4:
-        d.line([(25,9),(27,8),(27,6)],fill=9);d.point((24,13),fill=8)
-    else:
-        d.rectangle((24,8,28,10),fill=10);d.point((25,8),fill=11)
-    # Broad sleeves hold the shaft; wrists stay connected through every pose.
-    hand_y=16 if kindle else 20 if breathing else 22
-    d.line([(19,19),(22,hand_y+1),(25,hand_y)],fill=1,width=4)
-    d.line([(19,19),(22,hand_y+1),(24,hand_y)],fill=4,width=2)
-    d.point((25,hand_y),fill=11)
-    d.line([(10,20),(8,24),(10,25)],fill=1,width=4)
-    d.line([(10,20),(9,23)],fill=5,width=2)
-    d.point((10,25),fill=11)
+        d.polygon(_shift([(12,17),(16,18),(15,20),(13,19)],dy),fill=7)
     if 'blink' in name:
-        d.line([(13,14),(17,14)],fill=2)
-    if breathing:d.line([(12,23),(13,25)],fill=5)
+        # A closed/settling cowl changes the lip; no face or glowing eyes
+        # emerge from the deliberately obscured hood.
+        d.line((12,16+dy,16,17+dy),fill=2)
+    if style==5:
+        d.line((11,18+dy,12,22+dy),fill=10)
+    elif style==4:
+        d.line((7,26,8,28),fill=2)
+    d.line([(26,8),(26,30)],fill=8,width=3)
+    d.line([(26,9),(26,29)],fill=9)
+    d.line((25,10,27,10),fill=10)
+    if style==1:d.line((24,8,28,8),fill=9)
+    elif style==2:d.line([(25,8),(28,8),(28,7)],fill=10)
+    elif style==3:d.line([(24,8),(25,10),(27,10),(28,8)],fill=10)
+    elif style==4:d.line([(25,8),(27,7),(27,9)],fill=9)
+    else:d.line((24,8,28,8),fill=10);d.point((25,9),fill=11)
+    hand_y=16 if kindle else 21 if breath else 22
+    # The crossed arm has two deliberate segments and a clear gap below it.
+    d.line([(19,19+dy),(22,hand_y+1),(25,hand_y)],fill=2,width=4)
+    d.line([(19,19+dy),(22,hand_y),(24,hand_y)],fill=3,width=2)
+    d.point((25,hand_y),fill=11)
+    d.line([(10,20+dy),(8,24),(10,25)],fill=2,width=3)
+    d.line([(10,20+dy),(9,23)],fill=4)
+    d.point((10,25),fill=7)
     return im
+
+
+FLAMES=(
+('...c....','..cdd...','..dddc..','.cdddc..','.cdeedc.','.cdeedc.','..deec..','...ec...'),
+('....c...','...ddc..','..dddc..','..ddedc.','.cdeedc.','.cdeedc.','..deec..','...ec...'),
+('..c.....','..ddc...','..dddc..','.cddedc.','.cdeedc.','.cdeedc.','..deec..','...ec...'),
+('...c....','...dc...','..dddc..','.cddedc.','.cdeedc.','.cdeedc.','..deec..','...ec...'))
 
 
 def flame(style,name):
     style=_style(style)
     if name not in FLAME_FRAMES:raise ValueError(name)
-    im,d=_new(8,8);phase=FLAME_FRAMES.index(name)
-    tip=[(3,0),(4,1),(2,0),(3,1)][phase]
-    # A teardrop, not a detached halo or orb. The base touches staffy8.
-    d.polygon([tip,(5,3),(6,4),(5,6),(3,7),(1,6),(1,4),(2,3)],fill=12)
-    d.polygon([(tip[0],tip[1]+1),(4,3),(5,5),(4,6),(2,6),(2,4)],fill=13)
-    d.polygon([(3,3),(4,5),(3,6),(2,5)],fill=14)
-    d.point((3,5),fill=15)
-    if style in (2,4) and phase==2:d.point((5,2),fill=13)
+    phase=FLAME_FRAMES.index(name);im,d=_new(8,8)
+    for y,row in enumerate(FLAMES[phase]):
+        for x,c in enumerate(row):
+            if c!='.':im.putpixel((x,y),int(c,16))
+    # Material identity varies by the tapered tongue, never by a wandering
+    # orb. All bases touch the fixed shaft at bodyy8 across every frame.
+    if style==2:
+        d.point((1,2),fill=12);d.point((0,4),fill=12)
+        if phase in (0,2):d.point((4,2),fill=14)
+    elif style==3:
+        for y in range(8):d.point((1,y),fill=0);d.point((6,y),fill=0)
+        d.point((2,4),fill=14)
+    elif style==4:
+        d.line((6,2,6,3),fill=12)
+        if phase==1:d.point((4,3),fill=12)
+    elif style==5:
+        d.point((6,4),fill=0);d.point((6,5),fill=0)
+        d.point((1,5),fill=0)
+    if style!=4:d.point((3,5),fill=15)
+    else:d.point((3,6),fill=15)
     return im
 
 
@@ -307,168 +424,206 @@ def portrait(style,who):
 
 def _frog_portrait(style):
     im,d=_new(48,48)
-    # Portrait design echoes the world silhouette but is independently drawn.
-    wide={1:20,2:18,3:19,4:22,5:19}[style]
-    left,right=24-wide,24+wide
-    if style==2:
-        d.ellipse((2,30,46,60),fill=1);d.ellipse((5,32,43,58),fill=4)
-    elif style==4:
-        d.polygon([(2,47),(5,36),(12,32),(33,32),(43,37),(47,47)],fill=1)
-        d.polygon([(5,47),(8,37),(14,34),(31,34),(40,38),(44,47)],fill=4)
-    elif style==5:
-        d.polygon([(8,47),(11,36),(17,33),(31,33),(37,37),(40,47)],fill=1)
-        d.polygon([(11,47),(14,37),(18,35),(30,35),(34,38),(37,47)],fill=4)
-    else:
-        d.polygon([(5,47),(8,35),(14,31),(33,31),(40,36),(45,47)],fill=1)
-        d.polygon([(8,47),(11,36),(16,33),(31,33),(37,37),(42,47)],fill=4)
-    d.ellipse((15,29,33,40),fill=6)
-    d.polygon([(13,35),(34,35),(36,47),(11,47)],fill=8)
-    d.polygon([(15,36),(32,36),(33,47),(13,47)],fill=10)
-    d.line([(15,37),(14,45)],fill=11,width=2)
-    d.line([(30,38),(32,46)],fill=9,width=2)
-    d.ellipse((left,10,right,34),fill=1)
-    d.ellipse((left+2,12,right-2,32),fill=4)
-    d.arc((left+4,11,right-4,31),190,330,fill=5,width=2)
-    d.ellipse((11,23,36,35),fill=3)
-    d.line([(13,30),(20,32),(29,32),(34,29)],fill=6,width=2)
-    eye_boxes={1:((6,3,20,19),(28,3,42,19)),2:((7,1,21,18),(28,6,40,20)),
-               3:((6,5,20,20),(28,5,42,20)),4:((4,5,18,20),(29,6,43,20)),
-               5:((8,5,20,19),(28,5,40,19))}[style]
-    for side,box in enumerate(eye_boxes):
-        x0,y0,x1,y1=box;d.ellipse(box,fill=1)
-        d.ellipse((x0+2,y0+2,x1-2,y1-2),fill=7)
-        px=(x0+x1)//2+(1 if side else -1)
-        py=(y0+y1)//2+(2 if side else 0)
-        d.rectangle((px,py,px+1,py+2),fill=1)
+    widths={1:(4,44),2:(1,46),3:(8,40),4:(1,46),5:(8,40)}
+    left,right=widths[style]
+    shoulder={1:[(5,47),(8,35),(16,30),(31,30),(40,35),(45,47)],
+              2:[(1,47),(4,38),(12,32),(34,32),(43,37),(47,47)],
+              3:[(11,47),(12,35),(18,30),(29,30),(35,36),(37,47)],
+              4:[(0,47),(2,39),(11,32),(35,32),(45,39),(47,47)],
+              5:[(8,47),(10,36),(18,31),(29,31),(37,37),(40,47)]}[style]
+    d.polygon(shoulder,fill=2)
+    d.polygon([(x+1 if x<24 else x-1,y if y==47 else y+1) for x,y in shoulder],fill=3)
+    d.polygon([(8 if style!=3 else 13,38),(16,33),(21,34),(17,42),(14,47),(7 if style!=3 else 12,47)],fill=4)
+    d.polygon([(29,35),(37 if style!=3 else 33,39),(40 if style!=3 else 35,47),(29,47)],fill=2)
+    d.polygon([(17,29),(30,29),(33,36),(29,40),(17,40),(14,36)],fill=5)
+    d.polygon([(18,31),(25,31),(24,35),(17,37),(16,35)],fill=6)
+    apron={1:[(15,36),(30,36),(35,47),(11,47)],2:[(13,37),(31,37),(37,47),(9,47)],
+           3:[(19,36),(29,36),(31,47),(16,47)],4:[(13,37),(33,37),(36,47),(10,47)],
+           5:[(16,36),(30,36),(34,47),(13,47)]}[style]
+    d.polygon(apron,fill=10)
+    d.polygon([(27,38),(32,40),(35,47),(26,47)],fill=9)
+    d.line((16,38,14,46),fill=11,width=2)
+    if style==4:d.polygon([(13,44),(17,42),(18,46),(15,47)],fill=9)
+    elif style==5:d.rectangle((25,41,26,42),fill=12)
+    top={1:12,2:13,3:14,4:15,5:15}[style]
+    chin={1:34,2:35,3:32,4:35,5:33}[style]
+    face=[(left,top+5),(left+4,top),(right-5,top),(right,top+5),
+          (right-2,chin-3),(right-7,chin),(left+7,chin),(left+2,chin-3)]
+    d.polygon(face,fill=2)
+    d.polygon([(left+2,top+5),(left+5,top+1),(right-6,top+1),(right-2,top+5),
+               (right-4,chin-4),(right-8,chin-1),(left+8,chin-1),(left+3,chin-4)],fill=3)
+    d.polygon([(left+3,top+6),(left+6,top+2),(24,top+2),(20,top+7),
+               (left+10,top+10),(left+4,top+9)],fill=4)
+    d.polygon([(right-10,top+5),(right-3,top+6),(right-4,chin-4),(right-8,chin-1),
+               (24,chin-1),(28,chin-5)],fill=2)
+    d.polygon([(left+8,chin-6),(right-8,chin-6),(right-9,chin-2),(left+9,chin-2)],fill=5)
+    eyes={1:((6,3,18,17),(29,4,41,18)),2:((5,1,18,17),(30,7,42,20)),
+          3:((10,7,21,20),(28,7,39,20)),4:((4,8,16,20),(31,9,43,21)),
+          5:((9,7,20,20),(28,7,39,20))}[style]
+    for side,(x0,y0,x1,y1) in enumerate(eyes):
+        points=[(x0,y0+4),(x0+3,y0),(x1-3,y0),(x1,y0+4),(x1,y1-2),(x1-3,y1),(x0+3,y1),(x0,y1-3)]
+        d.polygon(points,fill=2)
+        d.polygon([(x0+2,y0+4),(x0+4,y0+2),(x1-3,y0+2),(x1-2,y0+4),
+                   (x1-2,y1-3),(x1-4,y1-1),(x0+3,y1-2)],fill=7)
         if style==3:
-            d.polygon([(x0+2,y0+2),(x1-2,y0+2),(x1-2,y0+6),(x0+2,y0+7)],fill=4)
-            d.line([(x0+3,y0+3),(x1-3,y0+3)],fill=5)
-    d.rectangle((17,21,18,22),fill=2);d.rectangle((29,21,30,22),fill=2)
-    if style==2:
-        d.line([(12,26),(24,28),(32,27)],fill=1,width=2)
-        d.rectangle((29,28,33,31),fill=1)
-        d.line([(30,31),(32,31)],fill=7)
-    elif style==3:
-        d.line([(10,26),(20,28),(31,28),(36,26)],fill=1,width=2)
-        d.point((35,27),fill=6)
-    elif style==4:
-        d.line([(9,26),(34,26),(37,28)],fill=1,width=2)
-        for x,y in ((5,20),(8,23),(37,20),(41,24),(12,17)):d.rectangle((x,y,x+1,y+1),fill=5)
-    else:
-        d.line([(10,26),(29,27)],fill=1,width=2)
-        d.polygon([(28,27),(34,27),(33,32),(29,33)],fill=1)
-        d.line([(29,32),(32,32)],fill=7)
-    if style==1:
-        d.rectangle((19,41,29,45),fill=9);d.line([(19,41),(28,41)],fill=12)
-        d.point((26,42),fill=14)
-    elif style==2:
-        d.rectangle((17,40,25,46),fill=9);d.line([(18,41),(23,44)],fill=11)
-    elif style==3:d.line([(17,40),(29,40)],fill=7,width=2)
-    elif style==4:
-        d.polygon([(13,42),(18,40),(21,45),(16,47)],fill=9)
-        d.line([(24,41),(30,41)],fill=11)
-    else:
-        d.rectangle((17,0,31,1),fill=1)
-        d.rectangle((17,2,31,6),fill=13)
-        d.line([(18,2),(29,2)],fill=14,width=2)
-        d.line([(14,7),(34,7)],fill=12,width=2)
-        d.line([(14,35),(21,40),(24,37),(29,40),(34,35)],fill=12,width=2)
-        d.rectangle((24,42,25,43),fill=14)
+            d.polygon([(x0+1,y0+2),(x1-2,y0+1),(x1-1,y0+6),(x0+2,y0+7)],fill=3)
+            d.line((x0+3,y0+3,x1-4,y0+3),fill=4,width=2)
+            py=y0+8
+        else:py=(y0+y1)//2+(2 if side else 0)
+        px=(x0+x1)//2+(-1 if side==0 else 1)
+        d.rectangle((px,py,px+1,py+2),fill=1)
+    mouth_y={1:27,2:27,3:27,4:28,5:27}[style]
+    ml,mr={1:(12,35),2:(9,36),3:(15,34),4:(7,38),5:(15,33)}[style]
+    d.line([(ml,mouth_y),(ml+5,mouth_y+2),(mr-3,mouth_y+2),(mr,mouth_y)],fill=1,width=2)
+    if style in (1,2,5):
+        d.polygon([(mr-7,mouth_y+2),(mr-2,mouth_y+2),(mr-3,mouth_y+6),(mr-6,mouth_y+5)],fill=1)
+    if style==4:
+        d.line((ml+4,mouth_y+3,mr-5,mouth_y+3),fill=5,width=2)
+    if style==5:
+        d.polygon([(17,2),(28,2),(31,5),(30,7),(15,7),(14,5)],fill=12)
+        d.line((17,2,27,2),fill=14,width=2)
+        d.line((13,8,34,8),fill=13,width=2)
     return im
 
 
 def _wizard_portrait(style):
     im,d=_new(48,48)
-    d.polygon([(2,47),(6,33),(14,27),(30,28),(38,35),(43,47)],fill=1)
-    d.polygon([(5,47),(9,35),(15,30),(29,31),(34,37),(38,47)],fill=3)
-    d.polygon([(10,35),(16,31),(17,39),(13,47),(7,47)],fill=5)
-    d.line([(27,35),(30,44),(29,47)],fill=4,width=3)
-    hood={1:[(7,26),(8,16),(13,8),(22,4),(27,7),(32,14),(34,25),(29,33),(15,34)],
-          2:[(6,27),(8,14),(16,5),(29,0),(34,1),(30,7),(35,19),(33,30),(17,34)],
-          3:[(6,26),(7,17),(12,8),(24,3),(32,9),(36,20),(33,31),(17,35)],
-          4:[(4,28),(5,19),(10,11),(19,7),(27,10),(32,18),(35,26),(31,29),(29,35),(23,33),(19,36),(12,33)],
-          5:[(5,28),(9,14),(20,0),(25,6),(34,15),(36,27),(30,35),(15,34)]}[style]
-    d.polygon(hood,fill=1)
-    d.polygon([(9,25),(10,16),(16,8),(23,7),(30,15),(32,25),(28,31),(17,32)],fill=4)
-    d.line([(11,17),(17,9),(22,8)],fill=6,width=2)
-    d.polygon([(14,19),(18,14),(24,14),(29,19),(28,27),(23,30),(16,27)],fill=1)
-    d.line([(17,18),(20,16),(24,17)],fill=2,width=2)
-    d.line([(10,25),(13,29),(16,30)],fill=5,width=2)
+    shoulders={1:[(2,47),(5,37),(13,29),(25,28),(34,33),(39,47)],
+               2:[(1,47),(4,38),(11,31),(26,31),(35,36),(40,47)],
+               3:[(6,47),(8,36),(15,28),(28,29),(35,37),(39,47)],
+               4:[(0,47),(3,38),(11,32),(25,30),(34,34),(39,45),(35,47)],
+               5:[(4,47),(7,35),(15,27),(28,27),(35,35),(39,47)]}[style]
+    d.polygon(shoulders,fill=2)
+    d.polygon([(x+2 if x<22 else x-2,y if y==47 else y+1) for x,y in shoulders],fill=3)
+    light={1:[(7,38),(14,31),(18,30),(17,38),(11,47),(5,47)],
+           2:[(6,39),(12,33),(17,33),(16,38),(9,47),(3,47)],
+           3:[(10,37),(15,30),(19,30),(18,36),(12,45),(8,47)],
+           4:[(5,39),(12,34),(16,33),(15,39),(10,44),(3,47)],
+           5:[(9,36),(15,29),(19,28),(18,35),(13,44),(8,47)]}[style]
+    d.polygon(light,fill=4)
+    d.polygon([(26,32),(32,35),(36,43),(38,47),(27,47),(24,41)],fill=2)
+    hood={1:[(7,28),(7,19),(11,11),(16,7),(22,6),(28,10),(32,16),(32,27),(27,34),(17,35)],
+          2:[(5,28),(7,18),(12,10),(19,3),(30,1),(35,4),(29,7),(30,12),(33,20),(32,29),(26,35),(14,35)],
+          3:[(8,27),(8,18),(12,11),(18,7),(25,7),(31,12),(35,20),(34,28),(29,35),(18,36),(11,33)],
+          4:[(5,30),(5,22),(9,15),(14,10),(22,9),(28,12),(32,19),(35,29),(31,30),(29,36),(24,34),(20,37),(13,34)],
+          5:[(7,29),(9,18),(14,10),(21,1),(27,8),(33,15),(35,25),(32,32),(26,36),(16,35)]}[style]
+    d.polygon(hood,fill=2)
+    interior=[(x+1 if x<22 else x-1,y+1 if y<31 else y-1) for x,y in hood]
+    d.polygon(interior,fill=3)
+    hlight={1:[(9,20),(13,13),(17,9),(22,8),(21,11),(15,15),(12,22),(10,28)],
+            2:[(8,19),(13,12),(20,5),(29,3),(26,6),(21,9),(16,14),(12,23),(9,29)],
+            3:[(10,19),(14,13),(19,9),(24,9),(24,11),(18,14),(15,20),(13,28)],
+            4:[(7,23),(11,17),(15,12),(21,11),(19,14),(14,19),(11,26),(8,30)],
+            5:[(10,20),(15,12),(21,3),(24,7),(21,12),(17,17),(14,25),(11,30)]}[style]
+    d.polygon(hlight,fill=4)
+    cavity={1:[(15,19),(19,15),(24,16),(27,21),(26,28),(22,31),(16,29)],
+            2:[(14,20),(19,15),(25,17),(28,22),(26,29),(21,32),(15,29)],
+            3:[(16,20),(21,16),(27,18),(30,23),(28,29),(23,33),(17,30),(14,26)],
+            4:[(13,22),(18,17),(24,18),(27,23),(27,28),(22,33),(16,30)],
+            5:[(16,21),(22,16),(27,19),(30,24),(28,30),(23,33),(17,30)]}[style]
+    d.polygon(cavity,fill=1)
     if style in (1,2):
-        d.polygon([(17,28),(23,29),(28,27),(26,33),(22,36),(18,33)],fill=11)
-        d.line([(19,29),(21,33)],fill=7,width=1)
-    elif style==3:d.line([(16,29),(23,32),(27,30)],fill=6,width=2)
-    elif style==4:
-        d.line([(10,23),(12,28)],fill=2,width=2)
-        d.line([(26,9),(29,13)],fill=5,width=2)
-    else:
-        d.polygon([(20,3),(24,8),(21,11),(17,11)],fill=5)
-        d.line([(12,17),(18,10),(23,10),(30,19)],fill=10,width=2)
-        d.rectangle((20,10,22,11),fill=11)
-        d.line([(13,35),(12,44)],fill=10,width=2)
-    # The staff stays visibly continuous from the flame to the lower edge.
-    d.line([(41,12),(41,47)],fill=1,width=5)
-    d.line([(41,13),(41,47)],fill=9,width=3)
-    d.line([(40,16),(42,16)],fill=10,width=2)
-    d.line([(40,37),(42,37)],fill=10,width=2)
-    d.line([(31,35),(35,38),(39,34)],fill=1,width=6)
-    d.line([(31,35),(35,37),(38,34)],fill=4,width=3)
-    d.line([(39,34),(41,33)],fill=11,width=2)
-    d.polygon([(40,0),(43,4),(46,7),(45,11),(42,14),(38,13),(36,9),(38,5)],fill=12)
-    d.polygon([(40,3),(43,6),(44,9),(42,12),(39,12),(38,9)],fill=13)
-    d.polygon([(41,6),(43,9),(41,11),(39,10)],fill=14)
-    d.point((41,9),fill=15)
+        d.polygon([(16,29),(20,30),(25,29),(24,33),(21,36),(18,33)],fill=7)
+    if style==4:
+        d.polygon([(6,42),(9,42),(8,47),(5,47)],fill=2)
+    elif style==5:
+        d.line((14,34,13,42),fill=10,width=2)
+    # Clear staff-side negative space remains below and above the actual grip.
+    d.line((41,13,41,47),fill=8,width=5)
+    d.line((41,14,41,47),fill=9,width=3)
+    d.line((39,16,43,16),fill=10)
+    grip_y=34 if style!=2 else 36
+    d.line([(30,34),(35,grip_y+2),(39,grip_y)],fill=2,width=6)
+    d.line([(30,34),(35,grip_y+1),(38,grip_y)],fill=3,width=3)
+    d.line((39,grip_y,41,grip_y-1),fill=11,width=2)
+    d.polygon([(40,0),(43,4),(45,6),(46,9),(44,12),(41,14),(37,12),(36,9),(38,5)],fill=12)
+    d.polygon([(40,3),(42,6),(44,8),(43,11),(40,12),(38,10),(38,7)],fill=13)
+    d.polygon([(40,6),(42,8),(42,10),(40,11),(39,9)],fill=14)
+    d.point((40,9),fill=15)
     return im
 
 
 def rgba(image,palette):
-    result=Image.new('RGBA',image.size)
-    result.putdata([tuple(int(palette[i][n:n+2],16) for n in (1,3,5))+(255 if i else 0,)
-                    for i in image.tobytes()])
-    return result
+    out=Image.new('RGBA',image.size)
+    out.putdata([tuple(int(palette[i][n:n+2],16) for n in (1,3,5))+(255 if i else 0,) for i in image.tobytes()])
+    return out
 
 
 def _validate():
     for style in STYLE_NAMES:
-        for palette in (peddler_palette(style),wizard_palette(style)):
-            assert len(palette)==16
-            assert all(int(c[n:n+2],16)%8==0 for c in palette for n in (1,3,5))
-        for painter,names,size in ((peddler_head,HEAD_FRAMES,(16,16)),(peddler_body,BODY_FRAMES,(32,32)),
-                                   (wizard,WIZARD_FRAMES,(32,32)),(flame,FLAME_FRAMES,(8,8))):
-            for name in names:
-                image=painter(style,name)
-                assert image.mode=='P' and image.size==size and max(image.tobytes())<16,(style,name)
+        for pal in (peddler_palette(style),wizard_palette(style)):
+            assert len(pal)==16 and all(int(c[n:n+2],16)%8==0 for c in pal for n in (1,3,5))
+        for painter,frames,size in ((peddler_head,HEAD_FRAMES,(16,16)),(peddler_body,BODY_FRAMES,(32,32)),
+                                    (wizard,WIZARD_FRAMES,(32,32)),(flame,FLAME_FRAMES,(8,8))):
+            for frame in frames:
+                im=painter(style,frame)
+                assert im.mode=='P' and im.size==size and max(im.tobytes())<16,(style,frame)
         for who in ('peddler','wizard'):
-            image=portrait(style,who)
-            assert image.mode=='P' and image.size==(48,48) and max(image.tobytes())<16
-        assert not set(wizard(style,'idle').tobytes())&{13,14},'flame pulse recolours robe'
+            im=portrait(style,who)
+            assert im.mode=='P' and im.size==(48,48) and max(im.tobytes())<16
+        for frame in WIZARD_FRAMES:
+            assert not set(wizard(style,frame).tobytes())&{13,14},'pulse reaches cloth'
+
+
+def _world(style,who,phase=0):
+    im,_=_new(32,32)
+    if who=='peddler':
+        # Same front-to-back compositing order and relative anchors as the ROM.
+        _stamp(im,peddler_head(style,('open','open','blink','open')[phase]),(8,6+(phase in (1,2))))
+        _stamp(im,peddler_body(style,('rest','breathe','breathe','rest')[phase]),(0,0))
+    else:
+        _stamp(im,flame(style,FLAME_FRAMES[phase]),FLAME_ORIGIN)
+        _stamp(im,wizard(style,('idle','breath','breath_blink','idle')[phase]),(0,0))
+    return im
 
 
 def preview(out):
-    """Labelled native-source review boards; these are not emulator captures."""
+    """Source-only native/nearest-neighbour and shape/value review boards."""
     _validate();out=Path(out);out.mkdir(parents=True,exist_ok=True)
     font=ImageFont.truetype('/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf',12)
-    scene=Image.new('RGBA',(1080,290),'#182028');draw=ImageDraw.Draw(scene)
-    draw.text((8,5),'NATIVE SOURCE CONCEPTS / world sprites4x, portraits2x / not gameplay',font=font,fill='#f0e0b0')
+    board=Image.new('RGB',(1110,456),'#182028');d=ImageDraw.Draw(board)
+    d.text((8,6),'NATIVE SOURCE / five newly authored shape and material studies / not emulator output',font=font,fill='#e0d8b0')
     for style in STYLE_NAMES:
-        x=(style-1)*216
-        draw.text((x+8,28),str(style)+'. '+STYLE_NAMES[style],font=font,fill='#f0e0b0')
-        pair=Image.new('RGBA',(50,42))
-        pair.alpha_composite(rgba(peddler_head(style,'open'),peddler_palette(style)),(8,14))
-        pair.alpha_composite(rgba(peddler_body(style,'rest'),peddler_palette(style)),(0,8))
-        # Separate50px panel per character avoids overlapping source objects.
-        scene.alpha_composite(pair.resize((200,168),Image.Resampling.NEAREST),(x+8,48))
-        wiz=Image.new('RGBA',(32,32))
-        wiz.alpha_composite(rgba(wizard(style,'idle'),wizard_palette(style)))
-        wiz.alpha_composite(rgba(flame(style,'w0'),wizard_palette(style)),FLAME_ORIGIN)
-        scene.alpha_composite(wiz.resize((128,128),Image.Resampling.NEAREST),(x+94,68))
-        scene.alpha_composite(rgba(portrait(style,'peddler'),peddler_palette(style)).resize((96,96),Image.Resampling.NEAREST),(x+8,189))
-        scene.alpha_composite(rgba(portrait(style,'wizard'),wizard_palette(style)).resize((96,96),Image.Resampling.NEAREST),(x+110,189))
-    scene.convert('RGB').save(out/'npc-concepts.png')
-    print('PASS five NPC styles,145 world frames,10 independent portraits; source board',out/'npc-concepts.png')
+        x=(style-1)*222
+        d.text((x+8,30),str(style)+'. '+STYLE_NAMES[style],font=font,fill='#e0d8b0')
+        for row,who in enumerate(('peddler','wizard')):
+            pal=peddler_palette(style) if row==0 else wizard_palette(style)
+            im=rgba(_world(style,who),pal)
+            board.paste(im,(x+12,58+row*146),im)
+            zoom=im.resize((128,128),Image.Resampling.NEAREST)
+            board.paste(zoom,(x+65,54+row*146),zoom)
+        for k,who in enumerate(('peddler','wizard')):
+            pal=peddler_palette(style) if k==0 else wizard_palette(style)
+            im=rgba(portrait(style,who),pal).resize((96,96),Image.Resampling.NEAREST)
+            board.paste(im,(x+8+k*106,350),im)
+    board.save(out/'npc-concepts.png')
+    value=Image.new('RGB',(1110,250),'#b0b0a0');d=ImageDraw.Draw(value)
+    d.text((8,6),'NATIVE SOURCE / silhouettes and three-value checks / 4x nearest neighbour',font=font,fill='#182028')
+    for style in STYLE_NAMES:
+        x=(style-1)*222
+        for col,who in enumerate(('peddler','wizard')):
+            im=rgba(_world(style,who),peddler_palette(style) if who=='peddler' else wizard_palette(style))
+            alpha=im.getchannel('A')
+            sil=Image.new('RGBA',im.size,'#182028');sil.putalpha(alpha)
+            value.paste(sil.resize((96,96),Image.Resampling.NEAREST),(x+8+col*106,34),sil.resize((96,96),Image.Resampling.NEAREST))
+            gray=im.convert('L').point(lambda v:40 if v<70 else 112 if v<150 else 216).convert('RGBA');gray.putalpha(alpha)
+            gray=gray.resize((96,96),Image.Resampling.NEAREST)
+            value.paste(gray,(x+8+col*106,142),gray)
+    value.save(out/'silhouettes-and-values.png')
+    for style in STYLE_NAMES:
+        frames=[]
+        for phase in range(4):
+            scene=Image.new('RGB',(384,192),'#384848')
+            for k,who in enumerate(('peddler','wizard')):
+                im=rgba(_world(style,who,phase),peddler_palette(style) if k==0 else wizard_palette(style)).resize((160,160),Image.Resampling.NEAREST)
+                scene.paste(im,(16+k*192,16),im)
+            frames.append(scene)
+        frames[0].save(out/f'idle-study-{style}.gif',save_all=True,append_images=frames[1:],duration=[250,150,250,150],loop=0,disposal=2)
+    print('PASS five source NPC designs,150 world frames,10 portraits; source previews:',out)
 
 
 if __name__=='__main__':
     import argparse
-    parser=argparse.ArgumentParser(description=__doc__);parser.add_argument('--out',default='/workspace/setup/sewer-concepts/npcs')
-    preview(parser.parse_args().out)
+    ap=argparse.ArgumentParser(description=__doc__)
+    ap.add_argument('--out',default='/workspace/setup/sewer-concepts-v2/npcs')
+    preview(ap.parse_args().out)

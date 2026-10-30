@@ -157,6 +157,12 @@ static void peddler_update(void) {
         sPed.step = &peddler_acts[peddler_act_at[act]];
         sPed.t = 0;
     }
+#if BART_SEWER_VARIANT
+    /* The upper torso follows the same one-pixel breathing phase as the
+       separate head. The authored pose leaves the feet planted. */
+    if (body == F_PEDDLER_BODY_REST && (((gFrame + 17) >> 6) & 1))
+        body = F_PEDDLER_BODY_BREATHE;
+#endif
     /* his eyes follow the hero round to his left */
     if (face == F_PEDDLER_HEAD_OPEN && PX(gPlayer->x) < PX(a->x) - 24 && PX(gPlayer->y) < PX(a->y) + 96)
         face = F_PEDDLER_HEAD_LEFT;

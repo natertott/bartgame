@@ -1,5 +1,12 @@
 # Drain art concepts for selection
 
+The [reference-led second pass](art-reboot/REFERENCE_APPLICATION.md) reauthors
+all five sets from the six uploaded PDFs. The shared [art bible](art-reboot/ART_BIBLE.md),
+[decision log](art-reboot/ART_DIRECTION_LOG.md) and [source register](art-reboot/REFERENCE_REGISTER.md)
+record the reasoning continuously. The published first study remains the
+before reference; new source/value/silhouette comparisons and actual-run
+captures are generated rather than relabelling old media.
+
 These are native-GBA comparison builds, not a selected replacement for the
 released room. `BART_SEWER=0` keeps the current Step-and-cut release intact.
 The [review gallery](../../art-review/sewer-concepts/README.md) provides full
@@ -46,7 +53,11 @@ to select one entire room unchanged.
 
 The active room has 350 ground IDs plus 20 foreground IDs, placed 657 times.
 Their 623 native frame drawings include 38 animated tile IDs. The keeper
-sheets contain 29 world animation frames, plus two 48×48 dialogue portraits.
+sheets retain 29 original world animation frames, plus two 48×48 portraits.
+The second pass appends a fifteenth Peddler body pose, `breathe`, making
+30 world keeper frames. It coordinates the existing one-pixel head bob with
+upper-body compression while leaving the bottom three foot rows unchanged.
+The original action-frame IDs and live streamed body allocation remain stable.
 The review separately inventories 80 unused named sewer catalogue tiles.
 
 A new 16×8 decorative rail sprite joins the north-bank posts. It uses two
