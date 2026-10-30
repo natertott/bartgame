@@ -40,7 +40,11 @@ def comparison(work,out,screen,names,total_limit=None):
             frame.paste(im,((n-1)*240,30))
         frames.append(frame)
     info=write_gif(frames,gif_durations(count),out/(screen+'-five.gif'))
-    # Exact native PNGs remain available if a five-theme GIF exceeds256colors.
+    if not info['exact_palette']:
+        (out/(screen+'-five.gif')).unlink()
+        info['published']=False
+        info['note']='Palette union exceeds GIF capacity; exact native PNG boards and full-rate MP4 are published instead.'
+    else:info['published']=True
     info['source']='Five actual mGBA framebuffers, captions outside the240x160 game pixels.'
     return info
 
@@ -73,12 +77,16 @@ def main():
             if row.get('gif'):
                 # The environment is identical in UI1..5. Keep every MP4 and
                 # native frame, but publish those duplicated world GIFs once.
-                if number==0 or not row['name'].startswith('drain-'):
+                if not row['gif_metadata']['exact_palette']:
+                    archive['gif']=row.pop('gif')
+                    archive['gif_note']='Quantized GIF omitted from publication; native PNGs and full-rate MP4 preserve the actual output.'
+                    if (dst/archive['gif']).exists():(dst/archive['gif']).unlink()
+                elif number==0 or not row['name'].startswith('drain-'):
                     shutil.copy2(src/row['gif'],dst/row['gif'])
                 else:archive['gif']=row.pop('gif')
             row['archival_formats']=archive
         report['publication']={'source_report_sha256':sha(src/'capture.json'),
-            'note':'Native frames, filmstrips, retained GIFs and videos are unchanged. Raw all-frame PNGs and duplicated world GIFs are retained locally as archival formats.'}
+            'note':'Native frames, filmstrips, retained exact-palette GIFs and videos are unchanged. Quantized GIFs are omitted; native PNG/full-rate MP4 remain. Raw all-frame PNGs and duplicated world GIFs are retained locally as archival formats.'}
         (dst/'capture.json').write_text(json.dumps(report,indent=2)+'\n')
         rows.append(report)
     composites={}

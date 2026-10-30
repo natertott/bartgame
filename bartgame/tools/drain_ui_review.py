@@ -178,8 +178,10 @@ class Review:
         selected=sorted({0,total//4,total//2,total*3//4,total-1})
         for tick in selected:images[tick].save(directory/f'frame-{tick:03}.png')
         pick=total//2
-        if name=='reward-chest':pick=next((i for i,r in enumerate(trace) if r['hero_state']==6),pick)
-        if name=='death-return':pick=next((i for i,r in enumerate(trace) if r['textbox'] and r['area']==0),total-1)
+        if name=='reward-chest':pick=total-1
+        if name=='death-return':
+            first=next((i for i,r in enumerate(trace) if r['textbox'] and r['area']==0),total-1)
+            pick=min(total-1,first+48)
         images[pick].save(self.out/(name+'.png'))
         metadata=None;video=None
         if motion:
@@ -231,9 +233,12 @@ class Review:
         P.w8(self.c,pl+6,0)
         P.run(self.c,4)
         self.check('hidden keys do not alter HUD payload',hud_payload(self.c)==before)
+        ammo_payloads=[]
         for value in (0,9,99,255):
             P.w8(self.c,pl+7,value);P.w8(self.c,pl+35,value);P.run(self.c,4)
+            ammo_payloads.append(hud_payload(self.c))
             self.record('hud-ammo-'+str(value),32,note=f'Equipped seeds/bow with both ammunition counts{value}; explicit resource fixture.',hud=True)
+        self.check('four equipped ammunition values produce distinct actual HUD pixels',len(set(ammo_payloads))==4,ammo_payloads)
         for i,eq in enumerate((3,4,5)):P.w8(self.c,pl+9+i,eq)
         P.run(self.c,4);before=hud_payload(self.c)
         P.w8(self.c,pl+7,1);P.w8(self.c,pl+35,1);P.run(self.c,4)

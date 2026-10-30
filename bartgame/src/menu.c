@@ -121,13 +121,17 @@ static int gather(const MenuItem* list, int n, u8* out) {
 }
 
 /* ------------------------------------------------------------- frame -- */
-/* the page's frame and its tabs, the open one gold, R's badge at the
-   end. The tabs are drawn into a canvas on BG0, five pixels under the
+/* The page's frame and tabs, with a theme-aware selected ink and R's
+   badge at the end. The tabs are drawn into a canvas on BG0, five pixels under the
    frame's edge, so the slots and the map clear them by a few. */
 #define TAB_Y 5
 
 static void page_frame(void) {
     int i, x = 0;
+    /* Legacy tabs have a bright gold selected field; the new themes use
+       their normal base field. HIGH is light on the dark studies and dark
+       on vellum, so the selected label remains readable in all five. */
+    int selected_ink = BART_UI_VARIANT ? UI_INK_HIGH : UI_INK_DARK;
     ui_frame(gBg3, UI_BG3, 0, 0, 30, 20, FR_PANEL);
     bg0_canvas(&sTabs, 2, 0, 18, 3);
     for (i = 0; i < PG_COUNT; i++) {
@@ -135,7 +139,7 @@ static void page_frame(void) {
         if (n < 4)
             n = 4;
         ui_plate_px(&sTabs, x, TAB_Y, n, i == sPage ? PL_TABON : PL_TAB);
-        vwf_text(&sTabs, x + (n * 8 - w) / 2, TAB_Y + 4, sTabName[i], i == sPage ? UI_INK_DARK : UI_INK_CREAM);
+        vwf_text(&sTabs, x + (n * 8 - w) / 2, TAB_Y + 4, sTabName[i], i == sPage ? selected_ink : UI_INK_CREAM);
         x += n * 8 + 6;
     }
     vwf_flush(&sTabs, FALSE);
@@ -334,7 +338,9 @@ static void slot_count(int k, int at, const char* s) {
     int tx = GRID_TX(at % 4) + 2, ty = GRID_TY(at / 4) + 2;
     if (!bg0_canvas(&sCount[k], tx, ty, 2, 2))
         return;
-    vwf_text_fx(&sCount[k], 14 - vwf_width(s), 6, s, UI_INK_CREAM, UI_INK_DARK, FX_OUTLINE);
+    /* These figures float over variable item art, rather than a guaranteed
+       pale/dark panel. Use a light ink with a dark contour in every theme. */
+    vwf_text_fx(&sCount[k], 14 - vwf_width(s), 6, s, UI_INK_PALE, UI_INK_DARK, FX_OUTLINE);
     vwf_flush(&sCount[k], FALSE);
     sCountAt[k] = at;
 }

@@ -576,8 +576,13 @@ static void update_win(void) {
         bg0_plate(&plate, (30 - x) / 2, 3, "The Heart is cut", UI_INK_GOLD, TRUE);
         bg0_canvas(&body, 4, 6, 22, 3);
         vwf_clear(&body, UI_INK_NAVY); /* BG0 alone: nothing behind the panel */
-        title_line(&body, 2, "The wood breathes again, slowly.", UI_INK_CREAM);
-        title_line(&body, 13, "Somewhere a king stops dreaming.", UI_INK_CREAM);
+        /* These words have a guaranteed themed panel behind them. A dark
+           outline would merge the vellum theme's dark body letters into
+           thick blobs; reserve the outline for floating title prompts. */
+        vwf_text(&body, (body.tw * 8 - vwf_width("The wood breathes again, slowly.")) / 2,
+                 2, "The wood breathes again, slowly.", UI_INK_CREAM);
+        vwf_text(&body, (body.tw * 8 - vwf_width("Somewhere a king stops dreaming.")) / 2,
+                 13, "Somewhere a king stops dreaming.", UI_INK_CREAM);
         ui_tile(m, UI_BG0, 6, 10, UI_RULE_END, UI_HF);
         for (i = 7; i < 23; i++)
             ui_tile(m, UI_BG0, i, 10, UI_RULE, 0);

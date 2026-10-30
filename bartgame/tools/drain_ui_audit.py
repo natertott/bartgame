@@ -25,7 +25,7 @@ from sewer_concept_audit import NativeRom, decode_8x8, decode_sprite, decode_met
 SHA = lambda data: hashlib.sha256(data).hexdigest()
 CONTRACT = json.loads((ROOT/'art/reboot_contracts.json').read_text())
 KEEPERS = {'peddler_head','peddler_body','gatekeeper','wisp'}
-UI_SHEETS = {'uimarks','huditems'}
+UI_SHEETS = {'uimarks','huditems','cursor'}
 CHANGED_FACE_NAMES = {'peddler','gatekeeper'}
 ROOM_ARRAYS = {'room_sewer_main_ground','room_sewer_main_overlay'}
 ALLOWED_SCALARS = {'ui_tiles','hud_tiles','vwf_w','vwf_bits','orb_glow','huditems_frame_pal'} | ROOM_ARRAYS
@@ -274,6 +274,7 @@ class Audit:
                 'interface':'Five UI material/frame/mark/HUD studies; compact12px top HUD, conditional equipped ammunition and native16px bottom-right minimap; interface palettes/font presentation may change.',
                 'actors':'Selected first frog and pointed wizard; keeper face banks; HUD miniatures/markers; rail source art.',
                 'protected':'Bloom/Step-and-cut, all other actor/item/enemy pixel payloads, title bitmap, forest/interior art/animation, original gameplay metadata, item tables and interaction timing arrays.'},
+            'audit_tool_sha256':SHA(Path(__file__).read_bytes()),
             'variants':self.details,'passed':sum(r['passed'] for r in self.checks),'total':len(self.checks),
             'checks':self.checks,'failures':[r for r in self.checks if not r['passed']],
             'limits':'Exact source/ROM and physical-map verification is not a taste score. Runtime coverage is disclosed; art gallery captures separately review composition and readability. UI appearance differs intentionally; original default ROM hash is not required.'}

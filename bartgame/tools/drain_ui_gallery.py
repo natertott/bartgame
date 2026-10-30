@@ -204,11 +204,17 @@ def ui_source_atlas(out,names):
 def main():
     parser=argparse.ArgumentParser(description=__doc__);parser.add_argument('--work',type=Path,required=True)
     parser.add_argument('--out',type=Path,required=True);parser.add_argument('--source-only',action='store_true')
+    parser.add_argument('--actual-only',action='store_true',help='Add actual comparisons to an existing frozen source gallery')
     args=parser.parse_args();sys.path.insert(0,str(ROOT/'art'))
     import ui_studies as U
     sources={str(p.relative_to(ROOT)):sha(p) for p in (ROOT/'art').glob('*.py')}
     args.out.mkdir(parents=True,exist_ok=True)
-    report=source_gallery(args.out/'source');ui_source_atlas(args.out/'source',U.STYLE_NAMES)
+    if args.actual_only:
+        previous=json.loads((args.out/'gallery-manifest.json').read_text())
+        assert previous['source_hashes']==sources,'Actual boards require the same frozen source gallery'
+        report=json.loads((args.out/'source/catalogue.json').read_text())
+    else:
+        report=source_gallery(args.out/'source');ui_source_atlas(args.out/'source',U.STYLE_NAMES)
     actual=[] if args.source_only else actual_boards(args.work,args.out,U.STYLE_NAMES)
     assert sources=={name:sha(ROOT/name) for name in sources},'Source changed while gallery rendered; rerun after freeze'
     manifest={str(p.relative_to(args.out)):sha(p) for p in args.out.rglob('*') if p.is_file() and p.name!='gallery-manifest.json'}

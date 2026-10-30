@@ -368,3 +368,21 @@ on navigation, not through a per-frame redraw. Floating title/continue/new-game
 and victory prompts use an invariant pale ink with dark contours so the light
 vellum theme's dark body ink cannot disappear into the title bitmap.
 The five skin drawings and font metrics remain unchanged by this layout update.
+
+**Full-screen pilot review found contrast defects:** frozen `443e7aa` passes its
+byte, physical and functional checks, but actual native screens expose an old
+dark-on-gold assumption: selected tab text is too dark on the new dark tabs.
+All new skins now use their semantic high-contrast ink for the active tab;
+legacy UI0 retains dark type on its gold field. Unbacked item-count figures use
+invariant pale ink with a dark contour. The vellum victory body's dark semantic
+ink was also passed through a floating-title outline helper, smudging letters;
+backed victory prose now uses plain centered body type. Floating title prompts
+retain pale ink and a dark outline. Other backed shop/dialogue/reward fields
+were reviewed and already have the appropriate semantic inks.
+
+The `443e7aa` technical success is recorded as superseded pilot evidence, not
+proof of visual quality. All six ROMs and actual recordings are regenerated
+after these narrow UI-runtime fixes. Native art/palettes remain frozen.
+A death-and-return GIF crosses palette fades/areas and exceeds GIF's 256 colors;
+publish its exact native PNGs and full-rate MP4 instead of presenting a
+quantized GIF as faithful framebuffer colors.

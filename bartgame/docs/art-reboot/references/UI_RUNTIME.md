@@ -96,3 +96,43 @@ region whitelist, conditional ammunition and live room-map tracking. The parent
 publishes final all-profile results only after its corrected source freeze.
 
 No final capture or performance result is inferred from source legality alone.
+
+Updated steering pilot: the independent capture reviewer passes all56
+applicable HUD checks across ten states. Regional hardware alpha matches the
+compact top strip and separate map; actual minimap VRAM changes across generated
+room transitions; ammo0/9/99/255 displays; unequipped ammo and keys leave the
+visible HUD payload unchanged; sampled idle updates match VBlank. Its sewer9
+profile assertion intentionally fails on this declared sewer0 interface pilot.
+Final all-profile capture evidence remains the parent's separate final run.
+
+The separate independent regression validator also passes53/53 updated pilot
+checks, including all25 decoded minimap cells against actual World visited,
+goal and current-cell data in the Drain, after pause, at forest entry and in
+another generated room. Equipped bomb/bow counts update independently; ordinary
+hurt replacement latency remains one frame at normal and maximum HP. These
+pilot checks found no runtime correction; final frozen all-theme runs follow.
+
+## Final actual-screen contrast corrections
+
+The first complete six-theme pilot (`443e7aa`) exposed two semantic text
+contrast errors that native asset checks did not detect. Selected inventory
+tabs still hard-coded the old dark-on-gold ink although the new active-tab
+fields are dark. `src/menu.c` now chooses UI_INK_HIGH for selected tabs in
+all five new themes: it is light on the dark studies and dark on vellum.
+Baseline zero retains its valid dark-on-gold selected label. Items, Key Items
+and Map all use the same corrected page-frame function.
+
+The UI2 victory prose also used the floating title helper's dark outline;
+its dark body letters merged with that contour into smudges on pale paper.
+The two backed victory prose lines now use plain centered semantic body text.
+Floating title/Continue/NewGame/PressStart prompts retain light PALE ink and
+a dark contour. Item-slot resource figures float over variable item artwork
+and now likewise use PALE plus a dark contour, rather than paper-body ink.
+
+Every remaining UI_INK_DARK context was reviewed: outlines/contours retain
+their role; the baseline selected tab remains dark-on-gold; shop names/prices,
+speech bubbles, speaker plates, ordinary dialogue/reward body and map panels
+have guaranteed themed backings with the correct semantic ink. Body palettes
+were not globally forced light, so the vellum's dark-on-paper direction stays
+intact. These UI-only corrections preserve controls, gameplay and input timing.
+The parent rebuilds and recaptures every final theme; the pilot is superseded.
