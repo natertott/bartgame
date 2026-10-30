@@ -1,5 +1,12 @@
 # Drain art concepts for selection
 
+The current [third-pass gallery](../../art-review/sewer-concepts-v3/README.md)
+responds to the user's component-by-component feedback on the second pass.
+Its five new treatments keep exploring the preferred #1 frog and #5 wizard;
+neither actor is fixed across all five rooms. Floors, damaged walls, water,
+ladder markers, stalls and storage are reconsidered together. The shared
+[direction log](art-reboot/ART_DIRECTION_LOG.md) records the feedback and review.
+
 The [reference-led second pass](art-reboot/REFERENCE_APPLICATION.md) reauthors
 all five sets from the six uploaded PDFs. The shared [art bible](art-reboot/ART_BIBLE.md),
 [decision log](art-reboot/ART_DIRECTION_LOG.md) and [source register](art-reboot/REFERENCE_REGISTER.md)
@@ -36,11 +43,11 @@ the actual GBA screen is 240×160 and shows part of that map.
 
 | Option | Direction | Design emphasis |
 | --- | --- | --- |
-| 1 | Crown of Sludge | Heavy gray masonry and conspicuous ceremonial brass against sewage. |
-| 2 | Crooked Brassworks | Rounder, characterful stone and fittings; a more cartoon-like market. |
-| 3 | Moonlit Cistern | Cooler gray stone, dark liquid and crisp metal highlights. |
-| 4 | Rotten Reliquary | Worn stone, accumulated slime and damaged, precious fittings. |
-| 5 | Royal Drains | Clear outlined construction and an ordered rhythm of gray brick and gold. |
+| 1 | Ashlar & Amber | Broad running-bond gray brick, worn brass and the closest preferred actor anchors. |
+| 2 | Crooked Brickwork | Unequal old brick courses, patched market canvas and lopsided characters. |
+| 3 | Floodworn Flags | Long worn setts, narrow pouring water and a timber-canopied market. |
+| 4 | Crumbling Vault | Chipped flags, decayed masonry, ragged cloth and broken-lip water. |
+| 5 | Silted Cloister | Denser herringbone paving, worn orderly brass and compact pointed-cowl wizard. |
 
 These are shape/material studies, not five palette swaps. The material banks
 share index roles so components can be mixed without exceeding GBA limits.

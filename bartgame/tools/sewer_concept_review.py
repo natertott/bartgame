@@ -28,6 +28,7 @@ VIEWS = (
     ('market', (72, 115), 0, 288),
     ('ladder', (152, 80), 0, 128),
     ('wizard', (344, 118), 0, 288),
+    ('cistern', (240, 118), 0, 288),
     ('bridge', (240, 174), 0, 128),
     ('left-channel', (120, 140), 0, 128),
     ('right-outfall', (424, 132), 0, 128),
@@ -120,8 +121,19 @@ def tileset(c, defs):
             selected.append({'metatile': name.lower(), **match})
     if not selected:
         selected = [a for a in animations if len(set(a['frame_hashes'])) > 1][:1]
+    # The fixed cistern's upper falling sheet spans rows2/3, with impact and
+    # liquid at row4. Track those actual ROM allocations separately so a
+    # changing main channel cannot stand in for an unmoving waterfall.
+    cistern=[]
+    for name in ('SWH_068','SWH_069','SWH_095','SWH_096','SWH_122','SWH_123'):
+        mt=defs.get('MT_'+name)
+        if mt is None:continue
+        tile=(P.r16(c,mapping+mt*8)&65535)&1023
+        match=next((a for a in animations if a['tile']==tile),None)
+        if match and len(set(match['frame_hashes']))>1:
+            cistern.append({'metatile':name.lower(),**match})
     return {'tile_count': count, 'palette_count': P.r8(c, at+24),
-            'animations': animations, 'flow': selected}
+            'animations': animations, 'flow': selected,'cistern_flow':cistern}
 
 
 def frame_catalog(c, defs):
@@ -284,7 +296,8 @@ class Review:
                    'glitter_visible': P.r8(c, P.sym('gAmbientVisible')),
                    'textbox': P.r8(c, P.sym('gTbActive')),
                    'shop': P.r8(c, shop_at),
-                   'flow_frames': [digest(B.bytes_at(c, 0x06000000+a['tile']*32, 128)) for a in self.ts['flow']]}
+                   'flow_frames': [digest(B.bytes_at(c, 0x06000000+a['tile']*32, 128)) for a in self.ts['flow']],
+                   'cistern_frames': [digest(B.bytes_at(c,0x06000000+a['tile']*32,128)) for a in self.ts['cistern_flow']]}
             if self.rail:
                 candidates = [o for o in entries if o['pal'] == self.rail['pal'] and
                               o['shape'] == self.rail['shape'] and o['size'] == self.rail['size']]
@@ -333,6 +346,16 @@ class Review:
             checks['standing_camera_fixture_stays_on_safe_ground'] = all(r['hero_state'] == 0 and r['position'] == list(point) for r in trace)
             checks['ordinary_idle_game_remains_playing'] = all(r['state'] == 1 for r in trace)
             checks['flowing_water_changes_in_hardware_vram'] = any(len({r['flow_frames'][i] for r in trace}) > 1 for i in range(len(self.ts['flow'])))
+            if name=='cistern':
+                falling={'swh_068','swh_069','swh_095','swh_096'}
+                impact={'swh_122','swh_123'}
+                registered={a['metatile'] for a in self.ts['cistern_flow']}
+                checks['cistern_sheet_and_impact_have_distinct_rom_frames']=bool(registered&falling) and bool(registered&impact)
+                checks['cistern_sheet_and_impact_animate_in_actual_hardware']=bool(registered) and all(
+                    len({r['cistern_frames'][i] for r in trace})>1 for i in range(len(self.ts['cistern_flow'])))
+                checks['cistern_hardware_frames_match_exact_authored_rom_frames']=bool(registered) and all(
+                    r['cistern_frames'][i] in animation['frame_hashes']
+                    for r in trace for i,animation in enumerate(self.ts['cistern_flow']))
         elif dialogue == 'shop':
             checks['ordinary_A_opens_actual_shop'] = any(r['shop'] for r in trace)
         else:
@@ -426,7 +449,7 @@ def main():
     ap.add_argument('--baseline', default='/workspace/setup/step-and-cut/frozen')
     ap.add_argument('--no-video', action='store_true')
     ap.add_argument('--no-dialogue', action='store_true')
-    ap.add_argument('--views', help='Comma-separated subset of the eight authored viewpoints')
+    ap.add_argument('--views', help='Comma-separated subset of the nine authored viewpoints')
     return Review(ap.parse_args()).run()
 
 

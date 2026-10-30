@@ -339,11 +339,19 @@ class Audit:
         return {'recipe':source['recipe'],'native_tile_frames':frames,'animated_metatile_ids':contract_anim,'animated_ids_with_changing_pixels':moving,'keeper_and_portrait_frames':keeper_frames,'new_rail_frames':rail_frames,
                 'changed_rendered_metatile_ids':changed,'source_frame_hashes':source_hashes,'keeper_source_hashes':keeper_hashes}
     def run(self):
-        files=['sewer_concepts.py','sewer_concepts_terrain.py','sewer_concepts_npcs.py','reboot_core.py','reboot_terrain.py','reboot_actors.py','reboot_ui.py','reboot_contracts.json']
+        files=['sewer_concepts.py','sewer_concepts_terrain.py','sewer_v3_fixtures.py','sewer_concepts_npcs.py','reboot_core.py','reboot_terrain.py','reboot_actors.py','reboot_ui.py','reboot_contracts.json']
         snapshot={name:sha((ROOT/'art'/name).read_bytes()) for name in files}
         self.check(0,'default_release','BART_SEWER0 equals released Step-and-cut ROM',sha(self.base.rom)==RELEASED_SHA,sha(self.base.rom))
         for variant in self.args.variants:
             path=Path(self.args.frozen)/('v'+str(variant));rom=NativeRom(path)
+            provenance_path=path/'freeze.json'
+            if provenance_path.exists():
+                provenance=json.loads(provenance_path.read_text())
+                frozen_hashes=provenance.get('source_file_sha256')
+                if frozen_hashes is not None:
+                    self.check(variant,'source_snapshot','all audited painters match frozen build provenance',
+                               all(frozen_hashes.get(name,frozen_hashes.get('art/'+name))==value for name,value in snapshot.items()))
+                self.check(variant,'build_provenance','frozen ROM matches recorded build hash',sha(rom.rom)==provenance['rom_sha256'])
             self.check(variant,'build_recipe','header selects requested sewer profile',rom.defs.get('BART_SEWER_VARIANT')==variant,rom.defs.get('BART_SEWER_VARIANT'))
             detail=self.scope(variant,rom);detail.update(self.art(variant,rom))
             detail.update({'variant':variant,'rom_sha256':sha(rom.rom),'rom_bytes':len(rom.rom),

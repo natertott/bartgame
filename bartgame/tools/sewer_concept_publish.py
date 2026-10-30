@@ -54,29 +54,31 @@ for n in range(1,9):
     dst.mkdir(parents=True,exist_ok=True)
     report=json.loads((src/'capture.json').read_text())
     assert report['rom_sha256']==builds[n]['rom_sha256']
-    assert report['passed']==report['total'] and len(report['captures'])==10
+    assert report['passed']==report['total']
+    assert report['capture_count']==len(report['captures'])
+    assert {'market','wizard','bridge','ladder','cistern'} <= {row['name'] for row in report['captures']}
     for row in report['captures']:
         for name in [*row['native_frames'],row['preview_png'],row['filmstrip'],row['video']]:
             (dst/name).parent.mkdir(parents=True,exist_ok=True)
             shutil.copy2(src/name,dst/name)
         archived={'full_frames':row.pop('full_frames')}
-        if row['name']=='bridge' or n<=5 and row['name'] in ('market','wizard'):
+        if row['name'] in ('bridge','cistern') or n<=5 and row['name'] in ('market','wizard'):
             shutil.copy2(src/row['gif'],dst/row['gif'])
         else:
             if (dst/row['gif']).exists():(dst/row['gif']).unlink()
             archived['gif']=row.pop('gif')
         row['archival_formats']=archived
     report['publication']={'source_report_sha256':sha(src/'capture.json'),
-        'note':'Native selected PNGs, videos, filmstrips and traces are unchanged. Bridge GIFs are published for all recipes, plus market/wizard GIFs for1..5; all-frame local archives and other GIFs are listed under archival_formats.'}
+        'note':'Native selected PNGs, videos, filmstrips and traces are unchanged. Bridge/cistern GIFs are published for all recipes, plus market/wizard GIFs for 1..5; all-frame local archives and other GIFs are listed under archival_formats.'}
     (dst/'capture.json').write_text(json.dumps(report,indent=2)+'\n')
     reports[n]=report
     shutil.copy2(local/f'build-{n}.log',validation/f'build-{n}.log')
     shutil.copy2(local/f'review-v{n}.log',validation/f'review-v{n}.log')
 
-print('Copied source gallery and80actual cases',flush=True)
+print(f'Copied source gallery and {sum(r["capture_count"] for r in reports.values())} actual cases',flush=True)
 font=ImageFont.truetype('/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf',12)
 FPS=16777216/280896
-views=('market','wizard','bridge','ladder')
+views=('market','wizard','bridge','ladder','cistern')
 video=out/'five-concepts-mgba.mp4'
 proc=subprocess.Popen(['ffmpeg','-y','-loglevel','error','-f','rawvideo','-pixel_format','rgb24',
     '-video_size','1200x190','-framerate',str(FPS),'-i','-','-an','-c:v','libx264','-crf','17',
@@ -107,7 +109,7 @@ try:
             if tick==count//2:board.save(out/f'actual-{view}-comparison.png')
         durations=[round(min(count,t+2)/FPS*100)*10-round(t/FPS*100)*10 for t in range(0,count,2)]
         comparisons[view]=write_gif(gifs,durations,out/f'actual-{view}-comparison.gif')
-        if view!='bridge':(out/f'actual-{view}-comparison.gif').unlink()
+        if view not in ('bridge','cistern'):(out/f'actual-{view}-comparison.gif').unlink()
         print('COMPARISON',view,comparisons[view],flush=True)
     proc.stdin.close()
     assert proc.wait()==0
@@ -130,7 +132,8 @@ for n in range(1,9):
 Open a .gba in mGBA. No commercial base ROM is needed.
 01..05 are complete concepts;06..08 are mixed-component room designs.
 All use the same physical room, Bloom and glitter. The merchant is a cartoon
-frog and the wizard wears purple with a flame-tipped staff. These are optional
+frog and the wizard wears purple with a flame-tipped staff. These variations
+build on the preferred second-pass frog #1 and wizard #5. They are optional
 studies for feedback. The released art-reboot branch remains unchanged.
 
 Source game/art: {source}

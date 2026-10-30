@@ -169,3 +169,61 @@ The remaining local tradeoffs are recorded for feedback: Crooked and
 Reliquary have denser texture; Moonlit has quieter fields; small expressions
 cannot carry portrait-level information. The shared G01–G18 rules stay in the
 art bible while the user chooses a complete Drain treatment or mixed parts.
+
+## Feedback-led third Drain pass — 2026-10-30
+
+**Status:** exploratory revision in progress; no production room selected.
+
+**Evidence:** the user likes the second-pass frog #1 and wizard #5, and then
+explicitly asks for continued variation of both. All five new actor studies
+therefore start from those preferred identities; they are not five identical
+copies and the old options are retained as comparison evidence.
+
+The user rejects every floor and wall (wall #4 is closest), all ladders
+(ladder #1 closest; all arrows unclear), all water (falls resemble roots),
+and all markets (#1/#2 closest). Preferred cues: cistern arches #1/#4; wizard
+corner atmosphere #1/#2/#5 plus #4 decay; bridge #4; rails #1/#2 with #4 damage;
+storage #1/#2 without the ambiguous blob; grate #4; banks #1/#2/#4. The small
+gold outfall's purpose is unclear. These are starting points, not wholesale
+approvals of any existing treatment.
+
+**Decision:** five new coherent gray-brick floor constructions and damaged
+wall treatments, with attached localized grime, readable pouring liquid, a
+filled high-contrast up-arrow separate from ladder rungs, explicit pipe mouth
+and discharge, clearly wooden storage lids, and newly constructed market and
+wizard corners. Preserve the room layout, Bloom, sword timing, glitter and
+unrelated art. Add the silhouette/flow/readability lessons to the shared art
+bible; keep exact architecture and character choices local and exploratory.
+
+**Implementation:** `art/sewer_concepts.py`, `art/sewer_concepts_terrain.py`,
+new `art/sewer_v3_fixtures.py`, `art/sewer_concepts_npcs.py`, the Makefile
+dependency list and review/publication tools. Existing article guidance G01–G18
+remains applicable; no new source is claimed as read. The second-pass source
+gallery remains immutable before evidence. Native source review, all ID/frame
+atlases, five complete rooms, three mixed rooms, fresh mGBA recordings and
+playable study ROMs will be linked after source freeze.
+
+**Native freeze:** after source critique, all five floors have new bonds:
+running bond, reclaimed unequal courses, long setts, chipped flags and
+herringbone. The fifth remains deliberately denser, a comparison tradeoff.
+Walls use damaged fourth-study masonry as their shared starting vocabulary.
+The first sheet-water sketch still looked like a solid pillar, so the final
+pass adds broken fringe, descending light packets, detached spray, impact
+foam and pool arcs. An actual prior-ROM camera inspection found that the old
+ladder arrow was beneath the fixed 24-pixel HUD. The new filled sign sits at
+world `(160..174,32..46)` beside the original climb lane. Storage slime is
+moved off its identifying wooden top to the foot of the stack.
+
+Native drawing validation covers 3,680 terrain frame alternatives and five
+rails. NPC source validation passes 273 checks for all 150 world frames and
+ten separately drawn portraits. Option 1 intentionally retains the fifteen
+preferred first frog's body poses; its new head changes the assembled actor.
+The other 135 world-frame geometries change. Five distinct assembled frogs
+and five pointed-purple wizard families remain available. This is honest
+coverage, not a requirement to perturb every retained pixel.
+
+Frozen terrain: `4cf8f2a0d0eeb0b64c808906c858c48cbd4ffc42600347c8a51f265e0058f86b`;
+fixtures: `c148ceb7ca479cd76f0b82fdf1d6c02b930bb0be76c0982dee1ce71489a65c8a`;
+NPCs: `3ac84ca8f1024bfbbbb391f3c817d06d73609e82d17239aa05981e0633b130bb`.
+Full engine packing and real mGBA review follow this freeze, including a new
+dedicated cistern viewpoint to inspect the complaint directly.

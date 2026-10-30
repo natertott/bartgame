@@ -53,7 +53,8 @@ GEN_C     := $(GEN)/assets.c
 ART       := $(wildcard art/reboot_*.py) art/reboot_contracts.json tools/build_assets.py \
              art/palettes.py art/tiles.py art/sprites.py art/rooms.py art/ui_kit.py \
              art/ui_font.py art/faces.py art/title.py art/sw_folk.py art/sword_studies.py \
-             art/sewer_concepts.py art/sewer_concepts_terrain.py art/sewer_concepts_npcs.py
+             art/sewer_concepts.py art/sewer_concepts_terrain.py art/sewer_concepts_npcs.py \
+             art/sewer_v3_fixtures.py
 
 OBJS := $(patsubst src/%.c,$(BUILD)/%.o,$(SRC_C)) \
         $(patsubst src/%.c,$(BUILD)/%.o,$(SRC_IWRAM)) \

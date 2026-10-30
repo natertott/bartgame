@@ -173,6 +173,16 @@ remain trustworthy. An optional dirt trail can lead to a detour; an ordinary
 floor texture must not masquerade as a bombable wall. Loot beyond a barrier
 must not cover the barrier itself.
 
+Treat ambiguous scenery as a failed silhouette before adding detail. A pipe
+outlet needs a visible connection, a dark mouth, a lower lip and liquid leaving
+that mouth. Falling liquid needs downward motion, a changing sheet or separated
+streaks and a landing splash; a static branching contour can read as roots.
+An exit arrow uses a filled arrowhead and shaft separated from both the ladder
+rungs and surrounding trim. Grime belongs in attached deposits and must not
+hide a crate lid, grate bars, a sign or another object's identifying structure.
+These readability refinements come from the user's third Drain review. Exact
+pipe, arrow and masonry treatments remain exploratory local concepts.
+
 ## Glitter is abundant, with a grammar
 
 Aim for roughly twenty potential ambient glint sites in a viewport, phased so

@@ -48,3 +48,14 @@ The redesign review should connect each adopted rule to visible examples in
 the five Drain sets and state any advice intentionally deferred or inapplicable.
 The earlier [research register](RESEARCH.md) remains separate evidence; it must
 not be presented as a substitute for reading later references.
+
+## Follow-up Drain application — third pass
+
+The user’s review of the second-pass gallery is the direct evidence for this
+iteration, followed by their request to keep varying both NPCs. The existing
+six PDF notes remain the reference basis; this pass does not claim a new
+article or missing illustration was accessed. Concrete applications and
+tradeoffs are recorded in [third-pass characters](references/DRAIN_V3_CHARACTERS.md),
+[fixtures](references/DRAIN_V3_FIXTURES.md) and the [direction log](ART_DIRECTION_LOG.md).
+The preferred second-pass #1 frog and #5 wizard are comparison anchors, not
+new sources or automatic adoption of a whole room.
