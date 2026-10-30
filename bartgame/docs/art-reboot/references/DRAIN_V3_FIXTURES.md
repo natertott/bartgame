@@ -49,3 +49,17 @@ Tradeoff: pouring sheets still need motion to fully communicate water. The
 body is intentionally continuous rather than detached decorative pixels. The
 round architecture stays related between styles because that is the user's
 preferred construction.
+
+## Final alias correction from assembled-room review
+
+The first direct-layer pipe looked legible, but the original reused walkable
+IDs erased its upper riser and mouth when the REAL map was assembled. The
+fixed layout has unique bank IDs swh_230/231 at (27,9)/(28,9), and a unique
+animated stream ID swh_241 at (28,10). The final outlet therefore mounts ON
+the bank with a short horizontal connection to the side wall: flange
+x448..463,y145..159, dark cavity x452..460,y148..155 and liquid/spray entirely
+inside x448..463,y155..175. There is no longer a pretend floor riser.
+This keeps the same physical room and uses the existing eight-frame water
+slot, with no new object or ID. `fixtures-outfall-alias-corrected.png/.gif`
+are rendered from T.full_layers (assembled original map IDs), not direct
+private _layers. They visibly retain a round gold pipe mouth and moving water.

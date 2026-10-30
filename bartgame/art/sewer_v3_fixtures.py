@@ -188,19 +188,27 @@ def _pipe(d, box, style=1, horizontal=False):
 def _small_outfall(g, style=1, phase=0, period=8):
     """A legible elbow pipe pouring into the existing stream, not a gold icon."""
     d = ImageDraw.Draw(g)
-    # Connection and bolted collar clearly attach the spout to the wall.
-    _pipe(d, (431, 116, 443, 138), style)
-    d.ellipse((426, 132, 449, 147), fill=12)
-    d.ellipse((427, 132, 448, 144), fill=14)
-    d.ellipse((431, 135, 444, 143), fill=1)
-    d.arc((427, 132, 448, 144), 184, 278, fill=15)
-    d.line((431, 143, 444, 143), fill=12)
-    # Liquid begins at the mouth's LOWER lip and ends in a real channel pool.
-    _sheet(d, (434, 141, 441, 167), phase, period, style)
-    r = (int(phase)*3//max(1, int(period)))
-    d.arc((426-r, 164, 449+r, 174+r), 5, 175, fill=10)
-    d.line((430, 169, 435, 169), fill=11)
-    d.line((441, 171, 446, 171), fill=10)
+    # Only unique bank cells (27,9)/(28,9) can hold this fitting.  The former
+    # floor riser was erased by reused walkable tile IDs in the REAL map.
+    # A horizontal wall stub now leads to a front-facing outlet on the bank.
+    d.rectangle((457,146,479,151),fill=12)
+    d.rectangle((458,147,478,149),fill=13)
+    d.line((459,146,477,146),fill=14)
+    d.rectangle((469,145,472,152),fill=12)
+    d.line((469,145,471,145),fill=14)
+    d.ellipse((448,145,463,159),fill=12)
+    d.ellipse((449,145,462,157),fill=14)
+    d.ellipse((452,148,460,155),fill=1)
+    d.arc((449,145,462,157),185,280,fill=15)
+    d.line((451,156,461,156),fill=12)
+    # The full moving fall is inside UNIQUE animated tile (28,10), x448..463.
+    # Painting any flowing pixel at x<448 would spread it to repeated stream
+    # tiles or be erased; every splash/impact pixel stays within this lane.
+    _sheet(d,(452,155,458,171),phase,period,style)
+    r=int(phase)*2//max(1,int(period))
+    d.arc((449,169,462,174+r),5,175,fill=10)
+    d.line((450,173,454,173),fill=11)
+    d.line((458,174,461,174),fill=10)
 
 
 def _up_arrow(d, cx, top, style=1):

@@ -227,3 +227,21 @@ fixtures: `c148ceb7ca479cd76f0b82fdf1d6c02b930bb0be76c0982dee1ce71489a65c8a`;
 NPCs: `3ac84ca8f1024bfbbbb391f3c817d06d73609e82d17239aa05981e0633b130bb`.
 Full engine packing and real mGBA review follow this freeze, including a new
 dedicated cistern viewpoint to inspect the complaint directly.
+
+**First ROM pilot exposed an assembly failure:** the packed images matched
+their source exactly, but reused floor IDs discarded most of the small outlet
+fixture. Full-room visual review caught this; technical checks alone did not.
+The outlet now has its mouth on the unique bank cells230/231 and falling
+liquid/foam in unique animated cell241. The two reused north-wall pipe panels
+058/059 now preserve pipe material, since all occurrences are in the same
+horizontal pipe. The long pipe no longer breaks into disconnected fragments.
+This changes no IDs, placements, collision, palettes, actors or engine behavior.
+The initial `e354268` pilot is retained locally as superseded evidence.
+
+After review of actual-map source crops, final source hashes are terrain
+`913e22af37f33949d248675b8f3987daf17d989e0c7c8c04e32c76845ae8f561`,
+fixtures `1f7d4289575f8a4a933ac6fef1b37a5510308a1ed31c4815629cd9a0c5d8ea12`,
+with NPCs unchanged from the preceding native freeze. All final ROMs, atlases
+and mGBA recordings are rebuilt from this corrected source rather than reused
+from the pilot. Runtime review separately checks the actual outlet's animated
+VRAM allocation, not merely another part of the stream changing.

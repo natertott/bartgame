@@ -132,8 +132,18 @@ def tileset(c, defs):
         match=next((a for a in animations if a['tile']==tile),None)
         if match and len(set(match['frame_hashes']))>1:
             cistern.append({'metatile':name.lower(),**match})
+    # The small gold pipe's final bank outlet uses the fixed unique water
+    # metatile at (28,10). Tracking the channel alone would miss an outlet
+    # cropped away by a reused cell elsewhere in the fixed map.
+    outlet=[]
+    mt=defs.get('MT_SWH_241')
+    if mt is not None:
+        tile=(P.r16(c,mapping+mt*8)&65535)&1023
+        match=next((a for a in animations if a['tile']==tile),None)
+        if match and len(set(match['frame_hashes']))>1:
+            outlet.append({'metatile':'swh_241',**match})
     return {'tile_count': count, 'palette_count': P.r8(c, at+24),
-            'animations': animations, 'flow': selected,'cistern_flow':cistern}
+            'animations': animations, 'flow': selected,'cistern_flow':cistern,'outlet_flow':outlet}
 
 
 def frame_catalog(c, defs):
@@ -297,7 +307,8 @@ class Review:
                    'textbox': P.r8(c, P.sym('gTbActive')),
                    'shop': P.r8(c, shop_at),
                    'flow_frames': [digest(B.bytes_at(c, 0x06000000+a['tile']*32, 128)) for a in self.ts['flow']],
-                   'cistern_frames': [digest(B.bytes_at(c,0x06000000+a['tile']*32,128)) for a in self.ts['cistern_flow']]}
+                   'cistern_frames': [digest(B.bytes_at(c,0x06000000+a['tile']*32,128)) for a in self.ts['cistern_flow']],
+                   'outlet_frames': [digest(B.bytes_at(c,0x06000000+a['tile']*32,128)) for a in self.ts['outlet_flow']]}
             if self.rail:
                 candidates = [o for o in entries if o['pal'] == self.rail['pal'] and
                               o['shape'] == self.rail['shape'] and o['size'] == self.rail['size']]
@@ -356,6 +367,11 @@ class Review:
                 checks['cistern_hardware_frames_match_exact_authored_rom_frames']=bool(registered) and all(
                     r['cistern_frames'][i] in animation['frame_hashes']
                     for r in trace for i,animation in enumerate(self.ts['cistern_flow']))
+            if name=='right-outfall':
+                checks['unique_gold_outlet_water_cell_animates_with_exact_rom_frames_in_hardware']=bool(self.ts['outlet_flow']) and all(
+                    len({r['outlet_frames'][i] for r in trace})>1 and all(
+                        r['outlet_frames'][i] in animation['frame_hashes'] for r in trace)
+                    for i,animation in enumerate(self.ts['outlet_flow']))
         elif dialogue == 'shop':
             checks['ordinary_A_opens_actual_shop'] = any(r['shop'] for r in trace)
         else:

@@ -547,6 +547,13 @@ def _repeated(name,phase,key):
     if layer=='overlay' or len(ps)==1:return None
     styles=dict(zip(CATEGORIES,key));s=styles[category(name)]
     n=int(name[4:])
+    # These two reused panels occur only within the same horizontal wall
+    # pipe. Keep their continuous tube instead of replacing its middle with
+    # plain masonry. Their duplicate occurrences use the same material and
+    # height, so sharing these exact crops creates no stray pipe elsewhere.
+    if name in ('swh_058','swh_059'):
+        ground,_=_layers(key,phase,TILES[name]['frames'])
+        return ground.crop((x*16,y*16,x*16+16,y*16+16))
     if y<4:return wall_tile(styles['masonry'],n)
     if all(xx in (14,15) and 9<=yy<=12 for _,xx,yy in ps):
         return _bridge(styles['bridge']).crop((0 if x==14 else 16,0,16 if x==14 else 32,16))
