@@ -42,8 +42,10 @@ validation=out/'validation'
 validation.mkdir(exist_ok=True)
 for name in ['audit-scope.json','audit-scope-summary.json','audit-scope.log','review-summary.json','builds.json','build-0.log','default-restore.log']:
     shutil.copy2(local/name,validation/name)
-for name in ('terrain/terrain-validation.json','npcs/native-review.json'):
-    if (local/name).exists():shutil.copy2(local/name,validation/Path(name).name)
+for name,destination in (('terrain/terrain-validation.json','terrain-validation.json'),
+                         ('terrain/validation.json','terrain-validation.json'),
+                         ('npcs/native-review.json','native-review.json')):
+    if (local/name).exists():shutil.copy2(local/name,validation/destination)
 
 reports={}
 for n in range(1,9):

@@ -1,0 +1,11 @@
+CAPTURE 5 market PASS
+CAPTURE 5 ladder PASS
+CAPTURE 5 wizard PASS
+CAPTURE 5 bridge PASS
+CAPTURE 5 left-channel PASS
+CAPTURE 5 right-outfall PASS
+CAPTURE 5 lower-left PASS
+CAPTURE 5 lower-right PASS
+CAPTURE 5 peddler-shop PASS
+CAPTURE 5 wizard-dialogue PASS
+RESULT PASS 143/143

@@ -1,0 +1,99 @@
+{
+  "painter_sha256": "7a1c388d75fa7ae77bc8c1a66f76c323fb8c31e81f6fea772c7a24c0ae7bb8bb",
+  "world_frames": 150,
+  "portraits": 10,
+  "styles": [
+    {
+      "style": 1,
+      "previous_frame_geometry_changed": 31,
+      "previous_frame_count": 31,
+      "breathe_changed_pixels": 87,
+      "foot_rows_29_31_identical": true,
+      "green_skin_inks": [
+        2,
+        3,
+        4
+      ],
+      "robe_inks": [
+        2,
+        3,
+        4
+      ],
+      "robes_do_not_use_emissive_13_14": true
+    },
+    {
+      "style": 2,
+      "previous_frame_geometry_changed": 31,
+      "previous_frame_count": 31,
+      "breathe_changed_pixels": 93,
+      "foot_rows_29_31_identical": true,
+      "green_skin_inks": [
+        2,
+        3,
+        4
+      ],
+      "robe_inks": [
+        2,
+        3,
+        4
+      ],
+      "robes_do_not_use_emissive_13_14": true
+    },
+    {
+      "style": 3,
+      "previous_frame_geometry_changed": 31,
+      "previous_frame_count": 31,
+      "breathe_changed_pixels": 77,
+      "foot_rows_29_31_identical": true,
+      "green_skin_inks": [
+        2,
+        3,
+        4
+      ],
+      "robe_inks": [
+        2,
+        3,
+        4
+      ],
+      "robes_do_not_use_emissive_13_14": true
+    },
+    {
+      "style": 4,
+      "previous_frame_geometry_changed": 31,
+      "previous_frame_count": 31,
+      "breathe_changed_pixels": 103,
+      "foot_rows_29_31_identical": true,
+      "green_skin_inks": [
+        2,
+        3,
+        4
+      ],
+      "robe_inks": [
+        2,
+        3,
+        4
+      ],
+      "robes_do_not_use_emissive_13_14": true
+    },
+    {
+      "style": 5,
+      "previous_frame_geometry_changed": 31,
+      "previous_frame_count": 31,
+      "breathe_changed_pixels": 70,
+      "foot_rows_29_31_identical": true,
+      "green_skin_inks": [
+        2,
+        3,
+        4
+      ],
+      "robe_inks": [
+        2,
+        3,
+        4
+      ],
+      "robes_do_not_use_emissive_13_14": true
+    }
+  ],
+  "all_flame_phases_five_distinct": true,
+  "method": "Independent source/footprint observation; runtime evidence is generated separately in real mGBA."
+}

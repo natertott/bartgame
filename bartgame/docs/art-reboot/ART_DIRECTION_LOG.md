@@ -76,7 +76,8 @@ published in `ffc5d86739bc45d5cbb1ce2c8e87d3a1e9c92008`.
 
 ## Reference-led second Drain pass — 2026-10-30
 
-**Status:** in progress; PDF access resolved and shared principles adopted.
+**Status:** completed redesigned studies; shared principles adopted; five local
+Drain treatments remain available for user selection.
 
 The user requests that all six supplied pixel-art articles guide future art,
 that shared art-direction changes remain continuously documented, and that
@@ -137,3 +138,34 @@ Remaining visual tradeoffs to judge in motion: Crooked and Royal floor bonds
 are more patterned than Moonlit's flags; Reliquary is deliberately darker and
 grubbier. Tiny world expressions remain simpler than their portraits. No
 meaningless pixels are added to force all blank/seam pieces to differ.
+
+**Packed and actual-run review:** game/art source
+`476d1ede7162e20212707ede84d586a770f940f1` was frozen into nine builds: unchanged
+default zero, five complete sets and three mixes. The independent decoder
+passes 20,827/20,827 checks, including every packed native frame, exact original
+IDs, the single appended breathing pose, fixed foot rows, and unchanged room,
+Bloom/Step-and-cut, glitter, forest/interior, unrelated sprites, UI/font/title
+and protected palette data. The audit's generic descriptor expectation was
+corrected precisely for the approved extra source body frame; its hardware
+canvas, per-frame streamed allocation and palette remain unchanged.
+
+All 80 fresh mGBA cases pass 1,144/1,144 runtime checks. Each market clip has
+75 unique uploaded rest samples with head/body offset `(8,6)` and 39 breathing
+samples at `(8,7)`, with no phase mismatch. Every idle sample runs one update
+per VBlank. Peak recorded OAM is 42/128; Drain BG use is 547–587/1024 subtiles
+and one area palette. These measurements are sample coverage, not a promise
+of worst-case performance. The default ROM remains byte-identical to the
+approved Step-and-cut release (`547674bf…832c97a`).
+
+The [second-pass gallery](../../../art-review/sewer-concepts-v2/README.md)
+regenerates all asset options and eight source rooms, adds before/after,
+silhouette/value and rest/breathe diagnostics, and includes fresh exact native
+PNGs, normal-speed GIFs, full-rate videos and playable builds. Runtime clips
+activate 11/15 frog body poses and 4/5 head poses; authored atlas coverage and
+packed-source checks cover the entire family without claiming every pose was
+activated by the idle fixture. All four flame frames are observed.
+
+The remaining local tradeoffs are recorded for feedback: Crooked and
+Reliquary have denser texture; Moonlit has quieter fields; small expressions
+cannot carry portrait-level information. The shared G01–G18 rules stay in the
+art bible while the user chooses a complete Drain treatment or mixed parts.

@@ -1,5 +1,20 @@
 # BARTGAME downloads
 
+## Updated studies: reference-led Drain redesign
+
+All five Drain styles and three mixed rooms have been redesigned using the
+six uploaded pixel-art articles. New silhouettes, material planes, quieter
+ground, flowing water and coordinated frog breathing follow the page-cited
+shared art rules. The room, Bloom, glitter and shared game UI remain intact.
+
+- [Full refreshed gallery, before/after boards and 80 real mGBA recordings](https://github.com/natertott/bartgame/blob/sewer-concepts-v2/art-review/sewer-concepts-v2/README.md)
+- [Download all eight playable study ROMs](https://raw.githubusercontent.com/natertott/bartgame/sewer-concepts-v2/downloads/sewer-concepts-v2-476d1ed/all-eight-sewer-concepts.zip)
+- [Source and checksums](sewer-concepts-v2-476d1ed/README.txt)
+- [Shared art bible](../bartgame/docs/art-reboot/ART_BIBLE.md) · [Direction log](../bartgame/docs/art-reboot/ART_DIRECTION_LOG.md) · [Reference application](../bartgame/docs/art-reboot/REFERENCE_APPLICATION.md)
+
+Frozen game/art source: `476d1ed`. All 21,971 checks pass. These are updated
+selection studies; the normal released game remains the Step-and-cut build below.
+
 ## Optional: five Drain art concepts and three mixed rooms
 
 The `sewer-concepts` branch offers native sewer art choices for feedback:

@@ -7,6 +7,11 @@ record the reasoning continuously. The published first study remains the
 before reference; new source/value/silhouette comparisons and actual-run
 captures are generated rather than relabelling old media.
 
+[Open the regenerated second-pass gallery](../../art-review/sewer-concepts-v2/README.md)
+for every option, native before/after comparisons, actual mGBA recordings and
+eight playable builds. The game/art source is `476d1ed`; all 21,971 static and
+runtime checks pass. The normal released room remains unchanged during selection.
+
 These are native-GBA comparison builds, not a selected replacement for the
 released room. `BART_SEWER=0` keeps the current Step-and-cut release intact.
 The [review gallery](../../art-review/sewer-concepts/README.md) provides full

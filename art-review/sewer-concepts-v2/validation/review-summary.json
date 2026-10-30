@@ -1,0 +1,2948 @@
+{
+  "variants": [
+    {
+      "variant": 1,
+      "rom_sha256": "2ac138d375114741f6859837d30d4d33559d2c27f06b2a664a2c8d97d51fe6ff",
+      "captures": 10,
+      "passed": 143,
+      "total": 143,
+      "max_oam": 42,
+      "idle_updates_vblanks": [
+        {
+          "view": "market",
+          "updates": 288,
+          "vblanks": 288,
+          "frames": 288
+        },
+        {
+          "view": "ladder",
+          "updates": 128,
+          "vblanks": 128,
+          "frames": 128
+        },
+        {
+          "view": "wizard",
+          "updates": 288,
+          "vblanks": 288,
+          "frames": 288
+        },
+        {
+          "view": "bridge",
+          "updates": 128,
+          "vblanks": 128,
+          "frames": 128
+        },
+        {
+          "view": "left-channel",
+          "updates": 128,
+          "vblanks": 128,
+          "frames": 128
+        },
+        {
+          "view": "right-outfall",
+          "updates": 128,
+          "vblanks": 128,
+          "frames": 128
+        },
+        {
+          "view": "lower-left",
+          "updates": 128,
+          "vblanks": 128,
+          "frames": 128
+        },
+        {
+          "view": "lower-right",
+          "updates": 128,
+          "vblanks": 128,
+          "frames": 128
+        }
+      ],
+      "npc_frame_union": {
+        "market": {
+          "peddler_head": [
+            "blink",
+            "down",
+            "grin",
+            "open"
+          ],
+          "peddler_body": [
+            "breathe",
+            "lift",
+            "rest",
+            "slap",
+            "spin3",
+            "spin5",
+            "spin5b",
+            "spin7",
+            "spin7b",
+            "spin9",
+            "spin9b"
+          ],
+          "gatekeeper": [],
+          "wisp": []
+        },
+        "ladder": {
+          "peddler_head": [
+            "down",
+            "open"
+          ],
+          "peddler_body": [
+            "lift",
+            "rest",
+            "spin3",
+            "spin5",
+            "spin5b",
+            "spin7",
+            "spin7b",
+            "spin9",
+            "spin9b"
+          ],
+          "gatekeeper": [],
+          "wisp": []
+        },
+        "wizard": {
+          "peddler_head": [],
+          "peddler_body": [],
+          "gatekeeper": [
+            "breath",
+            "idle",
+            "kindle",
+            "kindle_blink"
+          ],
+          "wisp": [
+            "w0",
+            "w1",
+            "w2",
+            "w3"
+          ]
+        },
+        "bridge": {
+          "peddler_head": [],
+          "peddler_body": [],
+          "gatekeeper": [
+            "breath",
+            "idle",
+            "kindle",
+            "kindle_blink"
+          ],
+          "wisp": [
+            "w0",
+            "w1",
+            "w2",
+            "w3"
+          ]
+        },
+        "left-channel": {
+          "peddler_head": [
+            "down",
+            "open"
+          ],
+          "peddler_body": [
+            "lift",
+            "rest",
+            "spin3",
+            "spin5",
+            "spin5b",
+            "spin7",
+            "spin7b",
+            "spin9",
+            "spin9b"
+          ],
+          "gatekeeper": [],
+          "wisp": []
+        },
+        "right-outfall": {
+          "peddler_head": [],
+          "peddler_body": [],
+          "gatekeeper": [
+            "breath",
+            "idle",
+            "kindle",
+            "kindle_blink"
+          ],
+          "wisp": [
+            "w0",
+            "w1",
+            "w2",
+            "w3"
+          ]
+        },
+        "lower-left": {
+          "peddler_head": [],
+          "peddler_body": [],
+          "gatekeeper": [],
+          "wisp": []
+        },
+        "lower-right": {
+          "peddler_head": [],
+          "peddler_body": [],
+          "gatekeeper": [],
+          "wisp": []
+        },
+        "peddler-shop": {
+          "peddler_head": [
+            "open"
+          ],
+          "peddler_body": [
+            "rest"
+          ],
+          "gatekeeper": [],
+          "wisp": []
+        },
+        "wizard-dialogue": {
+          "peddler_head": [],
+          "peddler_body": [],
+          "gatekeeper": [
+            "blink",
+            "breath",
+            "idle"
+          ],
+          "wisp": [
+            "w0",
+            "w1",
+            "w2",
+            "w3"
+          ]
+        }
+      },
+      "max_gif_colour_union": 64,
+      "peddler_idle_hardware": {
+        "method": "Exact ROM-body bytes identify displayed rest/breathe; only unique pose matches test the OAM head/body offset. No current-frame timer assumption.",
+        "expected_head_body_anchors": {
+          "rest": [
+            8,
+            6
+          ],
+          "breathe": [
+            8,
+            7
+          ]
+        },
+        "matched_pose_samples": {
+          "rest": 75,
+          "breathe": 39
+        },
+        "unambiguous_pose_samples": {
+          "rest": 75,
+          "breathe": 39
+        },
+        "observed_head_body_anchors": {
+          "rest": [
+            [
+              8,
+              6
+            ]
+          ],
+          "breathe": [
+            [
+              8,
+              7
+            ]
+          ]
+        },
+        "unambiguous_video_ticks": {
+          "rest": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            17,
+            18,
+            19,
+            20,
+            21,
+            22,
+            23,
+            237,
+            238,
+            239,
+            240,
+            241,
+            242,
+            243,
+            244,
+            245,
+            246,
+            247,
+            248,
+            249,
+            250,
+            251,
+            252,
+            253,
+            254,
+            255,
+            256,
+            257,
+            258,
+            259,
+            260,
+            261,
+            262,
+            263,
+            264,
+            265,
+            266,
+            267,
+            268,
+            269,
+            270,
+            271,
+            272,
+            273,
+            274,
+            275,
+            276,
+            277,
+            278,
+            279,
+            280,
+            281,
+            282,
+            283,
+            284,
+            285,
+            286,
+            287
+          ],
+          "breathe": [
+            198,
+            199,
+            200,
+            201,
+            202,
+            203,
+            204,
+            205,
+            206,
+            207,
+            208,
+            209,
+            210,
+            211,
+            212,
+            213,
+            214,
+            215,
+            216,
+            217,
+            218,
+            219,
+            220,
+            221,
+            222,
+            223,
+            224,
+            225,
+            226,
+            227,
+            228,
+            229,
+            230,
+            231,
+            232,
+            233,
+            234,
+            235,
+            236
+          ]
+        }
+      },
+      "all_idle_body_hardware_phase_checks_pass": true,
+      "player_standing_fixture_stable": true,
+      "flowing_water_hardware_verified": true,
+      "source_foot_rows_limit": "The static audit proves rest/breathe bottomthree rows are byte-identical; these clips verify the displayed source poses and relative head/body OAM phase, not hidden counter-occluded feet by visual guess."
+    },
+    {
+      "variant": 2,
+      "rom_sha256": "7788c042f947e50bd11817756251a9b1030ebbe121500e2cbbc82c511b7b2a44",
+      "captures": 10,
+      "passed": 143,
+      "total": 143,
+      "max_oam": 42,
+      "idle_updates_vblanks": [
+        {
+          "view": "market",
+          "updates": 288,
+          "vblanks": 288,
+          "frames": 288
+        },
+        {
+          "view": "ladder",
+          "updates": 128,
+          "vblanks": 128,
+          "frames": 128
+        },
+        {
+          "view": "wizard",
+          "updates": 288,
+          "vblanks": 288,
+          "frames": 288
+        },
+        {
+          "view": "bridge",
+          "updates": 128,
+          "vblanks": 128,
+          "frames": 128
+        },
+        {
+          "view": "left-channel",
+          "updates": 128,
+          "vblanks": 128,
+          "frames": 128
+        },
+        {
+          "view": "right-outfall",
+          "updates": 128,
+          "vblanks": 128,
+          "frames": 128
+        },
+        {
+          "view": "lower-left",
+          "updates": 128,
+          "vblanks": 128,
+          "frames": 128
+        },
+        {
+          "view": "lower-right",
+          "updates": 128,
+          "vblanks": 128,
+          "frames": 128
+        }
+      ],
+      "npc_frame_union": {
+        "market": {
+          "peddler_head": [
+            "blink",
+            "down",
+            "grin",
+            "open"
+          ],
+          "peddler_body": [
+            "breathe",
+            "lift",
+            "rest",
+            "slap",
+            "spin3",
+            "spin5",
+            "spin5b",
+            "spin7",
+            "spin7b",
+            "spin9",
+            "spin9b"
+          ],
+          "gatekeeper": [],
+          "wisp": []
+        },
+        "ladder": {
+          "peddler_head": [
+            "down",
+            "open"
+          ],
+          "peddler_body": [
+            "lift",
+            "rest",
+            "spin3",
+            "spin5",
+            "spin5b",
+            "spin7",
+            "spin7b",
+            "spin9",
+            "spin9b"
+          ],
+          "gatekeeper": [],
+          "wisp": []
+        },
+        "wizard": {
+          "peddler_head": [],
+          "peddler_body": [],
+          "gatekeeper": [
+            "breath",
+            "idle",
+            "kindle",
+            "kindle_blink"
+          ],
+          "wisp": [
+            "w0",
+            "w1",
+            "w2",
+            "w3"
+          ]
+        },
+        "bridge": {
+          "peddler_head": [],
+          "peddler_body": [],
+          "gatekeeper": [
+            "breath",
+            "idle",
+            "kindle",
+            "kindle_blink"
+          ],
+          "wisp": [
+            "w0",
+            "w1",
+            "w2",
+            "w3"
+          ]
+        },
+        "left-channel": {
+          "peddler_head": [
+            "down",
+            "open"
+          ],
+          "peddler_body": [
+            "lift",
+            "rest",
+            "spin3",
+            "spin5",
+            "spin5b",
+            "spin7",
+            "spin7b",
+            "spin9",
+            "spin9b"
+          ],
+          "gatekeeper": [],
+          "wisp": []
+        },
+        "right-outfall": {
+          "peddler_head": [],
+          "peddler_body": [],
+          "gatekeeper": [
+            "breath",
+            "idle",
+            "kindle",
+            "kindle_blink"
+          ],
+          "wisp": [
+            "w0",
+            "w1",
+            "w2",
+            "w3"
+          ]
+        },
+        "lower-left": {
+          "peddler_head": [],
+          "peddler_body": [],
+          "gatekeeper": [],
+          "wisp": []
+        },
+        "lower-right": {
+          "peddler_head": [],
+          "peddler_body": [],
+          "gatekeeper": [],
+          "wisp": []
+        },
+        "peddler-shop": {
+          "peddler_head": [
+            "open"
+          ],
+          "peddler_body": [
+            "rest"
+          ],
+          "gatekeeper": [],
+          "wisp": []
+        },
+        "wizard-dialogue": {
+          "peddler_head": [],
+          "peddler_body": [],
+          "gatekeeper": [
+            "blink",
+            "breath",
+            "idle"
+          ],
+          "wisp": [
+            "w0",
+            "w1",
+            "w2",
+            "w3"
+          ]
+        }
+      },
+      "max_gif_colour_union": 65,
+      "peddler_idle_hardware": {
+        "method": "Exact ROM-body bytes identify displayed rest/breathe; only unique pose matches test the OAM head/body offset. No current-frame timer assumption.",
+        "expected_head_body_anchors": {
+          "rest": [
+            8,
+            6
+          ],
+          "breathe": [
+            8,
+            7
+          ]
+        },
+        "matched_pose_samples": {
+          "rest": 75,
+          "breathe": 39
+        },
+        "unambiguous_pose_samples": {
+          "rest": 75,
+          "breathe": 39
+        },
+        "observed_head_body_anchors": {
+          "rest": [
+            [
+              8,
+              6
+            ]
+          ],
+          "breathe": [
+            [
+              8,
+              7
+            ]
+          ]
+        },
+        "unambiguous_video_ticks": {
+          "rest": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            17,
+            18,
+            19,
+            20,
+            21,
+            22,
+            23,
+            237,
+            238,
+            239,
+            240,
+            241,
+            242,
+            243,
+            244,
+            245,
+            246,
+            247,
+            248,
+            249,
+            250,
+            251,
+            252,
+            253,
+            254,
+            255,
+            256,
+            257,
+            258,
+            259,
+            260,
+            261,
+            262,
+            263,
+            264,
+            265,
+            266,
+            267,
+            268,
+            269,
+            270,
+            271,
+            272,
+            273,
+            274,
+            275,
+            276,
+            277,
+            278,
+            279,
+            280,
+            281,
+            282,
+            283,
+            284,
+            285,
+            286,
+            287
+          ],
+          "breathe": [
+            198,
+            199,
+            200,
+            201,
+            202,
+            203,
+            204,
+            205,
+            206,
+            207,
+            208,
+            209,
+            210,
+            211,
+            212,
+            213,
+            214,
+            215,
+            216,
+            217,
+            218,
+            219,
+            220,
+            221,
+            222,
+            223,
+            224,
+            225,
+            226,
+            227,
+            228,
+            229,
+            230,
+            231,
+            232,
+            233,
+            234,
+            235,
+            236
+          ]
+        }
+      },
+      "all_idle_body_hardware_phase_checks_pass": true,
+      "player_standing_fixture_stable": true,
+      "flowing_water_hardware_verified": true,
+      "source_foot_rows_limit": "The static audit proves rest/breathe bottomthree rows are byte-identical; these clips verify the displayed source poses and relative head/body OAM phase, not hidden counter-occluded feet by visual guess."
+    },
+    {
+      "variant": 3,
+      "rom_sha256": "a279d87d2dcffe797654c03489b306214694c08f59fce38920be569f6d51d6ac",
+      "captures": 10,
+      "passed": 143,
+      "total": 143,
+      "max_oam": 42,
+      "idle_updates_vblanks": [
+        {
+          "view": "market",
+          "updates": 288,
+          "vblanks": 288,
+          "frames": 288
+        },
+        {
+          "view": "ladder",
+          "updates": 128,
+          "vblanks": 128,
+          "frames": 128
+        },
+        {
+          "view": "wizard",
+          "updates": 288,
+          "vblanks": 288,
+          "frames": 288
+        },
+        {
+          "view": "bridge",
+          "updates": 128,
+          "vblanks": 128,
+          "frames": 128
+        },
+        {
+          "view": "left-channel",
+          "updates": 128,
+          "vblanks": 128,
+          "frames": 128
+        },
+        {
+          "view": "right-outfall",
+          "updates": 128,
+          "vblanks": 128,
+          "frames": 128
+        },
+        {
+          "view": "lower-left",
+          "updates": 128,
+          "vblanks": 128,
+          "frames": 128
+        },
+        {
+          "view": "lower-right",
+          "updates": 128,
+          "vblanks": 128,
+          "frames": 128
+        }
+      ],
+      "npc_frame_union": {
+        "market": {
+          "peddler_head": [
+            "blink",
+            "down",
+            "grin",
+            "open"
+          ],
+          "peddler_body": [
+            "breathe",
+            "lift",
+            "rest",
+            "slap",
+            "spin3",
+            "spin5",
+            "spin5b",
+            "spin7",
+            "spin7b",
+            "spin9",
+            "spin9b"
+          ],
+          "gatekeeper": [],
+          "wisp": []
+        },
+        "ladder": {
+          "peddler_head": [
+            "down",
+            "open"
+          ],
+          "peddler_body": [
+            "lift",
+            "rest",
+            "spin3",
+            "spin5",
+            "spin5b",
+            "spin7",
+            "spin7b",
+            "spin9",
+            "spin9b"
+          ],
+          "gatekeeper": [],
+          "wisp": []
+        },
+        "wizard": {
+          "peddler_head": [],
+          "peddler_body": [],
+          "gatekeeper": [
+            "breath",
+            "idle",
+            "kindle",
+            "kindle_blink"
+          ],
+          "wisp": [
+            "w0",
+            "w1",
+            "w2",
+            "w3"
+          ]
+        },
+        "bridge": {
+          "peddler_head": [],
+          "peddler_body": [],
+          "gatekeeper": [
+            "breath",
+            "idle",
+            "kindle",
+            "kindle_blink"
+          ],
+          "wisp": [
+            "w0",
+            "w1",
+            "w2",
+            "w3"
+          ]
+        },
+        "left-channel": {
+          "peddler_head": [
+            "down",
+            "open"
+          ],
+          "peddler_body": [
+            "lift",
+            "rest",
+            "spin3",
+            "spin5",
+            "spin5b",
+            "spin7",
+            "spin7b",
+            "spin9",
+            "spin9b"
+          ],
+          "gatekeeper": [],
+          "wisp": []
+        },
+        "right-outfall": {
+          "peddler_head": [],
+          "peddler_body": [],
+          "gatekeeper": [
+            "breath",
+            "idle",
+            "kindle",
+            "kindle_blink"
+          ],
+          "wisp": [
+            "w0",
+            "w1",
+            "w2",
+            "w3"
+          ]
+        },
+        "lower-left": {
+          "peddler_head": [],
+          "peddler_body": [],
+          "gatekeeper": [],
+          "wisp": []
+        },
+        "lower-right": {
+          "peddler_head": [],
+          "peddler_body": [],
+          "gatekeeper": [],
+          "wisp": []
+        },
+        "peddler-shop": {
+          "peddler_head": [
+            "open"
+          ],
+          "peddler_body": [
+            "rest"
+          ],
+          "gatekeeper": [],
+          "wisp": []
+        },
+        "wizard-dialogue": {
+          "peddler_head": [],
+          "peddler_body": [],
+          "gatekeeper": [
+            "blink",
+            "breath",
+            "idle"
+          ],
+          "wisp": [
+            "w0",
+            "w1",
+            "w2",
+            "w3"
+          ]
+        }
+      },
+      "max_gif_colour_union": 65,
+      "peddler_idle_hardware": {
+        "method": "Exact ROM-body bytes identify displayed rest/breathe; only unique pose matches test the OAM head/body offset. No current-frame timer assumption.",
+        "expected_head_body_anchors": {
+          "rest": [
+            8,
+            6
+          ],
+          "breathe": [
+            8,
+            7
+          ]
+        },
+        "matched_pose_samples": {
+          "rest": 75,
+          "breathe": 39
+        },
+        "unambiguous_pose_samples": {
+          "rest": 75,
+          "breathe": 39
+        },
+        "observed_head_body_anchors": {
+          "rest": [
+            [
+              8,
+              6
+            ]
+          ],
+          "breathe": [
+            [
+              8,
+              7
+            ]
+          ]
+        },
+        "unambiguous_video_ticks": {
+          "rest": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            17,
+            18,
+            19,
+            20,
+            21,
+            22,
+            23,
+            237,
+            238,
+            239,
+            240,
+            241,
+            242,
+            243,
+            244,
+            245,
+            246,
+            247,
+            248,
+            249,
+            250,
+            251,
+            252,
+            253,
+            254,
+            255,
+            256,
+            257,
+            258,
+            259,
+            260,
+            261,
+            262,
+            263,
+            264,
+            265,
+            266,
+            267,
+            268,
+            269,
+            270,
+            271,
+            272,
+            273,
+            274,
+            275,
+            276,
+            277,
+            278,
+            279,
+            280,
+            281,
+            282,
+            283,
+            284,
+            285,
+            286,
+            287
+          ],
+          "breathe": [
+            198,
+            199,
+            200,
+            201,
+            202,
+            203,
+            204,
+            205,
+            206,
+            207,
+            208,
+            209,
+            210,
+            211,
+            212,
+            213,
+            214,
+            215,
+            216,
+            217,
+            218,
+            219,
+            220,
+            221,
+            222,
+            223,
+            224,
+            225,
+            226,
+            227,
+            228,
+            229,
+            230,
+            231,
+            232,
+            233,
+            234,
+            235,
+            236
+          ]
+        }
+      },
+      "all_idle_body_hardware_phase_checks_pass": true,
+      "player_standing_fixture_stable": true,
+      "flowing_water_hardware_verified": true,
+      "source_foot_rows_limit": "The static audit proves rest/breathe bottomthree rows are byte-identical; these clips verify the displayed source poses and relative head/body OAM phase, not hidden counter-occluded feet by visual guess."
+    },
+    {
+      "variant": 4,
+      "rom_sha256": "35fddb6372fd056408def456ba9a1b0281205b5a4b001db149d0cce5bbf13ede",
+      "captures": 10,
+      "passed": 143,
+      "total": 143,
+      "max_oam": 42,
+      "idle_updates_vblanks": [
+        {
+          "view": "market",
+          "updates": 288,
+          "vblanks": 288,
+          "frames": 288
+        },
+        {
+          "view": "ladder",
+          "updates": 128,
+          "vblanks": 128,
+          "frames": 128
+        },
+        {
+          "view": "wizard",
+          "updates": 288,
+          "vblanks": 288,
+          "frames": 288
+        },
+        {
+          "view": "bridge",
+          "updates": 128,
+          "vblanks": 128,
+          "frames": 128
+        },
+        {
+          "view": "left-channel",
+          "updates": 128,
+          "vblanks": 128,
+          "frames": 128
+        },
+        {
+          "view": "right-outfall",
+          "updates": 128,
+          "vblanks": 128,
+          "frames": 128
+        },
+        {
+          "view": "lower-left",
+          "updates": 128,
+          "vblanks": 128,
+          "frames": 128
+        },
+        {
+          "view": "lower-right",
+          "updates": 128,
+          "vblanks": 128,
+          "frames": 128
+        }
+      ],
+      "npc_frame_union": {
+        "market": {
+          "peddler_head": [
+            "blink",
+            "down",
+            "grin",
+            "open"
+          ],
+          "peddler_body": [
+            "breathe",
+            "lift",
+            "rest",
+            "slap",
+            "spin3",
+            "spin5",
+            "spin5b",
+            "spin7",
+            "spin7b",
+            "spin9",
+            "spin9b"
+          ],
+          "gatekeeper": [],
+          "wisp": []
+        },
+        "ladder": {
+          "peddler_head": [
+            "down",
+            "open"
+          ],
+          "peddler_body": [
+            "lift",
+            "rest",
+            "spin3",
+            "spin5",
+            "spin5b",
+            "spin7",
+            "spin7b",
+            "spin9",
+            "spin9b"
+          ],
+          "gatekeeper": [],
+          "wisp": []
+        },
+        "wizard": {
+          "peddler_head": [],
+          "peddler_body": [],
+          "gatekeeper": [
+            "breath",
+            "idle",
+            "kindle",
+            "kindle_blink"
+          ],
+          "wisp": [
+            "w0",
+            "w1",
+            "w2",
+            "w3"
+          ]
+        },
+        "bridge": {
+          "peddler_head": [],
+          "peddler_body": [],
+          "gatekeeper": [
+            "breath",
+            "idle",
+            "kindle",
+            "kindle_blink"
+          ],
+          "wisp": [
+            "w0",
+            "w1",
+            "w2",
+            "w3"
+          ]
+        },
+        "left-channel": {
+          "peddler_head": [
+            "down",
+            "open"
+          ],
+          "peddler_body": [
+            "lift",
+            "rest",
+            "spin3",
+            "spin5",
+            "spin5b",
+            "spin7",
+            "spin7b",
+            "spin9",
+            "spin9b"
+          ],
+          "gatekeeper": [],
+          "wisp": []
+        },
+        "right-outfall": {
+          "peddler_head": [],
+          "peddler_body": [],
+          "gatekeeper": [
+            "breath",
+            "idle",
+            "kindle",
+            "kindle_blink"
+          ],
+          "wisp": [
+            "w0",
+            "w1",
+            "w2",
+            "w3"
+          ]
+        },
+        "lower-left": {
+          "peddler_head": [],
+          "peddler_body": [],
+          "gatekeeper": [],
+          "wisp": []
+        },
+        "lower-right": {
+          "peddler_head": [],
+          "peddler_body": [],
+          "gatekeeper": [],
+          "wisp": []
+        },
+        "peddler-shop": {
+          "peddler_head": [
+            "open"
+          ],
+          "peddler_body": [
+            "rest"
+          ],
+          "gatekeeper": [],
+          "wisp": []
+        },
+        "wizard-dialogue": {
+          "peddler_head": [],
+          "peddler_body": [],
+          "gatekeeper": [
+            "blink",
+            "breath",
+            "idle"
+          ],
+          "wisp": [
+            "w0",
+            "w1",
+            "w2",
+            "w3"
+          ]
+        }
+      },
+      "max_gif_colour_union": 63,
+      "peddler_idle_hardware": {
+        "method": "Exact ROM-body bytes identify displayed rest/breathe; only unique pose matches test the OAM head/body offset. No current-frame timer assumption.",
+        "expected_head_body_anchors": {
+          "rest": [
+            8,
+            6
+          ],
+          "breathe": [
+            8,
+            7
+          ]
+        },
+        "matched_pose_samples": {
+          "rest": 75,
+          "breathe": 39
+        },
+        "unambiguous_pose_samples": {
+          "rest": 75,
+          "breathe": 39
+        },
+        "observed_head_body_anchors": {
+          "rest": [
+            [
+              8,
+              6
+            ]
+          ],
+          "breathe": [
+            [
+              8,
+              7
+            ]
+          ]
+        },
+        "unambiguous_video_ticks": {
+          "rest": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            17,
+            18,
+            19,
+            20,
+            21,
+            22,
+            23,
+            237,
+            238,
+            239,
+            240,
+            241,
+            242,
+            243,
+            244,
+            245,
+            246,
+            247,
+            248,
+            249,
+            250,
+            251,
+            252,
+            253,
+            254,
+            255,
+            256,
+            257,
+            258,
+            259,
+            260,
+            261,
+            262,
+            263,
+            264,
+            265,
+            266,
+            267,
+            268,
+            269,
+            270,
+            271,
+            272,
+            273,
+            274,
+            275,
+            276,
+            277,
+            278,
+            279,
+            280,
+            281,
+            282,
+            283,
+            284,
+            285,
+            286,
+            287
+          ],
+          "breathe": [
+            198,
+            199,
+            200,
+            201,
+            202,
+            203,
+            204,
+            205,
+            206,
+            207,
+            208,
+            209,
+            210,
+            211,
+            212,
+            213,
+            214,
+            215,
+            216,
+            217,
+            218,
+            219,
+            220,
+            221,
+            222,
+            223,
+            224,
+            225,
+            226,
+            227,
+            228,
+            229,
+            230,
+            231,
+            232,
+            233,
+            234,
+            235,
+            236
+          ]
+        }
+      },
+      "all_idle_body_hardware_phase_checks_pass": true,
+      "player_standing_fixture_stable": true,
+      "flowing_water_hardware_verified": true,
+      "source_foot_rows_limit": "The static audit proves rest/breathe bottomthree rows are byte-identical; these clips verify the displayed source poses and relative head/body OAM phase, not hidden counter-occluded feet by visual guess."
+    },
+    {
+      "variant": 5,
+      "rom_sha256": "b12ae5309061948dc8a1124d45d046815a74ac9feaa5115f7863f6ce28574e18",
+      "captures": 10,
+      "passed": 143,
+      "total": 143,
+      "max_oam": 42,
+      "idle_updates_vblanks": [
+        {
+          "view": "market",
+          "updates": 288,
+          "vblanks": 288,
+          "frames": 288
+        },
+        {
+          "view": "ladder",
+          "updates": 128,
+          "vblanks": 128,
+          "frames": 128
+        },
+        {
+          "view": "wizard",
+          "updates": 288,
+          "vblanks": 288,
+          "frames": 288
+        },
+        {
+          "view": "bridge",
+          "updates": 128,
+          "vblanks": 128,
+          "frames": 128
+        },
+        {
+          "view": "left-channel",
+          "updates": 128,
+          "vblanks": 128,
+          "frames": 128
+        },
+        {
+          "view": "right-outfall",
+          "updates": 128,
+          "vblanks": 128,
+          "frames": 128
+        },
+        {
+          "view": "lower-left",
+          "updates": 128,
+          "vblanks": 128,
+          "frames": 128
+        },
+        {
+          "view": "lower-right",
+          "updates": 128,
+          "vblanks": 128,
+          "frames": 128
+        }
+      ],
+      "npc_frame_union": {
+        "market": {
+          "peddler_head": [
+            "blink",
+            "down",
+            "grin",
+            "open"
+          ],
+          "peddler_body": [
+            "breathe",
+            "lift",
+            "rest",
+            "slap",
+            "spin3",
+            "spin5",
+            "spin5b",
+            "spin7",
+            "spin7b",
+            "spin9",
+            "spin9b"
+          ],
+          "gatekeeper": [],
+          "wisp": []
+        },
+        "ladder": {
+          "peddler_head": [
+            "down",
+            "open"
+          ],
+          "peddler_body": [
+            "lift",
+            "rest",
+            "spin3",
+            "spin5",
+            "spin5b",
+            "spin7",
+            "spin7b",
+            "spin9",
+            "spin9b"
+          ],
+          "gatekeeper": [],
+          "wisp": []
+        },
+        "wizard": {
+          "peddler_head": [],
+          "peddler_body": [],
+          "gatekeeper": [
+            "breath",
+            "idle",
+            "kindle",
+            "kindle_blink"
+          ],
+          "wisp": [
+            "w0",
+            "w1",
+            "w2",
+            "w3"
+          ]
+        },
+        "bridge": {
+          "peddler_head": [],
+          "peddler_body": [],
+          "gatekeeper": [
+            "breath",
+            "idle",
+            "kindle",
+            "kindle_blink"
+          ],
+          "wisp": [
+            "w0",
+            "w1",
+            "w2",
+            "w3"
+          ]
+        },
+        "left-channel": {
+          "peddler_head": [
+            "down",
+            "open"
+          ],
+          "peddler_body": [
+            "lift",
+            "rest",
+            "spin3",
+            "spin5",
+            "spin5b",
+            "spin7",
+            "spin7b",
+            "spin9",
+            "spin9b"
+          ],
+          "gatekeeper": [],
+          "wisp": []
+        },
+        "right-outfall": {
+          "peddler_head": [],
+          "peddler_body": [],
+          "gatekeeper": [
+            "breath",
+            "idle",
+            "kindle",
+            "kindle_blink"
+          ],
+          "wisp": [
+            "w0",
+            "w1",
+            "w2",
+            "w3"
+          ]
+        },
+        "lower-left": {
+          "peddler_head": [],
+          "peddler_body": [],
+          "gatekeeper": [],
+          "wisp": []
+        },
+        "lower-right": {
+          "peddler_head": [],
+          "peddler_body": [],
+          "gatekeeper": [],
+          "wisp": []
+        },
+        "peddler-shop": {
+          "peddler_head": [
+            "open"
+          ],
+          "peddler_body": [
+            "rest"
+          ],
+          "gatekeeper": [],
+          "wisp": []
+        },
+        "wizard-dialogue": {
+          "peddler_head": [],
+          "peddler_body": [],
+          "gatekeeper": [
+            "blink",
+            "breath",
+            "idle"
+          ],
+          "wisp": [
+            "w0",
+            "w1",
+            "w2",
+            "w3"
+          ]
+        }
+      },
+      "max_gif_colour_union": 67,
+      "peddler_idle_hardware": {
+        "method": "Exact ROM-body bytes identify displayed rest/breathe; only unique pose matches test the OAM head/body offset. No current-frame timer assumption.",
+        "expected_head_body_anchors": {
+          "rest": [
+            8,
+            6
+          ],
+          "breathe": [
+            8,
+            7
+          ]
+        },
+        "matched_pose_samples": {
+          "rest": 75,
+          "breathe": 39
+        },
+        "unambiguous_pose_samples": {
+          "rest": 75,
+          "breathe": 39
+        },
+        "observed_head_body_anchors": {
+          "rest": [
+            [
+              8,
+              6
+            ]
+          ],
+          "breathe": [
+            [
+              8,
+              7
+            ]
+          ]
+        },
+        "unambiguous_video_ticks": {
+          "rest": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            17,
+            18,
+            19,
+            20,
+            21,
+            22,
+            23,
+            237,
+            238,
+            239,
+            240,
+            241,
+            242,
+            243,
+            244,
+            245,
+            246,
+            247,
+            248,
+            249,
+            250,
+            251,
+            252,
+            253,
+            254,
+            255,
+            256,
+            257,
+            258,
+            259,
+            260,
+            261,
+            262,
+            263,
+            264,
+            265,
+            266,
+            267,
+            268,
+            269,
+            270,
+            271,
+            272,
+            273,
+            274,
+            275,
+            276,
+            277,
+            278,
+            279,
+            280,
+            281,
+            282,
+            283,
+            284,
+            285,
+            286,
+            287
+          ],
+          "breathe": [
+            198,
+            199,
+            200,
+            201,
+            202,
+            203,
+            204,
+            205,
+            206,
+            207,
+            208,
+            209,
+            210,
+            211,
+            212,
+            213,
+            214,
+            215,
+            216,
+            217,
+            218,
+            219,
+            220,
+            221,
+            222,
+            223,
+            224,
+            225,
+            226,
+            227,
+            228,
+            229,
+            230,
+            231,
+            232,
+            233,
+            234,
+            235,
+            236
+          ]
+        }
+      },
+      "all_idle_body_hardware_phase_checks_pass": true,
+      "player_standing_fixture_stable": true,
+      "flowing_water_hardware_verified": true,
+      "source_foot_rows_limit": "The static audit proves rest/breathe bottomthree rows are byte-identical; these clips verify the displayed source poses and relative head/body OAM phase, not hidden counter-occluded feet by visual guess."
+    },
+    {
+      "variant": 6,
+      "rom_sha256": "179711e23e4c1aec4c9b41e40dcf84908d559cb62c044a70bf115faa1d5762c8",
+      "captures": 10,
+      "passed": 143,
+      "total": 143,
+      "max_oam": 42,
+      "idle_updates_vblanks": [
+        {
+          "view": "market",
+          "updates": 288,
+          "vblanks": 288,
+          "frames": 288
+        },
+        {
+          "view": "ladder",
+          "updates": 128,
+          "vblanks": 128,
+          "frames": 128
+        },
+        {
+          "view": "wizard",
+          "updates": 288,
+          "vblanks": 288,
+          "frames": 288
+        },
+        {
+          "view": "bridge",
+          "updates": 128,
+          "vblanks": 128,
+          "frames": 128
+        },
+        {
+          "view": "left-channel",
+          "updates": 128,
+          "vblanks": 128,
+          "frames": 128
+        },
+        {
+          "view": "right-outfall",
+          "updates": 128,
+          "vblanks": 128,
+          "frames": 128
+        },
+        {
+          "view": "lower-left",
+          "updates": 128,
+          "vblanks": 128,
+          "frames": 128
+        },
+        {
+          "view": "lower-right",
+          "updates": 128,
+          "vblanks": 128,
+          "frames": 128
+        }
+      ],
+      "npc_frame_union": {
+        "market": {
+          "peddler_head": [
+            "blink",
+            "down",
+            "grin",
+            "open"
+          ],
+          "peddler_body": [
+            "breathe",
+            "lift",
+            "rest",
+            "slap",
+            "spin3",
+            "spin5",
+            "spin5b",
+            "spin7",
+            "spin7b",
+            "spin9",
+            "spin9b"
+          ],
+          "gatekeeper": [],
+          "wisp": []
+        },
+        "ladder": {
+          "peddler_head": [
+            "down",
+            "open"
+          ],
+          "peddler_body": [
+            "lift",
+            "rest",
+            "spin3",
+            "spin5",
+            "spin5b",
+            "spin7",
+            "spin7b",
+            "spin9",
+            "spin9b"
+          ],
+          "gatekeeper": [],
+          "wisp": []
+        },
+        "wizard": {
+          "peddler_head": [],
+          "peddler_body": [],
+          "gatekeeper": [
+            "breath",
+            "idle",
+            "kindle",
+            "kindle_blink"
+          ],
+          "wisp": [
+            "w0",
+            "w1",
+            "w2",
+            "w3"
+          ]
+        },
+        "bridge": {
+          "peddler_head": [],
+          "peddler_body": [],
+          "gatekeeper": [
+            "breath",
+            "idle",
+            "kindle",
+            "kindle_blink"
+          ],
+          "wisp": [
+            "w0",
+            "w1",
+            "w2",
+            "w3"
+          ]
+        },
+        "left-channel": {
+          "peddler_head": [
+            "down",
+            "open"
+          ],
+          "peddler_body": [
+            "lift",
+            "rest",
+            "spin3",
+            "spin5",
+            "spin5b",
+            "spin7",
+            "spin7b",
+            "spin9",
+            "spin9b"
+          ],
+          "gatekeeper": [],
+          "wisp": []
+        },
+        "right-outfall": {
+          "peddler_head": [],
+          "peddler_body": [],
+          "gatekeeper": [
+            "breath",
+            "idle",
+            "kindle",
+            "kindle_blink"
+          ],
+          "wisp": [
+            "w0",
+            "w1",
+            "w2",
+            "w3"
+          ]
+        },
+        "lower-left": {
+          "peddler_head": [],
+          "peddler_body": [],
+          "gatekeeper": [],
+          "wisp": []
+        },
+        "lower-right": {
+          "peddler_head": [],
+          "peddler_body": [],
+          "gatekeeper": [],
+          "wisp": []
+        },
+        "peddler-shop": {
+          "peddler_head": [
+            "open"
+          ],
+          "peddler_body": [
+            "rest"
+          ],
+          "gatekeeper": [],
+          "wisp": []
+        },
+        "wizard-dialogue": {
+          "peddler_head": [],
+          "peddler_body": [],
+          "gatekeeper": [
+            "blink",
+            "breath",
+            "idle"
+          ],
+          "wisp": [
+            "w0",
+            "w1",
+            "w2",
+            "w3"
+          ]
+        }
+      },
+      "max_gif_colour_union": 65,
+      "peddler_idle_hardware": {
+        "method": "Exact ROM-body bytes identify displayed rest/breathe; only unique pose matches test the OAM head/body offset. No current-frame timer assumption.",
+        "expected_head_body_anchors": {
+          "rest": [
+            8,
+            6
+          ],
+          "breathe": [
+            8,
+            7
+          ]
+        },
+        "matched_pose_samples": {
+          "rest": 75,
+          "breathe": 39
+        },
+        "unambiguous_pose_samples": {
+          "rest": 75,
+          "breathe": 39
+        },
+        "observed_head_body_anchors": {
+          "rest": [
+            [
+              8,
+              6
+            ]
+          ],
+          "breathe": [
+            [
+              8,
+              7
+            ]
+          ]
+        },
+        "unambiguous_video_ticks": {
+          "rest": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            17,
+            18,
+            19,
+            20,
+            21,
+            22,
+            23,
+            237,
+            238,
+            239,
+            240,
+            241,
+            242,
+            243,
+            244,
+            245,
+            246,
+            247,
+            248,
+            249,
+            250,
+            251,
+            252,
+            253,
+            254,
+            255,
+            256,
+            257,
+            258,
+            259,
+            260,
+            261,
+            262,
+            263,
+            264,
+            265,
+            266,
+            267,
+            268,
+            269,
+            270,
+            271,
+            272,
+            273,
+            274,
+            275,
+            276,
+            277,
+            278,
+            279,
+            280,
+            281,
+            282,
+            283,
+            284,
+            285,
+            286,
+            287
+          ],
+          "breathe": [
+            198,
+            199,
+            200,
+            201,
+            202,
+            203,
+            204,
+            205,
+            206,
+            207,
+            208,
+            209,
+            210,
+            211,
+            212,
+            213,
+            214,
+            215,
+            216,
+            217,
+            218,
+            219,
+            220,
+            221,
+            222,
+            223,
+            224,
+            225,
+            226,
+            227,
+            228,
+            229,
+            230,
+            231,
+            232,
+            233,
+            234,
+            235,
+            236
+          ]
+        }
+      },
+      "all_idle_body_hardware_phase_checks_pass": true,
+      "player_standing_fixture_stable": true,
+      "flowing_water_hardware_verified": true,
+      "source_foot_rows_limit": "The static audit proves rest/breathe bottomthree rows are byte-identical; these clips verify the displayed source poses and relative head/body OAM phase, not hidden counter-occluded feet by visual guess."
+    },
+    {
+      "variant": 7,
+      "rom_sha256": "cc75f7bfd2a40afa003c71db05455ff143e9db45e6e5e5d2331d14302b491d14",
+      "captures": 10,
+      "passed": 143,
+      "total": 143,
+      "max_oam": 42,
+      "idle_updates_vblanks": [
+        {
+          "view": "market",
+          "updates": 288,
+          "vblanks": 288,
+          "frames": 288
+        },
+        {
+          "view": "ladder",
+          "updates": 128,
+          "vblanks": 128,
+          "frames": 128
+        },
+        {
+          "view": "wizard",
+          "updates": 288,
+          "vblanks": 288,
+          "frames": 288
+        },
+        {
+          "view": "bridge",
+          "updates": 128,
+          "vblanks": 128,
+          "frames": 128
+        },
+        {
+          "view": "left-channel",
+          "updates": 128,
+          "vblanks": 128,
+          "frames": 128
+        },
+        {
+          "view": "right-outfall",
+          "updates": 128,
+          "vblanks": 128,
+          "frames": 128
+        },
+        {
+          "view": "lower-left",
+          "updates": 128,
+          "vblanks": 128,
+          "frames": 128
+        },
+        {
+          "view": "lower-right",
+          "updates": 128,
+          "vblanks": 128,
+          "frames": 128
+        }
+      ],
+      "npc_frame_union": {
+        "market": {
+          "peddler_head": [
+            "blink",
+            "down",
+            "grin",
+            "open"
+          ],
+          "peddler_body": [
+            "breathe",
+            "lift",
+            "rest",
+            "slap",
+            "spin3",
+            "spin5",
+            "spin5b",
+            "spin7",
+            "spin7b",
+            "spin9",
+            "spin9b"
+          ],
+          "gatekeeper": [],
+          "wisp": []
+        },
+        "ladder": {
+          "peddler_head": [
+            "down",
+            "open"
+          ],
+          "peddler_body": [
+            "lift",
+            "rest",
+            "spin3",
+            "spin5",
+            "spin5b",
+            "spin7",
+            "spin7b",
+            "spin9",
+            "spin9b"
+          ],
+          "gatekeeper": [],
+          "wisp": []
+        },
+        "wizard": {
+          "peddler_head": [],
+          "peddler_body": [],
+          "gatekeeper": [
+            "breath",
+            "idle",
+            "kindle",
+            "kindle_blink"
+          ],
+          "wisp": [
+            "w0",
+            "w1",
+            "w2",
+            "w3"
+          ]
+        },
+        "bridge": {
+          "peddler_head": [],
+          "peddler_body": [],
+          "gatekeeper": [
+            "breath",
+            "idle",
+            "kindle",
+            "kindle_blink"
+          ],
+          "wisp": [
+            "w0",
+            "w1",
+            "w2",
+            "w3"
+          ]
+        },
+        "left-channel": {
+          "peddler_head": [
+            "down",
+            "open"
+          ],
+          "peddler_body": [
+            "lift",
+            "rest",
+            "spin3",
+            "spin5",
+            "spin5b",
+            "spin7",
+            "spin7b",
+            "spin9",
+            "spin9b"
+          ],
+          "gatekeeper": [],
+          "wisp": []
+        },
+        "right-outfall": {
+          "peddler_head": [],
+          "peddler_body": [],
+          "gatekeeper": [
+            "breath",
+            "idle",
+            "kindle",
+            "kindle_blink"
+          ],
+          "wisp": [
+            "w0",
+            "w1",
+            "w2",
+            "w3"
+          ]
+        },
+        "lower-left": {
+          "peddler_head": [],
+          "peddler_body": [],
+          "gatekeeper": [],
+          "wisp": []
+        },
+        "lower-right": {
+          "peddler_head": [],
+          "peddler_body": [],
+          "gatekeeper": [],
+          "wisp": []
+        },
+        "peddler-shop": {
+          "peddler_head": [
+            "open"
+          ],
+          "peddler_body": [
+            "rest"
+          ],
+          "gatekeeper": [],
+          "wisp": []
+        },
+        "wizard-dialogue": {
+          "peddler_head": [],
+          "peddler_body": [],
+          "gatekeeper": [
+            "blink",
+            "breath",
+            "idle"
+          ],
+          "wisp": [
+            "w0",
+            "w1",
+            "w2",
+            "w3"
+          ]
+        }
+      },
+      "max_gif_colour_union": 67,
+      "peddler_idle_hardware": {
+        "method": "Exact ROM-body bytes identify displayed rest/breathe; only unique pose matches test the OAM head/body offset. No current-frame timer assumption.",
+        "expected_head_body_anchors": {
+          "rest": [
+            8,
+            6
+          ],
+          "breathe": [
+            8,
+            7
+          ]
+        },
+        "matched_pose_samples": {
+          "rest": 75,
+          "breathe": 39
+        },
+        "unambiguous_pose_samples": {
+          "rest": 75,
+          "breathe": 39
+        },
+        "observed_head_body_anchors": {
+          "rest": [
+            [
+              8,
+              6
+            ]
+          ],
+          "breathe": [
+            [
+              8,
+              7
+            ]
+          ]
+        },
+        "unambiguous_video_ticks": {
+          "rest": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            17,
+            18,
+            19,
+            20,
+            21,
+            22,
+            23,
+            237,
+            238,
+            239,
+            240,
+            241,
+            242,
+            243,
+            244,
+            245,
+            246,
+            247,
+            248,
+            249,
+            250,
+            251,
+            252,
+            253,
+            254,
+            255,
+            256,
+            257,
+            258,
+            259,
+            260,
+            261,
+            262,
+            263,
+            264,
+            265,
+            266,
+            267,
+            268,
+            269,
+            270,
+            271,
+            272,
+            273,
+            274,
+            275,
+            276,
+            277,
+            278,
+            279,
+            280,
+            281,
+            282,
+            283,
+            284,
+            285,
+            286,
+            287
+          ],
+          "breathe": [
+            198,
+            199,
+            200,
+            201,
+            202,
+            203,
+            204,
+            205,
+            206,
+            207,
+            208,
+            209,
+            210,
+            211,
+            212,
+            213,
+            214,
+            215,
+            216,
+            217,
+            218,
+            219,
+            220,
+            221,
+            222,
+            223,
+            224,
+            225,
+            226,
+            227,
+            228,
+            229,
+            230,
+            231,
+            232,
+            233,
+            234,
+            235,
+            236
+          ]
+        }
+      },
+      "all_idle_body_hardware_phase_checks_pass": true,
+      "player_standing_fixture_stable": true,
+      "flowing_water_hardware_verified": true,
+      "source_foot_rows_limit": "The static audit proves rest/breathe bottomthree rows are byte-identical; these clips verify the displayed source poses and relative head/body OAM phase, not hidden counter-occluded feet by visual guess."
+    },
+    {
+      "variant": 8,
+      "rom_sha256": "fffaaca6f5c97f9f42b30903227c0388dc3dc4effeb85cdd061edfc4194a8395",
+      "captures": 10,
+      "passed": 143,
+      "total": 143,
+      "max_oam": 42,
+      "idle_updates_vblanks": [
+        {
+          "view": "market",
+          "updates": 288,
+          "vblanks": 288,
+          "frames": 288
+        },
+        {
+          "view": "ladder",
+          "updates": 128,
+          "vblanks": 128,
+          "frames": 128
+        },
+        {
+          "view": "wizard",
+          "updates": 288,
+          "vblanks": 288,
+          "frames": 288
+        },
+        {
+          "view": "bridge",
+          "updates": 128,
+          "vblanks": 128,
+          "frames": 128
+        },
+        {
+          "view": "left-channel",
+          "updates": 128,
+          "vblanks": 128,
+          "frames": 128
+        },
+        {
+          "view": "right-outfall",
+          "updates": 128,
+          "vblanks": 128,
+          "frames": 128
+        },
+        {
+          "view": "lower-left",
+          "updates": 128,
+          "vblanks": 128,
+          "frames": 128
+        },
+        {
+          "view": "lower-right",
+          "updates": 128,
+          "vblanks": 128,
+          "frames": 128
+        }
+      ],
+      "npc_frame_union": {
+        "market": {
+          "peddler_head": [
+            "blink",
+            "down",
+            "grin",
+            "open"
+          ],
+          "peddler_body": [
+            "breathe",
+            "lift",
+            "rest",
+            "slap",
+            "spin3",
+            "spin5",
+            "spin5b",
+            "spin7",
+            "spin7b",
+            "spin9",
+            "spin9b"
+          ],
+          "gatekeeper": [],
+          "wisp": []
+        },
+        "ladder": {
+          "peddler_head": [
+            "down",
+            "open"
+          ],
+          "peddler_body": [
+            "lift",
+            "rest",
+            "spin3",
+            "spin5",
+            "spin5b",
+            "spin7",
+            "spin7b",
+            "spin9",
+            "spin9b"
+          ],
+          "gatekeeper": [],
+          "wisp": []
+        },
+        "wizard": {
+          "peddler_head": [],
+          "peddler_body": [],
+          "gatekeeper": [
+            "breath",
+            "idle",
+            "kindle",
+            "kindle_blink"
+          ],
+          "wisp": [
+            "w0",
+            "w1",
+            "w2",
+            "w3"
+          ]
+        },
+        "bridge": {
+          "peddler_head": [],
+          "peddler_body": [],
+          "gatekeeper": [
+            "breath",
+            "idle",
+            "kindle",
+            "kindle_blink"
+          ],
+          "wisp": [
+            "w0",
+            "w1",
+            "w2",
+            "w3"
+          ]
+        },
+        "left-channel": {
+          "peddler_head": [
+            "down",
+            "open"
+          ],
+          "peddler_body": [
+            "lift",
+            "rest",
+            "spin3",
+            "spin5",
+            "spin5b",
+            "spin7",
+            "spin7b",
+            "spin9",
+            "spin9b"
+          ],
+          "gatekeeper": [],
+          "wisp": []
+        },
+        "right-outfall": {
+          "peddler_head": [],
+          "peddler_body": [],
+          "gatekeeper": [
+            "breath",
+            "idle",
+            "kindle",
+            "kindle_blink"
+          ],
+          "wisp": [
+            "w0",
+            "w1",
+            "w2",
+            "w3"
+          ]
+        },
+        "lower-left": {
+          "peddler_head": [],
+          "peddler_body": [],
+          "gatekeeper": [],
+          "wisp": []
+        },
+        "lower-right": {
+          "peddler_head": [],
+          "peddler_body": [],
+          "gatekeeper": [],
+          "wisp": []
+        },
+        "peddler-shop": {
+          "peddler_head": [
+            "open"
+          ],
+          "peddler_body": [
+            "rest"
+          ],
+          "gatekeeper": [],
+          "wisp": []
+        },
+        "wizard-dialogue": {
+          "peddler_head": [],
+          "peddler_body": [],
+          "gatekeeper": [
+            "blink",
+            "breath",
+            "idle"
+          ],
+          "wisp": [
+            "w0",
+            "w1",
+            "w2",
+            "w3"
+          ]
+        }
+      },
+      "max_gif_colour_union": 63,
+      "peddler_idle_hardware": {
+        "method": "Exact ROM-body bytes identify displayed rest/breathe; only unique pose matches test the OAM head/body offset. No current-frame timer assumption.",
+        "expected_head_body_anchors": {
+          "rest": [
+            8,
+            6
+          ],
+          "breathe": [
+            8,
+            7
+          ]
+        },
+        "matched_pose_samples": {
+          "rest": 75,
+          "breathe": 39
+        },
+        "unambiguous_pose_samples": {
+          "rest": 75,
+          "breathe": 39
+        },
+        "observed_head_body_anchors": {
+          "rest": [
+            [
+              8,
+              6
+            ]
+          ],
+          "breathe": [
+            [
+              8,
+              7
+            ]
+          ]
+        },
+        "unambiguous_video_ticks": {
+          "rest": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            17,
+            18,
+            19,
+            20,
+            21,
+            22,
+            23,
+            237,
+            238,
+            239,
+            240,
+            241,
+            242,
+            243,
+            244,
+            245,
+            246,
+            247,
+            248,
+            249,
+            250,
+            251,
+            252,
+            253,
+            254,
+            255,
+            256,
+            257,
+            258,
+            259,
+            260,
+            261,
+            262,
+            263,
+            264,
+            265,
+            266,
+            267,
+            268,
+            269,
+            270,
+            271,
+            272,
+            273,
+            274,
+            275,
+            276,
+            277,
+            278,
+            279,
+            280,
+            281,
+            282,
+            283,
+            284,
+            285,
+            286,
+            287
+          ],
+          "breathe": [
+            198,
+            199,
+            200,
+            201,
+            202,
+            203,
+            204,
+            205,
+            206,
+            207,
+            208,
+            209,
+            210,
+            211,
+            212,
+            213,
+            214,
+            215,
+            216,
+            217,
+            218,
+            219,
+            220,
+            221,
+            222,
+            223,
+            224,
+            225,
+            226,
+            227,
+            228,
+            229,
+            230,
+            231,
+            232,
+            233,
+            234,
+            235,
+            236
+          ]
+        }
+      },
+      "all_idle_body_hardware_phase_checks_pass": true,
+      "player_standing_fixture_stable": true,
+      "flowing_water_hardware_verified": true,
+      "source_foot_rows_limit": "The static audit proves rest/breathe bottomthree rows are byte-identical; these clips verify the displayed source poses and relative head/body OAM phase, not hidden counter-occluded feet by visual guess."
+    }
+  ],
+  "passed": 1144,
+  "total": 1144,
+  "captures": 80,
+  "gif_quantized": [],
+  "idle_performance": [],
+  "all_idle_one_update_per_vblank": true,
+  "all_gifs_exact_palette": true,
+  "max_oam": 42,
+  "max_gif_colour_union": 67,
+  "all_new_peddler_idle_checks_pass": true,
+  "visual_inspection": {
+    "method": "Inspected matched native market/wizard/bridge screenshots for all five primary styles and chronological actual NPC crops at video ticks0/24/96/198/237 (frog) and0/64/128/192/256 (wizard). No automated art-quality score. All pixels come from the real full-frame archives, enlarged only by nearest neighbour for the diagnostic.",
+    "matched_board": "/workspace/setup/sewer-concepts-v2/actual-five-check.png",
+    "npc_chronology_board": "/workspace/setup/sewer-concepts-v2/npc-actual-chronology.png",
+    "finding": "No visible actor/staff/rail occlusion or grip disconnection blocker in these sampled views. The breathing pose lowers the torso/head together; the wizard hood remains legible and its flame stays at the staff tip. Style4 deliberately has the darkest/filthiest field; style2 retains a busier cobble rhythm than3."
+  }
+}

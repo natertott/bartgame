@@ -1,0 +1,38 @@
+{
+  "drawings": 3680,
+  "styles": {
+    "1": {
+      "drawings": 736,
+      "active_changing_tiles": 32,
+      "unused_changing_tiles": 22,
+      "water_loop_frames": 8
+    },
+    "2": {
+      "drawings": 736,
+      "active_changing_tiles": 32,
+      "unused_changing_tiles": 22,
+      "water_loop_frames": 8
+    },
+    "3": {
+      "drawings": 736,
+      "active_changing_tiles": 32,
+      "unused_changing_tiles": 22,
+      "water_loop_frames": 8
+    },
+    "4": {
+      "drawings": 736,
+      "active_changing_tiles": 32,
+      "unused_changing_tiles": 22,
+      "water_loop_frames": 8
+    },
+    "5": {
+      "drawings": 736,
+      "active_changing_tiles": 32,
+      "unused_changing_tiles": 22,
+      "water_loop_frames": 8
+    }
+  },
+  "palette_rgb555": true,
+  "native_4bpp": true,
+  "source_sha256": "6afdc6421cf3c611e05de3a18ead7b2fe07ab7b42cd5df27c255dc82361f5ae7"
+}

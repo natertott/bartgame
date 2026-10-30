@@ -1,0 +1,70 @@
+{
+  "source_commit": "476d1ede7162e20212707ede84d586a770f940f1",
+  "default_rom_sha256": "547674bfd44f79cd5614f3188bad86f8ed8a4a9ea9cee060e1236ca0c832c97a",
+  "default_release_unchanged": true,
+  "static_audit": {
+    "passed": 20827,
+    "total": 20827
+  },
+  "runtime_checks": {
+    "passed": 1144,
+    "total": 1144,
+    "cases": 80
+  },
+  "combined_checks": {
+    "passed": 21971,
+    "total": 21971
+  },
+  "comparisons": {
+    "market": {
+      "exact_palette": true,
+      "colour_count": 136,
+      "duration_ms": 4820,
+      "timeline_frames": 144
+    },
+    "wizard": {
+      "exact_palette": true,
+      "colour_count": 122,
+      "duration_ms": 4820,
+      "timeline_frames": 144
+    },
+    "bridge": {
+      "exact_palette": true,
+      "colour_count": 93,
+      "duration_ms": 2140,
+      "timeline_frames": 64
+    },
+    "ladder": {
+      "exact_palette": true,
+      "colour_count": 133,
+      "duration_ms": 2140,
+      "timeline_frames": 64
+    }
+  },
+  "video": {
+    "path": "five-concepts-mgba.mp4",
+    "frames": 832,
+    "fps": 59.72750056960583,
+    "seconds": 13.929931640625,
+    "lossy": true
+  },
+  "rom_files": {
+    "1": "01-crown-of-sludge.gba",
+    "2": "02-crooked-brassworks.gba",
+    "3": "03-moonlit-cistern.gba",
+    "4": "04-rotten-reliquary.gba",
+    "5": "05-royal-drains.gba",
+    "6": "06-royal-masonry-crooked-market.gba",
+    "7": "07-moonlit-stone-crown-brass.gba",
+    "8": "08-reliquary-grime-royal-crossing.gba"
+  },
+  "source_assembly_world_size": [
+    480,
+    320
+  ],
+  "native_game_screen": [
+    240,
+    160
+  ],
+  "limits": "Source assemblies omit ambient glitter and are not screenshots. Actual video frames are real mGBA output; captions are outside gameplay. Static art coverage exceeds the idle NPC poses activated in the runtime clips."
+}

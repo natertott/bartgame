@@ -1,0 +1,51 @@
+{
+  "source_commit": "476d1ede7162e20212707ede84d586a770f940f1",
+  "source_manifest_sha256": "b83a95852cc90f44645b4498acc8391d9050f597725bc91cb4dfd3ba2c598635",
+  "hashed_files": 177,
+  "total_files": 178,
+  "bytes": 7421063,
+  "coverage": {
+    "active_tile_ids": 370,
+    "active_frame_alternatives": 3115,
+    "unused_catalogue_ids": 80,
+    "unused_frame_alternatives": 565,
+    "world_npc_frame_alternatives": 150,
+    "retained_world_npc_frame_alternatives": 145,
+    "new_breathing_frame_alternatives": 5,
+    "portrait_alternatives": 10,
+    "new_foreground_rail_alternatives": 5,
+    "unchanged_bloom": true,
+    "ambient_glitter_in_source_assemblies": false
+  },
+  "tile_atlas_pages": 24,
+  "animated_tile_filmstrips": 62,
+  "npc_atlases": 6,
+  "fixture_comparisons": 12,
+  "before_after_records": 11,
+  "diagnostic_records": 12,
+  "checks": {
+    "all_source_file_hashes_match": true,
+    "all_painter_hashes_match": true,
+    "all_old_input_hashes_match": true,
+    "all_markdown_file_links_resolve_at_publication_paths": true,
+    "keeper_frames_30": true
+  },
+  "inspected": [
+    "room-overview.png",
+    "diagnostics/room-value-overview.png",
+    "diagnostics/character-reads-1x.png",
+    "diagnostics/character-reads-3x.png",
+    "diagnostics/frog-idle-joins.png",
+    "before-after/fixture-cistern.png"
+  ],
+  "visual_observations": [
+    "Directional inlet highlights and larger shaded faces replace the older concentric rim bands.",
+    "Travel fields are generally quieter and NPC body/hood silhouettes remain distinct in value and solid-mask views.",
+    "The new rest/breathe pair changes the upper body while preserving the bottom three foot rows in all five composites.",
+    "Source assemblies show continuous rails and the open bridge gap, without obvious large-arch tile seams."
+  ],
+  "limits": [
+    "Source assembly review cannot prove runtime motion or occlusion; use the matching actual mGBA captures.",
+    "Styles 2 and 4 retain denser repeated ground/water texture than the quietest options; inspect with the preserved runtime glitter before choosing."
+  ]
+}

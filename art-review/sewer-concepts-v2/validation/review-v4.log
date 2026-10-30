@@ -1,0 +1,11 @@
+CAPTURE 4 market PASS
+CAPTURE 4 ladder PASS
+CAPTURE 4 wizard PASS
+CAPTURE 4 bridge PASS
+CAPTURE 4 left-channel PASS
+CAPTURE 4 right-outfall PASS
+CAPTURE 4 lower-left PASS
+CAPTURE 4 lower-right PASS
+CAPTURE 4 peddler-shop PASS
+CAPTURE 4 wizard-dialogue PASS
+RESULT PASS 143/143

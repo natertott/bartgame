@@ -226,7 +226,12 @@ class Audit:
             self.check(variant,'native_limits',area+' all colors fit RGB555',all(c<0x8000 for c in colors))
         for name in before.sheet_ids:
             a,apixels=before.sheet(name);b,bpixels=rom.sheet(name)
-            self.check(variant,'sprite_contracts',name+' canvas/shape/frame count/palette slot',a==b)
+            expected=dict(a)
+            if variant and name=='peddler_body':
+                # Only this source sheet grows by the one approved appended
+                # pose; its streamed frame canvas, shape and palette stay put.
+                expected['tile_count']+=expected['frame_tiles']
+            self.check(variant,'sprite_contracts',name+' exact approved canvas/shape/source size/palette slot',expected==b)
             self.check(variant,'native_limits',name+' legal hardware canvas',(b['width'],b['height']) in SHAPES and b['frame_tiles']*64==b['width']*b['height'])
             if name in KEEPERS:continue
             if name=='face':

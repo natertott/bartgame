@@ -1,0 +1,11 @@
+CAPTURE 8 market PASS
+CAPTURE 8 ladder PASS
+CAPTURE 8 wizard PASS
+CAPTURE 8 bridge PASS
+CAPTURE 8 left-channel PASS
+CAPTURE 8 right-outfall PASS
+CAPTURE 8 lower-left PASS
+CAPTURE 8 lower-right PASS
+CAPTURE 8 peddler-shop PASS
+CAPTURE 8 wizard-dialogue PASS
+RESULT PASS 143/143
