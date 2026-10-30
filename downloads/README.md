@@ -1,5 +1,21 @@
 # BARTGAME downloads
 
+## New: five interface remixes and ten menu layouts
+
+Five new skins combine the preferred folio/brocade/ledger structures with
+wine, green and ivory palettes. Ten independently selectable menu layouts
+explore loadout comparison, tool-use labels, focus cards, a wheel, ribbon,
+route maps and simultaneous overview/chamber inspection.
+
+- [Actual mGBA images, videos, critique and research](https://github.com/natertott/bartgame/blob/ui-menu-exploration/art-review/ui-menu-exploration/README.md)
+- [Download the baseline and all fifteen studies](https://raw.githubusercontent.com/natertott/bartgame/ui-menu-exploration/downloads/ui-menu-studies-d113d39/baseline-and-fifteen-studies.zip)
+- [Individual ROMs and checksums](ui-menu-studies-d113d39/README.md)
+
+Frozen game/art source `d113d39`. All 312 actual presentations, 1,166 runtime
+checks and 7,523 independent preservation/encoding checks pass. These are
+optional playable studies; normal builds retain the final Drain and UI0/MENU0.
+The minimap and equipped-item ammunition remain on the compact gameplay HUD.
+
 ## Final Drain and five interface options
 
 The final sewer combines the selected components, with corrected arches, a

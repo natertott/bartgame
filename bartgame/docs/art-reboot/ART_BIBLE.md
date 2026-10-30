@@ -264,6 +264,16 @@ or map/interaction semantics. No automatic regional palette switch is adopted ye
 corners and selection markers, with clear text fields and consistent controls.
 The title is authored directly at 240×160 with a limited shared palette.
 
+Optional menu-layout studies follow the same visual vocabulary but may change
+information hierarchy. Retain separate tool/key focus and inspected map cell
+across pages; show actual assignment, relevant counts and concise use before
+lore in short cards. Keep north up and distinguish player, inspection, known
+geometry and discovered markers. A tool's verb may supplement its identity;
+do not invent a matching obstacle or required route. Prototype geometry,
+palette and layout remain independent choices until selected. Evaluate native
+readability and ordinary button response together; polished stills alone do
+not establish an effective menu.
+
 ## Area adaptation sheet
 
 For each of the eight future areas, fill in these fields before making tiles:

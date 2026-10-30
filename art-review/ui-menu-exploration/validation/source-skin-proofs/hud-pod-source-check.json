@@ -1,0 +1,66 @@
+{
+  "scope": "Exact preprocessing proves old0\u20135 hud_pod branches unchanged; syntax checks compile each new6\u201310 branch. Actual game HUD/counter/minimap behavior is reviewed separately in mGBA.",
+  "source_sha256": "a68bd4a74e7490335e7289013707f7aa35143444e3dd25ce2c6f18842a63b5b0",
+  "checks": [
+    {
+      "profile": 0,
+      "preprocessed_function_exact": true,
+      "sha256": "f3b2ced75451ce2ee750b288f8d79053bbef617830d23154c2cceaf6edb6a928"
+    },
+    {
+      "profile": 1,
+      "preprocessed_function_exact": true,
+      "sha256": "f3b2ced75451ce2ee750b288f8d79053bbef617830d23154c2cceaf6edb6a928"
+    },
+    {
+      "profile": 2,
+      "preprocessed_function_exact": true,
+      "sha256": "04ec75eb211817d54f4fffa658829d3f612d9f1c6ce690513e33fea8df683d1e"
+    },
+    {
+      "profile": 3,
+      "preprocessed_function_exact": true,
+      "sha256": "fb248d6e33abca23cca02ba6e204c8869201cc0eeaefc9b201add3cb7bdd727d"
+    },
+    {
+      "profile": 4,
+      "preprocessed_function_exact": true,
+      "sha256": "5d2f5bc44548ca8725f1ee57b4c037603925c657a5e8950655743b29680050a6"
+    },
+    {
+      "profile": 5,
+      "preprocessed_function_exact": true,
+      "sha256": "b22d306e8e661ba8631dfd2c6f466b163ef698fc6cd437332ecbca9ba94d99af"
+    },
+    {
+      "profile": 6,
+      "compiled_native_corner_branch": true,
+      "max_painted_y": 11,
+      "horizontal_bounds": "x through x+width-1"
+    },
+    {
+      "profile": 7,
+      "compiled_native_corner_branch": true,
+      "max_painted_y": 11,
+      "horizontal_bounds": "x through x+width-1"
+    },
+    {
+      "profile": 8,
+      "compiled_native_corner_branch": true,
+      "max_painted_y": 11,
+      "horizontal_bounds": "x through x+width-1"
+    },
+    {
+      "profile": 9,
+      "compiled_native_corner_branch": true,
+      "max_painted_y": 11,
+      "horizontal_bounds": "x through x+width-1"
+    },
+    {
+      "profile": 10,
+      "compiled_native_corner_branch": true,
+      "max_painted_y": 11,
+      "horizontal_bounds": "x through x+width-1"
+    }
+  ]
+}

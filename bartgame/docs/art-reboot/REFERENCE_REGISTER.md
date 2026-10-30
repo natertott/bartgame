@@ -81,3 +81,9 @@ knowledge layers. Specific windows, controls and state handling are attributed
 to source lines. Proposed BARTGAME adaptations remain design judgments. Direct
 review pages were inaccessible; ratings or reviewer quotations are not claimed.
 The original six supplied pixel-art PDFs remain the native art foundation.
+
+The [published interface/menu gallery](../../../art-review/ui-menu-exploration/README.md)
+links actual mGBA results, independent critique and compact URL/revision/hash
+records. The ten layouts are original adaptations, not reproductions of those
+games' exact screens. All fifteen proposals remain unselected. Final evidence
+uses source `d113d39`; earlier mutable pilot imagery is not relabelled as final.

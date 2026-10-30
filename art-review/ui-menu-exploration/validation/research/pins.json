@@ -1,0 +1,30 @@
+[
+  {
+    "repo": "pret/pokeemerald",
+    "sha": "731ad5bfd6e6f265508d0efcca0ba42f9dcf5881"
+  },
+  {
+    "repo": "pret/pokefirered",
+    "sha": "ce6406d8c2eaf46d543c8a2606de0c3cb1951982"
+  },
+  {
+    "repo": "zeldaret/tmc",
+    "sha": "6fb6dfb4a7efbe24d0fd1dda5097af6131faacde"
+  },
+  {
+    "repo": "FireEmblemUniverse/fireemblem8u",
+    "sha": "04d1edb163d14bd10777a065697e1a9f17be65f2"
+  },
+  {
+    "repo": "metroidret/mf",
+    "sha": "1ab064aceaef8954fdfb5441d44f4537600a12ea"
+  },
+  {
+    "repo": "metroidret/zm",
+    "error": "remote: Repository not found.\nfatal: repository 'https://github.com/metroidret/zm.git/' not found"
+  },
+  {
+    "repo": "pret/gs1",
+    "error": "remote: Repository not found.\nfatal: repository 'https://github.com/pret/gs1.git/' not found"
+  }
+]

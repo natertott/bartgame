@@ -1,0 +1,159 @@
+{
+  "research_date": "2026-10-30",
+  "method": "Primary public decompilation sources at pinned commits; no commercial ROM or production asset reuse. Inspection notes distinguish source observations from original BARTGAME adaptations.",
+  "sources": [
+    {
+      "repo": "pret/pokeemerald",
+      "path": "src/item_menu.c",
+      "sha": "731ad5bfd6e6f265508d0efcca0ba42f9dcf5881",
+      "url": "https://raw.githubusercontent.com/pret/pokeemerald/731ad5bfd6e6f265508d0efcca0ba42f9dcf5881/src/item_menu.c",
+      "bytes": 85367,
+      "sha256": "076dafdc18fa9008f25a53a4fc4950627d25f9f1bc6def653e43bf04e93a785c",
+      "inspection": "state, list callbacks, native window declarations, contextual actions, quantities and focus restoration"
+    },
+    {
+      "repo": "pret/pokeemerald",
+      "path": "src/region_map.c",
+      "sha": "731ad5bfd6e6f265508d0efcca0ba42f9dcf5881",
+      "url": "https://raw.githubusercontent.com/pret/pokeemerald/731ad5bfd6e6f265508d0efcca0ba42f9dcf5881/src/region_map.c",
+      "bytes": 67878,
+      "sha256": "21719294ece656fd637617ff5bbfa2f5ea68c927adc89a7f72fb3f4371a406cd",
+      "inspection": "normal/zoom initialization, independent player/cursor state, scroll offsets and zoom movement"
+    },
+    {
+      "repo": "pret/pokeemerald",
+      "path": "src/party_menu.c",
+      "sha": "731ad5bfd6e6f265508d0efcca0ba42f9dcf5881",
+      "url": "https://raw.githubusercontent.com/pret/pokeemerald/731ad5bfd6e6f265508d0efcca0ba42f9dcf5881/src/party_menu.c",
+      "bytes": 207210,
+      "sha256": "8c73e9d4ff8877c921e33cdfeaabbaaf5ba6ac78c4c96525acedae6ff6e06894",
+      "inspection": "Downloaded as neighboring context; not used as evidence for specific design claims."
+    },
+    {
+      "repo": "pret/pokefirered",
+      "path": "src/item_menu.c",
+      "sha": "ce6406d8c2eaf46d543c8a2606de0c3cb1951982",
+      "url": "https://raw.githubusercontent.com/pret/pokefirered/ce6406d8c2eaf46d543c8a2606de0c3cb1951982/src/item_menu.c",
+      "bytes": 79276,
+      "sha256": "155bd6b0943e8df179cbc9892e573cee52fd8f67a1d0dd39b962bdbec2e3546a",
+      "inspection": "pocket list construction, current item icon/description, context actions, quantity and position persistence"
+    },
+    {
+      "repo": "pret/pokefirered",
+      "path": "src/region_map.c",
+      "sha": "ce6406d8c2eaf46d543c8a2606de0c3cb1951982",
+      "url": "https://raw.githubusercontent.com/pret/pokefirered/ce6406d8c2eaf46d543c8a2606de0c3cb1951982/src/region_map.c",
+      "bytes": 138368,
+      "sha256": "b761f02803a1c5aada4465b9a93bf2b02c5ef1118432e677a30a5a4a4b78e0cb",
+      "inspection": "map windows, permissions, map cursor/type and region description declarations"
+    },
+    {
+      "repo": "FireEmblemUniverse/fireemblem8u",
+      "path": "src/uimenu.c",
+      "sha": "04d1edb163d14bd10777a065697e1a9f17be65f2",
+      "url": "https://raw.githubusercontent.com/FireEmblemUniverse/fireemblem8u/04d1edb163d14bd10777a065697e1a9f17be65f2/src/uimenu.c",
+      "bytes": 17088,
+      "sha256": "b25354b9c916dfa9e65ad2711b4b7f2827b91b26a0a9272111cd4953cb658653",
+      "inspection": "confirm/back dispatch, anchored contextual help and scrolling cursor support"
+    },
+    {
+      "repo": "FireEmblemUniverse/fireemblem8u",
+      "path": "src/prep_itemlist.c",
+      "sha": "04d1edb163d14bd10777a065697e1a9f17be65f2",
+      "url": "https://raw.githubusercontent.com/FireEmblemUniverse/fireemblem8u/04d1edb163d14bd10777a065697e1a9f17be65f2/src/prep_itemlist.c",
+      "bytes": 24896,
+      "sha256": "6f1d242ccc22ae6235b04863c6907070b637117f86082445ef941705365f7d92",
+      "inspection": "page index/offset state, 7-row scrollbar, owner field, navigation and anchored R help"
+    },
+    {
+      "repo": "FireEmblemUniverse/fireemblem8u",
+      "path": "src/prep_itemuse.c",
+      "sha": "04d1edb163d14bd10777a065697e1a9f17be65f2",
+      "url": "https://raw.githubusercontent.com/FireEmblemUniverse/fireemblem8u/04d1edb163d14bd10777a065697e1a9f17be65f2/src/prep_itemuse.c",
+      "bytes": 21291,
+      "sha256": "a135073de8d4b9858485df35dc54b632df74777827c95c3b7a6615773d4ff2ef",
+      "inspection": "Downloaded as neighboring context; not used as evidence for specific design claims."
+    },
+    {
+      "repo": "FireEmblemUniverse/fireemblem8u",
+      "path": "src/prepscreen.c",
+      "sha": "04d1edb163d14bd10777a065697e1a9f17be65f2",
+      "url": "https://raw.githubusercontent.com/FireEmblemUniverse/fireemblem8u/04d1edb163d14bd10777a065697e1a9f17be65f2/src/prepscreen.c",
+      "bytes": 15881,
+      "sha256": "042a5832c22ec0be66ec517bbf4ccae0b74bc31ea9f572f28ab6a1f846ecb996",
+      "inspection": "Downloaded as neighboring context; not used as evidence for specific design claims."
+    },
+    {
+      "repo": "FireEmblemUniverse/fireemblem8u",
+      "path": "src/worldmap_main.c",
+      "sha": "04d1edb163d14bd10777a065697e1a9f17be65f2",
+      "url": "https://raw.githubusercontent.com/FireEmblemUniverse/fireemblem8u/04d1edb163d14bd10777a065697e1a9f17be65f2/src/worldmap_main.c",
+      "bytes": 43790,
+      "sha256": "c422ad4828dce288e9697d9ec47770cab18841e81b85e604ca6bcbe58f7b2579",
+      "inspection": "Downloaded as neighboring context; not used as evidence for specific design claims."
+    },
+    {
+      "repo": "metroidret/mf",
+      "path": "src/menus/pause_screen.c",
+      "sha": "1ab064aceaef8954fdfb5441d44f4537600a12ea",
+      "url": "https://raw.githubusercontent.com/metroidret/mf/1ab064aceaef8954fdfb5441d44f4537600a12ea/src/menus/pause_screen.c",
+      "bytes": 92322,
+      "sha256": "636f854cb0d1a738e95ee05f83e4935e3c79092512da92d657651a418bf0079b",
+      "inspection": "map/status/navigation state dispatch, current map setup and marker declarations"
+    },
+    {
+      "repo": "metroidret/mf",
+      "path": "src/menus/pause_screen_map.c",
+      "sha": "1ab064aceaef8954fdfb5441d44f4537600a12ea",
+      "url": "https://raw.githubusercontent.com/metroidret/mf/1ab064aceaef8954fdfb5441d44f4537600a12ea/src/menus/pause_screen_map.c",
+      "bytes": 26871,
+      "sha256": "226bcac7b4957890c3046147c4b136cdd32835ee22801e79fa23324954b546d9",
+      "inspection": "bounded scrolling, objective toggle, visited/downloaded/hidden/collected state separation"
+    },
+    {
+      "repo": "zeldaret/tmc",
+      "path": "src/menu/pauseMenu.c",
+      "sha": "6fb6dfb4a7efbe24d0fd1dda5097af6131faacde",
+      "url": "https://raw.githubusercontent.com/zeldaret/tmc/6fb6dfb4a7efbe24d0fd1dda5097af6131faacde/src/menu/pauseMenu.c",
+      "bytes": 42011,
+      "sha256": "de6b58a8158b985d58c78b5d979c57cd7443f0d78a2bec025f980cd33b42f634",
+      "inspection": "page inputs, inventory build, explicit slot neighbors/positions, A/B assignment, selected item description and equipped markers"
+    },
+    {
+      "repo": "zeldaret/tmc",
+      "path": "src/menu/pauseMenuScreen6.c",
+      "sha": "6fb6dfb4a7efbe24d0fd1dda5097af6131faacde",
+      "url": "https://raw.githubusercontent.com/zeldaret/tmc/6fb6dfb4a7efbe24d0fd1dda5097af6131faacde/src/menu/pauseMenuScreen6.c",
+      "bytes": 7307,
+      "sha256": "d2bf097b61d412c6d1f02508aff08aae9fe01d1be6f3106161b08e5fe8686035",
+      "inspection": "Downloaded as neighboring context; not used as evidence for specific design claims."
+    },
+    {
+      "repo": "zeldaret/tmc",
+      "path": "include/menu.h",
+      "sha": "6fb6dfb4a7efbe24d0fd1dda5097af6131faacde",
+      "url": "https://raw.githubusercontent.com/zeldaret/tmc/6fb6dfb4a7efbe24d0fd1dda5097af6131faacde/include/menu.h",
+      "bytes": 3009,
+      "sha256": "b0a8aff752657357a0459222d9d2cdefe3021a205a57994325291d933368cf2f",
+      "inspection": "menu state declarations"
+    }
+  ],
+  "review_access": [
+    {
+      "url": "https://www.metacritic.com/game/the-legend-of-zelda-the-minish-cap/",
+      "error": "<urlopen error Tunnel connection failed: 403 Forbidden>",
+      "used_for_claims": false
+    },
+    {
+      "url": "https://www.metacritic.com/game/metroid-fusion/",
+      "error": "<urlopen error Tunnel connection failed: 403 Forbidden>",
+      "used_for_claims": false
+    },
+    {
+      "url": "https://www.nintendolife.com/reviews/gba/fire_emblem_the_sacred_stones",
+      "error": "<urlopen error Tunnel connection failed: 403 Forbidden>",
+      "used_for_claims": false
+    }
+  ],
+  "rating_claims": "No review scores or reviewer-specific endorsements are claimed; attempted external review pages were inaccessible."
+}

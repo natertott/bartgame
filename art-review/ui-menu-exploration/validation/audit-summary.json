@@ -1,0 +1,198 @@
+{
+  "method": "Independently verify world preservation and native UI bytes for layout studies.\n\nThe final-room baseline already has its independently decoded1,554 native\nframes. Every new ROM must retain its exact resolved world data. New UI ink,\nframe/marker/cursor data is decoded from actual4bpp bytes against native source;\nthis script never imports the asset builder or its packing/dedup functions.\n",
+  "baseline_sha256": "c1086f78fc8b191e2128a133e29a2cae9dc7f39b84ecf16d2bdd474e10ef5544",
+  "source_file_sha256": {
+    "art/blight_reference.py": "199c13c278c086d693042388e941e27c810e2b09442f6d25cb0682b0bcb6b431",
+    "art/blight_reference_source.py": "50261560155aecf45a16c16e9f4e1746016806a2be02d27a50e77433b673ba1d",
+    "art/bloom_animations.py": "f16b690fe853944a1bd87b5d9eca538239f7a6950a8acb9378272f8812f233c2",
+    "art/bloom_fx.py": "78da0962204d4cf23a5d622137f6171f636d6d2a2a40eef539c9f7232771707c",
+    "art/bloom_loads.py": "d2331f07e6a896244ab3b9afa4ff958d8875d5189ea8c6b2ec9ab544da65c4c4",
+    "art/clean_items.py": "adb7d042d823009988e8f3e3de3ffc52fc0d09e8dd9999db548f5189de31fa68",
+    "art/env_pack.py": "e266c715c90c4bf2c4ba8d840d5d6146e4f8bd68e614a53a0aece67a2051e12e",
+    "art/faces.py": "ff35c5233477ff7d43b4776d7cace2337bbf5e1fff6297bf8ba8b93e86d872f4",
+    "art/folk.py": "174fa5044812caefc70a7bdebb33f54a869854c3d4ff58560815126881e6099b",
+    "art/forest_art.py": "f468279e191c3727203c981eadf17442af38dc5ed59493cd1447e9fe21f02842",
+    "art/forest_sprites.py": "b376dd3f6cd16f46ecba74610d3f2265e5c9bfee2929b4449dcf28d56e0d86cf",
+    "art/healthy_reference.py": "32e0254b979378fc78fa970b51ebd0f5ed7479bfaa3adb5cd8c6121fcc5319d4",
+    "art/hero.py": "1313133514f169593e8be950355f213790ff8c4e5d6f051a16eee9c8ad4a6c48",
+    "art/interactive_props.py": "93e2eb136f71cad7dd66b59b17c1eabbc527d17ab4e84a1e65ecafa3d24133f7",
+    "art/interactive_tiles.py": "d252a44cd066de59f309aa890d2b424a5245e7ec0527b43595ea495b98f3cb84",
+    "art/items.py": "6865e732874429fd35732962b2f9df646ac642b3795f3eab418879cf28c08968",
+    "art/items32.py": "e4ff935e10b54f540830917cfd9233b0a6a086feb30bfd2a874cd7b3d7b5fbbf",
+    "art/marks.py": "8bbd676f70643403ea06105ad0468417ba2171433ca422438322534c6f4eb23d",
+    "art/monsters.py": "8dd8272f147ddc89336c69bb274c96578c445a4944a0b0e1113227639ab2b13c",
+    "art/pack.py": "6ed118c306471ea0bb4eebeedd3444badf724359bed77766e48134f9cc77c1fb",
+    "art/pack_tiles.py": "b99341a12dcd457f3e1dc2527da20f31d1dfe24f8e3fecd48cded0041b3e764d",
+    "art/paint.py": "e03b63767cdc885179ab902ccafe119cc5426228b322ad1162338880d2067fd9",
+    "art/palettes.py": "38820856997c96fbfa4a08d5c541f12e3e505d4dfb0aedb14cb30a9b22129347",
+    "art/portraits.py": "2dc833b09d884f7b9020000de5970615e06dceb61a7b9f901e9647c2659613f9",
+    "art/px.py": "2c0058322702da467efc85ab0cd9eb367d07db8b18f5f0bcf2f0b06b640d5188",
+    "art/reboot_actors.py": "08cf30f2219bb0b1f4b55724a9d55c6c755db897b768c35685f6523f1828823e",
+    "art/reboot_contracts.json": "3f3c22aeb93f63308ddc42f79e849145c5e8c12950e37ba14ded67773b44d0d8",
+    "art/reboot_core.py": "71021a7b1717f8dd7edd58d0ad0a4dda448def45533c42855f6d76a4bcc82ea4",
+    "art/reboot_items.py": "589c6e250bce05a44fd192c6a7ad7a19025214efe74c98f91e35affc38cc0891",
+    "art/reboot_terrain.py": "57ef3230a9d89b16e2cecb5984d3397ee3b19fb5d15d59af1c6ed9c9d460caec",
+    "art/reboot_ui.py": "6963ac2536f37580c1e398228b22359ea03c39460b9814fb751d4de82c98dfc7",
+    "art/reference_assets.py": "3374d7c6e3ce26e7fb2fa4977410ec75fcf37f98eed29610a4b8301bfae41f52",
+    "art/reference_items.py": "2367b5329b98fa2ba5ba9d067909ca4104cdf67e27db496a0929660c2908c36a",
+    "art/rooms.py": "c9f69874d628e8ef85e2dbf75511a27927147a1bd3d44fff508a9812ce659363",
+    "art/sample.py": "9018410070844f4a69e3bc9458394c8291de99ad548aa8b29d07d0b7d771d454",
+    "art/sewer_concepts.py": "6638656152cdfe5d424f94de8eb7f1c9ecc359293247670c62692d2ea2dd2606",
+    "art/sewer_concepts_npcs.py": "3ac84ca8f1024bfbbbb391f3c817d06d73609e82d17239aa05981e0633b130bb",
+    "art/sewer_concepts_terrain.py": "913e22af37f33949d248675b8f3987daf17d989e0c7c8c04e32c76845ae8f561",
+    "art/sewer_final.py": "f6229d2aa7e0207b01b6c35be75884cbcdd6b7847ceedc945388b760360baf83",
+    "art/sewer_final_contracts.py": "4afb10e4fe316d549046bacbeec4358747939d98f29ca2c2f633c24da4cf553c",
+    "art/sewer_v3_fixtures.py": "1f7d4289575f8a4a933ac6fef1b37a5510308a1ed31c4815629cd9a0c5d8ea12",
+    "art/sprites.py": "fbb6f7871fc2c444db5927d42001f1a453eb8fc1b162d188dd46e920cfa20423",
+    "art/style.py": "693a64a9136bba50f3489b08b806aaf6d20258f570009bac9e22a6b010c42cb3",
+    "art/sw_cut.py": "27f064e14cb1e392e16ed72102093e17310080f228f9d3d58da8285f7de8dd1b",
+    "art/sw_drain.py": "b546771bef482a455a24a125c11ef50824078e6b47ed100044f0b9cb65560b33",
+    "art/sw_folk.py": "7ed9e18713edce423e8a90947328d537097ee04a4e5a828c36539cbdf8521ac2",
+    "art/sw_hall.py": "a400723c297bb49eb4ef80ec69a3f92a6efde08f588fee20543de65798ee11cd",
+    "art/sw_paint.py": "8f7fce4a2871092631631be9ca8e5bfd4f35f68f039c412c0e5cfb25cf04c139",
+    "art/sw_props.py": "04a8bdc2d8661e21f22f73eea86169aaa647a5161e43d45cfd94a19eae051a6d",
+    "art/sword_studies.py": "5cf29b6116a417ed229d322eadaf9ae7a345a52dcd970dae2ff8f1bb8f0d01c4",
+    "art/tile_art.py": "24d090933cc0cccf70e827aac5fbf2a1a09fd20336b5ab303d04c636cdcc4217",
+    "art/tiles.py": "4a5468051beac6a290ce952962f5b656226badb72724dc7163db5aab7289038a",
+    "art/tiles_style.py": "eb9caf764e56a672227d48fd024df3119856e7b84e58bce11a2acd938b3c2890",
+    "art/title.py": "03b984ca0f7e81afbb064f7e5aadf45530c51f34b53fbb3998aead7a0ceb9715",
+    "art/ui_font.py": "48ae0da7d1daa4f01c144a856d18694c5be06674288029e62913a513bcb8388e",
+    "art/ui_kit.py": "49b31f6b0955436eb9c88bf019208ef6cc7bb573f9add58a3c85e8acea70e6ca",
+    "art/ui_studies.py": "5f924a43aa53fb0403cf6f1e77fe6912263b3ca7d210f614a081c3839f577b5b",
+    "art/wood_art.py": "4778b2a8cfca7fb647193abc53c9e63bc07998d2eb2177cc4930543de2c5251c"
+  },
+  "variants": [
+    {
+      "variant": 0,
+      "ui": 0,
+      "menu": 0,
+      "rom_sha256": "6d5d1ffe05653255da08f2077328c1a1f5c778d8d80a147a873459a6e228a141",
+      "checks": 424,
+      "passed": 424
+    },
+    {
+      "variant": 1,
+      "ui": 6,
+      "menu": 0,
+      "rom_sha256": "85ef5ea20579f13a1ac7a89fca61382b418fe57642ee3464bdd9f3b23b685089",
+      "checks": 424,
+      "passed": 424
+    },
+    {
+      "variant": 2,
+      "ui": 7,
+      "menu": 0,
+      "rom_sha256": "b7a717c96a4168234c4634020321c6abdeae8f07afa206cbf021537ae5bae700",
+      "checks": 424,
+      "passed": 424
+    },
+    {
+      "variant": 3,
+      "ui": 8,
+      "menu": 0,
+      "rom_sha256": "fb9c38ef317fc2e8bd7952525ab9cf1ddd1ab1ed469688b003c6c0eb27ce61b4",
+      "checks": 424,
+      "passed": 424
+    },
+    {
+      "variant": 4,
+      "ui": 9,
+      "menu": 0,
+      "rom_sha256": "e0ed28584d771865295c57951029cb4a2216636b917542906c7fa84bc6477b0f",
+      "checks": 424,
+      "passed": 424
+    },
+    {
+      "variant": 5,
+      "ui": 10,
+      "menu": 0,
+      "rom_sha256": "fe2e225a67d273ca0a5e318eb47abf500c14b09ce11652b3f8a59cf13f83714a",
+      "checks": 424,
+      "passed": 424
+    },
+    {
+      "variant": 6,
+      "ui": 6,
+      "menu": 1,
+      "rom_sha256": "1dcc27dbd0c8e574660fb83d9dcab624f9caf632d0fb04bc3e023f39bde48ac7",
+      "checks": 424,
+      "passed": 424
+    },
+    {
+      "variant": 7,
+      "ui": 6,
+      "menu": 2,
+      "rom_sha256": "61bc4df3ad65546c6e2c68d4b79698fd38abd87276373f5a031c6dbdd6ebbae2",
+      "checks": 424,
+      "passed": 424
+    },
+    {
+      "variant": 8,
+      "ui": 6,
+      "menu": 3,
+      "rom_sha256": "8d17546c547cd3e720b517763bff03b996f801021e8d652eb95717fac0e41752",
+      "checks": 424,
+      "passed": 424
+    },
+    {
+      "variant": 9,
+      "ui": 6,
+      "menu": 4,
+      "rom_sha256": "f6e6208deca3c49ff6d0d5096d857e2594669de0771d2266e68d608add9476d9",
+      "checks": 424,
+      "passed": 424
+    },
+    {
+      "variant": 10,
+      "ui": 6,
+      "menu": 5,
+      "rom_sha256": "d7dacd450f733997297997d9912cc8facfad71369789bddc92f0d3de6160ac2f",
+      "checks": 424,
+      "passed": 424
+    },
+    {
+      "variant": 11,
+      "ui": 6,
+      "menu": 6,
+      "rom_sha256": "8c5bca209d84a3bca378c1623f52d5e0cf85b01a4b14ddf8b7cfa215d538b688",
+      "checks": 424,
+      "passed": 424
+    },
+    {
+      "variant": 12,
+      "ui": 6,
+      "menu": 7,
+      "rom_sha256": "89ebaca395102d02561a444aa2a2b8defb64ef3d3020990497e16dba8be391ff",
+      "checks": 424,
+      "passed": 424
+    },
+    {
+      "variant": 13,
+      "ui": 6,
+      "menu": 8,
+      "rom_sha256": "97f4e5a74084db355f6696b9d30327e7a344486d71f0e22f1881534a1ceaf7df",
+      "checks": 424,
+      "passed": 424
+    },
+    {
+      "variant": 14,
+      "ui": 6,
+      "menu": 9,
+      "rom_sha256": "a09d1b7c479237e14551199b36237b0e188d6d75a271171464f0d5a550e55cd8",
+      "checks": 424,
+      "passed": 424
+    },
+    {
+      "variant": 15,
+      "ui": 6,
+      "menu": 10,
+      "rom_sha256": "d743eba1f771e5517da32aaeda551f1a8f66e288f2a3fa179889732eee14116b",
+      "checks": 424,
+      "passed": 424
+    }
+  ],
+  "passed": 7523,
+  "total": 7523,
+  "failures": [],
+  "limits": "This proves native art preservation/encoding and profile identity, not visual taste or runtime usability. Actual input/capture regressions are in the separate review."
+}

@@ -25,3 +25,31 @@ Runtime reviews: 47/47 native mGBA checks passed for Workbench and all ten pilot
 Final all-ten native capture/audit is handled by `tools/ui_layout_review.py` and the review agent; source wording/header fixes after the first pilot must be included in the final freeze.
 
 Final narrow QA corrections: wide40–48px title cards retain seed/arrow quantities on the same title line (real30/50 verified in `final-ammo/barrier-seeds.png` / `barrier-arrows.png`). Quick Ribbon overview/chamber both start y32, leaving the y24 orientation/room caption visible; final recipe SHA256 f575ca99eecc7880a5ffb1547c1a45903e1cac02463b2a6221680b983a8bc199. Root owns final immutable build/capture provenance; mutable pilot folders are diagnostic only.
+
+## Final committed review
+
+Source d113d39 produced sixteen immutable ROMs and312 actual mGBA cases.
+The final controller suite passes1,166/1,166 checks, including 59 per layout
+(590 total for the ten new arrangements). This supersedes the narrower pilot
+result above. The separate native/source audit passes7,523/7,523 checks.
+All 22 baseline selected framebuffers match the previous final Drain release.
+
+Every 114 code/art input per build matches the freeze (1,824 hash comparisons).
+All sixteen explicit `make -q` queries and the normal default query return0.
+Default ROM SHA256 is 6d5d1ffe05653255da08f2077328c1a1f5c778d8d80a147a873459a6e228a141
+and matches the restored frozen v0 exactly. Maximum linked study EWRAM use
+is 201,688/262,144 bytes, leaving 60,456; IWRAM linker end 20,292/32,512 leaves
+12,220 below its limit. These are linked allocations, not measured stack peaks.
+
+Final terrain chart draw counters are 52–54 IRQ frames, with end-to-end page
+transitions 53–55. Schematic cold draws are 5–6; Twin 9. Cached map moves take 2
+except Twin 6; zoom 4–7. The bounded ordered input queue has 31 usable events;
+the normal two-frame-tap sequences pass, but arbitrarily large bursts during
+a cold draw are not an unbounded input guarantee. Existing hooks are restored
+when the menu closes. Default MENU0 does not allocate this renderer/queue path.
+
+[Published native evidence and download choices](../../../../art-review/ui-menu-exploration/README.md)
+include exact clips, per-capture traces, timing table and independent UX critique.
+The four final focus checks were added in review-only tooling after the game
+freeze; the publication commit retains that exact checker. No game input or
+art input changed after the ROM source commit.

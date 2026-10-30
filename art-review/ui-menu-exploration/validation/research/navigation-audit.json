@@ -1,0 +1,515 @@
+{
+  "method": "Source-derived weighted directional graph: candidate along desired axis >0, minimize along^2+3*off_axis^2, source-index tie-break. All-owned shortest directed paths; not actual emulator controls.",
+  "source_sha256": {
+    "src/menu.c": "6e469d4de8d9cf71cc63fd0623b2386a2ac8c5032c692f2f5afe3962617376a5",
+    "src/menu_layouts_a.c": "6b3e08498419060bcb3d66c577ddf554b7896d19571d02fb21f478557dec81f6",
+    "src/menu_layouts_b.c": "e2c254f9316a00c9555c73736a8d980520c18e9dc2ea6232ad12a6e5863f949a"
+  },
+  "wheel_sparse_ownership": {
+    "nonempty_subsets": 127,
+    "starting_states": 448,
+    "all_connected": true
+  },
+  "layouts": [
+    {
+      "layout": 1,
+      "all7_reachable_from_every_owned_item": true,
+      "max_presses": 3,
+      "mean_shortest_presses": 1.762,
+      "neighbors": [
+        {
+          "Right": 1,
+          "Left": 0,
+          "Down": 4,
+          "Up": 0
+        },
+        {
+          "Right": 2,
+          "Left": 0,
+          "Down": 5,
+          "Up": 1
+        },
+        {
+          "Right": 3,
+          "Left": 1,
+          "Down": 6,
+          "Up": 2
+        },
+        {
+          "Right": 3,
+          "Left": 2,
+          "Down": 6,
+          "Up": 3
+        },
+        {
+          "Right": 5,
+          "Left": 4,
+          "Down": 4,
+          "Up": 0
+        },
+        {
+          "Right": 6,
+          "Left": 4,
+          "Down": 5,
+          "Up": 1
+        },
+        {
+          "Right": 3,
+          "Left": 5,
+          "Down": 6,
+          "Up": 2
+        }
+      ]
+    },
+    {
+      "layout": 2,
+      "all7_reachable_from_every_owned_item": true,
+      "max_presses": 6,
+      "mean_shortest_presses": 2.667,
+      "neighbors": [
+        {
+          "Right": 0,
+          "Left": 0,
+          "Down": 1,
+          "Up": 0
+        },
+        {
+          "Right": 1,
+          "Left": 1,
+          "Down": 2,
+          "Up": 0
+        },
+        {
+          "Right": 2,
+          "Left": 2,
+          "Down": 3,
+          "Up": 1
+        },
+        {
+          "Right": 3,
+          "Left": 3,
+          "Down": 4,
+          "Up": 2
+        },
+        {
+          "Right": 4,
+          "Left": 4,
+          "Down": 5,
+          "Up": 3
+        },
+        {
+          "Right": 5,
+          "Left": 5,
+          "Down": 6,
+          "Up": 4
+        },
+        {
+          "Right": 6,
+          "Left": 6,
+          "Down": 6,
+          "Up": 5
+        }
+      ]
+    },
+    {
+      "layout": 3,
+      "all7_reachable_from_every_owned_item": true,
+      "max_presses": 3,
+      "mean_shortest_presses": 1.762,
+      "neighbors": [
+        {
+          "Right": 1,
+          "Left": 0,
+          "Down": 2,
+          "Up": 0
+        },
+        {
+          "Right": 1,
+          "Left": 0,
+          "Down": 3,
+          "Up": 1
+        },
+        {
+          "Right": 3,
+          "Left": 2,
+          "Down": 4,
+          "Up": 0
+        },
+        {
+          "Right": 3,
+          "Left": 2,
+          "Down": 5,
+          "Up": 1
+        },
+        {
+          "Right": 5,
+          "Left": 4,
+          "Down": 6,
+          "Up": 2
+        },
+        {
+          "Right": 5,
+          "Left": 4,
+          "Down": 6,
+          "Up": 3
+        },
+        {
+          "Right": 5,
+          "Left": 6,
+          "Down": 6,
+          "Up": 4
+        }
+      ]
+    },
+    {
+      "layout": 4,
+      "all7_reachable_from_every_owned_item": true,
+      "max_presses": 6,
+      "mean_shortest_presses": 2.667,
+      "neighbors": [
+        {
+          "Right": 0,
+          "Left": 0,
+          "Down": 1,
+          "Up": 0
+        },
+        {
+          "Right": 1,
+          "Left": 1,
+          "Down": 2,
+          "Up": 0
+        },
+        {
+          "Right": 2,
+          "Left": 2,
+          "Down": 3,
+          "Up": 1
+        },
+        {
+          "Right": 3,
+          "Left": 3,
+          "Down": 4,
+          "Up": 2
+        },
+        {
+          "Right": 4,
+          "Left": 4,
+          "Down": 5,
+          "Up": 3
+        },
+        {
+          "Right": 5,
+          "Left": 5,
+          "Down": 6,
+          "Up": 4
+        },
+        {
+          "Right": 6,
+          "Left": 6,
+          "Down": 6,
+          "Up": 5
+        }
+      ]
+    },
+    {
+      "layout": 5,
+      "all7_reachable_from_every_owned_item": true,
+      "max_presses": 3,
+      "mean_shortest_presses": 2.0,
+      "neighbors": [
+        {
+          "Right": 1,
+          "Left": 6,
+          "Down": 1,
+          "Up": 0
+        },
+        {
+          "Right": 2,
+          "Left": 0,
+          "Down": 2,
+          "Up": 0
+        },
+        {
+          "Right": 2,
+          "Left": 1,
+          "Down": 3,
+          "Up": 1
+        },
+        {
+          "Right": 2,
+          "Left": 4,
+          "Down": 3,
+          "Up": 2
+        },
+        {
+          "Right": 3,
+          "Left": 5,
+          "Down": 4,
+          "Up": 5
+        },
+        {
+          "Right": 6,
+          "Left": 5,
+          "Down": 4,
+          "Up": 6
+        },
+        {
+          "Right": 0,
+          "Left": 5,
+          "Down": 5,
+          "Up": 0
+        }
+      ]
+    },
+    {
+      "layout": 6,
+      "all7_reachable_from_every_owned_item": true,
+      "max_presses": 6,
+      "mean_shortest_presses": 2.667,
+      "neighbors": [
+        {
+          "Right": 0,
+          "Left": 0,
+          "Down": 1,
+          "Up": 0
+        },
+        {
+          "Right": 1,
+          "Left": 1,
+          "Down": 2,
+          "Up": 0
+        },
+        {
+          "Right": 2,
+          "Left": 2,
+          "Down": 3,
+          "Up": 1
+        },
+        {
+          "Right": 3,
+          "Left": 3,
+          "Down": 4,
+          "Up": 2
+        },
+        {
+          "Right": 4,
+          "Left": 4,
+          "Down": 5,
+          "Up": 3
+        },
+        {
+          "Right": 5,
+          "Left": 5,
+          "Down": 6,
+          "Up": 4
+        },
+        {
+          "Right": 6,
+          "Left": 6,
+          "Down": 6,
+          "Up": 5
+        }
+      ]
+    },
+    {
+      "layout": 7,
+      "all7_reachable_from_every_owned_item": true,
+      "max_presses": 3,
+      "mean_shortest_presses": 1.762,
+      "neighbors": [
+        {
+          "Right": 1,
+          "Left": 0,
+          "Down": 4,
+          "Up": 0
+        },
+        {
+          "Right": 2,
+          "Left": 0,
+          "Down": 5,
+          "Up": 1
+        },
+        {
+          "Right": 3,
+          "Left": 1,
+          "Down": 6,
+          "Up": 2
+        },
+        {
+          "Right": 3,
+          "Left": 2,
+          "Down": 6,
+          "Up": 3
+        },
+        {
+          "Right": 5,
+          "Left": 4,
+          "Down": 4,
+          "Up": 0
+        },
+        {
+          "Right": 6,
+          "Left": 4,
+          "Down": 5,
+          "Up": 1
+        },
+        {
+          "Right": 3,
+          "Left": 5,
+          "Down": 6,
+          "Up": 2
+        }
+      ]
+    },
+    {
+      "layout": 8,
+      "all7_reachable_from_every_owned_item": true,
+      "max_presses": 6,
+      "mean_shortest_presses": 2.667,
+      "neighbors": [
+        {
+          "Right": 1,
+          "Left": 0,
+          "Down": 0,
+          "Up": 0
+        },
+        {
+          "Right": 2,
+          "Left": 0,
+          "Down": 1,
+          "Up": 1
+        },
+        {
+          "Right": 3,
+          "Left": 1,
+          "Down": 2,
+          "Up": 2
+        },
+        {
+          "Right": 4,
+          "Left": 2,
+          "Down": 3,
+          "Up": 3
+        },
+        {
+          "Right": 5,
+          "Left": 3,
+          "Down": 4,
+          "Up": 4
+        },
+        {
+          "Right": 6,
+          "Left": 4,
+          "Down": 5,
+          "Up": 5
+        },
+        {
+          "Right": 6,
+          "Left": 5,
+          "Down": 6,
+          "Up": 6
+        }
+      ]
+    },
+    {
+      "layout": 9,
+      "all7_reachable_from_every_owned_item": true,
+      "max_presses": 3,
+      "mean_shortest_presses": 1.762,
+      "neighbors": [
+        {
+          "Right": 1,
+          "Left": 0,
+          "Down": 4,
+          "Up": 0
+        },
+        {
+          "Right": 2,
+          "Left": 0,
+          "Down": 5,
+          "Up": 1
+        },
+        {
+          "Right": 3,
+          "Left": 1,
+          "Down": 6,
+          "Up": 2
+        },
+        {
+          "Right": 3,
+          "Left": 2,
+          "Down": 6,
+          "Up": 3
+        },
+        {
+          "Right": 5,
+          "Left": 4,
+          "Down": 4,
+          "Up": 0
+        },
+        {
+          "Right": 6,
+          "Left": 4,
+          "Down": 5,
+          "Up": 1
+        },
+        {
+          "Right": 3,
+          "Left": 5,
+          "Down": 6,
+          "Up": 2
+        }
+      ]
+    },
+    {
+      "layout": 10,
+      "all7_reachable_from_every_owned_item": true,
+      "max_presses": 6,
+      "mean_shortest_presses": 2.667,
+      "neighbors": [
+        {
+          "Right": 1,
+          "Left": 0,
+          "Down": 0,
+          "Up": 0
+        },
+        {
+          "Right": 2,
+          "Left": 0,
+          "Down": 1,
+          "Up": 1
+        },
+        {
+          "Right": 3,
+          "Left": 1,
+          "Down": 2,
+          "Up": 2
+        },
+        {
+          "Right": 4,
+          "Left": 2,
+          "Down": 3,
+          "Up": 3
+        },
+        {
+          "Right": 5,
+          "Left": 3,
+          "Down": 4,
+          "Up": 4
+        },
+        {
+          "Right": 6,
+          "Left": 4,
+          "Down": 5,
+          "Up": 5
+        },
+        {
+          "Right": 6,
+          "Left": 5,
+          "Down": 6,
+          "Up": 6
+        }
+      ]
+    }
+  ]
+}

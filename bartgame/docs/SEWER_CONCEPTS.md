@@ -6,6 +6,11 @@ Drain profile 9 and the neutral compact interface, UI0. UI1–5 remain choices
 for feedback. [The direction log](art-reboot/ART_DIRECTION_LOG.md) records the
 user's selections, follow-up HUD requirements and actual-screen corrections.
 
+The newer [five remixed interfaces and ten interactive menu layouts](../../art-review/ui-menu-exploration/README.md)
+extend this comparison using the preferred structures and requested wine,
+green and ivory palettes. They retain the final room and compact HUD/minimap/
+conditional ammo. UI6–10 and MENU1–10 are optional; UI0/MENU0 stays the default.
+
 ## Final room
 
 The final art combines v3 floor/debris #1/#5, north-wall language #1/#3, market
@@ -73,6 +78,12 @@ make -j4
 
 # Final room with a proposed interface skin.
 make -j4 BART_UI=2 BUILD=build_vellum
+
+# New preferred-structure/palette skin, existing menu arrangement.
+make -j4 BART_UI=6 BART_MENU=0 BUILD=build_winebound
+
+# Optional Twin Atlas menu layout in the same skin.
+make -j4 BART_UI=6 BART_MENU=6 BUILD=build_twin_atlas
 
 # Historical room art with the current compact interface/runtime.
 make -j4 BART_SEWER=3 BART_UI=0 BUILD=build_old_room

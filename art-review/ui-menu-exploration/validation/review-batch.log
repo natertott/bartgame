@@ -1,0 +1,17 @@
+{"variant": 0, "status": "passed", "ui": 0, "menu": 0, "captures": 22, "passed": 86, "total": 86}
+{"variant": 1, "status": "passed", "ui": 6, "menu": 0, "captures": 28, "passed": 98, "total": 98}
+{"variant": 2, "status": "passed", "ui": 7, "menu": 0, "captures": 28, "passed": 98, "total": 98}
+{"variant": 3, "status": "passed", "ui": 8, "menu": 0, "captures": 28, "passed": 98, "total": 98}
+{"variant": 4, "status": "passed", "ui": 9, "menu": 0, "captures": 28, "passed": 98, "total": 98}
+{"variant": 6, "status": "passed", "ui": 6, "menu": 1, "captures": 15, "passed": 59, "total": 59}
+{"variant": 5, "status": "passed", "ui": 10, "menu": 0, "captures": 28, "passed": 98, "total": 98}
+{"variant": 7, "status": "passed", "ui": 6, "menu": 2, "captures": 15, "passed": 59, "total": 59}
+{"variant": 8, "status": "passed", "ui": 6, "menu": 3, "captures": 15, "passed": 59, "total": 59}
+{"variant": 9, "status": "passed", "ui": 6, "menu": 4, "captures": 15, "passed": 59, "total": 59}
+{"variant": 10, "status": "passed", "ui": 6, "menu": 5, "captures": 15, "passed": 59, "total": 59}
+{"variant": 11, "status": "passed", "ui": 6, "menu": 6, "captures": 15, "passed": 59, "total": 59}
+{"variant": 12, "status": "passed", "ui": 6, "menu": 7, "captures": 15, "passed": 59, "total": 59}
+{"variant": 13, "status": "passed", "ui": 6, "menu": 8, "captures": 15, "passed": 59, "total": 59}
+{"variant": 14, "status": "passed", "ui": 6, "menu": 9, "captures": 15, "passed": 59, "total": 59}
+{"variant": 15, "status": "passed", "ui": 6, "menu": 10, "captures": 15, "passed": 59, "total": 59}
+RESULT 1166 / 1166 captures 312

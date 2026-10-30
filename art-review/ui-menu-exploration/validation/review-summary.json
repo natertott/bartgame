@@ -1,0 +1,185 @@
+{
+  "source_commit": "d113d398692e9b98903e5d5a944ea3cadc2d6282",
+  "captures": 312,
+  "passed": 1166,
+  "total": 1166,
+  "max_oam": 40,
+  "variants": [
+    {
+      "variant": 0,
+      "status": "passed",
+      "ui": 0,
+      "menu": 0,
+      "captures": 22,
+      "passed": 86,
+      "total": 86
+    },
+    {
+      "variant": 1,
+      "status": "passed",
+      "ui": 6,
+      "menu": 0,
+      "captures": 28,
+      "passed": 98,
+      "total": 98
+    },
+    {
+      "variant": 2,
+      "status": "passed",
+      "ui": 7,
+      "menu": 0,
+      "captures": 28,
+      "passed": 98,
+      "total": 98
+    },
+    {
+      "variant": 3,
+      "status": "passed",
+      "ui": 8,
+      "menu": 0,
+      "captures": 28,
+      "passed": 98,
+      "total": 98
+    },
+    {
+      "variant": 4,
+      "status": "passed",
+      "ui": 9,
+      "menu": 0,
+      "captures": 28,
+      "passed": 98,
+      "total": 98
+    },
+    {
+      "variant": 6,
+      "status": "passed",
+      "ui": 6,
+      "menu": 1,
+      "captures": 15,
+      "passed": 59,
+      "total": 59
+    },
+    {
+      "variant": 5,
+      "status": "passed",
+      "ui": 10,
+      "menu": 0,
+      "captures": 28,
+      "passed": 98,
+      "total": 98
+    },
+    {
+      "variant": 7,
+      "status": "passed",
+      "ui": 6,
+      "menu": 2,
+      "captures": 15,
+      "passed": 59,
+      "total": 59
+    },
+    {
+      "variant": 8,
+      "status": "passed",
+      "ui": 6,
+      "menu": 3,
+      "captures": 15,
+      "passed": 59,
+      "total": 59
+    },
+    {
+      "variant": 9,
+      "status": "passed",
+      "ui": 6,
+      "menu": 4,
+      "captures": 15,
+      "passed": 59,
+      "total": 59
+    },
+    {
+      "variant": 10,
+      "status": "passed",
+      "ui": 6,
+      "menu": 5,
+      "captures": 15,
+      "passed": 59,
+      "total": 59
+    },
+    {
+      "variant": 11,
+      "status": "passed",
+      "ui": 6,
+      "menu": 6,
+      "captures": 15,
+      "passed": 59,
+      "total": 59
+    },
+    {
+      "variant": 12,
+      "status": "passed",
+      "ui": 6,
+      "menu": 7,
+      "captures": 15,
+      "passed": 59,
+      "total": 59
+    },
+    {
+      "variant": 13,
+      "status": "passed",
+      "ui": 6,
+      "menu": 8,
+      "captures": 15,
+      "passed": 59,
+      "total": 59
+    },
+    {
+      "variant": 14,
+      "status": "passed",
+      "ui": 6,
+      "menu": 9,
+      "captures": 15,
+      "passed": 59,
+      "total": 59
+    },
+    {
+      "variant": 15,
+      "status": "passed",
+      "ui": 6,
+      "menu": 10,
+      "captures": 15,
+      "passed": 59,
+      "total": 59
+    }
+  ],
+  "quantized_gifs_not_for_publication": [
+    {
+      "ui": 6,
+      "menu": 0,
+      "capture": "death-return",
+      "colors": 320
+    },
+    {
+      "ui": 7,
+      "menu": 0,
+      "capture": "death-return",
+      "colors": 317
+    },
+    {
+      "ui": 8,
+      "menu": 0,
+      "capture": "death-return",
+      "colors": 311
+    },
+    {
+      "ui": 9,
+      "menu": 0,
+      "capture": "death-return",
+      "colors": 320
+    },
+    {
+      "ui": 10,
+      "menu": 0,
+      "capture": "death-return",
+      "colors": 317
+    }
+  ]
+}

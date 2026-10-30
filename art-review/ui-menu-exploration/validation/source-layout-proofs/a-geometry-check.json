@@ -1,0 +1,296 @@
+[
+  {
+    "layout": 1,
+    "name": "Loadout Workbench",
+    "native_bounds": [
+      240,
+      160
+    ],
+    "icon_size": 32,
+    "slots": [
+      [
+        8,
+        64
+      ],
+      [
+        40,
+        64
+      ],
+      [
+        72,
+        64
+      ],
+      [
+        104,
+        64
+      ],
+      [
+        8,
+        104
+      ],
+      [
+        40,
+        104
+      ],
+      [
+        72,
+        104
+      ]
+    ],
+    "panels": {
+      "detail": [
+        144,
+        64,
+        88,
+        80
+      ],
+      "equipment": [
+        8,
+        24,
+        128,
+        32
+      ],
+      "status": [
+        144,
+        24,
+        88,
+        32
+      ]
+    },
+    "bounds_alignment_no_overlap": true
+  },
+  {
+    "layout": 2,
+    "name": "Pocket Ledger",
+    "native_bounds": [
+      240,
+      160
+    ],
+    "icon_size": 16,
+    "slots": [
+      [
+        8,
+        24
+      ],
+      [
+        8,
+        40
+      ],
+      [
+        8,
+        56
+      ],
+      [
+        8,
+        72
+      ],
+      [
+        8,
+        88
+      ],
+      [
+        8,
+        104
+      ],
+      [
+        8,
+        120
+      ]
+    ],
+    "panels": {
+      "detail": [
+        144,
+        24,
+        88,
+        64
+      ],
+      "equipment": [
+        144,
+        96,
+        88,
+        24
+      ],
+      "status": [
+        144,
+        120,
+        88,
+        24
+      ]
+    },
+    "bounds_alignment_no_overlap": true
+  },
+  {
+    "layout": 3,
+    "name": "Fieldbook",
+    "native_bounds": [
+      240,
+      160
+    ],
+    "icon_size": 16,
+    "slots": [
+      [
+        16,
+        32
+      ],
+      [
+        64,
+        32
+      ],
+      [
+        16,
+        56
+      ],
+      [
+        64,
+        56
+      ],
+      [
+        16,
+        80
+      ],
+      [
+        64,
+        80
+      ],
+      [
+        16,
+        104
+      ]
+    ],
+    "panels": {
+      "detail": [
+        128,
+        24,
+        104,
+        88
+      ],
+      "equipment": [
+        8,
+        120,
+        104,
+        24
+      ],
+      "status": [
+        128,
+        120,
+        104,
+        24
+      ]
+    },
+    "bounds_alignment_no_overlap": true
+  },
+  {
+    "layout": 4,
+    "name": "Tactical Atlas",
+    "native_bounds": [
+      240,
+      160
+    ],
+    "icon_size": 16,
+    "slots": [
+      [
+        8,
+        24
+      ],
+      [
+        8,
+        40
+      ],
+      [
+        8,
+        56
+      ],
+      [
+        8,
+        72
+      ],
+      [
+        8,
+        88
+      ],
+      [
+        8,
+        104
+      ],
+      [
+        8,
+        120
+      ]
+    ],
+    "panels": {
+      "detail": [
+        48,
+        104,
+        184,
+        40
+      ],
+      "equipment": [
+        200,
+        24,
+        32,
+        80
+      ],
+      "preview": [
+        48,
+        32,
+        144,
+        64
+      ]
+    },
+    "bounds_alignment_no_overlap": true
+  },
+  {
+    "layout": 5,
+    "name": "Toolwheel",
+    "native_bounds": [
+      240,
+      160
+    ],
+    "icon_size": 32,
+    "slots": [
+      [
+        80,
+        24
+      ],
+      [
+        120,
+        32
+      ],
+      [
+        144,
+        72
+      ],
+      [
+        112,
+        112
+      ],
+      [
+        64,
+        112
+      ],
+      [
+        24,
+        72
+      ],
+      [
+        40,
+        32
+      ]
+    ],
+    "panels": {
+      "detail": [
+        64,
+        64,
+        72,
+        40
+      ],
+      "equipment": [
+        200,
+        32,
+        32,
+        112
+      ]
+    },
+    "bounds_alignment_no_overlap": true
+  }
+]

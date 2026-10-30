@@ -495,3 +495,37 @@ leaves room for its caption. Short wide cards show selected consumable quantity
 on the same title line, preserving concise action help. Compact fieldbook/grid
 icons intentionally trade illustration detail for open space; Workbench, Wheel
 and Ribbon offer larger native illustrations for comparison.
+
+**Final immutable evidence:** game/art source `d113d398692e9b98903e5d5a944ea3cadc2d6282`
+is frozen in sixteen ROMs: UI0/MENU0 baseline, five skins UI6–10/MENU0, and
+ten layouts UI6/MENU1–10. All 312 actual mGBA presentations pass 1,166/1,166
+runtime checks. The independent source/ROM decoder passes7,523/7,523 checks,
+including exact protected world/sprite/animation data and historical UI0–5.
+All 22 selected baseline framebuffers additionally match the previous final
+Drain output pixel for pixel. These are behavioral/preservation evidence,
+not aesthetic scores or human playtest results.
+
+The final native review verified short-card seed/arrow counts, distinct
+Gate/Relic markers, Twin Region/Chamber labels, complete eight-marker legends,
+Quick Ribbon caption clearance, counted-key wording, empty pages and fog.
+All ten layouts accept ordinary two-frame inputs, retain item/key/map focus,
+apply the canonical unique-item assignment rule, and restore room/HUD memory
+after close. The default ROM is restored byte-identical to this freeze's v0;
+its baseline screenshot behavior remains exact to the previous release.
+
+[The new gallery](../../../art-review/ui-menu-exploration/README.md) separates
+five visual skins on the existing layout from ten arrangements in one common
+skin. It includes actual item/key/map/chamber views, native PNGs, full-rate
+cut-labelled control clips, individual playable ROMs and the sixteen-ROM ZIP.
+Source geometry proofs are labelled separately. Five over-256-color
+death/return GIFs are omitted; exact PNGs and lossy MP4 viewing copies remain.
+Gallery assembly independently verifies 275 native crops/enlargements.
+
+**Selection status and limits:** all fifteen options remain exploratory;
+normal UI0/MENU0 is unchanged. The source-backed research yields usable design
+patterns, not reviewer ratings or imported Nintendo assets. Workbench emphasizes
+loadout, Twin Atlas navigation, Focus Cards learning and Quick Ribbon simple
+sequential reassignment. Compact 3/7 glyphs, wheel direction learning, long-row
+travel and cold terrain-map cost are explicit comparison tradeoffs. No automatic
+regional palette policy is adopted. Future work should combine user-selected
+geometry/palette/layout and then profile that chosen production path.

@@ -1,0 +1,253 @@
+{
+  "scope": "Native source and historical preservation, not actual emulator presentation.",
+  "source_sha256": "5f924a43aa53fb0403cf6f1e77fe6912263b3ca7d210f614a081c3839f577b5b",
+  "native_checks": {
+    "passed": 1221,
+    "total": 1221
+  },
+  "preservation_and_recipe_checks": [
+    {
+      "name": "old profile0 all exported UI pixels/palettes exact",
+      "passed": true
+    },
+    {
+      "name": "old profile1 all exported UI pixels/palettes exact",
+      "passed": true
+    },
+    {
+      "name": "old profile2 all exported UI pixels/palettes exact",
+      "passed": true
+    },
+    {
+      "name": "old profile3 all exported UI pixels/palettes exact",
+      "passed": true
+    },
+    {
+      "name": "old profile4 all exported UI pixels/palettes exact",
+      "passed": true
+    },
+    {
+      "name": "old profile5 all exported UI pixels/palettes exact",
+      "passed": true
+    },
+    {
+      "name": "profile6 requested palette4 exact",
+      "passed": true
+    },
+    {
+      "name": "profile6 all51IDs stable",
+      "passed": true
+    },
+    {
+      "name": "profile6 transparent health HUD drawings unchanged",
+      "passed": true
+    },
+    {
+      "name": "profile7 requested palette5 exact",
+      "passed": true
+    },
+    {
+      "name": "profile7 all51IDs stable",
+      "passed": true
+    },
+    {
+      "name": "profile7 transparent health HUD drawings unchanged",
+      "passed": true
+    },
+    {
+      "name": "profile8 requested palette1 exact",
+      "passed": true
+    },
+    {
+      "name": "profile8 all51IDs stable",
+      "passed": true
+    },
+    {
+      "name": "profile8 transparent health HUD drawings unchanged",
+      "passed": true
+    },
+    {
+      "name": "profile9 requested palette4 exact",
+      "passed": true
+    },
+    {
+      "name": "profile9 all51IDs stable",
+      "passed": true
+    },
+    {
+      "name": "profile9 transparent health HUD drawings unchanged",
+      "passed": true
+    },
+    {
+      "name": "profile10 requested palette5 exact",
+      "passed": true
+    },
+    {
+      "name": "profile10 all51IDs stable",
+      "passed": true
+    },
+    {
+      "name": "profile10 transparent health HUD drawings unchanged",
+      "passed": true
+    },
+    {
+      "name": "none material equipment glyph preserved",
+      "passed": true
+    },
+    {
+      "name": "bombs material equipment glyph preserved",
+      "passed": true
+    },
+    {
+      "name": "lamp material equipment glyph preserved",
+      "passed": true
+    },
+    {
+      "name": "cloak material equipment glyph preserved",
+      "passed": true
+    },
+    {
+      "name": "key material equipment glyph preserved",
+      "passed": true
+    },
+    {
+      "name": "heart_piece material equipment glyph preserved",
+      "passed": true
+    },
+    {
+      "name": "heart_container material equipment glyph preserved",
+      "passed": true
+    },
+    {
+      "name": "gilt_big material equipment glyph preserved",
+      "passed": true
+    },
+    {
+      "name": "relic material equipment glyph preserved",
+      "passed": true
+    },
+    {
+      "name": "gauntlet material equipment glyph preserved",
+      "passed": true
+    },
+    {
+      "name": "bow material equipment glyph preserved",
+      "passed": true
+    },
+    {
+      "name": "hubcap material equipment glyph preserved",
+      "passed": true
+    },
+    {
+      "name": "map material equipment glyph preserved",
+      "passed": true
+    },
+    {
+      "name": "astrolabe material equipment glyph preserved",
+      "passed": true
+    },
+    {
+      "name": "sword material equipment glyph preserved",
+      "passed": true
+    },
+    {
+      "name": "shield material equipment glyph preserved",
+      "passed": true
+    },
+    {
+      "name": "shield_upgraded material equipment glyph preserved",
+      "passed": true
+    },
+    {
+      "name": "five new indexed kit structures differ",
+      "passed": true
+    },
+    {
+      "name": "new structures differ from every historical kit",
+      "passed": true
+    }
+  ],
+  "old_profile_export_hashes": [
+    {
+      "profile": 0,
+      "expected_sha256": "daddfcca2570b47198753f40ffaf3f93ff524693a8c90fe2cc973dc99b9236bb",
+      "actual_sha256": "daddfcca2570b47198753f40ffaf3f93ff524693a8c90fe2cc973dc99b9236bb"
+    },
+    {
+      "profile": 1,
+      "expected_sha256": "680dba04ed5d7cffc5a499c3f199591bb7590ce8513de72ff110f817f25a3fd5",
+      "actual_sha256": "680dba04ed5d7cffc5a499c3f199591bb7590ce8513de72ff110f817f25a3fd5"
+    },
+    {
+      "profile": 2,
+      "expected_sha256": "e460eb78b2e6f74478b6bf516304812f870e1194c7538569692612aaaeb50256",
+      "actual_sha256": "e460eb78b2e6f74478b6bf516304812f870e1194c7538569692612aaaeb50256"
+    },
+    {
+      "profile": 3,
+      "expected_sha256": "94a554cef6a1bf47610f3bcf534f0aca85fd34de1b2e07cd983a123de937e5f8",
+      "actual_sha256": "94a554cef6a1bf47610f3bcf534f0aca85fd34de1b2e07cd983a123de937e5f8"
+    },
+    {
+      "profile": 4,
+      "expected_sha256": "90282b3da5ebddb5dfa7920b93ae42f5b6aea26afbe54f77208504c5426329e5",
+      "actual_sha256": "90282b3da5ebddb5dfa7920b93ae42f5b6aea26afbe54f77208504c5426329e5"
+    },
+    {
+      "profile": 5,
+      "expected_sha256": "1a271a23769b52b4fb4f07dee0893b73d7debf47c579c9409088b9f8a123de44",
+      "actual_sha256": "1a271a23769b52b4fb4f07dee0893b73d7debf47c579c9409088b9f8a123de44"
+    }
+  ],
+  "recipes": {
+    "6": {
+      "geometry": "winebound_folio",
+      "design_sources": [
+        2
+      ],
+      "palette": 4
+    },
+    "7": {
+      "geometry": "mossbound_fieldbook",
+      "design_sources": [
+        2,
+        5
+      ],
+      "palette": 5
+    },
+    "8": {
+      "geometry": "ivory_reliquary",
+      "design_sources": [
+        4
+      ],
+      "palette": 1
+    },
+    "9": {
+      "geometry": "burgundy_archivist",
+      "design_sources": [
+        4,
+        5
+      ],
+      "palette": 4
+    },
+    "10": {
+      "geometry": "verdigris_devotional",
+      "design_sources": [
+        2,
+        4,
+        5
+      ],
+      "palette": 5
+    }
+  },
+  "new_indexed_kit_sha256": {
+    "6": "65136db4495d3bd949e2b2b4b2fe5a26aebf9dc3cbf58dd3b82f5f2820b6f533",
+    "7": "6403b14ed92a5c252daab652019c2ad4343bc08ca7109839eefda3b6346547bd",
+    "8": "0777b5bb49d8e56673dbc333249afbabf7410aa3c4e5da95dad279fabe0868d3",
+    "9": "d9d033fd28813af8f1eb9c61218d4df6eab8e950f23c360222ef1dccccfe1395",
+    "10": "72cd6bd8194a21aed8902b1b4a9507be853ad1ddacbb8a27186d56ec8d05dede"
+  },
+  "font_metrics_unchanged": true,
+  "title_and_nonUI_assets_not_edited": true,
+  "controls": "Source preview uses A/B/L assign, R page, Start close; actual layouts will be shown through mGBA."
+}

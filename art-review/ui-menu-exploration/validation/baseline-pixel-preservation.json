@@ -1,0 +1,90 @@
+[
+  {
+    "image": "hud-sewer-max.png",
+    "exact": true
+  },
+  {
+    "image": "hud-ammo-0.png",
+    "exact": true
+  },
+  {
+    "image": "hud-ammo-9.png",
+    "exact": true
+  },
+  {
+    "image": "hud-ammo-99.png",
+    "exact": true
+  },
+  {
+    "image": "hud-ammo-255.png",
+    "exact": true
+  },
+  {
+    "image": "hud-non-ammo-equipment.png",
+    "exact": true
+  },
+  {
+    "image": "hud-empty-low.png",
+    "exact": true
+  },
+  {
+    "image": "hud-healthy.png",
+    "exact": true
+  },
+  {
+    "image": "hud-blighted.png",
+    "exact": true
+  },
+  {
+    "image": "hud-cave.png",
+    "exact": true
+  },
+  {
+    "image": "dialogue-wizard.png",
+    "exact": true
+  },
+  {
+    "image": "dialogue-wizard-page2.png",
+    "exact": true
+  },
+  {
+    "image": "shop.png",
+    "exact": true
+  },
+  {
+    "image": "shop-selected.png",
+    "exact": true
+  },
+  {
+    "image": "shop-purchase-response.png",
+    "exact": true
+  },
+  {
+    "image": "shop-unaffordable.png",
+    "exact": true
+  },
+  {
+    "image": "menu-items.png",
+    "exact": true
+  },
+  {
+    "image": "menu-equipped.png",
+    "exact": true
+  },
+  {
+    "image": "menu-key-items.png",
+    "exact": true
+  },
+  {
+    "image": "menu-map.png",
+    "exact": true
+  },
+  {
+    "image": "menu-map-zoom.png",
+    "exact": true
+  },
+  {
+    "image": "hud-after-equip.png",
+    "exact": true
+  }
+]

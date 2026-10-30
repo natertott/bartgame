@@ -1,0 +1,2983 @@
+{
+  "method": "Independent screenshot cropping compares each unmodified240x160 framebuffer against the comparison board;2x full-page enlargements match integer nearest-neighbour. Captions are outside game pixels.",
+  "checks": 275,
+  "passed": 275,
+  "failures": [],
+  "rows": [
+    {
+      "gallery": "skins/hud-sewer-max.png",
+      "source": "captures/v1/hud-sewer-max.png",
+      "crop": [
+        0,
+        24,
+        240,
+        184
+      ],
+      "exact": true
+    },
+    {
+      "gallery": "skins/hud-sewer-max.png",
+      "source": "captures/v2/hud-sewer-max.png",
+      "crop": [
+        240,
+        24,
+        480,
+        184
+      ],
+      "exact": true
+    },
+    {
+      "gallery": "skins/hud-sewer-max.png",
+      "source": "captures/v3/hud-sewer-max.png",
+      "crop": [
+        480,
+        24,
+        720,
+        184
+      ],
+      "exact": true
+    },
+    {
+      "gallery": "skins/hud-sewer-max.png",
+      "source": "captures/v4/hud-sewer-max.png",
+      "crop": [
+        720,
+        24,
+        960,
+        184
+      ],
+      "exact": true
+    },
+    {
+      "gallery": "skins/hud-sewer-max.png",
+      "source": "captures/v5/hud-sewer-max.png",
+      "crop": [
+        960,
+        24,
+        1200,
+        184
+      ],
+      "exact": true
+    },
+    {
+      "gallery": "skins/hud-ammo-99.png",
+      "source": "captures/v1/hud-ammo-99.png",
+      "crop": [
+        0,
+        24,
+        240,
+        184
+      ],
+      "exact": true
+    },
+    {
+      "gallery": "skins/hud-ammo-99.png",
+      "source": "captures/v2/hud-ammo-99.png",
+      "crop": [
+        240,
+        24,
+        480,
+        184
+      ],
+      "exact": true
+    },
+    {
+      "gallery": "skins/hud-ammo-99.png",
+      "source": "captures/v3/hud-ammo-99.png",
+      "crop": [
+        480,
+        24,
+        720,
+        184
+      ],
+      "exact": true
+    },
+    {
+      "gallery": "skins/hud-ammo-99.png",
+      "source": "captures/v4/hud-ammo-99.png",
+      "crop": [
+        720,
+        24,
+        960,
+        184
+      ],
+      "exact": true
+    },
+    {
+      "gallery": "skins/hud-ammo-99.png",
+      "source": "captures/v5/hud-ammo-99.png",
+      "crop": [
+        960,
+        24,
+        1200,
+        184
+      ],
+      "exact": true
+    },
+    {
+      "gallery": "skins/hud-healthy.png",
+      "source": "captures/v1/hud-healthy.png",
+      "crop": [
+        0,
+        24,
+        240,
+        184
+      ],
+      "exact": true
+    },
+    {
+      "gallery": "skins/hud-healthy.png",
+      "source": "captures/v2/hud-healthy.png",
+      "crop": [
+        240,
+        24,
+        480,
+        184
+      ],
+      "exact": true
+    },
+    {
+      "gallery": "skins/hud-healthy.png",
+      "source": "captures/v3/hud-healthy.png",
+      "crop": [
+        480,
+        24,
+        720,
+        184
+      ],
+      "exact": true
+    },
+    {
+      "gallery": "skins/hud-healthy.png",
+      "source": "captures/v4/hud-healthy.png",
+      "crop": [
+        720,
+        24,
+        960,
+        184
+      ],
+      "exact": true
+    },
+    {
+      "gallery": "skins/hud-healthy.png",
+      "source": "captures/v5/hud-healthy.png",
+      "crop": [
+        960,
+        24,
+        1200,
+        184
+      ],
+      "exact": true
+    },
+    {
+      "gallery": "skins/hud-blighted.png",
+      "source": "captures/v1/hud-blighted.png",
+      "crop": [
+        0,
+        24,
+        240,
+        184
+      ],
+      "exact": true
+    },
+    {
+      "gallery": "skins/hud-blighted.png",
+      "source": "captures/v2/hud-blighted.png",
+      "crop": [
+        240,
+        24,
+        480,
+        184
+      ],
+      "exact": true
+    },
+    {
+      "gallery": "skins/hud-blighted.png",
+      "source": "captures/v3/hud-blighted.png",
+      "crop": [
+        480,
+        24,
+        720,
+        184
+      ],
+      "exact": true
+    },
+    {
+      "gallery": "skins/hud-blighted.png",
+      "source": "captures/v4/hud-blighted.png",
+      "crop": [
+        720,
+        24,
+        960,
+        184
+      ],
+      "exact": true
+    },
+    {
+      "gallery": "skins/hud-blighted.png",
+      "source": "captures/v5/hud-blighted.png",
+      "crop": [
+        960,
+        24,
+        1200,
+        184
+      ],
+      "exact": true
+    },
+    {
+      "gallery": "skins/hud-cave.png",
+      "source": "captures/v1/hud-cave.png",
+      "crop": [
+        0,
+        24,
+        240,
+        184
+      ],
+      "exact": true
+    },
+    {
+      "gallery": "skins/hud-cave.png",
+      "source": "captures/v2/hud-cave.png",
+      "crop": [
+        240,
+        24,
+        480,
+        184
+      ],
+      "exact": true
+    },
+    {
+      "gallery": "skins/hud-cave.png",
+      "source": "captures/v3/hud-cave.png",
+      "crop": [
+        480,
+        24,
+        720,
+        184
+      ],
+      "exact": true
+    },
+    {
+      "gallery": "skins/hud-cave.png",
+      "source": "captures/v4/hud-cave.png",
+      "crop": [
+        720,
+        24,
+        960,
+        184
+      ],
+      "exact": true
+    },
+    {
+      "gallery": "skins/hud-cave.png",
+      "source": "captures/v5/hud-cave.png",
+      "crop": [
+        960,
+        24,
+        1200,
+        184
+      ],
+      "exact": true
+    },
+    {
+      "gallery": "skins/menu-items.png",
+      "source": "captures/v1/menu-items.png",
+      "crop": [
+        0,
+        24,
+        240,
+        184
+      ],
+      "exact": true
+    },
+    {
+      "gallery": "skins/menu-items.png",
+      "source": "captures/v2/menu-items.png",
+      "crop": [
+        240,
+        24,
+        480,
+        184
+      ],
+      "exact": true
+    },
+    {
+      "gallery": "skins/menu-items.png",
+      "source": "captures/v3/menu-items.png",
+      "crop": [
+        480,
+        24,
+        720,
+        184
+      ],
+      "exact": true
+    },
+    {
+      "gallery": "skins/menu-items.png",
+      "source": "captures/v4/menu-items.png",
+      "crop": [
+        720,
+        24,
+        960,
+        184
+      ],
+      "exact": true
+    },
+    {
+      "gallery": "skins/menu-items.png",
+      "source": "captures/v5/menu-items.png",
+      "crop": [
+        960,
+        24,
+        1200,
+        184
+      ],
+      "exact": true
+    },
+    {
+      "gallery": "skins/menu-key-items.png",
+      "source": "captures/v1/menu-key-items.png",
+      "crop": [
+        0,
+        24,
+        240,
+        184
+      ],
+      "exact": true
+    },
+    {
+      "gallery": "skins/menu-key-items.png",
+      "source": "captures/v2/menu-key-items.png",
+      "crop": [
+        240,
+        24,
+        480,
+        184
+      ],
+      "exact": true
+    },
+    {
+      "gallery": "skins/menu-key-items.png",
+      "source": "captures/v3/menu-key-items.png",
+      "crop": [
+        480,
+        24,
+        720,
+        184
+      ],
+      "exact": true
+    },
+    {
+      "gallery": "skins/menu-key-items.png",
+      "source": "captures/v4/menu-key-items.png",
+      "crop": [
+        720,
+        24,
+        960,
+        184
+      ],
+      "exact": true
+    },
+    {
+      "gallery": "skins/menu-key-items.png",
+      "source": "captures/v5/menu-key-items.png",
+      "crop": [
+        960,
+        24,
+        1200,
+        184
+      ],
+      "exact": true
+    },
+    {
+      "gallery": "skins/menu-map.png",
+      "source": "captures/v1/menu-map.png",
+      "crop": [
+        0,
+        24,
+        240,
+        184
+      ],
+      "exact": true
+    },
+    {
+      "gallery": "skins/menu-map.png",
+      "source": "captures/v2/menu-map.png",
+      "crop": [
+        240,
+        24,
+        480,
+        184
+      ],
+      "exact": true
+    },
+    {
+      "gallery": "skins/menu-map.png",
+      "source": "captures/v3/menu-map.png",
+      "crop": [
+        480,
+        24,
+        720,
+        184
+      ],
+      "exact": true
+    },
+    {
+      "gallery": "skins/menu-map.png",
+      "source": "captures/v4/menu-map.png",
+      "crop": [
+        720,
+        24,
+        960,
+        184
+      ],
+      "exact": true
+    },
+    {
+      "gallery": "skins/menu-map.png",
+      "source": "captures/v5/menu-map.png",
+      "crop": [
+        960,
+        24,
+        1200,
+        184
+      ],
+      "exact": true
+    },
+    {
+      "gallery": "skins/menu-map-zoom.png",
+      "source": "captures/v1/menu-map-zoom.png",
+      "crop": [
+        0,
+        24,
+        240,
+        184
+      ],
+      "exact": true
+    },
+    {
+      "gallery": "skins/menu-map-zoom.png",
+      "source": "captures/v2/menu-map-zoom.png",
+      "crop": [
+        240,
+        24,
+        480,
+        184
+      ],
+      "exact": true
+    },
+    {
+      "gallery": "skins/menu-map-zoom.png",
+      "source": "captures/v3/menu-map-zoom.png",
+      "crop": [
+        480,
+        24,
+        720,
+        184
+      ],
+      "exact": true
+    },
+    {
+      "gallery": "skins/menu-map-zoom.png",
+      "source": "captures/v4/menu-map-zoom.png",
+      "crop": [
+        720,
+        24,
+        960,
+        184
+      ],
+      "exact": true
+    },
+    {
+      "gallery": "skins/menu-map-zoom.png",
+      "source": "captures/v5/menu-map-zoom.png",
+      "crop": [
+        960,
+        24,
+        1200,
+        184
+      ],
+      "exact": true
+    },
+    {
+      "gallery": "skins/shop.png",
+      "source": "captures/v1/shop.png",
+      "crop": [
+        0,
+        24,
+        240,
+        184
+      ],
+      "exact": true
+    },
+    {
+      "gallery": "skins/shop.png",
+      "source": "captures/v2/shop.png",
+      "crop": [
+        240,
+        24,
+        480,
+        184
+      ],
+      "exact": true
+    },
+    {
+      "gallery": "skins/shop.png",
+      "source": "captures/v3/shop.png",
+      "crop": [
+        480,
+        24,
+        720,
+        184
+      ],
+      "exact": true
+    },
+    {
+      "gallery": "skins/shop.png",
+      "source": "captures/v4/shop.png",
+      "crop": [
+        720,
+        24,
+        960,
+        184
+      ],
+      "exact": true
+    },
+    {
+      "gallery": "skins/shop.png",
+      "source": "captures/v5/shop.png",
+      "crop": [
+        960,
+        24,
+        1200,
+        184
+      ],
+      "exact": true
+    },
+    {
+      "gallery": "skins/dialogue-wizard.png",
+      "source": "captures/v1/dialogue-wizard.png",
+      "crop": [
+        0,
+        24,
+        240,
+        184
+      ],
+      "exact": true
+    },
+    {
+      "gallery": "skins/dialogue-wizard.png",
+      "source": "captures/v2/dialogue-wizard.png",
+      "crop": [
+        240,
+        24,
+        480,
+        184
+      ],
+      "exact": true
+    },
+    {
+      "gallery": "skins/dialogue-wizard.png",
+      "source": "captures/v3/dialogue-wizard.png",
+      "crop": [
+        480,
+        24,
+        720,
+        184
+      ],
+      "exact": true
+    },
+    {
+      "gallery": "skins/dialogue-wizard.png",
+      "source": "captures/v4/dialogue-wizard.png",
+      "crop": [
+        720,
+        24,
+        960,
+        184
+      ],
+      "exact": true
+    },
+    {
+      "gallery": "skins/dialogue-wizard.png",
+      "source": "captures/v5/dialogue-wizard.png",
+      "crop": [
+        960,
+        24,
+        1200,
+        184
+      ],
+      "exact": true
+    },
+    {
+      "gallery": "skins/reward-chest.png",
+      "source": "captures/v1/reward-chest.png",
+      "crop": [
+        0,
+        24,
+        240,
+        184
+      ],
+      "exact": true
+    },
+    {
+      "gallery": "skins/reward-chest.png",
+      "source": "captures/v2/reward-chest.png",
+      "crop": [
+        240,
+        24,
+        480,
+        184
+      ],
+      "exact": true
+    },
+    {
+      "gallery": "skins/reward-chest.png",
+      "source": "captures/v3/reward-chest.png",
+      "crop": [
+        480,
+        24,
+        720,
+        184
+      ],
+      "exact": true
+    },
+    {
+      "gallery": "skins/reward-chest.png",
+      "source": "captures/v4/reward-chest.png",
+      "crop": [
+        720,
+        24,
+        960,
+        184
+      ],
+      "exact": true
+    },
+    {
+      "gallery": "skins/reward-chest.png",
+      "source": "captures/v5/reward-chest.png",
+      "crop": [
+        960,
+        24,
+        1200,
+        184
+      ],
+      "exact": true
+    },
+    {
+      "gallery": "skins/title-continue.png",
+      "source": "captures/v1/title-continue.png",
+      "crop": [
+        0,
+        24,
+        240,
+        184
+      ],
+      "exact": true
+    },
+    {
+      "gallery": "skins/title-continue.png",
+      "source": "captures/v2/title-continue.png",
+      "crop": [
+        240,
+        24,
+        480,
+        184
+      ],
+      "exact": true
+    },
+    {
+      "gallery": "skins/title-continue.png",
+      "source": "captures/v3/title-continue.png",
+      "crop": [
+        480,
+        24,
+        720,
+        184
+      ],
+      "exact": true
+    },
+    {
+      "gallery": "skins/title-continue.png",
+      "source": "captures/v4/title-continue.png",
+      "crop": [
+        720,
+        24,
+        960,
+        184
+      ],
+      "exact": true
+    },
+    {
+      "gallery": "skins/title-continue.png",
+      "source": "captures/v5/title-continue.png",
+      "crop": [
+        960,
+        24,
+        1200,
+        184
+      ],
+      "exact": true
+    },
+    {
+      "gallery": "skins/victory.png",
+      "source": "captures/v1/victory.png",
+      "crop": [
+        0,
+        24,
+        240,
+        184
+      ],
+      "exact": true
+    },
+    {
+      "gallery": "skins/victory.png",
+      "source": "captures/v2/victory.png",
+      "crop": [
+        240,
+        24,
+        480,
+        184
+      ],
+      "exact": true
+    },
+    {
+      "gallery": "skins/victory.png",
+      "source": "captures/v3/victory.png",
+      "crop": [
+        480,
+        24,
+        720,
+        184
+      ],
+      "exact": true
+    },
+    {
+      "gallery": "skins/victory.png",
+      "source": "captures/v4/victory.png",
+      "crop": [
+        720,
+        24,
+        960,
+        184
+      ],
+      "exact": true
+    },
+    {
+      "gallery": "skins/victory.png",
+      "source": "captures/v5/victory.png",
+      "crop": [
+        960,
+        24,
+        1200,
+        184
+      ],
+      "exact": true
+    },
+    {
+      "gallery": "layouts/layout-items.png",
+      "source": "captures/v6/layout-items.png",
+      "crop": [
+        0,
+        24,
+        240,
+        184
+      ],
+      "exact": true
+    },
+    {
+      "gallery": "layouts/layout-items.png",
+      "source": "captures/v7/layout-items.png",
+      "crop": [
+        240,
+        24,
+        480,
+        184
+      ],
+      "exact": true
+    },
+    {
+      "gallery": "layouts/layout-items.png",
+      "source": "captures/v8/layout-items.png",
+      "crop": [
+        480,
+        24,
+        720,
+        184
+      ],
+      "exact": true
+    },
+    {
+      "gallery": "layouts/layout-items.png",
+      "source": "captures/v9/layout-items.png",
+      "crop": [
+        720,
+        24,
+        960,
+        184
+      ],
+      "exact": true
+    },
+    {
+      "gallery": "layouts/layout-items.png",
+      "source": "captures/v10/layout-items.png",
+      "crop": [
+        960,
+        24,
+        1200,
+        184
+      ],
+      "exact": true
+    },
+    {
+      "gallery": "layouts/layout-items.png",
+      "source": "captures/v11/layout-items.png",
+      "crop": [
+        0,
+        210,
+        240,
+        370
+      ],
+      "exact": true
+    },
+    {
+      "gallery": "layouts/layout-items.png",
+      "source": "captures/v12/layout-items.png",
+      "crop": [
+        240,
+        210,
+        480,
+        370
+      ],
+      "exact": true
+    },
+    {
+      "gallery": "layouts/layout-items.png",
+      "source": "captures/v13/layout-items.png",
+      "crop": [
+        480,
+        210,
+        720,
+        370
+      ],
+      "exact": true
+    },
+    {
+      "gallery": "layouts/layout-items.png",
+      "source": "captures/v14/layout-items.png",
+      "crop": [
+        720,
+        210,
+        960,
+        370
+      ],
+      "exact": true
+    },
+    {
+      "gallery": "layouts/layout-items.png",
+      "source": "captures/v15/layout-items.png",
+      "crop": [
+        960,
+        210,
+        1200,
+        370
+      ],
+      "exact": true
+    },
+    {
+      "gallery": "layouts/layout-seeds.png",
+      "source": "captures/v6/layout-seeds.png",
+      "crop": [
+        0,
+        24,
+        240,
+        184
+      ],
+      "exact": true
+    },
+    {
+      "gallery": "layouts/layout-seeds.png",
+      "source": "captures/v7/layout-seeds.png",
+      "crop": [
+        240,
+        24,
+        480,
+        184
+      ],
+      "exact": true
+    },
+    {
+      "gallery": "layouts/layout-seeds.png",
+      "source": "captures/v8/layout-seeds.png",
+      "crop": [
+        480,
+        24,
+        720,
+        184
+      ],
+      "exact": true
+    },
+    {
+      "gallery": "layouts/layout-seeds.png",
+      "source": "captures/v9/layout-seeds.png",
+      "crop": [
+        720,
+        24,
+        960,
+        184
+      ],
+      "exact": true
+    },
+    {
+      "gallery": "layouts/layout-seeds.png",
+      "source": "captures/v10/layout-seeds.png",
+      "crop": [
+        960,
+        24,
+        1200,
+        184
+      ],
+      "exact": true
+    },
+    {
+      "gallery": "layouts/layout-seeds.png",
+      "source": "captures/v11/layout-seeds.png",
+      "crop": [
+        0,
+        210,
+        240,
+        370
+      ],
+      "exact": true
+    },
+    {
+      "gallery": "layouts/layout-seeds.png",
+      "source": "captures/v12/layout-seeds.png",
+      "crop": [
+        240,
+        210,
+        480,
+        370
+      ],
+      "exact": true
+    },
+    {
+      "gallery": "layouts/layout-seeds.png",
+      "source": "captures/v13/layout-seeds.png",
+      "crop": [
+        480,
+        210,
+        720,
+        370
+      ],
+      "exact": true
+    },
+    {
+      "gallery": "layouts/layout-seeds.png",
+      "source": "captures/v14/layout-seeds.png",
+      "crop": [
+        720,
+        210,
+        960,
+        370
+      ],
+      "exact": true
+    },
+    {
+      "gallery": "layouts/layout-seeds.png",
+      "source": "captures/v15/layout-seeds.png",
+      "crop": [
+        960,
+        210,
+        1200,
+        370
+      ],
+      "exact": true
+    },
+    {
+      "gallery": "layouts/layout-bow.png",
+      "source": "captures/v6/layout-bow.png",
+      "crop": [
+        0,
+        24,
+        240,
+        184
+      ],
+      "exact": true
+    },
+    {
+      "gallery": "layouts/layout-bow.png",
+      "source": "captures/v7/layout-bow.png",
+      "crop": [
+        240,
+        24,
+        480,
+        184
+      ],
+      "exact": true
+    },
+    {
+      "gallery": "layouts/layout-bow.png",
+      "source": "captures/v8/layout-bow.png",
+      "crop": [
+        480,
+        24,
+        720,
+        184
+      ],
+      "exact": true
+    },
+    {
+      "gallery": "layouts/layout-bow.png",
+      "source": "captures/v9/layout-bow.png",
+      "crop": [
+        720,
+        24,
+        960,
+        184
+      ],
+      "exact": true
+    },
+    {
+      "gallery": "layouts/layout-bow.png",
+      "source": "captures/v10/layout-bow.png",
+      "crop": [
+        960,
+        24,
+        1200,
+        184
+      ],
+      "exact": true
+    },
+    {
+      "gallery": "layouts/layout-bow.png",
+      "source": "captures/v11/layout-bow.png",
+      "crop": [
+        0,
+        210,
+        240,
+        370
+      ],
+      "exact": true
+    },
+    {
+      "gallery": "layouts/layout-bow.png",
+      "source": "captures/v12/layout-bow.png",
+      "crop": [
+        240,
+        210,
+        480,
+        370
+      ],
+      "exact": true
+    },
+    {
+      "gallery": "layouts/layout-bow.png",
+      "source": "captures/v13/layout-bow.png",
+      "crop": [
+        480,
+        210,
+        720,
+        370
+      ],
+      "exact": true
+    },
+    {
+      "gallery": "layouts/layout-bow.png",
+      "source": "captures/v14/layout-bow.png",
+      "crop": [
+        720,
+        210,
+        960,
+        370
+      ],
+      "exact": true
+    },
+    {
+      "gallery": "layouts/layout-bow.png",
+      "source": "captures/v15/layout-bow.png",
+      "crop": [
+        960,
+        210,
+        1200,
+        370
+      ],
+      "exact": true
+    },
+    {
+      "gallery": "layouts/layout-assigned.png",
+      "source": "captures/v6/layout-assigned.png",
+      "crop": [
+        0,
+        24,
+        240,
+        184
+      ],
+      "exact": true
+    },
+    {
+      "gallery": "layouts/layout-assigned.png",
+      "source": "captures/v7/layout-assigned.png",
+      "crop": [
+        240,
+        24,
+        480,
+        184
+      ],
+      "exact": true
+    },
+    {
+      "gallery": "layouts/layout-assigned.png",
+      "source": "captures/v8/layout-assigned.png",
+      "crop": [
+        480,
+        24,
+        720,
+        184
+      ],
+      "exact": true
+    },
+    {
+      "gallery": "layouts/layout-assigned.png",
+      "source": "captures/v9/layout-assigned.png",
+      "crop": [
+        720,
+        24,
+        960,
+        184
+      ],
+      "exact": true
+    },
+    {
+      "gallery": "layouts/layout-assigned.png",
+      "source": "captures/v10/layout-assigned.png",
+      "crop": [
+        960,
+        24,
+        1200,
+        184
+      ],
+      "exact": true
+    },
+    {
+      "gallery": "layouts/layout-assigned.png",
+      "source": "captures/v11/layout-assigned.png",
+      "crop": [
+        0,
+        210,
+        240,
+        370
+      ],
+      "exact": true
+    },
+    {
+      "gallery": "layouts/layout-assigned.png",
+      "source": "captures/v12/layout-assigned.png",
+      "crop": [
+        240,
+        210,
+        480,
+        370
+      ],
+      "exact": true
+    },
+    {
+      "gallery": "layouts/layout-assigned.png",
+      "source": "captures/v13/layout-assigned.png",
+      "crop": [
+        480,
+        210,
+        720,
+        370
+      ],
+      "exact": true
+    },
+    {
+      "gallery": "layouts/layout-assigned.png",
+      "source": "captures/v14/layout-assigned.png",
+      "crop": [
+        720,
+        210,
+        960,
+        370
+      ],
+      "exact": true
+    },
+    {
+      "gallery": "layouts/layout-assigned.png",
+      "source": "captures/v15/layout-assigned.png",
+      "crop": [
+        960,
+        210,
+        1200,
+        370
+      ],
+      "exact": true
+    },
+    {
+      "gallery": "layouts/layout-key-items.png",
+      "source": "captures/v6/layout-key-items.png",
+      "crop": [
+        0,
+        24,
+        240,
+        184
+      ],
+      "exact": true
+    },
+    {
+      "gallery": "layouts/layout-key-items.png",
+      "source": "captures/v7/layout-key-items.png",
+      "crop": [
+        240,
+        24,
+        480,
+        184
+      ],
+      "exact": true
+    },
+    {
+      "gallery": "layouts/layout-key-items.png",
+      "source": "captures/v8/layout-key-items.png",
+      "crop": [
+        480,
+        24,
+        720,
+        184
+      ],
+      "exact": true
+    },
+    {
+      "gallery": "layouts/layout-key-items.png",
+      "source": "captures/v9/layout-key-items.png",
+      "crop": [
+        720,
+        24,
+        960,
+        184
+      ],
+      "exact": true
+    },
+    {
+      "gallery": "layouts/layout-key-items.png",
+      "source": "captures/v10/layout-key-items.png",
+      "crop": [
+        960,
+        24,
+        1200,
+        184
+      ],
+      "exact": true
+    },
+    {
+      "gallery": "layouts/layout-key-items.png",
+      "source": "captures/v11/layout-key-items.png",
+      "crop": [
+        0,
+        210,
+        240,
+        370
+      ],
+      "exact": true
+    },
+    {
+      "gallery": "layouts/layout-key-items.png",
+      "source": "captures/v12/layout-key-items.png",
+      "crop": [
+        240,
+        210,
+        480,
+        370
+      ],
+      "exact": true
+    },
+    {
+      "gallery": "layouts/layout-key-items.png",
+      "source": "captures/v13/layout-key-items.png",
+      "crop": [
+        480,
+        210,
+        720,
+        370
+      ],
+      "exact": true
+    },
+    {
+      "gallery": "layouts/layout-key-items.png",
+      "source": "captures/v14/layout-key-items.png",
+      "crop": [
+        720,
+        210,
+        960,
+        370
+      ],
+      "exact": true
+    },
+    {
+      "gallery": "layouts/layout-key-items.png",
+      "source": "captures/v15/layout-key-items.png",
+      "crop": [
+        960,
+        210,
+        1200,
+        370
+      ],
+      "exact": true
+    },
+    {
+      "gallery": "layouts/layout-map.png",
+      "source": "captures/v6/layout-map.png",
+      "crop": [
+        0,
+        24,
+        240,
+        184
+      ],
+      "exact": true
+    },
+    {
+      "gallery": "layouts/layout-map.png",
+      "source": "captures/v7/layout-map.png",
+      "crop": [
+        240,
+        24,
+        480,
+        184
+      ],
+      "exact": true
+    },
+    {
+      "gallery": "layouts/layout-map.png",
+      "source": "captures/v8/layout-map.png",
+      "crop": [
+        480,
+        24,
+        720,
+        184
+      ],
+      "exact": true
+    },
+    {
+      "gallery": "layouts/layout-map.png",
+      "source": "captures/v9/layout-map.png",
+      "crop": [
+        720,
+        24,
+        960,
+        184
+      ],
+      "exact": true
+    },
+    {
+      "gallery": "layouts/layout-map.png",
+      "source": "captures/v10/layout-map.png",
+      "crop": [
+        960,
+        24,
+        1200,
+        184
+      ],
+      "exact": true
+    },
+    {
+      "gallery": "layouts/layout-map.png",
+      "source": "captures/v11/layout-map.png",
+      "crop": [
+        0,
+        210,
+        240,
+        370
+      ],
+      "exact": true
+    },
+    {
+      "gallery": "layouts/layout-map.png",
+      "source": "captures/v12/layout-map.png",
+      "crop": [
+        240,
+        210,
+        480,
+        370
+      ],
+      "exact": true
+    },
+    {
+      "gallery": "layouts/layout-map.png",
+      "source": "captures/v13/layout-map.png",
+      "crop": [
+        480,
+        210,
+        720,
+        370
+      ],
+      "exact": true
+    },
+    {
+      "gallery": "layouts/layout-map.png",
+      "source": "captures/v14/layout-map.png",
+      "crop": [
+        720,
+        210,
+        960,
+        370
+      ],
+      "exact": true
+    },
+    {
+      "gallery": "layouts/layout-map.png",
+      "source": "captures/v15/layout-map.png",
+      "crop": [
+        960,
+        210,
+        1200,
+        370
+      ],
+      "exact": true
+    },
+    {
+      "gallery": "layouts/layout-zoom-map.png",
+      "source": "captures/v6/layout-zoom-map.png",
+      "crop": [
+        0,
+        24,
+        240,
+        184
+      ],
+      "exact": true
+    },
+    {
+      "gallery": "layouts/layout-zoom-map.png",
+      "source": "captures/v7/layout-zoom-map.png",
+      "crop": [
+        240,
+        24,
+        480,
+        184
+      ],
+      "exact": true
+    },
+    {
+      "gallery": "layouts/layout-zoom-map.png",
+      "source": "captures/v8/layout-zoom-map.png",
+      "crop": [
+        480,
+        24,
+        720,
+        184
+      ],
+      "exact": true
+    },
+    {
+      "gallery": "layouts/layout-zoom-map.png",
+      "source": "captures/v9/layout-zoom-map.png",
+      "crop": [
+        720,
+        24,
+        960,
+        184
+      ],
+      "exact": true
+    },
+    {
+      "gallery": "layouts/layout-zoom-map.png",
+      "source": "captures/v10/layout-zoom-map.png",
+      "crop": [
+        960,
+        24,
+        1200,
+        184
+      ],
+      "exact": true
+    },
+    {
+      "gallery": "layouts/layout-zoom-map.png",
+      "source": "captures/v11/layout-zoom-map.png",
+      "crop": [
+        0,
+        210,
+        240,
+        370
+      ],
+      "exact": true
+    },
+    {
+      "gallery": "layouts/layout-zoom-map.png",
+      "source": "captures/v12/layout-zoom-map.png",
+      "crop": [
+        240,
+        210,
+        480,
+        370
+      ],
+      "exact": true
+    },
+    {
+      "gallery": "layouts/layout-zoom-map.png",
+      "source": "captures/v13/layout-zoom-map.png",
+      "crop": [
+        480,
+        210,
+        720,
+        370
+      ],
+      "exact": true
+    },
+    {
+      "gallery": "layouts/layout-zoom-map.png",
+      "source": "captures/v14/layout-zoom-map.png",
+      "crop": [
+        720,
+        210,
+        960,
+        370
+      ],
+      "exact": true
+    },
+    {
+      "gallery": "layouts/layout-zoom-map.png",
+      "source": "captures/v15/layout-zoom-map.png",
+      "crop": [
+        960,
+        210,
+        1200,
+        370
+      ],
+      "exact": true
+    },
+    {
+      "gallery": "layouts/layout-focus-return.png",
+      "source": "captures/v6/layout-focus-return.png",
+      "crop": [
+        0,
+        24,
+        240,
+        184
+      ],
+      "exact": true
+    },
+    {
+      "gallery": "layouts/layout-focus-return.png",
+      "source": "captures/v7/layout-focus-return.png",
+      "crop": [
+        240,
+        24,
+        480,
+        184
+      ],
+      "exact": true
+    },
+    {
+      "gallery": "layouts/layout-focus-return.png",
+      "source": "captures/v8/layout-focus-return.png",
+      "crop": [
+        480,
+        24,
+        720,
+        184
+      ],
+      "exact": true
+    },
+    {
+      "gallery": "layouts/layout-focus-return.png",
+      "source": "captures/v9/layout-focus-return.png",
+      "crop": [
+        720,
+        24,
+        960,
+        184
+      ],
+      "exact": true
+    },
+    {
+      "gallery": "layouts/layout-focus-return.png",
+      "source": "captures/v10/layout-focus-return.png",
+      "crop": [
+        960,
+        24,
+        1200,
+        184
+      ],
+      "exact": true
+    },
+    {
+      "gallery": "layouts/layout-focus-return.png",
+      "source": "captures/v11/layout-focus-return.png",
+      "crop": [
+        0,
+        210,
+        240,
+        370
+      ],
+      "exact": true
+    },
+    {
+      "gallery": "layouts/layout-focus-return.png",
+      "source": "captures/v12/layout-focus-return.png",
+      "crop": [
+        240,
+        210,
+        480,
+        370
+      ],
+      "exact": true
+    },
+    {
+      "gallery": "layouts/layout-focus-return.png",
+      "source": "captures/v13/layout-focus-return.png",
+      "crop": [
+        480,
+        210,
+        720,
+        370
+      ],
+      "exact": true
+    },
+    {
+      "gallery": "layouts/layout-focus-return.png",
+      "source": "captures/v14/layout-focus-return.png",
+      "crop": [
+        720,
+        210,
+        960,
+        370
+      ],
+      "exact": true
+    },
+    {
+      "gallery": "layouts/layout-focus-return.png",
+      "source": "captures/v15/layout-focus-return.png",
+      "crop": [
+        960,
+        210,
+        1200,
+        370
+      ],
+      "exact": true
+    },
+    {
+      "gallery": "layouts/layout-empty-items.png",
+      "source": "captures/v6/layout-empty-items.png",
+      "crop": [
+        0,
+        24,
+        240,
+        184
+      ],
+      "exact": true
+    },
+    {
+      "gallery": "layouts/layout-empty-items.png",
+      "source": "captures/v7/layout-empty-items.png",
+      "crop": [
+        240,
+        24,
+        480,
+        184
+      ],
+      "exact": true
+    },
+    {
+      "gallery": "layouts/layout-empty-items.png",
+      "source": "captures/v8/layout-empty-items.png",
+      "crop": [
+        480,
+        24,
+        720,
+        184
+      ],
+      "exact": true
+    },
+    {
+      "gallery": "layouts/layout-empty-items.png",
+      "source": "captures/v9/layout-empty-items.png",
+      "crop": [
+        720,
+        24,
+        960,
+        184
+      ],
+      "exact": true
+    },
+    {
+      "gallery": "layouts/layout-empty-items.png",
+      "source": "captures/v10/layout-empty-items.png",
+      "crop": [
+        960,
+        24,
+        1200,
+        184
+      ],
+      "exact": true
+    },
+    {
+      "gallery": "layouts/layout-empty-items.png",
+      "source": "captures/v11/layout-empty-items.png",
+      "crop": [
+        0,
+        210,
+        240,
+        370
+      ],
+      "exact": true
+    },
+    {
+      "gallery": "layouts/layout-empty-items.png",
+      "source": "captures/v12/layout-empty-items.png",
+      "crop": [
+        240,
+        210,
+        480,
+        370
+      ],
+      "exact": true
+    },
+    {
+      "gallery": "layouts/layout-empty-items.png",
+      "source": "captures/v13/layout-empty-items.png",
+      "crop": [
+        480,
+        210,
+        720,
+        370
+      ],
+      "exact": true
+    },
+    {
+      "gallery": "layouts/layout-empty-items.png",
+      "source": "captures/v14/layout-empty-items.png",
+      "crop": [
+        720,
+        210,
+        960,
+        370
+      ],
+      "exact": true
+    },
+    {
+      "gallery": "layouts/layout-empty-items.png",
+      "source": "captures/v15/layout-empty-items.png",
+      "crop": [
+        960,
+        210,
+        1200,
+        370
+      ],
+      "exact": true
+    },
+    {
+      "gallery": "layouts/layout-empty-key-items.png",
+      "source": "captures/v6/layout-empty-key-items.png",
+      "crop": [
+        0,
+        24,
+        240,
+        184
+      ],
+      "exact": true
+    },
+    {
+      "gallery": "layouts/layout-empty-key-items.png",
+      "source": "captures/v7/layout-empty-key-items.png",
+      "crop": [
+        240,
+        24,
+        480,
+        184
+      ],
+      "exact": true
+    },
+    {
+      "gallery": "layouts/layout-empty-key-items.png",
+      "source": "captures/v8/layout-empty-key-items.png",
+      "crop": [
+        480,
+        24,
+        720,
+        184
+      ],
+      "exact": true
+    },
+    {
+      "gallery": "layouts/layout-empty-key-items.png",
+      "source": "captures/v9/layout-empty-key-items.png",
+      "crop": [
+        720,
+        24,
+        960,
+        184
+      ],
+      "exact": true
+    },
+    {
+      "gallery": "layouts/layout-empty-key-items.png",
+      "source": "captures/v10/layout-empty-key-items.png",
+      "crop": [
+        960,
+        24,
+        1200,
+        184
+      ],
+      "exact": true
+    },
+    {
+      "gallery": "layouts/layout-empty-key-items.png",
+      "source": "captures/v11/layout-empty-key-items.png",
+      "crop": [
+        0,
+        210,
+        240,
+        370
+      ],
+      "exact": true
+    },
+    {
+      "gallery": "layouts/layout-empty-key-items.png",
+      "source": "captures/v12/layout-empty-key-items.png",
+      "crop": [
+        240,
+        210,
+        480,
+        370
+      ],
+      "exact": true
+    },
+    {
+      "gallery": "layouts/layout-empty-key-items.png",
+      "source": "captures/v13/layout-empty-key-items.png",
+      "crop": [
+        480,
+        210,
+        720,
+        370
+      ],
+      "exact": true
+    },
+    {
+      "gallery": "layouts/layout-empty-key-items.png",
+      "source": "captures/v14/layout-empty-key-items.png",
+      "crop": [
+        720,
+        210,
+        960,
+        370
+      ],
+      "exact": true
+    },
+    {
+      "gallery": "layouts/layout-empty-key-items.png",
+      "source": "captures/v15/layout-empty-key-items.png",
+      "crop": [
+        960,
+        210,
+        1200,
+        370
+      ],
+      "exact": true
+    },
+    {
+      "gallery": "layouts/layout-fog-map.png",
+      "source": "captures/v6/layout-fog-map.png",
+      "crop": [
+        0,
+        24,
+        240,
+        184
+      ],
+      "exact": true
+    },
+    {
+      "gallery": "layouts/layout-fog-map.png",
+      "source": "captures/v7/layout-fog-map.png",
+      "crop": [
+        240,
+        24,
+        480,
+        184
+      ],
+      "exact": true
+    },
+    {
+      "gallery": "layouts/layout-fog-map.png",
+      "source": "captures/v8/layout-fog-map.png",
+      "crop": [
+        480,
+        24,
+        720,
+        184
+      ],
+      "exact": true
+    },
+    {
+      "gallery": "layouts/layout-fog-map.png",
+      "source": "captures/v9/layout-fog-map.png",
+      "crop": [
+        720,
+        24,
+        960,
+        184
+      ],
+      "exact": true
+    },
+    {
+      "gallery": "layouts/layout-fog-map.png",
+      "source": "captures/v10/layout-fog-map.png",
+      "crop": [
+        960,
+        24,
+        1200,
+        184
+      ],
+      "exact": true
+    },
+    {
+      "gallery": "layouts/layout-fog-map.png",
+      "source": "captures/v11/layout-fog-map.png",
+      "crop": [
+        0,
+        210,
+        240,
+        370
+      ],
+      "exact": true
+    },
+    {
+      "gallery": "layouts/layout-fog-map.png",
+      "source": "captures/v12/layout-fog-map.png",
+      "crop": [
+        240,
+        210,
+        480,
+        370
+      ],
+      "exact": true
+    },
+    {
+      "gallery": "layouts/layout-fog-map.png",
+      "source": "captures/v13/layout-fog-map.png",
+      "crop": [
+        480,
+        210,
+        720,
+        370
+      ],
+      "exact": true
+    },
+    {
+      "gallery": "layouts/layout-fog-map.png",
+      "source": "captures/v14/layout-fog-map.png",
+      "crop": [
+        720,
+        210,
+        960,
+        370
+      ],
+      "exact": true
+    },
+    {
+      "gallery": "layouts/layout-fog-map.png",
+      "source": "captures/v15/layout-fog-map.png",
+      "crop": [
+        960,
+        210,
+        1200,
+        370
+      ],
+      "exact": true
+    },
+    {
+      "gallery": "layouts/layout-fog-zoom.png",
+      "source": "captures/v6/layout-fog-zoom.png",
+      "crop": [
+        0,
+        24,
+        240,
+        184
+      ],
+      "exact": true
+    },
+    {
+      "gallery": "layouts/layout-fog-zoom.png",
+      "source": "captures/v7/layout-fog-zoom.png",
+      "crop": [
+        240,
+        24,
+        480,
+        184
+      ],
+      "exact": true
+    },
+    {
+      "gallery": "layouts/layout-fog-zoom.png",
+      "source": "captures/v8/layout-fog-zoom.png",
+      "crop": [
+        480,
+        24,
+        720,
+        184
+      ],
+      "exact": true
+    },
+    {
+      "gallery": "layouts/layout-fog-zoom.png",
+      "source": "captures/v9/layout-fog-zoom.png",
+      "crop": [
+        720,
+        24,
+        960,
+        184
+      ],
+      "exact": true
+    },
+    {
+      "gallery": "layouts/layout-fog-zoom.png",
+      "source": "captures/v10/layout-fog-zoom.png",
+      "crop": [
+        960,
+        24,
+        1200,
+        184
+      ],
+      "exact": true
+    },
+    {
+      "gallery": "layouts/layout-fog-zoom.png",
+      "source": "captures/v11/layout-fog-zoom.png",
+      "crop": [
+        0,
+        210,
+        240,
+        370
+      ],
+      "exact": true
+    },
+    {
+      "gallery": "layouts/layout-fog-zoom.png",
+      "source": "captures/v12/layout-fog-zoom.png",
+      "crop": [
+        240,
+        210,
+        480,
+        370
+      ],
+      "exact": true
+    },
+    {
+      "gallery": "layouts/layout-fog-zoom.png",
+      "source": "captures/v13/layout-fog-zoom.png",
+      "crop": [
+        480,
+        210,
+        720,
+        370
+      ],
+      "exact": true
+    },
+    {
+      "gallery": "layouts/layout-fog-zoom.png",
+      "source": "captures/v14/layout-fog-zoom.png",
+      "crop": [
+        720,
+        210,
+        960,
+        370
+      ],
+      "exact": true
+    },
+    {
+      "gallery": "layouts/layout-fog-zoom.png",
+      "source": "captures/v15/layout-fog-zoom.png",
+      "crop": [
+        960,
+        210,
+        1200,
+        370
+      ],
+      "exact": true
+    },
+    {
+      "gallery": "layouts/layout-hud-return.png",
+      "source": "captures/v6/layout-hud-return.png",
+      "crop": [
+        0,
+        24,
+        240,
+        184
+      ],
+      "exact": true
+    },
+    {
+      "gallery": "layouts/layout-hud-return.png",
+      "source": "captures/v7/layout-hud-return.png",
+      "crop": [
+        240,
+        24,
+        480,
+        184
+      ],
+      "exact": true
+    },
+    {
+      "gallery": "layouts/layout-hud-return.png",
+      "source": "captures/v8/layout-hud-return.png",
+      "crop": [
+        480,
+        24,
+        720,
+        184
+      ],
+      "exact": true
+    },
+    {
+      "gallery": "layouts/layout-hud-return.png",
+      "source": "captures/v9/layout-hud-return.png",
+      "crop": [
+        720,
+        24,
+        960,
+        184
+      ],
+      "exact": true
+    },
+    {
+      "gallery": "layouts/layout-hud-return.png",
+      "source": "captures/v10/layout-hud-return.png",
+      "crop": [
+        960,
+        24,
+        1200,
+        184
+      ],
+      "exact": true
+    },
+    {
+      "gallery": "layouts/layout-hud-return.png",
+      "source": "captures/v11/layout-hud-return.png",
+      "crop": [
+        0,
+        210,
+        240,
+        370
+      ],
+      "exact": true
+    },
+    {
+      "gallery": "layouts/layout-hud-return.png",
+      "source": "captures/v12/layout-hud-return.png",
+      "crop": [
+        240,
+        210,
+        480,
+        370
+      ],
+      "exact": true
+    },
+    {
+      "gallery": "layouts/layout-hud-return.png",
+      "source": "captures/v13/layout-hud-return.png",
+      "crop": [
+        480,
+        210,
+        720,
+        370
+      ],
+      "exact": true
+    },
+    {
+      "gallery": "layouts/layout-hud-return.png",
+      "source": "captures/v14/layout-hud-return.png",
+      "crop": [
+        720,
+        210,
+        960,
+        370
+      ],
+      "exact": true
+    },
+    {
+      "gallery": "layouts/layout-hud-return.png",
+      "source": "captures/v15/layout-hud-return.png",
+      "crop": [
+        960,
+        210,
+        1200,
+        370
+      ],
+      "exact": true
+    },
+    {
+      "gallery": "five-skin-overview.png",
+      "source": "captures/v1/hud-sewer-max.png",
+      "crop": [
+        0,
+        24,
+        240,
+        184
+      ],
+      "exact": true
+    },
+    {
+      "gallery": "five-skin-overview.png",
+      "source": "captures/v2/hud-sewer-max.png",
+      "crop": [
+        240,
+        24,
+        480,
+        184
+      ],
+      "exact": true
+    },
+    {
+      "gallery": "five-skin-overview.png",
+      "source": "captures/v3/hud-sewer-max.png",
+      "crop": [
+        480,
+        24,
+        720,
+        184
+      ],
+      "exact": true
+    },
+    {
+      "gallery": "five-skin-overview.png",
+      "source": "captures/v4/hud-sewer-max.png",
+      "crop": [
+        720,
+        24,
+        960,
+        184
+      ],
+      "exact": true
+    },
+    {
+      "gallery": "five-skin-overview.png",
+      "source": "captures/v5/hud-sewer-max.png",
+      "crop": [
+        960,
+        24,
+        1200,
+        184
+      ],
+      "exact": true
+    },
+    {
+      "gallery": "five-skin-overview.png",
+      "source": "captures/v1/menu-items.png",
+      "crop": [
+        0,
+        210,
+        240,
+        370
+      ],
+      "exact": true
+    },
+    {
+      "gallery": "five-skin-overview.png",
+      "source": "captures/v2/menu-items.png",
+      "crop": [
+        240,
+        210,
+        480,
+        370
+      ],
+      "exact": true
+    },
+    {
+      "gallery": "five-skin-overview.png",
+      "source": "captures/v3/menu-items.png",
+      "crop": [
+        480,
+        210,
+        720,
+        370
+      ],
+      "exact": true
+    },
+    {
+      "gallery": "five-skin-overview.png",
+      "source": "captures/v4/menu-items.png",
+      "crop": [
+        720,
+        210,
+        960,
+        370
+      ],
+      "exact": true
+    },
+    {
+      "gallery": "five-skin-overview.png",
+      "source": "captures/v5/menu-items.png",
+      "crop": [
+        960,
+        210,
+        1200,
+        370
+      ],
+      "exact": true
+    },
+    {
+      "gallery": "five-skin-overview.png",
+      "source": "captures/v1/menu-key-items.png",
+      "crop": [
+        0,
+        396,
+        240,
+        556
+      ],
+      "exact": true
+    },
+    {
+      "gallery": "five-skin-overview.png",
+      "source": "captures/v2/menu-key-items.png",
+      "crop": [
+        240,
+        396,
+        480,
+        556
+      ],
+      "exact": true
+    },
+    {
+      "gallery": "five-skin-overview.png",
+      "source": "captures/v3/menu-key-items.png",
+      "crop": [
+        480,
+        396,
+        720,
+        556
+      ],
+      "exact": true
+    },
+    {
+      "gallery": "five-skin-overview.png",
+      "source": "captures/v4/menu-key-items.png",
+      "crop": [
+        720,
+        396,
+        960,
+        556
+      ],
+      "exact": true
+    },
+    {
+      "gallery": "five-skin-overview.png",
+      "source": "captures/v5/menu-key-items.png",
+      "crop": [
+        960,
+        396,
+        1200,
+        556
+      ],
+      "exact": true
+    },
+    {
+      "gallery": "five-skin-overview.png",
+      "source": "captures/v1/shop.png",
+      "crop": [
+        0,
+        582,
+        240,
+        742
+      ],
+      "exact": true
+    },
+    {
+      "gallery": "five-skin-overview.png",
+      "source": "captures/v2/shop.png",
+      "crop": [
+        240,
+        582,
+        480,
+        742
+      ],
+      "exact": true
+    },
+    {
+      "gallery": "five-skin-overview.png",
+      "source": "captures/v3/shop.png",
+      "crop": [
+        480,
+        582,
+        720,
+        742
+      ],
+      "exact": true
+    },
+    {
+      "gallery": "five-skin-overview.png",
+      "source": "captures/v4/shop.png",
+      "crop": [
+        720,
+        582,
+        960,
+        742
+      ],
+      "exact": true
+    },
+    {
+      "gallery": "five-skin-overview.png",
+      "source": "captures/v5/shop.png",
+      "crop": [
+        960,
+        582,
+        1200,
+        742
+      ],
+      "exact": true
+    },
+    {
+      "gallery": "five-skin-overview.png",
+      "source": "captures/v1/dialogue-wizard.png",
+      "crop": [
+        0,
+        768,
+        240,
+        928
+      ],
+      "exact": true
+    },
+    {
+      "gallery": "five-skin-overview.png",
+      "source": "captures/v2/dialogue-wizard.png",
+      "crop": [
+        240,
+        768,
+        480,
+        928
+      ],
+      "exact": true
+    },
+    {
+      "gallery": "five-skin-overview.png",
+      "source": "captures/v3/dialogue-wizard.png",
+      "crop": [
+        480,
+        768,
+        720,
+        928
+      ],
+      "exact": true
+    },
+    {
+      "gallery": "five-skin-overview.png",
+      "source": "captures/v4/dialogue-wizard.png",
+      "crop": [
+        720,
+        768,
+        960,
+        928
+      ],
+      "exact": true
+    },
+    {
+      "gallery": "five-skin-overview.png",
+      "source": "captures/v5/dialogue-wizard.png",
+      "crop": [
+        960,
+        768,
+        1200,
+        928
+      ],
+      "exact": true
+    },
+    {
+      "gallery": "layouts/layout-01-four-pages.png",
+      "source": "captures/v6/layout-items.png",
+      "crop": [
+        0,
+        24,
+        240,
+        184
+      ],
+      "exact": true
+    },
+    {
+      "gallery": "layouts/layout-01-four-pages.png",
+      "source": "captures/v6/layout-key-items.png",
+      "crop": [
+        240,
+        24,
+        480,
+        184
+      ],
+      "exact": true
+    },
+    {
+      "gallery": "layouts/layout-01-four-pages.png",
+      "source": "captures/v6/layout-map.png",
+      "crop": [
+        0,
+        210,
+        240,
+        370
+      ],
+      "exact": true
+    },
+    {
+      "gallery": "layouts/layout-01-four-pages.png",
+      "source": "captures/v6/layout-zoom-map.png",
+      "crop": [
+        240,
+        210,
+        480,
+        370
+      ],
+      "exact": true
+    },
+    {
+      "gallery": "layouts/layout-01-four-pages-2x.png",
+      "source": "gallery/layouts/layout-01-four-pages.png",
+      "crop": null,
+      "exact": true
+    },
+    {
+      "gallery": "layouts/layout-02-four-pages.png",
+      "source": "captures/v7/layout-items.png",
+      "crop": [
+        0,
+        24,
+        240,
+        184
+      ],
+      "exact": true
+    },
+    {
+      "gallery": "layouts/layout-02-four-pages.png",
+      "source": "captures/v7/layout-key-items.png",
+      "crop": [
+        240,
+        24,
+        480,
+        184
+      ],
+      "exact": true
+    },
+    {
+      "gallery": "layouts/layout-02-four-pages.png",
+      "source": "captures/v7/layout-map.png",
+      "crop": [
+        0,
+        210,
+        240,
+        370
+      ],
+      "exact": true
+    },
+    {
+      "gallery": "layouts/layout-02-four-pages.png",
+      "source": "captures/v7/layout-zoom-map.png",
+      "crop": [
+        240,
+        210,
+        480,
+        370
+      ],
+      "exact": true
+    },
+    {
+      "gallery": "layouts/layout-02-four-pages-2x.png",
+      "source": "gallery/layouts/layout-02-four-pages.png",
+      "crop": null,
+      "exact": true
+    },
+    {
+      "gallery": "layouts/layout-03-four-pages.png",
+      "source": "captures/v8/layout-items.png",
+      "crop": [
+        0,
+        24,
+        240,
+        184
+      ],
+      "exact": true
+    },
+    {
+      "gallery": "layouts/layout-03-four-pages.png",
+      "source": "captures/v8/layout-key-items.png",
+      "crop": [
+        240,
+        24,
+        480,
+        184
+      ],
+      "exact": true
+    },
+    {
+      "gallery": "layouts/layout-03-four-pages.png",
+      "source": "captures/v8/layout-map.png",
+      "crop": [
+        0,
+        210,
+        240,
+        370
+      ],
+      "exact": true
+    },
+    {
+      "gallery": "layouts/layout-03-four-pages.png",
+      "source": "captures/v8/layout-zoom-map.png",
+      "crop": [
+        240,
+        210,
+        480,
+        370
+      ],
+      "exact": true
+    },
+    {
+      "gallery": "layouts/layout-03-four-pages-2x.png",
+      "source": "gallery/layouts/layout-03-four-pages.png",
+      "crop": null,
+      "exact": true
+    },
+    {
+      "gallery": "layouts/layout-04-four-pages.png",
+      "source": "captures/v9/layout-items.png",
+      "crop": [
+        0,
+        24,
+        240,
+        184
+      ],
+      "exact": true
+    },
+    {
+      "gallery": "layouts/layout-04-four-pages.png",
+      "source": "captures/v9/layout-key-items.png",
+      "crop": [
+        240,
+        24,
+        480,
+        184
+      ],
+      "exact": true
+    },
+    {
+      "gallery": "layouts/layout-04-four-pages.png",
+      "source": "captures/v9/layout-map.png",
+      "crop": [
+        0,
+        210,
+        240,
+        370
+      ],
+      "exact": true
+    },
+    {
+      "gallery": "layouts/layout-04-four-pages.png",
+      "source": "captures/v9/layout-zoom-map.png",
+      "crop": [
+        240,
+        210,
+        480,
+        370
+      ],
+      "exact": true
+    },
+    {
+      "gallery": "layouts/layout-04-four-pages-2x.png",
+      "source": "gallery/layouts/layout-04-four-pages.png",
+      "crop": null,
+      "exact": true
+    },
+    {
+      "gallery": "layouts/layout-05-four-pages.png",
+      "source": "captures/v10/layout-items.png",
+      "crop": [
+        0,
+        24,
+        240,
+        184
+      ],
+      "exact": true
+    },
+    {
+      "gallery": "layouts/layout-05-four-pages.png",
+      "source": "captures/v10/layout-key-items.png",
+      "crop": [
+        240,
+        24,
+        480,
+        184
+      ],
+      "exact": true
+    },
+    {
+      "gallery": "layouts/layout-05-four-pages.png",
+      "source": "captures/v10/layout-map.png",
+      "crop": [
+        0,
+        210,
+        240,
+        370
+      ],
+      "exact": true
+    },
+    {
+      "gallery": "layouts/layout-05-four-pages.png",
+      "source": "captures/v10/layout-zoom-map.png",
+      "crop": [
+        240,
+        210,
+        480,
+        370
+      ],
+      "exact": true
+    },
+    {
+      "gallery": "layouts/layout-05-four-pages-2x.png",
+      "source": "gallery/layouts/layout-05-four-pages.png",
+      "crop": null,
+      "exact": true
+    },
+    {
+      "gallery": "layouts/layout-06-four-pages.png",
+      "source": "captures/v11/layout-items.png",
+      "crop": [
+        0,
+        24,
+        240,
+        184
+      ],
+      "exact": true
+    },
+    {
+      "gallery": "layouts/layout-06-four-pages.png",
+      "source": "captures/v11/layout-key-items.png",
+      "crop": [
+        240,
+        24,
+        480,
+        184
+      ],
+      "exact": true
+    },
+    {
+      "gallery": "layouts/layout-06-four-pages.png",
+      "source": "captures/v11/layout-map.png",
+      "crop": [
+        0,
+        210,
+        240,
+        370
+      ],
+      "exact": true
+    },
+    {
+      "gallery": "layouts/layout-06-four-pages.png",
+      "source": "captures/v11/layout-zoom-map.png",
+      "crop": [
+        240,
+        210,
+        480,
+        370
+      ],
+      "exact": true
+    },
+    {
+      "gallery": "layouts/layout-06-four-pages-2x.png",
+      "source": "gallery/layouts/layout-06-four-pages.png",
+      "crop": null,
+      "exact": true
+    },
+    {
+      "gallery": "layouts/layout-07-four-pages.png",
+      "source": "captures/v12/layout-items.png",
+      "crop": [
+        0,
+        24,
+        240,
+        184
+      ],
+      "exact": true
+    },
+    {
+      "gallery": "layouts/layout-07-four-pages.png",
+      "source": "captures/v12/layout-key-items.png",
+      "crop": [
+        240,
+        24,
+        480,
+        184
+      ],
+      "exact": true
+    },
+    {
+      "gallery": "layouts/layout-07-four-pages.png",
+      "source": "captures/v12/layout-map.png",
+      "crop": [
+        0,
+        210,
+        240,
+        370
+      ],
+      "exact": true
+    },
+    {
+      "gallery": "layouts/layout-07-four-pages.png",
+      "source": "captures/v12/layout-zoom-map.png",
+      "crop": [
+        240,
+        210,
+        480,
+        370
+      ],
+      "exact": true
+    },
+    {
+      "gallery": "layouts/layout-07-four-pages-2x.png",
+      "source": "gallery/layouts/layout-07-four-pages.png",
+      "crop": null,
+      "exact": true
+    },
+    {
+      "gallery": "layouts/layout-08-four-pages.png",
+      "source": "captures/v13/layout-items.png",
+      "crop": [
+        0,
+        24,
+        240,
+        184
+      ],
+      "exact": true
+    },
+    {
+      "gallery": "layouts/layout-08-four-pages.png",
+      "source": "captures/v13/layout-key-items.png",
+      "crop": [
+        240,
+        24,
+        480,
+        184
+      ],
+      "exact": true
+    },
+    {
+      "gallery": "layouts/layout-08-four-pages.png",
+      "source": "captures/v13/layout-map.png",
+      "crop": [
+        0,
+        210,
+        240,
+        370
+      ],
+      "exact": true
+    },
+    {
+      "gallery": "layouts/layout-08-four-pages.png",
+      "source": "captures/v13/layout-zoom-map.png",
+      "crop": [
+        240,
+        210,
+        480,
+        370
+      ],
+      "exact": true
+    },
+    {
+      "gallery": "layouts/layout-08-four-pages-2x.png",
+      "source": "gallery/layouts/layout-08-four-pages.png",
+      "crop": null,
+      "exact": true
+    },
+    {
+      "gallery": "layouts/layout-09-four-pages.png",
+      "source": "captures/v14/layout-items.png",
+      "crop": [
+        0,
+        24,
+        240,
+        184
+      ],
+      "exact": true
+    },
+    {
+      "gallery": "layouts/layout-09-four-pages.png",
+      "source": "captures/v14/layout-key-items.png",
+      "crop": [
+        240,
+        24,
+        480,
+        184
+      ],
+      "exact": true
+    },
+    {
+      "gallery": "layouts/layout-09-four-pages.png",
+      "source": "captures/v14/layout-map.png",
+      "crop": [
+        0,
+        210,
+        240,
+        370
+      ],
+      "exact": true
+    },
+    {
+      "gallery": "layouts/layout-09-four-pages.png",
+      "source": "captures/v14/layout-zoom-map.png",
+      "crop": [
+        240,
+        210,
+        480,
+        370
+      ],
+      "exact": true
+    },
+    {
+      "gallery": "layouts/layout-09-four-pages-2x.png",
+      "source": "gallery/layouts/layout-09-four-pages.png",
+      "crop": null,
+      "exact": true
+    },
+    {
+      "gallery": "layouts/layout-10-four-pages.png",
+      "source": "captures/v15/layout-items.png",
+      "crop": [
+        0,
+        24,
+        240,
+        184
+      ],
+      "exact": true
+    },
+    {
+      "gallery": "layouts/layout-10-four-pages.png",
+      "source": "captures/v15/layout-key-items.png",
+      "crop": [
+        240,
+        24,
+        480,
+        184
+      ],
+      "exact": true
+    },
+    {
+      "gallery": "layouts/layout-10-four-pages.png",
+      "source": "captures/v15/layout-map.png",
+      "crop": [
+        0,
+        210,
+        240,
+        370
+      ],
+      "exact": true
+    },
+    {
+      "gallery": "layouts/layout-10-four-pages.png",
+      "source": "captures/v15/layout-zoom-map.png",
+      "crop": [
+        240,
+        210,
+        480,
+        370
+      ],
+      "exact": true
+    },
+    {
+      "gallery": "layouts/layout-10-four-pages-2x.png",
+      "source": "gallery/layouts/layout-10-four-pages.png",
+      "crop": null,
+      "exact": true
+    }
+  ]
+}

@@ -1,0 +1,17 @@
+[
+  {
+    "url": "https://www.metacritic.com/game/the-legend-of-zelda-the-minish-cap/",
+    "error": "<urlopen error Tunnel connection failed: 403 Forbidden>",
+    "used_for_claims": false
+  },
+  {
+    "url": "https://www.metacritic.com/game/metroid-fusion/",
+    "error": "<urlopen error Tunnel connection failed: 403 Forbidden>",
+    "used_for_claims": false
+  },
+  {
+    "url": "https://www.nintendolife.com/reviews/gba/fire_emblem_the_sacred_stones",
+    "error": "<urlopen error Tunnel connection failed: 403 Forbidden>",
+    "used_for_claims": false
+  }
+]

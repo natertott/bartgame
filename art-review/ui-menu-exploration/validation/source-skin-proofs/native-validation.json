@@ -1,0 +1,5839 @@
+{
+  "scope": "native source UI pixels and palette constraints; source assemblies are not emulator evidence",
+  "variants": [
+    {
+      "variant": 0,
+      "name": "Quiet Brass",
+      "passed": 111,
+      "total": 111,
+      "checks": [
+        {
+          "name": "menu palette16",
+          "passed": true
+        },
+        {
+          "name": "menu RGB555",
+          "passed": true
+        },
+        {
+          "name": "map palette16",
+          "passed": true
+        },
+        {
+          "name": "map RGB555",
+          "passed": true
+        },
+        {
+          "name": "hud palette16",
+          "passed": true
+        },
+        {
+          "name": "hud RGB555",
+          "passed": true
+        },
+        {
+          "name": "uikit palette16",
+          "passed": true
+        },
+        {
+          "name": "uikit RGB555",
+          "passed": true
+        },
+        {
+          "name": "ui palette16",
+          "passed": true
+        },
+        {
+          "name": "ui RGB555",
+          "passed": true
+        },
+        {
+          "name": "portrait palette16",
+          "passed": true
+        },
+        {
+          "name": "portrait RGB555",
+          "passed": true
+        },
+        {
+          "name": "panel_tl legal8x8",
+          "passed": true
+        },
+        {
+          "name": "panel_t legal8x8",
+          "passed": true
+        },
+        {
+          "name": "panel_l legal8x8",
+          "passed": true
+        },
+        {
+          "name": "fill legal8x8",
+          "passed": true
+        },
+        {
+          "name": "div_t legal8x8",
+          "passed": true
+        },
+        {
+          "name": "div_m legal8x8",
+          "passed": true
+        },
+        {
+          "name": "plate_l_top legal8x8",
+          "passed": true
+        },
+        {
+          "name": "plate_l_bot legal8x8",
+          "passed": true
+        },
+        {
+          "name": "plate_m_top legal8x8",
+          "passed": true
+        },
+        {
+          "name": "plate_m_bot legal8x8",
+          "passed": true
+        },
+        {
+          "name": "slot_tl legal8x8",
+          "passed": true
+        },
+        {
+          "name": "slot_t legal8x8",
+          "passed": true
+        },
+        {
+          "name": "slot_l legal8x8",
+          "passed": true
+        },
+        {
+          "name": "slot_fill legal8x8",
+          "passed": true
+        },
+        {
+          "name": "sel_tl legal8x8",
+          "passed": true
+        },
+        {
+          "name": "sel_t legal8x8",
+          "passed": true
+        },
+        {
+          "name": "sel_l legal8x8",
+          "passed": true
+        },
+        {
+          "name": "empty_tl legal8x8",
+          "passed": true
+        },
+        {
+          "name": "empty_t legal8x8",
+          "passed": true
+        },
+        {
+          "name": "empty_l legal8x8",
+          "passed": true
+        },
+        {
+          "name": "tab_l_top legal8x8",
+          "passed": true
+        },
+        {
+          "name": "tab_l_bot legal8x8",
+          "passed": true
+        },
+        {
+          "name": "tab_m_top legal8x8",
+          "passed": true
+        },
+        {
+          "name": "tab_m_bot legal8x8",
+          "passed": true
+        },
+        {
+          "name": "tabon_l_top legal8x8",
+          "passed": true
+        },
+        {
+          "name": "tabon_l_bot legal8x8",
+          "passed": true
+        },
+        {
+          "name": "tabon_m_top legal8x8",
+          "passed": true
+        },
+        {
+          "name": "tabon_m_bot legal8x8",
+          "passed": true
+        },
+        {
+          "name": "badge_a legal8x8",
+          "passed": true
+        },
+        {
+          "name": "badge_b legal8x8",
+          "passed": true
+        },
+        {
+          "name": "badge_l legal8x8",
+          "passed": true
+        },
+        {
+          "name": "badge_r legal8x8",
+          "passed": true
+        },
+        {
+          "name": "row_tl legal8x8",
+          "passed": true
+        },
+        {
+          "name": "row_t legal8x8",
+          "passed": true
+        },
+        {
+          "name": "row_l legal8x8",
+          "passed": true
+        },
+        {
+          "name": "srow_tl legal8x8",
+          "passed": true
+        },
+        {
+          "name": "srow_t legal8x8",
+          "passed": true
+        },
+        {
+          "name": "srow_l legal8x8",
+          "passed": true
+        },
+        {
+          "name": "bub_tl legal8x8",
+          "passed": true
+        },
+        {
+          "name": "bub_t legal8x8",
+          "passed": true
+        },
+        {
+          "name": "bub_l legal8x8",
+          "passed": true
+        },
+        {
+          "name": "bub_fill legal8x8",
+          "passed": true
+        },
+        {
+          "name": "bub_tail legal8x8",
+          "passed": true
+        },
+        {
+          "name": "bub_join legal8x8",
+          "passed": true
+        },
+        {
+          "name": "coin legal8x8",
+          "passed": true
+        },
+        {
+          "name": "rule legal8x8",
+          "passed": true
+        },
+        {
+          "name": "rule_end legal8x8",
+          "passed": true
+        },
+        {
+          "name": "hud_tl legal8x8",
+          "passed": true
+        },
+        {
+          "name": "hud_t legal8x8",
+          "passed": true
+        },
+        {
+          "name": "hud_l legal8x8",
+          "passed": true
+        },
+        {
+          "name": "key legal8x8",
+          "passed": true
+        },
+        {
+          "name": "heart_full legal8x8",
+          "passed": true
+        },
+        {
+          "name": "heart_full transparentoutside",
+          "passed": true
+        },
+        {
+          "name": "heart_half legal8x8",
+          "passed": true
+        },
+        {
+          "name": "heart_half transparentoutside",
+          "passed": true
+        },
+        {
+          "name": "heart_empty legal8x8",
+          "passed": true
+        },
+        {
+          "name": "heart_empty transparentoutside",
+          "passed": true
+        },
+        {
+          "name": "hand legal8x8",
+          "passed": true
+        },
+        {
+          "name": "next markerlegal8x8",
+          "passed": true
+        },
+        {
+          "name": "pick markerlegal8x8",
+          "passed": true
+        },
+        {
+          "name": "corner markerlegal8x8",
+          "passed": true
+        },
+        {
+          "name": "badge_a markerlegal8x8",
+          "passed": true
+        },
+        {
+          "name": "badge_b markerlegal8x8",
+          "passed": true
+        },
+        {
+          "name": "badge_l markerlegal8x8",
+          "passed": true
+        },
+        {
+          "name": "cursorlegal32x32",
+          "passed": true
+        },
+        {
+          "name": "none native16canvas",
+          "passed": true
+        },
+        {
+          "name": "none compact<=10px",
+          "passed": true
+        },
+        {
+          "name": "bombs native16canvas",
+          "passed": true
+        },
+        {
+          "name": "bombs compact<=10px",
+          "passed": true
+        },
+        {
+          "name": "lamp native16canvas",
+          "passed": true
+        },
+        {
+          "name": "lamp compact<=10px",
+          "passed": true
+        },
+        {
+          "name": "cloak native16canvas",
+          "passed": true
+        },
+        {
+          "name": "cloak compact<=10px",
+          "passed": true
+        },
+        {
+          "name": "key native16canvas",
+          "passed": true
+        },
+        {
+          "name": "key compact<=10px",
+          "passed": true
+        },
+        {
+          "name": "heart_piece native16canvas",
+          "passed": true
+        },
+        {
+          "name": "heart_piece compact<=10px",
+          "passed": true
+        },
+        {
+          "name": "heart_container native16canvas",
+          "passed": true
+        },
+        {
+          "name": "heart_container compact<=10px",
+          "passed": true
+        },
+        {
+          "name": "gilt_big native16canvas",
+          "passed": true
+        },
+        {
+          "name": "gilt_big compact<=10px",
+          "passed": true
+        },
+        {
+          "name": "relic native16canvas",
+          "passed": true
+        },
+        {
+          "name": "relic compact<=10px",
+          "passed": true
+        },
+        {
+          "name": "gauntlet native16canvas",
+          "passed": true
+        },
+        {
+          "name": "gauntlet compact<=10px",
+          "passed": true
+        },
+        {
+          "name": "bow native16canvas",
+          "passed": true
+        },
+        {
+          "name": "bow compact<=10px",
+          "passed": true
+        },
+        {
+          "name": "hubcap native16canvas",
+          "passed": true
+        },
+        {
+          "name": "hubcap compact<=10px",
+          "passed": true
+        },
+        {
+          "name": "map native16canvas",
+          "passed": true
+        },
+        {
+          "name": "map compact<=10px",
+          "passed": true
+        },
+        {
+          "name": "astrolabe native16canvas",
+          "passed": true
+        },
+        {
+          "name": "astrolabe compact<=10px",
+          "passed": true
+        },
+        {
+          "name": "sword native16canvas",
+          "passed": true
+        },
+        {
+          "name": "sword compact<=10px",
+          "passed": true
+        },
+        {
+          "name": "shield native16canvas",
+          "passed": true
+        },
+        {
+          "name": "shield compact<=10px",
+          "passed": true
+        },
+        {
+          "name": "shield_upgraded native16canvas",
+          "passed": true
+        },
+        {
+          "name": "shield_upgraded compact<=10px",
+          "passed": true
+        }
+      ],
+      "kit_hashes": {
+        "panel_tl": "8948deec7f251fc6d2894aab4d250caea6b36b72aafefd5e9f54ed8d1f5843b8",
+        "panel_t": "361b6ff1e44fce66c621ea264d60fbc94334bce3957ed95326f725ea20bb606f",
+        "panel_l": "9e835a3c7becfebf6895bff5a59a679491a5c093331fbcb249ef18ca0ee9a7f4",
+        "fill": "c77e45aabdf68c7fa51f69356f6a9305e04f1fd8882ad5480ab0e3afb9ade322",
+        "div_t": "f7b357e09e10f5eaa312604e4de273ae89c98e4be72715245d85b5ee757b49c0",
+        "div_m": "89b4fae7be30f4632c571b62f188653b77225718fc6064b88714123713018912",
+        "plate_l_top": "010845e083a1474c21a8affd45b2ce7d48c237a854cedb0cee9855487e1def5d",
+        "plate_l_bot": "bc1e4d410bc42b896717bc097f42c24fdeb1e385ab6f76e403258f20f8b12f24",
+        "plate_m_top": "663389b8256f2219298c346b6004a740fa0c1a0ca84d63de2c344a3f0a2de141",
+        "plate_m_bot": "b29246584e59c88b29da34f496c9664d38128e9b01b0edca6446bb2c60c850f6",
+        "slot_tl": "62bb3fa60c6312a6929b69d0800ed85cb4371d5e2a0bbe7b2bd4e2f5976eff9e",
+        "slot_t": "17ede0425e72a420abec2499d7b07131a1d6e95725b68845c1dc7d6664880199",
+        "slot_l": "4711502d9bbc8dc349a4747704126d0c7cdd0e3dc675e2cc8106e69b27199548",
+        "slot_fill": "4c6dd169468938fefaa394fafbee6e4b79ad6a2ff2435489b7dc878a71b5630a",
+        "sel_tl": "a786a453cd0ac2c2b433d4c3052824c47f4d825463c6057051c05fb6298202e0",
+        "sel_t": "a4c6848ed795f53a4ea10d618a6cae05115e9fbd71a168fa4ae6a9a6be45b3fc",
+        "sel_l": "44459aa78e96b99bcc1607a32bc9db509be0b51691e6552ed4dce97f4e440fa7",
+        "empty_tl": "50dc0c320404e48ca4ec79c2d941b31a80d54de3b4bd10a78a2af4e2f00b69bf",
+        "empty_t": "61d10cec9ac615c8de4120e55ae69d42c876e2635fb734c6b34603d56b0210e8",
+        "empty_l": "85800fb7789931807994cf60b4d535bbc9db5b09cd0226a93f604fdff0b4dac7",
+        "tab_l_top": "010845e083a1474c21a8affd45b2ce7d48c237a854cedb0cee9855487e1def5d",
+        "tab_l_bot": "bc1e4d410bc42b896717bc097f42c24fdeb1e385ab6f76e403258f20f8b12f24",
+        "tab_m_top": "663389b8256f2219298c346b6004a740fa0c1a0ca84d63de2c344a3f0a2de141",
+        "tab_m_bot": "b29246584e59c88b29da34f496c9664d38128e9b01b0edca6446bb2c60c850f6",
+        "tabon_l_top": "dec85e64d030bb4880b1e2e3e5e616a8d89a7859616bfab02f39f66c562185d3",
+        "tabon_l_bot": "68f500ba1019ecd688932cbcfecb34b4ee514a53f0ac6e1d5af39db3f745fd39",
+        "tabon_m_top": "2f095929f3cc07e5085ae375500ee06d05b27756e65479d4882d670f4a7e511d",
+        "tabon_m_bot": "cd8a81df4ccb0509c87af25f72ee2c2400c14fb98624a1fe936adc4dcbc82bb8",
+        "badge_a": "91e3f30eccbc499622bad0285caf64fceb56365a8890f288e3e69f6a1a4f2271",
+        "badge_b": "cb9fa4d0706dd08f99ef26faf26e16caab6022b7ecc987f7f4528d11985a6247",
+        "badge_l": "e1ebd2ac635843b52b5d4f69f3ecabe75a615df51b725ce4637248c4fda2ec73",
+        "badge_r": "8b553a9b8e93a9d70c00f7810e41b39e36e2076ff1e47da028d516ec76828c2a",
+        "row_tl": "62bb3fa60c6312a6929b69d0800ed85cb4371d5e2a0bbe7b2bd4e2f5976eff9e",
+        "row_t": "17ede0425e72a420abec2499d7b07131a1d6e95725b68845c1dc7d6664880199",
+        "row_l": "4711502d9bbc8dc349a4747704126d0c7cdd0e3dc675e2cc8106e69b27199548",
+        "srow_tl": "a786a453cd0ac2c2b433d4c3052824c47f4d825463c6057051c05fb6298202e0",
+        "srow_t": "a4c6848ed795f53a4ea10d618a6cae05115e9fbd71a168fa4ae6a9a6be45b3fc",
+        "srow_l": "44459aa78e96b99bcc1607a32bc9db509be0b51691e6552ed4dce97f4e440fa7",
+        "bub_tl": "9d08b44202d797253d2dc0e418e34bc6b5f852ef08c1145cd3f1f17aa8039c9c",
+        "bub_t": "d9f3f2fb324413375f80ca4cd55907df64bf47f34a38673358caf624106a8893",
+        "bub_l": "8f5736b74166f17684398bd89e070d7652d3bf2304add3ce5697a4bf84d94988",
+        "bub_fill": "06aa20a633730070ee0e06ece876ed229a578cb608aba470c4a39ddf318369ee",
+        "bub_tail": "4f4bcf8472c03fbee48b14bf7bd4929018e2639f614c97893dea69faadfb0adf",
+        "bub_join": "619bd336c1776e4d5cb584ce4954dbea78c253df2d4c79a7e3e93b5ce484c848",
+        "coin": "3ce351b0b17f955694c2bb971560d1ce9a67a24d2045604ffafce182a815dc12",
+        "rule": "383bd8d938b005aabaa0a9e9d7c5b9815c0f04d14d1c7c3cd3633708641b809e",
+        "rule_end": "531686d31c2d255f99af582a7791f37720285ba90ee59c60d544c1d0c71bf90d",
+        "hud_tl": "8948deec7f251fc6d2894aab4d250caea6b36b72aafefd5e9f54ed8d1f5843b8",
+        "hud_t": "361b6ff1e44fce66c621ea264d60fbc94334bce3957ed95326f725ea20bb606f",
+        "hud_l": "9e835a3c7becfebf6895bff5a59a679491a5c093331fbcb249ef18ca0ee9a7f4",
+        "key": "6890fbfe9ac4fda933d0ac32ca26692e838469aebec9adcbd90f0d680f3c4c4b"
+      },
+      "hud_icon_hashes": {
+        "none": "5341e6b2646979a70e57653007a1f310169421ec9bdd9f1a5648f75ade005af1",
+        "bombs": "81ea1e6a096956269736190a4857376a9396096e0c5de1e5865d168444cf011b",
+        "lamp": "8911d4b1514d3a841f282f460dd6834978dc9d4aad2743bd8523fd7deaafd09e",
+        "cloak": "ed6ee26fdfda009f5b3fec5c30372e32ed1d5abe05268e243d77f1b1c14e4964",
+        "key": "983934bab1f5608b3e6a21584e1e80e99fd8964f3992817318cdeef92aac7b4e",
+        "heart_piece": "748942ef22420466c22364a427a2773959715cdcfba5b817b8ab000c5a82d0e2",
+        "heart_container": "beb4e4f5cbddbcb9c1b61314c912f64a9b0aa5625671058266f65d6da5f794dc",
+        "gilt_big": "80412346747512c2d8246286797636d9ce287ce1c582ef56893a696809d4ce0e",
+        "relic": "80412346747512c2d8246286797636d9ce287ce1c582ef56893a696809d4ce0e",
+        "gauntlet": "a4d77c27a977de5c293d7650f7d1a13c6eb5e487c880f7a93e733abf8ebd7bd3",
+        "bow": "d2206de130edcf1134027f7d01c32315ed1de548f9f3564614486fcc062beb71",
+        "hubcap": "8e17729c0cc30fe6677892150cf2cba08751009075fc021fdc0adef374661471",
+        "map": "0facda11396c2ce63da6e83e3a38406332b5d0f17d04c61c3755443e01c473b4",
+        "astrolabe": "80412346747512c2d8246286797636d9ce287ce1c582ef56893a696809d4ce0e",
+        "sword": "68c2215b52334717f6818f21a902c8b562e3e42f2b722c01f3e5f0372e8016d8",
+        "shield": "6afc8ce529ac9c85d4fc64fc6c0d4d38a41acd72649c96578c83db670e9d2cbd",
+        "shield_upgraded": "9afa92e1e0a63a5af420833d55a72f6f9c2dce4b80a468041a41755e1c7034dd"
+      },
+      "ui_kit_sha256": "d3779b6d08fa77d6f51a4e5922f51adce26c9dd00a6560f83becb2e7a496c311",
+      "source_sha256": {
+        "art/ui_studies.py": "5f924a43aa53fb0403cf6f1e77fe6912263b3ca7d210f614a081c3839f577b5b",
+        "art/reboot_ui.py": "6963ac2536f37580c1e398228b22359ea03c39460b9814fb751d4de82c98dfc7",
+        "art/ui_font.py": "48ae0da7d1daa4f01c144a856d18694c5be06674288029e62913a513bcb8388e"
+      }
+    },
+    {
+      "variant": 1,
+      "name": "Ivory Wire",
+      "passed": 111,
+      "total": 111,
+      "checks": [
+        {
+          "name": "menu palette16",
+          "passed": true
+        },
+        {
+          "name": "menu RGB555",
+          "passed": true
+        },
+        {
+          "name": "map palette16",
+          "passed": true
+        },
+        {
+          "name": "map RGB555",
+          "passed": true
+        },
+        {
+          "name": "hud palette16",
+          "passed": true
+        },
+        {
+          "name": "hud RGB555",
+          "passed": true
+        },
+        {
+          "name": "uikit palette16",
+          "passed": true
+        },
+        {
+          "name": "uikit RGB555",
+          "passed": true
+        },
+        {
+          "name": "ui palette16",
+          "passed": true
+        },
+        {
+          "name": "ui RGB555",
+          "passed": true
+        },
+        {
+          "name": "portrait palette16",
+          "passed": true
+        },
+        {
+          "name": "portrait RGB555",
+          "passed": true
+        },
+        {
+          "name": "panel_tl legal8x8",
+          "passed": true
+        },
+        {
+          "name": "panel_t legal8x8",
+          "passed": true
+        },
+        {
+          "name": "panel_l legal8x8",
+          "passed": true
+        },
+        {
+          "name": "fill legal8x8",
+          "passed": true
+        },
+        {
+          "name": "div_t legal8x8",
+          "passed": true
+        },
+        {
+          "name": "div_m legal8x8",
+          "passed": true
+        },
+        {
+          "name": "plate_l_top legal8x8",
+          "passed": true
+        },
+        {
+          "name": "plate_l_bot legal8x8",
+          "passed": true
+        },
+        {
+          "name": "plate_m_top legal8x8",
+          "passed": true
+        },
+        {
+          "name": "plate_m_bot legal8x8",
+          "passed": true
+        },
+        {
+          "name": "slot_tl legal8x8",
+          "passed": true
+        },
+        {
+          "name": "slot_t legal8x8",
+          "passed": true
+        },
+        {
+          "name": "slot_l legal8x8",
+          "passed": true
+        },
+        {
+          "name": "slot_fill legal8x8",
+          "passed": true
+        },
+        {
+          "name": "sel_tl legal8x8",
+          "passed": true
+        },
+        {
+          "name": "sel_t legal8x8",
+          "passed": true
+        },
+        {
+          "name": "sel_l legal8x8",
+          "passed": true
+        },
+        {
+          "name": "empty_tl legal8x8",
+          "passed": true
+        },
+        {
+          "name": "empty_t legal8x8",
+          "passed": true
+        },
+        {
+          "name": "empty_l legal8x8",
+          "passed": true
+        },
+        {
+          "name": "tab_l_top legal8x8",
+          "passed": true
+        },
+        {
+          "name": "tab_l_bot legal8x8",
+          "passed": true
+        },
+        {
+          "name": "tab_m_top legal8x8",
+          "passed": true
+        },
+        {
+          "name": "tab_m_bot legal8x8",
+          "passed": true
+        },
+        {
+          "name": "tabon_l_top legal8x8",
+          "passed": true
+        },
+        {
+          "name": "tabon_l_bot legal8x8",
+          "passed": true
+        },
+        {
+          "name": "tabon_m_top legal8x8",
+          "passed": true
+        },
+        {
+          "name": "tabon_m_bot legal8x8",
+          "passed": true
+        },
+        {
+          "name": "badge_a legal8x8",
+          "passed": true
+        },
+        {
+          "name": "badge_b legal8x8",
+          "passed": true
+        },
+        {
+          "name": "badge_l legal8x8",
+          "passed": true
+        },
+        {
+          "name": "badge_r legal8x8",
+          "passed": true
+        },
+        {
+          "name": "row_tl legal8x8",
+          "passed": true
+        },
+        {
+          "name": "row_t legal8x8",
+          "passed": true
+        },
+        {
+          "name": "row_l legal8x8",
+          "passed": true
+        },
+        {
+          "name": "srow_tl legal8x8",
+          "passed": true
+        },
+        {
+          "name": "srow_t legal8x8",
+          "passed": true
+        },
+        {
+          "name": "srow_l legal8x8",
+          "passed": true
+        },
+        {
+          "name": "bub_tl legal8x8",
+          "passed": true
+        },
+        {
+          "name": "bub_t legal8x8",
+          "passed": true
+        },
+        {
+          "name": "bub_l legal8x8",
+          "passed": true
+        },
+        {
+          "name": "bub_fill legal8x8",
+          "passed": true
+        },
+        {
+          "name": "bub_tail legal8x8",
+          "passed": true
+        },
+        {
+          "name": "bub_join legal8x8",
+          "passed": true
+        },
+        {
+          "name": "coin legal8x8",
+          "passed": true
+        },
+        {
+          "name": "rule legal8x8",
+          "passed": true
+        },
+        {
+          "name": "rule_end legal8x8",
+          "passed": true
+        },
+        {
+          "name": "hud_tl legal8x8",
+          "passed": true
+        },
+        {
+          "name": "hud_t legal8x8",
+          "passed": true
+        },
+        {
+          "name": "hud_l legal8x8",
+          "passed": true
+        },
+        {
+          "name": "key legal8x8",
+          "passed": true
+        },
+        {
+          "name": "heart_full legal8x8",
+          "passed": true
+        },
+        {
+          "name": "heart_full transparentoutside",
+          "passed": true
+        },
+        {
+          "name": "heart_half legal8x8",
+          "passed": true
+        },
+        {
+          "name": "heart_half transparentoutside",
+          "passed": true
+        },
+        {
+          "name": "heart_empty legal8x8",
+          "passed": true
+        },
+        {
+          "name": "heart_empty transparentoutside",
+          "passed": true
+        },
+        {
+          "name": "hand legal8x8",
+          "passed": true
+        },
+        {
+          "name": "next markerlegal8x8",
+          "passed": true
+        },
+        {
+          "name": "pick markerlegal8x8",
+          "passed": true
+        },
+        {
+          "name": "corner markerlegal8x8",
+          "passed": true
+        },
+        {
+          "name": "badge_a markerlegal8x8",
+          "passed": true
+        },
+        {
+          "name": "badge_b markerlegal8x8",
+          "passed": true
+        },
+        {
+          "name": "badge_l markerlegal8x8",
+          "passed": true
+        },
+        {
+          "name": "cursorlegal32x32",
+          "passed": true
+        },
+        {
+          "name": "none native16canvas",
+          "passed": true
+        },
+        {
+          "name": "none compact<=10px",
+          "passed": true
+        },
+        {
+          "name": "bombs native16canvas",
+          "passed": true
+        },
+        {
+          "name": "bombs compact<=10px",
+          "passed": true
+        },
+        {
+          "name": "lamp native16canvas",
+          "passed": true
+        },
+        {
+          "name": "lamp compact<=10px",
+          "passed": true
+        },
+        {
+          "name": "cloak native16canvas",
+          "passed": true
+        },
+        {
+          "name": "cloak compact<=10px",
+          "passed": true
+        },
+        {
+          "name": "key native16canvas",
+          "passed": true
+        },
+        {
+          "name": "key compact<=10px",
+          "passed": true
+        },
+        {
+          "name": "heart_piece native16canvas",
+          "passed": true
+        },
+        {
+          "name": "heart_piece compact<=10px",
+          "passed": true
+        },
+        {
+          "name": "heart_container native16canvas",
+          "passed": true
+        },
+        {
+          "name": "heart_container compact<=10px",
+          "passed": true
+        },
+        {
+          "name": "gilt_big native16canvas",
+          "passed": true
+        },
+        {
+          "name": "gilt_big compact<=10px",
+          "passed": true
+        },
+        {
+          "name": "relic native16canvas",
+          "passed": true
+        },
+        {
+          "name": "relic compact<=10px",
+          "passed": true
+        },
+        {
+          "name": "gauntlet native16canvas",
+          "passed": true
+        },
+        {
+          "name": "gauntlet compact<=10px",
+          "passed": true
+        },
+        {
+          "name": "bow native16canvas",
+          "passed": true
+        },
+        {
+          "name": "bow compact<=10px",
+          "passed": true
+        },
+        {
+          "name": "hubcap native16canvas",
+          "passed": true
+        },
+        {
+          "name": "hubcap compact<=10px",
+          "passed": true
+        },
+        {
+          "name": "map native16canvas",
+          "passed": true
+        },
+        {
+          "name": "map compact<=10px",
+          "passed": true
+        },
+        {
+          "name": "astrolabe native16canvas",
+          "passed": true
+        },
+        {
+          "name": "astrolabe compact<=10px",
+          "passed": true
+        },
+        {
+          "name": "sword native16canvas",
+          "passed": true
+        },
+        {
+          "name": "sword compact<=10px",
+          "passed": true
+        },
+        {
+          "name": "shield native16canvas",
+          "passed": true
+        },
+        {
+          "name": "shield compact<=10px",
+          "passed": true
+        },
+        {
+          "name": "shield_upgraded native16canvas",
+          "passed": true
+        },
+        {
+          "name": "shield_upgraded compact<=10px",
+          "passed": true
+        }
+      ],
+      "kit_hashes": {
+        "panel_tl": "653336ad8bb0bc84a2a302d2b56f5a71e65204bed87328516e00ca3227f869b2",
+        "panel_t": "8d1a1fa7ecd195ae31f905f143a2e11fd7305332d27f20b290c9512d5bb32d39",
+        "panel_l": "c84bef7ad473c54355538c2157e38af8f4fa41794e119c9cba271f6ade325cf0",
+        "fill": "c77e45aabdf68c7fa51f69356f6a9305e04f1fd8882ad5480ab0e3afb9ade322",
+        "div_t": "7300cdfb960719197720222b483f2274d5259f5119be75a196428377776f84b8",
+        "div_m": "04866ca3db653e9d21a5bec7a986d1199002db05d6ff0b16f369477fb2808195",
+        "plate_l_top": "eb5c1f684ee01c5c003620de5bec967b3baf323dfe23351e737a60bcf36e209a",
+        "plate_l_bot": "72553579d10aee89ac2b5a418ce2b4aea18f31f96324b2aefd3022d078502fa5",
+        "plate_m_top": "663389b8256f2219298c346b6004a740fa0c1a0ca84d63de2c344a3f0a2de141",
+        "plate_m_bot": "b29246584e59c88b29da34f496c9664d38128e9b01b0edca6446bb2c60c850f6",
+        "slot_tl": "21be968420526b50e9d24b2bc89ef0c434dc43d2fb17cac1eb56b5755ab1bf02",
+        "slot_t": "4ff84269b2e3cce9dce8d4fe77eff71d33dbeeb3d8e0333be3c9e6f49b371dca",
+        "slot_l": "f76830b3b603b2559669262efa0d7c4fa9940666bcbf6ad80100e76b368c0e70",
+        "slot_fill": "4c6dd169468938fefaa394fafbee6e4b79ad6a2ff2435489b7dc878a71b5630a",
+        "sel_tl": "8715123fed3f80e3d87b7d5e85d810da9a8e288c904df96cf79be28dc5914a4a",
+        "sel_t": "39343d618c516ef9c2f06cee6fa870f721e35835d74d1b5f193c29084a6ccdef",
+        "sel_l": "9f32defef13d83412b152baa240873148e53bc1b9229d9e63e996a670ca3536e",
+        "empty_tl": "5472f74aff5a1d871813306511d01d534c88c25c88d9653178fecfc1ffd00b7b",
+        "empty_t": "1660536856df2d95ce01e660f9550183246ee2d58efcad75c1a4f451b07a75f9",
+        "empty_l": "3aabe9615b662daec6c1633f2ad7fe10ea65303de87bed73c60760d83a69dcc2",
+        "tab_l_top": "eb5c1f684ee01c5c003620de5bec967b3baf323dfe23351e737a60bcf36e209a",
+        "tab_l_bot": "72553579d10aee89ac2b5a418ce2b4aea18f31f96324b2aefd3022d078502fa5",
+        "tab_m_top": "663389b8256f2219298c346b6004a740fa0c1a0ca84d63de2c344a3f0a2de141",
+        "tab_m_bot": "b29246584e59c88b29da34f496c9664d38128e9b01b0edca6446bb2c60c850f6",
+        "tabon_l_top": "17e68b92a465267426ffbcadb3ccd5ab27b6c0bdaea126ee07cf84101a852d8f",
+        "tabon_l_bot": "cf007abe268195cbb379a0fe18ad08587728880b14401adf40b5f5e3d7aef822",
+        "tabon_m_top": "7059d52886f068752c2cae525c7c87bf64c0c30701c061e5c21cb83094053197",
+        "tabon_m_bot": "0e555a71e209fc209fb0e8fc8b2e5aa8b65f2ea66b8a4bdca58d138523d3b60f",
+        "badge_a": "58157a16830cbbeb89041ad1ab9533961d57c89b4d4a45da67b71513ca6dc9cd",
+        "badge_b": "27d9211aa6ddfa66d3295c96a8bfdef886fa4132b18c011a3058b08ac76aa184",
+        "badge_l": "ace992b9ef38d26311951293b792998aff20d3537f500897992946393eab6b16",
+        "badge_r": "f673522da3509a6e610fad8c763fd347204bddba80e7a160bccea26f164cadeb",
+        "row_tl": "21be968420526b50e9d24b2bc89ef0c434dc43d2fb17cac1eb56b5755ab1bf02",
+        "row_t": "4ff84269b2e3cce9dce8d4fe77eff71d33dbeeb3d8e0333be3c9e6f49b371dca",
+        "row_l": "f76830b3b603b2559669262efa0d7c4fa9940666bcbf6ad80100e76b368c0e70",
+        "srow_tl": "8715123fed3f80e3d87b7d5e85d810da9a8e288c904df96cf79be28dc5914a4a",
+        "srow_t": "39343d618c516ef9c2f06cee6fa870f721e35835d74d1b5f193c29084a6ccdef",
+        "srow_l": "9f32defef13d83412b152baa240873148e53bc1b9229d9e63e996a670ca3536e",
+        "bub_tl": "62fe40860e6431a77ec96332e549360ebab5dadeac3f4bd7dbb1c92c87765090",
+        "bub_t": "75df164393d1189cbc0c2a386f011978823408ddef82c00284bc8933fe9b6e39",
+        "bub_l": "ea1bdecb3c993d4e8ba51f8e9e016e4e7fa8edeb141fbc49cbb3a71e097798c4",
+        "bub_fill": "06aa20a633730070ee0e06ece876ed229a578cb608aba470c4a39ddf318369ee",
+        "bub_tail": "cfc49f4fd0aec20e98a57bd659b4e09c6d17d2a93fb5826505e9456b51adbcd6",
+        "bub_join": "06aa20a633730070ee0e06ece876ed229a578cb608aba470c4a39ddf318369ee",
+        "coin": "8fcf64b585f2e0e7f1d50f60dc114e14df2092a6eb8015b5ee2058117ba7464c",
+        "rule": "47b76ed227f1a288c264a0d0aa92ace46edc1dbb21a485cd3fd7d66b8092f82f",
+        "rule_end": "92ef7d784bf6846c4ccfc8c2e061d7627d870fc4a0100ad9ff95e51abd0abd83",
+        "hud_tl": "653336ad8bb0bc84a2a302d2b56f5a71e65204bed87328516e00ca3227f869b2",
+        "hud_t": "8d1a1fa7ecd195ae31f905f143a2e11fd7305332d27f20b290c9512d5bb32d39",
+        "hud_l": "c84bef7ad473c54355538c2157e38af8f4fa41794e119c9cba271f6ade325cf0",
+        "key": "60203da1daf3e3a65175a9a3fb91a2e24a0244bea7d2756edc33ea617af9c3f6"
+      },
+      "hud_icon_hashes": {
+        "none": "5341e6b2646979a70e57653007a1f310169421ec9bdd9f1a5648f75ade005af1",
+        "bombs": "81ea1e6a096956269736190a4857376a9396096e0c5de1e5865d168444cf011b",
+        "lamp": "8911d4b1514d3a841f282f460dd6834978dc9d4aad2743bd8523fd7deaafd09e",
+        "cloak": "ed6ee26fdfda009f5b3fec5c30372e32ed1d5abe05268e243d77f1b1c14e4964",
+        "key": "983934bab1f5608b3e6a21584e1e80e99fd8964f3992817318cdeef92aac7b4e",
+        "heart_piece": "748942ef22420466c22364a427a2773959715cdcfba5b817b8ab000c5a82d0e2",
+        "heart_container": "beb4e4f5cbddbcb9c1b61314c912f64a9b0aa5625671058266f65d6da5f794dc",
+        "gilt_big": "80412346747512c2d8246286797636d9ce287ce1c582ef56893a696809d4ce0e",
+        "relic": "80412346747512c2d8246286797636d9ce287ce1c582ef56893a696809d4ce0e",
+        "gauntlet": "a4d77c27a977de5c293d7650f7d1a13c6eb5e487c880f7a93e733abf8ebd7bd3",
+        "bow": "d2206de130edcf1134027f7d01c32315ed1de548f9f3564614486fcc062beb71",
+        "hubcap": "8e17729c0cc30fe6677892150cf2cba08751009075fc021fdc0adef374661471",
+        "map": "0facda11396c2ce63da6e83e3a38406332b5d0f17d04c61c3755443e01c473b4",
+        "astrolabe": "80412346747512c2d8246286797636d9ce287ce1c582ef56893a696809d4ce0e",
+        "sword": "68c2215b52334717f6818f21a902c8b562e3e42f2b722c01f3e5f0372e8016d8",
+        "shield": "6afc8ce529ac9c85d4fc64fc6c0d4d38a41acd72649c96578c83db670e9d2cbd",
+        "shield_upgraded": "9afa92e1e0a63a5af420833d55a72f6f9c2dce4b80a468041a41755e1c7034dd"
+      },
+      "ui_kit_sha256": "417e4ce39824aaf2503fe439f4c5a7363fdf899761f66806dbfb6e327f72c5d7",
+      "source_sha256": {
+        "art/ui_studies.py": "5f924a43aa53fb0403cf6f1e77fe6912263b3ca7d210f614a081c3839f577b5b",
+        "art/reboot_ui.py": "6963ac2536f37580c1e398228b22359ea03c39460b9814fb751d4de82c98dfc7",
+        "art/ui_font.py": "48ae0da7d1daa4f01c144a856d18694c5be06674288029e62913a513bcb8388e"
+      }
+    },
+    {
+      "variant": 2,
+      "name": "Moulded Vellum",
+      "passed": 111,
+      "total": 111,
+      "checks": [
+        {
+          "name": "menu palette16",
+          "passed": true
+        },
+        {
+          "name": "menu RGB555",
+          "passed": true
+        },
+        {
+          "name": "map palette16",
+          "passed": true
+        },
+        {
+          "name": "map RGB555",
+          "passed": true
+        },
+        {
+          "name": "hud palette16",
+          "passed": true
+        },
+        {
+          "name": "hud RGB555",
+          "passed": true
+        },
+        {
+          "name": "uikit palette16",
+          "passed": true
+        },
+        {
+          "name": "uikit RGB555",
+          "passed": true
+        },
+        {
+          "name": "ui palette16",
+          "passed": true
+        },
+        {
+          "name": "ui RGB555",
+          "passed": true
+        },
+        {
+          "name": "portrait palette16",
+          "passed": true
+        },
+        {
+          "name": "portrait RGB555",
+          "passed": true
+        },
+        {
+          "name": "panel_tl legal8x8",
+          "passed": true
+        },
+        {
+          "name": "panel_t legal8x8",
+          "passed": true
+        },
+        {
+          "name": "panel_l legal8x8",
+          "passed": true
+        },
+        {
+          "name": "fill legal8x8",
+          "passed": true
+        },
+        {
+          "name": "div_t legal8x8",
+          "passed": true
+        },
+        {
+          "name": "div_m legal8x8",
+          "passed": true
+        },
+        {
+          "name": "plate_l_top legal8x8",
+          "passed": true
+        },
+        {
+          "name": "plate_l_bot legal8x8",
+          "passed": true
+        },
+        {
+          "name": "plate_m_top legal8x8",
+          "passed": true
+        },
+        {
+          "name": "plate_m_bot legal8x8",
+          "passed": true
+        },
+        {
+          "name": "slot_tl legal8x8",
+          "passed": true
+        },
+        {
+          "name": "slot_t legal8x8",
+          "passed": true
+        },
+        {
+          "name": "slot_l legal8x8",
+          "passed": true
+        },
+        {
+          "name": "slot_fill legal8x8",
+          "passed": true
+        },
+        {
+          "name": "sel_tl legal8x8",
+          "passed": true
+        },
+        {
+          "name": "sel_t legal8x8",
+          "passed": true
+        },
+        {
+          "name": "sel_l legal8x8",
+          "passed": true
+        },
+        {
+          "name": "empty_tl legal8x8",
+          "passed": true
+        },
+        {
+          "name": "empty_t legal8x8",
+          "passed": true
+        },
+        {
+          "name": "empty_l legal8x8",
+          "passed": true
+        },
+        {
+          "name": "tab_l_top legal8x8",
+          "passed": true
+        },
+        {
+          "name": "tab_l_bot legal8x8",
+          "passed": true
+        },
+        {
+          "name": "tab_m_top legal8x8",
+          "passed": true
+        },
+        {
+          "name": "tab_m_bot legal8x8",
+          "passed": true
+        },
+        {
+          "name": "tabon_l_top legal8x8",
+          "passed": true
+        },
+        {
+          "name": "tabon_l_bot legal8x8",
+          "passed": true
+        },
+        {
+          "name": "tabon_m_top legal8x8",
+          "passed": true
+        },
+        {
+          "name": "tabon_m_bot legal8x8",
+          "passed": true
+        },
+        {
+          "name": "badge_a legal8x8",
+          "passed": true
+        },
+        {
+          "name": "badge_b legal8x8",
+          "passed": true
+        },
+        {
+          "name": "badge_l legal8x8",
+          "passed": true
+        },
+        {
+          "name": "badge_r legal8x8",
+          "passed": true
+        },
+        {
+          "name": "row_tl legal8x8",
+          "passed": true
+        },
+        {
+          "name": "row_t legal8x8",
+          "passed": true
+        },
+        {
+          "name": "row_l legal8x8",
+          "passed": true
+        },
+        {
+          "name": "srow_tl legal8x8",
+          "passed": true
+        },
+        {
+          "name": "srow_t legal8x8",
+          "passed": true
+        },
+        {
+          "name": "srow_l legal8x8",
+          "passed": true
+        },
+        {
+          "name": "bub_tl legal8x8",
+          "passed": true
+        },
+        {
+          "name": "bub_t legal8x8",
+          "passed": true
+        },
+        {
+          "name": "bub_l legal8x8",
+          "passed": true
+        },
+        {
+          "name": "bub_fill legal8x8",
+          "passed": true
+        },
+        {
+          "name": "bub_tail legal8x8",
+          "passed": true
+        },
+        {
+          "name": "bub_join legal8x8",
+          "passed": true
+        },
+        {
+          "name": "coin legal8x8",
+          "passed": true
+        },
+        {
+          "name": "rule legal8x8",
+          "passed": true
+        },
+        {
+          "name": "rule_end legal8x8",
+          "passed": true
+        },
+        {
+          "name": "hud_tl legal8x8",
+          "passed": true
+        },
+        {
+          "name": "hud_t legal8x8",
+          "passed": true
+        },
+        {
+          "name": "hud_l legal8x8",
+          "passed": true
+        },
+        {
+          "name": "key legal8x8",
+          "passed": true
+        },
+        {
+          "name": "heart_full legal8x8",
+          "passed": true
+        },
+        {
+          "name": "heart_full transparentoutside",
+          "passed": true
+        },
+        {
+          "name": "heart_half legal8x8",
+          "passed": true
+        },
+        {
+          "name": "heart_half transparentoutside",
+          "passed": true
+        },
+        {
+          "name": "heart_empty legal8x8",
+          "passed": true
+        },
+        {
+          "name": "heart_empty transparentoutside",
+          "passed": true
+        },
+        {
+          "name": "hand legal8x8",
+          "passed": true
+        },
+        {
+          "name": "next markerlegal8x8",
+          "passed": true
+        },
+        {
+          "name": "pick markerlegal8x8",
+          "passed": true
+        },
+        {
+          "name": "corner markerlegal8x8",
+          "passed": true
+        },
+        {
+          "name": "badge_a markerlegal8x8",
+          "passed": true
+        },
+        {
+          "name": "badge_b markerlegal8x8",
+          "passed": true
+        },
+        {
+          "name": "badge_l markerlegal8x8",
+          "passed": true
+        },
+        {
+          "name": "cursorlegal32x32",
+          "passed": true
+        },
+        {
+          "name": "none native16canvas",
+          "passed": true
+        },
+        {
+          "name": "none compact<=10px",
+          "passed": true
+        },
+        {
+          "name": "bombs native16canvas",
+          "passed": true
+        },
+        {
+          "name": "bombs compact<=10px",
+          "passed": true
+        },
+        {
+          "name": "lamp native16canvas",
+          "passed": true
+        },
+        {
+          "name": "lamp compact<=10px",
+          "passed": true
+        },
+        {
+          "name": "cloak native16canvas",
+          "passed": true
+        },
+        {
+          "name": "cloak compact<=10px",
+          "passed": true
+        },
+        {
+          "name": "key native16canvas",
+          "passed": true
+        },
+        {
+          "name": "key compact<=10px",
+          "passed": true
+        },
+        {
+          "name": "heart_piece native16canvas",
+          "passed": true
+        },
+        {
+          "name": "heart_piece compact<=10px",
+          "passed": true
+        },
+        {
+          "name": "heart_container native16canvas",
+          "passed": true
+        },
+        {
+          "name": "heart_container compact<=10px",
+          "passed": true
+        },
+        {
+          "name": "gilt_big native16canvas",
+          "passed": true
+        },
+        {
+          "name": "gilt_big compact<=10px",
+          "passed": true
+        },
+        {
+          "name": "relic native16canvas",
+          "passed": true
+        },
+        {
+          "name": "relic compact<=10px",
+          "passed": true
+        },
+        {
+          "name": "gauntlet native16canvas",
+          "passed": true
+        },
+        {
+          "name": "gauntlet compact<=10px",
+          "passed": true
+        },
+        {
+          "name": "bow native16canvas",
+          "passed": true
+        },
+        {
+          "name": "bow compact<=10px",
+          "passed": true
+        },
+        {
+          "name": "hubcap native16canvas",
+          "passed": true
+        },
+        {
+          "name": "hubcap compact<=10px",
+          "passed": true
+        },
+        {
+          "name": "map native16canvas",
+          "passed": true
+        },
+        {
+          "name": "map compact<=10px",
+          "passed": true
+        },
+        {
+          "name": "astrolabe native16canvas",
+          "passed": true
+        },
+        {
+          "name": "astrolabe compact<=10px",
+          "passed": true
+        },
+        {
+          "name": "sword native16canvas",
+          "passed": true
+        },
+        {
+          "name": "sword compact<=10px",
+          "passed": true
+        },
+        {
+          "name": "shield native16canvas",
+          "passed": true
+        },
+        {
+          "name": "shield compact<=10px",
+          "passed": true
+        },
+        {
+          "name": "shield_upgraded native16canvas",
+          "passed": true
+        },
+        {
+          "name": "shield_upgraded compact<=10px",
+          "passed": true
+        }
+      ],
+      "kit_hashes": {
+        "panel_tl": "5689da4754bc333439f335ac327b3caebab0822ea332c2f272ef63cc92143dc9",
+        "panel_t": "8976b7b6bf303ba8cda979ed1a47e5c366a36434e212daf259a914a51ef42613",
+        "panel_l": "0b8a1269f2b3c5d35aed1719bcde4142b543373b3388849adac893b056f26343",
+        "fill": "c77e45aabdf68c7fa51f69356f6a9305e04f1fd8882ad5480ab0e3afb9ade322",
+        "div_t": "11fc37efd15b5e75b02360f892e10745d2cc0027ec0e473c04ecd2b22d8bc446",
+        "div_m": "14ec4fda62f039879a94bd21c3bdf4057aef1532a410bd19fe0aac36791872a9",
+        "plate_l_top": "52d7469da73518edf754a1488cc478520a41bfe066de7c74104bd061d620912a",
+        "plate_l_bot": "81e58b19e03df4f594b085158448a92266f549967024e3afd199f2ee1aa5b800",
+        "plate_m_top": "0e443aaa57945d74032af5e9dd6da2d4d20c0d33f7ec31cb1274af4bbba434e0",
+        "plate_m_bot": "fd436ad2704ddc4a5e132de0f0bf3d825b9843bc7a502056889997af4a98552c",
+        "slot_tl": "ea2bd592a7d866e4a5da33ef926cd97e991284e51e3b5b18da56c31c8f3f026f",
+        "slot_t": "ca616cbce20756ba165d69d580dee7aa7b2ba46e38e775ee682bb519cd685d66",
+        "slot_l": "e015961f843abb40e718bc67dbe5b96ec904ac5b7988cacac504a1745ec669b9",
+        "slot_fill": "4c6dd169468938fefaa394fafbee6e4b79ad6a2ff2435489b7dc878a71b5630a",
+        "sel_tl": "5e32e9ff44b68ac8882c07f4fe83968365bc0fcbaf14b836c6b4e94fb8b28508",
+        "sel_t": "14cbd779c20124e69d440326cbeff4c31de1d7445522ecba51c15f2ab93a0d57",
+        "sel_l": "e015961f843abb40e718bc67dbe5b96ec904ac5b7988cacac504a1745ec669b9",
+        "empty_tl": "5472f74aff5a1d871813306511d01d534c88c25c88d9653178fecfc1ffd00b7b",
+        "empty_t": "1660536856df2d95ce01e660f9550183246ee2d58efcad75c1a4f451b07a75f9",
+        "empty_l": "3aabe9615b662daec6c1633f2ad7fe10ea65303de87bed73c60760d83a69dcc2",
+        "tab_l_top": "52d7469da73518edf754a1488cc478520a41bfe066de7c74104bd061d620912a",
+        "tab_l_bot": "81e58b19e03df4f594b085158448a92266f549967024e3afd199f2ee1aa5b800",
+        "tab_m_top": "0e443aaa57945d74032af5e9dd6da2d4d20c0d33f7ec31cb1274af4bbba434e0",
+        "tab_m_bot": "fd436ad2704ddc4a5e132de0f0bf3d825b9843bc7a502056889997af4a98552c",
+        "tabon_l_top": "ed6d30cc74de0589820493c76de1f58acf4f0528f051ff866cbff281a30ff639",
+        "tabon_l_bot": "594ecd3f626e75f5663108965321a7108511d99ea4e3f70317d9b7cfdf2a9e06",
+        "tabon_m_top": "27b02f7d3f8775d56164c850750da635506ded1ff5e6bce370cf8fe7b7ee5f12",
+        "tabon_m_bot": "83a1be7a2ca9184caeddffcf9a1a83ac47528b943cd85b4499a11e5262cb29ad",
+        "badge_a": "30b625e285c6dd3a8b974fe6b2b1a488e281980a3092e9738e0f47e6a402a3d1",
+        "badge_b": "5cac5e58ab7d7f1bfe0d71d014d6f9c01b3154af0a752169c5bf143a6d6c957f",
+        "badge_l": "f215c8e76018695f39071baea74aa9aa886132f843e090199181a2068e6139b0",
+        "badge_r": "3a670701ef45db418f0e3fddbc38a5e29142a750ab29993c7d813b278af386cc",
+        "row_tl": "ea2bd592a7d866e4a5da33ef926cd97e991284e51e3b5b18da56c31c8f3f026f",
+        "row_t": "ca616cbce20756ba165d69d580dee7aa7b2ba46e38e775ee682bb519cd685d66",
+        "row_l": "e015961f843abb40e718bc67dbe5b96ec904ac5b7988cacac504a1745ec669b9",
+        "srow_tl": "5e32e9ff44b68ac8882c07f4fe83968365bc0fcbaf14b836c6b4e94fb8b28508",
+        "srow_t": "14cbd779c20124e69d440326cbeff4c31de1d7445522ecba51c15f2ab93a0d57",
+        "srow_l": "e015961f843abb40e718bc67dbe5b96ec904ac5b7988cacac504a1745ec669b9",
+        "bub_tl": "a29bd9204fb837aeab7d692c61ce00c6e97077ace7b8042fe63074c5bd57353b",
+        "bub_t": "3d10ca636cbfad5407e4e817280599a58c6ef1477003e8faf71cbc045fb7666a",
+        "bub_l": "b16f5db6ddbeaaaf96d6fb9d3a6bbfccf5b566fa4f40fed6ae4b1b3a71002065",
+        "bub_fill": "06aa20a633730070ee0e06ece876ed229a578cb608aba470c4a39ddf318369ee",
+        "bub_tail": "8f49c0060984c080690a444ac522d1c92f67e4161a5706990254ab62b8c27390",
+        "bub_join": "06aa20a633730070ee0e06ece876ed229a578cb608aba470c4a39ddf318369ee",
+        "coin": "8fcf64b585f2e0e7f1d50f60dc114e14df2092a6eb8015b5ee2058117ba7464c",
+        "rule": "47b76ed227f1a288c264a0d0aa92ace46edc1dbb21a485cd3fd7d66b8092f82f",
+        "rule_end": "92ef7d784bf6846c4ccfc8c2e061d7627d870fc4a0100ad9ff95e51abd0abd83",
+        "hud_tl": "5689da4754bc333439f335ac327b3caebab0822ea332c2f272ef63cc92143dc9",
+        "hud_t": "8976b7b6bf303ba8cda979ed1a47e5c366a36434e212daf259a914a51ef42613",
+        "hud_l": "0b8a1269f2b3c5d35aed1719bcde4142b543373b3388849adac893b056f26343",
+        "key": "60203da1daf3e3a65175a9a3fb91a2e24a0244bea7d2756edc33ea617af9c3f6"
+      },
+      "hud_icon_hashes": {
+        "none": "5341e6b2646979a70e57653007a1f310169421ec9bdd9f1a5648f75ade005af1",
+        "bombs": "81ea1e6a096956269736190a4857376a9396096e0c5de1e5865d168444cf011b",
+        "lamp": "8911d4b1514d3a841f282f460dd6834978dc9d4aad2743bd8523fd7deaafd09e",
+        "cloak": "ed6ee26fdfda009f5b3fec5c30372e32ed1d5abe05268e243d77f1b1c14e4964",
+        "key": "983934bab1f5608b3e6a21584e1e80e99fd8964f3992817318cdeef92aac7b4e",
+        "heart_piece": "748942ef22420466c22364a427a2773959715cdcfba5b817b8ab000c5a82d0e2",
+        "heart_container": "beb4e4f5cbddbcb9c1b61314c912f64a9b0aa5625671058266f65d6da5f794dc",
+        "gilt_big": "80412346747512c2d8246286797636d9ce287ce1c582ef56893a696809d4ce0e",
+        "relic": "80412346747512c2d8246286797636d9ce287ce1c582ef56893a696809d4ce0e",
+        "gauntlet": "a4d77c27a977de5c293d7650f7d1a13c6eb5e487c880f7a93e733abf8ebd7bd3",
+        "bow": "d2206de130edcf1134027f7d01c32315ed1de548f9f3564614486fcc062beb71",
+        "hubcap": "8e17729c0cc30fe6677892150cf2cba08751009075fc021fdc0adef374661471",
+        "map": "0facda11396c2ce63da6e83e3a38406332b5d0f17d04c61c3755443e01c473b4",
+        "astrolabe": "80412346747512c2d8246286797636d9ce287ce1c582ef56893a696809d4ce0e",
+        "sword": "68c2215b52334717f6818f21a902c8b562e3e42f2b722c01f3e5f0372e8016d8",
+        "shield": "6afc8ce529ac9c85d4fc64fc6c0d4d38a41acd72649c96578c83db670e9d2cbd",
+        "shield_upgraded": "9afa92e1e0a63a5af420833d55a72f6f9c2dce4b80a468041a41755e1c7034dd"
+      },
+      "ui_kit_sha256": "a77e643e30a8a69d7dcca0cbf567a88e911751236b8bfa193183ffdfd3c8f87b",
+      "source_sha256": {
+        "art/ui_studies.py": "5f924a43aa53fb0403cf6f1e77fe6912263b3ca7d210f614a081c3839f577b5b",
+        "art/reboot_ui.py": "6963ac2536f37580c1e398228b22359ea03c39460b9814fb751d4de82c98dfc7",
+        "art/ui_font.py": "48ae0da7d1daa4f01c144a856d18694c5be06674288029e62913a513bcb8388e"
+      }
+    },
+    {
+      "variant": 3,
+      "name": "Black Glass",
+      "passed": 111,
+      "total": 111,
+      "checks": [
+        {
+          "name": "menu palette16",
+          "passed": true
+        },
+        {
+          "name": "menu RGB555",
+          "passed": true
+        },
+        {
+          "name": "map palette16",
+          "passed": true
+        },
+        {
+          "name": "map RGB555",
+          "passed": true
+        },
+        {
+          "name": "hud palette16",
+          "passed": true
+        },
+        {
+          "name": "hud RGB555",
+          "passed": true
+        },
+        {
+          "name": "uikit palette16",
+          "passed": true
+        },
+        {
+          "name": "uikit RGB555",
+          "passed": true
+        },
+        {
+          "name": "ui palette16",
+          "passed": true
+        },
+        {
+          "name": "ui RGB555",
+          "passed": true
+        },
+        {
+          "name": "portrait palette16",
+          "passed": true
+        },
+        {
+          "name": "portrait RGB555",
+          "passed": true
+        },
+        {
+          "name": "panel_tl legal8x8",
+          "passed": true
+        },
+        {
+          "name": "panel_t legal8x8",
+          "passed": true
+        },
+        {
+          "name": "panel_l legal8x8",
+          "passed": true
+        },
+        {
+          "name": "fill legal8x8",
+          "passed": true
+        },
+        {
+          "name": "div_t legal8x8",
+          "passed": true
+        },
+        {
+          "name": "div_m legal8x8",
+          "passed": true
+        },
+        {
+          "name": "plate_l_top legal8x8",
+          "passed": true
+        },
+        {
+          "name": "plate_l_bot legal8x8",
+          "passed": true
+        },
+        {
+          "name": "plate_m_top legal8x8",
+          "passed": true
+        },
+        {
+          "name": "plate_m_bot legal8x8",
+          "passed": true
+        },
+        {
+          "name": "slot_tl legal8x8",
+          "passed": true
+        },
+        {
+          "name": "slot_t legal8x8",
+          "passed": true
+        },
+        {
+          "name": "slot_l legal8x8",
+          "passed": true
+        },
+        {
+          "name": "slot_fill legal8x8",
+          "passed": true
+        },
+        {
+          "name": "sel_tl legal8x8",
+          "passed": true
+        },
+        {
+          "name": "sel_t legal8x8",
+          "passed": true
+        },
+        {
+          "name": "sel_l legal8x8",
+          "passed": true
+        },
+        {
+          "name": "empty_tl legal8x8",
+          "passed": true
+        },
+        {
+          "name": "empty_t legal8x8",
+          "passed": true
+        },
+        {
+          "name": "empty_l legal8x8",
+          "passed": true
+        },
+        {
+          "name": "tab_l_top legal8x8",
+          "passed": true
+        },
+        {
+          "name": "tab_l_bot legal8x8",
+          "passed": true
+        },
+        {
+          "name": "tab_m_top legal8x8",
+          "passed": true
+        },
+        {
+          "name": "tab_m_bot legal8x8",
+          "passed": true
+        },
+        {
+          "name": "tabon_l_top legal8x8",
+          "passed": true
+        },
+        {
+          "name": "tabon_l_bot legal8x8",
+          "passed": true
+        },
+        {
+          "name": "tabon_m_top legal8x8",
+          "passed": true
+        },
+        {
+          "name": "tabon_m_bot legal8x8",
+          "passed": true
+        },
+        {
+          "name": "badge_a legal8x8",
+          "passed": true
+        },
+        {
+          "name": "badge_b legal8x8",
+          "passed": true
+        },
+        {
+          "name": "badge_l legal8x8",
+          "passed": true
+        },
+        {
+          "name": "badge_r legal8x8",
+          "passed": true
+        },
+        {
+          "name": "row_tl legal8x8",
+          "passed": true
+        },
+        {
+          "name": "row_t legal8x8",
+          "passed": true
+        },
+        {
+          "name": "row_l legal8x8",
+          "passed": true
+        },
+        {
+          "name": "srow_tl legal8x8",
+          "passed": true
+        },
+        {
+          "name": "srow_t legal8x8",
+          "passed": true
+        },
+        {
+          "name": "srow_l legal8x8",
+          "passed": true
+        },
+        {
+          "name": "bub_tl legal8x8",
+          "passed": true
+        },
+        {
+          "name": "bub_t legal8x8",
+          "passed": true
+        },
+        {
+          "name": "bub_l legal8x8",
+          "passed": true
+        },
+        {
+          "name": "bub_fill legal8x8",
+          "passed": true
+        },
+        {
+          "name": "bub_tail legal8x8",
+          "passed": true
+        },
+        {
+          "name": "bub_join legal8x8",
+          "passed": true
+        },
+        {
+          "name": "coin legal8x8",
+          "passed": true
+        },
+        {
+          "name": "rule legal8x8",
+          "passed": true
+        },
+        {
+          "name": "rule_end legal8x8",
+          "passed": true
+        },
+        {
+          "name": "hud_tl legal8x8",
+          "passed": true
+        },
+        {
+          "name": "hud_t legal8x8",
+          "passed": true
+        },
+        {
+          "name": "hud_l legal8x8",
+          "passed": true
+        },
+        {
+          "name": "key legal8x8",
+          "passed": true
+        },
+        {
+          "name": "heart_full legal8x8",
+          "passed": true
+        },
+        {
+          "name": "heart_full transparentoutside",
+          "passed": true
+        },
+        {
+          "name": "heart_half legal8x8",
+          "passed": true
+        },
+        {
+          "name": "heart_half transparentoutside",
+          "passed": true
+        },
+        {
+          "name": "heart_empty legal8x8",
+          "passed": true
+        },
+        {
+          "name": "heart_empty transparentoutside",
+          "passed": true
+        },
+        {
+          "name": "hand legal8x8",
+          "passed": true
+        },
+        {
+          "name": "next markerlegal8x8",
+          "passed": true
+        },
+        {
+          "name": "pick markerlegal8x8",
+          "passed": true
+        },
+        {
+          "name": "corner markerlegal8x8",
+          "passed": true
+        },
+        {
+          "name": "badge_a markerlegal8x8",
+          "passed": true
+        },
+        {
+          "name": "badge_b markerlegal8x8",
+          "passed": true
+        },
+        {
+          "name": "badge_l markerlegal8x8",
+          "passed": true
+        },
+        {
+          "name": "cursorlegal32x32",
+          "passed": true
+        },
+        {
+          "name": "none native16canvas",
+          "passed": true
+        },
+        {
+          "name": "none compact<=10px",
+          "passed": true
+        },
+        {
+          "name": "bombs native16canvas",
+          "passed": true
+        },
+        {
+          "name": "bombs compact<=10px",
+          "passed": true
+        },
+        {
+          "name": "lamp native16canvas",
+          "passed": true
+        },
+        {
+          "name": "lamp compact<=10px",
+          "passed": true
+        },
+        {
+          "name": "cloak native16canvas",
+          "passed": true
+        },
+        {
+          "name": "cloak compact<=10px",
+          "passed": true
+        },
+        {
+          "name": "key native16canvas",
+          "passed": true
+        },
+        {
+          "name": "key compact<=10px",
+          "passed": true
+        },
+        {
+          "name": "heart_piece native16canvas",
+          "passed": true
+        },
+        {
+          "name": "heart_piece compact<=10px",
+          "passed": true
+        },
+        {
+          "name": "heart_container native16canvas",
+          "passed": true
+        },
+        {
+          "name": "heart_container compact<=10px",
+          "passed": true
+        },
+        {
+          "name": "gilt_big native16canvas",
+          "passed": true
+        },
+        {
+          "name": "gilt_big compact<=10px",
+          "passed": true
+        },
+        {
+          "name": "relic native16canvas",
+          "passed": true
+        },
+        {
+          "name": "relic compact<=10px",
+          "passed": true
+        },
+        {
+          "name": "gauntlet native16canvas",
+          "passed": true
+        },
+        {
+          "name": "gauntlet compact<=10px",
+          "passed": true
+        },
+        {
+          "name": "bow native16canvas",
+          "passed": true
+        },
+        {
+          "name": "bow compact<=10px",
+          "passed": true
+        },
+        {
+          "name": "hubcap native16canvas",
+          "passed": true
+        },
+        {
+          "name": "hubcap compact<=10px",
+          "passed": true
+        },
+        {
+          "name": "map native16canvas",
+          "passed": true
+        },
+        {
+          "name": "map compact<=10px",
+          "passed": true
+        },
+        {
+          "name": "astrolabe native16canvas",
+          "passed": true
+        },
+        {
+          "name": "astrolabe compact<=10px",
+          "passed": true
+        },
+        {
+          "name": "sword native16canvas",
+          "passed": true
+        },
+        {
+          "name": "sword compact<=10px",
+          "passed": true
+        },
+        {
+          "name": "shield native16canvas",
+          "passed": true
+        },
+        {
+          "name": "shield compact<=10px",
+          "passed": true
+        },
+        {
+          "name": "shield_upgraded native16canvas",
+          "passed": true
+        },
+        {
+          "name": "shield_upgraded compact<=10px",
+          "passed": true
+        }
+      ],
+      "kit_hashes": {
+        "panel_tl": "116994f334daa3fd8eebaf462dbfe072f960c585822dc069c7e4bf618dd93614",
+        "panel_t": "92372ed5acddd642f70efe9da42da99f3fa3a80484b5cc91e95c13fe825b166c",
+        "panel_l": "e2dd20bd4f2cd2a6d99cd678a0590ffdd19f223710195c07b9730aa16dbc0585",
+        "fill": "c77e45aabdf68c7fa51f69356f6a9305e04f1fd8882ad5480ab0e3afb9ade322",
+        "div_t": "af9d44c4c6a4c5b4a74d6b734e09a67456908a4263e503b83535fc8edca22d83",
+        "div_m": "b9dd24aa80d75c1bc804e3c4a346b79e8a0f14e668bad267fa4e5673b2482c74",
+        "plate_l_top": "1c7d37384a3b4ae3fcbd112cc56d5a30fd8c9977087407fcb39206f0c6af56c1",
+        "plate_l_bot": "673b2e563c06472b89c5ceefaf497e7bc3416df4f8ce480a1e4d48bf278d9149",
+        "plate_m_top": "453c12827d5011808083e81961a1e5f0760387b98c047607964463052694851e",
+        "plate_m_bot": "7fafc2b07f216626d843b3b9fc70243d02d7ad4e06cad3704549aac72e62bed1",
+        "slot_tl": "2513cc6882650b99477cb0212df2633235cbeed991456baff03b2b117d754267",
+        "slot_t": "cb156130eb1545af4f1c1531732dcaf9b59f30a8a9e78203bfafd18a85eac585",
+        "slot_l": "4be44c6ac010dd464d2542fc18f716dcb5acf412ec8294eb9d7adaa1bdfd9767",
+        "slot_fill": "4c6dd169468938fefaa394fafbee6e4b79ad6a2ff2435489b7dc878a71b5630a",
+        "sel_tl": "aec88a602eebbc7978ecbe45676fb8a33ac94d4efb51d9883725e3e1f09474fe",
+        "sel_t": "c22c3e4d29a68c2f55b4ce752edce160c43ac74ecf417c80d7e01458bdbd03ca",
+        "sel_l": "7a049cb765f5a19ea1a919849fc48449ad7246543360750c53d18709f55d4007",
+        "empty_tl": "5472f74aff5a1d871813306511d01d534c88c25c88d9653178fecfc1ffd00b7b",
+        "empty_t": "1660536856df2d95ce01e660f9550183246ee2d58efcad75c1a4f451b07a75f9",
+        "empty_l": "3aabe9615b662daec6c1633f2ad7fe10ea65303de87bed73c60760d83a69dcc2",
+        "tab_l_top": "1c7d37384a3b4ae3fcbd112cc56d5a30fd8c9977087407fcb39206f0c6af56c1",
+        "tab_l_bot": "673b2e563c06472b89c5ceefaf497e7bc3416df4f8ce480a1e4d48bf278d9149",
+        "tab_m_top": "453c12827d5011808083e81961a1e5f0760387b98c047607964463052694851e",
+        "tab_m_bot": "7fafc2b07f216626d843b3b9fc70243d02d7ad4e06cad3704549aac72e62bed1",
+        "tabon_l_top": "8c8790264480bee83d8a9538765a109842e7994b0ec64d0c69c1248f7c3d99cf",
+        "tabon_l_bot": "1b9f7eb4681dc322da2e4e580688552f98f320924f57e0802127c6c9a6f7901e",
+        "tabon_m_top": "f191f2d7a9b853433014ef1ba36b2d37079ba777d24d7ff6b25a4ee4b94a59eb",
+        "tabon_m_bot": "8303c6bd97b1b37961dcdc7979229b02382dc39e7fa0f6002cc8572f8f10cfb9",
+        "badge_a": "baa5c84ecc888201b5512cf60fc7341819304b5497bed057defc26eb664c619e",
+        "badge_b": "d9c1895f9b16489c1041b730ab19812c92ad87da6fb1c454cc313f72c846c4c5",
+        "badge_l": "ef0170f89c8ef95669eeeadd616101d28a8f5abadbc67307783efff5f1b12f01",
+        "badge_r": "6741e6725278bceaf7d14cef68cbcafb0d4b7e41a0a73b3d0db376b0bfc4f28d",
+        "row_tl": "2513cc6882650b99477cb0212df2633235cbeed991456baff03b2b117d754267",
+        "row_t": "cb156130eb1545af4f1c1531732dcaf9b59f30a8a9e78203bfafd18a85eac585",
+        "row_l": "4be44c6ac010dd464d2542fc18f716dcb5acf412ec8294eb9d7adaa1bdfd9767",
+        "srow_tl": "aec88a602eebbc7978ecbe45676fb8a33ac94d4efb51d9883725e3e1f09474fe",
+        "srow_t": "c22c3e4d29a68c2f55b4ce752edce160c43ac74ecf417c80d7e01458bdbd03ca",
+        "srow_l": "7a049cb765f5a19ea1a919849fc48449ad7246543360750c53d18709f55d4007",
+        "bub_tl": "0c4bd5ecefc22ac44a8e9bc3ab091577f77e0891cbfaf0d3a802fb0f80de830a",
+        "bub_t": "ed29272df161c2b6a3da5ee837330d80239c62ac913aa5d9c17b498e16c1edd1",
+        "bub_l": "82b4487313b994a1812cdb728956e4b66d541416f0767a7188c1571a882257cd",
+        "bub_fill": "06aa20a633730070ee0e06ece876ed229a578cb608aba470c4a39ddf318369ee",
+        "bub_tail": "4f4bcf8472c03fbee48b14bf7bd4929018e2639f614c97893dea69faadfb0adf",
+        "bub_join": "06aa20a633730070ee0e06ece876ed229a578cb608aba470c4a39ddf318369ee",
+        "coin": "330389990c30b89f55a72c6e2ad7f7edc0eefbc8e84420db03b0c240142b1bb8",
+        "rule": "65beeabd2c2489da4abb07f0f256be2eb6402a0c1458dcd1bc359d10be755151",
+        "rule_end": "c276a13215ddce731b7274502d36e7baf1a2cb5e05706af9a72443ba02a494f6",
+        "hud_tl": "116994f334daa3fd8eebaf462dbfe072f960c585822dc069c7e4bf618dd93614",
+        "hud_t": "92372ed5acddd642f70efe9da42da99f3fa3a80484b5cc91e95c13fe825b166c",
+        "hud_l": "e2dd20bd4f2cd2a6d99cd678a0590ffdd19f223710195c07b9730aa16dbc0585",
+        "key": "60203da1daf3e3a65175a9a3fb91a2e24a0244bea7d2756edc33ea617af9c3f6"
+      },
+      "hud_icon_hashes": {
+        "none": "5341e6b2646979a70e57653007a1f310169421ec9bdd9f1a5648f75ade005af1",
+        "bombs": "81ea1e6a096956269736190a4857376a9396096e0c5de1e5865d168444cf011b",
+        "lamp": "8911d4b1514d3a841f282f460dd6834978dc9d4aad2743bd8523fd7deaafd09e",
+        "cloak": "ed6ee26fdfda009f5b3fec5c30372e32ed1d5abe05268e243d77f1b1c14e4964",
+        "key": "983934bab1f5608b3e6a21584e1e80e99fd8964f3992817318cdeef92aac7b4e",
+        "heart_piece": "748942ef22420466c22364a427a2773959715cdcfba5b817b8ab000c5a82d0e2",
+        "heart_container": "beb4e4f5cbddbcb9c1b61314c912f64a9b0aa5625671058266f65d6da5f794dc",
+        "gilt_big": "80412346747512c2d8246286797636d9ce287ce1c582ef56893a696809d4ce0e",
+        "relic": "80412346747512c2d8246286797636d9ce287ce1c582ef56893a696809d4ce0e",
+        "gauntlet": "a4d77c27a977de5c293d7650f7d1a13c6eb5e487c880f7a93e733abf8ebd7bd3",
+        "bow": "d2206de130edcf1134027f7d01c32315ed1de548f9f3564614486fcc062beb71",
+        "hubcap": "8e17729c0cc30fe6677892150cf2cba08751009075fc021fdc0adef374661471",
+        "map": "0facda11396c2ce63da6e83e3a38406332b5d0f17d04c61c3755443e01c473b4",
+        "astrolabe": "80412346747512c2d8246286797636d9ce287ce1c582ef56893a696809d4ce0e",
+        "sword": "68c2215b52334717f6818f21a902c8b562e3e42f2b722c01f3e5f0372e8016d8",
+        "shield": "6afc8ce529ac9c85d4fc64fc6c0d4d38a41acd72649c96578c83db670e9d2cbd",
+        "shield_upgraded": "9afa92e1e0a63a5af420833d55a72f6f9c2dce4b80a468041a41755e1c7034dd"
+      },
+      "ui_kit_sha256": "a25aa9ce42a725f58461fbb15a5fee0265e9fa82ff1e5fd13dfb9f02690354ba",
+      "source_sha256": {
+        "art/ui_studies.py": "5f924a43aa53fb0403cf6f1e77fe6912263b3ca7d210f614a081c3839f577b5b",
+        "art/reboot_ui.py": "6963ac2536f37580c1e398228b22359ea03c39460b9814fb751d4de82c98dfc7",
+        "art/ui_font.py": "48ae0da7d1daa4f01c144a856d18694c5be06674288029e62913a513bcb8388e"
+      }
+    },
+    {
+      "variant": 4,
+      "name": "Wine Reliquary",
+      "passed": 111,
+      "total": 111,
+      "checks": [
+        {
+          "name": "menu palette16",
+          "passed": true
+        },
+        {
+          "name": "menu RGB555",
+          "passed": true
+        },
+        {
+          "name": "map palette16",
+          "passed": true
+        },
+        {
+          "name": "map RGB555",
+          "passed": true
+        },
+        {
+          "name": "hud palette16",
+          "passed": true
+        },
+        {
+          "name": "hud RGB555",
+          "passed": true
+        },
+        {
+          "name": "uikit palette16",
+          "passed": true
+        },
+        {
+          "name": "uikit RGB555",
+          "passed": true
+        },
+        {
+          "name": "ui palette16",
+          "passed": true
+        },
+        {
+          "name": "ui RGB555",
+          "passed": true
+        },
+        {
+          "name": "portrait palette16",
+          "passed": true
+        },
+        {
+          "name": "portrait RGB555",
+          "passed": true
+        },
+        {
+          "name": "panel_tl legal8x8",
+          "passed": true
+        },
+        {
+          "name": "panel_t legal8x8",
+          "passed": true
+        },
+        {
+          "name": "panel_l legal8x8",
+          "passed": true
+        },
+        {
+          "name": "fill legal8x8",
+          "passed": true
+        },
+        {
+          "name": "div_t legal8x8",
+          "passed": true
+        },
+        {
+          "name": "div_m legal8x8",
+          "passed": true
+        },
+        {
+          "name": "plate_l_top legal8x8",
+          "passed": true
+        },
+        {
+          "name": "plate_l_bot legal8x8",
+          "passed": true
+        },
+        {
+          "name": "plate_m_top legal8x8",
+          "passed": true
+        },
+        {
+          "name": "plate_m_bot legal8x8",
+          "passed": true
+        },
+        {
+          "name": "slot_tl legal8x8",
+          "passed": true
+        },
+        {
+          "name": "slot_t legal8x8",
+          "passed": true
+        },
+        {
+          "name": "slot_l legal8x8",
+          "passed": true
+        },
+        {
+          "name": "slot_fill legal8x8",
+          "passed": true
+        },
+        {
+          "name": "sel_tl legal8x8",
+          "passed": true
+        },
+        {
+          "name": "sel_t legal8x8",
+          "passed": true
+        },
+        {
+          "name": "sel_l legal8x8",
+          "passed": true
+        },
+        {
+          "name": "empty_tl legal8x8",
+          "passed": true
+        },
+        {
+          "name": "empty_t legal8x8",
+          "passed": true
+        },
+        {
+          "name": "empty_l legal8x8",
+          "passed": true
+        },
+        {
+          "name": "tab_l_top legal8x8",
+          "passed": true
+        },
+        {
+          "name": "tab_l_bot legal8x8",
+          "passed": true
+        },
+        {
+          "name": "tab_m_top legal8x8",
+          "passed": true
+        },
+        {
+          "name": "tab_m_bot legal8x8",
+          "passed": true
+        },
+        {
+          "name": "tabon_l_top legal8x8",
+          "passed": true
+        },
+        {
+          "name": "tabon_l_bot legal8x8",
+          "passed": true
+        },
+        {
+          "name": "tabon_m_top legal8x8",
+          "passed": true
+        },
+        {
+          "name": "tabon_m_bot legal8x8",
+          "passed": true
+        },
+        {
+          "name": "badge_a legal8x8",
+          "passed": true
+        },
+        {
+          "name": "badge_b legal8x8",
+          "passed": true
+        },
+        {
+          "name": "badge_l legal8x8",
+          "passed": true
+        },
+        {
+          "name": "badge_r legal8x8",
+          "passed": true
+        },
+        {
+          "name": "row_tl legal8x8",
+          "passed": true
+        },
+        {
+          "name": "row_t legal8x8",
+          "passed": true
+        },
+        {
+          "name": "row_l legal8x8",
+          "passed": true
+        },
+        {
+          "name": "srow_tl legal8x8",
+          "passed": true
+        },
+        {
+          "name": "srow_t legal8x8",
+          "passed": true
+        },
+        {
+          "name": "srow_l legal8x8",
+          "passed": true
+        },
+        {
+          "name": "bub_tl legal8x8",
+          "passed": true
+        },
+        {
+          "name": "bub_t legal8x8",
+          "passed": true
+        },
+        {
+          "name": "bub_l legal8x8",
+          "passed": true
+        },
+        {
+          "name": "bub_fill legal8x8",
+          "passed": true
+        },
+        {
+          "name": "bub_tail legal8x8",
+          "passed": true
+        },
+        {
+          "name": "bub_join legal8x8",
+          "passed": true
+        },
+        {
+          "name": "coin legal8x8",
+          "passed": true
+        },
+        {
+          "name": "rule legal8x8",
+          "passed": true
+        },
+        {
+          "name": "rule_end legal8x8",
+          "passed": true
+        },
+        {
+          "name": "hud_tl legal8x8",
+          "passed": true
+        },
+        {
+          "name": "hud_t legal8x8",
+          "passed": true
+        },
+        {
+          "name": "hud_l legal8x8",
+          "passed": true
+        },
+        {
+          "name": "key legal8x8",
+          "passed": true
+        },
+        {
+          "name": "heart_full legal8x8",
+          "passed": true
+        },
+        {
+          "name": "heart_full transparentoutside",
+          "passed": true
+        },
+        {
+          "name": "heart_half legal8x8",
+          "passed": true
+        },
+        {
+          "name": "heart_half transparentoutside",
+          "passed": true
+        },
+        {
+          "name": "heart_empty legal8x8",
+          "passed": true
+        },
+        {
+          "name": "heart_empty transparentoutside",
+          "passed": true
+        },
+        {
+          "name": "hand legal8x8",
+          "passed": true
+        },
+        {
+          "name": "next markerlegal8x8",
+          "passed": true
+        },
+        {
+          "name": "pick markerlegal8x8",
+          "passed": true
+        },
+        {
+          "name": "corner markerlegal8x8",
+          "passed": true
+        },
+        {
+          "name": "badge_a markerlegal8x8",
+          "passed": true
+        },
+        {
+          "name": "badge_b markerlegal8x8",
+          "passed": true
+        },
+        {
+          "name": "badge_l markerlegal8x8",
+          "passed": true
+        },
+        {
+          "name": "cursorlegal32x32",
+          "passed": true
+        },
+        {
+          "name": "none native16canvas",
+          "passed": true
+        },
+        {
+          "name": "none compact<=10px",
+          "passed": true
+        },
+        {
+          "name": "bombs native16canvas",
+          "passed": true
+        },
+        {
+          "name": "bombs compact<=10px",
+          "passed": true
+        },
+        {
+          "name": "lamp native16canvas",
+          "passed": true
+        },
+        {
+          "name": "lamp compact<=10px",
+          "passed": true
+        },
+        {
+          "name": "cloak native16canvas",
+          "passed": true
+        },
+        {
+          "name": "cloak compact<=10px",
+          "passed": true
+        },
+        {
+          "name": "key native16canvas",
+          "passed": true
+        },
+        {
+          "name": "key compact<=10px",
+          "passed": true
+        },
+        {
+          "name": "heart_piece native16canvas",
+          "passed": true
+        },
+        {
+          "name": "heart_piece compact<=10px",
+          "passed": true
+        },
+        {
+          "name": "heart_container native16canvas",
+          "passed": true
+        },
+        {
+          "name": "heart_container compact<=10px",
+          "passed": true
+        },
+        {
+          "name": "gilt_big native16canvas",
+          "passed": true
+        },
+        {
+          "name": "gilt_big compact<=10px",
+          "passed": true
+        },
+        {
+          "name": "relic native16canvas",
+          "passed": true
+        },
+        {
+          "name": "relic compact<=10px",
+          "passed": true
+        },
+        {
+          "name": "gauntlet native16canvas",
+          "passed": true
+        },
+        {
+          "name": "gauntlet compact<=10px",
+          "passed": true
+        },
+        {
+          "name": "bow native16canvas",
+          "passed": true
+        },
+        {
+          "name": "bow compact<=10px",
+          "passed": true
+        },
+        {
+          "name": "hubcap native16canvas",
+          "passed": true
+        },
+        {
+          "name": "hubcap compact<=10px",
+          "passed": true
+        },
+        {
+          "name": "map native16canvas",
+          "passed": true
+        },
+        {
+          "name": "map compact<=10px",
+          "passed": true
+        },
+        {
+          "name": "astrolabe native16canvas",
+          "passed": true
+        },
+        {
+          "name": "astrolabe compact<=10px",
+          "passed": true
+        },
+        {
+          "name": "sword native16canvas",
+          "passed": true
+        },
+        {
+          "name": "sword compact<=10px",
+          "passed": true
+        },
+        {
+          "name": "shield native16canvas",
+          "passed": true
+        },
+        {
+          "name": "shield compact<=10px",
+          "passed": true
+        },
+        {
+          "name": "shield_upgraded native16canvas",
+          "passed": true
+        },
+        {
+          "name": "shield_upgraded compact<=10px",
+          "passed": true
+        }
+      ],
+      "kit_hashes": {
+        "panel_tl": "96e9220211d0ac221e3b1f188f24e7ff115a17e7b2a7e0659d1d45215e16c8ef",
+        "panel_t": "cff32cc1bb77a1bada46a5e46e572f6d386a3c314d2c348d92d4a986ad2cc6e5",
+        "panel_l": "4377275f2e1995806f09e3e22b27645c818948124f03e7b7eb0a79d1c15e9af7",
+        "fill": "c77e45aabdf68c7fa51f69356f6a9305e04f1fd8882ad5480ab0e3afb9ade322",
+        "div_t": "2f67fae2a0a57978979f3cc2c216f328322f3cc0ba6b0a53b21e7298686bf22c",
+        "div_m": "b9dd24aa80d75c1bc804e3c4a346b79e8a0f14e668bad267fa4e5673b2482c74",
+        "plate_l_top": "2f0753ddb2abb4e840549facaf888085aea62e5e6fb74b4e669c720be039f8a2",
+        "plate_l_bot": "427d01b4d29cb613d901b6da471c573b9ca1748a2a48e0a3a6d62ec84b101bf6",
+        "plate_m_top": "51b07f4ad30c58ce066bc14147e9e2dec53d3ba445618f1c5ce3af5ae73c3123",
+        "plate_m_bot": "222df2a7c35e09cc1800bd11246247a6dac8fc1b89b7e2f5d8b0cdf5c29b5947",
+        "slot_tl": "e4222c60b5f574f9e0259b240e54003163e824298851fd212e6ffbbb23bfd48a",
+        "slot_t": "706c0650b4aa88f2fda3292af81993cbd9a022bea153a3c4757457f6695e38e6",
+        "slot_l": "fe76e77358b69890b71113cc0e01b5a2ed9c3b6f0e209a731738fea7f5454c5f",
+        "slot_fill": "4c6dd169468938fefaa394fafbee6e4b79ad6a2ff2435489b7dc878a71b5630a",
+        "sel_tl": "5ca33a24d5782452dd26054e94efc3690896ddfc3f3d7861ab1748751522b8ed",
+        "sel_t": "01fc4769aeba0c9e3fd1df082a29f43d8fa7ad9d2d7acfb31546ef636dd1a358",
+        "sel_l": "a122a5bc7ab88d124398304c84aea017cc6e6a7abf42710c902c39ad7ac74de5",
+        "empty_tl": "5472f74aff5a1d871813306511d01d534c88c25c88d9653178fecfc1ffd00b7b",
+        "empty_t": "1660536856df2d95ce01e660f9550183246ee2d58efcad75c1a4f451b07a75f9",
+        "empty_l": "3aabe9615b662daec6c1633f2ad7fe10ea65303de87bed73c60760d83a69dcc2",
+        "tab_l_top": "2f0753ddb2abb4e840549facaf888085aea62e5e6fb74b4e669c720be039f8a2",
+        "tab_l_bot": "427d01b4d29cb613d901b6da471c573b9ca1748a2a48e0a3a6d62ec84b101bf6",
+        "tab_m_top": "51b07f4ad30c58ce066bc14147e9e2dec53d3ba445618f1c5ce3af5ae73c3123",
+        "tab_m_bot": "222df2a7c35e09cc1800bd11246247a6dac8fc1b89b7e2f5d8b0cdf5c29b5947",
+        "tabon_l_top": "5c3a74ccb232b9b8c198d221c4ac626de0a4888b78b0075f19976ea87b7dc357",
+        "tabon_l_bot": "6d3d274f1a499146e6ae327fb77878941dc2eca42da61bdcd924f9baae28bc85",
+        "tabon_m_top": "4de158354bcdc5e2e01527e65ba07d8c05c75ed7f9421f9c38940b166433b74f",
+        "tabon_m_bot": "1bb28fbed2db4ffd809e4511ae8824a339c0937c96fb8dd327557eceef86b44f",
+        "badge_a": "94fddb948d6cc33353ff0d9b3da08cc55a9d7b0b0b9beb6fb43480a1ecece140",
+        "badge_b": "a8cc3278f5ff104cbdb9366c3c3bcfdd81b5048aec1c923626422e792c6dd655",
+        "badge_l": "eefed2eecfcc0014b8d109911038aae2b97d07c555cde0be49a20798307c89ae",
+        "badge_r": "1da27258e03d78d4efbf0f6130dffa25a784e97addbec4246e9d9ea313f4bc6d",
+        "row_tl": "e4222c60b5f574f9e0259b240e54003163e824298851fd212e6ffbbb23bfd48a",
+        "row_t": "706c0650b4aa88f2fda3292af81993cbd9a022bea153a3c4757457f6695e38e6",
+        "row_l": "fe76e77358b69890b71113cc0e01b5a2ed9c3b6f0e209a731738fea7f5454c5f",
+        "srow_tl": "5ca33a24d5782452dd26054e94efc3690896ddfc3f3d7861ab1748751522b8ed",
+        "srow_t": "01fc4769aeba0c9e3fd1df082a29f43d8fa7ad9d2d7acfb31546ef636dd1a358",
+        "srow_l": "a122a5bc7ab88d124398304c84aea017cc6e6a7abf42710c902c39ad7ac74de5",
+        "bub_tl": "415c1131553aa05a620e6f34c8e680ec8959bc913fe4b0042e204ab1234302d7",
+        "bub_t": "8dee67328a8d4cb244975765d665e48ae905cf04fbb089499da76b1571b15ec1",
+        "bub_l": "4d63d4aca2d89fbfec98cd739eb55b93940a65cb5e1d37a81b613faf0e621895",
+        "bub_fill": "06aa20a633730070ee0e06ece876ed229a578cb608aba470c4a39ddf318369ee",
+        "bub_tail": "4f4bcf8472c03fbee48b14bf7bd4929018e2639f614c97893dea69faadfb0adf",
+        "bub_join": "06aa20a633730070ee0e06ece876ed229a578cb608aba470c4a39ddf318369ee",
+        "coin": "8fcf64b585f2e0e7f1d50f60dc114e14df2092a6eb8015b5ee2058117ba7464c",
+        "rule": "09261eedff0ae56aac25fade24da53cf1c9b68cee0cef9a607cf69be7d36008f",
+        "rule_end": "18235b4744acb47e486ab48f6b7a0c18445273288c52da02bd661ad4042b8de5",
+        "hud_tl": "96e9220211d0ac221e3b1f188f24e7ff115a17e7b2a7e0659d1d45215e16c8ef",
+        "hud_t": "cff32cc1bb77a1bada46a5e46e572f6d386a3c314d2c348d92d4a986ad2cc6e5",
+        "hud_l": "4377275f2e1995806f09e3e22b27645c818948124f03e7b7eb0a79d1c15e9af7",
+        "key": "60203da1daf3e3a65175a9a3fb91a2e24a0244bea7d2756edc33ea617af9c3f6"
+      },
+      "hud_icon_hashes": {
+        "none": "5341e6b2646979a70e57653007a1f310169421ec9bdd9f1a5648f75ade005af1",
+        "bombs": "81ea1e6a096956269736190a4857376a9396096e0c5de1e5865d168444cf011b",
+        "lamp": "8911d4b1514d3a841f282f460dd6834978dc9d4aad2743bd8523fd7deaafd09e",
+        "cloak": "ed6ee26fdfda009f5b3fec5c30372e32ed1d5abe05268e243d77f1b1c14e4964",
+        "key": "983934bab1f5608b3e6a21584e1e80e99fd8964f3992817318cdeef92aac7b4e",
+        "heart_piece": "748942ef22420466c22364a427a2773959715cdcfba5b817b8ab000c5a82d0e2",
+        "heart_container": "beb4e4f5cbddbcb9c1b61314c912f64a9b0aa5625671058266f65d6da5f794dc",
+        "gilt_big": "80412346747512c2d8246286797636d9ce287ce1c582ef56893a696809d4ce0e",
+        "relic": "80412346747512c2d8246286797636d9ce287ce1c582ef56893a696809d4ce0e",
+        "gauntlet": "a4d77c27a977de5c293d7650f7d1a13c6eb5e487c880f7a93e733abf8ebd7bd3",
+        "bow": "d2206de130edcf1134027f7d01c32315ed1de548f9f3564614486fcc062beb71",
+        "hubcap": "8e17729c0cc30fe6677892150cf2cba08751009075fc021fdc0adef374661471",
+        "map": "0facda11396c2ce63da6e83e3a38406332b5d0f17d04c61c3755443e01c473b4",
+        "astrolabe": "80412346747512c2d8246286797636d9ce287ce1c582ef56893a696809d4ce0e",
+        "sword": "68c2215b52334717f6818f21a902c8b562e3e42f2b722c01f3e5f0372e8016d8",
+        "shield": "6afc8ce529ac9c85d4fc64fc6c0d4d38a41acd72649c96578c83db670e9d2cbd",
+        "shield_upgraded": "9afa92e1e0a63a5af420833d55a72f6f9c2dce4b80a468041a41755e1c7034dd"
+      },
+      "ui_kit_sha256": "fdf292290d0f7fe9b76e8b7f0551a502fa9905a98f50308c1c7ee514af6e19c6",
+      "source_sha256": {
+        "art/ui_studies.py": "5f924a43aa53fb0403cf6f1e77fe6912263b3ca7d210f614a081c3839f577b5b",
+        "art/reboot_ui.py": "6963ac2536f37580c1e398228b22359ea03c39460b9814fb751d4de82c98dfc7",
+        "art/ui_font.py": "48ae0da7d1daa4f01c144a856d18694c5be06674288029e62913a513bcb8388e"
+      }
+    },
+    {
+      "variant": 5,
+      "name": "Salvage Ledger",
+      "passed": 111,
+      "total": 111,
+      "checks": [
+        {
+          "name": "menu palette16",
+          "passed": true
+        },
+        {
+          "name": "menu RGB555",
+          "passed": true
+        },
+        {
+          "name": "map palette16",
+          "passed": true
+        },
+        {
+          "name": "map RGB555",
+          "passed": true
+        },
+        {
+          "name": "hud palette16",
+          "passed": true
+        },
+        {
+          "name": "hud RGB555",
+          "passed": true
+        },
+        {
+          "name": "uikit palette16",
+          "passed": true
+        },
+        {
+          "name": "uikit RGB555",
+          "passed": true
+        },
+        {
+          "name": "ui palette16",
+          "passed": true
+        },
+        {
+          "name": "ui RGB555",
+          "passed": true
+        },
+        {
+          "name": "portrait palette16",
+          "passed": true
+        },
+        {
+          "name": "portrait RGB555",
+          "passed": true
+        },
+        {
+          "name": "panel_tl legal8x8",
+          "passed": true
+        },
+        {
+          "name": "panel_t legal8x8",
+          "passed": true
+        },
+        {
+          "name": "panel_l legal8x8",
+          "passed": true
+        },
+        {
+          "name": "fill legal8x8",
+          "passed": true
+        },
+        {
+          "name": "div_t legal8x8",
+          "passed": true
+        },
+        {
+          "name": "div_m legal8x8",
+          "passed": true
+        },
+        {
+          "name": "plate_l_top legal8x8",
+          "passed": true
+        },
+        {
+          "name": "plate_l_bot legal8x8",
+          "passed": true
+        },
+        {
+          "name": "plate_m_top legal8x8",
+          "passed": true
+        },
+        {
+          "name": "plate_m_bot legal8x8",
+          "passed": true
+        },
+        {
+          "name": "slot_tl legal8x8",
+          "passed": true
+        },
+        {
+          "name": "slot_t legal8x8",
+          "passed": true
+        },
+        {
+          "name": "slot_l legal8x8",
+          "passed": true
+        },
+        {
+          "name": "slot_fill legal8x8",
+          "passed": true
+        },
+        {
+          "name": "sel_tl legal8x8",
+          "passed": true
+        },
+        {
+          "name": "sel_t legal8x8",
+          "passed": true
+        },
+        {
+          "name": "sel_l legal8x8",
+          "passed": true
+        },
+        {
+          "name": "empty_tl legal8x8",
+          "passed": true
+        },
+        {
+          "name": "empty_t legal8x8",
+          "passed": true
+        },
+        {
+          "name": "empty_l legal8x8",
+          "passed": true
+        },
+        {
+          "name": "tab_l_top legal8x8",
+          "passed": true
+        },
+        {
+          "name": "tab_l_bot legal8x8",
+          "passed": true
+        },
+        {
+          "name": "tab_m_top legal8x8",
+          "passed": true
+        },
+        {
+          "name": "tab_m_bot legal8x8",
+          "passed": true
+        },
+        {
+          "name": "tabon_l_top legal8x8",
+          "passed": true
+        },
+        {
+          "name": "tabon_l_bot legal8x8",
+          "passed": true
+        },
+        {
+          "name": "tabon_m_top legal8x8",
+          "passed": true
+        },
+        {
+          "name": "tabon_m_bot legal8x8",
+          "passed": true
+        },
+        {
+          "name": "badge_a legal8x8",
+          "passed": true
+        },
+        {
+          "name": "badge_b legal8x8",
+          "passed": true
+        },
+        {
+          "name": "badge_l legal8x8",
+          "passed": true
+        },
+        {
+          "name": "badge_r legal8x8",
+          "passed": true
+        },
+        {
+          "name": "row_tl legal8x8",
+          "passed": true
+        },
+        {
+          "name": "row_t legal8x8",
+          "passed": true
+        },
+        {
+          "name": "row_l legal8x8",
+          "passed": true
+        },
+        {
+          "name": "srow_tl legal8x8",
+          "passed": true
+        },
+        {
+          "name": "srow_t legal8x8",
+          "passed": true
+        },
+        {
+          "name": "srow_l legal8x8",
+          "passed": true
+        },
+        {
+          "name": "bub_tl legal8x8",
+          "passed": true
+        },
+        {
+          "name": "bub_t legal8x8",
+          "passed": true
+        },
+        {
+          "name": "bub_l legal8x8",
+          "passed": true
+        },
+        {
+          "name": "bub_fill legal8x8",
+          "passed": true
+        },
+        {
+          "name": "bub_tail legal8x8",
+          "passed": true
+        },
+        {
+          "name": "bub_join legal8x8",
+          "passed": true
+        },
+        {
+          "name": "coin legal8x8",
+          "passed": true
+        },
+        {
+          "name": "rule legal8x8",
+          "passed": true
+        },
+        {
+          "name": "rule_end legal8x8",
+          "passed": true
+        },
+        {
+          "name": "hud_tl legal8x8",
+          "passed": true
+        },
+        {
+          "name": "hud_t legal8x8",
+          "passed": true
+        },
+        {
+          "name": "hud_l legal8x8",
+          "passed": true
+        },
+        {
+          "name": "key legal8x8",
+          "passed": true
+        },
+        {
+          "name": "heart_full legal8x8",
+          "passed": true
+        },
+        {
+          "name": "heart_full transparentoutside",
+          "passed": true
+        },
+        {
+          "name": "heart_half legal8x8",
+          "passed": true
+        },
+        {
+          "name": "heart_half transparentoutside",
+          "passed": true
+        },
+        {
+          "name": "heart_empty legal8x8",
+          "passed": true
+        },
+        {
+          "name": "heart_empty transparentoutside",
+          "passed": true
+        },
+        {
+          "name": "hand legal8x8",
+          "passed": true
+        },
+        {
+          "name": "next markerlegal8x8",
+          "passed": true
+        },
+        {
+          "name": "pick markerlegal8x8",
+          "passed": true
+        },
+        {
+          "name": "corner markerlegal8x8",
+          "passed": true
+        },
+        {
+          "name": "badge_a markerlegal8x8",
+          "passed": true
+        },
+        {
+          "name": "badge_b markerlegal8x8",
+          "passed": true
+        },
+        {
+          "name": "badge_l markerlegal8x8",
+          "passed": true
+        },
+        {
+          "name": "cursorlegal32x32",
+          "passed": true
+        },
+        {
+          "name": "none native16canvas",
+          "passed": true
+        },
+        {
+          "name": "none compact<=10px",
+          "passed": true
+        },
+        {
+          "name": "bombs native16canvas",
+          "passed": true
+        },
+        {
+          "name": "bombs compact<=10px",
+          "passed": true
+        },
+        {
+          "name": "lamp native16canvas",
+          "passed": true
+        },
+        {
+          "name": "lamp compact<=10px",
+          "passed": true
+        },
+        {
+          "name": "cloak native16canvas",
+          "passed": true
+        },
+        {
+          "name": "cloak compact<=10px",
+          "passed": true
+        },
+        {
+          "name": "key native16canvas",
+          "passed": true
+        },
+        {
+          "name": "key compact<=10px",
+          "passed": true
+        },
+        {
+          "name": "heart_piece native16canvas",
+          "passed": true
+        },
+        {
+          "name": "heart_piece compact<=10px",
+          "passed": true
+        },
+        {
+          "name": "heart_container native16canvas",
+          "passed": true
+        },
+        {
+          "name": "heart_container compact<=10px",
+          "passed": true
+        },
+        {
+          "name": "gilt_big native16canvas",
+          "passed": true
+        },
+        {
+          "name": "gilt_big compact<=10px",
+          "passed": true
+        },
+        {
+          "name": "relic native16canvas",
+          "passed": true
+        },
+        {
+          "name": "relic compact<=10px",
+          "passed": true
+        },
+        {
+          "name": "gauntlet native16canvas",
+          "passed": true
+        },
+        {
+          "name": "gauntlet compact<=10px",
+          "passed": true
+        },
+        {
+          "name": "bow native16canvas",
+          "passed": true
+        },
+        {
+          "name": "bow compact<=10px",
+          "passed": true
+        },
+        {
+          "name": "hubcap native16canvas",
+          "passed": true
+        },
+        {
+          "name": "hubcap compact<=10px",
+          "passed": true
+        },
+        {
+          "name": "map native16canvas",
+          "passed": true
+        },
+        {
+          "name": "map compact<=10px",
+          "passed": true
+        },
+        {
+          "name": "astrolabe native16canvas",
+          "passed": true
+        },
+        {
+          "name": "astrolabe compact<=10px",
+          "passed": true
+        },
+        {
+          "name": "sword native16canvas",
+          "passed": true
+        },
+        {
+          "name": "sword compact<=10px",
+          "passed": true
+        },
+        {
+          "name": "shield native16canvas",
+          "passed": true
+        },
+        {
+          "name": "shield compact<=10px",
+          "passed": true
+        },
+        {
+          "name": "shield_upgraded native16canvas",
+          "passed": true
+        },
+        {
+          "name": "shield_upgraded compact<=10px",
+          "passed": true
+        }
+      ],
+      "kit_hashes": {
+        "panel_tl": "b8b2f20f3ccd93533448a84e9d6502af7a5138b6398047ef99c336af49cdeede",
+        "panel_t": "aab2cfedba9560b7a5bf87844592d470190d7c60f5d8142287d52f624593157e",
+        "panel_l": "d07eb0d97345c5f6e26432d2d66875a514d5efb2a5b8c71ff4158ee371e18733",
+        "fill": "c77e45aabdf68c7fa51f69356f6a9305e04f1fd8882ad5480ab0e3afb9ade322",
+        "div_t": "7300cdfb960719197720222b483f2274d5259f5119be75a196428377776f84b8",
+        "div_m": "04866ca3db653e9d21a5bec7a986d1199002db05d6ff0b16f369477fb2808195",
+        "plate_l_top": "8cf0a52777a9e7d8fcefe8c761987613107d953ef306e85ce17d83146d87e391",
+        "plate_l_bot": "85081d5fa7f417455f45d859a9a2fffb6996c26d6aac3f54b57080eb1a541c68",
+        "plate_m_top": "5d544bfd4a61ccb61eaf62fac9fb5083a47dc469d24b77fbe37ae151bbce9a58",
+        "plate_m_bot": "fcdcae9b6b4b0e68860038dba878b14f0358029a60321c9d4e93022b2c23212a",
+        "slot_tl": "ef5dc756fe50776b0314c9f3664e0430c4ddc983c5e43295e6ebba4dee252295",
+        "slot_t": "f88cf9cc6a9dfe926fb76fe71b4cfd3e3cf4e53919f692eb12ad69c89e96fae4",
+        "slot_l": "25a8ceaaf5c8129d7e4c7e8050f536fe311cd4d8f761ed0737008f48c083d334",
+        "slot_fill": "4c6dd169468938fefaa394fafbee6e4b79ad6a2ff2435489b7dc878a71b5630a",
+        "sel_tl": "207d2d5418c3e12b32db81bc63c8b6422f888e1f9294adda80eef64ef6cfb368",
+        "sel_t": "0670f0185326576efbf354ecee76bff392fd06d5ba617bf15a7a84e83ada8b95",
+        "sel_l": "126969fc6fe878bd28d1d35938d012a3bd4790471f8471b612cf4d089f07ae7b",
+        "empty_tl": "5472f74aff5a1d871813306511d01d534c88c25c88d9653178fecfc1ffd00b7b",
+        "empty_t": "1660536856df2d95ce01e660f9550183246ee2d58efcad75c1a4f451b07a75f9",
+        "empty_l": "3aabe9615b662daec6c1633f2ad7fe10ea65303de87bed73c60760d83a69dcc2",
+        "tab_l_top": "8cf0a52777a9e7d8fcefe8c761987613107d953ef306e85ce17d83146d87e391",
+        "tab_l_bot": "85081d5fa7f417455f45d859a9a2fffb6996c26d6aac3f54b57080eb1a541c68",
+        "tab_m_top": "5d544bfd4a61ccb61eaf62fac9fb5083a47dc469d24b77fbe37ae151bbce9a58",
+        "tab_m_bot": "fcdcae9b6b4b0e68860038dba878b14f0358029a60321c9d4e93022b2c23212a",
+        "tabon_l_top": "10211fd1bb50a9e2313bab6ed1a174115553cfe346c486cbbc6a74e2569c8508",
+        "tabon_l_bot": "acf8c322a7d2154ae5ee89118d6afb74460945609a21525511bbe3ad2636e785",
+        "tabon_m_top": "e043fd8e621dc87cccd5df621c04d84f690c43db14dae1665adb338803a60365",
+        "tabon_m_bot": "ccd01720e7c470c1d29c06b13f00f584ff3beb89ad1b7488aca7428b06ec12d1",
+        "badge_a": "967d81951b75778e5c1e770b1925d3c7ffe36dc3b56041b04be31991857d9ccd",
+        "badge_b": "fbafadb1dec4da3450107fba55274792ae09714b1191ae337bd069d14170397e",
+        "badge_l": "09806540d57537c81eb84a67e98cad4669b0e035c78d97ed4c69b8876d7329c9",
+        "badge_r": "ab95361b023e8694ab597cbb8b65381a072c9e1d86730dcd64d4dd00aa5d85e9",
+        "row_tl": "ef5dc756fe50776b0314c9f3664e0430c4ddc983c5e43295e6ebba4dee252295",
+        "row_t": "f88cf9cc6a9dfe926fb76fe71b4cfd3e3cf4e53919f692eb12ad69c89e96fae4",
+        "row_l": "25a8ceaaf5c8129d7e4c7e8050f536fe311cd4d8f761ed0737008f48c083d334",
+        "srow_tl": "207d2d5418c3e12b32db81bc63c8b6422f888e1f9294adda80eef64ef6cfb368",
+        "srow_t": "0670f0185326576efbf354ecee76bff392fd06d5ba617bf15a7a84e83ada8b95",
+        "srow_l": "126969fc6fe878bd28d1d35938d012a3bd4790471f8471b612cf4d089f07ae7b",
+        "bub_tl": "35639d3316cea2b865c66e2a2d430d81da1ef0a482db34e754908d8d21a5a47f",
+        "bub_t": "441b3c5ad99173da897117f8386c896d810a0ab15cad035b66a84ff04dafc08f",
+        "bub_l": "167d640485a7918c04a4f4bcec41a805d93032a77538c8f68710cc3d99c850cb",
+        "bub_fill": "06aa20a633730070ee0e06ece876ed229a578cb608aba470c4a39ddf318369ee",
+        "bub_tail": "4f4bcf8472c03fbee48b14bf7bd4929018e2639f614c97893dea69faadfb0adf",
+        "bub_join": "06aa20a633730070ee0e06ece876ed229a578cb608aba470c4a39ddf318369ee",
+        "coin": "50471bde0321cfe5179efc9c24e93af7dfe905d2e42c994c0bcf029d7306521f",
+        "rule": "47b76ed227f1a288c264a0d0aa92ace46edc1dbb21a485cd3fd7d66b8092f82f",
+        "rule_end": "92ef7d784bf6846c4ccfc8c2e061d7627d870fc4a0100ad9ff95e51abd0abd83",
+        "hud_tl": "b8b2f20f3ccd93533448a84e9d6502af7a5138b6398047ef99c336af49cdeede",
+        "hud_t": "aab2cfedba9560b7a5bf87844592d470190d7c60f5d8142287d52f624593157e",
+        "hud_l": "d07eb0d97345c5f6e26432d2d66875a514d5efb2a5b8c71ff4158ee371e18733",
+        "key": "60203da1daf3e3a65175a9a3fb91a2e24a0244bea7d2756edc33ea617af9c3f6"
+      },
+      "hud_icon_hashes": {
+        "none": "5341e6b2646979a70e57653007a1f310169421ec9bdd9f1a5648f75ade005af1",
+        "bombs": "81ea1e6a096956269736190a4857376a9396096e0c5de1e5865d168444cf011b",
+        "lamp": "8911d4b1514d3a841f282f460dd6834978dc9d4aad2743bd8523fd7deaafd09e",
+        "cloak": "ed6ee26fdfda009f5b3fec5c30372e32ed1d5abe05268e243d77f1b1c14e4964",
+        "key": "983934bab1f5608b3e6a21584e1e80e99fd8964f3992817318cdeef92aac7b4e",
+        "heart_piece": "748942ef22420466c22364a427a2773959715cdcfba5b817b8ab000c5a82d0e2",
+        "heart_container": "beb4e4f5cbddbcb9c1b61314c912f64a9b0aa5625671058266f65d6da5f794dc",
+        "gilt_big": "80412346747512c2d8246286797636d9ce287ce1c582ef56893a696809d4ce0e",
+        "relic": "80412346747512c2d8246286797636d9ce287ce1c582ef56893a696809d4ce0e",
+        "gauntlet": "a4d77c27a977de5c293d7650f7d1a13c6eb5e487c880f7a93e733abf8ebd7bd3",
+        "bow": "d2206de130edcf1134027f7d01c32315ed1de548f9f3564614486fcc062beb71",
+        "hubcap": "8e17729c0cc30fe6677892150cf2cba08751009075fc021fdc0adef374661471",
+        "map": "0facda11396c2ce63da6e83e3a38406332b5d0f17d04c61c3755443e01c473b4",
+        "astrolabe": "80412346747512c2d8246286797636d9ce287ce1c582ef56893a696809d4ce0e",
+        "sword": "68c2215b52334717f6818f21a902c8b562e3e42f2b722c01f3e5f0372e8016d8",
+        "shield": "6afc8ce529ac9c85d4fc64fc6c0d4d38a41acd72649c96578c83db670e9d2cbd",
+        "shield_upgraded": "9afa92e1e0a63a5af420833d55a72f6f9c2dce4b80a468041a41755e1c7034dd"
+      },
+      "ui_kit_sha256": "151189baa23a54add1021621de2037300e064137d9e27add1dc8f818ab1563e8",
+      "source_sha256": {
+        "art/ui_studies.py": "5f924a43aa53fb0403cf6f1e77fe6912263b3ca7d210f614a081c3839f577b5b",
+        "art/reboot_ui.py": "6963ac2536f37580c1e398228b22359ea03c39460b9814fb751d4de82c98dfc7",
+        "art/ui_font.py": "48ae0da7d1daa4f01c144a856d18694c5be06674288029e62913a513bcb8388e"
+      }
+    },
+    {
+      "variant": 6,
+      "name": "Winebound Folio",
+      "passed": 111,
+      "total": 111,
+      "checks": [
+        {
+          "name": "menu palette16",
+          "passed": true
+        },
+        {
+          "name": "menu RGB555",
+          "passed": true
+        },
+        {
+          "name": "map palette16",
+          "passed": true
+        },
+        {
+          "name": "map RGB555",
+          "passed": true
+        },
+        {
+          "name": "hud palette16",
+          "passed": true
+        },
+        {
+          "name": "hud RGB555",
+          "passed": true
+        },
+        {
+          "name": "uikit palette16",
+          "passed": true
+        },
+        {
+          "name": "uikit RGB555",
+          "passed": true
+        },
+        {
+          "name": "ui palette16",
+          "passed": true
+        },
+        {
+          "name": "ui RGB555",
+          "passed": true
+        },
+        {
+          "name": "portrait palette16",
+          "passed": true
+        },
+        {
+          "name": "portrait RGB555",
+          "passed": true
+        },
+        {
+          "name": "panel_tl legal8x8",
+          "passed": true
+        },
+        {
+          "name": "panel_t legal8x8",
+          "passed": true
+        },
+        {
+          "name": "panel_l legal8x8",
+          "passed": true
+        },
+        {
+          "name": "fill legal8x8",
+          "passed": true
+        },
+        {
+          "name": "div_t legal8x8",
+          "passed": true
+        },
+        {
+          "name": "div_m legal8x8",
+          "passed": true
+        },
+        {
+          "name": "plate_l_top legal8x8",
+          "passed": true
+        },
+        {
+          "name": "plate_l_bot legal8x8",
+          "passed": true
+        },
+        {
+          "name": "plate_m_top legal8x8",
+          "passed": true
+        },
+        {
+          "name": "plate_m_bot legal8x8",
+          "passed": true
+        },
+        {
+          "name": "slot_tl legal8x8",
+          "passed": true
+        },
+        {
+          "name": "slot_t legal8x8",
+          "passed": true
+        },
+        {
+          "name": "slot_l legal8x8",
+          "passed": true
+        },
+        {
+          "name": "slot_fill legal8x8",
+          "passed": true
+        },
+        {
+          "name": "sel_tl legal8x8",
+          "passed": true
+        },
+        {
+          "name": "sel_t legal8x8",
+          "passed": true
+        },
+        {
+          "name": "sel_l legal8x8",
+          "passed": true
+        },
+        {
+          "name": "empty_tl legal8x8",
+          "passed": true
+        },
+        {
+          "name": "empty_t legal8x8",
+          "passed": true
+        },
+        {
+          "name": "empty_l legal8x8",
+          "passed": true
+        },
+        {
+          "name": "tab_l_top legal8x8",
+          "passed": true
+        },
+        {
+          "name": "tab_l_bot legal8x8",
+          "passed": true
+        },
+        {
+          "name": "tab_m_top legal8x8",
+          "passed": true
+        },
+        {
+          "name": "tab_m_bot legal8x8",
+          "passed": true
+        },
+        {
+          "name": "tabon_l_top legal8x8",
+          "passed": true
+        },
+        {
+          "name": "tabon_l_bot legal8x8",
+          "passed": true
+        },
+        {
+          "name": "tabon_m_top legal8x8",
+          "passed": true
+        },
+        {
+          "name": "tabon_m_bot legal8x8",
+          "passed": true
+        },
+        {
+          "name": "badge_a legal8x8",
+          "passed": true
+        },
+        {
+          "name": "badge_b legal8x8",
+          "passed": true
+        },
+        {
+          "name": "badge_l legal8x8",
+          "passed": true
+        },
+        {
+          "name": "badge_r legal8x8",
+          "passed": true
+        },
+        {
+          "name": "row_tl legal8x8",
+          "passed": true
+        },
+        {
+          "name": "row_t legal8x8",
+          "passed": true
+        },
+        {
+          "name": "row_l legal8x8",
+          "passed": true
+        },
+        {
+          "name": "srow_tl legal8x8",
+          "passed": true
+        },
+        {
+          "name": "srow_t legal8x8",
+          "passed": true
+        },
+        {
+          "name": "srow_l legal8x8",
+          "passed": true
+        },
+        {
+          "name": "bub_tl legal8x8",
+          "passed": true
+        },
+        {
+          "name": "bub_t legal8x8",
+          "passed": true
+        },
+        {
+          "name": "bub_l legal8x8",
+          "passed": true
+        },
+        {
+          "name": "bub_fill legal8x8",
+          "passed": true
+        },
+        {
+          "name": "bub_tail legal8x8",
+          "passed": true
+        },
+        {
+          "name": "bub_join legal8x8",
+          "passed": true
+        },
+        {
+          "name": "coin legal8x8",
+          "passed": true
+        },
+        {
+          "name": "rule legal8x8",
+          "passed": true
+        },
+        {
+          "name": "rule_end legal8x8",
+          "passed": true
+        },
+        {
+          "name": "hud_tl legal8x8",
+          "passed": true
+        },
+        {
+          "name": "hud_t legal8x8",
+          "passed": true
+        },
+        {
+          "name": "hud_l legal8x8",
+          "passed": true
+        },
+        {
+          "name": "key legal8x8",
+          "passed": true
+        },
+        {
+          "name": "heart_full legal8x8",
+          "passed": true
+        },
+        {
+          "name": "heart_full transparentoutside",
+          "passed": true
+        },
+        {
+          "name": "heart_half legal8x8",
+          "passed": true
+        },
+        {
+          "name": "heart_half transparentoutside",
+          "passed": true
+        },
+        {
+          "name": "heart_empty legal8x8",
+          "passed": true
+        },
+        {
+          "name": "heart_empty transparentoutside",
+          "passed": true
+        },
+        {
+          "name": "hand legal8x8",
+          "passed": true
+        },
+        {
+          "name": "next markerlegal8x8",
+          "passed": true
+        },
+        {
+          "name": "pick markerlegal8x8",
+          "passed": true
+        },
+        {
+          "name": "corner markerlegal8x8",
+          "passed": true
+        },
+        {
+          "name": "badge_a markerlegal8x8",
+          "passed": true
+        },
+        {
+          "name": "badge_b markerlegal8x8",
+          "passed": true
+        },
+        {
+          "name": "badge_l markerlegal8x8",
+          "passed": true
+        },
+        {
+          "name": "cursorlegal32x32",
+          "passed": true
+        },
+        {
+          "name": "none native16canvas",
+          "passed": true
+        },
+        {
+          "name": "none compact<=10px",
+          "passed": true
+        },
+        {
+          "name": "bombs native16canvas",
+          "passed": true
+        },
+        {
+          "name": "bombs compact<=10px",
+          "passed": true
+        },
+        {
+          "name": "lamp native16canvas",
+          "passed": true
+        },
+        {
+          "name": "lamp compact<=10px",
+          "passed": true
+        },
+        {
+          "name": "cloak native16canvas",
+          "passed": true
+        },
+        {
+          "name": "cloak compact<=10px",
+          "passed": true
+        },
+        {
+          "name": "key native16canvas",
+          "passed": true
+        },
+        {
+          "name": "key compact<=10px",
+          "passed": true
+        },
+        {
+          "name": "heart_piece native16canvas",
+          "passed": true
+        },
+        {
+          "name": "heart_piece compact<=10px",
+          "passed": true
+        },
+        {
+          "name": "heart_container native16canvas",
+          "passed": true
+        },
+        {
+          "name": "heart_container compact<=10px",
+          "passed": true
+        },
+        {
+          "name": "gilt_big native16canvas",
+          "passed": true
+        },
+        {
+          "name": "gilt_big compact<=10px",
+          "passed": true
+        },
+        {
+          "name": "relic native16canvas",
+          "passed": true
+        },
+        {
+          "name": "relic compact<=10px",
+          "passed": true
+        },
+        {
+          "name": "gauntlet native16canvas",
+          "passed": true
+        },
+        {
+          "name": "gauntlet compact<=10px",
+          "passed": true
+        },
+        {
+          "name": "bow native16canvas",
+          "passed": true
+        },
+        {
+          "name": "bow compact<=10px",
+          "passed": true
+        },
+        {
+          "name": "hubcap native16canvas",
+          "passed": true
+        },
+        {
+          "name": "hubcap compact<=10px",
+          "passed": true
+        },
+        {
+          "name": "map native16canvas",
+          "passed": true
+        },
+        {
+          "name": "map compact<=10px",
+          "passed": true
+        },
+        {
+          "name": "astrolabe native16canvas",
+          "passed": true
+        },
+        {
+          "name": "astrolabe compact<=10px",
+          "passed": true
+        },
+        {
+          "name": "sword native16canvas",
+          "passed": true
+        },
+        {
+          "name": "sword compact<=10px",
+          "passed": true
+        },
+        {
+          "name": "shield native16canvas",
+          "passed": true
+        },
+        {
+          "name": "shield compact<=10px",
+          "passed": true
+        },
+        {
+          "name": "shield_upgraded native16canvas",
+          "passed": true
+        },
+        {
+          "name": "shield_upgraded compact<=10px",
+          "passed": true
+        }
+      ],
+      "kit_hashes": {
+        "panel_tl": "a8f5226b18c64d716fc89da3b98a03dc18eac6f8be22e38c5c043b745f171b93",
+        "panel_t": "2906086e8ae3a6f5e9796011d2965c890577619fa20ee47edbf48408133caed3",
+        "panel_l": "7bdfcad76a1cc694c8096c756060b05d68d81e4c4271fab47e21efe6bd324618",
+        "fill": "c77e45aabdf68c7fa51f69356f6a9305e04f1fd8882ad5480ab0e3afb9ade322",
+        "div_t": "583c7e0046e662e61597b4ca80730e8a45a294d9f2bd29468353702951ea0b60",
+        "div_m": "a81de3211b2a1741ea5b601ef671cc3f81c61225c6728daa8a0dfc7e445a7d0f",
+        "plate_l_top": "47254b3a86d032ebd1944bb9cdd293c6af5c3e37ada80119d5be2dec1cc4af78",
+        "plate_l_bot": "8c1b43c85a30d7fc6798bf9b590763a587556c38d53501a892b7545a4fa9ae2c",
+        "plate_m_top": "82440f49546d34f770fa4ee5087830702bc89222db2ec860e1594352b1920c22",
+        "plate_m_bot": "2eb09cb2be55f1a5f5ef68b7445e514ee7015aa71a8bb88a3a24845fe85aa262",
+        "slot_tl": "aa3e627eb866d87e5f50ca48ef589f83599693734d7c535f9311e92ea65e7f8e",
+        "slot_t": "021657dd8b9783651304c50fe7509bf885007e47aca89481ded5c26fc0ac713a",
+        "slot_l": "42d896445497dfe6b3f0c06108568cc31a338642e18822b39350ccff8575bd4f",
+        "slot_fill": "4c6dd169468938fefaa394fafbee6e4b79ad6a2ff2435489b7dc878a71b5630a",
+        "sel_tl": "4068ccf4a5801d4167d0a31c4e7ca0ce9bf6e6df2ee08b3601d12e4baf001e93",
+        "sel_t": "bd5ae33b41694f1f99bfc8290380a0df1863fa6400a405ac40747d3bce3fd8ed",
+        "sel_l": "8a17d5d898562b1ab4e96fda3dce6608f8e95d616170bbc15f74239f8e2bb1e3",
+        "empty_tl": "ab40fde9162513a448315e2605cb11a2de83988dca64af9c84958c54cbabce73",
+        "empty_t": "320e0f90f71a8823e5576e3e2e0bdf6020a76c72f3116a10c2be661dc15a52a1",
+        "empty_l": "d4124eaa101e9ed24b5d0344f841629cad4938b0abdb78c2e38374d824fb7166",
+        "tab_l_top": "47254b3a86d032ebd1944bb9cdd293c6af5c3e37ada80119d5be2dec1cc4af78",
+        "tab_l_bot": "8c1b43c85a30d7fc6798bf9b590763a587556c38d53501a892b7545a4fa9ae2c",
+        "tab_m_top": "82440f49546d34f770fa4ee5087830702bc89222db2ec860e1594352b1920c22",
+        "tab_m_bot": "2eb09cb2be55f1a5f5ef68b7445e514ee7015aa71a8bb88a3a24845fe85aa262",
+        "tabon_l_top": "c1b746b46fa6a64bf04f3b77cbc33986e75c3079b3e353c74d3a2c924dbc609c",
+        "tabon_l_bot": "53433bb7824b0cbf325996f9c1c621f8d1673dd0f2ab3c133caa5d729f296eb9",
+        "tabon_m_top": "d467096191dda6b292031a60eed9714a6298747c31a0a114a527ed793da4d9f8",
+        "tabon_m_bot": "c304c5e339857fe381f8e26c65aaf50e755442b02fbe9f640669a79e7e68e1ef",
+        "badge_a": "d5661ad957280d19ace68898c9e03c668eaca87bf5c8f71685ef3e2c29d7cb0b",
+        "badge_b": "7a61cb3cb5d9b5e4022cea1f4b3523eda5ea643f9ea3ac241b275d3414da3af0",
+        "badge_l": "93c96b46a496b90c73ffc7a0698c8f9643a2aad3389fe6afad4be316e4e32a2e",
+        "badge_r": "7104e8fb63b36b5d07404928acd1360592dc3d606d73fb1b2db4e1e9cfa1e1e2",
+        "row_tl": "aa3e627eb866d87e5f50ca48ef589f83599693734d7c535f9311e92ea65e7f8e",
+        "row_t": "021657dd8b9783651304c50fe7509bf885007e47aca89481ded5c26fc0ac713a",
+        "row_l": "42d896445497dfe6b3f0c06108568cc31a338642e18822b39350ccff8575bd4f",
+        "srow_tl": "4068ccf4a5801d4167d0a31c4e7ca0ce9bf6e6df2ee08b3601d12e4baf001e93",
+        "srow_t": "bd5ae33b41694f1f99bfc8290380a0df1863fa6400a405ac40747d3bce3fd8ed",
+        "srow_l": "8a17d5d898562b1ab4e96fda3dce6608f8e95d616170bbc15f74239f8e2bb1e3",
+        "bub_tl": "6be1cd0be9bfc613299cc0f3788411a0ad4a845ca83cb76bf577c3ce91659eb8",
+        "bub_t": "4359ffb25d35c9ee0d101aed6bf680e289b53d0aa05f701d7a251e0abb21ec1b",
+        "bub_l": "cd0f670d7d365b3ea4332249ba8c592829526b332412361332a3d93bc04ac6ef",
+        "bub_fill": "06aa20a633730070ee0e06ece876ed229a578cb608aba470c4a39ddf318369ee",
+        "bub_tail": "8f49c0060984c080690a444ac522d1c92f67e4161a5706990254ab62b8c27390",
+        "bub_join": "06aa20a633730070ee0e06ece876ed229a578cb608aba470c4a39ddf318369ee",
+        "coin": "8fcf64b585f2e0e7f1d50f60dc114e14df2092a6eb8015b5ee2058117ba7464c",
+        "rule": "1113be562caa1795c9c2cf4be7c1af939c1c1d971f0925419b0c03ba587a47f7",
+        "rule_end": "2d4ada23fe7d497bcd87d835a547b51967aeffb89151f0c7243ebeffcea48239",
+        "hud_tl": "a8f5226b18c64d716fc89da3b98a03dc18eac6f8be22e38c5c043b745f171b93",
+        "hud_t": "2906086e8ae3a6f5e9796011d2965c890577619fa20ee47edbf48408133caed3",
+        "hud_l": "7bdfcad76a1cc694c8096c756060b05d68d81e4c4271fab47e21efe6bd324618",
+        "key": "60203da1daf3e3a65175a9a3fb91a2e24a0244bea7d2756edc33ea617af9c3f6"
+      },
+      "hud_icon_hashes": {
+        "none": "5341e6b2646979a70e57653007a1f310169421ec9bdd9f1a5648f75ade005af1",
+        "bombs": "81ea1e6a096956269736190a4857376a9396096e0c5de1e5865d168444cf011b",
+        "lamp": "8911d4b1514d3a841f282f460dd6834978dc9d4aad2743bd8523fd7deaafd09e",
+        "cloak": "ed6ee26fdfda009f5b3fec5c30372e32ed1d5abe05268e243d77f1b1c14e4964",
+        "key": "983934bab1f5608b3e6a21584e1e80e99fd8964f3992817318cdeef92aac7b4e",
+        "heart_piece": "748942ef22420466c22364a427a2773959715cdcfba5b817b8ab000c5a82d0e2",
+        "heart_container": "beb4e4f5cbddbcb9c1b61314c912f64a9b0aa5625671058266f65d6da5f794dc",
+        "gilt_big": "80412346747512c2d8246286797636d9ce287ce1c582ef56893a696809d4ce0e",
+        "relic": "80412346747512c2d8246286797636d9ce287ce1c582ef56893a696809d4ce0e",
+        "gauntlet": "a4d77c27a977de5c293d7650f7d1a13c6eb5e487c880f7a93e733abf8ebd7bd3",
+        "bow": "d2206de130edcf1134027f7d01c32315ed1de548f9f3564614486fcc062beb71",
+        "hubcap": "8e17729c0cc30fe6677892150cf2cba08751009075fc021fdc0adef374661471",
+        "map": "0facda11396c2ce63da6e83e3a38406332b5d0f17d04c61c3755443e01c473b4",
+        "astrolabe": "80412346747512c2d8246286797636d9ce287ce1c582ef56893a696809d4ce0e",
+        "sword": "68c2215b52334717f6818f21a902c8b562e3e42f2b722c01f3e5f0372e8016d8",
+        "shield": "6afc8ce529ac9c85d4fc64fc6c0d4d38a41acd72649c96578c83db670e9d2cbd",
+        "shield_upgraded": "9afa92e1e0a63a5af420833d55a72f6f9c2dce4b80a468041a41755e1c7034dd"
+      },
+      "ui_kit_sha256": "e3c58732aeff9f6bf736ad7d238277659caa156d1330871761c4094afcbb20bb",
+      "source_sha256": {
+        "art/ui_studies.py": "5f924a43aa53fb0403cf6f1e77fe6912263b3ca7d210f614a081c3839f577b5b",
+        "art/reboot_ui.py": "6963ac2536f37580c1e398228b22359ea03c39460b9814fb751d4de82c98dfc7",
+        "art/ui_font.py": "48ae0da7d1daa4f01c144a856d18694c5be06674288029e62913a513bcb8388e"
+      }
+    },
+    {
+      "variant": 7,
+      "name": "Mossbound Fieldbook",
+      "passed": 111,
+      "total": 111,
+      "checks": [
+        {
+          "name": "menu palette16",
+          "passed": true
+        },
+        {
+          "name": "menu RGB555",
+          "passed": true
+        },
+        {
+          "name": "map palette16",
+          "passed": true
+        },
+        {
+          "name": "map RGB555",
+          "passed": true
+        },
+        {
+          "name": "hud palette16",
+          "passed": true
+        },
+        {
+          "name": "hud RGB555",
+          "passed": true
+        },
+        {
+          "name": "uikit palette16",
+          "passed": true
+        },
+        {
+          "name": "uikit RGB555",
+          "passed": true
+        },
+        {
+          "name": "ui palette16",
+          "passed": true
+        },
+        {
+          "name": "ui RGB555",
+          "passed": true
+        },
+        {
+          "name": "portrait palette16",
+          "passed": true
+        },
+        {
+          "name": "portrait RGB555",
+          "passed": true
+        },
+        {
+          "name": "panel_tl legal8x8",
+          "passed": true
+        },
+        {
+          "name": "panel_t legal8x8",
+          "passed": true
+        },
+        {
+          "name": "panel_l legal8x8",
+          "passed": true
+        },
+        {
+          "name": "fill legal8x8",
+          "passed": true
+        },
+        {
+          "name": "div_t legal8x8",
+          "passed": true
+        },
+        {
+          "name": "div_m legal8x8",
+          "passed": true
+        },
+        {
+          "name": "plate_l_top legal8x8",
+          "passed": true
+        },
+        {
+          "name": "plate_l_bot legal8x8",
+          "passed": true
+        },
+        {
+          "name": "plate_m_top legal8x8",
+          "passed": true
+        },
+        {
+          "name": "plate_m_bot legal8x8",
+          "passed": true
+        },
+        {
+          "name": "slot_tl legal8x8",
+          "passed": true
+        },
+        {
+          "name": "slot_t legal8x8",
+          "passed": true
+        },
+        {
+          "name": "slot_l legal8x8",
+          "passed": true
+        },
+        {
+          "name": "slot_fill legal8x8",
+          "passed": true
+        },
+        {
+          "name": "sel_tl legal8x8",
+          "passed": true
+        },
+        {
+          "name": "sel_t legal8x8",
+          "passed": true
+        },
+        {
+          "name": "sel_l legal8x8",
+          "passed": true
+        },
+        {
+          "name": "empty_tl legal8x8",
+          "passed": true
+        },
+        {
+          "name": "empty_t legal8x8",
+          "passed": true
+        },
+        {
+          "name": "empty_l legal8x8",
+          "passed": true
+        },
+        {
+          "name": "tab_l_top legal8x8",
+          "passed": true
+        },
+        {
+          "name": "tab_l_bot legal8x8",
+          "passed": true
+        },
+        {
+          "name": "tab_m_top legal8x8",
+          "passed": true
+        },
+        {
+          "name": "tab_m_bot legal8x8",
+          "passed": true
+        },
+        {
+          "name": "tabon_l_top legal8x8",
+          "passed": true
+        },
+        {
+          "name": "tabon_l_bot legal8x8",
+          "passed": true
+        },
+        {
+          "name": "tabon_m_top legal8x8",
+          "passed": true
+        },
+        {
+          "name": "tabon_m_bot legal8x8",
+          "passed": true
+        },
+        {
+          "name": "badge_a legal8x8",
+          "passed": true
+        },
+        {
+          "name": "badge_b legal8x8",
+          "passed": true
+        },
+        {
+          "name": "badge_l legal8x8",
+          "passed": true
+        },
+        {
+          "name": "badge_r legal8x8",
+          "passed": true
+        },
+        {
+          "name": "row_tl legal8x8",
+          "passed": true
+        },
+        {
+          "name": "row_t legal8x8",
+          "passed": true
+        },
+        {
+          "name": "row_l legal8x8",
+          "passed": true
+        },
+        {
+          "name": "srow_tl legal8x8",
+          "passed": true
+        },
+        {
+          "name": "srow_t legal8x8",
+          "passed": true
+        },
+        {
+          "name": "srow_l legal8x8",
+          "passed": true
+        },
+        {
+          "name": "bub_tl legal8x8",
+          "passed": true
+        },
+        {
+          "name": "bub_t legal8x8",
+          "passed": true
+        },
+        {
+          "name": "bub_l legal8x8",
+          "passed": true
+        },
+        {
+          "name": "bub_fill legal8x8",
+          "passed": true
+        },
+        {
+          "name": "bub_tail legal8x8",
+          "passed": true
+        },
+        {
+          "name": "bub_join legal8x8",
+          "passed": true
+        },
+        {
+          "name": "coin legal8x8",
+          "passed": true
+        },
+        {
+          "name": "rule legal8x8",
+          "passed": true
+        },
+        {
+          "name": "rule_end legal8x8",
+          "passed": true
+        },
+        {
+          "name": "hud_tl legal8x8",
+          "passed": true
+        },
+        {
+          "name": "hud_t legal8x8",
+          "passed": true
+        },
+        {
+          "name": "hud_l legal8x8",
+          "passed": true
+        },
+        {
+          "name": "key legal8x8",
+          "passed": true
+        },
+        {
+          "name": "heart_full legal8x8",
+          "passed": true
+        },
+        {
+          "name": "heart_full transparentoutside",
+          "passed": true
+        },
+        {
+          "name": "heart_half legal8x8",
+          "passed": true
+        },
+        {
+          "name": "heart_half transparentoutside",
+          "passed": true
+        },
+        {
+          "name": "heart_empty legal8x8",
+          "passed": true
+        },
+        {
+          "name": "heart_empty transparentoutside",
+          "passed": true
+        },
+        {
+          "name": "hand legal8x8",
+          "passed": true
+        },
+        {
+          "name": "next markerlegal8x8",
+          "passed": true
+        },
+        {
+          "name": "pick markerlegal8x8",
+          "passed": true
+        },
+        {
+          "name": "corner markerlegal8x8",
+          "passed": true
+        },
+        {
+          "name": "badge_a markerlegal8x8",
+          "passed": true
+        },
+        {
+          "name": "badge_b markerlegal8x8",
+          "passed": true
+        },
+        {
+          "name": "badge_l markerlegal8x8",
+          "passed": true
+        },
+        {
+          "name": "cursorlegal32x32",
+          "passed": true
+        },
+        {
+          "name": "none native16canvas",
+          "passed": true
+        },
+        {
+          "name": "none compact<=10px",
+          "passed": true
+        },
+        {
+          "name": "bombs native16canvas",
+          "passed": true
+        },
+        {
+          "name": "bombs compact<=10px",
+          "passed": true
+        },
+        {
+          "name": "lamp native16canvas",
+          "passed": true
+        },
+        {
+          "name": "lamp compact<=10px",
+          "passed": true
+        },
+        {
+          "name": "cloak native16canvas",
+          "passed": true
+        },
+        {
+          "name": "cloak compact<=10px",
+          "passed": true
+        },
+        {
+          "name": "key native16canvas",
+          "passed": true
+        },
+        {
+          "name": "key compact<=10px",
+          "passed": true
+        },
+        {
+          "name": "heart_piece native16canvas",
+          "passed": true
+        },
+        {
+          "name": "heart_piece compact<=10px",
+          "passed": true
+        },
+        {
+          "name": "heart_container native16canvas",
+          "passed": true
+        },
+        {
+          "name": "heart_container compact<=10px",
+          "passed": true
+        },
+        {
+          "name": "gilt_big native16canvas",
+          "passed": true
+        },
+        {
+          "name": "gilt_big compact<=10px",
+          "passed": true
+        },
+        {
+          "name": "relic native16canvas",
+          "passed": true
+        },
+        {
+          "name": "relic compact<=10px",
+          "passed": true
+        },
+        {
+          "name": "gauntlet native16canvas",
+          "passed": true
+        },
+        {
+          "name": "gauntlet compact<=10px",
+          "passed": true
+        },
+        {
+          "name": "bow native16canvas",
+          "passed": true
+        },
+        {
+          "name": "bow compact<=10px",
+          "passed": true
+        },
+        {
+          "name": "hubcap native16canvas",
+          "passed": true
+        },
+        {
+          "name": "hubcap compact<=10px",
+          "passed": true
+        },
+        {
+          "name": "map native16canvas",
+          "passed": true
+        },
+        {
+          "name": "map compact<=10px",
+          "passed": true
+        },
+        {
+          "name": "astrolabe native16canvas",
+          "passed": true
+        },
+        {
+          "name": "astrolabe compact<=10px",
+          "passed": true
+        },
+        {
+          "name": "sword native16canvas",
+          "passed": true
+        },
+        {
+          "name": "sword compact<=10px",
+          "passed": true
+        },
+        {
+          "name": "shield native16canvas",
+          "passed": true
+        },
+        {
+          "name": "shield compact<=10px",
+          "passed": true
+        },
+        {
+          "name": "shield_upgraded native16canvas",
+          "passed": true
+        },
+        {
+          "name": "shield_upgraded compact<=10px",
+          "passed": true
+        }
+      ],
+      "kit_hashes": {
+        "panel_tl": "c27ea0aa0e105fa380f21d60b83fe24b6037bd072093a4cd5e9d8c03b79e9179",
+        "panel_t": "e6f9a4d1e53545e134e627a719294f2676389eda1381f87c663161e82fa8c409",
+        "panel_l": "1d843ff2b25ccbd664a446a721e096df060e79c674801ea854c28753dc63f52d",
+        "fill": "c77e45aabdf68c7fa51f69356f6a9305e04f1fd8882ad5480ab0e3afb9ade322",
+        "div_t": "e64def8aaf9e9e4b9142afbdcda2c1c28012827871d01e0450b077cf0879f077",
+        "div_m": "04866ca3db653e9d21a5bec7a986d1199002db05d6ff0b16f369477fb2808195",
+        "plate_l_top": "c3479adb4c148b8c857a54d3cac44d45c41e3ce6963ad1f6122ff961e29addc3",
+        "plate_l_bot": "81e7b4147842fa157d20f359b85288d481e77ce02926a84c6e1ec0db1c052a55",
+        "plate_m_top": "81f9701f864ec7f01b305bb20d446d74291c145ac83f82dfae50407784f8f85f",
+        "plate_m_bot": "6ff1cbaba0544b5ca53222310438f6b36c0ef97d8b3baa16aad30b3315348ff0",
+        "slot_tl": "6e28d4626b41ad1346132c0c099a9b4a2ff92fb18ea7cb8251edfda75ad51400",
+        "slot_t": "ccc7fb745d9d4aae0da378c0a12cd23e0291791240ccfe1bcf0f2733f29e0822",
+        "slot_l": "f054d7b605314b38b7cd645a7c85c14214cb77b295a8bbecb77004937c14ecfd",
+        "slot_fill": "4c6dd169468938fefaa394fafbee6e4b79ad6a2ff2435489b7dc878a71b5630a",
+        "sel_tl": "cb5d01d6f7c32ad368e41aa07021043c9d2a84caefea9e0411ab6c255cc227df",
+        "sel_t": "46c8963bb57dcef76e9fa1cbbfa82901c0437036c46598303680b09a3bee9bca",
+        "sel_l": "06c13afa25426311ba1f31d681f7bf58752a46d913a0b828eee46db327bba7b2",
+        "empty_tl": "bb779cc3cac2102c0e99f889a729655057e8f3eb432a1e54ebcd895dbac28f0c",
+        "empty_t": "3d54c973d62aa6ae4421d53effa0bc393515adbc6027761063f78fa511d9852e",
+        "empty_l": "262cdb8f1328dc17c34829ab3654cd3c93ef8e2f7d8e7c9339bb217beff7b06a",
+        "tab_l_top": "c3479adb4c148b8c857a54d3cac44d45c41e3ce6963ad1f6122ff961e29addc3",
+        "tab_l_bot": "81e7b4147842fa157d20f359b85288d481e77ce02926a84c6e1ec0db1c052a55",
+        "tab_m_top": "81f9701f864ec7f01b305bb20d446d74291c145ac83f82dfae50407784f8f85f",
+        "tab_m_bot": "6ff1cbaba0544b5ca53222310438f6b36c0ef97d8b3baa16aad30b3315348ff0",
+        "tabon_l_top": "33654cb030c77f45f16d4c1c5fb486ce8182c04c134bbc4b0b02c9681d9234a4",
+        "tabon_l_bot": "5ac7f6495a08d110b3b7ffc77bacf8a0514ee91d04ee85be39ca123080b0644b",
+        "tabon_m_top": "cd1199ca6f6530837f43ee5ccd62cc4723640b1988a6573cd378a8305c2e791e",
+        "tabon_m_bot": "cf85a62cc88f390594b51e94484581fd56e37e5a2575214d31edac67ce055e19",
+        "badge_a": "7ed27f18c136e625953f67a8de45ba172c0a8cc116226ed7787da70db2e17a50",
+        "badge_b": "298f530fc47216bf127950f36fcc6204e663c0a3a8f487d1fe14584d2a24fb01",
+        "badge_l": "925c90da324177587bcdbf3ec8011bbdbbacb74921575f18448eb59cca71eb98",
+        "badge_r": "8b77ebd7fdc67c38c63c0f0168ae1f7bd11aa860350f19f52bf2a551beb5df80",
+        "row_tl": "6e28d4626b41ad1346132c0c099a9b4a2ff92fb18ea7cb8251edfda75ad51400",
+        "row_t": "ccc7fb745d9d4aae0da378c0a12cd23e0291791240ccfe1bcf0f2733f29e0822",
+        "row_l": "f054d7b605314b38b7cd645a7c85c14214cb77b295a8bbecb77004937c14ecfd",
+        "srow_tl": "cb5d01d6f7c32ad368e41aa07021043c9d2a84caefea9e0411ab6c255cc227df",
+        "srow_t": "46c8963bb57dcef76e9fa1cbbfa82901c0437036c46598303680b09a3bee9bca",
+        "srow_l": "06c13afa25426311ba1f31d681f7bf58752a46d913a0b828eee46db327bba7b2",
+        "bub_tl": "2d8cbb48bc5bb10e5af4d544cef786132f55106baacff5c9867aa5ed38773c54",
+        "bub_t": "589ea6938e68395b5f5439f5c5b49e874f5631a07f8de86a1971a66d66f68af8",
+        "bub_l": "3b6996db6cdd0be24f050ef273b463358ef100c0a8cec659de9ddcba29d20b7b",
+        "bub_fill": "06aa20a633730070ee0e06ece876ed229a578cb608aba470c4a39ddf318369ee",
+        "bub_tail": "e1a21861320c615b641fbfc62c1c50fc2ef62b6d7352e88b7b6a761431aa7582",
+        "bub_join": "06aa20a633730070ee0e06ece876ed229a578cb608aba470c4a39ddf318369ee",
+        "coin": "8fcf64b585f2e0e7f1d50f60dc114e14df2092a6eb8015b5ee2058117ba7464c",
+        "rule": "09261eedff0ae56aac25fade24da53cf1c9b68cee0cef9a607cf69be7d36008f",
+        "rule_end": "e95ee3cb6e48ad554e54001877f9858315f4631ae5a50abdad91bbda1fdeaae5",
+        "hud_tl": "c27ea0aa0e105fa380f21d60b83fe24b6037bd072093a4cd5e9d8c03b79e9179",
+        "hud_t": "e6f9a4d1e53545e134e627a719294f2676389eda1381f87c663161e82fa8c409",
+        "hud_l": "1d843ff2b25ccbd664a446a721e096df060e79c674801ea854c28753dc63f52d",
+        "key": "60203da1daf3e3a65175a9a3fb91a2e24a0244bea7d2756edc33ea617af9c3f6"
+      },
+      "hud_icon_hashes": {
+        "none": "5341e6b2646979a70e57653007a1f310169421ec9bdd9f1a5648f75ade005af1",
+        "bombs": "81ea1e6a096956269736190a4857376a9396096e0c5de1e5865d168444cf011b",
+        "lamp": "8911d4b1514d3a841f282f460dd6834978dc9d4aad2743bd8523fd7deaafd09e",
+        "cloak": "ed6ee26fdfda009f5b3fec5c30372e32ed1d5abe05268e243d77f1b1c14e4964",
+        "key": "983934bab1f5608b3e6a21584e1e80e99fd8964f3992817318cdeef92aac7b4e",
+        "heart_piece": "748942ef22420466c22364a427a2773959715cdcfba5b817b8ab000c5a82d0e2",
+        "heart_container": "beb4e4f5cbddbcb9c1b61314c912f64a9b0aa5625671058266f65d6da5f794dc",
+        "gilt_big": "80412346747512c2d8246286797636d9ce287ce1c582ef56893a696809d4ce0e",
+        "relic": "80412346747512c2d8246286797636d9ce287ce1c582ef56893a696809d4ce0e",
+        "gauntlet": "a4d77c27a977de5c293d7650f7d1a13c6eb5e487c880f7a93e733abf8ebd7bd3",
+        "bow": "d2206de130edcf1134027f7d01c32315ed1de548f9f3564614486fcc062beb71",
+        "hubcap": "8e17729c0cc30fe6677892150cf2cba08751009075fc021fdc0adef374661471",
+        "map": "0facda11396c2ce63da6e83e3a38406332b5d0f17d04c61c3755443e01c473b4",
+        "astrolabe": "80412346747512c2d8246286797636d9ce287ce1c582ef56893a696809d4ce0e",
+        "sword": "68c2215b52334717f6818f21a902c8b562e3e42f2b722c01f3e5f0372e8016d8",
+        "shield": "6afc8ce529ac9c85d4fc64fc6c0d4d38a41acd72649c96578c83db670e9d2cbd",
+        "shield_upgraded": "9afa92e1e0a63a5af420833d55a72f6f9c2dce4b80a468041a41755e1c7034dd"
+      },
+      "ui_kit_sha256": "149b268bcd20598312948042820f6c9e37a3a987aca70344f2bd4d888d2b4f71",
+      "source_sha256": {
+        "art/ui_studies.py": "5f924a43aa53fb0403cf6f1e77fe6912263b3ca7d210f614a081c3839f577b5b",
+        "art/reboot_ui.py": "6963ac2536f37580c1e398228b22359ea03c39460b9814fb751d4de82c98dfc7",
+        "art/ui_font.py": "48ae0da7d1daa4f01c144a856d18694c5be06674288029e62913a513bcb8388e"
+      }
+    },
+    {
+      "variant": 8,
+      "name": "Ivory Reliquary",
+      "passed": 111,
+      "total": 111,
+      "checks": [
+        {
+          "name": "menu palette16",
+          "passed": true
+        },
+        {
+          "name": "menu RGB555",
+          "passed": true
+        },
+        {
+          "name": "map palette16",
+          "passed": true
+        },
+        {
+          "name": "map RGB555",
+          "passed": true
+        },
+        {
+          "name": "hud palette16",
+          "passed": true
+        },
+        {
+          "name": "hud RGB555",
+          "passed": true
+        },
+        {
+          "name": "uikit palette16",
+          "passed": true
+        },
+        {
+          "name": "uikit RGB555",
+          "passed": true
+        },
+        {
+          "name": "ui palette16",
+          "passed": true
+        },
+        {
+          "name": "ui RGB555",
+          "passed": true
+        },
+        {
+          "name": "portrait palette16",
+          "passed": true
+        },
+        {
+          "name": "portrait RGB555",
+          "passed": true
+        },
+        {
+          "name": "panel_tl legal8x8",
+          "passed": true
+        },
+        {
+          "name": "panel_t legal8x8",
+          "passed": true
+        },
+        {
+          "name": "panel_l legal8x8",
+          "passed": true
+        },
+        {
+          "name": "fill legal8x8",
+          "passed": true
+        },
+        {
+          "name": "div_t legal8x8",
+          "passed": true
+        },
+        {
+          "name": "div_m legal8x8",
+          "passed": true
+        },
+        {
+          "name": "plate_l_top legal8x8",
+          "passed": true
+        },
+        {
+          "name": "plate_l_bot legal8x8",
+          "passed": true
+        },
+        {
+          "name": "plate_m_top legal8x8",
+          "passed": true
+        },
+        {
+          "name": "plate_m_bot legal8x8",
+          "passed": true
+        },
+        {
+          "name": "slot_tl legal8x8",
+          "passed": true
+        },
+        {
+          "name": "slot_t legal8x8",
+          "passed": true
+        },
+        {
+          "name": "slot_l legal8x8",
+          "passed": true
+        },
+        {
+          "name": "slot_fill legal8x8",
+          "passed": true
+        },
+        {
+          "name": "sel_tl legal8x8",
+          "passed": true
+        },
+        {
+          "name": "sel_t legal8x8",
+          "passed": true
+        },
+        {
+          "name": "sel_l legal8x8",
+          "passed": true
+        },
+        {
+          "name": "empty_tl legal8x8",
+          "passed": true
+        },
+        {
+          "name": "empty_t legal8x8",
+          "passed": true
+        },
+        {
+          "name": "empty_l legal8x8",
+          "passed": true
+        },
+        {
+          "name": "tab_l_top legal8x8",
+          "passed": true
+        },
+        {
+          "name": "tab_l_bot legal8x8",
+          "passed": true
+        },
+        {
+          "name": "tab_m_top legal8x8",
+          "passed": true
+        },
+        {
+          "name": "tab_m_bot legal8x8",
+          "passed": true
+        },
+        {
+          "name": "tabon_l_top legal8x8",
+          "passed": true
+        },
+        {
+          "name": "tabon_l_bot legal8x8",
+          "passed": true
+        },
+        {
+          "name": "tabon_m_top legal8x8",
+          "passed": true
+        },
+        {
+          "name": "tabon_m_bot legal8x8",
+          "passed": true
+        },
+        {
+          "name": "badge_a legal8x8",
+          "passed": true
+        },
+        {
+          "name": "badge_b legal8x8",
+          "passed": true
+        },
+        {
+          "name": "badge_l legal8x8",
+          "passed": true
+        },
+        {
+          "name": "badge_r legal8x8",
+          "passed": true
+        },
+        {
+          "name": "row_tl legal8x8",
+          "passed": true
+        },
+        {
+          "name": "row_t legal8x8",
+          "passed": true
+        },
+        {
+          "name": "row_l legal8x8",
+          "passed": true
+        },
+        {
+          "name": "srow_tl legal8x8",
+          "passed": true
+        },
+        {
+          "name": "srow_t legal8x8",
+          "passed": true
+        },
+        {
+          "name": "srow_l legal8x8",
+          "passed": true
+        },
+        {
+          "name": "bub_tl legal8x8",
+          "passed": true
+        },
+        {
+          "name": "bub_t legal8x8",
+          "passed": true
+        },
+        {
+          "name": "bub_l legal8x8",
+          "passed": true
+        },
+        {
+          "name": "bub_fill legal8x8",
+          "passed": true
+        },
+        {
+          "name": "bub_tail legal8x8",
+          "passed": true
+        },
+        {
+          "name": "bub_join legal8x8",
+          "passed": true
+        },
+        {
+          "name": "coin legal8x8",
+          "passed": true
+        },
+        {
+          "name": "rule legal8x8",
+          "passed": true
+        },
+        {
+          "name": "rule_end legal8x8",
+          "passed": true
+        },
+        {
+          "name": "hud_tl legal8x8",
+          "passed": true
+        },
+        {
+          "name": "hud_t legal8x8",
+          "passed": true
+        },
+        {
+          "name": "hud_l legal8x8",
+          "passed": true
+        },
+        {
+          "name": "key legal8x8",
+          "passed": true
+        },
+        {
+          "name": "heart_full legal8x8",
+          "passed": true
+        },
+        {
+          "name": "heart_full transparentoutside",
+          "passed": true
+        },
+        {
+          "name": "heart_half legal8x8",
+          "passed": true
+        },
+        {
+          "name": "heart_half transparentoutside",
+          "passed": true
+        },
+        {
+          "name": "heart_empty legal8x8",
+          "passed": true
+        },
+        {
+          "name": "heart_empty transparentoutside",
+          "passed": true
+        },
+        {
+          "name": "hand legal8x8",
+          "passed": true
+        },
+        {
+          "name": "next markerlegal8x8",
+          "passed": true
+        },
+        {
+          "name": "pick markerlegal8x8",
+          "passed": true
+        },
+        {
+          "name": "corner markerlegal8x8",
+          "passed": true
+        },
+        {
+          "name": "badge_a markerlegal8x8",
+          "passed": true
+        },
+        {
+          "name": "badge_b markerlegal8x8",
+          "passed": true
+        },
+        {
+          "name": "badge_l markerlegal8x8",
+          "passed": true
+        },
+        {
+          "name": "cursorlegal32x32",
+          "passed": true
+        },
+        {
+          "name": "none native16canvas",
+          "passed": true
+        },
+        {
+          "name": "none compact<=10px",
+          "passed": true
+        },
+        {
+          "name": "bombs native16canvas",
+          "passed": true
+        },
+        {
+          "name": "bombs compact<=10px",
+          "passed": true
+        },
+        {
+          "name": "lamp native16canvas",
+          "passed": true
+        },
+        {
+          "name": "lamp compact<=10px",
+          "passed": true
+        },
+        {
+          "name": "cloak native16canvas",
+          "passed": true
+        },
+        {
+          "name": "cloak compact<=10px",
+          "passed": true
+        },
+        {
+          "name": "key native16canvas",
+          "passed": true
+        },
+        {
+          "name": "key compact<=10px",
+          "passed": true
+        },
+        {
+          "name": "heart_piece native16canvas",
+          "passed": true
+        },
+        {
+          "name": "heart_piece compact<=10px",
+          "passed": true
+        },
+        {
+          "name": "heart_container native16canvas",
+          "passed": true
+        },
+        {
+          "name": "heart_container compact<=10px",
+          "passed": true
+        },
+        {
+          "name": "gilt_big native16canvas",
+          "passed": true
+        },
+        {
+          "name": "gilt_big compact<=10px",
+          "passed": true
+        },
+        {
+          "name": "relic native16canvas",
+          "passed": true
+        },
+        {
+          "name": "relic compact<=10px",
+          "passed": true
+        },
+        {
+          "name": "gauntlet native16canvas",
+          "passed": true
+        },
+        {
+          "name": "gauntlet compact<=10px",
+          "passed": true
+        },
+        {
+          "name": "bow native16canvas",
+          "passed": true
+        },
+        {
+          "name": "bow compact<=10px",
+          "passed": true
+        },
+        {
+          "name": "hubcap native16canvas",
+          "passed": true
+        },
+        {
+          "name": "hubcap compact<=10px",
+          "passed": true
+        },
+        {
+          "name": "map native16canvas",
+          "passed": true
+        },
+        {
+          "name": "map compact<=10px",
+          "passed": true
+        },
+        {
+          "name": "astrolabe native16canvas",
+          "passed": true
+        },
+        {
+          "name": "astrolabe compact<=10px",
+          "passed": true
+        },
+        {
+          "name": "sword native16canvas",
+          "passed": true
+        },
+        {
+          "name": "sword compact<=10px",
+          "passed": true
+        },
+        {
+          "name": "shield native16canvas",
+          "passed": true
+        },
+        {
+          "name": "shield compact<=10px",
+          "passed": true
+        },
+        {
+          "name": "shield_upgraded native16canvas",
+          "passed": true
+        },
+        {
+          "name": "shield_upgraded compact<=10px",
+          "passed": true
+        }
+      ],
+      "kit_hashes": {
+        "panel_tl": "91fe2c04c6fe71ad98daec85a435e6ca3c1b67d4b0b04685ab26d1ce116f665f",
+        "panel_t": "e841af926d5c0edb804895dedd65b4c2b8deba2f9a51470dc51cb41b30416dbb",
+        "panel_l": "734c50d4e6bd1e7c9d1865aa5bcb9d1da1968f3f67cf307c4e8a1266bef35040",
+        "fill": "c77e45aabdf68c7fa51f69356f6a9305e04f1fd8882ad5480ab0e3afb9ade322",
+        "div_t": "d288f44ac1cc74b6c5d0da69f29401ef85e788216e2c77bd2a82074d0bd2885b",
+        "div_m": "04866ca3db653e9d21a5bec7a986d1199002db05d6ff0b16f369477fb2808195",
+        "plate_l_top": "c57a67863baad376f0b0cc0ee09227ad1234abba283bb2830cf41acb9a419c99",
+        "plate_l_bot": "3ceaddbc6d42578dee7ff245f986a85a4804c3e25897583c3791e64170b374e1",
+        "plate_m_top": "663389b8256f2219298c346b6004a740fa0c1a0ca84d63de2c344a3f0a2de141",
+        "plate_m_bot": "b29246584e59c88b29da34f496c9664d38128e9b01b0edca6446bb2c60c850f6",
+        "slot_tl": "85a1500e8c2f15ef74ddb817fe455960d1cbc6740df999df89dfa87b481eedf3",
+        "slot_t": "70c180c9bf5b9f1018ea26e60107cecc08c0a23c8aa9034413fcef20e2623f9f",
+        "slot_l": "0b922767e511b739c53bbd5dbe70ae5891f0ea9d4d5f052f18b78a6090511ace",
+        "slot_fill": "4c6dd169468938fefaa394fafbee6e4b79ad6a2ff2435489b7dc878a71b5630a",
+        "sel_tl": "bf16868567f4aeb4899cbed84c70cadfa34bbc58d8aaee0fc422093a2824db1e",
+        "sel_t": "730d907ac69c818ebc9f713e109a71313bde13447517b7c846fe82a9cf5e74d5",
+        "sel_l": "cf00ed51acaacf525e3b3428397ffffcea936ebdbe0a268833fbb48581c0d109",
+        "empty_tl": "16369231044e737d4f5e5d5a5c3b04ef5ccd44f465d4b5f3c6edf4c9d25f80e9",
+        "empty_t": "320e0f90f71a8823e5576e3e2e0bdf6020a76c72f3116a10c2be661dc15a52a1",
+        "empty_l": "d4124eaa101e9ed24b5d0344f841629cad4938b0abdb78c2e38374d824fb7166",
+        "tab_l_top": "c57a67863baad376f0b0cc0ee09227ad1234abba283bb2830cf41acb9a419c99",
+        "tab_l_bot": "3ceaddbc6d42578dee7ff245f986a85a4804c3e25897583c3791e64170b374e1",
+        "tab_m_top": "663389b8256f2219298c346b6004a740fa0c1a0ca84d63de2c344a3f0a2de141",
+        "tab_m_bot": "b29246584e59c88b29da34f496c9664d38128e9b01b0edca6446bb2c60c850f6",
+        "tabon_l_top": "54d7fb3bd617383f1731861631303a29e37aa4c4ca3931fdb47e534fb7c75964",
+        "tabon_l_bot": "0fd116dd41cca63ca0a533e6c548cb1dcfde463a6939337370f53acd39eaeed3",
+        "tabon_m_top": "a5bcab3b38d62ea82867a0cb1f980646e3b687d68adc269200dfa136dfc31a4b",
+        "tabon_m_bot": "6255f14a66a3ab9f23eadb7df47f34f096e5cde6306d541c158e5904584f8c90",
+        "badge_a": "c1d70c87ee3dbe6b67bfeb8bd849c16523baa1edd708e1c81a96a6117bce3766",
+        "badge_b": "7695478ac53cd73a491529d811dd6f93b6855a41a7576d3c03b52f1353d04f57",
+        "badge_l": "c5817d3c4ffca45bbfd4e1f53c67fd59caf6b6da1b1009b109b8189b42c93adf",
+        "badge_r": "41fbe510ca16d1d6b526cb9134922a1f546473290532f3d33faf5103e639ff73",
+        "row_tl": "85a1500e8c2f15ef74ddb817fe455960d1cbc6740df999df89dfa87b481eedf3",
+        "row_t": "70c180c9bf5b9f1018ea26e60107cecc08c0a23c8aa9034413fcef20e2623f9f",
+        "row_l": "0b922767e511b739c53bbd5dbe70ae5891f0ea9d4d5f052f18b78a6090511ace",
+        "srow_tl": "bf16868567f4aeb4899cbed84c70cadfa34bbc58d8aaee0fc422093a2824db1e",
+        "srow_t": "730d907ac69c818ebc9f713e109a71313bde13447517b7c846fe82a9cf5e74d5",
+        "srow_l": "cf00ed51acaacf525e3b3428397ffffcea936ebdbe0a268833fbb48581c0d109",
+        "bub_tl": "586d6dbfbbdd8299f1954f53803b0a99399416901596b29dcbf74930a13118b8",
+        "bub_t": "12c26f7fbd8a5400f9fcd7758dd80960d988034b3f05c517dc414ae56ada7106",
+        "bub_l": "5512065ee9f63d1008b6c8199c6680ce6d2a782b38f82913fd464d8d289527b3",
+        "bub_fill": "06aa20a633730070ee0e06ece876ed229a578cb608aba470c4a39ddf318369ee",
+        "bub_tail": "5ef6c5c5483d21fe44781d9be40787a5fe67c1790a3ad059cc0b043ea96b1732",
+        "bub_join": "06aa20a633730070ee0e06ece876ed229a578cb608aba470c4a39ddf318369ee",
+        "coin": "8fcf64b585f2e0e7f1d50f60dc114e14df2092a6eb8015b5ee2058117ba7464c",
+        "rule": "47b76ed227f1a288c264a0d0aa92ace46edc1dbb21a485cd3fd7d66b8092f82f",
+        "rule_end": "98e1e565dad6d84d0fbf5dc4edec08db215fedc0ecfdba0ebb42b8760691aee6",
+        "hud_tl": "91fe2c04c6fe71ad98daec85a435e6ca3c1b67d4b0b04685ab26d1ce116f665f",
+        "hud_t": "e841af926d5c0edb804895dedd65b4c2b8deba2f9a51470dc51cb41b30416dbb",
+        "hud_l": "734c50d4e6bd1e7c9d1865aa5bcb9d1da1968f3f67cf307c4e8a1266bef35040",
+        "key": "60203da1daf3e3a65175a9a3fb91a2e24a0244bea7d2756edc33ea617af9c3f6"
+      },
+      "hud_icon_hashes": {
+        "none": "5341e6b2646979a70e57653007a1f310169421ec9bdd9f1a5648f75ade005af1",
+        "bombs": "81ea1e6a096956269736190a4857376a9396096e0c5de1e5865d168444cf011b",
+        "lamp": "8911d4b1514d3a841f282f460dd6834978dc9d4aad2743bd8523fd7deaafd09e",
+        "cloak": "ed6ee26fdfda009f5b3fec5c30372e32ed1d5abe05268e243d77f1b1c14e4964",
+        "key": "983934bab1f5608b3e6a21584e1e80e99fd8964f3992817318cdeef92aac7b4e",
+        "heart_piece": "748942ef22420466c22364a427a2773959715cdcfba5b817b8ab000c5a82d0e2",
+        "heart_container": "beb4e4f5cbddbcb9c1b61314c912f64a9b0aa5625671058266f65d6da5f794dc",
+        "gilt_big": "80412346747512c2d8246286797636d9ce287ce1c582ef56893a696809d4ce0e",
+        "relic": "80412346747512c2d8246286797636d9ce287ce1c582ef56893a696809d4ce0e",
+        "gauntlet": "a4d77c27a977de5c293d7650f7d1a13c6eb5e487c880f7a93e733abf8ebd7bd3",
+        "bow": "d2206de130edcf1134027f7d01c32315ed1de548f9f3564614486fcc062beb71",
+        "hubcap": "8e17729c0cc30fe6677892150cf2cba08751009075fc021fdc0adef374661471",
+        "map": "0facda11396c2ce63da6e83e3a38406332b5d0f17d04c61c3755443e01c473b4",
+        "astrolabe": "80412346747512c2d8246286797636d9ce287ce1c582ef56893a696809d4ce0e",
+        "sword": "68c2215b52334717f6818f21a902c8b562e3e42f2b722c01f3e5f0372e8016d8",
+        "shield": "6afc8ce529ac9c85d4fc64fc6c0d4d38a41acd72649c96578c83db670e9d2cbd",
+        "shield_upgraded": "9afa92e1e0a63a5af420833d55a72f6f9c2dce4b80a468041a41755e1c7034dd"
+      },
+      "ui_kit_sha256": "c9e2f71b8bf273867d862d4f3a4a1535d2cd4d7b6d146ca598acd92178e53a49",
+      "source_sha256": {
+        "art/ui_studies.py": "5f924a43aa53fb0403cf6f1e77fe6912263b3ca7d210f614a081c3839f577b5b",
+        "art/reboot_ui.py": "6963ac2536f37580c1e398228b22359ea03c39460b9814fb751d4de82c98dfc7",
+        "art/ui_font.py": "48ae0da7d1daa4f01c144a856d18694c5be06674288029e62913a513bcb8388e"
+      }
+    },
+    {
+      "variant": 9,
+      "name": "Burgundy Archivist",
+      "passed": 111,
+      "total": 111,
+      "checks": [
+        {
+          "name": "menu palette16",
+          "passed": true
+        },
+        {
+          "name": "menu RGB555",
+          "passed": true
+        },
+        {
+          "name": "map palette16",
+          "passed": true
+        },
+        {
+          "name": "map RGB555",
+          "passed": true
+        },
+        {
+          "name": "hud palette16",
+          "passed": true
+        },
+        {
+          "name": "hud RGB555",
+          "passed": true
+        },
+        {
+          "name": "uikit palette16",
+          "passed": true
+        },
+        {
+          "name": "uikit RGB555",
+          "passed": true
+        },
+        {
+          "name": "ui palette16",
+          "passed": true
+        },
+        {
+          "name": "ui RGB555",
+          "passed": true
+        },
+        {
+          "name": "portrait palette16",
+          "passed": true
+        },
+        {
+          "name": "portrait RGB555",
+          "passed": true
+        },
+        {
+          "name": "panel_tl legal8x8",
+          "passed": true
+        },
+        {
+          "name": "panel_t legal8x8",
+          "passed": true
+        },
+        {
+          "name": "panel_l legal8x8",
+          "passed": true
+        },
+        {
+          "name": "fill legal8x8",
+          "passed": true
+        },
+        {
+          "name": "div_t legal8x8",
+          "passed": true
+        },
+        {
+          "name": "div_m legal8x8",
+          "passed": true
+        },
+        {
+          "name": "plate_l_top legal8x8",
+          "passed": true
+        },
+        {
+          "name": "plate_l_bot legal8x8",
+          "passed": true
+        },
+        {
+          "name": "plate_m_top legal8x8",
+          "passed": true
+        },
+        {
+          "name": "plate_m_bot legal8x8",
+          "passed": true
+        },
+        {
+          "name": "slot_tl legal8x8",
+          "passed": true
+        },
+        {
+          "name": "slot_t legal8x8",
+          "passed": true
+        },
+        {
+          "name": "slot_l legal8x8",
+          "passed": true
+        },
+        {
+          "name": "slot_fill legal8x8",
+          "passed": true
+        },
+        {
+          "name": "sel_tl legal8x8",
+          "passed": true
+        },
+        {
+          "name": "sel_t legal8x8",
+          "passed": true
+        },
+        {
+          "name": "sel_l legal8x8",
+          "passed": true
+        },
+        {
+          "name": "empty_tl legal8x8",
+          "passed": true
+        },
+        {
+          "name": "empty_t legal8x8",
+          "passed": true
+        },
+        {
+          "name": "empty_l legal8x8",
+          "passed": true
+        },
+        {
+          "name": "tab_l_top legal8x8",
+          "passed": true
+        },
+        {
+          "name": "tab_l_bot legal8x8",
+          "passed": true
+        },
+        {
+          "name": "tab_m_top legal8x8",
+          "passed": true
+        },
+        {
+          "name": "tab_m_bot legal8x8",
+          "passed": true
+        },
+        {
+          "name": "tabon_l_top legal8x8",
+          "passed": true
+        },
+        {
+          "name": "tabon_l_bot legal8x8",
+          "passed": true
+        },
+        {
+          "name": "tabon_m_top legal8x8",
+          "passed": true
+        },
+        {
+          "name": "tabon_m_bot legal8x8",
+          "passed": true
+        },
+        {
+          "name": "badge_a legal8x8",
+          "passed": true
+        },
+        {
+          "name": "badge_b legal8x8",
+          "passed": true
+        },
+        {
+          "name": "badge_l legal8x8",
+          "passed": true
+        },
+        {
+          "name": "badge_r legal8x8",
+          "passed": true
+        },
+        {
+          "name": "row_tl legal8x8",
+          "passed": true
+        },
+        {
+          "name": "row_t legal8x8",
+          "passed": true
+        },
+        {
+          "name": "row_l legal8x8",
+          "passed": true
+        },
+        {
+          "name": "srow_tl legal8x8",
+          "passed": true
+        },
+        {
+          "name": "srow_t legal8x8",
+          "passed": true
+        },
+        {
+          "name": "srow_l legal8x8",
+          "passed": true
+        },
+        {
+          "name": "bub_tl legal8x8",
+          "passed": true
+        },
+        {
+          "name": "bub_t legal8x8",
+          "passed": true
+        },
+        {
+          "name": "bub_l legal8x8",
+          "passed": true
+        },
+        {
+          "name": "bub_fill legal8x8",
+          "passed": true
+        },
+        {
+          "name": "bub_tail legal8x8",
+          "passed": true
+        },
+        {
+          "name": "bub_join legal8x8",
+          "passed": true
+        },
+        {
+          "name": "coin legal8x8",
+          "passed": true
+        },
+        {
+          "name": "rule legal8x8",
+          "passed": true
+        },
+        {
+          "name": "rule_end legal8x8",
+          "passed": true
+        },
+        {
+          "name": "hud_tl legal8x8",
+          "passed": true
+        },
+        {
+          "name": "hud_t legal8x8",
+          "passed": true
+        },
+        {
+          "name": "hud_l legal8x8",
+          "passed": true
+        },
+        {
+          "name": "key legal8x8",
+          "passed": true
+        },
+        {
+          "name": "heart_full legal8x8",
+          "passed": true
+        },
+        {
+          "name": "heart_full transparentoutside",
+          "passed": true
+        },
+        {
+          "name": "heart_half legal8x8",
+          "passed": true
+        },
+        {
+          "name": "heart_half transparentoutside",
+          "passed": true
+        },
+        {
+          "name": "heart_empty legal8x8",
+          "passed": true
+        },
+        {
+          "name": "heart_empty transparentoutside",
+          "passed": true
+        },
+        {
+          "name": "hand legal8x8",
+          "passed": true
+        },
+        {
+          "name": "next markerlegal8x8",
+          "passed": true
+        },
+        {
+          "name": "pick markerlegal8x8",
+          "passed": true
+        },
+        {
+          "name": "corner markerlegal8x8",
+          "passed": true
+        },
+        {
+          "name": "badge_a markerlegal8x8",
+          "passed": true
+        },
+        {
+          "name": "badge_b markerlegal8x8",
+          "passed": true
+        },
+        {
+          "name": "badge_l markerlegal8x8",
+          "passed": true
+        },
+        {
+          "name": "cursorlegal32x32",
+          "passed": true
+        },
+        {
+          "name": "none native16canvas",
+          "passed": true
+        },
+        {
+          "name": "none compact<=10px",
+          "passed": true
+        },
+        {
+          "name": "bombs native16canvas",
+          "passed": true
+        },
+        {
+          "name": "bombs compact<=10px",
+          "passed": true
+        },
+        {
+          "name": "lamp native16canvas",
+          "passed": true
+        },
+        {
+          "name": "lamp compact<=10px",
+          "passed": true
+        },
+        {
+          "name": "cloak native16canvas",
+          "passed": true
+        },
+        {
+          "name": "cloak compact<=10px",
+          "passed": true
+        },
+        {
+          "name": "key native16canvas",
+          "passed": true
+        },
+        {
+          "name": "key compact<=10px",
+          "passed": true
+        },
+        {
+          "name": "heart_piece native16canvas",
+          "passed": true
+        },
+        {
+          "name": "heart_piece compact<=10px",
+          "passed": true
+        },
+        {
+          "name": "heart_container native16canvas",
+          "passed": true
+        },
+        {
+          "name": "heart_container compact<=10px",
+          "passed": true
+        },
+        {
+          "name": "gilt_big native16canvas",
+          "passed": true
+        },
+        {
+          "name": "gilt_big compact<=10px",
+          "passed": true
+        },
+        {
+          "name": "relic native16canvas",
+          "passed": true
+        },
+        {
+          "name": "relic compact<=10px",
+          "passed": true
+        },
+        {
+          "name": "gauntlet native16canvas",
+          "passed": true
+        },
+        {
+          "name": "gauntlet compact<=10px",
+          "passed": true
+        },
+        {
+          "name": "bow native16canvas",
+          "passed": true
+        },
+        {
+          "name": "bow compact<=10px",
+          "passed": true
+        },
+        {
+          "name": "hubcap native16canvas",
+          "passed": true
+        },
+        {
+          "name": "hubcap compact<=10px",
+          "passed": true
+        },
+        {
+          "name": "map native16canvas",
+          "passed": true
+        },
+        {
+          "name": "map compact<=10px",
+          "passed": true
+        },
+        {
+          "name": "astrolabe native16canvas",
+          "passed": true
+        },
+        {
+          "name": "astrolabe compact<=10px",
+          "passed": true
+        },
+        {
+          "name": "sword native16canvas",
+          "passed": true
+        },
+        {
+          "name": "sword compact<=10px",
+          "passed": true
+        },
+        {
+          "name": "shield native16canvas",
+          "passed": true
+        },
+        {
+          "name": "shield compact<=10px",
+          "passed": true
+        },
+        {
+          "name": "shield_upgraded native16canvas",
+          "passed": true
+        },
+        {
+          "name": "shield_upgraded compact<=10px",
+          "passed": true
+        }
+      ],
+      "kit_hashes": {
+        "panel_tl": "dee00c56d2f27de225bae583ae233c54f7dbaa7e94a41cacd3488bdbb09ae1da",
+        "panel_t": "1000c950e956d10d23a16c4da0e5a8fcb1e4890eef696e894aa0fce7408233cc",
+        "panel_l": "713392aa0f1a7c0f530a2875e3fc7efe4f1fae00601f090770fee3c9b20a952b",
+        "fill": "c77e45aabdf68c7fa51f69356f6a9305e04f1fd8882ad5480ab0e3afb9ade322",
+        "div_t": "1134ad55bf3a50bc6ec9b9ed0dbe0555a470a86b9ee9e578c4f8150e8ecb79da",
+        "div_m": "a81de3211b2a1741ea5b601ef671cc3f81c61225c6728daa8a0dfc7e445a7d0f",
+        "plate_l_top": "11fa09e23c914b0ea245b2c4f3c1322f3a4b05bcfa57fdc82f24c84db7a03471",
+        "plate_l_bot": "9e818ddf3ec6d84b62363dbe514f9335fde3b0cbfa391bd7d292153a9e2c6809",
+        "plate_m_top": "a265b00f65583c86854f567b1c597e2e9477dd36a3287f4854eb9300346a44fe",
+        "plate_m_bot": "ef7e8ab9cfcf58e6437dbb6ab10ca58f89cab7cd3f368aea94f939bb1d5cccde",
+        "slot_tl": "13fa219c00d4be3f5b1c2e6be748694d5cd97488c7d4354c397c3e4c05c5d1f2",
+        "slot_t": "31b35a723158a19762eb05ac6161e3871d3a8674a05c8d6f4310abc4e181f44b",
+        "slot_l": "93444b44b06e3770c688dc891d4d9af226a44c6bd7360658eb248671387dda4a",
+        "slot_fill": "4c6dd169468938fefaa394fafbee6e4b79ad6a2ff2435489b7dc878a71b5630a",
+        "sel_tl": "6dd70b0bba6a6bc520118b6dfd7501cf1566440bfc1a669e910a17716437969c",
+        "sel_t": "66a62ce7b83c7debcd743782258b463612a33334b0cbfa9b792e4e1a85b0b2e6",
+        "sel_l": "f31fd274cfa277bb29ea8d33208814b2c56945d5c9b06dc969828ce074c206e1",
+        "empty_tl": "bb779cc3cac2102c0e99f889a729655057e8f3eb432a1e54ebcd895dbac28f0c",
+        "empty_t": "3d54c973d62aa6ae4421d53effa0bc393515adbc6027761063f78fa511d9852e",
+        "empty_l": "262cdb8f1328dc17c34829ab3654cd3c93ef8e2f7d8e7c9339bb217beff7b06a",
+        "tab_l_top": "11fa09e23c914b0ea245b2c4f3c1322f3a4b05bcfa57fdc82f24c84db7a03471",
+        "tab_l_bot": "9e818ddf3ec6d84b62363dbe514f9335fde3b0cbfa391bd7d292153a9e2c6809",
+        "tab_m_top": "a265b00f65583c86854f567b1c597e2e9477dd36a3287f4854eb9300346a44fe",
+        "tab_m_bot": "ef7e8ab9cfcf58e6437dbb6ab10ca58f89cab7cd3f368aea94f939bb1d5cccde",
+        "tabon_l_top": "a8419cc49faa733939d40d9b4e44bfac2353679a99a3074f1f1b3ddc2d4068ed",
+        "tabon_l_bot": "59d01b82a9d9fdd9d42937521ae6f08482387b74cb3b9305d5c7076d95c4a1b5",
+        "tabon_m_top": "e742c93cefc8eb7f741a7834fd91103013a4601cc10fe758d378844efa427c39",
+        "tabon_m_bot": "db9cabd85b8c88a993fa696f03d19110e953a60c94e4cda0affb6273979270e8",
+        "badge_a": "1d9979fa568f61a8989821b6cebd45cb6d7bba3a5d503571a9361c70c70600ff",
+        "badge_b": "4b90fdc3312e4759171365a20c12f4a47ef5b1045c9bf7c7205451d81f574d48",
+        "badge_l": "aad7f02d06d379178e459d25db2614ed13aa30c8de62d996f30a0f68951968f2",
+        "badge_r": "71cb667b9517e6876590eb9cb477b853cad12c2ffb970dd5c2b6d770280f90e0",
+        "row_tl": "13fa219c00d4be3f5b1c2e6be748694d5cd97488c7d4354c397c3e4c05c5d1f2",
+        "row_t": "31b35a723158a19762eb05ac6161e3871d3a8674a05c8d6f4310abc4e181f44b",
+        "row_l": "93444b44b06e3770c688dc891d4d9af226a44c6bd7360658eb248671387dda4a",
+        "srow_tl": "6dd70b0bba6a6bc520118b6dfd7501cf1566440bfc1a669e910a17716437969c",
+        "srow_t": "66a62ce7b83c7debcd743782258b463612a33334b0cbfa9b792e4e1a85b0b2e6",
+        "srow_l": "f31fd274cfa277bb29ea8d33208814b2c56945d5c9b06dc969828ce074c206e1",
+        "bub_tl": "ae0fb6ff9bfc2e8eb4ebf65d181ca7d9aa85c64c23df8c0297dddf43e853e2f7",
+        "bub_t": "00c86c138ec10c414251018959049e0b11784afbad992ddc5c3bff20ca48de65",
+        "bub_l": "d13dd22c8c9d1a615ff1427935a26623a519f9cdb0124a221312b2b651413c7c",
+        "bub_fill": "06aa20a633730070ee0e06ece876ed229a578cb608aba470c4a39ddf318369ee",
+        "bub_tail": "e1a21861320c615b641fbfc62c1c50fc2ef62b6d7352e88b7b6a761431aa7582",
+        "bub_join": "06aa20a633730070ee0e06ece876ed229a578cb608aba470c4a39ddf318369ee",
+        "coin": "8fcf64b585f2e0e7f1d50f60dc114e14df2092a6eb8015b5ee2058117ba7464c",
+        "rule": "8d95fea0fe2a44af44630bd2608979ca5e28b3ff6b0bd5758e5fa5993ca262e8",
+        "rule_end": "8e5bcd7046c3ba564aaee5e08083f0a58ad7bfab7713cb2f6605fb06dce6bc18",
+        "hud_tl": "dee00c56d2f27de225bae583ae233c54f7dbaa7e94a41cacd3488bdbb09ae1da",
+        "hud_t": "1000c950e956d10d23a16c4da0e5a8fcb1e4890eef696e894aa0fce7408233cc",
+        "hud_l": "713392aa0f1a7c0f530a2875e3fc7efe4f1fae00601f090770fee3c9b20a952b",
+        "key": "60203da1daf3e3a65175a9a3fb91a2e24a0244bea7d2756edc33ea617af9c3f6"
+      },
+      "hud_icon_hashes": {
+        "none": "5341e6b2646979a70e57653007a1f310169421ec9bdd9f1a5648f75ade005af1",
+        "bombs": "81ea1e6a096956269736190a4857376a9396096e0c5de1e5865d168444cf011b",
+        "lamp": "8911d4b1514d3a841f282f460dd6834978dc9d4aad2743bd8523fd7deaafd09e",
+        "cloak": "ed6ee26fdfda009f5b3fec5c30372e32ed1d5abe05268e243d77f1b1c14e4964",
+        "key": "983934bab1f5608b3e6a21584e1e80e99fd8964f3992817318cdeef92aac7b4e",
+        "heart_piece": "748942ef22420466c22364a427a2773959715cdcfba5b817b8ab000c5a82d0e2",
+        "heart_container": "beb4e4f5cbddbcb9c1b61314c912f64a9b0aa5625671058266f65d6da5f794dc",
+        "gilt_big": "80412346747512c2d8246286797636d9ce287ce1c582ef56893a696809d4ce0e",
+        "relic": "80412346747512c2d8246286797636d9ce287ce1c582ef56893a696809d4ce0e",
+        "gauntlet": "a4d77c27a977de5c293d7650f7d1a13c6eb5e487c880f7a93e733abf8ebd7bd3",
+        "bow": "d2206de130edcf1134027f7d01c32315ed1de548f9f3564614486fcc062beb71",
+        "hubcap": "8e17729c0cc30fe6677892150cf2cba08751009075fc021fdc0adef374661471",
+        "map": "0facda11396c2ce63da6e83e3a38406332b5d0f17d04c61c3755443e01c473b4",
+        "astrolabe": "80412346747512c2d8246286797636d9ce287ce1c582ef56893a696809d4ce0e",
+        "sword": "68c2215b52334717f6818f21a902c8b562e3e42f2b722c01f3e5f0372e8016d8",
+        "shield": "6afc8ce529ac9c85d4fc64fc6c0d4d38a41acd72649c96578c83db670e9d2cbd",
+        "shield_upgraded": "9afa92e1e0a63a5af420833d55a72f6f9c2dce4b80a468041a41755e1c7034dd"
+      },
+      "ui_kit_sha256": "49a61db003680ca33058000d3203be2fd596d2a3b2d657a6e53e80ce5327378a",
+      "source_sha256": {
+        "art/ui_studies.py": "5f924a43aa53fb0403cf6f1e77fe6912263b3ca7d210f614a081c3839f577b5b",
+        "art/reboot_ui.py": "6963ac2536f37580c1e398228b22359ea03c39460b9814fb751d4de82c98dfc7",
+        "art/ui_font.py": "48ae0da7d1daa4f01c144a856d18694c5be06674288029e62913a513bcb8388e"
+      }
+    },
+    {
+      "variant": 10,
+      "name": "Verdigris Devotional",
+      "passed": 111,
+      "total": 111,
+      "checks": [
+        {
+          "name": "menu palette16",
+          "passed": true
+        },
+        {
+          "name": "menu RGB555",
+          "passed": true
+        },
+        {
+          "name": "map palette16",
+          "passed": true
+        },
+        {
+          "name": "map RGB555",
+          "passed": true
+        },
+        {
+          "name": "hud palette16",
+          "passed": true
+        },
+        {
+          "name": "hud RGB555",
+          "passed": true
+        },
+        {
+          "name": "uikit palette16",
+          "passed": true
+        },
+        {
+          "name": "uikit RGB555",
+          "passed": true
+        },
+        {
+          "name": "ui palette16",
+          "passed": true
+        },
+        {
+          "name": "ui RGB555",
+          "passed": true
+        },
+        {
+          "name": "portrait palette16",
+          "passed": true
+        },
+        {
+          "name": "portrait RGB555",
+          "passed": true
+        },
+        {
+          "name": "panel_tl legal8x8",
+          "passed": true
+        },
+        {
+          "name": "panel_t legal8x8",
+          "passed": true
+        },
+        {
+          "name": "panel_l legal8x8",
+          "passed": true
+        },
+        {
+          "name": "fill legal8x8",
+          "passed": true
+        },
+        {
+          "name": "div_t legal8x8",
+          "passed": true
+        },
+        {
+          "name": "div_m legal8x8",
+          "passed": true
+        },
+        {
+          "name": "plate_l_top legal8x8",
+          "passed": true
+        },
+        {
+          "name": "plate_l_bot legal8x8",
+          "passed": true
+        },
+        {
+          "name": "plate_m_top legal8x8",
+          "passed": true
+        },
+        {
+          "name": "plate_m_bot legal8x8",
+          "passed": true
+        },
+        {
+          "name": "slot_tl legal8x8",
+          "passed": true
+        },
+        {
+          "name": "slot_t legal8x8",
+          "passed": true
+        },
+        {
+          "name": "slot_l legal8x8",
+          "passed": true
+        },
+        {
+          "name": "slot_fill legal8x8",
+          "passed": true
+        },
+        {
+          "name": "sel_tl legal8x8",
+          "passed": true
+        },
+        {
+          "name": "sel_t legal8x8",
+          "passed": true
+        },
+        {
+          "name": "sel_l legal8x8",
+          "passed": true
+        },
+        {
+          "name": "empty_tl legal8x8",
+          "passed": true
+        },
+        {
+          "name": "empty_t legal8x8",
+          "passed": true
+        },
+        {
+          "name": "empty_l legal8x8",
+          "passed": true
+        },
+        {
+          "name": "tab_l_top legal8x8",
+          "passed": true
+        },
+        {
+          "name": "tab_l_bot legal8x8",
+          "passed": true
+        },
+        {
+          "name": "tab_m_top legal8x8",
+          "passed": true
+        },
+        {
+          "name": "tab_m_bot legal8x8",
+          "passed": true
+        },
+        {
+          "name": "tabon_l_top legal8x8",
+          "passed": true
+        },
+        {
+          "name": "tabon_l_bot legal8x8",
+          "passed": true
+        },
+        {
+          "name": "tabon_m_top legal8x8",
+          "passed": true
+        },
+        {
+          "name": "tabon_m_bot legal8x8",
+          "passed": true
+        },
+        {
+          "name": "badge_a legal8x8",
+          "passed": true
+        },
+        {
+          "name": "badge_b legal8x8",
+          "passed": true
+        },
+        {
+          "name": "badge_l legal8x8",
+          "passed": true
+        },
+        {
+          "name": "badge_r legal8x8",
+          "passed": true
+        },
+        {
+          "name": "row_tl legal8x8",
+          "passed": true
+        },
+        {
+          "name": "row_t legal8x8",
+          "passed": true
+        },
+        {
+          "name": "row_l legal8x8",
+          "passed": true
+        },
+        {
+          "name": "srow_tl legal8x8",
+          "passed": true
+        },
+        {
+          "name": "srow_t legal8x8",
+          "passed": true
+        },
+        {
+          "name": "srow_l legal8x8",
+          "passed": true
+        },
+        {
+          "name": "bub_tl legal8x8",
+          "passed": true
+        },
+        {
+          "name": "bub_t legal8x8",
+          "passed": true
+        },
+        {
+          "name": "bub_l legal8x8",
+          "passed": true
+        },
+        {
+          "name": "bub_fill legal8x8",
+          "passed": true
+        },
+        {
+          "name": "bub_tail legal8x8",
+          "passed": true
+        },
+        {
+          "name": "bub_join legal8x8",
+          "passed": true
+        },
+        {
+          "name": "coin legal8x8",
+          "passed": true
+        },
+        {
+          "name": "rule legal8x8",
+          "passed": true
+        },
+        {
+          "name": "rule_end legal8x8",
+          "passed": true
+        },
+        {
+          "name": "hud_tl legal8x8",
+          "passed": true
+        },
+        {
+          "name": "hud_t legal8x8",
+          "passed": true
+        },
+        {
+          "name": "hud_l legal8x8",
+          "passed": true
+        },
+        {
+          "name": "key legal8x8",
+          "passed": true
+        },
+        {
+          "name": "heart_full legal8x8",
+          "passed": true
+        },
+        {
+          "name": "heart_full transparentoutside",
+          "passed": true
+        },
+        {
+          "name": "heart_half legal8x8",
+          "passed": true
+        },
+        {
+          "name": "heart_half transparentoutside",
+          "passed": true
+        },
+        {
+          "name": "heart_empty legal8x8",
+          "passed": true
+        },
+        {
+          "name": "heart_empty transparentoutside",
+          "passed": true
+        },
+        {
+          "name": "hand legal8x8",
+          "passed": true
+        },
+        {
+          "name": "next markerlegal8x8",
+          "passed": true
+        },
+        {
+          "name": "pick markerlegal8x8",
+          "passed": true
+        },
+        {
+          "name": "corner markerlegal8x8",
+          "passed": true
+        },
+        {
+          "name": "badge_a markerlegal8x8",
+          "passed": true
+        },
+        {
+          "name": "badge_b markerlegal8x8",
+          "passed": true
+        },
+        {
+          "name": "badge_l markerlegal8x8",
+          "passed": true
+        },
+        {
+          "name": "cursorlegal32x32",
+          "passed": true
+        },
+        {
+          "name": "none native16canvas",
+          "passed": true
+        },
+        {
+          "name": "none compact<=10px",
+          "passed": true
+        },
+        {
+          "name": "bombs native16canvas",
+          "passed": true
+        },
+        {
+          "name": "bombs compact<=10px",
+          "passed": true
+        },
+        {
+          "name": "lamp native16canvas",
+          "passed": true
+        },
+        {
+          "name": "lamp compact<=10px",
+          "passed": true
+        },
+        {
+          "name": "cloak native16canvas",
+          "passed": true
+        },
+        {
+          "name": "cloak compact<=10px",
+          "passed": true
+        },
+        {
+          "name": "key native16canvas",
+          "passed": true
+        },
+        {
+          "name": "key compact<=10px",
+          "passed": true
+        },
+        {
+          "name": "heart_piece native16canvas",
+          "passed": true
+        },
+        {
+          "name": "heart_piece compact<=10px",
+          "passed": true
+        },
+        {
+          "name": "heart_container native16canvas",
+          "passed": true
+        },
+        {
+          "name": "heart_container compact<=10px",
+          "passed": true
+        },
+        {
+          "name": "gilt_big native16canvas",
+          "passed": true
+        },
+        {
+          "name": "gilt_big compact<=10px",
+          "passed": true
+        },
+        {
+          "name": "relic native16canvas",
+          "passed": true
+        },
+        {
+          "name": "relic compact<=10px",
+          "passed": true
+        },
+        {
+          "name": "gauntlet native16canvas",
+          "passed": true
+        },
+        {
+          "name": "gauntlet compact<=10px",
+          "passed": true
+        },
+        {
+          "name": "bow native16canvas",
+          "passed": true
+        },
+        {
+          "name": "bow compact<=10px",
+          "passed": true
+        },
+        {
+          "name": "hubcap native16canvas",
+          "passed": true
+        },
+        {
+          "name": "hubcap compact<=10px",
+          "passed": true
+        },
+        {
+          "name": "map native16canvas",
+          "passed": true
+        },
+        {
+          "name": "map compact<=10px",
+          "passed": true
+        },
+        {
+          "name": "astrolabe native16canvas",
+          "passed": true
+        },
+        {
+          "name": "astrolabe compact<=10px",
+          "passed": true
+        },
+        {
+          "name": "sword native16canvas",
+          "passed": true
+        },
+        {
+          "name": "sword compact<=10px",
+          "passed": true
+        },
+        {
+          "name": "shield native16canvas",
+          "passed": true
+        },
+        {
+          "name": "shield compact<=10px",
+          "passed": true
+        },
+        {
+          "name": "shield_upgraded native16canvas",
+          "passed": true
+        },
+        {
+          "name": "shield_upgraded compact<=10px",
+          "passed": true
+        }
+      ],
+      "kit_hashes": {
+        "panel_tl": "c42770a44b176a430719a7d339809fa24461562b32ee9f3efac5954edb5d9530",
+        "panel_t": "2707ae9618bfb737ef008da6a74c22ae189375012cebf10b6d3264e01f67d01e",
+        "panel_l": "57d5333e031ce6bbe251ebfec78f07daddc9800573d64a2ac20940f571ccb713",
+        "fill": "c77e45aabdf68c7fa51f69356f6a9305e04f1fd8882ad5480ab0e3afb9ade322",
+        "div_t": "c4d42e68b6a2adec314c30fa97a6b1224f387b53761cabee001a2772fdec8d1b",
+        "div_m": "a81de3211b2a1741ea5b601ef671cc3f81c61225c6728daa8a0dfc7e445a7d0f",
+        "plate_l_top": "b2b6ad0490d9fcd262b5f3eefd4171b7d07b9ddca61059f860d92e087108a6bf",
+        "plate_l_bot": "9d3770900d0169cd0f6efef88d1e879d0468fc02d73357cd50634ca4d6478d08",
+        "plate_m_top": "51b07f4ad30c58ce066bc14147e9e2dec53d3ba445618f1c5ce3af5ae73c3123",
+        "plate_m_bot": "222df2a7c35e09cc1800bd11246247a6dac8fc1b89b7e2f5d8b0cdf5c29b5947",
+        "slot_tl": "bc89a0bfedec3a5eedbeab7d46aba277ecd16a5de443722445ea16a578e7d883",
+        "slot_t": "212d927b1f78cd7332ccd98c0b7675ccb2e0d5e4a04a1a5574eb47851feb90af",
+        "slot_l": "db5d261e21eae6f8caada6e46274f30500ccaa16ca2022993cf2628f9b948d08",
+        "slot_fill": "4c6dd169468938fefaa394fafbee6e4b79ad6a2ff2435489b7dc878a71b5630a",
+        "sel_tl": "2b94f22d2ee80ba1b1583161cb0931d322eb8b8082ca8bba26b4d76fc5586787",
+        "sel_t": "c61458bac4b0da1732bf0831fc5f7a25381bdcc0fb9f3e9e1f25db1dffb9de5f",
+        "sel_l": "026a161f258cf1892a1063b965b7432e9b0b43c111aaa418fcda47b3fdfca9bb",
+        "empty_tl": "16369231044e737d4f5e5d5a5c3b04ef5ccd44f465d4b5f3c6edf4c9d25f80e9",
+        "empty_t": "320e0f90f71a8823e5576e3e2e0bdf6020a76c72f3116a10c2be661dc15a52a1",
+        "empty_l": "d4124eaa101e9ed24b5d0344f841629cad4938b0abdb78c2e38374d824fb7166",
+        "tab_l_top": "b2b6ad0490d9fcd262b5f3eefd4171b7d07b9ddca61059f860d92e087108a6bf",
+        "tab_l_bot": "9d3770900d0169cd0f6efef88d1e879d0468fc02d73357cd50634ca4d6478d08",
+        "tab_m_top": "51b07f4ad30c58ce066bc14147e9e2dec53d3ba445618f1c5ce3af5ae73c3123",
+        "tab_m_bot": "222df2a7c35e09cc1800bd11246247a6dac8fc1b89b7e2f5d8b0cdf5c29b5947",
+        "tabon_l_top": "14332680baccd3440be657457b95d9aa15cc35a6fac53b70304ad4501be33836",
+        "tabon_l_bot": "58cf4c62b31e4c367f3c34cffe9e920f271351116da97fbef66c1acc37c2e2d1",
+        "tabon_m_top": "327c8edaff66fd6681b5badd6ccff99191bbf47fd2e06f7520bda4db75401293",
+        "tabon_m_bot": "a88d778830c9179778d76c65fc064b4823b173bdd1062f9c236ccaa15ea9094f",
+        "badge_a": "ebd881d754b08325a6d14207ab349310873896a3303f4bfa8e21b50a60368fc9",
+        "badge_b": "ff4b81e07b98ae79f19dd04cf4a381cb2516e756a81b8fa46c653129139d3b24",
+        "badge_l": "915a470d16e8835b9642824daad0b49964d5be4d50ebe2d83f0a581d58c915e5",
+        "badge_r": "5ea20747df1cb07e2324b7ded277fbc3d3640278416baaaf36c06d446474e618",
+        "row_tl": "bc89a0bfedec3a5eedbeab7d46aba277ecd16a5de443722445ea16a578e7d883",
+        "row_t": "212d927b1f78cd7332ccd98c0b7675ccb2e0d5e4a04a1a5574eb47851feb90af",
+        "row_l": "db5d261e21eae6f8caada6e46274f30500ccaa16ca2022993cf2628f9b948d08",
+        "srow_tl": "2b94f22d2ee80ba1b1583161cb0931d322eb8b8082ca8bba26b4d76fc5586787",
+        "srow_t": "c61458bac4b0da1732bf0831fc5f7a25381bdcc0fb9f3e9e1f25db1dffb9de5f",
+        "srow_l": "026a161f258cf1892a1063b965b7432e9b0b43c111aaa418fcda47b3fdfca9bb",
+        "bub_tl": "35b6e9c09f93d22b40bdc10bffb021882c627fe9ba90c46a3be92abc36ae9e5e",
+        "bub_t": "0c1bc52e77bff094c23e937a3f7a68b082fdb1f9abfec3da1b0d17d9991bd5c2",
+        "bub_l": "ea7e3a7c9379277bb9ee6194099e92895b7ca2c02b4b8114501c6eed1133817b",
+        "bub_fill": "06aa20a633730070ee0e06ece876ed229a578cb608aba470c4a39ddf318369ee",
+        "bub_tail": "8f49c0060984c080690a444ac522d1c92f67e4161a5706990254ab62b8c27390",
+        "bub_join": "06aa20a633730070ee0e06ece876ed229a578cb608aba470c4a39ddf318369ee",
+        "coin": "8fcf64b585f2e0e7f1d50f60dc114e14df2092a6eb8015b5ee2058117ba7464c",
+        "rule": "47b76ed227f1a288c264a0d0aa92ace46edc1dbb21a485cd3fd7d66b8092f82f",
+        "rule_end": "98e1e565dad6d84d0fbf5dc4edec08db215fedc0ecfdba0ebb42b8760691aee6",
+        "hud_tl": "c42770a44b176a430719a7d339809fa24461562b32ee9f3efac5954edb5d9530",
+        "hud_t": "2707ae9618bfb737ef008da6a74c22ae189375012cebf10b6d3264e01f67d01e",
+        "hud_l": "57d5333e031ce6bbe251ebfec78f07daddc9800573d64a2ac20940f571ccb713",
+        "key": "60203da1daf3e3a65175a9a3fb91a2e24a0244bea7d2756edc33ea617af9c3f6"
+      },
+      "hud_icon_hashes": {
+        "none": "5341e6b2646979a70e57653007a1f310169421ec9bdd9f1a5648f75ade005af1",
+        "bombs": "81ea1e6a096956269736190a4857376a9396096e0c5de1e5865d168444cf011b",
+        "lamp": "8911d4b1514d3a841f282f460dd6834978dc9d4aad2743bd8523fd7deaafd09e",
+        "cloak": "ed6ee26fdfda009f5b3fec5c30372e32ed1d5abe05268e243d77f1b1c14e4964",
+        "key": "983934bab1f5608b3e6a21584e1e80e99fd8964f3992817318cdeef92aac7b4e",
+        "heart_piece": "748942ef22420466c22364a427a2773959715cdcfba5b817b8ab000c5a82d0e2",
+        "heart_container": "beb4e4f5cbddbcb9c1b61314c912f64a9b0aa5625671058266f65d6da5f794dc",
+        "gilt_big": "80412346747512c2d8246286797636d9ce287ce1c582ef56893a696809d4ce0e",
+        "relic": "80412346747512c2d8246286797636d9ce287ce1c582ef56893a696809d4ce0e",
+        "gauntlet": "a4d77c27a977de5c293d7650f7d1a13c6eb5e487c880f7a93e733abf8ebd7bd3",
+        "bow": "d2206de130edcf1134027f7d01c32315ed1de548f9f3564614486fcc062beb71",
+        "hubcap": "8e17729c0cc30fe6677892150cf2cba08751009075fc021fdc0adef374661471",
+        "map": "0facda11396c2ce63da6e83e3a38406332b5d0f17d04c61c3755443e01c473b4",
+        "astrolabe": "80412346747512c2d8246286797636d9ce287ce1c582ef56893a696809d4ce0e",
+        "sword": "68c2215b52334717f6818f21a902c8b562e3e42f2b722c01f3e5f0372e8016d8",
+        "shield": "6afc8ce529ac9c85d4fc64fc6c0d4d38a41acd72649c96578c83db670e9d2cbd",
+        "shield_upgraded": "9afa92e1e0a63a5af420833d55a72f6f9c2dce4b80a468041a41755e1c7034dd"
+      },
+      "ui_kit_sha256": "5ad85b2507fc24ab48c8eb65b2bf3ed1668ea89a192964b2b9c98d0aa71b5cfd",
+      "source_sha256": {
+        "art/ui_studies.py": "5f924a43aa53fb0403cf6f1e77fe6912263b3ca7d210f614a081c3839f577b5b",
+        "art/reboot_ui.py": "6963ac2536f37580c1e398228b22359ea03c39460b9814fb751d4de82c98dfc7",
+        "art/ui_font.py": "48ae0da7d1daa4f01c144a856d18694c5be06674288029e62913a513bcb8388e"
+      }
+    }
+  ],
+  "passed": 1221,
+  "total": 1221,
+  "five_new_geometry_distinct": true,
+  "protected_title_font_unchanged": true
+}

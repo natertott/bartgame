@@ -1,0 +1,405 @@
+{
+  "layouts": [
+    {
+      "number": 6,
+      "name": "Twin Atlas",
+      "icon_size": 16,
+      "slots": [
+        [
+          8,
+          24
+        ],
+        [
+          8,
+          40
+        ],
+        [
+          8,
+          56
+        ],
+        [
+          8,
+          72
+        ],
+        [
+          8,
+          88
+        ],
+        [
+          8,
+          104
+        ],
+        [
+          8,
+          120
+        ]
+      ],
+      "rectangles": {
+        "detail": [
+          128,
+          96,
+          104,
+          48
+        ],
+        "equipment": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "status": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "overview": [
+          8,
+          32,
+          96,
+          96
+        ],
+        "chamber": [
+          112,
+          32,
+          120,
+          96
+        ],
+        "map_info": [
+          8,
+          128,
+          224,
+          16
+        ],
+        "preview": [
+          128,
+          24,
+          104,
+          64
+        ]
+      },
+      "source_assembly_not_emulator": true
+    },
+    {
+      "number": 7,
+      "name": "Expedition Dashboard",
+      "icon_size": 16,
+      "slots": [
+        [
+          16,
+          32
+        ],
+        [
+          48,
+          32
+        ],
+        [
+          80,
+          32
+        ],
+        [
+          112,
+          32
+        ],
+        [
+          16,
+          72
+        ],
+        [
+          48,
+          72
+        ],
+        [
+          80,
+          72
+        ]
+      ],
+      "rectangles": {
+        "detail": [
+          144,
+          80,
+          88,
+          64
+        ],
+        "equipment": [
+          8,
+          104,
+          128,
+          40
+        ],
+        "status": [
+          144,
+          24,
+          88,
+          48
+        ],
+        "overview": [
+          8,
+          24,
+          128,
+          112
+        ],
+        "chamber": [
+          8,
+          24,
+          128,
+          112
+        ],
+        "map_info": [
+          144,
+          24,
+          88,
+          112
+        ],
+        "preview": [
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      "source_assembly_not_emulator": true
+    },
+    {
+      "number": 8,
+      "name": "Focus Cards",
+      "icon_size": 16,
+      "slots": [
+        [
+          8,
+          112
+        ],
+        [
+          40,
+          112
+        ],
+        [
+          72,
+          112
+        ],
+        [
+          104,
+          112
+        ],
+        [
+          136,
+          112
+        ],
+        [
+          168,
+          112
+        ],
+        [
+          200,
+          112
+        ]
+      ],
+      "rectangles": {
+        "detail": [
+          8,
+          24,
+          224,
+          80
+        ],
+        "equipment": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "status": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "overview": [
+          8,
+          24,
+          144,
+          112
+        ],
+        "chamber": [
+          8,
+          24,
+          144,
+          112
+        ],
+        "map_info": [
+          160,
+          24,
+          72,
+          112
+        ],
+        "preview": [
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      "source_assembly_not_emulator": true
+    },
+    {
+      "number": 9,
+      "name": "Barrier Index",
+      "icon_size": 16,
+      "slots": [
+        [
+          16,
+          32
+        ],
+        [
+          72,
+          32
+        ],
+        [
+          128,
+          32
+        ],
+        [
+          184,
+          32
+        ],
+        [
+          16,
+          72
+        ],
+        [
+          72,
+          72
+        ],
+        [
+          128,
+          72
+        ]
+      ],
+      "rectangles": {
+        "detail": [
+          8,
+          104,
+          224,
+          40
+        ],
+        "equipment": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "status": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "overview": [
+          8,
+          24,
+          152,
+          112
+        ],
+        "chamber": [
+          8,
+          24,
+          152,
+          112
+        ],
+        "map_info": [
+          168,
+          24,
+          64,
+          112
+        ],
+        "preview": [
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      "source_assembly_not_emulator": true
+    },
+    {
+      "number": 10,
+      "name": "Quick Ribbon",
+      "icon_size": 32,
+      "slots": [
+        [
+          8,
+          32
+        ],
+        [
+          40,
+          32
+        ],
+        [
+          72,
+          32
+        ],
+        [
+          104,
+          32
+        ],
+        [
+          136,
+          32
+        ],
+        [
+          168,
+          32
+        ],
+        [
+          200,
+          32
+        ]
+      ],
+      "rectangles": {
+        "detail": [
+          8,
+          80,
+          224,
+          64
+        ],
+        "equipment": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "status": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "overview": [
+          8,
+          24,
+          224,
+          96
+        ],
+        "chamber": [
+          8,
+          24,
+          224,
+          96
+        ],
+        "map_info": [
+          8,
+          128,
+          224,
+          16
+        ],
+        "preview": [
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      "source_assembly_not_emulator": true
+    }
+  ],
+  "scope": "Source coordinate/alignment proof and native wireframes; not actual game rendering or usability completion."
+}
