@@ -1,0 +1,35 @@
+{
+  "game_art_source_commit": "e5e3fcb21fe1bcc50c965943164146a2dc1e3c46",
+  "tools": {
+    "bartgame/tools/forest_v2_publish.py": {
+      "sha256": "8f2cfc49ed884162f49b0bd09ca99a204f60bca7fdbf38b59bdba21e5f7957e8",
+      "repository_url": "https://github.com/natertott/bartgame/blob/forest-concepts-v2/bartgame/tools/forest_v2_publish.py"
+    },
+    "bartgame/tools/forest_v2_gallery.py": {
+      "sha256": "2e5f72997e8fcfc46429e0396c25a63231058a379daf3ccce8f83a4d908bb3d1",
+      "repository_url": "https://github.com/natertott/bartgame/blob/forest-concepts-v2/bartgame/tools/forest_v2_gallery.py"
+    },
+    "bartgame/tools/forest_v2_audit.py": {
+      "sha256": "54bc933076e579a06a6bc19406e49e11dc9038d6391876a117c7a4b5a788391e",
+      "repository_url": "https://github.com/natertott/bartgame/blob/forest-concepts-v2/bartgame/tools/forest_v2_audit.py"
+    },
+    "bartgame/tools/forest_v2_review.py": {
+      "sha256": "27f61fdfc4bac4dea3b0defe05cddcbff8f4ab05eedc4e761cb219698e15948b",
+      "repository_url": "https://github.com/natertott/bartgame/blob/forest-concepts-v2/bartgame/tools/forest_v2_review.py"
+    },
+    "bartgame/tools/forest_concept_publish.py": {
+      "sha256": "f3b86b83b2949f2bf05090b4d98b3fdc249735f39f9c88b5e13b3355551d25cf",
+      "repository_url": "https://github.com/natertott/bartgame/blob/forest-concepts-v2/bartgame/tools/forest_concept_publish.py"
+    },
+    "bartgame/tools/forest_concept_review.py": {
+      "sha256": "17c6fc2de373b2cf0aee906a3e4044653879f81860d32b642362fb034678e181",
+      "repository_url": "https://github.com/natertott/bartgame/blob/forest-concepts-v2/bartgame/tools/forest_concept_review.py"
+    },
+    "local-source-gallery-verifier": {
+      "sha256": "5d8095857d74811fcf5419bc0c3c616e68d6a134669764e74562d1ef8876f4d2",
+      "published_source": "validation/tool-sources/verify_source_gallery.py",
+      "note": "Separately hashed local verification script, not claimed as part of the game/art freeze."
+    }
+  },
+  "note": "Publication/review tools are separately hashed and linked. Game/art freeze and review-tool revision are different provenance records."
+}

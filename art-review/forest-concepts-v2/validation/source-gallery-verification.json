@@ -1,0 +1,25 @@
+{
+  "source_commit": "e5e3fcb21fe1bcc50c965943164146a2dc1e3c46",
+  "passed": 47515,
+  "total": 47515,
+  "failures": [],
+  "current_source_matches": true,
+  "current_drift": [],
+  "files": 10983,
+  "native_frames": 5320,
+  "native_matrix_panels": 5320,
+  "exact_gifs": 15,
+  "native_palette_group_states": 40,
+  "blob_panel_native_composites": 2350,
+  "isolated_water_entire_alpha_perimeters": 30,
+  "north_fringe_source_alpha_cases": 80,
+  "source_standing_roll_panels": 140,
+  "minimum_canopy_opaque_pixels": 168,
+  "image_bytes_identical_to_held0dce": true,
+  "limits": [
+    "Source diagrams and fixed-foot pose composites are not real gameplay or collision runs.",
+    "Pulse GIFs use authored BG bank phases with fixed180ms inspection holds; no real clock/OBJ pulse claimed."
+  ],
+  "image_bytes_identical_to_held_deb9": true,
+  "held_deb9_image_count": 10950
+}

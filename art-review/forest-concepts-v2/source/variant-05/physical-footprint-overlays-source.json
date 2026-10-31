@@ -1,0 +1,178 @@
+[
+  {
+    "title": "Rounded canopy",
+    "footprints": [
+      [
+        0,
+        0,
+        15,
+        false
+      ]
+    ],
+    "collision_quarter_bits": [
+      8,
+      4,
+      2,
+      1
+    ],
+    "source_only": true,
+    "wire_overlay_is_diagnostic": true
+  },
+  {
+    "title": "Water island",
+    "footprints": [
+      [
+        0,
+        0,
+        0,
+        true
+      ]
+    ],
+    "collision_quarter_bits": [
+      8,
+      4,
+      2,
+      1
+    ],
+    "source_only": true,
+    "wire_overlay_is_diagnostic": true
+  },
+  {
+    "title": "Canopy fringe",
+    "footprints": [
+      [
+        0,
+        0,
+        0,
+        false
+      ]
+    ],
+    "collision_quarter_bits": [
+      8,
+      4,
+      2,
+      1
+    ],
+    "source_only": true,
+    "wire_overlay_is_diagnostic": true
+  },
+  {
+    "title": "Raised root arch",
+    "footprints": [
+      [
+        0,
+        0,
+        0,
+        false
+      ],
+      [
+        16,
+        0,
+        0,
+        false
+      ]
+    ],
+    "collision_quarter_bits": [
+      8,
+      4,
+      2,
+      1
+    ],
+    "source_only": true,
+    "wire_overlay_is_diagnostic": true
+  },
+  {
+    "title": "Long fallen log",
+    "footprints": [
+      [
+        0,
+        0,
+        15,
+        false
+      ],
+      [
+        16,
+        0,
+        15,
+        false
+      ]
+    ],
+    "collision_quarter_bits": [
+      8,
+      4,
+      2,
+      1
+    ],
+    "source_only": true,
+    "wire_overlay_is_diagnostic": true
+  },
+  {
+    "title": "Tall relic at live plinth",
+    "footprints": [
+      [
+        8,
+        16,
+        0,
+        false
+      ]
+    ],
+    "collision_quarter_bits": [
+      8,
+      4,
+      2,
+      1
+    ],
+    "source_only": true,
+    "wire_overlay_is_diagnostic": true
+  },
+  {
+    "title": "Tall shrine plus lower pad",
+    "footprints": [
+      [
+        8,
+        16,
+        3,
+        false
+      ],
+      [
+        8,
+        32,
+        0,
+        false
+      ]
+    ],
+    "collision_quarter_bits": [
+      8,
+      4,
+      2,
+      1
+    ],
+    "source_only": true,
+    "wire_overlay_is_diagnostic": true
+  },
+  {
+    "title": "Bars plus one large lock",
+    "footprints": [
+      [
+        8,
+        16,
+        15,
+        false
+      ],
+      [
+        24,
+        16,
+        15,
+        false
+      ]
+    ],
+    "collision_quarter_bits": [
+      8,
+      4,
+      2,
+      1
+    ],
+    "source_only": true,
+    "wire_overlay_is_diagnostic": true
+  }
+]

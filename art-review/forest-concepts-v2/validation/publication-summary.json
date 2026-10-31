@@ -1,0 +1,190 @@
+{
+  "source_commit": "e5e3fcb21fe1bcc50c965943164146a2dc1e3c46",
+  "source_art": {
+    "path": "source/README.md",
+    "manifest": "source/source-manifest.json",
+    "note": "Native source assemblies and palette inspection cycles. Fixed review-clock GIFs do not claim actual engine timing.",
+    "total_frame_instances": 5320,
+    "profiles": [
+      6,
+      7,
+      8,
+      9,
+      10
+    ]
+  },
+  "actual": [
+    {
+      "forest_variant": 6,
+      "display_variant": 1,
+      "path": "actual/variant-01",
+      "captures": 97,
+      "natural_contexts": 91,
+      "diagnostic_contexts": 6,
+      "passed": 1399,
+      "total": 1399,
+      "movies": 15,
+      "files_copied": 548,
+      "additional_earned_progression_images": 5,
+      "rom_sha256": "fc8e92f92a4aa43aa5cc56c0caff7a6dc1394f21dc356e7830ef9a7e07f234a1",
+      "omitted_gifs": []
+    },
+    {
+      "forest_variant": 7,
+      "display_variant": 2,
+      "path": "actual/variant-02",
+      "captures": 97,
+      "natural_contexts": 91,
+      "diagnostic_contexts": 6,
+      "passed": 1463,
+      "total": 1463,
+      "movies": 15,
+      "files_copied": 548,
+      "additional_earned_progression_images": 5,
+      "rom_sha256": "3fe6143a9c9de8ccb79248e20b69b199aa462078c92827e71805ebf5826e11df",
+      "omitted_gifs": []
+    },
+    {
+      "forest_variant": 8,
+      "display_variant": 3,
+      "path": "actual/variant-03",
+      "captures": 97,
+      "natural_contexts": 91,
+      "diagnostic_contexts": 6,
+      "passed": 1463,
+      "total": 1463,
+      "movies": 15,
+      "files_copied": 548,
+      "additional_earned_progression_images": 5,
+      "rom_sha256": "c72c07bf22bd15eaf3898e1fb0a75eabb7b2dc4c85ead74e68ba30a5f181e8f9",
+      "omitted_gifs": []
+    },
+    {
+      "forest_variant": 9,
+      "display_variant": 4,
+      "path": "actual/variant-04",
+      "captures": 97,
+      "natural_contexts": 91,
+      "diagnostic_contexts": 6,
+      "passed": 1463,
+      "total": 1463,
+      "movies": 15,
+      "files_copied": 548,
+      "additional_earned_progression_images": 5,
+      "rom_sha256": "6e5af6e3ec8e960f2e11cbd485a4c6e8d11f4e6eca202d46f15246cc3cca7538",
+      "omitted_gifs": []
+    },
+    {
+      "forest_variant": 10,
+      "display_variant": 5,
+      "path": "actual/variant-05",
+      "captures": 97,
+      "natural_contexts": 91,
+      "diagnostic_contexts": 6,
+      "passed": 1463,
+      "total": 1463,
+      "movies": 15,
+      "files_copied": 548,
+      "additional_earned_progression_images": 5,
+      "rom_sha256": "3876a966293a6cfd68eb39f881dd107b1da4bc14f0b764223712251321784d07",
+      "omitted_gifs": []
+    },
+    {
+      "forest_variant": 0,
+      "display_variant": 0,
+      "path": "actual/control-v0",
+      "captures": 83,
+      "natural_contexts": 83,
+      "diagnostic_contexts": 0,
+      "passed": 482,
+      "total": 482,
+      "movies": 10,
+      "files_copied": 422,
+      "additional_earned_progression_images": 0,
+      "rom_sha256": "9330a44a4e27d99606a757134aa41a62adb122a74315c400e1ad3427048c8661",
+      "omitted_gifs": []
+    }
+  ],
+  "new_style_contexts": 485,
+  "natural_contexts": 455,
+  "diagnostic_contexts": 30,
+  "new_capture_checks": {
+    "passed": 7251,
+    "total": 7251
+  },
+  "all_recorded_art_contexts": 568,
+  "all_capture_checks": {
+    "passed": 7733,
+    "total": 7733
+  },
+  "all_movies": 85,
+  "separate_production_control": {
+    "forest_variant": 0,
+    "display_variant": 0,
+    "path": "actual/control-v0",
+    "captures": 83,
+    "natural_contexts": 83,
+    "diagnostic_contexts": 0,
+    "passed": 482,
+    "total": 482,
+    "movies": 10,
+    "files_copied": 422,
+    "additional_earned_progression_images": 0,
+    "rom_sha256": "9330a44a4e27d99606a757134aa41a62adb122a74315c400e1ad3427048c8661",
+    "omitted_gifs": []
+  },
+  "independent_audit": {
+    "passed": 139478,
+    "total": 139478
+  },
+  "actual_panel_manifest": "actual-panel-manifest.json",
+  "actual_boards": 23,
+  "release": {
+    "roms": [
+      {
+        "display_variant": 1,
+        "forest_variant": 6,
+        "label": "Black Sap Oak",
+        "rom": "forest-v2-01-black-sap-oak-e5e3fcb.gba",
+        "rom_sha256": "fc8e92f92a4aa43aa5cc56c0caff7a6dc1394f21dc356e7830ef9a7e07f234a1",
+        "freeze": "freezes/forest-profile-06.json"
+      },
+      {
+        "display_variant": 2,
+        "forest_variant": 7,
+        "label": "Violet Strangler",
+        "rom": "forest-v2-02-violet-strangler-e5e3fcb.gba",
+        "rom_sha256": "3fe6143a9c9de8ccb79248e20b69b199aa462078c92827e71805ebf5826e11df",
+        "freeze": "freezes/forest-profile-07.json"
+      },
+      {
+        "display_variant": 3,
+        "forest_variant": 8,
+        "label": "Witchfire Weep",
+        "rom": "forest-v2-03-witchfire-weep-e5e3fcb.gba",
+        "rom_sha256": "c72c07bf22bd15eaf3898e1fb0a75eabb7b2dc4c85ead74e68ba30a5f181e8f9",
+        "freeze": "freezes/forest-profile-08.json"
+      },
+      {
+        "display_variant": 4,
+        "forest_variant": 9,
+        "label": "Amethyst Canker",
+        "rom": "forest-v2-04-amethyst-canker-e5e3fcb.gba",
+        "rom_sha256": "6e5af6e3ec8e960f2e11cbd485a4c6e8d11f4e6eca202d46f15246cc3cca7538",
+        "freeze": "freezes/forest-profile-09.json"
+      },
+      {
+        "display_variant": 5,
+        "forest_variant": 10,
+        "label": "Royal Bruise",
+        "rom": "forest-v2-05-royal-bruise-e5e3fcb.gba",
+        "rom_sha256": "3876a966293a6cfd68eb39f881dd107b1da4bc14f0b764223712251321784d07",
+        "freeze": "freezes/forest-profile-10.json"
+      }
+    ],
+    "zip": "forest-concepts-v2-e5e3fcb.zip",
+    "zip_sha256": "2cc7f88814b788aeb408be79c21a6cf72b20698978f70aee66d9f6c3a0e799c4",
+    "zip_crc_and_member_hashes_verified": true
+  },
+  "format_policy": "Publish the second five native forest studies and truthful mGBA evidence.\n\nNatural generated contexts, explicit diagnostic-room fixtures, historical\nillustrations and source assemblies are separate. Native game pixels are\nnever painted, filtered or graded. Captions sit outside captured panels.\nOnly referenced native keyframes, exact GIFs and full-rate lossy MP4 viewing\ncopies are published; raw all-frame recording directories stay local."
+}

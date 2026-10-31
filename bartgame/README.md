@@ -37,6 +37,8 @@ The [second forest pass](docs/FOREST_CONCEPTS_V2.md), `BART_FOREST=6..10`,
 explores much stronger purple infection, new characters and props, adjacency
 joins and true foreground canopy/underpass depth. Earlier studies remain
 available; [topology notes](docs/FOREST_TOPOLOGY.md) track the ongoing engine/art work.
+The [five playable ROMs, actual recordings and native catalogs](../art-review/forest-concepts-v2/README.md)
+keep source assemblies and deliberate renderer diagnostics clearly labelled.
 
 ## Current game
 

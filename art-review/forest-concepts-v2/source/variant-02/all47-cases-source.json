@@ -1,0 +1,4379 @@
+{
+  "healthy": [
+    {
+      "mask": 0,
+      "corners": 0,
+      "canonical_neighbors": [
+        [
+          -1,
+          -1
+        ],
+        [
+          -1,
+          0
+        ],
+        [
+          -1,
+          1
+        ],
+        [
+          0,
+          -1
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          -1
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          1,
+          1
+        ]
+      ],
+      "parent_id": 12,
+      "parent_type": "SOLID",
+      "parent_coll": 15,
+      "visual_only": true,
+      "source_only": true
+    },
+    {
+      "mask": 0,
+      "corners": 1,
+      "canonical_neighbors": [
+        [
+          -1,
+          0
+        ],
+        [
+          -1,
+          1
+        ],
+        [
+          0,
+          -1
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          -1
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          1,
+          1
+        ]
+      ],
+      "parent_id": 12,
+      "parent_type": "SOLID",
+      "parent_coll": 15,
+      "visual_only": true,
+      "source_only": true
+    },
+    {
+      "mask": 0,
+      "corners": 2,
+      "canonical_neighbors": [
+        [
+          -1,
+          -1
+        ],
+        [
+          -1,
+          0
+        ],
+        [
+          -1,
+          1
+        ],
+        [
+          0,
+          -1
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          1,
+          1
+        ]
+      ],
+      "parent_id": 12,
+      "parent_type": "SOLID",
+      "parent_coll": 15,
+      "visual_only": true,
+      "source_only": true
+    },
+    {
+      "mask": 0,
+      "corners": 3,
+      "canonical_neighbors": [
+        [
+          -1,
+          0
+        ],
+        [
+          -1,
+          1
+        ],
+        [
+          0,
+          -1
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          1,
+          1
+        ]
+      ],
+      "parent_id": 12,
+      "parent_type": "SOLID",
+      "parent_coll": 15,
+      "visual_only": true,
+      "source_only": true
+    },
+    {
+      "mask": 0,
+      "corners": 4,
+      "canonical_neighbors": [
+        [
+          -1,
+          -1
+        ],
+        [
+          -1,
+          0
+        ],
+        [
+          -1,
+          1
+        ],
+        [
+          0,
+          -1
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          -1
+        ],
+        [
+          1,
+          0
+        ]
+      ],
+      "parent_id": 12,
+      "parent_type": "SOLID",
+      "parent_coll": 15,
+      "visual_only": true,
+      "source_only": true
+    },
+    {
+      "mask": 0,
+      "corners": 5,
+      "canonical_neighbors": [
+        [
+          -1,
+          0
+        ],
+        [
+          -1,
+          1
+        ],
+        [
+          0,
+          -1
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          -1
+        ],
+        [
+          1,
+          0
+        ]
+      ],
+      "parent_id": 12,
+      "parent_type": "SOLID",
+      "parent_coll": 15,
+      "visual_only": true,
+      "source_only": true
+    },
+    {
+      "mask": 0,
+      "corners": 6,
+      "canonical_neighbors": [
+        [
+          -1,
+          -1
+        ],
+        [
+          -1,
+          0
+        ],
+        [
+          -1,
+          1
+        ],
+        [
+          0,
+          -1
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          0
+        ]
+      ],
+      "parent_id": 12,
+      "parent_type": "SOLID",
+      "parent_coll": 15,
+      "visual_only": true,
+      "source_only": true
+    },
+    {
+      "mask": 0,
+      "corners": 7,
+      "canonical_neighbors": [
+        [
+          -1,
+          0
+        ],
+        [
+          -1,
+          1
+        ],
+        [
+          0,
+          -1
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          0
+        ]
+      ],
+      "parent_id": 12,
+      "parent_type": "SOLID",
+      "parent_coll": 15,
+      "visual_only": true,
+      "source_only": true
+    },
+    {
+      "mask": 0,
+      "corners": 8,
+      "canonical_neighbors": [
+        [
+          -1,
+          -1
+        ],
+        [
+          -1,
+          0
+        ],
+        [
+          0,
+          -1
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          -1
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          1,
+          1
+        ]
+      ],
+      "parent_id": 12,
+      "parent_type": "SOLID",
+      "parent_coll": 15,
+      "visual_only": true,
+      "source_only": true
+    },
+    {
+      "mask": 0,
+      "corners": 9,
+      "canonical_neighbors": [
+        [
+          -1,
+          0
+        ],
+        [
+          0,
+          -1
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          -1
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          1,
+          1
+        ]
+      ],
+      "parent_id": 12,
+      "parent_type": "SOLID",
+      "parent_coll": 15,
+      "visual_only": true,
+      "source_only": true
+    },
+    {
+      "mask": 0,
+      "corners": 10,
+      "canonical_neighbors": [
+        [
+          -1,
+          -1
+        ],
+        [
+          -1,
+          0
+        ],
+        [
+          0,
+          -1
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          1,
+          1
+        ]
+      ],
+      "parent_id": 12,
+      "parent_type": "SOLID",
+      "parent_coll": 15,
+      "visual_only": true,
+      "source_only": true
+    },
+    {
+      "mask": 0,
+      "corners": 11,
+      "canonical_neighbors": [
+        [
+          -1,
+          0
+        ],
+        [
+          0,
+          -1
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          1,
+          1
+        ]
+      ],
+      "parent_id": 12,
+      "parent_type": "SOLID",
+      "parent_coll": 15,
+      "visual_only": true,
+      "source_only": true
+    },
+    {
+      "mask": 0,
+      "corners": 12,
+      "canonical_neighbors": [
+        [
+          -1,
+          -1
+        ],
+        [
+          -1,
+          0
+        ],
+        [
+          0,
+          -1
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          -1
+        ],
+        [
+          1,
+          0
+        ]
+      ],
+      "parent_id": 12,
+      "parent_type": "SOLID",
+      "parent_coll": 15,
+      "visual_only": true,
+      "source_only": true
+    },
+    {
+      "mask": 0,
+      "corners": 13,
+      "canonical_neighbors": [
+        [
+          -1,
+          0
+        ],
+        [
+          0,
+          -1
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          -1
+        ],
+        [
+          1,
+          0
+        ]
+      ],
+      "parent_id": 12,
+      "parent_type": "SOLID",
+      "parent_coll": 15,
+      "visual_only": true,
+      "source_only": true
+    },
+    {
+      "mask": 0,
+      "corners": 14,
+      "canonical_neighbors": [
+        [
+          -1,
+          -1
+        ],
+        [
+          -1,
+          0
+        ],
+        [
+          0,
+          -1
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          0
+        ]
+      ],
+      "parent_id": 12,
+      "parent_type": "SOLID",
+      "parent_coll": 15,
+      "visual_only": true,
+      "source_only": true
+    },
+    {
+      "mask": 0,
+      "corners": 15,
+      "canonical_neighbors": [
+        [
+          -1,
+          0
+        ],
+        [
+          0,
+          -1
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          0
+        ]
+      ],
+      "parent_id": 12,
+      "parent_type": "SOLID",
+      "parent_coll": 15,
+      "visual_only": true,
+      "source_only": true
+    },
+    {
+      "mask": 1,
+      "corners": 0,
+      "canonical_neighbors": [
+        [
+          -1,
+          0
+        ],
+        [
+          -1,
+          1
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          1,
+          1
+        ]
+      ],
+      "parent_id": 12,
+      "parent_type": "SOLID",
+      "parent_coll": 15,
+      "visual_only": true,
+      "source_only": true
+    },
+    {
+      "mask": 1,
+      "corners": 4,
+      "canonical_neighbors": [
+        [
+          -1,
+          0
+        ],
+        [
+          -1,
+          1
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          0
+        ]
+      ],
+      "parent_id": 12,
+      "parent_type": "SOLID",
+      "parent_coll": 15,
+      "visual_only": true,
+      "source_only": true
+    },
+    {
+      "mask": 1,
+      "corners": 8,
+      "canonical_neighbors": [
+        [
+          -1,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          1,
+          1
+        ]
+      ],
+      "parent_id": 12,
+      "parent_type": "SOLID",
+      "parent_coll": 15,
+      "visual_only": true,
+      "source_only": true
+    },
+    {
+      "mask": 1,
+      "corners": 12,
+      "canonical_neighbors": [
+        [
+          -1,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          0
+        ]
+      ],
+      "parent_id": 12,
+      "parent_type": "SOLID",
+      "parent_coll": 15,
+      "visual_only": true,
+      "source_only": true
+    },
+    {
+      "mask": 2,
+      "corners": 0,
+      "canonical_neighbors": [
+        [
+          -1,
+          -1
+        ],
+        [
+          -1,
+          0
+        ],
+        [
+          -1,
+          1
+        ],
+        [
+          0,
+          -1
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          1
+        ]
+      ],
+      "parent_id": 12,
+      "parent_type": "SOLID",
+      "parent_coll": 15,
+      "visual_only": true,
+      "source_only": true
+    },
+    {
+      "mask": 2,
+      "corners": 1,
+      "canonical_neighbors": [
+        [
+          -1,
+          0
+        ],
+        [
+          -1,
+          1
+        ],
+        [
+          0,
+          -1
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          1
+        ]
+      ],
+      "parent_id": 12,
+      "parent_type": "SOLID",
+      "parent_coll": 15,
+      "visual_only": true,
+      "source_only": true
+    },
+    {
+      "mask": 2,
+      "corners": 8,
+      "canonical_neighbors": [
+        [
+          -1,
+          -1
+        ],
+        [
+          -1,
+          0
+        ],
+        [
+          0,
+          -1
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          1
+        ]
+      ],
+      "parent_id": 12,
+      "parent_type": "SOLID",
+      "parent_coll": 15,
+      "visual_only": true,
+      "source_only": true
+    },
+    {
+      "mask": 2,
+      "corners": 9,
+      "canonical_neighbors": [
+        [
+          -1,
+          0
+        ],
+        [
+          0,
+          -1
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          1
+        ]
+      ],
+      "parent_id": 12,
+      "parent_type": "SOLID",
+      "parent_coll": 15,
+      "visual_only": true,
+      "source_only": true
+    },
+    {
+      "mask": 3,
+      "corners": 0,
+      "canonical_neighbors": [
+        [
+          -1,
+          0
+        ],
+        [
+          -1,
+          1
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          1
+        ]
+      ],
+      "parent_id": 12,
+      "parent_type": "SOLID",
+      "parent_coll": 15,
+      "visual_only": true,
+      "source_only": true
+    },
+    {
+      "mask": 3,
+      "corners": 8,
+      "canonical_neighbors": [
+        [
+          -1,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          1
+        ]
+      ],
+      "parent_id": 12,
+      "parent_type": "SOLID",
+      "parent_coll": 15,
+      "visual_only": true,
+      "source_only": true
+    },
+    {
+      "mask": 4,
+      "corners": 0,
+      "canonical_neighbors": [
+        [
+          -1,
+          -1
+        ],
+        [
+          -1,
+          0
+        ],
+        [
+          0,
+          -1
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          1,
+          -1
+        ],
+        [
+          1,
+          0
+        ]
+      ],
+      "parent_id": 12,
+      "parent_type": "SOLID",
+      "parent_coll": 15,
+      "visual_only": true,
+      "source_only": true
+    },
+    {
+      "mask": 4,
+      "corners": 1,
+      "canonical_neighbors": [
+        [
+          -1,
+          0
+        ],
+        [
+          0,
+          -1
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          1,
+          -1
+        ],
+        [
+          1,
+          0
+        ]
+      ],
+      "parent_id": 12,
+      "parent_type": "SOLID",
+      "parent_coll": 15,
+      "visual_only": true,
+      "source_only": true
+    },
+    {
+      "mask": 4,
+      "corners": 2,
+      "canonical_neighbors": [
+        [
+          -1,
+          -1
+        ],
+        [
+          -1,
+          0
+        ],
+        [
+          0,
+          -1
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          1,
+          0
+        ]
+      ],
+      "parent_id": 12,
+      "parent_type": "SOLID",
+      "parent_coll": 15,
+      "visual_only": true,
+      "source_only": true
+    },
+    {
+      "mask": 4,
+      "corners": 3,
+      "canonical_neighbors": [
+        [
+          -1,
+          0
+        ],
+        [
+          0,
+          -1
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          1,
+          0
+        ]
+      ],
+      "parent_id": 12,
+      "parent_type": "SOLID",
+      "parent_coll": 15,
+      "visual_only": true,
+      "source_only": true
+    },
+    {
+      "mask": 5,
+      "corners": 0,
+      "canonical_neighbors": [
+        [
+          -1,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          1,
+          0
+        ]
+      ],
+      "parent_id": 12,
+      "parent_type": "SOLID",
+      "parent_coll": 15,
+      "visual_only": true,
+      "source_only": true
+    },
+    {
+      "mask": 6,
+      "corners": 0,
+      "canonical_neighbors": [
+        [
+          -1,
+          -1
+        ],
+        [
+          -1,
+          0
+        ],
+        [
+          0,
+          -1
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "parent_id": 12,
+      "parent_type": "SOLID",
+      "parent_coll": 15,
+      "visual_only": true,
+      "source_only": true
+    },
+    {
+      "mask": 6,
+      "corners": 1,
+      "canonical_neighbors": [
+        [
+          -1,
+          0
+        ],
+        [
+          0,
+          -1
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "parent_id": 12,
+      "parent_type": "SOLID",
+      "parent_coll": 15,
+      "visual_only": true,
+      "source_only": true
+    },
+    {
+      "mask": 7,
+      "corners": 0,
+      "canonical_neighbors": [
+        [
+          -1,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "parent_id": 12,
+      "parent_type": "SOLID",
+      "parent_coll": 15,
+      "visual_only": true,
+      "source_only": true
+    },
+    {
+      "mask": 8,
+      "corners": 0,
+      "canonical_neighbors": [
+        [
+          0,
+          -1
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          -1
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          1,
+          1
+        ]
+      ],
+      "parent_id": 12,
+      "parent_type": "SOLID",
+      "parent_coll": 15,
+      "visual_only": true,
+      "source_only": true
+    },
+    {
+      "mask": 8,
+      "corners": 2,
+      "canonical_neighbors": [
+        [
+          0,
+          -1
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          1,
+          1
+        ]
+      ],
+      "parent_id": 12,
+      "parent_type": "SOLID",
+      "parent_coll": 15,
+      "visual_only": true,
+      "source_only": true
+    },
+    {
+      "mask": 8,
+      "corners": 4,
+      "canonical_neighbors": [
+        [
+          0,
+          -1
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          -1
+        ],
+        [
+          1,
+          0
+        ]
+      ],
+      "parent_id": 12,
+      "parent_type": "SOLID",
+      "parent_coll": 15,
+      "visual_only": true,
+      "source_only": true
+    },
+    {
+      "mask": 8,
+      "corners": 6,
+      "canonical_neighbors": [
+        [
+          0,
+          -1
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          0
+        ]
+      ],
+      "parent_id": 12,
+      "parent_type": "SOLID",
+      "parent_coll": 15,
+      "visual_only": true,
+      "source_only": true
+    },
+    {
+      "mask": 9,
+      "corners": 0,
+      "canonical_neighbors": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          1,
+          1
+        ]
+      ],
+      "parent_id": 12,
+      "parent_type": "SOLID",
+      "parent_coll": 15,
+      "visual_only": true,
+      "source_only": true
+    },
+    {
+      "mask": 9,
+      "corners": 4,
+      "canonical_neighbors": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          0
+        ]
+      ],
+      "parent_id": 12,
+      "parent_type": "SOLID",
+      "parent_coll": 15,
+      "visual_only": true,
+      "source_only": true
+    },
+    {
+      "mask": 10,
+      "corners": 0,
+      "canonical_neighbors": [
+        [
+          0,
+          -1
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          1
+        ]
+      ],
+      "parent_id": 12,
+      "parent_type": "SOLID",
+      "parent_coll": 15,
+      "visual_only": true,
+      "source_only": true
+    },
+    {
+      "mask": 11,
+      "corners": 0,
+      "canonical_neighbors": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          1
+        ]
+      ],
+      "parent_id": 12,
+      "parent_type": "SOLID",
+      "parent_coll": 15,
+      "visual_only": true,
+      "source_only": true
+    },
+    {
+      "mask": 12,
+      "corners": 0,
+      "canonical_neighbors": [
+        [
+          0,
+          -1
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          1,
+          -1
+        ],
+        [
+          1,
+          0
+        ]
+      ],
+      "parent_id": 12,
+      "parent_type": "SOLID",
+      "parent_coll": 15,
+      "visual_only": true,
+      "source_only": true
+    },
+    {
+      "mask": 12,
+      "corners": 2,
+      "canonical_neighbors": [
+        [
+          0,
+          -1
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          1,
+          0
+        ]
+      ],
+      "parent_id": 12,
+      "parent_type": "SOLID",
+      "parent_coll": 15,
+      "visual_only": true,
+      "source_only": true
+    },
+    {
+      "mask": 13,
+      "corners": 0,
+      "canonical_neighbors": [
+        [
+          0,
+          0
+        ],
+        [
+          1,
+          0
+        ]
+      ],
+      "parent_id": 12,
+      "parent_type": "SOLID",
+      "parent_coll": 15,
+      "visual_only": true,
+      "source_only": true
+    },
+    {
+      "mask": 14,
+      "corners": 0,
+      "canonical_neighbors": [
+        [
+          0,
+          -1
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "parent_id": 12,
+      "parent_type": "SOLID",
+      "parent_coll": 15,
+      "visual_only": true,
+      "source_only": true
+    },
+    {
+      "mask": 15,
+      "corners": 0,
+      "canonical_neighbors": [
+        [
+          0,
+          0
+        ]
+      ],
+      "parent_id": 12,
+      "parent_type": "SOLID",
+      "parent_coll": 15,
+      "visual_only": true,
+      "source_only": true
+    }
+  ],
+  "blight": [
+    {
+      "mask": 0,
+      "corners": 0,
+      "canonical_neighbors": [
+        [
+          -1,
+          -1
+        ],
+        [
+          -1,
+          0
+        ],
+        [
+          -1,
+          1
+        ],
+        [
+          0,
+          -1
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          -1
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          1,
+          1
+        ]
+      ],
+      "parent_id": 179,
+      "parent_type": "SOLID",
+      "parent_coll": 15,
+      "visual_only": true,
+      "source_only": true
+    },
+    {
+      "mask": 0,
+      "corners": 1,
+      "canonical_neighbors": [
+        [
+          -1,
+          0
+        ],
+        [
+          -1,
+          1
+        ],
+        [
+          0,
+          -1
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          -1
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          1,
+          1
+        ]
+      ],
+      "parent_id": 179,
+      "parent_type": "SOLID",
+      "parent_coll": 15,
+      "visual_only": true,
+      "source_only": true
+    },
+    {
+      "mask": 0,
+      "corners": 2,
+      "canonical_neighbors": [
+        [
+          -1,
+          -1
+        ],
+        [
+          -1,
+          0
+        ],
+        [
+          -1,
+          1
+        ],
+        [
+          0,
+          -1
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          1,
+          1
+        ]
+      ],
+      "parent_id": 179,
+      "parent_type": "SOLID",
+      "parent_coll": 15,
+      "visual_only": true,
+      "source_only": true
+    },
+    {
+      "mask": 0,
+      "corners": 3,
+      "canonical_neighbors": [
+        [
+          -1,
+          0
+        ],
+        [
+          -1,
+          1
+        ],
+        [
+          0,
+          -1
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          1,
+          1
+        ]
+      ],
+      "parent_id": 179,
+      "parent_type": "SOLID",
+      "parent_coll": 15,
+      "visual_only": true,
+      "source_only": true
+    },
+    {
+      "mask": 0,
+      "corners": 4,
+      "canonical_neighbors": [
+        [
+          -1,
+          -1
+        ],
+        [
+          -1,
+          0
+        ],
+        [
+          -1,
+          1
+        ],
+        [
+          0,
+          -1
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          -1
+        ],
+        [
+          1,
+          0
+        ]
+      ],
+      "parent_id": 179,
+      "parent_type": "SOLID",
+      "parent_coll": 15,
+      "visual_only": true,
+      "source_only": true
+    },
+    {
+      "mask": 0,
+      "corners": 5,
+      "canonical_neighbors": [
+        [
+          -1,
+          0
+        ],
+        [
+          -1,
+          1
+        ],
+        [
+          0,
+          -1
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          -1
+        ],
+        [
+          1,
+          0
+        ]
+      ],
+      "parent_id": 179,
+      "parent_type": "SOLID",
+      "parent_coll": 15,
+      "visual_only": true,
+      "source_only": true
+    },
+    {
+      "mask": 0,
+      "corners": 6,
+      "canonical_neighbors": [
+        [
+          -1,
+          -1
+        ],
+        [
+          -1,
+          0
+        ],
+        [
+          -1,
+          1
+        ],
+        [
+          0,
+          -1
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          0
+        ]
+      ],
+      "parent_id": 179,
+      "parent_type": "SOLID",
+      "parent_coll": 15,
+      "visual_only": true,
+      "source_only": true
+    },
+    {
+      "mask": 0,
+      "corners": 7,
+      "canonical_neighbors": [
+        [
+          -1,
+          0
+        ],
+        [
+          -1,
+          1
+        ],
+        [
+          0,
+          -1
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          0
+        ]
+      ],
+      "parent_id": 179,
+      "parent_type": "SOLID",
+      "parent_coll": 15,
+      "visual_only": true,
+      "source_only": true
+    },
+    {
+      "mask": 0,
+      "corners": 8,
+      "canonical_neighbors": [
+        [
+          -1,
+          -1
+        ],
+        [
+          -1,
+          0
+        ],
+        [
+          0,
+          -1
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          -1
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          1,
+          1
+        ]
+      ],
+      "parent_id": 179,
+      "parent_type": "SOLID",
+      "parent_coll": 15,
+      "visual_only": true,
+      "source_only": true
+    },
+    {
+      "mask": 0,
+      "corners": 9,
+      "canonical_neighbors": [
+        [
+          -1,
+          0
+        ],
+        [
+          0,
+          -1
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          -1
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          1,
+          1
+        ]
+      ],
+      "parent_id": 179,
+      "parent_type": "SOLID",
+      "parent_coll": 15,
+      "visual_only": true,
+      "source_only": true
+    },
+    {
+      "mask": 0,
+      "corners": 10,
+      "canonical_neighbors": [
+        [
+          -1,
+          -1
+        ],
+        [
+          -1,
+          0
+        ],
+        [
+          0,
+          -1
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          1,
+          1
+        ]
+      ],
+      "parent_id": 179,
+      "parent_type": "SOLID",
+      "parent_coll": 15,
+      "visual_only": true,
+      "source_only": true
+    },
+    {
+      "mask": 0,
+      "corners": 11,
+      "canonical_neighbors": [
+        [
+          -1,
+          0
+        ],
+        [
+          0,
+          -1
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          1,
+          1
+        ]
+      ],
+      "parent_id": 179,
+      "parent_type": "SOLID",
+      "parent_coll": 15,
+      "visual_only": true,
+      "source_only": true
+    },
+    {
+      "mask": 0,
+      "corners": 12,
+      "canonical_neighbors": [
+        [
+          -1,
+          -1
+        ],
+        [
+          -1,
+          0
+        ],
+        [
+          0,
+          -1
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          -1
+        ],
+        [
+          1,
+          0
+        ]
+      ],
+      "parent_id": 179,
+      "parent_type": "SOLID",
+      "parent_coll": 15,
+      "visual_only": true,
+      "source_only": true
+    },
+    {
+      "mask": 0,
+      "corners": 13,
+      "canonical_neighbors": [
+        [
+          -1,
+          0
+        ],
+        [
+          0,
+          -1
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          -1
+        ],
+        [
+          1,
+          0
+        ]
+      ],
+      "parent_id": 179,
+      "parent_type": "SOLID",
+      "parent_coll": 15,
+      "visual_only": true,
+      "source_only": true
+    },
+    {
+      "mask": 0,
+      "corners": 14,
+      "canonical_neighbors": [
+        [
+          -1,
+          -1
+        ],
+        [
+          -1,
+          0
+        ],
+        [
+          0,
+          -1
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          0
+        ]
+      ],
+      "parent_id": 179,
+      "parent_type": "SOLID",
+      "parent_coll": 15,
+      "visual_only": true,
+      "source_only": true
+    },
+    {
+      "mask": 0,
+      "corners": 15,
+      "canonical_neighbors": [
+        [
+          -1,
+          0
+        ],
+        [
+          0,
+          -1
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          0
+        ]
+      ],
+      "parent_id": 179,
+      "parent_type": "SOLID",
+      "parent_coll": 15,
+      "visual_only": true,
+      "source_only": true
+    },
+    {
+      "mask": 1,
+      "corners": 0,
+      "canonical_neighbors": [
+        [
+          -1,
+          0
+        ],
+        [
+          -1,
+          1
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          1,
+          1
+        ]
+      ],
+      "parent_id": 179,
+      "parent_type": "SOLID",
+      "parent_coll": 15,
+      "visual_only": true,
+      "source_only": true
+    },
+    {
+      "mask": 1,
+      "corners": 4,
+      "canonical_neighbors": [
+        [
+          -1,
+          0
+        ],
+        [
+          -1,
+          1
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          0
+        ]
+      ],
+      "parent_id": 179,
+      "parent_type": "SOLID",
+      "parent_coll": 15,
+      "visual_only": true,
+      "source_only": true
+    },
+    {
+      "mask": 1,
+      "corners": 8,
+      "canonical_neighbors": [
+        [
+          -1,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          1,
+          1
+        ]
+      ],
+      "parent_id": 179,
+      "parent_type": "SOLID",
+      "parent_coll": 15,
+      "visual_only": true,
+      "source_only": true
+    },
+    {
+      "mask": 1,
+      "corners": 12,
+      "canonical_neighbors": [
+        [
+          -1,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          0
+        ]
+      ],
+      "parent_id": 179,
+      "parent_type": "SOLID",
+      "parent_coll": 15,
+      "visual_only": true,
+      "source_only": true
+    },
+    {
+      "mask": 2,
+      "corners": 0,
+      "canonical_neighbors": [
+        [
+          -1,
+          -1
+        ],
+        [
+          -1,
+          0
+        ],
+        [
+          -1,
+          1
+        ],
+        [
+          0,
+          -1
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          1
+        ]
+      ],
+      "parent_id": 179,
+      "parent_type": "SOLID",
+      "parent_coll": 15,
+      "visual_only": true,
+      "source_only": true
+    },
+    {
+      "mask": 2,
+      "corners": 1,
+      "canonical_neighbors": [
+        [
+          -1,
+          0
+        ],
+        [
+          -1,
+          1
+        ],
+        [
+          0,
+          -1
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          1
+        ]
+      ],
+      "parent_id": 179,
+      "parent_type": "SOLID",
+      "parent_coll": 15,
+      "visual_only": true,
+      "source_only": true
+    },
+    {
+      "mask": 2,
+      "corners": 8,
+      "canonical_neighbors": [
+        [
+          -1,
+          -1
+        ],
+        [
+          -1,
+          0
+        ],
+        [
+          0,
+          -1
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          1
+        ]
+      ],
+      "parent_id": 179,
+      "parent_type": "SOLID",
+      "parent_coll": 15,
+      "visual_only": true,
+      "source_only": true
+    },
+    {
+      "mask": 2,
+      "corners": 9,
+      "canonical_neighbors": [
+        [
+          -1,
+          0
+        ],
+        [
+          0,
+          -1
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          1
+        ]
+      ],
+      "parent_id": 179,
+      "parent_type": "SOLID",
+      "parent_coll": 15,
+      "visual_only": true,
+      "source_only": true
+    },
+    {
+      "mask": 3,
+      "corners": 0,
+      "canonical_neighbors": [
+        [
+          -1,
+          0
+        ],
+        [
+          -1,
+          1
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          1
+        ]
+      ],
+      "parent_id": 179,
+      "parent_type": "SOLID",
+      "parent_coll": 15,
+      "visual_only": true,
+      "source_only": true
+    },
+    {
+      "mask": 3,
+      "corners": 8,
+      "canonical_neighbors": [
+        [
+          -1,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          1
+        ]
+      ],
+      "parent_id": 179,
+      "parent_type": "SOLID",
+      "parent_coll": 15,
+      "visual_only": true,
+      "source_only": true
+    },
+    {
+      "mask": 4,
+      "corners": 0,
+      "canonical_neighbors": [
+        [
+          -1,
+          -1
+        ],
+        [
+          -1,
+          0
+        ],
+        [
+          0,
+          -1
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          1,
+          -1
+        ],
+        [
+          1,
+          0
+        ]
+      ],
+      "parent_id": 179,
+      "parent_type": "SOLID",
+      "parent_coll": 15,
+      "visual_only": true,
+      "source_only": true
+    },
+    {
+      "mask": 4,
+      "corners": 1,
+      "canonical_neighbors": [
+        [
+          -1,
+          0
+        ],
+        [
+          0,
+          -1
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          1,
+          -1
+        ],
+        [
+          1,
+          0
+        ]
+      ],
+      "parent_id": 179,
+      "parent_type": "SOLID",
+      "parent_coll": 15,
+      "visual_only": true,
+      "source_only": true
+    },
+    {
+      "mask": 4,
+      "corners": 2,
+      "canonical_neighbors": [
+        [
+          -1,
+          -1
+        ],
+        [
+          -1,
+          0
+        ],
+        [
+          0,
+          -1
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          1,
+          0
+        ]
+      ],
+      "parent_id": 179,
+      "parent_type": "SOLID",
+      "parent_coll": 15,
+      "visual_only": true,
+      "source_only": true
+    },
+    {
+      "mask": 4,
+      "corners": 3,
+      "canonical_neighbors": [
+        [
+          -1,
+          0
+        ],
+        [
+          0,
+          -1
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          1,
+          0
+        ]
+      ],
+      "parent_id": 179,
+      "parent_type": "SOLID",
+      "parent_coll": 15,
+      "visual_only": true,
+      "source_only": true
+    },
+    {
+      "mask": 5,
+      "corners": 0,
+      "canonical_neighbors": [
+        [
+          -1,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          1,
+          0
+        ]
+      ],
+      "parent_id": 179,
+      "parent_type": "SOLID",
+      "parent_coll": 15,
+      "visual_only": true,
+      "source_only": true
+    },
+    {
+      "mask": 6,
+      "corners": 0,
+      "canonical_neighbors": [
+        [
+          -1,
+          -1
+        ],
+        [
+          -1,
+          0
+        ],
+        [
+          0,
+          -1
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "parent_id": 179,
+      "parent_type": "SOLID",
+      "parent_coll": 15,
+      "visual_only": true,
+      "source_only": true
+    },
+    {
+      "mask": 6,
+      "corners": 1,
+      "canonical_neighbors": [
+        [
+          -1,
+          0
+        ],
+        [
+          0,
+          -1
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "parent_id": 179,
+      "parent_type": "SOLID",
+      "parent_coll": 15,
+      "visual_only": true,
+      "source_only": true
+    },
+    {
+      "mask": 7,
+      "corners": 0,
+      "canonical_neighbors": [
+        [
+          -1,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "parent_id": 179,
+      "parent_type": "SOLID",
+      "parent_coll": 15,
+      "visual_only": true,
+      "source_only": true
+    },
+    {
+      "mask": 8,
+      "corners": 0,
+      "canonical_neighbors": [
+        [
+          0,
+          -1
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          -1
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          1,
+          1
+        ]
+      ],
+      "parent_id": 179,
+      "parent_type": "SOLID",
+      "parent_coll": 15,
+      "visual_only": true,
+      "source_only": true
+    },
+    {
+      "mask": 8,
+      "corners": 2,
+      "canonical_neighbors": [
+        [
+          0,
+          -1
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          1,
+          1
+        ]
+      ],
+      "parent_id": 179,
+      "parent_type": "SOLID",
+      "parent_coll": 15,
+      "visual_only": true,
+      "source_only": true
+    },
+    {
+      "mask": 8,
+      "corners": 4,
+      "canonical_neighbors": [
+        [
+          0,
+          -1
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          -1
+        ],
+        [
+          1,
+          0
+        ]
+      ],
+      "parent_id": 179,
+      "parent_type": "SOLID",
+      "parent_coll": 15,
+      "visual_only": true,
+      "source_only": true
+    },
+    {
+      "mask": 8,
+      "corners": 6,
+      "canonical_neighbors": [
+        [
+          0,
+          -1
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          0
+        ]
+      ],
+      "parent_id": 179,
+      "parent_type": "SOLID",
+      "parent_coll": 15,
+      "visual_only": true,
+      "source_only": true
+    },
+    {
+      "mask": 9,
+      "corners": 0,
+      "canonical_neighbors": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          1,
+          1
+        ]
+      ],
+      "parent_id": 179,
+      "parent_type": "SOLID",
+      "parent_coll": 15,
+      "visual_only": true,
+      "source_only": true
+    },
+    {
+      "mask": 9,
+      "corners": 4,
+      "canonical_neighbors": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          0
+        ]
+      ],
+      "parent_id": 179,
+      "parent_type": "SOLID",
+      "parent_coll": 15,
+      "visual_only": true,
+      "source_only": true
+    },
+    {
+      "mask": 10,
+      "corners": 0,
+      "canonical_neighbors": [
+        [
+          0,
+          -1
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          1
+        ]
+      ],
+      "parent_id": 179,
+      "parent_type": "SOLID",
+      "parent_coll": 15,
+      "visual_only": true,
+      "source_only": true
+    },
+    {
+      "mask": 11,
+      "corners": 0,
+      "canonical_neighbors": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          1
+        ]
+      ],
+      "parent_id": 179,
+      "parent_type": "SOLID",
+      "parent_coll": 15,
+      "visual_only": true,
+      "source_only": true
+    },
+    {
+      "mask": 12,
+      "corners": 0,
+      "canonical_neighbors": [
+        [
+          0,
+          -1
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          1,
+          -1
+        ],
+        [
+          1,
+          0
+        ]
+      ],
+      "parent_id": 179,
+      "parent_type": "SOLID",
+      "parent_coll": 15,
+      "visual_only": true,
+      "source_only": true
+    },
+    {
+      "mask": 12,
+      "corners": 2,
+      "canonical_neighbors": [
+        [
+          0,
+          -1
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          1,
+          0
+        ]
+      ],
+      "parent_id": 179,
+      "parent_type": "SOLID",
+      "parent_coll": 15,
+      "visual_only": true,
+      "source_only": true
+    },
+    {
+      "mask": 13,
+      "corners": 0,
+      "canonical_neighbors": [
+        [
+          0,
+          0
+        ],
+        [
+          1,
+          0
+        ]
+      ],
+      "parent_id": 179,
+      "parent_type": "SOLID",
+      "parent_coll": 15,
+      "visual_only": true,
+      "source_only": true
+    },
+    {
+      "mask": 14,
+      "corners": 0,
+      "canonical_neighbors": [
+        [
+          0,
+          -1
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "parent_id": 179,
+      "parent_type": "SOLID",
+      "parent_coll": 15,
+      "visual_only": true,
+      "source_only": true
+    },
+    {
+      "mask": 15,
+      "corners": 0,
+      "canonical_neighbors": [
+        [
+          0,
+          0
+        ]
+      ],
+      "parent_id": 179,
+      "parent_type": "SOLID",
+      "parent_coll": 15,
+      "visual_only": true,
+      "source_only": true
+    }
+  ],
+  "water": [
+    {
+      "mask": 0,
+      "corners": 0,
+      "canonical_neighbors": [
+        [
+          -1,
+          -1
+        ],
+        [
+          -1,
+          0
+        ],
+        [
+          -1,
+          1
+        ],
+        [
+          0,
+          -1
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          -1
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          1,
+          1
+        ]
+      ],
+      "parent_id": 39,
+      "parent_type": "WATER",
+      "parent_coll": 0,
+      "visual_only": true,
+      "source_only": true
+    },
+    {
+      "mask": 0,
+      "corners": 1,
+      "canonical_neighbors": [
+        [
+          -1,
+          0
+        ],
+        [
+          -1,
+          1
+        ],
+        [
+          0,
+          -1
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          -1
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          1,
+          1
+        ]
+      ],
+      "parent_id": 39,
+      "parent_type": "WATER",
+      "parent_coll": 0,
+      "visual_only": true,
+      "source_only": true
+    },
+    {
+      "mask": 0,
+      "corners": 2,
+      "canonical_neighbors": [
+        [
+          -1,
+          -1
+        ],
+        [
+          -1,
+          0
+        ],
+        [
+          -1,
+          1
+        ],
+        [
+          0,
+          -1
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          1,
+          1
+        ]
+      ],
+      "parent_id": 39,
+      "parent_type": "WATER",
+      "parent_coll": 0,
+      "visual_only": true,
+      "source_only": true
+    },
+    {
+      "mask": 0,
+      "corners": 3,
+      "canonical_neighbors": [
+        [
+          -1,
+          0
+        ],
+        [
+          -1,
+          1
+        ],
+        [
+          0,
+          -1
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          1,
+          1
+        ]
+      ],
+      "parent_id": 39,
+      "parent_type": "WATER",
+      "parent_coll": 0,
+      "visual_only": true,
+      "source_only": true
+    },
+    {
+      "mask": 0,
+      "corners": 4,
+      "canonical_neighbors": [
+        [
+          -1,
+          -1
+        ],
+        [
+          -1,
+          0
+        ],
+        [
+          -1,
+          1
+        ],
+        [
+          0,
+          -1
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          -1
+        ],
+        [
+          1,
+          0
+        ]
+      ],
+      "parent_id": 39,
+      "parent_type": "WATER",
+      "parent_coll": 0,
+      "visual_only": true,
+      "source_only": true
+    },
+    {
+      "mask": 0,
+      "corners": 5,
+      "canonical_neighbors": [
+        [
+          -1,
+          0
+        ],
+        [
+          -1,
+          1
+        ],
+        [
+          0,
+          -1
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          -1
+        ],
+        [
+          1,
+          0
+        ]
+      ],
+      "parent_id": 39,
+      "parent_type": "WATER",
+      "parent_coll": 0,
+      "visual_only": true,
+      "source_only": true
+    },
+    {
+      "mask": 0,
+      "corners": 6,
+      "canonical_neighbors": [
+        [
+          -1,
+          -1
+        ],
+        [
+          -1,
+          0
+        ],
+        [
+          -1,
+          1
+        ],
+        [
+          0,
+          -1
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          0
+        ]
+      ],
+      "parent_id": 39,
+      "parent_type": "WATER",
+      "parent_coll": 0,
+      "visual_only": true,
+      "source_only": true
+    },
+    {
+      "mask": 0,
+      "corners": 7,
+      "canonical_neighbors": [
+        [
+          -1,
+          0
+        ],
+        [
+          -1,
+          1
+        ],
+        [
+          0,
+          -1
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          0
+        ]
+      ],
+      "parent_id": 39,
+      "parent_type": "WATER",
+      "parent_coll": 0,
+      "visual_only": true,
+      "source_only": true
+    },
+    {
+      "mask": 0,
+      "corners": 8,
+      "canonical_neighbors": [
+        [
+          -1,
+          -1
+        ],
+        [
+          -1,
+          0
+        ],
+        [
+          0,
+          -1
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          -1
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          1,
+          1
+        ]
+      ],
+      "parent_id": 39,
+      "parent_type": "WATER",
+      "parent_coll": 0,
+      "visual_only": true,
+      "source_only": true
+    },
+    {
+      "mask": 0,
+      "corners": 9,
+      "canonical_neighbors": [
+        [
+          -1,
+          0
+        ],
+        [
+          0,
+          -1
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          -1
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          1,
+          1
+        ]
+      ],
+      "parent_id": 39,
+      "parent_type": "WATER",
+      "parent_coll": 0,
+      "visual_only": true,
+      "source_only": true
+    },
+    {
+      "mask": 0,
+      "corners": 10,
+      "canonical_neighbors": [
+        [
+          -1,
+          -1
+        ],
+        [
+          -1,
+          0
+        ],
+        [
+          0,
+          -1
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          1,
+          1
+        ]
+      ],
+      "parent_id": 39,
+      "parent_type": "WATER",
+      "parent_coll": 0,
+      "visual_only": true,
+      "source_only": true
+    },
+    {
+      "mask": 0,
+      "corners": 11,
+      "canonical_neighbors": [
+        [
+          -1,
+          0
+        ],
+        [
+          0,
+          -1
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          1,
+          1
+        ]
+      ],
+      "parent_id": 39,
+      "parent_type": "WATER",
+      "parent_coll": 0,
+      "visual_only": true,
+      "source_only": true
+    },
+    {
+      "mask": 0,
+      "corners": 12,
+      "canonical_neighbors": [
+        [
+          -1,
+          -1
+        ],
+        [
+          -1,
+          0
+        ],
+        [
+          0,
+          -1
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          -1
+        ],
+        [
+          1,
+          0
+        ]
+      ],
+      "parent_id": 39,
+      "parent_type": "WATER",
+      "parent_coll": 0,
+      "visual_only": true,
+      "source_only": true
+    },
+    {
+      "mask": 0,
+      "corners": 13,
+      "canonical_neighbors": [
+        [
+          -1,
+          0
+        ],
+        [
+          0,
+          -1
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          -1
+        ],
+        [
+          1,
+          0
+        ]
+      ],
+      "parent_id": 39,
+      "parent_type": "WATER",
+      "parent_coll": 0,
+      "visual_only": true,
+      "source_only": true
+    },
+    {
+      "mask": 0,
+      "corners": 14,
+      "canonical_neighbors": [
+        [
+          -1,
+          -1
+        ],
+        [
+          -1,
+          0
+        ],
+        [
+          0,
+          -1
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          0
+        ]
+      ],
+      "parent_id": 39,
+      "parent_type": "WATER",
+      "parent_coll": 0,
+      "visual_only": true,
+      "source_only": true
+    },
+    {
+      "mask": 0,
+      "corners": 15,
+      "canonical_neighbors": [
+        [
+          -1,
+          0
+        ],
+        [
+          0,
+          -1
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          0
+        ]
+      ],
+      "parent_id": 39,
+      "parent_type": "WATER",
+      "parent_coll": 0,
+      "visual_only": true,
+      "source_only": true
+    },
+    {
+      "mask": 1,
+      "corners": 0,
+      "canonical_neighbors": [
+        [
+          -1,
+          0
+        ],
+        [
+          -1,
+          1
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          1,
+          1
+        ]
+      ],
+      "parent_id": 39,
+      "parent_type": "WATER",
+      "parent_coll": 0,
+      "visual_only": true,
+      "source_only": true
+    },
+    {
+      "mask": 1,
+      "corners": 4,
+      "canonical_neighbors": [
+        [
+          -1,
+          0
+        ],
+        [
+          -1,
+          1
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          0
+        ]
+      ],
+      "parent_id": 39,
+      "parent_type": "WATER",
+      "parent_coll": 0,
+      "visual_only": true,
+      "source_only": true
+    },
+    {
+      "mask": 1,
+      "corners": 8,
+      "canonical_neighbors": [
+        [
+          -1,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          1,
+          1
+        ]
+      ],
+      "parent_id": 39,
+      "parent_type": "WATER",
+      "parent_coll": 0,
+      "visual_only": true,
+      "source_only": true
+    },
+    {
+      "mask": 1,
+      "corners": 12,
+      "canonical_neighbors": [
+        [
+          -1,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          0
+        ]
+      ],
+      "parent_id": 39,
+      "parent_type": "WATER",
+      "parent_coll": 0,
+      "visual_only": true,
+      "source_only": true
+    },
+    {
+      "mask": 2,
+      "corners": 0,
+      "canonical_neighbors": [
+        [
+          -1,
+          -1
+        ],
+        [
+          -1,
+          0
+        ],
+        [
+          -1,
+          1
+        ],
+        [
+          0,
+          -1
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          1
+        ]
+      ],
+      "parent_id": 39,
+      "parent_type": "WATER",
+      "parent_coll": 0,
+      "visual_only": true,
+      "source_only": true
+    },
+    {
+      "mask": 2,
+      "corners": 1,
+      "canonical_neighbors": [
+        [
+          -1,
+          0
+        ],
+        [
+          -1,
+          1
+        ],
+        [
+          0,
+          -1
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          1
+        ]
+      ],
+      "parent_id": 39,
+      "parent_type": "WATER",
+      "parent_coll": 0,
+      "visual_only": true,
+      "source_only": true
+    },
+    {
+      "mask": 2,
+      "corners": 8,
+      "canonical_neighbors": [
+        [
+          -1,
+          -1
+        ],
+        [
+          -1,
+          0
+        ],
+        [
+          0,
+          -1
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          1
+        ]
+      ],
+      "parent_id": 39,
+      "parent_type": "WATER",
+      "parent_coll": 0,
+      "visual_only": true,
+      "source_only": true
+    },
+    {
+      "mask": 2,
+      "corners": 9,
+      "canonical_neighbors": [
+        [
+          -1,
+          0
+        ],
+        [
+          0,
+          -1
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          1
+        ]
+      ],
+      "parent_id": 39,
+      "parent_type": "WATER",
+      "parent_coll": 0,
+      "visual_only": true,
+      "source_only": true
+    },
+    {
+      "mask": 3,
+      "corners": 0,
+      "canonical_neighbors": [
+        [
+          -1,
+          0
+        ],
+        [
+          -1,
+          1
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          1
+        ]
+      ],
+      "parent_id": 39,
+      "parent_type": "WATER",
+      "parent_coll": 0,
+      "visual_only": true,
+      "source_only": true
+    },
+    {
+      "mask": 3,
+      "corners": 8,
+      "canonical_neighbors": [
+        [
+          -1,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          1
+        ]
+      ],
+      "parent_id": 39,
+      "parent_type": "WATER",
+      "parent_coll": 0,
+      "visual_only": true,
+      "source_only": true
+    },
+    {
+      "mask": 4,
+      "corners": 0,
+      "canonical_neighbors": [
+        [
+          -1,
+          -1
+        ],
+        [
+          -1,
+          0
+        ],
+        [
+          0,
+          -1
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          1,
+          -1
+        ],
+        [
+          1,
+          0
+        ]
+      ],
+      "parent_id": 39,
+      "parent_type": "WATER",
+      "parent_coll": 0,
+      "visual_only": true,
+      "source_only": true
+    },
+    {
+      "mask": 4,
+      "corners": 1,
+      "canonical_neighbors": [
+        [
+          -1,
+          0
+        ],
+        [
+          0,
+          -1
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          1,
+          -1
+        ],
+        [
+          1,
+          0
+        ]
+      ],
+      "parent_id": 39,
+      "parent_type": "WATER",
+      "parent_coll": 0,
+      "visual_only": true,
+      "source_only": true
+    },
+    {
+      "mask": 4,
+      "corners": 2,
+      "canonical_neighbors": [
+        [
+          -1,
+          -1
+        ],
+        [
+          -1,
+          0
+        ],
+        [
+          0,
+          -1
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          1,
+          0
+        ]
+      ],
+      "parent_id": 39,
+      "parent_type": "WATER",
+      "parent_coll": 0,
+      "visual_only": true,
+      "source_only": true
+    },
+    {
+      "mask": 4,
+      "corners": 3,
+      "canonical_neighbors": [
+        [
+          -1,
+          0
+        ],
+        [
+          0,
+          -1
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          1,
+          0
+        ]
+      ],
+      "parent_id": 39,
+      "parent_type": "WATER",
+      "parent_coll": 0,
+      "visual_only": true,
+      "source_only": true
+    },
+    {
+      "mask": 5,
+      "corners": 0,
+      "canonical_neighbors": [
+        [
+          -1,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          1,
+          0
+        ]
+      ],
+      "parent_id": 39,
+      "parent_type": "WATER",
+      "parent_coll": 0,
+      "visual_only": true,
+      "source_only": true
+    },
+    {
+      "mask": 6,
+      "corners": 0,
+      "canonical_neighbors": [
+        [
+          -1,
+          -1
+        ],
+        [
+          -1,
+          0
+        ],
+        [
+          0,
+          -1
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "parent_id": 39,
+      "parent_type": "WATER",
+      "parent_coll": 0,
+      "visual_only": true,
+      "source_only": true
+    },
+    {
+      "mask": 6,
+      "corners": 1,
+      "canonical_neighbors": [
+        [
+          -1,
+          0
+        ],
+        [
+          0,
+          -1
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "parent_id": 39,
+      "parent_type": "WATER",
+      "parent_coll": 0,
+      "visual_only": true,
+      "source_only": true
+    },
+    {
+      "mask": 7,
+      "corners": 0,
+      "canonical_neighbors": [
+        [
+          -1,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "parent_id": 39,
+      "parent_type": "WATER",
+      "parent_coll": 0,
+      "visual_only": true,
+      "source_only": true
+    },
+    {
+      "mask": 8,
+      "corners": 0,
+      "canonical_neighbors": [
+        [
+          0,
+          -1
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          -1
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          1,
+          1
+        ]
+      ],
+      "parent_id": 39,
+      "parent_type": "WATER",
+      "parent_coll": 0,
+      "visual_only": true,
+      "source_only": true
+    },
+    {
+      "mask": 8,
+      "corners": 2,
+      "canonical_neighbors": [
+        [
+          0,
+          -1
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          1,
+          1
+        ]
+      ],
+      "parent_id": 39,
+      "parent_type": "WATER",
+      "parent_coll": 0,
+      "visual_only": true,
+      "source_only": true
+    },
+    {
+      "mask": 8,
+      "corners": 4,
+      "canonical_neighbors": [
+        [
+          0,
+          -1
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          -1
+        ],
+        [
+          1,
+          0
+        ]
+      ],
+      "parent_id": 39,
+      "parent_type": "WATER",
+      "parent_coll": 0,
+      "visual_only": true,
+      "source_only": true
+    },
+    {
+      "mask": 8,
+      "corners": 6,
+      "canonical_neighbors": [
+        [
+          0,
+          -1
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          0
+        ]
+      ],
+      "parent_id": 39,
+      "parent_type": "WATER",
+      "parent_coll": 0,
+      "visual_only": true,
+      "source_only": true
+    },
+    {
+      "mask": 9,
+      "corners": 0,
+      "canonical_neighbors": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          1,
+          1
+        ]
+      ],
+      "parent_id": 39,
+      "parent_type": "WATER",
+      "parent_coll": 0,
+      "visual_only": true,
+      "source_only": true
+    },
+    {
+      "mask": 9,
+      "corners": 4,
+      "canonical_neighbors": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          0
+        ]
+      ],
+      "parent_id": 39,
+      "parent_type": "WATER",
+      "parent_coll": 0,
+      "visual_only": true,
+      "source_only": true
+    },
+    {
+      "mask": 10,
+      "corners": 0,
+      "canonical_neighbors": [
+        [
+          0,
+          -1
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          1
+        ]
+      ],
+      "parent_id": 39,
+      "parent_type": "WATER",
+      "parent_coll": 0,
+      "visual_only": true,
+      "source_only": true
+    },
+    {
+      "mask": 11,
+      "corners": 0,
+      "canonical_neighbors": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          1
+        ]
+      ],
+      "parent_id": 39,
+      "parent_type": "WATER",
+      "parent_coll": 0,
+      "visual_only": true,
+      "source_only": true
+    },
+    {
+      "mask": 12,
+      "corners": 0,
+      "canonical_neighbors": [
+        [
+          0,
+          -1
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          1,
+          -1
+        ],
+        [
+          1,
+          0
+        ]
+      ],
+      "parent_id": 39,
+      "parent_type": "WATER",
+      "parent_coll": 0,
+      "visual_only": true,
+      "source_only": true
+    },
+    {
+      "mask": 12,
+      "corners": 2,
+      "canonical_neighbors": [
+        [
+          0,
+          -1
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          1,
+          0
+        ]
+      ],
+      "parent_id": 39,
+      "parent_type": "WATER",
+      "parent_coll": 0,
+      "visual_only": true,
+      "source_only": true
+    },
+    {
+      "mask": 13,
+      "corners": 0,
+      "canonical_neighbors": [
+        [
+          0,
+          0
+        ],
+        [
+          1,
+          0
+        ]
+      ],
+      "parent_id": 39,
+      "parent_type": "WATER",
+      "parent_coll": 0,
+      "visual_only": true,
+      "source_only": true
+    },
+    {
+      "mask": 14,
+      "corners": 0,
+      "canonical_neighbors": [
+        [
+          0,
+          -1
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "parent_id": 39,
+      "parent_type": "WATER",
+      "parent_coll": 0,
+      "visual_only": true,
+      "source_only": true
+    },
+    {
+      "mask": 15,
+      "corners": 0,
+      "canonical_neighbors": [
+        [
+          0,
+          0
+        ]
+      ],
+      "parent_id": 39,
+      "parent_type": "WATER",
+      "parent_coll": 0,
+      "visual_only": true,
+      "source_only": true
+    }
+  ]
+}

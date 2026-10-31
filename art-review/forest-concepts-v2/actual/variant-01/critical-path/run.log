@@ -1,0 +1,76 @@
+seed 0xb4a7
+entry 22 goal 20 path [22, 23, 18, 19, 14, 9, 4, 3, 2, 1, 6, 5, 10, 15, 20]
+gates [(23, 0, 'CRACK'), (4, 3, 'WEB'), (15, 2, 'CHASM')]
+keys [11, 7, 0]
+PASS ENTRY: the drain leads to the entry cell     cell 22
+   cross 22 side 3: 22 -> 21 pos (490, 200) hp 24
+   cross 21 side 0: 21 -> 16 pos (256, 364) hp 24
+   cross 16 side 0: 16 -> 11 pos (256, 364) hp 24
+PASS TRIAL: reached the seed trial room           cell 11
+TRIAL_BEFORE {"area": 1, "cell": 11, "chest_ground": [], "chest_overlay": [], "enemies": [{"coll": 0, "facing": 0, "hp": 4, "kind": 2, "speed": 32, "state": 0, "timer": 33, "type": 3, "x": 408, "y": 110, "z": 0}, {"coll": 0, "facing": 0, "hp": 4, "kind": 2, "speed": 32, "state": 0, "timer": 23, "type": 3, "x": 120, "y": 158, "z": 0}, {"coll": 0, "facing": 3, "hp": 2, "kind": 2, "speed": 128, "state": 0, "timer": 29, "type": 0, "x": 392, "y": 110, "z": 0}, {"coll": 0, "facing": 2, "hp": 2, "kind": 2, "speed": 96, "state": 0, "timer": 27, "type": 2, "x": 216, "y": 238, "z": 0}, {"coll": 0, "facing": 0, "hp": 2, "kind": 2, "speed": 128, "state": 0, "timer": 17, "type": 0, "x": 216, "y": 270, "z": 0}], "game": 1, "items": 65, "mystery_flags": 0, "packed_mystery": 24, "player": {"coll": 0, "facing": 0, "hp": 0, "kind": 1, "speed": 0, "state": 0, "timer": 0, "type": 0, "x": 256, "y": 364, "z": 0}, "textbox": 0}
+CHEST_BEFORE {"area": 2, "cell": 11, "chest_ground": [[9, 6]], "chest_overlay": [], "enemies": [], "game": 1, "items": 65, "mystery_flags": 6, "packed_mystery": 24, "player": {"coll": 0, "facing": 0, "hp": 0, "kind": 1, "speed": 0, "state": 0, "timer": 0, "type": 0, "x": 200, "y": 156, "z": 0}, "textbox": 0}
+CHEST_AFTER True {"area": 2, "cell": 11, "chest_ground": [], "chest_overlay": [], "enemies": [], "game": 1, "items": 67, "mystery_flags": 7, "packed_mystery": 24, "player": {"coll": 1, "facing": 2, "hp": 0, "kind": 1, "speed": 0, "state": 0, "timer": 0, "type": 0, "x": 152, "y": 120, "z": 0}, "textbox": 0}
+TRIAL_AFTER True {"area": 1, "cell": 11, "chest_ground": [], "chest_overlay": [], "enemies": [{"coll": 0, "facing": 1, "hp": 4, "kind": 2, "speed": 32, "state": 0, "timer": 21, "type": 3, "x": 408, "y": 110, "z": 0}, {"coll": 0, "facing": 3, "hp": 4, "kind": 2, "speed": 32, "state": 0, "timer": 39, "type": 3, "x": 120, "y": 158, "z": 0}, {"coll": 0, "facing": 1, "hp": 2, "kind": 2, "speed": 128, "state": 0, "timer": 27, "type": 0, "x": 392, "y": 110, "z": 0}, {"coll": 0, "facing": 2, "hp": 2, "kind": 2, "speed": 96, "state": 0, "timer": 38, "type": 2, "x": 216, "y": 238, "z": 0}, {"coll": 0, "facing": 3, "hp": 2, "kind": 2, "speed": 128, "state": 0, "timer": 23, "type": 0, "x": 216, "y": 270, "z": 0}], "game": 1, "items": 67, "mystery_flags": 7, "packed_mystery": 24, "player": {"coll": 0, "facing": 2, "hp": 0, "kind": 1, "speed": 0, "state": 0, "timer": 0, "type": 0, "x": 88, "y": 94, "z": 0}, "textbox": 0}
+PASS TRIAL: its event is completed and claimed    
+PASS KEYS: the earned chest grants the bombs      items 0x43 bombs 10
+   cross 11 side 2: 11 -> 16 pos (256, 52) hp 24
+   cross 16 side 2: 16 -> 21 pos (256, 52) hp 24
+   cross 21 side 1: 21 -> 22 pos (22, 200) hp 24
+   cross 22 side 1: 22 -> 23 pos (22, 200) hp 24
+PASS CRACK: reached the cracked wall              cell 23
+PASS CRACK: the bomb opened it                    cell 23 -> 18
+   cross 18 side 3: 18 -> 17 pos (490, 200) hp 24
+   cross 17 side 0: 17 -> 12 pos (256, 364) hp 24
+   cross 12 side 0: 12 -> 7 pos (256, 364) hp 24
+PASS TRIAL: reached the candle trial room         cell 7
+TRIAL_BEFORE {"area": 1, "cell": 7, "chest_ground": [], "chest_overlay": [], "enemies": [{"coll": 0, "facing": 3, "hp": 2, "kind": 2, "speed": 128, "state": 0, "timer": 25, "type": 0, "x": 408, "y": 238, "z": 0}, {"coll": 0, "facing": 1, "hp": 2, "kind": 2, "speed": 256, "state": 10, "timer": 81, "type": 1, "x": 120, "y": 206, "z": 12}, {"coll": 0, "facing": 2, "hp": 2, "kind": 2, "speed": 256, "state": 10, "timer": 50, "type": 1, "x": 168, "y": 254, "z": 12}, {"coll": 0, "facing": 2, "hp": 2, "kind": 2, "speed": 128, "state": 0, "timer": 18, "type": 0, "x": 136, "y": 254, "z": 0}, {"coll": 0, "facing": 1, "hp": 2, "kind": 2, "speed": 128, "state": 0, "timer": 32, "type": 0, "x": 72, "y": 158, "z": 0}, {"coll": 0, "facing": 2, "hp": 2, "kind": 2, "speed": 128, "state": 0, "timer": 26, "type": 0, "x": 168, "y": 238, "z": 0}], "game": 1, "items": 67, "mystery_flags": 0, "packed_mystery": 149, "player": {"coll": 0, "facing": 0, "hp": 0, "kind": 1, "speed": 0, "state": 0, "timer": 0, "type": 0, "x": 256, "y": 364, "z": 0}, "textbox": 0}
+ACTUAL_SWORD_DAMAGE {"HP_after": 0, "HP_before": 2, "actor": 1, "kind_after": 0, "turn": 1, "type": 0}
+ACTUAL_SWORD_DAMAGE {"HP_after": 0, "HP_before": 2, "actor": 3, "kind_after": 0, "turn": 3, "type": 0}
+ACTUAL_SWORD_DAMAGE {"HP_after": 0, "HP_before": 2, "actor": 5, "kind_after": 0, "turn": 5, "type": 1}
+ACTUAL_SWORD_DAMAGE {"HP_after": 0, "HP_before": 2, "actor": 1, "kind_after": 0, "turn": 8, "type": 0}
+ACTUAL_SWORD_DAMAGE {"HP_after": 0, "HP_before": 2, "actor": 4, "kind_after": 0, "turn": 10, "type": 1}
+ACTUAL_SWORD_DAMAGE {"HP_after": 0, "HP_before": 2, "actor": 6, "kind_after": 0, "turn": 12, "type": 0}
+ACTUAL_SWORD_DAMAGE {"HP_after": 0, "HP_before": 2, "actor": 8, "kind_after": 0, "turn": 14, "type": 0}
+CHEST_BEFORE {"area": 2, "cell": 7, "chest_ground": [[9, 6]], "chest_overlay": [], "enemies": [], "game": 1, "items": 67, "mystery_flags": 6, "packed_mystery": 149, "player": {"coll": 0, "facing": 0, "hp": 0, "kind": 1, "speed": 0, "state": 0, "timer": 18, "type": 0, "x": 166, "y": 117, "z": 0}, "textbox": 0}
+CHEST_AFTER True {"area": 2, "cell": 7, "chest_ground": [], "chest_overlay": [], "enemies": [], "game": 1, "items": 71, "mystery_flags": 7, "packed_mystery": 149, "player": {"coll": 1, "facing": 2, "hp": 0, "kind": 1, "speed": 0, "state": 0, "timer": 0, "type": 0, "x": 152, "y": 120, "z": 0}, "textbox": 0}
+TRIAL_AFTER True {"area": 1, "cell": 7, "chest_ground": [], "chest_overlay": [], "enemies": [{"coll": 0, "facing": 3, "hp": 2, "kind": 2, "speed": 128, "state": 0, "timer": 21, "type": 0, "x": 408, "y": 238, "z": 0}, {"coll": 0, "facing": 1, "hp": 2, "kind": 2, "speed": 256, "state": 10, "timer": 92, "type": 1, "x": 120, "y": 206, "z": 12}, {"coll": 0, "facing": 0, "hp": 2, "kind": 2, "speed": 256, "state": 10, "timer": 118, "type": 1, "x": 168, "y": 254, "z": 12}, {"coll": 0, "facing": 1, "hp": 2, "kind": 2, "speed": 128, "state": 0, "timer": 22, "type": 0, "x": 136, "y": 254, "z": 0}, {"coll": 0, "facing": 1, "hp": 2, "kind": 2, "speed": 128, "state": 0, "timer": 14, "type": 0, "x": 72, "y": 158, "z": 0}, {"coll": 0, "facing": 2, "hp": 2, "kind": 2, "speed": 128, "state": 0, "timer": 20, "type": 0, "x": 168, "y": 238, "z": 0}], "game": 1, "items": 71, "mystery_flags": 7, "packed_mystery": 149, "player": {"coll": 0, "facing": 2, "hp": 0, "kind": 1, "speed": 0, "state": 0, "timer": 0, "type": 0, "x": 472, "y": 350, "z": 0}, "textbox": 0}
+PASS TRIAL: its event is completed and claimed    
+PASS KEYS: the earned chest grants the lamp       items 0x47
+   cross 7 side 2: 7 -> 12 pos (256, 52) hp 24
+   cross 12 side 2: 12 -> 17 pos (256, 52) hp 24
+   cross 17 side 1: 17 -> 18 pos (22, 200) hp 24
+   cross 18 side 0: 18 -> 13 pos (256, 364) hp 24
+   cross 13 side 1: 13 -> 14 pos (22, 200) hp 24
+   cross 14 side 0: 14 -> 9 pos (256, 364) hp 24
+   cross 9 side 0: 9 -> 4 pos (256, 364) hp 24
+PASS WEB: reached the web                         cell 4
+PASS WEB: the lamp burned it                      cell 4 -> 3
+   cross 3 side 3: 3 -> 2 pos (490, 200) hp 24
+   cross 2 side 3: 2 -> 1 pos (490, 200) hp 24
+   cross 1 side 3: 1 -> 0 pos (490, 200) hp 24
+PASS TRIAL: reached the cape trial room           cell 0
+TRIAL_BEFORE {"area": 1, "cell": 0, "chest_ground": [], "chest_overlay": [], "enemies": [{"coll": 0, "facing": 2, "hp": 4, "kind": 2, "speed": 32, "state": 0, "timer": 25, "type": 3, "x": 376, "y": 142, "z": 0}, {"coll": 0, "facing": 0, "hp": 4, "kind": 2, "speed": 32, "state": 0, "timer": 30, "type": 3, "x": 104, "y": 238, "z": 0}, {"coll": 0, "facing": 1, "hp": 4, "kind": 2, "speed": 32, "state": 0, "timer": 29, "type": 3, "x": 376, "y": 206, "z": 0}, {"coll": 0, "facing": 3, "hp": 10, "kind": 2, "speed": 96, "state": 0, "timer": 32, "type": 4, "x": 360, "y": 238, "z": 0}, {"coll": 0, "facing": 0, "hp": 10, "kind": 2, "speed": 96, "state": 0, "timer": 37, "type": 4, "x": 376, "y": 206, "z": 0}, {"coll": 0, "facing": 1, "hp": 4, "kind": 2, "speed": 32, "state": 0, "timer": 33, "type": 3, "x": 392, "y": 270, "z": 0}], "game": 1, "items": 71, "mystery_flags": 0, "packed_mystery": 23, "player": {"coll": 0, "facing": 3, "hp": 0, "kind": 1, "speed": 0, "state": 0, "timer": 0, "type": 0, "x": 490, "y": 200, "z": 0}, "textbox": 0}
+ACTUAL_SWORD_DAMAGE {"HP_after": 0, "HP_before": 2, "actor": 5, "kind_after": 0, "turn": 1, "type": 0}
+ACTUAL_SWORD_DAMAGE {"HP_after": 0, "HP_before": 2, "actor": 3, "kind_after": 0, "turn": 3, "type": 0}
+ACTUAL_SWORD_DAMAGE {"HP_after": 18, "HP_before": 20, "actor": 1, "kind_after": 2, "turn": 5, "type": 4}
+ACTUAL_SWORD_DAMAGE {"HP_after": 16, "HP_before": 18, "actor": 1, "kind_after": 2, "turn": 7, "type": 4}
+ACTUAL_SWORD_DAMAGE {"HP_after": 14, "HP_before": 16, "actor": 1, "kind_after": 2, "turn": 9, "type": 4}
+ACTUAL_SWORD_DAMAGE {"HP_after": 12, "HP_before": 14, "actor": 1, "kind_after": 2, "turn": 11, "type": 4}
+ACTUAL_SWORD_DAMAGE {"HP_after": 10, "HP_before": 12, "actor": 1, "kind_after": 2, "turn": 13, "type": 4}
+ACTUAL_SWORD_DAMAGE {"HP_after": 8, "HP_before": 10, "actor": 1, "kind_after": 2, "turn": 15, "type": 4}
+ACTUAL_SWORD_DAMAGE {"HP_after": 6, "HP_before": 8, "actor": 1, "kind_after": 2, "turn": 17, "type": 4}
+ACTUAL_SWORD_DAMAGE {"HP_after": 4, "HP_before": 6, "actor": 1, "kind_after": 2, "turn": 19, "type": 4}
+ACTUAL_SWORD_DAMAGE {"HP_after": 2, "HP_before": 4, "actor": 1, "kind_after": 2, "turn": 21, "type": 4}
+ACTUAL_SWORD_DAMAGE {"HP_after": 0, "HP_before": 2, "actor": 1, "kind_after": 0, "turn": 23, "type": 4}
+CHEST_BEFORE {"area": 2, "cell": 0, "chest_ground": [[9, 6]], "chest_overlay": [], "enemies": [], "game": 1, "items": 71, "mystery_flags": 6, "packed_mystery": 23, "player": {"coll": 0, "facing": 0, "hp": 0, "kind": 1, "speed": 0, "state": 2, "timer": 17, "type": 0, "x": 129, "y": 145, "z": 0}, "textbox": 0}
+CHEST_AFTER True {"area": 2, "cell": 0, "chest_ground": [], "chest_overlay": [], "enemies": [], "game": 1, "items": 79, "mystery_flags": 7, "packed_mystery": 23, "player": {"coll": 1, "facing": 2, "hp": 0, "kind": 1, "speed": 0, "state": 0, "timer": 0, "type": 0, "x": 152, "y": 120, "z": 0}, "textbox": 0}
+TRIAL_AFTER True {"area": 1, "cell": 0, "chest_ground": [], "chest_overlay": [], "enemies": [{"coll": 0, "facing": 3, "hp": 4, "kind": 2, "speed": 32, "state": 0, "timer": 34, "type": 3, "x": 376, "y": 142, "z": 0}, {"coll": 0, "facing": 1, "hp": 4, "kind": 2, "speed": 32, "state": 0, "timer": 17, "type": 3, "x": 104, "y": 238, "z": 0}, {"coll": 0, "facing": 3, "hp": 4, "kind": 2, "speed": 32, "state": 0, "timer": 14, "type": 3, "x": 376, "y": 206, "z": 0}, {"coll": 0, "facing": 2, "hp": 10, "kind": 2, "speed": 96, "state": 0, "timer": 27, "type": 4, "x": 360, "y": 238, "z": 0}, {"coll": 0, "facing": 1, "hp": 10, "kind": 2, "speed": 96, "state": 0, "timer": 20, "type": 4, "x": 376, "y": 206, "z": 0}, {"coll": 0, "facing": 1, "hp": 4, "kind": 2, "speed": 32, "state": 0, "timer": 29, "type": 3, "x": 392, "y": 270, "z": 0}], "game": 1, "items": 79, "mystery_flags": 7, "packed_mystery": 23, "player": {"coll": 0, "facing": 2, "hp": 0, "kind": 1, "speed": 0, "state": 0, "timer": 0, "type": 0, "x": 152, "y": 190, "z": 0}, "textbox": 0}
+PASS TRIAL: its event is completed and claimed    
+PASS KEYS: the earned chest grants the cloak      items 0x4f
+   cross 0 side 2: 0 -> 5 pos (256, 52) hp 24
+   cross 5 side 2: 5 -> 10 pos (256, 52) hp 24
+   cross 10 side 2: 10 -> 15 pos (256, 52) hp 24
+PASS CHASM: reached the chasm                     cell 15
+PASS CHASM: the cloak crossed it                  cell 20 (hp 24)
+PASS GOAL: the goal room is entered               cell 20
+RESULT PASS 17/17

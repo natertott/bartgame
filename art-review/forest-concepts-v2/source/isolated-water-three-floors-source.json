@@ -1,0 +1,482 @@
+[
+  {
+    "profile": 6,
+    "floor": "moss0",
+    "water_alias": "f2_water_f0",
+    "water_corner_rgba": [
+      [
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0
+      ]
+    ],
+    "source_only": true
+  },
+  {
+    "profile": 6,
+    "floor": "blight_floor",
+    "water_alias": "f2_water_f0",
+    "water_corner_rgba": [
+      [
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0
+      ]
+    ],
+    "source_only": true
+  },
+  {
+    "profile": 6,
+    "floor": "path",
+    "water_alias": "f2_water_f0",
+    "water_corner_rgba": [
+      [
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0
+      ]
+    ],
+    "source_only": true
+  },
+  {
+    "profile": 7,
+    "floor": "moss0",
+    "water_alias": "f2_water_f0",
+    "water_corner_rgba": [
+      [
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0
+      ]
+    ],
+    "source_only": true
+  },
+  {
+    "profile": 7,
+    "floor": "blight_floor",
+    "water_alias": "f2_water_f0",
+    "water_corner_rgba": [
+      [
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0
+      ]
+    ],
+    "source_only": true
+  },
+  {
+    "profile": 7,
+    "floor": "path",
+    "water_alias": "f2_water_f0",
+    "water_corner_rgba": [
+      [
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0
+      ]
+    ],
+    "source_only": true
+  },
+  {
+    "profile": 8,
+    "floor": "moss0",
+    "water_alias": "f2_water_f0",
+    "water_corner_rgba": [
+      [
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0
+      ]
+    ],
+    "source_only": true
+  },
+  {
+    "profile": 8,
+    "floor": "blight_floor",
+    "water_alias": "f2_water_f0",
+    "water_corner_rgba": [
+      [
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0
+      ]
+    ],
+    "source_only": true
+  },
+  {
+    "profile": 8,
+    "floor": "path",
+    "water_alias": "f2_water_f0",
+    "water_corner_rgba": [
+      [
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0
+      ]
+    ],
+    "source_only": true
+  },
+  {
+    "profile": 9,
+    "floor": "moss0",
+    "water_alias": "f2_water_f0",
+    "water_corner_rgba": [
+      [
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0
+      ]
+    ],
+    "source_only": true
+  },
+  {
+    "profile": 9,
+    "floor": "blight_floor",
+    "water_alias": "f2_water_f0",
+    "water_corner_rgba": [
+      [
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0
+      ]
+    ],
+    "source_only": true
+  },
+  {
+    "profile": 9,
+    "floor": "path",
+    "water_alias": "f2_water_f0",
+    "water_corner_rgba": [
+      [
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0
+      ]
+    ],
+    "source_only": true
+  },
+  {
+    "profile": 10,
+    "floor": "moss0",
+    "water_alias": "f2_water_f0",
+    "water_corner_rgba": [
+      [
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0
+      ]
+    ],
+    "source_only": true
+  },
+  {
+    "profile": 10,
+    "floor": "blight_floor",
+    "water_alias": "f2_water_f0",
+    "water_corner_rgba": [
+      [
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0
+      ]
+    ],
+    "source_only": true
+  },
+  {
+    "profile": 10,
+    "floor": "path",
+    "water_alias": "f2_water_f0",
+    "water_corner_rgba": [
+      [
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0
+      ]
+    ],
+    "source_only": true
+  }
+]

@@ -862,3 +862,59 @@ review also corrected the first water threshold's bridge axis. All ten named
 stage traces pass; frozen corpus and emulator results are recorded separately.
 Old profiles0–5 keep their previous bytes and behavior. The general rule that
 an interaction owns its standing space is now explicit in the shared bible.
+
+**Final second-pass evidence:** source `e5e3fcb21fe1bcc50c965943164146a2dc1e3c46`
+is frozen in profiles 0,1,5 and 6–10. Production 0 and the two historical controls
+remain byte-identical to their prior ROMs. Restored normal 0 still has SHA256
+`9330a44a4e27d99606a757134aa41a62adb122a74315c400e1ad3427048c8661`.
+The five new directions remain unselected. Renderer/generator changes are
+conditional; Bloom/Step-and-cut, selected bestiary/Heart, equipment/pickups,
+Drain architecture/keepers, interface layout/font/title and existing glitter
+keep their art. Study environment objects and forest portraits are explicitly
+redrawn, including shared chests/entrances/portable forms outside the forest.
+
+The complete source catalogs contain 5,320 native frame instances and twenty
+albums per option, including all 47 adjacency cases, four macroquadrants,
+ten wooden chest constructions/states and fifteen named folk with native 48px
+portraits. Independent export verification passes 47,515/47,515 checks.
+All 10,950 PNG/GIF bytes match the held artwork checkpoint; C-only placement
+repairs have fresh source provenance rather than relabelled old captures.
+Palette/state inspection GIFs and fixed-foot source diagrams remain distinct
+from engine timing, natural movement and physical passage.
+
+Final actual evidence has 568 recorded contexts: 485 new-style contexts
+(455 generated and 30 explicit diagnostic rooms) plus 83 production-control
+contexts. Runtime checks pass 7,733/7,733, with 85 full-rate clips and 85 exact
+sampled-palette GIFs. Each new style also earns the three trial rewards,
+uses actual gates and enters the Heart through a 17/17 progression proof.
+Navigation, health and attack-position fixtures are disclosed; enemy HP,
+quest flags and rewards are not assigned. Those extra progression snapshots
+are separate from the art-context count. All four new-style comparisons match
+the reference new style's physical layouts, RNG, progress and mechanic states.
+
+Independent native/static checks pass 121,211/121,211; combined native/runtime
+audit passes 139,478/139,478. The one final frozen host corpus covers 20,000
+seeds, 500,000 rooms and 60,000 tuned world graphs with zero failures, including
+256,812 complete log pairs, 11,884 underpasses, 263,746 item pockets and
+3,182,406 required approaches. Earlier failed or partial runs are archived
+locally and excluded from final publication.
+
+Forest graphics use 851–855/1,024 subtiles, ten/twelve world banks and 73
+animation allocations. Interiors use 107 subtiles/six banks; the Drain remains
+822 subtiles/one bank. The conservative OBJ union is 848/876, including four landmark slots.
+Frozen linked memory is 216,284/262,144 EWRAM bytes and 21,900/32,256 IWRAM
+bytes before the declared stack reservation. The connector scratch belongs to
+IWRAM, correcting an earlier EWRAM label. Sampled runtime OAM peaks at 25/128;
+this is recorded-case resource evidence, not a universal frame-time guarantee.
+
+**Final critique and next work:** foreground leaves and the raised root arch
+show real overlap during movement. The root span supports a lower route only;
+a usable upper deck still needs explicit elevation/collision routing. Long
+healthy crown bands repeat, and deep purple strokes/loops can read as a glowing
+fence or rune pattern instead of branching wood. Rounded adjacency solves hard
+corners but not broad composition. Future work should group larger forest
+masses and vary their rhythm after selection. Sparse sick soil can look bare;
+some unusual chests rely on their latch, and the friendly Moth Sister shares a
+wing family with the enemy Confessor. These limits remain visible in the
+[actual/source gallery](../../../art-review/forest-concepts-v2/README.md),
+alongside [all five ROMs](../../../downloads/forest-concepts-v2-e5e3fcb/README.md).

@@ -1,0 +1,5 @@
+fc8e92f92a4aa43aa5cc56c0caff7a6dc1394f21dc356e7830ef9a7e07f234a1  forest-v2-01-black-sap-oak-e5e3fcb.gba
+3fe6143a9c9de8ccb79248e20b69b199aa462078c92827e71805ebf5826e11df  forest-v2-02-violet-strangler-e5e3fcb.gba
+c72c07bf22bd15eaf3898e1fb0a75eabb7b2dc4c85ead74e68ba30a5f181e8f9  forest-v2-03-witchfire-weep-e5e3fcb.gba
+6e5af6e3ec8e960f2e11cbd485a4c6e8d11f4e6eca202d46f15246cc3cca7538  forest-v2-04-amethyst-canker-e5e3fcb.gba
+3876a966293a6cfd68eb39f881dd107b1da4bc14f0b764223712251321784d07  forest-v2-05-royal-bruise-e5e3fcb.gba

@@ -1,0 +1,2047 @@
+{
+  "method": "Compact final index derived from finalaudit.json and fresh runtime aggregate; full checks and per-frame evidence remain linked separately.",
+  "source_commit": "e5e3fcb21fe1bcc50c965943164146a2dc1e3c46",
+  "auditor_sha256": "54bc933076e579a06a6bc19406e49e11dc9038d6391876a117c7a4b5a788391e",
+  "finalaudit_sha256": "977835f808ec7cc0df3d5d3b1b75ba5ae796d58f0cf70088cf10c548cd3a6513",
+  "passed": 139478,
+  "total": 139478,
+  "failures": [],
+  "historical_profiles_byte_exact": [
+    0,
+    1,
+    5
+  ],
+  "new_profiles": [
+    6,
+    7,
+    8,
+    9,
+    10
+  ],
+  "host": {
+    "requested_seeds": 20000,
+    "seeds": 20000,
+    "world_graphs": 60000,
+    "rooms": 500000,
+    "logs": 256812,
+    "underpasses": 11884,
+    "item_pockets": 263746,
+    "required_approaches": 3182406,
+    "failures": 0
+  },
+  "host_report_sha256": "58f07911a76dc1393c686f0f076bdace3d861b0701e2d6461b04f45ed9f40491",
+  "runtime_profiles": [
+    {
+      "variant": 6,
+      "rom_sha256": "fc8e92f92a4aa43aa5cc56c0caff7a6dc1394f21dc356e7830ef9a7e07f234a1",
+      "capture_count": 97,
+      "natural_capture_count": 91,
+      "diagnostic_capture_count": 6,
+      "passed": 1399,
+      "total": 1399,
+      "transition_timing_observations": [
+        {
+          "name": "blight-bomb-wall",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "blight-brass-chest",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "blight-cape-hole",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "blight-cobweb",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "blight-hollow-door",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "blight-locked-door",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "blight-relic-chest",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "blight-thicket-door",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "blight-wood-chest",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "cave-exit",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "cave-floor-switch",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "cave-pot",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "cave-spring",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "deep-blight",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "diagnostic-living-canopy-isolated-sizes",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "diagnostic-living-canopy-narrow-inner-corners",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "diagnostic-sick-canopy-isolated-sizes",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "diagnostic-sick-canopy-narrow-inner-corners",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "diagnostic-water-isolated-sizes",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "diagnostic-water-narrow-inner-corners",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "drain-control",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "forest-bomb-wall",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "forest-brass-chest",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "forest-bush",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "forest-cape-hole",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "forest-cave-door",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "forest-cobweb",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "forest-hollow-door",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "forest-locked-door",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "forest-npc-gardener",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "forest-npc-hermit",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "forest-npc-nun",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "forest-relic-chest",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "forest-relic-pedestal",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "forest-rock_small",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "forest-room-00-stage2",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "forest-room-01-stage2",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "forest-room-02-stage2",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "forest-room-03-stage2",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "forest-room-04-stage1",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "forest-room-05-stage2",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "forest-room-06-stage2",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "forest-room-07-stage1",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "forest-room-08-stage1",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "forest-room-09-stage1",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "forest-room-10-stage2",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "forest-room-11-stage0",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "forest-room-12-stage1",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "forest-room-13-stage1",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "forest-room-14-stage1",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "forest-room-15-stage2",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "forest-room-16-stage0",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "forest-room-17-stage1",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "forest-room-18-stage1",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "forest-room-19-stage1",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "forest-room-20-stage3",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "forest-room-21-stage0",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "forest-room-22-stage0",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "forest-room-23-stage0",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "forest-room-24-stage0",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "forest-shrine",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "forest-thicket-door",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "forest-thorn",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "forest-wood-B-chest",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "forest-wood-chest",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "ground-growths",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "healthy-canopy",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "heart-glade",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "hollow-exit",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "hollow-floor-switch",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "interior-cave",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "interior-hollow",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "interior-thicket",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "large-log-collision",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "large-thicket-chest",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "ledge-path",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "living-canopy-walkunder",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "medium-cave-chest",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "mixed-cave-door",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "mixed-forest",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "outer-gate-chasm",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "outer-gate-cobweb",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "outer-gate-cracked-wall",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "outer-gate-locked-door",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "outer-gate-thorns",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "pit-bank",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "raised-ledge-drop",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "relic-plinth-depth",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "root-arch-underpass",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "shrine-plinth-depth",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "sick-canopy-walkunder",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "small-hollow-chest",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "thicket-boulder",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "thicket-censer",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "thicket-exit",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "thicket-floor-switch",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "water-bridge",
+          "transition_ticks_exact": true
+        }
+      ]
+    },
+    {
+      "variant": 7,
+      "rom_sha256": "3fe6143a9c9de8ccb79248e20b69b199aa462078c92827e71805ebf5826e11df",
+      "capture_count": 97,
+      "natural_capture_count": 91,
+      "diagnostic_capture_count": 6,
+      "passed": 1463,
+      "total": 1463,
+      "transition_timing_observations": [
+        {
+          "name": "blight-bomb-wall",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "blight-brass-chest",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "blight-cape-hole",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "blight-cobweb",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "blight-hollow-door",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "blight-locked-door",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "blight-relic-chest",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "blight-thicket-door",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "blight-wood-chest",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "cave-exit",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "cave-floor-switch",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "cave-pot",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "cave-spring",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "deep-blight",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "diagnostic-living-canopy-isolated-sizes",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "diagnostic-living-canopy-narrow-inner-corners",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "diagnostic-sick-canopy-isolated-sizes",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "diagnostic-sick-canopy-narrow-inner-corners",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "diagnostic-water-isolated-sizes",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "diagnostic-water-narrow-inner-corners",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "drain-control",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "forest-bomb-wall",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "forest-brass-chest",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "forest-bush",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "forest-cape-hole",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "forest-cave-door",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "forest-cobweb",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "forest-hollow-door",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "forest-locked-door",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "forest-npc-gardener",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "forest-npc-hermit",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "forest-npc-nun",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "forest-relic-chest",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "forest-relic-pedestal",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "forest-rock_small",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "forest-room-00-stage2",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "forest-room-01-stage2",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "forest-room-02-stage2",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "forest-room-03-stage2",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "forest-room-04-stage1",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "forest-room-05-stage2",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "forest-room-06-stage2",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "forest-room-07-stage1",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "forest-room-08-stage1",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "forest-room-09-stage1",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "forest-room-10-stage2",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "forest-room-11-stage0",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "forest-room-12-stage1",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "forest-room-13-stage1",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "forest-room-14-stage1",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "forest-room-15-stage2",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "forest-room-16-stage0",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "forest-room-17-stage1",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "forest-room-18-stage1",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "forest-room-19-stage1",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "forest-room-20-stage3",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "forest-room-21-stage0",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "forest-room-22-stage0",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "forest-room-23-stage0",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "forest-room-24-stage0",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "forest-shrine",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "forest-thicket-door",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "forest-thorn",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "forest-wood-B-chest",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "forest-wood-chest",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "ground-growths",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "healthy-canopy",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "heart-glade",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "hollow-exit",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "hollow-floor-switch",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "interior-cave",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "interior-hollow",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "interior-thicket",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "large-log-collision",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "large-thicket-chest",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "ledge-path",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "living-canopy-walkunder",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "medium-cave-chest",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "mixed-cave-door",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "mixed-forest",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "outer-gate-chasm",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "outer-gate-cobweb",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "outer-gate-cracked-wall",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "outer-gate-locked-door",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "outer-gate-thorns",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "pit-bank",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "raised-ledge-drop",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "relic-plinth-depth",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "root-arch-underpass",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "shrine-plinth-depth",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "sick-canopy-walkunder",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "small-hollow-chest",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "thicket-boulder",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "thicket-censer",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "thicket-exit",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "thicket-floor-switch",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "water-bridge",
+          "transition_ticks_exact": true
+        }
+      ]
+    },
+    {
+      "variant": 8,
+      "rom_sha256": "c72c07bf22bd15eaf3898e1fb0a75eabb7b2dc4c85ead74e68ba30a5f181e8f9",
+      "capture_count": 97,
+      "natural_capture_count": 91,
+      "diagnostic_capture_count": 6,
+      "passed": 1463,
+      "total": 1463,
+      "transition_timing_observations": [
+        {
+          "name": "blight-bomb-wall",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "blight-brass-chest",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "blight-cape-hole",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "blight-cobweb",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "blight-hollow-door",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "blight-locked-door",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "blight-relic-chest",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "blight-thicket-door",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "blight-wood-chest",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "cave-exit",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "cave-floor-switch",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "cave-pot",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "cave-spring",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "deep-blight",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "diagnostic-living-canopy-isolated-sizes",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "diagnostic-living-canopy-narrow-inner-corners",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "diagnostic-sick-canopy-isolated-sizes",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "diagnostic-sick-canopy-narrow-inner-corners",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "diagnostic-water-isolated-sizes",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "diagnostic-water-narrow-inner-corners",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "drain-control",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "forest-bomb-wall",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "forest-brass-chest",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "forest-bush",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "forest-cape-hole",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "forest-cave-door",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "forest-cobweb",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "forest-hollow-door",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "forest-locked-door",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "forest-npc-gardener",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "forest-npc-hermit",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "forest-npc-nun",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "forest-relic-chest",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "forest-relic-pedestal",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "forest-rock_small",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "forest-room-00-stage2",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "forest-room-01-stage2",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "forest-room-02-stage2",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "forest-room-03-stage2",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "forest-room-04-stage1",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "forest-room-05-stage2",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "forest-room-06-stage2",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "forest-room-07-stage1",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "forest-room-08-stage1",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "forest-room-09-stage1",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "forest-room-10-stage2",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "forest-room-11-stage0",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "forest-room-12-stage1",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "forest-room-13-stage1",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "forest-room-14-stage1",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "forest-room-15-stage2",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "forest-room-16-stage0",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "forest-room-17-stage1",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "forest-room-18-stage1",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "forest-room-19-stage1",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "forest-room-20-stage3",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "forest-room-21-stage0",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "forest-room-22-stage0",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "forest-room-23-stage0",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "forest-room-24-stage0",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "forest-shrine",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "forest-thicket-door",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "forest-thorn",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "forest-wood-B-chest",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "forest-wood-chest",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "ground-growths",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "healthy-canopy",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "heart-glade",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "hollow-exit",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "hollow-floor-switch",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "interior-cave",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "interior-hollow",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "interior-thicket",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "large-log-collision",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "large-thicket-chest",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "ledge-path",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "living-canopy-walkunder",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "medium-cave-chest",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "mixed-cave-door",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "mixed-forest",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "outer-gate-chasm",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "outer-gate-cobweb",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "outer-gate-cracked-wall",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "outer-gate-locked-door",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "outer-gate-thorns",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "pit-bank",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "raised-ledge-drop",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "relic-plinth-depth",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "root-arch-underpass",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "shrine-plinth-depth",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "sick-canopy-walkunder",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "small-hollow-chest",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "thicket-boulder",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "thicket-censer",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "thicket-exit",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "thicket-floor-switch",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "water-bridge",
+          "transition_ticks_exact": true
+        }
+      ]
+    },
+    {
+      "variant": 9,
+      "rom_sha256": "6e5af6e3ec8e960f2e11cbd485a4c6e8d11f4e6eca202d46f15246cc3cca7538",
+      "capture_count": 97,
+      "natural_capture_count": 91,
+      "diagnostic_capture_count": 6,
+      "passed": 1463,
+      "total": 1463,
+      "transition_timing_observations": [
+        {
+          "name": "blight-bomb-wall",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "blight-brass-chest",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "blight-cape-hole",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "blight-cobweb",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "blight-hollow-door",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "blight-locked-door",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "blight-relic-chest",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "blight-thicket-door",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "blight-wood-chest",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "cave-exit",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "cave-floor-switch",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "cave-pot",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "cave-spring",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "deep-blight",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "diagnostic-living-canopy-isolated-sizes",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "diagnostic-living-canopy-narrow-inner-corners",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "diagnostic-sick-canopy-isolated-sizes",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "diagnostic-sick-canopy-narrow-inner-corners",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "diagnostic-water-isolated-sizes",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "diagnostic-water-narrow-inner-corners",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "drain-control",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "forest-bomb-wall",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "forest-brass-chest",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "forest-bush",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "forest-cape-hole",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "forest-cave-door",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "forest-cobweb",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "forest-hollow-door",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "forest-locked-door",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "forest-npc-gardener",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "forest-npc-hermit",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "forest-npc-nun",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "forest-relic-chest",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "forest-relic-pedestal",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "forest-rock_small",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "forest-room-00-stage2",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "forest-room-01-stage2",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "forest-room-02-stage2",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "forest-room-03-stage2",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "forest-room-04-stage1",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "forest-room-05-stage2",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "forest-room-06-stage2",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "forest-room-07-stage1",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "forest-room-08-stage1",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "forest-room-09-stage1",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "forest-room-10-stage2",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "forest-room-11-stage0",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "forest-room-12-stage1",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "forest-room-13-stage1",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "forest-room-14-stage1",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "forest-room-15-stage2",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "forest-room-16-stage0",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "forest-room-17-stage1",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "forest-room-18-stage1",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "forest-room-19-stage1",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "forest-room-20-stage3",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "forest-room-21-stage0",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "forest-room-22-stage0",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "forest-room-23-stage0",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "forest-room-24-stage0",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "forest-shrine",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "forest-thicket-door",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "forest-thorn",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "forest-wood-B-chest",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "forest-wood-chest",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "ground-growths",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "healthy-canopy",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "heart-glade",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "hollow-exit",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "hollow-floor-switch",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "interior-cave",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "interior-hollow",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "interior-thicket",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "large-log-collision",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "large-thicket-chest",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "ledge-path",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "living-canopy-walkunder",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "medium-cave-chest",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "mixed-cave-door",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "mixed-forest",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "outer-gate-chasm",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "outer-gate-cobweb",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "outer-gate-cracked-wall",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "outer-gate-locked-door",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "outer-gate-thorns",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "pit-bank",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "raised-ledge-drop",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "relic-plinth-depth",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "root-arch-underpass",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "shrine-plinth-depth",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "sick-canopy-walkunder",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "small-hollow-chest",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "thicket-boulder",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "thicket-censer",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "thicket-exit",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "thicket-floor-switch",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "water-bridge",
+          "transition_ticks_exact": true
+        }
+      ]
+    },
+    {
+      "variant": 10,
+      "rom_sha256": "3876a966293a6cfd68eb39f881dd107b1da4bc14f0b764223712251321784d07",
+      "capture_count": 97,
+      "natural_capture_count": 91,
+      "diagnostic_capture_count": 6,
+      "passed": 1463,
+      "total": 1463,
+      "transition_timing_observations": [
+        {
+          "name": "blight-bomb-wall",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "blight-brass-chest",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "blight-cape-hole",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "blight-cobweb",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "blight-hollow-door",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "blight-locked-door",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "blight-relic-chest",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "blight-thicket-door",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "blight-wood-chest",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "cave-exit",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "cave-floor-switch",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "cave-pot",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "cave-spring",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "deep-blight",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "diagnostic-living-canopy-isolated-sizes",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "diagnostic-living-canopy-narrow-inner-corners",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "diagnostic-sick-canopy-isolated-sizes",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "diagnostic-sick-canopy-narrow-inner-corners",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "diagnostic-water-isolated-sizes",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "diagnostic-water-narrow-inner-corners",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "drain-control",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "forest-bomb-wall",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "forest-brass-chest",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "forest-bush",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "forest-cape-hole",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "forest-cave-door",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "forest-cobweb",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "forest-hollow-door",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "forest-locked-door",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "forest-npc-gardener",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "forest-npc-hermit",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "forest-npc-nun",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "forest-relic-chest",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "forest-relic-pedestal",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "forest-rock_small",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "forest-room-00-stage2",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "forest-room-01-stage2",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "forest-room-02-stage2",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "forest-room-03-stage2",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "forest-room-04-stage1",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "forest-room-05-stage2",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "forest-room-06-stage2",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "forest-room-07-stage1",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "forest-room-08-stage1",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "forest-room-09-stage1",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "forest-room-10-stage2",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "forest-room-11-stage0",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "forest-room-12-stage1",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "forest-room-13-stage1",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "forest-room-14-stage1",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "forest-room-15-stage2",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "forest-room-16-stage0",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "forest-room-17-stage1",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "forest-room-18-stage1",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "forest-room-19-stage1",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "forest-room-20-stage3",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "forest-room-21-stage0",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "forest-room-22-stage0",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "forest-room-23-stage0",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "forest-room-24-stage0",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "forest-shrine",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "forest-thicket-door",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "forest-thorn",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "forest-wood-B-chest",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "forest-wood-chest",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "ground-growths",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "healthy-canopy",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "heart-glade",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "hollow-exit",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "hollow-floor-switch",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "interior-cave",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "interior-hollow",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "interior-thicket",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "large-log-collision",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "large-thicket-chest",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "ledge-path",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "living-canopy-walkunder",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "medium-cave-chest",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "mixed-cave-door",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "mixed-forest",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "outer-gate-chasm",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "outer-gate-cobweb",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "outer-gate-cracked-wall",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "outer-gate-locked-door",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "outer-gate-thorns",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "pit-bank",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "raised-ledge-drop",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "relic-plinth-depth",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "root-arch-underpass",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "shrine-plinth-depth",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "sick-canopy-walkunder",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "small-hollow-chest",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "thicket-boulder",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "thicket-censer",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "thicket-exit",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "thicket-floor-switch",
+          "transition_ticks_exact": true
+        },
+        {
+          "name": "water-bridge",
+          "transition_ticks_exact": true
+        }
+      ]
+    }
+  ],
+  "production_control": {
+    "capture_count": 83,
+    "passed": 482,
+    "total": 482,
+    "rom_sha256": "9330a44a4e27d99606a757134aa41a62adb122a74315c400e1ad3427048c8661"
+  },
+  "runtime_aggregate_sha256": "b5db22e304b8da5f2f09748524af9c9d0e27bfa1f4ddd1fcf3678d6a39ce94b6",
+  "new_actual_cases": 485,
+  "new_actual_movies": 75,
+  "production_actual_cases": 83,
+  "production_actual_movies": 10,
+  "new_diagnostic_cases": 30,
+  "new_exhaustive_renderer_contracts": 2285,
+  "visual_review": "visual-review-actual.md",
+  "secondary_source_review": "secondary-source-critique.md",
+  "timing_observations": "timing-observations.json",
+  "limits": "Source/native coverage includes retained unused IDs. Actual and diagnostic captures are distinguished. Finite room/seed tests do not assert universal solvability, CPU timing or aesthetic preference."
+}

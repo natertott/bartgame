@@ -139,3 +139,14 @@ forest research still guide native forms, lighting and interaction semantics;
 no new article or inaccessible illustration is claimed. The second pass's
 terrain, props, folk and engine notes will record each adaptation and its
 source versus actual-game evidence. The five new treatments remain unselected.
+
+The completed second-pass notes cover [terrain and palette glow](references/FOREST_V2_TERRAIN.md),
+[props and footprints](references/FOREST_V2_PROPS.md),
+[fifteen folk](references/FOREST_V2_FOLK.md) and
+[renderer/generation contracts](references/FOREST_V2_ENGINE.md).
+Source `e5e3fcb` is frozen for the [native/actual review](../../../art-review/forest-concepts-v2/README.md).
+This pass uses the previously read references and direct user feedback; no new
+website access or missing PDF figure is claimed. Source diagrams, diagnostic
+room fixtures and natural mGBA contexts have separate provenance and labels.
+The shared bible now explicitly includes foreground depth and reserved
+interaction approaches; the five local visual treatments remain exploratory.

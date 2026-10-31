@@ -154,7 +154,7 @@ three-by-three frame, perimeter gates and item barriers. Water uses a bridge
 aligned with the connection, including its first threshold cell. Subsequent
 placement always floods from the original entry anchor, including after role
 objects are written, rather than treating an isolated room centre as entry.
-The connector visits at most 768 cells and uses 2,304 bytes of bounded EWRAM
+The connector visits at most 768 cells and uses 2,304 bytes of bounded IWRAM
 scratch (one byte of predecessor direction and one queued halfword per cell).
 Regression seeds are 2019, 3116, 5801, 9700, 10511, 11065, 11638, 12304,
 15217 and 18878. The resulting placements and their actual collision are
@@ -212,3 +212,12 @@ world banks, with 73 animation allocations; Drain remained 822 tiles/one bank.
 The draft C build succeeded, with total BSS 235,748 bytes, including 4,096
 bytes for visual-map diagnostics. These are draft measurements, superseded
 by the final frozen build and independent source/ROM/runtime audit.
+
+Final source `e5e3fcb` uses 851–855 forest subtiles/ten world banks, 107 interior
+subtiles/six banks and 822 Drain subtiles/one bank. The conservative OBJ union
+is 848/876. Frozen linker totals are 216,284 EWRAM bytes and 21,900 IWRAM bytes
+before the declared stack reservation. Final independent native/static checks
+pass 121,211/121,211; combined native/runtime checks pass 139,478/139,478.
+The source-bound 20,000-seed corpus covers 500,000 rooms and 60,000 world graphs
+with zero failures. [Actual footage and full validation](../../../../art-review/forest-concepts-v2/README.md)
+separate generated rooms, deliberate diagnostics and source diagrams.

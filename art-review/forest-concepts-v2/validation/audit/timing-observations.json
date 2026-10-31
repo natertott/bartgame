@@ -1,0 +1,44 @@
+{
+  "method": "Timing observations from the final matched-input mGBA suite, without claiming whole-program timing or exhaustive behavior.",
+  "source_commit": "e5e3fcb21fe1bcc50c965943164146a2dc1e3c46",
+  "finalaudit_sha256": "977835f808ec7cc0df3d5d3b1b75ba5ae796d58f0cf70088cf10c548cd3a6513",
+  "baseline_profile": 6,
+  "profiles": [
+    {
+      "variant": 6,
+      "capture_count": 97,
+      "transition_tick_cases_exact": 97,
+      "transition_tick_cases_total": 97,
+      "nonexact": []
+    },
+    {
+      "variant": 7,
+      "capture_count": 97,
+      "transition_tick_cases_exact": 97,
+      "transition_tick_cases_total": 97,
+      "nonexact": []
+    },
+    {
+      "variant": 8,
+      "capture_count": 97,
+      "transition_tick_cases_exact": 97,
+      "transition_tick_cases_total": 97,
+      "nonexact": []
+    },
+    {
+      "variant": 9,
+      "capture_count": 97,
+      "transition_tick_cases_exact": 97,
+      "transition_tick_cases_total": 97,
+      "nonexact": []
+    },
+    {
+      "variant": 10,
+      "capture_count": 97,
+      "transition_tick_cases_exact": 97,
+      "transition_tick_cases_total": 97,
+      "nonexact": []
+    }
+  ],
+  "limits": "These same final fixtures have identical recorded ordered transitions and ticks. This does not benchmark CPU cost, all frame-loading paths or other seeds. The previous held-direction chasm fixture belonged to superseded v1 evidence and was not reused here."
+}

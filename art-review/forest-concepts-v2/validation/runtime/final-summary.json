@@ -1,0 +1,89 @@
+{
+  "source_commit": "e5e3fcb21fe1bcc50c965943164146a2dc1e3c46",
+  "reports": [
+    {
+      "forest_variant": 0,
+      "source_commit": "e5e3fcb21fe1bcc50c965943164146a2dc1e3c46",
+      "rom_sha256": "9330a44a4e27d99606a757134aa41a62adb122a74315c400e1ad3427048c8661",
+      "tool_sha256": "17c6fc2de373b2cf0aee906a3e4044653879f81860d32b642362fb034678e181",
+      "passed": 482,
+      "total": 482,
+      "captures": 83,
+      "movies": 10,
+      "exact_palette_gifs": 10,
+      "maximum_sampled_OAM": 25,
+      "earned_critical_path": null
+    },
+    {
+      "forest_variant": 6,
+      "source_commit": "e5e3fcb21fe1bcc50c965943164146a2dc1e3c46",
+      "rom_sha256": "fc8e92f92a4aa43aa5cc56c0caff7a6dc1394f21dc356e7830ef9a7e07f234a1",
+      "tool_sha256": "27f61fdfc4bac4dea3b0defe05cddcbff8f4ab05eedc4e761cb219698e15948b",
+      "passed": 1399,
+      "total": 1399,
+      "captures": 97,
+      "movies": 15,
+      "exact_palette_gifs": 15,
+      "maximum_sampled_OAM": 25,
+      "earned_critical_path": "17/17"
+    },
+    {
+      "forest_variant": 7,
+      "source_commit": "e5e3fcb21fe1bcc50c965943164146a2dc1e3c46",
+      "rom_sha256": "3fe6143a9c9de8ccb79248e20b69b199aa462078c92827e71805ebf5826e11df",
+      "tool_sha256": "27f61fdfc4bac4dea3b0defe05cddcbff8f4ab05eedc4e761cb219698e15948b",
+      "passed": 1463,
+      "total": 1463,
+      "captures": 97,
+      "movies": 15,
+      "exact_palette_gifs": 15,
+      "maximum_sampled_OAM": 25,
+      "earned_critical_path": "17/17"
+    },
+    {
+      "forest_variant": 8,
+      "source_commit": "e5e3fcb21fe1bcc50c965943164146a2dc1e3c46",
+      "rom_sha256": "c72c07bf22bd15eaf3898e1fb0a75eabb7b2dc4c85ead74e68ba30a5f181e8f9",
+      "tool_sha256": "27f61fdfc4bac4dea3b0defe05cddcbff8f4ab05eedc4e761cb219698e15948b",
+      "passed": 1463,
+      "total": 1463,
+      "captures": 97,
+      "movies": 15,
+      "exact_palette_gifs": 15,
+      "maximum_sampled_OAM": 25,
+      "earned_critical_path": "17/17"
+    },
+    {
+      "forest_variant": 9,
+      "source_commit": "e5e3fcb21fe1bcc50c965943164146a2dc1e3c46",
+      "rom_sha256": "6e5af6e3ec8e960f2e11cbd485a4c6e8d11f4e6eca202d46f15246cc3cca7538",
+      "tool_sha256": "27f61fdfc4bac4dea3b0defe05cddcbff8f4ab05eedc4e761cb219698e15948b",
+      "passed": 1463,
+      "total": 1463,
+      "captures": 97,
+      "movies": 15,
+      "exact_palette_gifs": 15,
+      "maximum_sampled_OAM": 25,
+      "earned_critical_path": "17/17"
+    },
+    {
+      "forest_variant": 10,
+      "source_commit": "e5e3fcb21fe1bcc50c965943164146a2dc1e3c46",
+      "rom_sha256": "3876a966293a6cfd68eb39f881dd107b1da4bc14f0b764223712251321784d07",
+      "tool_sha256": "27f61fdfc4bac4dea3b0defe05cddcbff8f4ab05eedc4e761cb219698e15948b",
+      "passed": 1463,
+      "total": 1463,
+      "captures": 97,
+      "movies": 15,
+      "exact_palette_gifs": 15,
+      "maximum_sampled_OAM": 25,
+      "earned_critical_path": "17/17"
+    }
+  ],
+  "total_passed": 7733,
+  "total_checks": 7733,
+  "total_captures": 568,
+  "total_movies": 85,
+  "total_exact_palette_gifs": 85,
+  "maximum_sampled_OAM": 25
+}

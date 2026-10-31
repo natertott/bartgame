@@ -1,0 +1,621 @@
+{
+  "method": "Compact index derived from the independently decoded final static audit; not an additional test run. Full per-frame/palette/physical/source checks remain in static.json.",
+  "source_commit": "e5e3fcb21fe1bcc50c965943164146a2dc1e3c46",
+  "static_sha256": "3bf21ffc3924ea5d9c473e9f643db5fa26f50c345a4cc8e6d7a8ff91439f8827",
+  "auditor_sha256": "54bc933076e579a06a6bc19406e49e11dc9038d6391876a117c7a4b5a788391e",
+  "passed": 121211,
+  "total": 121211,
+  "failures": [],
+  "profiles": [
+    {
+      "variant": 0,
+      "source_commit": "e5e3fcb21fe1bcc50c965943164146a2dc1e3c46",
+      "rom_sha256": "9330a44a4e27d99606a757134aa41a62adb122a74315c400e1ad3427048c8661",
+      "native_art": {
+        "status": "historical byte preservation"
+      },
+      "pulse": null,
+      "budgets": {
+        "forest": {
+          "tile_count": 693,
+          "palette_count": 8
+        },
+        "myst": {
+          "tile_count": 114,
+          "palette_count": 5
+        },
+        "sewer": {
+          "tile_count": 822,
+          "palette_count": 1
+        },
+        "memory": {
+          "__bss_end": 50351212,
+          "__ewram_bss_end": 33766616,
+          "ewram_used": 212184,
+          "iwram_used": 19564
+        }
+      }
+    },
+    {
+      "variant": 1,
+      "source_commit": "e5e3fcb21fe1bcc50c965943164146a2dc1e3c46",
+      "rom_sha256": "aa1dda5a1fe8bb31982d7f5beaeba7497011badccc34900037ef687cb0bc3067",
+      "native_art": {
+        "status": "historical byte preservation"
+      },
+      "pulse": null,
+      "budgets": {
+        "forest": {
+          "tile_count": 609,
+          "palette_count": 10
+        },
+        "myst": {
+          "tile_count": 109,
+          "palette_count": 6
+        },
+        "sewer": {
+          "tile_count": 822,
+          "palette_count": 1
+        },
+        "memory": {
+          "__bss_end": 50351212,
+          "__ewram_bss_end": 33766616,
+          "ewram_used": 212184,
+          "iwram_used": 19564
+        }
+      }
+    },
+    {
+      "variant": 5,
+      "source_commit": "e5e3fcb21fe1bcc50c965943164146a2dc1e3c46",
+      "rom_sha256": "0904dd78511be6df01adb8e49e40064b7a6d95b4c07368e4a0699077d003e8a5",
+      "native_art": {
+        "status": "historical byte preservation"
+      },
+      "pulse": null,
+      "budgets": {
+        "forest": {
+          "tile_count": 608,
+          "palette_count": 10
+        },
+        "myst": {
+          "tile_count": 109,
+          "palette_count": 6
+        },
+        "sewer": {
+          "tile_count": 822,
+          "palette_count": 1
+        },
+        "memory": {
+          "__bss_end": 50351212,
+          "__ewram_bss_end": 33766616,
+          "ewram_used": 212184,
+          "iwram_used": 19564
+        }
+      }
+    },
+    {
+      "variant": 6,
+      "source_commit": "e5e3fcb21fe1bcc50c965943164146a2dc1e3c46",
+      "rom_sha256": "fc8e92f92a4aa43aa5cc56c0caff7a6dc1394f21dc356e7830ef9a7e07f234a1",
+      "native_art": {
+        "unique_BG_IDs": 918,
+        "unique_BG_frames": 1029,
+        "topology_IDs": 457,
+        "OBJ_frame_instances": 30,
+        "area_frame_instances": {
+          "forest": 938,
+          "myst": 101
+        }
+      },
+      "pulse": {
+        "banks": [
+          "blight"
+        ],
+        "indices": {
+          "blight": [
+            5,
+            6,
+            7,
+            13,
+            14
+          ]
+        },
+        "phase_count": 4
+      },
+      "budgets": {
+        "forest": {
+          "tile_count": 855,
+          "palette_count": 10
+        },
+        "myst": {
+          "tile_count": 107,
+          "palette_count": 6
+        },
+        "sewer": {
+          "tile_count": 822,
+          "palette_count": 1
+        },
+        "memory": {
+          "__bss_end": 50353548,
+          "__ewram_bss_end": 33770716,
+          "ewram_used": 216284,
+          "iwram_used": 21900
+        }
+      }
+    },
+    {
+      "variant": 7,
+      "source_commit": "e5e3fcb21fe1bcc50c965943164146a2dc1e3c46",
+      "rom_sha256": "3fe6143a9c9de8ccb79248e20b69b199aa462078c92827e71805ebf5826e11df",
+      "native_art": {
+        "unique_BG_IDs": 918,
+        "unique_BG_frames": 1029,
+        "topology_IDs": 457,
+        "OBJ_frame_instances": 30,
+        "area_frame_instances": {
+          "forest": 938,
+          "myst": 101
+        }
+      },
+      "pulse": {
+        "banks": [
+          "blight"
+        ],
+        "indices": {
+          "blight": [
+            5,
+            6,
+            7,
+            13,
+            14
+          ]
+        },
+        "phase_count": 4
+      },
+      "budgets": {
+        "forest": {
+          "tile_count": 851,
+          "palette_count": 10
+        },
+        "myst": {
+          "tile_count": 107,
+          "palette_count": 6
+        },
+        "sewer": {
+          "tile_count": 822,
+          "palette_count": 1
+        },
+        "memory": {
+          "__bss_end": 50353548,
+          "__ewram_bss_end": 33770716,
+          "ewram_used": 216284,
+          "iwram_used": 21900
+        }
+      }
+    },
+    {
+      "variant": 8,
+      "source_commit": "e5e3fcb21fe1bcc50c965943164146a2dc1e3c46",
+      "rom_sha256": "c72c07bf22bd15eaf3898e1fb0a75eabb7b2dc4c85ead74e68ba30a5f181e8f9",
+      "native_art": {
+        "unique_BG_IDs": 918,
+        "unique_BG_frames": 1029,
+        "topology_IDs": 457,
+        "OBJ_frame_instances": 30,
+        "area_frame_instances": {
+          "forest": 938,
+          "myst": 101
+        }
+      },
+      "pulse": {
+        "banks": [
+          "blight"
+        ],
+        "indices": {
+          "blight": [
+            5,
+            6,
+            7,
+            13,
+            14
+          ]
+        },
+        "phase_count": 4
+      },
+      "budgets": {
+        "forest": {
+          "tile_count": 853,
+          "palette_count": 10
+        },
+        "myst": {
+          "tile_count": 107,
+          "palette_count": 6
+        },
+        "sewer": {
+          "tile_count": 822,
+          "palette_count": 1
+        },
+        "memory": {
+          "__bss_end": 50353548,
+          "__ewram_bss_end": 33770716,
+          "ewram_used": 216284,
+          "iwram_used": 21900
+        }
+      }
+    },
+    {
+      "variant": 9,
+      "source_commit": "e5e3fcb21fe1bcc50c965943164146a2dc1e3c46",
+      "rom_sha256": "6e5af6e3ec8e960f2e11cbd485a4c6e8d11f4e6eca202d46f15246cc3cca7538",
+      "native_art": {
+        "unique_BG_IDs": 918,
+        "unique_BG_frames": 1029,
+        "topology_IDs": 457,
+        "OBJ_frame_instances": 30,
+        "area_frame_instances": {
+          "forest": 938,
+          "myst": 101
+        }
+      },
+      "pulse": {
+        "banks": [
+          "blight"
+        ],
+        "indices": {
+          "blight": [
+            5,
+            6,
+            7,
+            13,
+            14
+          ]
+        },
+        "phase_count": 4
+      },
+      "budgets": {
+        "forest": {
+          "tile_count": 851,
+          "palette_count": 10
+        },
+        "myst": {
+          "tile_count": 107,
+          "palette_count": 6
+        },
+        "sewer": {
+          "tile_count": 822,
+          "palette_count": 1
+        },
+        "memory": {
+          "__bss_end": 50353548,
+          "__ewram_bss_end": 33770716,
+          "ewram_used": 216284,
+          "iwram_used": 21900
+        }
+      }
+    },
+    {
+      "variant": 10,
+      "source_commit": "e5e3fcb21fe1bcc50c965943164146a2dc1e3c46",
+      "rom_sha256": "3876a966293a6cfd68eb39f881dd107b1da4bc14f0b764223712251321784d07",
+      "native_art": {
+        "unique_BG_IDs": 918,
+        "unique_BG_frames": 1029,
+        "topology_IDs": 457,
+        "OBJ_frame_instances": 30,
+        "area_frame_instances": {
+          "forest": 938,
+          "myst": 101
+        }
+      },
+      "pulse": {
+        "banks": [
+          "blight"
+        ],
+        "indices": {
+          "blight": [
+            5,
+            6,
+            7,
+            13,
+            14
+          ]
+        },
+        "phase_count": 4
+      },
+      "budgets": {
+        "forest": {
+          "tile_count": 852,
+          "palette_count": 10
+        },
+        "myst": {
+          "tile_count": 107,
+          "palette_count": 6
+        },
+        "sewer": {
+          "tile_count": 822,
+          "palette_count": 1
+        },
+        "memory": {
+          "__bss_end": 50353548,
+          "__ewram_bss_end": 33770716,
+          "ewram_used": 216284,
+          "iwram_used": 21900
+        }
+      }
+    }
+  ],
+  "obj_budgets": [
+    {
+      "variant": 6,
+      "enemy": 11,
+      "used": 848,
+      "limit": 876,
+      "free": 28,
+      "allocations": {
+        "hero/body+sword+streamed-shield foundation": 32,
+        "items whole sheet": 84,
+        "fx whole sheet": 52,
+        "proj whole sheet": 4,
+        "lift whole sheet": 16,
+        "pick32 whole sheet": 40,
+        "Bloom streamed action": 16,
+        "Bloom ground shadow": 2,
+        "beetle whole sheet": 24,
+        "bat whole sheet": 12,
+        "spitter whole sheet": 48,
+        "slime whole sheet": 12,
+        "knight whole sheet": 192,
+        "ksword whole sheet": 8,
+        "boss streamed frame": 32,
+        "chest streamed frame": 16,
+        "entrance streamed frame": 32,
+        "ambient whole sheet": 6,
+        "arrow whole sheet": 12,
+        "seven menu icons": 112,
+        "trial mouth whole sheet": 48,
+        "one forest/trial NPC frame": 16,
+        "four streamedlandmark slots": 32
+      },
+      "limits": "Static allocation superset, not an OAM peak/CPU guarantee. Includes every enemy family although ordinary themed rooms use subsets. Portrait/HUD use their fixed higher reservations."
+    },
+    {
+      "variant": 7,
+      "enemy": 11,
+      "used": 848,
+      "limit": 876,
+      "free": 28,
+      "allocations": {
+        "hero/body+sword+streamed-shield foundation": 32,
+        "items whole sheet": 84,
+        "fx whole sheet": 52,
+        "proj whole sheet": 4,
+        "lift whole sheet": 16,
+        "pick32 whole sheet": 40,
+        "Bloom streamed action": 16,
+        "Bloom ground shadow": 2,
+        "beetle whole sheet": 24,
+        "bat whole sheet": 12,
+        "spitter whole sheet": 48,
+        "slime whole sheet": 12,
+        "knight whole sheet": 192,
+        "ksword whole sheet": 8,
+        "boss streamed frame": 32,
+        "chest streamed frame": 16,
+        "entrance streamed frame": 32,
+        "ambient whole sheet": 6,
+        "arrow whole sheet": 12,
+        "seven menu icons": 112,
+        "trial mouth whole sheet": 48,
+        "one forest/trial NPC frame": 16,
+        "four streamedlandmark slots": 32
+      },
+      "limits": "Static allocation superset, not an OAM peak/CPU guarantee. Includes every enemy family although ordinary themed rooms use subsets. Portrait/HUD use their fixed higher reservations."
+    },
+    {
+      "variant": 8,
+      "enemy": 11,
+      "used": 848,
+      "limit": 876,
+      "free": 28,
+      "allocations": {
+        "hero/body+sword+streamed-shield foundation": 32,
+        "items whole sheet": 84,
+        "fx whole sheet": 52,
+        "proj whole sheet": 4,
+        "lift whole sheet": 16,
+        "pick32 whole sheet": 40,
+        "Bloom streamed action": 16,
+        "Bloom ground shadow": 2,
+        "beetle whole sheet": 24,
+        "bat whole sheet": 12,
+        "spitter whole sheet": 48,
+        "slime whole sheet": 12,
+        "knight whole sheet": 192,
+        "ksword whole sheet": 8,
+        "boss streamed frame": 32,
+        "chest streamed frame": 16,
+        "entrance streamed frame": 32,
+        "ambient whole sheet": 6,
+        "arrow whole sheet": 12,
+        "seven menu icons": 112,
+        "trial mouth whole sheet": 48,
+        "one forest/trial NPC frame": 16,
+        "four streamedlandmark slots": 32
+      },
+      "limits": "Static allocation superset, not an OAM peak/CPU guarantee. Includes every enemy family although ordinary themed rooms use subsets. Portrait/HUD use their fixed higher reservations."
+    },
+    {
+      "variant": 9,
+      "enemy": 11,
+      "used": 848,
+      "limit": 876,
+      "free": 28,
+      "allocations": {
+        "hero/body+sword+streamed-shield foundation": 32,
+        "items whole sheet": 84,
+        "fx whole sheet": 52,
+        "proj whole sheet": 4,
+        "lift whole sheet": 16,
+        "pick32 whole sheet": 40,
+        "Bloom streamed action": 16,
+        "Bloom ground shadow": 2,
+        "beetle whole sheet": 24,
+        "bat whole sheet": 12,
+        "spitter whole sheet": 48,
+        "slime whole sheet": 12,
+        "knight whole sheet": 192,
+        "ksword whole sheet": 8,
+        "boss streamed frame": 32,
+        "chest streamed frame": 16,
+        "entrance streamed frame": 32,
+        "ambient whole sheet": 6,
+        "arrow whole sheet": 12,
+        "seven menu icons": 112,
+        "trial mouth whole sheet": 48,
+        "one forest/trial NPC frame": 16,
+        "four streamedlandmark slots": 32
+      },
+      "limits": "Static allocation superset, not an OAM peak/CPU guarantee. Includes every enemy family although ordinary themed rooms use subsets. Portrait/HUD use their fixed higher reservations."
+    },
+    {
+      "variant": 10,
+      "enemy": 11,
+      "used": 848,
+      "limit": 876,
+      "free": 28,
+      "allocations": {
+        "hero/body+sword+streamed-shield foundation": 32,
+        "items whole sheet": 84,
+        "fx whole sheet": 52,
+        "proj whole sheet": 4,
+        "lift whole sheet": 16,
+        "pick32 whole sheet": 40,
+        "Bloom streamed action": 16,
+        "Bloom ground shadow": 2,
+        "beetle whole sheet": 24,
+        "bat whole sheet": 12,
+        "spitter whole sheet": 48,
+        "slime whole sheet": 12,
+        "knight whole sheet": 192,
+        "ksword whole sheet": 8,
+        "boss streamed frame": 32,
+        "chest streamed frame": 16,
+        "entrance streamed frame": 32,
+        "ambient whole sheet": 6,
+        "arrow whole sheet": 12,
+        "seven menu icons": 112,
+        "trial mouth whole sheet": 48,
+        "one forest/trial NPC frame": 16,
+        "four streamedlandmark slots": 32
+      },
+      "limits": "Static allocation superset, not an OAM peak/CPU guarantee. Includes every enemy family although ordinary themed rooms use subsets. Portrait/HUD use their fixed higher reservations."
+    }
+  ],
+  "groups": {
+    "baseline": {
+      "passed": 1,
+      "total": 1
+    },
+    "budget": {
+      "passed": 88,
+      "total": 88
+    },
+    "carry_identity": {
+      "passed": 40,
+      "total": 40
+    },
+    "defaults": {
+      "passed": 6,
+      "total": 6
+    },
+    "direct_coverage": {
+      "passed": 5,
+      "total": 5
+    },
+    "freeze": {
+      "passed": 2152,
+      "total": 2152
+    },
+    "historical": {
+      "passed": 3,
+      "total": 3
+    },
+    "host_generator": {
+      "passed": 6,
+      "total": 6
+    },
+    "identifiers": {
+      "passed": 12700,
+      "total": 12700
+    },
+    "material": {
+      "passed": 18540,
+      "total": 18540
+    },
+    "native": {
+      "passed": 19660,
+      "total": 19660
+    },
+    "native_lookup": {
+      "passed": 50,
+      "total": 50
+    },
+    "native_mapping": {
+      "passed": 44535,
+      "total": 44535
+    },
+    "native_palette": {
+      "passed": 45,
+      "total": 45
+    },
+    "native_residency": {
+      "passed": 4089,
+      "total": 4089
+    },
+    "native_sprite": {
+      "passed": 300,
+      "total": 300
+    },
+    "obj_budget": {
+      "passed": 20,
+      "total": 20
+    },
+    "physical": {
+      "passed": 20,
+      "total": 20
+    },
+    "physical_alias": {
+      "passed": 13710,
+      "total": 13710
+    },
+    "portrait_palette": {
+      "passed": 15,
+      "total": 15
+    },
+    "protected": {
+      "passed": 1570,
+      "total": 1570
+    },
+    "protected_sprite": {
+      "passed": 2230,
+      "total": 2230
+    },
+    "pulse": {
+      "passed": 45,
+      "total": 45
+    },
+    "scope": {
+      "passed": 1066,
+      "total": 1066
+    },
+    "sprite_contract": {
+      "passed": 180,
+      "total": 180
+    },
+    "sprite_material": {
+      "passed": 135,
+      "total": 135
+    }
+  }
+}

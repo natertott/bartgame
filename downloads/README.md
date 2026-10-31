@@ -1,5 +1,20 @@
 # BARTGAME downloads
 
+## Second forest pass: infection and layered depth
+
+Five new options add blackened wood and bright purple blight, foreground leaves
+that Bloom can walk beneath, real lower root passages, rounded terrain joins,
+ten wooden chest forms and fifteen forest folk with matching portraits.
+
+- [Compare actual mGBA footage and every native asset](https://github.com/natertott/bartgame/blob/forest-concepts-v2/art-review/forest-concepts-v2/README.md)
+- [Download all five playable ROMs](https://raw.githubusercontent.com/natertott/bartgame/forest-concepts-v2/downloads/forest-concepts-v2-e5e3fcb/forest-concepts-v2-e5e3fcb.zip)
+- [Individual ROMs and checksums](forest-concepts-v2-e5e3fcb/README.md)
+
+Game/art source `e5e3fcb`. These remain unselected studies, built with
+`BART_FOREST=6..10`; the ordinary build remains forest0. The root arch supports
+a genuine lower passage, without an accessible upper deck. Generation repairs
+reserve interaction approaches and keep required quest fixtures usable.
+
 ## Five forest environment alternatives
 
 Fern & Oak, Silver Willow, Copper Beech, Velvet Cedar and Pale Orchard keep

@@ -1,0 +1,207 @@
+{
+  "method": "Direct frozen-ROM tileset/ROM-size/linker extraction; conservative OBJ union plus four streamed landmark slots. Static resource accounting, not CPU/frame-time/OAM peak.",
+  "profiles": [
+    {
+      "source_commit": "e5e3fcb21fe1bcc50c965943164146a2dc1e3c46",
+      "rom_sha256": "9330a44a4e27d99606a757134aa41a62adb122a74315c400e1ad3427048c8661",
+      "rom_bytes": 594124,
+      "label": "Current production forest",
+      "profile": 0,
+      "forest": {
+        "tile_count": 693,
+        "palette_count": 8,
+        "animation_allocations": 59
+      },
+      "myst": {
+        "tile_count": 114,
+        "palette_count": 5,
+        "animation_allocations": 6
+      },
+      "sewer": {
+        "tile_count": 822,
+        "palette_count": 1,
+        "animation_allocations": 69
+      },
+      "ewram_used": 212184,
+      "iwram_used": 19564
+    },
+    {
+      "source_commit": "e5e3fcb21fe1bcc50c965943164146a2dc1e3c46",
+      "rom_sha256": "aa1dda5a1fe8bb31982d7f5beaeba7497011badccc34900037ef687cb0bc3067",
+      "rom_bytes": 591436,
+      "label": "Fern & Oak",
+      "profile": 1,
+      "forest": {
+        "tile_count": 609,
+        "palette_count": 10,
+        "animation_allocations": 59
+      },
+      "myst": {
+        "tile_count": 109,
+        "palette_count": 6,
+        "animation_allocations": 6
+      },
+      "sewer": {
+        "tile_count": 822,
+        "palette_count": 1,
+        "animation_allocations": 69
+      },
+      "ewram_used": 212184,
+      "iwram_used": 19564
+    },
+    {
+      "source_commit": "e5e3fcb21fe1bcc50c965943164146a2dc1e3c46",
+      "rom_sha256": "0904dd78511be6df01adb8e49e40064b7a6d95b4c07368e4a0699077d003e8a5",
+      "rom_bytes": 591404,
+      "label": "Pale Orchard",
+      "profile": 5,
+      "forest": {
+        "tile_count": 608,
+        "palette_count": 10,
+        "animation_allocations": 59
+      },
+      "myst": {
+        "tile_count": 109,
+        "palette_count": 6,
+        "animation_allocations": 6
+      },
+      "sewer": {
+        "tile_count": 822,
+        "palette_count": 1,
+        "animation_allocations": 69
+      },
+      "ewram_used": 212184,
+      "iwram_used": 19564
+    },
+    {
+      "source_commit": "e5e3fcb21fe1bcc50c965943164146a2dc1e3c46",
+      "rom_sha256": "fc8e92f92a4aa43aa5cc56c0caff7a6dc1394f21dc356e7830ef9a7e07f234a1",
+      "rom_bytes": 639228,
+      "label": "Black Sap Oak",
+      "profile": 6,
+      "forest": {
+        "tile_count": 855,
+        "palette_count": 10,
+        "animation_allocations": 73
+      },
+      "myst": {
+        "tile_count": 107,
+        "palette_count": 6,
+        "animation_allocations": 6
+      },
+      "sewer": {
+        "tile_count": 822,
+        "palette_count": 1,
+        "animation_allocations": 69
+      },
+      "ewram_used": 216284,
+      "iwram_used": 21900,
+      "obj_union_used": 848,
+      "obj_union_limit": 876
+    },
+    {
+      "source_commit": "e5e3fcb21fe1bcc50c965943164146a2dc1e3c46",
+      "rom_sha256": "3fe6143a9c9de8ccb79248e20b69b199aa462078c92827e71805ebf5826e11df",
+      "rom_bytes": 639100,
+      "label": "Violet Strangler",
+      "profile": 7,
+      "forest": {
+        "tile_count": 851,
+        "palette_count": 10,
+        "animation_allocations": 73
+      },
+      "myst": {
+        "tile_count": 107,
+        "palette_count": 6,
+        "animation_allocations": 6
+      },
+      "sewer": {
+        "tile_count": 822,
+        "palette_count": 1,
+        "animation_allocations": 69
+      },
+      "ewram_used": 216284,
+      "iwram_used": 21900,
+      "obj_union_used": 848,
+      "obj_union_limit": 876
+    },
+    {
+      "source_commit": "e5e3fcb21fe1bcc50c965943164146a2dc1e3c46",
+      "rom_sha256": "c72c07bf22bd15eaf3898e1fb0a75eabb7b2dc4c85ead74e68ba30a5f181e8f9",
+      "rom_bytes": 639164,
+      "label": "Witchfire Weep",
+      "profile": 8,
+      "forest": {
+        "tile_count": 853,
+        "palette_count": 10,
+        "animation_allocations": 73
+      },
+      "myst": {
+        "tile_count": 107,
+        "palette_count": 6,
+        "animation_allocations": 6
+      },
+      "sewer": {
+        "tile_count": 822,
+        "palette_count": 1,
+        "animation_allocations": 69
+      },
+      "ewram_used": 216284,
+      "iwram_used": 21900,
+      "obj_union_used": 848,
+      "obj_union_limit": 876
+    },
+    {
+      "source_commit": "e5e3fcb21fe1bcc50c965943164146a2dc1e3c46",
+      "rom_sha256": "6e5af6e3ec8e960f2e11cbd485a4c6e8d11f4e6eca202d46f15246cc3cca7538",
+      "rom_bytes": 639100,
+      "label": "Amethyst Canker",
+      "profile": 9,
+      "forest": {
+        "tile_count": 851,
+        "palette_count": 10,
+        "animation_allocations": 73
+      },
+      "myst": {
+        "tile_count": 107,
+        "palette_count": 6,
+        "animation_allocations": 6
+      },
+      "sewer": {
+        "tile_count": 822,
+        "palette_count": 1,
+        "animation_allocations": 69
+      },
+      "ewram_used": 216284,
+      "iwram_used": 21900,
+      "obj_union_used": 848,
+      "obj_union_limit": 876
+    },
+    {
+      "source_commit": "e5e3fcb21fe1bcc50c965943164146a2dc1e3c46",
+      "rom_sha256": "3876a966293a6cfd68eb39f881dd107b1da4bc14f0b764223712251321784d07",
+      "rom_bytes": 639132,
+      "label": "Royal Bruise",
+      "profile": 10,
+      "forest": {
+        "tile_count": 852,
+        "palette_count": 10,
+        "animation_allocations": 73
+      },
+      "myst": {
+        "tile_count": 107,
+        "palette_count": 6,
+        "animation_allocations": 6
+      },
+      "sewer": {
+        "tile_count": 822,
+        "palette_count": 1,
+        "animation_allocations": 69
+      },
+      "ewram_used": 216284,
+      "iwram_used": 21900,
+      "obj_union_used": 848,
+      "obj_union_limit": 876
+    }
+  ]
+}

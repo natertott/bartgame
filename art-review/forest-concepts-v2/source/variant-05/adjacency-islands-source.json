@@ -1,0 +1,1232 @@
+[
+  {
+    "family": "healthy",
+    "origin": [
+      2,
+      2
+    ],
+    "cells": [
+      {
+        "cell": [
+          0,
+          0
+        ],
+        "world_cell": [
+          2,
+          2
+        ],
+        "mask": 15,
+        "corners": 0,
+        "macro_quadrant": 0,
+        "alias": "f2_canopy_0_0_f0"
+      }
+    ],
+    "substrate": "Explicit source fixture: healthy grass",
+    "note": "Interior island on a disclosed source substrate, not an actual generated room.",
+    "shape": "isolated1x1"
+  },
+  {
+    "family": "healthy",
+    "origin": [
+      2,
+      2
+    ],
+    "cells": [
+      {
+        "cell": [
+          0,
+          0
+        ],
+        "world_cell": [
+          2,
+          2
+        ],
+        "mask": 9,
+        "corners": 0,
+        "macro_quadrant": 0,
+        "alias": "f2_canopy_0_0_90"
+      },
+      {
+        "cell": [
+          1,
+          0
+        ],
+        "world_cell": [
+          3,
+          2
+        ],
+        "mask": 3,
+        "corners": 0,
+        "macro_quadrant": 1,
+        "alias": "f2_canopy_0_1_30"
+      },
+      {
+        "cell": [
+          0,
+          1
+        ],
+        "world_cell": [
+          2,
+          3
+        ],
+        "mask": 12,
+        "corners": 0,
+        "macro_quadrant": 2,
+        "alias": "f2_canopy_0_2_c0"
+      },
+      {
+        "cell": [
+          1,
+          1
+        ],
+        "world_cell": [
+          3,
+          3
+        ],
+        "mask": 6,
+        "corners": 0,
+        "macro_quadrant": 3,
+        "alias": "f2_canopy_0_3_60"
+      }
+    ],
+    "substrate": "Explicit source fixture: healthy grass",
+    "note": "Interior island on a disclosed source substrate, not an actual generated room.",
+    "shape": "block2x2"
+  },
+  {
+    "family": "healthy",
+    "origin": [
+      2,
+      2
+    ],
+    "cells": [
+      {
+        "cell": [
+          0,
+          0
+        ],
+        "world_cell": [
+          2,
+          2
+        ],
+        "mask": 9,
+        "corners": 0,
+        "macro_quadrant": 0,
+        "alias": "f2_canopy_0_0_90"
+      },
+      {
+        "cell": [
+          1,
+          0
+        ],
+        "world_cell": [
+          3,
+          2
+        ],
+        "mask": 1,
+        "corners": 0,
+        "macro_quadrant": 1,
+        "alias": "f2_canopy_0_1_10"
+      },
+      {
+        "cell": [
+          2,
+          0
+        ],
+        "world_cell": [
+          4,
+          2
+        ],
+        "mask": 3,
+        "corners": 0,
+        "macro_quadrant": 0,
+        "alias": "f2_canopy_0_0_30"
+      },
+      {
+        "cell": [
+          0,
+          1
+        ],
+        "world_cell": [
+          2,
+          3
+        ],
+        "mask": 8,
+        "corners": 0,
+        "macro_quadrant": 2,
+        "alias": "f2_canopy_0_2_80"
+      },
+      {
+        "cell": [
+          1,
+          1
+        ],
+        "world_cell": [
+          3,
+          3
+        ],
+        "mask": 0,
+        "corners": 0,
+        "macro_quadrant": 3,
+        "alias": "f2_canopy_0_3_00"
+      },
+      {
+        "cell": [
+          2,
+          1
+        ],
+        "world_cell": [
+          4,
+          3
+        ],
+        "mask": 2,
+        "corners": 0,
+        "macro_quadrant": 2,
+        "alias": "f2_canopy_0_2_20"
+      },
+      {
+        "cell": [
+          0,
+          2
+        ],
+        "world_cell": [
+          2,
+          4
+        ],
+        "mask": 12,
+        "corners": 0,
+        "macro_quadrant": 0,
+        "alias": "f2_canopy_0_0_c0"
+      },
+      {
+        "cell": [
+          1,
+          2
+        ],
+        "world_cell": [
+          3,
+          4
+        ],
+        "mask": 4,
+        "corners": 0,
+        "macro_quadrant": 1,
+        "alias": "f2_canopy_0_1_40"
+      },
+      {
+        "cell": [
+          2,
+          2
+        ],
+        "world_cell": [
+          4,
+          4
+        ],
+        "mask": 6,
+        "corners": 0,
+        "macro_quadrant": 0,
+        "alias": "f2_canopy_0_0_60"
+      }
+    ],
+    "substrate": "Explicit source fixture: healthy grass",
+    "note": "Interior island on a disclosed source substrate, not an actual generated room.",
+    "shape": "block3x3"
+  },
+  {
+    "family": "healthy",
+    "origin": [
+      2,
+      2
+    ],
+    "cells": [
+      {
+        "cell": [
+          0,
+          0
+        ],
+        "world_cell": [
+          2,
+          2
+        ],
+        "mask": 11,
+        "corners": 0,
+        "macro_quadrant": 0,
+        "alias": "f2_canopy_0_0_b0"
+      },
+      {
+        "cell": [
+          0,
+          1
+        ],
+        "world_cell": [
+          2,
+          3
+        ],
+        "mask": 12,
+        "corners": 2,
+        "macro_quadrant": 2,
+        "alias": "f2_canopy_0_2_c2"
+      },
+      {
+        "cell": [
+          1,
+          1
+        ],
+        "world_cell": [
+          3,
+          3
+        ],
+        "mask": 7,
+        "corners": 0,
+        "macro_quadrant": 3,
+        "alias": "f2_canopy_0_3_70"
+      }
+    ],
+    "substrate": "Explicit source fixture: healthy grass",
+    "note": "Interior island on a disclosed source substrate, not an actual generated room.",
+    "shape": "L-corner"
+  },
+  {
+    "family": "healthy",
+    "origin": [
+      2,
+      2
+    ],
+    "cells": [
+      {
+        "cell": [
+          0,
+          0
+        ],
+        "world_cell": [
+          2,
+          2
+        ],
+        "mask": 9,
+        "corners": 4,
+        "macro_quadrant": 0,
+        "alias": "f2_canopy_0_0_94"
+      },
+      {
+        "cell": [
+          1,
+          0
+        ],
+        "world_cell": [
+          3,
+          2
+        ],
+        "mask": 5,
+        "corners": 0,
+        "macro_quadrant": 1,
+        "alias": "f2_canopy_0_1_50"
+      },
+      {
+        "cell": [
+          2,
+          0
+        ],
+        "world_cell": [
+          4,
+          2
+        ],
+        "mask": 3,
+        "corners": 8,
+        "macro_quadrant": 0,
+        "alias": "f2_canopy_0_0_38"
+      },
+      {
+        "cell": [
+          0,
+          1
+        ],
+        "world_cell": [
+          2,
+          3
+        ],
+        "mask": 10,
+        "corners": 0,
+        "macro_quadrant": 2,
+        "alias": "f2_canopy_0_2_a0"
+      },
+      {
+        "cell": [
+          2,
+          1
+        ],
+        "world_cell": [
+          4,
+          3
+        ],
+        "mask": 10,
+        "corners": 0,
+        "macro_quadrant": 2,
+        "alias": "f2_canopy_0_2_a0"
+      },
+      {
+        "cell": [
+          0,
+          2
+        ],
+        "world_cell": [
+          2,
+          4
+        ],
+        "mask": 12,
+        "corners": 2,
+        "macro_quadrant": 0,
+        "alias": "f2_canopy_0_0_c2"
+      },
+      {
+        "cell": [
+          1,
+          2
+        ],
+        "world_cell": [
+          3,
+          4
+        ],
+        "mask": 5,
+        "corners": 0,
+        "macro_quadrant": 1,
+        "alias": "f2_canopy_0_1_50"
+      },
+      {
+        "cell": [
+          2,
+          2
+        ],
+        "world_cell": [
+          4,
+          4
+        ],
+        "mask": 6,
+        "corners": 1,
+        "macro_quadrant": 0,
+        "alias": "f2_canopy_0_0_61"
+      }
+    ],
+    "substrate": "Explicit source fixture: healthy grass",
+    "note": "Interior island on a disclosed source substrate, not an actual generated room.",
+    "shape": "concave-ring"
+  },
+  {
+    "family": "blight",
+    "origin": [
+      2,
+      2
+    ],
+    "cells": [
+      {
+        "cell": [
+          0,
+          0
+        ],
+        "world_cell": [
+          2,
+          2
+        ],
+        "mask": 15,
+        "corners": 0,
+        "macro_quadrant": 0,
+        "alias": "f2_canopy_1_0_f0"
+      }
+    ],
+    "substrate": "Explicit source fixture: sick soil",
+    "note": "Interior island on a disclosed source substrate, not an actual generated room.",
+    "shape": "isolated1x1"
+  },
+  {
+    "family": "blight",
+    "origin": [
+      2,
+      2
+    ],
+    "cells": [
+      {
+        "cell": [
+          0,
+          0
+        ],
+        "world_cell": [
+          2,
+          2
+        ],
+        "mask": 9,
+        "corners": 0,
+        "macro_quadrant": 0,
+        "alias": "f2_canopy_1_0_90"
+      },
+      {
+        "cell": [
+          1,
+          0
+        ],
+        "world_cell": [
+          3,
+          2
+        ],
+        "mask": 3,
+        "corners": 0,
+        "macro_quadrant": 1,
+        "alias": "f2_canopy_1_1_30"
+      },
+      {
+        "cell": [
+          0,
+          1
+        ],
+        "world_cell": [
+          2,
+          3
+        ],
+        "mask": 12,
+        "corners": 0,
+        "macro_quadrant": 2,
+        "alias": "f2_canopy_1_2_c0"
+      },
+      {
+        "cell": [
+          1,
+          1
+        ],
+        "world_cell": [
+          3,
+          3
+        ],
+        "mask": 6,
+        "corners": 0,
+        "macro_quadrant": 3,
+        "alias": "f2_canopy_1_3_60"
+      }
+    ],
+    "substrate": "Explicit source fixture: sick soil",
+    "note": "Interior island on a disclosed source substrate, not an actual generated room.",
+    "shape": "block2x2"
+  },
+  {
+    "family": "blight",
+    "origin": [
+      2,
+      2
+    ],
+    "cells": [
+      {
+        "cell": [
+          0,
+          0
+        ],
+        "world_cell": [
+          2,
+          2
+        ],
+        "mask": 9,
+        "corners": 0,
+        "macro_quadrant": 0,
+        "alias": "f2_canopy_1_0_90"
+      },
+      {
+        "cell": [
+          1,
+          0
+        ],
+        "world_cell": [
+          3,
+          2
+        ],
+        "mask": 1,
+        "corners": 0,
+        "macro_quadrant": 1,
+        "alias": "f2_canopy_1_1_10"
+      },
+      {
+        "cell": [
+          2,
+          0
+        ],
+        "world_cell": [
+          4,
+          2
+        ],
+        "mask": 3,
+        "corners": 0,
+        "macro_quadrant": 0,
+        "alias": "f2_canopy_1_0_30"
+      },
+      {
+        "cell": [
+          0,
+          1
+        ],
+        "world_cell": [
+          2,
+          3
+        ],
+        "mask": 8,
+        "corners": 0,
+        "macro_quadrant": 2,
+        "alias": "f2_canopy_1_2_80"
+      },
+      {
+        "cell": [
+          1,
+          1
+        ],
+        "world_cell": [
+          3,
+          3
+        ],
+        "mask": 0,
+        "corners": 0,
+        "macro_quadrant": 3,
+        "alias": "f2_canopy_1_3_00"
+      },
+      {
+        "cell": [
+          2,
+          1
+        ],
+        "world_cell": [
+          4,
+          3
+        ],
+        "mask": 2,
+        "corners": 0,
+        "macro_quadrant": 2,
+        "alias": "f2_canopy_1_2_20"
+      },
+      {
+        "cell": [
+          0,
+          2
+        ],
+        "world_cell": [
+          2,
+          4
+        ],
+        "mask": 12,
+        "corners": 0,
+        "macro_quadrant": 0,
+        "alias": "f2_canopy_1_0_c0"
+      },
+      {
+        "cell": [
+          1,
+          2
+        ],
+        "world_cell": [
+          3,
+          4
+        ],
+        "mask": 4,
+        "corners": 0,
+        "macro_quadrant": 1,
+        "alias": "f2_canopy_1_1_40"
+      },
+      {
+        "cell": [
+          2,
+          2
+        ],
+        "world_cell": [
+          4,
+          4
+        ],
+        "mask": 6,
+        "corners": 0,
+        "macro_quadrant": 0,
+        "alias": "f2_canopy_1_0_60"
+      }
+    ],
+    "substrate": "Explicit source fixture: sick soil",
+    "note": "Interior island on a disclosed source substrate, not an actual generated room.",
+    "shape": "block3x3"
+  },
+  {
+    "family": "blight",
+    "origin": [
+      2,
+      2
+    ],
+    "cells": [
+      {
+        "cell": [
+          0,
+          0
+        ],
+        "world_cell": [
+          2,
+          2
+        ],
+        "mask": 11,
+        "corners": 0,
+        "macro_quadrant": 0,
+        "alias": "f2_canopy_1_0_b0"
+      },
+      {
+        "cell": [
+          0,
+          1
+        ],
+        "world_cell": [
+          2,
+          3
+        ],
+        "mask": 12,
+        "corners": 2,
+        "macro_quadrant": 2,
+        "alias": "f2_canopy_1_2_c2"
+      },
+      {
+        "cell": [
+          1,
+          1
+        ],
+        "world_cell": [
+          3,
+          3
+        ],
+        "mask": 7,
+        "corners": 0,
+        "macro_quadrant": 3,
+        "alias": "f2_canopy_1_3_70"
+      }
+    ],
+    "substrate": "Explicit source fixture: sick soil",
+    "note": "Interior island on a disclosed source substrate, not an actual generated room.",
+    "shape": "L-corner"
+  },
+  {
+    "family": "blight",
+    "origin": [
+      2,
+      2
+    ],
+    "cells": [
+      {
+        "cell": [
+          0,
+          0
+        ],
+        "world_cell": [
+          2,
+          2
+        ],
+        "mask": 9,
+        "corners": 4,
+        "macro_quadrant": 0,
+        "alias": "f2_canopy_1_0_94"
+      },
+      {
+        "cell": [
+          1,
+          0
+        ],
+        "world_cell": [
+          3,
+          2
+        ],
+        "mask": 5,
+        "corners": 0,
+        "macro_quadrant": 1,
+        "alias": "f2_canopy_1_1_50"
+      },
+      {
+        "cell": [
+          2,
+          0
+        ],
+        "world_cell": [
+          4,
+          2
+        ],
+        "mask": 3,
+        "corners": 8,
+        "macro_quadrant": 0,
+        "alias": "f2_canopy_1_0_38"
+      },
+      {
+        "cell": [
+          0,
+          1
+        ],
+        "world_cell": [
+          2,
+          3
+        ],
+        "mask": 10,
+        "corners": 0,
+        "macro_quadrant": 2,
+        "alias": "f2_canopy_1_2_a0"
+      },
+      {
+        "cell": [
+          2,
+          1
+        ],
+        "world_cell": [
+          4,
+          3
+        ],
+        "mask": 10,
+        "corners": 0,
+        "macro_quadrant": 2,
+        "alias": "f2_canopy_1_2_a0"
+      },
+      {
+        "cell": [
+          0,
+          2
+        ],
+        "world_cell": [
+          2,
+          4
+        ],
+        "mask": 12,
+        "corners": 2,
+        "macro_quadrant": 0,
+        "alias": "f2_canopy_1_0_c2"
+      },
+      {
+        "cell": [
+          1,
+          2
+        ],
+        "world_cell": [
+          3,
+          4
+        ],
+        "mask": 5,
+        "corners": 0,
+        "macro_quadrant": 1,
+        "alias": "f2_canopy_1_1_50"
+      },
+      {
+        "cell": [
+          2,
+          2
+        ],
+        "world_cell": [
+          4,
+          4
+        ],
+        "mask": 6,
+        "corners": 1,
+        "macro_quadrant": 0,
+        "alias": "f2_canopy_1_0_61"
+      }
+    ],
+    "substrate": "Explicit source fixture: sick soil",
+    "note": "Interior island on a disclosed source substrate, not an actual generated room.",
+    "shape": "concave-ring"
+  },
+  {
+    "family": "water",
+    "origin": [
+      2,
+      2
+    ],
+    "cells": [
+      {
+        "cell": [
+          0,
+          0
+        ],
+        "world_cell": [
+          2,
+          2
+        ],
+        "mask": 15,
+        "corners": 0,
+        "macro_quadrant": 0,
+        "alias": "f2_water_f0"
+      }
+    ],
+    "substrate": "Explicit source fixture: healthy grass",
+    "note": "Interior island on a disclosed source substrate, not an actual generated room.",
+    "shape": "isolated1x1"
+  },
+  {
+    "family": "water",
+    "origin": [
+      2,
+      2
+    ],
+    "cells": [
+      {
+        "cell": [
+          0,
+          0
+        ],
+        "world_cell": [
+          2,
+          2
+        ],
+        "mask": 9,
+        "corners": 0,
+        "macro_quadrant": 0,
+        "alias": "f2_water_90"
+      },
+      {
+        "cell": [
+          1,
+          0
+        ],
+        "world_cell": [
+          3,
+          2
+        ],
+        "mask": 3,
+        "corners": 0,
+        "macro_quadrant": 1,
+        "alias": "f2_water_30"
+      },
+      {
+        "cell": [
+          0,
+          1
+        ],
+        "world_cell": [
+          2,
+          3
+        ],
+        "mask": 12,
+        "corners": 0,
+        "macro_quadrant": 2,
+        "alias": "f2_water_c0"
+      },
+      {
+        "cell": [
+          1,
+          1
+        ],
+        "world_cell": [
+          3,
+          3
+        ],
+        "mask": 6,
+        "corners": 0,
+        "macro_quadrant": 3,
+        "alias": "f2_water_60"
+      }
+    ],
+    "substrate": "Explicit source fixture: healthy grass",
+    "note": "Interior island on a disclosed source substrate, not an actual generated room.",
+    "shape": "block2x2"
+  },
+  {
+    "family": "water",
+    "origin": [
+      2,
+      2
+    ],
+    "cells": [
+      {
+        "cell": [
+          0,
+          0
+        ],
+        "world_cell": [
+          2,
+          2
+        ],
+        "mask": 9,
+        "corners": 0,
+        "macro_quadrant": 0,
+        "alias": "f2_water_90"
+      },
+      {
+        "cell": [
+          1,
+          0
+        ],
+        "world_cell": [
+          3,
+          2
+        ],
+        "mask": 1,
+        "corners": 0,
+        "macro_quadrant": 1,
+        "alias": "f2_water_10"
+      },
+      {
+        "cell": [
+          2,
+          0
+        ],
+        "world_cell": [
+          4,
+          2
+        ],
+        "mask": 3,
+        "corners": 0,
+        "macro_quadrant": 0,
+        "alias": "f2_water_30"
+      },
+      {
+        "cell": [
+          0,
+          1
+        ],
+        "world_cell": [
+          2,
+          3
+        ],
+        "mask": 8,
+        "corners": 0,
+        "macro_quadrant": 2,
+        "alias": "f2_water_80"
+      },
+      {
+        "cell": [
+          1,
+          1
+        ],
+        "world_cell": [
+          3,
+          3
+        ],
+        "mask": 0,
+        "corners": 0,
+        "macro_quadrant": 3,
+        "alias": "f2_water_00"
+      },
+      {
+        "cell": [
+          2,
+          1
+        ],
+        "world_cell": [
+          4,
+          3
+        ],
+        "mask": 2,
+        "corners": 0,
+        "macro_quadrant": 2,
+        "alias": "f2_water_20"
+      },
+      {
+        "cell": [
+          0,
+          2
+        ],
+        "world_cell": [
+          2,
+          4
+        ],
+        "mask": 12,
+        "corners": 0,
+        "macro_quadrant": 0,
+        "alias": "f2_water_c0"
+      },
+      {
+        "cell": [
+          1,
+          2
+        ],
+        "world_cell": [
+          3,
+          4
+        ],
+        "mask": 4,
+        "corners": 0,
+        "macro_quadrant": 1,
+        "alias": "f2_water_40"
+      },
+      {
+        "cell": [
+          2,
+          2
+        ],
+        "world_cell": [
+          4,
+          4
+        ],
+        "mask": 6,
+        "corners": 0,
+        "macro_quadrant": 0,
+        "alias": "f2_water_60"
+      }
+    ],
+    "substrate": "Explicit source fixture: healthy grass",
+    "note": "Interior island on a disclosed source substrate, not an actual generated room.",
+    "shape": "block3x3"
+  },
+  {
+    "family": "water",
+    "origin": [
+      2,
+      2
+    ],
+    "cells": [
+      {
+        "cell": [
+          0,
+          0
+        ],
+        "world_cell": [
+          2,
+          2
+        ],
+        "mask": 11,
+        "corners": 0,
+        "macro_quadrant": 0,
+        "alias": "f2_water_b0"
+      },
+      {
+        "cell": [
+          0,
+          1
+        ],
+        "world_cell": [
+          2,
+          3
+        ],
+        "mask": 12,
+        "corners": 2,
+        "macro_quadrant": 2,
+        "alias": "f2_water_c2"
+      },
+      {
+        "cell": [
+          1,
+          1
+        ],
+        "world_cell": [
+          3,
+          3
+        ],
+        "mask": 7,
+        "corners": 0,
+        "macro_quadrant": 3,
+        "alias": "f2_water_70"
+      }
+    ],
+    "substrate": "Explicit source fixture: healthy grass",
+    "note": "Interior island on a disclosed source substrate, not an actual generated room.",
+    "shape": "L-corner"
+  },
+  {
+    "family": "water",
+    "origin": [
+      2,
+      2
+    ],
+    "cells": [
+      {
+        "cell": [
+          0,
+          0
+        ],
+        "world_cell": [
+          2,
+          2
+        ],
+        "mask": 9,
+        "corners": 4,
+        "macro_quadrant": 0,
+        "alias": "f2_water_94"
+      },
+      {
+        "cell": [
+          1,
+          0
+        ],
+        "world_cell": [
+          3,
+          2
+        ],
+        "mask": 5,
+        "corners": 0,
+        "macro_quadrant": 1,
+        "alias": "f2_water_50"
+      },
+      {
+        "cell": [
+          2,
+          0
+        ],
+        "world_cell": [
+          4,
+          2
+        ],
+        "mask": 3,
+        "corners": 8,
+        "macro_quadrant": 0,
+        "alias": "f2_water_38"
+      },
+      {
+        "cell": [
+          0,
+          1
+        ],
+        "world_cell": [
+          2,
+          3
+        ],
+        "mask": 10,
+        "corners": 0,
+        "macro_quadrant": 2,
+        "alias": "f2_water_a0"
+      },
+      {
+        "cell": [
+          2,
+          1
+        ],
+        "world_cell": [
+          4,
+          3
+        ],
+        "mask": 10,
+        "corners": 0,
+        "macro_quadrant": 2,
+        "alias": "f2_water_a0"
+      },
+      {
+        "cell": [
+          0,
+          2
+        ],
+        "world_cell": [
+          2,
+          4
+        ],
+        "mask": 12,
+        "corners": 2,
+        "macro_quadrant": 0,
+        "alias": "f2_water_c2"
+      },
+      {
+        "cell": [
+          1,
+          2
+        ],
+        "world_cell": [
+          3,
+          4
+        ],
+        "mask": 5,
+        "corners": 0,
+        "macro_quadrant": 1,
+        "alias": "f2_water_50"
+      },
+      {
+        "cell": [
+          2,
+          2
+        ],
+        "world_cell": [
+          4,
+          4
+        ],
+        "mask": 6,
+        "corners": 1,
+        "macro_quadrant": 0,
+        "alias": "f2_water_61"
+      }
+    ],
+    "substrate": "Explicit source fixture: healthy grass",
+    "note": "Interior island on a disclosed source substrate, not an actual generated room.",
+    "shape": "concave-ring"
+  }
+]
