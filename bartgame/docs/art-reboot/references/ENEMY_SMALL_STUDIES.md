@@ -135,3 +135,7 @@ they do not change target selection, speed, radius, collision or HP. Generic
 source coverage consequently rises from 620 to 640 frame instances across the
 whole sixty-concept set. All original frame names stay first in the compiled
 sheet and the two north names are appended.
+
+## Production selection follow-up
+
+Coin Toad9 and Quill Moth9 are now adopted by the user. Profile11 uses their complete existing poses; other alternatives remain historical studies.

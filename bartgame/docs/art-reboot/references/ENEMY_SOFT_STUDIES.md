@@ -125,3 +125,7 @@ records all thirty small forms on four actual background crops. Seed companion
 #5 was also revised from a teal diamond to an asymmetric bronze pod after
 independent concern about its pale center reading as glitter. None of these
 source diagnostics alone establishes the winning enemy design.
+
+## Production selection follow-up
+
+Trumpet Bellflower5 with seed5 and Pear Bladder9 are now adopted by the user. Profile11 selects their complete existing drawings and palette roles.

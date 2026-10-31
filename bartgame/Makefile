@@ -55,13 +55,14 @@ $(error BART_MENU must be one integer in 0..10)
 endif
 MENU_STAMP := $(GEN)/menu-profile-$(BART_MENU).stamp
 
-# Enemy artwork remains a ten-option comparison, zero keeps existing enemies.
-BART_ENEMY ?= 0
+# Selected five enemies and the purple Broken Heart are the normal build.
+# 0 preserves pre-selection art; 1..10 retain historical comparison sets.
+BART_ENEMY ?= 11
 ifneq ($(words $(BART_ENEMY)),1)
-$(error BART_ENEMY must be one integer in 0..10)
+$(error BART_ENEMY must be one integer in 0..11)
 endif
-ifneq ($(BART_ENEMY),$(filter $(BART_ENEMY),0 1 2 3 4 5 6 7 8 9 10))
-$(error BART_ENEMY must be one integer in 0..10)
+ifneq ($(BART_ENEMY),$(filter $(BART_ENEMY),0 1 2 3 4 5 6 7 8 9 10 11))
+$(error BART_ENEMY must be one integer in 0..11)
 endif
 ENEMY_STAMP := $(GEN)/enemy-profile-$(BART_ENEMY).stamp
 
@@ -83,7 +84,7 @@ ART       := $(wildcard art/reboot_*.py) art/reboot_contracts.json tools/build_a
              art/ui_font.py art/faces.py art/title.py art/sw_folk.py art/sword_studies.py \
              art/sewer_concepts.py art/sewer_concepts_terrain.py art/sewer_concepts_npcs.py \
              art/sewer_v3_fixtures.py art/ui_studies.py art/sewer_final.py art/sewer_final_contracts.py \
-             $(wildcard art/enemy_studies*.py)
+             $(wildcard art/enemy_studies*.py) art/enemy_heart.py
 
 OBJS := $(patsubst src/%.c,$(BUILD)/%.o,$(SRC_C)) \
         $(patsubst src/%.c,$(BUILD)/%.o,$(SRC_IWRAM)) \

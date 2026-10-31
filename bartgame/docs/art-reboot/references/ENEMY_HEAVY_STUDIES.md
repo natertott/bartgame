@@ -135,3 +135,7 @@ some 32px boss glyphs are less immediately animal-like than others. These are
 options for user feedback, not a claim that every concept is equally strong.
 Actual terrain contrast, weapon/body OAM depth, phase timing, hurt replacement
 and streamed allocation remain the parent's runtime review responsibilities.
+
+## Production selection follow-up
+
+Moth Confessor6 and its paired weapon are adopted. None of the ten boss forms is adopted: the boss remains a purplish heart broken down its middle, authored in enemy_heart.py and documented in BROKEN_HEART.md. Profile11 selects this combination.

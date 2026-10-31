@@ -46,7 +46,7 @@ for name in ('huditems','glitter'):
 assert not owned,('unregistered new families',sorted(owned))
 
 # Enemy alternatives retain all physical IDs and append presentation poses.
-# Profile zero remains the production baseline until concepts are selected.
+# Profile11 is the selected production set; zero retains pre-selection art.
 import enemy_studies as ENEMY_STUDIES
 ENEMY_VARIANT = ENEMY_STUDIES.VARIANT
 ENEMY_STUDIES.apply(SHEETS, COVERAGE)

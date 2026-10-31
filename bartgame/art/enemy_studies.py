@@ -1,14 +1,19 @@
 """Ten native, behavior-led alternatives for each of six enemy families.
 
-Profile zero preserves the existing production sprites. Profiles1..10 select
-one alternative in every family for playable comparison; they do not rename
-gameplay IDs or change movement, attack timing, hitboxes or damage.
+Profile11 is the selected production set. Zero preserves pre-selection art;
+profiles1..10 retain the complete comparison sets. None rename gameplay IDs
+or change movement, attack timing, hitboxes or damage.
 """
 import os
 
-VARIANT = int(os.environ.get('BART_ENEMY', '0'))
-assert 0 <= VARIANT <= 10, 'BART_ENEMY must be 0..10'
+VARIANT = int(os.environ.get('BART_ENEMY', '11'))
+assert 0 <= VARIANT <= 11, 'BART_ENEMY must be 0..11'
 FAMILIES = ('beetle', 'bat', 'spitter', 'slime', 'knight', 'boss')
+SELECTED_VARIANTS = {'beetle': 9, 'bat': 9, 'spitter': 5, 'slime': 9,
+                     'knight': 6, 'ksword': 6, 'proj': 5}
+SELECTED_NAMES = {'beetle': 'Coin Toad', 'bat': 'Quill Moth',
+                  'spitter': 'Trumpet Bellflower', 'slime': 'Pear Bladder',
+                  'knight': 'Moth Confessor', 'boss': 'Broken Heart'}
 
 
 def module_for(family):
@@ -22,7 +27,12 @@ def module_for(family):
 
 
 def frame(family, variant, name):
-    image = module_for(family).frame(family, variant, name)
+    if variant == 11 and family == 'boss':
+        import enemy_heart
+        image = enemy_heart.frame(name)
+    else:
+        choice = SELECTED_VARIANTS[family] if variant == 11 else variant
+        image = module_for(family).frame(family, choice, name)
     assert image.mode == 'P', (family, name, image.mode)
     assert set(image.getdata()) <= set(range(16)), (family, name)
     return image
@@ -44,6 +54,7 @@ def apply(sheets, coverage):
         if family not in names and not companion:
             continue
         module = module_for(family)
+        owner = 'enemy_heart' if VARIANT == 11 and family == 'boss' else module.__name__
         if family in ('beetle', 'bat', 'slime'):
             # Bank10 is unused by live material-item frames: they all select
             # explicit per-frame banks. The paused icon cache may borrow it,
@@ -60,11 +71,14 @@ def apply(sheets, coverage):
             assert image.size == (sheet['w'], sheet['h']), (family, name, image.size)
             sheet['frames'][name] = rows(image)
             coverage.append({'sheet': family, 'frame': name,
-                             'owner': module.__name__, 'canvas': list(image.size),
+                             'owner': owner, 'canvas': list(image.size),
                              'enemy_study': VARIANT})
         for entry in coverage:
             if entry['sheet'] == family and entry['frame'] in targets:
-                entry.update(owner=module.__name__, enemy_study=VARIANT)
+                entry.update(owner=owner, enemy_study=VARIANT)
+            if VARIANT == 11 and entry['sheet'] == family:
+                entry['selected_design'] = SELECTED_NAMES.get(family, 'Selected companion')
+                entry['selected_variant'] = SELECTED_VARIANTS.get(family)
     for sheet in sheets:
         if sheet['name'] in ('beetle', 'bat', 'slime'):
             continue

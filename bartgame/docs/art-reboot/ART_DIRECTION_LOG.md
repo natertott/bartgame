@@ -632,3 +632,27 @@ or terrain is assigned. The combined publication contains 234 actual cases and
 The main gallery links this clear-floor view for grounded gait comparison,
 while source GIFs retain complete facing/pose coverage. No ROM/art input
 changed for this camera/context refinement.
+
+## Selected enemies and the broken Heart — 2026-10-30 (Pacific)
+
+**User adoption:** Coin Toad9, Quill Moth9, Trumpet Bellflower5, Pear Bladder9
+and Moth Confessor6 are selected from their respective behavior families.
+The shooter keeps its matching seed5; the heavy attacker keeps weapon6.
+The boss must remain a purplish heart broken down the middle, rather than one
+of the ten experimental object/maw forms. These choices are now production
+defaults, preserving historical profiles0–10 for comparison.
+
+**Implementation:** profile11 dispatches each selected family to its complete
+existing native artwork; only the Heart receives a new painter. Its13 poses
+keep the established32×64 canvas, foot anchor and collision scale. A jagged
+middle fracture, two lobes and a tapered point carry its identity through
+pulse, charge, release, spawning, lunge, hurt and death. Purple material planes
+use the existing blight bank, preserving the selected bellflower's colors.
+No combat/AI/physics, world, UI preference, save or Bloom changes are required.
+
+**Basis and evidence:** the current user choice supersedes the prior unselected
+status for these five enemies and the boss direction. Existing native/PDF
+rules and source notes still apply; no new external article or source image is
+claimed. Native source critique and actual mGBA recordings will be published
+with a frozen default ROM, exact selected-frame comparisons and the complete
+Heart phase review. Source galleries remain separate from actual gameplay.

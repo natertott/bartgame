@@ -301,6 +301,16 @@ weak spot or armored face must not promise an immunity or damage multiplier
 that does not exist. Ten alternatives per family are selection studies, not
 sixty new gameplay types or automatically adopted final characters.
 
+The chosen production bestiary is Coin Toad (ground pursuit), Quill Moth
+(airborne hunter), Trumpet Bellflower (directional shooter), Pear Bladder
+(compress-and-hop) and Moth Confessor (heavy melee). Their full selected pose
+sets and matching weapon/seed are adopted. The endpoint boss remains a Heart:
+a purplish organic heart broken through the middle, with two recognizable
+lobes, a tapering point and a jagged central split visible in every phase.
+Do not replace its identity with a mouth, face or ceremonial object. Pulse,
+charge, release, spawning, lunging, hurt and collapse must preserve that split.
+Other enemy proposals remain historical alternatives.
+
 ## Area adaptation sheet
 
 For each of the eight future areas, fill in these fields before making tiles:

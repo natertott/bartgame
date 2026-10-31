@@ -97,3 +97,12 @@ menu findings guide focus, assignment, help and map knowledge. No new web
 source or missing figure is claimed. ENEMY_SMALL_STUDIES, ENEMY_SOFT_STUDIES
 and ENEMY_HEAVY_STUDIES document original mechanic-led concepts. Appearance
 and map integration are recorded in APPEARANCE_OPTIONS and ADOPTED_MENU_MAP.
+
+## Selected bestiary and broken Heart
+
+The user's latest selection adopts Coin Toad, Quill Moth, Trumpet Bellflower,
+Pear Bladder and Moth Confessor. The boss brief is a purplish heart broken
+down the middle. This is direct user direction, not a newly fetched reference.
+The existing six tutorial/PDF notes and native motion/scale rules guide the
+new Heart painter; [Heart decisions](references/BROKEN_HEART.md) record its
+phase construction, source critique and eventual real-ROM evidence.
