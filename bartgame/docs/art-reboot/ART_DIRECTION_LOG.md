@@ -810,3 +810,20 @@ forms and actual barrier clearing. Clearly label diagnostic room fixtures and
 distinguish them from natural generated placements. Test reachability and
 physical footprints where generation changes; update the implementation notes
 and remaining topology gaps as part of this ongoing process.
+
+**Integration corrections before final evidence:** isolated water originally
+carried healthy-green corner pixels even after its outline was rounded. Its
+exterior now uses transparent ink and the renderer supplies the actual BG2
+substrate below BG1 water; healthy grass, sick turf and dirt are checked
+separately. Canopy uses the same real layer separation. A keyhole priority fix
+keeps the single lock above its bars. Root spans require a complete walkable
+north/under/south lane rather than merely two empty cells beneath the image.
+
+Actual movement also exposed an overly deep north fringe: the rolled body
+could vanish, and standing recovery feet were obscured by long flank leaves.
+The final contour keeps a twelve-pixel shallow center (columns2–13, at most
+two pixels deep) with longer outer tips. This changes foliage clearance,
+not Bloom's sprite or physical position. Readability is verified at the real
+collision limit rather than choosing a camera that conceals the problem.
+Hardware telemetry records the displayed camera for precise pixel/occlusion
+comparisons. Source diagrams identify BG2 floor, BG1 foreground and BG0 UI.

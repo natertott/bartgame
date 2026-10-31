@@ -488,10 +488,10 @@ def fringe(parent,mask,variant=1):
         # Real roll captures showed that a full 6px central fringe could
         # combine with the base canopy and hide the entire low rolling body.
         # Keep only a 2px central header; long hanging leaves/twigs remain
-        # at the flanks, while lower body and soles have a transparent lane.
+        # only at outer columns0–1/14–15; the 12px-wide root-foot lane stays clear.
         p=im.load()
         for y in range(2,16):
-            for x in range(4,12):p[x,y]=0
+            for x in range(2,14):p[x,y]=0
     return im,'blight' if sick else 'foliage'
 
 

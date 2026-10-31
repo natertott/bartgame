@@ -86,11 +86,14 @@ instead retain transparency outside their actual branch/root anatomy. The six
 retired `btree_6`–`11` floor contracts remain opaque sick turf.
 
 `fringe(parent,mask,variant)` uses **touching** canopy bits N1/E2/S4/W8. Its true
-transparent foreground canvas projects at most2px in central north columns4–11,
+transparent foreground canvas projects at most2px in central north columns2–13,
 with6–7px hanging tips at the outer flanks,3–4px at the sides, and only a tiny
 southern contact rim. Real roll inspection found that a full6px central fringe
 could combine with the opaque base canopy to hide the entire low rolling body.
-The central2px header and transparent lower lane correct that coverage without
+A later actual standing/recovery review showed that the earlier8px-wide lane
+still covered the spread root feet. The final12px lane spans columns2–13,
+leaving long tips only at the outer columns0–1 and14–15. The central2px header
+and transparent lower lane correct that coverage without
 removing the partial walk-under edge effect. It can partly occlude Bloom's head and
 brush while leaving the central route and feet readable. It never fills the
 floor in its transparent areas. Existing meaningful interactive overlays win;
