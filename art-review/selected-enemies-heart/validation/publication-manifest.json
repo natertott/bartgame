@@ -1,0 +1,1182 @@
+{
+  "source_commit": "770b5422715fd108fc5b2607ab0978702b96e46f",
+  "files": {
+    "art-review/selected-enemies-heart/README.md": {
+      "sha256": "54415808dae84aa5b27b51c737ba0a3a6747e32f5b38449860127a2d6e3fb0f6",
+      "bytes": 5587
+    },
+    "art-review/selected-enemies-heart/actual/README.md": {
+      "sha256": "9361afc08f539a3c2b7cbf73d7f0b8bb70ebb451de5bc79da72f038281d19309",
+      "bytes": 4778
+    },
+    "art-review/selected-enemies-heart/actual/boss-fan-and-adds/frame-000.png": {
+      "sha256": "3b1447b104cba08f8be56610f5893283d19857716db6cb2b193bf03bd96ab18b",
+      "bytes": 5420
+    },
+    "art-review/selected-enemies-heart/actual/boss-fan-and-adds/frame-090.png": {
+      "sha256": "501d239110293e0cf3358559b5a62f1563df8d742bdab41555b9bfff6cc78148",
+      "bytes": 5693
+    },
+    "art-review/selected-enemies-heart/actual/boss-fan-and-adds/frame-180.png": {
+      "sha256": "605470d846047543c92c7f3ae5f0c402a2ca215c168259e36566003f7ae83f4b",
+      "bytes": 5755
+    },
+    "art-review/selected-enemies-heart/actual/boss-fan-and-adds/frame-270.png": {
+      "sha256": "6e1483212ac6b2a138ef92daa7902fc4e4f636e8407cefe421ce3cc375f0cb8d",
+      "bytes": 5816
+    },
+    "art-review/selected-enemies-heart/actual/boss-fan-and-adds/frame-359.png": {
+      "sha256": "71bb268f0e07483c583791f49a3f1c5a288b6a57e606bf17b1ddae85c1ef44b0",
+      "bytes": 5935
+    },
+    "art-review/selected-enemies-heart/actual/boss-fan-and-adds-filmstrip.png": {
+      "sha256": "8536b8a65eb71113556230dc3795afdcb83ae05a672bd27a5ba7463ee02ea452",
+      "bytes": 68109
+    },
+    "art-review/selected-enemies-heart/actual/boss-fan-and-adds.gif": {
+      "sha256": "0d869dfd9bd803acc3d6f60f40b3c872b5ce71d57cd241abff5fd7380fea03bf",
+      "bytes": 2025536
+    },
+    "art-review/selected-enemies-heart/actual/boss-fan-and-adds.mp4": {
+      "sha256": "ab0d831e0ba7ad1ea307cc4856bb1fbec40a8c43cfcbfb74eff6be280f73e63d",
+      "bytes": 199151
+    },
+    "art-review/selected-enemies-heart/actual/boss-fan-and-adds.png": {
+      "sha256": "727a8324406cd86a5dba4e8039406706ccb1e9753f5d3c5256b0719ba4166f5d",
+      "bytes": 5011
+    },
+    "art-review/selected-enemies-heart/actual/boss-lunge/frame-000.png": {
+      "sha256": "1fdb8ac3cf468b81de974837732cb485766406023c0efa7b54a6a84b618f763e",
+      "bytes": 5949
+    },
+    "art-review/selected-enemies-heart/actual/boss-lunge/frame-050.png": {
+      "sha256": "b88b4d3c248ab6944362d1720b79626dbdb77f23b05b145c8e8dc7277e276b41",
+      "bytes": 5660
+    },
+    "art-review/selected-enemies-heart/actual/boss-lunge/frame-100.png": {
+      "sha256": "9f74dcb2299545e0c3526f96c6f6d350e6fd26531b03ff61c0089073f3198333",
+      "bytes": 5585
+    },
+    "art-review/selected-enemies-heart/actual/boss-lunge/frame-150.png": {
+      "sha256": "4eac4eecd2600d31c4a191d3838d75427a26bc72301f5c5dc2178f80a2ee956c",
+      "bytes": 5785
+    },
+    "art-review/selected-enemies-heart/actual/boss-lunge/frame-199.png": {
+      "sha256": "f3442e38c3ebb55218ae1e1aaedbc641d4d4417d3ce7885652ea62996820c8e6",
+      "bytes": 5922
+    },
+    "art-review/selected-enemies-heart/actual/boss-lunge-filmstrip.png": {
+      "sha256": "27c5bc6c2c908be4040173e9b4f4145c6f0e87583a20966feb7428632c0160e9",
+      "bytes": 64869
+    },
+    "art-review/selected-enemies-heart/actual/boss-lunge.gif": {
+      "sha256": "f5aa0c3a92714ff9e2e8f7d47a168b507a5a46d0113fd6a6e49f7be5a7785703",
+      "bytes": 1177322
+    },
+    "art-review/selected-enemies-heart/actual/boss-lunge.mp4": {
+      "sha256": "e5c71c31c80e654312a2095a8a53824b096bac9c665af72f3ed63a71db981f54",
+      "bytes": 123068
+    },
+    "art-review/selected-enemies-heart/actual/boss-lunge.png": {
+      "sha256": "ebf4f3ec2af1c307b8efa3fbb19e7daede71fe80842145ac76e2f31e3e8c6f0e",
+      "bytes": 5943
+    },
+    "art-review/selected-enemies-heart/actual/boss-real-defeat/frame-000.png": {
+      "sha256": "a1cf5e419c843709a017d4bbffb638bbfd645db0ad5f8297aab9bf488e8a608f",
+      "bytes": 4413
+    },
+    "art-review/selected-enemies-heart/actual/boss-real-defeat/frame-180.png": {
+      "sha256": "dd4311ff8f3f2a8a4162c71dd453db6917185646c8c7426102a300610e156dad",
+      "bytes": 3603
+    },
+    "art-review/selected-enemies-heart/actual/boss-real-defeat/frame-360.png": {
+      "sha256": "1cfc177bdb6867fd9f47d3984a9970e26e4a2fcdb72950e84950eae16018b3bf",
+      "bytes": 2340
+    },
+    "art-review/selected-enemies-heart/actual/boss-real-defeat/frame-540.png": {
+      "sha256": "1cfc177bdb6867fd9f47d3984a9970e26e4a2fcdb72950e84950eae16018b3bf",
+      "bytes": 2340
+    },
+    "art-review/selected-enemies-heart/actual/boss-real-defeat/frame-719.png": {
+      "sha256": "1cfc177bdb6867fd9f47d3984a9970e26e4a2fcdb72950e84950eae16018b3bf",
+      "bytes": 2340
+    },
+    "art-review/selected-enemies-heart/actual/boss-real-defeat-filmstrip.png": {
+      "sha256": "a3c86c3e2420473ca424e1fcbfdd796f90e4ee82e3d7f1126d0dd4a3ff0d9ad6",
+      "bytes": 31230
+    },
+    "art-review/selected-enemies-heart/actual/boss-real-defeat.mp4": {
+      "sha256": "4fff868c24266e9bcf10a3e6a5cfd57f0248957dea6e95640831108dd37b8408",
+      "bytes": 188655
+    },
+    "art-review/selected-enemies-heart/actual/boss-real-defeat.png": {
+      "sha256": "7a72edf80be75d1289eb8258966f2ea73d1cd0d36739ab56202a2a9be95d21d6",
+      "bytes": 3870
+    },
+    "art-review/selected-enemies-heart/actual/boss-ring/frame-000.png": {
+      "sha256": "a1cf5e419c843709a017d4bbffb638bbfd645db0ad5f8297aab9bf488e8a608f",
+      "bytes": 4413
+    },
+    "art-review/selected-enemies-heart/actual/boss-ring/frame-060.png": {
+      "sha256": "e0dc873eca69bec8c768c8094b6599bcb805cca260d83f760b2e03e4f7f25561",
+      "bytes": 5066
+    },
+    "art-review/selected-enemies-heart/actual/boss-ring/frame-120.png": {
+      "sha256": "3776d2325ee4e09e860a6dfc19ac3a57ec066bf06eac97713b83fd70344e2250",
+      "bytes": 4962
+    },
+    "art-review/selected-enemies-heart/actual/boss-ring/frame-180.png": {
+      "sha256": "f52f4f72522a7d031abcadb421c5228c557fcc2d7dbc73c36b7819da580d379a",
+      "bytes": 5222
+    },
+    "art-review/selected-enemies-heart/actual/boss-ring/frame-239.png": {
+      "sha256": "5b0494513463a22c526390fc5b48ed62bff142f00bea87789f736d4b2fd6ce96",
+      "bytes": 5380
+    },
+    "art-review/selected-enemies-heart/actual/boss-ring-filmstrip.png": {
+      "sha256": "db9191ad5cf6cef3f105641dbbd1e3263fd9c5da27ccdebe12619e0fc26aca7b",
+      "bytes": 54525
+    },
+    "art-review/selected-enemies-heart/actual/boss-ring.gif": {
+      "sha256": "81d207db5754c873cc525b6952d209662d2230241d3eb9e045360a3fe2b8b2ac",
+      "bytes": 1048522
+    },
+    "art-review/selected-enemies-heart/actual/boss-ring.mp4": {
+      "sha256": "c30e8d29f7e7dd510a5595aa710e342ae8d1aa685a3ec83135c960b848475fee",
+      "bytes": 102188
+    },
+    "art-review/selected-enemies-heart/actual/boss-ring.png": {
+      "sha256": "a1cf5e419c843709a017d4bbffb638bbfd645db0ad5f8297aab9bf488e8a608f",
+      "bytes": 4413
+    },
+    "art-review/selected-enemies-heart/actual/capture.json": {
+      "sha256": "8582ccdd14a51cc7832aca13e64a1f764eeaf129eb43a7ed6517e009be1d498c",
+      "bytes": 7143007
+    },
+    "art-review/selected-enemies-heart/actual/cave-natural-group/frame-000.png": {
+      "sha256": "339073a0ae79ac0a2b19592c4f564067b8f6adbac04a0dbab2660adeb7dc0c1a",
+      "bytes": 3653
+    },
+    "art-review/selected-enemies-heart/actual/cave-natural-group/frame-060.png": {
+      "sha256": "f747f49e6c69b7c0e2d04eb2d7aaba48ee06acef1b099202890b85c7b1e3b18d",
+      "bytes": 3452
+    },
+    "art-review/selected-enemies-heart/actual/cave-natural-group/frame-120.png": {
+      "sha256": "f5756bc61dafc70bb5428c4ffb5fa67c3d38d43f502834b792235f45732a11e4",
+      "bytes": 3570
+    },
+    "art-review/selected-enemies-heart/actual/cave-natural-group/frame-180.png": {
+      "sha256": "ec5d784d87ec58e4ca8016b66e77ae8c57179ca482fadfd109cd51c47f0abed6",
+      "bytes": 3393
+    },
+    "art-review/selected-enemies-heart/actual/cave-natural-group/frame-239.png": {
+      "sha256": "dbbf4502e0a957794aa0df32424fc373abc1c6bc2bf1c574f0d4a99a487e527e",
+      "bytes": 3925
+    },
+    "art-review/selected-enemies-heart/actual/cave-natural-group-filmstrip.png": {
+      "sha256": "de8240ab219553df145abe680eb31da9781435fd3a33cc80739e44f9c311b26f",
+      "bytes": 38503
+    },
+    "art-review/selected-enemies-heart/actual/cave-natural-group.gif": {
+      "sha256": "1d3568c7fc22d7cf189096cbb4db60d64811fdef8f817ba9f0bcb536fc68e2be",
+      "bytes": 1002182
+    },
+    "art-review/selected-enemies-heart/actual/cave-natural-group.mp4": {
+      "sha256": "97abb252fbb8f366e8ded839dae3fc089099f63f38a7b069dbdbf6fb11a8e093",
+      "bytes": 88121
+    },
+    "art-review/selected-enemies-heart/actual/cave-natural-group.png": {
+      "sha256": "339073a0ae79ac0a2b19592c4f564067b8f6adbac04a0dbab2660adeb7dc0c1a",
+      "bytes": 3653
+    },
+    "art-review/selected-enemies-heart/actual/clearing/README.md": {
+      "sha256": "a4317999d4613737ebd528d1752b13c67f96a2d9fda97f1a4ff2ae0da968caf0",
+      "bytes": 850
+    },
+    "art-review/selected-enemies-heart/actual/clearing/capture.json": {
+      "sha256": "e651891f3e7e53cf59d3bb763ba764178490d35ffda23c121a2396b241acfdc4",
+      "bytes": 214274
+    },
+    "art-review/selected-enemies-heart/actual/clearing/pursuer-clearing/frame-000.png": {
+      "sha256": "50be75b690b14e548a608f48eca64ebfddc8566ae0edee94cdc0f007e3f2b4bc",
+      "bytes": 6596
+    },
+    "art-review/selected-enemies-heart/actual/clearing/pursuer-clearing/frame-024.png": {
+      "sha256": "f0c33765f8bebd928f7b4674f32d07a7efc9f5eeef867af08969753b8baecf59",
+      "bytes": 6767
+    },
+    "art-review/selected-enemies-heart/actual/clearing/pursuer-clearing/frame-048.png": {
+      "sha256": "7600f307a17f839f95525b840d6fd31d270c5f9cf09817295e94b262cecf6986",
+      "bytes": 6513
+    },
+    "art-review/selected-enemies-heart/actual/clearing/pursuer-clearing/frame-072.png": {
+      "sha256": "f778c5290e95a1b61b3119aff27aa08c11e2e1d2b52888cced3823831158da82",
+      "bytes": 6589
+    },
+    "art-review/selected-enemies-heart/actual/clearing/pursuer-clearing/frame-095.png": {
+      "sha256": "8017abac1faefbc5446e312e17d0363209f12c13bfb93f3a1be6adddbb0b9413",
+      "bytes": 5888
+    },
+    "art-review/selected-enemies-heart/actual/clearing/pursuer-clearing-filmstrip.png": {
+      "sha256": "f958e06072bbd17a6c737522fc47bc889bf19f2c56bdc6dff876eeefd19bf1ef",
+      "bytes": 66813
+    },
+    "art-review/selected-enemies-heart/actual/clearing/pursuer-clearing.gif": {
+      "sha256": "f38850985fa1f45cd7cdbbe2d3759d54175eda4c79cb5d0217df094c3d1e9e12",
+      "bytes": 703944
+    },
+    "art-review/selected-enemies-heart/actual/clearing/pursuer-clearing.mp4": {
+      "sha256": "cfbe0af38d5ff0c79d15efd24f63220f165ce4fc9eb093001132d41bfb5fff01",
+      "bytes": 67705
+    },
+    "art-review/selected-enemies-heart/actual/clearing/pursuer-clearing.png": {
+      "sha256": "f6c30ad0bd09fe94a329fe4ff3c68240efa32dec3155035bb3688084268df661",
+      "bytes": 6882
+    },
+    "art-review/selected-enemies-heart/actual/flyer-behavior/frame-000.png": {
+      "sha256": "3b08c0e0bafffa455a8a74d3029318177bcd9d7212df63aecad26ac53db11373",
+      "bytes": 7702
+    },
+    "art-review/selected-enemies-heart/actual/flyer-behavior/frame-070.png": {
+      "sha256": "9b8a7ee07b01539e722381266d6b348a992bec58aa3498bfe235b2975580c7a6",
+      "bytes": 7950
+    },
+    "art-review/selected-enemies-heart/actual/flyer-behavior/frame-140.png": {
+      "sha256": "9a231d1faef0d1efcda273240450be6ca4534fcc41572add4a3ee024190ee007",
+      "bytes": 7764
+    },
+    "art-review/selected-enemies-heart/actual/flyer-behavior/frame-210.png": {
+      "sha256": "5a54b0230cdcc70eb3441c49d28b3dc7436fc2be3c4d2f9eff44a85817ac068d",
+      "bytes": 7999
+    },
+    "art-review/selected-enemies-heart/actual/flyer-behavior/frame-279.png": {
+      "sha256": "dffc68ba3ac8a3cd3e18beb647715d113769d04f6590c55a0b4ce8e1904b0954",
+      "bytes": 7971
+    },
+    "art-review/selected-enemies-heart/actual/flyer-behavior-filmstrip.png": {
+      "sha256": "49c8373291ef0f6f25c9c614b0a51a8a7e9c0c5cdfeff340008e7fa3ad76cf9f",
+      "bytes": 73380
+    },
+    "art-review/selected-enemies-heart/actual/flyer-behavior.gif": {
+      "sha256": "1d299a7d5316fb594531fb3abf650f21f45104b38f02e54c3272ca8e7fa4d34a",
+      "bytes": 2383528
+    },
+    "art-review/selected-enemies-heart/actual/flyer-behavior.mp4": {
+      "sha256": "8065f1636b49a67a76786933eb4852f66c7c478c9f8e97c39f3de272518f8408",
+      "bytes": 137370
+    },
+    "art-review/selected-enemies-heart/actual/flyer-behavior.png": {
+      "sha256": "3b08c0e0bafffa455a8a74d3029318177bcd9d7212df63aecad26ac53db11373",
+      "bytes": 7702
+    },
+    "art-review/selected-enemies-heart/actual/heart-actual-poses.json": {
+      "sha256": "f58a0f83dfd11afecd382a3995e674d28a2c3084dc55059df90bbcfff64d3570",
+      "bytes": 9877
+    },
+    "art-review/selected-enemies-heart/actual/heart-actual-poses.png": {
+      "sha256": "bf299bd9ea38aae942a9c9f4054a7a8aa0ed35c01d2f9218e35e9eef2327434b",
+      "bytes": 23718
+    },
+    "art-review/selected-enemies-heart/actual/heart-defeat-actual-timeline.json": {
+      "sha256": "aca10e4ee7a9569d6481fc9482d091e882fad46ce36f76c08a70499ac3922446",
+      "bytes": 2733
+    },
+    "art-review/selected-enemies-heart/actual/heart-defeat-actual-timeline.png": {
+      "sha256": "3713b7f2a92c47e6da2b2dc81b68953702b345190de22d46f78f7920943f3a56",
+      "bytes": 33174
+    },
+    "art-review/selected-enemies-heart/actual/hopper-behavior/frame-000.png": {
+      "sha256": "385fc2f621c5b0c871585a9a0bfdebf91a5ca74d0c133046050003859c99aa93",
+      "bytes": 7576
+    },
+    "art-review/selected-enemies-heart/actual/hopper-behavior/frame-040.png": {
+      "sha256": "4cd561eb6ce970eddc4f5ef25c2fc333eacd074f34ccb91c5cce971b2ea65641",
+      "bytes": 7962
+    },
+    "art-review/selected-enemies-heart/actual/hopper-behavior/frame-080.png": {
+      "sha256": "8d533c5bff0d13845090a5f13e4ea9dc5633cc4c17034835db4a1f24803f5bfc",
+      "bytes": 8293
+    },
+    "art-review/selected-enemies-heart/actual/hopper-behavior/frame-120.png": {
+      "sha256": "8e21512dec0e02d3fc379aa5c8bcbe8c5f234d29f0d83ef83bea1d36dcefd1b4",
+      "bytes": 7700
+    },
+    "art-review/selected-enemies-heart/actual/hopper-behavior/frame-159.png": {
+      "sha256": "8c8e7866580e8edc982d6a1f5bf78774c5fe955447b7a32a906e4fb10d900d57",
+      "bytes": 8024
+    },
+    "art-review/selected-enemies-heart/actual/hopper-behavior-filmstrip.png": {
+      "sha256": "d255e20d74cb3649fdb64145d58d1864661acfa4a5e8040fd3d2470f3987ec9e",
+      "bytes": 69320
+    },
+    "art-review/selected-enemies-heart/actual/hopper-behavior.gif": {
+      "sha256": "6423814fb5a532b492a28c156c25c4fb37c4490ef394445ba3ecf9afc1cb7d46",
+      "bytes": 1442499
+    },
+    "art-review/selected-enemies-heart/actual/hopper-behavior.mp4": {
+      "sha256": "f96121f260cb72dd8b818515cf418da0a3988dd45e46c19792e79f3c3a68b449",
+      "bytes": 78609
+    },
+    "art-review/selected-enemies-heart/actual/hopper-behavior.png": {
+      "sha256": "25956156c04cd071bde1794cb373dad813eba51768d4e6e7f26956b7e36581f5",
+      "bytes": 8004
+    },
+    "art-review/selected-enemies-heart/actual/melee-after-menu/frame-000.png": {
+      "sha256": "ea8f9ad80edb011cfb6a42a2a3edc2144e0fd06fa1b4a172c3da20af1fe9ba29",
+      "bytes": 7881
+    },
+    "art-review/selected-enemies-heart/actual/melee-after-menu/frame-016.png": {
+      "sha256": "33443d8c26ea26178f2f5b9311a489f891b560e38d1c9801386c7727b76dca2e",
+      "bytes": 7887
+    },
+    "art-review/selected-enemies-heart/actual/melee-after-menu/frame-032.png": {
+      "sha256": "c73e044db1e67c0b6e85003cc32cee35329252dfbe86576fe0dbd1be9af70d53",
+      "bytes": 7649
+    },
+    "art-review/selected-enemies-heart/actual/melee-after-menu/frame-048.png": {
+      "sha256": "836ee34fe5940c29fc93c4ee6f7b807a853f21debb902a3f3f74433e1f7e7eb1",
+      "bytes": 7553
+    },
+    "art-review/selected-enemies-heart/actual/melee-after-menu/frame-063.png": {
+      "sha256": "89193de5fa58b5e48fc932b978b331f8ebc059d6953b932f08763f2aec60d6ab",
+      "bytes": 7863
+    },
+    "art-review/selected-enemies-heart/actual/melee-after-menu-filmstrip.png": {
+      "sha256": "2bf606010846ab09a476529489b0405ea89be4c39a17d0bbdba5085e53aff018",
+      "bytes": 61322
+    },
+    "art-review/selected-enemies-heart/actual/melee-after-menu.gif": {
+      "sha256": "88f09ba7b3431445000cd68c62a79d51a7fc17d8908b5b99a72de8ea9e35dbb6",
+      "bytes": 598394
+    },
+    "art-review/selected-enemies-heart/actual/melee-after-menu.mp4": {
+      "sha256": "545b0226ee85c6aa3729e9468116fdce5792938959ca5d9aeb711d0e4f7911fc",
+      "bytes": 47180
+    },
+    "art-review/selected-enemies-heart/actual/melee-after-menu.png": {
+      "sha256": "f56ce120136a31ca13fa7e481613bd6b65a6f35de59fccc616d7f14da3d6b463",
+      "bytes": 8003
+    },
+    "art-review/selected-enemies-heart/actual/melee-behavior/frame-000.png": {
+      "sha256": "b50d57cdb69f0c219d23602eb7e9d0686ccc08d15259d4d0a4a1f18ac3c7fad6",
+      "bytes": 8148
+    },
+    "art-review/selected-enemies-heart/actual/melee-behavior/frame-036.png": {
+      "sha256": "2f8d02ad3438356517bcad5d9504b6553c9970a8b773d20bb00a28f3d67afb82",
+      "bytes": 7512
+    },
+    "art-review/selected-enemies-heart/actual/melee-behavior/frame-072.png": {
+      "sha256": "cb184307cbe5bfa5e19a5193a910e20c35646fef4c339d853cca5e7d21ca3112",
+      "bytes": 7807
+    },
+    "art-review/selected-enemies-heart/actual/melee-behavior/frame-108.png": {
+      "sha256": "b9e663840cd2e2f488a6bfa316d27f0bec035eb1757903a3554e0c97dcbb4aeb",
+      "bytes": 7785
+    },
+    "art-review/selected-enemies-heart/actual/melee-behavior/frame-143.png": {
+      "sha256": "ac8d63e33170bd0bb1167dfbf61b5ca5a120545ff29b2e1a749876a34846d7a7",
+      "bytes": 7760
+    },
+    "art-review/selected-enemies-heart/actual/melee-behavior-filmstrip.png": {
+      "sha256": "ac4fc843d97a2f630e3a2a210c062ca194d8fcf3fe3aa00693180b8474179d53",
+      "bytes": 66429
+    },
+    "art-review/selected-enemies-heart/actual/melee-behavior.gif": {
+      "sha256": "8cefecfcb5f562af64c8d6c469f44f88c438cbab969fa99d9a41b7727e387d6f",
+      "bytes": 1309086
+    },
+    "art-review/selected-enemies-heart/actual/melee-behavior.mp4": {
+      "sha256": "c7e5e71248e00130cda06697e4e0ee7662ed2fc2e657705ef5f1b908936ae666",
+      "bytes": 77312
+    },
+    "art-review/selected-enemies-heart/actual/melee-behavior.png": {
+      "sha256": "76260fab8533105e3341646aeda9a7a838b48df71ec678b019235189765246cc",
+      "bytes": 7973
+    },
+    "art-review/selected-enemies-heart/actual/melee-real-combat/frame-000.png": {
+      "sha256": "15e701856cbf7c654210fac06a5980846ca0f50998ac6c95fd80359981ad5378",
+      "bytes": 7946
+    },
+    "art-review/selected-enemies-heart/actual/melee-real-combat/frame-120.png": {
+      "sha256": "7e3a76cd295c877460967ddd67ef0b1afb64f5267bed44bc5854d9fc131dbf56",
+      "bytes": 7875
+    },
+    "art-review/selected-enemies-heart/actual/melee-real-combat/frame-240.png": {
+      "sha256": "c5cc72cd8da03fb2eddc090a92504ebe75059dcd0605eb59bb4314f41275fe02",
+      "bytes": 8281
+    },
+    "art-review/selected-enemies-heart/actual/melee-real-combat/frame-360.png": {
+      "sha256": "2cf89e4ce7e75657035a07d9c8fffbc8e7495093d23360a1e3a0849d9b40b96b",
+      "bytes": 7895
+    },
+    "art-review/selected-enemies-heart/actual/melee-real-combat/frame-479.png": {
+      "sha256": "4c761438dadce6f0faf73b937d73ddbc2d49bd9ac361296e2a3f091656b49649",
+      "bytes": 7775
+    },
+    "art-review/selected-enemies-heart/actual/melee-real-combat-filmstrip.png": {
+      "sha256": "b49cb96256ff845c28b04eaa0d980fa1af983986327a4f81f0585996974e6502",
+      "bytes": 78904
+    },
+    "art-review/selected-enemies-heart/actual/melee-real-combat.gif": {
+      "sha256": "a150d80e154a6d3c948f1e2d6902d7d31cba82b9cea1e695591c7f825e2fd1b5",
+      "bytes": 3794739
+    },
+    "art-review/selected-enemies-heart/actual/melee-real-combat.mp4": {
+      "sha256": "5cf041841ee04b487d0e3bfa36437a86d888858f9ec5c39a4d9ef2bdfd23dc84",
+      "bytes": 234409
+    },
+    "art-review/selected-enemies-heart/actual/melee-real-combat.png": {
+      "sha256": "3b409ebe809aeb5a6c4e772b5bebe35e8057de7880bf56664914063f591c1399",
+      "bytes": 8095
+    },
+    "art-review/selected-enemies-heart/actual/pursuer-behavior/frame-000.png": {
+      "sha256": "0fba5aa944d9db98f66d6282509095688947a965d315b29aac9782425a83f6e8",
+      "bytes": 8364
+    },
+    "art-review/selected-enemies-heart/actual/pursuer-behavior/frame-040.png": {
+      "sha256": "b2cb7b86b45a2decca09f9a7a9e54c52041b38d2459bb1e684cb055fba96b4df",
+      "bytes": 8569
+    },
+    "art-review/selected-enemies-heart/actual/pursuer-behavior/frame-080.png": {
+      "sha256": "67877644cf4bf50dfb422736480b9b36a27716dbd0cc69c49772576f15a8d6da",
+      "bytes": 8305
+    },
+    "art-review/selected-enemies-heart/actual/pursuer-behavior/frame-120.png": {
+      "sha256": "c7d3c8ff5aeba7445d66c7503c9af6e573d00e78fb5c2fe02c65ed868deb397d",
+      "bytes": 8358
+    },
+    "art-review/selected-enemies-heart/actual/pursuer-behavior/frame-159.png": {
+      "sha256": "c5427fd329d69a629da76f56550adefc70900549111b2f6cfb54f3acf55663e1",
+      "bytes": 8257
+    },
+    "art-review/selected-enemies-heart/actual/pursuer-behavior-filmstrip.png": {
+      "sha256": "39af69079b933c9ac6449c6b9fd5aec622bc5cf50bc03e505bdfa5aae7628f91",
+      "bytes": 70709
+    },
+    "art-review/selected-enemies-heart/actual/pursuer-behavior.gif": {
+      "sha256": "75ffc051241ebf0acc187600b947df06a3942a68ab8c25505ba35c36292f193e",
+      "bytes": 1680161
+    },
+    "art-review/selected-enemies-heart/actual/pursuer-behavior.mp4": {
+      "sha256": "c2beb60ada3a8729e0a37a937cbf8b87666f78780c469158c8aeeac08f5cd3d5",
+      "bytes": 90411
+    },
+    "art-review/selected-enemies-heart/actual/pursuer-behavior.png": {
+      "sha256": "0fba5aa944d9db98f66d6282509095688947a965d315b29aac9782425a83f6e8",
+      "bytes": 8364
+    },
+    "art-review/selected-enemies-heart/actual/shooter-behavior/frame-000.png": {
+      "sha256": "dba5509070214915bec8e7af9d5ea995b16307b4ab1521fede6d91e0f81fd86b",
+      "bytes": 6889
+    },
+    "art-review/selected-enemies-heart/actual/shooter-behavior/frame-040.png": {
+      "sha256": "b829b25b56e4b2f6a45f0b6bbef64ee3f63d75dc5dcaa9e0cf4ef21d71a59755",
+      "bytes": 7005
+    },
+    "art-review/selected-enemies-heart/actual/shooter-behavior/frame-080.png": {
+      "sha256": "9f0287c526aca0c00be8c011e3cf4756c82b7049dec98a5bf9ef3a42baeddd0b",
+      "bytes": 6906
+    },
+    "art-review/selected-enemies-heart/actual/shooter-behavior/frame-120.png": {
+      "sha256": "455ecfd8568c4a9abc80d0fc07c358a92586b3571c508ff4d653f5cafedf8b42",
+      "bytes": 7060
+    },
+    "art-review/selected-enemies-heart/actual/shooter-behavior/frame-159.png": {
+      "sha256": "58e8f916d835d1136bd3cd4006caf75a783c8d737c14a73ac9509e79cb2f8ee8",
+      "bytes": 6882
+    },
+    "art-review/selected-enemies-heart/actual/shooter-behavior-filmstrip.png": {
+      "sha256": "484029556ace4d74bc1aa1a9152f27fe8cd8d0e6a0e742958c62a2c338406019",
+      "bytes": 55820
+    },
+    "art-review/selected-enemies-heart/actual/shooter-behavior.gif": {
+      "sha256": "332bc535f4e9e72f42e4cdce5d6eacc152028a317682734d87e527e17a3220af",
+      "bytes": 1332482
+    },
+    "art-review/selected-enemies-heart/actual/shooter-behavior.mp4": {
+      "sha256": "51dd14fdc737cc71de1b8e5f7cb03c2010606396e8983a3a759236bdf4dd6584",
+      "bytes": 63534
+    },
+    "art-review/selected-enemies-heart/actual/shooter-behavior.png": {
+      "sha256": "dad891e85e8bddb78974f6b371df0947176c6ce39c09f7d20596ae5fd2372988",
+      "bytes": 6808
+    },
+    "art-review/selected-enemies-heart/selected-actual-context-2x.png": {
+      "sha256": "b8a70b33fcd0309a4a41bbbe2a94c80e7e88e15362ca515e128bc6532ffad23b",
+      "bytes": 17122
+    },
+    "art-review/selected-enemies-heart/selected-actual-manifest.json": {
+      "sha256": "a95a85847857ab713e2a727e38e189b5c88621cabe20b3824ba7698a1478cd26",
+      "bytes": 6256
+    },
+    "art-review/selected-enemies-heart/selected-actual-native.png": {
+      "sha256": "edeef94f24d282d067cdb7750534d8ec58f795b8fc817c5fd79c37939a9c469c",
+      "bytes": 47502
+    },
+    "art-review/selected-enemies-heart/source/README.md": {
+      "sha256": "b866f320c06c73ec9dc312f4473afbedc4e94e4ea8d72c0d46afa2a34ddf010e",
+      "bytes": 3018
+    },
+    "art-review/selected-enemies-heart/source/atlases/bat-all-frames-source.png": {
+      "sha256": "8faaeacfc7015bd5118ebe8e1cb01688550334463df4d1f32c5f4da459c1506b",
+      "bytes": 3038
+    },
+    "art-review/selected-enemies-heart/source/atlases/beetle-all-frames-source.png": {
+      "sha256": "5371029073cf3a349f566022880e9b91ebb2e54b5f7483290a885862f4f2c2ee",
+      "bytes": 4338
+    },
+    "art-review/selected-enemies-heart/source/atlases/boss-all-frames-source.png": {
+      "sha256": "780818539622e5e5ace715ae958873949cd271c1994a213c0c9e918f9cc51a48",
+      "bytes": 23240
+    },
+    "art-review/selected-enemies-heart/source/atlases/knight-all-frames-source.png": {
+      "sha256": "f339f0543175e68526e048a6677f40df2ec10aa02d39bd1cef07526e1a3126bf",
+      "bytes": 19395
+    },
+    "art-review/selected-enemies-heart/source/atlases/slime-all-frames-source.png": {
+      "sha256": "e15eb5bf01b60774b6b82567f5ebbca50db459ba2b1c66989cdfc6debf089db3",
+      "bytes": 2987
+    },
+    "art-review/selected-enemies-heart/source/atlases/spitter-all-frames-source.png": {
+      "sha256": "46eda75cf08e52aa169b9868932446c6f2db116e2a2ed38984a1329a885d62d4",
+      "bytes": 9021
+    },
+    "art-review/selected-enemies-heart/source/bat-all-poses-source.gif": {
+      "sha256": "3c32a0a7a3ee2757637960c8bce23ef44ecc16ae12acd18c94caf9a1be38ec48",
+      "bytes": 8878
+    },
+    "art-review/selected-enemies-heart/source/beetle-all-poses-source.gif": {
+      "sha256": "ba2db92920901a24b95e78cbff095f7c47c94462066293042bc61d3e528b6da8",
+      "bytes": 17991
+    },
+    "art-review/selected-enemies-heart/source/boss-all-poses-source.gif": {
+      "sha256": "8b9431bd4823fb336ff9c13f08c43ae95c45fb362b3ca4b21c105d8fd126dc9d",
+      "bytes": 71162
+    },
+    "art-review/selected-enemies-heart/source/knight-all-poses-source.gif": {
+      "sha256": "ae8f137a0af95e9a42424eb686d96a3dddc5d619c213787de1690ec71e8f9664",
+      "bytes": 92075
+    },
+    "art-review/selected-enemies-heart/source/native/bat/fly1-indexed.png": {
+      "sha256": "f51d1f5dd4ceafd95a758003b8e729b4154cfc55d463bb5d8d3bf1d8e3a79cb8",
+      "bytes": 934
+    },
+    "art-review/selected-enemies-heart/source/native/bat/fly1.png": {
+      "sha256": "9bc79d80077cf05aad0d01586893a4fccf553662d8f83b9c4304f8f2cb269046",
+      "bytes": 265
+    },
+    "art-review/selected-enemies-heart/source/native/bat/fly2-indexed.png": {
+      "sha256": "3e4156c9d8e9043d1811682035b9e0c3231022a77381c820988c840d176b4006",
+      "bytes": 923
+    },
+    "art-review/selected-enemies-heart/source/native/bat/fly2.png": {
+      "sha256": "10419466644753f65c90f591b972514f5c9cd85a751d7c5d847fe883f475e53b",
+      "bytes": 247
+    },
+    "art-review/selected-enemies-heart/source/native/bat/rest-indexed.png": {
+      "sha256": "c365f7a5e2b46d867768a0bc71a4b14de84812358fae2faac672b03e122adab1",
+      "bytes": 915
+    },
+    "art-review/selected-enemies-heart/source/native/bat/rest.png": {
+      "sha256": "9775c97f564e33a090ab9ae79849983fe52f7187c8b0364a5a1275bd3487aba4",
+      "bytes": 217
+    },
+    "art-review/selected-enemies-heart/source/native/beetle/walk_e1-indexed.png": {
+      "sha256": "78c8bfaca35d1a17fbdc948ef6d5be65ff42fe0413701a8e98da805bd3218048",
+      "bytes": 931
+    },
+    "art-review/selected-enemies-heart/source/native/beetle/walk_e1.png": {
+      "sha256": "cec8ff74d983cb8a7aeea83242b77183845b89cc4ffa718a163b9b700c58f711",
+      "bytes": 257
+    },
+    "art-review/selected-enemies-heart/source/native/beetle/walk_e2-indexed.png": {
+      "sha256": "c73e5fd975f63618d38af86ff2e50f2e31b8d07ee4fd30590c8914b4ac0c9069",
+      "bytes": 929
+    },
+    "art-review/selected-enemies-heart/source/native/beetle/walk_e2.png": {
+      "sha256": "320d05445ce2e4a9a9ad267ff406a1b54dc7067f997a98ec35baec2c19f3764a",
+      "bytes": 249
+    },
+    "art-review/selected-enemies-heart/source/native/beetle/walk_n1-indexed.png": {
+      "sha256": "140054ff632e1680fd40f1ed9633439a81252a35066a2982e16e3aceb4f9075d",
+      "bytes": 934
+    },
+    "art-review/selected-enemies-heart/source/native/beetle/walk_n1.png": {
+      "sha256": "fef8dc948f3721cc8f1aa0d1d0e2800b01ba420854cedf4b1300bd1879b6797a",
+      "bytes": 301
+    },
+    "art-review/selected-enemies-heart/source/native/beetle/walk_n2-indexed.png": {
+      "sha256": "2b0e5df8f980ef05c530286996b009702c5351c53ced7112eb4c90e02a642ec4",
+      "bytes": 933
+    },
+    "art-review/selected-enemies-heart/source/native/beetle/walk_n2.png": {
+      "sha256": "99e6f675f0d3f2f784ec5e2b5423280ea6288960f1c4a6a2f7c2e814bc7886c3",
+      "bytes": 300
+    },
+    "art-review/selected-enemies-heart/source/native/beetle/walk_s1-indexed.png": {
+      "sha256": "331e12eb575b0a1bc8f5a49f0b656ce2c653457fd93a580a11ad06c8df4b210e",
+      "bytes": 927
+    },
+    "art-review/selected-enemies-heart/source/native/beetle/walk_s1.png": {
+      "sha256": "e7f1414e7d8b8cc25c6d1d2b219e77515d2f0fee98ecb71bfd76673273e23203",
+      "bytes": 263
+    },
+    "art-review/selected-enemies-heart/source/native/beetle/walk_s2-indexed.png": {
+      "sha256": "dd15be02e62436541316f950296ac3d1a2636465387de302d4ac437597e3bf73",
+      "bytes": 925
+    },
+    "art-review/selected-enemies-heart/source/native/beetle/walk_s2.png": {
+      "sha256": "f05d670cc93b6ed3fdf66a827a29743f61be9bb06ccbc1f9a8792f9abb91264a",
+      "bytes": 254
+    },
+    "art-review/selected-enemies-heart/source/native/boss/charge1-indexed.png": {
+      "sha256": "486519bc2163dbb28600f8d028a97e38f646fff57950304d64aeb5df1aec5c96",
+      "bytes": 1184
+    },
+    "art-review/selected-enemies-heart/source/native/boss/charge1.png": {
+      "sha256": "88c516aeb5e7fb70b0ecfa415a51e798d1607a901cb6061f762ccbe77bbed240",
+      "bytes": 915
+    },
+    "art-review/selected-enemies-heart/source/native/boss/charge2-indexed.png": {
+      "sha256": "9f658a50ef6afd9fab17f12efed57c524f457a3d498165a092a2567b25844324",
+      "bytes": 1180
+    },
+    "art-review/selected-enemies-heart/source/native/boss/charge2.png": {
+      "sha256": "1eb068c094d98d167a8f525d09368a162adc77743da96cd554390431b613eb42",
+      "bytes": 928
+    },
+    "art-review/selected-enemies-heart/source/native/boss/dying1-indexed.png": {
+      "sha256": "5ddafcf60cfeb22e31776270d7420c2f3ff63567fe20a44d997f6c7d5c43797a",
+      "bytes": 1085
+    },
+    "art-review/selected-enemies-heart/source/native/boss/dying1.png": {
+      "sha256": "494e11cb221b880492daf185bb3eda953fe3eff08a90f2da627ab29b9b6f260a",
+      "bytes": 697
+    },
+    "art-review/selected-enemies-heart/source/native/boss/dying2-indexed.png": {
+      "sha256": "a7db7443bb1ea8464173680b601b298893fb2bed2c13c626b6f9e68a6638e2e5",
+      "bytes": 1031
+    },
+    "art-review/selected-enemies-heart/source/native/boss/dying2.png": {
+      "sha256": "1a51e301d4a4dac1a171691a9cd1593c5c62bc992a0ac59a7052da6e301e648d",
+      "bytes": 540
+    },
+    "art-review/selected-enemies-heart/source/native/boss/hurt-indexed.png": {
+      "sha256": "3c65c1580bec49837dcb669aa6d6ed507a6a2073ff25dc9ffa01b88314d1988a",
+      "bytes": 1181
+    },
+    "art-review/selected-enemies-heart/source/native/boss/hurt.png": {
+      "sha256": "f405951454a7f980c2ed34ec3a5ec0594a1aad87e82d08b966100a1eed3d46d8",
+      "bytes": 957
+    },
+    "art-review/selected-enemies-heart/source/native/boss/lunge1-indexed.png": {
+      "sha256": "9e357b7224257f3f96dadaee2f528a86f11ceac45d244970e1fce7f8d46815f4",
+      "bytes": 1168
+    },
+    "art-review/selected-enemies-heart/source/native/boss/lunge1.png": {
+      "sha256": "594f571cf9c18c1a7d2322b0c46cdb1b23280e19381733c4d9bee4629fc48b63",
+      "bytes": 896
+    },
+    "art-review/selected-enemies-heart/source/native/boss/lunge2-indexed.png": {
+      "sha256": "5f3080cea16a66d92cdbe6d664b2b5633226d43f6972111a478def8f0b114b0a",
+      "bytes": 1168
+    },
+    "art-review/selected-enemies-heart/source/native/boss/lunge2.png": {
+      "sha256": "ee7db3a3f734826e0bd2c6e1271537d7d2592f5b1cdd6a18e5b9f99c8c04025d",
+      "bytes": 920
+    },
+    "art-review/selected-enemies-heart/source/native/boss/pulse1-indexed.png": {
+      "sha256": "cdd84a60d16407b4ca6d8f9211ef3af22ae81508564fd7cd94bccf887fe135e1",
+      "bytes": 1179
+    },
+    "art-review/selected-enemies-heart/source/native/boss/pulse1.png": {
+      "sha256": "36d23ccfe357d6de2b4564bf567ad764c06960db674fe1f024d04cc97dcc3f93",
+      "bytes": 924
+    },
+    "art-review/selected-enemies-heart/source/native/boss/pulse2-indexed.png": {
+      "sha256": "2fe86da94fd724f1cf0fb07b8cffe5242695c923d2c157797abdf124693bbedf",
+      "bytes": 1195
+    },
+    "art-review/selected-enemies-heart/source/native/boss/pulse2.png": {
+      "sha256": "540bae28da0d597b27326be9eb99cb98b568a98ccbfa57cdcec855d9a1bf0541",
+      "bytes": 930
+    },
+    "art-review/selected-enemies-heart/source/native/boss/release1-indexed.png": {
+      "sha256": "47cad737bf06545048907f9811382914eb204e669ea0031ea84e6c4f1ec63d03",
+      "bytes": 1156
+    },
+    "art-review/selected-enemies-heart/source/native/boss/release1.png": {
+      "sha256": "5903bd856f56119e2967bcb279a2df9078aea931d177829865ec6da3461ecaba",
+      "bytes": 902
+    },
+    "art-review/selected-enemies-heart/source/native/boss/release2-indexed.png": {
+      "sha256": "a910225f42154935c2d7f7fc64c27ce5e58e267916dbad115bf6d7a3d144ea11",
+      "bytes": 1154
+    },
+    "art-review/selected-enemies-heart/source/native/boss/release2.png": {
+      "sha256": "f4adf0171d57fd9abd74cd4e7ce10c320ce250d5b1002e9d2174667fa79708f6",
+      "bytes": 864
+    },
+    "art-review/selected-enemies-heart/source/native/boss/spawn1-indexed.png": {
+      "sha256": "d0d653d51765f150ffbe1825fa50e54cdf01249593f7e4900bb1cde1e8afdad4",
+      "bytes": 1177
+    },
+    "art-review/selected-enemies-heart/source/native/boss/spawn1.png": {
+      "sha256": "5e8c8ee2201ab6020748586b800ad606f247eb7a93aa0f1bcdea0f9a5d66181d",
+      "bytes": 910
+    },
+    "art-review/selected-enemies-heart/source/native/boss/spawn2-indexed.png": {
+      "sha256": "5d271e79acc6e3344153ac373b418ec65dc757a8e77d680f849db1ce48519357",
+      "bytes": 1188
+    },
+    "art-review/selected-enemies-heart/source/native/boss/spawn2.png": {
+      "sha256": "1258b2742a1bdc9c2cde838ea8a0946a452534680ccc49be38f4f4098204d670",
+      "bytes": 952
+    },
+    "art-review/selected-enemies-heart/source/native/knight/atk_e-indexed.png": {
+      "sha256": "9120837b41f84f6f36a8a7409b16e5bc05c26cd473b35e296ec3257b2cd53ecd",
+      "bytes": 1004
+    },
+    "art-review/selected-enemies-heart/source/native/knight/atk_e.png": {
+      "sha256": "883c9ad793343ff7d4ae8b976f4f0419a97729bfcb891373753bdcdddc017ca0",
+      "bytes": 468
+    },
+    "art-review/selected-enemies-heart/source/native/knight/atk_n-indexed.png": {
+      "sha256": "e19ab33ae3b1f88a9efedee7f5ad0a853a48b8eb1eec2fa08d733884e3e52a2f",
+      "bytes": 1010
+    },
+    "art-review/selected-enemies-heart/source/native/knight/atk_n.png": {
+      "sha256": "20207275a3e1397cb64a58c698c9412569e1228c9d8d04f3250dadf42e21c5d4",
+      "bytes": 481
+    },
+    "art-review/selected-enemies-heart/source/native/knight/atk_s-indexed.png": {
+      "sha256": "364ac05239f9b9f2d57b6cbf827c761cdfa952d3bcee7a776ae301b13f6dcab2",
+      "bytes": 1001
+    },
+    "art-review/selected-enemies-heart/source/native/knight/atk_s.png": {
+      "sha256": "145a9db8675a81ab4fbe19094e6bc01d68930522ae43c2502570463d1535b304",
+      "bytes": 479
+    },
+    "art-review/selected-enemies-heart/source/native/knight/hurt_e-indexed.png": {
+      "sha256": "3e97673fef1a98325e9470d83c9316c0b8011d472ea5a999a1f767cb8b32427e",
+      "bytes": 1015
+    },
+    "art-review/selected-enemies-heart/source/native/knight/hurt_e.png": {
+      "sha256": "013be2d6f1f83b667f81a491292bf33179957a5e182cfe6f48e987043702ec5a",
+      "bytes": 498
+    },
+    "art-review/selected-enemies-heart/source/native/knight/hurt_n-indexed.png": {
+      "sha256": "d0eff343eaaec67502bc2d78c124ed3d45e245efdf7194deb9d2c3f6595df46c",
+      "bytes": 1011
+    },
+    "art-review/selected-enemies-heart/source/native/knight/hurt_n.png": {
+      "sha256": "a8f1adcca57c06ef0b8b4df3798c3ee9aad13e9e7a04081211cb9956d7a70c6c",
+      "bytes": 472
+    },
+    "art-review/selected-enemies-heart/source/native/knight/hurt_s-indexed.png": {
+      "sha256": "0f683cb2cf783086d39f6032fb0326961296bce5ccd9cf8f45d1ec6119bb0ed8",
+      "bytes": 1011
+    },
+    "art-review/selected-enemies-heart/source/native/knight/hurt_s.png": {
+      "sha256": "36a9c5da22d141374f6c59a9fc2c07ebdc656a54fca7b0725f0f81b27ed89bb1",
+      "bytes": 503
+    },
+    "art-review/selected-enemies-heart/source/native/knight/idle_e-indexed.png": {
+      "sha256": "0e18a1a7ee71bd691a138aa8093cf45716fad07a9a8b604a4954580d686503b1",
+      "bytes": 1007
+    },
+    "art-review/selected-enemies-heart/source/native/knight/idle_e.png": {
+      "sha256": "6d0168a025622daa1985f1dbffccc2e8a03e501682e745f011d21628fdb5342e",
+      "bytes": 481
+    },
+    "art-review/selected-enemies-heart/source/native/knight/idle_n-indexed.png": {
+      "sha256": "fcddbfae9ab124ac2d4837ee699dd37589467099229f7668acab1b4ae3ba90fe",
+      "bytes": 1007
+    },
+    "art-review/selected-enemies-heart/source/native/knight/idle_n.png": {
+      "sha256": "195efd23ebfaa0d1d4e4c798c937aa234812cbf2ce01e5e123d49cc4bf248e95",
+      "bytes": 465
+    },
+    "art-review/selected-enemies-heart/source/native/knight/idle_s-indexed.png": {
+      "sha256": "b438e52ac76fa86b4326783d70278e7831483cb3a1945351c8b781c4a890e649",
+      "bytes": 1005
+    },
+    "art-review/selected-enemies-heart/source/native/knight/idle_s.png": {
+      "sha256": "f6564636ae3fcae7cb76d57153452084612050106dc1371705864e94b8033a31",
+      "bytes": 478
+    },
+    "art-review/selected-enemies-heart/source/native/knight/recover_e-indexed.png": {
+      "sha256": "cfae823324231a5220f79f79dcbc3c6786c63bc3d60bc8f1b2126c98867ae1d0",
+      "bytes": 1003
+    },
+    "art-review/selected-enemies-heart/source/native/knight/recover_e.png": {
+      "sha256": "167fc8ca014e2a28c80e4ed6934ac3b22b795124e8a0702e1a6109b6cc8334ab",
+      "bytes": 468
+    },
+    "art-review/selected-enemies-heart/source/native/knight/recover_n-indexed.png": {
+      "sha256": "e77c8233d6f891d595655eaadac397fe91c2764d87becc31e867a2de809d56d2",
+      "bytes": 1003
+    },
+    "art-review/selected-enemies-heart/source/native/knight/recover_n.png": {
+      "sha256": "e7c37fa43a8c4384f29df87094ea8e3996f523c00e6746962bddb0b3a01ad3aa",
+      "bytes": 451
+    },
+    "art-review/selected-enemies-heart/source/native/knight/recover_s-indexed.png": {
+      "sha256": "7f3636cd55dafd8250c2a0a02e7a2fda3688372fb259ede363aa33c7a4cd528d",
+      "bytes": 1002
+    },
+    "art-review/selected-enemies-heart/source/native/knight/recover_s.png": {
+      "sha256": "80784aac0a1e778a8547ad911b8c104f322d61c6526e1ef1f8e815a432018b64",
+      "bytes": 477
+    },
+    "art-review/selected-enemies-heart/source/native/knight/strike_e-indexed.png": {
+      "sha256": "9120837b41f84f6f36a8a7409b16e5bc05c26cd473b35e296ec3257b2cd53ecd",
+      "bytes": 1004
+    },
+    "art-review/selected-enemies-heart/source/native/knight/strike_e.png": {
+      "sha256": "883c9ad793343ff7d4ae8b976f4f0419a97729bfcb891373753bdcdddc017ca0",
+      "bytes": 468
+    },
+    "art-review/selected-enemies-heart/source/native/knight/strike_n-indexed.png": {
+      "sha256": "e19ab33ae3b1f88a9efedee7f5ad0a853a48b8eb1eec2fa08d733884e3e52a2f",
+      "bytes": 1010
+    },
+    "art-review/selected-enemies-heart/source/native/knight/strike_n.png": {
+      "sha256": "20207275a3e1397cb64a58c698c9412569e1228c9d8d04f3250dadf42e21c5d4",
+      "bytes": 481
+    },
+    "art-review/selected-enemies-heart/source/native/knight/strike_s-indexed.png": {
+      "sha256": "364ac05239f9b9f2d57b6cbf827c761cdfa952d3bcee7a776ae301b13f6dcab2",
+      "bytes": 1001
+    },
+    "art-review/selected-enemies-heart/source/native/knight/strike_s.png": {
+      "sha256": "145a9db8675a81ab4fbe19094e6bc01d68930522ae43c2502570463d1535b304",
+      "bytes": 479
+    },
+    "art-review/selected-enemies-heart/source/native/knight/walk_e1-indexed.png": {
+      "sha256": "0271062e8d261f4dad17ea65f055642bd8d782cdaf116956b891f4eb721b1c38",
+      "bytes": 1007
+    },
+    "art-review/selected-enemies-heart/source/native/knight/walk_e1.png": {
+      "sha256": "c0c1f4946d642560a54353679fe320ab330c7c2334cdf7c91fa159175848709a",
+      "bytes": 489
+    },
+    "art-review/selected-enemies-heart/source/native/knight/walk_e2-indexed.png": {
+      "sha256": "044f4c377f00721d6937e73b3b6ff7afedba594d7cf7f756d37b90b5eb5d6af9",
+      "bytes": 1008
+    },
+    "art-review/selected-enemies-heart/source/native/knight/walk_e2.png": {
+      "sha256": "316488cdf0dd74a360e05edd766b9979c7302309022a0450caef5d2f5ebd8149",
+      "bytes": 468
+    },
+    "art-review/selected-enemies-heart/source/native/knight/walk_n1-indexed.png": {
+      "sha256": "c356a4ba5f54e729073fe30281e66044e8a576d22e3ea0e7e4f7b65baa0a6295",
+      "bytes": 1006
+    },
+    "art-review/selected-enemies-heart/source/native/knight/walk_n1.png": {
+      "sha256": "c6cdf0263fa34a9042d49edcbd5ace15c03d288d7544bee0063698a8dbbb6000",
+      "bytes": 473
+    },
+    "art-review/selected-enemies-heart/source/native/knight/walk_n2-indexed.png": {
+      "sha256": "e0699bbf52e88d0a982f8e12e5afb83336c2d2e21e787fadbe7c5fa1d634df49",
+      "bytes": 1006
+    },
+    "art-review/selected-enemies-heart/source/native/knight/walk_n2.png": {
+      "sha256": "92f0551e18f576bae475b644c58ce869ee5a8afb01c8446bf930387594f435b5",
+      "bytes": 454
+    },
+    "art-review/selected-enemies-heart/source/native/knight/walk_s1-indexed.png": {
+      "sha256": "e42819910faf2026c84abc4a9d4dfef8503efa3ede4f9423bf2e24a3cd9cc817",
+      "bytes": 1006
+    },
+    "art-review/selected-enemies-heart/source/native/knight/walk_s1.png": {
+      "sha256": "88eb1bde83ea2d369e366048b950c3776c117a53c306081b6511402e99421c83",
+      "bytes": 484
+    },
+    "art-review/selected-enemies-heart/source/native/knight/walk_s2-indexed.png": {
+      "sha256": "d3f3759d8675757334dce147158d6a7cd86f604ffd9c2b004b55e5bea8a69bd5",
+      "bytes": 1005
+    },
+    "art-review/selected-enemies-heart/source/native/knight/walk_s2.png": {
+      "sha256": "c9d8bb6bb4c9636aedd44727b0bc525fc01f810ce8f235ae01ecccb46a82de7e",
+      "bytes": 477
+    },
+    "art-review/selected-enemies-heart/source/native/knight/windup_e-indexed.png": {
+      "sha256": "b940ae1cf342545908b89d6348d6b0984495030822c6f5c528b2b81251e66d20",
+      "bytes": 1010
+    },
+    "art-review/selected-enemies-heart/source/native/knight/windup_e.png": {
+      "sha256": "dad13abda0e3b629c62eb22b6dd195cbd91f1ad247e46bbe62bf04319e14daec",
+      "bytes": 479
+    },
+    "art-review/selected-enemies-heart/source/native/knight/windup_n-indexed.png": {
+      "sha256": "21ed5e020de64a71445c72f0a0d71a34a07d8caf678cbc707247dece8057fa02",
+      "bytes": 996
+    },
+    "art-review/selected-enemies-heart/source/native/knight/windup_n.png": {
+      "sha256": "d7f13c1839aa47d454a1b7c09329f2249e0b399c9243345b67e8d96897f262bf",
+      "bytes": 449
+    },
+    "art-review/selected-enemies-heart/source/native/knight/windup_s-indexed.png": {
+      "sha256": "bf3ce35ba8460e6032beea21d8ac5449564da4ced2ed5d2f94df2ed57059d4b5",
+      "bytes": 1005
+    },
+    "art-review/selected-enemies-heart/source/native/knight/windup_s.png": {
+      "sha256": "120f2b8eb03caf54dbc0501e23c0ab9e47d2ee02abc99c366e77bf2f6a25735e",
+      "bytes": 485
+    },
+    "art-review/selected-enemies-heart/source/native/ksword/blade_e-indexed.png": {
+      "sha256": "9776097ac41a691184c6dd3cf24ba324829018deb3267059c02ac01079a201ac",
+      "bytes": 906
+    },
+    "art-review/selected-enemies-heart/source/native/ksword/blade_e.png": {
+      "sha256": "3b006cccc9c83887a3738f70935b2b13dffe5e2617336bc6ad33b061d4e2ab2b",
+      "bytes": 179
+    },
+    "art-review/selected-enemies-heart/source/native/ksword/blade_s-indexed.png": {
+      "sha256": "d767dc5c671201ab04eb55350af9274025cb46abdf737a3958efc7ce51808e00",
+      "bytes": 896
+    },
+    "art-review/selected-enemies-heart/source/native/ksword/blade_s.png": {
+      "sha256": "2cb4eb692a99bbac9dbcce9ffa716e7890e5877a0e08b85cf31ebdb5d3fce19d",
+      "bytes": 174
+    },
+    "art-review/selected-enemies-heart/source/native/proj/seed-indexed.png": {
+      "sha256": "277befff5c90d19cdc53a3a95fa0a47df16cb195d44ec4a5c790687cd8e37ef5",
+      "bytes": 886
+    },
+    "art-review/selected-enemies-heart/source/native/proj/seed.png": {
+      "sha256": "4e53e5ce2e6ef533b7311f7d2a373a64faa869e7544701ee8f7a18870f8a1964",
+      "bytes": 160
+    },
+    "art-review/selected-enemies-heart/source/native/slime/idle-indexed.png": {
+      "sha256": "9c33300ccf8dde8e740ae90300637ad8adece7e8bf41d2e4ef620a9f9fe34041",
+      "bytes": 925
+    },
+    "art-review/selected-enemies-heart/source/native/slime/idle.png": {
+      "sha256": "1e0d055b647a725eba9f44f8f269e33398e7648b110190e86ae3691c7e921026",
+      "bytes": 259
+    },
+    "art-review/selected-enemies-heart/source/native/slime/jump-indexed.png": {
+      "sha256": "56f6c7a03fd6e9f3dc0bc5814eb9c2f48122b20da3f36405a50aad172b500d97",
+      "bytes": 927
+    },
+    "art-review/selected-enemies-heart/source/native/slime/jump.png": {
+      "sha256": "f53f5de216332b7e52580fd815c1232ec422c6b355375477215b720126fb477d",
+      "bytes": 255
+    },
+    "art-review/selected-enemies-heart/source/native/slime/squash-indexed.png": {
+      "sha256": "bc14d93bde7fdcd1b66c0d9c7abfa6ce6ba5d85bc93148f2d136c0cf0c19889b",
+      "bytes": 916
+    },
+    "art-review/selected-enemies-heart/source/native/slime/squash.png": {
+      "sha256": "e1f82cda55eda16cc8ee33fac0670e076a769ac517d7f26da110b0b1473adc59",
+      "bytes": 228
+    },
+    "art-review/selected-enemies-heart/source/native/spitter/charge_e-indexed.png": {
+      "sha256": "8566aee78d7c4e14c632c951feeba7fb0923a291e6bab70c16cb709b0baf0c3b",
+      "bytes": 930
+    },
+    "art-review/selected-enemies-heart/source/native/spitter/charge_e.png": {
+      "sha256": "87a47a83b356a8051c6f8e2b0ec2e1cc69ea2a82b94d9f0d09036dd4c1007d39",
+      "bytes": 282
+    },
+    "art-review/selected-enemies-heart/source/native/spitter/charge_n-indexed.png": {
+      "sha256": "f1253fdea5081fe4cf600cc722a64642a113f3ca177d59769981e492e78ccc93",
+      "bytes": 932
+    },
+    "art-review/selected-enemies-heart/source/native/spitter/charge_n.png": {
+      "sha256": "e7fd149a40ecd79af964e88c094feb105ec23564ddee1e175da2a169fdff7362",
+      "bytes": 267
+    },
+    "art-review/selected-enemies-heart/source/native/spitter/charge_s-indexed.png": {
+      "sha256": "c8be4a15842e42af6a304c9bd0544f2b7e982517b7f7e4af16ddcd783c266e2e",
+      "bytes": 938
+    },
+    "art-review/selected-enemies-heart/source/native/spitter/charge_s.png": {
+      "sha256": "95ddd1972750c6cef84462c2ed0341c4491991d2e85695ecd52fea1c610c16ef",
+      "bytes": 307
+    },
+    "art-review/selected-enemies-heart/source/native/spitter/idle_e-indexed.png": {
+      "sha256": "059a5a972fa2e002062a687c69447b8d2f408a74a35b47c75a310857d8f372fb",
+      "bytes": 938
+    },
+    "art-review/selected-enemies-heart/source/native/spitter/idle_e.png": {
+      "sha256": "7606da4260f3456437f9d99236e8fc1e4d689b7bd6687bc1c50fe6ae4328ee23",
+      "bytes": 287
+    },
+    "art-review/selected-enemies-heart/source/native/spitter/idle_n-indexed.png": {
+      "sha256": "c2237db8cd31df7e2fa8fbfd1a99f95961692ad1b1e9763d903b30887f8d223e",
+      "bytes": 937
+    },
+    "art-review/selected-enemies-heart/source/native/spitter/idle_n.png": {
+      "sha256": "1fee388fca5104156b004d9268a15c3b25c8428ccf7e9e48eb9a01960a84facf",
+      "bytes": 277
+    },
+    "art-review/selected-enemies-heart/source/native/spitter/idle_s-indexed.png": {
+      "sha256": "7277c540fbc5b93446ebe87e0986528680c3d6e4c339b9ccbb8da1340faf553c",
+      "bytes": 944
+    },
+    "art-review/selected-enemies-heart/source/native/spitter/idle_s.png": {
+      "sha256": "dd492893b3dbdda578c4c14ce0b52188299d58bcff5555ceb60039bc0abdc68d",
+      "bytes": 311
+    },
+    "art-review/selected-enemies-heart/source/native/spitter/spit_e-indexed.png": {
+      "sha256": "7de5617bb9875a868aa0ab3f89234d60fc277702be8e0681accb26a9645a0b02",
+      "bytes": 936
+    },
+    "art-review/selected-enemies-heart/source/native/spitter/spit_e.png": {
+      "sha256": "977c37e640e6ec43c27859bb6c905192cf2bfe8b8696f45c83f2327267a4d60e",
+      "bytes": 287
+    },
+    "art-review/selected-enemies-heart/source/native/spitter/spit_n-indexed.png": {
+      "sha256": "0f71c70e4ce3acfa713390b4f1efcb8e47e16bea28c28286cc94fd63765a5636",
+      "bytes": 942
+    },
+    "art-review/selected-enemies-heart/source/native/spitter/spit_n.png": {
+      "sha256": "34dd42fa69dd29c17e41ea2004e7757dc404d96e3dcfb4ae7ce22fddc5246907",
+      "bytes": 291
+    },
+    "art-review/selected-enemies-heart/source/native/spitter/spit_s-indexed.png": {
+      "sha256": "877a87896f0ed06e23e6e55372bc16dfb83559133f8ef24baa6ce8d84305144d",
+      "bytes": 941
+    },
+    "art-review/selected-enemies-heart/source/native/spitter/spit_s.png": {
+      "sha256": "7848f86260be7d045fe6bfe4dc29967bb0a69a654162e39bb224b39fdbf85c91",
+      "bytes": 300
+    },
+    "art-review/selected-enemies-heart/source/native/spitter/walk_e-indexed.png": {
+      "sha256": "4ae2820226bbe597a09fcd0d0218145bef61e3a15fe66abebd48393990a3619e",
+      "bytes": 938
+    },
+    "art-review/selected-enemies-heart/source/native/spitter/walk_e.png": {
+      "sha256": "8cfb5c239427e23683fce6973b433c5ce82cad8b28c8146ce98d7ff09b9ed92c",
+      "bytes": 282
+    },
+    "art-review/selected-enemies-heart/source/native/spitter/walk_n-indexed.png": {
+      "sha256": "6033636e062fafe7c11fd2cd344d115f8f3e1289336ca954d352ff90b9e0cc59",
+      "bytes": 939
+    },
+    "art-review/selected-enemies-heart/source/native/spitter/walk_n.png": {
+      "sha256": "10b2a8f04ce69ae55604e6904ffe4aa744295671cab584d46203639765986989",
+      "bytes": 275
+    },
+    "art-review/selected-enemies-heart/source/native/spitter/walk_s-indexed.png": {
+      "sha256": "bc0f6d2f9d5a294a5980e8261cef50bcbc026df12c03cc54fe81716ab440cf18",
+      "bytes": 945
+    },
+    "art-review/selected-enemies-heart/source/native/spitter/walk_s.png": {
+      "sha256": "4899fffb24a9f7ed90cace84ddd1d272dc7a40bb21cbcd693c7fed6e895b5c6a",
+      "bytes": 320
+    },
+    "art-review/selected-enemies-heart/source/selected-all-poses-source.gif": {
+      "sha256": "0847b5bde07689f97fa0bd97eea3f7dedce767328ea3b10fafc0eca288c6d89f",
+      "bytes": 305825
+    },
+    "art-review/selected-enemies-heart/source/selected-diagnostics-source.png": {
+      "sha256": "f6bd2bbf382ec654b994a317fe49303b987edfa438a6fcd0ce0f12128694b008",
+      "bytes": 17296
+    },
+    "art-review/selected-enemies-heart/source/selected-overview-source.png": {
+      "sha256": "bd68dafc79cde2a5cd63ec2bd059381c2db54827fbb719c4507f8a56839bd8cb",
+      "bytes": 11265
+    },
+    "art-review/selected-enemies-heart/source/slime-all-poses-source.gif": {
+      "sha256": "b93c0715f19ba7ac52153f5818ab22be7eabb51f3477b7bbb01ba8f2276e4494",
+      "bytes": 8901
+    },
+    "art-review/selected-enemies-heart/source/source-manifest.json": {
+      "sha256": "0621f1bfa079a890dbab9feea8f694497d68774fb35b176000dd724d5e7eb534",
+      "bytes": 77714
+    },
+    "art-review/selected-enemies-heart/source/spitter-all-poses-source.gif": {
+      "sha256": "1fb9eb8f45c89073bd0736d32dbb77f07e95319946e11b71475e62685fcf311b",
+      "bytes": 37914
+    },
+    "art-review/selected-enemies-heart/validation/audit-summary.json": {
+      "sha256": "bc363c0622c3c6a52947286cd7049c363e1887f7647b5e38fcf8f2e47bdc5c5f",
+      "bytes": 20408
+    },
+    "art-review/selected-enemies-heart/validation/audit.json": {
+      "sha256": "3c5e09b997514546ede42c1e50a55c7d3a8a657a3bfb31502d45e728f83bbc0f",
+      "bytes": 1738451
+    },
+    "art-review/selected-enemies-heart/validation/audit.log": {
+      "sha256": "d32e76b54aadb36eb2ffd87886d7fcd7cff39207a3f7808cab703c53da16f871",
+      "bytes": 21
+    },
+    "art-review/selected-enemies-heart/validation/build-default.log": {
+      "sha256": "fd1f2ba3f06def85468f227e8f8ec6745db300d8341f32472ca602aa04b5b79e",
+      "bytes": 8581
+    },
+    "art-review/selected-enemies-heart/validation/capture.log": {
+      "sha256": "a0cf2337170de399a1e3e6bc302f50904abe93b21c8d7977f0f652b68a085a4f",
+      "bytes": 360
+    },
+    "art-review/selected-enemies-heart/validation/clearing.log": {
+      "sha256": "632eabff24afc8e6e415e52c5a7d974746e9a9448ddd1cc3bafb51f3527e2d9c",
+      "bytes": 52
+    },
+    "art-review/selected-enemies-heart/validation/coverage.json": {
+      "sha256": "dbccbcc21143fb0f6cca4e3830c18da362c796c1c79f2d059622fa31ecdc3578",
+      "bytes": 604594
+    },
+    "art-review/selected-enemies-heart/validation/freeze.json": {
+      "sha256": "0402738e135bd40186626a9236f5f4616be9d6a3110d497fd1897825664f0c9d",
+      "bytes": 11513
+    },
+    "art-review/selected-enemies-heart/validation/heart-rom-native-atlas.png": {
+      "sha256": "faff72ad67608e43e09e26179fdb206e06e31f0f283139db8d51deacbe730095",
+      "bytes": 19602
+    },
+    "art-review/selected-enemies-heart/validation/historical-profile-preservation.json": {
+      "sha256": "5d6fd1549f82ad3f7e31e1129e5d4c624d0fbc3af70cea84d57afd74070fc2d9",
+      "bytes": 208
+    },
+    "art-review/selected-enemies-heart/validation/native-validation.json": {
+      "sha256": "d0d0bb2ab85b748955c5470a38f2eb7a7c6443d15018c146aedc5d7db17df040",
+      "bytes": 6116
+    },
+    "art-review/selected-enemies-heart/validation/publication-summary.json": {
+      "sha256": "019e47bb8bcf2ed338bc35840dcfc76c525cdfde0b95100dc9e571282ffa238b",
+      "bytes": 8509
+    },
+    "art-review/selected-enemies-heart/validation/selection-contracts.json": {
+      "sha256": "cf78aedf616c8b33cb0658dcdcd7c6febcb42abed810523c3a5918d0e56bce6e",
+      "bytes": 14744
+    },
+    "art-review/selected-enemies-heart/validation/visual-review.md": {
+      "sha256": "b4895d57cf4bea49138e8dd64e65bc04bdef4aedebc9c744393c365346702f8c",
+      "bytes": 2455
+    },
+    "downloads/selected-enemies-770b542/README.md": {
+      "sha256": "3a2f7d80a5d7233be7376b286daeb83551e0a2c29d6bbf3ece2850407a4ebe0c",
+      "bytes": 1457
+    },
+    "downloads/selected-enemies-770b542/README.txt": {
+      "sha256": "ee9febbd2a5d5edb240acf8ec2170886311d34f3a40c9ba26aadbf3021d3d165",
+      "bytes": 1011
+    },
+    "downloads/selected-enemies-770b542/ROM-SHA256.txt": {
+      "sha256": "32143771cdc08d2d9a21fcc9cbb7d3135dc2b5a1e602133a223aac3c234f712e",
+      "bytes": 95
+    },
+    "downloads/selected-enemies-770b542/SHA256SUMS.txt": {
+      "sha256": "e73552d4fec9a451038c1a4d5b395c32edc8e114a319402c16fd6f62dae540d9",
+      "bytes": 190
+    },
+    "downloads/selected-enemies-770b542/freeze.json": {
+      "sha256": "0402738e135bd40186626a9236f5f4616be9d6a3110d497fd1897825664f0c9d",
+      "bytes": 11513
+    },
+    "downloads/selected-enemies-770b542/selected-enemies-770b542.gba": {
+      "sha256": "9330a44a4e27d99606a757134aa41a62adb122a74315c400e1ad3427048c8661",
+      "bytes": 594124
+    },
+    "downloads/selected-enemies-770b542/selected-enemies-770b542.zip": {
+      "sha256": "268aba0a6f7910c4277ec6679fd4a17e1887fb3cb3e7152933b07ec91cb0ec63",
+      "bytes": 152601
+    }
+  },
+  "note": "Exact hashes excluding this manifest. Parent regenerates after main/release editorial README additions."
+}

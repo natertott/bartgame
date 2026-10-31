@@ -656,3 +656,22 @@ rules and source notes still apply; no new external article or source image is
 claimed. Native source critique and actual mGBA recordings will be published
 with a frozen default ROM, exact selected-frame comparisons and the complete
 Heart phase review. Source galleries remain separate from actual gameplay.
+
+**Final evidence:** ordinary `make -j4` at game/art source `770b542` produces
+SHA256 `9330a44a4e27d99606a757134aa41a62adb122a74315c400e1ad3427048c8661`.
+All thirteen actual mGBA cases pass 88 runtime checks, including the Heart's
+ring, fan/spawning, lunge, hurt and defeat. The independent audit passes
+12,919 checks, including all 51 selected non-boss native frame instances,
+all thirteen new Heart poses and actual visible sprite pixels for every pose.
+Protected world/Bloom/items/UI/font/glitter, palettes and every `src/*` file
+are exact to the prior release. All thirteen sampled gameplay trajectories
+match its prior positive-profile behavior. Source catalogs use fixed review
+holds; separate actual footage establishes gameplay timing. Historical
+profiles0–10 remain unchanged, with an explicit profile1 rebuild byte-identical
+to its frozen release. OBJ remains816/876 and EWRAM212,184/262,144.
+
+[Selected-enemy gallery](../../../art-review/selected-enemies-heart/README.md)
+and [playable release](../../../downloads/selected-enemies-770b542/README.md)
+record the final adoption. The purple Heart is recognizable in the actual
+blighted-room captures; the continuous central fracture remains visible in
+all thirteen live poses. No new external research is claimed for this choice.

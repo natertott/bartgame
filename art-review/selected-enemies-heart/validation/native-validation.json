@@ -1,0 +1,367 @@
+{
+  "method": "Direct native legal-canvas/index/continuous-split/unique-pose checks; exact-palette GIF RGB roundtrip. These source checks do not replace actual mGBA review.",
+  "frames": [
+    {
+      "frame": "pulse1",
+      "canvas": [
+        32,
+        64
+      ],
+      "indices": [
+        0,
+        1,
+        3,
+        4,
+        5,
+        6,
+        7,
+        12,
+        13,
+        14
+      ],
+      "bounds": [
+        1,
+        15,
+        32,
+        62
+      ],
+      "full_height_gap_clear": true,
+      "native_indices_sha256": "18795e4821a6b8e4216eefaa3a46e62ec0bfa53006f768a2ef7343fd07660b1d"
+    },
+    {
+      "frame": "pulse2",
+      "canvas": [
+        32,
+        64
+      ],
+      "indices": [
+        0,
+        1,
+        3,
+        4,
+        5,
+        6,
+        7,
+        12,
+        13,
+        14,
+        15
+      ],
+      "bounds": [
+        0,
+        14,
+        32,
+        62
+      ],
+      "full_height_gap_clear": true,
+      "native_indices_sha256": "9c3d6c387f379f48da7a6b8870737bab423a7e2c9d1ceb269eea21870b1d2c74"
+    },
+    {
+      "frame": "hurt",
+      "canvas": [
+        32,
+        64
+      ],
+      "indices": [
+        0,
+        1,
+        3,
+        4,
+        5,
+        6,
+        7,
+        12,
+        13,
+        14,
+        15
+      ],
+      "bounds": [
+        0,
+        15,
+        31,
+        61
+      ],
+      "full_height_gap_clear": true,
+      "native_indices_sha256": "9216b0ce5ecdc9c40d225db9c4422da7a1918c7086fbd0a8212906b59624e9aa"
+    },
+    {
+      "frame": "charge1",
+      "canvas": [
+        32,
+        64
+      ],
+      "indices": [
+        0,
+        1,
+        3,
+        4,
+        5,
+        6,
+        7,
+        12,
+        13,
+        14,
+        15
+      ],
+      "bounds": [
+        0,
+        14,
+        32,
+        61
+      ],
+      "full_height_gap_clear": true,
+      "native_indices_sha256": "0e3f967b3f024ab5be900de09097a210c81d2740b998147ac41f237920dd671f"
+    },
+    {
+      "frame": "charge2",
+      "canvas": [
+        32,
+        64
+      ],
+      "indices": [
+        0,
+        1,
+        3,
+        4,
+        5,
+        6,
+        7,
+        12,
+        13,
+        14,
+        15
+      ],
+      "bounds": [
+        0,
+        13,
+        32,
+        60
+      ],
+      "full_height_gap_clear": true,
+      "native_indices_sha256": "b3eb7c4ff719ac6ba144822e187d2eebc0f56943a0ceda16f9491ec12e7120f2"
+    },
+    {
+      "frame": "release1",
+      "canvas": [
+        32,
+        64
+      ],
+      "indices": [
+        0,
+        1,
+        3,
+        4,
+        5,
+        6,
+        7,
+        12,
+        13,
+        14,
+        15
+      ],
+      "bounds": [
+        2,
+        15,
+        32,
+        60
+      ],
+      "full_height_gap_clear": true,
+      "native_indices_sha256": "a16b5bf3c0229626df7bc800fbd03f4dc28519b5475cd7b3b4593a9f914a8e37"
+    },
+    {
+      "frame": "release2",
+      "canvas": [
+        32,
+        64
+      ],
+      "indices": [
+        0,
+        1,
+        3,
+        4,
+        5,
+        6,
+        7,
+        12,
+        13,
+        14,
+        15
+      ],
+      "bounds": [
+        3,
+        16,
+        32,
+        61
+      ],
+      "full_height_gap_clear": true,
+      "native_indices_sha256": "5a23727ff57b1b523f081ca0be17b5d20417bf696a81b8cfb6c3fd053ce1a2a9"
+    },
+    {
+      "frame": "spawn1",
+      "canvas": [
+        32,
+        64
+      ],
+      "indices": [
+        0,
+        1,
+        3,
+        4,
+        5,
+        6,
+        7,
+        12,
+        13,
+        14,
+        15
+      ],
+      "bounds": [
+        1,
+        14,
+        32,
+        61
+      ],
+      "full_height_gap_clear": true,
+      "native_indices_sha256": "dd622eb22ad24e7b773e4ab708adafb0be9f40e3fddd9e9e138a08961a84a8c4"
+    },
+    {
+      "frame": "spawn2",
+      "canvas": [
+        32,
+        64
+      ],
+      "indices": [
+        0,
+        1,
+        3,
+        4,
+        5,
+        6,
+        7,
+        12,
+        13,
+        14,
+        15
+      ],
+      "bounds": [
+        0,
+        15,
+        32,
+        61
+      ],
+      "full_height_gap_clear": true,
+      "native_indices_sha256": "2ebc3fdf37a9cd5f2e175cf021e03a32f89f0013783b062d6f5c4ff62981627f"
+    },
+    {
+      "frame": "lunge1",
+      "canvas": [
+        32,
+        64
+      ],
+      "indices": [
+        0,
+        1,
+        3,
+        4,
+        5,
+        6,
+        7,
+        12,
+        13,
+        14,
+        15
+      ],
+      "bounds": [
+        0,
+        16,
+        31,
+        61
+      ],
+      "full_height_gap_clear": true,
+      "native_indices_sha256": "17409adc3e2a6c685a3eb71f413d597f861b853c5c135ed9736b74320cef1da5"
+    },
+    {
+      "frame": "lunge2",
+      "canvas": [
+        32,
+        64
+      ],
+      "indices": [
+        0,
+        1,
+        3,
+        4,
+        5,
+        6,
+        7,
+        12,
+        13,
+        14,
+        15
+      ],
+      "bounds": [
+        0,
+        17,
+        32,
+        61
+      ],
+      "full_height_gap_clear": true,
+      "native_indices_sha256": "c2385404ca32fb6ef123c6bc0f0b64f0d4d0d7b998849cb0a314a4d69e016f56"
+    },
+    {
+      "frame": "dying1",
+      "canvas": [
+        32,
+        64
+      ],
+      "indices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        12
+      ],
+      "bounds": [
+        2,
+        24,
+        31,
+        60
+      ],
+      "full_height_gap_clear": true,
+      "native_indices_sha256": "b9fe7dc466c86b6dd114e04e8e3600b13efa2dabb749c00c0058fe8f1fc78172"
+    },
+    {
+      "frame": "dying2",
+      "canvas": [
+        32,
+        64
+      ],
+      "indices": [
+        0,
+        1,
+        3,
+        4,
+        5,
+        6,
+        12
+      ],
+      "bounds": [
+        4,
+        32,
+        31,
+        60
+      ],
+      "full_height_gap_clear": true,
+      "native_indices_sha256": "36317b0eefca7bad7c8b1f53ff5317ad7d04705ef266feeda0b8bc459f320ba8"
+    }
+  ],
+  "passed": 13,
+  "total": 13,
+  "gif_exact_palette": true,
+  "gif_colors": 13,
+  "gif_pose_ms": 150,
+  "source_sha256": "a52ae7779f314f006f3a0e861c3a3f75cfadbb2be5294873c5d2c6e2ace6e917"
+}

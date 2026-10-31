@@ -22,8 +22,11 @@ The [five comparison studies](docs/SWORD_STUDIES.md) remain available explicitly
 include title Options, a fixed Winebound HUD, Workbench inventory, event-labelled
 regional/chamber maps, and sixty animated enemy alternatives. Menu/dialogue
 frame style and colors are selected independently and persist between runs.
-Normal builds use the final Drain9, UI6/MENU1 and existing enemies; optional
-`BART_ENEMY=1..10` builds provide the comparison sets. Earlier
+Normal builds use the final Drain9, UI6/MENU1 and the
+[selected enemy set](../art-review/selected-enemies-heart/README.md): Coin Toad,
+Quill Moth, Trumpet Bellflower, Pear Bladder, Moth Confessor and a new purple
+Heart broken down the middle (`BART_ENEMY=11`). Explicit `BART_ENEMY=0..10`
+builds retain the earlier comparison sets. Earlier
 [Drain concept studies](docs/SEWER_CONCEPTS.md) remain available.
 
 ## Current game
@@ -84,7 +87,8 @@ only equipped ammunition is shown. Menus use the selected native frame kit.
 | `art/reboot_core.py` | Shared RGB555 inks, material roles, perspective and reusable native shapes. |
 | `art/reboot_terrain.py` | Forest, progressive blight, Drain, interiors and interactive metatiles. |
 | `art/reboot_actors.py` | Bloom, weapons/actions, enemies, NPCs, keepers and Heart. |
-| `art/enemy_studies*.py` | Sixty optional behavior-led enemy alternatives, native companions and a dedicated small-enemy palette. |
+| `art/enemy_studies*.py` | Selected enemy dispatch plus sixty comparison alternatives, native companions and a dedicated small-enemy palette. |
+| `art/enemy_heart.py` | Thirteen native poses for the selected broken purple Heart. |
 | `art/sword_studies.py` | Selected Step-and-cut body/weapon poses, clock and contact geometry. |
 | `art/reboot_items.py` | World drops, equipment, liftables, chests and entrances. |
 | `art/reboot_ui.py`, `ui_font.py`, `ui_kit.py`, `faces.py`, `title.py` | Interface, native font, portraits and title. |

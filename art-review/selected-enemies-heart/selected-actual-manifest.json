@@ -1,0 +1,222 @@
+{
+  "selected-actual-native.png": {
+    "sha256": "edeef94f24d282d067cdb7750534d8ec58f795b8fc817c5fd79c37939a9c469c",
+    "panels": [
+      {
+        "name": "Coin Toad",
+        "case": "pursuer-clearing",
+        "source_image": "clearing/pursuer-clearing.png",
+        "source_sha256": "f6c30ad0bd09fe94a329fe4ff3c68240efa32dec3155035bb3688084268df661",
+        "tick": 13,
+        "crop": null,
+        "destination": [
+          0,
+          50,
+          240,
+          210
+        ],
+        "note": "Only actual framebuffer pixels; external captions and integer crop enlargement."
+      },
+      {
+        "name": "Quill Moth",
+        "case": "flyer-behavior",
+        "source_image": "captures/flyer-behavior.png",
+        "source_sha256": "3b08c0e0bafffa455a8a74d3029318177bcd9d7212df63aecad26ac53db11373",
+        "tick": 0,
+        "crop": null,
+        "destination": [
+          240,
+          50,
+          480,
+          210
+        ],
+        "note": "Only actual framebuffer pixels; external captions and integer crop enlargement."
+      },
+      {
+        "name": "Trumpet Bellflower",
+        "case": "shooter-behavior",
+        "source_image": "captures/shooter-behavior.png",
+        "source_sha256": "dad891e85e8bddb78974f6b371df0947176c6ce39c09f7d20596ae5fd2372988",
+        "tick": 11,
+        "crop": null,
+        "destination": [
+          480,
+          50,
+          720,
+          210
+        ],
+        "note": "Only actual framebuffer pixels; external captions and integer crop enlargement."
+      },
+      {
+        "name": "Pear Bladder",
+        "case": "hopper-behavior",
+        "source_image": "captures/hopper-behavior.png",
+        "source_sha256": "25956156c04cd071bde1794cb373dad813eba51768d4e6e7f26956b7e36581f5",
+        "tick": 27,
+        "crop": null,
+        "destination": [
+          0,
+          240,
+          240,
+          400
+        ],
+        "note": "Only actual framebuffer pixels; external captions and integer crop enlargement."
+      },
+      {
+        "name": "Moth Confessor",
+        "case": "melee-behavior",
+        "source_image": "captures/melee-behavior.png",
+        "source_sha256": "76260fab8533105e3341646aeda9a7a838b48df71ec678b019235189765246cc",
+        "tick": 19,
+        "crop": null,
+        "destination": [
+          240,
+          240,
+          480,
+          400
+        ],
+        "note": "Only actual framebuffer pixels; external captions and integer crop enlargement."
+      },
+      {
+        "name": "Broken Heart",
+        "case": "boss-ring",
+        "source_image": "captures/boss-ring.png",
+        "source_sha256": "a1cf5e419c843709a017d4bbffb638bbfd645db0ad5f8297aab9bf488e8a608f",
+        "tick": 0,
+        "crop": null,
+        "destination": [
+          480,
+          240,
+          720,
+          400
+        ],
+        "note": "Only actual framebuffer pixels; external captions and integer crop enlargement."
+      }
+    ]
+  },
+  "selected-actual-context-2x.png": {
+    "sha256": "b8a70b33fcd0309a4a41bbbe2a94c80e7e88e15362ca515e128bc6532ffad23b",
+    "panels": [
+      {
+        "name": "Coin Toad",
+        "case": "pursuer-clearing",
+        "source_image": "clearing/pursuer-clearing.png",
+        "source_sha256": "f6c30ad0bd09fe94a329fe4ff3c68240efa32dec3155035bb3688084268df661",
+        "tick": 13,
+        "crop": [
+          40,
+          79,
+          136,
+          159
+        ],
+        "destination": [
+          24,
+          50,
+          216,
+          210
+        ],
+        "note": "Only actual framebuffer pixels; external captions and integer crop enlargement."
+      },
+      {
+        "name": "Quill Moth",
+        "case": "flyer-behavior",
+        "source_image": "captures/flyer-behavior.png",
+        "source_sha256": "3b08c0e0bafffa455a8a74d3029318177bcd9d7212df63aecad26ac53db11373",
+        "tick": 0,
+        "crop": [
+          28,
+          15,
+          124,
+          95
+        ],
+        "destination": [
+          264,
+          50,
+          456,
+          210
+        ],
+        "note": "Only actual framebuffer pixels; external captions and integer crop enlargement."
+      },
+      {
+        "name": "Trumpet Bellflower",
+        "case": "shooter-behavior",
+        "source_image": "captures/shooter-behavior.png",
+        "source_sha256": "dad891e85e8bddb78974f6b371df0947176c6ce39c09f7d20596ae5fd2372988",
+        "tick": 11,
+        "crop": [
+          120,
+          24,
+          216,
+          104
+        ],
+        "destination": [
+          504,
+          50,
+          696,
+          210
+        ],
+        "note": "Only actual framebuffer pixels; external captions and integer crop enlargement."
+      },
+      {
+        "name": "Pear Bladder",
+        "case": "hopper-behavior",
+        "source_image": "captures/hopper-behavior.png",
+        "source_sha256": "25956156c04cd071bde1794cb373dad813eba51768d4e6e7f26956b7e36581f5",
+        "tick": 27,
+        "crop": [
+          72,
+          12,
+          168,
+          92
+        ],
+        "destination": [
+          24,
+          240,
+          216,
+          400
+        ],
+        "note": "Only actual framebuffer pixels; external captions and integer crop enlargement."
+      },
+      {
+        "name": "Moth Confessor",
+        "case": "melee-behavior",
+        "source_image": "captures/melee-behavior.png",
+        "source_sha256": "76260fab8533105e3341646aeda9a7a838b48df71ec678b019235189765246cc",
+        "tick": 19,
+        "crop": [
+          76,
+          21,
+          172,
+          101
+        ],
+        "destination": [
+          264,
+          240,
+          456,
+          400
+        ],
+        "note": "Only actual framebuffer pixels; external captions and integer crop enlargement."
+      },
+      {
+        "name": "Broken Heart",
+        "case": "boss-ring",
+        "source_image": "captures/boss-ring.png",
+        "source_sha256": "a1cf5e419c843709a017d4bbffb638bbfd645db0ad5f8297aab9bf488e8a608f",
+        "tick": 0,
+        "crop": [
+          37,
+          24,
+          133,
+          104
+        ],
+        "destination": [
+          504,
+          240,
+          696,
+          400
+        ],
+        "note": "Only actual framebuffer pixels; external captions and integer crop enlargement."
+      }
+    ]
+  }
+}

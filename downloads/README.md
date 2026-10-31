@@ -1,5 +1,20 @@
 # BARTGAME downloads
 
+## Selected enemies and broken purple Heart
+
+The selected Coin Toad, Quill Moth, Trumpet Bellflower, Pear Bladder and Moth
+Confessor are now production defaults. The boss is a new purple Heart split
+down the middle through all thirteen poses.
+
+- [Download the ROM](https://raw.githubusercontent.com/natertott/bartgame/selected-enemies-heart/downloads/selected-enemies-770b542/selected-enemies-770b542.gba)
+- [Download the ZIP](https://raw.githubusercontent.com/natertott/bartgame/selected-enemies-heart/downloads/selected-enemies-770b542/selected-enemies-770b542.zip)
+- [Actual mGBA images, animations and complete source artwork](https://github.com/natertott/bartgame/blob/selected-enemies-heart/art-review/selected-enemies-heart/README.md)
+- [Release and checksums](selected-enemies-770b542/README.md)
+
+Game/art source `770b542`; ordinary `make -j4` selects `BART_ENEMY=11`.
+Thirteen actual cases pass 88 runtime checks; 12,919 independent checks pass.
+Earlier branch-specific releases and comparison studies remain below.
+
 ## Selected interfaces and sixty animated enemy studies
 
 Home-screen Options combines Winebound Folio, Mossbound Fieldbook or Ivory

@@ -1,0 +1,386 @@
+{
+  "method": "Read actual captured RGB against frozen-ROM pose pixels and OAM.\n\n        A stable repeated selection avoids the declared one-VBlank stream\n        latency. Shadows/player/foreground may cover a few pixels; require a\n        clearly visible body for every pose instead of trusting pose counters.",
+  "poses": {
+    "pulse1": {
+      "fraction": 1.0,
+      "matches": 808,
+      "opaque_pixels": 808,
+      "capture": "boss-ring",
+      "tick": 35,
+      "image": "/workspace/setup/selected-enemies-heart/captures/all-frames/boss-ring/frame-035.png",
+      "hardware_origin": [
+        58,
+        26
+      ]
+    },
+    "pulse2": {
+      "fraction": 1.0,
+      "matches": 866,
+      "opaque_pixels": 866,
+      "capture": "boss-ring",
+      "tick": 41,
+      "image": "/workspace/setup/selected-enemies-heart/captures/all-frames/boss-ring/frame-041.png",
+      "hardware_origin": [
+        58,
+        27
+      ]
+    },
+    "hurt": {
+      "fraction": 0.9949044585987261,
+      "matches": 781,
+      "opaque_pixels": 785,
+      "capture": "boss-real-defeat",
+      "tick": 34,
+      "image": "/workspace/setup/selected-enemies-heart/captures/all-frames/boss-real-defeat/frame-034.png",
+      "hardware_origin": [
+        71,
+        24
+      ]
+    },
+    "charge1": {
+      "fraction": 1.0,
+      "matches": 831,
+      "opaque_pixels": 831,
+      "capture": "boss-fan-and-adds",
+      "tick": 268,
+      "image": "/workspace/setup/selected-enemies-heart/captures/all-frames/boss-fan-and-adds/frame-268.png",
+      "hardware_origin": [
+        91,
+        44
+      ]
+    },
+    "charge2": {
+      "fraction": 1.0,
+      "matches": 842,
+      "opaque_pixels": 842,
+      "capture": "boss-fan-and-adds",
+      "tick": 273,
+      "image": "/workspace/setup/selected-enemies-heart/captures/all-frames/boss-fan-and-adds/frame-273.png",
+      "hardware_origin": [
+        91,
+        44
+      ]
+    },
+    "release1": {
+      "fraction": 0.9638069705093834,
+      "matches": 719,
+      "opaque_pixels": 746,
+      "capture": "boss-lunge",
+      "tick": 71,
+      "image": "/workspace/setup/selected-enemies-heart/captures/all-frames/boss-lunge/frame-071.png",
+      "hardware_origin": [
+        163,
+        33
+      ]
+    },
+    "release2": {
+      "fraction": 0.9790794979079498,
+      "matches": 702,
+      "opaque_pixels": 717,
+      "capture": "boss-lunge",
+      "tick": 76,
+      "image": "/workspace/setup/selected-enemies-heart/captures/all-frames/boss-lunge/frame-076.png",
+      "hardware_origin": [
+        163,
+        34
+      ]
+    },
+    "spawn1": {
+      "fraction": 1.0,
+      "matches": 815,
+      "opaque_pixels": 815,
+      "capture": "boss-fan-and-adds",
+      "tick": 138,
+      "image": "/workspace/setup/selected-enemies-heart/captures/all-frames/boss-fan-and-adds/frame-138.png",
+      "hardware_origin": [
+        81,
+        33
+      ]
+    },
+    "spawn2": {
+      "fraction": 1.0,
+      "matches": 829,
+      "opaque_pixels": 829,
+      "capture": "boss-fan-and-adds",
+      "tick": 145,
+      "image": "/workspace/setup/selected-enemies-heart/captures/all-frames/boss-fan-and-adds/frame-145.png",
+      "hardware_origin": [
+        75,
+        32
+      ]
+    },
+    "lunge1": {
+      "fraction": 1.0,
+      "matches": 769,
+      "opaque_pixels": 769,
+      "capture": "boss-lunge",
+      "tick": 18,
+      "image": "/workspace/setup/selected-enemies-heart/captures/all-frames/boss-lunge/frame-018.png",
+      "hardware_origin": [
+        116,
+        37
+      ]
+    },
+    "lunge2": {
+      "fraction": 1.0,
+      "matches": 751,
+      "opaque_pixels": 751,
+      "capture": "boss-lunge",
+      "tick": 25,
+      "image": "/workspace/setup/selected-enemies-heart/captures/all-frames/boss-lunge/frame-025.png",
+      "hardware_origin": [
+        128,
+        39
+      ]
+    },
+    "dying1": {
+      "fraction": 1.0,
+      "matches": 530,
+      "opaque_pixels": 530,
+      "capture": "boss-real-defeat",
+      "tick": 89,
+      "image": "/workspace/setup/selected-enemies-heart/captures/all-frames/boss-real-defeat/frame-089.png",
+      "hardware_origin": [
+        77,
+        14
+      ]
+    },
+    "dying2": {
+      "fraction": 1.0,
+      "matches": 349,
+      "opaque_pixels": 349,
+      "capture": "boss-real-defeat",
+      "tick": 81,
+      "image": "/workspace/setup/selected-enemies-heart/captures/all-frames/boss-real-defeat/frame-081.png",
+      "hardware_origin": [
+        87,
+        20
+      ]
+    }
+  },
+  "minimum_required_opaque_pixel_match": 0.9,
+  "actual_pose_board": "/workspace/setup/selected-enemies-heart/heart-actual-poses.png",
+  "unchanged_crop_rectangles": [
+    {
+      "pose": "pulse1",
+      "source_image": "/workspace/setup/selected-enemies-heart/captures/all-frames/boss-ring/frame-035.png",
+      "source_sha256": "dda57fea7dc146db254d1d6592b95235b96989bd267f51fd4ba199081f75de83",
+      "native_crop": [
+        34,
+        18,
+        114,
+        98
+      ],
+      "destination": [
+        5,
+        28,
+        165,
+        188
+      ]
+    },
+    {
+      "pose": "pulse2",
+      "source_image": "/workspace/setup/selected-enemies-heart/captures/all-frames/boss-ring/frame-041.png",
+      "source_sha256": "a2d04ea312bbbdb08b69617524a0bd5a1b0e461a49a4c1ecfa717ff7b6b15b09",
+      "native_crop": [
+        34,
+        19,
+        114,
+        99
+      ],
+      "destination": [
+        185,
+        28,
+        345,
+        188
+      ]
+    },
+    {
+      "pose": "hurt",
+      "source_image": "/workspace/setup/selected-enemies-heart/captures/all-frames/boss-real-defeat/frame-034.png",
+      "source_sha256": "09638b6d8c7f1e0491b30f3d88a48b35d055058a44b29c50b61737eb3a87b5f3",
+      "native_crop": [
+        47,
+        16,
+        127,
+        96
+      ],
+      "destination": [
+        365,
+        28,
+        525,
+        188
+      ]
+    },
+    {
+      "pose": "charge1",
+      "source_image": "/workspace/setup/selected-enemies-heart/captures/all-frames/boss-fan-and-adds/frame-268.png",
+      "source_sha256": "e6008f300ceb7bb05166bc42787cd5046863ce07513503442aa98240d2ca24f6",
+      "native_crop": [
+        67,
+        36,
+        147,
+        116
+      ],
+      "destination": [
+        545,
+        28,
+        705,
+        188
+      ]
+    },
+    {
+      "pose": "charge2",
+      "source_image": "/workspace/setup/selected-enemies-heart/captures/all-frames/boss-fan-and-adds/frame-273.png",
+      "source_sha256": "054442534963bb41c4bc23bd1d20d6c8b735856548c64290eddad7f3a5a98101",
+      "native_crop": [
+        67,
+        36,
+        147,
+        116
+      ],
+      "destination": [
+        725,
+        28,
+        885,
+        188
+      ]
+    },
+    {
+      "pose": "release1",
+      "source_image": "/workspace/setup/selected-enemies-heart/captures/all-frames/boss-lunge/frame-071.png",
+      "source_sha256": "4669b7e1ae3402211272a863fa32cff8990a8263c49a2c5135592adf32dbb34a",
+      "native_crop": [
+        139,
+        25,
+        219,
+        105
+      ],
+      "destination": [
+        5,
+        224,
+        165,
+        384
+      ]
+    },
+    {
+      "pose": "release2",
+      "source_image": "/workspace/setup/selected-enemies-heart/captures/all-frames/boss-lunge/frame-076.png",
+      "source_sha256": "6b26293ba09c4b50b25efd3e20e3e0eece7f498d021fcf17df869c5f541743b2",
+      "native_crop": [
+        139,
+        26,
+        219,
+        106
+      ],
+      "destination": [
+        185,
+        224,
+        345,
+        384
+      ]
+    },
+    {
+      "pose": "spawn1",
+      "source_image": "/workspace/setup/selected-enemies-heart/captures/all-frames/boss-fan-and-adds/frame-138.png",
+      "source_sha256": "926566f53150d1b151991d80457c9f942d5a7cd17e3fd4a879bebe2f30246cb4",
+      "native_crop": [
+        57,
+        25,
+        137,
+        105
+      ],
+      "destination": [
+        365,
+        224,
+        525,
+        384
+      ]
+    },
+    {
+      "pose": "spawn2",
+      "source_image": "/workspace/setup/selected-enemies-heart/captures/all-frames/boss-fan-and-adds/frame-145.png",
+      "source_sha256": "5b69fc1c678ecd454d8bd4ea7c467dc97e21ac6b226c2ac7c5b088195884ae8d",
+      "native_crop": [
+        51,
+        24,
+        131,
+        104
+      ],
+      "destination": [
+        545,
+        224,
+        705,
+        384
+      ]
+    },
+    {
+      "pose": "lunge1",
+      "source_image": "/workspace/setup/selected-enemies-heart/captures/all-frames/boss-lunge/frame-018.png",
+      "source_sha256": "51b61cc5049651b4a8fac591dfa6f9a90325599f0a4a6c90fc2bfa87f1637ae2",
+      "native_crop": [
+        92,
+        29,
+        172,
+        109
+      ],
+      "destination": [
+        725,
+        224,
+        885,
+        384
+      ]
+    },
+    {
+      "pose": "lunge2",
+      "source_image": "/workspace/setup/selected-enemies-heart/captures/all-frames/boss-lunge/frame-025.png",
+      "source_sha256": "b5865fd6d0cf980baa4657d7b6f8a1113a2cf353d70b950bd21d5c4bd4161711",
+      "native_crop": [
+        104,
+        31,
+        184,
+        111
+      ],
+      "destination": [
+        5,
+        420,
+        165,
+        580
+      ]
+    },
+    {
+      "pose": "dying1",
+      "source_image": "/workspace/setup/selected-enemies-heart/captures/all-frames/boss-real-defeat/frame-089.png",
+      "source_sha256": "1c322ffd5282c5a2f2bd30fcec2f07cb192e048dbca8950f07799fd1a25bbd09",
+      "native_crop": [
+        53,
+        6,
+        133,
+        86
+      ],
+      "destination": [
+        185,
+        420,
+        345,
+        580
+      ]
+    },
+    {
+      "pose": "dying2",
+      "source_image": "/workspace/setup/selected-enemies-heart/captures/all-frames/boss-real-defeat/frame-081.png",
+      "source_sha256": "70f95c9ee8a8e29806f51144d767daf32e66b76b1d6ca80a09040b903209154a",
+      "native_crop": [
+        63,
+        12,
+        143,
+        92
+      ],
+      "destination": [
+        365,
+        420,
+        525,
+        580
+      ]
+    }
+  ]
+}

@@ -1,0 +1,491 @@
+{
+  "result": "PASS",
+  "selection": [
+    {
+      "family": "beetle",
+      "chosen_variant": 9,
+      "label": "Coin Toad",
+      "source_ROM": "/workspace/setup/appearance-enemy-studies/v9",
+      "metadata": {
+        "tile_count": 24,
+        "frame_tiles": 4,
+        "shape": 0,
+        "size": 1,
+        "pal": 10,
+        "width": 16,
+        "height": 16
+      },
+      "frame_names": [
+        "walk_s1",
+        "walk_s2",
+        "walk_e1",
+        "walk_e2",
+        "walk_n1",
+        "walk_n2"
+      ],
+      "frame_count": 6,
+      "palette_slot": 10,
+      "palette_sha256": "fc38b8ad818cf7a710dce08ab105ba50b087437823bc0cc4fc29a60b10dc120f",
+      "checks": [
+        {
+          "name": "walk_s1",
+          "id": 0,
+          "indexed_sha256": "2998990c86a26be3add5f03539b8c5bed59b13373ec7a5f849400b88436380f3"
+        },
+        {
+          "name": "walk_s2",
+          "id": 1,
+          "indexed_sha256": "1cd422e59523808f70825c92ff5fb02dd72c31c9f2cbda845cc0c975246c350e"
+        },
+        {
+          "name": "walk_e1",
+          "id": 2,
+          "indexed_sha256": "9149917f4ec3a48f19ccea538a60b5cb98ceca52280dcc21b1f6a21f2c452d1a"
+        },
+        {
+          "name": "walk_e2",
+          "id": 3,
+          "indexed_sha256": "a416c2110d3d978df48cbf7cbc943fd0795083f81135b9e3663783a447d414d6"
+        },
+        {
+          "name": "walk_n1",
+          "id": 4,
+          "indexed_sha256": "5fb826c5cfb02e265ef6aa780fd633f8b8b7c07e0c229015cb921d90eb0e1cd0"
+        },
+        {
+          "name": "walk_n2",
+          "id": 5,
+          "indexed_sha256": "7a3f61848d9688a964816f348353c8034b63b0ce52cbdc9dbb389c9c65945f0f"
+        }
+      ],
+      "raw_sheet_sha256": "1aaed1fd2f6a3ea7d737c90b3cec4584dbf329831dc660892a5c8f2fbd842139"
+    },
+    {
+      "family": "bat",
+      "chosen_variant": 9,
+      "label": "Quill Moth",
+      "source_ROM": "/workspace/setup/appearance-enemy-studies/v9",
+      "metadata": {
+        "tile_count": 12,
+        "frame_tiles": 4,
+        "shape": 0,
+        "size": 1,
+        "pal": 10,
+        "width": 16,
+        "height": 16
+      },
+      "frame_names": [
+        "fly1",
+        "fly2",
+        "rest"
+      ],
+      "frame_count": 3,
+      "palette_slot": 10,
+      "palette_sha256": "fc38b8ad818cf7a710dce08ab105ba50b087437823bc0cc4fc29a60b10dc120f",
+      "checks": [
+        {
+          "name": "fly1",
+          "id": 0,
+          "indexed_sha256": "556daf665e37671e75e379b7ccc8109cbe3800abdbc1a74244a5a7870ee1d2b2"
+        },
+        {
+          "name": "fly2",
+          "id": 1,
+          "indexed_sha256": "59aa50984736b10d16e14aec1438458cd2ee0ef2d8fde598736f0e81012412b6"
+        },
+        {
+          "name": "rest",
+          "id": 2,
+          "indexed_sha256": "87cf25ae7cd3d5de37f1ce0e3a9c8bf0bdbcacafa5001e8c799ea7a05e858f4c"
+        }
+      ],
+      "raw_sheet_sha256": "2d5a1001ff1b995d21fb8a172847708cd444cedf24b4f138de1da0cd20c09982"
+    },
+    {
+      "family": "spitter",
+      "chosen_variant": 5,
+      "label": "Trumpet bellflower",
+      "source_ROM": "/workspace/setup/appearance-enemy-studies/v5",
+      "metadata": {
+        "tile_count": 48,
+        "frame_tiles": 4,
+        "shape": 0,
+        "size": 1,
+        "pal": 3,
+        "width": 16,
+        "height": 16
+      },
+      "frame_names": [
+        "idle_s",
+        "walk_s",
+        "spit_s",
+        "idle_n",
+        "walk_n",
+        "spit_n",
+        "idle_e",
+        "walk_e",
+        "spit_e",
+        "charge_s",
+        "charge_n",
+        "charge_e"
+      ],
+      "frame_count": 12,
+      "palette_slot": 3,
+      "palette_sha256": "125cd9c2e6d0b829e1c305ce2113f9c4c7299172cf9a79fe39bf52921ea395ed",
+      "checks": [
+        {
+          "name": "idle_s",
+          "id": 0,
+          "indexed_sha256": "469131388efe58c7e71305f4f27519c5d819bdd91c15652417be31a8e9ed33c1"
+        },
+        {
+          "name": "walk_s",
+          "id": 1,
+          "indexed_sha256": "366c2024d365ca49bb587895250d0af8aa9f2260e39bb84be2bb77ba43877f5b"
+        },
+        {
+          "name": "spit_s",
+          "id": 2,
+          "indexed_sha256": "2fbc4f4f2fe666fd5f9ba47a527097d7d02ad92f9457482b1e8af39e94914313"
+        },
+        {
+          "name": "idle_n",
+          "id": 3,
+          "indexed_sha256": "d15009636be45b12d063feaa5f20f7cd1ec0f121e1be1f7c24c4cf71051e4367"
+        },
+        {
+          "name": "walk_n",
+          "id": 4,
+          "indexed_sha256": "6d55c1c6971c5a748070d62dfcca7cf1a3768822f9a885fe6f301255e80ba31e"
+        },
+        {
+          "name": "spit_n",
+          "id": 5,
+          "indexed_sha256": "b842e2841a38aa4516382d9a5053d95a0c264a2f727b81d12d40188c1bab28c6"
+        },
+        {
+          "name": "idle_e",
+          "id": 6,
+          "indexed_sha256": "052c51db28428b1acd30db36b8c8df15c4ae06bd81938e983ab89e381d08998c"
+        },
+        {
+          "name": "walk_e",
+          "id": 7,
+          "indexed_sha256": "ac851a7ef371444995a5369ae39a511801d277285910edbbfc1681a378b66363"
+        },
+        {
+          "name": "spit_e",
+          "id": 8,
+          "indexed_sha256": "100c08c763e1e430f5ebc842f242164b23cddd8fe26b86af8373b72ac48e402b"
+        },
+        {
+          "name": "charge_s",
+          "id": 9,
+          "indexed_sha256": "fc6d6c61366d307b0c10ed4ca24b22b4260b92599490db4d2cc76b2de56a8a61"
+        },
+        {
+          "name": "charge_n",
+          "id": 10,
+          "indexed_sha256": "108836ac762a4de76afd6ef805db70b6e979af0cdb5c6ed72804b5083311e732"
+        },
+        {
+          "name": "charge_e",
+          "id": 11,
+          "indexed_sha256": "819e5dc8e03b15d52e208f40e3e7acd67918474e477951005974cca4ddc0decf"
+        }
+      ],
+      "raw_sheet_sha256": "d062dd7e190d4f76edf38e33a71b4475b756dd9b6d597ad94113c5c95bec798c"
+    },
+    {
+      "family": "slime",
+      "chosen_variant": 9,
+      "label": "Pear bladder",
+      "source_ROM": "/workspace/setup/appearance-enemy-studies/v9",
+      "metadata": {
+        "tile_count": 12,
+        "frame_tiles": 4,
+        "shape": 0,
+        "size": 1,
+        "pal": 10,
+        "width": 16,
+        "height": 16
+      },
+      "frame_names": [
+        "idle",
+        "squash",
+        "jump"
+      ],
+      "frame_count": 3,
+      "palette_slot": 10,
+      "palette_sha256": "fc38b8ad818cf7a710dce08ab105ba50b087437823bc0cc4fc29a60b10dc120f",
+      "checks": [
+        {
+          "name": "idle",
+          "id": 0,
+          "indexed_sha256": "5d8c6f0c513e1da0132258091e26402f0ce837dd0a78d6419091dc805d000493"
+        },
+        {
+          "name": "squash",
+          "id": 1,
+          "indexed_sha256": "7f37a668c50d4317513100d91adbd89544782ad25a8545f39f8d82da7a04b4a1"
+        },
+        {
+          "name": "jump",
+          "id": 2,
+          "indexed_sha256": "49f95d8924e38a74b3f23df4dbde76cb031aeb0f7a5c5014f52c526d460edfcb"
+        }
+      ],
+      "raw_sheet_sha256": "55e3958b6125de10174d6a8fdec4f904e9f18ea4eefa7e6e31aacf39a8d7b843"
+    },
+    {
+      "family": "knight",
+      "chosen_variant": 6,
+      "label": "Moth Confessor",
+      "source_ROM": "/workspace/setup/appearance-enemy-studies/v6",
+      "metadata": {
+        "tile_count": 192,
+        "frame_tiles": 8,
+        "shape": 2,
+        "size": 2,
+        "pal": 4,
+        "width": 16,
+        "height": 32
+      },
+      "frame_names": [
+        "walk_s1",
+        "walk_s2",
+        "idle_s",
+        "atk_s",
+        "walk_n1",
+        "walk_n2",
+        "idle_n",
+        "atk_n",
+        "walk_e1",
+        "walk_e2",
+        "idle_e",
+        "atk_e",
+        "windup_n",
+        "windup_e",
+        "windup_s",
+        "strike_n",
+        "strike_e",
+        "strike_s",
+        "recover_n",
+        "recover_e",
+        "recover_s",
+        "hurt_n",
+        "hurt_e",
+        "hurt_s"
+      ],
+      "frame_count": 24,
+      "palette_slot": 4,
+      "palette_sha256": "2ea003b5a6f36ffd8926faccf8362adfe8f0cb01393169641f059126f8cd2e5a",
+      "checks": [
+        {
+          "name": "walk_s1",
+          "id": 0,
+          "indexed_sha256": "0fa16118261bd377d2f263e0a9c1818b611996c6471cb62bc659f69447f80f58"
+        },
+        {
+          "name": "walk_s2",
+          "id": 1,
+          "indexed_sha256": "e702e85c4a42a7c45df1561803217f919299eaa7333d8ba6c3357aa20f8f4e3c"
+        },
+        {
+          "name": "idle_s",
+          "id": 2,
+          "indexed_sha256": "f86e8aeac1af12b1e4c865e003835838769aef5b82c5008d7ae3834645dfa262"
+        },
+        {
+          "name": "atk_s",
+          "id": 3,
+          "indexed_sha256": "d5c4e9dbb3d157ca3deb81d28069597d7348297f2712271c8426d87359c93d15"
+        },
+        {
+          "name": "walk_n1",
+          "id": 4,
+          "indexed_sha256": "31600a00e7897b85f3af1b56c2b9f71b03ff2547a58e35d46a1c3538eb9f313e"
+        },
+        {
+          "name": "walk_n2",
+          "id": 5,
+          "indexed_sha256": "4efea43bd0bce09014157b1b0b85e741da5d72158214e5189b581eb10230ed73"
+        },
+        {
+          "name": "idle_n",
+          "id": 6,
+          "indexed_sha256": "a17d8d7de14d32d3e57db8f5a1da57d2470a402f87567b4d78f6c3fd903706bd"
+        },
+        {
+          "name": "atk_n",
+          "id": 7,
+          "indexed_sha256": "4dc290e971e990d55f7b2a81250c223b80ec5c9f16d408e029c5e82cf0f06135"
+        },
+        {
+          "name": "walk_e1",
+          "id": 8,
+          "indexed_sha256": "ff09735380d592d120fa0f4efeccfcb20aca30ae7e41dfefb25fdbc609977a2b"
+        },
+        {
+          "name": "walk_e2",
+          "id": 9,
+          "indexed_sha256": "eef22edea81b91cb03cdd4cda2d99f4071f418db7432bef6f0f6a66802bb2b9b"
+        },
+        {
+          "name": "idle_e",
+          "id": 10,
+          "indexed_sha256": "f91970a5c570675aa9528f69abe872a64c9aae41df4c350a6ba6ed7e1650bf3e"
+        },
+        {
+          "name": "atk_e",
+          "id": 11,
+          "indexed_sha256": "92accbf65c4305c1a00d8857a5246fb6a51a608d6c0233d5d0fd85cc9578fccd"
+        },
+        {
+          "name": "windup_n",
+          "id": 12,
+          "indexed_sha256": "fa86e16cdc2043994d66596a2a143c0fc5c0cf314ef5ba96e05904c8dcbe1326"
+        },
+        {
+          "name": "windup_e",
+          "id": 13,
+          "indexed_sha256": "3e83025f83dad76e088045491870a522e93a2dba9eff8f748c98901134229742"
+        },
+        {
+          "name": "windup_s",
+          "id": 14,
+          "indexed_sha256": "a965a0e05752c7ef6f1c49962275674d817efb167c6610e60c9d903e3c2da31e"
+        },
+        {
+          "name": "strike_n",
+          "id": 15,
+          "indexed_sha256": "4dc290e971e990d55f7b2a81250c223b80ec5c9f16d408e029c5e82cf0f06135"
+        },
+        {
+          "name": "strike_e",
+          "id": 16,
+          "indexed_sha256": "92accbf65c4305c1a00d8857a5246fb6a51a608d6c0233d5d0fd85cc9578fccd"
+        },
+        {
+          "name": "strike_s",
+          "id": 17,
+          "indexed_sha256": "d5c4e9dbb3d157ca3deb81d28069597d7348297f2712271c8426d87359c93d15"
+        },
+        {
+          "name": "recover_n",
+          "id": 18,
+          "indexed_sha256": "de8f9740415f646c8f3ef230dc605d82b7801580619243b38a6463c345fa7ae5"
+        },
+        {
+          "name": "recover_e",
+          "id": 19,
+          "indexed_sha256": "683675f650f7f909e191fb954419e960799a4d927483b0f3c88bca062f13f34b"
+        },
+        {
+          "name": "recover_s",
+          "id": 20,
+          "indexed_sha256": "33742257a4a4f3e21965e6ec11afc37979b5549588497efb63fcac687ab2cd16"
+        },
+        {
+          "name": "hurt_n",
+          "id": 21,
+          "indexed_sha256": "bd7d7f2d83d60d54fe5554ece29484e72689a37a26b7540cdcacf91c0a4448c0"
+        },
+        {
+          "name": "hurt_e",
+          "id": 22,
+          "indexed_sha256": "ff06361587eb8a593eca1d7af49fb4b0caf0bc9072a246f2590f5caffb792d31"
+        },
+        {
+          "name": "hurt_s",
+          "id": 23,
+          "indexed_sha256": "d7aa38dee553719c232690f29f6d451693227955da743b5559ca15d66959ce3c"
+        }
+      ],
+      "raw_sheet_sha256": "12f29a49ff85ee78cf6239a01997b0a8bd0af8e946e97edd1e3e25752290020b"
+    },
+    {
+      "family": "ksword",
+      "chosen_variant": 6,
+      "label": "Moth Confessor weapon",
+      "source_ROM": "/workspace/setup/appearance-enemy-studies/v6",
+      "metadata": {
+        "tile_count": 8,
+        "frame_tiles": 4,
+        "shape": 0,
+        "size": 1,
+        "pal": 4,
+        "width": 16,
+        "height": 16
+      },
+      "frame_names": [
+        "blade_e",
+        "blade_s"
+      ],
+      "frame_count": 2,
+      "palette_slot": 4,
+      "palette_sha256": "2ea003b5a6f36ffd8926faccf8362adfe8f0cb01393169641f059126f8cd2e5a",
+      "checks": [
+        {
+          "name": "blade_e",
+          "id": 0,
+          "indexed_sha256": "2f3b97a59d34fb8da617bf79a1f98cd8e0de4c8803d394346d90045f99e62f2a"
+        },
+        {
+          "name": "blade_s",
+          "id": 1,
+          "indexed_sha256": "df02f0bcddc95c55ca0fab1ed00c83393579ce8884345facf469f142cf7bf2b5"
+        }
+      ],
+      "raw_sheet_sha256": "7f844681ac1b754dfb6a6470f505b4522f57ac876695fb823b3275a24a6ccc75"
+    },
+    {
+      "family": "proj",
+      "chosen_variant": 5,
+      "label": "Trumpet bellflower seed",
+      "source_ROM": "/workspace/setup/appearance-enemy-studies/v5",
+      "metadata": {
+        "tile_count": 3,
+        "frame_tiles": 1,
+        "shape": 0,
+        "size": 0,
+        "pal": 1,
+        "width": 8,
+        "height": 8
+      },
+      "frame_names": [
+        "seed"
+      ],
+      "frame_count": 1,
+      "palette_slot": 1,
+      "palette_sha256": "4bf90793c0879465a4e259e5112f7c1edbc8e8097ceb6e99136dc44663b56d23",
+      "checks": [
+        {
+          "name": "seed",
+          "id": 0,
+          "indexed_sha256": "4d59d9127716c2d78f870382935381a1b1fb6e9c5fc2a5f374e6bbb080065fc2"
+        }
+      ],
+      "raw_sheet_sha256": "a643a2647051fd961a0534a20039d8ee58b97791bf680972476bf82bc694c980"
+    }
+  ],
+  "selected_nonboss_native_frames": 51,
+  "palette_slots": {
+    "beetle": 10,
+    "bat": 10,
+    "spitter": 3,
+    "slime": 10,
+    "knight": 4,
+    "ksword": 4,
+    "proj": 1
+  },
+  "contract_notes": [
+    "Boss must keep32x64 canvas with13frames and32 streamed resident tiles.",
+    "Core HB_HEART is offset(0,-22), halfextent(14,20), unchanged by sprite split.",
+    "All selected small bodies use OBJ10, with other item frames explicitly routed elsewhere.",
+    "Trumpet bellflower and boss share OBJ3 blight: changing that bank globally will recolor chosen shooter.",
+    "Selected Moth Confessor body must pair withksword variant6; seed must pair withshooter variant5.",
+    "Original IDs stayfirst; beetle N/knight phase/shooter charge/boss extra IDs follow established order.",
+    "Same64frame-count layout perselected profile permits directpositive1 mechanics comparison; nativebossart maychange butAI stays."
+  ]
+}

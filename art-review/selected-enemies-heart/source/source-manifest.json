@@ -1,0 +1,3092 @@
+{
+  "method": "Native source gallery for the five selected enemies and the Broken Heart.\n\nThese are SOURCE pose catalogs, not mGBA recordings or a combat simulation.\nEach body pose has the same review hold. Actual state timing and movement\nbelong to the separately captured running ROM.\n",
+  "profile": 11,
+  "source_only": true,
+  "git_base_commit": "770b5422715fd108fc5b2607ab0978702b96e46f",
+  "source_sha256": {
+    "art/enemy_studies.py": "cd82b9babef1fbb61cbf99e6f89f44a5159e8bbb09a90bb00492151af045ad39",
+    "art/enemy_studies_small.py": "51170452427ae507c66b851b38b16330167684a84be29172a14b442da0df411d",
+    "art/enemy_studies_soft.py": "cd1e1f2d01f25153c497b3474001bcd75a2dfeb08219b01c6354e855be15ce38",
+    "art/enemy_studies_heavy.py": "460c3a66a96eece44e90f943ca2f121ec345813cf279a0104b28e72a1eac1304",
+    "art/enemy_studies_palette.py": "aa35bba202cb9d7cc705146312104c211584b168bf0b01547ffdf96d4bff322b",
+    "art/enemy_heart.py": "a52ae7779f314f006f3a0e861c3a3f75cfadbb2be5294873c5d2c6e2ace6e917",
+    "art/reboot_core.py": "71021a7b1717f8dd7edd58d0ad0a4dda448def45533c42855f6d76a4bcc82ea4",
+    "art/reboot_actors.py": "08cf30f2219bb0b1f4b55724a9d55c6c755db897b768c35685f6523f1828823e",
+    "art/reboot_contracts.json": "3f3c22aeb93f63308ddc42f79e849145c5e8c12950e37ba14ded67773b44d0d8",
+    "tools/enemy_study_gallery.py": "c5a897b03da127ac0287b20673de1933f57196272e7298c1fc442cf9d71be5d7",
+    "tools/selected_enemy_gallery.py": "2341393492dd84832a6c8fd0669589fc21784d9204b1e878933c4e3ac16fb371"
+  },
+  "pose_duration_ms": 150,
+  "families": {
+    "beetle": {
+      "name": "Coin Toad",
+      "selected_study": 9,
+      "canvas": [
+        16,
+        16
+      ],
+      "palette_slot": "items",
+      "palette_source": "enemy_studies_palette.colors()",
+      "colors_rgb555": [
+        "#000000",
+        "#101820",
+        "#182830",
+        "#204840",
+        "#386858",
+        "#508870",
+        "#78a080",
+        "#b0c898",
+        "#302828",
+        "#584030",
+        "#886040",
+        "#c09058",
+        "#e8c880",
+        "#284850",
+        "#80a8a8",
+        "#f0e8c8"
+      ],
+      "frame_names": [
+        "walk_s1",
+        "walk_s2",
+        "walk_e1",
+        "walk_e2",
+        "walk_n1",
+        "walk_n2"
+      ],
+      "review_sequence": [
+        "walk_s1",
+        "walk_s2",
+        "walk_e1",
+        "walk_e2",
+        "walk_n1",
+        "walk_n2"
+      ]
+    },
+    "bat": {
+      "name": "Quill Moth",
+      "selected_study": 9,
+      "canvas": [
+        16,
+        16
+      ],
+      "palette_slot": "items",
+      "palette_source": "enemy_studies_palette.colors()",
+      "colors_rgb555": [
+        "#000000",
+        "#101820",
+        "#182830",
+        "#204840",
+        "#386858",
+        "#508870",
+        "#78a080",
+        "#b0c898",
+        "#302828",
+        "#584030",
+        "#886040",
+        "#c09058",
+        "#e8c880",
+        "#284850",
+        "#80a8a8",
+        "#f0e8c8"
+      ],
+      "frame_names": [
+        "fly1",
+        "fly2",
+        "rest"
+      ],
+      "review_sequence": [
+        "rest",
+        "fly1",
+        "fly2"
+      ]
+    },
+    "spitter": {
+      "name": "Trumpet Bellflower",
+      "selected_study": 5,
+      "canvas": [
+        16,
+        16
+      ],
+      "palette_slot": "blight",
+      "palette_source": "blight",
+      "colors_rgb555": [
+        "#000000",
+        "#101018",
+        "#201828",
+        "#302038",
+        "#483048",
+        "#604058",
+        "#805068",
+        "#a06878",
+        "#403030",
+        "#604038",
+        "#886048",
+        "#b08858",
+        "#882858",
+        "#c04888",
+        "#e890b8",
+        "#f0d8c0"
+      ],
+      "frame_names": [
+        "idle_s",
+        "walk_s",
+        "spit_s",
+        "idle_n",
+        "walk_n",
+        "spit_n",
+        "idle_e",
+        "walk_e",
+        "spit_e",
+        "charge_s",
+        "charge_n",
+        "charge_e"
+      ],
+      "review_sequence": [
+        "idle_s",
+        "walk_s",
+        "charge_s",
+        "spit_s",
+        "idle_e",
+        "walk_e",
+        "charge_e",
+        "spit_e",
+        "idle_n",
+        "walk_n",
+        "charge_n",
+        "spit_n"
+      ]
+    },
+    "slime": {
+      "name": "Pear Bladder",
+      "selected_study": 9,
+      "canvas": [
+        16,
+        16
+      ],
+      "palette_slot": "items",
+      "palette_source": "enemy_studies_palette.colors()",
+      "colors_rgb555": [
+        "#000000",
+        "#101820",
+        "#182830",
+        "#204840",
+        "#386858",
+        "#508870",
+        "#78a080",
+        "#b0c898",
+        "#302828",
+        "#584030",
+        "#886040",
+        "#c09058",
+        "#e8c880",
+        "#284850",
+        "#80a8a8",
+        "#f0e8c8"
+      ],
+      "frame_names": [
+        "idle",
+        "squash",
+        "jump"
+      ],
+      "review_sequence": [
+        "idle",
+        "squash",
+        "jump"
+      ]
+    },
+    "knight": {
+      "name": "Moth Confessor",
+      "selected_study": 6,
+      "canvas": [
+        16,
+        32
+      ],
+      "palette_slot": "iron",
+      "palette_source": "stone",
+      "colors_rgb555": [
+        "#000000",
+        "#101820",
+        "#202830",
+        "#303840",
+        "#485050",
+        "#606860",
+        "#889080",
+        "#b0b098",
+        "#d0d0b0",
+        "#302820",
+        "#504030",
+        "#786040",
+        "#a08048",
+        "#c0a060",
+        "#e8d098",
+        "#f8f0c8"
+      ],
+      "frame_names": [
+        "walk_s1",
+        "walk_s2",
+        "idle_s",
+        "atk_s",
+        "walk_n1",
+        "walk_n2",
+        "idle_n",
+        "atk_n",
+        "walk_e1",
+        "walk_e2",
+        "idle_e",
+        "atk_e",
+        "windup_n",
+        "windup_e",
+        "windup_s",
+        "strike_n",
+        "strike_e",
+        "strike_s",
+        "recover_n",
+        "recover_e",
+        "recover_s",
+        "hurt_n",
+        "hurt_e",
+        "hurt_s"
+      ],
+      "review_sequence": [
+        "idle_s",
+        "walk_s1",
+        "walk_s2",
+        "windup_s",
+        "atk_s",
+        "strike_s",
+        "recover_s",
+        "hurt_s",
+        "idle_e",
+        "walk_e1",
+        "walk_e2",
+        "windup_e",
+        "atk_e",
+        "strike_e",
+        "recover_e",
+        "hurt_e",
+        "idle_n",
+        "walk_n1",
+        "walk_n2",
+        "windup_n",
+        "atk_n",
+        "strike_n",
+        "recover_n",
+        "hurt_n"
+      ]
+    },
+    "boss": {
+      "name": "Broken Heart",
+      "selected_study": null,
+      "canvas": [
+        32,
+        64
+      ],
+      "palette_slot": "blight",
+      "palette_source": "blight",
+      "colors_rgb555": [
+        "#000000",
+        "#101018",
+        "#201828",
+        "#302038",
+        "#483048",
+        "#604058",
+        "#805068",
+        "#a06878",
+        "#403030",
+        "#604038",
+        "#886048",
+        "#b08858",
+        "#882858",
+        "#c04888",
+        "#e890b8",
+        "#f0d8c0"
+      ],
+      "frame_names": [
+        "pulse1",
+        "pulse2",
+        "hurt",
+        "charge1",
+        "charge2",
+        "release1",
+        "release2",
+        "spawn1",
+        "spawn2",
+        "lunge1",
+        "lunge2",
+        "dying1",
+        "dying2"
+      ],
+      "review_sequence": [
+        "pulse1",
+        "pulse2",
+        "charge1",
+        "charge2",
+        "release1",
+        "release2",
+        "spawn1",
+        "spawn2",
+        "lunge1",
+        "lunge2",
+        "hurt",
+        "dying1",
+        "dying2"
+      ]
+    }
+  },
+  "animations": {
+    "beetle": {
+      "path": "beetle-all-poses-source.gif",
+      "pose_names": [
+        "walk_s1",
+        "walk_s2",
+        "walk_e1",
+        "walk_e2",
+        "walk_n1",
+        "walk_n2"
+      ],
+      "exact_palette": true,
+      "colors": 14,
+      "frames": 6,
+      "pose_duration_ms": 150,
+      "duration_ms": 900,
+      "decoded_rgb_verified": true
+    },
+    "bat": {
+      "path": "bat-all-poses-source.gif",
+      "pose_names": [
+        "rest",
+        "fly1",
+        "fly2"
+      ],
+      "exact_palette": true,
+      "colors": 10,
+      "frames": 3,
+      "pose_duration_ms": 150,
+      "duration_ms": 450,
+      "decoded_rgb_verified": true
+    },
+    "spitter": {
+      "path": "spitter-all-poses-source.gif",
+      "pose_names": [
+        "idle_s",
+        "walk_s",
+        "charge_s",
+        "spit_s",
+        "idle_e",
+        "walk_e",
+        "charge_e",
+        "spit_e",
+        "idle_n",
+        "walk_n",
+        "charge_n",
+        "spit_n"
+      ],
+      "exact_palette": true,
+      "colors": 14,
+      "frames": 12,
+      "pose_duration_ms": 150,
+      "duration_ms": 1800,
+      "decoded_rgb_verified": true
+    },
+    "slime": {
+      "path": "slime-all-poses-source.gif",
+      "pose_names": [
+        "idle",
+        "squash",
+        "jump"
+      ],
+      "exact_palette": true,
+      "colors": 10,
+      "frames": 3,
+      "pose_duration_ms": 150,
+      "duration_ms": 450,
+      "decoded_rgb_verified": true
+    },
+    "knight": {
+      "path": "knight-all-poses-source.gif",
+      "pose_names": [
+        "idle_s",
+        "walk_s1",
+        "walk_s2",
+        "windup_s",
+        "atk_s",
+        "strike_s",
+        "recover_s",
+        "hurt_s",
+        "idle_e",
+        "walk_e1",
+        "walk_e2",
+        "windup_e",
+        "atk_e",
+        "strike_e",
+        "recover_e",
+        "hurt_e",
+        "idle_n",
+        "walk_n1",
+        "walk_n2",
+        "windup_n",
+        "atk_n",
+        "strike_n",
+        "recover_n",
+        "hurt_n"
+      ],
+      "exact_palette": true,
+      "colors": 13,
+      "frames": 24,
+      "pose_duration_ms": 150,
+      "duration_ms": 3600,
+      "decoded_rgb_verified": true
+    },
+    "boss": {
+      "path": "boss-all-poses-source.gif",
+      "pose_names": [
+        "pulse1",
+        "pulse2",
+        "charge1",
+        "charge2",
+        "release1",
+        "release2",
+        "spawn1",
+        "spawn2",
+        "lunge1",
+        "lunge2",
+        "hurt",
+        "dying1",
+        "dying2"
+      ],
+      "exact_palette": true,
+      "colors": 16,
+      "frames": 13,
+      "pose_duration_ms": 150,
+      "duration_ms": 1950,
+      "decoded_rgb_verified": true
+    }
+  },
+  "frames": [
+    {
+      "family": "beetle",
+      "name": "walk_s1",
+      "canvas": [
+        16,
+        16
+      ],
+      "palette_slot": "items",
+      "palette_source": "enemy_studies_palette.colors()",
+      "index_sha256": "2998990c86a26be3add5f03539b8c5bed59b13373ec7a5f849400b88436380f3",
+      "rgba_sha256": "5872d3cbf845a05374d64e9a01a255b05e053e2111becb4fddef0a9045096f55",
+      "native_indexed_png": "native/beetle/walk_s1-indexed.png",
+      "native_rgba_png": "native/beetle/walk_s1.png",
+      "bounds": [
+        2,
+        4,
+        15,
+        16
+      ],
+      "indices": [
+        0,
+        1,
+        3,
+        5,
+        10,
+        11,
+        12,
+        15
+      ],
+      "rgba_roundtrip_verified": true
+    },
+    {
+      "family": "beetle",
+      "name": "walk_s2",
+      "canvas": [
+        16,
+        16
+      ],
+      "palette_slot": "items",
+      "palette_source": "enemy_studies_palette.colors()",
+      "index_sha256": "1cd422e59523808f70825c92ff5fb02dd72c31c9f2cbda845cc0c975246c350e",
+      "rgba_sha256": "40db1f146dc4e667ce90b46483ea5bef91bb893072d847307fb84fa14d308c4d",
+      "native_indexed_png": "native/beetle/walk_s2-indexed.png",
+      "native_rgba_png": "native/beetle/walk_s2.png",
+      "bounds": [
+        2,
+        4,
+        15,
+        16
+      ],
+      "indices": [
+        0,
+        1,
+        3,
+        5,
+        10,
+        11,
+        12,
+        15
+      ],
+      "rgba_roundtrip_verified": true
+    },
+    {
+      "family": "beetle",
+      "name": "walk_e1",
+      "canvas": [
+        16,
+        16
+      ],
+      "palette_slot": "items",
+      "palette_source": "enemy_studies_palette.colors()",
+      "index_sha256": "9149917f4ec3a48f19ccea538a60b5cb98ceca52280dcc21b1f6a21f2c452d1a",
+      "rgba_sha256": "eed747403f60f480babdfaab067347f7b85aa7b555c6f3b26b4560ab250d2cf0",
+      "native_indexed_png": "native/beetle/walk_e1-indexed.png",
+      "native_rgba_png": "native/beetle/walk_e1.png",
+      "bounds": [
+        1,
+        4,
+        16,
+        16
+      ],
+      "indices": [
+        0,
+        1,
+        3,
+        5,
+        10,
+        11,
+        12,
+        15
+      ],
+      "rgba_roundtrip_verified": true
+    },
+    {
+      "family": "beetle",
+      "name": "walk_e2",
+      "canvas": [
+        16,
+        16
+      ],
+      "palette_slot": "items",
+      "palette_source": "enemy_studies_palette.colors()",
+      "index_sha256": "a416c2110d3d978df48cbf7cbc943fd0795083f81135b9e3663783a447d414d6",
+      "rgba_sha256": "df50133dbf247a661aac7c76c16f0ed1495815fa11cf7b7bb72e7afafc9e1c8a",
+      "native_indexed_png": "native/beetle/walk_e2-indexed.png",
+      "native_rgba_png": "native/beetle/walk_e2.png",
+      "bounds": [
+        2,
+        4,
+        16,
+        16
+      ],
+      "indices": [
+        0,
+        1,
+        3,
+        5,
+        10,
+        11,
+        12,
+        15
+      ],
+      "rgba_roundtrip_verified": true
+    },
+    {
+      "family": "beetle",
+      "name": "walk_n1",
+      "canvas": [
+        16,
+        16
+      ],
+      "palette_slot": "items",
+      "palette_source": "enemy_studies_palette.colors()",
+      "index_sha256": "5fb826c5cfb02e265ef6aa780fd633f8b8b7c07e0c229015cb921d90eb0e1cd0",
+      "rgba_sha256": "e3a161f91cf57fa9e43949791c22ef5f46c9351d1eff8ad3cee9953f1b84931a",
+      "native_indexed_png": "native/beetle/walk_n1-indexed.png",
+      "native_rgba_png": "native/beetle/walk_n1.png",
+      "bounds": [
+        1,
+        3,
+        15,
+        16
+      ],
+      "indices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        10,
+        11,
+        12
+      ],
+      "rgba_roundtrip_verified": true
+    },
+    {
+      "family": "beetle",
+      "name": "walk_n2",
+      "canvas": [
+        16,
+        16
+      ],
+      "palette_slot": "items",
+      "palette_source": "enemy_studies_palette.colors()",
+      "index_sha256": "7a3f61848d9688a964816f348353c8034b63b0ce52cbdc9dbb389c9c65945f0f",
+      "rgba_sha256": "821fbb58c62f9b72ef7022285c3849b306490c71e65a6be573a4ab20c6acb5b7",
+      "native_indexed_png": "native/beetle/walk_n2-indexed.png",
+      "native_rgba_png": "native/beetle/walk_n2.png",
+      "bounds": [
+        1,
+        3,
+        15,
+        16
+      ],
+      "indices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        10,
+        11,
+        12
+      ],
+      "rgba_roundtrip_verified": true
+    },
+    {
+      "family": "bat",
+      "name": "fly1",
+      "canvas": [
+        16,
+        16
+      ],
+      "palette_slot": "items",
+      "palette_source": "enemy_studies_palette.colors()",
+      "index_sha256": "556daf665e37671e75e379b7ccc8109cbe3800abdbc1a74244a5a7870ee1d2b2",
+      "rgba_sha256": "90de92cb90d618fcd5c60221ed90537202e9728e1b57771e14a2f6c798f3a87b",
+      "native_indexed_png": "native/bat/fly1-indexed.png",
+      "native_rgba_png": "native/bat/fly1.png",
+      "bounds": [
+        0,
+        1,
+        16,
+        14
+      ],
+      "indices": [
+        0,
+        1,
+        3,
+        10,
+        12,
+        15
+      ],
+      "rgba_roundtrip_verified": true
+    },
+    {
+      "family": "bat",
+      "name": "fly2",
+      "canvas": [
+        16,
+        16
+      ],
+      "palette_slot": "items",
+      "palette_source": "enemy_studies_palette.colors()",
+      "index_sha256": "59aa50984736b10d16e14aec1438458cd2ee0ef2d8fde598736f0e81012412b6",
+      "rgba_sha256": "0659513e49b8d44a99b351e9d9a17914ed1cc61b9d235ccdf47ed5307b1d48e2",
+      "native_indexed_png": "native/bat/fly2-indexed.png",
+      "native_rgba_png": "native/bat/fly2.png",
+      "bounds": [
+        0,
+        6,
+        16,
+        16
+      ],
+      "indices": [
+        0,
+        1,
+        3,
+        10,
+        12,
+        15
+      ],
+      "rgba_roundtrip_verified": true
+    },
+    {
+      "family": "bat",
+      "name": "rest",
+      "canvas": [
+        16,
+        16
+      ],
+      "palette_slot": "items",
+      "palette_source": "enemy_studies_palette.colors()",
+      "index_sha256": "87cf25ae7cd3d5de37f1ce0e3a9c8bf0bdbcacafa5001e8c799ea7a05e858f4c",
+      "rgba_sha256": "7a6c773c99bf1045db2f72cf17a5781d2a303cca6b08f2ddd206f7c7a7635046",
+      "native_indexed_png": "native/bat/rest-indexed.png",
+      "native_rgba_png": "native/bat/rest.png",
+      "bounds": [
+        4,
+        3,
+        13,
+        15
+      ],
+      "indices": [
+        0,
+        1,
+        3,
+        9,
+        12,
+        15
+      ],
+      "rgba_roundtrip_verified": true
+    },
+    {
+      "family": "spitter",
+      "name": "idle_s",
+      "canvas": [
+        16,
+        16
+      ],
+      "palette_slot": "blight",
+      "palette_source": "blight",
+      "index_sha256": "469131388efe58c7e71305f4f27519c5d819bdd91c15652417be31a8e9ed33c1",
+      "rgba_sha256": "3c7c013fd89fe80fa308c607f9438b08def60490a4137219f9dadb1b2c0f93d2",
+      "native_indexed_png": "native/spitter/idle_s-indexed.png",
+      "native_rgba_png": "native/spitter/idle_s.png",
+      "bounds": [
+        0,
+        1,
+        15,
+        16
+      ],
+      "indices": [
+        0,
+        1,
+        6,
+        9,
+        10,
+        11,
+        13,
+        14,
+        15
+      ],
+      "rgba_roundtrip_verified": true
+    },
+    {
+      "family": "spitter",
+      "name": "walk_s",
+      "canvas": [
+        16,
+        16
+      ],
+      "palette_slot": "blight",
+      "palette_source": "blight",
+      "index_sha256": "366c2024d365ca49bb587895250d0af8aa9f2260e39bb84be2bb77ba43877f5b",
+      "rgba_sha256": "1e5718a7dfd1fd3c42ea353664f8f36347ea38dd0a867a05e7709522f5e88a51",
+      "native_indexed_png": "native/spitter/walk_s-indexed.png",
+      "native_rgba_png": "native/spitter/walk_s.png",
+      "bounds": [
+        0,
+        1,
+        15,
+        16
+      ],
+      "indices": [
+        0,
+        1,
+        6,
+        9,
+        10,
+        11,
+        13,
+        14,
+        15
+      ],
+      "rgba_roundtrip_verified": true
+    },
+    {
+      "family": "spitter",
+      "name": "spit_s",
+      "canvas": [
+        16,
+        16
+      ],
+      "palette_slot": "blight",
+      "palette_source": "blight",
+      "index_sha256": "2fbc4f4f2fe666fd5f9ba47a527097d7d02ad92f9457482b1e8af39e94914313",
+      "rgba_sha256": "aa97f310daf9b8d0b62a1b53460cae4a2d382589d08b39a2c4e11e57701b48e5",
+      "native_indexed_png": "native/spitter/spit_s-indexed.png",
+      "native_rgba_png": "native/spitter/spit_s.png",
+      "bounds": [
+        0,
+        2,
+        15,
+        16
+      ],
+      "indices": [
+        0,
+        1,
+        2,
+        6,
+        9,
+        10,
+        11,
+        13,
+        14,
+        15
+      ],
+      "rgba_roundtrip_verified": true
+    },
+    {
+      "family": "spitter",
+      "name": "idle_n",
+      "canvas": [
+        16,
+        16
+      ],
+      "palette_slot": "blight",
+      "palette_source": "blight",
+      "index_sha256": "d15009636be45b12d063feaa5f20f7cd1ec0f121e1be1f7c24c4cf71051e4367",
+      "rgba_sha256": "15172531c11ecd63b5d9c0efc014f02cfbcab644e9a7ab04bfeaf1c84ec64027",
+      "native_indexed_png": "native/spitter/idle_n-indexed.png",
+      "native_rgba_png": "native/spitter/idle_n.png",
+      "bounds": [
+        0,
+        0,
+        15,
+        16
+      ],
+      "indices": [
+        0,
+        1,
+        6,
+        9,
+        10,
+        11,
+        13,
+        14,
+        15
+      ],
+      "rgba_roundtrip_verified": true
+    },
+    {
+      "family": "spitter",
+      "name": "walk_n",
+      "canvas": [
+        16,
+        16
+      ],
+      "palette_slot": "blight",
+      "palette_source": "blight",
+      "index_sha256": "6d55c1c6971c5a748070d62dfcca7cf1a3768822f9a885fe6f301255e80ba31e",
+      "rgba_sha256": "b9e5669c81f7ea6e423b5b722a9ef7634e638e20ae4b24d9c60d6ae814423e64",
+      "native_indexed_png": "native/spitter/walk_n-indexed.png",
+      "native_rgba_png": "native/spitter/walk_n.png",
+      "bounds": [
+        0,
+        0,
+        15,
+        16
+      ],
+      "indices": [
+        0,
+        1,
+        6,
+        9,
+        10,
+        11,
+        13,
+        14,
+        15
+      ],
+      "rgba_roundtrip_verified": true
+    },
+    {
+      "family": "spitter",
+      "name": "spit_n",
+      "canvas": [
+        16,
+        16
+      ],
+      "palette_slot": "blight",
+      "palette_source": "blight",
+      "index_sha256": "b842e2841a38aa4516382d9a5053d95a0c264a2f727b81d12d40188c1bab28c6",
+      "rgba_sha256": "4f164987aab226f65f64b28b8f526971992ba1d00ff721a93f1767e2fbc8409b",
+      "native_indexed_png": "native/spitter/spit_n-indexed.png",
+      "native_rgba_png": "native/spitter/spit_n.png",
+      "bounds": [
+        0,
+        0,
+        15,
+        16
+      ],
+      "indices": [
+        0,
+        1,
+        2,
+        6,
+        9,
+        10,
+        11,
+        13,
+        14,
+        15
+      ],
+      "rgba_roundtrip_verified": true
+    },
+    {
+      "family": "spitter",
+      "name": "idle_e",
+      "canvas": [
+        16,
+        16
+      ],
+      "palette_slot": "blight",
+      "palette_source": "blight",
+      "index_sha256": "052c51db28428b1acd30db36b8c8df15c4ae06bd81938e983ab89e381d08998c",
+      "rgba_sha256": "dd31a891dc88c9b256f5748b83be24348288192b3e58bda19e92d3c1835a4aa9",
+      "native_indexed_png": "native/spitter/idle_e-indexed.png",
+      "native_rgba_png": "native/spitter/idle_e.png",
+      "bounds": [
+        0,
+        1,
+        16,
+        16
+      ],
+      "indices": [
+        0,
+        1,
+        6,
+        10,
+        11,
+        13,
+        14,
+        15
+      ],
+      "rgba_roundtrip_verified": true
+    },
+    {
+      "family": "spitter",
+      "name": "walk_e",
+      "canvas": [
+        16,
+        16
+      ],
+      "palette_slot": "blight",
+      "palette_source": "blight",
+      "index_sha256": "ac851a7ef371444995a5369ae39a511801d277285910edbbfc1681a378b66363",
+      "rgba_sha256": "66207fe288d0be73b9058689eedb7dd37b736a53e34af6ab6a24561a4a0c9d2a",
+      "native_indexed_png": "native/spitter/walk_e-indexed.png",
+      "native_rgba_png": "native/spitter/walk_e.png",
+      "bounds": [
+        0,
+        1,
+        16,
+        16
+      ],
+      "indices": [
+        0,
+        1,
+        6,
+        10,
+        11,
+        13,
+        14,
+        15
+      ],
+      "rgba_roundtrip_verified": true
+    },
+    {
+      "family": "spitter",
+      "name": "spit_e",
+      "canvas": [
+        16,
+        16
+      ],
+      "palette_slot": "blight",
+      "palette_source": "blight",
+      "index_sha256": "100c08c763e1e430f5ebc842f242164b23cddd8fe26b86af8373b72ac48e402b",
+      "rgba_sha256": "bdee79500188f20644b8d2c7d65e45aaeaa52e4839ff194d29a3e42d935c8fd8",
+      "native_indexed_png": "native/spitter/spit_e-indexed.png",
+      "native_rgba_png": "native/spitter/spit_e.png",
+      "bounds": [
+        0,
+        2,
+        16,
+        16
+      ],
+      "indices": [
+        0,
+        1,
+        2,
+        6,
+        10,
+        11,
+        13,
+        14,
+        15
+      ],
+      "rgba_roundtrip_verified": true
+    },
+    {
+      "family": "spitter",
+      "name": "charge_s",
+      "canvas": [
+        16,
+        16
+      ],
+      "palette_slot": "blight",
+      "palette_source": "blight",
+      "index_sha256": "fc6d6c61366d307b0c10ed4ca24b22b4260b92599490db4d2cc76b2de56a8a61",
+      "rgba_sha256": "effaa7d754af8341290afb064788be451c1572d7bf7a7055f78d0ca05a9a642d",
+      "native_indexed_png": "native/spitter/charge_s-indexed.png",
+      "native_rgba_png": "native/spitter/charge_s.png",
+      "bounds": [
+        2,
+        1,
+        14,
+        16
+      ],
+      "indices": [
+        0,
+        1,
+        6,
+        9,
+        10,
+        11,
+        13,
+        14,
+        15
+      ],
+      "rgba_roundtrip_verified": true
+    },
+    {
+      "family": "spitter",
+      "name": "charge_n",
+      "canvas": [
+        16,
+        16
+      ],
+      "palette_slot": "blight",
+      "palette_source": "blight",
+      "index_sha256": "108836ac762a4de76afd6ef805db70b6e979af0cdb5c6ed72804b5083311e732",
+      "rgba_sha256": "293a532d58de758ecb2242f3ee9f7873e440f0701f49ba1607c08e1dd75ed8f1",
+      "native_indexed_png": "native/spitter/charge_n-indexed.png",
+      "native_rgba_png": "native/spitter/charge_n.png",
+      "bounds": [
+        2,
+        0,
+        14,
+        16
+      ],
+      "indices": [
+        0,
+        1,
+        6,
+        9,
+        10,
+        11,
+        13,
+        14,
+        15
+      ],
+      "rgba_roundtrip_verified": true
+    },
+    {
+      "family": "spitter",
+      "name": "charge_e",
+      "canvas": [
+        16,
+        16
+      ],
+      "palette_slot": "blight",
+      "palette_source": "blight",
+      "index_sha256": "819e5dc8e03b15d52e208f40e3e7acd67918474e477951005974cca4ddc0decf",
+      "rgba_sha256": "e5de8ca2e5a153f14cf52b0a3c4f58707ae62f667894ab0cdea8521d1fbe2c4a",
+      "native_indexed_png": "native/spitter/charge_e-indexed.png",
+      "native_rgba_png": "native/spitter/charge_e.png",
+      "bounds": [
+        2,
+        1,
+        16,
+        16
+      ],
+      "indices": [
+        0,
+        1,
+        6,
+        10,
+        11,
+        13,
+        14,
+        15
+      ],
+      "rgba_roundtrip_verified": true
+    },
+    {
+      "family": "slime",
+      "name": "idle",
+      "canvas": [
+        16,
+        16
+      ],
+      "palette_slot": "items",
+      "palette_source": "enemy_studies_palette.colors()",
+      "index_sha256": "5d8c6f0c513e1da0132258091e26402f0ce837dd0a78d6419091dc805d000493",
+      "rgba_sha256": "f917f5678a42b70b9393d37fc4b854fabb892355205bcb2c2684c161d703b667",
+      "native_indexed_png": "native/slime/idle-indexed.png",
+      "native_rgba_png": "native/slime/idle.png",
+      "bounds": [
+        1,
+        1,
+        15,
+        16
+      ],
+      "indices": [
+        0,
+        1,
+        2,
+        6,
+        7,
+        9,
+        15
+      ],
+      "rgba_roundtrip_verified": true
+    },
+    {
+      "family": "slime",
+      "name": "squash",
+      "canvas": [
+        16,
+        16
+      ],
+      "palette_slot": "items",
+      "palette_source": "enemy_studies_palette.colors()",
+      "index_sha256": "7f37a668c50d4317513100d91adbd89544782ad25a8545f39f8d82da7a04b4a1",
+      "rgba_sha256": "f7bc4db297cf0b87bae52c48a41aef1516389bb51f87948a4f56cc8ce0d81fdb",
+      "native_indexed_png": "native/slime/squash-indexed.png",
+      "native_rgba_png": "native/slime/squash.png",
+      "bounds": [
+        1,
+        4,
+        15,
+        16
+      ],
+      "indices": [
+        0,
+        1,
+        2,
+        6,
+        7,
+        9,
+        15
+      ],
+      "rgba_roundtrip_verified": true
+    },
+    {
+      "family": "slime",
+      "name": "jump",
+      "canvas": [
+        16,
+        16
+      ],
+      "palette_slot": "items",
+      "palette_source": "enemy_studies_palette.colors()",
+      "index_sha256": "49f95d8924e38a74b3f23df4dbde76cb031aeb0f7a5c5014f52c526d460edfcb",
+      "rgba_sha256": "6a53e19401aec2fc6673398bf08b1020120a9cbe181f1bce01cf55316a6e0565",
+      "native_indexed_png": "native/slime/jump-indexed.png",
+      "native_rgba_png": "native/slime/jump.png",
+      "bounds": [
+        1,
+        0,
+        15,
+        16
+      ],
+      "indices": [
+        0,
+        1,
+        2,
+        6,
+        7,
+        9,
+        15
+      ],
+      "rgba_roundtrip_verified": true
+    },
+    {
+      "family": "knight",
+      "name": "walk_s1",
+      "canvas": [
+        16,
+        32
+      ],
+      "palette_slot": "iron",
+      "palette_source": "stone",
+      "index_sha256": "0fa16118261bd377d2f263e0a9c1818b611996c6471cb62bc659f69447f80f58",
+      "rgba_sha256": "10b444f169a791a13330a62e5dad0fdd6014113fcf97c72662d71d3053d916bd",
+      "native_indexed_png": "native/knight/walk_s1-indexed.png",
+      "native_rgba_png": "native/knight/walk_s1.png",
+      "bounds": [
+        0,
+        2,
+        16,
+        32
+      ],
+      "indices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        6,
+        7,
+        8,
+        15
+      ],
+      "rgba_roundtrip_verified": true
+    },
+    {
+      "family": "knight",
+      "name": "walk_s2",
+      "canvas": [
+        16,
+        32
+      ],
+      "palette_slot": "iron",
+      "palette_source": "stone",
+      "index_sha256": "e702e85c4a42a7c45df1561803217f919299eaa7333d8ba6c3357aa20f8f4e3c",
+      "rgba_sha256": "610fde766f74782dbde1cfc08f46f9387d710a5ff356cd8fb2b4dee902ee1903",
+      "native_indexed_png": "native/knight/walk_s2-indexed.png",
+      "native_rgba_png": "native/knight/walk_s2.png",
+      "bounds": [
+        0,
+        3,
+        16,
+        32
+      ],
+      "indices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        6,
+        7,
+        8,
+        15
+      ],
+      "rgba_roundtrip_verified": true
+    },
+    {
+      "family": "knight",
+      "name": "idle_s",
+      "canvas": [
+        16,
+        32
+      ],
+      "palette_slot": "iron",
+      "palette_source": "stone",
+      "index_sha256": "f86e8aeac1af12b1e4c865e003835838769aef5b82c5008d7ae3834645dfa262",
+      "rgba_sha256": "06f5c32362b22f464e062461b54029473b5952c62e943499c23e3d27ad0b01b9",
+      "native_indexed_png": "native/knight/idle_s-indexed.png",
+      "native_rgba_png": "native/knight/idle_s.png",
+      "bounds": [
+        0,
+        2,
+        16,
+        32
+      ],
+      "indices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        6,
+        7,
+        8,
+        15
+      ],
+      "rgba_roundtrip_verified": true
+    },
+    {
+      "family": "knight",
+      "name": "atk_s",
+      "canvas": [
+        16,
+        32
+      ],
+      "palette_slot": "iron",
+      "palette_source": "stone",
+      "index_sha256": "d5c4e9dbb3d157ca3deb81d28069597d7348297f2712271c8426d87359c93d15",
+      "rgba_sha256": "3daa7135b225b2ec61300ec0ecb4808823b3c79c3dd6239691f442bfc28d70c4",
+      "native_indexed_png": "native/knight/atk_s-indexed.png",
+      "native_rgba_png": "native/knight/atk_s.png",
+      "bounds": [
+        0,
+        2,
+        16,
+        32
+      ],
+      "indices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        6,
+        7,
+        8,
+        15
+      ],
+      "rgba_roundtrip_verified": true
+    },
+    {
+      "family": "knight",
+      "name": "walk_n1",
+      "canvas": [
+        16,
+        32
+      ],
+      "palette_slot": "iron",
+      "palette_source": "stone",
+      "index_sha256": "31600a00e7897b85f3af1b56c2b9f71b03ff2547a58e35d46a1c3538eb9f313e",
+      "rgba_sha256": "5ec0d8d81ae98a9c37199c8603c75a315b6213aadb08e088a0816ba1654cf33d",
+      "native_indexed_png": "native/knight/walk_n1-indexed.png",
+      "native_rgba_png": "native/knight/walk_n1.png",
+      "bounds": [
+        0,
+        2,
+        16,
+        32
+      ],
+      "indices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        6,
+        7,
+        8
+      ],
+      "rgba_roundtrip_verified": true
+    },
+    {
+      "family": "knight",
+      "name": "walk_n2",
+      "canvas": [
+        16,
+        32
+      ],
+      "palette_slot": "iron",
+      "palette_source": "stone",
+      "index_sha256": "4efea43bd0bce09014157b1b0b85e741da5d72158214e5189b581eb10230ed73",
+      "rgba_sha256": "f59926ea5c8ec4295d492526efddd295b135558b6050f3e9a4814f4e4c46cc72",
+      "native_indexed_png": "native/knight/walk_n2-indexed.png",
+      "native_rgba_png": "native/knight/walk_n2.png",
+      "bounds": [
+        0,
+        3,
+        16,
+        32
+      ],
+      "indices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        6,
+        7,
+        8
+      ],
+      "rgba_roundtrip_verified": true
+    },
+    {
+      "family": "knight",
+      "name": "idle_n",
+      "canvas": [
+        16,
+        32
+      ],
+      "palette_slot": "iron",
+      "palette_source": "stone",
+      "index_sha256": "a17d8d7de14d32d3e57db8f5a1da57d2470a402f87567b4d78f6c3fd903706bd",
+      "rgba_sha256": "d4e92be083dfcd02896804706997898684e84c5eb4cc6b315aefc6dbc7e57baf",
+      "native_indexed_png": "native/knight/idle_n-indexed.png",
+      "native_rgba_png": "native/knight/idle_n.png",
+      "bounds": [
+        0,
+        2,
+        16,
+        32
+      ],
+      "indices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        6,
+        7,
+        8
+      ],
+      "rgba_roundtrip_verified": true
+    },
+    {
+      "family": "knight",
+      "name": "atk_n",
+      "canvas": [
+        16,
+        32
+      ],
+      "palette_slot": "iron",
+      "palette_source": "stone",
+      "index_sha256": "4dc290e971e990d55f7b2a81250c223b80ec5c9f16d408e029c5e82cf0f06135",
+      "rgba_sha256": "c7a9a295d7087f1c6e67f7ab7902f6c02a7a576593c0358b3d978f3b53888464",
+      "native_indexed_png": "native/knight/atk_n-indexed.png",
+      "native_rgba_png": "native/knight/atk_n.png",
+      "bounds": [
+        0,
+        2,
+        16,
+        32
+      ],
+      "indices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        6,
+        7,
+        8
+      ],
+      "rgba_roundtrip_verified": true
+    },
+    {
+      "family": "knight",
+      "name": "walk_e1",
+      "canvas": [
+        16,
+        32
+      ],
+      "palette_slot": "iron",
+      "palette_source": "stone",
+      "index_sha256": "ff09735380d592d120fa0f4efeccfcb20aca30ae7e41dfefb25fdbc609977a2b",
+      "rgba_sha256": "e56c3263c4ffed7bf5502c21e7d8f85d094388058222551a4ebaa33ba0862b0a",
+      "native_indexed_png": "native/knight/walk_e1-indexed.png",
+      "native_rgba_png": "native/knight/walk_e1.png",
+      "bounds": [
+        0,
+        2,
+        16,
+        32
+      ],
+      "indices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        6,
+        7,
+        8,
+        15
+      ],
+      "rgba_roundtrip_verified": true
+    },
+    {
+      "family": "knight",
+      "name": "walk_e2",
+      "canvas": [
+        16,
+        32
+      ],
+      "palette_slot": "iron",
+      "palette_source": "stone",
+      "index_sha256": "eef22edea81b91cb03cdd4cda2d99f4071f418db7432bef6f0f6a66802bb2b9b",
+      "rgba_sha256": "4ebf5408605ddafd3cffb9dc1aec1ba1c3e6199eff88ddd0e6c2d08ad0c6a5b7",
+      "native_indexed_png": "native/knight/walk_e2-indexed.png",
+      "native_rgba_png": "native/knight/walk_e2.png",
+      "bounds": [
+        0,
+        3,
+        16,
+        32
+      ],
+      "indices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        6,
+        7,
+        8,
+        15
+      ],
+      "rgba_roundtrip_verified": true
+    },
+    {
+      "family": "knight",
+      "name": "idle_e",
+      "canvas": [
+        16,
+        32
+      ],
+      "palette_slot": "iron",
+      "palette_source": "stone",
+      "index_sha256": "f91970a5c570675aa9528f69abe872a64c9aae41df4c350a6ba6ed7e1650bf3e",
+      "rgba_sha256": "7ddb99fcfcd6162da20462166aac23198f28ce3e61721c7579d1a3fb474e5f9b",
+      "native_indexed_png": "native/knight/idle_e-indexed.png",
+      "native_rgba_png": "native/knight/idle_e.png",
+      "bounds": [
+        0,
+        2,
+        16,
+        32
+      ],
+      "indices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        6,
+        7,
+        8,
+        15
+      ],
+      "rgba_roundtrip_verified": true
+    },
+    {
+      "family": "knight",
+      "name": "atk_e",
+      "canvas": [
+        16,
+        32
+      ],
+      "palette_slot": "iron",
+      "palette_source": "stone",
+      "index_sha256": "92accbf65c4305c1a00d8857a5246fb6a51a608d6c0233d5d0fd85cc9578fccd",
+      "rgba_sha256": "08b3f4cf69bcc98ece1554db45db3479f0bd37fe9ff714e5bbeff27438c1e88d",
+      "native_indexed_png": "native/knight/atk_e-indexed.png",
+      "native_rgba_png": "native/knight/atk_e.png",
+      "bounds": [
+        0,
+        2,
+        16,
+        32
+      ],
+      "indices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        6,
+        7,
+        8,
+        15
+      ],
+      "rgba_roundtrip_verified": true
+    },
+    {
+      "family": "knight",
+      "name": "windup_n",
+      "canvas": [
+        16,
+        32
+      ],
+      "palette_slot": "iron",
+      "palette_source": "stone",
+      "index_sha256": "fa86e16cdc2043994d66596a2a143c0fc5c0cf314ef5ba96e05904c8dcbe1326",
+      "rgba_sha256": "12736e9c4a6895c5a919c32bcf43530c43cfd6634d075629176038bde208645a",
+      "native_indexed_png": "native/knight/windup_n-indexed.png",
+      "native_rgba_png": "native/knight/windup_n.png",
+      "bounds": [
+        0,
+        2,
+        16,
+        32
+      ],
+      "indices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        6,
+        7,
+        8
+      ],
+      "rgba_roundtrip_verified": true
+    },
+    {
+      "family": "knight",
+      "name": "windup_e",
+      "canvas": [
+        16,
+        32
+      ],
+      "palette_slot": "iron",
+      "palette_source": "stone",
+      "index_sha256": "3e83025f83dad76e088045491870a522e93a2dba9eff8f748c98901134229742",
+      "rgba_sha256": "4012b4490c6509bb3698c0e1f03a96eef1a648e54185cc9afbdb1d8b2929363d",
+      "native_indexed_png": "native/knight/windup_e-indexed.png",
+      "native_rgba_png": "native/knight/windup_e.png",
+      "bounds": [
+        0,
+        2,
+        16,
+        32
+      ],
+      "indices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        6,
+        7,
+        8,
+        15
+      ],
+      "rgba_roundtrip_verified": true
+    },
+    {
+      "family": "knight",
+      "name": "windup_s",
+      "canvas": [
+        16,
+        32
+      ],
+      "palette_slot": "iron",
+      "palette_source": "stone",
+      "index_sha256": "a965a0e05752c7ef6f1c49962275674d817efb167c6610e60c9d903e3c2da31e",
+      "rgba_sha256": "6e3bb32d9c8d58277a1077fde236384d0fbd145fcdff31790885f22751868878",
+      "native_indexed_png": "native/knight/windup_s-indexed.png",
+      "native_rgba_png": "native/knight/windup_s.png",
+      "bounds": [
+        0,
+        2,
+        16,
+        32
+      ],
+      "indices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        6,
+        7,
+        8,
+        15
+      ],
+      "rgba_roundtrip_verified": true
+    },
+    {
+      "family": "knight",
+      "name": "strike_n",
+      "canvas": [
+        16,
+        32
+      ],
+      "palette_slot": "iron",
+      "palette_source": "stone",
+      "index_sha256": "4dc290e971e990d55f7b2a81250c223b80ec5c9f16d408e029c5e82cf0f06135",
+      "rgba_sha256": "c7a9a295d7087f1c6e67f7ab7902f6c02a7a576593c0358b3d978f3b53888464",
+      "native_indexed_png": "native/knight/strike_n-indexed.png",
+      "native_rgba_png": "native/knight/strike_n.png",
+      "bounds": [
+        0,
+        2,
+        16,
+        32
+      ],
+      "indices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        6,
+        7,
+        8
+      ],
+      "rgba_roundtrip_verified": true
+    },
+    {
+      "family": "knight",
+      "name": "strike_e",
+      "canvas": [
+        16,
+        32
+      ],
+      "palette_slot": "iron",
+      "palette_source": "stone",
+      "index_sha256": "92accbf65c4305c1a00d8857a5246fb6a51a608d6c0233d5d0fd85cc9578fccd",
+      "rgba_sha256": "08b3f4cf69bcc98ece1554db45db3479f0bd37fe9ff714e5bbeff27438c1e88d",
+      "native_indexed_png": "native/knight/strike_e-indexed.png",
+      "native_rgba_png": "native/knight/strike_e.png",
+      "bounds": [
+        0,
+        2,
+        16,
+        32
+      ],
+      "indices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        6,
+        7,
+        8,
+        15
+      ],
+      "rgba_roundtrip_verified": true
+    },
+    {
+      "family": "knight",
+      "name": "strike_s",
+      "canvas": [
+        16,
+        32
+      ],
+      "palette_slot": "iron",
+      "palette_source": "stone",
+      "index_sha256": "d5c4e9dbb3d157ca3deb81d28069597d7348297f2712271c8426d87359c93d15",
+      "rgba_sha256": "3daa7135b225b2ec61300ec0ecb4808823b3c79c3dd6239691f442bfc28d70c4",
+      "native_indexed_png": "native/knight/strike_s-indexed.png",
+      "native_rgba_png": "native/knight/strike_s.png",
+      "bounds": [
+        0,
+        2,
+        16,
+        32
+      ],
+      "indices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        6,
+        7,
+        8,
+        15
+      ],
+      "rgba_roundtrip_verified": true
+    },
+    {
+      "family": "knight",
+      "name": "recover_n",
+      "canvas": [
+        16,
+        32
+      ],
+      "palette_slot": "iron",
+      "palette_source": "stone",
+      "index_sha256": "de8f9740415f646c8f3ef230dc605d82b7801580619243b38a6463c345fa7ae5",
+      "rgba_sha256": "7b2aa5b82c0c42aaf4361b670421ac3f6b5e822adfac02be3493a11cd4876ac3",
+      "native_indexed_png": "native/knight/recover_n-indexed.png",
+      "native_rgba_png": "native/knight/recover_n.png",
+      "bounds": [
+        0,
+        3,
+        16,
+        32
+      ],
+      "indices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        6,
+        7,
+        8
+      ],
+      "rgba_roundtrip_verified": true
+    },
+    {
+      "family": "knight",
+      "name": "recover_e",
+      "canvas": [
+        16,
+        32
+      ],
+      "palette_slot": "iron",
+      "palette_source": "stone",
+      "index_sha256": "683675f650f7f909e191fb954419e960799a4d927483b0f3c88bca062f13f34b",
+      "rgba_sha256": "0874a85bf57c6a1bd501a7b7efd3937504f5a34c223d725e8e6f0bfbfb0ae57a",
+      "native_indexed_png": "native/knight/recover_e-indexed.png",
+      "native_rgba_png": "native/knight/recover_e.png",
+      "bounds": [
+        0,
+        3,
+        16,
+        32
+      ],
+      "indices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        6,
+        7,
+        8,
+        15
+      ],
+      "rgba_roundtrip_verified": true
+    },
+    {
+      "family": "knight",
+      "name": "recover_s",
+      "canvas": [
+        16,
+        32
+      ],
+      "palette_slot": "iron",
+      "palette_source": "stone",
+      "index_sha256": "33742257a4a4f3e21965e6ec11afc37979b5549588497efb63fcac687ab2cd16",
+      "rgba_sha256": "6a434b5efae9d2a6280f0c291aa494cba071cd6a6333efe28c2f38c344bd85c8",
+      "native_indexed_png": "native/knight/recover_s-indexed.png",
+      "native_rgba_png": "native/knight/recover_s.png",
+      "bounds": [
+        0,
+        3,
+        16,
+        32
+      ],
+      "indices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        6,
+        7,
+        8,
+        15
+      ],
+      "rgba_roundtrip_verified": true
+    },
+    {
+      "family": "knight",
+      "name": "hurt_n",
+      "canvas": [
+        16,
+        32
+      ],
+      "palette_slot": "iron",
+      "palette_source": "stone",
+      "index_sha256": "bd7d7f2d83d60d54fe5554ece29484e72689a37a26b7540cdcacf91c0a4448c0",
+      "rgba_sha256": "f5ba74074a0adbe336c13e6946bbba1508733fb24d92af0a6bb532a3a8e6f3f7",
+      "native_indexed_png": "native/knight/hurt_n-indexed.png",
+      "native_rgba_png": "native/knight/hurt_n.png",
+      "bounds": [
+        0,
+        3,
+        16,
+        32
+      ],
+      "indices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        6,
+        7,
+        8,
+        14,
+        15
+      ],
+      "rgba_roundtrip_verified": true
+    },
+    {
+      "family": "knight",
+      "name": "hurt_e",
+      "canvas": [
+        16,
+        32
+      ],
+      "palette_slot": "iron",
+      "palette_source": "stone",
+      "index_sha256": "ff06361587eb8a593eca1d7af49fb4b0caf0bc9072a246f2590f5caffb792d31",
+      "rgba_sha256": "a342335230bf1cf80bedc93c75f12e363f9133d8009d51037ceb0f13532ebe76",
+      "native_indexed_png": "native/knight/hurt_e-indexed.png",
+      "native_rgba_png": "native/knight/hurt_e.png",
+      "bounds": [
+        0,
+        3,
+        16,
+        32
+      ],
+      "indices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        6,
+        7,
+        8,
+        14,
+        15
+      ],
+      "rgba_roundtrip_verified": true
+    },
+    {
+      "family": "knight",
+      "name": "hurt_s",
+      "canvas": [
+        16,
+        32
+      ],
+      "palette_slot": "iron",
+      "palette_source": "stone",
+      "index_sha256": "d7aa38dee553719c232690f29f6d451693227955da743b5559ca15d66959ce3c",
+      "rgba_sha256": "3ac2cd9f47de6d7d7a83c7fd9f83eabc019ee99a37d07dc78d214997d7033227",
+      "native_indexed_png": "native/knight/hurt_s-indexed.png",
+      "native_rgba_png": "native/knight/hurt_s.png",
+      "bounds": [
+        0,
+        3,
+        16,
+        32
+      ],
+      "indices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        6,
+        7,
+        8,
+        14,
+        15
+      ],
+      "rgba_roundtrip_verified": true
+    },
+    {
+      "family": "boss",
+      "name": "pulse1",
+      "canvas": [
+        32,
+        64
+      ],
+      "palette_slot": "blight",
+      "palette_source": "blight",
+      "index_sha256": "18795e4821a6b8e4216eefaa3a46e62ec0bfa53006f768a2ef7343fd07660b1d",
+      "rgba_sha256": "929c93506bd8dd03578705fc84f083232fdab73c85fe83ff9bfdda2a90189b83",
+      "native_indexed_png": "native/boss/pulse1-indexed.png",
+      "native_rgba_png": "native/boss/pulse1.png",
+      "bounds": [
+        1,
+        15,
+        32,
+        62
+      ],
+      "indices": [
+        0,
+        1,
+        3,
+        4,
+        5,
+        6,
+        7,
+        12,
+        13,
+        14
+      ],
+      "rgba_roundtrip_verified": true
+    },
+    {
+      "family": "boss",
+      "name": "pulse2",
+      "canvas": [
+        32,
+        64
+      ],
+      "palette_slot": "blight",
+      "palette_source": "blight",
+      "index_sha256": "9c3d6c387f379f48da7a6b8870737bab423a7e2c9d1ceb269eea21870b1d2c74",
+      "rgba_sha256": "a2213d8b0e059d130ddc71af82c1f3f07fc59106d57ab92b7b37f2590006f32b",
+      "native_indexed_png": "native/boss/pulse2-indexed.png",
+      "native_rgba_png": "native/boss/pulse2.png",
+      "bounds": [
+        0,
+        14,
+        32,
+        62
+      ],
+      "indices": [
+        0,
+        1,
+        3,
+        4,
+        5,
+        6,
+        7,
+        12,
+        13,
+        14,
+        15
+      ],
+      "rgba_roundtrip_verified": true
+    },
+    {
+      "family": "boss",
+      "name": "hurt",
+      "canvas": [
+        32,
+        64
+      ],
+      "palette_slot": "blight",
+      "palette_source": "blight",
+      "index_sha256": "9216b0ce5ecdc9c40d225db9c4422da7a1918c7086fbd0a8212906b59624e9aa",
+      "rgba_sha256": "14facb5d245e2195bffb9234594ca16910f1a4fcd3f871538dc1053c639f0c61",
+      "native_indexed_png": "native/boss/hurt-indexed.png",
+      "native_rgba_png": "native/boss/hurt.png",
+      "bounds": [
+        0,
+        15,
+        31,
+        61
+      ],
+      "indices": [
+        0,
+        1,
+        3,
+        4,
+        5,
+        6,
+        7,
+        12,
+        13,
+        14,
+        15
+      ],
+      "rgba_roundtrip_verified": true
+    },
+    {
+      "family": "boss",
+      "name": "charge1",
+      "canvas": [
+        32,
+        64
+      ],
+      "palette_slot": "blight",
+      "palette_source": "blight",
+      "index_sha256": "0e3f967b3f024ab5be900de09097a210c81d2740b998147ac41f237920dd671f",
+      "rgba_sha256": "2af8d28c87fd841051622aa7614d87ed1ae2dcc41f3ec99c88610bc628ad2240",
+      "native_indexed_png": "native/boss/charge1-indexed.png",
+      "native_rgba_png": "native/boss/charge1.png",
+      "bounds": [
+        0,
+        14,
+        32,
+        61
+      ],
+      "indices": [
+        0,
+        1,
+        3,
+        4,
+        5,
+        6,
+        7,
+        12,
+        13,
+        14,
+        15
+      ],
+      "rgba_roundtrip_verified": true
+    },
+    {
+      "family": "boss",
+      "name": "charge2",
+      "canvas": [
+        32,
+        64
+      ],
+      "palette_slot": "blight",
+      "palette_source": "blight",
+      "index_sha256": "b3eb7c4ff719ac6ba144822e187d2eebc0f56943a0ceda16f9491ec12e7120f2",
+      "rgba_sha256": "61041302ba2ecb5e01660f343ab1573e55d510fd488c2225d10542d3c9bc7ad7",
+      "native_indexed_png": "native/boss/charge2-indexed.png",
+      "native_rgba_png": "native/boss/charge2.png",
+      "bounds": [
+        0,
+        13,
+        32,
+        60
+      ],
+      "indices": [
+        0,
+        1,
+        3,
+        4,
+        5,
+        6,
+        7,
+        12,
+        13,
+        14,
+        15
+      ],
+      "rgba_roundtrip_verified": true
+    },
+    {
+      "family": "boss",
+      "name": "release1",
+      "canvas": [
+        32,
+        64
+      ],
+      "palette_slot": "blight",
+      "palette_source": "blight",
+      "index_sha256": "a16b5bf3c0229626df7bc800fbd03f4dc28519b5475cd7b3b4593a9f914a8e37",
+      "rgba_sha256": "223d7264f4ecf5661f63bf829507bc7e29d6b702f883ed1bd0c83e9b818a0529",
+      "native_indexed_png": "native/boss/release1-indexed.png",
+      "native_rgba_png": "native/boss/release1.png",
+      "bounds": [
+        2,
+        15,
+        32,
+        60
+      ],
+      "indices": [
+        0,
+        1,
+        3,
+        4,
+        5,
+        6,
+        7,
+        12,
+        13,
+        14,
+        15
+      ],
+      "rgba_roundtrip_verified": true
+    },
+    {
+      "family": "boss",
+      "name": "release2",
+      "canvas": [
+        32,
+        64
+      ],
+      "palette_slot": "blight",
+      "palette_source": "blight",
+      "index_sha256": "5a23727ff57b1b523f081ca0be17b5d20417bf696a81b8cfb6c3fd053ce1a2a9",
+      "rgba_sha256": "5537b8ec214470923d05c0f4ed38eff861c367d489055ee8100b5ed7f7c18b04",
+      "native_indexed_png": "native/boss/release2-indexed.png",
+      "native_rgba_png": "native/boss/release2.png",
+      "bounds": [
+        3,
+        16,
+        32,
+        61
+      ],
+      "indices": [
+        0,
+        1,
+        3,
+        4,
+        5,
+        6,
+        7,
+        12,
+        13,
+        14,
+        15
+      ],
+      "rgba_roundtrip_verified": true
+    },
+    {
+      "family": "boss",
+      "name": "spawn1",
+      "canvas": [
+        32,
+        64
+      ],
+      "palette_slot": "blight",
+      "palette_source": "blight",
+      "index_sha256": "dd622eb22ad24e7b773e4ab708adafb0be9f40e3fddd9e9e138a08961a84a8c4",
+      "rgba_sha256": "6ffbf04f9f79144e2211f61264140849af2e81c2b1c5791ac155e924b0c81189",
+      "native_indexed_png": "native/boss/spawn1-indexed.png",
+      "native_rgba_png": "native/boss/spawn1.png",
+      "bounds": [
+        1,
+        14,
+        32,
+        61
+      ],
+      "indices": [
+        0,
+        1,
+        3,
+        4,
+        5,
+        6,
+        7,
+        12,
+        13,
+        14,
+        15
+      ],
+      "rgba_roundtrip_verified": true
+    },
+    {
+      "family": "boss",
+      "name": "spawn2",
+      "canvas": [
+        32,
+        64
+      ],
+      "palette_slot": "blight",
+      "palette_source": "blight",
+      "index_sha256": "2ebc3fdf37a9cd5f2e175cf021e03a32f89f0013783b062d6f5c4ff62981627f",
+      "rgba_sha256": "ed7a1c45b99ce71526b3a18872342679e6ec54d64048217e22f5cca1720b4383",
+      "native_indexed_png": "native/boss/spawn2-indexed.png",
+      "native_rgba_png": "native/boss/spawn2.png",
+      "bounds": [
+        0,
+        15,
+        32,
+        61
+      ],
+      "indices": [
+        0,
+        1,
+        3,
+        4,
+        5,
+        6,
+        7,
+        12,
+        13,
+        14,
+        15
+      ],
+      "rgba_roundtrip_verified": true
+    },
+    {
+      "family": "boss",
+      "name": "lunge1",
+      "canvas": [
+        32,
+        64
+      ],
+      "palette_slot": "blight",
+      "palette_source": "blight",
+      "index_sha256": "17409adc3e2a6c685a3eb71f413d597f861b853c5c135ed9736b74320cef1da5",
+      "rgba_sha256": "1e33911c606c3761d34cbc26ea344c2ae2a33ba5ac95372370146c46215591b7",
+      "native_indexed_png": "native/boss/lunge1-indexed.png",
+      "native_rgba_png": "native/boss/lunge1.png",
+      "bounds": [
+        0,
+        16,
+        31,
+        61
+      ],
+      "indices": [
+        0,
+        1,
+        3,
+        4,
+        5,
+        6,
+        7,
+        12,
+        13,
+        14,
+        15
+      ],
+      "rgba_roundtrip_verified": true
+    },
+    {
+      "family": "boss",
+      "name": "lunge2",
+      "canvas": [
+        32,
+        64
+      ],
+      "palette_slot": "blight",
+      "palette_source": "blight",
+      "index_sha256": "c2385404ca32fb6ef123c6bc0f0b64f0d4d0d7b998849cb0a314a4d69e016f56",
+      "rgba_sha256": "dec0045cf822936ee1c80e0d5fc22f47a7fa865597ad0c3c0f7b686c0ee8950e",
+      "native_indexed_png": "native/boss/lunge2-indexed.png",
+      "native_rgba_png": "native/boss/lunge2.png",
+      "bounds": [
+        0,
+        17,
+        32,
+        61
+      ],
+      "indices": [
+        0,
+        1,
+        3,
+        4,
+        5,
+        6,
+        7,
+        12,
+        13,
+        14,
+        15
+      ],
+      "rgba_roundtrip_verified": true
+    },
+    {
+      "family": "boss",
+      "name": "dying1",
+      "canvas": [
+        32,
+        64
+      ],
+      "palette_slot": "blight",
+      "palette_source": "blight",
+      "index_sha256": "b9fe7dc466c86b6dd114e04e8e3600b13efa2dabb749c00c0058fe8f1fc78172",
+      "rgba_sha256": "9c3c004613e7cadec8a79ee47ecb2ba82d727b014052ed63a0a26c4a7d20852e",
+      "native_indexed_png": "native/boss/dying1-indexed.png",
+      "native_rgba_png": "native/boss/dying1.png",
+      "bounds": [
+        2,
+        24,
+        31,
+        60
+      ],
+      "indices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        12
+      ],
+      "rgba_roundtrip_verified": true
+    },
+    {
+      "family": "boss",
+      "name": "dying2",
+      "canvas": [
+        32,
+        64
+      ],
+      "palette_slot": "blight",
+      "palette_source": "blight",
+      "index_sha256": "36317b0eefca7bad7c8b1f53ff5317ad7d04705ef266feeda0b8bc459f320ba8",
+      "rgba_sha256": "9e400f3adff5f9de089ae031ca5c1c801a752f8990f0cf67b033512be480936a",
+      "native_indexed_png": "native/boss/dying2-indexed.png",
+      "native_rgba_png": "native/boss/dying2.png",
+      "bounds": [
+        4,
+        32,
+        31,
+        60
+      ],
+      "indices": [
+        0,
+        1,
+        3,
+        4,
+        5,
+        6,
+        12
+      ],
+      "rgba_roundtrip_verified": true
+    },
+    {
+      "family": "ksword",
+      "name": "blade_e",
+      "canvas": [
+        16,
+        16
+      ],
+      "palette_slot": "iron",
+      "palette_source": "stone",
+      "index_sha256": "2f3b97a59d34fb8da617bf79a1f98cd8e0de4c8803d394346d90045f99e62f2a",
+      "rgba_sha256": "633e89e52c7606be7d8e93a76289017f0778bb1389c87b50e192d70ab2b975f6",
+      "native_indexed_png": "native/ksword/blade_e-indexed.png",
+      "native_rgba_png": "native/ksword/blade_e.png",
+      "bounds": [
+        0,
+        5,
+        16,
+        11
+      ],
+      "indices": [
+        0,
+        1,
+        7,
+        8,
+        11,
+        12
+      ],
+      "rgba_roundtrip_verified": true
+    },
+    {
+      "family": "ksword",
+      "name": "blade_s",
+      "canvas": [
+        16,
+        16
+      ],
+      "palette_slot": "iron",
+      "palette_source": "stone",
+      "index_sha256": "df02f0bcddc95c55ca0fab1ed00c83393579ce8884345facf469f142cf7bf2b5",
+      "rgba_sha256": "197b4a51b02279c8d04528ded804df72a97184da1ef9100b57d93cc7e53cc5b5",
+      "native_indexed_png": "native/ksword/blade_s-indexed.png",
+      "native_rgba_png": "native/ksword/blade_s.png",
+      "bounds": [
+        5,
+        0,
+        11,
+        16
+      ],
+      "indices": [
+        0,
+        1,
+        7,
+        8,
+        11,
+        12
+      ],
+      "rgba_roundtrip_verified": true
+    },
+    {
+      "family": "proj",
+      "name": "seed",
+      "canvas": [
+        8,
+        8
+      ],
+      "palette_slot": "fx",
+      "palette_source": "gold",
+      "index_sha256": "4d59d9127716c2d78f870382935381a1b1fb6e9c5fc2a5f374e6bbb080065fc2",
+      "rgba_sha256": "0ce9212e681bf76ad8e055f5ecb00b66e654d8dec51666f4acda673b7ddba217",
+      "native_indexed_png": "native/proj/seed-indexed.png",
+      "native_rgba_png": "native/proj/seed.png",
+      "bounds": [
+        1,
+        1,
+        7,
+        7
+      ],
+      "indices": [
+        0,
+        1,
+        4,
+        6,
+        9,
+        11
+      ],
+      "rgba_roundtrip_verified": true
+    }
+  ],
+  "files": {
+    "README.md": {
+      "sha256": "b866f320c06c73ec9dc312f4473afbedc4e94e4ea8d72c0d46afa2a34ddf010e",
+      "bytes": 3018
+    },
+    "atlases/bat-all-frames-source.png": {
+      "sha256": "8faaeacfc7015bd5118ebe8e1cb01688550334463df4d1f32c5f4da459c1506b",
+      "bytes": 3038
+    },
+    "atlases/beetle-all-frames-source.png": {
+      "sha256": "5371029073cf3a349f566022880e9b91ebb2e54b5f7483290a885862f4f2c2ee",
+      "bytes": 4338
+    },
+    "atlases/boss-all-frames-source.png": {
+      "sha256": "780818539622e5e5ace715ae958873949cd271c1994a213c0c9e918f9cc51a48",
+      "bytes": 23240
+    },
+    "atlases/knight-all-frames-source.png": {
+      "sha256": "f339f0543175e68526e048a6677f40df2ec10aa02d39bd1cef07526e1a3126bf",
+      "bytes": 19395
+    },
+    "atlases/slime-all-frames-source.png": {
+      "sha256": "e15eb5bf01b60774b6b82567f5ebbca50db459ba2b1c66989cdfc6debf089db3",
+      "bytes": 2987
+    },
+    "atlases/spitter-all-frames-source.png": {
+      "sha256": "46eda75cf08e52aa169b9868932446c6f2db116e2a2ed38984a1329a885d62d4",
+      "bytes": 9021
+    },
+    "bat-all-poses-source.gif": {
+      "sha256": "3c32a0a7a3ee2757637960c8bce23ef44ecc16ae12acd18c94caf9a1be38ec48",
+      "bytes": 8878
+    },
+    "beetle-all-poses-source.gif": {
+      "sha256": "ba2db92920901a24b95e78cbff095f7c47c94462066293042bc61d3e528b6da8",
+      "bytes": 17991
+    },
+    "boss-all-poses-source.gif": {
+      "sha256": "8b9431bd4823fb336ff9c13f08c43ae95c45fb362b3ca4b21c105d8fd126dc9d",
+      "bytes": 71162
+    },
+    "knight-all-poses-source.gif": {
+      "sha256": "ae8f137a0af95e9a42424eb686d96a3dddc5d619c213787de1690ec71e8f9664",
+      "bytes": 92075
+    },
+    "native/bat/fly1-indexed.png": {
+      "sha256": "f51d1f5dd4ceafd95a758003b8e729b4154cfc55d463bb5d8d3bf1d8e3a79cb8",
+      "bytes": 934
+    },
+    "native/bat/fly1.png": {
+      "sha256": "9bc79d80077cf05aad0d01586893a4fccf553662d8f83b9c4304f8f2cb269046",
+      "bytes": 265
+    },
+    "native/bat/fly2-indexed.png": {
+      "sha256": "3e4156c9d8e9043d1811682035b9e0c3231022a77381c820988c840d176b4006",
+      "bytes": 923
+    },
+    "native/bat/fly2.png": {
+      "sha256": "10419466644753f65c90f591b972514f5c9cd85a751d7c5d847fe883f475e53b",
+      "bytes": 247
+    },
+    "native/bat/rest-indexed.png": {
+      "sha256": "c365f7a5e2b46d867768a0bc71a4b14de84812358fae2faac672b03e122adab1",
+      "bytes": 915
+    },
+    "native/bat/rest.png": {
+      "sha256": "9775c97f564e33a090ab9ae79849983fe52f7187c8b0364a5a1275bd3487aba4",
+      "bytes": 217
+    },
+    "native/beetle/walk_e1-indexed.png": {
+      "sha256": "78c8bfaca35d1a17fbdc948ef6d5be65ff42fe0413701a8e98da805bd3218048",
+      "bytes": 931
+    },
+    "native/beetle/walk_e1.png": {
+      "sha256": "cec8ff74d983cb8a7aeea83242b77183845b89cc4ffa718a163b9b700c58f711",
+      "bytes": 257
+    },
+    "native/beetle/walk_e2-indexed.png": {
+      "sha256": "c73e5fd975f63618d38af86ff2e50f2e31b8d07ee4fd30590c8914b4ac0c9069",
+      "bytes": 929
+    },
+    "native/beetle/walk_e2.png": {
+      "sha256": "320d05445ce2e4a9a9ad267ff406a1b54dc7067f997a98ec35baec2c19f3764a",
+      "bytes": 249
+    },
+    "native/beetle/walk_n1-indexed.png": {
+      "sha256": "140054ff632e1680fd40f1ed9633439a81252a35066a2982e16e3aceb4f9075d",
+      "bytes": 934
+    },
+    "native/beetle/walk_n1.png": {
+      "sha256": "fef8dc948f3721cc8f1aa0d1d0e2800b01ba420854cedf4b1300bd1879b6797a",
+      "bytes": 301
+    },
+    "native/beetle/walk_n2-indexed.png": {
+      "sha256": "2b0e5df8f980ef05c530286996b009702c5351c53ced7112eb4c90e02a642ec4",
+      "bytes": 933
+    },
+    "native/beetle/walk_n2.png": {
+      "sha256": "99e6f675f0d3f2f784ec5e2b5423280ea6288960f1c4a6a2f7c2e814bc7886c3",
+      "bytes": 300
+    },
+    "native/beetle/walk_s1-indexed.png": {
+      "sha256": "331e12eb575b0a1bc8f5a49f0b656ce2c653457fd93a580a11ad06c8df4b210e",
+      "bytes": 927
+    },
+    "native/beetle/walk_s1.png": {
+      "sha256": "e7f1414e7d8b8cc25c6d1d2b219e77515d2f0fee98ecb71bfd76673273e23203",
+      "bytes": 263
+    },
+    "native/beetle/walk_s2-indexed.png": {
+      "sha256": "dd15be02e62436541316f950296ac3d1a2636465387de302d4ac437597e3bf73",
+      "bytes": 925
+    },
+    "native/beetle/walk_s2.png": {
+      "sha256": "f05d670cc93b6ed3fdf66a827a29743f61be9bb06ccbc1f9a8792f9abb91264a",
+      "bytes": 254
+    },
+    "native/boss/charge1-indexed.png": {
+      "sha256": "486519bc2163dbb28600f8d028a97e38f646fff57950304d64aeb5df1aec5c96",
+      "bytes": 1184
+    },
+    "native/boss/charge1.png": {
+      "sha256": "88c516aeb5e7fb70b0ecfa415a51e798d1607a901cb6061f762ccbe77bbed240",
+      "bytes": 915
+    },
+    "native/boss/charge2-indexed.png": {
+      "sha256": "9f658a50ef6afd9fab17f12efed57c524f457a3d498165a092a2567b25844324",
+      "bytes": 1180
+    },
+    "native/boss/charge2.png": {
+      "sha256": "1eb068c094d98d167a8f525d09368a162adc77743da96cd554390431b613eb42",
+      "bytes": 928
+    },
+    "native/boss/dying1-indexed.png": {
+      "sha256": "5ddafcf60cfeb22e31776270d7420c2f3ff63567fe20a44d997f6c7d5c43797a",
+      "bytes": 1085
+    },
+    "native/boss/dying1.png": {
+      "sha256": "494e11cb221b880492daf185bb3eda953fe3eff08a90f2da627ab29b9b6f260a",
+      "bytes": 697
+    },
+    "native/boss/dying2-indexed.png": {
+      "sha256": "a7db7443bb1ea8464173680b601b298893fb2bed2c13c626b6f9e68a6638e2e5",
+      "bytes": 1031
+    },
+    "native/boss/dying2.png": {
+      "sha256": "1a51e301d4a4dac1a171691a9cd1593c5c62bc992a0ac59a7052da6e301e648d",
+      "bytes": 540
+    },
+    "native/boss/hurt-indexed.png": {
+      "sha256": "3c65c1580bec49837dcb669aa6d6ed507a6a2073ff25dc9ffa01b88314d1988a",
+      "bytes": 1181
+    },
+    "native/boss/hurt.png": {
+      "sha256": "f405951454a7f980c2ed34ec3a5ec0594a1aad87e82d08b966100a1eed3d46d8",
+      "bytes": 957
+    },
+    "native/boss/lunge1-indexed.png": {
+      "sha256": "9e357b7224257f3f96dadaee2f528a86f11ceac45d244970e1fce7f8d46815f4",
+      "bytes": 1168
+    },
+    "native/boss/lunge1.png": {
+      "sha256": "594f571cf9c18c1a7d2322b0c46cdb1b23280e19381733c4d9bee4629fc48b63",
+      "bytes": 896
+    },
+    "native/boss/lunge2-indexed.png": {
+      "sha256": "5f3080cea16a66d92cdbe6d664b2b5633226d43f6972111a478def8f0b114b0a",
+      "bytes": 1168
+    },
+    "native/boss/lunge2.png": {
+      "sha256": "ee7db3a3f734826e0bd2c6e1271537d7d2592f5b1cdd6a18e5b9f99c8c04025d",
+      "bytes": 920
+    },
+    "native/boss/pulse1-indexed.png": {
+      "sha256": "cdd84a60d16407b4ca6d8f9211ef3af22ae81508564fd7cd94bccf887fe135e1",
+      "bytes": 1179
+    },
+    "native/boss/pulse1.png": {
+      "sha256": "36d23ccfe357d6de2b4564bf567ad764c06960db674fe1f024d04cc97dcc3f93",
+      "bytes": 924
+    },
+    "native/boss/pulse2-indexed.png": {
+      "sha256": "2fe86da94fd724f1cf0fb07b8cffe5242695c923d2c157797abdf124693bbedf",
+      "bytes": 1195
+    },
+    "native/boss/pulse2.png": {
+      "sha256": "540bae28da0d597b27326be9eb99cb98b568a98ccbfa57cdcec855d9a1bf0541",
+      "bytes": 930
+    },
+    "native/boss/release1-indexed.png": {
+      "sha256": "47cad737bf06545048907f9811382914eb204e669ea0031ea84e6c4f1ec63d03",
+      "bytes": 1156
+    },
+    "native/boss/release1.png": {
+      "sha256": "5903bd856f56119e2967bcb279a2df9078aea931d177829865ec6da3461ecaba",
+      "bytes": 902
+    },
+    "native/boss/release2-indexed.png": {
+      "sha256": "a910225f42154935c2d7f7fc64c27ce5e58e267916dbad115bf6d7a3d144ea11",
+      "bytes": 1154
+    },
+    "native/boss/release2.png": {
+      "sha256": "f4adf0171d57fd9abd74cd4e7ce10c320ce250d5b1002e9d2174667fa79708f6",
+      "bytes": 864
+    },
+    "native/boss/spawn1-indexed.png": {
+      "sha256": "d0d653d51765f150ffbe1825fa50e54cdf01249593f7e4900bb1cde1e8afdad4",
+      "bytes": 1177
+    },
+    "native/boss/spawn1.png": {
+      "sha256": "5e8c8ee2201ab6020748586b800ad606f247eb7a93aa0f1bcdea0f9a5d66181d",
+      "bytes": 910
+    },
+    "native/boss/spawn2-indexed.png": {
+      "sha256": "5d271e79acc6e3344153ac373b418ec65dc757a8e77d680f849db1ce48519357",
+      "bytes": 1188
+    },
+    "native/boss/spawn2.png": {
+      "sha256": "1258b2742a1bdc9c2cde838ea8a0946a452534680ccc49be38f4f4098204d670",
+      "bytes": 952
+    },
+    "native/knight/atk_e-indexed.png": {
+      "sha256": "9120837b41f84f6f36a8a7409b16e5bc05c26cd473b35e296ec3257b2cd53ecd",
+      "bytes": 1004
+    },
+    "native/knight/atk_e.png": {
+      "sha256": "883c9ad793343ff7d4ae8b976f4f0419a97729bfcb891373753bdcdddc017ca0",
+      "bytes": 468
+    },
+    "native/knight/atk_n-indexed.png": {
+      "sha256": "e19ab33ae3b1f88a9efedee7f5ad0a853a48b8eb1eec2fa08d733884e3e52a2f",
+      "bytes": 1010
+    },
+    "native/knight/atk_n.png": {
+      "sha256": "20207275a3e1397cb64a58c698c9412569e1228c9d8d04f3250dadf42e21c5d4",
+      "bytes": 481
+    },
+    "native/knight/atk_s-indexed.png": {
+      "sha256": "364ac05239f9b9f2d57b6cbf827c761cdfa952d3bcee7a776ae301b13f6dcab2",
+      "bytes": 1001
+    },
+    "native/knight/atk_s.png": {
+      "sha256": "145a9db8675a81ab4fbe19094e6bc01d68930522ae43c2502570463d1535b304",
+      "bytes": 479
+    },
+    "native/knight/hurt_e-indexed.png": {
+      "sha256": "3e97673fef1a98325e9470d83c9316c0b8011d472ea5a999a1f767cb8b32427e",
+      "bytes": 1015
+    },
+    "native/knight/hurt_e.png": {
+      "sha256": "013be2d6f1f83b667f81a491292bf33179957a5e182cfe6f48e987043702ec5a",
+      "bytes": 498
+    },
+    "native/knight/hurt_n-indexed.png": {
+      "sha256": "d0eff343eaaec67502bc2d78c124ed3d45e245efdf7194deb9d2c3f6595df46c",
+      "bytes": 1011
+    },
+    "native/knight/hurt_n.png": {
+      "sha256": "a8f1adcca57c06ef0b8b4df3798c3ee9aad13e9e7a04081211cb9956d7a70c6c",
+      "bytes": 472
+    },
+    "native/knight/hurt_s-indexed.png": {
+      "sha256": "0f683cb2cf783086d39f6032fb0326961296bce5ccd9cf8f45d1ec6119bb0ed8",
+      "bytes": 1011
+    },
+    "native/knight/hurt_s.png": {
+      "sha256": "36a9c5da22d141374f6c59a9fc2c07ebdc656a54fca7b0725f0f81b27ed89bb1",
+      "bytes": 503
+    },
+    "native/knight/idle_e-indexed.png": {
+      "sha256": "0e18a1a7ee71bd691a138aa8093cf45716fad07a9a8b604a4954580d686503b1",
+      "bytes": 1007
+    },
+    "native/knight/idle_e.png": {
+      "sha256": "6d0168a025622daa1985f1dbffccc2e8a03e501682e745f011d21628fdb5342e",
+      "bytes": 481
+    },
+    "native/knight/idle_n-indexed.png": {
+      "sha256": "fcddbfae9ab124ac2d4837ee699dd37589467099229f7668acab1b4ae3ba90fe",
+      "bytes": 1007
+    },
+    "native/knight/idle_n.png": {
+      "sha256": "195efd23ebfaa0d1d4e4c798c937aa234812cbf2ce01e5e123d49cc4bf248e95",
+      "bytes": 465
+    },
+    "native/knight/idle_s-indexed.png": {
+      "sha256": "b438e52ac76fa86b4326783d70278e7831483cb3a1945351c8b781c4a890e649",
+      "bytes": 1005
+    },
+    "native/knight/idle_s.png": {
+      "sha256": "f6564636ae3fcae7cb76d57153452084612050106dc1371705864e94b8033a31",
+      "bytes": 478
+    },
+    "native/knight/recover_e-indexed.png": {
+      "sha256": "cfae823324231a5220f79f79dcbc3c6786c63bc3d60bc8f1b2126c98867ae1d0",
+      "bytes": 1003
+    },
+    "native/knight/recover_e.png": {
+      "sha256": "167fc8ca014e2a28c80e4ed6934ac3b22b795124e8a0702e1a6109b6cc8334ab",
+      "bytes": 468
+    },
+    "native/knight/recover_n-indexed.png": {
+      "sha256": "e77c8233d6f891d595655eaadac397fe91c2764d87becc31e867a2de809d56d2",
+      "bytes": 1003
+    },
+    "native/knight/recover_n.png": {
+      "sha256": "e7c37fa43a8c4384f29df87094ea8e3996f523c00e6746962bddb0b3a01ad3aa",
+      "bytes": 451
+    },
+    "native/knight/recover_s-indexed.png": {
+      "sha256": "7f3636cd55dafd8250c2a0a02e7a2fda3688372fb259ede363aa33c7a4cd528d",
+      "bytes": 1002
+    },
+    "native/knight/recover_s.png": {
+      "sha256": "80784aac0a1e778a8547ad911b8c104f322d61c6526e1ef1f8e815a432018b64",
+      "bytes": 477
+    },
+    "native/knight/strike_e-indexed.png": {
+      "sha256": "9120837b41f84f6f36a8a7409b16e5bc05c26cd473b35e296ec3257b2cd53ecd",
+      "bytes": 1004
+    },
+    "native/knight/strike_e.png": {
+      "sha256": "883c9ad793343ff7d4ae8b976f4f0419a97729bfcb891373753bdcdddc017ca0",
+      "bytes": 468
+    },
+    "native/knight/strike_n-indexed.png": {
+      "sha256": "e19ab33ae3b1f88a9efedee7f5ad0a853a48b8eb1eec2fa08d733884e3e52a2f",
+      "bytes": 1010
+    },
+    "native/knight/strike_n.png": {
+      "sha256": "20207275a3e1397cb64a58c698c9412569e1228c9d8d04f3250dadf42e21c5d4",
+      "bytes": 481
+    },
+    "native/knight/strike_s-indexed.png": {
+      "sha256": "364ac05239f9b9f2d57b6cbf827c761cdfa952d3bcee7a776ae301b13f6dcab2",
+      "bytes": 1001
+    },
+    "native/knight/strike_s.png": {
+      "sha256": "145a9db8675a81ab4fbe19094e6bc01d68930522ae43c2502570463d1535b304",
+      "bytes": 479
+    },
+    "native/knight/walk_e1-indexed.png": {
+      "sha256": "0271062e8d261f4dad17ea65f055642bd8d782cdaf116956b891f4eb721b1c38",
+      "bytes": 1007
+    },
+    "native/knight/walk_e1.png": {
+      "sha256": "c0c1f4946d642560a54353679fe320ab330c7c2334cdf7c91fa159175848709a",
+      "bytes": 489
+    },
+    "native/knight/walk_e2-indexed.png": {
+      "sha256": "044f4c377f00721d6937e73b3b6ff7afedba594d7cf7f756d37b90b5eb5d6af9",
+      "bytes": 1008
+    },
+    "native/knight/walk_e2.png": {
+      "sha256": "316488cdf0dd74a360e05edd766b9979c7302309022a0450caef5d2f5ebd8149",
+      "bytes": 468
+    },
+    "native/knight/walk_n1-indexed.png": {
+      "sha256": "c356a4ba5f54e729073fe30281e66044e8a576d22e3ea0e7e4f7b65baa0a6295",
+      "bytes": 1006
+    },
+    "native/knight/walk_n1.png": {
+      "sha256": "c6cdf0263fa34a9042d49edcbd5ace15c03d288d7544bee0063698a8dbbb6000",
+      "bytes": 473
+    },
+    "native/knight/walk_n2-indexed.png": {
+      "sha256": "e0699bbf52e88d0a982f8e12e5afb83336c2d2e21e787fadbe7c5fa1d634df49",
+      "bytes": 1006
+    },
+    "native/knight/walk_n2.png": {
+      "sha256": "92f0551e18f576bae475b644c58ce869ee5a8afb01c8446bf930387594f435b5",
+      "bytes": 454
+    },
+    "native/knight/walk_s1-indexed.png": {
+      "sha256": "e42819910faf2026c84abc4a9d4dfef8503efa3ede4f9423bf2e24a3cd9cc817",
+      "bytes": 1006
+    },
+    "native/knight/walk_s1.png": {
+      "sha256": "88eb1bde83ea2d369e366048b950c3776c117a53c306081b6511402e99421c83",
+      "bytes": 484
+    },
+    "native/knight/walk_s2-indexed.png": {
+      "sha256": "d3f3759d8675757334dce147158d6a7cd86f604ffd9c2b004b55e5bea8a69bd5",
+      "bytes": 1005
+    },
+    "native/knight/walk_s2.png": {
+      "sha256": "c9d8bb6bb4c9636aedd44727b0bc525fc01f810ce8f235ae01ecccb46a82de7e",
+      "bytes": 477
+    },
+    "native/knight/windup_e-indexed.png": {
+      "sha256": "b940ae1cf342545908b89d6348d6b0984495030822c6f5c528b2b81251e66d20",
+      "bytes": 1010
+    },
+    "native/knight/windup_e.png": {
+      "sha256": "dad13abda0e3b629c62eb22b6dd195cbd91f1ad247e46bbe62bf04319e14daec",
+      "bytes": 479
+    },
+    "native/knight/windup_n-indexed.png": {
+      "sha256": "21ed5e020de64a71445c72f0a0d71a34a07d8caf678cbc707247dece8057fa02",
+      "bytes": 996
+    },
+    "native/knight/windup_n.png": {
+      "sha256": "d7f13c1839aa47d454a1b7c09329f2249e0b399c9243345b67e8d96897f262bf",
+      "bytes": 449
+    },
+    "native/knight/windup_s-indexed.png": {
+      "sha256": "bf3ce35ba8460e6032beea21d8ac5449564da4ced2ed5d2f94df2ed57059d4b5",
+      "bytes": 1005
+    },
+    "native/knight/windup_s.png": {
+      "sha256": "120f2b8eb03caf54dbc0501e23c0ab9e47d2ee02abc99c366e77bf2f6a25735e",
+      "bytes": 485
+    },
+    "native/ksword/blade_e-indexed.png": {
+      "sha256": "9776097ac41a691184c6dd3cf24ba324829018deb3267059c02ac01079a201ac",
+      "bytes": 906
+    },
+    "native/ksword/blade_e.png": {
+      "sha256": "3b006cccc9c83887a3738f70935b2b13dffe5e2617336bc6ad33b061d4e2ab2b",
+      "bytes": 179
+    },
+    "native/ksword/blade_s-indexed.png": {
+      "sha256": "d767dc5c671201ab04eb55350af9274025cb46abdf737a3958efc7ce51808e00",
+      "bytes": 896
+    },
+    "native/ksword/blade_s.png": {
+      "sha256": "2cb4eb692a99bbac9dbcce9ffa716e7890e5877a0e08b85cf31ebdb5d3fce19d",
+      "bytes": 174
+    },
+    "native/proj/seed-indexed.png": {
+      "sha256": "277befff5c90d19cdc53a3a95fa0a47df16cb195d44ec4a5c790687cd8e37ef5",
+      "bytes": 886
+    },
+    "native/proj/seed.png": {
+      "sha256": "4e53e5ce2e6ef533b7311f7d2a373a64faa869e7544701ee8f7a18870f8a1964",
+      "bytes": 160
+    },
+    "native/slime/idle-indexed.png": {
+      "sha256": "9c33300ccf8dde8e740ae90300637ad8adece7e8bf41d2e4ef620a9f9fe34041",
+      "bytes": 925
+    },
+    "native/slime/idle.png": {
+      "sha256": "1e0d055b647a725eba9f44f8f269e33398e7648b110190e86ae3691c7e921026",
+      "bytes": 259
+    },
+    "native/slime/jump-indexed.png": {
+      "sha256": "56f6c7a03fd6e9f3dc0bc5814eb9c2f48122b20da3f36405a50aad172b500d97",
+      "bytes": 927
+    },
+    "native/slime/jump.png": {
+      "sha256": "f53f5de216332b7e52580fd815c1232ec422c6b355375477215b720126fb477d",
+      "bytes": 255
+    },
+    "native/slime/squash-indexed.png": {
+      "sha256": "bc14d93bde7fdcd1b66c0d9c7abfa6ce6ba5d85bc93148f2d136c0cf0c19889b",
+      "bytes": 916
+    },
+    "native/slime/squash.png": {
+      "sha256": "e1f82cda55eda16cc8ee33fac0670e076a769ac517d7f26da110b0b1473adc59",
+      "bytes": 228
+    },
+    "native/spitter/charge_e-indexed.png": {
+      "sha256": "8566aee78d7c4e14c632c951feeba7fb0923a291e6bab70c16cb709b0baf0c3b",
+      "bytes": 930
+    },
+    "native/spitter/charge_e.png": {
+      "sha256": "87a47a83b356a8051c6f8e2b0ec2e1cc69ea2a82b94d9f0d09036dd4c1007d39",
+      "bytes": 282
+    },
+    "native/spitter/charge_n-indexed.png": {
+      "sha256": "f1253fdea5081fe4cf600cc722a64642a113f3ca177d59769981e492e78ccc93",
+      "bytes": 932
+    },
+    "native/spitter/charge_n.png": {
+      "sha256": "e7fd149a40ecd79af964e88c094feb105ec23564ddee1e175da2a169fdff7362",
+      "bytes": 267
+    },
+    "native/spitter/charge_s-indexed.png": {
+      "sha256": "c8be4a15842e42af6a304c9bd0544f2b7e982517b7f7e4af16ddcd783c266e2e",
+      "bytes": 938
+    },
+    "native/spitter/charge_s.png": {
+      "sha256": "95ddd1972750c6cef84462c2ed0341c4491991d2e85695ecd52fea1c610c16ef",
+      "bytes": 307
+    },
+    "native/spitter/idle_e-indexed.png": {
+      "sha256": "059a5a972fa2e002062a687c69447b8d2f408a74a35b47c75a310857d8f372fb",
+      "bytes": 938
+    },
+    "native/spitter/idle_e.png": {
+      "sha256": "7606da4260f3456437f9d99236e8fc1e4d689b7bd6687bc1c50fe6ae4328ee23",
+      "bytes": 287
+    },
+    "native/spitter/idle_n-indexed.png": {
+      "sha256": "c2237db8cd31df7e2fa8fbfd1a99f95961692ad1b1e9763d903b30887f8d223e",
+      "bytes": 937
+    },
+    "native/spitter/idle_n.png": {
+      "sha256": "1fee388fca5104156b004d9268a15c3b25c8428ccf7e9e48eb9a01960a84facf",
+      "bytes": 277
+    },
+    "native/spitter/idle_s-indexed.png": {
+      "sha256": "7277c540fbc5b93446ebe87e0986528680c3d6e4c339b9ccbb8da1340faf553c",
+      "bytes": 944
+    },
+    "native/spitter/idle_s.png": {
+      "sha256": "dd492893b3dbdda578c4c14ce0b52188299d58bcff5555ceb60039bc0abdc68d",
+      "bytes": 311
+    },
+    "native/spitter/spit_e-indexed.png": {
+      "sha256": "7de5617bb9875a868aa0ab3f89234d60fc277702be8e0681accb26a9645a0b02",
+      "bytes": 936
+    },
+    "native/spitter/spit_e.png": {
+      "sha256": "977c37e640e6ec43c27859bb6c905192cf2bfe8b8696f45c83f2327267a4d60e",
+      "bytes": 287
+    },
+    "native/spitter/spit_n-indexed.png": {
+      "sha256": "0f71c70e4ce3acfa713390b4f1efcb8e47e16bea28c28286cc94fd63765a5636",
+      "bytes": 942
+    },
+    "native/spitter/spit_n.png": {
+      "sha256": "34dd42fa69dd29c17e41ea2004e7757dc404d96e3dcfb4ae7ce22fddc5246907",
+      "bytes": 291
+    },
+    "native/spitter/spit_s-indexed.png": {
+      "sha256": "877a87896f0ed06e23e6e55372bc16dfb83559133f8ef24baa6ce8d84305144d",
+      "bytes": 941
+    },
+    "native/spitter/spit_s.png": {
+      "sha256": "7848f86260be7d045fe6bfe4dc29967bb0a69a654162e39bb224b39fdbf85c91",
+      "bytes": 300
+    },
+    "native/spitter/walk_e-indexed.png": {
+      "sha256": "4ae2820226bbe597a09fcd0d0218145bef61e3a15fe66abebd48393990a3619e",
+      "bytes": 938
+    },
+    "native/spitter/walk_e.png": {
+      "sha256": "8cfb5c239427e23683fce6973b433c5ce82cad8b28c8146ce98d7ff09b9ed92c",
+      "bytes": 282
+    },
+    "native/spitter/walk_n-indexed.png": {
+      "sha256": "6033636e062fafe7c11fd2cd344d115f8f3e1289336ca954d352ff90b9e0cc59",
+      "bytes": 939
+    },
+    "native/spitter/walk_n.png": {
+      "sha256": "10b2a8f04ce69ae55604e6904ffe4aa744295671cab584d46203639765986989",
+      "bytes": 275
+    },
+    "native/spitter/walk_s-indexed.png": {
+      "sha256": "bc0f6d2f9d5a294a5980e8261cef50bcbc026df12c03cc54fe81716ab440cf18",
+      "bytes": 945
+    },
+    "native/spitter/walk_s.png": {
+      "sha256": "4899fffb24a9f7ed90cace84ddd1d272dc7a40bb21cbcd693c7fed6e895b5c6a",
+      "bytes": 320
+    },
+    "selected-all-poses-source.gif": {
+      "sha256": "0847b5bde07689f97fa0bd97eea3f7dedce767328ea3b10fafc0eca288c6d89f",
+      "bytes": 305825
+    },
+    "selected-diagnostics-source.png": {
+      "sha256": "f6bd2bbf382ec654b994a317fe49303b987edfa438a6fcd0ce0f12128694b008",
+      "bytes": 17296
+    },
+    "selected-overview-source.png": {
+      "sha256": "bd68dafc79cde2a5cd63ec2bd059381c2db54827fbb719c4507f8a56839bd8cb",
+      "bytes": 11265
+    },
+    "slime-all-poses-source.gif": {
+      "sha256": "b93c0715f19ba7ac52153f5818ab22be7eabb51f3477b7bbb01ba8f2276e4494",
+      "bytes": 8901
+    },
+    "spitter-all-poses-source.gif": {
+      "sha256": "1fb9eb8f45c89073bd0736d32dbb77f07e95319946e11b71475e62685fcf311b",
+      "bytes": 37914
+    }
+  },
+  "frame_count": 64,
+  "body_frame_count": 61,
+  "combined_animation": {
+    "path": "selected-all-poses-source.gif",
+    "exact_palette": true,
+    "colors": 38,
+    "frames": 24,
+    "pose_duration_ms": 150,
+    "duration_ms": 3600,
+    "decoded_rgb_verified": true,
+    "note": "Each body cycles through its complete labelled source poses; not one shared AI clock."
+  }
+}

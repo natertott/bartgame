@@ -1,0 +1,13 @@
+CAPTURE pursuer-behavior 160
+CAPTURE flyer-behavior 280
+CAPTURE shooter-behavior 160
+CAPTURE hopper-behavior 160
+CAPTURE melee-behavior 144
+CAPTURE melee-after-menu 64
+CAPTURE melee-real-combat 480
+CAPTURE boss-ring 240
+CAPTURE boss-fan-and-adds 360
+CAPTURE boss-lunge 200
+CAPTURE boss-real-defeat 720
+CAPTURE cave-natural-group 240
+RESULT 82 / 82 captures 12
