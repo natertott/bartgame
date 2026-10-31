@@ -1,0 +1,39 @@
+{
+  "capture_method": "mGBA emulation of compiled GBA ARM ROM; unprocessed stereo output",
+  "physical_hardware_capture": false,
+  "emulator": "mGBA",
+  "emulator_version": "0.10.5",
+  "rom": "soundtrack.gba",
+  "rom_sha256": "75530930f3ffede7a0e1dbc808c6a36da870f48f1b2b54bdfb9af9f7b4c7215f",
+  "elf_sha256": "da99a721f9241f211e2de1571b525bfebcd8bab1c112593285297ee145f0f32b",
+  "song_id": 1,
+  "sample_rate_hz": 44100,
+  "channels": 2,
+  "sample_format": "signed 16-bit little-endian PCM",
+  "samples_per_channel": 10048512,
+  "duration_seconds": 227.8574149659864,
+  "emulated_frame_rate": 59.72750056960583,
+  "emulated_frames": 13610,
+  "last_song_frame": 13609,
+  "song_timeline_symbol": "gAudioReviewFrame",
+  "observed_loop_count": 0,
+  "loop_boundaries": [],
+  "elapsed_wall_seconds": 2.428,
+  "audio_sha256": "9f2341f0f75095a3e6669cedf43f6b4ea51aed0bd9015c5306ee4cb177347edd",
+  "hardware_registers_at_capture_end": {
+    "sound_bias": "0x4200",
+    "sound_control_high": "0x120e",
+    "timer0_control": "0x80",
+    "note": "Timer0 counter readout is not its reload value; rate is specified by the compiled song descriptor."
+  },
+  "driver_cpu_profile": {
+    "method": "GBA timers 2+3 count cycles around sound_update; DMA stalls included",
+    "calls": 13610,
+    "total_cycles": 2735700,
+    "maximum_cycles_per_update": 925,
+    "mean_cycles_per_update": 201.007,
+    "mean_percent_of_frame": 0.07156,
+    "maximum_percent_of_frame": 0.3293,
+    "scope": "CPU driver only; DMA bus occupancy outside the call is excluded"
+  }
+}

@@ -1,0 +1,33 @@
+{
+  "source_id": 6,
+  "id": 1,
+  "code": "R06",
+  "kind": "original_mix",
+  "title": "Daft Punk \u2014 Voyager",
+  "slug": "voyager",
+  "file_name": "Daft Punk - Voyager (Official Audio).mp3",
+  "source_sha256": "516fcea5e925e132262483610d6a86b2fa9e047cc66c8a894e36ed51512dc51f",
+  "seconds": 227.8574149659864,
+  "total_frames": 13610,
+  "rate": 65536,
+  "timer_reload": 65280,
+  "sound_bias": 16896,
+  "channels": 2,
+  "bits": 8,
+  "source_samples_per_channel": 14932864,
+  "stored_samples_per_channel": 14941776,
+  "pcm_bytes": 29883552,
+  "pcm_sha256": [
+    "8df1655dba576892515ebd2a61363bf7373cd5526e84165f8119d8bc7c8a780c",
+    "6a72cd1eccb1233b5f3719008d616496d77db1ea25eeae96aa38ef64516d137b"
+  ],
+  "quantization": "signed8-bit, nearest step with full TPDF dither; digital silence kept zero",
+  "no_source_trimming": true,
+  "no_time_stretch": true,
+  "extra": {
+    "common_gain": 0.6384508124002514,
+    "source_decoded_peak": 1.1909209489822388,
+    "source_performance_and_vocals": true,
+    "rate_limit_note": null
+  }
+}

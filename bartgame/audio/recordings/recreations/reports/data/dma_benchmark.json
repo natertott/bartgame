@@ -1,0 +1,63 @@
+{
+  "status": "PASS",
+  "emulator": "mGBA0.10.5",
+  "hardware_clock_hz": 16777216,
+  "pcm_rate": 65536,
+  "channels": 2,
+  "waitcnt": "0x4317",
+  "benchmark": "100000iterations of Thumb arithmetic and a volatileIWRAM store; Timer2+3 wallcycles; four pairedoff/on runs; drivercalls excluded",
+  "rom_thumb": {
+    "pcm_off_cycles": [
+      2200097.0,
+      2200097.0,
+      2200097.0,
+      2200097.0
+    ],
+    "pcm_on_cycles": [
+      2222190.0,
+      2222190.0,
+      2222190.0,
+      2222190.0
+    ],
+    "extra_cycles": [
+      22093.0,
+      22093.0,
+      22093.0,
+      22093.0
+    ],
+    "throughput_loss_percent": [
+      0.9941994158915279,
+      0.9941994158915279,
+      0.9941994158915279,
+      0.9941994158915279
+    ],
+    "mean_loss_percent": 0.9941994158915279
+  },
+  "iwram_thumb": {
+    "pcm_off_cycles": [
+      1100070.0,
+      1100070.0,
+      1100070.0,
+      1100070.0
+    ],
+    "pcm_on_cycles": [
+      1111353.0,
+      1111353.0,
+      1111353.0,
+      1111353.0
+    ],
+    "extra_cycles": [
+      11283.0,
+      11283.0,
+      11283.0,
+      11283.0
+    ],
+    "throughput_loss_percent": [
+      1.01524898029699,
+      1.01524898029699,
+      1.01524898029699,
+      1.01524898029699
+    ],
+    "mean_loss_percent": 1.01524898029699
+  }
+}

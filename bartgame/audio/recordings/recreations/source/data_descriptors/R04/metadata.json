@@ -1,0 +1,33 @@
+{
+  "source_id": 4,
+  "id": 1,
+  "code": "R04",
+  "kind": "original_mix",
+  "title": "Snow Strippers \u2014 Under Your Spell",
+  "slug": "snow-strippers-under-your-spell",
+  "file_name": "SNOW STRIPPERS - UNDER YOUR SPELL #SURFGANG.mp3",
+  "source_sha256": "b7ee7f9898cac7725c8723cd65e92790df46a3ead3d38788e46319f28010cd31",
+  "seconds": 218.496,
+  "total_frames": 13051,
+  "rate": 65536,
+  "timer_reload": 65280,
+  "sound_bias": 16896,
+  "channels": 2,
+  "bits": 8,
+  "source_samples_per_channel": 14319354,
+  "stored_samples_per_channel": 14328416,
+  "pcm_bytes": 28656832,
+  "pcm_sha256": [
+    "8011436e7fe5a03ec502c0ddf39d34ae15e5c8af2d04d65ecbf17de751c549d9",
+    "0cf73278dc098151b4a8ae1adb72a3f8a36fdca46abbb7a7b9f9df38493a9c8b"
+  ],
+  "quantization": "signed8-bit, nearest step with full TPDF dither; digital silence kept zero",
+  "no_source_trimming": true,
+  "no_time_stretch": true,
+  "extra": {
+    "common_gain": 0.6384508124002514,
+    "source_decoded_peak": 1.4409880638122559,
+    "source_performance_and_vocals": true,
+    "rate_limit_note": null
+  }
+}

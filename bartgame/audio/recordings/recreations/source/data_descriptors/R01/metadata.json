@@ -1,0 +1,33 @@
+{
+  "source_id": 1,
+  "id": 1,
+  "code": "R01",
+  "kind": "original_mix",
+  "title": "Playboi Carti \u2014 ILoveUIHateU",
+  "slug": "iloveuihateu",
+  "file_name": "Playboi Carti - ILoveUIHateU (Official Audio).mp3",
+  "source_sha256": "4ca52a37ed48702bb7fe2d3a7e793926bb5344d2c274440867dfbe27f9a566f6",
+  "seconds": 135.37233560090704,
+  "total_frames": 8086,
+  "rate": 65536,
+  "timer_reload": 65280,
+  "sound_bias": 16896,
+  "channels": 2,
+  "bits": 8,
+  "source_samples_per_channel": 8871761,
+  "stored_samples_per_channel": 8880560,
+  "pcm_bytes": 17761120,
+  "pcm_sha256": [
+    "c9b87e6bbf2eadeedd835b3aa6cbf3dc99a0863d286e4f813d05a4613fd82d3b",
+    "ceb0f22e4179fec74931f397becaf245d5736ec486053a71f124926f4b3ec67c"
+  ],
+  "quantization": "signed8-bit, nearest step with full TPDF dither; digital silence kept zero",
+  "no_source_trimming": true,
+  "no_time_stretch": true,
+  "extra": {
+    "common_gain": 0.6384508124002514,
+    "source_decoded_peak": 1.0672845840454102,
+    "source_performance_and_vocals": true,
+    "rate_limit_note": null
+  }
+}

@@ -1,0 +1,80 @@
+{
+  "soundfont": "FluidR3_GM.sf2",
+  "fluidsynth": "2.4.4",
+  "sample_rate": 32768,
+  "main_samples": 7786759,
+  "parts": [
+    {
+      "part": "melody",
+      "channel": 0,
+      "drum": false,
+      "requested_program": 4,
+      "bank": 0,
+      "program": 4,
+      "preset_name": "Rhodes EP",
+      "pan": -0.06,
+      "volume": 0.8,
+      "fallback": null
+    },
+    {
+      "part": "counter",
+      "channel": 1,
+      "drum": false,
+      "requested_program": 27,
+      "bank": 0,
+      "program": 27,
+      "preset_name": "Clean Guitar",
+      "pan": 0.24,
+      "volume": 0.58,
+      "fallback": null
+    },
+    {
+      "part": "harmony",
+      "channel": 2,
+      "drum": false,
+      "requested_program": 90,
+      "bank": 0,
+      "program": 90,
+      "preset_name": "Polysynth",
+      "pan": -0.22,
+      "volume": 0.44,
+      "fallback": null
+    },
+    {
+      "part": "bass",
+      "channel": 3,
+      "drum": false,
+      "requested_program": 38,
+      "bank": 0,
+      "program": 38,
+      "preset_name": "Synth Bass 1",
+      "pan": 0.0,
+      "volume": 0.91,
+      "fallback": null
+    },
+    {
+      "part": "drums",
+      "channel": 9,
+      "drum": true,
+      "requested_program": 25,
+      "bank": 128,
+      "program": 25,
+      "preset_name": "TR-808",
+      "pan": 0.0,
+      "volume": 0.7,
+      "fallback": null
+    }
+  ],
+  "note_count": 5820,
+  "bass_bend_automation_events": 11796,
+  "bass_pitchbend_range_semitones": 12,
+  "other_parts_pitchbend": "equal-tempered note centers",
+  "scheduled_sample_accuracy": 1,
+  "synth_internal_block_samples": 64,
+  "gain": 0.28,
+  "symbolic_only": true,
+  "source_audio_in_render": false,
+  "master_gain": 2.451465074934301,
+  "master_peak": 0.8698133230209351,
+  "master_rms": 0.13000000291419359
+}

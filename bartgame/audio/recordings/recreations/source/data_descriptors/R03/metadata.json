@@ -1,0 +1,33 @@
+{
+  "source_id": 3,
+  "id": 1,
+  "code": "R03",
+  "kind": "original_mix",
+  "title": "The Weeknd with Playboi Carti \u2014 Timeless",
+  "slug": "timeless",
+  "file_name": "The Weeknd \u2013 Timeless with Playboi Carti (Official Music Video).mp3",
+  "source_sha256": "a6c6558c231cdd1bc2bba238ec7e039ba8ed383c36df1fe7e8f0cab98c148cfb",
+  "seconds": 256.11609977324264,
+  "total_frames": 15298,
+  "rate": 32768,
+  "timer_reload": 65024,
+  "sound_bias": 512,
+  "channels": 2,
+  "bits": 8,
+  "source_samples_per_channel": 8392412,
+  "stored_samples_per_channel": 8401072,
+  "pcm_bytes": 16802144,
+  "pcm_sha256": [
+    "5361cf7e13a7330b4638892a5cbcd6bb957887cbeb2eba58698ee4fb45bbcbdd",
+    "7a6ed377f0efa48df4b28a293316e26dfd65a40589b207237577313525068d03"
+  ],
+  "quantization": "signed8-bit, nearest step with full TPDF dither; digital silence kept zero",
+  "no_source_trimming": true,
+  "no_time_stretch": true,
+  "extra": {
+    "common_gain": 0.6384508124002514,
+    "source_decoded_peak": 1.2372196912765503,
+    "source_performance_and_vocals": true,
+    "rate_limit_note": "Full track retained; 65,536Hz stereo exceeds32MiB for this source, so synchronized32,768Hz is used."
+  }
+}

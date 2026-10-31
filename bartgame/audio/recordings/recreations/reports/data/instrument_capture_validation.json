@@ -1,0 +1,2808 @@
+{
+  "kind": "instrument",
+  "captures": 8,
+  "passed": 8,
+  "scope": "Actual unprocessed mGBA output; complete source-duration capture, no appended loop. Original silence retained.",
+  "elapsed_wall_seconds": 24.456384164000156,
+  "songs": [
+    {
+      "code": "I01",
+      "source_id": 1,
+      "title": "Playboi Carti \u2014 ILoveUIHateU",
+      "source_rate_hz": 32768,
+      "timer_reload": 65024,
+      "sound_bias": 512,
+      "build_directory": "/workspace/work/recreations/builds/I01",
+      "recording": "/workspace/work/recreations/recordings/instrument/I01_iloveuihateu.wav",
+      "rom_bytes": 8892464,
+      "rom_sha256": "211e5a4415edb569bd194176e2ef79f97ffcd0ba99c67fc09ed6289d48ba35c6",
+      "capture": {
+        "capture_method": "mGBA emulation of compiled GBA ARM ROM; unprocessed stereo output",
+        "physical_hardware_capture": false,
+        "emulator": "mGBA",
+        "emulator_version": "0.10.5",
+        "rom": "soundtrack.gba",
+        "rom_sha256": "211e5a4415edb569bd194176e2ef79f97ffcd0ba99c67fc09ed6289d48ba35c6",
+        "elf_sha256": "825c8084527098e99958982cbde611f8e22f0008f23cb616c25dd5aa2ca25e38",
+        "song_id": 1,
+        "sample_rate_hz": 44100,
+        "channels": 2,
+        "sample_format": "signed 16-bit little-endian PCM",
+        "samples_per_channel": 5969920,
+        "duration_seconds": 135.37233560090704,
+        "emulated_frame_rate": 59.72750056960583,
+        "emulated_frames": 8086,
+        "last_song_frame": 8085,
+        "song_timeline_symbol": "gAudioReviewFrame",
+        "observed_loop_count": 0,
+        "loop_boundaries": [],
+        "elapsed_wall_seconds": 0.888,
+        "audio_sha256": "bcd53103725249106f3a8d60886baab0ae18ea4efdd0a078629684143fd68e6c",
+        "hardware_registers_at_capture_end": {
+          "sound_bias": "0x200",
+          "sound_control_high": "0x120e",
+          "timer0_control": "0x80",
+          "note": "Timer0 counter readout is not its reload value; rate is specified by the compiled song descriptor."
+        },
+        "driver_cpu_profile": {
+          "method": "GBA timers 2+3 count cycles around sound_update; DMA stalls included",
+          "calls": 8086,
+          "total_cycles": 1617715,
+          "maximum_cycles_per_update": 925,
+          "mean_cycles_per_update": 200.064,
+          "mean_percent_of_frame": 0.07122,
+          "maximum_percent_of_frame": 0.3293,
+          "scope": "CPU driver only; DMA bus occupancy outside the call is excluded"
+        }
+      },
+      "validation": {
+        "file": "I01_iloveuihateu.wav",
+        "sha256": "bcd53103725249106f3a8d60886baab0ae18ea4efdd0a078629684143fd68e6c",
+        "sample_rate_hz": 44100,
+        "channels": 2,
+        "sample_width_bytes": 2,
+        "duration_seconds": 135.372336,
+        "peak_dbfs": -3.89,
+        "rms_dbfs": -20.641,
+        "clipped_sample_count": 0,
+        "longest_near_silence_seconds": 0.0,
+        "silence_limit_seconds": null,
+        "silence_policy": "Preserve expected source-file intros/tails; measure silence without rejecting it",
+        "channel_statistics": [
+          {
+            "peak_dbfs": -4.349,
+            "rms_dbfs": -20.659,
+            "dc_offset": 2e-07
+          },
+          {
+            "peak_dbfs": -3.89,
+            "rms_dbfs": -20.623,
+            "dc_offset": 1e-07
+          }
+        ],
+        "four_second_level_history": [
+          {
+            "start_seconds": 0.0,
+            "rms_dbfs": -28.662,
+            "peak_dbfs": -14.147
+          },
+          {
+            "start_seconds": 4.0,
+            "rms_dbfs": -28.537,
+            "peak_dbfs": -14.202
+          },
+          {
+            "start_seconds": 8.0,
+            "rms_dbfs": -28.683,
+            "peak_dbfs": -12.493
+          },
+          {
+            "start_seconds": 12.0,
+            "rms_dbfs": -24.871,
+            "peak_dbfs": -8.88
+          },
+          {
+            "start_seconds": 16.0,
+            "rms_dbfs": -20.195,
+            "peak_dbfs": -6.705
+          },
+          {
+            "start_seconds": 20.0,
+            "rms_dbfs": -20.626,
+            "peak_dbfs": -7.047
+          },
+          {
+            "start_seconds": 24.0,
+            "rms_dbfs": -19.884,
+            "peak_dbfs": -7.073
+          },
+          {
+            "start_seconds": 28.0,
+            "rms_dbfs": -20.06,
+            "peak_dbfs": -7.103
+          },
+          {
+            "start_seconds": 32.0,
+            "rms_dbfs": -20.052,
+            "peak_dbfs": -7.165
+          },
+          {
+            "start_seconds": 36.0,
+            "rms_dbfs": -19.98,
+            "peak_dbfs": -6.024
+          },
+          {
+            "start_seconds": 40.0,
+            "rms_dbfs": -20.452,
+            "peak_dbfs": -5.836
+          },
+          {
+            "start_seconds": 44.0,
+            "rms_dbfs": -19.88,
+            "peak_dbfs": -5.948
+          },
+          {
+            "start_seconds": 48.0,
+            "rms_dbfs": -19.953,
+            "peak_dbfs": -6.071
+          },
+          {
+            "start_seconds": 52.0,
+            "rms_dbfs": -20.237,
+            "peak_dbfs": -6.743
+          },
+          {
+            "start_seconds": 56.0,
+            "rms_dbfs": -20.992,
+            "peak_dbfs": -6.069
+          },
+          {
+            "start_seconds": 60.0,
+            "rms_dbfs": -20.01,
+            "peak_dbfs": -6.928
+          },
+          {
+            "start_seconds": 64.0,
+            "rms_dbfs": -20.205,
+            "peak_dbfs": -5.918
+          },
+          {
+            "start_seconds": 68.0,
+            "rms_dbfs": -19.8,
+            "peak_dbfs": -5.914
+          },
+          {
+            "start_seconds": 72.0,
+            "rms_dbfs": -20.658,
+            "peak_dbfs": -6.482
+          },
+          {
+            "start_seconds": 76.0,
+            "rms_dbfs": -20.553,
+            "peak_dbfs": -5.646
+          },
+          {
+            "start_seconds": 80.0,
+            "rms_dbfs": -20.053,
+            "peak_dbfs": -5.277
+          },
+          {
+            "start_seconds": 84.0,
+            "rms_dbfs": -19.787,
+            "peak_dbfs": -5.415
+          },
+          {
+            "start_seconds": 88.0,
+            "rms_dbfs": -19.524,
+            "peak_dbfs": -3.89
+          },
+          {
+            "start_seconds": 92.0,
+            "rms_dbfs": -20.316,
+            "peak_dbfs": -6.009
+          },
+          {
+            "start_seconds": 96.0,
+            "rms_dbfs": -19.808,
+            "peak_dbfs": -5.085
+          },
+          {
+            "start_seconds": 100.0,
+            "rms_dbfs": -20.319,
+            "peak_dbfs": -6.638
+          },
+          {
+            "start_seconds": 104.0,
+            "rms_dbfs": -21.086,
+            "peak_dbfs": -6.222
+          },
+          {
+            "start_seconds": 108.0,
+            "rms_dbfs": -19.95,
+            "peak_dbfs": -6.167
+          },
+          {
+            "start_seconds": 112.0,
+            "rms_dbfs": -19.982,
+            "peak_dbfs": -5.935
+          },
+          {
+            "start_seconds": 116.0,
+            "rms_dbfs": -19.879,
+            "peak_dbfs": -6.431
+          },
+          {
+            "start_seconds": 120.0,
+            "rms_dbfs": -20.646,
+            "peak_dbfs": -6.442
+          },
+          {
+            "start_seconds": 124.0,
+            "rms_dbfs": -20.765,
+            "peak_dbfs": -7.082
+          },
+          {
+            "start_seconds": 128.0,
+            "rms_dbfs": -20.291,
+            "peak_dbfs": -6.576
+          },
+          {
+            "start_seconds": 132.0,
+            "rms_dbfs": -20.836,
+            "peak_dbfs": -6.628
+          }
+        ],
+        "stereo_difference_rms_dbfs": -25.394,
+        "stereo_correlation": 0.832648,
+        "side_to_mid_db": -10.394,
+        "passed_integrity": true
+      }
+    },
+    {
+      "code": "I02",
+      "source_id": 2,
+      "title": "Desire \u2014 Under Your Spell",
+      "source_rate_hz": 32768,
+      "timer_reload": 65024,
+      "sound_bias": 512,
+      "build_directory": "/workspace/work/recreations/builds/I02",
+      "recording": "/workspace/work/recreations/recordings/instrument/I02_desire-under-your-spell.wav",
+      "rom_bytes": 15312464,
+      "rom_sha256": "23fa18cc6cc10fee5ea933b37deb76d0cf378fba443a0d5f20379ff9da2f42f9",
+      "capture": {
+        "capture_method": "mGBA emulation of compiled GBA ARM ROM; unprocessed stereo output",
+        "physical_hardware_capture": false,
+        "emulator": "mGBA",
+        "emulator_version": "0.10.5",
+        "rom": "soundtrack.gba",
+        "rom_sha256": "23fa18cc6cc10fee5ea933b37deb76d0cf378fba443a0d5f20379ff9da2f42f9",
+        "elf_sha256": "53086ca7f2d773f9fab7435cd0ffb0f156148a61500a872b6d29fecd48c94bc9",
+        "song_id": 1,
+        "sample_rate_hz": 44100,
+        "channels": 2,
+        "sample_format": "signed 16-bit little-endian PCM",
+        "samples_per_channel": 10290176,
+        "duration_seconds": 233.33732426303854,
+        "emulated_frame_rate": 59.72750056960583,
+        "emulated_frames": 13937,
+        "last_song_frame": 13936,
+        "song_timeline_symbol": "gAudioReviewFrame",
+        "observed_loop_count": 0,
+        "loop_boundaries": [],
+        "elapsed_wall_seconds": 1.588,
+        "audio_sha256": "a69d41cd0e771c9b0c1eee61892fc1f3db8c28cd02611968eacd370f75097ec2",
+        "hardware_registers_at_capture_end": {
+          "sound_bias": "0x200",
+          "sound_control_high": "0x120e",
+          "timer0_control": "0x80",
+          "note": "Timer0 counter readout is not its reload value; rate is specified by the compiled song descriptor."
+        },
+        "driver_cpu_profile": {
+          "method": "GBA timers 2+3 count cycles around sound_update; DMA stalls included",
+          "calls": 13937,
+          "total_cycles": 2787772,
+          "maximum_cycles_per_update": 925,
+          "mean_cycles_per_update": 200.027,
+          "mean_percent_of_frame": 0.07121,
+          "maximum_percent_of_frame": 0.3293,
+          "scope": "CPU driver only; DMA bus occupancy outside the call is excluded"
+        }
+      },
+      "validation": {
+        "file": "I02_desire-under-your-spell.wav",
+        "sha256": "a69d41cd0e771c9b0c1eee61892fc1f3db8c28cd02611968eacd370f75097ec2",
+        "sample_rate_hz": 44100,
+        "channels": 2,
+        "sample_width_bytes": 2,
+        "duration_seconds": 233.337324,
+        "peak_dbfs": -4.671,
+        "rms_dbfs": -20.371,
+        "clipped_sample_count": 0,
+        "longest_near_silence_seconds": 0.0,
+        "silence_limit_seconds": null,
+        "silence_policy": "Preserve expected source-file intros/tails; measure silence without rejecting it",
+        "channel_statistics": [
+          {
+            "peak_dbfs": -4.671,
+            "rms_dbfs": -20.305,
+            "dc_offset": 2e-07
+          },
+          {
+            "peak_dbfs": -5.02,
+            "rms_dbfs": -20.439,
+            "dc_offset": 2e-07
+          }
+        ],
+        "four_second_level_history": [
+          {
+            "start_seconds": 0.0,
+            "rms_dbfs": -21.773,
+            "peak_dbfs": -8.58
+          },
+          {
+            "start_seconds": 4.0,
+            "rms_dbfs": -20.263,
+            "peak_dbfs": -6.637
+          },
+          {
+            "start_seconds": 8.0,
+            "rms_dbfs": -20.315,
+            "peak_dbfs": -7.491
+          },
+          {
+            "start_seconds": 12.0,
+            "rms_dbfs": -19.246,
+            "peak_dbfs": -5.789
+          },
+          {
+            "start_seconds": 16.0,
+            "rms_dbfs": -18.82,
+            "peak_dbfs": -6.923
+          },
+          {
+            "start_seconds": 20.0,
+            "rms_dbfs": -22.129,
+            "peak_dbfs": -8.402
+          },
+          {
+            "start_seconds": 24.0,
+            "rms_dbfs": -20.745,
+            "peak_dbfs": -6.36
+          },
+          {
+            "start_seconds": 28.0,
+            "rms_dbfs": -20.456,
+            "peak_dbfs": -7.429
+          },
+          {
+            "start_seconds": 32.0,
+            "rms_dbfs": -21.288,
+            "peak_dbfs": -7.155
+          },
+          {
+            "start_seconds": 36.0,
+            "rms_dbfs": -21.235,
+            "peak_dbfs": -8.443
+          },
+          {
+            "start_seconds": 40.0,
+            "rms_dbfs": -22.669,
+            "peak_dbfs": -8.916
+          },
+          {
+            "start_seconds": 44.0,
+            "rms_dbfs": -20.519,
+            "peak_dbfs": -7.378
+          },
+          {
+            "start_seconds": 48.0,
+            "rms_dbfs": -21.037,
+            "peak_dbfs": -7.372
+          },
+          {
+            "start_seconds": 52.0,
+            "rms_dbfs": -20.38,
+            "peak_dbfs": -5.947
+          },
+          {
+            "start_seconds": 56.0,
+            "rms_dbfs": -21.425,
+            "peak_dbfs": -5.75
+          },
+          {
+            "start_seconds": 60.0,
+            "rms_dbfs": -20.222,
+            "peak_dbfs": -6.489
+          },
+          {
+            "start_seconds": 64.0,
+            "rms_dbfs": -21.643,
+            "peak_dbfs": -7.83
+          },
+          {
+            "start_seconds": 68.0,
+            "rms_dbfs": -19.659,
+            "peak_dbfs": -5.657
+          },
+          {
+            "start_seconds": 72.0,
+            "rms_dbfs": -21.065,
+            "peak_dbfs": -7.887
+          },
+          {
+            "start_seconds": 76.0,
+            "rms_dbfs": -20.177,
+            "peak_dbfs": -6.498
+          },
+          {
+            "start_seconds": 80.0,
+            "rms_dbfs": -21.188,
+            "peak_dbfs": -7.283
+          },
+          {
+            "start_seconds": 84.0,
+            "rms_dbfs": -18.609,
+            "peak_dbfs": -6.259
+          },
+          {
+            "start_seconds": 88.0,
+            "rms_dbfs": -21.257,
+            "peak_dbfs": -7.6
+          },
+          {
+            "start_seconds": 92.0,
+            "rms_dbfs": -21.93,
+            "peak_dbfs": -7.851
+          },
+          {
+            "start_seconds": 96.0,
+            "rms_dbfs": -20.917,
+            "peak_dbfs": -6.447
+          },
+          {
+            "start_seconds": 100.0,
+            "rms_dbfs": -22.541,
+            "peak_dbfs": -7.509
+          },
+          {
+            "start_seconds": 104.0,
+            "rms_dbfs": -21.024,
+            "peak_dbfs": -7.287
+          },
+          {
+            "start_seconds": 108.0,
+            "rms_dbfs": -22.455,
+            "peak_dbfs": -8.097
+          },
+          {
+            "start_seconds": 112.0,
+            "rms_dbfs": -21.47,
+            "peak_dbfs": -7.826
+          },
+          {
+            "start_seconds": 116.0,
+            "rms_dbfs": -21.447,
+            "peak_dbfs": -8.039
+          },
+          {
+            "start_seconds": 120.0,
+            "rms_dbfs": -21.917,
+            "peak_dbfs": -8.626
+          },
+          {
+            "start_seconds": 124.0,
+            "rms_dbfs": -21.828,
+            "peak_dbfs": -8.117
+          },
+          {
+            "start_seconds": 128.0,
+            "rms_dbfs": -20.266,
+            "peak_dbfs": -6.274
+          },
+          {
+            "start_seconds": 132.0,
+            "rms_dbfs": -21.181,
+            "peak_dbfs": -6.511
+          },
+          {
+            "start_seconds": 136.0,
+            "rms_dbfs": -20.043,
+            "peak_dbfs": -6.216
+          },
+          {
+            "start_seconds": 140.0,
+            "rms_dbfs": -20.662,
+            "peak_dbfs": -8.212
+          },
+          {
+            "start_seconds": 144.0,
+            "rms_dbfs": -20.157,
+            "peak_dbfs": -6.591
+          },
+          {
+            "start_seconds": 148.0,
+            "rms_dbfs": -21.417,
+            "peak_dbfs": -8.29
+          },
+          {
+            "start_seconds": 152.0,
+            "rms_dbfs": -21.118,
+            "peak_dbfs": -7.02
+          },
+          {
+            "start_seconds": 156.0,
+            "rms_dbfs": -20.247,
+            "peak_dbfs": -7.132
+          },
+          {
+            "start_seconds": 160.0,
+            "rms_dbfs": -19.275,
+            "peak_dbfs": -5.524
+          },
+          {
+            "start_seconds": 164.0,
+            "rms_dbfs": -17.45,
+            "peak_dbfs": -5.103
+          },
+          {
+            "start_seconds": 168.0,
+            "rms_dbfs": -19.143,
+            "peak_dbfs": -5.073
+          },
+          {
+            "start_seconds": 172.0,
+            "rms_dbfs": -18.397,
+            "peak_dbfs": -6.044
+          },
+          {
+            "start_seconds": 176.0,
+            "rms_dbfs": -18.322,
+            "peak_dbfs": -4.671
+          },
+          {
+            "start_seconds": 180.0,
+            "rms_dbfs": -19.372,
+            "peak_dbfs": -5.601
+          },
+          {
+            "start_seconds": 184.0,
+            "rms_dbfs": -18.991,
+            "peak_dbfs": -6.646
+          },
+          {
+            "start_seconds": 188.0,
+            "rms_dbfs": -20.152,
+            "peak_dbfs": -7.486
+          },
+          {
+            "start_seconds": 192.0,
+            "rms_dbfs": -18.664,
+            "peak_dbfs": -7.25
+          },
+          {
+            "start_seconds": 196.0,
+            "rms_dbfs": -20.023,
+            "peak_dbfs": -6.761
+          },
+          {
+            "start_seconds": 200.0,
+            "rms_dbfs": -18.659,
+            "peak_dbfs": -5.249
+          },
+          {
+            "start_seconds": 204.0,
+            "rms_dbfs": -19.24,
+            "peak_dbfs": -6.203
+          },
+          {
+            "start_seconds": 208.0,
+            "rms_dbfs": -18.727,
+            "peak_dbfs": -6.507
+          },
+          {
+            "start_seconds": 212.0,
+            "rms_dbfs": -19.822,
+            "peak_dbfs": -6.462
+          },
+          {
+            "start_seconds": 216.0,
+            "rms_dbfs": -26.78,
+            "peak_dbfs": -11.937
+          },
+          {
+            "start_seconds": 220.0,
+            "rms_dbfs": -20.439,
+            "peak_dbfs": -5.02
+          },
+          {
+            "start_seconds": 224.0,
+            "rms_dbfs": -19.482,
+            "peak_dbfs": -6.021
+          },
+          {
+            "start_seconds": 228.0,
+            "rms_dbfs": -24.164,
+            "peak_dbfs": -7.681
+          },
+          {
+            "start_seconds": 232.0,
+            "rms_dbfs": -52.985,
+            "peak_dbfs": -41.682
+          }
+        ],
+        "stereo_difference_rms_dbfs": -23.712,
+        "stereo_correlation": 0.768383,
+        "side_to_mid_db": -8.826,
+        "passed_integrity": true
+      }
+    },
+    {
+      "code": "I03",
+      "source_id": 3,
+      "title": "The Weeknd with Playboi Carti \u2014 Timeless",
+      "source_rate_hz": 32768,
+      "timer_reload": 65024,
+      "sound_bias": 512,
+      "build_directory": "/workspace/work/recreations/builds/I03",
+      "recording": "/workspace/work/recreations/recordings/instrument/I03_timeless.wav",
+      "rom_bytes": 16805856,
+      "rom_sha256": "6694bb9b08c24341451c513d493f5238d023233197fe39f4de69f751f3f6aeb8",
+      "capture": {
+        "capture_method": "mGBA emulation of compiled GBA ARM ROM; unprocessed stereo output",
+        "physical_hardware_capture": false,
+        "emulator": "mGBA",
+        "emulator_version": "0.10.5",
+        "rom": "soundtrack.gba",
+        "rom_sha256": "6694bb9b08c24341451c513d493f5238d023233197fe39f4de69f751f3f6aeb8",
+        "elf_sha256": "92f5f410cb93f9273823da0ffec0abc221c3b0dbb4e6f330b4bc672b06addc9c",
+        "song_id": 1,
+        "sample_rate_hz": 44100,
+        "channels": 2,
+        "sample_format": "signed 16-bit little-endian PCM",
+        "samples_per_channel": 11294720,
+        "duration_seconds": 256.11609977324264,
+        "emulated_frame_rate": 59.72750056960583,
+        "emulated_frames": 15298,
+        "last_song_frame": 15297,
+        "song_timeline_symbol": "gAudioReviewFrame",
+        "observed_loop_count": 0,
+        "loop_boundaries": [],
+        "elapsed_wall_seconds": 1.854,
+        "audio_sha256": "6d0a8327bec861e5ff3b257c072e88687425ccf8690ce18f4903bf07bd190aa4",
+        "hardware_registers_at_capture_end": {
+          "sound_bias": "0x200",
+          "sound_control_high": "0x120e",
+          "timer0_control": "0x80",
+          "note": "Timer0 counter readout is not its reload value; rate is specified by the compiled song descriptor."
+        },
+        "driver_cpu_profile": {
+          "method": "GBA timers 2+3 count cycles around sound_update; DMA stalls included",
+          "calls": 15298,
+          "total_cycles": 3059945,
+          "maximum_cycles_per_update": 925,
+          "mean_cycles_per_update": 200.023,
+          "mean_percent_of_frame": 0.07121,
+          "maximum_percent_of_frame": 0.3293,
+          "scope": "CPU driver only; DMA bus occupancy outside the call is excluded"
+        }
+      },
+      "validation": {
+        "file": "I03_timeless.wav",
+        "sha256": "6d0a8327bec861e5ff3b257c072e88687425ccf8690ce18f4903bf07bd190aa4",
+        "sample_rate_hz": 44100,
+        "channels": 2,
+        "sample_width_bytes": 2,
+        "duration_seconds": 256.1161,
+        "peak_dbfs": -4.724,
+        "rms_dbfs": -20.541,
+        "clipped_sample_count": 0,
+        "longest_near_silence_seconds": 0.0,
+        "silence_limit_seconds": null,
+        "silence_policy": "Preserve expected source-file intros/tails; measure silence without rejecting it",
+        "channel_statistics": [
+          {
+            "peak_dbfs": -4.937,
+            "rms_dbfs": -20.546,
+            "dc_offset": -1e-07
+          },
+          {
+            "peak_dbfs": -4.724,
+            "rms_dbfs": -20.536,
+            "dc_offset": -1e-07
+          }
+        ],
+        "four_second_level_history": [
+          {
+            "start_seconds": 0.0,
+            "rms_dbfs": -23.876,
+            "peak_dbfs": -8.988
+          },
+          {
+            "start_seconds": 4.0,
+            "rms_dbfs": -22.31,
+            "peak_dbfs": -8.644
+          },
+          {
+            "start_seconds": 8.0,
+            "rms_dbfs": -22.006,
+            "peak_dbfs": -8.05
+          },
+          {
+            "start_seconds": 12.0,
+            "rms_dbfs": -22.088,
+            "peak_dbfs": -9.222
+          },
+          {
+            "start_seconds": 16.0,
+            "rms_dbfs": -21.509,
+            "peak_dbfs": -7.527
+          },
+          {
+            "start_seconds": 20.0,
+            "rms_dbfs": -21.984,
+            "peak_dbfs": -7.25
+          },
+          {
+            "start_seconds": 24.0,
+            "rms_dbfs": -20.856,
+            "peak_dbfs": -7.021
+          },
+          {
+            "start_seconds": 28.0,
+            "rms_dbfs": -20.189,
+            "peak_dbfs": -7.04
+          },
+          {
+            "start_seconds": 32.0,
+            "rms_dbfs": -20.247,
+            "peak_dbfs": -6.297
+          },
+          {
+            "start_seconds": 36.0,
+            "rms_dbfs": -20.074,
+            "peak_dbfs": -4.937
+          },
+          {
+            "start_seconds": 40.0,
+            "rms_dbfs": -20.506,
+            "peak_dbfs": -5.921
+          },
+          {
+            "start_seconds": 44.0,
+            "rms_dbfs": -20.499,
+            "peak_dbfs": -5.131
+          },
+          {
+            "start_seconds": 48.0,
+            "rms_dbfs": -20.126,
+            "peak_dbfs": -6.859
+          },
+          {
+            "start_seconds": 52.0,
+            "rms_dbfs": -20.45,
+            "peak_dbfs": -6.673
+          },
+          {
+            "start_seconds": 56.0,
+            "rms_dbfs": -19.818,
+            "peak_dbfs": -6.019
+          },
+          {
+            "start_seconds": 60.0,
+            "rms_dbfs": -20.152,
+            "peak_dbfs": -5.749
+          },
+          {
+            "start_seconds": 64.0,
+            "rms_dbfs": -20.385,
+            "peak_dbfs": -7.542
+          },
+          {
+            "start_seconds": 68.0,
+            "rms_dbfs": -20.131,
+            "peak_dbfs": -6.379
+          },
+          {
+            "start_seconds": 72.0,
+            "rms_dbfs": -20.79,
+            "peak_dbfs": -7.046
+          },
+          {
+            "start_seconds": 76.0,
+            "rms_dbfs": -21.922,
+            "peak_dbfs": -8.06
+          },
+          {
+            "start_seconds": 80.0,
+            "rms_dbfs": -20.267,
+            "peak_dbfs": -5.528
+          },
+          {
+            "start_seconds": 84.0,
+            "rms_dbfs": -20.071,
+            "peak_dbfs": -7.023
+          },
+          {
+            "start_seconds": 88.0,
+            "rms_dbfs": -19.99,
+            "peak_dbfs": -5.941
+          },
+          {
+            "start_seconds": 92.0,
+            "rms_dbfs": -20.125,
+            "peak_dbfs": -6.766
+          },
+          {
+            "start_seconds": 96.0,
+            "rms_dbfs": -22.18,
+            "peak_dbfs": -8.427
+          },
+          {
+            "start_seconds": 100.0,
+            "rms_dbfs": -21.207,
+            "peak_dbfs": -7.852
+          },
+          {
+            "start_seconds": 104.0,
+            "rms_dbfs": -21.896,
+            "peak_dbfs": -8.918
+          },
+          {
+            "start_seconds": 108.0,
+            "rms_dbfs": -23.182,
+            "peak_dbfs": -9.877
+          },
+          {
+            "start_seconds": 112.0,
+            "rms_dbfs": -20.291,
+            "peak_dbfs": -7.673
+          },
+          {
+            "start_seconds": 116.0,
+            "rms_dbfs": -20.098,
+            "peak_dbfs": -5.286
+          },
+          {
+            "start_seconds": 120.0,
+            "rms_dbfs": -20.192,
+            "peak_dbfs": -4.724
+          },
+          {
+            "start_seconds": 124.0,
+            "rms_dbfs": -20.048,
+            "peak_dbfs": -6.389
+          },
+          {
+            "start_seconds": 128.0,
+            "rms_dbfs": -18.998,
+            "peak_dbfs": -5.685
+          },
+          {
+            "start_seconds": 132.0,
+            "rms_dbfs": -20.154,
+            "peak_dbfs": -6.778
+          },
+          {
+            "start_seconds": 136.0,
+            "rms_dbfs": -20.408,
+            "peak_dbfs": -7.079
+          },
+          {
+            "start_seconds": 140.0,
+            "rms_dbfs": -19.799,
+            "peak_dbfs": -6.395
+          },
+          {
+            "start_seconds": 144.0,
+            "rms_dbfs": -20.908,
+            "peak_dbfs": -7.009
+          },
+          {
+            "start_seconds": 148.0,
+            "rms_dbfs": -19.316,
+            "peak_dbfs": -5.693
+          },
+          {
+            "start_seconds": 152.0,
+            "rms_dbfs": -20.417,
+            "peak_dbfs": -6.757
+          },
+          {
+            "start_seconds": 156.0,
+            "rms_dbfs": -19.805,
+            "peak_dbfs": -7.112
+          },
+          {
+            "start_seconds": 160.0,
+            "rms_dbfs": -20.406,
+            "peak_dbfs": -5.004
+          },
+          {
+            "start_seconds": 164.0,
+            "rms_dbfs": -20.649,
+            "peak_dbfs": -6.316
+          },
+          {
+            "start_seconds": 168.0,
+            "rms_dbfs": -20.694,
+            "peak_dbfs": -6.901
+          },
+          {
+            "start_seconds": 172.0,
+            "rms_dbfs": -19.529,
+            "peak_dbfs": -6.181
+          },
+          {
+            "start_seconds": 176.0,
+            "rms_dbfs": -20.638,
+            "peak_dbfs": -6.682
+          },
+          {
+            "start_seconds": 180.0,
+            "rms_dbfs": -19.627,
+            "peak_dbfs": -5.89
+          },
+          {
+            "start_seconds": 184.0,
+            "rms_dbfs": -20.385,
+            "peak_dbfs": -5.405
+          },
+          {
+            "start_seconds": 188.0,
+            "rms_dbfs": -19.74,
+            "peak_dbfs": -4.857
+          },
+          {
+            "start_seconds": 192.0,
+            "rms_dbfs": -19.867,
+            "peak_dbfs": -5.729
+          },
+          {
+            "start_seconds": 196.0,
+            "rms_dbfs": -22.333,
+            "peak_dbfs": -7.676
+          },
+          {
+            "start_seconds": 200.0,
+            "rms_dbfs": -20.802,
+            "peak_dbfs": -6.907
+          },
+          {
+            "start_seconds": 204.0,
+            "rms_dbfs": -20.109,
+            "peak_dbfs": -6.171
+          },
+          {
+            "start_seconds": 208.0,
+            "rms_dbfs": -20.318,
+            "peak_dbfs": -5.915
+          },
+          {
+            "start_seconds": 212.0,
+            "rms_dbfs": -19.627,
+            "peak_dbfs": -6.129
+          },
+          {
+            "start_seconds": 216.0,
+            "rms_dbfs": -19.771,
+            "peak_dbfs": -4.794
+          },
+          {
+            "start_seconds": 220.0,
+            "rms_dbfs": -19.617,
+            "peak_dbfs": -4.973
+          },
+          {
+            "start_seconds": 224.0,
+            "rms_dbfs": -19.648,
+            "peak_dbfs": -6.506
+          },
+          {
+            "start_seconds": 228.0,
+            "rms_dbfs": -19.168,
+            "peak_dbfs": -5.56
+          },
+          {
+            "start_seconds": 232.0,
+            "rms_dbfs": -20.246,
+            "peak_dbfs": -5.63
+          },
+          {
+            "start_seconds": 236.0,
+            "rms_dbfs": -19.325,
+            "peak_dbfs": -6.154
+          },
+          {
+            "start_seconds": 240.0,
+            "rms_dbfs": -20.479,
+            "peak_dbfs": -6.378
+          },
+          {
+            "start_seconds": 244.0,
+            "rms_dbfs": -20.127,
+            "peak_dbfs": -7.203
+          },
+          {
+            "start_seconds": 248.0,
+            "rms_dbfs": -28.05,
+            "peak_dbfs": -12.933
+          },
+          {
+            "start_seconds": 252.0,
+            "rms_dbfs": -28.134,
+            "peak_dbfs": -14.083
+          },
+          {
+            "start_seconds": 256.0,
+            "rms_dbfs": -29.006,
+            "peak_dbfs": -18.207
+          }
+        ],
+        "stereo_difference_rms_dbfs": -25.755,
+        "stereo_correlation": 0.849493,
+        "side_to_mid_db": -10.895,
+        "passed_integrity": true
+      }
+    },
+    {
+      "code": "I04",
+      "source_id": 4,
+      "title": "Snow Strippers \u2014 Under Your Spell",
+      "source_rate_hz": 32768,
+      "timer_reload": 65024,
+      "sound_bias": 512,
+      "build_directory": "/workspace/work/recreations/builds/I04",
+      "recording": "/workspace/work/recreations/recordings/instrument/I04_snow-strippers-under-your-spell.wav",
+      "rom_bytes": 14340304,
+      "rom_sha256": "3fe0755eaf0b6c37b0acf21d75c5d0fa05330095a1a34a5da68b94a82b65dcae",
+      "capture": {
+        "capture_method": "mGBA emulation of compiled GBA ARM ROM; unprocessed stereo output",
+        "physical_hardware_capture": false,
+        "emulator": "mGBA",
+        "emulator_version": "0.10.5",
+        "rom": "soundtrack.gba",
+        "rom_sha256": "3fe0755eaf0b6c37b0acf21d75c5d0fa05330095a1a34a5da68b94a82b65dcae",
+        "elf_sha256": "a170d873e0b145ac0a2da18033d6a601e8a559d1734896ae0f52e6b6eb61fed4",
+        "song_id": 1,
+        "sample_rate_hz": 44100,
+        "channels": 2,
+        "sample_format": "signed 16-bit little-endian PCM",
+        "samples_per_channel": 9635674,
+        "duration_seconds": 218.49600907029478,
+        "emulated_frame_rate": 59.72750056960583,
+        "emulated_frames": 13051,
+        "last_song_frame": 13050,
+        "song_timeline_symbol": "gAudioReviewFrame",
+        "observed_loop_count": 0,
+        "loop_boundaries": [],
+        "elapsed_wall_seconds": 1.472,
+        "audio_sha256": "1ae668debcd42e66ab730273f65936bb44ff0089b3da0841587471bf8775bd56",
+        "hardware_registers_at_capture_end": {
+          "sound_bias": "0x200",
+          "sound_control_high": "0x120e",
+          "timer0_control": "0x80",
+          "note": "Timer0 counter readout is not its reload value; rate is specified by the compiled song descriptor."
+        },
+        "driver_cpu_profile": {
+          "method": "GBA timers 2+3 count cycles around sound_update; DMA stalls included",
+          "calls": 13051,
+          "total_cycles": 2610625,
+          "maximum_cycles_per_update": 925,
+          "mean_cycles_per_update": 200.033,
+          "mean_percent_of_frame": 0.07121,
+          "maximum_percent_of_frame": 0.3293,
+          "scope": "CPU driver only; DMA bus occupancy outside the call is excluded"
+        }
+      },
+      "validation": {
+        "file": "I04_snow-strippers-under-your-spell.wav",
+        "sha256": "1ae668debcd42e66ab730273f65936bb44ff0089b3da0841587471bf8775bd56",
+        "sample_rate_hz": 44100,
+        "channels": 2,
+        "sample_width_bytes": 2,
+        "duration_seconds": 218.496009,
+        "peak_dbfs": -6.669,
+        "rms_dbfs": -20.505,
+        "clipped_sample_count": 0,
+        "longest_near_silence_seconds": 0.0,
+        "silence_limit_seconds": null,
+        "silence_policy": "Preserve expected source-file intros/tails; measure silence without rejecting it",
+        "channel_statistics": [
+          {
+            "peak_dbfs": -6.669,
+            "rms_dbfs": -20.484,
+            "dc_offset": -1e-07
+          },
+          {
+            "peak_dbfs": -7.128,
+            "rms_dbfs": -20.526,
+            "dc_offset": -2e-07
+          }
+        ],
+        "four_second_level_history": [
+          {
+            "start_seconds": 0.0,
+            "rms_dbfs": -20.621,
+            "peak_dbfs": -8.723
+          },
+          {
+            "start_seconds": 4.0,
+            "rms_dbfs": -21.325,
+            "peak_dbfs": -8.889
+          },
+          {
+            "start_seconds": 8.0,
+            "rms_dbfs": -20.941,
+            "peak_dbfs": -8.765
+          },
+          {
+            "start_seconds": 12.0,
+            "rms_dbfs": -21.306,
+            "peak_dbfs": -7.95
+          },
+          {
+            "start_seconds": 16.0,
+            "rms_dbfs": -22.206,
+            "peak_dbfs": -10.027
+          },
+          {
+            "start_seconds": 20.0,
+            "rms_dbfs": -20.473,
+            "peak_dbfs": -8.567
+          },
+          {
+            "start_seconds": 24.0,
+            "rms_dbfs": -20.83,
+            "peak_dbfs": -7.758
+          },
+          {
+            "start_seconds": 28.0,
+            "rms_dbfs": -21.1,
+            "peak_dbfs": -8.538
+          },
+          {
+            "start_seconds": 32.0,
+            "rms_dbfs": -22.19,
+            "peak_dbfs": -8.923
+          },
+          {
+            "start_seconds": 36.0,
+            "rms_dbfs": -21.765,
+            "peak_dbfs": -8.956
+          },
+          {
+            "start_seconds": 40.0,
+            "rms_dbfs": -20.229,
+            "peak_dbfs": -9.052
+          },
+          {
+            "start_seconds": 44.0,
+            "rms_dbfs": -20.16,
+            "peak_dbfs": -7.364
+          },
+          {
+            "start_seconds": 48.0,
+            "rms_dbfs": -21.073,
+            "peak_dbfs": -9.788
+          },
+          {
+            "start_seconds": 52.0,
+            "rms_dbfs": -19.758,
+            "peak_dbfs": -7.841
+          },
+          {
+            "start_seconds": 56.0,
+            "rms_dbfs": -21.333,
+            "peak_dbfs": -10.31
+          },
+          {
+            "start_seconds": 60.0,
+            "rms_dbfs": -20.336,
+            "peak_dbfs": -7.947
+          },
+          {
+            "start_seconds": 64.0,
+            "rms_dbfs": -19.478,
+            "peak_dbfs": -8.509
+          },
+          {
+            "start_seconds": 68.0,
+            "rms_dbfs": -18.161,
+            "peak_dbfs": -8.45
+          },
+          {
+            "start_seconds": 72.0,
+            "rms_dbfs": -17.468,
+            "peak_dbfs": -7.002
+          },
+          {
+            "start_seconds": 76.0,
+            "rms_dbfs": -18.123,
+            "peak_dbfs": -8.376
+          },
+          {
+            "start_seconds": 80.0,
+            "rms_dbfs": -17.997,
+            "peak_dbfs": -7.196
+          },
+          {
+            "start_seconds": 84.0,
+            "rms_dbfs": -17.683,
+            "peak_dbfs": -7.52
+          },
+          {
+            "start_seconds": 88.0,
+            "rms_dbfs": -17.707,
+            "peak_dbfs": -7.97
+          },
+          {
+            "start_seconds": 92.0,
+            "rms_dbfs": -20.374,
+            "peak_dbfs": -7.378
+          },
+          {
+            "start_seconds": 96.0,
+            "rms_dbfs": -21.788,
+            "peak_dbfs": -8.995
+          },
+          {
+            "start_seconds": 100.0,
+            "rms_dbfs": -20.63,
+            "peak_dbfs": -8.94
+          },
+          {
+            "start_seconds": 104.0,
+            "rms_dbfs": -20.6,
+            "peak_dbfs": -8.486
+          },
+          {
+            "start_seconds": 108.0,
+            "rms_dbfs": -20.901,
+            "peak_dbfs": -8.441
+          },
+          {
+            "start_seconds": 112.0,
+            "rms_dbfs": -20.441,
+            "peak_dbfs": -8.329
+          },
+          {
+            "start_seconds": 116.0,
+            "rms_dbfs": -19.974,
+            "peak_dbfs": -8.776
+          },
+          {
+            "start_seconds": 120.0,
+            "rms_dbfs": -20.952,
+            "peak_dbfs": -9.734
+          },
+          {
+            "start_seconds": 124.0,
+            "rms_dbfs": -20.321,
+            "peak_dbfs": -9.161
+          },
+          {
+            "start_seconds": 128.0,
+            "rms_dbfs": -20.556,
+            "peak_dbfs": -8.972
+          },
+          {
+            "start_seconds": 132.0,
+            "rms_dbfs": -18.277,
+            "peak_dbfs": -6.669
+          },
+          {
+            "start_seconds": 136.0,
+            "rms_dbfs": -17.723,
+            "peak_dbfs": -7.688
+          },
+          {
+            "start_seconds": 140.0,
+            "rms_dbfs": -18.404,
+            "peak_dbfs": -7.675
+          },
+          {
+            "start_seconds": 144.0,
+            "rms_dbfs": -21.5,
+            "peak_dbfs": -8.326
+          },
+          {
+            "start_seconds": 148.0,
+            "rms_dbfs": -25.021,
+            "peak_dbfs": -9.624
+          },
+          {
+            "start_seconds": 152.0,
+            "rms_dbfs": -25.191,
+            "peak_dbfs": -11.078
+          },
+          {
+            "start_seconds": 156.0,
+            "rms_dbfs": -21.972,
+            "peak_dbfs": -9.061
+          },
+          {
+            "start_seconds": 160.0,
+            "rms_dbfs": -22.04,
+            "peak_dbfs": -10.555
+          },
+          {
+            "start_seconds": 164.0,
+            "rms_dbfs": -20.701,
+            "peak_dbfs": -9.699
+          },
+          {
+            "start_seconds": 168.0,
+            "rms_dbfs": -20.563,
+            "peak_dbfs": -8.97
+          },
+          {
+            "start_seconds": 172.0,
+            "rms_dbfs": -20.432,
+            "peak_dbfs": -8.993
+          },
+          {
+            "start_seconds": 176.0,
+            "rms_dbfs": -19.968,
+            "peak_dbfs": -9.64
+          },
+          {
+            "start_seconds": 180.0,
+            "rms_dbfs": -21.149,
+            "peak_dbfs": -9.316
+          },
+          {
+            "start_seconds": 184.0,
+            "rms_dbfs": -20.908,
+            "peak_dbfs": -8.34
+          },
+          {
+            "start_seconds": 188.0,
+            "rms_dbfs": -21.827,
+            "peak_dbfs": -8.803
+          },
+          {
+            "start_seconds": 192.0,
+            "rms_dbfs": -25.219,
+            "peak_dbfs": -11.235
+          },
+          {
+            "start_seconds": 196.0,
+            "rms_dbfs": -22.372,
+            "peak_dbfs": -9.376
+          },
+          {
+            "start_seconds": 200.0,
+            "rms_dbfs": -23.184,
+            "peak_dbfs": -10.109
+          },
+          {
+            "start_seconds": 204.0,
+            "rms_dbfs": -21.855,
+            "peak_dbfs": -9.695
+          },
+          {
+            "start_seconds": 208.0,
+            "rms_dbfs": -21.046,
+            "peak_dbfs": -8.771
+          },
+          {
+            "start_seconds": 212.0,
+            "rms_dbfs": -30.09,
+            "peak_dbfs": -15.234
+          },
+          {
+            "start_seconds": 216.0,
+            "rms_dbfs": -28.281,
+            "peak_dbfs": -15.591
+          }
+        ],
+        "stereo_difference_rms_dbfs": -31.906,
+        "stereo_correlation": 0.963801,
+        "side_to_mid_db": -17.343,
+        "passed_integrity": true
+      }
+    },
+    {
+      "code": "I05",
+      "source_id": 5,
+      "title": "Friday Night",
+      "source_rate_hz": 32768,
+      "timer_reload": 65024,
+      "sound_bias": 512,
+      "build_directory": "/workspace/work/recreations/builds/I05",
+      "recording": "/workspace/work/recreations/recordings/instrument/I05_friday-night.wav",
+      "rom_bytes": 15594432,
+      "rom_sha256": "0cd5b602938376b5c7f836d2383a449ec6753ba51c554112399d317a53ed930d",
+      "capture": {
+        "capture_method": "mGBA emulation of compiled GBA ARM ROM; unprocessed stereo output",
+        "physical_hardware_capture": false,
+        "emulator": "mGBA",
+        "emulator_version": "0.10.5",
+        "rom": "soundtrack.gba",
+        "rom_sha256": "0cd5b602938376b5c7f836d2383a449ec6753ba51c554112399d317a53ed930d",
+        "elf_sha256": "f4e28f985748edfbf58288aa84212311b582691ee26f925b6023824af69526d3",
+        "song_id": 1,
+        "sample_rate_hz": 44100,
+        "channels": 2,
+        "sample_format": "signed 16-bit little-endian PCM",
+        "samples_per_channel": 10479616,
+        "duration_seconds": 237.63301587301586,
+        "emulated_frame_rate": 59.72750056960583,
+        "emulated_frames": 14194,
+        "last_song_frame": 14193,
+        "song_timeline_symbol": "gAudioReviewFrame",
+        "observed_loop_count": 0,
+        "loop_boundaries": [],
+        "elapsed_wall_seconds": 1.57,
+        "audio_sha256": "2475e57af54f74001983aa8c7478df0aa13be80064d81842c462c175600476a9",
+        "hardware_registers_at_capture_end": {
+          "sound_bias": "0x200",
+          "sound_control_high": "0x120e",
+          "timer0_control": "0x80",
+          "note": "Timer0 counter readout is not its reload value; rate is specified by the compiled song descriptor."
+        },
+        "driver_cpu_profile": {
+          "method": "GBA timers 2+3 count cycles around sound_update; DMA stalls included",
+          "calls": 14194,
+          "total_cycles": 2839165,
+          "maximum_cycles_per_update": 925,
+          "mean_cycles_per_update": 200.026,
+          "mean_percent_of_frame": 0.07121,
+          "maximum_percent_of_frame": 0.3293,
+          "scope": "CPU driver only; DMA bus occupancy outside the call is excluded"
+        }
+      },
+      "validation": {
+        "file": "I05_friday-night.wav",
+        "sha256": "2475e57af54f74001983aa8c7478df0aa13be80064d81842c462c175600476a9",
+        "sample_rate_hz": 44100,
+        "channels": 2,
+        "sample_width_bytes": 2,
+        "duration_seconds": 237.633016,
+        "peak_dbfs": -4.023,
+        "rms_dbfs": -20.507,
+        "clipped_sample_count": 0,
+        "longest_near_silence_seconds": 0.0,
+        "silence_limit_seconds": null,
+        "silence_policy": "Preserve expected source-file intros/tails; measure silence without rejecting it",
+        "channel_statistics": [
+          {
+            "peak_dbfs": -4.16,
+            "rms_dbfs": -20.47,
+            "dc_offset": -1e-07
+          },
+          {
+            "peak_dbfs": -4.023,
+            "rms_dbfs": -20.544,
+            "dc_offset": -1e-07
+          }
+        ],
+        "four_second_level_history": [
+          {
+            "start_seconds": 0.0,
+            "rms_dbfs": -19.41,
+            "peak_dbfs": -5.536
+          },
+          {
+            "start_seconds": 4.0,
+            "rms_dbfs": -19.838,
+            "peak_dbfs": -5.086
+          },
+          {
+            "start_seconds": 8.0,
+            "rms_dbfs": -19.285,
+            "peak_dbfs": -4.023
+          },
+          {
+            "start_seconds": 12.0,
+            "rms_dbfs": -19.325,
+            "peak_dbfs": -5.288
+          },
+          {
+            "start_seconds": 16.0,
+            "rms_dbfs": -19.757,
+            "peak_dbfs": -4.907
+          },
+          {
+            "start_seconds": 20.0,
+            "rms_dbfs": -19.682,
+            "peak_dbfs": -4.385
+          },
+          {
+            "start_seconds": 24.0,
+            "rms_dbfs": -20.016,
+            "peak_dbfs": -5.407
+          },
+          {
+            "start_seconds": 28.0,
+            "rms_dbfs": -20.906,
+            "peak_dbfs": -6.616
+          },
+          {
+            "start_seconds": 32.0,
+            "rms_dbfs": -21.345,
+            "peak_dbfs": -9.856
+          },
+          {
+            "start_seconds": 36.0,
+            "rms_dbfs": -20.978,
+            "peak_dbfs": -8.849
+          },
+          {
+            "start_seconds": 40.0,
+            "rms_dbfs": -21.422,
+            "peak_dbfs": -8.703
+          },
+          {
+            "start_seconds": 44.0,
+            "rms_dbfs": -20.885,
+            "peak_dbfs": -6.666
+          },
+          {
+            "start_seconds": 48.0,
+            "rms_dbfs": -21.113,
+            "peak_dbfs": -7.18
+          },
+          {
+            "start_seconds": 52.0,
+            "rms_dbfs": -20.377,
+            "peak_dbfs": -6.223
+          },
+          {
+            "start_seconds": 56.0,
+            "rms_dbfs": -21.077,
+            "peak_dbfs": -5.643
+          },
+          {
+            "start_seconds": 60.0,
+            "rms_dbfs": -20.11,
+            "peak_dbfs": -5.765
+          },
+          {
+            "start_seconds": 64.0,
+            "rms_dbfs": -20.483,
+            "peak_dbfs": -6.623
+          },
+          {
+            "start_seconds": 68.0,
+            "rms_dbfs": -21.138,
+            "peak_dbfs": -5.826
+          },
+          {
+            "start_seconds": 72.0,
+            "rms_dbfs": -19.731,
+            "peak_dbfs": -5.425
+          },
+          {
+            "start_seconds": 76.0,
+            "rms_dbfs": -20.12,
+            "peak_dbfs": -5.032
+          },
+          {
+            "start_seconds": 80.0,
+            "rms_dbfs": -19.845,
+            "peak_dbfs": -6.229
+          },
+          {
+            "start_seconds": 84.0,
+            "rms_dbfs": -20.163,
+            "peak_dbfs": -4.801
+          },
+          {
+            "start_seconds": 88.0,
+            "rms_dbfs": -21.685,
+            "peak_dbfs": -6.669
+          },
+          {
+            "start_seconds": 92.0,
+            "rms_dbfs": -20.32,
+            "peak_dbfs": -6.486
+          },
+          {
+            "start_seconds": 96.0,
+            "rms_dbfs": -20.798,
+            "peak_dbfs": -6.914
+          },
+          {
+            "start_seconds": 100.0,
+            "rms_dbfs": -20.76,
+            "peak_dbfs": -5.289
+          },
+          {
+            "start_seconds": 104.0,
+            "rms_dbfs": -20.771,
+            "peak_dbfs": -6.712
+          },
+          {
+            "start_seconds": 108.0,
+            "rms_dbfs": -21.243,
+            "peak_dbfs": -6.672
+          },
+          {
+            "start_seconds": 112.0,
+            "rms_dbfs": -20.111,
+            "peak_dbfs": -4.974
+          },
+          {
+            "start_seconds": 116.0,
+            "rms_dbfs": -20.735,
+            "peak_dbfs": -5.805
+          },
+          {
+            "start_seconds": 120.0,
+            "rms_dbfs": -20.615,
+            "peak_dbfs": -5.28
+          },
+          {
+            "start_seconds": 124.0,
+            "rms_dbfs": -20.026,
+            "peak_dbfs": -5.876
+          },
+          {
+            "start_seconds": 128.0,
+            "rms_dbfs": -20.934,
+            "peak_dbfs": -7.102
+          },
+          {
+            "start_seconds": 132.0,
+            "rms_dbfs": -20.146,
+            "peak_dbfs": -5.831
+          },
+          {
+            "start_seconds": 136.0,
+            "rms_dbfs": -20.689,
+            "peak_dbfs": -5.989
+          },
+          {
+            "start_seconds": 140.0,
+            "rms_dbfs": -20.488,
+            "peak_dbfs": -5.78
+          },
+          {
+            "start_seconds": 144.0,
+            "rms_dbfs": -20.975,
+            "peak_dbfs": -5.821
+          },
+          {
+            "start_seconds": 148.0,
+            "rms_dbfs": -19.887,
+            "peak_dbfs": -6.809
+          },
+          {
+            "start_seconds": 152.0,
+            "rms_dbfs": -19.889,
+            "peak_dbfs": -8.07
+          },
+          {
+            "start_seconds": 156.0,
+            "rms_dbfs": -19.762,
+            "peak_dbfs": -6.592
+          },
+          {
+            "start_seconds": 160.0,
+            "rms_dbfs": -20.458,
+            "peak_dbfs": -6.574
+          },
+          {
+            "start_seconds": 164.0,
+            "rms_dbfs": -20.308,
+            "peak_dbfs": -6.299
+          },
+          {
+            "start_seconds": 168.0,
+            "rms_dbfs": -19.914,
+            "peak_dbfs": -5.594
+          },
+          {
+            "start_seconds": 172.0,
+            "rms_dbfs": -20.739,
+            "peak_dbfs": -6.273
+          },
+          {
+            "start_seconds": 176.0,
+            "rms_dbfs": -20.334,
+            "peak_dbfs": -6.731
+          },
+          {
+            "start_seconds": 180.0,
+            "rms_dbfs": -20.384,
+            "peak_dbfs": -5.933
+          },
+          {
+            "start_seconds": 184.0,
+            "rms_dbfs": -20.225,
+            "peak_dbfs": -6.227
+          },
+          {
+            "start_seconds": 188.0,
+            "rms_dbfs": -20.253,
+            "peak_dbfs": -5.948
+          },
+          {
+            "start_seconds": 192.0,
+            "rms_dbfs": -20.47,
+            "peak_dbfs": -5.509
+          },
+          {
+            "start_seconds": 196.0,
+            "rms_dbfs": -19.958,
+            "peak_dbfs": -5.499
+          },
+          {
+            "start_seconds": 200.0,
+            "rms_dbfs": -20.798,
+            "peak_dbfs": -6.269
+          },
+          {
+            "start_seconds": 204.0,
+            "rms_dbfs": -20.726,
+            "peak_dbfs": -6.152
+          },
+          {
+            "start_seconds": 208.0,
+            "rms_dbfs": -20.639,
+            "peak_dbfs": -5.114
+          },
+          {
+            "start_seconds": 212.0,
+            "rms_dbfs": -20.809,
+            "peak_dbfs": -5.918
+          },
+          {
+            "start_seconds": 216.0,
+            "rms_dbfs": -21.039,
+            "peak_dbfs": -5.729
+          },
+          {
+            "start_seconds": 220.0,
+            "rms_dbfs": -20.972,
+            "peak_dbfs": -5.58
+          },
+          {
+            "start_seconds": 224.0,
+            "rms_dbfs": -21.392,
+            "peak_dbfs": -5.45
+          },
+          {
+            "start_seconds": 228.0,
+            "rms_dbfs": -22.29,
+            "peak_dbfs": -6.253
+          },
+          {
+            "start_seconds": 232.0,
+            "rms_dbfs": -22.91,
+            "peak_dbfs": -6.948
+          },
+          {
+            "start_seconds": 236.0,
+            "rms_dbfs": -26.985,
+            "peak_dbfs": -10.95
+          }
+        ],
+        "stereo_difference_rms_dbfs": -26.763,
+        "stereo_correlation": 0.881646,
+        "side_to_mid_db": -12.012,
+        "passed_integrity": true
+      }
+    },
+    {
+      "code": "I06",
+      "source_id": 6,
+      "title": "Daft Punk \u2014 Voyager",
+      "source_rate_hz": 32768,
+      "timer_reload": 65024,
+      "sound_bias": 512,
+      "build_directory": "/workspace/work/recreations/builds/I06",
+      "recording": "/workspace/work/recreations/recordings/instrument/I06_voyager.wav",
+      "rom_bytes": 14953664,
+      "rom_sha256": "e1bc0698eaca3519315c5f5b09fbddfb4d07dcb06053be722d0afbef29429f4d",
+      "capture": {
+        "capture_method": "mGBA emulation of compiled GBA ARM ROM; unprocessed stereo output",
+        "physical_hardware_capture": false,
+        "emulator": "mGBA",
+        "emulator_version": "0.10.5",
+        "rom": "soundtrack.gba",
+        "rom_sha256": "e1bc0698eaca3519315c5f5b09fbddfb4d07dcb06053be722d0afbef29429f4d",
+        "elf_sha256": "4c00449c333c2796fea1b1e379f733da706429167230dae64c7da3c6e0969602",
+        "song_id": 1,
+        "sample_rate_hz": 44100,
+        "channels": 2,
+        "sample_format": "signed 16-bit little-endian PCM",
+        "samples_per_channel": 10048512,
+        "duration_seconds": 227.8574149659864,
+        "emulated_frame_rate": 59.72750056960583,
+        "emulated_frames": 13610,
+        "last_song_frame": 13609,
+        "song_timeline_symbol": "gAudioReviewFrame",
+        "observed_loop_count": 0,
+        "loop_boundaries": [],
+        "elapsed_wall_seconds": 1.565,
+        "audio_sha256": "02fa08118ae3046e9d8fde8cf453b547499a9129e265d77e76ee0129bcc36bd0",
+        "hardware_registers_at_capture_end": {
+          "sound_bias": "0x200",
+          "sound_control_high": "0x120e",
+          "timer0_control": "0x80",
+          "note": "Timer0 counter readout is not its reload value; rate is specified by the compiled song descriptor."
+        },
+        "driver_cpu_profile": {
+          "method": "GBA timers 2+3 count cycles around sound_update; DMA stalls included",
+          "calls": 13610,
+          "total_cycles": 2722408,
+          "maximum_cycles_per_update": 925,
+          "mean_cycles_per_update": 200.03,
+          "mean_percent_of_frame": 0.07121,
+          "maximum_percent_of_frame": 0.3293,
+          "scope": "CPU driver only; DMA bus occupancy outside the call is excluded"
+        }
+      },
+      "validation": {
+        "file": "I06_voyager.wav",
+        "sha256": "02fa08118ae3046e9d8fde8cf453b547499a9129e265d77e76ee0129bcc36bd0",
+        "sample_rate_hz": 44100,
+        "channels": 2,
+        "sample_width_bytes": 2,
+        "duration_seconds": 227.857415,
+        "peak_dbfs": -3.591,
+        "rms_dbfs": -21.675,
+        "clipped_sample_count": 0,
+        "longest_near_silence_seconds": 0.0,
+        "silence_limit_seconds": null,
+        "silence_policy": "Preserve expected source-file intros/tails; measure silence without rejecting it",
+        "channel_statistics": [
+          {
+            "peak_dbfs": -3.64,
+            "rms_dbfs": -21.803,
+            "dc_offset": 0.0
+          },
+          {
+            "peak_dbfs": -3.591,
+            "rms_dbfs": -21.551,
+            "dc_offset": 0.0
+          }
+        ],
+        "four_second_level_history": [
+          {
+            "start_seconds": 0.0,
+            "rms_dbfs": -22.339,
+            "peak_dbfs": -6.589
+          },
+          {
+            "start_seconds": 4.0,
+            "rms_dbfs": -19.886,
+            "peak_dbfs": -4.848
+          },
+          {
+            "start_seconds": 8.0,
+            "rms_dbfs": -22.159,
+            "peak_dbfs": -8.11
+          },
+          {
+            "start_seconds": 12.0,
+            "rms_dbfs": -19.645,
+            "peak_dbfs": -5.644
+          },
+          {
+            "start_seconds": 16.0,
+            "rms_dbfs": -22.029,
+            "peak_dbfs": -6.802
+          },
+          {
+            "start_seconds": 20.0,
+            "rms_dbfs": -19.496,
+            "peak_dbfs": -5.049
+          },
+          {
+            "start_seconds": 24.0,
+            "rms_dbfs": -22.21,
+            "peak_dbfs": -7.639
+          },
+          {
+            "start_seconds": 28.0,
+            "rms_dbfs": -19.992,
+            "peak_dbfs": -5.98
+          },
+          {
+            "start_seconds": 32.0,
+            "rms_dbfs": -22.253,
+            "peak_dbfs": -7.613
+          },
+          {
+            "start_seconds": 36.0,
+            "rms_dbfs": -21.399,
+            "peak_dbfs": -6.684
+          },
+          {
+            "start_seconds": 40.0,
+            "rms_dbfs": -22.078,
+            "peak_dbfs": -7.628
+          },
+          {
+            "start_seconds": 44.0,
+            "rms_dbfs": -21.416,
+            "peak_dbfs": -6.321
+          },
+          {
+            "start_seconds": 48.0,
+            "rms_dbfs": -22.227,
+            "peak_dbfs": -7.572
+          },
+          {
+            "start_seconds": 52.0,
+            "rms_dbfs": -21.496,
+            "peak_dbfs": -6.992
+          },
+          {
+            "start_seconds": 56.0,
+            "rms_dbfs": -22.161,
+            "peak_dbfs": -7.634
+          },
+          {
+            "start_seconds": 60.0,
+            "rms_dbfs": -21.425,
+            "peak_dbfs": -7.731
+          },
+          {
+            "start_seconds": 64.0,
+            "rms_dbfs": -22.572,
+            "peak_dbfs": -7.959
+          },
+          {
+            "start_seconds": 68.0,
+            "rms_dbfs": -21.249,
+            "peak_dbfs": -7.052
+          },
+          {
+            "start_seconds": 72.0,
+            "rms_dbfs": -22.221,
+            "peak_dbfs": -7.906
+          },
+          {
+            "start_seconds": 76.0,
+            "rms_dbfs": -21.433,
+            "peak_dbfs": -6.772
+          },
+          {
+            "start_seconds": 80.0,
+            "rms_dbfs": -27.934,
+            "peak_dbfs": -10.319
+          },
+          {
+            "start_seconds": 84.0,
+            "rms_dbfs": -25.839,
+            "peak_dbfs": -10.205
+          },
+          {
+            "start_seconds": 88.0,
+            "rms_dbfs": -25.046,
+            "peak_dbfs": -10.745
+          },
+          {
+            "start_seconds": 92.0,
+            "rms_dbfs": -25.779,
+            "peak_dbfs": -9.973
+          },
+          {
+            "start_seconds": 96.0,
+            "rms_dbfs": -22.383,
+            "peak_dbfs": -8.476
+          },
+          {
+            "start_seconds": 100.0,
+            "rms_dbfs": -21.507,
+            "peak_dbfs": -7.471
+          },
+          {
+            "start_seconds": 104.0,
+            "rms_dbfs": -21.955,
+            "peak_dbfs": -7.62
+          },
+          {
+            "start_seconds": 108.0,
+            "rms_dbfs": -22.289,
+            "peak_dbfs": -7.02
+          },
+          {
+            "start_seconds": 112.0,
+            "rms_dbfs": -22.323,
+            "peak_dbfs": -8.617
+          },
+          {
+            "start_seconds": 116.0,
+            "rms_dbfs": -21.701,
+            "peak_dbfs": -6.851
+          },
+          {
+            "start_seconds": 120.0,
+            "rms_dbfs": -22.698,
+            "peak_dbfs": -10.075
+          },
+          {
+            "start_seconds": 124.0,
+            "rms_dbfs": -21.582,
+            "peak_dbfs": -5.894
+          },
+          {
+            "start_seconds": 128.0,
+            "rms_dbfs": -23.896,
+            "peak_dbfs": -7.674
+          },
+          {
+            "start_seconds": 132.0,
+            "rms_dbfs": -19.459,
+            "peak_dbfs": -5.716
+          },
+          {
+            "start_seconds": 136.0,
+            "rms_dbfs": -22.961,
+            "peak_dbfs": -7.878
+          },
+          {
+            "start_seconds": 140.0,
+            "rms_dbfs": -18.514,
+            "peak_dbfs": -5.132
+          },
+          {
+            "start_seconds": 144.0,
+            "rms_dbfs": -21.803,
+            "peak_dbfs": -7.89
+          },
+          {
+            "start_seconds": 148.0,
+            "rms_dbfs": -18.679,
+            "peak_dbfs": -4.937
+          },
+          {
+            "start_seconds": 152.0,
+            "rms_dbfs": -21.956,
+            "peak_dbfs": -7.867
+          },
+          {
+            "start_seconds": 156.0,
+            "rms_dbfs": -18.372,
+            "peak_dbfs": -3.591
+          },
+          {
+            "start_seconds": 160.0,
+            "rms_dbfs": -21.955,
+            "peak_dbfs": -6.807
+          },
+          {
+            "start_seconds": 164.0,
+            "rms_dbfs": -21.879,
+            "peak_dbfs": -6.541
+          },
+          {
+            "start_seconds": 168.0,
+            "rms_dbfs": -22.163,
+            "peak_dbfs": -7.454
+          },
+          {
+            "start_seconds": 172.0,
+            "rms_dbfs": -21.804,
+            "peak_dbfs": -6.698
+          },
+          {
+            "start_seconds": 176.0,
+            "rms_dbfs": -22.528,
+            "peak_dbfs": -7.669
+          },
+          {
+            "start_seconds": 180.0,
+            "rms_dbfs": -21.608,
+            "peak_dbfs": -7.106
+          },
+          {
+            "start_seconds": 184.0,
+            "rms_dbfs": -23.184,
+            "peak_dbfs": -8.888
+          },
+          {
+            "start_seconds": 188.0,
+            "rms_dbfs": -20.847,
+            "peak_dbfs": -6.046
+          },
+          {
+            "start_seconds": 192.0,
+            "rms_dbfs": -22.795,
+            "peak_dbfs": -8.905
+          },
+          {
+            "start_seconds": 196.0,
+            "rms_dbfs": -21.427,
+            "peak_dbfs": -7.141
+          },
+          {
+            "start_seconds": 200.0,
+            "rms_dbfs": -22.461,
+            "peak_dbfs": -6.938
+          },
+          {
+            "start_seconds": 204.0,
+            "rms_dbfs": -21.003,
+            "peak_dbfs": -6.583
+          },
+          {
+            "start_seconds": 208.0,
+            "rms_dbfs": -21.792,
+            "peak_dbfs": -7.231
+          },
+          {
+            "start_seconds": 212.0,
+            "rms_dbfs": -21.196,
+            "peak_dbfs": -4.926
+          },
+          {
+            "start_seconds": 216.0,
+            "rms_dbfs": -22.932,
+            "peak_dbfs": -7.678
+          },
+          {
+            "start_seconds": 220.0,
+            "rms_dbfs": -20.604,
+            "peak_dbfs": -5.485
+          },
+          {
+            "start_seconds": 224.0,
+            "rms_dbfs": -30.945,
+            "peak_dbfs": -11.256
+          }
+        ],
+        "stereo_difference_rms_dbfs": -32.778,
+        "stereo_correlation": 0.961621,
+        "side_to_mid_db": -17.038,
+        "passed_integrity": true
+      }
+    },
+    {
+      "code": "I07",
+      "source_id": 7,
+      "title": "Sunday Evening Pain",
+      "source_rate_hz": 32768,
+      "timer_reload": 65024,
+      "sound_bias": 512,
+      "build_directory": "/workspace/work/recreations/builds/I07",
+      "recording": "/workspace/work/recreations/recordings/instrument/I07_sunday-evening-pain.wav",
+      "rom_bytes": 11869280,
+      "rom_sha256": "228d72db64f377e3df896e5b3feb78977fa95a6b0a5ca387eceeb6810cac2cbc",
+      "capture": {
+        "capture_method": "mGBA emulation of compiled GBA ARM ROM; unprocessed stereo output",
+        "physical_hardware_capture": false,
+        "emulator": "mGBA",
+        "emulator_version": "0.10.5",
+        "rom": "soundtrack.gba",
+        "rom_sha256": "228d72db64f377e3df896e5b3feb78977fa95a6b0a5ca387eceeb6810cac2cbc",
+        "elf_sha256": "dcfc89f1b19ee61ba07cf5c9fb096fe5dbfe28241694b62e725349a77dcca6c8",
+        "song_id": 1,
+        "sample_rate_hz": 44100,
+        "channels": 2,
+        "sample_format": "signed 16-bit little-endian PCM",
+        "samples_per_channel": 7973312,
+        "duration_seconds": 180.80072562358276,
+        "emulated_frame_rate": 59.72750056960583,
+        "emulated_frames": 10799,
+        "last_song_frame": 10798,
+        "song_timeline_symbol": "gAudioReviewFrame",
+        "observed_loop_count": 0,
+        "loop_boundaries": [],
+        "elapsed_wall_seconds": 1.286,
+        "audio_sha256": "5d1a426ec492d7e0871bc6156d7d77113bcede2aa796d8e0e29e01525f11223f",
+        "hardware_registers_at_capture_end": {
+          "sound_bias": "0x200",
+          "sound_control_high": "0x120e",
+          "timer0_control": "0x80",
+          "note": "Timer0 counter readout is not its reload value; rate is specified by the compiled song descriptor."
+        },
+        "driver_cpu_profile": {
+          "method": "GBA timers 2+3 count cycles around sound_update; DMA stalls included",
+          "calls": 10799,
+          "total_cycles": 2160269,
+          "maximum_cycles_per_update": 925,
+          "mean_cycles_per_update": 200.043,
+          "mean_percent_of_frame": 0.07122,
+          "maximum_percent_of_frame": 0.3293,
+          "scope": "CPU driver only; DMA bus occupancy outside the call is excluded"
+        }
+      },
+      "validation": {
+        "file": "I07_sunday-evening-pain.wav",
+        "sha256": "5d1a426ec492d7e0871bc6156d7d77113bcede2aa796d8e0e29e01525f11223f",
+        "sample_rate_hz": 44100,
+        "channels": 2,
+        "sample_width_bytes": 2,
+        "duration_seconds": 180.800726,
+        "peak_dbfs": -3.611,
+        "rms_dbfs": -20.386,
+        "clipped_sample_count": 0,
+        "longest_near_silence_seconds": 0.0,
+        "silence_limit_seconds": null,
+        "silence_policy": "Preserve expected source-file intros/tails; measure silence without rejecting it",
+        "channel_statistics": [
+          {
+            "peak_dbfs": -3.611,
+            "rms_dbfs": -20.301,
+            "dc_offset": -6e-07
+          },
+          {
+            "peak_dbfs": -3.718,
+            "rms_dbfs": -20.471,
+            "dc_offset": -0.0
+          }
+        ],
+        "four_second_level_history": [
+          {
+            "start_seconds": 0.0,
+            "rms_dbfs": -22.688,
+            "peak_dbfs": -7.837
+          },
+          {
+            "start_seconds": 4.0,
+            "rms_dbfs": -22.67,
+            "peak_dbfs": -8.736
+          },
+          {
+            "start_seconds": 8.0,
+            "rms_dbfs": -21.584,
+            "peak_dbfs": -5.966
+          },
+          {
+            "start_seconds": 12.0,
+            "rms_dbfs": -22.688,
+            "peak_dbfs": -8.269
+          },
+          {
+            "start_seconds": 16.0,
+            "rms_dbfs": -21.321,
+            "peak_dbfs": -5.836
+          },
+          {
+            "start_seconds": 20.0,
+            "rms_dbfs": -21.703,
+            "peak_dbfs": -6.985
+          },
+          {
+            "start_seconds": 24.0,
+            "rms_dbfs": -19.826,
+            "peak_dbfs": -5.7
+          },
+          {
+            "start_seconds": 28.0,
+            "rms_dbfs": -21.951,
+            "peak_dbfs": -6.791
+          },
+          {
+            "start_seconds": 32.0,
+            "rms_dbfs": -21.039,
+            "peak_dbfs": -5.632
+          },
+          {
+            "start_seconds": 36.0,
+            "rms_dbfs": -20.44,
+            "peak_dbfs": -5.68
+          },
+          {
+            "start_seconds": 40.0,
+            "rms_dbfs": -20.975,
+            "peak_dbfs": -5.742
+          },
+          {
+            "start_seconds": 44.0,
+            "rms_dbfs": -20.539,
+            "peak_dbfs": -5.5
+          },
+          {
+            "start_seconds": 48.0,
+            "rms_dbfs": -20.539,
+            "peak_dbfs": -5.342
+          },
+          {
+            "start_seconds": 52.0,
+            "rms_dbfs": -20.283,
+            "peak_dbfs": -6.11
+          },
+          {
+            "start_seconds": 56.0,
+            "rms_dbfs": -20.755,
+            "peak_dbfs": -5.949
+          },
+          {
+            "start_seconds": 60.0,
+            "rms_dbfs": -20.208,
+            "peak_dbfs": -3.982
+          },
+          {
+            "start_seconds": 64.0,
+            "rms_dbfs": -19.925,
+            "peak_dbfs": -6.052
+          },
+          {
+            "start_seconds": 68.0,
+            "rms_dbfs": -19.674,
+            "peak_dbfs": -5.052
+          },
+          {
+            "start_seconds": 72.0,
+            "rms_dbfs": -19.305,
+            "peak_dbfs": -3.901
+          },
+          {
+            "start_seconds": 76.0,
+            "rms_dbfs": -19.949,
+            "peak_dbfs": -7.435
+          },
+          {
+            "start_seconds": 80.0,
+            "rms_dbfs": -20.586,
+            "peak_dbfs": -3.828
+          },
+          {
+            "start_seconds": 84.0,
+            "rms_dbfs": -20.887,
+            "peak_dbfs": -6.799
+          },
+          {
+            "start_seconds": 88.0,
+            "rms_dbfs": -20.79,
+            "peak_dbfs": -4.124
+          },
+          {
+            "start_seconds": 92.0,
+            "rms_dbfs": -20.345,
+            "peak_dbfs": -4.604
+          },
+          {
+            "start_seconds": 96.0,
+            "rms_dbfs": -19.938,
+            "peak_dbfs": -4.459
+          },
+          {
+            "start_seconds": 100.0,
+            "rms_dbfs": -21.35,
+            "peak_dbfs": -5.068
+          },
+          {
+            "start_seconds": 104.0,
+            "rms_dbfs": -20.095,
+            "peak_dbfs": -6.155
+          },
+          {
+            "start_seconds": 108.0,
+            "rms_dbfs": -20.958,
+            "peak_dbfs": -5.337
+          },
+          {
+            "start_seconds": 112.0,
+            "rms_dbfs": -20.162,
+            "peak_dbfs": -5.285
+          },
+          {
+            "start_seconds": 116.0,
+            "rms_dbfs": -20.046,
+            "peak_dbfs": -4.66
+          },
+          {
+            "start_seconds": 120.0,
+            "rms_dbfs": -18.705,
+            "peak_dbfs": -4.464
+          },
+          {
+            "start_seconds": 124.0,
+            "rms_dbfs": -19.36,
+            "peak_dbfs": -3.611
+          },
+          {
+            "start_seconds": 128.0,
+            "rms_dbfs": -19.27,
+            "peak_dbfs": -5.773
+          },
+          {
+            "start_seconds": 132.0,
+            "rms_dbfs": -19.934,
+            "peak_dbfs": -5.43
+          },
+          {
+            "start_seconds": 136.0,
+            "rms_dbfs": -18.855,
+            "peak_dbfs": -5.021
+          },
+          {
+            "start_seconds": 140.0,
+            "rms_dbfs": -18.922,
+            "peak_dbfs": -5.086
+          },
+          {
+            "start_seconds": 144.0,
+            "rms_dbfs": -18.917,
+            "peak_dbfs": -4.615
+          },
+          {
+            "start_seconds": 148.0,
+            "rms_dbfs": -19.653,
+            "peak_dbfs": -4.891
+          },
+          {
+            "start_seconds": 152.0,
+            "rms_dbfs": -21.234,
+            "peak_dbfs": -5.523
+          },
+          {
+            "start_seconds": 156.0,
+            "rms_dbfs": -19.341,
+            "peak_dbfs": -3.977
+          },
+          {
+            "start_seconds": 160.0,
+            "rms_dbfs": -21.716,
+            "peak_dbfs": -4.553
+          },
+          {
+            "start_seconds": 164.0,
+            "rms_dbfs": -19.66,
+            "peak_dbfs": -4.29
+          },
+          {
+            "start_seconds": 168.0,
+            "rms_dbfs": -20.487,
+            "peak_dbfs": -4.884
+          },
+          {
+            "start_seconds": 172.0,
+            "rms_dbfs": -20.431,
+            "peak_dbfs": -3.985
+          },
+          {
+            "start_seconds": 176.0,
+            "rms_dbfs": -22.204,
+            "peak_dbfs": -4.733
+          },
+          {
+            "start_seconds": 180.0,
+            "rms_dbfs": -27.769,
+            "peak_dbfs": -12.547
+          }
+        ],
+        "stereo_difference_rms_dbfs": -24.916,
+        "stereo_correlation": 0.823973,
+        "side_to_mid_db": -10.15,
+        "passed_integrity": true
+      }
+    },
+    {
+      "code": "I08",
+      "source_id": 8,
+      "title": "Drake \u2014 What\u2019s Next",
+      "source_rate_hz": 32768,
+      "timer_reload": 65024,
+      "sound_bias": 512,
+      "build_directory": "/workspace/work/recreations/builds/I08",
+      "recording": "/workspace/work/recreations/recordings/instrument/I08_whats-next.wav",
+      "rom_bytes": 13144288,
+      "rom_sha256": "c50832756160d60fcbe2418cfd566de041984d59d9829562ce0fa5d657883e45",
+      "capture": {
+        "capture_method": "mGBA emulation of compiled GBA ARM ROM; unprocessed stereo output",
+        "physical_hardware_capture": false,
+        "emulator": "mGBA",
+        "emulator_version": "0.10.5",
+        "rom": "soundtrack.gba",
+        "rom_sha256": "c50832756160d60fcbe2418cfd566de041984d59d9829562ce0fa5d657883e45",
+        "elf_sha256": "db55c59d24d886993b9124570f85dbf2875d56bceb0d223532cb833869d2adcf",
+        "song_id": 1,
+        "sample_rate_hz": 44100,
+        "channels": 2,
+        "sample_format": "signed 16-bit little-endian PCM",
+        "samples_per_channel": 8830976,
+        "duration_seconds": 200.2488888888889,
+        "emulated_frame_rate": 59.72750056960583,
+        "emulated_frames": 11961,
+        "last_song_frame": 11960,
+        "song_timeline_symbol": "gAudioReviewFrame",
+        "observed_loop_count": 0,
+        "loop_boundaries": [],
+        "elapsed_wall_seconds": 1.363,
+        "audio_sha256": "ded7a58054f1cdb78feeb2731f5382c65775c7c659aa5c48a3bea9e6c84ac403",
+        "hardware_registers_at_capture_end": {
+          "sound_bias": "0x200",
+          "sound_control_high": "0x120e",
+          "timer0_control": "0x80",
+          "note": "Timer0 counter readout is not its reload value; rate is specified by the compiled song descriptor."
+        },
+        "driver_cpu_profile": {
+          "method": "GBA timers 2+3 count cycles around sound_update; DMA stalls included",
+          "calls": 11961,
+          "total_cycles": 2392632,
+          "maximum_cycles_per_update": 925,
+          "mean_cycles_per_update": 200.036,
+          "mean_percent_of_frame": 0.07121,
+          "maximum_percent_of_frame": 0.3293,
+          "scope": "CPU driver only; DMA bus occupancy outside the call is excluded"
+        }
+      },
+      "validation": {
+        "file": "I08_whats-next.wav",
+        "sha256": "ded7a58054f1cdb78feeb2731f5382c65775c7c659aa5c48a3bea9e6c84ac403",
+        "sample_rate_hz": 44100,
+        "channels": 2,
+        "sample_width_bytes": 2,
+        "duration_seconds": 200.248889,
+        "peak_dbfs": -5.229,
+        "rms_dbfs": -20.714,
+        "clipped_sample_count": 0,
+        "longest_near_silence_seconds": 0.0,
+        "silence_limit_seconds": null,
+        "silence_policy": "Preserve expected source-file intros/tails; measure silence without rejecting it",
+        "channel_statistics": [
+          {
+            "peak_dbfs": -5.551,
+            "rms_dbfs": -20.824,
+            "dc_offset": 1e-07
+          },
+          {
+            "peak_dbfs": -5.229,
+            "rms_dbfs": -20.608,
+            "dc_offset": 1e-07
+          }
+        ],
+        "four_second_level_history": [
+          {
+            "start_seconds": 0.0,
+            "rms_dbfs": -27.366,
+            "peak_dbfs": -14.657
+          },
+          {
+            "start_seconds": 4.0,
+            "rms_dbfs": -26.324,
+            "peak_dbfs": -13.938
+          },
+          {
+            "start_seconds": 8.0,
+            "rms_dbfs": -26.247,
+            "peak_dbfs": -9.609
+          },
+          {
+            "start_seconds": 12.0,
+            "rms_dbfs": -21.251,
+            "peak_dbfs": -6.983
+          },
+          {
+            "start_seconds": 16.0,
+            "rms_dbfs": -19.038,
+            "peak_dbfs": -6.758
+          },
+          {
+            "start_seconds": 20.0,
+            "rms_dbfs": -18.984,
+            "peak_dbfs": -6.454
+          },
+          {
+            "start_seconds": 24.0,
+            "rms_dbfs": -19.888,
+            "peak_dbfs": -7.91
+          },
+          {
+            "start_seconds": 28.0,
+            "rms_dbfs": -22.568,
+            "peak_dbfs": -6.158
+          },
+          {
+            "start_seconds": 32.0,
+            "rms_dbfs": -23.045,
+            "peak_dbfs": -7.827
+          },
+          {
+            "start_seconds": 36.0,
+            "rms_dbfs": -29.511,
+            "peak_dbfs": -13.205
+          },
+          {
+            "start_seconds": 40.0,
+            "rms_dbfs": -19.747,
+            "peak_dbfs": -5.557
+          },
+          {
+            "start_seconds": 44.0,
+            "rms_dbfs": -18.719,
+            "peak_dbfs": -7.289
+          },
+          {
+            "start_seconds": 48.0,
+            "rms_dbfs": -19.546,
+            "peak_dbfs": -6.657
+          },
+          {
+            "start_seconds": 52.0,
+            "rms_dbfs": -19.126,
+            "peak_dbfs": -6.938
+          },
+          {
+            "start_seconds": 56.0,
+            "rms_dbfs": -19.612,
+            "peak_dbfs": -6.374
+          },
+          {
+            "start_seconds": 60.0,
+            "rms_dbfs": -19.258,
+            "peak_dbfs": -7.408
+          },
+          {
+            "start_seconds": 64.0,
+            "rms_dbfs": -20.871,
+            "peak_dbfs": -7.023
+          },
+          {
+            "start_seconds": 68.0,
+            "rms_dbfs": -21.151,
+            "peak_dbfs": -7.898
+          },
+          {
+            "start_seconds": 72.0,
+            "rms_dbfs": -19.111,
+            "peak_dbfs": -5.59
+          },
+          {
+            "start_seconds": 76.0,
+            "rms_dbfs": -19.364,
+            "peak_dbfs": -5.318
+          },
+          {
+            "start_seconds": 80.0,
+            "rms_dbfs": -19.447,
+            "peak_dbfs": -6.738
+          },
+          {
+            "start_seconds": 84.0,
+            "rms_dbfs": -19.89,
+            "peak_dbfs": -6.893
+          },
+          {
+            "start_seconds": 88.0,
+            "rms_dbfs": -23.158,
+            "peak_dbfs": -6.554
+          },
+          {
+            "start_seconds": 92.0,
+            "rms_dbfs": -22.582,
+            "peak_dbfs": -7.836
+          },
+          {
+            "start_seconds": 96.0,
+            "rms_dbfs": -26.596,
+            "peak_dbfs": -8.613
+          },
+          {
+            "start_seconds": 100.0,
+            "rms_dbfs": -19.026,
+            "peak_dbfs": -6.372
+          },
+          {
+            "start_seconds": 104.0,
+            "rms_dbfs": -19.327,
+            "peak_dbfs": -6.464
+          },
+          {
+            "start_seconds": 108.0,
+            "rms_dbfs": -19.606,
+            "peak_dbfs": -7.367
+          },
+          {
+            "start_seconds": 112.0,
+            "rms_dbfs": -19.251,
+            "peak_dbfs": -8.236
+          },
+          {
+            "start_seconds": 116.0,
+            "rms_dbfs": -19.79,
+            "peak_dbfs": -7.792
+          },
+          {
+            "start_seconds": 120.0,
+            "rms_dbfs": -18.916,
+            "peak_dbfs": -6.431
+          },
+          {
+            "start_seconds": 124.0,
+            "rms_dbfs": -18.662,
+            "peak_dbfs": -7.037
+          },
+          {
+            "start_seconds": 128.0,
+            "rms_dbfs": -20.722,
+            "peak_dbfs": -7.797
+          },
+          {
+            "start_seconds": 132.0,
+            "rms_dbfs": -19.349,
+            "peak_dbfs": -7.757
+          },
+          {
+            "start_seconds": 136.0,
+            "rms_dbfs": -20.446,
+            "peak_dbfs": -8.142
+          },
+          {
+            "start_seconds": 140.0,
+            "rms_dbfs": -21.627,
+            "peak_dbfs": -6.874
+          },
+          {
+            "start_seconds": 144.0,
+            "rms_dbfs": -19.157,
+            "peak_dbfs": -5.229
+          },
+          {
+            "start_seconds": 148.0,
+            "rms_dbfs": -19.171,
+            "peak_dbfs": -6.272
+          },
+          {
+            "start_seconds": 152.0,
+            "rms_dbfs": -19.405,
+            "peak_dbfs": -6.527
+          },
+          {
+            "start_seconds": 156.0,
+            "rms_dbfs": -19.293,
+            "peak_dbfs": -6.101
+          },
+          {
+            "start_seconds": 160.0,
+            "rms_dbfs": -21.336,
+            "peak_dbfs": -6.929
+          },
+          {
+            "start_seconds": 164.0,
+            "rms_dbfs": -21.184,
+            "peak_dbfs": -7.266
+          },
+          {
+            "start_seconds": 168.0,
+            "rms_dbfs": -26.712,
+            "peak_dbfs": -11.766
+          },
+          {
+            "start_seconds": 172.0,
+            "rms_dbfs": -20.836,
+            "peak_dbfs": -6.553
+          },
+          {
+            "start_seconds": 176.0,
+            "rms_dbfs": -18.727,
+            "peak_dbfs": -6.468
+          },
+          {
+            "start_seconds": 180.0,
+            "rms_dbfs": -19.947,
+            "peak_dbfs": -7.824
+          },
+          {
+            "start_seconds": 184.0,
+            "rms_dbfs": -24.776,
+            "peak_dbfs": -6.654
+          },
+          {
+            "start_seconds": 188.0,
+            "rms_dbfs": -53.005,
+            "peak_dbfs": -42.526
+          },
+          {
+            "start_seconds": 192.0,
+            "rms_dbfs": -53.018,
+            "peak_dbfs": -41.428
+          },
+          {
+            "start_seconds": 196.0,
+            "rms_dbfs": -53.006,
+            "peak_dbfs": -42.526
+          },
+          {
+            "start_seconds": 200.0,
+            "rms_dbfs": -52.978,
+            "peak_dbfs": -42.851
+          }
+        ],
+        "stereo_difference_rms_dbfs": -31.641,
+        "stereo_correlation": 0.959904,
+        "side_to_mid_db": -16.859,
+        "passed_integrity": true
+      }
+    }
+  ]
+}

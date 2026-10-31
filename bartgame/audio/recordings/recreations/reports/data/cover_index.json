@@ -1,0 +1,264 @@
+{
+  "status": "all_requested_covers_synthesized",
+  "engine_sha256": "568014c8c52e45c718727fd0e455596aff849f40343b12a4804dbe2d7b6d83c3",
+  "covers": [
+    {
+      "id": 1,
+      "slug": "iloveuihateu",
+      "title": "Playboi Carti \u2014 ILoveUIHateU",
+      "duration_seconds": 135.37233560090704,
+      "sample_rate": 32768,
+      "samples_per_channel": 4435881,
+      "score_path": "/workspace/work/recreations/covers/01_iloveuihateu.cover.json",
+      "midi_path": "/workspace/work/recreations/covers/01_iloveuihateu.mid",
+      "render_path": "/workspace/work/recreations/covers/01_iloveuihateu.npy",
+      "render_metadata_path": "/workspace/work/recreations/covers/01_iloveuihateu.render.json",
+      "events": 2958,
+      "parts": {
+        "bass": 574,
+        "melody": 490,
+        "counter": 470,
+        "harmony": 66,
+        "drums": 1358
+      },
+      "raw_bass_preserved": true,
+      "bass_pitchbend_points": 6134,
+      "bass_f0_validation": {
+        "f0_validated_intervals": 610,
+        "total_active_intervals": 792,
+        "rule": "Independent low-band YIN breaks ties only when valid periodic F0 matches an existing note+bend within0.85semitones; no notes or times generated."
+      },
+      "peak": 0.7715020775794983,
+      "rms": 0.12999999706956453,
+      "wall_seconds": 6.365,
+      "source_audio_in_render": false,
+      "input_note_sha256": "142efd7a807d73ef0a4800658521b70bad68f93f872c150d8d5a192599b02731",
+      "provenance_metadata_refreshed_audio_unchanged": true
+    },
+    {
+      "id": 2,
+      "slug": "desire-under-your-spell",
+      "title": "Desire \u2014 Under Your Spell",
+      "duration_seconds": 233.33732426303854,
+      "sample_rate": 32768,
+      "samples_per_channel": 7645997,
+      "score_path": "/workspace/work/recreations/covers/02_desire-under-your-spell.cover.json",
+      "midi_path": "/workspace/work/recreations/covers/02_desire-under-your-spell.mid",
+      "render_path": "/workspace/work/recreations/covers/02_desire-under-your-spell.npy",
+      "render_metadata_path": "/workspace/work/recreations/covers/02_desire-under-your-spell.render.json",
+      "events": 5079,
+      "parts": {
+        "bass": 1523,
+        "melody": 1110,
+        "drums": 1198,
+        "counter": 1211,
+        "harmony": 37
+      },
+      "raw_bass_preserved": true,
+      "bass_pitchbend_points": 11816,
+      "bass_f0_validation": {
+        "f0_validated_intervals": 958,
+        "total_active_intervals": 2728,
+        "rule": "Independent low-band YIN breaks ties only when valid periodic F0 matches an existing note+bend within0.85semitones; no notes or times generated."
+      },
+      "peak": 0.783682107925415,
+      "rms": 0.1300000024023372,
+      "wall_seconds": 7.305,
+      "source_audio_in_render": false,
+      "input_note_sha256": "babc3d2763eab4661bf8269d940025f2e60d626b6777ab01dc8a01c33a8fb26b"
+    },
+    {
+      "id": 3,
+      "slug": "timeless",
+      "title": "The Weeknd with Playboi Carti \u2014 Timeless",
+      "duration_seconds": 256.11609977324264,
+      "sample_rate": 32768,
+      "samples_per_channel": 8392412,
+      "score_path": "/workspace/work/recreations/covers/03_timeless.cover.json",
+      "midi_path": "/workspace/work/recreations/covers/03_timeless.mid",
+      "render_path": "/workspace/work/recreations/covers/03_timeless.npy",
+      "render_metadata_path": "/workspace/work/recreations/covers/03_timeless.render.json",
+      "events": 5382,
+      "parts": {
+        "bass": 1343,
+        "melody": 851,
+        "counter": 980,
+        "harmony": 145,
+        "drums": 2063
+      },
+      "raw_bass_preserved": true,
+      "bass_pitchbend_points": 13176,
+      "bass_f0_validation": {
+        "f0_validated_intervals": 1820,
+        "total_active_intervals": 2648,
+        "rule": "Independent low-band YIN breaks ties only when valid periodic F0 matches an existing note+bend within0.85semitones; no notes or times generated."
+      },
+      "peak": 0.7941673994064331,
+      "rms": 0.12999999898148915,
+      "wall_seconds": 16.653,
+      "source_audio_in_render": false,
+      "input_note_sha256": "3f58be04470b6f3921a73fe17329b8dc6287187c502ebe2b3efc58bb8d33368d"
+    },
+    {
+      "id": 4,
+      "slug": "snow-strippers-under-your-spell",
+      "title": "Snow Strippers \u2014 Under Your Spell",
+      "duration_seconds": 218.496,
+      "sample_rate": 32768,
+      "samples_per_channel": 7159677,
+      "score_path": "/workspace/work/recreations/covers/04_snow-strippers-under-your-spell.cover.json",
+      "midi_path": "/workspace/work/recreations/covers/04_snow-strippers-under-your-spell.mid",
+      "render_path": "/workspace/work/recreations/covers/04_snow-strippers-under-your-spell.npy",
+      "render_metadata_path": "/workspace/work/recreations/covers/04_snow-strippers-under-your-spell.render.json",
+      "events": 5470,
+      "parts": {
+        "bass": 1128,
+        "drums": 2021,
+        "counter": 1355,
+        "melody": 931,
+        "harmony": 35
+      },
+      "raw_bass_preserved": true,
+      "bass_pitchbend_points": 10723,
+      "bass_f0_validation": {
+        "f0_validated_intervals": 1155,
+        "total_active_intervals": 2141,
+        "rule": "Independent low-band YIN breaks ties only when valid periodic F0 matches an existing note+bend within0.85semitones; no notes or times generated."
+      },
+      "peak": 0.6394153237342834,
+      "rms": 0.1300000006551333,
+      "wall_seconds": 4.461,
+      "source_audio_in_render": false,
+      "input_note_sha256": "efb17ce5d27aef92d2123fdd2e19edd51fbe5b396d1902e76dd1842851a7b4aa"
+    },
+    {
+      "id": 5,
+      "slug": "friday-night",
+      "title": "Friday Night",
+      "duration_seconds": 237.63301587301586,
+      "sample_rate": 32768,
+      "samples_per_channel": 7786759,
+      "score_path": "/workspace/work/recreations/covers/05_friday-night.cover.json",
+      "midi_path": "/workspace/work/recreations/covers/05_friday-night.mid",
+      "render_path": "/workspace/work/recreations/covers/05_friday-night.npy",
+      "render_metadata_path": "/workspace/work/recreations/covers/05_friday-night.render.json",
+      "events": 5820,
+      "parts": {
+        "drums": 1881,
+        "bass": 1488,
+        "counter": 1560,
+        "melody": 819,
+        "harmony": 72
+      },
+      "raw_bass_preserved": true,
+      "bass_pitchbend_points": 11796,
+      "bass_f0_validation": {
+        "f0_validated_intervals": 1657,
+        "total_active_intervals": 3445,
+        "rule": "Independent low-band YIN breaks ties only when valid periodic F0 matches an existing note+bend within0.85semitones; no notes or times generated."
+      },
+      "peak": 0.8698133230209351,
+      "rms": 0.13000000291419359,
+      "wall_seconds": 5.848,
+      "source_audio_in_render": false,
+      "input_note_sha256": "ad1e50f434607c8a01feeba46718f3c11c0e6b853894385a93899f8700171ce5"
+    },
+    {
+      "id": 6,
+      "slug": "voyager",
+      "title": "Daft Punk \u2014 Voyager",
+      "duration_seconds": 227.8574149659864,
+      "sample_rate": 32768,
+      "samples_per_channel": 7466432,
+      "score_path": "/workspace/work/recreations/covers/06_voyager.cover.json",
+      "midi_path": "/workspace/work/recreations/covers/06_voyager.mid",
+      "render_path": "/workspace/work/recreations/covers/06_voyager.npy",
+      "render_metadata_path": "/workspace/work/recreations/covers/06_voyager.render.json",
+      "events": 5192,
+      "parts": {
+        "counter": 1719,
+        "melody": 1007,
+        "drums": 1404,
+        "harmony": 116,
+        "bass": 946
+      },
+      "raw_bass_preserved": true,
+      "bass_pitchbend_points": 9766,
+      "bass_f0_validation": {
+        "f0_validated_intervals": 838,
+        "total_active_intervals": 1829,
+        "rule": "Independent low-band YIN breaks ties only when valid periodic F0 matches an existing note+bend within0.85semitones; no notes or times generated."
+      },
+      "peak": 0.9099999666213989,
+      "rms": 0.1127089991326744,
+      "wall_seconds": 3.622,
+      "source_audio_in_render": false,
+      "input_note_sha256": "86dba529ade9e03ba9ec61b4af422f50241271ea1e03bb0979bf7aa3a6eee777"
+    },
+    {
+      "id": 7,
+      "slug": "sunday-evening-pain",
+      "title": "Sunday Evening Pain",
+      "duration_seconds": 180.80072562358276,
+      "sample_rate": 32768,
+      "samples_per_channel": 5924478,
+      "score_path": "/workspace/work/recreations/covers/07_sunday-evening-pain.cover.json",
+      "midi_path": "/workspace/work/recreations/covers/07_sunday-evening-pain.mid",
+      "render_path": "/workspace/work/recreations/covers/07_sunday-evening-pain.npy",
+      "render_metadata_path": "/workspace/work/recreations/covers/07_sunday-evening-pain.render.json",
+      "events": 2902,
+      "parts": {
+        "bass": 1084,
+        "harmony": 8,
+        "drums": 1205,
+        "melody": 364,
+        "counter": 241
+      },
+      "raw_bass_preserved": true,
+      "bass_pitchbend_points": 8386,
+      "bass_f0_validation": {
+        "f0_validated_intervals": 778,
+        "total_active_intervals": 2180,
+        "rule": "Independent low-band YIN breaks ties only when valid periodic F0 matches an existing note+bend within0.85semitones; no notes or times generated."
+      },
+      "peak": 0.8735545873641968,
+      "rms": 0.12999999967549683,
+      "wall_seconds": 4.326,
+      "source_audio_in_render": false,
+      "input_note_sha256": "48bcecf7bda30a98674156b2b1782d65123c7085b26b02b6d5819fa84e551e20"
+    },
+    {
+      "id": 8,
+      "slug": "whats-next",
+      "title": "Drake \u2014 What\u2019s Next",
+      "duration_seconds": 200.2488888888889,
+      "sample_rate": 32768,
+      "samples_per_channel": 6561756,
+      "score_path": "/workspace/work/recreations/covers/08_whats-next.cover.json",
+      "midi_path": "/workspace/work/recreations/covers/08_whats-next.mid",
+      "render_path": "/workspace/work/recreations/covers/08_whats-next.npy",
+      "render_metadata_path": "/workspace/work/recreations/covers/08_whats-next.render.json",
+      "events": 3368,
+      "parts": {
+        "bass": 575,
+        "melody": 422,
+        "harmony": 11,
+        "counter": 698,
+        "drums": 1662
+      },
+      "raw_bass_preserved": true,
+      "bass_pitchbend_points": 6928,
+      "bass_f0_validation": {
+        "f0_validated_intervals": 682,
+        "total_active_intervals": 988,
+        "rule": "Independent low-band YIN breaks ties only when valid periodic F0 matches an existing note+bend within0.85semitones; no notes or times generated."
+      },
+      "peak": 0.8164806962013245,
+      "rms": 0.12999999446177027,
+      "wall_seconds": 3.549,
+      "source_audio_in_render": false,
+      "input_note_sha256": "6e792b4fd8068e3a2714b4d9c3fd80a39fac8820ee66002d16645f754ff44816"
+    }
+  ],
+  "limitations": "Automatic mixed-signal transcription/revoicing, not an exact verified score. Source waveforms are not used in cover synthesis. These NPY renders are pre-GBA intermediates, not emulator captures."
+}

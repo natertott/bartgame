@@ -59,3 +59,7 @@ Verify the audio files from this directory with `sha256sum -c SHA256SUMS`.
 ## Trap Circuit
 
 [Ten new trap-style soundtracks](trap10/README.md): 164–184 BPM, custom sliding 808s, MP3 and FLAC.
+
+## Original-song recreations
+
+[Both versions of all eight original uploads](recreations/README.md): full-length original mixes on GBA and automatic instrument rebuilds, with MP3, FLAC, editable scores and MIDI.

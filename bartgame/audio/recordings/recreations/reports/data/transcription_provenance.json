@@ -1,0 +1,739 @@
+{
+  "status": "ready",
+  "source_count": 8,
+  "primary_note_total": 29556,
+  "sources": [
+    {
+      "id": 1,
+      "title": "Playboi Carti \u2014 ILoveUIHateU",
+      "duration_seconds": 135.37233560090704,
+      "primary": "/workspace/work/recreations/transcriptions/source01.json",
+      "bassband": "/workspace/work/recreations/transcriptions/source01.bassband.json",
+      "bass_f0": "/workspace/work/recreations/transcriptions/source01.bass_f0.npz",
+      "primary_note_count": 1763,
+      "views": [
+        {
+          "view": "fullmix",
+          "note_count": 1675,
+          "mean_polyphony": 2.3749,
+          "max_polyphony": 8,
+          "silent_fraction": 0.053,
+          "median_model_activation": 0.2719,
+          "pitch_min": 23,
+          "pitch_max": 97,
+          "salience_last_seconds": 135.36979591836734,
+          "uncovered_tail_seconds": 0.00254
+        },
+        {
+          "view": "harmonic",
+          "note_count": 1763,
+          "mean_polyphony": 3.1365,
+          "max_polyphony": 9,
+          "silent_fraction": 0.0058,
+          "median_model_activation": 0.3342,
+          "pitch_min": 23,
+          "pitch_max": 96,
+          "salience_last_seconds": 135.36979591836734,
+          "uncovered_tail_seconds": 0.00254
+        },
+        {
+          "view": "bassband",
+          "note_count": 830,
+          "mean_polyphony": 1.3587,
+          "max_polyphony": 4,
+          "silent_fraction": 0.0888,
+          "median_model_activation": 0.4395,
+          "pitch_min": 23,
+          "pitch_max": 59,
+          "salience_last_seconds": 135.36979591836734,
+          "uncovered_tail_seconds": 0.00254
+        },
+        {
+          "view": "stereo_side",
+          "note_count": 3678,
+          "mean_polyphony": 5.5961,
+          "max_polyphony": 11,
+          "silent_fraction": 0.0021,
+          "median_model_activation": 0.316,
+          "pitch_min": 50,
+          "pitch_max": 99,
+          "salience_last_seconds": 135.36979591836734,
+          "uncovered_tail_seconds": 0.00254
+        }
+      ],
+      "input_files": [
+        {
+          "path": "/workspace/work/recreations/transcriptions/source01.fullmix.json",
+          "sha256": "518d3cdec659eaf39ea8449eadd98c03a0ae9ce903d45745a3d7dbd47ad0b482",
+          "kind": "fullmix_notes"
+        },
+        {
+          "path": "/workspace/work/recreations/transcriptions/source01.harmonic.json",
+          "sha256": "19bd502186bc7ed39199cd0451459f8578835a7406da60bf3a3e341bb475ae6b",
+          "kind": "harmonic_notes"
+        },
+        {
+          "path": "/workspace/work/recreations/transcriptions/source01.bassband.json",
+          "sha256": "df58b3c8f96975fe5cb715217188eac2b9922ab55d84f8940f4d09b2ad673dc4",
+          "kind": "bassband_notes"
+        },
+        {
+          "path": "/workspace/work/recreations/transcriptions/source01.stereo_side.json",
+          "sha256": "40609c6c8d4b8cdb95ed841a40cb9aff95edde483380db1c989f84510c384028",
+          "kind": "stereo_side_notes"
+        },
+        {
+          "path": "/workspace/work/recreations/transcriptions/source01.json",
+          "sha256": "142efd7a807d73ef0a4800658521b70bad68f93f872c150d8d5a192599b02731",
+          "kind": "primary_harmonic_notes"
+        },
+        {
+          "path": "/workspace/work/recreations/transcriptions/source01.bass_f0.npz",
+          "sha256": "87c271ff2fe8cf0653ac6a2701fbfefc1e96b20fce9b6548df63171fa1385b0d",
+          "kind": "optional_bass_f0"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "title": "Desire \u2014 Under Your Spell",
+      "duration_seconds": 233.33732426303854,
+      "primary": "/workspace/work/recreations/transcriptions/source02.json",
+      "bassband": "/workspace/work/recreations/transcriptions/source02.bassband.json",
+      "bass_f0": "/workspace/work/recreations/transcriptions/source02.bass_f0.npz",
+      "primary_note_count": 4774,
+      "views": [
+        {
+          "view": "fullmix",
+          "note_count": 5652,
+          "mean_polyphony": 3.8256,
+          "max_polyphony": 10,
+          "silent_fraction": 0.0157,
+          "median_model_activation": 0.2635,
+          "pitch_min": 29,
+          "pitch_max": 96,
+          "salience_last_seconds": 233.3340589569161,
+          "uncovered_tail_seconds": 0.003265
+        },
+        {
+          "view": "harmonic",
+          "note_count": 4774,
+          "mean_polyphony": 3.7408,
+          "max_polyphony": 10,
+          "silent_fraction": 0.0139,
+          "median_model_activation": 0.3386,
+          "pitch_min": 31,
+          "pitch_max": 96,
+          "salience_last_seconds": 233.3340589569161,
+          "uncovered_tail_seconds": 0.003265
+        },
+        {
+          "view": "bassband",
+          "note_count": 2854,
+          "mean_polyphony": 2.566,
+          "max_polyphony": 7,
+          "silent_fraction": 0.0361,
+          "median_model_activation": 0.3654,
+          "pitch_min": 28,
+          "pitch_max": 58,
+          "salience_last_seconds": 233.3340589569161,
+          "uncovered_tail_seconds": 0.003265
+        },
+        {
+          "view": "stereo_side",
+          "note_count": 4418,
+          "mean_polyphony": 3.333,
+          "max_polyphony": 11,
+          "silent_fraction": 0.0313,
+          "median_model_activation": 0.2755,
+          "pitch_min": 43,
+          "pitch_max": 98,
+          "salience_last_seconds": 233.3340589569161,
+          "uncovered_tail_seconds": 0.003265
+        }
+      ],
+      "input_files": [
+        {
+          "path": "/workspace/work/recreations/transcriptions/source02.fullmix.json",
+          "sha256": "10e4bca2dfc91d8e266a34fa9e8708ce571aabe6933ee013ad3f30f1a99b2691",
+          "kind": "fullmix_notes"
+        },
+        {
+          "path": "/workspace/work/recreations/transcriptions/source02.harmonic.json",
+          "sha256": "0e361dc90c73bfc236684633e394c67a259d504d072a25eff6277c46e5162b5c",
+          "kind": "harmonic_notes"
+        },
+        {
+          "path": "/workspace/work/recreations/transcriptions/source02.bassband.json",
+          "sha256": "44d4196e2aa7fe3df82c554df18cff11f7c562c1636521845790e8725ef7ccd0",
+          "kind": "bassband_notes"
+        },
+        {
+          "path": "/workspace/work/recreations/transcriptions/source02.stereo_side.json",
+          "sha256": "b01b63bacf9305503191c9a586de30beff3dc20213cc55c462123f46845458e7",
+          "kind": "stereo_side_notes"
+        },
+        {
+          "path": "/workspace/work/recreations/transcriptions/source02.json",
+          "sha256": "babc3d2763eab4661bf8269d940025f2e60d626b6777ab01dc8a01c33a8fb26b",
+          "kind": "primary_harmonic_notes"
+        },
+        {
+          "path": "/workspace/work/recreations/transcriptions/source02.bass_f0.npz",
+          "sha256": "946ed8bc8757f1b69de0b0d2e6aa9669d0c6735753f2fa73ac4fcdd16ab92628",
+          "kind": "optional_bass_f0"
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "title": "The Weeknd with Playboi Carti \u2014 Timeless",
+      "duration_seconds": 256.11609977324264,
+      "primary": "/workspace/work/recreations/transcriptions/source03.json",
+      "bassband": "/workspace/work/recreations/transcriptions/source03.bassband.json",
+      "bass_f0": "/workspace/work/recreations/transcriptions/source03.bass_f0.npz",
+      "primary_note_count": 4114,
+      "views": [
+        {
+          "view": "fullmix",
+          "note_count": 4594,
+          "mean_polyphony": 3.4283,
+          "max_polyphony": 11,
+          "silent_fraction": 0.0037,
+          "median_model_activation": 0.2747,
+          "pitch_min": 26,
+          "pitch_max": 98,
+          "salience_last_seconds": 256.10956916099775,
+          "uncovered_tail_seconds": 0.006531
+        },
+        {
+          "view": "harmonic",
+          "note_count": 4114,
+          "mean_polyphony": 3.8352,
+          "max_polyphony": 11,
+          "silent_fraction": 0.0005,
+          "median_model_activation": 0.3385,
+          "pitch_min": 26,
+          "pitch_max": 95,
+          "salience_last_seconds": 256.10956916099775,
+          "uncovered_tail_seconds": 0.006531
+        },
+        {
+          "view": "bassband",
+          "note_count": 2503,
+          "mean_polyphony": 2.3435,
+          "max_polyphony": 6,
+          "silent_fraction": 0.0146,
+          "median_model_activation": 0.3492,
+          "pitch_min": 26,
+          "pitch_max": 59,
+          "salience_last_seconds": 256.10956916099775,
+          "uncovered_tail_seconds": 0.006531
+        },
+        {
+          "view": "stereo_side",
+          "note_count": 9255,
+          "mean_polyphony": 6.6516,
+          "max_polyphony": 14,
+          "silent_fraction": 0.0009,
+          "median_model_activation": 0.3028,
+          "pitch_min": 42,
+          "pitch_max": 99,
+          "salience_last_seconds": 256.10956916099775,
+          "uncovered_tail_seconds": 0.006531
+        }
+      ],
+      "input_files": [
+        {
+          "path": "/workspace/work/recreations/transcriptions/source03.fullmix.json",
+          "sha256": "c46a50cfcade3d09f8fb7e7095e360d02a9bd12544f73660b22f12f637b14812",
+          "kind": "fullmix_notes"
+        },
+        {
+          "path": "/workspace/work/recreations/transcriptions/source03.harmonic.json",
+          "sha256": "5f1212068e6ecb0894f8f87ab8339e942488091620eef48f7857cd4e9993c600",
+          "kind": "harmonic_notes"
+        },
+        {
+          "path": "/workspace/work/recreations/transcriptions/source03.bassband.json",
+          "sha256": "748d291bdd1d833016f79527d044c776019bced73b23fb6f1ef06cd1f1087e60",
+          "kind": "bassband_notes"
+        },
+        {
+          "path": "/workspace/work/recreations/transcriptions/source03.stereo_side.json",
+          "sha256": "fdabeb7dfe36f27b93e75f4271185e8ec41802c2a20e81d2979583c1958e7624",
+          "kind": "stereo_side_notes"
+        },
+        {
+          "path": "/workspace/work/recreations/transcriptions/source03.json",
+          "sha256": "3f58be04470b6f3921a73fe17329b8dc6287187c502ebe2b3efc58bb8d33368d",
+          "kind": "primary_harmonic_notes"
+        },
+        {
+          "path": "/workspace/work/recreations/transcriptions/source03.bass_f0.npz",
+          "sha256": "0ee700d59050c2e0e8244e838621bc0cd853358d56a4cf576d372cee3a418898",
+          "kind": "optional_bass_f0"
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "title": "Snow Strippers \u2014 Under Your Spell",
+      "duration_seconds": 218.496,
+      "primary": "/workspace/work/recreations/transcriptions/source04.json",
+      "bassband": "/workspace/work/recreations/transcriptions/source04.bassband.json",
+      "bass_f0": "/workspace/work/recreations/transcriptions/source04.bass_f0.npz",
+      "primary_note_count": 4280,
+      "views": [
+        {
+          "view": "fullmix",
+          "note_count": 5228,
+          "mean_polyphony": 4.1164,
+          "max_polyphony": 12,
+          "silent_fraction": 0.0082,
+          "median_model_activation": 0.2298,
+          "pitch_min": 26,
+          "pitch_max": 99,
+          "salience_last_seconds": 218.49197278911564,
+          "uncovered_tail_seconds": 0.004027
+        },
+        {
+          "view": "harmonic",
+          "note_count": 4280,
+          "mean_polyphony": 3.9636,
+          "max_polyphony": 9,
+          "silent_fraction": 0.0026,
+          "median_model_activation": 0.2843,
+          "pitch_min": 26,
+          "pitch_max": 97,
+          "salience_last_seconds": 218.49197278911564,
+          "uncovered_tail_seconds": 0.004027
+        },
+        {
+          "view": "bassband",
+          "note_count": 2067,
+          "mean_polyphony": 2.1404,
+          "max_polyphony": 6,
+          "silent_fraction": 0.0216,
+          "median_model_activation": 0.2898,
+          "pitch_min": 26,
+          "pitch_max": 59,
+          "salience_last_seconds": 218.49197278911564,
+          "uncovered_tail_seconds": 0.004027
+        },
+        {
+          "view": "stereo_side",
+          "note_count": 7203,
+          "mean_polyphony": 5.0106,
+          "max_polyphony": 12,
+          "silent_fraction": 0.0014,
+          "median_model_activation": 0.2735,
+          "pitch_min": 42,
+          "pitch_max": 99,
+          "salience_last_seconds": 218.49197278911564,
+          "uncovered_tail_seconds": 0.004027
+        }
+      ],
+      "input_files": [
+        {
+          "path": "/workspace/work/recreations/transcriptions/source04.fullmix.json",
+          "sha256": "12beb63aacacd2b3072301b42a6e20b305fe35898bad672a8a1a38b367f921db",
+          "kind": "fullmix_notes"
+        },
+        {
+          "path": "/workspace/work/recreations/transcriptions/source04.harmonic.json",
+          "sha256": "5d949d627ba332005a2c46c9ad3d5017a34b1e2c3048bb68e8759992d115229e",
+          "kind": "harmonic_notes"
+        },
+        {
+          "path": "/workspace/work/recreations/transcriptions/source04.bassband.json",
+          "sha256": "5603a075fc835c83cb0caabfd97445ea9740a50fcdff044753b7edcb7c32e1d4",
+          "kind": "bassband_notes"
+        },
+        {
+          "path": "/workspace/work/recreations/transcriptions/source04.stereo_side.json",
+          "sha256": "fcb612f7a275186c60ac22c94645b392d2948b6219f49bf1dd9850a4c50d10dc",
+          "kind": "stereo_side_notes"
+        },
+        {
+          "path": "/workspace/work/recreations/transcriptions/source04.json",
+          "sha256": "efb17ce5d27aef92d2123fdd2e19edd51fbe5b396d1902e76dd1842851a7b4aa",
+          "kind": "primary_harmonic_notes"
+        },
+        {
+          "path": "/workspace/work/recreations/transcriptions/source04.bass_f0.npz",
+          "sha256": "b147855439e632e0299e52b02b9ed0ea60bd606f2962af6c24d0241271ec49af",
+          "kind": "optional_bass_f0"
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "title": "Friday Night",
+      "duration_seconds": 237.63301587301586,
+      "primary": "/workspace/work/recreations/transcriptions/source05.json",
+      "bassband": "/workspace/work/recreations/transcriptions/source05.bassband.json",
+      "bass_f0": "/workspace/work/recreations/transcriptions/source05.bass_f0.npz",
+      "primary_note_count": 5732,
+      "views": [
+        {
+          "view": "fullmix",
+          "note_count": 7654,
+          "mean_polyphony": 5.2369,
+          "max_polyphony": 14,
+          "silent_fraction": 0.016,
+          "median_model_activation": 0.2298,
+          "pitch_min": 29,
+          "pitch_max": 90,
+          "salience_last_seconds": 237.62430839002266,
+          "uncovered_tail_seconds": 0.008707
+        },
+        {
+          "view": "harmonic",
+          "note_count": 5732,
+          "mean_polyphony": 4.7626,
+          "max_polyphony": 14,
+          "silent_fraction": 0.0166,
+          "median_model_activation": 0.2873,
+          "pitch_min": 28,
+          "pitch_max": 93,
+          "salience_last_seconds": 237.62430839002266,
+          "uncovered_tail_seconds": 0.008707
+        },
+        {
+          "view": "bassband",
+          "note_count": 3520,
+          "mean_polyphony": 3.2277,
+          "max_polyphony": 8,
+          "silent_fraction": 0.0224,
+          "median_model_activation": 0.2763,
+          "pitch_min": 28,
+          "pitch_max": 59,
+          "salience_last_seconds": 237.62430839002266,
+          "uncovered_tail_seconds": 0.008707
+        },
+        {
+          "view": "stereo_side",
+          "note_count": 6534,
+          "mean_polyphony": 5.0157,
+          "max_polyphony": 12,
+          "silent_fraction": 0.0434,
+          "median_model_activation": 0.3017,
+          "pitch_min": 42,
+          "pitch_max": 97,
+          "salience_last_seconds": 237.62430839002266,
+          "uncovered_tail_seconds": 0.008707
+        }
+      ],
+      "input_files": [
+        {
+          "path": "/workspace/work/recreations/transcriptions/source05.fullmix.json",
+          "sha256": "a477204438f9146cf41fe2dfec527cdb760432ccb6d129f2d031b188b4d20730",
+          "kind": "fullmix_notes"
+        },
+        {
+          "path": "/workspace/work/recreations/transcriptions/source05.harmonic.json",
+          "sha256": "b93d21176da1cb556114fd145072369e96ec1c876ddba6e7ad4b76d01845c01e",
+          "kind": "harmonic_notes"
+        },
+        {
+          "path": "/workspace/work/recreations/transcriptions/source05.bassband.json",
+          "sha256": "5d118b866e29bb6b12e4ca566039a0a8eeed09f7c59f38384f966a508d7b1dac",
+          "kind": "bassband_notes"
+        },
+        {
+          "path": "/workspace/work/recreations/transcriptions/source05.stereo_side.json",
+          "sha256": "25e12bad370f246a7fa149475edbc0a1721a95a9a64ac6c5a673e44ffd65abfe",
+          "kind": "stereo_side_notes"
+        },
+        {
+          "path": "/workspace/work/recreations/transcriptions/source05.json",
+          "sha256": "ad1e50f434607c8a01feeba46718f3c11c0e6b853894385a93899f8700171ce5",
+          "kind": "primary_harmonic_notes"
+        },
+        {
+          "path": "/workspace/work/recreations/transcriptions/source05.bass_f0.npz",
+          "sha256": "c6c90078cba6b7a31e7883402b1e9c4390e2d57d9b2d833f6cbbca024553c9bb",
+          "kind": "optional_bass_f0"
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "title": "Daft Punk \u2014 Voyager",
+      "duration_seconds": 227.8574149659864,
+      "primary": "/workspace/work/recreations/transcriptions/source06.json",
+      "bassband": "/workspace/work/recreations/transcriptions/source06.bassband.json",
+      "bass_f0": "/workspace/work/recreations/transcriptions/source06.bass_f0.npz",
+      "primary_note_count": 4358,
+      "views": [
+        {
+          "view": "fullmix",
+          "note_count": 6332,
+          "mean_polyphony": 4.7175,
+          "max_polyphony": 12,
+          "silent_fraction": 0.0222,
+          "median_model_activation": 0.2617,
+          "pitch_min": 24,
+          "pitch_max": 88,
+          "salience_last_seconds": 227.85342403628118,
+          "uncovered_tail_seconds": 0.003991
+        },
+        {
+          "view": "harmonic",
+          "note_count": 4358,
+          "mean_polyphony": 4.3113,
+          "max_polyphony": 11,
+          "silent_fraction": 0.0133,
+          "median_model_activation": 0.3695,
+          "pitch_min": 24,
+          "pitch_max": 95,
+          "salience_last_seconds": 227.85342403628118,
+          "uncovered_tail_seconds": 0.003991
+        },
+        {
+          "view": "bassband",
+          "note_count": 2256,
+          "mean_polyphony": 2.3663,
+          "max_polyphony": 7,
+          "silent_fraction": 0.0683,
+          "median_model_activation": 0.3298,
+          "pitch_min": 24,
+          "pitch_max": 59,
+          "salience_last_seconds": 227.85342403628118,
+          "uncovered_tail_seconds": 0.003991
+        },
+        {
+          "view": "stereo_side",
+          "note_count": 6625,
+          "mean_polyphony": 4.9558,
+          "max_polyphony": 11,
+          "silent_fraction": 0.0122,
+          "median_model_activation": 0.4455,
+          "pitch_min": 43,
+          "pitch_max": 95,
+          "salience_last_seconds": 227.85342403628118,
+          "uncovered_tail_seconds": 0.003991
+        }
+      ],
+      "input_files": [
+        {
+          "path": "/workspace/work/recreations/transcriptions/source06.fullmix.json",
+          "sha256": "41af39f19e7515f3bdbb6d0c54c939913e3693569c09c7b3abe648b23fb4d6ef",
+          "kind": "fullmix_notes"
+        },
+        {
+          "path": "/workspace/work/recreations/transcriptions/source06.harmonic.json",
+          "sha256": "2e0ac9e4e547715470e7c697f8da400e71b0de483175610f6cb992c5df93e5c8",
+          "kind": "harmonic_notes"
+        },
+        {
+          "path": "/workspace/work/recreations/transcriptions/source06.bassband.json",
+          "sha256": "b92de4eff5b102954de8e1800c58bea4cf73a08bbed1b331592a8d50c2c22614",
+          "kind": "bassband_notes"
+        },
+        {
+          "path": "/workspace/work/recreations/transcriptions/source06.stereo_side.json",
+          "sha256": "4057c70aff2e42265c48e5f0039b55463912ba4cf96d9b6c425e89785ef4463c",
+          "kind": "stereo_side_notes"
+        },
+        {
+          "path": "/workspace/work/recreations/transcriptions/source06.json",
+          "sha256": "86dba529ade9e03ba9ec61b4af422f50241271ea1e03bb0979bf7aa3a6eee777",
+          "kind": "primary_harmonic_notes"
+        },
+        {
+          "path": "/workspace/work/recreations/transcriptions/source06.bass_f0.npz",
+          "sha256": "4c4e6b455460d7a6c2f94537c494d4bc1a4a52d2291adea77ad0b5c562e17f70",
+          "kind": "optional_bass_f0"
+        }
+      ]
+    },
+    {
+      "id": 7,
+      "title": "Sunday Evening Pain",
+      "duration_seconds": 180.80072562358276,
+      "primary": "/workspace/work/recreations/transcriptions/source07.json",
+      "bassband": "/workspace/work/recreations/transcriptions/source07.bassband.json",
+      "bass_f0": "/workspace/work/recreations/transcriptions/source07.bass_f0.npz",
+      "primary_note_count": 2500,
+      "views": [
+        {
+          "view": "fullmix",
+          "note_count": 2696,
+          "mean_polyphony": 2.3628,
+          "max_polyphony": 8,
+          "silent_fraction": 0.0859,
+          "median_model_activation": 0.2075,
+          "pitch_min": 21,
+          "pitch_max": 96,
+          "salience_last_seconds": 180.79310657596372,
+          "uncovered_tail_seconds": 0.007619
+        },
+        {
+          "view": "harmonic",
+          "note_count": 2500,
+          "mean_polyphony": 2.5958,
+          "max_polyphony": 7,
+          "silent_fraction": 0.0498,
+          "median_model_activation": 0.2587,
+          "pitch_min": 21,
+          "pitch_max": 96,
+          "salience_last_seconds": 180.79310657596372,
+          "uncovered_tail_seconds": 0.007619
+        },
+        {
+          "view": "bassband",
+          "note_count": 1974,
+          "mean_polyphony": 2.1666,
+          "max_polyphony": 6,
+          "silent_fraction": 0.0791,
+          "median_model_activation": 0.2457,
+          "pitch_min": 21,
+          "pitch_max": 59,
+          "salience_last_seconds": 180.79310657596372,
+          "uncovered_tail_seconds": 0.007619
+        },
+        {
+          "view": "stereo_side",
+          "note_count": 1703,
+          "mean_polyphony": 2.0361,
+          "max_polyphony": 7,
+          "silent_fraction": 0.1195,
+          "median_model_activation": 0.2601,
+          "pitch_min": 43,
+          "pitch_max": 96,
+          "salience_last_seconds": 180.79310657596372,
+          "uncovered_tail_seconds": 0.007619
+        }
+      ],
+      "input_files": [
+        {
+          "path": "/workspace/work/recreations/transcriptions/source07.fullmix.json",
+          "sha256": "80afe57045fac429ec7d3b268b65bcc4e8b75b223f5cb134859a86a1003d15a7",
+          "kind": "fullmix_notes"
+        },
+        {
+          "path": "/workspace/work/recreations/transcriptions/source07.harmonic.json",
+          "sha256": "57335f0c569b07f696ffbb7a3a8370bbb6d5d7401aa784ecf2288c40f981b0ba",
+          "kind": "harmonic_notes"
+        },
+        {
+          "path": "/workspace/work/recreations/transcriptions/source07.bassband.json",
+          "sha256": "c11979453ae98780001144937adaeec9cd10207158e014e80471e5d300cbf9d5",
+          "kind": "bassband_notes"
+        },
+        {
+          "path": "/workspace/work/recreations/transcriptions/source07.stereo_side.json",
+          "sha256": "a887321cbb19f05ae3b828a02edb1edaae7f2541f9dde38a6ff14df25e5a96f1",
+          "kind": "stereo_side_notes"
+        },
+        {
+          "path": "/workspace/work/recreations/transcriptions/source07.json",
+          "sha256": "48bcecf7bda30a98674156b2b1782d65123c7085b26b02b6d5819fa84e551e20",
+          "kind": "primary_harmonic_notes"
+        },
+        {
+          "path": "/workspace/work/recreations/transcriptions/source07.bass_f0.npz",
+          "sha256": "d1bb98945354196608e93e877c5ee2173034e03653dc011348baa912becb9f81",
+          "kind": "optional_bass_f0"
+        }
+      ]
+    },
+    {
+      "id": 8,
+      "title": "Drake \u2014 What\u2019s Next",
+      "duration_seconds": 200.2488888888889,
+      "primary": "/workspace/work/recreations/transcriptions/source08.json",
+      "bassband": "/workspace/work/recreations/transcriptions/source08.bassband.json",
+      "bass_f0": "/workspace/work/recreations/transcriptions/source08.bass_f0.npz",
+      "primary_note_count": 2035,
+      "views": [
+        {
+          "view": "fullmix",
+          "note_count": 2062,
+          "mean_polyphony": 1.9973,
+          "max_polyphony": 8,
+          "silent_fraction": 0.2187,
+          "median_model_activation": 0.2289,
+          "pitch_min": 23,
+          "pitch_max": 85,
+          "salience_last_seconds": 200.2419954648526,
+          "uncovered_tail_seconds": 0.006893
+        },
+        {
+          "view": "harmonic",
+          "note_count": 2035,
+          "mean_polyphony": 2.4236,
+          "max_polyphony": 8,
+          "silent_fraction": 0.125,
+          "median_model_activation": 0.2644,
+          "pitch_min": 23,
+          "pitch_max": 79,
+          "salience_last_seconds": 200.2419954648526,
+          "uncovered_tail_seconds": 0.006893
+        },
+        {
+          "view": "bassband",
+          "note_count": 1181,
+          "mean_polyphony": 1.3583,
+          "max_polyphony": 6,
+          "silent_fraction": 0.1806,
+          "median_model_activation": 0.2668,
+          "pitch_min": 23,
+          "pitch_max": 59,
+          "salience_last_seconds": 200.2419954648526,
+          "uncovered_tail_seconds": 0.006893
+        },
+        {
+          "view": "stereo_side",
+          "note_count": 2407,
+          "mean_polyphony": 2.086,
+          "max_polyphony": 9,
+          "silent_fraction": 0.1801,
+          "median_model_activation": 0.2541,
+          "pitch_min": 42,
+          "pitch_max": 98,
+          "salience_last_seconds": 200.2419954648526,
+          "uncovered_tail_seconds": 0.006893
+        }
+      ],
+      "input_files": [
+        {
+          "path": "/workspace/work/recreations/transcriptions/source08.fullmix.json",
+          "sha256": "be6524b7109e09266af3dac8c14c8c8684b47d7b17052ea168c7e8c8c8845755",
+          "kind": "fullmix_notes"
+        },
+        {
+          "path": "/workspace/work/recreations/transcriptions/source08.harmonic.json",
+          "sha256": "e238745a44ff0cc2be4367910209b2b4eb82fd2546d689b9b9b1ebaaac7e9cdd",
+          "kind": "harmonic_notes"
+        },
+        {
+          "path": "/workspace/work/recreations/transcriptions/source08.bassband.json",
+          "sha256": "587cb6286836c331a1c842e7c979f9f39eec8bf7a4fd6d1b362c67ad25d0714c",
+          "kind": "bassband_notes"
+        },
+        {
+          "path": "/workspace/work/recreations/transcriptions/source08.stereo_side.json",
+          "sha256": "85afd152e0f55ddd102fe77862ad031aa6a0d9a1fdae59b674ca2bf4754101bb",
+          "kind": "stereo_side_notes"
+        },
+        {
+          "path": "/workspace/work/recreations/transcriptions/source08.json",
+          "sha256": "6e792b4fd8068e3a2714b4d9c3fd80a39fac8820ee66002d16645f754ff44816",
+          "kind": "primary_harmonic_notes"
+        },
+        {
+          "path": "/workspace/work/recreations/transcriptions/source08.bass_f0.npz",
+          "sha256": "54bfbd9453ae68968f2bf16114dcd9cf9a1ff86caac3ec57da054b38114a5bdf",
+          "kind": "optional_bass_f0"
+        }
+      ]
+    }
+  ],
+  "scope": "Complete-source, unquantized automatic multi-view note candidates; not a verified note-perfect arrangement",
+  "salience_timing": "Explicit time_seconds axes in every per-view NPZ",
+  "validation": "Native durations preserved; positive bounded notes; monotonic/finite salience and F0; final model tail covers source to within one hop (<12ms)",
+  "privacy": "Source/stem/model analysis files stay private; note-only rebuild must synthesize all audible content without source-waveform backing"
+}

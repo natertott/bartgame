@@ -1,0 +1,62 @@
+AUTOMATIC INSTRUMENTAL GAME COVERS
+
+These are note/transient-based instrumental reconstructions. They are not exact,
+human-verified transcriptions. The original mix comparison, if supplied alongside
+them, must remain clearly identified as a separate playback of the source mix.
+
+The cover synthesis accepts symbolic events only. No uploaded waveform, vocal,
+audio sample or extracted source stem is mixed into the cover PCM. Instrument
+sounds come from the FluidR3 GM SoundFont; the game subsequently plays their
+offline stereo mix through its Direct Sound PCM channels. Vocal pitch candidates
+may therefore be played as instrumental notes, with no recreated sung words.
+
+The pitch-input owner runs Spotify Basic Pitch locally on full-mix, harmonic,
+bass-band and stereo-side analysis views. HPSS is a harmonic/percussive signal
+decomposition, not vocal or instrument isolation. The selected HPSS view supplies
+nonbass candidates; a coherent separate bass-band pass supplies bass candidates.
+The engine does not blindly sum all model passes. Stereo-side alternatives are
+retained for review but are not currently added, because they can overdetect
+harmonic/octave notes. Model activation is salience, not calibrated correctness.
+
+Native source timestamps are preserved, with no new tempo grid, song rewrite,
+lead-in trimming, fade removal or shortened musical form. MIDI/score BPM120 is
+only a seconds-to-beats export timebase: one beat is0.5seconds. The final cover
+duration equals the exact decoded-source duration from source_manifest.json,
+rounded only to the nearest output sample. The GBA build may append tiny frame
+alignment padding separately. A full-length file can still contain missed or
+incorrect automatically detected notes; duration is not proof of transcription
+completeness.
+
+Among overlapping bass candidates, model salience selects one active note. An
+independent low-band YIN trace may break a tie only when its valid periodic F0
+matches an already-existing note plus bend within0.85semitones. It creates no new
+notes or timings. Genuine raw sub fundamentals21..27 are kept: Direct Sound PCM
+has no PSG minimum-pitch restriction. A source01 pilot independently supported
+the B0/C1 region. Other octave-estimation errors remain possible.
+
+Basic Pitch bend trajectories are interpreted as1/3semitone bins and applied to
+the monophonic bass at20ms control intervals. They are also exported as MIDI
+pitchwheel messages with a12-semitone wheel range. Other voices use their detected
+equal-tempered note centers. A salience-weighted nonoverlapping foreground path
+is assigned a prominent instrument; remaining original-time notes are retained
+in counter/harmony instruments. This assignment does not identify original stems.
+
+Drum candidates come from full-source HPSS-masked low/mid/high spectral flux,
+with local adaptive thresholds, conservative salience gates and approximately
+9.98ms timing resolution. These transients are re-created with fresh GM kick,
+snare/clap and hat sounds. No artificial metronome, tempo snapping or missing-beat
+fill is added. Vocal consonants, bass attacks and plucks can be false detections;
+quiet or overlapping drums can be missed. The class labels are heuristic.
+
+cover_engine.py can rebuild a saved symbolic score without reading source audio:
+  python3 cover_engine.py --id 1 --score covers/01_example.cover.json \
+      --midi covers/01_example.mid --render covers/01_example.npy
+
+Use --notes, --bass-notes, --bass-f0 and a cached --drums-json to rebuild a score
+from the analysis outputs. The saved score records input/model/code hashes and
+selection limitations. render_covers_batch.py validates exact sample counts,
+finite stereo output, monophonic foreground/bass and preserved raw sub register.
+
+The float32 NPY/WAV files produced by this engine are PRE-GBA synthesis files.
+User-facing recordings should come from actual execution of the cartridge in
+GBA emulation and be labeled accordingly. No public upload is part of this code.

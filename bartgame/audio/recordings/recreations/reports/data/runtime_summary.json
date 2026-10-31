@@ -1,0 +1,18 @@
+{
+  "driver_object": "builds/R01/sound.o",
+  "measurement_command": "arm-none-eabi-size builds/R01/sound.o",
+  "text_and_constants_bytes": 2052,
+  "data_bytes": 0,
+  "static_bss_bytes": 20,
+  "object_sha256": "1caa7315f2d15e0fdde5d7df30f91e12e87d70c2d434c9ecf09f9cd656894568",
+  "scope": "ARM object size excludes stack, hardware FIFO/register state, player UI, and other game state.",
+  "driver_mean_percent_of_frame_range": [
+    0.07121,
+    0.07157
+  ],
+  "driver_largest_observed_update_percent_of_frame": 0.3293,
+  "dma_fixture_65536_stereo_throughput_loss_percent": {
+    "rom": 0.9941994158915279,
+    "iwram": 1.01524898029699
+  }
+}

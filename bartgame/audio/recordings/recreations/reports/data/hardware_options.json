@@ -1,0 +1,1574 @@
+{
+  "status": "COMPLETE",
+  "recommendation": {
+    "preferred_mode": "65536Hz signed8-bit stereo PCM; Timer0divider256; SOUNDBIAS0x4200; dualROMDMA1/2",
+    "seven_shorter_sources": "one source per conventional<=32MiB ROM, retaining complete decoded timing and stereo mix",
+    "longest_source": "Timeless256.116099773s exceeds32MiB uncompressed atpreferredmode. Do not trim or change timing. Practical single-ROM fallback is synchronized32768Hz stereo; disclose16.384kHz sourceNyquist. Optional highest-fidelity65k alternative requires lossless compression/background buffering or two separateROMparts, with addedCPU/RAM or playback continuity limits.",
+    "not_recommended": [
+      "Divider380/PWM65536 and near-synchronizeddivider257/PWM65536: actualprobe shows substantial in-band PWM re-clocking spurs",
+      "KeepingdefaultPWM32768whileclockingFIFOat44150Hz: aliases full-band audio",
+      "UsinghigherPWM131072/262144: reducesDACresolutionto7/6bits anddoes not improve8-bit PCM precision"
+    ],
+    "rights_scope": "Only user-provided files, local decoding/conversion/emulation. No publication or third-party uploads authorized. Directmixplayback and instrumentcover are distinct deliverables; wait for the user choice before producing dependent deliverables."
+  },
+  "rom_limit_bytes": 33554432,
+  "budget_assumptions": {
+    "code_and_header_bytes": 8192,
+    "guard_samples_per_channel": 8192,
+    "channels": 2,
+    "bits_per_sample_per_channel": 8,
+    "plane_alignment_bytes": 16
+  },
+  "modes": [
+    {
+      "name": "Synchronized32.768k",
+      "divisor": 512,
+      "rate_hz": 32768,
+      "timer_reload": "0xFE00",
+      "sound_bias": "0x0200",
+      "pwm_hz": 32768,
+      "pwm_bits": 9,
+      "source_nyquist_hz": 16384,
+      "probe": [
+        {
+          "id": 1,
+          "mode": "32768_sync",
+          "timer_divisor": 512,
+          "timer_reload": "0xfe00",
+          "pcm_rate": 32768.0,
+          "soundbias": "0x200",
+          "tone_hz": 1000,
+          "output_rate": 96000,
+          "main_peak_frequency_hz": 1000.0000015819601,
+          "fitted_requested_tone_amplitude": 17243.336715611127,
+          "primary_gain_vs_8bit_pcm_db": -0.018448585333029354,
+          "audible_band_snr_db": 48.21757209866071,
+          "largest_audible_spur_hz": 1945.0,
+          "largest_spur_db_relative_to_requested_tone": -63.54693871449544
+        },
+        {
+          "id": 2,
+          "mode": "32768_sync",
+          "timer_divisor": 512,
+          "timer_reload": "0xfe00",
+          "pcm_rate": 32768.0,
+          "soundbias": "0x200",
+          "tone_hz": 10000,
+          "output_rate": 96000,
+          "main_peak_frequency_hz": 9999.999999365336,
+          "fitted_requested_tone_amplitude": 13435.330158228999,
+          "primary_gain_vs_8bit_pcm_db": -2.1859078988169225,
+          "audible_band_snr_db": 45.99224194077955,
+          "largest_audible_spur_hz": 1807.5,
+          "largest_spur_db_relative_to_requested_tone": -63.15302450928332
+        },
+        {
+          "id": 3,
+          "mode": "32768_sync",
+          "timer_divisor": 512,
+          "timer_reload": "0xfe00",
+          "pcm_rate": 32768.0,
+          "soundbias": "0x200",
+          "tone_hz": 15000,
+          "output_rate": 96000,
+          "main_peak_frequency_hz": 15000.000000750897,
+          "fitted_requested_tone_amplitude": 10112.970194370697,
+          "primary_gain_vs_8bit_pcm_db": -4.653300217648108,
+          "audible_band_snr_db": 1.8021632427782124,
+          "largest_audible_spur_hz": 17767.5,
+          "largest_spur_db_relative_to_requested_tone": -2.0271028760240504
+        }
+      ],
+      "data_bytes_per_second_stereo": 65536,
+      "all_individual_sources_fit_32MiB": true,
+      "minimum_roms_uncompressed_8_sources": 4
+    },
+    {
+      "name": "Asynchronous44.1506k",
+      "divisor": 380,
+      "rate_hz": 44150.56842105263,
+      "timer_reload": "0xFE84",
+      "sound_bias": "0x4200",
+      "pwm_hz": 65536,
+      "pwm_bits": 8,
+      "source_nyquist_hz": 22075.284210526315,
+      "probe": [
+        {
+          "id": 4,
+          "mode": "44150_pwm65536",
+          "timer_divisor": 380,
+          "timer_reload": "0xfe84",
+          "pcm_rate": 44150.56842105263,
+          "soundbias": "0x4200",
+          "tone_hz": 1000,
+          "output_rate": 96000,
+          "main_peak_frequency_hz": 999.9999554604273,
+          "fitted_requested_tone_amplitude": 17247.738210921652,
+          "primary_gain_vs_8bit_pcm_db": -0.016231727621366276,
+          "audible_band_snr_db": 32.75278838151958,
+          "largest_audible_spur_hz": 20385.0,
+          "largest_spur_db_relative_to_requested_tone": -36.738751409348474
+        },
+        {
+          "id": 5,
+          "mode": "44150_pwm65536",
+          "timer_divisor": 380,
+          "timer_reload": "0xfe84",
+          "pcm_rate": 44150.56842105263,
+          "soundbias": "0x4200",
+          "tone_hz": 10000,
+          "output_rate": 96000,
+          "main_peak_frequency_hz": 9999.982762871336,
+          "fitted_requested_tone_amplitude": 13845.695467177893,
+          "primary_gain_vs_8bit_pcm_db": -1.9245792593521296,
+          "audible_band_snr_db": 11.192438853125381,
+          "largest_audible_spur_hz": 11385.0,
+          "largest_spur_db_relative_to_requested_tone": -15.041440150100405
+        },
+        {
+          "id": 6,
+          "mode": "44150_pwm65536",
+          "timer_divisor": 380,
+          "timer_reload": "0xfe84",
+          "pcm_rate": 44150.56842105263,
+          "soundbias": "0x4200",
+          "tone_hz": 15000,
+          "output_rate": 96000,
+          "main_peak_frequency_hz": 15000.000281251014,
+          "fitted_requested_tone_amplitude": 11028.101502831489,
+          "primary_gain_vs_8bit_pcm_db": -3.900859668740719,
+          "audible_band_snr_db": 6.3657134305807475,
+          "largest_audible_spur_hz": 6385.0,
+          "largest_spur_db_relative_to_requested_tone": -10.425724591658243
+        },
+        {
+          "id": 7,
+          "mode": "44150_pwm65536",
+          "timer_divisor": 380,
+          "timer_reload": "0xfe84",
+          "pcm_rate": 44150.56842105263,
+          "soundbias": "0x4200",
+          "tone_hz": 20000,
+          "output_rate": 96000,
+          "main_peak_frequency_hz": 20000.00003420209,
+          "fitted_requested_tone_amplitude": 8135.827428826679,
+          "primary_gain_vs_8bit_pcm_db": -6.542840201297158,
+          "audible_band_snr_db": 2.6291079829167563,
+          "largest_audible_spur_hz": 1385.0,
+          "largest_spur_db_relative_to_requested_tone": -6.927492992403003
+        }
+      ],
+      "data_bytes_per_second_stereo": 88301.13684210526,
+      "all_individual_sources_fit_32MiB": true,
+      "minimum_roms_uncompressed_8_sources": 7
+    },
+    {
+      "name": "Synchronized65.536k",
+      "divisor": 256,
+      "rate_hz": 65536,
+      "timer_reload": "0xFF00",
+      "sound_bias": "0x4200",
+      "pwm_hz": 65536,
+      "pwm_bits": 8,
+      "source_nyquist_hz": 32768,
+      "probe": [
+        {
+          "id": 8,
+          "mode": "65536_sync",
+          "timer_divisor": 256,
+          "timer_reload": "0xff00",
+          "pcm_rate": 65536.0,
+          "soundbias": "0x4200",
+          "tone_hz": 1000,
+          "output_rate": 96000,
+          "main_peak_frequency_hz": 1000.0000018195204,
+          "fitted_requested_tone_amplitude": 17262.690879819893,
+          "primary_gain_vs_8bit_pcm_db": -0.008704887567857308,
+          "audible_band_snr_db": 50.27724942134178,
+          "largest_audible_spur_hz": 2712.5,
+          "largest_spur_db_relative_to_requested_tone": -67.37304124173984
+        },
+        {
+          "id": 9,
+          "mode": "65536_sync",
+          "timer_divisor": 256,
+          "timer_reload": "0xff00",
+          "pcm_rate": 65536.0,
+          "soundbias": "0x4200",
+          "tone_hz": 10000,
+          "output_rate": 96000,
+          "main_peak_frequency_hz": 10000.000000483911,
+          "fitted_requested_tone_amplitude": 15143.740012969036,
+          "primary_gain_vs_8bit_pcm_db": -1.1462118614158647,
+          "audible_band_snr_db": 48.79545337055827,
+          "largest_audible_spur_hz": 19440.0,
+          "largest_spur_db_relative_to_requested_tone": -64.67606423698085
+        },
+        {
+          "id": 10,
+          "mode": "65536_sync",
+          "timer_divisor": 256,
+          "timer_reload": "0xff00",
+          "pcm_rate": 65536.0,
+          "soundbias": "0x4200",
+          "tone_hz": 15000,
+          "output_rate": 96000,
+          "main_peak_frequency_hz": 15000.000000701717,
+          "fitted_requested_tone_amplitude": 13438.202101865747,
+          "primary_gain_vs_8bit_pcm_db": -2.1840513966400534,
+          "audible_band_snr_db": 47.608143743611684,
+          "largest_audible_spur_hz": 3607.5,
+          "largest_spur_db_relative_to_requested_tone": -61.22963757438255
+        },
+        {
+          "id": 11,
+          "mode": "65536_sync",
+          "timer_divisor": 256,
+          "timer_reload": "0xff00",
+          "pcm_rate": 65536.0,
+          "soundbias": "0x4200",
+          "tone_hz": 20000,
+          "output_rate": 96000,
+          "main_peak_frequency_hz": 19999.99999915625,
+          "fitted_requested_tone_amplitude": 11697.027436187105,
+          "primary_gain_vs_8bit_pcm_db": -3.389364591325558,
+          "audible_band_snr_db": 46.31307638645666,
+          "largest_audible_spur_hz": 8352.5,
+          "largest_spur_db_relative_to_requested_tone": -62.61001235711795
+        }
+      ],
+      "data_bytes_per_second_stereo": 131072,
+      "all_individual_sources_fit_32MiB": false,
+      "minimum_roms_uncompressed_8_sources": null
+    },
+    {
+      "name": "Asynchronous65.2810k",
+      "divisor": 257,
+      "rate_hz": 65280.99610894942,
+      "timer_reload": "0xFEFF",
+      "sound_bias": "0x4200",
+      "pwm_hz": 65536,
+      "pwm_bits": 8,
+      "source_nyquist_hz": 32640.49805447471,
+      "probe": [
+        {
+          "id": 12,
+          "mode": "65281_pwm65536",
+          "timer_divisor": 257,
+          "timer_reload": "0xfeff",
+          "pcm_rate": 65280.99610894942,
+          "soundbias": "0x4200",
+          "tone_hz": 1000,
+          "output_rate": 96000,
+          "main_peak_frequency_hz": 1000.0000159484906,
+          "fitted_requested_tone_amplitude": 17255.52081908195,
+          "primary_gain_vs_8bit_pcm_db": -0.012313322309896686,
+          "audible_band_snr_db": 31.17885187374825,
+          "largest_audible_spur_hz": 1255.0,
+          "largest_spur_db_relative_to_requested_tone": -36.172529614475096
+        },
+        {
+          "id": 13,
+          "mode": "65281_pwm65536",
+          "timer_divisor": 257,
+          "timer_reload": "0xfeff",
+          "pcm_rate": 65280.99610894942,
+          "soundbias": "0x4200",
+          "tone_hz": 10000,
+          "output_rate": 96000,
+          "main_peak_frequency_hz": 9999.999918853322,
+          "fitted_requested_tone_amplitude": 14553.797195400975,
+          "primary_gain_vs_8bit_pcm_db": -1.4913483866468753,
+          "audible_band_snr_db": 10.916443523875124,
+          "largest_audible_spur_hz": 10255.0,
+          "largest_spur_db_relative_to_requested_tone": -14.859366889760173
+        },
+        {
+          "id": 14,
+          "mode": "65281_pwm65536",
+          "timer_divisor": 257,
+          "timer_reload": "0xfeff",
+          "pcm_rate": 65280.99610894942,
+          "soundbias": "0x4200",
+          "tone_hz": 15000,
+          "output_rate": 96000,
+          "main_peak_frequency_hz": 14999.998622805966,
+          "fitted_requested_tone_amplitude": 12280.750497669964,
+          "primary_gain_vs_8bit_pcm_db": -2.9663766009609294,
+          "audible_band_snr_db": 7.120052938496208,
+          "largest_audible_spur_hz": 15255.0,
+          "largest_spur_db_relative_to_requested_tone": -10.513203293497915
+        },
+        {
+          "id": 15,
+          "mode": "65281_pwm65536",
+          "timer_divisor": 257,
+          "timer_reload": "0xfeff",
+          "pcm_rate": 65280.99610894942,
+          "soundbias": "0x4200",
+          "tone_hz": 20000,
+          "output_rate": 96000,
+          "main_peak_frequency_hz": 19999.999567324783,
+          "fitted_requested_tone_amplitude": 9952.780801128534,
+          "primary_gain_vs_8bit_pcm_db": -4.791985976372698,
+          "audible_band_snr_db": 4.277566657298133,
+          "largest_audible_spur_hz": 20255.0,
+          "largest_spur_db_relative_to_requested_tone": -7.117056490035852
+        }
+      ],
+      "data_bytes_per_second_stereo": 130561.99221789883,
+      "all_individual_sources_fit_32MiB": true,
+      "minimum_roms_uncompressed_8_sources": 8
+    }
+  ],
+  "sources": [
+    {
+      "file": "Sunday Evening Pain.mp3",
+      "sample_rate": 44100,
+      "decoded_frames": 7973312,
+      "decoded_seconds": 180.80072562358276,
+      "trailing_exact_silence_seconds": 0.01183673469387755,
+      "last2second_blocks_backwards": [
+        {
+          "ending_ms_before_file_end": 0,
+          "peak": 7.009966066107154e-05,
+          "rms": 2.7883245857661263e-05
+        },
+        {
+          "ending_ms_before_file_end": 100,
+          "peak": 0.0001379856839776039,
+          "rms": 3.620052574608535e-05
+        },
+        {
+          "ending_ms_before_file_end": 200,
+          "peak": 0.00018835216178558767,
+          "rms": 4.627983574342811e-05
+        },
+        {
+          "ending_ms_before_file_end": 300,
+          "peak": 0.0001473739102948457,
+          "rms": 3.776782499898694e-05
+        },
+        {
+          "ending_ms_before_file_end": 400,
+          "peak": 0.00023262901231646538,
+          "rms": 5.195817921353701e-05
+        },
+        {
+          "ending_ms_before_file_end": 500,
+          "peak": 0.00045910204062238336,
+          "rms": 9.393553667983062e-05
+        },
+        {
+          "ending_ms_before_file_end": 600,
+          "peak": 0.000857014674693346,
+          "rms": 0.00019154381621123574
+        },
+        {
+          "ending_ms_before_file_end": 700,
+          "peak": 0.025186797603964806,
+          "rms": 0.002904047551642528
+        },
+        {
+          "ending_ms_before_file_end": 800,
+          "peak": 0.10150795429944992,
+          "rms": 0.021847353570461248
+        },
+        {
+          "ending_ms_before_file_end": 900,
+          "peak": 1.1160216331481934,
+          "rms": 0.14808190590429754
+        },
+        {
+          "ending_ms_before_file_end": 1000,
+          "peak": 0.2150445282459259,
+          "rms": 0.039764041893625555
+        },
+        {
+          "ending_ms_before_file_end": 1100,
+          "peak": 0.6716611385345459,
+          "rms": 0.1298073977995794
+        },
+        {
+          "ending_ms_before_file_end": 1200,
+          "peak": 0.9535461068153381,
+          "rms": 0.14401584872147968
+        },
+        {
+          "ending_ms_before_file_end": 1300,
+          "peak": 0.2757004201412201,
+          "rms": 0.042698518835921066
+        },
+        {
+          "ending_ms_before_file_end": 1400,
+          "peak": 0.9164237976074219,
+          "rms": 0.14155611723447487
+        },
+        {
+          "ending_ms_before_file_end": 1500,
+          "peak": 0.03586825728416443,
+          "rms": 0.0045710759841059295
+        },
+        {
+          "ending_ms_before_file_end": 1600,
+          "peak": 0.32475924491882324,
+          "rms": 0.035336126731217256
+        },
+        {
+          "ending_ms_before_file_end": 1700,
+          "peak": 0.0828278511762619,
+          "rms": 0.012349466650024753
+        },
+        {
+          "ending_ms_before_file_end": 1800,
+          "peak": 0.7850289344787598,
+          "rms": 0.08972901470877914
+        },
+        {
+          "ending_ms_before_file_end": 1900,
+          "peak": 0.9378994107246399,
+          "rms": 0.10753298133138485
+        }
+      ],
+      "rates": {
+        "512": {
+          "pcm_rate": 32768.0,
+          "sample_frames": 5924478,
+          "pcm_bytes": 11865344,
+          "estimated_rom_bytes": 11873536,
+          "fits32MiB": true,
+          "headroom_bytes": 21680896
+        },
+        "380": {
+          "pcm_rate": 44150.56842105263,
+          "sample_frames": 7982455,
+          "pcm_bytes": 15981312,
+          "estimated_rom_bytes": 15989504,
+          "fits32MiB": true,
+          "headroom_bytes": 17564928
+        },
+        "257": {
+          "pcm_rate": 65280.99610894942,
+          "sample_frames": 11802851,
+          "pcm_bytes": 23622112,
+          "estimated_rom_bytes": 23630304,
+          "fits32MiB": true,
+          "headroom_bytes": 9924128
+        },
+        "256": {
+          "pcm_rate": 65536.0,
+          "sample_frames": 11848956,
+          "pcm_bytes": 23714304,
+          "estimated_rom_bytes": 23722496,
+          "fits32MiB": true,
+          "headroom_bytes": 9831936
+        }
+      }
+    },
+    {
+      "file": "SNOW STRIPPERS - UNDER YOUR SPELL #SURFGANG.mp3",
+      "sample_rate": 48000,
+      "decoded_frames": 10487808,
+      "decoded_seconds": 218.496,
+      "trailing_exact_silence_seconds": 0.0,
+      "last2second_blocks_backwards": [
+        {
+          "ending_ms_before_file_end": 0,
+          "peak": 0.0007266463944688439,
+          "rms": 0.00015358796492138772
+        },
+        {
+          "ending_ms_before_file_end": 100,
+          "peak": 0.001736974692903459,
+          "rms": 0.0004621320080521749
+        },
+        {
+          "ending_ms_before_file_end": 200,
+          "peak": 0.0031291572377085686,
+          "rms": 0.0008815625954275632
+        },
+        {
+          "ending_ms_before_file_end": 300,
+          "peak": 0.004078791011124849,
+          "rms": 0.0011958773528325892
+        },
+        {
+          "ending_ms_before_file_end": 400,
+          "peak": 0.004354563541710377,
+          "rms": 0.0012429658427686304
+        },
+        {
+          "ending_ms_before_file_end": 500,
+          "peak": 0.0063799042254686356,
+          "rms": 0.0015936193278765654
+        },
+        {
+          "ending_ms_before_file_end": 600,
+          "peak": 0.007186633534729481,
+          "rms": 0.0021382804655021687
+        },
+        {
+          "ending_ms_before_file_end": 700,
+          "peak": 0.008948796428740025,
+          "rms": 0.0024909921319333167
+        },
+        {
+          "ending_ms_before_file_end": 800,
+          "peak": 0.009281481616199017,
+          "rms": 0.0025943127975872073
+        },
+        {
+          "ending_ms_before_file_end": 900,
+          "peak": 0.009130061604082584,
+          "rms": 0.002604246673547667
+        },
+        {
+          "ending_ms_before_file_end": 1000,
+          "peak": 0.013856284320354462,
+          "rms": 0.0034341411772738765
+        },
+        {
+          "ending_ms_before_file_end": 1100,
+          "peak": 0.013452143408358097,
+          "rms": 0.003917656859569187
+        },
+        {
+          "ending_ms_before_file_end": 1200,
+          "peak": 0.013815751299262047,
+          "rms": 0.004109924721045052
+        },
+        {
+          "ending_ms_before_file_end": 1300,
+          "peak": 0.014672471210360527,
+          "rms": 0.0036001891425410824
+        },
+        {
+          "ending_ms_before_file_end": 1400,
+          "peak": 0.015175108797848225,
+          "rms": 0.004240595663598671
+        },
+        {
+          "ending_ms_before_file_end": 1500,
+          "peak": 0.016842719167470932,
+          "rms": 0.004740318277327431
+        },
+        {
+          "ending_ms_before_file_end": 1600,
+          "peak": 0.017965245991945267,
+          "rms": 0.005185289813063061
+        },
+        {
+          "ending_ms_before_file_end": 1700,
+          "peak": 0.01633397862315178,
+          "rms": 0.004886450965334743
+        },
+        {
+          "ending_ms_before_file_end": 1800,
+          "peak": 0.017908159643411636,
+          "rms": 0.005697126575921635
+        },
+        {
+          "ending_ms_before_file_end": 1900,
+          "peak": 0.022383444011211395,
+          "rms": 0.006710016064748155
+        }
+      ],
+      "rates": {
+        "512": {
+          "pcm_rate": 32768.0,
+          "sample_frames": 7159677,
+          "pcm_bytes": 14335744,
+          "estimated_rom_bytes": 14343936,
+          "fits32MiB": true,
+          "headroom_bytes": 19210496
+        },
+        "380": {
+          "pcm_rate": 44150.56842105263,
+          "sample_frames": 9646723,
+          "pcm_bytes": 19309856,
+          "estimated_rom_bytes": 19318048,
+          "fits32MiB": true,
+          "headroom_bytes": 14236384
+        },
+        "257": {
+          "pcm_rate": 65280.99610894942,
+          "sample_frames": 14263637,
+          "pcm_bytes": 28543680,
+          "estimated_rom_bytes": 28551872,
+          "fits32MiB": true,
+          "headroom_bytes": 5002560
+        },
+        "256": {
+          "pcm_rate": 65536.0,
+          "sample_frames": 14319354,
+          "pcm_bytes": 28655104,
+          "estimated_rom_bytes": 28663296,
+          "fits32MiB": true,
+          "headroom_bytes": 4891136
+        }
+      }
+    },
+    {
+      "file": "Under Your Spell - Desire (Drive).mp3",
+      "sample_rate": 44100,
+      "decoded_frames": 10290176,
+      "decoded_seconds": 233.33732426303854,
+      "trailing_exact_silence_seconds": 2.0,
+      "last2second_blocks_backwards": [
+        {
+          "ending_ms_before_file_end": 0,
+          "peak": 0.0,
+          "rms": 0.0
+        },
+        {
+          "ending_ms_before_file_end": 100,
+          "peak": 0.0,
+          "rms": 0.0
+        },
+        {
+          "ending_ms_before_file_end": 200,
+          "peak": 0.0,
+          "rms": 0.0
+        },
+        {
+          "ending_ms_before_file_end": 300,
+          "peak": 0.0,
+          "rms": 0.0
+        },
+        {
+          "ending_ms_before_file_end": 400,
+          "peak": 0.0,
+          "rms": 0.0
+        },
+        {
+          "ending_ms_before_file_end": 500,
+          "peak": 0.0,
+          "rms": 0.0
+        },
+        {
+          "ending_ms_before_file_end": 600,
+          "peak": 0.0,
+          "rms": 0.0
+        },
+        {
+          "ending_ms_before_file_end": 700,
+          "peak": 0.0,
+          "rms": 0.0
+        },
+        {
+          "ending_ms_before_file_end": 800,
+          "peak": 0.0,
+          "rms": 0.0
+        },
+        {
+          "ending_ms_before_file_end": 900,
+          "peak": 0.0,
+          "rms": 0.0
+        },
+        {
+          "ending_ms_before_file_end": 1000,
+          "peak": 0.0,
+          "rms": 0.0
+        },
+        {
+          "ending_ms_before_file_end": 1100,
+          "peak": 0.0,
+          "rms": 0.0
+        },
+        {
+          "ending_ms_before_file_end": 1200,
+          "peak": 0.0,
+          "rms": 0.0
+        },
+        {
+          "ending_ms_before_file_end": 1300,
+          "peak": 0.0,
+          "rms": 0.0
+        },
+        {
+          "ending_ms_before_file_end": 1400,
+          "peak": 0.0,
+          "rms": 0.0
+        },
+        {
+          "ending_ms_before_file_end": 1500,
+          "peak": 0.0,
+          "rms": 0.0
+        },
+        {
+          "ending_ms_before_file_end": 1600,
+          "peak": 0.0,
+          "rms": 0.0
+        },
+        {
+          "ending_ms_before_file_end": 1700,
+          "peak": 0.0,
+          "rms": 0.0
+        },
+        {
+          "ending_ms_before_file_end": 1800,
+          "peak": 0.0,
+          "rms": 0.0
+        },
+        {
+          "ending_ms_before_file_end": 1900,
+          "peak": 0.0,
+          "rms": 0.0
+        }
+      ],
+      "rates": {
+        "512": {
+          "pcm_rate": 32768.0,
+          "sample_frames": 7645997,
+          "pcm_bytes": 15308384,
+          "estimated_rom_bytes": 15316576,
+          "fits32MiB": true,
+          "headroom_bytes": 18237856
+        },
+        "380": {
+          "pcm_rate": 44150.56842105263,
+          "sample_frames": 10301976,
+          "pcm_bytes": 20620352,
+          "estimated_rom_bytes": 20628544,
+          "fits32MiB": true,
+          "headroom_bytes": 12925888
+        },
+        "257": {
+          "pcm_rate": 65280.99610894942,
+          "sample_frames": 15232493,
+          "pcm_bytes": 30481376,
+          "estimated_rom_bytes": 30489568,
+          "fits32MiB": true,
+          "headroom_bytes": 3064864
+        },
+        "256": {
+          "pcm_rate": 65536.0,
+          "sample_frames": 15291995,
+          "pcm_bytes": 30600384,
+          "estimated_rom_bytes": 30608576,
+          "fits32MiB": true,
+          "headroom_bytes": 2945856
+        }
+      }
+    },
+    {
+      "file": "Friday Night.mp3",
+      "sample_rate": 44100,
+      "decoded_frames": 10479616,
+      "decoded_seconds": 237.63301587301586,
+      "trailing_exact_silence_seconds": 0.7841496598639456,
+      "last2second_blocks_backwards": [
+        {
+          "ending_ms_before_file_end": 0,
+          "peak": 0.0,
+          "rms": 0.0
+        },
+        {
+          "ending_ms_before_file_end": 100,
+          "peak": 0.0,
+          "rms": 0.0
+        },
+        {
+          "ending_ms_before_file_end": 200,
+          "peak": 0.0,
+          "rms": 0.0
+        },
+        {
+          "ending_ms_before_file_end": 300,
+          "peak": 0.0,
+          "rms": 0.0
+        },
+        {
+          "ending_ms_before_file_end": 400,
+          "peak": 0.0,
+          "rms": 0.0
+        },
+        {
+          "ending_ms_before_file_end": 500,
+          "peak": 0.0,
+          "rms": 0.0
+        },
+        {
+          "ending_ms_before_file_end": 600,
+          "peak": 0.0,
+          "rms": 0.0
+        },
+        {
+          "ending_ms_before_file_end": 700,
+          "peak": 0.00030985462944954634,
+          "rms": 2.0182231192490693e-05
+        },
+        {
+          "ending_ms_before_file_end": 800,
+          "peak": 0.00042639492312446237,
+          "rms": 0.00010775729046019744
+        },
+        {
+          "ending_ms_before_file_end": 900,
+          "peak": 0.00044540746603161097,
+          "rms": 0.00011315485715169075
+        },
+        {
+          "ending_ms_before_file_end": 1000,
+          "peak": 0.00043077842565253377,
+          "rms": 0.00011196539058178819
+        },
+        {
+          "ending_ms_before_file_end": 1100,
+          "peak": 0.0022722287103533745,
+          "rms": 0.00045081429462558945
+        },
+        {
+          "ending_ms_before_file_end": 1200,
+          "peak": 0.005868950858712196,
+          "rms": 0.0010302982355384896
+        },
+        {
+          "ending_ms_before_file_end": 1300,
+          "peak": 0.14905670285224915,
+          "rms": 0.01782200497356696
+        },
+        {
+          "ending_ms_before_file_end": 1400,
+          "peak": 0.9358049035072327,
+          "rms": 0.14552634570675232
+        },
+        {
+          "ending_ms_before_file_end": 1500,
+          "peak": 0.07979075610637665,
+          "rms": 0.015616270724388736
+        },
+        {
+          "ending_ms_before_file_end": 1600,
+          "peak": 0.003968536853790283,
+          "rms": 0.0010717663301514292
+        },
+        {
+          "ending_ms_before_file_end": 1700,
+          "peak": 0.4463009238243103,
+          "rms": 0.04932877318791712
+        },
+        {
+          "ending_ms_before_file_end": 1800,
+          "peak": 0.44790709018707275,
+          "rms": 0.08956928356699528
+        },
+        {
+          "ending_ms_before_file_end": 1900,
+          "peak": 0.7397589087486267,
+          "rms": 0.10817949381822317
+        }
+      ],
+      "rates": {
+        "512": {
+          "pcm_rate": 32768.0,
+          "sample_frames": 7786759,
+          "pcm_bytes": 15589920,
+          "estimated_rom_bytes": 15598112,
+          "fits32MiB": true,
+          "headroom_bytes": 17956320
+        },
+        "380": {
+          "pcm_rate": 44150.56842105263,
+          "sample_frames": 10491633,
+          "pcm_bytes": 20999680,
+          "estimated_rom_bytes": 21007872,
+          "fits32MiB": true,
+          "headroom_bytes": 12546560
+        },
+        "257": {
+          "pcm_rate": 65280.99610894942,
+          "sample_frames": 15512920,
+          "pcm_bytes": 31042240,
+          "estimated_rom_bytes": 31050432,
+          "fits32MiB": true,
+          "headroom_bytes": 2504000
+        },
+        "256": {
+          "pcm_rate": 65536.0,
+          "sample_frames": 15573517,
+          "pcm_bytes": 31163424,
+          "estimated_rom_bytes": 31171616,
+          "fits32MiB": true,
+          "headroom_bytes": 2382816
+        }
+      }
+    },
+    {
+      "file": "Playboi Carti - ILoveUIHateU (Official Audio).mp3",
+      "sample_rate": 44100,
+      "decoded_frames": 5969920,
+      "decoded_seconds": 135.37233560090704,
+      "trailing_exact_silence_seconds": 0.16471655328798185,
+      "last2second_blocks_backwards": [
+        {
+          "ending_ms_before_file_end": 0,
+          "peak": 0.0,
+          "rms": 0.0
+        },
+        {
+          "ending_ms_before_file_end": 100,
+          "peak": 0.0010671878699213266,
+          "rms": 8.747252554279824e-05
+        },
+        {
+          "ending_ms_before_file_end": 200,
+          "peak": 0.3213583528995514,
+          "rms": 0.09270748410434804
+        },
+        {
+          "ending_ms_before_file_end": 300,
+          "peak": 0.544972836971283,
+          "rms": 0.17817449841541375
+        },
+        {
+          "ending_ms_before_file_end": 400,
+          "peak": 0.6917514801025391,
+          "rms": 0.2478417042383704
+        },
+        {
+          "ending_ms_before_file_end": 500,
+          "peak": 0.7611293792724609,
+          "rms": 0.31251530158830193
+        },
+        {
+          "ending_ms_before_file_end": 600,
+          "peak": 0.7022208571434021,
+          "rms": 0.3660514981623502
+        },
+        {
+          "ending_ms_before_file_end": 700,
+          "peak": 0.7313036918640137,
+          "rms": 0.3980754710273625
+        },
+        {
+          "ending_ms_before_file_end": 800,
+          "peak": 0.8681493997573853,
+          "rms": 0.33615657094238033
+        },
+        {
+          "ending_ms_before_file_end": 900,
+          "peak": 0.659712016582489,
+          "rms": 0.2220219148563377
+        },
+        {
+          "ending_ms_before_file_end": 1000,
+          "peak": 0.8874814510345459,
+          "rms": 0.3072935269843748
+        },
+        {
+          "ending_ms_before_file_end": 1100,
+          "peak": 0.7185803651809692,
+          "rms": 0.3298523507842731
+        },
+        {
+          "ending_ms_before_file_end": 1200,
+          "peak": 0.8159288167953491,
+          "rms": 0.37649155993610234
+        },
+        {
+          "ending_ms_before_file_end": 1300,
+          "peak": 0.6296984553337097,
+          "rms": 0.4033566575055272
+        },
+        {
+          "ending_ms_before_file_end": 1400,
+          "peak": 0.8079583048820496,
+          "rms": 0.42760005209382745
+        },
+        {
+          "ending_ms_before_file_end": 1500,
+          "peak": 0.7847323417663574,
+          "rms": 0.20600175669802892
+        },
+        {
+          "ending_ms_before_file_end": 1600,
+          "peak": 0.40059858560562134,
+          "rms": 0.2077089547900053
+        },
+        {
+          "ending_ms_before_file_end": 1700,
+          "peak": 0.7117303609848022,
+          "rms": 0.275350613358169
+        },
+        {
+          "ending_ms_before_file_end": 1800,
+          "peak": 0.7949872612953186,
+          "rms": 0.33897231581960197
+        },
+        {
+          "ending_ms_before_file_end": 1900,
+          "peak": 0.8045517802238464,
+          "rms": 0.3827682814586125
+        }
+      ],
+      "rates": {
+        "512": {
+          "pcm_rate": 32768.0,
+          "sample_frames": 4435881,
+          "pcm_bytes": 8888160,
+          "estimated_rom_bytes": 8896352,
+          "fits32MiB": true,
+          "headroom_bytes": 24658080
+        },
+        "380": {
+          "pcm_rate": 44150.56842105263,
+          "sample_frames": 5976766,
+          "pcm_bytes": 11969920,
+          "estimated_rom_bytes": 11978112,
+          "fits32MiB": true,
+          "headroom_bytes": 21576320
+        },
+        "257": {
+          "pcm_rate": 65280.99610894942,
+          "sample_frames": 8837241,
+          "pcm_bytes": 17690880,
+          "estimated_rom_bytes": 17699072,
+          "fits32MiB": true,
+          "headroom_bytes": 15855360
+        },
+        "256": {
+          "pcm_rate": 65536.0,
+          "sample_frames": 8871761,
+          "pcm_bytes": 17759936,
+          "estimated_rom_bytes": 17768128,
+          "fits32MiB": true,
+          "headroom_bytes": 15786304
+        }
+      }
+    },
+    {
+      "file": "The Weeknd \u2013 Timeless with Playboi Carti (Official Music Video).mp3",
+      "sample_rate": 44100,
+      "decoded_frames": 11294720,
+      "decoded_seconds": 256.11609977324264,
+      "trailing_exact_silence_seconds": 0.024013605442176872,
+      "last2second_blocks_backwards": [
+        {
+          "ending_ms_before_file_end": 0,
+          "peak": 0.008205418474972248,
+          "rms": 0.0020079979600724075
+        },
+        {
+          "ending_ms_before_file_end": 100,
+          "peak": 0.006842705886811018,
+          "rms": 0.0022195016531994785
+        },
+        {
+          "ending_ms_before_file_end": 200,
+          "peak": 0.008499480783939362,
+          "rms": 0.0024394374532954385
+        },
+        {
+          "ending_ms_before_file_end": 300,
+          "peak": 0.009109342470765114,
+          "rms": 0.002635576343648579
+        },
+        {
+          "ending_ms_before_file_end": 400,
+          "peak": 0.009536868892610073,
+          "rms": 0.0027965439883798275
+        },
+        {
+          "ending_ms_before_file_end": 500,
+          "peak": 0.008887382224202156,
+          "rms": 0.0022643263604037764
+        },
+        {
+          "ending_ms_before_file_end": 600,
+          "peak": 0.009712227620184422,
+          "rms": 0.0028389488580525825
+        },
+        {
+          "ending_ms_before_file_end": 700,
+          "peak": 0.00994011852890253,
+          "rms": 0.0037430226467030565
+        },
+        {
+          "ending_ms_before_file_end": 800,
+          "peak": 0.013869433663785458,
+          "rms": 0.004474844761085523
+        },
+        {
+          "ending_ms_before_file_end": 900,
+          "peak": 0.011570276692509651,
+          "rms": 0.0037157236123293337
+        },
+        {
+          "ending_ms_before_file_end": 1000,
+          "peak": 0.012738849967718124,
+          "rms": 0.004011121037119641
+        },
+        {
+          "ending_ms_before_file_end": 1100,
+          "peak": 0.01044442318379879,
+          "rms": 0.0030811895834880203
+        },
+        {
+          "ending_ms_before_file_end": 1200,
+          "peak": 0.014125194400548935,
+          "rms": 0.005236205885052402
+        },
+        {
+          "ending_ms_before_file_end": 1300,
+          "peak": 0.014182613231241703,
+          "rms": 0.004042375358918614
+        },
+        {
+          "ending_ms_before_file_end": 1400,
+          "peak": 0.01426362432539463,
+          "rms": 0.004525899517884027
+        },
+        {
+          "ending_ms_before_file_end": 1500,
+          "peak": 0.013602549210190773,
+          "rms": 0.0044859823955329696
+        },
+        {
+          "ending_ms_before_file_end": 1600,
+          "peak": 0.016957420855760574,
+          "rms": 0.006147916147233252
+        },
+        {
+          "ending_ms_before_file_end": 1700,
+          "peak": 0.01569346711039543,
+          "rms": 0.005234302395280798
+        },
+        {
+          "ending_ms_before_file_end": 1800,
+          "peak": 0.020375950261950493,
+          "rms": 0.00626518773784128
+        },
+        {
+          "ending_ms_before_file_end": 1900,
+          "peak": 0.021736610680818558,
+          "rms": 0.006864958447374931
+        }
+      ],
+      "rates": {
+        "512": {
+          "pcm_rate": 32768.0,
+          "sample_frames": 8392412,
+          "pcm_bytes": 16801216,
+          "estimated_rom_bytes": 16809408,
+          "fits32MiB": true,
+          "headroom_bytes": 16745024
+        },
+        "380": {
+          "pcm_rate": 44150.56842105263,
+          "sample_frames": 11307671,
+          "pcm_bytes": 22631744,
+          "estimated_rom_bytes": 22639936,
+          "fits32MiB": true,
+          "headroom_bytes": 10914496
+        },
+        "257": {
+          "pcm_rate": 65280.99610894942,
+          "sample_frames": 16719514,
+          "pcm_bytes": 33455424,
+          "estimated_rom_bytes": 33463616,
+          "fits32MiB": true,
+          "headroom_bytes": 90816
+        },
+        "256": {
+          "pcm_rate": 65536.0,
+          "sample_frames": 16784825,
+          "pcm_bytes": 33586048,
+          "estimated_rom_bytes": 33594240,
+          "fits32MiB": false,
+          "headroom_bytes": -39808
+        }
+      }
+    },
+    {
+      "file": "Drake - What's Next (Official Music Video).mp3",
+      "sample_rate": 44100,
+      "decoded_frames": 8830976,
+      "decoded_seconds": 200.2488888888889,
+      "trailing_exact_silence_seconds": 2.0,
+      "last2second_blocks_backwards": [
+        {
+          "ending_ms_before_file_end": 0,
+          "peak": 0.0,
+          "rms": 0.0
+        },
+        {
+          "ending_ms_before_file_end": 100,
+          "peak": 0.0,
+          "rms": 0.0
+        },
+        {
+          "ending_ms_before_file_end": 200,
+          "peak": 0.0,
+          "rms": 0.0
+        },
+        {
+          "ending_ms_before_file_end": 300,
+          "peak": 0.0,
+          "rms": 0.0
+        },
+        {
+          "ending_ms_before_file_end": 400,
+          "peak": 0.0,
+          "rms": 0.0
+        },
+        {
+          "ending_ms_before_file_end": 500,
+          "peak": 0.0,
+          "rms": 0.0
+        },
+        {
+          "ending_ms_before_file_end": 600,
+          "peak": 0.0,
+          "rms": 0.0
+        },
+        {
+          "ending_ms_before_file_end": 700,
+          "peak": 0.0,
+          "rms": 0.0
+        },
+        {
+          "ending_ms_before_file_end": 800,
+          "peak": 0.0,
+          "rms": 0.0
+        },
+        {
+          "ending_ms_before_file_end": 900,
+          "peak": 0.0,
+          "rms": 0.0
+        },
+        {
+          "ending_ms_before_file_end": 1000,
+          "peak": 0.0,
+          "rms": 0.0
+        },
+        {
+          "ending_ms_before_file_end": 1100,
+          "peak": 0.0,
+          "rms": 0.0
+        },
+        {
+          "ending_ms_before_file_end": 1200,
+          "peak": 0.0,
+          "rms": 0.0
+        },
+        {
+          "ending_ms_before_file_end": 1300,
+          "peak": 0.0,
+          "rms": 0.0
+        },
+        {
+          "ending_ms_before_file_end": 1400,
+          "peak": 0.0,
+          "rms": 0.0
+        },
+        {
+          "ending_ms_before_file_end": 1500,
+          "peak": 0.0,
+          "rms": 0.0
+        },
+        {
+          "ending_ms_before_file_end": 1600,
+          "peak": 0.0,
+          "rms": 0.0
+        },
+        {
+          "ending_ms_before_file_end": 1700,
+          "peak": 0.0,
+          "rms": 0.0
+        },
+        {
+          "ending_ms_before_file_end": 1800,
+          "peak": 0.0,
+          "rms": 0.0
+        },
+        {
+          "ending_ms_before_file_end": 1900,
+          "peak": 0.0,
+          "rms": 0.0
+        }
+      ],
+      "rates": {
+        "512": {
+          "pcm_rate": 32768.0,
+          "sample_frames": 6561756,
+          "pcm_bytes": 13139904,
+          "estimated_rom_bytes": 13148096,
+          "fits32MiB": true,
+          "headroom_bytes": 20406336
+        },
+        "380": {
+          "pcm_rate": 44150.56842105263,
+          "sample_frames": 8841102,
+          "pcm_bytes": 17698592,
+          "estimated_rom_bytes": 17706784,
+          "fits32MiB": true,
+          "headroom_bytes": 15847648
+        },
+        "257": {
+          "pcm_rate": 65280.99610894942,
+          "sample_frames": 13072447,
+          "pcm_bytes": 26161280,
+          "estimated_rom_bytes": 26169472,
+          "fits32MiB": true,
+          "headroom_bytes": 7384960
+        },
+        "256": {
+          "pcm_rate": 65536.0,
+          "sample_frames": 13123511,
+          "pcm_bytes": 26263424,
+          "estimated_rom_bytes": 26271616,
+          "fits32MiB": true,
+          "headroom_bytes": 7282816
+        }
+      }
+    },
+    {
+      "file": "Daft Punk - Voyager (Official Audio).mp3",
+      "sample_rate": 44100,
+      "decoded_frames": 10048512,
+      "decoded_seconds": 227.8574149659864,
+      "trailing_exact_silence_seconds": 2.0,
+      "last2second_blocks_backwards": [
+        {
+          "ending_ms_before_file_end": 0,
+          "peak": 0.0,
+          "rms": 0.0
+        },
+        {
+          "ending_ms_before_file_end": 100,
+          "peak": 0.0,
+          "rms": 0.0
+        },
+        {
+          "ending_ms_before_file_end": 200,
+          "peak": 0.0,
+          "rms": 0.0
+        },
+        {
+          "ending_ms_before_file_end": 300,
+          "peak": 0.0,
+          "rms": 0.0
+        },
+        {
+          "ending_ms_before_file_end": 400,
+          "peak": 0.0,
+          "rms": 0.0
+        },
+        {
+          "ending_ms_before_file_end": 500,
+          "peak": 0.0,
+          "rms": 0.0
+        },
+        {
+          "ending_ms_before_file_end": 600,
+          "peak": 0.0,
+          "rms": 0.0
+        },
+        {
+          "ending_ms_before_file_end": 700,
+          "peak": 0.0,
+          "rms": 0.0
+        },
+        {
+          "ending_ms_before_file_end": 800,
+          "peak": 0.0,
+          "rms": 0.0
+        },
+        {
+          "ending_ms_before_file_end": 900,
+          "peak": 0.0,
+          "rms": 0.0
+        },
+        {
+          "ending_ms_before_file_end": 1000,
+          "peak": 0.0,
+          "rms": 0.0
+        },
+        {
+          "ending_ms_before_file_end": 1100,
+          "peak": 0.0,
+          "rms": 0.0
+        },
+        {
+          "ending_ms_before_file_end": 1200,
+          "peak": 0.0,
+          "rms": 0.0
+        },
+        {
+          "ending_ms_before_file_end": 1300,
+          "peak": 0.0,
+          "rms": 0.0
+        },
+        {
+          "ending_ms_before_file_end": 1400,
+          "peak": 0.0,
+          "rms": 0.0
+        },
+        {
+          "ending_ms_before_file_end": 1500,
+          "peak": 0.0,
+          "rms": 0.0
+        },
+        {
+          "ending_ms_before_file_end": 1600,
+          "peak": 0.0,
+          "rms": 0.0
+        },
+        {
+          "ending_ms_before_file_end": 1700,
+          "peak": 0.0,
+          "rms": 0.0
+        },
+        {
+          "ending_ms_before_file_end": 1800,
+          "peak": 0.0,
+          "rms": 0.0
+        },
+        {
+          "ending_ms_before_file_end": 1900,
+          "peak": 0.0,
+          "rms": 0.0
+        }
+      ],
+      "rates": {
+        "512": {
+          "pcm_rate": 32768.0,
+          "sample_frames": 7466432,
+          "pcm_bytes": 14949248,
+          "estimated_rom_bytes": 14957440,
+          "fits32MiB": true,
+          "headroom_bytes": 18596992
+        },
+        "380": {
+          "pcm_rate": 44150.56842105263,
+          "sample_frames": 10060034,
+          "pcm_bytes": 20136480,
+          "estimated_rom_bytes": 20144672,
+          "fits32MiB": true,
+          "headroom_bytes": 13409760
+        },
+        "257": {
+          "pcm_rate": 65280.99610894942,
+          "sample_frames": 14874759,
+          "pcm_bytes": 29765920,
+          "estimated_rom_bytes": 29774112,
+          "fits32MiB": true,
+          "headroom_bytes": 3780320
+        },
+        "256": {
+          "pcm_rate": 65536.0,
+          "sample_frames": 14932864,
+          "pcm_bytes": 29882112,
+          "estimated_rom_bytes": 29890304,
+          "fits32MiB": true,
+          "headroom_bytes": 3664128
+        }
+      }
+    }
+  ],
+  "tests": {
+    "known_sine_rom": "probe/probe.gba",
+    "source": "probe/build_probe.py",
+    "capture": "probe/capture_probe.py",
+    "results": "probe/results.json",
+    "capture_sample_rate": 96000,
+    "fitted_tones_hz": [
+      1000,
+      10000,
+      15000,
+      20000
+    ],
+    "limitations": "DigitalmGBA0.10.5model; no physical headphone/speaker/analog-filter measurement; undithered90/127FS testPCM; audibleband20..22050Hz."
+  },
+  "dma_throughput_benchmark": {
+    "status": "PASS",
+    "emulator": "mGBA0.10.5",
+    "hardware_clock_hz": 16777216,
+    "pcm_rate": 65536,
+    "channels": 2,
+    "waitcnt": "0x4317",
+    "benchmark": "100000iterations of Thumb arithmetic and a volatileIWRAM store; Timer2+3 wallcycles; four pairedoff/on runs; drivercalls excluded",
+    "rom_thumb": {
+      "pcm_off_cycles": [
+        2200097.0,
+        2200097.0,
+        2200097.0,
+        2200097.0
+      ],
+      "pcm_on_cycles": [
+        2222190.0,
+        2222190.0,
+        2222190.0,
+        2222190.0
+      ],
+      "extra_cycles": [
+        22093.0,
+        22093.0,
+        22093.0,
+        22093.0
+      ],
+      "throughput_loss_percent": [
+        0.9941994158915279,
+        0.9941994158915279,
+        0.9941994158915279,
+        0.9941994158915279
+      ],
+      "mean_loss_percent": 0.9941994158915279
+    },
+    "iwram_thumb": {
+      "pcm_off_cycles": [
+        1100070.0,
+        1100070.0,
+        1100070.0,
+        1100070.0
+      ],
+      "pcm_on_cycles": [
+        1111353.0,
+        1111353.0,
+        1111353.0,
+        1111353.0
+      ],
+      "extra_cycles": [
+        11283.0,
+        11283.0,
+        11283.0,
+        11283.0
+      ],
+      "throughput_loss_percent": [
+        1.01524898029699,
+        1.01524898029699,
+        1.01524898029699,
+        1.01524898029699
+      ],
+      "mean_loss_percent": 1.01524898029699
+    }
+  },
+  "register_evidence": [
+    {
+      "file": "/workspace/setup/mgba/include/mgba/internal/gba/audio.h",
+      "line": 39,
+      "fact": "DirectSoundvolume/routing/timer/resetbits; SOUNDBIASresolutionbits14..15"
+    },
+    {
+      "file": "/workspace/setup/mgba/src/gba/audio.c",
+      "line": 262,
+      "fact": "PWMinterval=512>>resolution; streams report clock/interval"
+    },
+    {
+      "file": "/workspace/setup/mgba/src/gba/audio.c",
+      "line": 327,
+      "fact": "TimerFIFO sampleandDMArefill dispatch, four32-bitwords perrequest"
+    },
+    {
+      "file": "/workspace/setup/mgba/src/gba/audio.c",
+      "line": 386,
+      "fact": "FIFO lanes sampled on PWM grid androutedperoutput;100%volume uses8-bitsignedsample<<2"
+    },
+    {
+      "file": "/workspace/setup/mgba/src/gba/timer.c",
+      "line": 13,
+      "fact": "Timer0/1overflowdrivesselectedFIFO independentlyofPWMclock"
+    }
+  ]
+}

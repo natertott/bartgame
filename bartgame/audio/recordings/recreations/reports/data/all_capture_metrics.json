@@ -1,0 +1,43 @@
+{
+  "native_count": 8,
+  "instrument_count": 8,
+  "passed_count": 16,
+  "clipped_samples": 0,
+  "all_exact_original_duration_samples": true,
+  "all_same_driver_object": true,
+  "all_same_player_object": true,
+  "driver_object_code_bytes": 2052,
+  "driver_state_bytes": 20,
+  "review_player_total_bss_bytes": 48,
+  "maximum_peak_dbfs": -3.591,
+  "maximum_rom_bytes": 31168800,
+  "all_roms_within32MiB": true,
+  "mean_update_percent_frame_range": [
+    0.07121,
+    0.07157
+  ],
+  "maximum_update_cycles": 925,
+  "maximum_update_percent_frame": 0.3293,
+  "source_music_seconds_single_set": 1689.8618049886622,
+  "native_rom_hashes": {
+    "R01": "cf59c468e11642bcccdcaedb7fd7e5ab9c30a1ab9836ced08687c4c08552dc24",
+    "R02": "8c806c46fa0d16f540fafb7210775a6373f43a9bb0a9bfb8876c3029a32c800f",
+    "R03": "e849914b5223969a1cbde154ad4bb7ecb9208cd85180c4bd6cc3c179b91e2370",
+    "R04": "814ee0263e7efa706b62dfed6eb508cecceb4420eda53ffbfb08a019055c1d57",
+    "R05": "c3bdcf7ecdf9ba2f1032b2f483029b5196721ae90fadb66776a0f900872efa5c",
+    "R06": "75530930f3ffede7a0e1dbc808c6a36da870f48f1b2b54bdfb9af9f7b4c7215f",
+    "R07": "269b812b0a058ce9fa975c5f9e641550898dac1059b5f9a59b3601d30bffab58",
+    "R08": "3b54fbb05baef1e01a0aca5e21fb46a636b19247cf6884ca0d3c00b221905fdb"
+  },
+  "instrument_rom_hashes": {
+    "I01": "211e5a4415edb569bd194176e2ef79f97ffcd0ba99c67fc09ed6289d48ba35c6",
+    "I02": "23fa18cc6cc10fee5ea933b37deb76d0cf378fba443a0d5f20379ff9da2f42f9",
+    "I03": "6694bb9b08c24341451c513d493f5238d023233197fe39f4de69f751f3f6aeb8",
+    "I04": "3fe0755eaf0b6c37b0acf21d75c5d0fa05330095a1a34a5da68b94a82b65dcae",
+    "I05": "0cd5b602938376b5c7f836d2383a449ec6753ba51c554112399d317a53ed930d",
+    "I06": "e1bc0698eaca3519315c5f5b09fbddfb4d07dcb06053be722d0afbef29429f4d",
+    "I07": "228d72db64f377e3df896e5b3feb78977fa95a6b0a5ca387eceeb6810cac2cbc",
+    "I08": "c50832756160d60fcbe2418cfd566de041984d59d9829562ce0fa5d657883e45"
+  },
+  "scope": "Unprocessed mGBA0.10.5 output. Driver CPU excludes DMA bus use outside update calls. Source intros and tails remain in both versions; silence is measured, not discarded."
+}

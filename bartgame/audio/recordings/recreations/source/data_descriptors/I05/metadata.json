@@ -1,0 +1,113 @@
+{
+  "source_id": 5,
+  "id": 1,
+  "code": "I05",
+  "kind": "instrument",
+  "title": "Friday Night",
+  "slug": "friday-night",
+  "file_name": "Friday Night.mp3",
+  "source_sha256": "cab947e8fd629f24e5c536c13b490cbe62ac575ede9aa8e56c733435e484e848",
+  "seconds": 237.63301587301586,
+  "total_frames": 14194,
+  "rate": 32768,
+  "timer_reload": 65024,
+  "sound_bias": 512,
+  "channels": 2,
+  "bits": 8,
+  "source_samples_per_channel": 7786759,
+  "stored_samples_per_channel": 7795376,
+  "pcm_bytes": 15590752,
+  "pcm_sha256": [
+    "4110338dcaeeeb2dc2da389aa6a698911b3884c1abd91612e85200ecc60509fd",
+    "b91d643be82422aaba5b13344e68b0038c62f1e0d64f5adb56705d7b7830ca12"
+  ],
+  "quantization": "signed8-bit, nearest step with full TPDF dither; digital silence kept zero",
+  "no_source_trimming": true,
+  "no_time_stretch": true,
+  "extra": {
+    "automatic_transcription": true,
+    "source_waveform_in_render": false,
+    "render_metadata": {
+      "soundfont": "FluidR3_GM.sf2",
+      "fluidsynth": "2.4.4",
+      "sample_rate": 32768,
+      "main_samples": 7786759,
+      "parts": [
+        {
+          "part": "melody",
+          "channel": 0,
+          "drum": false,
+          "requested_program": 4,
+          "bank": 0,
+          "program": 4,
+          "preset_name": "Rhodes EP",
+          "pan": -0.06,
+          "volume": 0.8,
+          "fallback": null
+        },
+        {
+          "part": "counter",
+          "channel": 1,
+          "drum": false,
+          "requested_program": 27,
+          "bank": 0,
+          "program": 27,
+          "preset_name": "Clean Guitar",
+          "pan": 0.24,
+          "volume": 0.58,
+          "fallback": null
+        },
+        {
+          "part": "harmony",
+          "channel": 2,
+          "drum": false,
+          "requested_program": 90,
+          "bank": 0,
+          "program": 90,
+          "preset_name": "Polysynth",
+          "pan": -0.22,
+          "volume": 0.44,
+          "fallback": null
+        },
+        {
+          "part": "bass",
+          "channel": 3,
+          "drum": false,
+          "requested_program": 38,
+          "bank": 0,
+          "program": 38,
+          "preset_name": "Synth Bass 1",
+          "pan": 0.0,
+          "volume": 0.91,
+          "fallback": null
+        },
+        {
+          "part": "drums",
+          "channel": 9,
+          "drum": true,
+          "requested_program": 25,
+          "bank": 128,
+          "program": 25,
+          "preset_name": "TR-808",
+          "pan": 0.0,
+          "volume": 0.7,
+          "fallback": null
+        }
+      ],
+      "note_count": 5820,
+      "bass_bend_automation_events": 11796,
+      "bass_pitchbend_range_semitones": 12,
+      "other_parts_pitchbend": "equal-tempered note centers",
+      "scheduled_sample_accuracy": 1,
+      "synth_internal_block_samples": 64,
+      "gain": 0.28,
+      "symbolic_only": true,
+      "source_audio_in_render": false,
+      "master_gain": 2.451465074934301,
+      "master_peak": 0.8698133230209351,
+      "master_rms": 0.13000000291419359
+    },
+    "common_mix_gain": 1.0,
+    "quiet_tail_gate_threshold": 0.0001
+  }
+}

@@ -1,0 +1,113 @@
+{
+  "source_id": 3,
+  "id": 1,
+  "code": "I03",
+  "kind": "instrument",
+  "title": "The Weeknd with Playboi Carti \u2014 Timeless",
+  "slug": "timeless",
+  "file_name": "The Weeknd \u2013 Timeless with Playboi Carti (Official Music Video).mp3",
+  "source_sha256": "a6c6558c231cdd1bc2bba238ec7e039ba8ed383c36df1fe7e8f0cab98c148cfb",
+  "seconds": 256.11609977324264,
+  "total_frames": 15298,
+  "rate": 32768,
+  "timer_reload": 65024,
+  "sound_bias": 512,
+  "channels": 2,
+  "bits": 8,
+  "source_samples_per_channel": 8392412,
+  "stored_samples_per_channel": 8401072,
+  "pcm_bytes": 16802144,
+  "pcm_sha256": [
+    "7624305712b42d5934bede5dcc235806452a2a818ba8c1d3ebcb25f32a62d748",
+    "94cbc574f253404476361bbce464e358db78dbd40abac273e3c1e5a9c75ed322"
+  ],
+  "quantization": "signed8-bit, nearest step with full TPDF dither; digital silence kept zero",
+  "no_source_trimming": true,
+  "no_time_stretch": true,
+  "extra": {
+    "automatic_transcription": true,
+    "source_waveform_in_render": false,
+    "render_metadata": {
+      "soundfont": "FluidR3_GM.sf2",
+      "fluidsynth": "2.4.4",
+      "sample_rate": 32768,
+      "main_samples": 8392412,
+      "parts": [
+        {
+          "part": "melody",
+          "channel": 0,
+          "drum": false,
+          "requested_program": 5,
+          "bank": 0,
+          "program": 5,
+          "preset_name": "Legend EP 2",
+          "pan": -0.06,
+          "volume": 0.8,
+          "fallback": null
+        },
+        {
+          "part": "counter",
+          "channel": 1,
+          "drum": false,
+          "requested_program": 98,
+          "bank": 0,
+          "program": 98,
+          "preset_name": "Crystal",
+          "pan": 0.24,
+          "volume": 0.58,
+          "fallback": null
+        },
+        {
+          "part": "harmony",
+          "channel": 2,
+          "drum": false,
+          "requested_program": 90,
+          "bank": 0,
+          "program": 90,
+          "preset_name": "Polysynth",
+          "pan": -0.22,
+          "volume": 0.44,
+          "fallback": null
+        },
+        {
+          "part": "bass",
+          "channel": 3,
+          "drum": false,
+          "requested_program": 38,
+          "bank": 0,
+          "program": 38,
+          "preset_name": "Synth Bass 1",
+          "pan": 0.0,
+          "volume": 0.91,
+          "fallback": null
+        },
+        {
+          "part": "drums",
+          "channel": 9,
+          "drum": true,
+          "requested_program": 25,
+          "bank": 128,
+          "program": 25,
+          "preset_name": "TR-808",
+          "pan": 0.0,
+          "volume": 0.7,
+          "fallback": null
+        }
+      ],
+      "note_count": 5382,
+      "bass_bend_automation_events": 13176,
+      "bass_pitchbend_range_semitones": 12,
+      "other_parts_pitchbend": "equal-tempered note centers",
+      "scheduled_sample_accuracy": 1,
+      "synth_internal_block_samples": 64,
+      "gain": 0.28,
+      "symbolic_only": true,
+      "source_audio_in_render": false,
+      "master_gain": 2.2497811493444964,
+      "master_peak": 0.7941673994064331,
+      "master_rms": 0.12999999898148915
+    },
+    "common_mix_gain": 1.0,
+    "quiet_tail_gate_threshold": 0.0001
+  }
+}

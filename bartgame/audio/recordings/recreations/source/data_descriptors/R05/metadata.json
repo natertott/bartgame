@@ -1,0 +1,33 @@
+{
+  "source_id": 5,
+  "id": 1,
+  "code": "R05",
+  "kind": "original_mix",
+  "title": "Friday Night",
+  "slug": "friday-night",
+  "file_name": "Friday Night.mp3",
+  "source_sha256": "cab947e8fd629f24e5c536c13b490cbe62ac575ede9aa8e56c733435e484e848",
+  "seconds": 237.63301587301586,
+  "total_frames": 14194,
+  "rate": 65536,
+  "timer_reload": 65280,
+  "sound_bias": 16896,
+  "channels": 2,
+  "bits": 8,
+  "source_samples_per_channel": 15573517,
+  "stored_samples_per_channel": 15582560,
+  "pcm_bytes": 31165120,
+  "pcm_sha256": [
+    "a268966e72a32f20b1720905455b85df2b99c2615125d57e142ecc785c1b669d",
+    "c13d62c97fcd98ca32e5b0bcd09135a4ef39c2bf70bba3c4ab222aa56a64e03d"
+  ],
+  "quantization": "signed8-bit, nearest step with full TPDF dither; digital silence kept zero",
+  "no_source_trimming": true,
+  "no_time_stretch": true,
+  "extra": {
+    "common_gain": 0.6384508124002514,
+    "source_decoded_peak": 1.2199245691299438,
+    "source_performance_and_vocals": true,
+    "rate_limit_note": null
+  }
+}

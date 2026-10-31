@@ -1,0 +1,169 @@
+{
+  "conclusion": "Default blip-buffer high-pass coloration dominates bass-heavy waveform-difference metric; comparisonafter modeling that expectedfilter substantially improves. No exportedPCM orcapturedWAV changed.",
+  "songs": [
+    {
+      "code": "R01",
+      "raw_source_comparison": {
+        "gain": 0.4246525436341997,
+        "correlation": 0.9464320721745432,
+        "gain_fitted_snr_db": 9.34034363368275
+      },
+      "after_blip_expected_hpf": {
+        "gain": 0.4733359538603762,
+        "correlation": 0.9996538630249712,
+        "gain_fitted_snr_db": 31.594971984393737
+      },
+      "highpassed100Hz_comparison": {
+        "gain": 0.4607370753167417,
+        "correlation": 0.9919021675544977,
+        "gain_fitted_snr_db": 17.853006984466585
+      },
+      "measured_transfer_bands": [
+        {
+          "hz": [
+            25,
+            40
+          ],
+          "gain": 0.4385944031130438,
+          "phase_degrees": 22.695588725780635
+        },
+        {
+          "hz": [
+            40,
+            60
+          ],
+          "gain": 0.4542108003285401,
+          "phase_degrees": 17.031714625377333
+        },
+        {
+          "hz": [
+            60,
+            100
+          ],
+          "gain": 0.46801652086465045,
+          "phase_degrees": 9.835119091663337
+        },
+        {
+          "hz": [
+            100,
+            200
+          ],
+          "gain": 0.4721933580115482,
+          "phase_degrees": 6.391198732870887
+        },
+        {
+          "hz": [
+            200,
+            1000
+          ],
+          "gain": 0.47349485305311656,
+          "phase_degrees": 0.45720704849398985
+        },
+        {
+          "hz": [
+            1000,
+            5000
+          ],
+          "gain": 0.46367885306161843,
+          "phase_degrees": -1.5751734505628898
+        },
+        {
+          "hz": [
+            5000,
+            12000
+          ],
+          "gain": 0.40496538563886336,
+          "phase_degrees": -6.267005371210096
+        }
+      ],
+      "blip_hpf": {
+        "source_file": "mgba/src/third-party/blip_buf/blip_buf.c",
+        "bass_shift": 9,
+        "coefficient": 0.998046875,
+        "corner_hz": 13.708462871782391
+      }
+    },
+    {
+      "code": "R08",
+      "raw_source_comparison": {
+        "gain": 0.42700459669440416,
+        "correlation": 0.9508974883274494,
+        "gain_fitted_snr_db": 9.745211425868682
+      },
+      "after_blip_expected_hpf": {
+        "gain": 0.471088083194094,
+        "correlation": 0.9990762068618005,
+        "gain_fitted_snr_db": 27.32793353534506
+      },
+      "highpassed100Hz_comparison": {
+        "gain": 0.4595124104398035,
+        "correlation": 0.9933802213034373,
+        "gain_fitted_snr_db": 18.73797094499559
+      },
+      "measured_transfer_bands": [
+        {
+          "hz": [
+            25,
+            40
+          ],
+          "gain": 0.4386479438692667,
+          "phase_degrees": 22.61420721237558
+        },
+        {
+          "hz": [
+            40,
+            60
+          ],
+          "gain": 0.45682740994863347,
+          "phase_degrees": 16.048204526783188
+        },
+        {
+          "hz": [
+            60,
+            100
+          ],
+          "gain": 0.46798962137985317,
+          "phase_degrees": 9.978786556653061
+        },
+        {
+          "hz": [
+            100,
+            200
+          ],
+          "gain": 0.4724948230346194,
+          "phase_degrees": 6.144053232085282
+        },
+        {
+          "hz": [
+            200,
+            1000
+          ],
+          "gain": 0.47418691986029127,
+          "phase_degrees": 1.4318636659043564
+        },
+        {
+          "hz": [
+            1000,
+            5000
+          ],
+          "gain": 0.46194497547415686,
+          "phase_degrees": -0.3610023731815196
+        },
+        {
+          "hz": [
+            5000,
+            12000
+          ],
+          "gain": 0.38770631830423247,
+          "phase_degrees": -2.997659486991615
+        }
+      ],
+      "blip_hpf": {
+        "source_file": "mgba/src/third-party/blip_buf/blip_buf.c",
+        "bass_shift": 9,
+        "coefficient": 0.998046875,
+        "corner_hz": 13.708462871782391
+      }
+    }
+  ]
+}

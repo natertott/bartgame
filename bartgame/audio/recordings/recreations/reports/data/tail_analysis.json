@@ -1,0 +1,1599 @@
+{
+  "status": "complete",
+  "scope": "Read-only measurements; source timing/content unchanged. Thresholded near-silence is not exact silence. Exact signed8 zero gaps can be omitted only if playback emits the identical zero samples for the identical duration.",
+  "threshold_definition": "Tail continues only while both native floating-point channels have absolute amplitude<=threshold. Per-channel counts also included.",
+  "storage_estimate_note": "Sparse-gap estimates assume16-byte metadata per omitted stereo gap and retain the original8192-sample/channel guard plus64KiB player budget. They do not include a new scheduler/decompressor implementation.",
+  "sources": [
+    {
+      "id": 1,
+      "display_title": "Playboi Carti \u2014 ILoveUIHateU",
+      "source_sha256": "4ca52a37ed48702bb7fe2d3a7e793926bb5344d2c274440867dfbe27f9a566f6",
+      "native_sample_rate_hz": 44100,
+      "native_decoded_frames": 5969920,
+      "native_float32_last_frame": [
+        0.0,
+        0.0
+      ],
+      "native_float32_threshold_tails": {
+        "exact_zero": {
+          "amplitude_threshold": 0,
+          "tail_frames_both_channels": 6065,
+          "tail_seconds_both_channels": 0.1375283446712018,
+          "tail_frames_per_channel": [
+            6065,
+            6065
+          ],
+          "tail_seconds_per_channel": [
+            0.1375283446712018,
+            0.1375283446712018
+          ],
+          "theoretical_65536_stereo_tail_bytes": 18026.115192743764
+        },
+        "one_over_32768": {
+          "amplitude_threshold": 3.0517578125e-05,
+          "tail_frames_both_channels": 8302,
+          "tail_seconds_both_channels": 0.18825396825396826,
+          "tail_frames_per_channel": [
+            8302,
+            8306
+          ],
+          "tail_seconds_per_channel": [
+            0.18825396825396826,
+            0.18834467120181406
+          ],
+          "theoretical_65536_stereo_tail_bytes": 24674.824126984127
+        },
+        "one_over_65536": {
+          "amplitude_threshold": 1.52587890625e-05,
+          "tail_frames_both_channels": 8251,
+          "tail_seconds_both_channels": 0.18709750566893424,
+          "tail_frames_per_channel": [
+            8260,
+            8251
+          ],
+          "tail_seconds_per_channel": [
+            0.1873015873015873,
+            0.18709750566893424
+          ],
+          "theoretical_65536_stereo_tail_bytes": 24523.24426303855
+        },
+        "minus80_dbfs": {
+          "amplitude_threshold": 0.0001,
+          "tail_frames_both_channels": 8363,
+          "tail_seconds_both_channels": 0.18963718820861677,
+          "tail_frames_per_channel": [
+            8364,
+            8363
+          ],
+          "tail_seconds_per_channel": [
+            0.18965986394557824,
+            0.18963718820861677
+          ],
+          "theoretical_65536_stereo_tail_bytes": 24856.125532879818
+        },
+        "minus70_dbfs": {
+          "amplitude_threshold": 0.00031622776601683794,
+          "tail_frames_both_channels": 8396,
+          "tail_seconds_both_channels": 0.19038548752834467,
+          "tail_frames_per_channel": [
+            8396,
+            8407
+          ],
+          "tail_seconds_per_channel": [
+            0.19038548752834467,
+            0.19063492063492063
+          ],
+          "theoretical_65536_stereo_tail_bytes": 24954.206621315192
+        }
+      },
+      "illustrative_native_signed16_rounded_zero_tail_frames": 8251,
+      "illustrative_native_signed16_rounded_zero_tail_seconds": 0.18709750566893424,
+      "target65536_signed8_stereo": {
+        "conversion": "ffmpeg normal gapless decode, resample65536Hz, stereo, pcm_s8; no normalization or added dither requested",
+        "source_content_samples_per_channel": 8871762,
+        "raw_bytes": 17743524,
+        "exact_zero_tail_frames": 13324,
+        "exact_zero_tail_seconds": 0.20330810546875,
+        "exact_zero_tail_stereo_bytes": 26648,
+        "total_both_channel_zero_frames": 23385,
+        "longest_zero_run_frames": 13324,
+        "longest_zero_run_seconds": 0.20330810546875,
+        "original_ceilframe_guarded_pcm_rom_bytes": 17761120,
+        "original_guarded_plus64k_player_bytes": 17826656,
+        "excess_over32mib_bytes": 0,
+        "sparse_zero_gap_estimates": {
+          "16": {
+            "minimum_zero_run_frames": 16,
+            "minimum_zero_run_seconds": 0.000244140625,
+            "qualifying_runs": 9,
+            "omitted_zero_frames": 18450,
+            "omitted_stereo_bytes": 36900,
+            "assumed_descriptor_bytes": 144,
+            "net_estimated_rom_saving_bytes": 36756,
+            "estimated_rom_with_original_guard_and_64k_player_bytes": 17789900,
+            "fits_32mib_with_original_guard_and_64k_player": true
+          },
+          "64": {
+            "minimum_zero_run_frames": 64,
+            "minimum_zero_run_seconds": 0.0009765625,
+            "qualifying_runs": 3,
+            "omitted_zero_frames": 18277,
+            "omitted_stereo_bytes": 36554,
+            "assumed_descriptor_bytes": 48,
+            "net_estimated_rom_saving_bytes": 36506,
+            "estimated_rom_with_original_guard_and_64k_player_bytes": 17790150,
+            "fits_32mib_with_original_guard_and_64k_player": true
+          },
+          "256": {
+            "minimum_zero_run_frames": 256,
+            "minimum_zero_run_seconds": 0.00390625,
+            "qualifying_runs": 2,
+            "omitted_zero_frames": 18194,
+            "omitted_stereo_bytes": 36388,
+            "assumed_descriptor_bytes": 32,
+            "net_estimated_rom_saving_bytes": 36356,
+            "estimated_rom_with_original_guard_and_64k_player_bytes": 17790300,
+            "fits_32mib_with_original_guard_and_64k_player": true
+          },
+          "1024": {
+            "minimum_zero_run_frames": 1024,
+            "minimum_zero_run_seconds": 0.015625,
+            "qualifying_runs": 2,
+            "omitted_zero_frames": 18194,
+            "omitted_stereo_bytes": 36388,
+            "assumed_descriptor_bytes": 32,
+            "net_estimated_rom_saving_bytes": 36356,
+            "estimated_rom_with_original_guard_and_64k_player_bytes": 17790300,
+            "fits_32mib_with_original_guard_and_64k_player": true
+          },
+          "4096": {
+            "minimum_zero_run_frames": 4096,
+            "minimum_zero_run_seconds": 0.0625,
+            "qualifying_runs": 2,
+            "omitted_zero_frames": 18194,
+            "omitted_stereo_bytes": 36388,
+            "assumed_descriptor_bytes": 32,
+            "net_estimated_rom_saving_bytes": 36356,
+            "estimated_rom_with_original_guard_and_64k_player_bytes": 17790300,
+            "fits_32mib_with_original_guard_and_64k_player": true
+          },
+          "8192": {
+            "minimum_zero_run_frames": 8192,
+            "minimum_zero_run_seconds": 0.125,
+            "qualifying_runs": 1,
+            "omitted_zero_frames": 13324,
+            "omitted_stereo_bytes": 26648,
+            "assumed_descriptor_bytes": 16,
+            "net_estimated_rom_saving_bytes": 26632,
+            "estimated_rom_with_original_guard_and_64k_player_bytes": 17800024,
+            "fits_32mib_with_original_guard_and_64k_player": true
+          },
+          "65536": {
+            "minimum_zero_run_frames": 65536,
+            "minimum_zero_run_seconds": 1.0,
+            "qualifying_runs": 0,
+            "omitted_zero_frames": 0,
+            "omitted_stereo_bytes": 0,
+            "assumed_descriptor_bytes": 0,
+            "net_estimated_rom_saving_bytes": 0,
+            "estimated_rom_with_original_guard_and_64k_player_bytes": 17826656,
+            "fits_32mib_with_original_guard_and_64k_player": true
+          }
+        },
+        "illustrative_lossless_compression": {
+          "zlib_level1": {
+            "bytes": 14287641,
+            "ratio": 0.805231,
+            "saved_bytes": 3455883,
+            "fits_with_16k_guard_and_64k_player": true,
+            "note": "Offline storage measurement only; zlib is not automatically suitable for this GBA engine and needs runtime decompression/buffers."
+          },
+          "zlib_level6": {
+            "bytes": 14454488,
+            "ratio": 0.814635,
+            "saved_bytes": 3289036,
+            "fits_with_16k_guard_and_64k_player": true,
+            "note": "Offline storage measurement only; zlib is not automatically suitable for this GBA engine and needs runtime decompression/buffers."
+          }
+        }
+      }
+    },
+    {
+      "id": 2,
+      "display_title": "Desire \u2014 Under Your Spell",
+      "source_sha256": "53f3f243e68fb7d244af1917ea0ec11cb06172c8db01a2488730edd2ca4799d3",
+      "native_sample_rate_hz": 44100,
+      "native_decoded_frames": 10290176,
+      "native_float32_last_frame": [
+        0.0,
+        0.0
+      ],
+      "native_float32_threshold_tails": {
+        "exact_zero": {
+          "amplitude_threshold": 0,
+          "tail_frames_both_channels": 99057,
+          "tail_seconds_both_channels": 2.2461904761904763,
+          "tail_frames_per_channel": [
+            99057,
+            99057
+          ],
+          "tail_seconds_per_channel": [
+            2.2461904761904763,
+            2.2461904761904763
+          ],
+          "theoretical_65536_stereo_tail_bytes": 294412.6780952381
+        },
+        "one_over_32768": {
+          "amplitude_threshold": 3.0517578125e-05,
+          "tail_frames_both_channels": 102224,
+          "tail_seconds_both_channels": 2.3180045351473924,
+          "tail_frames_per_channel": [
+            102288,
+            102224
+          ],
+          "tail_seconds_per_channel": [
+            2.319455782312925,
+            2.3180045351473924
+          ],
+          "theoretical_65536_stereo_tail_bytes": 303825.490430839
+        },
+        "one_over_65536": {
+          "amplitude_threshold": 1.52587890625e-05,
+          "tail_frames_both_channels": 101445,
+          "tail_seconds_both_channels": 2.300340136054422,
+          "tail_frames_per_channel": [
+            101445,
+            101498
+          ],
+          "tail_seconds_per_channel": [
+            2.300340136054422,
+            2.3015419501133785
+          ],
+          "theoretical_65536_stereo_tail_bytes": 301510.1823129252
+        },
+        "minus80_dbfs": {
+          "amplitude_threshold": 0.0001,
+          "tail_frames_both_channels": 140309,
+          "tail_seconds_both_channels": 3.181609977324263,
+          "tail_frames_per_channel": [
+            141083,
+            140309
+          ],
+          "tail_seconds_per_channel": [
+            3.1991609977324265,
+            3.181609977324263
+          ],
+          "theoretical_65536_stereo_tail_bytes": 417019.9829478458
+        },
+        "minus70_dbfs": {
+          "amplitude_threshold": 0.00031622776601683794,
+          "tail_frames_both_channels": 172962,
+          "tail_seconds_both_channels": 3.922040816326531,
+          "tail_frames_per_channel": [
+            172962,
+            175327
+          ],
+          "tail_seconds_per_channel": [
+            3.922040816326531,
+            3.9756689342403626
+          ],
+          "theoretical_65536_stereo_tail_bytes": 514069.73387755104
+        }
+      },
+      "illustrative_native_signed16_rounded_zero_tail_frames": 101445,
+      "illustrative_native_signed16_rounded_zero_tail_seconds": 2.300340136054422,
+      "target65536_signed8_stereo": {
+        "conversion": "ffmpeg normal gapless decode, resample65536Hz, stereo, pcm_s8; no normalization or added dither requested",
+        "source_content_samples_per_channel": 15291995,
+        "raw_bytes": 30583990,
+        "exact_zero_tail_frames": 284155,
+        "exact_zero_tail_seconds": 4.3358612060546875,
+        "exact_zero_tail_stereo_bytes": 568310,
+        "total_both_channel_zero_frames": 411737,
+        "longest_zero_run_frames": 284155,
+        "longest_zero_run_seconds": 4.3358612060546875,
+        "original_ceilframe_guarded_pcm_rom_bytes": 30601152,
+        "original_guarded_plus64k_player_bytes": 30666688,
+        "excess_over32mib_bytes": 0,
+        "sparse_zero_gap_estimates": {
+          "16": {
+            "minimum_zero_run_frames": 16,
+            "minimum_zero_run_seconds": 0.000244140625,
+            "qualifying_runs": 1615,
+            "omitted_zero_frames": 360743,
+            "omitted_stereo_bytes": 721486,
+            "assumed_descriptor_bytes": 25840,
+            "net_estimated_rom_saving_bytes": 695646,
+            "estimated_rom_with_original_guard_and_64k_player_bytes": 29971042,
+            "fits_32mib_with_original_guard_and_64k_player": true
+          },
+          "64": {
+            "minimum_zero_run_frames": 64,
+            "minimum_zero_run_seconds": 0.0009765625,
+            "qualifying_runs": 167,
+            "omitted_zero_frames": 316678,
+            "omitted_stereo_bytes": 633356,
+            "assumed_descriptor_bytes": 2672,
+            "net_estimated_rom_saving_bytes": 630684,
+            "estimated_rom_with_original_guard_and_64k_player_bytes": 30036004,
+            "fits_32mib_with_original_guard_and_64k_player": true
+          },
+          "256": {
+            "minimum_zero_run_frames": 256,
+            "minimum_zero_run_seconds": 0.00390625,
+            "qualifying_runs": 7,
+            "omitted_zero_frames": 301808,
+            "omitted_stereo_bytes": 603616,
+            "assumed_descriptor_bytes": 112,
+            "net_estimated_rom_saving_bytes": 603504,
+            "estimated_rom_with_original_guard_and_64k_player_bytes": 30063184,
+            "fits_32mib_with_original_guard_and_64k_player": true
+          },
+          "1024": {
+            "minimum_zero_run_frames": 1024,
+            "minimum_zero_run_seconds": 0.015625,
+            "qualifying_runs": 4,
+            "omitted_zero_frames": 299824,
+            "omitted_stereo_bytes": 599648,
+            "assumed_descriptor_bytes": 64,
+            "net_estimated_rom_saving_bytes": 599584,
+            "estimated_rom_with_original_guard_and_64k_player_bytes": 30067104,
+            "fits_32mib_with_original_guard_and_64k_player": true
+          },
+          "4096": {
+            "minimum_zero_run_frames": 4096,
+            "minimum_zero_run_seconds": 0.0625,
+            "qualifying_runs": 2,
+            "omitted_zero_frames": 296519,
+            "omitted_stereo_bytes": 593038,
+            "assumed_descriptor_bytes": 32,
+            "net_estimated_rom_saving_bytes": 593006,
+            "estimated_rom_with_original_guard_and_64k_player_bytes": 30073682,
+            "fits_32mib_with_original_guard_and_64k_player": true
+          },
+          "8192": {
+            "minimum_zero_run_frames": 8192,
+            "minimum_zero_run_seconds": 0.125,
+            "qualifying_runs": 2,
+            "omitted_zero_frames": 296519,
+            "omitted_stereo_bytes": 593038,
+            "assumed_descriptor_bytes": 32,
+            "net_estimated_rom_saving_bytes": 593006,
+            "estimated_rom_with_original_guard_and_64k_player_bytes": 30073682,
+            "fits_32mib_with_original_guard_and_64k_player": true
+          },
+          "65536": {
+            "minimum_zero_run_frames": 65536,
+            "minimum_zero_run_seconds": 1.0,
+            "qualifying_runs": 1,
+            "omitted_zero_frames": 284155,
+            "omitted_stereo_bytes": 568310,
+            "assumed_descriptor_bytes": 16,
+            "net_estimated_rom_saving_bytes": 568294,
+            "estimated_rom_with_original_guard_and_64k_player_bytes": 30098394,
+            "fits_32mib_with_original_guard_and_64k_player": true
+          }
+        },
+        "illustrative_lossless_compression": {
+          "zlib_level1": {
+            "bytes": 21552470,
+            "ratio": 0.704698,
+            "saved_bytes": 9031520,
+            "fits_with_16k_guard_and_64k_player": true,
+            "note": "Offline storage measurement only; zlib is not automatically suitable for this GBA engine and needs runtime decompression/buffers."
+          },
+          "zlib_level6": {
+            "bytes": 21169332,
+            "ratio": 0.69217,
+            "saved_bytes": 9414658,
+            "fits_with_16k_guard_and_64k_player": true,
+            "note": "Offline storage measurement only; zlib is not automatically suitable for this GBA engine and needs runtime decompression/buffers."
+          }
+        }
+      }
+    },
+    {
+      "id": 3,
+      "display_title": "The Weeknd with Playboi Carti \u2014 Timeless",
+      "source_sha256": "a6c6558c231cdd1bc2bba238ec7e039ba8ed383c36df1fe7e8f0cab98c148cfb",
+      "native_sample_rate_hz": 44100,
+      "native_decoded_frames": 11294720,
+      "native_float32_last_frame": [
+        -1.9779655303931305e-16,
+        -5.158333409396344e-14
+      ],
+      "native_float32_threshold_tails": {
+        "exact_zero": {
+          "amplitude_threshold": 0,
+          "tail_frames_both_channels": 0,
+          "tail_seconds_both_channels": 0.0,
+          "tail_frames_per_channel": [
+            0,
+            0
+          ],
+          "tail_seconds_per_channel": [
+            0.0,
+            0.0
+          ],
+          "theoretical_65536_stereo_tail_bytes": 0.0
+        },
+        "one_over_32768": {
+          "amplitude_threshold": 3.0517578125e-05,
+          "tail_frames_both_channels": 2082,
+          "tail_seconds_both_channels": 0.047210884353741496,
+          "tail_frames_per_channel": [
+            2085,
+            2082
+          ],
+          "tail_seconds_per_channel": [
+            0.04727891156462585,
+            0.047210884353741496
+          ],
+          "theoretical_65536_stereo_tail_bytes": 6188.025034013605
+        },
+        "one_over_65536": {
+          "amplitude_threshold": 1.52587890625e-05,
+          "tail_frames_both_channels": 1574,
+          "tail_seconds_both_channels": 0.03569160997732426,
+          "tail_frames_per_channel": [
+            1796,
+            1574
+          ],
+          "tail_seconds_per_channel": [
+            0.04072562358276644,
+            0.03569160997732426
+          ],
+          "theoretical_65536_stereo_tail_bytes": 4678.170702947846
+        },
+        "minus80_dbfs": {
+          "amplitude_threshold": 0.0001,
+          "tail_frames_both_channels": 2347,
+          "tail_seconds_both_channels": 0.05321995464852608,
+          "tail_frames_per_channel": [
+            2387,
+            2347
+          ],
+          "tail_seconds_per_channel": [
+            0.05412698412698413,
+            0.05321995464852608
+          ],
+          "theoretical_65536_stereo_tail_bytes": 6975.64589569161
+        },
+        "minus70_dbfs": {
+          "amplitude_threshold": 0.00031622776601683794,
+          "tail_frames_both_channels": 2431,
+          "tail_seconds_both_channels": 0.05512471655328798,
+          "tail_frames_per_channel": [
+            2432,
+            2431
+          ],
+          "tail_seconds_per_channel": [
+            0.05514739229024943,
+            0.05512471655328798
+          ],
+          "theoretical_65536_stereo_tail_bytes": 7225.306848072562
+        }
+      },
+      "illustrative_native_signed16_rounded_zero_tail_frames": 1574,
+      "illustrative_native_signed16_rounded_zero_tail_seconds": 0.03569160997732426,
+      "target65536_signed8_stereo": {
+        "conversion": "ffmpeg normal gapless decode, resample65536Hz, stereo, pcm_s8; no normalization or added dither requested",
+        "source_content_samples_per_channel": 16784825,
+        "raw_bytes": 33569650,
+        "exact_zero_tail_frames": 3627,
+        "exact_zero_tail_seconds": 0.0553436279296875,
+        "exact_zero_tail_stereo_bytes": 7254,
+        "total_both_channel_zero_frames": 84934,
+        "longest_zero_run_frames": 3991,
+        "longest_zero_run_seconds": 0.0608978271484375,
+        "original_ceilframe_guarded_pcm_rom_bytes": 33587872,
+        "original_guarded_plus64k_player_bytes": 33653408,
+        "excess_over32mib_bytes": 98976,
+        "sparse_zero_gap_estimates": {
+          "16": {
+            "minimum_zero_run_frames": 16,
+            "minimum_zero_run_seconds": 0.000244140625,
+            "qualifying_runs": 1111,
+            "omitted_zero_frames": 59648,
+            "omitted_stereo_bytes": 119296,
+            "assumed_descriptor_bytes": 17776,
+            "net_estimated_rom_saving_bytes": 101520,
+            "estimated_rom_with_original_guard_and_64k_player_bytes": 33551888,
+            "fits_32mib_with_original_guard_and_64k_player": true
+          },
+          "64": {
+            "minimum_zero_run_frames": 64,
+            "minimum_zero_run_seconds": 0.0009765625,
+            "qualifying_runs": 172,
+            "omitted_zero_frames": 35072,
+            "omitted_stereo_bytes": 70144,
+            "assumed_descriptor_bytes": 2752,
+            "net_estimated_rom_saving_bytes": 67392,
+            "estimated_rom_with_original_guard_and_64k_player_bytes": 33586016,
+            "fits_32mib_with_original_guard_and_64k_player": false
+          },
+          "256": {
+            "minimum_zero_run_frames": 256,
+            "minimum_zero_run_seconds": 0.00390625,
+            "qualifying_runs": 18,
+            "omitted_zero_frames": 17728,
+            "omitted_stereo_bytes": 35456,
+            "assumed_descriptor_bytes": 288,
+            "net_estimated_rom_saving_bytes": 35168,
+            "estimated_rom_with_original_guard_and_64k_player_bytes": 33618240,
+            "fits_32mib_with_original_guard_and_64k_player": false
+          },
+          "1024": {
+            "minimum_zero_run_frames": 1024,
+            "minimum_zero_run_seconds": 0.015625,
+            "qualifying_runs": 4,
+            "omitted_zero_frames": 9955,
+            "omitted_stereo_bytes": 19910,
+            "assumed_descriptor_bytes": 64,
+            "net_estimated_rom_saving_bytes": 19846,
+            "estimated_rom_with_original_guard_and_64k_player_bytes": 33633562,
+            "fits_32mib_with_original_guard_and_64k_player": false
+          },
+          "4096": {
+            "minimum_zero_run_frames": 4096,
+            "minimum_zero_run_seconds": 0.0625,
+            "qualifying_runs": 0,
+            "omitted_zero_frames": 0,
+            "omitted_stereo_bytes": 0,
+            "assumed_descriptor_bytes": 0,
+            "net_estimated_rom_saving_bytes": 0,
+            "estimated_rom_with_original_guard_and_64k_player_bytes": 33653408,
+            "fits_32mib_with_original_guard_and_64k_player": false
+          },
+          "8192": {
+            "minimum_zero_run_frames": 8192,
+            "minimum_zero_run_seconds": 0.125,
+            "qualifying_runs": 0,
+            "omitted_zero_frames": 0,
+            "omitted_stereo_bytes": 0,
+            "assumed_descriptor_bytes": 0,
+            "net_estimated_rom_saving_bytes": 0,
+            "estimated_rom_with_original_guard_and_64k_player_bytes": 33653408,
+            "fits_32mib_with_original_guard_and_64k_player": false
+          },
+          "65536": {
+            "minimum_zero_run_frames": 65536,
+            "minimum_zero_run_seconds": 1.0,
+            "qualifying_runs": 0,
+            "omitted_zero_frames": 0,
+            "omitted_stereo_bytes": 0,
+            "assumed_descriptor_bytes": 0,
+            "net_estimated_rom_saving_bytes": 0,
+            "estimated_rom_with_original_guard_and_64k_player_bytes": 33653408,
+            "fits_32mib_with_original_guard_and_64k_player": false
+          }
+        },
+        "illustrative_lossless_compression": {
+          "zlib_level1": {
+            "bytes": 26965458,
+            "ratio": 0.803269,
+            "saved_bytes": 6604192,
+            "fits_with_16k_guard_and_64k_player": true,
+            "note": "Offline storage measurement only; zlib is not automatically suitable for this GBA engine and needs runtime decompression/buffers."
+          },
+          "zlib_level6": {
+            "bytes": 27140708,
+            "ratio": 0.808489,
+            "saved_bytes": 6428942,
+            "fits_with_16k_guard_and_64k_player": true,
+            "note": "Offline storage measurement only; zlib is not automatically suitable for this GBA engine and needs runtime decompression/buffers."
+          }
+        },
+        "sparse_zero_runs_aligned_to16_samples": {
+          "16": {
+            "minimum_run_frames": 16,
+            "gaps": 667,
+            "omitted_frames": 43040,
+            "net_estimated_saving_bytes": 75408,
+            "estimated_rom_bytes": 33578000,
+            "fits_32mib_with_64k_player": false,
+            "maximum_player_and_scheduler_bytes_to_fit32mib": 41968
+          },
+          "64": {
+            "minimum_run_frames": 64,
+            "gaps": 156,
+            "omitted_frames": 31840,
+            "net_estimated_saving_bytes": 61184,
+            "estimated_rom_bytes": 33592224,
+            "fits_32mib_with_64k_player": false,
+            "maximum_player_and_scheduler_bytes_to_fit32mib": 27744
+          },
+          "256": {
+            "minimum_run_frames": 256,
+            "gaps": 16,
+            "omitted_frames": 17008,
+            "net_estimated_saving_bytes": 33760,
+            "estimated_rom_bytes": 33619648,
+            "fits_32mib_with_64k_player": false,
+            "maximum_player_and_scheduler_bytes_to_fit32mib": 320
+          },
+          "1024": {
+            "minimum_run_frames": 1024,
+            "gaps": 4,
+            "omitted_frames": 9904,
+            "net_estimated_saving_bytes": 19744,
+            "estimated_rom_bytes": 33633664,
+            "fits_32mib_with_64k_player": false,
+            "maximum_player_and_scheduler_bytes_to_fit32mib": -13696
+          }
+        }
+      }
+    },
+    {
+      "id": 4,
+      "display_title": "Snow Strippers \u2014 Under Your Spell",
+      "source_sha256": "b7ee7f9898cac7725c8723cd65e92790df46a3ead3d38788e46319f28010cd31",
+      "native_sample_rate_hz": 48000,
+      "native_decoded_frames": 10487808,
+      "native_float32_last_frame": [
+        1.719871960403907e-07,
+        2.023030447162455e-06
+      ],
+      "native_float32_threshold_tails": {
+        "exact_zero": {
+          "amplitude_threshold": 0,
+          "tail_frames_both_channels": 0,
+          "tail_seconds_both_channels": 0.0,
+          "tail_frames_per_channel": [
+            0,
+            0
+          ],
+          "tail_seconds_per_channel": [
+            0.0,
+            0.0
+          ],
+          "theoretical_65536_stereo_tail_bytes": 0.0
+        },
+        "one_over_32768": {
+          "amplitude_threshold": 3.0517578125e-05,
+          "tail_frames_both_channels": 41,
+          "tail_seconds_both_channels": 0.0008541666666666667,
+          "tail_frames_per_channel": [
+            133,
+            41
+          ],
+          "tail_seconds_per_channel": [
+            0.0027708333333333335,
+            0.0008541666666666667
+          ],
+          "theoretical_65536_stereo_tail_bytes": 111.95733333333334
+        },
+        "one_over_65536": {
+          "amplitude_threshold": 1.52587890625e-05,
+          "tail_frames_both_channels": 20,
+          "tail_seconds_both_channels": 0.0004166666666666667,
+          "tail_frames_per_channel": [
+            20,
+            29
+          ],
+          "tail_seconds_per_channel": [
+            0.0004166666666666667,
+            0.0006041666666666667
+          ],
+          "theoretical_65536_stereo_tail_bytes": 54.61333333333334
+        },
+        "minus80_dbfs": {
+          "amplitude_threshold": 0.0001,
+          "tail_frames_both_channels": 506,
+          "tail_seconds_both_channels": 0.010541666666666666,
+          "tail_frames_per_channel": [
+            708,
+            506
+          ],
+          "tail_seconds_per_channel": [
+            0.01475,
+            0.010541666666666666
+          ],
+          "theoretical_65536_stereo_tail_bytes": 1381.7173333333333
+        },
+        "minus70_dbfs": {
+          "amplitude_threshold": 0.00031622776601683794,
+          "tail_frames_both_channels": 1895,
+          "tail_seconds_both_channels": 0.03947916666666667,
+          "tail_frames_per_channel": [
+            2334,
+            1895
+          ],
+          "tail_seconds_per_channel": [
+            0.048625,
+            0.03947916666666667
+          ],
+          "theoretical_65536_stereo_tail_bytes": 5174.613333333334
+        }
+      },
+      "illustrative_native_signed16_rounded_zero_tail_frames": 20,
+      "illustrative_native_signed16_rounded_zero_tail_seconds": 0.0004166666666666667,
+      "target65536_signed8_stereo": {
+        "conversion": "ffmpeg normal gapless decode, resample65536Hz, stereo, pcm_s8; no normalization or added dither requested",
+        "source_content_samples_per_channel": 14319354,
+        "raw_bytes": 28638708,
+        "exact_zero_tail_frames": 23811,
+        "exact_zero_tail_seconds": 0.3633270263671875,
+        "exact_zero_tail_stereo_bytes": 47622,
+        "total_both_channel_zero_frames": 131237,
+        "longest_zero_run_frames": 23811,
+        "longest_zero_run_seconds": 0.3633270263671875,
+        "original_ceilframe_guarded_pcm_rom_bytes": 28656832,
+        "original_guarded_plus64k_player_bytes": 28722368,
+        "excess_over32mib_bytes": 0,
+        "sparse_zero_gap_estimates": {
+          "16": {
+            "minimum_zero_run_frames": 16,
+            "minimum_zero_run_seconds": 0.000244140625,
+            "qualifying_runs": 1117,
+            "omitted_zero_frames": 83804,
+            "omitted_stereo_bytes": 167608,
+            "assumed_descriptor_bytes": 17872,
+            "net_estimated_rom_saving_bytes": 149736,
+            "estimated_rom_with_original_guard_and_64k_player_bytes": 28572632,
+            "fits_32mib_with_original_guard_and_64k_player": true
+          },
+          "64": {
+            "minimum_zero_run_frames": 64,
+            "minimum_zero_run_seconds": 0.0009765625,
+            "qualifying_runs": 180,
+            "omitted_zero_frames": 57422,
+            "omitted_stereo_bytes": 114844,
+            "assumed_descriptor_bytes": 2880,
+            "net_estimated_rom_saving_bytes": 111964,
+            "estimated_rom_with_original_guard_and_64k_player_bytes": 28610404,
+            "fits_32mib_with_original_guard_and_64k_player": true
+          },
+          "256": {
+            "minimum_zero_run_frames": 256,
+            "minimum_zero_run_seconds": 0.00390625,
+            "qualifying_runs": 21,
+            "omitted_zero_frames": 41155,
+            "omitted_stereo_bytes": 82310,
+            "assumed_descriptor_bytes": 336,
+            "net_estimated_rom_saving_bytes": 81974,
+            "estimated_rom_with_original_guard_and_64k_player_bytes": 28640394,
+            "fits_32mib_with_original_guard_and_64k_player": true
+          },
+          "1024": {
+            "minimum_zero_run_frames": 1024,
+            "minimum_zero_run_seconds": 0.015625,
+            "qualifying_runs": 5,
+            "omitted_zero_frames": 34219,
+            "omitted_stereo_bytes": 68438,
+            "assumed_descriptor_bytes": 80,
+            "net_estimated_rom_saving_bytes": 68358,
+            "estimated_rom_with_original_guard_and_64k_player_bytes": 28654010,
+            "fits_32mib_with_original_guard_and_64k_player": true
+          },
+          "4096": {
+            "minimum_zero_run_frames": 4096,
+            "minimum_zero_run_seconds": 0.0625,
+            "qualifying_runs": 2,
+            "omitted_zero_frames": 27980,
+            "omitted_stereo_bytes": 55960,
+            "assumed_descriptor_bytes": 32,
+            "net_estimated_rom_saving_bytes": 55928,
+            "estimated_rom_with_original_guard_and_64k_player_bytes": 28666440,
+            "fits_32mib_with_original_guard_and_64k_player": true
+          },
+          "8192": {
+            "minimum_zero_run_frames": 8192,
+            "minimum_zero_run_seconds": 0.125,
+            "qualifying_runs": 1,
+            "omitted_zero_frames": 23811,
+            "omitted_stereo_bytes": 47622,
+            "assumed_descriptor_bytes": 16,
+            "net_estimated_rom_saving_bytes": 47606,
+            "estimated_rom_with_original_guard_and_64k_player_bytes": 28674762,
+            "fits_32mib_with_original_guard_and_64k_player": true
+          },
+          "65536": {
+            "minimum_zero_run_frames": 65536,
+            "minimum_zero_run_seconds": 1.0,
+            "qualifying_runs": 0,
+            "omitted_zero_frames": 0,
+            "omitted_stereo_bytes": 0,
+            "assumed_descriptor_bytes": 0,
+            "net_estimated_rom_saving_bytes": 0,
+            "estimated_rom_with_original_guard_and_64k_player_bytes": 28722368,
+            "fits_32mib_with_original_guard_and_64k_player": true
+          }
+        },
+        "illustrative_lossless_compression": {
+          "zlib_level1": {
+            "bytes": 25323724,
+            "ratio": 0.884248,
+            "saved_bytes": 3314984,
+            "fits_with_16k_guard_and_64k_player": true,
+            "note": "Offline storage measurement only; zlib is not automatically suitable for this GBA engine and needs runtime decompression/buffers."
+          },
+          "zlib_level6": {
+            "bytes": 25716365,
+            "ratio": 0.897958,
+            "saved_bytes": 2922343,
+            "fits_with_16k_guard_and_64k_player": true,
+            "note": "Offline storage measurement only; zlib is not automatically suitable for this GBA engine and needs runtime decompression/buffers."
+          }
+        }
+      }
+    },
+    {
+      "id": 5,
+      "display_title": "Friday Night",
+      "source_sha256": "cab947e8fd629f24e5c536c13b490cbe62ac575ede9aa8e56c733435e484e848",
+      "native_sample_rate_hz": 44100,
+      "native_decoded_frames": 10479616,
+      "native_float32_last_frame": [
+        0.0,
+        0.0
+      ],
+      "native_float32_threshold_tails": {
+        "exact_zero": {
+          "amplitude_threshold": 0,
+          "tail_frames_both_channels": 34481,
+          "tail_seconds_both_channels": 0.7818820861678004,
+          "tail_frames_per_channel": [
+            34481,
+            34481
+          ],
+          "tail_seconds_per_channel": [
+            0.7818820861678004,
+            0.7818820861678004
+          ],
+          "theoretical_65536_stereo_tail_bytes": 102482.84879818594
+        },
+        "one_over_32768": {
+          "amplitude_threshold": 3.0517578125e-05,
+          "tail_frames_both_channels": 34770,
+          "tail_seconds_both_channels": 0.7884353741496599,
+          "tail_frames_per_channel": [
+            34772,
+            34770
+          ],
+          "tail_seconds_per_channel": [
+            0.7884807256235827,
+            0.7884353741496599
+          ],
+          "theoretical_65536_stereo_tail_bytes": 103341.80136054422
+        },
+        "one_over_65536": {
+          "amplitude_threshold": 1.52587890625e-05,
+          "tail_frames_both_channels": 34731,
+          "tail_seconds_both_channels": 0.7875510204081633,
+          "tail_frames_per_channel": [
+            34758,
+            34731
+          ],
+          "tail_seconds_per_channel": [
+            0.7881632653061225,
+            0.7875510204081633
+          ],
+          "theoretical_65536_stereo_tail_bytes": 103225.88734693878
+        },
+        "minus80_dbfs": {
+          "amplitude_threshold": 0.0001,
+          "tail_frames_both_channels": 34894,
+          "tail_seconds_both_channels": 0.7912471655328798,
+          "tail_frames_per_channel": [
+            34932,
+            34894
+          ],
+          "tail_seconds_per_channel": [
+            0.792108843537415,
+            0.7912471655328798
+          ],
+          "theoretical_65536_stereo_tail_bytes": 103710.34848072562
+        },
+        "minus70_dbfs": {
+          "amplitude_threshold": 0.00031622776601683794,
+          "tail_frames_both_channels": 35565,
+          "tail_seconds_both_channels": 0.8064625850340136,
+          "tail_frames_per_channel": [
+            35572,
+            35565
+          ],
+          "tail_seconds_per_channel": [
+            0.8066213151927437,
+            0.8064625850340136
+          ],
+          "theoretical_65536_stereo_tail_bytes": 105704.66394557823
+        }
+      },
+      "illustrative_native_signed16_rounded_zero_tail_frames": 34731,
+      "illustrative_native_signed16_rounded_zero_tail_seconds": 0.7875510204081633,
+      "target65536_signed8_stereo": {
+        "conversion": "ffmpeg normal gapless decode, resample65536Hz, stereo, pcm_s8; no normalization or added dither requested",
+        "source_content_samples_per_channel": 15573518,
+        "raw_bytes": 31147036,
+        "exact_zero_tail_frames": 81803,
+        "exact_zero_tail_seconds": 1.2482147216796875,
+        "exact_zero_tail_stereo_bytes": 163606,
+        "total_both_channel_zero_frames": 263392,
+        "longest_zero_run_frames": 81803,
+        "longest_zero_run_seconds": 1.2482147216796875,
+        "original_ceilframe_guarded_pcm_rom_bytes": 31165120,
+        "original_guarded_plus64k_player_bytes": 31230656,
+        "excess_over32mib_bytes": 0,
+        "sparse_zero_gap_estimates": {
+          "16": {
+            "minimum_zero_run_frames": 16,
+            "minimum_zero_run_seconds": 0.000244140625,
+            "qualifying_runs": 1057,
+            "omitted_zero_frames": 216836,
+            "omitted_stereo_bytes": 433672,
+            "assumed_descriptor_bytes": 16912,
+            "net_estimated_rom_saving_bytes": 416760,
+            "estimated_rom_with_original_guard_and_64k_player_bytes": 30813896,
+            "fits_32mib_with_original_guard_and_64k_player": true
+          },
+          "64": {
+            "minimum_zero_run_frames": 64,
+            "minimum_zero_run_seconds": 0.0009765625,
+            "qualifying_runs": 186,
+            "omitted_zero_frames": 191714,
+            "omitted_stereo_bytes": 383428,
+            "assumed_descriptor_bytes": 2976,
+            "net_estimated_rom_saving_bytes": 380452,
+            "estimated_rom_with_original_guard_and_64k_player_bytes": 30850204,
+            "fits_32mib_with_original_guard_and_64k_player": true
+          },
+          "256": {
+            "minimum_zero_run_frames": 256,
+            "minimum_zero_run_seconds": 0.00390625,
+            "qualifying_runs": 47,
+            "omitted_zero_frames": 177614,
+            "omitted_stereo_bytes": 355228,
+            "assumed_descriptor_bytes": 752,
+            "net_estimated_rom_saving_bytes": 354476,
+            "estimated_rom_with_original_guard_and_64k_player_bytes": 30876180,
+            "fits_32mib_with_original_guard_and_64k_player": true
+          },
+          "1024": {
+            "minimum_zero_run_frames": 1024,
+            "minimum_zero_run_seconds": 0.015625,
+            "qualifying_runs": 30,
+            "omitted_zero_frames": 170394,
+            "omitted_stereo_bytes": 340788,
+            "assumed_descriptor_bytes": 480,
+            "net_estimated_rom_saving_bytes": 340308,
+            "estimated_rom_with_original_guard_and_64k_player_bytes": 30890348,
+            "fits_32mib_with_original_guard_and_64k_player": true
+          },
+          "4096": {
+            "minimum_zero_run_frames": 4096,
+            "minimum_zero_run_seconds": 0.0625,
+            "qualifying_runs": 5,
+            "omitted_zero_frames": 108493,
+            "omitted_stereo_bytes": 216986,
+            "assumed_descriptor_bytes": 80,
+            "net_estimated_rom_saving_bytes": 216906,
+            "estimated_rom_with_original_guard_and_64k_player_bytes": 31013750,
+            "fits_32mib_with_original_guard_and_64k_player": true
+          },
+          "8192": {
+            "minimum_zero_run_frames": 8192,
+            "minimum_zero_run_seconds": 0.125,
+            "qualifying_runs": 2,
+            "omitted_zero_frames": 92617,
+            "omitted_stereo_bytes": 185234,
+            "assumed_descriptor_bytes": 32,
+            "net_estimated_rom_saving_bytes": 185202,
+            "estimated_rom_with_original_guard_and_64k_player_bytes": 31045454,
+            "fits_32mib_with_original_guard_and_64k_player": true
+          },
+          "65536": {
+            "minimum_zero_run_frames": 65536,
+            "minimum_zero_run_seconds": 1.0,
+            "qualifying_runs": 1,
+            "omitted_zero_frames": 81803,
+            "omitted_stereo_bytes": 163606,
+            "assumed_descriptor_bytes": 16,
+            "net_estimated_rom_saving_bytes": 163590,
+            "estimated_rom_with_original_guard_and_64k_player_bytes": 31067066,
+            "fits_32mib_with_original_guard_and_64k_player": true
+          }
+        },
+        "illustrative_lossless_compression": {
+          "zlib_level1": {
+            "bytes": 22246435,
+            "ratio": 0.714239,
+            "saved_bytes": 8900601,
+            "fits_with_16k_guard_and_64k_player": true,
+            "note": "Offline storage measurement only; zlib is not automatically suitable for this GBA engine and needs runtime decompression/buffers."
+          },
+          "zlib_level6": {
+            "bytes": 21779759,
+            "ratio": 0.699256,
+            "saved_bytes": 9367277,
+            "fits_with_16k_guard_and_64k_player": true,
+            "note": "Offline storage measurement only; zlib is not automatically suitable for this GBA engine and needs runtime decompression/buffers."
+          }
+        }
+      }
+    },
+    {
+      "id": 6,
+      "display_title": "Daft Punk \u2014 Voyager",
+      "source_sha256": "516fcea5e925e132262483610d6a86b2fa9e047cc66c8a894e36ed51512dc51f",
+      "native_sample_rate_hz": 44100,
+      "native_decoded_frames": 10048512,
+      "native_float32_last_frame": [
+        0.0,
+        0.0
+      ],
+      "native_float32_threshold_tails": {
+        "exact_zero": {
+          "amplitude_threshold": 0,
+          "tail_frames_both_channels": 91825,
+          "tail_seconds_both_channels": 2.0821995464852607,
+          "tail_frames_per_channel": [
+            91825,
+            91825
+          ],
+          "tail_seconds_per_channel": [
+            2.0821995464852607,
+            2.0821995464852607
+          ],
+          "theoretical_65536_stereo_tail_bytes": 272918.0589569161
+        },
+        "one_over_32768": {
+          "amplitude_threshold": 3.0517578125e-05,
+          "tail_frames_both_channels": 94233,
+          "tail_seconds_both_channels": 2.1368027210884355,
+          "tail_frames_per_channel": [
+            94233,
+            94311
+          ],
+          "tail_seconds_per_channel": [
+            2.1368027210884355,
+            2.138571428571429
+          ],
+          "theoretical_65536_stereo_tail_bytes": 280075.0062585034
+        },
+        "one_over_65536": {
+          "amplitude_threshold": 1.52587890625e-05,
+          "tail_frames_both_channels": 94232,
+          "tail_seconds_both_channels": 2.136780045351474,
+          "tail_frames_per_channel": [
+            94232,
+            94310
+          ],
+          "tail_seconds_per_channel": [
+            2.136780045351474,
+            2.1385487528344673
+          ],
+          "theoretical_65536_stereo_tail_bytes": 280072.0341043084
+        },
+        "minus80_dbfs": {
+          "amplitude_threshold": 0.0001,
+          "tail_frames_both_channels": 104622,
+          "tail_seconds_both_channels": 2.3723809523809525,
+          "tail_frames_per_channel": [
+            104733,
+            104622
+          ],
+          "tail_seconds_per_channel": [
+            2.3748979591836736,
+            2.3723809523809525
+          ],
+          "theoretical_65536_stereo_tail_bytes": 310952.7161904762
+        },
+        "minus70_dbfs": {
+          "amplitude_threshold": 0.00031622776601683794,
+          "tail_frames_both_channels": 106607,
+          "tail_seconds_both_channels": 2.417392290249433,
+          "tail_frames_per_channel": [
+            117537,
+            106607
+          ],
+          "tail_seconds_per_channel": [
+            2.665238095238095,
+            2.417392290249433
+          ],
+          "theoretical_65536_stereo_tail_bytes": 316852.4422675737
+        }
+      },
+      "illustrative_native_signed16_rounded_zero_tail_frames": 94232,
+      "illustrative_native_signed16_rounded_zero_tail_seconds": 2.136780045351474,
+      "target65536_signed8_stereo": {
+        "conversion": "ffmpeg normal gapless decode, resample65536Hz, stereo, pcm_s8; no normalization or added dither requested",
+        "source_content_samples_per_channel": 14932864,
+        "raw_bytes": 29865728,
+        "exact_zero_tail_frames": 224083,
+        "exact_zero_tail_seconds": 3.4192352294921875,
+        "exact_zero_tail_stereo_bytes": 448166,
+        "total_both_channel_zero_frames": 637527,
+        "longest_zero_run_frames": 224083,
+        "longest_zero_run_seconds": 3.4192352294921875,
+        "original_ceilframe_guarded_pcm_rom_bytes": 29883552,
+        "original_guarded_plus64k_player_bytes": 29949088,
+        "excess_over32mib_bytes": 0,
+        "sparse_zero_gap_estimates": {
+          "16": {
+            "minimum_zero_run_frames": 16,
+            "minimum_zero_run_seconds": 0.000244140625,
+            "qualifying_runs": 4545,
+            "omitted_zero_frames": 484807,
+            "omitted_stereo_bytes": 969614,
+            "assumed_descriptor_bytes": 72720,
+            "net_estimated_rom_saving_bytes": 896894,
+            "estimated_rom_with_original_guard_and_64k_player_bytes": 29052194,
+            "fits_32mib_with_original_guard_and_64k_player": true
+          },
+          "64": {
+            "minimum_zero_run_frames": 64,
+            "minimum_zero_run_seconds": 0.0009765625,
+            "qualifying_runs": 719,
+            "omitted_zero_frames": 374860,
+            "omitted_stereo_bytes": 749720,
+            "assumed_descriptor_bytes": 11504,
+            "net_estimated_rom_saving_bytes": 738216,
+            "estimated_rom_with_original_guard_and_64k_player_bytes": 29210872,
+            "fits_32mib_with_original_guard_and_64k_player": true
+          },
+          "256": {
+            "minimum_zero_run_frames": 256,
+            "minimum_zero_run_seconds": 0.00390625,
+            "qualifying_runs": 67,
+            "omitted_zero_frames": 307513,
+            "omitted_stereo_bytes": 615026,
+            "assumed_descriptor_bytes": 1072,
+            "net_estimated_rom_saving_bytes": 613954,
+            "estimated_rom_with_original_guard_and_64k_player_bytes": 29335134,
+            "fits_32mib_with_original_guard_and_64k_player": true
+          },
+          "1024": {
+            "minimum_zero_run_frames": 1024,
+            "minimum_zero_run_seconds": 0.015625,
+            "qualifying_runs": 12,
+            "omitted_zero_frames": 285326,
+            "omitted_stereo_bytes": 570652,
+            "assumed_descriptor_bytes": 192,
+            "net_estimated_rom_saving_bytes": 570460,
+            "estimated_rom_with_original_guard_and_64k_player_bytes": 29378628,
+            "fits_32mib_with_original_guard_and_64k_player": true
+          },
+          "4096": {
+            "minimum_zero_run_frames": 4096,
+            "minimum_zero_run_seconds": 0.0625,
+            "qualifying_runs": 6,
+            "omitted_zero_frames": 276114,
+            "omitted_stereo_bytes": 552228,
+            "assumed_descriptor_bytes": 96,
+            "net_estimated_rom_saving_bytes": 552132,
+            "estimated_rom_with_original_guard_and_64k_player_bytes": 29396956,
+            "fits_32mib_with_original_guard_and_64k_player": true
+          },
+          "8192": {
+            "minimum_zero_run_frames": 8192,
+            "minimum_zero_run_seconds": 0.125,
+            "qualifying_runs": 4,
+            "omitted_zero_frames": 263605,
+            "omitted_stereo_bytes": 527210,
+            "assumed_descriptor_bytes": 64,
+            "net_estimated_rom_saving_bytes": 527146,
+            "estimated_rom_with_original_guard_and_64k_player_bytes": 29421942,
+            "fits_32mib_with_original_guard_and_64k_player": true
+          },
+          "65536": {
+            "minimum_zero_run_frames": 65536,
+            "minimum_zero_run_seconds": 1.0,
+            "qualifying_runs": 1,
+            "omitted_zero_frames": 224083,
+            "omitted_stereo_bytes": 448166,
+            "assumed_descriptor_bytes": 16,
+            "net_estimated_rom_saving_bytes": 448150,
+            "estimated_rom_with_original_guard_and_64k_player_bytes": 29500938,
+            "fits_32mib_with_original_guard_and_64k_player": true
+          }
+        },
+        "illustrative_lossless_compression": {
+          "zlib_level1": {
+            "bytes": 17789391,
+            "ratio": 0.595646,
+            "saved_bytes": 12076337,
+            "fits_with_16k_guard_and_64k_player": true,
+            "note": "Offline storage measurement only; zlib is not automatically suitable for this GBA engine and needs runtime decompression/buffers."
+          },
+          "zlib_level6": {
+            "bytes": 16911928,
+            "ratio": 0.566265,
+            "saved_bytes": 12953800,
+            "fits_with_16k_guard_and_64k_player": true,
+            "note": "Offline storage measurement only; zlib is not automatically suitable for this GBA engine and needs runtime decompression/buffers."
+          }
+        }
+      }
+    },
+    {
+      "id": 7,
+      "display_title": "Sunday Evening Pain",
+      "source_sha256": "44e6f0e8b969d799d9a2a840112fce37dc2d28dc3b25a5ff2f8f031689c6e602",
+      "native_sample_rate_hz": 44100,
+      "native_decoded_frames": 7973312,
+      "native_float32_last_frame": [
+        0.0,
+        0.0
+      ],
+      "native_float32_threshold_tails": {
+        "exact_zero": {
+          "amplitude_threshold": 0,
+          "tail_frames_both_channels": 369,
+          "tail_seconds_both_channels": 0.00836734693877551,
+          "tail_frames_per_channel": [
+            369,
+            369
+          ],
+          "tail_seconds_per_channel": [
+            0.00836734693877551,
+            0.00836734693877551
+          ],
+          "theoretical_65536_stereo_tail_bytes": 1096.7248979591836
+        },
+        "one_over_32768": {
+          "amplitude_threshold": 3.0517578125e-05,
+          "tail_frames_both_channels": 833,
+          "tail_seconds_both_channels": 0.01888888888888889,
+          "tail_frames_per_channel": [
+            833,
+            833
+          ],
+          "tail_seconds_per_channel": [
+            0.01888888888888889,
+            0.01888888888888889
+          ],
+          "theoretical_65536_stereo_tail_bytes": 2475.8044444444445
+        },
+        "one_over_65536": {
+          "amplitude_threshold": 1.52587890625e-05,
+          "tail_frames_both_channels": 740,
+          "tail_seconds_both_channels": 0.016780045351473923,
+          "tail_frames_per_channel": [
+            740,
+            740
+          ],
+          "tail_seconds_per_channel": [
+            0.016780045351473923,
+            0.016780045351473923
+          ],
+          "theoretical_65536_stereo_tail_bytes": 2199.39410430839
+        },
+        "minus80_dbfs": {
+          "amplitude_threshold": 0.0001,
+          "tail_frames_both_channels": 6571,
+          "tail_seconds_both_channels": 0.14900226757369614,
+          "tail_frames_per_channel": [
+            6571,
+            6571
+          ],
+          "tail_seconds_per_channel": [
+            0.14900226757369614,
+            0.14900226757369614
+          ],
+          "theoretical_65536_stereo_tail_bytes": 19530.0252154195
+        },
+        "minus70_dbfs": {
+          "amplitude_threshold": 0.00031622776601683794,
+          "tail_frames_both_channels": 24970,
+          "tail_seconds_both_channels": 0.5662131519274376,
+          "tail_frames_per_channel": [
+            24970,
+            25199
+          ],
+          "tail_seconds_per_channel": [
+            0.5662131519274376,
+            0.5714058956916099
+          ],
+          "theoretical_65536_stereo_tail_bytes": 74214.6902494331
+        }
+      },
+      "illustrative_native_signed16_rounded_zero_tail_frames": 740,
+      "illustrative_native_signed16_rounded_zero_tail_seconds": 0.016780045351473923,
+      "target65536_signed8_stereo": {
+        "conversion": "ffmpeg normal gapless decode, resample65536Hz, stereo, pcm_s8; no normalization or added dither requested",
+        "source_content_samples_per_channel": 11848957,
+        "raw_bytes": 23697914,
+        "exact_zero_tail_frames": 48144,
+        "exact_zero_tail_seconds": 0.734619140625,
+        "exact_zero_tail_stereo_bytes": 96288,
+        "total_both_channel_zero_frames": 105719,
+        "longest_zero_run_frames": 48144,
+        "longest_zero_run_seconds": 0.734619140625,
+        "original_ceilframe_guarded_pcm_rom_bytes": 23714816,
+        "original_guarded_plus64k_player_bytes": 23780352,
+        "excess_over32mib_bytes": 0,
+        "sparse_zero_gap_estimates": {
+          "16": {
+            "minimum_zero_run_frames": 16,
+            "minimum_zero_run_seconds": 0.000244140625,
+            "qualifying_runs": 260,
+            "omitted_zero_frames": 75147,
+            "omitted_stereo_bytes": 150294,
+            "assumed_descriptor_bytes": 4160,
+            "net_estimated_rom_saving_bytes": 146134,
+            "estimated_rom_with_original_guard_and_64k_player_bytes": 23634218,
+            "fits_32mib_with_original_guard_and_64k_player": true
+          },
+          "64": {
+            "minimum_zero_run_frames": 64,
+            "minimum_zero_run_seconds": 0.0009765625,
+            "qualifying_runs": 29,
+            "omitted_zero_frames": 69226,
+            "omitted_stereo_bytes": 138452,
+            "assumed_descriptor_bytes": 464,
+            "net_estimated_rom_saving_bytes": 137988,
+            "estimated_rom_with_original_guard_and_64k_player_bytes": 23642364,
+            "fits_32mib_with_original_guard_and_64k_player": true
+          },
+          "256": {
+            "minimum_zero_run_frames": 256,
+            "minimum_zero_run_seconds": 0.00390625,
+            "qualifying_runs": 10,
+            "omitted_zero_frames": 67331,
+            "omitted_stereo_bytes": 134662,
+            "assumed_descriptor_bytes": 160,
+            "net_estimated_rom_saving_bytes": 134502,
+            "estimated_rom_with_original_guard_and_64k_player_bytes": 23645850,
+            "fits_32mib_with_original_guard_and_64k_player": true
+          },
+          "1024": {
+            "minimum_zero_run_frames": 1024,
+            "minimum_zero_run_seconds": 0.015625,
+            "qualifying_runs": 9,
+            "omitted_zero_frames": 67068,
+            "omitted_stereo_bytes": 134136,
+            "assumed_descriptor_bytes": 144,
+            "net_estimated_rom_saving_bytes": 133992,
+            "estimated_rom_with_original_guard_and_64k_player_bytes": 23646360,
+            "fits_32mib_with_original_guard_and_64k_player": true
+          },
+          "4096": {
+            "minimum_zero_run_frames": 4096,
+            "minimum_zero_run_seconds": 0.0625,
+            "qualifying_runs": 1,
+            "omitted_zero_frames": 48144,
+            "omitted_stereo_bytes": 96288,
+            "assumed_descriptor_bytes": 16,
+            "net_estimated_rom_saving_bytes": 96272,
+            "estimated_rom_with_original_guard_and_64k_player_bytes": 23684080,
+            "fits_32mib_with_original_guard_and_64k_player": true
+          },
+          "8192": {
+            "minimum_zero_run_frames": 8192,
+            "minimum_zero_run_seconds": 0.125,
+            "qualifying_runs": 1,
+            "omitted_zero_frames": 48144,
+            "omitted_stereo_bytes": 96288,
+            "assumed_descriptor_bytes": 16,
+            "net_estimated_rom_saving_bytes": 96272,
+            "estimated_rom_with_original_guard_and_64k_player_bytes": 23684080,
+            "fits_32mib_with_original_guard_and_64k_player": true
+          },
+          "65536": {
+            "minimum_zero_run_frames": 65536,
+            "minimum_zero_run_seconds": 1.0,
+            "qualifying_runs": 0,
+            "omitted_zero_frames": 0,
+            "omitted_stereo_bytes": 0,
+            "assumed_descriptor_bytes": 0,
+            "net_estimated_rom_saving_bytes": 0,
+            "estimated_rom_with_original_guard_and_64k_player_bytes": 23780352,
+            "fits_32mib_with_original_guard_and_64k_player": true
+          }
+        },
+        "illustrative_lossless_compression": {
+          "zlib_level1": {
+            "bytes": 16344639,
+            "ratio": 0.689708,
+            "saved_bytes": 7353275,
+            "fits_with_16k_guard_and_64k_player": true,
+            "note": "Offline storage measurement only; zlib is not automatically suitable for this GBA engine and needs runtime decompression/buffers."
+          },
+          "zlib_level6": {
+            "bytes": 15841045,
+            "ratio": 0.668457,
+            "saved_bytes": 7856869,
+            "fits_with_16k_guard_and_64k_player": true,
+            "note": "Offline storage measurement only; zlib is not automatically suitable for this GBA engine and needs runtime decompression/buffers."
+          }
+        }
+      }
+    },
+    {
+      "id": 8,
+      "display_title": "Drake \u2014 What\u2019s Next",
+      "source_sha256": "48bd5ff1c08e53e2a69fb89cbdddcf4f94095d2b4c0b9deb8ee9dc94e86436eb",
+      "native_sample_rate_hz": 44100,
+      "native_decoded_frames": 8830976,
+      "native_float32_last_frame": [
+        0.0,
+        0.0
+      ],
+      "native_float32_threshold_tails": {
+        "exact_zero": {
+          "amplitude_threshold": 0,
+          "tail_frames_both_channels": 650097,
+          "tail_seconds_both_channels": 14.741428571428571,
+          "tail_frames_per_channel": [
+            650097,
+            650097
+          ],
+          "tail_seconds_per_channel": [
+            14.741428571428571,
+            14.741428571428571
+          ],
+          "theoretical_65536_stereo_tail_bytes": 1932188.5257142857
+        },
+        "one_over_32768": {
+          "amplitude_threshold": 3.0517578125e-05,
+          "tail_frames_both_channels": 652649,
+          "tail_seconds_both_channels": 14.799297052154195,
+          "tail_frames_per_channel": [
+            652649,
+            652847
+          ],
+          "tail_seconds_per_channel": [
+            14.799297052154195,
+            14.803786848072562
+          ],
+          "theoretical_65536_stereo_tail_bytes": 1939773.4632199546
+        },
+        "one_over_65536": {
+          "amplitude_threshold": 1.52587890625e-05,
+          "tail_frames_both_channels": 652473,
+          "tail_seconds_both_channels": 14.795306122448979,
+          "tail_frames_per_channel": [
+            652473,
+            652524
+          ],
+          "tail_seconds_per_channel": [
+            14.795306122448979,
+            14.796462585034014
+          ],
+          "theoretical_65536_stereo_tail_bytes": 1939250.3640816326
+        },
+        "minus80_dbfs": {
+          "amplitude_threshold": 0.0001,
+          "tail_frames_both_channels": 652997,
+          "tail_seconds_both_channels": 14.80718820861678,
+          "tail_frames_per_channel": [
+            652997,
+            653012
+          ],
+          "tail_seconds_per_channel": [
+            14.80718820861678,
+            14.807528344671201
+          ],
+          "theoretical_65536_stereo_tail_bytes": 1940807.7728798187
+        },
+        "minus70_dbfs": {
+          "amplitude_threshold": 0.00031622776601683794,
+          "tail_frames_both_channels": 653135,
+          "tail_seconds_both_channels": 14.81031746031746,
+          "tail_frames_per_channel": [
+            653135,
+            653180
+          ],
+          "tail_seconds_per_channel": [
+            14.81031746031746,
+            14.811337868480726
+          ],
+          "theoretical_65536_stereo_tail_bytes": 1941217.9301587301
+        }
+      },
+      "illustrative_native_signed16_rounded_zero_tail_frames": 652473,
+      "illustrative_native_signed16_rounded_zero_tail_seconds": 14.795306122448979,
+      "target65536_signed8_stereo": {
+        "conversion": "ffmpeg normal gapless decode, resample65536Hz, stereo, pcm_s8; no normalization or added dither requested",
+        "source_content_samples_per_channel": 13123512,
+        "raw_bytes": 26247024,
+        "exact_zero_tail_frames": 971149,
+        "exact_zero_tail_seconds": 14.818557739257812,
+        "exact_zero_tail_stereo_bytes": 1942298,
+        "total_both_channel_zero_frames": 1218321,
+        "longest_zero_run_frames": 971149,
+        "longest_zero_run_seconds": 14.818557739257812,
+        "original_ceilframe_guarded_pcm_rom_bytes": 26264800,
+        "original_guarded_plus64k_player_bytes": 26330336,
+        "excess_over32mib_bytes": 0,
+        "sparse_zero_gap_estimates": {
+          "16": {
+            "minimum_zero_run_frames": 16,
+            "minimum_zero_run_seconds": 0.000244140625,
+            "qualifying_runs": 1903,
+            "omitted_zero_frames": 1186657,
+            "omitted_stereo_bytes": 2373314,
+            "assumed_descriptor_bytes": 30448,
+            "net_estimated_rom_saving_bytes": 2342866,
+            "estimated_rom_with_original_guard_and_64k_player_bytes": 23987470,
+            "fits_32mib_with_original_guard_and_64k_player": true
+          },
+          "64": {
+            "minimum_zero_run_frames": 64,
+            "minimum_zero_run_seconds": 0.0009765625,
+            "qualifying_runs": 514,
+            "omitted_zero_frames": 1143620,
+            "omitted_stereo_bytes": 2287240,
+            "assumed_descriptor_bytes": 8224,
+            "net_estimated_rom_saving_bytes": 2279016,
+            "estimated_rom_with_original_guard_and_64k_player_bytes": 24051320,
+            "fits_32mib_with_original_guard_and_64k_player": true
+          },
+          "256": {
+            "minimum_zero_run_frames": 256,
+            "minimum_zero_run_seconds": 0.00390625,
+            "qualifying_runs": 54,
+            "omitted_zero_frames": 1092141,
+            "omitted_stereo_bytes": 2184282,
+            "assumed_descriptor_bytes": 864,
+            "net_estimated_rom_saving_bytes": 2183418,
+            "estimated_rom_with_original_guard_and_64k_player_bytes": 24146918,
+            "fits_32mib_with_original_guard_and_64k_player": true
+          },
+          "1024": {
+            "minimum_zero_run_frames": 1024,
+            "minimum_zero_run_seconds": 0.015625,
+            "qualifying_runs": 7,
+            "omitted_zero_frames": 1075161,
+            "omitted_stereo_bytes": 2150322,
+            "assumed_descriptor_bytes": 112,
+            "net_estimated_rom_saving_bytes": 2150210,
+            "estimated_rom_with_original_guard_and_64k_player_bytes": 24180126,
+            "fits_32mib_with_original_guard_and_64k_player": true
+          },
+          "4096": {
+            "minimum_zero_run_frames": 4096,
+            "minimum_zero_run_seconds": 0.0625,
+            "qualifying_runs": 5,
+            "omitted_zero_frames": 1072038,
+            "omitted_stereo_bytes": 2144076,
+            "assumed_descriptor_bytes": 80,
+            "net_estimated_rom_saving_bytes": 2143996,
+            "estimated_rom_with_original_guard_and_64k_player_bytes": 24186340,
+            "fits_32mib_with_original_guard_and_64k_player": true
+          },
+          "8192": {
+            "minimum_zero_run_frames": 8192,
+            "minimum_zero_run_seconds": 0.125,
+            "qualifying_runs": 3,
+            "omitted_zero_frames": 1057544,
+            "omitted_stereo_bytes": 2115088,
+            "assumed_descriptor_bytes": 48,
+            "net_estimated_rom_saving_bytes": 2115040,
+            "estimated_rom_with_original_guard_and_64k_player_bytes": 24215296,
+            "fits_32mib_with_original_guard_and_64k_player": true
+          },
+          "65536": {
+            "minimum_zero_run_frames": 65536,
+            "minimum_zero_run_seconds": 1.0,
+            "qualifying_runs": 2,
+            "omitted_zero_frames": 1048781,
+            "omitted_stereo_bytes": 2097562,
+            "assumed_descriptor_bytes": 32,
+            "net_estimated_rom_saving_bytes": 2097530,
+            "estimated_rom_with_original_guard_and_64k_player_bytes": 24232806,
+            "fits_32mib_with_original_guard_and_64k_player": true
+          }
+        },
+        "illustrative_lossless_compression": {
+          "zlib_level1": {
+            "bytes": 16738757,
+            "ratio": 0.637739,
+            "saved_bytes": 9508267,
+            "fits_with_16k_guard_and_64k_player": true,
+            "note": "Offline storage measurement only; zlib is not automatically suitable for this GBA engine and needs runtime decompression/buffers."
+          },
+          "zlib_level6": {
+            "bytes": 16494261,
+            "ratio": 0.628424,
+            "saved_bytes": 9752763,
+            "fits_with_16k_guard_and_64k_player": true,
+            "note": "Offline storage measurement only; zlib is not automatically suitable for this GBA engine and needs runtime decompression/buffers."
+          }
+        }
+      }
+    }
+  ],
+  "conclusion": "All8 full target PCM streams are stored individually within32MiB at65536stereo except Timeless. Timeless has only55.34ms of exact quantized-zero tail; practical long-zero omission alone is insufficient. Unaligned16-frame sparse gaps barely fit an abstract budget, but16-sample-aligned gaps do not under64KiB player overhead. Lossless block/partial compression, lower effective storage rate or segmentation can retain complete playback duration."
+}

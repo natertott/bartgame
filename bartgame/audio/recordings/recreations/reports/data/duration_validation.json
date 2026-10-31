@@ -1,0 +1,133 @@
+{
+  "passed": true,
+  "checks": [
+    {
+      "code": "R01",
+      "expected_samples_per_channel": 5969920,
+      "captured_samples_per_channel": 5969920,
+      "exact_match": true,
+      "source_duration_seconds": 135.37233560090704,
+      "captured_duration_seconds": 135.37233560090704
+    },
+    {
+      "code": "R02",
+      "expected_samples_per_channel": 10290176,
+      "captured_samples_per_channel": 10290176,
+      "exact_match": true,
+      "source_duration_seconds": 233.33732426303854,
+      "captured_duration_seconds": 233.33732426303854
+    },
+    {
+      "code": "R03",
+      "expected_samples_per_channel": 11294720,
+      "captured_samples_per_channel": 11294720,
+      "exact_match": true,
+      "source_duration_seconds": 256.11609977324264,
+      "captured_duration_seconds": 256.11609977324264
+    },
+    {
+      "code": "R04",
+      "expected_samples_per_channel": 9635674,
+      "captured_samples_per_channel": 9635674,
+      "exact_match": true,
+      "source_duration_seconds": 218.496,
+      "captured_duration_seconds": 218.49600907029478
+    },
+    {
+      "code": "R05",
+      "expected_samples_per_channel": 10479616,
+      "captured_samples_per_channel": 10479616,
+      "exact_match": true,
+      "source_duration_seconds": 237.63301587301586,
+      "captured_duration_seconds": 237.63301587301586
+    },
+    {
+      "code": "R06",
+      "expected_samples_per_channel": 10048512,
+      "captured_samples_per_channel": 10048512,
+      "exact_match": true,
+      "source_duration_seconds": 227.8574149659864,
+      "captured_duration_seconds": 227.8574149659864
+    },
+    {
+      "code": "R07",
+      "expected_samples_per_channel": 7973312,
+      "captured_samples_per_channel": 7973312,
+      "exact_match": true,
+      "source_duration_seconds": 180.80072562358276,
+      "captured_duration_seconds": 180.80072562358276
+    },
+    {
+      "code": "R08",
+      "expected_samples_per_channel": 8830976,
+      "captured_samples_per_channel": 8830976,
+      "exact_match": true,
+      "source_duration_seconds": 200.2488888888889,
+      "captured_duration_seconds": 200.2488888888889
+    },
+    {
+      "code": "I01",
+      "expected_samples_per_channel": 5969920,
+      "captured_samples_per_channel": 5969920,
+      "exact_match": true,
+      "source_duration_seconds": 135.37233560090704,
+      "captured_duration_seconds": 135.37233560090704
+    },
+    {
+      "code": "I02",
+      "expected_samples_per_channel": 10290176,
+      "captured_samples_per_channel": 10290176,
+      "exact_match": true,
+      "source_duration_seconds": 233.33732426303854,
+      "captured_duration_seconds": 233.33732426303854
+    },
+    {
+      "code": "I03",
+      "expected_samples_per_channel": 11294720,
+      "captured_samples_per_channel": 11294720,
+      "exact_match": true,
+      "source_duration_seconds": 256.11609977324264,
+      "captured_duration_seconds": 256.11609977324264
+    },
+    {
+      "code": "I04",
+      "expected_samples_per_channel": 9635674,
+      "captured_samples_per_channel": 9635674,
+      "exact_match": true,
+      "source_duration_seconds": 218.496,
+      "captured_duration_seconds": 218.49600907029478
+    },
+    {
+      "code": "I05",
+      "expected_samples_per_channel": 10479616,
+      "captured_samples_per_channel": 10479616,
+      "exact_match": true,
+      "source_duration_seconds": 237.63301587301586,
+      "captured_duration_seconds": 237.63301587301586
+    },
+    {
+      "code": "I06",
+      "expected_samples_per_channel": 10048512,
+      "captured_samples_per_channel": 10048512,
+      "exact_match": true,
+      "source_duration_seconds": 227.8574149659864,
+      "captured_duration_seconds": 227.8574149659864
+    },
+    {
+      "code": "I07",
+      "expected_samples_per_channel": 7973312,
+      "captured_samples_per_channel": 7973312,
+      "exact_match": true,
+      "source_duration_seconds": 180.80072562358276,
+      "captured_duration_seconds": 180.80072562358276
+    },
+    {
+      "code": "I08",
+      "expected_samples_per_channel": 8830976,
+      "captured_samples_per_channel": 8830976,
+      "exact_match": true,
+      "source_duration_seconds": 200.2488888888889,
+      "captured_duration_seconds": 200.2488888888889
+    }
+  ]
+}

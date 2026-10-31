@@ -1,0 +1,137 @@
+{
+  "captures": 16,
+  "passed": 16,
+  "full_durations_preserved": true,
+  "all_roms_under_32MiB": true,
+  "physical_hardware_recording": false,
+  "checks": [
+    {
+      "code": "R01",
+      "kind": "native",
+      "flac_bit_exact_to_emulator": true,
+      "mp3_decodes": true,
+      "delivered_rom_matches_capture": true,
+      "complete_source_sample_count": true
+    },
+    {
+      "code": "R02",
+      "kind": "native",
+      "flac_bit_exact_to_emulator": true,
+      "mp3_decodes": true,
+      "delivered_rom_matches_capture": true,
+      "complete_source_sample_count": true
+    },
+    {
+      "code": "R03",
+      "kind": "native",
+      "flac_bit_exact_to_emulator": true,
+      "mp3_decodes": true,
+      "delivered_rom_matches_capture": true,
+      "complete_source_sample_count": true
+    },
+    {
+      "code": "R04",
+      "kind": "native",
+      "flac_bit_exact_to_emulator": true,
+      "mp3_decodes": true,
+      "delivered_rom_matches_capture": true,
+      "complete_source_sample_count": true
+    },
+    {
+      "code": "R05",
+      "kind": "native",
+      "flac_bit_exact_to_emulator": true,
+      "mp3_decodes": true,
+      "delivered_rom_matches_capture": true,
+      "complete_source_sample_count": true
+    },
+    {
+      "code": "R06",
+      "kind": "native",
+      "flac_bit_exact_to_emulator": true,
+      "mp3_decodes": true,
+      "delivered_rom_matches_capture": true,
+      "complete_source_sample_count": true
+    },
+    {
+      "code": "R07",
+      "kind": "native",
+      "flac_bit_exact_to_emulator": true,
+      "mp3_decodes": true,
+      "delivered_rom_matches_capture": true,
+      "complete_source_sample_count": true
+    },
+    {
+      "code": "R08",
+      "kind": "native",
+      "flac_bit_exact_to_emulator": true,
+      "mp3_decodes": true,
+      "delivered_rom_matches_capture": true,
+      "complete_source_sample_count": true
+    },
+    {
+      "code": "I01",
+      "kind": "instrument",
+      "flac_bit_exact_to_emulator": true,
+      "mp3_decodes": true,
+      "delivered_rom_matches_capture": true,
+      "complete_source_sample_count": true
+    },
+    {
+      "code": "I02",
+      "kind": "instrument",
+      "flac_bit_exact_to_emulator": true,
+      "mp3_decodes": true,
+      "delivered_rom_matches_capture": true,
+      "complete_source_sample_count": true
+    },
+    {
+      "code": "I03",
+      "kind": "instrument",
+      "flac_bit_exact_to_emulator": true,
+      "mp3_decodes": true,
+      "delivered_rom_matches_capture": true,
+      "complete_source_sample_count": true
+    },
+    {
+      "code": "I04",
+      "kind": "instrument",
+      "flac_bit_exact_to_emulator": true,
+      "mp3_decodes": true,
+      "delivered_rom_matches_capture": true,
+      "complete_source_sample_count": true
+    },
+    {
+      "code": "I05",
+      "kind": "instrument",
+      "flac_bit_exact_to_emulator": true,
+      "mp3_decodes": true,
+      "delivered_rom_matches_capture": true,
+      "complete_source_sample_count": true
+    },
+    {
+      "code": "I06",
+      "kind": "instrument",
+      "flac_bit_exact_to_emulator": true,
+      "mp3_decodes": true,
+      "delivered_rom_matches_capture": true,
+      "complete_source_sample_count": true
+    },
+    {
+      "code": "I07",
+      "kind": "instrument",
+      "flac_bit_exact_to_emulator": true,
+      "mp3_decodes": true,
+      "delivered_rom_matches_capture": true,
+      "complete_source_sample_count": true
+    },
+    {
+      "code": "I08",
+      "kind": "instrument",
+      "flac_bit_exact_to_emulator": true,
+      "mp3_decodes": true,
+      "delivered_rom_matches_capture": true,
+      "complete_source_sample_count": true
+    }
+  ]
+}

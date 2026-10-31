@@ -1,0 +1,274 @@
+{
+  "passed": true,
+  "count": 67,
+  "checks": [
+    {
+      "name": "Initial track1/native paused selection",
+      "passed": true
+    },
+    {
+      "name": "Volume matching enabled by default",
+      "passed": true
+    },
+    {
+      "name": "Autoplay disabled by default",
+      "passed": true
+    },
+    {
+      "name": "1/native plays correct file and binds downloads",
+      "passed": true
+    },
+    {
+      "name": "1/native highlights one card and one mode",
+      "passed": true
+    },
+    {
+      "name": "1/native applies correct player-only gain",
+      "passed": true
+    },
+    {
+      "name": "1/instrument plays correct file and binds downloads",
+      "passed": true
+    },
+    {
+      "name": "1/instrument highlights one card and one mode",
+      "passed": true
+    },
+    {
+      "name": "1/instrument applies correct player-only gain",
+      "passed": true
+    },
+    {
+      "name": "2/native plays correct file and binds downloads",
+      "passed": true
+    },
+    {
+      "name": "2/native highlights one card and one mode",
+      "passed": true
+    },
+    {
+      "name": "2/native applies correct player-only gain",
+      "passed": true
+    },
+    {
+      "name": "2/instrument plays correct file and binds downloads",
+      "passed": true
+    },
+    {
+      "name": "2/instrument highlights one card and one mode",
+      "passed": true
+    },
+    {
+      "name": "2/instrument applies correct player-only gain",
+      "passed": true
+    },
+    {
+      "name": "3/native plays correct file and binds downloads",
+      "passed": true
+    },
+    {
+      "name": "3/native highlights one card and one mode",
+      "passed": true
+    },
+    {
+      "name": "3/native applies correct player-only gain",
+      "passed": true
+    },
+    {
+      "name": "3/instrument plays correct file and binds downloads",
+      "passed": true
+    },
+    {
+      "name": "3/instrument highlights one card and one mode",
+      "passed": true
+    },
+    {
+      "name": "3/instrument applies correct player-only gain",
+      "passed": true
+    },
+    {
+      "name": "4/native plays correct file and binds downloads",
+      "passed": true
+    },
+    {
+      "name": "4/native highlights one card and one mode",
+      "passed": true
+    },
+    {
+      "name": "4/native applies correct player-only gain",
+      "passed": true
+    },
+    {
+      "name": "4/instrument plays correct file and binds downloads",
+      "passed": true
+    },
+    {
+      "name": "4/instrument highlights one card and one mode",
+      "passed": true
+    },
+    {
+      "name": "4/instrument applies correct player-only gain",
+      "passed": true
+    },
+    {
+      "name": "5/native plays correct file and binds downloads",
+      "passed": true
+    },
+    {
+      "name": "5/native highlights one card and one mode",
+      "passed": true
+    },
+    {
+      "name": "5/native applies correct player-only gain",
+      "passed": true
+    },
+    {
+      "name": "5/instrument plays correct file and binds downloads",
+      "passed": true
+    },
+    {
+      "name": "5/instrument highlights one card and one mode",
+      "passed": true
+    },
+    {
+      "name": "5/instrument applies correct player-only gain",
+      "passed": true
+    },
+    {
+      "name": "6/native plays correct file and binds downloads",
+      "passed": true
+    },
+    {
+      "name": "6/native highlights one card and one mode",
+      "passed": true
+    },
+    {
+      "name": "6/native applies correct player-only gain",
+      "passed": true
+    },
+    {
+      "name": "6/instrument plays correct file and binds downloads",
+      "passed": true
+    },
+    {
+      "name": "6/instrument highlights one card and one mode",
+      "passed": true
+    },
+    {
+      "name": "6/instrument applies correct player-only gain",
+      "passed": true
+    },
+    {
+      "name": "7/native plays correct file and binds downloads",
+      "passed": true
+    },
+    {
+      "name": "7/native highlights one card and one mode",
+      "passed": true
+    },
+    {
+      "name": "7/native applies correct player-only gain",
+      "passed": true
+    },
+    {
+      "name": "7/instrument plays correct file and binds downloads",
+      "passed": true
+    },
+    {
+      "name": "7/instrument highlights one card and one mode",
+      "passed": true
+    },
+    {
+      "name": "7/instrument applies correct player-only gain",
+      "passed": true
+    },
+    {
+      "name": "8/native plays correct file and binds downloads",
+      "passed": true
+    },
+    {
+      "name": "8/native highlights one card and one mode",
+      "passed": true
+    },
+    {
+      "name": "8/native applies correct player-only gain",
+      "passed": true
+    },
+    {
+      "name": "8/instrument plays correct file and binds downloads",
+      "passed": true
+    },
+    {
+      "name": "8/instrument highlights one card and one mode",
+      "passed": true
+    },
+    {
+      "name": "8/instrument applies correct player-only gain",
+      "passed": true
+    },
+    {
+      "name": "Mode switch preserves time while playing",
+      "passed": true
+    },
+    {
+      "name": "Mode switch preserves time while paused",
+      "passed": true
+    },
+    {
+      "name": "45second seek works when loaded",
+      "passed": true
+    },
+    {
+      "name": "Start returns to zero",
+      "passed": true
+    },
+    {
+      "name": "Unchecked matching restores unity volume",
+      "passed": true
+    },
+    {
+      "name": "Rechecked matching restores measured gain",
+      "passed": true
+    },
+    {
+      "name": "Next wraps8to1 and preserves instrument mode",
+      "passed": true
+    },
+    {
+      "name": "Previous wraps1to8",
+      "passed": true
+    },
+    {
+      "name": "Disabled autoplay does not advance",
+      "passed": true
+    },
+    {
+      "name": "Autoplay wraps8to1 in same mode",
+      "passed": true
+    },
+    {
+      "name": "Unloaded45second seek waits for metadata",
+      "passed": true
+    },
+    {
+      "name": "Stale metadata callback cannot seek new track",
+      "passed": true
+    },
+    {
+      "name": "Latest metadata callback starts current track",
+      "passed": true
+    },
+    {
+      "name": "Deep link selects track1",
+      "passed": true
+    },
+    {
+      "name": "Deep link selects track7",
+      "passed": true
+    },
+    {
+      "name": "Deep link selects track8",
+      "passed": true
+    }
+  ]
+}

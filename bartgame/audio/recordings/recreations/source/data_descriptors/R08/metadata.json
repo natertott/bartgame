@@ -1,0 +1,33 @@
+{
+  "source_id": 8,
+  "id": 1,
+  "code": "R08",
+  "kind": "original_mix",
+  "title": "Drake \u2014 What\u2019s Next",
+  "slug": "whats-next",
+  "file_name": "Drake - What's Next (Official Music Video).mp3",
+  "source_sha256": "48bd5ff1c08e53e2a69fb89cbdddcf4f94095d2b4c0b9deb8ee9dc94e86436eb",
+  "seconds": 200.2488888888889,
+  "total_frames": 11961,
+  "rate": 65536,
+  "timer_reload": 65280,
+  "sound_bias": 16896,
+  "channels": 2,
+  "bits": 8,
+  "source_samples_per_channel": 13123511,
+  "stored_samples_per_channel": 13132400,
+  "pcm_bytes": 26264800,
+  "pcm_sha256": [
+    "2434188d579f657f8de7aa8936953b56527d8064a0b191d78f67e5b846db1684",
+    "acbb05ec19c3083f53668d42573e6fd980781a8cdb2163a2071feca885b760b6"
+  ],
+  "quantization": "signed8-bit, nearest step with full TPDF dither; digital silence kept zero",
+  "no_source_trimming": true,
+  "no_time_stretch": true,
+  "extra": {
+    "common_gain": 0.6384508124002514,
+    "source_decoded_peak": 1.046569585800171,
+    "source_performance_and_vocals": true,
+    "rate_limit_note": null
+  }
+}

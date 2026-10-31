@@ -1,0 +1,33 @@
+{
+  "source_id": 2,
+  "id": 1,
+  "code": "R02",
+  "kind": "original_mix",
+  "title": "Desire \u2014 Under Your Spell",
+  "slug": "desire-under-your-spell",
+  "file_name": "Under Your Spell - Desire (Drive).mp3",
+  "source_sha256": "53f3f243e68fb7d244af1917ea0ec11cb06172c8db01a2488730edd2ca4799d3",
+  "seconds": 233.33732426303854,
+  "total_frames": 13937,
+  "rate": 65536,
+  "timer_reload": 65280,
+  "sound_bias": 16896,
+  "channels": 2,
+  "bits": 8,
+  "source_samples_per_channel": 15291995,
+  "stored_samples_per_channel": 15300576,
+  "pcm_bytes": 30601152,
+  "pcm_sha256": [
+    "b49e6ce5f7137ff2aaebc05e924b0d22f6388268324fe8a86f490100b1041362",
+    "aca736944eedb8d3c14d8444130626e54c7fc58eda6b118de85871170dc51b84"
+  ],
+  "quantization": "signed8-bit, nearest step with full TPDF dither; digital silence kept zero",
+  "no_source_trimming": true,
+  "no_time_stretch": true,
+  "extra": {
+    "common_gain": 0.6384508124002514,
+    "source_decoded_peak": 1.0184458494186401,
+    "source_performance_and_vocals": true,
+    "rate_limit_note": null
+  }
+}

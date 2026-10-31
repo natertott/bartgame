@@ -1,0 +1,153 @@
+{
+  "ids": [
+    "now",
+    "nowmeta",
+    "audio",
+    "previous",
+    "next",
+    "jump",
+    "start",
+    "match",
+    "autoplay",
+    "mp3link",
+    "flaclink",
+    "track-1",
+    "track-2",
+    "track-3",
+    "track-4",
+    "track-5",
+    "track-6",
+    "track-7",
+    "track-8"
+  ],
+  "cards": [
+    {
+      "class": "track",
+      "id": "track-1"
+    },
+    {
+      "class": "track",
+      "id": "track-2"
+    },
+    {
+      "class": "track",
+      "id": "track-3"
+    },
+    {
+      "class": "track",
+      "id": "track-4"
+    },
+    {
+      "class": "track",
+      "id": "track-5"
+    },
+    {
+      "class": "track",
+      "id": "track-6"
+    },
+    {
+      "class": "track",
+      "id": "track-7"
+    },
+    {
+      "class": "track",
+      "id": "track-8"
+    }
+  ],
+  "buttons": [
+    {
+      "data-mode": "native"
+    },
+    {
+      "data-mode": "instrument"
+    },
+    {
+      "id": "previous"
+    },
+    {
+      "id": "next"
+    },
+    {
+      "id": "jump"
+    },
+    {
+      "id": "start"
+    },
+    {
+      "data-track": "1",
+      "data-kind": "native"
+    },
+    {
+      "data-track": "1",
+      "data-kind": "instrument"
+    },
+    {
+      "data-track": "2",
+      "data-kind": "native"
+    },
+    {
+      "data-track": "2",
+      "data-kind": "instrument"
+    },
+    {
+      "data-track": "3",
+      "data-kind": "native"
+    },
+    {
+      "data-track": "3",
+      "data-kind": "instrument"
+    },
+    {
+      "data-track": "4",
+      "data-kind": "native"
+    },
+    {
+      "data-track": "4",
+      "data-kind": "instrument"
+    },
+    {
+      "data-track": "5",
+      "data-kind": "native"
+    },
+    {
+      "data-track": "5",
+      "data-kind": "instrument"
+    },
+    {
+      "data-track": "6",
+      "data-kind": "native"
+    },
+    {
+      "data-track": "6",
+      "data-kind": "instrument"
+    },
+    {
+      "data-track": "7",
+      "data-kind": "native"
+    },
+    {
+      "data-track": "7",
+      "data-kind": "instrument"
+    },
+    {
+      "data-track": "8",
+      "data-kind": "native"
+    },
+    {
+      "data-track": "8",
+      "data-kind": "instrument"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "match",
+      "type": "checkbox",
+      "checked": null
+    },
+    {
+      "id": "autoplay",
+      "type": "checkbox"
+    }
+  ],
+  "selects": []
+}

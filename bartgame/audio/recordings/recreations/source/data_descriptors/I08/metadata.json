@@ -1,0 +1,113 @@
+{
+  "source_id": 8,
+  "id": 1,
+  "code": "I08",
+  "kind": "instrument",
+  "title": "Drake \u2014 What\u2019s Next",
+  "slug": "whats-next",
+  "file_name": "Drake - What's Next (Official Music Video).mp3",
+  "source_sha256": "48bd5ff1c08e53e2a69fb89cbdddcf4f94095d2b4c0b9deb8ee9dc94e86436eb",
+  "seconds": 200.2488888888889,
+  "total_frames": 11961,
+  "rate": 32768,
+  "timer_reload": 65024,
+  "sound_bias": 512,
+  "channels": 2,
+  "bits": 8,
+  "source_samples_per_channel": 6561756,
+  "stored_samples_per_channel": 6570304,
+  "pcm_bytes": 13140608,
+  "pcm_sha256": [
+    "00e9bbd354a13929a0f9e7926b937e179982bee1ebc239dd23a330cd9eea970c",
+    "40bb810a207e880457501bf45669545edf62fb0c2e5a20d8fdc3727fcd231546"
+  ],
+  "quantization": "signed8-bit, nearest step with full TPDF dither; digital silence kept zero",
+  "no_source_trimming": true,
+  "no_time_stretch": true,
+  "extra": {
+    "automatic_transcription": true,
+    "source_waveform_in_render": false,
+    "render_metadata": {
+      "soundfont": "FluidR3_GM.sf2",
+      "fluidsynth": "2.4.4",
+      "sample_rate": 32768,
+      "main_samples": 6561756,
+      "parts": [
+        {
+          "part": "melody",
+          "channel": 0,
+          "drum": false,
+          "requested_program": 62,
+          "bank": 0,
+          "program": 62,
+          "preset_name": "Synth Brass 1",
+          "pan": -0.06,
+          "volume": 0.8,
+          "fallback": null
+        },
+        {
+          "part": "counter",
+          "channel": 1,
+          "drum": false,
+          "requested_program": 5,
+          "bank": 0,
+          "program": 5,
+          "preset_name": "Legend EP 2",
+          "pan": 0.24,
+          "volume": 0.58,
+          "fallback": null
+        },
+        {
+          "part": "harmony",
+          "channel": 2,
+          "drum": false,
+          "requested_program": 90,
+          "bank": 0,
+          "program": 90,
+          "preset_name": "Polysynth",
+          "pan": -0.22,
+          "volume": 0.44,
+          "fallback": null
+        },
+        {
+          "part": "bass",
+          "channel": 3,
+          "drum": false,
+          "requested_program": 39,
+          "bank": 0,
+          "program": 39,
+          "preset_name": "Synth Bass 2",
+          "pan": 0.0,
+          "volume": 0.91,
+          "fallback": null
+        },
+        {
+          "part": "drums",
+          "channel": 9,
+          "drum": true,
+          "requested_program": 25,
+          "bank": 128,
+          "program": 25,
+          "preset_name": "TR-808",
+          "pan": 0.0,
+          "volume": 0.7,
+          "fallback": null
+        }
+      ],
+      "note_count": 3368,
+      "bass_bend_automation_events": 6928,
+      "bass_pitchbend_range_semitones": 12,
+      "other_parts_pitchbend": "equal-tempered note centers",
+      "scheduled_sample_accuracy": 1,
+      "synth_internal_block_samples": 64,
+      "gain": 0.28,
+      "symbolic_only": true,
+      "source_audio_in_render": false,
+      "master_gain": 2.1753571960620763,
+      "master_peak": 0.8164806962013245,
+      "master_rms": 0.12999999446177027
+    },
+    "common_mix_gain": 1.0,
+    "quiet_tail_gate_threshold": 0.0001
+  }
+}

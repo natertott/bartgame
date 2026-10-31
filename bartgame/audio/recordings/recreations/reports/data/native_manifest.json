@@ -1,0 +1,269 @@
+{
+  "common_gain": 0.6384508124002514,
+  "songs": [
+    {
+      "source_id": 1,
+      "id": 1,
+      "code": "R01",
+      "kind": "original_mix",
+      "title": "Playboi Carti \u2014 ILoveUIHateU",
+      "slug": "iloveuihateu",
+      "file_name": "Playboi Carti - ILoveUIHateU (Official Audio).mp3",
+      "source_sha256": "4ca52a37ed48702bb7fe2d3a7e793926bb5344d2c274440867dfbe27f9a566f6",
+      "seconds": 135.37233560090704,
+      "total_frames": 8086,
+      "rate": 65536,
+      "timer_reload": 65280,
+      "sound_bias": 16896,
+      "channels": 2,
+      "bits": 8,
+      "source_samples_per_channel": 8871761,
+      "stored_samples_per_channel": 8880560,
+      "pcm_bytes": 17761120,
+      "pcm_sha256": [
+        "c9b87e6bbf2eadeedd835b3aa6cbf3dc99a0863d286e4f813d05a4613fd82d3b",
+        "ceb0f22e4179fec74931f397becaf245d5736ec486053a71f124926f4b3ec67c"
+      ],
+      "quantization": "signed8-bit, nearest step with full TPDF dither; digital silence kept zero",
+      "no_source_trimming": true,
+      "no_time_stretch": true,
+      "extra": {
+        "common_gain": 0.6384508124002514,
+        "source_decoded_peak": 1.0672845840454102,
+        "source_performance_and_vocals": true,
+        "rate_limit_note": null
+      }
+    },
+    {
+      "source_id": 2,
+      "id": 1,
+      "code": "R02",
+      "kind": "original_mix",
+      "title": "Desire \u2014 Under Your Spell",
+      "slug": "desire-under-your-spell",
+      "file_name": "Under Your Spell - Desire (Drive).mp3",
+      "source_sha256": "53f3f243e68fb7d244af1917ea0ec11cb06172c8db01a2488730edd2ca4799d3",
+      "seconds": 233.33732426303854,
+      "total_frames": 13937,
+      "rate": 65536,
+      "timer_reload": 65280,
+      "sound_bias": 16896,
+      "channels": 2,
+      "bits": 8,
+      "source_samples_per_channel": 15291995,
+      "stored_samples_per_channel": 15300576,
+      "pcm_bytes": 30601152,
+      "pcm_sha256": [
+        "b49e6ce5f7137ff2aaebc05e924b0d22f6388268324fe8a86f490100b1041362",
+        "aca736944eedb8d3c14d8444130626e54c7fc58eda6b118de85871170dc51b84"
+      ],
+      "quantization": "signed8-bit, nearest step with full TPDF dither; digital silence kept zero",
+      "no_source_trimming": true,
+      "no_time_stretch": true,
+      "extra": {
+        "common_gain": 0.6384508124002514,
+        "source_decoded_peak": 1.0184458494186401,
+        "source_performance_and_vocals": true,
+        "rate_limit_note": null
+      }
+    },
+    {
+      "source_id": 3,
+      "id": 1,
+      "code": "R03",
+      "kind": "original_mix",
+      "title": "The Weeknd with Playboi Carti \u2014 Timeless",
+      "slug": "timeless",
+      "file_name": "The Weeknd \u2013 Timeless with Playboi Carti (Official Music Video).mp3",
+      "source_sha256": "a6c6558c231cdd1bc2bba238ec7e039ba8ed383c36df1fe7e8f0cab98c148cfb",
+      "seconds": 256.11609977324264,
+      "total_frames": 15298,
+      "rate": 32768,
+      "timer_reload": 65024,
+      "sound_bias": 512,
+      "channels": 2,
+      "bits": 8,
+      "source_samples_per_channel": 8392412,
+      "stored_samples_per_channel": 8401072,
+      "pcm_bytes": 16802144,
+      "pcm_sha256": [
+        "5361cf7e13a7330b4638892a5cbcd6bb957887cbeb2eba58698ee4fb45bbcbdd",
+        "7a6ed377f0efa48df4b28a293316e26dfd65a40589b207237577313525068d03"
+      ],
+      "quantization": "signed8-bit, nearest step with full TPDF dither; digital silence kept zero",
+      "no_source_trimming": true,
+      "no_time_stretch": true,
+      "extra": {
+        "common_gain": 0.6384508124002514,
+        "source_decoded_peak": 1.2372196912765503,
+        "source_performance_and_vocals": true,
+        "rate_limit_note": "Full track retained; 65,536Hz stereo exceeds32MiB for this source, so synchronized32,768Hz is used."
+      }
+    },
+    {
+      "source_id": 4,
+      "id": 1,
+      "code": "R04",
+      "kind": "original_mix",
+      "title": "Snow Strippers \u2014 Under Your Spell",
+      "slug": "snow-strippers-under-your-spell",
+      "file_name": "SNOW STRIPPERS - UNDER YOUR SPELL #SURFGANG.mp3",
+      "source_sha256": "b7ee7f9898cac7725c8723cd65e92790df46a3ead3d38788e46319f28010cd31",
+      "seconds": 218.496,
+      "total_frames": 13051,
+      "rate": 65536,
+      "timer_reload": 65280,
+      "sound_bias": 16896,
+      "channels": 2,
+      "bits": 8,
+      "source_samples_per_channel": 14319354,
+      "stored_samples_per_channel": 14328416,
+      "pcm_bytes": 28656832,
+      "pcm_sha256": [
+        "8011436e7fe5a03ec502c0ddf39d34ae15e5c8af2d04d65ecbf17de751c549d9",
+        "0cf73278dc098151b4a8ae1adb72a3f8a36fdca46abbb7a7b9f9df38493a9c8b"
+      ],
+      "quantization": "signed8-bit, nearest step with full TPDF dither; digital silence kept zero",
+      "no_source_trimming": true,
+      "no_time_stretch": true,
+      "extra": {
+        "common_gain": 0.6384508124002514,
+        "source_decoded_peak": 1.4409880638122559,
+        "source_performance_and_vocals": true,
+        "rate_limit_note": null
+      }
+    },
+    {
+      "source_id": 5,
+      "id": 1,
+      "code": "R05",
+      "kind": "original_mix",
+      "title": "Friday Night",
+      "slug": "friday-night",
+      "file_name": "Friday Night.mp3",
+      "source_sha256": "cab947e8fd629f24e5c536c13b490cbe62ac575ede9aa8e56c733435e484e848",
+      "seconds": 237.63301587301586,
+      "total_frames": 14194,
+      "rate": 65536,
+      "timer_reload": 65280,
+      "sound_bias": 16896,
+      "channels": 2,
+      "bits": 8,
+      "source_samples_per_channel": 15573517,
+      "stored_samples_per_channel": 15582560,
+      "pcm_bytes": 31165120,
+      "pcm_sha256": [
+        "a268966e72a32f20b1720905455b85df2b99c2615125d57e142ecc785c1b669d",
+        "c13d62c97fcd98ca32e5b0bcd09135a4ef39c2bf70bba3c4ab222aa56a64e03d"
+      ],
+      "quantization": "signed8-bit, nearest step with full TPDF dither; digital silence kept zero",
+      "no_source_trimming": true,
+      "no_time_stretch": true,
+      "extra": {
+        "common_gain": 0.6384508124002514,
+        "source_decoded_peak": 1.2199245691299438,
+        "source_performance_and_vocals": true,
+        "rate_limit_note": null
+      }
+    },
+    {
+      "source_id": 6,
+      "id": 1,
+      "code": "R06",
+      "kind": "original_mix",
+      "title": "Daft Punk \u2014 Voyager",
+      "slug": "voyager",
+      "file_name": "Daft Punk - Voyager (Official Audio).mp3",
+      "source_sha256": "516fcea5e925e132262483610d6a86b2fa9e047cc66c8a894e36ed51512dc51f",
+      "seconds": 227.8574149659864,
+      "total_frames": 13610,
+      "rate": 65536,
+      "timer_reload": 65280,
+      "sound_bias": 16896,
+      "channels": 2,
+      "bits": 8,
+      "source_samples_per_channel": 14932864,
+      "stored_samples_per_channel": 14941776,
+      "pcm_bytes": 29883552,
+      "pcm_sha256": [
+        "8df1655dba576892515ebd2a61363bf7373cd5526e84165f8119d8bc7c8a780c",
+        "6a72cd1eccb1233b5f3719008d616496d77db1ea25eeae96aa38ef64516d137b"
+      ],
+      "quantization": "signed8-bit, nearest step with full TPDF dither; digital silence kept zero",
+      "no_source_trimming": true,
+      "no_time_stretch": true,
+      "extra": {
+        "common_gain": 0.6384508124002514,
+        "source_decoded_peak": 1.1909209489822388,
+        "source_performance_and_vocals": true,
+        "rate_limit_note": null
+      }
+    },
+    {
+      "source_id": 7,
+      "id": 1,
+      "code": "R07",
+      "kind": "original_mix",
+      "title": "Sunday Evening Pain",
+      "slug": "sunday-evening-pain",
+      "file_name": "Sunday Evening Pain.mp3",
+      "source_sha256": "44e6f0e8b969d799d9a2a840112fce37dc2d28dc3b25a5ff2f8f031689c6e602",
+      "seconds": 180.80072562358276,
+      "total_frames": 10799,
+      "rate": 65536,
+      "timer_reload": 65280,
+      "sound_bias": 16896,
+      "channels": 2,
+      "bits": 8,
+      "source_samples_per_channel": 11848956,
+      "stored_samples_per_channel": 11857408,
+      "pcm_bytes": 23714816,
+      "pcm_sha256": [
+        "e79524ab7435884ccfb4abf0e1c3ca49db444bf35ae9a97ff5e1e2d199beb655",
+        "0e062c6c16c24069fb8c8049a5a2b948b73af8182a67cb1a55e12f7c36d7af15"
+      ],
+      "quantization": "signed8-bit, nearest step with full TPDF dither; digital silence kept zero",
+      "no_source_trimming": true,
+      "no_time_stretch": true,
+      "extra": {
+        "common_gain": 0.6384508124002514,
+        "source_decoded_peak": 1.2442502975463867,
+        "source_performance_and_vocals": true,
+        "rate_limit_note": null
+      }
+    },
+    {
+      "source_id": 8,
+      "id": 1,
+      "code": "R08",
+      "kind": "original_mix",
+      "title": "Drake \u2014 What\u2019s Next",
+      "slug": "whats-next",
+      "file_name": "Drake - What's Next (Official Music Video).mp3",
+      "source_sha256": "48bd5ff1c08e53e2a69fb89cbdddcf4f94095d2b4c0b9deb8ee9dc94e86436eb",
+      "seconds": 200.2488888888889,
+      "total_frames": 11961,
+      "rate": 65536,
+      "timer_reload": 65280,
+      "sound_bias": 16896,
+      "channels": 2,
+      "bits": 8,
+      "source_samples_per_channel": 13123511,
+      "stored_samples_per_channel": 13132400,
+      "pcm_bytes": 26264800,
+      "pcm_sha256": [
+        "2434188d579f657f8de7aa8936953b56527d8064a0b191d78f67e5b846db1684",
+        "acbb05ec19c3083f53668d42573e6fd980781a8cdb2163a2071feca885b760b6"
+      ],
+      "quantization": "signed8-bit, nearest step with full TPDF dither; digital silence kept zero",
+      "no_source_trimming": true,
+      "no_time_stretch": true,
+      "extra": {
+        "common_gain": 0.6384508124002514,
+        "source_decoded_peak": 1.046569585800171,
+        "source_performance_and_vocals": true,
+        "rate_limit_note": null
+      }
+    }
+  ]
+}

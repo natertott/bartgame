@@ -1,0 +1,33 @@
+{
+  "source_id": 7,
+  "id": 1,
+  "code": "R07",
+  "kind": "original_mix",
+  "title": "Sunday Evening Pain",
+  "slug": "sunday-evening-pain",
+  "file_name": "Sunday Evening Pain.mp3",
+  "source_sha256": "44e6f0e8b969d799d9a2a840112fce37dc2d28dc3b25a5ff2f8f031689c6e602",
+  "seconds": 180.80072562358276,
+  "total_frames": 10799,
+  "rate": 65536,
+  "timer_reload": 65280,
+  "sound_bias": 16896,
+  "channels": 2,
+  "bits": 8,
+  "source_samples_per_channel": 11848956,
+  "stored_samples_per_channel": 11857408,
+  "pcm_bytes": 23714816,
+  "pcm_sha256": [
+    "e79524ab7435884ccfb4abf0e1c3ca49db444bf35ae9a97ff5e1e2d199beb655",
+    "0e062c6c16c24069fb8c8049a5a2b948b73af8182a67cb1a55e12f7c36d7af15"
+  ],
+  "quantization": "signed8-bit, nearest step with full TPDF dither; digital silence kept zero",
+  "no_source_trimming": true,
+  "no_time_stretch": true,
+  "extra": {
+    "common_gain": 0.6384508124002514,
+    "source_decoded_peak": 1.2442502975463867,
+    "source_performance_and_vocals": true,
+    "rate_limit_note": null
+  }
+}

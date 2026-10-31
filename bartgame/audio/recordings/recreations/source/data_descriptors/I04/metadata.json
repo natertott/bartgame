@@ -1,0 +1,113 @@
+{
+  "source_id": 4,
+  "id": 1,
+  "code": "I04",
+  "kind": "instrument",
+  "title": "Snow Strippers \u2014 Under Your Spell",
+  "slug": "snow-strippers-under-your-spell",
+  "file_name": "SNOW STRIPPERS - UNDER YOUR SPELL #SURFGANG.mp3",
+  "source_sha256": "b7ee7f9898cac7725c8723cd65e92790df46a3ead3d38788e46319f28010cd31",
+  "seconds": 218.496,
+  "total_frames": 13051,
+  "rate": 32768,
+  "timer_reload": 65024,
+  "sound_bias": 512,
+  "channels": 2,
+  "bits": 8,
+  "source_samples_per_channel": 7159677,
+  "stored_samples_per_channel": 7168304,
+  "pcm_bytes": 14336608,
+  "pcm_sha256": [
+    "5628c00fbe6e40809b903bd08694f638de61fe52fd21cafd0b2682a14b0951b6",
+    "28d3bd893c4d285ab0377e72ff787055208645799ca67fcc83c8056d474c55de"
+  ],
+  "quantization": "signed8-bit, nearest step with full TPDF dither; digital silence kept zero",
+  "no_source_trimming": true,
+  "no_time_stretch": true,
+  "extra": {
+    "automatic_transcription": true,
+    "source_waveform_in_render": false,
+    "render_metadata": {
+      "soundfont": "FluidR3_GM.sf2",
+      "fluidsynth": "2.4.4",
+      "sample_rate": 32768,
+      "main_samples": 7159677,
+      "parts": [
+        {
+          "part": "melody",
+          "channel": 0,
+          "drum": false,
+          "requested_program": 81,
+          "bank": 0,
+          "program": 81,
+          "preset_name": "Saw Wave",
+          "pan": -0.06,
+          "volume": 0.8,
+          "fallback": null
+        },
+        {
+          "part": "counter",
+          "channel": 1,
+          "drum": false,
+          "requested_program": 107,
+          "bank": 0,
+          "program": 107,
+          "preset_name": "Koto",
+          "pan": 0.24,
+          "volume": 0.58,
+          "fallback": null
+        },
+        {
+          "part": "harmony",
+          "channel": 2,
+          "drum": false,
+          "requested_program": 50,
+          "bank": 0,
+          "program": 50,
+          "preset_name": "Synth Strings 1",
+          "pan": -0.22,
+          "volume": 0.44,
+          "fallback": null
+        },
+        {
+          "part": "bass",
+          "channel": 3,
+          "drum": false,
+          "requested_program": 39,
+          "bank": 0,
+          "program": 39,
+          "preset_name": "Synth Bass 2",
+          "pan": 0.0,
+          "volume": 0.91,
+          "fallback": null
+        },
+        {
+          "part": "drums",
+          "channel": 9,
+          "drum": true,
+          "requested_program": 24,
+          "bank": 128,
+          "program": 24,
+          "preset_name": "Electronic",
+          "pan": 0.0,
+          "volume": 0.7,
+          "fallback": null
+        }
+      ],
+      "note_count": 5470,
+      "bass_bend_automation_events": 10723,
+      "bass_pitchbend_range_semitones": 12,
+      "other_parts_pitchbend": "equal-tempered note centers",
+      "scheduled_sample_accuracy": 1,
+      "synth_internal_block_samples": 64,
+      "gain": 0.28,
+      "symbolic_only": true,
+      "source_audio_in_render": false,
+      "master_gain": 1.9877455134955655,
+      "master_peak": 0.6394153237342834,
+      "master_rms": 0.1300000006551333
+    },
+    "common_mix_gain": 1.0,
+    "quiet_tail_gate_threshold": 0.0001
+  }
+}

@@ -1,0 +1,3979 @@
+{
+  "status": "all8sources_present_and_native_decode_matches_prior_analysis",
+  "scope": "Read-only identity/probe and capacity assessment; no musical changes, resequencing, sample copying, trimming or ROM export performed.",
+  "hardware_clock_hz": 16777216,
+  "rom_limit_bytes": 33554432,
+  "guard_assumption": "8192 samples per channel; stereo guard storage16384 bytes before per-channel16-byte alignment.",
+  "frame_policy": "Capacity estimates use ceil video frames so no decoded source content is removed; tiny zero padding may be appended.",
+  "bitrate_note": "MP3 bitrate is compressed source bitrate, not PCM precision. Stereo PCM options are signed8-bit per output lane.",
+  "vocal_note": "No audio-listening or vocal detector is available. Contextual expectations are recorded and explicitly not machine-verified.",
+  "sources": [
+    {
+      "id": 1,
+      "source_path": "Playboi Carti - ILoveUIHateU (Official Audio).mp3",
+      "file_name": "Playboi Carti - ILoveUIHateU (Official Audio).mp3",
+      "display_title": "Playboi Carti \u2014 ILoveUIHateU",
+      "slug": "iloveuihateu",
+      "source_sha256": "4ca52a37ed48702bb7fe2d3a7e793926bb5344d2c274440867dfbe27f9a566f6",
+      "source_bytes": 3250814,
+      "codec": "mp3",
+      "sample_rate_hz": 44100,
+      "channels": 2,
+      "channel_layout": "stereo",
+      "stream_bitrate_bps": 192000,
+      "container_bitrate_bps": 192045,
+      "decoded_samples_per_channel": 5969920,
+      "duration_seconds": 135.37233560090704,
+      "duration_rational": "5969920/44100",
+      "container_duration_seconds": 135.418776,
+      "container_start_seconds": 0.025057,
+      "decoded_duration_definition": "All PCM returned by normal gapless ffmpeg decoding, with MP3 codec delay/padding handled by decoder metadata; no musical lead-in, video introduction, fade, silence or tail trimmed.",
+      "vocal_assessment": {
+        "machine_verified": false,
+        "context": "Expected vocal/rap-bearing from release identity; not detected or transcribed in this assessment."
+      },
+      "previous_analysis": {
+        "file_name_matches": true,
+        "sample_rate_matches": true,
+        "channels_match": true,
+        "previous_duration_seconds": 135.372,
+        "native_duration_minus_previous_rounded_analysis_seconds": 0.000335601,
+        "duration_matches_within_1ms": true
+      },
+      "video_frame_rounding": {
+        "hardware_clock_hz": 16777216,
+        "cycles_per_frame": 280896,
+        "frame_rate_hz": 59.72750056960583,
+        "source_duration_in_frames": 8085.4512517120465,
+        "floor_frames": 8085,
+        "nearest_frames": 8085,
+        "ceil_preserve_full_source_frames": 8086,
+        "ceil_frame_duration_seconds": 135.38152313232422,
+        "ceil_frame_tail_padding_seconds": 0.009187531417189271,
+        "recommended": "Ceil video-frame duration and pad the end; nearest-frame rounding may cut the source by up to half a frame."
+      },
+      "pcm_options": {
+        "stereo_32768": {
+          "timer_divisor": 512,
+          "timer_reload": "0xfe00",
+          "sample_rate_hz": 32768.0,
+          "sample_rate_rational": "32768/1",
+          "channels": 2,
+          "bits_per_sample": 8,
+          "source_duration_samples_per_channel": 4435881,
+          "source_duration_stereo_payload_bytes": 8871762,
+          "source_duration_stereo_with_guard_and_alignment_bytes": 8888160,
+          "ceil_frame_samples_per_channel": 4436182,
+          "ceil_frame_stereo_payload_bytes": 8872364,
+          "guard_samples_per_channel": 8192,
+          "guard_stereo_bytes": 16384,
+          "channel_storage_alignment_bytes": 16,
+          "allocated_samples_per_channel": 4444384,
+          "pcm_rom_bytes": 8888768,
+          "pcm_rom_mib": 8.47699,
+          "fits_32mib_payload_only": true,
+          "fits_32mib_with_64k_player": true,
+          "assumed_player_budget_bytes": 65536,
+          "mono_alternative_pcm_rom_bytes": 4444384
+        },
+        "stereo_44150_568": {
+          "timer_divisor": 380,
+          "timer_reload": "0xfe84",
+          "sample_rate_hz": 44150.56842105263,
+          "sample_rate_rational": "4194304/95",
+          "channels": 2,
+          "bits_per_sample": 8,
+          "source_duration_samples_per_channel": 5976766,
+          "source_duration_stereo_payload_bytes": 11953532,
+          "source_duration_stereo_with_guard_and_alignment_bytes": 11969920,
+          "ceil_frame_samples_per_channel": 5977172,
+          "ceil_frame_stereo_payload_bytes": 11954344,
+          "guard_samples_per_channel": 8192,
+          "guard_stereo_bytes": 16384,
+          "channel_storage_alignment_bytes": 16,
+          "allocated_samples_per_channel": 5985376,
+          "pcm_rom_bytes": 11970752,
+          "pcm_rom_mib": 11.416199,
+          "fits_32mib_payload_only": true,
+          "fits_32mib_with_64k_player": true,
+          "assumed_player_budget_bytes": 65536,
+          "mono_alternative_pcm_rom_bytes": 5985376
+        },
+        "stereo_65536": {
+          "timer_divisor": 256,
+          "timer_reload": "0xff00",
+          "sample_rate_hz": 65536.0,
+          "sample_rate_rational": "65536/1",
+          "channels": 2,
+          "bits_per_sample": 8,
+          "source_duration_samples_per_channel": 8871762,
+          "source_duration_stereo_payload_bytes": 17743524,
+          "source_duration_stereo_with_guard_and_alignment_bytes": 17759936,
+          "ceil_frame_samples_per_channel": 8872364,
+          "ceil_frame_stereo_payload_bytes": 17744728,
+          "guard_samples_per_channel": 8192,
+          "guard_stereo_bytes": 16384,
+          "channel_storage_alignment_bytes": 16,
+          "allocated_samples_per_channel": 8880560,
+          "pcm_rom_bytes": 17761120,
+          "pcm_rom_mib": 16.938324,
+          "fits_32mib_payload_only": true,
+          "fits_32mib_with_64k_player": true,
+          "assumed_player_budget_bytes": 65536,
+          "mono_alternative_pcm_rom_bytes": 8880560
+        }
+      },
+      "ffprobe": {
+        "streams": [
+          {
+            "index": 0,
+            "codec_name": "mp3",
+            "codec_long_name": "MP3 (MPEG audio layer 3)",
+            "codec_type": "audio",
+            "codec_tag_string": "[0][0][0][0]",
+            "codec_tag": "0x0000",
+            "sample_fmt": "fltp",
+            "sample_rate": "44100",
+            "channels": 2,
+            "channel_layout": "stereo",
+            "bits_per_sample": 0,
+            "initial_padding": 0,
+            "r_frame_rate": "0/0",
+            "avg_frame_rate": "0/0",
+            "time_base": "1/14112000",
+            "start_pts": 353600,
+            "start_time": "0.025057",
+            "duration_ts": 1911029760,
+            "duration": "135.418776",
+            "bit_rate": "192000",
+            "disposition": {
+              "default": 0,
+              "dub": 0,
+              "original": 0,
+              "comment": 0,
+              "lyrics": 0,
+              "karaoke": 0,
+              "forced": 0,
+              "hearing_impaired": 0,
+              "visual_impaired": 0,
+              "clean_effects": 0,
+              "attached_pic": 0,
+              "timed_thumbnails": 0,
+              "non_diegetic": 0,
+              "captions": 0,
+              "descriptions": 0,
+              "metadata": 0,
+              "dependent": 0,
+              "still_image": 0,
+              "multilayer": 0
+            },
+            "tags": {
+              "encoder": "Lavc60.31"
+            }
+          }
+        ],
+        "format": {
+          "filename": "/workspace/attachments/b8fdb72f-9cca-4eaa-88b0-fc89c88f2398/Playboi Carti - ILoveUIHateU (Official Audio).mp3",
+          "nb_streams": 1,
+          "nb_programs": 0,
+          "nb_stream_groups": 0,
+          "format_name": "mp3",
+          "format_long_name": "MP2/3 (MPEG audio layer 2/3)",
+          "start_time": "0.025057",
+          "duration": "135.418776",
+          "size": "3250814",
+          "bit_rate": "192045",
+          "probe_score": 51,
+          "tags": {
+            "major_brand": "dash",
+            "minor_version": "0",
+            "compatible_brands": "iso6mp41",
+            "encoder": "Lavf60.16.100"
+          }
+        }
+      }
+    },
+    {
+      "id": 2,
+      "source_path": "Under Your Spell - Desire (Drive).mp3",
+      "file_name": "Under Your Spell - Desire (Drive).mp3",
+      "display_title": "Desire \u2014 Under Your Spell",
+      "slug": "desire-under-your-spell",
+      "source_sha256": "53f3f243e68fb7d244af1917ea0ec11cb06172c8db01a2488730edd2ca4799d3",
+      "source_bytes": 5601835,
+      "codec": "mp3",
+      "sample_rate_hz": 44100,
+      "channels": 2,
+      "channel_layout": "stereo",
+      "stream_bitrate_bps": 192000,
+      "container_bitrate_bps": 192026,
+      "decoded_samples_per_channel": 10290176,
+      "duration_seconds": 233.33732426303854,
+      "duration_rational": "10290176/44100",
+      "container_duration_seconds": 233.377959,
+      "container_start_seconds": 0.025057,
+      "decoded_duration_definition": "All PCM returned by normal gapless ffmpeg decoding, with MP3 codec delay/padding handled by decoder metadata; no musical lead-in, video introduction, fade, silence or tail trimmed.",
+      "vocal_assessment": {
+        "machine_verified": false,
+        "context": "Expected vocal-bearing from release identity; not detected or transcribed in this assessment."
+      },
+      "previous_analysis": {
+        "file_name_matches": true,
+        "sample_rate_matches": true,
+        "channels_match": true,
+        "previous_duration_seconds": 233.337,
+        "native_duration_minus_previous_rounded_analysis_seconds": 0.000324263,
+        "duration_matches_within_1ms": true
+      },
+      "video_frame_rounding": {
+        "hardware_clock_hz": 16777216,
+        "cycles_per_frame": 280896,
+        "frame_rate_hz": 59.72750056960583,
+        "source_duration_in_frames": 13936.655167830935,
+        "floor_frames": 13936,
+        "nearest_frames": 13937,
+        "ceil_preserve_full_source_frames": 13937,
+        "ceil_frame_duration_seconds": 233.34309768676758,
+        "ceil_frame_tail_padding_seconds": 0.005773423729029372,
+        "recommended": "Ceil video-frame duration and pad the end; nearest-frame rounding may cut the source by up to half a frame."
+      },
+      "pcm_options": {
+        "stereo_32768": {
+          "timer_divisor": 512,
+          "timer_reload": "0xfe00",
+          "sample_rate_hz": 32768.0,
+          "sample_rate_rational": "32768/1",
+          "channels": 2,
+          "bits_per_sample": 8,
+          "source_duration_samples_per_channel": 7645998,
+          "source_duration_stereo_payload_bytes": 15291996,
+          "source_duration_stereo_with_guard_and_alignment_bytes": 15308384,
+          "ceil_frame_samples_per_channel": 7646187,
+          "ceil_frame_stereo_payload_bytes": 15292374,
+          "guard_samples_per_channel": 8192,
+          "guard_stereo_bytes": 16384,
+          "channel_storage_alignment_bytes": 16,
+          "allocated_samples_per_channel": 7654384,
+          "pcm_rom_bytes": 15308768,
+          "pcm_rom_mib": 14.599579,
+          "fits_32mib_payload_only": true,
+          "fits_32mib_with_64k_player": true,
+          "assumed_player_budget_bytes": 65536,
+          "mono_alternative_pcm_rom_bytes": 7654384
+        },
+        "stereo_44150_568": {
+          "timer_divisor": 380,
+          "timer_reload": "0xfe84",
+          "sample_rate_hz": 44150.56842105263,
+          "sample_rate_rational": "4194304/95",
+          "channels": 2,
+          "bits_per_sample": 8,
+          "source_duration_samples_per_channel": 10301976,
+          "source_duration_stereo_payload_bytes": 20603952,
+          "source_duration_stereo_with_guard_and_alignment_bytes": 20620352,
+          "ceil_frame_samples_per_channel": 10302231,
+          "ceil_frame_stereo_payload_bytes": 20604462,
+          "guard_samples_per_channel": 8192,
+          "guard_stereo_bytes": 16384,
+          "channel_storage_alignment_bytes": 16,
+          "allocated_samples_per_channel": 10310432,
+          "pcm_rom_bytes": 20620864,
+          "pcm_rom_mib": 19.665588,
+          "fits_32mib_payload_only": true,
+          "fits_32mib_with_64k_player": true,
+          "assumed_player_budget_bytes": 65536,
+          "mono_alternative_pcm_rom_bytes": 10310432
+        },
+        "stereo_65536": {
+          "timer_divisor": 256,
+          "timer_reload": "0xff00",
+          "sample_rate_hz": 65536.0,
+          "sample_rate_rational": "65536/1",
+          "channels": 2,
+          "bits_per_sample": 8,
+          "source_duration_samples_per_channel": 15291995,
+          "source_duration_stereo_payload_bytes": 30583990,
+          "source_duration_stereo_with_guard_and_alignment_bytes": 30600384,
+          "ceil_frame_samples_per_channel": 15292374,
+          "ceil_frame_stereo_payload_bytes": 30584748,
+          "guard_samples_per_channel": 8192,
+          "guard_stereo_bytes": 16384,
+          "channel_storage_alignment_bytes": 16,
+          "allocated_samples_per_channel": 15300576,
+          "pcm_rom_bytes": 30601152,
+          "pcm_rom_mib": 29.183533,
+          "fits_32mib_payload_only": true,
+          "fits_32mib_with_64k_player": true,
+          "assumed_player_budget_bytes": 65536,
+          "mono_alternative_pcm_rom_bytes": 15300576
+        }
+      },
+      "ffprobe": {
+        "streams": [
+          {
+            "index": 0,
+            "codec_name": "mp3",
+            "codec_long_name": "MP3 (MPEG audio layer 3)",
+            "codec_type": "audio",
+            "codec_tag_string": "[0][0][0][0]",
+            "codec_tag": "0x0000",
+            "sample_fmt": "fltp",
+            "sample_rate": "44100",
+            "channels": 2,
+            "channel_layout": "stereo",
+            "bits_per_sample": 0,
+            "initial_padding": 0,
+            "r_frame_rate": "0/0",
+            "avg_frame_rate": "0/0",
+            "time_base": "1/14112000",
+            "start_pts": 353600,
+            "start_time": "0.025057",
+            "duration_ts": 3293429760,
+            "duration": "233.377959",
+            "bit_rate": "192000",
+            "disposition": {
+              "default": 0,
+              "dub": 0,
+              "original": 0,
+              "comment": 0,
+              "lyrics": 0,
+              "karaoke": 0,
+              "forced": 0,
+              "hearing_impaired": 0,
+              "visual_impaired": 0,
+              "clean_effects": 0,
+              "attached_pic": 0,
+              "timed_thumbnails": 0,
+              "non_diegetic": 0,
+              "captions": 0,
+              "descriptions": 0,
+              "metadata": 0,
+              "dependent": 0,
+              "still_image": 0,
+              "multilayer": 0
+            },
+            "tags": {
+              "encoder": "Lavc58.54"
+            }
+          }
+        ],
+        "format": {
+          "filename": "/workspace/attachments/96c0e18c-ae18-41b5-8bbc-218382e9b704/Under Your Spell - Desire (Drive).mp3",
+          "nb_streams": 1,
+          "nb_programs": 0,
+          "nb_stream_groups": 0,
+          "format_name": "mp3",
+          "format_long_name": "MP2/3 (MPEG audio layer 2/3)",
+          "start_time": "0.025057",
+          "duration": "233.377959",
+          "size": "5601835",
+          "bit_rate": "192026",
+          "probe_score": 51,
+          "tags": {
+            "major_brand": "mp42",
+            "minor_version": "0",
+            "compatible_brands": "isommp42",
+            "encoder": "Lavf58.29.100"
+          }
+        }
+      }
+    },
+    {
+      "id": 3,
+      "source_path": "The Weeknd \u2013 Timeless with Playboi Carti (Official Music Video).mp3",
+      "file_name": "The Weeknd \u2013 Timeless with Playboi Carti (Official Music Video).mp3",
+      "display_title": "The Weeknd with Playboi Carti \u2014 Timeless",
+      "slug": "timeless",
+      "source_sha256": "a6c6558c231cdd1bc2bba238ec7e039ba8ed383c36df1fe7e8f0cab98c148cfb",
+      "source_bytes": 6148525,
+      "codec": "mp3",
+      "sample_rate_hz": 44100,
+      "channels": 2,
+      "channel_layout": "stereo",
+      "stream_bitrate_bps": 192000,
+      "container_bitrate_bps": 192023,
+      "decoded_samples_per_channel": 11294720,
+      "duration_seconds": 256.11609977324264,
+      "duration_rational": "11294720/44100",
+      "container_duration_seconds": 256.156735,
+      "container_start_seconds": 0.025057,
+      "decoded_duration_definition": "All PCM returned by normal gapless ffmpeg decoding, with MP3 codec delay/padding handled by decoder metadata; no musical lead-in, video introduction, fade, silence or tail trimmed.",
+      "vocal_assessment": {
+        "machine_verified": false,
+        "context": "Expected vocal/rap-bearing from release identity; not detected or transcribed in this assessment."
+      },
+      "previous_analysis": {
+        "file_name_matches": true,
+        "sample_rate_matches": true,
+        "channels_match": true,
+        "previous_duration_seconds": 256.116,
+        "native_duration_minus_previous_rounded_analysis_seconds": 9.9773e-05,
+        "duration_matches_within_1ms": true
+      },
+      "video_frame_rounding": {
+        "hardware_clock_hz": 16777216,
+        "cycles_per_frame": 280896,
+        "frame_rate_hz": 59.72750056960583,
+        "source_duration_in_frames": 15297.174495091573,
+        "floor_frames": 15297,
+        "nearest_frames": 15297,
+        "ceil_preserve_full_source_frames": 15298,
+        "ceil_frame_duration_seconds": 256.12992095947266,
+        "ceil_frame_tail_padding_seconds": 0.013821186230025864,
+        "recommended": "Ceil video-frame duration and pad the end; nearest-frame rounding may cut the source by up to half a frame."
+      },
+      "pcm_options": {
+        "stereo_32768": {
+          "timer_divisor": 512,
+          "timer_reload": "0xfe00",
+          "sample_rate_hz": 32768.0,
+          "sample_rate_rational": "32768/1",
+          "channels": 2,
+          "bits_per_sample": 8,
+          "source_duration_samples_per_channel": 8392413,
+          "source_duration_stereo_payload_bytes": 16784826,
+          "source_duration_stereo_with_guard_and_alignment_bytes": 16801216,
+          "ceil_frame_samples_per_channel": 8392866,
+          "ceil_frame_stereo_payload_bytes": 16785732,
+          "guard_samples_per_channel": 8192,
+          "guard_stereo_bytes": 16384,
+          "channel_storage_alignment_bytes": 16,
+          "allocated_samples_per_channel": 8401072,
+          "pcm_rom_bytes": 16802144,
+          "pcm_rom_mib": 16.023773,
+          "fits_32mib_payload_only": true,
+          "fits_32mib_with_64k_player": true,
+          "assumed_player_budget_bytes": 65536,
+          "mono_alternative_pcm_rom_bytes": 8401072
+        },
+        "stereo_44150_568": {
+          "timer_divisor": 380,
+          "timer_reload": "0xfe84",
+          "sample_rate_hz": 44150.56842105263,
+          "sample_rate_rational": "4194304/95",
+          "channels": 2,
+          "bits_per_sample": 8,
+          "source_duration_samples_per_channel": 11307672,
+          "source_duration_stereo_payload_bytes": 22615344,
+          "source_duration_stereo_with_guard_and_alignment_bytes": 22631744,
+          "ceil_frame_samples_per_channel": 11308282,
+          "ceil_frame_stereo_payload_bytes": 22616564,
+          "guard_samples_per_channel": 8192,
+          "guard_stereo_bytes": 16384,
+          "channel_storage_alignment_bytes": 16,
+          "allocated_samples_per_channel": 11316480,
+          "pcm_rom_bytes": 22632960,
+          "pcm_rom_mib": 21.584473,
+          "fits_32mib_payload_only": true,
+          "fits_32mib_with_64k_player": true,
+          "assumed_player_budget_bytes": 65536,
+          "mono_alternative_pcm_rom_bytes": 11316480
+        },
+        "stereo_65536": {
+          "timer_divisor": 256,
+          "timer_reload": "0xff00",
+          "sample_rate_hz": 65536.0,
+          "sample_rate_rational": "65536/1",
+          "channels": 2,
+          "bits_per_sample": 8,
+          "source_duration_samples_per_channel": 16784825,
+          "source_duration_stereo_payload_bytes": 33569650,
+          "source_duration_stereo_with_guard_and_alignment_bytes": 33586048,
+          "ceil_frame_samples_per_channel": 16785731,
+          "ceil_frame_stereo_payload_bytes": 33571462,
+          "guard_samples_per_channel": 8192,
+          "guard_stereo_bytes": 16384,
+          "channel_storage_alignment_bytes": 16,
+          "allocated_samples_per_channel": 16793936,
+          "pcm_rom_bytes": 33587872,
+          "pcm_rom_mib": 32.031891,
+          "fits_32mib_payload_only": false,
+          "fits_32mib_with_64k_player": false,
+          "assumed_player_budget_bytes": 65536,
+          "mono_alternative_pcm_rom_bytes": 16793936
+        }
+      },
+      "ffprobe": {
+        "streams": [
+          {
+            "index": 0,
+            "codec_name": "mp3",
+            "codec_long_name": "MP3 (MPEG audio layer 3)",
+            "codec_type": "audio",
+            "codec_tag_string": "[0][0][0][0]",
+            "codec_tag": "0x0000",
+            "sample_fmt": "fltp",
+            "sample_rate": "44100",
+            "channels": 2,
+            "channel_layout": "stereo",
+            "bits_per_sample": 0,
+            "initial_padding": 0,
+            "r_frame_rate": "0/0",
+            "avg_frame_rate": "0/0",
+            "time_base": "1/14112000",
+            "start_pts": 353600,
+            "start_time": "0.025057",
+            "duration_ts": 3614883840,
+            "duration": "256.156735",
+            "bit_rate": "192000",
+            "disposition": {
+              "default": 0,
+              "dub": 0,
+              "original": 0,
+              "comment": 0,
+              "lyrics": 0,
+              "karaoke": 0,
+              "forced": 0,
+              "hearing_impaired": 0,
+              "visual_impaired": 0,
+              "clean_effects": 0,
+              "attached_pic": 0,
+              "timed_thumbnails": 0,
+              "non_diegetic": 0,
+              "captions": 0,
+              "descriptions": 0,
+              "metadata": 0,
+              "dependent": 0,
+              "still_image": 0,
+              "multilayer": 0
+            },
+            "tags": {
+              "encoder": "Lavc58.54"
+            }
+          }
+        ],
+        "format": {
+          "filename": "/workspace/attachments/4112d831-ac69-4e10-b719-d8836ad7a184/The Weeknd \u2013 Timeless with Playboi Carti (Official Music Video).mp3",
+          "nb_streams": 1,
+          "nb_programs": 0,
+          "nb_stream_groups": 0,
+          "format_name": "mp3",
+          "format_long_name": "MP2/3 (MPEG audio layer 2/3)",
+          "start_time": "0.025057",
+          "duration": "256.156735",
+          "size": "6148525",
+          "bit_rate": "192023",
+          "probe_score": 51,
+          "tags": {
+            "major_brand": "dash",
+            "minor_version": "0",
+            "compatible_brands": "iso6mp41",
+            "encoder": "Lavf58.29.100"
+          }
+        }
+      }
+    },
+    {
+      "id": 4,
+      "source_path": "SNOW STRIPPERS - UNDER YOUR SPELL #SURFGANG.mp3",
+      "file_name": "SNOW STRIPPERS - UNDER YOUR SPELL #SURFGANG.mp3",
+      "display_title": "Snow Strippers \u2014 Under Your Spell",
+      "slug": "snow-strippers-under-your-spell",
+      "source_sha256": "b7ee7f9898cac7725c8723cd65e92790df46a3ead3d38788e46319f28010cd31",
+      "source_bytes": 5245101,
+      "codec": "mp3",
+      "sample_rate_hz": 48000,
+      "channels": 2,
+      "channel_layout": "stereo",
+      "stream_bitrate_bps": 192000,
+      "container_bitrate_bps": 192022,
+      "decoded_samples_per_channel": 10487808,
+      "duration_seconds": 218.496,
+      "duration_rational": "10487808/48000",
+      "container_duration_seconds": 218.52,
+      "container_start_seconds": 0.023021,
+      "decoded_duration_definition": "All PCM returned by normal gapless ffmpeg decoding, with MP3 codec delay/padding handled by decoder metadata; no musical lead-in, video introduction, fade, silence or tail trimmed.",
+      "vocal_assessment": {
+        "machine_verified": false,
+        "context": "Expected vocal-bearing from release identity; not detected or transcribed in this assessment."
+      },
+      "previous_analysis": {
+        "file_name_matches": true,
+        "sample_rate_matches": true,
+        "channels_match": true,
+        "previous_duration_seconds": 218.496,
+        "native_duration_minus_previous_rounded_analysis_seconds": 0.0,
+        "duration_matches_within_1ms": true
+      },
+      "video_frame_rounding": {
+        "hardware_clock_hz": 16777216,
+        "cycles_per_frame": 280896,
+        "frame_rate_hz": 59.72750056960583,
+        "source_duration_in_frames": 13050.219964456595,
+        "floor_frames": 13050,
+        "nearest_frames": 13050,
+        "ceil_preserve_full_source_frames": 13051,
+        "ceil_frame_duration_seconds": 218.50905990600586,
+        "ceil_frame_tail_padding_seconds": 0.013059906005859375,
+        "recommended": "Ceil video-frame duration and pad the end; nearest-frame rounding may cut the source by up to half a frame."
+      },
+      "pcm_options": {
+        "stereo_32768": {
+          "timer_divisor": 512,
+          "timer_reload": "0xfe00",
+          "sample_rate_hz": 32768.0,
+          "sample_rate_rational": "32768/1",
+          "channels": 2,
+          "bits_per_sample": 8,
+          "source_duration_samples_per_channel": 7159677,
+          "source_duration_stereo_payload_bytes": 14319354,
+          "source_duration_stereo_with_guard_and_alignment_bytes": 14335744,
+          "ceil_frame_samples_per_channel": 7160105,
+          "ceil_frame_stereo_payload_bytes": 14320210,
+          "guard_samples_per_channel": 8192,
+          "guard_stereo_bytes": 16384,
+          "channel_storage_alignment_bytes": 16,
+          "allocated_samples_per_channel": 7168304,
+          "pcm_rom_bytes": 14336608,
+          "pcm_rom_mib": 13.672455,
+          "fits_32mib_payload_only": true,
+          "fits_32mib_with_64k_player": true,
+          "assumed_player_budget_bytes": 65536,
+          "mono_alternative_pcm_rom_bytes": 7168304
+        },
+        "stereo_44150_568": {
+          "timer_divisor": 380,
+          "timer_reload": "0xfe84",
+          "sample_rate_hz": 44150.56842105263,
+          "sample_rate_rational": "4194304/95",
+          "channels": 2,
+          "bits_per_sample": 8,
+          "source_duration_samples_per_channel": 9646723,
+          "source_duration_stereo_payload_bytes": 19293446,
+          "source_duration_stereo_with_guard_and_alignment_bytes": 19309856,
+          "ceil_frame_samples_per_channel": 9647300,
+          "ceil_frame_stereo_payload_bytes": 19294600,
+          "guard_samples_per_channel": 8192,
+          "guard_stereo_bytes": 16384,
+          "channel_storage_alignment_bytes": 16,
+          "allocated_samples_per_channel": 9655504,
+          "pcm_rom_bytes": 19311008,
+          "pcm_rom_mib": 18.416412,
+          "fits_32mib_payload_only": true,
+          "fits_32mib_with_64k_player": true,
+          "assumed_player_budget_bytes": 65536,
+          "mono_alternative_pcm_rom_bytes": 9655504
+        },
+        "stereo_65536": {
+          "timer_divisor": 256,
+          "timer_reload": "0xff00",
+          "sample_rate_hz": 65536.0,
+          "sample_rate_rational": "65536/1",
+          "channels": 2,
+          "bits_per_sample": 8,
+          "source_duration_samples_per_channel": 14319354,
+          "source_duration_stereo_payload_bytes": 28638708,
+          "source_duration_stereo_with_guard_and_alignment_bytes": 28655104,
+          "ceil_frame_samples_per_channel": 14320210,
+          "ceil_frame_stereo_payload_bytes": 28640420,
+          "guard_samples_per_channel": 8192,
+          "guard_stereo_bytes": 16384,
+          "channel_storage_alignment_bytes": 16,
+          "allocated_samples_per_channel": 14328416,
+          "pcm_rom_bytes": 28656832,
+          "pcm_rom_mib": 27.329285,
+          "fits_32mib_payload_only": true,
+          "fits_32mib_with_64k_player": true,
+          "assumed_player_budget_bytes": 65536,
+          "mono_alternative_pcm_rom_bytes": 14328416
+        }
+      },
+      "ffprobe": {
+        "streams": [
+          {
+            "index": 0,
+            "codec_name": "mp3",
+            "codec_long_name": "MP3 (MPEG audio layer 3)",
+            "codec_type": "audio",
+            "codec_tag_string": "[0][0][0][0]",
+            "codec_tag": "0x0000",
+            "sample_fmt": "fltp",
+            "sample_rate": "48000",
+            "channels": 2,
+            "channel_layout": "stereo",
+            "bits_per_sample": 0,
+            "initial_padding": 0,
+            "r_frame_rate": "0/0",
+            "avg_frame_rate": "0/0",
+            "time_base": "1/14112000",
+            "start_pts": 324870,
+            "start_time": "0.023021",
+            "duration_ts": 3083754240,
+            "duration": "218.520000",
+            "bit_rate": "192000",
+            "disposition": {
+              "default": 0,
+              "dub": 0,
+              "original": 0,
+              "comment": 0,
+              "lyrics": 0,
+              "karaoke": 0,
+              "forced": 0,
+              "hearing_impaired": 0,
+              "visual_impaired": 0,
+              "clean_effects": 0,
+              "attached_pic": 0,
+              "timed_thumbnails": 0,
+              "non_diegetic": 0,
+              "captions": 0,
+              "descriptions": 0,
+              "metadata": 0,
+              "dependent": 0,
+              "still_image": 0,
+              "multilayer": 0
+            },
+            "tags": {
+              "encoder": "Lavc58.54"
+            }
+          }
+        ],
+        "format": {
+          "filename": "/workspace/attachments/e9b22e2a-cc48-4adf-a6f5-1bb24f758abe/SNOW STRIPPERS - UNDER YOUR SPELL #SURFGANG.mp3",
+          "nb_streams": 1,
+          "nb_programs": 0,
+          "nb_stream_groups": 0,
+          "format_name": "mp3",
+          "format_long_name": "MP2/3 (MPEG audio layer 2/3)",
+          "start_time": "0.023021",
+          "duration": "218.520000",
+          "size": "5245101",
+          "bit_rate": "192022",
+          "probe_score": 51,
+          "tags": {
+            "encoder": "Lavf58.29.100"
+          }
+        }
+      }
+    },
+    {
+      "id": 5,
+      "source_path": "Friday Night.mp3",
+      "file_name": "Friday Night.mp3",
+      "display_title": "Friday Night",
+      "slug": "friday-night",
+      "source_sha256": "cab947e8fd629f24e5c536c13b490cbe62ac575ede9aa8e56c733435e484e848",
+      "source_bytes": 3976928,
+      "codec": "mp3",
+      "sample_rate_hz": 44100,
+      "channels": 2,
+      "channel_layout": "stereo",
+      "stream_bitrate_bps": 133865,
+      "container_bitrate_bps": 133868,
+      "decoded_samples_per_channel": 10479616,
+      "duration_seconds": 237.63301587301586,
+      "duration_rational": "10479616/44100",
+      "container_duration_seconds": 237.662041,
+      "container_start_seconds": 0.025057,
+      "decoded_duration_definition": "All PCM returned by normal gapless ffmpeg decoding, with MP3 codec delay/padding handled by decoder metadata; no musical lead-in, video introduction, fade, silence or tail trimmed.",
+      "vocal_assessment": {
+        "machine_verified": false,
+        "context": "Generic filename; vocal presence is not established by the available signal-only analysis."
+      },
+      "previous_analysis": {
+        "file_name_matches": true,
+        "sample_rate_matches": true,
+        "channels_match": true,
+        "previous_duration_seconds": 237.633,
+        "native_duration_minus_previous_rounded_analysis_seconds": 1.5873e-05,
+        "duration_matches_within_1ms": true
+      },
+      "video_frame_rounding": {
+        "hardware_clock_hz": 16777216,
+        "cycles_per_frame": 280896,
+        "frame_rate_hz": 59.72750056960583,
+        "source_duration_in_frames": 14193.226090912707,
+        "floor_frames": 14193,
+        "nearest_frames": 14193,
+        "ceil_preserve_full_source_frames": 14194,
+        "ceil_frame_duration_seconds": 237.6459732055664,
+        "ceil_frame_tail_padding_seconds": 0.012957332550533234,
+        "recommended": "Ceil video-frame duration and pad the end; nearest-frame rounding may cut the source by up to half a frame."
+      },
+      "pcm_options": {
+        "stereo_32768": {
+          "timer_divisor": 512,
+          "timer_reload": "0xfe00",
+          "sample_rate_hz": 32768.0,
+          "sample_rate_rational": "32768/1",
+          "channels": 2,
+          "bits_per_sample": 8,
+          "source_duration_samples_per_channel": 7786759,
+          "source_duration_stereo_payload_bytes": 15573518,
+          "source_duration_stereo_with_guard_and_alignment_bytes": 15589920,
+          "ceil_frame_samples_per_channel": 7787184,
+          "ceil_frame_stereo_payload_bytes": 15574368,
+          "guard_samples_per_channel": 8192,
+          "guard_stereo_bytes": 16384,
+          "channel_storage_alignment_bytes": 16,
+          "allocated_samples_per_channel": 7795376,
+          "pcm_rom_bytes": 15590752,
+          "pcm_rom_mib": 14.8685,
+          "fits_32mib_payload_only": true,
+          "fits_32mib_with_64k_player": true,
+          "assumed_player_budget_bytes": 65536,
+          "mono_alternative_pcm_rom_bytes": 7795376
+        },
+        "stereo_44150_568": {
+          "timer_divisor": 380,
+          "timer_reload": "0xfe84",
+          "sample_rate_hz": 44150.56842105263,
+          "sample_rate_rational": "4194304/95",
+          "channels": 2,
+          "bits_per_sample": 8,
+          "source_duration_samples_per_channel": 10491633,
+          "source_duration_stereo_payload_bytes": 20983266,
+          "source_duration_stereo_with_guard_and_alignment_bytes": 20999680,
+          "ceil_frame_samples_per_channel": 10492205,
+          "ceil_frame_stereo_payload_bytes": 20984410,
+          "guard_samples_per_channel": 8192,
+          "guard_stereo_bytes": 16384,
+          "channel_storage_alignment_bytes": 16,
+          "allocated_samples_per_channel": 10500400,
+          "pcm_rom_bytes": 21000800,
+          "pcm_rom_mib": 20.027924,
+          "fits_32mib_payload_only": true,
+          "fits_32mib_with_64k_player": true,
+          "assumed_player_budget_bytes": 65536,
+          "mono_alternative_pcm_rom_bytes": 10500400
+        },
+        "stereo_65536": {
+          "timer_divisor": 256,
+          "timer_reload": "0xff00",
+          "sample_rate_hz": 65536.0,
+          "sample_rate_rational": "65536/1",
+          "channels": 2,
+          "bits_per_sample": 8,
+          "source_duration_samples_per_channel": 15573518,
+          "source_duration_stereo_payload_bytes": 31147036,
+          "source_duration_stereo_with_guard_and_alignment_bytes": 31163424,
+          "ceil_frame_samples_per_channel": 15574367,
+          "ceil_frame_stereo_payload_bytes": 31148734,
+          "guard_samples_per_channel": 8192,
+          "guard_stereo_bytes": 16384,
+          "channel_storage_alignment_bytes": 16,
+          "allocated_samples_per_channel": 15582560,
+          "pcm_rom_bytes": 31165120,
+          "pcm_rom_mib": 29.721375,
+          "fits_32mib_payload_only": true,
+          "fits_32mib_with_64k_player": true,
+          "assumed_player_budget_bytes": 65536,
+          "mono_alternative_pcm_rom_bytes": 15582560
+        }
+      },
+      "ffprobe": {
+        "streams": [
+          {
+            "index": 0,
+            "codec_name": "mp3",
+            "codec_long_name": "MP3 (MPEG audio layer 3)",
+            "codec_type": "audio",
+            "codec_tag_string": "[0][0][0][0]",
+            "codec_tag": "0x0000",
+            "sample_fmt": "fltp",
+            "sample_rate": "44100",
+            "channels": 2,
+            "channel_layout": "stereo",
+            "bits_per_sample": 0,
+            "initial_padding": 0,
+            "r_frame_rate": "0/0",
+            "avg_frame_rate": "0/0",
+            "time_base": "1/14112000",
+            "start_pts": 353600,
+            "start_time": "0.025057",
+            "duration_ts": 3353886720,
+            "duration": "237.662041",
+            "bit_rate": "133865",
+            "disposition": {
+              "default": 0,
+              "dub": 0,
+              "original": 0,
+              "comment": 0,
+              "lyrics": 0,
+              "karaoke": 0,
+              "forced": 0,
+              "hearing_impaired": 0,
+              "visual_impaired": 0,
+              "clean_effects": 0,
+              "attached_pic": 0,
+              "timed_thumbnails": 0,
+              "non_diegetic": 0,
+              "captions": 0,
+              "descriptions": 0,
+              "metadata": 0,
+              "dependent": 0,
+              "still_image": 0,
+              "multilayer": 0
+            },
+            "tags": {
+              "encoder": "Lavc60.31"
+            }
+          }
+        ],
+        "format": {
+          "filename": "/workspace/attachments/24cdb1c4-776a-49fe-9416-3eceab7576c1/Friday Night.mp3",
+          "nb_streams": 1,
+          "nb_programs": 0,
+          "nb_stream_groups": 0,
+          "format_name": "mp3",
+          "format_long_name": "MP2/3 (MPEG audio layer 2/3)",
+          "start_time": "0.025057",
+          "duration": "237.662041",
+          "size": "3976928",
+          "bit_rate": "133868",
+          "probe_score": 51,
+          "tags": {
+            "encoder": "Lavf60.16.100",
+            "id3v2_priv.com.apple.streaming.transportStreamTimestamp": "\\x00\\x00\\x00\\x00\\x00\\x00\\x03\\x92"
+          }
+        }
+      }
+    },
+    {
+      "id": 6,
+      "source_path": "Daft Punk - Voyager (Official Audio).mp3",
+      "file_name": "Daft Punk - Voyager (Official Audio).mp3",
+      "display_title": "Daft Punk \u2014 Voyager",
+      "slug": "voyager",
+      "source_sha256": "516fcea5e925e132262483610d6a86b2fa9e047cc66c8a894e36ed51512dc51f",
+      "source_bytes": 5470177,
+      "codec": "mp3",
+      "sample_rate_hz": 44100,
+      "channels": 2,
+      "channel_layout": "stereo",
+      "stream_bitrate_bps": 192000,
+      "container_bitrate_bps": 192026,
+      "decoded_samples_per_channel": 10048512,
+      "duration_seconds": 227.8574149659864,
+      "duration_rational": "10048512/44100",
+      "container_duration_seconds": 227.892245,
+      "container_start_seconds": 0.025057,
+      "decoded_duration_definition": "All PCM returned by normal gapless ffmpeg decoding, with MP3 codec delay/padding handled by decoder metadata; no musical lead-in, video introduction, fade, silence or tail trimmed.",
+      "vocal_assessment": {
+        "machine_verified": false,
+        "context": "Expected instrumental from release identity; this uploaded arrangement has not been independently audited for every vocal sound."
+      },
+      "previous_analysis": {
+        "file_name_matches": true,
+        "sample_rate_matches": true,
+        "channels_match": true,
+        "previous_duration_seconds": 227.857,
+        "native_duration_minus_previous_rounded_analysis_seconds": 0.000414966,
+        "duration_matches_within_1ms": true
+      },
+      "video_frame_rounding": {
+        "hardware_clock_hz": 16777216,
+        "cycles_per_frame": 280896,
+        "frame_rate_hz": 59.72750056960583,
+        "source_duration_in_frames": 13609.353882169866,
+        "floor_frames": 13609,
+        "nearest_frames": 13609,
+        "ceil_preserve_full_source_frames": 13610,
+        "ceil_frame_duration_seconds": 227.86823272705078,
+        "ceil_frame_tail_padding_seconds": 0.010817761064386693,
+        "recommended": "Ceil video-frame duration and pad the end; nearest-frame rounding may cut the source by up to half a frame."
+      },
+      "pcm_options": {
+        "stereo_32768": {
+          "timer_divisor": 512,
+          "timer_reload": "0xfe00",
+          "sample_rate_hz": 32768.0,
+          "sample_rate_rational": "32768/1",
+          "channels": 2,
+          "bits_per_sample": 8,
+          "source_duration_samples_per_channel": 7466432,
+          "source_duration_stereo_payload_bytes": 14932864,
+          "source_duration_stereo_with_guard_and_alignment_bytes": 14949248,
+          "ceil_frame_samples_per_channel": 7466787,
+          "ceil_frame_stereo_payload_bytes": 14933574,
+          "guard_samples_per_channel": 8192,
+          "guard_stereo_bytes": 16384,
+          "channel_storage_alignment_bytes": 16,
+          "allocated_samples_per_channel": 7474992,
+          "pcm_rom_bytes": 14949984,
+          "pcm_rom_mib": 14.257416,
+          "fits_32mib_payload_only": true,
+          "fits_32mib_with_64k_player": true,
+          "assumed_player_budget_bytes": 65536,
+          "mono_alternative_pcm_rom_bytes": 7474992
+        },
+        "stereo_44150_568": {
+          "timer_divisor": 380,
+          "timer_reload": "0xfe84",
+          "sample_rate_hz": 44150.56842105263,
+          "sample_rate_rational": "4194304/95",
+          "channels": 2,
+          "bits_per_sample": 8,
+          "source_duration_samples_per_channel": 10060035,
+          "source_duration_stereo_payload_bytes": 20120070,
+          "source_duration_stereo_with_guard_and_alignment_bytes": 20136480,
+          "ceil_frame_samples_per_channel": 10060512,
+          "ceil_frame_stereo_payload_bytes": 20121024,
+          "guard_samples_per_channel": 8192,
+          "guard_stereo_bytes": 16384,
+          "channel_storage_alignment_bytes": 16,
+          "allocated_samples_per_channel": 10068704,
+          "pcm_rom_bytes": 20137408,
+          "pcm_rom_mib": 19.204529,
+          "fits_32mib_payload_only": true,
+          "fits_32mib_with_64k_player": true,
+          "assumed_player_budget_bytes": 65536,
+          "mono_alternative_pcm_rom_bytes": 10068704
+        },
+        "stereo_65536": {
+          "timer_divisor": 256,
+          "timer_reload": "0xff00",
+          "sample_rate_hz": 65536.0,
+          "sample_rate_rational": "65536/1",
+          "channels": 2,
+          "bits_per_sample": 8,
+          "source_duration_samples_per_channel": 14932864,
+          "source_duration_stereo_payload_bytes": 29865728,
+          "source_duration_stereo_with_guard_and_alignment_bytes": 29882112,
+          "ceil_frame_samples_per_channel": 14933573,
+          "ceil_frame_stereo_payload_bytes": 29867146,
+          "guard_samples_per_channel": 8192,
+          "guard_stereo_bytes": 16384,
+          "channel_storage_alignment_bytes": 16,
+          "allocated_samples_per_channel": 14941776,
+          "pcm_rom_bytes": 29883552,
+          "pcm_rom_mib": 28.499176,
+          "fits_32mib_payload_only": true,
+          "fits_32mib_with_64k_player": true,
+          "assumed_player_budget_bytes": 65536,
+          "mono_alternative_pcm_rom_bytes": 14941776
+        }
+      },
+      "ffprobe": {
+        "streams": [
+          {
+            "index": 0,
+            "codec_name": "mp3",
+            "codec_long_name": "MP3 (MPEG audio layer 3)",
+            "codec_type": "audio",
+            "codec_tag_string": "[0][0][0][0]",
+            "codec_tag": "0x0000",
+            "sample_fmt": "fltp",
+            "sample_rate": "44100",
+            "channels": 2,
+            "channel_layout": "stereo",
+            "bits_per_sample": 0,
+            "initial_padding": 0,
+            "r_frame_rate": "0/0",
+            "avg_frame_rate": "0/0",
+            "time_base": "1/14112000",
+            "start_pts": 353600,
+            "start_time": "0.025057",
+            "duration_ts": 3216015360,
+            "duration": "227.892245",
+            "bit_rate": "192000",
+            "disposition": {
+              "default": 0,
+              "dub": 0,
+              "original": 0,
+              "comment": 0,
+              "lyrics": 0,
+              "karaoke": 0,
+              "forced": 0,
+              "hearing_impaired": 0,
+              "visual_impaired": 0,
+              "clean_effects": 0,
+              "attached_pic": 0,
+              "timed_thumbnails": 0,
+              "non_diegetic": 0,
+              "captions": 0,
+              "descriptions": 0,
+              "metadata": 0,
+              "dependent": 0,
+              "still_image": 0,
+              "multilayer": 0
+            },
+            "tags": {
+              "encoder": "Lavc58.54"
+            }
+          }
+        ],
+        "format": {
+          "filename": "/workspace/attachments/4067b477-9d2b-4e93-8065-69d7bec2020b/Daft Punk - Voyager (Official Audio).mp3",
+          "nb_streams": 1,
+          "nb_programs": 0,
+          "nb_stream_groups": 0,
+          "format_name": "mp3",
+          "format_long_name": "MP2/3 (MPEG audio layer 2/3)",
+          "start_time": "0.025057",
+          "duration": "227.892245",
+          "size": "5470177",
+          "bit_rate": "192026",
+          "probe_score": 51,
+          "tags": {
+            "major_brand": "dash",
+            "minor_version": "0",
+            "compatible_brands": "iso6mp41",
+            "encoder": "Lavf58.29.100"
+          }
+        }
+      }
+    },
+    {
+      "id": 7,
+      "source_path": "Sunday Evening Pain.mp3",
+      "file_name": "Sunday Evening Pain.mp3",
+      "display_title": "Sunday Evening Pain",
+      "slug": "sunday-evening-pain",
+      "source_sha256": "44e6f0e8b969d799d9a2a840112fce37dc2d28dc3b25a5ff2f8f031689c6e602",
+      "source_bytes": 2885307,
+      "codec": "mp3",
+      "sample_rate_hz": 44100,
+      "channels": 2,
+      "channel_layout": "stereo",
+      "stream_bitrate_bps": 127630,
+      "container_bitrate_bps": 127636,
+      "decoded_samples_per_channel": 7973312,
+      "duration_seconds": 180.80072562358276,
+      "duration_rational": "7973312/44100",
+      "container_duration_seconds": 180.845714,
+      "container_start_seconds": 0.025057,
+      "decoded_duration_definition": "All PCM returned by normal gapless ffmpeg decoding, with MP3 codec delay/padding handled by decoder metadata; no musical lead-in, video introduction, fade, silence or tail trimmed.",
+      "vocal_assessment": {
+        "machine_verified": false,
+        "context": "Generic filename; vocal presence is not established by the available signal-only analysis."
+      },
+      "previous_analysis": {
+        "file_name_matches": true,
+        "sample_rate_matches": true,
+        "channels_match": true,
+        "previous_duration_seconds": 180.801,
+        "native_duration_minus_previous_rounded_analysis_seconds": -0.000274376,
+        "duration_matches_within_1ms": true
+      },
+      "video_frame_rounding": {
+        "hardware_clock_hz": 16777216,
+        "cycles_per_frame": 280896,
+        "frame_rate_hz": 59.72750056960583,
+        "source_duration_in_frames": 10798.775442667687,
+        "floor_frames": 10798,
+        "nearest_frames": 10799,
+        "ceil_preserve_full_source_frames": 10799,
+        "ceil_frame_duration_seconds": 180.80448532104492,
+        "ceil_frame_tail_padding_seconds": 0.0037596974621554352,
+        "recommended": "Ceil video-frame duration and pad the end; nearest-frame rounding may cut the source by up to half a frame."
+      },
+      "pcm_options": {
+        "stereo_32768": {
+          "timer_divisor": 512,
+          "timer_reload": "0xfe00",
+          "sample_rate_hz": 32768.0,
+          "sample_rate_rational": "32768/1",
+          "channels": 2,
+          "bits_per_sample": 8,
+          "source_duration_samples_per_channel": 5924479,
+          "source_duration_stereo_payload_bytes": 11848958,
+          "source_duration_stereo_with_guard_and_alignment_bytes": 11865344,
+          "ceil_frame_samples_per_channel": 5924602,
+          "ceil_frame_stereo_payload_bytes": 11849204,
+          "guard_samples_per_channel": 8192,
+          "guard_stereo_bytes": 16384,
+          "channel_storage_alignment_bytes": 16,
+          "allocated_samples_per_channel": 5932800,
+          "pcm_rom_bytes": 11865600,
+          "pcm_rom_mib": 11.315918,
+          "fits_32mib_payload_only": true,
+          "fits_32mib_with_64k_player": true,
+          "assumed_player_budget_bytes": 65536,
+          "mono_alternative_pcm_rom_bytes": 5932800
+        },
+        "stereo_44150_568": {
+          "timer_divisor": 380,
+          "timer_reload": "0xfe84",
+          "sample_rate_hz": 44150.56842105263,
+          "sample_rate_rational": "4194304/95",
+          "channels": 2,
+          "bits_per_sample": 8,
+          "source_duration_samples_per_channel": 7982455,
+          "source_duration_stereo_payload_bytes": 15964910,
+          "source_duration_stereo_with_guard_and_alignment_bytes": 15981312,
+          "ceil_frame_samples_per_channel": 7982621,
+          "ceil_frame_stereo_payload_bytes": 15965242,
+          "guard_samples_per_channel": 8192,
+          "guard_stereo_bytes": 16384,
+          "channel_storage_alignment_bytes": 16,
+          "allocated_samples_per_channel": 7990816,
+          "pcm_rom_bytes": 15981632,
+          "pcm_rom_mib": 15.241272,
+          "fits_32mib_payload_only": true,
+          "fits_32mib_with_64k_player": true,
+          "assumed_player_budget_bytes": 65536,
+          "mono_alternative_pcm_rom_bytes": 7990816
+        },
+        "stereo_65536": {
+          "timer_divisor": 256,
+          "timer_reload": "0xff00",
+          "sample_rate_hz": 65536.0,
+          "sample_rate_rational": "65536/1",
+          "channels": 2,
+          "bits_per_sample": 8,
+          "source_duration_samples_per_channel": 11848957,
+          "source_duration_stereo_payload_bytes": 23697914,
+          "source_duration_stereo_with_guard_and_alignment_bytes": 23714304,
+          "ceil_frame_samples_per_channel": 11849203,
+          "ceil_frame_stereo_payload_bytes": 23698406,
+          "guard_samples_per_channel": 8192,
+          "guard_stereo_bytes": 16384,
+          "channel_storage_alignment_bytes": 16,
+          "allocated_samples_per_channel": 11857408,
+          "pcm_rom_bytes": 23714816,
+          "pcm_rom_mib": 22.616211,
+          "fits_32mib_payload_only": true,
+          "fits_32mib_with_64k_player": true,
+          "assumed_player_budget_bytes": 65536,
+          "mono_alternative_pcm_rom_bytes": 11857408
+        }
+      },
+      "ffprobe": {
+        "streams": [
+          {
+            "index": 0,
+            "codec_name": "mp3",
+            "codec_long_name": "MP3 (MPEG audio layer 3)",
+            "codec_type": "audio",
+            "codec_tag_string": "[0][0][0][0]",
+            "codec_tag": "0x0000",
+            "sample_fmt": "fltp",
+            "sample_rate": "44100",
+            "channels": 2,
+            "channel_layout": "stereo",
+            "bits_per_sample": 0,
+            "initial_padding": 0,
+            "r_frame_rate": "0/0",
+            "avg_frame_rate": "0/0",
+            "time_base": "1/14112000",
+            "start_pts": 353600,
+            "start_time": "0.025057",
+            "duration_ts": 2552094720,
+            "duration": "180.845714",
+            "bit_rate": "127630",
+            "disposition": {
+              "default": 0,
+              "dub": 0,
+              "original": 0,
+              "comment": 0,
+              "lyrics": 0,
+              "karaoke": 0,
+              "forced": 0,
+              "hearing_impaired": 0,
+              "visual_impaired": 0,
+              "clean_effects": 0,
+              "attached_pic": 0,
+              "timed_thumbnails": 0,
+              "non_diegetic": 0,
+              "captions": 0,
+              "descriptions": 0,
+              "metadata": 0,
+              "dependent": 0,
+              "still_image": 0,
+              "multilayer": 0
+            },
+            "tags": {
+              "encoder": "Lavc60.31"
+            }
+          }
+        ],
+        "format": {
+          "filename": "/workspace/attachments/6fcf9c92-ea84-402e-8120-2213ddb8be48/Sunday Evening Pain.mp3",
+          "nb_streams": 1,
+          "nb_programs": 0,
+          "nb_stream_groups": 0,
+          "format_name": "mp3",
+          "format_long_name": "MP2/3 (MPEG audio layer 2/3)",
+          "start_time": "0.025057",
+          "duration": "180.845714",
+          "size": "2885307",
+          "bit_rate": "127636",
+          "probe_score": 51,
+          "tags": {
+            "major_brand": "isom",
+            "minor_version": "512",
+            "compatible_brands": "isomiso2mp41",
+            "encoder": "Lavf60.16.100"
+          }
+        }
+      }
+    },
+    {
+      "id": 8,
+      "source_path": "Drake - What's Next (Official Music Video).mp3",
+      "file_name": "Drake - What's Next (Official Music Video).mp3",
+      "display_title": "Drake \u2014 What\u2019s Next",
+      "slug": "whats-next",
+      "source_sha256": "48bd5ff1c08e53e2a69fb89cbdddcf4f94095d2b4c0b9deb8ee9dc94e86436eb",
+      "source_bytes": 4807503,
+      "codec": "mp3",
+      "sample_rate_hz": 44100,
+      "channels": 2,
+      "channel_layout": "stereo",
+      "stream_bitrate_bps": 192000,
+      "container_bitrate_bps": 192030,
+      "decoded_samples_per_channel": 8830976,
+      "duration_seconds": 200.2488888888889,
+      "duration_rational": "8830976/44100",
+      "container_duration_seconds": 200.280816,
+      "container_start_seconds": 0.025057,
+      "decoded_duration_definition": "All PCM returned by normal gapless ffmpeg decoding, with MP3 codec delay/padding handled by decoder metadata; no musical lead-in, video introduction, fade, silence or tail trimmed.",
+      "vocal_assessment": {
+        "machine_verified": false,
+        "context": "Expected rap/vocal-bearing from release identity; not detected or transcribed in this assessment."
+      },
+      "previous_analysis": {
+        "file_name_matches": true,
+        "sample_rate_matches": true,
+        "channels_match": true,
+        "previous_duration_seconds": 200.249,
+        "native_duration_minus_previous_rounded_analysis_seconds": -0.000111111,
+        "duration_matches_within_1ms": true
+      },
+      "video_frame_rounding": {
+        "hardware_clock_hz": 16777216,
+        "cycles_per_frame": 280896,
+        "frame_rate_hz": 59.72750056960583,
+        "source_duration_in_frames": 11960.365625174047,
+        "floor_frames": 11960,
+        "nearest_frames": 11960,
+        "ceil_preserve_full_source_frames": 11961,
+        "ceil_frame_duration_seconds": 200.2595100402832,
+        "ceil_frame_tail_padding_seconds": 0.010621151394314236,
+        "recommended": "Ceil video-frame duration and pad the end; nearest-frame rounding may cut the source by up to half a frame."
+      },
+      "pcm_options": {
+        "stereo_32768": {
+          "timer_divisor": 512,
+          "timer_reload": "0xfe00",
+          "sample_rate_hz": 32768.0,
+          "sample_rate_rational": "32768/1",
+          "channels": 2,
+          "bits_per_sample": 8,
+          "source_duration_samples_per_channel": 6561756,
+          "source_duration_stereo_payload_bytes": 13123512,
+          "source_duration_stereo_with_guard_and_alignment_bytes": 13139904,
+          "ceil_frame_samples_per_channel": 6562104,
+          "ceil_frame_stereo_payload_bytes": 13124208,
+          "guard_samples_per_channel": 8192,
+          "guard_stereo_bytes": 16384,
+          "channel_storage_alignment_bytes": 16,
+          "allocated_samples_per_channel": 6570304,
+          "pcm_rom_bytes": 13140608,
+          "pcm_rom_mib": 12.53186,
+          "fits_32mib_payload_only": true,
+          "fits_32mib_with_64k_player": true,
+          "assumed_player_budget_bytes": 65536,
+          "mono_alternative_pcm_rom_bytes": 6570304
+        },
+        "stereo_44150_568": {
+          "timer_divisor": 380,
+          "timer_reload": "0xfe84",
+          "sample_rate_hz": 44150.56842105263,
+          "sample_rate_rational": "4194304/95",
+          "channels": 2,
+          "bits_per_sample": 8,
+          "source_duration_samples_per_channel": 8841103,
+          "source_duration_stereo_payload_bytes": 17682206,
+          "source_duration_stereo_with_guard_and_alignment_bytes": 17698592,
+          "ceil_frame_samples_per_channel": 8841572,
+          "ceil_frame_stereo_payload_bytes": 17683144,
+          "guard_samples_per_channel": 8192,
+          "guard_stereo_bytes": 16384,
+          "channel_storage_alignment_bytes": 16,
+          "allocated_samples_per_channel": 8849776,
+          "pcm_rom_bytes": 17699552,
+          "pcm_rom_mib": 16.879608,
+          "fits_32mib_payload_only": true,
+          "fits_32mib_with_64k_player": true,
+          "assumed_player_budget_bytes": 65536,
+          "mono_alternative_pcm_rom_bytes": 8849776
+        },
+        "stereo_65536": {
+          "timer_divisor": 256,
+          "timer_reload": "0xff00",
+          "sample_rate_hz": 65536.0,
+          "sample_rate_rational": "65536/1",
+          "channels": 2,
+          "bits_per_sample": 8,
+          "source_duration_samples_per_channel": 13123512,
+          "source_duration_stereo_payload_bytes": 26247024,
+          "source_duration_stereo_with_guard_and_alignment_bytes": 26263424,
+          "ceil_frame_samples_per_channel": 13124208,
+          "ceil_frame_stereo_payload_bytes": 26248416,
+          "guard_samples_per_channel": 8192,
+          "guard_stereo_bytes": 16384,
+          "channel_storage_alignment_bytes": 16,
+          "allocated_samples_per_channel": 13132400,
+          "pcm_rom_bytes": 26264800,
+          "pcm_rom_mib": 25.048065,
+          "fits_32mib_payload_only": true,
+          "fits_32mib_with_64k_player": true,
+          "assumed_player_budget_bytes": 65536,
+          "mono_alternative_pcm_rom_bytes": 13132400
+        }
+      },
+      "ffprobe": {
+        "streams": [
+          {
+            "index": 0,
+            "codec_name": "mp3",
+            "codec_long_name": "MP3 (MPEG audio layer 3)",
+            "codec_type": "audio",
+            "codec_tag_string": "[0][0][0][0]",
+            "codec_tag": "0x0000",
+            "sample_fmt": "fltp",
+            "sample_rate": "44100",
+            "channels": 2,
+            "channel_layout": "stereo",
+            "bits_per_sample": 0,
+            "initial_padding": 0,
+            "r_frame_rate": "0/0",
+            "avg_frame_rate": "0/0",
+            "time_base": "1/14112000",
+            "start_pts": 353600,
+            "start_time": "0.025057",
+            "duration_ts": 2826362880,
+            "duration": "200.280816",
+            "bit_rate": "192000",
+            "disposition": {
+              "default": 0,
+              "dub": 0,
+              "original": 0,
+              "comment": 0,
+              "lyrics": 0,
+              "karaoke": 0,
+              "forced": 0,
+              "hearing_impaired": 0,
+              "visual_impaired": 0,
+              "clean_effects": 0,
+              "attached_pic": 0,
+              "timed_thumbnails": 0,
+              "non_diegetic": 0,
+              "captions": 0,
+              "descriptions": 0,
+              "metadata": 0,
+              "dependent": 0,
+              "still_image": 0,
+              "multilayer": 0
+            },
+            "tags": {
+              "encoder": "Lavc58.54"
+            }
+          }
+        ],
+        "format": {
+          "filename": "/workspace/attachments/a198caf7-b4c9-4715-888e-1c70fc42c032/Drake - What's Next (Official Music Video).mp3",
+          "nb_streams": 1,
+          "nb_programs": 0,
+          "nb_stream_groups": 0,
+          "format_name": "mp3",
+          "format_long_name": "MP2/3 (MPEG audio layer 2/3)",
+          "start_time": "0.025057",
+          "duration": "200.280816",
+          "size": "4807503",
+          "bit_rate": "192030",
+          "probe_score": 51,
+          "tags": {
+            "major_brand": "dash",
+            "minor_version": "0",
+            "compatible_brands": "iso6mp41",
+            "encoder": "Lavf58.29.100"
+          }
+        }
+      }
+    }
+  ],
+  "capacity_by_rate": {
+    "stereo_32768": {
+      "payload_only": {
+        "player_budget_per_rom_bytes": 0,
+        "all_single_song_roms_fit": true,
+        "oversized_single_song_ids": [],
+        "singles": [
+          {
+            "ids": [
+              1
+            ],
+            "rom_bytes": 8888768,
+            "fits": true
+          },
+          {
+            "ids": [
+              2
+            ],
+            "rom_bytes": 15308768,
+            "fits": true
+          },
+          {
+            "ids": [
+              3
+            ],
+            "rom_bytes": 16802144,
+            "fits": true
+          },
+          {
+            "ids": [
+              4
+            ],
+            "rom_bytes": 14336608,
+            "fits": true
+          },
+          {
+            "ids": [
+              5
+            ],
+            "rom_bytes": 15590752,
+            "fits": true
+          },
+          {
+            "ids": [
+              6
+            ],
+            "rom_bytes": 14949984,
+            "fits": true
+          },
+          {
+            "ids": [
+              7
+            ],
+            "rom_bytes": 11865600,
+            "fits": true
+          },
+          {
+            "ids": [
+              8
+            ],
+            "rom_bytes": 13140608,
+            "fits": true
+          }
+        ],
+        "pairs": [
+          {
+            "ids": [
+              1,
+              2
+            ],
+            "rom_bytes": 24197536,
+            "fits": true
+          },
+          {
+            "ids": [
+              1,
+              3
+            ],
+            "rom_bytes": 25690912,
+            "fits": true
+          },
+          {
+            "ids": [
+              1,
+              4
+            ],
+            "rom_bytes": 23225376,
+            "fits": true
+          },
+          {
+            "ids": [
+              1,
+              5
+            ],
+            "rom_bytes": 24479520,
+            "fits": true
+          },
+          {
+            "ids": [
+              1,
+              6
+            ],
+            "rom_bytes": 23838752,
+            "fits": true
+          },
+          {
+            "ids": [
+              1,
+              7
+            ],
+            "rom_bytes": 20754368,
+            "fits": true
+          },
+          {
+            "ids": [
+              1,
+              8
+            ],
+            "rom_bytes": 22029376,
+            "fits": true
+          },
+          {
+            "ids": [
+              2,
+              3
+            ],
+            "rom_bytes": 32110912,
+            "fits": true
+          },
+          {
+            "ids": [
+              2,
+              4
+            ],
+            "rom_bytes": 29645376,
+            "fits": true
+          },
+          {
+            "ids": [
+              2,
+              5
+            ],
+            "rom_bytes": 30899520,
+            "fits": true
+          },
+          {
+            "ids": [
+              2,
+              6
+            ],
+            "rom_bytes": 30258752,
+            "fits": true
+          },
+          {
+            "ids": [
+              2,
+              7
+            ],
+            "rom_bytes": 27174368,
+            "fits": true
+          },
+          {
+            "ids": [
+              2,
+              8
+            ],
+            "rom_bytes": 28449376,
+            "fits": true
+          },
+          {
+            "ids": [
+              3,
+              4
+            ],
+            "rom_bytes": 31138752,
+            "fits": true
+          },
+          {
+            "ids": [
+              3,
+              5
+            ],
+            "rom_bytes": 32392896,
+            "fits": true
+          },
+          {
+            "ids": [
+              3,
+              6
+            ],
+            "rom_bytes": 31752128,
+            "fits": true
+          },
+          {
+            "ids": [
+              3,
+              7
+            ],
+            "rom_bytes": 28667744,
+            "fits": true
+          },
+          {
+            "ids": [
+              3,
+              8
+            ],
+            "rom_bytes": 29942752,
+            "fits": true
+          },
+          {
+            "ids": [
+              4,
+              5
+            ],
+            "rom_bytes": 29927360,
+            "fits": true
+          },
+          {
+            "ids": [
+              4,
+              6
+            ],
+            "rom_bytes": 29286592,
+            "fits": true
+          },
+          {
+            "ids": [
+              4,
+              7
+            ],
+            "rom_bytes": 26202208,
+            "fits": true
+          },
+          {
+            "ids": [
+              4,
+              8
+            ],
+            "rom_bytes": 27477216,
+            "fits": true
+          },
+          {
+            "ids": [
+              5,
+              6
+            ],
+            "rom_bytes": 30540736,
+            "fits": true
+          },
+          {
+            "ids": [
+              5,
+              7
+            ],
+            "rom_bytes": 27456352,
+            "fits": true
+          },
+          {
+            "ids": [
+              5,
+              8
+            ],
+            "rom_bytes": 28731360,
+            "fits": true
+          },
+          {
+            "ids": [
+              6,
+              7
+            ],
+            "rom_bytes": 26815584,
+            "fits": true
+          },
+          {
+            "ids": [
+              6,
+              8
+            ],
+            "rom_bytes": 28090592,
+            "fits": true
+          },
+          {
+            "ids": [
+              7,
+              8
+            ],
+            "rom_bytes": 25006208,
+            "fits": true
+          }
+        ],
+        "feasible_two_song_pairs": [
+          {
+            "ids": [
+              1,
+              2
+            ],
+            "rom_bytes": 24197536,
+            "fits": true
+          },
+          {
+            "ids": [
+              1,
+              3
+            ],
+            "rom_bytes": 25690912,
+            "fits": true
+          },
+          {
+            "ids": [
+              1,
+              4
+            ],
+            "rom_bytes": 23225376,
+            "fits": true
+          },
+          {
+            "ids": [
+              1,
+              5
+            ],
+            "rom_bytes": 24479520,
+            "fits": true
+          },
+          {
+            "ids": [
+              1,
+              6
+            ],
+            "rom_bytes": 23838752,
+            "fits": true
+          },
+          {
+            "ids": [
+              1,
+              7
+            ],
+            "rom_bytes": 20754368,
+            "fits": true
+          },
+          {
+            "ids": [
+              1,
+              8
+            ],
+            "rom_bytes": 22029376,
+            "fits": true
+          },
+          {
+            "ids": [
+              2,
+              3
+            ],
+            "rom_bytes": 32110912,
+            "fits": true
+          },
+          {
+            "ids": [
+              2,
+              4
+            ],
+            "rom_bytes": 29645376,
+            "fits": true
+          },
+          {
+            "ids": [
+              2,
+              5
+            ],
+            "rom_bytes": 30899520,
+            "fits": true
+          },
+          {
+            "ids": [
+              2,
+              6
+            ],
+            "rom_bytes": 30258752,
+            "fits": true
+          },
+          {
+            "ids": [
+              2,
+              7
+            ],
+            "rom_bytes": 27174368,
+            "fits": true
+          },
+          {
+            "ids": [
+              2,
+              8
+            ],
+            "rom_bytes": 28449376,
+            "fits": true
+          },
+          {
+            "ids": [
+              3,
+              4
+            ],
+            "rom_bytes": 31138752,
+            "fits": true
+          },
+          {
+            "ids": [
+              3,
+              5
+            ],
+            "rom_bytes": 32392896,
+            "fits": true
+          },
+          {
+            "ids": [
+              3,
+              6
+            ],
+            "rom_bytes": 31752128,
+            "fits": true
+          },
+          {
+            "ids": [
+              3,
+              7
+            ],
+            "rom_bytes": 28667744,
+            "fits": true
+          },
+          {
+            "ids": [
+              3,
+              8
+            ],
+            "rom_bytes": 29942752,
+            "fits": true
+          },
+          {
+            "ids": [
+              4,
+              5
+            ],
+            "rom_bytes": 29927360,
+            "fits": true
+          },
+          {
+            "ids": [
+              4,
+              6
+            ],
+            "rom_bytes": 29286592,
+            "fits": true
+          },
+          {
+            "ids": [
+              4,
+              7
+            ],
+            "rom_bytes": 26202208,
+            "fits": true
+          },
+          {
+            "ids": [
+              4,
+              8
+            ],
+            "rom_bytes": 27477216,
+            "fits": true
+          },
+          {
+            "ids": [
+              5,
+              6
+            ],
+            "rom_bytes": 30540736,
+            "fits": true
+          },
+          {
+            "ids": [
+              5,
+              7
+            ],
+            "rom_bytes": 27456352,
+            "fits": true
+          },
+          {
+            "ids": [
+              5,
+              8
+            ],
+            "rom_bytes": 28731360,
+            "fits": true
+          },
+          {
+            "ids": [
+              6,
+              7
+            ],
+            "rom_bytes": 26815584,
+            "fits": true
+          },
+          {
+            "ids": [
+              6,
+              8
+            ],
+            "rom_bytes": 28090592,
+            "fits": true
+          },
+          {
+            "ids": [
+              7,
+              8
+            ],
+            "rom_bytes": 25006208,
+            "fits": true
+          }
+        ],
+        "largest_number_of_songs_in_one_rom": 2,
+        "minimum_rom_count_for_all_eight": 4,
+        "example_minimum_packing": [
+          {
+            "ids": [
+              4,
+              8
+            ],
+            "rom_bytes": 27477216,
+            "remaining_bytes": 6077216
+          },
+          {
+            "ids": [
+              1,
+              7
+            ],
+            "rom_bytes": 20754368,
+            "remaining_bytes": 12800064
+          },
+          {
+            "ids": [
+              2,
+              6
+            ],
+            "rom_bytes": 30258752,
+            "remaining_bytes": 3295680
+          },
+          {
+            "ids": [
+              3,
+              5
+            ],
+            "rom_bytes": 32392896,
+            "remaining_bytes": 1161536
+          }
+        ],
+        "note": "No compression, no trimming, signed8-bit stereo, two separately16-byte-aligned channels,8192 guard samples per channel. Player overhead is budgeted once per ROM. A null minimum means at least one complete source cannot fit by itself."
+      },
+      "with_64k_player": {
+        "player_budget_per_rom_bytes": 65536,
+        "all_single_song_roms_fit": true,
+        "oversized_single_song_ids": [],
+        "singles": [
+          {
+            "ids": [
+              1
+            ],
+            "rom_bytes": 8954304,
+            "fits": true
+          },
+          {
+            "ids": [
+              2
+            ],
+            "rom_bytes": 15374304,
+            "fits": true
+          },
+          {
+            "ids": [
+              3
+            ],
+            "rom_bytes": 16867680,
+            "fits": true
+          },
+          {
+            "ids": [
+              4
+            ],
+            "rom_bytes": 14402144,
+            "fits": true
+          },
+          {
+            "ids": [
+              5
+            ],
+            "rom_bytes": 15656288,
+            "fits": true
+          },
+          {
+            "ids": [
+              6
+            ],
+            "rom_bytes": 15015520,
+            "fits": true
+          },
+          {
+            "ids": [
+              7
+            ],
+            "rom_bytes": 11931136,
+            "fits": true
+          },
+          {
+            "ids": [
+              8
+            ],
+            "rom_bytes": 13206144,
+            "fits": true
+          }
+        ],
+        "pairs": [
+          {
+            "ids": [
+              1,
+              2
+            ],
+            "rom_bytes": 24263072,
+            "fits": true
+          },
+          {
+            "ids": [
+              1,
+              3
+            ],
+            "rom_bytes": 25756448,
+            "fits": true
+          },
+          {
+            "ids": [
+              1,
+              4
+            ],
+            "rom_bytes": 23290912,
+            "fits": true
+          },
+          {
+            "ids": [
+              1,
+              5
+            ],
+            "rom_bytes": 24545056,
+            "fits": true
+          },
+          {
+            "ids": [
+              1,
+              6
+            ],
+            "rom_bytes": 23904288,
+            "fits": true
+          },
+          {
+            "ids": [
+              1,
+              7
+            ],
+            "rom_bytes": 20819904,
+            "fits": true
+          },
+          {
+            "ids": [
+              1,
+              8
+            ],
+            "rom_bytes": 22094912,
+            "fits": true
+          },
+          {
+            "ids": [
+              2,
+              3
+            ],
+            "rom_bytes": 32176448,
+            "fits": true
+          },
+          {
+            "ids": [
+              2,
+              4
+            ],
+            "rom_bytes": 29710912,
+            "fits": true
+          },
+          {
+            "ids": [
+              2,
+              5
+            ],
+            "rom_bytes": 30965056,
+            "fits": true
+          },
+          {
+            "ids": [
+              2,
+              6
+            ],
+            "rom_bytes": 30324288,
+            "fits": true
+          },
+          {
+            "ids": [
+              2,
+              7
+            ],
+            "rom_bytes": 27239904,
+            "fits": true
+          },
+          {
+            "ids": [
+              2,
+              8
+            ],
+            "rom_bytes": 28514912,
+            "fits": true
+          },
+          {
+            "ids": [
+              3,
+              4
+            ],
+            "rom_bytes": 31204288,
+            "fits": true
+          },
+          {
+            "ids": [
+              3,
+              5
+            ],
+            "rom_bytes": 32458432,
+            "fits": true
+          },
+          {
+            "ids": [
+              3,
+              6
+            ],
+            "rom_bytes": 31817664,
+            "fits": true
+          },
+          {
+            "ids": [
+              3,
+              7
+            ],
+            "rom_bytes": 28733280,
+            "fits": true
+          },
+          {
+            "ids": [
+              3,
+              8
+            ],
+            "rom_bytes": 30008288,
+            "fits": true
+          },
+          {
+            "ids": [
+              4,
+              5
+            ],
+            "rom_bytes": 29992896,
+            "fits": true
+          },
+          {
+            "ids": [
+              4,
+              6
+            ],
+            "rom_bytes": 29352128,
+            "fits": true
+          },
+          {
+            "ids": [
+              4,
+              7
+            ],
+            "rom_bytes": 26267744,
+            "fits": true
+          },
+          {
+            "ids": [
+              4,
+              8
+            ],
+            "rom_bytes": 27542752,
+            "fits": true
+          },
+          {
+            "ids": [
+              5,
+              6
+            ],
+            "rom_bytes": 30606272,
+            "fits": true
+          },
+          {
+            "ids": [
+              5,
+              7
+            ],
+            "rom_bytes": 27521888,
+            "fits": true
+          },
+          {
+            "ids": [
+              5,
+              8
+            ],
+            "rom_bytes": 28796896,
+            "fits": true
+          },
+          {
+            "ids": [
+              6,
+              7
+            ],
+            "rom_bytes": 26881120,
+            "fits": true
+          },
+          {
+            "ids": [
+              6,
+              8
+            ],
+            "rom_bytes": 28156128,
+            "fits": true
+          },
+          {
+            "ids": [
+              7,
+              8
+            ],
+            "rom_bytes": 25071744,
+            "fits": true
+          }
+        ],
+        "feasible_two_song_pairs": [
+          {
+            "ids": [
+              1,
+              2
+            ],
+            "rom_bytes": 24263072,
+            "fits": true
+          },
+          {
+            "ids": [
+              1,
+              3
+            ],
+            "rom_bytes": 25756448,
+            "fits": true
+          },
+          {
+            "ids": [
+              1,
+              4
+            ],
+            "rom_bytes": 23290912,
+            "fits": true
+          },
+          {
+            "ids": [
+              1,
+              5
+            ],
+            "rom_bytes": 24545056,
+            "fits": true
+          },
+          {
+            "ids": [
+              1,
+              6
+            ],
+            "rom_bytes": 23904288,
+            "fits": true
+          },
+          {
+            "ids": [
+              1,
+              7
+            ],
+            "rom_bytes": 20819904,
+            "fits": true
+          },
+          {
+            "ids": [
+              1,
+              8
+            ],
+            "rom_bytes": 22094912,
+            "fits": true
+          },
+          {
+            "ids": [
+              2,
+              3
+            ],
+            "rom_bytes": 32176448,
+            "fits": true
+          },
+          {
+            "ids": [
+              2,
+              4
+            ],
+            "rom_bytes": 29710912,
+            "fits": true
+          },
+          {
+            "ids": [
+              2,
+              5
+            ],
+            "rom_bytes": 30965056,
+            "fits": true
+          },
+          {
+            "ids": [
+              2,
+              6
+            ],
+            "rom_bytes": 30324288,
+            "fits": true
+          },
+          {
+            "ids": [
+              2,
+              7
+            ],
+            "rom_bytes": 27239904,
+            "fits": true
+          },
+          {
+            "ids": [
+              2,
+              8
+            ],
+            "rom_bytes": 28514912,
+            "fits": true
+          },
+          {
+            "ids": [
+              3,
+              4
+            ],
+            "rom_bytes": 31204288,
+            "fits": true
+          },
+          {
+            "ids": [
+              3,
+              5
+            ],
+            "rom_bytes": 32458432,
+            "fits": true
+          },
+          {
+            "ids": [
+              3,
+              6
+            ],
+            "rom_bytes": 31817664,
+            "fits": true
+          },
+          {
+            "ids": [
+              3,
+              7
+            ],
+            "rom_bytes": 28733280,
+            "fits": true
+          },
+          {
+            "ids": [
+              3,
+              8
+            ],
+            "rom_bytes": 30008288,
+            "fits": true
+          },
+          {
+            "ids": [
+              4,
+              5
+            ],
+            "rom_bytes": 29992896,
+            "fits": true
+          },
+          {
+            "ids": [
+              4,
+              6
+            ],
+            "rom_bytes": 29352128,
+            "fits": true
+          },
+          {
+            "ids": [
+              4,
+              7
+            ],
+            "rom_bytes": 26267744,
+            "fits": true
+          },
+          {
+            "ids": [
+              4,
+              8
+            ],
+            "rom_bytes": 27542752,
+            "fits": true
+          },
+          {
+            "ids": [
+              5,
+              6
+            ],
+            "rom_bytes": 30606272,
+            "fits": true
+          },
+          {
+            "ids": [
+              5,
+              7
+            ],
+            "rom_bytes": 27521888,
+            "fits": true
+          },
+          {
+            "ids": [
+              5,
+              8
+            ],
+            "rom_bytes": 28796896,
+            "fits": true
+          },
+          {
+            "ids": [
+              6,
+              7
+            ],
+            "rom_bytes": 26881120,
+            "fits": true
+          },
+          {
+            "ids": [
+              6,
+              8
+            ],
+            "rom_bytes": 28156128,
+            "fits": true
+          },
+          {
+            "ids": [
+              7,
+              8
+            ],
+            "rom_bytes": 25071744,
+            "fits": true
+          }
+        ],
+        "largest_number_of_songs_in_one_rom": 2,
+        "minimum_rom_count_for_all_eight": 4,
+        "example_minimum_packing": [
+          {
+            "ids": [
+              4,
+              8
+            ],
+            "rom_bytes": 27542752,
+            "remaining_bytes": 6011680
+          },
+          {
+            "ids": [
+              1,
+              7
+            ],
+            "rom_bytes": 20819904,
+            "remaining_bytes": 12734528
+          },
+          {
+            "ids": [
+              2,
+              6
+            ],
+            "rom_bytes": 30324288,
+            "remaining_bytes": 3230144
+          },
+          {
+            "ids": [
+              3,
+              5
+            ],
+            "rom_bytes": 32458432,
+            "remaining_bytes": 1096000
+          }
+        ],
+        "note": "No compression, no trimming, signed8-bit stereo, two separately16-byte-aligned channels,8192 guard samples per channel. Player overhead is budgeted once per ROM. A null minimum means at least one complete source cannot fit by itself."
+      }
+    },
+    "stereo_44150_568": {
+      "payload_only": {
+        "player_budget_per_rom_bytes": 0,
+        "all_single_song_roms_fit": true,
+        "oversized_single_song_ids": [],
+        "singles": [
+          {
+            "ids": [
+              1
+            ],
+            "rom_bytes": 11970752,
+            "fits": true
+          },
+          {
+            "ids": [
+              2
+            ],
+            "rom_bytes": 20620864,
+            "fits": true
+          },
+          {
+            "ids": [
+              3
+            ],
+            "rom_bytes": 22632960,
+            "fits": true
+          },
+          {
+            "ids": [
+              4
+            ],
+            "rom_bytes": 19311008,
+            "fits": true
+          },
+          {
+            "ids": [
+              5
+            ],
+            "rom_bytes": 21000800,
+            "fits": true
+          },
+          {
+            "ids": [
+              6
+            ],
+            "rom_bytes": 20137408,
+            "fits": true
+          },
+          {
+            "ids": [
+              7
+            ],
+            "rom_bytes": 15981632,
+            "fits": true
+          },
+          {
+            "ids": [
+              8
+            ],
+            "rom_bytes": 17699552,
+            "fits": true
+          }
+        ],
+        "pairs": [
+          {
+            "ids": [
+              1,
+              2
+            ],
+            "rom_bytes": 32591616,
+            "fits": true
+          },
+          {
+            "ids": [
+              1,
+              3
+            ],
+            "rom_bytes": 34603712,
+            "fits": false
+          },
+          {
+            "ids": [
+              1,
+              4
+            ],
+            "rom_bytes": 31281760,
+            "fits": true
+          },
+          {
+            "ids": [
+              1,
+              5
+            ],
+            "rom_bytes": 32971552,
+            "fits": true
+          },
+          {
+            "ids": [
+              1,
+              6
+            ],
+            "rom_bytes": 32108160,
+            "fits": true
+          },
+          {
+            "ids": [
+              1,
+              7
+            ],
+            "rom_bytes": 27952384,
+            "fits": true
+          },
+          {
+            "ids": [
+              1,
+              8
+            ],
+            "rom_bytes": 29670304,
+            "fits": true
+          },
+          {
+            "ids": [
+              2,
+              3
+            ],
+            "rom_bytes": 43253824,
+            "fits": false
+          },
+          {
+            "ids": [
+              2,
+              4
+            ],
+            "rom_bytes": 39931872,
+            "fits": false
+          },
+          {
+            "ids": [
+              2,
+              5
+            ],
+            "rom_bytes": 41621664,
+            "fits": false
+          },
+          {
+            "ids": [
+              2,
+              6
+            ],
+            "rom_bytes": 40758272,
+            "fits": false
+          },
+          {
+            "ids": [
+              2,
+              7
+            ],
+            "rom_bytes": 36602496,
+            "fits": false
+          },
+          {
+            "ids": [
+              2,
+              8
+            ],
+            "rom_bytes": 38320416,
+            "fits": false
+          },
+          {
+            "ids": [
+              3,
+              4
+            ],
+            "rom_bytes": 41943968,
+            "fits": false
+          },
+          {
+            "ids": [
+              3,
+              5
+            ],
+            "rom_bytes": 43633760,
+            "fits": false
+          },
+          {
+            "ids": [
+              3,
+              6
+            ],
+            "rom_bytes": 42770368,
+            "fits": false
+          },
+          {
+            "ids": [
+              3,
+              7
+            ],
+            "rom_bytes": 38614592,
+            "fits": false
+          },
+          {
+            "ids": [
+              3,
+              8
+            ],
+            "rom_bytes": 40332512,
+            "fits": false
+          },
+          {
+            "ids": [
+              4,
+              5
+            ],
+            "rom_bytes": 40311808,
+            "fits": false
+          },
+          {
+            "ids": [
+              4,
+              6
+            ],
+            "rom_bytes": 39448416,
+            "fits": false
+          },
+          {
+            "ids": [
+              4,
+              7
+            ],
+            "rom_bytes": 35292640,
+            "fits": false
+          },
+          {
+            "ids": [
+              4,
+              8
+            ],
+            "rom_bytes": 37010560,
+            "fits": false
+          },
+          {
+            "ids": [
+              5,
+              6
+            ],
+            "rom_bytes": 41138208,
+            "fits": false
+          },
+          {
+            "ids": [
+              5,
+              7
+            ],
+            "rom_bytes": 36982432,
+            "fits": false
+          },
+          {
+            "ids": [
+              5,
+              8
+            ],
+            "rom_bytes": 38700352,
+            "fits": false
+          },
+          {
+            "ids": [
+              6,
+              7
+            ],
+            "rom_bytes": 36119040,
+            "fits": false
+          },
+          {
+            "ids": [
+              6,
+              8
+            ],
+            "rom_bytes": 37836960,
+            "fits": false
+          },
+          {
+            "ids": [
+              7,
+              8
+            ],
+            "rom_bytes": 33681184,
+            "fits": false
+          }
+        ],
+        "feasible_two_song_pairs": [
+          {
+            "ids": [
+              1,
+              2
+            ],
+            "rom_bytes": 32591616,
+            "fits": true
+          },
+          {
+            "ids": [
+              1,
+              4
+            ],
+            "rom_bytes": 31281760,
+            "fits": true
+          },
+          {
+            "ids": [
+              1,
+              5
+            ],
+            "rom_bytes": 32971552,
+            "fits": true
+          },
+          {
+            "ids": [
+              1,
+              6
+            ],
+            "rom_bytes": 32108160,
+            "fits": true
+          },
+          {
+            "ids": [
+              1,
+              7
+            ],
+            "rom_bytes": 27952384,
+            "fits": true
+          },
+          {
+            "ids": [
+              1,
+              8
+            ],
+            "rom_bytes": 29670304,
+            "fits": true
+          }
+        ],
+        "largest_number_of_songs_in_one_rom": 2,
+        "minimum_rom_count_for_all_eight": 7,
+        "example_minimum_packing": [
+          {
+            "ids": [
+              8
+            ],
+            "rom_bytes": 17699552,
+            "remaining_bytes": 15854880
+          },
+          {
+            "ids": [
+              7
+            ],
+            "rom_bytes": 15981632,
+            "remaining_bytes": 17572800
+          },
+          {
+            "ids": [
+              6
+            ],
+            "rom_bytes": 20137408,
+            "remaining_bytes": 13417024
+          },
+          {
+            "ids": [
+              1,
+              5
+            ],
+            "rom_bytes": 32971552,
+            "remaining_bytes": 582880
+          },
+          {
+            "ids": [
+              4
+            ],
+            "rom_bytes": 19311008,
+            "remaining_bytes": 14243424
+          },
+          {
+            "ids": [
+              3
+            ],
+            "rom_bytes": 22632960,
+            "remaining_bytes": 10921472
+          },
+          {
+            "ids": [
+              2
+            ],
+            "rom_bytes": 20620864,
+            "remaining_bytes": 12933568
+          }
+        ],
+        "note": "No compression, no trimming, signed8-bit stereo, two separately16-byte-aligned channels,8192 guard samples per channel. Player overhead is budgeted once per ROM. A null minimum means at least one complete source cannot fit by itself."
+      },
+      "with_64k_player": {
+        "player_budget_per_rom_bytes": 65536,
+        "all_single_song_roms_fit": true,
+        "oversized_single_song_ids": [],
+        "singles": [
+          {
+            "ids": [
+              1
+            ],
+            "rom_bytes": 12036288,
+            "fits": true
+          },
+          {
+            "ids": [
+              2
+            ],
+            "rom_bytes": 20686400,
+            "fits": true
+          },
+          {
+            "ids": [
+              3
+            ],
+            "rom_bytes": 22698496,
+            "fits": true
+          },
+          {
+            "ids": [
+              4
+            ],
+            "rom_bytes": 19376544,
+            "fits": true
+          },
+          {
+            "ids": [
+              5
+            ],
+            "rom_bytes": 21066336,
+            "fits": true
+          },
+          {
+            "ids": [
+              6
+            ],
+            "rom_bytes": 20202944,
+            "fits": true
+          },
+          {
+            "ids": [
+              7
+            ],
+            "rom_bytes": 16047168,
+            "fits": true
+          },
+          {
+            "ids": [
+              8
+            ],
+            "rom_bytes": 17765088,
+            "fits": true
+          }
+        ],
+        "pairs": [
+          {
+            "ids": [
+              1,
+              2
+            ],
+            "rom_bytes": 32657152,
+            "fits": true
+          },
+          {
+            "ids": [
+              1,
+              3
+            ],
+            "rom_bytes": 34669248,
+            "fits": false
+          },
+          {
+            "ids": [
+              1,
+              4
+            ],
+            "rom_bytes": 31347296,
+            "fits": true
+          },
+          {
+            "ids": [
+              1,
+              5
+            ],
+            "rom_bytes": 33037088,
+            "fits": true
+          },
+          {
+            "ids": [
+              1,
+              6
+            ],
+            "rom_bytes": 32173696,
+            "fits": true
+          },
+          {
+            "ids": [
+              1,
+              7
+            ],
+            "rom_bytes": 28017920,
+            "fits": true
+          },
+          {
+            "ids": [
+              1,
+              8
+            ],
+            "rom_bytes": 29735840,
+            "fits": true
+          },
+          {
+            "ids": [
+              2,
+              3
+            ],
+            "rom_bytes": 43319360,
+            "fits": false
+          },
+          {
+            "ids": [
+              2,
+              4
+            ],
+            "rom_bytes": 39997408,
+            "fits": false
+          },
+          {
+            "ids": [
+              2,
+              5
+            ],
+            "rom_bytes": 41687200,
+            "fits": false
+          },
+          {
+            "ids": [
+              2,
+              6
+            ],
+            "rom_bytes": 40823808,
+            "fits": false
+          },
+          {
+            "ids": [
+              2,
+              7
+            ],
+            "rom_bytes": 36668032,
+            "fits": false
+          },
+          {
+            "ids": [
+              2,
+              8
+            ],
+            "rom_bytes": 38385952,
+            "fits": false
+          },
+          {
+            "ids": [
+              3,
+              4
+            ],
+            "rom_bytes": 42009504,
+            "fits": false
+          },
+          {
+            "ids": [
+              3,
+              5
+            ],
+            "rom_bytes": 43699296,
+            "fits": false
+          },
+          {
+            "ids": [
+              3,
+              6
+            ],
+            "rom_bytes": 42835904,
+            "fits": false
+          },
+          {
+            "ids": [
+              3,
+              7
+            ],
+            "rom_bytes": 38680128,
+            "fits": false
+          },
+          {
+            "ids": [
+              3,
+              8
+            ],
+            "rom_bytes": 40398048,
+            "fits": false
+          },
+          {
+            "ids": [
+              4,
+              5
+            ],
+            "rom_bytes": 40377344,
+            "fits": false
+          },
+          {
+            "ids": [
+              4,
+              6
+            ],
+            "rom_bytes": 39513952,
+            "fits": false
+          },
+          {
+            "ids": [
+              4,
+              7
+            ],
+            "rom_bytes": 35358176,
+            "fits": false
+          },
+          {
+            "ids": [
+              4,
+              8
+            ],
+            "rom_bytes": 37076096,
+            "fits": false
+          },
+          {
+            "ids": [
+              5,
+              6
+            ],
+            "rom_bytes": 41203744,
+            "fits": false
+          },
+          {
+            "ids": [
+              5,
+              7
+            ],
+            "rom_bytes": 37047968,
+            "fits": false
+          },
+          {
+            "ids": [
+              5,
+              8
+            ],
+            "rom_bytes": 38765888,
+            "fits": false
+          },
+          {
+            "ids": [
+              6,
+              7
+            ],
+            "rom_bytes": 36184576,
+            "fits": false
+          },
+          {
+            "ids": [
+              6,
+              8
+            ],
+            "rom_bytes": 37902496,
+            "fits": false
+          },
+          {
+            "ids": [
+              7,
+              8
+            ],
+            "rom_bytes": 33746720,
+            "fits": false
+          }
+        ],
+        "feasible_two_song_pairs": [
+          {
+            "ids": [
+              1,
+              2
+            ],
+            "rom_bytes": 32657152,
+            "fits": true
+          },
+          {
+            "ids": [
+              1,
+              4
+            ],
+            "rom_bytes": 31347296,
+            "fits": true
+          },
+          {
+            "ids": [
+              1,
+              5
+            ],
+            "rom_bytes": 33037088,
+            "fits": true
+          },
+          {
+            "ids": [
+              1,
+              6
+            ],
+            "rom_bytes": 32173696,
+            "fits": true
+          },
+          {
+            "ids": [
+              1,
+              7
+            ],
+            "rom_bytes": 28017920,
+            "fits": true
+          },
+          {
+            "ids": [
+              1,
+              8
+            ],
+            "rom_bytes": 29735840,
+            "fits": true
+          }
+        ],
+        "largest_number_of_songs_in_one_rom": 2,
+        "minimum_rom_count_for_all_eight": 7,
+        "example_minimum_packing": [
+          {
+            "ids": [
+              8
+            ],
+            "rom_bytes": 17765088,
+            "remaining_bytes": 15789344
+          },
+          {
+            "ids": [
+              7
+            ],
+            "rom_bytes": 16047168,
+            "remaining_bytes": 17507264
+          },
+          {
+            "ids": [
+              6
+            ],
+            "rom_bytes": 20202944,
+            "remaining_bytes": 13351488
+          },
+          {
+            "ids": [
+              1,
+              5
+            ],
+            "rom_bytes": 33037088,
+            "remaining_bytes": 517344
+          },
+          {
+            "ids": [
+              4
+            ],
+            "rom_bytes": 19376544,
+            "remaining_bytes": 14177888
+          },
+          {
+            "ids": [
+              3
+            ],
+            "rom_bytes": 22698496,
+            "remaining_bytes": 10855936
+          },
+          {
+            "ids": [
+              2
+            ],
+            "rom_bytes": 20686400,
+            "remaining_bytes": 12868032
+          }
+        ],
+        "note": "No compression, no trimming, signed8-bit stereo, two separately16-byte-aligned channels,8192 guard samples per channel. Player overhead is budgeted once per ROM. A null minimum means at least one complete source cannot fit by itself."
+      }
+    },
+    "stereo_65536": {
+      "payload_only": {
+        "player_budget_per_rom_bytes": 0,
+        "all_single_song_roms_fit": false,
+        "oversized_single_song_ids": [
+          3
+        ],
+        "singles": [
+          {
+            "ids": [
+              1
+            ],
+            "rom_bytes": 17761120,
+            "fits": true
+          },
+          {
+            "ids": [
+              2
+            ],
+            "rom_bytes": 30601152,
+            "fits": true
+          },
+          {
+            "ids": [
+              3
+            ],
+            "rom_bytes": 33587872,
+            "fits": false
+          },
+          {
+            "ids": [
+              4
+            ],
+            "rom_bytes": 28656832,
+            "fits": true
+          },
+          {
+            "ids": [
+              5
+            ],
+            "rom_bytes": 31165120,
+            "fits": true
+          },
+          {
+            "ids": [
+              6
+            ],
+            "rom_bytes": 29883552,
+            "fits": true
+          },
+          {
+            "ids": [
+              7
+            ],
+            "rom_bytes": 23714816,
+            "fits": true
+          },
+          {
+            "ids": [
+              8
+            ],
+            "rom_bytes": 26264800,
+            "fits": true
+          }
+        ],
+        "pairs": [
+          {
+            "ids": [
+              1,
+              2
+            ],
+            "rom_bytes": 48362272,
+            "fits": false
+          },
+          {
+            "ids": [
+              1,
+              3
+            ],
+            "rom_bytes": 51348992,
+            "fits": false
+          },
+          {
+            "ids": [
+              1,
+              4
+            ],
+            "rom_bytes": 46417952,
+            "fits": false
+          },
+          {
+            "ids": [
+              1,
+              5
+            ],
+            "rom_bytes": 48926240,
+            "fits": false
+          },
+          {
+            "ids": [
+              1,
+              6
+            ],
+            "rom_bytes": 47644672,
+            "fits": false
+          },
+          {
+            "ids": [
+              1,
+              7
+            ],
+            "rom_bytes": 41475936,
+            "fits": false
+          },
+          {
+            "ids": [
+              1,
+              8
+            ],
+            "rom_bytes": 44025920,
+            "fits": false
+          },
+          {
+            "ids": [
+              2,
+              3
+            ],
+            "rom_bytes": 64189024,
+            "fits": false
+          },
+          {
+            "ids": [
+              2,
+              4
+            ],
+            "rom_bytes": 59257984,
+            "fits": false
+          },
+          {
+            "ids": [
+              2,
+              5
+            ],
+            "rom_bytes": 61766272,
+            "fits": false
+          },
+          {
+            "ids": [
+              2,
+              6
+            ],
+            "rom_bytes": 60484704,
+            "fits": false
+          },
+          {
+            "ids": [
+              2,
+              7
+            ],
+            "rom_bytes": 54315968,
+            "fits": false
+          },
+          {
+            "ids": [
+              2,
+              8
+            ],
+            "rom_bytes": 56865952,
+            "fits": false
+          },
+          {
+            "ids": [
+              3,
+              4
+            ],
+            "rom_bytes": 62244704,
+            "fits": false
+          },
+          {
+            "ids": [
+              3,
+              5
+            ],
+            "rom_bytes": 64752992,
+            "fits": false
+          },
+          {
+            "ids": [
+              3,
+              6
+            ],
+            "rom_bytes": 63471424,
+            "fits": false
+          },
+          {
+            "ids": [
+              3,
+              7
+            ],
+            "rom_bytes": 57302688,
+            "fits": false
+          },
+          {
+            "ids": [
+              3,
+              8
+            ],
+            "rom_bytes": 59852672,
+            "fits": false
+          },
+          {
+            "ids": [
+              4,
+              5
+            ],
+            "rom_bytes": 59821952,
+            "fits": false
+          },
+          {
+            "ids": [
+              4,
+              6
+            ],
+            "rom_bytes": 58540384,
+            "fits": false
+          },
+          {
+            "ids": [
+              4,
+              7
+            ],
+            "rom_bytes": 52371648,
+            "fits": false
+          },
+          {
+            "ids": [
+              4,
+              8
+            ],
+            "rom_bytes": 54921632,
+            "fits": false
+          },
+          {
+            "ids": [
+              5,
+              6
+            ],
+            "rom_bytes": 61048672,
+            "fits": false
+          },
+          {
+            "ids": [
+              5,
+              7
+            ],
+            "rom_bytes": 54879936,
+            "fits": false
+          },
+          {
+            "ids": [
+              5,
+              8
+            ],
+            "rom_bytes": 57429920,
+            "fits": false
+          },
+          {
+            "ids": [
+              6,
+              7
+            ],
+            "rom_bytes": 53598368,
+            "fits": false
+          },
+          {
+            "ids": [
+              6,
+              8
+            ],
+            "rom_bytes": 56148352,
+            "fits": false
+          },
+          {
+            "ids": [
+              7,
+              8
+            ],
+            "rom_bytes": 49979616,
+            "fits": false
+          }
+        ],
+        "feasible_two_song_pairs": [],
+        "largest_number_of_songs_in_one_rom": 1,
+        "minimum_rom_count_for_all_eight": null,
+        "example_minimum_packing": null,
+        "note": "No compression, no trimming, signed8-bit stereo, two separately16-byte-aligned channels,8192 guard samples per channel. Player overhead is budgeted once per ROM. A null minimum means at least one complete source cannot fit by itself."
+      },
+      "with_64k_player": {
+        "player_budget_per_rom_bytes": 65536,
+        "all_single_song_roms_fit": false,
+        "oversized_single_song_ids": [
+          3
+        ],
+        "singles": [
+          {
+            "ids": [
+              1
+            ],
+            "rom_bytes": 17826656,
+            "fits": true
+          },
+          {
+            "ids": [
+              2
+            ],
+            "rom_bytes": 30666688,
+            "fits": true
+          },
+          {
+            "ids": [
+              3
+            ],
+            "rom_bytes": 33653408,
+            "fits": false
+          },
+          {
+            "ids": [
+              4
+            ],
+            "rom_bytes": 28722368,
+            "fits": true
+          },
+          {
+            "ids": [
+              5
+            ],
+            "rom_bytes": 31230656,
+            "fits": true
+          },
+          {
+            "ids": [
+              6
+            ],
+            "rom_bytes": 29949088,
+            "fits": true
+          },
+          {
+            "ids": [
+              7
+            ],
+            "rom_bytes": 23780352,
+            "fits": true
+          },
+          {
+            "ids": [
+              8
+            ],
+            "rom_bytes": 26330336,
+            "fits": true
+          }
+        ],
+        "pairs": [
+          {
+            "ids": [
+              1,
+              2
+            ],
+            "rom_bytes": 48427808,
+            "fits": false
+          },
+          {
+            "ids": [
+              1,
+              3
+            ],
+            "rom_bytes": 51414528,
+            "fits": false
+          },
+          {
+            "ids": [
+              1,
+              4
+            ],
+            "rom_bytes": 46483488,
+            "fits": false
+          },
+          {
+            "ids": [
+              1,
+              5
+            ],
+            "rom_bytes": 48991776,
+            "fits": false
+          },
+          {
+            "ids": [
+              1,
+              6
+            ],
+            "rom_bytes": 47710208,
+            "fits": false
+          },
+          {
+            "ids": [
+              1,
+              7
+            ],
+            "rom_bytes": 41541472,
+            "fits": false
+          },
+          {
+            "ids": [
+              1,
+              8
+            ],
+            "rom_bytes": 44091456,
+            "fits": false
+          },
+          {
+            "ids": [
+              2,
+              3
+            ],
+            "rom_bytes": 64254560,
+            "fits": false
+          },
+          {
+            "ids": [
+              2,
+              4
+            ],
+            "rom_bytes": 59323520,
+            "fits": false
+          },
+          {
+            "ids": [
+              2,
+              5
+            ],
+            "rom_bytes": 61831808,
+            "fits": false
+          },
+          {
+            "ids": [
+              2,
+              6
+            ],
+            "rom_bytes": 60550240,
+            "fits": false
+          },
+          {
+            "ids": [
+              2,
+              7
+            ],
+            "rom_bytes": 54381504,
+            "fits": false
+          },
+          {
+            "ids": [
+              2,
+              8
+            ],
+            "rom_bytes": 56931488,
+            "fits": false
+          },
+          {
+            "ids": [
+              3,
+              4
+            ],
+            "rom_bytes": 62310240,
+            "fits": false
+          },
+          {
+            "ids": [
+              3,
+              5
+            ],
+            "rom_bytes": 64818528,
+            "fits": false
+          },
+          {
+            "ids": [
+              3,
+              6
+            ],
+            "rom_bytes": 63536960,
+            "fits": false
+          },
+          {
+            "ids": [
+              3,
+              7
+            ],
+            "rom_bytes": 57368224,
+            "fits": false
+          },
+          {
+            "ids": [
+              3,
+              8
+            ],
+            "rom_bytes": 59918208,
+            "fits": false
+          },
+          {
+            "ids": [
+              4,
+              5
+            ],
+            "rom_bytes": 59887488,
+            "fits": false
+          },
+          {
+            "ids": [
+              4,
+              6
+            ],
+            "rom_bytes": 58605920,
+            "fits": false
+          },
+          {
+            "ids": [
+              4,
+              7
+            ],
+            "rom_bytes": 52437184,
+            "fits": false
+          },
+          {
+            "ids": [
+              4,
+              8
+            ],
+            "rom_bytes": 54987168,
+            "fits": false
+          },
+          {
+            "ids": [
+              5,
+              6
+            ],
+            "rom_bytes": 61114208,
+            "fits": false
+          },
+          {
+            "ids": [
+              5,
+              7
+            ],
+            "rom_bytes": 54945472,
+            "fits": false
+          },
+          {
+            "ids": [
+              5,
+              8
+            ],
+            "rom_bytes": 57495456,
+            "fits": false
+          },
+          {
+            "ids": [
+              6,
+              7
+            ],
+            "rom_bytes": 53663904,
+            "fits": false
+          },
+          {
+            "ids": [
+              6,
+              8
+            ],
+            "rom_bytes": 56213888,
+            "fits": false
+          },
+          {
+            "ids": [
+              7,
+              8
+            ],
+            "rom_bytes": 50045152,
+            "fits": false
+          }
+        ],
+        "feasible_two_song_pairs": [],
+        "largest_number_of_songs_in_one_rom": 1,
+        "minimum_rom_count_for_all_eight": null,
+        "example_minimum_packing": null,
+        "note": "No compression, no trimming, signed8-bit stereo, two separately16-byte-aligned channels,8192 guard samples per channel. Player overhead is budgeted once per ROM. A null minimum means at least one complete source cannot fit by itself."
+      }
+    }
+  }
+}

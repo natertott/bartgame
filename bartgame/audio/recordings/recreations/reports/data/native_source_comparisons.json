@@ -1,0 +1,77 @@
+{
+  "scope": "Direct-source fidelity, with analysis-only fractional delay/gain fitting; WAVs unchanged. R03 has a32768Hz cartridge bandwidth limit.",
+  "songs": [
+    {
+      "code": "R01",
+      "rate": 65536,
+      "minimum_window_channel_correlation": 0.946377395464127,
+      "minimum_window_channel_gain_fitted_snr_db": 9.33553760205353,
+      "median_start_latency_ms": 0.32792545881813684,
+      "integer_timing_drift_samples": 0,
+      "comparison_file": "/workspace/work/recreations/comparisons/native/R01.json"
+    },
+    {
+      "code": "R02",
+      "rate": 65536,
+      "minimum_window_channel_correlation": 0.9920279493232871,
+      "minimum_window_channel_gain_fitted_snr_db": 17.921823379186225,
+      "median_start_latency_ms": 0.3282137581965027,
+      "integer_timing_drift_samples": 0,
+      "comparison_file": "/workspace/work/recreations/comparisons/native/R02.json"
+    },
+    {
+      "code": "R03",
+      "rate": 32768,
+      "minimum_window_channel_correlation": 0.9668087552644916,
+      "minimum_window_channel_gain_fitted_snr_db": 11.558954768287457,
+      "median_start_latency_ms": 0.36678674668588057,
+      "integer_timing_drift_samples": 0,
+      "comparison_file": "/workspace/work/recreations/comparisons/native/R03.json"
+    },
+    {
+      "code": "R04",
+      "rate": 65536,
+      "minimum_window_channel_correlation": 0.9794191188097302,
+      "minimum_window_channel_gain_fitted_snr_db": 13.719354285994964,
+      "median_start_latency_ms": 0.32912832284605753,
+      "integer_timing_drift_samples": 1,
+      "comparison_file": "/workspace/work/recreations/comparisons/native/R04.json"
+    },
+    {
+      "code": "R05",
+      "rate": 65536,
+      "minimum_window_channel_correlation": 0.9809138967969286,
+      "minimum_window_channel_gain_fitted_snr_db": 14.056789080632722,
+      "median_start_latency_ms": 0.3287694608026364,
+      "integer_timing_drift_samples": 0,
+      "comparison_file": "/workspace/work/recreations/comparisons/native/R05.json"
+    },
+    {
+      "code": "R06",
+      "rate": 65536,
+      "minimum_window_channel_correlation": 0.9753843226874538,
+      "minimum_window_channel_gain_fitted_snr_db": 12.914881489878251,
+      "median_start_latency_ms": 0.3283378317583929,
+      "integer_timing_drift_samples": 0,
+      "comparison_file": "/workspace/work/recreations/comparisons/native/R06.json"
+    },
+    {
+      "code": "R07",
+      "rate": 65536,
+      "minimum_window_channel_correlation": 0.9829376926834181,
+      "minimum_window_channel_gain_fitted_snr_db": 14.557051504349733,
+      "median_start_latency_ms": 0.3294396021164325,
+      "integer_timing_drift_samples": 0,
+      "comparison_file": "/workspace/work/recreations/comparisons/native/R07.json"
+    },
+    {
+      "code": "R08",
+      "rate": 65536,
+      "minimum_window_channel_correlation": 0.9440660080985196,
+      "minimum_window_channel_gain_fitted_snr_db": 9.13617899631091,
+      "median_start_latency_ms": 0.329068680722832,
+      "integer_timing_drift_samples": 0,
+      "comparison_file": "/workspace/work/recreations/comparisons/native/R08.json"
+    }
+  ]
+}
