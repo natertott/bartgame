@@ -709,3 +709,11 @@ and actual evidence separately. Art preferences remain unselected; physical
 contracts and production-profile bytes will be checked against the prior
 selected-enemy release. Final counts, critique and release links follow after
 the frozen build/capture audit.
+
+**Pre-publication correction:** independent source/ROM checks found that the
+unchanged `sparkle_white` tile pixels inherited a restyled stone BG ramp. The
+study integration now routes those pixels to the existing BG-only original
+stone alias, preserving their exact visible white highlight and animation
+clock. OBJ glitter remains unchanged. All six builds and matched capture
+provenance are regenerated after this correction; the earlier source draft is
+not relabelled as final evidence.

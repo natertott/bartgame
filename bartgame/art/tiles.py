@@ -21,6 +21,10 @@ if FC.VARIANT:
         painted = [FC.tile(mt['name'], phase) for phase in range(count)]
         if painted[0] is None:
             assert all(frame is None for frame in painted)
+            # Preserve the existing white sparkle RGB as well as its pixels.
+            # Terrain stone is restyled; this BG-only bank retains its inks.
+            if mt['name'] == 'sparkle_white':
+                mt['pal'] = 'forest_obj_stone'
             continue
         assert all(frame is not None for frame in painted), mt['name']
         assert len({frame[1] for frame in painted}) == 1, mt['name']
