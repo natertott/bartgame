@@ -26,6 +26,7 @@ extern u16 gRoomVisualGround[ROOM_MAX_W * ROOM_MAX_H];
 extern u16 gRoomVisualOverlay[ROOM_MAX_W * ROOM_MAX_H];
 u16 room_visual_ground(int mx,int my);
 u16 room_visual_overlay(int mx,int my);
+bool8 room_recoil_fringe_front(int px,int py);
 #endif
 
 /* object kinds in authored rooms (art/rooms.py) */

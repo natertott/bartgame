@@ -347,6 +347,13 @@ static void render_cell(int x, int y) {
 #if BART_FOREST_VARIANT >= 6
 u16 room_visual_ground(int x,int y) {return gRoomVisualGround[y*ROOM_MAX_W+x];}
 u16 room_visual_overlay(int x,int y) {return gRoomVisualOverlay[y*ROOM_MAX_W+x];}
+bool8 room_recoil_fringe_front(int px,int py) {
+    if(gGame.area!=AREA_FOREST || px<0 || py<1 || px>=gRoom.w*16 || py>=gRoom.h*16)return FALSE;
+    int at=((py-1)/16)*ROOM_MAX_W+px/16;
+    u16 ground=gRoom.ground[at],overlay=gRoomVisualOverlay[at];
+    return ground!=MT_NONE && metatile_type[ground]==TT_FLOOR &&
+           metatile_coll[ground]==0 && overlay!=MT_NONE && forest_v2_low_fringe[overlay];
+}
 static bool8 overhead_at_body(int px,int py,int z,int width,int height) {
     int x,y,x0=MAX(0,(px-width/2)/16),x1=MIN(gRoom.w-1,(px+width/2)/16);
     int y0=MAX(0,(py-z-height)/16),y1=MIN(gRoom.h-1,(py-z-1)/16);

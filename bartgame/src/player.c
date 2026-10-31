@@ -1014,6 +1014,17 @@ static void draw_ground_shadow(Actor* a) {
                 sShadowTile, 0, 0, prio, PAL_OBJ_HERO);
 }
 
+#if BART_FOREST_VARIANT >= 6
+int player_recoil_priority(const Actor* a,int priority) {
+    /* A roll-wall recoil changes to normal before its small airborne bounce
+       ends. Both body and held parts apply this after environment sorting;
+       generic actors and the independently sorted ground shadow do not. */
+    if(a==gPlayer && (priority==1 || priority==2) && a->state==PS_NORMAL && a->z>0 &&
+       room_recoil_fringe_front(PX(a->x),PX(a->y)))return 1;
+    return priority;
+}
+#endif
+
 void player_draw(void) {
     Actor* a = gPlayer;
     int frame;
@@ -1023,6 +1034,9 @@ void player_draw(void) {
        hides the shopkeeper's legs (art/sw_hall.py) */
     a->prio = (room_type_px(PX(a->x), PX(a->y) - 1) == TT_FRONT) ? 1 : 2;
     a->prio=room_prop_priority(PX(a->x),PX(a->y),PX(a->z),18,24,a->prio);
+#if BART_FOREST_VARIANT >= 6
+    a->prio=player_recoil_priority(a,a->prio);
+#endif
     switch (a->state) {
         case PS_ROLL: {
             int t = a->timer;

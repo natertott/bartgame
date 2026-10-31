@@ -5,6 +5,9 @@
 #include "actor.h"
 #include "interactive.h"
 #include "ambient.h"
+#if BART_FOREST_VARIANT >= 6
+#include "player.h"
+#endif
 
 Actor gActors[ACTOR_MAX];
 
@@ -362,6 +365,11 @@ void actor_draw(Actor* a) {
     int width,height;
     actor_visual_size(a,&width,&height);
     int prio=room_prop_priority(PX(a->x),PX(a->y),PX(a->z),width,height,a->prio);
+#if BART_FOREST_VARIANT >= 6
+    /* Keep the final body verdict identical to the held-part verdict after
+       generic terrain sorting; only Bloom's narrow leaf-edge recoil qualifies. */
+    prio=player_recoil_priority(a,prio);
+#endif
     draw_sprite(sx, sy, a->sheet, a->tile, a->frame, a->hflip, prio, a->pal);
 }
 

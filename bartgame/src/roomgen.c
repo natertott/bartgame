@@ -1573,6 +1573,33 @@ bool8 roomgen_blighted(int cell) {
 }
 
 #if BART_FOREST_VARIANT >= 6
+static bool8 log_floor(u16 mt) {
+    return mt!=MT_NONE && metatile_type[mt]==TT_FLOOR &&
+           metatile_coll[mt]==0 && !metatile_prop[mt];
+}
+
+/* Late required corridors and event repairs take precedence over furniture.
+   If they consume one half of a log, remove the other half too. Recreating
+   the missing half would put a solid obstacle back into the repaired route. */
+static void finish_log_pairs(void) {
+    static const s8 step[4][2]={{0,1},{0,-1},{1,0},{-1,0}};
+    int x,y,k;
+    for(y=0;y<H;y++)for(x=0;x<W;x++) {
+        u16 mt=room_get(x,y),floor;
+        if((mt!=MT_HLOG_0 || room_get(x+1,y)==MT_HLOG_1) &&
+           (mt!=MT_HLOG_1 || room_get(x-1,y)==MT_HLOG_0))continue;
+        floor=gRoom.underlay[y*ROOM_MAX_W+x];
+        if(!log_floor(floor)) {
+            for(k=0;k<4;k++) {
+                u16 neighbor=room_get(x+step[k][0],y+step[k][1]);
+                if(log_floor(neighbor)){floor=neighbor;break;}
+            }
+        }
+        if(!log_floor(floor))floor=sBlighted?MT_BLIGHT_FLOOR:MT_MOSS0;
+        room_set(x,y,floor);
+    }
+}
+
 static bool8 arch_event_clear(int x,int y) {
     int i;
     if((gSpots.has_chest && ABS(x-gSpots.chest.x)<=2 && ABS(y-gSpots.chest.y)<=2) ||
@@ -2178,6 +2205,7 @@ static void roomgen_build_internal(int cell, bool8 render) {
     if (blighted)
         skin_blight_trees(cell);
 #if BART_FOREST_VARIANT >= 6
+    finish_log_pairs();
     place_root_arch(cell);
 #endif
     if (render)

@@ -827,3 +827,16 @@ not Bloom's sprite or physical position. Readability is verified at the real
 collision limit rather than choosing a camera that conceals the problem.
 Hardware telemetry records the displayed camera for precise pixel/occlusion
 comparisons. Source diagrams identify BG2 floor, BG1 foreground and BG0 UI.
+
+**Generator and sorting regression fixes:** the larger frozen host corpus
+found later corridor/feature repairs overwriting one half of some log pairs.
+A final v2-only pass removes orphan halves to local floor instead of rebuilding
+obstacles across repaired routes. The targeted seeds and a6,000-room preflight
+now pass; the final frozen corpus is rerun separately. A natural roll-wall
+impact also has a brief airborne NORMAL recoil, distinct from rolling and
+grounded walking. At low foliage only, body and held parts share a narrow
+post-environment priority override during that lift; shadows retain ground
+sorting. Ordinary rolls, walking, full crowns and root-arch roofs retain real
+occlusion. A code review caught and fixed a second generic body-priority pass
+overwriting the held-part decision. These are explicit coarse layer-sorting
+and prefab-integrity rules, not changes to damage, physics or jump timing.

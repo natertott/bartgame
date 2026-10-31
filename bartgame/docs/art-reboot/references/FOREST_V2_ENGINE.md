@@ -76,6 +76,20 @@ fringe or root arch, their world priority remains behind BG1 even if flat
 litter would otherwise promote them. The ground shadow stays on the floor.
 HUD and dialogue objects do not pass through this world-depth predicate.
 
+One bounded readability exception handles Bloom's natural roll-wall recoil.
+The existing physics switches to NORMAL before its small airborne bounce
+settles, which could lift the entire compact body into the low fringe. Only
+that player state with positive height, grounded over dry floor carrying a
+rendered low-fringe alias, draws body and held tools in front of the leaf edge
+until landing. Its shadow remains behind on the ground. Ordinary walking,
+rolling, jumping, full tree crowns and root arches do not use this exception.
+The same explicit player-only modifier runs after terrain sorting for held
+parts and after the final generic actor sort for the body, so the second
+environment pass cannot split their priorities. It never changes non-player
+actors or explicit effect priorities.
+This is coarse GBA layer sorting for a brief readable recoil, not a new height
+or collision rule; no animation pixels, physics, timers or z values change.
+
 ## A real lower path beneath roots
 
 The generator can place one raised two-cell root arch above an existing
@@ -101,6 +115,16 @@ two-cell kit. Both cells remain truly SOLID, and the existing plain-ground fit
 and connectivity guards must accept the complete two-cell footprint.
 Transparent corners expose the actual stored substrate. Existing chunk-based
 hollow logs already use this safe pair and now share its new art.
+
+The independent large-seed test found a late-pass interaction: required lane
+repairs or event placement could replace one of the two cells after the log
+was safely stamped. A final integrity pass now removes only such orphaned
+halves and restores their stored dry floor. It never recreates a missing half
+over a repaired passage or feature, and complete pairs remain untouched. The
+pass runs after every semantic repair and material skin, before the optional
+root arch and rendering, and consumes no RNG or progression state. Seeds 88
+and 240 are named regressions; the full seed/room audit checks final pairs,
+collision, required approaches and item-gated pockets together.
 
 A new 16×32 streamed `forestlandmark` sheet has four frames: relic,
 shrine-available, shrine-spent and key-lock. Original sheet IDs stay stable;

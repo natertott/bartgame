@@ -307,6 +307,7 @@ if FOREST_CONCEPTS.VARIANT >= 6:
           'extern const u8 forest_v2_water_kind[];',
           'extern const u8 forest_v2_special_tree[];',
           'extern const u8 forest_v2_overhead[];',
+          'extern const u8 forest_v2_low_fringe[];',
           'extern const u16 forest_v2_visual_parent[];',
           'extern const u16 forest_v2_canopy_alias[2][4][16][16];',
           'extern const u16 forest_v2_fringe_alias[2][16];',
@@ -317,12 +318,15 @@ if FOREST_CONCEPTS.VARIANT >= 6:
     c.append(c_array_u8('forest_v2_special_tree', F2T.special_trees(tiles.METATILES)))
     parents = list(range(len(tiles.METATILES)))
     overhead = F2T.authored_crowns(tiles.METATILES)
+    low_fringe = [0] * len(parents)
     for spec in topology['specs']:
         i = mt_names[spec['name']]
         parents[i] = mt_names[spec['parent']]
         overhead[i] = int(spec['family'] in ('canopy', 'fringe', 'overhead_root_arch'))
+        low_fringe[i] = int(spec['family'] == 'fringe')
     c.append(c_array_u16('forest_v2_visual_parent', parents))
     c.append(c_array_u8('forest_v2_overhead', overhead))
+    c.append(c_array_u8('forest_v2_low_fringe', low_fringe))
     c.append('const u16 forest_v2_canopy_alias[2][4][16][16] = {')
     for kind in range(2):
         c.append('  {')
