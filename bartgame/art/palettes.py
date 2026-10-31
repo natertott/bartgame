@@ -4,12 +4,14 @@ import reboot_ui as U
 import faces
 import sewer_concepts as SC
 import enemy_studies as ENEMY_STUDIES
+import forest_concepts as FC
 
 PACK_TILES=False
 GRASS_MID=R.PALETTES['ground'][4]
 BG_PALETTES=list(R.PALETTES.items())
 for name in ('menu','map','hud'):
     BG_PALETTES.append((name,U.GROUPS[name]))
+BG_PALETTES = FC.bg_palettes(BG_PALETTES)
 
 # Keep physical OBJ slot names stable; every ink now comes from the same core.
 OBJ_ALIASES=[('hero','hero'),('fx','gold'),('bugs','foliage'),('blight','blight'),

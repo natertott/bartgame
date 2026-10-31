@@ -106,3 +106,18 @@ down the middle. This is direct user direction, not a newly fetched reference.
 The existing six tutorial/PDF notes and native motion/scale rules guide the
 new Heart painter; [Heart decisions](references/BROKEN_HEART.md) record its
 phase construction, source critique and eventual real-ROM evidence.
+
+## Forest-first environment alternatives — 2026-10-31
+
+The latest user brief supplies the local forest rules: living green/brown
+walkable ground at every depth, structural corruption, limited coherent
+vegetation, and clear permanent/temporary/interactive silhouettes. The six PDF
+notes and G01–G18 remain the shared art basis. The new
+[forest readability research](references/FOREST_READABILITY_RESEARCH.md) records
+fresh primary game-source access and distinguishes measured native assets,
+implementation evidence and our adaptations. The
+[asset inventory](references/FOREST_ASSET_INVENTORY.md),
+[terrain concepts](references/FOREST_TERRAIN_CONCEPTS.md) and
+[prop concepts](references/FOREST_PROP_CONCEPTS.md) document coverage and design
+decisions. Five alternatives remain exploratory; no whole forest treatment is
+adopted by this request to generate review variations.

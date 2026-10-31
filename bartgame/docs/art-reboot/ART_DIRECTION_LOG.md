@@ -675,3 +675,37 @@ and [playable release](../../../downloads/selected-enemies-770b542/README.md)
 record the final adoption. The purple Heart is recognizable in the actual
 blighted-room captures; the continuous central fracture remains visible in
 all thirteen live poses. No new external research is claimed for this choice.
+
+## Forest-first environment studies — 2026-10-31
+
+**User direction:** prepare five complete forest art alternatives for review.
+Every depth must communicate forest before corruption. Preserve readable green
+grass and brown earth; show blight through foliage structure, dead limbs,
+parasitic vines, flowers and restrained accents. Keep floor detail subordinate,
+use a limited versatile tree/prop vocabulary, and distinguish walkable space,
+permanent solids and temporary interactions by shape, value and contact shadow.
+Water, bridges, recessed holes and openings inherit the successful Drain's
+semantic clarity, with clearer forest water. Keys, bombs, candle and cape must
+continue to mean the same things.
+
+**Exploration:** Fern & Oak, Silver Willow, Copper Beech, Velvet Cedar and Pale
+Orchard are five different native constructions, each spanning healthy, mixed
+and deep forest, ground transitions, water, tree groups, props, gates, chests,
+entrances and the three mystery-interior styles. `BART_FOREST=1..5` will select
+the alternatives explicitly; ordinary builds retain production profile0 until
+the user chooses. Environment OBJ props are shared portable/chest/entry drawings
+in those study ROMs. Bloom, chosen enemies, gear/pickups, UI, Drain architecture
+and keepers, physics, generator layout and existing glitter remain protected.
+BG-only object palette aliases preserve exact ground/carry colors without
+recoloring the cloak or selected enemies.
+
+**Evidence plan:** inventory every retained environment identifier and pose;
+apply the six already-read PDFs/G01–G18; inspect fresh primary game sources for
+terrain and interaction readability. Record actual URLs and observations in
+FOREST_READABILITY_RESEARCH. Review native source sheets, coherent group
+assemblies and value/silhouette diagnostics before packing. Capture the same
+generated rooms and interactions in real mGBA for all five, preserving source
+and actual evidence separately. Art preferences remain unselected; physical
+contracts and production-profile bytes will be checked against the prior
+selected-enemy release. Final counts, critique and release links follow after
+the frozen build/capture audit.

@@ -153,6 +153,25 @@ be visible below the HUD.
 
 ## Interaction vocabulary
 
+The forest remains a forest at every corruption level: green grass, warm dirt,
+recognizable leaf masses, bark and undergrowth carry its base identity. The
+user's latest forest direction rejects a uniform purple walkable field. Show
+increasing blight chiefly through bare limbs, parasitic vines, bruised leaves,
+fungal growth and corrupted flowers, with restrained changes to ground color.
+Keep a limited, versatile family of crowns and ground details within each art
+direction; healthy and sick forms share their construction. Quiet ground must
+leave room for Bloom, enemies, loot and temporary obstacles to read.
+
+Forest water is clearer than sewage while retaining continuous banks, coherent
+flow and a distinct near edge. Bridges visibly join accessible banks; pits
+retain a recessed dark void rather than borrowing a wall or water texture.
+Portable objects keep the same material and silhouette on the ground, carried
+and thrown. Forest gates and interactions inherit the Drain's clear openings,
+locks, fractures, fibres, contact shadows and directional lighting. Five new
+forest environment treatments are comparison studies, not an adopted style.
+Bloom, the selected bestiary, equipment, interfaces and glitter remain the
+context against which those treatments are judged.
+
 Carry these meanings unchanged into every future area:
 
 - Bombable barriers: broad broken stone with a distinctive branching fracture

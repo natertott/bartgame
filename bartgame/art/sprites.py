@@ -51,6 +51,11 @@ import enemy_studies as ENEMY_STUDIES
 ENEMY_VARIANT = ENEMY_STUDIES.VARIANT
 ENEMY_STUDIES.apply(SHEETS, COVERAGE)
 
+# Optional environment props share their ground/carry identity, while enemy,
+# Bloom, equipment and UI source frames retain their selected artwork.
+import forest_concepts as FOREST_CONCEPTS
+FOREST_CONCEPTS.apply_sprites(SHEETS, COVERAGE)
+
 # Compact HUD pictograms are separately authored at their ten-pixel ink size;
 # menu and world item drawings keep their established images and palettes.
 import ui_studies as UI_STUDIES

@@ -29,6 +29,11 @@ Heart broken down the middle (`BART_ENEMY=11`). Explicit `BART_ENEMY=0..10`
 builds retain the earlier comparison sets. Earlier
 [Drain concept studies](docs/SEWER_CONCEPTS.md) remain available.
 
+Five optional [forest environment studies](docs/FOREST_CONCEPTS.md) explore
+Fern & Oak, Silver Willow, Copper Beech, Velvet Cedar and Pale Orchard.
+`BART_FOREST=1..5` selects their complete terrain, props and forest folk;
+ordinary builds retain the current forest (`BART_FOREST=0`) until selection.
+
 ## Current game
 
 The Drain is the hub, with the Billious Peddler, Pale Gatekeeper and a

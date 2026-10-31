@@ -31,6 +31,7 @@ import rooms  # noqa: E402
 import reboot_actors  # noqa: E402
 import sewer_concepts as SC  # noqa: E402
 import ui_studies as UI_STUDIES  # noqa: E402
+import forest_concepts as FOREST_CONCEPTS  # noqa: E402
 
 OUT = sys.argv[1] if len(sys.argv) > 1 else os.path.join(HERE, '..', 'build', 'gen')
 os.makedirs(OUT, exist_ok=True)
@@ -408,6 +409,7 @@ h.append('#define WISP_Y %d' % (1 if SC.VARIANT else sw_folk.WISP_AT[1]))
 h.append('#define BART_SEWER_VARIANT %d' % SC.VARIANT)
 h.append('#define BART_UI_VARIANT %d' % UI_STUDIES.VARIANT)
 h.append('#define BART_ENEMY_VARIANT %d' % sprites.ENEMY_VARIANT)
+h.append('#define BART_FOREST_VARIANT %d' % FOREST_CONCEPTS.VARIANT)
 MENU_VARIANT = int(os.environ.get('BART_MENU', '0'))
 assert 0 <= MENU_VARIANT <= 10, 'BART_MENU must be0..10'
 h.append('#define BART_MENU_VARIANT %d' % MENU_VARIANT)
@@ -601,6 +603,15 @@ if SC.VARIANT:
 coverage['ui_study'] = {'variant': UI_STUDIES.VARIANT,
                         'name': UI_STUDIES.STYLE_NAMES.get(UI_STUDIES.VARIANT, 'Compact baseline'),
                         'hud_fields': ['equipped items', 'hearts', 'gilt']}
+coverage['forest_concept'] = {
+    'variant': FOREST_CONCEPTS.VARIANT,
+    'name': FOREST_CONCEPTS.NAMES[FOREST_CONCEPTS.VARIANT],
+    'status': 'Optional environment comparison; production default remains zero.',
+    'tile_owners': dict(tiles.FOREST_OWNERS),
+    'obj_scope': 'Matching environment chests, entries and portable objects only; shared across areas in study ROMs.',
+    'protected': ['Bloom', 'selected enemies', 'equipment and pickups', 'UI',
+                  'Drain architecture and keepers', 'glitter', 'physical metadata'],
+}
 with open(os.path.join(OUT, 'art-reboot-coverage.json'), 'w') as report:
     json.dump(coverage, report, indent=2)
     report.write('\n')

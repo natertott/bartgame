@@ -3,6 +3,7 @@ import json
 from pathlib import Path
 import reboot_terrain
 import sewer_concepts as SC
+import forest_concepts as FC
 
 CONTRACTS=json.loads((Path(__file__).with_name('reboot_contracts.json')).read_text())
 TYPES=CONTRACTS['types']
@@ -13,6 +14,27 @@ def default_coll(kind):
     return 15 if kind in SOLID_TYPES else 0
 
 METATILES=reboot_terrain.build()
+FOREST_OWNERS = {}
+if FC.VARIANT:
+    for mt in METATILES:
+        count = len(mt['frames']) if 'frames' in mt else 1
+        painted = [FC.tile(mt['name'], phase) for phase in range(count)]
+        if painted[0] is None:
+            assert all(frame is None for frame in painted)
+            continue
+        assert all(frame is not None for frame in painted), mt['name']
+        assert len({frame[1] for frame in painted}) == 1, mt['name']
+        frames = []
+        for image, bank, owner in painted:
+            assert image.size == (16, 16), mt['name']
+            frames.append(FC.rows(image))
+        mt['pal'] = painted[0][1]
+        mt.pop('qpals', None)
+        if 'frames' in mt:
+            mt['frames'] = frames
+        else:
+            mt['art'] = frames[0]
+        FOREST_OWNERS[mt['name']] = painted[0][2]
 if SC.VARIANT and SC.VARIANT != 9:
     import sewer_concepts_terrain as SCT
     for mt in METATILES:
@@ -38,6 +60,7 @@ for expected,painted in zip(CONTRACTS['tiles'],METATILES):
     frames=painted.get('frames') or [painted['art']]
     assert len(frames)==expected['frames'],painted['name']
     owner='sewer_concepts_terrain' if SC.VARIANT and SC.VARIANT != 9 and painted['name'].startswith(('sw_','swh_')) else 'reboot_terrain'
+    owner=FOREST_OWNERS.get(painted['name'], owner)
     COVERAGE.append({'name':painted['name'],'owner':owner,'frames':len(frames),
                      'material':painted['pal'],'glitter':bool(painted.get('glitter'))})
 
