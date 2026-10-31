@@ -121,3 +121,11 @@ implementation evidence and our adaptations. The
 [prop concepts](references/FOREST_PROP_CONCEPTS.md) document coverage and design
 decisions. Five alternatives remain exploratory; no whole forest treatment is
 adopted by this request to generate review variations.
+
+Final native catalogs and actual mGBA evidence are published in the
+[five-direction gallery](../../../art-review/forest-concepts/README.md).
+[Forest folk notes](references/FOREST_FOLK_CONCEPTS.md) add matching native
+world characters and48px portraits. Final art source is `73df5c1`; source-only
+inspection holds remain distinct from actual motion and interactions. Original
+reference-game graphics/reconstructions stay in the local research directory;
+the published metadata contains URLs/revisions/hashes and measured facts.

@@ -1,0 +1,37 @@
+{
+  "fixture": "Chasm movement released identically at tick56 before returning to play. Allfinalpositions [256,52].",
+  "observation": "Study room loading returns oneVBlank sooner than the larger production-background asset set. Ordered mechanic states, initial/final logicalstates and RNG/geometry/progress are exact. Timing difference is observed, not claimed identical.",
+  "cases": {
+    "0": [],
+    "1": [
+      {
+        "name": "outer-gate-chasm",
+        "transition_ticks_exact": false
+      }
+    ],
+    "2": [
+      {
+        "name": "outer-gate-chasm",
+        "transition_ticks_exact": false
+      }
+    ],
+    "3": [
+      {
+        "name": "outer-gate-chasm",
+        "transition_ticks_exact": false
+      }
+    ],
+    "4": [
+      {
+        "name": "outer-gate-chasm",
+        "transition_ticks_exact": false
+      }
+    ],
+    "5": [
+      {
+        "name": "outer-gate-chasm",
+        "transition_ticks_exact": false
+      }
+    ]
+  }
+}

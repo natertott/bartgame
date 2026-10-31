@@ -1,0 +1,75 @@
+[
+  {
+    "file": "emerald-general.png",
+    "url": "https://raw.githubusercontent.com/pret/pokeemerald/master/data/tilesets/primary/general/tiles.png",
+    "status": 200,
+    "sha256": "365ba5482e7564763e614a0009900d1c317790dcd9f7a06c4ab74c363a3ba2f5",
+    "bytes": 7622
+  },
+  {
+    "file": "emerald-general-metatiles.bin",
+    "url": "https://raw.githubusercontent.com/pret/pokeemerald/master/data/tilesets/primary/general/metatiles.bin",
+    "status": 200,
+    "sha256": "17974b0ba1bb9d105d5ba255c69a3b80d8484a26ea0b8ff22c6c6567c6c22910",
+    "bytes": 8192
+  },
+  {
+    "file": "emerald-general-attributes.bin",
+    "url": "https://raw.githubusercontent.com/pret/pokeemerald/master/data/tilesets/primary/general/metatile_attributes.bin",
+    "status": 200,
+    "sha256": "06c9548a6c70d133b6d47638090f5d36f3fec92aace3d90deca758a4404cfa9b",
+    "bytes": 1024
+  },
+  {
+    "file": "emerald-petalburg-woods.png",
+    "url": "https://raw.githubusercontent.com/pret/pokeemerald/master/data/tilesets/secondary/petalburg_woods/tiles.png",
+    "error": "HTTP Error 404: Not Found"
+  },
+  {
+    "file": "emerald-fieldmap.c",
+    "url": "https://raw.githubusercontent.com/pret/pokeemerald/master/src/fieldmap.c",
+    "status": 200,
+    "sha256": "0776631c5f8a2751ceaa6197667d637dd1339ab88446dc8d84a3a586575a8e51",
+    "bytes": 25358
+  },
+  {
+    "file": "emerald-field-player-avatar.c",
+    "url": "https://raw.githubusercontent.com/pret/pokeemerald/master/src/field_player_avatar.c",
+    "status": 200,
+    "sha256": "70db5bd30ce875189e9bc7bfed9e0d712d1d6da3f78931f16b9526521dea78af",
+    "bytes": 72193
+  },
+  {
+    "file": "emerald-metatile-behavior.c",
+    "url": "https://raw.githubusercontent.com/pret/pokeemerald/master/src/metatile_behavior.c",
+    "status": 200,
+    "sha256": "0c770f6cc5876b87f893a415df5d2b001c1d3530d9542cd6a9a311b0ec9e82d8",
+    "bytes": 39082
+  },
+  {
+    "file": "emerald-metatile-constants.h",
+    "url": "https://raw.githubusercontent.com/pret/pokeemerald/master/include/constants/metatile_behaviors.h",
+    "status": 200,
+    "sha256": "213bfcb92984f848272b6aba404cabc82932e0c553ad4362e69d10a09afda854",
+    "bytes": 5939
+  },
+  {
+    "file": "tmc-bush.c",
+    "url": "https://raw.githubusercontent.com/zeldaret/tmc/master/src/object/bush.c",
+    "status": 200,
+    "sha256": "9187cabaa865761eeb51cafbb476ddb7a6471d704532ae2a85402fa078623bdf",
+    "bytes": 3994
+  },
+  {
+    "file": "tmc-pot.c",
+    "url": "https://raw.githubusercontent.com/zeldaret/tmc/master/src/object/pot.c",
+    "status": 200,
+    "sha256": "39b9ce0207a29c39f73c6158bc1dea1e180100cc75c0d3e07b9bda7646a7906d",
+    "bytes": 9587
+  },
+  {
+    "file": "tmc-small-rock.c",
+    "url": "https://raw.githubusercontent.com/zeldaret/tmc/master/src/object/rock.c",
+    "error": "HTTP Error 404: Not Found"
+  }
+]

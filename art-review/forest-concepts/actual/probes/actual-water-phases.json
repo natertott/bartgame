@@ -1,0 +1,66 @@
+[
+  {
+    "image": "/workspace/setup/forest-concepts/runtime/v2/all-frames/water-bridge/frame-000.png",
+    "sha256": "d9fa7d9839427dd7edcbaafd5f21af74ab59cba65ac5bf6de9238d0fcee51fcf",
+    "crop": [
+      115,
+      0,
+      195,
+      64
+    ],
+    "destination": [
+      0,
+      32,
+      160,
+      128
+    ]
+  },
+  {
+    "image": "/workspace/setup/forest-concepts/runtime/v2/all-frames/water-bridge/frame-008.png",
+    "sha256": "83c1b8ef26869afffee152873b434a30d90fa93b5156450d91e690f8fe2e4f7a",
+    "crop": [
+      115,
+      0,
+      195,
+      64
+    ],
+    "destination": [
+      160,
+      32,
+      160,
+      128
+    ]
+  },
+  {
+    "image": "/workspace/setup/forest-concepts/runtime/v2/all-frames/water-bridge/frame-016.png",
+    "sha256": "674dfec0e23390e4e152311dce92928d2e73046f0d618c1e1f904b05bec5652b",
+    "crop": [
+      115,
+      0,
+      195,
+      64
+    ],
+    "destination": [
+      320,
+      32,
+      160,
+      128
+    ]
+  },
+  {
+    "image": "/workspace/setup/forest-concepts/runtime/v2/all-frames/water-bridge/frame-024.png",
+    "sha256": "149615055f03e3f76b772cace1ae73c433ea46b4b1f3c007e5a0731ad577be44",
+    "crop": [
+      115,
+      0,
+      195,
+      64
+    ],
+    "destination": [
+      480,
+      32,
+      160,
+      128
+    ]
+  }
+]

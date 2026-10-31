@@ -1,0 +1,86 @@
+[
+  {
+    "variant": 0,
+    "label": "Current production forest",
+    "frozen": "/workspace/setup/forest-concepts/frozen/v0",
+    "rom_sha256": "9330a44a4e27d99606a757134aa41a62adb122a74315c400e1ad3427048c8661",
+    "rom_bytes": 594124,
+    "source_commit": "73df5c1296f84ac469102c92f106dc9ad17b9a27",
+    "log": "/workspace/setup/forest-concepts/build-v0.log",
+    "budgets": [
+      "tileset forest: 693 tiles, 376 metatiles held, 59 animated, 8 palettes",
+      "tileset sewer: 822 tiles, 657 metatiles held, 69 animated, 1 palettes",
+      "tileset myst: 114 tiles, 97 metatiles held, 6 animated, 5 palettes"
+    ]
+  },
+  {
+    "variant": 1,
+    "label": "Fern & Oak",
+    "frozen": "/workspace/setup/forest-concepts/frozen/v1",
+    "rom_sha256": "aa1dda5a1fe8bb31982d7f5beaeba7497011badccc34900037ef687cb0bc3067",
+    "rom_bytes": 591436,
+    "source_commit": "73df5c1296f84ac469102c92f106dc9ad17b9a27",
+    "log": "/workspace/setup/forest-concepts/build-v1.log",
+    "budgets": [
+      "tileset forest: 609 tiles, 376 metatiles held, 59 animated, 10 palettes",
+      "tileset sewer: 822 tiles, 657 metatiles held, 69 animated, 1 palettes",
+      "tileset myst: 109 tiles, 97 metatiles held, 6 animated, 6 palettes"
+    ]
+  },
+  {
+    "variant": 2,
+    "label": "Silver Willow",
+    "frozen": "/workspace/setup/forest-concepts/frozen/v2",
+    "rom_sha256": "50f559ec16aaa2e08bb446349c8a8e122ff5ec6b983cea6b32a0b2d5be3cc515",
+    "rom_bytes": 591148,
+    "source_commit": "73df5c1296f84ac469102c92f106dc9ad17b9a27",
+    "log": "/workspace/setup/forest-concepts/build-v2.log",
+    "budgets": [
+      "tileset forest: 600 tiles, 376 metatiles held, 59 animated, 10 palettes",
+      "tileset sewer: 822 tiles, 657 metatiles held, 69 animated, 1 palettes",
+      "tileset myst: 109 tiles, 97 metatiles held, 6 animated, 6 palettes"
+    ]
+  },
+  {
+    "variant": 3,
+    "label": "Copper Beech",
+    "frozen": "/workspace/setup/forest-concepts/frozen/v3",
+    "rom_sha256": "85238cd938ef2778f651bf005eb9655216569d8194f9aefe81cc9e3c70f85673",
+    "rom_bytes": 591244,
+    "source_commit": "73df5c1296f84ac469102c92f106dc9ad17b9a27",
+    "log": "/workspace/setup/forest-concepts/build-v3.log",
+    "budgets": [
+      "tileset forest: 603 tiles, 376 metatiles held, 59 animated, 10 palettes",
+      "tileset sewer: 822 tiles, 657 metatiles held, 69 animated, 1 palettes",
+      "tileset myst: 109 tiles, 97 metatiles held, 6 animated, 6 palettes"
+    ]
+  },
+  {
+    "variant": 4,
+    "label": "Velvet Cedar",
+    "frozen": "/workspace/setup/forest-concepts/frozen/v4",
+    "rom_sha256": "411035db3a288fabe0aef2f3cabc21199be324d1445de5c6a8323942cda44214",
+    "rom_bytes": 590828,
+    "source_commit": "73df5c1296f84ac469102c92f106dc9ad17b9a27",
+    "log": "/workspace/setup/forest-concepts/build-v4.log",
+    "budgets": [
+      "tileset forest: 590 tiles, 376 metatiles held, 59 animated, 10 palettes",
+      "tileset sewer: 822 tiles, 657 metatiles held, 69 animated, 1 palettes",
+      "tileset myst: 109 tiles, 97 metatiles held, 6 animated, 6 palettes"
+    ]
+  },
+  {
+    "variant": 5,
+    "label": "Pale Orchard",
+    "frozen": "/workspace/setup/forest-concepts/frozen/v5",
+    "rom_sha256": "0904dd78511be6df01adb8e49e40064b7a6d95b4c07368e4a0699077d003e8a5",
+    "rom_bytes": 591404,
+    "source_commit": "73df5c1296f84ac469102c92f106dc9ad17b9a27",
+    "log": "/workspace/setup/forest-concepts/build-v5.log",
+    "budgets": [
+      "tileset forest: 608 tiles, 376 metatiles held, 59 animated, 10 palettes",
+      "tileset sewer: 822 tiles, 657 metatiles held, 69 animated, 1 palettes",
+      "tileset myst: 109 tiles, 97 metatiles held, 6 animated, 6 palettes"
+    ]
+  }
+]

@@ -1,0 +1,22 @@
+{
+  "game_art_source_commit": "73df5c1296f84ac469102c92f106dc9ad17b9a27",
+  "tools": {
+    "bartgame/tools/forest_concept_publish.py": {
+      "sha256": "f3b86b83b2949f2bf05090b4d98b3fdc249735f39f9c88b5e13b3355551d25cf",
+      "repository_url": "https://github.com/natertott/bartgame/blob/forest-concepts/bartgame/tools/forest_concept_publish.py"
+    },
+    "bartgame/tools/forest_concept_gallery.py": {
+      "sha256": "c604f90f998f7501720539f9f3a02c3b62a34e6f42934152c343c8fe23d4c975",
+      "repository_url": "https://github.com/natertott/bartgame/blob/forest-concepts/bartgame/tools/forest_concept_gallery.py"
+    },
+    "bartgame/tools/forest_concept_audit.py": {
+      "sha256": "41267bba1bd0b43830b0a0b25ac6499ab989740f76db66a05c930c018b1f981b",
+      "repository_url": "https://github.com/natertott/bartgame/blob/forest-concepts/bartgame/tools/forest_concept_audit.py"
+    },
+    "bartgame/tools/forest_concept_review.py": {
+      "sha256": "17c6fc2de373b2cf0aee906a3e4044653879f81860d32b642362fb034678e181",
+      "repository_url": "https://github.com/natertott/bartgame/blob/forest-concepts/bartgame/tools/forest_concept_review.py"
+    }
+  },
+  "note": "Review tools are separately hashed and linked in the publication branch. The game/art freeze predates final review tooling; it is not used as a false tool-code revision."
+}

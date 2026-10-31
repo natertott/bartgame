@@ -1,0 +1,101 @@
+{
+  "kind": "native static SOURCE reconstruction, no emulator/gameplay claim",
+  "revision": "731ad5bfd6e6f265508d0efcca0ba42f9dcf5881",
+  "map": [
+    48,
+    44
+  ],
+  "terrain": [
+    768,
+    704
+  ],
+  "general_tiles_png": [
+    128,
+    256
+  ],
+  "metatile_size": [
+    16,
+    16
+  ],
+  "tile_size": [
+    8,
+    8
+  ],
+  "metatile_layers": 2,
+  "primary_palettes": 6,
+  "map_palettes_loaded": 13,
+  "sample_metatiles": [
+    {
+      "metatile": "001",
+      "unique_colors": 3,
+      "dominant_fraction": 0.859375,
+      "mean_luma": 173.5,
+      "behavior": 0,
+      "layer": 0,
+      "sha256_rgb": "44588f6768b480ce111bb43b3740b375278ac2f4762590a2072b752c4e2e5d20"
+    },
+    {
+      "metatile": "00D",
+      "unique_colors": 4,
+      "dominant_fraction": 0.34765625,
+      "mean_luma": 131.77,
+      "behavior": 2,
+      "layer": 0,
+      "sha256_rgb": "358c4b297b6f358a3a53927205a0c19877b7df5671b2fe9e729ffe192600c1d2"
+    },
+    {
+      "metatile": "00E",
+      "unique_colors": 7,
+      "dominant_fraction": 0.26953125,
+      "mean_luma": 148.6,
+      "behavior": 0,
+      "layer": 0,
+      "sha256_rgb": "301c8a26ffe8548d70df4c16c30fe2fcae9293304a65fdac4a61a7472e8a863c"
+    },
+    {
+      "metatile": "09F",
+      "unique_colors": 4,
+      "dominant_fraction": 0.328125,
+      "mean_luma": 82.07,
+      "behavior": 0,
+      "layer": 0,
+      "sha256_rgb": "b8ae42eb9f8ca59eefe6fbd06e253282c7e8280f0deb6387989374aeaaae9066"
+    },
+    {
+      "metatile": "0A7",
+      "unique_colors": 5,
+      "dominant_fraction": 0.6171875,
+      "mean_luma": 66.78,
+      "behavior": 96,
+      "layer": 0,
+      "sha256_rgb": "076b06c7fb18d3d9e3298f6302e2661d75522ebb88f895cbdd79e44efb98f303"
+    },
+    {
+      "metatile": "0A1",
+      "unique_colors": 1,
+      "dominant_fraction": 1.0,
+      "mean_luma": 172.97,
+      "behavior": 16,
+      "layer": 1,
+      "sha256_rgb": "b178e2e022a39025cbe14bef597f3fa059f2da0106a5075620fa7907017a9751"
+    },
+    {
+      "metatile": "1CE",
+      "unique_colors": 6,
+      "dominant_fraction": 0.77734375,
+      "mean_luma": 171.65,
+      "behavior": 0,
+      "layer": 0,
+      "sha256_rgb": "acf8cb68d59f41b240d3dcd7387f4c8a2b2362e22eeb9abd9c614b49f83c153a"
+    },
+    {
+      "metatile": "1CF",
+      "unique_colors": 7,
+      "dominant_fraction": 0.77734375,
+      "mean_luma": 171.02,
+      "behavior": 0,
+      "layer": 0,
+      "sha256_rgb": "f0fe49617ccaa54724bd83bfd00cda213ffd2e2cd075198f292315747d9ea9c9"
+    }
+  ]
+}

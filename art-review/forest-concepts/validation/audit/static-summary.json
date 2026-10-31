@@ -1,0 +1,182 @@
+{
+  "baseline_source": "31b31513f354d9ead6577166d72fa06dad71358b",
+  "baseline_rom_sha256": "9330a44a4e27d99606a757134aa41a62adb122a74315c400e1ad3427048c8661",
+  "auditor_sha256": "afe9e9bbc7dd98d0f573ab727231d4fb7a396b391d3eb059e9350a03cbc461b0",
+  "inventory_sha256": "a7e9255dc7b6d3292ccda1aeb3943ccbff1392df912db25ab89f77c427710e1f",
+  "passed": 63549,
+  "total": 63549,
+  "failures": [],
+  "limits": "Source/native assertions cover all retained IDs including currently unused variants. Finite runtime samples do not claim universal route coverage, CPU timing, player preference or aesthetic perfection.",
+  "profiles": [
+    {
+      "variant": 0,
+      "rom_sha256": "9330a44a4e27d99606a757134aa41a62adb122a74315c400e1ad3427048c8661",
+      "source_commit": "73df5c1296f84ac469102c92f106dc9ad17b9a27",
+      "budgets": {
+        "forest": {
+          "bg_subtiles": 693,
+          "bg_palette_banks": 8,
+          "animation_allocations": 59
+        },
+        "myst": {
+          "bg_subtiles": 114,
+          "bg_palette_banks": 5,
+          "animation_allocations": 6
+        },
+        "sewer": {
+          "bg_subtiles": 822,
+          "bg_palette_banks": 1,
+          "animation_allocations": 69
+        }
+      },
+      "native_art": {
+        "status": "production retained byte for byte"
+      }
+    },
+    {
+      "variant": 1,
+      "rom_sha256": "aa1dda5a1fe8bb31982d7f5beaeba7497011badccc34900037ef687cb0bc3067",
+      "source_commit": "73df5c1296f84ac469102c92f106dc9ad17b9a27",
+      "budgets": {
+        "forest": {
+          "bg_subtiles": 609,
+          "bg_palette_banks": 10,
+          "animation_allocations": 59
+        },
+        "myst": {
+          "bg_subtiles": 109,
+          "bg_palette_banks": 6,
+          "animation_allocations": 6
+        },
+        "sewer": {
+          "bg_subtiles": 822,
+          "bg_palette_banks": 1,
+          "animation_allocations": 69
+        }
+      },
+      "native_art": {
+        "native_bg_ids": 461,
+        "unique_native_bg_frames": 523,
+        "area_native_frame_instances": 533,
+        "native_obj_frames": 24,
+        "changed_bg_ids": 459
+      }
+    },
+    {
+      "variant": 2,
+      "rom_sha256": "50f559ec16aaa2e08bb446349c8a8e122ff5ec6b983cea6b32a0b2d5be3cc515",
+      "source_commit": "73df5c1296f84ac469102c92f106dc9ad17b9a27",
+      "budgets": {
+        "forest": {
+          "bg_subtiles": 600,
+          "bg_palette_banks": 10,
+          "animation_allocations": 59
+        },
+        "myst": {
+          "bg_subtiles": 109,
+          "bg_palette_banks": 6,
+          "animation_allocations": 6
+        },
+        "sewer": {
+          "bg_subtiles": 822,
+          "bg_palette_banks": 1,
+          "animation_allocations": 69
+        }
+      },
+      "native_art": {
+        "native_bg_ids": 461,
+        "unique_native_bg_frames": 523,
+        "area_native_frame_instances": 533,
+        "native_obj_frames": 24,
+        "changed_bg_ids": 459
+      }
+    },
+    {
+      "variant": 3,
+      "rom_sha256": "85238cd938ef2778f651bf005eb9655216569d8194f9aefe81cc9e3c70f85673",
+      "source_commit": "73df5c1296f84ac469102c92f106dc9ad17b9a27",
+      "budgets": {
+        "forest": {
+          "bg_subtiles": 603,
+          "bg_palette_banks": 10,
+          "animation_allocations": 59
+        },
+        "myst": {
+          "bg_subtiles": 109,
+          "bg_palette_banks": 6,
+          "animation_allocations": 6
+        },
+        "sewer": {
+          "bg_subtiles": 822,
+          "bg_palette_banks": 1,
+          "animation_allocations": 69
+        }
+      },
+      "native_art": {
+        "native_bg_ids": 461,
+        "unique_native_bg_frames": 523,
+        "area_native_frame_instances": 533,
+        "native_obj_frames": 24,
+        "changed_bg_ids": 459
+      }
+    },
+    {
+      "variant": 4,
+      "rom_sha256": "411035db3a288fabe0aef2f3cabc21199be324d1445de5c6a8323942cda44214",
+      "source_commit": "73df5c1296f84ac469102c92f106dc9ad17b9a27",
+      "budgets": {
+        "forest": {
+          "bg_subtiles": 590,
+          "bg_palette_banks": 10,
+          "animation_allocations": 59
+        },
+        "myst": {
+          "bg_subtiles": 109,
+          "bg_palette_banks": 6,
+          "animation_allocations": 6
+        },
+        "sewer": {
+          "bg_subtiles": 822,
+          "bg_palette_banks": 1,
+          "animation_allocations": 69
+        }
+      },
+      "native_art": {
+        "native_bg_ids": 461,
+        "unique_native_bg_frames": 523,
+        "area_native_frame_instances": 533,
+        "native_obj_frames": 24,
+        "changed_bg_ids": 459
+      }
+    },
+    {
+      "variant": 5,
+      "rom_sha256": "0904dd78511be6df01adb8e49e40064b7a6d95b4c07368e4a0699077d003e8a5",
+      "source_commit": "73df5c1296f84ac469102c92f106dc9ad17b9a27",
+      "budgets": {
+        "forest": {
+          "bg_subtiles": 608,
+          "bg_palette_banks": 10,
+          "animation_allocations": 59
+        },
+        "myst": {
+          "bg_subtiles": 109,
+          "bg_palette_banks": 6,
+          "animation_allocations": 6
+        },
+        "sewer": {
+          "bg_subtiles": 822,
+          "bg_palette_banks": 1,
+          "animation_allocations": 69
+        }
+      },
+      "native_art": {
+        "native_bg_ids": 461,
+        "unique_native_bg_frames": 523,
+        "area_native_frame_instances": 533,
+        "native_obj_frames": 24,
+        "changed_bg_ids": 459
+      }
+    }
+  ]
+}

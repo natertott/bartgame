@@ -1,0 +1,468 @@
+{
+  "source_commit": "73df5c1296f84ac469102c92f106dc9ad17b9a27",
+  "board": "coin-toad-context-actual.png",
+  "sha256": "f7130ab5043e0cfed324729e842b7d7fcc7ee0559c4fd26534d3b7accca25da2",
+  "decoded_panels_verified": true,
+  "panels": [
+    {
+      "forest_variant": 1,
+      "case": "pursuer-clearing",
+      "tick": 13,
+      "source_image": "actual/pursuer-context/variant1/pursuer-clearing.png",
+      "source_png_sha256": "69f730c8275570d7a0baef0a1a00d9b5c5ec5ade38ce434290d4bed5cd4bf165",
+      "source_rectangle": [
+        0,
+        0,
+        240,
+        160
+      ],
+      "destination_rectangle": [
+        0,
+        48,
+        240,
+        208
+      ],
+      "nearest_neighbour_scale": 1,
+      "rom_sha256": "aa1dda5a1fe8bb31982d7f5beaeba7497011badccc34900037ef687cb0bc3067",
+      "snapshot_camera": [
+        258,
+        91
+      ],
+      "fixture": {
+        "seed": 6,
+        "cell": 9,
+        "stage": 3,
+        "natural_spawn_index": 5,
+        "kind": 0,
+        "player_position_fixture": [
+          357,
+          207
+        ],
+        "player_health_fixture": 80,
+        "ordinary_camera_settle_frames": 80,
+        "unrelated_actors_cleared": true,
+        "clear_lane": [
+          293,
+          183,
+          373,
+          235
+        ],
+        "clear_lane_rule": "Every covered metatile is TT_FLOOR, non-prop, collision0 and overlayNONE; no bridge, water, ledge, canopy or raised decoration."
+      }
+    },
+    {
+      "forest_variant": 1,
+      "case": "pursuer-clearing",
+      "tick": 13,
+      "source_image": "actual/pursuer-context/variant1/pursuer-clearing.png",
+      "source_png_sha256": "69f730c8275570d7a0baef0a1a00d9b5c5ec5ade38ce434290d4bed5cd4bf165",
+      "source_rectangle": [
+        40,
+        79,
+        136,
+        159
+      ],
+      "destination_rectangle": [
+        24,
+        236,
+        216,
+        396
+      ],
+      "nearest_neighbour_scale": 2,
+      "rom_sha256": "aa1dda5a1fe8bb31982d7f5beaeba7497011badccc34900037ef687cb0bc3067",
+      "snapshot_camera": [
+        258,
+        91
+      ],
+      "fixture": {
+        "seed": 6,
+        "cell": 9,
+        "stage": 3,
+        "natural_spawn_index": 5,
+        "kind": 0,
+        "player_position_fixture": [
+          357,
+          207
+        ],
+        "player_health_fixture": 80,
+        "ordinary_camera_settle_frames": 80,
+        "unrelated_actors_cleared": true,
+        "clear_lane": [
+          293,
+          183,
+          373,
+          235
+        ],
+        "clear_lane_rule": "Every covered metatile is TT_FLOOR, non-prop, collision0 and overlayNONE; no bridge, water, ledge, canopy or raised decoration."
+      }
+    },
+    {
+      "forest_variant": 2,
+      "case": "pursuer-clearing",
+      "tick": 13,
+      "source_image": "actual/pursuer-context/variant2/pursuer-clearing.png",
+      "source_png_sha256": "ae50e8e66856bdfd54451a945324d44c1fb8b90c55e795969ec1c8b477190ac7",
+      "source_rectangle": [
+        0,
+        0,
+        240,
+        160
+      ],
+      "destination_rectangle": [
+        240,
+        48,
+        480,
+        208
+      ],
+      "nearest_neighbour_scale": 1,
+      "rom_sha256": "50f559ec16aaa2e08bb446349c8a8e122ff5ec6b983cea6b32a0b2d5be3cc515",
+      "snapshot_camera": [
+        258,
+        91
+      ],
+      "fixture": {
+        "seed": 6,
+        "cell": 9,
+        "stage": 3,
+        "natural_spawn_index": 5,
+        "kind": 0,
+        "player_position_fixture": [
+          357,
+          207
+        ],
+        "player_health_fixture": 80,
+        "ordinary_camera_settle_frames": 80,
+        "unrelated_actors_cleared": true,
+        "clear_lane": [
+          293,
+          183,
+          373,
+          235
+        ],
+        "clear_lane_rule": "Every covered metatile is TT_FLOOR, non-prop, collision0 and overlayNONE; no bridge, water, ledge, canopy or raised decoration."
+      }
+    },
+    {
+      "forest_variant": 2,
+      "case": "pursuer-clearing",
+      "tick": 13,
+      "source_image": "actual/pursuer-context/variant2/pursuer-clearing.png",
+      "source_png_sha256": "ae50e8e66856bdfd54451a945324d44c1fb8b90c55e795969ec1c8b477190ac7",
+      "source_rectangle": [
+        40,
+        79,
+        136,
+        159
+      ],
+      "destination_rectangle": [
+        264,
+        236,
+        456,
+        396
+      ],
+      "nearest_neighbour_scale": 2,
+      "rom_sha256": "50f559ec16aaa2e08bb446349c8a8e122ff5ec6b983cea6b32a0b2d5be3cc515",
+      "snapshot_camera": [
+        258,
+        91
+      ],
+      "fixture": {
+        "seed": 6,
+        "cell": 9,
+        "stage": 3,
+        "natural_spawn_index": 5,
+        "kind": 0,
+        "player_position_fixture": [
+          357,
+          207
+        ],
+        "player_health_fixture": 80,
+        "ordinary_camera_settle_frames": 80,
+        "unrelated_actors_cleared": true,
+        "clear_lane": [
+          293,
+          183,
+          373,
+          235
+        ],
+        "clear_lane_rule": "Every covered metatile is TT_FLOOR, non-prop, collision0 and overlayNONE; no bridge, water, ledge, canopy or raised decoration."
+      }
+    },
+    {
+      "forest_variant": 3,
+      "case": "pursuer-clearing",
+      "tick": 13,
+      "source_image": "actual/pursuer-context/variant3/pursuer-clearing.png",
+      "source_png_sha256": "7a9b487c60fd8886728da5948d37cd03bcb3a0c71005c7856264ffc45295ea02",
+      "source_rectangle": [
+        0,
+        0,
+        240,
+        160
+      ],
+      "destination_rectangle": [
+        480,
+        48,
+        720,
+        208
+      ],
+      "nearest_neighbour_scale": 1,
+      "rom_sha256": "85238cd938ef2778f651bf005eb9655216569d8194f9aefe81cc9e3c70f85673",
+      "snapshot_camera": [
+        258,
+        91
+      ],
+      "fixture": {
+        "seed": 6,
+        "cell": 9,
+        "stage": 3,
+        "natural_spawn_index": 5,
+        "kind": 0,
+        "player_position_fixture": [
+          357,
+          207
+        ],
+        "player_health_fixture": 80,
+        "ordinary_camera_settle_frames": 80,
+        "unrelated_actors_cleared": true,
+        "clear_lane": [
+          293,
+          183,
+          373,
+          235
+        ],
+        "clear_lane_rule": "Every covered metatile is TT_FLOOR, non-prop, collision0 and overlayNONE; no bridge, water, ledge, canopy or raised decoration."
+      }
+    },
+    {
+      "forest_variant": 3,
+      "case": "pursuer-clearing",
+      "tick": 13,
+      "source_image": "actual/pursuer-context/variant3/pursuer-clearing.png",
+      "source_png_sha256": "7a9b487c60fd8886728da5948d37cd03bcb3a0c71005c7856264ffc45295ea02",
+      "source_rectangle": [
+        40,
+        79,
+        136,
+        159
+      ],
+      "destination_rectangle": [
+        504,
+        236,
+        696,
+        396
+      ],
+      "nearest_neighbour_scale": 2,
+      "rom_sha256": "85238cd938ef2778f651bf005eb9655216569d8194f9aefe81cc9e3c70f85673",
+      "snapshot_camera": [
+        258,
+        91
+      ],
+      "fixture": {
+        "seed": 6,
+        "cell": 9,
+        "stage": 3,
+        "natural_spawn_index": 5,
+        "kind": 0,
+        "player_position_fixture": [
+          357,
+          207
+        ],
+        "player_health_fixture": 80,
+        "ordinary_camera_settle_frames": 80,
+        "unrelated_actors_cleared": true,
+        "clear_lane": [
+          293,
+          183,
+          373,
+          235
+        ],
+        "clear_lane_rule": "Every covered metatile is TT_FLOOR, non-prop, collision0 and overlayNONE; no bridge, water, ledge, canopy or raised decoration."
+      }
+    },
+    {
+      "forest_variant": 4,
+      "case": "pursuer-clearing",
+      "tick": 13,
+      "source_image": "actual/pursuer-context/variant4/pursuer-clearing.png",
+      "source_png_sha256": "20611b50b36236b2b124320849152c3c990e5db7f482047866127353fa6b1d10",
+      "source_rectangle": [
+        0,
+        0,
+        240,
+        160
+      ],
+      "destination_rectangle": [
+        720,
+        48,
+        960,
+        208
+      ],
+      "nearest_neighbour_scale": 1,
+      "rom_sha256": "411035db3a288fabe0aef2f3cabc21199be324d1445de5c6a8323942cda44214",
+      "snapshot_camera": [
+        258,
+        91
+      ],
+      "fixture": {
+        "seed": 6,
+        "cell": 9,
+        "stage": 3,
+        "natural_spawn_index": 5,
+        "kind": 0,
+        "player_position_fixture": [
+          357,
+          207
+        ],
+        "player_health_fixture": 80,
+        "ordinary_camera_settle_frames": 80,
+        "unrelated_actors_cleared": true,
+        "clear_lane": [
+          293,
+          183,
+          373,
+          235
+        ],
+        "clear_lane_rule": "Every covered metatile is TT_FLOOR, non-prop, collision0 and overlayNONE; no bridge, water, ledge, canopy or raised decoration."
+      }
+    },
+    {
+      "forest_variant": 4,
+      "case": "pursuer-clearing",
+      "tick": 13,
+      "source_image": "actual/pursuer-context/variant4/pursuer-clearing.png",
+      "source_png_sha256": "20611b50b36236b2b124320849152c3c990e5db7f482047866127353fa6b1d10",
+      "source_rectangle": [
+        40,
+        79,
+        136,
+        159
+      ],
+      "destination_rectangle": [
+        744,
+        236,
+        936,
+        396
+      ],
+      "nearest_neighbour_scale": 2,
+      "rom_sha256": "411035db3a288fabe0aef2f3cabc21199be324d1445de5c6a8323942cda44214",
+      "snapshot_camera": [
+        258,
+        91
+      ],
+      "fixture": {
+        "seed": 6,
+        "cell": 9,
+        "stage": 3,
+        "natural_spawn_index": 5,
+        "kind": 0,
+        "player_position_fixture": [
+          357,
+          207
+        ],
+        "player_health_fixture": 80,
+        "ordinary_camera_settle_frames": 80,
+        "unrelated_actors_cleared": true,
+        "clear_lane": [
+          293,
+          183,
+          373,
+          235
+        ],
+        "clear_lane_rule": "Every covered metatile is TT_FLOOR, non-prop, collision0 and overlayNONE; no bridge, water, ledge, canopy or raised decoration."
+      }
+    },
+    {
+      "forest_variant": 5,
+      "case": "pursuer-clearing",
+      "tick": 13,
+      "source_image": "actual/pursuer-context/variant5/pursuer-clearing.png",
+      "source_png_sha256": "a033ceb18ac7ee41f52b7dba1bc64a73877d88f1f1707a33c7bcc3c3e637d32c",
+      "source_rectangle": [
+        0,
+        0,
+        240,
+        160
+      ],
+      "destination_rectangle": [
+        960,
+        48,
+        1200,
+        208
+      ],
+      "nearest_neighbour_scale": 1,
+      "rom_sha256": "0904dd78511be6df01adb8e49e40064b7a6d95b4c07368e4a0699077d003e8a5",
+      "snapshot_camera": [
+        258,
+        91
+      ],
+      "fixture": {
+        "seed": 6,
+        "cell": 9,
+        "stage": 3,
+        "natural_spawn_index": 5,
+        "kind": 0,
+        "player_position_fixture": [
+          357,
+          207
+        ],
+        "player_health_fixture": 80,
+        "ordinary_camera_settle_frames": 80,
+        "unrelated_actors_cleared": true,
+        "clear_lane": [
+          293,
+          183,
+          373,
+          235
+        ],
+        "clear_lane_rule": "Every covered metatile is TT_FLOOR, non-prop, collision0 and overlayNONE; no bridge, water, ledge, canopy or raised decoration."
+      }
+    },
+    {
+      "forest_variant": 5,
+      "case": "pursuer-clearing",
+      "tick": 13,
+      "source_image": "actual/pursuer-context/variant5/pursuer-clearing.png",
+      "source_png_sha256": "a033ceb18ac7ee41f52b7dba1bc64a73877d88f1f1707a33c7bcc3c3e637d32c",
+      "source_rectangle": [
+        40,
+        79,
+        136,
+        159
+      ],
+      "destination_rectangle": [
+        984,
+        236,
+        1176,
+        396
+      ],
+      "nearest_neighbour_scale": 2,
+      "rom_sha256": "0904dd78511be6df01adb8e49e40064b7a6d95b4c07368e4a0699077d003e8a5",
+      "snapshot_camera": [
+        258,
+        91
+      ],
+      "fixture": {
+        "seed": 6,
+        "cell": 9,
+        "stage": 3,
+        "natural_spawn_index": 5,
+        "kind": 0,
+        "player_position_fixture": [
+          357,
+          207
+        ],
+        "player_health_fixture": 80,
+        "ordinary_camera_settle_frames": 80,
+        "unrelated_actors_cleared": true,
+        "clear_lane": [
+          293,
+          183,
+          373,
+          235
+        ],
+        "clear_lane_rule": "Every covered metatile is TT_FLOOR, non-prop, collision0 and overlayNONE; no bridge, water, ledge, canopy or raised decoration."
+      }
+    }
+  ]
+}

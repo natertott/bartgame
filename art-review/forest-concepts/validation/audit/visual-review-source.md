@@ -1,0 +1,13 @@
+# Independent source review of the five forest studies
+
+This is a review of native authoring evidence, not an emulator or playtest claim. Inspected the five living/deep 240×160 pairs in terrain/five-directions-native.png, the individual Fern & Oak native pairs, the five interaction/chest/entry/lift comparison sheets, and folk/overview.png. The full independent packed-ROM and real-capture reports are separate.
+
+The walkable field is considerably quieter: green ground and a continuous brown trail remain legible in both living and deep samples. The deep examples alter branches, leaf masses and attached parasites while retaining the forest floor. Oak, beech and orchard retain related rounded crowns; willow has hanging strands and cedar has angular tiered masses. This makes the five directions a related family rather than five unrelated sprite packs. The willow and cedar silhouettes are the strongest structural departures.
+
+The quiet floor and dark canopy separate open movement from solid edges. Tree trunks have a smaller contact footprint under their raised crowns. Water uses a distinct darker blue-green field and a bank; bridge planks have a directional run across it. The source patches demonstrate local tiling/material alignment; they do not prove that every generated placement is attractive.
+
+The interaction drawings have a coherent size hierarchy: full-cell switches, approximately20-pixel chests and entrances with an opening taller than Bloom. Whole lift-only stones retain broad unbroken planes; the bomb barrier has a high-value branching fracture. Open/closed chest lids and blocked/open cave apertures remain distinguishable. The four portable silhouettes/materials are independently checked against their exact floor/carried versions in the native audit. Small scenery stone variants intentionally share a family silhouette; visual differences alone must not imply a different tool requirement.
+
+The three world folk use compact14–18-pixel body widths and a shared foot baseline. Hood, veil and gardener headwear/tool continue into their larger busts. Their palette remains the selected shared actor palette, avoiding a second character pack. Portrait expressions are economical; much of identity is carried by clothing and head shape at native scale.
+
+Remaining comparison tradeoffs: the repeating canopy boundary can still read as a regular band in a dense rectangle, especially cedar's tiered forms. Native-scale ornament and chest-tier differences are deliberately restrained. The twelve retained animated ground/vein/pit IDs have static painted phases by design; attached lantern/fungus/canopy details and actual water retain phase changes. This distinction is documented and must not be advertised as twelve newly moving surfaces.

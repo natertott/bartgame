@@ -1,0 +1,134 @@
+{
+  "status": "compared",
+  "profiles": [
+    {
+      "forest_variant": 1,
+      "source_commit": "73df5c1296f84ac469102c92f106dc9ad17b9a27",
+      "rom_sha256": "aa1dda5a1fe8bb31982d7f5beaeba7497011badccc34900037ef687cb0bc3067",
+      "enemy_variant": 11,
+      "capture_count": 1,
+      "checks_passed": 6,
+      "checks_total": 6,
+      "report": "/workspace/setup/forest-concepts/audit/pursuer-context/v1/capture.json",
+      "mechanical_comparison": {
+        "reference_rom_sha256": "9330a44a4e27d99606a757134aa41a62adb122a74315c400e1ad3427048c8661",
+        "candidate_rom_sha256": "aa1dda5a1fe8bb31982d7f5beaeba7497011badccc34900037ef687cb0bc3067",
+        "passed": 1,
+        "total": 1,
+        "method": "Independently compare canonical mechanics, excluding presentation clocks.\n\n    No capture/harness module or mGBA binding is imported here. Global video\n    phase, OAM, palette/tile residency and selected visual frame are excluded;\n    position, AI state/timers, health, damage, projectiles and RNG are exact.",
+        "captures": [
+          {
+            "name": "pursuer-clearing",
+            "passed": true,
+            "reference_frames": 96,
+            "candidate_frames": 96
+          }
+        ]
+      }
+    },
+    {
+      "forest_variant": 2,
+      "source_commit": "73df5c1296f84ac469102c92f106dc9ad17b9a27",
+      "rom_sha256": "50f559ec16aaa2e08bb446349c8a8e122ff5ec6b983cea6b32a0b2d5be3cc515",
+      "enemy_variant": 11,
+      "capture_count": 1,
+      "checks_passed": 6,
+      "checks_total": 6,
+      "report": "/workspace/setup/forest-concepts/audit/pursuer-context/v2/capture.json",
+      "mechanical_comparison": {
+        "reference_rom_sha256": "9330a44a4e27d99606a757134aa41a62adb122a74315c400e1ad3427048c8661",
+        "candidate_rom_sha256": "50f559ec16aaa2e08bb446349c8a8e122ff5ec6b983cea6b32a0b2d5be3cc515",
+        "passed": 1,
+        "total": 1,
+        "method": "Independently compare canonical mechanics, excluding presentation clocks.\n\n    No capture/harness module or mGBA binding is imported here. Global video\n    phase, OAM, palette/tile residency and selected visual frame are excluded;\n    position, AI state/timers, health, damage, projectiles and RNG are exact.",
+        "captures": [
+          {
+            "name": "pursuer-clearing",
+            "passed": true,
+            "reference_frames": 96,
+            "candidate_frames": 96
+          }
+        ]
+      }
+    },
+    {
+      "forest_variant": 3,
+      "source_commit": "73df5c1296f84ac469102c92f106dc9ad17b9a27",
+      "rom_sha256": "85238cd938ef2778f651bf005eb9655216569d8194f9aefe81cc9e3c70f85673",
+      "enemy_variant": 11,
+      "capture_count": 1,
+      "checks_passed": 6,
+      "checks_total": 6,
+      "report": "/workspace/setup/forest-concepts/audit/pursuer-context/v3/capture.json",
+      "mechanical_comparison": {
+        "reference_rom_sha256": "9330a44a4e27d99606a757134aa41a62adb122a74315c400e1ad3427048c8661",
+        "candidate_rom_sha256": "85238cd938ef2778f651bf005eb9655216569d8194f9aefe81cc9e3c70f85673",
+        "passed": 1,
+        "total": 1,
+        "method": "Independently compare canonical mechanics, excluding presentation clocks.\n\n    No capture/harness module or mGBA binding is imported here. Global video\n    phase, OAM, palette/tile residency and selected visual frame are excluded;\n    position, AI state/timers, health, damage, projectiles and RNG are exact.",
+        "captures": [
+          {
+            "name": "pursuer-clearing",
+            "passed": true,
+            "reference_frames": 96,
+            "candidate_frames": 96
+          }
+        ]
+      }
+    },
+    {
+      "forest_variant": 4,
+      "source_commit": "73df5c1296f84ac469102c92f106dc9ad17b9a27",
+      "rom_sha256": "411035db3a288fabe0aef2f3cabc21199be324d1445de5c6a8323942cda44214",
+      "enemy_variant": 11,
+      "capture_count": 1,
+      "checks_passed": 6,
+      "checks_total": 6,
+      "report": "/workspace/setup/forest-concepts/audit/pursuer-context/v4/capture.json",
+      "mechanical_comparison": {
+        "reference_rom_sha256": "9330a44a4e27d99606a757134aa41a62adb122a74315c400e1ad3427048c8661",
+        "candidate_rom_sha256": "411035db3a288fabe0aef2f3cabc21199be324d1445de5c6a8323942cda44214",
+        "passed": 1,
+        "total": 1,
+        "method": "Independently compare canonical mechanics, excluding presentation clocks.\n\n    No capture/harness module or mGBA binding is imported here. Global video\n    phase, OAM, palette/tile residency and selected visual frame are excluded;\n    position, AI state/timers, health, damage, projectiles and RNG are exact.",
+        "captures": [
+          {
+            "name": "pursuer-clearing",
+            "passed": true,
+            "reference_frames": 96,
+            "candidate_frames": 96
+          }
+        ]
+      }
+    },
+    {
+      "forest_variant": 5,
+      "source_commit": "73df5c1296f84ac469102c92f106dc9ad17b9a27",
+      "rom_sha256": "0904dd78511be6df01adb8e49e40064b7a6d95b4c07368e4a0699077d003e8a5",
+      "enemy_variant": 11,
+      "capture_count": 1,
+      "checks_passed": 6,
+      "checks_total": 6,
+      "report": "/workspace/setup/forest-concepts/audit/pursuer-context/v5/capture.json",
+      "mechanical_comparison": {
+        "reference_rom_sha256": "9330a44a4e27d99606a757134aa41a62adb122a74315c400e1ad3427048c8661",
+        "candidate_rom_sha256": "0904dd78511be6df01adb8e49e40064b7a6d95b4c07368e4a0699077d003e8a5",
+        "passed": 1,
+        "total": 1,
+        "method": "Independently compare canonical mechanics, excluding presentation clocks.\n\n    No capture/harness module or mGBA binding is imported here. Global video\n    phase, OAM, palette/tile residency and selected visual frame are excluded;\n    position, AI state/timers, health, damage, projectiles and RNG are exact.",
+        "captures": [
+          {
+            "name": "pursuer-clearing",
+            "passed": true,
+            "reference_frames": 96,
+            "candidate_frames": 96
+          }
+        ]
+      }
+    }
+  ],
+  "capture_count": 5,
+  "passed": 30,
+  "total": 30,
+  "method": "Separate actual mGBA green-Coin-Toad contrast encounters. The legacy enemy harness records enemy_variant; forest_variant is bound independently here through the frozen ROM header/SHA and source commit. No captured report is relabelled or rewritten."
+}

@@ -1,0 +1,2 @@
+# Preserve exact GNU linker map output, including its generated padding.
+/art-review/forest-concepts/validation/frozen/v[0-5]/bartgame.map -whitespace

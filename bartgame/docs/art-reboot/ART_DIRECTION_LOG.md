@@ -717,3 +717,56 @@ stone alias, preserving their exact visible white highlight and animation
 clock. OBJ glitter remains unchanged. All six builds and matched capture
 provenance are regenerated after this correction; the earlier source draft is
 not relabelled as final evidence.
+
+**Final forest evidence:** game/art source `73df5c1` is frozen in six builds:
+control 0 and optional profiles 1–5. The control and restored ordinary build
+remain byte-identical to production, SHA256
+`9330a44a4e27d99606a757134aa41a62adb122a74315c400e1ad3427048c8661`.
+Every `src/*` file and all sixteen OBJ banks are unchanged. Bloom, selected
+enemies/Heart, equipment/pickups, interface layout/font/title, final Drain
+architecture/keepers and existing glitter retain their art. The studies cover
+463 BG identifiers (523 owned phases plus five protected sparkle phases),
+24 environment OBJ/portrait instances and local BG ramps. IDs, collision,
+prop/glitter flags and animation clocks remain stable. Forest use is 590–609
+of 1,024 subtiles with ten of twelve banks; interiors use 109 tiles/six banks;
+the final Drain remains at 822 tiles/one bank.
+
+The source catalogs contain 2,760 frame instances, 552 per option, with eighteen
+atlases each, eight five-way family sheets, fifteen exact source GIFs and
+19,750 passing export/atlas/hash checks. Source state pairs and 180ms inspection
+holds do not represent engine timing. Six unused root-extension cells are
+explicitly retired to grassy footing; allocated soil/root/pit phases remain
+visually quiet. Initial shingle-like crowns, wire-like willow leaves and
+repeated water stripes were refined into connected foliage, thicker root
+collars and shorter ripple groups before freezing.
+
+The main mGBA suite passes 3,307 checks across 498 cases, 83 per build, including
+all 25 room viewports, natural mystery styles, NPC dialogue and real item
+interactions. The independent source/ROM/runtime audit passes 75,315 checks.
+A focused follow-up adds five natural Coin Toad encounters/30 checks, with exact
+prior AI trajectories and visible contact on unobstructed green ground. The
+combined publication contains 503 cases, 3,337 runtime checks and 65 full-rate
+clips. Native PNGs are exact; MP4s are lossy viewing copies, GIFs require exact
+colors, and raw recording archives stay local. Every report discloses fixtures
+and distinguishes source artwork from actual captures.
+
+One observation matters to comparison limits: smaller BG payloads can finish
+a chasm transition one VBlank earlier. With movement held across that boundary,
+the old fixture ended two pixels farther along in some studies. The final
+shared input releases movement before play resumes; initial/final positions,
+geometry, RNG, progress and ordered mechanic states then match. Original
+transition ticks remain disclosed. No engine, physics, generator or art change
+was made to force timing equality. Earlier held-direction recordings remain
+archived as superseded fixtures.
+
+**Critique and status:** Willow and Cedar have the strongest canopy silhouette
+changes; Oak, Beech and Orchard share a closer broadleaf family. Ground stays
+quiet and readable, though open rooms can feel spare. Repeated canopy bands
+still expose some grid rhythm; wood/brass chest tiers are subtler than relic
+chests; unlit censers and leafy thicket frames remain next-pass targets. The
+green Coin Toad is less prominent than Bloom, but its contour, eyes and movement
+remain readable. These are tradeoffs for the user's selection. None of the
+five directions is adopted. The [actual/source review](../../../art-review/forest-concepts/README.md)
+and [five-ROM release](../../../downloads/forest-concepts-73df5c1/README.md)
+record every alternative. Research notes separate primary evidence from
+original adaptations; no reference-game pixels are imported.

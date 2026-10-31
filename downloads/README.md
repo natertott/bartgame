@@ -1,5 +1,22 @@
 # BARTGAME downloads
 
+## Five forest environment alternatives
+
+Fern & Oak, Silver Willow, Copper Beech, Velvet Cedar and Pale Orchard keep
+readable green grass and brown dirt through increasing structural blight.
+Each complete set includes terrain/transitions, water, trees, props, gates,
+chests, entrances, interiors, forest folk and matching portraits.
+
+- [Compare all five in actual mGBA and native asset sheets](https://github.com/natertott/bartgame/blob/forest-concepts/art-review/forest-concepts/README.md)
+- [Download all five playable ROMs](https://raw.githubusercontent.com/natertott/bartgame/forest-concepts/downloads/forest-concepts-73df5c1/forest-concepts-73df5c1.zip)
+- [Individual ROMs and checksums](forest-concepts-73df5c1/README.md)
+
+Game/art source `73df5c1`. These are unselected `BART_FOREST=1..5` studies;
+normal builds retain production forest0 and the selected bestiary below.
+There are 2,760 native catalog frames and 503 actual mGBA cases, with 3,337
+runtime checks. The independent main audit passes 75,315 checks. Source
+catalogs and actual game footage are clearly separated.
+
 ## Selected enemies and broken purple Heart
 
 The selected Coin Toad, Quill Moth, Trumpet Bellflower, Pear Bladder and Moth

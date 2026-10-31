@@ -1,0 +1,167 @@
+[
+  {
+    "forest_variant": 1,
+    "image": "/workspace/setup/forest-concepts/runtime/v1/healthy-canopy.png",
+    "sha256": "db7501df282a9552f6ff00baa014751a3d8fd95c41fa1359c6f1e59dbb4ea465",
+    "destination": [
+      0,
+      30,
+      240,
+      160
+    ]
+  },
+  {
+    "forest_variant": 1,
+    "image": "/workspace/setup/forest-concepts/runtime/v1/mixed-forest.png",
+    "sha256": "4a1bf9f7049347188aec8c5c199f2c520b45a3cceeda4859e07eb360ddc42529",
+    "destination": [
+      240,
+      30,
+      240,
+      160
+    ]
+  },
+  {
+    "forest_variant": 1,
+    "image": "/workspace/setup/forest-concepts/runtime/v1/deep-blight.png",
+    "sha256": "2a3acd3583be7d346e90533feb06c1d60b3931f895516e95adc6d1f5d0e0dea7",
+    "destination": [
+      480,
+      30,
+      240,
+      160
+    ]
+  },
+  {
+    "forest_variant": 2,
+    "image": "/workspace/setup/forest-concepts/runtime/v2/healthy-canopy.png",
+    "sha256": "d01b92676f70805c18d11506f680bfcb783efb694a792084c95d208c00b0f27e",
+    "destination": [
+      0,
+      214,
+      240,
+      160
+    ]
+  },
+  {
+    "forest_variant": 2,
+    "image": "/workspace/setup/forest-concepts/runtime/v2/mixed-forest.png",
+    "sha256": "b57d8fc3c4025423c54e30fa2db37dd2de6208a1df7436a29804819e2b1293be",
+    "destination": [
+      240,
+      214,
+      240,
+      160
+    ]
+  },
+  {
+    "forest_variant": 2,
+    "image": "/workspace/setup/forest-concepts/runtime/v2/deep-blight.png",
+    "sha256": "44d10fb57c9c1ecde74ed548da10e21c5592f2cf8890dd10d7968f36d154bb5b",
+    "destination": [
+      480,
+      214,
+      240,
+      160
+    ]
+  },
+  {
+    "forest_variant": 3,
+    "image": "/workspace/setup/forest-concepts/runtime/v3/healthy-canopy.png",
+    "sha256": "3964ba0ca9bb4277790d7e19da4baaca49a949e8020c000ed25009fef03e9e54",
+    "destination": [
+      0,
+      398,
+      240,
+      160
+    ]
+  },
+  {
+    "forest_variant": 3,
+    "image": "/workspace/setup/forest-concepts/runtime/v3/mixed-forest.png",
+    "sha256": "c849560230fdd951df723b28030564b50f3532548839065183f83fb2bd55e641",
+    "destination": [
+      240,
+      398,
+      240,
+      160
+    ]
+  },
+  {
+    "forest_variant": 3,
+    "image": "/workspace/setup/forest-concepts/runtime/v3/deep-blight.png",
+    "sha256": "e813acbe70689fefc9625b24101b113ba5e462d1f7c83e4a0493968991aeb0e4",
+    "destination": [
+      480,
+      398,
+      240,
+      160
+    ]
+  },
+  {
+    "forest_variant": 4,
+    "image": "/workspace/setup/forest-concepts/runtime/v4/healthy-canopy.png",
+    "sha256": "1db54ecd277b8e889ed6366e5d9886797742dc396de38e3b07fe9fa3955d333b",
+    "destination": [
+      0,
+      582,
+      240,
+      160
+    ]
+  },
+  {
+    "forest_variant": 4,
+    "image": "/workspace/setup/forest-concepts/runtime/v4/mixed-forest.png",
+    "sha256": "58c8f5cae0496d74bf3cb8e5d384cb48c7a9965aebd27c23a613cd739cb9d33e",
+    "destination": [
+      240,
+      582,
+      240,
+      160
+    ]
+  },
+  {
+    "forest_variant": 4,
+    "image": "/workspace/setup/forest-concepts/runtime/v4/deep-blight.png",
+    "sha256": "90373e504523dae22ef9bbda1210622c2d782ffce9d3f816163178432be96158",
+    "destination": [
+      480,
+      582,
+      240,
+      160
+    ]
+  },
+  {
+    "forest_variant": 5,
+    "image": "/workspace/setup/forest-concepts/runtime/v5/healthy-canopy.png",
+    "sha256": "0ea6aff87f3efbf2d3e219d2f8e5e8845be982b9767d3e0bb59977411397bebb",
+    "destination": [
+      0,
+      766,
+      240,
+      160
+    ]
+  },
+  {
+    "forest_variant": 5,
+    "image": "/workspace/setup/forest-concepts/runtime/v5/mixed-forest.png",
+    "sha256": "135342d58e904b0b44a6256684a84a4838d7cb1f0611b6e98a822e7b666e882c",
+    "destination": [
+      240,
+      766,
+      240,
+      160
+    ]
+  },
+  {
+    "forest_variant": 5,
+    "image": "/workspace/setup/forest-concepts/runtime/v5/deep-blight.png",
+    "sha256": "311cd3ddbe603bf9856da9894d85acad8cb76e6db639344ac2e00c506843e30b",
+    "destination": [
+      480,
+      766,
+      240,
+      160
+    ]
+  }
+]

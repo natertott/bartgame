@@ -53,3 +53,12 @@ review uses matching naturally generated layouts and discloses seed, player,
 equipment, health and camera fixtures. Fixed source inspection holds do not
 represent AI or damage timing. Native PNGs are the authoritative pixel view;
 integer enlargement is only for inspection.
+
+Final game/art source `73df5c1` freezes all six control/study builds. The complete
+catalog covers 2,760 frame instances. Main runtime review: 498 cases/3,307 checks;
+focused Coin Toad contrast: five cases/30 checks. Combined: 503 cases/3,337 checks.
+The independent main audit passes 75,315 checks; source-gallery verification
+passes 19,750. Production profile0 remains byte-identical to the prior release.
+Smaller BG payloads can finish room loading one update earlier; test reports
+retain transition ticks and compare common inputs with movement released before
+play resumes. No engine timing is altered for the art study.

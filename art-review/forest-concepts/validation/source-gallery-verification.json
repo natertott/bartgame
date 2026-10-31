@@ -1,0 +1,15 @@
+{
+  "source_commit": "73df5c1296f84ac469102c92f106dc9ad17b9a27",
+  "passed": 19750,
+  "total": 19750,
+  "failures": [],
+  "files": 5727,
+  "native_frames": 2760,
+  "native_matrix_panels": 2760,
+  "exact_gifs": 15,
+  "notes": [
+    "All 70 non-tool source input hashes match frozen git revision.",
+    "Seven unchanged BG phase instances retain exact visible RGB, including all five sparkle phases.",
+    "Source-only material and state cycles use fixed180ms holds; no emulator/gameplay timing claimed."
+  ]
+}

@@ -1,0 +1,20 @@
+# Forest source-gallery review
+
+Final source: `73df5c1296f84ac469102c92f106dc9ad17b9a27`.
+These findings concern native source artwork and inspection composites, not emulator behavior.
+
+The five-column native matrix was inspected in color and grayscale across every inventory category: ground/details, hazardous pool, trees/canopy, solid scenery, water/crossings/elevation, interactions, floor overlays, transition masks, all three interiors and shared interior objects, forest folk, carried liftables, portraits, chest states and entrance states. The assembled tree/group boards, healthy/mixed/deep material patches and enlarged comparison sheets were also inspected. The raw group sheet intentionally exposes opaque grass-bearing tree-foot cells; matching grass swatches and patches show their intended surrounding context.
+
+The five directions have recognizable crown constructions: rounded Oak, drooping Willow, broad Beech, tiered Cedar and lobed Orchard. Their bare/sick forms preserve related trunks and attached damage. Quiet green turf and warm earth remain legible at every depth. Deep corruption is communicated by crown loss, exposed limbs, mauve growth and pale attached parasites rather than a purple field. The limited tree vocabulary is coherent across retained legacy IDs. Six unused root-extension IDs are intentionally retired to grassy footing and remain listed; they are not missing exports.
+
+Pale webs, broad fractured stones, whole lift boulders, brass key gates, plate states and lidded chest tiers stay visibly distinct on grass. Entrances retain their large arch/opening and closed bars. NPC faces, beards, wimples and tools provide focal anchors; Willow and Orchard are palest, while Cedar uses a darker cloak with pale facial and hem anchors. Portraits use the actual per-speaker ramp, rather than the sheet's default palette alias.
+
+Clear teal water is separated from grass by its value and bank marks; bridges retain a directional timber axis. Pits show a dark cavity and near rim when placed on the matching grass context. The first dark comparison backdrop hid the cavity without changing the artwork, so the final comparison panels use explicit grass swatches. Cave stone, hollow bark and thicket leaf masses remain distinct from their quiet floors. Grayscale inspection retains the principal terrain/object hierarchy.
+
+Deliberate tradeoffs remain for user feedback. The quiet ground can look spare outside a generated room's larger canopy masses. Healthy and deep floor hues are intentionally similar, so corruption depends on the generated balance of sick/dead forest structures. The hazardous pool is darker/desaturated than clear blue water; its damage meaning still deserves judgment in the actual encounters. These are exploratory alternatives, not a claim that one is adopted or that source stills establish final gameplay readability.
+
+Fifteen source GIFs were decoded against their exact PNG phases: three per concept, all with fixed 180ms inspection holds. Interaction pairs are labelled as source states, not timed destruction/activation sequences. Several allocated soil/root/pit phases deliberately have identical paintings; they do not imply blinking or crawling ground. Actual engine clocks and real terrain interactions belong to the separately captured mGBA review.
+
+Independent source export verification passes 19,750/19,750 checks. All seventy non-tool source inputs match the frozen commit; the uncommitted review tool is separately hashed. Every one of 2,760 native frame instances has exact indexed/RGBA PNG roundtrips, binary alpha and RGB555 metadata. Every family/category atlas covers its full declared frame set. All 2,760 native-matrix panels match their literal source composites. The final white-sparkle alias fix is present: all five protected sparkle phases retain exact visible RGB, as do the black and inner-pit reference cells. All 5,727 output manifest files match their hashes and sizes.
+
+No game/art files changed during this review. Final source outputs are held stable at `/workspace/setup/forest-concepts/gallery/`.

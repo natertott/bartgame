@@ -158,3 +158,12 @@ docs/sim_runs.json
 # Selected enemies and native broken purple Heart production release
 !/downloads/selected-enemies-770b542/selected-enemies-770b542.gba
 !/downloads/selected-enemies-770b542/selected-enemies-770b542.zip
+
+# Five optional forest environment study builds and their standalone link maps
+!/downloads/forest-concepts-73df5c1/forest-01-fern-and-oak-73df5c1.gba
+!/downloads/forest-concepts-73df5c1/forest-02-silver-willow-73df5c1.gba
+!/downloads/forest-concepts-73df5c1/forest-03-copper-beech-73df5c1.gba
+!/downloads/forest-concepts-73df5c1/forest-04-velvet-cedar-73df5c1.gba
+!/downloads/forest-concepts-73df5c1/forest-05-pale-orchard-73df5c1.gba
+!/downloads/forest-concepts-73df5c1/forest-concepts-73df5c1.zip
+!/art-review/forest-concepts/validation/frozen/v[0-5]/bartgame.map

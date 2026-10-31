@@ -1,0 +1,3145 @@
+Archive member included to satisfy reference by file (symbol)
+
+/workspace/setup/sysroot/usr/bin/../lib/gcc/arm-none-eabi/14.2.1/thumb/nofp/libgcc.a(_udivsi3.o)
+                              /workspace/setup/forest-concepts/builds/v5/game.o (__aeabi_uidiv)
+/workspace/setup/sysroot/usr/bin/../lib/gcc/arm-none-eabi/14.2.1/thumb/nofp/libgcc.a(_divsi3.o)
+                              /workspace/setup/forest-concepts/builds/v5/ambient.o (__aeabi_idiv)
+/workspace/setup/sysroot/usr/bin/../lib/gcc/arm-none-eabi/14.2.1/thumb/nofp/libgcc.a(_dvmd_tls.o)
+                              /workspace/setup/sysroot/usr/bin/../lib/gcc/arm-none-eabi/14.2.1/thumb/nofp/libgcc.a(_udivsi3.o) (__aeabi_idiv0)
+/workspace/setup/sysroot/usr/bin/../lib/gcc/arm-none-eabi/14.2.1/thumb/nofp/libgcc.a(_muldi3.o)
+                              /workspace/setup/forest-concepts/builds/v5/util.o (__aeabi_lmul)
+
+Discarded input sections
+
+ .text          0x00000000        0x0 /workspace/setup/forest-concepts/builds/v5/actor.o
+ .data          0x00000000        0x0 /workspace/setup/forest-concepts/builds/v5/actor.o
+ .bss           0x00000000        0x0 /workspace/setup/forest-concepts/builds/v5/actor.o
+ .text.actor_count
+                0x00000000       0x28 /workspace/setup/forest-concepts/builds/v5/actor.o
+ .comment       0x00000000       0x27 /workspace/setup/forest-concepts/builds/v5/actor.o
+ .ARM.attributes
+                0x00000000       0x2a /workspace/setup/forest-concepts/builds/v5/actor.o
+ .text          0x00000000        0x0 /workspace/setup/forest-concepts/builds/v5/ambient.o
+ .data          0x00000000        0x0 /workspace/setup/forest-concepts/builds/v5/ambient.o
+ .bss           0x00000000        0x0 /workspace/setup/forest-concepts/builds/v5/ambient.o
+ .comment       0x00000000       0x27 /workspace/setup/forest-concepts/builds/v5/ambient.o
+ .ARM.attributes
+                0x00000000       0x2a /workspace/setup/forest-concepts/builds/v5/ambient.o
+ .text          0x00000000        0x0 /workspace/setup/forest-concepts/builds/v5/appearance.o
+ .data          0x00000000        0x0 /workspace/setup/forest-concepts/builds/v5/appearance.o
+ .bss           0x00000000        0x0 /workspace/setup/forest-concepts/builds/v5/appearance.o
+ .text.appearance_revision
+                0x00000000        0xc /workspace/setup/forest-concepts/builds/v5/appearance.o
+ .comment       0x00000000       0x27 /workspace/setup/forest-concepts/builds/v5/appearance.o
+ .ARM.attributes
+                0x00000000       0x2a /workspace/setup/forest-concepts/builds/v5/appearance.o
+ .text          0x00000000        0x0 /workspace/setup/forest-concepts/builds/v5/boss.o
+ .data          0x00000000        0x0 /workspace/setup/forest-concepts/builds/v5/boss.o
+ .bss           0x00000000        0x0 /workspace/setup/forest-concepts/builds/v5/boss.o
+ .text.boss_is_dying
+                0x00000000        0xc /workspace/setup/forest-concepts/builds/v5/boss.o
+ .comment       0x00000000       0x27 /workspace/setup/forest-concepts/builds/v5/boss.o
+ .ARM.attributes
+                0x00000000       0x2a /workspace/setup/forest-concepts/builds/v5/boss.o
+ .text          0x00000000        0x0 /workspace/setup/forest-concepts/builds/v5/enemy.o
+ .data          0x00000000        0x0 /workspace/setup/forest-concepts/builds/v5/enemy.o
+ .bss           0x00000000        0x0 /workspace/setup/forest-concepts/builds/v5/enemy.o
+ .comment       0x00000000       0x27 /workspace/setup/forest-concepts/builds/v5/enemy.o
+ .ARM.attributes
+                0x00000000       0x2a /workspace/setup/forest-concepts/builds/v5/enemy.o
+ .text          0x00000000        0x0 /workspace/setup/forest-concepts/builds/v5/game.o
+ .data          0x00000000        0x0 /workspace/setup/forest-concepts/builds/v5/game.o
+ .bss           0x00000000        0x0 /workspace/setup/forest-concepts/builds/v5/game.o
+ .comment       0x00000000       0x27 /workspace/setup/forest-concepts/builds/v5/game.o
+ .ARM.attributes
+                0x00000000       0x2a /workspace/setup/forest-concepts/builds/v5/game.o
+ .text          0x00000000        0x0 /workspace/setup/forest-concepts/builds/v5/interactive.o
+ .data          0x00000000        0x0 /workspace/setup/forest-concepts/builds/v5/interactive.o
+ .bss           0x00000000        0x0 /workspace/setup/forest-concepts/builds/v5/interactive.o
+ .comment       0x00000000       0x27 /workspace/setup/forest-concepts/builds/v5/interactive.o
+ .ARM.attributes
+                0x00000000       0x2a /workspace/setup/forest-concepts/builds/v5/interactive.o
+ .text          0x00000000        0x0 /workspace/setup/forest-concepts/builds/v5/items.o
+ .data          0x00000000        0x0 /workspace/setup/forest-concepts/builds/v5/items.o
+ .bss           0x00000000        0x0 /workspace/setup/forest-concepts/builds/v5/items.o
+ .text.items_draw
+                0x00000000        0x4 /workspace/setup/forest-concepts/builds/v5/items.o
+ .comment       0x00000000       0x27 /workspace/setup/forest-concepts/builds/v5/items.o
+ .ARM.attributes
+                0x00000000       0x2a /workspace/setup/forest-concepts/builds/v5/items.o
+ .text          0x00000000        0x0 /workspace/setup/forest-concepts/builds/v5/main.o
+ .data          0x00000000        0x0 /workspace/setup/forest-concepts/builds/v5/main.o
+ .bss           0x00000000        0x0 /workspace/setup/forest-concepts/builds/v5/main.o
+ .comment       0x00000000       0x27 /workspace/setup/forest-concepts/builds/v5/main.o
+ .ARM.attributes
+                0x00000000       0x2a /workspace/setup/forest-concepts/builds/v5/main.o
+ .text          0x00000000        0x0 /workspace/setup/forest-concepts/builds/v5/menu.o
+ .data          0x00000000        0x0 /workspace/setup/forest-concepts/builds/v5/menu.o
+ .bss           0x00000000        0x0 /workspace/setup/forest-concepts/builds/v5/menu.o
+ .comment       0x00000000       0x27 /workspace/setup/forest-concepts/builds/v5/menu.o
+ .ARM.attributes
+                0x00000000       0x2a /workspace/setup/forest-concepts/builds/v5/menu.o
+ .text          0x00000000        0x0 /workspace/setup/forest-concepts/builds/v5/menu_layouts_a.o
+ .data          0x00000000        0x0 /workspace/setup/forest-concepts/builds/v5/menu_layouts_a.o
+ .bss           0x00000000        0x0 /workspace/setup/forest-concepts/builds/v5/menu_layouts_a.o
+ .comment       0x00000000       0x27 /workspace/setup/forest-concepts/builds/v5/menu_layouts_a.o
+ .ARM.attributes
+                0x00000000       0x2a /workspace/setup/forest-concepts/builds/v5/menu_layouts_a.o
+ .text          0x00000000        0x0 /workspace/setup/forest-concepts/builds/v5/menu_layouts_b.o
+ .data          0x00000000        0x0 /workspace/setup/forest-concepts/builds/v5/menu_layouts_b.o
+ .bss           0x00000000        0x0 /workspace/setup/forest-concepts/builds/v5/menu_layouts_b.o
+ .comment       0x00000000       0x27 /workspace/setup/forest-concepts/builds/v5/menu_layouts_b.o
+ .ARM.attributes
+                0x00000000       0x2a /workspace/setup/forest-concepts/builds/v5/menu_layouts_b.o
+ .text          0x00000000        0x0 /workspace/setup/forest-concepts/builds/v5/menu_studies.o
+ .data          0x00000000        0x0 /workspace/setup/forest-concepts/builds/v5/menu_studies.o
+ .bss           0x00000000        0x0 /workspace/setup/forest-concepts/builds/v5/menu_studies.o
+ .rodata.str1.4
+                0x00000000       0xa5 /workspace/setup/forest-concepts/builds/v5/menu_studies.o
+ .rodata.menu_study_names
+                0x00000000       0x2c /workspace/setup/forest-concepts/builds/v5/menu_studies.o
+ .comment       0x00000000       0x27 /workspace/setup/forest-concepts/builds/v5/menu_studies.o
+ .ARM.attributes
+                0x00000000       0x2a /workspace/setup/forest-concepts/builds/v5/menu_studies.o
+ .text          0x00000000        0x0 /workspace/setup/forest-concepts/builds/v5/myst.o
+ .data          0x00000000        0x0 /workspace/setup/forest-concepts/builds/v5/myst.o
+ .bss           0x00000000        0x0 /workspace/setup/forest-concepts/builds/v5/myst.o
+ .text.myst_kind
+                0x00000000        0xc /workspace/setup/forest-concepts/builds/v5/myst.o
+ .comment       0x00000000       0x27 /workspace/setup/forest-concepts/builds/v5/myst.o
+ .ARM.attributes
+                0x00000000       0x2a /workspace/setup/forest-concepts/builds/v5/myst.o
+ .text          0x00000000        0x0 /workspace/setup/forest-concepts/builds/v5/npc.o
+ .data          0x00000000        0x0 /workspace/setup/forest-concepts/builds/v5/npc.o
+ .bss           0x00000000        0x0 /workspace/setup/forest-concepts/builds/v5/npc.o
+ .comment       0x00000000       0x27 /workspace/setup/forest-concepts/builds/v5/npc.o
+ .ARM.attributes
+                0x00000000       0x2a /workspace/setup/forest-concepts/builds/v5/npc.o
+ .text          0x00000000        0x0 /workspace/setup/forest-concepts/builds/v5/objects.o
+ .data          0x00000000        0x0 /workspace/setup/forest-concepts/builds/v5/objects.o
+ .bss           0x00000000        0x0 /workspace/setup/forest-concepts/builds/v5/objects.o
+ .comment       0x00000000       0x27 /workspace/setup/forest-concepts/builds/v5/objects.o
+ .ARM.attributes
+                0x00000000       0x2a /workspace/setup/forest-concepts/builds/v5/objects.o
+ .text          0x00000000        0x0 /workspace/setup/forest-concepts/builds/v5/player.o
+ .data          0x00000000        0x0 /workspace/setup/forest-concepts/builds/v5/player.o
+ .bss           0x00000000        0x0 /workspace/setup/forest-concepts/builds/v5/player.o
+ .text.player_shield_upgrade
+                0x00000000       0x14 /workspace/setup/forest-concepts/builds/v5/player.o
+ .text.player_shield_palette
+                0x00000000       0x1c /workspace/setup/forest-concepts/builds/v5/player.o
+ .text.player_set_pos
+                0x00000000       0x1c /workspace/setup/forest-concepts/builds/v5/player.o
+ .text.player_face
+                0x00000000       0x1c /workspace/setup/forest-concepts/builds/v5/player.o
+ .text.player_ledge_jump_sub
+                0x00000000       0x10 /workspace/setup/forest-concepts/builds/v5/player.o
+ .comment       0x00000000       0x27 /workspace/setup/forest-concepts/builds/v5/player.o
+ .ARM.attributes
+                0x00000000       0x2a /workspace/setup/forest-concepts/builds/v5/player.o
+ .text          0x00000000        0x0 /workspace/setup/forest-concepts/builds/v5/react.o
+ .data          0x00000000        0x0 /workspace/setup/forest-concepts/builds/v5/react.o
+ .bss           0x00000000        0x0 /workspace/setup/forest-concepts/builds/v5/react.o
+ .text.room_torch_light
+                0x00000000       0x24 /workspace/setup/forest-concepts/builds/v5/react.o
+ .comment       0x00000000       0x27 /workspace/setup/forest-concepts/builds/v5/react.o
+ .ARM.attributes
+                0x00000000       0x2a /workspace/setup/forest-concepts/builds/v5/react.o
+ .text          0x00000000        0x0 /workspace/setup/forest-concepts/builds/v5/room.o
+ .data          0x00000000        0x0 /workspace/setup/forest-concepts/builds/v5/room.o
+ .bss           0x00000000        0x0 /workspace/setup/forest-concepts/builds/v5/room.o
+ .text.room_build_solid
+                0x00000000       0x4c /workspace/setup/forest-concepts/builds/v5/room.o
+ .comment       0x00000000       0x27 /workspace/setup/forest-concepts/builds/v5/room.o
+ .ARM.attributes
+                0x00000000       0x2a /workspace/setup/forest-concepts/builds/v5/room.o
+ .text          0x00000000        0x0 /workspace/setup/forest-concepts/builds/v5/roomgen.o
+ .data          0x00000000        0x0 /workspace/setup/forest-concepts/builds/v5/roomgen.o
+ .bss           0x00000000        0x0 /workspace/setup/forest-concepts/builds/v5/roomgen.o
+ .text.roomgen_preview
+                0x00000000      0x3e4 /workspace/setup/forest-concepts/builds/v5/roomgen.o
+ .comment       0x00000000       0x27 /workspace/setup/forest-concepts/builds/v5/roomgen.o
+ .ARM.attributes
+                0x00000000       0x2a /workspace/setup/forest-concepts/builds/v5/roomgen.o
+ .text          0x00000000        0x0 /workspace/setup/forest-concepts/builds/v5/save.o
+ .data          0x00000000        0x0 /workspace/setup/forest-concepts/builds/v5/save.o
+ .bss           0x00000000        0x0 /workspace/setup/forest-concepts/builds/v5/save.o
+ .text.save_erase
+                0x00000000       0x44 /workspace/setup/forest-concepts/builds/v5/save.o
+ .comment       0x00000000       0x27 /workspace/setup/forest-concepts/builds/v5/save.o
+ .ARM.attributes
+                0x00000000       0x2a /workspace/setup/forest-concepts/builds/v5/save.o
+ .text          0x00000000        0x0 /workspace/setup/forest-concepts/builds/v5/sound.o
+ .data          0x00000000        0x0 /workspace/setup/forest-concepts/builds/v5/sound.o
+ .bss           0x00000000        0x0 /workspace/setup/forest-concepts/builds/v5/sound.o
+ .comment       0x00000000       0x27 /workspace/setup/forest-concepts/builds/v5/sound.o
+ .ARM.attributes
+                0x00000000       0x2a /workspace/setup/forest-concepts/builds/v5/sound.o
+ .text          0x00000000        0x0 /workspace/setup/forest-concepts/builds/v5/text.o
+ .data          0x00000000        0x0 /workspace/setup/forest-concepts/builds/v5/text.o
+ .bss           0x00000000        0x0 /workspace/setup/forest-concepts/builds/v5/text.o
+ .text.bg0_put  0x00000000       0x2c /workspace/setup/forest-concepts/builds/v5/text.o
+ .text.bg0_fill
+                0x00000000       0x74 /workspace/setup/forest-concepts/builds/v5/text.o
+ .text.bg0_pool_reset
+                0x00000000       0x14 /workspace/setup/forest-concepts/builds/v5/text.o
+ .text.bg0_show
+                0x00000000       0x44 /workspace/setup/forest-concepts/builds/v5/text.o
+ .text.face_load
+                0x00000000       0x58 /workspace/setup/forest-concepts/builds/v5/text.o
+ .text.face_draw
+                0x00000000       0x24 /workspace/setup/forest-concepts/builds/v5/text.o
+ .comment       0x00000000       0x27 /workspace/setup/forest-concepts/builds/v5/text.o
+ .ARM.attributes
+                0x00000000       0x2a /workspace/setup/forest-concepts/builds/v5/text.o
+ .text          0x00000000        0x0 /workspace/setup/forest-concepts/builds/v5/ui.o
+ .data          0x00000000        0x0 /workspace/setup/forest-concepts/builds/v5/ui.o
+ .bss           0x00000000        0x0 /workspace/setup/forest-concepts/builds/v5/ui.o
+ .text.ui_put   0x00000000       0x18 /workspace/setup/forest-concepts/builds/v5/ui.o
+ .text.ui_plate_px
+                0x00000000       0x9c /workspace/setup/forest-concepts/builds/v5/ui.o
+ .text.ui_backdrop_clear
+                0x00000000       0x28 /workspace/setup/forest-concepts/builds/v5/ui.o
+ .comment       0x00000000       0x27 /workspace/setup/forest-concepts/builds/v5/ui.o
+ .ARM.attributes
+                0x00000000       0x2a /workspace/setup/forest-concepts/builds/v5/ui.o
+ .text          0x00000000        0x0 /workspace/setup/forest-concepts/builds/v5/util.o
+ .data          0x00000000        0x0 /workspace/setup/forest-concepts/builds/v5/util.o
+ .bss           0x00000000        0x0 /workspace/setup/forest-concepts/builds/v5/util.o
+ .comment       0x00000000       0x27 /workspace/setup/forest-concepts/builds/v5/util.o
+ .ARM.attributes
+                0x00000000       0x2a /workspace/setup/forest-concepts/builds/v5/util.o
+ .text          0x00000000        0x0 /workspace/setup/forest-concepts/builds/v5/video.o
+ .data          0x00000000        0x0 /workspace/setup/forest-concepts/builds/v5/video.o
+ .bss           0x00000000        0x0 /workspace/setup/forest-concepts/builds/v5/video.o
+ .text.oam_flush
+                0x00000000       0x2c /workspace/setup/forest-concepts/builds/v5/video.o
+ .comment       0x00000000       0x27 /workspace/setup/forest-concepts/builds/v5/video.o
+ .ARM.attributes
+                0x00000000       0x2a /workspace/setup/forest-concepts/builds/v5/video.o
+ .text          0x00000000        0x0 /workspace/setup/forest-concepts/builds/v5/vwf.o
+ .data          0x00000000        0x0 /workspace/setup/forest-concepts/builds/v5/vwf.o
+ .bss           0x00000000        0x0 /workspace/setup/forest-concepts/builds/v5/vwf.o
+ .comment       0x00000000       0x27 /workspace/setup/forest-concepts/builds/v5/vwf.o
+ .ARM.attributes
+                0x00000000       0x2a /workspace/setup/forest-concepts/builds/v5/vwf.o
+ .text          0x00000000        0x0 /workspace/setup/forest-concepts/builds/v5/world.o
+ .data          0x00000000        0x0 /workspace/setup/forest-concepts/builds/v5/world.o
+ .bss           0x00000000        0x0 /workspace/setup/forest-concepts/builds/v5/world.o
+ .rodata.gate_name.str1.4
+                0x00000000        0x8 /workspace/setup/forest-concepts/builds/v5/world.o
+ .text.gate_name
+                0x00000000       0x1c /workspace/setup/forest-concepts/builds/v5/world.o
+ .rodata.str1.4
+                0x00000000       0x3c /workspace/setup/forest-concepts/builds/v5/world.o
+ .rodata.CSWTCH.84
+                0x00000000       0x14 /workspace/setup/forest-concepts/builds/v5/world.o
+ .comment       0x00000000       0x27 /workspace/setup/forest-concepts/builds/v5/world.o
+ .ARM.attributes
+                0x00000000       0x2a /workspace/setup/forest-concepts/builds/v5/world.o
+ .text          0x00000000        0x0 /workspace/setup/forest-concepts/builds/v5/crt0.o
+ .data          0x00000000        0x0 /workspace/setup/forest-concepts/builds/v5/crt0.o
+ .bss           0x00000000        0x0 /workspace/setup/forest-concepts/builds/v5/crt0.o
+ .ARM.attributes
+                0x00000000       0x1a /workspace/setup/forest-concepts/builds/v5/crt0.o
+ .text          0x00000000        0x0 /workspace/setup/forest-concepts/builds/v5/assets.o
+ .data          0x00000000        0x0 /workspace/setup/forest-concepts/builds/v5/assets.o
+ .bss           0x00000000        0x0 /workspace/setup/forest-concepts/builds/v5/assets.o
+ .rodata.ui_tiles
+                0x00000000      0x660 /workspace/setup/forest-concepts/builds/v5/assets.o
+ .rodata.face_frame_pal
+                0x00000000        0x6 /workspace/setup/forest-concepts/builds/v5/assets.o
+ .rodata.arrow_frame_pal
+                0x00000000        0x3 /workspace/setup/forest-concepts/builds/v5/assets.o
+ .rodata.npc_frame_pal
+                0x00000000        0x7 /workspace/setup/forest-concepts/builds/v5/assets.o
+ .rodata.sword_frame_pal
+                0x00000000        0x3 /workspace/setup/forest-concepts/builds/v5/assets.o
+ .rodata.bloom_sword_hit
+                0x00000000       0x50 /workspace/setup/forest-concepts/builds/v5/assets.o
+ .rodata.bloom_sword_origin
+                0x00000000        0x8 /workspace/setup/forest-concepts/builds/v5/assets.o
+ .comment       0x00000000       0x27 /workspace/setup/forest-concepts/builds/v5/assets.o
+ .ARM.attributes
+                0x00000000       0x2a /workspace/setup/forest-concepts/builds/v5/assets.o
+ .data          0x00000000        0x0 /workspace/setup/sysroot/usr/bin/../lib/gcc/arm-none-eabi/14.2.1/thumb/nofp/libgcc.a(_udivsi3.o)
+ .bss           0x00000000        0x0 /workspace/setup/sysroot/usr/bin/../lib/gcc/arm-none-eabi/14.2.1/thumb/nofp/libgcc.a(_udivsi3.o)
+ .ARM.attributes
+                0x00000000       0x1c /workspace/setup/sysroot/usr/bin/../lib/gcc/arm-none-eabi/14.2.1/thumb/nofp/libgcc.a(_udivsi3.o)
+ .data          0x00000000        0x0 /workspace/setup/sysroot/usr/bin/../lib/gcc/arm-none-eabi/14.2.1/thumb/nofp/libgcc.a(_divsi3.o)
+ .bss           0x00000000        0x0 /workspace/setup/sysroot/usr/bin/../lib/gcc/arm-none-eabi/14.2.1/thumb/nofp/libgcc.a(_divsi3.o)
+ .ARM.attributes
+                0x00000000       0x1c /workspace/setup/sysroot/usr/bin/../lib/gcc/arm-none-eabi/14.2.1/thumb/nofp/libgcc.a(_divsi3.o)
+ .data          0x00000000        0x0 /workspace/setup/sysroot/usr/bin/../lib/gcc/arm-none-eabi/14.2.1/thumb/nofp/libgcc.a(_dvmd_tls.o)
+ .bss           0x00000000        0x0 /workspace/setup/sysroot/usr/bin/../lib/gcc/arm-none-eabi/14.2.1/thumb/nofp/libgcc.a(_dvmd_tls.o)
+ .ARM.attributes
+                0x00000000       0x1c /workspace/setup/sysroot/usr/bin/../lib/gcc/arm-none-eabi/14.2.1/thumb/nofp/libgcc.a(_dvmd_tls.o)
+ .data          0x00000000        0x0 /workspace/setup/sysroot/usr/bin/../lib/gcc/arm-none-eabi/14.2.1/thumb/nofp/libgcc.a(_muldi3.o)
+ .bss           0x00000000        0x0 /workspace/setup/sysroot/usr/bin/../lib/gcc/arm-none-eabi/14.2.1/thumb/nofp/libgcc.a(_muldi3.o)
+ .comment       0x00000000       0x27 /workspace/setup/sysroot/usr/bin/../lib/gcc/arm-none-eabi/14.2.1/thumb/nofp/libgcc.a(_muldi3.o)
+ .ARM.attributes
+                0x00000000       0x2a /workspace/setup/sysroot/usr/bin/../lib/gcc/arm-none-eabi/14.2.1/thumb/nofp/libgcc.a(_muldi3.o)
+
+Memory Configuration
+
+Name             Origin             Length             Attributes
+rom              0x08000000         0x02000000         xr
+iwram            0x03000000         0x00007f00         xrw
+ewram            0x02000000         0x00040000         rw
+*default*        0x00000000         0xffffffff
+
+Linker script and memory map
+
+
+.text           0x08000000    0x1a7d0
+ *(.text.startup)
+ .text.startup  0x08000000      0x198 /workspace/setup/forest-concepts/builds/v5/crt0.o
+                0x08000000                _start
+ *(.text .text.* .gnu.linkonce.t.*)
+ .text.actors_clear
+                0x08000198       0x18 /workspace/setup/forest-concepts/builds/v5/actor.o
+                0x08000198                actors_clear
+ .text.actor_new
+                0x080001b0       0x78 /workspace/setup/forest-concepts/builds/v5/actor.o
+                0x080001b0                actor_new
+ .text.actor_free
+                0x08000228        0x8 /workspace/setup/forest-concepts/builds/v5/actor.o
+                0x08000228                actor_free
+ .text.actor_find
+                0x08000230       0x34 /workspace/setup/forest-concepts/builds/v5/actor.o
+                0x08000230                actor_find
+ .text.dir_to_facing
+                0x08000264        0x8 /workspace/setup/forest-concepts/builds/v5/actor.o
+                0x08000264                dir_to_facing
+ .text.facing_to_dir
+                0x0800026c        0x4 /workspace/setup/forest-concepts/builds/v5/actor.o
+                0x0800026c                facing_to_dir
+ .text.actor_feet_box_solid
+                0x08000270       0x48 /workspace/setup/forest-concepts/builds/v5/actor.o
+                0x08000270                actor_feet_box_solid
+ .text.actor_move
+                0x080002b8      0x2c8 /workspace/setup/forest-concepts/builds/v5/actor.o
+                0x080002b8                actor_move
+ .text.actor_move_free
+                0x08000580       0x40 /workspace/setup/forest-concepts/builds/v5/actor.o
+                0x08000580                actor_move_free
+ .text.actor_gravity
+                0x080005c0       0x2c /workspace/setup/forest-concepts/builds/v5/actor.o
+                0x080005c0                actor_gravity
+ .text.actors_overlap
+                0x080005ec       0xf0 /workspace/setup/forest-concepts/builds/v5/actor.o
+                0x080005ec                actors_overlap
+ .text.actor_box_overlap
+                0x080006dc       0x68 /workspace/setup/forest-concepts/builds/v5/actor.o
+                0x080006dc                actor_box_overlap
+ .text.actor_dir_to
+                0x08000744       0x9c /workspace/setup/forest-concepts/builds/v5/actor.o
+                0x08000744                actor_dir_to
+ .text.actor_dist2
+                0x080007e0       0x28 /workspace/setup/forest-concepts/builds/v5/actor.o
+                0x080007e0                actor_dist2
+ .text.sprites_reset
+                0x08000808       0x38 /workspace/setup/forest-concepts/builds/v5/actor.o
+                0x08000808                sprites_reset
+ .text.sprite_load_frame
+                0x08000840       0xd8 /workspace/setup/forest-concepts/builds/v5/actor.o
+                0x08000840                sprite_load_frame
+ .text.sprite_alloc
+                0x08000918       0x2c /workspace/setup/forest-concepts/builds/v5/actor.o
+                0x08000918                sprite_alloc
+ .text.sprite_load_sheet
+                0x08000944       0x8c /workspace/setup/forest-concepts/builds/v5/actor.o
+                0x08000944                sprite_load_sheet
+ .text.actor_set_sheet
+                0x080009d0       0x24 /workspace/setup/forest-concepts/builds/v5/actor.o
+                0x080009d0                actor_set_sheet
+ .text.draw_sprite
+                0x080009f4       0xc8 /workspace/setup/forest-concepts/builds/v5/actor.o
+                0x080009f4                draw_sprite
+ .text.actor_visual_size
+                0x08000abc       0x44 /workspace/setup/forest-concepts/builds/v5/actor.o
+                0x08000abc                actor_visual_size
+ .text.actor_draw
+                0x08000b00       0xc4 /workspace/setup/forest-concepts/builds/v5/actor.o
+                0x08000b00                actor_draw
+ .text.vram_queue
+                0x08000bc4       0x2c /workspace/setup/forest-concepts/builds/v5/actor.o
+                0x08000bc4                vram_queue
+ .text.vram_flush_queue
+                0x08000bf0       0x70 /workspace/setup/forest-concepts/builds/v5/actor.o
+                0x08000bf0                vram_flush_queue
+ .text.surface  0x08000c60       0xa4 /workspace/setup/forest-concepts/builds/v5/ambient.o
+ .text.ambient_room_reset
+                0x08000d04      0x200 /workspace/setup/forest-concepts/builds/v5/ambient.o
+                0x08000d04                ambient_room_reset
+ .text.ambient_draw
+                0x08000f04      0x298 /workspace/setup/forest-concepts/builds/v5/ambient.o
+                0x08000f04                ambient_draw
+ .text.appearance_save
+                0x0800119c       0x8c /workspace/setup/forest-concepts/builds/v5/appearance.o
+                0x0800119c                appearance_save
+ .text.appearance_apply
+                0x08001228       0x60 /workspace/setup/forest-concepts/builds/v5/appearance.o
+                0x08001228                appearance_apply
+ .text.appearance_init
+                0x08001288       0xac /workspace/setup/forest-concepts/builds/v5/appearance.o
+                0x08001288                appearance_init
+ .text.appearance_set_style
+                0x08001334       0x28 /workspace/setup/forest-concepts/builds/v5/appearance.o
+                0x08001334                appearance_set_style
+ .text.appearance_set_palette
+                0x0800135c       0x30 /workspace/setup/forest-concepts/builds/v5/appearance.o
+                0x0800135c                appearance_set_palette
+ .text.appearance_style
+                0x0800138c        0xc /workspace/setup/forest-concepts/builds/v5/appearance.o
+                0x0800138c                appearance_style
+ .text.appearance_palette
+                0x08001398        0xc /workspace/setup/forest-concepts/builds/v5/appearance.o
+                0x08001398                appearance_palette
+ .text.ui_current_tiles
+                0x080013a4       0x1c /workspace/setup/forest-concepts/builds/v5/appearance.o
+                0x080013a4                ui_current_tiles
+ .text.ui_current_marks
+                0x080013c0       0x18 /workspace/setup/forest-concepts/builds/v5/appearance.o
+                0x080013c0                ui_current_marks
+ .text.clamp_in_room
+                0x080013d8       0xcc /workspace/setup/forest-concepts/builds/v5/boss.o
+ .text.boss_spawn
+                0x080014a4       0x78 /workspace/setup/forest-concepts/builds/v5/boss.o
+                0x080014a4                boss_spawn
+ .text.boss_draw
+                0x0800151c       0x58 /workspace/setup/forest-concepts/builds/v5/boss.o
+                0x0800151c                boss_draw
+ .text.boss_presentation_frame
+                0x08001574       0x54 /workspace/setup/forest-concepts/builds/v5/boss.o
+                0x08001574                boss_presentation_frame
+ .text.boss_defeated
+                0x080015c8       0x2c /workspace/setup/forest-concepts/builds/v5/boss.o
+                0x080015c8                boss_defeated
+ .text.boss_died
+                0x080015f4       0xb8 /workspace/setup/forest-concepts/builds/v5/boss.o
+                0x080015f4                boss_died
+ .text.boss_update
+                0x080016ac      0x324 /workspace/setup/forest-concepts/builds/v5/boss.o
+                0x080016ac                boss_update
+ .text.enemy_draw_body
+                0x080019d0       0xf4 /workspace/setup/forest-concepts/builds/v5/enemy.o
+ .text.knight_draw_sword
+                0x08001ac4      0x150 /workspace/setup/forest-concepts/builds/v5/enemy.o
+ .text.enemy_load_sheets_for_theme
+                0x08001c14       0x18 /workspace/setup/forest-concepts/builds/v5/enemy.o
+                0x08001c14                enemy_load_sheets_for_theme
+ .text.enemy_pick_type
+                0x08001c2c       0xac /workspace/setup/forest-concepts/builds/v5/enemy.o
+                0x08001c2c                enemy_pick_type
+ .text.enemy_spawn
+                0x08001cd8       0xe0 /workspace/setup/forest-concepts/builds/v5/enemy.o
+                0x08001cd8                enemy_spawn
+ .text.enemies_alive
+                0x08001db8       0x2c /workspace/setup/forest-concepts/builds/v5/enemy.o
+                0x08001db8                enemies_alive
+ .text.enemy_kill
+                0x08001de4       0x58 /workspace/setup/forest-concepts/builds/v5/enemy.o
+                0x08001de4                enemy_kill
+ .text.enemy_hurt
+                0x08001e3c       0x50 /workspace/setup/forest-concepts/builds/v5/enemy.o
+                0x08001e3c                enemy_hurt
+ .text.enemies_update
+                0x08001e8c      0xa90 /workspace/setup/forest-concepts/builds/v5/enemy.o
+                0x08001e8c                enemies_update
+ .text.enemies_draw
+                0x0800291c       0x6c /workspace/setup/forest-concepts/builds/v5/enemy.o
+                0x0800291c                enemies_draw
+ .text.options_draw
+                0x08002988      0x27c /workspace/setup/forest-concepts/builds/v5/game.o
+ .text.load_sewer
+                0x08002c04      0x158 /workspace/setup/forest-concepts/builds/v5/game.o
+ .text.draw_world
+                0x08002d5c       0xac /workspace/setup/forest-concepts/builds/v5/game.o
+ .text.start_run
+                0x08002e08       0x88 /workspace/setup/forest-concepts/builds/v5/game.o
+ .text.title_show
+                0x08002e90      0x21c /workspace/setup/forest-concepts/builds/v5/game.o
+ .text.game_return_to_hub
+                0x080030ac       0x48 /workspace/setup/forest-concepts/builds/v5/game.o
+                0x080030ac                game_return_to_hub
+ .text.game_give_key_item
+                0x080030f4       0x84 /workspace/setup/forest-concepts/builds/v5/game.o
+                0x080030f4                game_give_key_item
+ .text.game_win
+                0x08003178       0x30 /workspace/setup/forest-concepts/builds/v5/game.o
+                0x08003178                game_win
+ .text.game_init
+                0x080031a8       0x14 /workspace/setup/forest-concepts/builds/v5/game.o
+                0x080031a8                game_init
+ .text.game_update
+                0x080031bc     0x11fc /workspace/setup/forest-concepts/builds/v5/game.o
+                0x080031bc                game_update
+ .text.interactive_chest_tile
+                0x080043b8       0x10 /workspace/setup/forest-concepts/builds/v5/interactive.o
+                0x080043b8                interactive_chest_tile
+ .text.interactive_chest_overlay
+                0x080043c8       0x14 /workspace/setup/forest-concepts/builds/v5/interactive.o
+                0x080043c8                interactive_chest_overlay
+ .text.interactive_mouth_tile
+                0x080043dc       0x14 /workspace/setup/forest-concepts/builds/v5/interactive.o
+                0x080043dc                interactive_mouth_tile
+ .text.interactive_chest_ready
+                0x080043f0       0x10 /workspace/setup/forest-concepts/builds/v5/interactive.o
+                0x080043f0                interactive_chest_ready
+ .text.interactive_entry_ready
+                0x08004400       0x10 /workspace/setup/forest-concepts/builds/v5/interactive.o
+                0x08004400                interactive_entry_ready
+ .text.interactive_chest_tier
+                0x08004410       0x64 /workspace/setup/forest-concepts/builds/v5/interactive.o
+                0x08004410                interactive_chest_tier
+ .text.interactive_cell_changed
+                0x08004474       0x60 /workspace/setup/forest-concepts/builds/v5/interactive.o
+                0x08004474                interactive_cell_changed
+ .text.interactive_room_reset
+                0x080044d4      0x134 /workspace/setup/forest-concepts/builds/v5/interactive.o
+                0x080044d4                interactive_room_reset
+ .text.interactive_draw
+                0x08004608      0x258 /workspace/setup/forest-concepts/builds/v5/interactive.o
+                0x08004608                interactive_draw
+ .text.items_update
+                0x08004860      0x24c /workspace/setup/forest-concepts/builds/v5/items.o
+                0x08004860                items_update
+ .text.startup.main
+                0x08004aac       0x40 /workspace/setup/forest-concepts/builds/v5/main.o
+                0x08004aac                main
+ .text.ms_input_irq
+                0x08004aec       0x64 /workspace/setup/forest-concepts/builds/v5/menu.o
+ .text.ms_glyph
+                0x08004b50      0x13c /workspace/setup/forest-concepts/builds/v5/menu.o
+ .text.ms_fill  0x08004c8c       0xec /workspace/setup/forest-concepts/builds/v5/menu.o
+ .text.ms_frame
+                0x08004d78      0x1a8 /workspace/setup/forest-concepts/builds/v5/menu.o
+ .text.ms_label_width
+                0x08004f20       0xd0 /workspace/setup/forest-concepts/builds/v5/menu.o
+ .text.ms_map_bank
+                0x08004ff0       0xd0 /workspace/setup/forest-concepts/builds/v5/menu.o
+ .text.gate_mark
+                0x080050c0       0x4c /workspace/setup/forest-concepts/builds/v5/menu.o
+ .text.ms_events
+                0x0800510c      0x184 /workspace/setup/forest-concepts/builds/v5/menu.o
+ .text.ms_icon  0x08005290       0xc0 /workspace/setup/forest-concepts/builds/v5/menu.o
+ .text.ms_wrap.constprop.0
+                0x08005350      0x18c /workspace/setup/forest-concepts/builds/v5/menu.o
+ .text.gather   0x080054dc       0x4c /workspace/setup/forest-concepts/builds/v5/menu.o
+ .text.ms_line  0x08005528       0xe4 /workspace/setup/forest-concepts/builds/v5/menu.o
+ .text.ms_box   0x0800560c       0x60 /workspace/setup/forest-concepts/builds/v5/menu.o
+ .text.ms_located_marker
+                0x0800566c      0x1a0 /workspace/setup/forest-concepts/builds/v5/menu.o
+ .text.ms_marker.part.0
+                0x0800580c      0x204 /workspace/setup/forest-concepts/builds/v5/menu.o
+ .text.tile_desc
+                0x08005a10       0xd0 /workspace/setup/forest-concepts/builds/v5/menu.o
+ .text.fetch_mask
+                0x08005ae0      0x22c /workspace/setup/forest-concepts/builds/v5/menu.o
+ .text.ms_textfit.part.0
+                0x08005d0c       0xc4 /workspace/setup/forest-concepts/builds/v5/menu.o
+ .text.ms_map_info
+                0x08005dd0      0x1e8 /workspace/setup/forest-concepts/builds/v5/menu.o
+ .text.ms_map   0x08005fb8      0xea0 /workspace/setup/forest-concepts/builds/v5/menu.o
+ .text.ms_draw  0x08006e58     0x10c4 /workspace/setup/forest-concepts/builds/v5/menu.o
+ .text.menu_open
+                0x08007f1c      0x32c /workspace/setup/forest-concepts/builds/v5/menu.o
+                0x08007f1c                menu_open
+ .text.menu_update
+                0x08008248      0x800 /workspace/setup/forest-concepts/builds/v5/menu.o
+                0x08008248                menu_update
+ .text.menu_layout_a
+                0x08008a48       0x1c /workspace/setup/forest-concepts/builds/v5/menu_layouts_a.o
+                0x08008a48                menu_layout_a
+ .text.menu_layout_b
+                0x08008a64       0x18 /workspace/setup/forest-concepts/builds/v5/menu_layouts_b.o
+                0x08008a64                menu_layout_b
+ .text.menu_study_layout
+                0x08008a7c       0x18 /workspace/setup/forest-concepts/builds/v5/menu_studies.o
+                0x08008a7c                menu_study_layout
+ .text.is_open_floor
+                0x08008a94       0x64 /workspace/setup/forest-concepts/builds/v5/myst.o
+ .text.set_door
+                0x08008af8       0x5c /workspace/setup/forest-concepts/builds/v5/myst.o
+ .text.spawn_one
+                0x08008b54       0xcc /workspace/setup/forest-concepts/builds/v5/myst.o
+ .text.spawn_wave
+                0x08008c20       0x90 /workspace/setup/forest-concepts/builds/v5/myst.o
+ .text.finish   0x08008cb0       0xa8 /workspace/setup/forest-concepts/builds/v5/myst.o
+ .text.myst_done
+                0x08008d58       0x18 /workspace/setup/forest-concepts/builds/v5/myst.o
+                0x08008d58                myst_done
+ .text.myst_ground
+                0x08008d70       0x74 /workspace/setup/forest-concepts/builds/v5/myst.o
+                0x08008d70                myst_ground
+ .text.place_chest
+                0x08008de4       0x50 /workspace/setup/forest-concepts/builds/v5/myst.o
+ .text.myst_build
+                0x08008e34      0x7a0 /workspace/setup/forest-concepts/builds/v5/myst.o
+                0x08008e34                myst_build
+ .text.myst_start_pos
+                0x080095d4       0x24 /workspace/setup/forest-concepts/builds/v5/myst.o
+                0x080095d4                myst_start_pos
+ .text.myst_enter
+                0x080095f8       0x94 /workspace/setup/forest-concepts/builds/v5/myst.o
+                0x080095f8                myst_enter
+ .text.myst_update
+                0x0800968c      0x2cc /workspace/setup/forest-concepts/builds/v5/myst.o
+                0x0800968c                myst_update
+ .text.myst_chest_opened
+                0x08009958       0xfc /workspace/setup/forest-concepts/builds/v5/myst.o
+                0x08009958                myst_chest_opened
+ .text.myst_tile_cleared
+                0x08009a54      0x108 /workspace/setup/forest-concepts/builds/v5/myst.o
+                0x08009a54                myst_tile_cleared
+ .text.myst_stranger_trade
+                0x08009b5c       0x5c /workspace/setup/forest-concepts/builds/v5/myst.o
+                0x08009b5c                myst_stranger_trade
+ .text.npcs_draw_pass
+                0x08009bb8      0x1dc /workspace/setup/forest-concepts/builds/v5/npc.o
+ .text.npc_spawn
+                0x08009d94      0x1c0 /workspace/setup/forest-concepts/builds/v5/npc.o
+                0x08009d94                npc_spawn
+ .text.npc_room_reset
+                0x08009f54       0x30 /workspace/setup/forest-concepts/builds/v5/npc.o
+                0x08009f54                npc_room_reset
+ .text.npcs_update
+                0x08009f84      0x454 /workspace/setup/forest-concepts/builds/v5/npc.o
+                0x08009f84                npcs_update
+ .text.npcs_draw_front
+                0x0800a3d8       0x94 /workspace/setup/forest-concepts/builds/v5/npc.o
+                0x0800a3d8                npcs_draw_front
+ .text.npcs_draw
+                0x0800a46c       0x10 /workspace/setup/forest-concepts/builds/v5/npc.o
+                0x0800a46c                npcs_draw
+ .text.npc_try_talk
+                0x0800a47c      0x5cc /workspace/setup/forest-concepts/builds/v5/npc.o
+                0x0800a47c                npc_try_talk
+ .text.npc_dialogue_active
+                0x0800aa48       0x10 /workspace/setup/forest-concepts/builds/v5/npc.o
+                0x0800aa48                npc_dialogue_active
+ .text.npc_dialogue_update
+                0x0800aa58      0x1ec /workspace/setup/forest-concepts/builds/v5/npc.o
+                0x0800aa58                npc_dialogue_update
+ .text.ensure_sheets
+                0x0800ac44       0x90 /workspace/setup/forest-concepts/builds/v5/objects.o
+ .text.player_release_overlap.part.0
+                0x0800acd4       0x68 /workspace/setup/forest-concepts/builds/v5/objects.o
+ .text.icon32_frame_tile.part.0
+                0x0800ad3c      0x118 /workspace/setup/forest-concepts/builds/v5/objects.o
+ .text.icon32_menu_begin
+                0x0800ae54       0x4c /workspace/setup/forest-concepts/builds/v5/objects.o
+                0x0800ae54                icon32_menu_begin
+ .text.icon32_menu_end
+                0x0800aea0       0x54 /workspace/setup/forest-concepts/builds/v5/objects.o
+                0x0800aea0                icon32_menu_end
+ .text.icon32_frame_tile
+                0x0800aef4       0x38 /workspace/setup/forest-concepts/builds/v5/objects.o
+                0x0800aef4                icon32_frame_tile
+ .text.icon32_frame_palette
+                0x0800af2c       0x64 /workspace/setup/forest-concepts/builds/v5/objects.o
+                0x0800af2c                icon32_frame_palette
+ .text.objects_room_reset
+                0x0800af90       0x54 /workspace/setup/forest-concepts/builds/v5/objects.o
+                0x0800af90                objects_room_reset
+ .text.lift_sheet_tile
+                0x0800afe4       0x14 /workspace/setup/forest-concepts/builds/v5/objects.o
+                0x0800afe4                lift_sheet_tile
+ .text.items_sheet_tile
+                0x0800aff8       0x14 /workspace/setup/forest-concepts/builds/v5/objects.o
+                0x0800aff8                items_sheet_tile
+ .text.proj_spawn
+                0x0800b00c       0xe0 /workspace/setup/forest-concepts/builds/v5/objects.o
+                0x0800b00c                proj_spawn
+ .text.pickup_spawn
+                0x0800b0ec       0x68 /workspace/setup/forest-concepts/builds/v5/objects.o
+                0x0800b0ec                pickup_spawn
+ .text.drop_roll
+                0x0800b154       0x80 /workspace/setup/forest-concepts/builds/v5/objects.o
+                0x0800b154                drop_roll
+ .text.fx_spawn
+                0x0800b1d4       0xe8 /workspace/setup/forest-concepts/builds/v5/objects.o
+                0x0800b1d4                fx_spawn
+ .text.thrown_break
+                0x0800b2bc       0x60 /workspace/setup/forest-concepts/builds/v5/objects.o
+ .text.bomb_place
+                0x0800b31c       0x94 /workspace/setup/forest-concepts/builds/v5/objects.o
+                0x0800b31c                bomb_place
+ .text.bombs_live
+                0x0800b3b0       0x2c /workspace/setup/forest-concepts/builds/v5/objects.o
+                0x0800b3b0                bombs_live
+ .text.thrown_spawn
+                0x0800b3dc       0x8c /workspace/setup/forest-concepts/builds/v5/objects.o
+                0x0800b3dc                thrown_spawn
+ .text.objects_update
+                0x0800b468      0x7e4 /workspace/setup/forest-concepts/builds/v5/objects.o
+                0x0800b468                objects_update
+ .text.objects_draw_hand
+                0x0800bc4c      0x1fc /workspace/setup/forest-concepts/builds/v5/objects.o
+                0x0800bc4c                objects_draw_hand
+ .text.objects_draw
+                0x0800be48      0x1bc /workspace/setup/forest-concepts/builds/v5/objects.o
+                0x0800be48                objects_draw
+ .text.input_dir
+                0x0800c004       0x4c /workspace/setup/forest-concepts/builds/v5/player.o
+ .text.facing_tile
+                0x0800c050       0x40 /workspace/setup/forest-concepts/builds/v5/player.o
+ .text.action_frame
+                0x0800c090       0x90 /workspace/setup/forest-concepts/builds/v5/player.o
+ .text.draw_load
+                0x0800c120       0xbc /workspace/setup/forest-concepts/builds/v5/player.o
+ .text.player_new_game
+                0x0800c1dc       0x3c /workspace/setup/forest-concepts/builds/v5/player.o
+                0x0800c1dc                player_new_game
+ .text.player_equip_keys
+                0x0800c218       0x28 /workspace/setup/forest-concepts/builds/v5/player.o
+                0x0800c218                player_equip_keys
+ .text.player_has_item
+                0x0800c240       0x64 /workspace/setup/forest-concepts/builds/v5/player.o
+                0x0800c240                player_has_item
+ .text.player_equip_set
+                0x0800c2a4       0x44 /workspace/setup/forest-concepts/builds/v5/player.o
+                0x0800c2a4                player_equip_set
+ .text.player_auto_equip
+                0x0800c2e8       0x2c /workspace/setup/forest-concepts/builds/v5/player.o
+                0x0800c2e8                player_auto_equip
+ .text.player_init
+                0x0800c314      0x110 /workspace/setup/forest-concepts/builds/v5/player.o
+                0x0800c314                player_init
+ .text.player_shield_icon
+                0x0800c424       0x14 /workspace/setup/forest-concepts/builds/v5/player.o
+                0x0800c424                player_shield_icon
+ .text.player_shield_frame
+                0x0800c438       0x44 /workspace/setup/forest-concepts/builds/v5/player.o
+                0x0800c438                player_shield_frame
+ .text.draw_action.part.0
+                0x0800c47c      0x1d4 /workspace/setup/forest-concepts/builds/v5/player.o
+ .text.player_is_vulnerable
+                0x0800c650       0x40 /workspace/setup/forest-concepts/builds/v5/player.o
+                0x0800c650                player_is_vulnerable
+ .text.player_hurt
+                0x0800c690       0xe4 /workspace/setup/forest-concepts/builds/v5/player.o
+                0x0800c690                player_hurt
+ .text.check_floor
+                0x0800c774      0x160 /workspace/setup/forest-concepts/builds/v5/player.o
+ .text.player_heart_piece
+                0x0800c8d4       0x28 /workspace/setup/forest-concepts/builds/v5/player.o
+                0x0800c8d4                player_heart_piece
+ .text.player_heal
+                0x0800c8fc       0x28 /workspace/setup/forest-concepts/builds/v5/player.o
+                0x0800c8fc                player_heal
+ .text.player_item_get
+                0x0800c924       0xb8 /workspace/setup/forest-concepts/builds/v5/player.o
+                0x0800c924                player_item_get
+ .text.player_sword_box
+                0x0800c9dc       0x8c /workspace/setup/forest-concepts/builds/v5/player.o
+                0x0800c9dc                player_sword_box
+ .text.player_item_pose
+                0x0800ca68       0x50 /workspace/setup/forest-concepts/builds/v5/player.o
+                0x0800ca68                player_item_pose
+ .text.player_lamp_box
+                0x0800cab8       0x80 /workspace/setup/forest-concepts/builds/v5/player.o
+                0x0800cab8                player_lamp_box
+ .text.player_swallow
+                0x0800cb38       0x48 /workspace/setup/forest-concepts/builds/v5/player.o
+                0x0800cb38                player_swallow
+ .text.player_drop_in
+                0x0800cb80       0x2c /workspace/setup/forest-concepts/builds/v5/player.o
+                0x0800cb80                player_drop_in
+ .text.player_shoot
+                0x0800cbac       0x78 /workspace/setup/forest-concepts/builds/v5/player.o
+                0x0800cbac                player_shoot
+ .text.player_update
+                0x0800cc24      0x85c /workspace/setup/forest-concepts/builds/v5/player.o
+                0x0800cc24                player_update
+ .text.player_cloak_jump
+                0x0800d480       0x5c /workspace/setup/forest-concepts/builds/v5/player.o
+                0x0800d480                player_cloak_jump
+ .text.player_draw
+                0x0800d4dc      0x764 /workspace/setup/forest-concepts/builds/v5/player.o
+                0x0800d4dc                player_draw
+ .text.open_gate_tiles
+                0x0800dc40       0x40 /workspace/setup/forest-concepts/builds/v5/react.o
+ .text.ground_under
+                0x0800dc80       0x94 /workspace/setup/forest-concepts/builds/v5/react.o
+ .text.tile_gate_side
+                0x0800dd14       0x5c /workspace/setup/forest-concepts/builds/v5/react.o
+                0x0800dd14                tile_gate_side
+ .text.room_crack_open
+                0x0800dd70       0x9c /workspace/setup/forest-concepts/builds/v5/react.o
+                0x0800dd70                room_crack_open
+ .text.room_web_burn
+                0x0800de0c       0xb0 /workspace/setup/forest-concepts/builds/v5/react.o
+                0x0800de0c                room_web_burn
+ .text.room_door_unlock
+                0x0800debc       0x44 /workspace/setup/forest-concepts/builds/v5/react.o
+                0x0800debc                room_door_unlock
+ .text.room_thorn_cut
+                0x0800df00       0xa0 /workspace/setup/forest-concepts/builds/v5/react.o
+                0x0800df00                room_thorn_cut
+ .text.room_lift
+                0x0800dfa0       0x80 /workspace/setup/forest-concepts/builds/v5/react.o
+                0x0800dfa0                room_lift
+ .text.room_break_lift
+                0x0800e020       0x90 /workspace/setup/forest-concepts/builds/v5/react.o
+                0x0800e020                room_break_lift
+ .text.react_cut_box
+                0x0800e0b0       0x6c /workspace/setup/forest-concepts/builds/v5/react.o
+                0x0800e0b0                react_cut_box
+ .text.react_burn_box
+                0x0800e11c       0x84 /workspace/setup/forest-concepts/builds/v5/react.o
+                0x0800e11c                react_burn_box
+ .text.room_torches_unlit
+                0x0800e1a0       0x44 /workspace/setup/forest-concepts/builds/v5/react.o
+                0x0800e1a0                room_torches_unlit
+ .text.solid_cell_update
+                0x0800e1e4       0x88 /workspace/setup/forest-concepts/builds/v5/room.o
+ .text.map_write
+                0x0800e26c       0x6c /workspace/setup/forest-concepts/builds/v5/room.o
+ .text.render_cell
+                0x0800e2d8      0x210 /workspace/setup/forest-concepts/builds/v5/room.o
+ .text.tiles_load
+                0x0800e4e8       0x68 /workspace/setup/forest-concepts/builds/v5/room.o
+                0x0800e4e8                tiles_load
+ .text.tiles_init
+                0x0800e550       0x4c /workspace/setup/forest-concepts/builds/v5/room.o
+                0x0800e550                tiles_init
+ .text.tiles_animate
+                0x0800e59c       0xbc /workspace/setup/forest-concepts/builds/v5/room.o
+                0x0800e59c                tiles_animate
+ .text.room_clear
+                0x0800e658       0x3c /workspace/setup/forest-concepts/builds/v5/room.o
+                0x0800e658                room_clear
+ .text.room_set
+                0x0800e694       0x48 /workspace/setup/forest-concepts/builds/v5/room.o
+                0x0800e694                room_set
+ .text.room_set_overlay
+                0x0800e6dc       0x2c /workspace/setup/forest-concepts/builds/v5/room.o
+                0x0800e6dc                room_set_overlay
+ .text.room_get
+                0x0800e708       0x24 /workspace/setup/forest-concepts/builds/v5/room.o
+                0x0800e708                room_get
+ .text.room_get_overlay
+                0x0800e72c       0x30 /workspace/setup/forest-concepts/builds/v5/room.o
+                0x0800e72c                room_get_overlay
+ .text.room_type
+                0x0800e75c       0x38 /workspace/setup/forest-concepts/builds/v5/room.o
+                0x0800e75c                room_type
+ .text.room_type_px
+                0x0800e794       0x44 /workspace/setup/forest-concepts/builds/v5/room.o
+                0x0800e794                room_type_px
+ .text.room_prop_priority
+                0x0800e7d8      0x280 /workspace/setup/forest-concepts/builds/v5/room.o
+                0x0800e7d8                room_prop_priority
+ .text.room_render
+                0x0800ea58       0xb8 /workspace/setup/forest-concepts/builds/v5/room.o
+                0x0800ea58                room_render
+ .text.room_change
+                0x0800eb10       0xe4 /workspace/setup/forest-concepts/builds/v5/room.o
+                0x0800eb10                room_change
+ .text.room_change_overlay
+                0x0800ebf4       0x4c /workspace/setup/forest-concepts/builds/v5/room.o
+                0x0800ebf4                room_change_overlay
+ .text.room_solid_px
+                0x0800ec40       0x38 /workspace/setup/forest-concepts/builds/v5/room.o
+                0x0800ec40                room_solid_px
+ .text.room_box_solid
+                0x0800ec78       0x60 /workspace/setup/forest-concepts/builds/v5/room.o
+                0x0800ec78                room_box_solid
+ .text.room_load_def
+                0x0800ecd8       0xa0 /workspace/setup/forest-concepts/builds/v5/room.o
+                0x0800ecd8                room_load_def
+ .text.room_px_w
+                0x0800ed78        0xc /workspace/setup/forest-concepts/builds/v5/room.o
+                0x0800ed78                room_px_w
+ .text.room_px_h
+                0x0800ed84        0xc /workspace/setup/forest-concepts/builds/v5/room.o
+                0x0800ed84                room_px_h
+ .text.camera_update
+                0x0800ed90       0xd4 /workspace/setup/forest-concepts/builds/v5/room.o
+                0x0800ed90                camera_update
+ .text.crect_free
+                0x0800ee64       0x5c /workspace/setup/forest-concepts/builds/v5/roomgen.o
+ .text.shape_clearings
+                0x0800eec0      0x210 /workspace/setup/forest-concepts/builds/v5/roomgen.o
+ .text.bridge_landings
+                0x0800f0d0      0x1e8 /workspace/setup/forest-concepts/builds/v5/roomgen.o
+ .text.grass_edge
+                0x0800f2b8      0x174 /workspace/setup/forest-concepts/builds/v5/roomgen.o
+ .text.trail_story
+                0x0800f42c      0x158 /workspace/setup/forest-concepts/builds/v5/roomgen.o
+ .text.cjoin    0x0800f584       0x88 /workspace/setup/forest-concepts/builds/v5/roomgen.o
+ .text.add_waterfalls
+                0x0800f60c      0x154 /workspace/setup/forest-concepts/builds/v5/roomgen.o
+ .text.refresh_edges
+                0x0800f760      0x174 /workspace/setup/forest-concepts/builds/v5/roomgen.o
+ .text.mouth_frame_space
+                0x0800f8d4       0x7c /workspace/setup/forest-concepts/builds/v5/roomgen.o
+ .text.carve    0x0800f950       0x24 /workspace/setup/forest-concepts/builds/v5/roomgen.o
+ .text.watershed
+                0x0800f974      0x374 /workspace/setup/forest-concepts/builds/v5/roomgen.o
+ .text.near_door
+                0x0800fce8       0xa4 /workspace/setup/forest-concepts/builds/v5/roomgen.o
+ .text.cpath    0x0800fd8c      0x158 /workspace/setup/forest-concepts/builds/v5/roomgen.o
+ .text.passable
+                0x0800fee4       0x28 /workspace/setup/forest-concepts/builds/v5/roomgen.o
+ .text.flood_reach
+                0x0800ff0c       0xd8 /workspace/setup/forest-concepts/builds/v5/roomgen.o
+ .text.quest_flood
+                0x0800ffe4       0x44 /workspace/setup/forest-concepts/builds/v5/roomgen.o
+ .text.carve_to_center
+                0x08010028      0x144 /workspace/setup/forest-concepts/builds/v5/roomgen.o
+ .text.is_floor
+                0x0801016c       0x3c /workspace/setup/forest-concepts/builds/v5/roomgen.o
+ .text.simple_spot
+                0x080101a8       0xcc /workspace/setup/forest-concepts/builds/v5/roomgen.o
+ .text.find_spot
+                0x08010274       0xf0 /workspace/setup/forest-concepts/builds/v5/roomgen.o
+ .text.ensure_spot
+                0x08010364       0x60 /workspace/setup/forest-concepts/builds/v5/roomgen.o
+ .text.ensure_fronted_spot
+                0x080103c4       0x90 /workspace/setup/forest-concepts/builds/v5/roomgen.o
+ .text.quest_try_torch
+                0x08010454      0x204 /workspace/setup/forest-concepts/builds/v5/roomgen.o
+ .text.ensure_npc_spot.constprop.0
+                0x08010658       0x64 /workspace/setup/forest-concepts/builds/v5/roomgen.o
+ .text.place_tree_kind.isra.0
+                0x080106bc       0xf8 /workspace/setup/forest-concepts/builds/v5/roomgen.o
+ .text.expand   0x080107b4      0xb44 /workspace/setup/forest-concepts/builds/v5/roomgen.o
+ .text.plan     0x080112f8      0x79c /workspace/setup/forest-concepts/builds/v5/roomgen.o
+ .text.is_plain
+                0x08011a94       0x94 /workspace/setup/forest-concepts/builds/v5/roomgen.o
+ .text.scatter_solid
+                0x08011b28       0x78 /workspace/setup/forest-concepts/builds/v5/roomgen.o
+ .text.scatter_rocks
+                0x08011ba0       0x8c /workspace/setup/forest-concepts/builds/v5/roomgen.o
+ .text.place_big_tree
+                0x08011c2c      0x114 /workspace/setup/forest-concepts/builds/v5/roomgen.o
+ .text.floor_at
+                0x08011d40       0x3c /workspace/setup/forest-concepts/builds/v5/roomgen.o
+ .text.block_at
+                0x08011d7c      0x210 /workspace/setup/forest-concepts/builds/v5/roomgen.o
+ .text.solid_at
+                0x08011f8c       0x4c /workspace/setup/forest-concepts/builds/v5/roomgen.o
+ .text.roomgen_build_internal
+                0x08011fd8     0x3220 /workspace/setup/forest-concepts/builds/v5/roomgen.o
+ .text.roomgen_gate_tiles
+                0x080151f8       0x44 /workspace/setup/forest-concepts/builds/v5/roomgen.o
+                0x080151f8                roomgen_gate_tiles
+ .text.roomgen_door_pos
+                0x0801523c       0x30 /workspace/setup/forest-concepts/builds/v5/roomgen.o
+                0x0801523c                roomgen_door_pos
+ .text.roomgen_blighted
+                0x0801526c       0x24 /workspace/setup/forest-concepts/builds/v5/roomgen.o
+                0x0801526c                roomgen_blighted
+ .text.roomgen_build
+                0x08015290       0x10 /workspace/setup/forest-concepts/builds/v5/roomgen.o
+                0x08015290                roomgen_build
+ .text.roomgen_preview_details
+                0x080152a0       0xec /workspace/setup/forest-concepts/builds/v5/roomgen.o
+                0x080152a0                roomgen_preview_details
+ .text.roomgen_preview_events
+                0x0801538c       0x10 /workspace/setup/forest-concepts/builds/v5/roomgen.o
+                0x0801538c                roomgen_preview_events
+ .text.file_valid
+                0x0801539c       0x64 /workspace/setup/forest-concepts/builds/v5/save.o
+ .text.save_write
+                0x08015400       0xb4 /workspace/setup/forest-concepts/builds/v5/save.o
+                0x08015400                save_write
+ .text.save_exists
+                0x080154b4       0x28 /workspace/setup/forest-concepts/builds/v5/save.o
+                0x080154b4                save_exists
+ .text.save_load
+                0x080154dc      0x144 /workspace/setup/forest-concepts/builds/v5/save.o
+                0x080154dc                save_load
+ .text.sound_init
+                0x08015620       0x7c /workspace/setup/forest-concepts/builds/v5/sound.o
+                0x08015620                sound_init
+ .text.sfx_play
+                0x0801569c      0x308 /workspace/setup/forest-concepts/builds/v5/sound.o
+                0x0801569c                sfx_play
+ .text.bgm_play
+                0x080159a4       0x70 /workspace/setup/forest-concepts/builds/v5/sound.o
+                0x080159a4                bgm_play
+ .text.bgm_stop
+                0x08015a14       0x2c /workspace/setup/forest-concepts/builds/v5/sound.o
+                0x08015a14                bgm_stop
+ .text.sound_update
+                0x08015a40      0x188 /workspace/setup/forest-concepts/builds/v5/sound.o
+                0x08015a40                sound_update
+ .text.vitals_line
+                0x08015bc8       0xc8 /workspace/setup/forest-concepts/builds/v5/text.o
+ .text.shop_detail
+                0x08015c90       0xd8 /workspace/setup/forest-concepts/builds/v5/text.o
+ .text.shop_row
+                0x08015d68       0xbc /workspace/setup/forest-concepts/builds/v5/text.o
+ .text.hud_icon
+                0x08015e24       0x3c /workspace/setup/forest-concepts/builds/v5/text.o
+ .text.hud_digits.constprop.0
+                0x08015e60      0x15c /workspace/setup/forest-concepts/builds/v5/text.o
+ .text.text_init
+                0x08015fbc      0x174 /workspace/setup/forest-concepts/builds/v5/text.o
+                0x08015fbc                text_init
+ .text.bg0_clear
+                0x08016130       0x24 /workspace/setup/forest-concepts/builds/v5/text.o
+                0x08016130                bg0_clear
+ .text.bg0_map  0x08016154       0x14 /workspace/setup/forest-concepts/builds/v5/text.o
+                0x08016154                bg0_map
+ .text.bg0_pool_reset_full
+                0x08016168       0x30 /workspace/setup/forest-concepts/builds/v5/text.o
+                0x08016168                bg0_pool_reset_full
+ .text.bg0_canvas
+                0x08016198       0x48 /workspace/setup/forest-concepts/builds/v5/text.o
+                0x08016198                bg0_canvas
+ .text.bg0_plate
+                0x080161e0      0x130 /workspace/setup/forest-concepts/builds/v5/text.o
+                0x080161e0                bg0_plate
+ .text.text_flush
+                0x08016310       0x70 /workspace/setup/forest-concepts/builds/v5/text.o
+                0x08016310                text_flush
+ .text.textbox_open_named
+                0x08016380      0x218 /workspace/setup/forest-concepts/builds/v5/text.o
+                0x08016380                textbox_open_named
+ .text.textbox_open
+                0x08016598       0x14 /workspace/setup/forest-concepts/builds/v5/text.o
+                0x08016598                textbox_open
+ .text.textbox_active
+                0x080165ac        0xc /workspace/setup/forest-concepts/builds/v5/text.o
+                0x080165ac                textbox_active
+ .text.textbox_close
+                0x080165b8       0x50 /workspace/setup/forest-concepts/builds/v5/text.o
+                0x080165b8                textbox_close
+ .text.textbox_draw
+                0x08016608       0x84 /workspace/setup/forest-concepts/builds/v5/text.o
+                0x08016608                textbox_draw
+ .text.textbox_update
+                0x0801668c      0x2a8 /workspace/setup/forest-concepts/builds/v5/text.o
+                0x0801668c                textbox_update
+ .text.shop_open
+                0x08016934      0x47c /workspace/setup/forest-concepts/builds/v5/text.o
+                0x08016934                shop_open
+ .text.shop_update
+                0x08016db0       0xc4 /workspace/setup/forest-concepts/builds/v5/text.o
+                0x08016db0                shop_update
+ .text.shop_draw
+                0x08016e74      0x118 /workspace/setup/forest-concepts/builds/v5/text.o
+                0x08016e74                shop_draw
+ .text.shop_close
+                0x08016f8c       0x38 /workspace/setup/forest-concepts/builds/v5/text.o
+                0x08016f8c                shop_close
+ .text.shop_result
+                0x08016fc4        0xc /workspace/setup/forest-concepts/builds/v5/text.o
+                0x08016fc4                shop_result
+ .text.shop_active
+                0x08016fd0        0xc /workspace/setup/forest-concepts/builds/v5/text.o
+                0x08016fd0                shop_active
+ .text.hud_draw
+                0x08016fdc      0x5f8 /workspace/setup/forest-concepts/builds/v5/text.o
+                0x08016fdc                hud_draw
+ .text.minimap_render
+                0x080175d4      0x220 /workspace/setup/forest-concepts/builds/v5/text.o
+                0x080175d4                minimap_render
+ .text.ui_tile  0x080177f4       0x2c /workspace/setup/forest-concepts/builds/v5/ui.o
+                0x080177f4                ui_tile
+ .text.ui_frame
+                0x08017820      0x118 /workspace/setup/forest-concepts/builds/v5/ui.o
+                0x08017820                ui_frame
+ .text.ui_plate
+                0x08017938      0x12c /workspace/setup/forest-concepts/builds/v5/ui.o
+                0x08017938                ui_plate
+ .text.ui_plate_tiles
+                0x08017a64       0x14 /workspace/setup/forest-concepts/builds/v5/ui.o
+                0x08017a64                ui_plate_tiles
+ .text.ui_backdrop_open
+                0x08017a78       0xcc /workspace/setup/forest-concepts/builds/v5/ui.o
+                0x08017a78                ui_backdrop_open
+ .text.ui_backdrop_flush
+                0x08017b44       0x2c /workspace/setup/forest-concepts/builds/v5/ui.o
+                0x08017b44                ui_backdrop_flush
+ .text.memcpy   0x08017b70       0x3c /workspace/setup/forest-concepts/builds/v5/util.o
+                0x08017b70                memcpy
+ .text.memset   0x08017bac       0x40 /workspace/setup/forest-concepts/builds/v5/util.o
+                0x08017bac                memset
+ .text.memcpy32
+                0x08017bec       0x1c /workspace/setup/forest-concepts/builds/v5/util.o
+                0x08017bec                memcpy32
+ .text.memset32
+                0x08017c08       0x10 /workspace/setup/forest-concepts/builds/v5/util.o
+                0x08017c08                memset32
+ .text.rand_next
+                0x08017c18       0x20 /workspace/setup/forest-concepts/builds/v5/util.o
+                0x08017c18                rand_next
+ .text.rand_range
+                0x08017c38       0x38 /workspace/setup/forest-concepts/builds/v5/util.o
+                0x08017c38                rand_range
+ .text.rng_seed
+                0x08017c70       0x34 /workspace/setup/forest-concepts/builds/v5/util.o
+                0x08017c70                rng_seed
+ .text.rng_next
+                0x08017ca4       0x14 /workspace/setup/forest-concepts/builds/v5/util.o
+                0x08017ca4                rng_next
+ .text.rng_range
+                0x08017cb8       0x28 /workspace/setup/forest-concepts/builds/v5/util.o
+                0x08017cb8                rng_range
+ .text.hash32   0x08017ce0       0x7c /workspace/setup/forest-concepts/builds/v5/util.o
+                0x08017ce0                hash32
+ .text.vblank_isr
+                0x08017d5c       0x34 /workspace/setup/forest-concepts/builds/v5/video.o
+                0x08017d5c                vblank_isr
+ .text.video_init
+                0x08017d90       0xcc /workspace/setup/forest-concepts/builds/v5/video.o
+                0x08017d90                video_init
+ .text.video_show
+                0x08017e5c        0xc /workspace/setup/forest-concepts/builds/v5/video.o
+                0x08017e5c                video_show
+ .text.input_read
+                0x08017e68       0x38 /workspace/setup/forest-concepts/builds/v5/video.o
+                0x08017e68                input_read
+ .text.oam_clear
+                0x08017ea0       0x28 /workspace/setup/forest-concepts/builds/v5/video.o
+                0x08017ea0                oam_clear
+ .text.oam_alloc
+                0x08017ec8       0x20 /workspace/setup/forest-concepts/builds/v5/video.o
+                0x08017ec8                oam_alloc
+ .text.pal_set_bg
+                0x08017ee8       0x24 /workspace/setup/forest-concepts/builds/v5/video.o
+                0x08017ee8                pal_set_bg
+ .text.pal_set_obj
+                0x08017f0c       0x24 /workspace/setup/forest-concepts/builds/v5/video.o
+                0x08017f0c                pal_set_obj
+ .text.fade_start
+                0x08017f30       0x24 /workspace/setup/forest-concepts/builds/v5/video.o
+                0x08017f30                fade_start
+ .text.fade_done
+                0x08017f54       0x20 /workspace/setup/forest-concepts/builds/v5/video.o
+                0x08017f54                fade_done
+ .text.fade_set
+                0x08017f74       0x20 /workspace/setup/forest-concepts/builds/v5/video.o
+                0x08017f74                fade_set
+ .text.fade_update
+                0x08017f94       0x54 /workspace/setup/forest-concepts/builds/v5/video.o
+                0x08017f94                fade_update
+ .text.video_flush
+                0x08017fe8      0x228 /workspace/setup/forest-concepts/builds/v5/video.o
+                0x08017fe8                video_flush
+ .text.frame_wait
+                0x08018210       0x10 /workspace/setup/forest-concepts/builds/v5/video.o
+                0x08018210                frame_wait
+ .text.vwf_pool
+                0x08018220       0x14 /workspace/setup/forest-concepts/builds/v5/vwf.o
+                0x08018220                vwf_pool
+ .text.vwf_canvas
+                0x08018234       0x50 /workspace/setup/forest-concepts/builds/v5/vwf.o
+                0x08018234                vwf_canvas
+ .text.vwf_canvas_at
+                0x08018284       0x18 /workspace/setup/forest-concepts/builds/v5/vwf.o
+                0x08018284                vwf_canvas_at
+ .text.vwf_canvas_obj
+                0x0801829c       0x10 /workspace/setup/forest-concepts/builds/v5/vwf.o
+                0x0801829c                vwf_canvas_obj
+ .text.vwf_clear
+                0x080182ac       0x30 /workspace/setup/forest-concepts/builds/v5/vwf.o
+                0x080182ac                vwf_clear
+ .text.vwf_kit  0x080182dc       0xcc /workspace/setup/forest-concepts/builds/v5/vwf.o
+                0x080182dc                vwf_kit
+ .text.vwf_pixel
+                0x080183a8       0x4c /workspace/setup/forest-concepts/builds/v5/vwf.o
+                0x080183a8                vwf_pixel
+ .text.vwf_kit_px
+                0x080183f4       0xa8 /workspace/setup/forest-concepts/builds/v5/vwf.o
+                0x080183f4                vwf_kit_px
+ .text.vwf_advance
+                0x0801849c       0x30 /workspace/setup/forest-concepts/builds/v5/vwf.o
+                0x0801849c                vwf_advance
+ .text.vwf_glyph
+                0x080184cc       0xfc /workspace/setup/forest-concepts/builds/v5/vwf.o
+                0x080184cc                vwf_glyph
+ .text.vwf_ink  0x080185c8       0x18 /workspace/setup/forest-concepts/builds/v5/vwf.o
+                0x080185c8                vwf_ink
+ .text.vwf_text
+                0x080185e0       0x64 /workspace/setup/forest-concepts/builds/v5/vwf.o
+                0x080185e0                vwf_text
+ .text.vwf_text_fx
+                0x08018644      0x13c /workspace/setup/forest-concepts/builds/v5/vwf.o
+                0x08018644                vwf_text_fx
+ .text.vwf_width
+                0x08018780       0x50 /workspace/setup/forest-concepts/builds/v5/vwf.o
+                0x08018780                vwf_width
+ .text.vwf_fit  0x080187d0       0x90 /workspace/setup/forest-concepts/builds/v5/vwf.o
+                0x080187d0                vwf_fit
+ .text.vwf_block
+                0x08018860       0xc8 /workspace/setup/forest-concepts/builds/v5/vwf.o
+                0x08018860                vwf_block
+ .text.vwf_flush
+                0x08018928       0x64 /workspace/setup/forest-concepts/builds/v5/vwf.o
+                0x08018928                vwf_flush
+ .text.vwf_map  0x0801898c       0x6c /workspace/setup/forest-concepts/builds/v5/vwf.o
+                0x0801898c                vwf_map
+ .text.vwf_num  0x080189f8       0x94 /workspace/setup/forest-concepts/builds/v5/vwf.o
+                0x080189f8                vwf_num
+ .text.milestones_fit
+                0x08018a8c       0x5c /workspace/setup/forest-concepts/builds/v5/world.o
+ .text.pass_stage
+                0x08018ae8       0x5c /workspace/setup/forest-concepts/builds/v5/world.o
+ .text.pick_room.constprop.0
+                0x08018b44       0xac /workspace/setup/forest-concepts/builds/v5/world.o
+ .text.flood    0x08018bf0      0x10c /workspace/setup/forest-concepts/builds/v5/world.o
+ .text.cell_x   0x08018cfc       0x10 /workspace/setup/forest-concepts/builds/v5/world.o
+                0x08018cfc                cell_x
+ .text.cell_y   0x08018d0c       0x10 /workspace/setup/forest-concepts/builds/v5/world.o
+                0x08018d0c                cell_y
+ .text.cell_neighbor
+                0x08018d1c       0x44 /workspace/setup/forest-concepts/builds/v5/world.o
+                0x08018d1c                cell_neighbor
+ .text.route_walk
+                0x08018d60      0x180 /workspace/setup/forest-concepts/builds/v5/world.o
+ .text.subtree_holds_key
+                0x08018ee0       0x68 /workspace/setup/forest-concepts/builds/v5/world.o
+ .text.world_candidate
+                0x08018f48     0x10a8 /workspace/setup/forest-concepts/builds/v5/world.o
+ .text.world_open_gate
+                0x08019ff0       0x48 /workspace/setup/forest-concepts/builds/v5/world.o
+                0x08019ff0                world_open_gate
+ .text.world_gate_open
+                0x0801a038       0x1c /workspace/setup/forest-concepts/builds/v5/world.o
+                0x0801a038                world_gate_open
+ .text.world_route_metrics
+                0x0801a054      0x130 /workspace/setup/forest-concepts/builds/v5/world.o
+                0x0801a054                world_route_metrics
+ .text.world_generate_tuned
+                0x0801a184      0x330 /workspace/setup/forest-concepts/builds/v5/world.o
+                0x0801a184                world_generate_tuned
+ .text.world_generate
+                0x0801a4b4       0x14 /workspace/setup/forest-concepts/builds/v5/world.o
+                0x0801a4b4                world_generate
+ .text          0x0801a4c8      0x11c /workspace/setup/sysroot/usr/bin/../lib/gcc/arm-none-eabi/14.2.1/thumb/nofp/libgcc.a(_udivsi3.o)
+                0x0801a4c8                __udivsi3
+                0x0801a4c8                __aeabi_uidiv
+                0x0801a5c4                __aeabi_uidivmod
+ .text          0x0801a5e4      0x150 /workspace/setup/sysroot/usr/bin/../lib/gcc/arm-none-eabi/14.2.1/thumb/nofp/libgcc.a(_divsi3.o)
+                0x0801a5e4                __aeabi_idiv
+                0x0801a5e4                __divsi3
+                0x0801a714                __aeabi_idivmod
+ .text          0x0801a734        0x4 /workspace/setup/sysroot/usr/bin/../lib/gcc/arm-none-eabi/14.2.1/thumb/nofp/libgcc.a(_dvmd_tls.o)
+                0x0801a734                __aeabi_ldiv0
+                0x0801a734                __aeabi_idiv0
+ .text          0x0801a738       0x64 /workspace/setup/sysroot/usr/bin/../lib/gcc/arm-none-eabi/14.2.1/thumb/nofp/libgcc.a(_muldi3.o)
+                0x0801a738                __aeabi_lmul
+                0x0801a738                __muldi3
+ *fill*         0x0801a79c        0x4 
+ .text.__stub   0x0801a7a0       0x2c linker stubs
+ *(.glue_7)
+ .glue_7        0x0801a7d0        0x0 linker stubs
+ *(.glue_7t)
+ .glue_7t       0x0801a7d0        0x0 linker stubs
+ *(.v4_bx)
+ .v4_bx         0x0801a7d0        0x0 linker stubs
+                0x0801a7d0                        . = ALIGN (0x4)
+
+.vfp11_veneer   0x0801a7d0        0x0
+ .vfp11_veneer  0x0801a7d0        0x0 linker stubs
+
+.iplt           0x0801a7d0        0x0
+ .iplt          0x0801a7d0        0x0 /workspace/setup/forest-concepts/builds/v5/actor.o
+
+.igot.plt       0x0801a7d0        0x0
+ .igot.plt      0x0801a7d0        0x0 /workspace/setup/forest-concepts/builds/v5/actor.o
+
+.rodata         0x0801a7d0    0x75de0
+ *(.rodata .rodata.* .gnu.linkonce.r.*)
+ .rodata.gHitboxes
+                0x0801a7d0       0x30 /workspace/setup/forest-concepts/builds/v5/actor.o
+                0x0801a7d0                gHitboxes
+ .rodata.str1.4
+                0x0801a800     0x1c92 /workspace/setup/forest-concepts/builds/v5/appearance.o
+                                 0x60 (size before relaxing)
+ *fill*         0x0801c492        0x2 
+ .rodata.gAppearancePaletteNames
+                0x0801c494        0xc /workspace/setup/forest-concepts/builds/v5/appearance.o
+                0x0801c494                gAppearancePaletteNames
+ .rodata.gAppearanceStyleNames
+                0x0801c4a0        0xc /workspace/setup/forest-concepts/builds/v5/appearance.o
+                0x0801c4a0                gAppearanceStyleNames
+ .rodata.boss_update
+                0x0801c4ac       0x18 /workspace/setup/forest-concepts/builds/v5/boss.o
+ .rodata.enemies_update
+                0x0801c4c4       0x3c /workspace/setup/forest-concepts/builds/v5/enemy.o
+ .rodata.charge.0
+                0x0801c500        0x3 /workspace/setup/forest-concepts/builds/v5/enemy.o
+ *fill*         0x0801c503        0x1 
+ .rodata.poses.1
+                0x0801c504        0xc /workspace/setup/forest-concepts/builds/v5/enemy.o
+ .rodata.hand.2
+                0x0801c510        0x8 /workspace/setup/forest-concepts/builds/v5/enemy.o
+ .rodata.walk_dur.3
+                0x0801c518        0x4 /workspace/setup/forest-concepts/builds/v5/enemy.o
+ .rodata.gEnemyDefs
+                0x0801c51c       0x30 /workspace/setup/forest-concepts/builds/v5/enemy.o
+                0x0801c51c                gEnemyDefs
+ .rodata.options_draw.str1.4
+                0x0801c54c       0x7c /workspace/setup/forest-concepts/builds/v5/game.o
+ .rodata.start_run.str1.4
+                0x0801c54c       0x5b /workspace/setup/forest-concepts/builds/v5/game.o
+ .rodata.title_show.str1.4
+                0x0801c54c       0x15 /workspace/setup/forest-concepts/builds/v5/game.o
+ .rodata.game_update.str1.4
+                0x0801c54c      0x45c /workspace/setup/forest-concepts/builds/v5/game.o
+ .rodata.game_update
+                0x0801c54c       0x3c /workspace/setup/forest-concepts/builds/v5/game.o
+ .rodata.nudge.4
+                0x0801c588        0x4 /workspace/setup/forest-concepts/builds/v5/game.o
+ .rodata.str1.4
+                0x0801c58c      0x15a /workspace/setup/forest-concepts/builds/v5/game.o
+ .rodata.sKeyItemText
+                0x0801c58c       0x10 /workspace/setup/forest-concepts/builds/v5/game.o
+ .rodata.items_update.str1.4
+                0x0801c59c       0x94 /workspace/setup/forest-concepts/builds/v5/items.o
+ .rodata.ms_map_info.str1.4
+                0x0801c59c       0x3f /workspace/setup/forest-concepts/builds/v5/menu.o
+ .rodata.ms_map.str1.4
+                0x0801c59c        0xc /workspace/setup/forest-concepts/builds/v5/menu.o
+ .rodata.ms_draw.str1.4
+                0x0801c59c      0x1c8 /workspace/setup/forest-concepts/builds/v5/menu.o
+ .rodata.CSWTCH.479
+                0x0801c59c       0x10 /workspace/setup/forest-concepts/builds/v5/menu.o
+ .rodata.CSWTCH.409
+                0x0801c5ac       0x14 /workspace/setup/forest-concepts/builds/v5/menu.o
+ .rodata.str1.4
+                0x0801c5c0      0x615 /workspace/setup/forest-concepts/builds/v5/menu.o
+ .rodata.CSWTCH.406
+                0x0801c5c0       0x1c /workspace/setup/forest-concepts/builds/v5/menu.o
+ .rodata.CSWTCH.404
+                0x0801c5dc       0x1c /workspace/setup/forest-concepts/builds/v5/menu.o
+ .rodata.shortname.0
+                0x0801c5f8       0x20 /workspace/setup/forest-concepts/builds/v5/menu.o
+ .rodata.parts.2
+                0x0801c618       0x10 /workspace/setup/forest-concepts/builds/v5/menu.o
+ .rodata.badge.3
+                0x0801c628        0xc /workspace/setup/forest-concepts/builds/v5/menu.o
+ *fill*         0x0801c634        0x4 
+ .rodata.order.4
+                0x0801c638        0x9 /workspace/setup/forest-concepts/builds/v5/menu.o
+ *fill*         0x0801c641        0x3 
+ .rodata.offset.5
+                0x0801c644       0x1a /workspace/setup/forest-concepts/builds/v5/menu.o
+ *fill*         0x0801c65e        0x2 
+ .rodata.mp.6   0x0801c660        0x5 /workspace/setup/forest-concepts/builds/v5/menu.o
+ *fill*         0x0801c665        0x3 
+ .rodata.sMapSymbol
+                0x0801c668       0x6c /workspace/setup/forest-concepts/builds/v5/menu.o
+ .rodata.sTabName
+                0x0801c6d4        0xc /workspace/setup/forest-concepts/builds/v5/menu.o
+ .rodata.sArchName
+                0x0801c6e0       0x20 /workspace/setup/forest-concepts/builds/v5/menu.o
+ .rodata.sKeys  0x0801c700       0x60 /workspace/setup/forest-concepts/builds/v5/menu.o
+ .rodata.sItems
+                0x0801c760       0x70 /workspace/setup/forest-concepts/builds/v5/menu.o
+ .rodata        0x0801c7d0        0xc /workspace/setup/forest-concepts/builds/v5/menu.o
+ .rodata.str1.4
+                0x0801c7dc       0xe9 /workspace/setup/forest-concepts/builds/v5/menu_layouts_a.o
+ .rodata.sLayouts
+                0x0801c7dc      0x1e0 /workspace/setup/forest-concepts/builds/v5/menu_layouts_a.o
+ .rodata.CSWTCH.1
+                0x0801c9bc       0x14 /workspace/setup/forest-concepts/builds/v5/menu_layouts_b.o
+ .rodata.str1.4
+                0x0801c9d0      0x133 /workspace/setup/forest-concepts/builds/v5/menu_layouts_b.o
+ .rodata.sQuickRibbon
+                0x0801c9d0       0x60 /workspace/setup/forest-concepts/builds/v5/menu_layouts_b.o
+ .rodata.sBarrierIndex
+                0x0801ca30       0x60 /workspace/setup/forest-concepts/builds/v5/menu_layouts_b.o
+ .rodata.sFocusCards
+                0x0801ca90       0x60 /workspace/setup/forest-concepts/builds/v5/menu_layouts_b.o
+ .rodata.sExpeditionDashboard
+                0x0801caf0       0x60 /workspace/setup/forest-concepts/builds/v5/menu_layouts_b.o
+ .rodata.sTwinAtlas
+                0x0801cb50       0x60 /workspace/setup/forest-concepts/builds/v5/menu_layouts_b.o
+ .rodata.myst_build
+                0x0801cbb0       0x2c /workspace/setup/forest-concepts/builds/v5/myst.o
+ .rodata.myst_update.str1.4
+                0x0801cbdc       0x38 /workspace/setup/forest-concepts/builds/v5/myst.o
+ .rodata.myst_update
+                0x0801cbdc       0x18 /workspace/setup/forest-concepts/builds/v5/myst.o
+ .rodata.myst_chest_opened.str1.4
+                0x0801cbf4       0xae /workspace/setup/forest-concepts/builds/v5/myst.o
+ .rodata.at.0   0x0801cbf4        0x8 /workspace/setup/forest-concepts/builds/v5/myst.o
+ .rodata.at.1   0x0801cbfc        0x6 /workspace/setup/forest-concepts/builds/v5/myst.o
+ *fill*         0x0801cc02        0x2 
+ .rodata.at.2   0x0801cc04        0x8 /workspace/setup/forest-concepts/builds/v5/myst.o
+ .rodata.at.3   0x0801cc0c        0xc /workspace/setup/forest-concepts/builds/v5/myst.o
+ .rodata.kSize  0x0801cc18        0x6 /workspace/setup/forest-concepts/builds/v5/myst.o
+ *fill*         0x0801cc1e        0x2 
+ .rodata.kStyle
+                0x0801cc20       0x48 /workspace/setup/forest-concepts/builds/v5/myst.o
+ .rodata.npc_try_talk.str1.4
+                0x0801cc68      0x857 /workspace/setup/forest-concepts/builds/v5/npc.o
+ .rodata.npc_try_talk
+                0x0801cc68       0x18 /workspace/setup/forest-concepts/builds/v5/npc.o
+ .rodata.npc_dialogue_update.str1.4
+                0x0801cc80       0xa2 /workspace/setup/forest-concepts/builds/v5/npc.o
+ .rodata.kActs.0
+                0x0801cc80        0x4 /workspace/setup/forest-concepts/builds/v5/npc.o
+ .rodata.str1.4
+                0x0801cc84       0xd3 /workspace/setup/forest-concepts/builds/v5/npc.o
+ .rodata.sShop  0x0801cc84       0x30 /workspace/setup/forest-concepts/builds/v5/npc.o
+ .rodata.sPortraits
+                0x0801ccb4        0x6 /workspace/setup/forest-concepts/builds/v5/npc.o
+ *fill*         0x0801ccba        0x2 
+ .rodata.sNames
+                0x0801ccbc       0x18 /workspace/setup/forest-concepts/builds/v5/npc.o
+ .rodata.sFrames
+                0x0801ccd4        0x6 /workspace/setup/forest-concepts/builds/v5/npc.o
+ *fill*         0x0801ccda        0x2 
+ .rodata.fx_spawn
+                0x0801ccdc       0x20 /workspace/setup/forest-concepts/builds/v5/objects.o
+ .rodata.objects_update
+                0x0801ccfc       0x48 /workspace/setup/forest-concepts/builds/v5/objects.o
+ .rodata.hand.0
+                0x0801cd44        0x8 /workspace/setup/forest-concepts/builds/v5/objects.o
+ .rodata.frames.1
+                0x0801cd4c        0xa /workspace/setup/forest-concepts/builds/v5/objects.o
+ *fill*         0x0801cd56        0x2 
+ .rodata.player_has_item
+                0x0801cd58       0x20 /workspace/setup/forest-concepts/builds/v5/player.o
+ .rodata.player_update
+                0x0801cd78       0x68 /workspace/setup/forest-concepts/builds/v5/player.o
+ .rodata.player_draw
+                0x0801cde0       0x34 /workspace/setup/forest-concepts/builds/v5/player.o
+ .rodata.frame.0
+                0x0801ce14        0x4 /workspace/setup/forest-concepts/builds/v5/player.o
+ .rodata.at.1   0x0801ce18        0x8 /workspace/setup/forest-concepts/builds/v5/player.o
+ .rodata.lamp.2
+                0x0801ce20        0x4 /workspace/setup/forest-concepts/builds/v5/player.o
+ .rodata.bow.3  0x0801ce24        0x4 /workspace/setup/forest-concepts/builds/v5/player.o
+ .rodata.cape.4
+                0x0801ce28        0x4 /workspace/setup/forest-concepts/builds/v5/player.o
+ .rodata.origin.5
+                0x0801ce2c        0x8 /workspace/setup/forest-concepts/builds/v5/player.o
+ .rodata.sCarryFrame
+                0x0801ce34        0xc /workspace/setup/forest-concepts/builds/v5/player.o
+ .rodata.sCapeFrame
+                0x0801ce40        0xc /workspace/setup/forest-concepts/builds/v5/player.o
+ .rodata.sBowFrame
+                0x0801ce4c        0xc /workspace/setup/forest-concepts/builds/v5/player.o
+ .rodata.sUseFrame
+                0x0801ce58        0xc /workspace/setup/forest-concepts/builds/v5/player.o
+ .rodata.sLiftFrame
+                0x0801ce64        0xc /workspace/setup/forest-concepts/builds/v5/player.o
+ .rodata.sGuardStep
+                0x0801ce70        0x8 /workspace/setup/forest-concepts/builds/v5/player.o
+ .rodata.sGuardFrame
+                0x0801ce78        0x4 /workspace/setup/forest-concepts/builds/v5/player.o
+ .rodata.sHurtFrame
+                0x0801ce7c        0x4 /workspace/setup/forest-concepts/builds/v5/player.o
+ .rodata.sWalk2Frame
+                0x0801ce80        0x4 /workspace/setup/forest-concepts/builds/v5/player.o
+ .rodata.sWalk1Frame
+                0x0801ce84        0x4 /workspace/setup/forest-concepts/builds/v5/player.o
+ .rodata.sIdleFrame
+                0x0801ce88        0x4 /workspace/setup/forest-concepts/builds/v5/player.o
+ .rodata.d.0    0x0801ce8c        0x8 /workspace/setup/forest-concepts/builds/v5/react.o
+ .rodata.d.0    0x0801ce94        0x8 /workspace/setup/forest-concepts/builds/v5/room.o
+ .rodata.expand
+                0x0801ce9c       0x1c /workspace/setup/forest-concepts/builds/v5/roomgen.o
+ .rodata.roomgen_build_internal
+                0x0801ceb8       0xcc /workspace/setup/forest-concepts/builds/v5/roomgen.o
+ .rodata.edge.0
+                0x0801cf84       0x20 /workspace/setup/forest-concepts/builds/v5/roomgen.o
+ .rodata.d.2    0x0801cfa4        0x8 /workspace/setup/forest-concepts/builds/v5/roomgen.o
+ .rodata.d.3    0x0801cfac        0x8 /workspace/setup/forest-concepts/builds/v5/roomgen.o
+ .rodata.kinds.5
+                0x0801cfb4        0x6 /workspace/setup/forest-concepts/builds/v5/roomgen.o
+ *fill*         0x0801cfba        0x2 
+ .rodata.ring.7
+                0x0801cfbc       0x10 /workspace/setup/forest-concepts/builds/v5/roomgen.o
+ .rodata.rows.8
+                0x0801cfcc        0x4 /workspace/setup/forest-concepts/builds/v5/roomgen.o
+ .rodata.widths.9
+                0x0801cfd0        0x6 /workspace/setup/forest-concepts/builds/v5/roomgen.o
+ *fill*         0x0801cfd6        0x2 
+ .rodata.items.0
+                0x0801cfd8        0x3 /workspace/setup/forest-concepts/builds/v5/save.o
+ *fill*         0x0801cfdb        0x1 
+ .rodata.kinds.1
+                0x0801cfdc        0x3 /workspace/setup/forest-concepts/builds/v5/save.o
+ *fill*         0x0801cfdf        0x1 
+ .rodata.gSramId
+                0x0801cfe0        0xa /workspace/setup/forest-concepts/builds/v5/save.o
+                0x0801cfe0                gSramId
+ *fill*         0x0801cfea        0x2 
+ .rodata.sfx_play
+                0x0801cfec       0x60 /workspace/setup/forest-concepts/builds/v5/sound.o
+ .rodata.sSongs
+                0x0801d04c       0x60 /workspace/setup/forest-concepts/builds/v5/sound.o
+ .rodata.sWinDrums
+                0x0801d0ac       0x10 /workspace/setup/forest-concepts/builds/v5/sound.o
+ .rodata.sWinBass
+                0x0801d0bc        0xf /workspace/setup/forest-concepts/builds/v5/sound.o
+ *fill*         0x0801d0cb        0x1 
+ .rodata.sWinMelody
+                0x0801d0cc       0x23 /workspace/setup/forest-concepts/builds/v5/sound.o
+ *fill*         0x0801d0ef        0x1 
+ .rodata.sTitleDrums
+                0x0801d0f0       0x10 /workspace/setup/forest-concepts/builds/v5/sound.o
+ .rodata.sTitleBass
+                0x0801d100        0x9 /workspace/setup/forest-concepts/builds/v5/sound.o
+ *fill*         0x0801d109        0x3 
+ .rodata.sTitleMelody
+                0x0801d10c       0x21 /workspace/setup/forest-concepts/builds/v5/sound.o
+ *fill*         0x0801d12d        0x3 
+ .rodata.sBossDrums
+                0x0801d130       0x10 /workspace/setup/forest-concepts/builds/v5/sound.o
+ .rodata.sBossBass
+                0x0801d140       0x21 /workspace/setup/forest-concepts/builds/v5/sound.o
+ *fill*         0x0801d161        0x3 
+ .rodata.sBossMelody
+                0x0801d164       0x3d /workspace/setup/forest-concepts/builds/v5/sound.o
+ *fill*         0x0801d1a1        0x3 
+ .rodata.sForestDrums
+                0x0801d1a4       0x10 /workspace/setup/forest-concepts/builds/v5/sound.o
+ .rodata.sForestBass
+                0x0801d1b4       0x11 /workspace/setup/forest-concepts/builds/v5/sound.o
+ *fill*         0x0801d1c5        0x3 
+ .rodata.sForestMelody
+                0x0801d1c8       0x57 /workspace/setup/forest-concepts/builds/v5/sound.o
+ *fill*         0x0801d21f        0x1 
+ .rodata.sSewerDrums
+                0x0801d220       0x10 /workspace/setup/forest-concepts/builds/v5/sound.o
+ .rodata.sSewerBass
+                0x0801d230       0x13 /workspace/setup/forest-concepts/builds/v5/sound.o
+ *fill*         0x0801d243        0x1 
+ .rodata.sSewerMelody
+                0x0801d244       0x2b /workspace/setup/forest-concepts/builds/v5/sound.o
+ *fill*         0x0801d26f        0x1 
+ .rodata.sNoteFreq
+                0x0801d270       0x78 /workspace/setup/forest-concepts/builds/v5/sound.o
+ .rodata.shop_detail.str1.4
+                0x0801d2e8        0x8 /workspace/setup/forest-concepts/builds/v5/text.o
+ .rodata.hud_icon
+                0x0801d2e8       0x20 /workspace/setup/forest-concepts/builds/v5/text.o
+ .rodata.shop_open.str1.4
+                0x0801d308        0xa /workspace/setup/forest-concepts/builds/v5/text.o
+ .rodata.digits.0
+                0x0801d308       0x32 /workspace/setup/forest-concepts/builds/v5/text.o
+ *fill*         0x0801d33a        0x2 
+ .rodata.letters.1
+                0x0801d33c        0xf /workspace/setup/forest-concepts/builds/v5/text.o
+ *fill*         0x0801d34b        0x1 
+ .rodata.bob.3  0x0801d34c        0x4 /workspace/setup/forest-concepts/builds/v5/text.o
+ .rodata.sPlates
+                0x0801d350        0xc /workspace/setup/forest-concepts/builds/v5/ui.o
+ .rodata.sFrames
+                0x0801d35c       0x20 /workspace/setup/forest-concepts/builds/v5/ui.o
+ .rodata.CSWTCH.53
+                0x0801d37c       0x10 /workspace/setup/forest-concepts/builds/v5/vwf.o
+ .rodata.trials.0
+                0x0801d38c        0x3 /workspace/setup/forest-concepts/builds/v5/world.o
+ *fill*         0x0801d38f        0x1 
+ .rodata.key_items.1
+                0x0801d390        0x3 /workspace/setup/forest-concepts/builds/v5/world.o
+ *fill*         0x0801d393        0x1 
+ .rodata.gate_types.2
+                0x0801d394        0x3 /workspace/setup/forest-concepts/builds/v5/world.o
+ *fill*         0x0801d397        0x1 
+ .rodata.fallback.3
+                0x0801d398       0x30 /workspace/setup/forest-concepts/builds/v5/world.o
+ .rodata.world_profiles
+                0x0801d3c8       0x15 /workspace/setup/forest-concepts/builds/v5/world.o
+                0x0801d3c8                world_profiles
+ *fill*         0x0801d3dd        0x3 
+ .rodata.sDy    0x0801d3e0        0x4 /workspace/setup/forest-concepts/builds/v5/world.o
+ .rodata.sDx    0x0801d3e4        0x4 /workspace/setup/forest-concepts/builds/v5/world.o
+ .rodata        0x0801d3e8        0xc /workspace/setup/forest-concepts/builds/v5/world.o
+ .rodata.sin_table_u
+                0x0801d3f4      0x200 /workspace/setup/forest-concepts/builds/v5/assets.o
+                0x0801d3f4                sin_table_u
+ .rodata.room_defs
+                0x0801d5f4       0x14 /workspace/setup/forest-concepts/builds/v5/assets.o
+                0x0801d5f4                room_defs
+ .rodata.room_sewer_main_objects
+                0x0801d608       0x10 /workspace/setup/forest-concepts/builds/v5/assets.o
+                0x0801d608                room_sewer_main_objects
+ .rodata.room_sewer_main_overlay
+                0x0801d618      0x4b0 /workspace/setup/forest-concepts/builds/v5/assets.o
+                0x0801d618                room_sewer_main_overlay
+ .rodata.room_sewer_main_ground
+                0x0801dac8      0x4b0 /workspace/setup/forest-concepts/builds/v5/assets.o
+                0x0801dac8                room_sewer_main_ground
+ .rodata.title_bitmap
+                0x0801df78    0x12c00 /workspace/setup/forest-concepts/builds/v5/assets.o
+                0x0801df78                title_bitmap
+ .rodata.hud_tiles
+                0x08030b78       0x80 /workspace/setup/forest-concepts/builds/v5/assets.o
+                0x08030b78                hud_tiles
+ .rodata.appearance_mark_tiles
+                0x08030bf8      0x240 /workspace/setup/forest-concepts/builds/v5/assets.o
+                0x08030bf8                appearance_mark_tiles
+ .rodata.appearance_palettes
+                0x08030e38       0x60 /workspace/setup/forest-concepts/builds/v5/assets.o
+                0x08030e38                appearance_palettes
+ .rodata.appearance_ui_tiles
+                0x08030e98     0x1320 /workspace/setup/forest-concepts/builds/v5/assets.o
+                0x08030e98                appearance_ui_tiles
+ .rodata.vwf_bits
+                0x080321b8      0x369 /workspace/setup/forest-concepts/builds/v5/assets.o
+                0x080321b8                vwf_bits
+ *fill*         0x08032521        0x3 
+ .rodata.vwf_w  0x08032524       0x61 /workspace/setup/forest-concepts/builds/v5/assets.o
+                0x08032524                vwf_w
+ *fill*         0x08032585        0x3 
+ .rodata.peddler_act_at
+                0x08032588        0x6 /workspace/setup/forest-concepts/builds/v5/assets.o
+                0x08032588                peddler_act_at
+ *fill*         0x0803258e        0x2 
+ .rodata.peddler_acts
+                0x08032590       0xc0 /workspace/setup/forest-concepts/builds/v5/assets.o
+                0x08032590                peddler_acts
+ .rodata.orb_glow
+                0x08032650       0x18 /workspace/setup/forest-concepts/builds/v5/assets.o
+                0x08032650                orb_glow
+ .rodata.huditems_frame_pal
+                0x08032668       0x11 /workspace/setup/forest-concepts/builds/v5/assets.o
+                0x08032668                huditems_frame_pal
+ *fill*         0x08032679        0x3 
+ .rodata.interactiveentry_frame_pal
+                0x0803267c        0x6 /workspace/setup/forest-concepts/builds/v5/assets.o
+                0x0803267c                interactiveentry_frame_pal
+ *fill*         0x08032682        0x2 
+ .rodata.interactivechest_frame_pal
+                0x08032684        0x6 /workspace/setup/forest-concepts/builds/v5/assets.o
+                0x08032684                interactivechest_frame_pal
+ *fill*         0x0803268a        0x2 
+ .rodata.bloomfx_frame_pal
+                0x0803268c       0x4f /workspace/setup/forest-concepts/builds/v5/assets.o
+                0x0803268c                bloomfx_frame_pal
+ *fill*         0x080326db        0x1 
+ .rodata.icon32_exact_pal
+                0x080326dc      0x220 /workspace/setup/forest-concepts/builds/v5/assets.o
+                0x080326dc                icon32_exact_pal
+ .rodata.icon32_exact_tiles
+                0x080328fc     0x2200 /workspace/setup/forest-concepts/builds/v5/assets.o
+                0x080328fc                icon32_exact_tiles
+ .rodata.icon32_frame_pal
+                0x08034afc       0x11 /workspace/setup/forest-concepts/builds/v5/assets.o
+                0x08034afc                icon32_frame_pal
+ *fill*         0x08034b0d        0x3 
+ .rodata.pick32_frame_pal
+                0x08034b10        0xa /workspace/setup/forest-concepts/builds/v5/assets.o
+                0x08034b10                pick32_frame_pal
+ *fill*         0x08034b1a        0x2 
+ .rodata.lift_frame_pal
+                0x08034b1c        0x4 /workspace/setup/forest-concepts/builds/v5/assets.o
+                0x08034b1c                lift_frame_pal
+ .rodata.items_frame_pal
+                0x08034b20       0x15 /workspace/setup/forest-concepts/builds/v5/assets.o
+                0x08034b20                items_frame_pal
+ *fill*         0x08034b35        0x3 
+ .rodata.shield_frame_pal
+                0x08034b38        0x6 /workspace/setup/forest-concepts/builds/v5/assets.o
+                0x08034b38                shield_frame_pal
+ *fill*         0x08034b3e        0x2 
+ .rodata.bloom_swing_hit
+                0x08034b40       0x80 /workspace/setup/forest-concepts/builds/v5/assets.o
+                0x08034b40                bloom_swing_hit
+ .rodata.bloom_swing_origin
+                0x08034bc0       0x40 /workspace/setup/forest-concepts/builds/v5/assets.o
+                0x08034bc0                bloom_swing_origin
+ .rodata.bloom_swing_age_active
+                0x08034c00       0x12 /workspace/setup/forest-concepts/builds/v5/assets.o
+                0x08034c00                bloom_swing_age_active
+ *fill*         0x08034c12        0x2 
+ .rodata.bloom_swing_age_phase
+                0x08034c14       0x12 /workspace/setup/forest-concepts/builds/v5/assets.o
+                0x08034c14                bloom_swing_age_phase
+ *fill*         0x08034c26        0x2 
+ .rodata.sheets
+                0x08034c28      0x1a4 /workspace/setup/forest-concepts/builds/v5/assets.o
+                0x08034c28                sheets
+ .rodata.sheet_sewerrail_tiles
+                0x08034dcc       0x40 /workspace/setup/forest-concepts/builds/v5/assets.o
+                0x08034dcc                sheet_sewerrail_tiles
+ .rodata.sheet_glitter_tiles
+                0x08034e0c       0xc0 /workspace/setup/forest-concepts/builds/v5/assets.o
+                0x08034e0c                sheet_glitter_tiles
+ .rodata.sheet_huditems_tiles
+                0x08034ecc      0x880 /workspace/setup/forest-concepts/builds/v5/assets.o
+                0x08034ecc                sheet_huditems_tiles
+ .rodata.sheet_interactiveentry_tiles
+                0x0803574c     0x1800 /workspace/setup/forest-concepts/builds/v5/assets.o
+                0x0803574c                sheet_interactiveentry_tiles
+ .rodata.sheet_interactivechest_tiles
+                0x08036f4c      0xc00 /workspace/setup/forest-concepts/builds/v5/assets.o
+                0x08036f4c                sheet_interactivechest_tiles
+ .rodata.sheet_bloomshadow_tiles
+                0x08037b4c       0x40 /workspace/setup/forest-concepts/builds/v5/assets.o
+                0x08037b4c                sheet_bloomshadow_tiles
+ .rodata.sheet_bloomfx_tiles
+                0x08037b8c     0x9e00 /workspace/setup/forest-concepts/builds/v5/assets.o
+                0x08037b8c                sheet_bloomfx_tiles
+ .rodata.sheet_wisp_tiles
+                0x0804198c       0x80 /workspace/setup/forest-concepts/builds/v5/assets.o
+                0x0804198c                sheet_wisp_tiles
+ .rodata.sheet_gatekeeper_tiles
+                0x08041a0c      0xc00 /workspace/setup/forest-concepts/builds/v5/assets.o
+                0x08041a0c                sheet_gatekeeper_tiles
+ .rodata.sheet_peddler_body_tiles
+                0x0804260c     0x1e00 /workspace/setup/forest-concepts/builds/v5/assets.o
+                0x0804260c                sheet_peddler_body_tiles
+ .rodata.sheet_peddler_head_tiles
+                0x0804440c      0x280 /workspace/setup/forest-concepts/builds/v5/assets.o
+                0x0804440c                sheet_peddler_head_tiles
+ .rodata.sheet_face_tiles
+                0x0804468c     0x3000 /workspace/setup/forest-concepts/builds/v5/assets.o
+                0x0804468c                sheet_face_tiles
+ .rodata.sheet_uimarks_tiles
+                0x0804768c       0xc0 /workspace/setup/forest-concepts/builds/v5/assets.o
+                0x0804768c                sheet_uimarks_tiles
+ .rodata.sheet_icon32_tiles
+                0x0804774c     0x2200 /workspace/setup/forest-concepts/builds/v5/assets.o
+                0x0804774c                sheet_icon32_tiles
+ .rodata.sheet_pick32_tiles
+                0x0804994c      0x500 /workspace/setup/forest-concepts/builds/v5/assets.o
+                0x0804994c                sheet_pick32_tiles
+ .rodata.sheet_cursor_tiles
+                0x08049e4c      0x200 /workspace/setup/forest-concepts/builds/v5/assets.o
+                0x08049e4c                sheet_cursor_tiles
+ .rodata.sheet_dots_tiles
+                0x0804a04c      0x180 /workspace/setup/forest-concepts/builds/v5/assets.o
+                0x0804a04c                sheet_dots_tiles
+ .rodata.sheet_marks_tiles
+                0x0804a1cc      0x680 /workspace/setup/forest-concepts/builds/v5/assets.o
+                0x0804a1cc                sheet_marks_tiles
+ .rodata.sheet_mouth_tiles
+                0x0804a84c      0x600 /workspace/setup/forest-concepts/builds/v5/assets.o
+                0x0804a84c                sheet_mouth_tiles
+ .rodata.sheet_arrow_tiles
+                0x0804ae4c      0x180 /workspace/setup/forest-concepts/builds/v5/assets.o
+                0x0804ae4c                sheet_arrow_tiles
+ .rodata.sheet_lift_tiles
+                0x0804afcc      0x200 /workspace/setup/forest-concepts/builds/v5/assets.o
+                0x0804afcc                sheet_lift_tiles
+ .rodata.sheet_boss_tiles
+                0x0804b1cc     0x3400 /workspace/setup/forest-concepts/builds/v5/assets.o
+                0x0804b1cc                sheet_boss_tiles
+ .rodata.sheet_npc_tiles
+                0x0804e5cc      0xe00 /workspace/setup/forest-concepts/builds/v5/assets.o
+                0x0804e5cc                sheet_npc_tiles
+ .rodata.sheet_proj_tiles
+                0x0804f3cc       0x60 /workspace/setup/forest-concepts/builds/v5/assets.o
+                0x0804f3cc                sheet_proj_tiles
+ .rodata.sheet_fx_tiles
+                0x0804f42c      0x680 /workspace/setup/forest-concepts/builds/v5/assets.o
+                0x0804f42c                sheet_fx_tiles
+ .rodata.sheet_ksword_tiles
+                0x0804faac      0x100 /workspace/setup/forest-concepts/builds/v5/assets.o
+                0x0804faac                sheet_ksword_tiles
+ .rodata.sheet_knight_tiles
+                0x0804fbac     0x1800 /workspace/setup/forest-concepts/builds/v5/assets.o
+                0x0804fbac                sheet_knight_tiles
+ .rodata.sheet_spitter_tiles
+                0x080513ac      0x600 /workspace/setup/forest-concepts/builds/v5/assets.o
+                0x080513ac                sheet_spitter_tiles
+ .rodata.sheet_slime_tiles
+                0x080519ac      0x180 /workspace/setup/forest-concepts/builds/v5/assets.o
+                0x080519ac                sheet_slime_tiles
+ .rodata.sheet_bat_tiles
+                0x08051b2c      0x180 /workspace/setup/forest-concepts/builds/v5/assets.o
+                0x08051b2c                sheet_bat_tiles
+ .rodata.sheet_beetle_tiles
+                0x08051cac      0x300 /workspace/setup/forest-concepts/builds/v5/assets.o
+                0x08051cac                sheet_beetle_tiles
+ .rodata.sheet_items_tiles
+                0x08051fac      0xa80 /workspace/setup/forest-concepts/builds/v5/assets.o
+                0x08051fac                sheet_items_tiles
+ .rodata.sheet_shield_tiles
+                0x08052a2c      0x300 /workspace/setup/forest-concepts/builds/v5/assets.o
+                0x08052a2c                sheet_shield_tiles
+ .rodata.sheet_sword_tiles
+                0x08052d2c      0x180 /workspace/setup/forest-concepts/builds/v5/assets.o
+                0x08052d2c                sheet_sword_tiles
+ .rodata.sheet_hero_tiles
+                0x08052eac    0x10a00 /workspace/setup/forest-concepts/builds/v5/assets.o
+                0x08052eac                sheet_hero_tiles
+ .rodata.tilesets
+                0x080638ac       0x54 /workspace/setup/forest-concepts/builds/v5/assets.o
+                0x080638ac                tilesets
+ .rodata.tile_anims_myst
+                0x08063900       0x30 /workspace/setup/forest-concepts/builds/v5/assets.o
+ .rodata.tile_anim_myst_5
+                0x08063930      0x100 /workspace/setup/forest-concepts/builds/v5/assets.o
+                0x08063930                tile_anim_myst_5
+ .rodata.tile_anim_myst_4
+                0x08063a30      0x100 /workspace/setup/forest-concepts/builds/v5/assets.o
+                0x08063a30                tile_anim_myst_4
+ .rodata.tile_anim_myst_3
+                0x08063b30      0x100 /workspace/setup/forest-concepts/builds/v5/assets.o
+                0x08063b30                tile_anim_myst_3
+ .rodata.tile_anim_myst_2
+                0x08063c30      0x100 /workspace/setup/forest-concepts/builds/v5/assets.o
+                0x08063c30                tile_anim_myst_2
+ .rodata.tile_anim_myst_1
+                0x08063d30      0x180 /workspace/setup/forest-concepts/builds/v5/assets.o
+                0x08063d30                tile_anim_myst_1
+ .rodata.tile_anim_myst_0
+                0x08063eb0      0x100 /workspace/setup/forest-concepts/builds/v5/assets.o
+                0x08063eb0                tile_anim_myst_0
+ .rodata.tileset_myst_pals
+                0x08063fb0       0xc0 /workspace/setup/forest-concepts/builds/v5/assets.o
+                0x08063fb0                tileset_myst_pals
+ .rodata.metatile_map_myst
+                0x08064070     0x3110 /workspace/setup/forest-concepts/builds/v5/assets.o
+                0x08064070                metatile_map_myst
+ .rodata.tileset_myst_tiles
+                0x08067180      0xda0 /workspace/setup/forest-concepts/builds/v5/assets.o
+                0x08067180                tileset_myst_tiles
+ .rodata.tile_anims_sewer
+                0x08067f20      0x228 /workspace/setup/forest-concepts/builds/v5/assets.o
+ .rodata.tile_anim_sewer_68
+                0x08068148      0x400 /workspace/setup/forest-concepts/builds/v5/assets.o
+                0x08068148                tile_anim_sewer_68
+ .rodata.tile_anim_sewer_67
+                0x08068548      0x400 /workspace/setup/forest-concepts/builds/v5/assets.o
+                0x08068548                tile_anim_sewer_67
+ .rodata.tile_anim_sewer_66
+                0x08068948      0xc00 /workspace/setup/forest-concepts/builds/v5/assets.o
+                0x08068948                tile_anim_sewer_66
+ .rodata.tile_anim_sewer_65
+                0x08069548      0x400 /workspace/setup/forest-concepts/builds/v5/assets.o
+                0x08069548                tile_anim_sewer_65
+ .rodata.tile_anim_sewer_64
+                0x08069948      0x400 /workspace/setup/forest-concepts/builds/v5/assets.o
+                0x08069948                tile_anim_sewer_64
+ .rodata.tile_anim_sewer_63
+                0x08069d48      0x400 /workspace/setup/forest-concepts/builds/v5/assets.o
+                0x08069d48                tile_anim_sewer_63
+ .rodata.tile_anim_sewer_62
+                0x0806a148      0xc00 /workspace/setup/forest-concepts/builds/v5/assets.o
+                0x0806a148                tile_anim_sewer_62
+ .rodata.tile_anim_sewer_61
+                0x0806ad48      0x400 /workspace/setup/forest-concepts/builds/v5/assets.o
+                0x0806ad48                tile_anim_sewer_61
+ .rodata.tile_anim_sewer_60
+                0x0806b148      0x400 /workspace/setup/forest-concepts/builds/v5/assets.o
+                0x0806b148                tile_anim_sewer_60
+ .rodata.tile_anim_sewer_59
+                0x0806b548      0x400 /workspace/setup/forest-concepts/builds/v5/assets.o
+                0x0806b548                tile_anim_sewer_59
+ .rodata.tile_anim_sewer_58
+                0x0806b948      0x400 /workspace/setup/forest-concepts/builds/v5/assets.o
+                0x0806b948                tile_anim_sewer_58
+ .rodata.tile_anim_sewer_57
+                0x0806bd48      0x100 /workspace/setup/forest-concepts/builds/v5/assets.o
+                0x0806bd48                tile_anim_sewer_57
+ .rodata.tile_anim_sewer_56
+                0x0806be48      0x400 /workspace/setup/forest-concepts/builds/v5/assets.o
+                0x0806be48                tile_anim_sewer_56
+ .rodata.tile_anim_sewer_55
+                0x0806c248      0x400 /workspace/setup/forest-concepts/builds/v5/assets.o
+                0x0806c248                tile_anim_sewer_55
+ .rodata.tile_anim_sewer_54
+                0x0806c648      0x400 /workspace/setup/forest-concepts/builds/v5/assets.o
+                0x0806c648                tile_anim_sewer_54
+ .rodata.tile_anim_sewer_53
+                0x0806ca48      0x400 /workspace/setup/forest-concepts/builds/v5/assets.o
+                0x0806ca48                tile_anim_sewer_53
+ .rodata.tile_anim_sewer_52
+                0x0806ce48      0x400 /workspace/setup/forest-concepts/builds/v5/assets.o
+                0x0806ce48                tile_anim_sewer_52
+ .rodata.tile_anim_sewer_51
+                0x0806d248      0x400 /workspace/setup/forest-concepts/builds/v5/assets.o
+                0x0806d248                tile_anim_sewer_51
+ .rodata.tile_anim_sewer_50
+                0x0806d648      0x400 /workspace/setup/forest-concepts/builds/v5/assets.o
+                0x0806d648                tile_anim_sewer_50
+ .rodata.tile_anim_sewer_49
+                0x0806da48      0x400 /workspace/setup/forest-concepts/builds/v5/assets.o
+                0x0806da48                tile_anim_sewer_49
+ .rodata.tile_anim_sewer_48
+                0x0806de48      0x400 /workspace/setup/forest-concepts/builds/v5/assets.o
+                0x0806de48                tile_anim_sewer_48
+ .rodata.tile_anim_sewer_47
+                0x0806e248      0x400 /workspace/setup/forest-concepts/builds/v5/assets.o
+                0x0806e248                tile_anim_sewer_47
+ .rodata.tile_anim_sewer_46
+                0x0806e648      0x400 /workspace/setup/forest-concepts/builds/v5/assets.o
+                0x0806e648                tile_anim_sewer_46
+ .rodata.tile_anim_sewer_45
+                0x0806ea48      0x400 /workspace/setup/forest-concepts/builds/v5/assets.o
+                0x0806ea48                tile_anim_sewer_45
+ .rodata.tile_anim_sewer_44
+                0x0806ee48      0x400 /workspace/setup/forest-concepts/builds/v5/assets.o
+                0x0806ee48                tile_anim_sewer_44
+ .rodata.tile_anim_sewer_43
+                0x0806f248      0x400 /workspace/setup/forest-concepts/builds/v5/assets.o
+                0x0806f248                tile_anim_sewer_43
+ .rodata.tile_anim_sewer_42
+                0x0806f648      0x400 /workspace/setup/forest-concepts/builds/v5/assets.o
+                0x0806f648                tile_anim_sewer_42
+ .rodata.tile_anim_sewer_41
+                0x0806fa48      0x400 /workspace/setup/forest-concepts/builds/v5/assets.o
+                0x0806fa48                tile_anim_sewer_41
+ .rodata.tile_anim_sewer_40
+                0x0806fe48      0x400 /workspace/setup/forest-concepts/builds/v5/assets.o
+                0x0806fe48                tile_anim_sewer_40
+ .rodata.tile_anim_sewer_39
+                0x08070248      0x400 /workspace/setup/forest-concepts/builds/v5/assets.o
+                0x08070248                tile_anim_sewer_39
+ .rodata.tile_anim_sewer_38
+                0x08070648      0x400 /workspace/setup/forest-concepts/builds/v5/assets.o
+                0x08070648                tile_anim_sewer_38
+ .rodata.tile_anim_sewer_37
+                0x08070a48      0x400 /workspace/setup/forest-concepts/builds/v5/assets.o
+                0x08070a48                tile_anim_sewer_37
+ .rodata.tile_anim_sewer_36
+                0x08070e48      0x400 /workspace/setup/forest-concepts/builds/v5/assets.o
+                0x08070e48                tile_anim_sewer_36
+ .rodata.tile_anim_sewer_35
+                0x08071248      0x400 /workspace/setup/forest-concepts/builds/v5/assets.o
+                0x08071248                tile_anim_sewer_35
+ .rodata.tile_anim_sewer_34
+                0x08071648      0x400 /workspace/setup/forest-concepts/builds/v5/assets.o
+                0x08071648                tile_anim_sewer_34
+ .rodata.tile_anim_sewer_33
+                0x08071a48      0x400 /workspace/setup/forest-concepts/builds/v5/assets.o
+                0x08071a48                tile_anim_sewer_33
+ .rodata.tile_anim_sewer_32
+                0x08071e48      0x400 /workspace/setup/forest-concepts/builds/v5/assets.o
+                0x08071e48                tile_anim_sewer_32
+ .rodata.tile_anim_sewer_31
+                0x08072248      0x400 /workspace/setup/forest-concepts/builds/v5/assets.o
+                0x08072248                tile_anim_sewer_31
+ .rodata.tile_anim_sewer_30
+                0x08072648      0x400 /workspace/setup/forest-concepts/builds/v5/assets.o
+                0x08072648                tile_anim_sewer_30
+ .rodata.tile_anim_sewer_29
+                0x08072a48      0x400 /workspace/setup/forest-concepts/builds/v5/assets.o
+                0x08072a48                tile_anim_sewer_29
+ .rodata.tile_anim_sewer_28
+                0x08072e48      0x400 /workspace/setup/forest-concepts/builds/v5/assets.o
+                0x08072e48                tile_anim_sewer_28
+ .rodata.tile_anim_sewer_27
+                0x08073248      0x400 /workspace/setup/forest-concepts/builds/v5/assets.o
+                0x08073248                tile_anim_sewer_27
+ .rodata.tile_anim_sewer_26
+                0x08073648      0x400 /workspace/setup/forest-concepts/builds/v5/assets.o
+                0x08073648                tile_anim_sewer_26
+ .rodata.tile_anim_sewer_25
+                0x08073a48      0x400 /workspace/setup/forest-concepts/builds/v5/assets.o
+                0x08073a48                tile_anim_sewer_25
+ .rodata.tile_anim_sewer_24
+                0x08073e48      0x400 /workspace/setup/forest-concepts/builds/v5/assets.o
+                0x08073e48                tile_anim_sewer_24
+ .rodata.tile_anim_sewer_23
+                0x08074248      0x400 /workspace/setup/forest-concepts/builds/v5/assets.o
+                0x08074248                tile_anim_sewer_23
+ .rodata.tile_anim_sewer_22
+                0x08074648      0x400 /workspace/setup/forest-concepts/builds/v5/assets.o
+                0x08074648                tile_anim_sewer_22
+ .rodata.tile_anim_sewer_21
+                0x08074a48      0x400 /workspace/setup/forest-concepts/builds/v5/assets.o
+                0x08074a48                tile_anim_sewer_21
+ .rodata.tile_anim_sewer_20
+                0x08074e48      0x400 /workspace/setup/forest-concepts/builds/v5/assets.o
+                0x08074e48                tile_anim_sewer_20
+ .rodata.tile_anim_sewer_19
+                0x08075248      0x400 /workspace/setup/forest-concepts/builds/v5/assets.o
+                0x08075248                tile_anim_sewer_19
+ .rodata.tile_anim_sewer_18
+                0x08075648      0x400 /workspace/setup/forest-concepts/builds/v5/assets.o
+                0x08075648                tile_anim_sewer_18
+ .rodata.tile_anim_sewer_17
+                0x08075a48      0x400 /workspace/setup/forest-concepts/builds/v5/assets.o
+                0x08075a48                tile_anim_sewer_17
+ .rodata.tile_anim_sewer_16
+                0x08075e48      0x400 /workspace/setup/forest-concepts/builds/v5/assets.o
+                0x08075e48                tile_anim_sewer_16
+ .rodata.tile_anim_sewer_15
+                0x08076248      0x400 /workspace/setup/forest-concepts/builds/v5/assets.o
+                0x08076248                tile_anim_sewer_15
+ .rodata.tile_anim_sewer_14
+                0x08076648      0x400 /workspace/setup/forest-concepts/builds/v5/assets.o
+                0x08076648                tile_anim_sewer_14
+ .rodata.tile_anim_sewer_13
+                0x08076a48      0x400 /workspace/setup/forest-concepts/builds/v5/assets.o
+                0x08076a48                tile_anim_sewer_13
+ .rodata.tile_anim_sewer_12
+                0x08076e48      0x400 /workspace/setup/forest-concepts/builds/v5/assets.o
+                0x08076e48                tile_anim_sewer_12
+ .rodata.tile_anim_sewer_11
+                0x08077248      0x180 /workspace/setup/forest-concepts/builds/v5/assets.o
+                0x08077248                tile_anim_sewer_11
+ .rodata.tile_anim_sewer_10
+                0x080773c8      0x180 /workspace/setup/forest-concepts/builds/v5/assets.o
+                0x080773c8                tile_anim_sewer_10
+ .rodata.tile_anim_sewer_9
+                0x08077548      0x180 /workspace/setup/forest-concepts/builds/v5/assets.o
+                0x08077548                tile_anim_sewer_9
+ .rodata.tile_anim_sewer_8
+                0x080776c8      0x400 /workspace/setup/forest-concepts/builds/v5/assets.o
+                0x080776c8                tile_anim_sewer_8
+ .rodata.tile_anim_sewer_7
+                0x08077ac8      0x400 /workspace/setup/forest-concepts/builds/v5/assets.o
+                0x08077ac8                tile_anim_sewer_7
+ .rodata.tile_anim_sewer_6
+                0x08077ec8      0x400 /workspace/setup/forest-concepts/builds/v5/assets.o
+                0x08077ec8                tile_anim_sewer_6
+ .rodata.tile_anim_sewer_5
+                0x080782c8      0x400 /workspace/setup/forest-concepts/builds/v5/assets.o
+                0x080782c8                tile_anim_sewer_5
+ .rodata.tile_anim_sewer_4
+                0x080786c8      0x200 /workspace/setup/forest-concepts/builds/v5/assets.o
+                0x080786c8                tile_anim_sewer_4
+ .rodata.tile_anim_sewer_3
+                0x080788c8      0x200 /workspace/setup/forest-concepts/builds/v5/assets.o
+                0x080788c8                tile_anim_sewer_3
+ .rodata.tile_anim_sewer_2
+                0x08078ac8      0x400 /workspace/setup/forest-concepts/builds/v5/assets.o
+                0x08078ac8                tile_anim_sewer_2
+ .rodata.tile_anim_sewer_1
+                0x08078ec8      0x400 /workspace/setup/forest-concepts/builds/v5/assets.o
+                0x08078ec8                tile_anim_sewer_1
+ .rodata.tile_anim_sewer_0
+                0x080792c8      0x180 /workspace/setup/forest-concepts/builds/v5/assets.o
+                0x080792c8                tile_anim_sewer_0
+ .rodata.tileset_sewer_pals
+                0x08079448       0x20 /workspace/setup/forest-concepts/builds/v5/assets.o
+                0x08079448                tileset_sewer_pals
+ .rodata.metatile_map_sewer
+                0x08079468     0x3110 /workspace/setup/forest-concepts/builds/v5/assets.o
+                0x08079468                metatile_map_sewer
+ .rodata.tileset_sewer_tiles
+                0x0807c578     0x66c0 /workspace/setup/forest-concepts/builds/v5/assets.o
+                0x0807c578                tileset_sewer_tiles
+ .rodata.tile_anims_forest
+                0x08082c38      0x1d8 /workspace/setup/forest-concepts/builds/v5/assets.o
+ .rodata.tile_anim_forest_58
+                0x08082e10      0x100 /workspace/setup/forest-concepts/builds/v5/assets.o
+                0x08082e10                tile_anim_forest_58
+ .rodata.tile_anim_forest_57
+                0x08082f10      0x100 /workspace/setup/forest-concepts/builds/v5/assets.o
+                0x08082f10                tile_anim_forest_57
+ .rodata.tile_anim_forest_56
+                0x08083010      0x100 /workspace/setup/forest-concepts/builds/v5/assets.o
+                0x08083010                tile_anim_forest_56
+ .rodata.tile_anim_forest_55
+                0x08083110      0x100 /workspace/setup/forest-concepts/builds/v5/assets.o
+                0x08083110                tile_anim_forest_55
+ .rodata.tile_anim_forest_54
+                0x08083210      0x100 /workspace/setup/forest-concepts/builds/v5/assets.o
+                0x08083210                tile_anim_forest_54
+ .rodata.tile_anim_forest_53
+                0x08083310      0x100 /workspace/setup/forest-concepts/builds/v5/assets.o
+                0x08083310                tile_anim_forest_53
+ .rodata.tile_anim_forest_52
+                0x08083410      0x100 /workspace/setup/forest-concepts/builds/v5/assets.o
+                0x08083410                tile_anim_forest_52
+ .rodata.tile_anim_forest_51
+                0x08083510      0x100 /workspace/setup/forest-concepts/builds/v5/assets.o
+                0x08083510                tile_anim_forest_51
+ .rodata.tile_anim_forest_50
+                0x08083610      0x100 /workspace/setup/forest-concepts/builds/v5/assets.o
+                0x08083610                tile_anim_forest_50
+ .rodata.tile_anim_forest_49
+                0x08083710      0x100 /workspace/setup/forest-concepts/builds/v5/assets.o
+                0x08083710                tile_anim_forest_49
+ .rodata.tile_anim_forest_48
+                0x08083810      0x100 /workspace/setup/forest-concepts/builds/v5/assets.o
+                0x08083810                tile_anim_forest_48
+ .rodata.tile_anim_forest_47
+                0x08083910      0x180 /workspace/setup/forest-concepts/builds/v5/assets.o
+                0x08083910                tile_anim_forest_47
+ .rodata.tile_anim_forest_46
+                0x08083a90      0x100 /workspace/setup/forest-concepts/builds/v5/assets.o
+                0x08083a90                tile_anim_forest_46
+ .rodata.tile_anim_forest_45
+                0x08083b90      0x100 /workspace/setup/forest-concepts/builds/v5/assets.o
+                0x08083b90                tile_anim_forest_45
+ .rodata.tile_anim_forest_44
+                0x08083c90      0x100 /workspace/setup/forest-concepts/builds/v5/assets.o
+                0x08083c90                tile_anim_forest_44
+ .rodata.tile_anim_forest_43
+                0x08083d90      0x100 /workspace/setup/forest-concepts/builds/v5/assets.o
+                0x08083d90                tile_anim_forest_43
+ .rodata.tile_anim_forest_42
+                0x08083e90      0x100 /workspace/setup/forest-concepts/builds/v5/assets.o
+                0x08083e90                tile_anim_forest_42
+ .rodata.tile_anim_forest_41
+                0x08083f90      0x100 /workspace/setup/forest-concepts/builds/v5/assets.o
+                0x08083f90                tile_anim_forest_41
+ .rodata.tile_anim_forest_40
+                0x08084090      0x100 /workspace/setup/forest-concepts/builds/v5/assets.o
+                0x08084090                tile_anim_forest_40
+ .rodata.tile_anim_forest_39
+                0x08084190      0x100 /workspace/setup/forest-concepts/builds/v5/assets.o
+                0x08084190                tile_anim_forest_39
+ .rodata.tile_anim_forest_38
+                0x08084290      0x100 /workspace/setup/forest-concepts/builds/v5/assets.o
+                0x08084290                tile_anim_forest_38
+ .rodata.tile_anim_forest_37
+                0x08084390      0x100 /workspace/setup/forest-concepts/builds/v5/assets.o
+                0x08084390                tile_anim_forest_37
+ .rodata.tile_anim_forest_36
+                0x08084490      0x100 /workspace/setup/forest-concepts/builds/v5/assets.o
+                0x08084490                tile_anim_forest_36
+ .rodata.tile_anim_forest_35
+                0x08084590      0x100 /workspace/setup/forest-concepts/builds/v5/assets.o
+                0x08084590                tile_anim_forest_35
+ .rodata.tile_anim_forest_34
+                0x08084690      0x100 /workspace/setup/forest-concepts/builds/v5/assets.o
+                0x08084690                tile_anim_forest_34
+ .rodata.tile_anim_forest_33
+                0x08084790      0x100 /workspace/setup/forest-concepts/builds/v5/assets.o
+                0x08084790                tile_anim_forest_33
+ .rodata.tile_anim_forest_32
+                0x08084890      0x100 /workspace/setup/forest-concepts/builds/v5/assets.o
+                0x08084890                tile_anim_forest_32
+ .rodata.tile_anim_forest_31
+                0x08084990      0x100 /workspace/setup/forest-concepts/builds/v5/assets.o
+                0x08084990                tile_anim_forest_31
+ .rodata.tile_anim_forest_30
+                0x08084a90      0x100 /workspace/setup/forest-concepts/builds/v5/assets.o
+                0x08084a90                tile_anim_forest_30
+ .rodata.tile_anim_forest_29
+                0x08084b90      0x100 /workspace/setup/forest-concepts/builds/v5/assets.o
+                0x08084b90                tile_anim_forest_29
+ .rodata.tile_anim_forest_28
+                0x08084c90      0x100 /workspace/setup/forest-concepts/builds/v5/assets.o
+                0x08084c90                tile_anim_forest_28
+ .rodata.tile_anim_forest_27
+                0x08084d90      0x100 /workspace/setup/forest-concepts/builds/v5/assets.o
+                0x08084d90                tile_anim_forest_27
+ .rodata.tile_anim_forest_26
+                0x08084e90      0x100 /workspace/setup/forest-concepts/builds/v5/assets.o
+                0x08084e90                tile_anim_forest_26
+ .rodata.tile_anim_forest_25
+                0x08084f90      0x100 /workspace/setup/forest-concepts/builds/v5/assets.o
+                0x08084f90                tile_anim_forest_25
+ .rodata.tile_anim_forest_24
+                0x08085090      0x100 /workspace/setup/forest-concepts/builds/v5/assets.o
+                0x08085090                tile_anim_forest_24
+ .rodata.tile_anim_forest_23
+                0x08085190      0x100 /workspace/setup/forest-concepts/builds/v5/assets.o
+                0x08085190                tile_anim_forest_23
+ .rodata.tile_anim_forest_22
+                0x08085290      0x100 /workspace/setup/forest-concepts/builds/v5/assets.o
+                0x08085290                tile_anim_forest_22
+ .rodata.tile_anim_forest_21
+                0x08085390      0x180 /workspace/setup/forest-concepts/builds/v5/assets.o
+                0x08085390                tile_anim_forest_21
+ .rodata.tile_anim_forest_20
+                0x08085510      0x100 /workspace/setup/forest-concepts/builds/v5/assets.o
+                0x08085510                tile_anim_forest_20
+ .rodata.tile_anim_forest_19
+                0x08085610      0x100 /workspace/setup/forest-concepts/builds/v5/assets.o
+                0x08085610                tile_anim_forest_19
+ .rodata.tile_anim_forest_18
+                0x08085710      0x100 /workspace/setup/forest-concepts/builds/v5/assets.o
+                0x08085710                tile_anim_forest_18
+ .rodata.tile_anim_forest_17
+                0x08085810      0x100 /workspace/setup/forest-concepts/builds/v5/assets.o
+                0x08085810                tile_anim_forest_17
+ .rodata.tile_anim_forest_16
+                0x08085910      0x100 /workspace/setup/forest-concepts/builds/v5/assets.o
+                0x08085910                tile_anim_forest_16
+ .rodata.tile_anim_forest_15
+                0x08085a10      0x100 /workspace/setup/forest-concepts/builds/v5/assets.o
+                0x08085a10                tile_anim_forest_15
+ .rodata.tile_anim_forest_14
+                0x08085b10      0x100 /workspace/setup/forest-concepts/builds/v5/assets.o
+                0x08085b10                tile_anim_forest_14
+ .rodata.tile_anim_forest_13
+                0x08085c10      0x100 /workspace/setup/forest-concepts/builds/v5/assets.o
+                0x08085c10                tile_anim_forest_13
+ .rodata.tile_anim_forest_12
+                0x08085d10      0x100 /workspace/setup/forest-concepts/builds/v5/assets.o
+                0x08085d10                tile_anim_forest_12
+ .rodata.tile_anim_forest_11
+                0x08085e10      0x100 /workspace/setup/forest-concepts/builds/v5/assets.o
+                0x08085e10                tile_anim_forest_11
+ .rodata.tile_anim_forest_10
+                0x08085f10      0x100 /workspace/setup/forest-concepts/builds/v5/assets.o
+                0x08085f10                tile_anim_forest_10
+ .rodata.tile_anim_forest_9
+                0x08086010      0x100 /workspace/setup/forest-concepts/builds/v5/assets.o
+                0x08086010                tile_anim_forest_9
+ .rodata.tile_anim_forest_8
+                0x08086110      0x100 /workspace/setup/forest-concepts/builds/v5/assets.o
+                0x08086110                tile_anim_forest_8
+ .rodata.tile_anim_forest_7
+                0x08086210      0x100 /workspace/setup/forest-concepts/builds/v5/assets.o
+                0x08086210                tile_anim_forest_7
+ .rodata.tile_anim_forest_6
+                0x08086310      0x100 /workspace/setup/forest-concepts/builds/v5/assets.o
+                0x08086310                tile_anim_forest_6
+ .rodata.tile_anim_forest_5
+                0x08086410      0x100 /workspace/setup/forest-concepts/builds/v5/assets.o
+                0x08086410                tile_anim_forest_5
+ .rodata.tile_anim_forest_4
+                0x08086510      0x100 /workspace/setup/forest-concepts/builds/v5/assets.o
+                0x08086510                tile_anim_forest_4
+ .rodata.tile_anim_forest_3
+                0x08086610      0x100 /workspace/setup/forest-concepts/builds/v5/assets.o
+                0x08086610                tile_anim_forest_3
+ .rodata.tile_anim_forest_2
+                0x08086710      0x100 /workspace/setup/forest-concepts/builds/v5/assets.o
+                0x08086710                tile_anim_forest_2
+ .rodata.tile_anim_forest_1
+                0x08086810      0x100 /workspace/setup/forest-concepts/builds/v5/assets.o
+                0x08086810                tile_anim_forest_1
+ .rodata.tile_anim_forest_0
+                0x08086910      0x100 /workspace/setup/forest-concepts/builds/v5/assets.o
+                0x08086910                tile_anim_forest_0
+ .rodata.tileset_forest_pals
+                0x08086a10      0x140 /workspace/setup/forest-concepts/builds/v5/assets.o
+                0x08086a10                tileset_forest_pals
+ .rodata.metatile_map_forest
+                0x08086b50     0x3110 /workspace/setup/forest-concepts/builds/v5/assets.o
+                0x08086b50                metatile_map_forest
+ .rodata.tileset_forest_tiles
+                0x08089c60     0x4c00 /workspace/setup/forest-concepts/builds/v5/assets.o
+                0x08089c60                tileset_forest_tiles
+ .rodata.metatile_glitter
+                0x0808e860      0x622 /workspace/setup/forest-concepts/builds/v5/assets.o
+                0x0808e860                metatile_glitter
+ *fill*         0x0808ee82        0x2 
+ .rodata.metatile_prop
+                0x0808ee84      0x622 /workspace/setup/forest-concepts/builds/v5/assets.o
+                0x0808ee84                metatile_prop
+ *fill*         0x0808f4a6        0x2 
+ .rodata.metatile_coll
+                0x0808f4a8      0x622 /workspace/setup/forest-concepts/builds/v5/assets.o
+                0x0808f4a8                metatile_coll
+ *fill*         0x0808faca        0x2 
+ .rodata.metatile_type
+                0x0808facc      0x622 /workspace/setup/forest-concepts/builds/v5/assets.o
+                0x0808facc                metatile_type
+ *fill*         0x080900ee        0x2 
+ .rodata.pal_face
+                0x080900f0       0xc0 /workspace/setup/forest-concepts/builds/v5/assets.o
+                0x080900f0                pal_face
+ .rodata.pal_obj
+                0x080901b0      0x200 /workspace/setup/forest-concepts/builds/v5/assets.o
+                0x080901b0                pal_obj
+ .rodata.pal_bg
+                0x080903b0      0x200 /workspace/setup/forest-concepts/builds/v5/assets.o
+                0x080903b0                pal_bg
+                0x080905b0                        . = ALIGN (0x4)
+
+.rel.dyn        0x080905b0        0x0
+ .rel.iplt      0x080905b0        0x0 /workspace/setup/forest-concepts/builds/v5/actor.o
+
+.ARM.exidx
+ *(.ARM.exidx*)
+
+.iwram          0x03000000       0x7c load address 0x080905b0
+                0x03000000                        __iwram_start = .
+ *_iwram.o(.text .text.* .rodata .rodata.*)
+ *(.iwram .iwram.*)
+ .iwram         0x03000000       0x6c /workspace/setup/forest-concepts/builds/v5/crt0.o
+                0x03000000                irq_handler
+ *(.data .data.* .gnu.linkonce.d.*)
+ .data.sLastShieldFrame
+                0x0300006c        0x1 /workspace/setup/forest-concepts/builds/v5/player.o
+ .data.sLastFrame
+                0x0300006d        0x1 /workspace/setup/forest-concepts/builds/v5/player.o
+ *fill*         0x0300006e        0x2 
+ .data.sTs      0x03000070        0x4 /workspace/setup/forest-concepts/builds/v5/room.o
+ .data.sTbFace  0x03000074        0x1 /workspace/setup/forest-concepts/builds/v5/text.o
+ *fill*         0x03000075        0x3 
+ .data.sRand    0x03000078        0x4 /workspace/setup/forest-concepts/builds/v5/util.o
+                0x0300007c                        . = ALIGN (0x4)
+                0x0300007c                        __iwram_end = .
+                0x080905b0                        __iwram_lma = LOADADDR (.iwram)
+
+.bss            0x03000080     0x4bec load address 0x0809062c
+                0x03000080                        __bss_start = .
+ *(.bss .bss.* .gnu.linkonce.b.*)
+ .bss.sVqCount  0x03000080        0x1 /workspace/setup/forest-concepts/builds/v5/actor.o
+ *fill*         0x03000081        0x3 
+ .bss.sVq       0x03000084       0xc0 /workspace/setup/forest-concepts/builds/v5/actor.o
+ .bss.sFrameCount
+                0x03000144        0x1 /workspace/setup/forest-concepts/builds/v5/actor.o
+ *fill*         0x03000145        0x3 
+ .bss.sFrameCache
+                0x03000148       0x20 /workspace/setup/forest-concepts/builds/v5/actor.o
+ .bss.sSheetTile
+                0x03000168       0x46 /workspace/setup/forest-concepts/builds/v5/actor.o
+ .bss.sNextTile
+                0x030001ae        0x2 /workspace/setup/forest-concepts/builds/v5/actor.o
+ .bss.gActors   0x030001b0     0x1800 /workspace/setup/forest-concepts/builds/v5/actor.o
+                0x030001b0                gActors
+ .bss.gAmbientPeaks
+                0x030019b0        0x1 /workspace/setup/forest-concepts/builds/v5/ambient.o
+                0x030019b0                gAmbientPeaks
+ .bss.gAmbientVisible
+                0x030019b1        0x1 /workspace/setup/forest-concepts/builds/v5/ambient.o
+                0x030019b1                gAmbientVisible
+ .bss.gAmbientPotential
+                0x030019b2        0x1 /workspace/setup/forest-concepts/builds/v5/ambient.o
+                0x030019b2                gAmbientPotential
+ *fill*         0x030019b3        0x1 
+ .bss.gAmbientSiteCount
+                0x030019b4        0x2 /workspace/setup/forest-concepts/builds/v5/ambient.o
+                0x030019b4                gAmbientSiteCount
+ *fill*         0x030019b6        0x2 
+ .bss.sAmbientFrame
+                0x030019b8        0x4 /workspace/setup/forest-concepts/builds/v5/ambient.o
+ .bss.sAmbientTile
+                0x030019bc        0x2 /workspace/setup/forest-concepts/builds/v5/ambient.o
+ .bss.sAppearanceRevision
+                0x030019be        0x2 /workspace/setup/forest-concepts/builds/v5/appearance.o
+ .bss.gAppearancePalette
+                0x030019c0        0x1 /workspace/setup/forest-concepts/builds/v5/appearance.o
+                0x030019c0                gAppearancePalette
+ .bss.gAppearanceStyle
+                0x030019c1        0x1 /workspace/setup/forest-concepts/builds/v5/appearance.o
+                0x030019c1                gAppearanceStyle
+ .bss.sBossUploadedFrame
+                0x030019c2        0x1 /workspace/setup/forest-concepts/builds/v5/boss.o
+ .bss.sDying    0x030019c3        0x1 /workspace/setup/forest-concepts/builds/v5/boss.o
+ .bss.sBossTile
+                0x030019c4        0x2 /workspace/setup/forest-concepts/builds/v5/boss.o
+ *fill*         0x030019c6        0x2 
+ .bss.gEnemyPresentedFrame
+                0x030019c8       0x60 /workspace/setup/forest-concepts/builds/v5/enemy.o
+                0x030019c8                gEnemyPresentedFrame
+ .bss.sKswordTile
+                0x03001a28        0x2 /workspace/setup/forest-concepts/builds/v5/enemy.o
+ *fill*         0x03001a2a        0x2 
+ .bss.sSheetTile
+                0x03001a2c        0xc /workspace/setup/forest-concepts/builds/v5/enemy.o
+ .bss.press.0   0x03001a38        0xc /workspace/setup/forest-concepts/builds/v5/game.o
+ .bss.stats.1   0x03001a44        0xc /workspace/setup/forest-concepts/builds/v5/game.o
+ .bss.body.2    0x03001a50        0xc /workspace/setup/forest-concepts/builds/v5/game.o
+ .bss.plate.3   0x03001a5c        0xc /workspace/setup/forest-concepts/builds/v5/game.o
+ .bss.gDbgSpawn
+                0x03001a68        0x4 /workspace/setup/forest-concepts/builds/v5/game.o
+                0x03001a68                gDbgSpawn
+ .bss.sWinTimer
+                0x03001a6c        0x2 /workspace/setup/forest-concepts/builds/v5/game.o
+ *fill*         0x03001a6e        0x2 
+ .bss.sTitleTextPixels
+                0x03001a70      0x400 /workspace/setup/forest-concepts/builds/v5/game.o
+ .bss.sOptionsHelp
+                0x03001e70        0xc /workspace/setup/forest-concepts/builds/v5/game.o
+ .bss.sOptionsPreview
+                0x03001e7c        0xc /workspace/setup/forest-concepts/builds/v5/game.o
+ .bss.sOptionsColors
+                0x03001e88        0xc /workspace/setup/forest-concepts/builds/v5/game.o
+ .bss.sOptionsStyle
+                0x03001e94        0xc /workspace/setup/forest-concepts/builds/v5/game.o
+ .bss.sOptionsHeader
+                0x03001ea0        0xc /workspace/setup/forest-concepts/builds/v5/game.o
+ .bss.sOptionsCursor
+                0x03001eac        0x1 /workspace/setup/forest-concepts/builds/v5/game.o
+ .bss.gTitleOptions
+                0x03001ead        0x1 /workspace/setup/forest-concepts/builds/v5/game.o
+                0x03001ead                gTitleOptions
+ *fill*         0x03001eae        0x2 
+ .bss.sTitleMenu
+                0x03001eb0        0xc /workspace/setup/forest-concepts/builds/v5/game.o
+ .bss.sDiedFlag
+                0x03001ebc        0x1 /workspace/setup/forest-concepts/builds/v5/game.o
+ *fill*         0x03001ebd        0x3 
+ .bss.sTitleSeed
+                0x03001ec0        0x4 /workspace/setup/forest-concepts/builds/v5/game.o
+ .bss.sTitlePhase
+                0x03001ec4        0x1 /workspace/setup/forest-concepts/builds/v5/game.o
+ .bss.sDark     0x03001ec5        0x1 /workspace/setup/forest-concepts/builds/v5/game.o
+ .bss.sHubcap   0x03001ec6        0x1 /workspace/setup/forest-concepts/builds/v5/game.o
+ .bss.sTransPhase
+                0x03001ec7        0x1 /workspace/setup/forest-concepts/builds/v5/game.o
+ .bss.sTitleHasSave
+                0x03001ec8        0x1 /workspace/setup/forest-concepts/builds/v5/game.o
+ .bss.sTitleCursor
+                0x03001ec9        0x1 /workspace/setup/forest-concepts/builds/v5/game.o
+ .bss.sNextSide
+                0x03001eca        0x1 /workspace/setup/forest-concepts/builds/v5/game.o
+ .bss.sNextCell
+                0x03001ecb        0x1 /workspace/setup/forest-concepts/builds/v5/game.o
+ .bss.sNextArea
+                0x03001ecc        0x1 /workspace/setup/forest-concepts/builds/v5/game.o
+ *fill*         0x03001ecd        0x3 
+ .bss.gSeedOverride
+                0x03001ed0        0x4 /workspace/setup/forest-concepts/builds/v5/game.o
+                0x03001ed0                gSeedOverride
+ .bss.gGame     0x03001ed4       0x10 /workspace/setup/forest-concepts/builds/v5/game.o
+                0x03001ed4                gGame
+ .bss.sEntryInterior
+                0x03001ee4        0x1 /workspace/setup/forest-concepts/builds/v5/interactive.o
+ .bss.sEntryY   0x03001ee5        0x1 /workspace/setup/forest-concepts/builds/v5/interactive.o
+ .bss.sEntryX   0x03001ee6        0x1 /workspace/setup/forest-concepts/builds/v5/interactive.o
+ .bss.sChestY   0x03001ee7        0x1 /workspace/setup/forest-concepts/builds/v5/interactive.o
+ .bss.sChestX   0x03001ee8        0x1 /workspace/setup/forest-concepts/builds/v5/interactive.o
+ .bss.sEntryFrame
+                0x03001ee9        0x1 /workspace/setup/forest-concepts/builds/v5/interactive.o
+ .bss.sChestFrame
+                0x03001eea        0x1 /workspace/setup/forest-concepts/builds/v5/interactive.o
+ *fill*         0x03001eeb        0x1 
+ .bss.sEntryTile
+                0x03001eec        0x2 /workspace/setup/forest-concepts/builds/v5/interactive.o
+ .bss.sChestTile
+                0x03001eee        0x2 /workspace/setup/forest-concepts/builds/v5/interactive.o
+ .bss.sLampFx   0x03001ef0        0x1 /workspace/setup/forest-concepts/builds/v5/items.o
+ .bss.sDoorMsgLatch
+                0x03001ef1        0x1 /workspace/setup/forest-concepts/builds/v5/items.o
+ .bss.gMenuMapMarkerCount
+                0x03001ef2        0x1 /workspace/setup/forest-concepts/builds/v5/menu.o
+                0x03001ef2                gMenuMapMarkerCount
+ *fill*         0x03001ef3        0x1 
+ .bss.gMenuMapMarkers
+                0x03001ef4       0xc0 /workspace/setup/forest-concepts/builds/v5/menu.o
+                0x03001ef4                gMenuMapMarkers
+ .bss.gMenuMapEvents
+                0x03001fb4       0x32 /workspace/setup/forest-concepts/builds/v5/menu.o
+                0x03001fb4                gMenuMapEvents
+ .bss.gMenuStudyDrawFrames
+                0x03001fe6        0x2 /workspace/setup/forest-concepts/builds/v5/menu.o
+                0x03001fe6                gMenuStudyDrawFrames
+ .bss.sStudyHeld
+                0x03001fe8        0x2 /workspace/setup/forest-concepts/builds/v5/menu.o
+ .bss.sStudyInputWrite
+                0x03001fea        0x1 /workspace/setup/forest-concepts/builds/v5/menu.o
+ .bss.sStudyInputRead
+                0x03001feb        0x1 /workspace/setup/forest-concepts/builds/v5/menu.o
+ .bss.sStudyInput
+                0x03001fec       0x40 /workspace/setup/forest-concepts/builds/v5/menu.o
+ .bss.sStudyOldHook
+                0x0300202c        0x4 /workspace/setup/forest-concepts/builds/v5/menu.o
+ .bss.sStudyKitReady
+                0x03002030        0x1 /workspace/setup/forest-concepts/builds/v5/menu.o
+ *fill*         0x03002031        0x3 
+ .bss.sStudy    0x03002034        0x4 /workspace/setup/forest-concepts/builds/v5/menu.o
+ .bss.sStudySeed
+                0x03002038        0x4 /workspace/setup/forest-concepts/builds/v5/menu.o
+ .bss.sStudyFocus
+                0x0300203c        0x2 /workspace/setup/forest-concepts/builds/v5/menu.o
+ .bss.sStudyHaveFocus
+                0x0300203e        0x1 /workspace/setup/forest-concepts/builds/v5/menu.o
+ .bss.sStudyAnim
+                0x0300203f        0x1 /workspace/setup/forest-concepts/builds/v5/menu.o
+ .bss.sStudyBg3
+                0x03002040        0x2 /workspace/setup/forest-concepts/builds/v5/menu.o
+ *fill*         0x03002042        0x2 
+ .bss.sStudyCanvas
+                0x03002044        0xc /workspace/setup/forest-concepts/builds/v5/menu.o
+ .bss.sStudyMapReady
+                0x03002050        0x1 /workspace/setup/forest-concepts/builds/v5/menu.o
+ .bss.sStudyMapMode
+                0x03002051        0x1 /workspace/setup/forest-concepts/builds/v5/menu.o
+ *fill*         0x03002052        0x6 
+ .bss.sStudyMapRect
+                0x03002058        0x8 /workspace/setup/forest-concepts/builds/v5/menu.o
+ .bss.sStudyBaseReady
+                0x03002060        0x1 /workspace/setup/forest-concepts/builds/v5/menu.o
+ *fill*         0x03002061        0x3 
+ .bss.sMaskDone
+                0x03002064        0x4 /workspace/setup/forest-concepts/builds/v5/menu.o
+ .bss.sMaskSeed
+                0x03002068        0x4 /workspace/setup/forest-concepts/builds/v5/menu.o
+ .bss.sMapEventsSeed
+                0x0300206c        0x4 /workspace/setup/forest-concepts/builds/v5/menu.o
+ .bss.sMapEventsDone
+                0x03002070        0x4 /workspace/setup/forest-concepts/builds/v5/menu.o
+ .bss.sCount    0x03002074       0x18 /workspace/setup/forest-concepts/builds/v5/menu.o
+ .bss.sMapCur   0x0300208c        0x1 /workspace/setup/forest-concepts/builds/v5/menu.o
+ .bss.sCursor   0x0300208d        0x1 /workspace/setup/forest-concepts/builds/v5/menu.o
+ .bss.sZoom     0x0300208e        0x1 /workspace/setup/forest-concepts/builds/v5/menu.o
+ .bss.sPage     0x0300208f        0x1 /workspace/setup/forest-concepts/builds/v5/menu.o
+ .bss.gMenuStudyZoom
+                0x03002090        0x1 /workspace/setup/forest-concepts/builds/v5/menu_studies.o
+                0x03002090                gMenuStudyZoom
+ .bss.gMenuStudyMapCell
+                0x03002091        0x1 /workspace/setup/forest-concepts/builds/v5/menu_studies.o
+                0x03002091                gMenuStudyMapCell
+ .bss.gMenuStudyCursor
+                0x03002092        0x1 /workspace/setup/forest-concepts/builds/v5/menu_studies.o
+                0x03002092                gMenuStudyCursor
+ .bss.gMenuStudyPage
+                0x03002093        0x1 /workspace/setup/forest-concepts/builds/v5/menu_studies.o
+                0x03002093                gMenuStudyPage
+ .bss.sPrizeY   0x03002094        0x1 /workspace/setup/forest-concepts/builds/v5/myst.o
+ .bss.sPrizeX   0x03002095        0x1 /workspace/setup/forest-concepts/builds/v5/myst.o
+ *fill*         0x03002096        0x2 
+ .bss.sTotal    0x03002098        0x4 /workspace/setup/forest-concepts/builds/v5/myst.o
+ .bss.sCount    0x0300209c        0x4 /workspace/setup/forest-concepts/builds/v5/myst.o
+ .bss.sWave     0x030020a0        0x4 /workspace/setup/forest-concepts/builds/v5/myst.o
+ .bss.sTimer    0x030020a4        0x4 /workspace/setup/forest-concepts/builds/v5/myst.o
+ .bss.sPhase    0x030020a8        0x4 /workspace/setup/forest-concepts/builds/v5/myst.o
+ .bss.sH        0x030020ac        0x4 /workspace/setup/forest-concepts/builds/v5/myst.o
+ .bss.sW        0x030020b0        0x4 /workspace/setup/forest-concepts/builds/v5/myst.o
+ .bss.sStyle    0x030020b4        0x4 /workspace/setup/forest-concepts/builds/v5/myst.o
+ .bss.sSize     0x030020b8        0x4 /workspace/setup/forest-concepts/builds/v5/myst.o
+ .bss.sKind     0x030020bc        0x4 /workspace/setup/forest-concepts/builds/v5/myst.o
+ .bss.sCell     0x030020c0        0x4 /workspace/setup/forest-concepts/builds/v5/myst.o
+ .bss.sR        0x030020c4        0x4 /workspace/setup/forest-concepts/builds/v5/myst.o
+ .bss.sBuf      0x030020c8       0xc8 /workspace/setup/forest-concepts/builds/v5/npc.o
+ .bss.sGate     0x03002190       0x14 /workspace/setup/forest-concepts/builds/v5/npc.o
+ .bss.sPed      0x030021a4       0x18 /workspace/setup/forest-concepts/builds/v5/npc.o
+ .bss.sRailTile
+                0x030021bc        0x2 /workspace/setup/forest-concepts/builds/v5/npc.o
+ *fill*         0x030021be        0x2 
+ .bss.sKeepRng  0x030021c0        0x4 /workspace/setup/forest-concepts/builds/v5/npc.o
+ .bss.sDlgState
+                0x030021c4        0x1 /workspace/setup/forest-concepts/builds/v5/npc.o
+ *fill*         0x030021c5        0x3 
+ .bss.sTalking  0x030021c8        0x4 /workspace/setup/forest-concepts/builds/v5/npc.o
+ .bss.sIconMenu
+                0x030021cc        0x1 /workspace/setup/forest-concepts/builds/v5/objects.o
+ *fill*         0x030021cd        0x3 
+ .bss.sIconWorldPal
+                0x030021d0      0x200 /workspace/setup/forest-concepts/builds/v5/objects.o
+ .bss.sIconAge  0x030023d0        0x7 /workspace/setup/forest-concepts/builds/v5/objects.o
+ *fill*         0x030023d7        0x1 
+ .bss.sIconFrame
+                0x030023d8        0x7 /workspace/setup/forest-concepts/builds/v5/objects.o
+ *fill*         0x030023df        0x1 
+ .bss.sIconTile
+                0x030023e0        0x2 /workspace/setup/forest-concepts/builds/v5/objects.o
+ .bss.sPickTile
+                0x030023e2        0x2 /workspace/setup/forest-concepts/builds/v5/objects.o
+ .bss.sMouthTile
+                0x030023e4        0x2 /workspace/setup/forest-concepts/builds/v5/objects.o
+ .bss.sArrowTile
+                0x030023e6        0x2 /workspace/setup/forest-concepts/builds/v5/objects.o
+ .bss.sLiftTile
+                0x030023e8        0x2 /workspace/setup/forest-concepts/builds/v5/objects.o
+ .bss.sProjTile
+                0x030023ea        0x2 /workspace/setup/forest-concepts/builds/v5/objects.o
+ .bss.sFxTile   0x030023ec        0x2 /workspace/setup/forest-concepts/builds/v5/objects.o
+ .bss.sItemsTile
+                0x030023ee        0x2 /workspace/setup/forest-concepts/builds/v5/objects.o
+ .bss.gSwordStudyRender
+                0x030023f0       0x20 /workspace/setup/forest-concepts/builds/v5/player.o
+                0x030023f0                gSwordStudyRender
+ .bss.gSwordStudyRenderSequence
+                0x03002410        0x4 /workspace/setup/forest-concepts/builds/v5/player.o
+                0x03002410                gSwordStudyRenderSequence
+ .bss.sUseFacing
+                0x03002414        0x1 /workspace/setup/forest-concepts/builds/v5/player.o
+ .bss.sUseLength
+                0x03002415        0x1 /workspace/setup/forest-concepts/builds/v5/player.o
+ .bss.sUseTimer
+                0x03002416        0x1 /workspace/setup/forest-concepts/builds/v5/player.o
+ .bss.sUseItem  0x03002417        0x1 /workspace/setup/forest-concepts/builds/v5/player.o
+ .bss.sShadowTile
+                0x03002418        0x2 /workspace/setup/forest-concepts/builds/v5/player.o
+ .bss.sLastActionFrame
+                0x0300241a        0x2 /workspace/setup/forest-concepts/builds/v5/player.o
+ .bss.sActionTile
+                0x0300241c        0x2 /workspace/setup/forest-concepts/builds/v5/player.o
+ .bss.sWalkTimer
+                0x0300241e        0x1 /workspace/setup/forest-concepts/builds/v5/player.o
+ *fill*         0x0300241f        0x1 
+ .bss.gPl       0x03002420       0x26 /workspace/setup/forest-concepts/builds/v5/player.o
+                0x03002420                gPl
+ *fill*         0x03002446        0x2 
+ .bss.gPlayer   0x03002448        0x4 /workspace/setup/forest-concepts/builds/v5/player.o
+                0x03002448                gPlayer
+ .bss.v.1       0x0300244c        0x4 /workspace/setup/forest-concepts/builds/v5/room.o
+ .bss.gAnimTiles
+                0x03002450        0x1 /workspace/setup/forest-concepts/builds/v5/room.o
+                0x03002450                gAnimTiles
+ *fill*         0x03002451        0x1 
+ .bss.gCamY     0x03002452        0x2 /workspace/setup/forest-concepts/builds/v5/room.o
+                0x03002452                gCamY
+ .bss.gCamX     0x03002454        0x2 /workspace/setup/forest-concepts/builds/v5/room.o
+                0x03002454                gCamX
+ *fill*         0x03002456        0x2 
+ .bss.rot.1     0x03002458      0x300 /workspace/setup/forest-concepts/builds/v5/roomgen.o
+ .bss.q.4       0x03002758      0x600 /workspace/setup/forest-concepts/builds/v5/roomgen.o
+ .bss.sWater    0x03002d58        0x1 /workspace/setup/forest-concepts/builds/v5/roomgen.o
+ *fill*         0x03002d59        0x3 
+ .bss.sClearCount
+                0x03002d5c        0x4 /workspace/setup/forest-concepts/builds/v5/roomgen.o
+ .bss.sClear    0x03002d60       0x10 /workspace/setup/forest-concepts/builds/v5/roomgen.o
+ .bss.sChunk    0x03002d70      0x15e /workspace/setup/forest-concepts/builds/v5/roomgen.o
+ .bss.sStage    0x03002ece        0x1 /workspace/setup/forest-concepts/builds/v5/roomgen.o
+ .bss.sBlighted
+                0x03002ecf        0x1 /workspace/setup/forest-concepts/builds/v5/roomgen.o
+ .bss.sTrail    0x03002ed0        0x2 /workspace/setup/forest-concepts/builds/v5/roomgen.o
+ *fill*         0x03002ed2        0x2 
+ .bss.sPath     0x03002ed4      0x300 /workspace/setup/forest-concepts/builds/v5/roomgen.o
+ .bss.sMask     0x030031d4      0x300 /workspace/setup/forest-concepts/builds/v5/roomgen.o
+ .bss.sTerraceRow
+                0x030034d4        0x4 /workspace/setup/forest-concepts/builds/v5/roomgen.o
+ .bss.sReach    0x030034d8      0x300 /workspace/setup/forest-concepts/builds/v5/roomgen.o
+ .bss.sR        0x030037d8        0x4 /workspace/setup/forest-concepts/builds/v5/roomgen.o
+ .bss.gSpots    0x030037dc       0x3a /workspace/setup/forest-concepts/builds/v5/roomgen.o
+                0x030037dc                gSpots
+ .bss.sRow      0x03003816        0x1 /workspace/setup/forest-concepts/builds/v5/sound.o
+ .bss.sTickTimer
+                0x03003817        0x1 /workspace/setup/forest-concepts/builds/v5/sound.o
+ .bss.sBass     0x03003818        0x8 /workspace/setup/forest-concepts/builds/v5/sound.o
+ .bss.sMel      0x03003820        0x8 /workspace/setup/forest-concepts/builds/v5/sound.o
+ .bss.sBgm      0x03003828        0x1 /workspace/setup/forest-concepts/builds/v5/sound.o
+ .bss.sSfxCur   0x03003829        0x1 /workspace/setup/forest-concepts/builds/v5/sound.o
+ .bss.sSfxTimer
+                0x0300382a        0x1 /workspace/setup/forest-concepts/builds/v5/sound.o
+ *fill*         0x0300382b        0x1 
+ .bss.v.4       0x0300382c        0x4 /workspace/setup/forest-concepts/builds/v5/text.o
+ .bss.sMapTiles
+                0x03003830       0x80 /workspace/setup/forest-concepts/builds/v5/text.o
+ .bss.sHudCount
+                0x030038b0        0x6 /workspace/setup/forest-concepts/builds/v5/text.o
+ *fill*         0x030038b6        0x2 
+ .bss.sHudIconFrame
+                0x030038b8        0x3 /workspace/setup/forest-concepts/builds/v5/text.o
+ *fill*         0x030038bb        0x1 
+ .bss.sHudEq    0x030038bc        0x3 /workspace/setup/forest-concepts/builds/v5/text.o
+ *fill*         0x030038bf        0x1 
+ .bss.sPurseGilt
+                0x030038c0        0x4 /workspace/setup/forest-concepts/builds/v5/text.o
+ .bss.sHudHpMax
+                0x030038c4        0x2 /workspace/setup/forest-concepts/builds/v5/text.o
+ .bss.sHudHp    0x030038c6        0x2 /workspace/setup/forest-concepts/builds/v5/text.o
+ .bss.sPurse    0x030038c8        0xc /workspace/setup/forest-concepts/builds/v5/text.o
+ .bss.sShopHints
+                0x030038d4        0xc /workspace/setup/forest-concepts/builds/v5/text.o
+ .bss.sShopBubble
+                0x030038e0        0xc /workspace/setup/forest-concepts/builds/v5/text.o
+ .bss.sShopPurse
+                0x030038ec        0xc /workspace/setup/forest-concepts/builds/v5/text.o
+ .bss.sShopDesc
+                0x030038f8        0xc /workspace/setup/forest-concepts/builds/v5/text.o
+ .bss.sShopName
+                0x03003904        0xc /workspace/setup/forest-concepts/builds/v5/text.o
+ .bss.sShopRows
+                0x03003910       0x24 /workspace/setup/forest-concepts/builds/v5/text.o
+ .bss.sShopIconTile
+                0x03003934        0x2 /workspace/setup/forest-concepts/builds/v5/text.o
+ .bss.sShopResult
+                0x03003936        0x1 /workspace/setup/forest-concepts/builds/v5/text.o
+ .bss.sShopActive
+                0x03003937        0x1 /workspace/setup/forest-concepts/builds/v5/text.o
+ .bss.sShopCursor
+                0x03003938        0x1 /workspace/setup/forest-concepts/builds/v5/text.o
+ .bss.sShopCount
+                0x03003939        0x1 /workspace/setup/forest-concepts/builds/v5/text.o
+ *fill*         0x0300393a        0x2 
+ .bss.sShopItems
+                0x0300393c        0x4 /workspace/setup/forest-concepts/builds/v5/text.o
+ .bss.sTbX      0x03003940        0x2 /workspace/setup/forest-concepts/builds/v5/text.o
+ .bss.sTbW      0x03003942        0x1 /workspace/setup/forest-concepts/builds/v5/text.o
+ .bss.sTbX0     0x03003943        0x1 /workspace/setup/forest-concepts/builds/v5/text.o
+ .bss.sTbDirty  0x03003944        0x1 /workspace/setup/forest-concepts/builds/v5/text.o
+ .bss.sTbInk    0x03003945        0x1 /workspace/setup/forest-concepts/builds/v5/text.o
+ .bss.sTbDone   0x03003946        0x1 /workspace/setup/forest-concepts/builds/v5/text.o
+ .bss.sTbLine   0x03003947        0x1 /workspace/setup/forest-concepts/builds/v5/text.o
+ .bss.gTbActive
+                0x03003948        0x1 /workspace/setup/forest-concepts/builds/v5/text.o
+                0x03003948                gTbActive
+ *fill*         0x03003949        0x3 
+ .bss.sTbPos    0x0300394c        0x4 /workspace/setup/forest-concepts/builds/v5/text.o
+ .bss.sTbText   0x03003950        0x4 /workspace/setup/forest-concepts/builds/v5/text.o
+ .bss.sTbName   0x03003954        0xc /workspace/setup/forest-concepts/builds/v5/text.o
+ .bss.sTbCanvas
+                0x03003960        0xc /workspace/setup/forest-concepts/builds/v5/text.o
+ .bss.sBg0Dirty
+                0x0300396c        0x1 /workspace/setup/forest-concepts/builds/v5/text.o
+ *fill*         0x0300396d        0x3 
+ .bss.sBg0      0x03003970      0x800 /workspace/setup/forest-concepts/builds/v5/text.o
+ .bss.gBg3Dirty
+                0x03004170        0x1 /workspace/setup/forest-concepts/builds/v5/ui.o
+                0x03004170                gBg3Dirty
+ *fill*         0x03004171        0x3 
+ .bss.gDbg      0x03004174       0x20 /workspace/setup/forest-concepts/builds/v5/util.o
+                0x03004174                gDbg
+ .bss.tmp.0     0x03004194      0x200 /workspace/setup/forest-concepts/builds/v5/video.o
+ .bss.gVBlankHook
+                0x03004394        0x4 /workspace/setup/forest-concepts/builds/v5/video.o
+                0x03004394                gVBlankHook
+ .bss.sFadeSpeed
+                0x03004398        0x1 /workspace/setup/forest-concepts/builds/v5/video.o
+ .bss.sFadeTarget
+                0x03004399        0x1 /workspace/setup/forest-concepts/builds/v5/video.o
+ .bss.gFadeLevel
+                0x0300439a        0x1 /workspace/setup/forest-concepts/builds/v5/video.o
+                0x0300439a                gFadeLevel
+ .bss.gPalDirty
+                0x0300439b        0x1 /workspace/setup/forest-concepts/builds/v5/video.o
+                0x0300439b                gPalDirty
+ *fill*         0x0300439c        0x4 
+ .bss.gPalObj   0x030043a0      0x200 /workspace/setup/forest-concepts/builds/v5/video.o
+                0x030043a0                gPalObj
+ .bss.gPalBg    0x030045a0      0x200 /workspace/setup/forest-concepts/builds/v5/video.o
+                0x030045a0                gPalBg
+ .bss.gBgScroll
+                0x030047a0       0x10 /workspace/setup/forest-concepts/builds/v5/video.o
+                0x030047a0                gBgScroll
+ .bss.gOamCount
+                0x030047b0        0x1 /workspace/setup/forest-concepts/builds/v5/video.o
+                0x030047b0                gOamCount
+ *fill*         0x030047b1        0x7 
+ .bss.gOam      0x030047b8      0x400 /workspace/setup/forest-concepts/builds/v5/video.o
+                0x030047b8                gOam
+ .bss.gKeysUp   0x03004bb8        0x2 /workspace/setup/forest-concepts/builds/v5/video.o
+                0x03004bb8                gKeysUp
+ .bss.gKeysDown
+                0x03004bba        0x2 /workspace/setup/forest-concepts/builds/v5/video.o
+                0x03004bba                gKeysDown
+ .bss.gKeysHeld
+                0x03004bbc        0x2 /workspace/setup/forest-concepts/builds/v5/video.o
+                0x03004bbc                gKeysHeld
+ .bss.gVBlankFlag
+                0x03004bbe        0x1 /workspace/setup/forest-concepts/builds/v5/video.o
+                0x03004bbe                gVBlankFlag
+ *fill*         0x03004bbf        0x1 
+ .bss.gFrame    0x03004bc0        0x4 /workspace/setup/forest-concepts/builds/v5/video.o
+                0x03004bc0                gFrame
+ .bss.sEnd      0x03004bc4        0x2 /workspace/setup/forest-concepts/builds/v5/vwf.o
+ .bss.sNext     0x03004bc6        0x2 /workspace/setup/forest-concepts/builds/v5/vwf.o
+ .bss.sStageLimit
+                0x03004bc8        0x4 /workspace/setup/forest-concepts/builds/v5/world.o
+ .bss.sParent   0x03004bcc       0x19 /workspace/setup/forest-concepts/builds/v5/world.o
+ *fill*         0x03004be5        0x3 
+ .bss.sDist     0x03004be8       0x19 /workspace/setup/forest-concepts/builds/v5/world.o
+ *fill*         0x03004c01        0x3 
+ .bss.sTree     0x03004c04       0x64 /workspace/setup/forest-concepts/builds/v5/world.o
+ .bss.gWorldGenerationFallback
+                0x03004c68        0x1 /workspace/setup/forest-concepts/builds/v5/world.o
+                0x03004c68                gWorldGenerationFallback
+ .bss.gWorldGenerationAttempts
+                0x03004c69        0x1 /workspace/setup/forest-concepts/builds/v5/world.o
+                0x03004c69                gWorldGenerationAttempts
+ *(COMMON)
+                0x03004c6c                        . = ALIGN (0x4)
+ *fill*         0x03004c6a        0x2 
+                0x03004c6c                        __bss_end = .
+
+.ewram          0x02000000        0x0 load address 0x0809062c
+                0x02000000                        __ewram_start = .
+ *(.ewram .ewram.*)
+                0x02000000                        . = ALIGN (0x4)
+                0x02000000                        __ewram_end = .
+                0x0809062c                        __ewram_lma = LOADADDR (.ewram)
+
+.ewram_bss      0x02000000    0x33cd8 load address 0x0809062c
+                0x02000000                        __ewram_bss_start = .
+ *(.ewram_bss .ewram_bss.*)
+ .ewram_bss     0x02000000     0x2000 /workspace/setup/forest-concepts/builds/v5/ambient.o
+ .ewram_bss     0x02002000    0x2817c /workspace/setup/forest-concepts/builds/v5/menu.o
+ .ewram_bss     0x0202a17c     0x2802 /workspace/setup/forest-concepts/builds/v5/room.o
+                0x0202a17c                gRoom
+ *fill*         0x0202c97e        0x2 
+ .ewram_bss     0x0202c980     0x2802 /workspace/setup/forest-concepts/builds/v5/roomgen.o
+ *fill*         0x0202f182        0x2 
+ .ewram_bss     0x0202f184      0x2d8 /workspace/setup/forest-concepts/builds/v5/save.o
+ .ewram_bss     0x0202f45c      0x780 /workspace/setup/forest-concepts/builds/v5/text.o
+ .ewram_bss     0x0202fbdc      0xe60 /workspace/setup/forest-concepts/builds/v5/ui.o
+                0x0203023c                gBg3
+ .ewram_bss     0x02030a3c     0x3000 /workspace/setup/forest-concepts/builds/v5/vwf.o
+ .ewram_bss     0x02033a3c      0x29c /workspace/setup/forest-concepts/builds/v5/world.o
+                0x02033a3c                gWorld
+                0x02033cd8                        . = ALIGN (0x4)
+                0x02033cd8                        __ewram_bss_end = .
+                0x0809062c                        __rom_end = (LOADADDR (.ewram) + SIZEOF (.ewram))
+
+/DISCARD/
+ *(.comment)
+ *(.note*)
+ *(.ARM.attributes)
+LOAD /workspace/setup/forest-concepts/builds/v5/actor.o
+LOAD /workspace/setup/forest-concepts/builds/v5/ambient.o
+LOAD /workspace/setup/forest-concepts/builds/v5/appearance.o
+LOAD /workspace/setup/forest-concepts/builds/v5/boss.o
+LOAD /workspace/setup/forest-concepts/builds/v5/enemy.o
+LOAD /workspace/setup/forest-concepts/builds/v5/game.o
+LOAD /workspace/setup/forest-concepts/builds/v5/interactive.o
+LOAD /workspace/setup/forest-concepts/builds/v5/items.o
+LOAD /workspace/setup/forest-concepts/builds/v5/main.o
+LOAD /workspace/setup/forest-concepts/builds/v5/menu.o
+LOAD /workspace/setup/forest-concepts/builds/v5/menu_layouts_a.o
+LOAD /workspace/setup/forest-concepts/builds/v5/menu_layouts_b.o
+LOAD /workspace/setup/forest-concepts/builds/v5/menu_studies.o
+LOAD /workspace/setup/forest-concepts/builds/v5/myst.o
+LOAD /workspace/setup/forest-concepts/builds/v5/npc.o
+LOAD /workspace/setup/forest-concepts/builds/v5/objects.o
+LOAD /workspace/setup/forest-concepts/builds/v5/player.o
+LOAD /workspace/setup/forest-concepts/builds/v5/react.o
+LOAD /workspace/setup/forest-concepts/builds/v5/room.o
+LOAD /workspace/setup/forest-concepts/builds/v5/roomgen.o
+LOAD /workspace/setup/forest-concepts/builds/v5/save.o
+LOAD /workspace/setup/forest-concepts/builds/v5/sound.o
+LOAD /workspace/setup/forest-concepts/builds/v5/text.o
+LOAD /workspace/setup/forest-concepts/builds/v5/ui.o
+LOAD /workspace/setup/forest-concepts/builds/v5/util.o
+LOAD /workspace/setup/forest-concepts/builds/v5/video.o
+LOAD /workspace/setup/forest-concepts/builds/v5/vwf.o
+LOAD /workspace/setup/forest-concepts/builds/v5/world.o
+LOAD /workspace/setup/forest-concepts/builds/v5/crt0.o
+LOAD /workspace/setup/forest-concepts/builds/v5/assets.o
+LOAD /workspace/setup/sysroot/usr/bin/../lib/gcc/arm-none-eabi/14.2.1/thumb/nofp/libgcc.a
+OUTPUT(/workspace/setup/forest-concepts/builds/v5/forest-study-5.elf elf32-littlearm)
+LOAD linker stubs
+
+.debug_info     0x00000000    0x374b6
+ .debug_info    0x00000000     0x1920 /workspace/setup/forest-concepts/builds/v5/actor.o
+ .debug_info    0x00001920      0xced /workspace/setup/forest-concepts/builds/v5/ambient.o
+ .debug_info    0x0000260d      0x484 /workspace/setup/forest-concepts/builds/v5/appearance.o
+ .debug_info    0x00002a91     0x10eb /workspace/setup/forest-concepts/builds/v5/boss.o
+ .debug_info    0x00003b7c     0x20ed /workspace/setup/forest-concepts/builds/v5/enemy.o
+ .debug_info    0x00005c69     0x3e35 /workspace/setup/forest-concepts/builds/v5/game.o
+ .debug_info    0x00009a9e      0xf89 /workspace/setup/forest-concepts/builds/v5/interactive.o
+ .debug_info    0x0000aa27      0xbeb /workspace/setup/forest-concepts/builds/v5/items.o
+ .debug_info    0x0000b612      0x15f /workspace/setup/forest-concepts/builds/v5/main.o
+ .debug_info    0x0000b771     0x73d2 /workspace/setup/forest-concepts/builds/v5/menu.o
+ .debug_info    0x00012b43      0x286 /workspace/setup/forest-concepts/builds/v5/menu_layouts_a.o
+ .debug_info    0x00012dc9      0x2af /workspace/setup/forest-concepts/builds/v5/menu_layouts_b.o
+ .debug_info    0x00013078      0x2bc /workspace/setup/forest-concepts/builds/v5/menu_studies.o
+ .debug_info    0x00013334     0x2375 /workspace/setup/forest-concepts/builds/v5/myst.o
+ .debug_info    0x000156a9     0x2913 /workspace/setup/forest-concepts/builds/v5/npc.o
+ .debug_info    0x00017fbc     0x262e /workspace/setup/forest-concepts/builds/v5/objects.o
+ .debug_info    0x0001a5ea     0x329b /workspace/setup/forest-concepts/builds/v5/player.o
+ .debug_info    0x0001d885     0x182c /workspace/setup/forest-concepts/builds/v5/react.o
+ .debug_info    0x0001f0b1     0x17e0 /workspace/setup/forest-concepts/builds/v5/room.o
+ .debug_info    0x00020891     0x9cd6 /workspace/setup/forest-concepts/builds/v5/roomgen.o
+ .debug_info    0x0002a567      0xa9d /workspace/setup/forest-concepts/builds/v5/save.o
+ .debug_info    0x0002b004     0x109b /workspace/setup/forest-concepts/builds/v5/sound.o
+ .debug_info    0x0002c09f     0x440b /workspace/setup/forest-concepts/builds/v5/text.o
+ .debug_info    0x000304aa      0xb03 /workspace/setup/forest-concepts/builds/v5/ui.o
+ .debug_info    0x00030fad      0x48a /workspace/setup/forest-concepts/builds/v5/util.o
+ .debug_info    0x00031437      0x950 /workspace/setup/forest-concepts/builds/v5/video.o
+ .debug_info    0x00031d87     0x12ed /workspace/setup/forest-concepts/builds/v5/vwf.o
+ .debug_info    0x00033074     0x25c5 /workspace/setup/forest-concepts/builds/v5/world.o
+ .debug_info    0x00035639     0x19a5 /workspace/setup/forest-concepts/builds/v5/assets.o
+ .debug_info    0x00036fde       0x3e /workspace/setup/sysroot/usr/bin/../lib/gcc/arm-none-eabi/14.2.1/thumb/nofp/libgcc.a(_udivsi3.o)
+ .debug_info    0x0003701c       0x3e /workspace/setup/sysroot/usr/bin/../lib/gcc/arm-none-eabi/14.2.1/thumb/nofp/libgcc.a(_divsi3.o)
+ .debug_info    0x0003705a       0x3c /workspace/setup/sysroot/usr/bin/../lib/gcc/arm-none-eabi/14.2.1/thumb/nofp/libgcc.a(_dvmd_tls.o)
+ .debug_info    0x00037096      0x420 /workspace/setup/sysroot/usr/bin/../lib/gcc/arm-none-eabi/14.2.1/thumb/nofp/libgcc.a(_muldi3.o)
+
+.debug_abbrev   0x00000000     0x6f35
+ .debug_abbrev  0x00000000      0x4cc /workspace/setup/forest-concepts/builds/v5/actor.o
+ .debug_abbrev  0x000004cc      0x352 /workspace/setup/forest-concepts/builds/v5/ambient.o
+ .debug_abbrev  0x0000081e      0x242 /workspace/setup/forest-concepts/builds/v5/appearance.o
+ .debug_abbrev  0x00000a60      0x39d /workspace/setup/forest-concepts/builds/v5/boss.o
+ .debug_abbrev  0x00000dfd      0x539 /workspace/setup/forest-concepts/builds/v5/enemy.o
+ .debug_abbrev  0x00001336      0x50d /workspace/setup/forest-concepts/builds/v5/game.o
+ .debug_abbrev  0x00001843      0x3fa /workspace/setup/forest-concepts/builds/v5/interactive.o
+ .debug_abbrev  0x00001c3d      0x28e /workspace/setup/forest-concepts/builds/v5/items.o
+ .debug_abbrev  0x00001ecb       0x62 /workspace/setup/forest-concepts/builds/v5/main.o
+ .debug_abbrev  0x00001f2d      0x6d1 /workspace/setup/forest-concepts/builds/v5/menu.o
+ .debug_abbrev  0x000025fe      0x104 /workspace/setup/forest-concepts/builds/v5/menu_layouts_a.o
+ .debug_abbrev  0x00002702      0x106 /workspace/setup/forest-concepts/builds/v5/menu_layouts_b.o
+ .debug_abbrev  0x00002808      0x132 /workspace/setup/forest-concepts/builds/v5/menu_studies.o
+ .debug_abbrev  0x0000293a      0x52c /workspace/setup/forest-concepts/builds/v5/myst.o
+ .debug_abbrev  0x00002e66      0x523 /workspace/setup/forest-concepts/builds/v5/npc.o
+ .debug_abbrev  0x00003389      0x56d /workspace/setup/forest-concepts/builds/v5/objects.o
+ .debug_abbrev  0x000038f6      0x6be /workspace/setup/forest-concepts/builds/v5/player.o
+ .debug_abbrev  0x00003fb4      0x378 /workspace/setup/forest-concepts/builds/v5/react.o
+ .debug_abbrev  0x0000432c      0x543 /workspace/setup/forest-concepts/builds/v5/room.o
+ .debug_abbrev  0x0000486f      0x651 /workspace/setup/forest-concepts/builds/v5/roomgen.o
+ .debug_abbrev  0x00004ec0      0x2ff /workspace/setup/forest-concepts/builds/v5/save.o
+ .debug_abbrev  0x000051bf      0x253 /workspace/setup/forest-concepts/builds/v5/sound.o
+ .debug_abbrev  0x00005412      0x6c6 /workspace/setup/forest-concepts/builds/v5/text.o
+ .debug_abbrev  0x00005ad8      0x320 /workspace/setup/forest-concepts/builds/v5/ui.o
+ .debug_abbrev  0x00005df8      0x22a /workspace/setup/forest-concepts/builds/v5/util.o
+ .debug_abbrev  0x00006022      0x33a /workspace/setup/forest-concepts/builds/v5/video.o
+ .debug_abbrev  0x0000635c      0x3ad /workspace/setup/forest-concepts/builds/v5/vwf.o
+ .debug_abbrev  0x00006709      0x531 /workspace/setup/forest-concepts/builds/v5/world.o
+ .debug_abbrev  0x00006c3a      0x133 /workspace/setup/forest-concepts/builds/v5/assets.o
+ .debug_abbrev  0x00006d6d       0x28 /workspace/setup/sysroot/usr/bin/../lib/gcc/arm-none-eabi/14.2.1/thumb/nofp/libgcc.a(_udivsi3.o)
+ .debug_abbrev  0x00006d95       0x28 /workspace/setup/sysroot/usr/bin/../lib/gcc/arm-none-eabi/14.2.1/thumb/nofp/libgcc.a(_divsi3.o)
+ .debug_abbrev  0x00006dbd       0x26 /workspace/setup/sysroot/usr/bin/../lib/gcc/arm-none-eabi/14.2.1/thumb/nofp/libgcc.a(_dvmd_tls.o)
+ .debug_abbrev  0x00006de3      0x152 /workspace/setup/sysroot/usr/bin/../lib/gcc/arm-none-eabi/14.2.1/thumb/nofp/libgcc.a(_muldi3.o)
+
+.debug_loclists
+                0x00000000    0x202e4
+ .debug_loclists
+                0x00000000     0x13ff /workspace/setup/forest-concepts/builds/v5/actor.o
+ .debug_loclists
+                0x000013ff      0x42c /workspace/setup/forest-concepts/builds/v5/ambient.o
+ .debug_loclists
+                0x0000182b      0x1cf /workspace/setup/forest-concepts/builds/v5/appearance.o
+ .debug_loclists
+                0x000019fa      0x37c /workspace/setup/forest-concepts/builds/v5/boss.o
+ .debug_loclists
+                0x00001d76     0x11f9 /workspace/setup/forest-concepts/builds/v5/enemy.o
+ .debug_loclists
+                0x00002f6f      0xb16 /workspace/setup/forest-concepts/builds/v5/game.o
+ .debug_loclists
+                0x00003a85      0x445 /workspace/setup/forest-concepts/builds/v5/interactive.o
+ .debug_loclists
+                0x00003eca      0x152 /workspace/setup/forest-concepts/builds/v5/items.o
+ .debug_loclists
+                0x0000401c     0x56fc /workspace/setup/forest-concepts/builds/v5/menu.o
+ .debug_loclists
+                0x00009718       0x32 /workspace/setup/forest-concepts/builds/v5/menu_layouts_a.o
+ .debug_loclists
+                0x0000974a       0x32 /workspace/setup/forest-concepts/builds/v5/menu_layouts_b.o
+ .debug_loclists
+                0x0000977c       0x40 /workspace/setup/forest-concepts/builds/v5/menu_studies.o
+ .debug_loclists
+                0x000097bc      0xa02 /workspace/setup/forest-concepts/builds/v5/myst.o
+ .debug_loclists
+                0x0000a1be      0xdd8 /workspace/setup/forest-concepts/builds/v5/npc.o
+ .debug_loclists
+                0x0000af96     0x1017 /workspace/setup/forest-concepts/builds/v5/objects.o
+ .debug_loclists
+                0x0000bfad     0x1e3c /workspace/setup/forest-concepts/builds/v5/player.o
+ .debug_loclists
+                0x0000dde9      0x6f5 /workspace/setup/forest-concepts/builds/v5/react.o
+ .debug_loclists
+                0x0000e4de     0x126d /workspace/setup/forest-concepts/builds/v5/room.o
+ .debug_loclists
+                0x0000f74b     0x949a /workspace/setup/forest-concepts/builds/v5/roomgen.o
+ .debug_loclists
+                0x00018be5      0x21d /workspace/setup/forest-concepts/builds/v5/save.o
+ .debug_loclists
+                0x00018e02      0x803 /workspace/setup/forest-concepts/builds/v5/sound.o
+ .debug_loclists
+                0x00019605     0x1f78 /workspace/setup/forest-concepts/builds/v5/text.o
+ .debug_loclists
+                0x0001b57d      0xaeb /workspace/setup/forest-concepts/builds/v5/ui.o
+ .debug_loclists
+                0x0001c068      0x4c4 /workspace/setup/forest-concepts/builds/v5/util.o
+ .debug_loclists
+                0x0001c52c      0x375 /workspace/setup/forest-concepts/builds/v5/video.o
+ .debug_loclists
+                0x0001c8a1     0x1398 /workspace/setup/forest-concepts/builds/v5/vwf.o
+ .debug_loclists
+                0x0001dc39     0x257d /workspace/setup/forest-concepts/builds/v5/world.o
+ .debug_loclists
+                0x000201b6      0x12e /workspace/setup/sysroot/usr/bin/../lib/gcc/arm-none-eabi/14.2.1/thumb/nofp/libgcc.a(_muldi3.o)
+
+.debug_aranges  0x00000000      0xee0
+ .debug_aranges
+                0x00000000       0xe0 /workspace/setup/forest-concepts/builds/v5/actor.o
+ .debug_aranges
+                0x000000e0       0x30 /workspace/setup/forest-concepts/builds/v5/ambient.o
+ .debug_aranges
+                0x00000110       0x68 /workspace/setup/forest-concepts/builds/v5/appearance.o
+ .debug_aranges
+                0x00000178       0x58 /workspace/setup/forest-concepts/builds/v5/boss.o
+ .debug_aranges
+                0x000001d0       0x68 /workspace/setup/forest-concepts/builds/v5/enemy.o
+ .debug_aranges
+                0x00000238       0x68 /workspace/setup/forest-concepts/builds/v5/game.o
+ .debug_aranges
+                0x000002a0       0x60 /workspace/setup/forest-concepts/builds/v5/interactive.o
+ .debug_aranges
+                0x00000300       0x28 /workspace/setup/forest-concepts/builds/v5/items.o
+ .debug_aranges
+                0x00000328       0x20 /workspace/setup/forest-concepts/builds/v5/main.o
+ .debug_aranges
+                0x00000348       0xd0 /workspace/setup/forest-concepts/builds/v5/menu.o
+ .debug_aranges
+                0x00000418       0x20 /workspace/setup/forest-concepts/builds/v5/menu_layouts_a.o
+ .debug_aranges
+                0x00000438       0x20 /workspace/setup/forest-concepts/builds/v5/menu_layouts_b.o
+ .debug_aranges
+                0x00000458       0x20 /workspace/setup/forest-concepts/builds/v5/menu_studies.o
+ .debug_aranges
+                0x00000478       0x98 /workspace/setup/forest-concepts/builds/v5/myst.o
+ .debug_aranges
+                0x00000510       0x60 /workspace/setup/forest-concepts/builds/v5/npc.o
+ .debug_aranges
+                0x00000570       0xc0 /workspace/setup/forest-concepts/builds/v5/objects.o
+ .debug_aranges
+                0x00000630      0x120 /workspace/setup/forest-concepts/builds/v5/player.o
+ .debug_aranges
+                0x00000750       0x80 /workspace/setup/forest-concepts/builds/v5/react.o
+ .debug_aranges
+                0x000007d0       0xd8 /workspace/setup/forest-concepts/builds/v5/room.o
+ .debug_aranges
+                0x000008a8      0x168 /workspace/setup/forest-concepts/builds/v5/roomgen.o
+ .debug_aranges
+                0x00000a10       0x40 /workspace/setup/forest-concepts/builds/v5/save.o
+ .debug_aranges
+                0x00000a50       0x40 /workspace/setup/forest-concepts/builds/v5/sound.o
+ .debug_aranges
+                0x00000a90      0x118 /workspace/setup/forest-concepts/builds/v5/text.o
+ .debug_aranges
+                0x00000ba8       0x60 /workspace/setup/forest-concepts/builds/v5/ui.o
+ .debug_aranges
+                0x00000c08       0x68 /workspace/setup/forest-concepts/builds/v5/util.o
+ .debug_aranges
+                0x00000c70       0x90 /workspace/setup/forest-concepts/builds/v5/video.o
+ .debug_aranges
+                0x00000d00       0xb0 /workspace/setup/forest-concepts/builds/v5/vwf.o
+ .debug_aranges
+                0x00000db0       0x98 /workspace/setup/forest-concepts/builds/v5/world.o
+ .debug_aranges
+                0x00000e48       0x18 /workspace/setup/forest-concepts/builds/v5/assets.o
+ .debug_aranges
+                0x00000e60       0x20 /workspace/setup/sysroot/usr/bin/../lib/gcc/arm-none-eabi/14.2.1/thumb/nofp/libgcc.a(_udivsi3.o)
+ .debug_aranges
+                0x00000e80       0x20 /workspace/setup/sysroot/usr/bin/../lib/gcc/arm-none-eabi/14.2.1/thumb/nofp/libgcc.a(_divsi3.o)
+ .debug_aranges
+                0x00000ea0       0x20 /workspace/setup/sysroot/usr/bin/../lib/gcc/arm-none-eabi/14.2.1/thumb/nofp/libgcc.a(_dvmd_tls.o)
+ .debug_aranges
+                0x00000ec0       0x20 /workspace/setup/sysroot/usr/bin/../lib/gcc/arm-none-eabi/14.2.1/thumb/nofp/libgcc.a(_muldi3.o)
+
+.debug_rnglists
+                0x00000000     0x500e
+ .debug_rnglists
+                0x00000000      0x1d7 /workspace/setup/forest-concepts/builds/v5/actor.o
+ .debug_rnglists
+                0x000001d7       0x75 /workspace/setup/forest-concepts/builds/v5/ambient.o
+ .debug_rnglists
+                0x0000024c       0x57 /workspace/setup/forest-concepts/builds/v5/appearance.o
+ .debug_rnglists
+                0x000002a3       0x6e /workspace/setup/forest-concepts/builds/v5/boss.o
+ .debug_rnglists
+                0x00000311      0x24f /workspace/setup/forest-concepts/builds/v5/enemy.o
+ .debug_rnglists
+                0x00000560      0x2c5 /workspace/setup/forest-concepts/builds/v5/game.o
+ .debug_rnglists
+                0x00000825       0xb4 /workspace/setup/forest-concepts/builds/v5/interactive.o
+ .debug_rnglists
+                0x000008d9       0x68 /workspace/setup/forest-concepts/builds/v5/items.o
+ .debug_rnglists
+                0x00000941       0x13 /workspace/setup/forest-concepts/builds/v5/main.o
+ .debug_rnglists
+                0x00000954      0xdef /workspace/setup/forest-concepts/builds/v5/menu.o
+ .debug_rnglists
+                0x00001743       0x13 /workspace/setup/forest-concepts/builds/v5/menu_layouts_a.o
+ .debug_rnglists
+                0x00001756       0x13 /workspace/setup/forest-concepts/builds/v5/menu_layouts_b.o
+ .debug_rnglists
+                0x00001769       0x13 /workspace/setup/forest-concepts/builds/v5/menu_studies.o
+ .debug_rnglists
+                0x0000177c      0x302 /workspace/setup/forest-concepts/builds/v5/myst.o
+ .debug_rnglists
+                0x00001a7e      0x421 /workspace/setup/forest-concepts/builds/v5/npc.o
+ .debug_rnglists
+                0x00001e9f      0x36c /workspace/setup/forest-concepts/builds/v5/objects.o
+ .debug_rnglists
+                0x0000220b      0x5c7 /workspace/setup/forest-concepts/builds/v5/player.o
+ .debug_rnglists
+                0x000027d2      0x117 /workspace/setup/forest-concepts/builds/v5/react.o
+ .debug_rnglists
+                0x000028e9      0x194 /workspace/setup/forest-concepts/builds/v5/room.o
+ .debug_rnglists
+                0x00002a7d     0x14d9 /workspace/setup/forest-concepts/builds/v5/roomgen.o
+ .debug_rnglists
+                0x00003f56       0x7a /workspace/setup/forest-concepts/builds/v5/save.o
+ .debug_rnglists
+                0x00003fd0      0x16f /workspace/setup/forest-concepts/builds/v5/sound.o
+ .debug_rnglists
+                0x0000413f      0x429 /workspace/setup/forest-concepts/builds/v5/text.o
+ .debug_rnglists
+                0x00004568      0x1a0 /workspace/setup/forest-concepts/builds/v5/ui.o
+ .debug_rnglists
+                0x00004708       0x67 /workspace/setup/forest-concepts/builds/v5/util.o
+ .debug_rnglists
+                0x0000476f      0x131 /workspace/setup/forest-concepts/builds/v5/video.o
+ .debug_rnglists
+                0x000048a0      0x205 /workspace/setup/forest-concepts/builds/v5/vwf.o
+ .debug_rnglists
+                0x00004aa5      0x54a /workspace/setup/forest-concepts/builds/v5/world.o
+ .debug_rnglists
+                0x00004fef       0x1f /workspace/setup/sysroot/usr/bin/../lib/gcc/arm-none-eabi/14.2.1/thumb/nofp/libgcc.a(_muldi3.o)
+
+.debug_line     0x00000000    0x26fa5
+ .debug_line    0x00000000     0x10e4 /workspace/setup/forest-concepts/builds/v5/actor.o
+ .debug_line    0x000010e4      0x699 /workspace/setup/forest-concepts/builds/v5/ambient.o
+ .debug_line    0x0000177d      0x4a1 /workspace/setup/forest-concepts/builds/v5/appearance.o
+ .debug_line    0x00001c1e      0x88e /workspace/setup/forest-concepts/builds/v5/boss.o
+ .debug_line    0x000024ac     0x17ca /workspace/setup/forest-concepts/builds/v5/enemy.o
+ .debug_line    0x00003c76     0x1b83 /workspace/setup/forest-concepts/builds/v5/game.o
+ .debug_line    0x000057f9      0x664 /workspace/setup/forest-concepts/builds/v5/interactive.o
+ .debug_line    0x00005e5d      0x40a /workspace/setup/forest-concepts/builds/v5/items.o
+ .debug_line    0x00006267       0xa0 /workspace/setup/forest-concepts/builds/v5/main.o
+ .debug_line    0x00006307     0x6aac /workspace/setup/forest-concepts/builds/v5/menu.o
+ .debug_line    0x0000cdb3       0x81 /workspace/setup/forest-concepts/builds/v5/menu_layouts_a.o
+ .debug_line    0x0000ce34       0x70 /workspace/setup/forest-concepts/builds/v5/menu_layouts_b.o
+ .debug_line    0x0000cea4       0x7b /workspace/setup/forest-concepts/builds/v5/menu_studies.o
+ .debug_line    0x0000cf1f     0x192a /workspace/setup/forest-concepts/builds/v5/myst.o
+ .debug_line    0x0000e849     0x1737 /workspace/setup/forest-concepts/builds/v5/npc.o
+ .debug_line    0x0000ff80     0x1974 /workspace/setup/forest-concepts/builds/v5/objects.o
+ .debug_line    0x000118f4     0x2c82 /workspace/setup/forest-concepts/builds/v5/player.o
+ .debug_line    0x00014576      0x8b0 /workspace/setup/forest-concepts/builds/v5/react.o
+ .debug_line    0x00014e26     0x1337 /workspace/setup/forest-concepts/builds/v5/room.o
+ .debug_line    0x0001615d     0x90c8 /workspace/setup/forest-concepts/builds/v5/roomgen.o
+ .debug_line    0x0001f225      0x4ae /workspace/setup/forest-concepts/builds/v5/save.o
+ .debug_line    0x0001f6d3      0xa58 /workspace/setup/forest-concepts/builds/v5/sound.o
+ .debug_line    0x0002012b     0x24a2 /workspace/setup/forest-concepts/builds/v5/text.o
+ .debug_line    0x000225cd      0x717 /workspace/setup/forest-concepts/builds/v5/ui.o
+ .debug_line    0x00022ce4      0x35a /workspace/setup/forest-concepts/builds/v5/util.o
+ .debug_line    0x0002303e      0x840 /workspace/setup/forest-concepts/builds/v5/video.o
+ .debug_line    0x0002387e      0xe87 /workspace/setup/forest-concepts/builds/v5/vwf.o
+ .debug_line    0x00024705     0x2602 /workspace/setup/forest-concepts/builds/v5/world.o
+ .debug_line    0x00026d07       0x71 /workspace/setup/forest-concepts/builds/v5/assets.o
+ .debug_line    0x00026d78       0x67 /workspace/setup/sysroot/usr/bin/../lib/gcc/arm-none-eabi/14.2.1/thumb/nofp/libgcc.a(_udivsi3.o)
+ .debug_line    0x00026ddf       0x73 /workspace/setup/sysroot/usr/bin/../lib/gcc/arm-none-eabi/14.2.1/thumb/nofp/libgcc.a(_divsi3.o)
+ .debug_line    0x00026e52       0x4a /workspace/setup/sysroot/usr/bin/../lib/gcc/arm-none-eabi/14.2.1/thumb/nofp/libgcc.a(_dvmd_tls.o)
+ .debug_line    0x00026e9c      0x109 /workspace/setup/sysroot/usr/bin/../lib/gcc/arm-none-eabi/14.2.1/thumb/nofp/libgcc.a(_muldi3.o)
+
+.debug_str      0x00000000     0x5907
+ .debug_str     0x00000000     0x5907 /workspace/setup/forest-concepts/builds/v5/actor.o
+                                0x561 (size before relaxing)
+ .debug_str     0x00005907      0x5c9 /workspace/setup/forest-concepts/builds/v5/ambient.o
+ .debug_str     0x00005907      0x326 /workspace/setup/forest-concepts/builds/v5/appearance.o
+ .debug_str     0x00005907      0x834 /workspace/setup/forest-concepts/builds/v5/boss.o
+ .debug_str     0x00005907      0xada /workspace/setup/forest-concepts/builds/v5/enemy.o
+ .debug_str     0x00005907     0x1420 /workspace/setup/forest-concepts/builds/v5/game.o
+ .debug_str     0x00005907      0x6f6 /workspace/setup/forest-concepts/builds/v5/interactive.o
+ .debug_str     0x00005907      0x698 /workspace/setup/forest-concepts/builds/v5/items.o
+ .debug_str     0x00005907      0x1e6 /workspace/setup/forest-concepts/builds/v5/main.o
+ .debug_str     0x00005907     0x1385 /workspace/setup/forest-concepts/builds/v5/menu.o
+ .debug_str     0x00005907      0x29e /workspace/setup/forest-concepts/builds/v5/menu_layouts_a.o
+ .debug_str     0x00005907      0x2dc /workspace/setup/forest-concepts/builds/v5/menu_layouts_b.o
+ .debug_str     0x00005907      0x255 /workspace/setup/forest-concepts/builds/v5/menu_studies.o
+ .debug_str     0x00005907      0xacc /workspace/setup/forest-concepts/builds/v5/myst.o
+ .debug_str     0x00005907      0xc3b /workspace/setup/forest-concepts/builds/v5/npc.o
+ .debug_str     0x00005907      0xd29 /workspace/setup/forest-concepts/builds/v5/objects.o
+ .debug_str     0x00005907      0xd64 /workspace/setup/forest-concepts/builds/v5/player.o
+ .debug_str     0x00005907      0x7ef /workspace/setup/forest-concepts/builds/v5/react.o
+ .debug_str     0x00005907      0x650 /workspace/setup/forest-concepts/builds/v5/room.o
+ .debug_str     0x00005907      0xccc /workspace/setup/forest-concepts/builds/v5/roomgen.o
+ .debug_str     0x00005907      0x5c6 /workspace/setup/forest-concepts/builds/v5/save.o
+ .debug_str     0x00005907      0x449 /workspace/setup/forest-concepts/builds/v5/sound.o
+ .debug_str     0x00005907      0xcc7 /workspace/setup/forest-concepts/builds/v5/text.o
+ .debug_str     0x00005907      0x242 /workspace/setup/forest-concepts/builds/v5/ui.o
+ .debug_str     0x00005907      0x1c4 /workspace/setup/forest-concepts/builds/v5/util.o
+ .debug_str     0x00005907      0x307 /workspace/setup/forest-concepts/builds/v5/video.o
+ .debug_str     0x00005907      0x308 /workspace/setup/forest-concepts/builds/v5/vwf.o
+ .debug_str     0x00005907      0x8f7 /workspace/setup/forest-concepts/builds/v5/world.o
+ .debug_str     0x00005907     0x126f /workspace/setup/forest-concepts/builds/v5/assets.o
+ .debug_str     0x00005907       0xb2 /workspace/setup/sysroot/usr/bin/../lib/gcc/arm-none-eabi/14.2.1/thumb/nofp/libgcc.a(_udivsi3.o)
+ .debug_str     0x00005907       0xb0 /workspace/setup/sysroot/usr/bin/../lib/gcc/arm-none-eabi/14.2.1/thumb/nofp/libgcc.a(_divsi3.o)
+ .debug_str     0x00005907       0xb3 /workspace/setup/sysroot/usr/bin/../lib/gcc/arm-none-eabi/14.2.1/thumb/nofp/libgcc.a(_dvmd_tls.o)
+ .debug_str     0x00005907      0x668 /workspace/setup/sysroot/usr/bin/../lib/gcc/arm-none-eabi/14.2.1/thumb/nofp/libgcc.a(_muldi3.o)
+
+.debug_frame    0x00000000     0x2ddc
+ .debug_frame   0x00000000      0x2e4 /workspace/setup/forest-concepts/builds/v5/actor.o
+ .debug_frame   0x000002e4       0x84 /workspace/setup/forest-concepts/builds/v5/ambient.o
+ .debug_frame   0x00000368       0xe0 /workspace/setup/forest-concepts/builds/v5/appearance.o
+ .debug_frame   0x00000448      0x104 /workspace/setup/forest-concepts/builds/v5/boss.o
+ .debug_frame   0x0000054c      0x13c /workspace/setup/forest-concepts/builds/v5/enemy.o
+ .debug_frame   0x00000688      0x168 /workspace/setup/forest-concepts/builds/v5/game.o
+ .debug_frame   0x000007f0       0xec /workspace/setup/forest-concepts/builds/v5/interactive.o
+ .debug_frame   0x000008dc       0x48 /workspace/setup/forest-concepts/builds/v5/items.o
+ .debug_frame   0x00000924       0x28 /workspace/setup/forest-concepts/builds/v5/main.o
+ .debug_frame   0x0000094c      0x3bc /workspace/setup/forest-concepts/builds/v5/menu.o
+ .debug_frame   0x00000d08       0x20 /workspace/setup/forest-concepts/builds/v5/menu_layouts_a.o
+ .debug_frame   0x00000d28       0x20 /workspace/setup/forest-concepts/builds/v5/menu_layouts_b.o
+ .debug_frame   0x00000d48       0x28 /workspace/setup/forest-concepts/builds/v5/menu_studies.o
+ .debug_frame   0x00000d70      0x1f8 /workspace/setup/forest-concepts/builds/v5/myst.o
+ .debug_frame   0x00000f68      0x140 /workspace/setup/forest-concepts/builds/v5/npc.o
+ .debug_frame   0x000010a8      0x288 /workspace/setup/forest-concepts/builds/v5/objects.o
+ .debug_frame   0x00001330      0x378 /workspace/setup/forest-concepts/builds/v5/player.o
+ .debug_frame   0x000016a8      0x1b8 /workspace/setup/forest-concepts/builds/v5/react.o
+ .debug_frame   0x00001860      0x298 /workspace/setup/forest-concepts/builds/v5/room.o
+ .debug_frame   0x00001af8      0x5f8 /workspace/setup/forest-concepts/builds/v5/roomgen.o
+ .debug_frame   0x000020f0       0x94 /workspace/setup/forest-concepts/builds/v5/save.o
+ .debug_frame   0x00002184       0x7c /workspace/setup/forest-concepts/builds/v5/sound.o
+ .debug_frame   0x00002200      0x3d0 /workspace/setup/forest-concepts/builds/v5/text.o
+ .debug_frame   0x000025d0      0x11c /workspace/setup/forest-concepts/builds/v5/ui.o
+ .debug_frame   0x000026ec       0xdc /workspace/setup/forest-concepts/builds/v5/util.o
+ .debug_frame   0x000027c8      0x144 /workspace/setup/forest-concepts/builds/v5/video.o
+ .debug_frame   0x0000290c      0x258 /workspace/setup/forest-concepts/builds/v5/vwf.o
+ .debug_frame   0x00002b64      0x204 /workspace/setup/forest-concepts/builds/v5/world.o
+ .debug_frame   0x00002d68       0x20 /workspace/setup/sysroot/usr/bin/../lib/gcc/arm-none-eabi/14.2.1/thumb/nofp/libgcc.a(_udivsi3.o)
+ .debug_frame   0x00002d88       0x20 /workspace/setup/sysroot/usr/bin/../lib/gcc/arm-none-eabi/14.2.1/thumb/nofp/libgcc.a(_divsi3.o)
+ .debug_frame   0x00002da8       0x34 /workspace/setup/sysroot/usr/bin/../lib/gcc/arm-none-eabi/14.2.1/thumb/nofp/libgcc.a(_muldi3.o)
+
+.debug_line_str
+                0x00000000       0x88
+ .debug_line_str
+                0x00000000       0x88 /workspace/setup/sysroot/usr/bin/../lib/gcc/arm-none-eabi/14.2.1/thumb/nofp/libgcc.a(_udivsi3.o)
+ .debug_line_str
+                0x00000088       0x88 /workspace/setup/sysroot/usr/bin/../lib/gcc/arm-none-eabi/14.2.1/thumb/nofp/libgcc.a(_divsi3.o)
+ .debug_line_str
+                0x00000088       0x88 /workspace/setup/sysroot/usr/bin/../lib/gcc/arm-none-eabi/14.2.1/thumb/nofp/libgcc.a(_dvmd_tls.o)

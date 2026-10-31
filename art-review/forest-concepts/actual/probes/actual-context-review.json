@@ -1,0 +1,222 @@
+[
+  {
+    "image": "/workspace/setup/forest-concepts/runtime/v1/water-bridge.png",
+    "sha256": "58123cec257af7039d4942191309d5ba78f91a1e575c93e12fa268d251000606",
+    "forest_variant": 1,
+    "destination": [
+      0,
+      30,
+      240,
+      160
+    ]
+  },
+  {
+    "image": "/workspace/setup/forest-concepts/runtime/v1/forest-bomb-wall.png",
+    "sha256": "31318015ed68e09e43034ce1f8d7b284b705d688625eb4b263bffc82a7fc762e",
+    "forest_variant": 1,
+    "destination": [
+      240,
+      30,
+      240,
+      160
+    ]
+  },
+  {
+    "image": "/workspace/setup/forest-concepts/runtime/v1/interior-hollow.png",
+    "sha256": "f4223fb2f0e03483363566d358811b17efcc0c5979d868eea3baed96e4734b73",
+    "forest_variant": 1,
+    "destination": [
+      480,
+      30,
+      240,
+      160
+    ]
+  },
+  {
+    "image": "/workspace/setup/forest-concepts/runtime/v1/forest-npc-hermit-after.png",
+    "sha256": "12c6c646824c4f3a53d39533a4644fe4911b73ec4d491e5e892bc51adfcafe0e",
+    "forest_variant": 1,
+    "destination": [
+      720,
+      30,
+      240,
+      160
+    ]
+  },
+  {
+    "image": "/workspace/setup/forest-concepts/runtime/v2/water-bridge.png",
+    "sha256": "d9fa7d9839427dd7edcbaafd5f21af74ab59cba65ac5bf6de9238d0fcee51fcf",
+    "forest_variant": 2,
+    "destination": [
+      0,
+      214,
+      240,
+      160
+    ]
+  },
+  {
+    "image": "/workspace/setup/forest-concepts/runtime/v2/forest-bomb-wall.png",
+    "sha256": "921435372caebd9356a7adb77c7adf070d65444269960f2dd25a19230b05d640",
+    "forest_variant": 2,
+    "destination": [
+      240,
+      214,
+      240,
+      160
+    ]
+  },
+  {
+    "image": "/workspace/setup/forest-concepts/runtime/v2/interior-hollow.png",
+    "sha256": "683c6fb3d6e5ea4312e240a9ea690617277038f3314afcfe6144064a2e577116",
+    "forest_variant": 2,
+    "destination": [
+      480,
+      214,
+      240,
+      160
+    ]
+  },
+  {
+    "image": "/workspace/setup/forest-concepts/runtime/v2/forest-npc-hermit-after.png",
+    "sha256": "dfabe2ce99e9dfb685eef6a6008ee4d730fec546d3c784e8b57e40ca571746b6",
+    "forest_variant": 2,
+    "destination": [
+      720,
+      214,
+      240,
+      160
+    ]
+  },
+  {
+    "image": "/workspace/setup/forest-concepts/runtime/v3/water-bridge.png",
+    "sha256": "d7be6ae4baa0b0779691ca8701f4c09e36ad0f4b67efee60ec997596e37edb2d",
+    "forest_variant": 3,
+    "destination": [
+      0,
+      398,
+      240,
+      160
+    ]
+  },
+  {
+    "image": "/workspace/setup/forest-concepts/runtime/v3/forest-bomb-wall.png",
+    "sha256": "32c9751d279fe72b03aedd5e5c5d9718a2e089749e0888148a0b6ceb935e7fed",
+    "forest_variant": 3,
+    "destination": [
+      240,
+      398,
+      240,
+      160
+    ]
+  },
+  {
+    "image": "/workspace/setup/forest-concepts/runtime/v3/interior-hollow.png",
+    "sha256": "c6ebf0815cb8be50f78b6b26eaef361af45eab8b1929da93805d2430e2718b88",
+    "forest_variant": 3,
+    "destination": [
+      480,
+      398,
+      240,
+      160
+    ]
+  },
+  {
+    "image": "/workspace/setup/forest-concepts/runtime/v3/forest-npc-hermit-after.png",
+    "sha256": "53b951eb5b118010d6836e1c5801c2e54fcdd623856836e02b2facc7ab2a989a",
+    "forest_variant": 3,
+    "destination": [
+      720,
+      398,
+      240,
+      160
+    ]
+  },
+  {
+    "image": "/workspace/setup/forest-concepts/runtime/v4/water-bridge.png",
+    "sha256": "85273e989d9f48a665bc87827910e8e222f2c1796c1569eead212b90a8de99f6",
+    "forest_variant": 4,
+    "destination": [
+      0,
+      582,
+      240,
+      160
+    ]
+  },
+  {
+    "image": "/workspace/setup/forest-concepts/runtime/v4/forest-bomb-wall.png",
+    "sha256": "5f980fb01700bb3777008a90fccbacb7a17c4d40d8f857e7f4ce1349ec294e97",
+    "forest_variant": 4,
+    "destination": [
+      240,
+      582,
+      240,
+      160
+    ]
+  },
+  {
+    "image": "/workspace/setup/forest-concepts/runtime/v4/interior-hollow.png",
+    "sha256": "f9a5341091688866215261239b4e4227a7f8cedfc6b390b70b34e13cf7590486",
+    "forest_variant": 4,
+    "destination": [
+      480,
+      582,
+      240,
+      160
+    ]
+  },
+  {
+    "image": "/workspace/setup/forest-concepts/runtime/v4/forest-npc-hermit-after.png",
+    "sha256": "ce7927815218a1d7080b18f1f585f9cfe48e9e87d312d738a9792728c01d9bf8",
+    "forest_variant": 4,
+    "destination": [
+      720,
+      582,
+      240,
+      160
+    ]
+  },
+  {
+    "image": "/workspace/setup/forest-concepts/runtime/v5/water-bridge.png",
+    "sha256": "8a345fb86a30cf992b6d997cdcdd35f944f2f2f9a78fdf9342964cfda86b7611",
+    "forest_variant": 5,
+    "destination": [
+      0,
+      766,
+      240,
+      160
+    ]
+  },
+  {
+    "image": "/workspace/setup/forest-concepts/runtime/v5/forest-bomb-wall.png",
+    "sha256": "fdd834577c02c66a59913e1471e02d49f00a29e367089d3a1e3c9c3caf5d2eef",
+    "forest_variant": 5,
+    "destination": [
+      240,
+      766,
+      240,
+      160
+    ]
+  },
+  {
+    "image": "/workspace/setup/forest-concepts/runtime/v5/interior-hollow.png",
+    "sha256": "072640a21f472c79932eae6e6201b62aa6ce29581b85796f462de65b79e88449",
+    "forest_variant": 5,
+    "destination": [
+      480,
+      766,
+      240,
+      160
+    ]
+  },
+  {
+    "image": "/workspace/setup/forest-concepts/runtime/v5/forest-npc-hermit-after.png",
+    "sha256": "5f5d3d93a08fa425e847aed19fd96cc9eeebf988075aa8fe32fb84761e6d1343",
+    "forest_variant": 5,
+    "destination": [
+      720,
+      766,
+      240,
+      160
+    ]
+  }
+]

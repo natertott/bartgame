@@ -1,0 +1,340 @@
+[
+  {
+    "file": "emerald-general.png",
+    "url": "https://raw.githubusercontent.com/pret/pokeemerald/731ad5bfd6e6f265508d0efcca0ba42f9dcf5881/data/tilesets/primary/general/tiles.png",
+    "status": 200,
+    "bytes": 7622,
+    "sha256": "365ba5482e7564763e614a0009900d1c317790dcd9f7a06c4ab74c363a3ba2f5",
+    "retrieved_on_utc": "2026-10-31"
+  },
+  {
+    "file": "emerald-general-metatiles.bin",
+    "url": "https://raw.githubusercontent.com/pret/pokeemerald/731ad5bfd6e6f265508d0efcca0ba42f9dcf5881/data/tilesets/primary/general/metatiles.bin",
+    "status": 200,
+    "bytes": 8192,
+    "sha256": "17974b0ba1bb9d105d5ba255c69a3b80d8484a26ea0b8ff22c6c6567c6c22910",
+    "retrieved_on_utc": "2026-10-31"
+  },
+  {
+    "file": "emerald-general-attributes.bin",
+    "url": "https://raw.githubusercontent.com/pret/pokeemerald/731ad5bfd6e6f265508d0efcca0ba42f9dcf5881/data/tilesets/primary/general/metatile_attributes.bin",
+    "status": 200,
+    "bytes": 1024,
+    "sha256": "06c9548a6c70d133b6d47638090f5d36f3fec92aace3d90deca758a4404cfa9b",
+    "retrieved_on_utc": "2026-10-31"
+  },
+  {
+    "file": "emerald-fieldmap.c",
+    "url": "https://raw.githubusercontent.com/pret/pokeemerald/731ad5bfd6e6f265508d0efcca0ba42f9dcf5881/src/fieldmap.c",
+    "status": 200,
+    "bytes": 25358,
+    "sha256": "0776631c5f8a2751ceaa6197667d637dd1339ab88446dc8d84a3a586575a8e51",
+    "retrieved_on_utc": "2026-10-31"
+  },
+  {
+    "file": "emerald-field-player-avatar.c",
+    "url": "https://raw.githubusercontent.com/pret/pokeemerald/731ad5bfd6e6f265508d0efcca0ba42f9dcf5881/src/field_player_avatar.c",
+    "status": 200,
+    "bytes": 72193,
+    "sha256": "70db5bd30ce875189e9bc7bfed9e0d712d1d6da3f78931f16b9526521dea78af",
+    "retrieved_on_utc": "2026-10-31"
+  },
+  {
+    "file": "emerald-metatile-behavior.c",
+    "url": "https://raw.githubusercontent.com/pret/pokeemerald/731ad5bfd6e6f265508d0efcca0ba42f9dcf5881/src/metatile_behavior.c",
+    "status": 200,
+    "bytes": 39082,
+    "sha256": "0c770f6cc5876b87f893a415df5d2b001c1d3530d9542cd6a9a311b0ec9e82d8",
+    "retrieved_on_utc": "2026-10-31"
+  },
+  {
+    "file": "emerald-metatile-constants.h",
+    "url": "https://raw.githubusercontent.com/pret/pokeemerald/731ad5bfd6e6f265508d0efcca0ba42f9dcf5881/include/constants/metatile_behaviors.h",
+    "status": 200,
+    "bytes": 5939,
+    "sha256": "213bfcb92984f848272b6aba404cabc82932e0c553ad4362e69d10a09afda854",
+    "retrieved_on_utc": "2026-10-31"
+  },
+  {
+    "file": "tmc-bush.c",
+    "url": "https://raw.githubusercontent.com/zeldaret/tmc/6fb6dfb4a7efbe24d0fd1dda5097af6131faacde/src/object/bush.c",
+    "status": 200,
+    "bytes": 3994,
+    "sha256": "9187cabaa865761eeb51cafbb476ddb7a6471d704532ae2a85402fa078623bdf",
+    "retrieved_on_utc": "2026-10-31"
+  },
+  {
+    "file": "tmc-pot.c",
+    "url": "https://raw.githubusercontent.com/zeldaret/tmc/6fb6dfb4a7efbe24d0fd1dda5097af6131faacde/src/object/pot.c",
+    "status": 200,
+    "bytes": 9587,
+    "sha256": "39b9ce0207a29c39f73c6158bc1dea1e180100cc75c0d3e07b9bda7646a7906d",
+    "retrieved_on_utc": "2026-10-31"
+  },
+  {
+    "file": "emerald-general-palette-00.pal",
+    "url": "https://raw.githubusercontent.com/pret/pokeemerald/731ad5bfd6e6f265508d0efcca0ba42f9dcf5881/data/tilesets/primary/general/palettes/00.pal",
+    "status": 200,
+    "bytes": 198,
+    "sha256": "424a32d1079a61b6b9b4f1e879dd68108708905e8312d18edd134af3918407fd",
+    "retrieved_on_utc": "2026-10-31"
+  },
+  {
+    "file": "emerald-general-palette-01.pal",
+    "url": "https://raw.githubusercontent.com/pret/pokeemerald/731ad5bfd6e6f265508d0efcca0ba42f9dcf5881/data/tilesets/primary/general/palettes/01.pal",
+    "status": 200,
+    "bytes": 195,
+    "sha256": "9b9d01878137cef9ea6006c3025a3ada5cdf37d9c251b25bc95f71963bd9a447",
+    "retrieved_on_utc": "2026-10-31"
+  },
+  {
+    "file": "emerald-general-palette-02.pal",
+    "url": "https://raw.githubusercontent.com/pret/pokeemerald/731ad5bfd6e6f265508d0efcca0ba42f9dcf5881/data/tilesets/primary/general/palettes/02.pal",
+    "status": 200,
+    "bytes": 187,
+    "sha256": "8a469b137e6fc97823ab46b903c0ab80c466212cd430340586ccde22afbee949",
+    "retrieved_on_utc": "2026-10-31"
+  },
+  {
+    "file": "emerald-general-palette-03.pal",
+    "url": "https://raw.githubusercontent.com/pret/pokeemerald/731ad5bfd6e6f265508d0efcca0ba42f9dcf5881/data/tilesets/primary/general/palettes/03.pal",
+    "status": 200,
+    "bytes": 194,
+    "sha256": "821f0a62f0ce995c96e9eaa0b4a32a1cd61e4db1f3216bfbe1fd588cf33b7583",
+    "retrieved_on_utc": "2026-10-31"
+  },
+  {
+    "file": "emerald-general-palette-04.pal",
+    "url": "https://raw.githubusercontent.com/pret/pokeemerald/731ad5bfd6e6f265508d0efcca0ba42f9dcf5881/data/tilesets/primary/general/palettes/04.pal",
+    "status": 200,
+    "bytes": 192,
+    "sha256": "f99602126046eed3f20545a34ddd46fa6e5fcb96f032b410fa8d5251c7450e22",
+    "retrieved_on_utc": "2026-10-31"
+  },
+  {
+    "file": "emerald-general-palette-05.pal",
+    "url": "https://raw.githubusercontent.com/pret/pokeemerald/731ad5bfd6e6f265508d0efcca0ba42f9dcf5881/data/tilesets/primary/general/palettes/05.pal",
+    "status": 200,
+    "bytes": 197,
+    "sha256": "53b599be1554c4e1a0684f2339409ee4032ac8507696dae1836a10152f925177",
+    "retrieved_on_utc": "2026-10-31"
+  },
+  {
+    "file": "emerald-metatile-labels.h",
+    "url": "https://raw.githubusercontent.com/pret/pokeemerald/731ad5bfd6e6f265508d0efcca0ba42f9dcf5881/include/constants/metatile_labels.h",
+    "status": 200,
+    "bytes": 42388,
+    "sha256": "6f53ac68b105d8d72c7daa3d57c4c669a828f68d3f8d84d1902e9f6309b818f2",
+    "retrieved_on_utc": "2026-10-31"
+  },
+  {
+    "file": "emerald-field-control-avatar.c",
+    "url": "https://raw.githubusercontent.com/pret/pokeemerald/731ad5bfd6e6f265508d0efcca0ba42f9dcf5881/src/field_control_avatar.c",
+    "status": 200,
+    "bytes": 33561,
+    "sha256": "6482017054c860a083ac259b17b88647bb941bd6eb7cbadac1c6b05142cedb7a",
+    "retrieved_on_utc": "2026-10-31"
+  },
+  {
+    "file": "tmc-treasure-chest.c",
+    "url": "https://raw.githubusercontent.com/zeldaret/tmc/6fb6dfb4a7efbe24d0fd1dda5097af6131faacde/src/object/treasureChest.c",
+    "error": "HTTP Error 404: Not Found",
+    "retrieved_on_utc": "2026-10-31"
+  },
+  {
+    "file": "tmc-bombable-wall.c",
+    "url": "https://raw.githubusercontent.com/zeldaret/tmc/6fb6dfb4a7efbe24d0fd1dda5097af6131faacde/src/object/bombableWall.c",
+    "error": "HTTP Error 404: Not Found",
+    "retrieved_on_utc": "2026-10-31"
+  },
+  {
+    "file": "emerald-tileset-headers.h",
+    "url": "https://raw.githubusercontent.com/pret/pokeemerald/731ad5bfd6e6f265508d0efcca0ba42f9dcf5881/src/data/tilesets/headers.h",
+    "status": 200,
+    "bytes": 24298,
+    "sha256": "902ed5a843c1903ce3be5d61f85c0b12df78ab7b1e4d98dd3b10415159a3db3d",
+    "retrieved_on_utc": "2026-10-31"
+  },
+  {
+    "file": "emerald-tileset-graphics.h",
+    "url": "https://raw.githubusercontent.com/pret/pokeemerald/731ad5bfd6e6f265508d0efcca0ba42f9dcf5881/src/data/tilesets/graphics.h",
+    "status": 200,
+    "bytes": 111474,
+    "sha256": "40360ef93657a608e8a20c92a126e903813bc33fb709754441f96713f05d7d71",
+    "retrieved_on_utc": "2026-10-31"
+  },
+  {
+    "file": "emerald-layouts.json",
+    "url": "https://raw.githubusercontent.com/pret/pokeemerald/731ad5bfd6e6f265508d0efcca0ba42f9dcf5881/data/layouts/layouts.json",
+    "status": 200,
+    "bytes": 168542,
+    "sha256": "5ac58ee1072862c937f82121a931b3315ccca3b5ae807f2a28a0e273957c2e4f",
+    "retrieved_on_utc": "2026-10-31"
+  },
+  {
+    "file": "emerald-petalburgwoods-map.json",
+    "url": "https://raw.githubusercontent.com/pret/pokeemerald/731ad5bfd6e6f265508d0efcca0ba42f9dcf5881/data/maps/PetalburgWoods/map.json",
+    "status": 200,
+    "bytes": 8131,
+    "sha256": "31038be29e39c493a1e3cdf74a7cccaae7f9d024e55112973528813b5d24b45a",
+    "retrieved_on_utc": "2026-10-31"
+  },
+  {
+    "file": "emerald-fieldmap.h",
+    "url": "https://raw.githubusercontent.com/pret/pokeemerald/731ad5bfd6e6f265508d0efcca0ba42f9dcf5881/include/fieldmap.h",
+    "status": 200,
+    "bytes": 2215,
+    "sha256": "83af318f7e8b23ef66f4434d8624424525a70b8dc7c3bdabb82de0c4938b7b6b",
+    "retrieved_on_utc": "2026-10-31"
+  },
+  {
+    "file": "emerald-metatile-render.c",
+    "url": "https://raw.githubusercontent.com/pret/pokeemerald/731ad5bfd6e6f265508d0efcca0ba42f9dcf5881/src/field_camera.c",
+    "status": 200,
+    "bytes": 15231,
+    "sha256": "ac36edf99c7fa3d64bfb59e438b26c8614a8bb372c690aa6a7551584bdb7cee4",
+    "retrieved_on_utc": "2026-10-31"
+  },
+  {
+    "file": "emerald-petalburgwoods-map.bin",
+    "url": "https://raw.githubusercontent.com/pret/pokeemerald/731ad5bfd6e6f265508d0efcca0ba42f9dcf5881/data/layouts/PetalburgWoods/map.bin",
+    "status": 200,
+    "bytes": 4224,
+    "sha256": "053fc2e64d7065edaf0bfaa4b7504fef15ad808dc458f8b937cb3a2604495442",
+    "retrieved_on_utc": "2026-10-31"
+  },
+  {
+    "file": "emerald-rustboro.png",
+    "url": "https://raw.githubusercontent.com/pret/pokeemerald/731ad5bfd6e6f265508d0efcca0ba42f9dcf5881/data/tilesets/secondary/rustboro/tiles.png",
+    "status": 200,
+    "bytes": 3938,
+    "sha256": "87b3ce4e15674b3ef02b1793df0bc8633b7c49bf4443cb50708293615b048d24",
+    "retrieved_on_utc": "2026-10-31"
+  },
+  {
+    "file": "emerald-rustboro-metatiles.bin",
+    "url": "https://raw.githubusercontent.com/pret/pokeemerald/731ad5bfd6e6f265508d0efcca0ba42f9dcf5881/data/tilesets/secondary/rustboro/metatiles.bin",
+    "status": 200,
+    "bytes": 5600,
+    "sha256": "2e5daf7451ac4a3a003ce569e2132dccefe00b618f3e5763d45b2cef480b3274",
+    "retrieved_on_utc": "2026-10-31"
+  },
+  {
+    "file": "emerald-rustboro-attributes.bin",
+    "url": "https://raw.githubusercontent.com/pret/pokeemerald/731ad5bfd6e6f265508d0efcca0ba42f9dcf5881/data/tilesets/secondary/rustboro/metatile_attributes.bin",
+    "status": 200,
+    "bytes": 700,
+    "sha256": "1c3c55c0f4643722502a895997545c6b2a9186863eaf13ff1f522e8077f73a4f",
+    "retrieved_on_utc": "2026-10-31"
+  },
+  {
+    "file": "emerald-cuttable-tree.png",
+    "url": "https://raw.githubusercontent.com/pret/pokeemerald/731ad5bfd6e6f265508d0efcca0ba42f9dcf5881/graphics/object_events/pics/misc/cuttable_tree.png",
+    "status": 200,
+    "bytes": 344,
+    "sha256": "7777b5b630cb9a430d1313e6d9603a6e2e4829c5954f08dc1f11b4a0a4f5eac1",
+    "retrieved_on_utc": "2026-10-31"
+  },
+  {
+    "file": "emerald-smashable-rock.png",
+    "url": "https://raw.githubusercontent.com/pret/pokeemerald/731ad5bfd6e6f265508d0efcca0ba42f9dcf5881/graphics/object_events/pics/misc/rock_smash_rock.png",
+    "error": "HTTP Error 404: Not Found",
+    "retrieved_on_utc": "2026-10-31"
+  },
+  {
+    "file": "emerald-pushable-boulder.png",
+    "url": "https://raw.githubusercontent.com/pret/pokeemerald/731ad5bfd6e6f265508d0efcca0ba42f9dcf5881/graphics/object_events/pics/misc/pushable_boulder.png",
+    "status": 200,
+    "bytes": 211,
+    "sha256": "9ff11e929fbc9c221dd5228e342be51a04b19591b7248ad12aa698e60221e663",
+    "retrieved_on_utc": "2026-10-31"
+  },
+  {
+    "file": "emerald-rustboro-palette-06.pal",
+    "url": "https://raw.githubusercontent.com/pret/pokeemerald/731ad5bfd6e6f265508d0efcca0ba42f9dcf5881/data/tilesets/secondary/rustboro/palettes/06.pal",
+    "status": 200,
+    "bytes": 119,
+    "sha256": "da1c8053b701c2d151ec7203232cb8cd4b23340c41a10db116d468bd83d223ac",
+    "retrieved_on_utc": "2026-10-31"
+  },
+  {
+    "file": "emerald-rustboro-palette-07.pal",
+    "url": "https://raw.githubusercontent.com/pret/pokeemerald/731ad5bfd6e6f265508d0efcca0ba42f9dcf5881/data/tilesets/secondary/rustboro/palettes/07.pal",
+    "status": 200,
+    "bytes": 167,
+    "sha256": "d7ca58861d2feefc4b3c15cb3800902459ee55547252a15eabf69d535cca9b59",
+    "retrieved_on_utc": "2026-10-31"
+  },
+  {
+    "file": "emerald-rustboro-palette-08.pal",
+    "url": "https://raw.githubusercontent.com/pret/pokeemerald/731ad5bfd6e6f265508d0efcca0ba42f9dcf5881/data/tilesets/secondary/rustboro/palettes/08.pal",
+    "status": 200,
+    "bytes": 201,
+    "sha256": "58548dec58b639dd5495ddf754a75e801c2b57d7b9cb9a0c9622ae7a9da271cf",
+    "retrieved_on_utc": "2026-10-31"
+  },
+  {
+    "file": "emerald-rustboro-palette-09.pal",
+    "url": "https://raw.githubusercontent.com/pret/pokeemerald/731ad5bfd6e6f265508d0efcca0ba42f9dcf5881/data/tilesets/secondary/rustboro/palettes/09.pal",
+    "status": 200,
+    "bytes": 198,
+    "sha256": "bbee036d658a31a658b449064159f9b5f9595169833506728fd7217538255abd",
+    "retrieved_on_utc": "2026-10-31"
+  },
+  {
+    "file": "emerald-rustboro-palette-10.pal",
+    "url": "https://raw.githubusercontent.com/pret/pokeemerald/731ad5bfd6e6f265508d0efcca0ba42f9dcf5881/data/tilesets/secondary/rustboro/palettes/10.pal",
+    "status": 200,
+    "bytes": 190,
+    "sha256": "77b5d5106753402ee7fadb6801d7ea06011292b99feec522a6dccf5f103bd74a",
+    "retrieved_on_utc": "2026-10-31"
+  },
+  {
+    "file": "emerald-rustboro-palette-11.pal",
+    "url": "https://raw.githubusercontent.com/pret/pokeemerald/731ad5bfd6e6f265508d0efcca0ba42f9dcf5881/data/tilesets/secondary/rustboro/palettes/11.pal",
+    "status": 200,
+    "bytes": 201,
+    "sha256": "7a776801783d71cccc318c86ee844499c4c2a43404058417553989536781601f",
+    "retrieved_on_utc": "2026-10-31"
+  },
+  {
+    "file": "emerald-rustboro-palette-12.pal",
+    "url": "https://raw.githubusercontent.com/pret/pokeemerald/731ad5bfd6e6f265508d0efcca0ba42f9dcf5881/data/tilesets/secondary/rustboro/palettes/12.pal",
+    "status": 200,
+    "bytes": 117,
+    "sha256": "9fd961331b3d93c934ae2606e4c71e915af26bdefdded710b3992d047360fc3e",
+    "retrieved_on_utc": "2026-10-31"
+  },
+  {
+    "file": "emerald-cut.c",
+    "url": "https://raw.githubusercontent.com/pret/pokeemerald/731ad5bfd6e6f265508d0efcca0ba42f9dcf5881/src/fldeff_cut.c",
+    "status": 200,
+    "bytes": 21801,
+    "sha256": "4f054e0f14084708ad4c599cca19ddb416b2dbbf592e59acff77ac1ee1a24551",
+    "retrieved_on_utc": "2026-10-31"
+  },
+  {
+    "file": "emerald-rock-smash.c",
+    "url": "https://raw.githubusercontent.com/pret/pokeemerald/731ad5bfd6e6f265508d0efcca0ba42f9dcf5881/src/fldeff_rocksmash.c",
+    "status": 200,
+    "bytes": 5499,
+    "sha256": "dd5fe9c836b8a20d08fe7d2dbc3ddae6ce7f8e00f5af4ed1e0d130a6404d2cfb",
+    "retrieved_on_utc": "2026-10-31"
+  },
+  {
+    "file": "emerald-event-graphics-info.h",
+    "url": "https://raw.githubusercontent.com/pret/pokeemerald/731ad5bfd6e6f265508d0efcca0ba42f9dcf5881/src/data/object_events/object_event_graphics_info.h",
+    "status": 200,
+    "bytes": 150763,
+    "sha256": "eeb2cf276ee20664276c7905bd1e36ed40519e271655a0ef2bed3b1d56960983",
+    "retrieved_on_utc": "2026-10-31"
+  },
+  {
+    "file": "emerald-breakable-rock.png",
+    "url": "https://raw.githubusercontent.com/pret/pokeemerald/731ad5bfd6e6f265508d0efcca0ba42f9dcf5881/graphics/object_events/pics/misc/breakable_rock.png",
+    "status": 200,
+    "bytes": 381,
+    "sha256": "accf417ec0b1958af56e2964eda5dadd1ba97a52def6bbf6057d11f4a02be316",
+    "retrieved_on_utc": "2026-10-31"
+  }
+]

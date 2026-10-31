@@ -1,0 +1,105 @@
+{
+  "kind": "SOURCE frame dimensions, transparent index0 bounds; original PNG preview palette, not actual live OBJ palette",
+  "revision": "731ad5bfd6e6f265508d0efcca0ba42f9dcf5881",
+  "objects": [
+    {
+      "source": "emerald-cuttable-tree.png",
+      "png": [
+        64,
+        16
+      ],
+      "frame": [
+        16,
+        16
+      ],
+      "frames": 4,
+      "ink_bounds": [
+        [
+          1,
+          1,
+          16,
+          16
+        ],
+        [
+          1,
+          0,
+          16,
+          16
+        ],
+        [
+          0,
+          1,
+          14,
+          16
+        ],
+        [
+          0,
+          7,
+          14,
+          16
+        ]
+      ],
+      "unique_png_colors": 8
+    },
+    {
+      "source": "emerald-breakable-rock.png",
+      "png": [
+        64,
+        16
+      ],
+      "frame": [
+        16,
+        16
+      ],
+      "frames": 4,
+      "ink_bounds": [
+        [
+          1,
+          2,
+          15,
+          16
+        ],
+        [
+          0,
+          4,
+          15,
+          16
+        ],
+        [
+          0,
+          0,
+          16,
+          16
+        ],
+        [
+          0,
+          2,
+          16,
+          16
+        ]
+      ],
+      "unique_png_colors": 5
+    },
+    {
+      "source": "emerald-pushable-boulder.png",
+      "png": [
+        16,
+        16
+      ],
+      "frame": [
+        16,
+        16
+      ],
+      "frames": 1,
+      "ink_bounds": [
+        [
+          0,
+          0,
+          16,
+          16
+        ]
+      ],
+      "unique_png_colors": 5
+    }
+  ]
+}
