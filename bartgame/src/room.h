@@ -20,6 +20,13 @@ typedef struct {
 extern Room gRoom;
 extern s16 gCamX, gCamY;
 extern u8 gAnimTiles;
+#if BART_FOREST_VARIANT >= 6
+/* Read-only render diagnostics: semantic ground/overlay and collision stay in Room. */
+extern u16 gRoomVisualGround[ROOM_MAX_W * ROOM_MAX_H];
+extern u16 gRoomVisualOverlay[ROOM_MAX_W * ROOM_MAX_H];
+u16 room_visual_ground(int mx,int my);
+u16 room_visual_overlay(int mx,int my);
+#endif
 
 /* object kinds in authored rooms (art/rooms.py) */
 #define OBJ_NPC 1

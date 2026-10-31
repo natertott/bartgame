@@ -33,6 +33,10 @@ Five optional [forest environment studies](docs/FOREST_CONCEPTS.md) explore
 Fern & Oak, Silver Willow, Copper Beech, Velvet Cedar and Pale Orchard.
 `BART_FOREST=1..5` selects their complete terrain, props and forest folk;
 ordinary builds retain the current forest (`BART_FOREST=0`) until selection.
+The [second forest pass](docs/FOREST_CONCEPTS_V2.md), `BART_FOREST=6..10`,
+explores much stronger purple infection, new characters and props, adjacency
+joins and true foreground canopy/underpass depth. Earlier studies remain
+available; [topology notes](docs/FOREST_TOPOLOGY.md) track the ongoing engine/art work.
 
 ## Current game
 

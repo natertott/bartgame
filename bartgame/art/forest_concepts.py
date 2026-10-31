@@ -7,7 +7,9 @@ their established contracts. No global palette object is mutated.
 import os
 
 VARIANT = int(os.environ.get('BART_FOREST', '0'))
-assert 0 <= VARIANT <= 5, ('BART_FOREST must be 0..5', VARIANT)
+assert 0 <= VARIANT <= 10, ('BART_FOREST must be 0..10', VARIANT)
+ROUND2 = VARIANT >= 6
+LOCAL_VARIANT = VARIANT - 5 if ROUND2 else VARIANT
 NAMES = {
     0: 'Current production forest',
     1: 'Fern & Oak',
@@ -15,23 +17,45 @@ NAMES = {
     3: 'Copper Beech',
     4: 'Velvet Cedar',
     5: 'Pale Orchard',
+    6: 'Black Sap Oak',
+    7: 'Violet Strangler',
+    8: 'Witchfire Weep',
+    9: 'Amethyst Canker',
+    10: 'Royal Bruise',
 }
 TERRAIN_BANKS = {'ground', 'foliage', 'water', 'stone', 'blight',
                  'decay_mix', 'rot_water'}
+
+
+def painters():
+    if ROUND2:
+        import forest_concepts_v2_props as props
+        import forest_concepts_v2_terrain as terrain
+    else:
+        import forest_concepts_props as props
+        import forest_concepts_terrain as terrain
+    return props, terrain
+
+
+def folk_painter():
+    if ROUND2:
+        import forest_concepts_v2_folk as folk
+    else:
+        import forest_concepts_folk as folk
+    return folk
 
 
 def tile(name, phase=0):
     """Return (native image, BG bank, owner), or None for a protected tile."""
     if not VARIANT:
         return None
-    import forest_concepts_props as props
-    import forest_concepts_terrain as terrain
+    props, terrain = painters()
     if props.supports_tile(name):
-        image, bank = props.paint_tile(name, phase, VARIANT)
-        return image, bank, 'forest_concepts_props'
+        image, bank = props.paint_tile(name, phase, LOCAL_VARIANT)
+        return image, bank, props.__name__
     if terrain.supports(name):
-        image, bank = terrain.paint(name, phase, VARIANT)
-        return image, bank, 'forest_concepts_terrain'
+        image, bank = terrain.paint(name, phase, LOCAL_VARIANT)
+        return image, bank, terrain.__name__
     return None
 
 
@@ -44,9 +68,8 @@ def rows(image):
 def bg_palettes(palettes):
     if not VARIANT:
         return palettes
-    import forest_concepts_props as props
-    import forest_concepts_terrain as terrain
-    out = [(name, terrain.palette(name, VARIANT) if name in TERRAIN_BANKS
+    props, terrain = painters()
+    out = [(name, terrain.palette(name, LOCAL_VARIANT) if name in TERRAIN_BANKS
             else colors) for name, colors in palettes]
     aliases = props.BG_PALETTE_ALIASES
     assert not set(aliases) & {name for name, _ in out}
@@ -57,16 +80,16 @@ def bg_palettes(palettes):
 def apply_sprites(sheets, coverage):
     if not VARIANT:
         return
-    import forest_concepts_props as props
-    import forest_concepts_folk as folk
+    props, _ = painters()
+    folk = folk_painter()
     for sheet in sheets:
         for frame in sheet['frames']:
             if props.supports_frame(sheet['name'], frame):
-                image, bank = props.paint_frame(sheet['name'], frame, VARIANT)
-                owner = 'forest_concepts_props'
+                image, bank = props.paint_frame(sheet['name'], frame, LOCAL_VARIANT)
+                owner = props.__name__
             elif folk.supports_frame(sheet['name'], frame):
-                image, bank = folk.frame(sheet['name'], frame, VARIANT)
-                owner = 'forest_concepts_folk'
+                image, bank = folk.frame(sheet['name'], frame, LOCAL_VARIANT)
+                owner = folk.__name__
             else:
                 continue
             assert image.size == (sheet['w'], sheet['h']), (sheet['name'], frame)

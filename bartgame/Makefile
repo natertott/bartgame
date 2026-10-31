@@ -66,13 +66,13 @@ $(error BART_ENEMY must be one integer in 0..11)
 endif
 ENEMY_STAMP := $(GEN)/enemy-profile-$(BART_ENEMY).stamp
 
-# Five environment alternatives are studies until the user selects one.
+# Profiles1..5 retain the first forest studies;6..10 are the second pass.
 BART_FOREST ?= 0
 ifneq ($(words $(BART_FOREST)),1)
-$(error BART_FOREST must be one integer in 0..5)
+$(error BART_FOREST must be one integer in 0..10)
 endif
-ifneq ($(BART_FOREST),$(filter $(BART_FOREST),0 1 2 3 4 5))
-$(error BART_FOREST must be one integer in 0..5)
+ifneq ($(BART_FOREST),$(filter $(BART_FOREST),0 1 2 3 4 5 6 7 8 9 10))
+$(error BART_FOREST must be one integer in 0..10)
 endif
 FOREST_STAMP := $(GEN)/forest-profile-$(BART_FOREST).stamp
 

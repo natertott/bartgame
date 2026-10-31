@@ -11,6 +11,37 @@
 #include "world.h"
 #include "myst.h"
 #include "interactive.h"
+#if BART_FOREST_VARIANT >= 6
+#include "util.h"
+#include "roomgen.h"
+static u16 sLandmarkTile[4];
+static u8 sLandmarkFrame[4];
+static s16 sLockX[4],sLockY[4];
+
+/* One marker per gate pair; its single keyhole does not promise two keys. */
+static void scan_locks(void) {
+    int side;
+    for(side=0;side<4;side++) {
+        int x0,y0,x1,y1;
+        sLockX[side]=sLockY[side]=-1;
+        if(gGame.area!=AREA_FOREST)continue;
+        roomgen_gate_tiles(side,&x0,&y0,&x1,&y1);
+        if(room_get(x0,y0)==MT_DOOR_LOCKED || room_get(x1,y1)==MT_DOOR_LOCKED) {
+            sLockX[side]=(x0+x1)*8+8;
+            sLockY[side]=(y0+y1)*8+16;
+        }
+    }
+}
+
+bool8 interactive_landmark_tile(int x,int y) {
+    if(gGame.area!=AREA_FOREST)return FALSE;
+    if(sLandmarkTile[0] && gSpots.has_relic &&
+       !(gWorld.cells[gGame.cell].flags&CF_RELIC_TAKEN) &&
+       x==gSpots.relic.x && y==gSpots.relic.y)return TRUE;
+    return sLandmarkTile[1] && gSpots.has_shrine &&
+           x==gSpots.shrine.x && y==gSpots.shrine.y;
+}
+#endif
 
 static u16 sChestTile, sEntryTile;
 static u8 sChestFrame, sEntryFrame;
@@ -67,6 +98,12 @@ void interactive_room_reset(void) {
     sChestFrame = sEntryFrame = 0xFF;
     sChestX = sChestY = sEntryX = sEntryY = -1;
     sEntryInterior = 0;
+#if BART_FOREST_VARIANT >= 6
+    memset(sLandmarkTile,0,sizeof(sLandmarkTile));
+    memset(sLandmarkFrame,255,sizeof(sLandmarkFrame));
+    memset(sLockX,255,sizeof(sLockX));
+    memset(sLockY,255,sizeof(sLockY));
+#endif
     if (gGame.area == AREA_SEWER)
         return;
     for (y=0;y<gRoom.h;y++) for (x=0;x<gRoom.w;x++) {
@@ -87,6 +124,17 @@ void interactive_room_reset(void) {
     }
     if (sEntryX >= 0)
         sEntryTile = sprite_alloc(sheets[SHEET_INTERACTIVEENTRY].frame_tiles);
+#if BART_FOREST_VARIANT >= 6
+    if(gGame.area==AREA_FOREST) {
+        if(gSpots.has_relic)sLandmarkTile[0]=sprite_alloc(sheets[SHEET_FORESTLANDMARK].frame_tiles);
+        if(gSpots.has_shrine)sLandmarkTile[1]=sprite_alloc(sheets[SHEET_FORESTLANDMARK].frame_tiles);
+        /* Two live frame uploads suffice: all lock instances share one frame. */
+        scan_locks();
+        for(x=0;x<4;x++)if(sLockX[x]>=0) {
+            sLandmarkTile[3]=sprite_alloc(sheets[SHEET_FORESTLANDMARK].frame_tiles);break;
+        }
+    }
+#endif
     /* The first room render precedes sprite allocation. Apply enlarged
        display suppression now; failed allocations retain the old BG art. */
     room_render();
@@ -110,7 +158,32 @@ static void stream_frame(int sheet,int frame,u16 tile,u8* previous) {
     }
 }
 
+#if BART_FOREST_VARIANT >= 6
+static void draw_landmark(int slot,int frame,int x,int y,bool8 behind) {
+    bool8 far=PX(gPlayer->y)>=y;
+    if(!sLandmarkTile[slot] || far!=behind)return;
+    stream_frame(SHEET_FORESTLANDMARK,frame,sLandmarkTile[slot],&sLandmarkFrame[slot]);
+    draw_sprite(x-8-gCamX,y-32-gCamY,SHEET_FORESTLANDMARK,sLandmarkTile[slot],
+                0,0,slot==3?1:(far?2:1),forestlandmark_frame_pal[frame]);
+}
+#endif
+
 void interactive_draw(bool8 behind) {
+#if BART_FOREST_VARIANT >= 6
+    if(gGame.area==AREA_FOREST) {
+        int side;
+        if(gSpots.has_relic && !(gWorld.cells[gGame.cell].flags&CF_RELIC_TAKEN))
+            draw_landmark(0,F_FORESTLANDMARK_RELIC,gSpots.relic.x*16+8,
+                          gSpots.relic.y*16+16,behind);
+        if(gSpots.has_shrine)
+            draw_landmark(1,(gWorld.cells[gGame.cell].flags&CF_SHRINE_USED)?
+                          F_FORESTLANDMARK_SHRINE_SPENT:F_FORESTLANDMARK_SHRINE_AVAILABLE,
+                          gSpots.shrine.x*16+8,gSpots.shrine.y*16+16,behind);
+        scan_locks();
+        for(side=0;side<4;side++)if(sLockX[side]>=0)
+            draw_landmark(3,F_FORESTLANDMARK_KEYLOCK,sLockX[side],sLockY[side],behind);
+    }
+#endif
     if (sEntryTile && sEntryX >= 0 && behind) {
         /* A forest threshold is centred on one logical entrance tile;
            an interior threshold spans the existing pair of exit tiles. */
@@ -133,6 +206,10 @@ void interactive_draw(bool8 behind) {
             u16 ground=room_get(sChestX,sChestY),overlay=room_get_overlay(sChestX,sChestY);
             int open=ground==MT_CHEST_OPEN || overlay==MT_MYST_CHEST_OPEN;
             int frame=interactive_chest_tier()*2+open;
+#if BART_FOREST_VARIANT >= 6
+            if(frame<2 && (hash32(gWorld.seed,gGame.cell)&1))
+                frame=F_INTERACTIVECHEST_WOODEN_B_CLOSED+open;
+#endif
             int sx=sChestX*16-8-gCamX,sy=sChestY*16-16-gCamY;
             stream_frame(SHEET_INTERACTIVECHEST,frame,sChestTile,&sChestFrame);
             /* Flat litter can promote Bloom to priority one. A near chest

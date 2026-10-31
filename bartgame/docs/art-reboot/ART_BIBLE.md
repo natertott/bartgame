@@ -153,14 +153,17 @@ be visible below the HUD.
 
 ## Interaction vocabulary
 
-The forest remains a forest at every corruption level: green grass, warm dirt,
-recognizable leaf masses, bark and undergrowth carry its base identity. The
-user's latest forest direction rejects a uniform purple walkable field. Show
-increasing blight chiefly through bare limbs, parasitic vines, bruised leaves,
-fungal growth and corrupted flowers, with restrained changes to ground color.
-Keep a limited, versatile family of crowns and ground details within each art
-direction; healthy and sick forms share their construction. Quiet ground must
-leave room for Bloom, enemies, loot and temporary obstacles to read.
+The forest remains a forest at every corruption level: recognizable tree
+anatomy, leaves, bark, grass and earth carry its identity. Healthy ground keeps
+green grass and brown dirt. The second forest review explicitly rejects the
+first pass's restrained corruption: deep forest must become visibly sick,
+filthy and vibrant, with blackened wood, little surviving greenery and glowing
+purple veins. Diseased grass may become bald, pallid, olive or brown. Keep
+walkable fields subordinate and legible; saturated veins are attached growth
+and fissures, not a uniform purple replacement for every material. This
+supersedes the earlier preference for almost unchanged deep green turf.
+Maintain a limited, versatile family of crowns and details; structural decay
+and luminous infection must remain related to the healthy construction.
 
 Forest water is clearer than sewage while retaining continuous banks, coherent
 flow and a distinct near edge. Bridges visibly join accessible banks; pits
@@ -170,7 +173,28 @@ and thrown. Forest gates and interactions inherit the Drain's clear openings,
 locks, fractures, fibres, contact shadows and directional lighting. Five new
 forest environment treatments are comparison studies, not an adopted style.
 Bloom, the selected bestiary, equipment, interfaces and glitter remain the
-context against which those treatments are judged.
+context against which those treatments are judged. Additional studies may
+explore much wider character forms while preserving readable roles, native
+scale, one clear signature and matching separately authored portraits.
+
+Depth belongs to both drawing and room structure. Ground planes, raised faces,
+contact shadows and foreground overhangs must agree with physical passage.
+Canopy fringes can project onto neighboring walkable grass and partly cover
+Bloom's upper body; keep feet, paths and interactions readable. Rounded outer
+corners, inner corners, ends and isolated cells require explicit adjacency
+art or placement rules. Transparent foreground edges must composite over the
+actual ground instead of carrying a mismatched rectangular substrate.
+Underpasses require genuinely walkable clearance. A raised root arch can
+provide overhead occlusion without promising a walkable upper deck; a bridge
+that supports both routes needs explicit elevation and collision routing.
+Show implemented depth behavior in real gameplay, not solely source mockups.
+
+Cleared thorns, bombable stone, silk and key gates reveal the same correct
+underlying grass/earth. A key barrier should have one unmistakable large
+keyhole rather than repeated tiny decorative marks. Pressure switches may be
+simple broad raised/depressed faces, without ornate stamps or UI checkmarks.
+Relic/shrine markers may grow vertically above their established footprint;
+larger logs need a matching physical footprint and placement clearance.
 
 Carry these meanings unchanged into every future area:
 

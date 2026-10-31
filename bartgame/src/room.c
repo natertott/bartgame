@@ -12,6 +12,10 @@
 Room gRoom EWRAM_BSS;
 s16 gCamX, gCamY;
 u8 gAnimTiles; /* off while the title owns the charblock */
+#if BART_FOREST_VARIANT >= 6
+u16 gRoomVisualGround[ROOM_MAX_W * ROOM_MAX_H] EWRAM_BSS;
+u16 gRoomVisualOverlay[ROOM_MAX_W * ROOM_MAX_H] EWRAM_BSS;
+#endif
 
 #define SB_OVERLAY 24
 #define SB_GROUND 28
@@ -57,6 +61,18 @@ void tiles_animate(void) {
         /* subtiles are tl, tr, bl, br: consecutive in the tileset for animated metatiles */
         dma3_copy32(ta->data + f * 64, CHARBLOCK(0) + ta->tile * 16, 128);
     }
+#if BART_FOREST_VARIANT >= 6
+    /* Authored glow breathes only in world BG banks. Neither shared OBJ
+       material nor the reserved HUD/menu/sparkle palettes are changed. */
+    if (gGame.area != AREA_SEWER && gGame.state == GS_PLAY) {
+        int set = (int)(sTs - tilesets), phase = (gFrame >> 3) & 3;
+        if(set >= 0 && set < TILESET_COUNT)
+            for(i=0;i<FOREST_V2_PULSE_COUNT;i++) {
+                int slot=forest_v2_pulse_slots[set][i];
+                if(slot!=255)pal_set_bg(slot,forest_v2_pulse_colors[i][phase]);
+            }
+    }
+#endif
 }
 
 void room_clear(int w, int h, u16 fill) {
@@ -132,6 +148,10 @@ void room_build_solid(void) {
 }
 
 static void map_write(int sb_base, int mx, int my, u16 mt) {
+#if BART_FOREST_VARIANT >= 6
+    if(sb_base==SB_GROUND)gRoomVisualGround[my*ROOM_MAX_W+mx]=mt;
+    else if(sb_base==SB_OVERLAY)gRoomVisualOverlay[my*ROOM_MAX_W+mx]=mt;
+#endif
     int tx = mx * 2, ty = my * 2;
     int sb = sb_base + ((ty >> 5) << 1) + (tx >> 5);
     vu16* m = SCREENBLOCK(sb) + (ty & 31) * 32 + (tx & 31);
@@ -172,9 +192,114 @@ static u16 barrier_floor(int x,int y,u16 base) {
     return roomgen_blighted(gGame.cell) ? MT_BLIGHT_FLOOR : MT_PATH;
 }
 
+#if BART_FOREST_VARIANT >= 6
+static int forest_canopy_at(int x,int y) {
+    if(x<0 || y<0 || x>=gRoom.w || y>=gRoom.h)return 1;
+    u16 mt=room_get(x,y);
+    return mt==MT_NONE ? 0 : forest_v2_canopy_kind[mt];
+}
+
+static bool8 forest_water_at(int x,int y) {
+    if(x<0 || y<0 || x>=gRoom.w || y>=gRoom.h)return FALSE;
+    u16 mt=room_get(x,y);
+    return mt!=MT_NONE && forest_v2_water_kind[mt];
+}
+
+static bool8 forest_isolated_water(int x,int y,u16 mt) {
+    int kind=mt==MT_NONE?0:forest_v2_water_kind[mt];
+    return gGame.area==AREA_FOREST && kind>=1 && kind<=3 &&
+           !forest_water_at(x,y-1) && !forest_water_at(x+1,y) &&
+           !forest_water_at(x,y+1) && !forest_water_at(x-1,y);
+}
+
+static u16 forest_picture(int x,int y,u16 mt) {
+    if(gGame.area!=AREA_FOREST || mt==MT_NONE)return mt;
+    int kind=forest_v2_canopy_kind[mt];
+    if(kind==1 || kind==2) {
+        int n=forest_canopy_at(x,y-1),e=forest_canopy_at(x+1,y);
+        int s=forest_canopy_at(x,y+1),w=forest_canopy_at(x-1,y);
+        int mask=(!n?1:0)|(!e?2:0)|(!s?4:0)|(!w?8:0);
+        int corners=(!n||!w||forest_canopy_at(x-1,y-1)?0:1)|
+                    (!n||!e||forest_canopy_at(x+1,y-1)?0:2)|
+                    (!s||!e||forest_canopy_at(x+1,y+1)?0:4)|
+                    (!s||!w||forest_canopy_at(x-1,y+1)?0:8);
+        return forest_v2_canopy_alias[kind-1][(x&1)|((y&1)<<1)][mask][corners];
+    }
+    kind=forest_v2_water_kind[mt];
+    if(kind>=1 && kind<=3) {
+        int n=forest_water_at(x,y-1),e=forest_water_at(x+1,y);
+        int s=forest_water_at(x,y+1),w=forest_water_at(x-1,y);
+        int mask=(!n?1:0)|(!e?2:0)|(!s?4:0)|(!w?8:0);
+        int corners=(!n||!w||forest_water_at(x-1,y-1)?0:1)|
+                    (!n||!e||forest_water_at(x+1,y-1)?0:2)|
+                    (!s||!e||forest_water_at(x+1,y+1)?0:4)|
+                    (!s||!w||forest_water_at(x-1,y+1)?0:8);
+        if(kind==1)return forest_v2_water_alias[mask][corners];
+        if(mask==15)return forest_v2_water_isolated[kind-2];
+    }
+    return mt;
+}
+
+/* Do not cover rewards, switches, speakers, thresholds or their approaches. */
+static bool8 forest_projection_clear(int x,int y,u16 ground,u16 overlay) {
+    if(gGame.area!=AREA_FOREST || ground==MT_NONE || metatile_type[ground]!=TT_FLOOR ||
+       metatile_prop[ground] || (overlay!=MT_NONE && overlay!=MT_SPARKLE &&
+       overlay!=MT_SPARKLE_WHITE && overlay!=MT_BLIGHT_MIST))return FALSE;
+    if((gSpots.has_chest && ABS(x-gSpots.chest.x)<=1 && ABS(y-gSpots.chest.y)<=1) ||
+       (gSpots.has_npc && ABS(x-gSpots.npc.x)<=1 && ABS(y-gSpots.npc.y)<=1) ||
+       (gSpots.has_relic && ABS(x-gSpots.relic.x)<=1 && ABS(y-gSpots.relic.y)<=1) ||
+       (gSpots.has_treasure && ABS(x-gSpots.treasure.x)<=1 && ABS(y-gSpots.treasure.y)<=1) ||
+       (gSpots.has_mouth && ABS(x-gSpots.mouth.x)<=1 && ABS(y-gSpots.mouth.y)<=2) ||
+       (gSpots.has_shrine && ABS(x-gSpots.shrine.x)<=1 && ABS(y-gSpots.shrine.y)<=2))
+        return FALSE;
+    return TRUE;
+}
+
+static u16 forest_projection(int x,int y,u16 ground,u16 overlay) {
+    if(!forest_projection_clear(x,y,ground,overlay))return overlay;
+    int n=forest_canopy_at(x,y-1),e=forest_canopy_at(x+1,y);
+    int s=forest_canopy_at(x,y+1),w=forest_canopy_at(x-1,y);
+    int mask=(n?1:0)|(e?2:0)|(s?4:0)|(w?8:0);
+    if(!mask)return overlay;
+    int kind=(n>=2 || e>=2 || s>=2 || w>=2)?1:0;
+    return forest_v2_fringe_alias[kind][mask];
+}
+#endif
+
 static void render_cell(int x, int y) {
     int i=y*ROOM_MAX_W+x;
     u16 ground=gRoom.ground[i],overlay=gRoom.overlay[i],base=gRoom.underlay[i];
+#if BART_FOREST_VARIANT >= 6
+    u16 picture=ground;
+    if(forest_isolated_water(x,y,ground)) {
+        if(overlay==MT_NONE || overlay==MT_SPARKLE || overlay==MT_SPARKLE_WHITE || overlay==MT_BLIGHT_MIST) {
+            /* Exterior alpha reveals this soil, not a healthy-green square
+               baked into a pond on dirt or diseased grass. */
+            map_write(SB_GROUND,x,y,barrier_floor(x,y,base));
+            overlay=forest_picture(x,y,ground);
+        } else {
+            /* The two world planes are already occupied. Preserve an
+               authored crown/event and a visible water surface beneath it,
+               never an alpha hole to the backdrop. */
+            map_write(SB_GROUND,x,y,MT_WATER);
+        }
+    } else if(gGame.area==AREA_FOREST && ground!=MT_NONE &&
+       (forest_v2_canopy_kind[ground]==1 || forest_v2_canopy_kind[ground]==2) &&
+       (overlay==MT_NONE || overlay==MT_SPARKLE || overlay==MT_SPARKLE_WHITE || overlay==MT_BLIGHT_MIST)) {
+        /* Rounded foliage is a true foreground silhouette over local soil,
+           not a green rectangle painted onto a dirt or water boundary. */
+        map_write(SB_GROUND,x,y,barrier_floor(x,y,base));
+        overlay=forest_picture(x,y,ground);
+    } else if(interactive_landmark_tile(x,y)) {
+        picture=barrier_floor(x,y,base);
+        if(overlay==MT_SPARKLE || overlay==MT_SPARKLE_WHITE)overlay=MT_NONE;
+        map_write(SB_GROUND,x,y,picture);
+    } else if(gGame.area==AREA_FOREST && ground!=MT_NONE && forest_v2_special_tree[ground] &&
+              (overlay==MT_NONE || overlay==MT_SPARKLE || overlay==MT_SPARKLE_WHITE || overlay==MT_BLIGHT_MIST)) {
+        map_write(SB_GROUND,x,y,barrier_floor(x,y,base));
+        overlay=ground;
+    } else
+#endif
     if (interactive_chest_ready() && (interactive_chest_tile(ground) ||
         interactive_chest_overlay(overlay))) {
         /* The larger OBJ chest owns its complete silhouette. Its original
@@ -190,7 +315,11 @@ static void render_cell(int x, int y) {
         /* A continuous wall behind the large portal avoids a second tiny
            doorway visible through transparent pixels around the frame. */
         map_write(SB_GROUND,x,y,roomgen_blighted(gGame.cell) ? MT_BLIGHT_WALL : MT_CANOPY_S);
-    } else if (barrier_material(ground)) {
+    } else if (barrier_material(ground)
+#if BART_FOREST_VARIANT >= 6
+               || ground==MT_THORN || ground==MT_DOOR_LOCKED
+#endif
+               ) {
         /* The obstacle must cover the hoard beyond it, while its transparent
            corners and silk reveal a continuous local floor. Physics still
            reads the original CRACK/WEB tile and unchanged collision mask. */
@@ -202,10 +331,42 @@ static void render_cell(int x, int y) {
         if (overlay==MT_NONE || overlay==MT_SPARKLE || overlay==MT_SPARKLE_WHITE || overlay==MT_BLIGHT_MIST)
             overlay=ground;
     } else {
+#if BART_FOREST_VARIANT >= 6
+        picture=forest_picture(x,y,ground);
+        map_write(SB_GROUND,x,y,picture);
+#else
         map_write(SB_GROUND,x,y,ground);
+#endif
     }
+#if BART_FOREST_VARIANT >= 6
+    overlay=forest_projection(x,y,ground,overlay);
+#endif
     map_write(SB_OVERLAY,x,y,overlay);
 }
+
+#if BART_FOREST_VARIANT >= 6
+u16 room_visual_ground(int x,int y) {return gRoomVisualGround[y*ROOM_MAX_W+x];}
+u16 room_visual_overlay(int x,int y) {return gRoomVisualOverlay[y*ROOM_MAX_W+x];}
+static bool8 overhead_at_body(int px,int py,int z,int width,int height) {
+    int x,y,x0=MAX(0,(px-width/2)/16),x1=MIN(gRoom.w-1,(px+width/2)/16);
+    int y0=MAX(0,(py-z-height)/16),y1=MIN(gRoom.h-1,(py-z-1)/16);
+    for(y=y0;y<=y1;y++)for(x=x0;x<=x1;x++) {
+        u16 mt=gRoomVisualOverlay[y*ROOM_MAX_W+x];
+        if(mt!=MT_NONE && forest_v2_overhead[mt])return TRUE;
+    }
+    return FALSE;
+}
+
+static bool8 water_surface_at_body(int px,int py,int z,int width,int height) {
+    int x,y,x0=MAX(0,(px-width/2)/16),x1=MIN(gRoom.w-1,(px+width/2)/16);
+    int y0=MAX(0,(py-z-height)/16),y1=MIN(gRoom.h-1,(py-z-1)/16);
+    for(y=y0;y<=y1;y++)for(x=x0;x<=x1;x++) {
+        u16 mt=gRoomVisualOverlay[y*ROOM_MAX_W+x];
+        if(mt!=MT_NONE && metatile_type[mt]==TT_WATER)return TRUE;
+    }
+    return FALSE;
+}
+#endif
 
 /* BG1 now carries transparent material as well as the original crowns.
    A grounded sprite is in front of a prop once its feet pass that prop's
@@ -222,6 +383,9 @@ int room_prop_priority(int px,int py,int z,int width,int height,int priority) {
     int half=MIN(width/2,16), top=py-MIN(height,64)-z, bottom=py-z-1;
     int x0=MAX(0,(px-half)/16),x1=MIN(gRoom.w-1,(px+half)/16);
     int y0=MAX(0,top/16),y1=MIN(gRoom.h-1,bottom/16);
+#if BART_FOREST_VARIANT >= 6
+    if((priority==1 || priority==2) && overhead_at_body(px,py,z,width,height))return 2;
+#endif
     if(priority!=2)return priority;
     if(px>=0 && py>=4 && px<gRoom.w*16 && py<gRoom.h*16) {
         u16 feet=gRoom.overlay[((py-4)/16)*ROOM_MAX_W+px/16];
@@ -240,10 +404,19 @@ int room_prop_priority(int px,int py,int z,int width,int height,int priority) {
            !(interactive_chest_ready() && interactive_chest_overlay(ov)))
             continue; /* this cell displays the authored crown, not material */
         if(interactive_chest_ready() && interactive_chest_tile(mt))continue;
-        if(mt==MT_NONE || (!metatile_prop[mt] && !barrier_material(mt)))continue;
+        if(mt==MT_NONE || (!metatile_prop[mt] && !barrier_material(mt)
+#if BART_FOREST_VARIANT >= 6
+                          && !forest_v2_special_tree[mt]
+#endif
+                          ))continue;
         if(metatile_coll[mt]==0 || py>=(y+1)*16 || z>=16)front=1;
         else if(px>=x*16 && px<(x+1)*16)behind=1;
     }
+#if BART_FOREST_VARIANT >= 6
+    /* The water surface is below bodies, unlike a canopy. Also test dry
+       actors whose heads overlap a neighboring pond, not only feet in it. */
+    if(!behind && water_surface_at_body(px,py,z,width,height))return 1;
+#endif
     return front && !behind ? 1 : priority;
 }
 
@@ -266,6 +439,11 @@ void room_change(int mx, int my, u16 mt) {
     {
         int i=my*ROOM_MAX_W+mx;
         u16 old=gRoom.ground[i],base=gRoom.underlay[i];
+#if BART_FOREST_VARIANT >= 6
+        if((old==MT_THORN || old==MT_CRACK || old==MT_WEB || old==MT_DOOR_LOCKED) &&
+           mt!=MT_NONE && (metatile_type[mt]==TT_FLOOR || metatile_type[mt]==TT_DOOR_OPEN))
+            mt=barrier_floor(mx,my,base);
+#endif
         /* Lifting/cutting a prop exposes the exact substrate it covered,
            including rot, shore or trail, rather than the caller's generic
            grass fallback. Chests and lit censers remain material props. */
@@ -278,6 +456,12 @@ void room_change(int mx, int my, u16 mt) {
     solid_cell_update(mx, my);
     interactive_cell_changed(mx,my);
     render_cell(mx,my);
+#if BART_FOREST_VARIANT >= 6
+    int nx,ny;
+    for(ny=MAX(0,my-1);ny<=MIN(gRoom.h-1,my+1);ny++)
+        for(nx=MAX(0,mx-1);nx<=MIN(gRoom.w-1,mx+1);nx++)
+            if(nx!=mx || ny!=my)render_cell(nx,ny);
+#endif
 }
 
 void room_change_overlay(int mx, int my, u16 mt) {

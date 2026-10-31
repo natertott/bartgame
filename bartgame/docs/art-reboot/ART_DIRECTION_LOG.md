@@ -770,3 +770,43 @@ five directions is adopted. The [actual/source review](../../../art-review/fores
 and [five-ROM release](../../../downloads/forest-concepts-73df5c1/README.md)
 record every alternative. Research notes separate primary evidence from
 original adaptations; no reference-game pixels are imported.
+
+## Forest second pass: black sap, purple fever and layered depth — 2026-10-31
+
+**Direct user feedback:** the first five deep forests are far too restrained.
+The second pass needs blackened dead wood, sick sparse grass, filth and vivid
+glowing purple blight veins. Healthy grass remains a useful anchor. Keep the
+favored healthy canopy1/3 and trees1/5 as references; cave walls1/4 and hollow/
+thicket walls1/3 guide construction. Vibrant thorns2/3 gain purple infection;
+bomb stone starts from4. Redesign all dead/sick trees, blighted canopy/walls,
+tall grass and ledges. Five webs must differ in construction. Locks require an
+obvious keyhole; all four cleared barrier kinds return the correct normal
+floor. Explore much wider wooden-chest forms and simpler physical switches.
+Relic/shrine markers should stand taller, and logs can occupy multiple cells.
+
+**New character scope:** fifteen original forest folk concepts, five per
+existing Hermit/Nun/Gardener role, with matching native portraits. Follow the
+sewer's silhouette, single-hook, material-plane and native-scale rules rather
+than merely recoloring hooded humans. Selected enemies, Bloom, equipment,
+Drain keepers/layout, interfaces and established glitter remain protected.
+
+**Engine/art intersection:** add adjacency-aware visual aliases for isolated
+water/canopy, ends and joins; preserve semantic room/collision data wherever
+only the rendering changes. Use genuine foreground canopy fringes over
+walkable grass, with partial player occlusion and visible feet. A raised root
+arch demonstrates a real walkable underpass; it does not claim an accessible
+upper bridge deck. Investigate height through consistent ledge lips, vertical
+faces and shadows, and safe multi-cell log placement. Keep larger marker
+billboards and one clear lock synchronized with their interaction state.
+
+**Exploration and evidence plan:** profiles6–10 map to five new local options,
+Black Sap Oak, Violet Strangler, Witchfire Weep, Amethyst Canker and Royal
+Bruise. Profiles0–5 remain historical choices; the normal build stays0.
+Native authored BG palette phases make attached purple veins actually pulse
+in game, while shared OBJ/UI/glitter inks stay stable. Source sheets show all
+states and adjacency assemblies. Real mGBA captures will show generated rooms,
+isolated cases, under/overhang movement, taller landmarks, both wooden-chest
+forms and actual barrier clearing. Clearly label diagnostic room fixtures and
+distinguish them from natural generated placements. Test reachability and
+physical footprints where generation changes; update the implementation notes
+and remaining topology gaps as part of this ongoing process.

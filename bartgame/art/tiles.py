@@ -101,3 +101,8 @@ if SC.VARIANT == 9:
         COVERAGE.append({'name': mt['name'], 'owner': 'sewer_final', 'frames': count,
                          'material': 'drain', 'glitter': bool(mt.get('glitter')),
                          'source': clone['source'], 'placement': [clone['layer'], clone['x'], clone['y']]})
+
+FOREST_V2_TOPOLOGY = None
+if FC.VARIANT >= 6:
+    import forest_concepts_v2_topology as F2T
+    FOREST_V2_TOPOLOGY = F2T.append(METATILES, COVERAGE, FC.VARIANT - 5)

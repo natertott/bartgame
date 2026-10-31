@@ -218,6 +218,11 @@ h.append('extern const u8 metatile_glitter[];')
 h.append('typedef struct { u16 tile; u8 frames; u8 speed; const u16* data; } TileAnim;')
 h.append('typedef struct { const u16* tiles; u16 tile_count; const u16* map; const TileAnim* anims; u8 anim_count; const u16* pals; u8 pal_count; } Tileset;')
 set_rows = []
+forest_v2_pulse_slots = []
+forest_v2_pulses = {}
+if FOREST_CONCEPTS.VARIANT >= 6:
+    import forest_concepts_v2_terrain as F2ART
+    forest_v2_pulses = F2ART.pulse_palettes(FOREST_CONCEPTS.VARIANT - 5)
 for si, (sname, pred) in enumerate(SETS):
     ts = Tileset()
     ts.add([[0] * 8 for _ in range(8)], 0, 0)  # tile 0 blank
@@ -234,6 +239,10 @@ for si, (sname, pred) in enumerate(SETS):
                 if pn not in set_pals:
                     set_pals.append(pn)
     assert len(set_pals) <= PAL_AREA_SLOTS, ('tileset %s needs %d palettes' % (sname, len(set_pals)), set_pals)
+    if FOREST_CONCEPTS.VARIANT >= 6:
+        forest_v2_pulse_slots.append([set_pals.index(name) if name in set_pals
+                                      and sname != 'sewer' else 255
+                                      for name in forest_v2_pulses])
     for i, mt in enumerate(tiles.METATILES):
         if not pred(mt['name'], i):
             entries += [0, 0, 0, 0]
@@ -248,7 +257,8 @@ for si, (sname, pred) in enumerate(SETS):
         # orientation, timing and quarter palette assignment; a first-frame
         # match alone would let unrelated moving surfaces overwrite each other.
         animation_key = None
-        if SC.VARIANT == 9 and sname == 'sewer' and animated:
+        if animated and ((SC.VARIANT == 9 and sname == 'sewer') or
+                         (FOREST_CONCEPTS.VARIANT >= 6 and sname == 'forest')):
             animation_key = (tuple(tuple(fr) for fr in frames),
                              mt.get('anim_speed', 8), tuple(qpals))
             if animation_key in animation_cache:
@@ -289,6 +299,68 @@ c.append('const Tileset tilesets[%d] = {' % len(SETS))
 c += set_rows
 c.append('};')
 h.append('extern const Tileset tilesets[];')
+if FOREST_CONCEPTS.VARIANT >= 6:
+    import forest_concepts_v2_topology as F2T
+    topology = tiles.FOREST_V2_TOPOLOGY
+    kinds, waters = F2T.classes(tiles.METATILES)
+    h += ['extern const u8 forest_v2_canopy_kind[];',
+          'extern const u8 forest_v2_water_kind[];',
+          'extern const u8 forest_v2_special_tree[];',
+          'extern const u8 forest_v2_overhead[];',
+          'extern const u16 forest_v2_visual_parent[];',
+          'extern const u16 forest_v2_canopy_alias[2][4][16][16];',
+          'extern const u16 forest_v2_fringe_alias[2][16];',
+          'extern const u16 forest_v2_water_alias[16][16];',
+          'extern const u16 forest_v2_water_isolated[2];']
+    c.append(c_array_u8('forest_v2_canopy_kind', kinds))
+    c.append(c_array_u8('forest_v2_water_kind', waters))
+    c.append(c_array_u8('forest_v2_special_tree', F2T.special_trees(tiles.METATILES)))
+    parents = list(range(len(tiles.METATILES)))
+    overhead = F2T.authored_crowns(tiles.METATILES)
+    for spec in topology['specs']:
+        i = mt_names[spec['name']]
+        parents[i] = mt_names[spec['parent']]
+        overhead[i] = int(spec['family'] in ('canopy', 'fringe', 'overhead_root_arch'))
+    c.append(c_array_u16('forest_v2_visual_parent', parents))
+    c.append(c_array_u8('forest_v2_overhead', overhead))
+    c.append('const u16 forest_v2_canopy_alias[2][4][16][16] = {')
+    for kind in range(2):
+        c.append('  {')
+        for quadrant in range(4):
+            c.append('    {')
+            for mask in range(16):
+                c.append('      {' + ','.join(str(mt_names[topology['canopy'][kind][quadrant][mask][corner & F2T.eligible_corners(mask)]])
+                                          for corner in range(16)) + '},')
+            c.append('    },')
+        c.append('  },')
+    c.append('};')
+    c.append('const u16 forest_v2_fringe_alias[2][16] = {')
+    for row in topology['fringe']:
+        c.append('  {' + ','.join(str(mt_names[name]) if name else '65535' for name in row) + '},')
+    c.append('};')
+    c.append(c_array_u16('forest_v2_water_isolated', [mt_names[name] for name in topology['isolated_water']]))
+    c.append('const u16 forest_v2_water_alias[16][16] = {')
+    for mask in range(16):
+        c.append('  {' + ','.join(str(mt_names[topology['water'][mask][corner & F2T.eligible_corners(mask)]])
+                                for corner in range(16)) + '},')
+    c.append('};')
+    h.append('#define FOREST_V2_PULSE_COUNT %d' % len(forest_v2_pulses))
+    h += ['extern const u8 forest_v2_pulse_slots[3][FOREST_V2_PULSE_COUNT];',
+          'extern const u16 forest_v2_pulse_colors[FOREST_V2_PULSE_COUNT][4][16];']
+    c.append('const u8 forest_v2_pulse_slots[3][FOREST_V2_PULSE_COUNT] = {')
+    for row in forest_v2_pulse_slots:
+        c.append('  {' + ','.join(map(str, row)) + '},')
+    c.append('};')
+    c.append('const u16 forest_v2_pulse_colors[FOREST_V2_PULSE_COUNT][4][16] = {')
+    for bank, phases in forest_v2_pulses.items():
+        assert len(phases) == 4 and all(len(palette) == 16 for palette in phases), bank
+        assert phases[0] == dict(palettes.BG_PALETTES)[bank], bank
+        c.append('  {')
+        for palette in phases:
+            assert all(int(color[k:k+2],16)%8 == 0 for color in palette for k in (1,3,5)), bank
+            c.append('    {' + ','.join(str(rgb15(color)) for color in palette) + '},')
+        c.append('  },')
+    c.append('};')
 h.append('#define TILESET_COUNT %d\n' % len(SETS))
 
 # ------------------------------------------------------------- sprites --
@@ -612,6 +684,19 @@ coverage['forest_concept'] = {
     'protected': ['Bloom', 'selected enemies', 'equipment and pickups', 'UI',
                   'Drain architecture and keepers', 'glitter', 'physical metadata'],
 }
+if FOREST_CONCEPTS.VARIANT >= 6:
+    coverage['forest_concept']['topology'] = tiles.FOREST_V2_TOPOLOGY
+    coverage['forest_concept']['depth'] = {
+        'semantic_room_arrays': 'Unchanged IDs for render-only canopy/water aliases.',
+        'visual_arrays': ['gRoomVisualGround', 'gRoomVisualOverlay'],
+        'foreground': 'Transparent canopy silhouettes/fringes and a two-cell raised root arch.',
+        'underpass': 'Only the lower floor is a route; no accessible upper bridge level is invented.',
+        'logs': 'Existing HLOG_0/1 solid two-cell kit replaces scattered one-cell logs after safety checks.',
+        'landmarks': ['relic', 'shrine_available', 'shrine_spent', 'keylock'],
+        'pulse_banks': list(forest_v2_pulses),
+        'pulse_slots': forest_v2_pulse_slots,
+        'pulse_clock': '(gFrame >> 3) & 3 while playing forest/mystery rooms',
+    }
 with open(os.path.join(OUT, 'art-reboot-coverage.json'), 'w') as report:
     json.dump(coverage, report, indent=2)
     report.write('\n')

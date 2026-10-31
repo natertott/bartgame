@@ -129,3 +129,13 @@ world characters and48px portraits. Final art source is `73df5c1`; source-only
 inspection holds remain distinct from actual motion and interactions. Original
 reference-game graphics/reconstructions stay in the local research directory;
 the published metadata contains URLs/revisions/hashes and measured facts.
+
+## Second forest review: infection and depth — 2026-10-31
+
+The user's latest asset-by-asset feedback and foreground/depth request are
+the direct authority. They supersede the first study's very restrained deep
+grass and canopy corruption. Existing six PDF notes/G01–G18 and pinned primary
+forest research still guide native forms, lighting and interaction semantics;
+no new article or inaccessible illustration is claimed. The second pass's
+terrain, props, folk and engine notes will record each adaptation and its
+source versus actual-game evidence. The five new treatments remain unselected.

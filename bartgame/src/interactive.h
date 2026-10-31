@@ -12,5 +12,8 @@ bool8 interactive_chest_overlay(u16 mt);
 bool8 interactive_chest_ready(void);
 bool8 interactive_entry_ready(void);
 bool8 interactive_mouth_tile(u16 mt);
+#if BART_FOREST_VARIANT >= 6
+bool8 interactive_landmark_tile(int x,int y);
+#endif
 
 #endif

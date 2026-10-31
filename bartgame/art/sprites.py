@@ -55,6 +55,29 @@ ENEMY_STUDIES.apply(SHEETS, COVERAGE)
 # Bloom, equipment and UI source frames retain their selected artwork.
 import forest_concepts as FOREST_CONCEPTS
 FOREST_CONCEPTS.apply_sprites(SHEETS, COVERAGE)
+FOREST_LANDMARK_SHEET = None
+if FOREST_CONCEPTS.VARIANT >= 6:
+    import forest_concepts_v2_props as F2P
+    local_variant = FOREST_CONCEPTS.VARIANT - 5
+    chest = next(sheet for sheet in SHEETS if sheet['name'] == 'interactivechest')
+    for frame in ('wooden_b_closed', 'wooden_b_open'):
+        image, bank = F2P.paint_frame('interactivechest', frame, local_variant)
+        assert image.mode == 'P' and image.size == (32, 32), frame
+        chest['frames'][frame] = FOREST_CONCEPTS.rows(image)
+        chest['frame_pal'][frame] = bank
+        COVERAGE.append({'sheet': 'interactivechest', 'frame': frame,
+                         'owner': 'forest_concepts_v2_props', 'canvas': [32,32],
+                         'forest_concept': FOREST_CONCEPTS.VARIANT})
+    frames, banks = {}, {}
+    for frame in ('relic', 'shrine_available', 'shrine_spent', 'keylock'):
+        image, bank = F2P.landmark(frame, local_variant)
+        assert image.mode == 'P' and image.size == (16,32), frame
+        frames[frame] = FOREST_CONCEPTS.rows(image); banks[frame] = bank
+        COVERAGE.append({'sheet': 'forestlandmark', 'frame': frame,
+                         'owner': 'forest_concepts_v2_props', 'canvas': [16,32],
+                         'forest_concept': FOREST_CONCEPTS.VARIANT})
+    FOREST_LANDMARK_SHEET = {'name':'forestlandmark','w':16,'h':32,'pal':banks['relic'],
+                            'frames':frames,'frame_pal':banks}
 
 # Compact HUD pictograms are separately authored at their ten-pixel ink size;
 # menu and world item drawings keep their established images and palettes.
@@ -155,3 +178,7 @@ if SC.VARIANT:
                    'frames':{'rail':concept_rows(image)}})
     COVERAGE.append({'sheet':'sewerrail','frame':'rail','owner':'sewer_concepts_terrain',
                      'canvas':[16,8],'sewer_concept':SC.VARIANT})
+
+# Append after the historical final Drain strip so every previous sheet ID stays stable.
+if FOREST_LANDMARK_SHEET is not None:
+    SHEETS.append(FOREST_LANDMARK_SHEET)

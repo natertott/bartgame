@@ -1,6 +1,7 @@
 /* BARTGAME: video setup, VBlank flush, OAM shadow, fades. */
 #include "gba.h"
 #include "video.h"
+#include "assets.h"
 
 volatile u32 gFrame;
 volatile u8 gVBlankFlag;
@@ -9,6 +10,10 @@ u16 gKeysHeld, gKeysDown, gKeysUp;
 OamEntry gOam[128] ALIGN4;
 u8 gOamCount;
 s16 gBgScroll[4][2];
+#if BART_FOREST_VARIANT >= 6
+/* The frame being displayed can lag the next logical camera while walking. */
+s16 gForestV2DisplayedCamera[2] EWRAM_BSS;
+#endif
 u16 gPalBg[256] ALIGN4;
 u16 gPalObj[256] ALIGN4;
 u8 gPalDirty;
@@ -158,6 +163,10 @@ void video_flush(void) {
     REG_BG0VOFS = gBgScroll[0][1];
     REG_BG1HOFS = gBgScroll[1][0];
     REG_BG1VOFS = gBgScroll[1][1];
+#if BART_FOREST_VARIANT >= 6
+    gForestV2DisplayedCamera[0]=gBgScroll[1][0];
+    gForestV2DisplayedCamera[1]=gBgScroll[1][1];
+#endif
     REG_BG2HOFS = gBgScroll[2][0];
     REG_BG2VOFS = gBgScroll[2][1];
     REG_BG3HOFS = gBgScroll[3][0];

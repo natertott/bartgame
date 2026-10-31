@@ -931,6 +931,14 @@ static void scatter_rocks(int n, int tries) {
 /* n solid things on the grass, each where it narrows a way but never
    closes one */
 static void scatter_solid(u16 mt, int n, int tries) {
+#if BART_FOREST_VARIANT >= 6
+    /* Logs occupy the full two-cell body their artwork advertises. Existing
+       fit/connectivity guards protect paths, pockets and event approaches. */
+    if(mt==MT_LOG) {
+        scatter_block(MT_HLOG_0,2,1,n,tries);
+        return;
+    }
+#endif
     int i;
     for (i = 0; i < tries && n > 0; i++) {
         int x = 2 + rng_range(&sR, W - 4), y = 3 + rng_range(&sR, H - 5);
@@ -1564,6 +1572,57 @@ bool8 roomgen_blighted(int cell) {
     return (c->stage >= 3) || (c->arch == ARCH_ARENA);
 }
 
+#if BART_FOREST_VARIANT >= 6
+static bool8 arch_event_clear(int x,int y) {
+    int i;
+    if((gSpots.has_chest && ABS(x-gSpots.chest.x)<=2 && ABS(y-gSpots.chest.y)<=2) ||
+       (gSpots.has_npc && ABS(x-gSpots.npc.x)<=2 && ABS(y-gSpots.npc.y)<=2) ||
+       (gSpots.has_relic && ABS(x-gSpots.relic.x)<=2 && ABS(y-gSpots.relic.y)<=2) ||
+       (gSpots.has_shrine && ABS(x-gSpots.shrine.x)<=2 && ABS(y-gSpots.shrine.y)<=2) ||
+       (gSpots.has_mouth && ABS(x-gSpots.mouth.x)<=2 && ABS(y-gSpots.mouth.y)<=2) ||
+       (gSpots.has_treasure && ABS(x-gSpots.treasure.x)<=2 && ABS(y-gSpots.treasure.y)<=2))return FALSE;
+    for(i=0;i<gSpots.torch_count;i++)
+        if(ABS(x-gSpots.torches[i].x)<=2 && ABS(y-gSpots.torches[i].y)<=2)return FALSE;
+    return TRUE;
+}
+
+/* A raised root arch crosses a real lower trail. Its two overlay cells have
+   zero collision. The upper wood is scenery, not an invented second route. */
+static void place_root_arch(int cell) {
+    int x,y,bx=-1,by=-1;
+    u32 best=0xffffffff;
+    for(y=3;y<H-3;y++)for(x=2;x<W-3;x++) {
+        u16 a=room_get(x,y),b=room_get(x+1,y);
+        if(metatile_type[a]!=TT_FLOOR || metatile_type[b]!=TT_FLOOR ||
+           metatile_prop[a] || metatile_prop[b] || near_door(x,y) || near_door(x+1,y) ||
+           room_get_overlay(x,y)!=MT_NONE || room_get_overlay(x+1,y)!=MT_NONE ||
+           room_type(x-1,y)!=TT_SOLID || room_type(x+2,y)!=TT_SOLID ||
+           !(sPath[y][x]&P_MID) || !(sPath[y][x+1]&P_MID) ||
+           !arch_event_clear(x,y) || !arch_event_clear(x+1,y))continue;
+        /* At least one complete lower lane must really pass through both
+           ports. A one-row opening ending at a wall is only scenery. The
+           visible span may be wider than its narrower usable lower route. */
+        int dx,dy,lanes=0;
+        for(dx=0;dx<2;dx++) {
+            int clear=TRUE;
+            for(dy=-1;dy<=1;dy++) {
+                u16 mt=room_get(x+dx,y+dy),ov=room_get_overlay(x+dx,y+dy);
+                if(metatile_coll[mt] || (metatile_type[mt]!=TT_FLOOR && metatile_type[mt]!=TT_DOOR_OPEN) ||
+                   metatile_prop[mt] || (ov!=MT_NONE && metatile_coll[ov])) {clear=FALSE;break;}
+            }
+            if(clear)lanes|=1<<dx;
+        }
+        if(!lanes)continue;
+        u32 rank=hash32(gWorld.seed,cell*19381+y*W+x);
+        if(rank<best){best=rank;bx=x;by=y;}
+    }
+    if(bx>=0) {
+        room_set_overlay(bx,by,MT_F2_ARCH_0);
+        room_set_overlay(bx+1,by,MT_F2_ARCH_1);
+    }
+}
+#endif
+
 /* Frame a few clearing edges with a complete twisted tree. Each source
    part replaces an already-solid wall quarter-for-quarter; no walkable
    ground, overlay, event or layout RNG is touched. */
@@ -1817,6 +1876,9 @@ static void roomgen_build_internal(int cell, bool8 render) {
             case GATE_EXIT: gt = MT_STAIRS_DOWN; break;
             default: break;
         }
+#if BART_FOREST_VARIANT >= 6
+        if(open && (g==GATE_CRACK || g==GATE_WEB || g==GATE_LOCK))gt=sTrail;
+#endif
         if (g != GATE_OPEN) {
             room_set(x0, y0, gt);
             room_set(x1, y1, gt);
@@ -2115,6 +2177,9 @@ static void roomgen_build_internal(int cell, bool8 render) {
     }
     if (blighted)
         skin_blight_trees(cell);
+#if BART_FOREST_VARIANT >= 6
+    place_root_arch(cell);
+#endif
     if (render)
         room_render();
 }
