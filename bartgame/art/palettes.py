@@ -3,6 +3,7 @@ import reboot_core as R
 import reboot_ui as U
 import faces
 import sewer_concepts as SC
+import enemy_studies as ENEMY_STUDIES
 
 PACK_TILES=False
 GRASS_MID=R.PALETTES['ground'][4]
@@ -17,6 +18,12 @@ OBJ_ALIASES=[('hero','hero'),('fx','gold'),('bugs','foliage'),('blight','blight'
              ('icons','gold'),('peddler','gold'),('gatekeeper','stone'),('uikit','ui')]
 OBJ_PALETTES=[(name,U.GROUPS[name] if name in U.GROUPS else R.PALETTES[material])
               for name,material in OBJ_ALIASES]
+if ENEMY_STUDIES.VARIANT:
+    import enemy_studies_palette
+    # Every material-item frame has an explicit palette; their default slot10
+    # is free in the playfield. Keep bugs2 exact for cloak/carried-bush art.
+    OBJ_PALETTES=[(name,enemy_studies_palette.colors() if name=='items' else colors)
+                  for name,colors in OBJ_PALETTES]
 FACE_PALETTES=[['#000000']+['#%02x%02x%02x'%tuple(rgb) for _,rgb in palette]
                for _,palette,_ in faces.FACES]
 if SC.VARIANT:

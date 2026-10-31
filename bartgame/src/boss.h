@@ -9,5 +9,6 @@ void boss_draw(Actor* e);
 void boss_defeated(Actor* e);
 void boss_died(Actor* e);
 bool8 boss_is_dying(void);
+u8 boss_presentation_frame(const Actor* e);
 
 #endif

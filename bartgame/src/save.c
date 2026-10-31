@@ -8,6 +8,7 @@
 #include "game.h"
 #include "save.h"
 #include "myst.h"
+#include "appearance.h"
 
 #define SRAM ((volatile u8*)0x0E000000)
 #define SAVE_MAGIC 0x54524142u /* "BART" */
@@ -26,6 +27,10 @@ typedef struct {
     u32 run_frames;
     u32 sum;
 } SaveFile;
+
+/* A future larger run must not silently grow into the independent settings
+   record. This adds no field and changes neither existing save version. */
+typedef char SaveFitsBeforeAppearance[(sizeof(SaveFile) <= APPEARANCE_SRAM_OFFSET) ? 1 : -1];
 
 static SaveFile sFile EWRAM_BSS;
 

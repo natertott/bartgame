@@ -71,6 +71,10 @@ static u16 sMarksTile, sDotsTile;
 static u16 sTiles[PIC_TW * PIC_TH * 16] EWRAM_BSS;
 static u8 sMasks[CELLS][32 * 24] EWRAM_BSS;
 static Canvas sTabs, sDesc, sCount[2], sInfo, sLegend, sSide;
+#if BART_MENU_VARIANT
+static u8 sMapEventMarks[CELLS][MP_COUNT*2] EWRAM_BSS;
+static u32 sMapEventsDone,sMapEventsSeed;
+#endif
 static u8 sCountAt[2]; /* the slots the counts are drawn over */
 
 typedef struct {
@@ -221,7 +225,16 @@ static void fetch_mask(int cell) {
     if (sMaskDone & (1u << cell))
         return;
     sMaskDone |= 1u << cell;
+#if BART_MENU_VARIANT == 1
+    /* The selected atlas charts the complete placed room, including access
+       carved for entrances and role objects. Cache its positions in the same
+       pass instead of rebuilding a charted Astrolabe room on A. */
+    if(sMapEventsSeed!=gWorld.seed){sMapEventsSeed=gWorld.seed;sMapEventsDone=0;}
+    roomgen_preview_details(cell,sMapEventMarks[cell],&mask,&path);
+    sMapEventsDone|=1u<<cell;
+#else
     roomgen_preview(cell, &mask, &path);
+#endif
     for (i = 0; i < 32 * 24; i++)
         out[i] = mask[i] | ((path[i] & P_MID) ? 0x80 : 0);
     for (s = 0; s < 4; s++) {
@@ -556,7 +569,9 @@ static bool8 quest_giver(const Cell* c) {
 }
 
 static bool8 has_chest(const Cell* c) {
-    return (c->role == ROLE_CHEST || c->role == ROLE_KEYITEM || c->role == ROLE_KEYCHEST) && !(c->flags & CF_CHEST_OPEN);
+    /* Required item rooms pay their prize inside the trial, not in a second
+       forest chest. Do not manufacture a chest icon for that role. */
+    return (c->role == ROLE_CHEST || c->role == ROLE_KEYCHEST) && !(c->flags & CF_CHEST_OPEN);
 }
 
 /* a barrier's mark, or -1 for an open way */
@@ -712,7 +727,7 @@ static void ms_cache_kit(void){
     if(sStudyKitReady)return;
     for(b=0;b<256;b++){u32 w=0;for(i=0;i<8;i++)if(b&(1<<i))w|=15u<<(i*4);sStudyBitMask[b]=w;}
     for(f=0;f<4;f++)for(t=0;t<UI_TILE_COUNT;t++)for(y=0;y<8;y++){
-        const u32* src=(const u32*)ui_tiles+t*8;u32 w=src[f&2?7-y:y],o=0,m=0;
+        const u32* src=(const u32*)ui_current_tiles()+t*8;u32 w=src[f&2?7-y:y],o=0,m=0;
         for(i=0;i<8;i++){int v=(w>>(i*4))&15,shift=(f&1?7-i:i)*4;o|=(u32)v<<shift;if(v)m|=15u<<shift;}
         sStudyKit[f][t][y]=o;sStudyKitMask[f][t][y]=m;
     }sStudyKitReady=1;
@@ -882,12 +897,64 @@ static void ms_details(const MenuItem* item){
     body=(MSRect){x,y,w,r.y+r.h-y-4};
     ms_wrap(body,r.w<96||r.h<=48?ms_use(item):item->desc,UI_INK_CREAM,9);
 }
+/* One semantic vocabulary serves overview, chamber and legend. These are
+   final seven-pixel pictograms, never a filtered copy of an item image.
+   Bright marks have a dark one-pixel contour against every terrain value. */
+enum { MM_YOU, MM_DOOR, MM_TASK, MM_CHEST, MM_HEAL, MM_HEART, MM_FOLK, MM_RELIC, MM_GATE, MM_COUNT };
+static const struct { const char* name; u8 rows[7]; } sMapSymbol[MM_COUNT] = {
+    {"You",   { 8,28,62,127,8,8,8 }},
+    {"Door",  {28,62,99,99,99,99,127}},
+    {"Task",  {28,28,28,28,8,0,8}},
+    {"Chest", {62,99,127,73,127,99,62}},
+    {"Shrine",{54,127,127,62,28,8,0}},
+    {"Heart", {65,65,65,127,65,65,65}},
+    {"Folk",  {127,64,64,124,64,64,64}},
+    {"Relic", {8,28,62,127,62,28,8}},
+    {"Gate",  {127,85,85,85,85,85,127}},
+};
+/* Read-only review state. The game never consumes these reports. */
+u16 gMenuMapEvents[25];
+MenuMapMarker gMenuMapMarkers[16];
+u8 gMenuMapMarkerCount;
+
 static void ms_marker(int x,int y,int kind,int ink){
-    if(kind==5||kind==6||kind==7||kind==8){ms_text(x-2,y-3,kind==5?"H":kind==6?"F":kind==7?"R":"G",ink);return;}
-    if(kind==0){ms_pixel(x,y,ink);ms_pixel(x-1,y,ink);ms_pixel(x+1,y,ink);ms_pixel(x,y-1,ink);ms_pixel(x,y+1,ink);}
-    else if(kind==1){ms_box(x-2,y-2,5,5,ink);ms_pixel(x,y,ink);}
-    else if(kind==2){ms_line(x,y-2,x,y+1,ink);ms_pixel(x,y+3,ink);}
-    else{ms_box(x-1,y-1,3,3,ink);}
+    int dx,dy,ax,ay;
+    const u8* rows;
+    if(kind<0||kind>=MM_COUNT)return;
+    rows=sMapSymbol[kind].rows;
+    /* Contour follows the symbol, leaving the map visible in negative space. */
+    for(dy=0;dy<7;dy++)for(dx=0;dx<7;dx++)if(rows[dy]&(1<<(6-dx)))
+        for(ay=-1;ay<=1;ay++)for(ax=-1;ax<=1;ax++)ms_pixel(x-3+dx+ax,y-3+dy+ay,MAP_INK_OUTLINE);
+    for(dy=0;dy<7;dy++)for(dx=0;dx<7;dx++)if(rows[dy]&(1<<(6-dx)))ms_pixel(x-3+dx,y-3+dy,ink);
+}
+static u16 ms_events(int cell){
+    const Cell* c=&gWorld.cells[cell];const u8* m=gWorld.mark[cell];
+    bool8 visited=(c->flags&CF_VISITED)!=0,astro=(gPl.items2&ITEM2_ASTROLABE)!=0;
+    u16 out=0;int side;
+    if(visited){
+        if(m[MP_MOUTH*2]&&!(gWorld.myst_flags[cell]&MF_DONE))out|=1<<MM_DOOR;
+        if(m[MP_NPC*2]&&!(quest_giver(c)&&(c->flags&CF_QUEST_DONE)))out|=1<<(quest_giver(c)?MM_TASK:MM_FOLK);
+        if(m[MP_SHRINE*2]&&!(c->flags&CF_SHRINE_USED))out|=1<<MM_HEAL;
+    }
+    if(astro){
+        if(has_chest(c))out|=1<<MM_CHEST;
+        if(cell==gWorld.goal&&!(c->flags&CF_CLEARED))out|=1<<MM_HEART;
+        for(side=0;side<4;side++)if(gate_mark(cell,side)>=0){out|=1<<MM_GATE;break;}
+    }
+    if(relic_cell()==cell)out|=1<<MM_RELIC;
+    return out;
+}
+static const u8* ms_event_positions(int cell){
+    if(gWorld.cells[cell].flags&CF_VISITED)return gWorld.mark[cell];
+    /* Preview only revealed contents of charted rooms. The generator helper
+       restores live room/spots/marks/RNG and never submits render work. */
+    if(!known(cell)||!(gPl.items2&ITEM2_ASTROLABE))return NULL;
+    if(sMapEventsSeed!=gWorld.seed){sMapEventsSeed=gWorld.seed;sMapEventsDone=0;}
+    if(!(sMapEventsDone&(1u<<cell))){
+        roomgen_preview_events(cell,sMapEventMarks[cell]);
+        sMapEventsDone|=1u<<cell;
+    }
+    return sMapEventMarks[cell];
 }
 static void ms_map_copy(MSRect r,bool8 save){
     int y,x;for(y=r.y/8;y<(r.y+r.h)/8;y++)for(x=r.x/8;x<(r.x+r.w)/8;x++){
@@ -895,6 +962,45 @@ static void ms_map_copy(MSRect r,bool8 save){
     }
 }
 static void ms_map_bank(MSRect r){int x,y;for(y=r.y/8;y<(r.y+r.h)/8;y++)for(x=r.x/8;x<(r.x+r.w)/8;x++)if(x>=0&&x<30&&y>=0&&y<20)gBg3[y*32+x]=(y*30+x)|(MAP_PAL<<12);}
+static bool8 ms_overlap_mark(int x,int y){
+    int i;for(i=0;i<gMenuMapMarkerCount;i++)if(ABS(x-gMenuMapMarkers[i].x)<9&&ABS(y-gMenuMapMarkers[i].y)<9)return TRUE;
+    return FALSE;
+}
+static void ms_located_marker(MSRect box,int sx,int sy,int kind,int tx,int ty){
+    static const s8 offset[][2]={{0,0},{0,-9},{9,0},{0,9},{-9,0},{9,-9},{-9,-9},{9,9},{-9,9},{0,-18},{18,0},{0,18},{-18,0}};
+    int x=sx,y=sy,i;
+    /* Adjacent physical objects can be less than an icon-width apart at this
+       scale. A short tether preserves the exact anchor while separating art. */
+    for(i=0;i<(int)(sizeof(offset)/sizeof(offset[0]));i++){
+        x=CLAMP(sx+offset[i][0],box.x+5,box.x+box.w-6);
+        y=CLAMP(sy+offset[i][1],box.y+5,box.y+box.h-6);
+        if(!ms_overlap_mark(x,y))break;
+    }
+    if(x!=sx||y!=sy){
+        ms_line(sx,sy,x,y,MAP_INK_OUTLINE);ms_line(sx,sy,x,y,MAP_INK_CREAM);
+        ms_pixel(sx,sy,MAP_INK_GOLD);
+    }
+    if(gMenuMapMarkerCount<16){MenuMapMarker* out=&gMenuMapMarkers[gMenuMapMarkerCount++];
+        out->cell=sMapCur;out->kind=kind;out->x=x;out->y=y;out->source_x=sx;out->source_y=sy;out->tile_x=tx;out->tile_y=ty;
+    }
+}
+static void ms_draw_located_markers(void){
+    int i;for(i=0;i<gMenuMapMarkerCount;i++){
+        const MenuMapMarker* m=&gMenuMapMarkers[i];
+        ms_marker(m->x,m->y,m->kind,m->kind==MM_YOU||m->kind==MM_DOOR||m->kind==MM_HEAL?MAP_INK_CREAM:MAP_INK_GOLD);
+    }
+}
+static void ms_room_contents(MSRect r,u16 mask){
+    static const u8 order[]={MM_YOU,MM_DOOR,MM_TASK,MM_FOLK,MM_CHEST,MM_HEAL,MM_RELIC,MM_HEART,MM_GATE};
+    int n=0,i,cols=MAX(1,(r.w-2)/9),rows,total=0,startx,starty;
+    for(i=0;i<MM_COUNT;i++)if(mask&(1<<order[i]))total++;
+    if(!total)return;
+    cols=MIN(cols,total);rows=(total+cols-1)/cols;
+    startx=r.x+(r.w-cols*9)/2+4;starty=r.y+(r.h-rows*9)/2+4;
+    for(i=0;i<MM_COUNT;i++)if(mask&(1<<order[i])){
+        ms_marker(startx+(n%cols)*9,starty+(n/cols)*9,order[i],order[i]==MM_YOU?MAP_INK_GOLD:MAP_INK_CREAM);n++;
+    }
+}
 static void ms_map(MSRect box,int zoom,int mode){
     int x,y,cell,cw,ch,base_x,base_y;u8 tx_at[48],ty_at[48];bool8 astro=(gPl.items2&ITEM2_ASTROLABE)!=0;
     if(!ms_valid(box))return;
@@ -903,9 +1009,9 @@ static void ms_map(MSRect box,int zoom,int mode){
     }
     ms_fill(box.x,box.y,box.w,box.h,MAP_INK_GROUND);ms_map_bank(box);
     if(zoom){
-        int sw=30,sh=21,scale=MIN(box.w/sw,box.h/sh);bool8 kn=known(sMapCur);scale=MAX(1,scale);
+        int sw=30,sh=21,scale=MIN(box.w/sw,box.h/sh);bool8 kn=known(sMapCur);scale=MAX(1,scale);gMenuMapMarkerCount=0;
         base_x=box.x+(box.w-sw*scale)/2;base_y=box.y+(box.h-sh*scale)/2;
-        if(kn){const u8* m;fetch_mask(sMapCur);m=sMasks[sMapCur];
+        if(kn){const u8* m;const u8* marks;u16 events=ms_events(sMapCur);fetch_mask(sMapCur);m=sMasks[sMapCur];marks=ms_event_positions(sMapCur);
             for(y=0;y<sh;y++)for(x=0;x<sw;x++){
                 int d=tile_desc(m,x+1,y+2),ink=(m[(y+2)*32+x+1]>>3)&15;
                 if(!ink)ink=MAP_INK_GROUND;
@@ -915,31 +1021,57 @@ static void ms_map(MSRect box,int zoom,int mode){
                     if(d&SH_W)ms_fill(base_x+x*scale,base_y+y*scale,1,scale,MAP_INK_LIT);
                 }
             }
-            {Cell* c=&gWorld.cells[sMapCur];const u8* marks=gWorld.mark[sMapCur];int rc=relic_cell();
-             if(c->flags&CF_VISITED){
-                if(marks[MP_MOUTH*2]&&!(gWorld.myst_flags[sMapCur]&MF_DONE))ms_marker(base_x+(marks[MP_MOUTH*2]-2)*scale,base_y+(marks[MP_MOUTH*2+1]-3)*scale,1,MAP_INK_CREAM);
-                if(marks[MP_NPC*2]&&!(quest_giver(c)&&(c->flags&CF_QUEST_DONE)))ms_marker(base_x+(marks[MP_NPC*2]-2)*scale,base_y+(marks[MP_NPC*2+1]-3)*scale,quest_giver(c)?2:6,MAP_INK_GOLD);
-                if(astro&&marks[MP_CHEST*2]&&has_chest(c))ms_marker(base_x+(marks[MP_CHEST*2]-2)*scale,base_y+(marks[MP_CHEST*2+1]-3)*scale,3,MAP_INK_GOLD);
-                if(rc==sMapCur&&marks[MP_RELIC*2])ms_marker(base_x+(marks[MP_RELIC*2]-2)*scale,base_y+(marks[MP_RELIC*2+1]-3)*scale,7,MAP_INK_CREAM);
-             }
-             if(astro&&sMapCur==gWorld.goal&&!(c->flags&CF_CLEARED))ms_marker(base_x+15*scale,base_y+10*scale,5,MAP_INK_GOLD);
-             if(astro){int side;for(side=0;side<4;side++)if(gate_mark(sMapCur,side)>=0){int gx=side==SIDE_E?29:side==SIDE_W?0:15,gy=side==SIDE_N?0:side==SIDE_S?20:10;ms_marker(base_x+gx*scale,base_y+gy*scale,8,MAP_INK_GOLD);}}
+            /* Stored/preview coordinates are x+1,y+1, not screen positions. */
+            if(marks){
+                static const u8 mp[]={MP_MOUTH,MP_NPC,MP_CHEST,MP_RELIC,MP_SHRINE};int i;
+                for(i=0;i<5;i++){
+                    int kind=mp[i]==MP_MOUTH?MM_DOOR:mp[i]==MP_NPC?(quest_giver(&gWorld.cells[sMapCur])?MM_TASK:MM_FOLK):mp[i]==MP_CHEST?MM_CHEST:mp[i]==MP_RELIC?MM_RELIC:MM_HEAL;
+                    int tx=marks[mp[i]*2]-1,ty=marks[mp[i]*2+1]-1;
+                    if((events&(1<<kind))&&marks[mp[i]*2])ms_located_marker(box,base_x+(tx-1)*scale+scale/2,base_y+(ty-2)*scale+scale/2,kind,tx,ty);
+                }
             }
-            if(gGame.area==AREA_FOREST&&gGame.cell==sMapCur)ms_marker(base_x+CLAMP((PX(gPlayer->x)-16)/16,0,29)*scale,base_y+CLAMP((PX(gPlayer->y)-40)/16,0,20)*scale,0,MAP_INK_CREAM);
+            if(events&(1<<MM_HEART)){
+                /* The fixed arena spawn is tile16,11 plus the actor's16px
+                   anchor. A live boss is marked where it actually moved. */
+                int px=17*16,py=12*16,i;
+                if(gGame.area==AREA_FOREST&&gGame.cell==sMapCur)for(i=1;i<ACTOR_MAX;i++)if(gActors[i].kind==AK_ENEMY&&(gActors[i].flags&AF_BOSS)){px=PX(gActors[i].x);py=PX(gActors[i].y);break;}
+                ms_located_marker(box,base_x+(px-16)*scale/16,base_y+(py-32)*scale/16,MM_HEART,px/16,py/16);
+            }
+            if(astro){int side;for(side=0;side<4;side++)if(gate_mark(sMapCur,side)>=0){
+                int x0,y0,x1,y1,tx,ty;roomgen_gate_tiles(side,&x0,&y0,&x1,&y1);tx=(x0+x1)/2;ty=(y0+y1)/2;
+                ms_located_marker(box,base_x+(((x0+x1+1)*8-16)*scale)/16,base_y+(((y0+y1+1)*8-32)*scale)/16,MM_GATE,tx,ty);
+            }}
+            if(gGame.area==AREA_FOREST&&gGame.cell==sMapCur)ms_located_marker(box,base_x+(PX(gPlayer->x)-16)*scale/16,base_y+(PX(gPlayer->y)-32)*scale/16,MM_YOU,PX(gPlayer->x)/16,PX(gPlayer->y)/16);
+            /* All tethers are underneath all symbols, so a later nearby
+               callout cannot scratch through another icon's body. */
+            ms_draw_located_markers();
         }else{
             ms_textfit(box.x+4,box.y+box.h/2-4,box.w-8,"Not charted",MAP_INK_CREAM);
         }
         ms_box(box.x,box.y,box.w,box.h,MAP_INK_GRID);return;
     }
-    /* Terrain keeps a single scale in both axes; diagram styles may use a
-       freer topology grid, but never change north or invent unknown links. */
+    gMenuMapMarkerCount=0;
+    /* Terrain keeps one scale; a diagram gives each room a separate card.
+       Connections are painted first, then every known event gets its own
+       slot INSIDE the card. A later center mark never erases another event. */
     if(mode==MS_MAP_TERRAIN){cw=MIN(box.w/5,(box.h/5)*32/22);cw=MAX(5,cw);ch=MAX(5,cw*22/32);}
     else{cw=box.w/5;ch=box.h/5;}
     base_x=box.x+(box.w-cw*5)/2;base_y=box.y+(box.h-ch*5)/2;
     for(x=0;x<cw;x++)tx_at[x]=x*32/cw;
     for(y=0;y<ch;y++)ty_at[y]=1+y*22/ch;
     for(cell=0;cell<CELLS;cell++){
+        Cell* c=&gWorld.cells[cell];int cx=base_x+(cell%5)*cw,cy=base_y+(cell/5)*ch;int side;
+        if(!known(cell))continue;
+        for(side=SIDE_E;side<=SIDE_S;side++){
+            int nb=cell_neighbor(cell,side);if(nb>=0&&known(nb)&&c->gate[side]!=GATE_WALL){
+                int ink=MAP_INK_GRID;if(astro){ink=world_gate_open(cell,side)?MAP_INK_LIT:MAP_INK_GRID;if(gate_mark(cell,side)>=0)ink=MAP_INK_GOLD;}
+                ms_line(cx+cw/2,cy+ch/2,cx+cw/2+(side==SIDE_E?cw:0),cy+ch/2+(side==SIDE_S?ch:0),ink);
+            }
+        }
+    }
+    for(cell=0;cell<CELLS;cell++){
         bool8 kn=known(cell);Cell* c=&gWorld.cells[cell];int cx=base_x+(cell%5)*cw,cy=base_y+(cell/5)*ch;
+        MSRect room={cx+2,cy+1,cw-4,ch-2};u16 events=ms_events(cell);
         if(kn&&(mode==MS_MAP_TERRAIN||mode==MS_MAP_PARCHMENT))fetch_mask(cell);
         if(mode==MS_MAP_TERRAIN||mode==MS_MAP_PARCHMENT){
             for(y=1;y<ch-1;y++)for(x=1;x<cw-1;x++){
@@ -949,41 +1081,34 @@ static void ms_map(MSRect box,int zoom,int mode){
             }
             ms_box(cx,cy,cw,ch,kn?MAP_INK_GRID:MAP_INK_UNKNOWN_EDGE);
         }else{
-            int rx=cx+MAX(2,cw/6),ry=cy+MAX(2,ch/6),rw=cw-MAX(4,cw/3),rh=ch-MAX(4,ch/3);
-            if(kn){int side;for(side=SIDE_E;side<=SIDE_S;side++){int nb=cell_neighbor(cell,side);if(nb>=0&&known(nb)&&c->gate[side]!=GATE_WALL){int ink=MAP_INK_GRID;if(astro){ink=world_gate_open(cell,side)?MAP_INK_LIT:MAP_INK_GRID;if(gate_mark(cell,side)>=0)ink=MAP_INK_GOLD;}ms_line(cx+cw/2,cy+ch/2,cx+cw/2+(side==SIDE_E?cw:0),cy+ch/2+(side==SIDE_S?ch:0),ink);}}}
-            ms_fill(rx,ry,rw,rh,kn?(c->flags&CF_VISITED?MAP_INK_GREEN:MAP_INK_DEEP):MAP_INK_GROUND);
-            ms_box(rx,ry,rw,rh,kn?MAP_INK_LIT:MAP_INK_UNKNOWN_EDGE);
-            if(mode==MS_MAP_ROUTE&&kn&&c->flags&CF_VISITED)ms_line(rx+1,ry+rh-2,rx+rw-2,ry+rh-2,MAP_INK_GOLD);
+            ms_fill(room.x,room.y,room.w,room.h,kn?(c->flags&CF_VISITED?MAP_INK_GREEN:MAP_INK_DEEP):MAP_INK_GROUND);
+            ms_box(room.x,room.y,room.w,room.h,kn?MAP_INK_LIT:MAP_INK_UNKNOWN_EDGE);
+            if(mode==MS_MAP_ROUTE&&kn&&c->flags&CF_VISITED)ms_line(room.x+1,room.y+room.h-2,room.x+room.w-2,room.y+room.h-2,MAP_INK_GOLD);
         }
-        if(c->flags&CF_VISITED){
-            const u8* m=gWorld.mark[cell];
-            if(m[MP_NPC*2]&&!(quest_giver(c)&&(c->flags&CF_QUEST_DONE)))ms_marker(cx+cw/2,cy+ch/2,quest_giver(c)?2:6,MAP_INK_CREAM);
-            if(m[MP_MOUTH*2]&&!(gWorld.myst_flags[cell]&MF_DONE))ms_marker(cx+cw/3,cy+ch/2,1,MAP_INK_LIT);
-        }
-        if(astro&&has_chest(c))ms_marker(cx+cw/2,cy+ch/2,3,MAP_INK_GOLD);
-        if(astro&&cell==gWorld.goal&&!(c->flags&CF_CLEARED))ms_marker(cx+cw/2,cy+ch/2,5,MAP_INK_GOLD);
-        if(relic_cell()==cell)ms_marker(cx+cw/2,cy+ch/2,7,MAP_INK_CREAM);
+        /* The player gets an ordinary, separate content slot too. It is
+           never painted over the room's first chest/person/entrance. */
+        if(cell==(gGame.area==AREA_FOREST?gGame.cell:gWorld.entry))events|=1<<MM_YOU;
+        gMenuMapEvents[cell]=events;ms_room_contents(room,events);
     }
-    cell=gGame.area==AREA_FOREST?gGame.cell:gWorld.entry;
-    ms_marker(base_x+(cell%5)*cw+cw/2,base_y+(cell/5)*ch+ch/2,0,MAP_INK_CREAM);
     ms_box(box.x,box.y,box.w,box.h,MAP_INK_GRID);
     ms_map_copy(box,TRUE);sStudyMapRect=box;sStudyMapMode=mode;sStudyMapReady=1;
 cursor:
     if(mode==MS_MAP_TERRAIN){cw=MIN(box.w/5,(box.h/5)*32/22);cw=MAX(5,cw);ch=MAX(5,cw*22/32);}else{cw=box.w/5;ch=box.h/5;}
     base_x=box.x+(box.w-cw*5)/2;base_y=box.y+(box.h-ch*5)/2;
-    ms_box(base_x+(sMapCur%5)*cw+1,base_y+(sMapCur/5)*ch+1,cw-2,ch-2,MAP_INK_GOLD);
+    ms_box(base_x+(sMapCur%5)*cw,base_y+(sMapCur/5)*ch,cw,ch,MAP_INK_GOLD);
 }
 static void ms_map_info(MSRect r){
-    Cell* c=&gWorld.cells[sMapCur];char b[8];int y;
+    Cell* c=&gWorld.cells[sMapCur];int y,i;
     if(!ms_valid(r))return;
     ms_frame(r,0);
-    if(r.h<=24){ms_textfit(r.x+4,r.y+4,r.w-8,"+You []Door !Task FFolk oChest RRelic HHeart GGate",UI_INK_CREAM);return;}
-
+    if(r.h<=24){ms_textfit(r.x+4,r.y+4,r.w-8,"You Door Task Folk Chest Heal Relic Heart Gate",UI_INK_CREAM);return;}
     ms_wrap((MSRect){r.x+4,r.y+4,r.w-8,18},known(sMapCur)?sArchName[c->arch]:"Unknown wood",UI_INK_HIGH,9);y=r.y+24;
-    if(r.h>=112&&y+8<r.y+r.h){int x=ms_text(r.x+4,y,vwf_num(b,explored(),0),UI_INK_GOLD);ms_text(x,y,"% seen",UI_INK_DIM);y+=10;}
-    {static const char* const legend[]={"+ You","[] Door","! Task","F Folk","o Chest","R Relic","H Heart","G Gate"};int i;
-     for(i=0;i<8&&y+9<=r.y+r.h-3;i++,y+=9)ms_textfit(r.x+4,y,r.w-8,legend[i],UI_INK_DIM);}
-
+    for(i=0;i<MM_COUNT&&y+8<=r.y+r.h-3;i++,y+=9){
+        int dx,dy;const u8* rows=sMapSymbol[i].rows;
+        /* UI palette copy of exactly the same native map pictogram. */
+        for(dy=0;dy<7;dy++)for(dx=0;dx<7;dx++)if(rows[dy]&(1<<(6-dx)))ms_pixel(r.x+4+dx,y+dy,UI_INK_GOLD);
+        ms_textfit(r.x+14,y,r.w-18,sMapSymbol[i].name,UI_INK_CREAM);
+    }
 }
 static void ms_upload(void){
     vram_queue(sStudyPixels,CHARBLOCK(0),sizeof(sStudyPixels));gBg3Dirty=1;
@@ -999,9 +1124,9 @@ static void ms_draw(void){
     else{
         vwf_clear(&sStudyCanvas,UI_INK_NAVY);
     ms_frame((MSRect){0,0,240,160},0);
-    ms_textfit(7,3,150,sStudy->name,UI_INK_GOLD);
+    ms_textfit(7,3,150,sPage==PG_MAP?"Woodland Map":sStudy->name,UI_INK_GOLD);
     ms_textfit(170,3,64,sTabName[sPage],UI_INK_HIGH);
-    ms_textfit(7,14,224,sStudy->purpose,UI_INK_DIM);
+    ms_textfit(7,14,224,sPage==PG_MAP?"Known rooms and unfinished finds":sStudy->purpose,UI_INK_DIM);
     ms_line(4,146,235,146,UI_INK_GOLD_DARK);
         dma3_copy32(sStudyPixels,sStudyBase[sPage],sizeof(sStudyPixels));sStudyBaseReady|=1<<sPage;
     }
@@ -1014,7 +1139,7 @@ static void ms_draw(void){
         }
         if(sZoom){MSRect z=sStudy->chamber;if(!ms_valid(z)||sStudy->map_mode==MS_MAP_DUAL)z=(MSRect){8,32,224,112};ms_map(z,1,sStudy->map_mode);if(sStudy->map_mode!=MS_MAP_DUAL)ms_map_info(sStudy->map_info);}
         else{ms_map(primary,0,sStudy->map_mode);if(sStudy->map_mode==MS_MAP_DUAL)ms_map(sStudy->chamber,1,sStudy->map_mode);ms_map_info(sStudy->map_info);}
-        ms_textfit(7,149,226,sZoom?"B overview  R page  Start close":"D-pad browse  A zoom  R page  Start close",UI_INK_CREAM);
+        ms_textfit(7,149,226,sZoom?"D-pad room  B overview  R page  Start close":"D-pad browse  A zoom  R page  Start close",UI_INK_CREAM);
     }else{
         n=gather(list,sPage==PG_KEYS?KEY_COUNT:ITEM_COUNT,idx);
         if(sCursor>=n)sCursor=n?n-1:0;
@@ -1055,7 +1180,7 @@ static void ms_restore(void){
 }
 static void ms_open(void){
     int n,i;u8 idx[7];
-    sStudy=menu_study_layout(BART_MENU_VARIANT);ms_cache_kit();sStudyMapReady=0;
+    sStudy=menu_study_layout(BART_MENU_VARIANT);sStudyKitReady=0;sStudyBaseReady=0;ms_cache_kit();sStudyMapReady=0;
     sStudyInputRead=sStudyInputWrite=0;sStudyHeld=~REG_KEYINPUT&KEY_ANY;sStudyOldHook=gVBlankHook;gVBlankHook=ms_input_irq;
     if(!sStudyHaveFocus||sStudySeed!=gWorld.seed){sStudyFocus[0]=sStudyFocus[1]=0;sMapCur=gGame.area==AREA_FOREST?gGame.cell:gWorld.entry;sZoom=0;sStudySeed=gWorld.seed;sStudyHaveFocus=1;}
     sPage=PG_ITEMS;n=gather(sItems,ITEM_COUNT,idx);sCursor=0;for(i=0;i<n;i++)if(idx[i]==sStudyFocus[0])sCursor=i;

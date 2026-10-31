@@ -53,6 +53,31 @@ def geometry_recipe(number=None):
     number=VARIANT if number is None else int(number)
     return STYLE_RECIPES.get(number,{}).get('geometry',STYLE_NAMES[number])
 
+
+def appearance_kits(original,index,font):
+    """Three native structures for the selected runtime appearance setting.
+
+    Shape and color remain independent: these preserve semantic indices and
+    never recolor the separately selected Winebound gameplay HUD.
+    """
+    return [kit(original,index,font,style) for style in (6,7,8)]
+
+
+def appearance_palette_colors():
+    """Wine, moss and ivory semantic color roles, each at RGB555 precision."""
+    return [['#000000']+[THEMES[style][key] for key in KEYS] for style in (6,7,8)]
+
+
+def appearance_marks(original,index,font,tiles):
+    """Matching continuation/picker/badge shapes in stable native frame order."""
+    out=[]
+    for style,kit_ in zip((6,7,8),appearance_kits(tiles,index,font)):
+        markers=marks(original,index,style)
+        for name in ('badge_a','badge_b','badge_l'):markers[name]=kit_[name]
+        assert set(markers)==set(original)
+        out.append({name:markers[name] for name in original})
+    return out
+
 def indexed(w=8,h=8,fill=0):
     im=Image.new('P',(w,h),fill)
     return im,ImageDraw.Draw(im)

@@ -1606,7 +1606,7 @@ static void skin_blight_trees(int cell) {
     }
 }
 
-void roomgen_build(int cell) {
+static void roomgen_build_internal(int cell, bool8 render) {
     Cell* c = &gWorld.cells[cell];
     int x, y, s, i;
     rng_seed(&sR, hash32(gWorld.seed, cell * 7919 + 13));
@@ -2115,5 +2115,44 @@ void roomgen_build(int cell) {
     }
     if (blighted)
         skin_blight_trees(cell);
-    room_render();
+    if (render)
+        room_render();
+}
+
+void roomgen_build(int cell) {
+    roomgen_build_internal(cell, TRUE);
+}
+
+/* The same placement pass supplies map locations; no guessed central
+   markers. This scratch snapshot is only used while the game is paused.
+   Full builds write only this room's marks in World and do not spawn actors.
+   Suppressing room_render keeps BG characters/maps and live animation intact.
+   Generator scratch is disposable after a build, as for terrain preview. */
+static Room sPreviewRoom EWRAM_BSS;
+void roomgen_preview_details(int cell, u8* marks, const u8** mask, const u8** path) {
+    RoomSpots previous_spots;
+    u8 previous_marks[MP_COUNT * 2];
+    Rng previous_rng;
+    if (cell < 0 || cell >= CELLS) {
+        memset(marks, 0, MP_COUNT * 2);
+        if (mask) *mask = 0;
+        if (path) *path = 0;
+        return;
+    }
+    sPreviewRoom = gRoom;
+    previous_spots = gSpots;
+    memcpy(previous_marks, gWorld.mark[cell], sizeof(previous_marks));
+    previous_rng = sR;
+    roomgen_build_internal(cell, FALSE);
+    memcpy(marks, gWorld.mark[cell], MP_COUNT * 2);
+    if (mask) *mask = &sMask[0][0];
+    if (path) *path = &sPath[0][0];
+    memcpy(gWorld.mark[cell], previous_marks, sizeof(previous_marks));
+    gRoom = sPreviewRoom;
+    gSpots = previous_spots;
+    sR = previous_rng;
+}
+
+void roomgen_preview_events(int cell, u8* marks) {
+    roomgen_preview_details(cell, marks, 0, 0);
 }

@@ -25,5 +25,7 @@ void enemy_kill(Actor* e);
 int enemies_alive(void);
 void enemy_load_sheets_for_theme(int theme);
 int enemy_pick_type(int theme, int stage, u32 roll);
+/* Read-only selected presentation frames; review never assigns these. */
+extern u8 gEnemyPresentedFrame[ACTOR_MAX];
 
 #endif

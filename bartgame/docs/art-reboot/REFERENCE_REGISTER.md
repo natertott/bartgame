@@ -87,3 +87,13 @@ links actual mGBA results, independent critique and compact URL/revision/hash
 records. The ten layouts are original adaptations, not reproductions of those
 games' exact screens. All fifteen proposals remain unselected. Final evidence
 uses source `d113d39`; earlier mutable pilot imagery is not relabelled as final.
+
+## Adopted appearance and behavior-led enemy studies — 2026-10-31
+
+The user's explicit UI/menu/map selection and request for ten animated
+alternatives per enemy are the direct brief. The six read PDF notes and
+G01–G18 application matrix remain the art reference; the existing pinned GBA
+menu findings guide focus, assignment, help and map knowledge. No new web
+source or missing figure is claimed. ENEMY_SMALL_STUDIES, ENEMY_SOFT_STUDIES
+and ENEMY_HEAVY_STUDIES document original mechanic-led concepts. Appearance
+and map integration are recorded in APPEARANCE_OPTIONS and ADOPTED_MENU_MAP.

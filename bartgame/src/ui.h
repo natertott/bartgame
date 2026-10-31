@@ -21,6 +21,11 @@ enum { PL_PLATE, PL_TAB, PL_TABON };
 extern u16 gBg3[32 * 32];
 extern u8 gBg3Dirty; /* pushed with BG0's map at the VBlank */
 
+/* The title's independently selected native frame geometry. All choices
+   share the same semantic tile IDs; their palette is applied separately. */
+const u16* ui_current_tiles(void);
+const u16* ui_current_marks(void);
+
 void ui_put(u16* map, int tx, int ty, u16 entry);
 void ui_tile(u16* map, int base, int tx, int ty, int tile, u16 flips);
 void ui_frame(u16* map, int base, int tx, int ty, int w, int h, int kind);

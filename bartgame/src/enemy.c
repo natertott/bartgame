@@ -28,6 +28,7 @@ const EnemyDef gEnemyDefs[EN_COUNT] = {
 
 static u16 sSheetTile[EN_COUNT];
 static u16 sKswordTile;
+u8 gEnemyPresentedFrame[ACTOR_MAX];
 
 /* enemy states */
 enum { ES_IDLE, ES_WALK, ES_CHASE, ES_PAUSE, ES_SPIT, ES_HOP, ES_WINDUP, ES_SWING, ES_RECOVER, ES_DIE, ES_REST, ES_FLY };
@@ -41,6 +42,12 @@ void enemy_load_sheets_for_theme(int theme) {
 }
 
 static void ensure_sheet(int type) {
+#if BART_ENEMY_VARIANT
+    /* The boss owns one streamed frame. Loading the unused knight sheet
+       here would waste192 OBJ tiles before boss_spawn replaces it. */
+    if (type == EN_BOSS)
+        return;
+#endif
     if (!sSheetTile[type])
         sSheetTile[type] = sprite_load_sheet(gEnemyDefs[type].sheet);
     if (type == EN_KNIGHT && !sKswordTile)
@@ -507,26 +514,61 @@ static void knight_draw_sword(Actor* e) {
         gOam[gOamCount - 1].attr1 |= ATTR1_VFLIP;
 }
 
+static u8 enemy_presentation_frame(const Actor* e) {
+#if BART_ENEMY_VARIANT
+    int face = e->facing == FACE_N ? 0 : e->facing == FACE_S ? 2 : 1;
+    if (e->type == EN_BEETLE && e->facing == FACE_N) {
+        int step = (gFrame >> (e->state == ES_CHASE ? 2 : 3)) & 1;
+        return step ? F_BEETLE_WALK_N2 : F_BEETLE_WALK_N1;
+    }
+    if (e->type == EN_BOSS)
+        return boss_presentation_frame(e);
+    if (e->type == EN_KNIGHT) {
+        static const u8 poses[4][3] = {
+            { F_KNIGHT_WINDUP_N, F_KNIGHT_WINDUP_E, F_KNIGHT_WINDUP_S },
+            { F_KNIGHT_STRIKE_N, F_KNIGHT_STRIKE_E, F_KNIGHT_STRIKE_S },
+            { F_KNIGHT_RECOVER_N, F_KNIGHT_RECOVER_E, F_KNIGHT_RECOVER_S },
+            { F_KNIGHT_HURT_N, F_KNIGHT_HURT_E, F_KNIGHT_HURT_S }
+        };
+        if (e->iframes) return poses[3][face];
+        if (e->state == ES_WINDUP) return poses[0][face];
+        if (e->state == ES_SWING) return poses[1][face];
+        if (e->state == ES_RECOVER) return poses[2][face];
+    }
+    if (e->type == EN_SPITTER && e->state == ES_SPIT && e->timer >= 18) {
+        static const u8 charge[3] = { F_SPITTER_CHARGE_N, F_SPITTER_CHARGE_E, F_SPITTER_CHARGE_S };
+        return charge[face];
+    }
+#endif
+    return e->frame;
+}
+
+static void enemy_draw_body(Actor* e) {
+    u8 ai_frame = e->frame;
+    e->frame = enemy_presentation_frame(e);
+    gEnemyPresentedFrame[e - gActors] = e->frame;
+    if (e->type == EN_BOSS) boss_draw(e);
+    else actor_draw(e);
+    e->frame = ai_frame;
+}
+
 void enemies_draw(void) {
     int i;
+    memset(gEnemyPresentedFrame, 255, sizeof(gEnemyPresentedFrame));
     for (i = 1; i < ACTOR_MAX; i++) {
         Actor* e = &gActors[i];
         if (e->kind != AK_ENEMY)
             continue;
         if (e->type == EN_KNIGHT && (e->state == ES_WINDUP || e->state == ES_SWING)) {
             if (e->facing == FACE_N) {
-                actor_draw(e);
+                enemy_draw_body(e);
                 knight_draw_sword(e);
             } else {
                 knight_draw_sword(e);
-                actor_draw(e);
+                enemy_draw_body(e);
             }
             continue;
         }
-        if (e->type == EN_BOSS) {
-            boss_draw(e);
-            continue;
-        }
-        actor_draw(e);
+        enemy_draw_body(e);
     }
 }

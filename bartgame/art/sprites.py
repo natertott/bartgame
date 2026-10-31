@@ -45,6 +45,12 @@ for name in ('huditems','glitter'):
     take(name)
 assert not owned,('unregistered new families',sorted(owned))
 
+# Enemy alternatives retain all physical IDs and append presentation poses.
+# Profile zero remains the production baseline until concepts are selected.
+import enemy_studies as ENEMY_STUDIES
+ENEMY_VARIANT = ENEMY_STUDIES.VARIANT
+ENEMY_STUDIES.apply(SHEETS, COVERAGE)
+
 # Compact HUD pictograms are separately authored at their ten-pixel ink size;
 # menu and world item drawings keep their established images and palettes.
 import ui_studies as UI_STUDIES

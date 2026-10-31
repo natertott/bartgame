@@ -529,3 +529,60 @@ sequential reassignment. Compact 3/7 glyphs, wheel direction learning, long-row
 travel and cold terrain-map cost are explicit comparison tradeoffs. No automatic
 regional palette policy is adopted. Future work should combine user-selected
 geometry/palette/layout and then profile that chosen production path.
+
+## Selected appearance, event maps and enemy alternatives — 2026-10-31
+
+**User selection:** HUD1 Winebound Folio; item layout1 Loadout Workbench;
+map layout2 Pocket Ledger. Add Options to the home screen, available with or
+without an existing run. Menu/dialogue frame style may be Winebound Folio,
+Mossbound Fieldbook or Ivory Reliquary, and the three palettes cycle separately.
+Keep preferences independently of run saves. The selected HUD stays Winebound.
+These elements are adopted; no enemy alternative is selected yet.
+
+**Map correction:** overview rectangles summarize all permitted known event
+types without overlapping them. Chamber charts use the generator's exact
+feature positions, with a distinct player/selection/Heart/shrine vocabulary.
+Readable outlined pictograms and letter cues replace ambiguous tiny glyphs.
+Completed-state and Map/Astrolabe/fog rules remain truthful. A paused full-room
+metadata preview snapshots/restores live room, spots, saved marks and local
+RNG while suppressing rendering, avoiding invented centered coordinates.
+
+**Enemy scope:** six existing AI families, ten full alternatives each: grounded
+pursuit, airborne hunter, cardinal projectile shooter, elastic hopper, heavy
+directional attacker and phase boss. Names are mechanic identifiers for review,
+not constraints on subject matter. Concepts may be weird animals, animated
+objects, ceremonial debris or abject organisms. Silhouette, motion and attack
+readability precede texture, using the existing native banks and foot anchors.
+All old frame IDs remain, with added presentation-only inhale, windup, strike,
+recovery, hurt and boss-phase poses where useful. Movement, damage, collision,
+AI timers, drops and actual vulnerabilities do not change between concepts.
+Ordinary death still uses the shared puff rather than a fictional body state.
+
+**Sources:** current user feedback and the already-read six PDF tutorials
+(G01–G18 in REFERENCE_APPLICATION), plus the pinned GBA menu research from the
+previous pass. No new inaccessible article is claimed as read. Existing
+Drain/world/Bloom/glitter are retained. Source pose boards and complete frame
+atlases are labelled separately from actual mGBA AI/controls recordings.
+Final frozen builds, captures, review findings and delivery evidence follow.
+
+**Native review refinements:** the first solid/background composites exposed
+weak separation in the foliage-colored small enemies. All30 such concepts
+were compared on four actual captured material backgrounds (120 before/after
+source composites). The study-only enemy bank uses brighter jade/wood planes
+and ivory attached highlights, retaining the original dark contour. Physical
+OBJ bank10 is reserved for these three enemy bodies; all world material items
+select explicit other frame palettes, and the paused icon cache restores the
+entire live palette on return. The protected cloak/carried-bush bank remains
+unchanged. A seed shaped too much like a glitter cross becomes an asymmetric
+bronze pod. Ten genuine back views also correct the grounded pursuer's old
+south-facing artwork when travelling north, without changing its gait clock.
+
+The boss's expanded thirteen-pose set streams one32-tile frame instead of
+keeping416 tiles resident. Skipping its unused temporary knight sheet keeps
+the conservative all-enemy/prop/menu allocation under the876-tile playfield
+limit. Draw-only presentation restores the Actor's original AI-frame field;
+hurt selection works during the existing knockback pause. None of these
+presentation refinements changes damage or actual vulnerability windows.
+The Options page previews all nine frame/color combinations, persists its
+own CRC-checked SRAM record, and styles the continuation/picker marks without
+recoloring the fixed Winebound HUD or minimap.

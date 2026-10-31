@@ -93,17 +93,18 @@ int ui_plate_tiles(int w, int pad) {
 
 void ui_backdrop_open(void) {
     static u16 kit[UI_TILE_COUNT * 16] EWRAM_BSS;
+    const u16* tiles = ui_current_tiles();
     int i, n;
     /* clear pixels take the panel's navy */
     for (i = 0; i < UI_TILE_COUNT * 16; i++) {
-        u16 w = ui_tiles[i], o = 0;
+        u16 w = tiles[i], o = 0;
         for (n = 0; n < 4; n++) {
             u16 v = (w >> (n * 4)) & 15;
             o |= (v ? v : UI_INK_NAVY) << (n * 4);
         }
         kit[i] = o;
     }
-    dma3_copy32(ui_tiles + UI_FILL * 16, CHARBLOCK(3), 32);
+    dma3_copy32(tiles + UI_FILL * 16, CHARBLOCK(3), 32);
     dma3_copy32(kit, CHARBLOCK(3) + UI_BG3 * 16, UI_TILE_COUNT * 32);
     ui_backdrop_clear();
     ui_backdrop_flush();

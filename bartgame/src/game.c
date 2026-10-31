@@ -24,6 +24,7 @@ extern u16 items_sheet_tile(void);
 #include "game.h"
 #include "interactive.h"
 #include "ambient.h"
+#include "appearance.h"
 
 GameState gGame;
 u32 gSeedOverride; /* probes set this before pressing Start */
@@ -399,7 +400,10 @@ static u8 sTitlePhase;
 static u32 sTitleSeed;
 static u8 sDiedFlag;
 
-static Canvas sTitlePress, sTitleMenu;
+static Canvas sTitleMenu;
+u8 gTitleOptions; /* read-only presentation probe, changed by title controls */
+static u8 sOptionsCursor;
+static Canvas sOptionsHeader, sOptionsStyle, sOptionsColors, sOptionsPreview, sOptionsHelp;
 /* Bitmap modes reserve OBJ tiles 0..511 for framebuffer space. The title
    borrows the HUD's high tiles for one 64x32 transparent text sprite. */
 #define TITLE_TEXT_TILE OBJ_TILE_HUD_ICONS
@@ -421,9 +425,14 @@ static void title_text_draw(int y) {
 /* Floating title words always use a light ink over the dark bitmap.
    The animated picker identifies the selected save/new-run choice. */
 static void title_menu(void) {
+    int row = 0;
     vwf_clear(&sTitleMenu, 0);
-    title_line(&sTitleMenu, 2, "Continue", UI_INK_PALE);
-    title_line(&sTitleMenu, 14, "New Game", UI_INK_PALE);
+    if (sTitleHasSave) {
+        title_line(&sTitleMenu, row * 10 + 2, "Continue", UI_INK_PALE);
+        row++;
+    }
+    title_line(&sTitleMenu, row++ * 10 + 2, "New Game", UI_INK_PALE);
+    title_line(&sTitleMenu, row * 10 + 2, "Options", UI_INK_PALE);
     vwf_flush(&sTitleMenu, FALSE);
 }
 
@@ -440,15 +449,9 @@ static void title_show(void) {
     bg0_clear();
     sTitleHasSave = save_exists();
     sTitleCursor = 0;
-    if (sTitleHasSave) {
-        vwf_canvas_obj(&sTitleMenu, sTitleTextPixels, TITLE_TEXT_TILE, 8, 4);
-        title_menu();
-    } else {
-        vwf_canvas_obj(&sTitlePress, sTitleTextPixels, TITLE_TEXT_TILE, 8, 4);
-        vwf_clear(&sTitlePress, 0);
-        title_line(&sTitlePress, 2, "Press Start", UI_INK_PALE);
-        vwf_flush(&sTitlePress, TRUE);
-    }
+    gTitleOptions = 0;
+    vwf_canvas_obj(&sTitleMenu, sTitleTextPixels, TITLE_TEXT_TILE, 8, 4);
+    title_menu();
     dma3_copy32(title_bitmap, MEM_VRAM, TITLE_BITMAP_BYTES);
     REG_BG2CNT = BGCNT_PRIO(2);
     REG_BG2PA = REG_BG2PD = 0x0100;
@@ -464,6 +467,90 @@ static void title_show(void) {
     REG_BLDY = 16;
     REG_DISPCNT = DCNT_MODE3 | DCNT_OBJ_1D | DCNT_BG2 | DCNT_OBJ;
     bgm_play(BGM_TITLE);
+}
+
+/* The settings page draws the same native kit and semantic ink roles as
+   actual inventory/dialogue. It never recolors the gameplay HUD. */
+static void options_draw(void) {
+    int ink;
+    vram_flush_queue();
+    text_init();
+    bg0_clear();
+    bg0_pool_reset_full();
+    ui_backdrop_open();
+    ui_frame(gBg3, UI_BG3, 0, 0, 30, 20, FR_PANEL);
+    ui_frame(gBg3, UI_BG3, 1, 4, 28, 3, sOptionsCursor == 0 ? FR_SEL : FR_SLOT);
+    ui_frame(gBg3, UI_BG3, 1, 8, 28, 3, sOptionsCursor == 1 ? FR_SEL : FR_SLOT);
+    ui_frame(gBg3, UI_BG3, 1, 12, 28, 6, FR_PANEL);
+    gBg3Dirty = 1;
+
+    bg0_canvas(&sOptionsHeader, 7, 1, 16, 2);
+    vwf_text(&sOptionsHeader, (128 - vwf_width("Options")) / 2, 2, "Options", UI_INK_HIGH);
+    vwf_flush(&sOptionsHeader, TRUE);
+    bg0_canvas(&sOptionsStyle, 2, 5, 26, 2);
+    ink = sOptionsCursor == 0 ? UI_INK_HIGH : UI_INK_CREAM;
+    vwf_text(&sOptionsStyle, 2, 2, "Style", UI_INK_GOLD);
+    vwf_text(&sOptionsStyle, 47, 2, "<", ink);
+    vwf_text(&sOptionsStyle, 59, 2, gAppearanceStyleNames[appearance_style()], ink);
+    vwf_text(&sOptionsStyle, 199, 2, ">", ink);
+    vwf_flush(&sOptionsStyle, TRUE);
+    bg0_canvas(&sOptionsColors, 2, 9, 26, 2);
+    ink = sOptionsCursor == 1 ? UI_INK_HIGH : UI_INK_CREAM;
+    vwf_text(&sOptionsColors, 2, 2, "Colors", UI_INK_GOLD);
+    vwf_text(&sOptionsColors, 47, 2, "<", ink);
+    vwf_text(&sOptionsColors, 59, 2, gAppearancePaletteNames[appearance_palette()], ink);
+    vwf_text(&sOptionsColors, 199, 2, ">", ink);
+    vwf_flush(&sOptionsColors, TRUE);
+    bg0_canvas(&sOptionsPreview, 2, 12, 26, 5);
+    vwf_text(&sOptionsPreview, 4, 5, "The Bloom", UI_INK_GOLD);
+    vwf_text(&sOptionsPreview, 4, 19, "Filth below. Glitter above.", UI_INK_CREAM);
+    vwf_text(&sOptionsPreview, 4, 31, "A little glory in the muck.", UI_INK_CREAM);
+    vwf_flush(&sOptionsPreview, TRUE);
+    bg0_canvas(&sOptionsHelp, 2, 18, 26, 2);
+    vwf_text(&sOptionsHelp, 4, 3, "D-pad change   A/B done", UI_INK_CREAM);
+    vwf_flush(&sOptionsHelp, TRUE);
+    ui_backdrop_flush();
+}
+
+static void options_open(void) {
+    REG_DISPCNT = DCNT_BLANK;
+    REG_BLDCNT = REG_BLDY = 0;
+    fade_set(0);
+    gTitleOptions = 1;
+    sOptionsCursor = 0;
+    REG_BG0CNT = BGCNT_PRIO(0) | BGCNT_CHARBASE(2) | BGCNT_SCREENBASE(23) | BGCNT_SIZE_32x32;
+    REG_BG3CNT = BGCNT_PRIO(3) | BGCNT_CHARBASE(3) | BGCNT_SCREENBASE(22) | BGCNT_SIZE_32x32;
+    gBgScroll[0][0] = gBgScroll[0][1] = 0;
+    gBgScroll[3][0] = gBgScroll[3][1] = 0;
+    tiles_init();
+    options_draw();
+    video_show(DCNT_BG0 | DCNT_BG3 | DCNT_OBJ);
+}
+
+static void options_update(void) {
+    bool8 changed = FALSE;
+    if (gKeysDown & (KEY_A | KEY_B | KEY_START)) {
+        appearance_save();
+        title_show();
+        sTitleCursor = sTitleHasSave ? 2 : 1;
+        sfx_play(SFX_MENU);
+        return;
+    }
+    if (gKeysDown & (KEY_UP | KEY_DOWN)) {
+        sOptionsCursor ^= 1;
+        changed = TRUE;
+    }
+    if (gKeysDown & (KEY_LEFT | KEY_RIGHT)) {
+        int delta = (gKeysDown & KEY_RIGHT) ? 1 : 2;
+        if (sOptionsCursor == 0)
+            changed |= appearance_set_style((appearance_style() + delta) % AP_COUNT);
+        else
+            changed |= appearance_set_palette((appearance_palette() + delta) % AP_COUNT);
+    }
+    if (changed) {
+        options_draw();
+        sfx_play(SFX_MENU);
+    }
 }
 
 static void title_restore_world(void) {
@@ -512,24 +599,25 @@ static void continue_run(void) {
 }
 
 static void update_title(void) {
-    sTitleSeed = sTitleSeed * 1103515245u + 12345u + gFrame;
-    if (sTitleHasSave) {
-        /* a saved run: continue it, or begin anew */
-        static const u8 nudge[4] = { 0, 1, 2, 1 };
-        if (sTitlePhase == 0 && (gKeysDown & (KEY_UP | KEY_DOWN))) {
-            sTitleCursor ^= 1;
-            title_menu();
-            sfx_play(SFX_MENU);
-        }
-        title_text_draw(120);
-        int x = 88 + (64 - vwf_width("Continue")) / 2 - 10;
-        draw_sprite(x + nudge[(gFrame >> 3) & 3], 122 + sTitleCursor * 12, SHEET_UIMARKS, OBJ_TILE_UI, F_UIMARKS_PICK, 0, 0, PAL_OBJ_UIKIT);
-    } else {
-        /* Press Start blinks */
-        if ((gFrame & 32) == 0)
-            title_text_draw(140);
+    int choices = sTitleHasSave ? 3 : 2;
+    static const u8 nudge[4] = { 0, 1, 2, 1 };
+    if (gTitleOptions) {
+        options_update();
+        return;
     }
+    sTitleSeed = sTitleSeed * 1103515245u + 12345u + gFrame;
+    if (sTitlePhase == 0 && (gKeysDown & (KEY_UP | KEY_DOWN))) {
+        sTitleCursor = (sTitleCursor + ((gKeysDown & KEY_DOWN) ? 1 : choices - 1)) % choices;
+        sfx_play(SFX_MENU);
+    }
+    title_text_draw(120);
+    draw_sprite(78 + nudge[(gFrame >> 3) & 3], 122 + sTitleCursor * 10, SHEET_UIMARKS, OBJ_TILE_UI, F_UIMARKS_PICK, 0, 0, PAL_OBJ_UI);
     if (sTitlePhase == 0 && (gKeysDown & (KEY_START | KEY_A))) {
+        if (sTitleCursor == choices - 1) {
+            options_open();
+            sfx_play(SFX_MENU);
+            return;
+        }
         sTitlePhase = 1;
         fade_start(16, 2);
         sfx_play(SFX_MENU);
@@ -616,6 +704,8 @@ static void update_win(void) {
 
 /* ----------------------------------------------------------- states -- */
 void game_init(void) {
+    appearance_init();
+    text_init(); /* load saved marker/kit geometry before the title picker */
     title_show();
 }
 

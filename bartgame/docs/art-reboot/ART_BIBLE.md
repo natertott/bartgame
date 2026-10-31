@@ -274,6 +274,33 @@ palette and layout remain independent choices until selected. Evaluate native
 readability and ordinary button response together; polished stills alone do
 not establish an effective menu.
 
+The 2026-10-31 selection adopts Winebound Folio's compact HUD, Loadout
+Workbench's item/key organization, and Pocket Ledger's schematic map. The
+home-screen Options offer Winebound Folio, Mossbound Fieldbook and Ivory
+Reliquary frame construction, with their three palettes chosen independently.
+Menu/dialogue preferences share that choice; the gameplay HUD keeps its
+selected Winebound identity. Preferences belong to the player, independently
+of a run's save. This supersedes the earlier unselected status for these
+specific elements; other layout/skin studies remain historical alternatives.
+
+Maps use a consistent semantic icon vocabulary. A region cell summarizes its
+known event types in separate slots; a chamber chart marks actual generated
+positions. Distinct pictograms, letter cues, outlines and a legend carry the
+meaning together. Selected room, current player, healing and boss markers must
+remain distinguishable. Never pile unrelated events at the room center or
+invent a feature's coordinates. Map/Astrolabe/discovery permissions still apply.
+
+Enemy concepts start from behavior rather than an inherited monster name.
+Give ground pursuit, flight, projectile release, elastic hops and heavy
+windup/strike/recovery different silhouettes and mass rhythms. Every alternative
+must preserve collision scale and support all its real poses. Bright attached
+eyes, material edges and purposeful negative space separate enemies from
+scenery; projectile travel must remain distinguishable from ambient glitter
+and loot. Anticipation and recovery describe actual engine timings. A visible
+weak spot or armored face must not promise an immunity or damage multiplier
+that does not exist. Ten alternatives per family are selection studies, not
+sixty new gameplay types or automatically adopted final characters.
+
 ## Area adaptation sheet
 
 For each of the eight future areas, fill in these fields before making tiles:

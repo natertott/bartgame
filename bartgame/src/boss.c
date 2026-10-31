@@ -23,9 +23,17 @@ enum { BS_IDLE, BS_DRIFT, BS_BURST, BS_SPAWN, BS_LUNGE, BS_REST, BS_DIE };
 
 static u16 sBossTile;
 static u8 sDying;
+#if BART_ENEMY_VARIANT
+static u8 sBossUploadedFrame;
+#endif
 
 void boss_spawn(int px, int py) {
+#if BART_ENEMY_VARIANT
+    sBossTile = sprite_alloc(sheets[SHEET_BOSS].frame_tiles);
+    sBossUploadedFrame = 255;
+#else
     sBossTile = sprite_load_sheet(SHEET_BOSS);
+#endif
     sDying = 0;
     Actor* e = enemy_spawn(EN_BOSS, px, py);
     if (!e)
@@ -174,8 +182,41 @@ void boss_update(Actor* e) {
 }
 
 void boss_draw(Actor* e) {
+#if BART_ENEMY_VARIANT
+    const SpriteSheet* sheet = &sheets[SHEET_BOSS];
+    u8 pose = e->frame;
+    if (pose != sBossUploadedFrame) {
+        vram_queue(sheet->tiles + pose * sheet->frame_tiles * 16,
+                   OBJ_TILE(sBossTile), sheet->frame_tiles * 32);
+        sBossUploadedFrame = pose;
+    }
+    e->frame = 0;
     actor_draw(e);
+    e->frame = pose;
+#else
+    actor_draw(e);
+#endif
     /* a shadow of spores drifting under it: none; the heart glows on its own */
+}
+
+/* Study art communicates existing phases; it never changes their timers,
+   projectiles, hitbox or vulnerability. The draw caller restores AI frame. */
+u8 boss_presentation_frame(const Actor* e) {
+#if BART_ENEMY_VARIANT
+    int phase = (gFrame >> 3) & 1;
+    if (sDying)
+        return phase ? F_BOSS_DYING2 : F_BOSS_DYING1;
+    if (e->iframes)
+        return F_BOSS_HURT;
+    if (e->state == BS_BURST)
+        return e->timer > 10 ? (phase ? F_BOSS_CHARGE2 : F_BOSS_CHARGE1)
+                             : (phase ? F_BOSS_RELEASE2 : F_BOSS_RELEASE1);
+    if (e->state == BS_SPAWN)
+        return phase ? F_BOSS_SPAWN2 : F_BOSS_SPAWN1;
+    if (e->state == BS_LUNGE)
+        return phase ? F_BOSS_LUNGE2 : F_BOSS_LUNGE1;
+#endif
+    return e->frame;
 }
 
 /* called when hp reaches 0: start dying */

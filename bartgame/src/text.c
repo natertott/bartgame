@@ -16,6 +16,7 @@
 #include "world.h"
 #include "game.h"
 #include "assets.h"
+#include "appearance.h"
 
 #define BG0_MAP SCREENBLOCK(23)
 #define PAL_HUD (PAL_SLOT_HUD << 12) /* native heart tiles */
@@ -43,9 +44,10 @@ void text_init(void) {
     const SpriteSheet* marks = &sheets[SHEET_UIMARKS];
     dma3_fill32(0, CHARBLOCK(2), 32);
     dma3_copy32(hud_tiles, CHARBLOCK(2) + HUD_TILE_BASE * 16, HUD_TILE_COUNT * 32);
-    dma3_copy32(ui_tiles, CHARBLOCK(2) + UI_BG0 * 16, UI_TILE_COUNT * 32);
+    appearance_apply();
+    dma3_copy32(ui_current_tiles(), CHARBLOCK(2) + UI_BG0 * 16, UI_TILE_COUNT * 32);
     /* the marks over the boxes stay resident above the sheets */
-    dma3_copy32(marks->tiles, OBJ_TILE(OBJ_TILE_UI), marks->tile_count * 32);
+    dma3_copy32(ui_current_marks(), OBJ_TILE(OBJ_TILE_UI), marks->tile_count * 32);
     hud_init();
     bg0_pool_reset();
     bg0_clear();
@@ -234,7 +236,7 @@ void textbox_draw(void) {
     if (!gTbActive)
         return;
     if (sTbDone)
-        draw_sprite(214, 143 + bob[(gFrame >> 3) & 3], SHEET_UIMARKS, OBJ_TILE_UI, F_UIMARKS_NEXT, 0, 0, PAL_OBJ_UIKIT);
+        draw_sprite(214, 143 + bob[(gFrame >> 3) & 3], SHEET_UIMARKS, OBJ_TILE_UI, F_UIMARKS_NEXT, 0, 0, PAL_OBJ_UI);
     if (sTbFace >= 0)
         face_draw(FACE_X, FACE_Y, 0);
 }
@@ -448,7 +450,7 @@ void shop_draw(void) {
     int i;
     if (!sShopActive)
         return;
-    draw_sprite(14 + nudge[(gFrame >> 3) & 3], SH_ROW_Y(sShopCursor) * 8 + 4, SHEET_UIMARKS, OBJ_TILE_UI, F_UIMARKS_PICK, 0, 0, PAL_OBJ_UIKIT);
+    draw_sprite(14 + nudge[(gFrame >> 3) & 3], SH_ROW_Y(sShopCursor) * 8 + 4, SHEET_UIMARKS, OBJ_TILE_UI, F_UIMARKS_PICK, 0, 0, PAL_OBJ_UI);
     face_draw(SH_FACE_X, SH_FACE_Y, 0);
     for (i = 0; i < sShopCount; i++)
         draw_sprite(SH_ICON_X, SH_ROW_Y(i) * 8, SHEET_ITEMS, sShopIconTile, sShopItems[i].icon, 0, 0, items_frame_pal[sShopItems[i].icon]);

@@ -8,6 +8,7 @@
 #include "actor.h"
 #include "vwf.h"
 #include "assets.h"
+#include "ui.h"
 
 static u32 sPix[384 * 8] EWRAM_BSS;
 static u16 sNext, sEnd;
@@ -61,7 +62,7 @@ static u32 mirror(u32 w) {
 }
 
 void vwf_kit(Canvas* c, int tx, int ty, int ui_tile, int flip, bool8 over) {
-    const u32* src = (const u32*)ui_tiles + ui_tile * 8;
+    const u32* src = (const u32*)ui_current_tiles() + ui_tile * 8;
     u32* dst;
     int y, i;
     if (tx < 0 || ty < 0 || tx >= c->tw || ty >= c->th)
@@ -84,7 +85,7 @@ void vwf_kit(Canvas* c, int tx, int ty, int ui_tile, int flip, bool8 over) {
 }
 
 void vwf_kit_px(Canvas* c, int x, int y, int ui_tile, int flip) {
-    const u32* src = (const u32*)ui_tiles + ui_tile * 8;
+    const u32* src = (const u32*)ui_current_tiles() + ui_tile * 8;
     int r, i;
     for (r = 0; r < 8; r++) {
         u32 w = src[(flip & 2) ? 7 - r : r];

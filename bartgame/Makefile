@@ -36,9 +36,8 @@ ifneq ($(BART_SEWER),$(filter $(BART_SEWER),0 1 2 3 4 5 6 7 8 9))
 $(error BART_SEWER must be one integer in 0..9)
 endif
 SEWER_STAMP := $(GEN)/sewer-profile-$(BART_SEWER).stamp
-# Zero keeps the established UI theme with the new minimal HUD.
-# The five other themes remain comparison choices.
-BART_UI ?= 0
+# Selected Winebound HUD; title Options select frames/colors at runtime.
+BART_UI ?= 6
 ifneq ($(words $(BART_UI)),1)
 $(error BART_UI must be one integer in 0..10)
 endif
@@ -46,8 +45,8 @@ ifneq ($(BART_UI),$(filter $(BART_UI),0 1 2 3 4 5 6 7 8 9 10))
 $(error BART_UI must be one integer in 0..10)
 endif
 UI_STAMP := $(GEN)/ui-profile-$(BART_UI).stamp
-# Optional pause-menu layout studies; production keeps the original layout.
-BART_MENU ?= 0
+# Selected Workbench items with the separately selected Ledger map.
+BART_MENU ?= 1
 ifneq ($(words $(BART_MENU)),1)
 $(error BART_MENU must be one integer in 0..10)
 endif
@@ -55,6 +54,16 @@ ifneq ($(BART_MENU),$(filter $(BART_MENU),0 1 2 3 4 5 6 7 8 9 10))
 $(error BART_MENU must be one integer in 0..10)
 endif
 MENU_STAMP := $(GEN)/menu-profile-$(BART_MENU).stamp
+
+# Enemy artwork remains a ten-option comparison, zero keeps existing enemies.
+BART_ENEMY ?= 0
+ifneq ($(words $(BART_ENEMY)),1)
+$(error BART_ENEMY must be one integer in 0..10)
+endif
+ifneq ($(BART_ENEMY),$(filter $(BART_ENEMY),0 1 2 3 4 5 6 7 8 9 10))
+$(error BART_ENEMY must be one integer in 0..10)
+endif
+ENEMY_STAMP := $(GEN)/enemy-profile-$(BART_ENEMY).stamp
 
 ARCH    := -mcpu=arm7tdmi -mtune=arm7tdmi
 CFLAGS  := $(ARCH) -O2 -g -Wall -Wno-unused-function -fno-strict-aliasing \
@@ -73,7 +82,8 @@ ART       := $(wildcard art/reboot_*.py) art/reboot_contracts.json tools/build_a
              art/palettes.py art/tiles.py art/sprites.py art/rooms.py art/ui_kit.py \
              art/ui_font.py art/faces.py art/title.py art/sw_folk.py art/sword_studies.py \
              art/sewer_concepts.py art/sewer_concepts_terrain.py art/sewer_concepts_npcs.py \
-             art/sewer_v3_fixtures.py art/ui_studies.py art/sewer_final.py art/sewer_final_contracts.py
+             art/sewer_v3_fixtures.py art/ui_studies.py art/sewer_final.py art/sewer_final_contracts.py \
+             $(wildcard art/enemy_studies*.py)
 
 OBJS := $(patsubst src/%.c,$(BUILD)/%.o,$(SRC_C)) \
         $(patsubst src/%.c,$(BUILD)/%.o,$(SRC_IWRAM)) \
@@ -106,9 +116,14 @@ $(MENU_STAMP):
 	@rm -f $(GEN)/menu-profile-*.stamp
 	@printf '%s\n' '$(BART_MENU)' > $@
 
-$(GEN)/assets.c: $(ART) $(SWING_STAMP) $(SEWER_STAMP) $(UI_STAMP) $(MENU_STAMP)
+$(ENEMY_STAMP):
 	@mkdir -p $(GEN)
-	BART_SWING=$(BART_SWING) BART_SEWER=$(BART_SEWER) BART_UI=$(BART_UI) BART_MENU=$(BART_MENU) $(PYTHON) tools/build_assets.py $(GEN)
+	@rm -f $(GEN)/enemy-profile-*.stamp
+	@printf '%s\n' '$(BART_ENEMY)' > $@
+
+$(GEN)/assets.c: $(ART) $(SWING_STAMP) $(SEWER_STAMP) $(UI_STAMP) $(MENU_STAMP) $(ENEMY_STAMP)
+	@mkdir -p $(GEN)
+	BART_SWING=$(BART_SWING) BART_SEWER=$(BART_SEWER) BART_UI=$(BART_UI) BART_MENU=$(BART_MENU) BART_ENEMY=$(BART_ENEMY) $(PYTHON) tools/build_assets.py $(GEN)
 
 $(GEN)/assets.h: $(GEN)/assets.c ;
 

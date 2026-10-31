@@ -407,6 +407,7 @@ h.append('#define WISP_X %d /* body-relative flame/wisp anchor */' % (23 if SC.V
 h.append('#define WISP_Y %d' % (1 if SC.VARIANT else sw_folk.WISP_AT[1]))
 h.append('#define BART_SEWER_VARIANT %d' % SC.VARIANT)
 h.append('#define BART_UI_VARIANT %d' % UI_STUDIES.VARIANT)
+h.append('#define BART_ENEMY_VARIANT %d' % sprites.ENEMY_VARIANT)
 MENU_VARIANT = int(os.environ.get('BART_MENU', '0'))
 assert 0 <= MENU_VARIANT <= 10, 'BART_MENU must be0..10'
 h.append('#define BART_MENU_VARIANT %d' % MENU_VARIANT)
@@ -458,6 +459,25 @@ for i, (name, rows) in enumerate(ui_kit.TILES.items()):
 c.append(c_array_u16('ui_tiles', bytes_to_u16(data)))
 h.append('extern const u16 ui_tiles[];')
 h.append('#define UI_TILE_COUNT %d' % len(ui_kit.TILES))
+# Every runtime frame choice is authored at native8px size, not recolored
+# screenshot art. The semantic role order is identical across the three kits.
+appearance_data = b''
+for kit in UI_STUDIES.appearance_kits(ui_kit.TILES, ui_kit.INDEX, ui_font):
+    assert list(kit) == list(ui_kit.TILES)
+    for rows in kit.values():
+        appearance_data += tile_bytes([[ui_kit.INDEX.get(ch, 0) for ch in r] for r in rows], 0, 0)
+c.append(c_array_u16('appearance_ui_tiles', bytes_to_u16(appearance_data)))
+h.append('extern const u16 appearance_ui_tiles[];')
+c.append(c_array_u16('appearance_palettes', [rgb15(color) for colors in UI_STUDIES.appearance_palette_colors() for color in colors]))
+h.append('extern const u16 appearance_palettes[];')
+h.append('#define APPEARANCE_STYLE_COUNT 3')
+appearance_data = b''
+for markers in UI_STUDIES.appearance_marks(ui_kit.OBJ_MARKS, ui_kit.INDEX, ui_font, ui_kit.TILES):
+    for rows in markers.values():
+        appearance_data += tile_bytes([[ui_kit.INDEX.get(ch, 0) for ch in r] for r in rows], 0, 0)
+c.append(c_array_u16('appearance_mark_tiles', bytes_to_u16(appearance_data)))
+h.append('extern const u16 appearance_mark_tiles[];')
+h.append('#define APPEARANCE_MARK_COUNT %d' % len(ui_kit.OBJ_MARKS))
 for nm, k in (('CREAM', 'c'), ('HIGH', 'h'), ('RED', 'r'), ('GOLD', 'G'), ('DIM', 's'), ('BROWN', 'b'),
               ('DARK', 'o'), ('DEEP', '1'), ('NAVY', '2'), ('RAISED', '3'), ('EDGE', '4'), ('PARCH', 'p'),
               ('GOLD_DARK', 'y'), ('GOLD_MID', 'Y'), ('PALE', 'W')):
@@ -545,6 +565,17 @@ coverage = {
         {'family': 'font', 'owner': 'reboot_ui', 'elements': list(range(VWF_FIRST, VWF_LAST + 1))},
         {'family': 'portraits', 'owner': 'reboot_ui', 'elements': list(sprites.SHEETS[next(i for i, s in enumerate(sprites.SHEETS) if s['name'] == 'face')]['frames'])},
     ],
+    'appearance_options': {
+        'owner': 'ui_studies',
+        'styles': [{'index': i, 'profile': style, 'name': UI_STUDIES.STYLE_NAMES[style],
+                    'geometry': UI_STUDIES.geometry_recipe(style)} for i,style in enumerate((6,7,8))],
+        'palette_profiles': [4,5,1],
+        'palette_colors': UI_STUDIES.appearance_palette_colors(),
+        'kit_canvas': [8,8], 'kit_tiles': len(ui_kit.TILES),
+        'marker_canvas': [8,8], 'marker_frames': list(ui_kit.OBJ_MARKS),
+        'selection': 'Independent native geometry and colors, persisted separately from the run.',
+        'hud': 'Selected Winebound Folio in production UI6; appearance changes do not alter HUD/minimap banks.',
+    },
     'title': title.metadata(title_bitmap),
     'sword_geometry': sword_geometry,
 }

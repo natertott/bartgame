@@ -29,5 +29,11 @@ const MenuLayout* menu_study_layout(int number);
 extern const char* const menu_study_names[11];
 /* Read-only presentation state; real controls change it. */
 extern u8 gMenuStudyPage,gMenuStudyCursor,gMenuStudyMapCell,gMenuStudyZoom;
+/* Map diagnostics report actual visible types and tethered native positions.
+   Bits use You,Door,Task,Chest,Heal,Heart,Folk,Relic,Gate order. */
+typedef struct { u8 cell,kind; s16 x,y,source_x,source_y; u8 tile_x,tile_y; } MenuMapMarker;
+extern u16 gMenuMapEvents[25];
+extern MenuMapMarker gMenuMapMarkers[16];
+extern u8 gMenuMapMarkerCount;
 extern u16 gMenuStudyDrawFrames; /* most recent completed redraw, video IRQ ticks */
 #endif
