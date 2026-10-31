@@ -12,6 +12,7 @@ import hashlib
 import json
 from pathlib import Path
 import subprocess
+import struct
 from types import SimpleNamespace
 
 from PIL import Image, ImageDraw, ImageFont
@@ -483,18 +484,117 @@ class Review:
                 return
         self.check('a naturally generated combat cave was found', False)
 
+    def clear_floor_map(self):
+        """Snapshot natural floor/foreground data for the clearing proof."""
+        room = P.sym('gRoom')
+        n = self.defs['METATILE_COUNT']
+        ground = struct.unpack('<1024H', B.bytes_at(self.c, room + 2, 2048))
+        overlay = struct.unpack('<1024H', B.bytes_at(self.c, room + 2050, 2048))
+        types = B.bytes_at(self.c, P.sym('metatile_type'), n)
+        props = B.bytes_at(self.c, P.sym('metatile_prop'), n)
+        collision = B.bytes_at(self.c, P.sym('metatile_coll'), n)
+        width, height = P.r8(self.c, room), P.r8(self.c, room + 1)
+        def clear(bounds):
+            x0, y0, x1, y1 = bounds
+            if not (16 <= x0 and 48 <= y0 and x1 < width * 16 - 16 and y1 < height * 16 - 16):
+                return False
+            for y in range(y0 // 16, y1 // 16 + 1):
+                for x in range(x0 // 16, x1 // 16 + 1):
+                    at = y * 32 + x
+                    mt = ground[at]
+                    if mt >= n or types[mt] or props[mt] or collision[mt] or overlay[at] != 65535:
+                        return False
+            return True
+        return clear
+
+    def clear_pursuer(self):
+        """Supplement the bridge-depth case with a natural open-floor lane."""
+        self.kind = 0
+        for seed in (6, 7, 11, 0xB4A7):
+            self.c = P.boot(rom=P.ROM, seed=seed)
+            C.dismiss(self.c)
+            world = C.world(self.c)
+            P.enter_forest(self.c)
+            for cell in sorted(range(25), key=lambda i: (world['cells'][i]['stage'], i)):
+                self.heal()
+                L.warp(self.c, cell, next(i for i, gate in enumerate(world['cells'][cell]['gate']) if gate))
+                C.dismiss(self.c)
+                clear = self.clear_floor_map()
+                for index, actor in self.enemies():
+                    if actor['type'] != 0:
+                        continue
+                    ex, ey = actor['x'], actor['y']
+                    for dx, dy in ((64, 0), (-64, 0), (48, -16), (-48, -16), (48, 16), (-48, 16)):
+                        point = ex + dx, ey + dy
+                        bounds = (min(ex, point[0]) - 16, min(ey, point[1]) - 24,
+                                  max(ex, point[0]) + 16, max(ey, point[1]) + 12)
+                        if not clear(bounds):
+                            continue
+                        self.target = index
+                        for other in range(1, 96):
+                            if other != index:
+                                P.w8(self.c, P.sym('gActors') + other * 64, 0)
+                        self.position(point, 3 if dx > 0 else 1)
+                        self.heal()
+                        for _ in range(80):
+                            self.heal()
+                            self.c.run_frame()
+                        self.context = {'seed': seed, 'cell': cell, 'stage': world['cells'][cell]['stage'],
+                                        'natural_spawn_index': index, 'kind': 0,
+                                        'player_position_fixture': list(point), 'player_health_fixture': 80,
+                                        'ordinary_camera_settle_frames': 80, 'unrelated_actors_cleared': True,
+                                        'clear_lane': list(bounds),
+                                        'clear_lane_rule': 'Every covered metatile is TT_FLOOR, non-prop, collision0 and overlayNONE; no bridge, water, ledge, canopy or raised decoration.'}
+                        trace = self.record('pursuer-clearing', 96,
+                                            note='Supplementary natural pursuer on an independently selected unobstructed natural floor lane. No enemy position/state/timer/frame or terrain writes. Main bridge-depth recordings remain untouched.')
+                        samples = []
+                        for t in trace:
+                            a = t['target']
+                            samples.append(bool(a) and clear(((a['x_q16'] >> 16) - 8,
+                                                             (a['y_q16'] >> 16) - 16,
+                                                             (a['x_q16'] >> 16) + 7,
+                                                             (a['y_q16'] >> 16) - 1)))
+                        self.rows[-1]['unobstructed_terrain_samples'] = samples
+                        self.check('every recorded pursuer body footprint has no terrain/foreground obstruction', all(samples),
+                                   {'clear': sum(samples), 'total': len(samples)})
+                        self.check('clearing pursuer really changes position',
+                                   len({(t['target']['x_q16'], t['target']['y_q16']) for t in trace if t['target']}) > 1)
+                        self.save()
+                        return
+        self.check('natural unobstructed pursuer lane exists', False)
+
     def save(self):
         freeze = self.frozen / 'freeze.json'
+        pose_coverage = {}
+        for kind, prefix in enumerate(('BEETLE', 'BAT', 'SPITTER', 'SLIME', 'KNIGHT', 'BOSS')):
+            expected = {key.removeprefix('F_' + prefix + '_').lower(): value
+                        for key, value in self.defs.items() if key.startswith('F_' + prefix + '_')}
+            observed = {t['target']['presented_frame']
+                        for row in self.rows if row['kind'] == kind
+                        for t in row['trace'] if t['target']}
+            pose_coverage[NAMES[kind]] = {
+                'expected_source_frames': expected,
+                'actual_draw_selected_ids': sorted(observed),
+                'actual_draw_selected_names': sorted(name for name, frame in expected.items() if frame in observed),
+                'source_only_in_this_capture_suite': sorted(name for name, frame in expected.items() if frame not in observed),
+            }
         row = {'method': __doc__.strip(), 'emulator': 'mGBA 0.10.5',
                'rom_sha256': digest(P.ROM), 'enemy_variant': self.variant,
                'source_commit': json.loads(freeze.read_text()).get('source_commit') if freeze.exists() else None,
                'checks': self.checks, 'passed': sum(c['passed'] for c in self.checks),
                'total': len(self.checks), 'failures': [c for c in self.checks if not c['passed']],
                'capture_count': len(self.rows), 'captures': self.rows,
+               'pose_coverage': pose_coverage,
+               'presentation_note': 'Read-only gEnemyPresentedFrame reports draw-selected pose; queued hardware uploads can lag one VBlank. Hardware OAM presence is captured separately. Source-only directions/compatibility poses are not claimed as observed runtime frames.',
                'mechanic_comparison_fields': list(MECHANIC_FIELDS)}
         (self.out / 'capture.json').write_text(json.dumps(row, indent=2) + '\n')
 
     def run(self):
+        if self.args.clear_pursuer:
+            self.clear_pursuer()
+            self.save()
+            print('RESULT', sum(c['passed'] for c in self.checks), '/', len(self.checks), 'captures', len(self.rows), flush=True)
+            return int(any(not c['passed'] for c in self.checks))
         for kind in (self.args.kinds if self.args.kinds is not None else range(6)):
             self.boss() if kind == 5 else self.common(kind)
         if self.args.include_cave:
@@ -550,6 +650,8 @@ def main():
     p.add_argument('--no-video', action='store_true')
     p.add_argument('--include-cave', action='store_true',
                    help='Also enter a natural generated cave combat trial; no enemy/terrain injection.')
+    p.add_argument('--clear-pursuer', action='store_true',
+                   help='Only supplementary natural open-floor pursuer comparison; preserves main reports.')
     return Review(p.parse_args()).run()
 
 if __name__ == '__main__':

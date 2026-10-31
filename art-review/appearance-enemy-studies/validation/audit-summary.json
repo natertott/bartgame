@@ -1,0 +1,1268 @@
+{
+  "method": "Independent native enemy ROM, preserved-world and combat-contract audit.\n\nOnly source painter APIs provide expected native pixels. No asset builder,\n4bpp packing helper, sprite dispatcher or deduplicator is imported. Frozen ROM\nnibbles and relocated descriptors are decoded by the independent ROM reader.\nThe positive profiles share mechanics; source and runtime evidence are kept\nseparate from visual preference and from the older baseline's frame cost.\n",
+  "reference_commit": "a9e09e5de3c185e6b7bc8293b2411e4bdc13e4fe",
+  "baseline_rom_sha256": "6d5d1ffe05653255da08f2077328c1a1f5c778d8d80a147a873459a6e228a141",
+  "auditor_sha256": "87c8369100d0e84988b49d9e4a7b7b932e2cd3c9b2217a3516527a4d400a30b4",
+  "source_file_sha256": {
+    "art/blight_reference.py": "199c13c278c086d693042388e941e27c810e2b09442f6d25cb0682b0bcb6b431",
+    "art/blight_reference_source.py": "50261560155aecf45a16c16e9f4e1746016806a2be02d27a50e77433b673ba1d",
+    "art/bloom_animations.py": "f16b690fe853944a1bd87b5d9eca538239f7a6950a8acb9378272f8812f233c2",
+    "art/bloom_fx.py": "78da0962204d4cf23a5d622137f6171f636d6d2a2a40eef539c9f7232771707c",
+    "art/bloom_loads.py": "d2331f07e6a896244ab3b9afa4ff958d8875d5189ea8c6b2ec9ab544da65c4c4",
+    "art/clean_items.py": "adb7d042d823009988e8f3e3de3ffc52fc0d09e8dd9999db548f5189de31fa68",
+    "art/enemy_studies.py": "e00035ab8e70d27bc3ead01ee4dd5dd3dab4ab6a57c7228ae9b8188f271df2ad",
+    "art/enemy_studies_heavy.py": "460c3a66a96eece44e90f943ca2f121ec345813cf279a0104b28e72a1eac1304",
+    "art/enemy_studies_palette.py": "aa35bba202cb9d7cc705146312104c211584b168bf0b01547ffdf96d4bff322b",
+    "art/enemy_studies_small.py": "51170452427ae507c66b851b38b16330167684a84be29172a14b442da0df411d",
+    "art/enemy_studies_soft.py": "cd1e1f2d01f25153c497b3474001bcd75a2dfeb08219b01c6354e855be15ce38",
+    "art/env_pack.py": "e266c715c90c4bf2c4ba8d840d5d6146e4f8bd68e614a53a0aece67a2051e12e",
+    "art/faces.py": "ff35c5233477ff7d43b4776d7cace2337bbf5e1fff6297bf8ba8b93e86d872f4",
+    "art/folk.py": "174fa5044812caefc70a7bdebb33f54a869854c3d4ff58560815126881e6099b",
+    "art/forest_art.py": "f468279e191c3727203c981eadf17442af38dc5ed59493cd1447e9fe21f02842",
+    "art/forest_sprites.py": "b376dd3f6cd16f46ecba74610d3f2265e5c9bfee2929b4449dcf28d56e0d86cf",
+    "art/healthy_reference.py": "32e0254b979378fc78fa970b51ebd0f5ed7479bfaa3adb5cd8c6121fcc5319d4",
+    "art/hero.py": "1313133514f169593e8be950355f213790ff8c4e5d6f051a16eee9c8ad4a6c48",
+    "art/interactive_props.py": "93e2eb136f71cad7dd66b59b17c1eabbc527d17ab4e84a1e65ecafa3d24133f7",
+    "art/interactive_tiles.py": "d252a44cd066de59f309aa890d2b424a5245e7ec0527b43595ea495b98f3cb84",
+    "art/items.py": "6865e732874429fd35732962b2f9df646ac642b3795f3eab418879cf28c08968",
+    "art/items32.py": "e4ff935e10b54f540830917cfd9233b0a6a086feb30bfd2a874cd7b3d7b5fbbf",
+    "art/marks.py": "8bbd676f70643403ea06105ad0468417ba2171433ca422438322534c6f4eb23d",
+    "art/monsters.py": "8dd8272f147ddc89336c69bb274c96578c445a4944a0b0e1113227639ab2b13c",
+    "art/pack.py": "6ed118c306471ea0bb4eebeedd3444badf724359bed77766e48134f9cc77c1fb",
+    "art/pack_tiles.py": "b99341a12dcd457f3e1dc2527da20f31d1dfe24f8e3fecd48cded0041b3e764d",
+    "art/paint.py": "e03b63767cdc885179ab902ccafe119cc5426228b322ad1162338880d2067fd9",
+    "art/palettes.py": "c57f0e4c37f0ee70afb6cf9912dbc40939b787e7616af24948f12e4822273aa1",
+    "art/portraits.py": "2dc833b09d884f7b9020000de5970615e06dceb61a7b9f901e9647c2659613f9",
+    "art/px.py": "2c0058322702da467efc85ab0cd9eb367d07db8b18f5f0bcf2f0b06b640d5188",
+    "art/reboot_actors.py": "08cf30f2219bb0b1f4b55724a9d55c6c755db897b768c35685f6523f1828823e",
+    "art/reboot_contracts.json": "3f3c22aeb93f63308ddc42f79e849145c5e8c12950e37ba14ded67773b44d0d8",
+    "art/reboot_core.py": "71021a7b1717f8dd7edd58d0ad0a4dda448def45533c42855f6d76a4bcc82ea4",
+    "art/reboot_items.py": "589c6e250bce05a44fd192c6a7ad7a19025214efe74c98f91e35affc38cc0891",
+    "art/reboot_terrain.py": "57ef3230a9d89b16e2cecb5984d3397ee3b19fb5d15d59af1c6ed9c9d460caec",
+    "art/reboot_ui.py": "6963ac2536f37580c1e398228b22359ea03c39460b9814fb751d4de82c98dfc7",
+    "art/reference_assets.py": "3374d7c6e3ce26e7fb2fa4977410ec75fcf37f98eed29610a4b8301bfae41f52",
+    "art/reference_items.py": "2367b5329b98fa2ba5ba9d067909ca4104cdf67e27db496a0929660c2908c36a",
+    "art/rooms.py": "c9f69874d628e8ef85e2dbf75511a27927147a1bd3d44fff508a9812ce659363",
+    "art/sample.py": "9018410070844f4a69e3bc9458394c8291de99ad548aa8b29d07d0b7d771d454",
+    "art/sewer_concepts.py": "6638656152cdfe5d424f94de8eb7f1c9ecc359293247670c62692d2ea2dd2606",
+    "art/sewer_concepts_npcs.py": "3ac84ca8f1024bfbbbb391f3c817d06d73609e82d17239aa05981e0633b130bb",
+    "art/sewer_concepts_terrain.py": "913e22af37f33949d248675b8f3987daf17d989e0c7c8c04e32c76845ae8f561",
+    "art/sewer_final.py": "f6229d2aa7e0207b01b6c35be75884cbcdd6b7847ceedc945388b760360baf83",
+    "art/sewer_final_contracts.py": "4afb10e4fe316d549046bacbeec4358747939d98f29ca2c2f633c24da4cf553c",
+    "art/sewer_v3_fixtures.py": "1f7d4289575f8a4a933ac6fef1b37a5510308a1ed31c4815629cd9a0c5d8ea12",
+    "art/sprites.py": "5370abd4fd5772df73c92d21fcb72f58071ac37d422110c51f83b96d35aeafdc",
+    "art/style.py": "693a64a9136bba50f3489b08b806aaf6d20258f570009bac9e22a6b010c42cb3",
+    "art/sw_cut.py": "27f064e14cb1e392e16ed72102093e17310080f228f9d3d58da8285f7de8dd1b",
+    "art/sw_drain.py": "b546771bef482a455a24a125c11ef50824078e6b47ed100044f0b9cb65560b33",
+    "art/sw_folk.py": "7ed9e18713edce423e8a90947328d537097ee04a4e5a828c36539cbdf8521ac2",
+    "art/sw_hall.py": "a400723c297bb49eb4ef80ec69a3f92a6efde08f588fee20543de65798ee11cd",
+    "art/sw_paint.py": "8f7fce4a2871092631631be9ca8e5bfd4f35f68f039c412c0e5cfb25cf04c139",
+    "art/sw_props.py": "04a8bdc2d8661e21f22f73eea86169aaa647a5161e43d45cfd94a19eae051a6d",
+    "art/sword_studies.py": "5cf29b6116a417ed229d322eadaf9ae7a345a52dcd970dae2ff8f1bb8f0d01c4",
+    "art/tile_art.py": "24d090933cc0cccf70e827aac5fbf2a1a09fd20336b5ab303d04c636cdcc4217",
+    "art/tiles.py": "4a5468051beac6a290ce952962f5b656226badb72724dc7163db5aab7289038a",
+    "art/tiles_style.py": "eb9caf764e56a672227d48fd024df3119856e7b84e58bce11a2acd938b3c2890",
+    "art/title.py": "03b984ca0f7e81afbb064f7e5aadf45530c51f34b53fbb3998aead7a0ceb9715",
+    "art/ui_font.py": "48ae0da7d1daa4f01c144a856d18694c5be06674288029e62913a513bcb8388e",
+    "art/ui_kit.py": "49b31f6b0955436eb9c88bf019208ef6cc7bb573f9add58a3c85e8acea70e6ca",
+    "art/ui_studies.py": "b2a9bbddc134a36c82f87b990a8e5f1f93e15cf2b4cd165391f673b2fe03a3c3",
+    "art/wood_art.py": "4778b2a8cfca7fb647193abc53c9e63bc07998d2eb2177cc4930543de2c5251c"
+  },
+  "variants": [
+    {
+      "variant": 0,
+      "enemy": 0,
+      "rom_sha256": "42d7902226c9cbca47bdefb21b970a4e3f74d9e4e2cfc201404dd6479fe275a3",
+      "native_frames": 0,
+      "passed": 911,
+      "total": 911
+    },
+    {
+      "variant": 1,
+      "enemy": 1,
+      "rom_sha256": "82ce7b19a6cdcbf6819ecbea4870a8905598e40da5ba5d6312d02d6b579d5087",
+      "native_frames": 64,
+      "passed": 1062,
+      "total": 1062
+    },
+    {
+      "variant": 2,
+      "enemy": 2,
+      "rom_sha256": "dcc97741406cbc0836dfbf8c25728cdc47cbf619a1e59d1485333cb49dfa4796",
+      "native_frames": 64,
+      "passed": 1062,
+      "total": 1062
+    },
+    {
+      "variant": 3,
+      "enemy": 3,
+      "rom_sha256": "22865248043f7d96cae01da8b7b99b7722601e21f0df547ee13e1c47d6b2aabd",
+      "native_frames": 64,
+      "passed": 1062,
+      "total": 1062
+    },
+    {
+      "variant": 4,
+      "enemy": 4,
+      "rom_sha256": "767694badbedc1f15eb8c3151201f6b6892c42caa97baf7a819c4989c77670d8",
+      "native_frames": 64,
+      "passed": 1062,
+      "total": 1062
+    },
+    {
+      "variant": 5,
+      "enemy": 5,
+      "rom_sha256": "ab8e4bd0e022fb4ab213b39617939eee12de279c2b99123e124351a2ad53a0cc",
+      "native_frames": 64,
+      "passed": 1062,
+      "total": 1062
+    },
+    {
+      "variant": 6,
+      "enemy": 6,
+      "rom_sha256": "a952d1869e3ffe6b10f599d501a69a3adf8b6d1b4061f0da8100e950d1900ae4",
+      "native_frames": 64,
+      "passed": 1062,
+      "total": 1062
+    },
+    {
+      "variant": 7,
+      "enemy": 7,
+      "rom_sha256": "1b18ffd437770d6e53322ce8583f30f00fe9ba9658ba5794e1f811c495b95af1",
+      "native_frames": 64,
+      "passed": 1062,
+      "total": 1062
+    },
+    {
+      "variant": 8,
+      "enemy": 8,
+      "rom_sha256": "78c5ca3883bde311bfda25bf0d87d3e81ce5a072b8bf2dcfa5ad579d0839d190",
+      "native_frames": 64,
+      "passed": 1062,
+      "total": 1062
+    },
+    {
+      "variant": 9,
+      "enemy": 9,
+      "rom_sha256": "b7e902c1bd58f528db2aee5ca2c399eb482dd159fa7260ef560222e03666cf9b",
+      "native_frames": 64,
+      "passed": 1062,
+      "total": 1062
+    },
+    {
+      "variant": 10,
+      "enemy": 10,
+      "rom_sha256": "351e8492a6972ff5b0ccb89c4a633f9b340def21bfc9d9ef3e61b45648099241",
+      "native_frames": 64,
+      "passed": 1062,
+      "total": 1062
+    }
+  ],
+  "obj_budgets": [
+    {
+      "variant": 0,
+      "enemy": 0,
+      "used": 764,
+      "limit": 876,
+      "free": 112,
+      "allocations": {
+        "hero/body+sword+streamed-shield foundation": 32,
+        "items whole sheet": 84,
+        "fx whole sheet": 52,
+        "proj whole sheet": 4,
+        "lift whole sheet": 16,
+        "pick32 whole sheet": 40,
+        "Bloom streamed action": 16,
+        "Bloom ground shadow": 2,
+        "beetle whole sheet": 16,
+        "bat whole sheet": 12,
+        "spitter whole sheet": 36,
+        "slime whole sheet": 12,
+        "knight whole sheet": 96,
+        "ksword whole sheet": 8,
+        "boss whole sheet": 96,
+        "chest streamed frame": 16,
+        "entrance streamed frame": 32,
+        "ambient whole sheet": 6,
+        "arrow whole sheet": 12,
+        "seven menu icons": 112,
+        "trial mouth whole sheet": 48,
+        "one forest/trial NPC frame": 16
+      },
+      "limits": "Static allocation superset, not an OAM peak/CPU guarantee. Includes every enemy family although ordinary themed rooms use subsets. Portrait/HUD use their fixed higher reservations."
+    },
+    {
+      "variant": 1,
+      "enemy": 1,
+      "used": 816,
+      "limit": 876,
+      "free": 60,
+      "allocations": {
+        "hero/body+sword+streamed-shield foundation": 32,
+        "items whole sheet": 84,
+        "fx whole sheet": 52,
+        "proj whole sheet": 4,
+        "lift whole sheet": 16,
+        "pick32 whole sheet": 40,
+        "Bloom streamed action": 16,
+        "Bloom ground shadow": 2,
+        "beetle whole sheet": 24,
+        "bat whole sheet": 12,
+        "spitter whole sheet": 48,
+        "slime whole sheet": 12,
+        "knight whole sheet": 192,
+        "ksword whole sheet": 8,
+        "boss streamed frame": 32,
+        "chest streamed frame": 16,
+        "entrance streamed frame": 32,
+        "ambient whole sheet": 6,
+        "arrow whole sheet": 12,
+        "seven menu icons": 112,
+        "trial mouth whole sheet": 48,
+        "one forest/trial NPC frame": 16
+      },
+      "limits": "Static allocation superset, not an OAM peak/CPU guarantee. Includes every enemy family although ordinary themed rooms use subsets. Portrait/HUD use their fixed higher reservations."
+    },
+    {
+      "variant": 2,
+      "enemy": 2,
+      "used": 816,
+      "limit": 876,
+      "free": 60,
+      "allocations": {
+        "hero/body+sword+streamed-shield foundation": 32,
+        "items whole sheet": 84,
+        "fx whole sheet": 52,
+        "proj whole sheet": 4,
+        "lift whole sheet": 16,
+        "pick32 whole sheet": 40,
+        "Bloom streamed action": 16,
+        "Bloom ground shadow": 2,
+        "beetle whole sheet": 24,
+        "bat whole sheet": 12,
+        "spitter whole sheet": 48,
+        "slime whole sheet": 12,
+        "knight whole sheet": 192,
+        "ksword whole sheet": 8,
+        "boss streamed frame": 32,
+        "chest streamed frame": 16,
+        "entrance streamed frame": 32,
+        "ambient whole sheet": 6,
+        "arrow whole sheet": 12,
+        "seven menu icons": 112,
+        "trial mouth whole sheet": 48,
+        "one forest/trial NPC frame": 16
+      },
+      "limits": "Static allocation superset, not an OAM peak/CPU guarantee. Includes every enemy family although ordinary themed rooms use subsets. Portrait/HUD use their fixed higher reservations."
+    },
+    {
+      "variant": 3,
+      "enemy": 3,
+      "used": 816,
+      "limit": 876,
+      "free": 60,
+      "allocations": {
+        "hero/body+sword+streamed-shield foundation": 32,
+        "items whole sheet": 84,
+        "fx whole sheet": 52,
+        "proj whole sheet": 4,
+        "lift whole sheet": 16,
+        "pick32 whole sheet": 40,
+        "Bloom streamed action": 16,
+        "Bloom ground shadow": 2,
+        "beetle whole sheet": 24,
+        "bat whole sheet": 12,
+        "spitter whole sheet": 48,
+        "slime whole sheet": 12,
+        "knight whole sheet": 192,
+        "ksword whole sheet": 8,
+        "boss streamed frame": 32,
+        "chest streamed frame": 16,
+        "entrance streamed frame": 32,
+        "ambient whole sheet": 6,
+        "arrow whole sheet": 12,
+        "seven menu icons": 112,
+        "trial mouth whole sheet": 48,
+        "one forest/trial NPC frame": 16
+      },
+      "limits": "Static allocation superset, not an OAM peak/CPU guarantee. Includes every enemy family although ordinary themed rooms use subsets. Portrait/HUD use their fixed higher reservations."
+    },
+    {
+      "variant": 4,
+      "enemy": 4,
+      "used": 816,
+      "limit": 876,
+      "free": 60,
+      "allocations": {
+        "hero/body+sword+streamed-shield foundation": 32,
+        "items whole sheet": 84,
+        "fx whole sheet": 52,
+        "proj whole sheet": 4,
+        "lift whole sheet": 16,
+        "pick32 whole sheet": 40,
+        "Bloom streamed action": 16,
+        "Bloom ground shadow": 2,
+        "beetle whole sheet": 24,
+        "bat whole sheet": 12,
+        "spitter whole sheet": 48,
+        "slime whole sheet": 12,
+        "knight whole sheet": 192,
+        "ksword whole sheet": 8,
+        "boss streamed frame": 32,
+        "chest streamed frame": 16,
+        "entrance streamed frame": 32,
+        "ambient whole sheet": 6,
+        "arrow whole sheet": 12,
+        "seven menu icons": 112,
+        "trial mouth whole sheet": 48,
+        "one forest/trial NPC frame": 16
+      },
+      "limits": "Static allocation superset, not an OAM peak/CPU guarantee. Includes every enemy family although ordinary themed rooms use subsets. Portrait/HUD use their fixed higher reservations."
+    },
+    {
+      "variant": 5,
+      "enemy": 5,
+      "used": 816,
+      "limit": 876,
+      "free": 60,
+      "allocations": {
+        "hero/body+sword+streamed-shield foundation": 32,
+        "items whole sheet": 84,
+        "fx whole sheet": 52,
+        "proj whole sheet": 4,
+        "lift whole sheet": 16,
+        "pick32 whole sheet": 40,
+        "Bloom streamed action": 16,
+        "Bloom ground shadow": 2,
+        "beetle whole sheet": 24,
+        "bat whole sheet": 12,
+        "spitter whole sheet": 48,
+        "slime whole sheet": 12,
+        "knight whole sheet": 192,
+        "ksword whole sheet": 8,
+        "boss streamed frame": 32,
+        "chest streamed frame": 16,
+        "entrance streamed frame": 32,
+        "ambient whole sheet": 6,
+        "arrow whole sheet": 12,
+        "seven menu icons": 112,
+        "trial mouth whole sheet": 48,
+        "one forest/trial NPC frame": 16
+      },
+      "limits": "Static allocation superset, not an OAM peak/CPU guarantee. Includes every enemy family although ordinary themed rooms use subsets. Portrait/HUD use their fixed higher reservations."
+    },
+    {
+      "variant": 6,
+      "enemy": 6,
+      "used": 816,
+      "limit": 876,
+      "free": 60,
+      "allocations": {
+        "hero/body+sword+streamed-shield foundation": 32,
+        "items whole sheet": 84,
+        "fx whole sheet": 52,
+        "proj whole sheet": 4,
+        "lift whole sheet": 16,
+        "pick32 whole sheet": 40,
+        "Bloom streamed action": 16,
+        "Bloom ground shadow": 2,
+        "beetle whole sheet": 24,
+        "bat whole sheet": 12,
+        "spitter whole sheet": 48,
+        "slime whole sheet": 12,
+        "knight whole sheet": 192,
+        "ksword whole sheet": 8,
+        "boss streamed frame": 32,
+        "chest streamed frame": 16,
+        "entrance streamed frame": 32,
+        "ambient whole sheet": 6,
+        "arrow whole sheet": 12,
+        "seven menu icons": 112,
+        "trial mouth whole sheet": 48,
+        "one forest/trial NPC frame": 16
+      },
+      "limits": "Static allocation superset, not an OAM peak/CPU guarantee. Includes every enemy family although ordinary themed rooms use subsets. Portrait/HUD use their fixed higher reservations."
+    },
+    {
+      "variant": 7,
+      "enemy": 7,
+      "used": 816,
+      "limit": 876,
+      "free": 60,
+      "allocations": {
+        "hero/body+sword+streamed-shield foundation": 32,
+        "items whole sheet": 84,
+        "fx whole sheet": 52,
+        "proj whole sheet": 4,
+        "lift whole sheet": 16,
+        "pick32 whole sheet": 40,
+        "Bloom streamed action": 16,
+        "Bloom ground shadow": 2,
+        "beetle whole sheet": 24,
+        "bat whole sheet": 12,
+        "spitter whole sheet": 48,
+        "slime whole sheet": 12,
+        "knight whole sheet": 192,
+        "ksword whole sheet": 8,
+        "boss streamed frame": 32,
+        "chest streamed frame": 16,
+        "entrance streamed frame": 32,
+        "ambient whole sheet": 6,
+        "arrow whole sheet": 12,
+        "seven menu icons": 112,
+        "trial mouth whole sheet": 48,
+        "one forest/trial NPC frame": 16
+      },
+      "limits": "Static allocation superset, not an OAM peak/CPU guarantee. Includes every enemy family although ordinary themed rooms use subsets. Portrait/HUD use their fixed higher reservations."
+    },
+    {
+      "variant": 8,
+      "enemy": 8,
+      "used": 816,
+      "limit": 876,
+      "free": 60,
+      "allocations": {
+        "hero/body+sword+streamed-shield foundation": 32,
+        "items whole sheet": 84,
+        "fx whole sheet": 52,
+        "proj whole sheet": 4,
+        "lift whole sheet": 16,
+        "pick32 whole sheet": 40,
+        "Bloom streamed action": 16,
+        "Bloom ground shadow": 2,
+        "beetle whole sheet": 24,
+        "bat whole sheet": 12,
+        "spitter whole sheet": 48,
+        "slime whole sheet": 12,
+        "knight whole sheet": 192,
+        "ksword whole sheet": 8,
+        "boss streamed frame": 32,
+        "chest streamed frame": 16,
+        "entrance streamed frame": 32,
+        "ambient whole sheet": 6,
+        "arrow whole sheet": 12,
+        "seven menu icons": 112,
+        "trial mouth whole sheet": 48,
+        "one forest/trial NPC frame": 16
+      },
+      "limits": "Static allocation superset, not an OAM peak/CPU guarantee. Includes every enemy family although ordinary themed rooms use subsets. Portrait/HUD use their fixed higher reservations."
+    },
+    {
+      "variant": 9,
+      "enemy": 9,
+      "used": 816,
+      "limit": 876,
+      "free": 60,
+      "allocations": {
+        "hero/body+sword+streamed-shield foundation": 32,
+        "items whole sheet": 84,
+        "fx whole sheet": 52,
+        "proj whole sheet": 4,
+        "lift whole sheet": 16,
+        "pick32 whole sheet": 40,
+        "Bloom streamed action": 16,
+        "Bloom ground shadow": 2,
+        "beetle whole sheet": 24,
+        "bat whole sheet": 12,
+        "spitter whole sheet": 48,
+        "slime whole sheet": 12,
+        "knight whole sheet": 192,
+        "ksword whole sheet": 8,
+        "boss streamed frame": 32,
+        "chest streamed frame": 16,
+        "entrance streamed frame": 32,
+        "ambient whole sheet": 6,
+        "arrow whole sheet": 12,
+        "seven menu icons": 112,
+        "trial mouth whole sheet": 48,
+        "one forest/trial NPC frame": 16
+      },
+      "limits": "Static allocation superset, not an OAM peak/CPU guarantee. Includes every enemy family although ordinary themed rooms use subsets. Portrait/HUD use their fixed higher reservations."
+    },
+    {
+      "variant": 10,
+      "enemy": 10,
+      "used": 816,
+      "limit": 876,
+      "free": 60,
+      "allocations": {
+        "hero/body+sword+streamed-shield foundation": 32,
+        "items whole sheet": 84,
+        "fx whole sheet": 52,
+        "proj whole sheet": 4,
+        "lift whole sheet": 16,
+        "pick32 whole sheet": 40,
+        "Bloom streamed action": 16,
+        "Bloom ground shadow": 2,
+        "beetle whole sheet": 24,
+        "bat whole sheet": 12,
+        "spitter whole sheet": 48,
+        "slime whole sheet": 12,
+        "knight whole sheet": 192,
+        "ksword whole sheet": 8,
+        "boss streamed frame": 32,
+        "chest streamed frame": 16,
+        "entrance streamed frame": 32,
+        "ambient whole sheet": 6,
+        "arrow whole sheet": 12,
+        "seven menu icons": 112,
+        "trial mouth whole sheet": 48,
+        "one forest/trial NPC frame": 16
+      },
+      "limits": "Static allocation superset, not an OAM peak/CPU guarantee. Includes every enemy family although ordinary themed rooms use subsets. Portrait/HUD use their fixed higher reservations."
+    }
+  ],
+  "runtime_comparison": {
+    "status": "complete",
+    "comparison_reference": 1,
+    "positive_profile_count": 10,
+    "profile_pairs": 9,
+    "matched_flows": 108,
+    "total_flows": 108,
+    "profiles": [
+      {
+        "enemy": 2,
+        "reference_rom_sha256": "82ce7b19a6cdcbf6819ecbea4870a8905598e40da5ba5d6312d02d6b579d5087",
+        "candidate_rom_sha256": "dcc97741406cbc0836dfbf8c25728cdc47cbf619a1e59d1485333cb49dfa4796",
+        "passed": 12,
+        "total": 12,
+        "method": "Independently compare canonical mechanics, excluding presentation clocks.\n\n    No capture/harness module or mGBA binding is imported here. Global video\n    phase, OAM, palette/tile residency and selected visual frame are excluded;\n    position, AI state/timers, health, damage, projectiles and RNG are exact.",
+        "captures": [
+          {
+            "name": "pursuer-behavior",
+            "passed": true,
+            "reference_frames": 160,
+            "candidate_frames": 160
+          },
+          {
+            "name": "flyer-behavior",
+            "passed": true,
+            "reference_frames": 280,
+            "candidate_frames": 280
+          },
+          {
+            "name": "shooter-behavior",
+            "passed": true,
+            "reference_frames": 160,
+            "candidate_frames": 160
+          },
+          {
+            "name": "hopper-behavior",
+            "passed": true,
+            "reference_frames": 160,
+            "candidate_frames": 160
+          },
+          {
+            "name": "melee-behavior",
+            "passed": true,
+            "reference_frames": 144,
+            "candidate_frames": 144
+          },
+          {
+            "name": "melee-after-menu",
+            "passed": true,
+            "reference_frames": 64,
+            "candidate_frames": 64
+          },
+          {
+            "name": "melee-real-combat",
+            "passed": true,
+            "reference_frames": 480,
+            "candidate_frames": 480
+          },
+          {
+            "name": "boss-ring",
+            "passed": true,
+            "reference_frames": 240,
+            "candidate_frames": 240
+          },
+          {
+            "name": "boss-fan-and-adds",
+            "passed": true,
+            "reference_frames": 360,
+            "candidate_frames": 360
+          },
+          {
+            "name": "boss-lunge",
+            "passed": true,
+            "reference_frames": 200,
+            "candidate_frames": 200
+          },
+          {
+            "name": "boss-real-defeat",
+            "passed": true,
+            "reference_frames": 720,
+            "candidate_frames": 720
+          },
+          {
+            "name": "cave-natural-group",
+            "passed": true,
+            "reference_frames": 240,
+            "candidate_frames": 240
+          }
+        ]
+      },
+      {
+        "enemy": 3,
+        "reference_rom_sha256": "82ce7b19a6cdcbf6819ecbea4870a8905598e40da5ba5d6312d02d6b579d5087",
+        "candidate_rom_sha256": "22865248043f7d96cae01da8b7b99b7722601e21f0df547ee13e1c47d6b2aabd",
+        "passed": 12,
+        "total": 12,
+        "method": "Independently compare canonical mechanics, excluding presentation clocks.\n\n    No capture/harness module or mGBA binding is imported here. Global video\n    phase, OAM, palette/tile residency and selected visual frame are excluded;\n    position, AI state/timers, health, damage, projectiles and RNG are exact.",
+        "captures": [
+          {
+            "name": "pursuer-behavior",
+            "passed": true,
+            "reference_frames": 160,
+            "candidate_frames": 160
+          },
+          {
+            "name": "flyer-behavior",
+            "passed": true,
+            "reference_frames": 280,
+            "candidate_frames": 280
+          },
+          {
+            "name": "shooter-behavior",
+            "passed": true,
+            "reference_frames": 160,
+            "candidate_frames": 160
+          },
+          {
+            "name": "hopper-behavior",
+            "passed": true,
+            "reference_frames": 160,
+            "candidate_frames": 160
+          },
+          {
+            "name": "melee-behavior",
+            "passed": true,
+            "reference_frames": 144,
+            "candidate_frames": 144
+          },
+          {
+            "name": "melee-after-menu",
+            "passed": true,
+            "reference_frames": 64,
+            "candidate_frames": 64
+          },
+          {
+            "name": "melee-real-combat",
+            "passed": true,
+            "reference_frames": 480,
+            "candidate_frames": 480
+          },
+          {
+            "name": "boss-ring",
+            "passed": true,
+            "reference_frames": 240,
+            "candidate_frames": 240
+          },
+          {
+            "name": "boss-fan-and-adds",
+            "passed": true,
+            "reference_frames": 360,
+            "candidate_frames": 360
+          },
+          {
+            "name": "boss-lunge",
+            "passed": true,
+            "reference_frames": 200,
+            "candidate_frames": 200
+          },
+          {
+            "name": "boss-real-defeat",
+            "passed": true,
+            "reference_frames": 720,
+            "candidate_frames": 720
+          },
+          {
+            "name": "cave-natural-group",
+            "passed": true,
+            "reference_frames": 240,
+            "candidate_frames": 240
+          }
+        ]
+      },
+      {
+        "enemy": 4,
+        "reference_rom_sha256": "82ce7b19a6cdcbf6819ecbea4870a8905598e40da5ba5d6312d02d6b579d5087",
+        "candidate_rom_sha256": "767694badbedc1f15eb8c3151201f6b6892c42caa97baf7a819c4989c77670d8",
+        "passed": 12,
+        "total": 12,
+        "method": "Independently compare canonical mechanics, excluding presentation clocks.\n\n    No capture/harness module or mGBA binding is imported here. Global video\n    phase, OAM, palette/tile residency and selected visual frame are excluded;\n    position, AI state/timers, health, damage, projectiles and RNG are exact.",
+        "captures": [
+          {
+            "name": "pursuer-behavior",
+            "passed": true,
+            "reference_frames": 160,
+            "candidate_frames": 160
+          },
+          {
+            "name": "flyer-behavior",
+            "passed": true,
+            "reference_frames": 280,
+            "candidate_frames": 280
+          },
+          {
+            "name": "shooter-behavior",
+            "passed": true,
+            "reference_frames": 160,
+            "candidate_frames": 160
+          },
+          {
+            "name": "hopper-behavior",
+            "passed": true,
+            "reference_frames": 160,
+            "candidate_frames": 160
+          },
+          {
+            "name": "melee-behavior",
+            "passed": true,
+            "reference_frames": 144,
+            "candidate_frames": 144
+          },
+          {
+            "name": "melee-after-menu",
+            "passed": true,
+            "reference_frames": 64,
+            "candidate_frames": 64
+          },
+          {
+            "name": "melee-real-combat",
+            "passed": true,
+            "reference_frames": 480,
+            "candidate_frames": 480
+          },
+          {
+            "name": "boss-ring",
+            "passed": true,
+            "reference_frames": 240,
+            "candidate_frames": 240
+          },
+          {
+            "name": "boss-fan-and-adds",
+            "passed": true,
+            "reference_frames": 360,
+            "candidate_frames": 360
+          },
+          {
+            "name": "boss-lunge",
+            "passed": true,
+            "reference_frames": 200,
+            "candidate_frames": 200
+          },
+          {
+            "name": "boss-real-defeat",
+            "passed": true,
+            "reference_frames": 720,
+            "candidate_frames": 720
+          },
+          {
+            "name": "cave-natural-group",
+            "passed": true,
+            "reference_frames": 240,
+            "candidate_frames": 240
+          }
+        ]
+      },
+      {
+        "enemy": 5,
+        "reference_rom_sha256": "82ce7b19a6cdcbf6819ecbea4870a8905598e40da5ba5d6312d02d6b579d5087",
+        "candidate_rom_sha256": "ab8e4bd0e022fb4ab213b39617939eee12de279c2b99123e124351a2ad53a0cc",
+        "passed": 12,
+        "total": 12,
+        "method": "Independently compare canonical mechanics, excluding presentation clocks.\n\n    No capture/harness module or mGBA binding is imported here. Global video\n    phase, OAM, palette/tile residency and selected visual frame are excluded;\n    position, AI state/timers, health, damage, projectiles and RNG are exact.",
+        "captures": [
+          {
+            "name": "pursuer-behavior",
+            "passed": true,
+            "reference_frames": 160,
+            "candidate_frames": 160
+          },
+          {
+            "name": "flyer-behavior",
+            "passed": true,
+            "reference_frames": 280,
+            "candidate_frames": 280
+          },
+          {
+            "name": "shooter-behavior",
+            "passed": true,
+            "reference_frames": 160,
+            "candidate_frames": 160
+          },
+          {
+            "name": "hopper-behavior",
+            "passed": true,
+            "reference_frames": 160,
+            "candidate_frames": 160
+          },
+          {
+            "name": "melee-behavior",
+            "passed": true,
+            "reference_frames": 144,
+            "candidate_frames": 144
+          },
+          {
+            "name": "melee-after-menu",
+            "passed": true,
+            "reference_frames": 64,
+            "candidate_frames": 64
+          },
+          {
+            "name": "melee-real-combat",
+            "passed": true,
+            "reference_frames": 480,
+            "candidate_frames": 480
+          },
+          {
+            "name": "boss-ring",
+            "passed": true,
+            "reference_frames": 240,
+            "candidate_frames": 240
+          },
+          {
+            "name": "boss-fan-and-adds",
+            "passed": true,
+            "reference_frames": 360,
+            "candidate_frames": 360
+          },
+          {
+            "name": "boss-lunge",
+            "passed": true,
+            "reference_frames": 200,
+            "candidate_frames": 200
+          },
+          {
+            "name": "boss-real-defeat",
+            "passed": true,
+            "reference_frames": 720,
+            "candidate_frames": 720
+          },
+          {
+            "name": "cave-natural-group",
+            "passed": true,
+            "reference_frames": 240,
+            "candidate_frames": 240
+          }
+        ]
+      },
+      {
+        "enemy": 6,
+        "reference_rom_sha256": "82ce7b19a6cdcbf6819ecbea4870a8905598e40da5ba5d6312d02d6b579d5087",
+        "candidate_rom_sha256": "a952d1869e3ffe6b10f599d501a69a3adf8b6d1b4061f0da8100e950d1900ae4",
+        "passed": 12,
+        "total": 12,
+        "method": "Independently compare canonical mechanics, excluding presentation clocks.\n\n    No capture/harness module or mGBA binding is imported here. Global video\n    phase, OAM, palette/tile residency and selected visual frame are excluded;\n    position, AI state/timers, health, damage, projectiles and RNG are exact.",
+        "captures": [
+          {
+            "name": "pursuer-behavior",
+            "passed": true,
+            "reference_frames": 160,
+            "candidate_frames": 160
+          },
+          {
+            "name": "flyer-behavior",
+            "passed": true,
+            "reference_frames": 280,
+            "candidate_frames": 280
+          },
+          {
+            "name": "shooter-behavior",
+            "passed": true,
+            "reference_frames": 160,
+            "candidate_frames": 160
+          },
+          {
+            "name": "hopper-behavior",
+            "passed": true,
+            "reference_frames": 160,
+            "candidate_frames": 160
+          },
+          {
+            "name": "melee-behavior",
+            "passed": true,
+            "reference_frames": 144,
+            "candidate_frames": 144
+          },
+          {
+            "name": "melee-after-menu",
+            "passed": true,
+            "reference_frames": 64,
+            "candidate_frames": 64
+          },
+          {
+            "name": "melee-real-combat",
+            "passed": true,
+            "reference_frames": 480,
+            "candidate_frames": 480
+          },
+          {
+            "name": "boss-ring",
+            "passed": true,
+            "reference_frames": 240,
+            "candidate_frames": 240
+          },
+          {
+            "name": "boss-fan-and-adds",
+            "passed": true,
+            "reference_frames": 360,
+            "candidate_frames": 360
+          },
+          {
+            "name": "boss-lunge",
+            "passed": true,
+            "reference_frames": 200,
+            "candidate_frames": 200
+          },
+          {
+            "name": "boss-real-defeat",
+            "passed": true,
+            "reference_frames": 720,
+            "candidate_frames": 720
+          },
+          {
+            "name": "cave-natural-group",
+            "passed": true,
+            "reference_frames": 240,
+            "candidate_frames": 240
+          }
+        ]
+      },
+      {
+        "enemy": 7,
+        "reference_rom_sha256": "82ce7b19a6cdcbf6819ecbea4870a8905598e40da5ba5d6312d02d6b579d5087",
+        "candidate_rom_sha256": "1b18ffd437770d6e53322ce8583f30f00fe9ba9658ba5794e1f811c495b95af1",
+        "passed": 12,
+        "total": 12,
+        "method": "Independently compare canonical mechanics, excluding presentation clocks.\n\n    No capture/harness module or mGBA binding is imported here. Global video\n    phase, OAM, palette/tile residency and selected visual frame are excluded;\n    position, AI state/timers, health, damage, projectiles and RNG are exact.",
+        "captures": [
+          {
+            "name": "pursuer-behavior",
+            "passed": true,
+            "reference_frames": 160,
+            "candidate_frames": 160
+          },
+          {
+            "name": "flyer-behavior",
+            "passed": true,
+            "reference_frames": 280,
+            "candidate_frames": 280
+          },
+          {
+            "name": "shooter-behavior",
+            "passed": true,
+            "reference_frames": 160,
+            "candidate_frames": 160
+          },
+          {
+            "name": "hopper-behavior",
+            "passed": true,
+            "reference_frames": 160,
+            "candidate_frames": 160
+          },
+          {
+            "name": "melee-behavior",
+            "passed": true,
+            "reference_frames": 144,
+            "candidate_frames": 144
+          },
+          {
+            "name": "melee-after-menu",
+            "passed": true,
+            "reference_frames": 64,
+            "candidate_frames": 64
+          },
+          {
+            "name": "melee-real-combat",
+            "passed": true,
+            "reference_frames": 480,
+            "candidate_frames": 480
+          },
+          {
+            "name": "boss-ring",
+            "passed": true,
+            "reference_frames": 240,
+            "candidate_frames": 240
+          },
+          {
+            "name": "boss-fan-and-adds",
+            "passed": true,
+            "reference_frames": 360,
+            "candidate_frames": 360
+          },
+          {
+            "name": "boss-lunge",
+            "passed": true,
+            "reference_frames": 200,
+            "candidate_frames": 200
+          },
+          {
+            "name": "boss-real-defeat",
+            "passed": true,
+            "reference_frames": 720,
+            "candidate_frames": 720
+          },
+          {
+            "name": "cave-natural-group",
+            "passed": true,
+            "reference_frames": 240,
+            "candidate_frames": 240
+          }
+        ]
+      },
+      {
+        "enemy": 8,
+        "reference_rom_sha256": "82ce7b19a6cdcbf6819ecbea4870a8905598e40da5ba5d6312d02d6b579d5087",
+        "candidate_rom_sha256": "78c5ca3883bde311bfda25bf0d87d3e81ce5a072b8bf2dcfa5ad579d0839d190",
+        "passed": 12,
+        "total": 12,
+        "method": "Independently compare canonical mechanics, excluding presentation clocks.\n\n    No capture/harness module or mGBA binding is imported here. Global video\n    phase, OAM, palette/tile residency and selected visual frame are excluded;\n    position, AI state/timers, health, damage, projectiles and RNG are exact.",
+        "captures": [
+          {
+            "name": "pursuer-behavior",
+            "passed": true,
+            "reference_frames": 160,
+            "candidate_frames": 160
+          },
+          {
+            "name": "flyer-behavior",
+            "passed": true,
+            "reference_frames": 280,
+            "candidate_frames": 280
+          },
+          {
+            "name": "shooter-behavior",
+            "passed": true,
+            "reference_frames": 160,
+            "candidate_frames": 160
+          },
+          {
+            "name": "hopper-behavior",
+            "passed": true,
+            "reference_frames": 160,
+            "candidate_frames": 160
+          },
+          {
+            "name": "melee-behavior",
+            "passed": true,
+            "reference_frames": 144,
+            "candidate_frames": 144
+          },
+          {
+            "name": "melee-after-menu",
+            "passed": true,
+            "reference_frames": 64,
+            "candidate_frames": 64
+          },
+          {
+            "name": "melee-real-combat",
+            "passed": true,
+            "reference_frames": 480,
+            "candidate_frames": 480
+          },
+          {
+            "name": "boss-ring",
+            "passed": true,
+            "reference_frames": 240,
+            "candidate_frames": 240
+          },
+          {
+            "name": "boss-fan-and-adds",
+            "passed": true,
+            "reference_frames": 360,
+            "candidate_frames": 360
+          },
+          {
+            "name": "boss-lunge",
+            "passed": true,
+            "reference_frames": 200,
+            "candidate_frames": 200
+          },
+          {
+            "name": "boss-real-defeat",
+            "passed": true,
+            "reference_frames": 720,
+            "candidate_frames": 720
+          },
+          {
+            "name": "cave-natural-group",
+            "passed": true,
+            "reference_frames": 240,
+            "candidate_frames": 240
+          }
+        ]
+      },
+      {
+        "enemy": 9,
+        "reference_rom_sha256": "82ce7b19a6cdcbf6819ecbea4870a8905598e40da5ba5d6312d02d6b579d5087",
+        "candidate_rom_sha256": "b7e902c1bd58f528db2aee5ca2c399eb482dd159fa7260ef560222e03666cf9b",
+        "passed": 12,
+        "total": 12,
+        "method": "Independently compare canonical mechanics, excluding presentation clocks.\n\n    No capture/harness module or mGBA binding is imported here. Global video\n    phase, OAM, palette/tile residency and selected visual frame are excluded;\n    position, AI state/timers, health, damage, projectiles and RNG are exact.",
+        "captures": [
+          {
+            "name": "pursuer-behavior",
+            "passed": true,
+            "reference_frames": 160,
+            "candidate_frames": 160
+          },
+          {
+            "name": "flyer-behavior",
+            "passed": true,
+            "reference_frames": 280,
+            "candidate_frames": 280
+          },
+          {
+            "name": "shooter-behavior",
+            "passed": true,
+            "reference_frames": 160,
+            "candidate_frames": 160
+          },
+          {
+            "name": "hopper-behavior",
+            "passed": true,
+            "reference_frames": 160,
+            "candidate_frames": 160
+          },
+          {
+            "name": "melee-behavior",
+            "passed": true,
+            "reference_frames": 144,
+            "candidate_frames": 144
+          },
+          {
+            "name": "melee-after-menu",
+            "passed": true,
+            "reference_frames": 64,
+            "candidate_frames": 64
+          },
+          {
+            "name": "melee-real-combat",
+            "passed": true,
+            "reference_frames": 480,
+            "candidate_frames": 480
+          },
+          {
+            "name": "boss-ring",
+            "passed": true,
+            "reference_frames": 240,
+            "candidate_frames": 240
+          },
+          {
+            "name": "boss-fan-and-adds",
+            "passed": true,
+            "reference_frames": 360,
+            "candidate_frames": 360
+          },
+          {
+            "name": "boss-lunge",
+            "passed": true,
+            "reference_frames": 200,
+            "candidate_frames": 200
+          },
+          {
+            "name": "boss-real-defeat",
+            "passed": true,
+            "reference_frames": 720,
+            "candidate_frames": 720
+          },
+          {
+            "name": "cave-natural-group",
+            "passed": true,
+            "reference_frames": 240,
+            "candidate_frames": 240
+          }
+        ]
+      },
+      {
+        "enemy": 10,
+        "reference_rom_sha256": "82ce7b19a6cdcbf6819ecbea4870a8905598e40da5ba5d6312d02d6b579d5087",
+        "candidate_rom_sha256": "351e8492a6972ff5b0ccb89c4a633f9b340def21bfc9d9ef3e61b45648099241",
+        "passed": 12,
+        "total": 12,
+        "method": "Independently compare canonical mechanics, excluding presentation clocks.\n\n    No capture/harness module or mGBA binding is imported here. Global video\n    phase, OAM, palette/tile residency and selected visual frame are excluded;\n    position, AI state/timers, health, damage, projectiles and RNG are exact.",
+        "captures": [
+          {
+            "name": "pursuer-behavior",
+            "passed": true,
+            "reference_frames": 160,
+            "candidate_frames": 160
+          },
+          {
+            "name": "flyer-behavior",
+            "passed": true,
+            "reference_frames": 280,
+            "candidate_frames": 280
+          },
+          {
+            "name": "shooter-behavior",
+            "passed": true,
+            "reference_frames": 160,
+            "candidate_frames": 160
+          },
+          {
+            "name": "hopper-behavior",
+            "passed": true,
+            "reference_frames": 160,
+            "candidate_frames": 160
+          },
+          {
+            "name": "melee-behavior",
+            "passed": true,
+            "reference_frames": 144,
+            "candidate_frames": 144
+          },
+          {
+            "name": "melee-after-menu",
+            "passed": true,
+            "reference_frames": 64,
+            "candidate_frames": 64
+          },
+          {
+            "name": "melee-real-combat",
+            "passed": true,
+            "reference_frames": 480,
+            "candidate_frames": 480
+          },
+          {
+            "name": "boss-ring",
+            "passed": true,
+            "reference_frames": 240,
+            "candidate_frames": 240
+          },
+          {
+            "name": "boss-fan-and-adds",
+            "passed": true,
+            "reference_frames": 360,
+            "candidate_frames": 360
+          },
+          {
+            "name": "boss-lunge",
+            "passed": true,
+            "reference_frames": 200,
+            "candidate_frames": 200
+          },
+          {
+            "name": "boss-real-defeat",
+            "passed": true,
+            "reference_frames": 720,
+            "candidate_frames": 720
+          },
+          {
+            "name": "cave-natural-group",
+            "passed": true,
+            "reference_frames": 240,
+            "candidate_frames": 240
+          }
+        ]
+      }
+    ],
+    "limits": "Compares canonical AI/gameplay fields, not framebuffer pixels, global VBlank phase or older baseline performance."
+  },
+  "passed": 11632,
+  "total": 11632,
+  "failures": [],
+  "limits": "Native encoding, scope and gameplay-contract evidence, not aesthetic ranking or human playtest. UI appearance/options/map geometry is separately reviewed. Every bonus frame can be correctly encoded without necessarily being observed in the actual sampled combat."
+}

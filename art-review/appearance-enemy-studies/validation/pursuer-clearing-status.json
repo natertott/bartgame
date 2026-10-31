@@ -1,0 +1,82 @@
+[
+  {
+    "variant": 1,
+    "status": "passed",
+    "captures": 1,
+    "passed": 6,
+    "total": 6,
+    "frames": 96
+  },
+  {
+    "variant": 3,
+    "status": "passed",
+    "captures": 1,
+    "passed": 6,
+    "total": 6,
+    "frames": 96
+  },
+  {
+    "variant": 2,
+    "status": "passed",
+    "captures": 1,
+    "passed": 6,
+    "total": 6,
+    "frames": 96
+  },
+  {
+    "variant": 4,
+    "status": "passed",
+    "captures": 1,
+    "passed": 6,
+    "total": 6,
+    "frames": 96
+  },
+  {
+    "variant": 5,
+    "status": "passed",
+    "captures": 1,
+    "passed": 6,
+    "total": 6,
+    "frames": 96
+  },
+  {
+    "variant": 7,
+    "status": "passed",
+    "captures": 1,
+    "passed": 6,
+    "total": 6,
+    "frames": 96
+  },
+  {
+    "variant": 6,
+    "status": "passed",
+    "captures": 1,
+    "passed": 6,
+    "total": 6,
+    "frames": 96
+  },
+  {
+    "variant": 8,
+    "status": "passed",
+    "captures": 1,
+    "passed": 6,
+    "total": 6,
+    "frames": 96
+  },
+  {
+    "variant": 9,
+    "status": "passed",
+    "captures": 1,
+    "passed": 6,
+    "total": 6,
+    "frames": 96
+  },
+  {
+    "variant": 10,
+    "status": "passed",
+    "captures": 1,
+    "passed": 6,
+    "total": 6,
+    "frames": 96
+  }
+]

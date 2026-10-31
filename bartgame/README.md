@@ -18,9 +18,13 @@ transfer, a four-update preparation, seven damaging updates and seven recovery
 updates. Body, blade and damage bounds share one clock in every facing.
 The [five comparison studies](docs/SWORD_STUDIES.md) remain available explicitly.
 
-[Drain concept studies](docs/SEWER_CONCEPTS.md) offer five complete sewer art
-directions and three mixed rooms for feedback. They keep the physical layout,
-Bloom and glitter intact; `BART_SEWER=0` preserves the released room.
+[The selected interfaces and enemy studies](../art-review/appearance-enemy-studies/README.md)
+include title Options, a fixed Winebound HUD, Workbench inventory, event-labelled
+regional/chamber maps, and sixty animated enemy alternatives. Menu/dialogue
+frame style and colors are selected independently and persist between runs.
+Normal builds use the final Drain9, UI6/MENU1 and existing enemies; optional
+`BART_ENEMY=1..10` builds provide the comparison sets. Earlier
+[Drain concept studies](docs/SEWER_CONCEPTS.md) remain available.
 
 ## Current game
 
@@ -72,13 +76,15 @@ World pickups are commonly 10–14 pixels in 16×16 canvases. Dedicated HUD icon
 and larger menu/reward illustrations are separate drawings. All held tools
 share explicit hand anchors with the body. Sword contact bounds are generated
 from each live blade pose; the north-facing shield sits on the far side.
-The 24-pixel HUD keeps the familiar menu structure while freeing playfield.
+The compact top HUD occupies twelve rows, with a separate corner minimap;
+only equipped ammunition is shown. Menus use the selected native frame kit.
 
 | Source | Responsibility |
 | --- | --- |
 | `art/reboot_core.py` | Shared RGB555 inks, material roles, perspective and reusable native shapes. |
 | `art/reboot_terrain.py` | Forest, progressive blight, Drain, interiors and interactive metatiles. |
 | `art/reboot_actors.py` | Bloom, weapons/actions, enemies, NPCs, keepers and Heart. |
+| `art/enemy_studies*.py` | Sixty optional behavior-led enemy alternatives, native companions and a dedicated small-enemy palette. |
 | `art/sword_studies.py` | Selected Step-and-cut body/weapon poses, clock and contact geometry. |
 | `art/reboot_items.py` | World drops, equipment, liftables, chests and entrances. |
 | `art/reboot_ui.py`, `ui_font.py`, `ui_kit.py`, `faces.py`, `title.py` | Interface, native font, portraits and title. |

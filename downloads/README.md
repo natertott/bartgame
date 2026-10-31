@@ -1,5 +1,22 @@
 # BARTGAME downloads
 
+## Selected interfaces and sixty animated enemy studies
+
+Home-screen Options combines Winebound Folio, Mossbound Fieldbook or Ivory
+Reliquary frames with three independent color palettes. The gameplay HUD uses
+Winebound; inventory uses Workbench; the regional graph and chamber zoom show
+clear, separate event badges at actual feature positions.
+
+- [Actual UI/maps, sixty enemy concepts and complete animation comparisons](https://github.com/natertott/bartgame/blob/appearance-enemy-studies/art-review/appearance-enemy-studies/README.md)
+- [Download the selected-interface game](https://raw.githubusercontent.com/natertott/bartgame/appearance-enemy-studies/downloads/appearance-enemy-5eedc6d/00-selected-ui-existing-enemies.gba)
+- [Download that game and all ten enemy-study ROMs](https://raw.githubusercontent.com/natertott/bartgame/appearance-enemy-studies/downloads/appearance-enemy-5eedc6d/selected-ui-and-ten-enemy-studies.zip)
+- [Individual options and checksums](appearance-enemy-5eedc6d/README.md)
+
+Game/art source `5eedc6d`. The interface choices are adopted; enemy forms
+remain ten alternatives per current behavior for feedback. There are 640 native
+frame instances and actual AI recordings for all ten sets. Prior releases below
+retain their branch-specific behavior and evidence.
+
 ## New: five interface remixes and ten menu layouts
 
 Five new skins combine the preferred folio/brocade/ledger structures with

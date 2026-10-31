@@ -1,0 +1,1065 @@
+{
+  "reference_rom_sha256": "42d7902226c9cbca47bdefb21b970a4e3f74d9e4e2cfc201404dd6479fe275a3",
+  "candidate_rom_sha256": "82ce7b19a6cdcbf6819ecbea4870a8905598e40da5ba5d6312d02d6b579d5087",
+  "passed": 8,
+  "total": 12,
+  "method": "Exclude images, draw-only frames, OAM, global time and presentation IDs.\n\n    Kept game fields expose any real AI/motion/health/projectile/RNG drift.\n    Cold-loading/global-frame phase differences in a legacy baseline are not\n    silently normalized away: callers inspect and explain any resulting drift.",
+  "captures": [
+    {
+      "name": "pursuer-behavior",
+      "passed": true,
+      "reference_frames": 160,
+      "candidate_frames": 160
+    },
+    {
+      "name": "flyer-behavior",
+      "passed": true,
+      "reference_frames": 280,
+      "candidate_frames": 280
+    },
+    {
+      "name": "shooter-behavior",
+      "passed": true,
+      "reference_frames": 160,
+      "candidate_frames": 160
+    },
+    {
+      "name": "hopper-behavior",
+      "passed": true,
+      "reference_frames": 160,
+      "candidate_frames": 160
+    },
+    {
+      "name": "melee-behavior",
+      "passed": true,
+      "reference_frames": 144,
+      "candidate_frames": 144
+    },
+    {
+      "name": "melee-after-menu",
+      "passed": true,
+      "reference_frames": 64,
+      "candidate_frames": 64
+    },
+    {
+      "name": "melee-real-combat",
+      "passed": true,
+      "reference_frames": 480,
+      "candidate_frames": 480
+    },
+    {
+      "name": "boss-ring",
+      "passed": false,
+      "reference_frames": 240,
+      "candidate_frames": 240,
+      "first_divergence_tick": 0,
+      "reference": {
+        "game_state": 1,
+        "area": 1,
+        "cell": 20,
+        "hero": {
+          "kind": 1,
+          "type": 0,
+          "state": 0,
+          "timer": 0,
+          "timer2": 0,
+          "dir": 0,
+          "facing": 0,
+          "x_q16": 21495808,
+          "y_q16": 13107200,
+          "z_q16": 0,
+          "zvel_q16": 0,
+          "speed": 0,
+          "hp": 0,
+          "iframes": 0,
+          "knockback_timer": 0,
+          "flags": 0,
+          "damage": 0,
+          "v": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        "hero_hp": 80,
+        "target": {
+          "kind": 2,
+          "type": 5,
+          "state": 2,
+          "timer": 8,
+          "timer2": 0,
+          "dir": 8,
+          "facing": 2,
+          "x_q16": 19218432,
+          "y_q16": 12664832,
+          "z_q16": 65536,
+          "zvel_q16": 0,
+          "speed": 128,
+          "hp": 40,
+          "iframes": 0,
+          "knockback_timer": 0,
+          "flags": 75,
+          "damage": 4,
+          "v": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        "projectiles": [
+          {
+            "type": 1,
+            "dir": 2,
+            "x_q16": 19276544,
+            "y_q16": 11942144,
+            "speed": 256,
+            "damage": 2,
+            "friendly": 0
+          },
+          {
+            "type": 1,
+            "dir": 6,
+            "x_q16": 19383296,
+            "y_q16": 12048896,
+            "speed": 256,
+            "damage": 2,
+            "friendly": 0
+          },
+          {
+            "type": 1,
+            "dir": 10,
+            "x_q16": 19383296,
+            "y_q16": 12198656,
+            "speed": 256,
+            "damage": 2,
+            "friendly": 0
+          },
+          {
+            "type": 1,
+            "dir": 14,
+            "x_q16": 19276544,
+            "y_q16": 12305408,
+            "speed": 256,
+            "damage": 2,
+            "friendly": 0
+          },
+          {
+            "type": 1,
+            "dir": 18,
+            "x_q16": 19126784,
+            "y_q16": 12305408,
+            "speed": 256,
+            "damage": 2,
+            "friendly": 0
+          },
+          {
+            "type": 1,
+            "dir": 22,
+            "x_q16": 19020032,
+            "y_q16": 12198656,
+            "speed": 256,
+            "damage": 2,
+            "friendly": 0
+          },
+          {
+            "type": 1,
+            "dir": 26,
+            "x_q16": 19020032,
+            "y_q16": 12048896,
+            "speed": 256,
+            "damage": 2,
+            "friendly": 0
+          },
+          {
+            "type": 1,
+            "dir": 30,
+            "x_q16": 19126784,
+            "y_q16": 11942144,
+            "speed": 256,
+            "damage": 2,
+            "friendly": 0
+          }
+        ],
+        "enemy_count": 1,
+        "rng": 2314558843
+      },
+      "candidate": {
+        "game_state": 1,
+        "area": 1,
+        "cell": 20,
+        "hero": {
+          "kind": 1,
+          "type": 0,
+          "state": 0,
+          "timer": 0,
+          "timer2": 0,
+          "dir": 0,
+          "facing": 0,
+          "x_q16": 21495808,
+          "y_q16": 13107200,
+          "z_q16": 0,
+          "zvel_q16": 0,
+          "speed": 0,
+          "hp": 0,
+          "iframes": 0,
+          "knockback_timer": 0,
+          "flags": 0,
+          "damage": 0,
+          "v": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        "hero_hp": 80,
+        "target": {
+          "kind": 2,
+          "type": 5,
+          "state": 2,
+          "timer": 7,
+          "timer2": 0,
+          "dir": 8,
+          "facing": 2,
+          "x_q16": 19202048,
+          "y_q16": 12681216,
+          "z_q16": 65536,
+          "zvel_q16": 0,
+          "speed": 128,
+          "hp": 40,
+          "iframes": 0,
+          "knockback_timer": 0,
+          "flags": 75,
+          "damage": 4,
+          "v": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        "projectiles": [
+          {
+            "type": 1,
+            "dir": 1,
+            "x_q16": 19252224,
+            "y_q16": 11866112,
+            "speed": 256,
+            "damage": 2,
+            "friendly": 0
+          },
+          {
+            "type": 1,
+            "dir": 5,
+            "x_q16": 19419136,
+            "y_q16": 11977728,
+            "speed": 256,
+            "damage": 2,
+            "friendly": 0
+          },
+          {
+            "type": 1,
+            "dir": 9,
+            "x_q16": 19459072,
+            "y_q16": 12174336,
+            "speed": 256,
+            "damage": 2,
+            "friendly": 0
+          },
+          {
+            "type": 1,
+            "dir": 13,
+            "x_q16": 19347456,
+            "y_q16": 12341248,
+            "speed": 256,
+            "damage": 2,
+            "friendly": 0
+          },
+          {
+            "type": 1,
+            "dir": 17,
+            "x_q16": 19150848,
+            "y_q16": 12381184,
+            "speed": 256,
+            "damage": 2,
+            "friendly": 0
+          },
+          {
+            "type": 1,
+            "dir": 21,
+            "x_q16": 18983936,
+            "y_q16": 12269568,
+            "speed": 256,
+            "damage": 2,
+            "friendly": 0
+          },
+          {
+            "type": 1,
+            "dir": 25,
+            "x_q16": 18944000,
+            "y_q16": 12072960,
+            "speed": 256,
+            "damage": 2,
+            "friendly": 0
+          },
+          {
+            "type": 1,
+            "dir": 29,
+            "x_q16": 19055616,
+            "y_q16": 11906048,
+            "speed": 256,
+            "damage": 2,
+            "friendly": 0
+          }
+        ],
+        "enemy_count": 1,
+        "rng": 2314558843
+      }
+    },
+    {
+      "name": "boss-fan-and-adds",
+      "passed": false,
+      "reference_frames": 360,
+      "candidate_frames": 360,
+      "first_divergence_tick": 0,
+      "reference": {
+        "game_state": 1,
+        "area": 1,
+        "cell": 20,
+        "hero": {
+          "kind": 1,
+          "type": 0,
+          "state": 0,
+          "timer": 0,
+          "timer2": 0,
+          "dir": 0,
+          "facing": 0,
+          "x_q16": 22945792,
+          "y_q16": 13705216,
+          "z_q16": 0,
+          "zvel_q16": 0,
+          "speed": 0,
+          "hp": 0,
+          "iframes": 0,
+          "knockback_timer": 0,
+          "flags": 0,
+          "damage": 0,
+          "v": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        "hero_hp": 80,
+        "target": {
+          "kind": 2,
+          "type": 5,
+          "state": 1,
+          "timer": 28,
+          "timer2": 0,
+          "dir": 9,
+          "facing": 2,
+          "x_q16": 21325312,
+          "y_q16": 13050368,
+          "z_q16": 65536,
+          "zvel_q16": 0,
+          "speed": 128,
+          "hp": 26,
+          "iframes": 0,
+          "knockback_timer": 0,
+          "flags": 75,
+          "damage": 4,
+          "v": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        "projectiles": [
+          {
+            "type": 1,
+            "dir": 2,
+            "x_q16": 23004928,
+            "y_q16": 6071552,
+            "speed": 256,
+            "damage": 2,
+            "friendly": 0
+          },
+          {
+            "type": 1,
+            "dir": 6,
+            "x_q16": 26670080,
+            "y_q16": 9736704,
+            "speed": 256,
+            "damage": 2,
+            "friendly": 0
+          },
+          {
+            "type": 1,
+            "dir": 14,
+            "x_q16": 23004928,
+            "y_q16": 18543616,
+            "speed": 256,
+            "damage": 2,
+            "friendly": 0
+          },
+          {
+            "type": 1,
+            "dir": 18,
+            "x_q16": 17863168,
+            "y_q16": 18543616,
+            "speed": 256,
+            "damage": 2,
+            "friendly": 0
+          },
+          {
+            "type": 1,
+            "dir": 22,
+            "x_q16": 14198016,
+            "y_q16": 14878464,
+            "speed": 256,
+            "damage": 2,
+            "friendly": 0
+          },
+          {
+            "type": 1,
+            "dir": 26,
+            "x_q16": 14198016,
+            "y_q16": 9736704,
+            "speed": 256,
+            "damage": 2,
+            "friendly": 0
+          },
+          {
+            "type": 1,
+            "dir": 30,
+            "x_q16": 17863168,
+            "y_q16": 6071552,
+            "speed": 256,
+            "damage": 2,
+            "friendly": 0
+          }
+        ],
+        "enemy_count": 1,
+        "rng": 2314558843
+      },
+      "candidate": {
+        "game_state": 1,
+        "area": 1,
+        "cell": 20,
+        "hero": {
+          "kind": 1,
+          "type": 0,
+          "state": 0,
+          "timer": 0,
+          "timer2": 0,
+          "dir": 0,
+          "facing": 0,
+          "x_q16": 23035904,
+          "y_q16": 13410304,
+          "z_q16": 0,
+          "zvel_q16": 0,
+          "speed": 0,
+          "hp": 0,
+          "iframes": 0,
+          "knockback_timer": 0,
+          "flags": 0,
+          "damage": 0,
+          "v": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        "hero_hp": 80,
+        "target": {
+          "kind": 2,
+          "type": 5,
+          "state": 1,
+          "timer": 27,
+          "timer2": 0,
+          "dir": 9,
+          "facing": 2,
+          "x_q16": 21333504,
+          "y_q16": 13017600,
+          "z_q16": 65536,
+          "zvel_q16": 0,
+          "speed": 128,
+          "hp": 26,
+          "iframes": 0,
+          "knockback_timer": 0,
+          "flags": 75,
+          "damage": 4,
+          "v": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        "projectiles": [
+          {
+            "type": 1,
+            "dir": 1,
+            "x_q16": 21751808,
+            "y_q16": 5611520,
+            "speed": 256,
+            "damage": 2,
+            "friendly": 0
+          },
+          {
+            "type": 1,
+            "dir": 5,
+            "x_q16": 26091520,
+            "y_q16": 8513536,
+            "speed": 256,
+            "damage": 2,
+            "friendly": 0
+          },
+          {
+            "type": 1,
+            "dir": 13,
+            "x_q16": 24227840,
+            "y_q16": 17965056,
+            "speed": 256,
+            "damage": 2,
+            "friendly": 0
+          },
+          {
+            "type": 1,
+            "dir": 17,
+            "x_q16": 19116032,
+            "y_q16": 19003392,
+            "speed": 256,
+            "damage": 2,
+            "friendly": 0
+          },
+          {
+            "type": 1,
+            "dir": 21,
+            "x_q16": 14776320,
+            "y_q16": 16101376,
+            "speed": 256,
+            "damage": 2,
+            "friendly": 0
+          },
+          {
+            "type": 1,
+            "dir": 25,
+            "x_q16": 13737984,
+            "y_q16": 10989568,
+            "speed": 256,
+            "damage": 2,
+            "friendly": 0
+          },
+          {
+            "type": 1,
+            "dir": 29,
+            "x_q16": 16640000,
+            "y_q16": 6649856,
+            "speed": 256,
+            "damage": 2,
+            "friendly": 0
+          }
+        ],
+        "enemy_count": 1,
+        "rng": 2314558843
+      }
+    },
+    {
+      "name": "boss-lunge",
+      "passed": false,
+      "reference_frames": 200,
+      "candidate_frames": 200,
+      "first_divergence_tick": 0,
+      "reference": {
+        "game_state": 1,
+        "area": 1,
+        "cell": 20,
+        "hero": {
+          "kind": 1,
+          "type": 0,
+          "state": 0,
+          "timer": 0,
+          "timer2": 0,
+          "dir": 0,
+          "facing": 0,
+          "x_q16": 28073984,
+          "y_q16": 16101376,
+          "z_q16": 0,
+          "zvel_q16": 0,
+          "speed": 0,
+          "hp": 0,
+          "iframes": 17,
+          "knockback_timer": 0,
+          "flags": 0,
+          "damage": 0,
+          "v": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        "hero_hp": 80,
+        "target": {
+          "kind": 2,
+          "type": 5,
+          "state": 1,
+          "timer": 18,
+          "timer2": 0,
+          "dir": 11,
+          "facing": 2,
+          "x_q16": 25832960,
+          "y_q16": 14121728,
+          "z_q16": 458752,
+          "zvel_q16": 0,
+          "speed": 128,
+          "hp": 12,
+          "iframes": 0,
+          "knockback_timer": 0,
+          "flags": 75,
+          "damage": 4,
+          "v": [
+            3,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        "projectiles": [
+          {
+            "type": 1,
+            "dir": 9,
+            "x_q16": 32827392,
+            "y_q16": 14745088,
+            "speed": 384,
+            "damage": 2,
+            "friendly": 0
+          },
+          {
+            "type": 1,
+            "dir": 12,
+            "x_q16": 29640192,
+            "y_q16": 17974784,
+            "speed": 320,
+            "damage": 2,
+            "friendly": 0
+          },
+          {
+            "type": 1,
+            "dir": 6,
+            "x_q16": 31106304,
+            "y_q16": 10559232,
+            "speed": 320,
+            "damage": 2,
+            "friendly": 0
+          }
+        ],
+        "enemy_count": 3,
+        "rng": 1139955287
+      },
+      "candidate": {
+        "game_state": 1,
+        "area": 1,
+        "cell": 20,
+        "hero": {
+          "kind": 1,
+          "type": 0,
+          "state": 0,
+          "timer": 0,
+          "timer2": 0,
+          "dir": 0,
+          "facing": 0,
+          "x_q16": 27623424,
+          "y_q16": 13406208,
+          "z_q16": 0,
+          "zvel_q16": 0,
+          "speed": 0,
+          "hp": 0,
+          "iframes": 16,
+          "knockback_timer": 0,
+          "flags": 0,
+          "damage": 0,
+          "v": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        "hero_hp": 80,
+        "target": {
+          "kind": 2,
+          "type": 5,
+          "state": 1,
+          "timer": 17,
+          "timer2": 0,
+          "dir": 8,
+          "facing": 2,
+          "x_q16": 25966592,
+          "y_q16": 13418496,
+          "z_q16": 458752,
+          "zvel_q16": 0,
+          "speed": 128,
+          "hp": 12,
+          "iframes": 0,
+          "knockback_timer": 0,
+          "flags": 75,
+          "damage": 4,
+          "v": [
+            3,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        "projectiles": [
+          {
+            "type": 1,
+            "dir": 8,
+            "x_q16": 33095680,
+            "y_q16": 12845056,
+            "speed": 384,
+            "damage": 2,
+            "friendly": 0
+          },
+          {
+            "type": 1,
+            "dir": 11,
+            "x_q16": 30558208,
+            "y_q16": 16651264,
+            "speed": 320,
+            "damage": 2,
+            "friendly": 0
+          },
+          {
+            "type": 1,
+            "dir": 5,
+            "x_q16": 30558208,
+            "y_q16": 9017344,
+            "speed": 320,
+            "damage": 2,
+            "friendly": 0
+          }
+        ],
+        "enemy_count": 3,
+        "rng": 1139955287
+      }
+    },
+    {
+      "name": "boss-real-defeat",
+      "passed": false,
+      "reference_frames": 720,
+      "candidate_frames": 720,
+      "first_divergence_tick": 0,
+      "reference": {
+        "game_state": 1,
+        "area": 1,
+        "cell": 20,
+        "hero": {
+          "kind": 1,
+          "type": 0,
+          "state": 0,
+          "timer": 0,
+          "timer2": 0,
+          "dir": 24,
+          "facing": 3,
+          "x_q16": 21413888,
+          "y_q16": 13107200,
+          "z_q16": 0,
+          "zvel_q16": 0,
+          "speed": 320,
+          "hp": 0,
+          "iframes": 0,
+          "knockback_timer": 0,
+          "flags": 0,
+          "damage": 0,
+          "v": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        "hero_hp": 80,
+        "target": {
+          "kind": 2,
+          "type": 5,
+          "state": 2,
+          "timer": 8,
+          "timer2": 0,
+          "dir": 8,
+          "facing": 2,
+          "x_q16": 19218432,
+          "y_q16": 12664832,
+          "z_q16": 65536,
+          "zvel_q16": 0,
+          "speed": 128,
+          "hp": 4,
+          "iframes": 0,
+          "knockback_timer": 0,
+          "flags": 75,
+          "damage": 4,
+          "v": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        "projectiles": [
+          {
+            "type": 1,
+            "dir": 2,
+            "x_q16": 19276544,
+            "y_q16": 11942144,
+            "speed": 256,
+            "damage": 2,
+            "friendly": 0
+          },
+          {
+            "type": 1,
+            "dir": 6,
+            "x_q16": 19383296,
+            "y_q16": 12048896,
+            "speed": 256,
+            "damage": 2,
+            "friendly": 0
+          },
+          {
+            "type": 1,
+            "dir": 10,
+            "x_q16": 19383296,
+            "y_q16": 12198656,
+            "speed": 256,
+            "damage": 2,
+            "friendly": 0
+          },
+          {
+            "type": 1,
+            "dir": 14,
+            "x_q16": 19276544,
+            "y_q16": 12305408,
+            "speed": 256,
+            "damage": 2,
+            "friendly": 0
+          },
+          {
+            "type": 1,
+            "dir": 18,
+            "x_q16": 19126784,
+            "y_q16": 12305408,
+            "speed": 256,
+            "damage": 2,
+            "friendly": 0
+          },
+          {
+            "type": 1,
+            "dir": 22,
+            "x_q16": 19020032,
+            "y_q16": 12198656,
+            "speed": 256,
+            "damage": 2,
+            "friendly": 0
+          },
+          {
+            "type": 1,
+            "dir": 26,
+            "x_q16": 19020032,
+            "y_q16": 12048896,
+            "speed": 256,
+            "damage": 2,
+            "friendly": 0
+          },
+          {
+            "type": 1,
+            "dir": 30,
+            "x_q16": 19126784,
+            "y_q16": 11942144,
+            "speed": 256,
+            "damage": 2,
+            "friendly": 0
+          }
+        ],
+        "enemy_count": 1,
+        "rng": 2314558843
+      },
+      "candidate": {
+        "game_state": 1,
+        "area": 1,
+        "cell": 20,
+        "hero": {
+          "kind": 1,
+          "type": 0,
+          "state": 0,
+          "timer": 0,
+          "timer2": 0,
+          "dir": 24,
+          "facing": 3,
+          "x_q16": 21413888,
+          "y_q16": 13107200,
+          "z_q16": 0,
+          "zvel_q16": 0,
+          "speed": 320,
+          "hp": 0,
+          "iframes": 0,
+          "knockback_timer": 0,
+          "flags": 0,
+          "damage": 0,
+          "v": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        "hero_hp": 80,
+        "target": {
+          "kind": 2,
+          "type": 5,
+          "state": 2,
+          "timer": 7,
+          "timer2": 0,
+          "dir": 8,
+          "facing": 2,
+          "x_q16": 19202048,
+          "y_q16": 12681216,
+          "z_q16": 65536,
+          "zvel_q16": 0,
+          "speed": 128,
+          "hp": 4,
+          "iframes": 0,
+          "knockback_timer": 0,
+          "flags": 75,
+          "damage": 4,
+          "v": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        "projectiles": [
+          {
+            "type": 1,
+            "dir": 1,
+            "x_q16": 19252224,
+            "y_q16": 11866112,
+            "speed": 256,
+            "damage": 2,
+            "friendly": 0
+          },
+          {
+            "type": 1,
+            "dir": 5,
+            "x_q16": 19419136,
+            "y_q16": 11977728,
+            "speed": 256,
+            "damage": 2,
+            "friendly": 0
+          },
+          {
+            "type": 1,
+            "dir": 9,
+            "x_q16": 19459072,
+            "y_q16": 12174336,
+            "speed": 256,
+            "damage": 2,
+            "friendly": 0
+          },
+          {
+            "type": 1,
+            "dir": 13,
+            "x_q16": 19347456,
+            "y_q16": 12341248,
+            "speed": 256,
+            "damage": 2,
+            "friendly": 0
+          },
+          {
+            "type": 1,
+            "dir": 17,
+            "x_q16": 19150848,
+            "y_q16": 12381184,
+            "speed": 256,
+            "damage": 2,
+            "friendly": 0
+          },
+          {
+            "type": 1,
+            "dir": 21,
+            "x_q16": 18983936,
+            "y_q16": 12269568,
+            "speed": 256,
+            "damage": 2,
+            "friendly": 0
+          },
+          {
+            "type": 1,
+            "dir": 25,
+            "x_q16": 18944000,
+            "y_q16": 12072960,
+            "speed": 256,
+            "damage": 2,
+            "friendly": 0
+          },
+          {
+            "type": 1,
+            "dir": 29,
+            "x_q16": 19055616,
+            "y_q16": 11906048,
+            "speed": 256,
+            "damage": 2,
+            "friendly": 0
+          }
+        ],
+        "enemy_count": 1,
+        "rng": 2314558843
+      }
+    },
+    {
+      "name": "cave-natural-group",
+      "passed": true,
+      "reference_frames": 240,
+      "candidate_frames": 240
+    }
+  ]
+}

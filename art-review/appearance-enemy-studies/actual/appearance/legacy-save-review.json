@@ -1,0 +1,34 @@
+{
+  "method": "Existing independent save_probe.py run directly against the final frozen v0 ROM/map/header. Serialized legacyv1 and corrupt-run fixtures are disclosed in that checker. No game/art code or real user save files were changed.",
+  "source_commit": "5eedc6dae94d8c1ea21c55b8668435bcf0be884d",
+  "rom_sha256": "42d7902226c9cbca47bdefb21b970a4e3f74d9e4e2cfc201404dd6479fe275a3",
+  "passed": 6,
+  "total": 6,
+  "checks": [
+    {
+      "name": "legacy inventory, gates, loot and unrelated state preserved",
+      "passed": true
+    },
+    {
+      "name": "owned reward retained; unrelated old mystery completion cannot consume missing items",
+      "passed": true
+    },
+    {
+      "name": "migrated record written as v2 with valid checksum",
+      "passed": true
+    },
+    {
+      "name": "v2 continue/death/save round trip",
+      "passed": true
+    },
+    {
+      "name": "unclaimed trial victory and opened pocket persist without auto-claim",
+      "passed": true
+    },
+    {
+      "name": "corrupted checksum rejected",
+      "passed": true
+    }
+  ],
+  "log_sha256": "81634cc17bc354a694ba01c57acd8742b1eef5dbd183f3a91a7b525742287018"
+}

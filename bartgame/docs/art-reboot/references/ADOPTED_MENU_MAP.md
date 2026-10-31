@@ -1,7 +1,7 @@
 # Adopted Workbench and annotated room map
 
-Status: adopted implementation with passing actual mGBA pilot review. The
-parent will repeat this checker against the final immutable release freeze.
+Status: adopted implementation, verified from the final immutable source
+`5eedc6dae94d8c1ea21c55b8668435bcf0be884d` and frozen production v0 ROM.
 The user's 2026-10-31 selections are the direct source: item menu1, map menu2,
 a fixed Winebound HUD and runtime selectable frame/color choices. Shared art
 bible, direction log, reference register and the prior pinned GBA menu research
@@ -58,8 +58,8 @@ reports, and a capture harness must never write them to fabricate a screen.
 
 Controls remain Start close/open, R page, D-pad item/room navigation, A/B/L
 assignment on Items, A map zoom and B overview. Zoom now advertises D-pad room
-browsing. Native ARM syntax checks pass for the active MENU1 path. The actual mGBA
-pilot now passes 198/198 checks across 34 captures: all 25 normally generated
+browsing. Native ARM syntax checks pass for the active MENU1 path. The final actual mGBA
+review passes 223/223 checks across 36 captures: all 25 normally generated
 rooms are loaded to harvest authentic positions, then navigated by two-frame
 button taps in the adopted map. Every visible event agrees with actual room
 tiles; adjacent icons stay separate and bounded. A cold fresh-core Map +
@@ -71,16 +71,24 @@ restores static world VRAM, legal animation allocations and palettes.
 
 The healing shrine is genuine seed 2 / cell 8, not an inserted mark. The
 six-panel native comparison shows Door, Task/NPC, Chest, Heart, Relic and Shrine.
-The appearance owner independently inspected that board and the native overview:
+The appearance owner independently inspected the pilot board and native overview:
 no symbol, label, palette or overlap blocker was found. Ordinary forest NPCs
 currently all have tasks, so the Folk F registry/legend is present without
-inventing a non-task actor simply to exercise it. Cold pilot graph draw takes
-12 IRQ frames; sampled complete room zooms take 6–20. These measurements are
+inventing a non-task actor simply to exercise it. The sampled graph draw takes
+12 IRQ frames; complete room zooms take 6–20. These measurements are
 samples, not a worst-case guarantee for every seed.
 
 Tool: tools/adopted_map_review.py, invoked with --frozen and --out. It never
-writes any gMenuStudy or map presentation report. Mutable pilot evidence lives
-under /workspace/setup/appearance-enemy-studies/map-native-review; final immutable
-capture/publication remains owned by the parent. The appearance owner's
+writes any gMenuStudy or map presentation report. Final immutable evidence lives
+under /workspace/setup/appearance-enemy-studies/map-review, with source commit,
+ROM hash, exact native frames, capture inputs, source anchors and per-view
+state traces. The original pilot remains separate in map-native-review.
+
+The final run additionally checks the live moving Heart against its paused
+actor position, rather than only its deterministic spawn. The Workbench accepts
+A/B/L assignments through the canonical unique-item rule, preserves independent
+tool/key/map focus, and refuses equipment changes from Key Items. Reopening
+retains map focus and zoom. Those assertions were added in review-only tooling
+after the game source freeze, without modifying any C/art/Makefile input. The appearance owner's
 separate all-nine style/palette suite covers interface changes; this map pass
 uses the fixed Winebound default for consistent comparisons.

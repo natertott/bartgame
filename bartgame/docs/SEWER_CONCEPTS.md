@@ -1,15 +1,19 @@
 # Final Drain and interface studies
 
-The [current review gallery](../../art-review/drain-final-ui/README.md) contains
-one final Drain room and five optional interface skins. Normal `make` now uses
-Drain profile 9 and the neutral compact interface, UI0. UI1–5 remain choices
-for feedback. [The direction log](art-reboot/ART_DIRECTION_LOG.md) records the
-user's selections, follow-up HUD requirements and actual-screen corrections.
+The [final room gallery](../../art-review/drain-final-ui/README.md) contains
+the adopted Drain room and five historical interface studies. Normal `make`
+uses Drain9, the selected Winebound HUD, Workbench inventory and Pocket Ledger
+map (UI6/MENU1). Home-screen Options selects one of three menu/dialogue frame
+styles and their three independent palettes. The newer
+[selected-interface/enemy gallery](../../art-review/appearance-enemy-studies/README.md)
+shows the implemented choices. [The direction log](art-reboot/ART_DIRECTION_LOG.md)
+records their actual-screen corrections and adoption.
 
 The newer [five remixed interfaces and ten interactive menu layouts](../../art-review/ui-menu-exploration/README.md)
 extend this comparison using the preferred structures and requested wine,
 green and ivory palettes. They retain the final room and compact HUD/minimap/
-conditional ammo. UI6–10 and MENU1–10 are optional; UI0/MENU0 stays the default.
+conditional ammo. The chosen parts are now integrated; other layouts remain
+historical comparison profiles rather than the normal menu.
 
 ## Final room
 
@@ -73,7 +77,7 @@ backed paper prose avoids dark title outlines. Floating prompts use pale ink.
 ## Build choices
 
 ```sh
-# Final room, neutral compact UI and selected Step-and-cut sword.
+# Final room, selected HUD/Options/Workbench/map and Step-and-cut sword.
 make -j4
 
 # Final room with a proposed interface skin.

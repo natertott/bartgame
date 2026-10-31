@@ -1,0 +1,604 @@
+{
+  "inspected_date": "2026-10-31",
+  "baseline_commit": "a9e09e5de3c185e6b7bc8293b2411e4bdc13e4fe",
+  "scope": "Six actor AI families including finalboss; ten alternatives each=60 concepts. Projectile,weapon,hurt/death companions are supporting assets, not extra standalone AI families.",
+  "timing_unit": "Game update, generally one per video frame during ordinaryplay. Damage units are eighths of a full heart (8units/fullheart).",
+  "sources": {
+    "src/enemy.c": "139fe3153490d70770e298610aec9a93542940a78b88665ddc991c9fbf8c92ad",
+    "src/enemy.h": "ab83d960966d247d6355c67ae52bd5d59d2c3a76ac023c8461f20146296ebea8",
+    "src/boss.c": "b19c5fd8bb0e5fde29b59fc44285384015acceb9b2e538682da1f59cb6d6b440",
+    "src/actor.c": "143f4693e328621d8eaaefacb2728ea7f3ac75ce87f52de2649ee038bfb4fe9c",
+    "src/actor.h": "e2254c2e8fbda6bdd9c5e0cca74ca27f49cacfc010c97f7da110600036725c80",
+    "src/objects.c": "8c0e807163ba1258aafc0521dbcf61437f35f2f8e545368ba35d24017d542f76",
+    "src/player.c": "ccf3f1586e63cc3ef6d984335600b6fa1c381a3d86b10b1d1f0090b0aa2ddc33",
+    "src/game.c": "e016dbed9bcdef6762dbb6ddd3b3595a79f73431f0dc12688b11754b45a58e7f",
+    "src/myst.c": "2cfd56bc44be8affbdf625a68b26e0ea42f343d8b441d4f155bee6a9de92825c",
+    "art/reboot_contracts.json": "3f3c22aeb93f63308ddc42f79e849145c5e8c12950e37ba14ded67773b44d0d8",
+    "art/reboot_actors.py": "08cf30f2219bb0b1f4b55724a9d55c6c755db897b768c35685f6523f1828823e",
+    "art/palettes.py": "38820856997c96fbfa4a08d5c541f12e3e505d4dfb0aedb14cb30a9b22129347",
+    "art/reboot_core.py": "71021a7b1717f8dd7edd58d0ad0a4dda448def45533c42855f6d76a4bcc82ea4"
+  },
+  "common": {
+    "base_sword_damage": 2,
+    "hurt_iframes": 12,
+    "hurt_knockback_updates": 12,
+    "hurt_blink": "notdrawn wheniframes&&gFrame&2",
+    "knockback": "commonroutine handles movement thenreturns withoutAI/timer/frame updates",
+    "ordinary_death": "immediateactor_free +FX_PUFF18updates(3poses) +drop_roll; no old deathbody animation",
+    "all_sword_vulnerability": "2D box overlap regardless z, subject AF_HITTABLE andiframe0",
+    "contact_vulnerability": "ordinary actoroverlap +ABS(z difference)<12 +player_is_vulnerable",
+    "defense": "playershield frontwindow\u00b15/32 onincomingdamage canblock; enemyarmorimmunitiesnotimplemented",
+    "spawn": "forest usesenemy_pick_type(theme,stage,hash). Mysterywaves use samepicker; miniboss usesHP20melee+2chasers; Heart arena spawnsboss; Heart phase2spawnschasers. Drainhasnoordinaryenemyspawns."
+  },
+  "state_ids": {
+    "ES_IDLE": 0,
+    "ES_WALK": 1,
+    "ES_CHASE": 2,
+    "ES_PAUSE": 3,
+    "ES_SPIT": 4,
+    "ES_HOP": 5,
+    "ES_WINDUP": 6,
+    "ES_SWING": 7,
+    "ES_RECOVER": 8,
+    "ES_DIE": 9,
+    "ES_REST": 10,
+    "ES_FLY": 11
+  },
+  "families": [
+    {
+      "type": 0,
+      "source_key": "beetle",
+      "mechanic": "Small ground pursuer",
+      "hp": 2,
+      "contact_damage_units": 2,
+      "canvas": [
+        16,
+        16
+      ],
+      "foot_in_canvas": [
+        8,
+        16
+      ],
+      "palette": "bugs",
+      "frames": [
+        "walk_s1",
+        "walk_s2",
+        "walk_e1",
+        "walk_e2"
+      ],
+      "frame_count": 4,
+      "hitbox": {
+        "center": [
+          0,
+          -6
+        ],
+        "half_extents": [
+          5,
+          5
+        ]
+      },
+      "states": {
+        "idle": 0,
+        "wander": 1,
+        "chase": 2
+      },
+      "motion": {
+        "idle_updates": [
+          10,
+          39
+        ],
+        "wander_updates": [
+          30,
+          69
+        ],
+        "wander_speed": 0.5,
+        "chase_speed": 1.0,
+        "detect_distance": 80,
+        "lose_distance": 120,
+        "retarget_updates": 8,
+        "collision": "ground tiles; wandering turns12..19/32, chasing turns8/32"
+      },
+      "animation": {
+        "gait": "Two frames:16-update full cycle in wander/idle,8-update in chase; east/west use side art; north shares south art",
+        "facing": "W mirrors E; N is S as currently implemented"
+      },
+      "truthful_counterplay": [
+        "All states accept damage;2HP is one default2damage sword hit.",
+        "No shell armor or exposed-back damage rule.",
+        "Contact causes recoil14updates unless boss/knight."
+      ],
+      "companion_sheets": []
+    },
+    {
+      "type": 1,
+      "source_key": "bat",
+      "mechanic": "Resting airborne wobble chaser",
+      "hp": 2,
+      "contact_damage_units": 2,
+      "canvas": [
+        16,
+        16
+      ],
+      "foot_in_canvas": [
+        8,
+        16
+      ],
+      "palette": "bugs",
+      "frames": [
+        "fly1",
+        "fly2",
+        "rest"
+      ],
+      "frame_count": 3,
+      "hitbox": {
+        "center": [
+          0,
+          -6
+        ],
+        "half_extents": [
+          5,
+          5
+        ]
+      },
+      "states": {
+        "rest": 10,
+        "fly": 11
+      },
+      "motion": {
+        "first_rest_updates": [
+          30,
+          119
+        ],
+        "later_rest_updates": [
+          40,
+          119
+        ],
+        "fly_updates": [
+          60,
+          119
+        ],
+        "fly_speed": 1.0,
+        "retarget_updates": 16,
+        "wobble": "phase+=3, SIN(phase*8)*4",
+        "z": "12+SIN(gFrame*6)*4 while flying; rest keeps last height",
+        "bounds": "x24..roomWidth-24, y40..roomHeight-16; ignores tile collision"
+      },
+      "animation": {
+        "flight": "fly1/fly2 alternate with gFrame&4:8-update full wing cycle",
+        "rest": "folded body; no directional frame variants"
+      },
+      "truthful_counterplay": [
+        "All states accept sword damage.",
+        "Contact/projectile overlap checks require relative z<12; player sword-box test is2D.",
+        "No mandatory grounded-only vulnerability."
+      ],
+      "companion_sheets": []
+    },
+    {
+      "type": 2,
+      "source_key": "spitter",
+      "mechanic": "Four-way moving projectile shooter",
+      "hp": 2,
+      "contact_damage_units": 2,
+      "canvas": [
+        16,
+        16
+      ],
+      "foot_in_canvas": [
+        8,
+        16
+      ],
+      "palette": "blight",
+      "frames": [
+        "idle_s",
+        "walk_s",
+        "spit_s",
+        "idle_n",
+        "walk_n",
+        "spit_n",
+        "idle_e",
+        "walk_e",
+        "spit_e"
+      ],
+      "frame_count": 9,
+      "hitbox": {
+        "center": [
+          0,
+          -8
+        ],
+        "half_extents": [
+          7,
+          7
+        ]
+      },
+      "states": {
+        "idle": 0,
+        "walk": 1,
+        "spit": 4
+      },
+      "motion": {
+        "speed": 0.375,
+        "walk_durations": [
+          30,
+          60,
+          60,
+          90
+        ],
+        "idle_updates": [
+          24,
+          80
+        ],
+        "aim": "chooses toward-player cardinal half the time; random otherwise; turns180 oncollision",
+        "shoot_condition": "ends walk facing player cardinal, rand_range(4)!=0",
+        "shot_updates": 24,
+        "emit_at_remaining_timer": 12,
+        "seed_speed": 2.5,
+        "seed_damage_units": 2,
+        "muzzle_from_feet": {
+          "n": [
+            0,
+            -14
+          ],
+          "s": [
+            0,
+            2
+          ],
+          "e": [
+            8,
+            0
+          ],
+          "w": [
+            -8,
+            0
+          ]
+        }
+      },
+      "animation": {
+        "walk": "idle/walk alternate every8 global updates (16 fullcycle)",
+        "spit": "spit pose while state4 and timer<18; emission occurs during it",
+        "facings": "N/S/E authored; W mirrors E"
+      },
+      "truthful_counterplay": [
+        "Sword reflects seeds into friendly projectiles at3px/update.",
+        "Held forward shield blocks incoming damage direction.",
+        "Seeds hit walls; no armor or immunity when mouth closed."
+      ],
+      "companion_sheets": [
+        "proj"
+      ]
+    },
+    {
+      "type": 3,
+      "source_key": "slime",
+      "mechanic": "Slow ground wanderer with aimed hop",
+      "hp": 4,
+      "contact_damage_units": 2,
+      "canvas": [
+        16,
+        16
+      ],
+      "foot_in_canvas": [
+        8,
+        16
+      ],
+      "palette": "bugs",
+      "frames": [
+        "idle",
+        "squash",
+        "jump"
+      ],
+      "frame_count": 3,
+      "hitbox": {
+        "center": [
+          0,
+          -8
+        ],
+        "half_extents": [
+          7,
+          7
+        ]
+      },
+      "states": {
+        "idle": 0,
+        "wander": 1,
+        "crouch": 3,
+        "hop": 5
+      },
+      "motion": {
+        "wander_speed": 0.125,
+        "wander_updates": [
+          40,
+          79
+        ],
+        "detect_distance": 72,
+        "first_crouch_updates": 18,
+        "later_crouch_updates": 24,
+        "hop_speed": 1.25,
+        "launch_z": 0.5,
+        "launch_z_velocity": 1.75,
+        "gravity_per_update": 0.125,
+        "airtime_updates": 30,
+        "post_land_idle_if_far": 30,
+        "aim": "locked toward player on launch; ordinary ground collision still applies"
+      },
+      "animation": {
+        "idle": "idle",
+        "wander": "idle/squash alternate with gFrame&16",
+        "crouch_and_land": "squash",
+        "airborne": "jump; world z handles ascent/descent"
+      },
+      "truthful_counterplay": [
+        "All states accept sword damage;4HP is two default sword hits.",
+        "Crouch honestly telegraphs the coming hop; landing is an approach opportunity, not an invulnerability rule."
+      ],
+      "companion_sheets": []
+    },
+    {
+      "type": 4,
+      "source_key": "knight",
+      "mechanic": "Slow solid pursuer with directional melee windup",
+      "hp": 10,
+      "contact_damage_units": 4,
+      "canvas": [
+        16,
+        32
+      ],
+      "foot_in_canvas": [
+        8,
+        32
+      ],
+      "palette": "iron",
+      "frames": [
+        "walk_s1",
+        "walk_s2",
+        "idle_s",
+        "atk_s",
+        "walk_n1",
+        "walk_n2",
+        "idle_n",
+        "atk_n",
+        "walk_e1",
+        "walk_e2",
+        "idle_e",
+        "atk_e"
+      ],
+      "frame_count": 12,
+      "hitbox": {
+        "center": [
+          0,
+          -13
+        ],
+        "half_extents": [
+          7,
+          13
+        ]
+      },
+      "states": {
+        "idle": 0,
+        "chase": 2,
+        "windup": 6,
+        "swing": 7,
+        "recover": 8
+      },
+      "motion": {
+        "speed": 0.375,
+        "retarget_updates": 16,
+        "attack_condition": "front box within28px and distance<32; lateral absdx<14 north/south or absdy<16 east/west",
+        "windup_updates": 16,
+        "swing_updates": 14,
+        "live_swing_remaining_timer": [
+          4,
+          11
+        ],
+        "recovery_updates": 24,
+        "swing_damage_units": 4,
+        "swing_boxes_from_feet": {
+          "n": [
+            -10,
+            -36,
+            10,
+            -16
+          ],
+          "s": [
+            -10,
+            -8,
+            10,
+            12
+          ],
+          "e": [
+            6,
+            -20,
+            26,
+            0
+          ],
+          "w": [
+            -26,
+            -20,
+            -6,
+            0
+          ]
+        },
+        "miniboss_hp": 20
+      },
+      "animation": {
+        "walk": "Two poses per facing, gFrame>>3 (16-update full cycle)",
+        "attack": "old atk body shared across windup and swing; recover usesidle",
+        "facings": "N/S/E authored; W mirrors E",
+        "weapon": "held using separate16px weapon sheet; windup raises it; north draw body thenweapon, other facings weapon thenbody"
+      },
+      "truthful_counterplay": [
+        "Hittable from every side in every ordinary state. NO shield immunity, no front armor.",
+        "Five default sword hits; miniboss ten.",
+        "Windup16 and recovery24 are real timing opportunities without bonus-damage mechanics."
+      ],
+      "companion_sheets": [
+        "ksword"
+      ]
+    },
+    {
+      "type": 5,
+      "source_key": "boss",
+      "mechanic": "Floating pulse mass with rings, adds and lunge phases",
+      "hp": 40,
+      "contact_damage_units": 4,
+      "canvas": [
+        32,
+        64
+      ],
+      "foot_in_canvas": [
+        16,
+        64
+      ],
+      "palette": "blight",
+      "frames": [
+        "pulse1",
+        "pulse2",
+        "hurt"
+      ],
+      "frame_count": 3,
+      "hitbox": {
+        "center": [
+          0,
+          -22
+        ],
+        "half_extents": [
+          14,
+          20
+        ]
+      },
+      "states": {
+        "idle": 0,
+        "drift": 1,
+        "burst": 2,
+        "spawn": 3,
+        "lunge": 4,
+        "rest": 5,
+        "die": 6
+      },
+      "motion": {
+        "initial_idle_updates": 60,
+        "moods": [
+          {
+            "hp": "27..40",
+            "drift_speed": 0.25,
+            "first_drift_updates": 90,
+            "later_drift_updates": 80,
+            "attack": "8spore ring,1.0px/update,2damage each",
+            "rest_updates": 40
+          },
+          {
+            "hp": "13..26",
+            "drift_speed": 0.375,
+            "first_drift_updates": 70,
+            "later_drift_updates": 60,
+            "attack": "alternates three-spore aimedfan and2ground-pursuer adds ifalive<5",
+            "fan_speed": [
+              1.5,
+              1.25,
+              1.25
+            ],
+            "fan_directions": "aim,aim+3/32,aim-3/32",
+            "fan_damage_units": 2,
+            "rest_updates_after_fan": 30,
+            "rest_updates_after_adds": 50
+          },
+          {
+            "hp": "1..12",
+            "drift_speed": 0.5,
+            "first_drift_updates": 50,
+            "later_drift_updates": 40,
+            "attack": "40update1.75px/update locked-direction lunge then aimedfan",
+            "rest_updates": 20
+          }
+        ],
+        "burst_updates": 20,
+        "emission_remaining_timer": 10,
+        "spawn_updates": 20,
+        "spawn_offsets": [
+          [
+            -20,
+            8
+          ],
+          [
+            20,
+            8
+          ]
+        ],
+        "boss_z": "4+SIN(gFrame*4)*3",
+        "death_updates": 120,
+        "death": "shake\u00b11x eachupdate, puff every8, hitSFXevery16, then6blasts/Grail/addsclear"
+      },
+      "animation": {
+        "pulse": "pulse1/pulse2 via gFrame&16 (32-update fullcycle)",
+        "hurt": "hurtframe assigned byboss_update onlywhileiframes, but knockback common return normally prevents reaching that code beforeiframesexpire",
+        "death": "existingpulse+shake+sharedpuff/blast; no olddedicateddeathbodyframes",
+        "palette": "blight; runtime canvas32\u00d764 overriding old32\u00d732 contract",
+        "body": "allstatesdamageable untilboss_defeated clears AF_HITTABLE/AF_HURTS"
+      },
+      "truthful_counterplay": [
+        "All ordinary phases can be damaged; do not imply an armored shell or glowing-core-only weakness.",
+        "40HP is20default sword hits; ordinary knockback pauses AI.",
+        "Sword reflects spores; sporesignorecanopy, seedsdonot."
+      ],
+      "companion_sheets": [
+        "proj",
+        "beetle",
+        "fx"
+      ]
+    }
+  ],
+  "companions": {
+    "ksword": {
+      "name": "ksword",
+      "w": 16,
+      "h": 16,
+      "pal": "iron",
+      "frames": [
+        "blade_e",
+        "blade_s"
+      ]
+    },
+    "proj": {
+      "name": "proj",
+      "w": 8,
+      "h": 8,
+      "pal": "fx",
+      "frames": [
+        "seed",
+        "spore",
+        "shard"
+      ],
+      "runtime_note": "Only seed and spore are spawned by current enemies. The shard frame/update handler exists but no current enemy spawns PJ_SHARD."
+    },
+    "fx": {
+      "name": "fx",
+      "w": 16,
+      "h": 16,
+      "pal": "fx",
+      "frames": [
+        "puff1",
+        "puff2",
+        "puff3",
+        "clang",
+        "blast1",
+        "blast2",
+        "blast3",
+        "flame1",
+        "flame2",
+        "bomb1",
+        "bomb2",
+        "firefly1",
+        "firefly2"
+      ]
+    }
+  },
+  "review_plan": {
+    "source": "Render every required named frame, four mirrored facings where relevant, native/3x, grayscale/silhouette and fixedbackground comparisons. Animationstrip loops must be labelled source sequences, not mGBA evidence.",
+    "real_run": "Use ten frozen BART_ENEMY builds; boot fixedseed; naturalworldgen/roomspawns; position/heal player, clearunrelatedactors as disclosed. Record AI state/timer/frame/facing/hp/position/projectile counts fromactualupdate. Neverwrite enemy state/frame/timer/z oranimationphase to claimnaturalbehavior.",
+    "capture_families": "sixfamilies \u00d710styles with at leastidle/movement/attack behavior; longcaptureforrest/fly andshooter; allbosshpphases fromrealcombatordisclosedHPfixtures, deathfromrealweaponhits.",
+    "controls": "ActualDpad/A/B/L drives attacks/shields; hit reactionanddeath mustcome fromordinarycollision/combat.",
+    "evidence_limits": "Sourceatlas provescompleteauthoredframecoverage. Runtimeclips demonstrate state-selectedart andmechanic cues; do notclaim everyfacing/stateoccurred inoneclip. Palette/HWcanvasesandROMencoding independentlychecked.",
+    "existing_harness_warning": "wood_probe.spawn_enemy writes idle/timer200, so donot use unmodified as naturalAI evidence; use natural spawns orclearlabelledspawnhook then leaveAIunforced."
+  },
+  "source_note": "Original behavior/frame-contract inventory at the prior published source commit. Final study presentation adds frames and draw-only selectors; those are documented by final native audit/capture coverage rather than falsely attributed to this initial inventory."
+}

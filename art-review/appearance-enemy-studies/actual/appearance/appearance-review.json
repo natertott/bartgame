@@ -1,0 +1,1705 @@
+{
+  "method": "Exercise title appearance controls and all nine native combinations in mGBA.\n\nNo preference/menu state variable is written. Initial blank/corrupt SRAM,\ninventory, seed and safe NPC positions are declared fixtures. Menus, dialogue\nand shops are opened through ordinary buttons. Source framebuffer pixels are\nsaved unchanged. The final save/migration test uses the existing independent\nsave_probe's declared serialized legacy-save fixtures.",
+  "rom_sha256": "42d7902226c9cbca47bdefb21b970a4e3f74d9e4e2cfc201404dd6479fe275a3",
+  "captures": [
+    {
+      "name": "title-no-save",
+      "image": "title-no-save.png",
+      "sha256": "bde259155cb705d7b117f0ef9607958762e19f3a5efcd15fc96ae286f3965e32",
+      "note": "Actual title exposes New Game and Options without a run save.",
+      "style": 0,
+      "palette": 0,
+      "game_state": 0
+    },
+    {
+      "name": "style-1-palette-1-options",
+      "image": "style-1-palette-1-options.png",
+      "sha256": "6d572e2bd32bb610e3f8a7f70b55b3098cd76f67df509829007db078fa1a3c6a",
+      "note": "Actual title controls select independent shape and colors; live native dialogue sample.",
+      "style": 0,
+      "palette": 0,
+      "game_state": 0
+    },
+    {
+      "name": "style-1-palette-1-intro",
+      "image": "style-1-palette-1-intro.png",
+      "sha256": "39da40a7f0828324266fe632098ef2b82d4915231429cf567a5b43f5e155f9b1",
+      "note": "Real opening dialogue after New Game, with saved appearance preferences.",
+      "style": 0,
+      "palette": 0,
+      "game_state": 1
+    },
+    {
+      "name": "style-1-palette-1-hud",
+      "image": "style-1-palette-1-hud.png",
+      "sha256": "d18b3236d5052b4c55cec2fc5811b1bf41bb0550c6f9ccabd5eade08f66d14db",
+      "note": "Maximum inventory/ammunition fixture; actual fixed Winebound HUD and minimap.",
+      "style": 0,
+      "palette": 0,
+      "game_state": 1
+    },
+    {
+      "name": "style-1-palette-1-items",
+      "image": "style-1-palette-1-items.png",
+      "sha256": "c70d368ca36ed7cc688c3f9f0aefc4ffe4650e0d8a9e92454dadf36c26ace37c",
+      "note": "Real Start opens selected Workbench; full carried-tool fixture.",
+      "style": 0,
+      "palette": 0,
+      "game_state": 4
+    },
+    {
+      "name": "style-1-palette-1-dialogue",
+      "image": "style-1-palette-1-dialogue.png",
+      "sha256": "f1ffc8ae7c09df98404dd24098701b62de9577b32596acc465a45638f94639c1",
+      "note": "Position fixture; ordinary Up/A talks to the real wizard, including name and portrait.",
+      "style": 0,
+      "palette": 0,
+      "game_state": 1
+    },
+    {
+      "name": "style-1-palette-1-shop",
+      "image": "style-1-palette-1-shop.png",
+      "sha256": "a9a7bd394711012cde17db2008c2fef2c86165f2a1caecadb1b023c4bb87c27b",
+      "note": "Position/gilt fixture; ordinary Up/A opens the real merchant shop.",
+      "style": 0,
+      "palette": 0,
+      "game_state": 1
+    },
+    {
+      "name": "style-1-palette-2-options",
+      "image": "style-1-palette-2-options.png",
+      "sha256": "16609bddcf54ae72171dd765bd9dc61a80d5d1c66622f3179602383067e06dcb",
+      "note": "Actual title controls select independent shape and colors; live native dialogue sample.",
+      "style": 0,
+      "palette": 1,
+      "game_state": 0
+    },
+    {
+      "name": "style-1-palette-2-intro",
+      "image": "style-1-palette-2-intro.png",
+      "sha256": "a5900a64153b52e89889ca1ed2a786357d05491cfceecc46ccc5bb7f7d1af94e",
+      "note": "Real opening dialogue after New Game, with saved appearance preferences.",
+      "style": 0,
+      "palette": 1,
+      "game_state": 1
+    },
+    {
+      "name": "style-1-palette-2-hud",
+      "image": "style-1-palette-2-hud.png",
+      "sha256": "d18b3236d5052b4c55cec2fc5811b1bf41bb0550c6f9ccabd5eade08f66d14db",
+      "note": "Maximum inventory/ammunition fixture; actual fixed Winebound HUD and minimap.",
+      "style": 0,
+      "palette": 1,
+      "game_state": 1
+    },
+    {
+      "name": "style-1-palette-2-items",
+      "image": "style-1-palette-2-items.png",
+      "sha256": "97fa894147c4b36437dccae253abf23067d406125deca21a4c4f92c6abca4cbb",
+      "note": "Real Start opens selected Workbench; full carried-tool fixture.",
+      "style": 0,
+      "palette": 1,
+      "game_state": 4
+    },
+    {
+      "name": "style-1-palette-2-dialogue",
+      "image": "style-1-palette-2-dialogue.png",
+      "sha256": "a10bf6da7bbb8b3cf156a217a83e82682f4b084ac8037b7379503e216e88672a",
+      "note": "Position fixture; ordinary Up/A talks to the real wizard, including name and portrait.",
+      "style": 0,
+      "palette": 1,
+      "game_state": 1
+    },
+    {
+      "name": "style-1-palette-2-shop",
+      "image": "style-1-palette-2-shop.png",
+      "sha256": "424611267ec5ee2aa8d23ef55d273d5430f3168bd59b5cc2de56b2c8fc44c5a4",
+      "note": "Position/gilt fixture; ordinary Up/A opens the real merchant shop.",
+      "style": 0,
+      "palette": 1,
+      "game_state": 1
+    },
+    {
+      "name": "style-1-palette-3-options",
+      "image": "style-1-palette-3-options.png",
+      "sha256": "e7ae8be72180293c719a765a75178b3aa08688e700f12571cffeff4ff0b79f0b",
+      "note": "Actual title controls select independent shape and colors; live native dialogue sample.",
+      "style": 0,
+      "palette": 2,
+      "game_state": 0
+    },
+    {
+      "name": "style-1-palette-3-intro",
+      "image": "style-1-palette-3-intro.png",
+      "sha256": "5dafebf3b663aaa7c8b982e941a1296a3b3362a8f12cae9711177bf6dace07a0",
+      "note": "Real opening dialogue after New Game, with saved appearance preferences.",
+      "style": 0,
+      "palette": 2,
+      "game_state": 1
+    },
+    {
+      "name": "style-1-palette-3-hud",
+      "image": "style-1-palette-3-hud.png",
+      "sha256": "d18b3236d5052b4c55cec2fc5811b1bf41bb0550c6f9ccabd5eade08f66d14db",
+      "note": "Maximum inventory/ammunition fixture; actual fixed Winebound HUD and minimap.",
+      "style": 0,
+      "palette": 2,
+      "game_state": 1
+    },
+    {
+      "name": "style-1-palette-3-items",
+      "image": "style-1-palette-3-items.png",
+      "sha256": "16a54571c9ab43885fdd2cadf0183ca6325195e877c64511082e7bc209ac1858",
+      "note": "Real Start opens selected Workbench; full carried-tool fixture.",
+      "style": 0,
+      "palette": 2,
+      "game_state": 4
+    },
+    {
+      "name": "style-1-palette-3-dialogue",
+      "image": "style-1-palette-3-dialogue.png",
+      "sha256": "f32a0e8f18037a2572f46c91853aa6cf50cc4f768ee8637f3d5db225a3bf3332",
+      "note": "Position fixture; ordinary Up/A talks to the real wizard, including name and portrait.",
+      "style": 0,
+      "palette": 2,
+      "game_state": 1
+    },
+    {
+      "name": "style-1-palette-3-shop",
+      "image": "style-1-palette-3-shop.png",
+      "sha256": "23582f728bada2be441e56d92b9b53a4be80aa4952b90c34e95e296de67f9a02",
+      "note": "Position/gilt fixture; ordinary Up/A opens the real merchant shop.",
+      "style": 0,
+      "palette": 2,
+      "game_state": 1
+    },
+    {
+      "name": "style-2-palette-1-options",
+      "image": "style-2-palette-1-options.png",
+      "sha256": "aed130b8fe3a35b66f7910af0be0339193f1917f528d1bbaf4ed8cd458dd4f39",
+      "note": "Actual title controls select independent shape and colors; live native dialogue sample.",
+      "style": 1,
+      "palette": 0,
+      "game_state": 0
+    },
+    {
+      "name": "style-2-palette-1-intro",
+      "image": "style-2-palette-1-intro.png",
+      "sha256": "c1359a8f9f5301bed53fcffbffbc67f636b739c4ee3545bba37687220f7eca59",
+      "note": "Real opening dialogue after New Game, with saved appearance preferences.",
+      "style": 1,
+      "palette": 0,
+      "game_state": 1
+    },
+    {
+      "name": "style-2-palette-1-hud",
+      "image": "style-2-palette-1-hud.png",
+      "sha256": "d18b3236d5052b4c55cec2fc5811b1bf41bb0550c6f9ccabd5eade08f66d14db",
+      "note": "Maximum inventory/ammunition fixture; actual fixed Winebound HUD and minimap.",
+      "style": 1,
+      "palette": 0,
+      "game_state": 1
+    },
+    {
+      "name": "style-2-palette-1-items",
+      "image": "style-2-palette-1-items.png",
+      "sha256": "4503e0c6cc7a577c3f9d869bd3acdecd0feff7a398193a3b8855a74865e07bf3",
+      "note": "Real Start opens selected Workbench; full carried-tool fixture.",
+      "style": 1,
+      "palette": 0,
+      "game_state": 4
+    },
+    {
+      "name": "style-2-palette-1-dialogue",
+      "image": "style-2-palette-1-dialogue.png",
+      "sha256": "7311f7570012e9283de1134e81f84bbe7d78f136209e1a40b70bc9b907c6b617",
+      "note": "Position fixture; ordinary Up/A talks to the real wizard, including name and portrait.",
+      "style": 1,
+      "palette": 0,
+      "game_state": 1
+    },
+    {
+      "name": "style-2-palette-1-shop",
+      "image": "style-2-palette-1-shop.png",
+      "sha256": "9e79650faf23e5f1338f0ed881f8cecb485b71388d4d7e62598a2e0a98a67759",
+      "note": "Position/gilt fixture; ordinary Up/A opens the real merchant shop.",
+      "style": 1,
+      "palette": 0,
+      "game_state": 1
+    },
+    {
+      "name": "style-2-palette-2-options",
+      "image": "style-2-palette-2-options.png",
+      "sha256": "e119f792692fca27b47dded482cf8721d409b9ca578c595535a88aa90368685d",
+      "note": "Actual title controls select independent shape and colors; live native dialogue sample.",
+      "style": 1,
+      "palette": 1,
+      "game_state": 0
+    },
+    {
+      "name": "style-2-palette-2-intro",
+      "image": "style-2-palette-2-intro.png",
+      "sha256": "e3841034de175f04b3737f9989c7dd69fbc199d05e7b0747f1417ce9f24c6e60",
+      "note": "Real opening dialogue after New Game, with saved appearance preferences.",
+      "style": 1,
+      "palette": 1,
+      "game_state": 1
+    },
+    {
+      "name": "style-2-palette-2-hud",
+      "image": "style-2-palette-2-hud.png",
+      "sha256": "d18b3236d5052b4c55cec2fc5811b1bf41bb0550c6f9ccabd5eade08f66d14db",
+      "note": "Maximum inventory/ammunition fixture; actual fixed Winebound HUD and minimap.",
+      "style": 1,
+      "palette": 1,
+      "game_state": 1
+    },
+    {
+      "name": "style-2-palette-2-items",
+      "image": "style-2-palette-2-items.png",
+      "sha256": "e2911033e4e0e5c4a51567ca1274bf7fd92b5c779aace84856352188e516854a",
+      "note": "Real Start opens selected Workbench; full carried-tool fixture.",
+      "style": 1,
+      "palette": 1,
+      "game_state": 4
+    },
+    {
+      "name": "style-2-palette-2-dialogue",
+      "image": "style-2-palette-2-dialogue.png",
+      "sha256": "f53e396cb8ae05b6a9c3ccfeb276ce6b2d8b01c5325038734b1487f6b4b4fc75",
+      "note": "Position fixture; ordinary Up/A talks to the real wizard, including name and portrait.",
+      "style": 1,
+      "palette": 1,
+      "game_state": 1
+    },
+    {
+      "name": "style-2-palette-2-shop",
+      "image": "style-2-palette-2-shop.png",
+      "sha256": "4b697aa20caf429e49f5abb72d8997978c9031deb3ec7bd42d77acb1a88249d4",
+      "note": "Position/gilt fixture; ordinary Up/A opens the real merchant shop.",
+      "style": 1,
+      "palette": 1,
+      "game_state": 1
+    },
+    {
+      "name": "style-2-palette-3-options",
+      "image": "style-2-palette-3-options.png",
+      "sha256": "72d173ffd95c4c48a981e9a027bba7d9ce5092cc1477749705a6cabca96d5f62",
+      "note": "Actual title controls select independent shape and colors; live native dialogue sample.",
+      "style": 1,
+      "palette": 2,
+      "game_state": 0
+    },
+    {
+      "name": "style-2-palette-3-intro",
+      "image": "style-2-palette-3-intro.png",
+      "sha256": "b8f8da1acd877b3a5faa90d86dd98eb6335540b6d25cdbaba25ad71e582463b2",
+      "note": "Real opening dialogue after New Game, with saved appearance preferences.",
+      "style": 1,
+      "palette": 2,
+      "game_state": 1
+    },
+    {
+      "name": "style-2-palette-3-hud",
+      "image": "style-2-palette-3-hud.png",
+      "sha256": "d18b3236d5052b4c55cec2fc5811b1bf41bb0550c6f9ccabd5eade08f66d14db",
+      "note": "Maximum inventory/ammunition fixture; actual fixed Winebound HUD and minimap.",
+      "style": 1,
+      "palette": 2,
+      "game_state": 1
+    },
+    {
+      "name": "style-2-palette-3-items",
+      "image": "style-2-palette-3-items.png",
+      "sha256": "0d1a6c728a439c26fb54d7152b5d5d11b5582a2d8e2aff68988c4ee1b44abe56",
+      "note": "Real Start opens selected Workbench; full carried-tool fixture.",
+      "style": 1,
+      "palette": 2,
+      "game_state": 4
+    },
+    {
+      "name": "style-2-palette-3-dialogue",
+      "image": "style-2-palette-3-dialogue.png",
+      "sha256": "53426bba5a9fdeaf31d87cf0dda29b2433458046c288988e91c84b5cf8e2007f",
+      "note": "Position fixture; ordinary Up/A talks to the real wizard, including name and portrait.",
+      "style": 1,
+      "palette": 2,
+      "game_state": 1
+    },
+    {
+      "name": "style-2-palette-3-shop",
+      "image": "style-2-palette-3-shop.png",
+      "sha256": "7fae2a11bbae1f0d678e552a7f57c03d60f7791f85d3e7f34221e7f7c106467c",
+      "note": "Position/gilt fixture; ordinary Up/A opens the real merchant shop.",
+      "style": 1,
+      "palette": 2,
+      "game_state": 1
+    },
+    {
+      "name": "style-3-palette-1-options",
+      "image": "style-3-palette-1-options.png",
+      "sha256": "d66746cd4b8a4062809c35a054e25a51e2a340486127925f5465b9bb1a7de996",
+      "note": "Actual title controls select independent shape and colors; live native dialogue sample.",
+      "style": 2,
+      "palette": 0,
+      "game_state": 0
+    },
+    {
+      "name": "style-3-palette-1-intro",
+      "image": "style-3-palette-1-intro.png",
+      "sha256": "c52929801764099df863c3178f58dcd502f9469613f6eee676749f80982ebf73",
+      "note": "Real opening dialogue after New Game, with saved appearance preferences.",
+      "style": 2,
+      "palette": 0,
+      "game_state": 1
+    },
+    {
+      "name": "style-3-palette-1-hud",
+      "image": "style-3-palette-1-hud.png",
+      "sha256": "d18b3236d5052b4c55cec2fc5811b1bf41bb0550c6f9ccabd5eade08f66d14db",
+      "note": "Maximum inventory/ammunition fixture; actual fixed Winebound HUD and minimap.",
+      "style": 2,
+      "palette": 0,
+      "game_state": 1
+    },
+    {
+      "name": "style-3-palette-1-items",
+      "image": "style-3-palette-1-items.png",
+      "sha256": "4651c207b16b29986b9d877eef1075fd766b7fbb8e54fefccc6a6179889f4128",
+      "note": "Real Start opens selected Workbench; full carried-tool fixture.",
+      "style": 2,
+      "palette": 0,
+      "game_state": 4
+    },
+    {
+      "name": "style-3-palette-1-dialogue",
+      "image": "style-3-palette-1-dialogue.png",
+      "sha256": "9883583e4914ec4f4537c81f9cc8cca1b3554e9635af1e520f7b182688ef8692",
+      "note": "Position fixture; ordinary Up/A talks to the real wizard, including name and portrait.",
+      "style": 2,
+      "palette": 0,
+      "game_state": 1
+    },
+    {
+      "name": "style-3-palette-1-shop",
+      "image": "style-3-palette-1-shop.png",
+      "sha256": "6bdb1eb64ecf5e3885c1423dee48eaea84cc53c353591d7c4ffd2ad8a9e2391c",
+      "note": "Position/gilt fixture; ordinary Up/A opens the real merchant shop.",
+      "style": 2,
+      "palette": 0,
+      "game_state": 1
+    },
+    {
+      "name": "style-3-palette-2-options",
+      "image": "style-3-palette-2-options.png",
+      "sha256": "1bb2f202ce485d8274623013e33965e96e30b0153558add1218dddbcbe6db013",
+      "note": "Actual title controls select independent shape and colors; live native dialogue sample.",
+      "style": 2,
+      "palette": 1,
+      "game_state": 0
+    },
+    {
+      "name": "style-3-palette-2-intro",
+      "image": "style-3-palette-2-intro.png",
+      "sha256": "72d54e50d15574ff635de2b600adaca75ab47603cc7962215a426c8ffebea486",
+      "note": "Real opening dialogue after New Game, with saved appearance preferences.",
+      "style": 2,
+      "palette": 1,
+      "game_state": 1
+    },
+    {
+      "name": "style-3-palette-2-hud",
+      "image": "style-3-palette-2-hud.png",
+      "sha256": "d18b3236d5052b4c55cec2fc5811b1bf41bb0550c6f9ccabd5eade08f66d14db",
+      "note": "Maximum inventory/ammunition fixture; actual fixed Winebound HUD and minimap.",
+      "style": 2,
+      "palette": 1,
+      "game_state": 1
+    },
+    {
+      "name": "style-3-palette-2-items",
+      "image": "style-3-palette-2-items.png",
+      "sha256": "3af36c97a5d10dfc5dcae80c1c7f46eefe10caa8ce66b8768cf36419fab57cdd",
+      "note": "Real Start opens selected Workbench; full carried-tool fixture.",
+      "style": 2,
+      "palette": 1,
+      "game_state": 4
+    },
+    {
+      "name": "style-3-palette-2-dialogue",
+      "image": "style-3-palette-2-dialogue.png",
+      "sha256": "c33b690f7322833fd6b4e9dfd8298cfb200c708b75de9c3eae55bf7f02df3843",
+      "note": "Position fixture; ordinary Up/A talks to the real wizard, including name and portrait.",
+      "style": 2,
+      "palette": 1,
+      "game_state": 1
+    },
+    {
+      "name": "style-3-palette-2-shop",
+      "image": "style-3-palette-2-shop.png",
+      "sha256": "7cf13b5b171abf5a56382ddd0de8034fb77c606d3fe765cb0f6d63ad50c2d027",
+      "note": "Position/gilt fixture; ordinary Up/A opens the real merchant shop.",
+      "style": 2,
+      "palette": 1,
+      "game_state": 1
+    },
+    {
+      "name": "style-3-palette-3-options",
+      "image": "style-3-palette-3-options.png",
+      "sha256": "7c4b7681741f3859fb4fbff53b0aeb5bb001baac7f8f0681c807b73e239f23bc",
+      "note": "Actual title controls select independent shape and colors; live native dialogue sample.",
+      "style": 2,
+      "palette": 2,
+      "game_state": 0
+    },
+    {
+      "name": "style-3-palette-3-intro",
+      "image": "style-3-palette-3-intro.png",
+      "sha256": "66724048b3ca34718e1f0207ce3fcee18e7579ce97351d1744e16b721c126351",
+      "note": "Real opening dialogue after New Game, with saved appearance preferences.",
+      "style": 2,
+      "palette": 2,
+      "game_state": 1
+    },
+    {
+      "name": "style-3-palette-3-hud",
+      "image": "style-3-palette-3-hud.png",
+      "sha256": "d18b3236d5052b4c55cec2fc5811b1bf41bb0550c6f9ccabd5eade08f66d14db",
+      "note": "Maximum inventory/ammunition fixture; actual fixed Winebound HUD and minimap.",
+      "style": 2,
+      "palette": 2,
+      "game_state": 1
+    },
+    {
+      "name": "style-3-palette-3-items",
+      "image": "style-3-palette-3-items.png",
+      "sha256": "7d8bcce6f07574f0dedb39ea0cf5c10151d805c197f25ef3887d9ac8ca48775a",
+      "note": "Real Start opens selected Workbench; full carried-tool fixture.",
+      "style": 2,
+      "palette": 2,
+      "game_state": 4
+    },
+    {
+      "name": "style-3-palette-3-dialogue",
+      "image": "style-3-palette-3-dialogue.png",
+      "sha256": "a33eb7edc98e4f037de4c59091c67798ce6939745923cc5773145977fbf96805",
+      "note": "Position fixture; ordinary Up/A talks to the real wizard, including name and portrait.",
+      "style": 2,
+      "palette": 2,
+      "game_state": 1
+    },
+    {
+      "name": "style-3-palette-3-shop",
+      "image": "style-3-palette-3-shop.png",
+      "sha256": "ee049aee8349f92ed10535bcee9589987f9950267fadc040fff0ffe14b08536c",
+      "note": "Position/gilt fixture; ordinary Up/A opens the real merchant shop.",
+      "style": 2,
+      "palette": 2,
+      "game_state": 1
+    },
+    {
+      "name": "title-with-save",
+      "image": "title-with-save.png",
+      "sha256": "947a43f8b3854b2c302534afdecf2c242cdc3ff7132357197591af5bd679ea03",
+      "note": "Actual title after the normal death/save path; Continue, New Game and Options.",
+      "style": 1,
+      "palette": 2,
+      "game_state": 0
+    }
+  ],
+  "checks": [
+    {
+      "name": "blank boot has default preferences",
+      "passed": true
+    },
+    {
+      "name": "title-no-save native dimensions",
+      "passed": true
+    },
+    {
+      "name": "Options opens through title choice",
+      "passed": true
+    },
+    {
+      "name": "actual style/color selectors match",
+      "passed": true
+    },
+    {
+      "name": "chosen native menu palette is loaded",
+      "passed": true
+    },
+    {
+      "name": "chosen native kit loaded for preview",
+      "passed": true
+    },
+    {
+      "name": "chosen native continuation/picker shapes are resident",
+      "passed": true
+    },
+    {
+      "name": "pointer colors follow menu instead of HUD palette",
+      "passed": true
+    },
+    {
+      "name": "style-1-palette-1-options native dimensions",
+      "passed": true
+    },
+    {
+      "name": "B completes Options and returns title",
+      "passed": true
+    },
+    {
+      "name": "Options does not write the run save",
+      "passed": true
+    },
+    {
+      "name": "independent preferences written",
+      "passed": true
+    },
+    {
+      "name": "preferences survive actual reset",
+      "passed": true
+    },
+    {
+      "name": "New Game opens actual Drain",
+      "passed": true
+    },
+    {
+      "name": "chosen native menu palette is loaded",
+      "passed": true
+    },
+    {
+      "name": "style-1-palette-1-intro native dimensions",
+      "passed": true
+    },
+    {
+      "name": "New Game preserves preferences record",
+      "passed": true
+    },
+    {
+      "name": "Winebound HUD stays exact across appearance choices",
+      "passed": true,
+      "detail": {
+        "paint": "71f52d9b8dea097d975464f8acff7fb9f3c23a7f0cffd24b19e2eb3564f340bf",
+        "hud_palette": "9f8d04cd4b568e64c05d99a1be3a35d1928d1ecee17ab722dec0b4c83321ab13",
+        "minimap_palette": "f56c0725530c3a8dc30b46f49006d31f8a6c59a75d019296aa82a0da3807534b",
+        "minimap_tiles": "05b0c620113c4f26cadc561a85f925c096f9a1534817a0192a4b72b0e67887dc"
+      }
+    },
+    {
+      "name": "style-1-palette-1-hud native dimensions",
+      "passed": true
+    },
+    {
+      "name": "Start opens item layout",
+      "passed": true
+    },
+    {
+      "name": "chosen native menu palette is loaded",
+      "passed": true
+    },
+    {
+      "name": "menu renderer uses selected native shape corner",
+      "passed": true
+    },
+    {
+      "name": "style-1-palette-1-items native dimensions",
+      "passed": true
+    },
+    {
+      "name": "real Wizard dialogue is active",
+      "passed": true
+    },
+    {
+      "name": "chosen pointer palette restored after inventory",
+      "passed": true
+    },
+    {
+      "name": "style-1-palette-1-dialogue native dimensions",
+      "passed": true
+    },
+    {
+      "name": "real market opened",
+      "passed": true
+    },
+    {
+      "name": "market uses selected pointer palette",
+      "passed": true
+    },
+    {
+      "name": "style-1-palette-1-shop native dimensions",
+      "passed": true
+    },
+    {
+      "name": "chosen native menu palette is loaded",
+      "passed": true
+    },
+    {
+      "name": "blank boot has default preferences",
+      "passed": true
+    },
+    {
+      "name": "Options opens through title choice",
+      "passed": true
+    },
+    {
+      "name": "actual style/color selectors match",
+      "passed": true
+    },
+    {
+      "name": "chosen native menu palette is loaded",
+      "passed": true
+    },
+    {
+      "name": "chosen native kit loaded for preview",
+      "passed": true
+    },
+    {
+      "name": "chosen native continuation/picker shapes are resident",
+      "passed": true
+    },
+    {
+      "name": "pointer colors follow menu instead of HUD palette",
+      "passed": true
+    },
+    {
+      "name": "style-1-palette-2-options native dimensions",
+      "passed": true
+    },
+    {
+      "name": "B completes Options and returns title",
+      "passed": true
+    },
+    {
+      "name": "Options does not write the run save",
+      "passed": true
+    },
+    {
+      "name": "independent preferences written",
+      "passed": true
+    },
+    {
+      "name": "preferences survive actual reset",
+      "passed": true
+    },
+    {
+      "name": "New Game opens actual Drain",
+      "passed": true
+    },
+    {
+      "name": "chosen native menu palette is loaded",
+      "passed": true
+    },
+    {
+      "name": "style-1-palette-2-intro native dimensions",
+      "passed": true
+    },
+    {
+      "name": "New Game preserves preferences record",
+      "passed": true
+    },
+    {
+      "name": "Winebound HUD stays exact across appearance choices",
+      "passed": true,
+      "detail": {
+        "paint": "71f52d9b8dea097d975464f8acff7fb9f3c23a7f0cffd24b19e2eb3564f340bf",
+        "hud_palette": "9f8d04cd4b568e64c05d99a1be3a35d1928d1ecee17ab722dec0b4c83321ab13",
+        "minimap_palette": "f56c0725530c3a8dc30b46f49006d31f8a6c59a75d019296aa82a0da3807534b",
+        "minimap_tiles": "05b0c620113c4f26cadc561a85f925c096f9a1534817a0192a4b72b0e67887dc"
+      }
+    },
+    {
+      "name": "style-1-palette-2-hud native dimensions",
+      "passed": true
+    },
+    {
+      "name": "Start opens item layout",
+      "passed": true
+    },
+    {
+      "name": "chosen native menu palette is loaded",
+      "passed": true
+    },
+    {
+      "name": "menu renderer uses selected native shape corner",
+      "passed": true
+    },
+    {
+      "name": "style-1-palette-2-items native dimensions",
+      "passed": true
+    },
+    {
+      "name": "real Wizard dialogue is active",
+      "passed": true
+    },
+    {
+      "name": "chosen pointer palette restored after inventory",
+      "passed": true
+    },
+    {
+      "name": "style-1-palette-2-dialogue native dimensions",
+      "passed": true
+    },
+    {
+      "name": "real market opened",
+      "passed": true
+    },
+    {
+      "name": "market uses selected pointer palette",
+      "passed": true
+    },
+    {
+      "name": "style-1-palette-2-shop native dimensions",
+      "passed": true
+    },
+    {
+      "name": "chosen native menu palette is loaded",
+      "passed": true
+    },
+    {
+      "name": "blank boot has default preferences",
+      "passed": true
+    },
+    {
+      "name": "Options opens through title choice",
+      "passed": true
+    },
+    {
+      "name": "actual style/color selectors match",
+      "passed": true
+    },
+    {
+      "name": "chosen native menu palette is loaded",
+      "passed": true
+    },
+    {
+      "name": "chosen native kit loaded for preview",
+      "passed": true
+    },
+    {
+      "name": "chosen native continuation/picker shapes are resident",
+      "passed": true
+    },
+    {
+      "name": "pointer colors follow menu instead of HUD palette",
+      "passed": true
+    },
+    {
+      "name": "style-1-palette-3-options native dimensions",
+      "passed": true
+    },
+    {
+      "name": "B completes Options and returns title",
+      "passed": true
+    },
+    {
+      "name": "Options does not write the run save",
+      "passed": true
+    },
+    {
+      "name": "independent preferences written",
+      "passed": true
+    },
+    {
+      "name": "preferences survive actual reset",
+      "passed": true
+    },
+    {
+      "name": "New Game opens actual Drain",
+      "passed": true
+    },
+    {
+      "name": "chosen native menu palette is loaded",
+      "passed": true
+    },
+    {
+      "name": "style-1-palette-3-intro native dimensions",
+      "passed": true
+    },
+    {
+      "name": "New Game preserves preferences record",
+      "passed": true
+    },
+    {
+      "name": "Winebound HUD stays exact across appearance choices",
+      "passed": true,
+      "detail": {
+        "paint": "71f52d9b8dea097d975464f8acff7fb9f3c23a7f0cffd24b19e2eb3564f340bf",
+        "hud_palette": "9f8d04cd4b568e64c05d99a1be3a35d1928d1ecee17ab722dec0b4c83321ab13",
+        "minimap_palette": "f56c0725530c3a8dc30b46f49006d31f8a6c59a75d019296aa82a0da3807534b",
+        "minimap_tiles": "05b0c620113c4f26cadc561a85f925c096f9a1534817a0192a4b72b0e67887dc"
+      }
+    },
+    {
+      "name": "style-1-palette-3-hud native dimensions",
+      "passed": true
+    },
+    {
+      "name": "Start opens item layout",
+      "passed": true
+    },
+    {
+      "name": "chosen native menu palette is loaded",
+      "passed": true
+    },
+    {
+      "name": "menu renderer uses selected native shape corner",
+      "passed": true
+    },
+    {
+      "name": "style-1-palette-3-items native dimensions",
+      "passed": true
+    },
+    {
+      "name": "real Wizard dialogue is active",
+      "passed": true
+    },
+    {
+      "name": "chosen pointer palette restored after inventory",
+      "passed": true
+    },
+    {
+      "name": "style-1-palette-3-dialogue native dimensions",
+      "passed": true
+    },
+    {
+      "name": "real market opened",
+      "passed": true
+    },
+    {
+      "name": "market uses selected pointer palette",
+      "passed": true
+    },
+    {
+      "name": "style-1-palette-3-shop native dimensions",
+      "passed": true
+    },
+    {
+      "name": "chosen native menu palette is loaded",
+      "passed": true
+    },
+    {
+      "name": "blank boot has default preferences",
+      "passed": true
+    },
+    {
+      "name": "Options opens through title choice",
+      "passed": true
+    },
+    {
+      "name": "actual style/color selectors match",
+      "passed": true
+    },
+    {
+      "name": "chosen native menu palette is loaded",
+      "passed": true
+    },
+    {
+      "name": "chosen native kit loaded for preview",
+      "passed": true
+    },
+    {
+      "name": "chosen native continuation/picker shapes are resident",
+      "passed": true
+    },
+    {
+      "name": "pointer colors follow menu instead of HUD palette",
+      "passed": true
+    },
+    {
+      "name": "style-2-palette-1-options native dimensions",
+      "passed": true
+    },
+    {
+      "name": "B completes Options and returns title",
+      "passed": true
+    },
+    {
+      "name": "Options does not write the run save",
+      "passed": true
+    },
+    {
+      "name": "independent preferences written",
+      "passed": true
+    },
+    {
+      "name": "preferences survive actual reset",
+      "passed": true
+    },
+    {
+      "name": "New Game opens actual Drain",
+      "passed": true
+    },
+    {
+      "name": "chosen native menu palette is loaded",
+      "passed": true
+    },
+    {
+      "name": "style-2-palette-1-intro native dimensions",
+      "passed": true
+    },
+    {
+      "name": "New Game preserves preferences record",
+      "passed": true
+    },
+    {
+      "name": "Winebound HUD stays exact across appearance choices",
+      "passed": true,
+      "detail": {
+        "paint": "71f52d9b8dea097d975464f8acff7fb9f3c23a7f0cffd24b19e2eb3564f340bf",
+        "hud_palette": "9f8d04cd4b568e64c05d99a1be3a35d1928d1ecee17ab722dec0b4c83321ab13",
+        "minimap_palette": "f56c0725530c3a8dc30b46f49006d31f8a6c59a75d019296aa82a0da3807534b",
+        "minimap_tiles": "05b0c620113c4f26cadc561a85f925c096f9a1534817a0192a4b72b0e67887dc"
+      }
+    },
+    {
+      "name": "style-2-palette-1-hud native dimensions",
+      "passed": true
+    },
+    {
+      "name": "Start opens item layout",
+      "passed": true
+    },
+    {
+      "name": "chosen native menu palette is loaded",
+      "passed": true
+    },
+    {
+      "name": "menu renderer uses selected native shape corner",
+      "passed": true
+    },
+    {
+      "name": "style-2-palette-1-items native dimensions",
+      "passed": true
+    },
+    {
+      "name": "real Wizard dialogue is active",
+      "passed": true
+    },
+    {
+      "name": "chosen pointer palette restored after inventory",
+      "passed": true
+    },
+    {
+      "name": "style-2-palette-1-dialogue native dimensions",
+      "passed": true
+    },
+    {
+      "name": "real market opened",
+      "passed": true
+    },
+    {
+      "name": "market uses selected pointer palette",
+      "passed": true
+    },
+    {
+      "name": "style-2-palette-1-shop native dimensions",
+      "passed": true
+    },
+    {
+      "name": "chosen native menu palette is loaded",
+      "passed": true
+    },
+    {
+      "name": "blank boot has default preferences",
+      "passed": true
+    },
+    {
+      "name": "Options opens through title choice",
+      "passed": true
+    },
+    {
+      "name": "actual style/color selectors match",
+      "passed": true
+    },
+    {
+      "name": "chosen native menu palette is loaded",
+      "passed": true
+    },
+    {
+      "name": "chosen native kit loaded for preview",
+      "passed": true
+    },
+    {
+      "name": "chosen native continuation/picker shapes are resident",
+      "passed": true
+    },
+    {
+      "name": "pointer colors follow menu instead of HUD palette",
+      "passed": true
+    },
+    {
+      "name": "style-2-palette-2-options native dimensions",
+      "passed": true
+    },
+    {
+      "name": "B completes Options and returns title",
+      "passed": true
+    },
+    {
+      "name": "Options does not write the run save",
+      "passed": true
+    },
+    {
+      "name": "independent preferences written",
+      "passed": true
+    },
+    {
+      "name": "preferences survive actual reset",
+      "passed": true
+    },
+    {
+      "name": "New Game opens actual Drain",
+      "passed": true
+    },
+    {
+      "name": "chosen native menu palette is loaded",
+      "passed": true
+    },
+    {
+      "name": "style-2-palette-2-intro native dimensions",
+      "passed": true
+    },
+    {
+      "name": "New Game preserves preferences record",
+      "passed": true
+    },
+    {
+      "name": "Winebound HUD stays exact across appearance choices",
+      "passed": true,
+      "detail": {
+        "paint": "71f52d9b8dea097d975464f8acff7fb9f3c23a7f0cffd24b19e2eb3564f340bf",
+        "hud_palette": "9f8d04cd4b568e64c05d99a1be3a35d1928d1ecee17ab722dec0b4c83321ab13",
+        "minimap_palette": "f56c0725530c3a8dc30b46f49006d31f8a6c59a75d019296aa82a0da3807534b",
+        "minimap_tiles": "05b0c620113c4f26cadc561a85f925c096f9a1534817a0192a4b72b0e67887dc"
+      }
+    },
+    {
+      "name": "style-2-palette-2-hud native dimensions",
+      "passed": true
+    },
+    {
+      "name": "Start opens item layout",
+      "passed": true
+    },
+    {
+      "name": "chosen native menu palette is loaded",
+      "passed": true
+    },
+    {
+      "name": "menu renderer uses selected native shape corner",
+      "passed": true
+    },
+    {
+      "name": "style-2-palette-2-items native dimensions",
+      "passed": true
+    },
+    {
+      "name": "real Wizard dialogue is active",
+      "passed": true
+    },
+    {
+      "name": "chosen pointer palette restored after inventory",
+      "passed": true
+    },
+    {
+      "name": "style-2-palette-2-dialogue native dimensions",
+      "passed": true
+    },
+    {
+      "name": "real market opened",
+      "passed": true
+    },
+    {
+      "name": "market uses selected pointer palette",
+      "passed": true
+    },
+    {
+      "name": "style-2-palette-2-shop native dimensions",
+      "passed": true
+    },
+    {
+      "name": "chosen native menu palette is loaded",
+      "passed": true
+    },
+    {
+      "name": "blank boot has default preferences",
+      "passed": true
+    },
+    {
+      "name": "Options opens through title choice",
+      "passed": true
+    },
+    {
+      "name": "actual style/color selectors match",
+      "passed": true
+    },
+    {
+      "name": "chosen native menu palette is loaded",
+      "passed": true
+    },
+    {
+      "name": "chosen native kit loaded for preview",
+      "passed": true
+    },
+    {
+      "name": "chosen native continuation/picker shapes are resident",
+      "passed": true
+    },
+    {
+      "name": "pointer colors follow menu instead of HUD palette",
+      "passed": true
+    },
+    {
+      "name": "style-2-palette-3-options native dimensions",
+      "passed": true
+    },
+    {
+      "name": "B completes Options and returns title",
+      "passed": true
+    },
+    {
+      "name": "Options does not write the run save",
+      "passed": true
+    },
+    {
+      "name": "independent preferences written",
+      "passed": true
+    },
+    {
+      "name": "preferences survive actual reset",
+      "passed": true
+    },
+    {
+      "name": "New Game opens actual Drain",
+      "passed": true
+    },
+    {
+      "name": "chosen native menu palette is loaded",
+      "passed": true
+    },
+    {
+      "name": "style-2-palette-3-intro native dimensions",
+      "passed": true
+    },
+    {
+      "name": "New Game preserves preferences record",
+      "passed": true
+    },
+    {
+      "name": "Winebound HUD stays exact across appearance choices",
+      "passed": true,
+      "detail": {
+        "paint": "71f52d9b8dea097d975464f8acff7fb9f3c23a7f0cffd24b19e2eb3564f340bf",
+        "hud_palette": "9f8d04cd4b568e64c05d99a1be3a35d1928d1ecee17ab722dec0b4c83321ab13",
+        "minimap_palette": "f56c0725530c3a8dc30b46f49006d31f8a6c59a75d019296aa82a0da3807534b",
+        "minimap_tiles": "05b0c620113c4f26cadc561a85f925c096f9a1534817a0192a4b72b0e67887dc"
+      }
+    },
+    {
+      "name": "style-2-palette-3-hud native dimensions",
+      "passed": true
+    },
+    {
+      "name": "Start opens item layout",
+      "passed": true
+    },
+    {
+      "name": "chosen native menu palette is loaded",
+      "passed": true
+    },
+    {
+      "name": "menu renderer uses selected native shape corner",
+      "passed": true
+    },
+    {
+      "name": "style-2-palette-3-items native dimensions",
+      "passed": true
+    },
+    {
+      "name": "real Wizard dialogue is active",
+      "passed": true
+    },
+    {
+      "name": "chosen pointer palette restored after inventory",
+      "passed": true
+    },
+    {
+      "name": "style-2-palette-3-dialogue native dimensions",
+      "passed": true
+    },
+    {
+      "name": "real market opened",
+      "passed": true
+    },
+    {
+      "name": "market uses selected pointer palette",
+      "passed": true
+    },
+    {
+      "name": "style-2-palette-3-shop native dimensions",
+      "passed": true
+    },
+    {
+      "name": "chosen native menu palette is loaded",
+      "passed": true
+    },
+    {
+      "name": "blank boot has default preferences",
+      "passed": true
+    },
+    {
+      "name": "Options opens through title choice",
+      "passed": true
+    },
+    {
+      "name": "actual style/color selectors match",
+      "passed": true
+    },
+    {
+      "name": "chosen native menu palette is loaded",
+      "passed": true
+    },
+    {
+      "name": "chosen native kit loaded for preview",
+      "passed": true
+    },
+    {
+      "name": "chosen native continuation/picker shapes are resident",
+      "passed": true
+    },
+    {
+      "name": "pointer colors follow menu instead of HUD palette",
+      "passed": true
+    },
+    {
+      "name": "style-3-palette-1-options native dimensions",
+      "passed": true
+    },
+    {
+      "name": "B completes Options and returns title",
+      "passed": true
+    },
+    {
+      "name": "Options does not write the run save",
+      "passed": true
+    },
+    {
+      "name": "independent preferences written",
+      "passed": true
+    },
+    {
+      "name": "preferences survive actual reset",
+      "passed": true
+    },
+    {
+      "name": "New Game opens actual Drain",
+      "passed": true
+    },
+    {
+      "name": "chosen native menu palette is loaded",
+      "passed": true
+    },
+    {
+      "name": "style-3-palette-1-intro native dimensions",
+      "passed": true
+    },
+    {
+      "name": "New Game preserves preferences record",
+      "passed": true
+    },
+    {
+      "name": "Winebound HUD stays exact across appearance choices",
+      "passed": true,
+      "detail": {
+        "paint": "71f52d9b8dea097d975464f8acff7fb9f3c23a7f0cffd24b19e2eb3564f340bf",
+        "hud_palette": "9f8d04cd4b568e64c05d99a1be3a35d1928d1ecee17ab722dec0b4c83321ab13",
+        "minimap_palette": "f56c0725530c3a8dc30b46f49006d31f8a6c59a75d019296aa82a0da3807534b",
+        "minimap_tiles": "05b0c620113c4f26cadc561a85f925c096f9a1534817a0192a4b72b0e67887dc"
+      }
+    },
+    {
+      "name": "style-3-palette-1-hud native dimensions",
+      "passed": true
+    },
+    {
+      "name": "Start opens item layout",
+      "passed": true
+    },
+    {
+      "name": "chosen native menu palette is loaded",
+      "passed": true
+    },
+    {
+      "name": "menu renderer uses selected native shape corner",
+      "passed": true
+    },
+    {
+      "name": "style-3-palette-1-items native dimensions",
+      "passed": true
+    },
+    {
+      "name": "real Wizard dialogue is active",
+      "passed": true
+    },
+    {
+      "name": "chosen pointer palette restored after inventory",
+      "passed": true
+    },
+    {
+      "name": "style-3-palette-1-dialogue native dimensions",
+      "passed": true
+    },
+    {
+      "name": "real market opened",
+      "passed": true
+    },
+    {
+      "name": "market uses selected pointer palette",
+      "passed": true
+    },
+    {
+      "name": "style-3-palette-1-shop native dimensions",
+      "passed": true
+    },
+    {
+      "name": "chosen native menu palette is loaded",
+      "passed": true
+    },
+    {
+      "name": "blank boot has default preferences",
+      "passed": true
+    },
+    {
+      "name": "Options opens through title choice",
+      "passed": true
+    },
+    {
+      "name": "actual style/color selectors match",
+      "passed": true
+    },
+    {
+      "name": "chosen native menu palette is loaded",
+      "passed": true
+    },
+    {
+      "name": "chosen native kit loaded for preview",
+      "passed": true
+    },
+    {
+      "name": "chosen native continuation/picker shapes are resident",
+      "passed": true
+    },
+    {
+      "name": "pointer colors follow menu instead of HUD palette",
+      "passed": true
+    },
+    {
+      "name": "style-3-palette-2-options native dimensions",
+      "passed": true
+    },
+    {
+      "name": "B completes Options and returns title",
+      "passed": true
+    },
+    {
+      "name": "Options does not write the run save",
+      "passed": true
+    },
+    {
+      "name": "independent preferences written",
+      "passed": true
+    },
+    {
+      "name": "preferences survive actual reset",
+      "passed": true
+    },
+    {
+      "name": "New Game opens actual Drain",
+      "passed": true
+    },
+    {
+      "name": "chosen native menu palette is loaded",
+      "passed": true
+    },
+    {
+      "name": "style-3-palette-2-intro native dimensions",
+      "passed": true
+    },
+    {
+      "name": "New Game preserves preferences record",
+      "passed": true
+    },
+    {
+      "name": "Winebound HUD stays exact across appearance choices",
+      "passed": true,
+      "detail": {
+        "paint": "71f52d9b8dea097d975464f8acff7fb9f3c23a7f0cffd24b19e2eb3564f340bf",
+        "hud_palette": "9f8d04cd4b568e64c05d99a1be3a35d1928d1ecee17ab722dec0b4c83321ab13",
+        "minimap_palette": "f56c0725530c3a8dc30b46f49006d31f8a6c59a75d019296aa82a0da3807534b",
+        "minimap_tiles": "05b0c620113c4f26cadc561a85f925c096f9a1534817a0192a4b72b0e67887dc"
+      }
+    },
+    {
+      "name": "style-3-palette-2-hud native dimensions",
+      "passed": true
+    },
+    {
+      "name": "Start opens item layout",
+      "passed": true
+    },
+    {
+      "name": "chosen native menu palette is loaded",
+      "passed": true
+    },
+    {
+      "name": "menu renderer uses selected native shape corner",
+      "passed": true
+    },
+    {
+      "name": "style-3-palette-2-items native dimensions",
+      "passed": true
+    },
+    {
+      "name": "real Wizard dialogue is active",
+      "passed": true
+    },
+    {
+      "name": "chosen pointer palette restored after inventory",
+      "passed": true
+    },
+    {
+      "name": "style-3-palette-2-dialogue native dimensions",
+      "passed": true
+    },
+    {
+      "name": "real market opened",
+      "passed": true
+    },
+    {
+      "name": "market uses selected pointer palette",
+      "passed": true
+    },
+    {
+      "name": "style-3-palette-2-shop native dimensions",
+      "passed": true
+    },
+    {
+      "name": "chosen native menu palette is loaded",
+      "passed": true
+    },
+    {
+      "name": "blank boot has default preferences",
+      "passed": true
+    },
+    {
+      "name": "Options opens through title choice",
+      "passed": true
+    },
+    {
+      "name": "actual style/color selectors match",
+      "passed": true
+    },
+    {
+      "name": "chosen native menu palette is loaded",
+      "passed": true
+    },
+    {
+      "name": "chosen native kit loaded for preview",
+      "passed": true
+    },
+    {
+      "name": "chosen native continuation/picker shapes are resident",
+      "passed": true
+    },
+    {
+      "name": "pointer colors follow menu instead of HUD palette",
+      "passed": true
+    },
+    {
+      "name": "style-3-palette-3-options native dimensions",
+      "passed": true
+    },
+    {
+      "name": "B completes Options and returns title",
+      "passed": true
+    },
+    {
+      "name": "Options does not write the run save",
+      "passed": true
+    },
+    {
+      "name": "independent preferences written",
+      "passed": true
+    },
+    {
+      "name": "preferences survive actual reset",
+      "passed": true
+    },
+    {
+      "name": "New Game opens actual Drain",
+      "passed": true
+    },
+    {
+      "name": "chosen native menu palette is loaded",
+      "passed": true
+    },
+    {
+      "name": "style-3-palette-3-intro native dimensions",
+      "passed": true
+    },
+    {
+      "name": "New Game preserves preferences record",
+      "passed": true
+    },
+    {
+      "name": "Winebound HUD stays exact across appearance choices",
+      "passed": true,
+      "detail": {
+        "paint": "71f52d9b8dea097d975464f8acff7fb9f3c23a7f0cffd24b19e2eb3564f340bf",
+        "hud_palette": "9f8d04cd4b568e64c05d99a1be3a35d1928d1ecee17ab722dec0b4c83321ab13",
+        "minimap_palette": "f56c0725530c3a8dc30b46f49006d31f8a6c59a75d019296aa82a0da3807534b",
+        "minimap_tiles": "05b0c620113c4f26cadc561a85f925c096f9a1534817a0192a4b72b0e67887dc"
+      }
+    },
+    {
+      "name": "style-3-palette-3-hud native dimensions",
+      "passed": true
+    },
+    {
+      "name": "Start opens item layout",
+      "passed": true
+    },
+    {
+      "name": "chosen native menu palette is loaded",
+      "passed": true
+    },
+    {
+      "name": "menu renderer uses selected native shape corner",
+      "passed": true
+    },
+    {
+      "name": "style-3-palette-3-items native dimensions",
+      "passed": true
+    },
+    {
+      "name": "real Wizard dialogue is active",
+      "passed": true
+    },
+    {
+      "name": "chosen pointer palette restored after inventory",
+      "passed": true
+    },
+    {
+      "name": "style-3-palette-3-dialogue native dimensions",
+      "passed": true
+    },
+    {
+      "name": "real market opened",
+      "passed": true
+    },
+    {
+      "name": "market uses selected pointer palette",
+      "passed": true
+    },
+    {
+      "name": "style-3-palette-3-shop native dimensions",
+      "passed": true
+    },
+    {
+      "name": "chosen native menu palette is loaded",
+      "passed": true
+    },
+    {
+      "name": "blank boot has default preferences",
+      "passed": true
+    },
+    {
+      "name": "Options opens through title choice",
+      "passed": true
+    },
+    {
+      "name": "actual style/color selectors match",
+      "passed": true
+    },
+    {
+      "name": "corrupt settings fall back safely",
+      "passed": true
+    },
+    {
+      "name": "blank boot has default preferences",
+      "passed": true
+    },
+    {
+      "name": "Options opens through title choice",
+      "passed": true
+    },
+    {
+      "name": "actual style/color selectors match",
+      "passed": true
+    },
+    {
+      "name": "New Game opens actual Drain",
+      "passed": true
+    },
+    {
+      "name": "normal death/save keeps existing v2 format",
+      "passed": true
+    },
+    {
+      "name": "run save leaves preference bytes untouched",
+      "passed": true
+    },
+    {
+      "name": "title-with-save native dimensions",
+      "passed": true
+    },
+    {
+      "name": "Options opens through title choice",
+      "passed": true
+    },
+    {
+      "name": "saved appearance remains selected with Continue present",
+      "passed": true
+    },
+    {
+      "name": "changing preferences preserves a valid run record exactly",
+      "passed": true
+    },
+    {
+      "name": "Continue loads actual saved seed",
+      "passed": true
+    },
+    {
+      "name": "Continue keeps chosen appearance",
+      "passed": true
+    },
+    {
+      "name": "New Game remains a distinct title choice with a save",
+      "passed": true
+    },
+    {
+      "name": "New Game with an old run preserves preferences",
+      "passed": true
+    }
+  ],
+  "passed": 280,
+  "total": 280,
+  "fixed_hud": {
+    "paint": "71f52d9b8dea097d975464f8acff7fb9f3c23a7f0cffd24b19e2eb3564f340bf",
+    "hud_palette": "9f8d04cd4b568e64c05d99a1be3a35d1928d1ecee17ab722dec0b4c83321ab13",
+    "minimap_palette": "f56c0725530c3a8dc30b46f49006d31f8a6c59a75d019296aa82a0da3807534b",
+    "minimap_tiles": "05b0c620113c4f26cadc561a85f925c096f9a1534817a0192a4b72b0e67887dc"
+  },
+  "source_commit": "5eedc6dae94d8c1ea21c55b8668435bcf0be884d",
+  "freeze_sha256": "ee2ff6ba668d949954693c763e3fd2cc2a1858b5b1558e15ba3c750e50a27b1e",
+  "frozen_variant": 0,
+  "visual_review": "All nine final Options, item, named-wizard dialogue and market boards personally inspected at native resolution. No text/price/arrow clipping or contrast blocker observed; independent palettes remain readable. Fixed Winebound HUD/minimap hashes match across all9 choices.",
+  "frozen_inputs_match_current": true,
+  "publication": {
+    "source_report_sha256": "703a98c0a4e9abc6b3e1bcd92ba6a9a8dc6da6446d0abd634131c15e436fc93d",
+    "source_commit": "5eedc6dae94d8c1ea21c55b8668435bcf0be884d",
+    "variant": 0,
+    "method": "Active media are unchanged copies of approved frozen-ROM mGBA output. Local raw all-frame directories and inexact GIFs are archival only."
+  }
+}

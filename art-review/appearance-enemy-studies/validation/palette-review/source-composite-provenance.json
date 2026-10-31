@@ -1,0 +1,1966 @@
+{
+  "method": "Exact captured240x160 background crops with source indexed sprites overlaid at native16px. This is source comparison, NOT new emulator evidence. Only actor input palette changes between sides.",
+  "palette": [
+    "#000000",
+    "#101820",
+    "#182830",
+    "#204840",
+    "#386858",
+    "#508870",
+    "#78a080",
+    "#b0c898",
+    "#302828",
+    "#584030",
+    "#886040",
+    "#c09058",
+    "#e8c880",
+    "#284850",
+    "#80a8a8",
+    "#f0e8c8"
+  ],
+  "old_palette": [
+    "#000000",
+    "#101820",
+    "#102828",
+    "#183830",
+    "#204838",
+    "#306048",
+    "#487850",
+    "#689858",
+    "#302820",
+    "#483828",
+    "#685038",
+    "#907048",
+    "#b09058",
+    "#183838",
+    "#305850",
+    "#789880"
+  ],
+  "family_count": 3,
+  "concept_count": 30,
+  "scene_comparisons": 120,
+  "records": [
+    {
+      "scene": "forest",
+      "source": "art-review/ui-menu-exploration/actual/v1/hud-healthy.png",
+      "source_sha256": "824250c2c8c150d7456b26ab91a8e2f1879a9baf78cbdcd9d61a530c5cefeb9b",
+      "crop": [
+        144,
+        36,
+        192,
+        76
+      ],
+      "family": "beetle",
+      "variant": 1,
+      "pose": "walk_s1",
+      "source_composite": true,
+      "actual_run": false
+    },
+    {
+      "scene": "forest",
+      "source": "art-review/ui-menu-exploration/actual/v1/hud-healthy.png",
+      "source_sha256": "824250c2c8c150d7456b26ab91a8e2f1879a9baf78cbdcd9d61a530c5cefeb9b",
+      "crop": [
+        144,
+        36,
+        192,
+        76
+      ],
+      "family": "beetle",
+      "variant": 2,
+      "pose": "walk_s1",
+      "source_composite": true,
+      "actual_run": false
+    },
+    {
+      "scene": "forest",
+      "source": "art-review/ui-menu-exploration/actual/v1/hud-healthy.png",
+      "source_sha256": "824250c2c8c150d7456b26ab91a8e2f1879a9baf78cbdcd9d61a530c5cefeb9b",
+      "crop": [
+        144,
+        36,
+        192,
+        76
+      ],
+      "family": "beetle",
+      "variant": 3,
+      "pose": "walk_s1",
+      "source_composite": true,
+      "actual_run": false
+    },
+    {
+      "scene": "forest",
+      "source": "art-review/ui-menu-exploration/actual/v1/hud-healthy.png",
+      "source_sha256": "824250c2c8c150d7456b26ab91a8e2f1879a9baf78cbdcd9d61a530c5cefeb9b",
+      "crop": [
+        144,
+        36,
+        192,
+        76
+      ],
+      "family": "beetle",
+      "variant": 4,
+      "pose": "walk_s1",
+      "source_composite": true,
+      "actual_run": false
+    },
+    {
+      "scene": "forest",
+      "source": "art-review/ui-menu-exploration/actual/v1/hud-healthy.png",
+      "source_sha256": "824250c2c8c150d7456b26ab91a8e2f1879a9baf78cbdcd9d61a530c5cefeb9b",
+      "crop": [
+        144,
+        36,
+        192,
+        76
+      ],
+      "family": "beetle",
+      "variant": 5,
+      "pose": "walk_s1",
+      "source_composite": true,
+      "actual_run": false
+    },
+    {
+      "scene": "forest",
+      "source": "art-review/ui-menu-exploration/actual/v1/hud-healthy.png",
+      "source_sha256": "824250c2c8c150d7456b26ab91a8e2f1879a9baf78cbdcd9d61a530c5cefeb9b",
+      "crop": [
+        144,
+        36,
+        192,
+        76
+      ],
+      "family": "beetle",
+      "variant": 6,
+      "pose": "walk_s1",
+      "source_composite": true,
+      "actual_run": false
+    },
+    {
+      "scene": "forest",
+      "source": "art-review/ui-menu-exploration/actual/v1/hud-healthy.png",
+      "source_sha256": "824250c2c8c150d7456b26ab91a8e2f1879a9baf78cbdcd9d61a530c5cefeb9b",
+      "crop": [
+        144,
+        36,
+        192,
+        76
+      ],
+      "family": "beetle",
+      "variant": 7,
+      "pose": "walk_s1",
+      "source_composite": true,
+      "actual_run": false
+    },
+    {
+      "scene": "forest",
+      "source": "art-review/ui-menu-exploration/actual/v1/hud-healthy.png",
+      "source_sha256": "824250c2c8c150d7456b26ab91a8e2f1879a9baf78cbdcd9d61a530c5cefeb9b",
+      "crop": [
+        144,
+        36,
+        192,
+        76
+      ],
+      "family": "beetle",
+      "variant": 8,
+      "pose": "walk_s1",
+      "source_composite": true,
+      "actual_run": false
+    },
+    {
+      "scene": "forest",
+      "source": "art-review/ui-menu-exploration/actual/v1/hud-healthy.png",
+      "source_sha256": "824250c2c8c150d7456b26ab91a8e2f1879a9baf78cbdcd9d61a530c5cefeb9b",
+      "crop": [
+        144,
+        36,
+        192,
+        76
+      ],
+      "family": "beetle",
+      "variant": 9,
+      "pose": "walk_s1",
+      "source_composite": true,
+      "actual_run": false
+    },
+    {
+      "scene": "forest",
+      "source": "art-review/ui-menu-exploration/actual/v1/hud-healthy.png",
+      "source_sha256": "824250c2c8c150d7456b26ab91a8e2f1879a9baf78cbdcd9d61a530c5cefeb9b",
+      "crop": [
+        144,
+        36,
+        192,
+        76
+      ],
+      "family": "beetle",
+      "variant": 10,
+      "pose": "walk_s1",
+      "source_composite": true,
+      "actual_run": false
+    },
+    {
+      "scene": "forest",
+      "source": "art-review/ui-menu-exploration/actual/v1/hud-healthy.png",
+      "source_sha256": "824250c2c8c150d7456b26ab91a8e2f1879a9baf78cbdcd9d61a530c5cefeb9b",
+      "crop": [
+        144,
+        36,
+        192,
+        76
+      ],
+      "family": "bat",
+      "variant": 1,
+      "pose": "fly1",
+      "source_composite": true,
+      "actual_run": false
+    },
+    {
+      "scene": "forest",
+      "source": "art-review/ui-menu-exploration/actual/v1/hud-healthy.png",
+      "source_sha256": "824250c2c8c150d7456b26ab91a8e2f1879a9baf78cbdcd9d61a530c5cefeb9b",
+      "crop": [
+        144,
+        36,
+        192,
+        76
+      ],
+      "family": "bat",
+      "variant": 2,
+      "pose": "fly1",
+      "source_composite": true,
+      "actual_run": false
+    },
+    {
+      "scene": "forest",
+      "source": "art-review/ui-menu-exploration/actual/v1/hud-healthy.png",
+      "source_sha256": "824250c2c8c150d7456b26ab91a8e2f1879a9baf78cbdcd9d61a530c5cefeb9b",
+      "crop": [
+        144,
+        36,
+        192,
+        76
+      ],
+      "family": "bat",
+      "variant": 3,
+      "pose": "fly1",
+      "source_composite": true,
+      "actual_run": false
+    },
+    {
+      "scene": "forest",
+      "source": "art-review/ui-menu-exploration/actual/v1/hud-healthy.png",
+      "source_sha256": "824250c2c8c150d7456b26ab91a8e2f1879a9baf78cbdcd9d61a530c5cefeb9b",
+      "crop": [
+        144,
+        36,
+        192,
+        76
+      ],
+      "family": "bat",
+      "variant": 4,
+      "pose": "fly1",
+      "source_composite": true,
+      "actual_run": false
+    },
+    {
+      "scene": "forest",
+      "source": "art-review/ui-menu-exploration/actual/v1/hud-healthy.png",
+      "source_sha256": "824250c2c8c150d7456b26ab91a8e2f1879a9baf78cbdcd9d61a530c5cefeb9b",
+      "crop": [
+        144,
+        36,
+        192,
+        76
+      ],
+      "family": "bat",
+      "variant": 5,
+      "pose": "fly1",
+      "source_composite": true,
+      "actual_run": false
+    },
+    {
+      "scene": "forest",
+      "source": "art-review/ui-menu-exploration/actual/v1/hud-healthy.png",
+      "source_sha256": "824250c2c8c150d7456b26ab91a8e2f1879a9baf78cbdcd9d61a530c5cefeb9b",
+      "crop": [
+        144,
+        36,
+        192,
+        76
+      ],
+      "family": "bat",
+      "variant": 6,
+      "pose": "fly1",
+      "source_composite": true,
+      "actual_run": false
+    },
+    {
+      "scene": "forest",
+      "source": "art-review/ui-menu-exploration/actual/v1/hud-healthy.png",
+      "source_sha256": "824250c2c8c150d7456b26ab91a8e2f1879a9baf78cbdcd9d61a530c5cefeb9b",
+      "crop": [
+        144,
+        36,
+        192,
+        76
+      ],
+      "family": "bat",
+      "variant": 7,
+      "pose": "fly1",
+      "source_composite": true,
+      "actual_run": false
+    },
+    {
+      "scene": "forest",
+      "source": "art-review/ui-menu-exploration/actual/v1/hud-healthy.png",
+      "source_sha256": "824250c2c8c150d7456b26ab91a8e2f1879a9baf78cbdcd9d61a530c5cefeb9b",
+      "crop": [
+        144,
+        36,
+        192,
+        76
+      ],
+      "family": "bat",
+      "variant": 8,
+      "pose": "fly1",
+      "source_composite": true,
+      "actual_run": false
+    },
+    {
+      "scene": "forest",
+      "source": "art-review/ui-menu-exploration/actual/v1/hud-healthy.png",
+      "source_sha256": "824250c2c8c150d7456b26ab91a8e2f1879a9baf78cbdcd9d61a530c5cefeb9b",
+      "crop": [
+        144,
+        36,
+        192,
+        76
+      ],
+      "family": "bat",
+      "variant": 9,
+      "pose": "fly1",
+      "source_composite": true,
+      "actual_run": false
+    },
+    {
+      "scene": "forest",
+      "source": "art-review/ui-menu-exploration/actual/v1/hud-healthy.png",
+      "source_sha256": "824250c2c8c150d7456b26ab91a8e2f1879a9baf78cbdcd9d61a530c5cefeb9b",
+      "crop": [
+        144,
+        36,
+        192,
+        76
+      ],
+      "family": "bat",
+      "variant": 10,
+      "pose": "fly1",
+      "source_composite": true,
+      "actual_run": false
+    },
+    {
+      "scene": "forest",
+      "source": "art-review/ui-menu-exploration/actual/v1/hud-healthy.png",
+      "source_sha256": "824250c2c8c150d7456b26ab91a8e2f1879a9baf78cbdcd9d61a530c5cefeb9b",
+      "crop": [
+        144,
+        36,
+        192,
+        76
+      ],
+      "family": "slime",
+      "variant": 1,
+      "pose": "idle",
+      "source_composite": true,
+      "actual_run": false
+    },
+    {
+      "scene": "forest",
+      "source": "art-review/ui-menu-exploration/actual/v1/hud-healthy.png",
+      "source_sha256": "824250c2c8c150d7456b26ab91a8e2f1879a9baf78cbdcd9d61a530c5cefeb9b",
+      "crop": [
+        144,
+        36,
+        192,
+        76
+      ],
+      "family": "slime",
+      "variant": 2,
+      "pose": "idle",
+      "source_composite": true,
+      "actual_run": false
+    },
+    {
+      "scene": "forest",
+      "source": "art-review/ui-menu-exploration/actual/v1/hud-healthy.png",
+      "source_sha256": "824250c2c8c150d7456b26ab91a8e2f1879a9baf78cbdcd9d61a530c5cefeb9b",
+      "crop": [
+        144,
+        36,
+        192,
+        76
+      ],
+      "family": "slime",
+      "variant": 3,
+      "pose": "idle",
+      "source_composite": true,
+      "actual_run": false
+    },
+    {
+      "scene": "forest",
+      "source": "art-review/ui-menu-exploration/actual/v1/hud-healthy.png",
+      "source_sha256": "824250c2c8c150d7456b26ab91a8e2f1879a9baf78cbdcd9d61a530c5cefeb9b",
+      "crop": [
+        144,
+        36,
+        192,
+        76
+      ],
+      "family": "slime",
+      "variant": 4,
+      "pose": "idle",
+      "source_composite": true,
+      "actual_run": false
+    },
+    {
+      "scene": "forest",
+      "source": "art-review/ui-menu-exploration/actual/v1/hud-healthy.png",
+      "source_sha256": "824250c2c8c150d7456b26ab91a8e2f1879a9baf78cbdcd9d61a530c5cefeb9b",
+      "crop": [
+        144,
+        36,
+        192,
+        76
+      ],
+      "family": "slime",
+      "variant": 5,
+      "pose": "idle",
+      "source_composite": true,
+      "actual_run": false
+    },
+    {
+      "scene": "forest",
+      "source": "art-review/ui-menu-exploration/actual/v1/hud-healthy.png",
+      "source_sha256": "824250c2c8c150d7456b26ab91a8e2f1879a9baf78cbdcd9d61a530c5cefeb9b",
+      "crop": [
+        144,
+        36,
+        192,
+        76
+      ],
+      "family": "slime",
+      "variant": 6,
+      "pose": "idle",
+      "source_composite": true,
+      "actual_run": false
+    },
+    {
+      "scene": "forest",
+      "source": "art-review/ui-menu-exploration/actual/v1/hud-healthy.png",
+      "source_sha256": "824250c2c8c150d7456b26ab91a8e2f1879a9baf78cbdcd9d61a530c5cefeb9b",
+      "crop": [
+        144,
+        36,
+        192,
+        76
+      ],
+      "family": "slime",
+      "variant": 7,
+      "pose": "idle",
+      "source_composite": true,
+      "actual_run": false
+    },
+    {
+      "scene": "forest",
+      "source": "art-review/ui-menu-exploration/actual/v1/hud-healthy.png",
+      "source_sha256": "824250c2c8c150d7456b26ab91a8e2f1879a9baf78cbdcd9d61a530c5cefeb9b",
+      "crop": [
+        144,
+        36,
+        192,
+        76
+      ],
+      "family": "slime",
+      "variant": 8,
+      "pose": "idle",
+      "source_composite": true,
+      "actual_run": false
+    },
+    {
+      "scene": "forest",
+      "source": "art-review/ui-menu-exploration/actual/v1/hud-healthy.png",
+      "source_sha256": "824250c2c8c150d7456b26ab91a8e2f1879a9baf78cbdcd9d61a530c5cefeb9b",
+      "crop": [
+        144,
+        36,
+        192,
+        76
+      ],
+      "family": "slime",
+      "variant": 9,
+      "pose": "idle",
+      "source_composite": true,
+      "actual_run": false
+    },
+    {
+      "scene": "forest",
+      "source": "art-review/ui-menu-exploration/actual/v1/hud-healthy.png",
+      "source_sha256": "824250c2c8c150d7456b26ab91a8e2f1879a9baf78cbdcd9d61a530c5cefeb9b",
+      "crop": [
+        144,
+        36,
+        192,
+        76
+      ],
+      "family": "slime",
+      "variant": 10,
+      "pose": "idle",
+      "source_composite": true,
+      "actual_run": false
+    },
+    {
+      "scene": "blight",
+      "source": "art-review/ui-menu-exploration/actual/v1/hud-blighted.png",
+      "source_sha256": "bc6de8714ab4eb103459cde5ef1213acf5c99316d0f2e3f9c72ed1d881da445e",
+      "crop": [
+        94,
+        104,
+        142,
+        144
+      ],
+      "family": "beetle",
+      "variant": 1,
+      "pose": "walk_s1",
+      "source_composite": true,
+      "actual_run": false
+    },
+    {
+      "scene": "blight",
+      "source": "art-review/ui-menu-exploration/actual/v1/hud-blighted.png",
+      "source_sha256": "bc6de8714ab4eb103459cde5ef1213acf5c99316d0f2e3f9c72ed1d881da445e",
+      "crop": [
+        94,
+        104,
+        142,
+        144
+      ],
+      "family": "beetle",
+      "variant": 2,
+      "pose": "walk_s1",
+      "source_composite": true,
+      "actual_run": false
+    },
+    {
+      "scene": "blight",
+      "source": "art-review/ui-menu-exploration/actual/v1/hud-blighted.png",
+      "source_sha256": "bc6de8714ab4eb103459cde5ef1213acf5c99316d0f2e3f9c72ed1d881da445e",
+      "crop": [
+        94,
+        104,
+        142,
+        144
+      ],
+      "family": "beetle",
+      "variant": 3,
+      "pose": "walk_s1",
+      "source_composite": true,
+      "actual_run": false
+    },
+    {
+      "scene": "blight",
+      "source": "art-review/ui-menu-exploration/actual/v1/hud-blighted.png",
+      "source_sha256": "bc6de8714ab4eb103459cde5ef1213acf5c99316d0f2e3f9c72ed1d881da445e",
+      "crop": [
+        94,
+        104,
+        142,
+        144
+      ],
+      "family": "beetle",
+      "variant": 4,
+      "pose": "walk_s1",
+      "source_composite": true,
+      "actual_run": false
+    },
+    {
+      "scene": "blight",
+      "source": "art-review/ui-menu-exploration/actual/v1/hud-blighted.png",
+      "source_sha256": "bc6de8714ab4eb103459cde5ef1213acf5c99316d0f2e3f9c72ed1d881da445e",
+      "crop": [
+        94,
+        104,
+        142,
+        144
+      ],
+      "family": "beetle",
+      "variant": 5,
+      "pose": "walk_s1",
+      "source_composite": true,
+      "actual_run": false
+    },
+    {
+      "scene": "blight",
+      "source": "art-review/ui-menu-exploration/actual/v1/hud-blighted.png",
+      "source_sha256": "bc6de8714ab4eb103459cde5ef1213acf5c99316d0f2e3f9c72ed1d881da445e",
+      "crop": [
+        94,
+        104,
+        142,
+        144
+      ],
+      "family": "beetle",
+      "variant": 6,
+      "pose": "walk_s1",
+      "source_composite": true,
+      "actual_run": false
+    },
+    {
+      "scene": "blight",
+      "source": "art-review/ui-menu-exploration/actual/v1/hud-blighted.png",
+      "source_sha256": "bc6de8714ab4eb103459cde5ef1213acf5c99316d0f2e3f9c72ed1d881da445e",
+      "crop": [
+        94,
+        104,
+        142,
+        144
+      ],
+      "family": "beetle",
+      "variant": 7,
+      "pose": "walk_s1",
+      "source_composite": true,
+      "actual_run": false
+    },
+    {
+      "scene": "blight",
+      "source": "art-review/ui-menu-exploration/actual/v1/hud-blighted.png",
+      "source_sha256": "bc6de8714ab4eb103459cde5ef1213acf5c99316d0f2e3f9c72ed1d881da445e",
+      "crop": [
+        94,
+        104,
+        142,
+        144
+      ],
+      "family": "beetle",
+      "variant": 8,
+      "pose": "walk_s1",
+      "source_composite": true,
+      "actual_run": false
+    },
+    {
+      "scene": "blight",
+      "source": "art-review/ui-menu-exploration/actual/v1/hud-blighted.png",
+      "source_sha256": "bc6de8714ab4eb103459cde5ef1213acf5c99316d0f2e3f9c72ed1d881da445e",
+      "crop": [
+        94,
+        104,
+        142,
+        144
+      ],
+      "family": "beetle",
+      "variant": 9,
+      "pose": "walk_s1",
+      "source_composite": true,
+      "actual_run": false
+    },
+    {
+      "scene": "blight",
+      "source": "art-review/ui-menu-exploration/actual/v1/hud-blighted.png",
+      "source_sha256": "bc6de8714ab4eb103459cde5ef1213acf5c99316d0f2e3f9c72ed1d881da445e",
+      "crop": [
+        94,
+        104,
+        142,
+        144
+      ],
+      "family": "beetle",
+      "variant": 10,
+      "pose": "walk_s1",
+      "source_composite": true,
+      "actual_run": false
+    },
+    {
+      "scene": "blight",
+      "source": "art-review/ui-menu-exploration/actual/v1/hud-blighted.png",
+      "source_sha256": "bc6de8714ab4eb103459cde5ef1213acf5c99316d0f2e3f9c72ed1d881da445e",
+      "crop": [
+        94,
+        104,
+        142,
+        144
+      ],
+      "family": "bat",
+      "variant": 1,
+      "pose": "fly1",
+      "source_composite": true,
+      "actual_run": false
+    },
+    {
+      "scene": "blight",
+      "source": "art-review/ui-menu-exploration/actual/v1/hud-blighted.png",
+      "source_sha256": "bc6de8714ab4eb103459cde5ef1213acf5c99316d0f2e3f9c72ed1d881da445e",
+      "crop": [
+        94,
+        104,
+        142,
+        144
+      ],
+      "family": "bat",
+      "variant": 2,
+      "pose": "fly1",
+      "source_composite": true,
+      "actual_run": false
+    },
+    {
+      "scene": "blight",
+      "source": "art-review/ui-menu-exploration/actual/v1/hud-blighted.png",
+      "source_sha256": "bc6de8714ab4eb103459cde5ef1213acf5c99316d0f2e3f9c72ed1d881da445e",
+      "crop": [
+        94,
+        104,
+        142,
+        144
+      ],
+      "family": "bat",
+      "variant": 3,
+      "pose": "fly1",
+      "source_composite": true,
+      "actual_run": false
+    },
+    {
+      "scene": "blight",
+      "source": "art-review/ui-menu-exploration/actual/v1/hud-blighted.png",
+      "source_sha256": "bc6de8714ab4eb103459cde5ef1213acf5c99316d0f2e3f9c72ed1d881da445e",
+      "crop": [
+        94,
+        104,
+        142,
+        144
+      ],
+      "family": "bat",
+      "variant": 4,
+      "pose": "fly1",
+      "source_composite": true,
+      "actual_run": false
+    },
+    {
+      "scene": "blight",
+      "source": "art-review/ui-menu-exploration/actual/v1/hud-blighted.png",
+      "source_sha256": "bc6de8714ab4eb103459cde5ef1213acf5c99316d0f2e3f9c72ed1d881da445e",
+      "crop": [
+        94,
+        104,
+        142,
+        144
+      ],
+      "family": "bat",
+      "variant": 5,
+      "pose": "fly1",
+      "source_composite": true,
+      "actual_run": false
+    },
+    {
+      "scene": "blight",
+      "source": "art-review/ui-menu-exploration/actual/v1/hud-blighted.png",
+      "source_sha256": "bc6de8714ab4eb103459cde5ef1213acf5c99316d0f2e3f9c72ed1d881da445e",
+      "crop": [
+        94,
+        104,
+        142,
+        144
+      ],
+      "family": "bat",
+      "variant": 6,
+      "pose": "fly1",
+      "source_composite": true,
+      "actual_run": false
+    },
+    {
+      "scene": "blight",
+      "source": "art-review/ui-menu-exploration/actual/v1/hud-blighted.png",
+      "source_sha256": "bc6de8714ab4eb103459cde5ef1213acf5c99316d0f2e3f9c72ed1d881da445e",
+      "crop": [
+        94,
+        104,
+        142,
+        144
+      ],
+      "family": "bat",
+      "variant": 7,
+      "pose": "fly1",
+      "source_composite": true,
+      "actual_run": false
+    },
+    {
+      "scene": "blight",
+      "source": "art-review/ui-menu-exploration/actual/v1/hud-blighted.png",
+      "source_sha256": "bc6de8714ab4eb103459cde5ef1213acf5c99316d0f2e3f9c72ed1d881da445e",
+      "crop": [
+        94,
+        104,
+        142,
+        144
+      ],
+      "family": "bat",
+      "variant": 8,
+      "pose": "fly1",
+      "source_composite": true,
+      "actual_run": false
+    },
+    {
+      "scene": "blight",
+      "source": "art-review/ui-menu-exploration/actual/v1/hud-blighted.png",
+      "source_sha256": "bc6de8714ab4eb103459cde5ef1213acf5c99316d0f2e3f9c72ed1d881da445e",
+      "crop": [
+        94,
+        104,
+        142,
+        144
+      ],
+      "family": "bat",
+      "variant": 9,
+      "pose": "fly1",
+      "source_composite": true,
+      "actual_run": false
+    },
+    {
+      "scene": "blight",
+      "source": "art-review/ui-menu-exploration/actual/v1/hud-blighted.png",
+      "source_sha256": "bc6de8714ab4eb103459cde5ef1213acf5c99316d0f2e3f9c72ed1d881da445e",
+      "crop": [
+        94,
+        104,
+        142,
+        144
+      ],
+      "family": "bat",
+      "variant": 10,
+      "pose": "fly1",
+      "source_composite": true,
+      "actual_run": false
+    },
+    {
+      "scene": "blight",
+      "source": "art-review/ui-menu-exploration/actual/v1/hud-blighted.png",
+      "source_sha256": "bc6de8714ab4eb103459cde5ef1213acf5c99316d0f2e3f9c72ed1d881da445e",
+      "crop": [
+        94,
+        104,
+        142,
+        144
+      ],
+      "family": "slime",
+      "variant": 1,
+      "pose": "idle",
+      "source_composite": true,
+      "actual_run": false
+    },
+    {
+      "scene": "blight",
+      "source": "art-review/ui-menu-exploration/actual/v1/hud-blighted.png",
+      "source_sha256": "bc6de8714ab4eb103459cde5ef1213acf5c99316d0f2e3f9c72ed1d881da445e",
+      "crop": [
+        94,
+        104,
+        142,
+        144
+      ],
+      "family": "slime",
+      "variant": 2,
+      "pose": "idle",
+      "source_composite": true,
+      "actual_run": false
+    },
+    {
+      "scene": "blight",
+      "source": "art-review/ui-menu-exploration/actual/v1/hud-blighted.png",
+      "source_sha256": "bc6de8714ab4eb103459cde5ef1213acf5c99316d0f2e3f9c72ed1d881da445e",
+      "crop": [
+        94,
+        104,
+        142,
+        144
+      ],
+      "family": "slime",
+      "variant": 3,
+      "pose": "idle",
+      "source_composite": true,
+      "actual_run": false
+    },
+    {
+      "scene": "blight",
+      "source": "art-review/ui-menu-exploration/actual/v1/hud-blighted.png",
+      "source_sha256": "bc6de8714ab4eb103459cde5ef1213acf5c99316d0f2e3f9c72ed1d881da445e",
+      "crop": [
+        94,
+        104,
+        142,
+        144
+      ],
+      "family": "slime",
+      "variant": 4,
+      "pose": "idle",
+      "source_composite": true,
+      "actual_run": false
+    },
+    {
+      "scene": "blight",
+      "source": "art-review/ui-menu-exploration/actual/v1/hud-blighted.png",
+      "source_sha256": "bc6de8714ab4eb103459cde5ef1213acf5c99316d0f2e3f9c72ed1d881da445e",
+      "crop": [
+        94,
+        104,
+        142,
+        144
+      ],
+      "family": "slime",
+      "variant": 5,
+      "pose": "idle",
+      "source_composite": true,
+      "actual_run": false
+    },
+    {
+      "scene": "blight",
+      "source": "art-review/ui-menu-exploration/actual/v1/hud-blighted.png",
+      "source_sha256": "bc6de8714ab4eb103459cde5ef1213acf5c99316d0f2e3f9c72ed1d881da445e",
+      "crop": [
+        94,
+        104,
+        142,
+        144
+      ],
+      "family": "slime",
+      "variant": 6,
+      "pose": "idle",
+      "source_composite": true,
+      "actual_run": false
+    },
+    {
+      "scene": "blight",
+      "source": "art-review/ui-menu-exploration/actual/v1/hud-blighted.png",
+      "source_sha256": "bc6de8714ab4eb103459cde5ef1213acf5c99316d0f2e3f9c72ed1d881da445e",
+      "crop": [
+        94,
+        104,
+        142,
+        144
+      ],
+      "family": "slime",
+      "variant": 7,
+      "pose": "idle",
+      "source_composite": true,
+      "actual_run": false
+    },
+    {
+      "scene": "blight",
+      "source": "art-review/ui-menu-exploration/actual/v1/hud-blighted.png",
+      "source_sha256": "bc6de8714ab4eb103459cde5ef1213acf5c99316d0f2e3f9c72ed1d881da445e",
+      "crop": [
+        94,
+        104,
+        142,
+        144
+      ],
+      "family": "slime",
+      "variant": 8,
+      "pose": "idle",
+      "source_composite": true,
+      "actual_run": false
+    },
+    {
+      "scene": "blight",
+      "source": "art-review/ui-menu-exploration/actual/v1/hud-blighted.png",
+      "source_sha256": "bc6de8714ab4eb103459cde5ef1213acf5c99316d0f2e3f9c72ed1d881da445e",
+      "crop": [
+        94,
+        104,
+        142,
+        144
+      ],
+      "family": "slime",
+      "variant": 9,
+      "pose": "idle",
+      "source_composite": true,
+      "actual_run": false
+    },
+    {
+      "scene": "blight",
+      "source": "art-review/ui-menu-exploration/actual/v1/hud-blighted.png",
+      "source_sha256": "bc6de8714ab4eb103459cde5ef1213acf5c99316d0f2e3f9c72ed1d881da445e",
+      "crop": [
+        94,
+        104,
+        142,
+        144
+      ],
+      "family": "slime",
+      "variant": 10,
+      "pose": "idle",
+      "source_composite": true,
+      "actual_run": false
+    },
+    {
+      "scene": "Drain",
+      "source": "art-review/ui-menu-exploration/actual/v1/hud-sewer-max.png",
+      "source_sha256": "d5cdc47e9187047685c7048173dd9e7ff736099a95cfee7f96ded63a7909aef0",
+      "crop": [
+        126,
+        100,
+        174,
+        140
+      ],
+      "family": "beetle",
+      "variant": 1,
+      "pose": "walk_s1",
+      "source_composite": true,
+      "actual_run": false
+    },
+    {
+      "scene": "Drain",
+      "source": "art-review/ui-menu-exploration/actual/v1/hud-sewer-max.png",
+      "source_sha256": "d5cdc47e9187047685c7048173dd9e7ff736099a95cfee7f96ded63a7909aef0",
+      "crop": [
+        126,
+        100,
+        174,
+        140
+      ],
+      "family": "beetle",
+      "variant": 2,
+      "pose": "walk_s1",
+      "source_composite": true,
+      "actual_run": false
+    },
+    {
+      "scene": "Drain",
+      "source": "art-review/ui-menu-exploration/actual/v1/hud-sewer-max.png",
+      "source_sha256": "d5cdc47e9187047685c7048173dd9e7ff736099a95cfee7f96ded63a7909aef0",
+      "crop": [
+        126,
+        100,
+        174,
+        140
+      ],
+      "family": "beetle",
+      "variant": 3,
+      "pose": "walk_s1",
+      "source_composite": true,
+      "actual_run": false
+    },
+    {
+      "scene": "Drain",
+      "source": "art-review/ui-menu-exploration/actual/v1/hud-sewer-max.png",
+      "source_sha256": "d5cdc47e9187047685c7048173dd9e7ff736099a95cfee7f96ded63a7909aef0",
+      "crop": [
+        126,
+        100,
+        174,
+        140
+      ],
+      "family": "beetle",
+      "variant": 4,
+      "pose": "walk_s1",
+      "source_composite": true,
+      "actual_run": false
+    },
+    {
+      "scene": "Drain",
+      "source": "art-review/ui-menu-exploration/actual/v1/hud-sewer-max.png",
+      "source_sha256": "d5cdc47e9187047685c7048173dd9e7ff736099a95cfee7f96ded63a7909aef0",
+      "crop": [
+        126,
+        100,
+        174,
+        140
+      ],
+      "family": "beetle",
+      "variant": 5,
+      "pose": "walk_s1",
+      "source_composite": true,
+      "actual_run": false
+    },
+    {
+      "scene": "Drain",
+      "source": "art-review/ui-menu-exploration/actual/v1/hud-sewer-max.png",
+      "source_sha256": "d5cdc47e9187047685c7048173dd9e7ff736099a95cfee7f96ded63a7909aef0",
+      "crop": [
+        126,
+        100,
+        174,
+        140
+      ],
+      "family": "beetle",
+      "variant": 6,
+      "pose": "walk_s1",
+      "source_composite": true,
+      "actual_run": false
+    },
+    {
+      "scene": "Drain",
+      "source": "art-review/ui-menu-exploration/actual/v1/hud-sewer-max.png",
+      "source_sha256": "d5cdc47e9187047685c7048173dd9e7ff736099a95cfee7f96ded63a7909aef0",
+      "crop": [
+        126,
+        100,
+        174,
+        140
+      ],
+      "family": "beetle",
+      "variant": 7,
+      "pose": "walk_s1",
+      "source_composite": true,
+      "actual_run": false
+    },
+    {
+      "scene": "Drain",
+      "source": "art-review/ui-menu-exploration/actual/v1/hud-sewer-max.png",
+      "source_sha256": "d5cdc47e9187047685c7048173dd9e7ff736099a95cfee7f96ded63a7909aef0",
+      "crop": [
+        126,
+        100,
+        174,
+        140
+      ],
+      "family": "beetle",
+      "variant": 8,
+      "pose": "walk_s1",
+      "source_composite": true,
+      "actual_run": false
+    },
+    {
+      "scene": "Drain",
+      "source": "art-review/ui-menu-exploration/actual/v1/hud-sewer-max.png",
+      "source_sha256": "d5cdc47e9187047685c7048173dd9e7ff736099a95cfee7f96ded63a7909aef0",
+      "crop": [
+        126,
+        100,
+        174,
+        140
+      ],
+      "family": "beetle",
+      "variant": 9,
+      "pose": "walk_s1",
+      "source_composite": true,
+      "actual_run": false
+    },
+    {
+      "scene": "Drain",
+      "source": "art-review/ui-menu-exploration/actual/v1/hud-sewer-max.png",
+      "source_sha256": "d5cdc47e9187047685c7048173dd9e7ff736099a95cfee7f96ded63a7909aef0",
+      "crop": [
+        126,
+        100,
+        174,
+        140
+      ],
+      "family": "beetle",
+      "variant": 10,
+      "pose": "walk_s1",
+      "source_composite": true,
+      "actual_run": false
+    },
+    {
+      "scene": "Drain",
+      "source": "art-review/ui-menu-exploration/actual/v1/hud-sewer-max.png",
+      "source_sha256": "d5cdc47e9187047685c7048173dd9e7ff736099a95cfee7f96ded63a7909aef0",
+      "crop": [
+        126,
+        100,
+        174,
+        140
+      ],
+      "family": "bat",
+      "variant": 1,
+      "pose": "fly1",
+      "source_composite": true,
+      "actual_run": false
+    },
+    {
+      "scene": "Drain",
+      "source": "art-review/ui-menu-exploration/actual/v1/hud-sewer-max.png",
+      "source_sha256": "d5cdc47e9187047685c7048173dd9e7ff736099a95cfee7f96ded63a7909aef0",
+      "crop": [
+        126,
+        100,
+        174,
+        140
+      ],
+      "family": "bat",
+      "variant": 2,
+      "pose": "fly1",
+      "source_composite": true,
+      "actual_run": false
+    },
+    {
+      "scene": "Drain",
+      "source": "art-review/ui-menu-exploration/actual/v1/hud-sewer-max.png",
+      "source_sha256": "d5cdc47e9187047685c7048173dd9e7ff736099a95cfee7f96ded63a7909aef0",
+      "crop": [
+        126,
+        100,
+        174,
+        140
+      ],
+      "family": "bat",
+      "variant": 3,
+      "pose": "fly1",
+      "source_composite": true,
+      "actual_run": false
+    },
+    {
+      "scene": "Drain",
+      "source": "art-review/ui-menu-exploration/actual/v1/hud-sewer-max.png",
+      "source_sha256": "d5cdc47e9187047685c7048173dd9e7ff736099a95cfee7f96ded63a7909aef0",
+      "crop": [
+        126,
+        100,
+        174,
+        140
+      ],
+      "family": "bat",
+      "variant": 4,
+      "pose": "fly1",
+      "source_composite": true,
+      "actual_run": false
+    },
+    {
+      "scene": "Drain",
+      "source": "art-review/ui-menu-exploration/actual/v1/hud-sewer-max.png",
+      "source_sha256": "d5cdc47e9187047685c7048173dd9e7ff736099a95cfee7f96ded63a7909aef0",
+      "crop": [
+        126,
+        100,
+        174,
+        140
+      ],
+      "family": "bat",
+      "variant": 5,
+      "pose": "fly1",
+      "source_composite": true,
+      "actual_run": false
+    },
+    {
+      "scene": "Drain",
+      "source": "art-review/ui-menu-exploration/actual/v1/hud-sewer-max.png",
+      "source_sha256": "d5cdc47e9187047685c7048173dd9e7ff736099a95cfee7f96ded63a7909aef0",
+      "crop": [
+        126,
+        100,
+        174,
+        140
+      ],
+      "family": "bat",
+      "variant": 6,
+      "pose": "fly1",
+      "source_composite": true,
+      "actual_run": false
+    },
+    {
+      "scene": "Drain",
+      "source": "art-review/ui-menu-exploration/actual/v1/hud-sewer-max.png",
+      "source_sha256": "d5cdc47e9187047685c7048173dd9e7ff736099a95cfee7f96ded63a7909aef0",
+      "crop": [
+        126,
+        100,
+        174,
+        140
+      ],
+      "family": "bat",
+      "variant": 7,
+      "pose": "fly1",
+      "source_composite": true,
+      "actual_run": false
+    },
+    {
+      "scene": "Drain",
+      "source": "art-review/ui-menu-exploration/actual/v1/hud-sewer-max.png",
+      "source_sha256": "d5cdc47e9187047685c7048173dd9e7ff736099a95cfee7f96ded63a7909aef0",
+      "crop": [
+        126,
+        100,
+        174,
+        140
+      ],
+      "family": "bat",
+      "variant": 8,
+      "pose": "fly1",
+      "source_composite": true,
+      "actual_run": false
+    },
+    {
+      "scene": "Drain",
+      "source": "art-review/ui-menu-exploration/actual/v1/hud-sewer-max.png",
+      "source_sha256": "d5cdc47e9187047685c7048173dd9e7ff736099a95cfee7f96ded63a7909aef0",
+      "crop": [
+        126,
+        100,
+        174,
+        140
+      ],
+      "family": "bat",
+      "variant": 9,
+      "pose": "fly1",
+      "source_composite": true,
+      "actual_run": false
+    },
+    {
+      "scene": "Drain",
+      "source": "art-review/ui-menu-exploration/actual/v1/hud-sewer-max.png",
+      "source_sha256": "d5cdc47e9187047685c7048173dd9e7ff736099a95cfee7f96ded63a7909aef0",
+      "crop": [
+        126,
+        100,
+        174,
+        140
+      ],
+      "family": "bat",
+      "variant": 10,
+      "pose": "fly1",
+      "source_composite": true,
+      "actual_run": false
+    },
+    {
+      "scene": "Drain",
+      "source": "art-review/ui-menu-exploration/actual/v1/hud-sewer-max.png",
+      "source_sha256": "d5cdc47e9187047685c7048173dd9e7ff736099a95cfee7f96ded63a7909aef0",
+      "crop": [
+        126,
+        100,
+        174,
+        140
+      ],
+      "family": "slime",
+      "variant": 1,
+      "pose": "idle",
+      "source_composite": true,
+      "actual_run": false
+    },
+    {
+      "scene": "Drain",
+      "source": "art-review/ui-menu-exploration/actual/v1/hud-sewer-max.png",
+      "source_sha256": "d5cdc47e9187047685c7048173dd9e7ff736099a95cfee7f96ded63a7909aef0",
+      "crop": [
+        126,
+        100,
+        174,
+        140
+      ],
+      "family": "slime",
+      "variant": 2,
+      "pose": "idle",
+      "source_composite": true,
+      "actual_run": false
+    },
+    {
+      "scene": "Drain",
+      "source": "art-review/ui-menu-exploration/actual/v1/hud-sewer-max.png",
+      "source_sha256": "d5cdc47e9187047685c7048173dd9e7ff736099a95cfee7f96ded63a7909aef0",
+      "crop": [
+        126,
+        100,
+        174,
+        140
+      ],
+      "family": "slime",
+      "variant": 3,
+      "pose": "idle",
+      "source_composite": true,
+      "actual_run": false
+    },
+    {
+      "scene": "Drain",
+      "source": "art-review/ui-menu-exploration/actual/v1/hud-sewer-max.png",
+      "source_sha256": "d5cdc47e9187047685c7048173dd9e7ff736099a95cfee7f96ded63a7909aef0",
+      "crop": [
+        126,
+        100,
+        174,
+        140
+      ],
+      "family": "slime",
+      "variant": 4,
+      "pose": "idle",
+      "source_composite": true,
+      "actual_run": false
+    },
+    {
+      "scene": "Drain",
+      "source": "art-review/ui-menu-exploration/actual/v1/hud-sewer-max.png",
+      "source_sha256": "d5cdc47e9187047685c7048173dd9e7ff736099a95cfee7f96ded63a7909aef0",
+      "crop": [
+        126,
+        100,
+        174,
+        140
+      ],
+      "family": "slime",
+      "variant": 5,
+      "pose": "idle",
+      "source_composite": true,
+      "actual_run": false
+    },
+    {
+      "scene": "Drain",
+      "source": "art-review/ui-menu-exploration/actual/v1/hud-sewer-max.png",
+      "source_sha256": "d5cdc47e9187047685c7048173dd9e7ff736099a95cfee7f96ded63a7909aef0",
+      "crop": [
+        126,
+        100,
+        174,
+        140
+      ],
+      "family": "slime",
+      "variant": 6,
+      "pose": "idle",
+      "source_composite": true,
+      "actual_run": false
+    },
+    {
+      "scene": "Drain",
+      "source": "art-review/ui-menu-exploration/actual/v1/hud-sewer-max.png",
+      "source_sha256": "d5cdc47e9187047685c7048173dd9e7ff736099a95cfee7f96ded63a7909aef0",
+      "crop": [
+        126,
+        100,
+        174,
+        140
+      ],
+      "family": "slime",
+      "variant": 7,
+      "pose": "idle",
+      "source_composite": true,
+      "actual_run": false
+    },
+    {
+      "scene": "Drain",
+      "source": "art-review/ui-menu-exploration/actual/v1/hud-sewer-max.png",
+      "source_sha256": "d5cdc47e9187047685c7048173dd9e7ff736099a95cfee7f96ded63a7909aef0",
+      "crop": [
+        126,
+        100,
+        174,
+        140
+      ],
+      "family": "slime",
+      "variant": 8,
+      "pose": "idle",
+      "source_composite": true,
+      "actual_run": false
+    },
+    {
+      "scene": "Drain",
+      "source": "art-review/ui-menu-exploration/actual/v1/hud-sewer-max.png",
+      "source_sha256": "d5cdc47e9187047685c7048173dd9e7ff736099a95cfee7f96ded63a7909aef0",
+      "crop": [
+        126,
+        100,
+        174,
+        140
+      ],
+      "family": "slime",
+      "variant": 9,
+      "pose": "idle",
+      "source_composite": true,
+      "actual_run": false
+    },
+    {
+      "scene": "Drain",
+      "source": "art-review/ui-menu-exploration/actual/v1/hud-sewer-max.png",
+      "source_sha256": "d5cdc47e9187047685c7048173dd9e7ff736099a95cfee7f96ded63a7909aef0",
+      "crop": [
+        126,
+        100,
+        174,
+        140
+      ],
+      "family": "slime",
+      "variant": 10,
+      "pose": "idle",
+      "source_composite": true,
+      "actual_run": false
+    },
+    {
+      "scene": "cave",
+      "source": "art-review/ui-menu-exploration/actual/v1/hud-cave.png",
+      "source_sha256": "61630058f1d664dee1c01585d8ddab5ed4269e6f73392f00de12e9c7d1fdad5b",
+      "crop": [
+        144,
+        96,
+        192,
+        136
+      ],
+      "family": "beetle",
+      "variant": 1,
+      "pose": "walk_s1",
+      "source_composite": true,
+      "actual_run": false
+    },
+    {
+      "scene": "cave",
+      "source": "art-review/ui-menu-exploration/actual/v1/hud-cave.png",
+      "source_sha256": "61630058f1d664dee1c01585d8ddab5ed4269e6f73392f00de12e9c7d1fdad5b",
+      "crop": [
+        144,
+        96,
+        192,
+        136
+      ],
+      "family": "beetle",
+      "variant": 2,
+      "pose": "walk_s1",
+      "source_composite": true,
+      "actual_run": false
+    },
+    {
+      "scene": "cave",
+      "source": "art-review/ui-menu-exploration/actual/v1/hud-cave.png",
+      "source_sha256": "61630058f1d664dee1c01585d8ddab5ed4269e6f73392f00de12e9c7d1fdad5b",
+      "crop": [
+        144,
+        96,
+        192,
+        136
+      ],
+      "family": "beetle",
+      "variant": 3,
+      "pose": "walk_s1",
+      "source_composite": true,
+      "actual_run": false
+    },
+    {
+      "scene": "cave",
+      "source": "art-review/ui-menu-exploration/actual/v1/hud-cave.png",
+      "source_sha256": "61630058f1d664dee1c01585d8ddab5ed4269e6f73392f00de12e9c7d1fdad5b",
+      "crop": [
+        144,
+        96,
+        192,
+        136
+      ],
+      "family": "beetle",
+      "variant": 4,
+      "pose": "walk_s1",
+      "source_composite": true,
+      "actual_run": false
+    },
+    {
+      "scene": "cave",
+      "source": "art-review/ui-menu-exploration/actual/v1/hud-cave.png",
+      "source_sha256": "61630058f1d664dee1c01585d8ddab5ed4269e6f73392f00de12e9c7d1fdad5b",
+      "crop": [
+        144,
+        96,
+        192,
+        136
+      ],
+      "family": "beetle",
+      "variant": 5,
+      "pose": "walk_s1",
+      "source_composite": true,
+      "actual_run": false
+    },
+    {
+      "scene": "cave",
+      "source": "art-review/ui-menu-exploration/actual/v1/hud-cave.png",
+      "source_sha256": "61630058f1d664dee1c01585d8ddab5ed4269e6f73392f00de12e9c7d1fdad5b",
+      "crop": [
+        144,
+        96,
+        192,
+        136
+      ],
+      "family": "beetle",
+      "variant": 6,
+      "pose": "walk_s1",
+      "source_composite": true,
+      "actual_run": false
+    },
+    {
+      "scene": "cave",
+      "source": "art-review/ui-menu-exploration/actual/v1/hud-cave.png",
+      "source_sha256": "61630058f1d664dee1c01585d8ddab5ed4269e6f73392f00de12e9c7d1fdad5b",
+      "crop": [
+        144,
+        96,
+        192,
+        136
+      ],
+      "family": "beetle",
+      "variant": 7,
+      "pose": "walk_s1",
+      "source_composite": true,
+      "actual_run": false
+    },
+    {
+      "scene": "cave",
+      "source": "art-review/ui-menu-exploration/actual/v1/hud-cave.png",
+      "source_sha256": "61630058f1d664dee1c01585d8ddab5ed4269e6f73392f00de12e9c7d1fdad5b",
+      "crop": [
+        144,
+        96,
+        192,
+        136
+      ],
+      "family": "beetle",
+      "variant": 8,
+      "pose": "walk_s1",
+      "source_composite": true,
+      "actual_run": false
+    },
+    {
+      "scene": "cave",
+      "source": "art-review/ui-menu-exploration/actual/v1/hud-cave.png",
+      "source_sha256": "61630058f1d664dee1c01585d8ddab5ed4269e6f73392f00de12e9c7d1fdad5b",
+      "crop": [
+        144,
+        96,
+        192,
+        136
+      ],
+      "family": "beetle",
+      "variant": 9,
+      "pose": "walk_s1",
+      "source_composite": true,
+      "actual_run": false
+    },
+    {
+      "scene": "cave",
+      "source": "art-review/ui-menu-exploration/actual/v1/hud-cave.png",
+      "source_sha256": "61630058f1d664dee1c01585d8ddab5ed4269e6f73392f00de12e9c7d1fdad5b",
+      "crop": [
+        144,
+        96,
+        192,
+        136
+      ],
+      "family": "beetle",
+      "variant": 10,
+      "pose": "walk_s1",
+      "source_composite": true,
+      "actual_run": false
+    },
+    {
+      "scene": "cave",
+      "source": "art-review/ui-menu-exploration/actual/v1/hud-cave.png",
+      "source_sha256": "61630058f1d664dee1c01585d8ddab5ed4269e6f73392f00de12e9c7d1fdad5b",
+      "crop": [
+        144,
+        96,
+        192,
+        136
+      ],
+      "family": "bat",
+      "variant": 1,
+      "pose": "fly1",
+      "source_composite": true,
+      "actual_run": false
+    },
+    {
+      "scene": "cave",
+      "source": "art-review/ui-menu-exploration/actual/v1/hud-cave.png",
+      "source_sha256": "61630058f1d664dee1c01585d8ddab5ed4269e6f73392f00de12e9c7d1fdad5b",
+      "crop": [
+        144,
+        96,
+        192,
+        136
+      ],
+      "family": "bat",
+      "variant": 2,
+      "pose": "fly1",
+      "source_composite": true,
+      "actual_run": false
+    },
+    {
+      "scene": "cave",
+      "source": "art-review/ui-menu-exploration/actual/v1/hud-cave.png",
+      "source_sha256": "61630058f1d664dee1c01585d8ddab5ed4269e6f73392f00de12e9c7d1fdad5b",
+      "crop": [
+        144,
+        96,
+        192,
+        136
+      ],
+      "family": "bat",
+      "variant": 3,
+      "pose": "fly1",
+      "source_composite": true,
+      "actual_run": false
+    },
+    {
+      "scene": "cave",
+      "source": "art-review/ui-menu-exploration/actual/v1/hud-cave.png",
+      "source_sha256": "61630058f1d664dee1c01585d8ddab5ed4269e6f73392f00de12e9c7d1fdad5b",
+      "crop": [
+        144,
+        96,
+        192,
+        136
+      ],
+      "family": "bat",
+      "variant": 4,
+      "pose": "fly1",
+      "source_composite": true,
+      "actual_run": false
+    },
+    {
+      "scene": "cave",
+      "source": "art-review/ui-menu-exploration/actual/v1/hud-cave.png",
+      "source_sha256": "61630058f1d664dee1c01585d8ddab5ed4269e6f73392f00de12e9c7d1fdad5b",
+      "crop": [
+        144,
+        96,
+        192,
+        136
+      ],
+      "family": "bat",
+      "variant": 5,
+      "pose": "fly1",
+      "source_composite": true,
+      "actual_run": false
+    },
+    {
+      "scene": "cave",
+      "source": "art-review/ui-menu-exploration/actual/v1/hud-cave.png",
+      "source_sha256": "61630058f1d664dee1c01585d8ddab5ed4269e6f73392f00de12e9c7d1fdad5b",
+      "crop": [
+        144,
+        96,
+        192,
+        136
+      ],
+      "family": "bat",
+      "variant": 6,
+      "pose": "fly1",
+      "source_composite": true,
+      "actual_run": false
+    },
+    {
+      "scene": "cave",
+      "source": "art-review/ui-menu-exploration/actual/v1/hud-cave.png",
+      "source_sha256": "61630058f1d664dee1c01585d8ddab5ed4269e6f73392f00de12e9c7d1fdad5b",
+      "crop": [
+        144,
+        96,
+        192,
+        136
+      ],
+      "family": "bat",
+      "variant": 7,
+      "pose": "fly1",
+      "source_composite": true,
+      "actual_run": false
+    },
+    {
+      "scene": "cave",
+      "source": "art-review/ui-menu-exploration/actual/v1/hud-cave.png",
+      "source_sha256": "61630058f1d664dee1c01585d8ddab5ed4269e6f73392f00de12e9c7d1fdad5b",
+      "crop": [
+        144,
+        96,
+        192,
+        136
+      ],
+      "family": "bat",
+      "variant": 8,
+      "pose": "fly1",
+      "source_composite": true,
+      "actual_run": false
+    },
+    {
+      "scene": "cave",
+      "source": "art-review/ui-menu-exploration/actual/v1/hud-cave.png",
+      "source_sha256": "61630058f1d664dee1c01585d8ddab5ed4269e6f73392f00de12e9c7d1fdad5b",
+      "crop": [
+        144,
+        96,
+        192,
+        136
+      ],
+      "family": "bat",
+      "variant": 9,
+      "pose": "fly1",
+      "source_composite": true,
+      "actual_run": false
+    },
+    {
+      "scene": "cave",
+      "source": "art-review/ui-menu-exploration/actual/v1/hud-cave.png",
+      "source_sha256": "61630058f1d664dee1c01585d8ddab5ed4269e6f73392f00de12e9c7d1fdad5b",
+      "crop": [
+        144,
+        96,
+        192,
+        136
+      ],
+      "family": "bat",
+      "variant": 10,
+      "pose": "fly1",
+      "source_composite": true,
+      "actual_run": false
+    },
+    {
+      "scene": "cave",
+      "source": "art-review/ui-menu-exploration/actual/v1/hud-cave.png",
+      "source_sha256": "61630058f1d664dee1c01585d8ddab5ed4269e6f73392f00de12e9c7d1fdad5b",
+      "crop": [
+        144,
+        96,
+        192,
+        136
+      ],
+      "family": "slime",
+      "variant": 1,
+      "pose": "idle",
+      "source_composite": true,
+      "actual_run": false
+    },
+    {
+      "scene": "cave",
+      "source": "art-review/ui-menu-exploration/actual/v1/hud-cave.png",
+      "source_sha256": "61630058f1d664dee1c01585d8ddab5ed4269e6f73392f00de12e9c7d1fdad5b",
+      "crop": [
+        144,
+        96,
+        192,
+        136
+      ],
+      "family": "slime",
+      "variant": 2,
+      "pose": "idle",
+      "source_composite": true,
+      "actual_run": false
+    },
+    {
+      "scene": "cave",
+      "source": "art-review/ui-menu-exploration/actual/v1/hud-cave.png",
+      "source_sha256": "61630058f1d664dee1c01585d8ddab5ed4269e6f73392f00de12e9c7d1fdad5b",
+      "crop": [
+        144,
+        96,
+        192,
+        136
+      ],
+      "family": "slime",
+      "variant": 3,
+      "pose": "idle",
+      "source_composite": true,
+      "actual_run": false
+    },
+    {
+      "scene": "cave",
+      "source": "art-review/ui-menu-exploration/actual/v1/hud-cave.png",
+      "source_sha256": "61630058f1d664dee1c01585d8ddab5ed4269e6f73392f00de12e9c7d1fdad5b",
+      "crop": [
+        144,
+        96,
+        192,
+        136
+      ],
+      "family": "slime",
+      "variant": 4,
+      "pose": "idle",
+      "source_composite": true,
+      "actual_run": false
+    },
+    {
+      "scene": "cave",
+      "source": "art-review/ui-menu-exploration/actual/v1/hud-cave.png",
+      "source_sha256": "61630058f1d664dee1c01585d8ddab5ed4269e6f73392f00de12e9c7d1fdad5b",
+      "crop": [
+        144,
+        96,
+        192,
+        136
+      ],
+      "family": "slime",
+      "variant": 5,
+      "pose": "idle",
+      "source_composite": true,
+      "actual_run": false
+    },
+    {
+      "scene": "cave",
+      "source": "art-review/ui-menu-exploration/actual/v1/hud-cave.png",
+      "source_sha256": "61630058f1d664dee1c01585d8ddab5ed4269e6f73392f00de12e9c7d1fdad5b",
+      "crop": [
+        144,
+        96,
+        192,
+        136
+      ],
+      "family": "slime",
+      "variant": 6,
+      "pose": "idle",
+      "source_composite": true,
+      "actual_run": false
+    },
+    {
+      "scene": "cave",
+      "source": "art-review/ui-menu-exploration/actual/v1/hud-cave.png",
+      "source_sha256": "61630058f1d664dee1c01585d8ddab5ed4269e6f73392f00de12e9c7d1fdad5b",
+      "crop": [
+        144,
+        96,
+        192,
+        136
+      ],
+      "family": "slime",
+      "variant": 7,
+      "pose": "idle",
+      "source_composite": true,
+      "actual_run": false
+    },
+    {
+      "scene": "cave",
+      "source": "art-review/ui-menu-exploration/actual/v1/hud-cave.png",
+      "source_sha256": "61630058f1d664dee1c01585d8ddab5ed4269e6f73392f00de12e9c7d1fdad5b",
+      "crop": [
+        144,
+        96,
+        192,
+        136
+      ],
+      "family": "slime",
+      "variant": 8,
+      "pose": "idle",
+      "source_composite": true,
+      "actual_run": false
+    },
+    {
+      "scene": "cave",
+      "source": "art-review/ui-menu-exploration/actual/v1/hud-cave.png",
+      "source_sha256": "61630058f1d664dee1c01585d8ddab5ed4269e6f73392f00de12e9c7d1fdad5b",
+      "crop": [
+        144,
+        96,
+        192,
+        136
+      ],
+      "family": "slime",
+      "variant": 9,
+      "pose": "idle",
+      "source_composite": true,
+      "actual_run": false
+    },
+    {
+      "scene": "cave",
+      "source": "art-review/ui-menu-exploration/actual/v1/hud-cave.png",
+      "source_sha256": "61630058f1d664dee1c01585d8ddab5ed4269e6f73392f00de12e9c7d1fdad5b",
+      "crop": [
+        144,
+        96,
+        192,
+        136
+      ],
+      "family": "slime",
+      "variant": 10,
+      "pose": "idle",
+      "source_composite": true,
+      "actual_run": false
+    }
+  ],
+  "shared_bank_hazard": "Original bugs also colors PetalCloak/HUD/carriedbush. Give enemy bodies an independent bank; do not replace shared foliage/bugs globally.",
+  "limits": "Static foreground separation and allsourceposes inspected; parent real-run capture still needed. No numerical contrast metric is an aesthetic score."
+}

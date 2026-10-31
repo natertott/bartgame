@@ -1,0 +1,21 @@
+{
+  "scope": "Final immutable source and ROM",
+  "source_commit": "5eedc6dae94d8c1ea21c55b8668435bcf0be884d",
+  "rom_sha256": "42d7902226c9cbca47bdefb21b970a4e3f74d9e4e2cfc201404dd6479fe275a3",
+  "captures": 36,
+  "passed": 223,
+  "total": 223,
+  "all_25_generated_rooms": true,
+  "shrine_seed": 2,
+  "shrine_cell": 8,
+  "live_heart_actor_location": true,
+  "Workbench_focus_assignment_and_key_safety": true,
+  "independent_visual_review": "appearance_runtime inspected the native overview and six-panel pilot feature board; no blocker. Parent also reviewed the first native overview.",
+  "max_sampled_draw_frames": 20,
+  "source_sha256": {
+    "src/menu.c": "8994db593fd477cd9601e1c035522a72bb4725cba0897adf1fa9b3b4ddd782c2",
+    "src/menu_studies.h": "26d48dbedbb63dd4bdf380deec661490ae96c7816e95406c2178598592e7ce8a",
+    "src/menu_layouts_a.c": "f786b8af57520e3c8c5bc50d03651d8282c207617f25f98b989a91a3248b6130",
+    "tools/adopted_map_review.py": "c24130cfd641ee97217066237d41c561eee06df6014cc2384fb9ec60cd812025"
+  }
+}

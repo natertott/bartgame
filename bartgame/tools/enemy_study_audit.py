@@ -95,6 +95,40 @@ def git_source(ref, name):
     return subprocess.check_output(['git', 'show', ref + ':bartgame/' + name], cwd=ROOT, text=True)
 
 
+def compare_trajectories(reference_path, candidate_path):
+    """Independently compare canonical mechanics, excluding presentation clocks.
+
+    No capture/harness module or mGBA binding is imported here. Global video
+    phase, OAM, palette/tile residency and selected visual frame are excluded;
+    position, AI state/timers, health, damage, projectiles and RNG are exact.
+    """
+    reference=json.loads(Path(reference_path).read_text())
+    candidate=json.loads(Path(candidate_path).read_text())
+    fields=('kind','type','state','timer','timer2','dir','facing','x_q16','y_q16',
+            'z_q16','zvel_q16','speed','hp','iframes','knockback_timer','flags','damage','v')
+    def actor(a):return {key:a[key] for key in fields} if a else None
+    def canonical(t):
+        return {'game_state':t['game_state'],'area':t['area'],'cell':t['cell'],
+                'hero':actor(t['hero']),'hero_hp':t['hero_hp'],
+                'target':actor(t['target']),'projectiles':t['projectiles'],
+                'enemy_count':t['enemy_count'],'rng':t.get('rng')}
+    old={row['name']:row for row in reference['captures']};rows=[]
+    for row in candidate['captures']:
+        before=old.get(row['name'])
+        if before is None:
+            rows.append({'name':row['name'],'passed':False,'reason':'reference capture missing'});continue
+        a,b=[canonical(t) for t in before['trace']],[canonical(t) for t in row['trace']]
+        bad=next((i for i,(x,y) in enumerate(zip(a,b)) if x!=y),None)
+        result={'name':row['name'],'passed':bad is None and len(a)==len(b),
+                'reference_frames':len(a),'candidate_frames':len(b)}
+        if bad is not None:result.update(first_divergence_tick=bad,reference=a[bad],candidate=b[bad])
+        rows.append(result)
+    return {'reference_rom_sha256':reference['rom_sha256'],
+            'candidate_rom_sha256':candidate['rom_sha256'],
+            'passed':sum(r['passed'] for r in rows),'total':len(rows),
+            'method':compare_trajectories.__doc__.strip(),'captures':rows}
+
+
 class Audit:
     def __init__(self, args):
         self.args = args
@@ -292,17 +326,23 @@ class Audit:
             path = next((p for p in options if p.exists()), None)
             self.check(v,'runtime_comparison','positive-profile capture report exists',path is not None)
             if path:
+                report=json.loads(path.read_text())
+                self.check(v,'runtime_comparison','capture ROM matches frozen build',report['rom_sha256']==build['rom_sha256'])
+                self.check(v,'runtime_comparison','capture source matches frozen build',report.get('source_commit')==build.get('source_commit'))
+                self.check(v,'runtime_comparison','all twelve intended flows complete',report.get('capture_count')==len(report['captures'])==12)
+                self.check(v,'runtime_comparison','capture checks all pass',report['passed']==report['total'] and not report['failures'])
                 reports.append((enemy,path))
         if len(reports) != 10:
             return {'status':'incomplete','profiles':len(reports)}
-        from enemy_study_review import compare_reports
         reports.sort(key=lambda r:r[0]);reference=reports[0][1];results=[]
-        for enemy,report in reports:
-            comparison=compare_reports(reference,report)
+        expected_names={r['name'] for r in json.loads(reference.read_text())['captures']}
+        for enemy,report in reports[1:]:
+            self.check(enemy,'runtime_comparison','identical complete clip set',expected_names=={r['name'] for r in json.loads(report.read_text())['captures']})
+            comparison=compare_trajectories(reference,report)
             passed=comparison['total']>0 and comparison['passed']==comparison['total']
             self.check(enemy,'runtime_comparison','same positive-profile gameplay trace',passed,comparison)
             results.append({'enemy':enemy,**comparison})
-        return {'status':'complete','comparison_reference':1,'profiles':results,'limits':'Compares canonical AI/gameplay fields, not framebuffer pixels, global VBlank phase or older baseline performance.'}
+        return {'status':'complete','comparison_reference':1,'positive_profile_count':len(reports),'profile_pairs':len(results),'matched_flows':sum(x['passed'] for x in results),'total_flows':sum(x['total'] for x in results),'profiles':results,'limits':'Compares canonical AI/gameplay fields, not framebuffer pixels, global VBlank phase or older baseline performance.'}
 
     def run(self):
         builds = json.loads((self.work/'builds.json').read_text())

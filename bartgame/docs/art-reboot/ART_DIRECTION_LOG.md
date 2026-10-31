@@ -566,11 +566,11 @@ atlases are labelled separately from actual mGBA AI/controls recordings.
 Final frozen builds, captures, review findings and delivery evidence follow.
 
 **Native review refinements:** the first solid/background composites exposed
-weak separation in the foliage-colored small enemies. All30 such concepts
+weak separation in the foliage-colored small enemies. All 30 such concepts
 were compared on four actual captured material backgrounds (120 before/after
 source composites). The study-only enemy bank uses brighter jade/wood planes
 and ivory attached highlights, retaining the original dark contour. Physical
-OBJ bank10 is reserved for these three enemy bodies; all world material items
+OBJ bank 10 is reserved for these three enemy bodies; all world material items
 select explicit other frame palettes, and the paused icon cache restores the
 entire live palette on return. The protected cloak/carried-bush bank remains
 unchanged. A seed shaped too much like a glitter cross becomes an asymmetric
@@ -578,11 +578,57 @@ bronze pod. Ten genuine back views also correct the grounded pursuer's old
 south-facing artwork when travelling north, without changing its gait clock.
 
 The boss's expanded thirteen-pose set streams one32-tile frame instead of
-keeping416 tiles resident. Skipping its unused temporary knight sheet keeps
-the conservative all-enemy/prop/menu allocation under the876-tile playfield
+keeping 416 tiles resident. Skipping its unused temporary knight sheet keeps
+the conservative all-enemy/prop/menu allocation under the 876-tile playfield
 limit. Draw-only presentation restores the Actor's original AI-frame field;
 hurt selection works during the existing knockback pause. None of these
 presentation refinements changes damage or actual vulnerability windows.
 The Options page previews all nine frame/color combinations, persists its
 own CRC-checked SRAM record, and styles the continuation/picker marks without
 recoloring the fixed Winebound HUD or minimap.
+
+**Final core evidence:** source `5eedc6dae94d8c1ea21c55b8668435bcf0be884d`
+is frozen in eleven ROMs: selected interfaces/current enemies (default 0), and
+enemy alternatives 1–10. All nine frame/palette combinations pass 280 appearance
+checks over 56 actual mGBA views; legacy save migration/roundtrip/corruption
+passes 6. The hybrid Workbench/map suite passes 223 checks over 36 views, including
+all 25 generated rooms, a genuine shrine, live moving Heart, cold unvisited
+Astrolabe preview, Map-only/fog/completion, assignment/focus and full pause/
+restore invariants. Map symbols are outlined 7px designs with a nine-entry key;
+the healing Shrine and boss Heart are explicitly different labels.
+
+The eleven enemy builds pass 900 checks over 132 natural-AI encounters, including
+hurt/death, boss phases, natural cave combat and post-menu weapon/palette
+restoration. All thirteen boss poses occur in every positive profile. The
+independent ROM/source audit passes 11,632 checks, including 108 exact positive
+gameplay-flow comparisons. Protected world/Bloom/items/font/glitter and original
+IDs remain exact. The baseline's four boss sample timelines differ by an
+initial update/global-frame phase from the expanded streamed presentation;
+their unchanged source AI is distinguished from that clip-alignment limit.
+
+The final source gallery contains 640 native frame instances: 610 body poses,
+20 weapon and 10 seed companions. Six exact-palette source GIFs show every
+body pose at 150ms for inspection, with companions in complete native atlases;
+they do not pretend to reproduce actual attack timing. Real mGBA clips have
+their own truthful event/input traces. Source and actual captures are separate
+in [the new gallery](../../../art-review/appearance-enemy-studies/README.md).
+
+Linked maximum EWRAM is 212,184/262,144 bytes; the conservative union of all
+enemy/prop/menu allocations is 816/876 OBJ tiles. The normal build is restored
+byte-identical to frozen v0 and every profile's `make -q` is current. Native
+marker/maps, nine appearance combinations and sixty concept silhouettes were
+visually inspected. Several rounded boss maw forms rely on appendages and
+phase behavior for identity. Enemy proposals are still unselected; the user's
+interface choices and Options behavior are adopted.
+
+**Final visibility follow-up:** the longer healthy pursuer encounter correctly
+draws bridge rails over the lower body, making it less useful for comparing
+leg motion. It remains a depth-context recording. Ten additional natural
+spawn encounters (seed 6/cell 9, open blighted floor) each show 96 actual updates
+with the complete body footprint on unobstructed floor. All 960 footprints,
+60 checks and 9 matching comparison flows pass. No enemy state/position/pose
+or terrain is assigned. The combined publication contains 234 actual cases and
+1,469 runtime/save checks; the original 132 enemy reports remain unchanged.
+The main gallery links this clear-floor view for grounded gait comparison,
+while source GIFs retain complete facing/pose coverage. No ROM/art input
+changed for this camera/context refinement.

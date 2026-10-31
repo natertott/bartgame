@@ -1,0 +1,153 @@
+{
+  "source_commit": "5eedc6dae94d8c1ea21c55b8668435bcf0be884d",
+  "reference_variant": 1,
+  "passed": 9,
+  "total": 9,
+  "comparisons": [
+    {
+      "reference_rom_sha256": "82ce7b19a6cdcbf6819ecbea4870a8905598e40da5ba5d6312d02d6b579d5087",
+      "candidate_rom_sha256": "dcc97741406cbc0836dfbf8c25728cdc47cbf619a1e59d1485333cb49dfa4796",
+      "passed": 1,
+      "total": 1,
+      "method": "Exclude images, draw-only frames, OAM, global time and presentation IDs.\n\n    Kept game fields expose any real AI/motion/health/projectile/RNG drift.\n    Cold-loading/global-frame phase differences in a legacy baseline are not\n    silently normalized away: callers inspect and explain any resulting drift.",
+      "captures": [
+        {
+          "name": "pursuer-clearing",
+          "passed": true,
+          "reference_frames": 96,
+          "candidate_frames": 96
+        }
+      ],
+      "variant": 2
+    },
+    {
+      "reference_rom_sha256": "82ce7b19a6cdcbf6819ecbea4870a8905598e40da5ba5d6312d02d6b579d5087",
+      "candidate_rom_sha256": "22865248043f7d96cae01da8b7b99b7722601e21f0df547ee13e1c47d6b2aabd",
+      "passed": 1,
+      "total": 1,
+      "method": "Exclude images, draw-only frames, OAM, global time and presentation IDs.\n\n    Kept game fields expose any real AI/motion/health/projectile/RNG drift.\n    Cold-loading/global-frame phase differences in a legacy baseline are not\n    silently normalized away: callers inspect and explain any resulting drift.",
+      "captures": [
+        {
+          "name": "pursuer-clearing",
+          "passed": true,
+          "reference_frames": 96,
+          "candidate_frames": 96
+        }
+      ],
+      "variant": 3
+    },
+    {
+      "reference_rom_sha256": "82ce7b19a6cdcbf6819ecbea4870a8905598e40da5ba5d6312d02d6b579d5087",
+      "candidate_rom_sha256": "767694badbedc1f15eb8c3151201f6b6892c42caa97baf7a819c4989c77670d8",
+      "passed": 1,
+      "total": 1,
+      "method": "Exclude images, draw-only frames, OAM, global time and presentation IDs.\n\n    Kept game fields expose any real AI/motion/health/projectile/RNG drift.\n    Cold-loading/global-frame phase differences in a legacy baseline are not\n    silently normalized away: callers inspect and explain any resulting drift.",
+      "captures": [
+        {
+          "name": "pursuer-clearing",
+          "passed": true,
+          "reference_frames": 96,
+          "candidate_frames": 96
+        }
+      ],
+      "variant": 4
+    },
+    {
+      "reference_rom_sha256": "82ce7b19a6cdcbf6819ecbea4870a8905598e40da5ba5d6312d02d6b579d5087",
+      "candidate_rom_sha256": "ab8e4bd0e022fb4ab213b39617939eee12de279c2b99123e124351a2ad53a0cc",
+      "passed": 1,
+      "total": 1,
+      "method": "Exclude images, draw-only frames, OAM, global time and presentation IDs.\n\n    Kept game fields expose any real AI/motion/health/projectile/RNG drift.\n    Cold-loading/global-frame phase differences in a legacy baseline are not\n    silently normalized away: callers inspect and explain any resulting drift.",
+      "captures": [
+        {
+          "name": "pursuer-clearing",
+          "passed": true,
+          "reference_frames": 96,
+          "candidate_frames": 96
+        }
+      ],
+      "variant": 5
+    },
+    {
+      "reference_rom_sha256": "82ce7b19a6cdcbf6819ecbea4870a8905598e40da5ba5d6312d02d6b579d5087",
+      "candidate_rom_sha256": "a952d1869e3ffe6b10f599d501a69a3adf8b6d1b4061f0da8100e950d1900ae4",
+      "passed": 1,
+      "total": 1,
+      "method": "Exclude images, draw-only frames, OAM, global time and presentation IDs.\n\n    Kept game fields expose any real AI/motion/health/projectile/RNG drift.\n    Cold-loading/global-frame phase differences in a legacy baseline are not\n    silently normalized away: callers inspect and explain any resulting drift.",
+      "captures": [
+        {
+          "name": "pursuer-clearing",
+          "passed": true,
+          "reference_frames": 96,
+          "candidate_frames": 96
+        }
+      ],
+      "variant": 6
+    },
+    {
+      "reference_rom_sha256": "82ce7b19a6cdcbf6819ecbea4870a8905598e40da5ba5d6312d02d6b579d5087",
+      "candidate_rom_sha256": "1b18ffd437770d6e53322ce8583f30f00fe9ba9658ba5794e1f811c495b95af1",
+      "passed": 1,
+      "total": 1,
+      "method": "Exclude images, draw-only frames, OAM, global time and presentation IDs.\n\n    Kept game fields expose any real AI/motion/health/projectile/RNG drift.\n    Cold-loading/global-frame phase differences in a legacy baseline are not\n    silently normalized away: callers inspect and explain any resulting drift.",
+      "captures": [
+        {
+          "name": "pursuer-clearing",
+          "passed": true,
+          "reference_frames": 96,
+          "candidate_frames": 96
+        }
+      ],
+      "variant": 7
+    },
+    {
+      "reference_rom_sha256": "82ce7b19a6cdcbf6819ecbea4870a8905598e40da5ba5d6312d02d6b579d5087",
+      "candidate_rom_sha256": "78c5ca3883bde311bfda25bf0d87d3e81ce5a072b8bf2dcfa5ad579d0839d190",
+      "passed": 1,
+      "total": 1,
+      "method": "Exclude images, draw-only frames, OAM, global time and presentation IDs.\n\n    Kept game fields expose any real AI/motion/health/projectile/RNG drift.\n    Cold-loading/global-frame phase differences in a legacy baseline are not\n    silently normalized away: callers inspect and explain any resulting drift.",
+      "captures": [
+        {
+          "name": "pursuer-clearing",
+          "passed": true,
+          "reference_frames": 96,
+          "candidate_frames": 96
+        }
+      ],
+      "variant": 8
+    },
+    {
+      "reference_rom_sha256": "82ce7b19a6cdcbf6819ecbea4870a8905598e40da5ba5d6312d02d6b579d5087",
+      "candidate_rom_sha256": "b7e902c1bd58f528db2aee5ca2c399eb482dd159fa7260ef560222e03666cf9b",
+      "passed": 1,
+      "total": 1,
+      "method": "Exclude images, draw-only frames, OAM, global time and presentation IDs.\n\n    Kept game fields expose any real AI/motion/health/projectile/RNG drift.\n    Cold-loading/global-frame phase differences in a legacy baseline are not\n    silently normalized away: callers inspect and explain any resulting drift.",
+      "captures": [
+        {
+          "name": "pursuer-clearing",
+          "passed": true,
+          "reference_frames": 96,
+          "candidate_frames": 96
+        }
+      ],
+      "variant": 9
+    },
+    {
+      "reference_rom_sha256": "82ce7b19a6cdcbf6819ecbea4870a8905598e40da5ba5d6312d02d6b579d5087",
+      "candidate_rom_sha256": "351e8492a6972ff5b0ccb89c4a633f9b340def21bfc9d9ef3e61b45648099241",
+      "passed": 1,
+      "total": 1,
+      "method": "Exclude images, draw-only frames, OAM, global time and presentation IDs.\n\n    Kept game fields expose any real AI/motion/health/projectile/RNG drift.\n    Cold-loading/global-frame phase differences in a legacy baseline are not\n    silently normalized away: callers inspect and explain any resulting drift.",
+      "captures": [
+        {
+          "name": "pursuer-clearing",
+          "passed": true,
+          "reference_frames": 96,
+          "candidate_frames": 96
+        }
+      ],
+      "variant": 10
+    }
+  ],
+  "method": "Full actual AI/motion/HP/RNG/hero/projectile traces, excluding presentation and hardware identifiers only. Original132 reports remain unchanged."
+}

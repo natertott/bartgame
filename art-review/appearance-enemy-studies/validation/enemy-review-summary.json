@@ -1,0 +1,97 @@
+{
+  "source_commit": "5eedc6dae94d8c1ea21c55b8668435bcf0be884d",
+  "variants": [
+    {
+      "variant": 0,
+      "status": "passed",
+      "captures": 12,
+      "passed": 80,
+      "total": 80,
+      "rom_sha256": "42d7902226c9cbca47bdefb21b970a4e3f74d9e4e2cfc201404dd6479fe275a3"
+    },
+    {
+      "variant": 1,
+      "status": "passed",
+      "captures": 12,
+      "passed": 82,
+      "total": 82,
+      "rom_sha256": "82ce7b19a6cdcbf6819ecbea4870a8905598e40da5ba5d6312d02d6b579d5087"
+    },
+    {
+      "variant": 2,
+      "status": "passed",
+      "captures": 12,
+      "passed": 82,
+      "total": 82,
+      "rom_sha256": "dcc97741406cbc0836dfbf8c25728cdc47cbf619a1e59d1485333cb49dfa4796"
+    },
+    {
+      "variant": 3,
+      "status": "passed",
+      "captures": 12,
+      "passed": 82,
+      "total": 82,
+      "rom_sha256": "22865248043f7d96cae01da8b7b99b7722601e21f0df547ee13e1c47d6b2aabd"
+    },
+    {
+      "variant": 4,
+      "status": "passed",
+      "captures": 12,
+      "passed": 82,
+      "total": 82,
+      "rom_sha256": "767694badbedc1f15eb8c3151201f6b6892c42caa97baf7a819c4989c77670d8"
+    },
+    {
+      "variant": 5,
+      "status": "passed",
+      "captures": 12,
+      "passed": 82,
+      "total": 82,
+      "rom_sha256": "ab8e4bd0e022fb4ab213b39617939eee12de279c2b99123e124351a2ad53a0cc"
+    },
+    {
+      "variant": 6,
+      "status": "passed",
+      "captures": 12,
+      "passed": 82,
+      "total": 82,
+      "rom_sha256": "a952d1869e3ffe6b10f599d501a69a3adf8b6d1b4061f0da8100e950d1900ae4"
+    },
+    {
+      "variant": 7,
+      "status": "passed",
+      "captures": 12,
+      "passed": 82,
+      "total": 82,
+      "rom_sha256": "1b18ffd437770d6e53322ce8583f30f00fe9ba9658ba5794e1f811c495b95af1"
+    },
+    {
+      "variant": 8,
+      "status": "passed",
+      "captures": 12,
+      "passed": 82,
+      "total": 82,
+      "rom_sha256": "78c5ca3883bde311bfda25bf0d87d3e81ce5a072b8bf2dcfa5ad579d0839d190"
+    },
+    {
+      "variant": 9,
+      "status": "passed",
+      "captures": 12,
+      "passed": 82,
+      "total": 82,
+      "rom_sha256": "b7e902c1bd58f528db2aee5ca2c399eb482dd159fa7260ef560222e03666cf9b"
+    },
+    {
+      "variant": 10,
+      "status": "passed",
+      "captures": 12,
+      "passed": 82,
+      "total": 82,
+      "rom_sha256": "351e8492a6972ff5b0ccb89c4a633f9b340def21bfc9d9ef3e61b45648099241"
+    }
+  ],
+  "captures": 132,
+  "passed": 900,
+  "total": 900,
+  "all_passed": true
+}

@@ -125,7 +125,12 @@ class MapReview(Review):
             if events&(1<<kind) and reference[mp*2]:
                 tx,ty=reference[mp*2]-1,reference[mp*2+1]-1
                 expected.append((kind,tx,ty,13+(tx-1)*5+2,35+(ty-2)*5+2))
-        if events&(1<<HEART):expected.append((HEART,17,12,93,85))
+        if events&(1<<HEART):
+            px,py=272,192
+            if C.area(self.c)==1 and C.cell(self.c)==n:
+                boss=next((P.actor(self.c,i) for i in range(1,96) if P.actor(self.c,i)['kind']==2 and P.actor(self.c,i)['type']==5),None)
+                if boss:px,py=boss['x'],boss['y']
+            expected.append((HEART,px//16,py//16,13+(px-16)*5//16,35+(py-32)*5//16))
         if events&(1<<GATE):
             corners={0:(15,1,16,1),1:(31,11,31,12),2:(15,23,16,23),3:(0,11,0,12)}
             for side in self.closed_sides(n):
@@ -145,9 +150,28 @@ class MapReview(Review):
 
     def open_map(self):
         P.press(self.c,'START',2,12);self.wait_report('gMenuStudyPage',0);self.page(2)
+        if getattr(self,'last_focus_core',None) is self.c:
+            self.check('reopening map preserves inspected cell and zoom',(self.symbol8('gMenuStudyMapCell'),self.symbol8('gMenuStudyZoom'))==self.last_focus)
         if self.symbol8('gMenuStudyZoom'):self.press_map('B','gMenuStudyZoom',0)
 
+    def check_menu_focus(self):
+        cell=self.symbol8('gMenuStudyMapCell');self.page(0)
+        self.press_map('RIGHT');item_focus=self.symbol8('gMenuStudyCursor')
+        self.check('Workbench ordinary input changes selected tool',item_focus==1)
+        expected=[P.r8(self.c,P.sym('gPl')+9+i) for i in range(3)]
+        for slot,key in enumerate(('A','B','L')):
+            self.press_map(key);expected=[0 if eq==5 else eq for eq in expected];expected[slot]=5
+            self.check('Workbench '+key+' assigns selected shield uniquely',[P.r8(self.c,P.sym('gPl')+9+i) for i in range(3)]==expected)
+        self.page(1);self.press_map('RIGHT');key_focus=self.symbol8('gMenuStudyCursor')
+        before=B.bytes_at(self.c,P.sym('gPl')+9,3);self.press_map('A')
+        self.check('Key Items A cannot replace equipment',B.bytes_at(self.c,P.sym('gPl')+9,3)==before)
+        self.page(2);self.check('map location survives item/key page changes',self.symbol8('gMenuStudyMapCell')==cell)
+        self.page(0);self.check('Workbench tool focus persists independently',self.symbol8('gMenuStudyCursor')==item_focus)
+        self.page(1);self.check('key-item focus persists independently',self.symbol8('gMenuStudyCursor')==key_focus)
+        self.page(2)
+
     def close_map(self):
+        self.last_focus_core=self.c;self.last_focus=(self.symbol8('gMenuStudyMapCell'),self.symbol8('gMenuStudyZoom'))
         P.press(self.c,'START',2,18)
         self.check('Start closes adopted map',C.gstate(self.c)==1)
         self.restored_world_tiles()
@@ -167,7 +191,7 @@ class MapReview(Review):
         P.w8(self.c,P.sym('gPl')+8,P.r8(self.c,P.sym('gPl')+8)&~16)
         entry=world['entry'];L.warp(self.c,entry,next(i for i,g in enumerate(world['cells'][entry]['gate']) if g));C.dismiss(self.c);C.clear_enemies(self.c)
         point=BR.natural_spot(self.c,0,0);assert point;self.focus(point)
-        self.open_map();paused=self.snapshot();self.check_overview('full known')
+        self.open_map();self.check_menu_focus();paused=self.snapshot();self.check_overview('full known')
         self.record('map-overview-all-known',24,note='All25 cells loaded normally; full inventory/active relic quest are review fixtures.')
         for n in range(25):
             self.seek_cell(n);self.press_map('A','gMenuStudyZoom',1)
@@ -187,6 +211,18 @@ class MapReview(Review):
         self.check_locations(chest,actual[chest],'charted unvisited chest')
         self.record('map-charted-unvisited-chest',24,note='Fresh core: Map+Astrolabe reveal this unvisited chest; a cold pure preview locates it without visiting or changing live state.')
         self.check('unvisited metadata preview preserves live game state',self.snapshot()==paused)
+        self.close_map()
+        # The current-room Heart is a moving actor, so verify that the H mark
+        # follows its actual paused position rather than always using spawn.
+        goal=world['goal'];L.warp(self.c,goal,next(i for i,g in enumerate(world['cells'][goal]['gate']) if g));C.dismiss(self.c)
+        point=BR.natural_spot(self.c,0,0);assert point;self.focus(point);P.run(self.c,48)
+        self.check('actual live Heart actor exists',any(P.actor(self.c,i)['kind']==2 and P.actor(self.c,i)['type']==5 for i in range(1,96)))
+        self.record('map-live-heart-world',24,note='The actual Heart moves under normal boss AI; no boss pose, position or state is assigned.')
+        self.open_map();self.seek_cell(goal);paused=self.snapshot();actors=hashlib.sha256(B.bytes_at(self.c,P.sym('gActors'),96*64)).hexdigest()
+        self.press_map('A','gMenuStudyZoom',1);self.check_locations(goal,self.cell(goal)['marks'],'live moving Heart')
+        self.record('map-live-heart-zoom',24,note='H is anchored to the real paused boss position; player and event markers have separate callouts.')
+        self.check('map inspection freezes live actor positions/state',hashlib.sha256(B.bytes_at(self.c,P.sym('gActors'),96*64)).hexdigest()==actors)
+        self.check('live boss map preserves world/room/spots/player/RNG',self.snapshot()==paused)
         self.close_map()
         # Completed-state fixtures exercise suppression without replaying every
         # combat/trial workflow, which this map-only pass does not change.
