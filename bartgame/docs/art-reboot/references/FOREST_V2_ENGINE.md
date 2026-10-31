@@ -126,6 +126,40 @@ root arch and rendering, and consumes no RNG or progression state. Seeds 88
 and 240 are named regressions; the full seed/room audit checks final pairs,
 collision, required approaches and item-gated pockets together.
 
+The full 20,000-seed audit also exposed twelve sparse event-placement defects
+that reproduce in the historical default build. A south-facing chest fallback
+could return an arbitrary solid-object site with canopy or water in front;
+another chest could occupy a mystery mouth's return threshold; a mouth's two
+fallback corridors could cross the future mouth cell and become separated
+when its solid picture was installed. The detached centre then supplied an
+unreachable enemy spawn. Two tiny entry components also lacked space for all
+four quest censers. These are inherited placement defects, not failures of
+the new topology aliases or a reason to weaken approach checks.
+
+Profiles 6–10 reserve existing landmarks and their interaction lanes before
+placing another solid. Fronted placement exhausts safe existing sites before
+opening a bounded dry clearing of at most 3×3 cells; a narrow bank can use a
+2×2 nook or 1×2 wall recess. Its future object always replaces an already
+solid centre, and another cell touches the entry component, so placing the
+object cannot consume its connection. Existing water, cliffs, perimeter
+gates, reserved routes, meaningful overlays and earlier landmarks are
+protected. A wall recess may use the broad decorative door margin because
+its centre was already blocked; the actual reserved arrival lane remains
+clear. Censer fallbacks keep the broader door margin too. No optional item
+pocket exists at this phase, and no repair changes item costs or rewards.
+
+A fallback mouth instead finds a finite shortest interior connection from
+its south threshold directly to the existing entry component, excluding its
+three-by-three frame, perimeter gates and item barriers. Water uses a bridge
+aligned with the connection, including its first threshold cell. Subsequent
+placement always floods from the original entry anchor, including after role
+objects are written, rather than treating an isolated room centre as entry.
+The connector visits at most 768 cells and uses 2,304 bytes of bounded EWRAM
+scratch (one byte of predecessor direction and one queued halfword per cell).
+Regression seeds are 2019, 3116, 5801, 9700, 10511, 11065, 11638, 12304,
+15217 and 18878. The resulting placements and their actual collision are
+checked independently; the repairs do not add a debug navigation feature.
+
 A new 16×32 streamed `forestlandmark` sheet has four frames: relic,
 shrine-available, shrine-spent and key-lock. Original sheet IDs stay stable;
 it is appended after the final Drain strip. Available relic markers are

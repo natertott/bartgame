@@ -151,6 +151,13 @@ bridges join usable banks. Terrain texture must not imply a false step, hole
 or item. Entrances need an unobstructed approach and enough framing space to
 be visible below the HUD.
 
+Reserve an interaction's standing space as part of its footprint. A chest or
+entrance is not usable merely because its own cell is reachable; its required
+front must remain clear after other props are placed. Derive placement reach
+from an actual room entry, and verify required quest fixtures after dressing.
+When space is scarce, use a small connected clearing that preserves existing
+targets and item gates rather than silently omitting a required fixture.
+
 ## Interaction vocabulary
 
 The forest remains a forest at every corruption level: recognizable tree

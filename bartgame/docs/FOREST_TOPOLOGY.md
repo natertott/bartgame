@@ -17,6 +17,7 @@ optional profiles6–10; older profiles0–5 retain their previous behavior.
 | Shrine/relic | Tall16×32 upstand plus visible base/pad, separated from background material. | Use actual shrine/relic spots and state. Healing approach stays visible; spent and available states differ. Legacy unplaced source markers are identified honestly. |
 | Key gate | Bars plus one centered large padlock/keyhole, drawn above the bars. | Existing single-key rule remains. Cleared gate cells reveal the real local substrate. |
 | Other barriers | Distinct thorns, fracture and silk, with common clear-floor result. | Sword/bomb/candle remove their own existing obstacle; they do not leave unrelated brown trim or ghost collision. |
+| Interaction approaches | Keep a visible standing space at chest latches, entrances and quest censers. | Later props reserve earlier targets and their fronts. Rare fallback furniture uses a small dry clearing attached to the actual entry component; required censers must all fit. No perimeter gate or existing item barrier is carved through. |
 | Root underpass | A raised root span on BG1, with visible Before/Under/Emerged body states. | At least one complete16px lane is clear north/under/south. It is a real lower passage; the roots are scenery above, not a claimed walkable upper deck. |
 
 ## Existing planes and sorting

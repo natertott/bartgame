@@ -840,3 +840,25 @@ sorting. Ordinary rolls, walking, full crowns and root-arch roofs retain real
 occlusion. A code review caught and fixed a second generic body-priority pass
 overwriting the held-part decision. These are explicit coarse layer-sorting
 and prefab-integrity rules, not changes to damage, physics or jump timing.
+
+**Approach repairs found during final generation review:** paired old0/new6
+inspection identified twelve sparse findings across ten seeds in both builds.
+Four chest fronts were genuinely blocked; three entrance fronts could be
+occupied by another chest; one mouth return/spawn could attach to a detached
+component. Two gardener rooms contained only two/zero censers despite their
+four-censer dialogue. A south-only NPC check was stronger than talk physics,
+but its missing quest furniture was still a real task defect. Ordinary ledge
+drops and already-owned tools did not explain the blocked chest fronts.
+
+The new profiles now reserve existing landmarks and their interaction lanes.
+Rare furniture fallbacks find an existing fronted site or open a small dry
+recess attached to reached floor, using an already-solid center so placing the
+object cannot cut its new connection. Mouth fallback routing connects directly
+to the actual entry component while protecting its frame. Required-censer
+shortages receive bounded connected space before retrying. All repairs happen
+before optional item pockets; existing barriers, perimeter gates, water/cliffs,
+meaningful overlays and earlier targets stay protected. A reconstruction
+review also corrected the first water threshold's bridge axis. All ten named
+stage traces pass; frozen corpus and emulator results are recorded separately.
+Old profiles0–5 keep their previous bytes and behavior. The general rule that
+an interaction owns its standing space is now explicit in the shared bible.

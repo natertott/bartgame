@@ -44,6 +44,9 @@ static u16 sTrail;
 static bool8 sBlighted;
 static u8 sStage;
 static bool8 reached(int x, int y);
+#if BART_FOREST_VARIANT >= 6
+static u8 sEntryX,sEntryY;
+#endif
 
 
 /* ------------------------------------------------------------ helpers -- */
@@ -1253,6 +1256,128 @@ static bool8 reached(int x, int y) {
     return sReach[y * W + x];
 }
 
+#if BART_FOREST_VARIANT >= 6
+/* Furniture must not occupy an earlier landmark or the place where Bloom
+   stands to use it. In particular, a chest cannot fill a mouth's threshold. */
+static bool8 required_reserved(int x,int y) {
+    int i;
+    if(gSpots.has_mouth && ABS(x-gSpots.mouth.x)<=1 &&
+       y>=gSpots.mouth.y-2 && y<=gSpots.mouth.y+2)return TRUE;
+    if(gSpots.has_chest && x==gSpots.chest.x &&
+       y>=gSpots.chest.y && y<=gSpots.chest.y+1)return TRUE;
+    if(gSpots.has_npc && x==gSpots.npc.x &&
+       y>=gSpots.npc.y-1 && y<=gSpots.npc.y+2)return TRUE;
+    if(gSpots.has_relic && x==gSpots.relic.x && y==gSpots.relic.y)return TRUE;
+    if(gSpots.has_shrine && x==gSpots.shrine.x &&
+       y>=gSpots.shrine.y && y<=gSpots.shrine.y+1)return TRUE;
+    for(i=0;i<gSpots.torch_count;i++)
+        if(x==gSpots.torches[i].x && y>=gSpots.torches[i].y &&
+           y<=gSpots.torches[i].y+1)return TRUE;
+    return FALSE;
+}
+
+static bool8 scan_fronted_spot(Spot* out) {
+    int x,y;
+    for(y=3;y<H-2;y++)for(x=2;x<W-2;x++)
+        if(!required_reserved(x,y) && !required_reserved(x,y+1) &&
+           reached(x,y) && reached(x,y+1) && is_floor(x,y+1) && simple_spot(x,y)) {
+            out->x=x;out->y=y;return TRUE;
+        }
+    return FALSE;
+}
+
+/* A rare tiny entry component can have no south-facing furniture site.
+   Open at most one 3x3 clearing touching its existing reached floor. A
+   narrow bank may instead fit a 2x2 nook or a single wall-cell recess above
+   existing floor. The future solid object replaces an already-solid cell,
+   so it cannot remove the clearing's connection to the entry component.
+   This runs before optional item pockets exist; it never edits perimeter gates,
+   water/cliffs, earlier landmarks, their approaches, or authored crowns. */
+static bool8 open_fronted_clearing(Spot* out,bool8 door_margin) {
+    static const s8 shape[3][4]={{-1,-1,1,1},{0,0,1,1},{0,0,0,1}};
+    int x,y,dx,dy,pass,bx=-1,by=-1,best=1000;
+    int left=0,top=0,right=0,bottom=0;
+    for(pass=0;pass<3 && bx<0;pass++) {
+      left=shape[pass][0];top=shape[pass][1];right=shape[pass][2];bottom=shape[pass][3];
+      for(y=3;y<H-2;y++)for(x=2;x<W-2;x++) {
+        int changes=0,touches=0,okay=1;
+        /* Unlike normal floor placement, the centre is already solid and
+           cannot consume an arrival lane. Allow a recess inside the broad
+           decorative door margin, but never on the reserved path itself. */
+        if((!door_margin && near_door(x,y)) ||
+           (sPath[y][x]&(P_MID|P_BANK)) || type_at(x,y)!=TT_SOLID)continue;
+        for(dy=top;dy<=bottom && okay;dy++)for(dx=left;dx<=right;dx++) {
+            int tx=x+dx,ty=y+dy;
+            u16 mt=room_get(tx,ty),ov=room_get_overlay(tx,ty);
+            u8 type=type_at(tx,ty);
+            if(!interior(tx,ty) || required_reserved(tx,ty) ||
+               (ov!=MT_NONE && ov!=MT_SPARKLE && ov!=MT_SPARKLE_WHITE && ov!=MT_BLIGHT_MIST) ||
+               (type!=TT_FLOOR && type!=TT_SOLID && type!=TT_LIFT1 && type!=TT_LIFT2)) {
+                okay=0;break;
+            }
+            if((dx || dy) && reached(tx,ty) && type==TT_FLOOR)touches=1;
+            if(type!=TT_FLOOR || metatile_coll[mt])changes++;
+        }
+        if(okay && touches && changes<best){best=changes;bx=x;by=y;}
+      }
+    }
+    if(bx<0)return FALSE;
+    for(dy=top;dy<=bottom;dy++)for(dx=left;dx<=right;dx++) {
+        int tx=bx+dx,ty=by+dy;
+        if(type_at(tx,ty)!=TT_FLOOR || metatile_coll[room_get(tx,ty)]) {
+            room_set(tx,ty,sTrail);
+            room_set_overlay(tx,ty,MT_NONE);
+            sMask[ty][tx]=M_FLOOR;
+        }
+    }
+    flood_reach(sEntryX,sEntryY);
+    out->x=bx;out->y=by;
+    return reached(bx,by) && reached(bx,by+1);
+}
+
+/* The fallback mouth joins the actual entry component directly. Routing
+   both ends through the centre could cross the future mouth cell, then be
+   cut when that cell became solid. Preserve the entire frame while finding
+   the nearest existing component; no optional pocket has been placed yet. */
+static void connect_mouth_approach(int mx,int my) {
+    static const s8 step[4][2]={{0,-1},{1,0},{0,1},{-1,0}};
+    static u8 from[W*H];
+    static u16 queue[W*H];
+    int head=0,tail=0,start=(my+1)*W+mx,end=-1,k,last_back=0;
+    memset(from,255,sizeof(from));
+    from[start]=4;queue[tail++]=start;
+    while(head<tail) {
+        int at=queue[head++],x=at%W,y=at/W;
+        if(reached(x,y)){end=at;break;}
+        for(k=0;k<4;k++) {
+            int nx=x+step[k][0],ny=y+step[k][1],next=ny*W+nx;
+            u8 type;
+            if(!interior(nx,ny) || (ABS(nx-mx)<=1 && ny>=my-2 && ny<=my) ||
+               from[next]!=255)continue;
+            type=type_at(nx,ny);
+            if(type==TT_MYST || type==TT_CRACK || type==TT_WEB || type==TT_PIT ||
+               type==TT_DOOR || type==TT_EXIT || type==TT_STAIRS)continue;
+            from[next]=k^2;queue[tail++]=next;
+        }
+    }
+    while(end>=0) {
+        int x=end%W,y=end/W,back=from[end];
+        if(!passable(x,y)) {
+            bool8 water=type_at(x,y)==TT_WATER;
+            int axis=back<4 ? back : last_back;
+            bool8 vertical=axis==0 || axis==2;
+            room_set(x,y,water ? (vertical?MT_BRIDGE_V:MT_BRIDGE) : sTrail);
+            room_set_overlay(x,y,MT_NONE);
+            sMask[y][x]=water ? (vertical?M_BRIDGE_V:M_BRIDGE_H) : M_FLOOR;
+            sPath[y][x]|=P_MID|(vertical?P_V:P_H);
+        }
+        if(end==start)break;
+        last_back=back;
+        end=(y+step[back][1])*W+x+step[back][0];
+    }
+}
+#endif
+
 /* Find a reached spot, not near a door. mode 0: any floor (a monster
    stands anywhere); 1: a solid may stand there; 2: 3x3 of floor. */
 static bool8 find_spot(Spot* out, int tries, int mode) {
@@ -1261,6 +1386,9 @@ static bool8 find_spot(Spot* out, int tries, int mode) {
         int x = 2 + rng_range(&sR, W - 4), y = 3 + rng_range(&sR, H - 5);
         if (!reached(x, y) || near_door(x, y))
             continue;
+#if BART_FOREST_VARIANT >= 6
+        if(mode && (required_reserved(x,y) || required_reserved(x,y+1)))continue;
+#endif
         if (!is_floor(x, y) || (mode && (sPath[y][x] & P_BANK)))
             continue;
         if (mode == 2 && !clear3(x, y))
@@ -1312,6 +1440,9 @@ static void ensure_fronted_spot(Spot* out) {
     for (k = 0; k < 600; k++)
         if (find_spot(out, 1, 1) && is_floor(out->x, out->y + 1) && reached(out->x, out->y + 1))
             return;
+#if BART_FOREST_VARIANT >= 6
+    if(scan_fronted_spot(out) || open_fronted_clearing(out,TRUE))return;
+#endif
     ensure_spot(out);
 }
 
@@ -1414,6 +1545,12 @@ static void place_quest_torches(const Cell* c) {
             Spot t={x,y};
             placed=quest_try_torch(c,t,second);
         }
+#if BART_FOREST_VARIANT >= 6
+        if(!placed) {
+            Spot t;
+            if(open_fronted_clearing(&t,FALSE))placed=quest_try_torch(c,t,second);
+        }
+#endif
     }
 }
 
@@ -2032,6 +2169,9 @@ static void roomgen_build_internal(int cell, bool8 render) {
             sx = W / 2;
             sy = H / 2;
         }
+#if BART_FOREST_VARIANT >= 6
+        sEntryX=sx;sEntryY=sy;
+#endif
         for (pass = 0; pass < 3; pass++) {
             bool8 ok = TRUE;
             flood_reach(sx, sy);
@@ -2071,21 +2211,34 @@ static void roomgen_build_internal(int cell, bool8 render) {
             /* Guaranteed task access even when no random wall-face trial
                succeeded: connect a secluded face to the central clearing. */
             int mx = (hash32(gWorld.seed,cell) & 1) ? 4 : W-5, my = 4;
-            int ax,ay,rx=W/2,ry=H/2;
+            int ax,ay;
+#if BART_FOREST_VARIANT < 6
+            int rx=W/2,ry=H/2;
+#endif
             /* A whole native wall patch is preferable to widening a frame
                across traversable ground. Its approach can be connected
                without turning the surrounding frame into solid new cells. */
             for(ay=4;ay<H-3;ay++) for(ax=2;ax<W-2;ax++)
                 if(mouth_frame_space(ax,ay) && ABS(ax-W/2)>=3 && !near_door(ax,ay+1)) {mx=ax;my=ay;}
+#if BART_FOREST_VARIANT < 6
             for(ay=2;ay<H-1;ay++) for(ax=1;ax<W-1;ax++)
                 if(reached(ax,ay)) {rx=ax;ry=ay;}
+#endif
+#if BART_FOREST_VARIANT >= 6
+            connect_mouth_approach(mx,my);
+#else
             carve_to_center(mx,my+1);
             carve_to_center(rx,ry);
+#endif
             sMask[my][mx]=M_WALL;
             room_set(mx,my,style==MY_CAVE ? MT_MOUTH_CAVE : style==MY_HOLLOW ? MT_MOUTH_HOLLOW : MT_MOUTH_THICKET);
             room_set_overlay(mx,my,MT_NONE);
             gSpots.mouth.x=mx; gSpots.mouth.y=my; gSpots.has_mouth=1;
+#if BART_FOREST_VARIANT >= 6
+            flood_reach(sEntryX,sEntryY);
+#else
             flood_reach(W/2,H/2);
+#endif
         }
     }
     /* role objects */
@@ -2137,6 +2290,9 @@ static void roomgen_build_internal(int cell, bool8 render) {
         default:
             break;
     }
+#if BART_FOREST_VARIANT >= 6
+    flood_reach(sEntryX,sEntryY);
+#endif
     /* Side pockets never hold a mandatory reward. Their entrance is on
        the already-proved connected component, their interior deliberately
        inaccessible until the player returns with the corresponding item. */
