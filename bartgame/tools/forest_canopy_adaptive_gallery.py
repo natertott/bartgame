@@ -474,7 +474,7 @@ def actual_main(args):
             assert 'all-frames' not in Path(relative).parts
             exact_copy(path, destination / relative)
         lines = [f'# {style}. {report.get("recipe", "Adaptive canopy")}: actual mGBA', '',
-                 'Generated-room views and ordinary-input motion from the frozen ROM. Player/camera/inventory fixtures are disclosed in the report. '
+                 'Generated-room views and ordinary-input motion from the frozen ROM. Player, camera, inventory and controlled action-RNG fixtures are disclosed in the report. '
                  'Source drawings and room-layer reconstructions are separate.', '', '[Complete report](capture.json)', '']
         for row in report['captures']:
             lines += [f'## {row["name"]}', '', f'Seed {row.get("seed")} · room {row.get("cell")} · {row.get("note", "")}', '',

@@ -22,12 +22,29 @@ CanopyPlacement gAdaptiveCanopyPlacements[CANOPY_SCENE_MAX_PLACEMENTS] EWRAM_BSS
 u16 gAdaptiveCanopyStats[16] EWRAM_BSS;
 static u16 sPicture[64*64] EWRAM_BSS;
 static u16 sQueue[32*32] EWRAM_BSS;
-static u16 sIntegral[33*33] EWRAM_BSS;
-static u8 sClaimed[32*32] EWRAM_BSS;
+/* Small hot lookup masks belong in IWRAM; the large resident scene does not. */
+static u32 sAvailableRows[32];
+static u32 sOpenRows[32];
+static u32 sOpenColumns[32];
 static u8 sPlanned[32*32] EWRAM_BSS;
 static u8 sActive,sPaletteStage,sPalettePhase;
 static u8 sRoomCell,sRoomWidth,sRoomHeight;
 static u32 sRoomSeed;
+/* Native drawings span at most six cells horizontally and four vertically. */
+static const u8 sBitCount[64] __attribute__((section(".iwram.rodata")))={
+    0,1,1,2,1,2,2,3,1,2,2,3,2,3,3,4,
+    1,2,2,3,2,3,3,4,2,3,3,4,3,4,4,5,
+    1,2,2,3,2,3,3,4,2,3,3,4,3,4,4,5,
+    2,3,3,4,3,4,4,5,3,4,4,5,4,5,5,6
+};
+
+/* The shared hash32 expression, inlined into the IWRAM fit search. This
+   changes neither the generator stream nor placement jitter/tie order. */
+static inline u32 score_hash(u32 a,u32 b) {
+    u32 h=a*0x9E3779B1u^(b+0x7F4A7C15u);
+    h^=h>>15;h*=0x85EBCA77u;h^=h>>13;h*=0xC2B2AE3Du;h^=h>>16;
+    return h;
+}
 
 static vu16* map_at(int base,int x8,int y8) {
     int sb=base+((y8>>5)<<1)+(x8>>5);
@@ -64,51 +81,43 @@ void canopy_scene_reset(void) {
     memset(gAdaptiveCanopyStats,0,sizeof(gAdaptiveCanopyStats));
 }
 
-/* Prefix sums make every native-footprint fit a constant-time question.
-   There is no source-cell parity or coarse chunk grid in this planner. */
-static void available_integral(void) {
-    int x,y;
-    memset(sIntegral,0,sizeof(sIntegral));
-    for(y=0;y<gRoom.h;y++) {
-        int line=0;
-        for(x=0;x<gRoom.w;x++) {
-            int at=y*STRIDE+x;
-            line+=(sPlanned[at]&CANOPY_SCENE_SOLID)!=0 && !sClaimed[at];
-            sIntegral[(y+1)*33+x+1]=sIntegral[y*33+x+1]+line;
-        }
-    }
-}
-
 static bool8 fits(int x,int y,int w,int h) {
     if(x<0 || y<0 || x+w>gRoom.w || y+h>gRoom.h)return FALSE;
-    int sum=sIntegral[(y+h)*33+x+w]-sIntegral[y*33+x+w]-
-            sIntegral[(y+h)*33+x]+sIntegral[y*33+x];
-    return sum==w*h;
+    u32 span=((1u<<w)-1u)<<x;
+    int row;
+    /* One bit per logical cell. Clearing a chosen footprint costs at most
+       four row writes; it never rebuilds a room-sized prefix table. */
+    for(row=y;row<y+h;row++)
+        if((sAvailableRows[row]&span)!=span)return FALSE;
+    return TRUE;
 }
 
 static int edge_score(int x,int y,int w,int h,int role) {
-    int k,south=0,north=0,side=0;
-    for(k=0;k<w;k++) {
-        south+=open_floor(x+k,y+h);
-        north+=open_floor(x+k,y-1);
-    }
-    for(k=0;k<h;k++) {
-        side+=open_floor(x-1,y+k);
-        side+=open_floor(x+w,y+k);
-    }
+    u32 wm=(1u<<w)-1u,hm=(1u<<h)-1u;
+    int south=y+h<gRoom.h?sBitCount[(sOpenRows[y+h]>>x)&wm]:0;
+    int north=y>0?sBitCount[(sOpenRows[y-1]>>x)&wm]:0;
+    int side=x>0?sBitCount[(sOpenColumns[x-1]>>y)&hm]:0;
+    if(x+w<gRoom.w)side+=sBitCount[(sOpenColumns[x+w]>>y)&hm];
     /* Native trunks face down-screen. Expose that face to the clearing
        whenever possible instead of hiding the only tree at row zero. */
     int score=south*120+north*18+side*32;
     score-=ABS((x*2+w)-gRoom.w)*2+ABS((y+h)-gRoom.h/2);
-    score+=(hash32(gWorld.seed,(gGame.cell+1)*127+x*23+y*71+role*311)&31);
+    score+=(score_hash(gWorld.seed,(gGame.cell+1)*127+x*23+y*71+role*311)&31);
     return score;
 }
 
-static bool8 best_position(int component,int role,int* bx,int* by) {
+static bool8 IWRAM_CODE best_position(int component,int role,int* bx,int* by) {
     const CanopyPrefab* p=&canopy_prefabs[role];
     int x,y,best=-32767;
+    int x0=0,y0=0,x1=gRoom.w-p->w,y1=gRoom.h-p->h;
+    if(component<=CANOPY_SCENE_MAX_COMPONENTS) {
+        const CanopyComponent* c=&gAdaptiveCanopyComponents[component-1];
+        x0=c->x0;y0=c->y0;
+        x1=MIN(x1,c->x1+1-p->w);y1=MIN(y1,c->y1+1-p->h);
+    }
     *bx=*by=-1;
-    for(y=0;y+p->h<=gRoom.h;y++)for(x=0;x+p->w<=gRoom.w;x++) {
+    /* Restrict the search without changing ascending candidate/tie order. */
+    for(y=y0;y<=y1;y++)for(x=x0;x<=x1;x++) {
         if(gAdaptiveCanopyComponent[y*STRIDE+x]!=component || !fits(x,y,p->w,p->h))continue;
         int score=edge_score(x,y,p->w,p->h,role);
         if(score>best){best=score;*bx=x;*by=y;}
@@ -125,9 +134,10 @@ static bool8 record_piece(int component,int role,int x,int y,int flags) {
     CanopyPlacement* out=&gAdaptiveCanopyPlacements[n];
     out->component=component;out->role=role;out->x=x;out->y=y;
     out->w=p->w;out->h=p->h;out->flags=flags;
+    u32 span=((1u<<p->w)-1u)<<x;
+    for(dy=0;dy<p->h;dy++)sAvailableRows[y+dy]&=~span;
     for(dy=0;dy<p->h;dy++)for(dx=0;dx<p->w;dx++) {
         int at=(y+dy)*STRIDE+x+dx;
-        sClaimed[at]=1;
         if(flags&CANOPY_SCENE_OVERHANG)sPlanned[at]=CANOPY_SCENE_OVERHANG;
         else gAdaptiveCanopyStats[5]++;
     }
@@ -154,10 +164,9 @@ static void compose_component(int id,int area) {
         CANOPY_ROLE_TREE,CANOPY_ROLE_COLUMN,CANOPY_ROLE_BRANCH,CANOPY_ROLE_CLUMP,
         CANOPY_ROLE_ROOTS,CANOPY_ROLE_SMALL};
     int x,y,pass,placed=0,covered=0;
-    available_integral();
     if(best_position(id,CANOPY_ROLE_HERO,&x,&y) && record_piece(id,CANOPY_ROLE_HERO,x,y,0)) {
         const CanopyPrefab* p=&canopy_prefabs[CANOPY_ROLE_HERO];
-        covered=p->w*p->h;placed++;available_integral();
+        covered=p->w*p->h;placed++;
     }
     /* A shallow disconnected mass calls for a long limb, not a procession
        of 16px icons or the roots of a tree whose crown does not fit. */
@@ -166,7 +175,7 @@ static void compose_component(int id,int area) {
         const CanopyPrefab* p=&canopy_prefabs[CANOPY_ROLE_BRANCH];
         while(best_position(id,CANOPY_ROLE_BRANCH,&x,&y) &&
               record_piece(id,CANOPY_ROLE_BRANCH,x,y,0)) {
-            covered+=p->w*p->h;available_integral();
+            covered+=p->w*p->h;
         }
     }
     /* Unequal anatomical groups fill useful inner edges. A large connected
@@ -180,7 +189,7 @@ static void compose_component(int id,int area) {
             if(role==CANOPY_ROLE_SMALL && area>1 && pass<2)continue;
             if(best_position(id,role,&x,&y) && record_piece(id,role,x,y,0)) {
                 const CanopyPrefab* p=&canopy_prefabs[role];
-                covered+=p->w*p->h;placed++;available_integral();
+                covered+=p->w*p->h;placed++;
             }
             if(gAdaptiveCanopyStats[3]>=CANOPY_SCENE_MAX_PLACEMENTS)return;
         }
@@ -230,15 +239,24 @@ void canopy_scene_build(void) {
     }
     canopy_scene_reset();
     if(gGame.area!=AREA_FOREST)return;
+    u32 started=gFrame,phase_started;
     sActive=TRUE;gAdaptiveCanopyStats[0]=1;
     sRoomSeed=gWorld.seed;sRoomCell=gGame.cell;sRoomWidth=gRoom.w;sRoomHeight=gRoom.h;
-    memset(sClaimed,0,sizeof(sClaimed));memset(sPlanned,0,sizeof(sPlanned));
+    memset(sPlanned,0,sizeof(sPlanned));
+    memset(sAvailableRows,0,sizeof(sAvailableRows));
+    memset(sOpenRows,0,sizeof(sOpenRows));
+    memset(sOpenColumns,0,sizeof(sOpenColumns));
     for(y=0;y<gRoom.h*2;y++)for(x=0;x<gRoom.w*2;x++)
         sPicture[y*MAP_STRIDE+x]=*map_at(SB_CANOPY,x,y);
-    for(y=0;y<gRoom.h;y++)for(x=0;x<gRoom.w;x++)if(eligible(x,y)) {
-        sPlanned[y*STRIDE+x]=CANOPY_SCENE_SOLID;total++;
+    for(y=0;y<gRoom.h;y++)for(x=0;x<gRoom.w;x++) {
+        if(eligible(x,y)) {
+            sPlanned[y*STRIDE+x]=CANOPY_SCENE_SOLID;
+            sAvailableRows[y]|=1u<<x;total++;
+        }
+        if(open_floor(x,y)) {sOpenRows[y]|=1u<<x;sOpenColumns[x]|=1u<<y;}
     }
     gAdaptiveCanopyStats[4]=total;
+    gAdaptiveCanopyStats[12]=gFrame-started;phase_started=gFrame;
     for(y=0;y<gRoom.h;y++)for(x=0;x<gRoom.w;x++) {
         int at=y*STRIDE+x,head=0,tail=0,id,area=0,x0=x,x1=x,y0=y,y1=y;
         if(!sPlanned[at] || gAdaptiveCanopyComponent[at])continue;
@@ -259,10 +277,13 @@ void canopy_scene_build(void) {
         } else gAdaptiveCanopyStats[10]|=1;
         compose_component(id,area);
     }
+    gAdaptiveCanopyStats[13]=gFrame-phase_started;phase_started=gFrame;
     add_projection();
     memcpy(gAdaptiveCanopyMask,sPlanned,sizeof(sPlanned));
     for(y=0;y<gRoom.h;y++)for(x=0;x<gRoom.w;x++)canopy_scene_apply_cell(x,y);
     canopy_scene_palette_tick();
+    gAdaptiveCanopyStats[14]=gFrame-phase_started;
+    gAdaptiveCanopyStats[15]=gFrame-started;
 }
 
 bool8 canopy_scene_owns(int mx,int my) {

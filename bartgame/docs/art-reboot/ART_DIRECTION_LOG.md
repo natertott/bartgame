@@ -1089,3 +1089,27 @@ the ten alternatives. Long edges and some tiny remnants still reveal the
 semantic rectangular footprint; native semantic fit does not provide an
 arbitrary pixel contour clip. Full frozen captures and independent review
 follow. No candidate becomes the production default in this study.
+
+**Compatibility and loading refinement:** adding an empty translation unit
+changed GNU ld's ARM/Thumb division-veneer order in older builds despite
+unchanged behavior. Profiles 0–18 now omit that file completely and all
+nineteen prior ROMs compare byte-for-byte. The production default remains 0.
+
+Direct mGBA timing exposed a separate one-time composition cost. Exact row
+bitmasks replace repeated full-room prefix tables; cached floor-exposure masks
+and a small IWRAM candidate-search path preserve placement order and score.
+All five sampled complete BG1/BG2 maps, visual arrays, masks and native
+placements remain byte-identical. The measured seed 6 / cell 4 transition
+improves from 108 to 47 video/VBlank frames, about 1.81 to 0.79 seconds at
+GBA timing. Prior profile 6 takes 28 frames, about 0.47 seconds. The remaining
+19-frame / 0.32-second overhead is an explicit local tradeoff, not a claim of
+identical entry performance or a worst-case bound.
+
+Different loading durations also let unrelated enemies consume different
+global random draws before recording fixtures clear them. The review tool
+now declares one common action-RNG starting value after complete natural
+generation, enemy clearing and standing settle. It records assignment/readback
+and unchanged room/world/progress hashes, then retains strict initial/final
+RNG and gameplay comparisons throughout ordinary inputs. This fixture does
+not claim equal pre-capture AI histories. Failed pilot reports remain separate
+from the fresh final recordings. No game/art RNG call is added by the planner.

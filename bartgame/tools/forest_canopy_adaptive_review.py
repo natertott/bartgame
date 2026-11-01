@@ -6,6 +6,9 @@ and separated/concave forest footprints. Two ordinary-input clips test walking,
 rolling/recoil and cape passage. No generated-case terrain, poses or video
 pixels are assigned. The adaptive planner's native placements and resident
 graphics are evidence alongside unchanged semantic room/collision arrays.
+The global action RNG is initialized to a disclosed common fixture only after
+generation, enemy clearing and standing settle, immediately before recorded
+inputs; world-generation RNG, room arrays and progress remain untouched.
 
 The prior scanline0→160 native body/cape metrology remains the starting point.
 This reader decodes actual BG1 opacity directly, without assuming that runtime
@@ -386,6 +389,29 @@ class Review(V3.Review):
             self.frame_observations[-1]['adaptive_cached_redraws']=P.r16(self.c,P.sym('gAdaptiveCanopyStats')+22)&65535
         return result
 
+    def settle(self,point,facing=0):
+        super().settle(point,facing)
+        # Fixed-frame navigation waits reach PLAY at different times when a
+        # room's renderer takes longer. Unrelated AI therefore consumes a
+        # different pre-capture global RNG history before it is cleared.
+        # Establish the same explicit action fixture after all such updates;
+        # retain strict initial/final RNG comparison during ordinary inputs.
+        raw=(self.selected_plan or {}).get('action_rng_fixture','0x01234567')
+        assigned=int(raw,0) if isinstance(raw,str) else int(raw)
+        before={'physical_contract':self.contract(),'maze_sha256':F.jsonsha(self.maze()),
+                'progress_sha256':self.progress()}
+        previous=P.r32(self.c,self.rng)
+        P.w16(self.c,self.rng,assigned&65535);P.w16(self.c,self.rng+2,assigned>>16)
+        after={'physical_contract':self.contract(),'maze_sha256':F.jsonsha(self.maze()),
+               'progress_sha256':self.progress()}
+        self.rng_fixture_observation={'before_sRand':previous,'assigned_sRand':assigned,
+            'actual_sRand_after':P.r32(self.c,self.rng),'before':before,'after':after,
+            'point':'After complete natural generation, enemy clearing and standing settle; immediately before the first recorded state/input. No emulation frame advances between assignment and initial observation.',
+            'scope':'Controlled action-test fixture only. This does not claim that different navigation wait histories consume equal enemy-AI random draws.'}
+        name=(getattr(self,'recording_case',None) or {}).get('name','probe')
+        self.check(name+' controlled action RNG leaves completed generation and progress unchanged',
+                   before==after and P.r32(self.c,self.rng)==assigned,self.rng_fixture_observation)
+
     def geometry(self):
         if not self.selected_plan:raise RuntimeError('Natural geometry plan is not selected yet')
         self.plan['geometry']=self.selected_plan['geometry']
@@ -430,6 +456,8 @@ class Review(V3.Review):
                     {'note':'One focused ordinary menu round trip beneath the natural branch. Checks exact native world palette/maps and cached redraw on return; interface frames are outside canopy visibility scope.'})
 
     def inspect_case(self,row):
+        row['controlled_starting_rng']=self.rng_fixture_observation
+        row['fixture_kind']='natural generated room; navigation/inventory/player/starting-global-RNG fixtures only'
         super().inspect_case(row)
         row['semantic_canopy']=self.semantic_canopy()
         row['adaptive_planner']=self.planner()

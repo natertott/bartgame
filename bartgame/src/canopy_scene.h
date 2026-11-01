@@ -30,7 +30,8 @@ extern CanopyComponent gAdaptiveCanopyComponents[CANOPY_SCENE_MAX_COMPONENTS];
 extern CanopyPlacement gAdaptiveCanopyPlacements[CANOPY_SCENE_MAX_PLACEMENTS];
 /* version,components,recorded-components,placements,eligible,painted,
    projected,largest-role-width-px,largest-role-height-px,stage,overflow,
-   cached-redraws; remaining words reserved */
+   cached-redraws, entry IRQ ticks: mask/copy, component-fit,
+   projection/apply, total. Timings are coarse VBlank counts. */
 extern u16 gAdaptiveCanopyStats[16];
 
 void canopy_scene_reset(void);

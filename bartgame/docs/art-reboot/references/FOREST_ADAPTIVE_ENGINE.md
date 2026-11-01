@@ -52,6 +52,37 @@ and their neighbors and reapply their stored scene entries. Palette animation
 changes one dedicated canopy bank after the existing forest pulse; healthy
 through deep stages share geometry and retain living-green accents.
 
+Fit tests use 32 available-row bitmasks, with a chosen footprint clearing its
+bits in at most four rows. Cached open-floor row and column masks provide exact
+edge-exposure counts through a 64-entry lookup table. The native drawings span
+at most six cells horizontally and four vertically; larger future roles would
+require extending that lookup policy. Candidate searches retain ascending
+order within each component's inclusive bounds, preserving the previous
+placement decisions and hash tie breaks. The hot fit search, count table and
+small masks occupy 1,280 additional bytes of IWRAM. The local inlined score
+hash retains the shared `hash32` expression; it never advances gameplay RNG.
+
+The measured final pilot uses EWRAM through `0x02039514` (234,772 bytes) and
+IWRAM through `0x03005ab4`, leaving 9,292 bytes before the system stack's initial
+address. These are linked allocation bounds, not measured worst-case stack
+usage. No extra scene atlas, framebuffer or streamed character cache was added.
+
+On the measured mGBA seed-6/cell-4 transition, the original adaptive planner
+took 108 video/VBlank frames, the bitmask version 54, and the final IWRAM
+version 47; preserved base6 took 28. All observed transitions executed two
+mainloop updates. Final loading is about 0.79 seconds versus base6's 0.47,
+an extra 0.32 seconds in this case. This is a known room-entry cost, distinct
+from recorded gameplay cadence and not a bound for every generated room.
+Coarse internal timing for the final case was 1 frame for mask/copy, 12 for
+component fitting and 3 for projection/application, 16 total inside the
+adaptive build. All five reviewed natural rooms retained byte-identical
+8,192-byte BG1 and BG2 maps, visual owner arrays, placement records and masks
+between the original and optimized planners. Independent checks compared
+736,212 fits and exposure counts against per-cell definitions and one million
+actual C hash results against the shared hash. Reports are
+`audit/planner-bitmask-equivalence.json`, `audit/local-score-hash-equivalence.json`
+and `audit/planner-iwram-runtime.json` in the review workspace.
+
 Read-only telemetry in `canopy_scene.h` makes the choice reviewable:
 
 - `gAdaptiveCanopyMask`: 32×32 bytes; 1 solid forest, 2 projected branch.
@@ -63,9 +94,17 @@ Read-only telemetry in `canopy_scene.h` makes the choice reviewable:
 - `gAdaptiveCanopyStats`: 16 words; version, component count, recorded count,
   placement count, eligible cells, painted solid cells, projected cells,
   greatest native width/height in pixels, stage, overflow flags and cached
-  redraw count. The final four words are reserved.
+  redraw count. Words 12–15 contain coarse room-entry VBlank counts for
+  mask/copy, component fitting, projection/application and total. Interrupt
+  timing can round phase boundaries; these words do not drive gameplay.
 
 Component and placement overflow retain the quiet forest backing; they never
 write outside the fixed arrays. The telemetry describes construction, while
 actual mGBA PPU/VRAM captures must independently establish what was displayed.
 Source assemblies alone are not emulator evidence.
+
+Historical profiles 0–18 omit `canopy_scene.c` from the Makefile's linker input
+list. Preprocessor guards alone were insufficient: even an empty extra object
+reordered GNU ld's ARM/Thumb division veneers. Restoring the original input
+list restored all 19 historical ROM hashes exactly. This is a binary
+preservation rule, not an art-selection change.

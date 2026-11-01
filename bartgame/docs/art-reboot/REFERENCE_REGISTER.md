@@ -178,14 +178,14 @@ user feedback and existing read references; no new article is attributed.
 ## Space-dependent canopy compositions — 2026-11-01
 
 The user rejects the previous canopy artwork as a major regression and
-explicitly withdraws the repeated3×3-block advice. This direct brief is the
+explicitly withdraws the repeated 3×3-block advice. This direct brief is the
 authority for a new map-first composition pass and ten new tree/canopy
 directions. It supersedes the fixed 32px crown construction recorded above;
 earlier native/runtime technical checks do not imply aesthetic acceptance.
 
 The initial internal geometry census reads five existing seeded forests in
-mGBA:125 rooms and457 connected canopy components, including94 single-cell
-remnants. Each sampled room has a logical96×64 fitting rectangle before
+mGBA: 125 rooms and 457 connected canopy components, including 94 single-cell
+remnants. Each sampled room has a logical 96×64 fitting rectangle before
 protected-feature exclusions. This measures available space; it does not
 authorize painting across events or prove that an attractive composition is
 visible from the walkable route. Native source anatomy, fit diagnostics and
