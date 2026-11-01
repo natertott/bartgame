@@ -222,3 +222,19 @@ checks establish the local-ground correction independently of source art.
 Its [independent review](../../../art-review/forest-canopy-emerald/validation/INDEPENDENT_REVIEW.md)
 records remaining texture, grid and gray-leaf readability limits. The preceding
 ten-study anatomy is retained as rejected historical evidence.
+
+## Uploaded GBA Sprite Art Guide — 2026-11-01
+
+File: `GBA_Sprite_Art_Guide.pdf`, supplied workspace basename
+`1-GBA_Sprite_Art_Guide.pdf`, fourteen pages, 1,001,327 bytes. SHA256:
+`bc5400b675d76d7088f9b59f6a11feb04292c5c01ed34ce7cedece84b33fb4e1`.
+All page text and illustrated teaching/game pages 1–12 were reviewed across
+the root and independent reference review. The
+[page-cited application note](references/TREE_GUIDE_APPLICATION.md) records
+what applies to this tree-only study, the guide's factual/proposal distinctions
+and the user's overriding dimensions/scope. Books and external readings listed
+in the PDF were not independently read as part of this pass.
+
+The user sets canopy work aside and requests a repeated 32×32/16×32 tree kit
+with healthy/sick/dead structure and palette refinement. Source figures,
+deliberately planted mGBA groves and natural procedural rooms remain distinct.

@@ -371,10 +371,71 @@ for si, (sname, pred) in enumerate(SETS):
     set_rows.append('    { tileset_%s_tiles, %d, metatile_map_%s, tile_anims_%s, %d, tileset_%s_pals, %d },' % (sname, len(ts.tiles), sname, sname, len(anims), sname, len(set_pals)))
     print('tileset %s: %d tiles, %d metatiles held, %d animated, %d palettes' % (sname, len(ts.tiles), held, len(anims), len(set_pals)))
     assert len(anims) <= 255, ('too many animation allocations', sname, len(anims))
+    if FOREST_CONCEPTS.TREE_ROUND and sname == 'forest':
+        tree_study_forest_palettes = list(set_pals)
 c.append('const Tileset tilesets[%d] = {' % len(SETS))
 c += set_rows
 c.append('};')
 h.append('extern const Tileset tilesets[];')
+if FOREST_CONCEPTS.TREE_ROUND:
+    # A separate diagnostic atlas preserves the normal forest/canopy residency.
+    import forest_tree_study as TREE_ART
+    study_ts = Tileset()
+    study_ts.add([[0]*8 for _ in range(8)], 0, 0)
+    study_palette = TREE_ART.palette()
+    assert len(study_palette) == 16
+    assert all(int(color[k:k+2], 16) % 8 == 0 for color in study_palette for k in (1, 3, 5))
+    assert len(tree_study_forest_palettes) <= 11
+    study_slot = 11
+    def study_map(pixels, width, height, slots):
+        packed = []
+        for yy in range(0, height, 8):
+            for xx in range(0, width, 8):
+                tile, hf, vf = study_ts.add(pixels, xx, yy)
+                slot = slots[(yy//8)*(width//8)+xx//8] if isinstance(slots, list) else slots
+                packed.append(tile | (hf << 10) | (vf << 11) | (slot << 12))
+        return packed
+    floor_names = ('moss0', 'path', 'blight_floor')
+    floor_maps = []
+    for name in floor_names:
+        mt = tiles.METATILES[mt_names[name]]
+        art = mt.get('art') or mt['frames'][0]
+        colors = mt.get('qpals') or [mt['pal']]*4
+        floor_maps.append(study_map(parse_art(art, 16, 16), 16, 16,
+                                    [tree_study_forest_palettes.index(p) for p in colors]))
+    specs = TREE_ART.specs()
+    assert len(specs) == 12
+    h += ['#define TREE_STUDY_COUNT 12', '#define TREE_STUDY_PALETTE_SLOT 11',
+          'typedef struct { const u16* map; u8 w,h,size,variety,state; } TreeStudyFrame;',
+          'extern const TreeStudyFrame tree_study_frames[TREE_STUDY_COUNT];',
+          'extern const u16 tree_study_tiles[];', 'extern const u16 tree_study_palette[16];',
+          'extern const u16 tree_study_floor[3][4];', 'extern const u16 TREE_STUDY_FLOOR_MT[3];']
+    descriptor_rows = []
+    packed_specs = []
+    for index, spec in enumerate(specs):
+        image = TREE_ART.tree(spec['size'], spec['variety'], spec['state'])
+        width, height = image.size
+        assert image.mode == 'P' and image.size in ((32, 32), (16, 32))
+        assert set(image.tobytes()) <= set(range(16))
+        packed = study_map(parse_art(FOREST_CONCEPTS.rows(image), width, height), width, height, study_slot)
+        symbol = 'tree_study_map_%d' % index
+        c.append(c_array_u16(symbol, packed))
+        descriptor_rows.append('  { %s, %d, %d, %d, %d, %d },' %
+                               (symbol, width//8, height//8, int(spec['size']=='narrow'),
+                                spec['variety'], TREE_ART.STATES.index(spec['state'])))
+        packed_specs.append({**spec, 'map_symbol': symbol, 'map_entries': len(packed)})
+    assert len(study_ts.tiles) <= 1024
+    h.append('#define TREE_STUDY_TILE_COUNT %d' % len(study_ts.tiles))
+    c += ['const TreeStudyFrame tree_study_frames[TREE_STUDY_COUNT] = {', *descriptor_rows, '};']
+    c.append(c_array_u16('tree_study_tiles', bytes_to_u16(b''.join(study_ts.tiles))))
+    c.append(c_array_u16('tree_study_palette', [rgb15(color) for color in study_palette]))
+    c += ['const u16 tree_study_floor[3][4] = {',
+          *['  {'+','.join(str(v) for v in row)+'},' for row in floor_maps], '};']
+    c.append(c_array_u16('TREE_STUDY_FLOOR_MT', [mt_names[n] for n in floor_names]))
+    tree_study_metadata = {'scope': 'Tree-only diagnostic grove; regular forest and canopy stay at profile29.',
+                           'frames': packed_specs, 'palette': study_palette, 'palette_slot': study_slot,
+                           'resident_tiles': len(study_ts.tiles), 'floor_names': list(floor_names),
+                           'floor_maps': floor_maps, 'origin': 'bottom-center y=30; canvas is not collider'}
 if FOREST_CONCEPTS.VARIANT >= 6:
     import forest_concepts_v2_topology as F2T
     topology = tiles.FOREST_V2_TOPOLOGY
@@ -822,6 +883,8 @@ coverage['forest_concept'] = {
     'protected': ['Bloom', 'selected enemies', 'equipment and pickups', 'UI',
                   'Drain architecture and keepers', 'glitter', 'physical metadata'],
 }
+if FOREST_CONCEPTS.TREE_ROUND:
+    coverage['tree_study'] = tree_study_metadata
 if FOREST_CONCEPTS.VARIANT >= 6:
     coverage['forest_concept']['topology'] = tiles.FOREST_V2_TOPOLOGY
     coverage['forest_concept']['depth'] = {

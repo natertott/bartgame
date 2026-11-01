@@ -183,6 +183,16 @@ integrated into each structure. Large available regions warrant larger native
 drawings and finer branch/bark/leaf relationships; do not enlarge a small tile
 or merely recolor the same repeating design.
 
+The current forest pass sets canopy design aside. Work on a small repeated
+tree kit first: 32×32 (two-by-two 16px tiles) and 16×32 (one-by-two tiles),
+with a few forms and healthy, sick and dead states. These requested art sizes
+supersede larger standalone-tree proposals for this study. State must change
+structure as well as hue: full crowns, damaged/sagging partial crowns, then
+bare broken forks. Keep contact shadows small and exterior index zero clear
+so the actual floor supplies the background. Use a few connected value and
+leaf masses; earlier dense fan texture is not a requirement. Canopy work and
+procedural replacement wait while these trees are reviewed in repeated groups.
+
 The latest direct reference is the user's Pokémon Emerald tree crop. The
 ten exposed-branch studies are rejected as the working direction: their sparse
 foliage and flat purple-black backing fail the forest read. Build tree identity

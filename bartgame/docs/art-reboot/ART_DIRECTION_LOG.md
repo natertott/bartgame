@@ -1234,3 +1234,52 @@ show the corrected leafy volume and real grass contacts. The busy fan pattern,
 some repeated/grid-aligned joins, and deep gray/olive foliage's occasional
 mossy-stone reading remain visible. This is one coherent reference-led review
 set; no final production canopy is selected.
+
+## Compact repeated trees and the supplied field guide — 2026-11-01
+
+**Direct request:** use `GBA_Sprite_Art_Guide.pdf` to begin the next forest
+redesign with repeated trees and a few varieties. Make healthy, sick and dead
+versions, blend them into the forest floor, iterate existing palettes, and
+forget the canopy for now. The requested two-by-two and one-by-two sizes are
+interpreted as 16px gameplay tiles: 32×32 and 16×32 pixels, as stated to the user.
+
+**Guide application:** all fourteen pages were read, with teaching/game
+figures inspected. Pages 5/12 support silhouette and a few connected masses
+before texture; 6/10 support local contact, real-background checks and clean
+alpha; 7 supports structural state cues beyond hue; 8 distinguishes visible
+art, canvas and collision; 9 calls for tested depth/ground-contact sorting;
+11 calls for an explicit native/palette/origin contract. The guide distinguishes
+hardware facts from its proposed design ranges and selected-frame readings.
+No underlying book or external linked tutorial is claimed as newly read.
+
+**Exploration:** two varieties per footprint, each healthy/sick/dead, form a
+twelve-piece native kit in `art/forest_tree_study.py`. One shared RGB555 bank
+extends familiar greens, olive sickness, wood and localized violet infection.
+Healthy full crowns become missing/drooping crowns with exposed wood, then
+clearly bare broken forks. New large leaf lobes replace the first egg-like
+prototype, keeping the earlier noisy fan pattern out of this study.
+
+**Scope and evidence:** regular forest/canopy assets and procedural generation
+stay unchanged. A compact separate review atlas and deliberately planted
+in-ROM grove provide real mGBA context and ordinary Bloom movement without
+silently fitting new small art to old larger colliders. These diagnostic
+layouts are not presented as natural generated forest. The source kit and
+actual scene evidence will be published separately after the native gate.
+
+**Representative native/actual gate:** all twelve source pieces now have
+readable compact tree forms and distinct healthy, damaged and bare silhouettes.
+The native mGBA catalog shows their actual 32×32/16×32 scale beside Bloom.
+The first scene test incorrectly initialized sprites after installing the
+review atlas; an existing reset cleared the tree maps. That empty failed pilot
+was rejected. Initialization now precedes installation, and the corrected
+qualified eight-case pilot passes 104 checks across grass, path and sick grass,
+with two ordinary walk-around clips. Raw BG maps, palette/atlas data, shallow
+root footprints and current body/guard OAM bytes make the proof independently
+inspectable. Ground-contact sorting uses the art's y=30 anchor.
+
+The kit uses one shared sixteen-entry RGB555 bank. Its separate compact atlas
+is 129 subtiles including the three actual floor materials; it replaces the
+world atlas only during the explicit diagnostic scene. Normal forest/canopy
+art, existing tree colliders and procedural placement remain unchanged. Final
+review publication will provide the art pack and labelled grove captures; it
+will not imply that normal game boot automatically enters this test scene.

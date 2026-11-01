@@ -7,11 +7,12 @@ their established contracts. No global palette object is mutated.
 import os
 
 VARIANT = int(os.environ.get('BART_FOREST', '0'))
-assert 0 <= VARIANT <= 29, ('BART_FOREST must be 0..29', VARIANT)
+assert 0 <= VARIANT <= 30, ('BART_FOREST must be 0..30', VARIANT)
 ROUND2 = VARIANT >= 6
 CANOPY_ROUND = VARIANT >= 11
 ADAPTIVE_ROUND = VARIANT >= 19
-EMERALD_ROUND = VARIANT == 29
+TREE_ROUND = VARIANT == 30
+EMERALD_ROUND = VARIANT in (29, 30)
 LOCAL_VARIANT = 1 if EMERALD_ROUND else VARIANT - 18 if ADAPTIVE_ROUND else VARIANT - 10 if CANOPY_ROUND else VARIANT - 5 if ROUND2 else VARIANT
 # Canopy studies keep the accepted grey ground and all other environment art
 # from Black Sap Oak; only the canopy painter receives the local study style.
@@ -47,6 +48,7 @@ NAMES = {
     27: 'Black Cedar Cathedral',
     28: 'Sorrow Arch Elm',
     29: 'Leafwoven Canopy',
+    30: 'Repeated Tree Study',
 }
 TERRAIN_BANKS = {'ground', 'foliage', 'water', 'stone', 'blight',
                  'decay_mix', 'rot_water'}

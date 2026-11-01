@@ -66,13 +66,13 @@ $(error BART_ENEMY must be one integer in 0..11)
 endif
 ENEMY_STAMP := $(GEN)/enemy-profile-$(BART_ENEMY).stamp
 
-# Historical studies remain;29 explores dense, foliage-first canopy composition.
+# Profile30 adds a separate tree review atlas; normal forest retains profile29.
 BART_FOREST ?= 0
 ifneq ($(words $(BART_FOREST)),1)
-$(error BART_FOREST must be one integer in 0..29)
+$(error BART_FOREST must be one integer in 0..30)
 endif
-ifneq ($(BART_FOREST),$(filter $(BART_FOREST),0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29))
-$(error BART_FOREST must be one integer in 0..29)
+ifneq ($(BART_FOREST),$(filter $(BART_FOREST),0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30))
+$(error BART_FOREST must be one integer in 0..30)
 endif
 FOREST_STAMP := $(GEN)/forest-profile-$(BART_FOREST).stamp
 
@@ -83,9 +83,15 @@ CFLAGS  := $(ARCH) -O2 -g -Wall -Wno-unused-function -fno-strict-aliasing \
 THUMB   := -mthumb
 ARM     := -marm
 LDFLAGS := $(ARCH) -mthumb -nostdlib -Wl,-T,gba.ld -Wl,--gc-sections -Wl,-Map,$(BUILD)/$(TARGET).map
+ifeq ($(BART_FOREST),30)
+LDFLAGS += -Wl,--undefined=tree_study_begin
+endif
 LIBS    := -lgcc
 
 SRC_C     := $(filter-out %_iwram.c,$(wildcard src/*.c))
+ifneq ($(BART_FOREST),30)
+SRC_C     := $(filter-out src/tree_study.c,$(SRC_C))
+endif
 # Even an empty extra object changes GNU ld's ARM/Thumb veneer ordering.
 # Historical profiles retain their exact original linker input list.
 ifneq ($(filter $(BART_FOREST),0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18),)
@@ -101,7 +107,7 @@ ART       := $(wildcard art/reboot_*.py) art/reboot_contracts.json tools/build_a
              art/sewer_v3_fixtures.py art/ui_studies.py art/sewer_final.py art/sewer_final_contracts.py \
              $(wildcard art/enemy_studies*.py) art/enemy_heart.py \
              $(wildcard art/forest_concepts*.py) $(wildcard art/forest_canopy_adaptive*.py) \
-             $(wildcard art/forest_canopy_emerald*.py)
+             $(wildcard art/forest_canopy_emerald*.py) $(wildcard art/forest_tree_study*.py)
 
 OBJS := $(patsubst src/%.c,$(BUILD)/%.o,$(SRC_C)) \
         $(patsubst src/%.c,$(BUILD)/%.o,$(SRC_IWRAM)) \

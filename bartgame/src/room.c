@@ -14,6 +14,9 @@
 #if BART_FOREST_VARIANT >= 29
 #include "util.h"
 #endif
+#if BART_FOREST_VARIANT == 30
+#include "tree_study.h"
+#endif
 
 Room gRoom EWRAM_BSS;
 s16 gCamX, gCamY;
@@ -35,6 +38,9 @@ static const Tileset* sTs = &tilesets[TS_SEWER];
 void tiles_load(int set) {
     int i;
     sTs = &tilesets[set];
+#if BART_FOREST_VARIANT == 30
+    tree_study_reset();
+#endif
     dma3_copy32(sTs->tiles, CHARBLOCK(0), sTs->tile_count * 32);
     for (i = 0; i < sTs->pal_count; i++)
         pal_set_bg(i, &sTs->pals[i * 16]);
@@ -492,6 +498,9 @@ static bool8 floor_mark(u16 mt) {
 }
 
 int room_prop_priority(int px,int py,int z,int width,int height,int priority) {
+#if BART_FOREST_VARIANT == 30
+    if(gTreeStudyActive)return tree_study_priority(px,py,z,width,height,priority);
+#endif
     int x,y,front=0,behind=0;
     int half=MIN(width/2,16), top=py-MIN(height,64)-z, bottom=py-z-1;
     int x0=MAX(0,(px-half)/16),x1=MIN(gRoom.w-1,(px+half)/16);
