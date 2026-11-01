@@ -1,0 +1,220 @@
+{
+  "source_commit": "fd7465d87f3dfcec33152254d49b3df629debf26",
+  "profile": 31,
+  "gallery_tool_sha256": "9d78d73dd785e9b648fdfa2850c0443a333498990c57af1f43fcc351c8a61f2d",
+  "boards": [
+    {
+      "file": "rooms-actual.png",
+      "sha256": "7649963174a241671cc94a238bfcccdea7a42e11f85fff457a5c44a2723cade7",
+      "size": [
+        1568,
+        484
+      ],
+      "panels": [
+        {
+          "case": "healthy",
+          "source": "actual/healthy/full-room.png",
+          "source_sha256": "95e9eb4dff3f285d2083b798ad245d4a8531e9022cdf846cb2454dae8ae0ecd7",
+          "native_size": [
+            512,
+            384
+          ],
+          "inspection_scale": 1,
+          "rect": [
+            8,
+            92,
+            512,
+            384
+          ],
+          "native_RGB_sha256": "9e650a880a4a268c94cd6bff02a489764e8bf79ff60d5f9cf86c8969842ef256",
+          "kind": "registered native-camera mosaic"
+        },
+        {
+          "case": "mixed",
+          "source": "actual/mixed/full-room.png",
+          "source_sha256": "104381ffc90fd24f731640dbb2da2cf28b1c6c66126147319e1d4acc343ebcf5",
+          "native_size": [
+            512,
+            384
+          ],
+          "inspection_scale": 1,
+          "rect": [
+            528,
+            92,
+            512,
+            384
+          ],
+          "native_RGB_sha256": "6a0621ba09d5ae64f254cc4c41e0d915e56efde1c580691521efffcfcc96d773",
+          "kind": "registered native-camera mosaic"
+        },
+        {
+          "case": "deep",
+          "source": "actual/deep/full-room.png",
+          "source_sha256": "251afaeff3a305607c53a57f70718acc1ec18ca09d447393d35801e3b51fbb2c",
+          "native_size": [
+            512,
+            384
+          ],
+          "inspection_scale": 1,
+          "rect": [
+            1048,
+            92,
+            512,
+            384
+          ],
+          "native_RGB_sha256": "d2fd9338a0976a824a9711d909a55164ff10fe8c3a03047f473ac758557324a4",
+          "kind": "registered native-camera mosaic"
+        }
+      ]
+    },
+    {
+      "file": "native-HUD-actual.png",
+      "sha256": "4edb597aaa527631334ac8653221d6f6aa4166651b63c837ce6f6659d7b92727",
+      "size": [
+        752,
+        260
+      ],
+      "panels": [
+        {
+          "case": "healthy",
+          "source": "actual/healthy/native-HUD.png",
+          "source_sha256": "31651038b3eccc30cbf00f5ed3119583109a78e763ed9ed41ec2e6a696548594",
+          "native_size": [
+            240,
+            160
+          ],
+          "inspection_scale": 1,
+          "rect": [
+            8,
+            92,
+            240,
+            160
+          ],
+          "native_RGB_sha256": "dc3697ad3cd785ab4d8275ee5f3b094b0094948bd2dfe08119d5ae1952443241",
+          "kind": "native HUD-on framebuffer"
+        },
+        {
+          "case": "mixed",
+          "source": "actual/mixed/native-HUD.png",
+          "source_sha256": "c8eabd4e39e45f0278d2485f2e3e882d16a06f3959392f414819ff186113c64d",
+          "native_size": [
+            240,
+            160
+          ],
+          "inspection_scale": 1,
+          "rect": [
+            256,
+            92,
+            240,
+            160
+          ],
+          "native_RGB_sha256": "3187bc80e607a672828b9aebf6ba66f41b0325109c113c33e8a075ab3b7eca6c",
+          "kind": "native HUD-on framebuffer"
+        },
+        {
+          "case": "deep",
+          "source": "actual/deep/native-HUD.png",
+          "source_sha256": "6770bef9dd901acad3165ffad5bee21a0fb92b1c8880d545995131651c626192",
+          "native_size": [
+            240,
+            160
+          ],
+          "inspection_scale": 1,
+          "rect": [
+            504,
+            92,
+            240,
+            160
+          ],
+          "native_RGB_sha256": "a97866d5932597428399a6090156bb61d9d72e5797df823ea5961ddd7b0e6db8",
+          "kind": "native HUD-on framebuffer"
+        }
+      ]
+    },
+    {
+      "file": "inspection/healthy-2x.png",
+      "sha256": "c82aecfcdc218fd5a8def85c89bbf31525a77aae00a0845d3d22a819308466de",
+      "size": [
+        1040,
+        868
+      ],
+      "panels": [
+        {
+          "case": "healthy",
+          "source": "actual/healthy/full-room.png",
+          "source_sha256": "95e9eb4dff3f285d2083b798ad245d4a8531e9022cdf846cb2454dae8ae0ecd7",
+          "native_size": [
+            512,
+            384
+          ],
+          "inspection_scale": 2,
+          "rect": [
+            8,
+            92,
+            1024,
+            768
+          ],
+          "native_RGB_sha256": "9e650a880a4a268c94cd6bff02a489764e8bf79ff60d5f9cf86c8969842ef256",
+          "kind": "registered native-camera mosaic"
+        }
+      ]
+    },
+    {
+      "file": "inspection/mixed-2x.png",
+      "sha256": "43b8fa85d3671706fad5aaf7085162f086fcf431280f927ce452f0346efe2cbb",
+      "size": [
+        1040,
+        868
+      ],
+      "panels": [
+        {
+          "case": "mixed",
+          "source": "actual/mixed/full-room.png",
+          "source_sha256": "104381ffc90fd24f731640dbb2da2cf28b1c6c66126147319e1d4acc343ebcf5",
+          "native_size": [
+            512,
+            384
+          ],
+          "inspection_scale": 2,
+          "rect": [
+            8,
+            92,
+            1024,
+            768
+          ],
+          "native_RGB_sha256": "6a0621ba09d5ae64f254cc4c41e0d915e56efde1c580691521efffcfcc96d773",
+          "kind": "registered native-camera mosaic"
+        }
+      ]
+    },
+    {
+      "file": "inspection/deep-2x.png",
+      "sha256": "1996f67d39cc1f89c593177cf428b27a1120e35c83989d76a6ef3ec2be6de0d7",
+      "size": [
+        1040,
+        868
+      ],
+      "panels": [
+        {
+          "case": "deep",
+          "source": "actual/deep/full-room.png",
+          "source_sha256": "251afaeff3a305607c53a57f70718acc1ec18ca09d447393d35801e3b51fbb2c",
+          "native_size": [
+            512,
+            384
+          ],
+          "inspection_scale": 2,
+          "rect": [
+            8,
+            92,
+            1024,
+            768
+          ],
+          "native_RGB_sha256": "d2fd9338a0976a824a9711d909a55164ff10fe8c3a03047f473ac758557324a4",
+          "kind": "registered native-camera mosaic"
+        }
+      ]
+    }
+  ],
+  "method": "Literal RGB native framebuffer/mosaic copies; inspection views use integer nearest-neighbour only. Captions are outside captured game pixels."
+}

@@ -1336,3 +1336,43 @@ Packed/source fidelity, physical geometry, layering/menu restoration and
 unrelated-art protection must be checked before publication. Remaining visual
 risk is the apparent width of transparent dead-tree bases versus solid maze
 cells; inspect real rooms rather than declaring this solved numerically.
+
+
+**Production qualification:** game/art source
+`fd7465d87f3dfcec33152254d49b3df629debf26` is frozen as profile31, now also the
+ordinary `make` result. ROM SHA256:
+`977f38406e3f5cf12e7108e3840356d305d364bd665bc0d9ef578ec8f5937e78`.
+All32 profiles build; historical0–30 compare byte-for-byte. Forest residency
+is646/768 BG subtiles and11/12 world palette banks. All twelve approved
+paintings, anchors, colors and source-alpha rows survive packing exactly.
+
+Fresh actual mGBA evidence passes140/140 checks across three naturally
+produced rooms: healthy(stage0), mixed(stage2) and deep(stage3). Their full-room
+images are labelled nine-view native camera mosaics;27 raw240×160 views,
+HUD-on arrivals/facings and three ordinary-input clips remain separate.
+All504 walk frames retain native body/guard proof. Minimum visible Bloom is
+90/94/95 colored pixels. Missed logic intervals are1/1/0, within the pinned
+historical profile29 control; this is not a frame-perfect performance claim.
+
+The first movement pilot exposed an overly broad tree depth decision that
+pushed Bloom behind unrelated grass. Sorting now tests exact authored alpha
+with compact32-bit row masks; the visibility guard also handles actual lower
+world-plane occlusion. This preserves native body/action pixels and avoids
+sustained slowdowns from per-pixel sorting. Same-room tree plans stay cached
+across bush cutting and menu redraws.
+
+Independent audit passes1915/1915:512 seeds×25 rooms,86,699 required
+approaches,7,258 item pockets,108,800 inventory/boundary checks,6,807,405
+base-ownership checks, opened-state/real-feet tests, deterministic rebuilds,
+preview/cache preservation and literal capture proof. Drain, mystery rooms,
+36 OBJ sheets,1532 non-tree forest metatiles and19 UI/palette payloads retain
+the preceding review build's resolved art. Actual mGBA runtime checks pass
+78/78, including all three required trials and bomb/candle/cape gates.
+Publication checks pass209/209.
+
+The [integrated review](../../../art-review/forest-trees-integrated/README.md)
+and [playable ROM/ZIP](../../../downloads/forest-trees-integrated-fd7465d/README.md)
+are the new production handoff. Remaining local limits: upper crowns can be
+clipped at protected fixture clearances(11/9/6 cells in these rooms), and bare
+trunks reveal grass within conservative impassable forest base bands. These
+finite captures do not establish universal gameplay or aesthetic quality.

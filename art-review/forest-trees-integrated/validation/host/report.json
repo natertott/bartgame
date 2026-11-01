@@ -1,0 +1,91 @@
+{
+  "method": "Actual C generation plus native ROM metadata; independent flood-fill and resulting-root checks. Hardware submission suppressed; no render claim.",
+  "rom_sha256": "977f38406e3f5cf12e7108e3840356d305d364bd665bc0d9ef578ec8f5937e78",
+  "statistics": {
+    "requested_seeds": 512,
+    "rooms": 12800,
+    "opened_state_rooms": 800,
+    "approaches": 86699,
+    "pockets": 7258,
+    "determinism": 12800,
+    "boundary_inventory_checks": 108800,
+    "feet_box_rooms": 1600,
+    "trees": 4112422,
+    "wood_cells": 6773864,
+    "authored_cells": 33541,
+    "root_ownership_checks": 6807405,
+    "preview_preservation_checks": 800,
+    "live_scene_cache_checks": 800,
+    "frame_counts": [
+      737767,
+      447480,
+      162066,
+      737060,
+      448749,
+      161861,
+      388105,
+      236447,
+      84440,
+      387936,
+      236350,
+      84161
+    ],
+    "stage_state_counts": [
+      [
+        1286623,
+        209267,
+        0
+      ],
+      [
+        553852,
+        403235,
+        50346
+      ],
+      [
+        302209,
+        504989,
+        201985
+      ],
+      [
+        108184,
+        251535,
+        240197
+      ]
+    ],
+    "failures": 0
+  },
+  "exit_code": 0,
+  "compiler": "gcc (Debian 14.2.0-19) 14.2.0",
+  "command": [
+    "gcc",
+    "-O2",
+    "-fno-builtin",
+    "-w",
+    "-ffunction-sections",
+    "-fdata-sections",
+    "-I",
+    "/workspace/bartgame/bartgame/src",
+    "-I",
+    "/workspace/setup/forest-tree-world/frozen/v31",
+    "/workspace/setup/forest-tree-world/audit-final/host/generator-check.c",
+    "/workspace/setup/forest-tree-world/audit-final/host/room-logic.c",
+    "/workspace/bartgame/bartgame/src/forest_trees.c",
+    "/workspace/bartgame/bartgame/src/world.c",
+    "/workspace/bartgame/bartgame/src/util.c",
+    "/workspace/setup/forest-tree-world/audit-final/host/native-metadata.c",
+    "-Wl,--gc-sections",
+    "-o",
+    "/workspace/setup/forest-tree-world/audit-final/host/generator-check"
+  ],
+  "harness_sha256": "9f4e9d66f080d1777f7498cb2f11c164a28cc2e22c95297b4f1d89205c23d859",
+  "wrapper_sha256": "e75bd04d0bd234b11870033a8e2374f5b87fbb3bb1b8989a3062f958f4b27c33",
+  "metadata_sha256": "197f13a0b6b0589bcdce226afe7ceb51162bcb8acdfca2fc179b26ccedc9b8b8",
+  "binary_sha256": "ee8cc114be72c81d632852ad2b1fe419075f9d6ea98fd15f534eceb562020207",
+  "source_sha256": {
+    "src/roomgen.c": "4e47daa50032c1c33c952560bf3dcaf26b1aad9687146ed2be2929805c44f07e",
+    "src/room.c": "12be5d27a63d96cfe3968f7976006d9138b7910449e29490f27de4c239981814",
+    "src/forest_trees.c": "a6726e763d3e2506d95bea0f1c488870b2e37b42a9a86729bcc94bee7d629abb",
+    "src/world.c": "203716ae6d4044cc1be92fb9c150ba958fe05a01dafa2ddbf3553e24d30b7f4c",
+    "src/util.c": "e8df1ff26b31194d375b0be31364bacd3fd95fb90d983e7dc17ff984e0a05698"
+  }
+}

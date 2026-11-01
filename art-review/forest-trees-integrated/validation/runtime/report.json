@@ -1,0 +1,807 @@
+{
+  "kind": "actual mGBA runtime integration verification",
+  "source_commit": "fd7465d87f3dfcec33152254d49b3df629debf26",
+  "rom_sha256": "977f38406e3f5cf12e7108e3840356d305d364bd665bc0d9ef578ec8f5937e78",
+  "tool_sha256": "1d229456b932c70def76506d9f633fc26b1455f0c82a0ca6b72e98e0d9c66aba",
+  "seed": 46247,
+  "fixtures": [
+    "Pinned run seed via gSeedOverride before normal title Start.",
+    "Forest ladder approach uses developer positioning, then real Up input.",
+    "Enemy removal isolates menu and gate geometry; it does not test combat pressure.",
+    "Room-switch checks use the game transition request, not tile or framebuffer injection.",
+    "Critical-path helper positions Bloom between rooms and before trial enemies, heals him, and equips owned items; trial completion and item rewards are earned through actual game logic.",
+    "The combat fixture chooses an enemy with an existing safe approach before a blocked first actor; it never changes enemy HP, event flags or rewards."
+  ],
+  "checks": [
+    {
+      "name": "production tree profile31 is loaded",
+      "passed": true
+    },
+    {
+      "name": "ordinary boot reaches native title bitmap",
+      "passed": true
+    },
+    {
+      "name": "title Options opens through real input",
+      "passed": true
+    },
+    {
+      "name": "Options returns to title without forest layer",
+      "passed": true
+    },
+    {
+      "name": "normal Start begins in the Drain",
+      "passed": true
+    },
+    {
+      "name": "Drain boot does not enable forest BG3 roots",
+      "passed": true,
+      "detail": {
+        "display": 5952,
+        "bg1": 55297,
+        "bg2": 56322,
+        "bg3": 5647
+      }
+    },
+    {
+      "name": "Drain boot restores the ordinary menu BG3screen22",
+      "passed": true,
+      "detail": {
+        "display": 5952,
+        "bg1": 55297,
+        "bg2": 56322,
+        "bg3": 5647
+      }
+    },
+    {
+      "name": "real ladder input enters generated entry room",
+      "passed": true
+    },
+    {
+      "name": "entry forest uses all three world layers",
+      "passed": true,
+      "detail": {
+        "display": 8000,
+        "bg1": 55297,
+        "bg2": 56323,
+        "bg3": 52226
+      }
+    },
+    {
+      "name": "entry forest reserves BG3screen12 charbase0 size64",
+      "passed": true,
+      "detail": {
+        "display": 8000,
+        "bg1": 55297,
+        "bg2": 56323,
+        "bg3": 52226
+      }
+    },
+    {
+      "name": "entry forest keeps floor behind tree bases",
+      "passed": true,
+      "detail": {
+        "display": 8000,
+        "bg1": 55297,
+        "bg2": 56323,
+        "bg3": 52226
+      }
+    },
+    {
+      "name": "Start opens item page",
+      "passed": true
+    },
+    {
+      "name": "item menu owns BG3screen22 size32 charbase0",
+      "passed": true,
+      "detail": {
+        "display": 6464,
+        "bg1": 55297,
+        "bg2": 56323,
+        "bg3": 5635
+      }
+    },
+    {
+      "name": "R opens key-item page",
+      "passed": true
+    },
+    {
+      "name": "R opens region map",
+      "passed": true
+    },
+    {
+      "name": "A opens room zoom map",
+      "passed": true
+    },
+    {
+      "name": "B returns to overview map",
+      "passed": true
+    },
+    {
+      "name": "Start returns to normal world",
+      "passed": true
+    },
+    {
+      "name": "returned forest uses all three world layers",
+      "passed": true,
+      "detail": {
+        "display": 8000,
+        "bg1": 55297,
+        "bg2": 56323,
+        "bg3": 52226
+      }
+    },
+    {
+      "name": "returned forest reserves BG3screen12 charbase0 size64",
+      "passed": true,
+      "detail": {
+        "display": 8000,
+        "bg1": 55297,
+        "bg2": 56323,
+        "bg3": 52226
+      }
+    },
+    {
+      "name": "returned forest keeps floor behind tree bases",
+      "passed": true,
+      "detail": {
+        "display": 8000,
+        "bg1": 55297,
+        "bg2": 56323,
+        "bg3": 52226
+      }
+    },
+    {
+      "name": "menu restores exact bg1",
+      "passed": true,
+      "detail": {
+        "before": "9aea184c9eeecefb31545f80a874c02011d6894450e161988ff47c06a5ad1a7b",
+        "after": "9aea184c9eeecefb31545f80a874c02011d6894450e161988ff47c06a5ad1a7b"
+      }
+    },
+    {
+      "name": "menu restores exact bg2",
+      "passed": true,
+      "detail": {
+        "before": "0a481945e96dd7a308c32a2d0a41e3d337442815a48fabf310351c76ff651ba2",
+        "after": "0a481945e96dd7a308c32a2d0a41e3d337442815a48fabf310351c76ff651ba2"
+      }
+    },
+    {
+      "name": "menu restores exact bg3",
+      "passed": true,
+      "detail": {
+        "before": "e33cc99ca62f9536cd76bf4ef54473d11d4ce7ed1dcd2540914d186ae87caa1b",
+        "after": "e33cc99ca62f9536cd76bf4ef54473d11d4ce7ed1dcd2540914d186ae87caa1b"
+      }
+    },
+    {
+      "name": "menu restores exact static_atlas",
+      "passed": true,
+      "detail": {
+        "before": "4158a212284dea5d85ef328f0d22f269e177066326c4027ea854108e0cfdf020",
+        "after": "4158a212284dea5d85ef328f0d22f269e177066326c4027ea854108e0cfdf020"
+      }
+    },
+    {
+      "name": "menu restores exact collision",
+      "passed": true,
+      "detail": {
+        "before": "606c215c47b75260519d01db0ecad0b084a7dd16dfdf62626f7292de55075ca1",
+        "after": "606c215c47b75260519d01db0ecad0b084a7dd16dfdf62626f7292de55075ca1"
+      }
+    },
+    {
+      "name": "menu restores exact root_owners",
+      "passed": true,
+      "detail": {
+        "before": "ec38b8bca8f4c388ff82ddb384e1d6bf390c42bd713184413d28ab93dd203c5f",
+        "after": "ec38b8bca8f4c388ff82ddb384e1d6bf390c42bd713184413d28ab93dd203c5f"
+      }
+    },
+    {
+      "name": "menu restores exact placements",
+      "passed": true,
+      "detail": {
+        "before": "b9d750f84aa7f1021048f16c6a92d86f121036eb8a29cda38698edc5fbb7c3f9",
+        "after": "b9d750f84aa7f1021048f16c6a92d86f121036eb8a29cda38698edc5fbb7c3f9"
+      }
+    },
+    {
+      "name": "menu restores exact tree_palette",
+      "passed": true,
+      "detail": {
+        "before": "688629c178ecfff52c26502452506dcb073df99654c4e68e08b67d1fecd433b1",
+        "after": "688629c178ecfff52c26502452506dcb073df99654c4e68e08b67d1fecd433b1"
+      }
+    },
+    {
+      "name": "generated room contains a safely approachable cuttable bush",
+      "passed": true
+    },
+    {
+      "name": "ordinary sword input cuts the generated bush",
+      "passed": true,
+      "detail": {
+        "cell": 22,
+        "tile": [
+          10,
+          14
+        ],
+        "near_tree": true
+      }
+    },
+    {
+      "name": "bush cut updates the real collision grid",
+      "passed": true
+    },
+    {
+      "name": "room_change preserves planted tree placements",
+      "passed": true
+    },
+    {
+      "name": "room_change preserves planted tree root_owners",
+      "passed": true
+    },
+    {
+      "name": "room_change preserves planted tree bg3",
+      "passed": true
+    },
+    {
+      "name": "post-cut item menu opens",
+      "passed": true
+    },
+    {
+      "name": "post-cut item menu closes",
+      "passed": true
+    },
+    {
+      "name": "same-room cache restores cut-room bg1",
+      "passed": true
+    },
+    {
+      "name": "same-room cache restores cut-room bg2",
+      "passed": true
+    },
+    {
+      "name": "same-room cache restores cut-room bg3",
+      "passed": true
+    },
+    {
+      "name": "same-room cache restores cut-room static_atlas",
+      "passed": true
+    },
+    {
+      "name": "same-room cache restores cut-room collision",
+      "passed": true
+    },
+    {
+      "name": "same-room cache restores cut-room root_owners",
+      "passed": true
+    },
+    {
+      "name": "same-room cache restores cut-room placements",
+      "passed": true
+    },
+    {
+      "name": "same-room cache restores cut-room tree_palette",
+      "passed": true
+    },
+    {
+      "name": "cut floor and open collision survive menu redraw",
+      "passed": true
+    },
+    {
+      "name": "transition request settles in area1 cell0",
+      "passed": true
+    },
+    {
+      "name": "existing mystery mouth enters its generated interior",
+      "passed": true
+    },
+    {
+      "name": "mystery interior does not enable forest BG3 roots",
+      "passed": true,
+      "detail": {
+        "display": 5952,
+        "bg1": 55297,
+        "bg2": 56322,
+        "bg3": 5647
+      }
+    },
+    {
+      "name": "mystery interior restores the ordinary menu BG3screen22",
+      "passed": true,
+      "detail": {
+        "display": 5952,
+        "bg1": 55297,
+        "bg2": 56322,
+        "bg3": 5647
+      }
+    },
+    {
+      "name": "transition request settles in area1 cell0",
+      "passed": true
+    },
+    {
+      "name": "forest after mystery uses all three world layers",
+      "passed": true,
+      "detail": {
+        "display": 8000,
+        "bg1": 55297,
+        "bg2": 56323,
+        "bg3": 52226
+      }
+    },
+    {
+      "name": "forest after mystery reserves BG3screen12 charbase0 size64",
+      "passed": true,
+      "detail": {
+        "display": 8000,
+        "bg1": 55297,
+        "bg2": 56323,
+        "bg3": 52226
+      }
+    },
+    {
+      "name": "forest after mystery keeps floor behind tree bases",
+      "passed": true,
+      "detail": {
+        "display": 8000,
+        "bg1": 55297,
+        "bg2": 56323,
+        "bg3": 52226
+      }
+    },
+    {
+      "name": "transition request settles in area0 cell0",
+      "passed": true
+    },
+    {
+      "name": "Drain return does not enable forest BG3 roots",
+      "passed": true,
+      "detail": {
+        "display": 5952,
+        "bg1": 55297,
+        "bg2": 56322,
+        "bg3": 5647
+      }
+    },
+    {
+      "name": "Drain return restores the ordinary menu BG3screen22",
+      "passed": true,
+      "detail": {
+        "display": 5952,
+        "bg1": 55297,
+        "bg2": 56322,
+        "bg3": 5647
+      }
+    },
+    {
+      "name": "forest re-entry uses all three world layers",
+      "passed": true,
+      "detail": {
+        "display": 8000,
+        "bg1": 55297,
+        "bg2": 56323,
+        "bg3": 52226
+      }
+    },
+    {
+      "name": "forest re-entry reserves BG3screen12 charbase0 size64",
+      "passed": true,
+      "detail": {
+        "display": 8000,
+        "bg1": 55297,
+        "bg2": 56323,
+        "bg3": 52226
+      }
+    },
+    {
+      "name": "forest re-entry keeps floor behind tree bases",
+      "passed": true,
+      "detail": {
+        "display": 8000,
+        "bg1": 55297,
+        "bg2": 56323,
+        "bg3": 52226
+      }
+    },
+    {
+      "name": "critical path: ENTRY: the drain leads to the entry cell",
+      "passed": true,
+      "detail": "cell 22"
+    },
+    {
+      "name": "critical path: TRIAL: reached the seed trial room",
+      "passed": true,
+      "detail": "cell 11"
+    },
+    {
+      "name": "critical path: TRIAL: its event is completed and claimed",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "critical path: KEYS: the earned chest grants the bombs",
+      "passed": true,
+      "detail": "items 0x43 bombs 10"
+    },
+    {
+      "name": "critical path: CRACK: reached the cracked wall",
+      "passed": true,
+      "detail": "cell 23"
+    },
+    {
+      "name": "critical path: CRACK: the bomb opened it",
+      "passed": true,
+      "detail": "cell 23 -> 18"
+    },
+    {
+      "name": "critical path: TRIAL: reached the candle trial room",
+      "passed": true,
+      "detail": "cell 7"
+    },
+    {
+      "name": "critical path: TRIAL: its event is completed and claimed",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "critical path: KEYS: the earned chest grants the lamp",
+      "passed": true,
+      "detail": "items 0x47"
+    },
+    {
+      "name": "critical path: WEB: reached the web",
+      "passed": true,
+      "detail": "cell 4"
+    },
+    {
+      "name": "critical path: WEB: the lamp burned it",
+      "passed": true,
+      "detail": "cell 4 -> 3"
+    },
+    {
+      "name": "critical path: TRIAL: reached the cape trial room",
+      "passed": true,
+      "detail": "cell 0"
+    },
+    {
+      "name": "critical path: TRIAL: its event is completed and claimed",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "critical path: KEYS: the earned chest grants the cloak",
+      "passed": true,
+      "detail": "items 0x4f"
+    },
+    {
+      "name": "critical path: CHASM: reached the chasm",
+      "passed": true,
+      "detail": "cell 15"
+    },
+    {
+      "name": "critical path: CHASM: the cloak crossed it",
+      "passed": true,
+      "detail": "cell 20 (hp 24)"
+    },
+    {
+      "name": "critical path: GOAL: the goal room is entered",
+      "passed": true,
+      "detail": "cell 20"
+    },
+    {
+      "name": "all actual required trials/item gates reach the Heart room",
+      "passed": true,
+      "detail": {
+        "passed": 17,
+        "total": 17
+      }
+    }
+  ],
+  "passed": 78,
+  "total": 78,
+  "failures": [],
+  "snapshots": [
+    {
+      "label": "before menu",
+      "values": {
+        "bg1": "9aea184c9eeecefb31545f80a874c02011d6894450e161988ff47c06a5ad1a7b",
+        "bg2": "0a481945e96dd7a308c32a2d0a41e3d337442815a48fabf310351c76ff651ba2",
+        "bg3": "e33cc99ca62f9536cd76bf4ef54473d11d4ce7ed1dcd2540914d186ae87caa1b",
+        "static_atlas": "4158a212284dea5d85ef328f0d22f269e177066326c4027ea854108e0cfdf020",
+        "collision": "606c215c47b75260519d01db0ecad0b084a7dd16dfdf62626f7292de55075ca1",
+        "root_owners": "ec38b8bca8f4c388ff82ddb384e1d6bf390c42bd713184413d28ab93dd203c5f",
+        "placements": "b9d750f84aa7f1021048f16c6a92d86f121036eb8a29cda38698edc5fbb7c3f9",
+        "tree_palette": "688629c178ecfff52c26502452506dcb073df99654c4e68e08b67d1fecd433b1"
+      },
+      "count": 334,
+      "registers": {
+        "display": 8000,
+        "bg1": 55297,
+        "bg2": 56323,
+        "bg3": 52226
+      },
+      "area": 1,
+      "cell": 22,
+      "frame": 268
+    },
+    {
+      "label": "after item/key/map/zoom menu",
+      "values": {
+        "bg1": "9aea184c9eeecefb31545f80a874c02011d6894450e161988ff47c06a5ad1a7b",
+        "bg2": "0a481945e96dd7a308c32a2d0a41e3d337442815a48fabf310351c76ff651ba2",
+        "bg3": "e33cc99ca62f9536cd76bf4ef54473d11d4ce7ed1dcd2540914d186ae87caa1b",
+        "static_atlas": "4158a212284dea5d85ef328f0d22f269e177066326c4027ea854108e0cfdf020",
+        "collision": "606c215c47b75260519d01db0ecad0b084a7dd16dfdf62626f7292de55075ca1",
+        "root_owners": "ec38b8bca8f4c388ff82ddb384e1d6bf390c42bd713184413d28ab93dd203c5f",
+        "placements": "b9d750f84aa7f1021048f16c6a92d86f121036eb8a29cda38698edc5fbb7c3f9",
+        "tree_palette": "688629c178ecfff52c26502452506dcb073df99654c4e68e08b67d1fecd433b1"
+      },
+      "count": 334,
+      "registers": {
+        "display": 8000,
+        "bg1": 55297,
+        "bg2": 56323,
+        "bg3": 52226
+      },
+      "area": 1,
+      "cell": 22,
+      "frame": 785
+    },
+    {
+      "label": "before ordinary sword bush cut",
+      "values": {
+        "bg1": "9aea184c9eeecefb31545f80a874c02011d6894450e161988ff47c06a5ad1a7b",
+        "bg2": "0a481945e96dd7a308c32a2d0a41e3d337442815a48fabf310351c76ff651ba2",
+        "bg3": "e33cc99ca62f9536cd76bf4ef54473d11d4ce7ed1dcd2540914d186ae87caa1b",
+        "static_atlas": "4158a212284dea5d85ef328f0d22f269e177066326c4027ea854108e0cfdf020",
+        "collision": "606c215c47b75260519d01db0ecad0b084a7dd16dfdf62626f7292de55075ca1",
+        "root_owners": "ec38b8bca8f4c388ff82ddb384e1d6bf390c42bd713184413d28ab93dd203c5f",
+        "placements": "b9d750f84aa7f1021048f16c6a92d86f121036eb8a29cda38698edc5fbb7c3f9",
+        "tree_palette": "688629c178ecfff52c26502452506dcb073df99654c4e68e08b67d1fecd433b1"
+      },
+      "count": 334,
+      "registers": {
+        "display": 8000,
+        "bg1": 55297,
+        "bg2": 56323,
+        "bg3": 52226
+      },
+      "area": 1,
+      "cell": 22,
+      "frame": 785
+    },
+    {
+      "label": "after sword cut before menu",
+      "values": {
+        "bg1": "d1cfdc8c47dd459b9ff778d9d0b2e41b2011955fefaea74a057598e840fc910d",
+        "bg2": "0a481945e96dd7a308c32a2d0a41e3d337442815a48fabf310351c76ff651ba2",
+        "bg3": "e33cc99ca62f9536cd76bf4ef54473d11d4ce7ed1dcd2540914d186ae87caa1b",
+        "static_atlas": "4158a212284dea5d85ef328f0d22f269e177066326c4027ea854108e0cfdf020",
+        "collision": "aa6128f15a4d214a200c8f88b6fbbf2eb99e751cfe77594fdc4e7c889a20fc7b",
+        "root_owners": "ec38b8bca8f4c388ff82ddb384e1d6bf390c42bd713184413d28ab93dd203c5f",
+        "placements": "b9d750f84aa7f1021048f16c6a92d86f121036eb8a29cda38698edc5fbb7c3f9",
+        "tree_palette": "688629c178ecfff52c26502452506dcb073df99654c4e68e08b67d1fecd433b1"
+      },
+      "count": 334,
+      "registers": {
+        "display": 8000,
+        "bg1": 55297,
+        "bg2": 56323,
+        "bg3": 52226
+      },
+      "area": 1,
+      "cell": 22,
+      "frame": 815
+    },
+    {
+      "label": "after sword cut and same-room menu redraw",
+      "values": {
+        "bg1": "d1cfdc8c47dd459b9ff778d9d0b2e41b2011955fefaea74a057598e840fc910d",
+        "bg2": "0a481945e96dd7a308c32a2d0a41e3d337442815a48fabf310351c76ff651ba2",
+        "bg3": "e33cc99ca62f9536cd76bf4ef54473d11d4ce7ed1dcd2540914d186ae87caa1b",
+        "static_atlas": "4158a212284dea5d85ef328f0d22f269e177066326c4027ea854108e0cfdf020",
+        "collision": "aa6128f15a4d214a200c8f88b6fbbf2eb99e751cfe77594fdc4e7c889a20fc7b",
+        "root_owners": "ec38b8bca8f4c388ff82ddb384e1d6bf390c42bd713184413d28ab93dd203c5f",
+        "placements": "b9d750f84aa7f1021048f16c6a92d86f121036eb8a29cda38698edc5fbb7c3f9",
+        "tree_palette": "688629c178ecfff52c26502452506dcb073df99654c4e68e08b67d1fecd433b1"
+      },
+      "count": 334,
+      "registers": {
+        "display": 8000,
+        "bg1": 55297,
+        "bg2": 56323,
+        "bg3": 52226
+      },
+      "area": 1,
+      "cell": 22,
+      "frame": 959
+    }
+  ],
+  "media": [
+    {
+      "file": "01-title.png",
+      "sha256": "16cf4271d3cd2e4960f030926614d64ba3855e3573c083174a20098f36f5553d",
+      "native_size": [
+        240,
+        160
+      ],
+      "kind": "untouched mGBA framebuffer"
+    },
+    {
+      "file": "02-title-options.png",
+      "sha256": "8cbea4e75774965fc154dbac7562ed3ae5624903d54824edac83fc0d399612ad",
+      "native_size": [
+        240,
+        160
+      ],
+      "kind": "untouched mGBA framebuffer"
+    },
+    {
+      "file": "03-drain.png",
+      "sha256": "c894b549dcc2400803d07b5d1bdef2ce9062aba809ef09566fdd0af7c8227c07",
+      "native_size": [
+        240,
+        160
+      ],
+      "kind": "untouched mGBA framebuffer"
+    },
+    {
+      "file": "04-forest-before-menu.png",
+      "sha256": "ffc2eb586fe147fe4ee48855f738f74b585c1d167188db599266a11f08469b03",
+      "native_size": [
+        240,
+        160
+      ],
+      "kind": "untouched mGBA framebuffer"
+    },
+    {
+      "file": "05-items.png",
+      "sha256": "9c92e362ae75372bf24b96104e574964477b32f873a72e16647282eae5eddc05",
+      "native_size": [
+        240,
+        160
+      ],
+      "kind": "untouched mGBA framebuffer"
+    },
+    {
+      "file": "06-key-items.png",
+      "sha256": "ed2e9d458e5793cb20b8f6cd485df37da1eb70082294dbf3ec5e68ce1806e730",
+      "native_size": [
+        240,
+        160
+      ],
+      "kind": "untouched mGBA framebuffer"
+    },
+    {
+      "file": "07-region-map.png",
+      "sha256": "9174812d409fb1209a9052efddde1b808895b850565c8c3de97c3ed28f2e28d6",
+      "native_size": [
+        240,
+        160
+      ],
+      "kind": "untouched mGBA framebuffer"
+    },
+    {
+      "file": "08-room-map.png",
+      "sha256": "89a3606df814962ff708655da382fe9d86cee2d172eff68992fdb961f3cd34bb",
+      "native_size": [
+        240,
+        160
+      ],
+      "kind": "untouched mGBA framebuffer"
+    },
+    {
+      "file": "09-forest-after-menu.png",
+      "sha256": "9cb5ac80949c2236c606db28c40ea177dffd0f3aaab853fcbe863568afb39969",
+      "native_size": [
+        240,
+        160
+      ],
+      "kind": "untouched mGBA framebuffer"
+    },
+    {
+      "file": "14-bush-cut-before-menu.png",
+      "sha256": "6ee2fc9fdf463ac90095124a9fc0a0868310e1077ac945892d3737494f0587a7",
+      "native_size": [
+        240,
+        160
+      ],
+      "kind": "untouched mGBA framebuffer"
+    },
+    {
+      "file": "15-bush-cut-after-menu.png",
+      "sha256": "f27713d4b020f55940135b437323cc01c5c66aac1f5d2bc626a4d9421a64f165",
+      "native_size": [
+        240,
+        160
+      ],
+      "kind": "untouched mGBA framebuffer"
+    },
+    {
+      "file": "10-mystery-interior.png",
+      "sha256": "2648747cbd557e6c926ba0751bcb6a50816113d76ce5798c3717dbbf5f0c4a55",
+      "native_size": [
+        240,
+        160
+      ],
+      "kind": "untouched mGBA framebuffer"
+    },
+    {
+      "file": "11-forest-after-mystery.png",
+      "sha256": "38eeb95bd08bd89472295b44d4996553a69a6f38e86d2220d7cab784b390140f",
+      "native_size": [
+        240,
+        160
+      ],
+      "kind": "untouched mGBA framebuffer"
+    },
+    {
+      "file": "12-drain-return.png",
+      "sha256": "248b8dee8afd36d01500d7ededfb7e077f169708b85bdfd2156fa1b0565fa94c",
+      "native_size": [
+        240,
+        160
+      ],
+      "kind": "untouched mGBA framebuffer"
+    },
+    {
+      "file": "13-forest-reentry.png",
+      "sha256": "b06756c3b255c5e71ad3ae4242c433b02c20a2ceb857489feb1ce7aad0e9b144",
+      "native_size": [
+        240,
+        160
+      ],
+      "kind": "untouched mGBA framebuffer"
+    },
+    {
+      "file": "cp1.png",
+      "sha256": "af4926155a7128717aab712b830e0fe56658d75bb523edcc5c9615edcd557f1a",
+      "native_size": [
+        240,
+        160
+      ],
+      "kind": "untouched mGBA critical-path framebuffer"
+    },
+    {
+      "file": "cp2.png",
+      "sha256": "f7a691e48539a01d42f1b08f10b8302952410ef6522c5e7ad0a135632fa4dfb5",
+      "native_size": [
+        240,
+        160
+      ],
+      "kind": "untouched mGBA critical-path framebuffer"
+    },
+    {
+      "file": "cp3.png",
+      "sha256": "3de741cbf5159df80b4741ddf6589c38433b4dc30a16ba583b5e781a43f01426",
+      "native_size": [
+        240,
+        160
+      ],
+      "kind": "untouched mGBA critical-path framebuffer"
+    },
+    {
+      "file": "cp4.png",
+      "sha256": "6a056a280f756cb09087a304dd5476b323f773ccf0a10332f49df74bb770a296",
+      "native_size": [
+        240,
+        160
+      ],
+      "kind": "untouched mGBA critical-path framebuffer"
+    },
+    {
+      "file": "cp5.png",
+      "sha256": "6a056a280f756cb09087a304dd5476b323f773ccf0a10332f49df74bb770a296",
+      "native_size": [
+        240,
+        160
+      ],
+      "kind": "untouched mGBA critical-path framebuffer"
+    }
+  ],
+  "error": null
+}

@@ -1,0 +1,524 @@
+{
+  "game_art_source_commit": "fd7465d87f3dfcec33152254d49b3df629debf26",
+  "publication_branch": "forest-trees-integrated",
+  "forest_profile": 31,
+  "rom_sha256": "977f38406e3f5cf12e7108e3840356d305d364bd665bc0d9ef578ec8f5937e78",
+  "scope": "New integrated-tree gallery and playable release; prior study publications remain historical. Verification tools/documents may be finalized after the game/art source freeze and are independently hashed here.",
+  "checks": {
+    "capture": [
+      140,
+      140
+    ],
+    "independent": [
+      1915,
+      1915
+    ],
+    "actual_runtime": [
+      78,
+      78
+    ],
+    "publication": [
+      209,
+      209
+    ],
+    "historical_byte_exact_profiles": 31,
+    "host_rooms": 12800,
+    "native_walk_frames": 504
+  },
+  "files": {
+    "art-review/forest-trees-integrated/README.md": {
+      "bytes": 4095,
+      "sha256": "99b5367ed1f0ac82836e107268e3b1ddf3664043b16e987d4d0d3a6fbc110f49"
+    },
+    "art-review/forest-trees-integrated/actual/README.md": {
+      "bytes": 1264,
+      "sha256": "c87af7a870cdfac669b471a1d9545f8489afe51a5efc4b94eec297117807c008"
+    },
+    "art-review/forest-trees-integrated/actual/capture.json": {
+      "bytes": 908173,
+      "sha256": "ecdaace2ff4cdfd3af3001d58d263f8d35d7f5510b7bfdcef2b2f7734ccb891e"
+    },
+    "art-review/forest-trees-integrated/actual/deep/BG3_map.bin": {
+      "bytes": 8192,
+      "sha256": "675a480b0bd45f8e8d3efa5601d99a5c0a3f12a23acebe1bb5088a5667e7d41c"
+    },
+    "art-review/forest-trees-integrated/actual/deep/BG_maps.bin": {
+      "bytes": 16384,
+      "sha256": "3d5d917856929f2d54444a2f4b6acda3f1f336514e788323f08240195ccc9b8b"
+    },
+    "art-review/forest-trees-integrated/actual/deep/BG_tiles.bin": {
+      "bytes": 20672,
+      "sha256": "2eb33e94aed183ba8890636db40aecc6cd045644d53cb288f7c0178c151686b9"
+    },
+    "art-review/forest-trees-integrated/actual/deep/camera-000-000.png": {
+      "bytes": 13788,
+      "sha256": "6da6fbfca4959ea00c4b8fd0fda77daf57a66f52456fd3b43b2f53dd7b4f7496"
+    },
+    "art-review/forest-trees-integrated/actual/deep/camera-000-112.png": {
+      "bytes": 11093,
+      "sha256": "beb441833dc34f00e9e7eabae68c19500032796df1ff169edcefd26f9ddd452f"
+    },
+    "art-review/forest-trees-integrated/actual/deep/camera-000-224.png": {
+      "bytes": 12338,
+      "sha256": "cc57e2047fb0f0aa054eb832541970963022a5d6ba059760642280b6289c1d4b"
+    },
+    "art-review/forest-trees-integrated/actual/deep/camera-136-000.png": {
+      "bytes": 13504,
+      "sha256": "6d94275ffb445615e020e2ce293c5954683c7aac3d7bfc5191234a831d7fd7d6"
+    },
+    "art-review/forest-trees-integrated/actual/deep/camera-136-112.png": {
+      "bytes": 10727,
+      "sha256": "e41118b6b8c0728958f2dd7274646965d1e953f24d042fc4bb5ecac2f5ee6dab"
+    },
+    "art-review/forest-trees-integrated/actual/deep/camera-136-224.png": {
+      "bytes": 10166,
+      "sha256": "9d67ce06c88b1788ce082d0f6437fdc94f4ab9aaaab22123cc555f3107276c7f"
+    },
+    "art-review/forest-trees-integrated/actual/deep/camera-272-000.png": {
+      "bytes": 13913,
+      "sha256": "13f49535fdc4457561fbd2b33d7d1b7329531c5e1830ef8e44b8fbf940f868aa"
+    },
+    "art-review/forest-trees-integrated/actual/deep/camera-272-112.png": {
+      "bytes": 12473,
+      "sha256": "1484ba93f932c6e347efa398d79335d4a379c2fb096b0afe05082a9046fa2b1d"
+    },
+    "art-review/forest-trees-integrated/actual/deep/camera-272-224.png": {
+      "bytes": 11715,
+      "sha256": "0a36ad3133745d5cc0d399739380130019da2466be1d258b9f0b76e33c640fce"
+    },
+    "art-review/forest-trees-integrated/actual/deep/full-room.png": {
+      "bytes": 56127,
+      "sha256": "251afaeff3a305607c53a57f70718acc1ec18ca09d447393d35801e3b51fbb2c"
+    },
+    "art-review/forest-trees-integrated/actual/deep/native-HUD-north.png": {
+      "bytes": 11002,
+      "sha256": "39aea653a8c96e7b4527e9cddfafc695a82a16a9b8826cff01012262f2af60ce"
+    },
+    "art-review/forest-trees-integrated/actual/deep/native-HUD-south.png": {
+      "bytes": 11066,
+      "sha256": "81d72ae5e906dafb7fa3b20295f19fd63e4f4faed38c22d81af506e715da0405"
+    },
+    "art-review/forest-trees-integrated/actual/deep/native-HUD-west.png": {
+      "bytes": 11102,
+      "sha256": "be62f4a2a878329a57c21a9baca0f658b42ff72d2ad667f8d52a7b6d96de622b"
+    },
+    "art-review/forest-trees-integrated/actual/deep/native-HUD.png": {
+      "bytes": 11065,
+      "sha256": "6770bef9dd901acad3165ffad5bee21a0fb92b1c8880d545995131651c626192"
+    },
+    "art-review/forest-trees-integrated/actual/deep/native-arrival.png": {
+      "bytes": 11305,
+      "sha256": "e6c577f4e95b1690c5ff0096852a0eeeaefe472a62ee1d9f3ace0783c8d4bdc1"
+    },
+    "art-review/forest-trees-integrated/actual/deep/room.bin": {
+      "bytes": 10242,
+      "sha256": "56abd452cd9388205d7cccad6f573b7e7106fbd16b3e92e6b9b2c7c9ea94f1ee"
+    },
+    "art-review/forest-trees-integrated/actual/deep/walk-observations.json": {
+      "bytes": 465230,
+      "sha256": "4222803244500d46bbe6f7861ca6cd5273b10156201bd64eb6c44a6d7aa75b70"
+    },
+    "art-review/forest-trees-integrated/actual/deep/walk.gif": {
+      "bytes": 161465,
+      "sha256": "0a6d6698118dfd88cc2ca251ea640264015b8649c8df733f0db6cf5583f44cc1"
+    },
+    "art-review/forest-trees-integrated/actual/deep/walk.mp4": {
+      "bytes": 173041,
+      "sha256": "9f930f99ff4e72a35fb7beadc7026fbd50f3ca8739083f746ea6bcf606dfd803"
+    },
+    "art-review/forest-trees-integrated/actual/healthy/BG3_map.bin": {
+      "bytes": 8192,
+      "sha256": "4129e9efaefffad021704fa615914173bf0841dfa5913cb3f6a5d70fc9681885"
+    },
+    "art-review/forest-trees-integrated/actual/healthy/BG_maps.bin": {
+      "bytes": 16384,
+      "sha256": "97877fba819471180b664a26b49dd129616b191a851d68fd298659abaa98c77f"
+    },
+    "art-review/forest-trees-integrated/actual/healthy/BG_tiles.bin": {
+      "bytes": 20672,
+      "sha256": "d6a34d359ebb89e41fb925d8c1b503e46b4be53f6de4c752c1d8498aaea5e374"
+    },
+    "art-review/forest-trees-integrated/actual/healthy/camera-000-000.png": {
+      "bytes": 9974,
+      "sha256": "e4a22a76e0b879694a44899c595562d592aeee37347c08c1b94c7061ed4f668d"
+    },
+    "art-review/forest-trees-integrated/actual/healthy/camera-000-112.png": {
+      "bytes": 8991,
+      "sha256": "55f6cb60ceebd61be9f4981417746e668a0d5d5c8395f59d13c98f77709b4208"
+    },
+    "art-review/forest-trees-integrated/actual/healthy/camera-000-224.png": {
+      "bytes": 9777,
+      "sha256": "15d9358a49a99d99830e4c25ffa2f81b771b60c57ad4c8a758c745f91dd466e9"
+    },
+    "art-review/forest-trees-integrated/actual/healthy/camera-136-000.png": {
+      "bytes": 9869,
+      "sha256": "d31a32fb21bce8309afef6376358b8d0fb125568df053045b8700d829bc9ce0c"
+    },
+    "art-review/forest-trees-integrated/actual/healthy/camera-136-112.png": {
+      "bytes": 8937,
+      "sha256": "ef1b556ae5f6c8776240170141e75eaf22476809557a92729d8383d3dcbeec85"
+    },
+    "art-review/forest-trees-integrated/actual/healthy/camera-136-224.png": {
+      "bytes": 8695,
+      "sha256": "43ffa58ce14f8aae840bacb18539fd75ee4fa541a2aca124dec563a7a6bdffd3"
+    },
+    "art-review/forest-trees-integrated/actual/healthy/camera-272-000.png": {
+      "bytes": 10630,
+      "sha256": "6e8467178c9a278f4cfedb850b774aeb47c963483847b02be658796b1275789a"
+    },
+    "art-review/forest-trees-integrated/actual/healthy/camera-272-112.png": {
+      "bytes": 10919,
+      "sha256": "1cece1d5f5de2c2dbd3fc3389f2bec2f9b73173c28863445e60f3843ed9a6290"
+    },
+    "art-review/forest-trees-integrated/actual/healthy/camera-272-224.png": {
+      "bytes": 10379,
+      "sha256": "fc96af662bdb8401a3e5a4828d77374fed7692296893477e6b072479c6a3fca0"
+    },
+    "art-review/forest-trees-integrated/actual/healthy/full-room.png": {
+      "bytes": 45829,
+      "sha256": "95e9eb4dff3f285d2083b798ad245d4a8531e9022cdf846cb2454dae8ae0ecd7"
+    },
+    "art-review/forest-trees-integrated/actual/healthy/native-HUD-north.png": {
+      "bytes": 8832,
+      "sha256": "9541ced5a28f144f51afd8567085d135c5ba2013605417dcd3695ba1383c9164"
+    },
+    "art-review/forest-trees-integrated/actual/healthy/native-HUD-south.png": {
+      "bytes": 8983,
+      "sha256": "e310f738b4d12d5188114cc5d6158904981c788a77437892cdcae40ecdcf98f0"
+    },
+    "art-review/forest-trees-integrated/actual/healthy/native-HUD-west.png": {
+      "bytes": 8763,
+      "sha256": "897be672d07ec734b532043c1bc9105b8a56cc5315a017054e667cfa3448597a"
+    },
+    "art-review/forest-trees-integrated/actual/healthy/native-HUD.png": {
+      "bytes": 8923,
+      "sha256": "31651038b3eccc30cbf00f5ed3119583109a78e763ed9ed41ec2e6a696548594"
+    },
+    "art-review/forest-trees-integrated/actual/healthy/native-arrival.png": {
+      "bytes": 10912,
+      "sha256": "d2f89d1225afcdcdc25d6c4a5cd239a58d5cbb8b9aefab1be0c81c61be4cf906"
+    },
+    "art-review/forest-trees-integrated/actual/healthy/room.bin": {
+      "bytes": 10242,
+      "sha256": "ecf4212e5cf7af6332d7123ebc7838b23106ac93f8c09c0ca77d8865d9c1f536"
+    },
+    "art-review/forest-trees-integrated/actual/healthy/walk-observations.json": {
+      "bytes": 465362,
+      "sha256": "12f75480b5b1b57f19152963daad20364c26cfa41e48e0d2a164772ae37e45ce"
+    },
+    "art-review/forest-trees-integrated/actual/healthy/walk.gif": {
+      "bytes": 157767,
+      "sha256": "2f90a59683495154bbccd9b49efa17ed820809e1cb62ffecc134f8dc60c72bd2"
+    },
+    "art-review/forest-trees-integrated/actual/healthy/walk.mp4": {
+      "bytes": 131387,
+      "sha256": "438b5ad99d3726e3599c5b40af217a5cde397cbb5f9ad8a21d0866acd781b7d6"
+    },
+    "art-review/forest-trees-integrated/actual/mixed/BG3_map.bin": {
+      "bytes": 8192,
+      "sha256": "62cae7fa651cc193d55f728c3eb378f2af293027e9da665358f80b960c37f6e4"
+    },
+    "art-review/forest-trees-integrated/actual/mixed/BG_maps.bin": {
+      "bytes": 16384,
+      "sha256": "bde0a99702ca0fbc0302eba2566e94a9a34e4861d442d71c4e140a88053466d2"
+    },
+    "art-review/forest-trees-integrated/actual/mixed/BG_tiles.bin": {
+      "bytes": 20672,
+      "sha256": "d6a34d359ebb89e41fb925d8c1b503e46b4be53f6de4c752c1d8498aaea5e374"
+    },
+    "art-review/forest-trees-integrated/actual/mixed/camera-000-000.png": {
+      "bytes": 13617,
+      "sha256": "568b01d0ca745abb81b89b214b49ad182acfc82e61877aaabef64e2681f6708b"
+    },
+    "art-review/forest-trees-integrated/actual/mixed/camera-000-112.png": {
+      "bytes": 12938,
+      "sha256": "44abce6c209acbb1e4944374276586ed22e5f1cc3c73f04dfff5bc3ca566e5be"
+    },
+    "art-review/forest-trees-integrated/actual/mixed/camera-000-224.png": {
+      "bytes": 13901,
+      "sha256": "5d555c3644aa555e23fca867e6c1de5a718052864d943d0700c5bd5e4a41ec5d"
+    },
+    "art-review/forest-trees-integrated/actual/mixed/camera-136-000.png": {
+      "bytes": 12665,
+      "sha256": "c903b94a31a4d3cf4cc42efc3a4ebda9015581adb183aa8e4debf2d8cd7d51d4"
+    },
+    "art-review/forest-trees-integrated/actual/mixed/camera-136-112.png": {
+      "bytes": 9338,
+      "sha256": "4509e6ac03efce21ff98e7a98bf8e332930cada111883945d165223f1271a3fd"
+    },
+    "art-review/forest-trees-integrated/actual/mixed/camera-136-224.png": {
+      "bytes": 11847,
+      "sha256": "1378e9e1521115d28481e2259bdb612c292fb0368723691ea8afeb3475f1ef68"
+    },
+    "art-review/forest-trees-integrated/actual/mixed/camera-272-000.png": {
+      "bytes": 13053,
+      "sha256": "cebd55e6a24248fe5d53e2d9b49306e901d21b156fad4a35e596257549407f35"
+    },
+    "art-review/forest-trees-integrated/actual/mixed/camera-272-112.png": {
+      "bytes": 8844,
+      "sha256": "0d495dc8de23a6b3e34103f94866b59fc52e6918d3944ffbf8bdb56d3ebeeadd"
+    },
+    "art-review/forest-trees-integrated/actual/mixed/camera-272-224.png": {
+      "bytes": 12236,
+      "sha256": "56c76f1170b2fe21bd66bd750b243a4e14ff178d2e39162ae72d26db8d180ff2"
+    },
+    "art-review/forest-trees-integrated/actual/mixed/full-room.png": {
+      "bytes": 56383,
+      "sha256": "104381ffc90fd24f731640dbb2da2cf28b1c6c66126147319e1d4acc343ebcf5"
+    },
+    "art-review/forest-trees-integrated/actual/mixed/native-HUD-north.png": {
+      "bytes": 10001,
+      "sha256": "9396104a1504166b30d5148cfef7e1c455946308c5faa616a47ff3d5836e5ef0"
+    },
+    "art-review/forest-trees-integrated/actual/mixed/native-HUD-south.png": {
+      "bytes": 9991,
+      "sha256": "c7b0a92aa101efaab987c7ce0368589b476eb45ccf3f3d97169f3d5b62833e80"
+    },
+    "art-review/forest-trees-integrated/actual/mixed/native-HUD-west.png": {
+      "bytes": 9983,
+      "sha256": "513316a9edad33446f1b81ab1282ae60ae5b18e1767ad0bcbb37127f78f3ca30"
+    },
+    "art-review/forest-trees-integrated/actual/mixed/native-HUD.png": {
+      "bytes": 9996,
+      "sha256": "c8eabd4e39e45f0278d2485f2e3e882d16a06f3959392f414819ff186113c64d"
+    },
+    "art-review/forest-trees-integrated/actual/mixed/native-arrival.png": {
+      "bytes": 10483,
+      "sha256": "d515d3ba5eab7c644587fd6f7d3ce4100da57d97aeccc51ad87871e7b6c6c906"
+    },
+    "art-review/forest-trees-integrated/actual/mixed/room.bin": {
+      "bytes": 10242,
+      "sha256": "5b443affe1c2835e2edd55f106f1be7705d8ad4d563d79e2a1251b21e51f3f2e"
+    },
+    "art-review/forest-trees-integrated/actual/mixed/walk-observations.json": {
+      "bytes": 471426,
+      "sha256": "e2147a4ac3883a07aa6ac0a99f5a876c0e05dcaad3489d6a8c88d0c4e33b532b"
+    },
+    "art-review/forest-trees-integrated/actual/mixed/walk.gif": {
+      "bytes": 160280,
+      "sha256": "d6a27785a124ba3fdb49ccfec3d40d9476b07e114078901abe8f9a7bf266b658"
+    },
+    "art-review/forest-trees-integrated/actual/mixed/walk.mp4": {
+      "bytes": 133379,
+      "sha256": "50a9af29f8f0c4797fad9a4e6118813327721636efb62e5c2f56ddddd05ee93e"
+    },
+    "art-review/forest-trees-integrated/actual/timing-baseline.json": {
+      "bytes": 280172,
+      "sha256": "1ef84e4fc5df0cc32c74ce7e46852bc88818a6122006a7410432b64600405ce3"
+    },
+    "art-review/forest-trees-integrated/actual-panel-manifest.json": {
+      "bytes": 6338,
+      "sha256": "5398361629b5fd51c81f404faa85a90468d686fe0d536fe5bfe583a5e8b80200"
+    },
+    "art-review/forest-trees-integrated/actual-publication-summary.json": {
+      "bytes": 938,
+      "sha256": "98f66b0d26473fa460d73d96edc311e58a8c678253c85b3d5ab7d6412fcd79de"
+    },
+    "art-review/forest-trees-integrated/inspection/deep-2x.png": {
+      "bytes": 91674,
+      "sha256": "1996f67d39cc1f89c593177cf428b27a1120e35c83989d76a6ef3ec2be6de0d7"
+    },
+    "art-review/forest-trees-integrated/inspection/healthy-2x.png": {
+      "bytes": 71685,
+      "sha256": "c82aecfcdc218fd5a8def85c89bbf31525a77aae00a0845d3d22a819308466de"
+    },
+    "art-review/forest-trees-integrated/inspection/mixed-2x.png": {
+      "bytes": 88220,
+      "sha256": "43b8fa85d3671706fad5aaf7085162f086fcf431280f927ce452f0346efe2cbb"
+    },
+    "art-review/forest-trees-integrated/native-HUD-actual.png": {
+      "bytes": 34291,
+      "sha256": "4edb597aaa527631334ac8653221d6f6aa4166651b63c837ce6f6659d7b92727"
+    },
+    "art-review/forest-trees-integrated/rooms-actual.png": {
+      "bytes": 174640,
+      "sha256": "7649963174a241671cc94a238bfcccdea7a42e11f85fff457a5c44a2723cade7"
+    },
+    "art-review/forest-trees-integrated/validation/README.md": {
+      "bytes": 3238,
+      "sha256": "6a91809a912404a81571c4b84632bb58203f2ba45d5951b773c20662fb61335b"
+    },
+    "art-review/forest-trees-integrated/validation/audit.json": {
+      "bytes": 287771,
+      "sha256": "f1d46f720f0b0db1222caf37f836156c140bd3140bd3559579851be661210200"
+    },
+    "art-review/forest-trees-integrated/validation/builds.json": {
+      "bytes": 19820,
+      "sha256": "06e980d4158dc08aad95fa488798284bc55af3c7bb135860c650baa164c81d0f"
+    },
+    "art-review/forest-trees-integrated/validation/default-build.json": {
+      "bytes": 268,
+      "sha256": "08f7780573b9faedcaa797f46d3428e59eabb344caa333101f7233e76d6e2794"
+    },
+    "art-review/forest-trees-integrated/validation/fast-alpha-timing.json": {
+      "bytes": 93619,
+      "sha256": "a8e6eb222e1e78ae89b42efc660ed3e23d28cb39ad9df1638f758c287510f357"
+    },
+    "art-review/forest-trees-integrated/validation/frozen/v31/assets.h": {
+      "bytes": 80681,
+      "sha256": "ca83db699d252d6f0fbb440e2bd1b3cb6c5c4b886c1f9d6dd51f8fda37b89f51"
+    },
+    "art-review/forest-trees-integrated/validation/frozen/v31/bartgame.map": {
+      "bytes": 212888,
+      "sha256": "439e05ef500a9bf4593314fa8cb382eb0799917527564e59d1d19e7daa7a55ad"
+    },
+    "art-review/forest-trees-integrated/validation/frozen/v31/coverage.json": {
+      "bytes": 960008,
+      "sha256": "1eb84bfd1b822d6b0567c19510729115ad7438c28599f1bdd0130220688cdd8d"
+    },
+    "art-review/forest-trees-integrated/validation/frozen/v31/freeze.json": {
+      "bytes": 14050,
+      "sha256": "05084eb3eb0cf996539de8899a31a5a6e56869ab9bee86d46b24715d0215033b"
+    },
+    "art-review/forest-trees-integrated/validation/host/compile.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "art-review/forest-trees-integrated/validation/host/generator-check.c": {
+      "bytes": 15231,
+      "sha256": "9f4e9d66f080d1777f7498cb2f11c164a28cc2e22c95297b4f1d89205c23d859"
+    },
+    "art-review/forest-trees-integrated/validation/host/native-metadata.c": {
+      "bytes": 52320,
+      "sha256": "197f13a0b6b0589bcdce226afe7ceb51162bcb8acdfca2fc179b26ccedc9b8b8"
+    },
+    "art-review/forest-trees-integrated/validation/host/report.json": {
+      "bytes": 2783,
+      "sha256": "b1a4c8e846d50449439fa730c15606cc56388258cf7b367a2c6466e5aa20d65b"
+    },
+    "art-review/forest-trees-integrated/validation/host/room-logic.c": {
+      "bytes": 147,
+      "sha256": "e75bd04d0bd234b11870033a8e2374f5b87fbb3bb1b8989a3062f958f4b27c33"
+    },
+    "art-review/forest-trees-integrated/validation/host/run.log": {
+      "bytes": 888,
+      "sha256": "189b19dbe6a25d7ec213740e155d794b647e09aaef6adfc99fa52d9136601108"
+    },
+    "art-review/forest-trees-integrated/validation/legacy-preservation.json": {
+      "bytes": 7764,
+      "sha256": "87e91134cd22ec3a6eb75ee13b5c64a4a890a553c7035ce09a833e60d24c3210"
+    },
+    "art-review/forest-trees-integrated/validation/publication-qa.json": {
+      "bytes": 30004,
+      "sha256": "522bc50096ef368c1b85957489729e7badff7a78b7bf32b6e5ab055ba08cdc47"
+    },
+    "art-review/forest-trees-integrated/validation/runtime/01-title.png": {
+      "bytes": 7308,
+      "sha256": "16cf4271d3cd2e4960f030926614d64ba3855e3573c083174a20098f36f5553d"
+    },
+    "art-review/forest-trees-integrated/validation/runtime/02-title-options.png": {
+      "bytes": 2790,
+      "sha256": "8cbea4e75774965fc154dbac7562ed3ae5624903d54824edac83fc0d399612ad"
+    },
+    "art-review/forest-trees-integrated/validation/runtime/03-drain.png": {
+      "bytes": 4784,
+      "sha256": "c894b549dcc2400803d07b5d1bdef2ce9062aba809ef09566fdd0af7c8227c07"
+    },
+    "art-review/forest-trees-integrated/validation/runtime/04-forest-before-menu.png": {
+      "bytes": 10509,
+      "sha256": "ffc2eb586fe147fe4ee48855f738f74b585c1d167188db599266a11f08469b03"
+    },
+    "art-review/forest-trees-integrated/validation/runtime/05-items.png": {
+      "bytes": 3681,
+      "sha256": "9c92e362ae75372bf24b96104e574964477b32f873a72e16647282eae5eddc05"
+    },
+    "art-review/forest-trees-integrated/validation/runtime/06-key-items.png": {
+      "bytes": 3970,
+      "sha256": "ed2e9d458e5793cb20b8f6cd485df37da1eb70082294dbf3ec5e68ce1806e730"
+    },
+    "art-review/forest-trees-integrated/validation/runtime/07-region-map.png": {
+      "bytes": 3063,
+      "sha256": "9174812d409fb1209a9052efddde1b808895b850565c8c3de97c3ed28f2e28d6"
+    },
+    "art-review/forest-trees-integrated/validation/runtime/08-room-map.png": {
+      "bytes": 3182,
+      "sha256": "89a3606df814962ff708655da382fe9d86cee2d172eff68992fdb961f3cd34bb"
+    },
+    "art-review/forest-trees-integrated/validation/runtime/09-forest-after-menu.png": {
+      "bytes": 10338,
+      "sha256": "9cb5ac80949c2236c606db28c40ea177dffd0f3aaab853fcbe863568afb39969"
+    },
+    "art-review/forest-trees-integrated/validation/runtime/10-mystery-interior.png": {
+      "bytes": 2987,
+      "sha256": "2648747cbd557e6c926ba0751bcb6a50816113d76ce5798c3717dbbf5f0c4a55"
+    },
+    "art-review/forest-trees-integrated/validation/runtime/11-forest-after-mystery.png": {
+      "bytes": 10327,
+      "sha256": "38eeb95bd08bd89472295b44d4996553a69a6f38e86d2220d7cab784b390140f"
+    },
+    "art-review/forest-trees-integrated/validation/runtime/12-drain-return.png": {
+      "bytes": 7014,
+      "sha256": "248b8dee8afd36d01500d7ededfb7e077f169708b85bdfd2156fa1b0565fa94c"
+    },
+    "art-review/forest-trees-integrated/validation/runtime/13-forest-reentry.png": {
+      "bytes": 10439,
+      "sha256": "b06756c3b255c5e71ad3ae4242c433b02c20a2ceb857489feb1ce7aad0e9b144"
+    },
+    "art-review/forest-trees-integrated/validation/runtime/14-bush-cut-before-menu.png": {
+      "bytes": 9012,
+      "sha256": "6ee2fc9fdf463ac90095124a9fc0a0868310e1077ac945892d3737494f0587a7"
+    },
+    "art-review/forest-trees-integrated/validation/runtime/15-bush-cut-after-menu.png": {
+      "bytes": 8992,
+      "sha256": "f27713d4b020f55940135b437323cc01c5c66aac1f5d2bc626a4d9421a64f165"
+    },
+    "art-review/forest-trees-integrated/validation/runtime/cp1.png": {
+      "bytes": 11237,
+      "sha256": "af4926155a7128717aab712b830e0fe56658d75bb523edcc5c9615edcd557f1a"
+    },
+    "art-review/forest-trees-integrated/validation/runtime/cp2.png": {
+      "bytes": 10359,
+      "sha256": "f7a691e48539a01d42f1b08f10b8302952410ef6522c5e7ad0a135632fa4dfb5"
+    },
+    "art-review/forest-trees-integrated/validation/runtime/cp3.png": {
+      "bytes": 10905,
+      "sha256": "3de741cbf5159df80b4741ddf6589c38433b4dc30a16ba583b5e781a43f01426"
+    },
+    "art-review/forest-trees-integrated/validation/runtime/cp4.png": {
+      "bytes": 9721,
+      "sha256": "6a056a280f756cb09087a304dd5476b323f773ccf0a10332f49df74bb770a296"
+    },
+    "art-review/forest-trees-integrated/validation/runtime/cp5.png": {
+      "bytes": 9721,
+      "sha256": "6a056a280f756cb09087a304dd5476b323f773ccf0a10332f49df74bb770a296"
+    },
+    "art-review/forest-trees-integrated/validation/runtime/report.json": {
+      "bytes": 22510,
+      "sha256": "ad120255bcc892b5f94bdcf305c82230e8859f7f8bf449c6dd28ae11443c5651"
+    },
+    "downloads/forest-trees-integrated-fd7465d/README.md": {
+      "bytes": 669,
+      "sha256": "2b16054463d385700dd215dc13eaf2872ff893f7141884e663ff9ea66532fb13"
+    },
+    "downloads/forest-trees-integrated-fd7465d/README.txt": {
+      "bytes": 645,
+      "sha256": "23a3ac70c5b31fc8b22feef436567162680acc418af149d1c5b6cabf39e6bbac"
+    },
+    "downloads/forest-trees-integrated-fd7465d/SHA256SUMS.txt": {
+      "bytes": 179,
+      "sha256": "12c719a878688260060ee2713625ba7c6d52e974fa126bf5642c1e8066be3a72"
+    },
+    "downloads/forest-trees-integrated-fd7465d/forest-trees-integrated-fd7465d.gba": {
+      "bytes": 639812,
+      "sha256": "977f38406e3f5cf12e7108e3840356d305d364bd665bc0d9ef578ec8f5937e78"
+    },
+    "downloads/forest-trees-integrated-fd7465d/forest-trees-integrated-fd7465d.zip": {
+      "bytes": 160627,
+      "sha256": "f748fb0721a197f9d95c985a4ca85b31a4a8b5f9c1776bbae8e4ffc2322c40d7"
+    }
+  },
+  "verification_tools_sha256": {
+    "bartgame/tools/forest_trees_review.py": "3091652394bb79ab14cb1c5bfad52fbe4b8301403242d52474d43a471e65647e",
+    "bartgame/tools/forest_trees_gallery.py": "9d78d73dd785e9b648fdfa2850c0443a333498990c57af1f43fcc351c8a61f2d",
+    "bartgame/tools/forest_trees_audit.py": "901aad854d1dd8b18e2849d8233a8afd644a97a3626ac78beb9aa0ed84f770e8",
+    "bartgame/tools/forest_trees_runtime.py": "1d229456b932c70def76506d9f633fc26b1455f0c82a0ca6b72e98e0d9c66aba"
+  },
+  "documentation_sha256": {
+    "bartgame/docs/art-reboot/ART_BIBLE.md": "320fe0b3b872f388e2d2152af2b07ec2f1407bce04d8de2e8ab7f858043bbf66",
+    "bartgame/docs/art-reboot/ART_DIRECTION_LOG.md": "ee32ba969a9f9dbaff712ea066c3d57df2464bbdc0d21ad6c1b7e5157887dd77",
+    "bartgame/docs/art-reboot/REFERENCE_REGISTER.md": "3cf73de7e7cb14905c256a0b2f3fffb9f79640ec9ee16ecf1fa500bbc6174257",
+    "bartgame/docs/art-reboot/references/FOREST_TREES_ENGINE.md": "9072741fe3264510b49521bd6f90a73a9b48b009f81424dea1bc5889bdd010d4",
+    "bartgame/docs/art-reboot/references/FOREST_TREES_INTEGRATION_REVIEW.md": "e6d31a4ec02fe0b54ee761ea9205540cbae8402e59b1259ee8bdcd76c7557083"
+  },
+  "self_exclusion": "This manifest excludes itself to avoid a circular hash."
+}

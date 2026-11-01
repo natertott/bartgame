@@ -1,0 +1,7 @@
+{
+  "command": "make -j4 (no profile override)",
+  "profile": 31,
+  "rom_sha256": "977f38406e3f5cf12e7108e3840356d305d364bd665bc0d9ef578ec8f5937e78",
+  "frozen_rom_sha256": "977f38406e3f5cf12e7108e3840356d305d364bd665bc0d9ef578ec8f5937e78",
+  "byte_identical": true
+}

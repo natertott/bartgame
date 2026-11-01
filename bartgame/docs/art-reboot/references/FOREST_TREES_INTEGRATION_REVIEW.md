@@ -1,10 +1,9 @@
 # Repeated trees: procedural integration review
 
-Status: implementation review in progress. The user approved the twelve-tree
-kit and requested implementation plus complete room renders. This supersedes
-the earlier diagnostic-only scope in `TREE_GUIDE_APPLICATION.md`; the approved
-paintings remain unchanged. Numerical results and final visual observations
-will be recorded here after the frozen build and real mGBA captures exist.
+Status: adopted and independently reviewed in profile 31, the production
+default. The user approved the twelve-tree kit and requested implementation
+plus complete room renders. This supersedes the earlier diagnostic-only scope
+in `TREE_GUIDE_APPLICATION.md`; the approved paintings remain unchanged.
 
 ## Source and interpretation
 
@@ -78,7 +77,7 @@ seams differ; any such limitation must be stated rather than repainted.
 
 ## Visual observations
 
-The healthy, mixed and deep pilot rooms and all three normal HUD viewports
+The healthy, mixed and deep final rooms and all three normal HUD viewports
 were independently inspected at native size. Repeated raised leafy crowns
 read as a coherent forest; mixed/deep rooms keep recognizable damaged forks,
 some surviving crowns and attached violet rather than opaque purple backing.
@@ -91,7 +90,7 @@ forest boundary remains physically solid. In these rooms the gaps occur
 inside a dense, continuous forest mass; they are not open clearings that lead
 to an invisible wall. This is still a readability tradeoff for later play
 feedback. A few upper half-cells are omitted near protected fixtures and
-their approaches: 11 healthy, 9 mixed and 6 deep in the pilot scenes. That can
+their approaches: 11 healthy, 9 mixed and 6 deep in the final scenes. That can
 make a local tree read as a stump, but keeps the portal/chest/NPC approach
 visible. It is recorded rather than passed off as an unmodified full-tree
 stamp in every location.
@@ -103,4 +102,48 @@ manifest reports them and the audit does not smooth them away.
 
 ## Results
 
-Pending the integrated frozen build, spatial corpus and visual review.
+Frozen game/art source: `fd7465d87f3dfcec33152254d49b3df629debf26`.
+Production profile 31 ROM SHA256:
+`977f38406e3f5cf12e7108e3840356d305d364bd665bc0d9ef578ec8f5937e78`.
+The final independent audit passed **1,915/1,915** checks using held helper
+SHA256 `901aad854d1dd8b18e2849d8233a8afd644a97a3626ac78beb9aa0ed84f770e8`.
+The final capture helper separately passed 140/140 checks.
+
+| Evidence | Result |
+| --- | --- |
+| Approved tree drawings | All 12 native index images, exact shared RGB555 palette, dimensions, ground anchors and state/variety descriptors preserved. All 384 new fast depth-sorting alpha rows match the source bit for bit. |
+| Resource use | 646 resident BG tiles of 768 available with the extra layer; 11 world palette banks of 12. |
+| Unrelated art | 1,532 non-tree forest metatiles preserve every resolved RGB555/transparent pixel and animation timing; 36 complete OBJ sheets, 19 interface/palette payloads, pre-existing global BG palettes except the adopted tree bank, and both other world tilesets stay exact. |
+| Generation corpus | 512 seeds, each with all 25 rooms: 12,800 generated rooms. World/progression and room-generation source match profile 30. |
+| Root/route checks | 6,807,405 base-cell ownership checks, 86,699 required approaches, 7,258 item-pocket cases and 108,800 boundary checks across the eight item combinations; zero failures. |
+| Lifecycle checks | 12,800 deterministic rebuilds; 800 paused-map previews and 800 live bush-clear/redraw cache checks preserve resident trees. |
+| Actual feet clearance | 1,600 room-state cases using Bloom's 10×8 feet box: 800 rooms before and after gates/pockets open. |
+| Native render provenance | Three 512×384 camera mosaics, each from nine untouched 240×160 mGBA viewports. Every pixel has exactly one declared source crop; no interpolation, repainted seam, copied HUD or repositioned actor. |
+| Movement | All 504 native walk frames independently match ROM Bloom poses, exact guard subsets, palette and paired scanout; minimum visible current-body pixels 90/94/95 in healthy/mixed/deep. Worst-overlap native frames were also inspected visually. |
+
+The observed healthy/mixed/deep walks contain 1/1/0 intervals without a logic
+update. These counts match the pinned profile 29 control for the same selected
+rooms, standing positions and 168-frame directional sequences. The comparison
+file is held by SHA256
+`1ef84e4fc5df0cc32c74ce7e46852bc88818a6122006a7410432b64600405ce3`.
+All native video frames remain in the evidence; none were dropped to make
+motion appear smoother. The MP4s are viewing copies at approximately 59.73Hz;
+sampled GIFs have inspection holds and do not reproduce original timing.
+Different art and navigation phases limit this finite performance comparison.
+It does not establish frame-perfect performance or universal gameplay safety.
+
+The camera-overlap comparison reports 63/100/17 differing pixels in the three
+rooms, associated with native viewport-dependent ambient glitter. The mosaics
+retain literal crops; those differences are neither averaged nor erased.
+These technical checks and the reviewed rooms establish import fidelity and
+the tested geometry/visibility contracts. They are not an exhaustive playthrough,
+an external player-recognition study or a claim that every future forest
+generation is aesthetically successful.
+
+Reviewable evidence:
+
+- [Actual room gallery and playable build](../../../../art-review/forest-trees-integrated/README.md).
+- [Final independent audit](../../../../art-review/forest-trees-integrated/validation/audit.json)
+  and [actual C host corpus report](../../../../art-review/forest-trees-integrated/validation/host/report.json).
+- [Capture manifest and native camera/scanout data](../../../../art-review/forest-trees-integrated/actual/capture.json).
+- [Historical build byte-preservation](../../../../art-review/forest-trees-integrated/validation/legacy-preservation.json).

@@ -1,0 +1,9 @@
+PROGRESS seeds=64 rooms=1600 failures=0
+PROGRESS seeds=128 rooms=3200 failures=0
+PROGRESS seeds=192 rooms=4800 failures=0
+PROGRESS seeds=256 rooms=6400 failures=0
+PROGRESS seeds=320 rooms=8000 failures=0
+PROGRESS seeds=384 rooms=9600 failures=0
+PROGRESS seeds=448 rooms=11200 failures=0
+PROGRESS seeds=512 rooms=12800 failures=0
+RESULT {"requested_seeds":512,"rooms":12800,"opened_state_rooms":800,"approaches":86699,"pockets":7258,"determinism":12800,"boundary_inventory_checks":108800,"feet_box_rooms":1600,"trees":4112422,"wood_cells":6773864,"authored_cells":33541,"root_ownership_checks":6807405,"preview_preservation_checks":800,"live_scene_cache_checks":800,"frame_counts":[737767,447480,162066,737060,448749,161861,388105,236447,84440,387936,236350,84161],"stage_state_counts":[[1286623,209267,0],[553852,403235,50346],[302209,504989,201985],[108184,251535,240197]],"failures":0}

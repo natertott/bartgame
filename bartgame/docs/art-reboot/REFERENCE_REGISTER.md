@@ -260,3 +260,12 @@ integration retains the approved indexed pixels and bank; it changes their
 placement, layering and normal-build selection. Prior study renders remain
 labelled diagnostic layouts; new whole-room evidence must come from actual
 generated rooms in mGBA.
+
+
+The [production integration review](../../../art-review/forest-trees-integrated/README.md)
+now binds game/art source`fd7465d` to actual generated healthy, mixed and deep
+rooms, native viewports and movement proof. The
+[independent review](references/FOREST_TREES_INTEGRATION_REVIEW.md) records
+source fidelity, real-floor contact, root/crown depth and remaining clearance
+tradeoffs against the already-read guide. No additional external source is
+claimed. The preceding diagnostic-only gallery remains historical evidence.

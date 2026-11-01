@@ -7,6 +7,10 @@
 *.rar
 baserom*.gba
 
+# Selected compact forest trees, normal playable build.
+!/downloads/forest-trees-integrated-fd7465d/forest-trees-integrated-fd7465d.gba
+!/downloads/forest-trees-integrated-fd7465d/forest-trees-integrated-fd7465d.zip
+
 # Published standalone BARTGAME build.
 !/downloads/bloom-polish-f42e91e/bartgame-bloom-polish-f42e91e.gba
 !/downloads/bloom-polish-f42e91e/bartgame-bloom-polish-f42e91e.zip

@@ -77,9 +77,16 @@ class Audit:
         # both builds; the full forest atlas legitimately gets repacked.
         names = sorted(n for n in self.base.sections if n in self.rom.sections and
                        not n.startswith(('forest_', 'tree_study_', 'tileset_', 'ts_')) and
-                       any(k in n for k in ('palette', 'title', 'font', 'hud', 'menu', 'dialogue')))
+                       (any(k in n for k in ('palette', 'title', 'font', 'hud', 'menu', 'dialogue')) or
+                        n.startswith(('pal_obj', 'pal_face', 'appearance_', 'ui_')) or
+                        n.endswith('_frame_pal') or n == 'icon32_exact_pal'))
         for name in names:
             self.check('scope', name+' unchanged payload', self.rom.array(name) == self.base.array(name))
+        bg_before, bg_after = self.base.array('pal_bg'), self.rom.array('pal_bg')
+        tree_global = self.rom.defs['PAL_BG_FOREST_TREE_STUDY']
+        other_bg_exact = len(bg_before) == len(bg_after) and all(
+            bg_before[i:i+32] == bg_after[i:i+32] for i in range(0, len(bg_before), 32) if i//32 != tree_global)
+        self.check('scope', 'every pre-existing global BG palette except the adopted tree bank stays exact', other_bg_exact)
         forest_scope = self.forest_scope()
         return {'object_sheets': len(self.base.sheet_ids), 'extra_payloads': names, 'forest': forest_scope}
 
@@ -124,7 +131,12 @@ class Audit:
 
         for name, index in self.base.tile_ids.items():
             row = descriptors.get(name, {})
-            is_tree = owns(name.lower()) or owns(row.get('parent', '').split('@')[0]) or row.get('family') == 'fringe'
+            # The final pass also retires the lower six cells of the old
+            # 2×6 blighted-tree canvas; the earlier canopy classifier owned
+            # only its upper six. All twelve are old tree illustration.
+            is_tree = (owns(name.lower()) or
+                       (name.startswith('BTREE_') and name[6:].isdigit() and int(name[6:]) < 12) or
+                       owns(row.get('parent', '').split('@')[0]) or row.get('family') == 'fringe')
             if is_tree:
                 retired.append(name)
                 continue

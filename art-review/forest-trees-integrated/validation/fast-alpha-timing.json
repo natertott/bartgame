@@ -1,0 +1,5084 @@
+{
+  "method": "Same natural seeded cell and safe standing position, enemy/projectile/FX clearing,60-frame warmup, clock1024, ordinary RIGHT48/DOWN36/LEFT48/UP36; no camera panorama or art fixtures. Profiles0/29 historical controls have different visible canopy art; exact logical collision preserved.",
+  "captures": [
+    {
+      "build": "fastalpha31",
+      "room": "healthy",
+      "initial_position": [
+        248,
+        232
+      ],
+      "rom_sha256": "e5172d9a66e5f957586c8090f260b8f9edf3e91d68d2bc1c77a483fd941205ab",
+      "frames": [
+        {
+          "tick": 0,
+          "updates": 1,
+          "position": [
+            249,
+            232
+          ],
+          "state": 0,
+          "clock": 1025
+        },
+        {
+          "tick": 1,
+          "updates": 1,
+          "position": [
+            250,
+            232
+          ],
+          "state": 0,
+          "clock": 1026
+        },
+        {
+          "tick": 2,
+          "updates": 1,
+          "position": [
+            251,
+            232
+          ],
+          "state": 0,
+          "clock": 1027
+        },
+        {
+          "tick": 3,
+          "updates": 1,
+          "position": [
+            253,
+            232
+          ],
+          "state": 0,
+          "clock": 1028
+        },
+        {
+          "tick": 4,
+          "updates": 1,
+          "position": [
+            254,
+            232
+          ],
+          "state": 0,
+          "clock": 1029
+        },
+        {
+          "tick": 5,
+          "updates": 1,
+          "position": [
+            255,
+            232
+          ],
+          "state": 0,
+          "clock": 1030
+        },
+        {
+          "tick": 6,
+          "updates": 1,
+          "position": [
+            256,
+            232
+          ],
+          "state": 0,
+          "clock": 1031
+        },
+        {
+          "tick": 7,
+          "updates": 1,
+          "position": [
+            258,
+            232
+          ],
+          "state": 0,
+          "clock": 1032
+        },
+        {
+          "tick": 8,
+          "updates": 1,
+          "position": [
+            259,
+            232
+          ],
+          "state": 0,
+          "clock": 1033
+        },
+        {
+          "tick": 9,
+          "updates": 1,
+          "position": [
+            260,
+            232
+          ],
+          "state": 0,
+          "clock": 1034
+        },
+        {
+          "tick": 10,
+          "updates": 1,
+          "position": [
+            261,
+            232
+          ],
+          "state": 0,
+          "clock": 1035
+        },
+        {
+          "tick": 11,
+          "updates": 1,
+          "position": [
+            263,
+            232
+          ],
+          "state": 0,
+          "clock": 1036
+        },
+        {
+          "tick": 12,
+          "updates": 1,
+          "position": [
+            264,
+            232
+          ],
+          "state": 0,
+          "clock": 1037
+        },
+        {
+          "tick": 13,
+          "updates": 1,
+          "position": [
+            265,
+            232
+          ],
+          "state": 0,
+          "clock": 1038
+        },
+        {
+          "tick": 14,
+          "updates": 1,
+          "position": [
+            266,
+            232
+          ],
+          "state": 0,
+          "clock": 1039
+        },
+        {
+          "tick": 15,
+          "updates": 1,
+          "position": [
+            268,
+            232
+          ],
+          "state": 0,
+          "clock": 1040
+        },
+        {
+          "tick": 16,
+          "updates": 1,
+          "position": [
+            269,
+            232
+          ],
+          "state": 0,
+          "clock": 1041
+        },
+        {
+          "tick": 17,
+          "updates": 1,
+          "position": [
+            270,
+            232
+          ],
+          "state": 0,
+          "clock": 1042
+        },
+        {
+          "tick": 18,
+          "updates": 1,
+          "position": [
+            271,
+            232
+          ],
+          "state": 0,
+          "clock": 1043
+        },
+        {
+          "tick": 19,
+          "updates": 1,
+          "position": [
+            273,
+            232
+          ],
+          "state": 0,
+          "clock": 1044
+        },
+        {
+          "tick": 20,
+          "updates": 1,
+          "position": [
+            274,
+            232
+          ],
+          "state": 0,
+          "clock": 1045
+        },
+        {
+          "tick": 21,
+          "updates": 1,
+          "position": [
+            275,
+            232
+          ],
+          "state": 0,
+          "clock": 1046
+        },
+        {
+          "tick": 22,
+          "updates": 1,
+          "position": [
+            276,
+            232
+          ],
+          "state": 0,
+          "clock": 1047
+        },
+        {
+          "tick": 23,
+          "updates": 1,
+          "position": [
+            278,
+            232
+          ],
+          "state": 0,
+          "clock": 1048
+        },
+        {
+          "tick": 24,
+          "updates": 1,
+          "position": [
+            279,
+            232
+          ],
+          "state": 0,
+          "clock": 1049
+        },
+        {
+          "tick": 25,
+          "updates": 1,
+          "position": [
+            280,
+            232
+          ],
+          "state": 0,
+          "clock": 1050
+        },
+        {
+          "tick": 26,
+          "updates": 1,
+          "position": [
+            281,
+            232
+          ],
+          "state": 0,
+          "clock": 1051
+        },
+        {
+          "tick": 27,
+          "updates": 1,
+          "position": [
+            283,
+            232
+          ],
+          "state": 0,
+          "clock": 1052
+        },
+        {
+          "tick": 28,
+          "updates": 1,
+          "position": [
+            284,
+            232
+          ],
+          "state": 0,
+          "clock": 1053
+        },
+        {
+          "tick": 29,
+          "updates": 1,
+          "position": [
+            285,
+            232
+          ],
+          "state": 0,
+          "clock": 1054
+        },
+        {
+          "tick": 30,
+          "updates": 1,
+          "position": [
+            286,
+            232
+          ],
+          "state": 0,
+          "clock": 1055
+        },
+        {
+          "tick": 31,
+          "updates": 1,
+          "position": [
+            288,
+            232
+          ],
+          "state": 0,
+          "clock": 1056
+        },
+        {
+          "tick": 32,
+          "updates": 1,
+          "position": [
+            289,
+            232
+          ],
+          "state": 0,
+          "clock": 1057
+        },
+        {
+          "tick": 33,
+          "updates": 1,
+          "position": [
+            290,
+            232
+          ],
+          "state": 0,
+          "clock": 1058
+        },
+        {
+          "tick": 34,
+          "updates": 1,
+          "position": [
+            291,
+            232
+          ],
+          "state": 0,
+          "clock": 1059
+        },
+        {
+          "tick": 35,
+          "updates": 1,
+          "position": [
+            293,
+            232
+          ],
+          "state": 0,
+          "clock": 1060
+        },
+        {
+          "tick": 36,
+          "updates": 1,
+          "position": [
+            294,
+            232
+          ],
+          "state": 0,
+          "clock": 1061
+        },
+        {
+          "tick": 37,
+          "updates": 1,
+          "position": [
+            295,
+            232
+          ],
+          "state": 0,
+          "clock": 1062
+        },
+        {
+          "tick": 38,
+          "updates": 1,
+          "position": [
+            296,
+            232
+          ],
+          "state": 0,
+          "clock": 1063
+        },
+        {
+          "tick": 39,
+          "updates": 1,
+          "position": [
+            298,
+            232
+          ],
+          "state": 0,
+          "clock": 1064
+        },
+        {
+          "tick": 40,
+          "updates": 1,
+          "position": [
+            299,
+            232
+          ],
+          "state": 0,
+          "clock": 1065
+        },
+        {
+          "tick": 41,
+          "updates": 1,
+          "position": [
+            299,
+            232
+          ],
+          "state": 0,
+          "clock": 1066
+        },
+        {
+          "tick": 42,
+          "updates": 1,
+          "position": [
+            299,
+            232
+          ],
+          "state": 0,
+          "clock": 1067
+        },
+        {
+          "tick": 43,
+          "updates": 1,
+          "position": [
+            299,
+            232
+          ],
+          "state": 0,
+          "clock": 1068
+        },
+        {
+          "tick": 44,
+          "updates": 1,
+          "position": [
+            299,
+            232
+          ],
+          "state": 0,
+          "clock": 1069
+        },
+        {
+          "tick": 45,
+          "updates": 1,
+          "position": [
+            299,
+            232
+          ],
+          "state": 0,
+          "clock": 1070
+        },
+        {
+          "tick": 46,
+          "updates": 1,
+          "position": [
+            299,
+            232
+          ],
+          "state": 0,
+          "clock": 1071
+        },
+        {
+          "tick": 47,
+          "updates": 1,
+          "position": [
+            299,
+            232
+          ],
+          "state": 0,
+          "clock": 1072
+        },
+        {
+          "tick": 48,
+          "updates": 1,
+          "position": [
+            299,
+            233
+          ],
+          "state": 0,
+          "clock": 1073
+        },
+        {
+          "tick": 49,
+          "updates": 1,
+          "position": [
+            299,
+            234
+          ],
+          "state": 0,
+          "clock": 1074
+        },
+        {
+          "tick": 50,
+          "updates": 1,
+          "position": [
+            299,
+            235
+          ],
+          "state": 0,
+          "clock": 1075
+        },
+        {
+          "tick": 51,
+          "updates": 1,
+          "position": [
+            299,
+            237
+          ],
+          "state": 0,
+          "clock": 1076
+        },
+        {
+          "tick": 52,
+          "updates": 1,
+          "position": [
+            299,
+            238
+          ],
+          "state": 0,
+          "clock": 1077
+        },
+        {
+          "tick": 53,
+          "updates": 1,
+          "position": [
+            299,
+            239
+          ],
+          "state": 0,
+          "clock": 1078
+        },
+        {
+          "tick": 54,
+          "updates": 1,
+          "position": [
+            299,
+            240
+          ],
+          "state": 0,
+          "clock": 1079
+        },
+        {
+          "tick": 55,
+          "updates": 1,
+          "position": [
+            299,
+            242
+          ],
+          "state": 0,
+          "clock": 1080
+        },
+        {
+          "tick": 56,
+          "updates": 1,
+          "position": [
+            299,
+            243
+          ],
+          "state": 0,
+          "clock": 1081
+        },
+        {
+          "tick": 57,
+          "updates": 1,
+          "position": [
+            299,
+            244
+          ],
+          "state": 0,
+          "clock": 1082
+        },
+        {
+          "tick": 58,
+          "updates": 1,
+          "position": [
+            299,
+            245
+          ],
+          "state": 0,
+          "clock": 1083
+        },
+        {
+          "tick": 59,
+          "updates": 1,
+          "position": [
+            299,
+            247
+          ],
+          "state": 0,
+          "clock": 1084
+        },
+        {
+          "tick": 60,
+          "updates": 1,
+          "position": [
+            299,
+            248
+          ],
+          "state": 0,
+          "clock": 1085
+        },
+        {
+          "tick": 61,
+          "updates": 1,
+          "position": [
+            299,
+            249
+          ],
+          "state": 0,
+          "clock": 1086
+        },
+        {
+          "tick": 62,
+          "updates": 1,
+          "position": [
+            299,
+            250
+          ],
+          "state": 0,
+          "clock": 1087
+        },
+        {
+          "tick": 63,
+          "updates": 1,
+          "position": [
+            299,
+            252
+          ],
+          "state": 0,
+          "clock": 1088
+        },
+        {
+          "tick": 64,
+          "updates": 1,
+          "position": [
+            299,
+            253
+          ],
+          "state": 0,
+          "clock": 1089
+        },
+        {
+          "tick": 65,
+          "updates": 1,
+          "position": [
+            299,
+            254
+          ],
+          "state": 0,
+          "clock": 1090
+        },
+        {
+          "tick": 66,
+          "updates": 1,
+          "position": [
+            299,
+            255
+          ],
+          "state": 0,
+          "clock": 1091
+        },
+        {
+          "tick": 67,
+          "updates": 1,
+          "position": [
+            299,
+            256
+          ],
+          "state": 0,
+          "clock": 1092
+        },
+        {
+          "tick": 68,
+          "updates": 1,
+          "position": [
+            299,
+            256
+          ],
+          "state": 0,
+          "clock": 1093
+        },
+        {
+          "tick": 69,
+          "updates": 1,
+          "position": [
+            299,
+            256
+          ],
+          "state": 0,
+          "clock": 1094
+        },
+        {
+          "tick": 70,
+          "updates": 1,
+          "position": [
+            299,
+            256
+          ],
+          "state": 0,
+          "clock": 1095
+        },
+        {
+          "tick": 71,
+          "updates": 1,
+          "position": [
+            299,
+            256
+          ],
+          "state": 0,
+          "clock": 1096
+        },
+        {
+          "tick": 72,
+          "updates": 1,
+          "position": [
+            299,
+            256
+          ],
+          "state": 0,
+          "clock": 1097
+        },
+        {
+          "tick": 73,
+          "updates": 1,
+          "position": [
+            299,
+            256
+          ],
+          "state": 0,
+          "clock": 1098
+        },
+        {
+          "tick": 74,
+          "updates": 1,
+          "position": [
+            299,
+            256
+          ],
+          "state": 0,
+          "clock": 1099
+        },
+        {
+          "tick": 75,
+          "updates": 1,
+          "position": [
+            299,
+            256
+          ],
+          "state": 0,
+          "clock": 1100
+        },
+        {
+          "tick": 76,
+          "updates": 1,
+          "position": [
+            299,
+            256
+          ],
+          "state": 0,
+          "clock": 1101
+        },
+        {
+          "tick": 77,
+          "updates": 1,
+          "position": [
+            299,
+            256
+          ],
+          "state": 0,
+          "clock": 1102
+        },
+        {
+          "tick": 78,
+          "updates": 1,
+          "position": [
+            299,
+            256
+          ],
+          "state": 0,
+          "clock": 1103
+        },
+        {
+          "tick": 79,
+          "updates": 1,
+          "position": [
+            299,
+            256
+          ],
+          "state": 0,
+          "clock": 1104
+        },
+        {
+          "tick": 80,
+          "updates": 1,
+          "position": [
+            299,
+            256
+          ],
+          "state": 0,
+          "clock": 1105
+        },
+        {
+          "tick": 81,
+          "updates": 1,
+          "position": [
+            299,
+            256
+          ],
+          "state": 0,
+          "clock": 1106
+        },
+        {
+          "tick": 82,
+          "updates": 1,
+          "position": [
+            299,
+            256
+          ],
+          "state": 0,
+          "clock": 1107
+        },
+        {
+          "tick": 83,
+          "updates": 1,
+          "position": [
+            299,
+            256
+          ],
+          "state": 0,
+          "clock": 1108
+        },
+        {
+          "tick": 84,
+          "updates": 1,
+          "position": [
+            297,
+            256
+          ],
+          "state": 0,
+          "clock": 1109
+        },
+        {
+          "tick": 85,
+          "updates": 1,
+          "position": [
+            296,
+            256
+          ],
+          "state": 0,
+          "clock": 1110
+        },
+        {
+          "tick": 86,
+          "updates": 1,
+          "position": [
+            295,
+            256
+          ],
+          "state": 0,
+          "clock": 1111
+        },
+        {
+          "tick": 87,
+          "updates": 1,
+          "position": [
+            294,
+            256
+          ],
+          "state": 0,
+          "clock": 1112
+        },
+        {
+          "tick": 88,
+          "updates": 1,
+          "position": [
+            292,
+            256
+          ],
+          "state": 0,
+          "clock": 1113
+        },
+        {
+          "tick": 89,
+          "updates": 1,
+          "position": [
+            291,
+            256
+          ],
+          "state": 0,
+          "clock": 1114
+        },
+        {
+          "tick": 90,
+          "updates": 1,
+          "position": [
+            290,
+            256
+          ],
+          "state": 0,
+          "clock": 1115
+        },
+        {
+          "tick": 91,
+          "updates": 1,
+          "position": [
+            289,
+            256
+          ],
+          "state": 0,
+          "clock": 1116
+        },
+        {
+          "tick": 92,
+          "updates": 1,
+          "position": [
+            287,
+            256
+          ],
+          "state": 0,
+          "clock": 1117
+        },
+        {
+          "tick": 93,
+          "updates": 1,
+          "position": [
+            286,
+            256
+          ],
+          "state": 0,
+          "clock": 1118
+        },
+        {
+          "tick": 94,
+          "updates": 1,
+          "position": [
+            285,
+            256
+          ],
+          "state": 0,
+          "clock": 1119
+        },
+        {
+          "tick": 95,
+          "updates": 1,
+          "position": [
+            284,
+            256
+          ],
+          "state": 0,
+          "clock": 1120
+        },
+        {
+          "tick": 96,
+          "updates": 1,
+          "position": [
+            282,
+            256
+          ],
+          "state": 0,
+          "clock": 1121
+        },
+        {
+          "tick": 97,
+          "updates": 1,
+          "position": [
+            281,
+            256
+          ],
+          "state": 0,
+          "clock": 1122
+        },
+        {
+          "tick": 98,
+          "updates": 1,
+          "position": [
+            280,
+            256
+          ],
+          "state": 0,
+          "clock": 1123
+        },
+        {
+          "tick": 99,
+          "updates": 1,
+          "position": [
+            279,
+            256
+          ],
+          "state": 0,
+          "clock": 1124
+        },
+        {
+          "tick": 100,
+          "updates": 1,
+          "position": [
+            277,
+            256
+          ],
+          "state": 0,
+          "clock": 1125
+        },
+        {
+          "tick": 101,
+          "updates": 1,
+          "position": [
+            276,
+            256
+          ],
+          "state": 0,
+          "clock": 1126
+        },
+        {
+          "tick": 102,
+          "updates": 1,
+          "position": [
+            275,
+            256
+          ],
+          "state": 0,
+          "clock": 1127
+        },
+        {
+          "tick": 103,
+          "updates": 1,
+          "position": [
+            274,
+            256
+          ],
+          "state": 0,
+          "clock": 1128
+        },
+        {
+          "tick": 104,
+          "updates": 1,
+          "position": [
+            272,
+            256
+          ],
+          "state": 0,
+          "clock": 1129
+        },
+        {
+          "tick": 105,
+          "updates": 1,
+          "position": [
+            271,
+            256
+          ],
+          "state": 0,
+          "clock": 1130
+        },
+        {
+          "tick": 106,
+          "updates": 1,
+          "position": [
+            270,
+            256
+          ],
+          "state": 0,
+          "clock": 1131
+        },
+        {
+          "tick": 107,
+          "updates": 1,
+          "position": [
+            269,
+            256
+          ],
+          "state": 0,
+          "clock": 1132
+        },
+        {
+          "tick": 108,
+          "updates": 1,
+          "position": [
+            267,
+            256
+          ],
+          "state": 0,
+          "clock": 1133
+        },
+        {
+          "tick": 109,
+          "updates": 1,
+          "position": [
+            266,
+            256
+          ],
+          "state": 0,
+          "clock": 1134
+        },
+        {
+          "tick": 110,
+          "updates": 1,
+          "position": [
+            265,
+            256
+          ],
+          "state": 0,
+          "clock": 1135
+        },
+        {
+          "tick": 111,
+          "updates": 1,
+          "position": [
+            264,
+            256
+          ],
+          "state": 0,
+          "clock": 1136
+        },
+        {
+          "tick": 112,
+          "updates": 1,
+          "position": [
+            262,
+            256
+          ],
+          "state": 0,
+          "clock": 1137
+        },
+        {
+          "tick": 113,
+          "updates": 1,
+          "position": [
+            261,
+            256
+          ],
+          "state": 0,
+          "clock": 1138
+        },
+        {
+          "tick": 114,
+          "updates": 1,
+          "position": [
+            260,
+            256
+          ],
+          "state": 0,
+          "clock": 1139
+        },
+        {
+          "tick": 115,
+          "updates": 1,
+          "position": [
+            259,
+            256
+          ],
+          "state": 0,
+          "clock": 1140
+        },
+        {
+          "tick": 116,
+          "updates": 1,
+          "position": [
+            257,
+            256
+          ],
+          "state": 0,
+          "clock": 1141
+        },
+        {
+          "tick": 117,
+          "updates": 1,
+          "position": [
+            256,
+            256
+          ],
+          "state": 0,
+          "clock": 1142
+        },
+        {
+          "tick": 118,
+          "updates": 1,
+          "position": [
+            255,
+            256
+          ],
+          "state": 0,
+          "clock": 1143
+        },
+        {
+          "tick": 119,
+          "updates": 1,
+          "position": [
+            254,
+            256
+          ],
+          "state": 0,
+          "clock": 1144
+        },
+        {
+          "tick": 120,
+          "updates": 1,
+          "position": [
+            252,
+            256
+          ],
+          "state": 0,
+          "clock": 1145
+        },
+        {
+          "tick": 121,
+          "updates": 1,
+          "position": [
+            251,
+            256
+          ],
+          "state": 0,
+          "clock": 1146
+        },
+        {
+          "tick": 122,
+          "updates": 1,
+          "position": [
+            250,
+            256
+          ],
+          "state": 0,
+          "clock": 1147
+        },
+        {
+          "tick": 123,
+          "updates": 1,
+          "position": [
+            249,
+            256
+          ],
+          "state": 0,
+          "clock": 1148
+        },
+        {
+          "tick": 124,
+          "updates": 1,
+          "position": [
+            247,
+            256
+          ],
+          "state": 0,
+          "clock": 1149
+        },
+        {
+          "tick": 125,
+          "updates": 1,
+          "position": [
+            246,
+            256
+          ],
+          "state": 0,
+          "clock": 1150
+        },
+        {
+          "tick": 126,
+          "updates": 1,
+          "position": [
+            245,
+            256
+          ],
+          "state": 0,
+          "clock": 1151
+        },
+        {
+          "tick": 127,
+          "updates": 1,
+          "position": [
+            244,
+            256
+          ],
+          "state": 0,
+          "clock": 1152
+        },
+        {
+          "tick": 128,
+          "updates": 1,
+          "position": [
+            242,
+            256
+          ],
+          "state": 0,
+          "clock": 1153
+        },
+        {
+          "tick": 129,
+          "updates": 1,
+          "position": [
+            241,
+            256
+          ],
+          "state": 0,
+          "clock": 1154
+        },
+        {
+          "tick": 130,
+          "updates": 1,
+          "position": [
+            240,
+            256
+          ],
+          "state": 0,
+          "clock": 1155
+        },
+        {
+          "tick": 131,
+          "updates": 1,
+          "position": [
+            239,
+            256
+          ],
+          "state": 0,
+          "clock": 1156
+        },
+        {
+          "tick": 132,
+          "updates": 1,
+          "position": [
+            239,
+            254
+          ],
+          "state": 0,
+          "clock": 1157
+        },
+        {
+          "tick": 133,
+          "updates": 1,
+          "position": [
+            239,
+            253
+          ],
+          "state": 0,
+          "clock": 1158
+        },
+        {
+          "tick": 134,
+          "updates": 1,
+          "position": [
+            239,
+            252
+          ],
+          "state": 0,
+          "clock": 1159
+        },
+        {
+          "tick": 135,
+          "updates": 1,
+          "position": [
+            239,
+            251
+          ],
+          "state": 0,
+          "clock": 1160
+        },
+        {
+          "tick": 136,
+          "updates": 1,
+          "position": [
+            239,
+            249
+          ],
+          "state": 0,
+          "clock": 1161
+        },
+        {
+          "tick": 137,
+          "updates": 1,
+          "position": [
+            239,
+            248
+          ],
+          "state": 0,
+          "clock": 1162
+        },
+        {
+          "tick": 138,
+          "updates": 1,
+          "position": [
+            239,
+            247
+          ],
+          "state": 0,
+          "clock": 1163
+        },
+        {
+          "tick": 139,
+          "updates": 1,
+          "position": [
+            239,
+            246
+          ],
+          "state": 0,
+          "clock": 1164
+        },
+        {
+          "tick": 140,
+          "updates": 1,
+          "position": [
+            239,
+            244
+          ],
+          "state": 0,
+          "clock": 1165
+        },
+        {
+          "tick": 141,
+          "updates": 1,
+          "position": [
+            239,
+            243
+          ],
+          "state": 0,
+          "clock": 1166
+        },
+        {
+          "tick": 142,
+          "updates": 1,
+          "position": [
+            239,
+            242
+          ],
+          "state": 0,
+          "clock": 1167
+        },
+        {
+          "tick": 143,
+          "updates": 1,
+          "position": [
+            239,
+            241
+          ],
+          "state": 0,
+          "clock": 1168
+        },
+        {
+          "tick": 144,
+          "updates": 1,
+          "position": [
+            239,
+            239
+          ],
+          "state": 0,
+          "clock": 1169
+        },
+        {
+          "tick": 145,
+          "updates": 1,
+          "position": [
+            239,
+            238
+          ],
+          "state": 0,
+          "clock": 1170
+        },
+        {
+          "tick": 146,
+          "updates": 1,
+          "position": [
+            239,
+            237
+          ],
+          "state": 0,
+          "clock": 1171
+        },
+        {
+          "tick": 147,
+          "updates": 1,
+          "position": [
+            239,
+            236
+          ],
+          "state": 0,
+          "clock": 1172
+        },
+        {
+          "tick": 148,
+          "updates": 1,
+          "position": [
+            239,
+            234
+          ],
+          "state": 0,
+          "clock": 1173
+        },
+        {
+          "tick": 149,
+          "updates": 1,
+          "position": [
+            239,
+            233
+          ],
+          "state": 0,
+          "clock": 1174
+        },
+        {
+          "tick": 150,
+          "updates": 1,
+          "position": [
+            239,
+            232
+          ],
+          "state": 0,
+          "clock": 1175
+        },
+        {
+          "tick": 151,
+          "updates": 1,
+          "position": [
+            239,
+            231
+          ],
+          "state": 0,
+          "clock": 1176
+        },
+        {
+          "tick": 152,
+          "updates": 1,
+          "position": [
+            239,
+            229
+          ],
+          "state": 0,
+          "clock": 1177
+        },
+        {
+          "tick": 153,
+          "updates": 1,
+          "position": [
+            239,
+            228
+          ],
+          "state": 0,
+          "clock": 1178
+        },
+        {
+          "tick": 154,
+          "updates": 1,
+          "position": [
+            239,
+            227
+          ],
+          "state": 0,
+          "clock": 1179
+        },
+        {
+          "tick": 155,
+          "updates": 1,
+          "position": [
+            239,
+            226
+          ],
+          "state": 0,
+          "clock": 1180
+        },
+        {
+          "tick": 156,
+          "updates": 1,
+          "position": [
+            239,
+            224
+          ],
+          "state": 0,
+          "clock": 1181
+        },
+        {
+          "tick": 157,
+          "updates": 1,
+          "position": [
+            239,
+            223
+          ],
+          "state": 0,
+          "clock": 1182
+        },
+        {
+          "tick": 158,
+          "updates": 1,
+          "position": [
+            239,
+            222
+          ],
+          "state": 0,
+          "clock": 1183
+        },
+        {
+          "tick": 159,
+          "updates": 1,
+          "position": [
+            239,
+            221
+          ],
+          "state": 0,
+          "clock": 1184
+        },
+        {
+          "tick": 160,
+          "updates": 1,
+          "position": [
+            239,
+            219
+          ],
+          "state": 0,
+          "clock": 1185
+        },
+        {
+          "tick": 161,
+          "updates": 1,
+          "position": [
+            239,
+            218
+          ],
+          "state": 0,
+          "clock": 1186
+        },
+        {
+          "tick": 162,
+          "updates": 1,
+          "position": [
+            239,
+            217
+          ],
+          "state": 0,
+          "clock": 1187
+        },
+        {
+          "tick": 163,
+          "updates": 1,
+          "position": [
+            239,
+            216
+          ],
+          "state": 0,
+          "clock": 1188
+        },
+        {
+          "tick": 164,
+          "updates": 1,
+          "position": [
+            239,
+            214
+          ],
+          "state": 0,
+          "clock": 1189
+        },
+        {
+          "tick": 165,
+          "updates": 1,
+          "position": [
+            239,
+            213
+          ],
+          "state": 0,
+          "clock": 1190
+        },
+        {
+          "tick": 166,
+          "updates": 1,
+          "position": [
+            239,
+            212
+          ],
+          "state": 0,
+          "clock": 1191
+        },
+        {
+          "tick": 167,
+          "updates": 1,
+          "position": [
+            239,
+            211
+          ],
+          "state": 0,
+          "clock": 1192
+        }
+      ],
+      "missed_updates": 0,
+      "total_updates": 168
+    },
+    {
+      "build": "fastalpha31",
+      "room": "mixed",
+      "initial_position": [
+        256,
+        224
+      ],
+      "rom_sha256": "e5172d9a66e5f957586c8090f260b8f9edf3e91d68d2bc1c77a483fd941205ab",
+      "frames": [
+        {
+          "tick": 0,
+          "updates": 1,
+          "position": [
+            257,
+            224
+          ],
+          "state": 0,
+          "clock": 1025
+        },
+        {
+          "tick": 1,
+          "updates": 1,
+          "position": [
+            258,
+            224
+          ],
+          "state": 0,
+          "clock": 1026
+        },
+        {
+          "tick": 2,
+          "updates": 1,
+          "position": [
+            259,
+            224
+          ],
+          "state": 0,
+          "clock": 1027
+        },
+        {
+          "tick": 3,
+          "updates": 1,
+          "position": [
+            261,
+            224
+          ],
+          "state": 0,
+          "clock": 1028
+        },
+        {
+          "tick": 4,
+          "updates": 1,
+          "position": [
+            262,
+            224
+          ],
+          "state": 0,
+          "clock": 1029
+        },
+        {
+          "tick": 5,
+          "updates": 1,
+          "position": [
+            263,
+            224
+          ],
+          "state": 0,
+          "clock": 1030
+        },
+        {
+          "tick": 6,
+          "updates": 1,
+          "position": [
+            264,
+            224
+          ],
+          "state": 0,
+          "clock": 1031
+        },
+        {
+          "tick": 7,
+          "updates": 1,
+          "position": [
+            266,
+            224
+          ],
+          "state": 0,
+          "clock": 1032
+        },
+        {
+          "tick": 8,
+          "updates": 1,
+          "position": [
+            267,
+            224
+          ],
+          "state": 0,
+          "clock": 1033
+        },
+        {
+          "tick": 9,
+          "updates": 1,
+          "position": [
+            268,
+            224
+          ],
+          "state": 0,
+          "clock": 1034
+        },
+        {
+          "tick": 10,
+          "updates": 1,
+          "position": [
+            269,
+            224
+          ],
+          "state": 0,
+          "clock": 1035
+        },
+        {
+          "tick": 11,
+          "updates": 1,
+          "position": [
+            271,
+            224
+          ],
+          "state": 0,
+          "clock": 1036
+        },
+        {
+          "tick": 12,
+          "updates": 1,
+          "position": [
+            272,
+            224
+          ],
+          "state": 0,
+          "clock": 1037
+        },
+        {
+          "tick": 13,
+          "updates": 1,
+          "position": [
+            273,
+            224
+          ],
+          "state": 0,
+          "clock": 1038
+        },
+        {
+          "tick": 14,
+          "updates": 1,
+          "position": [
+            274,
+            224
+          ],
+          "state": 0,
+          "clock": 1039
+        },
+        {
+          "tick": 15,
+          "updates": 1,
+          "position": [
+            276,
+            224
+          ],
+          "state": 0,
+          "clock": 1040
+        },
+        {
+          "tick": 16,
+          "updates": 1,
+          "position": [
+            277,
+            224
+          ],
+          "state": 0,
+          "clock": 1041
+        },
+        {
+          "tick": 17,
+          "updates": 1,
+          "position": [
+            278,
+            224
+          ],
+          "state": 0,
+          "clock": 1042
+        },
+        {
+          "tick": 18,
+          "updates": 1,
+          "position": [
+            279,
+            224
+          ],
+          "state": 0,
+          "clock": 1043
+        },
+        {
+          "tick": 19,
+          "updates": 1,
+          "position": [
+            281,
+            224
+          ],
+          "state": 0,
+          "clock": 1044
+        },
+        {
+          "tick": 20,
+          "updates": 1,
+          "position": [
+            282,
+            224
+          ],
+          "state": 0,
+          "clock": 1045
+        },
+        {
+          "tick": 21,
+          "updates": 1,
+          "position": [
+            283,
+            224
+          ],
+          "state": 0,
+          "clock": 1046
+        },
+        {
+          "tick": 22,
+          "updates": 1,
+          "position": [
+            284,
+            224
+          ],
+          "state": 0,
+          "clock": 1047
+        },
+        {
+          "tick": 23,
+          "updates": 1,
+          "position": [
+            286,
+            224
+          ],
+          "state": 0,
+          "clock": 1048
+        },
+        {
+          "tick": 24,
+          "updates": 1,
+          "position": [
+            287,
+            224
+          ],
+          "state": 0,
+          "clock": 1049
+        },
+        {
+          "tick": 25,
+          "updates": 1,
+          "position": [
+            288,
+            224
+          ],
+          "state": 0,
+          "clock": 1050
+        },
+        {
+          "tick": 26,
+          "updates": 1,
+          "position": [
+            289,
+            224
+          ],
+          "state": 0,
+          "clock": 1051
+        },
+        {
+          "tick": 27,
+          "updates": 1,
+          "position": [
+            291,
+            224
+          ],
+          "state": 0,
+          "clock": 1052
+        },
+        {
+          "tick": 28,
+          "updates": 1,
+          "position": [
+            292,
+            224
+          ],
+          "state": 0,
+          "clock": 1053
+        },
+        {
+          "tick": 29,
+          "updates": 1,
+          "position": [
+            293,
+            224
+          ],
+          "state": 0,
+          "clock": 1054
+        },
+        {
+          "tick": 30,
+          "updates": 1,
+          "position": [
+            294,
+            224
+          ],
+          "state": 0,
+          "clock": 1055
+        },
+        {
+          "tick": 31,
+          "updates": 1,
+          "position": [
+            296,
+            224
+          ],
+          "state": 0,
+          "clock": 1056
+        },
+        {
+          "tick": 32,
+          "updates": 1,
+          "position": [
+            297,
+            224
+          ],
+          "state": 0,
+          "clock": 1057
+        },
+        {
+          "tick": 33,
+          "updates": 1,
+          "position": [
+            298,
+            224
+          ],
+          "state": 0,
+          "clock": 1058
+        },
+        {
+          "tick": 34,
+          "updates": 1,
+          "position": [
+            299,
+            224
+          ],
+          "state": 0,
+          "clock": 1059
+        },
+        {
+          "tick": 35,
+          "updates": 1,
+          "position": [
+            301,
+            224
+          ],
+          "state": 0,
+          "clock": 1060
+        },
+        {
+          "tick": 36,
+          "updates": 1,
+          "position": [
+            302,
+            224
+          ],
+          "state": 0,
+          "clock": 1061
+        },
+        {
+          "tick": 37,
+          "updates": 1,
+          "position": [
+            303,
+            224
+          ],
+          "state": 0,
+          "clock": 1062
+        },
+        {
+          "tick": 38,
+          "updates": 1,
+          "position": [
+            304,
+            224
+          ],
+          "state": 0,
+          "clock": 1063
+        },
+        {
+          "tick": 39,
+          "updates": 1,
+          "position": [
+            306,
+            224
+          ],
+          "state": 0,
+          "clock": 1064
+        },
+        {
+          "tick": 40,
+          "updates": 1,
+          "position": [
+            307,
+            224
+          ],
+          "state": 0,
+          "clock": 1065
+        },
+        {
+          "tick": 41,
+          "updates": 1,
+          "position": [
+            308,
+            224
+          ],
+          "state": 0,
+          "clock": 1066
+        },
+        {
+          "tick": 42,
+          "updates": 1,
+          "position": [
+            309,
+            224
+          ],
+          "state": 0,
+          "clock": 1067
+        },
+        {
+          "tick": 43,
+          "updates": 1,
+          "position": [
+            311,
+            224
+          ],
+          "state": 0,
+          "clock": 1068
+        },
+        {
+          "tick": 44,
+          "updates": 1,
+          "position": [
+            312,
+            224
+          ],
+          "state": 0,
+          "clock": 1069
+        },
+        {
+          "tick": 45,
+          "updates": 1,
+          "position": [
+            313,
+            224
+          ],
+          "state": 0,
+          "clock": 1070
+        },
+        {
+          "tick": 46,
+          "updates": 1,
+          "position": [
+            314,
+            224
+          ],
+          "state": 0,
+          "clock": 1071
+        },
+        {
+          "tick": 47,
+          "updates": 1,
+          "position": [
+            316,
+            224
+          ],
+          "state": 0,
+          "clock": 1072
+        },
+        {
+          "tick": 48,
+          "updates": 1,
+          "position": [
+            316,
+            225
+          ],
+          "state": 0,
+          "clock": 1073
+        },
+        {
+          "tick": 49,
+          "updates": 1,
+          "position": [
+            316,
+            226
+          ],
+          "state": 0,
+          "clock": 1074
+        },
+        {
+          "tick": 50,
+          "updates": 1,
+          "position": [
+            316,
+            227
+          ],
+          "state": 0,
+          "clock": 1075
+        },
+        {
+          "tick": 51,
+          "updates": 1,
+          "position": [
+            316,
+            229
+          ],
+          "state": 0,
+          "clock": 1076
+        },
+        {
+          "tick": 52,
+          "updates": 1,
+          "position": [
+            316,
+            230
+          ],
+          "state": 0,
+          "clock": 1077
+        },
+        {
+          "tick": 53,
+          "updates": 1,
+          "position": [
+            316,
+            231
+          ],
+          "state": 0,
+          "clock": 1078
+        },
+        {
+          "tick": 54,
+          "updates": 1,
+          "position": [
+            316,
+            232
+          ],
+          "state": 0,
+          "clock": 1079
+        },
+        {
+          "tick": 55,
+          "updates": 1,
+          "position": [
+            316,
+            234
+          ],
+          "state": 0,
+          "clock": 1080
+        },
+        {
+          "tick": 56,
+          "updates": 1,
+          "position": [
+            316,
+            235
+          ],
+          "state": 0,
+          "clock": 1081
+        },
+        {
+          "tick": 57,
+          "updates": 1,
+          "position": [
+            316,
+            236
+          ],
+          "state": 0,
+          "clock": 1082
+        },
+        {
+          "tick": 58,
+          "updates": 1,
+          "position": [
+            316,
+            237
+          ],
+          "state": 0,
+          "clock": 1083
+        },
+        {
+          "tick": 59,
+          "updates": 1,
+          "position": [
+            316,
+            239
+          ],
+          "state": 0,
+          "clock": 1084
+        },
+        {
+          "tick": 60,
+          "updates": 1,
+          "position": [
+            316,
+            240
+          ],
+          "state": 0,
+          "clock": 1085
+        },
+        {
+          "tick": 61,
+          "updates": 1,
+          "position": [
+            316,
+            241
+          ],
+          "state": 0,
+          "clock": 1086
+        },
+        {
+          "tick": 62,
+          "updates": 1,
+          "position": [
+            316,
+            242
+          ],
+          "state": 0,
+          "clock": 1087
+        },
+        {
+          "tick": 63,
+          "updates": 1,
+          "position": [
+            316,
+            244
+          ],
+          "state": 0,
+          "clock": 1088
+        },
+        {
+          "tick": 64,
+          "updates": 1,
+          "position": [
+            316,
+            245
+          ],
+          "state": 0,
+          "clock": 1089
+        },
+        {
+          "tick": 65,
+          "updates": 1,
+          "position": [
+            316,
+            246
+          ],
+          "state": 0,
+          "clock": 1090
+        },
+        {
+          "tick": 66,
+          "updates": 1,
+          "position": [
+            316,
+            247
+          ],
+          "state": 0,
+          "clock": 1091
+        },
+        {
+          "tick": 67,
+          "updates": 1,
+          "position": [
+            316,
+            249
+          ],
+          "state": 0,
+          "clock": 1092
+        },
+        {
+          "tick": 68,
+          "updates": 1,
+          "position": [
+            316,
+            250
+          ],
+          "state": 0,
+          "clock": 1093
+        },
+        {
+          "tick": 69,
+          "updates": 1,
+          "position": [
+            316,
+            251
+          ],
+          "state": 0,
+          "clock": 1094
+        },
+        {
+          "tick": 70,
+          "updates": 1,
+          "position": [
+            316,
+            252
+          ],
+          "state": 0,
+          "clock": 1095
+        },
+        {
+          "tick": 71,
+          "updates": 1,
+          "position": [
+            316,
+            254
+          ],
+          "state": 0,
+          "clock": 1096
+        },
+        {
+          "tick": 72,
+          "updates": 1,
+          "position": [
+            316,
+            255
+          ],
+          "state": 0,
+          "clock": 1097
+        },
+        {
+          "tick": 73,
+          "updates": 1,
+          "position": [
+            316,
+            256
+          ],
+          "state": 0,
+          "clock": 1098
+        },
+        {
+          "tick": 74,
+          "updates": 1,
+          "position": [
+            315,
+            256
+          ],
+          "state": 0,
+          "clock": 1099
+        },
+        {
+          "tick": 75,
+          "updates": 1,
+          "position": [
+            315,
+            257
+          ],
+          "state": 0,
+          "clock": 1100
+        },
+        {
+          "tick": 76,
+          "updates": 1,
+          "position": [
+            315,
+            258
+          ],
+          "state": 0,
+          "clock": 1101
+        },
+        {
+          "tick": 77,
+          "updates": 1,
+          "position": [
+            315,
+            259
+          ],
+          "state": 0,
+          "clock": 1102
+        },
+        {
+          "tick": 78,
+          "updates": 1,
+          "position": [
+            315,
+            261
+          ],
+          "state": 0,
+          "clock": 1103
+        },
+        {
+          "tick": 79,
+          "updates": 1,
+          "position": [
+            315,
+            262
+          ],
+          "state": 0,
+          "clock": 1104
+        },
+        {
+          "tick": 80,
+          "updates": 1,
+          "position": [
+            315,
+            263
+          ],
+          "state": 0,
+          "clock": 1105
+        },
+        {
+          "tick": 81,
+          "updates": 1,
+          "position": [
+            315,
+            264
+          ],
+          "state": 0,
+          "clock": 1106
+        },
+        {
+          "tick": 82,
+          "updates": 1,
+          "position": [
+            315,
+            266
+          ],
+          "state": 0,
+          "clock": 1107
+        },
+        {
+          "tick": 83,
+          "updates": 1,
+          "position": [
+            315,
+            267
+          ],
+          "state": 0,
+          "clock": 1108
+        },
+        {
+          "tick": 84,
+          "updates": 1,
+          "position": [
+            313,
+            267
+          ],
+          "state": 0,
+          "clock": 1109
+        },
+        {
+          "tick": 85,
+          "updates": 1,
+          "position": [
+            312,
+            267
+          ],
+          "state": 0,
+          "clock": 1110
+        },
+        {
+          "tick": 86,
+          "updates": 1,
+          "position": [
+            311,
+            267
+          ],
+          "state": 0,
+          "clock": 1111
+        },
+        {
+          "tick": 87,
+          "updates": 1,
+          "position": [
+            310,
+            267
+          ],
+          "state": 0,
+          "clock": 1112
+        },
+        {
+          "tick": 88,
+          "updates": 1,
+          "position": [
+            308,
+            267
+          ],
+          "state": 0,
+          "clock": 1113
+        },
+        {
+          "tick": 89,
+          "updates": 1,
+          "position": [
+            307,
+            267
+          ],
+          "state": 0,
+          "clock": 1114
+        },
+        {
+          "tick": 90,
+          "updates": 1,
+          "position": [
+            306,
+            267
+          ],
+          "state": 0,
+          "clock": 1115
+        },
+        {
+          "tick": 91,
+          "updates": 1,
+          "position": [
+            305,
+            267
+          ],
+          "state": 0,
+          "clock": 1116
+        },
+        {
+          "tick": 92,
+          "updates": 1,
+          "position": [
+            303,
+            267
+          ],
+          "state": 0,
+          "clock": 1117
+        },
+        {
+          "tick": 93,
+          "updates": 1,
+          "position": [
+            302,
+            267
+          ],
+          "state": 0,
+          "clock": 1118
+        },
+        {
+          "tick": 94,
+          "updates": 1,
+          "position": [
+            301,
+            267
+          ],
+          "state": 0,
+          "clock": 1119
+        },
+        {
+          "tick": 95,
+          "updates": 1,
+          "position": [
+            300,
+            267
+          ],
+          "state": 0,
+          "clock": 1120
+        },
+        {
+          "tick": 96,
+          "updates": 1,
+          "position": [
+            298,
+            267
+          ],
+          "state": 0,
+          "clock": 1121
+        },
+        {
+          "tick": 97,
+          "updates": 1,
+          "position": [
+            297,
+            267
+          ],
+          "state": 0,
+          "clock": 1122
+        },
+        {
+          "tick": 98,
+          "updates": 1,
+          "position": [
+            296,
+            267
+          ],
+          "state": 0,
+          "clock": 1123
+        },
+        {
+          "tick": 99,
+          "updates": 1,
+          "position": [
+            295,
+            267
+          ],
+          "state": 0,
+          "clock": 1124
+        },
+        {
+          "tick": 100,
+          "updates": 1,
+          "position": [
+            293,
+            267
+          ],
+          "state": 0,
+          "clock": 1125
+        },
+        {
+          "tick": 101,
+          "updates": 1,
+          "position": [
+            292,
+            267
+          ],
+          "state": 0,
+          "clock": 1126
+        },
+        {
+          "tick": 102,
+          "updates": 1,
+          "position": [
+            291,
+            267
+          ],
+          "state": 0,
+          "clock": 1127
+        },
+        {
+          "tick": 103,
+          "updates": 1,
+          "position": [
+            290,
+            267
+          ],
+          "state": 0,
+          "clock": 1128
+        },
+        {
+          "tick": 104,
+          "updates": 1,
+          "position": [
+            288,
+            267
+          ],
+          "state": 0,
+          "clock": 1129
+        },
+        {
+          "tick": 105,
+          "updates": 1,
+          "position": [
+            287,
+            267
+          ],
+          "state": 0,
+          "clock": 1130
+        },
+        {
+          "tick": 106,
+          "updates": 1,
+          "position": [
+            286,
+            267
+          ],
+          "state": 0,
+          "clock": 1131
+        },
+        {
+          "tick": 107,
+          "updates": 1,
+          "position": [
+            285,
+            267
+          ],
+          "state": 0,
+          "clock": 1132
+        },
+        {
+          "tick": 108,
+          "updates": 1,
+          "position": [
+            283,
+            267
+          ],
+          "state": 0,
+          "clock": 1133
+        },
+        {
+          "tick": 109,
+          "updates": 1,
+          "position": [
+            282,
+            267
+          ],
+          "state": 0,
+          "clock": 1134
+        },
+        {
+          "tick": 110,
+          "updates": 1,
+          "position": [
+            281,
+            267
+          ],
+          "state": 0,
+          "clock": 1135
+        },
+        {
+          "tick": 111,
+          "updates": 1,
+          "position": [
+            280,
+            267
+          ],
+          "state": 0,
+          "clock": 1136
+        },
+        {
+          "tick": 112,
+          "updates": 1,
+          "position": [
+            278,
+            267
+          ],
+          "state": 0,
+          "clock": 1137
+        },
+        {
+          "tick": 113,
+          "updates": 1,
+          "position": [
+            277,
+            267
+          ],
+          "state": 0,
+          "clock": 1138
+        },
+        {
+          "tick": 114,
+          "updates": 1,
+          "position": [
+            276,
+            267
+          ],
+          "state": 0,
+          "clock": 1139
+        },
+        {
+          "tick": 115,
+          "updates": 1,
+          "position": [
+            275,
+            267
+          ],
+          "state": 0,
+          "clock": 1140
+        },
+        {
+          "tick": 116,
+          "updates": 1,
+          "position": [
+            273,
+            267
+          ],
+          "state": 0,
+          "clock": 1141
+        },
+        {
+          "tick": 117,
+          "updates": 1,
+          "position": [
+            272,
+            267
+          ],
+          "state": 0,
+          "clock": 1142
+        },
+        {
+          "tick": 118,
+          "updates": 1,
+          "position": [
+            271,
+            267
+          ],
+          "state": 0,
+          "clock": 1143
+        },
+        {
+          "tick": 119,
+          "updates": 1,
+          "position": [
+            270,
+            267
+          ],
+          "state": 0,
+          "clock": 1144
+        },
+        {
+          "tick": 120,
+          "updates": 1,
+          "position": [
+            268,
+            267
+          ],
+          "state": 0,
+          "clock": 1145
+        },
+        {
+          "tick": 121,
+          "updates": 1,
+          "position": [
+            267,
+            267
+          ],
+          "state": 0,
+          "clock": 1146
+        },
+        {
+          "tick": 122,
+          "updates": 1,
+          "position": [
+            266,
+            267
+          ],
+          "state": 0,
+          "clock": 1147
+        },
+        {
+          "tick": 123,
+          "updates": 1,
+          "position": [
+            265,
+            267
+          ],
+          "state": 0,
+          "clock": 1148
+        },
+        {
+          "tick": 124,
+          "updates": 1,
+          "position": [
+            263,
+            267
+          ],
+          "state": 0,
+          "clock": 1149
+        },
+        {
+          "tick": 125,
+          "updates": 1,
+          "position": [
+            262,
+            267
+          ],
+          "state": 0,
+          "clock": 1150
+        },
+        {
+          "tick": 126,
+          "updates": 1,
+          "position": [
+            261,
+            267
+          ],
+          "state": 0,
+          "clock": 1151
+        },
+        {
+          "tick": 127,
+          "updates": 1,
+          "position": [
+            260,
+            267
+          ],
+          "state": 0,
+          "clock": 1152
+        },
+        {
+          "tick": 128,
+          "updates": 1,
+          "position": [
+            258,
+            267
+          ],
+          "state": 0,
+          "clock": 1153
+        },
+        {
+          "tick": 129,
+          "updates": 1,
+          "position": [
+            257,
+            267
+          ],
+          "state": 0,
+          "clock": 1154
+        },
+        {
+          "tick": 130,
+          "updates": 1,
+          "position": [
+            256,
+            267
+          ],
+          "state": 0,
+          "clock": 1155
+        },
+        {
+          "tick": 131,
+          "updates": 1,
+          "position": [
+            255,
+            267
+          ],
+          "state": 0,
+          "clock": 1156
+        },
+        {
+          "tick": 132,
+          "updates": 1,
+          "position": [
+            255,
+            266
+          ],
+          "state": 0,
+          "clock": 1157
+        },
+        {
+          "tick": 133,
+          "updates": 1,
+          "position": [
+            255,
+            264
+          ],
+          "state": 0,
+          "clock": 1158
+        },
+        {
+          "tick": 134,
+          "updates": 1,
+          "position": [
+            255,
+            263
+          ],
+          "state": 0,
+          "clock": 1159
+        },
+        {
+          "tick": 135,
+          "updates": 1,
+          "position": [
+            255,
+            262
+          ],
+          "state": 0,
+          "clock": 1160
+        },
+        {
+          "tick": 136,
+          "updates": 1,
+          "position": [
+            255,
+            261
+          ],
+          "state": 0,
+          "clock": 1161
+        },
+        {
+          "tick": 137,
+          "updates": 1,
+          "position": [
+            255,
+            259
+          ],
+          "state": 0,
+          "clock": 1162
+        },
+        {
+          "tick": 138,
+          "updates": 1,
+          "position": [
+            255,
+            258
+          ],
+          "state": 0,
+          "clock": 1163
+        },
+        {
+          "tick": 139,
+          "updates": 1,
+          "position": [
+            255,
+            257
+          ],
+          "state": 0,
+          "clock": 1164
+        },
+        {
+          "tick": 140,
+          "updates": 1,
+          "position": [
+            255,
+            256
+          ],
+          "state": 0,
+          "clock": 1165
+        },
+        {
+          "tick": 141,
+          "updates": 1,
+          "position": [
+            255,
+            254
+          ],
+          "state": 0,
+          "clock": 1166
+        },
+        {
+          "tick": 142,
+          "updates": 1,
+          "position": [
+            255,
+            253
+          ],
+          "state": 0,
+          "clock": 1167
+        },
+        {
+          "tick": 143,
+          "updates": 1,
+          "position": [
+            255,
+            252
+          ],
+          "state": 0,
+          "clock": 1168
+        },
+        {
+          "tick": 144,
+          "updates": 1,
+          "position": [
+            255,
+            251
+          ],
+          "state": 0,
+          "clock": 1169
+        },
+        {
+          "tick": 145,
+          "updates": 1,
+          "position": [
+            255,
+            249
+          ],
+          "state": 0,
+          "clock": 1170
+        },
+        {
+          "tick": 146,
+          "updates": 1,
+          "position": [
+            255,
+            248
+          ],
+          "state": 0,
+          "clock": 1171
+        },
+        {
+          "tick": 147,
+          "updates": 1,
+          "position": [
+            256,
+            248
+          ],
+          "state": 0,
+          "clock": 1172
+        },
+        {
+          "tick": 148,
+          "updates": 1,
+          "position": [
+            257,
+            248
+          ],
+          "state": 0,
+          "clock": 1173
+        },
+        {
+          "tick": 149,
+          "updates": 1,
+          "position": [
+            258,
+            248
+          ],
+          "state": 0,
+          "clock": 1174
+        },
+        {
+          "tick": 150,
+          "updates": 1,
+          "position": [
+            259,
+            248
+          ],
+          "state": 0,
+          "clock": 1175
+        },
+        {
+          "tick": 151,
+          "updates": 1,
+          "position": [
+            260,
+            248
+          ],
+          "state": 0,
+          "clock": 1176
+        },
+        {
+          "tick": 152,
+          "updates": 1,
+          "position": [
+            261,
+            248
+          ],
+          "state": 0,
+          "clock": 1177
+        },
+        {
+          "tick": 153,
+          "updates": 1,
+          "position": [
+            261,
+            246
+          ],
+          "state": 0,
+          "clock": 1178
+        },
+        {
+          "tick": 154,
+          "updates": 1,
+          "position": [
+            261,
+            245
+          ],
+          "state": 0,
+          "clock": 1179
+        },
+        {
+          "tick": 155,
+          "updates": 1,
+          "position": [
+            261,
+            244
+          ],
+          "state": 0,
+          "clock": 1180
+        },
+        {
+          "tick": 156,
+          "updates": 1,
+          "position": [
+            261,
+            243
+          ],
+          "state": 0,
+          "clock": 1181
+        },
+        {
+          "tick": 157,
+          "updates": 1,
+          "position": [
+            261,
+            241
+          ],
+          "state": 0,
+          "clock": 1182
+        },
+        {
+          "tick": 158,
+          "updates": 1,
+          "position": [
+            261,
+            240
+          ],
+          "state": 0,
+          "clock": 1183
+        },
+        {
+          "tick": 159,
+          "updates": 1,
+          "position": [
+            261,
+            239
+          ],
+          "state": 0,
+          "clock": 1184
+        },
+        {
+          "tick": 160,
+          "updates": 1,
+          "position": [
+            261,
+            238
+          ],
+          "state": 0,
+          "clock": 1185
+        },
+        {
+          "tick": 161,
+          "updates": 1,
+          "position": [
+            261,
+            236
+          ],
+          "state": 0,
+          "clock": 1186
+        },
+        {
+          "tick": 162,
+          "updates": 1,
+          "position": [
+            261,
+            235
+          ],
+          "state": 0,
+          "clock": 1187
+        },
+        {
+          "tick": 163,
+          "updates": 1,
+          "position": [
+            261,
+            234
+          ],
+          "state": 0,
+          "clock": 1188
+        },
+        {
+          "tick": 164,
+          "updates": 1,
+          "position": [
+            261,
+            233
+          ],
+          "state": 0,
+          "clock": 1189
+        },
+        {
+          "tick": 165,
+          "updates": 1,
+          "position": [
+            261,
+            231
+          ],
+          "state": 0,
+          "clock": 1190
+        },
+        {
+          "tick": 166,
+          "updates": 0,
+          "position": [
+            261,
+            231
+          ],
+          "state": 0,
+          "clock": 1191
+        },
+        {
+          "tick": 167,
+          "updates": 1,
+          "position": [
+            261,
+            230
+          ],
+          "state": 0,
+          "clock": 1192
+        }
+      ],
+      "missed_updates": 1,
+      "total_updates": 167
+    },
+    {
+      "build": "fastalpha31",
+      "room": "deep",
+      "initial_position": [
+        256,
+        232
+      ],
+      "rom_sha256": "e5172d9a66e5f957586c8090f260b8f9edf3e91d68d2bc1c77a483fd941205ab",
+      "frames": [
+        {
+          "tick": 0,
+          "updates": 1,
+          "position": [
+            257,
+            232
+          ],
+          "state": 0,
+          "clock": 1025
+        },
+        {
+          "tick": 1,
+          "updates": 1,
+          "position": [
+            258,
+            232
+          ],
+          "state": 0,
+          "clock": 1026
+        },
+        {
+          "tick": 2,
+          "updates": 1,
+          "position": [
+            259,
+            232
+          ],
+          "state": 0,
+          "clock": 1027
+        },
+        {
+          "tick": 3,
+          "updates": 1,
+          "position": [
+            261,
+            232
+          ],
+          "state": 0,
+          "clock": 1028
+        },
+        {
+          "tick": 4,
+          "updates": 1,
+          "position": [
+            262,
+            232
+          ],
+          "state": 0,
+          "clock": 1029
+        },
+        {
+          "tick": 5,
+          "updates": 1,
+          "position": [
+            263,
+            232
+          ],
+          "state": 0,
+          "clock": 1030
+        },
+        {
+          "tick": 6,
+          "updates": 1,
+          "position": [
+            264,
+            232
+          ],
+          "state": 0,
+          "clock": 1031
+        },
+        {
+          "tick": 7,
+          "updates": 1,
+          "position": [
+            266,
+            232
+          ],
+          "state": 0,
+          "clock": 1032
+        },
+        {
+          "tick": 8,
+          "updates": 1,
+          "position": [
+            267,
+            232
+          ],
+          "state": 0,
+          "clock": 1033
+        },
+        {
+          "tick": 9,
+          "updates": 1,
+          "position": [
+            268,
+            232
+          ],
+          "state": 0,
+          "clock": 1034
+        },
+        {
+          "tick": 10,
+          "updates": 1,
+          "position": [
+            269,
+            232
+          ],
+          "state": 0,
+          "clock": 1035
+        },
+        {
+          "tick": 11,
+          "updates": 1,
+          "position": [
+            271,
+            232
+          ],
+          "state": 0,
+          "clock": 1036
+        },
+        {
+          "tick": 12,
+          "updates": 1,
+          "position": [
+            272,
+            232
+          ],
+          "state": 0,
+          "clock": 1037
+        },
+        {
+          "tick": 13,
+          "updates": 1,
+          "position": [
+            273,
+            232
+          ],
+          "state": 0,
+          "clock": 1038
+        },
+        {
+          "tick": 14,
+          "updates": 1,
+          "position": [
+            274,
+            232
+          ],
+          "state": 0,
+          "clock": 1039
+        },
+        {
+          "tick": 15,
+          "updates": 1,
+          "position": [
+            276,
+            232
+          ],
+          "state": 0,
+          "clock": 1040
+        },
+        {
+          "tick": 16,
+          "updates": 1,
+          "position": [
+            277,
+            232
+          ],
+          "state": 0,
+          "clock": 1041
+        },
+        {
+          "tick": 17,
+          "updates": 1,
+          "position": [
+            278,
+            232
+          ],
+          "state": 0,
+          "clock": 1042
+        },
+        {
+          "tick": 18,
+          "updates": 1,
+          "position": [
+            279,
+            232
+          ],
+          "state": 0,
+          "clock": 1043
+        },
+        {
+          "tick": 19,
+          "updates": 1,
+          "position": [
+            281,
+            232
+          ],
+          "state": 0,
+          "clock": 1044
+        },
+        {
+          "tick": 20,
+          "updates": 1,
+          "position": [
+            282,
+            232
+          ],
+          "state": 0,
+          "clock": 1045
+        },
+        {
+          "tick": 21,
+          "updates": 1,
+          "position": [
+            283,
+            232
+          ],
+          "state": 0,
+          "clock": 1046
+        },
+        {
+          "tick": 22,
+          "updates": 1,
+          "position": [
+            284,
+            232
+          ],
+          "state": 0,
+          "clock": 1047
+        },
+        {
+          "tick": 23,
+          "updates": 1,
+          "position": [
+            286,
+            232
+          ],
+          "state": 0,
+          "clock": 1048
+        },
+        {
+          "tick": 24,
+          "updates": 1,
+          "position": [
+            287,
+            232
+          ],
+          "state": 0,
+          "clock": 1049
+        },
+        {
+          "tick": 25,
+          "updates": 1,
+          "position": [
+            288,
+            232
+          ],
+          "state": 0,
+          "clock": 1050
+        },
+        {
+          "tick": 26,
+          "updates": 1,
+          "position": [
+            289,
+            232
+          ],
+          "state": 0,
+          "clock": 1051
+        },
+        {
+          "tick": 27,
+          "updates": 1,
+          "position": [
+            291,
+            232
+          ],
+          "state": 0,
+          "clock": 1052
+        },
+        {
+          "tick": 28,
+          "updates": 1,
+          "position": [
+            292,
+            232
+          ],
+          "state": 0,
+          "clock": 1053
+        },
+        {
+          "tick": 29,
+          "updates": 1,
+          "position": [
+            293,
+            232
+          ],
+          "state": 0,
+          "clock": 1054
+        },
+        {
+          "tick": 30,
+          "updates": 1,
+          "position": [
+            294,
+            232
+          ],
+          "state": 0,
+          "clock": 1055
+        },
+        {
+          "tick": 31,
+          "updates": 1,
+          "position": [
+            296,
+            232
+          ],
+          "state": 0,
+          "clock": 1056
+        },
+        {
+          "tick": 32,
+          "updates": 1,
+          "position": [
+            297,
+            232
+          ],
+          "state": 0,
+          "clock": 1057
+        },
+        {
+          "tick": 33,
+          "updates": 1,
+          "position": [
+            298,
+            232
+          ],
+          "state": 0,
+          "clock": 1058
+        },
+        {
+          "tick": 34,
+          "updates": 1,
+          "position": [
+            299,
+            232
+          ],
+          "state": 0,
+          "clock": 1059
+        },
+        {
+          "tick": 35,
+          "updates": 1,
+          "position": [
+            299,
+            232
+          ],
+          "state": 0,
+          "clock": 1060
+        },
+        {
+          "tick": 36,
+          "updates": 1,
+          "position": [
+            299,
+            232
+          ],
+          "state": 0,
+          "clock": 1061
+        },
+        {
+          "tick": 37,
+          "updates": 1,
+          "position": [
+            299,
+            232
+          ],
+          "state": 0,
+          "clock": 1062
+        },
+        {
+          "tick": 38,
+          "updates": 1,
+          "position": [
+            299,
+            232
+          ],
+          "state": 0,
+          "clock": 1063
+        },
+        {
+          "tick": 39,
+          "updates": 1,
+          "position": [
+            299,
+            232
+          ],
+          "state": 0,
+          "clock": 1064
+        },
+        {
+          "tick": 40,
+          "updates": 1,
+          "position": [
+            299,
+            232
+          ],
+          "state": 0,
+          "clock": 1065
+        },
+        {
+          "tick": 41,
+          "updates": 1,
+          "position": [
+            299,
+            232
+          ],
+          "state": 0,
+          "clock": 1066
+        },
+        {
+          "tick": 42,
+          "updates": 1,
+          "position": [
+            299,
+            232
+          ],
+          "state": 0,
+          "clock": 1067
+        },
+        {
+          "tick": 43,
+          "updates": 1,
+          "position": [
+            299,
+            232
+          ],
+          "state": 0,
+          "clock": 1068
+        },
+        {
+          "tick": 44,
+          "updates": 1,
+          "position": [
+            299,
+            232
+          ],
+          "state": 0,
+          "clock": 1069
+        },
+        {
+          "tick": 45,
+          "updates": 1,
+          "position": [
+            299,
+            232
+          ],
+          "state": 0,
+          "clock": 1070
+        },
+        {
+          "tick": 46,
+          "updates": 1,
+          "position": [
+            299,
+            232
+          ],
+          "state": 0,
+          "clock": 1071
+        },
+        {
+          "tick": 47,
+          "updates": 1,
+          "position": [
+            299,
+            232
+          ],
+          "state": 0,
+          "clock": 1072
+        },
+        {
+          "tick": 48,
+          "updates": 1,
+          "position": [
+            299,
+            233
+          ],
+          "state": 0,
+          "clock": 1073
+        },
+        {
+          "tick": 49,
+          "updates": 1,
+          "position": [
+            299,
+            234
+          ],
+          "state": 0,
+          "clock": 1074
+        },
+        {
+          "tick": 50,
+          "updates": 1,
+          "position": [
+            299,
+            235
+          ],
+          "state": 0,
+          "clock": 1075
+        },
+        {
+          "tick": 51,
+          "updates": 1,
+          "position": [
+            299,
+            237
+          ],
+          "state": 0,
+          "clock": 1076
+        },
+        {
+          "tick": 52,
+          "updates": 1,
+          "position": [
+            299,
+            238
+          ],
+          "state": 0,
+          "clock": 1077
+        },
+        {
+          "tick": 53,
+          "updates": 1,
+          "position": [
+            299,
+            239
+          ],
+          "state": 0,
+          "clock": 1078
+        },
+        {
+          "tick": 54,
+          "updates": 1,
+          "position": [
+            299,
+            240
+          ],
+          "state": 0,
+          "clock": 1079
+        },
+        {
+          "tick": 55,
+          "updates": 1,
+          "position": [
+            299,
+            242
+          ],
+          "state": 0,
+          "clock": 1080
+        },
+        {
+          "tick": 56,
+          "updates": 1,
+          "position": [
+            299,
+            243
+          ],
+          "state": 0,
+          "clock": 1081
+        },
+        {
+          "tick": 57,
+          "updates": 1,
+          "position": [
+            299,
+            244
+          ],
+          "state": 0,
+          "clock": 1082
+        },
+        {
+          "tick": 58,
+          "updates": 1,
+          "position": [
+            299,
+            245
+          ],
+          "state": 0,
+          "clock": 1083
+        },
+        {
+          "tick": 59,
+          "updates": 1,
+          "position": [
+            299,
+            247
+          ],
+          "state": 0,
+          "clock": 1084
+        },
+        {
+          "tick": 60,
+          "updates": 1,
+          "position": [
+            299,
+            248
+          ],
+          "state": 0,
+          "clock": 1085
+        },
+        {
+          "tick": 61,
+          "updates": 1,
+          "position": [
+            299,
+            249
+          ],
+          "state": 0,
+          "clock": 1086
+        },
+        {
+          "tick": 62,
+          "updates": 1,
+          "position": [
+            299,
+            250
+          ],
+          "state": 0,
+          "clock": 1087
+        },
+        {
+          "tick": 63,
+          "updates": 1,
+          "position": [
+            299,
+            252
+          ],
+          "state": 0,
+          "clock": 1088
+        },
+        {
+          "tick": 64,
+          "updates": 1,
+          "position": [
+            299,
+            253
+          ],
+          "state": 0,
+          "clock": 1089
+        },
+        {
+          "tick": 65,
+          "updates": 1,
+          "position": [
+            299,
+            254
+          ],
+          "state": 0,
+          "clock": 1090
+        },
+        {
+          "tick": 66,
+          "updates": 1,
+          "position": [
+            299,
+            255
+          ],
+          "state": 0,
+          "clock": 1091
+        },
+        {
+          "tick": 67,
+          "updates": 1,
+          "position": [
+            299,
+            257
+          ],
+          "state": 0,
+          "clock": 1092
+        },
+        {
+          "tick": 68,
+          "updates": 1,
+          "position": [
+            299,
+            258
+          ],
+          "state": 0,
+          "clock": 1093
+        },
+        {
+          "tick": 69,
+          "updates": 1,
+          "position": [
+            299,
+            259
+          ],
+          "state": 0,
+          "clock": 1094
+        },
+        {
+          "tick": 70,
+          "updates": 1,
+          "position": [
+            299,
+            260
+          ],
+          "state": 0,
+          "clock": 1095
+        },
+        {
+          "tick": 71,
+          "updates": 1,
+          "position": [
+            299,
+            262
+          ],
+          "state": 0,
+          "clock": 1096
+        },
+        {
+          "tick": 72,
+          "updates": 1,
+          "position": [
+            299,
+            263
+          ],
+          "state": 0,
+          "clock": 1097
+        },
+        {
+          "tick": 73,
+          "updates": 1,
+          "position": [
+            299,
+            264
+          ],
+          "state": 0,
+          "clock": 1098
+        },
+        {
+          "tick": 74,
+          "updates": 1,
+          "position": [
+            299,
+            265
+          ],
+          "state": 0,
+          "clock": 1099
+        },
+        {
+          "tick": 75,
+          "updates": 1,
+          "position": [
+            299,
+            267
+          ],
+          "state": 0,
+          "clock": 1100
+        },
+        {
+          "tick": 76,
+          "updates": 1,
+          "position": [
+            299,
+            268
+          ],
+          "state": 0,
+          "clock": 1101
+        },
+        {
+          "tick": 77,
+          "updates": 1,
+          "position": [
+            299,
+            269
+          ],
+          "state": 0,
+          "clock": 1102
+        },
+        {
+          "tick": 78,
+          "updates": 1,
+          "position": [
+            299,
+            270
+          ],
+          "state": 0,
+          "clock": 1103
+        },
+        {
+          "tick": 79,
+          "updates": 1,
+          "position": [
+            299,
+            272
+          ],
+          "state": 0,
+          "clock": 1104
+        },
+        {
+          "tick": 80,
+          "updates": 1,
+          "position": [
+            299,
+            273
+          ],
+          "state": 0,
+          "clock": 1105
+        },
+        {
+          "tick": 81,
+          "updates": 1,
+          "position": [
+            299,
+            274
+          ],
+          "state": 0,
+          "clock": 1106
+        },
+        {
+          "tick": 82,
+          "updates": 1,
+          "position": [
+            299,
+            275
+          ],
+          "state": 0,
+          "clock": 1107
+        },
+        {
+          "tick": 83,
+          "updates": 1,
+          "position": [
+            299,
+            277
+          ],
+          "state": 0,
+          "clock": 1108
+        },
+        {
+          "tick": 84,
+          "updates": 1,
+          "position": [
+            297,
+            277
+          ],
+          "state": 0,
+          "clock": 1109
+        },
+        {
+          "tick": 85,
+          "updates": 1,
+          "position": [
+            296,
+            277
+          ],
+          "state": 0,
+          "clock": 1110
+        },
+        {
+          "tick": 86,
+          "updates": 1,
+          "position": [
+            295,
+            277
+          ],
+          "state": 0,
+          "clock": 1111
+        },
+        {
+          "tick": 87,
+          "updates": 1,
+          "position": [
+            294,
+            277
+          ],
+          "state": 0,
+          "clock": 1112
+        },
+        {
+          "tick": 88,
+          "updates": 1,
+          "position": [
+            292,
+            277
+          ],
+          "state": 0,
+          "clock": 1113
+        },
+        {
+          "tick": 89,
+          "updates": 1,
+          "position": [
+            291,
+            277
+          ],
+          "state": 0,
+          "clock": 1114
+        },
+        {
+          "tick": 90,
+          "updates": 1,
+          "position": [
+            290,
+            277
+          ],
+          "state": 0,
+          "clock": 1115
+        },
+        {
+          "tick": 91,
+          "updates": 1,
+          "position": [
+            289,
+            277
+          ],
+          "state": 0,
+          "clock": 1116
+        },
+        {
+          "tick": 92,
+          "updates": 1,
+          "position": [
+            287,
+            277
+          ],
+          "state": 0,
+          "clock": 1117
+        },
+        {
+          "tick": 93,
+          "updates": 1,
+          "position": [
+            286,
+            277
+          ],
+          "state": 0,
+          "clock": 1118
+        },
+        {
+          "tick": 94,
+          "updates": 1,
+          "position": [
+            285,
+            277
+          ],
+          "state": 0,
+          "clock": 1119
+        },
+        {
+          "tick": 95,
+          "updates": 1,
+          "position": [
+            284,
+            277
+          ],
+          "state": 0,
+          "clock": 1120
+        },
+        {
+          "tick": 96,
+          "updates": 1,
+          "position": [
+            282,
+            277
+          ],
+          "state": 0,
+          "clock": 1121
+        },
+        {
+          "tick": 97,
+          "updates": 1,
+          "position": [
+            281,
+            277
+          ],
+          "state": 0,
+          "clock": 1122
+        },
+        {
+          "tick": 98,
+          "updates": 1,
+          "position": [
+            280,
+            277
+          ],
+          "state": 0,
+          "clock": 1123
+        },
+        {
+          "tick": 99,
+          "updates": 1,
+          "position": [
+            279,
+            277
+          ],
+          "state": 0,
+          "clock": 1124
+        },
+        {
+          "tick": 100,
+          "updates": 1,
+          "position": [
+            277,
+            277
+          ],
+          "state": 0,
+          "clock": 1125
+        },
+        {
+          "tick": 101,
+          "updates": 1,
+          "position": [
+            276,
+            277
+          ],
+          "state": 0,
+          "clock": 1126
+        },
+        {
+          "tick": 102,
+          "updates": 1,
+          "position": [
+            275,
+            277
+          ],
+          "state": 0,
+          "clock": 1127
+        },
+        {
+          "tick": 103,
+          "updates": 1,
+          "position": [
+            274,
+            277
+          ],
+          "state": 0,
+          "clock": 1128
+        },
+        {
+          "tick": 104,
+          "updates": 1,
+          "position": [
+            272,
+            277
+          ],
+          "state": 0,
+          "clock": 1129
+        },
+        {
+          "tick": 105,
+          "updates": 1,
+          "position": [
+            271,
+            277
+          ],
+          "state": 0,
+          "clock": 1130
+        },
+        {
+          "tick": 106,
+          "updates": 1,
+          "position": [
+            270,
+            277
+          ],
+          "state": 0,
+          "clock": 1131
+        },
+        {
+          "tick": 107,
+          "updates": 1,
+          "position": [
+            269,
+            277
+          ],
+          "state": 0,
+          "clock": 1132
+        },
+        {
+          "tick": 108,
+          "updates": 1,
+          "position": [
+            267,
+            277
+          ],
+          "state": 0,
+          "clock": 1133
+        },
+        {
+          "tick": 109,
+          "updates": 1,
+          "position": [
+            266,
+            277
+          ],
+          "state": 0,
+          "clock": 1134
+        },
+        {
+          "tick": 110,
+          "updates": 1,
+          "position": [
+            265,
+            277
+          ],
+          "state": 0,
+          "clock": 1135
+        },
+        {
+          "tick": 111,
+          "updates": 1,
+          "position": [
+            264,
+            277
+          ],
+          "state": 0,
+          "clock": 1136
+        },
+        {
+          "tick": 112,
+          "updates": 1,
+          "position": [
+            262,
+            277
+          ],
+          "state": 0,
+          "clock": 1137
+        },
+        {
+          "tick": 113,
+          "updates": 1,
+          "position": [
+            261,
+            277
+          ],
+          "state": 0,
+          "clock": 1138
+        },
+        {
+          "tick": 114,
+          "updates": 1,
+          "position": [
+            260,
+            277
+          ],
+          "state": 0,
+          "clock": 1139
+        },
+        {
+          "tick": 115,
+          "updates": 1,
+          "position": [
+            259,
+            277
+          ],
+          "state": 0,
+          "clock": 1140
+        },
+        {
+          "tick": 116,
+          "updates": 1,
+          "position": [
+            257,
+            277
+          ],
+          "state": 0,
+          "clock": 1141
+        },
+        {
+          "tick": 117,
+          "updates": 1,
+          "position": [
+            256,
+            277
+          ],
+          "state": 0,
+          "clock": 1142
+        },
+        {
+          "tick": 118,
+          "updates": 1,
+          "position": [
+            255,
+            277
+          ],
+          "state": 0,
+          "clock": 1143
+        },
+        {
+          "tick": 119,
+          "updates": 1,
+          "position": [
+            254,
+            277
+          ],
+          "state": 0,
+          "clock": 1144
+        },
+        {
+          "tick": 120,
+          "updates": 1,
+          "position": [
+            252,
+            277
+          ],
+          "state": 0,
+          "clock": 1145
+        },
+        {
+          "tick": 121,
+          "updates": 1,
+          "position": [
+            251,
+            277
+          ],
+          "state": 0,
+          "clock": 1146
+        },
+        {
+          "tick": 122,
+          "updates": 1,
+          "position": [
+            250,
+            277
+          ],
+          "state": 0,
+          "clock": 1147
+        },
+        {
+          "tick": 123,
+          "updates": 1,
+          "position": [
+            249,
+            277
+          ],
+          "state": 0,
+          "clock": 1148
+        },
+        {
+          "tick": 124,
+          "updates": 1,
+          "position": [
+            247,
+            277
+          ],
+          "state": 0,
+          "clock": 1149
+        },
+        {
+          "tick": 125,
+          "updates": 1,
+          "position": [
+            246,
+            277
+          ],
+          "state": 0,
+          "clock": 1150
+        },
+        {
+          "tick": 126,
+          "updates": 1,
+          "position": [
+            245,
+            277
+          ],
+          "state": 0,
+          "clock": 1151
+        },
+        {
+          "tick": 127,
+          "updates": 1,
+          "position": [
+            244,
+            277
+          ],
+          "state": 0,
+          "clock": 1152
+        },
+        {
+          "tick": 128,
+          "updates": 1,
+          "position": [
+            242,
+            277
+          ],
+          "state": 0,
+          "clock": 1153
+        },
+        {
+          "tick": 129,
+          "updates": 1,
+          "position": [
+            241,
+            277
+          ],
+          "state": 0,
+          "clock": 1154
+        },
+        {
+          "tick": 130,
+          "updates": 1,
+          "position": [
+            240,
+            277
+          ],
+          "state": 0,
+          "clock": 1155
+        },
+        {
+          "tick": 131,
+          "updates": 1,
+          "position": [
+            239,
+            277
+          ],
+          "state": 0,
+          "clock": 1156
+        },
+        {
+          "tick": 132,
+          "updates": 1,
+          "position": [
+            239,
+            275
+          ],
+          "state": 0,
+          "clock": 1157
+        },
+        {
+          "tick": 133,
+          "updates": 1,
+          "position": [
+            239,
+            274
+          ],
+          "state": 0,
+          "clock": 1158
+        },
+        {
+          "tick": 134,
+          "updates": 1,
+          "position": [
+            239,
+            273
+          ],
+          "state": 0,
+          "clock": 1159
+        },
+        {
+          "tick": 135,
+          "updates": 1,
+          "position": [
+            239,
+            272
+          ],
+          "state": 0,
+          "clock": 1160
+        },
+        {
+          "tick": 136,
+          "updates": 1,
+          "position": [
+            239,
+            270
+          ],
+          "state": 0,
+          "clock": 1161
+        },
+        {
+          "tick": 137,
+          "updates": 1,
+          "position": [
+            239,
+            269
+          ],
+          "state": 0,
+          "clock": 1162
+        },
+        {
+          "tick": 138,
+          "updates": 1,
+          "position": [
+            239,
+            268
+          ],
+          "state": 0,
+          "clock": 1163
+        },
+        {
+          "tick": 139,
+          "updates": 1,
+          "position": [
+            239,
+            267
+          ],
+          "state": 0,
+          "clock": 1164
+        },
+        {
+          "tick": 140,
+          "updates": 1,
+          "position": [
+            239,
+            265
+          ],
+          "state": 0,
+          "clock": 1165
+        },
+        {
+          "tick": 141,
+          "updates": 1,
+          "position": [
+            239,
+            264
+          ],
+          "state": 0,
+          "clock": 1166
+        },
+        {
+          "tick": 142,
+          "updates": 1,
+          "position": [
+            239,
+            263
+          ],
+          "state": 0,
+          "clock": 1167
+        },
+        {
+          "tick": 143,
+          "updates": 1,
+          "position": [
+            239,
+            262
+          ],
+          "state": 0,
+          "clock": 1168
+        },
+        {
+          "tick": 144,
+          "updates": 1,
+          "position": [
+            239,
+            260
+          ],
+          "state": 0,
+          "clock": 1169
+        },
+        {
+          "tick": 145,
+          "updates": 1,
+          "position": [
+            239,
+            259
+          ],
+          "state": 0,
+          "clock": 1170
+        },
+        {
+          "tick": 146,
+          "updates": 1,
+          "position": [
+            239,
+            258
+          ],
+          "state": 0,
+          "clock": 1171
+        },
+        {
+          "tick": 147,
+          "updates": 1,
+          "position": [
+            239,
+            257
+          ],
+          "state": 0,
+          "clock": 1172
+        },
+        {
+          "tick": 148,
+          "updates": 1,
+          "position": [
+            239,
+            255
+          ],
+          "state": 0,
+          "clock": 1173
+        },
+        {
+          "tick": 149,
+          "updates": 1,
+          "position": [
+            239,
+            254
+          ],
+          "state": 0,
+          "clock": 1174
+        },
+        {
+          "tick": 150,
+          "updates": 1,
+          "position": [
+            239,
+            253
+          ],
+          "state": 0,
+          "clock": 1175
+        },
+        {
+          "tick": 151,
+          "updates": 1,
+          "position": [
+            239,
+            252
+          ],
+          "state": 0,
+          "clock": 1176
+        },
+        {
+          "tick": 152,
+          "updates": 1,
+          "position": [
+            239,
+            250
+          ],
+          "state": 0,
+          "clock": 1177
+        },
+        {
+          "tick": 153,
+          "updates": 1,
+          "position": [
+            239,
+            249
+          ],
+          "state": 0,
+          "clock": 1178
+        },
+        {
+          "tick": 154,
+          "updates": 1,
+          "position": [
+            239,
+            248
+          ],
+          "state": 0,
+          "clock": 1179
+        },
+        {
+          "tick": 155,
+          "updates": 1,
+          "position": [
+            239,
+            247
+          ],
+          "state": 0,
+          "clock": 1180
+        },
+        {
+          "tick": 156,
+          "updates": 1,
+          "position": [
+            239,
+            245
+          ],
+          "state": 0,
+          "clock": 1181
+        },
+        {
+          "tick": 157,
+          "updates": 1,
+          "position": [
+            239,
+            244
+          ],
+          "state": 0,
+          "clock": 1182
+        },
+        {
+          "tick": 158,
+          "updates": 1,
+          "position": [
+            239,
+            243
+          ],
+          "state": 0,
+          "clock": 1183
+        },
+        {
+          "tick": 159,
+          "updates": 1,
+          "position": [
+            239,
+            242
+          ],
+          "state": 0,
+          "clock": 1184
+        },
+        {
+          "tick": 160,
+          "updates": 1,
+          "position": [
+            239,
+            240
+          ],
+          "state": 0,
+          "clock": 1185
+        },
+        {
+          "tick": 161,
+          "updates": 1,
+          "position": [
+            239,
+            239
+          ],
+          "state": 0,
+          "clock": 1186
+        },
+        {
+          "tick": 162,
+          "updates": 1,
+          "position": [
+            239,
+            238
+          ],
+          "state": 0,
+          "clock": 1187
+        },
+        {
+          "tick": 163,
+          "updates": 1,
+          "position": [
+            239,
+            237
+          ],
+          "state": 0,
+          "clock": 1188
+        },
+        {
+          "tick": 164,
+          "updates": 1,
+          "position": [
+            239,
+            235
+          ],
+          "state": 0,
+          "clock": 1189
+        },
+        {
+          "tick": 165,
+          "updates": 1,
+          "position": [
+            239,
+            234
+          ],
+          "state": 0,
+          "clock": 1190
+        },
+        {
+          "tick": 166,
+          "updates": 1,
+          "position": [
+            239,
+            233
+          ],
+          "state": 0,
+          "clock": 1191
+        },
+        {
+          "tick": 167,
+          "updates": 1,
+          "position": [
+            239,
+            232
+          ],
+          "state": 0,
+          "clock": 1192
+        }
+      ],
+      "missed_updates": 0,
+      "total_updates": 168
+    }
+  ]
+}

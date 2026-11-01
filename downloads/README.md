@@ -1,5 +1,20 @@
 # BARTGAME downloads
 
+
+## Selected repeated forest trees
+
+The approved healthy, sick and dead 32×32/16×32 trees are integrated into the
+normal procedural forest. Ordinary `make` selects profile31. These are playable
+builds, with real mGBA complete-room camera mosaics and native HUD views.
+
+- [View the actual rooms and movement clips](../art-review/forest-trees-integrated/README.md)
+- [Download the ROM](https://raw.githubusercontent.com/natertott/bartgame/forest-trees-integrated/downloads/forest-trees-integrated-fd7465d/forest-trees-integrated-fd7465d.gba)
+- [Download the ZIP](https://raw.githubusercontent.com/natertott/bartgame/forest-trees-integrated/downloads/forest-trees-integrated-fd7465d/forest-trees-integrated-fd7465d.zip)
+- [Build and checksums](forest-trees-integrated-fd7465d/README.md)
+
+Game/art source `fd7465d`. Historical profiles0–30 remain byte-identical.
+All prior unselected forest proposals below are historical comparisons.
+
 ## Eight leafy canopy alternatives
 
 Veinbound Oak, Patchblight Beech, Spore Drift, Bracketwood, Violet Leaf Mosaic,

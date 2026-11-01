@@ -1,0 +1,1090 @@
+{
+  "passed": 209,
+  "total": 209,
+  "checks": [
+    {
+      "name": "relative link art-review/forest-trees-integrated/README.md rooms-actual.png",
+      "passed": true,
+      "detail": "/workspace/bartgame/art-review/forest-trees-integrated/rooms-actual.png"
+    },
+    {
+      "name": "relative link art-review/forest-trees-integrated/README.md native-HUD-actual.png",
+      "passed": true,
+      "detail": "/workspace/bartgame/art-review/forest-trees-integrated/native-HUD-actual.png"
+    },
+    {
+      "name": "relative link art-review/forest-trees-integrated/README.md ../../downloads/forest-trees-integrated-fd7465d/forest-trees-integrated-fd7465d.gba",
+      "passed": true,
+      "detail": "/workspace/bartgame/downloads/forest-trees-integrated-fd7465d/forest-trees-integrated-fd7465d.gba"
+    },
+    {
+      "name": "relative link art-review/forest-trees-integrated/README.md ../../downloads/forest-trees-integrated-fd7465d/forest-trees-integrated-fd7465d.zip",
+      "passed": true,
+      "detail": "/workspace/bartgame/downloads/forest-trees-integrated-fd7465d/forest-trees-integrated-fd7465d.zip"
+    },
+    {
+      "name": "relative link art-review/forest-trees-integrated/README.md ../../downloads/forest-trees-integrated-fd7465d/README.md",
+      "passed": true,
+      "detail": "/workspace/bartgame/downloads/forest-trees-integrated-fd7465d/README.md"
+    },
+    {
+      "name": "relative link art-review/forest-trees-integrated/README.md actual/healthy/full-room.png",
+      "passed": true,
+      "detail": "/workspace/bartgame/art-review/forest-trees-integrated/actual/healthy/full-room.png"
+    },
+    {
+      "name": "relative link art-review/forest-trees-integrated/README.md inspection/healthy-2x.png",
+      "passed": true,
+      "detail": "/workspace/bartgame/art-review/forest-trees-integrated/inspection/healthy-2x.png"
+    },
+    {
+      "name": "relative link art-review/forest-trees-integrated/README.md actual/healthy/walk.mp4",
+      "passed": true,
+      "detail": "/workspace/bartgame/art-review/forest-trees-integrated/actual/healthy/walk.mp4"
+    },
+    {
+      "name": "relative link art-review/forest-trees-integrated/README.md actual/healthy/walk.gif",
+      "passed": true,
+      "detail": "/workspace/bartgame/art-review/forest-trees-integrated/actual/healthy/walk.gif"
+    },
+    {
+      "name": "relative link art-review/forest-trees-integrated/README.md actual/mixed/full-room.png",
+      "passed": true,
+      "detail": "/workspace/bartgame/art-review/forest-trees-integrated/actual/mixed/full-room.png"
+    },
+    {
+      "name": "relative link art-review/forest-trees-integrated/README.md inspection/mixed-2x.png",
+      "passed": true,
+      "detail": "/workspace/bartgame/art-review/forest-trees-integrated/inspection/mixed-2x.png"
+    },
+    {
+      "name": "relative link art-review/forest-trees-integrated/README.md actual/mixed/walk.mp4",
+      "passed": true,
+      "detail": "/workspace/bartgame/art-review/forest-trees-integrated/actual/mixed/walk.mp4"
+    },
+    {
+      "name": "relative link art-review/forest-trees-integrated/README.md actual/mixed/walk.gif",
+      "passed": true,
+      "detail": "/workspace/bartgame/art-review/forest-trees-integrated/actual/mixed/walk.gif"
+    },
+    {
+      "name": "relative link art-review/forest-trees-integrated/README.md actual/deep/full-room.png",
+      "passed": true,
+      "detail": "/workspace/bartgame/art-review/forest-trees-integrated/actual/deep/full-room.png"
+    },
+    {
+      "name": "relative link art-review/forest-trees-integrated/README.md inspection/deep-2x.png",
+      "passed": true,
+      "detail": "/workspace/bartgame/art-review/forest-trees-integrated/inspection/deep-2x.png"
+    },
+    {
+      "name": "relative link art-review/forest-trees-integrated/README.md actual/deep/walk.mp4",
+      "passed": true,
+      "detail": "/workspace/bartgame/art-review/forest-trees-integrated/actual/deep/walk.mp4"
+    },
+    {
+      "name": "relative link art-review/forest-trees-integrated/README.md actual/deep/walk.gif",
+      "passed": true,
+      "detail": "/workspace/bartgame/art-review/forest-trees-integrated/actual/deep/walk.gif"
+    },
+    {
+      "name": "relative link art-review/forest-trees-integrated/README.md actual/README.md",
+      "passed": true,
+      "detail": "/workspace/bartgame/art-review/forest-trees-integrated/actual/README.md"
+    },
+    {
+      "name": "relative link art-review/forest-trees-integrated/README.md actual-panel-manifest.json",
+      "passed": true,
+      "detail": "/workspace/bartgame/art-review/forest-trees-integrated/actual-panel-manifest.json"
+    },
+    {
+      "name": "relative link art-review/forest-trees-integrated/README.md actual-publication-summary.json",
+      "passed": true,
+      "detail": "/workspace/bartgame/art-review/forest-trees-integrated/actual-publication-summary.json"
+    },
+    {
+      "name": "relative link art-review/forest-trees-integrated/README.md ../forest-tree-study/source/README.md",
+      "passed": true,
+      "detail": "/workspace/bartgame/art-review/forest-tree-study/source/README.md"
+    },
+    {
+      "name": "relative link art-review/forest-trees-integrated/README.md ../../bartgame/docs/art-reboot/references/TREE_GUIDE_APPLICATION.md",
+      "passed": true,
+      "detail": "/workspace/bartgame/bartgame/docs/art-reboot/references/TREE_GUIDE_APPLICATION.md"
+    },
+    {
+      "name": "relative link art-review/forest-trees-integrated/actual/README.md capture.json",
+      "passed": true,
+      "detail": "/workspace/bartgame/art-review/forest-trees-integrated/actual/capture.json"
+    },
+    {
+      "name": "relative link art-review/forest-trees-integrated/actual/README.md healthy/full-room.png",
+      "passed": true,
+      "detail": "/workspace/bartgame/art-review/forest-trees-integrated/actual/healthy/full-room.png"
+    },
+    {
+      "name": "relative link art-review/forest-trees-integrated/actual/README.md healthy/native-HUD.png",
+      "passed": true,
+      "detail": "/workspace/bartgame/art-review/forest-trees-integrated/actual/healthy/native-HUD.png"
+    },
+    {
+      "name": "relative link art-review/forest-trees-integrated/actual/README.md healthy/camera-000-000.png",
+      "passed": true,
+      "detail": "/workspace/bartgame/art-review/forest-trees-integrated/actual/healthy/camera-000-000.png"
+    },
+    {
+      "name": "relative link art-review/forest-trees-integrated/actual/README.md healthy/native-arrival.png",
+      "passed": true,
+      "detail": "/workspace/bartgame/art-review/forest-trees-integrated/actual/healthy/native-arrival.png"
+    },
+    {
+      "name": "relative link art-review/forest-trees-integrated/actual/README.md mixed/full-room.png",
+      "passed": true,
+      "detail": "/workspace/bartgame/art-review/forest-trees-integrated/actual/mixed/full-room.png"
+    },
+    {
+      "name": "relative link art-review/forest-trees-integrated/actual/README.md mixed/native-HUD.png",
+      "passed": true,
+      "detail": "/workspace/bartgame/art-review/forest-trees-integrated/actual/mixed/native-HUD.png"
+    },
+    {
+      "name": "relative link art-review/forest-trees-integrated/actual/README.md mixed/camera-000-000.png",
+      "passed": true,
+      "detail": "/workspace/bartgame/art-review/forest-trees-integrated/actual/mixed/camera-000-000.png"
+    },
+    {
+      "name": "relative link art-review/forest-trees-integrated/actual/README.md mixed/native-arrival.png",
+      "passed": true,
+      "detail": "/workspace/bartgame/art-review/forest-trees-integrated/actual/mixed/native-arrival.png"
+    },
+    {
+      "name": "relative link art-review/forest-trees-integrated/actual/README.md deep/full-room.png",
+      "passed": true,
+      "detail": "/workspace/bartgame/art-review/forest-trees-integrated/actual/deep/full-room.png"
+    },
+    {
+      "name": "relative link art-review/forest-trees-integrated/actual/README.md deep/native-HUD.png",
+      "passed": true,
+      "detail": "/workspace/bartgame/art-review/forest-trees-integrated/actual/deep/native-HUD.png"
+    },
+    {
+      "name": "relative link art-review/forest-trees-integrated/actual/README.md deep/camera-000-000.png",
+      "passed": true,
+      "detail": "/workspace/bartgame/art-review/forest-trees-integrated/actual/deep/camera-000-000.png"
+    },
+    {
+      "name": "relative link art-review/forest-trees-integrated/actual/README.md deep/native-arrival.png",
+      "passed": true,
+      "detail": "/workspace/bartgame/art-review/forest-trees-integrated/actual/deep/native-arrival.png"
+    },
+    {
+      "name": "relative link downloads/forest-trees-integrated-fd7465d/README.md forest-trees-integrated-fd7465d.gba",
+      "passed": true,
+      "detail": "/workspace/bartgame/downloads/forest-trees-integrated-fd7465d/forest-trees-integrated-fd7465d.gba"
+    },
+    {
+      "name": "relative link downloads/forest-trees-integrated-fd7465d/README.md forest-trees-integrated-fd7465d.zip",
+      "passed": true,
+      "detail": "/workspace/bartgame/downloads/forest-trees-integrated-fd7465d/forest-trees-integrated-fd7465d.zip"
+    },
+    {
+      "name": "relative link downloads/forest-trees-integrated-fd7465d/README.md SHA256SUMS.txt",
+      "passed": true,
+      "detail": "/workspace/bartgame/downloads/forest-trees-integrated-fd7465d/SHA256SUMS.txt"
+    },
+    {
+      "name": "relative link downloads/forest-trees-integrated-fd7465d/README.md ../../art-review/forest-trees-integrated/README.md",
+      "passed": true,
+      "detail": "/workspace/bartgame/art-review/forest-trees-integrated/README.md"
+    },
+    {
+      "name": "board SHA rooms-actual.png",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "literal board panel rooms-actual.png healthy",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "literal board panel rooms-actual.png mixed",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "literal board panel rooms-actual.png deep",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "board SHA native-HUD-actual.png",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "literal board panel native-HUD-actual.png healthy",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "literal board panel native-HUD-actual.png mixed",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "literal board panel native-HUD-actual.png deep",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "board SHA inspection/healthy-2x.png",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "literal board panel inspection/healthy-2x.png healthy",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "board SHA inspection/mixed-2x.png",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "literal board panel inspection/mixed-2x.png mixed",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "board SHA inspection/deep-2x.png",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "literal board panel inspection/deep-2x.png deep",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "native movie extent and GBA playback rate healthy",
+      "passed": true,
+      "detail": {
+        "codec_name": "h264",
+        "width": 240,
+        "height": 160,
+        "pix_fmt": "yuv444p",
+        "r_frame_rate": "262144/4389",
+        "nb_frames": "168"
+      }
+    },
+    {
+      "name": "all recorded movie frames preserved healthy",
+      "passed": true,
+      "detail": "168"
+    },
+    {
+      "name": "GIF duration exact inspection hold healthy",
+      "passed": true,
+      "detail": 130
+    },
+    {
+      "name": "GIF duration exact inspection hold healthy",
+      "passed": true,
+      "detail": 130
+    },
+    {
+      "name": "GIF duration exact inspection hold healthy",
+      "passed": true,
+      "detail": 130
+    },
+    {
+      "name": "GIF duration exact inspection hold healthy",
+      "passed": true,
+      "detail": 130
+    },
+    {
+      "name": "GIF duration exact inspection hold healthy",
+      "passed": true,
+      "detail": 130
+    },
+    {
+      "name": "GIF duration exact inspection hold healthy",
+      "passed": true,
+      "detail": 130
+    },
+    {
+      "name": "GIF duration exact inspection hold healthy",
+      "passed": true,
+      "detail": 130
+    },
+    {
+      "name": "GIF duration exact inspection hold healthy",
+      "passed": true,
+      "detail": 130
+    },
+    {
+      "name": "GIF duration exact inspection hold healthy",
+      "passed": true,
+      "detail": 130
+    },
+    {
+      "name": "GIF duration exact inspection hold healthy",
+      "passed": true,
+      "detail": 130
+    },
+    {
+      "name": "GIF duration exact inspection hold healthy",
+      "passed": true,
+      "detail": 130
+    },
+    {
+      "name": "GIF duration exact inspection hold healthy",
+      "passed": true,
+      "detail": 130
+    },
+    {
+      "name": "GIF duration exact inspection hold healthy",
+      "passed": true,
+      "detail": 130
+    },
+    {
+      "name": "GIF duration exact inspection hold healthy",
+      "passed": true,
+      "detail": 130
+    },
+    {
+      "name": "GIF duration exact inspection hold healthy",
+      "passed": true,
+      "detail": 130
+    },
+    {
+      "name": "GIF duration exact inspection hold healthy",
+      "passed": true,
+      "detail": 130
+    },
+    {
+      "name": "GIF duration exact inspection hold healthy",
+      "passed": true,
+      "detail": 130
+    },
+    {
+      "name": "GIF duration exact inspection hold healthy",
+      "passed": true,
+      "detail": 130
+    },
+    {
+      "name": "GIF duration exact inspection hold healthy",
+      "passed": true,
+      "detail": 130
+    },
+    {
+      "name": "GIF duration exact inspection hold healthy",
+      "passed": true,
+      "detail": 130
+    },
+    {
+      "name": "GIF duration exact inspection hold healthy",
+      "passed": true,
+      "detail": 130
+    },
+    {
+      "name": "GIF exact native sample RGB healthy",
+      "passed": true,
+      "detail": {
+        "decoded": 21,
+        "samples": 21
+      }
+    },
+    {
+      "name": "native copied PNG healthy/native-arrival.png",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "native copied PNG healthy/native-HUD.png",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "native copied PNG healthy/native-HUD-north.png",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "native copied PNG healthy/native-HUD-west.png",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "native copied PNG healthy/native-HUD-south.png",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "native copied PNG healthy/camera-000-000.png",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "native copied PNG healthy/camera-136-000.png",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "native copied PNG healthy/camera-272-000.png",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "native copied PNG healthy/camera-000-112.png",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "native copied PNG healthy/camera-136-112.png",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "native copied PNG healthy/camera-272-112.png",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "native copied PNG healthy/camera-000-224.png",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "native copied PNG healthy/camera-136-224.png",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "native copied PNG healthy/camera-272-224.png",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "native copied PNG healthy/full-room.png",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "native camera crop healthy/camera-000-000.png",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "native camera crop healthy/camera-136-000.png",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "native camera crop healthy/camera-272-000.png",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "native camera crop healthy/camera-000-112.png",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "native camera crop healthy/camera-136-112.png",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "native camera crop healthy/camera-272-112.png",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "native camera crop healthy/camera-000-224.png",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "native camera crop healthy/camera-136-224.png",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "native camera crop healthy/camera-272-224.png",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "mosaic world covered exactly once healthy",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "native movie extent and GBA playback rate mixed",
+      "passed": true,
+      "detail": {
+        "codec_name": "h264",
+        "width": 240,
+        "height": 160,
+        "pix_fmt": "yuv444p",
+        "r_frame_rate": "262144/4389",
+        "nb_frames": "168"
+      }
+    },
+    {
+      "name": "all recorded movie frames preserved mixed",
+      "passed": true,
+      "detail": "168"
+    },
+    {
+      "name": "GIF duration exact inspection hold mixed",
+      "passed": true,
+      "detail": 130
+    },
+    {
+      "name": "GIF duration exact inspection hold mixed",
+      "passed": true,
+      "detail": 130
+    },
+    {
+      "name": "GIF duration exact inspection hold mixed",
+      "passed": true,
+      "detail": 130
+    },
+    {
+      "name": "GIF duration exact inspection hold mixed",
+      "passed": true,
+      "detail": 130
+    },
+    {
+      "name": "GIF duration exact inspection hold mixed",
+      "passed": true,
+      "detail": 130
+    },
+    {
+      "name": "GIF duration exact inspection hold mixed",
+      "passed": true,
+      "detail": 130
+    },
+    {
+      "name": "GIF duration exact inspection hold mixed",
+      "passed": true,
+      "detail": 130
+    },
+    {
+      "name": "GIF duration exact inspection hold mixed",
+      "passed": true,
+      "detail": 130
+    },
+    {
+      "name": "GIF duration exact inspection hold mixed",
+      "passed": true,
+      "detail": 130
+    },
+    {
+      "name": "GIF duration exact inspection hold mixed",
+      "passed": true,
+      "detail": 130
+    },
+    {
+      "name": "GIF duration exact inspection hold mixed",
+      "passed": true,
+      "detail": 130
+    },
+    {
+      "name": "GIF duration exact inspection hold mixed",
+      "passed": true,
+      "detail": 130
+    },
+    {
+      "name": "GIF duration exact inspection hold mixed",
+      "passed": true,
+      "detail": 130
+    },
+    {
+      "name": "GIF duration exact inspection hold mixed",
+      "passed": true,
+      "detail": 130
+    },
+    {
+      "name": "GIF duration exact inspection hold mixed",
+      "passed": true,
+      "detail": 130
+    },
+    {
+      "name": "GIF duration exact inspection hold mixed",
+      "passed": true,
+      "detail": 130
+    },
+    {
+      "name": "GIF duration exact inspection hold mixed",
+      "passed": true,
+      "detail": 130
+    },
+    {
+      "name": "GIF duration exact inspection hold mixed",
+      "passed": true,
+      "detail": 130
+    },
+    {
+      "name": "GIF duration exact inspection hold mixed",
+      "passed": true,
+      "detail": 130
+    },
+    {
+      "name": "GIF duration exact inspection hold mixed",
+      "passed": true,
+      "detail": 130
+    },
+    {
+      "name": "GIF duration exact inspection hold mixed",
+      "passed": true,
+      "detail": 130
+    },
+    {
+      "name": "GIF exact native sample RGB mixed",
+      "passed": true,
+      "detail": {
+        "decoded": 21,
+        "samples": 21
+      }
+    },
+    {
+      "name": "native copied PNG mixed/native-arrival.png",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "native copied PNG mixed/native-HUD.png",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "native copied PNG mixed/native-HUD-north.png",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "native copied PNG mixed/native-HUD-west.png",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "native copied PNG mixed/native-HUD-south.png",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "native copied PNG mixed/camera-000-000.png",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "native copied PNG mixed/camera-136-000.png",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "native copied PNG mixed/camera-272-000.png",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "native copied PNG mixed/camera-000-112.png",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "native copied PNG mixed/camera-136-112.png",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "native copied PNG mixed/camera-272-112.png",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "native copied PNG mixed/camera-000-224.png",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "native copied PNG mixed/camera-136-224.png",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "native copied PNG mixed/camera-272-224.png",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "native copied PNG mixed/full-room.png",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "native camera crop mixed/camera-000-000.png",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "native camera crop mixed/camera-136-000.png",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "native camera crop mixed/camera-272-000.png",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "native camera crop mixed/camera-000-112.png",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "native camera crop mixed/camera-136-112.png",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "native camera crop mixed/camera-272-112.png",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "native camera crop mixed/camera-000-224.png",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "native camera crop mixed/camera-136-224.png",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "native camera crop mixed/camera-272-224.png",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "mosaic world covered exactly once mixed",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "native movie extent and GBA playback rate deep",
+      "passed": true,
+      "detail": {
+        "codec_name": "h264",
+        "width": 240,
+        "height": 160,
+        "pix_fmt": "yuv444p",
+        "r_frame_rate": "262144/4389",
+        "nb_frames": "168"
+      }
+    },
+    {
+      "name": "all recorded movie frames preserved deep",
+      "passed": true,
+      "detail": "168"
+    },
+    {
+      "name": "GIF duration exact inspection hold deep",
+      "passed": true,
+      "detail": 130
+    },
+    {
+      "name": "GIF duration exact inspection hold deep",
+      "passed": true,
+      "detail": 130
+    },
+    {
+      "name": "GIF duration exact inspection hold deep",
+      "passed": true,
+      "detail": 130
+    },
+    {
+      "name": "GIF duration exact inspection hold deep",
+      "passed": true,
+      "detail": 130
+    },
+    {
+      "name": "GIF duration exact inspection hold deep",
+      "passed": true,
+      "detail": 130
+    },
+    {
+      "name": "GIF duration exact inspection hold deep",
+      "passed": true,
+      "detail": 130
+    },
+    {
+      "name": "GIF duration exact inspection hold deep",
+      "passed": true,
+      "detail": 130
+    },
+    {
+      "name": "GIF duration exact inspection hold deep",
+      "passed": true,
+      "detail": 130
+    },
+    {
+      "name": "GIF duration exact inspection hold deep",
+      "passed": true,
+      "detail": 130
+    },
+    {
+      "name": "GIF duration exact inspection hold deep",
+      "passed": true,
+      "detail": 130
+    },
+    {
+      "name": "GIF duration exact inspection hold deep",
+      "passed": true,
+      "detail": 130
+    },
+    {
+      "name": "GIF duration exact inspection hold deep",
+      "passed": true,
+      "detail": 130
+    },
+    {
+      "name": "GIF duration exact inspection hold deep",
+      "passed": true,
+      "detail": 130
+    },
+    {
+      "name": "GIF duration exact inspection hold deep",
+      "passed": true,
+      "detail": 130
+    },
+    {
+      "name": "GIF duration exact inspection hold deep",
+      "passed": true,
+      "detail": 130
+    },
+    {
+      "name": "GIF duration exact inspection hold deep",
+      "passed": true,
+      "detail": 130
+    },
+    {
+      "name": "GIF duration exact inspection hold deep",
+      "passed": true,
+      "detail": 130
+    },
+    {
+      "name": "GIF duration exact inspection hold deep",
+      "passed": true,
+      "detail": 130
+    },
+    {
+      "name": "GIF duration exact inspection hold deep",
+      "passed": true,
+      "detail": 130
+    },
+    {
+      "name": "GIF duration exact inspection hold deep",
+      "passed": true,
+      "detail": 130
+    },
+    {
+      "name": "GIF duration exact inspection hold deep",
+      "passed": true,
+      "detail": 130
+    },
+    {
+      "name": "GIF exact native sample RGB deep",
+      "passed": true,
+      "detail": {
+        "decoded": 21,
+        "samples": 21
+      }
+    },
+    {
+      "name": "native copied PNG deep/native-arrival.png",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "native copied PNG deep/native-HUD.png",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "native copied PNG deep/native-HUD-north.png",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "native copied PNG deep/native-HUD-west.png",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "native copied PNG deep/native-HUD-south.png",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "native copied PNG deep/camera-000-000.png",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "native copied PNG deep/camera-136-000.png",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "native copied PNG deep/camera-272-000.png",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "native copied PNG deep/camera-000-112.png",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "native copied PNG deep/camera-136-112.png",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "native copied PNG deep/camera-272-112.png",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "native copied PNG deep/camera-000-224.png",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "native copied PNG deep/camera-136-224.png",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "native copied PNG deep/camera-272-224.png",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "native copied PNG deep/full-room.png",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "native camera crop deep/camera-000-000.png",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "native camera crop deep/camera-136-000.png",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "native camera crop deep/camera-272-000.png",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "native camera crop deep/camera-000-112.png",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "native camera crop deep/camera-136-112.png",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "native camera crop deep/camera-272-112.png",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "native camera crop deep/camera-000-224.png",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "native camera crop deep/camera-136-224.png",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "native camera crop deep/camera-272-224.png",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "mosaic world covered exactly once deep",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "ROM equals frozen build",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "ROM published SHA",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "ZIP archive integrity",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "ZIP exact ROM",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "ZIP declared contents",
+      "passed": true,
+      "detail": [
+        "forest-trees-integrated-fd7465d.gba",
+        "README.txt",
+        "SHA256SUMS.txt"
+      ]
+    },
+    {
+      "name": "download checksum forest-trees-integrated-fd7465d.gba",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "download checksum README.txt",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "pinned timing report exact",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "source commit matches releasefolder",
+      "passed": true,
+      "detail": null
+    }
+  ],
+  "gallery_file_count": 77,
+  "download_file_count": 5,
+  "total_bytes": 5565941,
+  "rom_sha256": "977f38406e3f5cf12e7108e3840356d305d364bd665bc0d9ef578ec8f5937e78",
+  "zip_sha256": "f748fb0721a197f9d95c985a4ca85b31a4a8b5f9c1776bbae8e4ffc2322c40d7"
+}

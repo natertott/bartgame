@@ -20,3 +20,6 @@
 # Exact compact-tree review linker maps
 /art-review/forest-tree-study/validation/frozen/v29/bartgame.map -whitespace
 /art-review/forest-tree-study/validation/frozen/v30/bartgame.map -whitespace
+
+# Exact integrated-tree production linker map.
+/art-review/forest-trees-integrated/validation/frozen/v31/bartgame.map -whitespace

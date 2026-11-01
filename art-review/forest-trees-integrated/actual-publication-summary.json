@@ -1,0 +1,24 @@
+{
+  "source_commit": "fd7465d87f3dfcec33152254d49b3df629debf26",
+  "profile": 31,
+  "rom_sha256": "977f38406e3f5cf12e7108e3840356d305d364bd665bc0d9ef578ec8f5937e78",
+  "gallery_tool_sha256": "9d78d73dd785e9b648fdfa2850c0443a333498990c57af1f43fcc351c8a61f2d",
+  "capture_report_sha256": "ecdaace2ff4cdfd3af3001d58d263f8d35d7f5510b7bfdcef2b2f7734ccb891e",
+  "rooms": 3,
+  "native_camera_frames": 27,
+  "capture_checks_passed": 140,
+  "capture_checks_total": 140,
+  "copied_media_and_proof_files": 67,
+  "boards": 5,
+  "panels": 9,
+  "release": {
+    "folder": "forest-trees-integrated-fd7465d",
+    "rom": "forest-trees-integrated-fd7465d.gba",
+    "zip": "forest-trees-integrated-fd7465d.zip",
+    "rom_sha256": "977f38406e3f5cf12e7108e3840356d305d364bd665bc0d9ef578ec8f5937e78",
+    "zip_sha256": "f748fb0721a197f9d95c985a4ca85b31a4a8b5f9c1776bbae8e4ffc2322c40d7",
+    "rom_bytes": 639812,
+    "zip_bytes": 160627
+  },
+  "frozen": true
+}
