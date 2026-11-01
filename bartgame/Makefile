@@ -86,6 +86,11 @@ LDFLAGS := $(ARCH) -mthumb -nostdlib -Wl,-T,gba.ld -Wl,--gc-sections -Wl,-Map,$(
 LIBS    := -lgcc
 
 SRC_C     := $(filter-out %_iwram.c,$(wildcard src/*.c))
+# Even an empty extra object changes GNU ld's ARM/Thumb veneer ordering.
+# Historical profiles retain their exact original linker input list.
+ifneq ($(filter $(BART_FOREST),0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18),)
+SRC_C     := $(filter-out src/canopy_scene.c,$(SRC_C))
+endif
 SRC_IWRAM := $(wildcard src/*_iwram.c)
 SRC_S     := $(wildcard src/*.s)
 GEN_C     := $(GEN)/assets.c
