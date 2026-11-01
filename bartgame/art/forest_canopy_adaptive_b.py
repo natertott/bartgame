@@ -555,4 +555,3 @@ def paint(style, role, variation=0):
         w,h=SIZES[role];detail=2
         return {7:_lightning_tree,8:_birch_tree,9:_cedar_tree,10:_elm_tree}[style](w,h,detail,bool(variation&1))
     raise NotImplementedError((style,role))
-
