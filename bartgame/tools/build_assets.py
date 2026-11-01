@@ -281,7 +281,10 @@ for si, (sname, pred) in enumerate(SETS):
             if animation_key is not None:
                 animation_cache[animation_key] = base
     if FOREST_CONCEPTS.ADAPTIVE_ROUND and sname == 'forest':
-        import forest_canopy_adaptive as ACA
+        if FOREST_CONCEPTS.EMERALD_ROUND:
+            import forest_canopy_emerald as ACA
+        else:
+            import forest_canopy_adaptive as ACA
         adaptive_specs = ACA.prefab_specs(FOREST_CONCEPTS.LOCAL_VARIANT)
         assert len(adaptive_specs) == 9
         assert ACA.PALETTE_NAME in set_pals
@@ -347,6 +350,12 @@ for si, (sname, pred) in enumerate(SETS):
             'plan': 'Map first; fit unequal native compositions to connected available space.',
             'retired_canopy_pictures': 'Quiet backing only; no previous canopy image is used.',
         }
+        if FOREST_CONCEPTS.EMERALD_ROUND:
+            adaptive_atlas_metadata.update(
+                reference='User-supplied Pokemon Emerald tree crop; original native leaf-crown drawings.',
+                retired_canopy_pictures='Dense foliage joins and overlapping crowns replace skeletal trees and flat backing.',
+                substrate='Real local floor remains on BG2; transparent native BG1 entries clear prior infill.',
+            )
     c.append(c_array_u16('tileset_%s_tiles' % sname, bytes_to_u16(b''.join(ts.tiles))))
     c.append(c_array_u16('metatile_map_%s' % sname, entries, 8))
     c.append(c_array_u16('tileset_%s_pals' % sname, [rgb15(x) for n in set_pals for x in dict(palettes.BG_PALETTES)[n]]))
@@ -845,6 +854,8 @@ if FOREST_CONCEPTS.ADAPTIVE_ROUND:
     coverage['forest_concept']['adaptive_canopy'] = adaptive_atlas_metadata
     coverage['forest_concept']['canopy_round']['scope'] = 'Retired fixed-block canopy; replaced by room-shaped native compositions.'
     coverage['forest_concept']['canopy_round']['generator'] = 'Logical maze and feature locations unchanged; room-first visual placement fits native compositions to actual canopy geometry. Lantern-generation change remains pending.'
+    if FOREST_CONCEPTS.EMERALD_ROUND:
+        coverage['forest_concept']['canopy_round']['scope'] = 'Leaf-first crowns and original local ground contact informed by the supplied Emerald reference; no flat canopy substrate.'
 with open(os.path.join(OUT, 'art-reboot-coverage.json'), 'w') as report:
     json.dump(coverage, report, indent=2)
     report.write('\n')

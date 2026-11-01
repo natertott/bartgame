@@ -11,6 +11,9 @@
 #if BART_FOREST_VARIANT >= 19
 #include "canopy_scene.h"
 #endif
+#if BART_FOREST_VARIANT >= 29
+#include "util.h"
+#endif
 
 Room gRoom EWRAM_BSS;
 s16 gCamX, gCamY;
@@ -201,6 +204,26 @@ static u16 barrier_floor(int x,int y,u16 base) {
     return roomgen_blighted(gGame.cell) ? MT_BLIGHT_FLOOR : MT_PATH;
 }
 
+#if BART_FOREST_VARIANT >= 29
+static u16 canopy_floor(int x,int y,u16 base) {
+    static const s8 d[4][2]={{0,1},{0,-1},{1,0},{-1,0}};
+    int k;
+    if(base!=MT_NONE && metatile_type[base]==TT_FLOOR && !metatile_prop[base])
+        return base;
+    /* Continue an actual local lane or grass surface under the crown.
+       Forest interiors without one receive grass, never an invented path. */
+    for(k=0;k<4;k++) {
+        int nx=x+d[k][0],ny=y+d[k][1];
+        if(nx<0 || ny<0 || nx>=gRoom.w || ny>=gRoom.h)continue;
+        u16 mt=room_get(nx,ny);
+        if(mt!=MT_NONE && metatile_type[mt]==TT_FLOOR && !metatile_prop[mt])
+            return mt;
+    }
+    if(roomgen_blighted(gGame.cell))return MT_BLIGHT_FLOOR;
+    return MT_MOSS0+hash32(gWorld.seed,y*ROOM_MAX_W+x)%3;
+}
+#endif
+
 #if BART_FOREST_VARIANT >= 6
 static int forest_canopy_at(int x,int y) {
     if(x<0 || y<0 || x>=gRoom.w || y>=gRoom.h)return 1;
@@ -337,7 +360,11 @@ static void render_cell(int x, int y) {
        (overlay==MT_NONE || overlay==MT_SPARKLE || overlay==MT_SPARKLE_WHITE || overlay==MT_BLIGHT_MIST)) {
         /* Rounded foliage is a true foreground silhouette over local soil,
            not a green rectangle painted onto a dirt or water boundary. */
+#if BART_FOREST_VARIANT >= 29
+        map_write(SB_GROUND,x,y,canopy_floor(x,y,base));
+#else
         map_write(SB_GROUND,x,y,barrier_floor(x,y,base));
+#endif
         overlay=forest_picture(x,y,ground);
     } else if(interactive_landmark_tile(x,y)) {
         picture=barrier_floor(x,y,base);

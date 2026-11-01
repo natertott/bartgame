@@ -28,11 +28,19 @@ import probe as P
 import bloom_probe as BP
 import critical_path as C
 
-VALID={6,*range(19,29)}
+VALID={6,*range(19,30)}
 GROUPS={'geometry','motion','menu'}
 ROLES=('small','clump','tree','grove','hero','branch','roots','border','column')
 sha=F.sha
 component=V3.component
+
+
+def native_hash32(a,b):
+    """Independent unsigned32 reproduction of the unchanged native room hash."""
+    h=((a*0x9E3779B1)^((b+0x7F4A7C15)&0xffffffff))&0xffffffff
+    h^=h>>15;h=(h*0x85EBCA77)&0xffffffff
+    h^=h>>13;h=(h*0xC2B2AE3D)&0xffffffff
+    return (h^(h>>16))&0xffffffff
 
 
 def canopy_components(mask):
@@ -165,7 +173,10 @@ class Review(V3.Review):
                 for xx in range(pw*2):
                     expected=source[yy*pw*2+xx]
                     valid &= (expected&1023)<ts['tile_count'] and (expected>>12)<ts['palette_count']
-                    if not(expected&1023):continue
+                    # Emerald-style foliage needs real alpha gaps. A blank
+                    # authored subtile must clear the previous BG1 picture,
+                    # rather than silently retaining old canopy backing.
+                    if not(expected&1023) and self.variant<29:continue
                     subtiles+=1;actual=entry_at(ox*2+xx,oy*2+yy)
                     if actual!=expected:
                         matches=False
@@ -181,6 +192,57 @@ class Review(V3.Review):
                       adaptive_placed_map_matches_ROM=matches,
                       adaptive_map_mismatches=errors)
         result['native_room_mappings'] &= bool(valid and map_valid and matches)
+        if self.variant==29:
+            ground_ok=True;underlay_ok=True;material_ok=True;samples=[]
+            room=P.sym('gRoom');visual=P.sym('gRoomVisualGround')
+            world=P.sym('gWorld');cell=P.r8(c,P.sym('gGame')+2)
+            stage=P.r8(c,world+4+cell*13+7);archetype=P.r8(c,world+4+cell*13+8)
+            seed=P.r32(c,world)
+            def floor(mt):
+                return mt!=65535 and P.r8(c,P.sym('metatile_type')+mt)==0 and not P.r8(c,P.sym('metatile_prop')+mt)
+            for x,y in scene['solid_cells']:
+                at=y*32+x
+                ground=P.r16(c,visual+at*2)&65535
+                underlay=P.r16(c,room+8194+at*2)&65535
+                is_floor=ground!=65535 and P.r8(c,P.sym('metatile_type')+ground)==0 and not P.r8(c,P.sym('metatile_prop')+ground)
+                ground_ok &= bool(is_floor)
+                expected=struct.unpack_from('<4H',ts['map'],ground*8) if ground<self.defs['METATILE_COUNT'] else ()
+                actual=[]
+                for dx,dy in ((0,0),(1,0),(0,1),(1,1)):
+                    xx,yy=x*2+dx,y*2+dy;block=28+(yy>>5)*2+(xx>>5)
+                    actual.append(P.r16(c,0x06000000+block*2048+((yy&31)*32+(xx&31))*2)&65535)
+                ground_ok &= tuple(actual)==expected
+                stored_floor=underlay!=65535 and P.r8(c,P.sym('metatile_type')+underlay)==0 and not P.r8(c,P.sym('metatile_prop')+underlay)
+                if stored_floor:underlay_ok &= ground==underlay
+                neighbors=[]
+                for dx,dy in ((0,1),(0,-1),(1,0),(-1,0)):
+                    nx,ny=x+dx,y+dy
+                    neighbor=(P.r16(c,room+2+(ny*32+nx)*2)&65535) if 0<=nx<w and 0<=ny<h else 65535
+                    neighbors.append({'cell':[nx,ny],'ground_id':neighbor,
+                        'ground_name':self.names.get(neighbor,'none'),'is_floor_nonprop':bool(floor(neighbor))})
+                if stored_floor:expected_material=underlay;selection='stored floor'
+                else:
+                    candidate=next((n for n in neighbors if n['is_floor_nonprop']),None)
+                    if candidate:expected_material=candidate['ground_id'];selection='actual adjacent floor'
+                    elif stage>=3 or archetype==6:expected_material=self.defs['MT_BLIGHT_FLOOR'];selection='sick grass fallback'
+                    else:expected_material=self.defs['MT_MOSS0']+native_hash32(seed,y*32+x)%3;selection='green grass fallback'
+                material_ok &= ground==expected_material
+                samples.append({'cell':[x,y],'visual_ground':self.names.get(ground,'none'),
+                    'visual_ground_id':ground,'underlay_id':underlay,
+                    'underlay':self.names.get(underlay,'none'),'stored_floor':bool(stored_floor),
+                    'neighbor_ground_ids':neighbors,
+                    'material_selection':selection,'expected_material_id':expected_material,
+                    'expected_material':self.names.get(expected_material),'material_matches_expected':ground==expected_material,
+                    'ground_type_is_floor':bool(is_floor),'quarters_match_native_ROM':tuple(actual)==expected,
+                    'actual_BG2_quarters':actual,'expected_BG2_quarters':list(expected)})
+            self.emerald_ground_snapshot=samples
+            result['emerald_ground_substrate']={'all_solid_canopy_cells_use_native_floor':bool(ground_ok),
+                'stored_floor_is_preserved':bool(underlay_ok),'cell_count':len(samples),
+                'all_cells_choose_expected_local_material':bool(material_ok),
+                'native_floor_valid_count':sum(s['ground_type_is_floor'] and s['quarters_match_native_ROM'] for s in samples),
+                'full_cell_snapshot_sha256':F.jsonsha(samples),
+                'sample_cells':samples[::max(1,len(samples)//12)][:12],
+                'method':'Read BG2 hardware entries at every solid canopy cell and compare to its native visual-ground metatile. Preserve valid stored floor, otherwise first real floor neighbor S/N/E/W; only fallback uses sick grass for stage>=3 or arena, otherwise native moss0..2 selected by stateless hash. No invented dirt field or opaque canopy-wall panel beneath alpha gaps.'}
         return result
 
     def authored_palettes(self,area,ts):
@@ -354,19 +416,21 @@ class Review(V3.Review):
         _,px,py=max(candidates)
         return [px,py]
 
-    def background_layer(self):
-        """Decode the resident full-room BG2 plane as a labelled layer study.
+    def background_layer(self,layer=2):
+        """Decode a resident full-room plane as a labelled layer study.
 
         This is not an emulator framebuffer: no player, HUD or upper plane is
         composited into it. The real240x160 PNGs remain separate evidence.
         """
-        c=self.c;control=P.r16(c,0x0400000C)&65535
+        assert layer in (1,2)
+        c=self.c;control=P.r16(c,0x04000008+layer*2)&65535
         charbase=((control>>2)&3)*0x4000;screen=(control>>8)&31
         tiles=F.read(c,0x06000000+charbase,32768)
         colors=struct.unpack('<256H',F.read(c,0x05000000,512))
         rgb=[bytes((p<<3)|(p>>2) for p in (v&31,(v>>5)&31,(v>>10)&31)) for v in colors]
         w,h=P.r8(c,P.sym('gRoom'))*16,P.r8(c,P.sym('gRoom')+1)*16
-        data=bytearray(w*h*3)
+        stride=4 if layer==1 else 3
+        data=bytearray(w*h*stride)
         for ty in range(h//8):
             for tx in range(w//8):
                 block=screen+(ty>>5)*2+(tx>>5)
@@ -377,8 +441,9 @@ class Review(V3.Review):
                     for x in range(8):
                         xx=7-x if entry&0x400 else x
                         ink=(tiles[base+yy*4+xx//2]>>((xx&1)*4))&15
-                        at=((ty*8+y)*w+tx*8+x)*3;data[at:at+3]=rgb[pal+ink]
-        return Image.frombytes('RGB',(w,h),bytes(data))
+                        at=((ty*8+y)*w+tx*8+x)*stride;data[at:at+3]=rgb[pal+ink]
+                        if layer==1:data[at+3]=255 if ink else 0
+        return Image.frombytes('RGBA' if layer==1 else 'RGB',(w,h),bytes(data))
 
     def state(self,target=None):
         result=super().state(target)
@@ -468,6 +533,13 @@ class Review(V3.Review):
                 'kind':'resident-layer reconstruction; not a240x160 emulator framebuffer',
                 'dimensions':list(layer.size),
                 'note':'Read-only full-room BG2 map/VRAM/palette decode at capture end. No player,HUD or upper canopy plane is composited.'}
+            if self.variant==29:
+                path=row['name']+'/bg1-resident-layer.png'
+                layer=self.background_layer(1);layer.save(self.out/path)
+                row['resident_BG1_layer']={'path':path,'sha256':sha((self.out/path).read_bytes()),
+                    'kind':'resident foreground-layer reconstruction; not a240x160 emulator framebuffer',
+                    'dimensions':list(layer.size),
+                    'note':'Read-only BG1 map/VRAM/palette decode. Native ink0 is transparent; no ground/player/HUD is composited.'}
         if self.variant<19:return
         scene=row['adaptive_planner'];name=row['name'];stats=scene['stats']
         self.check(name+' planner ABI and bounded allocations are valid',
@@ -506,6 +578,20 @@ class Review(V3.Review):
         self.check(name+' resident BG1 entries are exact authored native prefab maps',
                    all(s['adaptive_native_map_valid'] and s['adaptive_placed_map_matches_ROM']
                        for s in row['hardware_samples']))
+        if self.variant==29:
+            snapshot=list(self.emerald_ground_snapshot)
+            row['emerald_ground_snapshot']={'cells':snapshot,'sha256':F.jsonsha(snapshot),
+                'method':'One complete native-floor cell snapshot per case. Every hardware sample separately checks every cell and records this canonical hash plus counts and twelve spatial samples.'}
+            self.check(name+' canopy alpha reveals actual native local floor on BG2',
+                       all(s.get('emerald_ground_substrate',{}).get('all_solid_canopy_cells_use_native_floor') and
+                           s['emerald_ground_substrate']['stored_floor_is_preserved']
+                           for s in row['hardware_samples']))
+            self.check(name+' local floor substrate remains stable throughout the recorded case',
+                       all(s['emerald_ground_substrate']['full_cell_snapshot_sha256']==row['emerald_ground_snapshot']['sha256']
+                           for s in row['hardware_samples']))
+            self.check(name+' forest-only fallback uses native grass material instead of invented path',
+                       all(s['emerald_ground_substrate']['all_cells_choose_expected_local_material']
+                           for s in row['hardware_samples']))
         row['selected_geometry_evidence']={'feature_bounds_pixels':row.get('feature_bounds_pixels'),
             'camera':row['initial']['camera'],'position':row['position'],
             'native_sizes_present':sorted({tuple(p['native_size_pixels']) for p in scene['placements']}),
@@ -519,8 +605,8 @@ class Review(V3.Review):
     def save(self):
         F.Review.save(self)
         path=self.out/'capture.json';value=json.loads(path.read_text())
-        value.update(schema=4,method=__doc__.strip(),canopy_focus='adaptive-room-first',
-                     display_variant=self.variant-18 if self.variant>=19 else 0,
+        value.update(schema=4,method=__doc__.strip(),canopy_focus='emerald-leaf-crowns' if self.variant==29 else 'adaptive-room-first',
+                     display_variant=1 if self.variant==29 else self.variant-18 if self.variant>=19 else 0,
                      recipe=self.freeze.get('label'),complete=self.finished,
                      unfrozen_pilot=bool(self.freeze.get('unfrozen_pilot',False)),
                      capture_tool_sha256=getattr(self,'adaptive_tool_hash',None),

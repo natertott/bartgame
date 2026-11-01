@@ -200,3 +200,17 @@ eight-way artwork as the working exploration. Its
 records remaining rectangular contacts, family resemblance and loading/menu
 latency. These are observations from the new work and the direct brief; no
 additional external reference is claimed.
+
+## Pokémon Emerald tree crop — 2026-11-01
+
+Direct reference: the user's inline image of overlapping green Emerald trees
+over grass. No workspace source filename or source-pixel hash is available.
+The image was inspected directly for foliage volume, small directional leaf
+clusters, hanging shadow planes, short trunks and continuous local grass in
+exterior gaps. The [reference analysis](references/EMERALD_CANOPY_REFERENCE.md)
+distinguishes those observations from our new native-GBA implementation.
+
+The prior ten adaptive studies are now rejected as the working canopy style.
+The new focused leaf-crown pass preserves map-first composition while replacing
+its skeletal anatomy and flat backing. Existing PDF guidance remains relevant;
+no new article or copied source sprite is claimed.

@@ -1154,3 +1154,55 @@ The [ten-direction source/actual review](../../../art-review/forest-canopy-adapt
 [explicit independent critique](../../../art-review/forest-canopy-adaptive/validation/INDEPENDENT_REVIEW.md)
 and [playable builds](../../../downloads/forest-canopy-adaptive-c6dc060/README.md)
 retain these caveats and exact source/build/file provenance.
+
+## Emerald reference and foliage-first correction — 2026-11-01
+
+**Direct feedback:** the ten adaptive trees still look bad and disconnected
+from the background, with a featureless purple-black field behind them. The
+user supplies an inline Pokémon Emerald tree crop as the new canopy reference.
+This rejects the sparse branch-and-panel construction as the working art;
+passing technical checks did not make that construction successful.
+
+**Adopted design correction:** dense rounded leaf volume carries the tree
+silhouette, supported by overlapping fan clusters, directional crown shading,
+a hanging underskirt, short trunk and local ground shadow. Deep infection
+changes material within that volume; surviving green and attached violet
+wounds remain. Actual local floor must show through exterior alpha.
+
+**Implementation in progress:** one focused original native study, profile
+29, uses `art/forest_canopy_emerald.py` and its terrain wrapper. It retains
+room-first fitting of differently sized art. Profile 29 clears transparent
+BG1 prefab entries and removes the forced interior `MT_BLIGHT_WALL` BG2 fill;
+unclaimed canopy cells receive dense leaf joins rather than a flat dark field.
+Previous profiles 0–28 remain historical controls. Bloom, accepted grey ground,
+non-canopy art, maze/collision/progression and glitter retain their contracts.
+
+**Reference interpretation:** the provided crop is the direct visual source.
+No additional website or inaccessible reference is claimed. This pass starts
+with one coherent set for healthy through deep conditions; it does not create
+ten more loosely related experiments before verifying the core tree read.
+The first source sketch had a regular six-cap layout and fish-scale leaf rows;
+source critique requires unequal overlapping crowns and quieter broken leaf
+planes. The actual-room gate must check dense foliage and real ground contact,
+not merely alpha coverage or source thumbnail attractiveness.
+
+**Representative actual-room gate completed:** profile 29 now shows dense
+rounded leaf crowns over real local grass and sick grass. The first real
+render still cropped broad crowns at their canvas bounds; complete unequal
+leaf skirts replace those rectangular cutoffs. A second engine correction
+removes the old no-underlay `MT_PATH` fallback beneath canopy: valid stored
+floor and real adjacent floor remain, otherwise stage-appropriate grass is
+chosen with a stateless hash. Physical floor/collision data are untouched.
+
+Five second-pass natural geometries pass 146 pilot checks; walking, rolling,
+recoil, cape and menu probes pass 107 more. Hardware inspection checks every
+prefab entry including transparent subtiles, and independently verifies every
+canopy cell's actual native BG2 floor and its stored/neighbor/fallback rule.
+Full floor evidence is retained once per case; repeated observations keep
+counts and hashes. These pilots guide the freeze and are not final provenance.
+
+The flat purple-black field and invented brown interior patches are removed.
+Some short bands/joins retain the grid, the healthy fan texture is busy, and
+the deepest gray/olive leaf masses can suggest mossy stone at a glance. The
+focused study is suitable for a final native/runtime review with those caveats;
+it is not a declaration that the user has selected the final game art.

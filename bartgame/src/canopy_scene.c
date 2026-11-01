@@ -149,10 +149,17 @@ static bool8 record_piece(int component,int role,int x,int y,int flags) {
         canopy_solid_branch:p->map;
     for(dy=0;dy<p->h*2;dy++)for(dx=0;dx<p->w*2;dx++) {
         u16 entry=picture[dy*p->w*2+dx];
+#if BART_FOREST_VARIANT >= 29
+        /* Leaf-crown art owns its complete native alpha silhouette. A blank
+           8px piece is a real gap to the local ground, not permission to
+           keep an opaque infill panel behind the authored crown. */
+        sPicture[(y*2+dy)*MAP_STRIDE+x*2+dx]=entry;
+#else
         /* A completely blank source subtile adds no rectangle over the
            quiet organic backing. Partial native alpha stays untouched. */
         if((entry&1023)!=0)
             sPicture[(y*2+dy)*MAP_STRIDE+x*2+dx]=entry;
+#endif
     }
     gAdaptiveCanopyStats[7]=MAX(gAdaptiveCanopyStats[7],p->w*16);
     gAdaptiveCanopyStats[8]=MAX(gAdaptiveCanopyStats[8],p->h*16);
@@ -301,6 +308,7 @@ void canopy_scene_apply_cell(int mx,int my) {
         gAdaptiveCanopyMask[at]=0;return;
     }
     gAdaptiveCanopyMask[at]=flag;
+#if BART_FOREST_VARIANT < 29
     /* Only deep interior cells receive an opaque underbrush ground plane.
        Boundary alpha still reveals the actual local soil, not a black box. */
     if((flag&CANOPY_SCENE_SOLID) && mx>0 && my>0 && mx+1<gRoom.w && my+1<gRoom.h &&
@@ -310,6 +318,10 @@ void canopy_scene_apply_cell(int mx,int my) {
         for(dy=0;dy<2;dy++)for(dx=0;dx<2;dx++)*map_at(SB_FLOOR,mx*2+dx,my*2+dy)=bg[dy*2+dx];
         gRoomVisualGround[at]=MT_BLIGHT_WALL;
     }
+#endif
+    /* Profile29 retains render_cell's actual stored/local grass or soil on
+       BG2. Dense leaves and their authored undersides define the canopy on
+       BG1; alpha is never backed by a forced purple-black ground plane. */
     for(dy=0;dy<2;dy++)for(dx=0;dx<2;dx++)
         *map_at(SB_CANOPY,mx*2+dx,my*2+dy)=sPicture[(my*2+dy)*MAP_STRIDE+mx*2+dx];
     /* Ownership marker only. Native scene pictures are the resident BG1

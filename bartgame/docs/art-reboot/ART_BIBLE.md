@@ -183,6 +183,18 @@ integrated into each structure. Large available regions warrant larger native
 drawings and finer branch/bark/leaf relationships; do not enlarge a small tile
 or merely recolor the same repeating design.
 
+The latest direct reference is the user's Pokémon Emerald tree crop. The
+ten exposed-branch studies are rejected as the working direction: their sparse
+foliage and flat purple-black backing fail the forest read. Build tree identity
+from dense, raised leaf crowns with overlapping directional clusters, a lit
+upper dome, a darker hanging skirt and a short supporting trunk. Dark pixels
+belong to leaf undersides, attached disease and local contact shadows. Crown
+notches and trunk gaps reveal the actual local grass/soil; a rectangular dark
+substrate is not a substitute for convincing forest density. Disease should
+remain inside recognizable leafy volume, with surviving green sprays and
+attached violet light. Native leaf motifs may repeat as material texture while
+larger compositions use unequal crowns suited to their generated space.
+
 Keep living green leaves visible at every depth. In the deep canopy, aim for
 roughly eighty percent disease and twenty percent surviving greenery across
 the mass; this is a composition guide, not a quota in every small tile. Broad
