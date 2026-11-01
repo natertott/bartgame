@@ -1283,3 +1283,29 @@ world atlas only during the explicit diagnostic scene. Normal forest/canopy
 art, existing tree colliders and procedural placement remain unchanged. Final
 review publication will provide the art pack and labelled grove captures; it
 will not imply that normal game boot automatically enters this test scene.
+
+**Final tree-only review:** source
+`c269b67b9f0652902a5295906f4d0c4d07e2710c` is frozen in profiles 0–30.
+Every historical 0–29 ROM compares byte-for-byte; normal forest/canopy, old
+tree colliders and procedural placement remain unchanged. The source catalog
+contains the twelve requested native state pieces, same-tree three-floor
+previews, silhouettes/grayscale and a shared-bank palette iteration.
+
+Fresh actual mGBA fixtures pass 104/104 capture checks across eight contexts
+and 352 scanout observations. Six native catalogs/repeated groves show grass,
+path and sick-ground contact; two ordinary walk-around clips test behind/front
+ordering and the shallow diagnostic root footprint. Minimum visible Bloom is
+43 exact colored pixels / 12 connected, with no missed ordinary update
+intervals. Independent verification passes 599/599 for packed/source art,
+normal-world protection, root/map/palette/body/guard proof and literal frames.
+These are finite diagnostic layouts, not natural procedural forest rooms.
+
+The [tree review](../../../art-review/forest-tree-study/README.md) and
+[art pack](../../../downloads/forest-trees-c269b67/README.md) provide the
+original 32×32/16×32 indexed PNGs, RGBA previews, raw 4bpp tiles, shared
+32-byte RGB555 palette and explicit import/anchor contract. This is not a
+player-ready ROM release; the retained test scene is opened by the developer
+harness. GIFs use fixed inspection holds, while MP4s preserve full-rate GBA
+playback. Dead narrow forms remain deliberately slender; dense future scene
+composition needs another review. No canopy redesign or production placement
+is adopted by this tree-only pass.

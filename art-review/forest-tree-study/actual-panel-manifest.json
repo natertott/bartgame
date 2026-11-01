@@ -1,0 +1,101 @@
+{
+  "boards": [
+    {
+      "path": "tree-groves-actual.png",
+      "sha256": "4e4de498208d9ddcc102f76e957cd32251b0b3b6f8109c2a6307013298b12690",
+      "panels": [
+        {
+          "profile": 30,
+          "case": "tree-catalog-grass",
+          "fixture": 0,
+          "source": "actual/tree-catalog-grass.png",
+          "source_sha256": "6386ce1df3348f08cf4e2329f12f4793b2abebc0184bc491f11fd4e88763f8fe",
+          "rect": [
+            0,
+            80,
+            240,
+            160
+          ],
+          "rgb_sha256": "4fe715badd6d1ee42d0a332f928b4ee73d846c1aad506ec7eafdb08c7a2a3311",
+          "kind": "actual mGBA framebuffer of deliberately planted diagnostic grove"
+        },
+        {
+          "profile": 30,
+          "case": "repeated-grove-grass",
+          "fixture": 3,
+          "source": "actual/repeated-grove-grass.png",
+          "source_sha256": "a99264b07f377f6b6803933c0dcd1dc85a3c6bbef17459a98d4ce77de3262b21",
+          "rect": [
+            240,
+            80,
+            240,
+            160
+          ],
+          "rgb_sha256": "fddfce704c6b4a0b8a120439cad11536c1389979db0a576ed42949b6a2a82eb2",
+          "kind": "actual mGBA framebuffer of deliberately planted diagnostic grove"
+        },
+        {
+          "profile": 30,
+          "case": "tree-catalog-path",
+          "fixture": 1,
+          "source": "actual/tree-catalog-path.png",
+          "source_sha256": "1d1e597cec12c71e1e818d7e4219a1e21a3bb0bb0f71d1859833929870e73c7a",
+          "rect": [
+            0,
+            264,
+            240,
+            160
+          ],
+          "rgb_sha256": "8a8c95f198f764c11d7a8ba446888b9eed7c611408c439265340698fceb54416",
+          "kind": "actual mGBA framebuffer of deliberately planted diagnostic grove"
+        },
+        {
+          "profile": 30,
+          "case": "repeated-grove-path",
+          "fixture": 4,
+          "source": "actual/repeated-grove-path.png",
+          "source_sha256": "3e3f28be4319bc841086502a7692f82389b0bd0885a830db522253330f0c2749",
+          "rect": [
+            240,
+            264,
+            240,
+            160
+          ],
+          "rgb_sha256": "535f519104d93aaad226d30a15e754e2bbe26f2842e29381a0aef103c4400470",
+          "kind": "actual mGBA framebuffer of deliberately planted diagnostic grove"
+        },
+        {
+          "profile": 30,
+          "case": "tree-catalog-sick-grass",
+          "fixture": 2,
+          "source": "actual/tree-catalog-sick-grass.png",
+          "source_sha256": "583bdb0407d925ed14b3553a6a616564ce4dc487930cf3991a6e147a556cd5c5",
+          "rect": [
+            0,
+            448,
+            240,
+            160
+          ],
+          "rgb_sha256": "e993d06e09f329064ce165d9c4216ec5c4873fd8ea86600014c08f84446e373c",
+          "kind": "actual mGBA framebuffer of deliberately planted diagnostic grove"
+        },
+        {
+          "profile": 30,
+          "case": "repeated-grove-sick-grass",
+          "fixture": 5,
+          "source": "actual/repeated-grove-sick-grass.png",
+          "source_sha256": "342d2ef449d3f21b6b01a24c6be1044c409a3bf367783a18dcdd2f82f0b99391",
+          "rect": [
+            240,
+            448,
+            240,
+            160
+          ],
+          "rgb_sha256": "7a0cfe258979f96d361943b6d2003eb9d7954e6a828b5752d934e8806371df82",
+          "kind": "actual mGBA framebuffer of deliberately planted diagnostic grove"
+        }
+      ]
+    }
+  ],
+  "method": "Literal native 240x160 framebuffer crops, byte-checked against copied PNGs. Captions are outside game pixels."
+}

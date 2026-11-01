@@ -238,3 +238,11 @@ in the PDF were not independently read as part of this pass.
 The user sets canopy work aside and requests a repeated 32×32/16×32 tree kit
 with healthy/sick/dead structure and palette refinement. Source figures,
 deliberately planted mGBA groves and natural procedural rooms remain distinct.
+
+The [tree-only source/actual review](../../../art-review/forest-tree-study/README.md)
+now binds source `c269b67` to twelve native assets and deliberately repeated
+actual mGBA layouts on three floors. The
+[independent qualification](../../../art-review/forest-tree-study/validation/INDEPENDENT_REVIEW.md)
+records the structural state changes, clean contacts, tested overlap and
+remaining small/dead-form composition limits. Uploaded-guide recommendations
+are applied to this local tree kit; no newly read external source is implied.

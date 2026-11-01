@@ -1,0 +1,810 @@
+{
+  "source_commit": "c269b67b9f0652902a5295906f4d0c4d07e2710c",
+  "publication_branch": "forest-tree-study",
+  "profile": 30,
+  "normal_forest_baseline": 29,
+  "scope": "12-piece native tree-only art kit and deliberately planted in-ROM review scenes; normal canopy/forest/generation unchanged. Art ZIP, not player-ready ROM.",
+  "source_input_sha256": {
+    "art/blight_reference.py": "199c13c278c086d693042388e941e27c810e2b09442f6d25cb0682b0bcb6b431",
+    "art/blight_reference_source.py": "50261560155aecf45a16c16e9f4e1746016806a2be02d27a50e77433b673ba1d",
+    "art/bloom_animations.py": "f16b690fe853944a1bd87b5d9eca538239f7a6950a8acb9378272f8812f233c2",
+    "art/bloom_fx.py": "78da0962204d4cf23a5d622137f6171f636d6d2a2a40eef539c9f7232771707c",
+    "art/bloom_loads.py": "d2331f07e6a896244ab3b9afa4ff958d8875d5189ea8c6b2ec9ab544da65c4c4",
+    "art/clean_items.py": "adb7d042d823009988e8f3e3de3ffc52fc0d09e8dd9999db548f5189de31fa68",
+    "art/enemy_heart.py": "a52ae7779f314f006f3a0e861c3a3f75cfadbb2be5294873c5d2c6e2ace6e917",
+    "art/enemy_studies.py": "cd82b9babef1fbb61cbf99e6f89f44a5159e8bbb09a90bb00492151af045ad39",
+    "art/enemy_studies_heavy.py": "460c3a66a96eece44e90f943ca2f121ec345813cf279a0104b28e72a1eac1304",
+    "art/enemy_studies_palette.py": "aa35bba202cb9d7cc705146312104c211584b168bf0b01547ffdf96d4bff322b",
+    "art/enemy_studies_small.py": "51170452427ae507c66b851b38b16330167684a84be29172a14b442da0df411d",
+    "art/enemy_studies_soft.py": "cd1e1f2d01f25153c497b3474001bcd75a2dfeb08219b01c6354e855be15ce38",
+    "art/env_pack.py": "e266c715c90c4bf2c4ba8d840d5d6146e4f8bd68e614a53a0aece67a2051e12e",
+    "art/faces.py": "602bbc4a4d32a37f9100e8c78f29417604e2277ab0afcc67631953ea4e8a435a",
+    "art/folk.py": "174fa5044812caefc70a7bdebb33f54a869854c3d4ff58560815126881e6099b",
+    "art/forest_art.py": "f468279e191c3727203c981eadf17442af38dc5ed59493cd1447e9fe21f02842",
+    "art/forest_canopy_adaptive.py": "5e53305c58950b944cc2b0b89b99abdd137da0362b01066395c6f77ce79e44b3",
+    "art/forest_canopy_adaptive_b.py": "7809408ba52d7ce2dce04cb4a7ee1ace649823267a2f24f716ab7c6011656187",
+    "art/forest_canopy_adaptive_terrain.py": "abf93147275d25cba81f9b12a350ccb499f38e03bf74fe777aaf995117b510c6",
+    "art/forest_canopy_emerald.py": "dbd8a0159c4def121f85ccf3ea48a6ce6faf3f462d6bffe2c15f2852b6107d24",
+    "art/forest_canopy_emerald_terrain.py": "2117fec2437250833abd43ada7ae9d4fbedca9dfe77cf288672f7b0750f38c69",
+    "art/forest_concepts.py": "a92703437870ba4348618e6b6e665389b1e8385a35bdb07d2bc99ec531844e53",
+    "art/forest_concepts_folk.py": "fd39704a0634b15bf2330b3dda2368a8ea8a136caa03b08a033bfbbf058a8aae",
+    "art/forest_concepts_props.py": "331f58e184620f14bb9f2d7f1f6a471d0ee3cbe179122e997969108756627e9e",
+    "art/forest_concepts_terrain.py": "dfc9f30160f7c7eb46fe265016583cf7c44147f2e840aedc8f31a1c19ebc3c6f",
+    "art/forest_concepts_v2_folk.py": "f90c9b814cc992d865306d3b75e6458fe7226fe920e5c5add2f3ffa42e2e18ee",
+    "art/forest_concepts_v2_props.py": "0f89761f86cc079494334c7b7f660ac3d8f23500daf6e1548dfcccd0e609d354",
+    "art/forest_concepts_v2_terrain.py": "d7d1215c447294a169d672ae36ccc6b61eab5fcc139ebed12ad4c1f7c0d4e52a",
+    "art/forest_concepts_v2_topology.py": "755c6c61ac5e2154db782583bdd7d65068abeba6043a613e7d9b60e922ff52fa",
+    "art/forest_concepts_v3_terrain.py": "e905aac03c5b46b2388b7e3f83c8e9763eef6e579cd6ee75b2786e9f3639e92e",
+    "art/forest_sprites.py": "b376dd3f6cd16f46ecba74610d3f2265e5c9bfee2929b4449dcf28d56e0d86cf",
+    "art/forest_tree_study.py": "a8750327e4d015a31656ede2adbc21be6e8512eadca09c5aa8636c1599b3b54f",
+    "art/healthy_reference.py": "32e0254b979378fc78fa970b51ebd0f5ed7479bfaa3adb5cd8c6121fcc5319d4",
+    "art/hero.py": "1313133514f169593e8be950355f213790ff8c4e5d6f051a16eee9c8ad4a6c48",
+    "art/interactive_props.py": "93e2eb136f71cad7dd66b59b17c1eabbc527d17ab4e84a1e65ecafa3d24133f7",
+    "art/interactive_tiles.py": "d252a44cd066de59f309aa890d2b424a5245e7ec0527b43595ea495b98f3cb84",
+    "art/items.py": "6865e732874429fd35732962b2f9df646ac642b3795f3eab418879cf28c08968",
+    "art/items32.py": "e4ff935e10b54f540830917cfd9233b0a6a086feb30bfd2a874cd7b3d7b5fbbf",
+    "art/marks.py": "8bbd676f70643403ea06105ad0468417ba2171433ca422438322534c6f4eb23d",
+    "art/monsters.py": "8dd8272f147ddc89336c69bb274c96578c445a4944a0b0e1113227639ab2b13c",
+    "art/pack.py": "6ed118c306471ea0bb4eebeedd3444badf724359bed77766e48134f9cc77c1fb",
+    "art/pack_tiles.py": "b99341a12dcd457f3e1dc2527da20f31d1dfe24f8e3fecd48cded0041b3e764d",
+    "art/paint.py": "e03b63767cdc885179ab902ccafe119cc5426228b322ad1162338880d2067fd9",
+    "art/palettes.py": "f715f6207034f404721d5a22f140acbd540793032540177d93102c3818275a6d",
+    "art/portraits.py": "2dc833b09d884f7b9020000de5970615e06dceb61a7b9f901e9647c2659613f9",
+    "art/px.py": "2c0058322702da467efc85ab0cd9eb367d07db8b18f5f0bcf2f0b06b640d5188",
+    "art/reboot_actors.py": "08cf30f2219bb0b1f4b55724a9d55c6c755db897b768c35685f6523f1828823e",
+    "art/reboot_core.py": "71021a7b1717f8dd7edd58d0ad0a4dda448def45533c42855f6d76a4bcc82ea4",
+    "art/reboot_items.py": "589c6e250bce05a44fd192c6a7ad7a19025214efe74c98f91e35affc38cc0891",
+    "art/reboot_terrain.py": "57ef3230a9d89b16e2cecb5984d3397ee3b19fb5d15d59af1c6ed9c9d460caec",
+    "art/reboot_ui.py": "6963ac2536f37580c1e398228b22359ea03c39460b9814fb751d4de82c98dfc7",
+    "art/reference_assets.py": "3374d7c6e3ce26e7fb2fa4977410ec75fcf37f98eed29610a4b8301bfae41f52",
+    "art/reference_items.py": "2367b5329b98fa2ba5ba9d067909ca4104cdf67e27db496a0929660c2908c36a",
+    "art/rooms.py": "c9f69874d628e8ef85e2dbf75511a27927147a1bd3d44fff508a9812ce659363",
+    "art/sample.py": "9018410070844f4a69e3bc9458394c8291de99ad548aa8b29d07d0b7d771d454",
+    "art/sewer_concepts.py": "6638656152cdfe5d424f94de8eb7f1c9ecc359293247670c62692d2ea2dd2606",
+    "art/sewer_concepts_npcs.py": "3ac84ca8f1024bfbbbb391f3c817d06d73609e82d17239aa05981e0633b130bb",
+    "art/sewer_concepts_terrain.py": "913e22af37f33949d248675b8f3987daf17d989e0c7c8c04e32c76845ae8f561",
+    "art/sewer_final.py": "f6229d2aa7e0207b01b6c35be75884cbcdd6b7847ceedc945388b760360baf83",
+    "art/sewer_final_contracts.py": "4afb10e4fe316d549046bacbeec4358747939d98f29ca2c2f633c24da4cf553c",
+    "art/sewer_v3_fixtures.py": "1f7d4289575f8a4a933ac6fef1b37a5510308a1ed31c4815629cd9a0c5d8ea12",
+    "art/sprites.py": "c5de3ca406f851997b5d29ad1ea07a3a6182fa1851ead4183f295c488198602d",
+    "art/style.py": "693a64a9136bba50f3489b08b806aaf6d20258f570009bac9e22a6b010c42cb3",
+    "art/sw_cut.py": "27f064e14cb1e392e16ed72102093e17310080f228f9d3d58da8285f7de8dd1b",
+    "art/sw_drain.py": "b546771bef482a455a24a125c11ef50824078e6b47ed100044f0b9cb65560b33",
+    "art/sw_folk.py": "7ed9e18713edce423e8a90947328d537097ee04a4e5a828c36539cbdf8521ac2",
+    "art/sw_hall.py": "a400723c297bb49eb4ef80ec69a3f92a6efde08f588fee20543de65798ee11cd",
+    "art/sw_paint.py": "8f7fce4a2871092631631be9ca8e5bfd4f35f68f039c412c0e5cfb25cf04c139",
+    "art/sw_props.py": "04a8bdc2d8661e21f22f73eea86169aaa647a5161e43d45cfd94a19eae051a6d",
+    "art/sword_studies.py": "5cf29b6116a417ed229d322eadaf9ae7a345a52dcd970dae2ff8f1bb8f0d01c4",
+    "art/tile_art.py": "24d090933cc0cccf70e827aac5fbf2a1a09fd20336b5ab303d04c636cdcc4217",
+    "art/tiles.py": "a83df9818f93c8724b403e919fd304349640970c6f33db60f8dba484cc672273",
+    "art/tiles_style.py": "eb9caf764e56a672227d48fd024df3119856e7b84e58bce11a2acd938b3c2890",
+    "art/title.py": "03b984ca0f7e81afbb064f7e5aadf45530c51f34b53fbb3998aead7a0ceb9715",
+    "art/ui_font.py": "48ae0da7d1daa4f01c144a856d18694c5be06674288029e62913a513bcb8388e",
+    "art/ui_kit.py": "49b31f6b0955436eb9c88bf019208ef6cc7bb573f9add58a3c85e8acea70e6ca",
+    "art/ui_studies.py": "b2a9bbddc134a36c82f87b990a8e5f1f93e15cf2b4cd165391f673b2fe03a3c3",
+    "art/wood_art.py": "4778b2a8cfca7fb647193abc53c9e63bc07998d2eb2177cc4930543de2c5251c",
+    "art/reboot_contracts.json": "3f3c22aeb93f63308ddc42f79e849145c5e8c12950e37ba14ded67773b44d0d8"
+  },
+  "code_input_sha256": {
+    "Makefile": "ab49e5103bb46a7324dd504d1de48ef8722104513b47996219a6667d2077ffa5",
+    "gba.ld": "f4febd8e06da89b5f08be8c9d88b8a6e9ec3fac8c2760f2b0fb75ca66b7d559c",
+    "tools/build_assets.py": "89145595d30af00f138815678fd19454baf3c4c47478e0ab0c3ba2f191913829",
+    "src/actor.c": "da9600bb4ec3d564ea6fd495591610c9cd4d6317f2c2bcb9c4eca355621f6b4f",
+    "src/actor.h": "3fa744b5a0d5eab5058c3bceeb29add34651c0f6031d2e5b822bdeff72a39759",
+    "src/ambient.c": "3b53f1202201322acd952ce9b72d71613468327bfa735f11ae4b40feaa5294fd",
+    "src/ambient.h": "51b942296b5535020118ef4cf87e25e98d51d868cf03b847c71da57e05ce3de1",
+    "src/appearance.c": "5030fc06a57add5b172dbe024679ef7971724071ba989998edb4be6cdf304a58",
+    "src/appearance.h": "b432cbe720f1d4471f7f65694e37081b4f9b42a71449fc2d4034754712304f3f",
+    "src/boss.c": "7bd72986c287e70af11c6ca6a98857fd5500d442d83d99ea654c6e99d8c3d5ff",
+    "src/boss.h": "78d51f91b879422d1cf6ab71bd103d498e94570402f55137a78b99c24500912b",
+    "src/canopy_scene.c": "1995868b561c353bed467514e1fae922a96dc2194e5b30be42490729d15eef52",
+    "src/canopy_scene.h": "c048c45948b4ca9869b09c07e92e91c43b4bd1b7dc2577fdd03a9ad1c213c182",
+    "src/crt0.s": "9561f54979715196cf69acdb00023e24fa1e7e5c9ab5c3ae02ca6241ac8d5ccf",
+    "src/enemy.c": "30360d13631456f8f6ea0dc8e5f97841b40d6ef9327092e9e3db585048d90f2d",
+    "src/enemy.h": "119915374666cbb0cc997bf553bc4ae855e3fa911fa8a2951277a03944f5dca6",
+    "src/game.c": "198c11e99d8cc3be361aad551eaf24bbec032aa46aeaed1fd47793a42d405877",
+    "src/game.h": "86d7cf9fa9732a3be092cc629f29b763d79108f5e2622647d706af1876812f8b",
+    "src/gba.h": "dbea259d073cc29e6058fcdddfb06d273a3d9b18da1c39053e8732d0a96b60f1",
+    "src/interactive.c": "470d3f7dff6a7c3762cdf47ce0ccad15849e51208663249c0967ab5ec3f4fb4b",
+    "src/interactive.h": "886f62f9eaa547f24638015ba90cf9ca2ea440257b3ade2109693d1ec63c6a66",
+    "src/items.c": "6d0e2fc3def2fbb1024e54ca2673bc7abf3cd6841a49d03734d201ffa854a37f",
+    "src/items.h": "35d78692cfa5ccf7d39e7ab8f1ed0bea1bd2e24acea41c952f5b2b8ffd2e1dca",
+    "src/main.c": "25eb7ee54a86b7aeb0b86a9580b4a8d96c35271b558d563c51d52903836005ff",
+    "src/menu.c": "8994db593fd477cd9601e1c035522a72bb4725cba0897adf1fa9b3b4ddd782c2",
+    "src/menu.h": "1e85e5dbef95da05637330cce98216299e765e31b4cc24ae39f66fe9203226ef",
+    "src/menu_layouts_a.c": "f786b8af57520e3c8c5bc50d03651d8282c207617f25f98b989a91a3248b6130",
+    "src/menu_layouts_b.c": "f575ca99eecc7880a5ffb1547c1a45903e1cac02463b2a6221680b983a8bc199",
+    "src/menu_studies.c": "3d8b608ab242e24496f6034bf45cb22b32a945d65ea7141916c6f11fc875038a",
+    "src/menu_studies.h": "26d48dbedbb63dd4bdf380deec661490ae96c7816e95406c2178598592e7ce8a",
+    "src/myst.c": "2cfd56bc44be8affbdf625a68b26e0ea42f343d8b441d4f155bee6a9de92825c",
+    "src/myst.h": "c33816c1d410d60f44611be2e6f057e14582ccd1c8afd3e143c4a74b8be17928",
+    "src/npc.c": "28decd80cb2340472a8d426a5db215235615722bafe446d3b9a6878c01795069",
+    "src/npc.h": "4b2b226a745441db020e6699298f0e6f2496d45779d707de014614055b9388b4",
+    "src/objects.c": "8c0e807163ba1258aafc0521dbcf61437f35f2f8e545368ba35d24017d542f76",
+    "src/objects.h": "390a370b4335575c0c6fca8f92beec74db77ab2bc79206ca70f9975769fc585f",
+    "src/player.c": "8a93e64f439bf5fa61be50c65c0f036c3784a15afaa94cf378d31f3ee677b158",
+    "src/player.h": "0f64172f389f311dbee797eaf0905b4032bb9cbad120181977578608e5e5e204",
+    "src/react.c": "5eeb327cfea6670cd1adb04ccac094247da1335bd83e81f8595da1e4a031855b",
+    "src/react.h": "d917db875e45e806cb6c3f2c4f38b33b56f65f29ac8e0ef320fa32554a6ecbfd",
+    "src/room.c": "a3f12ab861308f76ba8b10cade5e25d5359b01fb20f83b14550faddef593d9b0",
+    "src/room.h": "7e893257e1e220d670059f22599a4dc1e8ddb3199ab9f87ad963a36fd44bfa29",
+    "src/roomgen.c": "4e47daa50032c1c33c952560bf3dcaf26b1aad9687146ed2be2929805c44f07e",
+    "src/roomgen.h": "bb3ff63bc887097800c9bd00260312f108dae748ff28bffc07f5140fcdec0694",
+    "src/save.c": "6b0a6d164ad8a72fe9266aa7db4c97f935796ada77b09530526ab6151700db39",
+    "src/save.h": "e28723ca0b20c141ac8af2d7984b68cf7b8bcf38d8fe85e7381c6721d14e2f64",
+    "src/sound.c": "646acfaee313508ed39b4aeb845c834c1ed32a727648ae36d506e5c4e4daf20b",
+    "src/sound.h": "8f14cf11e2a9f5fad811bff4dbd314d37f820d97733a1c5afcc4837973fce5f3",
+    "src/text.c": "ddadb0ca78b0bdbfab815c3fb703bf235ada3b4e1a40a88bf5b4f1d532796108",
+    "src/text.h": "4d27fc5c4b8c72ce8dad63824fdd9dfa0b35a783890da1225605ed6acc243479",
+    "src/tree_study.c": "3bbb665c90cc7c4204a92e6ca8035d5b0540e2ba9d1c21cc515b723cd1217112",
+    "src/tree_study.h": "2d2323d2ac7aae29bc637020c5f8a95789e3d8992718815aad8006ef8adbfd74",
+    "src/ui.c": "2c80b424b8ad07d095eb82ab31d1806191b221f6d87f7f89a9b9d0fe146d9394",
+    "src/ui.h": "953789528da3255c35ddf12f281d52302e894d14058d1fd84f5c6449a8d2e9ed",
+    "src/util.c": "e8df1ff26b31194d375b0be31364bacd3fd95fb90d983e7dc17ff984e0a05698",
+    "src/util.h": "8a0da64b5887aa2a18878aca2745796687e12b20d3359d27827e0006980819ab",
+    "src/video.c": "d1ada2e347bd11bc326c9ebe053873d044d831d23fb41b8441e21e8ef2dffa9b",
+    "src/video.h": "7b40ed9ae2ad85b091bccd7aa54a04b35e97a053941c8ea1b01fb36739deb51d",
+    "src/vwf.c": "b63c129e9d4a601e1b0b3139528621b11b67964afaa200ba10883d10adc83c09",
+    "src/vwf.h": "be305bdebbb78027a9063d37133720c795abb3b8e52995f16bfc8149566066ee",
+    "src/world.c": "203716ae6d4044cc1be92fb9c150ba958fe05a01dafa2ddbf3553e24d30b7f4c",
+    "src/world.h": "76397dedc1bf5cfca8870f87b4bff14cd35102fae01ae48ff4fbdc6772bf9a1b"
+  },
+  "review_tool_sha256": {
+    "bartgame/tools/forest_tree_review.py": "3f97f557adcbbf2e8d588dac247975bfaeb7d473ae9bf752ad44ae530ab81f2c",
+    "bartgame/tools/forest_tree_gallery.py": "64bef622d3a743bbf81bcb4fb362f0ff25c0197ccf9707d5a1aac4ac59bf336d",
+    "bartgame/tools/forest_tree_study_audit.py": "6d2a10a23f93dcc4e510b2811f228b2d66e3087d57460b4277cb67f5f1ca2323"
+  },
+  "source_documents": {
+    "bartgame/docs/art-reboot/ART_BIBLE.md": "70d3a4bbe1a6259192791c3e13a3706329b4ecea234eae1b5ae0dd03e4385a21",
+    "bartgame/docs/art-reboot/ART_DIRECTION_LOG.md": "e723a379ccf96a5f322c55dbadbd0dad4dbb4a43b0b8f73e0d528b3e6821e52e",
+    "bartgame/docs/art-reboot/REFERENCE_REGISTER.md": "6bbd37e8ce523054024e8dbbc7fb2483d8ae602e945a4833d36958a61f80097f",
+    "bartgame/docs/art-reboot/references/TREE_GUIDE_APPLICATION.md": "2eca47f0edecb6e76d9a3033c5aa716e91bb512896331eb5f6240e4736b4b6ab",
+    "bartgame/docs/art-reboot/references/TREE_STUDY_AUTHORING.md": "b05199cda5c2e78a1dd0f03bf833facf8ca5dadd9a30aabaa9ada2cf5b552a5e",
+    "bartgame/docs/art-reboot/references/TREE_STUDY_ENGINE.md": "101e974f194c2c563c5cbbfd181176cd3da910ec909aa9eed7c7009f3d96363a"
+  },
+  "release": {
+    "source_commit": "c269b67b9f0652902a5295906f4d0c4d07e2710c",
+    "zip": "forest-trees-c269b67.zip",
+    "zip_sha256": "4e708ed7a1ee776580fb0f7361a576a0a53a4abddf6bbb7cd4a61efd38470599",
+    "frame_count": 12,
+    "kind": "art-pack"
+  },
+  "runtime": {
+    "source_commit": "c269b67b9f0652902a5295906f4d0c4d07e2710c",
+    "passed": 104,
+    "total": 104,
+    "contexts": 8,
+    "frame_observations": 352,
+    "minimum_visible_pixels": 43,
+    "minimum_connected_pixels": 12
+  },
+  "independent_audit": {
+    "passed": 599,
+    "total": 599,
+    "failures": [],
+    "sha256": "75b275b41fd79d2a42ce499b1ece5b0b2704aec19181d0fde3fd07d5f9b948ec"
+  },
+  "files": {
+    "art-review/forest-tree-study/README.md": {
+      "bytes": 4218,
+      "sha256": "45ab881c8bba2d82d370f45a55bd9293c6b29371901947e8d21310cb64afb964"
+    },
+    "art-review/forest-tree-study/actual/README.md": {
+      "bytes": 2120,
+      "sha256": "6f99f8562b762a5d9c7c7878f8df91fad22c0359cc5675e90635687dbf3a23f6"
+    },
+    "art-review/forest-tree-study/actual/broad-tree-walk-around/frame-000.png": {
+      "bytes": 5291,
+      "sha256": "46459d4c54be14a943de2e406f0ad2181a29be00052821a78dc907920e6cf9c9"
+    },
+    "art-review/forest-tree-study/actual/broad-tree-walk-around/frame-032.png": {
+      "bytes": 5359,
+      "sha256": "fb0ce55d8bf8e659f28ea7bee8b3aa5c561e4dec5ba8460a39da46b3416449d6"
+    },
+    "art-review/forest-tree-study/actual/broad-tree-walk-around/frame-064.png": {
+      "bytes": 5327,
+      "sha256": "5d479932c6d17a92790ebc909f638bcd802a89a226fc7fb41bd0ab1228cecbd5"
+    },
+    "art-review/forest-tree-study/actual/broad-tree-walk-around/frame-096.png": {
+      "bytes": 5339,
+      "sha256": "18fb1f867990dffc02f2c2939ccc7ca70d57cb8fe897206a32ef5765ec24e485"
+    },
+    "art-review/forest-tree-study/actual/broad-tree-walk-around/frame-127.png": {
+      "bytes": 5339,
+      "sha256": "18fb1f867990dffc02f2c2939ccc7ca70d57cb8fe897206a32ef5765ec24e485"
+    },
+    "art-review/forest-tree-study/actual/broad-tree-walk-around-filmstrip.png": {
+      "bytes": 12459,
+      "sha256": "53773633373cfbc3b0f2e79b9394ab42c7b75bd7bf1b0458fc9b9e46fc9cba46"
+    },
+    "art-review/forest-tree-study/actual/broad-tree-walk-around.gif": {
+      "bytes": 34106,
+      "sha256": "7fe091ffe61fbc1e565e8b1a72450ab37d20ff6cc49c4dcdcf40a016d5b60a4e"
+    },
+    "art-review/forest-tree-study/actual/broad-tree-walk-around.mp4": {
+      "bytes": 12671,
+      "sha256": "acb5b2111dfbb6ab5723d4a4db27020666d919fc235ba0cc07ab7886c220a17b"
+    },
+    "art-review/forest-tree-study/actual/broad-tree-walk-around.png": {
+      "bytes": 5291,
+      "sha256": "46459d4c54be14a943de2e406f0ad2181a29be00052821a78dc907920e6cf9c9"
+    },
+    "art-review/forest-tree-study/actual/capture.json": {
+      "bytes": 1279037,
+      "sha256": "16ed593456982cb40104c1260af6c77b19707181541f8bfa40ed495fd34e1540"
+    },
+    "art-review/forest-tree-study/actual/narrow-tree-walk-around/frame-000.png": {
+      "bytes": 5275,
+      "sha256": "fcb83f1542198bbf9531dffdee6161a998561e1c112fa3da3a7d6cfb70bea128"
+    },
+    "art-review/forest-tree-study/actual/narrow-tree-walk-around/frame-032.png": {
+      "bytes": 5377,
+      "sha256": "e55e99dfb9aec9cf4fee342afacc6a2e0ed3507ab4f92d7a1f16d837ccbd1fde"
+    },
+    "art-review/forest-tree-study/actual/narrow-tree-walk-around/frame-064.png": {
+      "bytes": 5342,
+      "sha256": "5edf204c58f603d38243052739a44f862bea6eb14ceba566a215a0bfa534a353"
+    },
+    "art-review/forest-tree-study/actual/narrow-tree-walk-around/frame-096.png": {
+      "bytes": 5332,
+      "sha256": "e6d140311608c321fb9427643062a5317e431fb69d229518ece6f26b05fe3824"
+    },
+    "art-review/forest-tree-study/actual/narrow-tree-walk-around/frame-127.png": {
+      "bytes": 5332,
+      "sha256": "e6d140311608c321fb9427643062a5317e431fb69d229518ece6f26b05fe3824"
+    },
+    "art-review/forest-tree-study/actual/narrow-tree-walk-around-filmstrip.png": {
+      "bytes": 12367,
+      "sha256": "95351c9c2946c737340af7dbdedb2cc05c2221058c1c49e31f9c3f6f5603da7c"
+    },
+    "art-review/forest-tree-study/actual/narrow-tree-walk-around.gif": {
+      "bytes": 34178,
+      "sha256": "aa34573a4bfbbcb43aebfade9dec74ebe405247f1b31689f868f2cea560617d0"
+    },
+    "art-review/forest-tree-study/actual/narrow-tree-walk-around.mp4": {
+      "bytes": 11822,
+      "sha256": "d3432f6260a1a7d8ac3eb9d39a821741a27dc2c66b853db7bb0d0dfd391d404a"
+    },
+    "art-review/forest-tree-study/actual/narrow-tree-walk-around.png": {
+      "bytes": 5275,
+      "sha256": "fcb83f1542198bbf9531dffdee6161a998561e1c112fa3da3a7d6cfb70bea128"
+    },
+    "art-review/forest-tree-study/actual/repeated-grove-grass/frame-000.png": {
+      "bytes": 5679,
+      "sha256": "a99264b07f377f6b6803933c0dcd1dc85a3c6bbef17459a98d4ce77de3262b21"
+    },
+    "art-review/forest-tree-study/actual/repeated-grove-grass/frame-004.png": {
+      "bytes": 5679,
+      "sha256": "a99264b07f377f6b6803933c0dcd1dc85a3c6bbef17459a98d4ce77de3262b21"
+    },
+    "art-review/forest-tree-study/actual/repeated-grove-grass/frame-008.png": {
+      "bytes": 5679,
+      "sha256": "a99264b07f377f6b6803933c0dcd1dc85a3c6bbef17459a98d4ce77de3262b21"
+    },
+    "art-review/forest-tree-study/actual/repeated-grove-grass/frame-012.png": {
+      "bytes": 5679,
+      "sha256": "a99264b07f377f6b6803933c0dcd1dc85a3c6bbef17459a98d4ce77de3262b21"
+    },
+    "art-review/forest-tree-study/actual/repeated-grove-grass/frame-015.png": {
+      "bytes": 5679,
+      "sha256": "a99264b07f377f6b6803933c0dcd1dc85a3c6bbef17459a98d4ce77de3262b21"
+    },
+    "art-review/forest-tree-study/actual/repeated-grove-grass-filmstrip.png": {
+      "bytes": 12188,
+      "sha256": "7787edd6ac00eab40111e8c116256cfbf21084ec7fceb8aea577bfc8b0548514"
+    },
+    "art-review/forest-tree-study/actual/repeated-grove-grass.png": {
+      "bytes": 5679,
+      "sha256": "a99264b07f377f6b6803933c0dcd1dc85a3c6bbef17459a98d4ce77de3262b21"
+    },
+    "art-review/forest-tree-study/actual/repeated-grove-path/frame-000.png": {
+      "bytes": 5623,
+      "sha256": "3e3f28be4319bc841086502a7692f82389b0bd0885a830db522253330f0c2749"
+    },
+    "art-review/forest-tree-study/actual/repeated-grove-path/frame-004.png": {
+      "bytes": 5623,
+      "sha256": "3e3f28be4319bc841086502a7692f82389b0bd0885a830db522253330f0c2749"
+    },
+    "art-review/forest-tree-study/actual/repeated-grove-path/frame-008.png": {
+      "bytes": 5623,
+      "sha256": "3e3f28be4319bc841086502a7692f82389b0bd0885a830db522253330f0c2749"
+    },
+    "art-review/forest-tree-study/actual/repeated-grove-path/frame-012.png": {
+      "bytes": 5623,
+      "sha256": "3e3f28be4319bc841086502a7692f82389b0bd0885a830db522253330f0c2749"
+    },
+    "art-review/forest-tree-study/actual/repeated-grove-path/frame-015.png": {
+      "bytes": 5623,
+      "sha256": "3e3f28be4319bc841086502a7692f82389b0bd0885a830db522253330f0c2749"
+    },
+    "art-review/forest-tree-study/actual/repeated-grove-path-filmstrip.png": {
+      "bytes": 12139,
+      "sha256": "a785c1c0430f422e9f86f762e86a9ace87eeab9e0b91e75e844ed4cf63989eae"
+    },
+    "art-review/forest-tree-study/actual/repeated-grove-path.png": {
+      "bytes": 5623,
+      "sha256": "3e3f28be4319bc841086502a7692f82389b0bd0885a830db522253330f0c2749"
+    },
+    "art-review/forest-tree-study/actual/repeated-grove-sick-grass/frame-000.png": {
+      "bytes": 5673,
+      "sha256": "342d2ef449d3f21b6b01a24c6be1044c409a3bf367783a18dcdd2f82f0b99391"
+    },
+    "art-review/forest-tree-study/actual/repeated-grove-sick-grass/frame-004.png": {
+      "bytes": 5673,
+      "sha256": "342d2ef449d3f21b6b01a24c6be1044c409a3bf367783a18dcdd2f82f0b99391"
+    },
+    "art-review/forest-tree-study/actual/repeated-grove-sick-grass/frame-008.png": {
+      "bytes": 5673,
+      "sha256": "342d2ef449d3f21b6b01a24c6be1044c409a3bf367783a18dcdd2f82f0b99391"
+    },
+    "art-review/forest-tree-study/actual/repeated-grove-sick-grass/frame-012.png": {
+      "bytes": 5673,
+      "sha256": "342d2ef449d3f21b6b01a24c6be1044c409a3bf367783a18dcdd2f82f0b99391"
+    },
+    "art-review/forest-tree-study/actual/repeated-grove-sick-grass/frame-015.png": {
+      "bytes": 5673,
+      "sha256": "342d2ef449d3f21b6b01a24c6be1044c409a3bf367783a18dcdd2f82f0b99391"
+    },
+    "art-review/forest-tree-study/actual/repeated-grove-sick-grass-filmstrip.png": {
+      "bytes": 12437,
+      "sha256": "6c8a414926109abd3fd4499477d9dfbb2dc92b02788e1fbd1d7241784bc6f3bf"
+    },
+    "art-review/forest-tree-study/actual/repeated-grove-sick-grass.png": {
+      "bytes": 5673,
+      "sha256": "342d2ef449d3f21b6b01a24c6be1044c409a3bf367783a18dcdd2f82f0b99391"
+    },
+    "art-review/forest-tree-study/actual/tree-catalog-grass/frame-000.png": {
+      "bytes": 5362,
+      "sha256": "6386ce1df3348f08cf4e2329f12f4793b2abebc0184bc491f11fd4e88763f8fe"
+    },
+    "art-review/forest-tree-study/actual/tree-catalog-grass/frame-004.png": {
+      "bytes": 5362,
+      "sha256": "6386ce1df3348f08cf4e2329f12f4793b2abebc0184bc491f11fd4e88763f8fe"
+    },
+    "art-review/forest-tree-study/actual/tree-catalog-grass/frame-008.png": {
+      "bytes": 5362,
+      "sha256": "6386ce1df3348f08cf4e2329f12f4793b2abebc0184bc491f11fd4e88763f8fe"
+    },
+    "art-review/forest-tree-study/actual/tree-catalog-grass/frame-012.png": {
+      "bytes": 5362,
+      "sha256": "6386ce1df3348f08cf4e2329f12f4793b2abebc0184bc491f11fd4e88763f8fe"
+    },
+    "art-review/forest-tree-study/actual/tree-catalog-grass/frame-015.png": {
+      "bytes": 5362,
+      "sha256": "6386ce1df3348f08cf4e2329f12f4793b2abebc0184bc491f11fd4e88763f8fe"
+    },
+    "art-review/forest-tree-study/actual/tree-catalog-grass-filmstrip.png": {
+      "bytes": 11052,
+      "sha256": "2bf45035640c1170e977d85541d7cf248fd0691faddfa5f17c085cbd9688a453"
+    },
+    "art-review/forest-tree-study/actual/tree-catalog-grass.png": {
+      "bytes": 5362,
+      "sha256": "6386ce1df3348f08cf4e2329f12f4793b2abebc0184bc491f11fd4e88763f8fe"
+    },
+    "art-review/forest-tree-study/actual/tree-catalog-path/frame-000.png": {
+      "bytes": 5375,
+      "sha256": "1d1e597cec12c71e1e818d7e4219a1e21a3bb0bb0f71d1859833929870e73c7a"
+    },
+    "art-review/forest-tree-study/actual/tree-catalog-path/frame-004.png": {
+      "bytes": 5375,
+      "sha256": "1d1e597cec12c71e1e818d7e4219a1e21a3bb0bb0f71d1859833929870e73c7a"
+    },
+    "art-review/forest-tree-study/actual/tree-catalog-path/frame-008.png": {
+      "bytes": 5375,
+      "sha256": "1d1e597cec12c71e1e818d7e4219a1e21a3bb0bb0f71d1859833929870e73c7a"
+    },
+    "art-review/forest-tree-study/actual/tree-catalog-path/frame-012.png": {
+      "bytes": 5375,
+      "sha256": "1d1e597cec12c71e1e818d7e4219a1e21a3bb0bb0f71d1859833929870e73c7a"
+    },
+    "art-review/forest-tree-study/actual/tree-catalog-path/frame-015.png": {
+      "bytes": 5375,
+      "sha256": "1d1e597cec12c71e1e818d7e4219a1e21a3bb0bb0f71d1859833929870e73c7a"
+    },
+    "art-review/forest-tree-study/actual/tree-catalog-path-filmstrip.png": {
+      "bytes": 10992,
+      "sha256": "3e18afb7e6dcfa84866fc9347f900a19eef5373fe59bc6ed2ecd0a2ff07f90be"
+    },
+    "art-review/forest-tree-study/actual/tree-catalog-path.png": {
+      "bytes": 5375,
+      "sha256": "1d1e597cec12c71e1e818d7e4219a1e21a3bb0bb0f71d1859833929870e73c7a"
+    },
+    "art-review/forest-tree-study/actual/tree-catalog-sick-grass/frame-000.png": {
+      "bytes": 5339,
+      "sha256": "583bdb0407d925ed14b3553a6a616564ce4dc487930cf3991a6e147a556cd5c5"
+    },
+    "art-review/forest-tree-study/actual/tree-catalog-sick-grass/frame-004.png": {
+      "bytes": 5339,
+      "sha256": "583bdb0407d925ed14b3553a6a616564ce4dc487930cf3991a6e147a556cd5c5"
+    },
+    "art-review/forest-tree-study/actual/tree-catalog-sick-grass/frame-008.png": {
+      "bytes": 5339,
+      "sha256": "583bdb0407d925ed14b3553a6a616564ce4dc487930cf3991a6e147a556cd5c5"
+    },
+    "art-review/forest-tree-study/actual/tree-catalog-sick-grass/frame-012.png": {
+      "bytes": 5339,
+      "sha256": "583bdb0407d925ed14b3553a6a616564ce4dc487930cf3991a6e147a556cd5c5"
+    },
+    "art-review/forest-tree-study/actual/tree-catalog-sick-grass/frame-015.png": {
+      "bytes": 5339,
+      "sha256": "583bdb0407d925ed14b3553a6a616564ce4dc487930cf3991a6e147a556cd5c5"
+    },
+    "art-review/forest-tree-study/actual/tree-catalog-sick-grass-filmstrip.png": {
+      "bytes": 11176,
+      "sha256": "ce39e98b13abecd6325829d422936820b8264255853523f1d6fc355e9528a6ed"
+    },
+    "art-review/forest-tree-study/actual/tree-catalog-sick-grass.png": {
+      "bytes": 5339,
+      "sha256": "583bdb0407d925ed14b3553a6a616564ce4dc487930cf3991a6e147a556cd5c5"
+    },
+    "art-review/forest-tree-study/actual-panel-manifest.json": {
+      "bytes": 3538,
+      "sha256": "9385c69adea7053bacb804801023f2a30ac493198ba5cdd049f9699f8326b904"
+    },
+    "art-review/forest-tree-study/actual-publication-summary.json": {
+      "bytes": 612,
+      "sha256": "af28e480fb66385b78bee04db2b2e11829c73d6be51e2699bb518807e2646ffd"
+    },
+    "art-review/forest-tree-study/source/README.md": {
+      "bytes": 1237,
+      "sha256": "1e29592918725b0e7d8a328000aecc4d1697ff52ada7ba637e69ceea459c9428"
+    },
+    "art-review/forest-tree-study/source/floor-contacts-source.png": {
+      "bytes": 12382,
+      "sha256": "84458a20196568b88704888f1d02f3027c309b0e7d85cc19b081a026e872acf3"
+    },
+    "art-review/forest-tree-study/source/grayscale-source.png": {
+      "bytes": 15563,
+      "sha256": "ea0e69a7186a54ce036e178e33cf4e74a4e901e57692f45761218771e1e8911a"
+    },
+    "art-review/forest-tree-study/source/native/tree_broad_0_dead-indexed.png": {
+      "bytes": 378,
+      "sha256": "4650a8e431b29f3d98a4d6467412ba27d7eb111b9b46880a9fdc0725788566d9"
+    },
+    "art-review/forest-tree-study/source/native/tree_broad_0_dead.png": {
+      "bytes": 611,
+      "sha256": "2a9226a29191e80fcd2b72450c9fc183c021f61a1ca891dbc28b1d0fb2429c52"
+    },
+    "art-review/forest-tree-study/source/native/tree_broad_0_healthy-indexed.png": {
+      "bytes": 383,
+      "sha256": "4f239e248d4ca04f9e7665296116800b1eddb7bc0840f1f0c04c86db7af0096a"
+    },
+    "art-review/forest-tree-study/source/native/tree_broad_0_healthy.png": {
+      "bytes": 549,
+      "sha256": "6c2c61a042634a88cb67401569f5c7f8bf8758d8a70c68de988704bce187a4a4"
+    },
+    "art-review/forest-tree-study/source/native/tree_broad_0_sick-indexed.png": {
+      "bytes": 394,
+      "sha256": "9e3ebdd2079577967b05e8bf44c9da295688c6ca80dd6653eb28fd9424e4e282"
+    },
+    "art-review/forest-tree-study/source/native/tree_broad_0_sick.png": {
+      "bytes": 642,
+      "sha256": "ffe2af85a0f008777f198e3f2b233bbd555b80c189303b2d3f9b20d8f3a2ec17"
+    },
+    "art-review/forest-tree-study/source/native/tree_broad_1_dead-indexed.png": {
+      "bytes": 381,
+      "sha256": "0e9b6efa48712d24fef6921e0e5402022ea1ddee15194ca488747dd53219579f"
+    },
+    "art-review/forest-tree-study/source/native/tree_broad_1_dead.png": {
+      "bytes": 600,
+      "sha256": "d7c050e3507fe134e6666acc86b1d777123b8cd81744a98a1161aea942326d4d"
+    },
+    "art-review/forest-tree-study/source/native/tree_broad_1_healthy-indexed.png": {
+      "bytes": 374,
+      "sha256": "bd49a51a27fed28af6c6c137969cebb1156833f8bec15bd363a857c380ac1791"
+    },
+    "art-review/forest-tree-study/source/native/tree_broad_1_healthy.png": {
+      "bytes": 543,
+      "sha256": "7b198479cf542b8cb3bae833855159c414124d08bb56384348b2025376c87736"
+    },
+    "art-review/forest-tree-study/source/native/tree_broad_1_sick-indexed.png": {
+      "bytes": 401,
+      "sha256": "7601b60b32e00d3c93b5b6d1a9b67778f23f9ad96b3f39001fadaba97842e374"
+    },
+    "art-review/forest-tree-study/source/native/tree_broad_1_sick.png": {
+      "bytes": 664,
+      "sha256": "c97e679aa32c8a30ead9f742df704f18b7e4ef572f04ac32d34d130f7a566fbe"
+    },
+    "art-review/forest-tree-study/source/native/tree_narrow_0_dead-indexed.png": {
+      "bytes": 302,
+      "sha256": "36742d48215c32a04dc3de785dfc326c90d86bcbc6d3dbfd5cc8b300b7d85dd7"
+    },
+    "art-review/forest-tree-study/source/native/tree_narrow_0_dead.png": {
+      "bytes": 440,
+      "sha256": "abd9e01a53709c0ee73b705bea985f22e14a8b84d8b730d85077e6d12f8ed2d3"
+    },
+    "art-review/forest-tree-study/source/native/tree_narrow_0_healthy-indexed.png": {
+      "bytes": 283,
+      "sha256": "0766fe0844ec6f19eac979fe62c2a2e070ebda24876c6e7d3e98130c3801b0f5"
+    },
+    "art-review/forest-tree-study/source/native/tree_narrow_0_healthy.png": {
+      "bytes": 405,
+      "sha256": "60b6bf7e040b498fc3e9da234593ee27e84200f3551b11ff52883a05feeb917a"
+    },
+    "art-review/forest-tree-study/source/native/tree_narrow_0_sick-indexed.png": {
+      "bytes": 305,
+      "sha256": "3afad51ae78f9fd81a10b0a42e80b68321af3a238d722f98b96e62d4f856a9ad"
+    },
+    "art-review/forest-tree-study/source/native/tree_narrow_0_sick.png": {
+      "bytes": 449,
+      "sha256": "cb26dfcc7821ff7e2ddef8808eab008ed73c21228f2f217c95f265981a6ea86b"
+    },
+    "art-review/forest-tree-study/source/native/tree_narrow_1_dead-indexed.png": {
+      "bytes": 293,
+      "sha256": "ae53a85dc567900bb1948642b8670281e6988e7cd764f42ccd949097cdf3cb3c"
+    },
+    "art-review/forest-tree-study/source/native/tree_narrow_1_dead.png": {
+      "bytes": 427,
+      "sha256": "7368aece039c7050c018f9e341f401240510d02dbe4c617ffe68fbbd95e7e907"
+    },
+    "art-review/forest-tree-study/source/native/tree_narrow_1_healthy-indexed.png": {
+      "bytes": 292,
+      "sha256": "5d02981780a1578aeb237ddfdfac659ce98b473acfbfcf50f3d8374fe930cb72"
+    },
+    "art-review/forest-tree-study/source/native/tree_narrow_1_healthy.png": {
+      "bytes": 425,
+      "sha256": "77aaa0fd16fa7f579258018ec72f32a32869bda2a698de3a95ca0454cf69f9fc"
+    },
+    "art-review/forest-tree-study/source/native/tree_narrow_1_sick-indexed.png": {
+      "bytes": 309,
+      "sha256": "9d5b51f6b707230a12bf010209b88f2ceee5cca665a96410046131d3811b0265"
+    },
+    "art-review/forest-tree-study/source/native/tree_narrow_1_sick.png": {
+      "bytes": 479,
+      "sha256": "1d4b49deaa3232f49169f4b4a4168c7ec988c65f404795157461d7b60565c6cc"
+    },
+    "art-review/forest-tree-study/source/native-manifest.json": {
+      "bytes": 21647,
+      "sha256": "0e89bd4403014a84879a3fb402fd6b9021589384aff091a4a68e70d984d75f86"
+    },
+    "art-review/forest-tree-study/source/palette-iteration-source.png": {
+      "bytes": 6493,
+      "sha256": "0e97e4efd457098ab672a4feabf3eb3de2f3ff52dabb99f10237fcc305d6d963"
+    },
+    "art-review/forest-tree-study/source/silhouettes-source.png": {
+      "bytes": 7686,
+      "sha256": "fa3fac02cd47d87cc4f610c4ce70f826ddd9a1f5b25dcd77440e553fc339c9c9"
+    },
+    "art-review/forest-tree-study/source/source-art.json": {
+      "bytes": 33830,
+      "sha256": "fbae6b260b38528c8f248df37579c9ccb9079c158379ff75e8623f3ef9211832"
+    },
+    "art-review/forest-tree-study/source/source-manifest.json": {
+      "bytes": 13037,
+      "sha256": "ed658d4b94a898efca1137f9b5915828f4424ce58219830ea3f42c5d5503b7a9"
+    },
+    "art-review/forest-tree-study/source/tree-states-source.png": {
+      "bytes": 15674,
+      "sha256": "3451f015acc8eb1717adebf55f838f613f1c9d6310b981e77d200353726f14a9"
+    },
+    "art-review/forest-tree-study/tree-groves-actual.png": {
+      "bytes": 28699,
+      "sha256": "4e4de498208d9ddcc102f76e957cd32251b0b3b6f8109c2a6307013298b12690"
+    },
+    "art-review/forest-tree-study/validation/INDEPENDENT_REVIEW.md": {
+      "bytes": 3865,
+      "sha256": "f02fb61c6e3a6dc1fefb32eac5dfabebe02b88b270fd6021b678ed6f190193f0"
+    },
+    "art-review/forest-tree-study/validation/README.md": {
+      "bytes": 3237,
+      "sha256": "db69a131fa6dad252864c74e8e49f4407e4618eafa6a0f6cbd2410bf3b4d1156"
+    },
+    "art-review/forest-tree-study/validation/builds.json": {
+      "bytes": 19190,
+      "sha256": "2e5a39639e3c1afee444ff896c014cb07b275a672bdda647f98e975ed9d2fb91"
+    },
+    "art-review/forest-tree-study/validation/final-audit.json": {
+      "bytes": 102576,
+      "sha256": "75b275b41fd79d2a42ce499b1ece5b0b2704aec19181d0fde3fd07d5f9b948ec"
+    },
+    "art-review/forest-tree-study/validation/frozen/v29/assets.h": {
+      "bytes": 80590,
+      "sha256": "7ad6b9cd1b834fb6a91bc12290dd282d190eccfc529693d97d01026c652ef538"
+    },
+    "art-review/forest-tree-study/validation/frozen/v29/bartgame.map": {
+      "bytes": 212163,
+      "sha256": "9a5e76ff18b0f22b198b67c6e87d9b8509c1c7f84f720f681f0f4541d552b751"
+    },
+    "art-review/forest-tree-study/validation/frozen/v29/coverage.json": {
+      "bytes": 972237,
+      "sha256": "5e8fc02609a96a2c969b3a3ad3dd412aa6a0415ce237928b0fb1824735d02e27"
+    },
+    "art-review/forest-tree-study/validation/frozen/v29/freeze.json": {
+      "bytes": 13735,
+      "sha256": "1c4a9339904348d7529f40d0e1768e7a6ff67c923e4e11eaeecc6b15991dcb94"
+    },
+    "art-review/forest-tree-study/validation/frozen/v30/assets.h": {
+      "bytes": 80990,
+      "sha256": "83a2c068ba524ac50f21519a4363468a439e100bc794e546dca7db10c451aae9"
+    },
+    "art-review/forest-tree-study/validation/frozen/v30/bartgame.map": {
+      "bytes": 218451,
+      "sha256": "f505da81aaeb3c02786e2c77406ed1dc6b8a4e3631162a10907bf03206ea7a69"
+    },
+    "art-review/forest-tree-study/validation/frozen/v30/coverage.json": {
+      "bytes": 978621,
+      "sha256": "799304a84f38b6f53faf375283d32330e5a849e6a43d187d7df5a10dd56d0f37"
+    },
+    "art-review/forest-tree-study/validation/frozen/v30/freeze.json": {
+      "bytes": 13730,
+      "sha256": "96737f2c06ef84ecb499410939ec9dd34bf4adb8bae77055704de4f11385df64"
+    },
+    "art-review/forest-tree-study/validation/legacy-preservation.json": {
+      "bytes": 7516,
+      "sha256": "c8e1b27c6e6a7520c8b371ca5145d85a9921acacd7e47e2c03f8c09af41845ae"
+    },
+    "downloads/forest-trees-c269b67/4bpp/tree_broad_0_dead.4bpp": {
+      "bytes": 512,
+      "sha256": "9bdde80ea90c86e3285aafb7e3121d71e07cb5b094b3850a0dba492e033757ae"
+    },
+    "downloads/forest-trees-c269b67/4bpp/tree_broad_0_healthy.4bpp": {
+      "bytes": 512,
+      "sha256": "9e116cd5f6723bf9311b10f8020b67386f6117635cceb28097eeb3c8621e87f4"
+    },
+    "downloads/forest-trees-c269b67/4bpp/tree_broad_0_sick.4bpp": {
+      "bytes": 512,
+      "sha256": "e2edf2f9b858e5b544f6cbda86980bc5371a3e24421f1febd17101476492d31e"
+    },
+    "downloads/forest-trees-c269b67/4bpp/tree_broad_1_dead.4bpp": {
+      "bytes": 512,
+      "sha256": "f62b22ae54da8bb92993523fb0efc7b91a30c48351e341577ecc5dbc1cb7ec5a"
+    },
+    "downloads/forest-trees-c269b67/4bpp/tree_broad_1_healthy.4bpp": {
+      "bytes": 512,
+      "sha256": "78c9abadc9d766ef303f64e64542e3630e4fed65195e099f44cc18d5d25d83d5"
+    },
+    "downloads/forest-trees-c269b67/4bpp/tree_broad_1_sick.4bpp": {
+      "bytes": 512,
+      "sha256": "1bff3b726b5ba8cf3a1babf708ae6757a3e3cc0ed99a288baa6970b314d799ee"
+    },
+    "downloads/forest-trees-c269b67/4bpp/tree_narrow_0_dead.4bpp": {
+      "bytes": 256,
+      "sha256": "9e82baf8cbe5656f4652d95369e2f334108447fa87889d62cf67b68408b1cf67"
+    },
+    "downloads/forest-trees-c269b67/4bpp/tree_narrow_0_healthy.4bpp": {
+      "bytes": 256,
+      "sha256": "2c9d6e53ad0cbe58c9b0fd76cc3cf11cd8f703481ea5d2fadfe4afd3343e8089"
+    },
+    "downloads/forest-trees-c269b67/4bpp/tree_narrow_0_sick.4bpp": {
+      "bytes": 256,
+      "sha256": "688f2a22d60d557d63b5990e897d9027da868ef98c4ec6d38f4c8ab5bed098b4"
+    },
+    "downloads/forest-trees-c269b67/4bpp/tree_narrow_1_dead.4bpp": {
+      "bytes": 256,
+      "sha256": "4a1c993b53be653957265cf1005aa125170e0f84d822a788e6bd521dfcd01b73"
+    },
+    "downloads/forest-trees-c269b67/4bpp/tree_narrow_1_healthy.4bpp": {
+      "bytes": 256,
+      "sha256": "de312834e1436b03134030af77c7fa0768fc552000c97d5fe669642cc3f6a7aa"
+    },
+    "downloads/forest-trees-c269b67/4bpp/tree_narrow_1_sick.4bpp": {
+      "bytes": 256,
+      "sha256": "0d654e8213aebd6f070532a149add7d6f08380f4a129972b7af073fdbb84b8e2"
+    },
+    "downloads/forest-trees-c269b67/README.md": {
+      "bytes": 1030,
+      "sha256": "59f2f58a315eb8692c80b89b9c3ea5531dbb49f46f89b8274ad7b8fdd81b2397"
+    },
+    "downloads/forest-trees-c269b67/README.txt": {
+      "bytes": 1123,
+      "sha256": "adad466872e0c99c5c02d15a3909d6fbdc06b105b0e1fe079d6b11411eb61aec"
+    },
+    "downloads/forest-trees-c269b67/SHA256SUMS.txt": {
+      "bytes": 3863,
+      "sha256": "8710bc2123802502687bb9039616534fef75fe6f2fc1617e1be2a94fbd25ec08"
+    },
+    "downloads/forest-trees-c269b67/forest-trees-c269b67.zip": {
+      "bytes": 20474,
+      "sha256": "4e708ed7a1ee776580fb0f7361a576a0a53a4abddf6bbb7cd4a61efd38470599"
+    },
+    "downloads/forest-trees-c269b67/indexed/tree_broad_0_dead.png": {
+      "bytes": 378,
+      "sha256": "4650a8e431b29f3d98a4d6467412ba27d7eb111b9b46880a9fdc0725788566d9"
+    },
+    "downloads/forest-trees-c269b67/indexed/tree_broad_0_healthy.png": {
+      "bytes": 383,
+      "sha256": "4f239e248d4ca04f9e7665296116800b1eddb7bc0840f1f0c04c86db7af0096a"
+    },
+    "downloads/forest-trees-c269b67/indexed/tree_broad_0_sick.png": {
+      "bytes": 394,
+      "sha256": "9e3ebdd2079577967b05e8bf44c9da295688c6ca80dd6653eb28fd9424e4e282"
+    },
+    "downloads/forest-trees-c269b67/indexed/tree_broad_1_dead.png": {
+      "bytes": 381,
+      "sha256": "0e9b6efa48712d24fef6921e0e5402022ea1ddee15194ca488747dd53219579f"
+    },
+    "downloads/forest-trees-c269b67/indexed/tree_broad_1_healthy.png": {
+      "bytes": 374,
+      "sha256": "bd49a51a27fed28af6c6c137969cebb1156833f8bec15bd363a857c380ac1791"
+    },
+    "downloads/forest-trees-c269b67/indexed/tree_broad_1_sick.png": {
+      "bytes": 401,
+      "sha256": "7601b60b32e00d3c93b5b6d1a9b67778f23f9ad96b3f39001fadaba97842e374"
+    },
+    "downloads/forest-trees-c269b67/indexed/tree_narrow_0_dead.png": {
+      "bytes": 302,
+      "sha256": "36742d48215c32a04dc3de785dfc326c90d86bcbc6d3dbfd5cc8b300b7d85dd7"
+    },
+    "downloads/forest-trees-c269b67/indexed/tree_narrow_0_healthy.png": {
+      "bytes": 283,
+      "sha256": "0766fe0844ec6f19eac979fe62c2a2e070ebda24876c6e7d3e98130c3801b0f5"
+    },
+    "downloads/forest-trees-c269b67/indexed/tree_narrow_0_sick.png": {
+      "bytes": 305,
+      "sha256": "3afad51ae78f9fd81a10b0a42e80b68321af3a238d722f98b96e62d4f856a9ad"
+    },
+    "downloads/forest-trees-c269b67/indexed/tree_narrow_1_dead.png": {
+      "bytes": 293,
+      "sha256": "ae53a85dc567900bb1948642b8670281e6988e7cd764f42ccd949097cdf3cb3c"
+    },
+    "downloads/forest-trees-c269b67/indexed/tree_narrow_1_healthy.png": {
+      "bytes": 292,
+      "sha256": "5d02981780a1578aeb237ddfdfac659ce98b473acfbfcf50f3d8374fe930cb72"
+    },
+    "downloads/forest-trees-c269b67/indexed/tree_narrow_1_sick.png": {
+      "bytes": 309,
+      "sha256": "9d5b51f6b707230a12bf010209b88f2ceee5cca665a96410046131d3811b0265"
+    },
+    "downloads/forest-trees-c269b67/palette.json": {
+      "bytes": 522,
+      "sha256": "fde6c0babcd05fcb1403f16961d6d5fd5cf95d71630b46d0f2879d8c1210ebb8"
+    },
+    "downloads/forest-trees-c269b67/palette.rgb555": {
+      "bytes": 32,
+      "sha256": "688629c178ecfff52c26502452506dcb073df99654c4e68e08b67d1fecd433b1"
+    },
+    "downloads/forest-trees-c269b67/rgba/tree_broad_0_dead.png": {
+      "bytes": 632,
+      "sha256": "8a4add541f7883b82ffa0dbc7374f93b22dbad80b68d1a4fb0fc9576b6935f97"
+    },
+    "downloads/forest-trees-c269b67/rgba/tree_broad_0_healthy.png": {
+      "bytes": 569,
+      "sha256": "8654fab22dc5cd400b45d035c8e90d07e89d472c33c77790eb9975fa741a9457"
+    },
+    "downloads/forest-trees-c269b67/rgba/tree_broad_0_sick.png": {
+      "bytes": 664,
+      "sha256": "2f69f2854caf2712437f749196ea16d45423059b6eeeed9c6e65cdcaff868197"
+    },
+    "downloads/forest-trees-c269b67/rgba/tree_broad_1_dead.png": {
+      "bytes": 623,
+      "sha256": "f305a90473dea40638aa12ff52c513379d508d4d778da46afd84fb560256c231"
+    },
+    "downloads/forest-trees-c269b67/rgba/tree_broad_1_healthy.png": {
+      "bytes": 574,
+      "sha256": "ae0e344469eab05230070e18da6407aac039aa415b3a4c1450e066b125d3971a"
+    },
+    "downloads/forest-trees-c269b67/rgba/tree_broad_1_sick.png": {
+      "bytes": 684,
+      "sha256": "a65ed7f3ce34e51e245eca3c9326b81d9e5a4884adbc817151cf436441d27f8c"
+    },
+    "downloads/forest-trees-c269b67/rgba/tree_narrow_0_dead.png": {
+      "bytes": 451,
+      "sha256": "cbcb0a9684978f0a7b67eb1f0179609dba43934850ea2cc9688f12679db90cff"
+    },
+    "downloads/forest-trees-c269b67/rgba/tree_narrow_0_healthy.png": {
+      "bytes": 419,
+      "sha256": "9806f6ab74111949d318427d358de82ce2dc9eaab4baae022ef27aa9375ba832"
+    },
+    "downloads/forest-trees-c269b67/rgba/tree_narrow_0_sick.png": {
+      "bytes": 462,
+      "sha256": "b84f44b8f20a61f337b54921e5859a9620ee1bb7a3257fde91d676ac1f52a429"
+    },
+    "downloads/forest-trees-c269b67/rgba/tree_narrow_1_dead.png": {
+      "bytes": 441,
+      "sha256": "5c13423679aba07f30caad219b5f6964b27e2dbc547d13256b6e4b881fb25cd9"
+    },
+    "downloads/forest-trees-c269b67/rgba/tree_narrow_1_healthy.png": {
+      "bytes": 445,
+      "sha256": "be58a4062b059d23fec1b5530f8dcc783d0e93f5a0589686091b0fd2fb9b4b8b"
+    },
+    "downloads/forest-trees-c269b67/rgba/tree_narrow_1_sick.png": {
+      "bytes": 499,
+      "sha256": "d29c39f7af7a8b4c1033155da3d62941719241302b0c191534756e63e7e597a9"
+    },
+    "downloads/forest-trees-c269b67/tree-contract.json": {
+      "bytes": 8068,
+      "sha256": "1c353142fa9d3209bbba011ff7dc028de8fb98e32bc11dcf252d28d226a2fdb5"
+    }
+  },
+  "note": "Repository-relative paths; manifest excludes itself. Raw final reports/media remain unchanged; source/grayscale/inspection figures and literal mGBA panels have distinct labels."
+}

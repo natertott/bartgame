@@ -1,0 +1,998 @@
+{
+  "profile": 30,
+  "entries": [
+    {
+      "name": "tree_broad_0_healthy",
+      "size": "broad",
+      "state": "healthy",
+      "variety": 0,
+      "variety_name": "Round oak",
+      "size_pixels": [
+        32,
+        32
+      ],
+      "w": 32,
+      "h": 32,
+      "anchor": [
+        16,
+        30
+      ],
+      "palette": "forest_tree_study",
+      "transparent_index": 0,
+      "index_sha256": "34787872fb47ac31b57b9b29779d046b928ee90345840dd3ac109a9c29518d2a",
+      "painted_bounds": [
+        1,
+        1,
+        31,
+        31
+      ],
+      "painted_pixels": 601,
+      "native_indexed": "native/tree_broad_0_healthy-indexed.png",
+      "native_rgba": "native/tree_broad_0_healthy.png"
+    },
+    {
+      "name": "tree_broad_0_sick",
+      "size": "broad",
+      "state": "sick",
+      "variety": 0,
+      "variety_name": "Round oak",
+      "size_pixels": [
+        32,
+        32
+      ],
+      "w": 32,
+      "h": 32,
+      "anchor": [
+        16,
+        30
+      ],
+      "palette": "forest_tree_study",
+      "transparent_index": 0,
+      "index_sha256": "b0ad628a534d16305ce2344e9a028d251c63fb201d4d32e8577be83c5261218a",
+      "painted_bounds": [
+        2,
+        2,
+        31,
+        31
+      ],
+      "painted_pixels": 464,
+      "native_indexed": "native/tree_broad_0_sick-indexed.png",
+      "native_rgba": "native/tree_broad_0_sick.png"
+    },
+    {
+      "name": "tree_broad_0_dead",
+      "size": "broad",
+      "state": "dead",
+      "variety": 0,
+      "variety_name": "Round oak",
+      "size_pixels": [
+        32,
+        32
+      ],
+      "w": 32,
+      "h": 32,
+      "anchor": [
+        16,
+        30
+      ],
+      "palette": "forest_tree_study",
+      "transparent_index": 0,
+      "index_sha256": "538f76ea7c24d908ebe5edbcbb4662908b4557d69f51ff1c6891af95ba13d843",
+      "painted_bounds": [
+        1,
+        2,
+        31,
+        31
+      ],
+      "painted_pixels": 372,
+      "native_indexed": "native/tree_broad_0_dead-indexed.png",
+      "native_rgba": "native/tree_broad_0_dead.png"
+    },
+    {
+      "name": "tree_broad_1_healthy",
+      "size": "broad",
+      "state": "healthy",
+      "variety": 1,
+      "variety_name": "Crooked oak",
+      "size_pixels": [
+        32,
+        32
+      ],
+      "w": 32,
+      "h": 32,
+      "anchor": [
+        16,
+        30
+      ],
+      "palette": "forest_tree_study",
+      "transparent_index": 0,
+      "index_sha256": "71bc47aaa4200348348ce39fd9bbef2b6d60adde8f76c47520df33b22aab94e7",
+      "painted_bounds": [
+        1,
+        2,
+        31,
+        31
+      ],
+      "painted_pixels": 552,
+      "native_indexed": "native/tree_broad_1_healthy-indexed.png",
+      "native_rgba": "native/tree_broad_1_healthy.png"
+    },
+    {
+      "name": "tree_broad_1_sick",
+      "size": "broad",
+      "state": "sick",
+      "variety": 1,
+      "variety_name": "Crooked oak",
+      "size_pixels": [
+        32,
+        32
+      ],
+      "w": 32,
+      "h": 32,
+      "anchor": [
+        16,
+        30
+      ],
+      "palette": "forest_tree_study",
+      "transparent_index": 0,
+      "index_sha256": "57fc590ba66f25f1f6abffa2d5884d7010264f1b583cf23953d9a056d24dca30",
+      "painted_bounds": [
+        1,
+        4,
+        31,
+        31
+      ],
+      "painted_pixels": 426,
+      "native_indexed": "native/tree_broad_1_sick-indexed.png",
+      "native_rgba": "native/tree_broad_1_sick.png"
+    },
+    {
+      "name": "tree_broad_1_dead",
+      "size": "broad",
+      "state": "dead",
+      "variety": 1,
+      "variety_name": "Crooked oak",
+      "size_pixels": [
+        32,
+        32
+      ],
+      "w": 32,
+      "h": 32,
+      "anchor": [
+        16,
+        30
+      ],
+      "palette": "forest_tree_study",
+      "transparent_index": 0,
+      "index_sha256": "b56a0e60328bddc427d30a15737022c82bf0d0a8f74b5b7b5b6acde39d39e799",
+      "painted_bounds": [
+        1,
+        2,
+        31,
+        31
+      ],
+      "painted_pixels": 362,
+      "native_indexed": "native/tree_broad_1_dead-indexed.png",
+      "native_rgba": "native/tree_broad_1_dead.png"
+    },
+    {
+      "name": "tree_narrow_0_healthy",
+      "size": "narrow",
+      "state": "healthy",
+      "variety": 0,
+      "variety_name": "Small poplar",
+      "size_pixels": [
+        16,
+        32
+      ],
+      "w": 16,
+      "h": 32,
+      "anchor": [
+        8,
+        30
+      ],
+      "palette": "forest_tree_study",
+      "transparent_index": 0,
+      "index_sha256": "68411b5502fe91d8997b7417fef3a28b8d4808706e9df00ff9c46ffb53277c5e",
+      "painted_bounds": [
+        1,
+        1,
+        15,
+        31
+      ],
+      "painted_pixels": 286,
+      "native_indexed": "native/tree_narrow_0_healthy-indexed.png",
+      "native_rgba": "native/tree_narrow_0_healthy.png"
+    },
+    {
+      "name": "tree_narrow_0_sick",
+      "size": "narrow",
+      "state": "sick",
+      "variety": 0,
+      "variety_name": "Small poplar",
+      "size_pixels": [
+        16,
+        32
+      ],
+      "w": 16,
+      "h": 32,
+      "anchor": [
+        8,
+        30
+      ],
+      "palette": "forest_tree_study",
+      "transparent_index": 0,
+      "index_sha256": "acc1257db961dc8252d78e0f47fc9508df533fe19412edd84b4d179dfa80340d",
+      "painted_bounds": [
+        1,
+        2,
+        15,
+        31
+      ],
+      "painted_pixels": 247,
+      "native_indexed": "native/tree_narrow_0_sick-indexed.png",
+      "native_rgba": "native/tree_narrow_0_sick.png"
+    },
+    {
+      "name": "tree_narrow_0_dead",
+      "size": "narrow",
+      "state": "dead",
+      "variety": 0,
+      "variety_name": "Small poplar",
+      "size_pixels": [
+        16,
+        32
+      ],
+      "w": 16,
+      "h": 32,
+      "anchor": [
+        8,
+        30
+      ],
+      "palette": "forest_tree_study",
+      "transparent_index": 0,
+      "index_sha256": "1db599aa3aa44558ea170c7b71c03db2bf74ac5c96f83b4ab70ed511b8fb272e",
+      "painted_bounds": [
+        1,
+        1,
+        15,
+        31
+      ],
+      "painted_pixels": 247,
+      "native_indexed": "native/tree_narrow_0_dead-indexed.png",
+      "native_rgba": "native/tree_narrow_0_dead.png"
+    },
+    {
+      "name": "tree_narrow_1_healthy",
+      "size": "narrow",
+      "state": "healthy",
+      "variety": 1,
+      "variety_name": "Forked birch",
+      "size_pixels": [
+        16,
+        32
+      ],
+      "w": 16,
+      "h": 32,
+      "anchor": [
+        8,
+        30
+      ],
+      "palette": "forest_tree_study",
+      "transparent_index": 0,
+      "index_sha256": "ceb9261da9dddcbe15b83ef807a3c5a1f75c18dd79fc32978520591c1ecb5f02",
+      "painted_bounds": [
+        1,
+        1,
+        15,
+        31
+      ],
+      "painted_pixels": 294,
+      "native_indexed": "native/tree_narrow_1_healthy-indexed.png",
+      "native_rgba": "native/tree_narrow_1_healthy.png"
+    },
+    {
+      "name": "tree_narrow_1_sick",
+      "size": "narrow",
+      "state": "sick",
+      "variety": 1,
+      "variety_name": "Forked birch",
+      "size_pixels": [
+        16,
+        32
+      ],
+      "w": 16,
+      "h": 32,
+      "anchor": [
+        8,
+        30
+      ],
+      "palette": "forest_tree_study",
+      "transparent_index": 0,
+      "index_sha256": "70455220d1d3f8fb95afc53c34f53d0c96127f33c7199080d466fed839bf7732",
+      "painted_bounds": [
+        1,
+        2,
+        15,
+        31
+      ],
+      "painted_pixels": 236,
+      "native_indexed": "native/tree_narrow_1_sick-indexed.png",
+      "native_rgba": "native/tree_narrow_1_sick.png"
+    },
+    {
+      "name": "tree_narrow_1_dead",
+      "size": "narrow",
+      "state": "dead",
+      "variety": 1,
+      "variety_name": "Forked birch",
+      "size_pixels": [
+        16,
+        32
+      ],
+      "w": 16,
+      "h": 32,
+      "anchor": [
+        8,
+        30
+      ],
+      "palette": "forest_tree_study",
+      "transparent_index": 0,
+      "index_sha256": "d389f5806c8c40d12d66cc46eb111bede474771d455834213b3d3db7ac9670d1",
+      "painted_bounds": [
+        1,
+        1,
+        15,
+        31
+      ],
+      "painted_pixels": 239,
+      "native_indexed": "native/tree_narrow_1_dead-indexed.png",
+      "native_rgba": "native/tree_narrow_1_dead.png"
+    }
+  ],
+  "boards": [
+    {
+      "path": "tree-states-source.png",
+      "sha256": "3451f015acc8eb1717adebf55f838f613f1c9d6310b981e77d200353726f14a9",
+      "panels": [
+        {
+          "name": "tree_broad_0_healthy",
+          "native_rect": [
+            10,
+            157,
+            32,
+            32
+          ],
+          "inspection_scale": 3,
+          "kind": "source on unchanged grass art"
+        },
+        {
+          "name": "tree_broad_0_sick",
+          "native_rect": [
+            186,
+            157,
+            32,
+            32
+          ],
+          "inspection_scale": 3,
+          "kind": "source on unchanged grass art"
+        },
+        {
+          "name": "tree_broad_0_dead",
+          "native_rect": [
+            362,
+            157,
+            32,
+            32
+          ],
+          "inspection_scale": 3,
+          "kind": "source on unchanged grass art"
+        },
+        {
+          "name": "tree_broad_1_healthy",
+          "native_rect": [
+            10,
+            289,
+            32,
+            32
+          ],
+          "inspection_scale": 3,
+          "kind": "source on unchanged grass art"
+        },
+        {
+          "name": "tree_broad_1_sick",
+          "native_rect": [
+            186,
+            289,
+            32,
+            32
+          ],
+          "inspection_scale": 3,
+          "kind": "source on unchanged grass art"
+        },
+        {
+          "name": "tree_broad_1_dead",
+          "native_rect": [
+            362,
+            289,
+            32,
+            32
+          ],
+          "inspection_scale": 3,
+          "kind": "source on unchanged grass art"
+        },
+        {
+          "name": "tree_narrow_0_healthy",
+          "native_rect": [
+            18,
+            421,
+            16,
+            32
+          ],
+          "inspection_scale": 3,
+          "kind": "source on unchanged grass art"
+        },
+        {
+          "name": "tree_narrow_0_sick",
+          "native_rect": [
+            194,
+            421,
+            16,
+            32
+          ],
+          "inspection_scale": 3,
+          "kind": "source on unchanged grass art"
+        },
+        {
+          "name": "tree_narrow_0_dead",
+          "native_rect": [
+            370,
+            421,
+            16,
+            32
+          ],
+          "inspection_scale": 3,
+          "kind": "source on unchanged grass art"
+        },
+        {
+          "name": "tree_narrow_1_healthy",
+          "native_rect": [
+            18,
+            553,
+            16,
+            32
+          ],
+          "inspection_scale": 3,
+          "kind": "source on unchanged grass art"
+        },
+        {
+          "name": "tree_narrow_1_sick",
+          "native_rect": [
+            194,
+            553,
+            16,
+            32
+          ],
+          "inspection_scale": 3,
+          "kind": "source on unchanged grass art"
+        },
+        {
+          "name": "tree_narrow_1_dead",
+          "native_rect": [
+            370,
+            553,
+            16,
+            32
+          ],
+          "inspection_scale": 3,
+          "kind": "source on unchanged grass art"
+        }
+      ]
+    },
+    {
+      "path": "silhouettes-source.png",
+      "sha256": "fa3fac02cd47d87cc4f610c4ce70f826ddd9a1f5b25dcd77440e553fc339c9c9",
+      "panels": [
+        {
+          "name": "tree_broad_0_healthy",
+          "native_rect": [
+            10,
+            157,
+            32,
+            32
+          ],
+          "inspection_scale": 3,
+          "kind": "silhouette diagnostic"
+        },
+        {
+          "name": "tree_broad_0_sick",
+          "native_rect": [
+            186,
+            157,
+            32,
+            32
+          ],
+          "inspection_scale": 3,
+          "kind": "silhouette diagnostic"
+        },
+        {
+          "name": "tree_broad_0_dead",
+          "native_rect": [
+            362,
+            157,
+            32,
+            32
+          ],
+          "inspection_scale": 3,
+          "kind": "silhouette diagnostic"
+        },
+        {
+          "name": "tree_broad_1_healthy",
+          "native_rect": [
+            10,
+            289,
+            32,
+            32
+          ],
+          "inspection_scale": 3,
+          "kind": "silhouette diagnostic"
+        },
+        {
+          "name": "tree_broad_1_sick",
+          "native_rect": [
+            186,
+            289,
+            32,
+            32
+          ],
+          "inspection_scale": 3,
+          "kind": "silhouette diagnostic"
+        },
+        {
+          "name": "tree_broad_1_dead",
+          "native_rect": [
+            362,
+            289,
+            32,
+            32
+          ],
+          "inspection_scale": 3,
+          "kind": "silhouette diagnostic"
+        },
+        {
+          "name": "tree_narrow_0_healthy",
+          "native_rect": [
+            18,
+            421,
+            16,
+            32
+          ],
+          "inspection_scale": 3,
+          "kind": "silhouette diagnostic"
+        },
+        {
+          "name": "tree_narrow_0_sick",
+          "native_rect": [
+            194,
+            421,
+            16,
+            32
+          ],
+          "inspection_scale": 3,
+          "kind": "silhouette diagnostic"
+        },
+        {
+          "name": "tree_narrow_0_dead",
+          "native_rect": [
+            370,
+            421,
+            16,
+            32
+          ],
+          "inspection_scale": 3,
+          "kind": "silhouette diagnostic"
+        },
+        {
+          "name": "tree_narrow_1_healthy",
+          "native_rect": [
+            18,
+            553,
+            16,
+            32
+          ],
+          "inspection_scale": 3,
+          "kind": "silhouette diagnostic"
+        },
+        {
+          "name": "tree_narrow_1_sick",
+          "native_rect": [
+            194,
+            553,
+            16,
+            32
+          ],
+          "inspection_scale": 3,
+          "kind": "silhouette diagnostic"
+        },
+        {
+          "name": "tree_narrow_1_dead",
+          "native_rect": [
+            370,
+            553,
+            16,
+            32
+          ],
+          "inspection_scale": 3,
+          "kind": "silhouette diagnostic"
+        }
+      ]
+    },
+    {
+      "path": "floor-contacts-source.png",
+      "sha256": "84458a20196568b88704888f1d02f3027c309b0e7d85cc19b081a026e872acf3",
+      "panels": [
+        {
+          "name": "tree_broad_0_healthy",
+          "floor": "moss0",
+          "native_rect": [
+            11,
+            96,
+            32,
+            32
+          ]
+        },
+        {
+          "name": "tree_broad_0_sick",
+          "floor": "moss0",
+          "native_rect": [
+            54,
+            96,
+            32,
+            32
+          ]
+        },
+        {
+          "name": "tree_broad_0_dead",
+          "floor": "moss0",
+          "native_rect": [
+            97,
+            96,
+            32,
+            32
+          ]
+        },
+        {
+          "name": "tree_broad_0_healthy",
+          "floor": "path",
+          "native_rect": [
+            155,
+            96,
+            32,
+            32
+          ]
+        },
+        {
+          "name": "tree_broad_0_sick",
+          "floor": "path",
+          "native_rect": [
+            198,
+            96,
+            32,
+            32
+          ]
+        },
+        {
+          "name": "tree_broad_0_dead",
+          "floor": "path",
+          "native_rect": [
+            241,
+            96,
+            32,
+            32
+          ]
+        },
+        {
+          "name": "tree_broad_0_healthy",
+          "floor": "blight_floor",
+          "native_rect": [
+            299,
+            96,
+            32,
+            32
+          ]
+        },
+        {
+          "name": "tree_broad_0_sick",
+          "floor": "blight_floor",
+          "native_rect": [
+            342,
+            96,
+            32,
+            32
+          ]
+        },
+        {
+          "name": "tree_broad_0_dead",
+          "floor": "blight_floor",
+          "native_rect": [
+            385,
+            96,
+            32,
+            32
+          ]
+        },
+        {
+          "name": "tree_broad_1_healthy",
+          "floor": "moss0",
+          "native_rect": [
+            11,
+            178,
+            32,
+            32
+          ]
+        },
+        {
+          "name": "tree_broad_1_sick",
+          "floor": "moss0",
+          "native_rect": [
+            54,
+            178,
+            32,
+            32
+          ]
+        },
+        {
+          "name": "tree_broad_1_dead",
+          "floor": "moss0",
+          "native_rect": [
+            97,
+            178,
+            32,
+            32
+          ]
+        },
+        {
+          "name": "tree_broad_1_healthy",
+          "floor": "path",
+          "native_rect": [
+            155,
+            178,
+            32,
+            32
+          ]
+        },
+        {
+          "name": "tree_broad_1_sick",
+          "floor": "path",
+          "native_rect": [
+            198,
+            178,
+            32,
+            32
+          ]
+        },
+        {
+          "name": "tree_broad_1_dead",
+          "floor": "path",
+          "native_rect": [
+            241,
+            178,
+            32,
+            32
+          ]
+        },
+        {
+          "name": "tree_broad_1_healthy",
+          "floor": "blight_floor",
+          "native_rect": [
+            299,
+            178,
+            32,
+            32
+          ]
+        },
+        {
+          "name": "tree_broad_1_sick",
+          "floor": "blight_floor",
+          "native_rect": [
+            342,
+            178,
+            32,
+            32
+          ]
+        },
+        {
+          "name": "tree_broad_1_dead",
+          "floor": "blight_floor",
+          "native_rect": [
+            385,
+            178,
+            32,
+            32
+          ]
+        },
+        {
+          "name": "tree_narrow_0_healthy",
+          "floor": "moss0",
+          "native_rect": [
+            19,
+            260,
+            16,
+            32
+          ]
+        },
+        {
+          "name": "tree_narrow_0_sick",
+          "floor": "moss0",
+          "native_rect": [
+            62,
+            260,
+            16,
+            32
+          ]
+        },
+        {
+          "name": "tree_narrow_0_dead",
+          "floor": "moss0",
+          "native_rect": [
+            105,
+            260,
+            16,
+            32
+          ]
+        },
+        {
+          "name": "tree_narrow_0_healthy",
+          "floor": "path",
+          "native_rect": [
+            163,
+            260,
+            16,
+            32
+          ]
+        },
+        {
+          "name": "tree_narrow_0_sick",
+          "floor": "path",
+          "native_rect": [
+            206,
+            260,
+            16,
+            32
+          ]
+        },
+        {
+          "name": "tree_narrow_0_dead",
+          "floor": "path",
+          "native_rect": [
+            249,
+            260,
+            16,
+            32
+          ]
+        },
+        {
+          "name": "tree_narrow_0_healthy",
+          "floor": "blight_floor",
+          "native_rect": [
+            307,
+            260,
+            16,
+            32
+          ]
+        },
+        {
+          "name": "tree_narrow_0_sick",
+          "floor": "blight_floor",
+          "native_rect": [
+            350,
+            260,
+            16,
+            32
+          ]
+        },
+        {
+          "name": "tree_narrow_0_dead",
+          "floor": "blight_floor",
+          "native_rect": [
+            393,
+            260,
+            16,
+            32
+          ]
+        },
+        {
+          "name": "tree_narrow_1_healthy",
+          "floor": "moss0",
+          "native_rect": [
+            19,
+            342,
+            16,
+            32
+          ]
+        },
+        {
+          "name": "tree_narrow_1_sick",
+          "floor": "moss0",
+          "native_rect": [
+            62,
+            342,
+            16,
+            32
+          ]
+        },
+        {
+          "name": "tree_narrow_1_dead",
+          "floor": "moss0",
+          "native_rect": [
+            105,
+            342,
+            16,
+            32
+          ]
+        },
+        {
+          "name": "tree_narrow_1_healthy",
+          "floor": "path",
+          "native_rect": [
+            163,
+            342,
+            16,
+            32
+          ]
+        },
+        {
+          "name": "tree_narrow_1_sick",
+          "floor": "path",
+          "native_rect": [
+            206,
+            342,
+            16,
+            32
+          ]
+        },
+        {
+          "name": "tree_narrow_1_dead",
+          "floor": "path",
+          "native_rect": [
+            249,
+            342,
+            16,
+            32
+          ]
+        },
+        {
+          "name": "tree_narrow_1_healthy",
+          "floor": "blight_floor",
+          "native_rect": [
+            307,
+            342,
+            16,
+            32
+          ]
+        },
+        {
+          "name": "tree_narrow_1_sick",
+          "floor": "blight_floor",
+          "native_rect": [
+            350,
+            342,
+            16,
+            32
+          ]
+        },
+        {
+          "name": "tree_narrow_1_dead",
+          "floor": "blight_floor",
+          "native_rect": [
+            393,
+            342,
+            16,
+            32
+          ]
+        }
+      ]
+    }
+  ],
+  "note": "Native canvas, visible bounds, ground origin and physical collider are separate contracts."
+}

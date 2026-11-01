@@ -16,3 +16,7 @@
 # Exact Emerald-canopy review linker maps
 /art-review/forest-canopy-emerald/validation/frozen/v19/bartgame.map -whitespace
 /art-review/forest-canopy-emerald/validation/frozen/v29/bartgame.map -whitespace
+
+# Exact compact-tree review linker maps
+/art-review/forest-tree-study/validation/frozen/v29/bartgame.map -whitespace
+/art-review/forest-tree-study/validation/frozen/v30/bartgame.map -whitespace

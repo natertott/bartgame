@@ -1,0 +1,3611 @@
+{
+  "method": "Focused independent native/ROM audit for the repeated tree diagnostic grove.\n\nThe guide supplies design advice, not test thresholds. These checks establish\nnative dimensions, index/palette/map fidelity and scope; visual judgment stays\nseparate from numerical success. The compact grove is a deliberate review\nfixture, not a naturally generated forest room.",
+  "source_commit": "c269b67b9f0652902a5295906f4d0c4d07e2710c",
+  "auditor_sha256": "6d2a10a23f93dcc4e510b2811f228b2d66e3087d57460b4277cb67f5f1ca2323",
+  "native_trees": [
+    {
+      "name": "tree_broad_0_healthy",
+      "size": "broad",
+      "state": "healthy",
+      "variety": 0,
+      "variety_name": "Round oak",
+      "size_pixels": [
+        32,
+        32
+      ],
+      "w": 32,
+      "h": 32,
+      "anchor": [
+        16,
+        30
+      ],
+      "palette": "forest_tree_study",
+      "transparent_index": 0,
+      "pixel_sha256": "34787872fb47ac31b57b9b29779d046b928ee90345840dd3ac109a9c29518d2a",
+      "painted_pixels": 601,
+      "painted_bounds": [
+        1,
+        1,
+        31,
+        31
+      ],
+      "map_entries": 16
+    },
+    {
+      "name": "tree_broad_0_sick",
+      "size": "broad",
+      "state": "sick",
+      "variety": 0,
+      "variety_name": "Round oak",
+      "size_pixels": [
+        32,
+        32
+      ],
+      "w": 32,
+      "h": 32,
+      "anchor": [
+        16,
+        30
+      ],
+      "palette": "forest_tree_study",
+      "transparent_index": 0,
+      "pixel_sha256": "b0ad628a534d16305ce2344e9a028d251c63fb201d4d32e8577be83c5261218a",
+      "painted_pixels": 464,
+      "painted_bounds": [
+        2,
+        2,
+        31,
+        31
+      ],
+      "map_entries": 16
+    },
+    {
+      "name": "tree_broad_0_dead",
+      "size": "broad",
+      "state": "dead",
+      "variety": 0,
+      "variety_name": "Round oak",
+      "size_pixels": [
+        32,
+        32
+      ],
+      "w": 32,
+      "h": 32,
+      "anchor": [
+        16,
+        30
+      ],
+      "palette": "forest_tree_study",
+      "transparent_index": 0,
+      "pixel_sha256": "538f76ea7c24d908ebe5edbcbb4662908b4557d69f51ff1c6891af95ba13d843",
+      "painted_pixels": 372,
+      "painted_bounds": [
+        1,
+        2,
+        31,
+        31
+      ],
+      "map_entries": 16
+    },
+    {
+      "name": "tree_broad_1_healthy",
+      "size": "broad",
+      "state": "healthy",
+      "variety": 1,
+      "variety_name": "Crooked oak",
+      "size_pixels": [
+        32,
+        32
+      ],
+      "w": 32,
+      "h": 32,
+      "anchor": [
+        16,
+        30
+      ],
+      "palette": "forest_tree_study",
+      "transparent_index": 0,
+      "pixel_sha256": "71bc47aaa4200348348ce39fd9bbef2b6d60adde8f76c47520df33b22aab94e7",
+      "painted_pixels": 552,
+      "painted_bounds": [
+        1,
+        2,
+        31,
+        31
+      ],
+      "map_entries": 16
+    },
+    {
+      "name": "tree_broad_1_sick",
+      "size": "broad",
+      "state": "sick",
+      "variety": 1,
+      "variety_name": "Crooked oak",
+      "size_pixels": [
+        32,
+        32
+      ],
+      "w": 32,
+      "h": 32,
+      "anchor": [
+        16,
+        30
+      ],
+      "palette": "forest_tree_study",
+      "transparent_index": 0,
+      "pixel_sha256": "57fc590ba66f25f1f6abffa2d5884d7010264f1b583cf23953d9a056d24dca30",
+      "painted_pixels": 426,
+      "painted_bounds": [
+        1,
+        4,
+        31,
+        31
+      ],
+      "map_entries": 16
+    },
+    {
+      "name": "tree_broad_1_dead",
+      "size": "broad",
+      "state": "dead",
+      "variety": 1,
+      "variety_name": "Crooked oak",
+      "size_pixels": [
+        32,
+        32
+      ],
+      "w": 32,
+      "h": 32,
+      "anchor": [
+        16,
+        30
+      ],
+      "palette": "forest_tree_study",
+      "transparent_index": 0,
+      "pixel_sha256": "b56a0e60328bddc427d30a15737022c82bf0d0a8f74b5b7b5b6acde39d39e799",
+      "painted_pixels": 362,
+      "painted_bounds": [
+        1,
+        2,
+        31,
+        31
+      ],
+      "map_entries": 16
+    },
+    {
+      "name": "tree_narrow_0_healthy",
+      "size": "narrow",
+      "state": "healthy",
+      "variety": 0,
+      "variety_name": "Small poplar",
+      "size_pixels": [
+        16,
+        32
+      ],
+      "w": 16,
+      "h": 32,
+      "anchor": [
+        8,
+        30
+      ],
+      "palette": "forest_tree_study",
+      "transparent_index": 0,
+      "pixel_sha256": "68411b5502fe91d8997b7417fef3a28b8d4808706e9df00ff9c46ffb53277c5e",
+      "painted_pixels": 286,
+      "painted_bounds": [
+        1,
+        1,
+        15,
+        31
+      ],
+      "map_entries": 8
+    },
+    {
+      "name": "tree_narrow_0_sick",
+      "size": "narrow",
+      "state": "sick",
+      "variety": 0,
+      "variety_name": "Small poplar",
+      "size_pixels": [
+        16,
+        32
+      ],
+      "w": 16,
+      "h": 32,
+      "anchor": [
+        8,
+        30
+      ],
+      "palette": "forest_tree_study",
+      "transparent_index": 0,
+      "pixel_sha256": "acc1257db961dc8252d78e0f47fc9508df533fe19412edd84b4d179dfa80340d",
+      "painted_pixels": 247,
+      "painted_bounds": [
+        1,
+        2,
+        15,
+        31
+      ],
+      "map_entries": 8
+    },
+    {
+      "name": "tree_narrow_0_dead",
+      "size": "narrow",
+      "state": "dead",
+      "variety": 0,
+      "variety_name": "Small poplar",
+      "size_pixels": [
+        16,
+        32
+      ],
+      "w": 16,
+      "h": 32,
+      "anchor": [
+        8,
+        30
+      ],
+      "palette": "forest_tree_study",
+      "transparent_index": 0,
+      "pixel_sha256": "1db599aa3aa44558ea170c7b71c03db2bf74ac5c96f83b4ab70ed511b8fb272e",
+      "painted_pixels": 247,
+      "painted_bounds": [
+        1,
+        1,
+        15,
+        31
+      ],
+      "map_entries": 8
+    },
+    {
+      "name": "tree_narrow_1_healthy",
+      "size": "narrow",
+      "state": "healthy",
+      "variety": 1,
+      "variety_name": "Forked birch",
+      "size_pixels": [
+        16,
+        32
+      ],
+      "w": 16,
+      "h": 32,
+      "anchor": [
+        8,
+        30
+      ],
+      "palette": "forest_tree_study",
+      "transparent_index": 0,
+      "pixel_sha256": "ceb9261da9dddcbe15b83ef807a3c5a1f75c18dd79fc32978520591c1ecb5f02",
+      "painted_pixels": 294,
+      "painted_bounds": [
+        1,
+        1,
+        15,
+        31
+      ],
+      "map_entries": 8
+    },
+    {
+      "name": "tree_narrow_1_sick",
+      "size": "narrow",
+      "state": "sick",
+      "variety": 1,
+      "variety_name": "Forked birch",
+      "size_pixels": [
+        16,
+        32
+      ],
+      "w": 16,
+      "h": 32,
+      "anchor": [
+        8,
+        30
+      ],
+      "palette": "forest_tree_study",
+      "transparent_index": 0,
+      "pixel_sha256": "70455220d1d3f8fb95afc53c34f53d0c96127f33c7199080d466fed839bf7732",
+      "painted_pixels": 236,
+      "painted_bounds": [
+        1,
+        2,
+        15,
+        31
+      ],
+      "map_entries": 8
+    },
+    {
+      "name": "tree_narrow_1_dead",
+      "size": "narrow",
+      "state": "dead",
+      "variety": 1,
+      "variety_name": "Forked birch",
+      "size_pixels": [
+        16,
+        32
+      ],
+      "w": 16,
+      "h": 32,
+      "anchor": [
+        8,
+        30
+      ],
+      "palette": "forest_tree_study",
+      "transparent_index": 0,
+      "pixel_sha256": "d389f5806c8c40d12d66cc46eb111bede474771d455834213b3d3db7ac9670d1",
+      "painted_pixels": 239,
+      "painted_bounds": [
+        1,
+        1,
+        15,
+        31
+      ],
+      "map_entries": 8
+    }
+  ],
+  "protected_scope": {
+    "immutable_arrays": 252,
+    "changed_arrays": []
+  },
+  "historical_controls": [
+    {
+      "profile": 0,
+      "byte_identical": true,
+      "current_sha256": "9330a44a4e27d99606a757134aa41a62adb122a74315c400e1ad3427048c8661",
+      "previous_sha256": "9330a44a4e27d99606a757134aa41a62adb122a74315c400e1ad3427048c8661"
+    },
+    {
+      "profile": 1,
+      "byte_identical": true,
+      "current_sha256": "aa1dda5a1fe8bb31982d7f5beaeba7497011badccc34900037ef687cb0bc3067",
+      "previous_sha256": "aa1dda5a1fe8bb31982d7f5beaeba7497011badccc34900037ef687cb0bc3067"
+    },
+    {
+      "profile": 2,
+      "byte_identical": true,
+      "current_sha256": "50f559ec16aaa2e08bb446349c8a8e122ff5ec6b983cea6b32a0b2d5be3cc515",
+      "previous_sha256": "50f559ec16aaa2e08bb446349c8a8e122ff5ec6b983cea6b32a0b2d5be3cc515"
+    },
+    {
+      "profile": 3,
+      "byte_identical": true,
+      "current_sha256": "85238cd938ef2778f651bf005eb9655216569d8194f9aefe81cc9e3c70f85673",
+      "previous_sha256": "85238cd938ef2778f651bf005eb9655216569d8194f9aefe81cc9e3c70f85673"
+    },
+    {
+      "profile": 4,
+      "byte_identical": true,
+      "current_sha256": "411035db3a288fabe0aef2f3cabc21199be324d1445de5c6a8323942cda44214",
+      "previous_sha256": "411035db3a288fabe0aef2f3cabc21199be324d1445de5c6a8323942cda44214"
+    },
+    {
+      "profile": 5,
+      "byte_identical": true,
+      "current_sha256": "0904dd78511be6df01adb8e49e40064b7a6d95b4c07368e4a0699077d003e8a5",
+      "previous_sha256": "0904dd78511be6df01adb8e49e40064b7a6d95b4c07368e4a0699077d003e8a5"
+    },
+    {
+      "profile": 6,
+      "byte_identical": true,
+      "current_sha256": "fc8e92f92a4aa43aa5cc56c0caff7a6dc1394f21dc356e7830ef9a7e07f234a1",
+      "previous_sha256": "fc8e92f92a4aa43aa5cc56c0caff7a6dc1394f21dc356e7830ef9a7e07f234a1"
+    },
+    {
+      "profile": 7,
+      "byte_identical": true,
+      "current_sha256": "3fe6143a9c9de8ccb79248e20b69b199aa462078c92827e71805ebf5826e11df",
+      "previous_sha256": "3fe6143a9c9de8ccb79248e20b69b199aa462078c92827e71805ebf5826e11df"
+    },
+    {
+      "profile": 8,
+      "byte_identical": true,
+      "current_sha256": "c72c07bf22bd15eaf3898e1fb0a75eabb7b2dc4c85ead74e68ba30a5f181e8f9",
+      "previous_sha256": "c72c07bf22bd15eaf3898e1fb0a75eabb7b2dc4c85ead74e68ba30a5f181e8f9"
+    },
+    {
+      "profile": 9,
+      "byte_identical": true,
+      "current_sha256": "6e5af6e3ec8e960f2e11cbd485a4c6e8d11f4e6eca202d46f15246cc3cca7538",
+      "previous_sha256": "6e5af6e3ec8e960f2e11cbd485a4c6e8d11f4e6eca202d46f15246cc3cca7538"
+    },
+    {
+      "profile": 10,
+      "byte_identical": true,
+      "current_sha256": "3876a966293a6cfd68eb39f881dd107b1da4bc14f0b764223712251321784d07",
+      "previous_sha256": "3876a966293a6cfd68eb39f881dd107b1da4bc14f0b764223712251321784d07"
+    },
+    {
+      "profile": 11,
+      "byte_identical": true,
+      "current_sha256": "1a125213d152e764ad201f87d6097c5d16cc9c8f49ed5837c6a5c6fafd3f940c",
+      "previous_sha256": "1a125213d152e764ad201f87d6097c5d16cc9c8f49ed5837c6a5c6fafd3f940c"
+    },
+    {
+      "profile": 12,
+      "byte_identical": true,
+      "current_sha256": "b22ee8a09b350e30a7b54aafd8dc24ca688b9c28122333576d83390dcb43bbed",
+      "previous_sha256": "b22ee8a09b350e30a7b54aafd8dc24ca688b9c28122333576d83390dcb43bbed"
+    },
+    {
+      "profile": 13,
+      "byte_identical": true,
+      "current_sha256": "cb51ca2122dd0ae22796eda6d574662074d7021ce7e42ecaa1dd8e0cd62aee2f",
+      "previous_sha256": "cb51ca2122dd0ae22796eda6d574662074d7021ce7e42ecaa1dd8e0cd62aee2f"
+    },
+    {
+      "profile": 14,
+      "byte_identical": true,
+      "current_sha256": "a511bfeb34db8d665fcf7fc49a643f1dd7250a4413f26f114baeb4991756bd91",
+      "previous_sha256": "a511bfeb34db8d665fcf7fc49a643f1dd7250a4413f26f114baeb4991756bd91"
+    },
+    {
+      "profile": 15,
+      "byte_identical": true,
+      "current_sha256": "75706dae8ecd8bee0a7475a5eb5aaa7463cbcb23ccca627859e84b24269300c7",
+      "previous_sha256": "75706dae8ecd8bee0a7475a5eb5aaa7463cbcb23ccca627859e84b24269300c7"
+    },
+    {
+      "profile": 16,
+      "byte_identical": true,
+      "current_sha256": "4cdd03ae3c2f55d96dece4d0e67d0cd1838e0d3c316ed2bda711df9e2ff9a8e3",
+      "previous_sha256": "4cdd03ae3c2f55d96dece4d0e67d0cd1838e0d3c316ed2bda711df9e2ff9a8e3"
+    },
+    {
+      "profile": 17,
+      "byte_identical": true,
+      "current_sha256": "4dda2734fd2f4934b08c14aa5cbb7a9854f8fecca237d7677ebcf74bfb5ee2b3",
+      "previous_sha256": "4dda2734fd2f4934b08c14aa5cbb7a9854f8fecca237d7677ebcf74bfb5ee2b3"
+    },
+    {
+      "profile": 18,
+      "byte_identical": true,
+      "current_sha256": "54768ae3f4462743dabd72e03ddd3c9f711ad4ebff2e09474bd3bd85d427e4af",
+      "previous_sha256": "54768ae3f4462743dabd72e03ddd3c9f711ad4ebff2e09474bd3bd85d427e4af"
+    },
+    {
+      "profile": 19,
+      "byte_identical": true,
+      "current_sha256": "09aa5274a91618c5a06a74bd7ba61bebc6ebb71d738aeb48de86f8b91930c3b7",
+      "previous_sha256": "09aa5274a91618c5a06a74bd7ba61bebc6ebb71d738aeb48de86f8b91930c3b7"
+    },
+    {
+      "profile": 20,
+      "byte_identical": true,
+      "current_sha256": "44cecd939239adc4f62130366372b72ae4044fc390c6ff887aa7eb334791eb47",
+      "previous_sha256": "44cecd939239adc4f62130366372b72ae4044fc390c6ff887aa7eb334791eb47"
+    },
+    {
+      "profile": 21,
+      "byte_identical": true,
+      "current_sha256": "4afbe064f60a8f7741f132ea1c3562199dad5574938a46833dc6a3a1324e95e5",
+      "previous_sha256": "4afbe064f60a8f7741f132ea1c3562199dad5574938a46833dc6a3a1324e95e5"
+    },
+    {
+      "profile": 22,
+      "byte_identical": true,
+      "current_sha256": "0e058c31efb7182646112ab79a2d21a8e4c6530c0fa9b7406619fe54cc62e345",
+      "previous_sha256": "0e058c31efb7182646112ab79a2d21a8e4c6530c0fa9b7406619fe54cc62e345"
+    },
+    {
+      "profile": 23,
+      "byte_identical": true,
+      "current_sha256": "68f99c3a73c0c824a0617283890c74798342799f5c81a8eb5ae2fa24ec103e59",
+      "previous_sha256": "68f99c3a73c0c824a0617283890c74798342799f5c81a8eb5ae2fa24ec103e59"
+    },
+    {
+      "profile": 24,
+      "byte_identical": true,
+      "current_sha256": "66a8d99b08d3fc4d55ef55f2148d26938207697c3c5ec1d918938fb9308a9226",
+      "previous_sha256": "66a8d99b08d3fc4d55ef55f2148d26938207697c3c5ec1d918938fb9308a9226"
+    },
+    {
+      "profile": 25,
+      "byte_identical": true,
+      "current_sha256": "750f173a8504a298114295c0fa5a620a1365aa9e7e9918f3f04916698478980f",
+      "previous_sha256": "750f173a8504a298114295c0fa5a620a1365aa9e7e9918f3f04916698478980f"
+    },
+    {
+      "profile": 26,
+      "byte_identical": true,
+      "current_sha256": "8f6184789e8bca6c38ff83a8bb8e1df7167da681502eb6d68838dd4a512c0ad8",
+      "previous_sha256": "8f6184789e8bca6c38ff83a8bb8e1df7167da681502eb6d68838dd4a512c0ad8"
+    },
+    {
+      "profile": 27,
+      "byte_identical": true,
+      "current_sha256": "473ec3ca0bdf37f54b62434b65253a827616b2adcc25df8756997f309f6f4b7b",
+      "previous_sha256": "473ec3ca0bdf37f54b62434b65253a827616b2adcc25df8756997f309f6f4b7b"
+    },
+    {
+      "profile": 28,
+      "byte_identical": true,
+      "current_sha256": "420cc65e9b1139dcadd939715800464728864e7e3cd776ca079d3dcc786f21b3",
+      "previous_sha256": "420cc65e9b1139dcadd939715800464728864e7e3cd776ca079d3dcc786f21b3"
+    },
+    {
+      "profile": 29,
+      "byte_identical": true,
+      "current_sha256": "ce60072a9484432c23c6059a74ba115df2b09c5e0f0c3bb2a68b975de9fedf54",
+      "previous_sha256": "ce60072a9484432c23c6059a74ba115df2b09c5e0f0c3bb2a68b975de9fedf54"
+    }
+  ],
+  "source_gallery": {
+    "native_images": 12,
+    "hashed_files": 32,
+    "source_panels": 60,
+    "manifest_sha256": "ed658d4b94a898efca1137f9b5915828f4424ce58219830ea3f42c5d5503b7a9",
+    "limits": "Source previews and silhouette/value diagnostics are not mGBA framebuffers."
+  },
+  "runtime": {
+    "contexts": 8,
+    "observed_frames": 352,
+    "movies": 2,
+    "exact_sampled_GIFs": 2,
+    "minimum_visible_pixels": 43,
+    "minimum_connected_component": 12,
+    "report_sha256": "16ed593456982cb40104c1260af6c77b19707181541f8bfa40ed495fd34e1540",
+    "limits": "Authored diagnostic grove; finite ordinary-input and native keyframe proof, not naturally generated forest adoption or universal playtesting."
+  },
+  "passed": 599,
+  "total": 599,
+  "failures": [],
+  "checks": [
+    {
+      "group": "provenance",
+      "name": "profile30 ROM binds the frozen source",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "art/blight_reference.py current bytes match frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "art/blight_reference_source.py current bytes match frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "art/bloom_animations.py current bytes match frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "art/bloom_fx.py current bytes match frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "art/bloom_loads.py current bytes match frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "art/clean_items.py current bytes match frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "art/enemy_heart.py current bytes match frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "art/enemy_studies.py current bytes match frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "art/enemy_studies_heavy.py current bytes match frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "art/enemy_studies_palette.py current bytes match frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "art/enemy_studies_small.py current bytes match frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "art/enemy_studies_soft.py current bytes match frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "art/env_pack.py current bytes match frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "art/faces.py current bytes match frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "art/folk.py current bytes match frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "art/forest_art.py current bytes match frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "art/forest_canopy_adaptive.py current bytes match frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "art/forest_canopy_adaptive_b.py current bytes match frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "art/forest_canopy_adaptive_terrain.py current bytes match frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "art/forest_canopy_emerald.py current bytes match frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "art/forest_canopy_emerald_terrain.py current bytes match frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "art/forest_concepts.py current bytes match frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "art/forest_concepts_folk.py current bytes match frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "art/forest_concepts_props.py current bytes match frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "art/forest_concepts_terrain.py current bytes match frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "art/forest_concepts_v2_folk.py current bytes match frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "art/forest_concepts_v2_props.py current bytes match frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "art/forest_concepts_v2_terrain.py current bytes match frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "art/forest_concepts_v2_topology.py current bytes match frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "art/forest_concepts_v3_terrain.py current bytes match frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "art/forest_sprites.py current bytes match frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "art/forest_tree_study.py current bytes match frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "art/healthy_reference.py current bytes match frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "art/hero.py current bytes match frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "art/interactive_props.py current bytes match frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "art/interactive_tiles.py current bytes match frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "art/items.py current bytes match frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "art/items32.py current bytes match frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "art/marks.py current bytes match frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "art/monsters.py current bytes match frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "art/pack.py current bytes match frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "art/pack_tiles.py current bytes match frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "art/paint.py current bytes match frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "art/palettes.py current bytes match frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "art/portraits.py current bytes match frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "art/px.py current bytes match frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "art/reboot_actors.py current bytes match frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "art/reboot_core.py current bytes match frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "art/reboot_items.py current bytes match frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "art/reboot_terrain.py current bytes match frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "art/reboot_ui.py current bytes match frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "art/reference_assets.py current bytes match frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "art/reference_items.py current bytes match frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "art/rooms.py current bytes match frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "art/sample.py current bytes match frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "art/sewer_concepts.py current bytes match frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "art/sewer_concepts_npcs.py current bytes match frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "art/sewer_concepts_terrain.py current bytes match frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "art/sewer_final.py current bytes match frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "art/sewer_final_contracts.py current bytes match frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "art/sewer_v3_fixtures.py current bytes match frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "art/sprites.py current bytes match frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "art/style.py current bytes match frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "art/sw_cut.py current bytes match frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "art/sw_drain.py current bytes match frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "art/sw_folk.py current bytes match frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "art/sw_hall.py current bytes match frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "art/sw_paint.py current bytes match frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "art/sw_props.py current bytes match frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "art/sword_studies.py current bytes match frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "art/tile_art.py current bytes match frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "art/tiles.py current bytes match frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "art/tiles_style.py current bytes match frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "art/title.py current bytes match frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "art/ui_font.py current bytes match frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "art/ui_kit.py current bytes match frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "art/ui_studies.py current bytes match frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "art/wood_art.py current bytes match frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "art/reboot_contracts.json current bytes match frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "Makefile current bytes match frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "gba.ld current bytes match frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "tools/build_assets.py current bytes match frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "src/actor.c current bytes match frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "src/actor.h current bytes match frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "src/ambient.c current bytes match frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "src/ambient.h current bytes match frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "src/appearance.c current bytes match frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "src/appearance.h current bytes match frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "src/boss.c current bytes match frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "src/boss.h current bytes match frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "src/canopy_scene.c current bytes match frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "src/canopy_scene.h current bytes match frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "src/crt0.s current bytes match frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "src/enemy.c current bytes match frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "src/enemy.h current bytes match frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "src/game.c current bytes match frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "src/game.h current bytes match frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "src/gba.h current bytes match frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "src/interactive.c current bytes match frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "src/interactive.h current bytes match frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "src/items.c current bytes match frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "src/items.h current bytes match frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "src/main.c current bytes match frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "src/menu.c current bytes match frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "src/menu.h current bytes match frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "src/menu_layouts_a.c current bytes match frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "src/menu_layouts_b.c current bytes match frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "src/menu_studies.c current bytes match frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "src/menu_studies.h current bytes match frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "src/myst.c current bytes match frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "src/myst.h current bytes match frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "src/npc.c current bytes match frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "src/npc.h current bytes match frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "src/objects.c current bytes match frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "src/objects.h current bytes match frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "src/player.c current bytes match frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "src/player.h current bytes match frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "src/react.c current bytes match frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "src/react.h current bytes match frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "src/room.c current bytes match frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "src/room.h current bytes match frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "src/roomgen.c current bytes match frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "src/roomgen.h current bytes match frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "src/save.c current bytes match frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "src/save.h current bytes match frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "src/sound.c current bytes match frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "src/sound.h current bytes match frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "src/text.c current bytes match frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "src/text.h current bytes match frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "src/tree_study.c current bytes match frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "src/tree_study.h current bytes match frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "src/ui.c current bytes match frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "src/ui.h current bytes match frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "src/util.c current bytes match frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "src/util.h current bytes match frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "src/video.c current bytes match frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "src/video.h current bytes match frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "src/vwf.c current bytes match frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "src/vwf.h current bytes match frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "src/world.c current bytes match frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "src/world.h current bytes match frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "native",
+      "name": "twelve source entries cover both sizes, varieties and structural states",
+      "passed": true
+    },
+    {
+      "group": "budget",
+      "name": "compact review atlas fits BG tile limit",
+      "passed": true,
+      "detail": {
+        "tiles": 129,
+        "limit": 1024
+      }
+    },
+    {
+      "group": "palette",
+      "name": "shared legal 16-ink RGB555 bank is packed exactly",
+      "passed": true
+    },
+    {
+      "group": "native",
+      "name": "native transparent tile zero is all zero nibbles",
+      "passed": true
+    },
+    {
+      "group": "descriptor",
+      "name": "tree_broad_0_healthy native dimensions and state/order metadata",
+      "passed": true
+    },
+    {
+      "group": "native",
+      "name": "tree_broad_0_healthy source index range and fixed root anchor",
+      "passed": true
+    },
+    {
+      "group": "native",
+      "name": "tree_broad_0_healthy every packed nibble/flip equals direct native art",
+      "passed": true
+    },
+    {
+      "group": "palette",
+      "name": "tree_broad_0_healthy every subtile uses the shared tree bank",
+      "passed": true
+    },
+    {
+      "group": "descriptor",
+      "name": "tree_broad_0_sick native dimensions and state/order metadata",
+      "passed": true
+    },
+    {
+      "group": "native",
+      "name": "tree_broad_0_sick source index range and fixed root anchor",
+      "passed": true
+    },
+    {
+      "group": "native",
+      "name": "tree_broad_0_sick every packed nibble/flip equals direct native art",
+      "passed": true
+    },
+    {
+      "group": "palette",
+      "name": "tree_broad_0_sick every subtile uses the shared tree bank",
+      "passed": true
+    },
+    {
+      "group": "descriptor",
+      "name": "tree_broad_0_dead native dimensions and state/order metadata",
+      "passed": true
+    },
+    {
+      "group": "native",
+      "name": "tree_broad_0_dead source index range and fixed root anchor",
+      "passed": true
+    },
+    {
+      "group": "native",
+      "name": "tree_broad_0_dead every packed nibble/flip equals direct native art",
+      "passed": true
+    },
+    {
+      "group": "palette",
+      "name": "tree_broad_0_dead every subtile uses the shared tree bank",
+      "passed": true
+    },
+    {
+      "group": "descriptor",
+      "name": "tree_broad_1_healthy native dimensions and state/order metadata",
+      "passed": true
+    },
+    {
+      "group": "native",
+      "name": "tree_broad_1_healthy source index range and fixed root anchor",
+      "passed": true
+    },
+    {
+      "group": "native",
+      "name": "tree_broad_1_healthy every packed nibble/flip equals direct native art",
+      "passed": true
+    },
+    {
+      "group": "palette",
+      "name": "tree_broad_1_healthy every subtile uses the shared tree bank",
+      "passed": true
+    },
+    {
+      "group": "descriptor",
+      "name": "tree_broad_1_sick native dimensions and state/order metadata",
+      "passed": true
+    },
+    {
+      "group": "native",
+      "name": "tree_broad_1_sick source index range and fixed root anchor",
+      "passed": true
+    },
+    {
+      "group": "native",
+      "name": "tree_broad_1_sick every packed nibble/flip equals direct native art",
+      "passed": true
+    },
+    {
+      "group": "palette",
+      "name": "tree_broad_1_sick every subtile uses the shared tree bank",
+      "passed": true
+    },
+    {
+      "group": "descriptor",
+      "name": "tree_broad_1_dead native dimensions and state/order metadata",
+      "passed": true
+    },
+    {
+      "group": "native",
+      "name": "tree_broad_1_dead source index range and fixed root anchor",
+      "passed": true
+    },
+    {
+      "group": "native",
+      "name": "tree_broad_1_dead every packed nibble/flip equals direct native art",
+      "passed": true
+    },
+    {
+      "group": "palette",
+      "name": "tree_broad_1_dead every subtile uses the shared tree bank",
+      "passed": true
+    },
+    {
+      "group": "descriptor",
+      "name": "tree_narrow_0_healthy native dimensions and state/order metadata",
+      "passed": true
+    },
+    {
+      "group": "native",
+      "name": "tree_narrow_0_healthy source index range and fixed root anchor",
+      "passed": true
+    },
+    {
+      "group": "native",
+      "name": "tree_narrow_0_healthy every packed nibble/flip equals direct native art",
+      "passed": true
+    },
+    {
+      "group": "palette",
+      "name": "tree_narrow_0_healthy every subtile uses the shared tree bank",
+      "passed": true
+    },
+    {
+      "group": "descriptor",
+      "name": "tree_narrow_0_sick native dimensions and state/order metadata",
+      "passed": true
+    },
+    {
+      "group": "native",
+      "name": "tree_narrow_0_sick source index range and fixed root anchor",
+      "passed": true
+    },
+    {
+      "group": "native",
+      "name": "tree_narrow_0_sick every packed nibble/flip equals direct native art",
+      "passed": true
+    },
+    {
+      "group": "palette",
+      "name": "tree_narrow_0_sick every subtile uses the shared tree bank",
+      "passed": true
+    },
+    {
+      "group": "descriptor",
+      "name": "tree_narrow_0_dead native dimensions and state/order metadata",
+      "passed": true
+    },
+    {
+      "group": "native",
+      "name": "tree_narrow_0_dead source index range and fixed root anchor",
+      "passed": true
+    },
+    {
+      "group": "native",
+      "name": "tree_narrow_0_dead every packed nibble/flip equals direct native art",
+      "passed": true
+    },
+    {
+      "group": "palette",
+      "name": "tree_narrow_0_dead every subtile uses the shared tree bank",
+      "passed": true
+    },
+    {
+      "group": "descriptor",
+      "name": "tree_narrow_1_healthy native dimensions and state/order metadata",
+      "passed": true
+    },
+    {
+      "group": "native",
+      "name": "tree_narrow_1_healthy source index range and fixed root anchor",
+      "passed": true
+    },
+    {
+      "group": "native",
+      "name": "tree_narrow_1_healthy every packed nibble/flip equals direct native art",
+      "passed": true
+    },
+    {
+      "group": "palette",
+      "name": "tree_narrow_1_healthy every subtile uses the shared tree bank",
+      "passed": true
+    },
+    {
+      "group": "descriptor",
+      "name": "tree_narrow_1_sick native dimensions and state/order metadata",
+      "passed": true
+    },
+    {
+      "group": "native",
+      "name": "tree_narrow_1_sick source index range and fixed root anchor",
+      "passed": true
+    },
+    {
+      "group": "native",
+      "name": "tree_narrow_1_sick every packed nibble/flip equals direct native art",
+      "passed": true
+    },
+    {
+      "group": "palette",
+      "name": "tree_narrow_1_sick every subtile uses the shared tree bank",
+      "passed": true
+    },
+    {
+      "group": "descriptor",
+      "name": "tree_narrow_1_dead native dimensions and state/order metadata",
+      "passed": true
+    },
+    {
+      "group": "native",
+      "name": "tree_narrow_1_dead source index range and fixed root anchor",
+      "passed": true
+    },
+    {
+      "group": "native",
+      "name": "tree_narrow_1_dead every packed nibble/flip equals direct native art",
+      "passed": true
+    },
+    {
+      "group": "palette",
+      "name": "tree_narrow_1_dead every subtile uses the shared tree bank",
+      "passed": true
+    },
+    {
+      "group": "state",
+      "name": "broad0 healthy/sick/dead silhouettes differ beyond hue",
+      "passed": true
+    },
+    {
+      "group": "state",
+      "name": "broad1 healthy/sick/dead silhouettes differ beyond hue",
+      "passed": true
+    },
+    {
+      "group": "state",
+      "name": "narrow0 healthy/sick/dead silhouettes differ beyond hue",
+      "passed": true
+    },
+    {
+      "group": "state",
+      "name": "narrow1 healthy/sick/dead silhouettes differ beyond hue",
+      "passed": true
+    },
+    {
+      "group": "floor",
+      "name": "MOSS0 compact atlas retains original native floor pixels/banks",
+      "passed": true
+    },
+    {
+      "group": "floor",
+      "name": "PATH compact atlas retains original native floor pixels/banks",
+      "passed": true
+    },
+    {
+      "group": "floor",
+      "name": "BLIGHT_FLOOR compact atlas retains original native floor pixels/banks",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "metatile and normal sprite identifiers unchanged",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "forest complete normal tile/map/palette/animation payload unchanged",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "sewer complete normal tile/map/palette/animation payload unchanged",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "myst complete normal tile/map/palette/animation payload unchanged",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "hero complete normal OBJ descriptor and pixel payload unchanged",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "sword complete normal OBJ descriptor and pixel payload unchanged",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "shield complete normal OBJ descriptor and pixel payload unchanged",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "items complete normal OBJ descriptor and pixel payload unchanged",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "beetle complete normal OBJ descriptor and pixel payload unchanged",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "bat complete normal OBJ descriptor and pixel payload unchanged",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "slime complete normal OBJ descriptor and pixel payload unchanged",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "spitter complete normal OBJ descriptor and pixel payload unchanged",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "knight complete normal OBJ descriptor and pixel payload unchanged",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "ksword complete normal OBJ descriptor and pixel payload unchanged",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "fx complete normal OBJ descriptor and pixel payload unchanged",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "proj complete normal OBJ descriptor and pixel payload unchanged",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "npc complete normal OBJ descriptor and pixel payload unchanged",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "boss complete normal OBJ descriptor and pixel payload unchanged",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "lift complete normal OBJ descriptor and pixel payload unchanged",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "arrow complete normal OBJ descriptor and pixel payload unchanged",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "mouth complete normal OBJ descriptor and pixel payload unchanged",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "marks complete normal OBJ descriptor and pixel payload unchanged",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "dots complete normal OBJ descriptor and pixel payload unchanged",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "cursor complete normal OBJ descriptor and pixel payload unchanged",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "pick32 complete normal OBJ descriptor and pixel payload unchanged",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "icon32 complete normal OBJ descriptor and pixel payload unchanged",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "uimarks complete normal OBJ descriptor and pixel payload unchanged",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "face complete normal OBJ descriptor and pixel payload unchanged",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "peddler_head complete normal OBJ descriptor and pixel payload unchanged",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "peddler_body complete normal OBJ descriptor and pixel payload unchanged",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "gatekeeper complete normal OBJ descriptor and pixel payload unchanged",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "wisp complete normal OBJ descriptor and pixel payload unchanged",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "bloomfx complete normal OBJ descriptor and pixel payload unchanged",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "bloomshadow complete normal OBJ descriptor and pixel payload unchanged",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "interactivechest complete normal OBJ descriptor and pixel payload unchanged",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "interactiveentry complete normal OBJ descriptor and pixel payload unchanged",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "huditems complete normal OBJ descriptor and pixel payload unchanged",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "glitter complete normal OBJ descriptor and pixel payload unchanged",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "sewerrail complete normal OBJ descriptor and pixel payload unchanged",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "forestlandmark complete normal OBJ descriptor and pixel payload unchanged",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "all shared immutable artwork/UI/title/fonts/palettes/metadata arrays unchanged",
+      "passed": true,
+      "detail": {
+        "arrays": 252,
+        "changes": []
+      }
+    },
+    {
+      "group": "canopy",
+      "name": "normal canopy descriptor0 retains exact map and metadata",
+      "passed": true
+    },
+    {
+      "group": "canopy",
+      "name": "normal canopy descriptor1 retains exact map and metadata",
+      "passed": true
+    },
+    {
+      "group": "canopy",
+      "name": "normal canopy descriptor2 retains exact map and metadata",
+      "passed": true
+    },
+    {
+      "group": "canopy",
+      "name": "normal canopy descriptor3 retains exact map and metadata",
+      "passed": true
+    },
+    {
+      "group": "canopy",
+      "name": "normal canopy descriptor4 retains exact map and metadata",
+      "passed": true
+    },
+    {
+      "group": "canopy",
+      "name": "normal canopy descriptor5 retains exact map and metadata",
+      "passed": true
+    },
+    {
+      "group": "canopy",
+      "name": "normal canopy descriptor6 retains exact map and metadata",
+      "passed": true
+    },
+    {
+      "group": "canopy",
+      "name": "normal canopy descriptor7 retains exact map and metadata",
+      "passed": true
+    },
+    {
+      "group": "canopy",
+      "name": "normal canopy descriptor8 retains exact map and metadata",
+      "passed": true
+    },
+    {
+      "group": "historical",
+      "name": "complete old profile0 ROM byte-identical",
+      "passed": true
+    },
+    {
+      "group": "historical",
+      "name": "complete old profile1 ROM byte-identical",
+      "passed": true
+    },
+    {
+      "group": "historical",
+      "name": "complete old profile2 ROM byte-identical",
+      "passed": true
+    },
+    {
+      "group": "historical",
+      "name": "complete old profile3 ROM byte-identical",
+      "passed": true
+    },
+    {
+      "group": "historical",
+      "name": "complete old profile4 ROM byte-identical",
+      "passed": true
+    },
+    {
+      "group": "historical",
+      "name": "complete old profile5 ROM byte-identical",
+      "passed": true
+    },
+    {
+      "group": "historical",
+      "name": "complete old profile6 ROM byte-identical",
+      "passed": true
+    },
+    {
+      "group": "historical",
+      "name": "complete old profile7 ROM byte-identical",
+      "passed": true
+    },
+    {
+      "group": "historical",
+      "name": "complete old profile8 ROM byte-identical",
+      "passed": true
+    },
+    {
+      "group": "historical",
+      "name": "complete old profile9 ROM byte-identical",
+      "passed": true
+    },
+    {
+      "group": "historical",
+      "name": "complete old profile10 ROM byte-identical",
+      "passed": true
+    },
+    {
+      "group": "historical",
+      "name": "complete old profile11 ROM byte-identical",
+      "passed": true
+    },
+    {
+      "group": "historical",
+      "name": "complete old profile12 ROM byte-identical",
+      "passed": true
+    },
+    {
+      "group": "historical",
+      "name": "complete old profile13 ROM byte-identical",
+      "passed": true
+    },
+    {
+      "group": "historical",
+      "name": "complete old profile14 ROM byte-identical",
+      "passed": true
+    },
+    {
+      "group": "historical",
+      "name": "complete old profile15 ROM byte-identical",
+      "passed": true
+    },
+    {
+      "group": "historical",
+      "name": "complete old profile16 ROM byte-identical",
+      "passed": true
+    },
+    {
+      "group": "historical",
+      "name": "complete old profile17 ROM byte-identical",
+      "passed": true
+    },
+    {
+      "group": "historical",
+      "name": "complete old profile18 ROM byte-identical",
+      "passed": true
+    },
+    {
+      "group": "historical",
+      "name": "complete old profile19 ROM byte-identical",
+      "passed": true
+    },
+    {
+      "group": "historical",
+      "name": "complete old profile20 ROM byte-identical",
+      "passed": true
+    },
+    {
+      "group": "historical",
+      "name": "complete old profile21 ROM byte-identical",
+      "passed": true
+    },
+    {
+      "group": "historical",
+      "name": "complete old profile22 ROM byte-identical",
+      "passed": true
+    },
+    {
+      "group": "historical",
+      "name": "complete old profile23 ROM byte-identical",
+      "passed": true
+    },
+    {
+      "group": "historical",
+      "name": "complete old profile24 ROM byte-identical",
+      "passed": true
+    },
+    {
+      "group": "historical",
+      "name": "complete old profile25 ROM byte-identical",
+      "passed": true
+    },
+    {
+      "group": "historical",
+      "name": "complete old profile26 ROM byte-identical",
+      "passed": true
+    },
+    {
+      "group": "historical",
+      "name": "complete old profile27 ROM byte-identical",
+      "passed": true
+    },
+    {
+      "group": "historical",
+      "name": "complete old profile28 ROM byte-identical",
+      "passed": true
+    },
+    {
+      "group": "historical",
+      "name": "complete old profile29 ROM byte-identical",
+      "passed": true
+    },
+    {
+      "group": "source_provenance",
+      "name": "native catalog binds profile30 frozen ROM/source/helper",
+      "passed": true
+    },
+    {
+      "group": "source_provenance",
+      "name": "art/blight_reference.py current source bytes",
+      "passed": true
+    },
+    {
+      "group": "source_provenance",
+      "name": "art/blight_reference_source.py current source bytes",
+      "passed": true
+    },
+    {
+      "group": "source_provenance",
+      "name": "art/bloom_animations.py current source bytes",
+      "passed": true
+    },
+    {
+      "group": "source_provenance",
+      "name": "art/bloom_fx.py current source bytes",
+      "passed": true
+    },
+    {
+      "group": "source_provenance",
+      "name": "art/bloom_loads.py current source bytes",
+      "passed": true
+    },
+    {
+      "group": "source_provenance",
+      "name": "art/clean_items.py current source bytes",
+      "passed": true
+    },
+    {
+      "group": "source_provenance",
+      "name": "art/enemy_heart.py current source bytes",
+      "passed": true
+    },
+    {
+      "group": "source_provenance",
+      "name": "art/enemy_studies.py current source bytes",
+      "passed": true
+    },
+    {
+      "group": "source_provenance",
+      "name": "art/enemy_studies_heavy.py current source bytes",
+      "passed": true
+    },
+    {
+      "group": "source_provenance",
+      "name": "art/enemy_studies_palette.py current source bytes",
+      "passed": true
+    },
+    {
+      "group": "source_provenance",
+      "name": "art/enemy_studies_small.py current source bytes",
+      "passed": true
+    },
+    {
+      "group": "source_provenance",
+      "name": "art/enemy_studies_soft.py current source bytes",
+      "passed": true
+    },
+    {
+      "group": "source_provenance",
+      "name": "art/env_pack.py current source bytes",
+      "passed": true
+    },
+    {
+      "group": "source_provenance",
+      "name": "art/faces.py current source bytes",
+      "passed": true
+    },
+    {
+      "group": "source_provenance",
+      "name": "art/folk.py current source bytes",
+      "passed": true
+    },
+    {
+      "group": "source_provenance",
+      "name": "art/forest_art.py current source bytes",
+      "passed": true
+    },
+    {
+      "group": "source_provenance",
+      "name": "art/forest_canopy_adaptive.py current source bytes",
+      "passed": true
+    },
+    {
+      "group": "source_provenance",
+      "name": "art/forest_canopy_adaptive_b.py current source bytes",
+      "passed": true
+    },
+    {
+      "group": "source_provenance",
+      "name": "art/forest_canopy_adaptive_terrain.py current source bytes",
+      "passed": true
+    },
+    {
+      "group": "source_provenance",
+      "name": "art/forest_canopy_emerald.py current source bytes",
+      "passed": true
+    },
+    {
+      "group": "source_provenance",
+      "name": "art/forest_canopy_emerald_terrain.py current source bytes",
+      "passed": true
+    },
+    {
+      "group": "source_provenance",
+      "name": "art/forest_concepts.py current source bytes",
+      "passed": true
+    },
+    {
+      "group": "source_provenance",
+      "name": "art/forest_concepts_folk.py current source bytes",
+      "passed": true
+    },
+    {
+      "group": "source_provenance",
+      "name": "art/forest_concepts_props.py current source bytes",
+      "passed": true
+    },
+    {
+      "group": "source_provenance",
+      "name": "art/forest_concepts_terrain.py current source bytes",
+      "passed": true
+    },
+    {
+      "group": "source_provenance",
+      "name": "art/forest_concepts_v2_folk.py current source bytes",
+      "passed": true
+    },
+    {
+      "group": "source_provenance",
+      "name": "art/forest_concepts_v2_props.py current source bytes",
+      "passed": true
+    },
+    {
+      "group": "source_provenance",
+      "name": "art/forest_concepts_v2_terrain.py current source bytes",
+      "passed": true
+    },
+    {
+      "group": "source_provenance",
+      "name": "art/forest_concepts_v2_topology.py current source bytes",
+      "passed": true
+    },
+    {
+      "group": "source_provenance",
+      "name": "art/forest_concepts_v3_terrain.py current source bytes",
+      "passed": true
+    },
+    {
+      "group": "source_provenance",
+      "name": "art/forest_sprites.py current source bytes",
+      "passed": true
+    },
+    {
+      "group": "source_provenance",
+      "name": "art/forest_tree_study.py current source bytes",
+      "passed": true
+    },
+    {
+      "group": "source_provenance",
+      "name": "art/healthy_reference.py current source bytes",
+      "passed": true
+    },
+    {
+      "group": "source_provenance",
+      "name": "art/hero.py current source bytes",
+      "passed": true
+    },
+    {
+      "group": "source_provenance",
+      "name": "art/interactive_props.py current source bytes",
+      "passed": true
+    },
+    {
+      "group": "source_provenance",
+      "name": "art/interactive_tiles.py current source bytes",
+      "passed": true
+    },
+    {
+      "group": "source_provenance",
+      "name": "art/items.py current source bytes",
+      "passed": true
+    },
+    {
+      "group": "source_provenance",
+      "name": "art/items32.py current source bytes",
+      "passed": true
+    },
+    {
+      "group": "source_provenance",
+      "name": "art/marks.py current source bytes",
+      "passed": true
+    },
+    {
+      "group": "source_provenance",
+      "name": "art/monsters.py current source bytes",
+      "passed": true
+    },
+    {
+      "group": "source_provenance",
+      "name": "art/pack.py current source bytes",
+      "passed": true
+    },
+    {
+      "group": "source_provenance",
+      "name": "art/pack_tiles.py current source bytes",
+      "passed": true
+    },
+    {
+      "group": "source_provenance",
+      "name": "art/paint.py current source bytes",
+      "passed": true
+    },
+    {
+      "group": "source_provenance",
+      "name": "art/palettes.py current source bytes",
+      "passed": true
+    },
+    {
+      "group": "source_provenance",
+      "name": "art/portraits.py current source bytes",
+      "passed": true
+    },
+    {
+      "group": "source_provenance",
+      "name": "art/px.py current source bytes",
+      "passed": true
+    },
+    {
+      "group": "source_provenance",
+      "name": "art/reboot_actors.py current source bytes",
+      "passed": true
+    },
+    {
+      "group": "source_provenance",
+      "name": "art/reboot_core.py current source bytes",
+      "passed": true
+    },
+    {
+      "group": "source_provenance",
+      "name": "art/reboot_items.py current source bytes",
+      "passed": true
+    },
+    {
+      "group": "source_provenance",
+      "name": "art/reboot_terrain.py current source bytes",
+      "passed": true
+    },
+    {
+      "group": "source_provenance",
+      "name": "art/reboot_ui.py current source bytes",
+      "passed": true
+    },
+    {
+      "group": "source_provenance",
+      "name": "art/reference_assets.py current source bytes",
+      "passed": true
+    },
+    {
+      "group": "source_provenance",
+      "name": "art/reference_items.py current source bytes",
+      "passed": true
+    },
+    {
+      "group": "source_provenance",
+      "name": "art/rooms.py current source bytes",
+      "passed": true
+    },
+    {
+      "group": "source_provenance",
+      "name": "art/sample.py current source bytes",
+      "passed": true
+    },
+    {
+      "group": "source_provenance",
+      "name": "art/sewer_concepts.py current source bytes",
+      "passed": true
+    },
+    {
+      "group": "source_provenance",
+      "name": "art/sewer_concepts_npcs.py current source bytes",
+      "passed": true
+    },
+    {
+      "group": "source_provenance",
+      "name": "art/sewer_concepts_terrain.py current source bytes",
+      "passed": true
+    },
+    {
+      "group": "source_provenance",
+      "name": "art/sewer_final.py current source bytes",
+      "passed": true
+    },
+    {
+      "group": "source_provenance",
+      "name": "art/sewer_final_contracts.py current source bytes",
+      "passed": true
+    },
+    {
+      "group": "source_provenance",
+      "name": "art/sewer_v3_fixtures.py current source bytes",
+      "passed": true
+    },
+    {
+      "group": "source_provenance",
+      "name": "art/sprites.py current source bytes",
+      "passed": true
+    },
+    {
+      "group": "source_provenance",
+      "name": "art/style.py current source bytes",
+      "passed": true
+    },
+    {
+      "group": "source_provenance",
+      "name": "art/sw_cut.py current source bytes",
+      "passed": true
+    },
+    {
+      "group": "source_provenance",
+      "name": "art/sw_drain.py current source bytes",
+      "passed": true
+    },
+    {
+      "group": "source_provenance",
+      "name": "art/sw_folk.py current source bytes",
+      "passed": true
+    },
+    {
+      "group": "source_provenance",
+      "name": "art/sw_hall.py current source bytes",
+      "passed": true
+    },
+    {
+      "group": "source_provenance",
+      "name": "art/sw_paint.py current source bytes",
+      "passed": true
+    },
+    {
+      "group": "source_provenance",
+      "name": "art/sw_props.py current source bytes",
+      "passed": true
+    },
+    {
+      "group": "source_provenance",
+      "name": "art/sword_studies.py current source bytes",
+      "passed": true
+    },
+    {
+      "group": "source_provenance",
+      "name": "art/tile_art.py current source bytes",
+      "passed": true
+    },
+    {
+      "group": "source_provenance",
+      "name": "art/tiles.py current source bytes",
+      "passed": true
+    },
+    {
+      "group": "source_provenance",
+      "name": "art/tiles_style.py current source bytes",
+      "passed": true
+    },
+    {
+      "group": "source_provenance",
+      "name": "art/title.py current source bytes",
+      "passed": true
+    },
+    {
+      "group": "source_provenance",
+      "name": "art/ui_font.py current source bytes",
+      "passed": true
+    },
+    {
+      "group": "source_provenance",
+      "name": "art/ui_kit.py current source bytes",
+      "passed": true
+    },
+    {
+      "group": "source_provenance",
+      "name": "art/ui_studies.py current source bytes",
+      "passed": true
+    },
+    {
+      "group": "source_provenance",
+      "name": "art/wood_art.py current source bytes",
+      "passed": true
+    },
+    {
+      "group": "source_provenance",
+      "name": "Makefile current source bytes",
+      "passed": true
+    },
+    {
+      "group": "source_provenance",
+      "name": "tools/build_assets.py current source bytes",
+      "passed": true
+    },
+    {
+      "group": "source_files",
+      "name": "README.md literal file hash and size",
+      "passed": true
+    },
+    {
+      "group": "source_files",
+      "name": "floor-contacts-source.png literal file hash and size",
+      "passed": true
+    },
+    {
+      "group": "source_files",
+      "name": "grayscale-source.png literal file hash and size",
+      "passed": true
+    },
+    {
+      "group": "source_files",
+      "name": "native/tree_broad_0_dead-indexed.png literal file hash and size",
+      "passed": true
+    },
+    {
+      "group": "source_files",
+      "name": "native/tree_broad_0_dead.png literal file hash and size",
+      "passed": true
+    },
+    {
+      "group": "source_files",
+      "name": "native/tree_broad_0_healthy-indexed.png literal file hash and size",
+      "passed": true
+    },
+    {
+      "group": "source_files",
+      "name": "native/tree_broad_0_healthy.png literal file hash and size",
+      "passed": true
+    },
+    {
+      "group": "source_files",
+      "name": "native/tree_broad_0_sick-indexed.png literal file hash and size",
+      "passed": true
+    },
+    {
+      "group": "source_files",
+      "name": "native/tree_broad_0_sick.png literal file hash and size",
+      "passed": true
+    },
+    {
+      "group": "source_files",
+      "name": "native/tree_broad_1_dead-indexed.png literal file hash and size",
+      "passed": true
+    },
+    {
+      "group": "source_files",
+      "name": "native/tree_broad_1_dead.png literal file hash and size",
+      "passed": true
+    },
+    {
+      "group": "source_files",
+      "name": "native/tree_broad_1_healthy-indexed.png literal file hash and size",
+      "passed": true
+    },
+    {
+      "group": "source_files",
+      "name": "native/tree_broad_1_healthy.png literal file hash and size",
+      "passed": true
+    },
+    {
+      "group": "source_files",
+      "name": "native/tree_broad_1_sick-indexed.png literal file hash and size",
+      "passed": true
+    },
+    {
+      "group": "source_files",
+      "name": "native/tree_broad_1_sick.png literal file hash and size",
+      "passed": true
+    },
+    {
+      "group": "source_files",
+      "name": "native/tree_narrow_0_dead-indexed.png literal file hash and size",
+      "passed": true
+    },
+    {
+      "group": "source_files",
+      "name": "native/tree_narrow_0_dead.png literal file hash and size",
+      "passed": true
+    },
+    {
+      "group": "source_files",
+      "name": "native/tree_narrow_0_healthy-indexed.png literal file hash and size",
+      "passed": true
+    },
+    {
+      "group": "source_files",
+      "name": "native/tree_narrow_0_healthy.png literal file hash and size",
+      "passed": true
+    },
+    {
+      "group": "source_files",
+      "name": "native/tree_narrow_0_sick-indexed.png literal file hash and size",
+      "passed": true
+    },
+    {
+      "group": "source_files",
+      "name": "native/tree_narrow_0_sick.png literal file hash and size",
+      "passed": true
+    },
+    {
+      "group": "source_files",
+      "name": "native/tree_narrow_1_dead-indexed.png literal file hash and size",
+      "passed": true
+    },
+    {
+      "group": "source_files",
+      "name": "native/tree_narrow_1_dead.png literal file hash and size",
+      "passed": true
+    },
+    {
+      "group": "source_files",
+      "name": "native/tree_narrow_1_healthy-indexed.png literal file hash and size",
+      "passed": true
+    },
+    {
+      "group": "source_files",
+      "name": "native/tree_narrow_1_healthy.png literal file hash and size",
+      "passed": true
+    },
+    {
+      "group": "source_files",
+      "name": "native/tree_narrow_1_sick-indexed.png literal file hash and size",
+      "passed": true
+    },
+    {
+      "group": "source_files",
+      "name": "native/tree_narrow_1_sick.png literal file hash and size",
+      "passed": true
+    },
+    {
+      "group": "source_files",
+      "name": "native-manifest.json literal file hash and size",
+      "passed": true
+    },
+    {
+      "group": "source_files",
+      "name": "palette-iteration-source.png literal file hash and size",
+      "passed": true
+    },
+    {
+      "group": "source_files",
+      "name": "silhouettes-source.png literal file hash and size",
+      "passed": true
+    },
+    {
+      "group": "source_files",
+      "name": "source-art.json literal file hash and size",
+      "passed": true
+    },
+    {
+      "group": "source_files",
+      "name": "tree-states-source.png literal file hash and size",
+      "passed": true
+    },
+    {
+      "group": "source_coverage",
+      "name": "twelve exact native source entries, one palette bank",
+      "passed": true
+    },
+    {
+      "group": "source_native",
+      "name": "tree_broad_0_healthy exported source nibbles/anchor exactly direct art",
+      "passed": true
+    },
+    {
+      "group": "source_native",
+      "name": "tree_broad_0_sick exported source nibbles/anchor exactly direct art",
+      "passed": true
+    },
+    {
+      "group": "source_native",
+      "name": "tree_broad_0_dead exported source nibbles/anchor exactly direct art",
+      "passed": true
+    },
+    {
+      "group": "source_native",
+      "name": "tree_broad_1_healthy exported source nibbles/anchor exactly direct art",
+      "passed": true
+    },
+    {
+      "group": "source_native",
+      "name": "tree_broad_1_sick exported source nibbles/anchor exactly direct art",
+      "passed": true
+    },
+    {
+      "group": "source_native",
+      "name": "tree_broad_1_dead exported source nibbles/anchor exactly direct art",
+      "passed": true
+    },
+    {
+      "group": "source_native",
+      "name": "tree_narrow_0_healthy exported source nibbles/anchor exactly direct art",
+      "passed": true
+    },
+    {
+      "group": "source_native",
+      "name": "tree_narrow_0_sick exported source nibbles/anchor exactly direct art",
+      "passed": true
+    },
+    {
+      "group": "source_native",
+      "name": "tree_narrow_0_dead exported source nibbles/anchor exactly direct art",
+      "passed": true
+    },
+    {
+      "group": "source_native",
+      "name": "tree_narrow_1_healthy exported source nibbles/anchor exactly direct art",
+      "passed": true
+    },
+    {
+      "group": "source_native",
+      "name": "tree_narrow_1_sick exported source nibbles/anchor exactly direct art",
+      "passed": true
+    },
+    {
+      "group": "source_native",
+      "name": "tree_narrow_1_dead exported source nibbles/anchor exactly direct art",
+      "passed": true
+    },
+    {
+      "group": "source_native",
+      "name": "tree_broad_0_healthy original P16 pixels and transparent index",
+      "passed": true
+    },
+    {
+      "group": "source_native",
+      "name": "tree_broad_0_healthy literal canonical RGB555 and binary-alpha PNG",
+      "passed": true
+    },
+    {
+      "group": "source_native",
+      "name": "tree_broad_0_sick original P16 pixels and transparent index",
+      "passed": true
+    },
+    {
+      "group": "source_native",
+      "name": "tree_broad_0_sick literal canonical RGB555 and binary-alpha PNG",
+      "passed": true
+    },
+    {
+      "group": "source_native",
+      "name": "tree_broad_0_dead original P16 pixels and transparent index",
+      "passed": true
+    },
+    {
+      "group": "source_native",
+      "name": "tree_broad_0_dead literal canonical RGB555 and binary-alpha PNG",
+      "passed": true
+    },
+    {
+      "group": "source_native",
+      "name": "tree_broad_1_healthy original P16 pixels and transparent index",
+      "passed": true
+    },
+    {
+      "group": "source_native",
+      "name": "tree_broad_1_healthy literal canonical RGB555 and binary-alpha PNG",
+      "passed": true
+    },
+    {
+      "group": "source_native",
+      "name": "tree_broad_1_sick original P16 pixels and transparent index",
+      "passed": true
+    },
+    {
+      "group": "source_native",
+      "name": "tree_broad_1_sick literal canonical RGB555 and binary-alpha PNG",
+      "passed": true
+    },
+    {
+      "group": "source_native",
+      "name": "tree_broad_1_dead original P16 pixels and transparent index",
+      "passed": true
+    },
+    {
+      "group": "source_native",
+      "name": "tree_broad_1_dead literal canonical RGB555 and binary-alpha PNG",
+      "passed": true
+    },
+    {
+      "group": "source_native",
+      "name": "tree_narrow_0_healthy original P16 pixels and transparent index",
+      "passed": true
+    },
+    {
+      "group": "source_native",
+      "name": "tree_narrow_0_healthy literal canonical RGB555 and binary-alpha PNG",
+      "passed": true
+    },
+    {
+      "group": "source_native",
+      "name": "tree_narrow_0_sick original P16 pixels and transparent index",
+      "passed": true
+    },
+    {
+      "group": "source_native",
+      "name": "tree_narrow_0_sick literal canonical RGB555 and binary-alpha PNG",
+      "passed": true
+    },
+    {
+      "group": "source_native",
+      "name": "tree_narrow_0_dead original P16 pixels and transparent index",
+      "passed": true
+    },
+    {
+      "group": "source_native",
+      "name": "tree_narrow_0_dead literal canonical RGB555 and binary-alpha PNG",
+      "passed": true
+    },
+    {
+      "group": "source_native",
+      "name": "tree_narrow_1_healthy original P16 pixels and transparent index",
+      "passed": true
+    },
+    {
+      "group": "source_native",
+      "name": "tree_narrow_1_healthy literal canonical RGB555 and binary-alpha PNG",
+      "passed": true
+    },
+    {
+      "group": "source_native",
+      "name": "tree_narrow_1_sick original P16 pixels and transparent index",
+      "passed": true
+    },
+    {
+      "group": "source_native",
+      "name": "tree_narrow_1_sick literal canonical RGB555 and binary-alpha PNG",
+      "passed": true
+    },
+    {
+      "group": "source_native",
+      "name": "tree_narrow_1_dead original P16 pixels and transparent index",
+      "passed": true
+    },
+    {
+      "group": "source_native",
+      "name": "tree_narrow_1_dead literal canonical RGB555 and binary-alpha PNG",
+      "passed": true
+    },
+    {
+      "group": "source_panels",
+      "name": "tree-states-source.png declared file hash",
+      "passed": true
+    },
+    {
+      "group": "source_panels",
+      "name": "tree_broad_0_healthy tree-states-source.png native opaque pixels exact",
+      "passed": true
+    },
+    {
+      "group": "source_panels",
+      "name": "tree_broad_0_sick tree-states-source.png native opaque pixels exact",
+      "passed": true
+    },
+    {
+      "group": "source_panels",
+      "name": "tree_broad_0_dead tree-states-source.png native opaque pixels exact",
+      "passed": true
+    },
+    {
+      "group": "source_panels",
+      "name": "tree_broad_1_healthy tree-states-source.png native opaque pixels exact",
+      "passed": true
+    },
+    {
+      "group": "source_panels",
+      "name": "tree_broad_1_sick tree-states-source.png native opaque pixels exact",
+      "passed": true
+    },
+    {
+      "group": "source_panels",
+      "name": "tree_broad_1_dead tree-states-source.png native opaque pixels exact",
+      "passed": true
+    },
+    {
+      "group": "source_panels",
+      "name": "tree_narrow_0_healthy tree-states-source.png native opaque pixels exact",
+      "passed": true
+    },
+    {
+      "group": "source_panels",
+      "name": "tree_narrow_0_sick tree-states-source.png native opaque pixels exact",
+      "passed": true
+    },
+    {
+      "group": "source_panels",
+      "name": "tree_narrow_0_dead tree-states-source.png native opaque pixels exact",
+      "passed": true
+    },
+    {
+      "group": "source_panels",
+      "name": "tree_narrow_1_healthy tree-states-source.png native opaque pixels exact",
+      "passed": true
+    },
+    {
+      "group": "source_panels",
+      "name": "tree_narrow_1_sick tree-states-source.png native opaque pixels exact",
+      "passed": true
+    },
+    {
+      "group": "source_panels",
+      "name": "tree_narrow_1_dead tree-states-source.png native opaque pixels exact",
+      "passed": true
+    },
+    {
+      "group": "source_panels",
+      "name": "silhouettes-source.png declared file hash",
+      "passed": true
+    },
+    {
+      "group": "source_panels",
+      "name": "tree_broad_0_healthy silhouettes-source.png native opaque pixels exact",
+      "passed": true
+    },
+    {
+      "group": "source_panels",
+      "name": "tree_broad_0_sick silhouettes-source.png native opaque pixels exact",
+      "passed": true
+    },
+    {
+      "group": "source_panels",
+      "name": "tree_broad_0_dead silhouettes-source.png native opaque pixels exact",
+      "passed": true
+    },
+    {
+      "group": "source_panels",
+      "name": "tree_broad_1_healthy silhouettes-source.png native opaque pixels exact",
+      "passed": true
+    },
+    {
+      "group": "source_panels",
+      "name": "tree_broad_1_sick silhouettes-source.png native opaque pixels exact",
+      "passed": true
+    },
+    {
+      "group": "source_panels",
+      "name": "tree_broad_1_dead silhouettes-source.png native opaque pixels exact",
+      "passed": true
+    },
+    {
+      "group": "source_panels",
+      "name": "tree_narrow_0_healthy silhouettes-source.png native opaque pixels exact",
+      "passed": true
+    },
+    {
+      "group": "source_panels",
+      "name": "tree_narrow_0_sick silhouettes-source.png native opaque pixels exact",
+      "passed": true
+    },
+    {
+      "group": "source_panels",
+      "name": "tree_narrow_0_dead silhouettes-source.png native opaque pixels exact",
+      "passed": true
+    },
+    {
+      "group": "source_panels",
+      "name": "tree_narrow_1_healthy silhouettes-source.png native opaque pixels exact",
+      "passed": true
+    },
+    {
+      "group": "source_panels",
+      "name": "tree_narrow_1_sick silhouettes-source.png native opaque pixels exact",
+      "passed": true
+    },
+    {
+      "group": "source_panels",
+      "name": "tree_narrow_1_dead silhouettes-source.png native opaque pixels exact",
+      "passed": true
+    },
+    {
+      "group": "source_panels",
+      "name": "floor-contacts-source.png declared file hash",
+      "passed": true
+    },
+    {
+      "group": "source_panels",
+      "name": "tree_broad_0_healthy floor-contacts-source.png native opaque pixels exact",
+      "passed": true
+    },
+    {
+      "group": "source_panels",
+      "name": "tree_broad_0_sick floor-contacts-source.png native opaque pixels exact",
+      "passed": true
+    },
+    {
+      "group": "source_panels",
+      "name": "tree_broad_0_dead floor-contacts-source.png native opaque pixels exact",
+      "passed": true
+    },
+    {
+      "group": "source_panels",
+      "name": "tree_broad_0_healthy floor-contacts-source.png native opaque pixels exact",
+      "passed": true
+    },
+    {
+      "group": "source_panels",
+      "name": "tree_broad_0_sick floor-contacts-source.png native opaque pixels exact",
+      "passed": true
+    },
+    {
+      "group": "source_panels",
+      "name": "tree_broad_0_dead floor-contacts-source.png native opaque pixels exact",
+      "passed": true
+    },
+    {
+      "group": "source_panels",
+      "name": "tree_broad_0_healthy floor-contacts-source.png native opaque pixels exact",
+      "passed": true
+    },
+    {
+      "group": "source_panels",
+      "name": "tree_broad_0_sick floor-contacts-source.png native opaque pixels exact",
+      "passed": true
+    },
+    {
+      "group": "source_panels",
+      "name": "tree_broad_0_dead floor-contacts-source.png native opaque pixels exact",
+      "passed": true
+    },
+    {
+      "group": "source_panels",
+      "name": "tree_broad_1_healthy floor-contacts-source.png native opaque pixels exact",
+      "passed": true
+    },
+    {
+      "group": "source_panels",
+      "name": "tree_broad_1_sick floor-contacts-source.png native opaque pixels exact",
+      "passed": true
+    },
+    {
+      "group": "source_panels",
+      "name": "tree_broad_1_dead floor-contacts-source.png native opaque pixels exact",
+      "passed": true
+    },
+    {
+      "group": "source_panels",
+      "name": "tree_broad_1_healthy floor-contacts-source.png native opaque pixels exact",
+      "passed": true
+    },
+    {
+      "group": "source_panels",
+      "name": "tree_broad_1_sick floor-contacts-source.png native opaque pixels exact",
+      "passed": true
+    },
+    {
+      "group": "source_panels",
+      "name": "tree_broad_1_dead floor-contacts-source.png native opaque pixels exact",
+      "passed": true
+    },
+    {
+      "group": "source_panels",
+      "name": "tree_broad_1_healthy floor-contacts-source.png native opaque pixels exact",
+      "passed": true
+    },
+    {
+      "group": "source_panels",
+      "name": "tree_broad_1_sick floor-contacts-source.png native opaque pixels exact",
+      "passed": true
+    },
+    {
+      "group": "source_panels",
+      "name": "tree_broad_1_dead floor-contacts-source.png native opaque pixels exact",
+      "passed": true
+    },
+    {
+      "group": "source_panels",
+      "name": "tree_narrow_0_healthy floor-contacts-source.png native opaque pixels exact",
+      "passed": true
+    },
+    {
+      "group": "source_panels",
+      "name": "tree_narrow_0_sick floor-contacts-source.png native opaque pixels exact",
+      "passed": true
+    },
+    {
+      "group": "source_panels",
+      "name": "tree_narrow_0_dead floor-contacts-source.png native opaque pixels exact",
+      "passed": true
+    },
+    {
+      "group": "source_panels",
+      "name": "tree_narrow_0_healthy floor-contacts-source.png native opaque pixels exact",
+      "passed": true
+    },
+    {
+      "group": "source_panels",
+      "name": "tree_narrow_0_sick floor-contacts-source.png native opaque pixels exact",
+      "passed": true
+    },
+    {
+      "group": "source_panels",
+      "name": "tree_narrow_0_dead floor-contacts-source.png native opaque pixels exact",
+      "passed": true
+    },
+    {
+      "group": "source_panels",
+      "name": "tree_narrow_0_healthy floor-contacts-source.png native opaque pixels exact",
+      "passed": true
+    },
+    {
+      "group": "source_panels",
+      "name": "tree_narrow_0_sick floor-contacts-source.png native opaque pixels exact",
+      "passed": true
+    },
+    {
+      "group": "source_panels",
+      "name": "tree_narrow_0_dead floor-contacts-source.png native opaque pixels exact",
+      "passed": true
+    },
+    {
+      "group": "source_panels",
+      "name": "tree_narrow_1_healthy floor-contacts-source.png native opaque pixels exact",
+      "passed": true
+    },
+    {
+      "group": "source_panels",
+      "name": "tree_narrow_1_sick floor-contacts-source.png native opaque pixels exact",
+      "passed": true
+    },
+    {
+      "group": "source_panels",
+      "name": "tree_narrow_1_dead floor-contacts-source.png native opaque pixels exact",
+      "passed": true
+    },
+    {
+      "group": "source_panels",
+      "name": "tree_narrow_1_healthy floor-contacts-source.png native opaque pixels exact",
+      "passed": true
+    },
+    {
+      "group": "source_panels",
+      "name": "tree_narrow_1_sick floor-contacts-source.png native opaque pixels exact",
+      "passed": true
+    },
+    {
+      "group": "source_panels",
+      "name": "tree_narrow_1_dead floor-contacts-source.png native opaque pixels exact",
+      "passed": true
+    },
+    {
+      "group": "source_panels",
+      "name": "tree_narrow_1_healthy floor-contacts-source.png native opaque pixels exact",
+      "passed": true
+    },
+    {
+      "group": "source_panels",
+      "name": "tree_narrow_1_sick floor-contacts-source.png native opaque pixels exact",
+      "passed": true
+    },
+    {
+      "group": "source_panels",
+      "name": "tree_narrow_1_dead floor-contacts-source.png native opaque pixels exact",
+      "passed": true
+    },
+    {
+      "group": "runtime_provenance",
+      "name": "eight final source-bound diagnostic-grove cases",
+      "passed": true
+    },
+    {
+      "group": "runtime_provenance",
+      "name": "held current capture helper",
+      "passed": true
+    },
+    {
+      "group": "runtime_fixture",
+      "name": "tree-catalog-grass explicit catalog/repeated diagnostic layout and native viewport",
+      "passed": true
+    },
+    {
+      "group": "runtime_maps",
+      "name": "tree-catalog-grass live descriptor words equal frozen ROM maps",
+      "passed": true
+    },
+    {
+      "group": "runtime_geometry",
+      "name": "tree-catalog-grass native placements fit, do not overlap and retain separate root footprints",
+      "passed": true
+    },
+    {
+      "group": "runtime_maps",
+      "name": "tree-catalog-grass every raw BG1/BG2 entry independently matches native tree/floor maps",
+      "passed": true
+    },
+    {
+      "group": "runtime_collision",
+      "name": "tree-catalog-grass actual root grid exactly matches declared shallow footprints",
+      "passed": true
+    },
+    {
+      "group": "runtime_palette",
+      "name": "tree-catalog-grass actual tree bank and resident atlas equal packed native payloads",
+      "passed": true
+    },
+    {
+      "group": "runtime_stability",
+      "name": "tree-catalog-grass complete raw scene snapshot stays unchanged through ordinary play",
+      "passed": true
+    },
+    {
+      "group": "runtime_coverage",
+      "name": "tree-catalog-grass all twelve native trees placed",
+      "passed": true
+    },
+    {
+      "group": "runtime_tree_pixels",
+      "name": "tree-catalog-grass literal tree colors and alpha reveal exact native floor in framebuffer",
+      "passed": true,
+      "detail": {
+        "opaque_pixels": 4326,
+        "transparent_contact_pixels": 4890,
+        "mismatches": []
+      }
+    },
+    {
+      "group": "runtime_body",
+      "name": "tree-catalog-grass raw native body/guard/BG1/palette/scanout/cadence proof at every recorded frame",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "group": "runtime_pixels",
+      "name": "tree-catalog-grass native PNG keyframes independently match exact body colors/components",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "group": "runtime_fixture",
+      "name": "tree-catalog-path explicit catalog/repeated diagnostic layout and native viewport",
+      "passed": true
+    },
+    {
+      "group": "runtime_maps",
+      "name": "tree-catalog-path live descriptor words equal frozen ROM maps",
+      "passed": true
+    },
+    {
+      "group": "runtime_geometry",
+      "name": "tree-catalog-path native placements fit, do not overlap and retain separate root footprints",
+      "passed": true
+    },
+    {
+      "group": "runtime_maps",
+      "name": "tree-catalog-path every raw BG1/BG2 entry independently matches native tree/floor maps",
+      "passed": true
+    },
+    {
+      "group": "runtime_collision",
+      "name": "tree-catalog-path actual root grid exactly matches declared shallow footprints",
+      "passed": true
+    },
+    {
+      "group": "runtime_palette",
+      "name": "tree-catalog-path actual tree bank and resident atlas equal packed native payloads",
+      "passed": true
+    },
+    {
+      "group": "runtime_stability",
+      "name": "tree-catalog-path complete raw scene snapshot stays unchanged through ordinary play",
+      "passed": true
+    },
+    {
+      "group": "runtime_fixture",
+      "name": "tree-catalog-path same diagnostic planting on different floor",
+      "passed": true
+    },
+    {
+      "group": "runtime_coverage",
+      "name": "tree-catalog-path all twelve native trees placed",
+      "passed": true
+    },
+    {
+      "group": "runtime_tree_pixels",
+      "name": "tree-catalog-path literal tree colors and alpha reveal exact native floor in framebuffer",
+      "passed": true,
+      "detail": {
+        "opaque_pixels": 4326,
+        "transparent_contact_pixels": 4890,
+        "mismatches": []
+      }
+    },
+    {
+      "group": "runtime_body",
+      "name": "tree-catalog-path raw native body/guard/BG1/palette/scanout/cadence proof at every recorded frame",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "group": "runtime_pixels",
+      "name": "tree-catalog-path native PNG keyframes independently match exact body colors/components",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "group": "runtime_fixture",
+      "name": "tree-catalog-sick-grass explicit catalog/repeated diagnostic layout and native viewport",
+      "passed": true
+    },
+    {
+      "group": "runtime_maps",
+      "name": "tree-catalog-sick-grass live descriptor words equal frozen ROM maps",
+      "passed": true
+    },
+    {
+      "group": "runtime_geometry",
+      "name": "tree-catalog-sick-grass native placements fit, do not overlap and retain separate root footprints",
+      "passed": true
+    },
+    {
+      "group": "runtime_maps",
+      "name": "tree-catalog-sick-grass every raw BG1/BG2 entry independently matches native tree/floor maps",
+      "passed": true
+    },
+    {
+      "group": "runtime_collision",
+      "name": "tree-catalog-sick-grass actual root grid exactly matches declared shallow footprints",
+      "passed": true
+    },
+    {
+      "group": "runtime_palette",
+      "name": "tree-catalog-sick-grass actual tree bank and resident atlas equal packed native payloads",
+      "passed": true
+    },
+    {
+      "group": "runtime_stability",
+      "name": "tree-catalog-sick-grass complete raw scene snapshot stays unchanged through ordinary play",
+      "passed": true
+    },
+    {
+      "group": "runtime_fixture",
+      "name": "tree-catalog-sick-grass same diagnostic planting on different floor",
+      "passed": true
+    },
+    {
+      "group": "runtime_coverage",
+      "name": "tree-catalog-sick-grass all twelve native trees placed",
+      "passed": true
+    },
+    {
+      "group": "runtime_tree_pixels",
+      "name": "tree-catalog-sick-grass literal tree colors and alpha reveal exact native floor in framebuffer",
+      "passed": true,
+      "detail": {
+        "opaque_pixels": 4326,
+        "transparent_contact_pixels": 4890,
+        "mismatches": []
+      }
+    },
+    {
+      "group": "runtime_body",
+      "name": "tree-catalog-sick-grass raw native body/guard/BG1/palette/scanout/cadence proof at every recorded frame",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "group": "runtime_pixels",
+      "name": "tree-catalog-sick-grass native PNG keyframes independently match exact body colors/components",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "group": "runtime_fixture",
+      "name": "repeated-grove-grass explicit catalog/repeated diagnostic layout and native viewport",
+      "passed": true
+    },
+    {
+      "group": "runtime_maps",
+      "name": "repeated-grove-grass live descriptor words equal frozen ROM maps",
+      "passed": true
+    },
+    {
+      "group": "runtime_geometry",
+      "name": "repeated-grove-grass native placements fit, do not overlap and retain separate root footprints",
+      "passed": true
+    },
+    {
+      "group": "runtime_maps",
+      "name": "repeated-grove-grass every raw BG1/BG2 entry independently matches native tree/floor maps",
+      "passed": true
+    },
+    {
+      "group": "runtime_collision",
+      "name": "repeated-grove-grass actual root grid exactly matches declared shallow footprints",
+      "passed": true
+    },
+    {
+      "group": "runtime_palette",
+      "name": "repeated-grove-grass actual tree bank and resident atlas equal packed native payloads",
+      "passed": true
+    },
+    {
+      "group": "runtime_stability",
+      "name": "repeated-grove-grass complete raw scene snapshot stays unchanged through ordinary play",
+      "passed": true
+    },
+    {
+      "group": "runtime_coverage",
+      "name": "repeated-grove-grass repeated kit includes all three states",
+      "passed": true
+    },
+    {
+      "group": "runtime_tree_pixels",
+      "name": "repeated-grove-grass literal tree colors and alpha reveal exact native floor in framebuffer",
+      "passed": true,
+      "detail": {
+        "opaque_pixels": 5214,
+        "transparent_contact_pixels": 6050,
+        "mismatches": []
+      }
+    },
+    {
+      "group": "runtime_body",
+      "name": "repeated-grove-grass raw native body/guard/BG1/palette/scanout/cadence proof at every recorded frame",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "group": "runtime_pixels",
+      "name": "repeated-grove-grass native PNG keyframes independently match exact body colors/components",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "group": "runtime_fixture",
+      "name": "repeated-grove-path explicit catalog/repeated diagnostic layout and native viewport",
+      "passed": true
+    },
+    {
+      "group": "runtime_maps",
+      "name": "repeated-grove-path live descriptor words equal frozen ROM maps",
+      "passed": true
+    },
+    {
+      "group": "runtime_geometry",
+      "name": "repeated-grove-path native placements fit, do not overlap and retain separate root footprints",
+      "passed": true
+    },
+    {
+      "group": "runtime_maps",
+      "name": "repeated-grove-path every raw BG1/BG2 entry independently matches native tree/floor maps",
+      "passed": true
+    },
+    {
+      "group": "runtime_collision",
+      "name": "repeated-grove-path actual root grid exactly matches declared shallow footprints",
+      "passed": true
+    },
+    {
+      "group": "runtime_palette",
+      "name": "repeated-grove-path actual tree bank and resident atlas equal packed native payloads",
+      "passed": true
+    },
+    {
+      "group": "runtime_stability",
+      "name": "repeated-grove-path complete raw scene snapshot stays unchanged through ordinary play",
+      "passed": true
+    },
+    {
+      "group": "runtime_fixture",
+      "name": "repeated-grove-path same diagnostic planting on different floor",
+      "passed": true
+    },
+    {
+      "group": "runtime_coverage",
+      "name": "repeated-grove-path repeated kit includes all three states",
+      "passed": true
+    },
+    {
+      "group": "runtime_tree_pixels",
+      "name": "repeated-grove-path literal tree colors and alpha reveal exact native floor in framebuffer",
+      "passed": true,
+      "detail": {
+        "opaque_pixels": 5214,
+        "transparent_contact_pixels": 6050,
+        "mismatches": []
+      }
+    },
+    {
+      "group": "runtime_body",
+      "name": "repeated-grove-path raw native body/guard/BG1/palette/scanout/cadence proof at every recorded frame",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "group": "runtime_pixels",
+      "name": "repeated-grove-path native PNG keyframes independently match exact body colors/components",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "group": "runtime_fixture",
+      "name": "repeated-grove-sick-grass explicit catalog/repeated diagnostic layout and native viewport",
+      "passed": true
+    },
+    {
+      "group": "runtime_maps",
+      "name": "repeated-grove-sick-grass live descriptor words equal frozen ROM maps",
+      "passed": true
+    },
+    {
+      "group": "runtime_geometry",
+      "name": "repeated-grove-sick-grass native placements fit, do not overlap and retain separate root footprints",
+      "passed": true
+    },
+    {
+      "group": "runtime_maps",
+      "name": "repeated-grove-sick-grass every raw BG1/BG2 entry independently matches native tree/floor maps",
+      "passed": true
+    },
+    {
+      "group": "runtime_collision",
+      "name": "repeated-grove-sick-grass actual root grid exactly matches declared shallow footprints",
+      "passed": true
+    },
+    {
+      "group": "runtime_palette",
+      "name": "repeated-grove-sick-grass actual tree bank and resident atlas equal packed native payloads",
+      "passed": true
+    },
+    {
+      "group": "runtime_stability",
+      "name": "repeated-grove-sick-grass complete raw scene snapshot stays unchanged through ordinary play",
+      "passed": true
+    },
+    {
+      "group": "runtime_fixture",
+      "name": "repeated-grove-sick-grass same diagnostic planting on different floor",
+      "passed": true
+    },
+    {
+      "group": "runtime_coverage",
+      "name": "repeated-grove-sick-grass repeated kit includes all three states",
+      "passed": true
+    },
+    {
+      "group": "runtime_tree_pixels",
+      "name": "repeated-grove-sick-grass literal tree colors and alpha reveal exact native floor in framebuffer",
+      "passed": true,
+      "detail": {
+        "opaque_pixels": 5214,
+        "transparent_contact_pixels": 6050,
+        "mismatches": []
+      }
+    },
+    {
+      "group": "runtime_body",
+      "name": "repeated-grove-sick-grass raw native body/guard/BG1/palette/scanout/cadence proof at every recorded frame",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "group": "runtime_pixels",
+      "name": "repeated-grove-sick-grass native PNG keyframes independently match exact body colors/components",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "group": "runtime_fixture",
+      "name": "broad-tree-walk-around explicit catalog/repeated diagnostic layout and native viewport",
+      "passed": true
+    },
+    {
+      "group": "runtime_maps",
+      "name": "broad-tree-walk-around live descriptor words equal frozen ROM maps",
+      "passed": true
+    },
+    {
+      "group": "runtime_geometry",
+      "name": "broad-tree-walk-around native placements fit, do not overlap and retain separate root footprints",
+      "passed": true
+    },
+    {
+      "group": "runtime_maps",
+      "name": "broad-tree-walk-around every raw BG1/BG2 entry independently matches native tree/floor maps",
+      "passed": true
+    },
+    {
+      "group": "runtime_collision",
+      "name": "broad-tree-walk-around actual root grid exactly matches declared shallow footprints",
+      "passed": true
+    },
+    {
+      "group": "runtime_palette",
+      "name": "broad-tree-walk-around actual tree bank and resident atlas equal packed native payloads",
+      "passed": true
+    },
+    {
+      "group": "runtime_stability",
+      "name": "broad-tree-walk-around complete raw scene snapshot stays unchanged through ordinary play",
+      "passed": true
+    },
+    {
+      "group": "runtime_fixture",
+      "name": "broad-tree-walk-around same diagnostic planting on different floor",
+      "passed": true
+    },
+    {
+      "group": "runtime_coverage",
+      "name": "broad-tree-walk-around all twelve native trees placed",
+      "passed": true
+    },
+    {
+      "group": "runtime_tree_pixels",
+      "name": "broad-tree-walk-around literal tree colors and alpha reveal exact native floor in framebuffer",
+      "passed": true,
+      "detail": {
+        "opaque_pixels": 4058,
+        "transparent_contact_pixels": 4646,
+        "mismatches": []
+      }
+    },
+    {
+      "group": "runtime_body",
+      "name": "broad-tree-walk-around raw native body/guard/BG1/palette/scanout/cadence proof at every recorded frame",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "group": "runtime_pixels",
+      "name": "broad-tree-walk-around native PNG keyframes independently match exact body colors/components",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "group": "runtime_depth",
+      "name": "broad-tree-walk-around behind/front priorities and root push are exercised",
+      "passed": true
+    },
+    {
+      "group": "runtime_media",
+      "name": "broad-tree-walk-around full native movie rate/frame count",
+      "passed": true
+    },
+    {
+      "group": "runtime_media",
+      "name": "broad-tree-walk-around exact sampled-color GIF timing declared and preserved",
+      "passed": true
+    },
+    {
+      "group": "runtime_media",
+      "name": "broad-tree-walk-around first sampled GIF is literal native RGB",
+      "passed": true
+    },
+    {
+      "group": "runtime_fixture",
+      "name": "narrow-tree-walk-around explicit catalog/repeated diagnostic layout and native viewport",
+      "passed": true
+    },
+    {
+      "group": "runtime_maps",
+      "name": "narrow-tree-walk-around live descriptor words equal frozen ROM maps",
+      "passed": true
+    },
+    {
+      "group": "runtime_geometry",
+      "name": "narrow-tree-walk-around native placements fit, do not overlap and retain separate root footprints",
+      "passed": true
+    },
+    {
+      "group": "runtime_maps",
+      "name": "narrow-tree-walk-around every raw BG1/BG2 entry independently matches native tree/floor maps",
+      "passed": true
+    },
+    {
+      "group": "runtime_collision",
+      "name": "narrow-tree-walk-around actual root grid exactly matches declared shallow footprints",
+      "passed": true
+    },
+    {
+      "group": "runtime_palette",
+      "name": "narrow-tree-walk-around actual tree bank and resident atlas equal packed native payloads",
+      "passed": true
+    },
+    {
+      "group": "runtime_stability",
+      "name": "narrow-tree-walk-around complete raw scene snapshot stays unchanged through ordinary play",
+      "passed": true
+    },
+    {
+      "group": "runtime_fixture",
+      "name": "narrow-tree-walk-around same diagnostic planting on different floor",
+      "passed": true
+    },
+    {
+      "group": "runtime_coverage",
+      "name": "narrow-tree-walk-around all twelve native trees placed",
+      "passed": true
+    },
+    {
+      "group": "runtime_tree_pixels",
+      "name": "narrow-tree-walk-around literal tree colors and alpha reveal exact native floor in framebuffer",
+      "passed": true,
+      "detail": {
+        "opaque_pixels": 4201,
+        "transparent_contact_pixels": 4759,
+        "mismatches": []
+      }
+    },
+    {
+      "group": "runtime_body",
+      "name": "narrow-tree-walk-around raw native body/guard/BG1/palette/scanout/cadence proof at every recorded frame",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "group": "runtime_pixels",
+      "name": "narrow-tree-walk-around native PNG keyframes independently match exact body colors/components",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "group": "runtime_depth",
+      "name": "narrow-tree-walk-around behind/front priorities and root push are exercised",
+      "passed": true
+    },
+    {
+      "group": "runtime_media",
+      "name": "narrow-tree-walk-around full native movie rate/frame count",
+      "passed": true
+    },
+    {
+      "group": "runtime_media",
+      "name": "narrow-tree-walk-around exact sampled-color GIF timing declared and preserved",
+      "passed": true
+    },
+    {
+      "group": "runtime_media",
+      "name": "narrow-tree-walk-around first sampled GIF is literal native RGB",
+      "passed": true
+    },
+    {
+      "group": "runtime_coverage",
+      "name": "six floor/layout contexts plus two ordinary tree-depth clips",
+      "passed": true
+    }
+  ],
+  "limits": "Focused native/packed/source and explicitly diagnostic-grove proof, not an aesthetic verdict, natural forest adoption or universal gameplay guarantee."
+}

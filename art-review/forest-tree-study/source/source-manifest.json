@@ -1,0 +1,224 @@
+{
+  "source_commit": "c269b67b9f0652902a5295906f4d0c4d07e2710c",
+  "profile": 30,
+  "rom_sha256": "fc1deae0c67d6a5db44e5cf1da4eb25a5868cfb29b162cd77b0d955bbbf4913a",
+  "gallery_tool_sha256": "64bef622d3a743bbf81bcb4fb362f0ff25c0197ccf9707d5a1aac4ac59bf336d",
+  "gallery_dependency_sha256": {
+    "forest_canopy_adaptive_gallery.py": "51b3a089e8c6d1752cb62112a6ee02f1696506133c647d7028efab06133f75ef"
+  },
+  "source_input_sha256": {
+    "art/blight_reference.py": "199c13c278c086d693042388e941e27c810e2b09442f6d25cb0682b0bcb6b431",
+    "art/blight_reference_source.py": "50261560155aecf45a16c16e9f4e1746016806a2be02d27a50e77433b673ba1d",
+    "art/bloom_animations.py": "f16b690fe853944a1bd87b5d9eca538239f7a6950a8acb9378272f8812f233c2",
+    "art/bloom_fx.py": "78da0962204d4cf23a5d622137f6171f636d6d2a2a40eef539c9f7232771707c",
+    "art/bloom_loads.py": "d2331f07e6a896244ab3b9afa4ff958d8875d5189ea8c6b2ec9ab544da65c4c4",
+    "art/clean_items.py": "adb7d042d823009988e8f3e3de3ffc52fc0d09e8dd9999db548f5189de31fa68",
+    "art/enemy_heart.py": "a52ae7779f314f006f3a0e861c3a3f75cfadbb2be5294873c5d2c6e2ace6e917",
+    "art/enemy_studies.py": "cd82b9babef1fbb61cbf99e6f89f44a5159e8bbb09a90bb00492151af045ad39",
+    "art/enemy_studies_heavy.py": "460c3a66a96eece44e90f943ca2f121ec345813cf279a0104b28e72a1eac1304",
+    "art/enemy_studies_palette.py": "aa35bba202cb9d7cc705146312104c211584b168bf0b01547ffdf96d4bff322b",
+    "art/enemy_studies_small.py": "51170452427ae507c66b851b38b16330167684a84be29172a14b442da0df411d",
+    "art/enemy_studies_soft.py": "cd1e1f2d01f25153c497b3474001bcd75a2dfeb08219b01c6354e855be15ce38",
+    "art/env_pack.py": "e266c715c90c4bf2c4ba8d840d5d6146e4f8bd68e614a53a0aece67a2051e12e",
+    "art/faces.py": "602bbc4a4d32a37f9100e8c78f29417604e2277ab0afcc67631953ea4e8a435a",
+    "art/folk.py": "174fa5044812caefc70a7bdebb33f54a869854c3d4ff58560815126881e6099b",
+    "art/forest_art.py": "f468279e191c3727203c981eadf17442af38dc5ed59493cd1447e9fe21f02842",
+    "art/forest_canopy_adaptive.py": "5e53305c58950b944cc2b0b89b99abdd137da0362b01066395c6f77ce79e44b3",
+    "art/forest_canopy_adaptive_b.py": "7809408ba52d7ce2dce04cb4a7ee1ace649823267a2f24f716ab7c6011656187",
+    "art/forest_canopy_adaptive_terrain.py": "abf93147275d25cba81f9b12a350ccb499f38e03bf74fe777aaf995117b510c6",
+    "art/forest_canopy_emerald.py": "dbd8a0159c4def121f85ccf3ea48a6ce6faf3f462d6bffe2c15f2852b6107d24",
+    "art/forest_canopy_emerald_terrain.py": "2117fec2437250833abd43ada7ae9d4fbedca9dfe77cf288672f7b0750f38c69",
+    "art/forest_concepts.py": "a92703437870ba4348618e6b6e665389b1e8385a35bdb07d2bc99ec531844e53",
+    "art/forest_concepts_folk.py": "fd39704a0634b15bf2330b3dda2368a8ea8a136caa03b08a033bfbbf058a8aae",
+    "art/forest_concepts_props.py": "331f58e184620f14bb9f2d7f1f6a471d0ee3cbe179122e997969108756627e9e",
+    "art/forest_concepts_terrain.py": "dfc9f30160f7c7eb46fe265016583cf7c44147f2e840aedc8f31a1c19ebc3c6f",
+    "art/forest_concepts_v2_folk.py": "f90c9b814cc992d865306d3b75e6458fe7226fe920e5c5add2f3ffa42e2e18ee",
+    "art/forest_concepts_v2_props.py": "0f89761f86cc079494334c7b7f660ac3d8f23500daf6e1548dfcccd0e609d354",
+    "art/forest_concepts_v2_terrain.py": "d7d1215c447294a169d672ae36ccc6b61eab5fcc139ebed12ad4c1f7c0d4e52a",
+    "art/forest_concepts_v2_topology.py": "755c6c61ac5e2154db782583bdd7d65068abeba6043a613e7d9b60e922ff52fa",
+    "art/forest_concepts_v3_terrain.py": "e905aac03c5b46b2388b7e3f83c8e9763eef6e579cd6ee75b2786e9f3639e92e",
+    "art/forest_sprites.py": "b376dd3f6cd16f46ecba74610d3f2265e5c9bfee2929b4449dcf28d56e0d86cf",
+    "art/forest_tree_study.py": "a8750327e4d015a31656ede2adbc21be6e8512eadca09c5aa8636c1599b3b54f",
+    "art/healthy_reference.py": "32e0254b979378fc78fa970b51ebd0f5ed7479bfaa3adb5cd8c6121fcc5319d4",
+    "art/hero.py": "1313133514f169593e8be950355f213790ff8c4e5d6f051a16eee9c8ad4a6c48",
+    "art/interactive_props.py": "93e2eb136f71cad7dd66b59b17c1eabbc527d17ab4e84a1e65ecafa3d24133f7",
+    "art/interactive_tiles.py": "d252a44cd066de59f309aa890d2b424a5245e7ec0527b43595ea495b98f3cb84",
+    "art/items.py": "6865e732874429fd35732962b2f9df646ac642b3795f3eab418879cf28c08968",
+    "art/items32.py": "e4ff935e10b54f540830917cfd9233b0a6a086feb30bfd2a874cd7b3d7b5fbbf",
+    "art/marks.py": "8bbd676f70643403ea06105ad0468417ba2171433ca422438322534c6f4eb23d",
+    "art/monsters.py": "8dd8272f147ddc89336c69bb274c96578c445a4944a0b0e1113227639ab2b13c",
+    "art/pack.py": "6ed118c306471ea0bb4eebeedd3444badf724359bed77766e48134f9cc77c1fb",
+    "art/pack_tiles.py": "b99341a12dcd457f3e1dc2527da20f31d1dfe24f8e3fecd48cded0041b3e764d",
+    "art/paint.py": "e03b63767cdc885179ab902ccafe119cc5426228b322ad1162338880d2067fd9",
+    "art/palettes.py": "f715f6207034f404721d5a22f140acbd540793032540177d93102c3818275a6d",
+    "art/portraits.py": "2dc833b09d884f7b9020000de5970615e06dceb61a7b9f901e9647c2659613f9",
+    "art/px.py": "2c0058322702da467efc85ab0cd9eb367d07db8b18f5f0bcf2f0b06b640d5188",
+    "art/reboot_actors.py": "08cf30f2219bb0b1f4b55724a9d55c6c755db897b768c35685f6523f1828823e",
+    "art/reboot_core.py": "71021a7b1717f8dd7edd58d0ad0a4dda448def45533c42855f6d76a4bcc82ea4",
+    "art/reboot_items.py": "589c6e250bce05a44fd192c6a7ad7a19025214efe74c98f91e35affc38cc0891",
+    "art/reboot_terrain.py": "57ef3230a9d89b16e2cecb5984d3397ee3b19fb5d15d59af1c6ed9c9d460caec",
+    "art/reboot_ui.py": "6963ac2536f37580c1e398228b22359ea03c39460b9814fb751d4de82c98dfc7",
+    "art/reference_assets.py": "3374d7c6e3ce26e7fb2fa4977410ec75fcf37f98eed29610a4b8301bfae41f52",
+    "art/reference_items.py": "2367b5329b98fa2ba5ba9d067909ca4104cdf67e27db496a0929660c2908c36a",
+    "art/rooms.py": "c9f69874d628e8ef85e2dbf75511a27927147a1bd3d44fff508a9812ce659363",
+    "art/sample.py": "9018410070844f4a69e3bc9458394c8291de99ad548aa8b29d07d0b7d771d454",
+    "art/sewer_concepts.py": "6638656152cdfe5d424f94de8eb7f1c9ecc359293247670c62692d2ea2dd2606",
+    "art/sewer_concepts_npcs.py": "3ac84ca8f1024bfbbbb391f3c817d06d73609e82d17239aa05981e0633b130bb",
+    "art/sewer_concepts_terrain.py": "913e22af37f33949d248675b8f3987daf17d989e0c7c8c04e32c76845ae8f561",
+    "art/sewer_final.py": "f6229d2aa7e0207b01b6c35be75884cbcdd6b7847ceedc945388b760360baf83",
+    "art/sewer_final_contracts.py": "4afb10e4fe316d549046bacbeec4358747939d98f29ca2c2f633c24da4cf553c",
+    "art/sewer_v3_fixtures.py": "1f7d4289575f8a4a933ac6fef1b37a5510308a1ed31c4815629cd9a0c5d8ea12",
+    "art/sprites.py": "c5de3ca406f851997b5d29ad1ea07a3a6182fa1851ead4183f295c488198602d",
+    "art/style.py": "693a64a9136bba50f3489b08b806aaf6d20258f570009bac9e22a6b010c42cb3",
+    "art/sw_cut.py": "27f064e14cb1e392e16ed72102093e17310080f228f9d3d58da8285f7de8dd1b",
+    "art/sw_drain.py": "b546771bef482a455a24a125c11ef50824078e6b47ed100044f0b9cb65560b33",
+    "art/sw_folk.py": "7ed9e18713edce423e8a90947328d537097ee04a4e5a828c36539cbdf8521ac2",
+    "art/sw_hall.py": "a400723c297bb49eb4ef80ec69a3f92a6efde08f588fee20543de65798ee11cd",
+    "art/sw_paint.py": "8f7fce4a2871092631631be9ca8e5bfd4f35f68f039c412c0e5cfb25cf04c139",
+    "art/sw_props.py": "04a8bdc2d8661e21f22f73eea86169aaa647a5161e43d45cfd94a19eae051a6d",
+    "art/sword_studies.py": "5cf29b6116a417ed229d322eadaf9ae7a345a52dcd970dae2ff8f1bb8f0d01c4",
+    "art/tile_art.py": "24d090933cc0cccf70e827aac5fbf2a1a09fd20336b5ab303d04c636cdcc4217",
+    "art/tiles.py": "a83df9818f93c8724b403e919fd304349640970c6f33db60f8dba484cc672273",
+    "art/tiles_style.py": "eb9caf764e56a672227d48fd024df3119856e7b84e58bce11a2acd938b3c2890",
+    "art/title.py": "03b984ca0f7e81afbb064f7e5aadf45530c51f34b53fbb3998aead7a0ceb9715",
+    "art/ui_font.py": "48ae0da7d1daa4f01c144a856d18694c5be06674288029e62913a513bcb8388e",
+    "art/ui_kit.py": "49b31f6b0955436eb9c88bf019208ef6cc7bb573f9add58a3c85e8acea70e6ca",
+    "art/ui_studies.py": "b2a9bbddc134a36c82f87b990a8e5f1f93e15cf2b4cd165391f673b2fe03a3c3",
+    "art/wood_art.py": "4778b2a8cfca7fb647193abc53c9e63bc07998d2eb2177cc4930543de2c5251c",
+    "Makefile": "ab49e5103bb46a7324dd504d1de48ef8722104513b47996219a6667d2077ffa5",
+    "tools/build_assets.py": "89145595d30af00f138815678fd19454baf3c4c47478e0ab0c3ba2f191913829"
+  },
+  "native_images": 12,
+  "palette_banks": 1,
+  "files": {
+    "README.md": {
+      "sha256": "1e29592918725b0e7d8a328000aecc4d1697ff52ada7ba637e69ceea459c9428",
+      "bytes": 1237
+    },
+    "floor-contacts-source.png": {
+      "sha256": "84458a20196568b88704888f1d02f3027c309b0e7d85cc19b081a026e872acf3",
+      "bytes": 12382
+    },
+    "grayscale-source.png": {
+      "sha256": "ea0e69a7186a54ce036e178e33cf4e74a4e901e57692f45761218771e1e8911a",
+      "bytes": 15563
+    },
+    "native/tree_broad_0_dead-indexed.png": {
+      "sha256": "4650a8e431b29f3d98a4d6467412ba27d7eb111b9b46880a9fdc0725788566d9",
+      "bytes": 378
+    },
+    "native/tree_broad_0_dead.png": {
+      "sha256": "2a9226a29191e80fcd2b72450c9fc183c021f61a1ca891dbc28b1d0fb2429c52",
+      "bytes": 611
+    },
+    "native/tree_broad_0_healthy-indexed.png": {
+      "sha256": "4f239e248d4ca04f9e7665296116800b1eddb7bc0840f1f0c04c86db7af0096a",
+      "bytes": 383
+    },
+    "native/tree_broad_0_healthy.png": {
+      "sha256": "6c2c61a042634a88cb67401569f5c7f8bf8758d8a70c68de988704bce187a4a4",
+      "bytes": 549
+    },
+    "native/tree_broad_0_sick-indexed.png": {
+      "sha256": "9e3ebdd2079577967b05e8bf44c9da295688c6ca80dd6653eb28fd9424e4e282",
+      "bytes": 394
+    },
+    "native/tree_broad_0_sick.png": {
+      "sha256": "ffe2af85a0f008777f198e3f2b233bbd555b80c189303b2d3f9b20d8f3a2ec17",
+      "bytes": 642
+    },
+    "native/tree_broad_1_dead-indexed.png": {
+      "sha256": "0e9b6efa48712d24fef6921e0e5402022ea1ddee15194ca488747dd53219579f",
+      "bytes": 381
+    },
+    "native/tree_broad_1_dead.png": {
+      "sha256": "d7c050e3507fe134e6666acc86b1d777123b8cd81744a98a1161aea942326d4d",
+      "bytes": 600
+    },
+    "native/tree_broad_1_healthy-indexed.png": {
+      "sha256": "bd49a51a27fed28af6c6c137969cebb1156833f8bec15bd363a857c380ac1791",
+      "bytes": 374
+    },
+    "native/tree_broad_1_healthy.png": {
+      "sha256": "7b198479cf542b8cb3bae833855159c414124d08bb56384348b2025376c87736",
+      "bytes": 543
+    },
+    "native/tree_broad_1_sick-indexed.png": {
+      "sha256": "7601b60b32e00d3c93b5b6d1a9b67778f23f9ad96b3f39001fadaba97842e374",
+      "bytes": 401
+    },
+    "native/tree_broad_1_sick.png": {
+      "sha256": "c97e679aa32c8a30ead9f742df704f18b7e4ef572f04ac32d34d130f7a566fbe",
+      "bytes": 664
+    },
+    "native/tree_narrow_0_dead-indexed.png": {
+      "sha256": "36742d48215c32a04dc3de785dfc326c90d86bcbc6d3dbfd5cc8b300b7d85dd7",
+      "bytes": 302
+    },
+    "native/tree_narrow_0_dead.png": {
+      "sha256": "abd9e01a53709c0ee73b705bea985f22e14a8b84d8b730d85077e6d12f8ed2d3",
+      "bytes": 440
+    },
+    "native/tree_narrow_0_healthy-indexed.png": {
+      "sha256": "0766fe0844ec6f19eac979fe62c2a2e070ebda24876c6e7d3e98130c3801b0f5",
+      "bytes": 283
+    },
+    "native/tree_narrow_0_healthy.png": {
+      "sha256": "60b6bf7e040b498fc3e9da234593ee27e84200f3551b11ff52883a05feeb917a",
+      "bytes": 405
+    },
+    "native/tree_narrow_0_sick-indexed.png": {
+      "sha256": "3afad51ae78f9fd81a10b0a42e80b68321af3a238d722f98b96e62d4f856a9ad",
+      "bytes": 305
+    },
+    "native/tree_narrow_0_sick.png": {
+      "sha256": "cb26dfcc7821ff7e2ddef8808eab008ed73c21228f2f217c95f265981a6ea86b",
+      "bytes": 449
+    },
+    "native/tree_narrow_1_dead-indexed.png": {
+      "sha256": "ae53a85dc567900bb1948642b8670281e6988e7cd764f42ccd949097cdf3cb3c",
+      "bytes": 293
+    },
+    "native/tree_narrow_1_dead.png": {
+      "sha256": "7368aece039c7050c018f9e341f401240510d02dbe4c617ffe68fbbd95e7e907",
+      "bytes": 427
+    },
+    "native/tree_narrow_1_healthy-indexed.png": {
+      "sha256": "5d02981780a1578aeb237ddfdfac659ce98b473acfbfcf50f3d8374fe930cb72",
+      "bytes": 292
+    },
+    "native/tree_narrow_1_healthy.png": {
+      "sha256": "77aaa0fd16fa7f579258018ec72f32a32869bda2a698de3a95ca0454cf69f9fc",
+      "bytes": 425
+    },
+    "native/tree_narrow_1_sick-indexed.png": {
+      "sha256": "9d5b51f6b707230a12bf010209b88f2ceee5cca665a96410046131d3811b0265",
+      "bytes": 309
+    },
+    "native/tree_narrow_1_sick.png": {
+      "sha256": "1d4b49deaa3232f49169f4b4a4168c7ec988c65f404795157461d7b60565c6cc",
+      "bytes": 479
+    },
+    "native-manifest.json": {
+      "sha256": "0e89bd4403014a84879a3fb402fd6b9021589384aff091a4a68e70d984d75f86",
+      "bytes": 21647
+    },
+    "palette-iteration-source.png": {
+      "sha256": "0e97e4efd457098ab672a4feabf3eb3de2f3ff52dabb99f10237fcc305d6d963",
+      "bytes": 6493
+    },
+    "silhouettes-source.png": {
+      "sha256": "fa3fac02cd47d87cc4f610c4ce70f826ddd9a1f5b25dcd77440e553fc339c9c9",
+      "bytes": 7686
+    },
+    "source-art.json": {
+      "sha256": "fbae6b260b38528c8f248df37579c9ccb9079c158379ff75e8623f3ef9211832",
+      "bytes": 33830
+    },
+    "tree-states-source.png": {
+      "sha256": "3451f015acc8eb1717adebf55f838f613f1c9d6310b981e77d200353726f14a9",
+      "bytes": 15674
+    }
+  },
+  "kind": "frozen source inspection"
+}

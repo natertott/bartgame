@@ -1,0 +1,16 @@
+{
+  "profile": 30,
+  "source_commit": "c269b67b9f0652902a5295906f4d0c4d07e2710c",
+  "rom_sha256": "fc1deae0c67d6a5db44e5cf1da4eb25a5868cfb29b162cd77b0d955bbbf4913a",
+  "contexts": 8,
+  "passed": 104,
+  "total": 104,
+  "movies": 2,
+  "gifs": 2,
+  "boards": 1,
+  "panels": 6,
+  "gallery_tool_sha256": "64bef622d3a743bbf81bcb4fb362f0ff25c0197ccf9707d5a1aac4ac59bf336d",
+  "capture_report_sha256": "16ed593456982cb40104c1260af6c77b19707181541f8bfa40ed495fd34e1540",
+  "copied_media_files": 60,
+  "fixture_scope": "Deliberate repeated-tree diagnostic plantings, not natural forest generation or a canopy redesign."
+}
