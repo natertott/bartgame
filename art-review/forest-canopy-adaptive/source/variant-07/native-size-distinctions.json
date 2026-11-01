@@ -1,0 +1,621 @@
+{
+  "comparisons": [
+    {
+      "roles": [
+        "small",
+        "tree"
+      ],
+      "identical_nearest_resize": false
+    },
+    {
+      "roles": [
+        "clump",
+        "small"
+      ],
+      "identical_nearest_resize": false
+    },
+    {
+      "roles": [
+        "clump",
+        "tree"
+      ],
+      "identical_nearest_resize": false
+    },
+    {
+      "roles": [
+        "clump",
+        "grove"
+      ],
+      "identical_nearest_resize": false
+    },
+    {
+      "roles": [
+        "clump",
+        "hero"
+      ],
+      "identical_nearest_resize": false
+    },
+    {
+      "roles": [
+        "clump",
+        "roots"
+      ],
+      "identical_nearest_resize": false
+    },
+    {
+      "roles": [
+        "clump",
+        "column"
+      ],
+      "identical_nearest_resize": false
+    },
+    {
+      "roles": [
+        "grove",
+        "small"
+      ],
+      "identical_nearest_resize": false
+    },
+    {
+      "roles": [
+        "grove",
+        "tree"
+      ],
+      "identical_nearest_resize": false
+    },
+    {
+      "roles": [
+        "grove",
+        "hero"
+      ],
+      "identical_nearest_resize": false
+    },
+    {
+      "roles": [
+        "grove",
+        "roots"
+      ],
+      "identical_nearest_resize": false
+    },
+    {
+      "roles": [
+        "hero",
+        "small"
+      ],
+      "identical_nearest_resize": false
+    },
+    {
+      "roles": [
+        "hero",
+        "tree"
+      ],
+      "identical_nearest_resize": false
+    },
+    {
+      "roles": [
+        "hero",
+        "roots"
+      ],
+      "identical_nearest_resize": false
+    },
+    {
+      "roles": [
+        "branch",
+        "small"
+      ],
+      "identical_nearest_resize": false
+    },
+    {
+      "roles": [
+        "branch",
+        "clump"
+      ],
+      "identical_nearest_resize": false
+    },
+    {
+      "roles": [
+        "branch",
+        "tree"
+      ],
+      "identical_nearest_resize": false
+    },
+    {
+      "roles": [
+        "branch",
+        "grove"
+      ],
+      "identical_nearest_resize": false
+    },
+    {
+      "roles": [
+        "branch",
+        "hero"
+      ],
+      "identical_nearest_resize": false
+    },
+    {
+      "roles": [
+        "branch",
+        "roots"
+      ],
+      "identical_nearest_resize": false
+    },
+    {
+      "roles": [
+        "branch",
+        "column"
+      ],
+      "identical_nearest_resize": false
+    },
+    {
+      "roles": [
+        "roots",
+        "small"
+      ],
+      "identical_nearest_resize": false
+    },
+    {
+      "roles": [
+        "roots",
+        "tree"
+      ],
+      "identical_nearest_resize": false
+    },
+    {
+      "roles": [
+        "border",
+        "small"
+      ],
+      "identical_nearest_resize": false
+    },
+    {
+      "roles": [
+        "border",
+        "clump"
+      ],
+      "identical_nearest_resize": false
+    },
+    {
+      "roles": [
+        "border",
+        "tree"
+      ],
+      "identical_nearest_resize": false
+    },
+    {
+      "roles": [
+        "border",
+        "grove"
+      ],
+      "identical_nearest_resize": false
+    },
+    {
+      "roles": [
+        "border",
+        "hero"
+      ],
+      "identical_nearest_resize": false
+    },
+    {
+      "roles": [
+        "border",
+        "branch"
+      ],
+      "identical_nearest_resize": false
+    },
+    {
+      "roles": [
+        "border",
+        "roots"
+      ],
+      "identical_nearest_resize": false
+    },
+    {
+      "roles": [
+        "border",
+        "column"
+      ],
+      "identical_nearest_resize": false
+    },
+    {
+      "roles": [
+        "border",
+        "branch-solid"
+      ],
+      "identical_nearest_resize": false
+    },
+    {
+      "roles": [
+        "column",
+        "small"
+      ],
+      "identical_nearest_resize": false
+    },
+    {
+      "roles": [
+        "column",
+        "tree"
+      ],
+      "identical_nearest_resize": false
+    },
+    {
+      "roles": [
+        "column",
+        "grove"
+      ],
+      "identical_nearest_resize": false
+    },
+    {
+      "roles": [
+        "column",
+        "hero"
+      ],
+      "identical_nearest_resize": false
+    },
+    {
+      "roles": [
+        "column",
+        "roots"
+      ],
+      "identical_nearest_resize": false
+    },
+    {
+      "roles": [
+        "authored-small-a",
+        "small"
+      ],
+      "identical_nearest_resize": false
+    },
+    {
+      "roles": [
+        "authored-small-a",
+        "clump"
+      ],
+      "identical_nearest_resize": false
+    },
+    {
+      "roles": [
+        "authored-small-a",
+        "tree"
+      ],
+      "identical_nearest_resize": false
+    },
+    {
+      "roles": [
+        "authored-small-a",
+        "grove"
+      ],
+      "identical_nearest_resize": false
+    },
+    {
+      "roles": [
+        "authored-small-a",
+        "hero"
+      ],
+      "identical_nearest_resize": false
+    },
+    {
+      "roles": [
+        "authored-small-a",
+        "branch"
+      ],
+      "identical_nearest_resize": false
+    },
+    {
+      "roles": [
+        "authored-small-a",
+        "roots"
+      ],
+      "identical_nearest_resize": false
+    },
+    {
+      "roles": [
+        "authored-small-a",
+        "border"
+      ],
+      "identical_nearest_resize": false
+    },
+    {
+      "roles": [
+        "authored-small-a",
+        "column"
+      ],
+      "identical_nearest_resize": false
+    },
+    {
+      "roles": [
+        "authored-small-a",
+        "branch-solid"
+      ],
+      "identical_nearest_resize": false
+    },
+    {
+      "roles": [
+        "authored-small-b",
+        "small"
+      ],
+      "identical_nearest_resize": false
+    },
+    {
+      "roles": [
+        "authored-small-b",
+        "clump"
+      ],
+      "identical_nearest_resize": false
+    },
+    {
+      "roles": [
+        "authored-small-b",
+        "tree"
+      ],
+      "identical_nearest_resize": false
+    },
+    {
+      "roles": [
+        "authored-small-b",
+        "grove"
+      ],
+      "identical_nearest_resize": false
+    },
+    {
+      "roles": [
+        "authored-small-b",
+        "hero"
+      ],
+      "identical_nearest_resize": false
+    },
+    {
+      "roles": [
+        "authored-small-b",
+        "branch"
+      ],
+      "identical_nearest_resize": false
+    },
+    {
+      "roles": [
+        "authored-small-b",
+        "roots"
+      ],
+      "identical_nearest_resize": false
+    },
+    {
+      "roles": [
+        "authored-small-b",
+        "border"
+      ],
+      "identical_nearest_resize": false
+    },
+    {
+      "roles": [
+        "authored-small-b",
+        "column"
+      ],
+      "identical_nearest_resize": false
+    },
+    {
+      "roles": [
+        "authored-small-b",
+        "branch-solid"
+      ],
+      "identical_nearest_resize": false
+    },
+    {
+      "roles": [
+        "authored-large-a",
+        "small"
+      ],
+      "identical_nearest_resize": false
+    },
+    {
+      "roles": [
+        "authored-large-a",
+        "clump"
+      ],
+      "identical_nearest_resize": false
+    },
+    {
+      "roles": [
+        "authored-large-a",
+        "tree"
+      ],
+      "identical_nearest_resize": false
+    },
+    {
+      "roles": [
+        "authored-large-a",
+        "grove"
+      ],
+      "identical_nearest_resize": false
+    },
+    {
+      "roles": [
+        "authored-large-a",
+        "hero"
+      ],
+      "identical_nearest_resize": false
+    },
+    {
+      "roles": [
+        "authored-large-a",
+        "branch"
+      ],
+      "identical_nearest_resize": false
+    },
+    {
+      "roles": [
+        "authored-large-a",
+        "roots"
+      ],
+      "identical_nearest_resize": false
+    },
+    {
+      "roles": [
+        "authored-large-a",
+        "border"
+      ],
+      "identical_nearest_resize": false
+    },
+    {
+      "roles": [
+        "authored-large-a",
+        "column"
+      ],
+      "identical_nearest_resize": false
+    },
+    {
+      "roles": [
+        "authored-large-a",
+        "authored-small-a"
+      ],
+      "identical_nearest_resize": false
+    },
+    {
+      "roles": [
+        "authored-large-a",
+        "authored-small-b"
+      ],
+      "identical_nearest_resize": false
+    },
+    {
+      "roles": [
+        "authored-large-a",
+        "branch-solid"
+      ],
+      "identical_nearest_resize": false
+    },
+    {
+      "roles": [
+        "authored-large-b",
+        "small"
+      ],
+      "identical_nearest_resize": false
+    },
+    {
+      "roles": [
+        "authored-large-b",
+        "clump"
+      ],
+      "identical_nearest_resize": false
+    },
+    {
+      "roles": [
+        "authored-large-b",
+        "tree"
+      ],
+      "identical_nearest_resize": false
+    },
+    {
+      "roles": [
+        "authored-large-b",
+        "grove"
+      ],
+      "identical_nearest_resize": false
+    },
+    {
+      "roles": [
+        "authored-large-b",
+        "hero"
+      ],
+      "identical_nearest_resize": false
+    },
+    {
+      "roles": [
+        "authored-large-b",
+        "branch"
+      ],
+      "identical_nearest_resize": false
+    },
+    {
+      "roles": [
+        "authored-large-b",
+        "roots"
+      ],
+      "identical_nearest_resize": false
+    },
+    {
+      "roles": [
+        "authored-large-b",
+        "border"
+      ],
+      "identical_nearest_resize": false
+    },
+    {
+      "roles": [
+        "authored-large-b",
+        "column"
+      ],
+      "identical_nearest_resize": false
+    },
+    {
+      "roles": [
+        "authored-large-b",
+        "authored-small-a"
+      ],
+      "identical_nearest_resize": false
+    },
+    {
+      "roles": [
+        "authored-large-b",
+        "authored-small-b"
+      ],
+      "identical_nearest_resize": false
+    },
+    {
+      "roles": [
+        "authored-large-b",
+        "branch-solid"
+      ],
+      "identical_nearest_resize": false
+    },
+    {
+      "roles": [
+        "branch-solid",
+        "small"
+      ],
+      "identical_nearest_resize": false
+    },
+    {
+      "roles": [
+        "branch-solid",
+        "clump"
+      ],
+      "identical_nearest_resize": false
+    },
+    {
+      "roles": [
+        "branch-solid",
+        "tree"
+      ],
+      "identical_nearest_resize": false
+    },
+    {
+      "roles": [
+        "branch-solid",
+        "grove"
+      ],
+      "identical_nearest_resize": false
+    },
+    {
+      "roles": [
+        "branch-solid",
+        "hero"
+      ],
+      "identical_nearest_resize": false
+    },
+    {
+      "roles": [
+        "branch-solid",
+        "roots"
+      ],
+      "identical_nearest_resize": false
+    },
+    {
+      "roles": [
+        "branch-solid",
+        "column"
+      ],
+      "identical_nearest_resize": false
+    }
+  ],
+  "method": "Compare final nibble data under nearest-neighbor resizing only as a diagnostic. Authored assets themselves are never resized for use."
+}

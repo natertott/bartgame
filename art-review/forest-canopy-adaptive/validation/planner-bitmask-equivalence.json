@@ -1,0 +1,49 @@
+{
+  "rooms": 125,
+  "native_roles": [
+    [
+      1,
+      1
+    ],
+    [
+      2,
+      2
+    ],
+    [
+      3,
+      3
+    ],
+    [
+      4,
+      4
+    ],
+    [
+      6,
+      4
+    ],
+    [
+      4,
+      1
+    ],
+    [
+      2,
+      1
+    ],
+    [
+      6,
+      2
+    ],
+    [
+      1,
+      4
+    ]
+  ],
+  "fit_comparisons": 736212,
+  "exposure_comparisons": 736212,
+  "lut_values": 64,
+  "right_edge_x_plus_width_32_included": true,
+  "all_passed": true,
+  "seconds": 1.912,
+  "source_sha256": "a9698753025e0da864d88d6a0bdf6989af0cacd3b02dc52df6d921316e30f32a",
+  "method": "Independent brute rectangle/all-cell fits and per-cell floor exposure counts versus optimized row/column masks. Source LUT parsed and exhaustively verified."
+}

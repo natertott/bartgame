@@ -1,0 +1,1321 @@
+{
+  "boards": [
+    {
+      "path": "isolated-small-ten-directions-actual.png",
+      "sha256": "8a5b297991fd34d37e50463a4f7c4a5dd1841b542272108842e41f31f54fa559",
+      "panels": [
+        {
+          "profile": 19,
+          "style": 1,
+          "case": "isolated-small",
+          "selector": "image",
+          "source": "actual/variant-01/isolated-small.png",
+          "source_sha256": "348a844b68a25299969b242ea94040c13c8d53b9390d44ab9e21a5e416cf2a7c",
+          "rgb_sha256": "6a8bcb5b1c97fe3bede33514f15c2c989a8ef062f51a1f55b03b830142a91bbf",
+          "rect": [
+            0,
+            84,
+            240,
+            160
+          ],
+          "kind": "natural generated room; navigation/inventory/player/starting-global-RNG fixtures only"
+        },
+        {
+          "profile": 20,
+          "style": 2,
+          "case": "isolated-small",
+          "selector": "image",
+          "source": "actual/variant-02/isolated-small.png",
+          "source_sha256": "484f1e80a406d181f6f5b053805ec2a6d4ee9544be03d6b6279bb265fedf38c2",
+          "rgb_sha256": "b017affac39e22bb6cab1de2248e9523637c493325ec8f2fa44391121f0d838f",
+          "rect": [
+            240,
+            84,
+            240,
+            160
+          ],
+          "kind": "natural generated room; navigation/inventory/player/starting-global-RNG fixtures only"
+        },
+        {
+          "profile": 21,
+          "style": 3,
+          "case": "isolated-small",
+          "selector": "image",
+          "source": "actual/variant-03/isolated-small.png",
+          "source_sha256": "d4dc8a28e84de75c88aa6b7cd3ed8321683692cb7a5015d4d7305b894d9c252b",
+          "rgb_sha256": "bda59dd42b61b4529a618cfbf70a4d606f5b3cdb9b33672e494019ca2dfa2585",
+          "rect": [
+            0,
+            274,
+            240,
+            160
+          ],
+          "kind": "natural generated room; navigation/inventory/player/starting-global-RNG fixtures only"
+        },
+        {
+          "profile": 22,
+          "style": 4,
+          "case": "isolated-small",
+          "selector": "image",
+          "source": "actual/variant-04/isolated-small.png",
+          "source_sha256": "d9b051abcedc3484f089814bf465555bc772a34e78580454064aa1558966b97e",
+          "rgb_sha256": "5544bb2cc2c4d7c2a837f3c2ef7e1fb9c208ff1b39b64e0b29167e600cb5054d",
+          "rect": [
+            240,
+            274,
+            240,
+            160
+          ],
+          "kind": "natural generated room; navigation/inventory/player/starting-global-RNG fixtures only"
+        },
+        {
+          "profile": 23,
+          "style": 5,
+          "case": "isolated-small",
+          "selector": "image",
+          "source": "actual/variant-05/isolated-small.png",
+          "source_sha256": "a3d6928044cc530642c29db96d8220628b93860e74f2f8faac64643c91d1c62d",
+          "rgb_sha256": "3ff9706dc67f20e7745e25ab8d5cfe1108603371aada895db45c528d5f980d39",
+          "rect": [
+            0,
+            464,
+            240,
+            160
+          ],
+          "kind": "natural generated room; navigation/inventory/player/starting-global-RNG fixtures only"
+        },
+        {
+          "profile": 24,
+          "style": 6,
+          "case": "isolated-small",
+          "selector": "image",
+          "source": "actual/variant-06/isolated-small.png",
+          "source_sha256": "ba07e5c5817e2a0c6801a00780494991b230fdd813a9efb4c49c29d4bf64792d",
+          "rgb_sha256": "6c863752db4f337a8b0c335de4ca4fd68247ba091bb35a591ccc7d2773454b77",
+          "rect": [
+            240,
+            464,
+            240,
+            160
+          ],
+          "kind": "natural generated room; navigation/inventory/player/starting-global-RNG fixtures only"
+        },
+        {
+          "profile": 25,
+          "style": 7,
+          "case": "isolated-small",
+          "selector": "image",
+          "source": "actual/variant-07/isolated-small.png",
+          "source_sha256": "b44ec30b581737b1172a3201ad98f468a1f531fa40b897d8e80b6e599745b39a",
+          "rgb_sha256": "eb3660e5f38032eb3dcdf28eb023d0220ff531fdcfb08cd1f71f3daa80b5790a",
+          "rect": [
+            0,
+            654,
+            240,
+            160
+          ],
+          "kind": "natural generated room; navigation/inventory/player/starting-global-RNG fixtures only"
+        },
+        {
+          "profile": 26,
+          "style": 8,
+          "case": "isolated-small",
+          "selector": "image",
+          "source": "actual/variant-08/isolated-small.png",
+          "source_sha256": "c9a1e4cd04bf15fb67806da03dae76aeab3d6656a60ce82736858bb9d741f8cc",
+          "rgb_sha256": "c837c7365ec7d58143f6418e5d652ada5e84a41783bca53c8d9b782ec2661ead",
+          "rect": [
+            240,
+            654,
+            240,
+            160
+          ],
+          "kind": "natural generated room; navigation/inventory/player/starting-global-RNG fixtures only"
+        },
+        {
+          "profile": 27,
+          "style": 9,
+          "case": "isolated-small",
+          "selector": "image",
+          "source": "actual/variant-09/isolated-small.png",
+          "source_sha256": "3fb975517a50cd62e404ac243e2efaca370a6adece05dfc406e0b62df3f48b46",
+          "rgb_sha256": "9ded07d44f44226600eb0b067d05ceb2105fee82f3e456fe8d4ebd94c180bce9",
+          "rect": [
+            0,
+            844,
+            240,
+            160
+          ],
+          "kind": "natural generated room; navigation/inventory/player/starting-global-RNG fixtures only"
+        },
+        {
+          "profile": 28,
+          "style": 10,
+          "case": "isolated-small",
+          "selector": "image",
+          "source": "actual/variant-10/isolated-small.png",
+          "source_sha256": "bc230cd9df8423be711bd8c351df77c38ed27916098a64335037f970682a3e98",
+          "rgb_sha256": "6ed6b017e005dbef750641c18999793bc8a92ad1086c6dc6007809b45b056d40",
+          "rect": [
+            240,
+            844,
+            240,
+            160
+          ],
+          "kind": "natural generated room; navigation/inventory/player/starting-global-RNG fixtures only"
+        }
+      ]
+    },
+    {
+      "path": "narrow-arm-ten-directions-actual.png",
+      "sha256": "155d651ad7434df7b587a46f8df2c09d4b9f08dcfa2388d411aaaff2d65a61fc",
+      "panels": [
+        {
+          "profile": 19,
+          "style": 1,
+          "case": "narrow-arm",
+          "selector": "image",
+          "source": "actual/variant-01/narrow-arm.png",
+          "source_sha256": "7f4d1d8478e4708c8bdadcf7eb1c847ffdfd5a3daeb88eca4cdc94bc5586b7bd",
+          "rgb_sha256": "c4b112605e2bd4e3507b3a0d058029253b6320d64196c7d2e96f0fbde306c87b",
+          "rect": [
+            0,
+            84,
+            240,
+            160
+          ],
+          "kind": "natural generated room; navigation/inventory/player/starting-global-RNG fixtures only"
+        },
+        {
+          "profile": 20,
+          "style": 2,
+          "case": "narrow-arm",
+          "selector": "image",
+          "source": "actual/variant-02/narrow-arm.png",
+          "source_sha256": "d0f43a0664f82384849ac06f6afe69c8291989386852aceb88a111929a67b927",
+          "rgb_sha256": "65592327af27f45d4770c16abfc21e1a0b94d0f9319b3a8ac0a412db7a805f1b",
+          "rect": [
+            240,
+            84,
+            240,
+            160
+          ],
+          "kind": "natural generated room; navigation/inventory/player/starting-global-RNG fixtures only"
+        },
+        {
+          "profile": 21,
+          "style": 3,
+          "case": "narrow-arm",
+          "selector": "image",
+          "source": "actual/variant-03/narrow-arm.png",
+          "source_sha256": "9aba81d7a513ac31c6c3ca03e862dad96a7d56641bca3b9524a9b7ef2230057b",
+          "rgb_sha256": "3e622848f8edfe921f590895320cb3ceeb625517ad32fdb8dbeb70e1d15a29dd",
+          "rect": [
+            0,
+            274,
+            240,
+            160
+          ],
+          "kind": "natural generated room; navigation/inventory/player/starting-global-RNG fixtures only"
+        },
+        {
+          "profile": 22,
+          "style": 4,
+          "case": "narrow-arm",
+          "selector": "image",
+          "source": "actual/variant-04/narrow-arm.png",
+          "source_sha256": "358457c77592fa46580ce3b8a487b7a692679898a2599dbcd4eada092fbbf33b",
+          "rgb_sha256": "393c2f7b6dda6969bdc1fd1f7c11dd9c76f97dcd420a412fc8e0fcd78ce4b26b",
+          "rect": [
+            240,
+            274,
+            240,
+            160
+          ],
+          "kind": "natural generated room; navigation/inventory/player/starting-global-RNG fixtures only"
+        },
+        {
+          "profile": 23,
+          "style": 5,
+          "case": "narrow-arm",
+          "selector": "image",
+          "source": "actual/variant-05/narrow-arm.png",
+          "source_sha256": "5239f27f39dce623354e8d84ea616d2d7d4a73b2e9c0b60fbe350b91e2f6e855",
+          "rgb_sha256": "3ab55c465d306a2e0a4f14ce35d6552638588a74df7338baf266026236b0ce62",
+          "rect": [
+            0,
+            464,
+            240,
+            160
+          ],
+          "kind": "natural generated room; navigation/inventory/player/starting-global-RNG fixtures only"
+        },
+        {
+          "profile": 24,
+          "style": 6,
+          "case": "narrow-arm",
+          "selector": "image",
+          "source": "actual/variant-06/narrow-arm.png",
+          "source_sha256": "8194948edc81fdde209510e2cf9b28b2048bd04db627fd11a650800b9435d573",
+          "rgb_sha256": "daf020baa2af2343a68e7b5d17b4675b25f48508ee43704b165c1c544f6d9c41",
+          "rect": [
+            240,
+            464,
+            240,
+            160
+          ],
+          "kind": "natural generated room; navigation/inventory/player/starting-global-RNG fixtures only"
+        },
+        {
+          "profile": 25,
+          "style": 7,
+          "case": "narrow-arm",
+          "selector": "image",
+          "source": "actual/variant-07/narrow-arm.png",
+          "source_sha256": "d3a0e53eb1451edc9f03e9dc41d7dbf12696012c489c3f365ecb0c05efd3f5ec",
+          "rgb_sha256": "5e2add04960da93cd70657c76515c321f1888d47baa3bde1f8a3c92ef8eb32e8",
+          "rect": [
+            0,
+            654,
+            240,
+            160
+          ],
+          "kind": "natural generated room; navigation/inventory/player/starting-global-RNG fixtures only"
+        },
+        {
+          "profile": 26,
+          "style": 8,
+          "case": "narrow-arm",
+          "selector": "image",
+          "source": "actual/variant-08/narrow-arm.png",
+          "source_sha256": "db366dc34b46d640953c4c676544c53b6e4f3ecb952d5848148ee8c8f6cecb71",
+          "rgb_sha256": "15539f28f42cde67945ddb222d3597f1871c061a1ed06e602065d5a128f099dd",
+          "rect": [
+            240,
+            654,
+            240,
+            160
+          ],
+          "kind": "natural generated room; navigation/inventory/player/starting-global-RNG fixtures only"
+        },
+        {
+          "profile": 27,
+          "style": 9,
+          "case": "narrow-arm",
+          "selector": "image",
+          "source": "actual/variant-09/narrow-arm.png",
+          "source_sha256": "18b60929bc6d62cee1c15d9a7152329cd9630ce212126beace1684a2f9a17940",
+          "rgb_sha256": "40ec41dc53f7f49d0d40666f417d66b3a51fd9dc08983f4f011c83ff216a533e",
+          "rect": [
+            0,
+            844,
+            240,
+            160
+          ],
+          "kind": "natural generated room; navigation/inventory/player/starting-global-RNG fixtures only"
+        },
+        {
+          "profile": 28,
+          "style": 10,
+          "case": "narrow-arm",
+          "selector": "image",
+          "source": "actual/variant-10/narrow-arm.png",
+          "source_sha256": "9cbb0bea6eeb853784f3817a7a4dacd59b1a577513eb81e9a51ef2a4bcba8ec9",
+          "rgb_sha256": "94a8cfe6e7a12db9cf0cf9e249fdb19f9e18eec559cb9fc5a5206c3054223973",
+          "rect": [
+            240,
+            844,
+            240,
+            160
+          ],
+          "kind": "natural generated room; navigation/inventory/player/starting-global-RNG fixtures only"
+        }
+      ]
+    },
+    {
+      "path": "ten-healthy-canopies-actual.png",
+      "sha256": "f0c12d8e535ed8dde726cefb064cb5b0a370b71488442490e4ab4e3cf548e9c7",
+      "panels": [
+        {
+          "profile": 19,
+          "style": 1,
+          "case": "broad-healthy",
+          "selector": "image",
+          "source": "actual/variant-01/broad-healthy.png",
+          "source_sha256": "2954dcbe95c0c565ddd54b7d91c6707b8742b7f5b457c2c29fa58949a66be03e",
+          "rgb_sha256": "750483a9cd373b46aaf0cb2f3f667ceb25aa0e61dc57ee3e34972bb1d9dfdb78",
+          "rect": [
+            0,
+            84,
+            240,
+            160
+          ],
+          "kind": "natural generated room; navigation/inventory/player/starting-global-RNG fixtures only"
+        },
+        {
+          "profile": 20,
+          "style": 2,
+          "case": "broad-healthy",
+          "selector": "image",
+          "source": "actual/variant-02/broad-healthy.png",
+          "source_sha256": "bf932fec97f5d5090ab42ca0685afec3ad72527c6f6838bdcdfb28e58eb8197f",
+          "rgb_sha256": "8ee2d19d20dbc4531ad7611f423e51df9bd7b046f9da5d8af2b7a82cf32aa751",
+          "rect": [
+            240,
+            84,
+            240,
+            160
+          ],
+          "kind": "natural generated room; navigation/inventory/player/starting-global-RNG fixtures only"
+        },
+        {
+          "profile": 21,
+          "style": 3,
+          "case": "broad-healthy",
+          "selector": "image",
+          "source": "actual/variant-03/broad-healthy.png",
+          "source_sha256": "516a8ccf5464362661540a552c145b979049fe26dc472fd0b6822857b724ffb7",
+          "rgb_sha256": "d8b8537acd9e806ba34d507c151c340f7ea182b34259d4ba8238382c70b38bb3",
+          "rect": [
+            0,
+            274,
+            240,
+            160
+          ],
+          "kind": "natural generated room; navigation/inventory/player/starting-global-RNG fixtures only"
+        },
+        {
+          "profile": 22,
+          "style": 4,
+          "case": "broad-healthy",
+          "selector": "image",
+          "source": "actual/variant-04/broad-healthy.png",
+          "source_sha256": "ba2166197be53970f286932da9a1bf7482190c06f76a3d16f4f186ccc9da95a1",
+          "rgb_sha256": "e661fa9b464447350668f465da7d96e61b169160cdf92a9e18cd7c2c8dfc76cf",
+          "rect": [
+            240,
+            274,
+            240,
+            160
+          ],
+          "kind": "natural generated room; navigation/inventory/player/starting-global-RNG fixtures only"
+        },
+        {
+          "profile": 23,
+          "style": 5,
+          "case": "broad-healthy",
+          "selector": "image",
+          "source": "actual/variant-05/broad-healthy.png",
+          "source_sha256": "b52ee441c446417eb104504d32e555a0919da2d640c087ef8db3367bdd80a6cc",
+          "rgb_sha256": "fc5bd34699fec1424f96a0ea1f88824b53fd80ccae09d4d1d2bc287dc46a09dc",
+          "rect": [
+            0,
+            464,
+            240,
+            160
+          ],
+          "kind": "natural generated room; navigation/inventory/player/starting-global-RNG fixtures only"
+        },
+        {
+          "profile": 24,
+          "style": 6,
+          "case": "broad-healthy",
+          "selector": "image",
+          "source": "actual/variant-06/broad-healthy.png",
+          "source_sha256": "be08290252473057c1353eeb7e9f38113ed3362bbef1518e3b03b0ce7f60b2a8",
+          "rgb_sha256": "6275e42ea2a9e74fbe417f392247d1b77ccf4d2854392bf3fe1c85f627e78458",
+          "rect": [
+            240,
+            464,
+            240,
+            160
+          ],
+          "kind": "natural generated room; navigation/inventory/player/starting-global-RNG fixtures only"
+        },
+        {
+          "profile": 25,
+          "style": 7,
+          "case": "broad-healthy",
+          "selector": "image",
+          "source": "actual/variant-07/broad-healthy.png",
+          "source_sha256": "1c47670e3e76fadf489712cad3ba5b0768eb091e86f0af779d77c42f9577e7a0",
+          "rgb_sha256": "469e86a37fa5431f22a0588dbfcc4f0806fec1c03f14763347eb3ed1265339ea",
+          "rect": [
+            0,
+            654,
+            240,
+            160
+          ],
+          "kind": "natural generated room; navigation/inventory/player/starting-global-RNG fixtures only"
+        },
+        {
+          "profile": 26,
+          "style": 8,
+          "case": "broad-healthy",
+          "selector": "image",
+          "source": "actual/variant-08/broad-healthy.png",
+          "source_sha256": "702f45b2bcc6a385c301194861f3f0007b473eee1a6b84aafc49454a79edf26d",
+          "rgb_sha256": "57bc24509d0f68fb69329684f6af563972a32dde9d61f48c80d5284a61597a18",
+          "rect": [
+            240,
+            654,
+            240,
+            160
+          ],
+          "kind": "natural generated room; navigation/inventory/player/starting-global-RNG fixtures only"
+        },
+        {
+          "profile": 27,
+          "style": 9,
+          "case": "broad-healthy",
+          "selector": "image",
+          "source": "actual/variant-09/broad-healthy.png",
+          "source_sha256": "35915f20f33f759bbd5897be3c2831b2a40c8b2238c51afe200c5152a2e5f281",
+          "rgb_sha256": "db9a7bfdafd24374b382e58f22596c65f238fd6e8d9f74fc6fd917f5b91a8e08",
+          "rect": [
+            0,
+            844,
+            240,
+            160
+          ],
+          "kind": "natural generated room; navigation/inventory/player/starting-global-RNG fixtures only"
+        },
+        {
+          "profile": 28,
+          "style": 10,
+          "case": "broad-healthy",
+          "selector": "image",
+          "source": "actual/variant-10/broad-healthy.png",
+          "source_sha256": "4b19e81b1bb40c286f28ee07d678e8ad1d590304cce1fe425090870893e99de6",
+          "rgb_sha256": "cab9d978988a67bbf2862ab0483acb3147dd1930d24089309aeea21d5c6ad3fe",
+          "rect": [
+            240,
+            844,
+            240,
+            160
+          ],
+          "kind": "natural generated room; navigation/inventory/player/starting-global-RNG fixtures only"
+        }
+      ]
+    },
+    {
+      "path": "ten-deep-canopies-actual.png",
+      "sha256": "cc0e65dc81edcc56212189af1f11826b692bb3a0d0dee4c9684842ba802ff984",
+      "panels": [
+        {
+          "profile": 19,
+          "style": 1,
+          "case": "broad-deep",
+          "selector": "image",
+          "source": "actual/variant-01/broad-deep.png",
+          "source_sha256": "dac3180da0a4bd4cba25b0e3819a89cbd3524ce1bb4a96aa14c48d8d59e5f5f0",
+          "rgb_sha256": "4445b1220809be8345482f6d16fdc3dab93fa964c97bacd8d3323a5de5fa3603",
+          "rect": [
+            0,
+            84,
+            240,
+            160
+          ],
+          "kind": "natural generated room; navigation/inventory/player/starting-global-RNG fixtures only"
+        },
+        {
+          "profile": 20,
+          "style": 2,
+          "case": "broad-deep",
+          "selector": "image",
+          "source": "actual/variant-02/broad-deep.png",
+          "source_sha256": "ed9b5099c332bc25e0a5557faa82315757495a3a1adba9cb621995ce5b64eb0f",
+          "rgb_sha256": "9bd8c51e0ced38fe2d2cc18d153d81275b124ded25af39b86ef088b858356e24",
+          "rect": [
+            240,
+            84,
+            240,
+            160
+          ],
+          "kind": "natural generated room; navigation/inventory/player/starting-global-RNG fixtures only"
+        },
+        {
+          "profile": 21,
+          "style": 3,
+          "case": "broad-deep",
+          "selector": "image",
+          "source": "actual/variant-03/broad-deep.png",
+          "source_sha256": "ab7ae9f6e637e05754520b0f0390c07a6416f15d93654250fdc556410f5431c7",
+          "rgb_sha256": "7925817b86617c141f241df7f81dce1a802190ac4685502b70b0d301136b0898",
+          "rect": [
+            0,
+            274,
+            240,
+            160
+          ],
+          "kind": "natural generated room; navigation/inventory/player/starting-global-RNG fixtures only"
+        },
+        {
+          "profile": 22,
+          "style": 4,
+          "case": "broad-deep",
+          "selector": "image",
+          "source": "actual/variant-04/broad-deep.png",
+          "source_sha256": "044cdae194705c0ee0a922cdae8af43367b3659063ff956b70c183e3a059df13",
+          "rgb_sha256": "8795854b8384257a9ef9b01e0a154142b210b756ca0758b281c6f52198ef8868",
+          "rect": [
+            240,
+            274,
+            240,
+            160
+          ],
+          "kind": "natural generated room; navigation/inventory/player/starting-global-RNG fixtures only"
+        },
+        {
+          "profile": 23,
+          "style": 5,
+          "case": "broad-deep",
+          "selector": "image",
+          "source": "actual/variant-05/broad-deep.png",
+          "source_sha256": "514a790bb80724b44c38a38e58b0836358eaa360216c947d5092d3b925b26426",
+          "rgb_sha256": "83a8a10fe37427c13e82fae4081a472c813386e165a63f35df600456e0aed08e",
+          "rect": [
+            0,
+            464,
+            240,
+            160
+          ],
+          "kind": "natural generated room; navigation/inventory/player/starting-global-RNG fixtures only"
+        },
+        {
+          "profile": 24,
+          "style": 6,
+          "case": "broad-deep",
+          "selector": "image",
+          "source": "actual/variant-06/broad-deep.png",
+          "source_sha256": "288db6999b999c278a013525e7cd237cd1892bd960321ff5a0fc8d9410233160",
+          "rgb_sha256": "defed1bdab995021a70770d0fea4897a88280626846b29e632d7078f065b8355",
+          "rect": [
+            240,
+            464,
+            240,
+            160
+          ],
+          "kind": "natural generated room; navigation/inventory/player/starting-global-RNG fixtures only"
+        },
+        {
+          "profile": 25,
+          "style": 7,
+          "case": "broad-deep",
+          "selector": "image",
+          "source": "actual/variant-07/broad-deep.png",
+          "source_sha256": "7a745e88ddee01a45e72bf17ed098253e84acfae0c2578dc17032015458cc612",
+          "rgb_sha256": "8f43c0f7b559e4d151d8a0591233fa2789d10ae2deca8df53b28379bee9a1395",
+          "rect": [
+            0,
+            654,
+            240,
+            160
+          ],
+          "kind": "natural generated room; navigation/inventory/player/starting-global-RNG fixtures only"
+        },
+        {
+          "profile": 26,
+          "style": 8,
+          "case": "broad-deep",
+          "selector": "image",
+          "source": "actual/variant-08/broad-deep.png",
+          "source_sha256": "ba593660239fd529df137ec9f1177ab8f4d0324c2563c96f4d852ae99fb16d2e",
+          "rgb_sha256": "3864d5058b31dfaee012aff599996ab96d552443e3ee6cdd35889a2247a59514",
+          "rect": [
+            240,
+            654,
+            240,
+            160
+          ],
+          "kind": "natural generated room; navigation/inventory/player/starting-global-RNG fixtures only"
+        },
+        {
+          "profile": 27,
+          "style": 9,
+          "case": "broad-deep",
+          "selector": "image",
+          "source": "actual/variant-09/broad-deep.png",
+          "source_sha256": "677e78f0bf1aac472f2fa2e58e18fe165c85f13d44044e5df236a5ab0816c610",
+          "rgb_sha256": "8bb193dcb4990cd61a1ffac2ee48e2bf8b845855c1a3823b313563f84a718f1a",
+          "rect": [
+            0,
+            844,
+            240,
+            160
+          ],
+          "kind": "natural generated room; navigation/inventory/player/starting-global-RNG fixtures only"
+        },
+        {
+          "profile": 28,
+          "style": 10,
+          "case": "broad-deep",
+          "selector": "image",
+          "source": "actual/variant-10/broad-deep.png",
+          "source_sha256": "73022d1f2eac5a22e4befa4aea275cf61aa85fb3ad3776e2fd77a42ea8803373",
+          "rgb_sha256": "6e6e13e54bb84291c0e8b3c94f46d5c984af83bc2c24cef2b65c99ee59de1727",
+          "rect": [
+            240,
+            844,
+            240,
+            160
+          ],
+          "kind": "natural generated room; navigation/inventory/player/starting-global-RNG fixtures only"
+        }
+      ]
+    },
+    {
+      "path": "separated-corner-ten-directions-actual.png",
+      "sha256": "f80f55a07a40b797e1d59c5b6a988700208f117358a1715274ebd4c84a2cc611",
+      "panels": [
+        {
+          "profile": 19,
+          "style": 1,
+          "case": "separated-corner",
+          "selector": "image",
+          "source": "actual/variant-01/separated-corner.png",
+          "source_sha256": "da167886220bd1da10520874a591261d25ab6d0040f07de13a4aad762b27dbee",
+          "rgb_sha256": "cc450053310b85e273ba46b2a2c4dc54779264a2acb20fd3faf53086e8f6ec6b",
+          "rect": [
+            0,
+            84,
+            240,
+            160
+          ],
+          "kind": "natural generated room; navigation/inventory/player/starting-global-RNG fixtures only"
+        },
+        {
+          "profile": 20,
+          "style": 2,
+          "case": "separated-corner",
+          "selector": "image",
+          "source": "actual/variant-02/separated-corner.png",
+          "source_sha256": "78e07a3e36a69c26c39d021803704f674d66a8bd475833d68ad57fc88b9c30cd",
+          "rgb_sha256": "6958fb436fb9f847b7a4acc64bb48e2b668d00561185825c96722570ad556455",
+          "rect": [
+            240,
+            84,
+            240,
+            160
+          ],
+          "kind": "natural generated room; navigation/inventory/player/starting-global-RNG fixtures only"
+        },
+        {
+          "profile": 21,
+          "style": 3,
+          "case": "separated-corner",
+          "selector": "image",
+          "source": "actual/variant-03/separated-corner.png",
+          "source_sha256": "6bfc5b3abd6dd04ccb09146c161475c3ec9942effe47a8880a5f9451e0eebef5",
+          "rgb_sha256": "f98981ae9338eada59751d07504ff90100d3d73752bc882bb7e91603b2e15244",
+          "rect": [
+            0,
+            274,
+            240,
+            160
+          ],
+          "kind": "natural generated room; navigation/inventory/player/starting-global-RNG fixtures only"
+        },
+        {
+          "profile": 22,
+          "style": 4,
+          "case": "separated-corner",
+          "selector": "image",
+          "source": "actual/variant-04/separated-corner.png",
+          "source_sha256": "9ec8d8fd40a6f2f59117e6aa165e970869091284a6e0337c7890fe6b2ab316e9",
+          "rgb_sha256": "63e67f586b0eff2fa7c43e80720a0521907b3be925ac9150824dcf1cf2c37c23",
+          "rect": [
+            240,
+            274,
+            240,
+            160
+          ],
+          "kind": "natural generated room; navigation/inventory/player/starting-global-RNG fixtures only"
+        },
+        {
+          "profile": 23,
+          "style": 5,
+          "case": "separated-corner",
+          "selector": "image",
+          "source": "actual/variant-05/separated-corner.png",
+          "source_sha256": "5df47eb14a4ed9cb34f88498a60c4040a83de7f6318b342ae8b8697412995110",
+          "rgb_sha256": "6fbc1416fac3e962081a59a8fb561aba8ed6149d45124cc42b7b8c0de210e9e4",
+          "rect": [
+            0,
+            464,
+            240,
+            160
+          ],
+          "kind": "natural generated room; navigation/inventory/player/starting-global-RNG fixtures only"
+        },
+        {
+          "profile": 24,
+          "style": 6,
+          "case": "separated-corner",
+          "selector": "image",
+          "source": "actual/variant-06/separated-corner.png",
+          "source_sha256": "540c5b0a043f097ef7fa7f891af2bd5984199ec79be3090b4fbed9953e66e460",
+          "rgb_sha256": "2c44163229d95e094922a20da5408721a3ffa73f3db49d8447def1b2b1853fbd",
+          "rect": [
+            240,
+            464,
+            240,
+            160
+          ],
+          "kind": "natural generated room; navigation/inventory/player/starting-global-RNG fixtures only"
+        },
+        {
+          "profile": 25,
+          "style": 7,
+          "case": "separated-corner",
+          "selector": "image",
+          "source": "actual/variant-07/separated-corner.png",
+          "source_sha256": "ff79ac404e72f9118ac0282a7ea04dda191247b1f4bbed41d2a15006b64b14ab",
+          "rgb_sha256": "eef9683b7f1f3ac215b3d0a0ee2af6195ed7b65da3c11bdb2c40ea31e7be9bbe",
+          "rect": [
+            0,
+            654,
+            240,
+            160
+          ],
+          "kind": "natural generated room; navigation/inventory/player/starting-global-RNG fixtures only"
+        },
+        {
+          "profile": 26,
+          "style": 8,
+          "case": "separated-corner",
+          "selector": "image",
+          "source": "actual/variant-08/separated-corner.png",
+          "source_sha256": "5563bca6cf59540923b8de8c6cf531845e239676a07ccb970ef2db6c6a09f7a0",
+          "rgb_sha256": "ca87803202320f6fb7bd53eb82cde961a93c119d0bd396291baa867d98dce188",
+          "rect": [
+            240,
+            654,
+            240,
+            160
+          ],
+          "kind": "natural generated room; navigation/inventory/player/starting-global-RNG fixtures only"
+        },
+        {
+          "profile": 27,
+          "style": 9,
+          "case": "separated-corner",
+          "selector": "image",
+          "source": "actual/variant-09/separated-corner.png",
+          "source_sha256": "7276ba94cdc0e3c8e7eed2d95d83a0dae038039ea1273ba649064d220f641631",
+          "rgb_sha256": "4d0cf1da92e7a68bfff2b34570cbc5a4d0f922b48ad3479e1202f2ae00ca8d1e",
+          "rect": [
+            0,
+            844,
+            240,
+            160
+          ],
+          "kind": "natural generated room; navigation/inventory/player/starting-global-RNG fixtures only"
+        },
+        {
+          "profile": 28,
+          "style": 10,
+          "case": "separated-corner",
+          "selector": "image",
+          "source": "actual/variant-10/separated-corner.png",
+          "source_sha256": "8f57b61dd9651e8aa4811226b4feeafdfb10777b54251218f5613df74409214a",
+          "rgb_sha256": "45e583f81c6fe0af757b53dc85a6bbc6290c75f9c35dd346f1fe7174d22c6ae0",
+          "rect": [
+            240,
+            844,
+            240,
+            160
+          ],
+          "kind": "natural generated room; navigation/inventory/player/starting-global-RNG fixtures only"
+        }
+      ]
+    },
+    {
+      "path": "deep-branch-walk-roll-motion-actual.png",
+      "sha256": "7b3dce7630569f56c57dab3d5bbd3e6140b9bca122daf9237777f8b03f815974",
+      "panels": [
+        {
+          "profile": 19,
+          "style": 1,
+          "case": "deep-branch-walk-roll",
+          "selector": "Before",
+          "source": "actual/variant-01/deep-branch-walk-roll/frame-000.png",
+          "source_sha256": "abb1f41beef892be4e21e922d06f7c69b363b2202eeba42b1d33fb7026c6593e",
+          "rgb_sha256": "6dd7155016464ee54eb060112e3710794a350482e322b241cd592e708e0f4280",
+          "rect": [
+            0,
+            84,
+            240,
+            160
+          ],
+          "kind": "natural generated room; navigation/inventory/player/starting-global-RNG fixtures only"
+        },
+        {
+          "profile": 19,
+          "style": 1,
+          "case": "deep-branch-walk-roll",
+          "selector": "Under",
+          "source": "actual/variant-01/deep-branch-walk-roll/frame-045.png",
+          "source_sha256": "f15fd8bafebb185de73fc5c3b7605ab8fd51b5880edda103ec32826262ef8407",
+          "rgb_sha256": "d351246e57eb845a5fc1e90a461d61595b9dd21d8b1b71fe15baea4e2bbaed11",
+          "rect": [
+            240,
+            84,
+            240,
+            160
+          ],
+          "kind": "natural generated room; navigation/inventory/player/starting-global-RNG fixtures only"
+        },
+        {
+          "profile": 19,
+          "style": 1,
+          "case": "deep-branch-walk-roll",
+          "selector": "Emerged",
+          "source": "actual/variant-01/deep-branch-walk-roll/frame-127.png",
+          "source_sha256": "1f6f7a9b27da5c31dc3db4ee330072fd447839ac7c0666bb91287b581f7a7d4b",
+          "rgb_sha256": "7bc49ad4c0edf9a2eda562de659279281658bcc98c6c255be463dfdc9b55f85b",
+          "rect": [
+            480,
+            84,
+            240,
+            160
+          ],
+          "kind": "natural generated room; navigation/inventory/player/starting-global-RNG fixtures only"
+        },
+        {
+          "profile": 20,
+          "style": 2,
+          "case": "deep-branch-walk-roll",
+          "selector": "Before",
+          "source": "actual/variant-02/deep-branch-walk-roll/frame-000.png",
+          "source_sha256": "cebf0adb5ce40791c719d16a74be8abb073f75e6955ebcae8984df5455b34af4",
+          "rgb_sha256": "dae9f82c6befa8c9748195e5377cb9401861c910bbb2d49512bebab31e6d0853",
+          "rect": [
+            0,
+            274,
+            240,
+            160
+          ],
+          "kind": "natural generated room; navigation/inventory/player/starting-global-RNG fixtures only"
+        },
+        {
+          "profile": 20,
+          "style": 2,
+          "case": "deep-branch-walk-roll",
+          "selector": "Under",
+          "source": "actual/variant-02/deep-branch-walk-roll/frame-045.png",
+          "source_sha256": "2829c5f59df2e47f3989f6ee588ce54e5e0fe590b4ed01a133e298b5f11852a8",
+          "rgb_sha256": "1d4f040f0dbd0c23260a599493b0dd0327b49401fe280f37c721190eec0b8a1e",
+          "rect": [
+            240,
+            274,
+            240,
+            160
+          ],
+          "kind": "natural generated room; navigation/inventory/player/starting-global-RNG fixtures only"
+        },
+        {
+          "profile": 20,
+          "style": 2,
+          "case": "deep-branch-walk-roll",
+          "selector": "Emerged",
+          "source": "actual/variant-02/deep-branch-walk-roll/frame-127.png",
+          "source_sha256": "01e08904d218a29b6819710b57821a3bddbe31dadc4d3409c0fdcf94ff039f43",
+          "rgb_sha256": "02bc0fcc7c30708a7b31b7bc6fe6f30c8f0141c6ddbd7931140b01d70054bdfb",
+          "rect": [
+            480,
+            274,
+            240,
+            160
+          ],
+          "kind": "natural generated room; navigation/inventory/player/starting-global-RNG fixtures only"
+        },
+        {
+          "profile": 21,
+          "style": 3,
+          "case": "deep-branch-walk-roll",
+          "selector": "Before",
+          "source": "actual/variant-03/deep-branch-walk-roll/frame-000.png",
+          "source_sha256": "bd7af94e85e3099e0e298b58c4993af1563ff7419969b376e2a830671438660c",
+          "rgb_sha256": "743916b73cc0a8cd76b133471d264b6f07a1a0c2a9595083462a94702d44706e",
+          "rect": [
+            0,
+            464,
+            240,
+            160
+          ],
+          "kind": "natural generated room; navigation/inventory/player/starting-global-RNG fixtures only"
+        },
+        {
+          "profile": 21,
+          "style": 3,
+          "case": "deep-branch-walk-roll",
+          "selector": "Under",
+          "source": "actual/variant-03/deep-branch-walk-roll/frame-051.png",
+          "source_sha256": "fac149786ea5efd140cee89c251c519824f7b74d2ea245dafe65a40f638a29cc",
+          "rgb_sha256": "328a73f7b45175755062cb2f59dfb103192f43625514299e680f19912eef28e6",
+          "rect": [
+            240,
+            464,
+            240,
+            160
+          ],
+          "kind": "natural generated room; navigation/inventory/player/starting-global-RNG fixtures only"
+        },
+        {
+          "profile": 21,
+          "style": 3,
+          "case": "deep-branch-walk-roll",
+          "selector": "Emerged",
+          "source": "actual/variant-03/deep-branch-walk-roll/frame-127.png",
+          "source_sha256": "5bf9bd7cdab1b909e23758800402a27ef1d3bce2820e741b1bb3140f6d65fce0",
+          "rgb_sha256": "89080ff4000b1339364574e0cdabb65714256cf881970ecb76795fd07782498b",
+          "rect": [
+            480,
+            464,
+            240,
+            160
+          ],
+          "kind": "natural generated room; navigation/inventory/player/starting-global-RNG fixtures only"
+        },
+        {
+          "profile": 22,
+          "style": 4,
+          "case": "deep-branch-walk-roll",
+          "selector": "Before",
+          "source": "actual/variant-04/deep-branch-walk-roll/frame-000.png",
+          "source_sha256": "c32df6eee6d3e0d64951f8b522c26e61ee702725ef71131cb902e114b61fb161",
+          "rgb_sha256": "57de1314906f9d2455dd8d732f536eb32875a445e3cd8b5da31e7b80e0e2ecb6",
+          "rect": [
+            0,
+            654,
+            240,
+            160
+          ],
+          "kind": "natural generated room; navigation/inventory/player/starting-global-RNG fixtures only"
+        },
+        {
+          "profile": 22,
+          "style": 4,
+          "case": "deep-branch-walk-roll",
+          "selector": "Under",
+          "source": "actual/variant-04/deep-branch-walk-roll/frame-045.png",
+          "source_sha256": "327caa5d3a4880d0c9570be906429c3fc1908889bc434541cc3320c226f55c4d",
+          "rgb_sha256": "59b0409f9ca11f69faac96e882f0cd43dcbb4e93337c231069bc1bbdc898ec4f",
+          "rect": [
+            240,
+            654,
+            240,
+            160
+          ],
+          "kind": "natural generated room; navigation/inventory/player/starting-global-RNG fixtures only"
+        },
+        {
+          "profile": 22,
+          "style": 4,
+          "case": "deep-branch-walk-roll",
+          "selector": "Emerged",
+          "source": "actual/variant-04/deep-branch-walk-roll/frame-127.png",
+          "source_sha256": "a0a1037957b7d55aa4689cfc283dc744c7229d205bab3300383bb76448202a7e",
+          "rgb_sha256": "3a5eae002e34f390b4181152a87753e74ab6f66b42c7ad38372ff93e91a762a4",
+          "rect": [
+            480,
+            654,
+            240,
+            160
+          ],
+          "kind": "natural generated room; navigation/inventory/player/starting-global-RNG fixtures only"
+        },
+        {
+          "profile": 23,
+          "style": 5,
+          "case": "deep-branch-walk-roll",
+          "selector": "Before",
+          "source": "actual/variant-05/deep-branch-walk-roll/frame-000.png",
+          "source_sha256": "da4ba82b0f2b01ba1c53ff30794020e337d94cd1a2af782802ba1c0f6ee20624",
+          "rgb_sha256": "184453e7cb99e3171b480e4c82a933f71ea13d2d47f0c4bdf79b1f5478eada45",
+          "rect": [
+            0,
+            844,
+            240,
+            160
+          ],
+          "kind": "natural generated room; navigation/inventory/player/starting-global-RNG fixtures only"
+        },
+        {
+          "profile": 23,
+          "style": 5,
+          "case": "deep-branch-walk-roll",
+          "selector": "Under",
+          "source": "actual/variant-05/deep-branch-walk-roll/frame-045.png",
+          "source_sha256": "8fc59a7eb553b0e94d126fe2c2470330224774dff40949cc3ab00eadca8ca88d",
+          "rgb_sha256": "10f167a7288bd8e520dd6f53b2b1cd5737a420c92d9e896dabab6324a2a45186",
+          "rect": [
+            240,
+            844,
+            240,
+            160
+          ],
+          "kind": "natural generated room; navigation/inventory/player/starting-global-RNG fixtures only"
+        },
+        {
+          "profile": 23,
+          "style": 5,
+          "case": "deep-branch-walk-roll",
+          "selector": "Emerged",
+          "source": "actual/variant-05/deep-branch-walk-roll/frame-127.png",
+          "source_sha256": "413d87005141540a6c13949936410d1df6fb76a8ead1a324f2999150e9badeb3",
+          "rgb_sha256": "ce50595e9d340c36a91efdf536923c6ef665352adae82328f9e8b5562fa4fc6e",
+          "rect": [
+            480,
+            844,
+            240,
+            160
+          ],
+          "kind": "natural generated room; navigation/inventory/player/starting-global-RNG fixtures only"
+        },
+        {
+          "profile": 24,
+          "style": 6,
+          "case": "deep-branch-walk-roll",
+          "selector": "Before",
+          "source": "actual/variant-06/deep-branch-walk-roll/frame-000.png",
+          "source_sha256": "6d0e3e313d57f0e6b8679b86141273d9194ee5c08200fba201c79f66396ed624",
+          "rgb_sha256": "ddeacfde7ca4b76540cf07bf1b9782731b8fdc6967dff30d71517718d76ca874",
+          "rect": [
+            0,
+            1034,
+            240,
+            160
+          ],
+          "kind": "natural generated room; navigation/inventory/player/starting-global-RNG fixtures only"
+        },
+        {
+          "profile": 24,
+          "style": 6,
+          "case": "deep-branch-walk-roll",
+          "selector": "Under",
+          "source": "actual/variant-06/deep-branch-walk-roll/frame-051.png",
+          "source_sha256": "d1fdcac069931592cac6c9512f50d1212cc8484336cafb6c31cd572a4e436dbb",
+          "rgb_sha256": "ccd8166cea0c581496bfad367997305a22e7b0d7d80743005477c9b5672694c5",
+          "rect": [
+            240,
+            1034,
+            240,
+            160
+          ],
+          "kind": "natural generated room; navigation/inventory/player/starting-global-RNG fixtures only"
+        },
+        {
+          "profile": 24,
+          "style": 6,
+          "case": "deep-branch-walk-roll",
+          "selector": "Emerged",
+          "source": "actual/variant-06/deep-branch-walk-roll/frame-127.png",
+          "source_sha256": "f627c98414d2471ab657be00c2b59b658674be92e68699aff93e252c3c01a979",
+          "rgb_sha256": "6fe147d52f87607158fa5c79ea4195b867299a26af96354f18c39155785bd017",
+          "rect": [
+            480,
+            1034,
+            240,
+            160
+          ],
+          "kind": "natural generated room; navigation/inventory/player/starting-global-RNG fixtures only"
+        },
+        {
+          "profile": 25,
+          "style": 7,
+          "case": "deep-branch-walk-roll",
+          "selector": "Before",
+          "source": "actual/variant-07/deep-branch-walk-roll/frame-000.png",
+          "source_sha256": "d2986e96c3050a772543fc8aa3480163e6aa8778f4d478c2986fb400aca07a44",
+          "rgb_sha256": "44a3ed7a63512d6617fc35003281fee17d19f1c0efac7d0da01ebb6e61abc8cb",
+          "rect": [
+            0,
+            1224,
+            240,
+            160
+          ],
+          "kind": "natural generated room; navigation/inventory/player/starting-global-RNG fixtures only"
+        },
+        {
+          "profile": 25,
+          "style": 7,
+          "case": "deep-branch-walk-roll",
+          "selector": "Under",
+          "source": "actual/variant-07/deep-branch-walk-roll/frame-045.png",
+          "source_sha256": "673dfc06ea394717c5021fd3a1bdf70776442c4bc9a8c1d2e677c8ef4691c9b6",
+          "rgb_sha256": "5712d8b5bbe857210ec38ab1a99d48f230a95bf5de6f13ff0cf51e49b9e81b76",
+          "rect": [
+            240,
+            1224,
+            240,
+            160
+          ],
+          "kind": "natural generated room; navigation/inventory/player/starting-global-RNG fixtures only"
+        },
+        {
+          "profile": 25,
+          "style": 7,
+          "case": "deep-branch-walk-roll",
+          "selector": "Emerged",
+          "source": "actual/variant-07/deep-branch-walk-roll/frame-127.png",
+          "source_sha256": "c9a9b2f9c629287fabb819e80755fec947add2d4bd3939bf237b8870cc85334d",
+          "rgb_sha256": "5b9e7adda1bc9c2311f404053f4b0d8c214dc9377155c496f4361f894d6e0e17",
+          "rect": [
+            480,
+            1224,
+            240,
+            160
+          ],
+          "kind": "natural generated room; navigation/inventory/player/starting-global-RNG fixtures only"
+        },
+        {
+          "profile": 26,
+          "style": 8,
+          "case": "deep-branch-walk-roll",
+          "selector": "Before",
+          "source": "actual/variant-08/deep-branch-walk-roll/frame-000.png",
+          "source_sha256": "2ee6b90f7b15f2a1e7d3ddba3c9fce63846b52d779c64b59560ddaa30cf0dc4c",
+          "rgb_sha256": "395fe0070b4784bd7f9daa1e44b4938af473323cdeabc1b3748b862d8628b66e",
+          "rect": [
+            0,
+            1414,
+            240,
+            160
+          ],
+          "kind": "natural generated room; navigation/inventory/player/starting-global-RNG fixtures only"
+        },
+        {
+          "profile": 26,
+          "style": 8,
+          "case": "deep-branch-walk-roll",
+          "selector": "Under",
+          "source": "actual/variant-08/deep-branch-walk-roll/frame-045.png",
+          "source_sha256": "b243a780c72d9e11d1d372d130a56a56daf02b5d7ba9a9d30a3f4ea6b731744e",
+          "rgb_sha256": "152013c66629ab8889b7443feae386d7c4bde395ed0a3e97743ddd7c73f3f7f9",
+          "rect": [
+            240,
+            1414,
+            240,
+            160
+          ],
+          "kind": "natural generated room; navigation/inventory/player/starting-global-RNG fixtures only"
+        },
+        {
+          "profile": 26,
+          "style": 8,
+          "case": "deep-branch-walk-roll",
+          "selector": "Emerged",
+          "source": "actual/variant-08/deep-branch-walk-roll/frame-127.png",
+          "source_sha256": "62cfb6bb9e54d64c21e90817970bc49a8d53695793d8aa1d4bec6879ae82fce6",
+          "rgb_sha256": "260a718ac94516aba496ec058847d69dc4e0c2d3349f50c58afbd3659adc2e79",
+          "rect": [
+            480,
+            1414,
+            240,
+            160
+          ],
+          "kind": "natural generated room; navigation/inventory/player/starting-global-RNG fixtures only"
+        },
+        {
+          "profile": 27,
+          "style": 9,
+          "case": "deep-branch-walk-roll",
+          "selector": "Before",
+          "source": "actual/variant-09/deep-branch-walk-roll/frame-000.png",
+          "source_sha256": "b4f70a31011763f7deb4d8401c0c1f17cbb0cbbddf2364e8c9a6974a60f1c491",
+          "rgb_sha256": "392fbc589dc23653aec861532308f23e1c3923e6aa25dc32f08eb10aaa58f700",
+          "rect": [
+            0,
+            1604,
+            240,
+            160
+          ],
+          "kind": "natural generated room; navigation/inventory/player/starting-global-RNG fixtures only"
+        },
+        {
+          "profile": 27,
+          "style": 9,
+          "case": "deep-branch-walk-roll",
+          "selector": "Under",
+          "source": "actual/variant-09/deep-branch-walk-roll/frame-079.png",
+          "source_sha256": "16c9ac2fdb1acd38fee280a666457c98aa54ba64ee7fb99afd601d45416c5608",
+          "rgb_sha256": "a598d8d668732b2705c4db64d4ea2aa4f4548cf0265179bbe6d7d7e21eaa294c",
+          "rect": [
+            240,
+            1604,
+            240,
+            160
+          ],
+          "kind": "natural generated room; navigation/inventory/player/starting-global-RNG fixtures only"
+        },
+        {
+          "profile": 27,
+          "style": 9,
+          "case": "deep-branch-walk-roll",
+          "selector": "Emerged",
+          "source": "actual/variant-09/deep-branch-walk-roll/frame-127.png",
+          "source_sha256": "b390f1d69e5594f2cca64a37069326ced3d57fb13926a6ade2cff3411d849123",
+          "rgb_sha256": "7a6c82062c64bc6b180fce20ceac5f7589927634f916e85f37254ddc3f49b926",
+          "rect": [
+            480,
+            1604,
+            240,
+            160
+          ],
+          "kind": "natural generated room; navigation/inventory/player/starting-global-RNG fixtures only"
+        },
+        {
+          "profile": 28,
+          "style": 10,
+          "case": "deep-branch-walk-roll",
+          "selector": "Before",
+          "source": "actual/variant-10/deep-branch-walk-roll/frame-000.png",
+          "source_sha256": "6e17564a37c0c70c515056820ed8ed4af99f1c2456d139a27e33dba926df4b22",
+          "rgb_sha256": "ae0aabf70a332a437a6851c43786f2a3946937d9f8d5ce2679644acc591621b7",
+          "rect": [
+            0,
+            1794,
+            240,
+            160
+          ],
+          "kind": "natural generated room; navigation/inventory/player/starting-global-RNG fixtures only"
+        },
+        {
+          "profile": 28,
+          "style": 10,
+          "case": "deep-branch-walk-roll",
+          "selector": "Under",
+          "source": "actual/variant-10/deep-branch-walk-roll/frame-051.png",
+          "source_sha256": "24eb3bc49d0df31fcc1b9a7150131dc60244fda938463205e0a69f792ce7c251",
+          "rgb_sha256": "14436253b80a4337ebe80d85582ab60c687b7e0cfe50091aa6dbbf3d0287fcad",
+          "rect": [
+            240,
+            1794,
+            240,
+            160
+          ],
+          "kind": "natural generated room; navigation/inventory/player/starting-global-RNG fixtures only"
+        },
+        {
+          "profile": 28,
+          "style": 10,
+          "case": "deep-branch-walk-roll",
+          "selector": "Emerged",
+          "source": "actual/variant-10/deep-branch-walk-roll/frame-127.png",
+          "source_sha256": "b77bb715baaf6417d499f2e106f50b5fb8f0080a4a47ae5d9c3433a78ad4f68a",
+          "rgb_sha256": "5751501a6cc2dc034e36373bc0218dbc3a692db7b35b2d3202da316527afc7ea",
+          "rect": [
+            480,
+            1794,
+            240,
+            160
+          ],
+          "kind": "natural generated room; navigation/inventory/player/starting-global-RNG fixtures only"
+        }
+      ]
+    }
+  ],
+  "method": "Every native240x160 rectangle independently decoded and compared byte-for-byte with its linked mGBA framebuffer."
+}

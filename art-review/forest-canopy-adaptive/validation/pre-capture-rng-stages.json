@@ -1,0 +1,214 @@
+[
+  {
+    "variant": 6,
+    "stages": [
+      {
+        "label": "boot+sewer-dismissed",
+        "sRand": 19088743,
+        "video_frame": 179,
+        "game_state": 1,
+        "area": 0,
+        "cell": 0,
+        "gameplay_updates": 93
+      },
+      {
+        "label": "forest-entry-wait-finished",
+        "sRand": 2314558843,
+        "video_frame": 282,
+        "game_state": 1,
+        "area": 1,
+        "cell": 22,
+        "gameplay_updates": 171
+      },
+      {
+        "label": "fixed70-frame-target-warp+enemy-clear-finished",
+        "sRand": 472313241,
+        "video_frame": 352,
+        "game_state": 1,
+        "area": 1,
+        "cell": 4,
+        "gameplay_updates": 215
+      },
+      {
+        "label": "standing-fixture-settled",
+        "sRand": 472313241,
+        "video_frame": 491,
+        "game_state": 1,
+        "area": 1,
+        "cell": 4,
+        "gameplay_updates": 354
+      }
+    ],
+    "RNG_changes_during_navigation": [
+      {
+        "video_frame": 232,
+        "before": 19088743,
+        "after": 1865491198,
+        "game_state": 2,
+        "area": 1,
+        "cell": 22,
+        "active_enemies": 3
+      },
+      {
+        "video_frame": 251,
+        "before": 1865491198,
+        "after": 2664185004,
+        "game_state": 1,
+        "area": 1,
+        "cell": 22,
+        "active_enemies": 3
+      },
+      {
+        "video_frame": 261,
+        "before": 2664185004,
+        "after": 2398646538,
+        "game_state": 1,
+        "area": 1,
+        "cell": 22,
+        "active_enemies": 3
+      },
+      {
+        "video_frame": 268,
+        "before": 2398646538,
+        "after": 2314558843,
+        "game_state": 1,
+        "area": 1,
+        "cell": 22,
+        "active_enemies": 3
+      },
+      {
+        "video_frame": 307,
+        "before": 2314558843,
+        "after": 1363023714,
+        "game_state": 2,
+        "area": 1,
+        "cell": 4,
+        "active_enemies": 3
+      },
+      {
+        "video_frame": 308,
+        "before": 1363023714,
+        "after": 3390517434,
+        "game_state": 2,
+        "area": 1,
+        "cell": 4,
+        "active_enemies": 7
+      },
+      {
+        "video_frame": 320,
+        "before": 3390517434,
+        "after": 1952642760,
+        "game_state": 1,
+        "area": 1,
+        "cell": 4,
+        "active_enemies": 7
+      },
+      {
+        "video_frame": 322,
+        "before": 1952642760,
+        "after": 3547831942,
+        "game_state": 1,
+        "area": 1,
+        "cell": 4,
+        "active_enemies": 7
+      },
+      {
+        "video_frame": 323,
+        "before": 3547831942,
+        "after": 1645524852,
+        "game_state": 1,
+        "area": 1,
+        "cell": 4,
+        "active_enemies": 7
+      },
+      {
+        "video_frame": 326,
+        "before": 1645524852,
+        "after": 2216631570,
+        "game_state": 1,
+        "area": 1,
+        "cell": 4,
+        "active_enemies": 7
+      },
+      {
+        "video_frame": 335,
+        "before": 2216631570,
+        "after": 472313241,
+        "game_state": 1,
+        "area": 1,
+        "cell": 4,
+        "active_enemies": 7
+      }
+    ]
+  },
+  {
+    "variant": 19,
+    "stages": [
+      {
+        "label": "boot+sewer-dismissed",
+        "sRand": 19088743,
+        "video_frame": 180,
+        "game_state": 1,
+        "area": 0,
+        "cell": 0,
+        "gameplay_updates": 94
+      },
+      {
+        "label": "forest-entry-wait-finished",
+        "sRand": 1865491198,
+        "video_frame": 297,
+        "game_state": 1,
+        "area": 1,
+        "cell": 22,
+        "gameplay_updates": 131
+      },
+      {
+        "label": "fixed70-frame-target-warp+enemy-clear-finished",
+        "sRand": 468756521,
+        "video_frame": 405,
+        "game_state": 1,
+        "area": 1,
+        "cell": 4,
+        "gameplay_updates": 133
+      },
+      {
+        "label": "standing-fixture-settled",
+        "sRand": 468756521,
+        "video_frame": 544,
+        "game_state": 1,
+        "area": 1,
+        "cell": 4,
+        "gameplay_updates": 272
+      }
+    ],
+    "RNG_changes_during_navigation": [
+      {
+        "video_frame": 287,
+        "before": 19088743,
+        "after": 1669832377,
+        "game_state": 2,
+        "area": 1,
+        "cell": 22,
+        "active_enemies": 3
+      },
+      {
+        "video_frame": 288,
+        "before": 1669832377,
+        "after": 1865491198,
+        "game_state": 2,
+        "area": 1,
+        "cell": 22,
+        "active_enemies": 3
+      },
+      {
+        "video_frame": 403,
+        "before": 1865491198,
+        "after": 468756521,
+        "game_state": 2,
+        "area": 1,
+        "cell": 4,
+        "active_enemies": 7
+      }
+    ]
+  }
+]

@@ -191,3 +191,12 @@ authorize painting across events or prove that an attractive composition is
 visible from the walkable route. Native source anatomy, fit diagnostics and
 actual room compositions will therefore be reviewed separately. Existing read
 PDF/native-art references remain relevant; no new external article is claimed.
+
+The [ten-direction adaptive review](../../../art-review/forest-canopy-adaptive/README.md)
+now binds new source `c6dc060` to native-size catalogs, recorded-fit diagrams
+and actual healthy/deep generated-room captures. It supersedes the rejected
+eight-way artwork as the working exploration. Its
+[independent critique](../../../art-review/forest-canopy-adaptive/validation/INDEPENDENT_REVIEW.md)
+records remaining rectangular contacts, family resemblance and loading/menu
+latency. These are observations from the new work and the direct brief; no
+additional external reference is claimed.

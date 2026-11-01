@@ -1,0 +1,5248 @@
+{
+  "method": "Focused independent native/scope and finite actual adaptive-canopy audit.\n\nReads direct native painters in clean subprocesses, independently decodes packed\nROM nibbles/maps, and checks recorded planner fit, semantics and real scanout.\nTechnical success is not an aesthetic approval. Real room critique is separate.\nNo unchanged generation corpus or universal visibility/performance claim.\n",
+  "source_commits": [
+    "c6dc060043aa6d0d5e2eb43d4d09e97ddf77450a"
+  ],
+  "auditor_sha256": "eca43b407525dade427cd0888307d01ffe863ff7f2bf4b71a680345cb5d5318b",
+  "audit_dependency_sha256": {
+    "tools/forest_v3_audit.py": "1415e9d782c73cb01536ef2115539966e82aa63c89469c7d7b0f9d55247b3ede",
+    "tools/forest_v2_audit.py": "54bc933076e579a06a6bc19406e49e11dc9038d6391876a117c7a4b5a788391e",
+    "tools/forest_concept_audit.py": "41267bba1bd0b43830b0a0b25ac6499ab989740f76db66a05c930c018b1f981b",
+    "tools/sewer_concept_audit.py": "d975c773dfa1ba641169b30fa42128b2a6671d1f1f90ce3fb99b16c4a06d76c5",
+    "tools/enemy_study_audit.py": "87c8369100d0e84988b49d9e4a7b7b932e2cd3c9b2217a3516527a4d400a30b4"
+  },
+  "base_source_sha256": "cd8972efdf44de1155bbfc1763439d53ae1a5348287331e56ed6d3e0b1c57da6",
+  "profiles": [
+    {
+      "profile": 19,
+      "label": "Ancient Oak Vault",
+      "source_commit": "c6dc060043aa6d0d5e2eb43d4d09e97ddf77450a",
+      "rom_sha256": "09aa5274a91618c5a06a74bd7ba61bebc6ebb71d738aeb48de86f8b91930c3b7",
+      "frozen_input_sha256": {
+        "bartgame.gba": "09aa5274a91618c5a06a74bd7ba61bebc6ebb71d738aeb48de86f8b91930c3b7",
+        "bartgame.map": "c64a62d0eda0d0ac3240bb4979ec3b8113ebca7f0642a1d150e1b23a140afb05",
+        "assets.h": "f54b406569e757a7a9fe259a89c7b929f02c9936de516df21af2c4e3a3c25134",
+        "freeze.json": "c6c65b6389a2d5c1c19ebbfbc5f649956a47cd2d0045b1da406820ce32923f0e"
+      },
+      "counts": {
+        "forest": {
+          "direct_frames": 938,
+          "protected_tiles": 334
+        },
+        "myst": {
+          "direct_frames": 101,
+          "protected_tiles": 96
+        },
+        "sewer": {
+          "direct_frames": 0,
+          "protected_tiles": 0
+        }
+      },
+      "BG_budgets": {
+        "forest": {
+          "tile_count": 919,
+          "palette_count": 11
+        },
+        "myst": {
+          "tile_count": 107,
+          "palette_count": 6
+        },
+        "sewer": {
+          "tile_count": 822,
+          "palette_count": 1
+        }
+      },
+      "prefabs": [
+        {
+          "role": "small",
+          "native_size": [
+            16,
+            16
+          ],
+          "native_index_sha256": "9bd19a68cc1673abcc0ec4e00a9cc285bb2a07cbb95ad767a2aa732db68f2fca",
+          "map_sha256": "517fa2b5437213b3e6450e843e7f6fad3b922d6eec6edd6afc7289db2ac712f0"
+        },
+        {
+          "role": "clump",
+          "native_size": [
+            32,
+            32
+          ],
+          "native_index_sha256": "1f22f8a85eb0120266dea79090fbeeb5baffd608f847b19937b352fbbdb4f5a8",
+          "map_sha256": "c3a0444e034d4083f91bac6931ae2f3c3bc711ba2cdc9f705b591cd685849e11"
+        },
+        {
+          "role": "tree",
+          "native_size": [
+            48,
+            48
+          ],
+          "native_index_sha256": "f139c2ca4b25c3f0458e1363dff9aa073f6528436eb646dce86623c1da3f8971",
+          "map_sha256": "4a3f932a1836580b93c659a153ebb34b706f42c325a88ffdcd515a2f2a05e84c"
+        },
+        {
+          "role": "grove",
+          "native_size": [
+            64,
+            64
+          ],
+          "native_index_sha256": "a0d160349fa78b06f3002a7a3ee5020fbd681b584ac9fd4874ea3666e1b1fd6a",
+          "map_sha256": "bbefe56d7db65c5c2718f867dcbb8f241812eaa0547263b20814d6c941ed059e"
+        },
+        {
+          "role": "hero",
+          "native_size": [
+            96,
+            64
+          ],
+          "native_index_sha256": "8cb92ac4632224ea1922d66a11ca335b10f1c9481377606e4058b6bb522c0dc1",
+          "map_sha256": "9df0063acc8f0b0989014f3e7b48d8079f54ce6fd9c5fc154602e5c7b3bfa83f"
+        },
+        {
+          "role": "branch",
+          "native_size": [
+            64,
+            16
+          ],
+          "native_index_sha256": "5c11c81595685a588a23341ef28fd34f644b529fc45dc9a216712cec3ec5f03d",
+          "map_sha256": "b5f7190c0908e1e62e03ae09941634b9ca63dc233df447ad3bcfd60bd04aba66"
+        },
+        {
+          "role": "roots",
+          "native_size": [
+            32,
+            16
+          ],
+          "native_index_sha256": "a1904dd3f1da4547b4d32b681d0dc325289c2a9a3a4d3cb0c0dafe407d04606f",
+          "map_sha256": "af17435d2c6019351a019e055df2f4091f36ba6fc04104c8fbcfc50e4ca3de8d"
+        },
+        {
+          "role": "border",
+          "native_size": [
+            96,
+            32
+          ],
+          "native_index_sha256": "c96aa0727214e24f9ce6d0e164fcdba121a89b7d4233e9c17cc2cb7381e9e757",
+          "map_sha256": "eb214d27aeaa56c155cf9b0ee46501b30aba4e4dde1fdfab87f33726ca445bea"
+        },
+        {
+          "role": "column",
+          "native_size": [
+            16,
+            64
+          ],
+          "native_index_sha256": "c41e688c592b63a65213a9c565eb7b1cc61757a6fc98f7fe6a9da438ed3c7ca1",
+          "map_sha256": "d55cd3cac1d29d3e914e59575faccbf96badb5041ea7a6fa0af4e79ab40be373"
+        }
+      ],
+      "solid_branch_sha256": "dbd9178b84cace50828fa38b9c03da048e806c3f99cf5c8f6fe36b02b9efd5d2",
+      "visibility": {
+        "frames": 133,
+        "row_bytes": 10,
+        "table_sha256": "a15f52cbe003b60ce3bc755e8033b066601159b7bb6a9a2913dac71f413f284f",
+        "criterion": "native source counts plus independent four-connected component and minimal-row proof; actual framebuffer visibility checked separately"
+      },
+      "OBJ_superset": {
+        "variant": 19,
+        "enemy": 11,
+        "used": 864,
+        "limit": 876,
+        "free": 12,
+        "allocations": {
+          "hero/body+sword+streamed-shield foundation": 32,
+          "items whole sheet": 84,
+          "fx whole sheet": 52,
+          "proj whole sheet": 4,
+          "lift whole sheet": 16,
+          "pick32 whole sheet": 40,
+          "Bloom streamed action": 16,
+          "Bloom ground shadow": 2,
+          "beetle whole sheet": 24,
+          "bat whole sheet": 12,
+          "spitter whole sheet": 48,
+          "slime whole sheet": 12,
+          "knight whole sheet": 192,
+          "ksword whole sheet": 8,
+          "boss streamed frame": 32,
+          "chest streamed frame": 16,
+          "entrance streamed frame": 32,
+          "ambient whole sheet": 6,
+          "arrow whole sheet": 12,
+          "seven menu icons": 112,
+          "trial mouth whole sheet": 48,
+          "one forest/trial NPC frame": 16,
+          "four streamed landmarks": 32,
+          "current-body visibility fragment": 16
+        },
+        "limits": "Static allocation superset, not an OAM peak/CPU guarantee. Includes every enemy family although ordinary themed rooms use subsets. Portrait/HUD use their fixed higher reservations."
+      },
+      "memory": {
+        "__bss_end": 50354868,
+        "__ewram_bss_end": 33789204
+      }
+    },
+    {
+      "profile": 20,
+      "label": "Crooked Willow",
+      "source_commit": "c6dc060043aa6d0d5e2eb43d4d09e97ddf77450a",
+      "rom_sha256": "44cecd939239adc4f62130366372b72ae4044fc390c6ff887aa7eb334791eb47",
+      "frozen_input_sha256": {
+        "bartgame.gba": "44cecd939239adc4f62130366372b72ae4044fc390c6ff887aa7eb334791eb47",
+        "bartgame.map": "1392fca316186807d6273b325706647009eaf06867587d37125b9724b1fac2db",
+        "assets.h": "974b143361376ae74c81a2dc5e58b9e49ee0d253dede40fd2c35b096821bf64f",
+        "freeze.json": "70199d8d86dc010685bfc4849b65753f0093fed5c947a502be0c1e2dfcc9a54c"
+      },
+      "counts": {
+        "forest": {
+          "direct_frames": 938,
+          "protected_tiles": 334
+        },
+        "myst": {
+          "direct_frames": 101,
+          "protected_tiles": 96
+        },
+        "sewer": {
+          "direct_frames": 0,
+          "protected_tiles": 0
+        }
+      },
+      "BG_budgets": {
+        "forest": {
+          "tile_count": 893,
+          "palette_count": 11
+        },
+        "myst": {
+          "tile_count": 107,
+          "palette_count": 6
+        },
+        "sewer": {
+          "tile_count": 822,
+          "palette_count": 1
+        }
+      },
+      "prefabs": [
+        {
+          "role": "small",
+          "native_size": [
+            16,
+            16
+          ],
+          "native_index_sha256": "4731df5e3b1cd076005d06e7cc77326c0e7ee5ec48f2cc6b246e2f65809ae910",
+          "map_sha256": "33120925a23e237889bfadf8d958f1c03af6bae56453759d817dce73e9477e87"
+        },
+        {
+          "role": "clump",
+          "native_size": [
+            32,
+            32
+          ],
+          "native_index_sha256": "9d4e816aa86397c2bb75a7aa4ccd4b7af0f540772bebb53e6ce8ee2e226b4e56",
+          "map_sha256": "d76682cab13b3be569c9b243a981585526c8ce529acd5f05aa670848bfd22814"
+        },
+        {
+          "role": "tree",
+          "native_size": [
+            48,
+            48
+          ],
+          "native_index_sha256": "74c996edf6568aaef895c9ebddbffd26a352e95b05c45c3d8a16cff8ed64b655",
+          "map_sha256": "23de0476e2da5b309b13692123f2e42dbd1e145ffa636392d07df5fa27290dd9"
+        },
+        {
+          "role": "grove",
+          "native_size": [
+            64,
+            64
+          ],
+          "native_index_sha256": "b9a60d16e201753ba5cbdbb641d970e395246d0bb19aa7f9a1390cf91f822f26",
+          "map_sha256": "0242b2e8555cb4eb0ad3592a7d5e11bcdd89dbdc1eb5d91f7144e35174f5ec56"
+        },
+        {
+          "role": "hero",
+          "native_size": [
+            96,
+            64
+          ],
+          "native_index_sha256": "93162ac111b92193717ba9d922ced358ad575eab5a94d2e3720a041ce11528e0",
+          "map_sha256": "bb40d0bac3dbb14e4ab270df73f7703bc2109e6a54cf91240738151f3fca9274"
+        },
+        {
+          "role": "branch",
+          "native_size": [
+            64,
+            16
+          ],
+          "native_index_sha256": "136a7102738913efd1a60d3dcc82abfdd6d825438862341fd4800889bc13ecd8",
+          "map_sha256": "a3bc90c9e7f0a8db8a6ed0686d4991ad8b87ed6ef89e2e26b9827b665edd2ea1"
+        },
+        {
+          "role": "roots",
+          "native_size": [
+            32,
+            16
+          ],
+          "native_index_sha256": "964d678bdfb0f72608137e9d3e4de9baf525d389e1cc07dc2a42b5301b8be171",
+          "map_sha256": "98f7e36d5cb9c0f3e47f5b60fd6a4d0856136b6c4685999c6c37de06202aa4b0"
+        },
+        {
+          "role": "border",
+          "native_size": [
+            96,
+            32
+          ],
+          "native_index_sha256": "73605bb9ec6f9a018b523ce0bca109e733ac7349f2e9df86dbbeed629c33b7ed",
+          "map_sha256": "294a04dae1a655d35ba717fcd255d549a864b32b61bb87afd0dce2f323380dcf"
+        },
+        {
+          "role": "column",
+          "native_size": [
+            16,
+            64
+          ],
+          "native_index_sha256": "f18933999196b860c2279f204598721d1795a1ae7faad7a6b9c5d46a77a2aeb3",
+          "map_sha256": "c92bcc7600ef93f8941a6cba80c629cb521fa86c0ca714de1724764074c9876b"
+        }
+      ],
+      "solid_branch_sha256": "26d0dafd17516ec679290d61fd3b69cd7a9e8a9fd9ced1b9c45843142fd5cf45",
+      "visibility": {
+        "frames": 133,
+        "row_bytes": 10,
+        "table_sha256": "a15f52cbe003b60ce3bc755e8033b066601159b7bb6a9a2913dac71f413f284f",
+        "criterion": "native source counts plus independent four-connected component and minimal-row proof; actual framebuffer visibility checked separately"
+      },
+      "OBJ_superset": {
+        "variant": 20,
+        "enemy": 11,
+        "used": 864,
+        "limit": 876,
+        "free": 12,
+        "allocations": {
+          "hero/body+sword+streamed-shield foundation": 32,
+          "items whole sheet": 84,
+          "fx whole sheet": 52,
+          "proj whole sheet": 4,
+          "lift whole sheet": 16,
+          "pick32 whole sheet": 40,
+          "Bloom streamed action": 16,
+          "Bloom ground shadow": 2,
+          "beetle whole sheet": 24,
+          "bat whole sheet": 12,
+          "spitter whole sheet": 48,
+          "slime whole sheet": 12,
+          "knight whole sheet": 192,
+          "ksword whole sheet": 8,
+          "boss streamed frame": 32,
+          "chest streamed frame": 16,
+          "entrance streamed frame": 32,
+          "ambient whole sheet": 6,
+          "arrow whole sheet": 12,
+          "seven menu icons": 112,
+          "trial mouth whole sheet": 48,
+          "one forest/trial NPC frame": 16,
+          "four streamed landmarks": 32,
+          "current-body visibility fragment": 16
+        },
+        "limits": "Static allocation superset, not an OAM peak/CPU guarantee. Includes every enemy family although ordinary themed rooms use subsets. Portrait/HUD use their fixed higher reservations."
+      },
+      "memory": {
+        "__bss_end": 50354868,
+        "__ewram_bss_end": 33789204
+      }
+    },
+    {
+      "profile": 21,
+      "label": "Buttress Beech",
+      "source_commit": "c6dc060043aa6d0d5e2eb43d4d09e97ddf77450a",
+      "rom_sha256": "4afbe064f60a8f7741f132ea1c3562199dad5574938a46833dc6a3a1324e95e5",
+      "frozen_input_sha256": {
+        "bartgame.gba": "4afbe064f60a8f7741f132ea1c3562199dad5574938a46833dc6a3a1324e95e5",
+        "bartgame.map": "5c5fa14597dc24337b84fe10fde8d7a008a974bc62d9d9da32542a72ce6010bf",
+        "assets.h": "eb29b5dfa63b4bf66bed56f025ccf234d2a69b9aad6104d911454ba639a60576",
+        "freeze.json": "4c8b66bbbc36649a34bbc2595c5115af5a060032dcbbb494dbc44e8ccb1d9244"
+      },
+      "counts": {
+        "forest": {
+          "direct_frames": 938,
+          "protected_tiles": 334
+        },
+        "myst": {
+          "direct_frames": 101,
+          "protected_tiles": 96
+        },
+        "sewer": {
+          "direct_frames": 0,
+          "protected_tiles": 0
+        }
+      },
+      "BG_budgets": {
+        "forest": {
+          "tile_count": 867,
+          "palette_count": 11
+        },
+        "myst": {
+          "tile_count": 107,
+          "palette_count": 6
+        },
+        "sewer": {
+          "tile_count": 822,
+          "palette_count": 1
+        }
+      },
+      "prefabs": [
+        {
+          "role": "small",
+          "native_size": [
+            16,
+            16
+          ],
+          "native_index_sha256": "fbd4b7c5330bc044ea3efdf1649be73588fdf8942c750d3aae5ce00f0a0b070b",
+          "map_sha256": "45f1da5a3f146346878cbd99c9087208dee1e0d88be4601d036e985a9db016d2"
+        },
+        {
+          "role": "clump",
+          "native_size": [
+            32,
+            32
+          ],
+          "native_index_sha256": "9a67e518a6a413cf959ee02ee4cfc4585504a80679d244cd60f5555526e61c03",
+          "map_sha256": "f82a517fd6cd8b5d581b18534fc890eff6d9bae569335801a92ae69b446b3fda"
+        },
+        {
+          "role": "tree",
+          "native_size": [
+            48,
+            48
+          ],
+          "native_index_sha256": "c95aa7c7569009cbc7fc796d39521805b35bb202c65dc84027ad245db63370c3",
+          "map_sha256": "ab32722613aa0f91c502b00eee092a66517ea10acdfd59767831885421f533c1"
+        },
+        {
+          "role": "grove",
+          "native_size": [
+            64,
+            64
+          ],
+          "native_index_sha256": "6f36b3d1d0918525a3938fec7460f3c2ac395a80212222f4a9a4a2e4d07dedab",
+          "map_sha256": "7600ccdedb7329b65c4e9fe03eacc9da36e66cd3135fc711db43902fba7ec542"
+        },
+        {
+          "role": "hero",
+          "native_size": [
+            96,
+            64
+          ],
+          "native_index_sha256": "bc88ffe218cd5c2f75b79679bb81c40ec8807694c5c2f5d172ec4534d27d4657",
+          "map_sha256": "4602f3c8ec7ab27b7550dba117e3d31da4f5bc2e5adbacc21eb8179fe9a34837"
+        },
+        {
+          "role": "branch",
+          "native_size": [
+            64,
+            16
+          ],
+          "native_index_sha256": "5c11c81595685a588a23341ef28fd34f644b529fc45dc9a216712cec3ec5f03d",
+          "map_sha256": "a0998c79ece88442332f66401877eeb64d009805980c62af96984d75fbd4a848"
+        },
+        {
+          "role": "roots",
+          "native_size": [
+            32,
+            16
+          ],
+          "native_index_sha256": "3b54dca1f50bc8d9d7e4f22433945b34fd0aeb21ee43294871e8a4131d7efb39",
+          "map_sha256": "a537f18c7608f5f6a7b8e617c6ced75dadd5c48438dc913c8ccdecd0ca74a6fc"
+        },
+        {
+          "role": "border",
+          "native_size": [
+            96,
+            32
+          ],
+          "native_index_sha256": "d52fc6ff62222471668e23d9b337555371c282312c86de4523af47ad22aad14c",
+          "map_sha256": "d49b6dfcbd311239d304c79422e28f023c4dd41075bf7c8cd97f7054132cdecc"
+        },
+        {
+          "role": "column",
+          "native_size": [
+            16,
+            64
+          ],
+          "native_index_sha256": "f30314e30946085f6e9a5d8a809b2d3939ccf5ec74d07691319708cc8206e202",
+          "map_sha256": "37de1047772b8a23e4c64b8d047821423036883238a5c14f249d730bc733fddb"
+        }
+      ],
+      "solid_branch_sha256": "6e9085dad3a28800752e87d6b99cae3426944e8c39b5194a3d966c97ca1fabbc",
+      "visibility": {
+        "frames": 133,
+        "row_bytes": 10,
+        "table_sha256": "a15f52cbe003b60ce3bc755e8033b066601159b7bb6a9a2913dac71f413f284f",
+        "criterion": "native source counts plus independent four-connected component and minimal-row proof; actual framebuffer visibility checked separately"
+      },
+      "OBJ_superset": {
+        "variant": 21,
+        "enemy": 11,
+        "used": 864,
+        "limit": 876,
+        "free": 12,
+        "allocations": {
+          "hero/body+sword+streamed-shield foundation": 32,
+          "items whole sheet": 84,
+          "fx whole sheet": 52,
+          "proj whole sheet": 4,
+          "lift whole sheet": 16,
+          "pick32 whole sheet": 40,
+          "Bloom streamed action": 16,
+          "Bloom ground shadow": 2,
+          "beetle whole sheet": 24,
+          "bat whole sheet": 12,
+          "spitter whole sheet": 48,
+          "slime whole sheet": 12,
+          "knight whole sheet": 192,
+          "ksword whole sheet": 8,
+          "boss streamed frame": 32,
+          "chest streamed frame": 16,
+          "entrance streamed frame": 32,
+          "ambient whole sheet": 6,
+          "arrow whole sheet": 12,
+          "seven menu icons": 112,
+          "trial mouth whole sheet": 48,
+          "one forest/trial NPC frame": 16,
+          "four streamed landmarks": 32,
+          "current-body visibility fragment": 16
+        },
+        "limits": "Static allocation superset, not an OAM peak/CPU guarantee. Includes every enemy family although ordinary themed rooms use subsets. Portrait/HUD use their fixed higher reservations."
+      },
+      "memory": {
+        "__bss_end": 50354868,
+        "__ewram_bss_end": 33789204
+      }
+    },
+    {
+      "profile": 22,
+      "label": "Woven Bower",
+      "source_commit": "c6dc060043aa6d0d5e2eb43d4d09e97ddf77450a",
+      "rom_sha256": "0e058c31efb7182646112ab79a2d21a8e4c6530c0fa9b7406619fe54cc62e345",
+      "frozen_input_sha256": {
+        "bartgame.gba": "0e058c31efb7182646112ab79a2d21a8e4c6530c0fa9b7406619fe54cc62e345",
+        "bartgame.map": "3864a81c63ee1629daa200b6e2f601ab1c58e856c1bc43da129f4c0502619343",
+        "assets.h": "13f7e4ebc90dbaa14b905ddda8adf6898b6824f55363a6100afd8ee15b49447f",
+        "freeze.json": "8a9d07e366dc2717b36647907bcba144c9a5a527e66e0e4342892f55e4b841f3"
+      },
+      "counts": {
+        "forest": {
+          "direct_frames": 938,
+          "protected_tiles": 334
+        },
+        "myst": {
+          "direct_frames": 101,
+          "protected_tiles": 96
+        },
+        "sewer": {
+          "direct_frames": 0,
+          "protected_tiles": 0
+        }
+      },
+      "BG_budgets": {
+        "forest": {
+          "tile_count": 889,
+          "palette_count": 11
+        },
+        "myst": {
+          "tile_count": 107,
+          "palette_count": 6
+        },
+        "sewer": {
+          "tile_count": 822,
+          "palette_count": 1
+        }
+      },
+      "prefabs": [
+        {
+          "role": "small",
+          "native_size": [
+            16,
+            16
+          ],
+          "native_index_sha256": "f286fb4fdf66253d4e2a0ae40bda3f3ddd339422c39de3717ef6c092d98c6e7a",
+          "map_sha256": "45f1da5a3f146346878cbd99c9087208dee1e0d88be4601d036e985a9db016d2"
+        },
+        {
+          "role": "clump",
+          "native_size": [
+            32,
+            32
+          ],
+          "native_index_sha256": "7eb3cbee8e678956302d5f54b858436ce13ff18c34137d9f77e8954445aec787",
+          "map_sha256": "314a585016f97a1d673a3a01823d0afe3ac0b2e01aaca00a2a26f7b40b383e05"
+        },
+        {
+          "role": "tree",
+          "native_size": [
+            48,
+            48
+          ],
+          "native_index_sha256": "b35a02d89380991155af236fc6e6d888614002ec77f4535064420abb082b94ca",
+          "map_sha256": "931648a013ba23d0609df7ff5333973534c32f7f194d4df59adb0cbcba6135e6"
+        },
+        {
+          "role": "grove",
+          "native_size": [
+            64,
+            64
+          ],
+          "native_index_sha256": "d461b74d2d0aa2bab5f8990fc0b17c99ca23ee80ab349f0c6ed4417e640b90dc",
+          "map_sha256": "a209324b3137f876c20d8ff3cfaf44f3774b1b1c4bf0faccc1f33f6294abf4b8"
+        },
+        {
+          "role": "hero",
+          "native_size": [
+            96,
+            64
+          ],
+          "native_index_sha256": "05ce0a341ec5bf9898ccf1df86df3d59a61e5068e9b029cf6be0c5da3f9f882f",
+          "map_sha256": "9f63085c4c999fbba54073a2d9f67c1396f5e5b6ac5aaf14e3751de9ed6ebbad"
+        },
+        {
+          "role": "branch",
+          "native_size": [
+            64,
+            16
+          ],
+          "native_index_sha256": "e5a671f01e77757dc61611cde93390494ef80b620b53b6f1a7425533c5797cc2",
+          "map_sha256": "13d0db600cc31942de1f930b4b1d800fa11fcd66d3df6cf742ccbe2095ead0af"
+        },
+        {
+          "role": "roots",
+          "native_size": [
+            32,
+            16
+          ],
+          "native_index_sha256": "c4b4674e2f278af41b04e3783e4782cb322ab69708c11e325834629dd4861878",
+          "map_sha256": "61206c4abe713b3f2d6096de21ca1b5d3fc77578bf23de51de088d290fcf17c6"
+        },
+        {
+          "role": "border",
+          "native_size": [
+            96,
+            32
+          ],
+          "native_index_sha256": "3a945408f35210f6ebd5ed49ec63a7a5e27b3a305aec9829605e53afb61d7005",
+          "map_sha256": "08a02e2f7d98b8fe7067fe93b8442caf884d7c9a6867b84e6456d688471f3710"
+        },
+        {
+          "role": "column",
+          "native_size": [
+            16,
+            64
+          ],
+          "native_index_sha256": "62a592c235e4a22eecfb13ece244b84069216f3f7ad060577120ee3aed2e9fb0",
+          "map_sha256": "778e3f672a3895e3adf6c15810d97c8b8e5ed8f5d0e6cbe498a0e63f10183cae"
+        }
+      ],
+      "solid_branch_sha256": "e8065d31f4bf8ad066e15b2d0fecddff18be938ac474776640b7a4beeb856c51",
+      "visibility": {
+        "frames": 133,
+        "row_bytes": 10,
+        "table_sha256": "a15f52cbe003b60ce3bc755e8033b066601159b7bb6a9a2913dac71f413f284f",
+        "criterion": "native source counts plus independent four-connected component and minimal-row proof; actual framebuffer visibility checked separately"
+      },
+      "OBJ_superset": {
+        "variant": 22,
+        "enemy": 11,
+        "used": 864,
+        "limit": 876,
+        "free": 12,
+        "allocations": {
+          "hero/body+sword+streamed-shield foundation": 32,
+          "items whole sheet": 84,
+          "fx whole sheet": 52,
+          "proj whole sheet": 4,
+          "lift whole sheet": 16,
+          "pick32 whole sheet": 40,
+          "Bloom streamed action": 16,
+          "Bloom ground shadow": 2,
+          "beetle whole sheet": 24,
+          "bat whole sheet": 12,
+          "spitter whole sheet": 48,
+          "slime whole sheet": 12,
+          "knight whole sheet": 192,
+          "ksword whole sheet": 8,
+          "boss streamed frame": 32,
+          "chest streamed frame": 16,
+          "entrance streamed frame": 32,
+          "ambient whole sheet": 6,
+          "arrow whole sheet": 12,
+          "seven menu icons": 112,
+          "trial mouth whole sheet": 48,
+          "one forest/trial NPC frame": 16,
+          "four streamed landmarks": 32,
+          "current-body visibility fragment": 16
+        },
+        "limits": "Static allocation superset, not an OAM peak/CPU guarantee. Includes every enemy family although ordinary themed rooms use subsets. Portrait/HUD use their fixed higher reservations."
+      },
+      "memory": {
+        "__bss_end": 50354868,
+        "__ewram_bss_end": 33789204
+      }
+    },
+    {
+      "profile": 23,
+      "label": "Fungal Cathedral",
+      "source_commit": "c6dc060043aa6d0d5e2eb43d4d09e97ddf77450a",
+      "rom_sha256": "68f99c3a73c0c824a0617283890c74798342799f5c81a8eb5ae2fa24ec103e59",
+      "frozen_input_sha256": {
+        "bartgame.gba": "68f99c3a73c0c824a0617283890c74798342799f5c81a8eb5ae2fa24ec103e59",
+        "bartgame.map": "aba7e7a4bc4106c8ac9220a1ad171e68407d616a08c4df9fbdd647bc73f9d235",
+        "assets.h": "2106250485370ff6f2215dfe4730e4c6e09dca0cb3efedf4ae919631a7c4f283",
+        "freeze.json": "2ed613764c78de921a75a857fe381a0cb29f12c8f9bd0eb22b8756deb7d03045"
+      },
+      "counts": {
+        "forest": {
+          "direct_frames": 938,
+          "protected_tiles": 334
+        },
+        "myst": {
+          "direct_frames": 101,
+          "protected_tiles": 96
+        },
+        "sewer": {
+          "direct_frames": 0,
+          "protected_tiles": 0
+        }
+      },
+      "BG_budgets": {
+        "forest": {
+          "tile_count": 942,
+          "palette_count": 11
+        },
+        "myst": {
+          "tile_count": 107,
+          "palette_count": 6
+        },
+        "sewer": {
+          "tile_count": 822,
+          "palette_count": 1
+        }
+      },
+      "prefabs": [
+        {
+          "role": "small",
+          "native_size": [
+            16,
+            16
+          ],
+          "native_index_sha256": "3d04a56503a46a97b885773a4ee7fce89e197d735c7a363c8af0948bb6c6134f",
+          "map_sha256": "45f1da5a3f146346878cbd99c9087208dee1e0d88be4601d036e985a9db016d2"
+        },
+        {
+          "role": "clump",
+          "native_size": [
+            32,
+            32
+          ],
+          "native_index_sha256": "4f3126a316a72fdc5b8321bcaaf68929e8c0185498c104a35f5e8da3e4cbe8f9",
+          "map_sha256": "31d5ec3e2c7755741a377ead47de7d97af93691d552709e17b6cad03f68c38f1"
+        },
+        {
+          "role": "tree",
+          "native_size": [
+            48,
+            48
+          ],
+          "native_index_sha256": "6ebfb92145840d9ef3857cdaaaf8aaf5269c75bf679f797849b8d186cd965dee",
+          "map_sha256": "4e34b221a9218ac7251d0f2704eb3fdd8c371ae8b9b5b18740aa7708f304b4ff"
+        },
+        {
+          "role": "grove",
+          "native_size": [
+            64,
+            64
+          ],
+          "native_index_sha256": "1183b28bafbe3a4da31c9caecb049c5b8211191171a131784f7ce9b51117b7d9",
+          "map_sha256": "79ea276bdb82f44f2c2ae7b389d835c2fccbf1b1e336a995382f0269b28e4cfb"
+        },
+        {
+          "role": "hero",
+          "native_size": [
+            96,
+            64
+          ],
+          "native_index_sha256": "9abbfbe3a9a3018112ecd9a51d476bcdd16ee91e8712f4184096f75e66c9c5ae",
+          "map_sha256": "e430c0387b7c28e99a0213cf29798a4ae4f043aada16fa4ed7e62a5011e65975"
+        },
+        {
+          "role": "branch",
+          "native_size": [
+            64,
+            16
+          ],
+          "native_index_sha256": "24b47beced5f8e22df90ed71c6f49e69071eb9e1fd15f162e33e3e39e199e20c",
+          "map_sha256": "8ceb9e37492e237a90c3db0986f06edfaf28bf1d37f863d9b51cf9bd85cc035b"
+        },
+        {
+          "role": "roots",
+          "native_size": [
+            32,
+            16
+          ],
+          "native_index_sha256": "e7fed8b2b0122e72e70cf1bdf650387fdc33a5dacaa64c1dca67feb6f6a386db",
+          "map_sha256": "7336e4cd464860af3ed42883d993437332e3fb601b821bf907e9620f1b547bfe"
+        },
+        {
+          "role": "border",
+          "native_size": [
+            96,
+            32
+          ],
+          "native_index_sha256": "4dd2f9702fd5f51a88c0ff3292f3f317a5ffe145ba43eaa2c63c53dd2c817cd4",
+          "map_sha256": "03b66fcf76a59aa9756198a51cd075e18d0b4ee7c205fbe0dd74f5cc963908cf"
+        },
+        {
+          "role": "column",
+          "native_size": [
+            16,
+            64
+          ],
+          "native_index_sha256": "19fb1b43f6f94fff0367e2ecc9531ea55586824daa1af5a11dea550f2e044447",
+          "map_sha256": "679c0650d53b35d5fc2ffa73a49e4f9f81cde0655b9303ceedb93948f709a0d9"
+        }
+      ],
+      "solid_branch_sha256": "233c68112cb8a288212820c0b794785fd53c4db4b9bab61134c6515ccd736ab3",
+      "visibility": {
+        "frames": 133,
+        "row_bytes": 10,
+        "table_sha256": "a15f52cbe003b60ce3bc755e8033b066601159b7bb6a9a2913dac71f413f284f",
+        "criterion": "native source counts plus independent four-connected component and minimal-row proof; actual framebuffer visibility checked separately"
+      },
+      "OBJ_superset": {
+        "variant": 23,
+        "enemy": 11,
+        "used": 864,
+        "limit": 876,
+        "free": 12,
+        "allocations": {
+          "hero/body+sword+streamed-shield foundation": 32,
+          "items whole sheet": 84,
+          "fx whole sheet": 52,
+          "proj whole sheet": 4,
+          "lift whole sheet": 16,
+          "pick32 whole sheet": 40,
+          "Bloom streamed action": 16,
+          "Bloom ground shadow": 2,
+          "beetle whole sheet": 24,
+          "bat whole sheet": 12,
+          "spitter whole sheet": 48,
+          "slime whole sheet": 12,
+          "knight whole sheet": 192,
+          "ksword whole sheet": 8,
+          "boss streamed frame": 32,
+          "chest streamed frame": 16,
+          "entrance streamed frame": 32,
+          "ambient whole sheet": 6,
+          "arrow whole sheet": 12,
+          "seven menu icons": 112,
+          "trial mouth whole sheet": 48,
+          "one forest/trial NPC frame": 16,
+          "four streamed landmarks": 32,
+          "current-body visibility fragment": 16
+        },
+        "limits": "Static allocation superset, not an OAM peak/CPU guarantee. Includes every enemy family although ordinary themed rooms use subsets. Portrait/HUD use their fixed higher reservations."
+      },
+      "memory": {
+        "__bss_end": 50354868,
+        "__ewram_bss_end": 33789204
+      }
+    },
+    {
+      "profile": 24,
+      "label": "Fallen Crown",
+      "source_commit": "c6dc060043aa6d0d5e2eb43d4d09e97ddf77450a",
+      "rom_sha256": "66a8d99b08d3fc4d55ef55f2148d26938207697c3c5ec1d918938fb9308a9226",
+      "frozen_input_sha256": {
+        "bartgame.gba": "66a8d99b08d3fc4d55ef55f2148d26938207697c3c5ec1d918938fb9308a9226",
+        "bartgame.map": "47c00e5e0934f1d0e3c02df6fb3f86350c27fded8395a75a80f20437e58d92e8",
+        "assets.h": "1b3089b9bd3db421afb7344115d64574b7bcf40b5fb6e986538d5c91c8f81544",
+        "freeze.json": "1c1f950a748318b0c66c4efc34a475449af20e7b48fb37f6a93a94652b728dbe"
+      },
+      "counts": {
+        "forest": {
+          "direct_frames": 938,
+          "protected_tiles": 334
+        },
+        "myst": {
+          "direct_frames": 101,
+          "protected_tiles": 96
+        },
+        "sewer": {
+          "direct_frames": 0,
+          "protected_tiles": 0
+        }
+      },
+      "BG_budgets": {
+        "forest": {
+          "tile_count": 898,
+          "palette_count": 11
+        },
+        "myst": {
+          "tile_count": 107,
+          "palette_count": 6
+        },
+        "sewer": {
+          "tile_count": 822,
+          "palette_count": 1
+        }
+      },
+      "prefabs": [
+        {
+          "role": "small",
+          "native_size": [
+            16,
+            16
+          ],
+          "native_index_sha256": "eed7108feea7f1042b3874a2de0367604a8045b351990d772cb1b536ebaec016",
+          "map_sha256": "2216258572e6fd4083316ddc4dcfcc0a743eaae51bdb4303f2fe834d88b414de"
+        },
+        {
+          "role": "clump",
+          "native_size": [
+            32,
+            32
+          ],
+          "native_index_sha256": "219e2a86cfc3ca4a40491ebe7cf9c37bace435921e213242c036213d14222d10",
+          "map_sha256": "74a7a67a3b51f4aeb420864a37dda0e52436e768bd88950821dc5de636556ccb"
+        },
+        {
+          "role": "tree",
+          "native_size": [
+            48,
+            48
+          ],
+          "native_index_sha256": "97c0096c431ed47ab517bd8e4d88bd207399752b643caa93cb51336e76858295",
+          "map_sha256": "1bdf6df9745a27dd2a99c9e5e5d96a80c5f96a5b02fe1e3a6ee84b75d8f1154b"
+        },
+        {
+          "role": "grove",
+          "native_size": [
+            64,
+            64
+          ],
+          "native_index_sha256": "56016d830cd20c623273d4913d383ca6cde2479317ade194066928c127e8b376",
+          "map_sha256": "e4418e93759baf179d09e24e95b57a4d02f2f966f19a9fbdf84fbfa665499279"
+        },
+        {
+          "role": "hero",
+          "native_size": [
+            96,
+            64
+          ],
+          "native_index_sha256": "026b90067d48caf497f45d5b49fed48b941629acc0d93a08b337a99de38f0588",
+          "map_sha256": "f3491dd84cd9468de098d632faba9ff2b5000c22bb0659c0030586d243670b17"
+        },
+        {
+          "role": "branch",
+          "native_size": [
+            64,
+            16
+          ],
+          "native_index_sha256": "67f1a713dc002c5a76cf8f4776de244ce94305de43e41dc0bfe3a360a418c5de",
+          "map_sha256": "6586e38d974b47f2a9432c8d55c5a7eba9e217a60ac5b300564331ebabd039b3"
+        },
+        {
+          "role": "roots",
+          "native_size": [
+            32,
+            16
+          ],
+          "native_index_sha256": "a5fe1fe6397de3e9c1a4574f099997bb26b6de9be7cc13d6929ee34ccb99d5a3",
+          "map_sha256": "59d94077a10e15d58ed103cd2f513cb9ab1707b6d37397680fbca7d62ee50660"
+        },
+        {
+          "role": "border",
+          "native_size": [
+            96,
+            32
+          ],
+          "native_index_sha256": "62a4ff0ba60ffd04770108b819f2d3c195c269111ec4403b5deb2f0f07a45305",
+          "map_sha256": "42b68e258894c65c16793f0cce838d1c7c2e8f12c99732f92bf78ff2f90afd51"
+        },
+        {
+          "role": "column",
+          "native_size": [
+            16,
+            64
+          ],
+          "native_index_sha256": "4ed5c2d664ab30d111887f4024ea175f91d00bcdd10ec64ccaeb59838467b503",
+          "map_sha256": "b5daf399a0ccc2a7c92dd7fa0fbdb40313d1130c62e9993ce718aaabff5ce8f4"
+        }
+      ],
+      "solid_branch_sha256": "52a0ec36ce0ffbce57659357cae2d4cd5db1873bf6870e7a133c6c56965a6ab6",
+      "visibility": {
+        "frames": 133,
+        "row_bytes": 10,
+        "table_sha256": "a15f52cbe003b60ce3bc755e8033b066601159b7bb6a9a2913dac71f413f284f",
+        "criterion": "native source counts plus independent four-connected component and minimal-row proof; actual framebuffer visibility checked separately"
+      },
+      "OBJ_superset": {
+        "variant": 24,
+        "enemy": 11,
+        "used": 864,
+        "limit": 876,
+        "free": 12,
+        "allocations": {
+          "hero/body+sword+streamed-shield foundation": 32,
+          "items whole sheet": 84,
+          "fx whole sheet": 52,
+          "proj whole sheet": 4,
+          "lift whole sheet": 16,
+          "pick32 whole sheet": 40,
+          "Bloom streamed action": 16,
+          "Bloom ground shadow": 2,
+          "beetle whole sheet": 24,
+          "bat whole sheet": 12,
+          "spitter whole sheet": 48,
+          "slime whole sheet": 12,
+          "knight whole sheet": 192,
+          "ksword whole sheet": 8,
+          "boss streamed frame": 32,
+          "chest streamed frame": 16,
+          "entrance streamed frame": 32,
+          "ambient whole sheet": 6,
+          "arrow whole sheet": 12,
+          "seven menu icons": 112,
+          "trial mouth whole sheet": 48,
+          "one forest/trial NPC frame": 16,
+          "four streamed landmarks": 32,
+          "current-body visibility fragment": 16
+        },
+        "limits": "Static allocation superset, not an OAM peak/CPU guarantee. Includes every enemy family although ordinary themed rooms use subsets. Portrait/HUD use their fixed higher reservations."
+      },
+      "memory": {
+        "__bss_end": 50354868,
+        "__ewram_bss_end": 33789204
+      }
+    },
+    {
+      "profile": 25,
+      "label": "Lightning Cleft Oak",
+      "source_commit": "c6dc060043aa6d0d5e2eb43d4d09e97ddf77450a",
+      "rom_sha256": "750f173a8504a298114295c0fa5a620a1365aa9e7e9918f3f04916698478980f",
+      "frozen_input_sha256": {
+        "bartgame.gba": "750f173a8504a298114295c0fa5a620a1365aa9e7e9918f3f04916698478980f",
+        "bartgame.map": "b19c72ea2c8b3ab22a637d5a47770bb0ceb1ff365bce16c58c556388cd4368e4",
+        "assets.h": "3f57d67bc8c3e42205dd80461f7dd25b1ecb44ea5687e9e629bdca55d464aaee",
+        "freeze.json": "26aa5cd6773f3b70748ef269fcbe096e597a5d73d793426c7bdd58ffadc46733"
+      },
+      "counts": {
+        "forest": {
+          "direct_frames": 938,
+          "protected_tiles": 334
+        },
+        "myst": {
+          "direct_frames": 101,
+          "protected_tiles": 96
+        },
+        "sewer": {
+          "direct_frames": 0,
+          "protected_tiles": 0
+        }
+      },
+      "BG_budgets": {
+        "forest": {
+          "tile_count": 921,
+          "palette_count": 11
+        },
+        "myst": {
+          "tile_count": 107,
+          "palette_count": 6
+        },
+        "sewer": {
+          "tile_count": 822,
+          "palette_count": 1
+        }
+      },
+      "prefabs": [
+        {
+          "role": "small",
+          "native_size": [
+            16,
+            16
+          ],
+          "native_index_sha256": "09b8f4955538b83b0e8887d750eecabdf6ff461de9c8a753d3de3df174731624",
+          "map_sha256": "45f1da5a3f146346878cbd99c9087208dee1e0d88be4601d036e985a9db016d2"
+        },
+        {
+          "role": "clump",
+          "native_size": [
+            32,
+            32
+          ],
+          "native_index_sha256": "6dde2d8b8380efb2324d930a9668e3b32390beccb89fe0cd820427e7f6cd4c94",
+          "map_sha256": "90322257f662b412fe763a2155f149248506d263f43edf8a0dc24190a3f01e27"
+        },
+        {
+          "role": "tree",
+          "native_size": [
+            48,
+            48
+          ],
+          "native_index_sha256": "a006eb2691bb65aee0d61a2b499eaff6a7cbe6e61fad4f3b5ea40f454c743b0f",
+          "map_sha256": "0fc4aa7519fdfa8c44aa4504e955114e48bf7b75ef3f0a38dad87fd2695a80d0"
+        },
+        {
+          "role": "grove",
+          "native_size": [
+            64,
+            64
+          ],
+          "native_index_sha256": "1cc55878b4fda6b805c7ce99ec4f3b7cb6a926be2d7741f5cbdebbc87dc1f317",
+          "map_sha256": "b599af0daac8940fe758a7edb1ab9336cf0e627783f489913642d40fd3d7d392"
+        },
+        {
+          "role": "hero",
+          "native_size": [
+            96,
+            64
+          ],
+          "native_index_sha256": "a6681198b726ab16a9cd2230796c93d578449ee5406378f00ef03462e8b985bf",
+          "map_sha256": "156aad03a672798d77efbf8748cd10499f52c12e310ec10aa8dee590f280ef16"
+        },
+        {
+          "role": "branch",
+          "native_size": [
+            64,
+            16
+          ],
+          "native_index_sha256": "da9554e3c8eb2d22847ccb48112606048166391334bfd69f38b2e5cc9a42938b",
+          "map_sha256": "e5997a07af5306315f311b793fd2381f36d81d1ea41e4c8716214edbc757782e"
+        },
+        {
+          "role": "roots",
+          "native_size": [
+            32,
+            16
+          ],
+          "native_index_sha256": "f8a8e76f20942a66fb9bba92fe4a21b8a5e4f075f6b5bcb372889b7e004f257f",
+          "map_sha256": "add6d0460242fddec55035f5838c8ca0d19d5d2694b3ad2235145df2df6cb1b8"
+        },
+        {
+          "role": "border",
+          "native_size": [
+            96,
+            32
+          ],
+          "native_index_sha256": "0c614160d3afd4a76d946ab17f1241962233504bf52f28aa8e5ac7485f0a6ecb",
+          "map_sha256": "be0f59300c0c34931cf92842369ba94652bc407174bec5e809232fef2d7d003a"
+        },
+        {
+          "role": "column",
+          "native_size": [
+            16,
+            64
+          ],
+          "native_index_sha256": "74bdd245fcf788344c1a96686b591740d89c0cf8526e396897e19ab5b528ea42",
+          "map_sha256": "11ad6b09a3a49aeaf6a3626993d7feb64e49d4277fc5295179f0e94140063177"
+        }
+      ],
+      "solid_branch_sha256": "d1bc3b21045d707d90179b219de3cfa46d272a35b8835cb305741ac9e379a786",
+      "visibility": {
+        "frames": 133,
+        "row_bytes": 10,
+        "table_sha256": "a15f52cbe003b60ce3bc755e8033b066601159b7bb6a9a2913dac71f413f284f",
+        "criterion": "native source counts plus independent four-connected component and minimal-row proof; actual framebuffer visibility checked separately"
+      },
+      "OBJ_superset": {
+        "variant": 25,
+        "enemy": 11,
+        "used": 864,
+        "limit": 876,
+        "free": 12,
+        "allocations": {
+          "hero/body+sword+streamed-shield foundation": 32,
+          "items whole sheet": 84,
+          "fx whole sheet": 52,
+          "proj whole sheet": 4,
+          "lift whole sheet": 16,
+          "pick32 whole sheet": 40,
+          "Bloom streamed action": 16,
+          "Bloom ground shadow": 2,
+          "beetle whole sheet": 24,
+          "bat whole sheet": 12,
+          "spitter whole sheet": 48,
+          "slime whole sheet": 12,
+          "knight whole sheet": 192,
+          "ksword whole sheet": 8,
+          "boss streamed frame": 32,
+          "chest streamed frame": 16,
+          "entrance streamed frame": 32,
+          "ambient whole sheet": 6,
+          "arrow whole sheet": 12,
+          "seven menu icons": 112,
+          "trial mouth whole sheet": 48,
+          "one forest/trial NPC frame": 16,
+          "four streamed landmarks": 32,
+          "current-body visibility fragment": 16
+        },
+        "limits": "Static allocation superset, not an OAM peak/CPU guarantee. Includes every enemy family although ordinary themed rooms use subsets. Portrait/HUD use their fixed higher reservations."
+      },
+      "memory": {
+        "__bss_end": 50354868,
+        "__ewram_bss_end": 33789204
+      }
+    },
+    {
+      "profile": 26,
+      "label": "Pale Birch Congregation",
+      "source_commit": "c6dc060043aa6d0d5e2eb43d4d09e97ddf77450a",
+      "rom_sha256": "8f6184789e8bca6c38ff83a8bb8e1df7167da681502eb6d68838dd4a512c0ad8",
+      "frozen_input_sha256": {
+        "bartgame.gba": "8f6184789e8bca6c38ff83a8bb8e1df7167da681502eb6d68838dd4a512c0ad8",
+        "bartgame.map": "3c460e7c58cab4e77dc916d70110c408caa1f287e750ca537cb29a6399db872f",
+        "assets.h": "d7dac33c736808960d92cf19a455b1a8cfa249421f1301ce5db31847e5c1dc92",
+        "freeze.json": "bc2755adde16634e351405efca68afa8de8539cca991ab86c2eb0aa80ff5efa5"
+      },
+      "counts": {
+        "forest": {
+          "direct_frames": 938,
+          "protected_tiles": 334
+        },
+        "myst": {
+          "direct_frames": 101,
+          "protected_tiles": 96
+        },
+        "sewer": {
+          "direct_frames": 0,
+          "protected_tiles": 0
+        }
+      },
+      "BG_budgets": {
+        "forest": {
+          "tile_count": 895,
+          "palette_count": 11
+        },
+        "myst": {
+          "tile_count": 107,
+          "palette_count": 6
+        },
+        "sewer": {
+          "tile_count": 822,
+          "palette_count": 1
+        }
+      },
+      "prefabs": [
+        {
+          "role": "small",
+          "native_size": [
+            16,
+            16
+          ],
+          "native_index_sha256": "082aa7fda7a564f77f985c91acfc654d5faf846d596ec0623d48d078422edcd3",
+          "map_sha256": "3261a58f5673d998ffe091811ae9fb508c9522867cfb605a22b26fe7a4411b4e"
+        },
+        {
+          "role": "clump",
+          "native_size": [
+            32,
+            32
+          ],
+          "native_index_sha256": "0b82143256770e37cebfa9ff5a8777f4b85ca8b2e4cf85f09adfaf94e7c7fa71",
+          "map_sha256": "d76682cab13b3be569c9b243a981585526c8ce529acd5f05aa670848bfd22814"
+        },
+        {
+          "role": "tree",
+          "native_size": [
+            48,
+            48
+          ],
+          "native_index_sha256": "f54bb2a18026ebc548924fd02c5dd5c66f65ce83dbe1f2d10be3be9ff31310dd",
+          "map_sha256": "702c397d89535cb298555cd82acd5ba988a12ae9a29eb6f59c56ecb03bb2bafd"
+        },
+        {
+          "role": "grove",
+          "native_size": [
+            64,
+            64
+          ],
+          "native_index_sha256": "b1429a7aa5d7c98ecec3f2899c8c831a9cb059c5896469c432febbf7c72aecb3",
+          "map_sha256": "a02259ce565f3f180c0a7bc671020394e448f608846d1b2e40853559ae233fe4"
+        },
+        {
+          "role": "hero",
+          "native_size": [
+            96,
+            64
+          ],
+          "native_index_sha256": "cd7d1a9ed3a155755b3dcc46efd2eedf8bed226ce0a42b42f71307fbe6a59f7d",
+          "map_sha256": "168c51c892c1b7c76b640d9a9d8f568913cbfe81d571968dba618cc7e06db4e5"
+        },
+        {
+          "role": "branch",
+          "native_size": [
+            64,
+            16
+          ],
+          "native_index_sha256": "a35ded1aff8d62af34f07b8c4efa6a4b70600149072800b0d904839b1a58de4d",
+          "map_sha256": "6759b37794522fbc4cf809a0dbe8e6d859a3107035214336d6a8853851cfc5e2"
+        },
+        {
+          "role": "roots",
+          "native_size": [
+            32,
+            16
+          ],
+          "native_index_sha256": "5d465937e733545fcdbbf45edb3999a80ed4b2657c9db7112f7a39ccb153402d",
+          "map_sha256": "46288dfc1d4e89f09cb1d561d83afd718199ac6ce3a35a02d4e399efaee5b024"
+        },
+        {
+          "role": "border",
+          "native_size": [
+            96,
+            32
+          ],
+          "native_index_sha256": "5f05d408b7c8dfefe3b543ee106432b7e3d30c338087ac186abff45941a8af81",
+          "map_sha256": "eda08c2726062954ca22e930e64ef21daf26e7df1ca16c0d9291c9f6a032f7ec"
+        },
+        {
+          "role": "column",
+          "native_size": [
+            16,
+            64
+          ],
+          "native_index_sha256": "5c031e654d7037365c20992a743a40e5d629176b4a921aa9623e1aafa36f951e",
+          "map_sha256": "c92bcc7600ef93f8941a6cba80c629cb521fa86c0ca714de1724764074c9876b"
+        }
+      ],
+      "solid_branch_sha256": "b9828145ac1d42a71ad3c91e540b09086444a1a1b3022bc82bbe700e92a18a93",
+      "visibility": {
+        "frames": 133,
+        "row_bytes": 10,
+        "table_sha256": "a15f52cbe003b60ce3bc755e8033b066601159b7bb6a9a2913dac71f413f284f",
+        "criterion": "native source counts plus independent four-connected component and minimal-row proof; actual framebuffer visibility checked separately"
+      },
+      "OBJ_superset": {
+        "variant": 26,
+        "enemy": 11,
+        "used": 864,
+        "limit": 876,
+        "free": 12,
+        "allocations": {
+          "hero/body+sword+streamed-shield foundation": 32,
+          "items whole sheet": 84,
+          "fx whole sheet": 52,
+          "proj whole sheet": 4,
+          "lift whole sheet": 16,
+          "pick32 whole sheet": 40,
+          "Bloom streamed action": 16,
+          "Bloom ground shadow": 2,
+          "beetle whole sheet": 24,
+          "bat whole sheet": 12,
+          "spitter whole sheet": 48,
+          "slime whole sheet": 12,
+          "knight whole sheet": 192,
+          "ksword whole sheet": 8,
+          "boss streamed frame": 32,
+          "chest streamed frame": 16,
+          "entrance streamed frame": 32,
+          "ambient whole sheet": 6,
+          "arrow whole sheet": 12,
+          "seven menu icons": 112,
+          "trial mouth whole sheet": 48,
+          "one forest/trial NPC frame": 16,
+          "four streamed landmarks": 32,
+          "current-body visibility fragment": 16
+        },
+        "limits": "Static allocation superset, not an OAM peak/CPU guarantee. Includes every enemy family although ordinary themed rooms use subsets. Portrait/HUD use their fixed higher reservations."
+      },
+      "memory": {
+        "__bss_end": 50354868,
+        "__ewram_bss_end": 33789204
+      }
+    },
+    {
+      "profile": 27,
+      "label": "Black Cedar Cathedral",
+      "source_commit": "c6dc060043aa6d0d5e2eb43d4d09e97ddf77450a",
+      "rom_sha256": "473ec3ca0bdf37f54b62434b65253a827616b2adcc25df8756997f309f6f4b7b",
+      "frozen_input_sha256": {
+        "bartgame.gba": "473ec3ca0bdf37f54b62434b65253a827616b2adcc25df8756997f309f6f4b7b",
+        "bartgame.map": "dcdd673fd81448a14bf2fabeff2a2a6e4363486af4aa772ec055f9654057a6cd",
+        "assets.h": "84e19455edb94b0cc000a658eeb3a3810ab57e1aef96ce593ce372456be7d5f1",
+        "freeze.json": "26f33f48cf921b9a5ddbb69566aa00d71e1414f4147b201a18bacb83e7a3d7d3"
+      },
+      "counts": {
+        "forest": {
+          "direct_frames": 938,
+          "protected_tiles": 334
+        },
+        "myst": {
+          "direct_frames": 101,
+          "protected_tiles": 96
+        },
+        "sewer": {
+          "direct_frames": 0,
+          "protected_tiles": 0
+        }
+      },
+      "BG_budgets": {
+        "forest": {
+          "tile_count": 910,
+          "palette_count": 11
+        },
+        "myst": {
+          "tile_count": 107,
+          "palette_count": 6
+        },
+        "sewer": {
+          "tile_count": 822,
+          "palette_count": 1
+        }
+      },
+      "prefabs": [
+        {
+          "role": "small",
+          "native_size": [
+            16,
+            16
+          ],
+          "native_index_sha256": "0bd12c50dff04a900b89608f669fce1d8784f8cfe0cbd6f243a4c062224f08e0",
+          "map_sha256": "2216258572e6fd4083316ddc4dcfcc0a743eaae51bdb4303f2fe834d88b414de"
+        },
+        {
+          "role": "clump",
+          "native_size": [
+            32,
+            32
+          ],
+          "native_index_sha256": "85abadec3a907357e25058e99af7cf02a1bce5bd7371b6df2c7e3a23db73c7af",
+          "map_sha256": "8b0859760e0a794976bcc14f2b3ac3c6d8e40e9567579754c62d5b612bb41dbf"
+        },
+        {
+          "role": "tree",
+          "native_size": [
+            48,
+            48
+          ],
+          "native_index_sha256": "6397266659d5240dd5ee874e8c185dbb0bf0945290115c019c0d6ba6c050e335",
+          "map_sha256": "c77dacd2037dde9550a0fdc182c36bec7d7ea2014923a9648941dd3a41b3d7d2"
+        },
+        {
+          "role": "grove",
+          "native_size": [
+            64,
+            64
+          ],
+          "native_index_sha256": "c65d9bb92002a66a7a3b6ed3d29f5f32449c3c58812912f4802c4ab1d54f4a64",
+          "map_sha256": "c8d0c65b138f10f496b6407e1725aac80d08089822dfbc5bdc75639c8cdbbea9"
+        },
+        {
+          "role": "hero",
+          "native_size": [
+            96,
+            64
+          ],
+          "native_index_sha256": "ad7415e1c92e562c81d055cfb4efa871ab2655e1738775e8a74b9e4982d48c92",
+          "map_sha256": "edb45ba7fc45ea4d0fa5b2902642e29c1060268ad67437e03ceb7a60cb26d9e0"
+        },
+        {
+          "role": "branch",
+          "native_size": [
+            64,
+            16
+          ],
+          "native_index_sha256": "37f33c08c11fe3e0199efa55860265d807d37817faea83ed01bb84ea624de61b",
+          "map_sha256": "9825fa7cf97c8edba0d6b7c69ae6589229dfbb111c7f88816214a2fbc20101f2"
+        },
+        {
+          "role": "roots",
+          "native_size": [
+            32,
+            16
+          ],
+          "native_index_sha256": "4c4128ad0df747e3eefb0e78c544acc2b548aae4b81eecdbf04f8daf94546362",
+          "map_sha256": "391d49cf1d76df104431ef07e8bf745b2f5daf69e6287aa3993484c49ff0cde4"
+        },
+        {
+          "role": "border",
+          "native_size": [
+            96,
+            32
+          ],
+          "native_index_sha256": "f84747c3c6b6cca09b1cad51f53cb47f184ea928f10c00f3a3f8f7e8823906c3",
+          "map_sha256": "ce9b90e426528a20a654725e80c8e2f50ff58648bc50fc0a502f3700d4a96158"
+        },
+        {
+          "role": "column",
+          "native_size": [
+            16,
+            64
+          ],
+          "native_index_sha256": "695423d33c01bac65d8eb850a110114160962714e294bc2c19f57deb6414221a",
+          "map_sha256": "6d7e59e537e4cc77f9f14be46c1edb5e21532abb0547ab791a8f337916ede9fc"
+        }
+      ],
+      "solid_branch_sha256": "f3f7dd16f252cc04d592a40fc941655386dfe2ef8b69e7d37addd49495d74b02",
+      "visibility": {
+        "frames": 133,
+        "row_bytes": 10,
+        "table_sha256": "a15f52cbe003b60ce3bc755e8033b066601159b7bb6a9a2913dac71f413f284f",
+        "criterion": "native source counts plus independent four-connected component and minimal-row proof; actual framebuffer visibility checked separately"
+      },
+      "OBJ_superset": {
+        "variant": 27,
+        "enemy": 11,
+        "used": 864,
+        "limit": 876,
+        "free": 12,
+        "allocations": {
+          "hero/body+sword+streamed-shield foundation": 32,
+          "items whole sheet": 84,
+          "fx whole sheet": 52,
+          "proj whole sheet": 4,
+          "lift whole sheet": 16,
+          "pick32 whole sheet": 40,
+          "Bloom streamed action": 16,
+          "Bloom ground shadow": 2,
+          "beetle whole sheet": 24,
+          "bat whole sheet": 12,
+          "spitter whole sheet": 48,
+          "slime whole sheet": 12,
+          "knight whole sheet": 192,
+          "ksword whole sheet": 8,
+          "boss streamed frame": 32,
+          "chest streamed frame": 16,
+          "entrance streamed frame": 32,
+          "ambient whole sheet": 6,
+          "arrow whole sheet": 12,
+          "seven menu icons": 112,
+          "trial mouth whole sheet": 48,
+          "one forest/trial NPC frame": 16,
+          "four streamed landmarks": 32,
+          "current-body visibility fragment": 16
+        },
+        "limits": "Static allocation superset, not an OAM peak/CPU guarantee. Includes every enemy family although ordinary themed rooms use subsets. Portrait/HUD use their fixed higher reservations."
+      },
+      "memory": {
+        "__bss_end": 50354868,
+        "__ewram_bss_end": 33789204
+      }
+    },
+    {
+      "profile": 28,
+      "label": "Sorrow Arch Elm",
+      "source_commit": "c6dc060043aa6d0d5e2eb43d4d09e97ddf77450a",
+      "rom_sha256": "420cc65e9b1139dcadd939715800464728864e7e3cd776ca079d3dcc786f21b3",
+      "frozen_input_sha256": {
+        "bartgame.gba": "420cc65e9b1139dcadd939715800464728864e7e3cd776ca079d3dcc786f21b3",
+        "bartgame.map": "6e862c2b70fb38bb5eb601a38e5b814a37af3cef529ddd6cbcf799874a3df3e3",
+        "assets.h": "a9ce79b06743eccd1794ac44b24b88fd1a6788b7fbe22ce1aea93ea7bc3eb8e6",
+        "freeze.json": "85623e2ea88c1610c128f7493b0f0f7364f1bc2624c6021088a687b554f099ca"
+      },
+      "counts": {
+        "forest": {
+          "direct_frames": 938,
+          "protected_tiles": 334
+        },
+        "myst": {
+          "direct_frames": 101,
+          "protected_tiles": 96
+        },
+        "sewer": {
+          "direct_frames": 0,
+          "protected_tiles": 0
+        }
+      },
+      "BG_budgets": {
+        "forest": {
+          "tile_count": 909,
+          "palette_count": 11
+        },
+        "myst": {
+          "tile_count": 107,
+          "palette_count": 6
+        },
+        "sewer": {
+          "tile_count": 822,
+          "palette_count": 1
+        }
+      },
+      "prefabs": [
+        {
+          "role": "small",
+          "native_size": [
+            16,
+            16
+          ],
+          "native_index_sha256": "a81ee41928192ee5f16d2a24c3cfe0c08832eedb882437bf425960717c114792",
+          "map_sha256": "517fa2b5437213b3e6450e843e7f6fad3b922d6eec6edd6afc7289db2ac712f0"
+        },
+        {
+          "role": "clump",
+          "native_size": [
+            32,
+            32
+          ],
+          "native_index_sha256": "f737f1206b4f1637723b3f29ae6a200944db9e13dc9c421b96eb7c3e8b884c29",
+          "map_sha256": "317cda8a275e2c8cedff9259d432aa803ea18a103ed1d2f0b1253ef0f3023f3c"
+        },
+        {
+          "role": "tree",
+          "native_size": [
+            48,
+            48
+          ],
+          "native_index_sha256": "ac74fe152c5ab77ca17bb2a2801d8b89a27adaeb127ec2f7fde39f45c09312a3",
+          "map_sha256": "7accb5db3c6741b0b8660b0b00c7f650cea05111f60d230ed89ac030b5936bd1"
+        },
+        {
+          "role": "grove",
+          "native_size": [
+            64,
+            64
+          ],
+          "native_index_sha256": "691fe88e6439ade74cd66b9268a9cde3214d68df892599196cc66a3bb220e049",
+          "map_sha256": "d169b3c9a4411c98ad1aed6712ac3cae662cc1b6bc07090849e5020e14ed1ee7"
+        },
+        {
+          "role": "hero",
+          "native_size": [
+            96,
+            64
+          ],
+          "native_index_sha256": "d6a638cc121422fdf00b0f64d04f8183b6b02aa609029b6d3057f05494b9a34b",
+          "map_sha256": "8a7eda0e399aa038bb3a9ab68010e06970f2ced9cd5a7e0f447eaa57a4c7883b"
+        },
+        {
+          "role": "branch",
+          "native_size": [
+            64,
+            16
+          ],
+          "native_index_sha256": "f3c16591001eb6e455343d966415612ed4ecdbfad8d7818abc8c9a50ed467264",
+          "map_sha256": "0c9b70e99e030917f10a66b931307aa9e73929a05d469b1adb1c26ce5e841e96"
+        },
+        {
+          "role": "roots",
+          "native_size": [
+            32,
+            16
+          ],
+          "native_index_sha256": "8f3a3daecb67cd689794aba573ecfca8a37a36be9f92cc6af71b20b4b0adff62",
+          "map_sha256": "dbb3223bd662db8725a6a4b5575315b8565e91199f154295309a23c4a9a554ab"
+        },
+        {
+          "role": "border",
+          "native_size": [
+            96,
+            32
+          ],
+          "native_index_sha256": "e33fa9ebbb0a70b224178a45dddee34578da6025c11ac1e87610f302cbaea731",
+          "map_sha256": "5f6fbbe81b4c8b22177c194f481548a5793943fae02c707e55ccef764b9a50a4"
+        },
+        {
+          "role": "column",
+          "native_size": [
+            16,
+            64
+          ],
+          "native_index_sha256": "62f42eb48c3edde57ea7fdf5d01ddee9207b7079e7d5e115a1772f1869967795",
+          "map_sha256": "f607ee794632251f0ddcf3395422805067edb20c6a0062e17c1b3839396e5747"
+        }
+      ],
+      "solid_branch_sha256": "7dcee9cd61952fc31cc6b5d5b59c4bd67cbaba2b1a58e6eb8afdd618471d175c",
+      "visibility": {
+        "frames": 133,
+        "row_bytes": 10,
+        "table_sha256": "a15f52cbe003b60ce3bc755e8033b066601159b7bb6a9a2913dac71f413f284f",
+        "criterion": "native source counts plus independent four-connected component and minimal-row proof; actual framebuffer visibility checked separately"
+      },
+      "OBJ_superset": {
+        "variant": 28,
+        "enemy": 11,
+        "used": 864,
+        "limit": 876,
+        "free": 12,
+        "allocations": {
+          "hero/body+sword+streamed-shield foundation": 32,
+          "items whole sheet": 84,
+          "fx whole sheet": 52,
+          "proj whole sheet": 4,
+          "lift whole sheet": 16,
+          "pick32 whole sheet": 40,
+          "Bloom streamed action": 16,
+          "Bloom ground shadow": 2,
+          "beetle whole sheet": 24,
+          "bat whole sheet": 12,
+          "spitter whole sheet": 48,
+          "slime whole sheet": 12,
+          "knight whole sheet": 192,
+          "ksword whole sheet": 8,
+          "boss streamed frame": 32,
+          "chest streamed frame": 16,
+          "entrance streamed frame": 32,
+          "ambient whole sheet": 6,
+          "arrow whole sheet": 12,
+          "seven menu icons": 112,
+          "trial mouth whole sheet": 48,
+          "one forest/trial NPC frame": 16,
+          "four streamed landmarks": 32,
+          "current-body visibility fragment": 16
+        },
+        "limits": "Static allocation superset, not an OAM peak/CPU guarantee. Includes every enemy family although ordinary themed rooms use subsets. Portrait/HUD use their fixed higher reservations."
+      },
+      "memory": {
+        "__bss_end": 50354868,
+        "__ewram_bss_end": 33789204
+      }
+    }
+  ],
+  "source_gallery": {
+    "manifest_sha256": "a11e93d312a28097033ab715cb89a70872da24508d892727670f08a0995a47c6",
+    "source_commit": "c6dc060043aa6d0d5e2eb43d4d09e97ddf77450a",
+    "native_images": 140,
+    "hashed_files": 554,
+    "exact_source_palette_GIFs": 10,
+    "limits": "Native assets/catalog/comparison/palette panels verified. Recorded-plan source figures are labelled schematic explanations, not actual framebuffers; their files are hash bound here."
+  },
+  "runtime": {
+    "profiles": [
+      {
+        "profile": 6,
+        "report_sha256": "3972384d155def9766b6e1d860264d0136f27b24a41589dfcfd348b5d565b63f",
+        "rom_sha256": "fc8e92f92a4aa43aa5cc56c0caff7a6dc1394f21dc356e7830ef9a7e07f234a1",
+        "contexts": 8,
+        "movies": 2,
+        "exact_gifs": 2,
+        "observed_video_frames": 400,
+        "minimum_displayed_character_colored_pixels": null,
+        "minimum_displayed_character_component": null,
+        "fully_hidden_new_character_frames": null,
+        "validated_attached_cape_frames": 34,
+        "media_manifest_sha256": "d477a0eeb21289865cc0f251b57c3b9bca87dc4bd695d132d433c067fd6e884b",
+        "planner_cases": {}
+      },
+      {
+        "profile": 19,
+        "report_sha256": "783cb3e6e8005eae3dc6595e62c7bff3cef1cd8262cafb9e9172b4b2eafb5f1a",
+        "rom_sha256": "09aa5274a91618c5a06a74bd7ba61bebc6ebb71d738aeb48de86f8b91930c3b7",
+        "contexts": 8,
+        "movies": 2,
+        "exact_gifs": 2,
+        "observed_video_frames": 400,
+        "minimum_displayed_character_colored_pixels": 37,
+        "minimum_displayed_character_component": 14,
+        "fully_hidden_new_character_frames": 0,
+        "validated_attached_cape_frames": 34,
+        "media_manifest_sha256": "8bd573f435dd7d92bcb2f084da2f1a781627e8c74289cddef3e5c962038aef80",
+        "planner_cases": {
+          "isolated-small": {
+            "components": 3,
+            "placements": 41,
+            "solid_cells": 461,
+            "projected_cells": 0,
+            "native_sizes": [
+              [
+                16,
+                16
+              ],
+              [
+                16,
+                64
+              ],
+              [
+                32,
+                16
+              ],
+              [
+                32,
+                32
+              ],
+              [
+                48,
+                48
+              ],
+              [
+                64,
+                16
+              ],
+              [
+                64,
+                64
+              ],
+              [
+                96,
+                32
+              ],
+              [
+                96,
+                64
+              ]
+            ]
+          },
+          "narrow-arm": {
+            "components": 8,
+            "placements": 53,
+            "solid_cells": 429,
+            "projected_cells": 0,
+            "native_sizes": [
+              [
+                16,
+                16
+              ],
+              [
+                16,
+                64
+              ],
+              [
+                32,
+                16
+              ],
+              [
+                32,
+                32
+              ],
+              [
+                48,
+                48
+              ],
+              [
+                64,
+                16
+              ],
+              [
+                64,
+                64
+              ],
+              [
+                96,
+                32
+              ],
+              [
+                96,
+                64
+              ]
+            ]
+          },
+          "broad-healthy": {
+            "components": 7,
+            "placements": 59,
+            "solid_cells": 436,
+            "projected_cells": 0,
+            "native_sizes": [
+              [
+                16,
+                16
+              ],
+              [
+                16,
+                64
+              ],
+              [
+                32,
+                16
+              ],
+              [
+                32,
+                32
+              ],
+              [
+                48,
+                48
+              ],
+              [
+                64,
+                16
+              ],
+              [
+                64,
+                64
+              ],
+              [
+                96,
+                32
+              ],
+              [
+                96,
+                64
+              ]
+            ]
+          },
+          "broad-deep": {
+            "components": 3,
+            "placements": 46,
+            "solid_cells": 563,
+            "projected_cells": 4,
+            "native_sizes": [
+              [
+                16,
+                16
+              ],
+              [
+                16,
+                64
+              ],
+              [
+                32,
+                16
+              ],
+              [
+                32,
+                32
+              ],
+              [
+                48,
+                48
+              ],
+              [
+                64,
+                16
+              ],
+              [
+                64,
+                64
+              ],
+              [
+                96,
+                32
+              ],
+              [
+                96,
+                64
+              ]
+            ]
+          },
+          "separated-corner": {
+            "components": 7,
+            "placements": 59,
+            "solid_cells": 436,
+            "projected_cells": 0,
+            "native_sizes": [
+              [
+                16,
+                16
+              ],
+              [
+                16,
+                64
+              ],
+              [
+                32,
+                16
+              ],
+              [
+                32,
+                32
+              ],
+              [
+                48,
+                48
+              ],
+              [
+                64,
+                16
+              ],
+              [
+                64,
+                64
+              ],
+              [
+                96,
+                32
+              ],
+              [
+                96,
+                64
+              ]
+            ]
+          },
+          "deep-branch-walk-roll": {
+            "components": 3,
+            "placements": 46,
+            "solid_cells": 563,
+            "projected_cells": 4,
+            "native_sizes": [
+              [
+                16,
+                16
+              ],
+              [
+                16,
+                64
+              ],
+              [
+                32,
+                16
+              ],
+              [
+                32,
+                32
+              ],
+              [
+                48,
+                48
+              ],
+              [
+                64,
+                16
+              ],
+              [
+                64,
+                64
+              ],
+              [
+                96,
+                32
+              ],
+              [
+                96,
+                64
+              ]
+            ]
+          },
+          "deep-branch-cape": {
+            "components": 3,
+            "placements": 46,
+            "solid_cells": 563,
+            "projected_cells": 4,
+            "native_sizes": [
+              [
+                16,
+                16
+              ],
+              [
+                16,
+                64
+              ],
+              [
+                32,
+                16
+              ],
+              [
+                32,
+                32
+              ],
+              [
+                48,
+                48
+              ],
+              [
+                64,
+                16
+              ],
+              [
+                64,
+                64
+              ],
+              [
+                96,
+                32
+              ],
+              [
+                96,
+                64
+              ]
+            ]
+          },
+          "deep-branch-menu-resume": {
+            "components": 3,
+            "placements": 46,
+            "solid_cells": 563,
+            "projected_cells": 4,
+            "native_sizes": [
+              [
+                16,
+                16
+              ],
+              [
+                16,
+                64
+              ],
+              [
+                32,
+                16
+              ],
+              [
+                32,
+                32
+              ],
+              [
+                48,
+                48
+              ],
+              [
+                64,
+                16
+              ],
+              [
+                64,
+                64
+              ],
+              [
+                96,
+                32
+              ],
+              [
+                96,
+                64
+              ]
+            ]
+          }
+        }
+      },
+      {
+        "profile": 20,
+        "report_sha256": "bcac43a81b4ecfdd1f4fd9a0c7fd264274238d8da906aa50b0c306eb5777a6cd",
+        "rom_sha256": "44cecd939239adc4f62130366372b72ae4044fc390c6ff887aa7eb334791eb47",
+        "contexts": 7,
+        "movies": 2,
+        "exact_gifs": 2,
+        "observed_video_frames": 272,
+        "minimum_displayed_character_colored_pixels": 37,
+        "minimum_displayed_character_component": 14,
+        "fully_hidden_new_character_frames": 0,
+        "validated_attached_cape_frames": 34,
+        "media_manifest_sha256": "0ab314912641232028a8af0d37dce93ec6ca0dadb01d031afd8453c6495d8360",
+        "planner_cases": {
+          "isolated-small": {
+            "components": 3,
+            "placements": 41,
+            "solid_cells": 461,
+            "projected_cells": 0,
+            "native_sizes": [
+              [
+                16,
+                16
+              ],
+              [
+                16,
+                64
+              ],
+              [
+                32,
+                16
+              ],
+              [
+                32,
+                32
+              ],
+              [
+                48,
+                48
+              ],
+              [
+                64,
+                16
+              ],
+              [
+                64,
+                64
+              ],
+              [
+                96,
+                32
+              ],
+              [
+                96,
+                64
+              ]
+            ]
+          },
+          "narrow-arm": {
+            "components": 8,
+            "placements": 53,
+            "solid_cells": 429,
+            "projected_cells": 0,
+            "native_sizes": [
+              [
+                16,
+                16
+              ],
+              [
+                16,
+                64
+              ],
+              [
+                32,
+                16
+              ],
+              [
+                32,
+                32
+              ],
+              [
+                48,
+                48
+              ],
+              [
+                64,
+                16
+              ],
+              [
+                64,
+                64
+              ],
+              [
+                96,
+                32
+              ],
+              [
+                96,
+                64
+              ]
+            ]
+          },
+          "broad-healthy": {
+            "components": 7,
+            "placements": 59,
+            "solid_cells": 436,
+            "projected_cells": 0,
+            "native_sizes": [
+              [
+                16,
+                16
+              ],
+              [
+                16,
+                64
+              ],
+              [
+                32,
+                16
+              ],
+              [
+                32,
+                32
+              ],
+              [
+                48,
+                48
+              ],
+              [
+                64,
+                16
+              ],
+              [
+                64,
+                64
+              ],
+              [
+                96,
+                32
+              ],
+              [
+                96,
+                64
+              ]
+            ]
+          },
+          "broad-deep": {
+            "components": 3,
+            "placements": 46,
+            "solid_cells": 563,
+            "projected_cells": 4,
+            "native_sizes": [
+              [
+                16,
+                16
+              ],
+              [
+                16,
+                64
+              ],
+              [
+                32,
+                16
+              ],
+              [
+                32,
+                32
+              ],
+              [
+                48,
+                48
+              ],
+              [
+                64,
+                16
+              ],
+              [
+                64,
+                64
+              ],
+              [
+                96,
+                32
+              ],
+              [
+                96,
+                64
+              ]
+            ]
+          },
+          "separated-corner": {
+            "components": 7,
+            "placements": 59,
+            "solid_cells": 436,
+            "projected_cells": 0,
+            "native_sizes": [
+              [
+                16,
+                16
+              ],
+              [
+                16,
+                64
+              ],
+              [
+                32,
+                16
+              ],
+              [
+                32,
+                32
+              ],
+              [
+                48,
+                48
+              ],
+              [
+                64,
+                16
+              ],
+              [
+                64,
+                64
+              ],
+              [
+                96,
+                32
+              ],
+              [
+                96,
+                64
+              ]
+            ]
+          },
+          "deep-branch-walk-roll": {
+            "components": 3,
+            "placements": 46,
+            "solid_cells": 563,
+            "projected_cells": 4,
+            "native_sizes": [
+              [
+                16,
+                16
+              ],
+              [
+                16,
+                64
+              ],
+              [
+                32,
+                16
+              ],
+              [
+                32,
+                32
+              ],
+              [
+                48,
+                48
+              ],
+              [
+                64,
+                16
+              ],
+              [
+                64,
+                64
+              ],
+              [
+                96,
+                32
+              ],
+              [
+                96,
+                64
+              ]
+            ]
+          },
+          "deep-branch-cape": {
+            "components": 3,
+            "placements": 46,
+            "solid_cells": 563,
+            "projected_cells": 4,
+            "native_sizes": [
+              [
+                16,
+                16
+              ],
+              [
+                16,
+                64
+              ],
+              [
+                32,
+                16
+              ],
+              [
+                32,
+                32
+              ],
+              [
+                48,
+                48
+              ],
+              [
+                64,
+                16
+              ],
+              [
+                64,
+                64
+              ],
+              [
+                96,
+                32
+              ],
+              [
+                96,
+                64
+              ]
+            ]
+          }
+        }
+      },
+      {
+        "profile": 21,
+        "report_sha256": "e007f1f3cc59e4cbec55f97f4129c424aed0018409c509bd94da0547d3f0922b",
+        "rom_sha256": "4afbe064f60a8f7741f132ea1c3562199dad5574938a46833dc6a3a1324e95e5",
+        "contexts": 7,
+        "movies": 2,
+        "exact_gifs": 2,
+        "observed_video_frames": 272,
+        "minimum_displayed_character_colored_pixels": 44,
+        "minimum_displayed_character_component": 14,
+        "fully_hidden_new_character_frames": 0,
+        "validated_attached_cape_frames": 34,
+        "media_manifest_sha256": "96b2c6b188ff2a101bc34176cc0e33de53c804cc21a83e55fcb080f4c91c2c8c",
+        "planner_cases": {
+          "isolated-small": {
+            "components": 3,
+            "placements": 41,
+            "solid_cells": 461,
+            "projected_cells": 0,
+            "native_sizes": [
+              [
+                16,
+                16
+              ],
+              [
+                16,
+                64
+              ],
+              [
+                32,
+                16
+              ],
+              [
+                32,
+                32
+              ],
+              [
+                48,
+                48
+              ],
+              [
+                64,
+                16
+              ],
+              [
+                64,
+                64
+              ],
+              [
+                96,
+                32
+              ],
+              [
+                96,
+                64
+              ]
+            ]
+          },
+          "narrow-arm": {
+            "components": 8,
+            "placements": 53,
+            "solid_cells": 429,
+            "projected_cells": 0,
+            "native_sizes": [
+              [
+                16,
+                16
+              ],
+              [
+                16,
+                64
+              ],
+              [
+                32,
+                16
+              ],
+              [
+                32,
+                32
+              ],
+              [
+                48,
+                48
+              ],
+              [
+                64,
+                16
+              ],
+              [
+                64,
+                64
+              ],
+              [
+                96,
+                32
+              ],
+              [
+                96,
+                64
+              ]
+            ]
+          },
+          "broad-healthy": {
+            "components": 7,
+            "placements": 59,
+            "solid_cells": 436,
+            "projected_cells": 0,
+            "native_sizes": [
+              [
+                16,
+                16
+              ],
+              [
+                16,
+                64
+              ],
+              [
+                32,
+                16
+              ],
+              [
+                32,
+                32
+              ],
+              [
+                48,
+                48
+              ],
+              [
+                64,
+                16
+              ],
+              [
+                64,
+                64
+              ],
+              [
+                96,
+                32
+              ],
+              [
+                96,
+                64
+              ]
+            ]
+          },
+          "broad-deep": {
+            "components": 3,
+            "placements": 46,
+            "solid_cells": 563,
+            "projected_cells": 4,
+            "native_sizes": [
+              [
+                16,
+                16
+              ],
+              [
+                16,
+                64
+              ],
+              [
+                32,
+                16
+              ],
+              [
+                32,
+                32
+              ],
+              [
+                48,
+                48
+              ],
+              [
+                64,
+                16
+              ],
+              [
+                64,
+                64
+              ],
+              [
+                96,
+                32
+              ],
+              [
+                96,
+                64
+              ]
+            ]
+          },
+          "separated-corner": {
+            "components": 7,
+            "placements": 59,
+            "solid_cells": 436,
+            "projected_cells": 0,
+            "native_sizes": [
+              [
+                16,
+                16
+              ],
+              [
+                16,
+                64
+              ],
+              [
+                32,
+                16
+              ],
+              [
+                32,
+                32
+              ],
+              [
+                48,
+                48
+              ],
+              [
+                64,
+                16
+              ],
+              [
+                64,
+                64
+              ],
+              [
+                96,
+                32
+              ],
+              [
+                96,
+                64
+              ]
+            ]
+          },
+          "deep-branch-walk-roll": {
+            "components": 3,
+            "placements": 46,
+            "solid_cells": 563,
+            "projected_cells": 4,
+            "native_sizes": [
+              [
+                16,
+                16
+              ],
+              [
+                16,
+                64
+              ],
+              [
+                32,
+                16
+              ],
+              [
+                32,
+                32
+              ],
+              [
+                48,
+                48
+              ],
+              [
+                64,
+                16
+              ],
+              [
+                64,
+                64
+              ],
+              [
+                96,
+                32
+              ],
+              [
+                96,
+                64
+              ]
+            ]
+          },
+          "deep-branch-cape": {
+            "components": 3,
+            "placements": 46,
+            "solid_cells": 563,
+            "projected_cells": 4,
+            "native_sizes": [
+              [
+                16,
+                16
+              ],
+              [
+                16,
+                64
+              ],
+              [
+                32,
+                16
+              ],
+              [
+                32,
+                32
+              ],
+              [
+                48,
+                48
+              ],
+              [
+                64,
+                16
+              ],
+              [
+                64,
+                64
+              ],
+              [
+                96,
+                32
+              ],
+              [
+                96,
+                64
+              ]
+            ]
+          }
+        }
+      },
+      {
+        "profile": 22,
+        "report_sha256": "90252be55ecdcd6f451afba36d9ce18615982b30ab479c99ece33e88d9149612",
+        "rom_sha256": "0e058c31efb7182646112ab79a2d21a8e4c6530c0fa9b7406619fe54cc62e345",
+        "contexts": 7,
+        "movies": 2,
+        "exact_gifs": 2,
+        "observed_video_frames": 272,
+        "minimum_displayed_character_colored_pixels": 40,
+        "minimum_displayed_character_component": 14,
+        "fully_hidden_new_character_frames": 0,
+        "validated_attached_cape_frames": 34,
+        "media_manifest_sha256": "793024dc213d76c9f0f3d786a5b045bfd82fa0eab769bf2d392c9ba70024df48",
+        "planner_cases": {
+          "isolated-small": {
+            "components": 3,
+            "placements": 41,
+            "solid_cells": 461,
+            "projected_cells": 0,
+            "native_sizes": [
+              [
+                16,
+                16
+              ],
+              [
+                16,
+                64
+              ],
+              [
+                32,
+                16
+              ],
+              [
+                32,
+                32
+              ],
+              [
+                48,
+                48
+              ],
+              [
+                64,
+                16
+              ],
+              [
+                64,
+                64
+              ],
+              [
+                96,
+                32
+              ],
+              [
+                96,
+                64
+              ]
+            ]
+          },
+          "narrow-arm": {
+            "components": 8,
+            "placements": 53,
+            "solid_cells": 429,
+            "projected_cells": 0,
+            "native_sizes": [
+              [
+                16,
+                16
+              ],
+              [
+                16,
+                64
+              ],
+              [
+                32,
+                16
+              ],
+              [
+                32,
+                32
+              ],
+              [
+                48,
+                48
+              ],
+              [
+                64,
+                16
+              ],
+              [
+                64,
+                64
+              ],
+              [
+                96,
+                32
+              ],
+              [
+                96,
+                64
+              ]
+            ]
+          },
+          "broad-healthy": {
+            "components": 7,
+            "placements": 59,
+            "solid_cells": 436,
+            "projected_cells": 0,
+            "native_sizes": [
+              [
+                16,
+                16
+              ],
+              [
+                16,
+                64
+              ],
+              [
+                32,
+                16
+              ],
+              [
+                32,
+                32
+              ],
+              [
+                48,
+                48
+              ],
+              [
+                64,
+                16
+              ],
+              [
+                64,
+                64
+              ],
+              [
+                96,
+                32
+              ],
+              [
+                96,
+                64
+              ]
+            ]
+          },
+          "broad-deep": {
+            "components": 3,
+            "placements": 46,
+            "solid_cells": 563,
+            "projected_cells": 4,
+            "native_sizes": [
+              [
+                16,
+                16
+              ],
+              [
+                16,
+                64
+              ],
+              [
+                32,
+                16
+              ],
+              [
+                32,
+                32
+              ],
+              [
+                48,
+                48
+              ],
+              [
+                64,
+                16
+              ],
+              [
+                64,
+                64
+              ],
+              [
+                96,
+                32
+              ],
+              [
+                96,
+                64
+              ]
+            ]
+          },
+          "separated-corner": {
+            "components": 7,
+            "placements": 59,
+            "solid_cells": 436,
+            "projected_cells": 0,
+            "native_sizes": [
+              [
+                16,
+                16
+              ],
+              [
+                16,
+                64
+              ],
+              [
+                32,
+                16
+              ],
+              [
+                32,
+                32
+              ],
+              [
+                48,
+                48
+              ],
+              [
+                64,
+                16
+              ],
+              [
+                64,
+                64
+              ],
+              [
+                96,
+                32
+              ],
+              [
+                96,
+                64
+              ]
+            ]
+          },
+          "deep-branch-walk-roll": {
+            "components": 3,
+            "placements": 46,
+            "solid_cells": 563,
+            "projected_cells": 4,
+            "native_sizes": [
+              [
+                16,
+                16
+              ],
+              [
+                16,
+                64
+              ],
+              [
+                32,
+                16
+              ],
+              [
+                32,
+                32
+              ],
+              [
+                48,
+                48
+              ],
+              [
+                64,
+                16
+              ],
+              [
+                64,
+                64
+              ],
+              [
+                96,
+                32
+              ],
+              [
+                96,
+                64
+              ]
+            ]
+          },
+          "deep-branch-cape": {
+            "components": 3,
+            "placements": 46,
+            "solid_cells": 563,
+            "projected_cells": 4,
+            "native_sizes": [
+              [
+                16,
+                16
+              ],
+              [
+                16,
+                64
+              ],
+              [
+                32,
+                16
+              ],
+              [
+                32,
+                32
+              ],
+              [
+                48,
+                48
+              ],
+              [
+                64,
+                16
+              ],
+              [
+                64,
+                64
+              ],
+              [
+                96,
+                32
+              ],
+              [
+                96,
+                64
+              ]
+            ]
+          }
+        }
+      },
+      {
+        "profile": 23,
+        "report_sha256": "252a416a34de6fd13d2e1393971d2b0afdd519d05067dbe71d7900f1e65ab9ec",
+        "rom_sha256": "68f99c3a73c0c824a0617283890c74798342799f5c81a8eb5ae2fa24ec103e59",
+        "contexts": 7,
+        "movies": 2,
+        "exact_gifs": 2,
+        "observed_video_frames": 272,
+        "minimum_displayed_character_colored_pixels": 37,
+        "minimum_displayed_character_component": 14,
+        "fully_hidden_new_character_frames": 0,
+        "validated_attached_cape_frames": 34,
+        "media_manifest_sha256": "c107fad50bb03d13014b7ed39d1929419ae27e12b728bb4034084094d68dc89a",
+        "planner_cases": {
+          "isolated-small": {
+            "components": 3,
+            "placements": 41,
+            "solid_cells": 461,
+            "projected_cells": 0,
+            "native_sizes": [
+              [
+                16,
+                16
+              ],
+              [
+                16,
+                64
+              ],
+              [
+                32,
+                16
+              ],
+              [
+                32,
+                32
+              ],
+              [
+                48,
+                48
+              ],
+              [
+                64,
+                16
+              ],
+              [
+                64,
+                64
+              ],
+              [
+                96,
+                32
+              ],
+              [
+                96,
+                64
+              ]
+            ]
+          },
+          "narrow-arm": {
+            "components": 8,
+            "placements": 53,
+            "solid_cells": 429,
+            "projected_cells": 0,
+            "native_sizes": [
+              [
+                16,
+                16
+              ],
+              [
+                16,
+                64
+              ],
+              [
+                32,
+                16
+              ],
+              [
+                32,
+                32
+              ],
+              [
+                48,
+                48
+              ],
+              [
+                64,
+                16
+              ],
+              [
+                64,
+                64
+              ],
+              [
+                96,
+                32
+              ],
+              [
+                96,
+                64
+              ]
+            ]
+          },
+          "broad-healthy": {
+            "components": 7,
+            "placements": 59,
+            "solid_cells": 436,
+            "projected_cells": 0,
+            "native_sizes": [
+              [
+                16,
+                16
+              ],
+              [
+                16,
+                64
+              ],
+              [
+                32,
+                16
+              ],
+              [
+                32,
+                32
+              ],
+              [
+                48,
+                48
+              ],
+              [
+                64,
+                16
+              ],
+              [
+                64,
+                64
+              ],
+              [
+                96,
+                32
+              ],
+              [
+                96,
+                64
+              ]
+            ]
+          },
+          "broad-deep": {
+            "components": 3,
+            "placements": 46,
+            "solid_cells": 563,
+            "projected_cells": 4,
+            "native_sizes": [
+              [
+                16,
+                16
+              ],
+              [
+                16,
+                64
+              ],
+              [
+                32,
+                16
+              ],
+              [
+                32,
+                32
+              ],
+              [
+                48,
+                48
+              ],
+              [
+                64,
+                16
+              ],
+              [
+                64,
+                64
+              ],
+              [
+                96,
+                32
+              ],
+              [
+                96,
+                64
+              ]
+            ]
+          },
+          "separated-corner": {
+            "components": 7,
+            "placements": 59,
+            "solid_cells": 436,
+            "projected_cells": 0,
+            "native_sizes": [
+              [
+                16,
+                16
+              ],
+              [
+                16,
+                64
+              ],
+              [
+                32,
+                16
+              ],
+              [
+                32,
+                32
+              ],
+              [
+                48,
+                48
+              ],
+              [
+                64,
+                16
+              ],
+              [
+                64,
+                64
+              ],
+              [
+                96,
+                32
+              ],
+              [
+                96,
+                64
+              ]
+            ]
+          },
+          "deep-branch-walk-roll": {
+            "components": 3,
+            "placements": 46,
+            "solid_cells": 563,
+            "projected_cells": 4,
+            "native_sizes": [
+              [
+                16,
+                16
+              ],
+              [
+                16,
+                64
+              ],
+              [
+                32,
+                16
+              ],
+              [
+                32,
+                32
+              ],
+              [
+                48,
+                48
+              ],
+              [
+                64,
+                16
+              ],
+              [
+                64,
+                64
+              ],
+              [
+                96,
+                32
+              ],
+              [
+                96,
+                64
+              ]
+            ]
+          },
+          "deep-branch-cape": {
+            "components": 3,
+            "placements": 46,
+            "solid_cells": 563,
+            "projected_cells": 4,
+            "native_sizes": [
+              [
+                16,
+                16
+              ],
+              [
+                16,
+                64
+              ],
+              [
+                32,
+                16
+              ],
+              [
+                32,
+                32
+              ],
+              [
+                48,
+                48
+              ],
+              [
+                64,
+                16
+              ],
+              [
+                64,
+                64
+              ],
+              [
+                96,
+                32
+              ],
+              [
+                96,
+                64
+              ]
+            ]
+          }
+        }
+      },
+      {
+        "profile": 24,
+        "report_sha256": "96d72fa5412897e57e2a206a1cbd111d2e46f53dacc2f3d9458daea631f4f038",
+        "rom_sha256": "66a8d99b08d3fc4d55ef55f2148d26938207697c3c5ec1d918938fb9308a9226",
+        "contexts": 7,
+        "movies": 2,
+        "exact_gifs": 2,
+        "observed_video_frames": 272,
+        "minimum_displayed_character_colored_pixels": 42,
+        "minimum_displayed_character_component": 14,
+        "fully_hidden_new_character_frames": 0,
+        "validated_attached_cape_frames": 34,
+        "media_manifest_sha256": "dc045a287eed2ebd3f91ef5e590fb25bad4568d45bd7f52a6c9ad5f2e94b459f",
+        "planner_cases": {
+          "isolated-small": {
+            "components": 3,
+            "placements": 41,
+            "solid_cells": 461,
+            "projected_cells": 0,
+            "native_sizes": [
+              [
+                16,
+                16
+              ],
+              [
+                16,
+                64
+              ],
+              [
+                32,
+                16
+              ],
+              [
+                32,
+                32
+              ],
+              [
+                48,
+                48
+              ],
+              [
+                64,
+                16
+              ],
+              [
+                64,
+                64
+              ],
+              [
+                96,
+                32
+              ],
+              [
+                96,
+                64
+              ]
+            ]
+          },
+          "narrow-arm": {
+            "components": 8,
+            "placements": 53,
+            "solid_cells": 429,
+            "projected_cells": 0,
+            "native_sizes": [
+              [
+                16,
+                16
+              ],
+              [
+                16,
+                64
+              ],
+              [
+                32,
+                16
+              ],
+              [
+                32,
+                32
+              ],
+              [
+                48,
+                48
+              ],
+              [
+                64,
+                16
+              ],
+              [
+                64,
+                64
+              ],
+              [
+                96,
+                32
+              ],
+              [
+                96,
+                64
+              ]
+            ]
+          },
+          "broad-healthy": {
+            "components": 7,
+            "placements": 59,
+            "solid_cells": 436,
+            "projected_cells": 0,
+            "native_sizes": [
+              [
+                16,
+                16
+              ],
+              [
+                16,
+                64
+              ],
+              [
+                32,
+                16
+              ],
+              [
+                32,
+                32
+              ],
+              [
+                48,
+                48
+              ],
+              [
+                64,
+                16
+              ],
+              [
+                64,
+                64
+              ],
+              [
+                96,
+                32
+              ],
+              [
+                96,
+                64
+              ]
+            ]
+          },
+          "broad-deep": {
+            "components": 3,
+            "placements": 46,
+            "solid_cells": 563,
+            "projected_cells": 4,
+            "native_sizes": [
+              [
+                16,
+                16
+              ],
+              [
+                16,
+                64
+              ],
+              [
+                32,
+                16
+              ],
+              [
+                32,
+                32
+              ],
+              [
+                48,
+                48
+              ],
+              [
+                64,
+                16
+              ],
+              [
+                64,
+                64
+              ],
+              [
+                96,
+                32
+              ],
+              [
+                96,
+                64
+              ]
+            ]
+          },
+          "separated-corner": {
+            "components": 7,
+            "placements": 59,
+            "solid_cells": 436,
+            "projected_cells": 0,
+            "native_sizes": [
+              [
+                16,
+                16
+              ],
+              [
+                16,
+                64
+              ],
+              [
+                32,
+                16
+              ],
+              [
+                32,
+                32
+              ],
+              [
+                48,
+                48
+              ],
+              [
+                64,
+                16
+              ],
+              [
+                64,
+                64
+              ],
+              [
+                96,
+                32
+              ],
+              [
+                96,
+                64
+              ]
+            ]
+          },
+          "deep-branch-walk-roll": {
+            "components": 3,
+            "placements": 46,
+            "solid_cells": 563,
+            "projected_cells": 4,
+            "native_sizes": [
+              [
+                16,
+                16
+              ],
+              [
+                16,
+                64
+              ],
+              [
+                32,
+                16
+              ],
+              [
+                32,
+                32
+              ],
+              [
+                48,
+                48
+              ],
+              [
+                64,
+                16
+              ],
+              [
+                64,
+                64
+              ],
+              [
+                96,
+                32
+              ],
+              [
+                96,
+                64
+              ]
+            ]
+          },
+          "deep-branch-cape": {
+            "components": 3,
+            "placements": 46,
+            "solid_cells": 563,
+            "projected_cells": 4,
+            "native_sizes": [
+              [
+                16,
+                16
+              ],
+              [
+                16,
+                64
+              ],
+              [
+                32,
+                16
+              ],
+              [
+                32,
+                32
+              ],
+              [
+                48,
+                48
+              ],
+              [
+                64,
+                16
+              ],
+              [
+                64,
+                64
+              ],
+              [
+                96,
+                32
+              ],
+              [
+                96,
+                64
+              ]
+            ]
+          }
+        }
+      },
+      {
+        "profile": 25,
+        "report_sha256": "ef414aca9c638433b8583a40c3a0c497b6a3d1137bb72f3bf212bcc4e89f43d0",
+        "rom_sha256": "750f173a8504a298114295c0fa5a620a1365aa9e7e9918f3f04916698478980f",
+        "contexts": 7,
+        "movies": 2,
+        "exact_gifs": 2,
+        "observed_video_frames": 272,
+        "minimum_displayed_character_colored_pixels": 37,
+        "minimum_displayed_character_component": 14,
+        "fully_hidden_new_character_frames": 0,
+        "validated_attached_cape_frames": 34,
+        "media_manifest_sha256": "da5d4f034ff0de573846d57d9ed348494ecea54a71581fc58e9273d14018ebb4",
+        "planner_cases": {
+          "isolated-small": {
+            "components": 3,
+            "placements": 41,
+            "solid_cells": 461,
+            "projected_cells": 0,
+            "native_sizes": [
+              [
+                16,
+                16
+              ],
+              [
+                16,
+                64
+              ],
+              [
+                32,
+                16
+              ],
+              [
+                32,
+                32
+              ],
+              [
+                48,
+                48
+              ],
+              [
+                64,
+                16
+              ],
+              [
+                64,
+                64
+              ],
+              [
+                96,
+                32
+              ],
+              [
+                96,
+                64
+              ]
+            ]
+          },
+          "narrow-arm": {
+            "components": 8,
+            "placements": 53,
+            "solid_cells": 429,
+            "projected_cells": 0,
+            "native_sizes": [
+              [
+                16,
+                16
+              ],
+              [
+                16,
+                64
+              ],
+              [
+                32,
+                16
+              ],
+              [
+                32,
+                32
+              ],
+              [
+                48,
+                48
+              ],
+              [
+                64,
+                16
+              ],
+              [
+                64,
+                64
+              ],
+              [
+                96,
+                32
+              ],
+              [
+                96,
+                64
+              ]
+            ]
+          },
+          "broad-healthy": {
+            "components": 7,
+            "placements": 59,
+            "solid_cells": 436,
+            "projected_cells": 0,
+            "native_sizes": [
+              [
+                16,
+                16
+              ],
+              [
+                16,
+                64
+              ],
+              [
+                32,
+                16
+              ],
+              [
+                32,
+                32
+              ],
+              [
+                48,
+                48
+              ],
+              [
+                64,
+                16
+              ],
+              [
+                64,
+                64
+              ],
+              [
+                96,
+                32
+              ],
+              [
+                96,
+                64
+              ]
+            ]
+          },
+          "broad-deep": {
+            "components": 3,
+            "placements": 46,
+            "solid_cells": 563,
+            "projected_cells": 4,
+            "native_sizes": [
+              [
+                16,
+                16
+              ],
+              [
+                16,
+                64
+              ],
+              [
+                32,
+                16
+              ],
+              [
+                32,
+                32
+              ],
+              [
+                48,
+                48
+              ],
+              [
+                64,
+                16
+              ],
+              [
+                64,
+                64
+              ],
+              [
+                96,
+                32
+              ],
+              [
+                96,
+                64
+              ]
+            ]
+          },
+          "separated-corner": {
+            "components": 7,
+            "placements": 59,
+            "solid_cells": 436,
+            "projected_cells": 0,
+            "native_sizes": [
+              [
+                16,
+                16
+              ],
+              [
+                16,
+                64
+              ],
+              [
+                32,
+                16
+              ],
+              [
+                32,
+                32
+              ],
+              [
+                48,
+                48
+              ],
+              [
+                64,
+                16
+              ],
+              [
+                64,
+                64
+              ],
+              [
+                96,
+                32
+              ],
+              [
+                96,
+                64
+              ]
+            ]
+          },
+          "deep-branch-walk-roll": {
+            "components": 3,
+            "placements": 46,
+            "solid_cells": 563,
+            "projected_cells": 4,
+            "native_sizes": [
+              [
+                16,
+                16
+              ],
+              [
+                16,
+                64
+              ],
+              [
+                32,
+                16
+              ],
+              [
+                32,
+                32
+              ],
+              [
+                48,
+                48
+              ],
+              [
+                64,
+                16
+              ],
+              [
+                64,
+                64
+              ],
+              [
+                96,
+                32
+              ],
+              [
+                96,
+                64
+              ]
+            ]
+          },
+          "deep-branch-cape": {
+            "components": 3,
+            "placements": 46,
+            "solid_cells": 563,
+            "projected_cells": 4,
+            "native_sizes": [
+              [
+                16,
+                16
+              ],
+              [
+                16,
+                64
+              ],
+              [
+                32,
+                16
+              ],
+              [
+                32,
+                32
+              ],
+              [
+                48,
+                48
+              ],
+              [
+                64,
+                16
+              ],
+              [
+                64,
+                64
+              ],
+              [
+                96,
+                32
+              ],
+              [
+                96,
+                64
+              ]
+            ]
+          }
+        }
+      },
+      {
+        "profile": 26,
+        "report_sha256": "4103fbfea642330966d4bd1574e9440f3e8e29174fbf9caf23b17850215b6c8c",
+        "rom_sha256": "8f6184789e8bca6c38ff83a8bb8e1df7167da681502eb6d68838dd4a512c0ad8",
+        "contexts": 7,
+        "movies": 2,
+        "exact_gifs": 2,
+        "observed_video_frames": 272,
+        "minimum_displayed_character_colored_pixels": 37,
+        "minimum_displayed_character_component": 14,
+        "fully_hidden_new_character_frames": 0,
+        "validated_attached_cape_frames": 34,
+        "media_manifest_sha256": "39fb72617c9769e157bb85d581c27219e83f19be94572757c1beaf9e3b3d9483",
+        "planner_cases": {
+          "isolated-small": {
+            "components": 3,
+            "placements": 41,
+            "solid_cells": 461,
+            "projected_cells": 0,
+            "native_sizes": [
+              [
+                16,
+                16
+              ],
+              [
+                16,
+                64
+              ],
+              [
+                32,
+                16
+              ],
+              [
+                32,
+                32
+              ],
+              [
+                48,
+                48
+              ],
+              [
+                64,
+                16
+              ],
+              [
+                64,
+                64
+              ],
+              [
+                96,
+                32
+              ],
+              [
+                96,
+                64
+              ]
+            ]
+          },
+          "narrow-arm": {
+            "components": 8,
+            "placements": 53,
+            "solid_cells": 429,
+            "projected_cells": 0,
+            "native_sizes": [
+              [
+                16,
+                16
+              ],
+              [
+                16,
+                64
+              ],
+              [
+                32,
+                16
+              ],
+              [
+                32,
+                32
+              ],
+              [
+                48,
+                48
+              ],
+              [
+                64,
+                16
+              ],
+              [
+                64,
+                64
+              ],
+              [
+                96,
+                32
+              ],
+              [
+                96,
+                64
+              ]
+            ]
+          },
+          "broad-healthy": {
+            "components": 7,
+            "placements": 59,
+            "solid_cells": 436,
+            "projected_cells": 0,
+            "native_sizes": [
+              [
+                16,
+                16
+              ],
+              [
+                16,
+                64
+              ],
+              [
+                32,
+                16
+              ],
+              [
+                32,
+                32
+              ],
+              [
+                48,
+                48
+              ],
+              [
+                64,
+                16
+              ],
+              [
+                64,
+                64
+              ],
+              [
+                96,
+                32
+              ],
+              [
+                96,
+                64
+              ]
+            ]
+          },
+          "broad-deep": {
+            "components": 3,
+            "placements": 46,
+            "solid_cells": 563,
+            "projected_cells": 4,
+            "native_sizes": [
+              [
+                16,
+                16
+              ],
+              [
+                16,
+                64
+              ],
+              [
+                32,
+                16
+              ],
+              [
+                32,
+                32
+              ],
+              [
+                48,
+                48
+              ],
+              [
+                64,
+                16
+              ],
+              [
+                64,
+                64
+              ],
+              [
+                96,
+                32
+              ],
+              [
+                96,
+                64
+              ]
+            ]
+          },
+          "separated-corner": {
+            "components": 7,
+            "placements": 59,
+            "solid_cells": 436,
+            "projected_cells": 0,
+            "native_sizes": [
+              [
+                16,
+                16
+              ],
+              [
+                16,
+                64
+              ],
+              [
+                32,
+                16
+              ],
+              [
+                32,
+                32
+              ],
+              [
+                48,
+                48
+              ],
+              [
+                64,
+                16
+              ],
+              [
+                64,
+                64
+              ],
+              [
+                96,
+                32
+              ],
+              [
+                96,
+                64
+              ]
+            ]
+          },
+          "deep-branch-walk-roll": {
+            "components": 3,
+            "placements": 46,
+            "solid_cells": 563,
+            "projected_cells": 4,
+            "native_sizes": [
+              [
+                16,
+                16
+              ],
+              [
+                16,
+                64
+              ],
+              [
+                32,
+                16
+              ],
+              [
+                32,
+                32
+              ],
+              [
+                48,
+                48
+              ],
+              [
+                64,
+                16
+              ],
+              [
+                64,
+                64
+              ],
+              [
+                96,
+                32
+              ],
+              [
+                96,
+                64
+              ]
+            ]
+          },
+          "deep-branch-cape": {
+            "components": 3,
+            "placements": 46,
+            "solid_cells": 563,
+            "projected_cells": 4,
+            "native_sizes": [
+              [
+                16,
+                16
+              ],
+              [
+                16,
+                64
+              ],
+              [
+                32,
+                16
+              ],
+              [
+                32,
+                32
+              ],
+              [
+                48,
+                48
+              ],
+              [
+                64,
+                16
+              ],
+              [
+                64,
+                64
+              ],
+              [
+                96,
+                32
+              ],
+              [
+                96,
+                64
+              ]
+            ]
+          }
+        }
+      },
+      {
+        "profile": 27,
+        "report_sha256": "ef4d3f6235b0f58ae9a37dd194ed9d8e9c769f0f1f0f94a52c2f166c32db7a05",
+        "rom_sha256": "473ec3ca0bdf37f54b62434b65253a827616b2adcc25df8756997f309f6f4b7b",
+        "contexts": 7,
+        "movies": 2,
+        "exact_gifs": 2,
+        "observed_video_frames": 272,
+        "minimum_displayed_character_colored_pixels": 36,
+        "minimum_displayed_character_component": 14,
+        "fully_hidden_new_character_frames": 0,
+        "validated_attached_cape_frames": 34,
+        "media_manifest_sha256": "99735dd0331417da27fbca08639e74c92ae0b07d958665fc4bf12ddef8abc123",
+        "planner_cases": {
+          "isolated-small": {
+            "components": 3,
+            "placements": 41,
+            "solid_cells": 461,
+            "projected_cells": 0,
+            "native_sizes": [
+              [
+                16,
+                16
+              ],
+              [
+                16,
+                64
+              ],
+              [
+                32,
+                16
+              ],
+              [
+                32,
+                32
+              ],
+              [
+                48,
+                48
+              ],
+              [
+                64,
+                16
+              ],
+              [
+                64,
+                64
+              ],
+              [
+                96,
+                32
+              ],
+              [
+                96,
+                64
+              ]
+            ]
+          },
+          "narrow-arm": {
+            "components": 8,
+            "placements": 53,
+            "solid_cells": 429,
+            "projected_cells": 0,
+            "native_sizes": [
+              [
+                16,
+                16
+              ],
+              [
+                16,
+                64
+              ],
+              [
+                32,
+                16
+              ],
+              [
+                32,
+                32
+              ],
+              [
+                48,
+                48
+              ],
+              [
+                64,
+                16
+              ],
+              [
+                64,
+                64
+              ],
+              [
+                96,
+                32
+              ],
+              [
+                96,
+                64
+              ]
+            ]
+          },
+          "broad-healthy": {
+            "components": 7,
+            "placements": 59,
+            "solid_cells": 436,
+            "projected_cells": 0,
+            "native_sizes": [
+              [
+                16,
+                16
+              ],
+              [
+                16,
+                64
+              ],
+              [
+                32,
+                16
+              ],
+              [
+                32,
+                32
+              ],
+              [
+                48,
+                48
+              ],
+              [
+                64,
+                16
+              ],
+              [
+                64,
+                64
+              ],
+              [
+                96,
+                32
+              ],
+              [
+                96,
+                64
+              ]
+            ]
+          },
+          "broad-deep": {
+            "components": 3,
+            "placements": 46,
+            "solid_cells": 563,
+            "projected_cells": 4,
+            "native_sizes": [
+              [
+                16,
+                16
+              ],
+              [
+                16,
+                64
+              ],
+              [
+                32,
+                16
+              ],
+              [
+                32,
+                32
+              ],
+              [
+                48,
+                48
+              ],
+              [
+                64,
+                16
+              ],
+              [
+                64,
+                64
+              ],
+              [
+                96,
+                32
+              ],
+              [
+                96,
+                64
+              ]
+            ]
+          },
+          "separated-corner": {
+            "components": 7,
+            "placements": 59,
+            "solid_cells": 436,
+            "projected_cells": 0,
+            "native_sizes": [
+              [
+                16,
+                16
+              ],
+              [
+                16,
+                64
+              ],
+              [
+                32,
+                16
+              ],
+              [
+                32,
+                32
+              ],
+              [
+                48,
+                48
+              ],
+              [
+                64,
+                16
+              ],
+              [
+                64,
+                64
+              ],
+              [
+                96,
+                32
+              ],
+              [
+                96,
+                64
+              ]
+            ]
+          },
+          "deep-branch-walk-roll": {
+            "components": 3,
+            "placements": 46,
+            "solid_cells": 563,
+            "projected_cells": 4,
+            "native_sizes": [
+              [
+                16,
+                16
+              ],
+              [
+                16,
+                64
+              ],
+              [
+                32,
+                16
+              ],
+              [
+                32,
+                32
+              ],
+              [
+                48,
+                48
+              ],
+              [
+                64,
+                16
+              ],
+              [
+                64,
+                64
+              ],
+              [
+                96,
+                32
+              ],
+              [
+                96,
+                64
+              ]
+            ]
+          },
+          "deep-branch-cape": {
+            "components": 3,
+            "placements": 46,
+            "solid_cells": 563,
+            "projected_cells": 4,
+            "native_sizes": [
+              [
+                16,
+                16
+              ],
+              [
+                16,
+                64
+              ],
+              [
+                32,
+                16
+              ],
+              [
+                32,
+                32
+              ],
+              [
+                48,
+                48
+              ],
+              [
+                64,
+                16
+              ],
+              [
+                64,
+                64
+              ],
+              [
+                96,
+                32
+              ],
+              [
+                96,
+                64
+              ]
+            ]
+          }
+        }
+      },
+      {
+        "profile": 28,
+        "report_sha256": "1e4f0db56409c1526645b5b444a2a949fb299fbafff9314cdf36eedafb0b32ae",
+        "rom_sha256": "420cc65e9b1139dcadd939715800464728864e7e3cd776ca079d3dcc786f21b3",
+        "contexts": 7,
+        "movies": 2,
+        "exact_gifs": 2,
+        "observed_video_frames": 272,
+        "minimum_displayed_character_colored_pixels": 41,
+        "minimum_displayed_character_component": 14,
+        "fully_hidden_new_character_frames": 0,
+        "validated_attached_cape_frames": 34,
+        "media_manifest_sha256": "badfda5e92d5cc5d43633d76caef3eb3ed0c90d7a52a9dadd571b594e43281c2",
+        "planner_cases": {
+          "isolated-small": {
+            "components": 3,
+            "placements": 41,
+            "solid_cells": 461,
+            "projected_cells": 0,
+            "native_sizes": [
+              [
+                16,
+                16
+              ],
+              [
+                16,
+                64
+              ],
+              [
+                32,
+                16
+              ],
+              [
+                32,
+                32
+              ],
+              [
+                48,
+                48
+              ],
+              [
+                64,
+                16
+              ],
+              [
+                64,
+                64
+              ],
+              [
+                96,
+                32
+              ],
+              [
+                96,
+                64
+              ]
+            ]
+          },
+          "narrow-arm": {
+            "components": 8,
+            "placements": 53,
+            "solid_cells": 429,
+            "projected_cells": 0,
+            "native_sizes": [
+              [
+                16,
+                16
+              ],
+              [
+                16,
+                64
+              ],
+              [
+                32,
+                16
+              ],
+              [
+                32,
+                32
+              ],
+              [
+                48,
+                48
+              ],
+              [
+                64,
+                16
+              ],
+              [
+                64,
+                64
+              ],
+              [
+                96,
+                32
+              ],
+              [
+                96,
+                64
+              ]
+            ]
+          },
+          "broad-healthy": {
+            "components": 7,
+            "placements": 59,
+            "solid_cells": 436,
+            "projected_cells": 0,
+            "native_sizes": [
+              [
+                16,
+                16
+              ],
+              [
+                16,
+                64
+              ],
+              [
+                32,
+                16
+              ],
+              [
+                32,
+                32
+              ],
+              [
+                48,
+                48
+              ],
+              [
+                64,
+                16
+              ],
+              [
+                64,
+                64
+              ],
+              [
+                96,
+                32
+              ],
+              [
+                96,
+                64
+              ]
+            ]
+          },
+          "broad-deep": {
+            "components": 3,
+            "placements": 46,
+            "solid_cells": 563,
+            "projected_cells": 4,
+            "native_sizes": [
+              [
+                16,
+                16
+              ],
+              [
+                16,
+                64
+              ],
+              [
+                32,
+                16
+              ],
+              [
+                32,
+                32
+              ],
+              [
+                48,
+                48
+              ],
+              [
+                64,
+                16
+              ],
+              [
+                64,
+                64
+              ],
+              [
+                96,
+                32
+              ],
+              [
+                96,
+                64
+              ]
+            ]
+          },
+          "separated-corner": {
+            "components": 7,
+            "placements": 59,
+            "solid_cells": 436,
+            "projected_cells": 0,
+            "native_sizes": [
+              [
+                16,
+                16
+              ],
+              [
+                16,
+                64
+              ],
+              [
+                32,
+                16
+              ],
+              [
+                32,
+                32
+              ],
+              [
+                48,
+                48
+              ],
+              [
+                64,
+                16
+              ],
+              [
+                64,
+                64
+              ],
+              [
+                96,
+                32
+              ],
+              [
+                96,
+                64
+              ]
+            ]
+          },
+          "deep-branch-walk-roll": {
+            "components": 3,
+            "placements": 46,
+            "solid_cells": 563,
+            "projected_cells": 4,
+            "native_sizes": [
+              [
+                16,
+                16
+              ],
+              [
+                16,
+                64
+              ],
+              [
+                32,
+                16
+              ],
+              [
+                32,
+                32
+              ],
+              [
+                48,
+                48
+              ],
+              [
+                64,
+                16
+              ],
+              [
+                64,
+                64
+              ],
+              [
+                96,
+                32
+              ],
+              [
+                96,
+                64
+              ]
+            ]
+          },
+          "deep-branch-cape": {
+            "components": 3,
+            "placements": 46,
+            "solid_cells": 563,
+            "projected_cells": 4,
+            "native_sizes": [
+              [
+                16,
+                16
+              ],
+              [
+                16,
+                64
+              ],
+              [
+                32,
+                16
+              ],
+              [
+                32,
+                32
+              ],
+              [
+                48,
+                48
+              ],
+              [
+                64,
+                16
+              ],
+              [
+                64,
+                64
+              ],
+              [
+                96,
+                32
+              ],
+              [
+                96,
+                64
+              ]
+            ]
+          }
+        }
+      }
+    ],
+    "contexts": 79,
+    "movies": 22,
+    "exact_gifs": 22,
+    "observed_video_frames": 3248,
+    "baseline": "Preserved old forest study6, not production0.",
+    "limits": "Finite naturally generated room recordings, not exhaustive animation/world/CPU proof."
+  },
+  "historical_controls": [
+    {
+      "profile": 0,
+      "group": "historical",
+      "name": "whole historical ROM byte-identical",
+      "passed": true,
+      "detail": {
+        "expected_sha256": "9330a44a4e27d99606a757134aa41a62adb122a74315c400e1ad3427048c8661",
+        "actual_sha256": "9330a44a4e27d99606a757134aa41a62adb122a74315c400e1ad3427048c8661"
+      }
+    },
+    {
+      "profile": 1,
+      "group": "historical",
+      "name": "whole historical ROM byte-identical",
+      "passed": true,
+      "detail": {
+        "expected_sha256": "aa1dda5a1fe8bb31982d7f5beaeba7497011badccc34900037ef687cb0bc3067",
+        "actual_sha256": "aa1dda5a1fe8bb31982d7f5beaeba7497011badccc34900037ef687cb0bc3067"
+      }
+    },
+    {
+      "profile": 2,
+      "group": "historical",
+      "name": "whole historical ROM byte-identical",
+      "passed": true,
+      "detail": {
+        "expected_sha256": "50f559ec16aaa2e08bb446349c8a8e122ff5ec6b983cea6b32a0b2d5be3cc515",
+        "actual_sha256": "50f559ec16aaa2e08bb446349c8a8e122ff5ec6b983cea6b32a0b2d5be3cc515"
+      }
+    },
+    {
+      "profile": 3,
+      "group": "historical",
+      "name": "whole historical ROM byte-identical",
+      "passed": true,
+      "detail": {
+        "expected_sha256": "85238cd938ef2778f651bf005eb9655216569d8194f9aefe81cc9e3c70f85673",
+        "actual_sha256": "85238cd938ef2778f651bf005eb9655216569d8194f9aefe81cc9e3c70f85673"
+      }
+    },
+    {
+      "profile": 4,
+      "group": "historical",
+      "name": "whole historical ROM byte-identical",
+      "passed": true,
+      "detail": {
+        "expected_sha256": "411035db3a288fabe0aef2f3cabc21199be324d1445de5c6a8323942cda44214",
+        "actual_sha256": "411035db3a288fabe0aef2f3cabc21199be324d1445de5c6a8323942cda44214"
+      }
+    },
+    {
+      "profile": 5,
+      "group": "historical",
+      "name": "whole historical ROM byte-identical",
+      "passed": true,
+      "detail": {
+        "expected_sha256": "0904dd78511be6df01adb8e49e40064b7a6d95b4c07368e4a0699077d003e8a5",
+        "actual_sha256": "0904dd78511be6df01adb8e49e40064b7a6d95b4c07368e4a0699077d003e8a5"
+      }
+    },
+    {
+      "profile": 6,
+      "group": "historical",
+      "name": "whole historical ROM byte-identical",
+      "passed": true,
+      "detail": {
+        "expected_sha256": "fc8e92f92a4aa43aa5cc56c0caff7a6dc1394f21dc356e7830ef9a7e07f234a1",
+        "actual_sha256": "fc8e92f92a4aa43aa5cc56c0caff7a6dc1394f21dc356e7830ef9a7e07f234a1"
+      }
+    },
+    {
+      "profile": 7,
+      "group": "historical",
+      "name": "whole historical ROM byte-identical",
+      "passed": true,
+      "detail": {
+        "expected_sha256": "3fe6143a9c9de8ccb79248e20b69b199aa462078c92827e71805ebf5826e11df",
+        "actual_sha256": "3fe6143a9c9de8ccb79248e20b69b199aa462078c92827e71805ebf5826e11df"
+      }
+    },
+    {
+      "profile": 8,
+      "group": "historical",
+      "name": "whole historical ROM byte-identical",
+      "passed": true,
+      "detail": {
+        "expected_sha256": "c72c07bf22bd15eaf3898e1fb0a75eabb7b2dc4c85ead74e68ba30a5f181e8f9",
+        "actual_sha256": "c72c07bf22bd15eaf3898e1fb0a75eabb7b2dc4c85ead74e68ba30a5f181e8f9"
+      }
+    },
+    {
+      "profile": 9,
+      "group": "historical",
+      "name": "whole historical ROM byte-identical",
+      "passed": true,
+      "detail": {
+        "expected_sha256": "6e5af6e3ec8e960f2e11cbd485a4c6e8d11f4e6eca202d46f15246cc3cca7538",
+        "actual_sha256": "6e5af6e3ec8e960f2e11cbd485a4c6e8d11f4e6eca202d46f15246cc3cca7538"
+      }
+    },
+    {
+      "profile": 10,
+      "group": "historical",
+      "name": "whole historical ROM byte-identical",
+      "passed": true,
+      "detail": {
+        "expected_sha256": "3876a966293a6cfd68eb39f881dd107b1da4bc14f0b764223712251321784d07",
+        "actual_sha256": "3876a966293a6cfd68eb39f881dd107b1da4bc14f0b764223712251321784d07"
+      }
+    },
+    {
+      "profile": 11,
+      "group": "historical",
+      "name": "whole historical ROM byte-identical",
+      "passed": true,
+      "detail": {
+        "expected_sha256": "1a125213d152e764ad201f87d6097c5d16cc9c8f49ed5837c6a5c6fafd3f940c",
+        "actual_sha256": "1a125213d152e764ad201f87d6097c5d16cc9c8f49ed5837c6a5c6fafd3f940c"
+      }
+    },
+    {
+      "profile": 12,
+      "group": "historical",
+      "name": "whole historical ROM byte-identical",
+      "passed": true,
+      "detail": {
+        "expected_sha256": "b22ee8a09b350e30a7b54aafd8dc24ca688b9c28122333576d83390dcb43bbed",
+        "actual_sha256": "b22ee8a09b350e30a7b54aafd8dc24ca688b9c28122333576d83390dcb43bbed"
+      }
+    },
+    {
+      "profile": 13,
+      "group": "historical",
+      "name": "whole historical ROM byte-identical",
+      "passed": true,
+      "detail": {
+        "expected_sha256": "cb51ca2122dd0ae22796eda6d574662074d7021ce7e42ecaa1dd8e0cd62aee2f",
+        "actual_sha256": "cb51ca2122dd0ae22796eda6d574662074d7021ce7e42ecaa1dd8e0cd62aee2f"
+      }
+    },
+    {
+      "profile": 14,
+      "group": "historical",
+      "name": "whole historical ROM byte-identical",
+      "passed": true,
+      "detail": {
+        "expected_sha256": "a511bfeb34db8d665fcf7fc49a643f1dd7250a4413f26f114baeb4991756bd91",
+        "actual_sha256": "a511bfeb34db8d665fcf7fc49a643f1dd7250a4413f26f114baeb4991756bd91"
+      }
+    },
+    {
+      "profile": 15,
+      "group": "historical",
+      "name": "whole historical ROM byte-identical",
+      "passed": true,
+      "detail": {
+        "expected_sha256": "75706dae8ecd8bee0a7475a5eb5aaa7463cbcb23ccca627859e84b24269300c7",
+        "actual_sha256": "75706dae8ecd8bee0a7475a5eb5aaa7463cbcb23ccca627859e84b24269300c7"
+      }
+    },
+    {
+      "profile": 16,
+      "group": "historical",
+      "name": "whole historical ROM byte-identical",
+      "passed": true,
+      "detail": {
+        "expected_sha256": "4cdd03ae3c2f55d96dece4d0e67d0cd1838e0d3c316ed2bda711df9e2ff9a8e3",
+        "actual_sha256": "4cdd03ae3c2f55d96dece4d0e67d0cd1838e0d3c316ed2bda711df9e2ff9a8e3"
+      }
+    },
+    {
+      "profile": 17,
+      "group": "historical",
+      "name": "whole historical ROM byte-identical",
+      "passed": true,
+      "detail": {
+        "expected_sha256": "4dda2734fd2f4934b08c14aa5cbb7a9854f8fecca237d7677ebcf74bfb5ee2b3",
+        "actual_sha256": "4dda2734fd2f4934b08c14aa5cbb7a9854f8fecca237d7677ebcf74bfb5ee2b3"
+      }
+    },
+    {
+      "profile": 18,
+      "group": "historical",
+      "name": "whole historical ROM byte-identical",
+      "passed": true,
+      "detail": {
+        "expected_sha256": "54768ae3f4462743dabd72e03ddd3c9f711ad4ebff2e09474bd3bd85d427e4af",
+        "actual_sha256": "54768ae3f4462743dabd72e03ddd3c9f711ad4ebff2e09474bd3bd85d427e4af"
+      }
+    }
+  ],
+  "passed": 12823,
+  "total": 12824,
+  "failures": [
+    {
+      "profile": 19,
+      "group": "runtime_cadence",
+      "name": "deep-branch-menu-resume strict observed update cadence matches old6",
+      "passed": false
+    }
+  ],
+  "checks_by_group": {
+    "scope": 619,
+    "provenance": 1370,
+    "native_palette": 30,
+    "budget": 50,
+    "native": 30,
+    "prefabs": 110,
+    "palette": 30,
+    "visibility_metadata": 4010,
+    "obj_budget": 30,
+    "historical": 19,
+    "source_provenance": 78,
+    "source_files": 554,
+    "source_coverage": 10,
+    "source_native": 420,
+    "source_panels": 310,
+    "source_palette": 160,
+    "source_gif": 10,
+    "runtime_provenance": 242,
+    "runtime_coverage": 11,
+    "runtime_fixture": 79,
+    "runtime_semantics": 158,
+    "runtime_cadence": 79,
+    "runtime_hardware": 158,
+    "runtime_media": 202,
+    "runtime_cape": 374,
+    "planner": 304,
+    "approaches": 568,
+    "runtime_visibility": 2809
+  },
+  "aesthetic_verdict": "Not established by this technical audit. See independent actual-room critique.",
+  "limits": "No unchanged generator corpus rerun; finite actual observations; source green percentages are not screen quotas."
+}

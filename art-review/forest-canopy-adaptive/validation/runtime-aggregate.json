@@ -1,0 +1,131 @@
+{
+  "source_commit": "c6dc060043aa6d0d5e2eb43d4d09e97ddf77450a",
+  "capture_tool_sha256": "b6c73aade2947ac584df55869bf03f94473318e63e62532e4b95b8f1d77ab9ab",
+  "selection_plan_sha256": "d37d3507d5f3019707254de534f1503118f309eaf5680776f66c25624f806e60",
+  "variants": [
+    6,
+    19,
+    20,
+    21,
+    22,
+    23,
+    24,
+    25,
+    26,
+    27,
+    28
+  ],
+  "contexts": 79,
+  "checks_passed": 1961,
+  "checks_total": 1961,
+  "observed_video_frames": 3248,
+  "movies": 22,
+  "gifs": 22,
+  "minimum_new_visible_body_pixels": 36,
+  "minimum_new_connected_body_component": 14,
+  "minimum_new_displayed_character_pixels": 36,
+  "minimum_new_displayed_character_component": 14,
+  "non_menu_zero_update_video_intervals": 0,
+  "reports": [
+    {
+      "variant": 6,
+      "path": "/workspace/setup/forest-canopy-adaptive/runtime/v6/capture.json",
+      "sha256": "3972384d155def9766b6e1d860264d0136f27b24a41589dfcfd348b5d565b63f",
+      "rom_sha256": "fc8e92f92a4aa43aa5cc56c0caff7a6dc1394f21dc356e7830ef9a7e07f234a1",
+      "contexts": 8,
+      "passed": 115,
+      "total": 115
+    },
+    {
+      "variant": 19,
+      "path": "/workspace/setup/forest-canopy-adaptive/runtime/v19/capture.json",
+      "sha256": "783cb3e6e8005eae3dc6595e62c7bff3cef1cd8262cafb9e9172b4b2eafb5f1a",
+      "rom_sha256": "09aa5274a91618c5a06a74bd7ba61bebc6ebb71d738aeb48de86f8b91930c3b7",
+      "contexts": 8,
+      "passed": 208,
+      "total": 208
+    },
+    {
+      "variant": 20,
+      "path": "/workspace/setup/forest-canopy-adaptive/runtime/v20/capture.json",
+      "sha256": "bcac43a81b4ecfdd1f4fd9a0c7fd264274238d8da906aa50b0c306eb5777a6cd",
+      "rom_sha256": "44cecd939239adc4f62130366372b72ae4044fc390c6ff887aa7eb334791eb47",
+      "contexts": 7,
+      "passed": 182,
+      "total": 182
+    },
+    {
+      "variant": 21,
+      "path": "/workspace/setup/forest-canopy-adaptive/runtime/v21/capture.json",
+      "sha256": "e007f1f3cc59e4cbec55f97f4129c424aed0018409c509bd94da0547d3f0922b",
+      "rom_sha256": "4afbe064f60a8f7741f132ea1c3562199dad5574938a46833dc6a3a1324e95e5",
+      "contexts": 7,
+      "passed": 182,
+      "total": 182
+    },
+    {
+      "variant": 22,
+      "path": "/workspace/setup/forest-canopy-adaptive/runtime/v22/capture.json",
+      "sha256": "90252be55ecdcd6f451afba36d9ce18615982b30ab479c99ece33e88d9149612",
+      "rom_sha256": "0e058c31efb7182646112ab79a2d21a8e4c6530c0fa9b7406619fe54cc62e345",
+      "contexts": 7,
+      "passed": 182,
+      "total": 182
+    },
+    {
+      "variant": 23,
+      "path": "/workspace/setup/forest-canopy-adaptive/runtime/v23/capture.json",
+      "sha256": "252a416a34de6fd13d2e1393971d2b0afdd519d05067dbe71d7900f1e65ab9ec",
+      "rom_sha256": "68f99c3a73c0c824a0617283890c74798342799f5c81a8eb5ae2fa24ec103e59",
+      "contexts": 7,
+      "passed": 182,
+      "total": 182
+    },
+    {
+      "variant": 24,
+      "path": "/workspace/setup/forest-canopy-adaptive/runtime/v24/capture.json",
+      "sha256": "96d72fa5412897e57e2a206a1cbd111d2e46f53dacc2f3d9458daea631f4f038",
+      "rom_sha256": "66a8d99b08d3fc4d55ef55f2148d26938207697c3c5ec1d918938fb9308a9226",
+      "contexts": 7,
+      "passed": 182,
+      "total": 182
+    },
+    {
+      "variant": 25,
+      "path": "/workspace/setup/forest-canopy-adaptive/runtime/v25/capture.json",
+      "sha256": "ef414aca9c638433b8583a40c3a0c497b6a3d1137bb72f3bf212bcc4e89f43d0",
+      "rom_sha256": "750f173a8504a298114295c0fa5a620a1365aa9e7e9918f3f04916698478980f",
+      "contexts": 7,
+      "passed": 182,
+      "total": 182
+    },
+    {
+      "variant": 26,
+      "path": "/workspace/setup/forest-canopy-adaptive/runtime/v26/capture.json",
+      "sha256": "4103fbfea642330966d4bd1574e9440f3e8e29174fbf9caf23b17850215b6c8c",
+      "rom_sha256": "8f6184789e8bca6c38ff83a8bb8e1df7167da681502eb6d68838dd4a512c0ad8",
+      "contexts": 7,
+      "passed": 182,
+      "total": 182
+    },
+    {
+      "variant": 27,
+      "path": "/workspace/setup/forest-canopy-adaptive/runtime/v27/capture.json",
+      "sha256": "ef4d3f6235b0f58ae9a37dd194ed9d8e9c769f0f1f0f94a52c2f166c32db7a05",
+      "rom_sha256": "473ec3ca0bdf37f54b62434b65253a827616b2adcc25df8756997f309f6f4b7b",
+      "contexts": 7,
+      "passed": 182,
+      "total": 182
+    },
+    {
+      "variant": 28,
+      "path": "/workspace/setup/forest-canopy-adaptive/runtime/v28/capture.json",
+      "sha256": "1e4f0db56409c1526645b5b444a2a949fb299fbafff9314cdf36eedafb0b32ae",
+      "rom_sha256": "420cc65e9b1139dcadd939715800464728864e7e3cd776ca079d3dcc786f21b3",
+      "contexts": 7,
+      "passed": 182,
+      "total": 182
+    }
+  ],
+  "note": "Five generated geometry views and two ordinary-input motion clips per profile. One additional focused menu/cache round trip in old6 and19 only. Exact reports stay unchanged; raw movie frames are local."
+}

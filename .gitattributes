@@ -6,3 +6,9 @@
 /art-review/forest-concepts-v2/actual/variant-0[1-5]/critical-path/run.log -whitespace
 /art-review/forest-canopy-v3/validation/frozen/v6/bartgame.map -whitespace
 /art-review/forest-canopy-v3/validation/frozen/v1[1-8]/bartgame.map -whitespace
+
+
+# Preserve exact adaptive-study linker maps.
+/art-review/forest-canopy-adaptive/validation/frozen/v6/bartgame.map -whitespace
+/art-review/forest-canopy-adaptive/validation/frozen/v19/bartgame.map -whitespace
+/art-review/forest-canopy-adaptive/validation/frozen/v2[0-8]/bartgame.map -whitespace

@@ -1,0 +1,602 @@
+{
+  "style": 3,
+  "entries": [
+    {
+      "name": "small",
+      "role": "small",
+      "variation": 0,
+      "w": 16,
+      "h": 16,
+      "size": [
+        16,
+        16
+      ],
+      "footprint": [
+        1,
+        1
+      ],
+      "palette": "canopy_adaptive",
+      "layer": "blocked_canopy",
+      "anchor": [
+        8,
+        15
+      ],
+      "category": "resident_prefab",
+      "index_sha256": "fbd4b7c5330bc044ea3efdf1649be73588fdf8942c750d3aae5ce00f0a0b070b",
+      "painted_bounds": [
+        0,
+        0,
+        16,
+        16
+      ],
+      "painted_pixels": 188,
+      "owner": "forest_canopy_adaptive",
+      "native_indexed": "native/small-v0-indexed.png",
+      "native_healthy": "native/small-v0-stage0.png",
+      "native_deep": "native/small-v0-stage3.png",
+      "catalog_native_rect": [
+        6,
+        101,
+        16,
+        16
+      ],
+      "catalog_inspection_rect": [
+        124,
+        101,
+        32,
+        32
+      ]
+    },
+    {
+      "name": "clump",
+      "role": "clump",
+      "variation": 0,
+      "w": 32,
+      "h": 32,
+      "size": [
+        32,
+        32
+      ],
+      "footprint": [
+        2,
+        2
+      ],
+      "palette": "canopy_adaptive",
+      "layer": "blocked_canopy",
+      "anchor": [
+        16,
+        31
+      ],
+      "category": "resident_prefab",
+      "index_sha256": "9a67e518a6a413cf959ee02ee4cfc4585504a80679d244cd60f5555526e61c03",
+      "painted_bounds": [
+        0,
+        0,
+        31,
+        32
+      ],
+      "painted_pixels": 857,
+      "owner": "forest_canopy_adaptive",
+      "native_indexed": "native/clump-v0-indexed.png",
+      "native_healthy": "native/clump-v0-stage0.png",
+      "native_deep": "native/clump-v0-stage3.png",
+      "catalog_native_rect": [
+        336,
+        101,
+        32,
+        32
+      ],
+      "catalog_inspection_rect": [
+        454,
+        101,
+        64,
+        64
+      ]
+    },
+    {
+      "name": "tree",
+      "role": "tree",
+      "variation": 0,
+      "w": 48,
+      "h": 48,
+      "size": [
+        48,
+        48
+      ],
+      "footprint": [
+        3,
+        3
+      ],
+      "palette": "canopy_adaptive",
+      "layer": "blocked_canopy",
+      "anchor": [
+        24,
+        47
+      ],
+      "category": "resident_prefab",
+      "index_sha256": "c95aa7c7569009cbc7fc796d39521805b35bb202c65dc84027ad245db63370c3",
+      "painted_bounds": [
+        1,
+        0,
+        47,
+        48
+      ],
+      "painted_pixels": 1968,
+      "owner": "forest_canopy_adaptive",
+      "native_indexed": "native/tree-v0-indexed.png",
+      "native_healthy": "native/tree-v0-stage0.png",
+      "native_deep": "native/tree-v0-stage3.png",
+      "catalog_native_rect": [
+        666,
+        101,
+        48,
+        48
+      ],
+      "catalog_inspection_rect": [
+        784,
+        101,
+        96,
+        96
+      ]
+    },
+    {
+      "name": "grove",
+      "role": "grove",
+      "variation": 0,
+      "w": 64,
+      "h": 64,
+      "size": [
+        64,
+        64
+      ],
+      "footprint": [
+        4,
+        4
+      ],
+      "palette": "canopy_adaptive",
+      "layer": "blocked_canopy",
+      "anchor": [
+        32,
+        63
+      ],
+      "category": "resident_prefab",
+      "index_sha256": "6f36b3d1d0918525a3938fec7460f3c2ac395a80212222f4a9a4a2e4d07dedab",
+      "painted_bounds": [
+        1,
+        0,
+        63,
+        64
+      ],
+      "painted_pixels": 3629,
+      "owner": "forest_canopy_adaptive",
+      "native_indexed": "native/grove-v0-indexed.png",
+      "native_healthy": "native/grove-v0-stage0.png",
+      "native_deep": "native/grove-v0-stage3.png",
+      "catalog_native_rect": [
+        6,
+        305,
+        64,
+        64
+      ],
+      "catalog_inspection_rect": [
+        124,
+        305,
+        128,
+        128
+      ]
+    },
+    {
+      "name": "hero",
+      "role": "hero",
+      "variation": 0,
+      "w": 96,
+      "h": 64,
+      "size": [
+        96,
+        64
+      ],
+      "footprint": [
+        6,
+        4
+      ],
+      "palette": "canopy_adaptive",
+      "layer": "blocked_canopy",
+      "anchor": [
+        48,
+        63
+      ],
+      "category": "resident_prefab",
+      "index_sha256": "bc88ffe218cd5c2f75b79679bb81c40ec8807694c5c2f5d172ec4534d27d4657",
+      "painted_bounds": [
+        1,
+        0,
+        95,
+        64
+      ],
+      "painted_pixels": 5572,
+      "owner": "forest_canopy_adaptive",
+      "native_indexed": "native/hero-v0-indexed.png",
+      "native_healthy": "native/hero-v0-stage0.png",
+      "native_deep": "native/hero-v0-stage3.png",
+      "catalog_native_rect": [
+        336,
+        305,
+        96,
+        64
+      ],
+      "catalog_inspection_rect": [
+        454,
+        305,
+        192,
+        128
+      ]
+    },
+    {
+      "name": "branch",
+      "role": "branch",
+      "variation": 0,
+      "w": 64,
+      "h": 16,
+      "size": [
+        64,
+        16
+      ],
+      "footprint": [
+        4,
+        1
+      ],
+      "palette": "canopy_adaptive",
+      "layer": "projection",
+      "anchor": [
+        32,
+        15
+      ],
+      "category": "resident_prefab",
+      "index_sha256": "5c11c81595685a588a23341ef28fd34f644b529fc45dc9a216712cec3ec5f03d",
+      "painted_bounds": [
+        0,
+        0,
+        64,
+        16
+      ],
+      "painted_pixels": 616,
+      "owner": "forest_canopy_adaptive",
+      "native_indexed": "native/branch-v0-indexed.png",
+      "native_healthy": "native/branch-v0-stage0.png",
+      "native_deep": "native/branch-v0-stage3.png",
+      "catalog_native_rect": [
+        666,
+        305,
+        64,
+        16
+      ],
+      "catalog_inspection_rect": [
+        784,
+        305,
+        128,
+        32
+      ]
+    },
+    {
+      "name": "roots",
+      "role": "roots",
+      "variation": 0,
+      "w": 32,
+      "h": 16,
+      "size": [
+        32,
+        16
+      ],
+      "footprint": [
+        2,
+        1
+      ],
+      "palette": "canopy_adaptive",
+      "layer": "blocked_canopy",
+      "anchor": [
+        16,
+        15
+      ],
+      "category": "resident_prefab",
+      "index_sha256": "3b54dca1f50bc8d9d7e4f22433945b34fd0aeb21ee43294871e8a4131d7efb39",
+      "painted_bounds": [
+        0,
+        0,
+        32,
+        16
+      ],
+      "painted_pixels": 352,
+      "owner": "forest_canopy_adaptive",
+      "native_indexed": "native/roots-v0-indexed.png",
+      "native_healthy": "native/roots-v0-stage0.png",
+      "native_deep": "native/roots-v0-stage3.png",
+      "catalog_native_rect": [
+        6,
+        509,
+        32,
+        16
+      ],
+      "catalog_inspection_rect": [
+        124,
+        509,
+        64,
+        32
+      ]
+    },
+    {
+      "name": "border",
+      "role": "border",
+      "variation": 0,
+      "w": 96,
+      "h": 32,
+      "size": [
+        96,
+        32
+      ],
+      "footprint": [
+        6,
+        2
+      ],
+      "palette": "canopy_adaptive",
+      "layer": "blocked_canopy",
+      "anchor": [
+        48,
+        31
+      ],
+      "category": "resident_prefab",
+      "index_sha256": "d52fc6ff62222471668e23d9b337555371c282312c86de4523af47ad22aad14c",
+      "painted_bounds": [
+        0,
+        0,
+        96,
+        32
+      ],
+      "painted_pixels": 2661,
+      "owner": "forest_canopy_adaptive",
+      "native_indexed": "native/border-v0-indexed.png",
+      "native_healthy": "native/border-v0-stage0.png",
+      "native_deep": "native/border-v0-stage3.png",
+      "catalog_native_rect": [
+        336,
+        509,
+        96,
+        32
+      ],
+      "catalog_inspection_rect": [
+        454,
+        509,
+        192,
+        64
+      ]
+    },
+    {
+      "name": "column",
+      "role": "column",
+      "variation": 0,
+      "w": 16,
+      "h": 64,
+      "size": [
+        16,
+        64
+      ],
+      "footprint": [
+        1,
+        4
+      ],
+      "palette": "canopy_adaptive",
+      "layer": "blocked_canopy",
+      "anchor": [
+        8,
+        63
+      ],
+      "category": "resident_prefab",
+      "index_sha256": "f30314e30946085f6e9a5d8a809b2d3939ccf5ec74d07691319708cc8206e202",
+      "painted_bounds": [
+        0,
+        1,
+        16,
+        64
+      ],
+      "painted_pixels": 813,
+      "owner": "forest_canopy_adaptive",
+      "native_indexed": "native/column-v0-indexed.png",
+      "native_healthy": "native/column-v0-stage0.png",
+      "native_deep": "native/column-v0-stage3.png",
+      "catalog_native_rect": [
+        666,
+        509,
+        16,
+        64
+      ],
+      "catalog_inspection_rect": [
+        784,
+        509,
+        32,
+        128
+      ]
+    },
+    {
+      "name": "authored-small-a",
+      "role": "authored-small-a",
+      "variation": 0,
+      "category": "authored_tree_group",
+      "size": [
+        32,
+        48
+      ],
+      "palette": "canopy_adaptive",
+      "layer": "Existing grouped-tree canvas; physical footprint is unchanged",
+      "index_sha256": "4247cd6e9727ea65ffec01b3ecb65508b295cdc5aa1ef98da1cb7c5330ac892f",
+      "painted_bounds": [
+        0,
+        0,
+        31,
+        48
+      ],
+      "painted_pixels": 1102,
+      "owner": "forest_canopy_adaptive",
+      "native_indexed": "native/authored-small-a-v0-indexed.png",
+      "native_healthy": "native/authored-small-a-v0-stage0.png",
+      "native_deep": "native/authored-small-a-v0-stage3.png",
+      "catalog_native_rect": [
+        6,
+        713,
+        32,
+        48
+      ],
+      "catalog_inspection_rect": [
+        124,
+        713,
+        64,
+        96
+      ]
+    },
+    {
+      "name": "authored-small-b",
+      "role": "authored-small-b",
+      "variation": 0,
+      "category": "authored_tree_group",
+      "size": [
+        32,
+        48
+      ],
+      "palette": "canopy_adaptive",
+      "layer": "Existing grouped-tree canvas; physical footprint is unchanged",
+      "index_sha256": "4247cd6e9727ea65ffec01b3ecb65508b295cdc5aa1ef98da1cb7c5330ac892f",
+      "painted_bounds": [
+        0,
+        0,
+        31,
+        48
+      ],
+      "painted_pixels": 1102,
+      "owner": "forest_canopy_adaptive",
+      "native_indexed": "native/authored-small-b-v0-indexed.png",
+      "native_healthy": "native/authored-small-b-v0-stage0.png",
+      "native_deep": "native/authored-small-b-v0-stage3.png",
+      "catalog_native_rect": [
+        336,
+        713,
+        32,
+        48
+      ],
+      "catalog_inspection_rect": [
+        454,
+        713,
+        64,
+        96
+      ]
+    },
+    {
+      "name": "authored-large-a",
+      "role": "authored-large-a",
+      "variation": 0,
+      "category": "authored_tree_group",
+      "size": [
+        48,
+        64
+      ],
+      "palette": "canopy_adaptive",
+      "layer": "Existing grouped-tree canvas; physical footprint is unchanged",
+      "index_sha256": "4f74ff4ad2cf331a44ba0b4ec20908182dcadf7b5305280f18d2bf1b69ceb57e",
+      "painted_bounds": [
+        1,
+        0,
+        47,
+        64
+      ],
+      "painted_pixels": 1771,
+      "owner": "forest_canopy_adaptive",
+      "native_indexed": "native/authored-large-a-v0-indexed.png",
+      "native_healthy": "native/authored-large-a-v0-stage0.png",
+      "native_deep": "native/authored-large-a-v0-stage3.png",
+      "catalog_native_rect": [
+        666,
+        713,
+        48,
+        64
+      ],
+      "catalog_inspection_rect": [
+        784,
+        713,
+        96,
+        128
+      ]
+    },
+    {
+      "name": "authored-large-b",
+      "role": "authored-large-b",
+      "variation": 0,
+      "category": "authored_tree_group",
+      "size": [
+        48,
+        64
+      ],
+      "palette": "canopy_adaptive",
+      "layer": "Existing grouped-tree canvas; physical footprint is unchanged",
+      "index_sha256": "4f74ff4ad2cf331a44ba0b4ec20908182dcadf7b5305280f18d2bf1b69ceb57e",
+      "painted_bounds": [
+        1,
+        0,
+        47,
+        64
+      ],
+      "painted_pixels": 1771,
+      "owner": "forest_canopy_adaptive",
+      "native_indexed": "native/authored-large-b-v0-indexed.png",
+      "native_healthy": "native/authored-large-b-v0-stage0.png",
+      "native_deep": "native/authored-large-b-v0-stage3.png",
+      "catalog_native_rect": [
+        6,
+        917,
+        48,
+        64
+      ],
+      "catalog_inspection_rect": [
+        124,
+        917,
+        96,
+        128
+      ]
+    },
+    {
+      "name": "branch-solid",
+      "role": "branch-solid",
+      "variation": 0,
+      "category": "resident_special_map",
+      "planner_role": "branch",
+      "placement_flags": 0,
+      "size": [
+        64,
+        16
+      ],
+      "palette": "canopy_adaptive",
+      "layer": "Blocked narrow arm; separate from the open projected branch",
+      "index_sha256": "6e9085dad3a28800752e87d6b99cae3426944e8c39b5194a3d966c97ca1fabbc",
+      "painted_bounds": [
+        0,
+        0,
+        64,
+        16
+      ],
+      "painted_pixels": 786,
+      "owner": "forest_canopy_adaptive",
+      "native_indexed": "native/branch-solid-v0-indexed.png",
+      "native_healthy": "native/branch-solid-v0-stage0.png",
+      "native_deep": "native/branch-solid-v0-stage3.png",
+      "catalog_native_rect": [
+        336,
+        917,
+        64,
+        16
+      ],
+      "catalog_inspection_rect": [
+        454,
+        917,
+        128,
+        32
+      ]
+    }
+  ],
+  "footprint_note": "Prefab footprint is a placement extent in metatiles, not a newly invented collider. The room plan owns collision and permitted overhang."
+}

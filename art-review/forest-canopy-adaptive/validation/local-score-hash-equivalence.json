@@ -1,0 +1,8 @@
+{
+  "passed": true,
+  "comparisons": 1000000,
+  "method": "Compile the actual shared util.c hash32 and actual local score_hash source bodies as unsigned32 C, compare one million deterministic input pairs.",
+  "result": "1000000 exact native C hash comparisons passed",
+  "shared_body_sha256": "8626c3301b078159a847fbf7f94c689773567aa694d82811c16d448038972f29",
+  "local_body_sha256": "f6f15ad7c1bdb298460cad7695944e07b5a1bfcd3255366dfad68db6eeef9d1e"
+}

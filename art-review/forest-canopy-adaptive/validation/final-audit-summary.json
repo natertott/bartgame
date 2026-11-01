@@ -1,0 +1,55 @@
+{
+  "classification": "Reviewable unselected studies with one accepted, explicitly retained timing difference; not an all-pass independent audit.",
+  "source_commit": "c6dc060043aa6d0d5e2eb43d4d09e97ddf77450a",
+  "auditor_sha256": "eca43b407525dade427cd0888307d01ffe863ff7f2bf4b71a680345cb5d5318b",
+  "report_sha256": "10150dfc57de35f5ccb0a7456eec96e8439e4e9aa63418bc2eaabf91ecb4684f",
+  "passed": 12823,
+  "total": 12824,
+  "failures": [
+    {
+      "profile": 19,
+      "group": "runtime_cadence",
+      "name": "deep-branch-menu-resume strict observed update cadence matches old6",
+      "passed": false
+    }
+  ],
+  "accepted_performance_difference": {
+    "case": "deep-branch-menu-resume",
+    "old6_world_handoff_tick": 47,
+    "new19_world_handoff_tick": 50,
+    "additional_video_frames": 3,
+    "additional_seconds": 0.050228118896484375,
+    "recorded_PLAY_interval_irq_update_deltas": [
+      1,
+      1
+    ],
+    "zero_update_intervals_each": [
+      8,
+      9,
+      10
+    ],
+    "assertion_preserved": true,
+    "raw_capture_reports_unchanged": true
+  },
+  "new_styles": 10,
+  "source_native_images": 140,
+  "source_hashed_files": 554,
+  "contexts": 79,
+  "movies": 22,
+  "exact_gifs": 22,
+  "observed_video_frames": 3248,
+  "minimum_new_displayed_character_colored_pixels": 36,
+  "minimum_new_displayed_character_component": 14,
+  "fully_hidden_new_character_frames": 0,
+  "historical0_through18_roms_byte_identical": true,
+  "generation_source_unchanged": true,
+  "load_latency_finite_case": {
+    "old6_video_frames": 28,
+    "original_adaptive19_video_frames": 108,
+    "intermediate_adaptive19_video_frames": 54,
+    "final_adaptive19_video_frames": 47,
+    "additional_final_seconds": 0.3181114196777344,
+    "same_five_scene_maps_plans_masks": true
+  },
+  "limits": "No unchanged generator corpus rerun; finite actual observations; source green percentages are not screen quotas."
+}

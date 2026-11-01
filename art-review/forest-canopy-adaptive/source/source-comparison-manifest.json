@@ -1,0 +1,264 @@
+{
+  "hero_panels": [
+    {
+      "style": 1,
+      "role": "hero",
+      "stage": 0,
+      "rect": [
+        5,
+        90,
+        96,
+        64
+      ],
+      "scale": 1,
+      "rgba_sha256": "da4bc5e873dfeee993de70ccd77e5cdef92bf27851d5ab18fc95e6ae51738e52"
+    },
+    {
+      "style": 1,
+      "role": "hero",
+      "stage": 3,
+      "rect": [
+        113,
+        90,
+        96,
+        64
+      ],
+      "scale": 1,
+      "rgba_sha256": "9f9203e292c13b8e2777d162331a96b0295f21a250df647bf9a36a12923300d8"
+    },
+    {
+      "style": 2,
+      "role": "hero",
+      "stage": 0,
+      "rect": [
+        431,
+        90,
+        96,
+        64
+      ],
+      "scale": 1,
+      "rgba_sha256": "43832c9c9885e2137f5ed97cbb79b5d9b5153b1ced83f1079a2148a619430a57"
+    },
+    {
+      "style": 2,
+      "role": "hero",
+      "stage": 3,
+      "rect": [
+        539,
+        90,
+        96,
+        64
+      ],
+      "scale": 1,
+      "rgba_sha256": "b6baf8c4266d41a73b547e7a99d9902f9901a0b42bb530ad3d23665cc2e7c4b3"
+    },
+    {
+      "style": 3,
+      "role": "hero",
+      "stage": 0,
+      "rect": [
+        5,
+        286,
+        96,
+        64
+      ],
+      "scale": 1,
+      "rgba_sha256": "012d80ec8646c304dd5b87ca58f55d12f2c2070b40276edcd61f780bf76484f8"
+    },
+    {
+      "style": 3,
+      "role": "hero",
+      "stage": 3,
+      "rect": [
+        113,
+        286,
+        96,
+        64
+      ],
+      "scale": 1,
+      "rgba_sha256": "fdd098a978c684803bdcdcf3f2daf0b4ea8882a8968ffd9364ae24794af7e466"
+    },
+    {
+      "style": 4,
+      "role": "hero",
+      "stage": 0,
+      "rect": [
+        431,
+        286,
+        96,
+        64
+      ],
+      "scale": 1,
+      "rgba_sha256": "bff22d83ff9a21e403b01312364dba005b61c3e9452059d52e231fa0caa991e9"
+    },
+    {
+      "style": 4,
+      "role": "hero",
+      "stage": 3,
+      "rect": [
+        539,
+        286,
+        96,
+        64
+      ],
+      "scale": 1,
+      "rgba_sha256": "e38e2d2e71eb70a748379d92d4f2c03ec17775d26f9c8a4f22e066bc56d5c4b0"
+    },
+    {
+      "style": 5,
+      "role": "hero",
+      "stage": 0,
+      "rect": [
+        5,
+        482,
+        96,
+        64
+      ],
+      "scale": 1,
+      "rgba_sha256": "b2f366c565eb0fa47923865d6b2cd6a0ca7bee0e598a3b54c459cf6dcd46678e"
+    },
+    {
+      "style": 5,
+      "role": "hero",
+      "stage": 3,
+      "rect": [
+        113,
+        482,
+        96,
+        64
+      ],
+      "scale": 1,
+      "rgba_sha256": "f1f632fc8dc1f8be26d505ba7895c69f3aa8836195bc4170fdc8ed3ed407240c"
+    },
+    {
+      "style": 6,
+      "role": "hero",
+      "stage": 0,
+      "rect": [
+        431,
+        482,
+        96,
+        64
+      ],
+      "scale": 1,
+      "rgba_sha256": "3f9fdd0adc361a920a89e2fc7d2c9e91fe88c35bf13e3161a525d53e6c083b37"
+    },
+    {
+      "style": 6,
+      "role": "hero",
+      "stage": 3,
+      "rect": [
+        539,
+        482,
+        96,
+        64
+      ],
+      "scale": 1,
+      "rgba_sha256": "0720aa2e5139be031422eaa4b4612dd967962f8c722a1590a87ec7b6fdad79f8"
+    },
+    {
+      "style": 7,
+      "role": "hero",
+      "stage": 0,
+      "rect": [
+        5,
+        678,
+        96,
+        64
+      ],
+      "scale": 1,
+      "rgba_sha256": "ebf6a98f78b0212dc0fc9aad0bcbd0b032b1212adc2c672ab6e6f72e017870c1"
+    },
+    {
+      "style": 7,
+      "role": "hero",
+      "stage": 3,
+      "rect": [
+        113,
+        678,
+        96,
+        64
+      ],
+      "scale": 1,
+      "rgba_sha256": "b6be16b680ddfd5bbcaa0ed8e2e9e6bb77a7a01e1ae975ea05faed72f9b43f7b"
+    },
+    {
+      "style": 8,
+      "role": "hero",
+      "stage": 0,
+      "rect": [
+        431,
+        678,
+        96,
+        64
+      ],
+      "scale": 1,
+      "rgba_sha256": "8c4b8a9a1aebeadbf9bbd4b4ba7fdebabb11c931bbd34f24aecd1c599ec50d09"
+    },
+    {
+      "style": 8,
+      "role": "hero",
+      "stage": 3,
+      "rect": [
+        539,
+        678,
+        96,
+        64
+      ],
+      "scale": 1,
+      "rgba_sha256": "079f06641ea9a0ad91304aff813119640d9d36cbfb1b3a866615710fac4dfc15"
+    },
+    {
+      "style": 9,
+      "role": "hero",
+      "stage": 0,
+      "rect": [
+        5,
+        874,
+        96,
+        64
+      ],
+      "scale": 1,
+      "rgba_sha256": "c21f7ce63344b39fdda7dc51ba431a3c50e2c07b3f82e3168261266b4081faff"
+    },
+    {
+      "style": 9,
+      "role": "hero",
+      "stage": 3,
+      "rect": [
+        113,
+        874,
+        96,
+        64
+      ],
+      "scale": 1,
+      "rgba_sha256": "284b1a97fbdd4ffcd902a2b2a0eae160db32fc67ba24424c704ba965c7f975c7"
+    },
+    {
+      "style": 10,
+      "role": "hero",
+      "stage": 0,
+      "rect": [
+        431,
+        874,
+        96,
+        64
+      ],
+      "scale": 1,
+      "rgba_sha256": "13f639940a075cbb88ef34229211862f64aa894b717ae6b3b624ac4dc06c4a0f"
+    },
+    {
+      "style": 10,
+      "role": "hero",
+      "stage": 3,
+      "rect": [
+        539,
+        874,
+        96,
+        64
+      ],
+      "scale": 1,
+      "rgba_sha256": "f9acceca775def34f315107a0858bb6facb512595454c58c8fd374584d253498"
+    }
+  ]
+}

@@ -1113,3 +1113,44 @@ and unchanged room/world/progress hashes, then retains strict initial/final
 RNG and gameplay comparisons throughout ordinary inputs. This fixture does
 not claim equal pre-capture AI histories. Failed pilot reports remain separate
 from the fresh final recordings. No game/art RNG call is added by the planner.
+
+**Completed ten-direction review:** game/art source
+`c6dc060043aa6d0d5e2eb43d4d09e97ddf77450a` is frozen in profiles 0–28.
+All nineteen historical 0–18 ROMs are byte-identical. The new source catalog
+contains 140 native maps/tree groups, twenty recorded-plan source figures and
+ten exact palette-inspection GIFs. Native, plan, layer-reconstruction and real
+framebuffer evidence are explicitly distinct.
+
+Fresh mGBA recordings pass 1,961/1,961 capture checks across 79 contexts and
+3,248 frame observations: 71 new-style cases plus eight profile 6 controls.
+There are 22 full-rate clips and 22 exact-palette GIFs; the ten-style gallery
+contains twenty of each and eighty literal native panels. Recorded ordinary
+movement has no missed update intervals. The minimum new displayed character
+measure is 36 colored pixels / 14 connected; this finite sample is not a
+universal silhouette guarantee. Existing lower-body protection remains.
+
+The independent audit records 12,823/12,824 assertions, retaining one strict
+absolute menu-cadence failure: the measured new menu handoff returns at tick
+50 instead of 47, about 50ms later. Both retain the same three handoff intervals
+without an update, and all recorded PLAY intervals advance once per IRQ. This
+is an accepted, disclosed redraw-latency tradeoff for the exploratory builds,
+alongside the entry-time difference above. The raw failed assertion remains
+published; it is not converted into a passing check. All other native/scope,
+palette, fit, actual visibility, physical, RNG and media assertions pass.
+
+Final static use is 234,772 EWRAM bytes and 23,220 IWRAM bytes. Forest residency
+is 867–942/1,024 subtiles and 11/12 world banks. These resource and finite-case
+measurements do not establish every-seed performance.
+
+**Visual judgment:** standing oak, buttress, fallen wood and split oak give
+the clearest tree anatomy. Pale birch adds a distinct stand; fungi are busier,
+cedar is sparse and can suggest parasol tiers, and the bowed elm can resemble
+an angular arch. The ten share a material vocabulary rather than ten unrelated
+rendering styles. Long contacts and some tiny fragments still reveal the
+semantic rectangular footprint; the finite resident kit recurs across rooms.
+No design is selected as production art.
+
+The [ten-direction source/actual review](../../../art-review/forest-canopy-adaptive/README.md),
+[explicit independent critique](../../../art-review/forest-canopy-adaptive/validation/INDEPENDENT_REVIEW.md)
+and [playable builds](../../../downloads/forest-canopy-adaptive-c6dc060/README.md)
+retain these caveats and exact source/build/file provenance.
