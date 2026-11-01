@@ -235,6 +235,24 @@ profile 9 adopts the requested taller ladder, consistent arches, distinct side
 walls and left-facing plumbing synthesis. Future areas reuse the semantic
 readability rules while choosing their own local architecture.
 
+## Lighting and discovery
+
+Place lanterns and other fixed light fixtures beside pathways, bridges, water
+crossings or identifiable room features. A fixture standing in grass should
+illuminate a specific feature rather than occupy an arbitrary empty patch.
+
+Use three levels of discovery: a dirt path can lead to content; a sequence of
+lanterns can lead across grass without a dirt path; and more concealed content
+can have neither path nor lanterns. Events, items and NPCs may sit away from
+the road. Lantern trails give players a second visual language to learn and
+follow toward a relic, healing cistern, NPC, entrance, treasure chest or other
+meaningful destination. They need not indicate the main progression route.
+
+Choose the destination and intended approach before placing its trail of
+lights. Successive lanterns should make that route readable while preserving
+crossings, interaction fronts and item gates. Keep these deliberate fixtures
+distinct from ambient glitter, which remains atmospheric surface light.
+
 ## Glitter is abundant, with a grammar
 
 Aim for roughly twenty potential ambient glint sites in a viewport, phased so

@@ -918,3 +918,29 @@ some unusual chests rely on their latch, and the friendly Moth Sister shares a
 wing family with the enemy Confessor. These limits remain visible in the
 [actual/source gallery](../../../art-review/forest-concepts-v2/README.md),
 alongside [all five ROMs](../../../downloads/forest-concepts-v2-e5e3fcb/README.md).
+
+## Lantern placement and hidden routes — 2026-10-31 (Pacific)
+
+**Direct user direction, adopted design rule:** lanterns and other light
+fixtures belong near pathways, water crossings or identifiable room features.
+Do not scatter fixtures into empty grass without a lighting purpose. Content
+can sit away from the dirt path; a chain of lanterns across grass can guide
+players to a relic, healing cistern, NPC, entrance, chest or other feature.
+Players should learn to notice and follow that second kind of trail. Preserve
+more concealed discoveries with neither a dirt path nor lantern guidance.
+
+**Scope and application:** the shared art bible now records three discovery
+treatments: path-led, lantern-led without a road, and fully unmarked. The
+forest topology notes carry the generation follow-up: choose a destination
+and usable approach first, then place readable successive lights beside it.
+Keep crossings, interaction fronts and item gates clear. Ambient surface
+glitter retains its existing atmospheric role.
+
+**Status and review:** this is a documentation-only change. Existing
+`V_LANTERN` dressing and random canopy-light placement in `src/roomgen.c`
+do not yet enforce the new rule; generator implementation and real-run
+placement review remain pending. The frozen ROMs and captures are unchanged.
+Reviewed against existing interaction-clearance, foreground-depth and
+misleading-path rules; no new external reference is claimed. The future
+placement pass should retain a mix of guided and unmarked discoveries so
+lanterns help exploration without revealing every secret.

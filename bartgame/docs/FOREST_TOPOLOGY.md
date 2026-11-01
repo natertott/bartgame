@@ -48,6 +48,21 @@ are separate evidence. Palette restoration after menus/area changes is tested.
 6. Publish natural rooms separately from diagnostic room fixtures; retain
    before/after evidence, exact native PNGs and the remaining tradeoffs.
 
+## Lantern placement and discovery: next generation pass
+
+The adopted [lighting rule](art-reboot/ART_BIBLE.md#lighting-and-discovery)
+requires fixtures to serve pathways, water crossings or specific room
+features. Plan the destination first, then place a readable sequence along
+its intended approach. A lantern trail can cross grass without adding a dirt
+road; some content should have neither kind of guide. Preserve a deliberate
+mix of path-led, lantern-led and unmarked discoveries.
+
+Place fixtures beside the travel line so they leave bridge landings,
+interaction fronts and item gates usable. Check foreground occlusion so a
+trail's successive lights can still be spotted. Existing random off-trail
+lantern and canopy-light placement needs a future generator pass; the frozen
+forest studies predate this note and do not yet enforce it.
+
 ## Next topology questions
 
 A bridge with both a usable upper deck and lower route needs explicit elevation
