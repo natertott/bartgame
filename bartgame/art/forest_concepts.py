@@ -1,4 +1,4 @@
-"""Opt-in forest environment studies; profile zero preserves production art.
+"""Forest environment profiles; profile31 is the selected production tree kit.
 
 Only the environment painters and their explicitly owned object frames vary.
 The selected bestiary, Bloom, equipment, interfaces and physical metadata keep
@@ -7,13 +7,14 @@ their established contracts. No global palette object is mutated.
 import os
 
 VARIANT = int(os.environ.get('BART_FOREST', '0'))
-assert 0 <= VARIANT <= 30, ('BART_FOREST must be 0..30', VARIANT)
+assert 0 <= VARIANT <= 31, ('BART_FOREST must be 0..31', VARIANT)
 ROUND2 = VARIANT >= 6
 CANOPY_ROUND = VARIANT >= 11
 ADAPTIVE_ROUND = VARIANT >= 19
 TREE_ROUND = VARIANT == 30
+TREE_WORLD = VARIANT == 31
 EMERALD_ROUND = VARIANT in (29, 30)
-LOCAL_VARIANT = 1 if EMERALD_ROUND else VARIANT - 18 if ADAPTIVE_ROUND else VARIANT - 10 if CANOPY_ROUND else VARIANT - 5 if ROUND2 else VARIANT
+LOCAL_VARIANT = 1 if EMERALD_ROUND or TREE_WORLD else VARIANT - 18 if ADAPTIVE_ROUND else VARIANT - 10 if CANOPY_ROUND else VARIANT - 5 if ROUND2 else VARIANT
 # Canopy studies keep the accepted grey ground and all other environment art
 # from Black Sap Oak; only the canopy painter receives the local study style.
 ENV_VARIANT = 1 if CANOPY_ROUND else LOCAL_VARIANT
@@ -49,13 +50,17 @@ NAMES = {
     28: 'Sorrow Arch Elm',
     29: 'Leafwoven Canopy',
     30: 'Repeated Tree Study',
+    31: 'Integrated Repeated Trees',
 }
 TERRAIN_BANKS = {'ground', 'foliage', 'water', 'stone', 'blight',
                  'decay_mix', 'rot_water'}
 
 
 def painters():
-    if EMERALD_ROUND:
+    if TREE_WORLD:
+        import forest_concepts_v2_props as props
+        import forest_trees_terrain as terrain
+    elif EMERALD_ROUND:
         import forest_concepts_v2_props as props
         import forest_canopy_emerald_terrain as terrain
     elif ADAPTIVE_ROUND:

@@ -246,3 +246,17 @@ actual mGBA layouts on three floors. The
 records the structural state changes, clean contacts, tested overlap and
 remaining small/dead-form composition limits. Uploaded-guide recommendations
 are applied to this local tree kit; no newly read external source is implied.
+
+
+## Approved tree kit — production integration, 2026-11-01
+
+The user approved the twelve native tree assets in the preceding
+[tree study](../../../art-review/forest-tree-study/README.md) for implementation
+in actual procedural forest rooms. The uploaded *GBA Sprite Art Guide* remains
+the source (same filename/hash above); no new external reading is claimed.
+Its pp.6–9 guidance informs real floor under alpha, explicit root footprints,
+ground-contact sorting and partial player visibility. The production
+integration retains the approved indexed pixels and bank; it changes their
+placement, layering and normal-build selection. Prior study renders remain
+labelled diagnostic layouts; new whole-room evidence must come from actual
+generated rooms in mGBA.

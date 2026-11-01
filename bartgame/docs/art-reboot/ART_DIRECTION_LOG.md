@@ -1309,3 +1309,30 @@ harness. GIFs use fixed inspection holds, while MP4s preserve full-rate GBA
 playback. Dead narrow forms remain deliberately slender; dense future scene
 composition needs another review. No canopy redesign or production placement
 is adopted by this tree-only pass.
+
+
+## 2026-11-01 — Adopt approved compact trees in procedural forest
+
+**User selection:** “These are great. Go ahead and implement them and make
+renders of the entire room using these.” The twelve drawings in
+`art/forest_tree_study.py` are adopted without pixel or palette changes.
+Profile31 becomes the normal forest build; profiles0–30 remain historical.
+This supersedes the preceding tree-study-only production restriction.
+
+**Implementation:** replace the retired large canopy and old authored tree
+pictures with deterministic repeated broad32×32/narrow16×32 forms. Healthy,
+sick and dead proportions follow room depth without consuming placement RNG.
+BG2 keeps actual local grass/soil, BG1 carries upper crowns and BG3 carries
+lower bases. Native transparency permits overlapping rows without black
+backing or erasing another tree. Reserve screens12–15 for BG3 and cap the
+forest atlas at768subtiles. Preserve maze barriers, optional item alcoves,
+feature approaches and existing shallow free-standing root masks.
+
+**Review plan:** actual mGBA complete-room camera mosaics for healthy, mixed
+and deeply blighted natural rooms, untouched HUD-on views and ordinary input
+walks. Camera/clock/HUD viewing fixtures and any enemy isolation are disclosed.
+Mosaics register literal native frames; they are not single GBA framebuffers.
+Packed/source fidelity, physical geometry, layering/menu restoration and
+unrelated-art protection must be checked before publication. Remaining visual
+risk is the apparent width of transparent dead-tree bases versus solid maze
+cells; inspect real rooms rather than declaring this solved numerically.

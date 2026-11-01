@@ -17,6 +17,9 @@
 #if BART_FOREST_VARIANT == 30
 #include "tree_study.h"
 #endif
+#if BART_FOREST_VARIANT == 31
+#include "forest_trees.h"
+#endif
 
 Room gRoom EWRAM_BSS;
 s16 gCamX, gCamY;
@@ -44,8 +47,11 @@ void tiles_load(int set) {
     dma3_copy32(sTs->tiles, CHARBLOCK(0), sTs->tile_count * 32);
     for (i = 0; i < sTs->pal_count; i++)
         pal_set_bg(i, &sTs->pals[i * 16]);
-#if BART_FOREST_VARIANT >= 19
+#if BART_FOREST_VARIANT >= 19 && BART_FOREST_VARIANT < 31
     canopy_scene_reset();
+#endif
+#if BART_FOREST_VARIANT == 31
+    forest_trees_reset();
 #endif
 }
 
@@ -88,7 +94,7 @@ void tiles_animate(void) {
             }
     }
 #endif
-#if BART_FOREST_VARIANT >= 19
+#if BART_FOREST_VARIANT >= 19 && BART_FOREST_VARIANT < 31
     if(gGame.state==GS_PLAY)canopy_scene_palette_tick();
 #endif
 }
@@ -343,8 +349,18 @@ bool8 room_canopy_projection_clear(int x,int y) {
 static void render_cell(int x, int y) {
     int i=y*ROOM_MAX_W+x;
     u16 ground=gRoom.ground[i],overlay=gRoom.overlay[i],base=gRoom.underlay[i];
+#if BART_FOREST_VARIANT == 31
+    /* The old 32x48/48x64 logical groups keep their exact root collision,
+       but none of their superseded picture quarters survive this renderer. */
+    if(gGame.area==AREA_FOREST && forest_trees_legacy(overlay))overlay=MT_NONE;
+#endif
 #if BART_FOREST_VARIANT >= 6
     u16 picture=ground;
+#if BART_FOREST_VARIANT == 31
+    if(gGame.area==AREA_FOREST && forest_trees_legacy(ground)) {
+        map_write(SB_GROUND,x,y,canopy_floor(x,y,base));
+    } else
+#endif
     if(forest_isolated_water(x,y,ground)) {
         if(overlay==MT_NONE || overlay==MT_SPARKLE || overlay==MT_SPARKLE_WHITE || overlay==MT_BLIGHT_MIST) {
             /* Exterior alpha reveals this soil, not a healthy-green square
@@ -396,7 +412,11 @@ static void render_cell(int x, int y) {
     } else if (interactive_entry_ready() && interactive_mouth_tile(ground)) {
         /* A continuous wall behind the large portal avoids a second tiny
            doorway visible through transparent pixels around the frame. */
+#if BART_FOREST_VARIANT == 31
+        map_write(SB_GROUND,x,y,canopy_floor(x,y,base));
+#else
         map_write(SB_GROUND,x,y,roomgen_blighted(gGame.cell) ? MT_BLIGHT_WALL : MT_CANOPY_S);
+#endif
     } else if (barrier_material(ground)
 #if BART_FOREST_VARIANT >= 6
                || ground==MT_THORN || ground==MT_DOOR_LOCKED
@@ -467,6 +487,9 @@ static bool8 canopy_overlay_cell(int x,int y) {
 }
 
 bool8 room_canopy_overlay_px(int px,int py) {
+#if BART_FOREST_VARIANT == 31
+    if(forest_trees_overlay_px(px,py))return TRUE;
+#endif
     if(px<0 || py<0 || !canopy_overlay_cell(px/16,py/16))return FALSE;
     int tx=px/8,ty=py/8;
     int sb=SB_OVERLAY+((ty>>5)<<1)+(tx>>5);
@@ -479,6 +502,9 @@ bool8 room_canopy_overlay_px(int px,int py) {
 }
 
 bool8 room_canopy_overlaps_body(int px,int py,int z,int width,int height) {
+#if BART_FOREST_VARIANT == 31
+    if(forest_trees_occludes_body(px,py,z,width,height,2))return TRUE;
+#endif
     int x,y,x0=MAX(0,(px-width/2)/16),x1=MIN(gRoom.w-1,(px+width/2-1)/16);
     int y0=MAX(0,(py-z-height)/16),y1=MIN(gRoom.h-1,(py-z-1)/16);
     for(y=y0;y<=y1;y++)for(x=x0;x<=x1;x++)
@@ -508,6 +534,12 @@ int room_prop_priority(int px,int py,int z,int width,int height,int priority) {
 #if BART_FOREST_VARIANT >= 6
     if((priority==1 || priority==2) && overhead_at_body(px,py,z,width,height))return 2;
 #endif
+#if BART_FOREST_VARIANT == 31
+    {
+        int tree_priority=forest_trees_priority(px,py,z,width,height,priority);
+        if(tree_priority!=priority)return tree_priority;
+    }
+#endif
     if(priority!=2)return priority;
     if(px>=0 && py>=4 && px<gRoom.w*16 && py<gRoom.h*16) {
         u16 feet=gRoom.overlay[((py-4)/16)*ROOM_MAX_W+px/16];
@@ -518,6 +550,9 @@ int room_prop_priority(int px,int py,int z,int width,int height,int priority) {
     for(y=y0;y<=y1;y++) for(x=x0;x<=x1;x++) {
         int at=y*ROOM_MAX_W+x;
         u16 mt=gRoom.ground[at],ov=gRoom.overlay[at];
+#if BART_FOREST_VARIANT == 31
+        if(gGame.area==AREA_FOREST && forest_trees_legacy(mt))continue;
+#endif
         if(floor_mark(ov)) {
             front=1; /* A plate belongs beneath feet, not above the body. */
             continue;
@@ -553,8 +588,17 @@ void room_render(void) {
         }
     }
     room_build_solid();
-#if BART_FOREST_VARIANT >= 19
+#if BART_FOREST_VARIANT >= 19 && BART_FOREST_VARIANT < 31
     canopy_scene_build();
+#endif
+#if BART_FOREST_VARIANT == 31
+    forest_trees_plan();
+    forest_trees_render();
+    /* Room/menu restoration can happen before video_show, and ordinary
+       room-to-room loads do not call video_show again. */
+    if(forest_trees_active())REG_DISPCNT|=DCNT_BG3;
+    else REG_DISPCNT&=~DCNT_BG3;
+    forest_trees_video(DCNT_BG0|DCNT_BG1|DCNT_BG2|DCNT_OBJ);
 #endif
 }
 
@@ -587,10 +631,15 @@ void room_change(int mx, int my, u16 mt) {
         for(nx=MAX(0,mx-1);nx<=MIN(gRoom.w-1,mx+1);nx++)
             if(nx!=mx || ny!=my)render_cell(nx,ny);
 #endif
-#if BART_FOREST_VARIANT >= 19
+#if BART_FOREST_VARIANT >= 19 && BART_FOREST_VARIANT < 31
     for(ny=MAX(0,my-1);ny<=MIN(gRoom.h-1,my+1);ny++)
         for(nx=MAX(0,mx-1);nx<=MIN(gRoom.w-1,mx+1);nx++)
             canopy_scene_apply_cell(nx,ny);
+#endif
+#if BART_FOREST_VARIANT == 31
+    for(ny=MAX(0,my-1);ny<=MIN(gRoom.h-1,my+1);ny++)
+        for(nx=MAX(0,mx-1);nx<=MIN(gRoom.w-1,mx+1);nx++)
+            forest_trees_apply_cell(nx,ny);
 #endif
 }
 
@@ -601,8 +650,11 @@ void room_change_overlay(int mx, int my, u16 mt) {
     solid_cell_update(mx, my);
     interactive_cell_changed(mx,my);
     render_cell(mx,my);
-#if BART_FOREST_VARIANT >= 19
+#if BART_FOREST_VARIANT >= 19 && BART_FOREST_VARIANT < 31
     canopy_scene_apply_cell(mx,my);
+#endif
+#if BART_FOREST_VARIANT == 31
+    forest_trees_apply_cell(mx,my);
 #endif
 }
 

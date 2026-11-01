@@ -132,7 +132,7 @@ choices; they do not override the user's GBA-first constraints.
 | Chest | About 20×18–20 closed | Wood, reinforced brass and relic variants share one construction. |
 | Plate | 16×16 | Flat, broad footprint with a clear pressed state. |
 | Entrance | About 32×40–46 | Opening taller than Bloom, embedded in a material mass. |
-| Tree | Usually 32×48; larger groups permitted | A small ground footprint, raised canopy and coherent overhang. |
+| Forest tree | 32×32 broad or 16×32 narrow | Two forms per size, each healthy/sick/dead; actual local floor beneath alpha. |
 
 Feet define actor world positions. All bodies, tools, shadows, carried objects
 and projectiles use explicit anchors relative to those feet. Transparent
@@ -183,15 +183,24 @@ integrated into each structure. Large available regions warrant larger native
 drawings and finer branch/bark/leaf relationships; do not enlarge a small tile
 or merely recolor the same repeating design.
 
-The current forest pass sets canopy design aside. Work on a small repeated
-tree kit first: 32×32 (two-by-two 16px tiles) and 16×32 (one-by-two tiles),
-with a few forms and healthy, sick and dead states. These requested art sizes
-supersede larger standalone-tree proposals for this study. State must change
-structure as well as hue: full crowns, damaged/sagging partial crowns, then
-bare broken forks. Keep contact shadows small and exterior index zero clear
-so the actual floor supplies the background. Use a few connected value and
-leaf masses; earlier dense fan texture is not a requirement. Canopy work and
-procedural replacement wait while these trees are reviewed in repeated groups.
+The approved forest kit is now the production tree direction: repeated
+32×32 (two-by-two 16px tiles) and 16×32 (one-by-two tiles), two forms per size,
+each healthy, sick and dead. These dimensions supersede the earlier larger
+standalone-tree and adaptive-canopy proposals. State changes structure as well
+as hue: full crowns, damaged partial crowns, then bare broken forks. The twelve
+approved indexed drawings and shared RGB555 bank remain unchanged on import.
+Small contact shadows and transparent exterior pixels reveal actual local
+forest floor. Earlier dense fan texture and large canopy prefabs are retired.
+
+Compose tree rows from the generated forest footprint. Upper crowns and lower
+bases use separate transparent world layers so adjacent rows overlap without
+rectangular erasure. Forest barrier cells retain visible tree bases and their
+existing collision; free-standing trees preserve their original shallow root
+masks. Never make the full32px picture a collider or silently open the maze's
+item-gate flanks. Dense dead rows and partially transparent base footprints
+still require visual review: collision preservation alone cannot establish
+readable boundaries. Whole-room review images are registered native mGBA camera
+mosaics, explicitly distinct from a single240×160 framebuffer.
 
 The latest direct reference is the user's Pokémon Emerald tree crop. The
 ten exposed-branch studies are rejected as the working direction: their sparse

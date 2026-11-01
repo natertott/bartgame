@@ -28,6 +28,13 @@ extern u16 items_sheet_tile(void);
 
 GameState gGame;
 u32 gSeedOverride; /* probes set this before pressing Start */
+#if BART_FOREST_VARIANT == 31
+u8 gForestReviewEnabled;
+s16 gForestReviewCamera[2];
+u32 gForestReviewClock = 256;
+static u16 sForestReviewDisplay;
+static u8 sForestReviewWasEnabled;
+#endif
 
 static void draw_world(void);
 
@@ -710,8 +717,14 @@ void game_init(void) {
 }
 
 static void draw_world(void) {
-    textbox_draw(); /* the UI first in OAM: between sprites the order rules */
-    hud_draw();
+#if BART_FOREST_VARIANT == 31
+    if (!gForestReviewEnabled) {
+#endif
+        textbox_draw(); /* UI first in OAM: between sprites the order rules */
+        hud_draw();
+#if BART_FOREST_VARIANT == 31
+    }
+#endif
     if (sDark)
         dark_spare(gOamCount);
     ambient_draw(TRUE);
@@ -828,6 +841,29 @@ static void update_transition(void) {
 }
 
 void game_update(void) {
+#if BART_FOREST_VARIANT == 31
+    if (gForestReviewEnabled) {
+        /* A frozen, HUD-free native camera view for a registered panorama.
+           This does not run movement, combat, AI, input or world generation.
+           The harness holds the same phase before tiles_animate as well. */
+        if (!sForestReviewWasEnabled) {
+            sForestReviewDisplay = REG_DISPCNT;
+            sForestReviewWasEnabled = 1;
+        }
+        REG_DISPCNT = sForestReviewDisplay & ~DCNT_BG0;
+        gFrame = gForestReviewClock;
+        gCamX = CLAMP(gForestReviewCamera[0], 0, MAX(0, room_px_w()-240));
+        gCamY = CLAMP(gForestReviewCamera[1], 0, MAX(0, room_px_h()-160));
+        gBgScroll[1][0] = gBgScroll[2][0] = gBgScroll[3][0] = gCamX;
+        gBgScroll[1][1] = gBgScroll[2][1] = gBgScroll[3][1] = gCamY;
+        draw_world();
+        return;
+    }
+    if (sForestReviewWasEnabled) {
+        REG_DISPCNT = sForestReviewDisplay;
+        sForestReviewWasEnabled = 0;
+    }
+#endif
     if (gGame.state == GS_PLAY || gGame.state == GS_TRANSITION)
         gGame.run_frames++;
     switch (gGame.state) {

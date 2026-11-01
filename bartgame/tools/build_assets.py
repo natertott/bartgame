@@ -224,7 +224,7 @@ if FOREST_CONCEPTS.VARIANT >= 6:
     _, forest_terrain = FOREST_CONCEPTS.painters()
     forest_v2_pulses = forest_terrain.pulse_palettes(FOREST_CONCEPTS.LOCAL_VARIANT)
 for si, (sname, pred) in enumerate(SETS):
-    ts = Tileset()
+    ts = Tileset(limit=768 if FOREST_CONCEPTS.TREE_WORLD and sname == 'forest' else 1024)
     ts.add([[0] * 8 for _ in range(8)], 0, 0)  # tile 0 blank
     entries = []
     anims = []
@@ -280,7 +280,7 @@ for si, (sname, pred) in enumerate(SETS):
             anims.append((base, len(frames), data, mt.get('anim_speed', 8)))
             if animation_key is not None:
                 animation_cache[animation_key] = base
-    if FOREST_CONCEPTS.ADAPTIVE_ROUND and sname == 'forest':
+    if FOREST_CONCEPTS.ADAPTIVE_ROUND and not FOREST_CONCEPTS.TREE_WORLD and sname == 'forest':
         if FOREST_CONCEPTS.EMERALD_ROUND:
             import forest_canopy_emerald as ACA
         else:
@@ -356,6 +356,57 @@ for si, (sname, pred) in enumerate(SETS):
                 retired_canopy_pictures='Dense foliage joins and overlapping crowns replace skeletal trees and flat backing.',
                 substrate='Real local floor remains on BG2; transparent native BG1 entries clear prior infill.',
             )
+    if FOREST_CONCEPTS.TREE_WORLD and sname == 'forest':
+        import forest_tree_study as TREE_ART
+        tree_slot = set_pals.index(TREE_ART.PALETTE_NAME)
+        specs = TREE_ART.specs()
+        assert len(specs) == 12
+        h += ['#define FOREST_TREE_FRAME_COUNT 12',
+              '#define FOREST_TREE_PALETTE_SLOT %d' % tree_slot,
+              'extern const u16 forest_tree_entries[12][16];',
+              'extern const u32 forest_tree_opaque_rows[12][32];']
+        tree_rows = []
+        tree_alpha = []
+        tree_frames = []
+        tree_base_tiles = len(ts.tiles)
+        for index, spec in enumerate(specs):
+            image = TREE_ART.tree(spec['size'], spec['variety'], spec['state'])
+            width, height = image.size
+            assert image.mode == 'P' and (width, height) in ((32, 32), (16, 32))
+            assert set(image.tobytes()) <= set(range(16))
+            pixels = parse_art(FOREST_CONCEPTS.rows(image), width, height)
+            tree_alpha.append('  {' + ','.join('0x%08xu' % sum((1 << x) for x in range(width) if pixels[y][x])
+                                               for y in range(height)) + '},')
+            packed = []
+            for yy in range(0, height, 8):
+                for xx in range(0, width, 8):
+                    tile, hf, vf = ts.add(pixels, xx, yy)
+                    packed.append(tile | (hf << 10) | (vf << 11) | (tree_slot << 12))
+            tree_rows.append('  {' + ','.join(str(v) for v in packed + [0]*(16-len(packed))) + '},')
+            tree_frames.append({**spec, 'index': index, 'entries': len(packed)})
+        c += ['const u16 forest_tree_entries[12][16] = {', *tree_rows, '};']
+        c += ['const u32 forest_tree_opaque_rows[12][32] = {', *tree_alpha, '};']
+        values = {
+            'width': [s['size_pixels'][0] for s in specs],
+            'anchor_x': [s['anchor'][0] for s in specs],
+            'anchor_y': [s['anchor'][1] for s in specs],
+            'state': [TREE_ART.STATES.index(s['state']) for s in specs],
+            'variety': [s['variety'] for s in specs],
+        }
+        for field, field_values in values.items():
+            symbol = 'forest_tree_' + field
+            c.append(c_array_u8(symbol, field_values))
+            h.append('extern const u8 %s[12];' % symbol)
+        tree_world_metadata = {
+            'frames': tree_frames, 'palette_slot': tree_slot,
+            'source': 'forest_tree_study.py, unchanged approved twelve native pictures',
+            'static_base_tiles': tree_base_tiles,
+            'tree_extra_tiles': len(ts.tiles)-tree_base_tiles,
+            'total_resident_tiles': len(ts.tiles), 'tile_limit': 768,
+            'layer_contract': {'floor': 'BG2', 'upper16': 'BG1', 'lower16': 'BG3'},
+            'retired': 'forest_trees_terrain.owns() legacy canopy and authored tree pictures',
+            'collision': 'Generated solid tree-base cells preserved; no full32px canvas collider.',
+        }
     c.append(c_array_u16('tileset_%s_tiles' % sname, bytes_to_u16(b''.join(ts.tiles))))
     c.append(c_array_u16('metatile_map_%s' % sname, entries, 8))
     c.append(c_array_u16('tileset_%s_pals' % sname, [rgb15(x) for n in set_pals for x in dict(palettes.BG_PALETTES)[n]]))
@@ -877,7 +928,8 @@ coverage['ui_study'] = {'variant': UI_STUDIES.VARIANT,
 coverage['forest_concept'] = {
     'variant': FOREST_CONCEPTS.VARIANT,
     'name': FOREST_CONCEPTS.NAMES[FOREST_CONCEPTS.VARIANT],
-    'status': 'Optional environment comparison; production default remains zero.',
+    'status': ('Selected production repeated-tree integration.' if FOREST_CONCEPTS.TREE_WORLD
+               else 'Historical optional environment comparison.'),
     'tile_owners': dict(tiles.FOREST_OWNERS),
     'obj_scope': 'Matching environment chests, entries and portable objects only; shared across areas in study ROMs.',
     'protected': ['Bloom', 'selected enemies', 'equipment and pickups', 'UI',
@@ -913,12 +965,16 @@ if FOREST_CONCEPTS.CANOPY_ROUND:
         'conservative_obj_union': {'used': 864, 'limit': 876},
         'generator': 'No layout, placement or lantern-generation change in this pass.',
     }
-if FOREST_CONCEPTS.ADAPTIVE_ROUND:
+if FOREST_CONCEPTS.ADAPTIVE_ROUND and not FOREST_CONCEPTS.TREE_WORLD:
     coverage['forest_concept']['adaptive_canopy'] = adaptive_atlas_metadata
     coverage['forest_concept']['canopy_round']['scope'] = 'Retired fixed-block canopy; replaced by room-shaped native compositions.'
     coverage['forest_concept']['canopy_round']['generator'] = 'Logical maze and feature locations unchanged; room-first visual placement fits native compositions to actual canopy geometry. Lantern-generation change remains pending.'
     if FOREST_CONCEPTS.EMERALD_ROUND:
         coverage['forest_concept']['canopy_round']['scope'] = 'Leaf-first crowns and original local ground contact informed by the supplied Emerald reference; no flat canopy substrate.'
+if FOREST_CONCEPTS.TREE_WORLD:
+    coverage['forest_trees'] = tree_world_metadata
+    coverage['forest_concept']['canopy_round']['scope'] = 'Approved compact repeated trees replace all legacy canopy/tree pictures.'
+    coverage['forest_concept']['canopy_round']['generator'] = 'Logical maze preserved; deterministic root-row composition uses the generated room.'
 with open(os.path.join(OUT, 'art-reboot-coverage.json'), 'w') as report:
     json.dump(coverage, report, indent=2)
     report.write('\n')

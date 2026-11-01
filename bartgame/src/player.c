@@ -8,6 +8,9 @@
 #include "gba.h"
 #include "video.h"
 #include "room.h"
+#if BART_FOREST_VARIANT == 31
+#include "forest_trees.h"
+#endif
 #include "actor.h"
 #include "player.h"
 #include "sound.h"
@@ -1074,9 +1077,19 @@ static void canopy_body_metadata(int frame) {
 static void prepare_canopy_visibility(Actor* a,int frame) {
     const SpriteSheet* sh=&sheets[SHEET_HERO];
     int z=a->state==PS_FALL ? 0 : PX(a->z);
-    if(!sCanopyTile || sh->w!=32 || sh->h!=32 || frame<0 || frame>=SHEET_HERO_FRAMES || a->prio!=2 ||
+    if(!sCanopyTile || sh->w!=32 || sh->h!=32 || frame<0 || frame>=SHEET_HERO_FRAMES ||
+#if BART_FOREST_VARIANT == 31
+       (a->prio!=2 && a->prio!=3) ||
+#else
+       a->prio!=2 ||
+#endif
        (a->flags&AF_HIDDEN) || (a->iframes && (gFrame&2)) ||
+#if BART_FOREST_VARIANT == 31
+       !(room_canopy_overlaps_body(PX(a->x),PX(a->y),z,32,32) ||
+          forest_trees_occludes_body(PX(a->x),PX(a->y),z,32,32,a->prio)))return;
+#else
        !room_canopy_overlaps_body(PX(a->x),PX(a->y),z,32,32))return;
+#endif
     const u8* source=(const u8*)(sh->tiles+frame*sh->frame_tiles*16);
     canopy_body_metadata(frame);
     memset(sCanopyPixels,0,sizeof(sCanopyPixels));
@@ -1086,7 +1099,12 @@ static void prepare_canopy_visibility(Actor* a,int frame) {
     for(y=sCanopyCutoff;y<32;y++)for(x=0;x<32;x++) {
         int ink=canopy_body_ink(source,x,y);
         int wx=left+(a->hflip ? 31-x : x),wy=top+y;
+#if BART_FOREST_VARIANT == 31
+        if(!ink || !(room_canopy_overlay_px(wx,wy) ||
+                     (a->prio==3 && forest_trees_base_px(wx,wy))))continue;
+#else
         if(!ink || !room_canopy_overlay_px(wx,wy))continue;
+#endif
         int at=((y/8)*4+x/8)*32+(y&7)*4+(x&7)/2;
         target[at]|=ink<<((x&1)*4);
         opaque++;coloured+=canopy_coloured_ink(a->pal,ink);

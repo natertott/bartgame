@@ -6,8 +6,8 @@ See the [native art reboot and actual mGBA recordings](art-review/reboot/README.
 [art direction for all nine planned areas](bartgame/docs/art-reboot/ART_BIBLE.md).
 The standalone build uses original native artwork and needs no commercial ROM.
 
-Latest comparison: [eight leafy canopy studies with surviving greenery,
-horizontal boughs and continuous player visibility](art-review/forest-canopy-v3/README.md).
+Latest forest: [approved repeated trees in complete generated rooms,
+with actual mGBA renders](art-review/forest-trees-integrated/README.md).
 
 The upstream Minish Cap decompilation documentation is preserved below.
 
