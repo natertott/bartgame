@@ -12,3 +12,7 @@
 /art-review/forest-canopy-adaptive/validation/frozen/v6/bartgame.map -whitespace
 /art-review/forest-canopy-adaptive/validation/frozen/v19/bartgame.map -whitespace
 /art-review/forest-canopy-adaptive/validation/frozen/v2[0-8]/bartgame.map -whitespace
+
+# Exact Emerald-canopy review linker maps
+/art-review/forest-canopy-emerald/validation/frozen/v19/bartgame.map -whitespace
+/art-review/forest-canopy-emerald/validation/frozen/v29/bartgame.map -whitespace

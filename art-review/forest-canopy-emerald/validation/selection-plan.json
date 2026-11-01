@@ -1,0 +1,187 @@
+{
+  "method": "Five natural room geometries selected from real old6 generation census; actual native96x64 placement/camera refined in boundary19 pilot. The same disclosed seed, room, starting position and ordinary inputs are held across every new style and old6. No terrain, pose, z, timers or framebuffer painting.",
+  "geometry": [
+    {
+      "name": "isolated-small",
+      "seed": "0xb4a7",
+      "cell": 4,
+      "feature_bounds_pixels": [
+        304,
+        176,
+        320,
+        192
+      ],
+      "geometry_kind": "one-cell disconnected canopy",
+      "position": [
+        312,
+        204
+      ]
+    },
+    {
+      "name": "narrow-arm",
+      "seed": "0xb4a7",
+      "cell": 6,
+      "feature_bounds_pixels": [
+        80,
+        112,
+        208,
+        128
+      ],
+      "geometry_kind": "eight-by-one disconnected canopy arm",
+      "position": [
+        152,
+        140
+      ]
+    },
+    {
+      "name": "broad-healthy",
+      "seed": "0xb4a7",
+      "cell": 16,
+      "feature_role": "hero",
+      "geometry_kind": "native96x64 healthy border stand",
+      "position": [
+        296,
+        156
+      ],
+      "feature_bounds_pixels": [
+        288,
+        80,
+        384,
+        144
+      ]
+    },
+    {
+      "name": "broad-deep",
+      "seed": "0x6",
+      "cell": 4,
+      "feature_role": "hero",
+      "geometry_kind": "native96x64 deep border stand",
+      "position": [
+        216,
+        348
+      ],
+      "feature_bounds_pixels": [
+        112,
+        288,
+        208,
+        352
+      ]
+    },
+    {
+      "name": "separated-corner",
+      "seed": "0xb4a7",
+      "cell": 16,
+      "feature_bounds_pixels": [
+        176,
+        256,
+        304,
+        320
+      ],
+      "geometry_kind": "multiple components and concave edge",
+      "position": [
+        248,
+        316
+      ]
+    }
+  ],
+  "motion": [
+    {
+      "name": "deep-branch-walk-roll",
+      "seed": "0x6",
+      "cell": 4,
+      "action": "canopy-depth",
+      "frames": 128,
+      "position": [
+        72,
+        212
+      ],
+      "target": [
+        4,
+        10
+      ],
+      "facing": 0,
+      "inputs": {
+        "8": [
+          [
+            "UP",
+            true
+          ]
+        ],
+        "20": [
+          [
+            "R",
+            true
+          ]
+        ],
+        "22": [
+          [
+            "R",
+            false
+          ]
+        ],
+        "64": [
+          [
+            "UP",
+            false
+          ],
+          [
+            "DOWN",
+            true
+          ]
+        ],
+        "96": [
+          [
+            "DOWN",
+            false
+          ]
+        ]
+      }
+    },
+    {
+      "name": "deep-branch-cape",
+      "seed": "0x6",
+      "cell": 4,
+      "action": "canopy-cape",
+      "frames": 64,
+      "position": [
+        72,
+        196
+      ],
+      "target": [
+        4,
+        10
+      ],
+      "facing": 0,
+      "inputs": {
+        "8": [
+          [
+            "A",
+            true
+          ]
+        ],
+        "10": [
+          [
+            "A",
+            false
+          ]
+        ]
+      }
+    }
+  ],
+  "menu": {
+    "name": "deep-branch-menu-resume",
+    "seed": "0x6",
+    "cell": 4,
+    "position": [
+      72,
+      196
+    ],
+    "target": [
+      4,
+      10
+    ]
+  },
+  "census_sha256": "8369e6405615861ce23c009ef2c8b0b753322771a3ebe911258740fe6ad5acc9",
+  "selection_pilot_rom_sha256": "168bdfe33335026bbb00aec311a77d76a97fb7955b68d38275269cef7d1f43ed",
+  "action_rng_fixture": "0x01234567"
+}

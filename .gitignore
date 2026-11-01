@@ -207,3 +207,9 @@ docs/sim_runs.json
 !/art-review/forest-canopy-adaptive/validation/frozen/v6/bartgame.map
 !/art-review/forest-canopy-adaptive/validation/frozen/v19/bartgame.map
 !/art-review/forest-canopy-adaptive/validation/frozen/v2[0-8]/bartgame.map
+
+# Emerald-inspired canopy review build
+!/downloads/forest-canopy-emerald-ead9bb6/leafwoven-canopy-ead9bb6.gba
+!/downloads/forest-canopy-emerald-ead9bb6/forest-canopy-emerald-ead9bb6.zip
+!/art-review/forest-canopy-emerald/validation/frozen/v19/bartgame.map
+!/art-review/forest-canopy-emerald/validation/frozen/v29/bartgame.map

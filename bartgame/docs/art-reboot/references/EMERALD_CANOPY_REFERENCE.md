@@ -79,3 +79,40 @@ This is a new local reference-led study, not the user's approval of any
 finished canopy treatment. Its findings supersede the previous canopy
 exploration's claim that broad flat underbrush backing was an acceptable
 visual solution.
+
+## Native and actual-room findings
+
+The first new source sketch replaced bare branching diagrams with leafy
+crowns and short trunks. Its large piece still made a nearly even two-row,
+three-column set of round caps, and regular small fan rows began to resemble
+checker or fish-scale texture. The revised source uses unequal dominant and
+supporting crowns, more overlap, varying fan spacing and quieter dome planes.
+
+The first actual-room gate confirmed the main improvement but exposed two
+remaining integration errors. Crowns extending beyond their source canvas
+were clipped into ruler-straight carpet edges. In addition, the inherited
+canopy ground fallback selected the ordinary path tile for large healthy
+interiors. That tile is native floor, but its material is brown dirt; a test
+of floor type alone could approve another mismatched rectangular backdrop.
+
+The focused correction keeps whole hanging crown skirts within the final
+canvas and exposes actual ground at their tips. The canopy-specific substrate
+rule preserves a valid stored floor, then an actual adjacent floor, and uses
+green grass when neither exists; sick grass remains the deep fallback. Genuine
+stored or adjacent paths remain appropriate contacts. Other barriers keep
+their existing rules.
+
+All five second-pass native mGBA views have been inspected: broad healthy and
+deep forest, a small isolated fragment, a narrow arm and separated/concave
+patches. The featureless purple-black panel and invented brown fallback are
+gone. Healthy masses read as dense crowns; the infected version retains that
+leaf volume with gray/olive sickness, surviving green and attached purple
+wounds. Shallow strips read as thickets, and small remnants have compact
+crowns rather than miniature large diagrams.
+
+This passes the focused blending gate for publication as a review revision.
+Remaining visual caveats are explicit: some grid-aligned joins and short
+repeated leaf bands remain; healthy leaf texture is fairly busy; gray/olive
+infected crowns can suggest mossy stone at a glance. These observations are
+not the user's selection of a final style. Frozen packed-source, actual
+substrate, movement and file/provenance checks follow separately.

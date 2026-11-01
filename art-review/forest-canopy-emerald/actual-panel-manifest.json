@@ -1,0 +1,147 @@
+{
+  "boards": [
+    {
+      "path": "healthy-deep-before-after-actual.png",
+      "sha256": "1433ff0889b560ae557f8b74d811758c18c0c8ce840e5a240bc5ac633e0e49da",
+      "panels": [
+        {
+          "profile": 19,
+          "case": "broad-healthy",
+          "source": "actual/profile-19/broad-healthy.png",
+          "source_sha256": "2954dcbe95c0c565ddd54b7d91c6707b8742b7f5b457c2c29fa58949a66be03e",
+          "rect": [
+            0,
+            70,
+            240,
+            160
+          ],
+          "rgb_sha256": "750483a9cd373b46aaf0cb2f3f667ceb25aa0e61dc57ee3e34972bb1d9dfdb78"
+        },
+        {
+          "profile": 29,
+          "case": "broad-healthy",
+          "source": "actual/profile-29/broad-healthy.png",
+          "source_sha256": "c64da3abfb1961e94d3729678ca5b459d5ff21fb52772cfe43da5bacf6061232",
+          "rect": [
+            240,
+            70,
+            240,
+            160
+          ],
+          "rgb_sha256": "748c4afad8a5c94e0407fd84cac40fbde3a1195455e7a1194e8e928cb56bd84b"
+        },
+        {
+          "profile": 19,
+          "case": "broad-deep",
+          "source": "actual/profile-19/broad-deep.png",
+          "source_sha256": "dac3180da0a4bd4cba25b0e3819a89cbd3524ce1bb4a96aa14c48d8d59e5f5f0",
+          "rect": [
+            0,
+            254,
+            240,
+            160
+          ],
+          "rgb_sha256": "4445b1220809be8345482f6d16fdc3dab93fa964c97bacd8d3323a5de5fa3603"
+        },
+        {
+          "profile": 29,
+          "case": "broad-deep",
+          "source": "actual/profile-29/broad-deep.png",
+          "source_sha256": "ad1f820e036197b4c3209b95bc66ddc5ec82216c13353f707c6d473401168922",
+          "rect": [
+            240,
+            254,
+            240,
+            160
+          ],
+          "rgb_sha256": "32cd571ef7aec2c7323344e582b8e18b34b111d4fd0e4c6cbd2e9b2199b4f729"
+        }
+      ]
+    },
+    {
+      "path": "canopy-boundaries-before-after-actual.png",
+      "sha256": "3ca208f5aaf362bac50a702416a75b11b02a7e1905036417b5a6aef5df5e3172",
+      "panels": [
+        {
+          "profile": 19,
+          "case": "isolated-small",
+          "source": "actual/profile-19/isolated-small.png",
+          "source_sha256": "348a844b68a25299969b242ea94040c13c8d53b9390d44ab9e21a5e416cf2a7c",
+          "rect": [
+            0,
+            70,
+            240,
+            160
+          ],
+          "rgb_sha256": "6a8bcb5b1c97fe3bede33514f15c2c989a8ef062f51a1f55b03b830142a91bbf"
+        },
+        {
+          "profile": 29,
+          "case": "isolated-small",
+          "source": "actual/profile-29/isolated-small.png",
+          "source_sha256": "8e6c43e916d93811019705d7c1574d99cd85d1f0f2fe899a34727a9692c9b3ba",
+          "rect": [
+            240,
+            70,
+            240,
+            160
+          ],
+          "rgb_sha256": "e3e77e6dd561d2ccb743237584666cb0f0c2d12daaf72303c43c56afac26df0e"
+        },
+        {
+          "profile": 19,
+          "case": "narrow-arm",
+          "source": "actual/profile-19/narrow-arm.png",
+          "source_sha256": "7f4d1d8478e4708c8bdadcf7eb1c847ffdfd5a3daeb88eca4cdc94bc5586b7bd",
+          "rect": [
+            0,
+            254,
+            240,
+            160
+          ],
+          "rgb_sha256": "c4b112605e2bd4e3507b3a0d058029253b6320d64196c7d2e96f0fbde306c87b"
+        },
+        {
+          "profile": 29,
+          "case": "narrow-arm",
+          "source": "actual/profile-29/narrow-arm.png",
+          "source_sha256": "f19d332b9198f7c5c0b548a32e3a053ea7628652a5e58c81d1373a4d05748511",
+          "rect": [
+            240,
+            254,
+            240,
+            160
+          ],
+          "rgb_sha256": "ca341d8855852aa40b6c7180f3176d8d22a4ba735d83c3016a1d46df28b53279"
+        },
+        {
+          "profile": 19,
+          "case": "separated-corner",
+          "source": "actual/profile-19/separated-corner.png",
+          "source_sha256": "da167886220bd1da10520874a591261d25ab6d0040f07de13a4aad762b27dbee",
+          "rect": [
+            0,
+            438,
+            240,
+            160
+          ],
+          "rgb_sha256": "cc450053310b85e273ba46b2a2c4dc54779264a2acb20fd3faf53086e8f6ec6b"
+        },
+        {
+          "profile": 29,
+          "case": "separated-corner",
+          "source": "actual/profile-29/separated-corner.png",
+          "source_sha256": "bb34b7bedacda1d2ef63449e090746f2ac448020c956d7e2fa2db179cfec8840",
+          "rect": [
+            240,
+            438,
+            240,
+            160
+          ],
+          "rgb_sha256": "180b9aa263ce6a0b0b1a7eed4fd02b19398db0c2738b9244d793b1914cd5c69d"
+        }
+      ]
+    }
+  ],
+  "method": "Every native240x160 panel is independently decoded and byte-compared to its copied mGBA framebuffer. Captions are outside captured pixels; no scene recomposition."
+}

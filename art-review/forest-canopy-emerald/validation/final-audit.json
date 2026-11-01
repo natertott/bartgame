@@ -1,0 +1,3833 @@
+{
+  "method": "Independent native and actual-room checks for the Emerald-inspired canopy.\n\nReuses the established 4bpp/ELF readers, not the asset packer. The direct new\npainters are read in an isolated subprocess. Aesthetic approval is separate:\nleaf-volume and blending must be judged in native actual-room pictures.\n",
+  "source_commits": [
+    "ead9bb68ca1cec93c8969dd813deda94c919af07"
+  ],
+  "auditor_sha256": "a3196c6a5ea16d1a8d0a7845c60e40c67e6faa0182db05b3e1f50a02509e96de",
+  "decoder_sha256": "eca43b407525dade427cd0888307d01ffe863ff7f2bf4b71a680345cb5d5318b",
+  "profiles": [
+    {
+      "profile": 29,
+      "source_commit": "ead9bb68ca1cec93c8969dd813deda94c919af07",
+      "rom_sha256": "ce60072a9484432c23c6059a74ba115df2b09c5e0f0c3bb2a68b975de9fedf54",
+      "counts": {
+        "forest": {
+          "direct_frames": 938,
+          "protected_tiles": 334
+        },
+        "myst": {
+          "direct_frames": 101,
+          "protected_tiles": 96
+        },
+        "sewer": {
+          "direct_frames": 0,
+          "protected_tiles": 0
+        }
+      },
+      "BG_budgets": {
+        "forest": {
+          "tile_count": 986,
+          "palette_count": 11
+        },
+        "myst": {
+          "tile_count": 107,
+          "palette_count": 6
+        },
+        "sewer": {
+          "tile_count": 822,
+          "palette_count": 1
+        }
+      },
+      "prefabs": [
+        {
+          "role": "small",
+          "native_size": [
+            16,
+            16
+          ],
+          "native_index_sha256": "9b9b8a568d638c5e13decc2bb5693778da776f076c35aec892dffee1bdcf7fca",
+          "map_sha256": "a70152077b49a76135db2e5a8d58ed0bdd3285edb5c314ab941d86350e147876"
+        },
+        {
+          "role": "clump",
+          "native_size": [
+            32,
+            32
+          ],
+          "native_index_sha256": "476d19daa4b8ed3e83f107cc7e4d811192af4c0d92ce6288e80a2e82a6c91014",
+          "map_sha256": "8f5140355cf54302ba58ae422437c8cfb312e46d8212261e851ba3f2925171c3"
+        },
+        {
+          "role": "tree",
+          "native_size": [
+            48,
+            48
+          ],
+          "native_index_sha256": "d57de63b2a04a0237279e10122d91ca65ead834d565f45b4ef043677b0ff0b7a",
+          "map_sha256": "bec74314aa995c58d52acb603ed8c4364b2c62ddcdb6f7fcec0ce41d9d64d978"
+        },
+        {
+          "role": "grove",
+          "native_size": [
+            64,
+            64
+          ],
+          "native_index_sha256": "6b100bc2787e626891b0ce6d13bb246d247c16f99639903c9205119303ee0b7b",
+          "map_sha256": "938d7635c873a70f0a3954267791a9be3e885da9da7be4405531b1bb8aaae7c0"
+        },
+        {
+          "role": "hero",
+          "native_size": [
+            96,
+            64
+          ],
+          "native_index_sha256": "cf876f16d782f2ca1a35e477ad687893eef585cdf531bf0fcf218b16d014fd0e",
+          "map_sha256": "5dac5e74b946fcf7f1dc5cd05f304b0fc6628f7e9e9372a49e89e1bd130159bd"
+        },
+        {
+          "role": "branch",
+          "native_size": [
+            64,
+            16
+          ],
+          "native_index_sha256": "c2d8a23f1c412883b1c23e66135160e8cd832b86305df57122d48e060b5e8b33",
+          "map_sha256": "6b2fb89eb2aecc034c0db7793d7e4a90e333fdd3db26f033399bf88ce7163132"
+        },
+        {
+          "role": "roots",
+          "native_size": [
+            32,
+            16
+          ],
+          "native_index_sha256": "c103c48a03c23eba57c4d78a3c4b5a2de24e50219d335b334df3f3a39dc184c3",
+          "map_sha256": "1943742259bc8563768bf8cf69c135dd4c427696819342bd916158c880429fab"
+        },
+        {
+          "role": "border",
+          "native_size": [
+            96,
+            32
+          ],
+          "native_index_sha256": "2351b8517a21eddb7de1e0d333a6591cf7665aed32d58544b6b937b7d49c7a03",
+          "map_sha256": "cdc661f456497d389cd2ffcf8a4645faafb56045958d5ed4d5f62cdc8e7c0f13"
+        },
+        {
+          "role": "column",
+          "native_size": [
+            16,
+            64
+          ],
+          "native_index_sha256": "a9b24b18060da7dca6db1ae5a831cf6a200da97a07f1d09490254d5f59f62a93",
+          "map_sha256": "5e9b1146d3868cc0a698cda79cf2b65235fd60fe46f08a506dbd5dd582f31c7d"
+        }
+      ],
+      "solid_branch_sha256": "0caee6b82479de77c44936af3bda58a664d4aace8a8448e408d3aab0b44743c8",
+      "visibility": {
+        "frames": 133,
+        "row_bytes": 10,
+        "table_sha256": "a15f52cbe003b60ce3bc755e8033b066601159b7bb6a9a2913dac71f413f284f",
+        "criterion": "native source counts plus independent four-connected component and minimal-row proof; actual framebuffer visibility checked separately"
+      },
+      "OBJ_superset": {
+        "variant": 29,
+        "enemy": 11,
+        "used": 864,
+        "limit": 876,
+        "free": 12,
+        "allocations": {
+          "hero/body+sword+streamed-shield foundation": 32,
+          "items whole sheet": 84,
+          "fx whole sheet": 52,
+          "proj whole sheet": 4,
+          "lift whole sheet": 16,
+          "pick32 whole sheet": 40,
+          "Bloom streamed action": 16,
+          "Bloom ground shadow": 2,
+          "beetle whole sheet": 24,
+          "bat whole sheet": 12,
+          "spitter whole sheet": 48,
+          "slime whole sheet": 12,
+          "knight whole sheet": 192,
+          "ksword whole sheet": 8,
+          "boss streamed frame": 32,
+          "chest streamed frame": 16,
+          "entrance streamed frame": 32,
+          "ambient whole sheet": 6,
+          "arrow whole sheet": 12,
+          "seven menu icons": 112,
+          "trial mouth whole sheet": 48,
+          "one forest/trial NPC frame": 16,
+          "four streamed landmarks": 32,
+          "current-body visibility fragment": 16
+        },
+        "limits": "Static allocation superset, not an OAM peak/CPU guarantee. Includes every enemy family although ordinary themed rooms use subsets. Portrait/HUD use their fixed higher reservations."
+      },
+      "memory": {
+        "__bss_end": 50354868,
+        "__ewram_bss_end": 33789204
+      }
+    }
+  ],
+  "leaf_diagnostics": {
+    "roles": [
+      {
+        "role": "small",
+        "size": [
+          16,
+          16
+        ],
+        "alpha_pixels": 192,
+        "leaf_pixels": 138,
+        "green_pixels": 45,
+        "largest_constant_ink_regions": {
+          "4": 7,
+          "5": 14,
+          "9": 8,
+          "12": 2,
+          "1": 19,
+          "6": 36,
+          "8": 4,
+          "3": 2,
+          "10": 2,
+          "2": 5,
+          "13": 1
+        }
+      },
+      {
+        "role": "clump",
+        "size": [
+          32,
+          32
+        ],
+        "alpha_pixels": 668,
+        "leaf_pixels": 538,
+        "green_pixels": 96,
+        "largest_constant_ink_regions": {
+          "8": 7,
+          "5": 23,
+          "9": 43,
+          "2": 14,
+          "1": 12,
+          "11": 9,
+          "6": 124,
+          "12": 3,
+          "4": 17,
+          "7": 2,
+          "10": 2,
+          "3": 2,
+          "13": 2,
+          "14": 1
+        }
+      },
+      {
+        "role": "tree",
+        "size": [
+          48,
+          48
+        ],
+        "alpha_pixels": 1597,
+        "leaf_pixels": 1348,
+        "green_pixels": 271,
+        "largest_constant_ink_regions": {
+          "11": 9,
+          "6": 115,
+          "5": 93,
+          "9": 46,
+          "4": 25,
+          "1": 14,
+          "2": 31,
+          "10": 2,
+          "8": 7,
+          "7": 2,
+          "12": 4,
+          "3": 5,
+          "13": 2,
+          "14": 1
+        }
+      },
+      {
+        "role": "grove",
+        "size": [
+          64,
+          64
+        ],
+        "alpha_pixels": 3534,
+        "leaf_pixels": 3258,
+        "green_pixels": 597,
+        "largest_constant_ink_regions": {
+          "5": 75,
+          "9": 46,
+          "6": 170,
+          "4": 59,
+          "13": 2,
+          "8": 7,
+          "10": 2,
+          "1": 12,
+          "11": 9,
+          "12": 4,
+          "7": 2,
+          "15": 1,
+          "14": 1
+        }
+      },
+      {
+        "role": "hero",
+        "size": [
+          96,
+          64
+        ],
+        "alpha_pixels": 5493,
+        "leaf_pixels": 5186,
+        "green_pixels": 748,
+        "largest_constant_ink_regions": {
+          "5": 103,
+          "9": 46,
+          "6": 309,
+          "4": 62,
+          "10": 2,
+          "7": 2,
+          "1": 23,
+          "8": 7,
+          "11": 9,
+          "12": 4,
+          "13": 2,
+          "15": 1,
+          "14": 1
+        }
+      },
+      {
+        "role": "branch",
+        "size": [
+          64,
+          16
+        ],
+        "alpha_pixels": 633,
+        "leaf_pixels": 479,
+        "green_pixels": 197,
+        "largest_constant_ink_regions": {
+          "9": 34,
+          "12": 3,
+          "5": 47,
+          "11": 5,
+          "7": 2,
+          "6": 37,
+          "1": 11,
+          "4": 13,
+          "10": 2,
+          "13": 2,
+          "8": 5,
+          "14": 1
+        }
+      },
+      {
+        "role": "roots",
+        "size": [
+          32,
+          16
+        ],
+        "alpha_pixels": 387,
+        "leaf_pixels": 302,
+        "green_pixels": 148,
+        "largest_constant_ink_regions": {
+          "4": 6,
+          "6": 31,
+          "9": 39,
+          "1": 12,
+          "10": 2,
+          "3": 2,
+          "8": 4,
+          "5": 26,
+          "12": 2,
+          "2": 10,
+          "7": 1,
+          "13": 1
+        }
+      },
+      {
+        "role": "border",
+        "size": [
+          96,
+          32
+        ],
+        "alpha_pixels": 2368,
+        "leaf_pixels": 2065,
+        "green_pixels": 502,
+        "largest_constant_ink_regions": {
+          "4": 28,
+          "11": 9,
+          "1": 17,
+          "7": 2,
+          "9": 45,
+          "6": 136,
+          "12": 4,
+          "5": 41,
+          "10": 2,
+          "8": 7,
+          "13": 2,
+          "14": 1
+        }
+      },
+      {
+        "role": "column",
+        "size": [
+          16,
+          64
+        ],
+        "alpha_pixels": 813,
+        "leaf_pixels": 790,
+        "green_pixels": 190,
+        "largest_constant_ink_regions": {
+          "4": 17,
+          "9": 37,
+          "5": 21,
+          "6": 63,
+          "8": 7,
+          "1": 5,
+          "10": 2,
+          "7": 2
+        }
+      },
+      {
+        "role": "authored-small-a",
+        "size": [
+          32,
+          48
+        ],
+        "alpha_pixels": 1010,
+        "leaf_pixels": 821,
+        "green_pixels": 160,
+        "largest_constant_ink_regions": {
+          "5": 71,
+          "12": 4,
+          "9": 45,
+          "11": 9,
+          "6": 58,
+          "4": 52,
+          "3": 7,
+          "2": 25,
+          "13": 2,
+          "1": 46,
+          "8": 7,
+          "7": 2,
+          "10": 2,
+          "14": 1
+        }
+      },
+      {
+        "role": "authored-small-b",
+        "size": [
+          32,
+          48
+        ],
+        "alpha_pixels": 1059,
+        "leaf_pixels": 867,
+        "green_pixels": 219,
+        "largest_constant_ink_regions": {
+          "6": 108,
+          "12": 4,
+          "9": 45,
+          "11": 9,
+          "4": 29,
+          "3": 7,
+          "8": 7,
+          "5": 40,
+          "2": 25,
+          "13": 2,
+          "1": 46,
+          "7": 2,
+          "10": 2,
+          "14": 1
+        }
+      },
+      {
+        "role": "authored-large-a",
+        "size": [
+          48,
+          64
+        ],
+        "alpha_pixels": 2159,
+        "leaf_pixels": 1832,
+        "green_pixels": 218,
+        "largest_constant_ink_regions": {
+          "7": 2,
+          "6": 185,
+          "2": 55,
+          "5": 31,
+          "8": 7,
+          "10": 2,
+          "4": 116,
+          "9": 41,
+          "1": 31,
+          "12": 4,
+          "11": 9,
+          "3": 8,
+          "13": 2,
+          "14": 1
+        }
+      },
+      {
+        "role": "authored-large-b",
+        "size": [
+          48,
+          64
+        ],
+        "alpha_pixels": 2136,
+        "leaf_pixels": 1806,
+        "green_pixels": 276,
+        "largest_constant_ink_regions": {
+          "11": 9,
+          "6": 108,
+          "2": 55,
+          "7": 2,
+          "1": 31,
+          "9": 46,
+          "5": 122,
+          "4": 44,
+          "10": 2,
+          "12": 4,
+          "3": 8,
+          "14": 1,
+          "8": 7,
+          "13": 2,
+          "15": 1
+        }
+      },
+      {
+        "role": "solid_branch",
+        "size": [
+          64,
+          16
+        ],
+        "alpha_pixels": 791,
+        "leaf_pixels": 620,
+        "green_pixels": 195,
+        "largest_constant_ink_regions": {
+          "6": 46,
+          "11": 9,
+          "4": 13,
+          "1": 13,
+          "9": 19,
+          "5": 38,
+          "7": 2,
+          "8": 4,
+          "12": 4,
+          "13": 2,
+          "10": 2,
+          "14": 1
+        }
+      }
+    ],
+    "verdict": "No aesthetic verdict. Review actual native rooms; these measurements distinguish content/flat regions but do not prove leaf volume."
+  },
+  "source_gallery": {
+    "manifest_sha256": "e5898528d48139e401989e809b3f06325345b9844c890df8106be380a5254ed2",
+    "source_commit": "ead9bb68ca1cec93c8969dd813deda94c919af07",
+    "native_images": 14,
+    "hashed_files": 52,
+    "limits": "Source file/native panels verified. These are not actual room framebuffers."
+  },
+  "runtime": {
+    "profiles": [
+      {
+        "profile": 19,
+        "contexts": 8,
+        "movies": 2,
+        "exact_gifs": 2,
+        "observed_video_frames": 400,
+        "minimum_actual_character_pixels": 37,
+        "minimum_actual_character_component": 14,
+        "report_sha256": "7e13c91f32fc16e9692e3b0c136993741b2f03f5e228afe5cafd009ee15378d0",
+        "media_manifest_sha256": "8bd573f435dd7d92bcb2f084da2f1a781627e8c74289cddef3e5c962038aef80",
+        "planner_cases": {
+          "isolated-small": {
+            "components": 3,
+            "placements": 41,
+            "solid_cells": 461,
+            "projected_cells": 0,
+            "native_sizes": [
+              [
+                16,
+                16
+              ],
+              [
+                16,
+                64
+              ],
+              [
+                32,
+                16
+              ],
+              [
+                32,
+                32
+              ],
+              [
+                48,
+                48
+              ],
+              [
+                64,
+                16
+              ],
+              [
+                64,
+                64
+              ],
+              [
+                96,
+                32
+              ],
+              [
+                96,
+                64
+              ]
+            ]
+          },
+          "narrow-arm": {
+            "components": 8,
+            "placements": 53,
+            "solid_cells": 429,
+            "projected_cells": 0,
+            "native_sizes": [
+              [
+                16,
+                16
+              ],
+              [
+                16,
+                64
+              ],
+              [
+                32,
+                16
+              ],
+              [
+                32,
+                32
+              ],
+              [
+                48,
+                48
+              ],
+              [
+                64,
+                16
+              ],
+              [
+                64,
+                64
+              ],
+              [
+                96,
+                32
+              ],
+              [
+                96,
+                64
+              ]
+            ]
+          },
+          "broad-healthy": {
+            "components": 7,
+            "placements": 59,
+            "solid_cells": 436,
+            "projected_cells": 0,
+            "native_sizes": [
+              [
+                16,
+                16
+              ],
+              [
+                16,
+                64
+              ],
+              [
+                32,
+                16
+              ],
+              [
+                32,
+                32
+              ],
+              [
+                48,
+                48
+              ],
+              [
+                64,
+                16
+              ],
+              [
+                64,
+                64
+              ],
+              [
+                96,
+                32
+              ],
+              [
+                96,
+                64
+              ]
+            ]
+          },
+          "broad-deep": {
+            "components": 3,
+            "placements": 46,
+            "solid_cells": 563,
+            "projected_cells": 4,
+            "native_sizes": [
+              [
+                16,
+                16
+              ],
+              [
+                16,
+                64
+              ],
+              [
+                32,
+                16
+              ],
+              [
+                32,
+                32
+              ],
+              [
+                48,
+                48
+              ],
+              [
+                64,
+                16
+              ],
+              [
+                64,
+                64
+              ],
+              [
+                96,
+                32
+              ],
+              [
+                96,
+                64
+              ]
+            ]
+          },
+          "separated-corner": {
+            "components": 7,
+            "placements": 59,
+            "solid_cells": 436,
+            "projected_cells": 0,
+            "native_sizes": [
+              [
+                16,
+                16
+              ],
+              [
+                16,
+                64
+              ],
+              [
+                32,
+                16
+              ],
+              [
+                32,
+                32
+              ],
+              [
+                48,
+                48
+              ],
+              [
+                64,
+                16
+              ],
+              [
+                64,
+                64
+              ],
+              [
+                96,
+                32
+              ],
+              [
+                96,
+                64
+              ]
+            ]
+          },
+          "deep-branch-walk-roll": {
+            "components": 3,
+            "placements": 46,
+            "solid_cells": 563,
+            "projected_cells": 4,
+            "native_sizes": [
+              [
+                16,
+                16
+              ],
+              [
+                16,
+                64
+              ],
+              [
+                32,
+                16
+              ],
+              [
+                32,
+                32
+              ],
+              [
+                48,
+                48
+              ],
+              [
+                64,
+                16
+              ],
+              [
+                64,
+                64
+              ],
+              [
+                96,
+                32
+              ],
+              [
+                96,
+                64
+              ]
+            ]
+          },
+          "deep-branch-cape": {
+            "components": 3,
+            "placements": 46,
+            "solid_cells": 563,
+            "projected_cells": 4,
+            "native_sizes": [
+              [
+                16,
+                16
+              ],
+              [
+                16,
+                64
+              ],
+              [
+                32,
+                16
+              ],
+              [
+                32,
+                32
+              ],
+              [
+                48,
+                48
+              ],
+              [
+                64,
+                16
+              ],
+              [
+                64,
+                64
+              ],
+              [
+                96,
+                32
+              ],
+              [
+                96,
+                64
+              ]
+            ]
+          },
+          "deep-branch-menu-resume": {
+            "components": 3,
+            "placements": 46,
+            "solid_cells": 563,
+            "projected_cells": 4,
+            "native_sizes": [
+              [
+                16,
+                16
+              ],
+              [
+                16,
+                64
+              ],
+              [
+                32,
+                16
+              ],
+              [
+                32,
+                32
+              ],
+              [
+                48,
+                48
+              ],
+              [
+                64,
+                16
+              ],
+              [
+                64,
+                64
+              ],
+              [
+                96,
+                32
+              ],
+              [
+                96,
+                64
+              ]
+            ]
+          }
+        },
+        "menu_timing_observations": [
+          {
+            "case": "deep-branch-menu-resume",
+            "absolute_tick_cadence_identical": true,
+            "candidate": {
+              "intervals": [
+                {
+                  "from_tick": 0,
+                  "to_tick": 1,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 1,
+                  "to_tick": 2,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 2,
+                  "to_tick": 3,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 3,
+                  "to_tick": 4,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 4,
+                  "to_tick": 5,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 5,
+                  "to_tick": 6,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 6,
+                  "to_tick": 7,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 7,
+                  "to_tick": 8,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 8,
+                  "to_tick": 9,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 0
+                },
+                {
+                  "from_tick": 9,
+                  "to_tick": 10,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 0
+                },
+                {
+                  "from_tick": 10,
+                  "to_tick": 11,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 0
+                },
+                {
+                  "from_tick": 50,
+                  "to_tick": 51,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 51,
+                  "to_tick": 52,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 52,
+                  "to_tick": 53,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 53,
+                  "to_tick": 54,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 54,
+                  "to_tick": 55,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 55,
+                  "to_tick": 56,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 56,
+                  "to_tick": 57,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 57,
+                  "to_tick": 58,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 58,
+                  "to_tick": 59,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 59,
+                  "to_tick": 60,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 60,
+                  "to_tick": 61,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 61,
+                  "to_tick": 62,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 62,
+                  "to_tick": 63,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 63,
+                  "to_tick": 64,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 64,
+                  "to_tick": 65,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 65,
+                  "to_tick": 66,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 66,
+                  "to_tick": 67,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 67,
+                  "to_tick": 68,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 68,
+                  "to_tick": 69,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 69,
+                  "to_tick": 70,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 70,
+                  "to_tick": 71,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 71,
+                  "to_tick": 72,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 72,
+                  "to_tick": 73,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 73,
+                  "to_tick": 74,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 74,
+                  "to_tick": 75,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 75,
+                  "to_tick": 76,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 76,
+                  "to_tick": 77,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 77,
+                  "to_tick": 78,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 78,
+                  "to_tick": 79,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 79,
+                  "to_tick": 80,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 80,
+                  "to_tick": 81,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 81,
+                  "to_tick": 82,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 82,
+                  "to_tick": 83,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 83,
+                  "to_tick": 84,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 84,
+                  "to_tick": 85,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 85,
+                  "to_tick": 86,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 86,
+                  "to_tick": 87,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 87,
+                  "to_tick": 88,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 88,
+                  "to_tick": 89,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 89,
+                  "to_tick": 90,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 90,
+                  "to_tick": 91,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 91,
+                  "to_tick": 92,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 92,
+                  "to_tick": 93,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 93,
+                  "to_tick": 94,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 94,
+                  "to_tick": 95,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 95,
+                  "to_tick": 96,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 96,
+                  "to_tick": 97,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 97,
+                  "to_tick": 98,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 98,
+                  "to_tick": 99,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 99,
+                  "to_tick": 100,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 100,
+                  "to_tick": 101,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 101,
+                  "to_tick": 102,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 102,
+                  "to_tick": 103,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 103,
+                  "to_tick": 104,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 104,
+                  "to_tick": 105,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 105,
+                  "to_tick": 106,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 106,
+                  "to_tick": 107,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 107,
+                  "to_tick": 108,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 108,
+                  "to_tick": 109,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 109,
+                  "to_tick": 110,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 110,
+                  "to_tick": 111,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 111,
+                  "to_tick": 112,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 112,
+                  "to_tick": 113,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 113,
+                  "to_tick": 114,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 114,
+                  "to_tick": 115,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 115,
+                  "to_tick": 116,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 116,
+                  "to_tick": 117,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 117,
+                  "to_tick": 118,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 118,
+                  "to_tick": 119,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 119,
+                  "to_tick": 120,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 120,
+                  "to_tick": 121,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 121,
+                  "to_tick": 122,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 122,
+                  "to_tick": 123,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 123,
+                  "to_tick": 124,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 124,
+                  "to_tick": 125,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 125,
+                  "to_tick": 126,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 126,
+                  "to_tick": 127,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                }
+              ],
+              "zero_update_video_intervals": 3,
+              "maximum_update_delta": 1,
+              "maximum_irq_delta": 1,
+              "note": "Counters read after each real mGBA video frame. Recorded gameplay cadence only; these are not CPU-cycle benchmarks or a universal performance guarantee."
+            },
+            "baseline": {
+              "intervals": [
+                {
+                  "from_tick": 0,
+                  "to_tick": 1,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 1,
+                  "to_tick": 2,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 2,
+                  "to_tick": 3,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 3,
+                  "to_tick": 4,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 4,
+                  "to_tick": 5,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 5,
+                  "to_tick": 6,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 6,
+                  "to_tick": 7,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 7,
+                  "to_tick": 8,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 8,
+                  "to_tick": 9,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 0
+                },
+                {
+                  "from_tick": 9,
+                  "to_tick": 10,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 0
+                },
+                {
+                  "from_tick": 10,
+                  "to_tick": 11,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 0
+                },
+                {
+                  "from_tick": 50,
+                  "to_tick": 51,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 51,
+                  "to_tick": 52,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 52,
+                  "to_tick": 53,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 53,
+                  "to_tick": 54,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 54,
+                  "to_tick": 55,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 55,
+                  "to_tick": 56,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 56,
+                  "to_tick": 57,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 57,
+                  "to_tick": 58,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 58,
+                  "to_tick": 59,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 59,
+                  "to_tick": 60,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 60,
+                  "to_tick": 61,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 61,
+                  "to_tick": 62,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 62,
+                  "to_tick": 63,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 63,
+                  "to_tick": 64,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 64,
+                  "to_tick": 65,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 65,
+                  "to_tick": 66,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 66,
+                  "to_tick": 67,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 67,
+                  "to_tick": 68,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 68,
+                  "to_tick": 69,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 69,
+                  "to_tick": 70,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 70,
+                  "to_tick": 71,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 71,
+                  "to_tick": 72,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 72,
+                  "to_tick": 73,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 73,
+                  "to_tick": 74,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 74,
+                  "to_tick": 75,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 75,
+                  "to_tick": 76,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 76,
+                  "to_tick": 77,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 77,
+                  "to_tick": 78,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 78,
+                  "to_tick": 79,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 79,
+                  "to_tick": 80,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 80,
+                  "to_tick": 81,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 81,
+                  "to_tick": 82,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 82,
+                  "to_tick": 83,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 83,
+                  "to_tick": 84,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 84,
+                  "to_tick": 85,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 85,
+                  "to_tick": 86,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 86,
+                  "to_tick": 87,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 87,
+                  "to_tick": 88,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 88,
+                  "to_tick": 89,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 89,
+                  "to_tick": 90,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 90,
+                  "to_tick": 91,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 91,
+                  "to_tick": 92,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 92,
+                  "to_tick": 93,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 93,
+                  "to_tick": 94,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 94,
+                  "to_tick": 95,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 95,
+                  "to_tick": 96,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 96,
+                  "to_tick": 97,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 97,
+                  "to_tick": 98,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 98,
+                  "to_tick": 99,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 99,
+                  "to_tick": 100,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 100,
+                  "to_tick": 101,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 101,
+                  "to_tick": 102,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 102,
+                  "to_tick": 103,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 103,
+                  "to_tick": 104,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 104,
+                  "to_tick": 105,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 105,
+                  "to_tick": 106,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 106,
+                  "to_tick": 107,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 107,
+                  "to_tick": 108,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 108,
+                  "to_tick": 109,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 109,
+                  "to_tick": 110,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 110,
+                  "to_tick": 111,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 111,
+                  "to_tick": 112,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 112,
+                  "to_tick": 113,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 113,
+                  "to_tick": 114,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 114,
+                  "to_tick": 115,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 115,
+                  "to_tick": 116,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 116,
+                  "to_tick": 117,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 117,
+                  "to_tick": 118,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 118,
+                  "to_tick": 119,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 119,
+                  "to_tick": 120,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 120,
+                  "to_tick": 121,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 121,
+                  "to_tick": 122,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 122,
+                  "to_tick": 123,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 123,
+                  "to_tick": 124,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 124,
+                  "to_tick": 125,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 125,
+                  "to_tick": 126,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 126,
+                  "to_tick": 127,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                }
+              ],
+              "zero_update_video_intervals": 3,
+              "maximum_update_delta": 1,
+              "maximum_irq_delta": 1,
+              "note": "Counters read after each real mGBA video frame. Recorded gameplay cadence only; these are not CPU-cycle benchmarks or a universal performance guarantee."
+            },
+            "note": "Menu handoff timing is measured separately from ordinary PLAY cadence, not silently declared identical."
+          }
+        ]
+      },
+      {
+        "profile": 29,
+        "contexts": 8,
+        "movies": 2,
+        "exact_gifs": 2,
+        "observed_video_frames": 400,
+        "minimum_actual_character_pixels": 37,
+        "minimum_actual_character_component": 14,
+        "report_sha256": "b150aa2358b17fcfb32df63d9180f4aadca51c56b78c01242a4f6f1bc7bf2081",
+        "media_manifest_sha256": "39ca79a0cac1b445f859a0c9d62dd338dbc66e5d99e0107198cf5c5a74402096",
+        "planner_cases": {
+          "isolated-small": {
+            "components": 3,
+            "placements": 41,
+            "solid_cells": 461,
+            "projected_cells": 0,
+            "native_sizes": [
+              [
+                16,
+                16
+              ],
+              [
+                16,
+                64
+              ],
+              [
+                32,
+                16
+              ],
+              [
+                32,
+                32
+              ],
+              [
+                48,
+                48
+              ],
+              [
+                64,
+                16
+              ],
+              [
+                64,
+                64
+              ],
+              [
+                96,
+                32
+              ],
+              [
+                96,
+                64
+              ]
+            ],
+            "substrate": {
+              "cells": 461,
+              "snapshot_sha256": "eb7d8fd6d2945710b2cb426f15939a8615108cc7831e6182a33a7fcb4d5445c8",
+              "material_selections": {
+                "green grass fallback": 390,
+                "actual adjacent floor": 71
+              },
+              "quarters_per_sample": 1212
+            }
+          },
+          "narrow-arm": {
+            "components": 8,
+            "placements": 53,
+            "solid_cells": 429,
+            "projected_cells": 0,
+            "native_sizes": [
+              [
+                16,
+                16
+              ],
+              [
+                16,
+                64
+              ],
+              [
+                32,
+                16
+              ],
+              [
+                32,
+                32
+              ],
+              [
+                48,
+                48
+              ],
+              [
+                64,
+                16
+              ],
+              [
+                64,
+                64
+              ],
+              [
+                96,
+                32
+              ],
+              [
+                96,
+                64
+              ]
+            ],
+            "substrate": {
+              "cells": 429,
+              "snapshot_sha256": "b3b76d8e914463f639346b6c70887ab6bdd9e65aeecc2540b9bc1ed8f562edff",
+              "material_selections": {
+                "green grass fallback": 349,
+                "actual adjacent floor": 80
+              },
+              "quarters_per_sample": 1300
+            }
+          },
+          "broad-healthy": {
+            "components": 7,
+            "placements": 59,
+            "solid_cells": 436,
+            "projected_cells": 0,
+            "native_sizes": [
+              [
+                16,
+                16
+              ],
+              [
+                16,
+                64
+              ],
+              [
+                32,
+                16
+              ],
+              [
+                32,
+                32
+              ],
+              [
+                48,
+                48
+              ],
+              [
+                64,
+                16
+              ],
+              [
+                64,
+                64
+              ],
+              [
+                96,
+                32
+              ],
+              [
+                96,
+                64
+              ]
+            ],
+            "substrate": {
+              "cells": 436,
+              "snapshot_sha256": "561e46818f009a27c324f8bda229306d4e88ab4c3fe6d90143599303e031ecb0",
+              "material_selections": {
+                "green grass fallback": 359,
+                "actual adjacent floor": 77
+              },
+              "quarters_per_sample": 1460
+            }
+          },
+          "broad-deep": {
+            "components": 3,
+            "placements": 46,
+            "solid_cells": 563,
+            "projected_cells": 4,
+            "native_sizes": [
+              [
+                16,
+                16
+              ],
+              [
+                16,
+                64
+              ],
+              [
+                32,
+                16
+              ],
+              [
+                32,
+                32
+              ],
+              [
+                48,
+                48
+              ],
+              [
+                64,
+                16
+              ],
+              [
+                64,
+                64
+              ],
+              [
+                96,
+                32
+              ],
+              [
+                96,
+                64
+              ]
+            ],
+            "substrate": {
+              "cells": 563,
+              "snapshot_sha256": "a53dea6a7843bffff08830699c35cc2515a31942961c1732b4d33c46d14ea445",
+              "material_selections": {
+                "sick grass fallback": 510,
+                "actual adjacent floor": 53
+              },
+              "quarters_per_sample": 1292
+            }
+          },
+          "separated-corner": {
+            "components": 7,
+            "placements": 59,
+            "solid_cells": 436,
+            "projected_cells": 0,
+            "native_sizes": [
+              [
+                16,
+                16
+              ],
+              [
+                16,
+                64
+              ],
+              [
+                32,
+                16
+              ],
+              [
+                32,
+                32
+              ],
+              [
+                48,
+                48
+              ],
+              [
+                64,
+                16
+              ],
+              [
+                64,
+                64
+              ],
+              [
+                96,
+                32
+              ],
+              [
+                96,
+                64
+              ]
+            ],
+            "substrate": {
+              "cells": 436,
+              "snapshot_sha256": "561e46818f009a27c324f8bda229306d4e88ab4c3fe6d90143599303e031ecb0",
+              "material_selections": {
+                "green grass fallback": 359,
+                "actual adjacent floor": 77
+              },
+              "quarters_per_sample": 1460
+            }
+          },
+          "deep-branch-walk-roll": {
+            "components": 3,
+            "placements": 46,
+            "solid_cells": 563,
+            "projected_cells": 4,
+            "native_sizes": [
+              [
+                16,
+                16
+              ],
+              [
+                16,
+                64
+              ],
+              [
+                32,
+                16
+              ],
+              [
+                32,
+                32
+              ],
+              [
+                48,
+                48
+              ],
+              [
+                64,
+                16
+              ],
+              [
+                64,
+                64
+              ],
+              [
+                96,
+                32
+              ],
+              [
+                96,
+                64
+              ]
+            ],
+            "substrate": {
+              "cells": 563,
+              "snapshot_sha256": "a53dea6a7843bffff08830699c35cc2515a31942961c1732b4d33c46d14ea445",
+              "material_selections": {
+                "sick grass fallback": 510,
+                "actual adjacent floor": 53
+              },
+              "quarters_per_sample": 1292
+            }
+          },
+          "deep-branch-cape": {
+            "components": 3,
+            "placements": 46,
+            "solid_cells": 563,
+            "projected_cells": 4,
+            "native_sizes": [
+              [
+                16,
+                16
+              ],
+              [
+                16,
+                64
+              ],
+              [
+                32,
+                16
+              ],
+              [
+                32,
+                32
+              ],
+              [
+                48,
+                48
+              ],
+              [
+                64,
+                16
+              ],
+              [
+                64,
+                64
+              ],
+              [
+                96,
+                32
+              ],
+              [
+                96,
+                64
+              ]
+            ],
+            "substrate": {
+              "cells": 563,
+              "snapshot_sha256": "a53dea6a7843bffff08830699c35cc2515a31942961c1732b4d33c46d14ea445",
+              "material_selections": {
+                "sick grass fallback": 510,
+                "actual adjacent floor": 53
+              },
+              "quarters_per_sample": 1292
+            }
+          },
+          "deep-branch-menu-resume": {
+            "components": 3,
+            "placements": 46,
+            "solid_cells": 563,
+            "projected_cells": 4,
+            "native_sizes": [
+              [
+                16,
+                16
+              ],
+              [
+                16,
+                64
+              ],
+              [
+                32,
+                16
+              ],
+              [
+                32,
+                32
+              ],
+              [
+                48,
+                48
+              ],
+              [
+                64,
+                16
+              ],
+              [
+                64,
+                64
+              ],
+              [
+                96,
+                32
+              ],
+              [
+                96,
+                64
+              ]
+            ],
+            "substrate": {
+              "cells": 563,
+              "snapshot_sha256": "a53dea6a7843bffff08830699c35cc2515a31942961c1732b4d33c46d14ea445",
+              "material_selections": {
+                "sick grass fallback": 510,
+                "actual adjacent floor": 53
+              },
+              "quarters_per_sample": 1292
+            }
+          }
+        },
+        "menu_timing_observations": [
+          {
+            "case": "deep-branch-menu-resume",
+            "absolute_tick_cadence_identical": false,
+            "candidate": {
+              "intervals": [
+                {
+                  "from_tick": 0,
+                  "to_tick": 1,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 1,
+                  "to_tick": 2,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 2,
+                  "to_tick": 3,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 3,
+                  "to_tick": 4,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 4,
+                  "to_tick": 5,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 5,
+                  "to_tick": 6,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 6,
+                  "to_tick": 7,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 7,
+                  "to_tick": 8,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 8,
+                  "to_tick": 9,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 0
+                },
+                {
+                  "from_tick": 9,
+                  "to_tick": 10,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 0
+                },
+                {
+                  "from_tick": 10,
+                  "to_tick": 11,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 0
+                },
+                {
+                  "from_tick": 49,
+                  "to_tick": 50,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 50,
+                  "to_tick": 51,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 51,
+                  "to_tick": 52,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 52,
+                  "to_tick": 53,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 53,
+                  "to_tick": 54,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 54,
+                  "to_tick": 55,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 55,
+                  "to_tick": 56,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 56,
+                  "to_tick": 57,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 57,
+                  "to_tick": 58,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 58,
+                  "to_tick": 59,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 59,
+                  "to_tick": 60,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 60,
+                  "to_tick": 61,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 61,
+                  "to_tick": 62,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 62,
+                  "to_tick": 63,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 63,
+                  "to_tick": 64,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 64,
+                  "to_tick": 65,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 65,
+                  "to_tick": 66,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 66,
+                  "to_tick": 67,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 67,
+                  "to_tick": 68,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 68,
+                  "to_tick": 69,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 69,
+                  "to_tick": 70,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 70,
+                  "to_tick": 71,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 71,
+                  "to_tick": 72,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 72,
+                  "to_tick": 73,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 73,
+                  "to_tick": 74,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 74,
+                  "to_tick": 75,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 75,
+                  "to_tick": 76,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 76,
+                  "to_tick": 77,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 77,
+                  "to_tick": 78,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 78,
+                  "to_tick": 79,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 79,
+                  "to_tick": 80,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 80,
+                  "to_tick": 81,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 81,
+                  "to_tick": 82,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 82,
+                  "to_tick": 83,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 83,
+                  "to_tick": 84,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 84,
+                  "to_tick": 85,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 85,
+                  "to_tick": 86,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 86,
+                  "to_tick": 87,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 87,
+                  "to_tick": 88,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 88,
+                  "to_tick": 89,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 89,
+                  "to_tick": 90,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 90,
+                  "to_tick": 91,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 91,
+                  "to_tick": 92,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 92,
+                  "to_tick": 93,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 93,
+                  "to_tick": 94,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 94,
+                  "to_tick": 95,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 95,
+                  "to_tick": 96,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 96,
+                  "to_tick": 97,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 97,
+                  "to_tick": 98,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 98,
+                  "to_tick": 99,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 99,
+                  "to_tick": 100,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 100,
+                  "to_tick": 101,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 101,
+                  "to_tick": 102,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 102,
+                  "to_tick": 103,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 103,
+                  "to_tick": 104,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 104,
+                  "to_tick": 105,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 105,
+                  "to_tick": 106,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 106,
+                  "to_tick": 107,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 107,
+                  "to_tick": 108,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 108,
+                  "to_tick": 109,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 109,
+                  "to_tick": 110,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 110,
+                  "to_tick": 111,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 111,
+                  "to_tick": 112,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 112,
+                  "to_tick": 113,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 113,
+                  "to_tick": 114,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 114,
+                  "to_tick": 115,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 115,
+                  "to_tick": 116,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 116,
+                  "to_tick": 117,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 117,
+                  "to_tick": 118,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 118,
+                  "to_tick": 119,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 119,
+                  "to_tick": 120,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 120,
+                  "to_tick": 121,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 121,
+                  "to_tick": 122,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 122,
+                  "to_tick": 123,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 123,
+                  "to_tick": 124,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 124,
+                  "to_tick": 125,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 125,
+                  "to_tick": 126,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 126,
+                  "to_tick": 127,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                }
+              ],
+              "zero_update_video_intervals": 3,
+              "maximum_update_delta": 1,
+              "maximum_irq_delta": 1,
+              "note": "Counters read after each real mGBA video frame. Recorded gameplay cadence only; these are not CPU-cycle benchmarks or a universal performance guarantee."
+            },
+            "baseline": {
+              "intervals": [
+                {
+                  "from_tick": 0,
+                  "to_tick": 1,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 1,
+                  "to_tick": 2,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 2,
+                  "to_tick": 3,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 3,
+                  "to_tick": 4,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 4,
+                  "to_tick": 5,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 5,
+                  "to_tick": 6,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 6,
+                  "to_tick": 7,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 7,
+                  "to_tick": 8,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 8,
+                  "to_tick": 9,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 0
+                },
+                {
+                  "from_tick": 9,
+                  "to_tick": 10,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 0
+                },
+                {
+                  "from_tick": 10,
+                  "to_tick": 11,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 0
+                },
+                {
+                  "from_tick": 50,
+                  "to_tick": 51,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 51,
+                  "to_tick": 52,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 52,
+                  "to_tick": 53,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 53,
+                  "to_tick": 54,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 54,
+                  "to_tick": 55,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 55,
+                  "to_tick": 56,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 56,
+                  "to_tick": 57,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 57,
+                  "to_tick": 58,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 58,
+                  "to_tick": 59,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 59,
+                  "to_tick": 60,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 60,
+                  "to_tick": 61,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 61,
+                  "to_tick": 62,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 62,
+                  "to_tick": 63,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 63,
+                  "to_tick": 64,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 64,
+                  "to_tick": 65,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 65,
+                  "to_tick": 66,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 66,
+                  "to_tick": 67,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 67,
+                  "to_tick": 68,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 68,
+                  "to_tick": 69,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 69,
+                  "to_tick": 70,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 70,
+                  "to_tick": 71,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 71,
+                  "to_tick": 72,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 72,
+                  "to_tick": 73,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 73,
+                  "to_tick": 74,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 74,
+                  "to_tick": 75,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 75,
+                  "to_tick": 76,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 76,
+                  "to_tick": 77,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 77,
+                  "to_tick": 78,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 78,
+                  "to_tick": 79,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 79,
+                  "to_tick": 80,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 80,
+                  "to_tick": 81,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 81,
+                  "to_tick": 82,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 82,
+                  "to_tick": 83,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 83,
+                  "to_tick": 84,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 84,
+                  "to_tick": 85,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 85,
+                  "to_tick": 86,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 86,
+                  "to_tick": 87,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 87,
+                  "to_tick": 88,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 88,
+                  "to_tick": 89,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 89,
+                  "to_tick": 90,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 90,
+                  "to_tick": 91,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 91,
+                  "to_tick": 92,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 92,
+                  "to_tick": 93,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 93,
+                  "to_tick": 94,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 94,
+                  "to_tick": 95,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 95,
+                  "to_tick": 96,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 96,
+                  "to_tick": 97,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 97,
+                  "to_tick": 98,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 98,
+                  "to_tick": 99,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 99,
+                  "to_tick": 100,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 100,
+                  "to_tick": 101,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 101,
+                  "to_tick": 102,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 102,
+                  "to_tick": 103,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 103,
+                  "to_tick": 104,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 104,
+                  "to_tick": 105,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 105,
+                  "to_tick": 106,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 106,
+                  "to_tick": 107,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 107,
+                  "to_tick": 108,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 108,
+                  "to_tick": 109,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 109,
+                  "to_tick": 110,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 110,
+                  "to_tick": 111,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 111,
+                  "to_tick": 112,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 112,
+                  "to_tick": 113,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 113,
+                  "to_tick": 114,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 114,
+                  "to_tick": 115,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 115,
+                  "to_tick": 116,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 116,
+                  "to_tick": 117,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 117,
+                  "to_tick": 118,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 118,
+                  "to_tick": 119,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 119,
+                  "to_tick": 120,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 120,
+                  "to_tick": 121,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 121,
+                  "to_tick": 122,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 122,
+                  "to_tick": 123,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 123,
+                  "to_tick": 124,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 124,
+                  "to_tick": 125,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 125,
+                  "to_tick": 126,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                },
+                {
+                  "from_tick": 126,
+                  "to_tick": 127,
+                  "irq_delta": 1,
+                  "gameplay_update_delta": 1
+                }
+              ],
+              "zero_update_video_intervals": 3,
+              "maximum_update_delta": 1,
+              "maximum_irq_delta": 1,
+              "note": "Counters read after each real mGBA video frame. Recorded gameplay cadence only; these are not CPU-cycle benchmarks or a universal performance guarantee."
+            },
+            "note": "Menu handoff timing is measured separately from ordinary PLAY cadence, not silently declared identical."
+          }
+        ]
+      }
+    ],
+    "contexts": 16,
+    "movies": 4,
+    "exact_gifs": 4,
+    "observed_video_frames": 800,
+    "baseline_profile": 19,
+    "limits": "Finite natural-room and ordinary-input observations; menu handoff timings are explicit observations; no universal animation/frame-time claim."
+  },
+  "historical_controls": [
+    {
+      "profile": 0,
+      "group": "historical",
+      "name": "prior full ROM and recorded identity exact",
+      "passed": true,
+      "detail": {
+        "previous_sha256": "9330a44a4e27d99606a757134aa41a62adb122a74315c400e1ad3427048c8661",
+        "current_sha256": "9330a44a4e27d99606a757134aa41a62adb122a74315c400e1ad3427048c8661"
+      }
+    },
+    {
+      "profile": 1,
+      "group": "historical",
+      "name": "prior full ROM and recorded identity exact",
+      "passed": true,
+      "detail": {
+        "previous_sha256": "aa1dda5a1fe8bb31982d7f5beaeba7497011badccc34900037ef687cb0bc3067",
+        "current_sha256": "aa1dda5a1fe8bb31982d7f5beaeba7497011badccc34900037ef687cb0bc3067"
+      }
+    },
+    {
+      "profile": 2,
+      "group": "historical",
+      "name": "prior full ROM and recorded identity exact",
+      "passed": true,
+      "detail": {
+        "previous_sha256": "50f559ec16aaa2e08bb446349c8a8e122ff5ec6b983cea6b32a0b2d5be3cc515",
+        "current_sha256": "50f559ec16aaa2e08bb446349c8a8e122ff5ec6b983cea6b32a0b2d5be3cc515"
+      }
+    },
+    {
+      "profile": 3,
+      "group": "historical",
+      "name": "prior full ROM and recorded identity exact",
+      "passed": true,
+      "detail": {
+        "previous_sha256": "85238cd938ef2778f651bf005eb9655216569d8194f9aefe81cc9e3c70f85673",
+        "current_sha256": "85238cd938ef2778f651bf005eb9655216569d8194f9aefe81cc9e3c70f85673"
+      }
+    },
+    {
+      "profile": 4,
+      "group": "historical",
+      "name": "prior full ROM and recorded identity exact",
+      "passed": true,
+      "detail": {
+        "previous_sha256": "411035db3a288fabe0aef2f3cabc21199be324d1445de5c6a8323942cda44214",
+        "current_sha256": "411035db3a288fabe0aef2f3cabc21199be324d1445de5c6a8323942cda44214"
+      }
+    },
+    {
+      "profile": 5,
+      "group": "historical",
+      "name": "prior full ROM and recorded identity exact",
+      "passed": true,
+      "detail": {
+        "previous_sha256": "0904dd78511be6df01adb8e49e40064b7a6d95b4c07368e4a0699077d003e8a5",
+        "current_sha256": "0904dd78511be6df01adb8e49e40064b7a6d95b4c07368e4a0699077d003e8a5"
+      }
+    },
+    {
+      "profile": 6,
+      "group": "historical",
+      "name": "prior full ROM and recorded identity exact",
+      "passed": true,
+      "detail": {
+        "previous_sha256": "fc8e92f92a4aa43aa5cc56c0caff7a6dc1394f21dc356e7830ef9a7e07f234a1",
+        "current_sha256": "fc8e92f92a4aa43aa5cc56c0caff7a6dc1394f21dc356e7830ef9a7e07f234a1"
+      }
+    },
+    {
+      "profile": 7,
+      "group": "historical",
+      "name": "prior full ROM and recorded identity exact",
+      "passed": true,
+      "detail": {
+        "previous_sha256": "3fe6143a9c9de8ccb79248e20b69b199aa462078c92827e71805ebf5826e11df",
+        "current_sha256": "3fe6143a9c9de8ccb79248e20b69b199aa462078c92827e71805ebf5826e11df"
+      }
+    },
+    {
+      "profile": 8,
+      "group": "historical",
+      "name": "prior full ROM and recorded identity exact",
+      "passed": true,
+      "detail": {
+        "previous_sha256": "c72c07bf22bd15eaf3898e1fb0a75eabb7b2dc4c85ead74e68ba30a5f181e8f9",
+        "current_sha256": "c72c07bf22bd15eaf3898e1fb0a75eabb7b2dc4c85ead74e68ba30a5f181e8f9"
+      }
+    },
+    {
+      "profile": 9,
+      "group": "historical",
+      "name": "prior full ROM and recorded identity exact",
+      "passed": true,
+      "detail": {
+        "previous_sha256": "6e5af6e3ec8e960f2e11cbd485a4c6e8d11f4e6eca202d46f15246cc3cca7538",
+        "current_sha256": "6e5af6e3ec8e960f2e11cbd485a4c6e8d11f4e6eca202d46f15246cc3cca7538"
+      }
+    },
+    {
+      "profile": 10,
+      "group": "historical",
+      "name": "prior full ROM and recorded identity exact",
+      "passed": true,
+      "detail": {
+        "previous_sha256": "3876a966293a6cfd68eb39f881dd107b1da4bc14f0b764223712251321784d07",
+        "current_sha256": "3876a966293a6cfd68eb39f881dd107b1da4bc14f0b764223712251321784d07"
+      }
+    },
+    {
+      "profile": 11,
+      "group": "historical",
+      "name": "prior full ROM and recorded identity exact",
+      "passed": true,
+      "detail": {
+        "previous_sha256": "1a125213d152e764ad201f87d6097c5d16cc9c8f49ed5837c6a5c6fafd3f940c",
+        "current_sha256": "1a125213d152e764ad201f87d6097c5d16cc9c8f49ed5837c6a5c6fafd3f940c"
+      }
+    },
+    {
+      "profile": 12,
+      "group": "historical",
+      "name": "prior full ROM and recorded identity exact",
+      "passed": true,
+      "detail": {
+        "previous_sha256": "b22ee8a09b350e30a7b54aafd8dc24ca688b9c28122333576d83390dcb43bbed",
+        "current_sha256": "b22ee8a09b350e30a7b54aafd8dc24ca688b9c28122333576d83390dcb43bbed"
+      }
+    },
+    {
+      "profile": 13,
+      "group": "historical",
+      "name": "prior full ROM and recorded identity exact",
+      "passed": true,
+      "detail": {
+        "previous_sha256": "cb51ca2122dd0ae22796eda6d574662074d7021ce7e42ecaa1dd8e0cd62aee2f",
+        "current_sha256": "cb51ca2122dd0ae22796eda6d574662074d7021ce7e42ecaa1dd8e0cd62aee2f"
+      }
+    },
+    {
+      "profile": 14,
+      "group": "historical",
+      "name": "prior full ROM and recorded identity exact",
+      "passed": true,
+      "detail": {
+        "previous_sha256": "a511bfeb34db8d665fcf7fc49a643f1dd7250a4413f26f114baeb4991756bd91",
+        "current_sha256": "a511bfeb34db8d665fcf7fc49a643f1dd7250a4413f26f114baeb4991756bd91"
+      }
+    },
+    {
+      "profile": 15,
+      "group": "historical",
+      "name": "prior full ROM and recorded identity exact",
+      "passed": true,
+      "detail": {
+        "previous_sha256": "75706dae8ecd8bee0a7475a5eb5aaa7463cbcb23ccca627859e84b24269300c7",
+        "current_sha256": "75706dae8ecd8bee0a7475a5eb5aaa7463cbcb23ccca627859e84b24269300c7"
+      }
+    },
+    {
+      "profile": 16,
+      "group": "historical",
+      "name": "prior full ROM and recorded identity exact",
+      "passed": true,
+      "detail": {
+        "previous_sha256": "4cdd03ae3c2f55d96dece4d0e67d0cd1838e0d3c316ed2bda711df9e2ff9a8e3",
+        "current_sha256": "4cdd03ae3c2f55d96dece4d0e67d0cd1838e0d3c316ed2bda711df9e2ff9a8e3"
+      }
+    },
+    {
+      "profile": 17,
+      "group": "historical",
+      "name": "prior full ROM and recorded identity exact",
+      "passed": true,
+      "detail": {
+        "previous_sha256": "4dda2734fd2f4934b08c14aa5cbb7a9854f8fecca237d7677ebcf74bfb5ee2b3",
+        "current_sha256": "4dda2734fd2f4934b08c14aa5cbb7a9854f8fecca237d7677ebcf74bfb5ee2b3"
+      }
+    },
+    {
+      "profile": 18,
+      "group": "historical",
+      "name": "prior full ROM and recorded identity exact",
+      "passed": true,
+      "detail": {
+        "previous_sha256": "54768ae3f4462743dabd72e03ddd3c9f711ad4ebff2e09474bd3bd85d427e4af",
+        "current_sha256": "54768ae3f4462743dabd72e03ddd3c9f711ad4ebff2e09474bd3bd85d427e4af"
+      }
+    },
+    {
+      "profile": 19,
+      "group": "historical",
+      "name": "prior full ROM and recorded identity exact",
+      "passed": true,
+      "detail": {
+        "previous_sha256": "09aa5274a91618c5a06a74bd7ba61bebc6ebb71d738aeb48de86f8b91930c3b7",
+        "current_sha256": "09aa5274a91618c5a06a74bd7ba61bebc6ebb71d738aeb48de86f8b91930c3b7"
+      }
+    },
+    {
+      "profile": 20,
+      "group": "historical",
+      "name": "prior full ROM and recorded identity exact",
+      "passed": true,
+      "detail": {
+        "previous_sha256": "44cecd939239adc4f62130366372b72ae4044fc390c6ff887aa7eb334791eb47",
+        "current_sha256": "44cecd939239adc4f62130366372b72ae4044fc390c6ff887aa7eb334791eb47"
+      }
+    },
+    {
+      "profile": 21,
+      "group": "historical",
+      "name": "prior full ROM and recorded identity exact",
+      "passed": true,
+      "detail": {
+        "previous_sha256": "4afbe064f60a8f7741f132ea1c3562199dad5574938a46833dc6a3a1324e95e5",
+        "current_sha256": "4afbe064f60a8f7741f132ea1c3562199dad5574938a46833dc6a3a1324e95e5"
+      }
+    },
+    {
+      "profile": 22,
+      "group": "historical",
+      "name": "prior full ROM and recorded identity exact",
+      "passed": true,
+      "detail": {
+        "previous_sha256": "0e058c31efb7182646112ab79a2d21a8e4c6530c0fa9b7406619fe54cc62e345",
+        "current_sha256": "0e058c31efb7182646112ab79a2d21a8e4c6530c0fa9b7406619fe54cc62e345"
+      }
+    },
+    {
+      "profile": 23,
+      "group": "historical",
+      "name": "prior full ROM and recorded identity exact",
+      "passed": true,
+      "detail": {
+        "previous_sha256": "68f99c3a73c0c824a0617283890c74798342799f5c81a8eb5ae2fa24ec103e59",
+        "current_sha256": "68f99c3a73c0c824a0617283890c74798342799f5c81a8eb5ae2fa24ec103e59"
+      }
+    },
+    {
+      "profile": 24,
+      "group": "historical",
+      "name": "prior full ROM and recorded identity exact",
+      "passed": true,
+      "detail": {
+        "previous_sha256": "66a8d99b08d3fc4d55ef55f2148d26938207697c3c5ec1d918938fb9308a9226",
+        "current_sha256": "66a8d99b08d3fc4d55ef55f2148d26938207697c3c5ec1d918938fb9308a9226"
+      }
+    },
+    {
+      "profile": 25,
+      "group": "historical",
+      "name": "prior full ROM and recorded identity exact",
+      "passed": true,
+      "detail": {
+        "previous_sha256": "750f173a8504a298114295c0fa5a620a1365aa9e7e9918f3f04916698478980f",
+        "current_sha256": "750f173a8504a298114295c0fa5a620a1365aa9e7e9918f3f04916698478980f"
+      }
+    },
+    {
+      "profile": 26,
+      "group": "historical",
+      "name": "prior full ROM and recorded identity exact",
+      "passed": true,
+      "detail": {
+        "previous_sha256": "8f6184789e8bca6c38ff83a8bb8e1df7167da681502eb6d68838dd4a512c0ad8",
+        "current_sha256": "8f6184789e8bca6c38ff83a8bb8e1df7167da681502eb6d68838dd4a512c0ad8"
+      }
+    },
+    {
+      "profile": 27,
+      "group": "historical",
+      "name": "prior full ROM and recorded identity exact",
+      "passed": true,
+      "detail": {
+        "previous_sha256": "473ec3ca0bdf37f54b62434b65253a827616b2adcc25df8756997f309f6f4b7b",
+        "current_sha256": "473ec3ca0bdf37f54b62434b65253a827616b2adcc25df8756997f309f6f4b7b"
+      }
+    },
+    {
+      "profile": 28,
+      "group": "historical",
+      "name": "prior full ROM and recorded identity exact",
+      "passed": true,
+      "detail": {
+        "previous_sha256": "420cc65e9b1139dcadd939715800464728864e7e3cd776ca079d3dcc786f21b3",
+        "current_sha256": "420cc65e9b1139dcadd939715800464728864e7e3cd776ca079d3dcc786f21b3"
+      }
+    }
+  ],
+  "passed": 2090,
+  "total": 2090,
+  "failures": [],
+  "checks_by_group": {
+    "scope": 70,
+    "provenance": 139,
+    "native_palette": 3,
+    "budget": 5,
+    "native": 3,
+    "prefabs": 11,
+    "palette": 3,
+    "visibility_metadata": 401,
+    "obj_budget": 3,
+    "historical": 29,
+    "source_provenance": 80,
+    "source_files": 52,
+    "source_coverage": 1,
+    "source_native": 42,
+    "source_panels": 28,
+    "source_palette": 16,
+    "source_gif": 1,
+    "runtime_provenance": 44,
+    "runtime_coverage": 2,
+    "runtime_fixture": 16,
+    "runtime_semantics": 32,
+    "runtime_cadence": 16,
+    "runtime_hardware": 32,
+    "planner": 68,
+    "approaches": 128,
+    "runtime_visibility": 723,
+    "runtime_media": 40,
+    "runtime_cape": 68,
+    "runtime_cache": 2,
+    "ground_substrate": 32
+  },
+  "aesthetic_verdict": "Separate native actual-room critique required. Dense alpha or passing counters are not proof of leaf volume or blending."
+}

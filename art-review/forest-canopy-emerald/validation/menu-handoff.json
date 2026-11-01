@@ -1,0 +1,1099 @@
+{
+  "method": "Read the unchanged final raw menu observations; first post40 tick with PLAY and displayedworldplanes, then first exactbodyOAM. No report rewrite.",
+  "profiles": [
+    {
+      "profile": 19,
+      "first_returned_world_tick": 50,
+      "first_returned_body_tick": 51,
+      "zero_update_video_intervals": 3,
+      "playing_irq_update_deltas": {
+        "intervals": [
+          {
+            "from_tick": 0,
+            "to_tick": 1,
+            "irq_delta": 1,
+            "gameplay_update_delta": 1
+          },
+          {
+            "from_tick": 1,
+            "to_tick": 2,
+            "irq_delta": 1,
+            "gameplay_update_delta": 1
+          },
+          {
+            "from_tick": 2,
+            "to_tick": 3,
+            "irq_delta": 1,
+            "gameplay_update_delta": 1
+          },
+          {
+            "from_tick": 3,
+            "to_tick": 4,
+            "irq_delta": 1,
+            "gameplay_update_delta": 1
+          },
+          {
+            "from_tick": 4,
+            "to_tick": 5,
+            "irq_delta": 1,
+            "gameplay_update_delta": 1
+          },
+          {
+            "from_tick": 5,
+            "to_tick": 6,
+            "irq_delta": 1,
+            "gameplay_update_delta": 1
+          },
+          {
+            "from_tick": 6,
+            "to_tick": 7,
+            "irq_delta": 1,
+            "gameplay_update_delta": 1
+          },
+          {
+            "from_tick": 7,
+            "to_tick": 8,
+            "irq_delta": 1,
+            "gameplay_update_delta": 1
+          },
+          {
+            "from_tick": 8,
+            "to_tick": 9,
+            "irq_delta": 1,
+            "gameplay_update_delta": 0
+          },
+          {
+            "from_tick": 9,
+            "to_tick": 10,
+            "irq_delta": 1,
+            "gameplay_update_delta": 0
+          },
+          {
+            "from_tick": 10,
+            "to_tick": 11,
+            "irq_delta": 1,
+            "gameplay_update_delta": 0
+          },
+          {
+            "from_tick": 50,
+            "to_tick": 51,
+            "irq_delta": 1,
+            "gameplay_update_delta": 1
+          },
+          {
+            "from_tick": 51,
+            "to_tick": 52,
+            "irq_delta": 1,
+            "gameplay_update_delta": 1
+          },
+          {
+            "from_tick": 52,
+            "to_tick": 53,
+            "irq_delta": 1,
+            "gameplay_update_delta": 1
+          },
+          {
+            "from_tick": 53,
+            "to_tick": 54,
+            "irq_delta": 1,
+            "gameplay_update_delta": 1
+          },
+          {
+            "from_tick": 54,
+            "to_tick": 55,
+            "irq_delta": 1,
+            "gameplay_update_delta": 1
+          },
+          {
+            "from_tick": 55,
+            "to_tick": 56,
+            "irq_delta": 1,
+            "gameplay_update_delta": 1
+          },
+          {
+            "from_tick": 56,
+            "to_tick": 57,
+            "irq_delta": 1,
+            "gameplay_update_delta": 1
+          },
+          {
+            "from_tick": 57,
+            "to_tick": 58,
+            "irq_delta": 1,
+            "gameplay_update_delta": 1
+          },
+          {
+            "from_tick": 58,
+            "to_tick": 59,
+            "irq_delta": 1,
+            "gameplay_update_delta": 1
+          },
+          {
+            "from_tick": 59,
+            "to_tick": 60,
+            "irq_delta": 1,
+            "gameplay_update_delta": 1
+          },
+          {
+            "from_tick": 60,
+            "to_tick": 61,
+            "irq_delta": 1,
+            "gameplay_update_delta": 1
+          },
+          {
+            "from_tick": 61,
+            "to_tick": 62,
+            "irq_delta": 1,
+            "gameplay_update_delta": 1
+          },
+          {
+            "from_tick": 62,
+            "to_tick": 63,
+            "irq_delta": 1,
+            "gameplay_update_delta": 1
+          },
+          {
+            "from_tick": 63,
+            "to_tick": 64,
+            "irq_delta": 1,
+            "gameplay_update_delta": 1
+          },
+          {
+            "from_tick": 64,
+            "to_tick": 65,
+            "irq_delta": 1,
+            "gameplay_update_delta": 1
+          },
+          {
+            "from_tick": 65,
+            "to_tick": 66,
+            "irq_delta": 1,
+            "gameplay_update_delta": 1
+          },
+          {
+            "from_tick": 66,
+            "to_tick": 67,
+            "irq_delta": 1,
+            "gameplay_update_delta": 1
+          },
+          {
+            "from_tick": 67,
+            "to_tick": 68,
+            "irq_delta": 1,
+            "gameplay_update_delta": 1
+          },
+          {
+            "from_tick": 68,
+            "to_tick": 69,
+            "irq_delta": 1,
+            "gameplay_update_delta": 1
+          },
+          {
+            "from_tick": 69,
+            "to_tick": 70,
+            "irq_delta": 1,
+            "gameplay_update_delta": 1
+          },
+          {
+            "from_tick": 70,
+            "to_tick": 71,
+            "irq_delta": 1,
+            "gameplay_update_delta": 1
+          },
+          {
+            "from_tick": 71,
+            "to_tick": 72,
+            "irq_delta": 1,
+            "gameplay_update_delta": 1
+          },
+          {
+            "from_tick": 72,
+            "to_tick": 73,
+            "irq_delta": 1,
+            "gameplay_update_delta": 1
+          },
+          {
+            "from_tick": 73,
+            "to_tick": 74,
+            "irq_delta": 1,
+            "gameplay_update_delta": 1
+          },
+          {
+            "from_tick": 74,
+            "to_tick": 75,
+            "irq_delta": 1,
+            "gameplay_update_delta": 1
+          },
+          {
+            "from_tick": 75,
+            "to_tick": 76,
+            "irq_delta": 1,
+            "gameplay_update_delta": 1
+          },
+          {
+            "from_tick": 76,
+            "to_tick": 77,
+            "irq_delta": 1,
+            "gameplay_update_delta": 1
+          },
+          {
+            "from_tick": 77,
+            "to_tick": 78,
+            "irq_delta": 1,
+            "gameplay_update_delta": 1
+          },
+          {
+            "from_tick": 78,
+            "to_tick": 79,
+            "irq_delta": 1,
+            "gameplay_update_delta": 1
+          },
+          {
+            "from_tick": 79,
+            "to_tick": 80,
+            "irq_delta": 1,
+            "gameplay_update_delta": 1
+          },
+          {
+            "from_tick": 80,
+            "to_tick": 81,
+            "irq_delta": 1,
+            "gameplay_update_delta": 1
+          },
+          {
+            "from_tick": 81,
+            "to_tick": 82,
+            "irq_delta": 1,
+            "gameplay_update_delta": 1
+          },
+          {
+            "from_tick": 82,
+            "to_tick": 83,
+            "irq_delta": 1,
+            "gameplay_update_delta": 1
+          },
+          {
+            "from_tick": 83,
+            "to_tick": 84,
+            "irq_delta": 1,
+            "gameplay_update_delta": 1
+          },
+          {
+            "from_tick": 84,
+            "to_tick": 85,
+            "irq_delta": 1,
+            "gameplay_update_delta": 1
+          },
+          {
+            "from_tick": 85,
+            "to_tick": 86,
+            "irq_delta": 1,
+            "gameplay_update_delta": 1
+          },
+          {
+            "from_tick": 86,
+            "to_tick": 87,
+            "irq_delta": 1,
+            "gameplay_update_delta": 1
+          },
+          {
+            "from_tick": 87,
+            "to_tick": 88,
+            "irq_delta": 1,
+            "gameplay_update_delta": 1
+          },
+          {
+            "from_tick": 88,
+            "to_tick": 89,
+            "irq_delta": 1,
+            "gameplay_update_delta": 1
+          },
+          {
+            "from_tick": 89,
+            "to_tick": 90,
+            "irq_delta": 1,
+            "gameplay_update_delta": 1
+          },
+          {
+            "from_tick": 90,
+            "to_tick": 91,
+            "irq_delta": 1,
+            "gameplay_update_delta": 1
+          },
+          {
+            "from_tick": 91,
+            "to_tick": 92,
+            "irq_delta": 1,
+            "gameplay_update_delta": 1
+          },
+          {
+            "from_tick": 92,
+            "to_tick": 93,
+            "irq_delta": 1,
+            "gameplay_update_delta": 1
+          },
+          {
+            "from_tick": 93,
+            "to_tick": 94,
+            "irq_delta": 1,
+            "gameplay_update_delta": 1
+          },
+          {
+            "from_tick": 94,
+            "to_tick": 95,
+            "irq_delta": 1,
+            "gameplay_update_delta": 1
+          },
+          {
+            "from_tick": 95,
+            "to_tick": 96,
+            "irq_delta": 1,
+            "gameplay_update_delta": 1
+          },
+          {
+            "from_tick": 96,
+            "to_tick": 97,
+            "irq_delta": 1,
+            "gameplay_update_delta": 1
+          },
+          {
+            "from_tick": 97,
+            "to_tick": 98,
+            "irq_delta": 1,
+            "gameplay_update_delta": 1
+          },
+          {
+            "from_tick": 98,
+            "to_tick": 99,
+            "irq_delta": 1,
+            "gameplay_update_delta": 1
+          },
+          {
+            "from_tick": 99,
+            "to_tick": 100,
+            "irq_delta": 1,
+            "gameplay_update_delta": 1
+          },
+          {
+            "from_tick": 100,
+            "to_tick": 101,
+            "irq_delta": 1,
+            "gameplay_update_delta": 1
+          },
+          {
+            "from_tick": 101,
+            "to_tick": 102,
+            "irq_delta": 1,
+            "gameplay_update_delta": 1
+          },
+          {
+            "from_tick": 102,
+            "to_tick": 103,
+            "irq_delta": 1,
+            "gameplay_update_delta": 1
+          },
+          {
+            "from_tick": 103,
+            "to_tick": 104,
+            "irq_delta": 1,
+            "gameplay_update_delta": 1
+          },
+          {
+            "from_tick": 104,
+            "to_tick": 105,
+            "irq_delta": 1,
+            "gameplay_update_delta": 1
+          },
+          {
+            "from_tick": 105,
+            "to_tick": 106,
+            "irq_delta": 1,
+            "gameplay_update_delta": 1
+          },
+          {
+            "from_tick": 106,
+            "to_tick": 107,
+            "irq_delta": 1,
+            "gameplay_update_delta": 1
+          },
+          {
+            "from_tick": 107,
+            "to_tick": 108,
+            "irq_delta": 1,
+            "gameplay_update_delta": 1
+          },
+          {
+            "from_tick": 108,
+            "to_tick": 109,
+            "irq_delta": 1,
+            "gameplay_update_delta": 1
+          },
+          {
+            "from_tick": 109,
+            "to_tick": 110,
+            "irq_delta": 1,
+            "gameplay_update_delta": 1
+          },
+          {
+            "from_tick": 110,
+            "to_tick": 111,
+            "irq_delta": 1,
+            "gameplay_update_delta": 1
+          },
+          {
+            "from_tick": 111,
+            "to_tick": 112,
+            "irq_delta": 1,
+            "gameplay_update_delta": 1
+          },
+          {
+            "from_tick": 112,
+            "to_tick": 113,
+            "irq_delta": 1,
+            "gameplay_update_delta": 1
+          },
+          {
+            "from_tick": 113,
+            "to_tick": 114,
+            "irq_delta": 1,
+            "gameplay_update_delta": 1
+          },
+          {
+            "from_tick": 114,
+            "to_tick": 115,
+            "irq_delta": 1,
+            "gameplay_update_delta": 1
+          },
+          {
+            "from_tick": 115,
+            "to_tick": 116,
+            "irq_delta": 1,
+            "gameplay_update_delta": 1
+          },
+          {
+            "from_tick": 116,
+            "to_tick": 117,
+            "irq_delta": 1,
+            "gameplay_update_delta": 1
+          },
+          {
+            "from_tick": 117,
+            "to_tick": 118,
+            "irq_delta": 1,
+            "gameplay_update_delta": 1
+          },
+          {
+            "from_tick": 118,
+            "to_tick": 119,
+            "irq_delta": 1,
+            "gameplay_update_delta": 1
+          },
+          {
+            "from_tick": 119,
+            "to_tick": 120,
+            "irq_delta": 1,
+            "gameplay_update_delta": 1
+          },
+          {
+            "from_tick": 120,
+            "to_tick": 121,
+            "irq_delta": 1,
+            "gameplay_update_delta": 1
+          },
+          {
+            "from_tick": 121,
+            "to_tick": 122,
+            "irq_delta": 1,
+            "gameplay_update_delta": 1
+          },
+          {
+            "from_tick": 122,
+            "to_tick": 123,
+            "irq_delta": 1,
+            "gameplay_update_delta": 1
+          },
+          {
+            "from_tick": 123,
+            "to_tick": 124,
+            "irq_delta": 1,
+            "gameplay_update_delta": 1
+          },
+          {
+            "from_tick": 124,
+            "to_tick": 125,
+            "irq_delta": 1,
+            "gameplay_update_delta": 1
+          },
+          {
+            "from_tick": 125,
+            "to_tick": 126,
+            "irq_delta": 1,
+            "gameplay_update_delta": 1
+          },
+          {
+            "from_tick": 126,
+            "to_tick": 127,
+            "irq_delta": 1,
+            "gameplay_update_delta": 1
+          }
+        ],
+        "zero_update_video_intervals": 3,
+        "maximum_update_delta": 1,
+        "maximum_irq_delta": 1,
+        "note": "Counters read after each real mGBA video frame. Recorded gameplay cadence only; these are not CPU-cycle benchmarks or a universal performance guarantee."
+      },
+      "source_commit": "ead9bb68ca1cec93c8969dd813deda94c919af07",
+      "rom_sha256": "09aa5274a91618c5a06a74bd7ba61bebc6ebb71d738aeb48de86f8b91930c3b7"
+    },
+    {
+      "profile": 29,
+      "first_returned_world_tick": 49,
+      "first_returned_body_tick": 50,
+      "zero_update_video_intervals": 3,
+      "playing_irq_update_deltas": {
+        "intervals": [
+          {
+            "from_tick": 0,
+            "to_tick": 1,
+            "irq_delta": 1,
+            "gameplay_update_delta": 1
+          },
+          {
+            "from_tick": 1,
+            "to_tick": 2,
+            "irq_delta": 1,
+            "gameplay_update_delta": 1
+          },
+          {
+            "from_tick": 2,
+            "to_tick": 3,
+            "irq_delta": 1,
+            "gameplay_update_delta": 1
+          },
+          {
+            "from_tick": 3,
+            "to_tick": 4,
+            "irq_delta": 1,
+            "gameplay_update_delta": 1
+          },
+          {
+            "from_tick": 4,
+            "to_tick": 5,
+            "irq_delta": 1,
+            "gameplay_update_delta": 1
+          },
+          {
+            "from_tick": 5,
+            "to_tick": 6,
+            "irq_delta": 1,
+            "gameplay_update_delta": 1
+          },
+          {
+            "from_tick": 6,
+            "to_tick": 7,
+            "irq_delta": 1,
+            "gameplay_update_delta": 1
+          },
+          {
+            "from_tick": 7,
+            "to_tick": 8,
+            "irq_delta": 1,
+            "gameplay_update_delta": 1
+          },
+          {
+            "from_tick": 8,
+            "to_tick": 9,
+            "irq_delta": 1,
+            "gameplay_update_delta": 0
+          },
+          {
+            "from_tick": 9,
+            "to_tick": 10,
+            "irq_delta": 1,
+            "gameplay_update_delta": 0
+          },
+          {
+            "from_tick": 10,
+            "to_tick": 11,
+            "irq_delta": 1,
+            "gameplay_update_delta": 0
+          },
+          {
+            "from_tick": 49,
+            "to_tick": 50,
+            "irq_delta": 1,
+            "gameplay_update_delta": 1
+          },
+          {
+            "from_tick": 50,
+            "to_tick": 51,
+            "irq_delta": 1,
+            "gameplay_update_delta": 1
+          },
+          {
+            "from_tick": 51,
+            "to_tick": 52,
+            "irq_delta": 1,
+            "gameplay_update_delta": 1
+          },
+          {
+            "from_tick": 52,
+            "to_tick": 53,
+            "irq_delta": 1,
+            "gameplay_update_delta": 1
+          },
+          {
+            "from_tick": 53,
+            "to_tick": 54,
+            "irq_delta": 1,
+            "gameplay_update_delta": 1
+          },
+          {
+            "from_tick": 54,
+            "to_tick": 55,
+            "irq_delta": 1,
+            "gameplay_update_delta": 1
+          },
+          {
+            "from_tick": 55,
+            "to_tick": 56,
+            "irq_delta": 1,
+            "gameplay_update_delta": 1
+          },
+          {
+            "from_tick": 56,
+            "to_tick": 57,
+            "irq_delta": 1,
+            "gameplay_update_delta": 1
+          },
+          {
+            "from_tick": 57,
+            "to_tick": 58,
+            "irq_delta": 1,
+            "gameplay_update_delta": 1
+          },
+          {
+            "from_tick": 58,
+            "to_tick": 59,
+            "irq_delta": 1,
+            "gameplay_update_delta": 1
+          },
+          {
+            "from_tick": 59,
+            "to_tick": 60,
+            "irq_delta": 1,
+            "gameplay_update_delta": 1
+          },
+          {
+            "from_tick": 60,
+            "to_tick": 61,
+            "irq_delta": 1,
+            "gameplay_update_delta": 1
+          },
+          {
+            "from_tick": 61,
+            "to_tick": 62,
+            "irq_delta": 1,
+            "gameplay_update_delta": 1
+          },
+          {
+            "from_tick": 62,
+            "to_tick": 63,
+            "irq_delta": 1,
+            "gameplay_update_delta": 1
+          },
+          {
+            "from_tick": 63,
+            "to_tick": 64,
+            "irq_delta": 1,
+            "gameplay_update_delta": 1
+          },
+          {
+            "from_tick": 64,
+            "to_tick": 65,
+            "irq_delta": 1,
+            "gameplay_update_delta": 1
+          },
+          {
+            "from_tick": 65,
+            "to_tick": 66,
+            "irq_delta": 1,
+            "gameplay_update_delta": 1
+          },
+          {
+            "from_tick": 66,
+            "to_tick": 67,
+            "irq_delta": 1,
+            "gameplay_update_delta": 1
+          },
+          {
+            "from_tick": 67,
+            "to_tick": 68,
+            "irq_delta": 1,
+            "gameplay_update_delta": 1
+          },
+          {
+            "from_tick": 68,
+            "to_tick": 69,
+            "irq_delta": 1,
+            "gameplay_update_delta": 1
+          },
+          {
+            "from_tick": 69,
+            "to_tick": 70,
+            "irq_delta": 1,
+            "gameplay_update_delta": 1
+          },
+          {
+            "from_tick": 70,
+            "to_tick": 71,
+            "irq_delta": 1,
+            "gameplay_update_delta": 1
+          },
+          {
+            "from_tick": 71,
+            "to_tick": 72,
+            "irq_delta": 1,
+            "gameplay_update_delta": 1
+          },
+          {
+            "from_tick": 72,
+            "to_tick": 73,
+            "irq_delta": 1,
+            "gameplay_update_delta": 1
+          },
+          {
+            "from_tick": 73,
+            "to_tick": 74,
+            "irq_delta": 1,
+            "gameplay_update_delta": 1
+          },
+          {
+            "from_tick": 74,
+            "to_tick": 75,
+            "irq_delta": 1,
+            "gameplay_update_delta": 1
+          },
+          {
+            "from_tick": 75,
+            "to_tick": 76,
+            "irq_delta": 1,
+            "gameplay_update_delta": 1
+          },
+          {
+            "from_tick": 76,
+            "to_tick": 77,
+            "irq_delta": 1,
+            "gameplay_update_delta": 1
+          },
+          {
+            "from_tick": 77,
+            "to_tick": 78,
+            "irq_delta": 1,
+            "gameplay_update_delta": 1
+          },
+          {
+            "from_tick": 78,
+            "to_tick": 79,
+            "irq_delta": 1,
+            "gameplay_update_delta": 1
+          },
+          {
+            "from_tick": 79,
+            "to_tick": 80,
+            "irq_delta": 1,
+            "gameplay_update_delta": 1
+          },
+          {
+            "from_tick": 80,
+            "to_tick": 81,
+            "irq_delta": 1,
+            "gameplay_update_delta": 1
+          },
+          {
+            "from_tick": 81,
+            "to_tick": 82,
+            "irq_delta": 1,
+            "gameplay_update_delta": 1
+          },
+          {
+            "from_tick": 82,
+            "to_tick": 83,
+            "irq_delta": 1,
+            "gameplay_update_delta": 1
+          },
+          {
+            "from_tick": 83,
+            "to_tick": 84,
+            "irq_delta": 1,
+            "gameplay_update_delta": 1
+          },
+          {
+            "from_tick": 84,
+            "to_tick": 85,
+            "irq_delta": 1,
+            "gameplay_update_delta": 1
+          },
+          {
+            "from_tick": 85,
+            "to_tick": 86,
+            "irq_delta": 1,
+            "gameplay_update_delta": 1
+          },
+          {
+            "from_tick": 86,
+            "to_tick": 87,
+            "irq_delta": 1,
+            "gameplay_update_delta": 1
+          },
+          {
+            "from_tick": 87,
+            "to_tick": 88,
+            "irq_delta": 1,
+            "gameplay_update_delta": 1
+          },
+          {
+            "from_tick": 88,
+            "to_tick": 89,
+            "irq_delta": 1,
+            "gameplay_update_delta": 1
+          },
+          {
+            "from_tick": 89,
+            "to_tick": 90,
+            "irq_delta": 1,
+            "gameplay_update_delta": 1
+          },
+          {
+            "from_tick": 90,
+            "to_tick": 91,
+            "irq_delta": 1,
+            "gameplay_update_delta": 1
+          },
+          {
+            "from_tick": 91,
+            "to_tick": 92,
+            "irq_delta": 1,
+            "gameplay_update_delta": 1
+          },
+          {
+            "from_tick": 92,
+            "to_tick": 93,
+            "irq_delta": 1,
+            "gameplay_update_delta": 1
+          },
+          {
+            "from_tick": 93,
+            "to_tick": 94,
+            "irq_delta": 1,
+            "gameplay_update_delta": 1
+          },
+          {
+            "from_tick": 94,
+            "to_tick": 95,
+            "irq_delta": 1,
+            "gameplay_update_delta": 1
+          },
+          {
+            "from_tick": 95,
+            "to_tick": 96,
+            "irq_delta": 1,
+            "gameplay_update_delta": 1
+          },
+          {
+            "from_tick": 96,
+            "to_tick": 97,
+            "irq_delta": 1,
+            "gameplay_update_delta": 1
+          },
+          {
+            "from_tick": 97,
+            "to_tick": 98,
+            "irq_delta": 1,
+            "gameplay_update_delta": 1
+          },
+          {
+            "from_tick": 98,
+            "to_tick": 99,
+            "irq_delta": 1,
+            "gameplay_update_delta": 1
+          },
+          {
+            "from_tick": 99,
+            "to_tick": 100,
+            "irq_delta": 1,
+            "gameplay_update_delta": 1
+          },
+          {
+            "from_tick": 100,
+            "to_tick": 101,
+            "irq_delta": 1,
+            "gameplay_update_delta": 1
+          },
+          {
+            "from_tick": 101,
+            "to_tick": 102,
+            "irq_delta": 1,
+            "gameplay_update_delta": 1
+          },
+          {
+            "from_tick": 102,
+            "to_tick": 103,
+            "irq_delta": 1,
+            "gameplay_update_delta": 1
+          },
+          {
+            "from_tick": 103,
+            "to_tick": 104,
+            "irq_delta": 1,
+            "gameplay_update_delta": 1
+          },
+          {
+            "from_tick": 104,
+            "to_tick": 105,
+            "irq_delta": 1,
+            "gameplay_update_delta": 1
+          },
+          {
+            "from_tick": 105,
+            "to_tick": 106,
+            "irq_delta": 1,
+            "gameplay_update_delta": 1
+          },
+          {
+            "from_tick": 106,
+            "to_tick": 107,
+            "irq_delta": 1,
+            "gameplay_update_delta": 1
+          },
+          {
+            "from_tick": 107,
+            "to_tick": 108,
+            "irq_delta": 1,
+            "gameplay_update_delta": 1
+          },
+          {
+            "from_tick": 108,
+            "to_tick": 109,
+            "irq_delta": 1,
+            "gameplay_update_delta": 1
+          },
+          {
+            "from_tick": 109,
+            "to_tick": 110,
+            "irq_delta": 1,
+            "gameplay_update_delta": 1
+          },
+          {
+            "from_tick": 110,
+            "to_tick": 111,
+            "irq_delta": 1,
+            "gameplay_update_delta": 1
+          },
+          {
+            "from_tick": 111,
+            "to_tick": 112,
+            "irq_delta": 1,
+            "gameplay_update_delta": 1
+          },
+          {
+            "from_tick": 112,
+            "to_tick": 113,
+            "irq_delta": 1,
+            "gameplay_update_delta": 1
+          },
+          {
+            "from_tick": 113,
+            "to_tick": 114,
+            "irq_delta": 1,
+            "gameplay_update_delta": 1
+          },
+          {
+            "from_tick": 114,
+            "to_tick": 115,
+            "irq_delta": 1,
+            "gameplay_update_delta": 1
+          },
+          {
+            "from_tick": 115,
+            "to_tick": 116,
+            "irq_delta": 1,
+            "gameplay_update_delta": 1
+          },
+          {
+            "from_tick": 116,
+            "to_tick": 117,
+            "irq_delta": 1,
+            "gameplay_update_delta": 1
+          },
+          {
+            "from_tick": 117,
+            "to_tick": 118,
+            "irq_delta": 1,
+            "gameplay_update_delta": 1
+          },
+          {
+            "from_tick": 118,
+            "to_tick": 119,
+            "irq_delta": 1,
+            "gameplay_update_delta": 1
+          },
+          {
+            "from_tick": 119,
+            "to_tick": 120,
+            "irq_delta": 1,
+            "gameplay_update_delta": 1
+          },
+          {
+            "from_tick": 120,
+            "to_tick": 121,
+            "irq_delta": 1,
+            "gameplay_update_delta": 1
+          },
+          {
+            "from_tick": 121,
+            "to_tick": 122,
+            "irq_delta": 1,
+            "gameplay_update_delta": 1
+          },
+          {
+            "from_tick": 122,
+            "to_tick": 123,
+            "irq_delta": 1,
+            "gameplay_update_delta": 1
+          },
+          {
+            "from_tick": 123,
+            "to_tick": 124,
+            "irq_delta": 1,
+            "gameplay_update_delta": 1
+          },
+          {
+            "from_tick": 124,
+            "to_tick": 125,
+            "irq_delta": 1,
+            "gameplay_update_delta": 1
+          },
+          {
+            "from_tick": 125,
+            "to_tick": 126,
+            "irq_delta": 1,
+            "gameplay_update_delta": 1
+          },
+          {
+            "from_tick": 126,
+            "to_tick": 127,
+            "irq_delta": 1,
+            "gameplay_update_delta": 1
+          }
+        ],
+        "zero_update_video_intervals": 3,
+        "maximum_update_delta": 1,
+        "maximum_irq_delta": 1,
+        "note": "Counters read after each real mGBA video frame. Recorded gameplay cadence only; these are not CPU-cycle benchmarks or a universal performance guarantee."
+      },
+      "source_commit": "ead9bb68ca1cec93c8969dd813deda94c919af07",
+      "rom_sha256": "ce60072a9484432c23c6059a74ba115df2b09c5e0f0c3bb2a68b975de9fedf54"
+    }
+  ]
+}

@@ -1,0 +1,32 @@
+{
+  "source_commit": "ead9bb68ca1cec93c8969dd813deda94c919af07",
+  "contexts": 16,
+  "passed": 420,
+  "total": 420,
+  "movies": 4,
+  "gifs": 4,
+  "boards": 2,
+  "panels": 10,
+  "gallery_tool_sha256": "ba78aa8fcd0a122736f92c9255bb262534125bc7eb6cf55760c018de2fa350e3",
+  "gallery_dependency_sha256": {
+    "forest_canopy_adaptive_gallery.py": "51b3a089e8c6d1752cb62112a6ee02f1696506133c647d7028efab06133f75ef"
+  },
+  "profiles": [
+    {
+      "profile": 19,
+      "report_sha256": "7e13c91f32fc16e9692e3b0c136993741b2f03f5e228afe5cafd009ee15378d0",
+      "rom_sha256": "09aa5274a91618c5a06a74bd7ba61bebc6ebb71d738aeb48de86f8b91930c3b7",
+      "contexts": 8,
+      "passed": 188,
+      "total": 188
+    },
+    {
+      "profile": 29,
+      "report_sha256": "b150aa2358b17fcfb32df63d9180f4aadca51c56b78c01242a4f6f1bc7bf2081",
+      "rom_sha256": "ce60072a9484432c23c6059a74ba115df2b09c5e0f0c3bb2a68b975de9fedf54",
+      "contexts": 8,
+      "passed": 232,
+      "total": 232
+    }
+  ]
+}

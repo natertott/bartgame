@@ -1206,3 +1206,31 @@ Some short bands/joins retain the grid, the healthy fan texture is busy, and
 the deepest gray/olive leaf masses can suggest mossy stone at a glance. The
 focused study is suitable for a final native/runtime review with those caveats;
 it is not a declaration that the user has selected the final game art.
+
+**Final focused review:** source
+`ead9bb68ca1cec93c8969dd813deda94c919af07` is frozen in all thirty profiles.
+Every historical profile 0–28 rebuilds byte-identically. The new forest uses
+986/1,024 BG subtiles and 11/12 world banks. The source catalog contains
+fourteen native pieces: nine composition roles, a solid strip and four authored
+tree groups, with healthy/deep pixels and exact source palette inspection.
+
+Fresh matched profile 19/29 recordings pass 420/420 checks across sixteen
+contexts and 800 actual frame observations, with four full-rate videos and
+four exact-color GIFs. Independent verification passes 2,090/2,090, including
+the actual stored/neighbor/grass-fallback rule and every BG1 entry, even blank
+subtiles. Source material statistics alone are not used to claim the backing
+is gone; native BG2 quarters, raw per-cell snapshots and real frames establish it.
+
+Recorded new-character visibility has a minimum of 37 colored pixels and a
+14-pixel connected component, with no missed ordinary gameplay updates. These
+are finite cases. The measured entry is 45 video/IRQ frames versus 47 in the
+prior adaptive control (about 0.75 versus 0.79 seconds). Menu world handoff is
+one frame earlier, tick 49 versus 50; inherited opening and body-return gaps
+remain disclosed. No universal performance claim follows.
+
+The [focused actual/source gallery](../../../art-review/forest-canopy-emerald/README.md)
+and [playable review ROM](../../../downloads/forest-canopy-emerald-ead9bb6/README.md)
+show the corrected leafy volume and real grass contacts. The busy fan pattern,
+some repeated/grid-aligned joins, and deep gray/olive foliage's occasional
+mossy-stone reading remain visible. This is one coherent reference-led review
+set; no final production canopy is selected.

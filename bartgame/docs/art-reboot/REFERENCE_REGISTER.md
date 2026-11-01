@@ -214,3 +214,11 @@ The prior ten adaptive studies are now rejected as the working canopy style.
 The new focused leaf-crown pass preserves map-first composition while replacing
 its skeletal anatomy and flat backing. Existing PDF guidance remains relevant;
 no new article or copied source sprite is claimed.
+
+The [focused leaf-crown gallery](../../../art-review/forest-canopy-emerald/README.md)
+now binds source `ead9bb6` to fourteen native pieces and matched healthy/deep,
+isolated, narrow and corner cases in actual mGBA. Hardware floor and alpha
+checks establish the local-ground correction independently of source art.
+Its [independent review](../../../art-review/forest-canopy-emerald/validation/INDEPENDENT_REVIEW.md)
+records remaining texture, grid and gray-leaf readability limits. The preceding
+ten-study anatomy is retained as rejected historical evidence.

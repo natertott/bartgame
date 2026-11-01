@@ -1,0 +1,411 @@
+{
+  "method": "Direct actual mGBA first post-run GS_PLAY observation after requesting the normal target room transition. Disclosed seed6/cell4. Video/IRQ/mainloop counters measured, no terrain or pictures assigned. Finitecase, not universal loading guarantee.",
+  "variant": 19,
+  "rom_sha256": "09aa5274a91618c5a06a74bd7ba61bebc6ebb71d738aeb48de86f8b91930c3b7",
+  "source_commit": "ead9bb68ca1cec93c8969dd813deda94c919af07",
+  "unfrozen_pilot": false,
+  "seed": "0x6",
+  "target_cell": 4,
+  "side": 2,
+  "start": {
+    "video_frame": 283,
+    "irq": 273,
+    "mainloop_updates": 158,
+    "state": 2,
+    "transition_phase": 0
+  },
+  "end": {
+    "video_frame": 330,
+    "irq": 320,
+    "mainloop_updates": 160,
+    "state": 1,
+    "transition_phase": 1
+  },
+  "elapsed_video_frames": 47,
+  "elapsed_irqs": 47,
+  "mainloop_updates": 2,
+  "phase_IRQs": [
+    1,
+    12,
+    3,
+    16
+  ],
+  "trace": [
+    {
+      "video_frame": 284,
+      "irq": 274,
+      "mainloop_updates": 159,
+      "state": 2,
+      "transition_phase": 0,
+      "tick": 0
+    },
+    {
+      "video_frame": 285,
+      "irq": 275,
+      "mainloop_updates": 159,
+      "state": 2,
+      "transition_phase": 0,
+      "tick": 1
+    },
+    {
+      "video_frame": 286,
+      "irq": 276,
+      "mainloop_updates": 159,
+      "state": 2,
+      "transition_phase": 0,
+      "tick": 2
+    },
+    {
+      "video_frame": 287,
+      "irq": 277,
+      "mainloop_updates": 159,
+      "state": 2,
+      "transition_phase": 0,
+      "tick": 3
+    },
+    {
+      "video_frame": 288,
+      "irq": 278,
+      "mainloop_updates": 159,
+      "state": 2,
+      "transition_phase": 0,
+      "tick": 4
+    },
+    {
+      "video_frame": 289,
+      "irq": 279,
+      "mainloop_updates": 159,
+      "state": 2,
+      "transition_phase": 0,
+      "tick": 5
+    },
+    {
+      "video_frame": 290,
+      "irq": 280,
+      "mainloop_updates": 159,
+      "state": 2,
+      "transition_phase": 0,
+      "tick": 6
+    },
+    {
+      "video_frame": 291,
+      "irq": 281,
+      "mainloop_updates": 159,
+      "state": 2,
+      "transition_phase": 0,
+      "tick": 7
+    },
+    {
+      "video_frame": 292,
+      "irq": 282,
+      "mainloop_updates": 159,
+      "state": 2,
+      "transition_phase": 0,
+      "tick": 8
+    },
+    {
+      "video_frame": 293,
+      "irq": 283,
+      "mainloop_updates": 159,
+      "state": 2,
+      "transition_phase": 0,
+      "tick": 9
+    },
+    {
+      "video_frame": 294,
+      "irq": 284,
+      "mainloop_updates": 159,
+      "state": 2,
+      "transition_phase": 0,
+      "tick": 10
+    },
+    {
+      "video_frame": 295,
+      "irq": 285,
+      "mainloop_updates": 159,
+      "state": 2,
+      "transition_phase": 0,
+      "tick": 11
+    },
+    {
+      "video_frame": 296,
+      "irq": 286,
+      "mainloop_updates": 159,
+      "state": 2,
+      "transition_phase": 0,
+      "tick": 12
+    },
+    {
+      "video_frame": 297,
+      "irq": 287,
+      "mainloop_updates": 159,
+      "state": 2,
+      "transition_phase": 0,
+      "tick": 13
+    },
+    {
+      "video_frame": 298,
+      "irq": 288,
+      "mainloop_updates": 159,
+      "state": 2,
+      "transition_phase": 0,
+      "tick": 14
+    },
+    {
+      "video_frame": 299,
+      "irq": 289,
+      "mainloop_updates": 159,
+      "state": 2,
+      "transition_phase": 0,
+      "tick": 15
+    },
+    {
+      "video_frame": 300,
+      "irq": 290,
+      "mainloop_updates": 159,
+      "state": 2,
+      "transition_phase": 0,
+      "tick": 16
+    },
+    {
+      "video_frame": 301,
+      "irq": 291,
+      "mainloop_updates": 159,
+      "state": 2,
+      "transition_phase": 0,
+      "tick": 17
+    },
+    {
+      "video_frame": 302,
+      "irq": 292,
+      "mainloop_updates": 159,
+      "state": 2,
+      "transition_phase": 0,
+      "tick": 18
+    },
+    {
+      "video_frame": 303,
+      "irq": 293,
+      "mainloop_updates": 159,
+      "state": 2,
+      "transition_phase": 0,
+      "tick": 19
+    },
+    {
+      "video_frame": 304,
+      "irq": 294,
+      "mainloop_updates": 159,
+      "state": 2,
+      "transition_phase": 0,
+      "tick": 20
+    },
+    {
+      "video_frame": 305,
+      "irq": 295,
+      "mainloop_updates": 159,
+      "state": 2,
+      "transition_phase": 0,
+      "tick": 21
+    },
+    {
+      "video_frame": 306,
+      "irq": 296,
+      "mainloop_updates": 159,
+      "state": 2,
+      "transition_phase": 0,
+      "tick": 22
+    },
+    {
+      "video_frame": 307,
+      "irq": 297,
+      "mainloop_updates": 159,
+      "state": 2,
+      "transition_phase": 0,
+      "tick": 23
+    },
+    {
+      "video_frame": 308,
+      "irq": 298,
+      "mainloop_updates": 159,
+      "state": 2,
+      "transition_phase": 0,
+      "tick": 24
+    },
+    {
+      "video_frame": 309,
+      "irq": 299,
+      "mainloop_updates": 159,
+      "state": 2,
+      "transition_phase": 0,
+      "tick": 25
+    },
+    {
+      "video_frame": 310,
+      "irq": 300,
+      "mainloop_updates": 159,
+      "state": 2,
+      "transition_phase": 0,
+      "tick": 26
+    },
+    {
+      "video_frame": 311,
+      "irq": 301,
+      "mainloop_updates": 159,
+      "state": 2,
+      "transition_phase": 0,
+      "tick": 27
+    },
+    {
+      "video_frame": 312,
+      "irq": 302,
+      "mainloop_updates": 159,
+      "state": 2,
+      "transition_phase": 0,
+      "tick": 28
+    },
+    {
+      "video_frame": 313,
+      "irq": 303,
+      "mainloop_updates": 159,
+      "state": 2,
+      "transition_phase": 0,
+      "tick": 29
+    },
+    {
+      "video_frame": 314,
+      "irq": 304,
+      "mainloop_updates": 159,
+      "state": 2,
+      "transition_phase": 0,
+      "tick": 30
+    },
+    {
+      "video_frame": 315,
+      "irq": 305,
+      "mainloop_updates": 159,
+      "state": 2,
+      "transition_phase": 0,
+      "tick": 31
+    },
+    {
+      "video_frame": 316,
+      "irq": 306,
+      "mainloop_updates": 159,
+      "state": 2,
+      "transition_phase": 0,
+      "tick": 32
+    },
+    {
+      "video_frame": 317,
+      "irq": 307,
+      "mainloop_updates": 159,
+      "state": 2,
+      "transition_phase": 0,
+      "tick": 33
+    },
+    {
+      "video_frame": 318,
+      "irq": 308,
+      "mainloop_updates": 159,
+      "state": 2,
+      "transition_phase": 0,
+      "tick": 34
+    },
+    {
+      "video_frame": 319,
+      "irq": 309,
+      "mainloop_updates": 159,
+      "state": 2,
+      "transition_phase": 0,
+      "tick": 35
+    },
+    {
+      "video_frame": 320,
+      "irq": 310,
+      "mainloop_updates": 159,
+      "state": 2,
+      "transition_phase": 0,
+      "tick": 36
+    },
+    {
+      "video_frame": 321,
+      "irq": 311,
+      "mainloop_updates": 159,
+      "state": 2,
+      "transition_phase": 0,
+      "tick": 37
+    },
+    {
+      "video_frame": 322,
+      "irq": 312,
+      "mainloop_updates": 159,
+      "state": 2,
+      "transition_phase": 0,
+      "tick": 38
+    },
+    {
+      "video_frame": 323,
+      "irq": 313,
+      "mainloop_updates": 159,
+      "state": 2,
+      "transition_phase": 0,
+      "tick": 39
+    },
+    {
+      "video_frame": 324,
+      "irq": 314,
+      "mainloop_updates": 159,
+      "state": 2,
+      "transition_phase": 0,
+      "tick": 40
+    },
+    {
+      "video_frame": 325,
+      "irq": 315,
+      "mainloop_updates": 159,
+      "state": 2,
+      "transition_phase": 0,
+      "tick": 41
+    },
+    {
+      "video_frame": 326,
+      "irq": 316,
+      "mainloop_updates": 159,
+      "state": 2,
+      "transition_phase": 0,
+      "tick": 42
+    },
+    {
+      "video_frame": 327,
+      "irq": 317,
+      "mainloop_updates": 159,
+      "state": 2,
+      "transition_phase": 0,
+      "tick": 43
+    },
+    {
+      "video_frame": 328,
+      "irq": 318,
+      "mainloop_updates": 159,
+      "state": 2,
+      "transition_phase": 0,
+      "tick": 44
+    },
+    {
+      "video_frame": 329,
+      "irq": 319,
+      "mainloop_updates": 159,
+      "state": 2,
+      "transition_phase": 1,
+      "tick": 45
+    },
+    {
+      "video_frame": 330,
+      "irq": 320,
+      "mainloop_updates": 160,
+      "state": 1,
+      "transition_phase": 1,
+      "tick": 46
+    }
+  ]
+}

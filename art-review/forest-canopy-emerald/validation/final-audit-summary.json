@@ -1,0 +1,25 @@
+{
+  "source_commit": "ead9bb68ca1cec93c8969dd813deda94c919af07",
+  "auditor_sha256": "a3196c6a5ea16d1a8d0a7845c60e40c67e6faa0182db05b3e1f50a02509e96de",
+  "final_audit_sha256": "e22eb705013cbb04f59743502598932c794eb380327b05ed56aa8c876a1cf0d1",
+  "passed": 2090,
+  "total": 2090,
+  "failures": [],
+  "runtime": {
+    "contexts": 16,
+    "movies": 4,
+    "exact_gifs": 4,
+    "observed_video_frames": 800,
+    "baseline_profile": 19,
+    "limits": "Finite natural-room and ordinary-input observations; menu handoff timings are explicit observations; no universal animation/frame-time claim."
+  },
+  "source_gallery": {
+    "manifest_sha256": "e5898528d48139e401989e809b3f06325345b9844c890df8106be380a5254ed2",
+    "source_commit": "ead9bb68ca1cec93c8969dd813deda94c919af07",
+    "native_images": 14,
+    "hashed_files": 52,
+    "limits": "Source file/native panels verified. These are not actual room framebuffers."
+  },
+  "historical_profiles": 29,
+  "qualification": "Focused canopy blending revision for review, with documented leaf-texture/edge caveats; no final user selection."
+}

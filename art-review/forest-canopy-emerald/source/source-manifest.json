@@ -1,0 +1,307 @@
+{
+  "source_commit": "ead9bb68ca1cec93c8969dd813deda94c919af07",
+  "profile": 29,
+  "style": 1,
+  "rom_sha256": "ce60072a9484432c23c6059a74ba115df2b09c5e0f0c3bb2a68b975de9fedf54",
+  "gallery_tool_sha256": "ba78aa8fcd0a122736f92c9255bb262534125bc7eb6cf55760c018de2fa350e3",
+  "gallery_dependency_sha256": {
+    "forest_canopy_adaptive_gallery.py": "51b3a089e8c6d1752cb62112a6ee02f1696506133c647d7028efab06133f75ef"
+  },
+  "source_input_sha256": {
+    "art/blight_reference.py": "199c13c278c086d693042388e941e27c810e2b09442f6d25cb0682b0bcb6b431",
+    "art/blight_reference_source.py": "50261560155aecf45a16c16e9f4e1746016806a2be02d27a50e77433b673ba1d",
+    "art/bloom_animations.py": "f16b690fe853944a1bd87b5d9eca538239f7a6950a8acb9378272f8812f233c2",
+    "art/bloom_fx.py": "78da0962204d4cf23a5d622137f6171f636d6d2a2a40eef539c9f7232771707c",
+    "art/bloom_loads.py": "d2331f07e6a896244ab3b9afa4ff958d8875d5189ea8c6b2ec9ab544da65c4c4",
+    "art/clean_items.py": "adb7d042d823009988e8f3e3de3ffc52fc0d09e8dd9999db548f5189de31fa68",
+    "art/enemy_heart.py": "a52ae7779f314f006f3a0e861c3a3f75cfadbb2be5294873c5d2c6e2ace6e917",
+    "art/enemy_studies.py": "cd82b9babef1fbb61cbf99e6f89f44a5159e8bbb09a90bb00492151af045ad39",
+    "art/enemy_studies_heavy.py": "460c3a66a96eece44e90f943ca2f121ec345813cf279a0104b28e72a1eac1304",
+    "art/enemy_studies_palette.py": "aa35bba202cb9d7cc705146312104c211584b168bf0b01547ffdf96d4bff322b",
+    "art/enemy_studies_small.py": "51170452427ae507c66b851b38b16330167684a84be29172a14b442da0df411d",
+    "art/enemy_studies_soft.py": "cd1e1f2d01f25153c497b3474001bcd75a2dfeb08219b01c6354e855be15ce38",
+    "art/env_pack.py": "e266c715c90c4bf2c4ba8d840d5d6146e4f8bd68e614a53a0aece67a2051e12e",
+    "art/faces.py": "602bbc4a4d32a37f9100e8c78f29417604e2277ab0afcc67631953ea4e8a435a",
+    "art/folk.py": "174fa5044812caefc70a7bdebb33f54a869854c3d4ff58560815126881e6099b",
+    "art/forest_art.py": "f468279e191c3727203c981eadf17442af38dc5ed59493cd1447e9fe21f02842",
+    "art/forest_canopy_adaptive.py": "5e53305c58950b944cc2b0b89b99abdd137da0362b01066395c6f77ce79e44b3",
+    "art/forest_canopy_adaptive_b.py": "7809408ba52d7ce2dce04cb4a7ee1ace649823267a2f24f716ab7c6011656187",
+    "art/forest_canopy_adaptive_terrain.py": "abf93147275d25cba81f9b12a350ccb499f38e03bf74fe777aaf995117b510c6",
+    "art/forest_canopy_emerald.py": "dbd8a0159c4def121f85ccf3ea48a6ce6faf3f462d6bffe2c15f2852b6107d24",
+    "art/forest_canopy_emerald_terrain.py": "2117fec2437250833abd43ada7ae9d4fbedca9dfe77cf288672f7b0750f38c69",
+    "art/forest_concepts.py": "7287846dda549d2dc0d829d224b7a4b5987f6c90cbafebc3461aca110b1a71c3",
+    "art/forest_concepts_folk.py": "fd39704a0634b15bf2330b3dda2368a8ea8a136caa03b08a033bfbbf058a8aae",
+    "art/forest_concepts_props.py": "331f58e184620f14bb9f2d7f1f6a471d0ee3cbe179122e997969108756627e9e",
+    "art/forest_concepts_terrain.py": "dfc9f30160f7c7eb46fe265016583cf7c44147f2e840aedc8f31a1c19ebc3c6f",
+    "art/forest_concepts_v2_folk.py": "f90c9b814cc992d865306d3b75e6458fe7226fe920e5c5add2f3ffa42e2e18ee",
+    "art/forest_concepts_v2_props.py": "0f89761f86cc079494334c7b7f660ac3d8f23500daf6e1548dfcccd0e609d354",
+    "art/forest_concepts_v2_terrain.py": "d7d1215c447294a169d672ae36ccc6b61eab5fcc139ebed12ad4c1f7c0d4e52a",
+    "art/forest_concepts_v2_topology.py": "755c6c61ac5e2154db782583bdd7d65068abeba6043a613e7d9b60e922ff52fa",
+    "art/forest_concepts_v3_terrain.py": "e905aac03c5b46b2388b7e3f83c8e9763eef6e579cd6ee75b2786e9f3639e92e",
+    "art/forest_sprites.py": "b376dd3f6cd16f46ecba74610d3f2265e5c9bfee2929b4449dcf28d56e0d86cf",
+    "art/healthy_reference.py": "32e0254b979378fc78fa970b51ebd0f5ed7479bfaa3adb5cd8c6121fcc5319d4",
+    "art/hero.py": "1313133514f169593e8be950355f213790ff8c4e5d6f051a16eee9c8ad4a6c48",
+    "art/interactive_props.py": "93e2eb136f71cad7dd66b59b17c1eabbc527d17ab4e84a1e65ecafa3d24133f7",
+    "art/interactive_tiles.py": "d252a44cd066de59f309aa890d2b424a5245e7ec0527b43595ea495b98f3cb84",
+    "art/items.py": "6865e732874429fd35732962b2f9df646ac642b3795f3eab418879cf28c08968",
+    "art/items32.py": "e4ff935e10b54f540830917cfd9233b0a6a086feb30bfd2a874cd7b3d7b5fbbf",
+    "art/marks.py": "8bbd676f70643403ea06105ad0468417ba2171433ca422438322534c6f4eb23d",
+    "art/monsters.py": "8dd8272f147ddc89336c69bb274c96578c445a4944a0b0e1113227639ab2b13c",
+    "art/pack.py": "6ed118c306471ea0bb4eebeedd3444badf724359bed77766e48134f9cc77c1fb",
+    "art/pack_tiles.py": "b99341a12dcd457f3e1dc2527da20f31d1dfe24f8e3fecd48cded0041b3e764d",
+    "art/paint.py": "e03b63767cdc885179ab902ccafe119cc5426228b322ad1162338880d2067fd9",
+    "art/palettes.py": "f715f6207034f404721d5a22f140acbd540793032540177d93102c3818275a6d",
+    "art/portraits.py": "2dc833b09d884f7b9020000de5970615e06dceb61a7b9f901e9647c2659613f9",
+    "art/px.py": "2c0058322702da467efc85ab0cd9eb367d07db8b18f5f0bcf2f0b06b640d5188",
+    "art/reboot_actors.py": "08cf30f2219bb0b1f4b55724a9d55c6c755db897b768c35685f6523f1828823e",
+    "art/reboot_core.py": "71021a7b1717f8dd7edd58d0ad0a4dda448def45533c42855f6d76a4bcc82ea4",
+    "art/reboot_items.py": "589c6e250bce05a44fd192c6a7ad7a19025214efe74c98f91e35affc38cc0891",
+    "art/reboot_terrain.py": "57ef3230a9d89b16e2cecb5984d3397ee3b19fb5d15d59af1c6ed9c9d460caec",
+    "art/reboot_ui.py": "6963ac2536f37580c1e398228b22359ea03c39460b9814fb751d4de82c98dfc7",
+    "art/reference_assets.py": "3374d7c6e3ce26e7fb2fa4977410ec75fcf37f98eed29610a4b8301bfae41f52",
+    "art/reference_items.py": "2367b5329b98fa2ba5ba9d067909ca4104cdf67e27db496a0929660c2908c36a",
+    "art/rooms.py": "c9f69874d628e8ef85e2dbf75511a27927147a1bd3d44fff508a9812ce659363",
+    "art/sample.py": "9018410070844f4a69e3bc9458394c8291de99ad548aa8b29d07d0b7d771d454",
+    "art/sewer_concepts.py": "6638656152cdfe5d424f94de8eb7f1c9ecc359293247670c62692d2ea2dd2606",
+    "art/sewer_concepts_npcs.py": "3ac84ca8f1024bfbbbb391f3c817d06d73609e82d17239aa05981e0633b130bb",
+    "art/sewer_concepts_terrain.py": "913e22af37f33949d248675b8f3987daf17d989e0c7c8c04e32c76845ae8f561",
+    "art/sewer_final.py": "f6229d2aa7e0207b01b6c35be75884cbcdd6b7847ceedc945388b760360baf83",
+    "art/sewer_final_contracts.py": "4afb10e4fe316d549046bacbeec4358747939d98f29ca2c2f633c24da4cf553c",
+    "art/sewer_v3_fixtures.py": "1f7d4289575f8a4a933ac6fef1b37a5510308a1ed31c4815629cd9a0c5d8ea12",
+    "art/sprites.py": "c5de3ca406f851997b5d29ad1ea07a3a6182fa1851ead4183f295c488198602d",
+    "art/style.py": "693a64a9136bba50f3489b08b806aaf6d20258f570009bac9e22a6b010c42cb3",
+    "art/sw_cut.py": "27f064e14cb1e392e16ed72102093e17310080f228f9d3d58da8285f7de8dd1b",
+    "art/sw_drain.py": "b546771bef482a455a24a125c11ef50824078e6b47ed100044f0b9cb65560b33",
+    "art/sw_folk.py": "7ed9e18713edce423e8a90947328d537097ee04a4e5a828c36539cbdf8521ac2",
+    "art/sw_hall.py": "a400723c297bb49eb4ef80ec69a3f92a6efde08f588fee20543de65798ee11cd",
+    "art/sw_paint.py": "8f7fce4a2871092631631be9ca8e5bfd4f35f68f039c412c0e5cfb25cf04c139",
+    "art/sw_props.py": "04a8bdc2d8661e21f22f73eea86169aaa647a5161e43d45cfd94a19eae051a6d",
+    "art/sword_studies.py": "5cf29b6116a417ed229d322eadaf9ae7a345a52dcd970dae2ff8f1bb8f0d01c4",
+    "art/tile_art.py": "24d090933cc0cccf70e827aac5fbf2a1a09fd20336b5ab303d04c636cdcc4217",
+    "art/tiles.py": "a83df9818f93c8724b403e919fd304349640970c6f33db60f8dba484cc672273",
+    "art/tiles_style.py": "eb9caf764e56a672227d48fd024df3119856e7b84e58bce11a2acd938b3c2890",
+    "art/title.py": "03b984ca0f7e81afbb064f7e5aadf45530c51f34b53fbb3998aead7a0ceb9715",
+    "art/ui_font.py": "48ae0da7d1daa4f01c144a856d18694c5be06674288029e62913a513bcb8388e",
+    "art/ui_kit.py": "49b31f6b0955436eb9c88bf019208ef6cc7bb573f9add58a3c85e8acea70e6ca",
+    "art/ui_studies.py": "b2a9bbddc134a36c82f87b990a8e5f1f93e15cf2b4cd165391f673b2fe03a3c3",
+    "art/wood_art.py": "4778b2a8cfca7fb647193abc53c9e63bc07998d2eb2177cc4930543de2c5251c",
+    "Makefile": "c5d34ac55aacab0d44280e03314476387fed9b6fb5db5edae9a7acf7630efa97",
+    "tools/build_assets.py": "92bdc4c0db1185b5afe04007855726e5d63ea6ca6681055d64d105c18a4168c2"
+  },
+  "native_images": 14,
+  "resident_prefabs": 9,
+  "special_native_maps": 1,
+  "authored_tree_groups": 4,
+  "exact_source_palette_GIFs": 1,
+  "files": {
+    "README.md": {
+      "sha256": "229212c3536a8006ba633496cd53b7e28e46d6cf227485fc0104e3026d877764",
+      "bytes": 908
+    },
+    "native/authored-large-a-deep.png": {
+      "sha256": "e9406a44056e476012287a26465317d48e7d9547b9612897d9aa103238e24d0e",
+      "bytes": 1720
+    },
+    "native/authored-large-a-healthy.png": {
+      "sha256": "4510d217ab2dcf7052dfc6864a3f478364eb0fdbc34a08419f9b94b95c46315d",
+      "bytes": 1710
+    },
+    "native/authored-large-a-indexed.png": {
+      "sha256": "b13d5cbc0da2ee2e671d30ef386c18494ef3d92d52b7748733ac1537020f9ad1",
+      "bytes": 904
+    },
+    "native/authored-large-b-deep.png": {
+      "sha256": "6762f924c9269c5b02a68d317a95a1f84e9d0527f5034408f32af8cc78cda515",
+      "bytes": 1796
+    },
+    "native/authored-large-b-healthy.png": {
+      "sha256": "83e3d15d93e307a2d264601554cf9064b0375c10204064536d89f2b40a893027",
+      "bytes": 1801
+    },
+    "native/authored-large-b-indexed.png": {
+      "sha256": "652f9e44648e37fef13bf3eb4cfafe9b674fa09a3a542e2644c86765c537abcc",
+      "bytes": 913
+    },
+    "native/authored-small-a-deep.png": {
+      "sha256": "5a6a48b271735e5657ca237a62ccf8a9ce32202eb851359ee3d6aae56dd68d42",
+      "bytes": 1103
+    },
+    "native/authored-small-a-healthy.png": {
+      "sha256": "42aa811600bb6de858d239143131aedc611dcd9cc5992f91908eb9129e139bf0",
+      "bytes": 1094
+    },
+    "native/authored-small-a-indexed.png": {
+      "sha256": "14ebf019a47845ff557b2d1f581bdcba16343b8096a1799311c5458f53a4e078",
+      "bytes": 557
+    },
+    "native/authored-small-b-deep.png": {
+      "sha256": "5e341ee78377b43f7800db5d12777a6579b34376ed36b6cb4fd87bad18def054",
+      "bytes": 1194
+    },
+    "native/authored-small-b-healthy.png": {
+      "sha256": "82f43c1cbad04a21e6817af2d7ac7dfdb14986b44bb2525ca574560f89cff08d",
+      "bytes": 1185
+    },
+    "native/authored-small-b-indexed.png": {
+      "sha256": "b8a887ed949303b20ecc26685c9d6b36903ef7fda27935b0dc2e213c6c2c9b96",
+      "bytes": 599
+    },
+    "native/border-deep.png": {
+      "sha256": "e4d2cf24277c5c980cb2cddf660f7f1be3f28a13af354922a70d4c72634463fc",
+      "bytes": 2018
+    },
+    "native/border-healthy.png": {
+      "sha256": "493b73f17582cc53fcd2067f9ed679b6aeb1928ea398db21f9ba056550426b47",
+      "bytes": 1983
+    },
+    "native/border-indexed.png": {
+      "sha256": "1e734e447f804240732c81ce346546bd6f5185c65726ac0403cdfb19bdc119f4",
+      "bytes": 1058
+    },
+    "native/branch-deep.png": {
+      "sha256": "6685df8ba98ef4212ae1943a3e542793bc817c31917db154886a710d2f42d428",
+      "bytes": 745
+    },
+    "native/branch-healthy.png": {
+      "sha256": "0c9c79d3e81b5382100b64b73ce3fb829edd84f140bb47955ba49e1b82bf8cc8",
+      "bytes": 749
+    },
+    "native/branch-indexed.png": {
+      "sha256": "08a5b187ff28a50381455a45a2e585be740f876ad40389fd1a90deba12263868",
+      "bytes": 426
+    },
+    "native/branch-solid-deep.png": {
+      "sha256": "16876e9371260e8bdcc012f9622a019fb73f459f0119cc1c369713d5b6cfd6cd",
+      "bytes": 871
+    },
+    "native/branch-solid-healthy.png": {
+      "sha256": "b4adf3269d7f191f497de9c4409969e386ead821bbe9854490288e236baa1b73",
+      "bytes": 868
+    },
+    "native/branch-solid-indexed.png": {
+      "sha256": "f990b5e17dace0c4fc908fb410b3e131e74d90170e905fbfbf072b46d57fc3c3",
+      "bytes": 504
+    },
+    "native/clump-deep.png": {
+      "sha256": "374fa558d894ebdff2fdb784c112bf884881f084362b0438e331ee9c586f9687",
+      "bytes": 809
+    },
+    "native/clump-healthy.png": {
+      "sha256": "db63366aa3fe09cd80f3efc309f13db72aa00b8a816eb137ede594e9539ad2e4",
+      "bytes": 792
+    },
+    "native/clump-indexed.png": {
+      "sha256": "4ec3fa031b15eeeefb46e9903d0efaa4628dd3c06cbdd6fdf92c94feada01775",
+      "bytes": 456
+    },
+    "native/column-deep.png": {
+      "sha256": "2d532839442e9093c5a422cd28199e078a2f59c37beb85c9f4e76ffd54ec7987",
+      "bytes": 960
+    },
+    "native/column-healthy.png": {
+      "sha256": "1ac2dbb0bf86d5f6e2b5a8e499107614ecedf5568861c84ae566aa8be9d413f7",
+      "bytes": 956
+    },
+    "native/column-indexed.png": {
+      "sha256": "f54c1fe9c1c25b9eb9cbd0a7645920af66ebe2a47e07f4aa378036c8cf90d25c",
+      "bytes": 489
+    },
+    "native/grove-deep.png": {
+      "sha256": "df6a0dd544a61db161f91ecef96c15525ab76afdcac9776109ae2308f8b94f08",
+      "bytes": 2732
+    },
+    "native/grove-healthy.png": {
+      "sha256": "8d3f7dd66826b5c6adf8c5bd1b3483783e189875bce9be569ccb62d2ed7e204e",
+      "bytes": 2713
+    },
+    "native/grove-indexed.png": {
+      "sha256": "e634a48be21ec273ee10990347bdea28fcf2cbaea7eb10eaf6455b4826c8501c",
+      "bytes": 1361
+    },
+    "native/hero-deep.png": {
+      "sha256": "10949f5f51060829d894ffdd1b979ce78b23ae3061e705cd95a4768c534f0a1a",
+      "bytes": 3678
+    },
+    "native/hero-healthy.png": {
+      "sha256": "ec682987336c5b1c4cd953208942de9c832fecff2319768c7254ce6c5d7fb06b",
+      "bytes": 3494
+    },
+    "native/hero-indexed.png": {
+      "sha256": "4595a6b369c130ab1765873291af082cfe10a938a2db3442276fd609c7027666",
+      "bytes": 1910
+    },
+    "native/roots-deep.png": {
+      "sha256": "065d9a06ca1353346b38aeee6bbda2607427657fc1acdc3ab829985837424485",
+      "bytes": 534
+    },
+    "native/roots-healthy.png": {
+      "sha256": "cb4746ae350aed4eed55b8f8a9c3a502092b2557979d0bd404621060177877f1",
+      "bytes": 538
+    },
+    "native/roots-indexed.png": {
+      "sha256": "d116485c4b769c0ee9e4573032657148b273f632983e5ef625513bf7dfa57857",
+      "bytes": 327
+    },
+    "native/small-deep.png": {
+      "sha256": "c50d0a298cdc4d49255859264e5c75a7583a3c8c006297a25bd4ac4c95d0dda7",
+      "bytes": 365
+    },
+    "native/small-healthy.png": {
+      "sha256": "58860e5bddc4c4f247dc01f11a86086fdaf54fe7221092f15bb8bcc82b7386f2",
+      "bytes": 370
+    },
+    "native/small-indexed.png": {
+      "sha256": "395f277340990e221b5cccf43f3535c8ead7c96875b616407461b9236d719a77",
+      "bytes": 247
+    },
+    "native/tree-deep.png": {
+      "sha256": "eba4032eaee7d2b2d0078fbac181cb21626759645c144bbd7c342e6fff1e8a7b",
+      "bytes": 1546
+    },
+    "native/tree-healthy.png": {
+      "sha256": "bfcb6d37fdc58c6cb7ac6a2d4eaf0de2c3c088e0df43703dd477248f910574e0",
+      "bytes": 1510
+    },
+    "native/tree-indexed.png": {
+      "sha256": "a2b85b9e00dfd7b471b9e78195877e770c39ce0d82c0d552ab921d23baa55e7d",
+      "bytes": 759
+    },
+    "native-healthy-deep-source.png": {
+      "sha256": "356503498a8563bacf93c84ff5326047d50ebe504c4a24fb86c8c663211cbb12",
+      "bytes": 42959
+    },
+    "native-manifest.json": {
+      "sha256": "530d201d06f651f809eecaa5ebb07a3e51662afccf1aa654fc92efc8103e2e80",
+      "bytes": 12436
+    },
+    "palette-inspection-source.gif": {
+      "sha256": "eb25cf0f77773fe1973895290557cff3709962f29cfb5b710189630cfdeccc0c",
+      "bytes": 42721
+    },
+    "palette-phase-0-source.png": {
+      "sha256": "1e0b5f6c08bec6362b9fb1466a36dcfb2a3b7d45529c0b329e0cc4efa8a7fb6c",
+      "bytes": 14968
+    },
+    "palette-phase-1-source.png": {
+      "sha256": "30cf5d124827c86ad6ec687aed62e76165e7d6e1be7d79be4dd8fd0d45d83c6d",
+      "bytes": 14937
+    },
+    "palette-phase-2-source.png": {
+      "sha256": "a951ed1f09464848e1b46bbed214a0083c44dfa06df6b399caf6deea34b195d2",
+      "bytes": 15001
+    },
+    "palette-phase-3-source.png": {
+      "sha256": "6758ca60902d037e9a39d557f28533c4d1b4eb2b2359e68caf672323d7239e5d",
+      "bytes": 14959
+    },
+    "source-art.json": {
+      "sha256": "044a2c69c397df9b439a96f2c48e80381e858c00677a4b9cc096fc2010260f09",
+      "bytes": 76640
+    },
+    "source-gif.json": {
+      "sha256": "b29c651b38a5901040eb0101dded5b227996109741dc1d7291fa30d6c4e474c5",
+      "bytes": 126
+    }
+  },
+  "kind": "frozen source inspection"
+}

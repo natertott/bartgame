@@ -1,0 +1,1099 @@
+{
+  "source_commit": "ead9bb68ca1cec93c8969dd813deda94c919af07",
+  "publication_branch": "forest-canopy-emerald",
+  "profile": 29,
+  "baseline_profile": 19,
+  "source_input_sha256": {
+    "art/blight_reference.py": "199c13c278c086d693042388e941e27c810e2b09442f6d25cb0682b0bcb6b431",
+    "art/blight_reference_source.py": "50261560155aecf45a16c16e9f4e1746016806a2be02d27a50e77433b673ba1d",
+    "art/bloom_animations.py": "f16b690fe853944a1bd87b5d9eca538239f7a6950a8acb9378272f8812f233c2",
+    "art/bloom_fx.py": "78da0962204d4cf23a5d622137f6171f636d6d2a2a40eef539c9f7232771707c",
+    "art/bloom_loads.py": "d2331f07e6a896244ab3b9afa4ff958d8875d5189ea8c6b2ec9ab544da65c4c4",
+    "art/clean_items.py": "adb7d042d823009988e8f3e3de3ffc52fc0d09e8dd9999db548f5189de31fa68",
+    "art/enemy_heart.py": "a52ae7779f314f006f3a0e861c3a3f75cfadbb2be5294873c5d2c6e2ace6e917",
+    "art/enemy_studies.py": "cd82b9babef1fbb61cbf99e6f89f44a5159e8bbb09a90bb00492151af045ad39",
+    "art/enemy_studies_heavy.py": "460c3a66a96eece44e90f943ca2f121ec345813cf279a0104b28e72a1eac1304",
+    "art/enemy_studies_palette.py": "aa35bba202cb9d7cc705146312104c211584b168bf0b01547ffdf96d4bff322b",
+    "art/enemy_studies_small.py": "51170452427ae507c66b851b38b16330167684a84be29172a14b442da0df411d",
+    "art/enemy_studies_soft.py": "cd1e1f2d01f25153c497b3474001bcd75a2dfeb08219b01c6354e855be15ce38",
+    "art/env_pack.py": "e266c715c90c4bf2c4ba8d840d5d6146e4f8bd68e614a53a0aece67a2051e12e",
+    "art/faces.py": "602bbc4a4d32a37f9100e8c78f29417604e2277ab0afcc67631953ea4e8a435a",
+    "art/folk.py": "174fa5044812caefc70a7bdebb33f54a869854c3d4ff58560815126881e6099b",
+    "art/forest_art.py": "f468279e191c3727203c981eadf17442af38dc5ed59493cd1447e9fe21f02842",
+    "art/forest_canopy_adaptive.py": "5e53305c58950b944cc2b0b89b99abdd137da0362b01066395c6f77ce79e44b3",
+    "art/forest_canopy_adaptive_b.py": "7809408ba52d7ce2dce04cb4a7ee1ace649823267a2f24f716ab7c6011656187",
+    "art/forest_canopy_adaptive_terrain.py": "abf93147275d25cba81f9b12a350ccb499f38e03bf74fe777aaf995117b510c6",
+    "art/forest_canopy_emerald.py": "dbd8a0159c4def121f85ccf3ea48a6ce6faf3f462d6bffe2c15f2852b6107d24",
+    "art/forest_canopy_emerald_terrain.py": "2117fec2437250833abd43ada7ae9d4fbedca9dfe77cf288672f7b0750f38c69",
+    "art/forest_concepts.py": "7287846dda549d2dc0d829d224b7a4b5987f6c90cbafebc3461aca110b1a71c3",
+    "art/forest_concepts_folk.py": "fd39704a0634b15bf2330b3dda2368a8ea8a136caa03b08a033bfbbf058a8aae",
+    "art/forest_concepts_props.py": "331f58e184620f14bb9f2d7f1f6a471d0ee3cbe179122e997969108756627e9e",
+    "art/forest_concepts_terrain.py": "dfc9f30160f7c7eb46fe265016583cf7c44147f2e840aedc8f31a1c19ebc3c6f",
+    "art/forest_concepts_v2_folk.py": "f90c9b814cc992d865306d3b75e6458fe7226fe920e5c5add2f3ffa42e2e18ee",
+    "art/forest_concepts_v2_props.py": "0f89761f86cc079494334c7b7f660ac3d8f23500daf6e1548dfcccd0e609d354",
+    "art/forest_concepts_v2_terrain.py": "d7d1215c447294a169d672ae36ccc6b61eab5fcc139ebed12ad4c1f7c0d4e52a",
+    "art/forest_concepts_v2_topology.py": "755c6c61ac5e2154db782583bdd7d65068abeba6043a613e7d9b60e922ff52fa",
+    "art/forest_concepts_v3_terrain.py": "e905aac03c5b46b2388b7e3f83c8e9763eef6e579cd6ee75b2786e9f3639e92e",
+    "art/forest_sprites.py": "b376dd3f6cd16f46ecba74610d3f2265e5c9bfee2929b4449dcf28d56e0d86cf",
+    "art/healthy_reference.py": "32e0254b979378fc78fa970b51ebd0f5ed7479bfaa3adb5cd8c6121fcc5319d4",
+    "art/hero.py": "1313133514f169593e8be950355f213790ff8c4e5d6f051a16eee9c8ad4a6c48",
+    "art/interactive_props.py": "93e2eb136f71cad7dd66b59b17c1eabbc527d17ab4e84a1e65ecafa3d24133f7",
+    "art/interactive_tiles.py": "d252a44cd066de59f309aa890d2b424a5245e7ec0527b43595ea495b98f3cb84",
+    "art/items.py": "6865e732874429fd35732962b2f9df646ac642b3795f3eab418879cf28c08968",
+    "art/items32.py": "e4ff935e10b54f540830917cfd9233b0a6a086feb30bfd2a874cd7b3d7b5fbbf",
+    "art/marks.py": "8bbd676f70643403ea06105ad0468417ba2171433ca422438322534c6f4eb23d",
+    "art/monsters.py": "8dd8272f147ddc89336c69bb274c96578c445a4944a0b0e1113227639ab2b13c",
+    "art/pack.py": "6ed118c306471ea0bb4eebeedd3444badf724359bed77766e48134f9cc77c1fb",
+    "art/pack_tiles.py": "b99341a12dcd457f3e1dc2527da20f31d1dfe24f8e3fecd48cded0041b3e764d",
+    "art/paint.py": "e03b63767cdc885179ab902ccafe119cc5426228b322ad1162338880d2067fd9",
+    "art/palettes.py": "f715f6207034f404721d5a22f140acbd540793032540177d93102c3818275a6d",
+    "art/portraits.py": "2dc833b09d884f7b9020000de5970615e06dceb61a7b9f901e9647c2659613f9",
+    "art/px.py": "2c0058322702da467efc85ab0cd9eb367d07db8b18f5f0bcf2f0b06b640d5188",
+    "art/reboot_actors.py": "08cf30f2219bb0b1f4b55724a9d55c6c755db897b768c35685f6523f1828823e",
+    "art/reboot_core.py": "71021a7b1717f8dd7edd58d0ad0a4dda448def45533c42855f6d76a4bcc82ea4",
+    "art/reboot_items.py": "589c6e250bce05a44fd192c6a7ad7a19025214efe74c98f91e35affc38cc0891",
+    "art/reboot_terrain.py": "57ef3230a9d89b16e2cecb5984d3397ee3b19fb5d15d59af1c6ed9c9d460caec",
+    "art/reboot_ui.py": "6963ac2536f37580c1e398228b22359ea03c39460b9814fb751d4de82c98dfc7",
+    "art/reference_assets.py": "3374d7c6e3ce26e7fb2fa4977410ec75fcf37f98eed29610a4b8301bfae41f52",
+    "art/reference_items.py": "2367b5329b98fa2ba5ba9d067909ca4104cdf67e27db496a0929660c2908c36a",
+    "art/rooms.py": "c9f69874d628e8ef85e2dbf75511a27927147a1bd3d44fff508a9812ce659363",
+    "art/sample.py": "9018410070844f4a69e3bc9458394c8291de99ad548aa8b29d07d0b7d771d454",
+    "art/sewer_concepts.py": "6638656152cdfe5d424f94de8eb7f1c9ecc359293247670c62692d2ea2dd2606",
+    "art/sewer_concepts_npcs.py": "3ac84ca8f1024bfbbbb391f3c817d06d73609e82d17239aa05981e0633b130bb",
+    "art/sewer_concepts_terrain.py": "913e22af37f33949d248675b8f3987daf17d989e0c7c8c04e32c76845ae8f561",
+    "art/sewer_final.py": "f6229d2aa7e0207b01b6c35be75884cbcdd6b7847ceedc945388b760360baf83",
+    "art/sewer_final_contracts.py": "4afb10e4fe316d549046bacbeec4358747939d98f29ca2c2f633c24da4cf553c",
+    "art/sewer_v3_fixtures.py": "1f7d4289575f8a4a933ac6fef1b37a5510308a1ed31c4815629cd9a0c5d8ea12",
+    "art/sprites.py": "c5de3ca406f851997b5d29ad1ea07a3a6182fa1851ead4183f295c488198602d",
+    "art/style.py": "693a64a9136bba50f3489b08b806aaf6d20258f570009bac9e22a6b010c42cb3",
+    "art/sw_cut.py": "27f064e14cb1e392e16ed72102093e17310080f228f9d3d58da8285f7de8dd1b",
+    "art/sw_drain.py": "b546771bef482a455a24a125c11ef50824078e6b47ed100044f0b9cb65560b33",
+    "art/sw_folk.py": "7ed9e18713edce423e8a90947328d537097ee04a4e5a828c36539cbdf8521ac2",
+    "art/sw_hall.py": "a400723c297bb49eb4ef80ec69a3f92a6efde08f588fee20543de65798ee11cd",
+    "art/sw_paint.py": "8f7fce4a2871092631631be9ca8e5bfd4f35f68f039c412c0e5cfb25cf04c139",
+    "art/sw_props.py": "04a8bdc2d8661e21f22f73eea86169aaa647a5161e43d45cfd94a19eae051a6d",
+    "art/sword_studies.py": "5cf29b6116a417ed229d322eadaf9ae7a345a52dcd970dae2ff8f1bb8f0d01c4",
+    "art/tile_art.py": "24d090933cc0cccf70e827aac5fbf2a1a09fd20336b5ab303d04c636cdcc4217",
+    "art/tiles.py": "a83df9818f93c8724b403e919fd304349640970c6f33db60f8dba484cc672273",
+    "art/tiles_style.py": "eb9caf764e56a672227d48fd024df3119856e7b84e58bce11a2acd938b3c2890",
+    "art/title.py": "03b984ca0f7e81afbb064f7e5aadf45530c51f34b53fbb3998aead7a0ceb9715",
+    "art/ui_font.py": "48ae0da7d1daa4f01c144a856d18694c5be06674288029e62913a513bcb8388e",
+    "art/ui_kit.py": "49b31f6b0955436eb9c88bf019208ef6cc7bb573f9add58a3c85e8acea70e6ca",
+    "art/ui_studies.py": "b2a9bbddc134a36c82f87b990a8e5f1f93e15cf2b4cd165391f673b2fe03a3c3",
+    "art/wood_art.py": "4778b2a8cfca7fb647193abc53c9e63bc07998d2eb2177cc4930543de2c5251c",
+    "art/reboot_contracts.json": "3f3c22aeb93f63308ddc42f79e849145c5e8c12950e37ba14ded67773b44d0d8"
+  },
+  "code_input_sha256": {
+    "Makefile": "c5d34ac55aacab0d44280e03314476387fed9b6fb5db5edae9a7acf7630efa97",
+    "gba.ld": "f4febd8e06da89b5f08be8c9d88b8a6e9ec3fac8c2760f2b0fb75ca66b7d559c",
+    "tools/build_assets.py": "92bdc4c0db1185b5afe04007855726e5d63ea6ca6681055d64d105c18a4168c2",
+    "src/actor.c": "da9600bb4ec3d564ea6fd495591610c9cd4d6317f2c2bcb9c4eca355621f6b4f",
+    "src/actor.h": "3fa744b5a0d5eab5058c3bceeb29add34651c0f6031d2e5b822bdeff72a39759",
+    "src/ambient.c": "3b53f1202201322acd952ce9b72d71613468327bfa735f11ae4b40feaa5294fd",
+    "src/ambient.h": "51b942296b5535020118ef4cf87e25e98d51d868cf03b847c71da57e05ce3de1",
+    "src/appearance.c": "5030fc06a57add5b172dbe024679ef7971724071ba989998edb4be6cdf304a58",
+    "src/appearance.h": "b432cbe720f1d4471f7f65694e37081b4f9b42a71449fc2d4034754712304f3f",
+    "src/boss.c": "7bd72986c287e70af11c6ca6a98857fd5500d442d83d99ea654c6e99d8c3d5ff",
+    "src/boss.h": "78d51f91b879422d1cf6ab71bd103d498e94570402f55137a78b99c24500912b",
+    "src/canopy_scene.c": "1995868b561c353bed467514e1fae922a96dc2194e5b30be42490729d15eef52",
+    "src/canopy_scene.h": "c048c45948b4ca9869b09c07e92e91c43b4bd1b7dc2577fdd03a9ad1c213c182",
+    "src/crt0.s": "9561f54979715196cf69acdb00023e24fa1e7e5c9ab5c3ae02ca6241ac8d5ccf",
+    "src/enemy.c": "30360d13631456f8f6ea0dc8e5f97841b40d6ef9327092e9e3db585048d90f2d",
+    "src/enemy.h": "119915374666cbb0cc997bf553bc4ae855e3fa911fa8a2951277a03944f5dca6",
+    "src/game.c": "198c11e99d8cc3be361aad551eaf24bbec032aa46aeaed1fd47793a42d405877",
+    "src/game.h": "86d7cf9fa9732a3be092cc629f29b763d79108f5e2622647d706af1876812f8b",
+    "src/gba.h": "dbea259d073cc29e6058fcdddfb06d273a3d9b18da1c39053e8732d0a96b60f1",
+    "src/interactive.c": "470d3f7dff6a7c3762cdf47ce0ccad15849e51208663249c0967ab5ec3f4fb4b",
+    "src/interactive.h": "886f62f9eaa547f24638015ba90cf9ca2ea440257b3ade2109693d1ec63c6a66",
+    "src/items.c": "6d0e2fc3def2fbb1024e54ca2673bc7abf3cd6841a49d03734d201ffa854a37f",
+    "src/items.h": "35d78692cfa5ccf7d39e7ab8f1ed0bea1bd2e24acea41c952f5b2b8ffd2e1dca",
+    "src/main.c": "25eb7ee54a86b7aeb0b86a9580b4a8d96c35271b558d563c51d52903836005ff",
+    "src/menu.c": "8994db593fd477cd9601e1c035522a72bb4725cba0897adf1fa9b3b4ddd782c2",
+    "src/menu.h": "1e85e5dbef95da05637330cce98216299e765e31b4cc24ae39f66fe9203226ef",
+    "src/menu_layouts_a.c": "f786b8af57520e3c8c5bc50d03651d8282c207617f25f98b989a91a3248b6130",
+    "src/menu_layouts_b.c": "f575ca99eecc7880a5ffb1547c1a45903e1cac02463b2a6221680b983a8bc199",
+    "src/menu_studies.c": "3d8b608ab242e24496f6034bf45cb22b32a945d65ea7141916c6f11fc875038a",
+    "src/menu_studies.h": "26d48dbedbb63dd4bdf380deec661490ae96c7816e95406c2178598592e7ce8a",
+    "src/myst.c": "2cfd56bc44be8affbdf625a68b26e0ea42f343d8b441d4f155bee6a9de92825c",
+    "src/myst.h": "c33816c1d410d60f44611be2e6f057e14582ccd1c8afd3e143c4a74b8be17928",
+    "src/npc.c": "28decd80cb2340472a8d426a5db215235615722bafe446d3b9a6878c01795069",
+    "src/npc.h": "4b2b226a745441db020e6699298f0e6f2496d45779d707de014614055b9388b4",
+    "src/objects.c": "8c0e807163ba1258aafc0521dbcf61437f35f2f8e545368ba35d24017d542f76",
+    "src/objects.h": "390a370b4335575c0c6fca8f92beec74db77ab2bc79206ca70f9975769fc585f",
+    "src/player.c": "8a93e64f439bf5fa61be50c65c0f036c3784a15afaa94cf378d31f3ee677b158",
+    "src/player.h": "0f64172f389f311dbee797eaf0905b4032bb9cbad120181977578608e5e5e204",
+    "src/react.c": "5eeb327cfea6670cd1adb04ccac094247da1335bd83e81f8595da1e4a031855b",
+    "src/react.h": "d917db875e45e806cb6c3f2c4f38b33b56f65f29ac8e0ef320fa32554a6ecbfd",
+    "src/room.c": "1d28688db7a3423688c20e6fdcc038e4ca5d6502abb3913c6a04c513d57ff4b5",
+    "src/room.h": "7e893257e1e220d670059f22599a4dc1e8ddb3199ab9f87ad963a36fd44bfa29",
+    "src/roomgen.c": "4e47daa50032c1c33c952560bf3dcaf26b1aad9687146ed2be2929805c44f07e",
+    "src/roomgen.h": "bb3ff63bc887097800c9bd00260312f108dae748ff28bffc07f5140fcdec0694",
+    "src/save.c": "6b0a6d164ad8a72fe9266aa7db4c97f935796ada77b09530526ab6151700db39",
+    "src/save.h": "e28723ca0b20c141ac8af2d7984b68cf7b8bcf38d8fe85e7381c6721d14e2f64",
+    "src/sound.c": "646acfaee313508ed39b4aeb845c834c1ed32a727648ae36d506e5c4e4daf20b",
+    "src/sound.h": "8f14cf11e2a9f5fad811bff4dbd314d37f820d97733a1c5afcc4837973fce5f3",
+    "src/text.c": "ddadb0ca78b0bdbfab815c3fb703bf235ada3b4e1a40a88bf5b4f1d532796108",
+    "src/text.h": "4d27fc5c4b8c72ce8dad63824fdd9dfa0b35a783890da1225605ed6acc243479",
+    "src/ui.c": "2c80b424b8ad07d095eb82ab31d1806191b221f6d87f7f89a9b9d0fe146d9394",
+    "src/ui.h": "953789528da3255c35ddf12f281d52302e894d14058d1fd84f5c6449a8d2e9ed",
+    "src/util.c": "e8df1ff26b31194d375b0be31364bacd3fd95fb90d983e7dc17ff984e0a05698",
+    "src/util.h": "8a0da64b5887aa2a18878aca2745796687e12b20d3359d27827e0006980819ab",
+    "src/video.c": "d1ada2e347bd11bc326c9ebe053873d044d831d23fb41b8441e21e8ef2dffa9b",
+    "src/video.h": "7b40ed9ae2ad85b091bccd7aa54a04b35e97a053941c8ea1b01fb36739deb51d",
+    "src/vwf.c": "b63c129e9d4a601e1b0b3139528621b11b67964afaa200ba10883d10adc83c09",
+    "src/vwf.h": "be305bdebbb78027a9063d37133720c795abb3b8e52995f16bfc8149566066ee",
+    "src/world.c": "203716ae6d4044cc1be92fb9c150ba958fe05a01dafa2ddbf3553e24d30b7f4c",
+    "src/world.h": "76397dedc1bf5cfca8870f87b4bff14cd35102fae01ae48ff4fbdc6772bf9a1b"
+  },
+  "review_tool_sha256": {
+    "bartgame/tools/forest_canopy_adaptive_review.py": "a6aac83dc3ff7ad83801329dc0a04bcb8f923d36efb951ad544678f3f2579e9d",
+    "bartgame/tools/forest_canopy_emerald_gallery.py": "ba78aa8fcd0a122736f92c9255bb262534125bc7eb6cf55760c018de2fa350e3",
+    "bartgame/tools/forest_canopy_emerald_audit.py": "a3196c6a5ea16d1a8d0a7845c60e40c67e6faa0182db05b3e1f50a02509e96de"
+  },
+  "source_documents": {
+    "bartgame/docs/art-reboot/ART_BIBLE.md": "2616e6b1da9c2b4f9a04a151d8c06f94fc30e84204c525bd0f621d3750b04dae",
+    "bartgame/docs/art-reboot/ART_DIRECTION_LOG.md": "433000ee29e14cf2bad373b6084b8ed4e0b1dd44d741b3c5fa746375976da963",
+    "bartgame/docs/art-reboot/REFERENCE_REGISTER.md": "c48810e3ea8a6800b2f114645c43afacc7f9febf82b0700de8f877f0d590f7f4",
+    "bartgame/docs/art-reboot/references/EMERALD_CANOPY_REFERENCE.md": "a9f6b041db0afc03468492b3d1d83ba0f159b50ff702cb12ed1528fc348fb8bf",
+    "bartgame/docs/art-reboot/references/FOREST_EMERALD_CANOPY.md": "640ff04783cda4889efd257c8c7d35d87b710b7f2ce71bd47a2458307ea8d6e1",
+    "bartgame/docs/art-reboot/references/FOREST_EMERALD_ENGINE.md": "8493e06331b9cf1413b89ea8dcf5f50a2a34f7d64091df7b90e7a72c2a0ba75a"
+  },
+  "release": {
+    "source_commit": "ead9bb68ca1cec93c8969dd813deda94c919af07",
+    "rom": "leafwoven-canopy-ead9bb6.gba",
+    "zip": "forest-canopy-emerald-ead9bb6.zip",
+    "rom_sha256": "ce60072a9484432c23c6059a74ba115df2b09c5e0f0c3bb2a68b975de9fedf54",
+    "zip_sha256": "014190b213d34e83ee43861321374736654d8167fcdec1fce8580750b3ea0300"
+  },
+  "runtime": {
+    "source_commit": "ead9bb68ca1cec93c8969dd813deda94c919af07",
+    "capture_tool_sha256": "a6aac83dc3ff7ad83801329dc0a04bcb8f923d36efb951ad544678f3f2579e9d",
+    "selection_plan_sha256": "d37d3507d5f3019707254de534f1503118f309eaf5680776f66c25624f806e60",
+    "contexts": 16,
+    "new_contexts": 8,
+    "checks_passed": 420,
+    "checks_total": 420,
+    "movies": 4,
+    "gifs": 4,
+    "observed_video_frames": 800,
+    "new_minimum_displayed_character_pixels": 37,
+    "new_minimum_connected_character_component": 14,
+    "new_non_menu_zero_update_intervals": 0,
+    "reports": [
+      {
+        "profile": 19,
+        "path": "/workspace/setup/forest-canopy-emerald/runtime/v19/capture.json",
+        "sha256": "7e13c91f32fc16e9692e3b0c136993741b2f03f5e228afe5cafd009ee15378d0",
+        "rom_sha256": "09aa5274a91618c5a06a74bd7ba61bebc6ebb71d738aeb48de86f8b91930c3b7",
+        "passed": 188,
+        "total": 188
+      },
+      {
+        "profile": 29,
+        "path": "/workspace/setup/forest-canopy-emerald/runtime/v29/capture.json",
+        "sha256": "b150aa2358b17fcfb32df63d9180f4aadca51c56b78c01242a4f6f1bc7bf2081",
+        "rom_sha256": "ce60072a9484432c23c6059a74ba115df2b09c5e0f0c3bb2a68b975de9fedf54",
+        "passed": 232,
+        "total": 232
+      }
+    ],
+    "note": "Five natural room geometries, two ordinary-input motion sequences and one focused menu return per ROM. Native/layer/source evidence separate. Actual per-case RNG and floor-native-material proof retained."
+  },
+  "independent_audit": {
+    "passed": 2090,
+    "total": 2090,
+    "failures": [],
+    "sha256": "e22eb705013cbb04f59743502598932c794eb380327b05ed56aa8c876a1cf0d1"
+  },
+  "files": {
+    "art-review/forest-canopy-emerald/README.md": {
+      "bytes": 3940,
+      "sha256": "438f9138329df6d8169742ec662e2f0c6ddb6007e3a28b062e487a6783678629"
+    },
+    "art-review/forest-canopy-emerald/actual/README.md": {
+      "bytes": 547,
+      "sha256": "93c9c80a39018e82af9329d0055ec26785dcdb8676daf23334164d5d2025fbfa"
+    },
+    "art-review/forest-canopy-emerald/actual/profile-19/README.md": {
+      "bytes": 3831,
+      "sha256": "be803d1130db5178d68f7c685d93d9be3b4f468437a361f1ab5f2bbb3dc15e32"
+    },
+    "art-review/forest-canopy-emerald/actual/profile-19/broad-deep/bg2-resident-layer.png": {
+      "bytes": 5173,
+      "sha256": "044b580feb79a48332d430c4603acb8a660f75ae8986442f3f6606b6348cbdc7"
+    },
+    "art-review/forest-canopy-emerald/actual/profile-19/broad-deep/frame-000.png": {
+      "bytes": 11063,
+      "sha256": "dac3180da0a4bd4cba25b0e3819a89cbd3524ce1bb4a96aa14c48d8d59e5f5f0"
+    },
+    "art-review/forest-canopy-emerald/actual/profile-19/broad-deep/frame-008.png": {
+      "bytes": 11019,
+      "sha256": "2b807e0e6ce363b94fbfe5e50b9e32f9e4eb21b78d18a309e1c62dedfd807f01"
+    },
+    "art-review/forest-canopy-emerald/actual/profile-19/broad-deep/frame-015.png": {
+      "bytes": 10897,
+      "sha256": "e40fb446101d22e80ddb5673814df69593129860d806b00854c3497c7b70fc6d"
+    },
+    "art-review/forest-canopy-emerald/actual/profile-19/broad-deep-after.png": {
+      "bytes": 10897,
+      "sha256": "e40fb446101d22e80ddb5673814df69593129860d806b00854c3497c7b70fc6d"
+    },
+    "art-review/forest-canopy-emerald/actual/profile-19/broad-deep-filmstrip.png": {
+      "bytes": 17768,
+      "sha256": "e043ace9725f7cbdbe31b83367e9a63fb474f9b57b758bf103124828fbbaddbb"
+    },
+    "art-review/forest-canopy-emerald/actual/profile-19/broad-deep.png": {
+      "bytes": 11063,
+      "sha256": "dac3180da0a4bd4cba25b0e3819a89cbd3524ce1bb4a96aa14c48d8d59e5f5f0"
+    },
+    "art-review/forest-canopy-emerald/actual/profile-19/broad-healthy/bg2-resident-layer.png": {
+      "bytes": 8669,
+      "sha256": "ac2bf746d156a2595df98d61e98a1fe0b88e645a48fbfebe5e052aecb8eacbd9"
+    },
+    "art-review/forest-canopy-emerald/actual/profile-19/broad-healthy/frame-000.png": {
+      "bytes": 13300,
+      "sha256": "2954dcbe95c0c565ddd54b7d91c6707b8742b7f5b457c2c29fa58949a66be03e"
+    },
+    "art-review/forest-canopy-emerald/actual/profile-19/broad-healthy/frame-008.png": {
+      "bytes": 13048,
+      "sha256": "5a505604134c405ecb8fcc29fafd884357dfa34d0b001be3832a9317d96e2b01"
+    },
+    "art-review/forest-canopy-emerald/actual/profile-19/broad-healthy/frame-015.png": {
+      "bytes": 13057,
+      "sha256": "5af8a27cf0030e51ccafdf56f39d01b7ab649d5e2ec9376cc72026fc6c2d5c5a"
+    },
+    "art-review/forest-canopy-emerald/actual/profile-19/broad-healthy-after.png": {
+      "bytes": 13057,
+      "sha256": "5af8a27cf0030e51ccafdf56f39d01b7ab649d5e2ec9376cc72026fc6c2d5c5a"
+    },
+    "art-review/forest-canopy-emerald/actual/profile-19/broad-healthy-filmstrip.png": {
+      "bytes": 19551,
+      "sha256": "4660a9d3f2c2df3796bb44686e42256d6a61f99c0e35e2291ac5d38c3f781503"
+    },
+    "art-review/forest-canopy-emerald/actual/profile-19/broad-healthy.png": {
+      "bytes": 13300,
+      "sha256": "2954dcbe95c0c565ddd54b7d91c6707b8742b7f5b457c2c29fa58949a66be03e"
+    },
+    "art-review/forest-canopy-emerald/actual/profile-19/capture.json": {
+      "bytes": 3123523,
+      "sha256": "7e13c91f32fc16e9692e3b0c136993741b2f03f5e228afe5cafd009ee15378d0"
+    },
+    "art-review/forest-canopy-emerald/actual/profile-19/deep-branch-cape/frame-000.png": {
+      "bytes": 10992,
+      "sha256": "05e35627eff0a0c13f0305984efacaf8a7ece4737a36e89e7ec5b5730b88a4be"
+    },
+    "art-review/forest-canopy-emerald/actual/profile-19/deep-branch-cape/frame-012.png": {
+      "bytes": 10856,
+      "sha256": "479f6d26cd00334a9cd031223238005ee33fc062cc1bf04c71d6e135589e342a"
+    },
+    "art-review/forest-canopy-emerald/actual/profile-19/deep-branch-cape/frame-013.png": {
+      "bytes": 10866,
+      "sha256": "036a5a4431959946b584ce32555ff20008374d831f8e44f6accb16ca26719fc3"
+    },
+    "art-review/forest-canopy-emerald/actual/profile-19/deep-branch-cape/frame-016.png": {
+      "bytes": 10658,
+      "sha256": "867e6bbf19a0cac0c55a40cafe04072b24166748626d05e319296f70f34eb833"
+    },
+    "art-review/forest-canopy-emerald/actual/profile-19/deep-branch-cape/frame-018.png": {
+      "bytes": 10609,
+      "sha256": "62ed7a07ad0a8b905747bf0d0dd4c315cb7edaef3d225fdbc43508e681faf737"
+    },
+    "art-review/forest-canopy-emerald/actual/profile-19/deep-branch-cape/frame-032.png": {
+      "bytes": 10831,
+      "sha256": "f4fa5c68f6414871bd3a28cb893dcba278ca3a7c4f7ffafa327b277d7a874be9"
+    },
+    "art-review/forest-canopy-emerald/actual/profile-19/deep-branch-cape/frame-043.png": {
+      "bytes": 10607,
+      "sha256": "d625d2268a61b9dca67d1839955d1a7bf40f2ec1702a83eb79978f5d191bb8b5"
+    },
+    "art-review/forest-canopy-emerald/actual/profile-19/deep-branch-cape/frame-048.png": {
+      "bytes": 10597,
+      "sha256": "ce94ba116f4b49f18506f2a435e206276ace794ae0cc8ca6f2de290ebeae2c6e"
+    },
+    "art-review/forest-canopy-emerald/actual/profile-19/deep-branch-cape/frame-063.png": {
+      "bytes": 10633,
+      "sha256": "a16b5eda14b5e89f9f0671d63b72562e0acbbfd63bb8cb2a8d156a2f3cd29642"
+    },
+    "art-review/forest-canopy-emerald/actual/profile-19/deep-branch-cape-after.png": {
+      "bytes": 10633,
+      "sha256": "a16b5eda14b5e89f9f0671d63b72562e0acbbfd63bb8cb2a8d156a2f3cd29642"
+    },
+    "art-review/forest-canopy-emerald/actual/profile-19/deep-branch-cape-filmstrip.png": {
+      "bytes": 34835,
+      "sha256": "139aa58a8fc52c21a145a1648c019fc9a80a40cb1f1acbee6b7b527ee6b18345"
+    },
+    "art-review/forest-canopy-emerald/actual/profile-19/deep-branch-cape.gif": {
+      "bytes": 507815,
+      "sha256": "63ca24ad4b8efa04f91331bd8cc603a549b5f2e425d20c2fa5344e88da656aaf"
+    },
+    "art-review/forest-canopy-emerald/actual/profile-19/deep-branch-cape.mp4": {
+      "bytes": 48275,
+      "sha256": "34bd0a782482c25ad0b23b28450a4cae88b1d396dc39bcf904590242035def30"
+    },
+    "art-review/forest-canopy-emerald/actual/profile-19/deep-branch-cape.png": {
+      "bytes": 10992,
+      "sha256": "05e35627eff0a0c13f0305984efacaf8a7ece4737a36e89e7ec5b5730b88a4be"
+    },
+    "art-review/forest-canopy-emerald/actual/profile-19/deep-branch-menu-resume/frame-000.png": {
+      "bytes": 10860,
+      "sha256": "988eb20a23fe2fc06fccac58cbb65b2d24f824e88dadb27a773c3bec0c9bfc2a"
+    },
+    "art-review/forest-canopy-emerald/actual/profile-19/deep-branch-menu-resume/frame-018.png": {
+      "bytes": 3681,
+      "sha256": "9c92e362ae75372bf24b96104e574964477b32f873a72e16647282eae5eddc05"
+    },
+    "art-review/forest-canopy-emerald/actual/profile-19/deep-branch-menu-resume/frame-064.png": {
+      "bytes": 10869,
+      "sha256": "3ca43316fb24fcb751503fe7cf7fe65bf0cb463852fc492ec9a28c66eccbc78c"
+    },
+    "art-review/forest-canopy-emerald/actual/profile-19/deep-branch-menu-resume/frame-127.png": {
+      "bytes": 10838,
+      "sha256": "c0ddf7bb405595aa52628e0bda47741c3422394d1c83e05c928fc895a92a5b01"
+    },
+    "art-review/forest-canopy-emerald/actual/profile-19/deep-branch-menu-resume-after.png": {
+      "bytes": 10838,
+      "sha256": "c0ddf7bb405595aa52628e0bda47741c3422394d1c83e05c928fc895a92a5b01"
+    },
+    "art-review/forest-canopy-emerald/actual/profile-19/deep-branch-menu-resume-filmstrip.png": {
+      "bytes": 17238,
+      "sha256": "cd2448ff0dce0b4e9569a423df4b5c1ae59678d8d7dff22078b2b4570ae3f075"
+    },
+    "art-review/forest-canopy-emerald/actual/profile-19/deep-branch-menu-resume.png": {
+      "bytes": 10860,
+      "sha256": "988eb20a23fe2fc06fccac58cbb65b2d24f824e88dadb27a773c3bec0c9bfc2a"
+    },
+    "art-review/forest-canopy-emerald/actual/profile-19/deep-branch-walk-roll/frame-000.png": {
+      "bytes": 11063,
+      "sha256": "abb1f41beef892be4e21e922d06f7c69b363b2202eeba42b1d33fb7026c6593e"
+    },
+    "art-review/forest-canopy-emerald/actual/profile-19/deep-branch-walk-roll/frame-032.png": {
+      "bytes": 10694,
+      "sha256": "7a79e105b8458d6dd053633c1da0ea2030bf9f39d4abc88f6d21c859c0a162ca"
+    },
+    "art-review/forest-canopy-emerald/actual/profile-19/deep-branch-walk-roll/frame-045.png": {
+      "bytes": 10471,
+      "sha256": "f15fd8bafebb185de73fc5c3b7605ab8fd51b5880edda103ec32826262ef8407"
+    },
+    "art-review/forest-canopy-emerald/actual/profile-19/deep-branch-walk-roll/frame-064.png": {
+      "bytes": 10586,
+      "sha256": "b10021774634f9c842fce44112ac48dbe1561c83b5fbef16ca03c8c7a18c74fa"
+    },
+    "art-review/forest-canopy-emerald/actual/profile-19/deep-branch-walk-roll/frame-065.png": {
+      "bytes": 10667,
+      "sha256": "e0adeb6485006db91ba0a030be44a977a20507de13794e39fbea2bdc07ee5f1d"
+    },
+    "art-review/forest-canopy-emerald/actual/profile-19/deep-branch-walk-roll/frame-096.png": {
+      "bytes": 11292,
+      "sha256": "dad5006002d5df29d9b2887848d9e94965a6e4d42b110d602b16608f127a8a71"
+    },
+    "art-review/forest-canopy-emerald/actual/profile-19/deep-branch-walk-roll/frame-127.png": {
+      "bytes": 11113,
+      "sha256": "1f6f7a9b27da5c31dc3db4ee330072fd447839ac7c0666bb91287b581f7a7d4b"
+    },
+    "art-review/forest-canopy-emerald/actual/profile-19/deep-branch-walk-roll-after.png": {
+      "bytes": 11113,
+      "sha256": "1f6f7a9b27da5c31dc3db4ee330072fd447839ac7c0666bb91287b581f7a7d4b"
+    },
+    "art-review/forest-canopy-emerald/actual/profile-19/deep-branch-walk-roll-filmstrip.png": {
+      "bytes": 38671,
+      "sha256": "f6759fb0835f8cba01274139bfb8b42d6dc46e3d4b818ca85dd9b528a2ed56c2"
+    },
+    "art-review/forest-canopy-emerald/actual/profile-19/deep-branch-walk-roll.gif": {
+      "bytes": 1108932,
+      "sha256": "8d55c202aea1847dd78158b229b05b5847dc7a3e73a250b67be476bd8d1cbcdf"
+    },
+    "art-review/forest-canopy-emerald/actual/profile-19/deep-branch-walk-roll.mp4": {
+      "bytes": 83528,
+      "sha256": "67277a893698cbe1289f8ba7a965ad7235ced71a677a84cd017934970bebb082"
+    },
+    "art-review/forest-canopy-emerald/actual/profile-19/deep-branch-walk-roll.png": {
+      "bytes": 11063,
+      "sha256": "abb1f41beef892be4e21e922d06f7c69b363b2202eeba42b1d33fb7026c6593e"
+    },
+    "art-review/forest-canopy-emerald/actual/profile-19/isolated-small/frame-000.png": {
+      "bytes": 9271,
+      "sha256": "348a844b68a25299969b242ea94040c13c8d53b9390d44ab9e21a5e416cf2a7c"
+    },
+    "art-review/forest-canopy-emerald/actual/profile-19/isolated-small/frame-008.png": {
+      "bytes": 9217,
+      "sha256": "fa87be84d64d22ff8a932cdf9135c5e579955f2b1a55939a7c5624114a59a3e9"
+    },
+    "art-review/forest-canopy-emerald/actual/profile-19/isolated-small/frame-015.png": {
+      "bytes": 9214,
+      "sha256": "ec16313636a4f3ed6a5d4cf81488cf122fde86cdc9d258d651f2dcdbd57315ea"
+    },
+    "art-review/forest-canopy-emerald/actual/profile-19/isolated-small-after.png": {
+      "bytes": 9214,
+      "sha256": "ec16313636a4f3ed6a5d4cf81488cf122fde86cdc9d258d651f2dcdbd57315ea"
+    },
+    "art-review/forest-canopy-emerald/actual/profile-19/isolated-small-filmstrip.png": {
+      "bytes": 14709,
+      "sha256": "0b14ebc67c346c708a9e0422b004cd96977491b667eb1136ca99e1fc9e3843dd"
+    },
+    "art-review/forest-canopy-emerald/actual/profile-19/isolated-small.png": {
+      "bytes": 9271,
+      "sha256": "348a844b68a25299969b242ea94040c13c8d53b9390d44ab9e21a5e416cf2a7c"
+    },
+    "art-review/forest-canopy-emerald/actual/profile-19/narrow-arm/frame-000.png": {
+      "bytes": 11137,
+      "sha256": "7f4d1d8478e4708c8bdadcf7eb1c847ffdfd5a3daeb88eca4cdc94bc5586b7bd"
+    },
+    "art-review/forest-canopy-emerald/actual/profile-19/narrow-arm/frame-008.png": {
+      "bytes": 11161,
+      "sha256": "15a58d2c1cb2842543cad53f9aa363faf8a733dbdb334706cc2103f5dc127ae6"
+    },
+    "art-review/forest-canopy-emerald/actual/profile-19/narrow-arm/frame-015.png": {
+      "bytes": 11224,
+      "sha256": "47aa480181687cae43b11aa4c86a3892b21f687aad186a042807b8f97879463d"
+    },
+    "art-review/forest-canopy-emerald/actual/profile-19/narrow-arm-after.png": {
+      "bytes": 11224,
+      "sha256": "47aa480181687cae43b11aa4c86a3892b21f687aad186a042807b8f97879463d"
+    },
+    "art-review/forest-canopy-emerald/actual/profile-19/narrow-arm-filmstrip.png": {
+      "bytes": 17011,
+      "sha256": "f2cb4fb35b9985d468db87da7ef2134e3812cb079028c64b201111e2e02722f1"
+    },
+    "art-review/forest-canopy-emerald/actual/profile-19/narrow-arm.png": {
+      "bytes": 11137,
+      "sha256": "7f4d1d8478e4708c8bdadcf7eb1c847ffdfd5a3daeb88eca4cdc94bc5586b7bd"
+    },
+    "art-review/forest-canopy-emerald/actual/profile-19/separated-corner/frame-000.png": {
+      "bytes": 10812,
+      "sha256": "da167886220bd1da10520874a591261d25ab6d0040f07de13a4aad762b27dbee"
+    },
+    "art-review/forest-canopy-emerald/actual/profile-19/separated-corner/frame-008.png": {
+      "bytes": 10627,
+      "sha256": "1bb71797c5c96569a5e9764bf9ad7628ee8024fa5fe3bf716d88f5c16072fda9"
+    },
+    "art-review/forest-canopy-emerald/actual/profile-19/separated-corner/frame-015.png": {
+      "bytes": 10635,
+      "sha256": "ffda403caf0e241076742799b11e0a1918b4c596f31267c4be0027465f4db7e8"
+    },
+    "art-review/forest-canopy-emerald/actual/profile-19/separated-corner-after.png": {
+      "bytes": 10635,
+      "sha256": "ffda403caf0e241076742799b11e0a1918b4c596f31267c4be0027465f4db7e8"
+    },
+    "art-review/forest-canopy-emerald/actual/profile-19/separated-corner-filmstrip.png": {
+      "bytes": 16119,
+      "sha256": "8cd93f39392f15997a140bd050ed99d2ba50701a64f1019d64513dc8a2a48388"
+    },
+    "art-review/forest-canopy-emerald/actual/profile-19/separated-corner.png": {
+      "bytes": 10812,
+      "sha256": "da167886220bd1da10520874a591261d25ab6d0040f07de13a4aad762b27dbee"
+    },
+    "art-review/forest-canopy-emerald/actual/profile-29/README.md": {
+      "bytes": 3968,
+      "sha256": "87c9f05235739dd004e6e2de3b7cf0e263d5621d202f55fdf0fd1733e173b571"
+    },
+    "art-review/forest-canopy-emerald/actual/profile-29/broad-deep/bg1-resident-layer.png": {
+      "bytes": 56252,
+      "sha256": "743bd09eeaf16e687e0d1b1b4cc7a8fc19585200caca4c230108a747ec5de41e"
+    },
+    "art-review/forest-canopy-emerald/actual/profile-29/broad-deep/bg2-resident-layer.png": {
+      "bytes": 4972,
+      "sha256": "3a52af1c268006aee2c71d75858e633a65a70889dce7a0898608fa487083e825"
+    },
+    "art-review/forest-canopy-emerald/actual/profile-29/broad-deep/frame-000.png": {
+      "bytes": 11735,
+      "sha256": "ad1f820e036197b4c3209b95bc66ddc5ec82216c13353f707c6d473401168922"
+    },
+    "art-review/forest-canopy-emerald/actual/profile-29/broad-deep/frame-008.png": {
+      "bytes": 11861,
+      "sha256": "574b243862bcc3f065b6224699fc57a521d8e39050f4ecd279d80905235aa68b"
+    },
+    "art-review/forest-canopy-emerald/actual/profile-29/broad-deep/frame-015.png": {
+      "bytes": 11751,
+      "sha256": "3ff021230cdec66c1d7687c219b63d8d1c390752279da6ad45e4cec449b17f0a"
+    },
+    "art-review/forest-canopy-emerald/actual/profile-29/broad-deep-after.png": {
+      "bytes": 11751,
+      "sha256": "3ff021230cdec66c1d7687c219b63d8d1c390752279da6ad45e4cec449b17f0a"
+    },
+    "art-review/forest-canopy-emerald/actual/profile-29/broad-deep-filmstrip.png": {
+      "bytes": 18614,
+      "sha256": "c0767d37873a17123c56790fe342393825500fa35bc57d244bf88454ca132169"
+    },
+    "art-review/forest-canopy-emerald/actual/profile-29/broad-deep.png": {
+      "bytes": 11735,
+      "sha256": "ad1f820e036197b4c3209b95bc66ddc5ec82216c13353f707c6d473401168922"
+    },
+    "art-review/forest-canopy-emerald/actual/profile-29/broad-healthy/bg1-resident-layer.png": {
+      "bytes": 61522,
+      "sha256": "81d70dbb935c530b4d8e8ead4925cdf4763f4a819414f95fb7691ecdb1acb14d"
+    },
+    "art-review/forest-canopy-emerald/actual/profile-29/broad-healthy/bg2-resident-layer.png": {
+      "bytes": 10143,
+      "sha256": "556dc8376bf22ba2d4fbd273f0355ffef37b1023aff9807aacc13ed6cde3eb0a"
+    },
+    "art-review/forest-canopy-emerald/actual/profile-29/broad-healthy/frame-000.png": {
+      "bytes": 14602,
+      "sha256": "c64da3abfb1961e94d3729678ca5b459d5ff21fb52772cfe43da5bacf6061232"
+    },
+    "art-review/forest-canopy-emerald/actual/profile-29/broad-healthy/frame-008.png": {
+      "bytes": 14439,
+      "sha256": "dfdb8b935cbabcba67a597f0f1ea23e2797e44d3d38cb87ee210e99dc8e419a9"
+    },
+    "art-review/forest-canopy-emerald/actual/profile-29/broad-healthy/frame-015.png": {
+      "bytes": 14438,
+      "sha256": "81a012c62600773428fbb5f947a58a1f5e93811746f6999647b7ef7f18817176"
+    },
+    "art-review/forest-canopy-emerald/actual/profile-29/broad-healthy-after.png": {
+      "bytes": 14438,
+      "sha256": "81a012c62600773428fbb5f947a58a1f5e93811746f6999647b7ef7f18817176"
+    },
+    "art-review/forest-canopy-emerald/actual/profile-29/broad-healthy-filmstrip.png": {
+      "bytes": 21778,
+      "sha256": "c7709f341e7170e702333f359f5dadc7ec887df8f066bcb7aa6e34e232ff18b6"
+    },
+    "art-review/forest-canopy-emerald/actual/profile-29/broad-healthy.png": {
+      "bytes": 14602,
+      "sha256": "c64da3abfb1961e94d3729678ca5b459d5ff21fb52772cfe43da5bacf6061232"
+    },
+    "art-review/forest-canopy-emerald/actual/profile-29/capture.json": {
+      "bytes": 11776684,
+      "sha256": "b150aa2358b17fcfb32df63d9180f4aadca51c56b78c01242a4f6f1bc7bf2081"
+    },
+    "art-review/forest-canopy-emerald/actual/profile-29/deep-branch-cape/frame-000.png": {
+      "bytes": 12778,
+      "sha256": "9ad43ca63ffaed1558d87c3535b93aca80b1db952369f792e85718118c2940e2"
+    },
+    "art-review/forest-canopy-emerald/actual/profile-29/deep-branch-cape/frame-009.png": {
+      "bytes": 12683,
+      "sha256": "484116c36ab23167d58674a430ee3b7149c156d0b3d88535d877394e1957bca4"
+    },
+    "art-review/forest-canopy-emerald/actual/profile-29/deep-branch-cape/frame-013.png": {
+      "bytes": 12691,
+      "sha256": "1d72beec3f3c2e82791df3f75a14a924f4e92276b9bad55e4f9e1616482a5acb"
+    },
+    "art-review/forest-canopy-emerald/actual/profile-29/deep-branch-cape/frame-016.png": {
+      "bytes": 12592,
+      "sha256": "a3bc9f434504e604f1105a5ebf5d9c21fd803d3894316ef8ff1afa4b883e29ce"
+    },
+    "art-review/forest-canopy-emerald/actual/profile-29/deep-branch-cape/frame-018.png": {
+      "bytes": 12450,
+      "sha256": "03abfa12bb2d15e7db5fe439a511ed50594ad6ebaafabfdd133b1d7359b78da0"
+    },
+    "art-review/forest-canopy-emerald/actual/profile-29/deep-branch-cape/frame-032.png": {
+      "bytes": 12523,
+      "sha256": "0540e6c1588d6cdf4053d8b36765de26ed2266d0385b012a94becfbc3247fdfb"
+    },
+    "art-review/forest-canopy-emerald/actual/profile-29/deep-branch-cape/frame-043.png": {
+      "bytes": 12617,
+      "sha256": "a59d9e1d72a4322ae241eeebe1672bc8edc38d6e26ea64bfc2e769738e1dfe6b"
+    },
+    "art-review/forest-canopy-emerald/actual/profile-29/deep-branch-cape/frame-048.png": {
+      "bytes": 12601,
+      "sha256": "a52514adc95a5f899114c2a15c2d6321b70bf5612cdb135168b1694a4133138b"
+    },
+    "art-review/forest-canopy-emerald/actual/profile-29/deep-branch-cape/frame-063.png": {
+      "bytes": 12486,
+      "sha256": "0930492efa863a4b9dcc47c015ead5b0064ece450ff9b9e876bcb8d8f8123baf"
+    },
+    "art-review/forest-canopy-emerald/actual/profile-29/deep-branch-cape-after.png": {
+      "bytes": 12486,
+      "sha256": "0930492efa863a4b9dcc47c015ead5b0064ece450ff9b9e876bcb8d8f8123baf"
+    },
+    "art-review/forest-canopy-emerald/actual/profile-29/deep-branch-cape-filmstrip.png": {
+      "bytes": 40640,
+      "sha256": "ef9abb46161ba9e0d7b25644b333c3a53231ce7e048c59c5c97d90cf638ae6e7"
+    },
+    "art-review/forest-canopy-emerald/actual/profile-29/deep-branch-cape.gif": {
+      "bytes": 692842,
+      "sha256": "fa9af81378ef86184c12954a76d2a5ad378b8eefb07934fbcba4db723e2340c3"
+    },
+    "art-review/forest-canopy-emerald/actual/profile-29/deep-branch-cape.mp4": {
+      "bytes": 67131,
+      "sha256": "175b065d6876e7a57d9e4db3487bf8903d5872961454979ca70bec4ccf66a5b5"
+    },
+    "art-review/forest-canopy-emerald/actual/profile-29/deep-branch-cape.png": {
+      "bytes": 12778,
+      "sha256": "9ad43ca63ffaed1558d87c3535b93aca80b1db952369f792e85718118c2940e2"
+    },
+    "art-review/forest-canopy-emerald/actual/profile-29/deep-branch-menu-resume/frame-000.png": {
+      "bytes": 12687,
+      "sha256": "e968f626c0ae8c3864b51fff317921effa739e2c9763f8a9aabc879147468a5d"
+    },
+    "art-review/forest-canopy-emerald/actual/profile-29/deep-branch-menu-resume/frame-018.png": {
+      "bytes": 3681,
+      "sha256": "9c92e362ae75372bf24b96104e574964477b32f873a72e16647282eae5eddc05"
+    },
+    "art-review/forest-canopy-emerald/actual/profile-29/deep-branch-menu-resume/frame-064.png": {
+      "bytes": 12671,
+      "sha256": "40ad50cc16dc302de20b3cad1a7f6ec42e4047e2b8c9a0d4156daed7b295b6ad"
+    },
+    "art-review/forest-canopy-emerald/actual/profile-29/deep-branch-menu-resume/frame-127.png": {
+      "bytes": 12637,
+      "sha256": "9e95671e817736f8435b135c62f69052699ee8f83362b4a3f847bb647acee64d"
+    },
+    "art-review/forest-canopy-emerald/actual/profile-29/deep-branch-menu-resume-after.png": {
+      "bytes": 12637,
+      "sha256": "9e95671e817736f8435b135c62f69052699ee8f83362b4a3f847bb647acee64d"
+    },
+    "art-review/forest-canopy-emerald/actual/profile-29/deep-branch-menu-resume-filmstrip.png": {
+      "bytes": 19654,
+      "sha256": "edef50ee8fda2696d688ecbc7ccebcf76e08246bab5a3633155257f7e37b2fab"
+    },
+    "art-review/forest-canopy-emerald/actual/profile-29/deep-branch-menu-resume.png": {
+      "bytes": 12687,
+      "sha256": "e968f626c0ae8c3864b51fff317921effa739e2c9763f8a9aabc879147468a5d"
+    },
+    "art-review/forest-canopy-emerald/actual/profile-29/deep-branch-walk-roll/frame-000.png": {
+      "bytes": 12765,
+      "sha256": "4047f6de713b3ab404d66339681bc3caa9c990311404cc7b904a72be8170e04c"
+    },
+    "art-review/forest-canopy-emerald/actual/profile-29/deep-branch-walk-roll/frame-032.png": {
+      "bytes": 12524,
+      "sha256": "3d6ba9341f205ecc5d81a94c59b93b8a66d4a1ec87cef952d15923194f2554a1"
+    },
+    "art-review/forest-canopy-emerald/actual/profile-29/deep-branch-walk-roll/frame-051.png": {
+      "bytes": 12494,
+      "sha256": "36e7e8b451bf6c78260bfe2e5e0feb0f0b3eba31d3ddfbbd1fb99efc1b30f20d"
+    },
+    "art-review/forest-canopy-emerald/actual/profile-29/deep-branch-walk-roll/frame-064.png": {
+      "bytes": 12424,
+      "sha256": "9ea3c6263b0b336bdc2d49e900054e53fe58b9f7a7e84e07b1e4dd2f3e08e643"
+    },
+    "art-review/forest-canopy-emerald/actual/profile-29/deep-branch-walk-roll/frame-065.png": {
+      "bytes": 12491,
+      "sha256": "b5453096b9a6f68da2c0d10d8e5f6a5918a995281e299a639fb1e30e9998df94"
+    },
+    "art-review/forest-canopy-emerald/actual/profile-29/deep-branch-walk-roll/frame-096.png": {
+      "bytes": 12821,
+      "sha256": "eb946a3caec95eccdce2d532ed8af4031bb0b4a73957c65ba2edde67a0d77a86"
+    },
+    "art-review/forest-canopy-emerald/actual/profile-29/deep-branch-walk-roll/frame-127.png": {
+      "bytes": 12706,
+      "sha256": "b3f083efc6644ea3927be0caee48d82bfd70d47630d248460a80503462a3b8fd"
+    },
+    "art-review/forest-canopy-emerald/actual/profile-29/deep-branch-walk-roll-after.png": {
+      "bytes": 12706,
+      "sha256": "b3f083efc6644ea3927be0caee48d82bfd70d47630d248460a80503462a3b8fd"
+    },
+    "art-review/forest-canopy-emerald/actual/profile-29/deep-branch-walk-roll-filmstrip.png": {
+      "bytes": 44071,
+      "sha256": "35e8e4ee003bf589a019a954061907c561ae134384bfcdd05f69935ab1412ae8"
+    },
+    "art-review/forest-canopy-emerald/actual/profile-29/deep-branch-walk-roll.gif": {
+      "bytes": 1400876,
+      "sha256": "b9de3adf56e2fa0d38f92138d2acf72f1b2102d97ebcc8fe5c8e78af64d62d85"
+    },
+    "art-review/forest-canopy-emerald/actual/profile-29/deep-branch-walk-roll.mp4": {
+      "bytes": 110934,
+      "sha256": "1fa984bbd9cf9d7c92d56b1868c1823da2c9fd8c868e8c980e5dfd2dac116a35"
+    },
+    "art-review/forest-canopy-emerald/actual/profile-29/deep-branch-walk-roll.png": {
+      "bytes": 12765,
+      "sha256": "4047f6de713b3ab404d66339681bc3caa9c990311404cc7b904a72be8170e04c"
+    },
+    "art-review/forest-canopy-emerald/actual/profile-29/isolated-small/frame-000.png": {
+      "bytes": 9559,
+      "sha256": "8e6c43e916d93811019705d7c1574d99cd85d1f0f2fe899a34727a9692c9b3ba"
+    },
+    "art-review/forest-canopy-emerald/actual/profile-29/isolated-small/frame-008.png": {
+      "bytes": 9446,
+      "sha256": "e145625b1affeedb5f0259ac54c8d53b70659847c28073098b4704497b9cfadd"
+    },
+    "art-review/forest-canopy-emerald/actual/profile-29/isolated-small/frame-015.png": {
+      "bytes": 9489,
+      "sha256": "4075270bdb77433cbe34f2d2906c24d36fba00665a7df074f76bfd729bd71739"
+    },
+    "art-review/forest-canopy-emerald/actual/profile-29/isolated-small-after.png": {
+      "bytes": 9489,
+      "sha256": "4075270bdb77433cbe34f2d2906c24d36fba00665a7df074f76bfd729bd71739"
+    },
+    "art-review/forest-canopy-emerald/actual/profile-29/isolated-small-filmstrip.png": {
+      "bytes": 14684,
+      "sha256": "ef58e8716c6bfa1468f221a84b6cfd954dd634270e36b7108bdbc3921913e0d7"
+    },
+    "art-review/forest-canopy-emerald/actual/profile-29/isolated-small.png": {
+      "bytes": 9559,
+      "sha256": "8e6c43e916d93811019705d7c1574d99cd85d1f0f2fe899a34727a9692c9b3ba"
+    },
+    "art-review/forest-canopy-emerald/actual/profile-29/narrow-arm/frame-000.png": {
+      "bytes": 12185,
+      "sha256": "f19d332b9198f7c5c0b548a32e3a053ea7628652a5e58c81d1373a4d05748511"
+    },
+    "art-review/forest-canopy-emerald/actual/profile-29/narrow-arm/frame-008.png": {
+      "bytes": 12231,
+      "sha256": "ec2404af6ed1419cfef572340380adebd7db9d284034cfeaa963c88deacdcaf6"
+    },
+    "art-review/forest-canopy-emerald/actual/profile-29/narrow-arm/frame-015.png": {
+      "bytes": 12285,
+      "sha256": "11f57fa5368b22ed80b016a66b4fa7a8f9b19b483563534022d6aee47b669872"
+    },
+    "art-review/forest-canopy-emerald/actual/profile-29/narrow-arm-after.png": {
+      "bytes": 12285,
+      "sha256": "11f57fa5368b22ed80b016a66b4fa7a8f9b19b483563534022d6aee47b669872"
+    },
+    "art-review/forest-canopy-emerald/actual/profile-29/narrow-arm-filmstrip.png": {
+      "bytes": 18503,
+      "sha256": "eca60a9bb9a1e4435b38305ef9b09a80a038343c875e94cd1964fd50a3de9354"
+    },
+    "art-review/forest-canopy-emerald/actual/profile-29/narrow-arm.png": {
+      "bytes": 12185,
+      "sha256": "f19d332b9198f7c5c0b548a32e3a053ea7628652a5e58c81d1373a4d05748511"
+    },
+    "art-review/forest-canopy-emerald/actual/profile-29/separated-corner/frame-000.png": {
+      "bytes": 10382,
+      "sha256": "bb34b7bedacda1d2ef63449e090746f2ac448020c956d7e2fa2db179cfec8840"
+    },
+    "art-review/forest-canopy-emerald/actual/profile-29/separated-corner/frame-008.png": {
+      "bytes": 10305,
+      "sha256": "f741121055284b314ccf96fb98a5b20e4be0a28a808c09b0a254019950238b31"
+    },
+    "art-review/forest-canopy-emerald/actual/profile-29/separated-corner/frame-015.png": {
+      "bytes": 10314,
+      "sha256": "e37ad1b84ad619706cac01450ac510b2d83711b967af44a31854dfc31d6cdaa1"
+    },
+    "art-review/forest-canopy-emerald/actual/profile-29/separated-corner-after.png": {
+      "bytes": 10314,
+      "sha256": "e37ad1b84ad619706cac01450ac510b2d83711b967af44a31854dfc31d6cdaa1"
+    },
+    "art-review/forest-canopy-emerald/actual/profile-29/separated-corner-filmstrip.png": {
+      "bytes": 15902,
+      "sha256": "2a4cd9a2e1747f386230f00ead263460688448390747c99494d1e026b25b06b5"
+    },
+    "art-review/forest-canopy-emerald/actual/profile-29/separated-corner.png": {
+      "bytes": 10382,
+      "sha256": "bb34b7bedacda1d2ef63449e090746f2ac448020c956d7e2fa2db179cfec8840"
+    },
+    "art-review/forest-canopy-emerald/actual-panel-manifest.json": {
+      "bytes": 4794,
+      "sha256": "88510f3e6fab709b1b6a9d168e2dd81410041fa23c918b83c2c94f50254c0d3e"
+    },
+    "art-review/forest-canopy-emerald/actual-publication-summary.json": {
+      "bytes": 983,
+      "sha256": "fd9dc6f39735ace9a4e18663997f790875287c69764dd0471b91a6abf09709f3"
+    },
+    "art-review/forest-canopy-emerald/canopy-boundaries-before-after-actual.png": {
+      "bytes": 58647,
+      "sha256": "3ca208f5aaf362bac50a702416a75b11b02a7e1905036417b5a6aef5df5e3172"
+    },
+    "art-review/forest-canopy-emerald/healthy-deep-before-after-actual.png": {
+      "bytes": 50569,
+      "sha256": "1433ff0889b560ae557f8b74d811758c18c0c8ce840e5a240bc5ac633e0e49da"
+    },
+    "art-review/forest-canopy-emerald/source/README.md": {
+      "bytes": 908,
+      "sha256": "229212c3536a8006ba633496cd53b7e28e46d6cf227485fc0104e3026d877764"
+    },
+    "art-review/forest-canopy-emerald/source/native/authored-large-a-deep.png": {
+      "bytes": 1720,
+      "sha256": "e9406a44056e476012287a26465317d48e7d9547b9612897d9aa103238e24d0e"
+    },
+    "art-review/forest-canopy-emerald/source/native/authored-large-a-healthy.png": {
+      "bytes": 1710,
+      "sha256": "4510d217ab2dcf7052dfc6864a3f478364eb0fdbc34a08419f9b94b95c46315d"
+    },
+    "art-review/forest-canopy-emerald/source/native/authored-large-a-indexed.png": {
+      "bytes": 904,
+      "sha256": "b13d5cbc0da2ee2e671d30ef386c18494ef3d92d52b7748733ac1537020f9ad1"
+    },
+    "art-review/forest-canopy-emerald/source/native/authored-large-b-deep.png": {
+      "bytes": 1796,
+      "sha256": "6762f924c9269c5b02a68d317a95a1f84e9d0527f5034408f32af8cc78cda515"
+    },
+    "art-review/forest-canopy-emerald/source/native/authored-large-b-healthy.png": {
+      "bytes": 1801,
+      "sha256": "83e3d15d93e307a2d264601554cf9064b0375c10204064536d89f2b40a893027"
+    },
+    "art-review/forest-canopy-emerald/source/native/authored-large-b-indexed.png": {
+      "bytes": 913,
+      "sha256": "652f9e44648e37fef13bf3eb4cfafe9b674fa09a3a542e2644c86765c537abcc"
+    },
+    "art-review/forest-canopy-emerald/source/native/authored-small-a-deep.png": {
+      "bytes": 1103,
+      "sha256": "5a6a48b271735e5657ca237a62ccf8a9ce32202eb851359ee3d6aae56dd68d42"
+    },
+    "art-review/forest-canopy-emerald/source/native/authored-small-a-healthy.png": {
+      "bytes": 1094,
+      "sha256": "42aa811600bb6de858d239143131aedc611dcd9cc5992f91908eb9129e139bf0"
+    },
+    "art-review/forest-canopy-emerald/source/native/authored-small-a-indexed.png": {
+      "bytes": 557,
+      "sha256": "14ebf019a47845ff557b2d1f581bdcba16343b8096a1799311c5458f53a4e078"
+    },
+    "art-review/forest-canopy-emerald/source/native/authored-small-b-deep.png": {
+      "bytes": 1194,
+      "sha256": "5e341ee78377b43f7800db5d12777a6579b34376ed36b6cb4fd87bad18def054"
+    },
+    "art-review/forest-canopy-emerald/source/native/authored-small-b-healthy.png": {
+      "bytes": 1185,
+      "sha256": "82f43c1cbad04a21e6817af2d7ac7dfdb14986b44bb2525ca574560f89cff08d"
+    },
+    "art-review/forest-canopy-emerald/source/native/authored-small-b-indexed.png": {
+      "bytes": 599,
+      "sha256": "b8a887ed949303b20ecc26685c9d6b36903ef7fda27935b0dc2e213c6c2c9b96"
+    },
+    "art-review/forest-canopy-emerald/source/native/border-deep.png": {
+      "bytes": 2018,
+      "sha256": "e4d2cf24277c5c980cb2cddf660f7f1be3f28a13af354922a70d4c72634463fc"
+    },
+    "art-review/forest-canopy-emerald/source/native/border-healthy.png": {
+      "bytes": 1983,
+      "sha256": "493b73f17582cc53fcd2067f9ed679b6aeb1928ea398db21f9ba056550426b47"
+    },
+    "art-review/forest-canopy-emerald/source/native/border-indexed.png": {
+      "bytes": 1058,
+      "sha256": "1e734e447f804240732c81ce346546bd6f5185c65726ac0403cdfb19bdc119f4"
+    },
+    "art-review/forest-canopy-emerald/source/native/branch-deep.png": {
+      "bytes": 745,
+      "sha256": "6685df8ba98ef4212ae1943a3e542793bc817c31917db154886a710d2f42d428"
+    },
+    "art-review/forest-canopy-emerald/source/native/branch-healthy.png": {
+      "bytes": 749,
+      "sha256": "0c9c79d3e81b5382100b64b73ce3fb829edd84f140bb47955ba49e1b82bf8cc8"
+    },
+    "art-review/forest-canopy-emerald/source/native/branch-indexed.png": {
+      "bytes": 426,
+      "sha256": "08a5b187ff28a50381455a45a2e585be740f876ad40389fd1a90deba12263868"
+    },
+    "art-review/forest-canopy-emerald/source/native/branch-solid-deep.png": {
+      "bytes": 871,
+      "sha256": "16876e9371260e8bdcc012f9622a019fb73f459f0119cc1c369713d5b6cfd6cd"
+    },
+    "art-review/forest-canopy-emerald/source/native/branch-solid-healthy.png": {
+      "bytes": 868,
+      "sha256": "b4adf3269d7f191f497de9c4409969e386ead821bbe9854490288e236baa1b73"
+    },
+    "art-review/forest-canopy-emerald/source/native/branch-solid-indexed.png": {
+      "bytes": 504,
+      "sha256": "f990b5e17dace0c4fc908fb410b3e131e74d90170e905fbfbf072b46d57fc3c3"
+    },
+    "art-review/forest-canopy-emerald/source/native/clump-deep.png": {
+      "bytes": 809,
+      "sha256": "374fa558d894ebdff2fdb784c112bf884881f084362b0438e331ee9c586f9687"
+    },
+    "art-review/forest-canopy-emerald/source/native/clump-healthy.png": {
+      "bytes": 792,
+      "sha256": "db63366aa3fe09cd80f3efc309f13db72aa00b8a816eb137ede594e9539ad2e4"
+    },
+    "art-review/forest-canopy-emerald/source/native/clump-indexed.png": {
+      "bytes": 456,
+      "sha256": "4ec3fa031b15eeeefb46e9903d0efaa4628dd3c06cbdd6fdf92c94feada01775"
+    },
+    "art-review/forest-canopy-emerald/source/native/column-deep.png": {
+      "bytes": 960,
+      "sha256": "2d532839442e9093c5a422cd28199e078a2f59c37beb85c9f4e76ffd54ec7987"
+    },
+    "art-review/forest-canopy-emerald/source/native/column-healthy.png": {
+      "bytes": 956,
+      "sha256": "1ac2dbb0bf86d5f6e2b5a8e499107614ecedf5568861c84ae566aa8be9d413f7"
+    },
+    "art-review/forest-canopy-emerald/source/native/column-indexed.png": {
+      "bytes": 489,
+      "sha256": "f54c1fe9c1c25b9eb9cbd0a7645920af66ebe2a47e07f4aa378036c8cf90d25c"
+    },
+    "art-review/forest-canopy-emerald/source/native/grove-deep.png": {
+      "bytes": 2732,
+      "sha256": "df6a0dd544a61db161f91ecef96c15525ab76afdcac9776109ae2308f8b94f08"
+    },
+    "art-review/forest-canopy-emerald/source/native/grove-healthy.png": {
+      "bytes": 2713,
+      "sha256": "8d3f7dd66826b5c6adf8c5bd1b3483783e189875bce9be569ccb62d2ed7e204e"
+    },
+    "art-review/forest-canopy-emerald/source/native/grove-indexed.png": {
+      "bytes": 1361,
+      "sha256": "e634a48be21ec273ee10990347bdea28fcf2cbaea7eb10eaf6455b4826c8501c"
+    },
+    "art-review/forest-canopy-emerald/source/native/hero-deep.png": {
+      "bytes": 3678,
+      "sha256": "10949f5f51060829d894ffdd1b979ce78b23ae3061e705cd95a4768c534f0a1a"
+    },
+    "art-review/forest-canopy-emerald/source/native/hero-healthy.png": {
+      "bytes": 3494,
+      "sha256": "ec682987336c5b1c4cd953208942de9c832fecff2319768c7254ce6c5d7fb06b"
+    },
+    "art-review/forest-canopy-emerald/source/native/hero-indexed.png": {
+      "bytes": 1910,
+      "sha256": "4595a6b369c130ab1765873291af082cfe10a938a2db3442276fd609c7027666"
+    },
+    "art-review/forest-canopy-emerald/source/native/roots-deep.png": {
+      "bytes": 534,
+      "sha256": "065d9a06ca1353346b38aeee6bbda2607427657fc1acdc3ab829985837424485"
+    },
+    "art-review/forest-canopy-emerald/source/native/roots-healthy.png": {
+      "bytes": 538,
+      "sha256": "cb4746ae350aed4eed55b8f8a9c3a502092b2557979d0bd404621060177877f1"
+    },
+    "art-review/forest-canopy-emerald/source/native/roots-indexed.png": {
+      "bytes": 327,
+      "sha256": "d116485c4b769c0ee9e4573032657148b273f632983e5ef625513bf7dfa57857"
+    },
+    "art-review/forest-canopy-emerald/source/native/small-deep.png": {
+      "bytes": 365,
+      "sha256": "c50d0a298cdc4d49255859264e5c75a7583a3c8c006297a25bd4ac4c95d0dda7"
+    },
+    "art-review/forest-canopy-emerald/source/native/small-healthy.png": {
+      "bytes": 370,
+      "sha256": "58860e5bddc4c4f247dc01f11a86086fdaf54fe7221092f15bb8bcc82b7386f2"
+    },
+    "art-review/forest-canopy-emerald/source/native/small-indexed.png": {
+      "bytes": 247,
+      "sha256": "395f277340990e221b5cccf43f3535c8ead7c96875b616407461b9236d719a77"
+    },
+    "art-review/forest-canopy-emerald/source/native/tree-deep.png": {
+      "bytes": 1546,
+      "sha256": "eba4032eaee7d2b2d0078fbac181cb21626759645c144bbd7c342e6fff1e8a7b"
+    },
+    "art-review/forest-canopy-emerald/source/native/tree-healthy.png": {
+      "bytes": 1510,
+      "sha256": "bfcb6d37fdc58c6cb7ac6a2d4eaf0de2c3c088e0df43703dd477248f910574e0"
+    },
+    "art-review/forest-canopy-emerald/source/native/tree-indexed.png": {
+      "bytes": 759,
+      "sha256": "a2b85b9e00dfd7b471b9e78195877e770c39ce0d82c0d552ab921d23baa55e7d"
+    },
+    "art-review/forest-canopy-emerald/source/native-healthy-deep-source.png": {
+      "bytes": 42959,
+      "sha256": "356503498a8563bacf93c84ff5326047d50ebe504c4a24fb86c8c663211cbb12"
+    },
+    "art-review/forest-canopy-emerald/source/native-manifest.json": {
+      "bytes": 12436,
+      "sha256": "530d201d06f651f809eecaa5ebb07a3e51662afccf1aa654fc92efc8103e2e80"
+    },
+    "art-review/forest-canopy-emerald/source/palette-inspection-source.gif": {
+      "bytes": 42721,
+      "sha256": "eb25cf0f77773fe1973895290557cff3709962f29cfb5b710189630cfdeccc0c"
+    },
+    "art-review/forest-canopy-emerald/source/palette-phase-0-source.png": {
+      "bytes": 14968,
+      "sha256": "1e0b5f6c08bec6362b9fb1466a36dcfb2a3b7d45529c0b329e0cc4efa8a7fb6c"
+    },
+    "art-review/forest-canopy-emerald/source/palette-phase-1-source.png": {
+      "bytes": 14937,
+      "sha256": "30cf5d124827c86ad6ec687aed62e76165e7d6e1be7d79be4dd8fd0d45d83c6d"
+    },
+    "art-review/forest-canopy-emerald/source/palette-phase-2-source.png": {
+      "bytes": 15001,
+      "sha256": "a951ed1f09464848e1b46bbed214a0083c44dfa06df6b399caf6deea34b195d2"
+    },
+    "art-review/forest-canopy-emerald/source/palette-phase-3-source.png": {
+      "bytes": 14959,
+      "sha256": "6758ca60902d037e9a39d557f28533c4d1b4eb2b2359e68caf672323d7239e5d"
+    },
+    "art-review/forest-canopy-emerald/source/source-art.json": {
+      "bytes": 76640,
+      "sha256": "044a2c69c397df9b439a96f2c48e80381e858c00677a4b9cc096fc2010260f09"
+    },
+    "art-review/forest-canopy-emerald/source/source-gif.json": {
+      "bytes": 126,
+      "sha256": "b29c651b38a5901040eb0101dded5b227996109741dc1d7291fa30d6c4e474c5"
+    },
+    "art-review/forest-canopy-emerald/source/source-manifest.json": {
+      "bytes": 15846,
+      "sha256": "e5898528d48139e401989e809b3f06325345b9844c890df8106be380a5254ed2"
+    },
+    "art-review/forest-canopy-emerald/validation/INDEPENDENT_REVIEW.md": {
+      "bytes": 5157,
+      "sha256": "8d3543e8a6868f78472301547e8540dffe6a8c31833ab3f15c9b730b85d98cb5"
+    },
+    "art-review/forest-canopy-emerald/validation/README.md": {
+      "bytes": 3356,
+      "sha256": "9b064e573b57927d0be379b105cf415916c421ff6ad8ad5162156922042f1eba"
+    },
+    "art-review/forest-canopy-emerald/validation/RUNTIME_REVIEW.md": {
+      "bytes": 5595,
+      "sha256": "dcd0355fb338ca3f49180269e694474e2f4d0388926e2c5286f19a1d2cf06a6a"
+    },
+    "art-review/forest-canopy-emerald/validation/builds.json": {
+      "bytes": 18806,
+      "sha256": "3fda70f97c44f61ec8178c993ee4f5db190bf0a71cd5068bf9fc658ecda5351f"
+    },
+    "art-review/forest-canopy-emerald/validation/final-audit-summary.json": {
+      "bytes": 1085,
+      "sha256": "d6da698635276f6566fe03d8689b6e9d6dc5b789e44620c6e7687411376e3131"
+    },
+    "art-review/forest-canopy-emerald/validation/final-audit.json": {
+      "bytes": 109796,
+      "sha256": "e22eb705013cbb04f59743502598932c794eb380327b05ed56aa8c876a1cf0d1"
+    },
+    "art-review/forest-canopy-emerald/validation/final-entry19.json": {
+      "bytes": 8040,
+      "sha256": "e5c22ca7f4ab498ca65ac6d9238537cc552708669e70d1b9b690cae42e93095b"
+    },
+    "art-review/forest-canopy-emerald/validation/final-entry29.json": {
+      "bytes": 7736,
+      "sha256": "aa5ba91158f913588d8f38e312d5858c46d55bc69b727117a474362d15d9d1a1"
+    },
+    "art-review/forest-canopy-emerald/validation/frozen/v19/assets.h": {
+      "bytes": 80591,
+      "sha256": "f54b406569e757a7a9fe259a89c7b929f02c9936de516df21af2c4e3a3c25134"
+    },
+    "art-review/forest-canopy-emerald/validation/frozen/v19/bartgame.map": {
+      "bytes": 218467,
+      "sha256": "531d17c21dd526e6ab6076dafb3b1fa75ebcae38acd1406fa678863f3835233d"
+    },
+    "art-review/forest-canopy-emerald/validation/frozen/v19/coverage.json": {
+      "bytes": 973278,
+      "sha256": "ff5d3e8331b0c4fae2ebb4600a98ae0855dc7bcee7cee53c2900d2c5adae6431"
+    },
+    "art-review/forest-canopy-emerald/validation/frozen/v19/freeze.json": {
+      "bytes": 13459,
+      "sha256": "d173003967f37ce3cc373b5a9964130ab2a3b5fac4d626f9f82bae1c14cf1d5d"
+    },
+    "art-review/forest-canopy-emerald/validation/frozen/v29/assets.h": {
+      "bytes": 80590,
+      "sha256": "7ad6b9cd1b834fb6a91bc12290dd282d190eccfc529693d97d01026c652ef538"
+    },
+    "art-review/forest-canopy-emerald/validation/frozen/v29/bartgame.map": {
+      "bytes": 218258,
+      "sha256": "ca9f3d67c587ad08fc4082b43ee3078f9a042cc33f622d8c83ecc2d48260cb83"
+    },
+    "art-review/forest-canopy-emerald/validation/frozen/v29/coverage.json": {
+      "bytes": 972237,
+      "sha256": "5e8fc02609a96a2c969b3a3ad3dd412aa6a0415ce237928b0fb1824735d02e27"
+    },
+    "art-review/forest-canopy-emerald/validation/frozen/v29/freeze.json": {
+      "bytes": 13460,
+      "sha256": "a6652155006e025eca545b56b35c10bf45b95688803c6b8c979f7b41f780a67d"
+    },
+    "art-review/forest-canopy-emerald/validation/legacy-preservation.json": {
+      "bytes": 7268,
+      "sha256": "bb773f7dccc1af3cc4455feebef6172eedfb4875f3228ee0147096940bc28cfa"
+    },
+    "art-review/forest-canopy-emerald/validation/menu-handoff.json": {
+      "bytes": 27780,
+      "sha256": "c908f54f62576f357633d1e425dfefa3fae8716a9588bcc634bd3c0fd0a8fe98"
+    },
+    "art-review/forest-canopy-emerald/validation/runtime-aggregate.json": {
+      "bytes": 1432,
+      "sha256": "46a2c66f820803213487445b5d508e9e5144fbfc09c244a3207f9f4ec913ab50"
+    },
+    "art-review/forest-canopy-emerald/validation/selection-plan.json": {
+      "bytes": 3498,
+      "sha256": "d37d3507d5f3019707254de534f1503118f309eaf5680776f66c25624f806e60"
+    },
+    "downloads/forest-canopy-emerald-ead9bb6/README.md": {
+      "bytes": 1250,
+      "sha256": "ed26b94cc767ac8832e084f5b1186df279b2622d75d01af56028e78dd6a6ceaf"
+    },
+    "downloads/forest-canopy-emerald-ead9bb6/README.txt": {
+      "bytes": 1033,
+      "sha256": "bc6c4d3027c129609a1632ba65a3ea24c43d4873241de9e8f4ffaf3272e7487d"
+    },
+    "downloads/forest-canopy-emerald-ead9bb6/ROM-SHA256SUMS.txt": {
+      "bytes": 95,
+      "sha256": "2dad4b499611aa532b4f8a5ab1b6f99f330b30c20abd9c22cf7024870c12ea5c"
+    },
+    "downloads/forest-canopy-emerald-ead9bb6/SHA256SUMS.txt": {
+      "bytes": 195,
+      "sha256": "b13a2b298ff61e1b669f338d6e8be4efd23641f8822d3a245a34c81d508903f5"
+    },
+    "downloads/forest-canopy-emerald-ead9bb6/forest-canopy-emerald-ead9bb6.zip": {
+      "bytes": 173710,
+      "sha256": "014190b213d34e83ee43861321374736654d8167fcdec1fce8580750b3ea0300"
+    },
+    "downloads/forest-canopy-emerald-ead9bb6/freeze.json": {
+      "bytes": 13460,
+      "sha256": "a6652155006e025eca545b56b35c10bf45b95688803c6b8c979f7b41f780a67d"
+    },
+    "downloads/forest-canopy-emerald-ead9bb6/leafwoven-canopy-ead9bb6.gba": {
+      "bytes": 650044,
+      "sha256": "ce60072a9484432c23c6059a74ba115df2b09c5e0f0c3bb2a68b975de9fedf54"
+    }
+  },
+  "note": "Repository-relative paths; this manifest excludes itself. Source art, literal native framebuffers and resident-layer reconstructions are distinct. Raw final capture/audit reports are unchanged. This is one focused review option, not a selected production canopy."
+}
