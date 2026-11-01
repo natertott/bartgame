@@ -48,6 +48,14 @@ copper, scum green and dark teal belong to the Drain. Gold connects the areas.
 - Author at the final pixel size. Screens are 240×160, gameplay cells 16×16
   and hardware subtiles 8×8. Enlarge only for inspection with nearest neighbour.
   No high-resolution generation, filtered reduction or photographic texture.
+- Hardware subtiles and collision cells do not limit illustration size. There
+  is no fixed 3×3 or 32px repeating-block requirement. Generate the room first,
+  measure its connected visual spaces and clearances, then select artwork
+  whose native footprint and detail suit those spaces. A small isolated patch
+  needs its own compact drawing; a broad forest border can carry a large,
+  intricate tree or interwoven grove. Compose unequal forms at several scales
+  instead of filling every area with the same crown stamp. Quiet material
+  backing and edge joins remain subordinate to that composition.
 - Inks start as RGB555 colours. Each 4bpp bank has transparent index zero and
   fifteen painted inks. The engine allows twelve world BG banks per area;
   interface banks remain reserved. OBJ has sixteen banks in total.
@@ -164,11 +172,16 @@ The forest remains a forest at every corruption level: recognizable tree
 anatomy, leaves, bark, grass and earth carry its identity. Healthy ground keeps
 green grass and brown dirt. Grey discolored/dead grass is an accepted part of
 the progression. Deep forest must feel sick, filthy and vibrant, while its
-canopy remains recognizably leafy. The latest canopy review rejects both the
-healthy crowns and the black blighted blobs/glyphs in the second study. Build
+canopy remains recognizably leafy. The latest review scraps the previous
+blighted canopy artwork, including the eight leafy-crown studies, as a major
+regression. Those images are historical rejected studies, not a basis for new
+canopies. Build
 clear clustered crowns and broad lateral branches first, then show disease
 through attached veins, patches, changed leaves or other growth. Explore
-widely different infection treatments over that tree structure.
+different tree anatomies and space-dependent compositions, with infection
+integrated into each structure. Large available regions warrant larger native
+drawings and finer branch/bark/leaf relationships; do not enlarge a small tile
+or merely recolor the same repeating design.
 
 Keep living green leaves visible at every depth. In the deep canopy, aim for
 roughly eighty percent disease and twenty percent surviving greenery across
@@ -181,6 +194,13 @@ replace every material with a uniformly purple floor. These rules supersede
 the earlier deep-canopy preference for almost entirely black wood.
 Maintain a limited, versatile family of crowns and details; structural decay
 and luminous infection must remain related to the healthy construction.
+Within that family, choose composition size from actual space. Connected
+forest masses, thin arms, corners and isolated remnants need different
+solutions. Place visible trunks and roots coherently near their physical
+footprints, and use multiple walkable-facing portions of a long component
+rather than hiding one detailed tree far off-screen. Retain grey dead grass,
+readable interactions and a recognizable living remnant across the forest;
+do not force equal green patches into every prefab to meet a pixel quota.
 
 Forest water is clearer than sewage while retaining continuous banks, coherent
 flow and a distinct near edge. Bridges visibly join accessible banks; pits

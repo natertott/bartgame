@@ -1036,3 +1036,56 @@ Isolated fragments read as pieces of canopy rather than mature trees. The
 [eight-way review](../../../art-review/forest-canopy-v3/README.md) and
 [playable alternatives](../../../downloads/forest-canopy-v3-e923557/README.md)
 retain these tradeoffs. No whole canopy treatment is selected by this pass.
+
+## Rejected canopy studies and map-first composition reset — 2026-11-01
+
+**Direct user decision:** the previous blighted canopy is a major regression
+and must be scrapped. The user withdraws the repeating 3×3-block advice.
+Uniformly sized repeated crowns are the wrong basis for large forest regions.
+Generate the room, assess the available space, and choose native artwork that
+suits it: small isolated growth, medium tree groups, or large intricate canopy
+compositions along broad borders. Art detail and variety must scale with the
+space. Ten genuinely different designs are requested.
+
+**Adopted process and rejected art:** the fixed 32px canopy approach and its
+eight treatments are historical rejected studies. Their technical passing
+checks did not establish visual success. New work retains accepted grey grass,
+legible floors/interactions and partial player visibility, while replacing
+the tree/canopy artwork entirely. Hardware 8×8 subtiles remain storage units;
+they do not impose a fixed illustration size or repeated3×3 motif.
+
+**Exploration:** new optional profiles 19–28 investigate Ancient Oak Vault,
+Crooked Willow, Buttress Beech, Woven Bower, Fungal Cathedral, Fallen Crown,
+Lightning Cleft Oak, Pale Birch Congregation, Black Cedar Cathedral and Sorrow
+Arch Elm. The visual planner measures actual components and clearance after
+logical generation, then fits unequal 16/32/48/64/96px compositions near visible
+inner boundaries. Nine separately authored native roles include a 96×64 focal
+tree and 96×32 broad border; smaller roles are different drawings, not resized
+copies. Existing standalone-tree physical footprints receive new native art.
+
+**Evidence gate:** inspect a large tree within a real generated broad border
+and inspect compact/narrow cases before approving all ten directions. A good
+isolated source drawing cannot excuse a tiled or empty played view. Ensure
+dense quiet backing, correct contact and readable walkable edges; preserve
+feature clearances, existing maze/item logic, Bloom action timing, palettes
+for unrelated assets and glitter. Measure resident GBA tile/bank budgets and
+actual movement/cadence. Source assemblies, geometric fit diagrams and real
+mGBA frames must retain separate labels. No final visual design is adopted by
+this request; the lantern-generation note remains a separate pending change.
+
+**Representative actual-room gate:** fresh natural profile 19 and 24 captures
+show connected standing oak and fallen-log anatomy at native 240×160, with
+small remnants and narrow arms using different-sized drawings. The first
+contact pass still formed bright repeated underbrush waves and rectangular
+panels; the second removes those waves, uses shallow unequal margins, and
+corrects connector ground backing. A separate backed 64×16 limb serves thin
+solid strips; its transparent counterpart remains the walkable projection.
+Both five-geometry pilots pass 113 runtime checks. These pilots establish the
+pipeline's direction, not final-source provenance or approval of all ten.
+
+All ten source atlases preflight at 867–942/1,024 forest subtiles and 11/12
+world banks. The representative visual review finds no blocker to freezing
+the ten alternatives. Long edges and some tiny remnants still reveal the
+semantic rectangular footprint; native semantic fit does not provide an
+arbitrary pixel contour clip. Full frozen captures and independent review
+follow. No candidate becomes the production default in this study.

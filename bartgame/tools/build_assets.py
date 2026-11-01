@@ -280,6 +280,73 @@ for si, (sname, pred) in enumerate(SETS):
             anims.append((base, len(frames), data, mt.get('anim_speed', 8)))
             if animation_key is not None:
                 animation_cache[animation_key] = base
+    if FOREST_CONCEPTS.ADAPTIVE_ROUND and sname == 'forest':
+        import forest_canopy_adaptive as ACA
+        adaptive_specs = ACA.prefab_specs(FOREST_CONCEPTS.LOCAL_VARIANT)
+        assert len(adaptive_specs) == 9
+        assert ACA.PALETTE_NAME in set_pals
+        adaptive_slot = set_pals.index(ACA.PALETTE_NAME)
+        h.append('typedef struct { const u16* map; u8 w,h,role,flags; } CanopyPrefab;')
+        h.append('#define CANOPY_PREFAB_COUNT %d' % len(adaptive_specs))
+        h.append('#define CANOPY_PALETTE_SLOT %d' % adaptive_slot)
+        h.append('extern const CanopyPrefab canopy_prefabs[CANOPY_PREFAB_COUNT];')
+        h.append('extern const u16 canopy_solid_branch[16];')
+        h.append('extern const u16 canopy_stage_colors[4][4][16];')
+        adaptive_rows = []
+        adaptive_coverage = []
+        adaptive_base_tiles = len(ts.tiles)
+        for role, spec in enumerate(adaptive_specs):
+            image = ACA.prefab(FOREST_CONCEPTS.LOCAL_VARIANT, spec['role'], 0)
+            w, hh = image.size
+            assert image.mode == 'P' and w % 16 == hh % 16 == 0
+            assert (w, hh) == (spec['w'], spec['h'])
+            assert set(image.tobytes()) <= set(range(16))
+            pixels = parse_art(FOREST_CONCEPTS.rows(image), w, hh)
+            packed = []
+            for y in range(0, hh, 8):
+                for x in range(0, w, 8):
+                    tile, hf, vf = ts.add(pixels, x, y)
+                    packed.append(tile | (hf << 10) | (vf << 11) | (adaptive_slot << 12))
+            cname_map = 'canopy_prefab_%d_map' % role
+            c.append(c_array_u16(cname_map, packed))
+            adaptive_rows.append('  { %s, %d, %d, %d, 0 },' % (cname_map, w//16, hh//16, role))
+            adaptive_coverage.append({**spec, 'role_index': role, 'native_size': [w, hh],
+                                      'map_entries': len(packed)})
+        c.append('const CanopyPrefab canopy_prefabs[CANOPY_PREFAB_COUNT] = {')
+        c.extend(adaptive_rows)
+        c.append('};')
+        image = ACA.blocked_branch(FOREST_CONCEPTS.LOCAL_VARIANT)
+        assert image.mode == 'P' and image.size == (64, 16)
+        assert set(image.tobytes()) <= set(range(16))
+        pixels = parse_art(FOREST_CONCEPTS.rows(image), 64, 16)
+        solid_branch = []
+        for y in range(0, 16, 8):
+            for x in range(0, 64, 8):
+                tile, hf, vf = ts.add(pixels, x, y)
+                solid_branch.append(tile | (hf << 10) | (vf << 11) | (adaptive_slot << 12))
+        c.append(c_array_u16('canopy_solid_branch', solid_branch))
+        adaptive_colors = []
+        c.append('const u16 canopy_stage_colors[4][4][16] = {')
+        for stage in range(4):
+            phases = ACA.pulse_palettes(FOREST_CONCEPTS.LOCAL_VARIANT, stage)[ACA.PALETTE_NAME]
+            assert len(phases) == 4
+            adaptive_colors.append(phases)
+            c.append('  {')
+            for colors in phases:
+                assert len(colors) == 16
+                assert all(int(color[k:k+2],16)%8 == 0 for color in colors for k in (1,3,5))
+                c.append('    {' + ','.join(str(rgb15(color)) for color in colors) + '},')
+            c.append('  },')
+        c.append('};')
+        adaptive_atlas_metadata = {
+            'prefabs': adaptive_coverage, 'palette_slot': adaptive_slot,
+            'static_base_tiles': adaptive_base_tiles,
+            'prefab_extra_tiles': len(ts.tiles)-adaptive_base_tiles,
+            'total_resident_tiles': len(ts.tiles), 'stage_pulse_colors': adaptive_colors,
+            'solid_branch': {'native_size': [64, 16], 'map_entries': len(solid_branch)},
+            'plan': 'Map first; fit unequal native compositions to connected available space.',
+            'retired_canopy_pictures': 'Quiet backing only; no previous canopy image is used.',
+        }
     c.append(c_array_u16('tileset_%s_tiles' % sname, bytes_to_u16(b''.join(ts.tiles))))
     c.append(c_array_u16('metatile_map_%s' % sname, entries, 8))
     c.append(c_array_u16('tileset_%s_pals' % sname, [rgb15(x) for n in set_pals for x in dict(palettes.BG_PALETTES)[n]]))
@@ -774,6 +841,10 @@ if FOREST_CONCEPTS.CANOPY_ROUND:
         'conservative_obj_union': {'used': 864, 'limit': 876},
         'generator': 'No layout, placement or lantern-generation change in this pass.',
     }
+if FOREST_CONCEPTS.ADAPTIVE_ROUND:
+    coverage['forest_concept']['adaptive_canopy'] = adaptive_atlas_metadata
+    coverage['forest_concept']['canopy_round']['scope'] = 'Retired fixed-block canopy; replaced by room-shaped native compositions.'
+    coverage['forest_concept']['canopy_round']['generator'] = 'Logical maze and feature locations unchanged; room-first visual placement fits native compositions to actual canopy geometry. Lantern-generation change remains pending.'
 with open(os.path.join(OUT, 'art-reboot-coverage.json'), 'w') as report:
     json.dump(coverage, report, indent=2)
     report.write('\n')

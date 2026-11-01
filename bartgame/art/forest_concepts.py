@@ -7,12 +7,13 @@ their established contracts. No global palette object is mutated.
 import os
 
 VARIANT = int(os.environ.get('BART_FOREST', '0'))
-assert 0 <= VARIANT <= 18, ('BART_FOREST must be 0..18', VARIANT)
+assert 0 <= VARIANT <= 28, ('BART_FOREST must be 0..28', VARIANT)
 ROUND2 = VARIANT >= 6
 CANOPY_ROUND = VARIANT >= 11
-LOCAL_VARIANT = VARIANT - 10 if CANOPY_ROUND else VARIANT - 5 if ROUND2 else VARIANT
+ADAPTIVE_ROUND = VARIANT >= 19
+LOCAL_VARIANT = VARIANT - 18 if ADAPTIVE_ROUND else VARIANT - 10 if CANOPY_ROUND else VARIANT - 5 if ROUND2 else VARIANT
 # Canopy studies keep the accepted grey ground and all other environment art
-# from Black Sap Oak; only the new terrain painter receives the eight styles.
+# from Black Sap Oak; only the canopy painter receives the local study style.
 ENV_VARIANT = 1 if CANOPY_ROUND else LOCAL_VARIANT
 NAMES = {
     0: 'Current production forest',
@@ -34,13 +35,26 @@ NAMES = {
     16: 'Black Sap Bough',
     17: 'Silkbound Crown',
     18: 'Canker Bloom',
+    19: 'Ancient Oak Vault',
+    20: 'Crooked Willow',
+    21: 'Buttress Beech',
+    22: 'Woven Bower',
+    23: 'Fungal Cathedral',
+    24: 'Fallen Crown',
+    25: 'Lightning Cleft Oak',
+    26: 'Pale Birch Congregation',
+    27: 'Black Cedar Cathedral',
+    28: 'Sorrow Arch Elm',
 }
 TERRAIN_BANKS = {'ground', 'foliage', 'water', 'stone', 'blight',
                  'decay_mix', 'rot_water'}
 
 
 def painters():
-    if CANOPY_ROUND:
+    if ADAPTIVE_ROUND:
+        import forest_concepts_v2_props as props
+        import forest_canopy_adaptive_terrain as terrain
+    elif CANOPY_ROUND:
         import forest_concepts_v2_props as props
         import forest_concepts_v3_terrain as terrain
     elif ROUND2:

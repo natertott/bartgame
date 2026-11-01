@@ -33,6 +33,13 @@ bool8 room_recoil_fringe_front(int px,int py);
 bool8 room_canopy_overlay_px(int px,int py);
 bool8 room_canopy_overlaps_body(int px,int py,int z,int width,int height);
 #endif
+#if BART_FOREST_VARIANT >= 19
+/* Native canopy planning reads semantic room geometry; these helpers keep
+   private tileset/feature-clearance policy in the room renderer. */
+bool8 room_canopy_scene_reserved(int mx,int my);
+bool8 room_canopy_projection_clear(int mx,int my);
+const u16* room_canopy_scene_entries(u16 mt);
+#endif
 
 /* object kinds in authored rooms (art/rooms.py) */
 #define OBJ_NPC 1

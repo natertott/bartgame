@@ -8,6 +8,9 @@
 #include "roomgen.h"
 #include "myst.h"
 #include "appearance.h"
+#if BART_FOREST_VARIANT >= 19
+#include "canopy_scene.h"
+#endif
 
 Room gRoom EWRAM_BSS;
 s16 gCamX, gCamY;
@@ -32,6 +35,9 @@ void tiles_load(int set) {
     dma3_copy32(sTs->tiles, CHARBLOCK(0), sTs->tile_count * 32);
     for (i = 0; i < sTs->pal_count; i++)
         pal_set_bg(i, &sTs->pals[i * 16]);
+#if BART_FOREST_VARIANT >= 19
+    canopy_scene_reset();
+#endif
 }
 
 void tiles_init(void) {
@@ -72,6 +78,9 @@ void tiles_animate(void) {
                 if(slot!=255)pal_set_bg(slot,forest_v2_pulse_colors[i][phase]);
             }
     }
+#endif
+#if BART_FOREST_VARIANT >= 19
+    if(gGame.state==GS_PLAY)canopy_scene_palette_tick();
 #endif
 }
 
@@ -215,6 +224,12 @@ static bool8 forest_isolated_water(int x,int y,u16 mt) {
 static u16 forest_picture(int x,int y,u16 mt) {
     if(gGame.area!=AREA_FOREST || mt==MT_NONE)return mt;
     int kind=forest_v2_canopy_kind[mt];
+#if BART_FOREST_VARIANT >= 19
+    /* Legacy connector IDs now join the room-shaped stand. They need the
+       same organic contact silhouette as the surrounding mass, not a
+       separate opaque quiet rectangle beneath the native drawing. */
+    if(kind==3)kind=2;
+#endif
     if(kind==1 || kind==2) {
         int n=forest_canopy_at(x,y-1),e=forest_canopy_at(x+1,y);
         int s=forest_canopy_at(x,y+1),w=forest_canopy_at(x-1,y);
@@ -266,6 +281,36 @@ static u16 forest_projection(int x,int y,u16 ground,u16 overlay) {
 }
 #endif
 
+#if BART_FOREST_VARIANT >= 19
+const u16* room_canopy_scene_entries(u16 mt) {
+    return &sTs->map[mt*4];
+}
+
+bool8 room_canopy_scene_reserved(int x,int y) {
+    int k;
+    /* A large entry OBJ owns its frame, dark opening and the approach.
+       A canopy component may wrap behind it, but never replace it. */
+    if((gSpots.has_mouth && ABS(x-gSpots.mouth.x)<=1 &&
+        y>=gSpots.mouth.y-2 && y<=gSpots.mouth.y+1) ||
+       (gSpots.has_shrine && ABS(x-gSpots.shrine.x)<=1 && ABS(y-gSpots.shrine.y)<=2) ||
+       (gSpots.has_chest && ABS(x-gSpots.chest.x)<=1 && ABS(y-gSpots.chest.y)<=1) ||
+       (gSpots.has_npc && ABS(x-gSpots.npc.x)<=1 && ABS(y-gSpots.npc.y)<=1) ||
+       (gSpots.has_relic && ABS(x-gSpots.relic.x)<=1 && ABS(y-gSpots.relic.y)<=1) ||
+       (gSpots.has_treasure && ABS(x-gSpots.treasure.x)<=1 && ABS(y-gSpots.treasure.y)<=1))
+        return TRUE;
+    for(k=0;k<gSpots.torch_count;k++)
+        if(ABS(x-gSpots.torches[k].x)<=1 && y>=gSpots.torches[k].y-1 &&
+           y<=gSpots.torches[k].y+1)return TRUE;
+    return FALSE;
+}
+
+bool8 room_canopy_projection_clear(int x,int y) {
+    if(x<0 || y<0 || x>=gRoom.w || y>=gRoom.h || room_canopy_scene_reserved(x,y))
+        return FALSE;
+    return forest_projection_clear(x,y,room_get(x,y),room_get_overlay(x,y));
+}
+#endif
+
 static void render_cell(int x, int y) {
     int i=y*ROOM_MAX_W+x;
     u16 ground=gRoom.ground[i],overlay=gRoom.overlay[i],base=gRoom.underlay[i];
@@ -284,7 +329,11 @@ static void render_cell(int x, int y) {
             map_write(SB_GROUND,x,y,MT_WATER);
         }
     } else if(gGame.area==AREA_FOREST && ground!=MT_NONE &&
-       (forest_v2_canopy_kind[ground]==1 || forest_v2_canopy_kind[ground]==2) &&
+       (forest_v2_canopy_kind[ground]==1 || forest_v2_canopy_kind[ground]==2
+#if BART_FOREST_VARIANT >= 19
+        || forest_v2_canopy_kind[ground]==3
+#endif
+       ) &&
        (overlay==MT_NONE || overlay==MT_SPARKLE || overlay==MT_SPARKLE_WHITE || overlay==MT_BLIGHT_MIST)) {
         /* Rounded foliage is a true foreground silhouette over local soil,
            not a green rectangle painted onto a dirt or water boundary. */
@@ -338,7 +387,7 @@ static void render_cell(int x, int y) {
         map_write(SB_GROUND,x,y,ground);
 #endif
     }
-#if BART_FOREST_VARIANT >= 6
+#if BART_FOREST_VARIANT >= 6 && BART_FOREST_VARIANT < 19
     overlay=forest_projection(x,y,ground,overlay);
 #endif
     map_write(SB_OVERLAY,x,y,overlay);
@@ -468,6 +517,9 @@ void room_render(void) {
         }
     }
     room_build_solid();
+#if BART_FOREST_VARIANT >= 19
+    canopy_scene_build();
+#endif
 }
 
 void room_change(int mx, int my, u16 mt) {
@@ -499,6 +551,11 @@ void room_change(int mx, int my, u16 mt) {
         for(nx=MAX(0,mx-1);nx<=MIN(gRoom.w-1,mx+1);nx++)
             if(nx!=mx || ny!=my)render_cell(nx,ny);
 #endif
+#if BART_FOREST_VARIANT >= 19
+    for(ny=MAX(0,my-1);ny<=MIN(gRoom.h-1,my+1);ny++)
+        for(nx=MAX(0,mx-1);nx<=MIN(gRoom.w-1,mx+1);nx++)
+            canopy_scene_apply_cell(nx,ny);
+#endif
 }
 
 void room_change_overlay(int mx, int my, u16 mt) {
@@ -508,6 +565,9 @@ void room_change_overlay(int mx, int my, u16 mt) {
     solid_cell_update(mx, my);
     interactive_cell_changed(mx,my);
     render_cell(mx,my);
+#if BART_FOREST_VARIANT >= 19
+    canopy_scene_apply_cell(mx,my);
+#endif
 }
 
 bool8 room_solid_px(int px, int py) {
