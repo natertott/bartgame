@@ -40,6 +40,13 @@ available; [topology notes](docs/FOREST_TOPOLOGY.md) track the ongoing engine/ar
 The [five playable ROMs, actual recordings and native catalogs](../art-review/forest-concepts-v2/README.md)
 keep source assemblies and deliberate renderer diagnostics clearly labelled.
 
+Eight [leafy canopy studies](docs/FOREST_CANOPY_V3.md), `BART_FOREST=11..18`,
+retain accepted grey ground and rebuild healthy/infected tree crowns around
+horizontal boughs and surviving green leaves. Their conditional renderer
+preserves a visible portion of Bloom's current native pose beneath foliage.
+[Actual mGBA comparisons and all eight ROMs](../art-review/forest-canopy-v3/README.md)
+remain unselected alternatives; earlier profiles0–10 retain their exact ROMs.
+
 ## Current game
 
 The Drain is the hub, with the Billious Peddler, Pale Gatekeeper and a

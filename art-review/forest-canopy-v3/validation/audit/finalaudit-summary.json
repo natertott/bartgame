@@ -1,0 +1,85 @@
+{
+  "status": "PASS",
+  "source_commit": "e923557aa74b01626f3e599f7c4b50366e096507",
+  "auditor_sha256": "1415e9d782c73cb01536ef2115539966e82aa63c89469c7d7b0f9d55247b3ede",
+  "combined_report_sha256": "ae2879125daa815ee15243ebe32daf067e0586f0359b8340c5b3412ca96dc262",
+  "combined_passed": 186010,
+  "combined_total": 186010,
+  "failure_count": 0,
+  "native_checks": 121691,
+  "source_gallery": {
+    "manifest_sha256": "84bf11a0156cc462731c62f6f6dc56a5720e82f216198444ecf3c123a9c31fd9",
+    "source_commit": "e923557aa74b01626f3e599f7c4b50366e096507",
+    "native_instances": 3952,
+    "source_panels": 3976,
+    "exact_source_gifs": 8,
+    "note": "Source artwork and fixed inspection holds; not emulator screenshots or live timing."
+  },
+  "runtime": {
+    "contexts": 198,
+    "movies": 63,
+    "exact_gifs": 63,
+    "baseline": "Preserved previous forest study6; not production0.",
+    "limits": "Finite real mGBA recordings and exact source/character compositing proof; does not assert universal CPU timing or arbitrary-scene visibility."
+  },
+  "runtime_capture_checks": {
+    "passed": 3477,
+    "total": 3477
+  },
+  "observed_video_frames": 16272,
+  "new_profiles_fully_hidden_displayed_character_frames": 0,
+  "minimum_new_displayed_character_colored_pixels": 30,
+  "minimum_new_displayed_character_component": 8,
+  "historical0_through10_roms_byte_identical": true,
+  "green_source_measurements": [
+    {
+      "profile": 11,
+      "label": "Veinbound Oak",
+      "whole_crown_live_green_percent": 20.605,
+      "authored_tree_live_green_percent": 20.357
+    },
+    {
+      "profile": 12,
+      "label": "Patchblight Beech",
+      "whole_crown_live_green_percent": 20.801,
+      "authored_tree_live_green_percent": 20.655
+    },
+    {
+      "profile": 13,
+      "label": "Spore Drift",
+      "whole_crown_live_green_percent": 20.605,
+      "authored_tree_live_green_percent": 20.357
+    },
+    {
+      "profile": 14,
+      "label": "Bracketwood",
+      "whole_crown_live_green_percent": 20.801,
+      "authored_tree_live_green_percent": 20.655
+    },
+    {
+      "profile": 15,
+      "label": "Violet Leaf Mosaic",
+      "whole_crown_live_green_percent": 20.605,
+      "authored_tree_live_green_percent": 20.357
+    },
+    {
+      "profile": 16,
+      "label": "Black Sap Bough",
+      "whole_crown_live_green_percent": 20.605,
+      "authored_tree_live_green_percent": 20.357
+    },
+    {
+      "profile": 17,
+      "label": "Silkbound Crown",
+      "whole_crown_live_green_percent": 20.801,
+      "authored_tree_live_green_percent": 20.655
+    },
+    {
+      "profile": 18,
+      "label": "Canker Bloom",
+      "whole_crown_live_green_percent": 20.605,
+      "authored_tree_live_green_percent": 20.357
+    }
+  ],
+  "limits": "Native source/ROM/metadata and scope proof, plus optional exact source-art and finite actual motion/PPU checks. No new generation corpus or universal visual/performance claim."
+}

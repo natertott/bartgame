@@ -22,7 +22,7 @@ grey ground, water, props, characters and portraits retain its artwork. The
 maze generator is unchanged, including the pending lantern-placement work.
 Bloom's native artwork, action timing and physics stay intact, as do selected
 enemies/Heart, equipment, interfaces, Drain architecture and existing glitter.
-Earlier profiles0–10 and the production default0 remain available.
+Earlier profiles 0–10 and the production default0 remain available.
 
 Overhead foliage may cover Bloom's upper body but must preserve a recognizable
 part of his current silhouette. A conditional foreground fragment uses only
@@ -51,6 +51,9 @@ isolated cells, connected bands and concave joins need separate inspection.
 [Shared art bible](art-reboot/ART_BIBLE.md) ·
 [Decision log](art-reboot/ART_DIRECTION_LOG.md)
 
-The final gallery will separate native source assemblies, naturally generated
-mGBA contexts and explicitly constructed renderer diagnostics. The eight
-infection treatments remain unselected alternatives.
+The [final gallery](../../art-review/forest-canopy-v3/README.md) separates native
+source assemblies, naturally generated mGBA contexts and explicitly constructed
+renderer diagnostics. The eight infection treatments remain unselected
+alternatives. All older profiles 0–10 are rebuilt byte-identically; the focused
+comparison records 198 contexts and passes 3,477 runtime checks, including
+matched gameplay cadence, actual scanout pixels and partial character visibility.

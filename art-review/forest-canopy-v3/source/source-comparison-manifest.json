@@ -1,0 +1,4660 @@
+{
+  "canopy_assemblies": [
+    {
+      "profile": 11,
+      "stage": "healthy",
+      "rect": [
+        5,
+        92,
+        192,
+        128
+      ],
+      "scale": 2,
+      "source_rgb_sha256": "14b233f21677db00da48b778ab4abce618f9ea7e4d969f5ba6531f3761b283f3",
+      "world_origin": [
+        1,
+        1
+      ],
+      "alias_definitions": [
+        {
+          "name": "f2_canopy_0_0_90",
+          "id": 1608,
+          "phase": 0,
+          "palette": "foliage",
+          "rect": [
+            16,
+            16,
+            16,
+            16
+          ],
+          "index_sha256": "44c0d04cda16bde29ccfba209a4383f8306e2e58240ab16017d2eae9d653d76f",
+          "rgba_sha256": "d212d232d425216302f969201c75c84d4c12866e72c94c88804237ba5f214f52",
+          "cell": [
+            1,
+            1
+          ],
+          "world_cell": [
+            2,
+            2
+          ]
+        },
+        {
+          "name": "f2_canopy_0_1_10",
+          "id": 1633,
+          "phase": 0,
+          "palette": "foliage",
+          "rect": [
+            32,
+            16,
+            16,
+            16
+          ],
+          "index_sha256": "ac9b4b7d3fc9fc4b730f1d463c76404ae1e239155b56fc70953cb460d189c3ce",
+          "rgba_sha256": "cfdecd0c08fe0828c7c342ce07156c3e145fe204c494976ebde0591e7db2579c",
+          "cell": [
+            2,
+            1
+          ],
+          "world_cell": [
+            3,
+            2
+          ]
+        },
+        {
+          "name": "f2_canopy_0_0_10",
+          "id": 1586,
+          "phase": 0,
+          "palette": "foliage",
+          "rect": [
+            48,
+            16,
+            16,
+            16
+          ],
+          "index_sha256": "61fc4275ae5677676346aabfde28d0d8fffee4233fa59b4ff7895a86b2d80603",
+          "rgba_sha256": "f32f68b77972c00f9f3b9af97c293c9f8fcaf610bdac575d9c006c6473cec62c",
+          "cell": [
+            3,
+            1
+          ],
+          "world_cell": [
+            4,
+            2
+          ]
+        },
+        {
+          "name": "f2_canopy_0_1_30",
+          "id": 1641,
+          "phase": 0,
+          "palette": "foliage",
+          "rect": [
+            64,
+            16,
+            16,
+            16
+          ],
+          "index_sha256": "98768109e73993c04e1cc582576aca32619d9504cdc3124567a78732ba2dd532",
+          "rgba_sha256": "c8a1cd9606890d0358b42d20f524aee6bebf1df0b858140f17aa19f7207d6f2c",
+          "cell": [
+            4,
+            1
+          ],
+          "world_cell": [
+            5,
+            2
+          ]
+        },
+        {
+          "name": "f2_canopy_0_2_c0",
+          "id": 1706,
+          "phase": 0,
+          "palette": "foliage",
+          "rect": [
+            16,
+            32,
+            16,
+            16
+          ],
+          "index_sha256": "b50f651ad36ca288a39fcdded45a6f5ebe8a8fdf9c50baa706471713eeea48c2",
+          "rgba_sha256": "10c5b0af189ace0d9ab33d9d5e97cd525faaff7ae4eb87a938f62ba57c4646a8",
+          "cell": [
+            1,
+            2
+          ],
+          "world_cell": [
+            2,
+            3
+          ]
+        },
+        {
+          "name": "f2_canopy_0_3_40",
+          "id": 1737,
+          "phase": 0,
+          "palette": "foliage",
+          "rect": [
+            32,
+            32,
+            16,
+            16
+          ],
+          "index_sha256": "22f7adaa6ed1aa70215f557d9d0912717aa161e3137de4d448aaa57b13843d1d",
+          "rgba_sha256": "85fec33bda95e361354cc3b43a1afc69a2101fca4c6878f2c1a566b3ba47af20",
+          "cell": [
+            2,
+            2
+          ],
+          "world_cell": [
+            3,
+            3
+          ]
+        },
+        {
+          "name": "f2_canopy_0_2_40",
+          "id": 1690,
+          "phase": 0,
+          "palette": "foliage",
+          "rect": [
+            48,
+            32,
+            16,
+            16
+          ],
+          "index_sha256": "15de23fa95e4ac17382c45f86bc6270b3c908c4622480093264bf60e414f137d",
+          "rgba_sha256": "396c0bbbfe22a3c094fbca8bbf296223244d65a61b539fdccfa8075470a27d38",
+          "cell": [
+            3,
+            2
+          ],
+          "world_cell": [
+            4,
+            3
+          ]
+        },
+        {
+          "name": "f2_canopy_0_3_60",
+          "id": 1742,
+          "phase": 0,
+          "palette": "foliage",
+          "rect": [
+            64,
+            32,
+            16,
+            16
+          ],
+          "index_sha256": "31f1b9232828d98aabe0128f21f2fa14923e86a717882f4c25c464091c6b8aa2",
+          "rgba_sha256": "ebebafab29a1245d056bedd2b6680ea1129be423f20982283f0a9b4a1b816c43",
+          "cell": [
+            4,
+            2
+          ],
+          "world_cell": [
+            5,
+            3
+          ]
+        }
+      ]
+    },
+    {
+      "profile": 11,
+      "stage": "mixed",
+      "rect": [
+        217,
+        92,
+        192,
+        128
+      ],
+      "scale": 2,
+      "source_rgb_sha256": "37afaf6eb2993a8bf857f07da19409c45a0429acd24241ef68f4fbc1964f00b0",
+      "world_origin": [
+        1,
+        1
+      ],
+      "alias_definitions": [
+        {
+          "name": "f2_canopy_0_0_90",
+          "id": 1608,
+          "phase": 0,
+          "palette": "foliage",
+          "rect": [
+            16,
+            16,
+            16,
+            16
+          ],
+          "index_sha256": "44c0d04cda16bde29ccfba209a4383f8306e2e58240ab16017d2eae9d653d76f",
+          "rgba_sha256": "d212d232d425216302f969201c75c84d4c12866e72c94c88804237ba5f214f52",
+          "cell": [
+            1,
+            1
+          ],
+          "world_cell": [
+            2,
+            2
+          ]
+        },
+        {
+          "name": "f2_canopy_0_1_10",
+          "id": 1633,
+          "phase": 0,
+          "palette": "foliage",
+          "rect": [
+            32,
+            16,
+            16,
+            16
+          ],
+          "index_sha256": "ac9b4b7d3fc9fc4b730f1d463c76404ae1e239155b56fc70953cb460d189c3ce",
+          "rgba_sha256": "cfdecd0c08fe0828c7c342ce07156c3e145fe204c494976ebde0591e7db2579c",
+          "cell": [
+            2,
+            1
+          ],
+          "world_cell": [
+            3,
+            2
+          ]
+        },
+        {
+          "name": "f2_canopy_1_0_10",
+          "id": 1789,
+          "phase": 0,
+          "palette": "canopy3_blight",
+          "rect": [
+            48,
+            16,
+            16,
+            16
+          ],
+          "index_sha256": "58c659705cd26ad43a4a580c4893175ce88ca84e7c764938afe24cadcd0848cb",
+          "rgba_sha256": "15bba8c369f2e60bdc8394dbc265d35c10f75a232d845053786ebe3853586e75",
+          "cell": [
+            3,
+            1
+          ],
+          "world_cell": [
+            4,
+            2
+          ]
+        },
+        {
+          "name": "f2_canopy_1_1_30",
+          "id": 1844,
+          "phase": 0,
+          "palette": "canopy3_blight",
+          "rect": [
+            64,
+            16,
+            16,
+            16
+          ],
+          "index_sha256": "53627f508f29adee1a5353668bf9013da97b4b4129ba17d6182fa039e73ec295",
+          "rgba_sha256": "c8293fd7d35d3d782ec01d284704276d5125b3cec700b0c703a4c1f9c2952aab",
+          "cell": [
+            4,
+            1
+          ],
+          "world_cell": [
+            5,
+            2
+          ]
+        },
+        {
+          "name": "f2_canopy_0_2_c0",
+          "id": 1706,
+          "phase": 0,
+          "palette": "foliage",
+          "rect": [
+            16,
+            32,
+            16,
+            16
+          ],
+          "index_sha256": "b50f651ad36ca288a39fcdded45a6f5ebe8a8fdf9c50baa706471713eeea48c2",
+          "rgba_sha256": "10c5b0af189ace0d9ab33d9d5e97cd525faaff7ae4eb87a938f62ba57c4646a8",
+          "cell": [
+            1,
+            2
+          ],
+          "world_cell": [
+            2,
+            3
+          ]
+        },
+        {
+          "name": "f2_canopy_0_3_40",
+          "id": 1737,
+          "phase": 0,
+          "palette": "foliage",
+          "rect": [
+            32,
+            32,
+            16,
+            16
+          ],
+          "index_sha256": "22f7adaa6ed1aa70215f557d9d0912717aa161e3137de4d448aaa57b13843d1d",
+          "rgba_sha256": "85fec33bda95e361354cc3b43a1afc69a2101fca4c6878f2c1a566b3ba47af20",
+          "cell": [
+            2,
+            2
+          ],
+          "world_cell": [
+            3,
+            3
+          ]
+        },
+        {
+          "name": "f2_canopy_1_2_40",
+          "id": 1893,
+          "phase": 0,
+          "palette": "canopy3_blight",
+          "rect": [
+            48,
+            32,
+            16,
+            16
+          ],
+          "index_sha256": "13ddf68fede71e185e3fd3ac5a70541f16a07dc0dee181a7408dd01150f95515",
+          "rgba_sha256": "407e3428ddc2051b166c25a32a09d89c3fa5e0401ff102a69e2d3ca20228addb",
+          "cell": [
+            3,
+            2
+          ],
+          "world_cell": [
+            4,
+            3
+          ]
+        },
+        {
+          "name": "f2_canopy_1_3_60",
+          "id": 1945,
+          "phase": 0,
+          "palette": "canopy3_blight",
+          "rect": [
+            64,
+            32,
+            16,
+            16
+          ],
+          "index_sha256": "86ba6e3d7485c5bd9157be07d62a7d6d7a88d8cf4d6144a3aa577f6ae9bd11af",
+          "rgba_sha256": "591c5df2a67db98aec99b1de495743201d83ae507e1c37b6fb15df34fbee33a5",
+          "cell": [
+            4,
+            2
+          ],
+          "world_cell": [
+            5,
+            3
+          ]
+        }
+      ]
+    },
+    {
+      "profile": 11,
+      "stage": "deep",
+      "rect": [
+        429,
+        92,
+        192,
+        128
+      ],
+      "scale": 2,
+      "source_rgb_sha256": "971299e02318cae902074b87f564edddf02a1b6a0a369c7af4fde3ea8fec1b28",
+      "world_origin": [
+        1,
+        1
+      ],
+      "alias_definitions": [
+        {
+          "name": "f2_canopy_1_0_90",
+          "id": 1811,
+          "phase": 0,
+          "palette": "canopy3_blight",
+          "rect": [
+            16,
+            16,
+            16,
+            16
+          ],
+          "index_sha256": "33317369fb4a353f56867a65f90604d0802b543a4ab6dbd61ccdfe3b2bf14a96",
+          "rgba_sha256": "371b5efc7da3a596af667f621c7eaa4b4c9bbee2648ccef60e4bd7ee76f4fbe1",
+          "cell": [
+            1,
+            1
+          ],
+          "world_cell": [
+            2,
+            2
+          ]
+        },
+        {
+          "name": "f2_canopy_1_1_10",
+          "id": 1836,
+          "phase": 0,
+          "palette": "canopy3_blight",
+          "rect": [
+            32,
+            16,
+            16,
+            16
+          ],
+          "index_sha256": "bbf9c816e5c5b28200a3dc9e340fece90c0704dfe7bce4d883440a769d43deb1",
+          "rgba_sha256": "24da8cf90ad64b4dd1cde0ff28d5605c675f11de13098be6175e185b9fe6f943",
+          "cell": [
+            2,
+            1
+          ],
+          "world_cell": [
+            3,
+            2
+          ]
+        },
+        {
+          "name": "f2_canopy_1_0_10",
+          "id": 1789,
+          "phase": 0,
+          "palette": "canopy3_blight",
+          "rect": [
+            48,
+            16,
+            16,
+            16
+          ],
+          "index_sha256": "58c659705cd26ad43a4a580c4893175ce88ca84e7c764938afe24cadcd0848cb",
+          "rgba_sha256": "15bba8c369f2e60bdc8394dbc265d35c10f75a232d845053786ebe3853586e75",
+          "cell": [
+            3,
+            1
+          ],
+          "world_cell": [
+            4,
+            2
+          ]
+        },
+        {
+          "name": "f2_canopy_1_1_30",
+          "id": 1844,
+          "phase": 0,
+          "palette": "canopy3_blight",
+          "rect": [
+            64,
+            16,
+            16,
+            16
+          ],
+          "index_sha256": "53627f508f29adee1a5353668bf9013da97b4b4129ba17d6182fa039e73ec295",
+          "rgba_sha256": "c8293fd7d35d3d782ec01d284704276d5125b3cec700b0c703a4c1f9c2952aab",
+          "cell": [
+            4,
+            1
+          ],
+          "world_cell": [
+            5,
+            2
+          ]
+        },
+        {
+          "name": "f2_canopy_1_2_c0",
+          "id": 1909,
+          "phase": 0,
+          "palette": "canopy3_blight",
+          "rect": [
+            16,
+            32,
+            16,
+            16
+          ],
+          "index_sha256": "33d55496bf7823aab4d65ed9cec5fafb96684d79802f184c6346975cb5cc58c7",
+          "rgba_sha256": "3721b191a6d43b19a370794060e1d8ee3cb67c9900e70b2754e0cf9e462df276",
+          "cell": [
+            1,
+            2
+          ],
+          "world_cell": [
+            2,
+            3
+          ]
+        },
+        {
+          "name": "f2_canopy_1_3_40",
+          "id": 1940,
+          "phase": 0,
+          "palette": "canopy3_blight",
+          "rect": [
+            32,
+            32,
+            16,
+            16
+          ],
+          "index_sha256": "20073a064f1d7d18f122c544afed2ee694a04ae145dcfe584b697d2a299d50d3",
+          "rgba_sha256": "13b0b123be4782ab17ca435ea35e1bb2c057b75fb737572d53cfe106bf5bfb62",
+          "cell": [
+            2,
+            2
+          ],
+          "world_cell": [
+            3,
+            3
+          ]
+        },
+        {
+          "name": "f2_canopy_1_2_40",
+          "id": 1893,
+          "phase": 0,
+          "palette": "canopy3_blight",
+          "rect": [
+            48,
+            32,
+            16,
+            16
+          ],
+          "index_sha256": "13ddf68fede71e185e3fd3ac5a70541f16a07dc0dee181a7408dd01150f95515",
+          "rgba_sha256": "407e3428ddc2051b166c25a32a09d89c3fa5e0401ff102a69e2d3ca20228addb",
+          "cell": [
+            3,
+            2
+          ],
+          "world_cell": [
+            4,
+            3
+          ]
+        },
+        {
+          "name": "f2_canopy_1_3_60",
+          "id": 1945,
+          "phase": 0,
+          "palette": "canopy3_blight",
+          "rect": [
+            64,
+            32,
+            16,
+            16
+          ],
+          "index_sha256": "86ba6e3d7485c5bd9157be07d62a7d6d7a88d8cf4d6144a3aa577f6ae9bd11af",
+          "rgba_sha256": "591c5df2a67db98aec99b1de495743201d83ae507e1c37b6fb15df34fbee33a5",
+          "cell": [
+            4,
+            2
+          ],
+          "world_cell": [
+            5,
+            3
+          ]
+        }
+      ]
+    },
+    {
+      "profile": 12,
+      "stage": "healthy",
+      "rect": [
+        5,
+        290,
+        192,
+        128
+      ],
+      "scale": 2,
+      "source_rgb_sha256": "14b233f21677db00da48b778ab4abce618f9ea7e4d969f5ba6531f3761b283f3",
+      "world_origin": [
+        1,
+        1
+      ],
+      "alias_definitions": [
+        {
+          "name": "f2_canopy_0_0_90",
+          "id": 1608,
+          "phase": 0,
+          "palette": "foliage",
+          "rect": [
+            16,
+            16,
+            16,
+            16
+          ],
+          "index_sha256": "44c0d04cda16bde29ccfba209a4383f8306e2e58240ab16017d2eae9d653d76f",
+          "rgba_sha256": "d212d232d425216302f969201c75c84d4c12866e72c94c88804237ba5f214f52",
+          "cell": [
+            1,
+            1
+          ],
+          "world_cell": [
+            2,
+            2
+          ]
+        },
+        {
+          "name": "f2_canopy_0_1_10",
+          "id": 1633,
+          "phase": 0,
+          "palette": "foliage",
+          "rect": [
+            32,
+            16,
+            16,
+            16
+          ],
+          "index_sha256": "ac9b4b7d3fc9fc4b730f1d463c76404ae1e239155b56fc70953cb460d189c3ce",
+          "rgba_sha256": "cfdecd0c08fe0828c7c342ce07156c3e145fe204c494976ebde0591e7db2579c",
+          "cell": [
+            2,
+            1
+          ],
+          "world_cell": [
+            3,
+            2
+          ]
+        },
+        {
+          "name": "f2_canopy_0_0_10",
+          "id": 1586,
+          "phase": 0,
+          "palette": "foliage",
+          "rect": [
+            48,
+            16,
+            16,
+            16
+          ],
+          "index_sha256": "61fc4275ae5677676346aabfde28d0d8fffee4233fa59b4ff7895a86b2d80603",
+          "rgba_sha256": "f32f68b77972c00f9f3b9af97c293c9f8fcaf610bdac575d9c006c6473cec62c",
+          "cell": [
+            3,
+            1
+          ],
+          "world_cell": [
+            4,
+            2
+          ]
+        },
+        {
+          "name": "f2_canopy_0_1_30",
+          "id": 1641,
+          "phase": 0,
+          "palette": "foliage",
+          "rect": [
+            64,
+            16,
+            16,
+            16
+          ],
+          "index_sha256": "98768109e73993c04e1cc582576aca32619d9504cdc3124567a78732ba2dd532",
+          "rgba_sha256": "c8a1cd9606890d0358b42d20f524aee6bebf1df0b858140f17aa19f7207d6f2c",
+          "cell": [
+            4,
+            1
+          ],
+          "world_cell": [
+            5,
+            2
+          ]
+        },
+        {
+          "name": "f2_canopy_0_2_c0",
+          "id": 1706,
+          "phase": 0,
+          "palette": "foliage",
+          "rect": [
+            16,
+            32,
+            16,
+            16
+          ],
+          "index_sha256": "b50f651ad36ca288a39fcdded45a6f5ebe8a8fdf9c50baa706471713eeea48c2",
+          "rgba_sha256": "10c5b0af189ace0d9ab33d9d5e97cd525faaff7ae4eb87a938f62ba57c4646a8",
+          "cell": [
+            1,
+            2
+          ],
+          "world_cell": [
+            2,
+            3
+          ]
+        },
+        {
+          "name": "f2_canopy_0_3_40",
+          "id": 1737,
+          "phase": 0,
+          "palette": "foliage",
+          "rect": [
+            32,
+            32,
+            16,
+            16
+          ],
+          "index_sha256": "22f7adaa6ed1aa70215f557d9d0912717aa161e3137de4d448aaa57b13843d1d",
+          "rgba_sha256": "85fec33bda95e361354cc3b43a1afc69a2101fca4c6878f2c1a566b3ba47af20",
+          "cell": [
+            2,
+            2
+          ],
+          "world_cell": [
+            3,
+            3
+          ]
+        },
+        {
+          "name": "f2_canopy_0_2_40",
+          "id": 1690,
+          "phase": 0,
+          "palette": "foliage",
+          "rect": [
+            48,
+            32,
+            16,
+            16
+          ],
+          "index_sha256": "15de23fa95e4ac17382c45f86bc6270b3c908c4622480093264bf60e414f137d",
+          "rgba_sha256": "396c0bbbfe22a3c094fbca8bbf296223244d65a61b539fdccfa8075470a27d38",
+          "cell": [
+            3,
+            2
+          ],
+          "world_cell": [
+            4,
+            3
+          ]
+        },
+        {
+          "name": "f2_canopy_0_3_60",
+          "id": 1742,
+          "phase": 0,
+          "palette": "foliage",
+          "rect": [
+            64,
+            32,
+            16,
+            16
+          ],
+          "index_sha256": "31f1b9232828d98aabe0128f21f2fa14923e86a717882f4c25c464091c6b8aa2",
+          "rgba_sha256": "ebebafab29a1245d056bedd2b6680ea1129be423f20982283f0a9b4a1b816c43",
+          "cell": [
+            4,
+            2
+          ],
+          "world_cell": [
+            5,
+            3
+          ]
+        }
+      ]
+    },
+    {
+      "profile": 12,
+      "stage": "mixed",
+      "rect": [
+        217,
+        290,
+        192,
+        128
+      ],
+      "scale": 2,
+      "source_rgb_sha256": "06322e7f0cb89d2e1872dfb22ec8c24d343a9c47b04caaa5d415180518ccfe53",
+      "world_origin": [
+        1,
+        1
+      ],
+      "alias_definitions": [
+        {
+          "name": "f2_canopy_0_0_90",
+          "id": 1608,
+          "phase": 0,
+          "palette": "foliage",
+          "rect": [
+            16,
+            16,
+            16,
+            16
+          ],
+          "index_sha256": "44c0d04cda16bde29ccfba209a4383f8306e2e58240ab16017d2eae9d653d76f",
+          "rgba_sha256": "d212d232d425216302f969201c75c84d4c12866e72c94c88804237ba5f214f52",
+          "cell": [
+            1,
+            1
+          ],
+          "world_cell": [
+            2,
+            2
+          ]
+        },
+        {
+          "name": "f2_canopy_0_1_10",
+          "id": 1633,
+          "phase": 0,
+          "palette": "foliage",
+          "rect": [
+            32,
+            16,
+            16,
+            16
+          ],
+          "index_sha256": "ac9b4b7d3fc9fc4b730f1d463c76404ae1e239155b56fc70953cb460d189c3ce",
+          "rgba_sha256": "cfdecd0c08fe0828c7c342ce07156c3e145fe204c494976ebde0591e7db2579c",
+          "cell": [
+            2,
+            1
+          ],
+          "world_cell": [
+            3,
+            2
+          ]
+        },
+        {
+          "name": "f2_canopy_1_0_10",
+          "id": 1789,
+          "phase": 0,
+          "palette": "canopy3_blight",
+          "rect": [
+            48,
+            16,
+            16,
+            16
+          ],
+          "index_sha256": "7c952b0fa0b29d557c64a9e4d8e2d2f5ce9e3a851d50d2690e7aa887a4589cc7",
+          "rgba_sha256": "6ea288f4a86e5dba60c8780b38a627a0f4ea55af40b162894b1cd071d282456b",
+          "cell": [
+            3,
+            1
+          ],
+          "world_cell": [
+            4,
+            2
+          ]
+        },
+        {
+          "name": "f2_canopy_1_1_30",
+          "id": 1844,
+          "phase": 0,
+          "palette": "canopy3_blight",
+          "rect": [
+            64,
+            16,
+            16,
+            16
+          ],
+          "index_sha256": "9789cecced8d28c09d5396c516b3240bd8e159f763c3865c486a5370c0cd0c48",
+          "rgba_sha256": "d1e1bbe3a95595096a01ef14b6a320273887e7b34f63ab38817c7baba070da08",
+          "cell": [
+            4,
+            1
+          ],
+          "world_cell": [
+            5,
+            2
+          ]
+        },
+        {
+          "name": "f2_canopy_0_2_c0",
+          "id": 1706,
+          "phase": 0,
+          "palette": "foliage",
+          "rect": [
+            16,
+            32,
+            16,
+            16
+          ],
+          "index_sha256": "b50f651ad36ca288a39fcdded45a6f5ebe8a8fdf9c50baa706471713eeea48c2",
+          "rgba_sha256": "10c5b0af189ace0d9ab33d9d5e97cd525faaff7ae4eb87a938f62ba57c4646a8",
+          "cell": [
+            1,
+            2
+          ],
+          "world_cell": [
+            2,
+            3
+          ]
+        },
+        {
+          "name": "f2_canopy_0_3_40",
+          "id": 1737,
+          "phase": 0,
+          "palette": "foliage",
+          "rect": [
+            32,
+            32,
+            16,
+            16
+          ],
+          "index_sha256": "22f7adaa6ed1aa70215f557d9d0912717aa161e3137de4d448aaa57b13843d1d",
+          "rgba_sha256": "85fec33bda95e361354cc3b43a1afc69a2101fca4c6878f2c1a566b3ba47af20",
+          "cell": [
+            2,
+            2
+          ],
+          "world_cell": [
+            3,
+            3
+          ]
+        },
+        {
+          "name": "f2_canopy_1_2_40",
+          "id": 1893,
+          "phase": 0,
+          "palette": "canopy3_blight",
+          "rect": [
+            48,
+            32,
+            16,
+            16
+          ],
+          "index_sha256": "873c8f635ec5e9b67c15b5cfa694fef7cc802e5c61db9deb2905e0dee7a22371",
+          "rgba_sha256": "fd04c250c841fa80f806ef5d40feb712416bf3579e99c8ffa9d4a5ab61f6323a",
+          "cell": [
+            3,
+            2
+          ],
+          "world_cell": [
+            4,
+            3
+          ]
+        },
+        {
+          "name": "f2_canopy_1_3_60",
+          "id": 1945,
+          "phase": 0,
+          "palette": "canopy3_blight",
+          "rect": [
+            64,
+            32,
+            16,
+            16
+          ],
+          "index_sha256": "5c961cdd94ca39554b510ccc4a50dffd1c53cbda00e8ce1ce19843a9840ba5e9",
+          "rgba_sha256": "e5134c6fa0ae82920b326307bed1e4de6014fbc6a12dffe0fa9a5f569eb7e56e",
+          "cell": [
+            4,
+            2
+          ],
+          "world_cell": [
+            5,
+            3
+          ]
+        }
+      ]
+    },
+    {
+      "profile": 12,
+      "stage": "deep",
+      "rect": [
+        429,
+        290,
+        192,
+        128
+      ],
+      "scale": 2,
+      "source_rgb_sha256": "6c5ffe5152fd11bbc21e095b4976dd1cc40f0277846d011eb8583c499e479c66",
+      "world_origin": [
+        1,
+        1
+      ],
+      "alias_definitions": [
+        {
+          "name": "f2_canopy_1_0_90",
+          "id": 1811,
+          "phase": 0,
+          "palette": "canopy3_blight",
+          "rect": [
+            16,
+            16,
+            16,
+            16
+          ],
+          "index_sha256": "792b7d79efc0b2611b8e7b6119f8e25c61260896bb2db66432ef1674eb8b88de",
+          "rgba_sha256": "4669ebac3a932c1b9d41f86af9c447df954df666844d780d4be8e60fee3629ba",
+          "cell": [
+            1,
+            1
+          ],
+          "world_cell": [
+            2,
+            2
+          ]
+        },
+        {
+          "name": "f2_canopy_1_1_10",
+          "id": 1836,
+          "phase": 0,
+          "palette": "canopy3_blight",
+          "rect": [
+            32,
+            16,
+            16,
+            16
+          ],
+          "index_sha256": "04bba71fc6f58689f4d527ab47d0898e0a3ae00c1e01f8d14354fc90528546df",
+          "rgba_sha256": "5176d1b13652e6e96dc82919eec99cdc888fed831189bf68312fe39d83f67983",
+          "cell": [
+            2,
+            1
+          ],
+          "world_cell": [
+            3,
+            2
+          ]
+        },
+        {
+          "name": "f2_canopy_1_0_10",
+          "id": 1789,
+          "phase": 0,
+          "palette": "canopy3_blight",
+          "rect": [
+            48,
+            16,
+            16,
+            16
+          ],
+          "index_sha256": "7c952b0fa0b29d557c64a9e4d8e2d2f5ce9e3a851d50d2690e7aa887a4589cc7",
+          "rgba_sha256": "6ea288f4a86e5dba60c8780b38a627a0f4ea55af40b162894b1cd071d282456b",
+          "cell": [
+            3,
+            1
+          ],
+          "world_cell": [
+            4,
+            2
+          ]
+        },
+        {
+          "name": "f2_canopy_1_1_30",
+          "id": 1844,
+          "phase": 0,
+          "palette": "canopy3_blight",
+          "rect": [
+            64,
+            16,
+            16,
+            16
+          ],
+          "index_sha256": "9789cecced8d28c09d5396c516b3240bd8e159f763c3865c486a5370c0cd0c48",
+          "rgba_sha256": "d1e1bbe3a95595096a01ef14b6a320273887e7b34f63ab38817c7baba070da08",
+          "cell": [
+            4,
+            1
+          ],
+          "world_cell": [
+            5,
+            2
+          ]
+        },
+        {
+          "name": "f2_canopy_1_2_c0",
+          "id": 1909,
+          "phase": 0,
+          "palette": "canopy3_blight",
+          "rect": [
+            16,
+            32,
+            16,
+            16
+          ],
+          "index_sha256": "f85dc7c2afb2331c43640eafe4dc76edd6eeabbbbb6c82035e750f691f42036e",
+          "rgba_sha256": "f5b8bbae74b3bc01f1a6b09a561d2d834122ba401f469d89e32763794faa618d",
+          "cell": [
+            1,
+            2
+          ],
+          "world_cell": [
+            2,
+            3
+          ]
+        },
+        {
+          "name": "f2_canopy_1_3_40",
+          "id": 1940,
+          "phase": 0,
+          "palette": "canopy3_blight",
+          "rect": [
+            32,
+            32,
+            16,
+            16
+          ],
+          "index_sha256": "abaa75bcbf3cb85fb535e466a1780d40a11bcaaea58e833d28209c81e81ccc4a",
+          "rgba_sha256": "cf71a497b21b05aca5b2d1fa17bb9fcfafc4344eee662dd0632390912ab367bd",
+          "cell": [
+            2,
+            2
+          ],
+          "world_cell": [
+            3,
+            3
+          ]
+        },
+        {
+          "name": "f2_canopy_1_2_40",
+          "id": 1893,
+          "phase": 0,
+          "palette": "canopy3_blight",
+          "rect": [
+            48,
+            32,
+            16,
+            16
+          ],
+          "index_sha256": "873c8f635ec5e9b67c15b5cfa694fef7cc802e5c61db9deb2905e0dee7a22371",
+          "rgba_sha256": "fd04c250c841fa80f806ef5d40feb712416bf3579e99c8ffa9d4a5ab61f6323a",
+          "cell": [
+            3,
+            2
+          ],
+          "world_cell": [
+            4,
+            3
+          ]
+        },
+        {
+          "name": "f2_canopy_1_3_60",
+          "id": 1945,
+          "phase": 0,
+          "palette": "canopy3_blight",
+          "rect": [
+            64,
+            32,
+            16,
+            16
+          ],
+          "index_sha256": "5c961cdd94ca39554b510ccc4a50dffd1c53cbda00e8ce1ce19843a9840ba5e9",
+          "rgba_sha256": "e5134c6fa0ae82920b326307bed1e4de6014fbc6a12dffe0fa9a5f569eb7e56e",
+          "cell": [
+            4,
+            2
+          ],
+          "world_cell": [
+            5,
+            3
+          ]
+        }
+      ]
+    },
+    {
+      "profile": 13,
+      "stage": "healthy",
+      "rect": [
+        5,
+        488,
+        192,
+        128
+      ],
+      "scale": 2,
+      "source_rgb_sha256": "14b233f21677db00da48b778ab4abce618f9ea7e4d969f5ba6531f3761b283f3",
+      "world_origin": [
+        1,
+        1
+      ],
+      "alias_definitions": [
+        {
+          "name": "f2_canopy_0_0_90",
+          "id": 1608,
+          "phase": 0,
+          "palette": "foliage",
+          "rect": [
+            16,
+            16,
+            16,
+            16
+          ],
+          "index_sha256": "44c0d04cda16bde29ccfba209a4383f8306e2e58240ab16017d2eae9d653d76f",
+          "rgba_sha256": "d212d232d425216302f969201c75c84d4c12866e72c94c88804237ba5f214f52",
+          "cell": [
+            1,
+            1
+          ],
+          "world_cell": [
+            2,
+            2
+          ]
+        },
+        {
+          "name": "f2_canopy_0_1_10",
+          "id": 1633,
+          "phase": 0,
+          "palette": "foliage",
+          "rect": [
+            32,
+            16,
+            16,
+            16
+          ],
+          "index_sha256": "ac9b4b7d3fc9fc4b730f1d463c76404ae1e239155b56fc70953cb460d189c3ce",
+          "rgba_sha256": "cfdecd0c08fe0828c7c342ce07156c3e145fe204c494976ebde0591e7db2579c",
+          "cell": [
+            2,
+            1
+          ],
+          "world_cell": [
+            3,
+            2
+          ]
+        },
+        {
+          "name": "f2_canopy_0_0_10",
+          "id": 1586,
+          "phase": 0,
+          "palette": "foliage",
+          "rect": [
+            48,
+            16,
+            16,
+            16
+          ],
+          "index_sha256": "61fc4275ae5677676346aabfde28d0d8fffee4233fa59b4ff7895a86b2d80603",
+          "rgba_sha256": "f32f68b77972c00f9f3b9af97c293c9f8fcaf610bdac575d9c006c6473cec62c",
+          "cell": [
+            3,
+            1
+          ],
+          "world_cell": [
+            4,
+            2
+          ]
+        },
+        {
+          "name": "f2_canopy_0_1_30",
+          "id": 1641,
+          "phase": 0,
+          "palette": "foliage",
+          "rect": [
+            64,
+            16,
+            16,
+            16
+          ],
+          "index_sha256": "98768109e73993c04e1cc582576aca32619d9504cdc3124567a78732ba2dd532",
+          "rgba_sha256": "c8a1cd9606890d0358b42d20f524aee6bebf1df0b858140f17aa19f7207d6f2c",
+          "cell": [
+            4,
+            1
+          ],
+          "world_cell": [
+            5,
+            2
+          ]
+        },
+        {
+          "name": "f2_canopy_0_2_c0",
+          "id": 1706,
+          "phase": 0,
+          "palette": "foliage",
+          "rect": [
+            16,
+            32,
+            16,
+            16
+          ],
+          "index_sha256": "b50f651ad36ca288a39fcdded45a6f5ebe8a8fdf9c50baa706471713eeea48c2",
+          "rgba_sha256": "10c5b0af189ace0d9ab33d9d5e97cd525faaff7ae4eb87a938f62ba57c4646a8",
+          "cell": [
+            1,
+            2
+          ],
+          "world_cell": [
+            2,
+            3
+          ]
+        },
+        {
+          "name": "f2_canopy_0_3_40",
+          "id": 1737,
+          "phase": 0,
+          "palette": "foliage",
+          "rect": [
+            32,
+            32,
+            16,
+            16
+          ],
+          "index_sha256": "22f7adaa6ed1aa70215f557d9d0912717aa161e3137de4d448aaa57b13843d1d",
+          "rgba_sha256": "85fec33bda95e361354cc3b43a1afc69a2101fca4c6878f2c1a566b3ba47af20",
+          "cell": [
+            2,
+            2
+          ],
+          "world_cell": [
+            3,
+            3
+          ]
+        },
+        {
+          "name": "f2_canopy_0_2_40",
+          "id": 1690,
+          "phase": 0,
+          "palette": "foliage",
+          "rect": [
+            48,
+            32,
+            16,
+            16
+          ],
+          "index_sha256": "15de23fa95e4ac17382c45f86bc6270b3c908c4622480093264bf60e414f137d",
+          "rgba_sha256": "396c0bbbfe22a3c094fbca8bbf296223244d65a61b539fdccfa8075470a27d38",
+          "cell": [
+            3,
+            2
+          ],
+          "world_cell": [
+            4,
+            3
+          ]
+        },
+        {
+          "name": "f2_canopy_0_3_60",
+          "id": 1742,
+          "phase": 0,
+          "palette": "foliage",
+          "rect": [
+            64,
+            32,
+            16,
+            16
+          ],
+          "index_sha256": "31f1b9232828d98aabe0128f21f2fa14923e86a717882f4c25c464091c6b8aa2",
+          "rgba_sha256": "ebebafab29a1245d056bedd2b6680ea1129be423f20982283f0a9b4a1b816c43",
+          "cell": [
+            4,
+            2
+          ],
+          "world_cell": [
+            5,
+            3
+          ]
+        }
+      ]
+    },
+    {
+      "profile": 13,
+      "stage": "mixed",
+      "rect": [
+        217,
+        488,
+        192,
+        128
+      ],
+      "scale": 2,
+      "source_rgb_sha256": "b627c324b9e39aac153c1740819a93d5ec0a671c6e175386e4dd6195ba3ab88f",
+      "world_origin": [
+        1,
+        1
+      ],
+      "alias_definitions": [
+        {
+          "name": "f2_canopy_0_0_90",
+          "id": 1608,
+          "phase": 0,
+          "palette": "foliage",
+          "rect": [
+            16,
+            16,
+            16,
+            16
+          ],
+          "index_sha256": "44c0d04cda16bde29ccfba209a4383f8306e2e58240ab16017d2eae9d653d76f",
+          "rgba_sha256": "d212d232d425216302f969201c75c84d4c12866e72c94c88804237ba5f214f52",
+          "cell": [
+            1,
+            1
+          ],
+          "world_cell": [
+            2,
+            2
+          ]
+        },
+        {
+          "name": "f2_canopy_0_1_10",
+          "id": 1633,
+          "phase": 0,
+          "palette": "foliage",
+          "rect": [
+            32,
+            16,
+            16,
+            16
+          ],
+          "index_sha256": "ac9b4b7d3fc9fc4b730f1d463c76404ae1e239155b56fc70953cb460d189c3ce",
+          "rgba_sha256": "cfdecd0c08fe0828c7c342ce07156c3e145fe204c494976ebde0591e7db2579c",
+          "cell": [
+            2,
+            1
+          ],
+          "world_cell": [
+            3,
+            2
+          ]
+        },
+        {
+          "name": "f2_canopy_1_0_10",
+          "id": 1789,
+          "phase": 0,
+          "palette": "canopy3_blight",
+          "rect": [
+            48,
+            16,
+            16,
+            16
+          ],
+          "index_sha256": "4228fafe16e8b14d1daca3ce50bbfcf81ee0314489d48f20c482dc6ad45a83c3",
+          "rgba_sha256": "e6d635a9f17cdb4054b0525e85028ef0d22b06db002b8f9ff793a50458285b29",
+          "cell": [
+            3,
+            1
+          ],
+          "world_cell": [
+            4,
+            2
+          ]
+        },
+        {
+          "name": "f2_canopy_1_1_30",
+          "id": 1844,
+          "phase": 0,
+          "palette": "canopy3_blight",
+          "rect": [
+            64,
+            16,
+            16,
+            16
+          ],
+          "index_sha256": "888baa65dcd5ef57c18f77182350505d80cbbd8a15f4968cfe2dba7e9a038dc0",
+          "rgba_sha256": "3cf64960b3603100b813bb5878db9bb29bcf67b2ffb568ac069a85db68f5ab3d",
+          "cell": [
+            4,
+            1
+          ],
+          "world_cell": [
+            5,
+            2
+          ]
+        },
+        {
+          "name": "f2_canopy_0_2_c0",
+          "id": 1706,
+          "phase": 0,
+          "palette": "foliage",
+          "rect": [
+            16,
+            32,
+            16,
+            16
+          ],
+          "index_sha256": "b50f651ad36ca288a39fcdded45a6f5ebe8a8fdf9c50baa706471713eeea48c2",
+          "rgba_sha256": "10c5b0af189ace0d9ab33d9d5e97cd525faaff7ae4eb87a938f62ba57c4646a8",
+          "cell": [
+            1,
+            2
+          ],
+          "world_cell": [
+            2,
+            3
+          ]
+        },
+        {
+          "name": "f2_canopy_0_3_40",
+          "id": 1737,
+          "phase": 0,
+          "palette": "foliage",
+          "rect": [
+            32,
+            32,
+            16,
+            16
+          ],
+          "index_sha256": "22f7adaa6ed1aa70215f557d9d0912717aa161e3137de4d448aaa57b13843d1d",
+          "rgba_sha256": "85fec33bda95e361354cc3b43a1afc69a2101fca4c6878f2c1a566b3ba47af20",
+          "cell": [
+            2,
+            2
+          ],
+          "world_cell": [
+            3,
+            3
+          ]
+        },
+        {
+          "name": "f2_canopy_1_2_40",
+          "id": 1893,
+          "phase": 0,
+          "palette": "canopy3_blight",
+          "rect": [
+            48,
+            32,
+            16,
+            16
+          ],
+          "index_sha256": "11e4e9d91966586406d8d774522d14b61fa6d00bc16434a01c31b7c8bdea3549",
+          "rgba_sha256": "769920a470062afdc494c5e526ef2bf60a5acae0637e2d8ac5a8adadf073d910",
+          "cell": [
+            3,
+            2
+          ],
+          "world_cell": [
+            4,
+            3
+          ]
+        },
+        {
+          "name": "f2_canopy_1_3_60",
+          "id": 1945,
+          "phase": 0,
+          "palette": "canopy3_blight",
+          "rect": [
+            64,
+            32,
+            16,
+            16
+          ],
+          "index_sha256": "86ba6e3d7485c5bd9157be07d62a7d6d7a88d8cf4d6144a3aa577f6ae9bd11af",
+          "rgba_sha256": "591c5df2a67db98aec99b1de495743201d83ae507e1c37b6fb15df34fbee33a5",
+          "cell": [
+            4,
+            2
+          ],
+          "world_cell": [
+            5,
+            3
+          ]
+        }
+      ]
+    },
+    {
+      "profile": 13,
+      "stage": "deep",
+      "rect": [
+        429,
+        488,
+        192,
+        128
+      ],
+      "scale": 2,
+      "source_rgb_sha256": "8da607e1e41f83088e73a8d7a0d35c1605dbdff59de4ef1e7ec0788af43e3b22",
+      "world_origin": [
+        1,
+        1
+      ],
+      "alias_definitions": [
+        {
+          "name": "f2_canopy_1_0_90",
+          "id": 1811,
+          "phase": 0,
+          "palette": "canopy3_blight",
+          "rect": [
+            16,
+            16,
+            16,
+            16
+          ],
+          "index_sha256": "37f819276870e5c9b1b8adef6269d02fa193d46b57e5698364e91dc0f5e3dc0e",
+          "rgba_sha256": "18142404010b9e5446448c7850381edd8f8d68cc9578f08b40df515a50186564",
+          "cell": [
+            1,
+            1
+          ],
+          "world_cell": [
+            2,
+            2
+          ]
+        },
+        {
+          "name": "f2_canopy_1_1_10",
+          "id": 1836,
+          "phase": 0,
+          "palette": "canopy3_blight",
+          "rect": [
+            32,
+            16,
+            16,
+            16
+          ],
+          "index_sha256": "ceacb7cfb9a040b3a095550e65a16633c8213875769a35ae51d30f5f2eded47e",
+          "rgba_sha256": "3f537be6a4df04884f9c07ff46b24df5039400b9bc1b32a38e4e161838aa4b58",
+          "cell": [
+            2,
+            1
+          ],
+          "world_cell": [
+            3,
+            2
+          ]
+        },
+        {
+          "name": "f2_canopy_1_0_10",
+          "id": 1789,
+          "phase": 0,
+          "palette": "canopy3_blight",
+          "rect": [
+            48,
+            16,
+            16,
+            16
+          ],
+          "index_sha256": "4228fafe16e8b14d1daca3ce50bbfcf81ee0314489d48f20c482dc6ad45a83c3",
+          "rgba_sha256": "e6d635a9f17cdb4054b0525e85028ef0d22b06db002b8f9ff793a50458285b29",
+          "cell": [
+            3,
+            1
+          ],
+          "world_cell": [
+            4,
+            2
+          ]
+        },
+        {
+          "name": "f2_canopy_1_1_30",
+          "id": 1844,
+          "phase": 0,
+          "palette": "canopy3_blight",
+          "rect": [
+            64,
+            16,
+            16,
+            16
+          ],
+          "index_sha256": "888baa65dcd5ef57c18f77182350505d80cbbd8a15f4968cfe2dba7e9a038dc0",
+          "rgba_sha256": "3cf64960b3603100b813bb5878db9bb29bcf67b2ffb568ac069a85db68f5ab3d",
+          "cell": [
+            4,
+            1
+          ],
+          "world_cell": [
+            5,
+            2
+          ]
+        },
+        {
+          "name": "f2_canopy_1_2_c0",
+          "id": 1909,
+          "phase": 0,
+          "palette": "canopy3_blight",
+          "rect": [
+            16,
+            32,
+            16,
+            16
+          ],
+          "index_sha256": "d307501aa995f5a101cef19496ee9052bfefc27577d557a946b2bdefecce069c",
+          "rgba_sha256": "2f63a53773159e36cd842c5fde70d0bd38df3be925f2f8303e4fea5d78123d7f",
+          "cell": [
+            1,
+            2
+          ],
+          "world_cell": [
+            2,
+            3
+          ]
+        },
+        {
+          "name": "f2_canopy_1_3_40",
+          "id": 1940,
+          "phase": 0,
+          "palette": "canopy3_blight",
+          "rect": [
+            32,
+            32,
+            16,
+            16
+          ],
+          "index_sha256": "20073a064f1d7d18f122c544afed2ee694a04ae145dcfe584b697d2a299d50d3",
+          "rgba_sha256": "13b0b123be4782ab17ca435ea35e1bb2c057b75fb737572d53cfe106bf5bfb62",
+          "cell": [
+            2,
+            2
+          ],
+          "world_cell": [
+            3,
+            3
+          ]
+        },
+        {
+          "name": "f2_canopy_1_2_40",
+          "id": 1893,
+          "phase": 0,
+          "palette": "canopy3_blight",
+          "rect": [
+            48,
+            32,
+            16,
+            16
+          ],
+          "index_sha256": "11e4e9d91966586406d8d774522d14b61fa6d00bc16434a01c31b7c8bdea3549",
+          "rgba_sha256": "769920a470062afdc494c5e526ef2bf60a5acae0637e2d8ac5a8adadf073d910",
+          "cell": [
+            3,
+            2
+          ],
+          "world_cell": [
+            4,
+            3
+          ]
+        },
+        {
+          "name": "f2_canopy_1_3_60",
+          "id": 1945,
+          "phase": 0,
+          "palette": "canopy3_blight",
+          "rect": [
+            64,
+            32,
+            16,
+            16
+          ],
+          "index_sha256": "86ba6e3d7485c5bd9157be07d62a7d6d7a88d8cf4d6144a3aa577f6ae9bd11af",
+          "rgba_sha256": "591c5df2a67db98aec99b1de495743201d83ae507e1c37b6fb15df34fbee33a5",
+          "cell": [
+            4,
+            2
+          ],
+          "world_cell": [
+            5,
+            3
+          ]
+        }
+      ]
+    },
+    {
+      "profile": 14,
+      "stage": "healthy",
+      "rect": [
+        5,
+        686,
+        192,
+        128
+      ],
+      "scale": 2,
+      "source_rgb_sha256": "14b233f21677db00da48b778ab4abce618f9ea7e4d969f5ba6531f3761b283f3",
+      "world_origin": [
+        1,
+        1
+      ],
+      "alias_definitions": [
+        {
+          "name": "f2_canopy_0_0_90",
+          "id": 1608,
+          "phase": 0,
+          "palette": "foliage",
+          "rect": [
+            16,
+            16,
+            16,
+            16
+          ],
+          "index_sha256": "44c0d04cda16bde29ccfba209a4383f8306e2e58240ab16017d2eae9d653d76f",
+          "rgba_sha256": "d212d232d425216302f969201c75c84d4c12866e72c94c88804237ba5f214f52",
+          "cell": [
+            1,
+            1
+          ],
+          "world_cell": [
+            2,
+            2
+          ]
+        },
+        {
+          "name": "f2_canopy_0_1_10",
+          "id": 1633,
+          "phase": 0,
+          "palette": "foliage",
+          "rect": [
+            32,
+            16,
+            16,
+            16
+          ],
+          "index_sha256": "ac9b4b7d3fc9fc4b730f1d463c76404ae1e239155b56fc70953cb460d189c3ce",
+          "rgba_sha256": "cfdecd0c08fe0828c7c342ce07156c3e145fe204c494976ebde0591e7db2579c",
+          "cell": [
+            2,
+            1
+          ],
+          "world_cell": [
+            3,
+            2
+          ]
+        },
+        {
+          "name": "f2_canopy_0_0_10",
+          "id": 1586,
+          "phase": 0,
+          "palette": "foliage",
+          "rect": [
+            48,
+            16,
+            16,
+            16
+          ],
+          "index_sha256": "61fc4275ae5677676346aabfde28d0d8fffee4233fa59b4ff7895a86b2d80603",
+          "rgba_sha256": "f32f68b77972c00f9f3b9af97c293c9f8fcaf610bdac575d9c006c6473cec62c",
+          "cell": [
+            3,
+            1
+          ],
+          "world_cell": [
+            4,
+            2
+          ]
+        },
+        {
+          "name": "f2_canopy_0_1_30",
+          "id": 1641,
+          "phase": 0,
+          "palette": "foliage",
+          "rect": [
+            64,
+            16,
+            16,
+            16
+          ],
+          "index_sha256": "98768109e73993c04e1cc582576aca32619d9504cdc3124567a78732ba2dd532",
+          "rgba_sha256": "c8a1cd9606890d0358b42d20f524aee6bebf1df0b858140f17aa19f7207d6f2c",
+          "cell": [
+            4,
+            1
+          ],
+          "world_cell": [
+            5,
+            2
+          ]
+        },
+        {
+          "name": "f2_canopy_0_2_c0",
+          "id": 1706,
+          "phase": 0,
+          "palette": "foliage",
+          "rect": [
+            16,
+            32,
+            16,
+            16
+          ],
+          "index_sha256": "b50f651ad36ca288a39fcdded45a6f5ebe8a8fdf9c50baa706471713eeea48c2",
+          "rgba_sha256": "10c5b0af189ace0d9ab33d9d5e97cd525faaff7ae4eb87a938f62ba57c4646a8",
+          "cell": [
+            1,
+            2
+          ],
+          "world_cell": [
+            2,
+            3
+          ]
+        },
+        {
+          "name": "f2_canopy_0_3_40",
+          "id": 1737,
+          "phase": 0,
+          "palette": "foliage",
+          "rect": [
+            32,
+            32,
+            16,
+            16
+          ],
+          "index_sha256": "22f7adaa6ed1aa70215f557d9d0912717aa161e3137de4d448aaa57b13843d1d",
+          "rgba_sha256": "85fec33bda95e361354cc3b43a1afc69a2101fca4c6878f2c1a566b3ba47af20",
+          "cell": [
+            2,
+            2
+          ],
+          "world_cell": [
+            3,
+            3
+          ]
+        },
+        {
+          "name": "f2_canopy_0_2_40",
+          "id": 1690,
+          "phase": 0,
+          "palette": "foliage",
+          "rect": [
+            48,
+            32,
+            16,
+            16
+          ],
+          "index_sha256": "15de23fa95e4ac17382c45f86bc6270b3c908c4622480093264bf60e414f137d",
+          "rgba_sha256": "396c0bbbfe22a3c094fbca8bbf296223244d65a61b539fdccfa8075470a27d38",
+          "cell": [
+            3,
+            2
+          ],
+          "world_cell": [
+            4,
+            3
+          ]
+        },
+        {
+          "name": "f2_canopy_0_3_60",
+          "id": 1742,
+          "phase": 0,
+          "palette": "foliage",
+          "rect": [
+            64,
+            32,
+            16,
+            16
+          ],
+          "index_sha256": "31f1b9232828d98aabe0128f21f2fa14923e86a717882f4c25c464091c6b8aa2",
+          "rgba_sha256": "ebebafab29a1245d056bedd2b6680ea1129be423f20982283f0a9b4a1b816c43",
+          "cell": [
+            4,
+            2
+          ],
+          "world_cell": [
+            5,
+            3
+          ]
+        }
+      ]
+    },
+    {
+      "profile": 14,
+      "stage": "mixed",
+      "rect": [
+        217,
+        686,
+        192,
+        128
+      ],
+      "scale": 2,
+      "source_rgb_sha256": "1396d079f6a779b4c7004df3d27d66828e0477d7e13df67c41ceb41de9ac43ca",
+      "world_origin": [
+        1,
+        1
+      ],
+      "alias_definitions": [
+        {
+          "name": "f2_canopy_0_0_90",
+          "id": 1608,
+          "phase": 0,
+          "palette": "foliage",
+          "rect": [
+            16,
+            16,
+            16,
+            16
+          ],
+          "index_sha256": "44c0d04cda16bde29ccfba209a4383f8306e2e58240ab16017d2eae9d653d76f",
+          "rgba_sha256": "d212d232d425216302f969201c75c84d4c12866e72c94c88804237ba5f214f52",
+          "cell": [
+            1,
+            1
+          ],
+          "world_cell": [
+            2,
+            2
+          ]
+        },
+        {
+          "name": "f2_canopy_0_1_10",
+          "id": 1633,
+          "phase": 0,
+          "palette": "foliage",
+          "rect": [
+            32,
+            16,
+            16,
+            16
+          ],
+          "index_sha256": "ac9b4b7d3fc9fc4b730f1d463c76404ae1e239155b56fc70953cb460d189c3ce",
+          "rgba_sha256": "cfdecd0c08fe0828c7c342ce07156c3e145fe204c494976ebde0591e7db2579c",
+          "cell": [
+            2,
+            1
+          ],
+          "world_cell": [
+            3,
+            2
+          ]
+        },
+        {
+          "name": "f2_canopy_1_0_10",
+          "id": 1789,
+          "phase": 0,
+          "palette": "canopy3_blight",
+          "rect": [
+            48,
+            16,
+            16,
+            16
+          ],
+          "index_sha256": "0b5658f7bb892451851a5744b3d82d16f3c3b5efbcd9111a1ef88d6f61321308",
+          "rgba_sha256": "fa41e7307ce02452a5ff0653b56c44cdf29fc65ecb154262d78050555d25c58c",
+          "cell": [
+            3,
+            1
+          ],
+          "world_cell": [
+            4,
+            2
+          ]
+        },
+        {
+          "name": "f2_canopy_1_1_30",
+          "id": 1844,
+          "phase": 0,
+          "palette": "canopy3_blight",
+          "rect": [
+            64,
+            16,
+            16,
+            16
+          ],
+          "index_sha256": "57b7a9d8aae3e97d36c2832b8769405f550609bed1909caeba22973c45ac1366",
+          "rgba_sha256": "bb46fdc4acac90cfc97f4e2ef4445cbee0bf7aec7626ac0972fbeb5e23fe5f36",
+          "cell": [
+            4,
+            1
+          ],
+          "world_cell": [
+            5,
+            2
+          ]
+        },
+        {
+          "name": "f2_canopy_0_2_c0",
+          "id": 1706,
+          "phase": 0,
+          "palette": "foliage",
+          "rect": [
+            16,
+            32,
+            16,
+            16
+          ],
+          "index_sha256": "b50f651ad36ca288a39fcdded45a6f5ebe8a8fdf9c50baa706471713eeea48c2",
+          "rgba_sha256": "10c5b0af189ace0d9ab33d9d5e97cd525faaff7ae4eb87a938f62ba57c4646a8",
+          "cell": [
+            1,
+            2
+          ],
+          "world_cell": [
+            2,
+            3
+          ]
+        },
+        {
+          "name": "f2_canopy_0_3_40",
+          "id": 1737,
+          "phase": 0,
+          "palette": "foliage",
+          "rect": [
+            32,
+            32,
+            16,
+            16
+          ],
+          "index_sha256": "22f7adaa6ed1aa70215f557d9d0912717aa161e3137de4d448aaa57b13843d1d",
+          "rgba_sha256": "85fec33bda95e361354cc3b43a1afc69a2101fca4c6878f2c1a566b3ba47af20",
+          "cell": [
+            2,
+            2
+          ],
+          "world_cell": [
+            3,
+            3
+          ]
+        },
+        {
+          "name": "f2_canopy_1_2_40",
+          "id": 1893,
+          "phase": 0,
+          "palette": "canopy3_blight",
+          "rect": [
+            48,
+            32,
+            16,
+            16
+          ],
+          "index_sha256": "b3e78ddb41bc20ba689a7cefec289904daafed38e9db7f39cc4b04ecb89ed36e",
+          "rgba_sha256": "a365e96b2edede9478fd674c52a571ee609ba19a1d3989d71c3bb2870acb0358",
+          "cell": [
+            3,
+            2
+          ],
+          "world_cell": [
+            4,
+            3
+          ]
+        },
+        {
+          "name": "f2_canopy_1_3_60",
+          "id": 1945,
+          "phase": 0,
+          "palette": "canopy3_blight",
+          "rect": [
+            64,
+            32,
+            16,
+            16
+          ],
+          "index_sha256": "a8a7888d95817ca75837f687c0dd9db8a24e538a06078fec74d1182b41bd6d33",
+          "rgba_sha256": "6808360405ce269d7f011dcdff18a44b5ec043d2f4d94669cfdf8386ea0c8105",
+          "cell": [
+            4,
+            2
+          ],
+          "world_cell": [
+            5,
+            3
+          ]
+        }
+      ]
+    },
+    {
+      "profile": 14,
+      "stage": "deep",
+      "rect": [
+        429,
+        686,
+        192,
+        128
+      ],
+      "scale": 2,
+      "source_rgb_sha256": "6072ca9bd3a01c88fc46018f86db64ceb8c88cfc25e7e187412c78aa5edff85f",
+      "world_origin": [
+        1,
+        1
+      ],
+      "alias_definitions": [
+        {
+          "name": "f2_canopy_1_0_90",
+          "id": 1811,
+          "phase": 0,
+          "palette": "canopy3_blight",
+          "rect": [
+            16,
+            16,
+            16,
+            16
+          ],
+          "index_sha256": "d15be50364bb50b1187612d5e54a9dc4b0bf17df59f83374a73f67f8eba5009a",
+          "rgba_sha256": "ea61c8314349a506b038d6b5e4425f10c27abbdc0a4ae4fc0f040fbc3d91a08b",
+          "cell": [
+            1,
+            1
+          ],
+          "world_cell": [
+            2,
+            2
+          ]
+        },
+        {
+          "name": "f2_canopy_1_1_10",
+          "id": 1836,
+          "phase": 0,
+          "palette": "canopy3_blight",
+          "rect": [
+            32,
+            16,
+            16,
+            16
+          ],
+          "index_sha256": "332a5b31abcfaaeeaad090b71c09d83ff91d6cdd08fd1186c89d5eedcd30326d",
+          "rgba_sha256": "4c62c5c7934acc48a27a6e4a06b3c540543ace6af580b3410a78d4c571d394ac",
+          "cell": [
+            2,
+            1
+          ],
+          "world_cell": [
+            3,
+            2
+          ]
+        },
+        {
+          "name": "f2_canopy_1_0_10",
+          "id": 1789,
+          "phase": 0,
+          "palette": "canopy3_blight",
+          "rect": [
+            48,
+            16,
+            16,
+            16
+          ],
+          "index_sha256": "0b5658f7bb892451851a5744b3d82d16f3c3b5efbcd9111a1ef88d6f61321308",
+          "rgba_sha256": "fa41e7307ce02452a5ff0653b56c44cdf29fc65ecb154262d78050555d25c58c",
+          "cell": [
+            3,
+            1
+          ],
+          "world_cell": [
+            4,
+            2
+          ]
+        },
+        {
+          "name": "f2_canopy_1_1_30",
+          "id": 1844,
+          "phase": 0,
+          "palette": "canopy3_blight",
+          "rect": [
+            64,
+            16,
+            16,
+            16
+          ],
+          "index_sha256": "57b7a9d8aae3e97d36c2832b8769405f550609bed1909caeba22973c45ac1366",
+          "rgba_sha256": "bb46fdc4acac90cfc97f4e2ef4445cbee0bf7aec7626ac0972fbeb5e23fe5f36",
+          "cell": [
+            4,
+            1
+          ],
+          "world_cell": [
+            5,
+            2
+          ]
+        },
+        {
+          "name": "f2_canopy_1_2_c0",
+          "id": 1909,
+          "phase": 0,
+          "palette": "canopy3_blight",
+          "rect": [
+            16,
+            32,
+            16,
+            16
+          ],
+          "index_sha256": "494eb470882b8bf853ad16e7c14e7dc3007869e32aeca9d160aa69574d5ed43f",
+          "rgba_sha256": "d1c662bcfb44cb49e8de70beb5136c220caed06de69ee8c6172bb5c1588f588e",
+          "cell": [
+            1,
+            2
+          ],
+          "world_cell": [
+            2,
+            3
+          ]
+        },
+        {
+          "name": "f2_canopy_1_3_40",
+          "id": 1940,
+          "phase": 0,
+          "palette": "canopy3_blight",
+          "rect": [
+            32,
+            32,
+            16,
+            16
+          ],
+          "index_sha256": "afa540f2690cad6c3b1bd5010f4e4f33c5716dcb2635c085cb245ec0558ff4ae",
+          "rgba_sha256": "fbe68c1f860a56e3ba34019b9e6d5e4d43e861e381bb466bc7cb360f6780ddd4",
+          "cell": [
+            2,
+            2
+          ],
+          "world_cell": [
+            3,
+            3
+          ]
+        },
+        {
+          "name": "f2_canopy_1_2_40",
+          "id": 1893,
+          "phase": 0,
+          "palette": "canopy3_blight",
+          "rect": [
+            48,
+            32,
+            16,
+            16
+          ],
+          "index_sha256": "b3e78ddb41bc20ba689a7cefec289904daafed38e9db7f39cc4b04ecb89ed36e",
+          "rgba_sha256": "a365e96b2edede9478fd674c52a571ee609ba19a1d3989d71c3bb2870acb0358",
+          "cell": [
+            3,
+            2
+          ],
+          "world_cell": [
+            4,
+            3
+          ]
+        },
+        {
+          "name": "f2_canopy_1_3_60",
+          "id": 1945,
+          "phase": 0,
+          "palette": "canopy3_blight",
+          "rect": [
+            64,
+            32,
+            16,
+            16
+          ],
+          "index_sha256": "a8a7888d95817ca75837f687c0dd9db8a24e538a06078fec74d1182b41bd6d33",
+          "rgba_sha256": "6808360405ce269d7f011dcdff18a44b5ec043d2f4d94669cfdf8386ea0c8105",
+          "cell": [
+            4,
+            2
+          ],
+          "world_cell": [
+            5,
+            3
+          ]
+        }
+      ]
+    },
+    {
+      "profile": 15,
+      "stage": "healthy",
+      "rect": [
+        5,
+        884,
+        192,
+        128
+      ],
+      "scale": 2,
+      "source_rgb_sha256": "14b233f21677db00da48b778ab4abce618f9ea7e4d969f5ba6531f3761b283f3",
+      "world_origin": [
+        1,
+        1
+      ],
+      "alias_definitions": [
+        {
+          "name": "f2_canopy_0_0_90",
+          "id": 1608,
+          "phase": 0,
+          "palette": "foliage",
+          "rect": [
+            16,
+            16,
+            16,
+            16
+          ],
+          "index_sha256": "44c0d04cda16bde29ccfba209a4383f8306e2e58240ab16017d2eae9d653d76f",
+          "rgba_sha256": "d212d232d425216302f969201c75c84d4c12866e72c94c88804237ba5f214f52",
+          "cell": [
+            1,
+            1
+          ],
+          "world_cell": [
+            2,
+            2
+          ]
+        },
+        {
+          "name": "f2_canopy_0_1_10",
+          "id": 1633,
+          "phase": 0,
+          "palette": "foliage",
+          "rect": [
+            32,
+            16,
+            16,
+            16
+          ],
+          "index_sha256": "ac9b4b7d3fc9fc4b730f1d463c76404ae1e239155b56fc70953cb460d189c3ce",
+          "rgba_sha256": "cfdecd0c08fe0828c7c342ce07156c3e145fe204c494976ebde0591e7db2579c",
+          "cell": [
+            2,
+            1
+          ],
+          "world_cell": [
+            3,
+            2
+          ]
+        },
+        {
+          "name": "f2_canopy_0_0_10",
+          "id": 1586,
+          "phase": 0,
+          "palette": "foliage",
+          "rect": [
+            48,
+            16,
+            16,
+            16
+          ],
+          "index_sha256": "61fc4275ae5677676346aabfde28d0d8fffee4233fa59b4ff7895a86b2d80603",
+          "rgba_sha256": "f32f68b77972c00f9f3b9af97c293c9f8fcaf610bdac575d9c006c6473cec62c",
+          "cell": [
+            3,
+            1
+          ],
+          "world_cell": [
+            4,
+            2
+          ]
+        },
+        {
+          "name": "f2_canopy_0_1_30",
+          "id": 1641,
+          "phase": 0,
+          "palette": "foliage",
+          "rect": [
+            64,
+            16,
+            16,
+            16
+          ],
+          "index_sha256": "98768109e73993c04e1cc582576aca32619d9504cdc3124567a78732ba2dd532",
+          "rgba_sha256": "c8a1cd9606890d0358b42d20f524aee6bebf1df0b858140f17aa19f7207d6f2c",
+          "cell": [
+            4,
+            1
+          ],
+          "world_cell": [
+            5,
+            2
+          ]
+        },
+        {
+          "name": "f2_canopy_0_2_c0",
+          "id": 1706,
+          "phase": 0,
+          "palette": "foliage",
+          "rect": [
+            16,
+            32,
+            16,
+            16
+          ],
+          "index_sha256": "b50f651ad36ca288a39fcdded45a6f5ebe8a8fdf9c50baa706471713eeea48c2",
+          "rgba_sha256": "10c5b0af189ace0d9ab33d9d5e97cd525faaff7ae4eb87a938f62ba57c4646a8",
+          "cell": [
+            1,
+            2
+          ],
+          "world_cell": [
+            2,
+            3
+          ]
+        },
+        {
+          "name": "f2_canopy_0_3_40",
+          "id": 1737,
+          "phase": 0,
+          "palette": "foliage",
+          "rect": [
+            32,
+            32,
+            16,
+            16
+          ],
+          "index_sha256": "22f7adaa6ed1aa70215f557d9d0912717aa161e3137de4d448aaa57b13843d1d",
+          "rgba_sha256": "85fec33bda95e361354cc3b43a1afc69a2101fca4c6878f2c1a566b3ba47af20",
+          "cell": [
+            2,
+            2
+          ],
+          "world_cell": [
+            3,
+            3
+          ]
+        },
+        {
+          "name": "f2_canopy_0_2_40",
+          "id": 1690,
+          "phase": 0,
+          "palette": "foliage",
+          "rect": [
+            48,
+            32,
+            16,
+            16
+          ],
+          "index_sha256": "15de23fa95e4ac17382c45f86bc6270b3c908c4622480093264bf60e414f137d",
+          "rgba_sha256": "396c0bbbfe22a3c094fbca8bbf296223244d65a61b539fdccfa8075470a27d38",
+          "cell": [
+            3,
+            2
+          ],
+          "world_cell": [
+            4,
+            3
+          ]
+        },
+        {
+          "name": "f2_canopy_0_3_60",
+          "id": 1742,
+          "phase": 0,
+          "palette": "foliage",
+          "rect": [
+            64,
+            32,
+            16,
+            16
+          ],
+          "index_sha256": "31f1b9232828d98aabe0128f21f2fa14923e86a717882f4c25c464091c6b8aa2",
+          "rgba_sha256": "ebebafab29a1245d056bedd2b6680ea1129be423f20982283f0a9b4a1b816c43",
+          "cell": [
+            4,
+            2
+          ],
+          "world_cell": [
+            5,
+            3
+          ]
+        }
+      ]
+    },
+    {
+      "profile": 15,
+      "stage": "mixed",
+      "rect": [
+        217,
+        884,
+        192,
+        128
+      ],
+      "scale": 2,
+      "source_rgb_sha256": "7c997c49143c5c752f1b9333a8a339ece2e8374f0e55709c2028944124a8513c",
+      "world_origin": [
+        1,
+        1
+      ],
+      "alias_definitions": [
+        {
+          "name": "f2_canopy_0_0_90",
+          "id": 1608,
+          "phase": 0,
+          "palette": "foliage",
+          "rect": [
+            16,
+            16,
+            16,
+            16
+          ],
+          "index_sha256": "44c0d04cda16bde29ccfba209a4383f8306e2e58240ab16017d2eae9d653d76f",
+          "rgba_sha256": "d212d232d425216302f969201c75c84d4c12866e72c94c88804237ba5f214f52",
+          "cell": [
+            1,
+            1
+          ],
+          "world_cell": [
+            2,
+            2
+          ]
+        },
+        {
+          "name": "f2_canopy_0_1_10",
+          "id": 1633,
+          "phase": 0,
+          "palette": "foliage",
+          "rect": [
+            32,
+            16,
+            16,
+            16
+          ],
+          "index_sha256": "ac9b4b7d3fc9fc4b730f1d463c76404ae1e239155b56fc70953cb460d189c3ce",
+          "rgba_sha256": "cfdecd0c08fe0828c7c342ce07156c3e145fe204c494976ebde0591e7db2579c",
+          "cell": [
+            2,
+            1
+          ],
+          "world_cell": [
+            3,
+            2
+          ]
+        },
+        {
+          "name": "f2_canopy_1_0_10",
+          "id": 1789,
+          "phase": 0,
+          "palette": "canopy3_blight",
+          "rect": [
+            48,
+            16,
+            16,
+            16
+          ],
+          "index_sha256": "dbe4dabc67af6a7794e2d6f825e2dcf4b9304869e10a6b10e313e22e0187fb3d",
+          "rgba_sha256": "323f58ab830062f109da404e4ccea4e473cebef0b88044b19ef23b605082606d",
+          "cell": [
+            3,
+            1
+          ],
+          "world_cell": [
+            4,
+            2
+          ]
+        },
+        {
+          "name": "f2_canopy_1_1_30",
+          "id": 1844,
+          "phase": 0,
+          "palette": "canopy3_blight",
+          "rect": [
+            64,
+            16,
+            16,
+            16
+          ],
+          "index_sha256": "ea59e570210987a963bca71c71f68093f0585af1bbc847b0c1e53b656d7b33f7",
+          "rgba_sha256": "7e17b318f223ade8191a712f6a4ae0172b57b46208d62d9599e69f2679c9a9ac",
+          "cell": [
+            4,
+            1
+          ],
+          "world_cell": [
+            5,
+            2
+          ]
+        },
+        {
+          "name": "f2_canopy_0_2_c0",
+          "id": 1706,
+          "phase": 0,
+          "palette": "foliage",
+          "rect": [
+            16,
+            32,
+            16,
+            16
+          ],
+          "index_sha256": "b50f651ad36ca288a39fcdded45a6f5ebe8a8fdf9c50baa706471713eeea48c2",
+          "rgba_sha256": "10c5b0af189ace0d9ab33d9d5e97cd525faaff7ae4eb87a938f62ba57c4646a8",
+          "cell": [
+            1,
+            2
+          ],
+          "world_cell": [
+            2,
+            3
+          ]
+        },
+        {
+          "name": "f2_canopy_0_3_40",
+          "id": 1737,
+          "phase": 0,
+          "palette": "foliage",
+          "rect": [
+            32,
+            32,
+            16,
+            16
+          ],
+          "index_sha256": "22f7adaa6ed1aa70215f557d9d0912717aa161e3137de4d448aaa57b13843d1d",
+          "rgba_sha256": "85fec33bda95e361354cc3b43a1afc69a2101fca4c6878f2c1a566b3ba47af20",
+          "cell": [
+            2,
+            2
+          ],
+          "world_cell": [
+            3,
+            3
+          ]
+        },
+        {
+          "name": "f2_canopy_1_2_40",
+          "id": 1893,
+          "phase": 0,
+          "palette": "canopy3_blight",
+          "rect": [
+            48,
+            32,
+            16,
+            16
+          ],
+          "index_sha256": "07474f0b522df65e5aa6a8ccb92fb3e183d50311822fd26e522a371291901944",
+          "rgba_sha256": "19b3b1bb57b60aed749ac92b7993413572e9b172608382713ba11df2b924c2a9",
+          "cell": [
+            3,
+            2
+          ],
+          "world_cell": [
+            4,
+            3
+          ]
+        },
+        {
+          "name": "f2_canopy_1_3_60",
+          "id": 1945,
+          "phase": 0,
+          "palette": "canopy3_blight",
+          "rect": [
+            64,
+            32,
+            16,
+            16
+          ],
+          "index_sha256": "9d6eb299c36ab7fbc5db684021f133cc5469ca33dadfd609bab1063a5a1f9890",
+          "rgba_sha256": "72364fd01e76964271355968343b49a52b058a4ef3522b51b646e11f0941cc6d",
+          "cell": [
+            4,
+            2
+          ],
+          "world_cell": [
+            5,
+            3
+          ]
+        }
+      ]
+    },
+    {
+      "profile": 15,
+      "stage": "deep",
+      "rect": [
+        429,
+        884,
+        192,
+        128
+      ],
+      "scale": 2,
+      "source_rgb_sha256": "8164fe4fd1d6a6c4d80330df5bd8b07dac77bdb1d2bc97901b2635cb64eaa4a3",
+      "world_origin": [
+        1,
+        1
+      ],
+      "alias_definitions": [
+        {
+          "name": "f2_canopy_1_0_90",
+          "id": 1811,
+          "phase": 0,
+          "palette": "canopy3_blight",
+          "rect": [
+            16,
+            16,
+            16,
+            16
+          ],
+          "index_sha256": "2c235574fdd35a5ad1f3a2924dff3f1bb436bd8562dd7bfc83d0b91adda16ad6",
+          "rgba_sha256": "99a903f0783e49acacabbfab3cb6958c87773f98a547f740fd2a8494efe8cfc3",
+          "cell": [
+            1,
+            1
+          ],
+          "world_cell": [
+            2,
+            2
+          ]
+        },
+        {
+          "name": "f2_canopy_1_1_10",
+          "id": 1836,
+          "phase": 0,
+          "palette": "canopy3_blight",
+          "rect": [
+            32,
+            16,
+            16,
+            16
+          ],
+          "index_sha256": "9de567e435197690d05ece8dc9921ce42f435c9704e725863abca0eb35af5ead",
+          "rgba_sha256": "047db81cb4650dd4440d3b9ca4a9bfba543f81099e4ee508a6d4e5fecf37003b",
+          "cell": [
+            2,
+            1
+          ],
+          "world_cell": [
+            3,
+            2
+          ]
+        },
+        {
+          "name": "f2_canopy_1_0_10",
+          "id": 1789,
+          "phase": 0,
+          "palette": "canopy3_blight",
+          "rect": [
+            48,
+            16,
+            16,
+            16
+          ],
+          "index_sha256": "dbe4dabc67af6a7794e2d6f825e2dcf4b9304869e10a6b10e313e22e0187fb3d",
+          "rgba_sha256": "323f58ab830062f109da404e4ccea4e473cebef0b88044b19ef23b605082606d",
+          "cell": [
+            3,
+            1
+          ],
+          "world_cell": [
+            4,
+            2
+          ]
+        },
+        {
+          "name": "f2_canopy_1_1_30",
+          "id": 1844,
+          "phase": 0,
+          "palette": "canopy3_blight",
+          "rect": [
+            64,
+            16,
+            16,
+            16
+          ],
+          "index_sha256": "ea59e570210987a963bca71c71f68093f0585af1bbc847b0c1e53b656d7b33f7",
+          "rgba_sha256": "7e17b318f223ade8191a712f6a4ae0172b57b46208d62d9599e69f2679c9a9ac",
+          "cell": [
+            4,
+            1
+          ],
+          "world_cell": [
+            5,
+            2
+          ]
+        },
+        {
+          "name": "f2_canopy_1_2_c0",
+          "id": 1909,
+          "phase": 0,
+          "palette": "canopy3_blight",
+          "rect": [
+            16,
+            32,
+            16,
+            16
+          ],
+          "index_sha256": "3cff12c670f0b69ef81115490f5164448a6bc9acd9684980e769ea8344b8de5d",
+          "rgba_sha256": "3696bd74ca95b82210b377d2e0f7fa03cc34d64c050163323329992df1f69e94",
+          "cell": [
+            1,
+            2
+          ],
+          "world_cell": [
+            2,
+            3
+          ]
+        },
+        {
+          "name": "f2_canopy_1_3_40",
+          "id": 1940,
+          "phase": 0,
+          "palette": "canopy3_blight",
+          "rect": [
+            32,
+            32,
+            16,
+            16
+          ],
+          "index_sha256": "de9797768c581c18098c14fdb7abad9befbc4f5346f35b92e13688adaef06d5d",
+          "rgba_sha256": "b9c5857c78e0661920924b9bd4dc9debcf31946e50082f5adfb087947a088829",
+          "cell": [
+            2,
+            2
+          ],
+          "world_cell": [
+            3,
+            3
+          ]
+        },
+        {
+          "name": "f2_canopy_1_2_40",
+          "id": 1893,
+          "phase": 0,
+          "palette": "canopy3_blight",
+          "rect": [
+            48,
+            32,
+            16,
+            16
+          ],
+          "index_sha256": "07474f0b522df65e5aa6a8ccb92fb3e183d50311822fd26e522a371291901944",
+          "rgba_sha256": "19b3b1bb57b60aed749ac92b7993413572e9b172608382713ba11df2b924c2a9",
+          "cell": [
+            3,
+            2
+          ],
+          "world_cell": [
+            4,
+            3
+          ]
+        },
+        {
+          "name": "f2_canopy_1_3_60",
+          "id": 1945,
+          "phase": 0,
+          "palette": "canopy3_blight",
+          "rect": [
+            64,
+            32,
+            16,
+            16
+          ],
+          "index_sha256": "9d6eb299c36ab7fbc5db684021f133cc5469ca33dadfd609bab1063a5a1f9890",
+          "rgba_sha256": "72364fd01e76964271355968343b49a52b058a4ef3522b51b646e11f0941cc6d",
+          "cell": [
+            4,
+            2
+          ],
+          "world_cell": [
+            5,
+            3
+          ]
+        }
+      ]
+    },
+    {
+      "profile": 16,
+      "stage": "healthy",
+      "rect": [
+        5,
+        1082,
+        192,
+        128
+      ],
+      "scale": 2,
+      "source_rgb_sha256": "14b233f21677db00da48b778ab4abce618f9ea7e4d969f5ba6531f3761b283f3",
+      "world_origin": [
+        1,
+        1
+      ],
+      "alias_definitions": [
+        {
+          "name": "f2_canopy_0_0_90",
+          "id": 1608,
+          "phase": 0,
+          "palette": "foliage",
+          "rect": [
+            16,
+            16,
+            16,
+            16
+          ],
+          "index_sha256": "44c0d04cda16bde29ccfba209a4383f8306e2e58240ab16017d2eae9d653d76f",
+          "rgba_sha256": "d212d232d425216302f969201c75c84d4c12866e72c94c88804237ba5f214f52",
+          "cell": [
+            1,
+            1
+          ],
+          "world_cell": [
+            2,
+            2
+          ]
+        },
+        {
+          "name": "f2_canopy_0_1_10",
+          "id": 1633,
+          "phase": 0,
+          "palette": "foliage",
+          "rect": [
+            32,
+            16,
+            16,
+            16
+          ],
+          "index_sha256": "ac9b4b7d3fc9fc4b730f1d463c76404ae1e239155b56fc70953cb460d189c3ce",
+          "rgba_sha256": "cfdecd0c08fe0828c7c342ce07156c3e145fe204c494976ebde0591e7db2579c",
+          "cell": [
+            2,
+            1
+          ],
+          "world_cell": [
+            3,
+            2
+          ]
+        },
+        {
+          "name": "f2_canopy_0_0_10",
+          "id": 1586,
+          "phase": 0,
+          "palette": "foliage",
+          "rect": [
+            48,
+            16,
+            16,
+            16
+          ],
+          "index_sha256": "61fc4275ae5677676346aabfde28d0d8fffee4233fa59b4ff7895a86b2d80603",
+          "rgba_sha256": "f32f68b77972c00f9f3b9af97c293c9f8fcaf610bdac575d9c006c6473cec62c",
+          "cell": [
+            3,
+            1
+          ],
+          "world_cell": [
+            4,
+            2
+          ]
+        },
+        {
+          "name": "f2_canopy_0_1_30",
+          "id": 1641,
+          "phase": 0,
+          "palette": "foliage",
+          "rect": [
+            64,
+            16,
+            16,
+            16
+          ],
+          "index_sha256": "98768109e73993c04e1cc582576aca32619d9504cdc3124567a78732ba2dd532",
+          "rgba_sha256": "c8a1cd9606890d0358b42d20f524aee6bebf1df0b858140f17aa19f7207d6f2c",
+          "cell": [
+            4,
+            1
+          ],
+          "world_cell": [
+            5,
+            2
+          ]
+        },
+        {
+          "name": "f2_canopy_0_2_c0",
+          "id": 1706,
+          "phase": 0,
+          "palette": "foliage",
+          "rect": [
+            16,
+            32,
+            16,
+            16
+          ],
+          "index_sha256": "b50f651ad36ca288a39fcdded45a6f5ebe8a8fdf9c50baa706471713eeea48c2",
+          "rgba_sha256": "10c5b0af189ace0d9ab33d9d5e97cd525faaff7ae4eb87a938f62ba57c4646a8",
+          "cell": [
+            1,
+            2
+          ],
+          "world_cell": [
+            2,
+            3
+          ]
+        },
+        {
+          "name": "f2_canopy_0_3_40",
+          "id": 1737,
+          "phase": 0,
+          "palette": "foliage",
+          "rect": [
+            32,
+            32,
+            16,
+            16
+          ],
+          "index_sha256": "22f7adaa6ed1aa70215f557d9d0912717aa161e3137de4d448aaa57b13843d1d",
+          "rgba_sha256": "85fec33bda95e361354cc3b43a1afc69a2101fca4c6878f2c1a566b3ba47af20",
+          "cell": [
+            2,
+            2
+          ],
+          "world_cell": [
+            3,
+            3
+          ]
+        },
+        {
+          "name": "f2_canopy_0_2_40",
+          "id": 1690,
+          "phase": 0,
+          "palette": "foliage",
+          "rect": [
+            48,
+            32,
+            16,
+            16
+          ],
+          "index_sha256": "15de23fa95e4ac17382c45f86bc6270b3c908c4622480093264bf60e414f137d",
+          "rgba_sha256": "396c0bbbfe22a3c094fbca8bbf296223244d65a61b539fdccfa8075470a27d38",
+          "cell": [
+            3,
+            2
+          ],
+          "world_cell": [
+            4,
+            3
+          ]
+        },
+        {
+          "name": "f2_canopy_0_3_60",
+          "id": 1742,
+          "phase": 0,
+          "palette": "foliage",
+          "rect": [
+            64,
+            32,
+            16,
+            16
+          ],
+          "index_sha256": "31f1b9232828d98aabe0128f21f2fa14923e86a717882f4c25c464091c6b8aa2",
+          "rgba_sha256": "ebebafab29a1245d056bedd2b6680ea1129be423f20982283f0a9b4a1b816c43",
+          "cell": [
+            4,
+            2
+          ],
+          "world_cell": [
+            5,
+            3
+          ]
+        }
+      ]
+    },
+    {
+      "profile": 16,
+      "stage": "mixed",
+      "rect": [
+        217,
+        1082,
+        192,
+        128
+      ],
+      "scale": 2,
+      "source_rgb_sha256": "54176e2b24cde3c940e267276a9f52ff31a98cef33039e64646bd69543794094",
+      "world_origin": [
+        1,
+        1
+      ],
+      "alias_definitions": [
+        {
+          "name": "f2_canopy_0_0_90",
+          "id": 1608,
+          "phase": 0,
+          "palette": "foliage",
+          "rect": [
+            16,
+            16,
+            16,
+            16
+          ],
+          "index_sha256": "44c0d04cda16bde29ccfba209a4383f8306e2e58240ab16017d2eae9d653d76f",
+          "rgba_sha256": "d212d232d425216302f969201c75c84d4c12866e72c94c88804237ba5f214f52",
+          "cell": [
+            1,
+            1
+          ],
+          "world_cell": [
+            2,
+            2
+          ]
+        },
+        {
+          "name": "f2_canopy_0_1_10",
+          "id": 1633,
+          "phase": 0,
+          "palette": "foliage",
+          "rect": [
+            32,
+            16,
+            16,
+            16
+          ],
+          "index_sha256": "ac9b4b7d3fc9fc4b730f1d463c76404ae1e239155b56fc70953cb460d189c3ce",
+          "rgba_sha256": "cfdecd0c08fe0828c7c342ce07156c3e145fe204c494976ebde0591e7db2579c",
+          "cell": [
+            2,
+            1
+          ],
+          "world_cell": [
+            3,
+            2
+          ]
+        },
+        {
+          "name": "f2_canopy_1_0_10",
+          "id": 1789,
+          "phase": 0,
+          "palette": "canopy3_blight",
+          "rect": [
+            48,
+            16,
+            16,
+            16
+          ],
+          "index_sha256": "f63f78e253ce705ed31e5c0292baf719d069e706a4fd7c91991ba8346c649eba",
+          "rgba_sha256": "c577e51658cc2d73300b9fd116d20c481d3985763a00037f68f48b5063039553",
+          "cell": [
+            3,
+            1
+          ],
+          "world_cell": [
+            4,
+            2
+          ]
+        },
+        {
+          "name": "f2_canopy_1_1_30",
+          "id": 1844,
+          "phase": 0,
+          "palette": "canopy3_blight",
+          "rect": [
+            64,
+            16,
+            16,
+            16
+          ],
+          "index_sha256": "78a7f72db99b24014fee5fab3525cc55f94d05324714d4f02a5946e83a83c930",
+          "rgba_sha256": "22dc91fa5410d55f48f3c1fc830d7226d5bdf3de578533c2aebaf614da46178e",
+          "cell": [
+            4,
+            1
+          ],
+          "world_cell": [
+            5,
+            2
+          ]
+        },
+        {
+          "name": "f2_canopy_0_2_c0",
+          "id": 1706,
+          "phase": 0,
+          "palette": "foliage",
+          "rect": [
+            16,
+            32,
+            16,
+            16
+          ],
+          "index_sha256": "b50f651ad36ca288a39fcdded45a6f5ebe8a8fdf9c50baa706471713eeea48c2",
+          "rgba_sha256": "10c5b0af189ace0d9ab33d9d5e97cd525faaff7ae4eb87a938f62ba57c4646a8",
+          "cell": [
+            1,
+            2
+          ],
+          "world_cell": [
+            2,
+            3
+          ]
+        },
+        {
+          "name": "f2_canopy_0_3_40",
+          "id": 1737,
+          "phase": 0,
+          "palette": "foliage",
+          "rect": [
+            32,
+            32,
+            16,
+            16
+          ],
+          "index_sha256": "22f7adaa6ed1aa70215f557d9d0912717aa161e3137de4d448aaa57b13843d1d",
+          "rgba_sha256": "85fec33bda95e361354cc3b43a1afc69a2101fca4c6878f2c1a566b3ba47af20",
+          "cell": [
+            2,
+            2
+          ],
+          "world_cell": [
+            3,
+            3
+          ]
+        },
+        {
+          "name": "f2_canopy_1_2_40",
+          "id": 1893,
+          "phase": 0,
+          "palette": "canopy3_blight",
+          "rect": [
+            48,
+            32,
+            16,
+            16
+          ],
+          "index_sha256": "d561be75d6f496e6da17415ef50da0c79dd9380633c1e533a1de70fcf04caf45",
+          "rgba_sha256": "3eeb2cd6df2f963336cde6347d1ed3258ebfad2bd78d79bea8f8380d29cc9b95",
+          "cell": [
+            3,
+            2
+          ],
+          "world_cell": [
+            4,
+            3
+          ]
+        },
+        {
+          "name": "f2_canopy_1_3_60",
+          "id": 1945,
+          "phase": 0,
+          "palette": "canopy3_blight",
+          "rect": [
+            64,
+            32,
+            16,
+            16
+          ],
+          "index_sha256": "fb7d717d123238c73caf4f2ba8ab8fa10c51166916dd9b8241917c43ffca1eb9",
+          "rgba_sha256": "cd8ec6049a01eb07d72903e2e0d4007d60671adf20ff61d0620a675328ed7ef2",
+          "cell": [
+            4,
+            2
+          ],
+          "world_cell": [
+            5,
+            3
+          ]
+        }
+      ]
+    },
+    {
+      "profile": 16,
+      "stage": "deep",
+      "rect": [
+        429,
+        1082,
+        192,
+        128
+      ],
+      "scale": 2,
+      "source_rgb_sha256": "a0b21302f21c5af79bbf573dea84b2ade4cd1abef09457cb758041daa1ef1ad5",
+      "world_origin": [
+        1,
+        1
+      ],
+      "alias_definitions": [
+        {
+          "name": "f2_canopy_1_0_90",
+          "id": 1811,
+          "phase": 0,
+          "palette": "canopy3_blight",
+          "rect": [
+            16,
+            16,
+            16,
+            16
+          ],
+          "index_sha256": "e79dd33aeed6c12c760820282c9a3f936dee08c721cf83e6dda465af4928303d",
+          "rgba_sha256": "a43a98fb5f8458567f163a8a8b5c6fbd038b65836e16e28244c0c240cf43b942",
+          "cell": [
+            1,
+            1
+          ],
+          "world_cell": [
+            2,
+            2
+          ]
+        },
+        {
+          "name": "f2_canopy_1_1_10",
+          "id": 1836,
+          "phase": 0,
+          "palette": "canopy3_blight",
+          "rect": [
+            32,
+            16,
+            16,
+            16
+          ],
+          "index_sha256": "0b28102c890b884b5a62d1b7276f44df726eca7bf2fa3f8221064faa8085b1b4",
+          "rgba_sha256": "3b65dfa2db2b674f9b2c85bdc32cd838f1e4138d43861edd9b6360f56183a036",
+          "cell": [
+            2,
+            1
+          ],
+          "world_cell": [
+            3,
+            2
+          ]
+        },
+        {
+          "name": "f2_canopy_1_0_10",
+          "id": 1789,
+          "phase": 0,
+          "palette": "canopy3_blight",
+          "rect": [
+            48,
+            16,
+            16,
+            16
+          ],
+          "index_sha256": "f63f78e253ce705ed31e5c0292baf719d069e706a4fd7c91991ba8346c649eba",
+          "rgba_sha256": "c577e51658cc2d73300b9fd116d20c481d3985763a00037f68f48b5063039553",
+          "cell": [
+            3,
+            1
+          ],
+          "world_cell": [
+            4,
+            2
+          ]
+        },
+        {
+          "name": "f2_canopy_1_1_30",
+          "id": 1844,
+          "phase": 0,
+          "palette": "canopy3_blight",
+          "rect": [
+            64,
+            16,
+            16,
+            16
+          ],
+          "index_sha256": "78a7f72db99b24014fee5fab3525cc55f94d05324714d4f02a5946e83a83c930",
+          "rgba_sha256": "22dc91fa5410d55f48f3c1fc830d7226d5bdf3de578533c2aebaf614da46178e",
+          "cell": [
+            4,
+            1
+          ],
+          "world_cell": [
+            5,
+            2
+          ]
+        },
+        {
+          "name": "f2_canopy_1_2_c0",
+          "id": 1909,
+          "phase": 0,
+          "palette": "canopy3_blight",
+          "rect": [
+            16,
+            32,
+            16,
+            16
+          ],
+          "index_sha256": "fa50c6cb257ac509bc4979a3a7b71b074fae182f0c357a6c5e8e0896c384441d",
+          "rgba_sha256": "4e7a74498916ceb98fa20fbc1bf953330960c31c9b4781a0a42803a7e5bf703b",
+          "cell": [
+            1,
+            2
+          ],
+          "world_cell": [
+            2,
+            3
+          ]
+        },
+        {
+          "name": "f2_canopy_1_3_40",
+          "id": 1940,
+          "phase": 0,
+          "palette": "canopy3_blight",
+          "rect": [
+            32,
+            32,
+            16,
+            16
+          ],
+          "index_sha256": "b7ad9cfe767f82eec16c2ea2bc6e5a402e4c03fb69ed0196f08a86fc54cda6d8",
+          "rgba_sha256": "8fd6a67d69364a4c3728d09ca69a906bd7b53153f19cc6259e8cf89e38e4c5ff",
+          "cell": [
+            2,
+            2
+          ],
+          "world_cell": [
+            3,
+            3
+          ]
+        },
+        {
+          "name": "f2_canopy_1_2_40",
+          "id": 1893,
+          "phase": 0,
+          "palette": "canopy3_blight",
+          "rect": [
+            48,
+            32,
+            16,
+            16
+          ],
+          "index_sha256": "d561be75d6f496e6da17415ef50da0c79dd9380633c1e533a1de70fcf04caf45",
+          "rgba_sha256": "3eeb2cd6df2f963336cde6347d1ed3258ebfad2bd78d79bea8f8380d29cc9b95",
+          "cell": [
+            3,
+            2
+          ],
+          "world_cell": [
+            4,
+            3
+          ]
+        },
+        {
+          "name": "f2_canopy_1_3_60",
+          "id": 1945,
+          "phase": 0,
+          "palette": "canopy3_blight",
+          "rect": [
+            64,
+            32,
+            16,
+            16
+          ],
+          "index_sha256": "fb7d717d123238c73caf4f2ba8ab8fa10c51166916dd9b8241917c43ffca1eb9",
+          "rgba_sha256": "cd8ec6049a01eb07d72903e2e0d4007d60671adf20ff61d0620a675328ed7ef2",
+          "cell": [
+            4,
+            2
+          ],
+          "world_cell": [
+            5,
+            3
+          ]
+        }
+      ]
+    },
+    {
+      "profile": 17,
+      "stage": "healthy",
+      "rect": [
+        5,
+        1280,
+        192,
+        128
+      ],
+      "scale": 2,
+      "source_rgb_sha256": "14b233f21677db00da48b778ab4abce618f9ea7e4d969f5ba6531f3761b283f3",
+      "world_origin": [
+        1,
+        1
+      ],
+      "alias_definitions": [
+        {
+          "name": "f2_canopy_0_0_90",
+          "id": 1608,
+          "phase": 0,
+          "palette": "foliage",
+          "rect": [
+            16,
+            16,
+            16,
+            16
+          ],
+          "index_sha256": "44c0d04cda16bde29ccfba209a4383f8306e2e58240ab16017d2eae9d653d76f",
+          "rgba_sha256": "d212d232d425216302f969201c75c84d4c12866e72c94c88804237ba5f214f52",
+          "cell": [
+            1,
+            1
+          ],
+          "world_cell": [
+            2,
+            2
+          ]
+        },
+        {
+          "name": "f2_canopy_0_1_10",
+          "id": 1633,
+          "phase": 0,
+          "palette": "foliage",
+          "rect": [
+            32,
+            16,
+            16,
+            16
+          ],
+          "index_sha256": "ac9b4b7d3fc9fc4b730f1d463c76404ae1e239155b56fc70953cb460d189c3ce",
+          "rgba_sha256": "cfdecd0c08fe0828c7c342ce07156c3e145fe204c494976ebde0591e7db2579c",
+          "cell": [
+            2,
+            1
+          ],
+          "world_cell": [
+            3,
+            2
+          ]
+        },
+        {
+          "name": "f2_canopy_0_0_10",
+          "id": 1586,
+          "phase": 0,
+          "palette": "foliage",
+          "rect": [
+            48,
+            16,
+            16,
+            16
+          ],
+          "index_sha256": "61fc4275ae5677676346aabfde28d0d8fffee4233fa59b4ff7895a86b2d80603",
+          "rgba_sha256": "f32f68b77972c00f9f3b9af97c293c9f8fcaf610bdac575d9c006c6473cec62c",
+          "cell": [
+            3,
+            1
+          ],
+          "world_cell": [
+            4,
+            2
+          ]
+        },
+        {
+          "name": "f2_canopy_0_1_30",
+          "id": 1641,
+          "phase": 0,
+          "palette": "foliage",
+          "rect": [
+            64,
+            16,
+            16,
+            16
+          ],
+          "index_sha256": "98768109e73993c04e1cc582576aca32619d9504cdc3124567a78732ba2dd532",
+          "rgba_sha256": "c8a1cd9606890d0358b42d20f524aee6bebf1df0b858140f17aa19f7207d6f2c",
+          "cell": [
+            4,
+            1
+          ],
+          "world_cell": [
+            5,
+            2
+          ]
+        },
+        {
+          "name": "f2_canopy_0_2_c0",
+          "id": 1706,
+          "phase": 0,
+          "palette": "foliage",
+          "rect": [
+            16,
+            32,
+            16,
+            16
+          ],
+          "index_sha256": "b50f651ad36ca288a39fcdded45a6f5ebe8a8fdf9c50baa706471713eeea48c2",
+          "rgba_sha256": "10c5b0af189ace0d9ab33d9d5e97cd525faaff7ae4eb87a938f62ba57c4646a8",
+          "cell": [
+            1,
+            2
+          ],
+          "world_cell": [
+            2,
+            3
+          ]
+        },
+        {
+          "name": "f2_canopy_0_3_40",
+          "id": 1737,
+          "phase": 0,
+          "palette": "foliage",
+          "rect": [
+            32,
+            32,
+            16,
+            16
+          ],
+          "index_sha256": "22f7adaa6ed1aa70215f557d9d0912717aa161e3137de4d448aaa57b13843d1d",
+          "rgba_sha256": "85fec33bda95e361354cc3b43a1afc69a2101fca4c6878f2c1a566b3ba47af20",
+          "cell": [
+            2,
+            2
+          ],
+          "world_cell": [
+            3,
+            3
+          ]
+        },
+        {
+          "name": "f2_canopy_0_2_40",
+          "id": 1690,
+          "phase": 0,
+          "palette": "foliage",
+          "rect": [
+            48,
+            32,
+            16,
+            16
+          ],
+          "index_sha256": "15de23fa95e4ac17382c45f86bc6270b3c908c4622480093264bf60e414f137d",
+          "rgba_sha256": "396c0bbbfe22a3c094fbca8bbf296223244d65a61b539fdccfa8075470a27d38",
+          "cell": [
+            3,
+            2
+          ],
+          "world_cell": [
+            4,
+            3
+          ]
+        },
+        {
+          "name": "f2_canopy_0_3_60",
+          "id": 1742,
+          "phase": 0,
+          "palette": "foliage",
+          "rect": [
+            64,
+            32,
+            16,
+            16
+          ],
+          "index_sha256": "31f1b9232828d98aabe0128f21f2fa14923e86a717882f4c25c464091c6b8aa2",
+          "rgba_sha256": "ebebafab29a1245d056bedd2b6680ea1129be423f20982283f0a9b4a1b816c43",
+          "cell": [
+            4,
+            2
+          ],
+          "world_cell": [
+            5,
+            3
+          ]
+        }
+      ]
+    },
+    {
+      "profile": 17,
+      "stage": "mixed",
+      "rect": [
+        217,
+        1280,
+        192,
+        128
+      ],
+      "scale": 2,
+      "source_rgb_sha256": "306f1f871399707d462a35fb1e9a6a2ea32aa2843322c7786602a02d89611249",
+      "world_origin": [
+        1,
+        1
+      ],
+      "alias_definitions": [
+        {
+          "name": "f2_canopy_0_0_90",
+          "id": 1608,
+          "phase": 0,
+          "palette": "foliage",
+          "rect": [
+            16,
+            16,
+            16,
+            16
+          ],
+          "index_sha256": "44c0d04cda16bde29ccfba209a4383f8306e2e58240ab16017d2eae9d653d76f",
+          "rgba_sha256": "d212d232d425216302f969201c75c84d4c12866e72c94c88804237ba5f214f52",
+          "cell": [
+            1,
+            1
+          ],
+          "world_cell": [
+            2,
+            2
+          ]
+        },
+        {
+          "name": "f2_canopy_0_1_10",
+          "id": 1633,
+          "phase": 0,
+          "palette": "foliage",
+          "rect": [
+            32,
+            16,
+            16,
+            16
+          ],
+          "index_sha256": "ac9b4b7d3fc9fc4b730f1d463c76404ae1e239155b56fc70953cb460d189c3ce",
+          "rgba_sha256": "cfdecd0c08fe0828c7c342ce07156c3e145fe204c494976ebde0591e7db2579c",
+          "cell": [
+            2,
+            1
+          ],
+          "world_cell": [
+            3,
+            2
+          ]
+        },
+        {
+          "name": "f2_canopy_1_0_10",
+          "id": 1789,
+          "phase": 0,
+          "palette": "canopy3_blight",
+          "rect": [
+            48,
+            16,
+            16,
+            16
+          ],
+          "index_sha256": "32ddcc8c9a97f36402c33f7ee8cd865c1430bfa72762a7d029a39e63c6e478c3",
+          "rgba_sha256": "5469f390b70de1a5593473e26ac36ab1d55c7bc369f53077f1ac4d38c0d55c7f",
+          "cell": [
+            3,
+            1
+          ],
+          "world_cell": [
+            4,
+            2
+          ]
+        },
+        {
+          "name": "f2_canopy_1_1_30",
+          "id": 1844,
+          "phase": 0,
+          "palette": "canopy3_blight",
+          "rect": [
+            64,
+            16,
+            16,
+            16
+          ],
+          "index_sha256": "9b50d66e60f5aa1d12835ce1a5f966e37fbd8c91440ccff4cc47ee46472e9638",
+          "rgba_sha256": "e1a11a4c64a3b3874c8f291af8b0eac547e00e7450aece6de8a962dbec617586",
+          "cell": [
+            4,
+            1
+          ],
+          "world_cell": [
+            5,
+            2
+          ]
+        },
+        {
+          "name": "f2_canopy_0_2_c0",
+          "id": 1706,
+          "phase": 0,
+          "palette": "foliage",
+          "rect": [
+            16,
+            32,
+            16,
+            16
+          ],
+          "index_sha256": "b50f651ad36ca288a39fcdded45a6f5ebe8a8fdf9c50baa706471713eeea48c2",
+          "rgba_sha256": "10c5b0af189ace0d9ab33d9d5e97cd525faaff7ae4eb87a938f62ba57c4646a8",
+          "cell": [
+            1,
+            2
+          ],
+          "world_cell": [
+            2,
+            3
+          ]
+        },
+        {
+          "name": "f2_canopy_0_3_40",
+          "id": 1737,
+          "phase": 0,
+          "palette": "foliage",
+          "rect": [
+            32,
+            32,
+            16,
+            16
+          ],
+          "index_sha256": "22f7adaa6ed1aa70215f557d9d0912717aa161e3137de4d448aaa57b13843d1d",
+          "rgba_sha256": "85fec33bda95e361354cc3b43a1afc69a2101fca4c6878f2c1a566b3ba47af20",
+          "cell": [
+            2,
+            2
+          ],
+          "world_cell": [
+            3,
+            3
+          ]
+        },
+        {
+          "name": "f2_canopy_1_2_40",
+          "id": 1893,
+          "phase": 0,
+          "palette": "canopy3_blight",
+          "rect": [
+            48,
+            32,
+            16,
+            16
+          ],
+          "index_sha256": "b257dd5e1dd3871e85d971d705b9f559221b9e99c6f9f2afc98c5fb60e0ab2dc",
+          "rgba_sha256": "62942db0bef8bef903e4495967184000bd6fcbc0af9db0dcbffad12e976799fe",
+          "cell": [
+            3,
+            2
+          ],
+          "world_cell": [
+            4,
+            3
+          ]
+        },
+        {
+          "name": "f2_canopy_1_3_60",
+          "id": 1945,
+          "phase": 0,
+          "palette": "canopy3_blight",
+          "rect": [
+            64,
+            32,
+            16,
+            16
+          ],
+          "index_sha256": "2daf83badd12686433c050d316cfff8772c843de8e1a6323b6240f2fbfae7468",
+          "rgba_sha256": "db50c404f72f900c362c4b1c970a3fdd4b35367af11b609c0b587b76eb9ed647",
+          "cell": [
+            4,
+            2
+          ],
+          "world_cell": [
+            5,
+            3
+          ]
+        }
+      ]
+    },
+    {
+      "profile": 17,
+      "stage": "deep",
+      "rect": [
+        429,
+        1280,
+        192,
+        128
+      ],
+      "scale": 2,
+      "source_rgb_sha256": "228907888871a64f40a60f6fe508a75d841b3e5c2413571800512b60dd869687",
+      "world_origin": [
+        1,
+        1
+      ],
+      "alias_definitions": [
+        {
+          "name": "f2_canopy_1_0_90",
+          "id": 1811,
+          "phase": 0,
+          "palette": "canopy3_blight",
+          "rect": [
+            16,
+            16,
+            16,
+            16
+          ],
+          "index_sha256": "675ea5e744481a777aabc19e98c77c97122ada66d09dfcd0e7518d649c5b5851",
+          "rgba_sha256": "f466f396f6e9db87e00e23fe28138f6afea451bbcab1fa50acba780d9a62d925",
+          "cell": [
+            1,
+            1
+          ],
+          "world_cell": [
+            2,
+            2
+          ]
+        },
+        {
+          "name": "f2_canopy_1_1_10",
+          "id": 1836,
+          "phase": 0,
+          "palette": "canopy3_blight",
+          "rect": [
+            32,
+            16,
+            16,
+            16
+          ],
+          "index_sha256": "0cee94ff2c0e67aba5a0ac764421533008e1eaebc3360e51bca2a72fbf116eb8",
+          "rgba_sha256": "d4acd345e84ca1e75e0b923e946d403879833710124be760dae652ab96c813c9",
+          "cell": [
+            2,
+            1
+          ],
+          "world_cell": [
+            3,
+            2
+          ]
+        },
+        {
+          "name": "f2_canopy_1_0_10",
+          "id": 1789,
+          "phase": 0,
+          "palette": "canopy3_blight",
+          "rect": [
+            48,
+            16,
+            16,
+            16
+          ],
+          "index_sha256": "32ddcc8c9a97f36402c33f7ee8cd865c1430bfa72762a7d029a39e63c6e478c3",
+          "rgba_sha256": "5469f390b70de1a5593473e26ac36ab1d55c7bc369f53077f1ac4d38c0d55c7f",
+          "cell": [
+            3,
+            1
+          ],
+          "world_cell": [
+            4,
+            2
+          ]
+        },
+        {
+          "name": "f2_canopy_1_1_30",
+          "id": 1844,
+          "phase": 0,
+          "palette": "canopy3_blight",
+          "rect": [
+            64,
+            16,
+            16,
+            16
+          ],
+          "index_sha256": "9b50d66e60f5aa1d12835ce1a5f966e37fbd8c91440ccff4cc47ee46472e9638",
+          "rgba_sha256": "e1a11a4c64a3b3874c8f291af8b0eac547e00e7450aece6de8a962dbec617586",
+          "cell": [
+            4,
+            1
+          ],
+          "world_cell": [
+            5,
+            2
+          ]
+        },
+        {
+          "name": "f2_canopy_1_2_c0",
+          "id": 1909,
+          "phase": 0,
+          "palette": "canopy3_blight",
+          "rect": [
+            16,
+            32,
+            16,
+            16
+          ],
+          "index_sha256": "4af28b8c5cac88fbeac02e1f7fa209de300991074f829094d416562a3b704e47",
+          "rgba_sha256": "d9bf72c77d1b830232287fe521e1e365ec32df3e419114e7efb7dc02cb9817e6",
+          "cell": [
+            1,
+            2
+          ],
+          "world_cell": [
+            2,
+            3
+          ]
+        },
+        {
+          "name": "f2_canopy_1_3_40",
+          "id": 1940,
+          "phase": 0,
+          "palette": "canopy3_blight",
+          "rect": [
+            32,
+            32,
+            16,
+            16
+          ],
+          "index_sha256": "bb24ff3a597fc3ec6ba83020bc9a50760961184bd8f8d916e8f22060b9a43b6c",
+          "rgba_sha256": "2e17a63729780eed9459d4282192b2957f6e824502d760e713f576498b67c09e",
+          "cell": [
+            2,
+            2
+          ],
+          "world_cell": [
+            3,
+            3
+          ]
+        },
+        {
+          "name": "f2_canopy_1_2_40",
+          "id": 1893,
+          "phase": 0,
+          "palette": "canopy3_blight",
+          "rect": [
+            48,
+            32,
+            16,
+            16
+          ],
+          "index_sha256": "b257dd5e1dd3871e85d971d705b9f559221b9e99c6f9f2afc98c5fb60e0ab2dc",
+          "rgba_sha256": "62942db0bef8bef903e4495967184000bd6fcbc0af9db0dcbffad12e976799fe",
+          "cell": [
+            3,
+            2
+          ],
+          "world_cell": [
+            4,
+            3
+          ]
+        },
+        {
+          "name": "f2_canopy_1_3_60",
+          "id": 1945,
+          "phase": 0,
+          "palette": "canopy3_blight",
+          "rect": [
+            64,
+            32,
+            16,
+            16
+          ],
+          "index_sha256": "2daf83badd12686433c050d316cfff8772c843de8e1a6323b6240f2fbfae7468",
+          "rgba_sha256": "db50c404f72f900c362c4b1c970a3fdd4b35367af11b609c0b587b76eb9ed647",
+          "cell": [
+            4,
+            2
+          ],
+          "world_cell": [
+            5,
+            3
+          ]
+        }
+      ]
+    },
+    {
+      "profile": 18,
+      "stage": "healthy",
+      "rect": [
+        5,
+        1478,
+        192,
+        128
+      ],
+      "scale": 2,
+      "source_rgb_sha256": "14b233f21677db00da48b778ab4abce618f9ea7e4d969f5ba6531f3761b283f3",
+      "world_origin": [
+        1,
+        1
+      ],
+      "alias_definitions": [
+        {
+          "name": "f2_canopy_0_0_90",
+          "id": 1608,
+          "phase": 0,
+          "palette": "foliage",
+          "rect": [
+            16,
+            16,
+            16,
+            16
+          ],
+          "index_sha256": "44c0d04cda16bde29ccfba209a4383f8306e2e58240ab16017d2eae9d653d76f",
+          "rgba_sha256": "d212d232d425216302f969201c75c84d4c12866e72c94c88804237ba5f214f52",
+          "cell": [
+            1,
+            1
+          ],
+          "world_cell": [
+            2,
+            2
+          ]
+        },
+        {
+          "name": "f2_canopy_0_1_10",
+          "id": 1633,
+          "phase": 0,
+          "palette": "foliage",
+          "rect": [
+            32,
+            16,
+            16,
+            16
+          ],
+          "index_sha256": "ac9b4b7d3fc9fc4b730f1d463c76404ae1e239155b56fc70953cb460d189c3ce",
+          "rgba_sha256": "cfdecd0c08fe0828c7c342ce07156c3e145fe204c494976ebde0591e7db2579c",
+          "cell": [
+            2,
+            1
+          ],
+          "world_cell": [
+            3,
+            2
+          ]
+        },
+        {
+          "name": "f2_canopy_0_0_10",
+          "id": 1586,
+          "phase": 0,
+          "palette": "foliage",
+          "rect": [
+            48,
+            16,
+            16,
+            16
+          ],
+          "index_sha256": "61fc4275ae5677676346aabfde28d0d8fffee4233fa59b4ff7895a86b2d80603",
+          "rgba_sha256": "f32f68b77972c00f9f3b9af97c293c9f8fcaf610bdac575d9c006c6473cec62c",
+          "cell": [
+            3,
+            1
+          ],
+          "world_cell": [
+            4,
+            2
+          ]
+        },
+        {
+          "name": "f2_canopy_0_1_30",
+          "id": 1641,
+          "phase": 0,
+          "palette": "foliage",
+          "rect": [
+            64,
+            16,
+            16,
+            16
+          ],
+          "index_sha256": "98768109e73993c04e1cc582576aca32619d9504cdc3124567a78732ba2dd532",
+          "rgba_sha256": "c8a1cd9606890d0358b42d20f524aee6bebf1df0b858140f17aa19f7207d6f2c",
+          "cell": [
+            4,
+            1
+          ],
+          "world_cell": [
+            5,
+            2
+          ]
+        },
+        {
+          "name": "f2_canopy_0_2_c0",
+          "id": 1706,
+          "phase": 0,
+          "palette": "foliage",
+          "rect": [
+            16,
+            32,
+            16,
+            16
+          ],
+          "index_sha256": "b50f651ad36ca288a39fcdded45a6f5ebe8a8fdf9c50baa706471713eeea48c2",
+          "rgba_sha256": "10c5b0af189ace0d9ab33d9d5e97cd525faaff7ae4eb87a938f62ba57c4646a8",
+          "cell": [
+            1,
+            2
+          ],
+          "world_cell": [
+            2,
+            3
+          ]
+        },
+        {
+          "name": "f2_canopy_0_3_40",
+          "id": 1737,
+          "phase": 0,
+          "palette": "foliage",
+          "rect": [
+            32,
+            32,
+            16,
+            16
+          ],
+          "index_sha256": "22f7adaa6ed1aa70215f557d9d0912717aa161e3137de4d448aaa57b13843d1d",
+          "rgba_sha256": "85fec33bda95e361354cc3b43a1afc69a2101fca4c6878f2c1a566b3ba47af20",
+          "cell": [
+            2,
+            2
+          ],
+          "world_cell": [
+            3,
+            3
+          ]
+        },
+        {
+          "name": "f2_canopy_0_2_40",
+          "id": 1690,
+          "phase": 0,
+          "palette": "foliage",
+          "rect": [
+            48,
+            32,
+            16,
+            16
+          ],
+          "index_sha256": "15de23fa95e4ac17382c45f86bc6270b3c908c4622480093264bf60e414f137d",
+          "rgba_sha256": "396c0bbbfe22a3c094fbca8bbf296223244d65a61b539fdccfa8075470a27d38",
+          "cell": [
+            3,
+            2
+          ],
+          "world_cell": [
+            4,
+            3
+          ]
+        },
+        {
+          "name": "f2_canopy_0_3_60",
+          "id": 1742,
+          "phase": 0,
+          "palette": "foliage",
+          "rect": [
+            64,
+            32,
+            16,
+            16
+          ],
+          "index_sha256": "31f1b9232828d98aabe0128f21f2fa14923e86a717882f4c25c464091c6b8aa2",
+          "rgba_sha256": "ebebafab29a1245d056bedd2b6680ea1129be423f20982283f0a9b4a1b816c43",
+          "cell": [
+            4,
+            2
+          ],
+          "world_cell": [
+            5,
+            3
+          ]
+        }
+      ]
+    },
+    {
+      "profile": 18,
+      "stage": "mixed",
+      "rect": [
+        217,
+        1478,
+        192,
+        128
+      ],
+      "scale": 2,
+      "source_rgb_sha256": "b9c524936a647bb789fe7280e47e67d3dbf740007fd48c4fe7549e54b44e9cec",
+      "world_origin": [
+        1,
+        1
+      ],
+      "alias_definitions": [
+        {
+          "name": "f2_canopy_0_0_90",
+          "id": 1608,
+          "phase": 0,
+          "palette": "foliage",
+          "rect": [
+            16,
+            16,
+            16,
+            16
+          ],
+          "index_sha256": "44c0d04cda16bde29ccfba209a4383f8306e2e58240ab16017d2eae9d653d76f",
+          "rgba_sha256": "d212d232d425216302f969201c75c84d4c12866e72c94c88804237ba5f214f52",
+          "cell": [
+            1,
+            1
+          ],
+          "world_cell": [
+            2,
+            2
+          ]
+        },
+        {
+          "name": "f2_canopy_0_1_10",
+          "id": 1633,
+          "phase": 0,
+          "palette": "foliage",
+          "rect": [
+            32,
+            16,
+            16,
+            16
+          ],
+          "index_sha256": "ac9b4b7d3fc9fc4b730f1d463c76404ae1e239155b56fc70953cb460d189c3ce",
+          "rgba_sha256": "cfdecd0c08fe0828c7c342ce07156c3e145fe204c494976ebde0591e7db2579c",
+          "cell": [
+            2,
+            1
+          ],
+          "world_cell": [
+            3,
+            2
+          ]
+        },
+        {
+          "name": "f2_canopy_1_0_10",
+          "id": 1789,
+          "phase": 0,
+          "palette": "canopy3_blight",
+          "rect": [
+            48,
+            16,
+            16,
+            16
+          ],
+          "index_sha256": "79e5a164dc8c459564ac3a843151916ae4a138df36a8395c55b6e3d7ffef67a7",
+          "rgba_sha256": "e0548bb51bb7463b695b5f1ec4e125b9d7323bc34ce8c9da21d77eaa2fc71612",
+          "cell": [
+            3,
+            1
+          ],
+          "world_cell": [
+            4,
+            2
+          ]
+        },
+        {
+          "name": "f2_canopy_1_1_30",
+          "id": 1844,
+          "phase": 0,
+          "palette": "canopy3_blight",
+          "rect": [
+            64,
+            16,
+            16,
+            16
+          ],
+          "index_sha256": "85aa678e6a1fa1acdec76c73eedae4d67730f18e3d306c2b27e496aaa67067b6",
+          "rgba_sha256": "8a0f6e31906b851c3c684530b16a592f1b2e49e6cb4ff85aecbb49234a6b2acf",
+          "cell": [
+            4,
+            1
+          ],
+          "world_cell": [
+            5,
+            2
+          ]
+        },
+        {
+          "name": "f2_canopy_0_2_c0",
+          "id": 1706,
+          "phase": 0,
+          "palette": "foliage",
+          "rect": [
+            16,
+            32,
+            16,
+            16
+          ],
+          "index_sha256": "b50f651ad36ca288a39fcdded45a6f5ebe8a8fdf9c50baa706471713eeea48c2",
+          "rgba_sha256": "10c5b0af189ace0d9ab33d9d5e97cd525faaff7ae4eb87a938f62ba57c4646a8",
+          "cell": [
+            1,
+            2
+          ],
+          "world_cell": [
+            2,
+            3
+          ]
+        },
+        {
+          "name": "f2_canopy_0_3_40",
+          "id": 1737,
+          "phase": 0,
+          "palette": "foliage",
+          "rect": [
+            32,
+            32,
+            16,
+            16
+          ],
+          "index_sha256": "22f7adaa6ed1aa70215f557d9d0912717aa161e3137de4d448aaa57b13843d1d",
+          "rgba_sha256": "85fec33bda95e361354cc3b43a1afc69a2101fca4c6878f2c1a566b3ba47af20",
+          "cell": [
+            2,
+            2
+          ],
+          "world_cell": [
+            3,
+            3
+          ]
+        },
+        {
+          "name": "f2_canopy_1_2_40",
+          "id": 1893,
+          "phase": 0,
+          "palette": "canopy3_blight",
+          "rect": [
+            48,
+            32,
+            16,
+            16
+          ],
+          "index_sha256": "ac993c2261febcf3df404c0af73cb691d83b7d23142b57c6297c33df87fdcd6f",
+          "rgba_sha256": "69e37ff7f16bfc8a524d1d7d263134021697fa483d657c8beb5e2cd98759f10a",
+          "cell": [
+            3,
+            2
+          ],
+          "world_cell": [
+            4,
+            3
+          ]
+        },
+        {
+          "name": "f2_canopy_1_3_60",
+          "id": 1945,
+          "phase": 0,
+          "palette": "canopy3_blight",
+          "rect": [
+            64,
+            32,
+            16,
+            16
+          ],
+          "index_sha256": "da14dd1208c4476cb48940efa3f734b7be717b5c87c21f89ef513439fa11cb48",
+          "rgba_sha256": "938f5777965550848f068b170517dee7b635da73e720972b8ee27d97e6bf4a45",
+          "cell": [
+            4,
+            2
+          ],
+          "world_cell": [
+            5,
+            3
+          ]
+        }
+      ]
+    },
+    {
+      "profile": 18,
+      "stage": "deep",
+      "rect": [
+        429,
+        1478,
+        192,
+        128
+      ],
+      "scale": 2,
+      "source_rgb_sha256": "2cece3bf336541efb0d49db9ba27f270661895b0f6cd280588f267001814f8f1",
+      "world_origin": [
+        1,
+        1
+      ],
+      "alias_definitions": [
+        {
+          "name": "f2_canopy_1_0_90",
+          "id": 1811,
+          "phase": 0,
+          "palette": "canopy3_blight",
+          "rect": [
+            16,
+            16,
+            16,
+            16
+          ],
+          "index_sha256": "6b97489745fd3db335b7db08a30af2b7b52e4d32b12465aaeb888eb6b57f30ea",
+          "rgba_sha256": "114d2a1a53ecea2f951a917bfe7aa100d5611900b8969f743cf196ed44d8b8ea",
+          "cell": [
+            1,
+            1
+          ],
+          "world_cell": [
+            2,
+            2
+          ]
+        },
+        {
+          "name": "f2_canopy_1_1_10",
+          "id": 1836,
+          "phase": 0,
+          "palette": "canopy3_blight",
+          "rect": [
+            32,
+            16,
+            16,
+            16
+          ],
+          "index_sha256": "1e4f487fe02fbcf0e1fd85dff01cbde01d8ed5124631cebdd6a9bb35b15c994e",
+          "rgba_sha256": "b9cb29e3504d9423f818449ff9fcbfdb6b5ac94b2ff1f94cfeb3596bc5726d24",
+          "cell": [
+            2,
+            1
+          ],
+          "world_cell": [
+            3,
+            2
+          ]
+        },
+        {
+          "name": "f2_canopy_1_0_10",
+          "id": 1789,
+          "phase": 0,
+          "palette": "canopy3_blight",
+          "rect": [
+            48,
+            16,
+            16,
+            16
+          ],
+          "index_sha256": "79e5a164dc8c459564ac3a843151916ae4a138df36a8395c55b6e3d7ffef67a7",
+          "rgba_sha256": "e0548bb51bb7463b695b5f1ec4e125b9d7323bc34ce8c9da21d77eaa2fc71612",
+          "cell": [
+            3,
+            1
+          ],
+          "world_cell": [
+            4,
+            2
+          ]
+        },
+        {
+          "name": "f2_canopy_1_1_30",
+          "id": 1844,
+          "phase": 0,
+          "palette": "canopy3_blight",
+          "rect": [
+            64,
+            16,
+            16,
+            16
+          ],
+          "index_sha256": "85aa678e6a1fa1acdec76c73eedae4d67730f18e3d306c2b27e496aaa67067b6",
+          "rgba_sha256": "8a0f6e31906b851c3c684530b16a592f1b2e49e6cb4ff85aecbb49234a6b2acf",
+          "cell": [
+            4,
+            1
+          ],
+          "world_cell": [
+            5,
+            2
+          ]
+        },
+        {
+          "name": "f2_canopy_1_2_c0",
+          "id": 1909,
+          "phase": 0,
+          "palette": "canopy3_blight",
+          "rect": [
+            16,
+            32,
+            16,
+            16
+          ],
+          "index_sha256": "d9630823f7a208d9ccf91bf0ec2b84e2f1709d56546f86a86b0466153ac4b289",
+          "rgba_sha256": "73fd46c6516deca39aecd147953eaa15fa08300d926f3cfbe1fc8dde64830b5b",
+          "cell": [
+            1,
+            2
+          ],
+          "world_cell": [
+            2,
+            3
+          ]
+        },
+        {
+          "name": "f2_canopy_1_3_40",
+          "id": 1940,
+          "phase": 0,
+          "palette": "canopy3_blight",
+          "rect": [
+            32,
+            32,
+            16,
+            16
+          ],
+          "index_sha256": "be09b2a8fa16e1c60896cbe4105084aade0a1fbd0e95310c11f57044d13ba227",
+          "rgba_sha256": "133181039e77ba607c12585eaafd1207e8a9e56e2f2d4b809e92e176392370f2",
+          "cell": [
+            2,
+            2
+          ],
+          "world_cell": [
+            3,
+            3
+          ]
+        },
+        {
+          "name": "f2_canopy_1_2_40",
+          "id": 1893,
+          "phase": 0,
+          "palette": "canopy3_blight",
+          "rect": [
+            48,
+            32,
+            16,
+            16
+          ],
+          "index_sha256": "ac993c2261febcf3df404c0af73cb691d83b7d23142b57c6297c33df87fdcd6f",
+          "rgba_sha256": "69e37ff7f16bfc8a524d1d7d263134021697fa483d657c8beb5e2cd98759f10a",
+          "cell": [
+            3,
+            2
+          ],
+          "world_cell": [
+            4,
+            3
+          ]
+        },
+        {
+          "name": "f2_canopy_1_3_60",
+          "id": 1945,
+          "phase": 0,
+          "palette": "canopy3_blight",
+          "rect": [
+            64,
+            32,
+            16,
+            16
+          ],
+          "index_sha256": "da14dd1208c4476cb48940efa3f734b7be717b5c87c21f89ef513439fa11cb48",
+          "rgba_sha256": "938f5777965550848f068b170517dee7b635da73e720972b8ee27d97e6bf4a45",
+          "cell": [
+            4,
+            2
+          ],
+          "world_cell": [
+            5,
+            3
+          ]
+        }
+      ]
+    }
+  ]
+}

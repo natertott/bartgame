@@ -177,3 +177,16 @@ docs/sim_runs.json
 !/downloads/forest-concepts-v2-e5e3fcb/forest-concepts-v2-e5e3fcb.zip
 !/art-review/forest-concepts-v2/validation/frozen/v[0156789]/bartgame.map
 !/art-review/forest-concepts-v2/validation/frozen/v10/bartgame.map
+
+# Eight optional leafy-canopy studies and exact reviewed linker maps
+!/downloads/forest-canopy-v3-e923557/canopy-01-veinbound-oak-e923557.gba
+!/downloads/forest-canopy-v3-e923557/canopy-02-patchblight-beech-e923557.gba
+!/downloads/forest-canopy-v3-e923557/canopy-03-spore-drift-e923557.gba
+!/downloads/forest-canopy-v3-e923557/canopy-04-bracketwood-e923557.gba
+!/downloads/forest-canopy-v3-e923557/canopy-05-violet-leaf-mosaic-e923557.gba
+!/downloads/forest-canopy-v3-e923557/canopy-06-black-sap-bough-e923557.gba
+!/downloads/forest-canopy-v3-e923557/canopy-07-silkbound-crown-e923557.gba
+!/downloads/forest-canopy-v3-e923557/canopy-08-canker-bloom-e923557.gba
+!/downloads/forest-canopy-v3-e923557/forest-canopy-v3-e923557.zip
+!/art-review/forest-canopy-v3/validation/frozen/v6/bartgame.map
+!/art-review/forest-canopy-v3/validation/frozen/v1[1-8]/bartgame.map

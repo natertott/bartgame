@@ -124,7 +124,21 @@ New profile 11 compiles without warnings. The first actual pilot exposed a
 real cadence regression from runtime pose scanning and connectivity searches:
 several video intervals did not advance gameplay, and same-input endpoints
 no longer matched the control. That pilot is superseded, and the immutable
-ROM metadata removes that work. The strict action/position comparisons are
-retained. Final publication still requires
-the separately frozen actual movement, roll/recoil, jump and four-direction
-sword/shield captures, including partial cover and visible-body checks.
+ROM metadata removes that work. Final same-input positions, logical states and
+gameplay-update cadence match the control without additional missed updates.
+The cape framebuffer observation was resolved through exact player-layer
+composition: a validated attached cape can replace body colors naturally.
+Explicit native cape/body frame identifiers, palette, matching OAM anchor and
+priority distinguish that overlap from canopy hiding the character. The
+source-body/guard visibility criterion remains separate and strict.
+
+Final source `e923557` records 198 contexts across eight new styles and the
+previous-profile6 control, passing 3,477 runtime checks with 63 full-rate clips.
+Across 16,272 video observations the new displayed-character minimum is 30
+colored pixels/8 connected; native body-versus-canopy minimum is 37/14. No new
+fully canopy-hidden character frames occur. Intentional blinking/shrinking
+and the inherited one-frame menu redraw gap are disclosed separately. These
+are recorded-case results, not a universal frame-time guarantee. The
+[actual/source gallery](../../../../art-review/forest-canopy-v3/README.md)
+provides the frozen motion, roll/recoil, cape and four-direction sword/shield
+evidence and the independent combined audit.

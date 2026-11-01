@@ -976,3 +976,63 @@ upper body remains behind branches. Its actual behavior and costs must be
 verified in mGBA; source composites alone do not establish visibility. Existing
 PDF guidance supports deliberate clusters and controlled lines; horizontal
 tree emphasis is recorded as current user direction.
+
+**Final canopy evidence:** game/art source `e923557aa74b01626f3e599f7c4b50366e096507`
+is frozen in all nineteen profiles 0–18. Every previous profile 0–10 rebuilds
+byte-identically. Production 0 remains SHA256
+`9330a44a4e27d99606a757134aa41a62adb122a74315c400e1ad3427048c8661`.
+All eight new styles keep accepted grey ground and other environment art at
+previous profile 6. The generator, item rules, Bloom artwork/physics/action
+timing, selected bestiary, equipment, UI, Drain and existing glitter remain
+unchanged. The lantern-placement note remains pending.
+
+Actual-room review rejected two intermediate constructions: flattened leaf
+plates, then small closed crown quarters that still looked like masonry in
+connected walls. Final art uses one larger 32px crown and short bark forks on
+exposed lower edges, with dense underbrush backing rather than false walkable
+holes. All 1,504 infected adjacency cases retain green leaves. Complete deep
+source macros measure 20.61–20.80% declared living-green ink; this is a mass
+composition measure, not a biological claim or per-tile quota.
+
+The foreground safeguard copies a lower portion of the current native Bloom
+frame only where canopy would cover it. It preserves directional tool order
+and uses a dedicated upload packet without shrinking the normal queue. An
+early runtime pose-analysis prototype caused missed gameplay updates; final
+immutable metadata for 133 native body frames removes that work. A tiny
+shrinking pose is protected in full without inventing new pixels. An attached
+back-worn cape can cover body pixels naturally; the actual character proof
+accepts only its exact native phase, palette, anchor and OAM composition.
+Source-body visibility against canopy is checked separately.
+
+Final mGBA evidence passes 3,477/3,477 checks across 198 contexts: 176 new-style
+contexts (128 generated, 48 explicit diagnostics) and 22 previous-profile 6
+controls. There are 63 full-rate clips and 63 exact sampled-color GIFs. Across
+16,272 video observations, new styles have no fully canopy-hidden displayed
+characters; measured minimum is 30 exact colored pixels/8 connected. Native
+body-versus-canopy minimum is 37 colored/14 connected. The previous study has
+46 fully hidden observations. Same-input positions, states, geometry, RNG and
+recorded game/IRQ cadence match. One inherited menu redraw frame without hero
+OAM is explicitly disclosed in every profile; it is not foliage occlusion.
+
+Independent combined native/source/runtime verification passes 186,010/186,010.
+The focused source catalog contains 3,952 frame instances (704 canonical,
+3,248 canopy/fringe aliases), all 47 corner cases, four parities and eight exact
+palette inspection GIFs. Actual comparison boards contain 360 literal native
+panels. Source assemblies and inspection timing stay separate from naturally
+generated mGBA contexts and deliberately inserted renderer diagnostics.
+
+Forest BG usage is 814–824/1,024 subtiles and 11/12 world banks. The conservative
+OBJ union is 864/876; the safeguard adds 16 tiles and at most one drawn OBJ.
+Frozen linked memory is 216,820 EWRAM bytes and 21,928 IWRAM bytes. These are
+resource measurements and recorded-case cadence checks, not a universal
+performance or all-seed gameplay guarantee.
+
+**Critique and selection status:** Veinbound Oak, Spore Drift and Canker Bloom
+show the clearest distinct infection approaches at native scale. Patchblight,
+Violet Leaf Mosaic and Black Sap Bough are quieter and closer; silk can read
+as pale strapping. Tree cues are stronger on exposed edges and standalone
+trees than inside dense connected masses, where 32px repetition remains.
+Isolated fragments read as pieces of canopy rather than mature trees. The
+[eight-way review](../../../art-review/forest-canopy-v3/README.md) and
+[playable alternatives](../../../downloads/forest-canopy-v3-e923557/README.md)
+retain these tradeoffs. No whole canopy treatment is selected by this pass.

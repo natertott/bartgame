@@ -1,0 +1,119 @@
+{
+  "method": "Count explicitly authored live-green ink roles among nontransparent painted source pixels. This is a compositional proxy, not a claim that every tile or every dark/purple pixel is biologically infected. The approximate 80/20 brief applies to whole crowns; clipped parity samples are also disclosed.",
+  "profile": 12,
+  "label": "Patchblight Beech",
+  "measurements": {
+    "macro-healthy": {
+      "declared_live_green_pixels": 956,
+      "painted_pixels": 1024,
+      "live_green_percent_of_painted": 93.359,
+      "green_ink_indices": [
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ]
+    },
+    "macro-deep": {
+      "declared_live_green_pixels": 213,
+      "painted_pixels": 1024,
+      "live_green_percent_of_painted": 20.801,
+      "green_ink_indices": [
+        9,
+        10,
+        11
+      ]
+    },
+    "authored-oak": {
+      "declared_live_green_pixels": 879,
+      "painted_pixels": 1088,
+      "live_green_percent_of_painted": 80.79,
+      "source_parts": [
+        "tree_top_nw",
+        "tree_top_ne",
+        "tree_mid_w",
+        "tree_mid_e",
+        "tree_trunk_w",
+        "tree_trunk_e"
+      ]
+    },
+    "authored-sick-tree": {
+      "declared_live_green_pixels": 227,
+      "painted_pixels": 1099,
+      "live_green_percent_of_painted": 20.655,
+      "source_parts": [
+        "sicktree_0",
+        "sicktree_1",
+        "sicktree_2",
+        "sicktree_3",
+        "sicktree_4",
+        "sicktree_5"
+      ]
+    },
+    "authored-dead-tree": {
+      "declared_live_green_pixels": 227,
+      "painted_pixels": 1099,
+      "live_green_percent_of_painted": 20.655,
+      "source_parts": [
+        "btree_0",
+        "btree_1",
+        "btree_2",
+        "btree_3",
+        "btree_4",
+        "btree_5"
+      ]
+    },
+    "deep-isolated-parity-samples": [
+      {
+        "declared_live_green_pixels": 22,
+        "painted_pixels": 168,
+        "live_green_percent_of_painted": 13.095,
+        "green_ink_indices": [
+          9,
+          10,
+          11
+        ],
+        "name": "f2_canopy_1_0_f0",
+        "quadrant": 0
+      },
+      {
+        "declared_live_green_pixels": 27,
+        "painted_pixels": 168,
+        "live_green_percent_of_painted": 16.071,
+        "green_ink_indices": [
+          9,
+          10,
+          11
+        ],
+        "name": "f2_canopy_1_1_f0",
+        "quadrant": 1
+      },
+      {
+        "declared_live_green_pixels": 35,
+        "painted_pixels": 168,
+        "live_green_percent_of_painted": 20.833,
+        "green_ink_indices": [
+          9,
+          10,
+          11
+        ],
+        "name": "f2_canopy_1_2_f0",
+        "quadrant": 2
+      },
+      {
+        "declared_live_green_pixels": 41,
+        "painted_pixels": 168,
+        "live_green_percent_of_painted": 24.405,
+        "green_ink_indices": [
+          9,
+          10,
+          11
+        ],
+        "name": "f2_canopy_1_3_f0",
+        "quadrant": 3
+      }
+    ]
+  }
+}

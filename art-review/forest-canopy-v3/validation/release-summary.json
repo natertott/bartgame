@@ -1,0 +1,81 @@
+{
+  "source_commit": "e923557aa74b01626f3e599f7c4b50366e096507",
+  "roms": [
+    {
+      "option": 1,
+      "profile": 11,
+      "label": "Veinbound Oak",
+      "rom": "canopy-01-veinbound-oak-e923557.gba",
+      "rom_sha256": "1a125213d152e764ad201f87d6097c5d16cc9c8f49ed5837c6a5c6fafd3f940c",
+      "rom_bytes": 638760,
+      "freeze": "freezes/profile-11.json"
+    },
+    {
+      "option": 2,
+      "profile": 12,
+      "label": "Patchblight Beech",
+      "rom": "canopy-02-patchblight-beech-e923557.gba",
+      "rom_sha256": "b22ee8a09b350e30a7b54aafd8dc24ca688b9c28122333576d83390dcb43bbed",
+      "rom_bytes": 638792,
+      "freeze": "freezes/profile-12.json"
+    },
+    {
+      "option": 3,
+      "profile": 13,
+      "label": "Spore Drift",
+      "rom": "canopy-03-spore-drift-e923557.gba",
+      "rom_sha256": "cb51ca2122dd0ae22796eda6d574662074d7021ce7e42ecaa1dd8e0cd62aee2f",
+      "rom_bytes": 638824,
+      "freeze": "freezes/profile-13.json"
+    },
+    {
+      "option": 4,
+      "profile": 14,
+      "label": "Bracketwood",
+      "rom": "canopy-04-bracketwood-e923557.gba",
+      "rom_sha256": "a511bfeb34db8d665fcf7fc49a643f1dd7250a4413f26f114baeb4991756bd91",
+      "rom_bytes": 638984,
+      "freeze": "freezes/profile-14.json"
+    },
+    {
+      "option": 5,
+      "profile": 15,
+      "label": "Violet Leaf Mosaic",
+      "rom": "canopy-05-violet-leaf-mosaic-e923557.gba",
+      "rom_sha256": "75706dae8ecd8bee0a7475a5eb5aaa7463cbcb23ccca627859e84b24269300c7",
+      "rom_bytes": 638984,
+      "freeze": "freezes/profile-15.json"
+    },
+    {
+      "option": 6,
+      "profile": 16,
+      "label": "Black Sap Bough",
+      "rom": "canopy-06-black-sap-bough-e923557.gba",
+      "rom_sha256": "4cdd03ae3c2f55d96dece4d0e67d0cd1838e0d3c316ed2bda711df9e2ff9a8e3",
+      "rom_bytes": 638984,
+      "freeze": "freezes/profile-16.json"
+    },
+    {
+      "option": 7,
+      "profile": 17,
+      "label": "Silkbound Crown",
+      "rom": "canopy-07-silkbound-crown-e923557.gba",
+      "rom_sha256": "4dda2734fd2f4934b08c14aa5cbb7a9854f8fecca237d7677ebcf74bfb5ee2b3",
+      "rom_bytes": 638664,
+      "freeze": "freezes/profile-17.json"
+    },
+    {
+      "option": 8,
+      "profile": 18,
+      "label": "Canker Bloom",
+      "rom": "canopy-08-canker-bloom-e923557.gba",
+      "rom_sha256": "54768ae3f4462743dabd72e03ddd3c9f711ad4ebff2e09474bd3bd85d427e4af",
+      "rom_bytes": 638984,
+      "freeze": "freezes/profile-18.json"
+    }
+  ],
+  "zip": "forest-canopy-v3-e923557.zip",
+  "zip_sha256": "4d0681098cd87317e4327a6f7fa422b22061c3b1fa40b4ce3e7ce402c125f14a",
+  "zip_members": 18,
+  "crc_and_members_verified": true
+}

@@ -1,5 +1,22 @@
 # BARTGAME downloads
 
+## Eight leafy canopy alternatives
+
+Veinbound Oak, Patchblight Beech, Spore Drift, Bracketwood, Violet Leaf Mosaic,
+Black Sap Bough, Silkbound Crown and Canker Bloom retain grey dead grass and
+living greenery while exploring eight infection treatments over recognizable
+tree crowns. Horizontal branches partly cover Bloom while his current native
+silhouette remains visible.
+
+- [Compare all eight in actual mGBA and native sprite sheets](https://github.com/natertott/bartgame/blob/forest-canopy-v3/art-review/forest-canopy-v3/README.md)
+- [Download all eight playable ROMs](https://raw.githubusercontent.com/natertott/bartgame/forest-canopy-v3/downloads/forest-canopy-v3-e923557/forest-canopy-v3-e923557.zip)
+- [Individual ROMs and checksums](forest-canopy-v3-e923557/README.md)
+
+Game/art source `e923557`. These remain optional `BART_FOREST=11..18`
+comparisons, using previous profile6 as fixed non-canopy context. Ordinary
+forest0 and all historical profiles0–10 remain byte-identical. Actual generated
+rooms, explicit diagnostics and source diagrams are separately labelled.
+
 ## Second forest pass: infection and layered depth
 
 Five new options add blackened wood and bright purple blight, foreground leaves

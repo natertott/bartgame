@@ -1,0 +1,26 @@
+{
+  "source_commit": "e923557aa74b01626f3e599f7c4b50366e096507",
+  "tools": {
+    "tools/forest_v3_review.py": {
+      "sha256": "87b4f48479dcd414037581c35bdbdfc319123ab035b2a3d7f6991403cc6f3802",
+      "repo_path": "bartgame/tools/forest_v3_review.py"
+    },
+    "tools/forest_v3_gallery.py": {
+      "sha256": "94867a16172d3e445e05d552f4650afd449c9216173564a623513d5a47ba3387",
+      "repo_path": "bartgame/tools/forest_v3_gallery.py"
+    },
+    "tools/forest_v3_audit.py": {
+      "sha256": "1415e9d782c73cb01536ef2115539966e82aa63c89469c7d7b0f9d55247b3ede",
+      "repo_path": "bartgame/tools/forest_v3_audit.py"
+    },
+    "tools/forest_v2_review.py": {
+      "sha256": "27f61fdfc4bac4dea3b0defe05cddcbff8f4ab05eedc4e761cb219698e15948b",
+      "repo_path": "bartgame/tools/forest_v2_review.py"
+    },
+    "tools/forest_concept_gallery.py": {
+      "sha256": "c604f90f998f7501720539f9f3a02c3b62a34e6f42934152c343c8fe23d4c975",
+      "repo_path": "bartgame/tools/forest_concept_gallery.py"
+    }
+  },
+  "note": "Capture/gallery/audit tools are separately hashed. Game/art freeze inputs and exact command arguments are in the frozen manifests and original capture reports."
+}

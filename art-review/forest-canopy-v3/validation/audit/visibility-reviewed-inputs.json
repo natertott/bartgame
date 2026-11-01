@@ -1,0 +1,16 @@
+{
+  "status": "Final optimized-source review; supersedes pre-optimization runtime-scan review",
+  "source_commit": "e923557aa74b01626f3e599f7c4b50366e096507",
+  "sha256": {
+    "tools/build_assets.py": "319f04aa6a6b2d089a2159fd429d25e0045c2479b64596b339048e36e7f5da62",
+    "src/player.c": "8a93e64f439bf5fa61be50c65c0f036c3784a15afaa94cf378d31f3ee677b158",
+    "src/room.c": "60ab60feb56023ae18e5ef82684195340e9825a715ec36fa61464a77372578c3",
+    "src/actor.c": "da9600bb4ec3d564ea6fd495591610c9cd4d6317f2c2bcb9c4eca355621f6b4f",
+    "src/player.h": "0f64172f389f311dbee797eaf0905b4032bb9cbad120181977578608e5e5e204",
+    "src/actor.h": "3fa744b5a0d5eab5058c3bceeb29add34651c0f6031d2e5b822bdeff72a39759",
+    "tools/forest_v3_review.py": "87b4f48479dcd414037581c35bdbdfc319123ab035b2a3d7f6991403cc6f3802",
+    "tools/forest_v3_audit.py": "1415e9d782c73cb01536ef2115539966e82aa63c89469c7d7b0f9d55247b3ede",
+    "art/forest_concepts_v3_terrain.py": "e905aac03c5b46b2388b7e3f83c8e9763eef6e579cd6ee75b2786e9f3639e92e"
+  },
+  "combined_report_sha256": "ae2879125daa815ee15243ebe32daf067e0586f0359b8340c5b3412ca96dc262"
+}

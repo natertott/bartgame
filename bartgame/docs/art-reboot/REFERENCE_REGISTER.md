@@ -164,3 +164,13 @@ vertical and diagonal pixel runs; the current preference for horizontal tree
 structure is user direction, not a universal orientation rule attributed to
 that tutorial. Source assemblies and eventual real movement captures remain
 separate evidence.
+
+The [canopy authoring notes](references/FOREST_V3_TERRAIN.md) and
+[visibility implementation](references/FOREST_V3_DEPTH.md) record the final
+native construction and actual-room corrections. Source `e923557` is frozen
+for the [eight-way source/actual review](../../../art-review/forest-canopy-v3/README.md).
+The accepted grey ground and all non-canopy art are verified against the
+previous profile6; new actual captures separately test recognizable tree
+boundaries, partial character cover and matched gameplay cadence. All eight
+infection methods remain unselected. These observations extend the direct
+user feedback and existing read references; no new article is attributed.

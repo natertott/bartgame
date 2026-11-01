@@ -1,0 +1,1302 @@
+{
+  "method": "Independent focused canopy source/native and scope audit.\n\nUses direct new painters with independently enumerated valid adjacency cases,\nthen decodes the frozen ROM using native GBA map entries/flip bits/palettes.\nNo generation corpus is repeated: roomgen source is separately byte checked.\n",
+  "source_commits": [
+    "e923557aa74b01626f3e599f7c4b50366e096507"
+  ],
+  "auditor_sha256": "1415e9d782c73cb01536ef2115539966e82aa63c89469c7d7b0f9d55247b3ede",
+  "audit_dependency_sha256": {
+    "tools/forest_v2_audit.py": "54bc933076e579a06a6bc19406e49e11dc9038d6391876a117c7a4b5a788391e",
+    "tools/sewer_concept_audit.py": "d975c773dfa1ba641169b30fa42128b2a6671d1f1f90ce3fb99b16c4a06d76c5",
+    "tools/forest_concept_audit.py": "41267bba1bd0b43830b0a0b25ac6499ab989740f76db66a05c930c018b1f981b",
+    "tools/enemy_study_audit.py": "87c8369100d0e84988b49d9e4a7b7b932e2cd3c9b2217a3516527a4d400a30b4"
+  },
+  "base_source_sha256": "cd8972efdf44de1155bbfc1763439d53ae1a5348287331e56ed6d3e0b1c57da6",
+  "inventory_sha256": "a7e9255dc7b6d3292ccda1aeb3943ccbff1392df912db25ab89f77c427710e1f",
+  "profiles": [
+    {
+      "profile": 11,
+      "source_commit": "e923557aa74b01626f3e599f7c4b50366e096507",
+      "frozen_input_sha256": {
+        "bartgame.gba": "1a125213d152e764ad201f87d6097c5d16cc9c8f49ed5837c6a5c6fafd3f940c",
+        "bartgame.map": "a8b2a12d0f7a19c8542344e543b59691c02e89708be01fd5bba4b7a4112e024e",
+        "assets.h": "8eff4d85971c0eb262e2137222a211d355a26e63a64d9286d72e7cd8c485f9cb",
+        "freeze.json": "62c223a352cb50309299c5273cd9f644f297f1488ff44c1697fe3a941f14811a"
+      },
+      "rom_sha256": "1a125213d152e764ad201f87d6097c5d16cc9c8f49ed5837c6a5c6fafd3f940c",
+      "native": {
+        "unique_BG_IDs": 918,
+        "unique_BG_frames": 1029,
+        "topology_IDs": 457,
+        "OBJ_frame_instances": 30,
+        "area_frame_instances": {
+          "forest": 938,
+          "myst": 101
+        }
+      },
+      "pulse": {
+        "banks": [
+          "blight",
+          "canopy3_blight"
+        ],
+        "indices": {
+          "blight": [
+            5,
+            6,
+            7,
+            13,
+            14
+          ],
+          "canopy3_blight": [
+            5,
+            6,
+            7,
+            13,
+            14
+          ]
+        },
+        "phase_count": 4
+      },
+      "visibility_metadata": {
+        "frames": 133,
+        "row_bytes": 10,
+        "table_sha256": "a15f52cbe003b60ce3bc755e8033b066601159b7bb6a9a2913dac71f413f284f",
+        "criterion": "native source counts plus independent four-connected component and minimal-row proof; actual framebuffer visibility checked separately"
+      },
+      "obj_budget": {
+        "variant": 11,
+        "enemy": 11,
+        "used": 864,
+        "limit": 876,
+        "free": 12,
+        "allocations": {
+          "hero/body+sword+streamed-shield foundation": 32,
+          "items whole sheet": 84,
+          "fx whole sheet": 52,
+          "proj whole sheet": 4,
+          "lift whole sheet": 16,
+          "pick32 whole sheet": 40,
+          "Bloom streamed action": 16,
+          "Bloom ground shadow": 2,
+          "beetle whole sheet": 24,
+          "bat whole sheet": 12,
+          "spitter whole sheet": 48,
+          "slime whole sheet": 12,
+          "knight whole sheet": 192,
+          "ksword whole sheet": 8,
+          "boss streamed frame": 32,
+          "chest streamed frame": 16,
+          "entrance streamed frame": 32,
+          "ambient whole sheet": 6,
+          "arrow whole sheet": 12,
+          "seven menu icons": 112,
+          "trial mouth whole sheet": 48,
+          "one forest/trial NPC frame": 16,
+          "four streamed forestlandmarks": 32,
+          "foreground lower-body visibility fragment": 16
+        },
+        "limits": "Static allocation superset, not an OAM peak/CPU guarantee. Includes every enemy family although ordinary themed rooms use subsets. Portrait/HUD use their fixed higher reservations."
+      },
+      "memory": {
+        "__bss_end": 50353580,
+        "__ewram_bss_end": 33771252
+      }
+    },
+    {
+      "profile": 12,
+      "source_commit": "e923557aa74b01626f3e599f7c4b50366e096507",
+      "frozen_input_sha256": {
+        "bartgame.gba": "b22ee8a09b350e30a7b54aafd8dc24ca688b9c28122333576d83390dcb43bbed",
+        "bartgame.map": "11c1c8db80d2666b779ff20ec8bbe042fac198c54bbfb082137ada46b9651fdc",
+        "assets.h": "9193492b08b86e4d80a2a466e6d49bcc78303cd4ef56c5e1a4618e543de6c37e",
+        "freeze.json": "f93b203b1056a76bc84b9b7e86574c5e1a9b9e109f6aeb0cd58c76ddf9fb734c"
+      },
+      "rom_sha256": "b22ee8a09b350e30a7b54aafd8dc24ca688b9c28122333576d83390dcb43bbed",
+      "native": {
+        "unique_BG_IDs": 918,
+        "unique_BG_frames": 1029,
+        "topology_IDs": 457,
+        "OBJ_frame_instances": 30,
+        "area_frame_instances": {
+          "forest": 938,
+          "myst": 101
+        }
+      },
+      "pulse": {
+        "banks": [
+          "blight",
+          "canopy3_blight"
+        ],
+        "indices": {
+          "blight": [
+            5,
+            6,
+            7,
+            13,
+            14
+          ],
+          "canopy3_blight": [
+            5,
+            6,
+            7,
+            13,
+            14
+          ]
+        },
+        "phase_count": 4
+      },
+      "visibility_metadata": {
+        "frames": 133,
+        "row_bytes": 10,
+        "table_sha256": "a15f52cbe003b60ce3bc755e8033b066601159b7bb6a9a2913dac71f413f284f",
+        "criterion": "native source counts plus independent four-connected component and minimal-row proof; actual framebuffer visibility checked separately"
+      },
+      "obj_budget": {
+        "variant": 12,
+        "enemy": 11,
+        "used": 864,
+        "limit": 876,
+        "free": 12,
+        "allocations": {
+          "hero/body+sword+streamed-shield foundation": 32,
+          "items whole sheet": 84,
+          "fx whole sheet": 52,
+          "proj whole sheet": 4,
+          "lift whole sheet": 16,
+          "pick32 whole sheet": 40,
+          "Bloom streamed action": 16,
+          "Bloom ground shadow": 2,
+          "beetle whole sheet": 24,
+          "bat whole sheet": 12,
+          "spitter whole sheet": 48,
+          "slime whole sheet": 12,
+          "knight whole sheet": 192,
+          "ksword whole sheet": 8,
+          "boss streamed frame": 32,
+          "chest streamed frame": 16,
+          "entrance streamed frame": 32,
+          "ambient whole sheet": 6,
+          "arrow whole sheet": 12,
+          "seven menu icons": 112,
+          "trial mouth whole sheet": 48,
+          "one forest/trial NPC frame": 16,
+          "four streamed forestlandmarks": 32,
+          "foreground lower-body visibility fragment": 16
+        },
+        "limits": "Static allocation superset, not an OAM peak/CPU guarantee. Includes every enemy family although ordinary themed rooms use subsets. Portrait/HUD use their fixed higher reservations."
+      },
+      "memory": {
+        "__bss_end": 50353580,
+        "__ewram_bss_end": 33771252
+      }
+    },
+    {
+      "profile": 13,
+      "source_commit": "e923557aa74b01626f3e599f7c4b50366e096507",
+      "frozen_input_sha256": {
+        "bartgame.gba": "cb51ca2122dd0ae22796eda6d574662074d7021ce7e42ecaa1dd8e0cd62aee2f",
+        "bartgame.map": "ff9ec900f858b253d91aed2c5a886b310d5307c64fc8d3c482f950e4d7b2dd15",
+        "assets.h": "ccaa85db5f50a82a5e4aa9b7d8c8e47968827ed735b3a17289b2e79ab43ff12a",
+        "freeze.json": "c40b28a518f1ec667e9c76fb69bdac0caf9c90f2d2a1a7734205798f1c849058"
+      },
+      "rom_sha256": "cb51ca2122dd0ae22796eda6d574662074d7021ce7e42ecaa1dd8e0cd62aee2f",
+      "native": {
+        "unique_BG_IDs": 918,
+        "unique_BG_frames": 1029,
+        "topology_IDs": 457,
+        "OBJ_frame_instances": 30,
+        "area_frame_instances": {
+          "forest": 938,
+          "myst": 101
+        }
+      },
+      "pulse": {
+        "banks": [
+          "blight",
+          "canopy3_blight"
+        ],
+        "indices": {
+          "blight": [
+            5,
+            6,
+            7,
+            13,
+            14
+          ],
+          "canopy3_blight": [
+            5,
+            6,
+            7,
+            13,
+            14
+          ]
+        },
+        "phase_count": 4
+      },
+      "visibility_metadata": {
+        "frames": 133,
+        "row_bytes": 10,
+        "table_sha256": "a15f52cbe003b60ce3bc755e8033b066601159b7bb6a9a2913dac71f413f284f",
+        "criterion": "native source counts plus independent four-connected component and minimal-row proof; actual framebuffer visibility checked separately"
+      },
+      "obj_budget": {
+        "variant": 13,
+        "enemy": 11,
+        "used": 864,
+        "limit": 876,
+        "free": 12,
+        "allocations": {
+          "hero/body+sword+streamed-shield foundation": 32,
+          "items whole sheet": 84,
+          "fx whole sheet": 52,
+          "proj whole sheet": 4,
+          "lift whole sheet": 16,
+          "pick32 whole sheet": 40,
+          "Bloom streamed action": 16,
+          "Bloom ground shadow": 2,
+          "beetle whole sheet": 24,
+          "bat whole sheet": 12,
+          "spitter whole sheet": 48,
+          "slime whole sheet": 12,
+          "knight whole sheet": 192,
+          "ksword whole sheet": 8,
+          "boss streamed frame": 32,
+          "chest streamed frame": 16,
+          "entrance streamed frame": 32,
+          "ambient whole sheet": 6,
+          "arrow whole sheet": 12,
+          "seven menu icons": 112,
+          "trial mouth whole sheet": 48,
+          "one forest/trial NPC frame": 16,
+          "four streamed forestlandmarks": 32,
+          "foreground lower-body visibility fragment": 16
+        },
+        "limits": "Static allocation superset, not an OAM peak/CPU guarantee. Includes every enemy family although ordinary themed rooms use subsets. Portrait/HUD use their fixed higher reservations."
+      },
+      "memory": {
+        "__bss_end": 50353580,
+        "__ewram_bss_end": 33771252
+      }
+    },
+    {
+      "profile": 14,
+      "source_commit": "e923557aa74b01626f3e599f7c4b50366e096507",
+      "frozen_input_sha256": {
+        "bartgame.gba": "a511bfeb34db8d665fcf7fc49a643f1dd7250a4413f26f114baeb4991756bd91",
+        "bartgame.map": "94b84c35668903fdbebb8381227513680c281c154c6c26d8a1738382b34da5da",
+        "assets.h": "be5673a1e4a7489d118cf026e38ddf8a58fb1cb21cbabe74b4518e6b665f8aef",
+        "freeze.json": "ed33e53b55898bb054a7794c3b19d83dd21a7ba823a335a235706c5017bbdac5"
+      },
+      "rom_sha256": "a511bfeb34db8d665fcf7fc49a643f1dd7250a4413f26f114baeb4991756bd91",
+      "native": {
+        "unique_BG_IDs": 918,
+        "unique_BG_frames": 1029,
+        "topology_IDs": 457,
+        "OBJ_frame_instances": 30,
+        "area_frame_instances": {
+          "forest": 938,
+          "myst": 101
+        }
+      },
+      "pulse": {
+        "banks": [
+          "blight",
+          "canopy3_blight"
+        ],
+        "indices": {
+          "blight": [
+            5,
+            6,
+            7,
+            13,
+            14
+          ],
+          "canopy3_blight": [
+            5,
+            6,
+            7,
+            13,
+            14
+          ]
+        },
+        "phase_count": 4
+      },
+      "visibility_metadata": {
+        "frames": 133,
+        "row_bytes": 10,
+        "table_sha256": "a15f52cbe003b60ce3bc755e8033b066601159b7bb6a9a2913dac71f413f284f",
+        "criterion": "native source counts plus independent four-connected component and minimal-row proof; actual framebuffer visibility checked separately"
+      },
+      "obj_budget": {
+        "variant": 14,
+        "enemy": 11,
+        "used": 864,
+        "limit": 876,
+        "free": 12,
+        "allocations": {
+          "hero/body+sword+streamed-shield foundation": 32,
+          "items whole sheet": 84,
+          "fx whole sheet": 52,
+          "proj whole sheet": 4,
+          "lift whole sheet": 16,
+          "pick32 whole sheet": 40,
+          "Bloom streamed action": 16,
+          "Bloom ground shadow": 2,
+          "beetle whole sheet": 24,
+          "bat whole sheet": 12,
+          "spitter whole sheet": 48,
+          "slime whole sheet": 12,
+          "knight whole sheet": 192,
+          "ksword whole sheet": 8,
+          "boss streamed frame": 32,
+          "chest streamed frame": 16,
+          "entrance streamed frame": 32,
+          "ambient whole sheet": 6,
+          "arrow whole sheet": 12,
+          "seven menu icons": 112,
+          "trial mouth whole sheet": 48,
+          "one forest/trial NPC frame": 16,
+          "four streamed forestlandmarks": 32,
+          "foreground lower-body visibility fragment": 16
+        },
+        "limits": "Static allocation superset, not an OAM peak/CPU guarantee. Includes every enemy family although ordinary themed rooms use subsets. Portrait/HUD use their fixed higher reservations."
+      },
+      "memory": {
+        "__bss_end": 50353580,
+        "__ewram_bss_end": 33771252
+      }
+    },
+    {
+      "profile": 15,
+      "source_commit": "e923557aa74b01626f3e599f7c4b50366e096507",
+      "frozen_input_sha256": {
+        "bartgame.gba": "75706dae8ecd8bee0a7475a5eb5aaa7463cbcb23ccca627859e84b24269300c7",
+        "bartgame.map": "3e9b52a29fe4879f5c0b8fd821025ecc885366f8dcae70affa34542ca6fffdb3",
+        "assets.h": "f8369bf63967e8be676dd8d2a7fcab5275c83855126648eccb361a1a013b7c95",
+        "freeze.json": "c43fb5d536ec62190bb21ce683091966fae6c35aad9baa66d17dc92764902445"
+      },
+      "rom_sha256": "75706dae8ecd8bee0a7475a5eb5aaa7463cbcb23ccca627859e84b24269300c7",
+      "native": {
+        "unique_BG_IDs": 918,
+        "unique_BG_frames": 1029,
+        "topology_IDs": 457,
+        "OBJ_frame_instances": 30,
+        "area_frame_instances": {
+          "forest": 938,
+          "myst": 101
+        }
+      },
+      "pulse": {
+        "banks": [
+          "blight",
+          "canopy3_blight"
+        ],
+        "indices": {
+          "blight": [
+            5,
+            6,
+            7,
+            13,
+            14
+          ],
+          "canopy3_blight": [
+            5,
+            6,
+            7,
+            13,
+            14
+          ]
+        },
+        "phase_count": 4
+      },
+      "visibility_metadata": {
+        "frames": 133,
+        "row_bytes": 10,
+        "table_sha256": "a15f52cbe003b60ce3bc755e8033b066601159b7bb6a9a2913dac71f413f284f",
+        "criterion": "native source counts plus independent four-connected component and minimal-row proof; actual framebuffer visibility checked separately"
+      },
+      "obj_budget": {
+        "variant": 15,
+        "enemy": 11,
+        "used": 864,
+        "limit": 876,
+        "free": 12,
+        "allocations": {
+          "hero/body+sword+streamed-shield foundation": 32,
+          "items whole sheet": 84,
+          "fx whole sheet": 52,
+          "proj whole sheet": 4,
+          "lift whole sheet": 16,
+          "pick32 whole sheet": 40,
+          "Bloom streamed action": 16,
+          "Bloom ground shadow": 2,
+          "beetle whole sheet": 24,
+          "bat whole sheet": 12,
+          "spitter whole sheet": 48,
+          "slime whole sheet": 12,
+          "knight whole sheet": 192,
+          "ksword whole sheet": 8,
+          "boss streamed frame": 32,
+          "chest streamed frame": 16,
+          "entrance streamed frame": 32,
+          "ambient whole sheet": 6,
+          "arrow whole sheet": 12,
+          "seven menu icons": 112,
+          "trial mouth whole sheet": 48,
+          "one forest/trial NPC frame": 16,
+          "four streamed forestlandmarks": 32,
+          "foreground lower-body visibility fragment": 16
+        },
+        "limits": "Static allocation superset, not an OAM peak/CPU guarantee. Includes every enemy family although ordinary themed rooms use subsets. Portrait/HUD use their fixed higher reservations."
+      },
+      "memory": {
+        "__bss_end": 50353580,
+        "__ewram_bss_end": 33771252
+      }
+    },
+    {
+      "profile": 16,
+      "source_commit": "e923557aa74b01626f3e599f7c4b50366e096507",
+      "frozen_input_sha256": {
+        "bartgame.gba": "4cdd03ae3c2f55d96dece4d0e67d0cd1838e0d3c316ed2bda711df9e2ff9a8e3",
+        "bartgame.map": "062b0040f4d13e70d99cf46d5b056f081ca9f3812cc0786cc48248f3cd25e53e",
+        "assets.h": "7abefaccfe509d3af72f0b624abfcd28ef4f209d82dc9d82a840d91ff6a1c244",
+        "freeze.json": "95b6674702bccb4d85385030e699c578a39344b54dede418d5c9430a42d9231c"
+      },
+      "rom_sha256": "4cdd03ae3c2f55d96dece4d0e67d0cd1838e0d3c316ed2bda711df9e2ff9a8e3",
+      "native": {
+        "unique_BG_IDs": 918,
+        "unique_BG_frames": 1029,
+        "topology_IDs": 457,
+        "OBJ_frame_instances": 30,
+        "area_frame_instances": {
+          "forest": 938,
+          "myst": 101
+        }
+      },
+      "pulse": {
+        "banks": [
+          "blight",
+          "canopy3_blight"
+        ],
+        "indices": {
+          "blight": [
+            5,
+            6,
+            7,
+            13,
+            14
+          ],
+          "canopy3_blight": [
+            5,
+            6,
+            7,
+            13,
+            14
+          ]
+        },
+        "phase_count": 4
+      },
+      "visibility_metadata": {
+        "frames": 133,
+        "row_bytes": 10,
+        "table_sha256": "a15f52cbe003b60ce3bc755e8033b066601159b7bb6a9a2913dac71f413f284f",
+        "criterion": "native source counts plus independent four-connected component and minimal-row proof; actual framebuffer visibility checked separately"
+      },
+      "obj_budget": {
+        "variant": 16,
+        "enemy": 11,
+        "used": 864,
+        "limit": 876,
+        "free": 12,
+        "allocations": {
+          "hero/body+sword+streamed-shield foundation": 32,
+          "items whole sheet": 84,
+          "fx whole sheet": 52,
+          "proj whole sheet": 4,
+          "lift whole sheet": 16,
+          "pick32 whole sheet": 40,
+          "Bloom streamed action": 16,
+          "Bloom ground shadow": 2,
+          "beetle whole sheet": 24,
+          "bat whole sheet": 12,
+          "spitter whole sheet": 48,
+          "slime whole sheet": 12,
+          "knight whole sheet": 192,
+          "ksword whole sheet": 8,
+          "boss streamed frame": 32,
+          "chest streamed frame": 16,
+          "entrance streamed frame": 32,
+          "ambient whole sheet": 6,
+          "arrow whole sheet": 12,
+          "seven menu icons": 112,
+          "trial mouth whole sheet": 48,
+          "one forest/trial NPC frame": 16,
+          "four streamed forestlandmarks": 32,
+          "foreground lower-body visibility fragment": 16
+        },
+        "limits": "Static allocation superset, not an OAM peak/CPU guarantee. Includes every enemy family although ordinary themed rooms use subsets. Portrait/HUD use their fixed higher reservations."
+      },
+      "memory": {
+        "__bss_end": 50353580,
+        "__ewram_bss_end": 33771252
+      }
+    },
+    {
+      "profile": 17,
+      "source_commit": "e923557aa74b01626f3e599f7c4b50366e096507",
+      "frozen_input_sha256": {
+        "bartgame.gba": "4dda2734fd2f4934b08c14aa5cbb7a9854f8fecca237d7677ebcf74bfb5ee2b3",
+        "bartgame.map": "119eda8d78a700b88156d37418a13ae5d8259b1ce1331ddce362579dd2518e07",
+        "assets.h": "bbc6463035745661a328e7eaa06ffc5747ad1af0700ecda638350b6be73ee4fa",
+        "freeze.json": "5a9448ffaf7c590bc07786c4f7299eb6ba85738c466082294dc9223e2069f5b6"
+      },
+      "rom_sha256": "4dda2734fd2f4934b08c14aa5cbb7a9854f8fecca237d7677ebcf74bfb5ee2b3",
+      "native": {
+        "unique_BG_IDs": 918,
+        "unique_BG_frames": 1029,
+        "topology_IDs": 457,
+        "OBJ_frame_instances": 30,
+        "area_frame_instances": {
+          "forest": 938,
+          "myst": 101
+        }
+      },
+      "pulse": {
+        "banks": [
+          "blight",
+          "canopy3_blight"
+        ],
+        "indices": {
+          "blight": [
+            5,
+            6,
+            7,
+            13,
+            14
+          ],
+          "canopy3_blight": [
+            5,
+            6,
+            7,
+            13,
+            14
+          ]
+        },
+        "phase_count": 4
+      },
+      "visibility_metadata": {
+        "frames": 133,
+        "row_bytes": 10,
+        "table_sha256": "a15f52cbe003b60ce3bc755e8033b066601159b7bb6a9a2913dac71f413f284f",
+        "criterion": "native source counts plus independent four-connected component and minimal-row proof; actual framebuffer visibility checked separately"
+      },
+      "obj_budget": {
+        "variant": 17,
+        "enemy": 11,
+        "used": 864,
+        "limit": 876,
+        "free": 12,
+        "allocations": {
+          "hero/body+sword+streamed-shield foundation": 32,
+          "items whole sheet": 84,
+          "fx whole sheet": 52,
+          "proj whole sheet": 4,
+          "lift whole sheet": 16,
+          "pick32 whole sheet": 40,
+          "Bloom streamed action": 16,
+          "Bloom ground shadow": 2,
+          "beetle whole sheet": 24,
+          "bat whole sheet": 12,
+          "spitter whole sheet": 48,
+          "slime whole sheet": 12,
+          "knight whole sheet": 192,
+          "ksword whole sheet": 8,
+          "boss streamed frame": 32,
+          "chest streamed frame": 16,
+          "entrance streamed frame": 32,
+          "ambient whole sheet": 6,
+          "arrow whole sheet": 12,
+          "seven menu icons": 112,
+          "trial mouth whole sheet": 48,
+          "one forest/trial NPC frame": 16,
+          "four streamed forestlandmarks": 32,
+          "foreground lower-body visibility fragment": 16
+        },
+        "limits": "Static allocation superset, not an OAM peak/CPU guarantee. Includes every enemy family although ordinary themed rooms use subsets. Portrait/HUD use their fixed higher reservations."
+      },
+      "memory": {
+        "__bss_end": 50353580,
+        "__ewram_bss_end": 33771252
+      }
+    },
+    {
+      "profile": 18,
+      "source_commit": "e923557aa74b01626f3e599f7c4b50366e096507",
+      "frozen_input_sha256": {
+        "bartgame.gba": "54768ae3f4462743dabd72e03ddd3c9f711ad4ebff2e09474bd3bd85d427e4af",
+        "bartgame.map": "b10c54d71ebd24cf3461b4931561722dc8243ece4c247178a7219cd374536139",
+        "assets.h": "ee99e357247c4e8dab846e92d8c44fee788531b597dab43f12d6d39dea8faffc",
+        "freeze.json": "a0933bd4579ea8e56826f608dd448d0dd81b739a3becc72e30d1f635d1d5ef63"
+      },
+      "rom_sha256": "54768ae3f4462743dabd72e03ddd3c9f711ad4ebff2e09474bd3bd85d427e4af",
+      "native": {
+        "unique_BG_IDs": 918,
+        "unique_BG_frames": 1029,
+        "topology_IDs": 457,
+        "OBJ_frame_instances": 30,
+        "area_frame_instances": {
+          "forest": 938,
+          "myst": 101
+        }
+      },
+      "pulse": {
+        "banks": [
+          "blight",
+          "canopy3_blight"
+        ],
+        "indices": {
+          "blight": [
+            5,
+            6,
+            7,
+            13,
+            14
+          ],
+          "canopy3_blight": [
+            5,
+            6,
+            7,
+            13,
+            14
+          ]
+        },
+        "phase_count": 4
+      },
+      "visibility_metadata": {
+        "frames": 133,
+        "row_bytes": 10,
+        "table_sha256": "a15f52cbe003b60ce3bc755e8033b066601159b7bb6a9a2913dac71f413f284f",
+        "criterion": "native source counts plus independent four-connected component and minimal-row proof; actual framebuffer visibility checked separately"
+      },
+      "obj_budget": {
+        "variant": 18,
+        "enemy": 11,
+        "used": 864,
+        "limit": 876,
+        "free": 12,
+        "allocations": {
+          "hero/body+sword+streamed-shield foundation": 32,
+          "items whole sheet": 84,
+          "fx whole sheet": 52,
+          "proj whole sheet": 4,
+          "lift whole sheet": 16,
+          "pick32 whole sheet": 40,
+          "Bloom streamed action": 16,
+          "Bloom ground shadow": 2,
+          "beetle whole sheet": 24,
+          "bat whole sheet": 12,
+          "spitter whole sheet": 48,
+          "slime whole sheet": 12,
+          "knight whole sheet": 192,
+          "ksword whole sheet": 8,
+          "boss streamed frame": 32,
+          "chest streamed frame": 16,
+          "entrance streamed frame": 32,
+          "ambient whole sheet": 6,
+          "arrow whole sheet": 12,
+          "seven menu icons": 112,
+          "trial mouth whole sheet": 48,
+          "one forest/trial NPC frame": 16,
+          "four streamed forestlandmarks": 32,
+          "foreground lower-body visibility fragment": 16
+        },
+        "limits": "Static allocation superset, not an OAM peak/CPU guarantee. Includes every enemy family although ordinary themed rooms use subsets. Portrait/HUD use their fixed higher reservations."
+      },
+      "memory": {
+        "__bss_end": 50353580,
+        "__ewram_bss_end": 33771252
+      }
+    }
+  ],
+  "obj_budgets": [
+    {
+      "variant": 11,
+      "enemy": 11,
+      "used": 864,
+      "limit": 876,
+      "free": 12,
+      "allocations": {
+        "hero/body+sword+streamed-shield foundation": 32,
+        "items whole sheet": 84,
+        "fx whole sheet": 52,
+        "proj whole sheet": 4,
+        "lift whole sheet": 16,
+        "pick32 whole sheet": 40,
+        "Bloom streamed action": 16,
+        "Bloom ground shadow": 2,
+        "beetle whole sheet": 24,
+        "bat whole sheet": 12,
+        "spitter whole sheet": 48,
+        "slime whole sheet": 12,
+        "knight whole sheet": 192,
+        "ksword whole sheet": 8,
+        "boss streamed frame": 32,
+        "chest streamed frame": 16,
+        "entrance streamed frame": 32,
+        "ambient whole sheet": 6,
+        "arrow whole sheet": 12,
+        "seven menu icons": 112,
+        "trial mouth whole sheet": 48,
+        "one forest/trial NPC frame": 16,
+        "four streamed forestlandmarks": 32,
+        "foreground lower-body visibility fragment": 16
+      },
+      "limits": "Static allocation superset, not an OAM peak/CPU guarantee. Includes every enemy family although ordinary themed rooms use subsets. Portrait/HUD use their fixed higher reservations."
+    },
+    {
+      "variant": 12,
+      "enemy": 11,
+      "used": 864,
+      "limit": 876,
+      "free": 12,
+      "allocations": {
+        "hero/body+sword+streamed-shield foundation": 32,
+        "items whole sheet": 84,
+        "fx whole sheet": 52,
+        "proj whole sheet": 4,
+        "lift whole sheet": 16,
+        "pick32 whole sheet": 40,
+        "Bloom streamed action": 16,
+        "Bloom ground shadow": 2,
+        "beetle whole sheet": 24,
+        "bat whole sheet": 12,
+        "spitter whole sheet": 48,
+        "slime whole sheet": 12,
+        "knight whole sheet": 192,
+        "ksword whole sheet": 8,
+        "boss streamed frame": 32,
+        "chest streamed frame": 16,
+        "entrance streamed frame": 32,
+        "ambient whole sheet": 6,
+        "arrow whole sheet": 12,
+        "seven menu icons": 112,
+        "trial mouth whole sheet": 48,
+        "one forest/trial NPC frame": 16,
+        "four streamed forestlandmarks": 32,
+        "foreground lower-body visibility fragment": 16
+      },
+      "limits": "Static allocation superset, not an OAM peak/CPU guarantee. Includes every enemy family although ordinary themed rooms use subsets. Portrait/HUD use their fixed higher reservations."
+    },
+    {
+      "variant": 13,
+      "enemy": 11,
+      "used": 864,
+      "limit": 876,
+      "free": 12,
+      "allocations": {
+        "hero/body+sword+streamed-shield foundation": 32,
+        "items whole sheet": 84,
+        "fx whole sheet": 52,
+        "proj whole sheet": 4,
+        "lift whole sheet": 16,
+        "pick32 whole sheet": 40,
+        "Bloom streamed action": 16,
+        "Bloom ground shadow": 2,
+        "beetle whole sheet": 24,
+        "bat whole sheet": 12,
+        "spitter whole sheet": 48,
+        "slime whole sheet": 12,
+        "knight whole sheet": 192,
+        "ksword whole sheet": 8,
+        "boss streamed frame": 32,
+        "chest streamed frame": 16,
+        "entrance streamed frame": 32,
+        "ambient whole sheet": 6,
+        "arrow whole sheet": 12,
+        "seven menu icons": 112,
+        "trial mouth whole sheet": 48,
+        "one forest/trial NPC frame": 16,
+        "four streamed forestlandmarks": 32,
+        "foreground lower-body visibility fragment": 16
+      },
+      "limits": "Static allocation superset, not an OAM peak/CPU guarantee. Includes every enemy family although ordinary themed rooms use subsets. Portrait/HUD use their fixed higher reservations."
+    },
+    {
+      "variant": 14,
+      "enemy": 11,
+      "used": 864,
+      "limit": 876,
+      "free": 12,
+      "allocations": {
+        "hero/body+sword+streamed-shield foundation": 32,
+        "items whole sheet": 84,
+        "fx whole sheet": 52,
+        "proj whole sheet": 4,
+        "lift whole sheet": 16,
+        "pick32 whole sheet": 40,
+        "Bloom streamed action": 16,
+        "Bloom ground shadow": 2,
+        "beetle whole sheet": 24,
+        "bat whole sheet": 12,
+        "spitter whole sheet": 48,
+        "slime whole sheet": 12,
+        "knight whole sheet": 192,
+        "ksword whole sheet": 8,
+        "boss streamed frame": 32,
+        "chest streamed frame": 16,
+        "entrance streamed frame": 32,
+        "ambient whole sheet": 6,
+        "arrow whole sheet": 12,
+        "seven menu icons": 112,
+        "trial mouth whole sheet": 48,
+        "one forest/trial NPC frame": 16,
+        "four streamed forestlandmarks": 32,
+        "foreground lower-body visibility fragment": 16
+      },
+      "limits": "Static allocation superset, not an OAM peak/CPU guarantee. Includes every enemy family although ordinary themed rooms use subsets. Portrait/HUD use their fixed higher reservations."
+    },
+    {
+      "variant": 15,
+      "enemy": 11,
+      "used": 864,
+      "limit": 876,
+      "free": 12,
+      "allocations": {
+        "hero/body+sword+streamed-shield foundation": 32,
+        "items whole sheet": 84,
+        "fx whole sheet": 52,
+        "proj whole sheet": 4,
+        "lift whole sheet": 16,
+        "pick32 whole sheet": 40,
+        "Bloom streamed action": 16,
+        "Bloom ground shadow": 2,
+        "beetle whole sheet": 24,
+        "bat whole sheet": 12,
+        "spitter whole sheet": 48,
+        "slime whole sheet": 12,
+        "knight whole sheet": 192,
+        "ksword whole sheet": 8,
+        "boss streamed frame": 32,
+        "chest streamed frame": 16,
+        "entrance streamed frame": 32,
+        "ambient whole sheet": 6,
+        "arrow whole sheet": 12,
+        "seven menu icons": 112,
+        "trial mouth whole sheet": 48,
+        "one forest/trial NPC frame": 16,
+        "four streamed forestlandmarks": 32,
+        "foreground lower-body visibility fragment": 16
+      },
+      "limits": "Static allocation superset, not an OAM peak/CPU guarantee. Includes every enemy family although ordinary themed rooms use subsets. Portrait/HUD use their fixed higher reservations."
+    },
+    {
+      "variant": 16,
+      "enemy": 11,
+      "used": 864,
+      "limit": 876,
+      "free": 12,
+      "allocations": {
+        "hero/body+sword+streamed-shield foundation": 32,
+        "items whole sheet": 84,
+        "fx whole sheet": 52,
+        "proj whole sheet": 4,
+        "lift whole sheet": 16,
+        "pick32 whole sheet": 40,
+        "Bloom streamed action": 16,
+        "Bloom ground shadow": 2,
+        "beetle whole sheet": 24,
+        "bat whole sheet": 12,
+        "spitter whole sheet": 48,
+        "slime whole sheet": 12,
+        "knight whole sheet": 192,
+        "ksword whole sheet": 8,
+        "boss streamed frame": 32,
+        "chest streamed frame": 16,
+        "entrance streamed frame": 32,
+        "ambient whole sheet": 6,
+        "arrow whole sheet": 12,
+        "seven menu icons": 112,
+        "trial mouth whole sheet": 48,
+        "one forest/trial NPC frame": 16,
+        "four streamed forestlandmarks": 32,
+        "foreground lower-body visibility fragment": 16
+      },
+      "limits": "Static allocation superset, not an OAM peak/CPU guarantee. Includes every enemy family although ordinary themed rooms use subsets. Portrait/HUD use their fixed higher reservations."
+    },
+    {
+      "variant": 17,
+      "enemy": 11,
+      "used": 864,
+      "limit": 876,
+      "free": 12,
+      "allocations": {
+        "hero/body+sword+streamed-shield foundation": 32,
+        "items whole sheet": 84,
+        "fx whole sheet": 52,
+        "proj whole sheet": 4,
+        "lift whole sheet": 16,
+        "pick32 whole sheet": 40,
+        "Bloom streamed action": 16,
+        "Bloom ground shadow": 2,
+        "beetle whole sheet": 24,
+        "bat whole sheet": 12,
+        "spitter whole sheet": 48,
+        "slime whole sheet": 12,
+        "knight whole sheet": 192,
+        "ksword whole sheet": 8,
+        "boss streamed frame": 32,
+        "chest streamed frame": 16,
+        "entrance streamed frame": 32,
+        "ambient whole sheet": 6,
+        "arrow whole sheet": 12,
+        "seven menu icons": 112,
+        "trial mouth whole sheet": 48,
+        "one forest/trial NPC frame": 16,
+        "four streamed forestlandmarks": 32,
+        "foreground lower-body visibility fragment": 16
+      },
+      "limits": "Static allocation superset, not an OAM peak/CPU guarantee. Includes every enemy family although ordinary themed rooms use subsets. Portrait/HUD use their fixed higher reservations."
+    },
+    {
+      "variant": 18,
+      "enemy": 11,
+      "used": 864,
+      "limit": 876,
+      "free": 12,
+      "allocations": {
+        "hero/body+sword+streamed-shield foundation": 32,
+        "items whole sheet": 84,
+        "fx whole sheet": 52,
+        "proj whole sheet": 4,
+        "lift whole sheet": 16,
+        "pick32 whole sheet": 40,
+        "Bloom streamed action": 16,
+        "Bloom ground shadow": 2,
+        "beetle whole sheet": 24,
+        "bat whole sheet": 12,
+        "spitter whole sheet": 48,
+        "slime whole sheet": 12,
+        "knight whole sheet": 192,
+        "ksword whole sheet": 8,
+        "boss streamed frame": 32,
+        "chest streamed frame": 16,
+        "entrance streamed frame": 32,
+        "ambient whole sheet": 6,
+        "arrow whole sheet": 12,
+        "seven menu icons": 112,
+        "trial mouth whole sheet": 48,
+        "one forest/trial NPC frame": 16,
+        "four streamed forestlandmarks": 32,
+        "foreground lower-body visibility fragment": 16
+      },
+      "limits": "Static allocation superset, not an OAM peak/CPU guarantee. Includes every enemy family although ordinary themed rooms use subsets. Portrait/HUD use their fixed higher reservations."
+    }
+  ],
+  "native_check_count": 121691,
+  "source_gallery": {
+    "manifest_sha256": "84bf11a0156cc462731c62f6f6dc56a5720e82f216198444ecf3c123a9c31fd9",
+    "source_commit": "e923557aa74b01626f3e599f7c4b50366e096507",
+    "native_instances": 3952,
+    "source_panels": 3976,
+    "exact_source_gifs": 8,
+    "note": "Source artwork and fixed inspection holds; not emulator screenshots or live timing."
+  },
+  "runtime": {
+    "reports": [
+      {
+        "profile": 6,
+        "capture_sha256": "fd48259a18424fcf0aa4cb4ad5b8311951af5ead575ef06e6452eaaa7b6e69cd",
+        "rom_sha256": "fc8e92f92a4aa43aa5cc56c0caff7a6dc1394f21dc356e7830ef9a7e07f234a1",
+        "source_commit": "e923557aa74b01626f3e599f7c4b50366e096507",
+        "contexts": 22,
+        "natural": 16,
+        "diagnostic": 6,
+        "capture_passed": 285,
+        "capture_total": 285,
+        "movies": 7,
+        "exact_gifs": 7,
+        "media_count": 197,
+        "media_manifest_sha256": "efce8a073420f64c9e3499c26c00870c9a3aadbc8c68ada5bc2a22cff4f9d8c1",
+        "minimum_body_canopy_visible_colored": null,
+        "minimum_displayed_character_colored": null,
+        "minimum_displayed_character_component": null,
+        "validated_attached_cape_frames": 68
+      },
+      {
+        "profile": 11,
+        "capture_sha256": "209ad62bced065b760bf7168902896d0bd20f23284ed9fd64890498976a15508",
+        "rom_sha256": "1a125213d152e764ad201f87d6097c5d16cc9c8f49ed5837c6a5c6fafd3f940c",
+        "source_commit": "e923557aa74b01626f3e599f7c4b50366e096507",
+        "contexts": 22,
+        "natural": 16,
+        "diagnostic": 6,
+        "capture_passed": 399,
+        "capture_total": 399,
+        "movies": 7,
+        "exact_gifs": 7,
+        "media_count": 202,
+        "media_manifest_sha256": "f60150ce5b99513174c861b12e5bdd657f4cd4902b9bd7876a1bd3b1ec9ece27",
+        "minimum_body_canopy_visible_colored": 37,
+        "minimum_displayed_character_colored": 30,
+        "minimum_displayed_character_component": 8,
+        "validated_attached_cape_frames": 68
+      },
+      {
+        "profile": 12,
+        "capture_sha256": "ebba92b57f564cd4c83a1f517d09a809aea9be6be09f47fe11d745d908c0306b",
+        "rom_sha256": "b22ee8a09b350e30a7b54aafd8dc24ca688b9c28122333576d83390dcb43bbed",
+        "source_commit": "e923557aa74b01626f3e599f7c4b50366e096507",
+        "contexts": 22,
+        "natural": 16,
+        "diagnostic": 6,
+        "capture_passed": 399,
+        "capture_total": 399,
+        "movies": 7,
+        "exact_gifs": 7,
+        "media_count": 202,
+        "media_manifest_sha256": "abfd7a91fab10ec2b614bb6236ff15be40b7428dfecfdf018144dbbd2de25db4",
+        "minimum_body_canopy_visible_colored": 37,
+        "minimum_displayed_character_colored": 30,
+        "minimum_displayed_character_component": 8,
+        "validated_attached_cape_frames": 68
+      },
+      {
+        "profile": 13,
+        "capture_sha256": "d753e372f40dd78cddd614709b30d95d1348393f8cf602258618f3d3e1dd7a2f",
+        "rom_sha256": "cb51ca2122dd0ae22796eda6d574662074d7021ce7e42ecaa1dd8e0cd62aee2f",
+        "source_commit": "e923557aa74b01626f3e599f7c4b50366e096507",
+        "contexts": 22,
+        "natural": 16,
+        "diagnostic": 6,
+        "capture_passed": 399,
+        "capture_total": 399,
+        "movies": 7,
+        "exact_gifs": 7,
+        "media_count": 202,
+        "media_manifest_sha256": "44876e350d650a0f240de918a4aff763508776f7e2b6ff996b2956a0f58784a6",
+        "minimum_body_canopy_visible_colored": 37,
+        "minimum_displayed_character_colored": 30,
+        "minimum_displayed_character_component": 8,
+        "validated_attached_cape_frames": 68
+      },
+      {
+        "profile": 14,
+        "capture_sha256": "1b8289adcb9a998af041eef5eaeb000cba5ab20a1c383fba44e2fc7812c0b845",
+        "rom_sha256": "a511bfeb34db8d665fcf7fc49a643f1dd7250a4413f26f114baeb4991756bd91",
+        "source_commit": "e923557aa74b01626f3e599f7c4b50366e096507",
+        "contexts": 22,
+        "natural": 16,
+        "diagnostic": 6,
+        "capture_passed": 399,
+        "capture_total": 399,
+        "movies": 7,
+        "exact_gifs": 7,
+        "media_count": 202,
+        "media_manifest_sha256": "f59fcbe4fc6003af53406fa72891bf1813dc87de8ba984695153c54e798dee1c",
+        "minimum_body_canopy_visible_colored": 37,
+        "minimum_displayed_character_colored": 30,
+        "minimum_displayed_character_component": 8,
+        "validated_attached_cape_frames": 68
+      },
+      {
+        "profile": 15,
+        "capture_sha256": "833e13adcb69088bad9d1bc3667c64444e8a37d34ca65e98ba3c79fa0e58e983",
+        "rom_sha256": "75706dae8ecd8bee0a7475a5eb5aaa7463cbcb23ccca627859e84b24269300c7",
+        "source_commit": "e923557aa74b01626f3e599f7c4b50366e096507",
+        "contexts": 22,
+        "natural": 16,
+        "diagnostic": 6,
+        "capture_passed": 399,
+        "capture_total": 399,
+        "movies": 7,
+        "exact_gifs": 7,
+        "media_count": 202,
+        "media_manifest_sha256": "c3a2342ec7000a673eb02d43e6686210d6a216d2211cf6e87651a38793aa5e74",
+        "minimum_body_canopy_visible_colored": 37,
+        "minimum_displayed_character_colored": 30,
+        "minimum_displayed_character_component": 8,
+        "validated_attached_cape_frames": 68
+      },
+      {
+        "profile": 16,
+        "capture_sha256": "e47a395b409703ba3be2435570ebf9413c3fd526c6c2ef3f854ee5e76c8207d0",
+        "rom_sha256": "4cdd03ae3c2f55d96dece4d0e67d0cd1838e0d3c316ed2bda711df9e2ff9a8e3",
+        "source_commit": "e923557aa74b01626f3e599f7c4b50366e096507",
+        "contexts": 22,
+        "natural": 16,
+        "diagnostic": 6,
+        "capture_passed": 399,
+        "capture_total": 399,
+        "movies": 7,
+        "exact_gifs": 7,
+        "media_count": 202,
+        "media_manifest_sha256": "a43e4320931cdbc80565a50fca4b04f8827b5136685953bb196e831850e35596",
+        "minimum_body_canopy_visible_colored": 37,
+        "minimum_displayed_character_colored": 30,
+        "minimum_displayed_character_component": 8,
+        "validated_attached_cape_frames": 68
+      },
+      {
+        "profile": 17,
+        "capture_sha256": "e9baa14c9a056b65a3e8ae72837d9ded5bf55f42cf712ca8cc96181e76e5fb5e",
+        "rom_sha256": "4dda2734fd2f4934b08c14aa5cbb7a9854f8fecca237d7677ebcf74bfb5ee2b3",
+        "source_commit": "e923557aa74b01626f3e599f7c4b50366e096507",
+        "contexts": 22,
+        "natural": 16,
+        "diagnostic": 6,
+        "capture_passed": 399,
+        "capture_total": 399,
+        "movies": 7,
+        "exact_gifs": 7,
+        "media_count": 202,
+        "media_manifest_sha256": "bfbb0de583972ac9de9d72488cbfd312df2abf4c8d3bbeade70e417433263bf0",
+        "minimum_body_canopy_visible_colored": 37,
+        "minimum_displayed_character_colored": 30,
+        "minimum_displayed_character_component": 8,
+        "validated_attached_cape_frames": 68
+      },
+      {
+        "profile": 18,
+        "capture_sha256": "032a8ef40ad0c960434018268ceabfabbe5ce1efcc49a0ed4991d8cdc46305d0",
+        "rom_sha256": "54768ae3f4462743dabd72e03ddd3c9f711ad4ebff2e09474bd3bd85d427e4af",
+        "source_commit": "e923557aa74b01626f3e599f7c4b50366e096507",
+        "contexts": 22,
+        "natural": 16,
+        "diagnostic": 6,
+        "capture_passed": 399,
+        "capture_total": 399,
+        "movies": 7,
+        "exact_gifs": 7,
+        "media_count": 202,
+        "media_manifest_sha256": "eebd6561911f14c8280d7a1944ea1bb09de915e46a1349c209583ebe8e278c97",
+        "minimum_body_canopy_visible_colored": 37,
+        "minimum_displayed_character_colored": 30,
+        "minimum_displayed_character_component": 8,
+        "validated_attached_cape_frames": 68
+      }
+    ],
+    "contexts": 198,
+    "movies": 63,
+    "exact_gifs": 63,
+    "baseline": "Preserved previous forest study6; not production0.",
+    "limits": "Finite real mGBA recordings and exact source/character compositing proof; does not assert universal CPU timing or arbitrary-scene visibility."
+  },
+  "passed": 186010,
+  "total": 186010,
+  "failures": [],
+  "checks_by_group": {
+    "provenance": 2112,
+    "scope": 32,
+    "protected": 3136,
+    "protected_palette": 128,
+    "noncanopy": 3368,
+    "protected_pulse": 8,
+    "living_canopy": 1512,
+    "budget": 32,
+    "noncanopy_native": 3440,
+    "native_palette": 72,
+    "direct_coverage": 8,
+    "identifiers": 20320,
+    "physical": 32,
+    "physical_alias": 18280,
+    "native_lookup": 80,
+    "native": 31456,
+    "material": 29664,
+    "native_sprite": 480,
+    "sprite_material": 216,
+    "portrait_palette": 24,
+    "sprite_contract": 288,
+    "protected_sprite": 3568,
+    "carry_identity": 64,
+    "pulse": 120,
+    "visibility_metadata": 3208,
+    "obj_budget": 32,
+    "historical": 11,
+    "source_provenance": 77,
+    "source_files": 1612,
+    "source_coverage": 8,
+    "source_native": 7904,
+    "source_png": 7904,
+    "source_assemblies": 4048,
+    "source_gif": 72,
+    "source_topology": 384,
+    "runtime_provenance": 198,
+    "runtime_comparison": 9315,
+    "runtime_labels": 198,
+    "runtime_hardware": 396,
+    "runtime_cadence": 198,
+    "runtime_media": 3032,
+    "runtime_cape": 612,
+    "runtime_coverage": 9,
+    "runtime_visibility": 28352
+  },
+  "historical_controls": [
+    {
+      "0": {
+        "expected_sha256": "9330a44a4e27d99606a757134aa41a62adb122a74315c400e1ad3427048c8661",
+        "actual_sha256": "9330a44a4e27d99606a757134aa41a62adb122a74315c400e1ad3427048c8661"
+      }
+    },
+    {
+      "1": {
+        "expected_sha256": "aa1dda5a1fe8bb31982d7f5beaeba7497011badccc34900037ef687cb0bc3067",
+        "actual_sha256": "aa1dda5a1fe8bb31982d7f5beaeba7497011badccc34900037ef687cb0bc3067"
+      }
+    },
+    {
+      "2": {
+        "expected_sha256": "50f559ec16aaa2e08bb446349c8a8e122ff5ec6b983cea6b32a0b2d5be3cc515",
+        "actual_sha256": "50f559ec16aaa2e08bb446349c8a8e122ff5ec6b983cea6b32a0b2d5be3cc515"
+      }
+    },
+    {
+      "3": {
+        "expected_sha256": "85238cd938ef2778f651bf005eb9655216569d8194f9aefe81cc9e3c70f85673",
+        "actual_sha256": "85238cd938ef2778f651bf005eb9655216569d8194f9aefe81cc9e3c70f85673"
+      }
+    },
+    {
+      "4": {
+        "expected_sha256": "411035db3a288fabe0aef2f3cabc21199be324d1445de5c6a8323942cda44214",
+        "actual_sha256": "411035db3a288fabe0aef2f3cabc21199be324d1445de5c6a8323942cda44214"
+      }
+    },
+    {
+      "5": {
+        "expected_sha256": "0904dd78511be6df01adb8e49e40064b7a6d95b4c07368e4a0699077d003e8a5",
+        "actual_sha256": "0904dd78511be6df01adb8e49e40064b7a6d95b4c07368e4a0699077d003e8a5"
+      }
+    },
+    {
+      "6": {
+        "expected_sha256": "fc8e92f92a4aa43aa5cc56c0caff7a6dc1394f21dc356e7830ef9a7e07f234a1",
+        "actual_sha256": "fc8e92f92a4aa43aa5cc56c0caff7a6dc1394f21dc356e7830ef9a7e07f234a1"
+      }
+    },
+    {
+      "7": {
+        "expected_sha256": "3fe6143a9c9de8ccb79248e20b69b199aa462078c92827e71805ebf5826e11df",
+        "actual_sha256": "3fe6143a9c9de8ccb79248e20b69b199aa462078c92827e71805ebf5826e11df"
+      }
+    },
+    {
+      "8": {
+        "expected_sha256": "c72c07bf22bd15eaf3898e1fb0a75eabb7b2dc4c85ead74e68ba30a5f181e8f9",
+        "actual_sha256": "c72c07bf22bd15eaf3898e1fb0a75eabb7b2dc4c85ead74e68ba30a5f181e8f9"
+      }
+    },
+    {
+      "9": {
+        "expected_sha256": "6e5af6e3ec8e960f2e11cbd485a4c6e8d11f4e6eca202d46f15246cc3cca7538",
+        "actual_sha256": "6e5af6e3ec8e960f2e11cbd485a4c6e8d11f4e6eca202d46f15246cc3cca7538"
+      }
+    },
+    {
+      "10": {
+        "expected_sha256": "3876a966293a6cfd68eb39f881dd107b1da4bc14f0b764223712251321784d07",
+        "actual_sha256": "3876a966293a6cfd68eb39f881dd107b1da4bc14f0b764223712251321784d07"
+      }
+    }
+  ],
+  "limits": "Native source/ROM/metadata and scope proof, plus optional exact source-art and finite actual motion/PPU checks. No new generation corpus or universal visual/performance claim."
+}

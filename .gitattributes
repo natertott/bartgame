@@ -4,3 +4,5 @@
 /art-review/forest-concepts-v2/validation/frozen/v10/bartgame.map -whitespace
 # Preserve the exact recorded progression logger's padded result lines.
 /art-review/forest-concepts-v2/actual/variant-0[1-5]/critical-path/run.log -whitespace
+/art-review/forest-canopy-v3/validation/frozen/v6/bartgame.map -whitespace
+/art-review/forest-canopy-v3/validation/frozen/v1[1-8]/bartgame.map -whitespace
