@@ -162,13 +162,23 @@ targets and item gates rather than silently omitting a required fixture.
 
 The forest remains a forest at every corruption level: recognizable tree
 anatomy, leaves, bark, grass and earth carry its identity. Healthy ground keeps
-green grass and brown dirt. The second forest review explicitly rejects the
-first pass's restrained corruption: deep forest must become visibly sick,
-filthy and vibrant, with blackened wood, little surviving greenery and glowing
-purple veins. Diseased grass may become bald, pallid, olive or brown. Keep
-walkable fields subordinate and legible; saturated veins are attached growth
-and fissures, not a uniform purple replacement for every material. This
-supersedes the earlier preference for almost unchanged deep green turf.
+green grass and brown dirt. Grey discolored/dead grass is an accepted part of
+the progression. Deep forest must feel sick, filthy and vibrant, while its
+canopy remains recognizably leafy. The latest canopy review rejects both the
+healthy crowns and the black blighted blobs/glyphs in the second study. Build
+clear clustered crowns and broad lateral branches first, then show disease
+through attached veins, patches, changed leaves or other growth. Explore
+widely different infection treatments over that tree structure.
+
+Keep living green leaves visible at every depth. In the deep canopy, aim for
+roughly eighty percent disease and twenty percent surviving greenery across
+the mass; this is a composition guide, not a quota in every small tile. Broad
+horizontal boughs and leaf shelves establish shape and height. Avoid long
+repeated vertical strokes that turn trees into curtains, fences or glyphs.
+This horizontal emphasis is the user's art direction for these canopies.
+Walkable fields stay subordinate and legible; attached purple light does not
+replace every material with a uniformly purple floor. These rules supersede
+the earlier deep-canopy preference for almost entirely black wood.
 Maintain a limited, versatile family of crowns and details; structural decay
 and luminous infection must remain related to the healthy construction.
 
@@ -187,7 +197,10 @@ scale, one clear signature and matching separately authored portraits.
 Depth belongs to both drawing and room structure. Ground planes, raised faces,
 contact shadows and foreground overhangs must agree with physical passage.
 Canopy fringes can project onto neighboring walkable grass and partly cover
-Bloom's upper body; keep feet, paths and interactions readable. Rounded outer
+Bloom's upper body; keep feet, paths and interactions readable. Canopy vegetation
+must never completely conceal a visible Bloom frame. Preserve a recognizable
+part of his current silhouette during walking, rolling, jumping and item use,
+including where neighboring overhangs meet. Rounded outer
 corners, inner corners, ends and isolated cells require explicit adjacency
 art or placement rules. Transparent foreground edges must composite over the
 actual ground instead of carrying a mismatched rectangular substrate.

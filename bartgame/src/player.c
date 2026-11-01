@@ -13,6 +13,9 @@
 #include "sound.h"
 #include "react.h"
 #include "objects.h"
+#if BART_FOREST_VARIANT >= 11
+#include "game.h"
+#endif
 
 Actor* gPlayer;
 PlayerState gPl;
@@ -37,6 +40,14 @@ static u8 sWalkTimer;
    streamed 32x32 layer serves the sword, held tools and airborne cape. */
 static u16 sActionTile, sLastActionFrame, sShadowTile;
 static u8 sUseItem, sUseTimer, sUseLength, sUseFacing;
+
+#if BART_FOREST_VARIANT >= 11
+/* A copy of existing body ink, never a new pose or a change to the hero slot. */
+static u16 sCanopyTile;
+static u8 sCanopyCutoff,sCanopyReady;
+static u16 sCanopyPixels[256] EWRAM_BSS ALIGN4;
+volatile u16 gForestV3Visibility[12] EWRAM_BSS;
+#endif
 
 #if BLOOM_SWING_STUDY
 /* Read-only capture diagnostics, outside actor/save data. A completed render
@@ -142,6 +153,12 @@ void player_init(int px, int py, int facing) {
     sLastActionFrame = 0xFFFF;
     sActionTile = sprite_alloc(16);
     sShadowTile = sprite_load_sheet(SHEET_BLOOMSHADOW);
+#if BART_FOREST_VARIANT >= 11
+    sCanopyTile=gGame.area==AREA_FOREST ? sprite_alloc(16) : 0;
+    sCanopyReady=0;
+    memset((void*)gForestV3Visibility,0,sizeof(gForestV3Visibility));
+    gForestV3Visibility[2]=sCanopyTile;
+#endif
     sUseItem = sUseTimer = sUseLength = 0;
     sWalkTimer = 0;
     gPl.sword_active = gPl.lamp_timer = gPl.shield_up = 0;
@@ -1016,12 +1033,79 @@ static void draw_ground_shadow(Actor* a) {
 
 #if BART_FOREST_VARIANT >= 6
 int player_recoil_priority(const Actor* a,int priority) {
+#if BART_FOREST_VARIANT >= 11
+    /* The new canopy's protected fragment replaces the whole-body depth pop. */
+    (void)a;
+    return priority;
+#else
     /* A roll-wall recoil changes to normal before its small airborne bounce
        ends. Both body and held parts apply this after environment sorting;
        generic actors and the independently sorted ground shadow do not. */
     if(a==gPlayer && (priority==1 || priority==2) && a->state==PS_NORMAL && a->z>0 &&
        room_recoil_fringe_front(PX(a->x),PX(a->y)))return 1;
     return priority;
+#endif
+}
+#endif
+
+#if BART_FOREST_VARIANT >= 11
+static int canopy_body_ink(const u8* pixels,int x,int y) {
+    int at=((y/8)*4+x/8)*32+(y&7)*4+(x&7)/2;
+    return (pixels[at]>>((x&1)*4))&15;
+}
+
+static bool8 canopy_coloured_ink(int pal,int ink) {
+    if(!ink)return FALSE;
+    u16 c=pal_obj[pal*16+ink];
+    int r=c&31,g=(c>>5)&31,b=(c>>10)&31;
+    return MAX(r,MAX(g,b))>=5 && r+g+b>=10;
+}
+
+static void canopy_body_metadata(int frame) {
+    /* Native source analysis is done once by the asset builder, not while
+       the action clock is running. The unchanged hero always uses its bank. */
+    const u16* row=forest_v3_body_visibility[frame];
+    int i;
+    sCanopyCutoff=row[0];
+    gForestV3Visibility[1]=frame;gForestV3Visibility[3]=row[0];
+    for(i=0;i<4;i++)gForestV3Visibility[4+i]=row[1+i];
+}
+
+static void prepare_canopy_visibility(Actor* a,int frame) {
+    const SpriteSheet* sh=&sheets[SHEET_HERO];
+    int z=a->state==PS_FALL ? 0 : PX(a->z);
+    if(!sCanopyTile || sh->w!=32 || sh->h!=32 || frame<0 || frame>=SHEET_HERO_FRAMES || a->prio!=2 ||
+       (a->flags&AF_HIDDEN) || (a->iframes && (gFrame&2)) ||
+       !room_canopy_overlaps_body(PX(a->x),PX(a->y),z,32,32))return;
+    const u8* source=(const u8*)(sh->tiles+frame*sh->frame_tiles*16);
+    canopy_body_metadata(frame);
+    memset(sCanopyPixels,0,sizeof(sCanopyPixels));
+    u8* target=(u8*)sCanopyPixels;
+    int x,y,opaque=0,coloured=0;
+    int left=PX(a->x)-16,top=PX(a->y)-32-z;
+    for(y=sCanopyCutoff;y<32;y++)for(x=0;x<32;x++) {
+        int ink=canopy_body_ink(source,x,y);
+        int wx=left+(a->hflip ? 31-x : x),wy=top+y;
+        if(!ink || !room_canopy_overlay_px(wx,wy))continue;
+        int at=((y/8)*4+x/8)*32+(y&7)*4+(x&7)/2;
+        target[at]|=ink<<((x&1)*4);
+        opaque++;coloured+=canopy_coloured_ink(a->pal,ink);
+    }
+    gForestV3Visibility[8]=opaque;gForestV3Visibility[9]=coloured;
+    gForestV3Visibility[10]=a->prio;
+    if(!opaque)return;
+    vram_queue_visibility(source,OBJ_TILE(HERO_TILE),sCanopyPixels,OBJ_TILE(sCanopyTile));
+    sCanopyReady=1;
+}
+
+static void draw_canopy_visibility(Actor* a) {
+    if(!sCanopyReady)return;
+    int z=a->state==PS_FALL ? 0 : PX(a->z);
+    int left=PX(a->x)-16,top=PX(a->y)-32-z;
+    int before=gOamCount;
+    draw_sprite(left-gCamX,top-gCamY,SHEET_HERO,sCanopyTile,0,a->hflip,1,a->pal);
+    gForestV3Visibility[0]=gOamCount!=before;
+    gForestV3Visibility[11]=before;
 }
 #endif
 
@@ -1029,6 +1113,11 @@ void player_draw(void) {
     Actor* a = gPlayer;
     int frame;
     int f = a->facing;
+#if BART_FOREST_VARIANT >= 11
+    sCanopyReady=0;
+    gForestV3Visibility[0]=gForestV3Visibility[8]=gForestV3Visibility[9]=0;
+    gForestV3Visibility[10]=0;gForestV3Visibility[11]=0xFFFF;
+#endif
     a->hflip = (f == FACE_W);
     /* in front of a counter the hero is drawn over the overlay that
        hides the shopkeeper's legs (art/sw_hall.py) */
@@ -1155,7 +1244,13 @@ void player_draw(void) {
             return;
         if (a->sub && t >= 32)
             return;
+#if BART_FOREST_VARIANT >= 11
+        prepare_canopy_visibility(a,frame);
+#endif
         draw_sprite(sx, sy, SHEET_HERO, HERO_TILE, 0, 0, a->prio, a->pal);
+#if BART_FOREST_VARIANT >= 11
+        draw_canopy_visibility(a);
+#endif
         return;
     }
     if (a->state == PS_DEAD && gPl.dead_timer > 60 && (gPl.dead_timer & 4))
@@ -1166,13 +1261,25 @@ void player_draw(void) {
         int sy = PX(a->y) - 60 - gCamY - ((gPl.got_timer < 16) ? (16 - gPl.got_timer) : 0);
         draw_sprite(sx, sy, SHEET_ICON32, icon32_frame_tile(gPl.got_item), 0, 0, 1, icon32_frame_palette(gPl.got_item));
     }
-    /* Body and held parts share terrain priority, then their OAM order
-       supplies directional depth. No prop is duplicated in body artwork. */
+#if BART_FOREST_VARIANT >= 11
+    prepare_canopy_visibility(a,frame);
+    int body_priority=a->prio;
+    /* Front-held parts stay in front of the protected body fragment. North
+       shields and other far-side parts retain the original canopy priority. */
+    if(sCanopyReady)a->prio=1;
+#endif
+    /* OAM order supplies the established directional body/tool depth. */
     if ((a->state == PS_LIFT || a->state == PS_CARRY) && gPl.carry && f != FACE_N)
         draw_load(a);
     objects_draw_hand(FALSE);
     draw_action(a,FALSE);
+#if BART_FOREST_VARIANT >= 11
+    a->prio=body_priority;
+#endif
     actor_draw(a);
+#if BART_FOREST_VARIANT >= 11
+    draw_canopy_visibility(a);
+#endif
     draw_action(a,TRUE);
     objects_draw_hand(TRUE);
     if ((a->state == PS_LIFT || a->state == PS_CARRY) && gPl.carry && f == FACE_N)

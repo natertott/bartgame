@@ -23,9 +23,9 @@ if FC.VARIANT:
     for i,(name,palette,rows) in enumerate(FACES):
         if name not in ('hermit','nun','gardener'):
             continue
-        image=FCF.portrait(name,FC.LOCAL_VARIANT)
+        image=FCF.portrait(name,FC.ENV_VARIANT)
         assert image.mode=='P' and image.size==(48,48),name
-        colors=FCF.portrait_palette(name,FC.LOCAL_VARIANT)
+        colors=FCF.portrait_palette(name,FC.ENV_VARIANT)
         rgb=lambda color:tuple(int(color[j:j+2],16) for j in (1,3,5))
         palette=[(format(k,'x'),rgb(colors[k])) for k in range(1,16)]
         rows=[''.join('.' if image.getpixel((x,y))==0 else format(image.getpixel((x,y)),'x')

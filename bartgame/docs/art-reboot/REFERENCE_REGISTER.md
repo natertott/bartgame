@@ -150,3 +150,17 @@ website access or missing PDF figure is claimed. Source diagrams, diagnostic
 room fixtures and natural mGBA contexts have separate provenance and labels.
 The shared bible now explicitly includes foreground depth and reserved
 interaction approaches; the five local visual treatments remain exploratory.
+
+## Canopy recognition and surviving greenery — 2026-11-01
+
+The user's latest review accepts grey dead grass but rejects both healthy and
+blighted canopy recognition. It directs broad horizontal limbs, recognizable
+leaf masses under varied infection overlays, roughly twenty percent surviving
+green in deep canopy and continuous partial player visibility. This direct
+feedback is the authority for the new canopy studies. Existing PDF notes and
+native-scale/cluster guidance remain the research basis; no new website or
+unavailable figure is claimed. Janes pp.1–2 discuss controlled horizontal,
+vertical and diagonal pixel runs; the current preference for horizontal tree
+structure is user direction, not a universal orientation rule attributed to
+that tutorial. Source assemblies and eventual real movement captures remain
+separate evidence.

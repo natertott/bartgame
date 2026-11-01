@@ -27,8 +27,8 @@ def combinations():
 
 
 def append(tiles, coverage, variant):
-    import forest_concepts_v2_terrain as art
     import forest_concepts as FC
+    _, art = FC.painters()
     originals = {mt['name']: mt for mt in tiles}
     specs = []
     canopy = [[[[None for _ in range(16)] for _ in range(16)] for _ in range(4)] for _ in range(2)]

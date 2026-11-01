@@ -944,3 +944,35 @@ Reviewed against existing interaction-clearance, foreground-depth and
 misleading-path rules; no new external reference is claimed. The future
 placement pass should retain a mix of guided and unmarked discoveries so
 lanterns help exploration without revealing every secret.
+
+## Canopy recognition, living remnants and lateral boughs — 2026-11-01
+
+**Direct user feedback:** grey discolored/dead grass is working and should
+remain. Both healthy and blighted canopies are unrecognizable; black infected
+blobs and repeated long vertical marks fail to communicate trees. Retain
+greenery at every depth, with roughly an eighty/twenty disease/green split in
+the deep canopy. Start from recognizable crowns and explore a wide range of
+attached veins, patches, changed leaves, dithered spore light and other
+infection treatments. Broad horizontal branches may overhang Bloom, but
+canopy must never conceal him completely.
+
+**Adopted requirements and exploratory scope:** the shared bible now records
+grey-ground retention, clear crown/branch anatomy, visible living leaf groups
+and continuous partial player visibility. Eight new canopy-only directions
+are exploratory profiles11–18: Veinbound Oak, Patchblight Beech, Spore Drift,
+Bracketwood, Violet Leaf Mosaic, Black Sap Bough, Silkbound Crown and Canker
+Bloom. Other environment art uses second-pass Black Sap Oak as fixed context;
+the existing forest alternatives and production default remain available.
+The lantern placement note remains a separate pending generator change.
+
+**Implementation/evidence plan:** author at native GBA sizes and RGB555 limits,
+with a separate canopy infection bank so accepted soil and unrelated materials
+retain their colors. Draw horizontal leafy volumes before infection. Compare
+healthy/deep crowns, isolated cells, strips, concave joins and real overhang
+movement. Preserve semantic collision, maze generation, Bloom artwork/action
+timing, selected enemies, items, interfaces and glitter. A conditional renderer
+safety layer may retain part of Bloom's current native silhouette while his
+upper body remains behind branches. Its actual behavior and costs must be
+verified in mGBA; source composites alone do not establish visibility. Existing
+PDF guidance supports deliberate clusters and controlled lines; horizontal
+tree emphasis is recorded as current user direction.

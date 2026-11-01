@@ -375,6 +375,36 @@ static bool8 water_surface_at_body(int px,int py,int z,int width,int height) {
 }
 #endif
 
+#if BART_FOREST_VARIANT >= 11
+static bool8 canopy_overlay_cell(int x,int y) {
+    if(gGame.area!=AREA_FOREST || x<0 || y<0 || x>=gRoom.w || y>=gRoom.h)return FALSE;
+    u16 mt=gRoomVisualOverlay[y*ROOM_MAX_W+x];
+    /* A timber roof is an underpass, not the foliage-visibility exception. */
+    if(mt==MT_NONE || mt==MT_F2_ARCH_0 || mt==MT_F2_ARCH_1)return FALSE;
+    return forest_v2_overhead[mt] || forest_v2_special_tree[mt] || forest_v2_canopy_kind[mt];
+}
+
+bool8 room_canopy_overlay_px(int px,int py) {
+    if(px<0 || py<0 || !canopy_overlay_cell(px/16,py/16))return FALSE;
+    int tx=px/8,ty=py/8;
+    int sb=SB_OVERLAY+((ty>>5)<<1)+(tx>>5);
+    u16 entry=SCREENBLOCK(sb)[(ty&31)*32+(tx&31)];
+    int x=px&7,y=py&7;
+    if(entry&0x400)x=7-x;
+    if(entry&0x800)y=7-y;
+    const vu16* tile=CHARBLOCK(0)+(entry&1023)*16;
+    return ((tile[y*2+x/4]>>((x&3)*4))&15)!=0;
+}
+
+bool8 room_canopy_overlaps_body(int px,int py,int z,int width,int height) {
+    int x,y,x0=MAX(0,(px-width/2)/16),x1=MIN(gRoom.w-1,(px+width/2-1)/16);
+    int y0=MAX(0,(py-z-height)/16),y1=MIN(gRoom.h-1,(py-z-1)/16);
+    for(y=y0;y<=y1;y++)for(x=x0;x<=x1;x++)
+        if(canopy_overlay_cell(x,y))return TRUE;
+    return FALSE;
+}
+#endif
+
 /* BG1 now carries transparent material as well as the original crowns.
    A grounded sprite is in front of a prop once its feet pass that prop's
    south edge; flat litter is always below sprites. Keep the authored crown

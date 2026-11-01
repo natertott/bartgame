@@ -110,6 +110,11 @@ void draw_sprite(int sx, int sy, int sheet, u16 tile, int frame, int hflip, int 
 
 /* VRAM uploads queued for the VBlank */
 void vram_queue(const void* src, volatile void* dst, u32 bytes);
+#if BART_FOREST_VARIANT >= 11
+/* Reserved current-body + masked visibility upload; does not consume VQ_MAX. */
+void vram_queue_visibility(const void* body,volatile void* body_dst,
+                           const void* mask,volatile void* mask_dst);
+#endif
 void vram_flush_queue(void);
 
 #endif

@@ -28,6 +28,11 @@ u16 room_visual_ground(int mx,int my);
 u16 room_visual_overlay(int mx,int my);
 bool8 room_recoil_fringe_front(int px,int py);
 #endif
+#if BART_FOREST_VARIANT >= 11
+/* Actual opaque vegetation pixels on BG1; architecture/root roofs stay separate. */
+bool8 room_canopy_overlay_px(int px,int py);
+bool8 room_canopy_overlaps_body(int px,int py,int z,int width,int height);
+#endif
 
 /* object kinds in authored rooms (art/rooms.py) */
 #define OBJ_NPC 1

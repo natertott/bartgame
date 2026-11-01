@@ -63,6 +63,11 @@ void player_draw(void);
 #if BART_FOREST_VARIANT >= 6
 int player_recoil_priority(const Actor* actor,int terrain_priority);
 #endif
+#if BART_FOREST_VARIANT >= 11
+/* Read-only visibility evidence: active, frame, tile, cutoff, total/lower opaque,
+   total/lower coloured, copied opaque/coloured, body priority, OAM index. */
+extern volatile u16 gForestV3Visibility[12];
+#endif
 bool8 player_hurt(int damage, int from_dir); /* FALSE when the shield took it */
 void player_heal(int amount);
 void player_item_get(int item_bit, int sprite_frame);

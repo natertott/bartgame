@@ -7,9 +7,13 @@ their established contracts. No global palette object is mutated.
 import os
 
 VARIANT = int(os.environ.get('BART_FOREST', '0'))
-assert 0 <= VARIANT <= 10, ('BART_FOREST must be 0..10', VARIANT)
+assert 0 <= VARIANT <= 18, ('BART_FOREST must be 0..18', VARIANT)
 ROUND2 = VARIANT >= 6
-LOCAL_VARIANT = VARIANT - 5 if ROUND2 else VARIANT
+CANOPY_ROUND = VARIANT >= 11
+LOCAL_VARIANT = VARIANT - 10 if CANOPY_ROUND else VARIANT - 5 if ROUND2 else VARIANT
+# Canopy studies keep the accepted grey ground and all other environment art
+# from Black Sap Oak; only the new terrain painter receives the eight styles.
+ENV_VARIANT = 1 if CANOPY_ROUND else LOCAL_VARIANT
 NAMES = {
     0: 'Current production forest',
     1: 'Fern & Oak',
@@ -22,13 +26,24 @@ NAMES = {
     8: 'Witchfire Weep',
     9: 'Amethyst Canker',
     10: 'Royal Bruise',
+    11: 'Veinbound Oak',
+    12: 'Patchblight Beech',
+    13: 'Spore Drift',
+    14: 'Bracketwood',
+    15: 'Violet Leaf Mosaic',
+    16: 'Black Sap Bough',
+    17: 'Silkbound Crown',
+    18: 'Canker Bloom',
 }
 TERRAIN_BANKS = {'ground', 'foliage', 'water', 'stone', 'blight',
                  'decay_mix', 'rot_water'}
 
 
 def painters():
-    if ROUND2:
+    if CANOPY_ROUND:
+        import forest_concepts_v2_props as props
+        import forest_concepts_v3_terrain as terrain
+    elif ROUND2:
         import forest_concepts_v2_props as props
         import forest_concepts_v2_terrain as terrain
     else:
@@ -51,7 +66,7 @@ def tile(name, phase=0):
         return None
     props, terrain = painters()
     if props.supports_tile(name):
-        image, bank = props.paint_tile(name, phase, LOCAL_VARIANT)
+        image, bank = props.paint_tile(name, phase, ENV_VARIANT)
         return image, bank, props.__name__
     if terrain.supports(name):
         image, bank = terrain.paint(name, phase, LOCAL_VARIANT)
@@ -74,6 +89,10 @@ def bg_palettes(palettes):
     aliases = props.BG_PALETTE_ALIASES
     assert not set(aliases) & {name for name, _ in out}
     out.extend(aliases.items())
+    if CANOPY_ROUND:
+        extra = terrain.extra_palettes(LOCAL_VARIANT)
+        assert not set(extra) & {name for name, _ in out}
+        out.extend(extra.items())
     return out
 
 
@@ -85,10 +104,10 @@ def apply_sprites(sheets, coverage):
     for sheet in sheets:
         for frame in sheet['frames']:
             if props.supports_frame(sheet['name'], frame):
-                image, bank = props.paint_frame(sheet['name'], frame, LOCAL_VARIANT)
+                image, bank = props.paint_frame(sheet['name'], frame, ENV_VARIANT)
                 owner = props.__name__
             elif folk.supports_frame(sheet['name'], frame):
-                image, bank = folk.frame(sheet['name'], frame, LOCAL_VARIANT)
+                image, bank = folk.frame(sheet['name'], frame, ENV_VARIANT)
                 owner = folk.__name__
             else:
                 continue

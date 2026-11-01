@@ -381,6 +381,22 @@ static struct {
     u32 bytes;
 } sVq[VQ_MAX];
 static u8 sVqCount;
+#if BART_FOREST_VARIANT >= 11
+static struct {
+    const void* body;
+    volatile void* body_dst;
+    const void* mask;
+    volatile void* mask_dst;
+} sVisibilityVq;
+static u8 sVisibilityVqPending;
+
+void vram_queue_visibility(const void* body,volatile void* body_dst,
+                           const void* mask,volatile void* mask_dst) {
+    sVisibilityVq.body=body;sVisibilityVq.body_dst=body_dst;
+    sVisibilityVq.mask=mask;sVisibilityVq.mask_dst=mask_dst;
+    sVisibilityVqPending=1;
+}
+#endif
 
 void vram_queue(const void* src, volatile void* dst, u32 bytes) {
     if (sVqCount < VQ_MAX) {
@@ -396,4 +412,13 @@ void vram_flush_queue(void) {
     for (i = 0; i < sVqCount; i++)
         dma3_copy32(sVq[i].src, sVq[i].dst, sVq[i].bytes);
     sVqCount = 0;
+#if BART_FOREST_VARIANT >= 11
+    /* A busy ordinary queue cannot leave an old mask over the next body pose.
+       Both 32x32 payloads are fixed-size native 4bpp pixels, copied unchanged. */
+    if(sVisibilityVqPending) {
+        dma3_copy32(sVisibilityVq.body,sVisibilityVq.body_dst,512);
+        dma3_copy32(sVisibilityVq.mask,sVisibilityVq.mask_dst,512);
+        sVisibilityVqPending=0;
+    }
+#endif
 }

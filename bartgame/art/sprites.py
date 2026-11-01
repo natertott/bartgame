@@ -58,7 +58,7 @@ FOREST_CONCEPTS.apply_sprites(SHEETS, COVERAGE)
 FOREST_LANDMARK_SHEET = None
 if FOREST_CONCEPTS.VARIANT >= 6:
     import forest_concepts_v2_props as F2P
-    local_variant = FOREST_CONCEPTS.VARIANT - 5
+    local_variant = FOREST_CONCEPTS.ENV_VARIANT
     chest = next(sheet for sheet in SHEETS if sheet['name'] == 'interactivechest')
     for frame in ('wooden_b_closed', 'wooden_b_open'):
         image, bank = F2P.paint_frame('interactivechest', frame, local_variant)

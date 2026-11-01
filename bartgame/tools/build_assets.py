@@ -221,8 +221,8 @@ set_rows = []
 forest_v2_pulse_slots = []
 forest_v2_pulses = {}
 if FOREST_CONCEPTS.VARIANT >= 6:
-    import forest_concepts_v2_terrain as F2ART
-    forest_v2_pulses = F2ART.pulse_palettes(FOREST_CONCEPTS.VARIANT - 5)
+    _, forest_terrain = FOREST_CONCEPTS.painters()
+    forest_v2_pulses = forest_terrain.pulse_palettes(FOREST_CONCEPTS.LOCAL_VARIANT)
 for si, (sname, pred) in enumerate(SETS):
     ts = Tileset()
     ts.add([[0] * 8 for _ in range(8)], 0, 0)  # tile 0 blank
@@ -398,6 +398,64 @@ c.append('};')
 h.append('#define SHEET_COUNT %d' % len(sheet_names))
 h.append('extern const SpriteSheet sheets[];\n')
 print('sprites: %d sheets, %d tiles' % (len(sheet_names), sum(s[1] for s in sheet_names)))
+
+# Immutable native-body metadata keeps the canopy safeguard out of the action
+# update budget. Hero pixels/palette are protected; only their lower-band
+# bounds/counts are computed here. The runtime copies those existing pixels.
+forest_v3_body_rows = None
+if FOREST_CONCEPTS.CANOPY_ROUND:
+    hero = next(sh for sh in sprites.SHEETS if sh['name'] == 'hero')
+    assert (hero['w'], hero['h']) == (32, 32)
+    assert all(bank == hero['pal'] for bank in hero.get('frame_pal', {}).values())
+    hero_colors = dict(palettes.OBJ_PALETTES)[hero['pal']]
+    colored = []
+    for ink, color in enumerate(hero_colors):
+        value = rgb15(color)
+        channels = (value & 31, (value >> 5) & 31, (value >> 10) & 31)
+        colored.append(bool(ink and max(channels) >= 5 and sum(channels) >= 10))
+
+    def connected_body(pixels, cutoff, goal):
+        if not goal:
+            return True
+        seen = set()
+        for y in range(cutoff, 32):
+            for x in range(32):
+                if (x, y) in seen or not colored[pixels[y][x]]:
+                    continue
+                queue = [(x, y)]
+                seen.add((x, y))
+                count = 0
+                for cx, cy in queue:
+                    count += 1
+                    if count >= goal:
+                        return True
+                    for nx, ny in ((cx, cy-1), (cx+1, cy), (cx, cy+1), (cx-1, cy)):
+                        if (0 <= nx < 32 and cutoff <= ny < 32 and
+                                (nx, ny) not in seen and colored[pixels[ny][nx]]):
+                            seen.add((nx, ny))
+                            queue.append((nx, ny))
+        return False
+
+    forest_v3_body_rows = []
+    for frame_name, frame in hero['frames'].items():
+        pixels = parse_art(frame, 32, 32)
+        opaque = sum(bool(ink) for row in pixels for ink in row)
+        color_count = sum(colored[ink] for row in pixels for ink in row)
+        opaque_goal = min(opaque, max(48, (opaque + 2) // 3))
+        color_goal = min(color_count, max(24, (color_count + 2) // 3))
+        lower = lower_color = 0
+        for cutoff in range(31, -1, -1):
+            lower += sum(bool(ink) for ink in pixels[cutoff])
+            lower_color += sum(colored[ink] for ink in pixels[cutoff])
+            if (lower >= opaque_goal and lower_color >= color_goal and
+                    connected_body(pixels, cutoff, min(12, color_count))):
+                break
+        forest_v3_body_rows.append([cutoff, opaque, lower, color_count, lower_color])
+    h.append('extern const u16 forest_v3_body_visibility[SHEET_HERO_FRAMES][5];')
+    c.append('const u16 forest_v3_body_visibility[SHEET_HERO_FRAMES][5] ALIGN4 = {')
+    for row in forest_v3_body_rows:
+        c.append('    {' + ','.join(map(str, row)) + '},')
+    c.append('};')
 
 # The same native painter supplies the blade, its render origin and the
 # phase-specific collision rectangle. No independent reach table can drift
@@ -700,6 +758,21 @@ if FOREST_CONCEPTS.VARIANT >= 6:
         'pulse_banks': list(forest_v2_pulses),
         'pulse_slots': forest_v2_pulse_slots,
         'pulse_clock': '(gFrame >> 3) & 3 while playing forest/mystery rooms',
+    }
+if FOREST_CONCEPTS.CANOPY_ROUND:
+    coverage['forest_concept']['obj_scope'] = 'All environment OBJ and portraits retain forest profile6 artwork.'
+    coverage['forest_concept']['canopy_round'] = {
+        'base_forest_profile': 6,
+        'local_style': FOREST_CONCEPTS.LOCAL_VARIANT,
+        'scope': 'Healthy/infected crowns, tree anatomy and overhang art only.',
+        'accepted_ground': 'Grey dead grass and all non-canopy pixels/palette roles retain profile6.',
+        'living_green_target': 'Approximately20% across deep canopy masses, not a quota per tile.',
+        'extra_bg_banks': list(forest_terrain.extra_palettes(FOREST_CONCEPTS.LOCAL_VARIANT)),
+        'player_visibility': 'Conditional current-frame lower-body fragment; native body/tools/physics unchanged.',
+        'extra_obj_tiles': 16,
+        'native_body_visibility_rows': forest_v3_body_rows,
+        'conservative_obj_union': {'used': 864, 'limit': 876},
+        'generator': 'No layout, placement or lantern-generation change in this pass.',
     }
 with open(os.path.join(OUT, 'art-reboot-coverage.json'), 'w') as report:
     json.dump(coverage, report, indent=2)

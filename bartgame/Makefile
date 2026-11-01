@@ -66,13 +66,13 @@ $(error BART_ENEMY must be one integer in 0..11)
 endif
 ENEMY_STAMP := $(GEN)/enemy-profile-$(BART_ENEMY).stamp
 
-# Profiles1..5 retain the first forest studies;6..10 are the second pass.
+# Profiles1..5 retain the first studies;6..10 the second;11..18 canopy studies.
 BART_FOREST ?= 0
 ifneq ($(words $(BART_FOREST)),1)
-$(error BART_FOREST must be one integer in 0..10)
+$(error BART_FOREST must be one integer in 0..18)
 endif
-ifneq ($(BART_FOREST),$(filter $(BART_FOREST),0 1 2 3 4 5 6 7 8 9 10))
-$(error BART_FOREST must be one integer in 0..10)
+ifneq ($(BART_FOREST),$(filter $(BART_FOREST),0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18))
+$(error BART_FOREST must be one integer in 0..18)
 endif
 FOREST_STAMP := $(GEN)/forest-profile-$(BART_FOREST).stamp
 
