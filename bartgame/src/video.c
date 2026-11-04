@@ -2,7 +2,7 @@
 #include "gba.h"
 #include "video.h"
 #include "assets.h"
-#if BART_FOREST_VARIANT == 31
+#if BART_FOREST_VARIANT >= 31
 #include "forest_trees.h"
 #endif
 
@@ -13,7 +13,7 @@ u16 gKeysHeld, gKeysDown, gKeysUp;
 OamEntry gOam[128] ALIGN4;
 u8 gOamCount;
 s16 gBgScroll[4][2];
-#if BART_FOREST_VARIANT == 31
+#if BART_FOREST_VARIANT >= 31
 s16 gForestTreeDisplayedScroll[6] EWRAM_BSS;
 #endif
 #if BART_FOREST_VARIANT >= 6
@@ -54,7 +54,7 @@ void video_init(void) {
 }
 
 void video_show(u16 flags) {
-#if BART_FOREST_VARIANT == 31
+#if BART_FOREST_VARIANT >= 31
     flags=forest_trees_video(flags);
 #endif
     REG_DISPCNT = DCNT_MODE0 | DCNT_OBJ_1D | flags;
@@ -178,12 +178,12 @@ void video_flush(void) {
 #endif
     REG_BG2HOFS = gBgScroll[2][0];
     REG_BG2VOFS = gBgScroll[2][1];
-#if BART_FOREST_VARIANT == 31
+#if BART_FOREST_VARIANT >= 31
     forest_trees_scroll();
 #endif
     REG_BG3HOFS = gBgScroll[3][0];
     REG_BG3VOFS = gBgScroll[3][1];
-#if BART_FOREST_VARIANT == 31
+#if BART_FOREST_VARIANT >= 31
     gForestTreeDisplayedScroll[0]=gBgScroll[1][0];
     gForestTreeDisplayedScroll[1]=gBgScroll[1][1];
     gForestTreeDisplayedScroll[2]=gBgScroll[2][0];

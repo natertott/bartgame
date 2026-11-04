@@ -28,7 +28,7 @@ extern u16 items_sheet_tile(void);
 
 GameState gGame;
 u32 gSeedOverride; /* probes set this before pressing Start */
-#if BART_FOREST_VARIANT == 31
+#if BART_FOREST_VARIANT >= 31
 u8 gForestReviewEnabled;
 s16 gForestReviewCamera[2];
 u32 gForestReviewClock = 256;
@@ -717,12 +717,12 @@ void game_init(void) {
 }
 
 static void draw_world(void) {
-#if BART_FOREST_VARIANT == 31
+#if BART_FOREST_VARIANT >= 31
     if (!gForestReviewEnabled) {
 #endif
         textbox_draw(); /* UI first in OAM: between sprites the order rules */
         hud_draw();
-#if BART_FOREST_VARIANT == 31
+#if BART_FOREST_VARIANT >= 31
     }
 #endif
     if (sDark)
@@ -841,7 +841,7 @@ static void update_transition(void) {
 }
 
 void game_update(void) {
-#if BART_FOREST_VARIANT == 31
+#if BART_FOREST_VARIANT >= 31
     if (gForestReviewEnabled) {
         /* A frozen, HUD-free native camera view for a registered panorama.
            This does not run movement, combat, AI, input or world generation.

@@ -29,6 +29,13 @@ typedef struct {
 } RoomSpots;
 
 extern RoomSpots gSpots;
+#if BART_FOREST_VARIANT == 32
+/* version,motif,water cells,deck cells,wet components,ecology clusters,
+   solid props,floor accents,lamps,visible trail,ledge cells,water attempts,
+   off-path feature lamps,arch,stage,cell. Motifs: glade,brook,pond,hollow,
+   ruined edge,Heart arena. Read-only review telemetry; no save ABI change. */
+extern u16 gForestCohesionInfo[16];
+#endif
 
 void roomgen_build(int cell);
 bool8 roomgen_blighted(int cell); /* drawn in the blight's colours */

@@ -106,3 +106,9 @@ FOREST_V2_TOPOLOGY = None
 if FC.VARIANT >= 6:
     import forest_concepts_v2_topology as F2T
     FOREST_V2_TOPOLOGY = F2T.append(METATILES, COVERAGE, FC.LOCAL_VARIANT)
+
+FOREST_COHESION_TOPOLOGY = None
+if FC.COHESION_ROUND:
+    import forest_cohesion_topology as FCT
+    FOREST_COHESION_TOPOLOGY = FCT.append(METATILES, COVERAGE)
+    FOREST_V2_TOPOLOGY['specs'].extend(FOREST_COHESION_TOPOLOGY['specs'])

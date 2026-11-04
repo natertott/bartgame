@@ -17,7 +17,7 @@
 #if BART_FOREST_VARIANT == 30
 #include "tree_study.h"
 #endif
-#if BART_FOREST_VARIANT == 31
+#if BART_FOREST_VARIANT >= 31
 #include "forest_trees.h"
 #endif
 
@@ -50,7 +50,7 @@ void tiles_load(int set) {
 #if BART_FOREST_VARIANT >= 19 && BART_FOREST_VARIANT < 31
     canopy_scene_reset();
 #endif
-#if BART_FOREST_VARIANT == 31
+#if BART_FOREST_VARIANT >= 31
     forest_trees_reset();
 #endif
 }
@@ -171,7 +171,37 @@ void room_build_solid(void) {
             solid_cell_update(x, y);
 }
 
+#if BART_FOREST_VARIANT == 32
+static bool8 forest_sick_floor(u16 mt) {
+    return mt==MT_MOSS_BLIGHT || mt==MT_MOSS_BLIGHT2 ||
+        (mt>=MT_BLIGHT_GROUND0&&mt<=MT_BLIGHT_GROUND2) || mt==MT_BLIGHT_FLOOR || mt==MT_BLIGHT_FLOOR2 ||
+        (mt>=MT_ROT_00&&mt<=MT_ROT_F0) || (mt>=MT_FOREST_ROT0&&mt<=MT_FOREST_ROT7);
+}
+
+static int forest_local_sick(int x,int y) {
+    return roomgen_blighted(gGame.cell) || forest_sick_floor(gRoom.underlay[y*ROOM_MAX_W+x]);
+}
+
+static u16 forest_decor_picture(int x,int y,u16 mt) {
+    int slot=-1;
+    if(gGame.area!=AREA_FOREST)return mt;
+    switch(mt) {
+        case MT_MOSS_FLOWERS: slot=0;break;
+        case MT_MOSS_FLOWERS2: slot=1;break;
+        case MT_TALL_GRASS: slot=2;break;
+        case MT_FERN_PATCH: slot=3;break;
+        case MT_LEAF_LITTER: slot=4;break;
+        case MT_MOSS_SHADE: slot=5;break;
+        default: break;
+    }
+    return slot<0?mt:forest_cohesion_decor_alias[forest_local_sick(x,y)][slot];
+}
+#endif
+
 static void map_write(int sb_base, int mx, int my, u16 mt) {
+#if BART_FOREST_VARIANT == 32
+    mt=forest_decor_picture(mx,my,mt);
+#endif
 #if BART_FOREST_VARIANT >= 6
     if(sb_base==SB_GROUND)gRoomVisualGround[my*ROOM_MAX_W+mx]=mt;
     else if(sb_base==SB_OVERLAY)gRoomVisualOverlay[my*ROOM_MAX_W+mx]=mt;
@@ -246,18 +276,47 @@ static int forest_canopy_at(int x,int y) {
 static bool8 forest_water_at(int x,int y) {
     if(x<0 || y<0 || x>=gRoom.w || y>=gRoom.h)return FALSE;
     u16 mt=room_get(x,y);
+#if BART_FOREST_VARIANT == 32
+    if(gRoom.underlay[y*ROOM_MAX_W+x]==MT_WATER && forest_v2_canopy_kind[mt])return TRUE;
+#endif
     return mt!=MT_NONE && forest_v2_water_kind[mt];
 }
 
 static bool8 forest_isolated_water(int x,int y,u16 mt) {
     int kind=mt==MT_NONE?0:forest_v2_water_kind[mt];
+#if BART_FOREST_VARIANT == 32
+    /* Every shore owns transparent exterior pixels, not only lone puddles. */
+    return gGame.area==AREA_FOREST && kind>=1 && kind<=3;
+#else
     return gGame.area==AREA_FOREST && kind>=1 && kind<=3 &&
            !forest_water_at(x,y-1) && !forest_water_at(x+1,y) &&
            !forest_water_at(x,y+1) && !forest_water_at(x-1,y);
+#endif
 }
+
+#if BART_FOREST_VARIANT == 32
+static bool8 forest_path_at(int x,int y) {
+    if(x<0||y<0||x>=gRoom.w||y>=gRoom.h)return FALSE;
+    u16 mt=room_get(x,y),base=gRoom.underlay[y*ROOM_MAX_W+x];
+    return mt==MT_PATH || (mt>=MT_PEDGE_1&&mt<=MT_PEDGE_F) || mt==MT_BRIDGE || mt==MT_BRIDGE_V ||
+        (base==MT_PATH && (metatile_prop[mt] || barrier_material(mt) || mt==MT_STAIRS_DOWN));
+}
+#endif
 
 static u16 forest_picture(int x,int y,u16 mt) {
     if(gGame.area!=AREA_FOREST || mt==MT_NONE)return mt;
+#if BART_FOREST_VARIANT == 32
+    if(mt==MT_PATH || (mt>=MT_PEDGE_1&&mt<=MT_PEDGE_F)) {
+        int n=forest_path_at(x,y-1),e=forest_path_at(x+1,y);
+        int s=forest_path_at(x,y+1),w=forest_path_at(x-1,y);
+        int mask=(!n?1:0)|(!e?2:0)|(!s?4:0)|(!w?8:0);
+        int corners=(!n||!w||forest_path_at(x-1,y-1)?0:1)|
+                    (!n||!e||forest_path_at(x+1,y-1)?0:2)|
+                    (!s||!e||forest_path_at(x+1,y+1)?0:4)|
+                    (!s||!w||forest_path_at(x-1,y+1)?0:8);
+        return forest_cohesion_path_alias[forest_local_sick(x,y)][mask][corners];
+    }
+#endif
     int kind=forest_v2_canopy_kind[mt];
 #if BART_FOREST_VARIANT >= 19
     /* Legacy connector IDs now join the room-shaped stand. They need the
@@ -297,7 +356,11 @@ static bool8 forest_projection_clear(int x,int y,u16 ground,u16 overlay) {
        overlay!=MT_SPARKLE_WHITE && overlay!=MT_BLIGHT_MIST))return FALSE;
     if((gSpots.has_chest && ABS(x-gSpots.chest.x)<=1 && ABS(y-gSpots.chest.y)<=1) ||
        (gSpots.has_npc && ABS(x-gSpots.npc.x)<=1 && ABS(y-gSpots.npc.y)<=1) ||
-       (gSpots.has_relic && ABS(x-gSpots.relic.x)<=1 && ABS(y-gSpots.relic.y)<=1) ||
+       ((gSpots.has_relic
+#if BART_FOREST_VARIANT == 32
+         || gWorld.cells[gForestCohesionInfo[15]].role==ROLE_RELIC
+#endif
+        ) && ABS(x-gSpots.relic.x)<=1 && ABS(y-gSpots.relic.y)<=1) ||
        (gSpots.has_treasure && ABS(x-gSpots.treasure.x)<=1 && ABS(y-gSpots.treasure.y)<=1) ||
        (gSpots.has_mouth && ABS(x-gSpots.mouth.x)<=1 && ABS(y-gSpots.mouth.y)<=2) ||
        (gSpots.has_shrine && ABS(x-gSpots.shrine.x)<=1 && ABS(y-gSpots.shrine.y)<=2))
@@ -349,15 +412,19 @@ bool8 room_canopy_projection_clear(int x,int y) {
 static void render_cell(int x, int y) {
     int i=y*ROOM_MAX_W+x;
     u16 ground=gRoom.ground[i],overlay=gRoom.overlay[i],base=gRoom.underlay[i];
-#if BART_FOREST_VARIANT == 31
+#if BART_FOREST_VARIANT >= 31
     /* The old 32x48/48x64 logical groups keep their exact root collision,
        but none of their superseded picture quarters survive this renderer. */
     if(gGame.area==AREA_FOREST && forest_trees_legacy(overlay))overlay=MT_NONE;
 #endif
 #if BART_FOREST_VARIANT >= 6
     u16 picture=ground;
-#if BART_FOREST_VARIANT == 31
+#if BART_FOREST_VARIANT >= 31
     if(gGame.area==AREA_FOREST && forest_trees_legacy(ground)) {
+#if BART_FOREST_VARIANT == 32
+        if(base==MT_WATER)map_write(SB_GROUND,x,y,MT_WATER);
+        else
+#endif
         map_write(SB_GROUND,x,y,canopy_floor(x,y,base));
     } else
 #endif
@@ -365,7 +432,11 @@ static void render_cell(int x, int y) {
         if(overlay==MT_NONE || overlay==MT_SPARKLE || overlay==MT_SPARKLE_WHITE || overlay==MT_BLIGHT_MIST) {
             /* Exterior alpha reveals this soil, not a healthy-green square
                baked into a pond on dirt or diseased grass. */
+#if BART_FOREST_VARIANT == 32
+            map_write(SB_GROUND,x,y,canopy_floor(x,y,base));
+#else
             map_write(SB_GROUND,x,y,barrier_floor(x,y,base));
+#endif
             overlay=forest_picture(x,y,ground);
         } else {
             /* The two world planes are already occupied. Preserve an
@@ -398,6 +469,15 @@ static void render_cell(int x, int y) {
         overlay=ground;
     } else
 #endif
+#if BART_FOREST_VARIANT == 32
+    if(gGame.area==AREA_FOREST && (ground==MT_FENCE || ground==MT_STAIRS_DOWN || ground==MT_DOOR_OPEN)) {
+        /* These old logical IDs predate prop metadata. Native alpha belongs
+           over actual grass/soil; an opened seal has no second dirt stamp. */
+        map_write(SB_GROUND,x,y,forest_picture(x,y,canopy_floor(x,y,base)));
+        if(ground!=MT_DOOR_OPEN && (overlay==MT_NONE || overlay==MT_SPARKLE || overlay==MT_SPARKLE_WHITE || overlay==MT_BLIGHT_MIST))
+            overlay=ground;
+    } else
+#endif
     if (interactive_chest_ready() && (interactive_chest_tile(ground) ||
         interactive_chest_overlay(overlay))) {
         /* The larger OBJ chest owns its complete silhouette. Its original
@@ -412,7 +492,7 @@ static void render_cell(int x, int y) {
     } else if (interactive_entry_ready() && interactive_mouth_tile(ground)) {
         /* A continuous wall behind the large portal avoids a second tiny
            doorway visible through transparent pixels around the frame. */
-#if BART_FOREST_VARIANT == 31
+#if BART_FOREST_VARIANT >= 31
         map_write(SB_GROUND,x,y,canopy_floor(x,y,base));
 #else
         map_write(SB_GROUND,x,y,roomgen_blighted(gGame.cell) ? MT_BLIGHT_WALL : MT_CANOPY_S);
@@ -487,7 +567,7 @@ static bool8 canopy_overlay_cell(int x,int y) {
 }
 
 bool8 room_canopy_overlay_px(int px,int py) {
-#if BART_FOREST_VARIANT == 31
+#if BART_FOREST_VARIANT >= 31
     if(forest_trees_overlay_px(px,py))return TRUE;
 #endif
     if(px<0 || py<0 || !canopy_overlay_cell(px/16,py/16))return FALSE;
@@ -502,7 +582,7 @@ bool8 room_canopy_overlay_px(int px,int py) {
 }
 
 bool8 room_canopy_overlaps_body(int px,int py,int z,int width,int height) {
-#if BART_FOREST_VARIANT == 31
+#if BART_FOREST_VARIANT >= 31
     if(forest_trees_occludes_body(px,py,z,width,height,2))return TRUE;
 #endif
     int x,y,x0=MAX(0,(px-width/2)/16),x1=MIN(gRoom.w-1,(px+width/2-1)/16);
@@ -534,7 +614,7 @@ int room_prop_priority(int px,int py,int z,int width,int height,int priority) {
 #if BART_FOREST_VARIANT >= 6
     if((priority==1 || priority==2) && overhead_at_body(px,py,z,width,height))return 2;
 #endif
-#if BART_FOREST_VARIANT == 31
+#if BART_FOREST_VARIANT >= 31
     {
         int tree_priority=forest_trees_priority(px,py,z,width,height,priority);
         if(tree_priority!=priority)return tree_priority;
@@ -550,7 +630,7 @@ int room_prop_priority(int px,int py,int z,int width,int height,int priority) {
     for(y=y0;y<=y1;y++) for(x=x0;x<=x1;x++) {
         int at=y*ROOM_MAX_W+x;
         u16 mt=gRoom.ground[at],ov=gRoom.overlay[at];
-#if BART_FOREST_VARIANT == 31
+#if BART_FOREST_VARIANT >= 31
         if(gGame.area==AREA_FOREST && forest_trees_legacy(mt))continue;
 #endif
         if(floor_mark(ov)) {
@@ -591,7 +671,7 @@ void room_render(void) {
 #if BART_FOREST_VARIANT >= 19 && BART_FOREST_VARIANT < 31
     canopy_scene_build();
 #endif
-#if BART_FOREST_VARIANT == 31
+#if BART_FOREST_VARIANT >= 31
     forest_trees_plan();
     forest_trees_render();
     /* Room/menu restoration can happen before video_show, and ordinary
@@ -636,7 +716,7 @@ void room_change(int mx, int my, u16 mt) {
         for(nx=MAX(0,mx-1);nx<=MIN(gRoom.w-1,mx+1);nx++)
             canopy_scene_apply_cell(nx,ny);
 #endif
-#if BART_FOREST_VARIANT == 31
+#if BART_FOREST_VARIANT >= 31
     for(ny=MAX(0,my-1);ny<=MIN(gRoom.h-1,my+1);ny++)
         for(nx=MAX(0,mx-1);nx<=MIN(gRoom.w-1,mx+1);nx++)
             forest_trees_apply_cell(nx,ny);
@@ -653,7 +733,7 @@ void room_change_overlay(int mx, int my, u16 mt) {
 #if BART_FOREST_VARIANT >= 19 && BART_FOREST_VARIANT < 31
     canopy_scene_apply_cell(mx,my);
 #endif
-#if BART_FOREST_VARIANT == 31
+#if BART_FOREST_VARIANT >= 31
     forest_trees_apply_cell(mx,my);
 #endif
 }

@@ -1376,3 +1376,67 @@ are the new production handoff. Remaining local limits: upper crowns can be
 clipped at protected fixture clearances(11/9/6 cells in these rooms), and bare
 trunks reveal grass within conservative impassable forest base bands. These
 finite captures do not establish universal gameplay or aesthetic quality.
+
+
+## 2026-11-03 — Forest room composition and detail refinement
+
+**User direction:** retain the general direction of the approved repeated
+healthy/sick/dead trees, but refine the procedural rooms and all forest art
+families together. Water, crossings, debris, material transitions and the
+whole room must feel deliberately composed. This is a refinement of the
+selected forest, not a new five-way visual style selection.
+
+**Baseline review:** the three published profile31 mGBA room mosaics show
+short rectangular pools/stream stubs, bridges without a larger watershed,
+right-angle dirt loops, evenly isolated bones/rocks/grass, detached ledge
+fragments and flat material boundaries. The tree identities and actual floor
+under their alpha remain the approved foundation. Branch
+`forest-room-cohesion` starts from publication `d269f6e6`; historical images
+remain unchanged.
+
+**Work in progress:** profile32 keeps the twelve tree source paintings and
+shared bank exact. Plan a room's landform before secondary decoration: a dry
+glade, edge-fed brook, irregular pond, damp root hollow or coherent terrace.
+Required routes and feature approaches remain reserved. Bridge runs connect
+dry usable landings; sources/outlets disappear into the room's wooded edge
+without opening maze cutsets. Decorative groups follow roots, banks, rocks,
+ruins or landmarks rather than filling arbitrary free cells. Lanterns light
+a route, crossing, feature or intentional clue chain. Quiet walking space
+stays readable through increasing sickness; gray grass and attached violet
+infection carry decay without washing every surface purple.
+
+**Art coverage:** native grass/soil/path joins, water/banks/crossings/ledges,
+vegetation, debris, rock/log/ruin materials and interactive terrain receive a
+coordinated review. Existing clear shared chests, entries, equipment, Bloom
+and selected enemies may remain where they already fit; retained art is
+listed explicitly rather than forced into arbitrary redraws. Per-area packing
+protects Drain/mystery pictures where a metatile ID is shared. Native pixels,
+source assemblies and real emulator renders are kept distinct.
+
+**Acceptance:** show matched healthy/mixed/deep rooms and additional water or
+landmark motifs in real mGBA. Check full-room composition at1×, unchanged
+approved tree import, actual banks/bridge endpoints, reachability/item gates,
+deterministic room rebuilds, menu/cache restoration, visual scope and ordinary
+Bloom movement. Current changes are unqualified until those checks and native
+room review pass. No new external research source is claimed.
+
+
+**First native-room critique:** real32 pilots replace isolated water boxes
+with connected brook/pond bodies and reduce scattered pickup-like debris.
+The first healthy scene still had redundant parallel crossings, mixed woods
+retained empty rectangular dirt loops, and the deep brook read as a straight
+channel with a closed end. Independent bridge checks also found decorative
+deck stubs and final landing obstructions despite unchanged required-route
+reachability. These were treated as defects, not accepted on the strength of
+passing gameplay checks.
+
+**Refinement in progress:** reserve actual door lanes before fitting water,
+merge nearby crossings, add a restrained asymmetric S-bend/bulge and show
+sources/outlets continuing below the solid wooded border. The new
+`forest_paths.c` builds a visible wear network between selected functional
+anchors using a heap search; it discards unused dirt cycles and repairs their
+prop underlays. It changes only ordinary zero-collision floor pictures and
+keeps hidden lanes and the required walkable room intact. Six decoration
+families use local healthy/sick palette aliases, avoiding green squares on
+gray ground. Sparse fine occupancy breaks up the initial grid of repeated
+floor tufts. Full-room renders and bridge/route tests will be repeated.

@@ -4,7 +4,7 @@
    one another's alpha or require composited/repainted source art. */
 #include "gba.h"
 #include "assets.h"
-#if BART_FOREST_VARIANT == 31
+#if BART_FOREST_VARIANT >= 31
 #include "forest_trees.h"
 #include "room.h"
 #include "roomgen.h"

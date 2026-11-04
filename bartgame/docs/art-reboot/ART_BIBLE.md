@@ -159,6 +159,17 @@ bridges join usable banks. Terrain texture must not imply a false step, hole
 or item. Entrances need an unobstructed approach and enough framing space to
 be visible below the HUD.
 
+Room detail follows a landform and an activity. Establish the required route
+and standing approaches, compose the clearing/brook/pond/root hollow/terrace,
+then place paths and crossings, contextual objects and finally small texture.
+Water needs a coherent body: edge-fed brooks have continuous flow, closed ponds
+have irregular banks, and intentional single-cell puddles need their own
+shallow treatment. Bridges join two dry usable landings and carry a route.
+Debris collects under roots, beside banks, below ledges or near a specific
+feature. Empty playable space is useful; do not evenly distribute decoration
+just because free cells are available. Shared RGB555 grass/soil shadow roles
+and transparent exterior contacts bind neighboring materials together.
+
 Reserve an interaction's standing space as part of its footprint. A chest or
 entrance is not usable merely because its own cell is reachable; its required
 front must remain clear after other props are placed. Derive placement reach

@@ -18,7 +18,7 @@ typedef struct {
 
 extern GameState gGame;
 
-#if BART_FOREST_VARIANT == 31
+#if BART_FOREST_VARIANT >= 31
 /* Developer camera-only panorama fixture. Zero in ordinary gameplay. The
    review harness preserves native world/actors and requests an actual PPU
    view, never injects artwork or room geometry. */

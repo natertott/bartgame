@@ -1,4 +1,4 @@
-"""Forest environment profiles; profile31 is the selected production tree kit.
+"""Forest environment profiles; profile32 refines the selected production tree kit.
 
 Only the environment painters and their explicitly owned object frames vary.
 The selected bestiary, Bloom, equipment, interfaces and physical metadata keep
@@ -7,12 +7,13 @@ their established contracts. No global palette object is mutated.
 import os
 
 VARIANT = int(os.environ.get('BART_FOREST', '0'))
-assert 0 <= VARIANT <= 31, ('BART_FOREST must be 0..31', VARIANT)
+assert 0 <= VARIANT <= 32, ('BART_FOREST must be 0..32', VARIANT)
 ROUND2 = VARIANT >= 6
 CANOPY_ROUND = VARIANT >= 11
 ADAPTIVE_ROUND = VARIANT >= 19
 TREE_ROUND = VARIANT == 30
-TREE_WORLD = VARIANT == 31
+TREE_WORLD = VARIANT in (31, 32)
+COHESION_ROUND = VARIANT == 32
 EMERALD_ROUND = VARIANT in (29, 30)
 LOCAL_VARIANT = 1 if EMERALD_ROUND or TREE_WORLD else VARIANT - 18 if ADAPTIVE_ROUND else VARIANT - 10 if CANOPY_ROUND else VARIANT - 5 if ROUND2 else VARIANT
 # Canopy studies keep the accepted grey ground and all other environment art
@@ -51,13 +52,17 @@ NAMES = {
     29: 'Leafwoven Canopy',
     30: 'Repeated Tree Study',
     31: 'Integrated Repeated Trees',
+    32: 'Forest Room Cohesion',
 }
 TERRAIN_BANKS = {'ground', 'foliage', 'water', 'stone', 'blight',
                  'decay_mix', 'rot_water'}
 
 
 def painters():
-    if TREE_WORLD:
+    if COHESION_ROUND:
+        import forest_cohesion_props as props
+        import forest_cohesion_terrain as terrain
+    elif TREE_WORLD:
         import forest_concepts_v2_props as props
         import forest_trees_terrain as terrain
     elif EMERALD_ROUND:

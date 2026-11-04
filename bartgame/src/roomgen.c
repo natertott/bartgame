@@ -19,6 +19,9 @@
 #include "world.h"
 #include "roomgen.h"
 #include "myst.h"
+#if BART_FOREST_VARIANT == 32
+#include "forest_paths.h"
+#endif
 
 RoomSpots gSpots;
 static Rng sR;
@@ -44,6 +47,12 @@ static u16 sTrail;
 static bool8 sBlighted;
 static u8 sStage;
 static bool8 reached(int x, int y);
+#if BART_FOREST_VARIANT == 32
+/* Review telemetry only. Semantic room/save structures retain their ABI. */
+u16 gForestCohesionInfo[16];
+static u8 sCoWater[H][W] EWRAM_BSS;
+enum { CO_GLADE, CO_BROOK, CO_POND, CO_HOLLOW, CO_RUIN, CO_HEART };
+#endif
 #if BART_FOREST_VARIANT >= 6
 static u8 sEntryX,sEntryY;
 #endif
@@ -484,6 +493,8 @@ static void plan(const Cell* c, bool8 arena, bool8 entry) {
             if (crect_free(x, y, w, h))
                 add_clearing(x, y, w, h);
         }
+        /* Profile32 fits one connected water landform after expansion. */
+#if BART_FOREST_VARIANT != 32
         /* a lake in the heart of a wide clearing, a ring of ground round it */
         for (i = 0; i < sClearCount; i++) {
             CRect* r = &sClear[i];
@@ -506,6 +517,7 @@ static void plan(const Cell* c, bool8 arena, bool8 entry) {
                 }
             sWater = TRUE;
         }
+#endif
     }
     /* paths: each door to its nearest clearing, the clearings in a chain,
        one more link for a loop when there are three */
@@ -522,8 +534,10 @@ static void plan(const Cell* c, bool8 arena, bool8 entry) {
     }
     for (i = 0; i + 1 < sClearCount; i++)
         cpath(sClear[i].x + sClear[i].w / 2, sClear[i].y + sClear[i].h / 2, sClear[i + 1].x + sClear[i + 1].w / 2, sClear[i + 1].y + sClear[i + 1].h / 2);
+#if BART_FOREST_VARIANT != 32
     if (sClearCount >= 3 && (rng_next(&sR) & 1))
         cpath(sClear[0].x + sClear[0].w / 2, sClear[0].y + sClear[0].h / 2, sClear[2].x + sClear[2].w / 2, sClear[2].y + sClear[2].h / 2);
+#endif
     /* here and there a path opens into a pocket of glade and closes again */
     {
         int cx, cy;
@@ -537,8 +551,10 @@ static void plan(const Cell* c, bool8 arena, bool8 entry) {
     /* a river, or a cliff: never both */
     /* Water is drawn as a continuous tile-scale watershed after expansion,
        so a river cannot break into disconnected three-tile squares. */
+#if BART_FOREST_VARIANT != 32
     if (!arena && !entry && !sWater && (c->arch == ARCH_RUINS || c->arch == ARCH_BONEYARD || rng_range(&sR, 3) == 0))
         terrace();
+#endif
 }
 
 /* does line i of three lie in a band of this width? the middle always does */
@@ -665,10 +681,143 @@ static void shape_clearings(void) {
     }
 }
 
+#if BART_FOREST_VARIANT == 32
+/* Real door corridors lie between the old chunk centerlines. Reserve them
+   before fitting water, so an apparent perpendicular crossing can never
+   become a long plank following the stream during the later entry pass. */
+static void cohesion_reserve_doors(const Cell* c) {
+    int s;
+    for(s=0;s<4;s++)if(c->gate[s]!=GATE_WALL) {
+        int x0,y0,x1,y1,k;
+        roomgen_gate_tiles(s,&x0,&y0,&x1,&y1);
+        for(k=1;k<=6;k++) {
+            int dx=s==SIDE_W?k:s==SIDE_E?-k:0,dy=s==SIDE_N?k:s==SIDE_S?-k:0;
+            int x=x0+dx,y=y0+dy;
+            carve(x,y);
+            if(interior(x,y))sPath[y][x]|=P_MID|((s==SIDE_N||s==SIDE_S)?P_V:P_H);
+            x=x1+dx;y=y1+dy;carve(x,y);
+            if(interior(x,y))sPath[y][x]|=P_MID|((s==SIDE_N||s==SIDE_S)?P_V:P_H);
+        }
+    }
+}
+
+/* A channel is one landform, not a collection of water stamps. A candidate
+   must cross reserved paths perpendicularly, with existing dry land on both
+   ends of every deck. The outer forest wall remains completely untouched. */
+static bool8 cohesion_brook(int cell) {
+    int attempt;
+    for(attempt=0;attempt<36;attempt++) {
+        u32 h=hash32(gWorld.seed,cell*917+attempt*71+3191);
+        bool8 vertical=(h&1)!=0;
+        int length=vertical?H-4:W-2,limit=vertical?W:H;
+        static const s8 bend[24]={0,0,1,1,2,2,2,1,1,0,0,-1,-1,-2,-2,-2,-1,-1,0,0,1,1,1,0};
+        int width=2+((h>>3)&1),base=5+(h>>6)%(limit-width-10);
+        int i,j,crossings=0,ok=1;
+        gForestCohesionInfo[11]++;
+        memset(sCoWater,0,sizeof(sCoWater));
+        for(i=0;i<length;i++) {
+            int phase=i*24/length;
+            int pos=CLAMP(base+bend[(phase+(h>>20))%24],3,limit-width-4);
+            int broad=width+(phase>=8&&phase<=13?1:0);
+            for(j=0;j<broad;j++) {
+                int x=vertical?pos+j:i+1,y=vertical?i+2:pos+j;
+                sCoWater[y][x]=1;
+            }
+        }
+        for(i=2;i<H-1 && ok;i++)for(j=1;j<W-1 && ok;j++) {
+            if(!sCoWater[i][j] || !(sPath[i][j]&P_MID))continue;
+            int dx=vertical?1:0,dy=vertical?0:1;
+            int along=vertical?P_V:P_H,across=vertical?P_H:P_V;
+            /* Open chunks carry only P_MID: infer their actual centerline. */
+            bool8 cross=(sPath[i][j]&across)!=0;
+            bool8 follows=(sPath[i][j]&along)!=0;
+            if(vertical) {
+                cross|=(sPath[i][j-1]&P_MID) && (sPath[i][j+1]&P_MID);
+                follows|=(sPath[i-1][j]&P_MID) && (sPath[i+1][j]&P_MID);
+            } else {
+                cross|=(sPath[i-1][j]&P_MID) && (sPath[i+1][j]&P_MID);
+                follows|=(sPath[i][j-1]&P_MID) && (sPath[i][j+1]&P_MID);
+            }
+            if(!cross || follows){ok=0;break;}
+            int sign;
+            for(sign=-1;sign<=1;sign+=2) {
+                int x=j,y=i;
+                do{x+=dx*sign;y+=dy*sign;}while(interior(x,y)&&sCoWater[y][x]);
+                if(!interior(x,y)||sMask[y][x]!=M_FLOOR){ok=0;break;}
+            }
+            crossings++;
+        }
+        if(!ok || !crossings)continue;
+        for(i=2;i<H-1;i++)for(j=1;j<W-1;j++)if(sCoWater[i][j]) {
+            if(sPath[i][j]&P_MID)
+                sMask[i][j]=vertical?M_BRIDGE_H:M_BRIDGE_V;
+            else sMask[i][j]=M_WATER;
+        }
+        sWater=TRUE;gForestCohesionInfo[1]=CO_BROOK;
+        return TRUE;
+    }
+    return FALSE;
+}
+
+/* A closed pond sits beside the travel lane. Its ellipse is slightly
+   unequal, and may tuck below the forest's edge, but never swallows a path
+   or opens a room-boundary escape. No single-tile puddle is manufactured. */
+static bool8 cohesion_pond(int cell) {
+    int attempt;
+    for(attempt=0;attempt<80;attempt++) {
+        u32 h=hash32(gWorld.seed,cell*733+attempt*127+859);
+        int rx=attempt<40?3:2,ry=2+((h>>4)&1);
+        int cx=4+(h>>7)%(W-8),cy=5+(h>>13)%(H-10);
+        int x,y,count=0,floor=0,ok=1;
+        gForestCohesionInfo[11]++;
+        memset(sCoWater,0,sizeof(sCoWater));
+        for(y=cy-ry;y<=cy+ry;y++)for(x=cx-rx;x<=cx+rx;x++) {
+            int dx=x-cx,dy=y-cy;
+            if(dx*dx*ry*ry+dy*dy*rx*rx>rx*rx*ry*ry)continue;
+            if(!interior(x,y)||near_door(x,y)||(sPath[y][x]&P_MID)) {ok=0;continue;}
+            if(sMask[y][x]!=M_FLOOR && sMask[y][x]!=M_WALL){ok=0;continue;}
+            sCoWater[y][x]=1;count++;floor+=sMask[y][x]==M_FLOOR;
+        }
+        if(!ok || count<13 || floor*4<count*3)continue;
+        for(y=2;y<H-1;y++)for(x=1;x<W-1;x++)if(sCoWater[y][x])sMask[y][x]=M_WATER;
+        sWater=TRUE;gForestCohesionInfo[1]=CO_POND;
+        return TRUE;
+    }
+    return FALSE;
+}
+
+static void cohesion_landform(const Cell* c,bool8 arena,bool8 entry) {
+    int cell=(int)(c-gWorld.cells);
+    u32 h=hash32(gWorld.seed,cell*191+5099);
+    int motif=arena?CO_HEART:c->arch==ARCH_RUINS?CO_RUIN:
+              c->arch==ARCH_BONEYARD || (c->arch==ARCH_THICKET && c->stage)?CO_HOLLOW:CO_GLADE;
+    memset(gForestCohesionInfo,0,sizeof(gForestCohesionInfo));
+    gForestCohesionInfo[0]=1;gForestCohesionInfo[1]=motif;
+    gForestCohesionInfo[13]=c->arch;gForestCohesionInfo[14]=c->stage;gForestCohesionInfo[15]=cell;
+    cohesion_reserve_doors(c);
+    if(arena || entry)return;
+    if(c->arch==ARCH_POND || h%5<2) {
+        if((h&8) && cohesion_brook(cell))return;
+        if(cohesion_pond(cell))return;
+        if(c->arch==ARCH_POND)cohesion_brook(cell);
+    }
+}
+
+static u16 cohesion_floor(int x,int y) {
+    u32 h=hash32(gWorld.seed,(x/3)*193+(y/3)*977+gForestCohesionInfo[15]*73);
+    u32 fine=hash32(gWorld.seed,x*1297+y*487+gForestCohesionInfo[15]*31);
+    if(sBlighted)return h%7==0 && fine%3==0?MT_BLIGHT_FLOOR2:MT_BLIGHT_FLOOR;
+    return MT_MOSS0+((h%11==0||h%13==0)&&fine%3==0?1+(fine>>8)%2:0);
+}
+#endif
+
 /* A river is one continuous band, two or three tiles wide, whose banks
    drift by at most one tile per row. Try orientations/locations that cross
    a path rather than run along it: every plank has land at both ends. */
 static void watershed(const Cell* c, bool8 arena, bool8 entry) {
+#if BART_FOREST_VARIANT == 32
+    cohesion_landform(c,arena,entry);
+#else
     int tries, i, j;
     if (arena || entry || sTerraceRow >= 0 ||
         (c->arch != ARCH_POND && hash32(gWorld.seed, c->dist + 719) % 4))
@@ -721,6 +870,7 @@ static void watershed(const Cell* c, bool8 arena, bool8 entry) {
         sWater = TRUE;
         return;
     }
+#endif
 }
 
 /* Trails are suggestions, not a graph overlay. Occasionally one arrival
@@ -771,6 +921,54 @@ static void bridge_landings(void) {
         }
     }
 }
+
+#if BART_FOREST_VARIANT == 32
+static u8 cohesion_uv(bool8 vertical,int u,int v) {
+    return vertical?sMask[v][u]:sMask[u][v];
+}
+
+static void cohesion_uv_set(bool8 vertical,int u,int v,u8 mask,u8 path) {
+    int x=vertical?u:v,y=vertical?v:u;
+    sMask[y][x]=mask;sPath[y][x]=path;
+}
+
+/* Nearby parallel lanes share one crossing. Their dry banks connect to that
+   deck before any furniture exists; this is a real route change, not wood
+   painted over water to hide an unsafe or disconnected crossing. */
+static void cohesion_join_crossings(void) {
+    int axis;
+    for(axis=0;axis<2;axis++) {
+        bool8 vertical=axis!=0;
+        int ulim=vertical?W:H,vlim=vertical?H:W,u,v;
+        u8 deck=vertical?M_BRIDGE_V:M_BRIDGE_H;
+        for(u=2;u<ulim-4;u++)for(v=3;v<vlim-3;v++) {
+            if(cohesion_uv(vertical,u,v)!=deck || cohesion_uv(vertical,u,v-1)==deck)continue;
+            int end=v,u2;
+            while(end+1<vlim-2 && cohesion_uv(vertical,u,end+1)==deck)end++;
+            for(u2=u+2;u2<=u+3 && u2<ulim-2;u2++) {
+                int match=-1,j;
+                for(j=v;j<=end;j++)if(cohesion_uv(vertical,u2,j)==deck){match=j;break;}
+                if(match<0)continue;
+                int a=match,b=match;
+                while(a>2 && cohesion_uv(vertical,u2,a-1)==deck)a--;
+                while(b<vlim-3 && cohesion_uv(vertical,u2,b+1)==deck)b++;
+                int lo=MIN(v,a),hi=MAX(end,b),ok=1;
+                if(lo<3 || hi>=vlim-3)continue;
+                for(j=u;j<=u2;j++)
+                    if(watery(cohesion_uv(vertical,j,lo-1)) || watery(cohesion_uv(vertical,j,hi+1)))ok=0;
+                if(!ok)continue;
+                for(j=a;j<=b;j++)cohesion_uv_set(vertical,u2,j,M_WATER,0);
+                for(j=lo;j<=hi;j++)cohesion_uv_set(vertical,u,j,deck,P_MID|(vertical?P_V:P_H));
+                for(j=u;j<=u2;j++) {
+                    cohesion_uv_set(vertical,j,lo-1,M_FLOOR,P_BANK|P_MID|(vertical?P_H:P_V));
+                    cohesion_uv_set(vertical,j,hi+1,M_FLOOR,P_BANK|P_MID|(vertical?P_H:P_V));
+                }
+                v=lo;end=hi;
+            }
+        }
+    }
+}
+#endif
 
 /* Water pours off the cliff: in a run of ledges four or more long, two
    ledges become a fall, a pool of water gathers on the high ground
@@ -1261,13 +1459,20 @@ static bool8 reached(int x, int y) {
    stands to use it. In particular, a chest cannot fill a mouth's threshold. */
 static bool8 required_reserved(int x,int y) {
     int i;
+#if BART_FOREST_VARIANT == 32
+    if(inside(x,y) && (sPath[y][x]&P_BANK))return TRUE;
+#endif
     if(gSpots.has_mouth && ABS(x-gSpots.mouth.x)<=1 &&
        y>=gSpots.mouth.y-2 && y<=gSpots.mouth.y+2)return TRUE;
     if(gSpots.has_chest && x==gSpots.chest.x &&
        y>=gSpots.chest.y && y<=gSpots.chest.y+1)return TRUE;
     if(gSpots.has_npc && x==gSpots.npc.x &&
        y>=gSpots.npc.y-1 && y<=gSpots.npc.y+2)return TRUE;
-    if(gSpots.has_relic && x==gSpots.relic.x && y==gSpots.relic.y)return TRUE;
+    if((gSpots.has_relic
+#if BART_FOREST_VARIANT == 32
+        || gWorld.cells[gForestCohesionInfo[15]].role==ROLE_RELIC
+#endif
+       ) && x==gSpots.relic.x && y==gSpots.relic.y)return TRUE;
     if(gSpots.has_shrine && x==gSpots.shrine.x &&
        y>=gSpots.shrine.y && y<=gSpots.shrine.y+1)return TRUE;
     for(i=0;i<gSpots.torch_count;i++)
@@ -1461,6 +1666,9 @@ static void ensure_npc_spot(Spot* out) {
    unchecked stump. Later censers could also claim an earlier approach. */
 static bool8 quest_torch_reserved(int x,int y) {
     int i;
+#if BART_FOREST_VARIANT == 32
+    if(inside(x,y) && (sPath[y][x]&P_BANK))return TRUE;
+#endif
     if(x==gSpots.npc.x && y>=gSpots.npc.y-1 && y<=gSpots.npc.y+2)
         return TRUE;
     for(i=0;i<gSpots.torch_count;i++)
@@ -1577,6 +1785,10 @@ static void ensure_spot(Spot* out) {
 void roomgen_preview(int cell, const u8** mask, const u8** path) {
     Cell* c = &gWorld.cells[cell];
     int s;
+#if BART_FOREST_VARIANT == 32
+    u16 previous_cohesion[16];
+    memcpy(previous_cohesion,gForestCohesionInfo,sizeof(previous_cohesion));
+#endif
     bool8 arena = (c->arch == ARCH_ARENA), entry = (c->arch == ARCH_ENTRY);
     rng_seed(&sR, hash32(gWorld.seed, cell * 7919 + 13));
     memset(sMask, 0, sizeof(sMask));
@@ -1608,9 +1820,15 @@ void roomgen_preview(int cell, const u8** mask, const u8** path) {
     }
     add_waterfalls();
     bridge_landings();
+#if BART_FOREST_VARIANT == 32
+    cohesion_join_crossings();
+#endif
     trail_story(c, arena, entry);
     *mask = &sMask[0][0];
     *path = &sPath[0][0];
+#if BART_FOREST_VARIANT == 32
+    memcpy(gForestCohesionInfo,previous_cohesion,sizeof(previous_cohesion));
+#endif
 }
 
 /* ---------------------------------------------------------- the build -- */
@@ -1741,7 +1959,11 @@ static bool8 arch_event_clear(int x,int y) {
     int i;
     if((gSpots.has_chest && ABS(x-gSpots.chest.x)<=2 && ABS(y-gSpots.chest.y)<=2) ||
        (gSpots.has_npc && ABS(x-gSpots.npc.x)<=2 && ABS(y-gSpots.npc.y)<=2) ||
-       (gSpots.has_relic && ABS(x-gSpots.relic.x)<=2 && ABS(y-gSpots.relic.y)<=2) ||
+       ((gSpots.has_relic
+#if BART_FOREST_VARIANT == 32
+         || gWorld.cells[gForestCohesionInfo[15]].role==ROLE_RELIC
+#endif
+        ) && ABS(x-gSpots.relic.x)<=2 && ABS(y-gSpots.relic.y)<=2) ||
        (gSpots.has_shrine && ABS(x-gSpots.shrine.x)<=2 && ABS(y-gSpots.shrine.y)<=2) ||
        (gSpots.has_mouth && ABS(x-gSpots.mouth.x)<=2 && ABS(y-gSpots.mouth.y)<=2) ||
        (gSpots.has_treasure && ABS(x-gSpots.treasure.x)<=2 && ABS(y-gSpots.treasure.y)<=2))return FALSE;
@@ -1829,6 +2051,195 @@ static void skin_blight_trees(int cell) {
     }
 }
 
+#if BART_FOREST_VARIANT == 32
+static bool8 cohesion_plain(int x,int y) {
+    if(!interior(x,y) || !is_floor(x,y) || near_door(x,y) || (sPath[y][x]&(P_MID|P_BANK)))return FALSE;
+    u16 mt=room_get(x,y);
+    return is_plain(x,y) || (mt>=MT_FOREST_ROT0&&mt<=MT_FOREST_ROT7) ||
+        (mt>=MT_ROT_00&&mt<=MT_ROT_F0);
+}
+
+static void cohesion_accent(int x,int y,u16 mt) {
+    if(!cohesion_plain(x,y))return;
+    room_set(x,y,mt);gForestCohesionInfo[7]++;
+}
+
+static bool8 cohesion_solid(int x,int y,u16 mt) {
+    if(!cohesion_plain(x,y) || !simple_spot(x,y))return FALSE;
+    room_set(x,y,mt);gForestCohesionInfo[6]++;
+    return TRUE;
+}
+
+static bool8 cohesion_wet(int x,int y) {
+    if(!inside(x,y))return FALSE;
+    return watery(sMask[y][x]) || sMask[y][x]==M_BRIDGE_H || sMask[y][x]==M_BRIDGE_V;
+}
+
+/* Ecology grows in small related groups. Open travel ground is deliberately
+   quiet; a stone, branch or blossom is a consequence of a bank or root edge. */
+static void cohesion_dress(const Cell* c,bool8 arena) {
+    int cell=(int)(c-gWorld.cells),attempt,clusters=0,want=arena?4:7;
+    memset(sCoWater,0,sizeof(sCoWater));
+    if(gForestCohesionInfo[1]==CO_RUIN) {
+        for(attempt=0;attempt<80;attempt++) {
+            u32 h=hash32(gWorld.seed,cell*1301+attempt*193+919);
+            int x=3+h%(W-8),y=5+(h>>8)%(H-10);
+            if(sMask[y-1][x]!=M_WALL || !plain_block(x,y,3,1) || !simple_block(x,y,3,1))continue;
+            room_set(x,y,MT_PILLAR);room_set(x+1,y,MT_RUIN_WALL);room_set(x+2,y,MT_PILLAR);
+            cohesion_accent(x,y+1,MT_MOSSY_STONE);cohesion_accent(x+2,y+1,MT_MOSSY_STONE);
+            cohesion_accent(x+1,y+2,MT_LEAF_LITTER);
+            gForestCohesionInfo[5]++;gForestCohesionInfo[6]+=3;
+            sCoWater[y][x+1]=1;clusters++;
+            break;
+        }
+    }
+    for(attempt=0;attempt<200 && clusters<want;attempt++) {
+        u32 h=hash32(gWorld.seed,cell*1879+attempt*277+991);
+        int x=3+h%(W-6),y=4+(h>>8)%(H-7),dx,dy,close=0;
+        bool8 bank=cohesion_wet(x-1,y)||cohesion_wet(x+1,y)||cohesion_wet(x,y-1)||cohesion_wet(x,y+1);
+        bool8 shade=sMask[y-1][x]==M_WALL||sMask[y+1][x]==M_WALL||sMask[y][x-1]==M_WALL||sMask[y][x+1]==M_WALL;
+        if(!cohesion_plain(x,y) || (!bank&&!shade))continue;
+        for(dy=MAX(2,y-3);dy<=MIN(H-2,y+3);dy++)for(dx=MAX(1,x-3);dx<=MIN(W-2,x+3);dx++)
+            if(sCoWater[dy][dx])close=1;
+        if(close)continue;
+        sCoWater[y][x]=1;clusters++;gForestCohesionInfo[5]++;
+        if(bank) {
+            if((h>>17)&1)cohesion_solid(x,y,c->stage>=2?MT_SICK_ROCK:MT_ROCK_SMALL);
+            cohesion_accent(x-1,y+1,MT_FERN_PATCH);
+            cohesion_accent(x,y+1,MT_FERN_PATCH);
+            cohesion_accent(x+1,y,((h>>19)&1)?MT_MOSS_FLOWERS:MT_LEAF_LITTER);
+        } else {
+            int kind=(h>>17)%5;
+            if(kind==0 && plain_block(x,y,2,1) && simple_block(x,y,2,1)) {
+                stamp_ground(x,y,2,1,MT_HLOG_0);gForestCohesionInfo[6]+=2;
+                cohesion_solid(x+2,y-1,c->stage>=2?MT_SICK_STUMP:MT_STUMP);
+            } else if(kind==1 && !arena) {
+                if(place_tree(x,y-2))gForestCohesionInfo[6]+=2;
+            } else if(kind<4)cohesion_solid(x,y,c->stage>=2?MT_SICK_STUMP:MT_BUSH);
+            cohesion_accent(x-1,y+1,MT_LEAF_LITTER);
+            cohesion_accent(x,y+1,c->arch==ARCH_BONEYARD?MT_SICK_BONES:MT_LEAF_LITTER);
+            cohesion_accent(x+1,y+1,c->stage>=2?MT_FERN_PATCH:MT_MOSS_FLOWERS);
+            if(gForestCohesionInfo[1]==CO_HOLLOW)cohesion_accent(x-1,y,MT_TALL_GRASS);
+        }
+    }
+    if(arena) {
+        /* A few connected infections frame the Heart instead of isolated
+           one-cell pools punctuating the central combat floor. */
+        cohesion_solid(W/2-8,H/2-4,MT_BLIGHT_CRYSTAL);
+        cohesion_solid(W/2-7,H/2-3,MT_BLIGHT_CRYSTAL);
+        cohesion_solid(W/2+7,H/2+3,MT_BLIGHT_CRYSTAL);
+        cohesion_accent(W/2-8,H/2-3,MT_FOREST_BLIGHT_VEIN0);
+    }
+}
+
+static bool8 cohesion_route_near(int x,int y,int radius) {
+    int xx,yy;
+    for(yy=MAX(1,y-radius);yy<=MIN(H-2,y+radius);yy++)
+        for(xx=MAX(1,x-radius);xx<=MIN(W-2,x+radius);xx++) {
+            u16 mt=room_get(xx,yy);
+            if(ABS(xx-x)+ABS(yy-y)<=radius &&
+               (mt==MT_PATH || (mt>=MT_PEDGE_1&&mt<=MT_PEDGE_F) ||
+                mt==MT_BRIDGE || mt==MT_BRIDGE_V))return TRUE;
+        }
+    return FALSE;
+}
+
+static int cohesion_feature_distance(int x,int y) {
+    int best=99,d;
+    if(gSpots.has_mouth){d=ABS(x-gSpots.mouth.x)+ABS(y-(gSpots.mouth.y+1));best=MIN(best,d);}
+    if(gSpots.has_chest){d=ABS(x-gSpots.chest.x)+ABS(y-gSpots.chest.y);best=MIN(best,d);}
+    if(gSpots.has_npc){d=ABS(x-gSpots.npc.x)+ABS(y-gSpots.npc.y);best=MIN(best,d);}
+    if(gSpots.has_relic || gWorld.cells[gForestCohesionInfo[15]].role==ROLE_RELIC) {
+        d=ABS(x-gSpots.relic.x)+ABS(y-gSpots.relic.y);best=MIN(best,d);
+    }
+    if(gSpots.has_shrine){d=ABS(x-gSpots.shrine.x)+ABS(y-gSpots.shrine.y);best=MIN(best,d);}
+    if(gSpots.has_treasure){d=ABS(x-gSpots.pocket_gate.x)+ABS(y-gSpots.pocket_gate.y);best=MIN(best,d);}
+    return best;
+}
+
+static bool8 cohesion_actor_reserved(int x,int y) {
+    int i;
+    if(required_reserved(x,y))return TRUE;
+    if(gWorld.cells[gForestCohesionInfo[15]].role==ROLE_RELIC &&
+       ABS(x-gSpots.relic.x)<=1 && ABS(y-gSpots.relic.y)<=1)return TRUE;
+    if(gSpots.has_boss && ABS(x-gSpots.boss.x)<=2 && ABS(y-gSpots.boss.y)<=2)return TRUE;
+    for(i=0;i<gSpots.spawn_count;i++)
+        if(ABS(x-gSpots.spawns[i].x)<=1 && ABS(y-gSpots.spawns[i].y)<=1)return TRUE;
+    if(gSpots.has_treasure && ABS(x-gSpots.treasure.x)<=1 && ABS(y-gSpots.treasure.y)<=1)return TRUE;
+    /* A future tool still needs the room-side launch/bomb/flame approach.
+       Ordinary-floor connectivity alone cannot see through its closed gate. */
+    if(gSpots.has_treasure && ABS(x-gSpots.pocket_gate.x)<=1 && ABS(y-gSpots.pocket_gate.y)<=1)return TRUE;
+    return FALSE;
+}
+
+/* Lamps frame a crossing or point to a feature, never decorate arbitrary
+   grass. Optional content can receive a lamp even when the dirt stops short. */
+static void cohesion_lights(int cell) {
+    int attempt,made=0;
+    Spot at[3];
+    for(attempt=0;attempt<240 && made<3;attempt++) {
+        u32 h=hash32(gWorld.seed,cell*1543+attempt*73+1409);
+        int x=2+h%(W-4),y=3+(h>>8)%(H-5),i,close=0;
+        int feature=cohesion_feature_distance(x,y);
+        bool8 crossing=room_get(x,y-1)==MT_BRIDGE || room_get(x,y+1)==MT_BRIDGE ||
+            room_get(x-1,y)==MT_BRIDGE_V || room_get(x+1,y)==MT_BRIDGE_V;
+        bool8 clue=feature>=2 && feature<=4;
+        if(!crossing && !clue && (!cohesion_route_near(x,y,1) || h%3))continue;
+        if(!cohesion_plain(x,y)||cohesion_actor_reserved(x,y)||!reached(x,y)||!simple_spot(x,y))continue;
+        for(i=0;i<made;i++)if(ABS(x-at[i].x)+ABS(y-at[i].y)<7)close=1;
+        if(close)continue;
+        room_set(x,y,MT_LANTERN_POST);at[made].x=x;at[made].y=y;made++;
+        gForestCohesionInfo[8]++;gForestCohesionInfo[6]++;
+        if(clue && !cohesion_route_near(x,y,1))gForestCohesionInfo[12]++;
+    }
+}
+
+/* The fluid continues beneath the first solid forest row. This is a
+   display substrate only: neither source nor outlet opens a boundary. */
+static void cohesion_sources(void) {
+    int x,y;
+    if(gForestCohesionInfo[1]!=CO_BROOK)return;
+    for(y=2;y<H-1;y++) {
+        if(cohesion_wet(1,y) && forest_v2_canopy_kind[room_get(0,y)])gRoom.underlay[y*ROOM_MAX_W]=MT_WATER;
+        if(cohesion_wet(W-2,y) && forest_v2_canopy_kind[room_get(W-1,y)])gRoom.underlay[y*ROOM_MAX_W+W-1]=MT_WATER;
+    }
+    for(x=1;x<W-1;x++) {
+        if(cohesion_wet(x,2)) {
+            if(forest_v2_canopy_kind[room_get(x,1)])gRoom.underlay[ROOM_MAX_W+x]=MT_WATER;
+            if(forest_v2_canopy_kind[room_get(x,0)])gRoom.underlay[x]=MT_WATER;
+        }
+        if(cohesion_wet(x,H-2) && forest_v2_canopy_kind[room_get(x,H-1)])gRoom.underlay[(H-1)*ROOM_MAX_W+x]=MT_WATER;
+    }
+}
+
+static void cohesion_measure(void) {
+    int x,y,head,tail;
+    u16 queue[W*H];
+    memset(sCoWater,0,sizeof(sCoWater));
+    gForestCohesionInfo[2]=gForestCohesionInfo[3]=gForestCohesionInfo[4]=0;
+    gForestCohesionInfo[9]=gForestCohesionInfo[10]=0;
+    for(y=0;y<H;y++)for(x=0;x<W;x++) {
+        u16 mt=room_get(x,y);
+        if(mt==MT_BRIDGE||mt==MT_BRIDGE_V){sCoWater[y][x]=1;gForestCohesionInfo[3]++;}
+        else if(metatile_type[mt]==TT_WATER){sCoWater[y][x]=1;gForestCohesionInfo[2]++;}
+        if(mt==MT_PATH || (mt>=MT_PEDGE_1 && mt<=MT_PEDGE_F))gForestCohesionInfo[9]++;
+        if(sMask[y][x]==M_LEDGE)gForestCohesionInfo[10]++;
+    }
+    for(y=0;y<H;y++)for(x=0;x<W;x++)if(sCoWater[y][x]==1) {
+        gForestCohesionInfo[4]++;head=tail=0;queue[tail++]=y*W+x;sCoWater[y][x]=2;
+        while(head<tail) {
+            int q=queue[head++],xx=q%W,yy=q/W,k;
+            static const s8 d[4][2]={{0,-1},{1,0},{0,1},{-1,0}};
+            for(k=0;k<4;k++) {
+                int nx=xx+d[k][0],ny=yy+d[k][1];
+                if(!inside(nx,ny)||sCoWater[ny][nx]!=1)continue;
+                sCoWater[ny][nx]=2;queue[tail++]=ny*W+nx;
+            }
+        }
+    }
+}
+#endif
+
 static void roomgen_build_internal(int cell, bool8 render) {
     Cell* c = &gWorld.cells[cell];
     int x, y, s, i;
@@ -1840,7 +2251,11 @@ static void roomgen_build_internal(int cell, bool8 render) {
     bool8 blighted = roomgen_blighted(cell);
     sBlighted = blighted;
     sStage = c->stage;
+#if BART_FOREST_VARIANT == 32
+    sTrail = MT_PATH;
+#else
     sTrail = blighted ? MT_BLIGHT_VEIN : MT_PATH;
+#endif
     bool8 arena = (c->arch == ARCH_ARENA), entry = (c->arch == ARCH_ENTRY);
 
     room_clear(W, H, MT_CANOPY);
@@ -1879,6 +2294,9 @@ static void roomgen_build_internal(int cell, bool8 render) {
     }
     add_waterfalls();
     bridge_landings();
+#if BART_FOREST_VARIANT == 32
+    cohesion_join_crossings();
+#endif
     trail_story(c, arena, entry);
 
     /* lay the ground */
@@ -1890,7 +2308,11 @@ static void roomgen_build_internal(int cell, bool8 render) {
                     if ((sPath[y][x] & (P_MID | P_HIDDEN)) == P_MID)
                         mt = sTrail;
                     else
+#if BART_FOREST_VARIANT == 32
+                        mt = cohesion_floor(x,y);
+#else
                         mt = blighted ? blight_pick() : moss_pick(c->stage);
+#endif
                     break;
                 case M_WATER: {
                     /* banks where ground lies beside it; lilies only on open water */
@@ -1924,6 +2346,7 @@ static void roomgen_build_internal(int cell, bool8 render) {
     }
     /* lily rafts on the open water of the lakes: two by two of water with
        water all round, one raft to a lake, two to a room at most */
+#if BART_FOREST_VARIANT != 32
     {
         int rafts = 0, lx = -99, ly = -99;
         for (y = 2; y < H - 3 && rafts < 2; y++)
@@ -1948,6 +2371,7 @@ static void roomgen_build_internal(int cell, bool8 render) {
                 }
             }
     }
+#endif
     /* the ends of a cliff */
     for (y = 2; y < H - 1; y++)
         for (x = 1; x < W - 1; x++)
@@ -2060,6 +2484,9 @@ static void roomgen_build_internal(int cell, bool8 render) {
        above its roots; then every open chunk gets its piece; then what
        may stand alone on a tile, narrowing the ways but never closing
        one; then the ground's accents */
+#if BART_FOREST_VARIANT == 32
+    cohesion_dress(c,arena);
+#else
     if (!arena && !blighted) {
         int want = (c->arch == ARCH_GROVE) ? 2 : (rng_range(&sR, 3) != 0) ? 1 : 0, k;
         for (k = 0; k < 40 && want > 0; k++) {
@@ -2131,6 +2558,7 @@ static void roomgen_build_internal(int cell, bool8 render) {
         default:
             break;
     }
+#endif
 
     /* keep the door approaches open: two tiles in from each opening */
     for (s = 0; s < 4; s++) {
@@ -2317,6 +2745,9 @@ static void roomgen_build_internal(int cell, bool8 render) {
         if (gSpots.has_relic) { m[MP_RELIC * 2] = gSpots.relic.x + 1; m[MP_RELIC * 2 + 1] = gSpots.relic.y + 1; }
         if (gSpots.has_shrine) { m[MP_SHRINE * 2] = gSpots.shrine.x + 1; m[MP_SHRINE * 2 + 1] = gSpots.shrine.y + 1; }
     }
+#if BART_FOREST_VARIANT == 32
+    forest_paths_refine(cell,&sPath[0][0]);
+#endif
     if (!blighted)
         lay_rot(c->stage);
     /* gold on the floor: the wood is rotten, but it shines; white stars
@@ -2364,6 +2795,11 @@ static void roomgen_build_internal(int cell, bool8 render) {
     finish_log_pairs();
     place_root_arch(cell);
 #endif
+#if BART_FOREST_VARIANT == 32
+    cohesion_lights(cell);
+    cohesion_sources();
+    cohesion_measure();
+#endif
     if (render)
         room_render();
 }
@@ -2382,6 +2818,9 @@ void roomgen_preview_details(int cell, u8* marks, const u8** mask, const u8** pa
     RoomSpots previous_spots;
     u8 previous_marks[MP_COUNT * 2];
     Rng previous_rng;
+#if BART_FOREST_VARIANT == 32
+    u16 previous_cohesion[16];
+#endif
     if (cell < 0 || cell >= CELLS) {
         memset(marks, 0, MP_COUNT * 2);
         if (mask) *mask = 0;
@@ -2392,6 +2831,9 @@ void roomgen_preview_details(int cell, u8* marks, const u8** mask, const u8** pa
     previous_spots = gSpots;
     memcpy(previous_marks, gWorld.mark[cell], sizeof(previous_marks));
     previous_rng = sR;
+#if BART_FOREST_VARIANT == 32
+    memcpy(previous_cohesion,gForestCohesionInfo,sizeof(previous_cohesion));
+#endif
     roomgen_build_internal(cell, FALSE);
     memcpy(marks, gWorld.mark[cell], MP_COUNT * 2);
     if (mask) *mask = &sMask[0][0];
@@ -2400,6 +2842,9 @@ void roomgen_preview_details(int cell, u8* marks, const u8** mask, const u8** pa
     gRoom = sPreviewRoom;
     gSpots = previous_spots;
     sR = previous_rng;
+#if BART_FOREST_VARIANT == 32
+    memcpy(gForestCohesionInfo,previous_cohesion,sizeof(previous_cohesion));
+#endif
 }
 
 void roomgen_preview_events(int cell, u8* marks) {

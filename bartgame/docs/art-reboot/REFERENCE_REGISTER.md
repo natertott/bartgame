@@ -269,3 +269,15 @@ rooms, native viewports and movement proof. The
 source fidelity, real-floor contact, root/crown depth and remaining clearance
 tradeoffs against the already-read guide. No additional external source is
 claimed. The preceding diagnostic-only gallery remains historical evidence.
+
+
+## Forest composition/detail refinement — 2026-11-03
+
+The direct source is the user's critique of the latest generated rooms and the
+published profile31 [mGBA room review](../../../art-review/forest-trees-integrated/README.md).
+The approved compact tree paintings stay the reference for tree identity.
+Previously read native-art guide and tutorial application notes remain the
+basis for palette, connected clusters, lighting, contact, clear hierarchy and
+native review. This pass does not claim new web research or unread sources.
+New profile32 evidence must distinguish source-native detail sheets from
+actual generated-room mGBA views and camera mosaics.

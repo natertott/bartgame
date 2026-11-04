@@ -1187,7 +1187,7 @@ static void ms_open(void){
     icon32_menu_begin();bg0_clear();bg0_pool_reset_full();
     dma3_copy32((const void*)CHARBLOCK(0),sStudyWorld,sizeof(sStudyWorld));dma3_copy32((const void*)OBJ_TILE(OBJ_TILE_HUD_ICONS),sStudyHud,sizeof(sStudyHud));
     sStudyBg3=REG_BG3CNT;sStudyAnim=gAnimTiles;gAnimTiles=0;
-#if BART_FOREST_VARIANT == 31
+#if BART_FOREST_VARIANT >= 31
     /* The forest lends BG3 its64x64 root map. The menu owns screen22 and
        a32x32 map; restore those dimensions as well as its character base. */
     REG_BG3CNT=BGCNT_PRIO(3)|BGCNT_CHARBASE(0)|BGCNT_SCREENBASE(22)|BGCNT_SIZE_32x32;

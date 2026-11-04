@@ -18,6 +18,7 @@ palette index 0-F, with '.' also meaning 0 (transparent).
 """
 import json
 import os
+import subprocess
 import sys
 
 HERE = os.path.dirname(os.path.abspath(__file__))
@@ -32,6 +33,22 @@ import reboot_actors  # noqa: E402
 import sewer_concepts as SC  # noqa: E402
 import ui_studies as UI_STUDIES  # noqa: E402
 import forest_concepts as FOREST_CONCEPTS  # noqa: E402
+
+# Some canonical IDs (moss, a torch, a boulder) are shared between regions.
+# A forest refinement must not repaint the Drain or mystery-room kit. Read
+# the preceding selected painters in an isolated process so module globals
+# and cached images cannot leak between the two native art configurations.
+protected31 = None
+if FOREST_CONCEPTS.COHESION_ROUND:
+    baseline_env = dict(os.environ, BART_FOREST='31')
+    baseline_code = ('import json,palettes,tiles; '
+                     'print(json.dumps({"palettes":palettes.BG_PALETTES,'
+                     '"metatiles":tiles.METATILES}))')
+    protected31 = json.loads(subprocess.check_output(
+        [sys.executable, '-c', baseline_code],
+        cwd=os.path.join(HERE, '..', 'art'), env=baseline_env, text=True))
+    assert [name for name, _ in protected31['palettes']] == [name for name, _ in palettes.BG_PALETTES]
+    protected31['by_name'] = {mt['name']: mt for mt in protected31['metatiles']}
 
 OUT = sys.argv[1] if len(sys.argv) > 1 else os.path.join(HERE, '..', 'build', 'gen')
 os.makedirs(OUT, exist_ok=True)
@@ -137,7 +154,8 @@ c.append('#include "gba.h"\n#include "assets.h"\n')
 bg_slots = {}
 obj_slots = {}
 vals = []
-for i, (name, cols) in enumerate(palettes.BG_PALETTES):
+global_bg_palettes = protected31['palettes'] if protected31 else palettes.BG_PALETTES
+for i, (name, cols) in enumerate(global_bg_palettes):
     assert len(cols) == 16, name
     bg_slots[name] = i
     h.append('#define PAL_BG_%s %d' % (cname(name), i))
@@ -224,6 +242,10 @@ if FOREST_CONCEPTS.VARIANT >= 6:
     _, forest_terrain = FOREST_CONCEPTS.painters()
     forest_v2_pulses = forest_terrain.pulse_palettes(FOREST_CONCEPTS.LOCAL_VARIANT)
 for si, (sname, pred) in enumerate(SETS):
+    area_metatiles = ([protected31['by_name'].get(mt['name'], mt) for mt in tiles.METATILES]
+                     if protected31 and sname != 'forest' else tiles.METATILES)
+    area_palette_colors = dict(protected31['palettes'] if protected31 and sname != 'forest'
+                               else palettes.BG_PALETTES)
     ts = Tileset(limit=768 if FOREST_CONCEPTS.TREE_WORLD and sname == 'forest' else 1024)
     ts.add([[0] * 8 for _ in range(8)], 0, 0)  # tile 0 blank
     entries = []
@@ -233,7 +255,7 @@ for si, (sname, pred) in enumerate(SETS):
     # the set's palette groups, in the order its metatiles first use them;
     # a metatile may give each of its quarters a palette of its own (qpals)
     set_pals = []
-    for i, mt in enumerate(tiles.METATILES):
+    for i, mt in enumerate(area_metatiles):
         if pred(mt['name'], i):
             for pn in mt.get('qpals') or [mt['pal']]:
                 if pn not in set_pals:
@@ -243,7 +265,7 @@ for si, (sname, pred) in enumerate(SETS):
         forest_v2_pulse_slots.append([set_pals.index(name) if name in set_pals
                                       and sname != 'sewer' else 255
                                       for name in forest_v2_pulses])
-    for i, mt in enumerate(tiles.METATILES):
+    for i, mt in enumerate(area_metatiles):
         if not pred(mt['name'], i):
             entries += [0, 0, 0, 0]
             continue
@@ -409,7 +431,7 @@ for si, (sname, pred) in enumerate(SETS):
         }
     c.append(c_array_u16('tileset_%s_tiles' % sname, bytes_to_u16(b''.join(ts.tiles))))
     c.append(c_array_u16('metatile_map_%s' % sname, entries, 8))
-    c.append(c_array_u16('tileset_%s_pals' % sname, [rgb15(x) for n in set_pals for x in dict(palettes.BG_PALETTES)[n]]))
+    c.append(c_array_u16('tileset_%s_pals' % sname, [rgb15(x) for n in set_pals for x in area_palette_colors[n]]))
     for k, (base, nfr, data, speed) in enumerate(anims):
         c.append(c_array_u16('tile_anim_%s_%d' % (sname, k), bytes_to_u16(data)))
     c.append('static const TileAnim tile_anims_%s[%d] = {' % (sname, max(1, len(anims))))
@@ -554,6 +576,29 @@ if FOREST_CONCEPTS.VARIANT >= 6:
         c.append('  },')
     c.append('};')
 h.append('#define TILESET_COUNT %d\n' % len(SETS))
+
+if FOREST_CONCEPTS.COHESION_ROUND:
+    import forest_concepts_v2_topology as F2T
+    import forest_cohesion_topology as FCT
+    path_table = tiles.FOREST_COHESION_TOPOLOGY['path']
+    h.append('extern const u16 forest_cohesion_path_alias[2][16][16];')
+    c.append('const u16 forest_cohesion_path_alias[2][16][16] = {')
+    for kind in range(2):
+        c.append('  {')
+        for mask in range(16):
+            c.append('    {' + ','.join(str(mt_names[path_table[kind][mask][corner & F2T.eligible_corners(mask)]])
+                                      for corner in range(16)) + '},')
+        c.append('  },')
+    c.append('};')
+    decor_table = tiles.FOREST_COHESION_TOPOLOGY['decor']
+    h.append('#define FOREST_COHESION_DECOR_COUNT %d' % len(FCT.DECOR_NAMES))
+    h.append('extern const u16 forest_cohesion_decor_alias[2][FOREST_COHESION_DECOR_COUNT];')
+    for index, name in enumerate(FCT.DECOR_NAMES):
+        h.append('#define FOREST_COHESION_DECOR_%s %d' % (cname(name), index))
+    c.append('const u16 forest_cohesion_decor_alias[2][FOREST_COHESION_DECOR_COUNT] = {')
+    for row in decor_table:
+        c.append('  {' + ','.join(str(mt_names[name]) for name in row) + '},')
+    c.append('};')
 
 # ------------------------------------------------------------- sprites --
 SHAPES = {(8, 8): (0, 0), (16, 16): (0, 1), (32, 32): (0, 2), (64, 64): (0, 3),
@@ -975,6 +1020,15 @@ if FOREST_CONCEPTS.TREE_WORLD:
     coverage['forest_trees'] = tree_world_metadata
     coverage['forest_concept']['canopy_round']['scope'] = 'Approved compact repeated trees replace all legacy canopy/tree pictures.'
     coverage['forest_concept']['canopy_round']['generator'] = 'Logical maze preserved; deterministic root-row composition uses the generated room.'
+if FOREST_CONCEPTS.COHESION_ROUND:
+    coverage['forest_cohesion'] = {
+        'status': 'Native forest composition and detail refinement, profile32.',
+        'terrain_owner': 'forest_cohesion_terrain', 'prop_owner': 'forest_cohesion_props',
+        'path_topology': tiles.FOREST_COHESION_TOPOLOGY,
+        'region_scope': 'Forest tileset uses new native drawings; nonforest tilesets and global BG UI palette use isolated profile31 source.',
+        'tree_source': 'Approved twelve forest_tree_study pictures, palette, anchors and alpha masks unchanged.',
+        'generation': 'Room landform and protected routes precede contextual vegetation/debris/light placement.',
+    }
 with open(os.path.join(OUT, 'art-reboot-coverage.json'), 'w') as report:
     json.dump(coverage, report, indent=2)
     report.write('\n')

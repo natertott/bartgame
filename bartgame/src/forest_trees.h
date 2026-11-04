@@ -2,7 +2,7 @@
 #define FOREST_TREES_H
 #include "gba.h"
 
-#if BART_FOREST_VARIANT == 31
+#if BART_FOREST_VARIANT >= 31
 #define FOREST_TREES_MAX 768
 #define FOREST_TREES_SB_BASE 12
 #define FOREST_TREES_STATS 16
