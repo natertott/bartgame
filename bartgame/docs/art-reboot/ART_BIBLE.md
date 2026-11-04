@@ -328,13 +328,22 @@ lights. Successive lanterns should make that route readable while preserving
 crossings, interaction fronts and item gates. Keep these deliberate fixtures
 distinct from ambient glitter, which remains atmospheric surface light.
 
-## Glitter is abundant, with a grammar
+## Glitter has a grammar and a quieter cadence
 
-Aim for roughly twenty potential ambient glint sites in a viewport, phased so
-only a subset peaks at once. Use wet stone, dew, metal, rot, pools and canopy
-as their sources. Add fewer, stronger four-point ivory/gold flares around
-valuable or sacred objects. The mockup cycle has twenty small sites and six
-strong sites, with four strong sites at their bright phase.
+The 2026-11-04 feedback halves ambient glitter's visible density and blink
+frequency. Retain at most twelve of the previous twenty-four eligible viewport
+sites, preserving their surface attachment and stable spatial selection.
+Normal retained points are lit for64 frames of a128-frame cycle. An odd
+unpaired source point contributes32 lit frames per128, so even a sparse room
+receives exactly half its former time-averaged visible glitter. This replaces
+the earlier roughly twenty-site target. Decorative HUD and minimap gold
+shimmers advance every16 frames instead of8. The functional current-room
+blink and button feedback keep their existing responsiveness.
+
+Use wet stone, dew, metal, rot, pools and canopy as glint sources. Stronger
+four-point ivory/gold flares belong to valuable or sacred objects; combat
+telegraphs and fixed discovery lanterns are distinct systems. The density
+request does not halve animation rates, projectile visibility or action cues.
 
 Most ambient glints are one to three pixels and attached to surfaces, with
 occasional five-to-seven-pixel specular peaks. Loot/sacred glints use a
@@ -464,6 +473,18 @@ lobes, a tapering point and a jagged central split visible in every phase.
 Do not replace its identity with a mouth, face or ceremonial object. Pulse,
 charge, release, spawning, lunging, hurt and collapse must preserve that split.
 Other enemy proposals remain historical alternatives.
+
+The optional 2026-11-04 enemy lab studies the original Zelda Fan Game handoff's
+curated71 enemy/form entries. Gilt Leech (Rope), Root Maw (red Leever) and
+Reliquary Snout (Helmasaur) are working native16×16 mechanic prototypes, not
+selected production replacements. A committed charge, announced burrowing
+cycle and visibly directional armor must each communicate actual vulnerability
+and timing without depending on ambient glitter. Their provisional art uses
+existing material banks and one hardware sprite each. Source behavior and
+new tuning must be separately identified in the
+[proposal report](../enemy-prototypes/PROPOSALS.md); unavailable original tools
+must never create an unwinnable mandatory encounter. The ordinary build keeps
+the selected roster. Lab run saving is disabled to protect real progression.
 
 ## Area adaptation sheet
 

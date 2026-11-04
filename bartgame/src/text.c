@@ -731,7 +731,7 @@ static void hud_init(void) {
 static void hud_refresh(void) {
     const SpriteSheet* icons=&sheets[SHEET_HUDITEMS];
     int s,i,hearts=MIN(10,(gPl.hp_max+7)/8);
-    u32 clock=gFrame,glint=clock>>3;
+    u32 clock=gFrame,glint=clock>>4;
     u8 count_dirty=0,button_dirty=0;
     bool8 reset=sHudHp<0 || sHudHpMax!=gPl.hp_max;
     bool8 dirty=FALSE;
@@ -860,7 +860,7 @@ static void minimap_current(void) {
 }
 
 static void minimap_animate(void) {
-    int x,phase=(gFrame>>3)%28;
+    int x,phase=(gFrame>>4)%28;
     for(x=2;x<=21;x++)minimap_pixel(x,1,UI_INK_GOLD);
     minimap_pixel(2,1,UI_INK_PALE);
     if(phase<20)minimap_pixel(2+phase,1,UI_INK_PALE);

@@ -1643,3 +1643,33 @@ art file, palette and packed native asset remains exact. The
 [measured diagnosis and playable build](../../../performance-review/README.md)
 include plots, original frame traces and real recordings. This pass changes
 engine efficiency; it adopts no new art style or visual reference.
+
+## Quieter glitter and source-led enemy lab — 2026-11-04
+
+**Adopted brief:** halve the visible ambient glitter and its blink frequency.
+Preserve surface anchors, drawings, material colors and the performance caches.
+Select alternating sites from the former24-site candidate window, retaining
+at most12. The complete pulse cycle grows64→128 frames. When that window has
+an odd number of eligible sites, its unpaired retained point uses a quarter
+duty cycle, keeping the time-averaged reduction exactly50% even in a room with
+one eligible sparkle. Decorative HUD/minimap trim advances8→16 frames; the
+current-room marker, button feedback, combat flashes and lanterns retain their
+functional timings. Native and actual-C density checks accompany this change.
+
+**Experimental, not selected:** start new combat work from the original
+Zelda Fan Game handoff. Its curated list contains71 enemy/form picks, rather
+than treating213 raw extracted forms as independent spawnable enemies.
+The first native16×16 experiments are Gilt Leech (Rope's straight charge),
+Root Maw (red Leever's announced burrow cycle) and Reliquary Snout
+(Helmasaur's directional armor). Existing palette banks and a single hardware
+sprite per body preserve the shared art vocabulary and constrained budget.
+
+The [source audit](../enemy-prototypes/SOURCE_AUDIT.md) distinguishes health,
+collision-matrix rows, missing original tools and multipart dependencies.
+The [proposal report](../enemy-prototypes/PROPOSALS.md) records exact prototype
+timings, accepted damage, required implementation hooks and thirteen additional
+families for review. Native art and attacks remain provisional. The default
+build keeps the five selected appearances and broken purple Heart; an optional
+`BART_ENEMY_LAB=1` build supplies the experiments without modifying ordinary
+procgen or run saves. Actual emulator validation and final downloadable builds
+are recorded with the review after qualification.

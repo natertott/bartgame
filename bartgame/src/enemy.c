@@ -16,6 +16,9 @@
 #include "enemy.h"
 #include "boss.h"
 #include "game.h"
+#if BART_ENEMY_LAB
+#include "enemy_prototypes.h"
+#endif
 
 const EnemyDef gEnemyDefs[EN_COUNT] = {
     [EN_BEETLE] = { SHEET_BEETLE, 2, Q8(0.5), 2, HB_SMALL, AF_HITTABLE | AF_HURTS, 0 },
@@ -24,6 +27,12 @@ const EnemyDef gEnemyDefs[EN_COUNT] = {
     [EN_SLIME] = { SHEET_SLIME, 4, Q8(0.125), 2, HB_MED, AF_HITTABLE | AF_HURTS, 1 },
     [EN_KNIGHT] = { SHEET_KNIGHT, 10, Q8(0.375), 4, HB_TALL, AF_HITTABLE | AF_HURTS | AF_SOLID, 2 }, /* five sword hits */
     [EN_BOSS] = { SHEET_KNIGHT, 40, Q8(0.5), 4, HB_BIG, AF_HITTABLE | AF_HURTS | AF_BOSS, 2 },
+#if BART_ENEMY_LAB
+    /* Review-only mechanics. These are never selected by enemy_pick_type. */
+    [EN_PROTO_ROPE] = { SHEET_PROTO_ROPE, 4, Q8(0.5), 2, HB_SMALL, AF_HITTABLE | AF_HURTS, 0 },
+    [EN_PROTO_LEEVER] = { SHEET_PROTO_LEEVER, 6, Q8(0.5), 2, HB_MED, 0, 0 },
+    [EN_PROTO_HELMASAUR] = { SHEET_PROTO_HELMASAUR, 4, Q8(1.0), 2, HB_MED, AF_HITTABLE | AF_HURTS, 0 },
+#endif
 };
 
 static u16 sSheetTile[EN_COUNT];
@@ -91,6 +100,14 @@ Actor* enemy_spawn(int type, int px, int py) {
     a->timer = 10 + rand_range(30);
     a->dir = rand_range(4) * 8;
     a->facing = dir_to_facing(a->dir);
+#if BART_ENEMY_LAB
+    if (type >= EN_PROTO_ROPE) {
+        /* A failed lab allocation must not draw over Bloom's resident tiles. */
+        if (!sSheetTile[type]) { actor_free(a); return NULL; }
+        enemy_prototypes_init(a);
+        return a;
+    }
+#endif
     if (type == EN_BAT) {
         a->state = ES_REST;
         a->timer = 30 + rand_range(90);
@@ -120,6 +137,10 @@ void enemy_kill(Actor* e) {
 void enemy_hurt(Actor* e, int damage, int from_dir, int knockback) {
     if (e->iframes)
         return;
+#if BART_ENEMY_LAB
+    if (e->type >= EN_PROTO_ROPE && !enemy_prototypes_accept_hit(e, damage, from_dir))
+        return;
+#endif
     e->hp -= damage;
     e->iframes = 12;
     e->kb_dir = from_dir;
@@ -440,6 +461,12 @@ static void enemy_common(Actor* e) {
     /* knockback overrides the AI's movement */
     if (e->kb_timer) {
         e->kb_timer--;
+#if BART_ENEMY_LAB
+        if (e->type >= EN_PROTO_ROPE) {
+            enemy_prototypes_recoil(e);
+            return;
+        }
+#endif
         if (e->flags & AF_FLYING)
             actor_move_free(e, e->kb_speed, e->kb_dir);
         else
@@ -453,6 +480,11 @@ static void enemy_common(Actor* e) {
         case EN_SLIME: slime_update(e); break;
         case EN_KNIGHT: knight_update(e); break;
         case EN_BOSS: boss_update(e); break;
+#if BART_ENEMY_LAB
+        case EN_PROTO_ROPE:
+        case EN_PROTO_LEEVER:
+        case EN_PROTO_HELMASAUR: enemy_prototypes_update(e); break;
+#endif
     }
 }
 

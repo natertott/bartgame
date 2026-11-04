@@ -324,3 +324,23 @@ Final source `c09e2909` is qualified by the
 [technical record](../performance/README.md) separates actual production
 throughput, diagnostic timer profiles, exact algorithm/native comparisons
 and finite test coverage. Artwork and visual references remain unchanged.
+
+## Quieter glitter and source-led enemy prototypes — 2026-11-04
+
+The user's direct brief halves ambient glitter density and blink frequency.
+No new external visual reference is adopted. Native shimmer paintings and
+material palettes remain intact; site selection and decorative clocks change.
+[GLITTER_TUNING.md](references/GLITTER_TUNING.md) documents exact treatment of
+sparse odd-count rooms and separates decorative shimmer from functional cues.
+
+The enemy reference is the repository's carried-over Zelda Fan Game handoff,
+including its curated roster, original enemy behavior, definitions and
+collision matrix. The [source audit](../enemy-prototypes/SOURCE_AUDIT.md)
+binds71 roster entries to source locations and distinguishes raw forms,
+collision-row identifiers and health damage. This is a code/document study;
+no commercial artwork or newly watched commercial gameplay is claimed.
+
+The [proposal report](../enemy-prototypes/PROPOSALS.md) separates three optional
+playable experiments from thirteen later families. Historical names identify
+source mechanics; new names, drawings and tuning remain provisional. Original
+tool dependencies such as Gust Jar are recorded, not silently transplanted.

@@ -3,7 +3,11 @@
 #include "gba.h"
 #include "actor.h"
 
-enum { EN_BEETLE, EN_BAT, EN_SPITTER, EN_SLIME, EN_KNIGHT, EN_BOSS, EN_COUNT };
+enum { EN_BEETLE, EN_BAT, EN_SPITTER, EN_SLIME, EN_KNIGHT, EN_BOSS,
+#if BART_ENEMY_LAB
+    EN_PROTO_ROPE, EN_PROTO_LEEVER, EN_PROTO_HELMASAUR,
+#endif
+    EN_COUNT };
 
 typedef struct {
     u8 sheet;

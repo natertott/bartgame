@@ -62,6 +62,9 @@ static bool8 file_valid(void) {
 }
 
 void save_write(void) {
+#if BART_ENEMY_LAB
+    return; /* Review encounters never persist granted tools or run progress. */
+#endif
     volatile const char* id = gSramId;
     (void)*id;
     sFile.magic = SAVE_MAGIC;
@@ -77,6 +80,9 @@ void save_write(void) {
 }
 
 bool8 save_exists(void) {
+#if BART_ENEMY_LAB
+    return FALSE;
+#endif
     sram_read(&sFile, sizeof(SaveFile));
     return file_valid();
 }
@@ -107,6 +113,9 @@ static void migrate_legacy_trials(void) {
 }
 
 bool8 save_load(void) {
+#if BART_ENEMY_LAB
+    return FALSE;
+#endif
     sram_read(&sFile, sizeof(SaveFile));
     if (!file_valid())
         return FALSE;
@@ -124,6 +133,9 @@ bool8 save_load(void) {
 }
 
 void save_erase(void) {
+#if BART_ENEMY_LAB
+    return;
+#endif
     int i;
     for (i = 0; i < 8; i++)
         SRAM[i] = 0;

@@ -12,7 +12,8 @@
 #include "ambient.h"
 
 #define AMBIENT_MAX_SITES (ROOM_MAX_W * ROOM_MAX_H)
-#define AMBIENT_VIEW_SITES 24
+#define AMBIENT_VIEW_SITES 12
+#define AMBIENT_SOURCE_VIEW_SITES (AMBIENT_VIEW_SITES * 2)
 typedef struct {
     s16 x,y;
     u8 phase,foreground,tx,ty;
@@ -22,7 +23,7 @@ static u16 sAmbientTile;
 static u32 sAmbientFrame;
 typedef struct {
     u16 site;
-    u8 material;
+    u8 material,fractional;
 } AmbientViewSite;
 static AmbientViewSite sAmbientView[AMBIENT_VIEW_SITES] EWRAM_BSS;
 static u32 sAmbientViewRevision;
@@ -57,8 +58,9 @@ void ambient_room_reset(void) {
     sAmbientFrame=0xFFFFFFFF;
     sAmbientViewValid=0;
     /* Every authored reflective cell can contribute one glint. The viewport
-       still selects at most 24 sites and phases them independently; dry
-       paths remain empty while wet leaves and stone can glitter richly. */
+       selects at most 12 sites, half the previous density, and phases them
+       independently; dry paths remain empty while wet leaves and stone can
+       glitter richly. */
     for(ty=0;ty<gRoom.h;ty++) for(tx=0;tx<gRoom.w;tx++) {
         int material=surface(tx,ty);
         if(!material)continue;
@@ -121,21 +123,26 @@ static bool8 actor_in_front(const AmbientSite* site,const AmbientActorBox* boxes
 }
 
 static void select_view(void) {
-    int i,potential=0;
-    /* Keep the original shuffled order and its first24 surviving material
-       sites. Selection depends only on camera and live room IDs, not phase
-       or actors. The room revision catches opened/broken material and
-       preview restoration; reset invalidates changes to the site list. */
-    for(i=0;i<gAmbientSiteCount && potential<AMBIENT_VIEW_SITES;i++) {
+    int i,potential=0,eligible=0;
+    /* Retain every other member of the previous first 24 eligible sites.
+       An unpaired final site uses half the normal bright duration, making
+       the average density half even in a one-site view. Selection depends
+       only on camera and live room IDs, not phase or actors. The
+       room revision catches opened/broken material and preview restoration;
+       reset invalidates changes to the site list. */
+    for(i=0;i<gAmbientSiteCount && eligible<AMBIENT_SOURCE_VIEW_SITES;i++) {
         const AmbientSite* s=&sAmbientSites[i];
         int x=s->x-gCamX,y=s->y-gCamY;
         if(x<4 || x>=236 || y<HUD_HEIGHT_PIXELS+4 || y>=156)continue;
         int material=surface(s->tx,s->ty);
         if(!material)continue; /* a gate may have opened since room creation */
+        if(eligible++ & 1)continue;
         sAmbientView[potential].site=i;
         sAmbientView[potential].material=material;
+        sAmbientView[potential].fractional=0;
         potential++;
     }
+    if(eligible&1)sAmbientView[potential-1].fractional=1;
     sAmbientViewCount=potential;
     sAmbientViewRevision=gRoomRevision;
     sAmbientViewCamX=gCamX;sAmbientViewCamY=gCamY;
@@ -152,14 +159,19 @@ static void draw_view(bool8 foreground,AmbientActorBox* boxes) {
         const AmbientViewSite* v=&sAmbientView[i];
         const AmbientSite* s=&sAmbientSites[v->site];
         if((v->material==2)!=foreground)continue;
-        int phase=(gFrame+s->phase)&63;
+        /* Half-speed clock doubles each complete cycle. For odd view counts,
+           compress the unpaired site's bright pulse to half duration; keep
+           all of its drawn stages and the same slow pulse frequency. */
+        int phase=((gFrame>>1)+s->phase)&63;
+        phase<<=v->fractional;
         if(phase>=32 || frame_count<2)continue;
         if(foreground) {
             if(box_count<0)box_count=foreground_boxes(boxes);
             if(actor_in_front(s,boxes,box_count))continue;
         }
         /* Frame zero is blank. Five drawn stages swell into one star and
-           fade, then remain dark for the other half of the 64-frame cycle. */
+           fade. A normal point is bright for 64 of 128 video frames; the
+           unpaired odd point is bright for 32 of 128. */
         int frame=1+phase*(frame_count-1)/32;
         if(gOamCount>=(foreground?80:120))continue;
         int x=s->x-gCamX,y=s->y-gCamY;

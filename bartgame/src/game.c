@@ -26,6 +26,9 @@ extern u16 items_sheet_tile(void);
 #include "interactive.h"
 #include "ambient.h"
 #include "appearance.h"
+#if BART_ENEMY_LAB
+#include "enemy_prototypes.h"
+#endif
 
 GameState gGame;
 u32 gSeedOverride; /* probes set this before pressing Start */
@@ -580,12 +583,27 @@ static void start_run(u32 seed) {
     gAnimTiles = 1;
     bg0_clear();
     load_sewer(0);
+#if BART_ENEMY_LAB
+    /* Review-only ROM: ordinary generated forest, isolated test encounters.
+       This branch is absent from the normal game and its random roster. */
+    load_forest(gWorld.entry, SIDE_S);
+    gPl.items=ITEM_SWORD|ITEM_BOMBS|ITEM_LAMP|ITEM_CLOAK|ITEM_GAUNTLET|ITEM_SHIELD;
+    gPl.items2=ITEM2_BOW|ITEM2_MAP;
+    gPl.bombs=20;gPl.arrows=50;
+    gPl.equip[SLOT_A]=EQ_BOMBS;gPl.equip[SLOT_B]=EQ_SWORD;gPl.equip[SLOT_L]=EQ_SHIELD;
+    gEnemyPrototypeRequest=1;
+#endif
     gGame.state = GS_PLAY;
     fade_set(16);
     fade_start(0, 1);
     video_show(DCNT_BG0 | DCNT_BG1 | DCNT_BG2 | DCNT_OBJ);
+#if BART_ENEMY_LAB
+    bgm_play(BGM_FOREST);
+    textbox_open("Enemy prototype lab.|Select: next encounter. B: sword. L: shield. A: bombs. Start: change tools.|Work in progress: charge, burrow, armor, then mixed.");
+#else
     bgm_play(BGM_SEWER);
     textbox_open("You wake in the drain. The stalk you grew on is your spine now. Up the ladder is the wood.");
+#endif
 }
 
 /* a saved run wakes in the drain with everything it had */
@@ -754,6 +772,9 @@ static void debug_spawn(void) {
 }
 
 static void update_play(void) {
+#if BART_ENEMY_LAB
+    enemy_prototypes_tick();
+#endif
     debug_spawn();
     if (npc_dialogue_active()) {
         npc_dialogue_update();

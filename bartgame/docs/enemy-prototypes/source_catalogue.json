@@ -1,0 +1,5283 @@
+{
+  "status": "Reference extraction only; not an adopted roster or new-game balance table.",
+  "source_revision": "04a42521264349e23d8057744e6467eace0bdd13",
+  "source_repository": "https://github.com/natertott/bartgame",
+  "raw_reference_form_count": 213,
+  "curated_pick_count": 71,
+  "curated_enemy_id_count": 57,
+  "curated_counts_by_legacy_tier": {
+    "1": 10,
+    "2": 15,
+    "3": 17,
+    "4": 12,
+    "5": 11,
+    "Elite": 6
+  },
+  "units": {
+    "speed_q8_8": "256 units = 1 pixel/frame",
+    "health": "Reference entity units; special lifecycles may ignore ordinary HP.",
+    "player_health": "8 units = 1 heart; ordinary contact 2 units = quarter heart.",
+    "damage_type": "Collision row ID, never a damage amount.",
+    "legacy_gfx_cost": "Old TMC dynamic graphics slots, not new-engine actor cost."
+  },
+  "cautions": [
+    "Stats describe initial forms, not every armor/airborne/exposure state.",
+    "Handlers, contact callbacks and damage modifiers can override matrix defaults.",
+    "CSV damage_to_org means damage to player/weapon side; damage_to_tgt means damage to enemy.",
+    "Only handler=default cells are direct generic damage values; numeric handlers require code review.",
+    "No implicit conversion from raw HP 255 to a damage-sponge enemy is valid.",
+    "Historical tiers are provenance, not a new hard difficulty or progression gate."
+  ],
+  "sources": [
+    {
+      "path": "src/game.c",
+      "sha256": "df4325d350479f8a1ff34243c228454d5d6d52d340ea3784d015c0ca3ad60b16"
+    },
+    {
+      "path": "docs/newgame/data/enemies.csv",
+      "sha256": "e551c1f45090730d7591a5917c10c06ffbe7c7fc23079f4058fa9c521c471923"
+    },
+    {
+      "path": "docs/newgame/data/collision_matrix.csv",
+      "sha256": "cf48c332dc16b1d2d08207313f68ca2be89ede6e01206732613c08eba84f2748"
+    },
+    {
+      "path": "tools/newgame/extract_feel.py",
+      "sha256": "76d4b0b8c62ae3e1c1be4cfb6f6aeecf20b6ce676901603a7c48ef3e34a55ae4"
+    },
+    {
+      "path": "src/collision.c",
+      "sha256": "4a737ae844c82912c4e2205fcad87ac389e0a80913c5fe1c62575bb82be5659b"
+    },
+    {
+      "path": "src/ui.c",
+      "sha256": "22ae33ac244deaf93921f522f4aa98dabbb2927852863a11536dc1aefe5a7678"
+    },
+    {
+      "path": "src/enemy.c",
+      "sha256": "02ba3a263284a4e437f214ec123b277ab347171715d4c58050870dd9d0f0a107"
+    },
+    {
+      "path": "docs/newgame/00_README.md",
+      "sha256": "b48e3cd6528d26c6f63efa07b334ca8a5d446f120ff8a2a6251229cfdbc57f5f"
+    },
+    {
+      "path": "docs/newgame/04_ENTITIES_ENEMIES_OBJECTS.md",
+      "sha256": "d0f9b85f90cc8439ff2f492c8caddf2a3f9a261bc9c3433d34dcf858e253d4bf"
+    },
+    {
+      "path": "docs/newgame/06_CURRENT_GAME_DESIGN.md",
+      "sha256": "cd15ffdf6109ea20bf095edcdafa0515da8c6fa8264d6a573bde0fe725b75817"
+    },
+    {
+      "path": "docs/newgame/12_FROM_SCRATCH_ENGINE.md",
+      "sha256": "f08ff9a650f668c3de4b02dc88d5e023c31fbccb736422a973da576baa08ac2d"
+    },
+    {
+      "path": "src/enemy/rope.c",
+      "sha256": "c2d9caecd9747b8dca72bcdad3f13743aafaa9f2b069b51c006d3e06e971cdce"
+    },
+    {
+      "path": "src/enemy/spikedBeetle.c",
+      "sha256": "cf37eaedf96f9140bfa8c57943fea32698d0cd5f476149d76d83cce4e7600b57"
+    },
+    {
+      "path": "src/enemy/crow.c",
+      "sha256": "4cdc84f66eb98d67eda552dc5a204c3d451e36b2aaeb49ad8c7ff78649d10c0c"
+    },
+    {
+      "path": "src/enemy/helmasaur.c",
+      "sha256": "f0cfc36424ccc38f1147f6284055300b34460dab827f41bea07ba908d76ce1f8"
+    },
+    {
+      "path": "src/enemy/leever.c",
+      "sha256": "ef1d792d79f6e25417da319317916e6ba01ae56c021bda70b49dc7cdbabf9479"
+    },
+    {
+      "path": "src/enemy/tektite.c",
+      "sha256": "186c5e27c4f0a1f270ba9da461127c76f030928f52c00d377120841ec5672daa"
+    },
+    {
+      "path": "src/enemy/puffstool.c",
+      "sha256": "79f28a4f7b29fa54ddb144d8fce9902a73846040ca20ec86b1cd77c8d350a625"
+    },
+    {
+      "path": "src/enemy/bobomb.c",
+      "sha256": "963d337347889555c4d591b3c201e74829459a83f17bcc12f8a5a75c938f4fda"
+    },
+    {
+      "path": "src/enemy/rupeeLike.c",
+      "sha256": "e794d6b05426d533ab679aedcd7e1173a989a245e391a8189790daa65373ab9b"
+    }
+  ],
+  "entries": [
+    {
+      "name": "BEETLE",
+      "form": 0,
+      "legacy_tier": "1",
+      "roles": [
+        "CHAFF",
+        "FAST"
+      ],
+      "legacy_gfx_cost": 1,
+      "legacy_required_item": "0",
+      "legacy_theme": "BUG",
+      "roster_array": "sQuickStartLevel1",
+      "roster_line": 9424,
+      "stats_csv_line": 17,
+      "initial_reference_stats": {
+        "id": 7,
+        "name": "BEETLE",
+        "form": 0,
+        "health": 1,
+        "speed_q8_8": 256,
+        "speed_px_per_frame": 1.0,
+        "damage_type": 75,
+        "collision_mask": 15,
+        "hitbox": "gHitbox_6",
+        "hb_off_x": 0,
+        "hb_off_y": 0,
+        "hb_half_w": 2,
+        "hb_half_h": 2,
+        "sheet": "fixed",
+        "gfx": "0x000b",
+        "swap_slots": "",
+        "sprite": "SPRITE_BEETLE",
+        "draw_prio_collide_draw_shadow": "3/0/0/0"
+      },
+      "shared_base_definition": false,
+      "initial_state_matrix_cells": {
+        "normal_sword_13": {
+          "source_line": 2256,
+          "values": {
+            "hitType": "75",
+            "hurtType": "13",
+            "handler": "default",
+            "org_knockback_speed": "0",
+            "org_iframes": "0",
+            "org_knockback_duration": "0",
+            "damage_to_org": "0",
+            "org_confused_time": "0",
+            "tgt_knockback_speed": "384",
+            "tgt_iframes": "12",
+            "tgt_knockback_duration": "12",
+            "damage_to_tgt": "4",
+            "tgt_confused_time": "0",
+            "flags": "0"
+          }
+        }
+      }
+    },
+    {
+      "name": "KEESE",
+      "form": 0,
+      "legacy_tier": "1",
+      "roles": [
+        "CHAFF",
+        "FLYER",
+        "FAST"
+      ],
+      "legacy_gfx_cost": 1,
+      "legacy_required_item": "0",
+      "legacy_theme": "AVIARY",
+      "roster_array": "sQuickStartLevel1",
+      "roster_line": 9425,
+      "stats_csv_line": 19,
+      "initial_reference_stats": {
+        "id": 8,
+        "name": "KEESE",
+        "form": 0,
+        "health": 2,
+        "speed_q8_8": 256,
+        "speed_px_per_frame": 1.0,
+        "damage_type": 32,
+        "collision_mask": 15,
+        "hitbox": "gHitbox_8",
+        "hb_off_x": 0,
+        "hb_off_y": 1,
+        "hb_half_w": 4,
+        "hb_half_h": 4,
+        "sheet": "fixed",
+        "gfx": "0x0007",
+        "swap_slots": "",
+        "sprite": "SPRITE_KEESE",
+        "draw_prio_collide_draw_shadow": "0/1/1/0"
+      },
+      "shared_base_definition": false,
+      "initial_state_matrix_cells": {
+        "player_body_0": {
+          "source_line": 941,
+          "values": {
+            "hitType": "32",
+            "hurtType": "0",
+            "handler": "default",
+            "org_knockback_speed": "384",
+            "org_iframes": "30",
+            "org_knockback_duration": "8",
+            "damage_to_org": "2",
+            "org_confused_time": "0",
+            "tgt_knockback_speed": "256",
+            "tgt_iframes": "-1",
+            "tgt_knockback_duration": "1",
+            "damage_to_tgt": "0",
+            "tgt_confused_time": "0",
+            "flags": "0"
+          }
+        },
+        "normal_sword_13": {
+          "source_line": 954,
+          "values": {
+            "hitType": "32",
+            "hurtType": "13",
+            "handler": "default",
+            "org_knockback_speed": "0",
+            "org_iframes": "0",
+            "org_knockback_duration": "0",
+            "damage_to_org": "0",
+            "org_confused_time": "0",
+            "tgt_knockback_speed": "384",
+            "tgt_iframes": "12",
+            "tgt_knockback_duration": "12",
+            "damage_to_tgt": "2",
+            "tgt_confused_time": "0",
+            "flags": "0"
+          }
+        }
+      }
+    },
+    {
+      "name": "SMALL_PESTO",
+      "form": 0,
+      "legacy_tier": "1",
+      "roles": [
+        "CHAFF",
+        "FLYER",
+        "SLOW"
+      ],
+      "legacy_gfx_cost": 1,
+      "legacy_required_item": "0",
+      "legacy_theme": null,
+      "roster_array": "sQuickStartLevel1",
+      "roster_line": 9426,
+      "stats_csv_line": 110,
+      "initial_reference_stats": {
+        "id": 45,
+        "name": "SMALL_PESTO",
+        "form": 0,
+        "health": 1,
+        "speed_q8_8": 64,
+        "speed_px_per_frame": 0.25,
+        "damage_type": 132,
+        "collision_mask": 15,
+        "hitbox": "gHitbox_0",
+        "hb_off_x": 0,
+        "hb_off_y": -3,
+        "hb_half_w": 6,
+        "hb_half_h": 6,
+        "sheet": "fixed",
+        "gfx": "0x00e3",
+        "swap_slots": "",
+        "sprite": "SPRITE_PESTO_1",
+        "draw_prio_collide_draw_shadow": "3/1/1/0"
+      },
+      "shared_base_definition": false,
+      "initial_state_matrix_cells": {
+        "player_body_0": {
+          "source_line": 4004,
+          "values": {
+            "hitType": "132",
+            "hurtType": "0",
+            "handler": "1",
+            "org_knockback_speed": "",
+            "org_iframes": "",
+            "org_knockback_duration": "",
+            "damage_to_org": "",
+            "org_confused_time": "",
+            "tgt_knockback_speed": "",
+            "tgt_iframes": "",
+            "tgt_knockback_duration": "",
+            "damage_to_tgt": "",
+            "tgt_confused_time": "",
+            "flags": ""
+          }
+        },
+        "normal_sword_13": {
+          "source_line": 4017,
+          "values": {
+            "hitType": "132",
+            "hurtType": "13",
+            "handler": "default",
+            "org_knockback_speed": "0",
+            "org_iframes": "0",
+            "org_knockback_duration": "0",
+            "damage_to_org": "0",
+            "org_confused_time": "0",
+            "tgt_knockback_speed": "384",
+            "tgt_iframes": "12",
+            "tgt_knockback_duration": "1",
+            "damage_to_tgt": "2",
+            "tgt_confused_time": "0",
+            "flags": "0"
+          }
+        }
+      }
+    },
+    {
+      "name": "TEKTITE",
+      "form": 0,
+      "legacy_tier": "1",
+      "roles": [
+        "CHAFF",
+        "FAST"
+      ],
+      "legacy_gfx_cost": 1,
+      "legacy_required_item": "0",
+      "legacy_theme": "BUG",
+      "roster_array": "sQuickStartLevel1",
+      "roster_line": 9427,
+      "stats_csv_line": 100,
+      "initial_reference_stats": {
+        "id": 38,
+        "name": "TEKTITE",
+        "form": 0,
+        "health": 3,
+        "speed_q8_8": 256,
+        "speed_px_per_frame": 1.0,
+        "damage_type": 25,
+        "collision_mask": 139,
+        "hitbox": "gHitbox_0",
+        "hb_off_x": 0,
+        "hb_off_y": -3,
+        "hb_half_w": 6,
+        "hb_half_h": 6,
+        "sheet": "fixed",
+        "gfx": "0x00c7",
+        "swap_slots": "",
+        "sprite": "SPRITE_TEKTITE",
+        "draw_prio_collide_draw_shadow": "1/1/1/1"
+      },
+      "shared_base_definition": false,
+      "initial_state_matrix_cells": {
+        "player_body_0": {
+          "source_line": 733,
+          "values": {
+            "hitType": "25",
+            "hurtType": "0",
+            "handler": "default",
+            "org_knockback_speed": "384",
+            "org_iframes": "30",
+            "org_knockback_duration": "8",
+            "damage_to_org": "2",
+            "org_confused_time": "0",
+            "tgt_knockback_speed": "256",
+            "tgt_iframes": "-1",
+            "tgt_knockback_duration": "1",
+            "damage_to_tgt": "0",
+            "tgt_confused_time": "0",
+            "flags": "0"
+          }
+        },
+        "normal_sword_13": {
+          "source_line": 746,
+          "values": {
+            "hitType": "25",
+            "hurtType": "13",
+            "handler": "default",
+            "org_knockback_speed": "0",
+            "org_iframes": "0",
+            "org_knockback_duration": "0",
+            "damage_to_org": "0",
+            "org_confused_time": "0",
+            "tgt_knockback_speed": "384",
+            "tgt_iframes": "12",
+            "tgt_knockback_duration": "12",
+            "damage_to_tgt": "2",
+            "tgt_confused_time": "0",
+            "flags": "0"
+          }
+        }
+      }
+    },
+    {
+      "name": "CROW",
+      "form": 0,
+      "legacy_tier": "1",
+      "roles": [
+        "CHAFF",
+        "FLYER",
+        "FAST"
+      ],
+      "legacy_gfx_cost": 2,
+      "legacy_required_item": "0",
+      "legacy_theme": "AVIARY",
+      "roster_array": "sQuickStartLevel1",
+      "roster_line": 9428,
+      "stats_csv_line": 117,
+      "initial_reference_stats": {
+        "id": 49,
+        "name": "CROW",
+        "form": 0,
+        "health": 2,
+        "speed_q8_8": 320,
+        "speed_px_per_frame": 1.25,
+        "damage_type": 41,
+        "collision_mask": 15,
+        "hitbox": "gHitbox_19",
+        "hb_off_x": 0,
+        "hb_off_y": -3,
+        "hb_half_w": 6,
+        "hb_half_h": 6,
+        "sheet": "fixed",
+        "gfx": "0x00ec",
+        "swap_slots": "",
+        "sprite": "SPRITE_CROW",
+        "draw_prio_collide_draw_shadow": "1/0/1/1"
+      },
+      "shared_base_definition": false,
+      "initial_state_matrix_cells": {
+        "player_body_0": {
+          "source_line": 1233,
+          "values": {
+            "hitType": "41",
+            "hurtType": "0",
+            "handler": "default",
+            "org_knockback_speed": "384",
+            "org_iframes": "30",
+            "org_knockback_duration": "8",
+            "damage_to_org": "2",
+            "org_confused_time": "0",
+            "tgt_knockback_speed": "256",
+            "tgt_iframes": "-1",
+            "tgt_knockback_duration": "1",
+            "damage_to_tgt": "0",
+            "tgt_confused_time": "0",
+            "flags": "0"
+          }
+        },
+        "normal_sword_13": {
+          "source_line": 1246,
+          "values": {
+            "hitType": "41",
+            "hurtType": "13",
+            "handler": "default",
+            "org_knockback_speed": "0",
+            "org_iframes": "0",
+            "org_knockback_duration": "0",
+            "damage_to_org": "0",
+            "org_confused_time": "0",
+            "tgt_knockback_speed": "384",
+            "tgt_iframes": "12",
+            "tgt_knockback_duration": "12",
+            "damage_to_tgt": "2",
+            "tgt_confused_time": "0",
+            "flags": "0"
+          }
+        }
+      }
+    },
+    {
+      "name": "MINI_SLIME",
+      "form": 0,
+      "legacy_tier": "1",
+      "roles": [
+        "CHAFF",
+        "SLOW"
+      ],
+      "legacy_gfx_cost": 2,
+      "legacy_required_item": "0",
+      "legacy_theme": null,
+      "roster_array": "sQuickStartLevel1",
+      "roster_line": 9429,
+      "stats_csv_line": 197,
+      "initial_reference_stats": {
+        "id": 87,
+        "name": "MINI_SLIME",
+        "form": 0,
+        "health": 1,
+        "speed_q8_8": 128,
+        "speed_px_per_frame": 0.5,
+        "damage_type": 25,
+        "collision_mask": 139,
+        "hitbox": "gUnk_080FD490",
+        "hb_off_x": 0,
+        "hb_off_y": -3,
+        "hb_half_w": 2,
+        "hb_half_h": 2,
+        "sheet": "fixed",
+        "gfx": "0x01a6",
+        "swap_slots": "",
+        "sprite": "SPRITE_SLIME",
+        "draw_prio_collide_draw_shadow": "3/1/1/0"
+      },
+      "shared_base_definition": false,
+      "initial_state_matrix_cells": {
+        "player_body_0": {
+          "source_line": 733,
+          "values": {
+            "hitType": "25",
+            "hurtType": "0",
+            "handler": "default",
+            "org_knockback_speed": "384",
+            "org_iframes": "30",
+            "org_knockback_duration": "8",
+            "damage_to_org": "2",
+            "org_confused_time": "0",
+            "tgt_knockback_speed": "256",
+            "tgt_iframes": "-1",
+            "tgt_knockback_duration": "1",
+            "damage_to_tgt": "0",
+            "tgt_confused_time": "0",
+            "flags": "0"
+          }
+        },
+        "normal_sword_13": {
+          "source_line": 746,
+          "values": {
+            "hitType": "25",
+            "hurtType": "13",
+            "handler": "default",
+            "org_knockback_speed": "0",
+            "org_iframes": "0",
+            "org_knockback_duration": "0",
+            "damage_to_org": "0",
+            "org_confused_time": "0",
+            "tgt_knockback_speed": "384",
+            "tgt_iframes": "12",
+            "tgt_knockback_duration": "12",
+            "damage_to_tgt": "2",
+            "tgt_confused_time": "0",
+            "flags": "0"
+          }
+        }
+      }
+    },
+    {
+      "name": "OCTOROK",
+      "form": 0,
+      "legacy_tier": "1",
+      "roles": [
+        "CHAFF",
+        "RANGED",
+        "SLOW"
+      ],
+      "legacy_gfx_cost": 3,
+      "legacy_required_item": "0",
+      "legacy_theme": null,
+      "roster_array": "sQuickStartLevel1",
+      "roster_line": 9435,
+      "stats_csv_line": 2,
+      "initial_reference_stats": {
+        "id": 0,
+        "name": "OCTOROK",
+        "form": 0,
+        "health": 2,
+        "speed_q8_8": 96,
+        "speed_px_per_frame": 0.375,
+        "damage_type": 25,
+        "collision_mask": 15,
+        "hitbox": "gHitbox_0",
+        "hb_off_x": 0,
+        "hb_off_y": -3,
+        "hb_half_w": 6,
+        "hb_half_h": 6,
+        "sheet": "fixed",
+        "gfx": "0x0001",
+        "swap_slots": "",
+        "sprite": "SPRITE_OCTOROK",
+        "draw_prio_collide_draw_shadow": "3/1/1/1"
+      },
+      "shared_base_definition": false,
+      "initial_state_matrix_cells": {
+        "player_body_0": {
+          "source_line": 733,
+          "values": {
+            "hitType": "25",
+            "hurtType": "0",
+            "handler": "default",
+            "org_knockback_speed": "384",
+            "org_iframes": "30",
+            "org_knockback_duration": "8",
+            "damage_to_org": "2",
+            "org_confused_time": "0",
+            "tgt_knockback_speed": "256",
+            "tgt_iframes": "-1",
+            "tgt_knockback_duration": "1",
+            "damage_to_tgt": "0",
+            "tgt_confused_time": "0",
+            "flags": "0"
+          }
+        },
+        "normal_sword_13": {
+          "source_line": 746,
+          "values": {
+            "hitType": "25",
+            "hurtType": "13",
+            "handler": "default",
+            "org_knockback_speed": "0",
+            "org_iframes": "0",
+            "org_knockback_duration": "0",
+            "damage_to_org": "0",
+            "org_confused_time": "0",
+            "tgt_knockback_speed": "384",
+            "tgt_iframes": "12",
+            "tgt_knockback_duration": "12",
+            "damage_to_tgt": "2",
+            "tgt_confused_time": "0",
+            "flags": "0"
+          }
+        }
+      }
+    },
+    {
+      "name": "PEAHAT",
+      "form": 0,
+      "legacy_tier": "1",
+      "roles": [
+        "CHAFF",
+        "FLYER"
+      ],
+      "legacy_gfx_cost": 2,
+      "legacy_required_item": "0",
+      "legacy_theme": null,
+      "roster_array": "sQuickStartLevel1",
+      "roster_line": 9436,
+      "stats_csv_line": 10,
+      "initial_reference_stats": {
+        "id": 3,
+        "name": "PEAHAT",
+        "form": 0,
+        "health": 4,
+        "speed_q8_8": 128,
+        "speed_px_per_frame": 0.5,
+        "damage_type": 112,
+        "collision_mask": 15,
+        "hitbox": "gHitbox_0",
+        "hb_off_x": 0,
+        "hb_off_y": -3,
+        "hb_half_w": 6,
+        "hb_half_h": 6,
+        "sheet": "fixed",
+        "gfx": "0x0005",
+        "swap_slots": "",
+        "sprite": "SPRITE_PEAHAT",
+        "draw_prio_collide_draw_shadow": "1/1/1/1"
+      },
+      "shared_base_definition": false,
+      "initial_state_matrix_cells": {
+        "player_body_0": {
+          "source_line": 3402,
+          "values": {
+            "hitType": "112",
+            "hurtType": "0",
+            "handler": "default",
+            "org_knockback_speed": "384",
+            "org_iframes": "30",
+            "org_knockback_duration": "8",
+            "damage_to_org": "2",
+            "org_confused_time": "0",
+            "tgt_knockback_speed": "256",
+            "tgt_iframes": "-1",
+            "tgt_knockback_duration": "1",
+            "damage_to_tgt": "0",
+            "tgt_confused_time": "0",
+            "flags": "0"
+          }
+        },
+        "normal_sword_13": {
+          "source_line": 3415,
+          "values": {
+            "hitType": "112",
+            "hurtType": "13",
+            "handler": "default",
+            "org_knockback_speed": "384",
+            "org_iframes": "248",
+            "org_knockback_duration": "4",
+            "damage_to_org": "0",
+            "org_confused_time": "0",
+            "tgt_knockback_speed": "384",
+            "tgt_iframes": "-12",
+            "tgt_knockback_duration": "12",
+            "damage_to_tgt": "0",
+            "tgt_confused_time": "0",
+            "flags": "1"
+          }
+        }
+      }
+    },
+    {
+      "name": "CHUCHU",
+      "form": 0,
+      "legacy_tier": "1",
+      "roles": [
+        "CHAFF",
+        "SLOW"
+      ],
+      "legacy_gfx_cost": 4,
+      "legacy_required_item": "0",
+      "legacy_theme": null,
+      "roster_array": "sQuickStartLevel1",
+      "roster_line": 9437,
+      "stats_csv_line": 5,
+      "initial_reference_stats": {
+        "id": 1,
+        "name": "CHUCHU",
+        "form": 0,
+        "health": 4,
+        "speed_q8_8": 32,
+        "speed_px_per_frame": 0.125,
+        "damage_type": 92,
+        "collision_mask": 15,
+        "hitbox": "gHitbox_23",
+        "hb_off_x": 0,
+        "hb_off_y": -3,
+        "hb_half_w": 4,
+        "hb_half_h": 4,
+        "sheet": "fixed",
+        "gfx": "0x0003",
+        "swap_slots": "",
+        "sprite": "SPRITE_CHUCHU",
+        "draw_prio_collide_draw_shadow": "1/0/0/0"
+      },
+      "shared_base_definition": false,
+      "initial_state_matrix_cells": {
+        "player_body_0": {
+          "source_line": 2797,
+          "values": {
+            "hitType": "92",
+            "hurtType": "0",
+            "handler": "16",
+            "org_knockback_speed": "",
+            "org_iframes": "",
+            "org_knockback_duration": "",
+            "damage_to_org": "",
+            "org_confused_time": "",
+            "tgt_knockback_speed": "",
+            "tgt_iframes": "",
+            "tgt_knockback_duration": "",
+            "damage_to_tgt": "",
+            "tgt_confused_time": "",
+            "flags": ""
+          }
+        },
+        "normal_sword_13": {
+          "source_line": 2810,
+          "values": {
+            "hitType": "92",
+            "hurtType": "13",
+            "handler": "default",
+            "org_knockback_speed": "0",
+            "org_iframes": "0",
+            "org_knockback_duration": "0",
+            "damage_to_org": "0",
+            "org_confused_time": "0",
+            "tgt_knockback_speed": "384",
+            "tgt_iframes": "12",
+            "tgt_knockback_duration": "12",
+            "damage_to_tgt": "2",
+            "tgt_confused_time": "0",
+            "flags": "0"
+          }
+        }
+      }
+    },
+    {
+      "name": "ROPE",
+      "form": 0,
+      "legacy_tier": "1",
+      "roles": [
+        "CHAFF",
+        "AMBUSH"
+      ],
+      "legacy_gfx_cost": 4,
+      "legacy_required_item": "0",
+      "legacy_theme": null,
+      "roster_array": "sQuickStartLevel1",
+      "roster_line": 9438,
+      "stats_csv_line": 109,
+      "initial_reference_stats": {
+        "id": 44,
+        "name": "ROPE",
+        "form": 0,
+        "health": 4,
+        "speed_q8_8": 128,
+        "speed_px_per_frame": 0.5,
+        "damage_type": 25,
+        "collision_mask": 139,
+        "hitbox": "gHitbox_24",
+        "hb_off_x": 0,
+        "hb_off_y": -3,
+        "hb_half_w": 3,
+        "hb_half_h": 3,
+        "sheet": "fixed",
+        "gfx": "0x00e0",
+        "swap_slots": "",
+        "sprite": "SPRITE_ROPE",
+        "draw_prio_collide_draw_shadow": "1/1/1/1"
+      },
+      "shared_base_definition": false,
+      "initial_state_matrix_cells": {
+        "player_body_0": {
+          "source_line": 733,
+          "values": {
+            "hitType": "25",
+            "hurtType": "0",
+            "handler": "default",
+            "org_knockback_speed": "384",
+            "org_iframes": "30",
+            "org_knockback_duration": "8",
+            "damage_to_org": "2",
+            "org_confused_time": "0",
+            "tgt_knockback_speed": "256",
+            "tgt_iframes": "-1",
+            "tgt_knockback_duration": "1",
+            "damage_to_tgt": "0",
+            "tgt_confused_time": "0",
+            "flags": "0"
+          }
+        },
+        "normal_sword_13": {
+          "source_line": 746,
+          "values": {
+            "hitType": "25",
+            "hurtType": "13",
+            "handler": "default",
+            "org_knockback_speed": "0",
+            "org_iframes": "0",
+            "org_knockback_duration": "0",
+            "damage_to_org": "0",
+            "org_confused_time": "0",
+            "tgt_knockback_speed": "384",
+            "tgt_iframes": "12",
+            "tgt_knockback_duration": "12",
+            "damage_to_tgt": "2",
+            "tgt_confused_time": "0",
+            "flags": "0"
+          }
+        }
+      }
+    },
+    {
+      "name": "OCTOROK2",
+      "form": 0,
+      "legacy_tier": "2",
+      "roles": [
+        "CHAFF",
+        "RANGED",
+        "SLOW"
+      ],
+      "legacy_gfx_cost": 3,
+      "legacy_required_item": "0",
+      "legacy_theme": null,
+      "roster_array": "sQuickStartLevel2",
+      "roster_line": 9453,
+      "stats_csv_line": 191,
+      "initial_reference_stats": {
+        "id": 85,
+        "name": "OCTOROK2",
+        "form": 0,
+        "health": 2,
+        "speed_q8_8": 96,
+        "speed_px_per_frame": 0.375,
+        "damage_type": 25,
+        "collision_mask": 15,
+        "hitbox": "gHitbox_0",
+        "hb_off_x": 0,
+        "hb_off_y": -3,
+        "hb_half_w": 6,
+        "hb_half_h": 6,
+        "sheet": "fixed",
+        "gfx": "0x0001",
+        "swap_slots": "",
+        "sprite": "SPRITE_OCTOROK",
+        "draw_prio_collide_draw_shadow": "3/1/1/1"
+      },
+      "shared_base_definition": false,
+      "initial_state_matrix_cells": {
+        "player_body_0": {
+          "source_line": 733,
+          "values": {
+            "hitType": "25",
+            "hurtType": "0",
+            "handler": "default",
+            "org_knockback_speed": "384",
+            "org_iframes": "30",
+            "org_knockback_duration": "8",
+            "damage_to_org": "2",
+            "org_confused_time": "0",
+            "tgt_knockback_speed": "256",
+            "tgt_iframes": "-1",
+            "tgt_knockback_duration": "1",
+            "damage_to_tgt": "0",
+            "tgt_confused_time": "0",
+            "flags": "0"
+          }
+        },
+        "normal_sword_13": {
+          "source_line": 746,
+          "values": {
+            "hitType": "25",
+            "hurtType": "13",
+            "handler": "default",
+            "org_knockback_speed": "0",
+            "org_iframes": "0",
+            "org_knockback_duration": "0",
+            "damage_to_org": "0",
+            "org_confused_time": "0",
+            "tgt_knockback_speed": "384",
+            "tgt_iframes": "12",
+            "tgt_knockback_duration": "12",
+            "damage_to_tgt": "2",
+            "tgt_confused_time": "0",
+            "flags": "0"
+          }
+        }
+      }
+    },
+    {
+      "name": "OCTOROK",
+      "form": 1,
+      "legacy_tier": "2",
+      "roles": [
+        "RANGED",
+        "SLOW"
+      ],
+      "legacy_gfx_cost": 3,
+      "legacy_required_item": "0",
+      "legacy_theme": null,
+      "roster_array": "sQuickStartLevel2",
+      "roster_line": 9454,
+      "stats_csv_line": 3,
+      "initial_reference_stats": {
+        "id": 0,
+        "name": "OCTOROK",
+        "form": 1,
+        "health": 3,
+        "speed_q8_8": 96,
+        "speed_px_per_frame": 0.375,
+        "damage_type": 25,
+        "collision_mask": 15,
+        "hitbox": "gHitbox_0",
+        "hb_off_x": 0,
+        "hb_off_y": -3,
+        "hb_half_w": 6,
+        "hb_half_h": 6,
+        "sheet": "fixed",
+        "gfx": "0x0001",
+        "swap_slots": "",
+        "sprite": "SPRITE_OCTOROK",
+        "draw_prio_collide_draw_shadow": "3/1/1/1"
+      },
+      "shared_base_definition": false,
+      "initial_state_matrix_cells": {
+        "player_body_0": {
+          "source_line": 733,
+          "values": {
+            "hitType": "25",
+            "hurtType": "0",
+            "handler": "default",
+            "org_knockback_speed": "384",
+            "org_iframes": "30",
+            "org_knockback_duration": "8",
+            "damage_to_org": "2",
+            "org_confused_time": "0",
+            "tgt_knockback_speed": "256",
+            "tgt_iframes": "-1",
+            "tgt_knockback_duration": "1",
+            "damage_to_tgt": "0",
+            "tgt_confused_time": "0",
+            "flags": "0"
+          }
+        },
+        "normal_sword_13": {
+          "source_line": 746,
+          "values": {
+            "hitType": "25",
+            "hurtType": "13",
+            "handler": "default",
+            "org_knockback_speed": "0",
+            "org_iframes": "0",
+            "org_knockback_duration": "0",
+            "damage_to_org": "0",
+            "org_confused_time": "0",
+            "tgt_knockback_speed": "384",
+            "tgt_iframes": "12",
+            "tgt_knockback_duration": "12",
+            "damage_to_tgt": "2",
+            "tgt_confused_time": "0",
+            "flags": "0"
+          }
+        }
+      }
+    },
+    {
+      "name": "SLIME",
+      "form": 0,
+      "legacy_tier": "2",
+      "roles": [
+        "CHAFF",
+        "SLOW"
+      ],
+      "legacy_gfx_cost": 2,
+      "legacy_required_item": "0",
+      "legacy_theme": null,
+      "roster_array": "sQuickStartLevel2",
+      "roster_line": 9455,
+      "stats_csv_line": 194,
+      "initial_reference_stats": {
+        "id": 86,
+        "name": "SLIME",
+        "form": 0,
+        "health": 2,
+        "speed_q8_8": 64,
+        "speed_px_per_frame": 0.25,
+        "damage_type": 25,
+        "collision_mask": 139,
+        "hitbox": "gUnk_080FD488",
+        "hb_off_x": 0,
+        "hb_off_y": -3,
+        "hb_half_w": 4,
+        "hb_half_h": 3,
+        "sheet": "fixed",
+        "gfx": "0x01a6",
+        "swap_slots": "",
+        "sprite": "SPRITE_SLIME",
+        "draw_prio_collide_draw_shadow": "3/1/1/1"
+      },
+      "shared_base_definition": false,
+      "initial_state_matrix_cells": {
+        "player_body_0": {
+          "source_line": 733,
+          "values": {
+            "hitType": "25",
+            "hurtType": "0",
+            "handler": "default",
+            "org_knockback_speed": "384",
+            "org_iframes": "30",
+            "org_knockback_duration": "8",
+            "damage_to_org": "2",
+            "org_confused_time": "0",
+            "tgt_knockback_speed": "256",
+            "tgt_iframes": "-1",
+            "tgt_knockback_duration": "1",
+            "damage_to_tgt": "0",
+            "tgt_confused_time": "0",
+            "flags": "0"
+          }
+        },
+        "normal_sword_13": {
+          "source_line": 746,
+          "values": {
+            "hitType": "25",
+            "hurtType": "13",
+            "handler": "default",
+            "org_knockback_speed": "0",
+            "org_iframes": "0",
+            "org_knockback_duration": "0",
+            "damage_to_org": "0",
+            "org_confused_time": "0",
+            "tgt_knockback_speed": "384",
+            "tgt_iframes": "12",
+            "tgt_knockback_duration": "12",
+            "damage_to_tgt": "2",
+            "tgt_confused_time": "0",
+            "flags": "0"
+          }
+        }
+      }
+    },
+    {
+      "name": "STALFOS",
+      "form": 0,
+      "legacy_tier": "2",
+      "roles": [
+        "CHAFF",
+        "FAST"
+      ],
+      "legacy_gfx_cost": 2,
+      "legacy_required_item": "0",
+      "legacy_theme": "UNDEAD",
+      "roster_array": "sQuickStartLevel2",
+      "roster_line": 9456,
+      "stats_csv_line": 152,
+      "initial_reference_stats": {
+        "id": 66,
+        "name": "STALFOS",
+        "form": 0,
+        "health": 4,
+        "speed_q8_8": 224,
+        "speed_px_per_frame": 0.875,
+        "damage_type": 68,
+        "collision_mask": 143,
+        "hitbox": "gHitbox_0",
+        "hb_off_x": 0,
+        "hb_off_y": -3,
+        "hb_half_w": 6,
+        "hb_half_h": 6,
+        "sheet": "swap",
+        "gfx": "0x4020",
+        "swap_slots": "2",
+        "sprite": "SPRITE_STALFOS",
+        "draw_prio_collide_draw_shadow": "1/1/1/1"
+      },
+      "shared_base_definition": false,
+      "initial_state_matrix_cells": {
+        "player_body_0": {
+          "source_line": 2073,
+          "values": {
+            "hitType": "68",
+            "hurtType": "0",
+            "handler": "default",
+            "org_knockback_speed": "384",
+            "org_iframes": "30",
+            "org_knockback_duration": "8",
+            "damage_to_org": "2",
+            "org_confused_time": "0",
+            "tgt_knockback_speed": "256",
+            "tgt_iframes": "-1",
+            "tgt_knockback_duration": "1",
+            "damage_to_tgt": "0",
+            "tgt_confused_time": "0",
+            "flags": "0"
+          }
+        },
+        "normal_sword_13": {
+          "source_line": 2086,
+          "values": {
+            "hitType": "68",
+            "hurtType": "13",
+            "handler": "default",
+            "org_knockback_speed": "0",
+            "org_iframes": "0",
+            "org_knockback_duration": "0",
+            "damage_to_org": "0",
+            "org_confused_time": "0",
+            "tgt_knockback_speed": "384",
+            "tgt_iframes": "12",
+            "tgt_knockback_duration": "12",
+            "damage_to_tgt": "2",
+            "tgt_confused_time": "0",
+            "flags": "0"
+          }
+        }
+      }
+    },
+    {
+      "name": "STALFOS",
+      "form": 1,
+      "legacy_tier": "2",
+      "roles": [
+        "CHAFF",
+        "FAST"
+      ],
+      "legacy_gfx_cost": 2,
+      "legacy_required_item": "0",
+      "legacy_theme": "UNDEAD",
+      "roster_array": "sQuickStartLevel2",
+      "roster_line": 9457,
+      "stats_csv_line": 153,
+      "initial_reference_stats": {
+        "id": 66,
+        "name": "STALFOS",
+        "form": 1,
+        "health": 4,
+        "speed_q8_8": 224,
+        "speed_px_per_frame": 0.875,
+        "damage_type": 68,
+        "collision_mask": 143,
+        "hitbox": "gHitbox_0",
+        "hb_off_x": 0,
+        "hb_off_y": -3,
+        "hb_half_w": 6,
+        "hb_half_h": 6,
+        "sheet": "swap",
+        "gfx": "0x4020",
+        "swap_slots": "2",
+        "sprite": "SPRITE_STALFOS",
+        "draw_prio_collide_draw_shadow": "1/1/1/1"
+      },
+      "shared_base_definition": false,
+      "initial_state_matrix_cells": {
+        "player_body_0": {
+          "source_line": 2073,
+          "values": {
+            "hitType": "68",
+            "hurtType": "0",
+            "handler": "default",
+            "org_knockback_speed": "384",
+            "org_iframes": "30",
+            "org_knockback_duration": "8",
+            "damage_to_org": "2",
+            "org_confused_time": "0",
+            "tgt_knockback_speed": "256",
+            "tgt_iframes": "-1",
+            "tgt_knockback_duration": "1",
+            "damage_to_tgt": "0",
+            "tgt_confused_time": "0",
+            "flags": "0"
+          }
+        },
+        "normal_sword_13": {
+          "source_line": 2086,
+          "values": {
+            "hitType": "68",
+            "hurtType": "13",
+            "handler": "default",
+            "org_knockback_speed": "0",
+            "org_iframes": "0",
+            "org_knockback_duration": "0",
+            "damage_to_org": "0",
+            "org_confused_time": "0",
+            "tgt_knockback_speed": "384",
+            "tgt_iframes": "12",
+            "tgt_knockback_duration": "12",
+            "damage_to_tgt": "2",
+            "tgt_confused_time": "0",
+            "flags": "0"
+          }
+        }
+      }
+    },
+    {
+      "name": "KEATON",
+      "form": 0,
+      "legacy_tier": "2",
+      "roles": [
+        "CHAFF",
+        "FAST"
+      ],
+      "legacy_gfx_cost": 1,
+      "legacy_required_item": "0",
+      "legacy_theme": null,
+      "roster_array": "sQuickStartLevel2",
+      "roster_line": 9458,
+      "stats_csv_line": 115,
+      "initial_reference_stats": {
+        "id": 48,
+        "name": "KEATON",
+        "form": 0,
+        "health": 4,
+        "speed_q8_8": 256,
+        "speed_px_per_frame": 1.0,
+        "damage_type": 33,
+        "collision_mask": 139,
+        "hitbox": "gUnk_080FD330",
+        "hb_off_x": 0,
+        "hb_off_y": -6,
+        "hb_half_w": 6,
+        "hb_half_h": 6,
+        "sheet": "swap",
+        "gfx": "0x4010",
+        "swap_slots": "1",
+        "sprite": "SPRITE_KEATON",
+        "draw_prio_collide_draw_shadow": "1/1/1/1"
+      },
+      "shared_base_definition": false,
+      "initial_state_matrix_cells": {
+        "player_body_0": {
+          "source_line": 972,
+          "values": {
+            "hitType": "33",
+            "hurtType": "0",
+            "handler": "default",
+            "org_knockback_speed": "384",
+            "org_iframes": "30",
+            "org_knockback_duration": "8",
+            "damage_to_org": "2",
+            "org_confused_time": "0",
+            "tgt_knockback_speed": "256",
+            "tgt_iframes": "-1",
+            "tgt_knockback_duration": "1",
+            "damage_to_tgt": "0",
+            "tgt_confused_time": "0",
+            "flags": "0"
+          }
+        },
+        "normal_sword_13": {
+          "source_line": 985,
+          "values": {
+            "hitType": "33",
+            "hurtType": "13",
+            "handler": "default",
+            "org_knockback_speed": "0",
+            "org_iframes": "0",
+            "org_knockback_duration": "0",
+            "damage_to_org": "0",
+            "org_confused_time": "0",
+            "tgt_knockback_speed": "384",
+            "tgt_iframes": "12",
+            "tgt_knockback_duration": "12",
+            "damage_to_tgt": "2",
+            "tgt_confused_time": "0",
+            "flags": "0"
+          }
+        }
+      }
+    },
+    {
+      "name": "HELMASAUR",
+      "form": 0,
+      "legacy_tier": "2",
+      "roles": [
+        "FAST"
+      ],
+      "legacy_gfx_cost": 4,
+      "legacy_required_item": "0",
+      "legacy_theme": null,
+      "roster_array": "sQuickStartLevel2",
+      "roster_line": 9459,
+      "stats_csv_line": 84,
+      "initial_reference_stats": {
+        "id": 32,
+        "name": "HELMASAUR",
+        "form": 0,
+        "health": 4,
+        "speed_q8_8": 256,
+        "speed_px_per_frame": 1.0,
+        "damage_type": 111,
+        "collision_mask": 15,
+        "hitbox": "gHitbox_14",
+        "hb_off_x": 0,
+        "hb_off_y": -3,
+        "hb_half_w": 5,
+        "hb_half_h": 5,
+        "sheet": "fixed",
+        "gfx": "0x0092",
+        "swap_slots": "",
+        "sprite": "SPRITE_HELMASAUR",
+        "draw_prio_collide_draw_shadow": "1/1/1/1"
+      },
+      "shared_base_definition": false,
+      "initial_state_matrix_cells": {
+        "player_body_0": {
+          "source_line": 3370,
+          "values": {
+            "hitType": "111",
+            "hurtType": "0",
+            "handler": "default",
+            "org_knockback_speed": "384",
+            "org_iframes": "30",
+            "org_knockback_duration": "8",
+            "damage_to_org": "2",
+            "org_confused_time": "0",
+            "tgt_knockback_speed": "256",
+            "tgt_iframes": "-1",
+            "tgt_knockback_duration": "1",
+            "damage_to_tgt": "0",
+            "tgt_confused_time": "0",
+            "flags": "0"
+          }
+        },
+        "normal_sword_13": {
+          "source_line": 3383,
+          "values": {
+            "hitType": "111",
+            "hurtType": "13",
+            "handler": "10",
+            "org_knockback_speed": "",
+            "org_iframes": "",
+            "org_knockback_duration": "",
+            "damage_to_org": "",
+            "org_confused_time": "",
+            "tgt_knockback_speed": "",
+            "tgt_iframes": "",
+            "tgt_knockback_duration": "",
+            "damage_to_tgt": "",
+            "tgt_confused_time": "",
+            "flags": ""
+          }
+        }
+      }
+    },
+    {
+      "name": "PESTO",
+      "form": 0,
+      "legacy_tier": "2",
+      "roles": [
+        "CHAFF",
+        "FLYER",
+        "SLOW"
+      ],
+      "legacy_gfx_cost": 3,
+      "legacy_required_item": "0",
+      "legacy_theme": "BUG",
+      "roster_array": "sQuickStartLevel2",
+      "roster_line": 9460,
+      "stats_csv_line": 48,
+      "initial_reference_stats": {
+        "id": 17,
+        "name": "PESTO",
+        "form": 0,
+        "health": 4,
+        "speed_q8_8": 64,
+        "speed_px_per_frame": 0.25,
+        "damage_type": 119,
+        "collision_mask": 15,
+        "hitbox": "gUnk_080FD22C",
+        "hb_off_x": 0,
+        "hb_off_y": 0,
+        "hb_half_w": 6,
+        "hb_half_h": 6,
+        "sheet": "fixed",
+        "gfx": "0x0022",
+        "swap_slots": "",
+        "sprite": "SPRITE_PESTO",
+        "draw_prio_collide_draw_shadow": "3/1/1/1"
+      },
+      "shared_base_definition": false,
+      "initial_state_matrix_cells": {
+        "player_body_0": {
+          "source_line": 3616,
+          "values": {
+            "hitType": "119",
+            "hurtType": "0",
+            "handler": "default",
+            "org_knockback_speed": "384",
+            "org_iframes": "30",
+            "org_knockback_duration": "8",
+            "damage_to_org": "2",
+            "org_confused_time": "0",
+            "tgt_knockback_speed": "256",
+            "tgt_iframes": "-1",
+            "tgt_knockback_duration": "1",
+            "damage_to_tgt": "0",
+            "tgt_confused_time": "0",
+            "flags": "0"
+          }
+        },
+        "normal_sword_13": {
+          "source_line": 3629,
+          "values": {
+            "hitType": "119",
+            "hurtType": "13",
+            "handler": "default",
+            "org_knockback_speed": "0",
+            "org_iframes": "0",
+            "org_knockback_duration": "0",
+            "damage_to_org": "0",
+            "org_confused_time": "0",
+            "tgt_knockback_speed": "384",
+            "tgt_iframes": "12",
+            "tgt_knockback_duration": "1",
+            "damage_to_tgt": "2",
+            "tgt_confused_time": "0",
+            "flags": "0"
+          }
+        }
+      }
+    },
+    {
+      "name": "CHUCHU",
+      "form": 2,
+      "legacy_tier": "2",
+      "roles": [
+        "CHAFF",
+        "SLOW"
+      ],
+      "legacy_gfx_cost": 4,
+      "legacy_required_item": "0",
+      "legacy_theme": "ICE",
+      "roster_array": "sQuickStartLevel2",
+      "roster_line": 9461,
+      "stats_csv_line": 7,
+      "initial_reference_stats": {
+        "id": 1,
+        "name": "CHUCHU",
+        "form": 2,
+        "health": 4,
+        "speed_q8_8": 32,
+        "speed_px_per_frame": 0.125,
+        "damage_type": 92,
+        "collision_mask": 15,
+        "hitbox": "gHitbox_23",
+        "hb_off_x": 0,
+        "hb_off_y": -3,
+        "hb_half_w": 4,
+        "hb_half_h": 4,
+        "sheet": "fixed",
+        "gfx": "0x0003",
+        "swap_slots": "",
+        "sprite": "SPRITE_CHUCHU",
+        "draw_prio_collide_draw_shadow": "1/0/0/0"
+      },
+      "shared_base_definition": false,
+      "initial_state_matrix_cells": {
+        "player_body_0": {
+          "source_line": 2797,
+          "values": {
+            "hitType": "92",
+            "hurtType": "0",
+            "handler": "16",
+            "org_knockback_speed": "",
+            "org_iframes": "",
+            "org_knockback_duration": "",
+            "damage_to_org": "",
+            "org_confused_time": "",
+            "tgt_knockback_speed": "",
+            "tgt_iframes": "",
+            "tgt_knockback_duration": "",
+            "damage_to_tgt": "",
+            "tgt_confused_time": "",
+            "flags": ""
+          }
+        },
+        "normal_sword_13": {
+          "source_line": 2810,
+          "values": {
+            "hitType": "92",
+            "hurtType": "13",
+            "handler": "default",
+            "org_knockback_speed": "0",
+            "org_iframes": "0",
+            "org_knockback_duration": "0",
+            "damage_to_org": "0",
+            "org_confused_time": "0",
+            "tgt_knockback_speed": "384",
+            "tgt_iframes": "12",
+            "tgt_knockback_duration": "12",
+            "damage_to_tgt": "2",
+            "tgt_confused_time": "0",
+            "flags": "0"
+          }
+        }
+      }
+    },
+    {
+      "name": "BOBOMB",
+      "form": 0,
+      "legacy_tier": "2",
+      "roles": [
+        "SLOW"
+      ],
+      "legacy_gfx_cost": 2,
+      "legacy_required_item": "0",
+      "legacy_theme": "FIRE",
+      "roster_array": "sQuickStartLevel2",
+      "roster_line": 9462,
+      "stats_csv_line": 86,
+      "initial_reference_stats": {
+        "id": 34,
+        "name": "BOBOMB",
+        "form": 0,
+        "health": 255,
+        "speed_q8_8": 128,
+        "speed_px_per_frame": 0.5,
+        "damage_type": 128,
+        "collision_mask": 15,
+        "hitbox": "gHitbox_0",
+        "hb_off_x": 0,
+        "hb_off_y": -3,
+        "hb_half_w": 6,
+        "hb_half_h": 6,
+        "sheet": "fixed",
+        "gfx": "0x00a9",
+        "swap_slots": "",
+        "sprite": "SPRITE_BOBOMB",
+        "draw_prio_collide_draw_shadow": "1/1/1/0"
+      },
+      "shared_base_definition": false,
+      "initial_state_matrix_cells": {
+        "player_body_0": {
+          "source_line": 3875,
+          "values": {
+            "hitType": "128",
+            "hurtType": "0",
+            "handler": "default",
+            "org_knockback_speed": "384",
+            "org_iframes": "30",
+            "org_knockback_duration": "8",
+            "damage_to_org": "2",
+            "org_confused_time": "0",
+            "tgt_knockback_speed": "256",
+            "tgt_iframes": "-1",
+            "tgt_knockback_duration": "1",
+            "damage_to_tgt": "0",
+            "tgt_confused_time": "0",
+            "flags": "0"
+          }
+        },
+        "normal_sword_13": {
+          "source_line": 3888,
+          "values": {
+            "hitType": "128",
+            "hurtType": "13",
+            "handler": "default",
+            "org_knockback_speed": "0",
+            "org_iframes": "0",
+            "org_knockback_duration": "0",
+            "damage_to_org": "0",
+            "org_confused_time": "0",
+            "tgt_knockback_speed": "384",
+            "tgt_iframes": "12",
+            "tgt_knockback_duration": "12",
+            "damage_to_tgt": "1",
+            "tgt_confused_time": "0",
+            "flags": "1"
+          }
+        }
+      }
+    },
+    {
+      "name": "BOMBAROSSA",
+      "form": 0,
+      "legacy_tier": "2",
+      "roles": [
+        "RANGED",
+        "FAST"
+      ],
+      "legacy_gfx_cost": 1,
+      "legacy_required_item": "0",
+      "legacy_theme": "FIRE",
+      "roster_array": "sQuickStartLevel2",
+      "roster_line": 9463,
+      "stats_csv_line": 120,
+      "initial_reference_stats": {
+        "id": 51,
+        "name": "BOMBAROSSA",
+        "form": 0,
+        "health": 255,
+        "speed_q8_8": 256,
+        "speed_px_per_frame": 1.0,
+        "damage_type": 1,
+        "collision_mask": 139,
+        "hitbox": "gHitbox_0",
+        "hb_off_x": 0,
+        "hb_off_y": -3,
+        "hb_half_w": 6,
+        "hb_half_h": 6,
+        "sheet": "fixed",
+        "gfx": "0x00fd",
+        "swap_slots": "",
+        "sprite": "SPRITE_BOMBAROSSA",
+        "draw_prio_collide_draw_shadow": "1/1/1/1"
+      },
+      "shared_base_definition": false,
+      "initial_state_matrix_cells": {}
+    },
+    {
+      "name": "LEEVER",
+      "form": 0,
+      "legacy_tier": "2",
+      "roles": [
+        "CHAFF",
+        "AMBUSH"
+      ],
+      "legacy_gfx_cost": 2,
+      "legacy_required_item": "0",
+      "legacy_theme": null,
+      "roster_array": "sQuickStartLevel2",
+      "roster_line": 9464,
+      "stats_csv_line": 8,
+      "initial_reference_stats": {
+        "id": 2,
+        "name": "LEEVER",
+        "form": 0,
+        "health": 6,
+        "speed_q8_8": 128,
+        "speed_px_per_frame": 0.5,
+        "damage_type": 25,
+        "collision_mask": 139,
+        "hitbox": "gHitbox_0",
+        "hb_off_x": 0,
+        "hb_off_y": -3,
+        "hb_half_w": 6,
+        "hb_half_h": 6,
+        "sheet": "fixed",
+        "gfx": "0x0002",
+        "swap_slots": "",
+        "sprite": "SPRITE_LEEVER",
+        "draw_prio_collide_draw_shadow": "3/0/0/1"
+      },
+      "shared_base_definition": false,
+      "initial_state_matrix_cells": {
+        "player_body_0": {
+          "source_line": 733,
+          "values": {
+            "hitType": "25",
+            "hurtType": "0",
+            "handler": "default",
+            "org_knockback_speed": "384",
+            "org_iframes": "30",
+            "org_knockback_duration": "8",
+            "damage_to_org": "2",
+            "org_confused_time": "0",
+            "tgt_knockback_speed": "256",
+            "tgt_iframes": "-1",
+            "tgt_knockback_duration": "1",
+            "damage_to_tgt": "0",
+            "tgt_confused_time": "0",
+            "flags": "0"
+          }
+        },
+        "normal_sword_13": {
+          "source_line": 746,
+          "values": {
+            "hitType": "25",
+            "hurtType": "13",
+            "handler": "default",
+            "org_knockback_speed": "0",
+            "org_iframes": "0",
+            "org_knockback_duration": "0",
+            "damage_to_org": "0",
+            "org_confused_time": "0",
+            "tgt_knockback_speed": "384",
+            "tgt_iframes": "12",
+            "tgt_knockback_duration": "12",
+            "damage_to_tgt": "2",
+            "tgt_confused_time": "0",
+            "flags": "0"
+          }
+        }
+      }
+    },
+    {
+      "name": "MULLDOZER",
+      "form": 0,
+      "legacy_tier": "2",
+      "roles": [
+        "SLOW"
+      ],
+      "legacy_gfx_cost": 4,
+      "legacy_required_item": "0",
+      "legacy_theme": null,
+      "roster_array": "sQuickStartLevel2",
+      "roster_line": 9465,
+      "stats_csv_line": 118,
+      "initial_reference_stats": {
+        "id": 50,
+        "name": "MULLDOZER",
+        "form": 0,
+        "health": 6,
+        "speed_q8_8": 96,
+        "speed_px_per_frame": 0.375,
+        "damage_type": 156,
+        "collision_mask": 139,
+        "hitbox": "gHitbox_0",
+        "hb_off_x": 0,
+        "hb_off_y": -3,
+        "hb_half_w": 6,
+        "hb_half_h": 6,
+        "sheet": "fixed",
+        "gfx": "0x00ed",
+        "swap_slots": "",
+        "sprite": "SPRITE_MULLDOZER",
+        "draw_prio_collide_draw_shadow": "1/1/1/1"
+      },
+      "shared_base_definition": false,
+      "initial_state_matrix_cells": {
+        "player_body_0": {
+          "source_line": 4742,
+          "values": {
+            "hitType": "156",
+            "hurtType": "0",
+            "handler": "default",
+            "org_knockback_speed": "384",
+            "org_iframes": "30",
+            "org_knockback_duration": "8",
+            "damage_to_org": "2",
+            "org_confused_time": "0",
+            "tgt_knockback_speed": "384",
+            "tgt_iframes": "-1",
+            "tgt_knockback_duration": "1",
+            "damage_to_tgt": "0",
+            "tgt_confused_time": "0",
+            "flags": "0"
+          }
+        },
+        "normal_sword_13": {
+          "source_line": 4755,
+          "values": {
+            "hitType": "156",
+            "hurtType": "13",
+            "handler": "default",
+            "org_knockback_speed": "0",
+            "org_iframes": "0",
+            "org_knockback_duration": "0",
+            "damage_to_org": "0",
+            "org_confused_time": "0",
+            "tgt_knockback_speed": "512",
+            "tgt_iframes": "12",
+            "tgt_knockback_duration": "12",
+            "damage_to_tgt": "1",
+            "tgt_confused_time": "0",
+            "flags": "0"
+          }
+        }
+      }
+    },
+    {
+      "name": "TEKTITE",
+      "form": 1,
+      "legacy_tier": "2",
+      "roles": [
+        "FAST"
+      ],
+      "legacy_gfx_cost": 1,
+      "legacy_required_item": "0",
+      "legacy_theme": "ICE",
+      "roster_array": "sQuickStartLevel2",
+      "roster_line": 9466,
+      "stats_csv_line": 101,
+      "initial_reference_stats": {
+        "id": 38,
+        "name": "TEKTITE",
+        "form": 1,
+        "health": 6,
+        "speed_q8_8": 320,
+        "speed_px_per_frame": 1.25,
+        "damage_type": 25,
+        "collision_mask": 139,
+        "hitbox": "gHitbox_0",
+        "hb_off_x": 0,
+        "hb_off_y": -3,
+        "hb_half_w": 6,
+        "hb_half_h": 6,
+        "sheet": "fixed",
+        "gfx": "0x00c7",
+        "swap_slots": "",
+        "sprite": "SPRITE_TEKTITE",
+        "draw_prio_collide_draw_shadow": "1/1/1/1"
+      },
+      "shared_base_definition": false,
+      "initial_state_matrix_cells": {
+        "player_body_0": {
+          "source_line": 733,
+          "values": {
+            "hitType": "25",
+            "hurtType": "0",
+            "handler": "default",
+            "org_knockback_speed": "384",
+            "org_iframes": "30",
+            "org_knockback_duration": "8",
+            "damage_to_org": "2",
+            "org_confused_time": "0",
+            "tgt_knockback_speed": "256",
+            "tgt_iframes": "-1",
+            "tgt_knockback_duration": "1",
+            "damage_to_tgt": "0",
+            "tgt_confused_time": "0",
+            "flags": "0"
+          }
+        },
+        "normal_sword_13": {
+          "source_line": 746,
+          "values": {
+            "hitType": "25",
+            "hurtType": "13",
+            "handler": "default",
+            "org_knockback_speed": "0",
+            "org_iframes": "0",
+            "org_knockback_duration": "0",
+            "damage_to_org": "0",
+            "org_confused_time": "0",
+            "tgt_knockback_speed": "384",
+            "tgt_iframes": "12",
+            "tgt_knockback_duration": "12",
+            "damage_to_tgt": "2",
+            "tgt_confused_time": "0",
+            "flags": "0"
+          }
+        }
+      }
+    },
+    {
+      "name": "LEEVER",
+      "form": 1,
+      "legacy_tier": "2",
+      "roles": [
+        "AMBUSH"
+      ],
+      "legacy_gfx_cost": 2,
+      "legacy_required_item": "0",
+      "legacy_theme": "ICE",
+      "roster_array": "sQuickStartLevel2",
+      "roster_line": 9467,
+      "stats_csv_line": 9,
+      "initial_reference_stats": {
+        "id": 2,
+        "name": "LEEVER",
+        "form": 1,
+        "health": 8,
+        "speed_q8_8": 128,
+        "speed_px_per_frame": 0.5,
+        "damage_type": 25,
+        "collision_mask": 139,
+        "hitbox": "gHitbox_0",
+        "hb_off_x": 0,
+        "hb_off_y": -3,
+        "hb_half_w": 6,
+        "hb_half_h": 6,
+        "sheet": "fixed",
+        "gfx": "0x0002",
+        "swap_slots": "",
+        "sprite": "SPRITE_LEEVER",
+        "draw_prio_collide_draw_shadow": "3/0/0/1"
+      },
+      "shared_base_definition": false,
+      "initial_state_matrix_cells": {
+        "player_body_0": {
+          "source_line": 733,
+          "values": {
+            "hitType": "25",
+            "hurtType": "0",
+            "handler": "default",
+            "org_knockback_speed": "384",
+            "org_iframes": "30",
+            "org_knockback_duration": "8",
+            "damage_to_org": "2",
+            "org_confused_time": "0",
+            "tgt_knockback_speed": "256",
+            "tgt_iframes": "-1",
+            "tgt_knockback_duration": "1",
+            "damage_to_tgt": "0",
+            "tgt_confused_time": "0",
+            "flags": "0"
+          }
+        },
+        "normal_sword_13": {
+          "source_line": 746,
+          "values": {
+            "hitType": "25",
+            "hurtType": "13",
+            "handler": "default",
+            "org_knockback_speed": "0",
+            "org_iframes": "0",
+            "org_knockback_duration": "0",
+            "damage_to_org": "0",
+            "org_confused_time": "0",
+            "tgt_knockback_speed": "384",
+            "tgt_iframes": "12",
+            "tgt_knockback_duration": "12",
+            "damage_to_tgt": "2",
+            "tgt_confused_time": "0",
+            "flags": "0"
+          }
+        }
+      }
+    },
+    {
+      "name": "MOLDORM",
+      "form": 0,
+      "legacy_tier": "3",
+      "roles": [
+        "FAST"
+      ],
+      "legacy_gfx_cost": 2,
+      "legacy_required_item": "0",
+      "legacy_theme": "BUG",
+      "roster_array": "sQuickStartLevel3",
+      "roster_line": 9476,
+      "stats_csv_line": 31,
+      "initial_reference_stats": {
+        "id": 13,
+        "name": "MOLDORM",
+        "form": 0,
+        "health": 10,
+        "speed_q8_8": 384,
+        "speed_px_per_frame": 1.5,
+        "damage_type": 93,
+        "collision_mask": 139,
+        "hitbox": "gUnk_080FD1DC",
+        "hb_off_x": 0,
+        "hb_off_y": 0,
+        "hb_half_w": 6,
+        "hb_half_h": 6,
+        "sheet": "fixed",
+        "gfx": "0x001a",
+        "swap_slots": "",
+        "sprite": "484",
+        "draw_prio_collide_draw_shadow": "0/0/1/1"
+      },
+      "shared_base_definition": false,
+      "initial_state_matrix_cells": {
+        "player_body_0": {
+          "source_line": 2829,
+          "values": {
+            "hitType": "93",
+            "hurtType": "0",
+            "handler": "default",
+            "org_knockback_speed": "384",
+            "org_iframes": "30",
+            "org_knockback_duration": "8",
+            "damage_to_org": "2",
+            "org_confused_time": "0",
+            "tgt_knockback_speed": "0",
+            "tgt_iframes": "0",
+            "tgt_knockback_duration": "0",
+            "damage_to_tgt": "0",
+            "tgt_confused_time": "0",
+            "flags": "0"
+          }
+        },
+        "normal_sword_13": {
+          "source_line": 2842,
+          "values": {
+            "hitType": "93",
+            "hurtType": "13",
+            "handler": "default",
+            "org_knockback_speed": "384",
+            "org_iframes": "248",
+            "org_knockback_duration": "4",
+            "damage_to_org": "0",
+            "org_confused_time": "0",
+            "tgt_knockback_speed": "384",
+            "tgt_iframes": "16",
+            "tgt_knockback_duration": "12",
+            "damage_to_tgt": "2",
+            "tgt_confused_time": "0",
+            "flags": "0"
+          }
+        }
+      }
+    },
+    {
+      "name": "GHINI",
+      "form": 0,
+      "legacy_tier": "3",
+      "roles": [
+        "FLYER",
+        "FAST"
+      ],
+      "legacy_gfx_cost": 5,
+      "legacy_required_item": "0",
+      "legacy_theme": "UNDEAD",
+      "roster_array": "sQuickStartLevel3",
+      "roster_line": 9477,
+      "stats_csv_line": 172,
+      "initial_reference_stats": {
+        "id": 78,
+        "name": "GHINI",
+        "form": 0,
+        "health": 9,
+        "speed_q8_8": 256,
+        "speed_px_per_frame": 1.0,
+        "damage_type": 36,
+        "collision_mask": 143,
+        "hitbox": "gHitbox_0",
+        "hb_off_x": 0,
+        "hb_off_y": -3,
+        "hb_half_w": 6,
+        "hb_half_h": 6,
+        "sheet": "fixed",
+        "gfx": "0x0196",
+        "swap_slots": "",
+        "sprite": "SPRITE_GHINI",
+        "draw_prio_collide_draw_shadow": "1/1/1/1"
+      },
+      "shared_base_definition": false,
+      "initial_state_matrix_cells": {
+        "player_body_0": {
+          "source_line": 1070,
+          "values": {
+            "hitType": "36",
+            "hurtType": "0",
+            "handler": "default",
+            "org_knockback_speed": "384",
+            "org_iframes": "30",
+            "org_knockback_duration": "8",
+            "damage_to_org": "2",
+            "org_confused_time": "0",
+            "tgt_knockback_speed": "256",
+            "tgt_iframes": "-1",
+            "tgt_knockback_duration": "1",
+            "damage_to_tgt": "0",
+            "tgt_confused_time": "0",
+            "flags": "0"
+          }
+        },
+        "normal_sword_13": {
+          "source_line": 1083,
+          "values": {
+            "hitType": "36",
+            "hurtType": "13",
+            "handler": "default",
+            "org_knockback_speed": "0",
+            "org_iframes": "0",
+            "org_knockback_duration": "0",
+            "damage_to_org": "0",
+            "org_confused_time": "0",
+            "tgt_knockback_speed": "384",
+            "tgt_iframes": "12",
+            "tgt_knockback_duration": "16",
+            "damage_to_tgt": "2",
+            "tgt_confused_time": "0",
+            "flags": "0"
+          }
+        }
+      }
+    },
+    {
+      "name": "ARMOS",
+      "form": 0,
+      "legacy_tier": "3",
+      "roles": [
+        "AMBUSH",
+        "SLOW"
+      ],
+      "legacy_gfx_cost": 5,
+      "legacy_required_item": "0",
+      "legacy_theme": null,
+      "roster_array": "sQuickStartLevel3",
+      "roster_line": 9478,
+      "stats_csv_line": 107,
+      "initial_reference_stats": {
+        "id": 42,
+        "name": "ARMOS",
+        "form": 0,
+        "health": 10,
+        "speed_q8_8": 160,
+        "speed_px_per_frame": 0.625,
+        "damage_type": 1,
+        "collision_mask": 1,
+        "hitbox": "gHitbox_15",
+        "hb_off_x": 0,
+        "hb_off_y": 0,
+        "hb_half_w": 9,
+        "hb_half_h": 9,
+        "sheet": "fixed",
+        "gfx": "0x00de",
+        "swap_slots": "",
+        "sprite": "SPRITE_ARMOS",
+        "draw_prio_collide_draw_shadow": "1/1/1/1"
+      },
+      "shared_base_definition": false,
+      "initial_state_matrix_cells": {}
+    },
+    {
+      "name": "EYEGORE",
+      "form": 0,
+      "legacy_tier": "3",
+      "roles": [
+        "RANGED",
+        "SLOW"
+      ],
+      "legacy_gfx_cost": 6,
+      "legacy_required_item": "0",
+      "legacy_theme": null,
+      "roster_array": "sQuickStartLevel3",
+      "roster_line": 9479,
+      "stats_csv_line": 108,
+      "initial_reference_stats": {
+        "id": 43,
+        "name": "EYEGORE",
+        "form": 0,
+        "health": 3,
+        "speed_q8_8": 256,
+        "speed_px_per_frame": 1.0,
+        "damage_type": 5,
+        "collision_mask": 139,
+        "hitbox": "gHitbox_16",
+        "hb_off_x": 0,
+        "hb_off_y": -7,
+        "hb_half_w": 8,
+        "hb_half_h": 7,
+        "sheet": "fixed",
+        "gfx": "0x00e1",
+        "swap_slots": "",
+        "sprite": "SPRITE_EYEGORE",
+        "draw_prio_collide_draw_shadow": "1/1/1/2"
+      },
+      "shared_base_definition": false,
+      "initial_state_matrix_cells": {
+        "player_body_0": {
+          "source_line": 134,
+          "values": {
+            "hitType": "5",
+            "hurtType": "0",
+            "handler": "default",
+            "org_knockback_speed": "384",
+            "org_iframes": "30",
+            "org_knockback_duration": "8",
+            "damage_to_org": "4",
+            "org_confused_time": "0",
+            "tgt_knockback_speed": "256",
+            "tgt_iframes": "-1",
+            "tgt_knockback_duration": "0",
+            "damage_to_tgt": "0",
+            "tgt_confused_time": "0",
+            "flags": "0"
+          }
+        },
+        "normal_sword_13": {
+          "source_line": 147,
+          "values": {
+            "hitType": "5",
+            "hurtType": "13",
+            "handler": "default",
+            "org_knockback_speed": "0",
+            "org_iframes": "0",
+            "org_knockback_duration": "0",
+            "damage_to_org": "0",
+            "org_confused_time": "0",
+            "tgt_knockback_speed": "0",
+            "tgt_iframes": "-16",
+            "tgt_knockback_duration": "0",
+            "damage_to_tgt": "0",
+            "tgt_confused_time": "0",
+            "flags": "1"
+          }
+        }
+      }
+    },
+    {
+      "name": "MULLDOZER",
+      "form": 1,
+      "legacy_tier": "3",
+      "roles": [
+        "SLOW"
+      ],
+      "legacy_gfx_cost": 4,
+      "legacy_required_item": "0",
+      "legacy_theme": "ICE",
+      "roster_array": "sQuickStartLevel3",
+      "roster_line": 9480,
+      "stats_csv_line": 119,
+      "initial_reference_stats": {
+        "id": 50,
+        "name": "MULLDOZER",
+        "form": 1,
+        "health": 8,
+        "speed_q8_8": 96,
+        "speed_px_per_frame": 0.375,
+        "damage_type": 155,
+        "collision_mask": 139,
+        "hitbox": "gHitbox_0",
+        "hb_off_x": 0,
+        "hb_off_y": -3,
+        "hb_half_w": 6,
+        "hb_half_h": 6,
+        "sheet": "fixed",
+        "gfx": "0x00ed",
+        "swap_slots": "",
+        "sprite": "SPRITE_MULLDOZER",
+        "draw_prio_collide_draw_shadow": "1/1/1/1"
+      },
+      "shared_base_definition": false,
+      "initial_state_matrix_cells": {
+        "player_body_0": {
+          "source_line": 4708,
+          "values": {
+            "hitType": "155",
+            "hurtType": "0",
+            "handler": "default",
+            "org_knockback_speed": "384",
+            "org_iframes": "30",
+            "org_knockback_duration": "8",
+            "damage_to_org": "4",
+            "org_confused_time": "0",
+            "tgt_knockback_speed": "256",
+            "tgt_iframes": "-1",
+            "tgt_knockback_duration": "1",
+            "damage_to_tgt": "0",
+            "tgt_confused_time": "0",
+            "flags": "0"
+          }
+        },
+        "normal_sword_13": {
+          "source_line": 4721,
+          "values": {
+            "hitType": "155",
+            "hurtType": "13",
+            "handler": "default",
+            "org_knockback_speed": "0",
+            "org_iframes": "0",
+            "org_knockback_duration": "0",
+            "damage_to_org": "0",
+            "org_confused_time": "0",
+            "tgt_knockback_speed": "384",
+            "tgt_iframes": "12",
+            "tgt_knockback_duration": "12",
+            "damage_to_tgt": "1",
+            "tgt_confused_time": "0",
+            "flags": "0"
+          }
+        }
+      }
+    },
+    {
+      "name": "PESTO",
+      "form": 1,
+      "legacy_tier": "3",
+      "roles": [
+        "CHAFF",
+        "FLYER",
+        "SLOW"
+      ],
+      "legacy_gfx_cost": 3,
+      "legacy_required_item": "0",
+      "legacy_theme": "BUG",
+      "roster_array": "sQuickStartLevel3",
+      "roster_line": 9481,
+      "stats_csv_line": 49,
+      "initial_reference_stats": {
+        "id": 17,
+        "name": "PESTO",
+        "form": 1,
+        "health": 4,
+        "speed_q8_8": 64,
+        "speed_px_per_frame": 0.25,
+        "damage_type": 119,
+        "collision_mask": 15,
+        "hitbox": "gUnk_080FD22C",
+        "hb_off_x": 0,
+        "hb_off_y": 0,
+        "hb_half_w": 6,
+        "hb_half_h": 6,
+        "sheet": "fixed",
+        "gfx": "0x0022",
+        "swap_slots": "",
+        "sprite": "SPRITE_PESTO",
+        "draw_prio_collide_draw_shadow": "3/1/1/1"
+      },
+      "shared_base_definition": false,
+      "initial_state_matrix_cells": {
+        "player_body_0": {
+          "source_line": 3616,
+          "values": {
+            "hitType": "119",
+            "hurtType": "0",
+            "handler": "default",
+            "org_knockback_speed": "384",
+            "org_iframes": "30",
+            "org_knockback_duration": "8",
+            "damage_to_org": "2",
+            "org_confused_time": "0",
+            "tgt_knockback_speed": "256",
+            "tgt_iframes": "-1",
+            "tgt_knockback_duration": "1",
+            "damage_to_tgt": "0",
+            "tgt_confused_time": "0",
+            "flags": "0"
+          }
+        },
+        "normal_sword_13": {
+          "source_line": 3629,
+          "values": {
+            "hitType": "119",
+            "hurtType": "13",
+            "handler": "default",
+            "org_knockback_speed": "0",
+            "org_iframes": "0",
+            "org_knockback_duration": "0",
+            "damage_to_org": "0",
+            "org_confused_time": "0",
+            "tgt_knockback_speed": "384",
+            "tgt_iframes": "12",
+            "tgt_knockback_duration": "1",
+            "damage_to_tgt": "2",
+            "tgt_confused_time": "0",
+            "flags": "0"
+          }
+        }
+      }
+    },
+    {
+      "name": "CHUCHU",
+      "form": 1,
+      "legacy_tier": "3",
+      "roles": [
+        "CHAFF",
+        "SLOW"
+      ],
+      "legacy_gfx_cost": 4,
+      "legacy_required_item": "0",
+      "legacy_theme": null,
+      "roster_array": "sQuickStartLevel3",
+      "roster_line": 9482,
+      "stats_csv_line": 6,
+      "initial_reference_stats": {
+        "id": 1,
+        "name": "CHUCHU",
+        "form": 1,
+        "health": 4,
+        "speed_q8_8": 32,
+        "speed_px_per_frame": 0.125,
+        "damage_type": 92,
+        "collision_mask": 15,
+        "hitbox": "gHitbox_23",
+        "hb_off_x": 0,
+        "hb_off_y": -3,
+        "hb_half_w": 4,
+        "hb_half_h": 4,
+        "sheet": "fixed",
+        "gfx": "0x0003",
+        "swap_slots": "",
+        "sprite": "SPRITE_CHUCHU",
+        "draw_prio_collide_draw_shadow": "1/0/0/0"
+      },
+      "shared_base_definition": false,
+      "initial_state_matrix_cells": {
+        "player_body_0": {
+          "source_line": 2797,
+          "values": {
+            "hitType": "92",
+            "hurtType": "0",
+            "handler": "16",
+            "org_knockback_speed": "",
+            "org_iframes": "",
+            "org_knockback_duration": "",
+            "damage_to_org": "",
+            "org_confused_time": "",
+            "tgt_knockback_speed": "",
+            "tgt_iframes": "",
+            "tgt_knockback_duration": "",
+            "damage_to_tgt": "",
+            "tgt_confused_time": "",
+            "flags": ""
+          }
+        },
+        "normal_sword_13": {
+          "source_line": 2810,
+          "values": {
+            "hitType": "92",
+            "hurtType": "13",
+            "handler": "default",
+            "org_knockback_speed": "0",
+            "org_iframes": "0",
+            "org_knockback_duration": "0",
+            "damage_to_org": "0",
+            "org_confused_time": "0",
+            "tgt_knockback_speed": "384",
+            "tgt_iframes": "12",
+            "tgt_knockback_duration": "12",
+            "damage_to_tgt": "2",
+            "tgt_confused_time": "0",
+            "flags": "0"
+          }
+        }
+      }
+    },
+    {
+      "name": "ROCK_CHUCHU",
+      "form": 0,
+      "legacy_tier": "3",
+      "roles": [
+        "SLOW"
+      ],
+      "legacy_gfx_cost": 2,
+      "legacy_required_item": "0",
+      "legacy_theme": null,
+      "roster_array": "sQuickStartLevel3",
+      "roster_line": 9483,
+      "stats_csv_line": 28,
+      "initial_reference_stats": {
+        "id": 10,
+        "name": "ROCK_CHUCHU",
+        "form": 0,
+        "health": 4,
+        "speed_q8_8": 64,
+        "speed_px_per_frame": 0.25,
+        "damage_type": 148,
+        "collision_mask": 139,
+        "hitbox": "gHitbox_23",
+        "hb_off_x": 0,
+        "hb_off_y": -3,
+        "hb_half_w": 4,
+        "hb_half_h": 4,
+        "sheet": "fixed",
+        "gfx": "0x0010",
+        "swap_slots": "",
+        "sprite": "SPRITE_ROCKCHUCHU",
+        "draw_prio_collide_draw_shadow": "1/1/1/0"
+      },
+      "shared_base_definition": false,
+      "initial_state_matrix_cells": {
+        "player_body_0": {
+          "source_line": 4502,
+          "values": {
+            "hitType": "148",
+            "hurtType": "0",
+            "handler": "default",
+            "org_knockback_speed": "384",
+            "org_iframes": "30",
+            "org_knockback_duration": "8",
+            "damage_to_org": "2",
+            "org_confused_time": "0",
+            "tgt_knockback_speed": "256",
+            "tgt_iframes": "-1",
+            "tgt_knockback_duration": "1",
+            "damage_to_tgt": "0",
+            "tgt_confused_time": "0",
+            "flags": "0"
+          }
+        },
+        "normal_sword_13": {
+          "source_line": 4515,
+          "values": {
+            "hitType": "148",
+            "hurtType": "13",
+            "handler": "default",
+            "org_knockback_speed": "384",
+            "org_iframes": "244",
+            "org_knockback_duration": "8",
+            "damage_to_org": "0",
+            "org_confused_time": "0",
+            "tgt_knockback_speed": "384",
+            "tgt_iframes": "-12",
+            "tgt_knockback_duration": "12",
+            "damage_to_tgt": "0",
+            "tgt_confused_time": "0",
+            "flags": "1"
+          }
+        }
+      }
+    },
+    {
+      "name": "SPINY_CHUCHU",
+      "form": 0,
+      "legacy_tier": "3",
+      "roles": [
+        "SLOW"
+      ],
+      "legacy_gfx_cost": 6,
+      "legacy_required_item": "0",
+      "legacy_theme": null,
+      "roster_array": "sQuickStartLevel3",
+      "roster_line": 9484,
+      "stats_csv_line": 29,
+      "initial_reference_stats": {
+        "id": 11,
+        "name": "SPINY_CHUCHU",
+        "form": 0,
+        "health": 4,
+        "speed_q8_8": 32,
+        "speed_px_per_frame": 0.125,
+        "damage_type": 92,
+        "collision_mask": 139,
+        "hitbox": "gHitbox_23",
+        "hb_off_x": 0,
+        "hb_off_y": -3,
+        "hb_half_w": 4,
+        "hb_half_h": 4,
+        "sheet": "fixed",
+        "gfx": "0x0011",
+        "swap_slots": "",
+        "sprite": "SPRITE_SPINYCHUCHU",
+        "draw_prio_collide_draw_shadow": "1/1/1/0"
+      },
+      "shared_base_definition": false,
+      "initial_state_matrix_cells": {
+        "player_body_0": {
+          "source_line": 2797,
+          "values": {
+            "hitType": "92",
+            "hurtType": "0",
+            "handler": "16",
+            "org_knockback_speed": "",
+            "org_iframes": "",
+            "org_knockback_duration": "",
+            "damage_to_org": "",
+            "org_confused_time": "",
+            "tgt_knockback_speed": "",
+            "tgt_iframes": "",
+            "tgt_knockback_duration": "",
+            "damage_to_tgt": "",
+            "tgt_confused_time": "",
+            "flags": ""
+          }
+        },
+        "normal_sword_13": {
+          "source_line": 2810,
+          "values": {
+            "hitType": "92",
+            "hurtType": "13",
+            "handler": "default",
+            "org_knockback_speed": "0",
+            "org_iframes": "0",
+            "org_knockback_duration": "0",
+            "damage_to_org": "0",
+            "org_confused_time": "0",
+            "tgt_knockback_speed": "384",
+            "tgt_iframes": "12",
+            "tgt_knockback_duration": "12",
+            "damage_to_tgt": "2",
+            "tgt_confused_time": "0",
+            "flags": "0"
+          }
+        }
+      }
+    },
+    {
+      "name": "SPIKED_BEETLE",
+      "form": 0,
+      "legacy_tier": "3",
+      "roles": [
+        "AMBUSH",
+        "SLOW"
+      ],
+      "legacy_gfx_cost": 5,
+      "legacy_required_item": "0",
+      "legacy_theme": "BUG",
+      "roster_array": "sQuickStartLevel3",
+      "roster_line": 9485,
+      "stats_csv_line": 82,
+      "initial_reference_stats": {
+        "id": 30,
+        "name": "SPIKED_BEETLE",
+        "form": 0,
+        "health": 4,
+        "speed_q8_8": 96,
+        "speed_px_per_frame": 0.375,
+        "damage_type": 99,
+        "collision_mask": 139,
+        "hitbox": "gHitbox_0",
+        "hb_off_x": 0,
+        "hb_off_y": -3,
+        "hb_half_w": 6,
+        "hb_half_h": 6,
+        "sheet": "fixed",
+        "gfx": "0x0090",
+        "swap_slots": "",
+        "sprite": "SPRITE_SPIKEDBEETLE",
+        "draw_prio_collide_draw_shadow": "1/1/1/1"
+      },
+      "shared_base_definition": false,
+      "initial_state_matrix_cells": {
+        "player_body_0": {
+          "source_line": 3031,
+          "values": {
+            "hitType": "99",
+            "hurtType": "0",
+            "handler": "default",
+            "org_knockback_speed": "384",
+            "org_iframes": "30",
+            "org_knockback_duration": "8",
+            "damage_to_org": "2",
+            "org_confused_time": "0",
+            "tgt_knockback_speed": "256",
+            "tgt_iframes": "-1",
+            "tgt_knockback_duration": "1",
+            "damage_to_tgt": "0",
+            "tgt_confused_time": "0",
+            "flags": "0"
+          }
+        },
+        "normal_sword_13": {
+          "source_line": 3044,
+          "values": {
+            "hitType": "99",
+            "hurtType": "13",
+            "handler": "default",
+            "org_knockback_speed": "384",
+            "org_iframes": "248",
+            "org_knockback_duration": "6",
+            "damage_to_org": "0",
+            "org_confused_time": "0",
+            "tgt_knockback_speed": "384",
+            "tgt_iframes": "-8",
+            "tgt_knockback_duration": "8",
+            "damage_to_tgt": "0",
+            "tgt_confused_time": "0",
+            "flags": "1"
+          }
+        }
+      }
+    },
+    {
+      "name": "PUFFSTOOL",
+      "form": 0,
+      "legacy_tier": "3",
+      "roles": [
+        "CHAFF",
+        "SLOW"
+      ],
+      "legacy_gfx_cost": 8,
+      "legacy_required_item": "0",
+      "legacy_theme": null,
+      "roster_array": "sQuickStartLevel3",
+      "roster_line": 9486,
+      "stats_csv_line": 51,
+      "initial_reference_stats": {
+        "id": 18,
+        "name": "PUFFSTOOL",
+        "form": 0,
+        "health": 1,
+        "speed_q8_8": 64,
+        "speed_px_per_frame": 0.25,
+        "damage_type": 130,
+        "collision_mask": 15,
+        "hitbox": "gHitbox_0",
+        "hb_off_x": 0,
+        "hb_off_y": -3,
+        "hb_half_w": 6,
+        "hb_half_h": 6,
+        "sheet": "fixed",
+        "gfx": "0x0023",
+        "swap_slots": "",
+        "sprite": "SPRITE_PUFFSTOOL",
+        "draw_prio_collide_draw_shadow": "1/1/1/0"
+      },
+      "shared_base_definition": false,
+      "initial_state_matrix_cells": {
+        "player_body_0": {
+          "source_line": 3940,
+          "values": {
+            "hitType": "130",
+            "hurtType": "0",
+            "handler": "default",
+            "org_knockback_speed": "384",
+            "org_iframes": "30",
+            "org_knockback_duration": "12",
+            "damage_to_org": "2",
+            "org_confused_time": "0",
+            "tgt_knockback_speed": "384",
+            "tgt_iframes": "-1",
+            "tgt_knockback_duration": "1",
+            "damage_to_tgt": "0",
+            "tgt_confused_time": "0",
+            "flags": "0"
+          }
+        },
+        "normal_sword_13": {
+          "source_line": 3953,
+          "values": {
+            "hitType": "130",
+            "hurtType": "13",
+            "handler": "default",
+            "org_knockback_speed": "0",
+            "org_iframes": "0",
+            "org_knockback_duration": "0",
+            "damage_to_org": "0",
+            "org_confused_time": "0",
+            "tgt_knockback_speed": "384",
+            "tgt_iframes": "-12",
+            "tgt_knockback_duration": "12",
+            "damage_to_tgt": "0",
+            "tgt_confused_time": "0",
+            "flags": "0"
+          }
+        }
+      }
+    },
+    {
+      "name": "FIREBALL_GUY",
+      "form": 0,
+      "legacy_tier": "3",
+      "roles": [
+        "RANGED"
+      ],
+      "legacy_gfx_cost": 4,
+      "legacy_required_item": "0",
+      "legacy_theme": "FIRE",
+      "roster_array": "sQuickStartLevel3",
+      "roster_line": 9487,
+      "stats_csv_line": 200,
+      "initial_reference_stats": {
+        "id": 88,
+        "name": "FIREBALL_GUY",
+        "form": 0,
+        "health": 4,
+        "speed_q8_8": 64,
+        "speed_px_per_frame": 0.25,
+        "damage_type": 25,
+        "collision_mask": 139,
+        "hitbox": "gHitbox_25",
+        "hb_off_x": 0,
+        "hb_off_y": -6,
+        "hb_half_w": 6,
+        "hb_half_h": 6,
+        "sheet": "fixed",
+        "gfx": "0x01bc",
+        "swap_slots": "",
+        "sprite": "SPRITE_FIREBALLGUY",
+        "draw_prio_collide_draw_shadow": "1/1/1/1"
+      },
+      "shared_base_definition": false,
+      "initial_state_matrix_cells": {
+        "player_body_0": {
+          "source_line": 733,
+          "values": {
+            "hitType": "25",
+            "hurtType": "0",
+            "handler": "default",
+            "org_knockback_speed": "384",
+            "org_iframes": "30",
+            "org_knockback_duration": "8",
+            "damage_to_org": "2",
+            "org_confused_time": "0",
+            "tgt_knockback_speed": "256",
+            "tgt_iframes": "-1",
+            "tgt_knockback_duration": "1",
+            "damage_to_tgt": "0",
+            "tgt_confused_time": "0",
+            "flags": "0"
+          }
+        },
+        "normal_sword_13": {
+          "source_line": 746,
+          "values": {
+            "hitType": "25",
+            "hurtType": "13",
+            "handler": "default",
+            "org_knockback_speed": "0",
+            "org_iframes": "0",
+            "org_knockback_duration": "0",
+            "damage_to_org": "0",
+            "org_confused_time": "0",
+            "tgt_knockback_speed": "384",
+            "tgt_iframes": "12",
+            "tgt_knockback_duration": "12",
+            "damage_to_tgt": "2",
+            "tgt_confused_time": "0",
+            "flags": "0"
+          }
+        }
+      }
+    },
+    {
+      "name": "MINI_FIREBALL_GUY",
+      "form": 0,
+      "legacy_tier": "3",
+      "roles": [
+        "CHAFF",
+        "RANGED"
+      ],
+      "legacy_gfx_cost": 4,
+      "legacy_required_item": "0",
+      "legacy_theme": "FIRE",
+      "roster_array": "sQuickStartLevel3",
+      "roster_line": 9488,
+      "stats_csv_line": 201,
+      "initial_reference_stats": {
+        "id": 89,
+        "name": "MINI_FIREBALL_GUY",
+        "form": 0,
+        "health": 1,
+        "speed_q8_8": 64,
+        "speed_px_per_frame": 0.25,
+        "damage_type": 25,
+        "collision_mask": 139,
+        "hitbox": "gHitbox_26",
+        "hb_off_x": 0,
+        "hb_off_y": -5,
+        "hb_half_w": 4,
+        "hb_half_h": 4,
+        "sheet": "fixed",
+        "gfx": "0x01bc",
+        "swap_slots": "",
+        "sprite": "SPRITE_FIREBALLGUY",
+        "draw_prio_collide_draw_shadow": "1/1/1/0"
+      },
+      "shared_base_definition": false,
+      "initial_state_matrix_cells": {
+        "player_body_0": {
+          "source_line": 733,
+          "values": {
+            "hitType": "25",
+            "hurtType": "0",
+            "handler": "default",
+            "org_knockback_speed": "384",
+            "org_iframes": "30",
+            "org_knockback_duration": "8",
+            "damage_to_org": "2",
+            "org_confused_time": "0",
+            "tgt_knockback_speed": "256",
+            "tgt_iframes": "-1",
+            "tgt_knockback_duration": "1",
+            "damage_to_tgt": "0",
+            "tgt_confused_time": "0",
+            "flags": "0"
+          }
+        },
+        "normal_sword_13": {
+          "source_line": 746,
+          "values": {
+            "hitType": "25",
+            "hurtType": "13",
+            "handler": "default",
+            "org_knockback_speed": "0",
+            "org_iframes": "0",
+            "org_knockback_duration": "0",
+            "damage_to_org": "0",
+            "org_confused_time": "0",
+            "tgt_knockback_speed": "384",
+            "tgt_iframes": "12",
+            "tgt_knockback_duration": "12",
+            "damage_to_tgt": "2",
+            "tgt_confused_time": "0",
+            "flags": "0"
+          }
+        }
+      }
+    },
+    {
+      "name": "BOMB_PEAHAT",
+      "form": 0,
+      "legacy_tier": "3",
+      "roles": [
+        "FLYER"
+      ],
+      "legacy_gfx_cost": 2,
+      "legacy_required_item": "0",
+      "legacy_theme": null,
+      "roster_array": "sQuickStartLevel3",
+      "roster_line": 9489,
+      "stats_csv_line": 76,
+      "initial_reference_stats": {
+        "id": 27,
+        "name": "BOMB_PEAHAT",
+        "form": 0,
+        "health": 4,
+        "speed_q8_8": 192,
+        "speed_px_per_frame": 0.75,
+        "damage_type": 127,
+        "collision_mask": 15,
+        "hitbox": "gHitbox_0",
+        "hb_off_x": 0,
+        "hb_off_y": -3,
+        "hb_half_w": 6,
+        "hb_half_h": 6,
+        "sheet": "fixed",
+        "gfx": "0x008c",
+        "swap_slots": "",
+        "sprite": "SPRITE_BOMBPEAHAT",
+        "draw_prio_collide_draw_shadow": "1/1/0/1"
+      },
+      "shared_base_definition": false,
+      "initial_state_matrix_cells": {
+        "player_body_0": {
+          "source_line": 3843,
+          "values": {
+            "hitType": "127",
+            "hurtType": "0",
+            "handler": "default",
+            "org_knockback_speed": "384",
+            "org_iframes": "30",
+            "org_knockback_duration": "8",
+            "damage_to_org": "2",
+            "org_confused_time": "0",
+            "tgt_knockback_speed": "256",
+            "tgt_iframes": "-1",
+            "tgt_knockback_duration": "1",
+            "damage_to_tgt": "0",
+            "tgt_confused_time": "0",
+            "flags": "0"
+          }
+        },
+        "normal_sword_13": {
+          "source_line": 3856,
+          "values": {
+            "hitType": "127",
+            "hurtType": "13",
+            "handler": "default",
+            "org_knockback_speed": "384",
+            "org_iframes": "248",
+            "org_knockback_duration": "4",
+            "damage_to_org": "0",
+            "org_confused_time": "0",
+            "tgt_knockback_speed": "384",
+            "tgt_iframes": "-12",
+            "tgt_knockback_duration": "12",
+            "damage_to_tgt": "0",
+            "tgt_confused_time": "0",
+            "flags": "1"
+          }
+        }
+      }
+    },
+    {
+      "name": "CLOUD_PIRANHA",
+      "form": 0,
+      "legacy_tier": "3",
+      "roles": [
+        "AMBUSH"
+      ],
+      "legacy_gfx_cost": 4,
+      "legacy_required_item": "0",
+      "legacy_theme": null,
+      "roster_array": "sQuickStartLevel3",
+      "roster_line": 9490,
+      "stats_csv_line": 147,
+      "initial_reference_stats": {
+        "id": 63,
+        "name": "CLOUD_PIRANHA",
+        "form": 0,
+        "health": 4,
+        "speed_q8_8": 256,
+        "speed_px_per_frame": 1.0,
+        "damage_type": 90,
+        "collision_mask": 139,
+        "hitbox": "gHitbox_0",
+        "hb_off_x": 0,
+        "hb_off_y": -3,
+        "hb_half_w": 6,
+        "hb_half_h": 6,
+        "sheet": "fixed",
+        "gfx": "0x0161",
+        "swap_slots": "",
+        "sprite": "SPRITE_CLOUDPIRANHA",
+        "draw_prio_collide_draw_shadow": "0/0/1/1"
+      },
+      "shared_base_definition": false,
+      "initial_state_matrix_cells": {
+        "player_body_0": {
+          "source_line": 2733,
+          "values": {
+            "hitType": "90",
+            "hurtType": "0",
+            "handler": "default",
+            "org_knockback_speed": "384",
+            "org_iframes": "30",
+            "org_knockback_duration": "8",
+            "damage_to_org": "2",
+            "org_confused_time": "0",
+            "tgt_knockback_speed": "256",
+            "tgt_iframes": "-1",
+            "tgt_knockback_duration": "1",
+            "damage_to_tgt": "0",
+            "tgt_confused_time": "0",
+            "flags": "0"
+          }
+        },
+        "normal_sword_13": {
+          "source_line": 2746,
+          "values": {
+            "hitType": "90",
+            "hurtType": "13",
+            "handler": "default",
+            "org_knockback_speed": "0",
+            "org_iframes": "0",
+            "org_knockback_duration": "0",
+            "damage_to_org": "0",
+            "org_confused_time": "0",
+            "tgt_knockback_speed": "384",
+            "tgt_iframes": "12",
+            "tgt_knockback_duration": "12",
+            "damage_to_tgt": "2",
+            "tgt_confused_time": "0",
+            "flags": "0"
+          }
+        }
+      }
+    },
+    {
+      "name": "SPINY_BEETLE",
+      "form": 0,
+      "legacy_tier": "3",
+      "roles": [
+        "FAST"
+      ],
+      "legacy_gfx_cost": 2,
+      "legacy_required_item": "0",
+      "legacy_theme": "BUG",
+      "roster_array": "sQuickStartLevel3",
+      "roster_line": 9491,
+      "stats_csv_line": 123,
+      "initial_reference_stats": {
+        "id": 53,
+        "name": "SPINY_BEETLE",
+        "form": 0,
+        "health": 4,
+        "speed_q8_8": 352,
+        "speed_px_per_frame": 1.375,
+        "damage_type": 25,
+        "collision_mask": 139,
+        "hitbox": "gHitbox_29",
+        "hb_off_x": 0,
+        "hb_off_y": -4,
+        "hb_half_w": 7,
+        "hb_half_h": 7,
+        "sheet": "fixed",
+        "gfx": "0x00ff",
+        "swap_slots": "",
+        "sprite": "SPRITE_SPINYBEETLE",
+        "draw_prio_collide_draw_shadow": "0/0/0/1"
+      },
+      "shared_base_definition": false,
+      "initial_state_matrix_cells": {
+        "player_body_0": {
+          "source_line": 733,
+          "values": {
+            "hitType": "25",
+            "hurtType": "0",
+            "handler": "default",
+            "org_knockback_speed": "384",
+            "org_iframes": "30",
+            "org_knockback_duration": "8",
+            "damage_to_org": "2",
+            "org_confused_time": "0",
+            "tgt_knockback_speed": "256",
+            "tgt_iframes": "-1",
+            "tgt_knockback_duration": "1",
+            "damage_to_tgt": "0",
+            "tgt_confused_time": "0",
+            "flags": "0"
+          }
+        },
+        "normal_sword_13": {
+          "source_line": 746,
+          "values": {
+            "hitType": "25",
+            "hurtType": "13",
+            "handler": "default",
+            "org_knockback_speed": "0",
+            "org_iframes": "0",
+            "org_knockback_duration": "0",
+            "damage_to_org": "0",
+            "org_confused_time": "0",
+            "tgt_knockback_speed": "384",
+            "tgt_iframes": "12",
+            "tgt_knockback_duration": "12",
+            "damage_to_tgt": "2",
+            "tgt_confused_time": "0",
+            "flags": "0"
+          }
+        }
+      }
+    },
+    {
+      "name": "ENEMY_50",
+      "form": 0,
+      "legacy_tier": "3",
+      "roles": [
+        "FAST"
+      ],
+      "legacy_gfx_cost": 5,
+      "legacy_required_item": "0",
+      "legacy_theme": null,
+      "roster_array": "sQuickStartLevel3",
+      "roster_line": 9492,
+      "stats_csv_line": 179,
+      "initial_reference_stats": {
+        "id": 80,
+        "name": "ENEMY_50",
+        "form": 0,
+        "health": 9,
+        "speed_q8_8": 256,
+        "speed_px_per_frame": 1.0,
+        "damage_type": 36,
+        "collision_mask": 143,
+        "hitbox": "gHitbox_0",
+        "hb_off_x": 0,
+        "hb_off_y": -3,
+        "hb_half_w": 6,
+        "hb_half_h": 6,
+        "sheet": "fixed",
+        "gfx": "0x0196",
+        "swap_slots": "",
+        "sprite": "SPRITE_GHINI",
+        "draw_prio_collide_draw_shadow": "1/0/0/1"
+      },
+      "shared_base_definition": false,
+      "initial_state_matrix_cells": {
+        "player_body_0": {
+          "source_line": 1070,
+          "values": {
+            "hitType": "36",
+            "hurtType": "0",
+            "handler": "default",
+            "org_knockback_speed": "384",
+            "org_iframes": "30",
+            "org_knockback_duration": "8",
+            "damage_to_org": "2",
+            "org_confused_time": "0",
+            "tgt_knockback_speed": "256",
+            "tgt_iframes": "-1",
+            "tgt_knockback_duration": "1",
+            "damage_to_tgt": "0",
+            "tgt_confused_time": "0",
+            "flags": "0"
+          }
+        },
+        "normal_sword_13": {
+          "source_line": 1083,
+          "values": {
+            "hitType": "36",
+            "hurtType": "13",
+            "handler": "default",
+            "org_knockback_speed": "0",
+            "org_iframes": "0",
+            "org_knockback_duration": "0",
+            "damage_to_org": "0",
+            "org_confused_time": "0",
+            "tgt_knockback_speed": "384",
+            "tgt_iframes": "12",
+            "tgt_knockback_duration": "16",
+            "damage_to_tgt": "2",
+            "tgt_confused_time": "0",
+            "flags": "0"
+          }
+        }
+      }
+    },
+    {
+      "name": "LIKE_LIKE",
+      "form": 0,
+      "legacy_tier": "4",
+      "roles": [
+        "HEAVY",
+        "SLOW",
+        "THIEF"
+      ],
+      "legacy_gfx_cost": 2,
+      "legacy_required_item": "0",
+      "legacy_theme": null,
+      "roster_array": "sQuickStartLevel4",
+      "roster_line": 9510,
+      "stats_csv_line": 62,
+      "initial_reference_stats": {
+        "id": 20,
+        "name": "LIKE_LIKE",
+        "form": 0,
+        "health": 20,
+        "speed_q8_8": 64,
+        "speed_px_per_frame": 0.25,
+        "damage_type": 140,
+        "collision_mask": 139,
+        "hitbox": "gHitbox_9",
+        "hb_off_x": 0,
+        "hb_off_y": -4,
+        "hb_half_w": 6,
+        "hb_half_h": 6,
+        "sheet": "fixed",
+        "gfx": "0x0045",
+        "swap_slots": "",
+        "sprite": "SPRITE_LIKELIKE",
+        "draw_prio_collide_draw_shadow": "1/1/1/1"
+      },
+      "shared_base_definition": false,
+      "initial_state_matrix_cells": {
+        "player_body_0": {
+          "source_line": 4267,
+          "values": {
+            "hitType": "140",
+            "hurtType": "0",
+            "handler": "7",
+            "org_knockback_speed": "",
+            "org_iframes": "",
+            "org_knockback_duration": "",
+            "damage_to_org": "",
+            "org_confused_time": "",
+            "tgt_knockback_speed": "",
+            "tgt_iframes": "",
+            "tgt_knockback_duration": "",
+            "damage_to_tgt": "",
+            "tgt_confused_time": "",
+            "flags": ""
+          }
+        },
+        "normal_sword_13": {
+          "source_line": 4280,
+          "values": {
+            "hitType": "140",
+            "hurtType": "13",
+            "handler": "default",
+            "org_knockback_speed": "0",
+            "org_iframes": "0",
+            "org_knockback_duration": "0",
+            "damage_to_org": "0",
+            "org_confused_time": "0",
+            "tgt_knockback_speed": "256",
+            "tgt_iframes": "12",
+            "tgt_knockback_duration": "1",
+            "damage_to_tgt": "2",
+            "tgt_confused_time": "0",
+            "flags": "0"
+          }
+        }
+      }
+    },
+    {
+      "name": "RUPEE_LIKE",
+      "form": 0,
+      "legacy_tier": "4",
+      "roles": [
+        "HEAVY",
+        "THIEF"
+      ],
+      "legacy_gfx_cost": 4,
+      "legacy_required_item": "0",
+      "legacy_theme": null,
+      "roster_array": "sQuickStartLevel4",
+      "roster_line": 9511,
+      "stats_csv_line": 66,
+      "initial_reference_stats": {
+        "id": 23,
+        "name": "RUPEE_LIKE",
+        "form": 0,
+        "health": 16,
+        "speed_q8_8": 96,
+        "speed_px_per_frame": 0.375,
+        "damage_type": 142,
+        "collision_mask": 139,
+        "hitbox": "gHitbox_10",
+        "hb_off_x": 0,
+        "hb_off_y": -3,
+        "hb_half_w": 2,
+        "hb_half_h": 3,
+        "sheet": "fixed",
+        "gfx": "0x0073",
+        "swap_slots": "",
+        "sprite": "SPRITE_323",
+        "draw_prio_collide_draw_shadow": "0/0/0/1"
+      },
+      "shared_base_definition": false,
+      "initial_state_matrix_cells": {}
+    },
+    {
+      "name": "RUPEE_LIKE",
+      "form": 2,
+      "legacy_tier": "4",
+      "roles": [
+        "HEAVY",
+        "THIEF"
+      ],
+      "legacy_gfx_cost": 4,
+      "legacy_required_item": "0",
+      "legacy_theme": null,
+      "roster_array": "sQuickStartLevel4",
+      "roster_line": 9512,
+      "stats_csv_line": 66,
+      "initial_reference_stats": {
+        "id": 23,
+        "name": "RUPEE_LIKE",
+        "form": 0,
+        "health": 16,
+        "speed_q8_8": 96,
+        "speed_px_per_frame": 0.375,
+        "damage_type": 142,
+        "collision_mask": 139,
+        "hitbox": "gHitbox_10",
+        "hb_off_x": 0,
+        "hb_off_y": -3,
+        "hb_half_w": 2,
+        "hb_half_h": 3,
+        "sheet": "fixed",
+        "gfx": "0x0073",
+        "swap_slots": "",
+        "sprite": "SPRITE_323",
+        "draw_prio_collide_draw_shadow": "0/0/0/1"
+      },
+      "shared_base_definition": true,
+      "initial_state_matrix_cells": {}
+    },
+    {
+      "name": "RUPEE_LIKE",
+      "form": 1,
+      "legacy_tier": "4",
+      "roles": [
+        "HEAVY",
+        "THIEF"
+      ],
+      "legacy_gfx_cost": 4,
+      "legacy_required_item": "0",
+      "legacy_theme": null,
+      "roster_array": "sQuickStartLevel4",
+      "roster_line": 9513,
+      "stats_csv_line": 66,
+      "initial_reference_stats": {
+        "id": 23,
+        "name": "RUPEE_LIKE",
+        "form": 0,
+        "health": 16,
+        "speed_q8_8": 96,
+        "speed_px_per_frame": 0.375,
+        "damage_type": 142,
+        "collision_mask": 139,
+        "hitbox": "gHitbox_10",
+        "hb_off_x": 0,
+        "hb_off_y": -3,
+        "hb_half_w": 2,
+        "hb_half_h": 3,
+        "sheet": "fixed",
+        "gfx": "0x0073",
+        "swap_slots": "",
+        "sprite": "SPRITE_323",
+        "draw_prio_collide_draw_shadow": "0/0/0/1"
+      },
+      "shared_base_definition": true,
+      "initial_state_matrix_cells": {}
+    },
+    {
+      "name": "TAKKURI",
+      "form": 0,
+      "legacy_tier": "4",
+      "roles": [
+        "FAST",
+        "FLYER",
+        "THIEF"
+      ],
+      "legacy_gfx_cost": 2,
+      "legacy_required_item": "0",
+      "legacy_theme": "AVIARY",
+      "roster_array": "sQuickStartLevel4",
+      "roster_line": 9514,
+      "stats_csv_line": 159,
+      "initial_reference_stats": {
+        "id": 69,
+        "name": "TAKKURI",
+        "form": 0,
+        "health": 4,
+        "speed_q8_8": 320,
+        "speed_px_per_frame": 1.25,
+        "damage_type": 87,
+        "collision_mask": 15,
+        "hitbox": "gHitbox_19",
+        "hb_off_x": 0,
+        "hb_off_y": -3,
+        "hb_half_w": 6,
+        "hb_half_h": 6,
+        "sheet": "fixed",
+        "gfx": "0x00ec",
+        "swap_slots": "",
+        "sprite": "SPRITE_CROW",
+        "draw_prio_collide_draw_shadow": "1/0/1/1"
+      },
+      "shared_base_definition": false,
+      "initial_state_matrix_cells": {
+        "player_body_0": {
+          "source_line": 2637,
+          "values": {
+            "hitType": "87",
+            "hurtType": "0",
+            "handler": "default",
+            "org_knockback_speed": "512",
+            "org_iframes": "30",
+            "org_knockback_duration": "8",
+            "damage_to_org": "2",
+            "org_confused_time": "0",
+            "tgt_knockback_speed": "384",
+            "tgt_iframes": "-1",
+            "tgt_knockback_duration": "1",
+            "damage_to_tgt": "0",
+            "tgt_confused_time": "0",
+            "flags": "0"
+          }
+        },
+        "normal_sword_13": {
+          "source_line": 2650,
+          "values": {
+            "hitType": "87",
+            "hurtType": "13",
+            "handler": "default",
+            "org_knockback_speed": "0",
+            "org_iframes": "0",
+            "org_knockback_duration": "0",
+            "damage_to_org": "0",
+            "org_confused_time": "0",
+            "tgt_knockback_speed": "512",
+            "tgt_iframes": "12",
+            "tgt_knockback_duration": "12",
+            "damage_to_tgt": "2",
+            "tgt_confused_time": "0",
+            "flags": "0"
+          }
+        }
+      }
+    },
+    {
+      "name": "GOBDO",
+      "form": 0,
+      "legacy_tier": "4",
+      "roles": [
+        "HEAVY",
+        "SLOW"
+      ],
+      "legacy_gfx_cost": 2,
+      "legacy_required_item": "0",
+      "legacy_theme": "UNDEAD",
+      "roster_array": "sQuickStartLevel4",
+      "roster_line": 9515,
+      "stats_csv_line": 143,
+      "initial_reference_stats": {
+        "id": 59,
+        "name": "GOBDO",
+        "form": 0,
+        "health": 20,
+        "speed_q8_8": 96,
+        "speed_px_per_frame": 0.375,
+        "damage_type": 38,
+        "collision_mask": 139,
+        "hitbox": "gHitbox_0",
+        "hb_off_x": 0,
+        "hb_off_y": -3,
+        "hb_half_w": 6,
+        "hb_half_h": 6,
+        "sheet": "swap",
+        "gfx": "0x4020",
+        "swap_slots": "2",
+        "sprite": "SPRITE_GIBDO",
+        "draw_prio_collide_draw_shadow": "1/1/1/1"
+      },
+      "shared_base_definition": false,
+      "initial_state_matrix_cells": {
+        "player_body_0": {
+          "source_line": 1136,
+          "values": {
+            "hitType": "38",
+            "hurtType": "0",
+            "handler": "default",
+            "org_knockback_speed": "384",
+            "org_iframes": "30",
+            "org_knockback_duration": "8",
+            "damage_to_org": "2",
+            "org_confused_time": "0",
+            "tgt_knockback_speed": "256",
+            "tgt_iframes": "-1",
+            "tgt_knockback_duration": "1",
+            "damage_to_tgt": "0",
+            "tgt_confused_time": "0",
+            "flags": "0"
+          }
+        },
+        "normal_sword_13": {
+          "source_line": 1148,
+          "values": {
+            "hitType": "38",
+            "hurtType": "13",
+            "handler": "default",
+            "org_knockback_speed": "0",
+            "org_iframes": "0",
+            "org_knockback_duration": "0",
+            "damage_to_org": "0",
+            "org_confused_time": "0",
+            "tgt_knockback_speed": "256",
+            "tgt_iframes": "16",
+            "tgt_knockback_duration": "2",
+            "damage_to_tgt": "2",
+            "tgt_confused_time": "0",
+            "flags": "0"
+          }
+        }
+      }
+    },
+    {
+      "name": "SCISSORS_BEETLE",
+      "form": 0,
+      "legacy_tier": "4",
+      "roles": [
+        "HEAVY"
+      ],
+      "legacy_gfx_cost": 1,
+      "legacy_required_item": "0",
+      "legacy_theme": "BUG",
+      "roster_array": "sQuickStartLevel4",
+      "roster_line": 9516,
+      "stats_csv_line": 148,
+      "initial_reference_stats": {
+        "id": 64,
+        "name": "SCISSORS_BEETLE",
+        "form": 0,
+        "health": 20,
+        "speed_q8_8": 128,
+        "speed_px_per_frame": 0.5,
+        "damage_type": 2,
+        "collision_mask": 139,
+        "hitbox": "gHitbox_2",
+        "hb_off_x": 0,
+        "hb_off_y": -3,
+        "hb_half_w": 8,
+        "hb_half_h": 8,
+        "sheet": "swap",
+        "gfx": "0x4010",
+        "swap_slots": "1",
+        "sprite": "SPRITE_SCISSORSBEETLE",
+        "draw_prio_collide_draw_shadow": "1/0/0/1"
+      },
+      "shared_base_definition": false,
+      "initial_state_matrix_cells": {
+        "player_body_0": {
+          "source_line": 36,
+          "values": {
+            "hitType": "2",
+            "hurtType": "0",
+            "handler": "default",
+            "org_knockback_speed": "384",
+            "org_iframes": "30",
+            "org_knockback_duration": "8",
+            "damage_to_org": "2",
+            "org_confused_time": "0",
+            "tgt_knockback_speed": "256",
+            "tgt_iframes": "-4",
+            "tgt_knockback_duration": "4",
+            "damage_to_tgt": "0",
+            "tgt_confused_time": "0",
+            "flags": "0"
+          }
+        },
+        "normal_sword_13": {
+          "source_line": 49,
+          "values": {
+            "hitType": "2",
+            "hurtType": "13",
+            "handler": "default",
+            "org_knockback_speed": "0",
+            "org_iframes": "0",
+            "org_knockback_duration": "0",
+            "damage_to_org": "0",
+            "org_confused_time": "0",
+            "tgt_knockback_speed": "256",
+            "tgt_iframes": "12",
+            "tgt_knockback_duration": "4",
+            "damage_to_tgt": "2",
+            "tgt_confused_time": "0",
+            "flags": "0"
+          }
+        }
+      }
+    },
+    {
+      "name": "MOLDWORM",
+      "form": 0,
+      "legacy_tier": "4",
+      "roles": [
+        "HEAVY"
+      ],
+      "legacy_gfx_cost": 6,
+      "legacy_required_item": "0",
+      "legacy_theme": "BUG",
+      "roster_array": "sQuickStartLevel4",
+      "roster_line": 9517,
+      "stats_csv_line": 36,
+      "initial_reference_stats": {
+        "id": 15,
+        "name": "MOLDWORM",
+        "form": 0,
+        "health": 20,
+        "speed_q8_8": 128,
+        "speed_px_per_frame": 0.5,
+        "damage_type": 133,
+        "collision_mask": 139,
+        "hitbox": "gUnk_080FD1FC",
+        "hb_off_x": 0,
+        "hb_off_y": 0,
+        "hb_half_w": 6,
+        "hb_half_h": 6,
+        "sheet": "fixed",
+        "gfx": "0x001f",
+        "swap_slots": "",
+        "sprite": "SPRITE_MOLDWORM",
+        "draw_prio_collide_draw_shadow": "0/0/0/1"
+      },
+      "shared_base_definition": false,
+      "initial_state_matrix_cells": {
+        "player_body_0": {
+          "source_line": 4037,
+          "values": {
+            "hitType": "133",
+            "hurtType": "0",
+            "handler": "default",
+            "org_knockback_speed": "384",
+            "org_iframes": "30",
+            "org_knockback_duration": "8",
+            "damage_to_org": "2",
+            "org_confused_time": "0",
+            "tgt_knockback_speed": "0",
+            "tgt_iframes": "0",
+            "tgt_knockback_duration": "0",
+            "damage_to_tgt": "0",
+            "tgt_confused_time": "0",
+            "flags": "0"
+          }
+        },
+        "normal_sword_13": {
+          "source_line": 4050,
+          "values": {
+            "hitType": "133",
+            "hurtType": "13",
+            "handler": "default",
+            "org_knockback_speed": "384",
+            "org_iframes": "244",
+            "org_knockback_duration": "4",
+            "damage_to_org": "0",
+            "org_confused_time": "0",
+            "tgt_knockback_speed": "0",
+            "tgt_iframes": "12",
+            "tgt_knockback_duration": "0",
+            "damage_to_tgt": "2",
+            "tgt_confused_time": "0",
+            "flags": "0"
+          }
+        }
+      }
+    },
+    {
+      "name": "ENEMY_4D",
+      "form": 0,
+      "legacy_tier": "4",
+      "roles": [
+        "HEAVY"
+      ],
+      "legacy_gfx_cost": 1,
+      "legacy_required_item": "0",
+      "legacy_theme": null,
+      "roster_array": "sQuickStartLevel4",
+      "roster_line": 9518,
+      "stats_csv_line": 171,
+      "initial_reference_stats": {
+        "id": 77,
+        "name": "ENEMY_4D",
+        "form": 0,
+        "health": 16,
+        "speed_q8_8": 128,
+        "speed_px_per_frame": 0.5,
+        "damage_type": 163,
+        "collision_mask": 139,
+        "hitbox": "gHitbox_0",
+        "hb_off_x": 0,
+        "hb_off_y": -3,
+        "hb_half_w": 6,
+        "hb_half_h": 6,
+        "sheet": "swap",
+        "gfx": "0x4010",
+        "swap_slots": "1",
+        "sprite": "SPRITE_BALLCHAINSOLDIER",
+        "draw_prio_collide_draw_shadow": "1/0/0/1"
+      },
+      "shared_base_definition": false,
+      "initial_state_matrix_cells": {
+        "player_body_0": {
+          "source_line": 4946,
+          "values": {
+            "hitType": "163",
+            "hurtType": "0",
+            "handler": "default",
+            "org_knockback_speed": "384",
+            "org_iframes": "30",
+            "org_knockback_duration": "8",
+            "damage_to_org": "2",
+            "org_confused_time": "0",
+            "tgt_knockback_speed": "256",
+            "tgt_iframes": "-1",
+            "tgt_knockback_duration": "1",
+            "damage_to_tgt": "0",
+            "tgt_confused_time": "0",
+            "flags": "0"
+          }
+        },
+        "normal_sword_13": {
+          "source_line": 4959,
+          "values": {
+            "hitType": "163",
+            "hurtType": "13",
+            "handler": "default",
+            "org_knockback_speed": "0",
+            "org_iframes": "0",
+            "org_knockback_duration": "0",
+            "damage_to_org": "0",
+            "org_confused_time": "0",
+            "tgt_knockback_speed": "256",
+            "tgt_iframes": "12",
+            "tgt_knockback_duration": "8",
+            "damage_to_tgt": "2",
+            "tgt_confused_time": "0",
+            "flags": "0"
+          }
+        }
+      }
+    },
+    {
+      "name": "BOW_MOBLIN",
+      "form": 0,
+      "legacy_tier": "4",
+      "roles": [
+        "RANGED",
+        "FAST"
+      ],
+      "legacy_gfx_cost": 8,
+      "legacy_required_item": "0",
+      "legacy_theme": null,
+      "roster_array": "sQuickStartLevel4",
+      "roster_line": 9519,
+      "stats_csv_line": 160,
+      "initial_reference_stats": {
+        "id": 70,
+        "name": "BOW_MOBLIN",
+        "form": 0,
+        "health": 8,
+        "speed_q8_8": 256,
+        "speed_px_per_frame": 1.0,
+        "damage_type": 138,
+        "collision_mask": 139,
+        "hitbox": "gUnk_080FD258",
+        "hb_off_x": 0,
+        "hb_off_y": -6,
+        "hb_half_w": 7,
+        "hb_half_h": 8,
+        "sheet": "fixed",
+        "gfx": "0x0048",
+        "swap_slots": "",
+        "sprite": "SPRITE_BOWMOBLIN",
+        "draw_prio_collide_draw_shadow": "1/1/1/2"
+      },
+      "shared_base_definition": false,
+      "initial_state_matrix_cells": {
+        "player_body_0": {
+          "source_line": 4201,
+          "values": {
+            "hitType": "138",
+            "hurtType": "0",
+            "handler": "default",
+            "org_knockback_speed": "384",
+            "org_iframes": "30",
+            "org_knockback_duration": "8",
+            "damage_to_org": "2",
+            "org_confused_time": "0",
+            "tgt_knockback_speed": "256",
+            "tgt_iframes": "-1",
+            "tgt_knockback_duration": "1",
+            "damage_to_tgt": "0",
+            "tgt_confused_time": "0",
+            "flags": "0"
+          }
+        },
+        "normal_sword_13": {
+          "source_line": 4214,
+          "values": {
+            "hitType": "138",
+            "hurtType": "13",
+            "handler": "default",
+            "org_knockback_speed": "0",
+            "org_iframes": "0",
+            "org_knockback_duration": "0",
+            "damage_to_org": "0",
+            "org_confused_time": "0",
+            "tgt_knockback_speed": "384",
+            "tgt_iframes": "12",
+            "tgt_knockback_duration": "12",
+            "damage_to_tgt": "2",
+            "tgt_confused_time": "0",
+            "flags": "0"
+          }
+        }
+      }
+    },
+    {
+      "name": "SPEAR_MOBLIN",
+      "form": 0,
+      "legacy_tier": "4",
+      "roles": [
+        "FAST"
+      ],
+      "legacy_gfx_cost": 8,
+      "legacy_required_item": "0",
+      "legacy_theme": null,
+      "roster_array": "sQuickStartLevel4",
+      "roster_line": 9520,
+      "stats_csv_line": 63,
+      "initial_reference_stats": {
+        "id": 21,
+        "name": "SPEAR_MOBLIN",
+        "form": 0,
+        "health": 8,
+        "speed_q8_8": 256,
+        "speed_px_per_frame": 1.0,
+        "damage_type": 138,
+        "collision_mask": 139,
+        "hitbox": "gUnk_080FD258",
+        "hb_off_x": 0,
+        "hb_off_y": -6,
+        "hb_half_w": 7,
+        "hb_half_h": 8,
+        "sheet": "fixed",
+        "gfx": "0x0047",
+        "swap_slots": "",
+        "sprite": "SPRITE_SPEARMOBLIN",
+        "draw_prio_collide_draw_shadow": "1/1/1/2"
+      },
+      "shared_base_definition": false,
+      "initial_state_matrix_cells": {
+        "player_body_0": {
+          "source_line": 4201,
+          "values": {
+            "hitType": "138",
+            "hurtType": "0",
+            "handler": "default",
+            "org_knockback_speed": "384",
+            "org_iframes": "30",
+            "org_knockback_duration": "8",
+            "damage_to_org": "2",
+            "org_confused_time": "0",
+            "tgt_knockback_speed": "256",
+            "tgt_iframes": "-1",
+            "tgt_knockback_duration": "1",
+            "damage_to_tgt": "0",
+            "tgt_confused_time": "0",
+            "flags": "0"
+          }
+        },
+        "normal_sword_13": {
+          "source_line": 4214,
+          "values": {
+            "hitType": "138",
+            "hurtType": "13",
+            "handler": "default",
+            "org_knockback_speed": "0",
+            "org_iframes": "0",
+            "org_knockback_duration": "0",
+            "damage_to_org": "0",
+            "org_confused_time": "0",
+            "tgt_knockback_speed": "384",
+            "tgt_iframes": "12",
+            "tgt_knockback_duration": "12",
+            "damage_to_tgt": "2",
+            "tgt_confused_time": "0",
+            "flags": "0"
+          }
+        }
+      }
+    },
+    {
+      "name": "ACRO_BANDIT",
+      "form": 0,
+      "legacy_tier": "4",
+      "roles": [
+        "CHAFF"
+      ],
+      "legacy_gfx_cost": 7,
+      "legacy_required_item": "0",
+      "legacy_theme": null,
+      "roster_array": "sQuickStartLevel4",
+      "roster_line": 9521,
+      "stats_csv_line": 113,
+      "initial_reference_stats": {
+        "id": 46,
+        "name": "ACRO_BANDIT",
+        "form": 0,
+        "health": 1,
+        "speed_q8_8": 128,
+        "speed_px_per_frame": 0.5,
+        "damage_type": 25,
+        "collision_mask": 139,
+        "hitbox": "gHitbox_0",
+        "hb_off_x": 0,
+        "hb_off_y": -3,
+        "hb_half_w": 6,
+        "hb_half_h": 6,
+        "sheet": "fixed",
+        "gfx": "0x00e4",
+        "swap_slots": "",
+        "sprite": "SPRITE_ACROBANDITS",
+        "draw_prio_collide_draw_shadow": "0/0/0/1"
+      },
+      "shared_base_definition": false,
+      "initial_state_matrix_cells": {
+        "player_body_0": {
+          "source_line": 733,
+          "values": {
+            "hitType": "25",
+            "hurtType": "0",
+            "handler": "default",
+            "org_knockback_speed": "384",
+            "org_iframes": "30",
+            "org_knockback_duration": "8",
+            "damage_to_org": "2",
+            "org_confused_time": "0",
+            "tgt_knockback_speed": "256",
+            "tgt_iframes": "-1",
+            "tgt_knockback_duration": "1",
+            "damage_to_tgt": "0",
+            "tgt_confused_time": "0",
+            "flags": "0"
+          }
+        },
+        "normal_sword_13": {
+          "source_line": 746,
+          "values": {
+            "hitType": "25",
+            "hurtType": "13",
+            "handler": "default",
+            "org_knockback_speed": "0",
+            "org_iframes": "0",
+            "org_knockback_duration": "0",
+            "damage_to_org": "0",
+            "org_confused_time": "0",
+            "tgt_knockback_speed": "384",
+            "tgt_iframes": "12",
+            "tgt_knockback_duration": "12",
+            "damage_to_tgt": "2",
+            "tgt_confused_time": "0",
+            "flags": "0"
+          }
+        }
+      }
+    },
+    {
+      "name": "WIZZROBE_FIRE",
+      "form": 0,
+      "legacy_tier": "5",
+      "roles": [
+        "RANGED",
+        "FAST"
+      ],
+      "legacy_gfx_cost": 4,
+      "legacy_required_item": "0",
+      "legacy_theme": "FIRE",
+      "roster_array": "sQuickStartLevel5",
+      "roster_line": 9533,
+      "stats_csv_line": 105,
+      "initial_reference_stats": {
+        "id": 40,
+        "name": "WIZZROBE_FIRE",
+        "form": 0,
+        "health": 8,
+        "speed_q8_8": 192,
+        "speed_px_per_frame": 0.75,
+        "damage_type": 12,
+        "collision_mask": 139,
+        "hitbox": "gHitbox_0",
+        "hb_off_x": 0,
+        "hb_off_y": -3,
+        "hb_half_w": 6,
+        "hb_half_h": 6,
+        "sheet": "fixed",
+        "gfx": "0x00d8",
+        "swap_slots": "",
+        "sprite": "SPRITE_WIZZROBEFIRE",
+        "draw_prio_collide_draw_shadow": "0/0/0/1"
+      },
+      "shared_base_definition": false,
+      "initial_state_matrix_cells": {
+        "player_body_0": {
+          "source_line": 360,
+          "values": {
+            "hitType": "12",
+            "hurtType": "0",
+            "handler": "default",
+            "org_knockback_speed": "384",
+            "org_iframes": "30",
+            "org_knockback_duration": "8",
+            "damage_to_org": "2",
+            "org_confused_time": "0",
+            "tgt_knockback_speed": "256",
+            "tgt_iframes": "-1",
+            "tgt_knockback_duration": "0",
+            "damage_to_tgt": "0",
+            "tgt_confused_time": "0",
+            "flags": "0"
+          }
+        },
+        "normal_sword_13": {
+          "source_line": 373,
+          "values": {
+            "hitType": "12",
+            "hurtType": "13",
+            "handler": "default",
+            "org_knockback_speed": "0",
+            "org_iframes": "0",
+            "org_knockback_duration": "0",
+            "damage_to_org": "0",
+            "org_confused_time": "0",
+            "tgt_knockback_speed": "256",
+            "tgt_iframes": "12",
+            "tgt_knockback_duration": "0",
+            "damage_to_tgt": "2",
+            "tgt_confused_time": "0",
+            "flags": "0"
+          }
+        }
+      }
+    },
+    {
+      "name": "WIZZROBE_ICE",
+      "form": 0,
+      "legacy_tier": "5",
+      "roles": [
+        "RANGED",
+        "FAST"
+      ],
+      "legacy_gfx_cost": 5,
+      "legacy_required_item": "0",
+      "legacy_theme": "ICE",
+      "roster_array": "sQuickStartLevel5",
+      "roster_line": 9534,
+      "stats_csv_line": 106,
+      "initial_reference_stats": {
+        "id": 41,
+        "name": "WIZZROBE_ICE",
+        "form": 0,
+        "health": 8,
+        "speed_q8_8": 192,
+        "speed_px_per_frame": 0.75,
+        "damage_type": 6,
+        "collision_mask": 139,
+        "hitbox": "gHitbox_0",
+        "hb_off_x": 0,
+        "hb_off_y": -3,
+        "hb_half_w": 6,
+        "hb_half_h": 6,
+        "sheet": "fixed",
+        "gfx": "0x00d9",
+        "swap_slots": "",
+        "sprite": "SPRITE_WIZZROBEICE",
+        "draw_prio_collide_draw_shadow": "0/0/0/1"
+      },
+      "shared_base_definition": false,
+      "initial_state_matrix_cells": {
+        "player_body_0": {
+          "source_line": 166,
+          "values": {
+            "hitType": "6",
+            "hurtType": "0",
+            "handler": "default",
+            "org_knockback_speed": "384",
+            "org_iframes": "30",
+            "org_knockback_duration": "8",
+            "damage_to_org": "2",
+            "org_confused_time": "0",
+            "tgt_knockback_speed": "256",
+            "tgt_iframes": "-1",
+            "tgt_knockback_duration": "0",
+            "damage_to_tgt": "0",
+            "tgt_confused_time": "0",
+            "flags": "0"
+          }
+        },
+        "normal_sword_13": {
+          "source_line": 179,
+          "values": {
+            "hitType": "6",
+            "hurtType": "13",
+            "handler": "default",
+            "org_knockback_speed": "0",
+            "org_iframes": "0",
+            "org_knockback_duration": "0",
+            "damage_to_org": "0",
+            "org_confused_time": "0",
+            "tgt_knockback_speed": "256",
+            "tgt_iframes": "12",
+            "tgt_knockback_duration": "0",
+            "damage_to_tgt": "2",
+            "tgt_confused_time": "0",
+            "flags": "0"
+          }
+        }
+      }
+    },
+    {
+      "name": "WIZZROBE_WIND",
+      "form": 0,
+      "legacy_tier": "5",
+      "roles": [
+        "RANGED",
+        "FAST"
+      ],
+      "legacy_gfx_cost": 3,
+      "legacy_required_item": "0",
+      "legacy_theme": null,
+      "roster_array": "sQuickStartLevel5",
+      "roster_line": 9535,
+      "stats_csv_line": 102,
+      "initial_reference_stats": {
+        "id": 39,
+        "name": "WIZZROBE_WIND",
+        "form": 0,
+        "health": 8,
+        "speed_q8_8": 192,
+        "speed_px_per_frame": 0.75,
+        "damage_type": 12,
+        "collision_mask": 139,
+        "hitbox": "gHitbox_0",
+        "hb_off_x": 0,
+        "hb_off_y": -3,
+        "hb_half_w": 6,
+        "hb_half_h": 6,
+        "sheet": "fixed",
+        "gfx": "0x00d7",
+        "swap_slots": "",
+        "sprite": "SPRITE_WIZZROBEWIND",
+        "draw_prio_collide_draw_shadow": "0/0/0/1"
+      },
+      "shared_base_definition": false,
+      "initial_state_matrix_cells": {
+        "player_body_0": {
+          "source_line": 360,
+          "values": {
+            "hitType": "12",
+            "hurtType": "0",
+            "handler": "default",
+            "org_knockback_speed": "384",
+            "org_iframes": "30",
+            "org_knockback_duration": "8",
+            "damage_to_org": "2",
+            "org_confused_time": "0",
+            "tgt_knockback_speed": "256",
+            "tgt_iframes": "-1",
+            "tgt_knockback_duration": "0",
+            "damage_to_tgt": "0",
+            "tgt_confused_time": "0",
+            "flags": "0"
+          }
+        },
+        "normal_sword_13": {
+          "source_line": 373,
+          "values": {
+            "hitType": "12",
+            "hurtType": "13",
+            "handler": "default",
+            "org_knockback_speed": "0",
+            "org_iframes": "0",
+            "org_knockback_duration": "0",
+            "damage_to_org": "0",
+            "org_confused_time": "0",
+            "tgt_knockback_speed": "256",
+            "tgt_iframes": "12",
+            "tgt_knockback_duration": "0",
+            "damage_to_tgt": "2",
+            "tgt_confused_time": "0",
+            "flags": "0"
+          }
+        }
+      }
+    },
+    {
+      "name": "TEKTITE_GOLDEN",
+      "form": 0,
+      "legacy_tier": "5",
+      "roles": [
+        "HEAVY",
+        "FAST"
+      ],
+      "legacy_gfx_cost": 1,
+      "legacy_required_item": "0",
+      "legacy_theme": null,
+      "roster_array": "sQuickStartLevel5",
+      "roster_line": 9536,
+      "stats_csv_line": 145,
+      "initial_reference_stats": {
+        "id": 61,
+        "name": "TEKTITE_GOLDEN",
+        "form": 0,
+        "health": 64,
+        "speed_q8_8": 576,
+        "speed_px_per_frame": 2.25,
+        "damage_type": 144,
+        "collision_mask": 139,
+        "hitbox": "gHitbox_0",
+        "hb_off_x": 0,
+        "hb_off_y": -3,
+        "hb_half_w": 6,
+        "hb_half_h": 6,
+        "sheet": "fixed",
+        "gfx": "0x00c7",
+        "swap_slots": "",
+        "sprite": "SPRITE_TEKTITE",
+        "draw_prio_collide_draw_shadow": "1/1/1/1"
+      },
+      "shared_base_definition": false,
+      "initial_state_matrix_cells": {
+        "player_body_0": {
+          "source_line": 4373,
+          "values": {
+            "hitType": "144",
+            "hurtType": "0",
+            "handler": "default",
+            "org_knockback_speed": "384",
+            "org_iframes": "30",
+            "org_knockback_duration": "8",
+            "damage_to_org": "2",
+            "org_confused_time": "0",
+            "tgt_knockback_speed": "256",
+            "tgt_iframes": "-1",
+            "tgt_knockback_duration": "1",
+            "damage_to_tgt": "0",
+            "tgt_confused_time": "0",
+            "flags": "0"
+          }
+        },
+        "normal_sword_13": {
+          "source_line": 4386,
+          "values": {
+            "hitType": "144",
+            "hurtType": "13",
+            "handler": "default",
+            "org_knockback_speed": "384",
+            "org_iframes": "252",
+            "org_knockback_duration": "2",
+            "damage_to_org": "0",
+            "org_confused_time": "0",
+            "tgt_knockback_speed": "384",
+            "tgt_iframes": "12",
+            "tgt_knockback_duration": "4",
+            "damage_to_tgt": "2",
+            "tgt_confused_time": "0",
+            "flags": "0"
+          }
+        }
+      }
+    },
+    {
+      "name": "OCTOROK_GOLDEN",
+      "form": 0,
+      "legacy_tier": "5",
+      "roles": [
+        "HEAVY",
+        "RANGED",
+        "SLOW"
+      ],
+      "legacy_gfx_cost": 3,
+      "legacy_required_item": "0",
+      "legacy_theme": null,
+      "roster_array": "sQuickStartLevel5",
+      "roster_line": 9537,
+      "stats_csv_line": 144,
+      "initial_reference_stats": {
+        "id": 60,
+        "name": "OCTOROK_GOLDEN",
+        "form": 0,
+        "health": 64,
+        "speed_q8_8": 96,
+        "speed_px_per_frame": 0.375,
+        "damage_type": 144,
+        "collision_mask": 139,
+        "hitbox": "gHitbox_0",
+        "hb_off_x": 0,
+        "hb_off_y": -3,
+        "hb_half_w": 6,
+        "hb_half_h": 6,
+        "sheet": "fixed",
+        "gfx": "0x0001",
+        "swap_slots": "",
+        "sprite": "SPRITE_OCTOROK",
+        "draw_prio_collide_draw_shadow": "3/1/1/1"
+      },
+      "shared_base_definition": false,
+      "initial_state_matrix_cells": {
+        "player_body_0": {
+          "source_line": 4373,
+          "values": {
+            "hitType": "144",
+            "hurtType": "0",
+            "handler": "default",
+            "org_knockback_speed": "384",
+            "org_iframes": "30",
+            "org_knockback_duration": "8",
+            "damage_to_org": "2",
+            "org_confused_time": "0",
+            "tgt_knockback_speed": "256",
+            "tgt_iframes": "-1",
+            "tgt_knockback_duration": "1",
+            "damage_to_tgt": "0",
+            "tgt_confused_time": "0",
+            "flags": "0"
+          }
+        },
+        "normal_sword_13": {
+          "source_line": 4386,
+          "values": {
+            "hitType": "144",
+            "hurtType": "13",
+            "handler": "default",
+            "org_knockback_speed": "384",
+            "org_iframes": "252",
+            "org_knockback_duration": "2",
+            "damage_to_org": "0",
+            "org_confused_time": "0",
+            "tgt_knockback_speed": "384",
+            "tgt_iframes": "12",
+            "tgt_knockback_duration": "4",
+            "damage_to_tgt": "2",
+            "tgt_confused_time": "0",
+            "flags": "0"
+          }
+        }
+      }
+    },
+    {
+      "name": "ROPE_GOLDEN",
+      "form": 0,
+      "legacy_tier": "5",
+      "roles": [
+        "HEAVY",
+        "AMBUSH"
+      ],
+      "legacy_gfx_cost": 4,
+      "legacy_required_item": "0",
+      "legacy_theme": null,
+      "roster_array": "sQuickStartLevel5",
+      "roster_line": 9538,
+      "stats_csv_line": 146,
+      "initial_reference_stats": {
+        "id": 62,
+        "name": "ROPE_GOLDEN",
+        "form": 0,
+        "health": 64,
+        "speed_q8_8": 128,
+        "speed_px_per_frame": 0.5,
+        "damage_type": 144,
+        "collision_mask": 139,
+        "hitbox": "gHitbox_0",
+        "hb_off_x": 0,
+        "hb_off_y": -3,
+        "hb_half_w": 6,
+        "hb_half_h": 6,
+        "sheet": "fixed",
+        "gfx": "0x00e0",
+        "swap_slots": "",
+        "sprite": "SPRITE_ROPE",
+        "draw_prio_collide_draw_shadow": "1/1/1/1"
+      },
+      "shared_base_definition": false,
+      "initial_state_matrix_cells": {
+        "player_body_0": {
+          "source_line": 4373,
+          "values": {
+            "hitType": "144",
+            "hurtType": "0",
+            "handler": "default",
+            "org_knockback_speed": "384",
+            "org_iframes": "30",
+            "org_knockback_duration": "8",
+            "damage_to_org": "2",
+            "org_confused_time": "0",
+            "tgt_knockback_speed": "256",
+            "tgt_iframes": "-1",
+            "tgt_knockback_duration": "1",
+            "damage_to_tgt": "0",
+            "tgt_confused_time": "0",
+            "flags": "0"
+          }
+        },
+        "normal_sword_13": {
+          "source_line": 4386,
+          "values": {
+            "hitType": "144",
+            "hurtType": "13",
+            "handler": "default",
+            "org_knockback_speed": "384",
+            "org_iframes": "252",
+            "org_knockback_duration": "2",
+            "damage_to_org": "0",
+            "org_confused_time": "0",
+            "tgt_knockback_speed": "384",
+            "tgt_iframes": "12",
+            "tgt_knockback_duration": "4",
+            "damage_to_tgt": "2",
+            "tgt_confused_time": "0",
+            "flags": "0"
+          }
+        }
+      }
+    },
+    {
+      "name": "ROLLOBITE",
+      "form": 0,
+      "legacy_tier": "5",
+      "roles": [
+        "FAST"
+      ],
+      "legacy_gfx_cost": 6,
+      "legacy_required_item": "0",
+      "legacy_theme": "BUG",
+      "roster_array": "sQuickStartLevel5",
+      "roster_line": 9539,
+      "stats_csv_line": 11,
+      "initial_reference_stats": {
+        "id": 4,
+        "name": "ROLLOBITE",
+        "form": 0,
+        "health": 255,
+        "speed_q8_8": 256,
+        "speed_px_per_frame": 1.0,
+        "damage_type": 34,
+        "collision_mask": 143,
+        "hitbox": "gHitbox_5",
+        "hb_off_x": 0,
+        "hb_off_y": -1,
+        "hb_half_w": 6,
+        "hb_half_h": 5,
+        "sheet": "fixed",
+        "gfx": "0x0008",
+        "swap_slots": "",
+        "sprite": "SPRITE_ROLLOBITE",
+        "draw_prio_collide_draw_shadow": "1/1/1/1"
+      },
+      "shared_base_definition": false,
+      "initial_state_matrix_cells": {
+        "player_body_0": {
+          "source_line": 1004,
+          "values": {
+            "hitType": "34",
+            "hurtType": "0",
+            "handler": "default",
+            "org_knockback_speed": "384",
+            "org_iframes": "30",
+            "org_knockback_duration": "8",
+            "damage_to_org": "2",
+            "org_confused_time": "0",
+            "tgt_knockback_speed": "256",
+            "tgt_iframes": "-1",
+            "tgt_knockback_duration": "1",
+            "damage_to_tgt": "0",
+            "tgt_confused_time": "0",
+            "flags": "0"
+          }
+        },
+        "normal_sword_13": {
+          "source_line": 1017,
+          "values": {
+            "hitType": "34",
+            "hurtType": "13",
+            "handler": "default",
+            "org_knockback_speed": "0",
+            "org_iframes": "0",
+            "org_knockback_duration": "0",
+            "damage_to_org": "0",
+            "org_confused_time": "0",
+            "tgt_knockback_speed": "384",
+            "tgt_iframes": "12",
+            "tgt_knockback_duration": "12",
+            "damage_to_tgt": "1",
+            "tgt_confused_time": "0",
+            "flags": "0"
+          }
+        }
+      }
+    },
+    {
+      "name": "WISP",
+      "form": 0,
+      "legacy_tier": "5",
+      "roles": [
+        "FLYER"
+      ],
+      "legacy_gfx_cost": 3,
+      "legacy_required_item": "0",
+      "legacy_theme": "UNDEAD",
+      "roster_array": "sQuickStartLevel5",
+      "roster_line": 9540,
+      "stats_csv_line": 121,
+      "initial_reference_stats": {
+        "id": 52,
+        "name": "WISP",
+        "form": 0,
+        "health": 255,
+        "speed_q8_8": 128,
+        "speed_px_per_frame": 0.5,
+        "damage_type": 9,
+        "collision_mask": 15,
+        "hitbox": "gHitbox_1",
+        "hb_off_x": 0,
+        "hb_off_y": 0,
+        "hb_half_w": 6,
+        "hb_half_h": 6,
+        "sheet": "fixed",
+        "gfx": "0x00fe",
+        "swap_slots": "",
+        "sprite": "SPRITE_WISP",
+        "draw_prio_collide_draw_shadow": "1/1/1/1"
+      },
+      "shared_base_definition": false,
+      "initial_state_matrix_cells": {
+        "player_body_0": {
+          "source_line": 264,
+          "values": {
+            "hitType": "9",
+            "hurtType": "0",
+            "handler": "14",
+            "org_knockback_speed": "",
+            "org_iframes": "",
+            "org_knockback_duration": "",
+            "damage_to_org": "",
+            "org_confused_time": "",
+            "tgt_knockback_speed": "",
+            "tgt_iframes": "",
+            "tgt_knockback_duration": "",
+            "damage_to_tgt": "",
+            "tgt_confused_time": "",
+            "flags": ""
+          }
+        },
+        "normal_sword_13": {
+          "source_line": 277,
+          "values": {
+            "hitType": "9",
+            "hurtType": "13",
+            "handler": "1",
+            "org_knockback_speed": "",
+            "org_iframes": "",
+            "org_knockback_duration": "",
+            "damage_to_org": "",
+            "org_confused_time": "",
+            "tgt_knockback_speed": "",
+            "tgt_iframes": "",
+            "tgt_knockback_duration": "",
+            "damage_to_tgt": "",
+            "tgt_confused_time": "",
+            "flags": ""
+          }
+        }
+      }
+    },
+    {
+      "name": "WISP",
+      "form": 1,
+      "legacy_tier": "5",
+      "roles": [
+        "FLYER",
+        "FAST"
+      ],
+      "legacy_gfx_cost": 3,
+      "legacy_required_item": "0",
+      "legacy_theme": "UNDEAD",
+      "roster_array": "sQuickStartLevel5",
+      "roster_line": 9541,
+      "stats_csv_line": 122,
+      "initial_reference_stats": {
+        "id": 52,
+        "name": "WISP",
+        "form": 1,
+        "health": 255,
+        "speed_q8_8": 384,
+        "speed_px_per_frame": 1.5,
+        "damage_type": 9,
+        "collision_mask": 15,
+        "hitbox": "gHitbox_1",
+        "hb_off_x": 0,
+        "hb_off_y": 0,
+        "hb_half_w": 6,
+        "hb_half_h": 6,
+        "sheet": "fixed",
+        "gfx": "0x00fe",
+        "swap_slots": "",
+        "sprite": "SPRITE_WISP",
+        "draw_prio_collide_draw_shadow": "1/1/1/1"
+      },
+      "shared_base_definition": false,
+      "initial_state_matrix_cells": {
+        "player_body_0": {
+          "source_line": 264,
+          "values": {
+            "hitType": "9",
+            "hurtType": "0",
+            "handler": "14",
+            "org_knockback_speed": "",
+            "org_iframes": "",
+            "org_knockback_duration": "",
+            "damage_to_org": "",
+            "org_confused_time": "",
+            "tgt_knockback_speed": "",
+            "tgt_iframes": "",
+            "tgt_knockback_duration": "",
+            "damage_to_tgt": "",
+            "tgt_confused_time": "",
+            "flags": ""
+          }
+        },
+        "normal_sword_13": {
+          "source_line": 277,
+          "values": {
+            "hitType": "9",
+            "hurtType": "13",
+            "handler": "1",
+            "org_knockback_speed": "",
+            "org_iframes": "",
+            "org_knockback_duration": "",
+            "damage_to_org": "",
+            "org_confused_time": "",
+            "tgt_knockback_speed": "",
+            "tgt_iframes": "",
+            "tgt_knockback_duration": "",
+            "damage_to_tgt": "",
+            "tgt_confused_time": "",
+            "flags": ""
+          }
+        }
+      }
+    },
+    {
+      "name": "SPARK",
+      "form": 0,
+      "legacy_tier": "5",
+      "roles": [
+        "FAST"
+      ],
+      "legacy_gfx_cost": 1,
+      "legacy_required_item": "ITEM_BOOMERANG",
+      "legacy_theme": null,
+      "roster_array": "sQuickStartLevel5",
+      "roster_line": 9545,
+      "stats_csv_line": 80,
+      "initial_reference_stats": {
+        "id": 28,
+        "name": "SPARK",
+        "form": 0,
+        "health": 255,
+        "speed_q8_8": 256,
+        "speed_px_per_frame": 1.0,
+        "damage_type": 72,
+        "collision_mask": 139,
+        "hitbox": "gHitbox_17",
+        "hb_off_x": 0,
+        "hb_off_y": 1,
+        "hb_half_w": 6,
+        "hb_half_h": 6,
+        "sheet": "fixed",
+        "gfx": "0x008d",
+        "swap_slots": "",
+        "sprite": "SPRITE_SPARK",
+        "draw_prio_collide_draw_shadow": "0/1/1/1"
+      },
+      "shared_base_definition": false,
+      "initial_state_matrix_cells": {
+        "player_body_0": {
+          "source_line": 2201,
+          "values": {
+            "hitType": "72",
+            "hurtType": "0",
+            "handler": "9",
+            "org_knockback_speed": "",
+            "org_iframes": "",
+            "org_knockback_duration": "",
+            "damage_to_org": "",
+            "org_confused_time": "",
+            "tgt_knockback_speed": "",
+            "tgt_iframes": "",
+            "tgt_knockback_duration": "",
+            "damage_to_tgt": "",
+            "tgt_confused_time": "",
+            "flags": ""
+          }
+        },
+        "normal_sword_13": {
+          "source_line": 2214,
+          "values": {
+            "hitType": "72",
+            "hurtType": "13",
+            "handler": "9",
+            "org_knockback_speed": "",
+            "org_iframes": "",
+            "org_knockback_duration": "",
+            "damage_to_org": "",
+            "org_confused_time": "",
+            "tgt_knockback_speed": "",
+            "tgt_iframes": "",
+            "tgt_knockback_duration": "",
+            "damage_to_tgt": "",
+            "tgt_confused_time": "",
+            "flags": ""
+          }
+        }
+      }
+    },
+    {
+      "name": "LAKITU",
+      "form": 0,
+      "legacy_tier": "5",
+      "roles": [
+        "RANGED",
+        "FLYER"
+      ],
+      "legacy_gfx_cost": 1,
+      "legacy_required_item": "ITEM_PACCI_CANE",
+      "legacy_theme": null,
+      "roster_array": "sQuickStartLevel5",
+      "roster_line": 9546,
+      "stats_csv_line": 162,
+      "initial_reference_stats": {
+        "id": 71,
+        "name": "LAKITU",
+        "form": 0,
+        "health": 6,
+        "speed_q8_8": 128,
+        "speed_px_per_frame": 0.5,
+        "damage_type": 67,
+        "collision_mask": 143,
+        "hitbox": "gHitbox_0",
+        "hb_off_x": 0,
+        "hb_off_y": -3,
+        "hb_half_w": 6,
+        "hb_half_h": 6,
+        "sheet": "swap",
+        "gfx": "0x4010",
+        "swap_slots": "1",
+        "sprite": "SPRITE_LAKITU",
+        "draw_prio_collide_draw_shadow": "0/1/0/1"
+      },
+      "shared_base_definition": false,
+      "initial_state_matrix_cells": {
+        "player_body_0": {
+          "source_line": 2041,
+          "values": {
+            "hitType": "67",
+            "hurtType": "0",
+            "handler": "default",
+            "org_knockback_speed": "384",
+            "org_iframes": "248",
+            "org_knockback_duration": "6",
+            "damage_to_org": "0",
+            "org_confused_time": "0",
+            "tgt_knockback_speed": "384",
+            "tgt_iframes": "-8",
+            "tgt_knockback_duration": "0",
+            "damage_to_tgt": "0",
+            "tgt_confused_time": "0",
+            "flags": "0"
+          }
+        },
+        "normal_sword_13": {
+          "source_line": 2054,
+          "values": {
+            "hitType": "67",
+            "hurtType": "13",
+            "handler": "default",
+            "org_knockback_speed": "0",
+            "org_iframes": "0",
+            "org_knockback_duration": "0",
+            "damage_to_org": "0",
+            "org_confused_time": "0",
+            "tgt_knockback_speed": "384",
+            "tgt_iframes": "-8",
+            "tgt_knockback_duration": "0",
+            "damage_to_tgt": "0",
+            "tgt_confused_time": "0",
+            "flags": "0"
+          }
+        }
+      }
+    },
+    {
+      "name": "DARK_NUT",
+      "form": 0,
+      "legacy_tier": "Elite",
+      "roles": [
+        "HEAVY",
+        "SLOW"
+      ],
+      "legacy_gfx_cost": 2,
+      "legacy_required_item": "0",
+      "legacy_theme": null,
+      "roster_array": "sQuickStartElites",
+      "roster_line": 9564,
+      "stats_csv_line": 12,
+      "initial_reference_stats": {
+        "id": 5,
+        "name": "DARK_NUT",
+        "form": 0,
+        "health": 12,
+        "speed_q8_8": 96,
+        "speed_px_per_frame": 0.375,
+        "damage_type": 86,
+        "collision_mask": 139,
+        "hitbox": "gUnk_080FD1B4",
+        "hb_off_x": 0,
+        "hb_off_y": -4,
+        "hb_half_w": 8,
+        "hb_half_h": 10,
+        "sheet": "swap",
+        "gfx": "0x4020",
+        "swap_slots": "2",
+        "sprite": "SPRITE_DARKNUT_0",
+        "draw_prio_collide_draw_shadow": "1/1/1/2"
+      },
+      "shared_base_definition": false,
+      "initial_state_matrix_cells": {
+        "player_body_0": {
+          "source_line": 2606,
+          "values": {
+            "hitType": "86",
+            "hurtType": "0",
+            "handler": "16",
+            "org_knockback_speed": "",
+            "org_iframes": "",
+            "org_knockback_duration": "",
+            "damage_to_org": "",
+            "org_confused_time": "",
+            "tgt_knockback_speed": "",
+            "tgt_iframes": "",
+            "tgt_knockback_duration": "",
+            "damage_to_tgt": "",
+            "tgt_confused_time": "",
+            "flags": ""
+          }
+        },
+        "normal_sword_13": {
+          "source_line": 2619,
+          "values": {
+            "hitType": "86",
+            "hurtType": "13",
+            "handler": "13",
+            "org_knockback_speed": "",
+            "org_iframes": "",
+            "org_knockback_duration": "",
+            "damage_to_org": "",
+            "org_confused_time": "",
+            "tgt_knockback_speed": "",
+            "tgt_iframes": "",
+            "tgt_knockback_duration": "",
+            "damage_to_tgt": "",
+            "tgt_confused_time": "",
+            "flags": ""
+          }
+        }
+      }
+    },
+    {
+      "name": "DARK_NUT",
+      "form": 1,
+      "legacy_tier": "Elite",
+      "roles": [
+        "HEAVY",
+        "SLOW"
+      ],
+      "legacy_gfx_cost": 2,
+      "legacy_required_item": "0",
+      "legacy_theme": null,
+      "roster_array": "sQuickStartElites",
+      "roster_line": 9565,
+      "stats_csv_line": 13,
+      "initial_reference_stats": {
+        "id": 5,
+        "name": "DARK_NUT",
+        "form": 1,
+        "health": 12,
+        "speed_q8_8": 96,
+        "speed_px_per_frame": 0.375,
+        "damage_type": 86,
+        "collision_mask": 139,
+        "hitbox": "gUnk_080FD1B4",
+        "hb_off_x": 0,
+        "hb_off_y": -4,
+        "hb_half_w": 8,
+        "hb_half_h": 10,
+        "sheet": "swap",
+        "gfx": "0x4020",
+        "swap_slots": "2",
+        "sprite": "SPRITE_DARKNUT_0",
+        "draw_prio_collide_draw_shadow": "1/1/1/2"
+      },
+      "shared_base_definition": false,
+      "initial_state_matrix_cells": {
+        "player_body_0": {
+          "source_line": 2606,
+          "values": {
+            "hitType": "86",
+            "hurtType": "0",
+            "handler": "16",
+            "org_knockback_speed": "",
+            "org_iframes": "",
+            "org_knockback_duration": "",
+            "damage_to_org": "",
+            "org_confused_time": "",
+            "tgt_knockback_speed": "",
+            "tgt_iframes": "",
+            "tgt_knockback_duration": "",
+            "damage_to_tgt": "",
+            "tgt_confused_time": "",
+            "flags": ""
+          }
+        },
+        "normal_sword_13": {
+          "source_line": 2619,
+          "values": {
+            "hitType": "86",
+            "hurtType": "13",
+            "handler": "13",
+            "org_knockback_speed": "",
+            "org_iframes": "",
+            "org_knockback_duration": "",
+            "damage_to_org": "",
+            "org_confused_time": "",
+            "tgt_knockback_speed": "",
+            "tgt_iframes": "",
+            "tgt_knockback_duration": "",
+            "damage_to_tgt": "",
+            "tgt_confused_time": "",
+            "flags": ""
+          }
+        }
+      }
+    },
+    {
+      "name": "DARK_NUT",
+      "form": 2,
+      "legacy_tier": "Elite",
+      "roles": [
+        "HEAVY",
+        "SLOW"
+      ],
+      "legacy_gfx_cost": 2,
+      "legacy_required_item": "0",
+      "legacy_theme": null,
+      "roster_array": "sQuickStartElites",
+      "roster_line": 9566,
+      "stats_csv_line": 14,
+      "initial_reference_stats": {
+        "id": 5,
+        "name": "DARK_NUT",
+        "form": 2,
+        "health": 20,
+        "speed_q8_8": 96,
+        "speed_px_per_frame": 0.375,
+        "damage_type": 86,
+        "collision_mask": 139,
+        "hitbox": "gUnk_080FD1B4",
+        "hb_off_x": 0,
+        "hb_off_y": -4,
+        "hb_half_w": 8,
+        "hb_half_h": 10,
+        "sheet": "swap",
+        "gfx": "0x4020",
+        "swap_slots": "2",
+        "sprite": "SPRITE_DARKNUT_0",
+        "draw_prio_collide_draw_shadow": "1/1/1/2"
+      },
+      "shared_base_definition": false,
+      "initial_state_matrix_cells": {
+        "player_body_0": {
+          "source_line": 2606,
+          "values": {
+            "hitType": "86",
+            "hurtType": "0",
+            "handler": "16",
+            "org_knockback_speed": "",
+            "org_iframes": "",
+            "org_knockback_duration": "",
+            "damage_to_org": "",
+            "org_confused_time": "",
+            "tgt_knockback_speed": "",
+            "tgt_iframes": "",
+            "tgt_knockback_duration": "",
+            "damage_to_tgt": "",
+            "tgt_confused_time": "",
+            "flags": ""
+          }
+        },
+        "normal_sword_13": {
+          "source_line": 2619,
+          "values": {
+            "hitType": "86",
+            "hurtType": "13",
+            "handler": "13",
+            "org_knockback_speed": "",
+            "org_iframes": "",
+            "org_knockback_duration": "",
+            "damage_to_org": "",
+            "org_confused_time": "",
+            "tgt_knockback_speed": "",
+            "tgt_iframes": "",
+            "tgt_knockback_duration": "",
+            "damage_to_tgt": "",
+            "tgt_confused_time": "",
+            "flags": ""
+          }
+        }
+      }
+    },
+    {
+      "name": "DARK_NUT",
+      "form": 3,
+      "legacy_tier": "Elite",
+      "roles": [
+        "HEAVY",
+        "SLOW"
+      ],
+      "legacy_gfx_cost": 2,
+      "legacy_required_item": "0",
+      "legacy_theme": null,
+      "roster_array": "sQuickStartElites",
+      "roster_line": 9567,
+      "stats_csv_line": 15,
+      "initial_reference_stats": {
+        "id": 5,
+        "name": "DARK_NUT",
+        "form": 3,
+        "health": 26,
+        "speed_q8_8": 96,
+        "speed_px_per_frame": 0.375,
+        "damage_type": 86,
+        "collision_mask": 139,
+        "hitbox": "gUnk_080FD1B4",
+        "hb_off_x": 0,
+        "hb_off_y": -4,
+        "hb_half_w": 8,
+        "hb_half_h": 10,
+        "sheet": "swap",
+        "gfx": "0x4020",
+        "swap_slots": "2",
+        "sprite": "SPRITE_DARKNUT_0",
+        "draw_prio_collide_draw_shadow": "1/1/1/2"
+      },
+      "shared_base_definition": false,
+      "initial_state_matrix_cells": {
+        "player_body_0": {
+          "source_line": 2606,
+          "values": {
+            "hitType": "86",
+            "hurtType": "0",
+            "handler": "16",
+            "org_knockback_speed": "",
+            "org_iframes": "",
+            "org_knockback_duration": "",
+            "damage_to_org": "",
+            "org_confused_time": "",
+            "tgt_knockback_speed": "",
+            "tgt_iframes": "",
+            "tgt_knockback_duration": "",
+            "damage_to_tgt": "",
+            "tgt_confused_time": "",
+            "flags": ""
+          }
+        },
+        "normal_sword_13": {
+          "source_line": 2619,
+          "values": {
+            "hitType": "86",
+            "hurtType": "13",
+            "handler": "13",
+            "org_knockback_speed": "",
+            "org_iframes": "",
+            "org_knockback_duration": "",
+            "damage_to_org": "",
+            "org_confused_time": "",
+            "tgt_knockback_speed": "",
+            "tgt_iframes": "",
+            "tgt_knockback_duration": "",
+            "damage_to_tgt": "",
+            "tgt_confused_time": "",
+            "flags": ""
+          }
+        }
+      }
+    },
+    {
+      "name": "BALL_CHAIN_SOLIDER",
+      "form": 0,
+      "legacy_tier": "Elite",
+      "roles": [
+        "HEAVY"
+      ],
+      "legacy_gfx_cost": 1,
+      "legacy_required_item": "0",
+      "legacy_theme": null,
+      "roster_array": "sQuickStartElites",
+      "roster_line": 9568,
+      "stats_csv_line": 170,
+      "initial_reference_stats": {
+        "id": 76,
+        "name": "BALL_CHAIN_SOLIDER",
+        "form": 0,
+        "health": 16,
+        "speed_q8_8": 128,
+        "speed_px_per_frame": 0.5,
+        "damage_type": 163,
+        "collision_mask": 139,
+        "hitbox": "gHitbox_0",
+        "hb_off_x": 0,
+        "hb_off_y": -3,
+        "hb_half_w": 6,
+        "hb_half_h": 6,
+        "sheet": "swap",
+        "gfx": "0x4010",
+        "swap_slots": "1",
+        "sprite": "SPRITE_BALLCHAINSOLDIER",
+        "draw_prio_collide_draw_shadow": "1/0/0/1"
+      },
+      "shared_base_definition": false,
+      "initial_state_matrix_cells": {
+        "player_body_0": {
+          "source_line": 4946,
+          "values": {
+            "hitType": "163",
+            "hurtType": "0",
+            "handler": "default",
+            "org_knockback_speed": "384",
+            "org_iframes": "30",
+            "org_knockback_duration": "8",
+            "damage_to_org": "2",
+            "org_confused_time": "0",
+            "tgt_knockback_speed": "256",
+            "tgt_iframes": "-1",
+            "tgt_knockback_duration": "1",
+            "damage_to_tgt": "0",
+            "tgt_confused_time": "0",
+            "flags": "0"
+          }
+        },
+        "normal_sword_13": {
+          "source_line": 4959,
+          "values": {
+            "hitType": "163",
+            "hurtType": "13",
+            "handler": "default",
+            "org_knockback_speed": "0",
+            "org_iframes": "0",
+            "org_knockback_duration": "0",
+            "damage_to_org": "0",
+            "org_confused_time": "0",
+            "tgt_knockback_speed": "256",
+            "tgt_iframes": "12",
+            "tgt_knockback_duration": "8",
+            "damage_to_tgt": "2",
+            "tgt_confused_time": "0",
+            "flags": "0"
+          }
+        }
+      }
+    },
+    {
+      "name": "MADDERPILLAR",
+      "form": 0,
+      "legacy_tier": "Elite",
+      "roles": [
+        "HEAVY"
+      ],
+      "legacy_gfx_cost": 5,
+      "legacy_required_item": "0",
+      "legacy_theme": null,
+      "roster_array": "sQuickStartElites",
+      "roster_line": 9577,
+      "stats_csv_line": 67,
+      "initial_reference_stats": {
+        "id": 24,
+        "name": "MADDERPILLAR",
+        "form": 0,
+        "health": 255,
+        "speed_q8_8": 224,
+        "speed_px_per_frame": 0.875,
+        "damage_type": 106,
+        "collision_mask": 139,
+        "hitbox": "gUnk_080FD290",
+        "hb_off_x": 0,
+        "hb_off_y": 0,
+        "hb_half_w": 6,
+        "hb_half_h": 6,
+        "sheet": "swap",
+        "gfx": "0x4010",
+        "swap_slots": "1",
+        "sprite": "SPRITE_MADDERPILLAR_0",
+        "draw_prio_collide_draw_shadow": "0/0/1/1"
+      },
+      "shared_base_definition": false,
+      "initial_state_matrix_cells": {
+        "player_body_0": {
+          "source_line": 3238,
+          "values": {
+            "hitType": "106",
+            "hurtType": "0",
+            "handler": "default",
+            "org_knockback_speed": "384",
+            "org_iframes": "30",
+            "org_knockback_duration": "8",
+            "damage_to_org": "2",
+            "org_confused_time": "0",
+            "tgt_knockback_speed": "0",
+            "tgt_iframes": "0",
+            "tgt_knockback_duration": "0",
+            "damage_to_tgt": "0",
+            "tgt_confused_time": "0",
+            "flags": "0"
+          }
+        },
+        "normal_sword_13": {
+          "source_line": 3251,
+          "values": {
+            "hitType": "106",
+            "hurtType": "13",
+            "handler": "default",
+            "org_knockback_speed": "384",
+            "org_iframes": "244",
+            "org_knockback_duration": "8",
+            "damage_to_org": "0",
+            "org_confused_time": "0",
+            "tgt_knockback_speed": "0",
+            "tgt_iframes": "-12",
+            "tgt_knockback_duration": "0",
+            "damage_to_tgt": "0",
+            "tgt_confused_time": "0",
+            "flags": "0"
+          }
+        }
+      }
+    }
+  ]
+}
