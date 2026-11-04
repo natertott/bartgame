@@ -6,6 +6,7 @@ Every frame uses one of reboot_core's literal RGB555 material banks.
 """
 from pathlib import Path
 import json
+import os
 from PIL import Image, ImageDraw
 import reboot_core as R
 
@@ -365,6 +366,10 @@ def held_palette(kind):return 'gear'
 
 def build_sheets(contracts):
     source={s['name']:s for s in contracts['sheets']};out={}
+    gilt_hud = int(os.environ.get('BART_HUD','1'))
+    assert gilt_hud in (0,1), ('BART_HUD must be 0..1',gilt_hud)
+    if gilt_hud:
+        import hud_gilt_items as gilt_items
     def emit(name,w,h,frames,mats,default=None,exact=False):
         expected=source[name]['frames'] if name in source else source['icon32']['frames']
         assert list(frames)==expected,(name,list(frames),expected)
@@ -376,9 +381,10 @@ def build_sheets(contracts):
     for name in ('items','pick32','icon32'):
         frames={};mats={}
         for f in source[name]['frames']:
-            frames[f]=large(f) if name=='icon32' else small(f);mats[f]=material(f)
+            frames[f]=(gilt_items.menu(f) if name=='icon32' else gilt_items.world(f)) if gilt_hud else (large(f) if name=='icon32' else small(f))
+            mats[f]=material(f)
         emit(name,32 if name=='icon32' else 16,32 if name=='icon32' else 16,frames,mats,source[name]['pal'],name=='icon32')
-    frames={f:small(f) for f in source['icon32']['frames']};mats={f:material(f) for f in frames}
+    frames={f:gilt_items.hud(f) if gilt_hud else small(f) for f in source['icon32']['frames']};mats={f:material(f) for f in frames}
     emit('huditems',16,16,frames,mats,'gear')
     emit('shield',16,16,{f:shield(f.split('_')[-1],f.startswith('upgraded')) for f in source['shield']['frames']},{f:'gold' for f in source['shield']['frames']},'gear')
     blade=small('sword')

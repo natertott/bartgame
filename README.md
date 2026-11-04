@@ -9,6 +9,8 @@ The standalone build uses original native artwork and needs no commercial ROM.
 Latest forest: [composed brooks, ponds, trails and woodland details,
 with matched actual mGBA rooms](art-review/forest-room-cohesion/README.md).
 
+Latest HUD: [larger native items and buttons, gold shimmer, and blinking minimap](art-review/hud-gilt/README.md).
+
 The upstream Minish Cap decompilation documentation is preserved below.
 
 ---

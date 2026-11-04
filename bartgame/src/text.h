@@ -1,5 +1,6 @@
 #ifndef TEXT_H
 #define TEXT_H
+#include "assets.h" /* selected native HUD geometry */
 #ifndef HUD_HEIGHT_PIXELS
 #define HUD_HEIGHT_PIXELS 12
 #endif
@@ -53,9 +54,10 @@ void shop_close(void);
 int shop_result(void); /* -2 open, -1 left, else the choice */
 bool8 shop_active(void);
 
-/* Hearts, gilt, equipped items and relevant ammunition fit within twelve
-   painted top rows. A native16x16 minimap occupies the lower-right corner.
-   Item pictograms go first in OAM; the pause menu retains the detailed map. */
+/* Hearts/gilt use twelve top rows; selected gilt item pods use twenty.
+   The open center remains transparent. The native minimap has20px of room
+   pitch in a24px frame (legacy HUD0 keeps16px). HUD OAM precedes the world;
+   the pause menu retains the detailed map. */
 void hud_draw(void);
 void minimap_render(void);
 

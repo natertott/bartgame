@@ -775,12 +775,15 @@ h.append('#define WISP_X %d /* body-relative flame/wisp anchor */' % (23 if SC.V
 h.append('#define WISP_Y %d' % (1 if SC.VARIANT else sw_folk.WISP_AT[1]))
 h.append('#define BART_SEWER_VARIANT %d' % SC.VARIANT)
 h.append('#define BART_UI_VARIANT %d' % UI_STUDIES.VARIANT)
+HUD_VARIANT = int(os.environ.get('BART_HUD', '0'))
+assert HUD_VARIANT in (0, 1), 'BART_HUD must be0..1'
+h.append('#define BART_HUD_VARIANT %d' % HUD_VARIANT)
 h.append('#define BART_ENEMY_VARIANT %d' % sprites.ENEMY_VARIANT)
 h.append('#define BART_FOREST_VARIANT %d' % FOREST_CONCEPTS.VARIANT)
 MENU_VARIANT = int(os.environ.get('BART_MENU', '0'))
 assert 0 <= MENU_VARIANT <= 10, 'BART_MENU must be0..10'
 h.append('#define BART_MENU_VARIANT %d' % MENU_VARIANT)
-h.append('#define HUD_HEIGHT_PIXELS 12 /* compact shared HUD, no full-width slab */')
+h.append('#define HUD_HEIGHT_PIXELS %d /* local pods; center stays open */' % (20 if HUD_VARIANT else 12))
 # the Peddler's business: steps of (body frame, head frame, frames held),
 # each act ended by a 0 hold
 frame_of = {sh['name']: {f: i for i, f in enumerate(sh['frames'])} for sh in sprites.SHEETS}
@@ -970,6 +973,16 @@ if SC.VARIANT:
 coverage['ui_study'] = {'variant': UI_STUDIES.VARIANT,
                         'name': UI_STUDIES.STYLE_NAMES.get(UI_STUDIES.VARIANT, 'Compact baseline'),
                         'hud_fields': ['equipped items', 'hearts', 'gilt']}
+coverage['hud_refresh'] = {
+    'variant': HUD_VARIANT,
+    'name': 'Gleaming gilt' if HUD_VARIANT else 'Historical compact HUD',
+    'native_item_canvas': [16, 16],
+    'item_art': 'Native HUD/menu/world family redraw' if HUD_VARIANT else 'Historical selected art',
+    'map_grid_pixels': [20, 20] if HUD_VARIANT else [15, 15],
+    'map_frame_pixels': [24, 24] if HUD_VARIANT else [16, 16],
+    'fields': ['equipped items', 'A/B/L buttons', 'hearts', 'gilt', 'conditional ammunition', 'minimap'],
+    'feedback': 'Physical A/B/L button illumination, current-room blink, local gold glints' if HUD_VARIANT else 'Static',
+}
 coverage['forest_concept'] = {
     'variant': FOREST_CONCEPTS.VARIANT,
     'name': FOREST_CONCEPTS.NAMES[FOREST_CONCEPTS.VARIANT],

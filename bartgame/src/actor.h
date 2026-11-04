@@ -65,7 +65,8 @@ typedef struct Actor {
 #define ACTOR_MAX 96
 /* above the sheets: the icons of what the buttons hold (32x32 each) and
    the counts over them (16x16 each), the UI's marks, the speaker's face
-   (a 64x64 sprite, its art 48 square), the HUD's mini-map in the last 16 */
+   (a 64x64 sprite, its art 48 square), the HUD's native32x32 mini-map
+   in the last16 hardware tiles (legacy HUD0 uses its first four) */
 #define OBJ_TILE_HUD_ICONS 876
 #define OBJ_TILE_HUD_COUNTS 924
 #define OBJ_TILE_UI 936

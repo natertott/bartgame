@@ -79,11 +79,13 @@ if FOREST_CONCEPTS.VARIANT >= 6:
     FOREST_LANDMARK_SHEET = {'name':'forestlandmark','w':16,'h':32,'pal':banks['relic'],
                             'frames':frames,'frame_pal':banks}
 
-# Compact HUD pictograms are separately authored at their ten-pixel ink size;
-# menu and world item drawings keep their established images and palettes.
+# HUD0 preserves the historical ten-pixel drawings; HUD1 uses the separately
+# authored native15–16px paintings installed by reboot_items above.
 import ui_studies as UI_STUDIES
+HUD_VARIANT=int(os.environ.get('BART_HUD','1'))
+assert HUD_VARIANT in (0,1), ('BART_HUD must be0..1',HUD_VARIANT)
 for sheet in SHEETS:
-    if sheet['name'] == 'huditems':
+    if sheet['name'] == 'huditems' and not HUD_VARIANT:
         for frame in sheet['frames']:
             image = UI_STUDIES.hud_icon(frame)
             assert image.mode == 'P' and image.size == (16, 16), frame
@@ -93,8 +95,15 @@ for sheet in SHEETS:
                 for y in range(16)]
 for row in COVERAGE:
     if row['sheet'] == 'huditems':
-        row['owner'] = 'ui_studies'
+        row['owner'] = 'hud_gilt_items' if HUD_VARIANT else 'ui_studies'
+        row['hud_variant'] = HUD_VARIANT
         row['ui_study'] = UI_STUDIES.VARIANT
+
+if HUD_VARIANT:
+    for row in COVERAGE:
+        if row['sheet'] in ('items','pick32','icon32','huditems'):
+            row['owner']='hud_gilt_items'
+            row['hud_variant']=HUD_VARIANT
 
 # Comparison-only Drain keepers use the same streamed canvases and frame IDs.
 if SC.VARIANT:

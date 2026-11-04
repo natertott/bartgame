@@ -36,7 +36,12 @@ ordinary builds use the refined repeated-tree forest (`BART_FOREST=32`).
 The [room-composition review](../art-review/forest-room-cohesion/README.md)
 shows matched generated rooms, native details, movement and water clips, plus
 a playable ROM. The approved twelve tree drawings remain unchanged.
-`BART_FOREST=0..31` retains historical profiles for comparison.
+`BART_FOREST=0..31` retains historical forest profiles for comparison.
+The normal `BART_HUD=1` adds larger native item pictograms, A/B/L press
+feedback and a blinking gold-framed minimap. `BART_HUD=0` reproduces the
+earlier compact HUD and item paintings; use it with historical forest
+profiles when comparing their original ROM bytes. Menu/dialogue appearance
+options remain independent. See the [HUD and item review](../art-review/hud-gilt/README.md).
 The [second forest pass](docs/FOREST_CONCEPTS_V2.md), `BART_FOREST=6..10`,
 explores much stronger purple infection, new characters and props, adjacency
 joins and true foreground canopy/underpass depth. Earlier studies remain

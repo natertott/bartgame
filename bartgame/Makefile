@@ -45,6 +45,15 @@ ifneq ($(BART_UI),$(filter $(BART_UI),0 1 2 3 4 5 6 7 8 9 10))
 $(error BART_UI must be one integer in 0..10)
 endif
 UI_STAMP := $(GEN)/ui-profile-$(BART_UI).stamp
+# Gilt HUD refresh; zero preserves the earlier compact interface/item art.
+BART_HUD ?= 1
+ifneq ($(words $(BART_HUD)),1)
+$(error BART_HUD must be one integer in 0..1)
+endif
+ifneq ($(BART_HUD),$(filter $(BART_HUD),0 1))
+$(error BART_HUD must be one integer in 0..1)
+endif
+HUD_STAMP := $(GEN)/hud-profile-$(BART_HUD).stamp
 # Selected Workbench items with the separately selected Ledger map.
 BART_MENU ?= 1
 ifneq ($(words $(BART_MENU)),1)
@@ -114,7 +123,8 @@ ART       := $(wildcard art/reboot_*.py) art/reboot_contracts.json tools/build_a
              $(wildcard art/enemy_studies*.py) art/enemy_heart.py \
              $(wildcard art/forest_concepts*.py) $(wildcard art/forest_canopy_adaptive*.py) \
              $(wildcard art/forest_canopy_emerald*.py) $(wildcard art/forest_tree_study*.py) \
-             $(wildcard art/forest_trees*.py) $(wildcard art/forest_cohesion*.py)
+             $(wildcard art/forest_trees*.py) $(wildcard art/forest_cohesion*.py) \
+             $(wildcard art/hud_gilt*.py)
 
 OBJS := $(patsubst src/%.c,$(BUILD)/%.o,$(SRC_C)) \
         $(patsubst src/%.c,$(BUILD)/%.o,$(SRC_IWRAM)) \
@@ -157,9 +167,14 @@ $(FOREST_STAMP):
 	@rm -f $(GEN)/forest-profile-*.stamp
 	@printf '%s\n' '$(BART_FOREST)' > $@
 
-$(GEN)/assets.c: $(ART) $(SWING_STAMP) $(SEWER_STAMP) $(UI_STAMP) $(MENU_STAMP) $(ENEMY_STAMP) $(FOREST_STAMP)
+$(HUD_STAMP):
 	@mkdir -p $(GEN)
-	BART_SWING=$(BART_SWING) BART_SEWER=$(BART_SEWER) BART_UI=$(BART_UI) BART_MENU=$(BART_MENU) BART_ENEMY=$(BART_ENEMY) BART_FOREST=$(BART_FOREST) $(PYTHON) tools/build_assets.py $(GEN)
+	@rm -f $(GEN)/hud-profile-*.stamp
+	@printf '%s\n' '$(BART_HUD)' > $@
+
+$(GEN)/assets.c: $(ART) $(SWING_STAMP) $(SEWER_STAMP) $(UI_STAMP) $(HUD_STAMP) $(MENU_STAMP) $(ENEMY_STAMP) $(FOREST_STAMP)
+	@mkdir -p $(GEN)
+	BART_SWING=$(BART_SWING) BART_SEWER=$(BART_SEWER) BART_UI=$(BART_UI) BART_HUD=$(BART_HUD) BART_MENU=$(BART_MENU) BART_ENEMY=$(BART_ENEMY) BART_FOREST=$(BART_FOREST) $(PYTHON) tools/build_assets.py $(GEN)
 
 $(GEN)/assets.h: $(GEN)/assets.c ;
 

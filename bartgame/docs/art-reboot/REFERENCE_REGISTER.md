@@ -292,3 +292,14 @@ separate native material/group source sheets. The
 [capture method](references/FOREST_COHESION_CAPTURE.md) record tested scope,
 placement/lighting changes, pixel fidelity and remaining native-grid limits.
 No new external article or game measurement is claimed by this refinement.
+
+## Gleaming HUD/item pass — 2026-11-04
+
+This pass applies the user's larger/high-contrast HUD request and the existing
+read tutorial principles (G01–G18), together with the pinned implementation
+observations in [GBA menu research](references/GBA_MENU_RESEARCH.md). These
+notes were reread for stable information locations, adjacent equipment
+assignments, conditional counts and separate player/exploration markers. No
+new external study, commercial ROM run or imported commercial art is claimed.
+The [direction log](ART_DIRECTION_LOG.md) records scope, status and eventual
+native emulator evidence.

@@ -1489,3 +1489,80 @@ retired from32 generation. Remaining minor limits: native16px orthogonality
 in some pond/path contours, restrained deep-floor detail and repeated tree
 texture. The eight visually reviewed rooms are finite examples, not a claim
 that every generated room was viewed or aesthetically perfected.
+
+## Gleaming HUD and coherent item identities — 2026-11-04
+
+**Status: adopted brief; implementation and native review in progress.** The
+user requests larger equipped-item pictograms and button labels, an
+approximately25% larger minimap, gold shimmering borders, current-room
+blinking, and physical A/B/L press illumination. This supersedes the previous
+12px limit only at the three equipped pods. Hearts/gilt stay compact and the
+center remains open. Menu/dialogue skin selection is preserved.
+
+**Direction:** independently author16px HUD and32px menu/item families with
+consistent identity, strong hue-dark silhouettes and grouped upper-left
+metal highlights. World drops retain their8–14px scale rather than inheriting
+the larger HUD drawing. Refresh item silhouettes without altering Bloom's
+held-action animation, sword hitbox/timing, enemy art or region paintings.
+Gold frames use dark isolation, a warm bevel and restrained traveling glints;
+button feedback and the current-room pulse keep distinct meanings.
+
+**Basis:** the direct user brief, the previously read six tutorial PDFs
+(G01–G18), and the pinned GBA-menu source observations in
+[the research notes](references/GBA_MENU_RESEARCH.md). Stable reading locations,
+adjacent assignment badges, relevant counts, truthful exploration and native
+scale are adaptations already recorded there. No new source access or copied
+commercial pixels is claimed.
+
+**Implementation plan:** BART_HUD1 becomes normal; BART_HUD0 retains the
+previous selected interface and item paintings for comparisons. Keep the
+existing item IDs/material banks, map state and save contract. Validate actual
+mGBA HUDs against Drain, healthy/deep forest and dark interiors, exercise the
+physical controls, counter bounds, pause/map/dialogue restoration, and record
+raw native views plus clearly labelled integer inspection images. Final
+evidence and remaining tradeoffs will be appended after review.
+
+**First native critique:** the native Drain/forest/interior screens show clear
+16px items, readable5×7 button labels and separated gold instruments. A source
+review filled the cape's mantle, broadened the blade/bow/glove, clarified the
+leaf-shield charge and connected the menu lantern's handle. Only four item
+presentation/drop families change; shared physical animation/effect sheets,
+material banks and region art remain exact. The freshHUD0 comparison reproduces
+the earlier650,168-byte ROM exactly.
+
+**Motion rejection before qualification:** the first dynamic HUD repainted too
+much on each gold-glint tick. Paired actual mGBA samples showed44 missed
+updates in180 idle frames and36 in144 walking frames, versus zero in the
+matching baseline samples. The attractive stills did not qualify that build.
+Static instrument pixels are being cached and dynamic updates reduced before
+repeating the paired samples. This pilot is private and will not be released.
+
+**Optimized native qualification before source freeze:** static instrument
+pixels now have a small cached base. Gold glints restore only two top
+scanlines; button badges, heart cells and counters update independently. The
+minimap retains packed4bpp pixels and patches only its top rim and current
+3×3 face during animation. Full rebuilds occur for changed room/exploration
+state or instrument capacity/equipment, rather than every glint.
+
+The optimized pilot passes290/290 actual mGBA checks. Its paired180-frame idle
+and144-frame walking samples have zero missed logic updates, matching the
+baseline. An additional paired real-action measurement passes29/29 for each
+build:192 game updates per192 video frames in Drain, forest, blight and cave
+with sword, shield and cape inputs. These are representative controlled
+samples, not a worst-case frame-rate guarantee.
+
+The native review covers all equipment/material variants, zero/byte-maximum
+ammunition, five-digit gilt, ten hearts with half/empty states, ordinary fog,
+current-room-only blinking, button-press isolation and release afterglow,
+menu/map/zoom restoration, named/unnamed dialogue and frog-market returns.
+The larger map pauses during dialogue; mystery interiors now mark their
+actual parent forest room. Final frozen-source captures and independent
+packed/source/budget checks will be linked in the publication.
+
+**Remaining tradeoffs:** the map's room field receives20px of space while its
+dedicated frame makes the complete instrument24px rather than the former16px.
+The slightly wider corner instrument was retained for readable3×3 room faces
+and separated gold trim. Equipment pods reach20px only at the upper right.
+Ground drops stay at most14px; existing item material banks deliberately keep
+blightseed highlights wine/magenta. Menu/dialogue skins and their bindings
+remain independently selectable.

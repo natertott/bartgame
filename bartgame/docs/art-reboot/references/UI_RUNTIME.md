@@ -1,5 +1,11 @@
 # Compact HUD and interface runtime
 
+Historical compact-HUD implementation. The 2026-11-04 equipped-item,
+button-feedback and minimap refinement supersedes its HUD geometry and
+render cache; see [Gilt HUD runtime](HUD_GILT_RUNTIME.md). Select
+`BART_HUD=0` to reproduce this earlier HUD. Menu/dialogue choices remain
+available independently.
+
 Status: final source is ready for the parent freeze. The latest user steering
 explicitly keeps the minimap and requests ammunition counts for equipped
 blightseeds and bow. This supersedes the first pilot's no-map/no-ammo design.

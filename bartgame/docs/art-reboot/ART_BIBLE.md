@@ -127,7 +127,7 @@ choices; they do not override the user's GBA-first constraints.
 | Heart/boss | 32–48 pixels across | A commanding mass with a clear vulnerable part; collision must agree. |
 | Ordinary world pickup | 8–14 pixels | Never use its menu illustration as the world drop. |
 | Important world pickup | Up to 16×16 | Importance comes from silhouette/glint, not a 32-pixel icon. |
-| HUD item | 12–16 within a 16×16 canvas | Its own drawing, not a filtered menu image. |
+| HUD item | About 15–16 within a 16×16 canvas | Its own drawing, not a filtered menu image; world drops keep their smaller category. |
 | Menu/reward illustration | 24–28 within 32×32 | More detail, same silhouette, material and light as the world version. |
 | Chest | About 20×18–20 closed | Wood, reinforced brass and relic variants share one construction. |
 | Plate | 16×16 | Flat, broad footprint with a clear pressed state. |
@@ -387,8 +387,19 @@ The user's selected information hierarchy supersedes the original 24-pixel
 HUD: show equipped items, hearts, gilt and a minimap, plus the current ammunition
 count when blightseeds or the bow are equipped. Use small separated pods with
 minimal local backplates and dark contours, leaving the top-center world
-visible. Aim for a maximum 12-pixel painted height along the top. Keep the small
-minimap in a separate bottom corner so it does not obscure northern content.
+visible. The 2026-11-04 HUD refinement permits a 20-pixel painted height only
+for the three equipped-item pods; hearts and gilt retain their compact top
+band. Keep the center open. Give each equipped item a clearly readable A/B/L
+button medallion and short illumination on physical press, including a held
+button. Frame these local pods with upper-left gold bevels, dark separation
+and sparse moving ivory-gold highlights. Never flash the item silhouette or
+change the meaning of its ammunition count to create feedback.
+Keep the minimap in a separate bottom corner: a native 20-pixel room grid
+inside a 24-pixel gold frame, padded into a hardware-valid 32-pixel OBJ.
+Blink the current room between two distinct visible states; do not blink the
+entire map away or reveal unexplored events. A border glint must leave the
+room cells legible. These are shared HUD rules, separate from the selectable
+menu/dialogue skins.
 Do not show a key count, unrelated ammunition or context-action prompt.
 Non-ammunition equipment uses an icon without an ammunition label.
 Author small icons at their final size rather than clipping large illustrations.
