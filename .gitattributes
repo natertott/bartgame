@@ -32,3 +32,9 @@
 
 # Preserve the exact reviewed performance linker map.
 /performance-review/validation/frozen/bartgame.map -whitespace
+
+# Preserve standard CSV CRLF and exact captured test stdout.
+/performance-review/measurements/cases.csv whitespace=cr-at-eol
+/performance-review/validation/regression/pocket_probe.log -whitespace
+/performance-review/validation/regression/revisit_probe.log -whitespace
+/performance-review/validation/regression/runtime.log -whitespace
