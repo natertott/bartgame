@@ -16,6 +16,7 @@
 ForestTree gForestTrees[FOREST_TREES_MAX] EWRAM_BSS;
 u16 gForestTreeStats[FOREST_TREES_STATS] EWRAM_BSS;
 u16 gForestTreeRoots[32*32] EWRAM_BSS;
+u32 gForestTreeRootRows[32];
 static u16 sUpper[64*64] EWRAM_BSS;
 static u16 sLower[64*64] EWRAM_BSS;
 static u8 sRoots[32*32] EWRAM_BSS;
@@ -49,6 +50,7 @@ void forest_trees_reset(void) {
     sActive=FALSE;
     memset(gForestTreeStats,0,sizeof(gForestTreeStats));
     memset(gForestTreeRoots,0,sizeof(gForestTreeRoots));
+    memset(gForestTreeRootRows,0,sizeof(gForestTreeRootRows));
 }
 
 bool8 forest_trees_active(void) {
@@ -96,7 +98,10 @@ static void add_tree(int x,int row,int cells,int flags) {
     t->x=x*16;t->y=(row-1)*16;t->frame=frame;t->flags=flags;
     t->root_mask[0]=metatile_coll[room_get(x,row)];
     t->root_mask[1]=cells==2 ? metatile_coll[room_get(x+1,row)] : 0;
-    for(dx=0;dx<cells;dx++)gForestTreeRoots[row*32+x+dx]=n+1;
+    for(dx=0;dx<cells;dx++) {
+        gForestTreeRoots[row*32+x+dx]=n+1;
+        gForestTreeRootRows[row]|=1u<<(x+dx);
+    }
     gForestTreeStats[1]++;
     gForestTreeStats[state+4]++;
     gForestTreeStats[cells==2 ? 7 : 8]++;
@@ -214,6 +219,47 @@ bool8 forest_trees_occludes_px(int x,int y,int priority) {
         (priority==3 && forest_trees_base_px(x,y));
 }
 
+/* Collapse the eight nonzero4bpp nibbles into one byte. Fetching a native
+   tile row once avoids repeating map, flip and VRAM reads for each pixel. */
+static u32 opaque_byte(u32 pixels) {
+    pixels|=pixels>>1;pixels|=pixels>>2;
+    pixels&=0x11111111u;
+    pixels=(pixels|(pixels>>3))&0x03030303u;
+    pixels=(pixels|(pixels>>6))&0x000f000fu;
+    return (pixels|(pixels>>12))&255;
+}
+
+static u32 plane_row(int x,int y,int base,const u16* picture) {
+    int start=MAX(0,x),end=MIN(gRoom.w*16,x+32),wx;
+    int ty=y>>3,iy=y&7;
+    u32 mask=0;
+    for(wx=start;wx<end;) {
+        int tx=wx>>3,ix=wx&7,count=MIN(8-ix,end-wx);
+        u16 expected=picture[ty*64+tx],entry=*map_at(base,tx,ty);
+        if((expected&1023) && expected==entry) {
+            int row=entry&0x800?7-iy:iy;
+            const vu16* source=CHARBLOCK(0)+(entry&1023)*16+row*2;
+            u32 bits=opaque_byte(source[0]|((u32)source[1]<<16));
+            if(entry&0x400) {
+                bits=((bits>>1)&0x55)|((bits&0x55)<<1);
+                bits=((bits>>2)&0x33)|((bits&0x33)<<2);
+                bits=((bits>>4)&0x0f)|((bits&0x0f)<<4);
+            }
+            mask|=((bits>>ix)&((1u<<count)-1))<<(wx-x);
+        }
+        wx+=count;
+    }
+    return mask;
+}
+
+u32 forest_trees_opaque_row(int x,int y,int priority) {
+    u32 mask;
+    if(!forest_trees_active() || y<0 || y>=gRoom.h*16 || x>=gRoom.w*16 || x<=-32)return 0;
+    mask=plane_row(x,y,24,sUpper);
+    if(priority==3)mask|=plane_row(x,y,FOREST_TREES_SB_BASE,sLower);
+    return mask;
+}
+
 bool8 forest_trees_occludes_body(int px,int py,int z,int width,int height,int priority) {
     int x,y;
     if(!forest_trees_active())return FALSE;
@@ -225,50 +271,6 @@ bool8 forest_trees_occludes_body(int px,int py,int z,int width,int height,int pr
            (priority==3 && (base&1023) && base==*map_at(FOREST_TREES_SB_BASE,x,y)))return TRUE;
     }
     return FALSE;
-}
-
-static bool8 lower_box_ink(const ForestTree* t,int x0,int y0,int x1,int y1) {
-    int y;
-    x0=MAX(0,x0-t->x);x1=MIN(forest_tree_width[t->frame],x1-t->x);
-    y0=MAX(16,y0-t->y);y1=MIN(32,y1-t->y);
-    if(x0>=x1 || y0>=y1)return FALSE;
-    /* Exact authored alpha, one32-bit AND per intersecting native row.
-       All lower halves are installed unmodified; no pixel VRAM scan is
-       needed in the hot actor sorting path. Span32 avoids a shift by32. */
-    u32 span=0xffffffffu>>(32-(x1-x0));
-    u32 mask=span<<x0;
-    for(y=y0;y<y1;y++)if(forest_tree_opaque_rows[t->frame][y]&mask)return TRUE;
-    return FALSE;
-}
-
-int forest_trees_priority(int px,int py,int z,int width,int height,int priority) {
-    int x,y,front=0,behind=0;
-    if(!forest_trees_active() || priority!=2)return priority;
-    int x0=px-MIN(width/2,16),x1=px+MIN(width/2,16);
-    int y0=py-z-MIN(height,64),y1=py-z;
-    int cx0=MAX(0,x0/16),cx1=MIN(gRoom.w-1,x1/16);
-    /* The only possible overhang is the upper16 band north of a root.
-       Consult these few local owner cells, never every tree in the room. */
-    int cy0=MAX(0,(y0-16)/16),cy1=MIN(gRoom.h-1,(y1+16)/16);
-    for(y=cy0;y<=cy1;y++) {
-      int previous=0;
-      for(x=cx0;x<=cx1;x++) {
-        int owner=gForestTreeRoots[y*32+x];
-        if(!owner || owner==previous)continue;
-        previous=owner;
-        const ForestTree* t=&gForestTrees[owner-1];
-        int w=forest_tree_width[t->frame];
-        int left=t->x+forest_tree_anchor_x[t->frame]-w/2;
-        if(x1<=left || x0>=left+w || y1<=t->y || y0>=t->y+32)continue;
-        if(py>=t->y+forest_tree_anchor_y[t->frame] || z>=16)front=1;
-        /* BG1 already covers priority2. Priority3 is needed only where
-           actual root-plane ink would cover this body; a transparent tree
-           bounding corner must not push Bloom behind unrelated grass. */
-        else if(lower_box_ink(t,MAX(x0,left),MAX(y0,t->y+16),
-                             MIN(x1,left+w),MIN(y1,t->y+32)))behind=1;
-      }
-    }
-    return behind ? 3 : front ? 1 : priority;
 }
 
 u16 forest_trees_video(u16 flags) {

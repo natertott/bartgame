@@ -497,6 +497,7 @@ void enemies_update(void) {
 static void knight_draw_sword(Actor* e) {
     if ((e->flags & AF_HIDDEN) || (e->iframes && (gFrame & 2)))
         return;
+    if(gOamCount>=128)return;
     static const s8 hand[4][2]={{5,-17},{7,-16},{4,-13},{-8,-16}};
     int px = PX(e->x) - gCamX, py = PX(e->y) - PX(e->z) - gCamY;
     int raised=e->state==ES_WINDUP, f=e->facing, hflip=f==FACE_W;
@@ -507,6 +508,10 @@ static void knight_draw_sword(Actor* e) {
     if(hflip)gx=15-gx;
     if(vflip)gy=15-gy;
     int sx=px+hand[f][0]-gx,sy=py+hand[f][1]-gy;
+    const SpriteSheet* sh=&sheets[SHEET_KSWORD];
+    /* Cull the blade by its own canvas, independently of its owner's body:
+       an offscreen Confessor can still swing a visible sword into view. */
+    if(sx<=-sh->w || sx>=240 || sy<=-sh->h || sy>=160)return;
     int priority=room_prop_priority(PX(e->x),PX(e->y),PX(e->z),16,28,e->prio);
     int before=gOamCount;
     draw_sprite(sx, sy, SHEET_KSWORD, sKswordTile, frame, hflip, priority, sheets[SHEET_KSWORD].pal);

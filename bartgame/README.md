@@ -56,6 +56,13 @@ preserves a visible portion of Bloom's current native pose beneath foliage.
 [Actual mGBA comparisons and all eight ROMs](../art-review/forest-canopy-v3/README.md)
 remain unselected alternatives; earlier profiles0–10 retain their exact ROMs.
 
+## Performance
+
+The [performance diagnosis](docs/performance/README.md) and
+[measured mGBA review](../performance-review/README.md) document the optimized
+engine without reducing artwork, enemies, effects or mechanics. Normal builds
+use `PROFILE=0`; `PROFILE=1` is development-only cycle accounting.
+
 ## Current game
 
 The Drain is the hub, with the Billious Peddler, Pale Gatekeeper and a

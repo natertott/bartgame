@@ -310,3 +310,11 @@ and [independent audit](references/HUD_GILT_AUDIT.md). The
 [actual mGBA review](../../../art-review/hud-gilt/README.md) records the final
 290-check run and retained210-check baseline separately from the65 native
 source frames. No further reference attribution is introduced by validation.
+
+## Performance preservation pass — 2026-11-04
+
+This is an engine/performance pass driven by the user's observed slowdowns.
+It uses actual mGBA timing, source profiling and differential/native render
+checks; no new visual reference, commercial-game measurement or art revision
+is claimed. Existing art and design rules remain unchanged. See the direction
+log and the forthcoming measured performance review for final qualification.

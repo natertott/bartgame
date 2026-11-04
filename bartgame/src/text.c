@@ -39,6 +39,14 @@
 
 static u16 sBg0[32 * 32] ALIGN4;
 static u8 sBg0Dirty;
+#if BART_HUD_VARIANT
+/* All public shadow-map mutation/borrowing routes invalidate installation.
+   Static HUD mappings then need no redraw or2KB map DMA on ordinary frames. */
+static u8 sHudMapReady;
+#define HUD_MAP_INVALIDATE() (sHudMapReady=0)
+#else
+#define HUD_MAP_INVALIDATE() ((void)0)
+#endif
 
 static void hud_init(void);
 static void hud_stale(void);
@@ -60,6 +68,7 @@ void text_init(void) {
 void bg0_clear(void) {
     memset32(sBg0, 0, sizeof(sBg0));
     sBg0Dirty = 1;
+    HUD_MAP_INVALIDATE();
 }
 
 void bg0_put(int tx, int ty, u16 tile) {
@@ -67,6 +76,7 @@ void bg0_put(int tx, int ty, u16 tile) {
         return;
     sBg0[ty * 32 + tx] = tile ? (tile | PAL_HUD) : 0;
     sBg0Dirty = 1;
+    HUD_MAP_INVALIDATE();
 }
 
 void bg0_fill(int tx, int ty, int w, int h, u16 tile) {
@@ -78,6 +88,7 @@ void bg0_fill(int tx, int ty, int w, int h, u16 tile) {
 
 u16* bg0_map(void) {
     sBg0Dirty = 1;
+    HUD_MAP_INVALIDATE();
     return sBg0;
 }
 
@@ -96,6 +107,7 @@ bool8 bg0_canvas(Canvas* c, int tx, int ty, int tw, int th) {
     vwf_clear(c, 0);
     vwf_map(c, sBg0, tx, ty, UI_PAL);
     sBg0Dirty = 1;
+    HUD_MAP_INVALIDATE();
     return TRUE;
 }
 
@@ -105,6 +117,7 @@ void bg0_show(const Canvas* c, int tx, int ty, bool8 on) {
     else
         bg0_fill(tx, ty, c->tw, c->th, 0);
     sBg0Dirty = 1;
+    HUD_MAP_INVALIDATE();
 }
 
 void bg0_plate(Canvas* c, int tx, int ty, const char* s, int ink, bool8 edge) {
@@ -571,23 +584,59 @@ static void hud_heart(int x,int fill) {
     }
 }
 
-/* Three-by-five numerals are used only for quantities. Their dark outline
-   and stable reading positions matter more than decorative type at this size. */
+/* Spread eight one-bit coverage flags into eight four-bit pixel masks. */
+static u32 hud_nibbles(u32 bits) {
+    bits=(bits|(bits<<12))&0x000F000Fu;
+    bits=(bits|(bits<<6))&0x03030303u;
+    bits=(bits|(bits<<3))&0x11111111u;
+    return bits*15;
+}
+
+static void hud_number_row(int x,int y,u32 coverage,u32 text) {
+    int width=sPurse.tw*8;
+    if(y<0 || y>=sPurse.th*8)return;
+    if(x<0) {
+        int clip=-x;
+        if(clip>=32)return;
+        coverage>>=clip;text>>=clip;x=0;
+    }
+    while(coverage && x<width) {
+        int first=x&7,count=MIN(8-first,width-x);
+        u32 bits=(1u<<count)-1;
+        u32 mask=hud_nibbles(coverage&bits)<<(first*4);
+        if(mask) {
+            u32 type=hud_nibbles(text&bits)<<(first*4);
+            u32* dst=sPurse.px+((y>>3)*sPurse.tw+(x>>3))*8+(y&7);
+            u32 ink=(VI_OUTLINE*0x11111111u&mask)^((VI_OUTLINE^VI_TEXT)*0x11111111u&type);
+            *dst=(*dst&~mask)|ink;
+        }
+        coverage>>=count;text>>=count;x+=count;
+    }
+}
+
+/* The same three-by-five glyphs and one-pixel outline, composed as seven
+   row masks instead of repeatedly repainting every pixel's nine neighbors. */
 static void hud_digits(int origin_x,int origin_y,unsigned value) {
     static const u8 digits[10][5]={
         {7,5,5,5,7},{2,6,2,2,7},{7,1,7,4,7},{7,1,7,1,7},
         {5,5,7,1,1},{7,4,7,1,7},{7,4,7,5,7},{7,1,1,1,1},
         {7,5,7,5,7},{7,5,7,1,7}
     };
-    char buf[6];int n=0,i,x,y,pass,dx,dy;
+    char buf[6];int n=0,i,y;
+    u32 rows[7]={0,0,0,0,0,0,0};
     do {buf[n++]='0'+value%10;value/=10;}while(value && n<5);
-    for(pass=0;pass<2;pass++)for(i=0;i<n;i++)for(y=0;y<5;y++)for(x=0;x<3;x++)
-        if(digits[(int)buf[n-i-1]-'0'][y]&(4>>x)) {
-            int px=origin_x+i*4+x,py=origin_y+y;
-            if(!pass)for(dy=-1;dy<=1;dy++)for(dx=-1;dx<=1;dx++)
-                vwf_pixel(&sPurse,px+dx,py+dy,VI_OUTLINE);
-            else vwf_pixel(&sPurse,px,py,VI_TEXT);
-        }
+    for(i=0;i<n;i++)for(y=0;y<5;y++) {
+        u32 bits=digits[(int)buf[n-i-1]-'0'][y];
+        bits=((bits&1)<<2)|(bits&2)|((bits&4)>>2);
+        rows[y+1]|=bits<<(i*4+1);
+    }
+    for(y=0;y<7;y++) {
+        u32 bits=rows[y];
+        if(y)bits|=rows[y-1];
+        if(y<6)bits|=rows[y+1];
+        bits|=(bits<<1)|(bits>>1);
+        hud_number_row(origin_x-1,origin_y+y-1,bits,rows[y]);
+    }
 }
 
 static void hud_coin(void) {
@@ -666,6 +715,7 @@ static void hud_panel_base(void) {
 static void hud_stale(void) {
     sPurseGilt=-1;sHudHp=sHudHpMax=-1;sHudGlint=~0u;
     sMapStamp=~0u;
+    HUD_MAP_INVALIDATE();
 }
 
 static void hud_init(void) {
@@ -743,9 +793,12 @@ static void hud_refresh(void) {
 }
 
 static void hud_bar(void) {
-    u16* m=bg0_map();
+    u16* m=sBg0;
+    if(sHudMapReady)return;
     memset32(m,0,HUD_MAP_ROWS*32*2);
     vwf_map(&sPurse,m,0,0,PAL_SLOT_HUD);
+    sBg0Dirty=1;
+    sHudMapReady=1;
 }
 
 static void obj_square(int x,int y,int size,int tile,int pal) {

@@ -1586,3 +1586,45 @@ contains raw native frames, exact animation samples, button feedback and
 separate source catalogs. The [playable build](../../../downloads/hud-gilt-4747b67/README.md)
 is the production handoff. Review fixtures and the finite scope of the
 performance samples remain explicit in the reports.
+
+## Performance without visual or gameplay reductions — 2026-11-04
+
+**Status: diagnosed; exact-work optimizations under qualification.** The user
+reports substantial slowdowns with live enemies. The performance survey keeps
+natural rosters and active AI; explicit larger synthetic swarms are separate.
+The delivered HUD build is retained as the baseline. Several ordinary dark
+forest rooms run at90 updates per180 video frames even with6–8 enemies.
+
+Development-only timer2/3 measurements identify repeated full-room censer
+counts, repeated glitter material/actor selection, software divisions in
+animation scheduling and terrain-depth/visibility work. The work replaces
+repeated calculations with invalidated caches, packed equivalent pixel
+queries, exact offscreen render rejection and fast-memory hot code. It does
+not lower enemy populations, AI frequency, glitter, animation rate, artwork
+quality or collision precision. The native image rules and materials remain
+unchanged. Button numerals are drawn through identical packed masks.
+
+Every changed algorithm receives differential tests, followed by production
+mGBA workloads, native render comparisons, item/gate/quest/save/HUD checks and
+a separate instrumented cycle diagnosis. The initial optimized build restores
+all75 sampled natural rooms to full sampled cadence; additional crowd spikes
+remain under investigation before final qualification. These are measured
+samples, not an unlimited-enemy or universal frame-rate guarantee. Detailed
+records and the final tested limits will accompany the playable release.
+
+**Functional candidate qualification:** all75 sampled natural forest rooms
+run at full sampled cadence. All30 additional no-offense throughput fixtures
+also reach180 updates per180 video frames, retaining4–24 actual enemies.
+Matched dark-room warmup verifies the former half-speed case remains full
+speed after120 settling frames. The broader146-context run retains a few
+isolated entry/equipment/combat-boundary repeats, explicitly reported rather
+than suppressed. Cold menus also avoid1,200 divisions per redraw.
+
+All24 matched native forest views and45 menu/preference views are pixel-
+identical to baseline. The full gameplay/source qualification passes900/900
+checks before freezing. Original art, enemy behavior, collision/attacks,
+item use, quests, saves, maze generation and frame meanings remain intact;
+only explicitly invalidated caches and equivalent rendering work change.
+The [technical notes](../performance/README.md) and
+[measured review](../../../performance-review/README.md) contain methods and
+limits. Final committed-source evidence is regenerated before delivery.

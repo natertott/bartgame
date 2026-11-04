@@ -10,6 +10,8 @@ void room_torch_light(int tx, int ty);
 void room_thorn_cut(int tx, int ty);
 void react_cut_box(int x0, int y0, int x1, int y1);
 void react_burn_box(int x0, int y0, int x1, int y1);
+/* Invalidated by every room mutation and full render, including previews. */
+extern u8 gRoomTorchesDirty;
 int room_torches_unlit(void);
 int tile_gate_side(int tx, int ty);
 int room_lift(int tx, int ty);

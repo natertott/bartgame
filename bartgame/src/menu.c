@@ -724,10 +724,14 @@ static void ms_input_irq(void){
 }
 static void ms_cache_kit(void){
     int b,f,t,y,i;
+    const u32* tiles;
     if(sStudyKitReady)return;
+    /* Appearance changes run on the main thread, outside this build. Read
+       the selected immutable kit once rather than once for every tile row. */
+    tiles=(const u32*)ui_current_tiles();
     for(b=0;b<256;b++){u32 w=0;for(i=0;i<8;i++)if(b&(1<<i))w|=15u<<(i*4);sStudyBitMask[b]=w;}
     for(f=0;f<4;f++)for(t=0;t<UI_TILE_COUNT;t++)for(y=0;y<8;y++){
-        const u32* src=(const u32*)ui_current_tiles()+t*8;u32 w=src[f&2?7-y:y],o=0,m=0;
+        const u32* src=tiles+t*8;u32 w=src[f&2?7-y:y],o=0,m=0;
         for(i=0;i<8;i++){int v=(w>>(i*4))&15,shift=(f&1?7-i:i)*4;o|=(u32)v<<shift;if(v)m|=15u<<shift;}
         sStudyKit[f][t][y]=o;sStudyKitMask[f][t][y]=m;
     }sStudyKitReady=1;
@@ -1115,11 +1119,13 @@ static void ms_upload(void){
 }
 static void ms_sync(void){gMenuStudyPage=sPage;gMenuStudyCursor=sCursor;gMenuStudyMapCell=sMapCur;gMenuStudyZoom=sZoom;}
 static void ms_draw(void){
-    u32 start=gFrame;int i,n,count_at=0;u8 idx[7];const MenuItem* list=sPage==PG_KEYS?sKeys:sItems;
+    u32 start=gFrame;int i,x,y,n,count_at=0;u8 idx[7];const MenuItem* list=sPage==PG_KEYS?sKeys:sItems;
     bg0_clear();bg0_pool_reset_full();
     sStudyCanvas=(Canvas){0,30,20,0,sStudyPixels};
     for(i=0;i<32*32;i++)gBg3[i]=UI_PAL<<12;
-    for(i=0;i<MS_TILES;i++)gBg3[(i/30)*32+i%30]=i|(UI_PAL<<12);
+    /* Preserve the exact600 entries and their order without two software
+       divisions per tile on ARM7TDMI. The unused right/bottom cells stay clear. */
+    for(y=0,i=0;y<20;y++)for(x=0;x<30;x++,i++)gBg3[y*32+x]=i|(UI_PAL<<12);
     if(sStudyBaseReady&(1<<sPage))dma3_copy32(sStudyBase[sPage],sStudyPixels,sizeof(sStudyPixels));
     else{
         vwf_clear(&sStudyCanvas,UI_INK_NAVY);

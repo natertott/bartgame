@@ -96,8 +96,20 @@ ifeq ($(BART_FOREST),30)
 LDFLAGS += -Wl,--undefined=tree_study_begin
 endif
 LIBS    := -lgcc
+PROFILE ?= 0
+ifneq ($(words $(PROFILE)),1)
+$(error PROFILE must be 0 or 1)
+endif
+ifneq ($(PROFILE),$(filter $(PROFILE),0 1))
+$(error PROFILE must be 0 or 1)
+endif
+CFLAGS += -DBART_PROFILE=$(PROFILE)
+PROFILE_STAMP := $(BUILD)/profile-$(PROFILE).stamp
 
 SRC_C     := $(filter-out %_iwram.c,$(wildcard src/*.c))
+ifeq ($(PROFILE),0)
+SRC_C     := $(filter-out src/performance.c,$(SRC_C))
+endif
 ifneq ($(BART_FOREST),30)
 SRC_C     := $(filter-out src/tree_study.c,$(SRC_C))
 endif
@@ -181,11 +193,16 @@ $(GEN)/assets.h: $(GEN)/assets.c ;
 $(BUILD)/assets.o: $(GEN)/assets.c
 	$(CC) $(CFLAGS) $(THUMB) -c $< -o $@
 
-$(BUILD)/%_iwram.o: src/%_iwram.c $(GEN)/assets.h
+$(BUILD)/%_iwram.o: src/%_iwram.c $(GEN)/assets.h $(PROFILE_STAMP)
 	@mkdir -p $(BUILD)
 	$(CC) $(CFLAGS) $(ARM) -c $< -o $@
 
-$(BUILD)/%.o: src/%.c $(GEN)/assets.h
+$(PROFILE_STAMP):
+	@mkdir -p $(BUILD)
+	@rm -f $(BUILD)/profile-*.stamp
+	@touch $@
+
+$(BUILD)/%.o: src/%.c $(GEN)/assets.h $(PROFILE_STAMP)
 	@mkdir -p $(BUILD)
 	$(CC) $(CFLAGS) $(THUMB) -c $< -o $@
 

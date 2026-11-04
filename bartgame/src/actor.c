@@ -79,7 +79,7 @@ int facing_to_dir(int facing) {
 }
 
 /* The feet box of the actor if it stood at (px, py). */
-bool8 actor_feet_box_solid(const Actor* a, int px, int py) {
+bool8 IWRAM_CODE actor_feet_box_solid(const Actor* a, int px, int py) {
     const Hitbox* hb = &gHitboxes[HB_HERO_FEET];
     if (a->kind != AK_PLAYER)
         hb = &gHitboxes[a->hitbox];
@@ -95,7 +95,7 @@ bool8 actor_feet_box_solid(const Actor* a, int px, int py) {
 
 /* Move with tile collision, one pixel at a time when blocked, with corner
    assist: a hero caught on the edge of a tile is nudged around it. */
-bool8 actor_move(Actor* a, int speed, int dir) {
+bool8 IWRAM_CODE actor_move(Actor* a, int speed, int dir) {
     int d8 = dir * 8;
     s32 vx = (speed * SIN(d8)) >> 14;
     s32 vy = -(speed * COS(d8)) >> 14;
@@ -329,7 +329,7 @@ void actor_set_sheet(Actor* a, int sheet, u16 tile) {
     a->pal = sh->pal;
 }
 
-void draw_sprite(int sx, int sy, int sheet, u16 tile, int frame, int hflip, int prio, int pal) {
+void IWRAM_CODE draw_sprite(int sx, int sy, int sheet, u16 tile, int frame, int hflip, int prio, int pal) {
     const SpriteSheet* sh = &sheets[sheet];
     if (sx <= -sh->w || sx >= 240 || sy <= -sh->h || sy >= 160)
         return;
@@ -360,12 +360,21 @@ void actor_draw(Actor* a) {
         return;
     if (a->iframes && (gFrame & 2))
         return; /* hurt blink */
+    if (gOamCount >= 128)
+        return; /* draw_sprite cannot submit an entry to a full OAM pool */
     int sx = PX(a->x) - a->w / 2 - gCamX;
     int sy = PX(a->y) - a->h - PX(a->z) - gCamY;
+    const SpriteSheet* sh = &sheets[a->sheet];
+    /* The depth verdict only selects an OAM priority. A canvas rejected by
+       draw_sprite cannot submit OAM, so avoid querying all overlapping
+       terrain/tree pixels for actors outside the viewport. Use the sheet's
+       canvas (as draw_sprite does), not the smaller physical silhouette. */
+    if (sx <= -sh->w || sx >= 240 || sy <= -sh->h || sy >= 160)
+        return;
     int width,height;
     actor_visual_size(a,&width,&height);
     int prio=room_prop_priority(PX(a->x),PX(a->y),PX(a->z),width,height,a->prio);
-#if BART_FOREST_VARIANT >= 6
+#if BART_FOREST_VARIANT >= 6 && BART_FOREST_VARIANT < 11
     /* Keep the final body verdict identical to the held-part verdict after
        generic terrain sorting; only Bloom's narrow leaf-edge recoil qualifies. */
     prio=player_recoil_priority(a,prio);

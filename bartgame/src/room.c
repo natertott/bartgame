@@ -8,6 +8,7 @@
 #include "roomgen.h"
 #include "myst.h"
 #include "appearance.h"
+#include "react.h"
 #if BART_FOREST_VARIANT >= 19
 #include "canopy_scene.h"
 #endif
@@ -23,6 +24,7 @@
 
 Room gRoom EWRAM_BSS;
 s16 gCamX, gCamY;
+u32 gRoomRevision; /* live visual-query caches invalidate on any map write */
 u8 gAnimTiles; /* off while the title owns the charblock */
 #if BART_FOREST_VARIANT >= 6
 u16 gRoomVisualGround[ROOM_MAX_W * ROOM_MAX_H] EWRAM_BSS;
@@ -70,16 +72,29 @@ void tiles_init(void) {
    base tiles, so every instance in the room animates at once. */
 void tiles_animate(void) {
     int i;
+    /* A tileset contains many animations but only a few distinct speeds.
+       Share each exact quotient; retain the original due-tick schedule. */
+    u32 quotients[256];
+    u32 seen[8]={0,0,0,0,0,0,0,0};
+    u32 clock=0;
     if (!gAnimTiles)
         return;
     for (i = 0; i < sTs->anim_count; i++) {
         const TileAnim* ta = &sTs->anims[i];
+        unsigned speed=ta->speed,word=speed>>5,bit=1u<<(speed&31);
+        u32 now,q;
         if (ta->frames == 0)
             continue;
-        if ((gFrame % ta->speed) != 0)
-            continue;
-        int f = (gFrame / ta->speed) % ta->frames;
-        /* subtiles are tl, tr, bl, br: consecutive in the tileset for animated metatiles */
+        now=gFrame;
+        if(now!=clock) {memset32(seen,0,sizeof(seen));clock=now;}
+        if(!(seen[word]&bit)) {quotients[speed]=now/speed;seen[word]|=bit;}
+        q=quotients[speed];
+        if(now-q*speed)continue;
+        /* The original takes a second volatile clock read for a due frame. */
+        u32 render_clock=gFrame;
+        if(render_clock!=now)q=render_clock/speed;
+        unsigned frames=ta->frames;
+        int f=(frames&(frames-1)) ? q%frames : q&(frames-1);
         dma3_copy32(ta->data + f * 64, CHARBLOCK(0) + ta->tile * 16, 128);
     }
 #if BART_FOREST_VARIANT >= 6
@@ -100,6 +115,7 @@ void tiles_animate(void) {
 }
 
 void room_clear(int w, int h, u16 fill) {
+    gRoomTorchesDirty=1;gRoomRevision++;
     int i;
     gRoom.w = w;
     gRoom.h = h;
@@ -111,6 +127,7 @@ void room_clear(int w, int h, u16 fill) {
 }
 
 void room_set(int mx, int my, u16 mt) {
+    gRoomTorchesDirty=1;gRoomRevision++;
     if (mx < 0 || my < 0 || mx >= gRoom.w || my >= gRoom.h)
         return;
     gRoom.ground[my * ROOM_MAX_W + mx] = mt;
@@ -119,6 +136,7 @@ void room_set(int mx, int my, u16 mt) {
 }
 
 void room_set_overlay(int mx, int my, u16 mt) {
+    gRoomTorchesDirty=1;gRoomRevision++;
     if (mx < 0 || my < 0 || mx >= gRoom.w || my >= gRoom.h)
         return;
     gRoom.overlay[my * ROOM_MAX_W + mx] = mt;
@@ -536,24 +554,87 @@ bool8 room_recoil_fringe_front(int px,int py) {
     return ground!=MT_NONE && metatile_type[ground]==TT_FLOOR &&
            metatile_coll[ground]==0 && overlay!=MT_NONE && forest_v2_low_fringe[overlay];
 }
-static bool8 overhead_at_body(int px,int py,int z,int width,int height) {
-    int x,y,x0=MAX(0,(px-width/2)/16),x1=MIN(gRoom.w-1,(px+width/2)/16);
-    int y0=MAX(0,(py-z-height)/16),y1=MIN(gRoom.h-1,(py-z-1)/16);
-    for(y=y0;y<=y1;y++)for(x=x0;x<=x1;x++) {
-        u16 mt=gRoomVisualOverlay[y*ROOM_MAX_W+x];
-        if(mt!=MT_NONE && forest_v2_overhead[mt])return TRUE;
+#endif
+
+/* Conservative row indexes replace repeated empty-cell classification for
+   every body and shadow. The room mutation revision also changes through
+   temporary previews; the first subsequent live query reads the restored
+   logical room and its current visual overlay, never a preview snapshot. */
+static u32 sDepthPropRows[ROOM_MAX_H];
+#if BART_FOREST_VARIANT >= 6
+static u32 sDepthOverheadRows[ROOM_MAX_H];
+static u32 sDepthWaterRows[ROOM_MAX_H];
+#endif
+static u32 sDepthRevision;
+static u8 sDepthReady,sDepthWidth,sDepthHeight;
+
+static void depth_index_refresh(void) {
+    int x,y;
+    if(sDepthReady && sDepthRevision==gRoomRevision &&
+       sDepthWidth==gRoom.w && sDepthHeight==gRoom.h)return;
+    for(y=0;y<ROOM_MAX_H;y++) {
+        u32 props=0;
+#if BART_FOREST_VARIANT >= 6
+        u32 overhead=0,water=0;
+#endif
+        if(y<gRoom.h)for(x=0;x<gRoom.w;x++) {
+            int at=y*ROOM_MAX_W+x;
+            u16 mt=gRoom.ground[at],ov=gRoom.overlay[at];
+            u32 bit=1u<<x;
+            /* Chest readiness, overlay ownership and legacy-tree exclusion
+               can only remove these candidates in the original query. */
+            if(ov==MT_MYST_SWITCH || ov==MT_MYST_SWITCH_DOWN ||
+               ov==MT_MYST_CHEST || ov==MT_MYST_CHEST_OPEN ||
+               (mt!=MT_NONE && (metatile_prop[mt] || barrier_material(mt)
+                               || mt==MT_CHEST || mt==MT_CHEST_OPEN
+#if BART_FOREST_VARIANT >= 6
+                               || forest_v2_special_tree[mt]
+#endif
+#if BART_FOREST_VARIANT >= 31
+                               || forest_trees_legacy(mt)
+#endif
+                               )))props|=bit;
+#if BART_FOREST_VARIANT >= 6
+            ov=gRoomVisualOverlay[at];
+            if(ov!=MT_NONE) {
+                if(forest_v2_overhead[ov])overhead|=bit;
+                if(metatile_type[ov]==TT_WATER)water|=bit;
+            }
+#endif
+        }
+        sDepthPropRows[y]=props;
+#if BART_FOREST_VARIANT >= 6
+        sDepthOverheadRows[y]=overhead;sDepthWaterRows[y]=water;
+#endif
     }
+    sDepthWidth=gRoom.w;sDepthHeight=gRoom.h;
+    sDepthRevision=gRoomRevision;sDepthReady=1;
+}
+
+static u32 depth_columns(int x0,int x1) {
+    if(x0>x1 || x0>=ROOM_MAX_W || x1<0)return 0;
+    return (0xffffffffu<<x0)&(0xffffffffu>>(31-x1));
+}
+
+#if BART_FOREST_VARIANT >= 6
+static bool8 depth_rows_any(const u32* rows,int x0,int y0,int x1,int y1) {
+    int y;
+    u32 columns=depth_columns(x0,x1);
+    if(!columns)return FALSE;
+    for(y=y0;y<=y1;y++)if(rows[y]&columns)return TRUE;
     return FALSE;
 }
 
-static bool8 water_surface_at_body(int px,int py,int z,int width,int height) {
-    int x,y,x0=MAX(0,(px-width/2)/16),x1=MIN(gRoom.w-1,(px+width/2)/16);
+static bool8 overhead_at_body(int px,int py,int z,int width,int height) {
+    int x0=MAX(0,(px-width/2)/16),x1=MIN(gRoom.w-1,(px+width/2)/16);
     int y0=MAX(0,(py-z-height)/16),y1=MIN(gRoom.h-1,(py-z-1)/16);
-    for(y=y0;y<=y1;y++)for(x=x0;x<=x1;x++) {
-        u16 mt=gRoomVisualOverlay[y*ROOM_MAX_W+x];
-        if(mt!=MT_NONE && metatile_type[mt]==TT_WATER)return TRUE;
-    }
-    return FALSE;
+    return depth_rows_any(sDepthOverheadRows,x0,y0,x1,y1);
+}
+
+static bool8 water_surface_at_body(int px,int py,int z,int width,int height) {
+    int x0=MAX(0,(px-width/2)/16),x1=MIN(gRoom.w-1,(px+width/2)/16);
+    int y0=MAX(0,(py-z-height)/16),y1=MIN(gRoom.h-1,(py-z-1)/16);
+    return depth_rows_any(sDepthWaterRows,x0,y0,x1,y1);
 }
 #endif
 
@@ -581,6 +662,34 @@ bool8 room_canopy_overlay_px(int px,int py) {
     return ((tile[y*2+x/4]>>((x&3)*4))&15)!=0;
 }
 
+u32 room_canopy_opaque_row(int px,int py,int priority) {
+    int x,end;
+    u32 mask=0;
+    if(gGame.area!=AREA_FOREST || py<0 || py>=gRoom.h*16 || px>=gRoom.w*16 || px<=-32)return 0;
+#if BART_FOREST_VARIANT >= 31
+    mask=forest_trees_opaque_row(px,py,priority);
+#endif
+    end=MIN(gRoom.w*16,px+32);
+    for(x=MAX(0,px);x<end;) {
+        int count=MIN(8-(x&7),end-x);
+        if(canopy_overlay_cell(x>>4,py>>4)) {
+            int tx=x>>3,ty=py>>3;
+            int sb=SB_OVERLAY+((ty>>5)<<1)+(tx>>5);
+            u16 entry=SCREENBLOCK(sb)[(ty&31)*32+(tx&31)];
+            int row=entry&0x800?7-(py&7):py&7;
+            const vu16* source=CHARBLOCK(0)+(entry&1023)*16+row*2;
+            u32 pixels=source[0]|((u32)source[1]<<16);
+            int at=x&7,i;
+            for(i=0;i<count;i++) {
+                int col=entry&0x400?7-at-i:at+i;
+                if((pixels>>(col*4))&15)mask|=1u<<(x+i-px);
+            }
+        }
+        x+=count;
+    }
+    return mask;
+}
+
 bool8 room_canopy_overlaps_body(int px,int py,int z,int width,int height) {
 #if BART_FOREST_VARIANT >= 31
     if(forest_trees_occludes_body(px,py,z,width,height,2))return TRUE;
@@ -603,10 +712,11 @@ static bool8 floor_mark(u16 mt) {
     return mt==MT_MYST_SWITCH || mt==MT_MYST_SWITCH_DOWN;
 }
 
-int room_prop_priority(int px,int py,int z,int width,int height,int priority) {
+int IWRAM_CODE room_prop_priority(int px,int py,int z,int width,int height,int priority) {
 #if BART_FOREST_VARIANT == 30
     if(gTreeStudyActive)return tree_study_priority(px,py,z,width,height,priority);
 #endif
+    depth_index_refresh();
     int x,y,front=0,behind=0;
     int half=MIN(width/2,16), top=py-MIN(height,64)-z, bottom=py-z-1;
     int x0=MAX(0,(px-half)/16),x1=MIN(gRoom.w-1,(px+half)/16);
@@ -627,7 +737,12 @@ int room_prop_priority(int px,int py,int z,int width,int height,int priority) {
            !(interactive_chest_ready() && interactive_chest_overlay(feet)))
             return priority;
     }
-    for(y=y0;y<=y1;y++) for(x=x0;x<=x1;x++) {
+    u32 columns=depth_columns(x0,x1);
+    for(y=y0;y<=y1;y++) {
+      u32 candidates=sDepthPropRows[y]&columns;
+      if(!candidates)continue;
+      for(x=x0;x<=x1;x++) {
+        if(!(candidates&(1u<<x)))continue;
         int at=y*ROOM_MAX_W+x;
         u16 mt=gRoom.ground[at],ov=gRoom.overlay[at];
 #if BART_FOREST_VARIANT >= 31
@@ -648,6 +763,7 @@ int room_prop_priority(int px,int py,int z,int width,int height,int priority) {
                           ))continue;
         if(metatile_coll[mt]==0 || py>=(y+1)*16 || z>=16)front=1;
         else if(px>=x*16 && px<(x+1)*16)behind=1;
+      }
     }
 #if BART_FOREST_VARIANT >= 6
     /* The water surface is below bodies, unlike a canopy. Also test dry
@@ -658,6 +774,7 @@ int room_prop_priority(int px,int py,int z,int width,int height,int priority) {
 }
 
 void room_render(void) {
+    gRoomTorchesDirty=1;gRoomRevision++;
     int x, y;
     /* clear both 64x64 maps */
     dma3_fill32(0, SCREENBLOCK(SB_OVERLAY), 0x2000);
@@ -683,6 +800,7 @@ void room_render(void) {
 }
 
 void room_change(int mx, int my, u16 mt) {
+    gRoomTorchesDirty=1;gRoomRevision++;
     if (mx < 0 || my < 0 || mx >= gRoom.w || my >= gRoom.h)
         return;
     {
@@ -724,6 +842,7 @@ void room_change(int mx, int my, u16 mt) {
 }
 
 void room_change_overlay(int mx, int my, u16 mt) {
+    gRoomTorchesDirty=1;gRoomRevision++;
     if (mx < 0 || my < 0 || mx >= gRoom.w || my >= gRoom.h)
         return;
     gRoom.overlay[my * ROOM_MAX_W + mx] = mt;
@@ -745,7 +864,7 @@ bool8 room_solid_px(int px, int py) {
 }
 
 /* Any solid 8x8 cell touching the inclusive pixel box? */
-bool8 room_box_solid(int x0, int y0, int x1, int y1) {
+bool8 IWRAM_CODE room_box_solid(int x0, int y0, int x1, int y1) {
     int x, y;
     if (x0 < 0 || y0 < 0 || x1 >= gRoom.w * 16 || y1 >= gRoom.h * 16)
         return TRUE;

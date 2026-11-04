@@ -11,6 +11,8 @@ with matched actual mGBA rooms](art-review/forest-room-cohesion/README.md).
 
 Latest HUD: [larger native items and buttons, gold shimmer, and blinking minimap](art-review/hud-gilt/README.md).
 
+Latest engine: [measured performance diagnosis and actual mGBA comparisons](performance-review/README.md).
+
 The upstream Minish Cap decompilation documentation is preserved below.
 
 ---

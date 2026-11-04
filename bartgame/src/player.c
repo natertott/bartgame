@@ -1086,28 +1086,46 @@ static void prepare_canopy_visibility(Actor* a,int frame) {
        (a->flags&AF_HIDDEN) || (a->iframes && (gFrame&2)) ||
 #if BART_FOREST_VARIANT >= 31
        !(room_canopy_overlaps_body(PX(a->x),PX(a->y),z,32,32) ||
-          forest_trees_occludes_body(PX(a->x),PX(a->y),z,32,32,a->prio)))return;
+          (a->prio==3 && forest_trees_occludes_body(PX(a->x),PX(a->y),z,32,32,3))))return;
 #else
        !room_canopy_overlaps_body(PX(a->x),PX(a->y),z,32,32))return;
 #endif
     const u8* source=(const u8*)(sh->tiles+frame*sh->frame_tiles*16);
     canopy_body_metadata(frame);
     memset(sCanopyPixels,0,sizeof(sCanopyPixels));
-    u8* target=(u8*)sCanopyPixels;
+    u32* target=(u32*)sCanopyPixels;
+    const u32* packed=(const u32*)source;
     int x,y,opaque=0,coloured=0;
+    u16 color_mask=0;
+    for(x=1;x<16;x++)if(canopy_coloured_ink(a->pal,x))color_mask|=1u<<x;
     int left=PX(a->x)-16,top=PX(a->y)-32-z;
-    for(y=sCanopyCutoff;y<32;y++)for(x=0;x<32;x++) {
-        int ink=canopy_body_ink(source,x,y);
-        int wx=left+(a->hflip ? 31-x : x),wy=top+y;
-#if BART_FOREST_VARIANT >= 31
-        if(!ink || !(room_canopy_overlay_px(wx,wy) ||
-                     (a->prio==3 && forest_trees_base_px(wx,wy))))continue;
-#else
-        if(!ink || !room_canopy_overlay_px(wx,wy))continue;
-#endif
-        int at=((y/8)*4+x/8)*32+(y&7)*4+(x&7)/2;
-        target[at]|=ink<<((x&1)*4);
-        opaque++;coloured+=canopy_coloured_ink(a->pal,ink);
+    for(y=sCanopyCutoff;y<32;y++) {
+        u32 mask=room_canopy_opaque_row(left,top+y,a->prio);
+        if(!mask)continue;
+        if(a->hflip) {
+            mask=((mask>>1)&0x55555555u)|((mask&0x55555555u)<<1);
+            mask=((mask>>2)&0x33333333u)|((mask&0x33333333u)<<2);
+            mask=((mask>>4)&0x0f0f0f0fu)|((mask&0x0f0f0f0fu)<<4);
+            mask=((mask>>8)&0x00ff00ffu)|((mask&0x00ff00ffu)<<8);
+            mask=(mask>>16)|(mask<<16);
+        }
+        for(x=0;x<4;x++) {
+            int at=((y>>3)*4+x)*8+(y&7);
+            u32 selected,pixels=(mask>>(x*8))&255;
+            if(!pixels)continue;
+            /* Spread eight mask bits to the low bit of eight nibbles, then
+               replicate within each nibble. Hero pixels remain unchanged. */
+            pixels=(pixels|(pixels<<12))&0x000f000fu;
+            pixels=(pixels|(pixels<<6))&0x03030303u;
+            pixels=(pixels|(pixels<<3))&0x11111111u;
+            selected=packed[at]&(pixels*15);
+            target[at]=selected;
+            while(selected) {
+                int ink=selected&15;
+                opaque+=ink!=0;coloured+=(color_mask>>ink)&1;
+                selected>>=4;
+            }
+        }
     }
     gForestV3Visibility[8]=opaque;gForestV3Visibility[9]=coloured;
     gForestV3Visibility[10]=a->prio;

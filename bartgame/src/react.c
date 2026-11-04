@@ -164,11 +164,16 @@ void react_burn_box(int x0, int y0, int x1, int y1) {
         }
 }
 
+u8 gRoomTorchesDirty=1;
+static s16 sUnlitTorches;
+
 int room_torches_unlit(void) {
+    if(!gRoomTorchesDirty)return sUnlitTorches;
     int x, y, n = 0;
     for (y = 0; y < gRoom.h; y++)
         for (x = 0; x < gRoom.w; x++)
             if (room_type(x, y) == TT_TORCH)
                 n++;
+    sUnlitTorches=n;gRoomTorchesDirty=0;
     return n;
 }

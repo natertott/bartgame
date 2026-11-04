@@ -20,6 +20,7 @@ typedef struct {
 extern Room gRoom;
 extern s16 gCamX, gCamY;
 extern u8 gAnimTiles;
+extern u32 gRoomRevision;
 #if BART_FOREST_VARIANT >= 6
 /* Read-only render diagnostics: semantic ground/overlay and collision stay in Room. */
 extern u16 gRoomVisualGround[ROOM_MAX_W * ROOM_MAX_H];
@@ -31,6 +32,9 @@ bool8 room_recoil_fringe_front(int px,int py);
 #if BART_FOREST_VARIANT >= 11
 /* Actual opaque vegetation pixels on BG1; architecture/root roofs stay separate. */
 bool8 room_canopy_overlay_px(int px,int py);
+/* The same live opacity as32 scalar queries, including tree root ink only
+   for priority3, returned in world-left-to-right bit order. */
+u32 room_canopy_opaque_row(int px,int py,int priority);
 bool8 room_canopy_overlaps_body(int px,int py,int z,int width,int height);
 #endif
 #if BART_FOREST_VARIANT >= 19
@@ -62,9 +66,9 @@ u8 room_type(int mx, int my);
 u8 room_type_px(int px, int py);
 void room_build_solid(void);
 void room_render(void);
-int room_prop_priority(int px,int py,int z,int width,int height,int priority);
+int IWRAM_CODE room_prop_priority(int px,int py,int z,int width,int height,int priority);
 bool8 room_solid_px(int px, int py);
-bool8 room_box_solid(int x0, int y0, int x1, int y1);
+bool8 IWRAM_CODE room_box_solid(int x0, int y0, int x1, int y1);
 void room_load_def(const RoomDef* def);
 void camera_update(int tx, int ty, bool8 snap);
 int room_px_w(void);

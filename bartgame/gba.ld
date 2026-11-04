@@ -69,6 +69,8 @@ SECTIONS
     } > ewram
 
     __rom_end = LOADADDR(.ewram) + SIZEOF(.ewram);
+    /* Bounded rendering scratch and IRQ frames share the system stack. */
+    ASSERT(__bss_end <= 0x03006F00, "IWRAM must retain at least4KB for the system stack")
 
     /DISCARD/ : { *(.comment) *(.note*) *(.ARM.attributes) }
 }

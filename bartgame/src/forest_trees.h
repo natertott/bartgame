@@ -20,6 +20,8 @@ extern ForestTree gForestTrees[FOREST_TREES_MAX];
 extern u16 gForestTreeStats[FOREST_TREES_STATS];
 /* One-based owning tree index at each physical base cell, zero elsewhere. */
 extern u16 gForestTreeRoots[32*32];
+/* Broad phase for the immutable planted owner index, rebuilt with that index. */
+extern u32 gForestTreeRootRows[32];
 /* Last actual BG1/BG2/BG3 scroll values written by video_flush. Hardware
    HOFS/VOFS registers are write-only; this is provenance, not a readback. */
 extern s16 gForestTreeDisplayedScroll[6];
@@ -38,8 +40,11 @@ bool8 forest_trees_overlay_px(int x,int y);
 bool8 forest_trees_base_px(int x,int y);
 /* Native visibility guard: priority3 bodies are also behind BG3 bases. */
 bool8 forest_trees_occludes_px(int x,int y,int priority);
+/* Bit n is the live opaque tree ink at (x+n,y), for a native32px span.
+   Map-entry identity, hardware flips and current tile alpha stay authoritative. */
+u32 forest_trees_opaque_row(int x,int y,int priority);
 bool8 forest_trees_occludes_body(int px,int py,int z,int width,int height,int priority);
-int forest_trees_priority(int px,int py,int z,int width,int height,int priority);
+int IWRAM_CODE forest_trees_priority(int px,int py,int z,int width,int height,int priority);
 /* video_show hands BG3 back to the menu when BG1/BG2 are not requested. */
 u16 forest_trees_video(u16 flags);
 void forest_trees_scroll(void);

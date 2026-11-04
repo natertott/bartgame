@@ -22,6 +22,7 @@ extern u16 items_sheet_tile(void);
 #include "menu.h"
 #include "save.h"
 #include "game.h"
+#include "performance.h"
 #include "interactive.h"
 #include "ambient.h"
 #include "appearance.h"
@@ -720,22 +721,22 @@ static void draw_world(void) {
 #if BART_FOREST_VARIANT >= 31
     if (!gForestReviewEnabled) {
 #endif
-        textbox_draw(); /* UI first in OAM: between sprites the order rules */
-        hud_draw();
+        PERF_CALL(PF_HUD,textbox_draw()); /* UI first in OAM: between sprites the order rules */
+        PERF_CALL(PF_HUD,hud_draw());
 #if BART_FOREST_VARIANT >= 31
     }
 #endif
     if (sDark)
         dark_spare(gOamCount);
-    ambient_draw(TRUE);
-    npcs_draw_front();
-    interactive_draw(FALSE);
-    player_draw();
-    enemies_draw();
-    npcs_draw();
-    objects_draw();
-    interactive_draw(TRUE);
-    ambient_draw(FALSE);
+    PERF_CALL(PF_GLITTER_FRONT,ambient_draw(TRUE));
+    PERF_CALL(PF_FOLK_FRONT,npcs_draw_front());
+    PERF_CALL(PF_INTERACTIVE_BACK,interactive_draw(FALSE));
+    PERF_CALL(PF_PLAYER_DRAW,player_draw());
+    PERF_CALL(PF_ENEMIES_DRAW,enemies_draw());
+    PERF_CALL(PF_FOLK_DRAW,npcs_draw());
+    PERF_CALL(PF_OBJECTS_DRAW,objects_draw());
+    PERF_CALL(PF_INTERACTIVE_FRONT,interactive_draw(TRUE));
+    PERF_CALL(PF_GLITTER_BACK,ambient_draw(FALSE));
 }
 
 u32 gDbgSpawn; /* probes: (count << 8) | type, spawns around the hero */
@@ -760,7 +761,7 @@ static void update_play(void) {
             shop_draw(); /* the whole screen: no world behind it */
             return;
         }
-        npcs_update();
+        PERF_CALL(PF_NPCS_UPDATE,npcs_update());
         draw_world();
         return;
     }
@@ -777,7 +778,7 @@ static void update_play(void) {
             draw_world();
         return;
     }
-    player_update();
+    PERF_CALL(PF_PLAYER_UPDATE,player_update());
     if (gPlayer->state == PS_DEAD) {
         if (gPl.dead_timer > 120) {
             gPl.hp = gPl.hp_max;
@@ -793,17 +794,17 @@ static void update_play(void) {
         menu_open();
         return;
     }
-    items_update();
-    enemies_update();
-    npcs_update();
-    objects_update();
+    PERF_CALL(PF_ITEMS_UPDATE,items_update());
+    PERF_CALL(PF_ENEMIES_UPDATE,enemies_update());
+    PERF_CALL(PF_NPCS_UPDATE,npcs_update());
+    PERF_CALL(PF_OBJECTS_UPDATE,objects_update());
     if (gGame.area == AREA_MYST)
-        myst_update();
-    check_chest();
-    check_shrine();
-    check_exits();
-    camera_update(PX(gPlayer->x), PX(gPlayer->y) - 16, FALSE);
-    dark_update();
+        PERF_CALL(PF_ROOM_EVENTS,myst_update());
+    PERF_CALL(PF_ROOM_EVENTS,check_chest());
+    PERF_CALL(PF_ROOM_EVENTS,check_shrine());
+    PERF_CALL(PF_ROOM_EVENTS,check_exits());
+    PERF_CALL(PF_CAMERA_DARK,camera_update(PX(gPlayer->x), PX(gPlayer->y) - 16, FALSE));
+    PERF_CALL(PF_CAMERA_DARK,dark_update());
     draw_world();
 }
 

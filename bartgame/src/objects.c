@@ -582,6 +582,10 @@ void objects_draw_hand(bool8 behind) {
     int i;
     for (i=1;i<ACTOR_MAX;i++) {
         Actor* a=&gActors[i];
+        /* Only released objects, arrows and flames can join Bloom's hand
+           composite. Empty slots, enemies and NPCs have no draw path here. */
+        if(a->kind!=AK_OBJECT && a->kind!=AK_PROJ && a->kind!=AK_FX)
+            continue;
         if (player_release_overlap(a)) {
             if ((a->dir == DIR_N) == behind) {
                 int sx = PX(a->x) - a->w / 2 - gCamX;
@@ -608,6 +612,11 @@ void objects_draw(void) {
     int i;
     for (i = 1; i < ACTOR_MAX; i++) {
         Actor* a = &gActors[i];
+        /* Reject unrelated pool entries before the release-overlap test;
+           their original path reaches no painter and changes no state. */
+        if(a->kind!=AK_PROJ && a->kind!=AK_PICKUP &&
+           a->kind!=AK_FX && a->kind!=AK_OBJECT)
+            continue;
         if (player_release_overlap(a))
             continue;
         if (a->kind==AK_OBJECT && a->type==FX_BOMB_OBJ && a->timer2<8 && player_hand_composite())

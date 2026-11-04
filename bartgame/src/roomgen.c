@@ -19,6 +19,7 @@
 #include "world.h"
 #include "roomgen.h"
 #include "myst.h"
+#include "react.h"
 #if BART_FOREST_VARIANT == 32
 #include "forest_paths.h"
 #endif
@@ -2848,6 +2849,7 @@ void roomgen_preview_details(int cell, u8* marks, const u8** mask, const u8** pa
     if (path) *path = &sPath[0][0];
     memcpy(gWorld.mark[cell], previous_marks, sizeof(previous_marks));
     gRoom = sPreviewRoom;
+    gRoomRevision++;gRoomTorchesDirty=1; /* invalidate restored-room query caches */
     gSpots = previous_spots;
     sR = previous_rng;
 #if BART_FOREST_VARIANT == 32

@@ -88,9 +88,9 @@ Actor* actor_new(u8 kind, u8 type, int px, int py);
 void actor_free(Actor* a);
 int actor_count(u8 kind);
 Actor* actor_find(u8 kind, u8 type);
-bool8 actor_move(Actor* a, int speed, int dir);
+bool8 IWRAM_CODE actor_move(Actor* a, int speed, int dir);
 void actor_move_free(Actor* a, int speed, int dir);
-bool8 actor_feet_box_solid(const Actor* a, int px, int py);
+bool8 IWRAM_CODE actor_feet_box_solid(const Actor* a, int px, int py);
 void actor_gravity(Actor* a);
 bool8 actors_overlap(const Actor* a, const Actor* b);
 bool8 actor_box_overlap(const Actor* a, int x0, int y0, int x1, int y1);
@@ -107,7 +107,7 @@ u16 sprite_alloc(int tiles);                 /* tiles held, for frames streamed 
 void actor_set_sheet(Actor* a, int sheet, u16 tile);
 void actor_visual_size(const Actor* a, int* width, int* height);
 void actor_draw(Actor* a);
-void draw_sprite(int sx, int sy, int sheet, u16 tile, int frame, int hflip, int prio, int pal);
+void IWRAM_CODE draw_sprite(int sx, int sy, int sheet, u16 tile, int frame, int hflip, int prio, int pal);
 
 /* VRAM uploads queued for the VBlank */
 void vram_queue(const void* src, volatile void* dst, u32 bytes);
