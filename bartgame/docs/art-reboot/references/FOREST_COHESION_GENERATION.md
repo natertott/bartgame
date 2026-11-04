@@ -77,6 +77,12 @@ logical interaction and collision metadata remain the authority.
 
 ## Determinism and review data
 
+A relic's permanent dais reserves the same placement space before and after
+collection. A temporary occupancy marker remains through all generation
+passes, including monster-site selection, sickness, root arches and lamps;
+the spent marker is removed before drawing. This keeps layout RNG and the
+remembered road/light pattern stable without showing an unclaimed reward.
+
 All new choices derive from the run seed and room index. The world graph,
 three required task/reward gates and save-layout ABI are unchanged. Historical
 profiles0–31 retain their old conditional branches. Room previews save and

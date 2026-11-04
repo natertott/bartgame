@@ -1440,3 +1440,15 @@ keeps hidden lanes and the required walkable room intact. Six decoration
 families use local healthy/sick palette aliases, avoiding green squares on
 gray ground. Sparse fine occupancy breaks up the initial grid of repeated
 floor tufts. Full-room renders and bridge/route tests will be repeated.
+
+
+**Expanded revisit correction, 2026-11-04:** the128-seed corpus found three
+rare spent-relic cases that the first32 seeds missed. Paths stayed fixed,
+but removing the relic sparkle early changed floor eligibility for monster
+spots or sickness, shifting later lantern placement. The generator now keeps
+the permanent dais occupied through every placement pass and removes the
+spent visual marker immediately before rendering. The fresh128-seed host
+run passes all checks, including128 collected-relic rebuilds, and actual
+mGBA progression/menu/cache checks pass80/80. This changes no approved tree
+pixels, item rewards, enemy health or world-graph/save contract. Final source
+and native evidence are regenerated after this correction.

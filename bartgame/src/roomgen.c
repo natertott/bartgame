@@ -2697,6 +2697,12 @@ static void roomgen_build_internal(int cell, bool8 render) {
                persistent pockets elsewhere when the player comes back. */
             ensure_spot(&gSpots.relic);
             room_set(gSpots.relic.x, gSpots.relic.y, MT_MOSSY_STONE);
+#if BART_FOREST_VARIANT == 32
+            /* Keep the permanent dais occupied for every placement pass.
+               A spent relic must not admit a different monster candidate,
+               advance layout RNG differently, or reseat nearby lamps. */
+            room_set_overlay(gSpots.relic.x,gSpots.relic.y,MT_SPARKLE);
+#endif
             if (!(c->flags & CF_RELIC_TAKEN)) {
                 gSpots.has_relic = 1;
                 room_set_overlay(gSpots.relic.x, gSpots.relic.y, MT_SPARKLE);
@@ -2799,6 +2805,8 @@ static void roomgen_build_internal(int cell, bool8 render) {
     cohesion_lights(cell);
     cohesion_sources();
     cohesion_measure();
+    if(c->role==ROLE_RELIC && (c->flags&CF_RELIC_TAKEN))
+        room_set_overlay(gSpots.relic.x,gSpots.relic.y,MT_NONE);
 #endif
     if (render)
         room_render();
