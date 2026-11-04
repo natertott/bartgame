@@ -1,0 +1,18 @@
+{
+  "passed": true,
+  "cases": 656,
+  "odd_cases": 192,
+  "video_frame_cases": 671744,
+  "checks": 4265136,
+  "draws_before": 2801664,
+  "draws_after": 1400832,
+  "method": "Compile actual ambient C before/after against deterministic host fixtures.\n\nThis checks density arithmetic and animation stages for every source count\nfrom zero through forty, including odd/sparse views. It is algorithm evidence;\nthe separate native mGBA captures establish real video/OAM behavior.",
+  "baseline": "04a42521264349e23d8057744e6467eace0bdd13",
+  "source_sha256": {
+    "before": "934270c50a47a70f00b822c9de6232301d9b0ee7c7dc6fcc17377d7e6c76154b",
+    "after": "5c6ad69d774ce643e8238c1524498c5f0b0d6ca53ad2cdb37628f300d2615e47"
+  },
+  "tool_sha256": "71a9a89e698813360375b13972f3dc762fdbab82751873879c47f5bc4cb62c19",
+  "fixture_sha256": "273c714764c4ff836e2808f27d3f5202b0158dd7485aff7a074c7cb4b2e135db",
+  "executable_sha256": "fc68e5a583004115cc866c6e0d6013916f3e898c925b875a81454e4795db5918"
+}

@@ -1,0 +1,9 @@
+{
+  "exact_palette": true,
+  "colour_count": 76,
+  "duration_ms": 8570,
+  "timeline_frames": 64,
+  "exact_RGB_roundtrip": true,
+  "method": "Each pane is an untouched native240x160 mGBA sample; labels occupy20px above. Matching seed/camera and512 videoframes sampled every8. Round-trip RGB/timing exact.",
+  "sha256": "9bf271d65cf4807a2a09992f2121937025d6d4103e3e7c3f1a72771ed53bf7bb"
+}

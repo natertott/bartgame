@@ -1,0 +1,7 @@
+PASS legacy inventory, gates, loot and unrelated state preserved
+PASS owned reward retained; unrelated old mystery completion cannot consume missing items
+PASS migrated record written as v2 with valid checksum
+PASS v2 continue/death/save round trip
+PASS unclaimed trial victory and opened pocket persist without auto-claim
+PASS corrupted checksum rejected
+RESULT PASS 6/6

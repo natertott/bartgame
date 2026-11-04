@@ -286,10 +286,13 @@ class Review:
         left,right=self.lane()
         # A real wall-edge run makes the ordinary charge stop observable.
         x,y=right
-        self.begin('gilt-leech-charge-and-wall')
-        self.position(0,left,0)
+        # Let the ordinary camera reach this part of the room before the
+        # encounter starts. Otherwise a cross-room fixture hides the charge.
+        self.position(0,(x-8,y),3)
+        self.run(96)
         self.check('Rope completes pre-existing state before line fixture',
                    self.wait(lambda:self.target(6)['state']==0 and not self.target(6)['knockback'],180))
+        self.begin('gilt-leech-charge-and-wall')
         self.position(enemy['index'],(x-40,y))
         self.position(0,(x-8,y),3)
         encounter_start=len(self.trace)
@@ -305,6 +308,7 @@ class Review:
         if side:self.position(0,side,0)
         self.check('Rope charge ends in ordinary recovery',self.wait(lambda:self.target(6)['state']==3,44))
         recover=self.target(6)
+        self.run(16)
         row=self.finish('Native30-update tell, fixed-heading1.625px/update charge and wall stop. Initial enemy/player coordinates and the perpendicular player dodge are fixtures on unchanged dry floor. Enemy HP/state/facing/timer are never assigned.')
         attacks=[a for r in row['trace'][encounter_start:] for a in r['enemies'] if a['type']==6 and a['state']==2]
         self.check('Rope charge direction remains locked after player dodge',bool(attacks) and all(a['direction']==locked for a in attacks),locked)
@@ -421,7 +425,9 @@ class Review:
         self.check('Actual bomb input consumes one blightseed',bomb is not None and
                    P.r8(self.c,P.sym('gPl')+7)==before-1)
         if bomb:
-            escape=next((p for p in (left,right) if abs(p[0]-bomb['x'])>48),None)
+            escape=next(((round(bomb['x'])+dx,round(bomb['y'])+dy)
+                         for dx,dy in ((-64,0),(64,0),(0,64),(0,-64),(-48,0),(48,0))
+                         if safe(self.c,round(bomb['x'])+dx,round(bomb['y'])+dy)),None)
             if escape:self.position(0,escape,0)
             self.wait(lambda:live_bomb() is None or live_bomb()['timer2']>=149,180)
             enemy=self.target(7);bomb=live_bomb()
@@ -429,7 +435,7 @@ class Review:
             self.check('Natural phase at bomb fuse149 is intended phase',enemy['state']==phase,enemy)
             if bomb:
                 self.position(enemy['index'],(round(bomb['x']),round(bomb['y'])))
-                hp=enemy['hp'];self.run(2)
+                hp=enemy['hp'];self.run(12)
                 after=self.target(7)
                 self.check('Real bomb rejects buried target' if buried else 'Real8damage bomb kills6HP exposed target',
                            after is not None and after['hp']==hp if buried else after is None,

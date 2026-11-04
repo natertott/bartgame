@@ -1,0 +1,33 @@
+{
+  "before_rom": "59f1e54cbbbac7e8f31b4e0c4623db72fe1f2a2190c7ceee5cc6fd559c6be898",
+  "after_rom": "cc57a1f790740ebcd6fc487e126cb970c41f79bc780e4f6bdd9530fc0d7e0d46",
+  "source_commit": "ef63b92e3608805c60fddd2fbbb0b6c930e3033b",
+  "checks": [
+    {
+      "name": "native glitter drawing and frame order",
+      "passed": true,
+      "before_sha256": "d7a39934fd659b705b3ca18a1f52c548d1822204746a7a126da1bd5a8a8b332b",
+      "after_sha256": "d7a39934fd659b705b3ca18a1f52c548d1822204746a7a126da1bd5a8a8b332b"
+    },
+    {
+      "name": "native glitter canvas and metadata",
+      "passed": true,
+      "before_sha256": "eb0919dfafc810633285e758f53c1b4089da4c06279ec773b13d086e6c1a7ae7",
+      "after_sha256": "eb0919dfafc810633285e758f53c1b4089da4c06279ec773b13d086e6c1a7ae7"
+    },
+    {
+      "name": "pal_bg",
+      "passed": true,
+      "before_sha256": "fdfdd1b2720a0b3f5a6825d9d8a5f1bf808cf4f4ecc051fef9e7ac6dc2f8f4f1",
+      "after_sha256": "fdfdd1b2720a0b3f5a6825d9d8a5f1bf808cf4f4ecc051fef9e7ac6dc2f8f4f1"
+    },
+    {
+      "name": "pal_obj",
+      "passed": true,
+      "before_sha256": "e76fbf027f88f45c0f5c70ea2704003ec725aaa8c82691511f33b2fd82ab4ec9",
+      "after_sha256": "e76fbf027f88f45c0f5c70ea2704003ec725aaa8c82691511f33b2fd82ab4ec9"
+    }
+  ],
+  "passed": 4,
+  "total": 4
+}

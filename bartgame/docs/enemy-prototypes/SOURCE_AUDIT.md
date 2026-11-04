@@ -121,10 +121,11 @@ Behavior evidence:
   carrying at 115, detonation at 290.
 - [Puffstool:74](https://github.com/natertott/bartgame/blob/04a42521264349e23d8057744e6467eace0bdd13/src/enemy/puffstool.c#L74).
 
-Rope, Spiked Beetle and Crow offer three distinct next prototypes: a
-committed ground charge, a shield reversal and an announced perched swoop.
-They can use the current sword/shield/movement vocabulary without adding a
-new mandatory item. The reference numbers above establish provenance; kinder
+The first lab candidates are Rope, red Leever and Helmasaur: a committed
+ground charge, an announced burrowing cycle and directional armor. Spiked
+Beetle and Crow remain promising later families for shield reversal and a
+perched swoop. These can extend the current sword/shield/movement vocabulary
+without adding a new mandatory item. The reference numbers above establish provenance; kinder
 recovery windows, reduced turning or different health must be labeled new
 tuning. Original forms/names are mechanics references; final creature designs
 should be original and remain unselected until reviewed.

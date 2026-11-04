@@ -64,3 +64,9 @@ corrected-candidate checks and 27/27 paired comparisons. Four native asset
 comparisons confirm unchanged glitter sheet pixels, sheet dimensions and
 background/object palettes. Production-bundle provenance is recorded in the
 final delivery manifest after its source commit is frozen.
+
+Final source `ef63b92e` produces ROM
+`cc57a1f790740ebcd6fc487e126cb970c41f79bc780e4f6bdd9530fc0d7e0d46`.
+The fresh frozen-ROM capture again passes187/187 and27/27 paired checks;
+[release evidence](../../../../enemy-prototype-review/README.md) includes
+the native recordings and full trace archive.

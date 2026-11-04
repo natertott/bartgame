@@ -1,0 +1,1541 @@
+{
+  "method": "Compare decoded production assets and verify lab run-save isolation in mGBA.\n\nUses one ordinary death/save record as input to a fresh lab core. No external\nsave file is opened; only the emulator's private SRAM is used. Actor death and\nits timer are disclosed fixtures to exercise the real save path.\n",
+  "roms": {
+    "before": "59f1e54cbbbac7e8f31b4e0c4623db72fe1f2a2190c7ceee5cc6fd559c6be898",
+    "normal": "cc57a1f790740ebcd6fc487e126cb970c41f79bc780e4f6bdd9530fc0d7e0d46",
+    "lab": "ecc4c5effe2b1e872e9520387585ab0687ed8f3b634011b2a0076d226967d653"
+  },
+  "tool_sha256": "1a3e5fce910dee2c079b65b1e52025845e0ff5562875a704dd822c78f1ff47bb",
+  "checks": [
+    {
+      "name": "normal excludes optional lab",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "lab is explicitly marked",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "forest original decoded terrain preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "sewer original decoded terrain preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "myst original decoded terrain preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "normal sheet IDs unchanged",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "hero original native sprite preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "sword original native sprite preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "shield original native sprite preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "items original native sprite preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "beetle original native sprite preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "bat original native sprite preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "slime original native sprite preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "spitter original native sprite preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "knight original native sprite preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "ksword original native sprite preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "fx original native sprite preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "proj original native sprite preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "npc original native sprite preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "boss original native sprite preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "lift original native sprite preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "arrow original native sprite preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "mouth original native sprite preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "marks original native sprite preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "dots original native sprite preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "cursor original native sprite preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "pick32 original native sprite preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "icon32 original native sprite preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "uimarks original native sprite preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "face original native sprite preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "peddler_head original native sprite preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "peddler_body original native sprite preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "gatekeeper original native sprite preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "wisp original native sprite preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "bloomfx original native sprite preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "bloomshadow original native sprite preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "interactivechest original native sprite preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "interactiveentry original native sprite preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "huditems original native sprite preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "glitter original native sprite preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "sewerrail original native sprite preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "forestlandmark original native sprite preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "sin_table_u packed native payload preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "room_sewer_main_objects packed native payload preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "room_sewer_main_overlay packed native payload preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "room_sewer_main_ground packed native payload preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "title_bitmap packed native payload preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "hud_tiles packed native payload preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "appearance_mark_tiles packed native payload preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "appearance_palettes packed native payload preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "appearance_ui_tiles packed native payload preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "vwf_bits packed native payload preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "vwf_w packed native payload preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "peddler_act_at packed native payload preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "peddler_acts packed native payload preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "orb_glow packed native payload preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "forestlandmark_frame_pal packed native payload preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "huditems_frame_pal packed native payload preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "interactiveentry_frame_pal packed native payload preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "interactivechest_frame_pal packed native payload preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "bloomfx_frame_pal packed native payload preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "icon32_exact_pal packed native payload preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "icon32_exact_tiles packed native payload preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "icon32_frame_pal packed native payload preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "pick32_frame_pal packed native payload preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "lift_frame_pal packed native payload preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "items_frame_pal packed native payload preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "shield_frame_pal packed native payload preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "bloom_swing_hit packed native payload preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "bloom_swing_origin packed native payload preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "bloom_swing_age_active packed native payload preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "bloom_swing_age_phase packed native payload preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "forest_v3_body_visibility packed native payload preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "sheet_forestlandmark_tiles packed native payload preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "sheet_sewerrail_tiles packed native payload preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "sheet_glitter_tiles packed native payload preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "sheet_huditems_tiles packed native payload preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "sheet_interactiveentry_tiles packed native payload preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "sheet_interactivechest_tiles packed native payload preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "sheet_bloomshadow_tiles packed native payload preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "sheet_bloomfx_tiles packed native payload preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "sheet_wisp_tiles packed native payload preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "sheet_gatekeeper_tiles packed native payload preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "sheet_peddler_body_tiles packed native payload preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "sheet_peddler_head_tiles packed native payload preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "sheet_face_tiles packed native payload preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "sheet_uimarks_tiles packed native payload preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "sheet_icon32_tiles packed native payload preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "sheet_pick32_tiles packed native payload preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "sheet_cursor_tiles packed native payload preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "sheet_dots_tiles packed native payload preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "sheet_marks_tiles packed native payload preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "sheet_mouth_tiles packed native payload preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "sheet_arrow_tiles packed native payload preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "sheet_lift_tiles packed native payload preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "sheet_boss_tiles packed native payload preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "sheet_npc_tiles packed native payload preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "sheet_proj_tiles packed native payload preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "sheet_fx_tiles packed native payload preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "sheet_ksword_tiles packed native payload preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "sheet_knight_tiles packed native payload preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "sheet_spitter_tiles packed native payload preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "sheet_slime_tiles packed native payload preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "sheet_bat_tiles packed native payload preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "sheet_beetle_tiles packed native payload preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "sheet_items_tiles packed native payload preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "sheet_shield_tiles packed native payload preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "sheet_sword_tiles packed native payload preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "sheet_hero_tiles packed native payload preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "forest_cohesion_decor_alias packed native payload preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "forest_cohesion_path_alias packed native payload preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "forest_v2_pulse_colors packed native payload preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "forest_v2_pulse_slots packed native payload preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "forest_v2_water_alias packed native payload preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "forest_v2_water_isolated packed native payload preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "forest_v2_canopy_alias packed native payload preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "forest_v2_overhead packed native payload preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "forest_v2_special_tree packed native payload preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "forest_v2_water_kind packed native payload preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "forest_v2_canopy_kind packed native payload preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "tile_anim_myst_5 packed native payload preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "tile_anim_myst_4 packed native payload preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "tile_anim_myst_3 packed native payload preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "tile_anim_myst_2 packed native payload preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "tile_anim_myst_1 packed native payload preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "tile_anim_myst_0 packed native payload preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "tileset_myst_pals packed native payload preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "metatile_map_myst packed native payload preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "tileset_myst_tiles packed native payload preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "tile_anim_sewer_68 packed native payload preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "tile_anim_sewer_67 packed native payload preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "tile_anim_sewer_66 packed native payload preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "tile_anim_sewer_65 packed native payload preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "tile_anim_sewer_64 packed native payload preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "tile_anim_sewer_63 packed native payload preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "tile_anim_sewer_62 packed native payload preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "tile_anim_sewer_61 packed native payload preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "tile_anim_sewer_60 packed native payload preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "tile_anim_sewer_59 packed native payload preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "tile_anim_sewer_58 packed native payload preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "tile_anim_sewer_57 packed native payload preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "tile_anim_sewer_56 packed native payload preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "tile_anim_sewer_55 packed native payload preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "tile_anim_sewer_54 packed native payload preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "tile_anim_sewer_53 packed native payload preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "tile_anim_sewer_52 packed native payload preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "tile_anim_sewer_51 packed native payload preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "tile_anim_sewer_50 packed native payload preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "tile_anim_sewer_49 packed native payload preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "tile_anim_sewer_48 packed native payload preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "tile_anim_sewer_47 packed native payload preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "tile_anim_sewer_46 packed native payload preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "tile_anim_sewer_45 packed native payload preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "tile_anim_sewer_44 packed native payload preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "tile_anim_sewer_43 packed native payload preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "tile_anim_sewer_42 packed native payload preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "tile_anim_sewer_41 packed native payload preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "tile_anim_sewer_40 packed native payload preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "tile_anim_sewer_39 packed native payload preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "tile_anim_sewer_38 packed native payload preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "tile_anim_sewer_37 packed native payload preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "tile_anim_sewer_36 packed native payload preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "tile_anim_sewer_35 packed native payload preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "tile_anim_sewer_34 packed native payload preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "tile_anim_sewer_33 packed native payload preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "tile_anim_sewer_32 packed native payload preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "tile_anim_sewer_31 packed native payload preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "tile_anim_sewer_30 packed native payload preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "tile_anim_sewer_29 packed native payload preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "tile_anim_sewer_28 packed native payload preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "tile_anim_sewer_27 packed native payload preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "tile_anim_sewer_26 packed native payload preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "tile_anim_sewer_25 packed native payload preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "tile_anim_sewer_24 packed native payload preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "tile_anim_sewer_23 packed native payload preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "tile_anim_sewer_22 packed native payload preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "tile_anim_sewer_21 packed native payload preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "tile_anim_sewer_20 packed native payload preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "tile_anim_sewer_19 packed native payload preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "tile_anim_sewer_18 packed native payload preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "tile_anim_sewer_17 packed native payload preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "tile_anim_sewer_16 packed native payload preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "tile_anim_sewer_15 packed native payload preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "tile_anim_sewer_14 packed native payload preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "tile_anim_sewer_13 packed native payload preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "tile_anim_sewer_12 packed native payload preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "tile_anim_sewer_11 packed native payload preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "tile_anim_sewer_10 packed native payload preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "tile_anim_sewer_9 packed native payload preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "tile_anim_sewer_8 packed native payload preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "tile_anim_sewer_7 packed native payload preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "tile_anim_sewer_6 packed native payload preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "tile_anim_sewer_5 packed native payload preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "tile_anim_sewer_4 packed native payload preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "tile_anim_sewer_3 packed native payload preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "tile_anim_sewer_2 packed native payload preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "tile_anim_sewer_1 packed native payload preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "tile_anim_sewer_0 packed native payload preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "tileset_sewer_pals packed native payload preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "metatile_map_sewer packed native payload preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "tileset_sewer_tiles packed native payload preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "tile_anim_forest_74 packed native payload preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "tile_anim_forest_73 packed native payload preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "tile_anim_forest_72 packed native payload preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "tile_anim_forest_71 packed native payload preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "tile_anim_forest_70 packed native payload preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "tile_anim_forest_69 packed native payload preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "tile_anim_forest_68 packed native payload preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "tile_anim_forest_67 packed native payload preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "tile_anim_forest_66 packed native payload preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "tile_anim_forest_65 packed native payload preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "tile_anim_forest_64 packed native payload preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "tile_anim_forest_63 packed native payload preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "tile_anim_forest_62 packed native payload preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "tile_anim_forest_61 packed native payload preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "tile_anim_forest_60 packed native payload preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "tile_anim_forest_59 packed native payload preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "tile_anim_forest_58 packed native payload preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "tile_anim_forest_57 packed native payload preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "tile_anim_forest_56 packed native payload preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "tile_anim_forest_55 packed native payload preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "tile_anim_forest_54 packed native payload preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "tile_anim_forest_53 packed native payload preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "tile_anim_forest_52 packed native payload preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "tile_anim_forest_51 packed native payload preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "tile_anim_forest_50 packed native payload preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "tile_anim_forest_49 packed native payload preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "tile_anim_forest_48 packed native payload preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "tile_anim_forest_47 packed native payload preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "tile_anim_forest_46 packed native payload preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "tile_anim_forest_45 packed native payload preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "tile_anim_forest_44 packed native payload preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "tile_anim_forest_43 packed native payload preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "tile_anim_forest_42 packed native payload preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "tile_anim_forest_41 packed native payload preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "tile_anim_forest_40 packed native payload preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "tile_anim_forest_39 packed native payload preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "tile_anim_forest_38 packed native payload preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "tile_anim_forest_37 packed native payload preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "tile_anim_forest_36 packed native payload preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "tile_anim_forest_35 packed native payload preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "tile_anim_forest_34 packed native payload preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "tile_anim_forest_33 packed native payload preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "tile_anim_forest_32 packed native payload preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "tile_anim_forest_31 packed native payload preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "tile_anim_forest_30 packed native payload preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "tile_anim_forest_29 packed native payload preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "tile_anim_forest_28 packed native payload preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "tile_anim_forest_27 packed native payload preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "tile_anim_forest_26 packed native payload preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "tile_anim_forest_25 packed native payload preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "tile_anim_forest_24 packed native payload preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "tile_anim_forest_23 packed native payload preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "tile_anim_forest_22 packed native payload preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "tile_anim_forest_21 packed native payload preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "tile_anim_forest_20 packed native payload preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "tile_anim_forest_19 packed native payload preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "tile_anim_forest_18 packed native payload preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "tile_anim_forest_17 packed native payload preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "tile_anim_forest_16 packed native payload preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "tile_anim_forest_15 packed native payload preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "tile_anim_forest_14 packed native payload preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "tile_anim_forest_13 packed native payload preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "tile_anim_forest_12 packed native payload preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "tile_anim_forest_11 packed native payload preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "tile_anim_forest_10 packed native payload preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "tile_anim_forest_9 packed native payload preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "tile_anim_forest_8 packed native payload preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "tile_anim_forest_7 packed native payload preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "tile_anim_forest_6 packed native payload preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "tile_anim_forest_5 packed native payload preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "tile_anim_forest_4 packed native payload preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "tile_anim_forest_3 packed native payload preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "tile_anim_forest_2 packed native payload preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "tile_anim_forest_1 packed native payload preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "tile_anim_forest_0 packed native payload preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "tileset_forest_pals packed native payload preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "metatile_map_forest packed native payload preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "tileset_forest_tiles packed native payload preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "forest_tree_variety packed native payload preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "forest_tree_state packed native payload preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "forest_tree_anchor_y packed native payload preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "forest_tree_anchor_x packed native payload preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "forest_tree_width packed native payload preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "forest_tree_opaque_rows packed native payload preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "forest_tree_entries packed native payload preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "metatile_glitter packed native payload preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "metatile_prop packed native payload preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "metatile_coll packed native payload preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "metatile_type packed native payload preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "pal_face packed native payload preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "pal_obj packed native payload preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "pal_bg packed native payload preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "proto_rope native16x16 one-OBJ32-pose sheet",
+      "passed": true,
+      "detail": {
+        "tile_count": 128,
+        "frame_tiles": 4,
+        "shape": 0,
+        "size": 1,
+        "pal": 10,
+        "width": 16,
+        "height": 16
+      }
+    },
+    {
+      "name": "proto_leever native16x16 one-OBJ32-pose sheet",
+      "passed": true,
+      "detail": {
+        "tile_count": 128,
+        "frame_tiles": 4,
+        "shape": 0,
+        "size": 1,
+        "pal": 3,
+        "width": 16,
+        "height": 16
+      }
+    },
+    {
+      "name": "proto_helmasaur native16x16 one-OBJ32-pose sheet",
+      "passed": true,
+      "detail": {
+        "tile_count": 128,
+        "frame_tiles": 4,
+        "shape": 0,
+        "size": 1,
+        "pal": 1,
+        "width": 16,
+        "height": 16
+      }
+    },
+    {
+      "name": "normal produces valid version2 run save",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "lab starts new forest experiment instead of continuing run",
+      "passed": true,
+      "detail": {
+        "area": 1,
+        "spawned": 1,
+        "items": 111
+      }
+    },
+    {
+      "name": "starting lab preserves original run record",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "lab death cannot overwrite ordinary run record",
+      "passed": true,
+      "detail": null
+    }
+  ],
+  "passed": 300,
+  "total": 300
+}

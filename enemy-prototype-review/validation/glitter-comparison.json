@@ -1,0 +1,276 @@
+{
+  "method": "Paired real mGBA glitter density/cadence comparison.",
+  "before_rom": "59f1e54cbbbac7e8f31b4e0c4623db72fe1f2a2190c7ceee5cc6fd559c6be898",
+  "after_rom": "cc57a1f790740ebcd6fc487e126cb970c41f79bc780e4f6bdd9530fc0d7e0d46",
+  "checks": [
+    {
+      "name": "before capture passed",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "after capture passed",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "same immutable capture helper",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "drain same scene",
+      "passed": true,
+      "detail": [
+        {
+          "area": 0,
+          "cell": 0,
+          "position": [
+            328,
+            126
+          ],
+          "camera": [
+            208,
+            22
+          ],
+          "seed": "0xb4a7"
+        },
+        {
+          "area": 0,
+          "cell": 0,
+          "position": [
+            328,
+            126
+          ],
+          "camera": [
+            208,
+            22
+          ],
+          "seed": "0xb4a7"
+        }
+      ]
+    },
+    {
+      "name": "drain all source candidate sites retained",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "drain exactly alternating prior view subset with fractional odd remainder",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "drain selected count represents half the prior view",
+      "passed": true,
+      "detail": [
+        24,
+        12
+      ]
+    },
+    {
+      "name": "drain average visible glitter is exactly half",
+      "passed": true,
+      "detail": [
+        12,
+        6
+      ]
+    },
+    {
+      "name": "drain full ambient cycle doubles",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "forest same scene",
+      "passed": true,
+      "detail": [
+        {
+          "area": 1,
+          "cell": 4,
+          "position": [
+            360,
+            190
+          ],
+          "camera": [
+            240,
+            86
+          ],
+          "seed": "0xb4a7"
+        },
+        {
+          "area": 1,
+          "cell": 4,
+          "position": [
+            360,
+            190
+          ],
+          "camera": [
+            240,
+            86
+          ],
+          "seed": "0xb4a7"
+        }
+      ]
+    },
+    {
+      "name": "forest all source candidate sites retained",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "forest exactly alternating prior view subset with fractional odd remainder",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "forest selected count represents half the prior view",
+      "passed": true,
+      "detail": [
+        24,
+        12
+      ]
+    },
+    {
+      "name": "forest average visible glitter is exactly half",
+      "passed": true,
+      "detail": [
+        12,
+        6
+      ]
+    },
+    {
+      "name": "forest full ambient cycle doubles",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "blight same scene",
+      "passed": true,
+      "detail": [
+        {
+          "area": 1,
+          "cell": 20,
+          "position": [
+            248,
+            222
+          ],
+          "camera": [
+            128,
+            118
+          ],
+          "seed": "0xb4a7"
+        },
+        {
+          "area": 1,
+          "cell": 20,
+          "position": [
+            248,
+            222
+          ],
+          "camera": [
+            128,
+            118
+          ],
+          "seed": "0xb4a7"
+        }
+      ]
+    },
+    {
+      "name": "blight all source candidate sites retained",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "blight exactly alternating prior view subset with fractional odd remainder",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "blight selected count represents half the prior view",
+      "passed": true,
+      "detail": [
+        1,
+        1
+      ]
+    },
+    {
+      "name": "blight average visible glitter is exactly half",
+      "passed": true,
+      "detail": [
+        0.5,
+        0.25
+      ]
+    },
+    {
+      "name": "blight full ambient cycle doubles",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "cave same scene",
+      "passed": true,
+      "detail": [
+        {
+          "area": 2,
+          "cell": 12,
+          "position": [
+            152,
+            94
+          ],
+          "camera": [
+            32,
+            0
+          ],
+          "seed": "0xb"
+        },
+        {
+          "area": 2,
+          "cell": 12,
+          "position": [
+            152,
+            94
+          ],
+          "camera": [
+            32,
+            0
+          ],
+          "seed": "0xb"
+        }
+      ]
+    },
+    {
+      "name": "cave all source candidate sites retained",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "cave exactly alternating prior view subset with fractional odd remainder",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "cave selected count represents half the prior view",
+      "passed": true,
+      "detail": [
+        24,
+        12
+      ]
+    },
+    {
+      "name": "cave average visible glitter is exactly half",
+      "passed": true,
+      "detail": [
+        12,
+        6
+      ]
+    },
+    {
+      "name": "cave full ambient cycle doubles",
+      "passed": true,
+      "detail": null
+    }
+  ],
+  "passed": 27,
+  "total": 27
+}

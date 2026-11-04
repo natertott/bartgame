@@ -1673,3 +1673,17 @@ build keeps the five selected appearances and broken purple Heart; an optional
 `BART_ENEMY_LAB=1` build supplies the experiments without modifying ordinary
 procgen or run saves. Actual emulator validation and final downloadable builds
 are recorded with the review after qualification.
+
+**Final qualification:** source `ef63b92e` produces the655,444-byte normal ROM
+(SHA256 `cc57a1f790740ebcd6fc487e126cb970c41f79bc780e4f6bdd9530fc0d7e0d46`)
+and the670,452-byte optional lab ROM
+(SHA256 `ecc4c5effe2b1e872e9520387585ab0687ed8f3b634011b2a0076d226967d653`).
+Fresh actual mGBA glitter checks pass187/187, paired density/cadence27/27,
+and enemy mechanics110/110. The host density test passes656 cases, including
+192 odd-count views. Decoded assets and lab save isolation pass300/300.
+The byte-identical normal candidate retains HUD290/290, forest80/80, save6/6
+and30 sustained enemy-load samples at5,400/5,400 updates. All existing native
+terrain, sprite payloads and palettes stay exact in both builds.
+The [gallery and playable handoff](../../../enemy-prototype-review/README.md)
+separates original pose studies, real gameplay capture, disclosed fixtures
+and unimplemented later proposals. New enemy art remains provisional.

@@ -236,3 +236,9 @@ docs/sim_runs.json
 !/downloads/performance-c09e290/performance-c09e290.gba
 !/downloads/performance-c09e290/performance-c09e290.zip
 !/performance-review/validation/frozen/bartgame.map
+
+# Quieter glitter production ROM, optional enemy mechanic lab and native evidence
+!/downloads/glitter-enemies-ef63b92/bartgame-quieter-glitter-ef63b92.gba
+!/downloads/glitter-enemies-ef63b92/enemy-lab-ef63b92.gba
+!/downloads/glitter-enemies-ef63b92/bartgame-and-enemy-lab.zip
+!/downloads/glitter-enemies-ef63b92/native-evidence.zip

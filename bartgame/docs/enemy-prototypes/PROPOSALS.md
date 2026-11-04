@@ -5,10 +5,11 @@
 The first three candidates add **a committed straight charge, an announced
 burrowing ambush, and armor that rewards flanking**. These mechanics add new
 combat decisions without requiring a new item or replacing the five selected
-forest enemies. Their optional combat-lab code is implemented; native pilot
-validation is still in progress. Ordinary procedural room rosters retain Coin
-Toad, Quill Moth, Trumpet Bellflower, Pear Bladder and Moth Confessor. The boss remains the purple heart broken down its
-middle. Names and prototype art below are provisional.
+forest enemies. Their optional combat lab passes110/110 actual mGBA checks
+across14 controlled scenarios. Ordinary procedural room rosters retain Coin
+Toad, Quill Moth, Trumpet Bellflower, Pear Bladder and Moth Confessor. The boss
+remains the purple heart broken down its middle. Names and prototype art below
+are provisional.
 
 The distinction matters: **source facts** describe the previous Zelda Fan Game;
 **prototype tuning** describes this independent BARTGAME implementation;
@@ -50,9 +51,10 @@ The implementation is isolated by `BART_ENEMY_LAB=1` in the
 never selects these three IDs. The native state machines live in
 [enemy_prototypes.c](../../src/enemy_prototypes.c) and the provisional sheets in
 [enemy_prototypes.py](../../art/enemy_prototypes.py). This report was reconciled
-against that code, not merely the initial brief. **The native pilot is still
-being validated; this section does not claim a passed emulator test suite or
-production-ready encounters.**
+against that code, not merely the initial brief. **The frozen lab passes110/110 actual mGBA checks across14 controlled
+scenarios. These are mechanic studies, not production-ready encounters.**
+The [review gallery](../../../enemy-prototype-review/README.md) provides actual
+recordings, the source commit, playable builds and validation limits.
 
 In the optional ROM:
 
@@ -71,8 +73,8 @@ background or redraw procedural terrain. Tool use can still alter supported
 room tiles. The fixture floor search is setup work and must be excluded from
 steady-state combat performance measurements.
 
-The [native review harness](../../tools/enemy_prototype_review.py) is being
-piloted separately. It drives real inputs and AI but discloses navigation,
+The [native review harness](../../tools/enemy_prototype_review.py) runs
+separately from the game. It drives real inputs and AI but discloses navigation,
 inventory, healing and coordinate-only positioning fixtures. Those controlled
 counterprobes can establish damage/state rules; they are not evidence of an
 unassisted complete run. Source sprite boards are design material. Only actual
@@ -285,8 +287,9 @@ reason to add every family to all procedural rooms immediately.
 1. **Place combat on navigable ground.** Use the player-reachable dry component
    and validate approaches, not just an empty tile. Reserve door arrivals,
    bridge chokepoints, ladders, chests, NPC interactions and required item-gate
-   approaches. Keep Leever emergence out of those reserved cells and never
-   under Bloom. A buried living actor still counts toward room completion.
+   approaches. Choose Leever emergence outside those reserved cells and away
+   from Bloom; the player can still deliberately step onto the announced mound
+   during its warning. A buried living actor still counts toward room completion.
 2. **Introduce combinations deliberately.** Start with one new enemy. Pair a
    leech with a stationary shooter only after its dodge lane is readable.
    Avoid a first encounter with armor blocking the only safe route while a
