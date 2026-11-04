@@ -303,3 +303,10 @@ assignments, conditional counts and separate player/exploration markers. No
 new external study, commercial ROM run or imported commercial art is claimed.
 The [direction log](ART_DIRECTION_LOG.md) records scope, status and eventual
 native emulator evidence.
+
+Final source4747b678 implements this HUD brief. Native source notes are
+[items](references/HUD_GILT_ITEMS.md), [runtime](references/HUD_GILT_RUNTIME.md)
+and [independent audit](references/HUD_GILT_AUDIT.md). The
+[actual mGBA review](../../../art-review/hud-gilt/README.md) records the final
+290-check run and retained210-check baseline separately from the65 native
+source frames. No further reference attribution is introduced by validation.

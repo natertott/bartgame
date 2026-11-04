@@ -226,3 +226,8 @@ docs/sim_runs.json
 !/downloads/forest-trees-c269b67/forest-trees-c269b67.zip
 !/art-review/forest-tree-study/validation/frozen/v29/bartgame.map
 !/art-review/forest-tree-study/validation/frozen/v30/bartgame.map
+
+# Reviewed gilt HUD production build and exact linker map
+!/downloads/hud-gilt-4747b67/hud-gilt-4747b67.gba
+!/downloads/hud-gilt-4747b67/hud-gilt-4747b67.zip
+!/art-review/hud-gilt/validation/frozen/bartgame.map

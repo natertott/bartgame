@@ -26,3 +26,6 @@
 
 # Exact room-composition production linker map.
 /art-review/forest-room-cohesion/validation/frozen/v32/bartgame.map -whitespace
+
+# Exact reviewed gilt HUD production linker map.
+/art-review/hud-gilt/validation/frozen/bartgame.map -whitespace

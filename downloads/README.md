@@ -1,6 +1,20 @@
 # BARTGAME downloads
 
 
+## Gleaming HUD and native item refresh
+
+Larger item silhouettes and A/B/L medallions, press illumination, restrained
+gold shimmer and a larger minimap with a blinking current room. The refined
+forest remains selected.
+
+- [Actual mGBA views, animation and complete native item catalog](../art-review/hud-gilt/README.md)
+- [Download the ROM](https://raw.githubusercontent.com/natertott/bartgame/hud-gilt-polish/downloads/hud-gilt-4747b67/hud-gilt-4747b67.gba)
+- [Download the ZIP](https://raw.githubusercontent.com/natertott/bartgame/hud-gilt-polish/downloads/hud-gilt-4747b67/hud-gilt-4747b67.zip)
+- [Build and checksums](hud-gilt-4747b67/README.md)
+
+Game/art source4747b678; normal `BART_HUD=1`. `BART_HUD=0` preserves
+the previous compact HUD/items when reproducing earlier forest profiles.
+
 ## Refined forest rooms and details
 
 The normal build now uses profile32: coherent brooks and ponds, useful

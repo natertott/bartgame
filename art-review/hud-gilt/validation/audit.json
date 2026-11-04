@@ -1,0 +1,7306 @@
+{
+  "method": "Independent scope, native-art fidelity and hardware-budget HUD review.\n\nThis compares decoded linked ROM assets with the native source and the previous\nselected game. It does not claim that numerical checks establish attractive art;\nactual HUD motion and scene readability are reviewed separately in mGBA.",
+  "tool_sha256": "8fe1bfb23c4266f0c3a6005db9f6b819458d60f5cab74c9c17df37ea631f38d4",
+  "source_commit": "4747b6788f18fe32da7d3304f34ce94c22468d5b",
+  "baseline_commit": "e3e65be4d7ab98426e31a4bfab9dac02e17299f6",
+  "baseline_rom_sha256": "5fcf4cba1c6ab3a5af4575a5a05a49d9813457a02b4f5d16a7e3abc05e41566e",
+  "rom_sha256": "1bd913bc5bf1ad81e9c1dcc7e07ebc38eac855d390a5bb613257f8fbfe128e59",
+  "rom_bytes": 652024,
+  "changed_source_files": [
+    "src/actor.h",
+    "src/text.c",
+    "src/text.h"
+  ],
+  "native_art": {
+    "frames": [
+      {
+        "sheet": "items",
+        "frame": "none",
+        "canvas": [
+          16,
+          16
+        ],
+        "bounds": null,
+        "painted_pixels": 0,
+        "previous_bounds": null,
+        "changed": false,
+        "pixel_sha256": "5341e6b2646979a70e57653007a1f310169421ec9bdd9f1a5648f75ade005af1"
+      },
+      {
+        "sheet": "items",
+        "frame": "bombs",
+        "canvas": [
+          16,
+          16
+        ],
+        "bounds": [
+          3,
+          2,
+          13,
+          15
+        ],
+        "painted_pixels": 72,
+        "previous_bounds": [
+          2,
+          2,
+          14,
+          16
+        ],
+        "changed": true,
+        "pixel_sha256": "2a402334f491ceb61a0f960fb92c951ecbbe3534a1f20159f49d042ecee45511"
+      },
+      {
+        "sheet": "items",
+        "frame": "lamp",
+        "canvas": [
+          16,
+          16
+        ],
+        "bounds": [
+          3,
+          1,
+          13,
+          15
+        ],
+        "painted_pixels": 114,
+        "previous_bounds": [
+          3,
+          0,
+          13,
+          15
+        ],
+        "changed": true,
+        "pixel_sha256": "3d63e9914b7c3440a0d1d9f50d1fbd5cdcbd9971a044d4e0e849c4e0a4bc8c42"
+      },
+      {
+        "sheet": "items",
+        "frame": "cloak",
+        "canvas": [
+          16,
+          16
+        ],
+        "bounds": [
+          2,
+          2,
+          15,
+          15
+        ],
+        "painted_pixels": 114,
+        "previous_bounds": [
+          1,
+          1,
+          15,
+          16
+        ],
+        "changed": true,
+        "pixel_sha256": "f0ad889b6f21489b5bc11704a5d72ff72d197a2690f8b3962cfea5103f9312ba"
+      },
+      {
+        "sheet": "items",
+        "frame": "key",
+        "canvas": [
+          16,
+          16
+        ],
+        "bounds": [
+          2,
+          2,
+          14,
+          15
+        ],
+        "painted_pixels": 76,
+        "previous_bounds": [
+          1,
+          1,
+          14,
+          15
+        ],
+        "changed": true,
+        "pixel_sha256": "81957db69d05769e15e5eb58228195950244a2cff7083c29d9f9b574a5bbf094"
+      },
+      {
+        "sheet": "items",
+        "frame": "heart_piece",
+        "canvas": [
+          16,
+          16
+        ],
+        "bounds": [
+          2,
+          3,
+          15,
+          15
+        ],
+        "painted_pixels": 104,
+        "previous_bounds": [
+          2,
+          2,
+          15,
+          15
+        ],
+        "changed": true,
+        "pixel_sha256": "40eca44474592e7a5c809f7d395161831064f8d62e68a6c30bc7aa513c3989e6"
+      },
+      {
+        "sheet": "items",
+        "frame": "heart_container",
+        "canvas": [
+          16,
+          16
+        ],
+        "bounds": [
+          2,
+          3,
+          15,
+          15
+        ],
+        "painted_pixels": 104,
+        "previous_bounds": [
+          2,
+          2,
+          15,
+          15
+        ],
+        "changed": true,
+        "pixel_sha256": "c4280086175584e294be162e52075eac574a58fe51c5732f805dc467e389da64"
+      },
+      {
+        "sheet": "items",
+        "frame": "gilt_big",
+        "canvas": [
+          16,
+          16
+        ],
+        "bounds": [
+          2,
+          2,
+          14,
+          15
+        ],
+        "painted_pixels": 111,
+        "previous_bounds": [
+          1,
+          2,
+          14,
+          16
+        ],
+        "changed": true,
+        "pixel_sha256": "9f14618a30af8fed72fdc738384aa92ffe68e47c9591ee3887616650b015d323"
+      },
+      {
+        "sheet": "items",
+        "frame": "relic",
+        "canvas": [
+          16,
+          16
+        ],
+        "bounds": [
+          2,
+          2,
+          14,
+          14
+        ],
+        "painted_pixels": 112,
+        "previous_bounds": [
+          1,
+          1,
+          15,
+          15
+        ],
+        "changed": true,
+        "pixel_sha256": "8f6b6528c908f483c140081a616eee1be665d79e7c10a10efcbc4a21a9f0763c"
+      },
+      {
+        "sheet": "items",
+        "frame": "heart",
+        "canvas": [
+          16,
+          16
+        ],
+        "bounds": [
+          2,
+          3,
+          15,
+          15
+        ],
+        "painted_pixels": 104,
+        "previous_bounds": [
+          2,
+          2,
+          15,
+          15
+        ],
+        "changed": true,
+        "pixel_sha256": "6c522c23e1de149c4ee3903f033f93207bac81b15705644543cc84b8d82433eb"
+      },
+      {
+        "sheet": "items",
+        "frame": "gilt",
+        "canvas": [
+          16,
+          16
+        ],
+        "bounds": [
+          4,
+          4,
+          12,
+          14
+        ],
+        "painted_pixels": 64,
+        "previous_bounds": [
+          3,
+          2,
+          13,
+          14
+        ],
+        "changed": true,
+        "pixel_sha256": "9f198dbac2f5d5243476bdb4e3a204c2ac404104cff8a4449f7f09f10725a6a5"
+      },
+      {
+        "sheet": "items",
+        "frame": "bomb_pickup",
+        "canvas": [
+          16,
+          16
+        ],
+        "bounds": [
+          3,
+          2,
+          13,
+          15
+        ],
+        "painted_pixels": 72,
+        "previous_bounds": [
+          2,
+          2,
+          14,
+          16
+        ],
+        "changed": true,
+        "pixel_sha256": "2a402334f491ceb61a0f960fb92c951ecbbe3534a1f20159f49d042ecee45511"
+      },
+      {
+        "sheet": "items",
+        "frame": "spark",
+        "canvas": [
+          16,
+          16
+        ],
+        "bounds": [
+          2,
+          2,
+          14,
+          14
+        ],
+        "painted_pixels": 42,
+        "previous_bounds": [
+          1,
+          1,
+          15,
+          15
+        ],
+        "changed": true,
+        "pixel_sha256": "fd4d7a739847505fac3f27d4afc8d0c025b6c504639909d52bb2fc455850204d"
+      },
+      {
+        "sheet": "items",
+        "frame": "grail",
+        "canvas": [
+          16,
+          16
+        ],
+        "bounds": [
+          2,
+          2,
+          14,
+          15
+        ],
+        "painted_pixels": 109,
+        "previous_bounds": [
+          2,
+          2,
+          14,
+          16
+        ],
+        "changed": true,
+        "pixel_sha256": "75a7a1be65be64cbff0fbd1b951a8560de1ebee50db51d40e2812ba0f08accfc"
+      },
+      {
+        "sheet": "items",
+        "frame": "gauntlet",
+        "canvas": [
+          16,
+          16
+        ],
+        "bounds": [
+          2,
+          2,
+          15,
+          15
+        ],
+        "painted_pixels": 122,
+        "previous_bounds": [
+          2,
+          1,
+          15,
+          16
+        ],
+        "changed": true,
+        "pixel_sha256": "2e4ca7067c2c6d544a829e6b0f9e341be77a39146c039bacd5e6ad9d71d64035"
+      },
+      {
+        "sheet": "items",
+        "frame": "bow",
+        "canvas": [
+          16,
+          16
+        ],
+        "bounds": [
+          4,
+          2,
+          14,
+          15
+        ],
+        "painted_pixels": 62,
+        "previous_bounds": [
+          4,
+          0,
+          14,
+          16
+        ],
+        "changed": true,
+        "pixel_sha256": "c54a3a26394e6040633d994a646356f004080d683c6d4eb1fe5523122c84f09a"
+      },
+      {
+        "sheet": "items",
+        "frame": "arrow1",
+        "canvas": [
+          16,
+          16
+        ],
+        "bounds": [
+          3,
+          3,
+          13,
+          15
+        ],
+        "painted_pixels": 47,
+        "previous_bounds": [
+          2,
+          2,
+          15,
+          15
+        ],
+        "changed": true,
+        "pixel_sha256": "49ed3b07c6655b4f011923696e1cc1b5b04b764a0a8194686ba8401567c3fd74"
+      },
+      {
+        "sheet": "items",
+        "frame": "arrow5",
+        "canvas": [
+          16,
+          16
+        ],
+        "bounds": [
+          2,
+          3,
+          14,
+          15
+        ],
+        "painted_pixels": 69,
+        "previous_bounds": [
+          1,
+          2,
+          14,
+          15
+        ],
+        "changed": true,
+        "pixel_sha256": "7ccc2b0ee94755914d2cb34120a8838646995d6d723741b6c1231e1cc50a55d2"
+      },
+      {
+        "sheet": "items",
+        "frame": "arrow10",
+        "canvas": [
+          16,
+          16
+        ],
+        "bounds": [
+          1,
+          3,
+          15,
+          15
+        ],
+        "painted_pixels": 91,
+        "previous_bounds": [
+          0,
+          2,
+          15,
+          15
+        ],
+        "changed": true,
+        "pixel_sha256": "abef0421fda70b5c3585cf5c8882c1f73c327b58a843fd53b676d6ef7cd87779"
+      },
+      {
+        "sheet": "items",
+        "frame": "hubcap",
+        "canvas": [
+          16,
+          16
+        ],
+        "bounds": [
+          2,
+          2,
+          14,
+          14
+        ],
+        "painted_pixels": 112,
+        "previous_bounds": [
+          1,
+          1,
+          15,
+          15
+        ],
+        "changed": true,
+        "pixel_sha256": "35adaeb6c3c23ae2f54a26f8d31362e64349ecb872934a90e4d9557addb4887a"
+      },
+      {
+        "sheet": "items",
+        "frame": "bomb_lit",
+        "canvas": [
+          16,
+          16
+        ],
+        "bounds": [
+          3,
+          1,
+          14,
+          15
+        ],
+        "painted_pixels": 76,
+        "previous_bounds": [
+          2,
+          0,
+          15,
+          16
+        ],
+        "changed": true,
+        "pixel_sha256": "e25f60d31ab44317f51f188ae4bacd649444435ceb5a6a690b8a7be0c89ddd71"
+      },
+      {
+        "sheet": "pick32",
+        "frame": "heart",
+        "canvas": [
+          16,
+          16
+        ],
+        "bounds": [
+          2,
+          3,
+          15,
+          15
+        ],
+        "painted_pixels": 104,
+        "previous_bounds": [
+          2,
+          2,
+          15,
+          15
+        ],
+        "changed": true,
+        "pixel_sha256": "6c522c23e1de149c4ee3903f033f93207bac81b15705644543cc84b8d82433eb"
+      },
+      {
+        "sheet": "pick32",
+        "frame": "gilt",
+        "canvas": [
+          16,
+          16
+        ],
+        "bounds": [
+          4,
+          4,
+          12,
+          14
+        ],
+        "painted_pixels": 64,
+        "previous_bounds": [
+          3,
+          2,
+          13,
+          14
+        ],
+        "changed": true,
+        "pixel_sha256": "9f198dbac2f5d5243476bdb4e3a204c2ac404104cff8a4449f7f09f10725a6a5"
+      },
+      {
+        "sheet": "pick32",
+        "frame": "bomb_pickup",
+        "canvas": [
+          16,
+          16
+        ],
+        "bounds": [
+          3,
+          2,
+          13,
+          15
+        ],
+        "painted_pixels": 72,
+        "previous_bounds": [
+          2,
+          2,
+          14,
+          16
+        ],
+        "changed": true,
+        "pixel_sha256": "2a402334f491ceb61a0f960fb92c951ecbbe3534a1f20159f49d042ecee45511"
+      },
+      {
+        "sheet": "pick32",
+        "frame": "gilt_big",
+        "canvas": [
+          16,
+          16
+        ],
+        "bounds": [
+          2,
+          2,
+          14,
+          15
+        ],
+        "painted_pixels": 111,
+        "previous_bounds": [
+          1,
+          2,
+          14,
+          16
+        ],
+        "changed": true,
+        "pixel_sha256": "9f14618a30af8fed72fdc738384aa92ffe68e47c9591ee3887616650b015d323"
+      },
+      {
+        "sheet": "pick32",
+        "frame": "key",
+        "canvas": [
+          16,
+          16
+        ],
+        "bounds": [
+          2,
+          2,
+          14,
+          15
+        ],
+        "painted_pixels": 76,
+        "previous_bounds": [
+          1,
+          1,
+          14,
+          15
+        ],
+        "changed": true,
+        "pixel_sha256": "81957db69d05769e15e5eb58228195950244a2cff7083c29d9f9b574a5bbf094"
+      },
+      {
+        "sheet": "pick32",
+        "frame": "relic",
+        "canvas": [
+          16,
+          16
+        ],
+        "bounds": [
+          2,
+          2,
+          14,
+          14
+        ],
+        "painted_pixels": 112,
+        "previous_bounds": [
+          1,
+          1,
+          15,
+          15
+        ],
+        "changed": true,
+        "pixel_sha256": "8f6b6528c908f483c140081a616eee1be665d79e7c10a10efcbc4a21a9f0763c"
+      },
+      {
+        "sheet": "pick32",
+        "frame": "grail",
+        "canvas": [
+          16,
+          16
+        ],
+        "bounds": [
+          2,
+          2,
+          14,
+          15
+        ],
+        "painted_pixels": 109,
+        "previous_bounds": [
+          2,
+          2,
+          14,
+          16
+        ],
+        "changed": true,
+        "pixel_sha256": "75a7a1be65be64cbff0fbd1b951a8560de1ebee50db51d40e2812ba0f08accfc"
+      },
+      {
+        "sheet": "pick32",
+        "frame": "arrow1",
+        "canvas": [
+          16,
+          16
+        ],
+        "bounds": [
+          3,
+          3,
+          13,
+          15
+        ],
+        "painted_pixels": 47,
+        "previous_bounds": [
+          2,
+          2,
+          15,
+          15
+        ],
+        "changed": true,
+        "pixel_sha256": "49ed3b07c6655b4f011923696e1cc1b5b04b764a0a8194686ba8401567c3fd74"
+      },
+      {
+        "sheet": "pick32",
+        "frame": "arrow5",
+        "canvas": [
+          16,
+          16
+        ],
+        "bounds": [
+          2,
+          3,
+          14,
+          15
+        ],
+        "painted_pixels": 69,
+        "previous_bounds": [
+          1,
+          2,
+          14,
+          15
+        ],
+        "changed": true,
+        "pixel_sha256": "7ccc2b0ee94755914d2cb34120a8838646995d6d723741b6c1231e1cc50a55d2"
+      },
+      {
+        "sheet": "pick32",
+        "frame": "arrow10",
+        "canvas": [
+          16,
+          16
+        ],
+        "bounds": [
+          1,
+          3,
+          15,
+          15
+        ],
+        "painted_pixels": 91,
+        "previous_bounds": [
+          0,
+          2,
+          15,
+          15
+        ],
+        "changed": true,
+        "pixel_sha256": "abef0421fda70b5c3585cf5c8882c1f73c327b58a843fd53b676d6ef7cd87779"
+      },
+      {
+        "sheet": "icon32",
+        "frame": "none",
+        "canvas": [
+          32,
+          32
+        ],
+        "bounds": null,
+        "painted_pixels": 0,
+        "previous_bounds": null,
+        "changed": false,
+        "pixel_sha256": "5f70bf18a086007016e948b04aed3b82103a36bea41755b6cddfaf10ace3c6ef"
+      },
+      {
+        "sheet": "icon32",
+        "frame": "bombs",
+        "canvas": [
+          32,
+          32
+        ],
+        "bounds": [
+          3,
+          1,
+          28,
+          31
+        ],
+        "painted_pixels": 478,
+        "previous_bounds": [
+          5,
+          2,
+          27,
+          30
+        ],
+        "changed": true,
+        "pixel_sha256": "1e52e1441eb505e2e3ad39ddab43821daf9fdff4f5615f44fe9662a46a11fd04"
+      },
+      {
+        "sheet": "icon32",
+        "frame": "lamp",
+        "canvas": [
+          32,
+          32
+        ],
+        "bounds": [
+          4,
+          1,
+          28,
+          30
+        ],
+        "painted_pixels": 499,
+        "previous_bounds": [
+          7,
+          1,
+          26,
+          29
+        ],
+        "changed": true,
+        "pixel_sha256": "1ee043c0870e0302aca8d2a50f1483509a37470e5dab13d3d1b4fac4c109ecb1"
+      },
+      {
+        "sheet": "icon32",
+        "frame": "cloak",
+        "canvas": [
+          32,
+          32
+        ],
+        "bounds": [
+          2,
+          1,
+          30,
+          31
+        ],
+        "painted_pixels": 580,
+        "previous_bounds": [
+          5,
+          2,
+          29,
+          30
+        ],
+        "changed": true,
+        "pixel_sha256": "22133e1b79fb24998cccae1faaaa6564841e2ac263dd79e7873f59763025deb6"
+      },
+      {
+        "sheet": "icon32",
+        "frame": "key",
+        "canvas": [
+          32,
+          32
+        ],
+        "bounds": [
+          2,
+          1,
+          32,
+          31
+        ],
+        "painted_pixels": 373,
+        "previous_bounds": [
+          3,
+          2,
+          30,
+          30
+        ],
+        "changed": true,
+        "pixel_sha256": "bc68be28607b1351c942c59874fb2b05442ce7375e68b1cfd016fe5f2763d8f2"
+      },
+      {
+        "sheet": "icon32",
+        "frame": "heart_piece",
+        "canvas": [
+          32,
+          32
+        ],
+        "bounds": [
+          2,
+          4,
+          31,
+          31
+        ],
+        "painted_pixels": 513,
+        "previous_bounds": [
+          3,
+          4,
+          30,
+          30
+        ],
+        "changed": true,
+        "pixel_sha256": "82a7c6f48adfa91077f8d2855b24ebb66d7c32139adacff9076921854292b5ce"
+      },
+      {
+        "sheet": "icon32",
+        "frame": "heart_container",
+        "canvas": [
+          32,
+          32
+        ],
+        "bounds": [
+          2,
+          4,
+          31,
+          31
+        ],
+        "painted_pixels": 513,
+        "previous_bounds": [
+          3,
+          4,
+          30,
+          30
+        ],
+        "changed": true,
+        "pixel_sha256": "4d4a29a31816fe473590739146891adb8fba782c3cf94a7d914cf212564745c9"
+      },
+      {
+        "sheet": "icon32",
+        "frame": "gilt_big",
+        "canvas": [
+          32,
+          32
+        ],
+        "bounds": [
+          2,
+          2,
+          30,
+          31
+        ],
+        "painted_pixels": 579,
+        "previous_bounds": [
+          3,
+          3,
+          28,
+          30
+        ],
+        "changed": true,
+        "pixel_sha256": "ac5b1b1a9fd70e7ad0dab09d567a9527cc07a3477967db43ec88421d83736912"
+      },
+      {
+        "sheet": "icon32",
+        "frame": "relic",
+        "canvas": [
+          32,
+          32
+        ],
+        "bounds": [
+          2,
+          2,
+          30,
+          30
+        ],
+        "painted_pixels": 616,
+        "previous_bounds": [
+          3,
+          3,
+          29,
+          29
+        ],
+        "changed": true,
+        "pixel_sha256": "9c3181cf5749dbe95500f4a1254aea4d40f5288bc04523fdcef4a91ce3d2a482"
+      },
+      {
+        "sheet": "icon32",
+        "frame": "gauntlet",
+        "canvas": [
+          32,
+          32
+        ],
+        "bounds": [
+          1,
+          1,
+          31,
+          31
+        ],
+        "painted_pixels": 637,
+        "previous_bounds": [
+          4,
+          2,
+          30,
+          30
+        ],
+        "changed": true,
+        "pixel_sha256": "257fe3a01dcfaba0d80f719a65a0e6167e2dee7bad45c4e0a9bee3fbac9662dd"
+      },
+      {
+        "sheet": "icon32",
+        "frame": "bow",
+        "canvas": [
+          32,
+          32
+        ],
+        "bounds": [
+          7,
+          1,
+          30,
+          32
+        ],
+        "painted_pixels": 199,
+        "previous_bounds": [
+          9,
+          2,
+          27,
+          30
+        ],
+        "changed": true,
+        "pixel_sha256": "9468db0f79cad53d77fbeb1c134bc11adf2bf11a06140c54a4a52cc2f0616071"
+      },
+      {
+        "sheet": "icon32",
+        "frame": "hubcap",
+        "canvas": [
+          32,
+          32
+        ],
+        "bounds": [
+          2,
+          2,
+          30,
+          30
+        ],
+        "painted_pixels": 616,
+        "previous_bounds": [
+          3,
+          3,
+          29,
+          29
+        ],
+        "changed": true,
+        "pixel_sha256": "1d41763e669d1f3c06d21be82e77e7f7d1496778b26b27cdc990f7b105d61bfb"
+      },
+      {
+        "sheet": "icon32",
+        "frame": "map",
+        "canvas": [
+          32,
+          32
+        ],
+        "bounds": [
+          2,
+          2,
+          31,
+          31
+        ],
+        "painted_pixels": 688,
+        "previous_bounds": [
+          4,
+          3,
+          29,
+          30
+        ],
+        "changed": true,
+        "pixel_sha256": "1042c148c2a721c2c2e795d11bef0665703ddea7db690f72074b6600df60a00c"
+      },
+      {
+        "sheet": "icon32",
+        "frame": "astrolabe",
+        "canvas": [
+          32,
+          32
+        ],
+        "bounds": [
+          2,
+          2,
+          30,
+          30
+        ],
+        "painted_pixels": 616,
+        "previous_bounds": [
+          3,
+          3,
+          29,
+          29
+        ],
+        "changed": true,
+        "pixel_sha256": "c58e078e1b2af16db21d91b95544335ca0c25a0d7347732b32402d89ee5a165a"
+      },
+      {
+        "sheet": "icon32",
+        "frame": "sword",
+        "canvas": [
+          32,
+          32
+        ],
+        "bounds": [
+          1,
+          2,
+          30,
+          31
+        ],
+        "painted_pixels": 302,
+        "previous_bounds": [
+          8,
+          2,
+          24,
+          30
+        ],
+        "changed": true,
+        "pixel_sha256": "8330fe301e98a23f1f0f576bfc1c16a8de5b55a244ee8db65aa5e835a490499f"
+      },
+      {
+        "sheet": "icon32",
+        "frame": "shield",
+        "canvas": [
+          32,
+          32
+        ],
+        "bounds": [
+          2,
+          2,
+          30,
+          31
+        ],
+        "painted_pixels": 646,
+        "previous_bounds": [
+          4,
+          3,
+          28,
+          29
+        ],
+        "changed": true,
+        "pixel_sha256": "e2696b1a678cbb1ef69d6d54e3634cb64cdf8a3f5875fe03ab5dd9f969661a05"
+      },
+      {
+        "sheet": "icon32",
+        "frame": "shield_upgraded",
+        "canvas": [
+          32,
+          32
+        ],
+        "bounds": [
+          2,
+          2,
+          30,
+          31
+        ],
+        "painted_pixels": 646,
+        "previous_bounds": [
+          4,
+          3,
+          28,
+          29
+        ],
+        "changed": true,
+        "pixel_sha256": "a8b0e94a9be90a3db187e484a0b64a66111ed8c9cfbbf4ad954139e119b99fec"
+      },
+      {
+        "sheet": "huditems",
+        "frame": "none",
+        "canvas": [
+          16,
+          16
+        ],
+        "bounds": null,
+        "painted_pixels": 0,
+        "previous_bounds": null,
+        "changed": false,
+        "pixel_sha256": "5341e6b2646979a70e57653007a1f310169421ec9bdd9f1a5648f75ade005af1"
+      },
+      {
+        "sheet": "huditems",
+        "frame": "bombs",
+        "canvas": [
+          16,
+          16
+        ],
+        "bounds": [
+          0,
+          0,
+          15,
+          16
+        ],
+        "painted_pixels": 150,
+        "previous_bounds": [
+          2,
+          1,
+          11,
+          11
+        ],
+        "changed": true,
+        "pixel_sha256": "362789d7bbbdfcb89e65cd48249efc8a334cefe8f88f525886aa9c69dde89c6a"
+      },
+      {
+        "sheet": "huditems",
+        "frame": "lamp",
+        "canvas": [
+          16,
+          16
+        ],
+        "bounds": [
+          1,
+          0,
+          15,
+          16
+        ],
+        "painted_pixels": 170,
+        "previous_bounds": [
+          3,
+          1,
+          11,
+          11
+        ],
+        "changed": true,
+        "pixel_sha256": "4f987db6f0ceaf9f8a6d0da6f4fb845a836fc93b98ff86e978a7e81bf77befbf"
+      },
+      {
+        "sheet": "huditems",
+        "frame": "cloak",
+        "canvas": [
+          16,
+          16
+        ],
+        "bounds": [
+          0,
+          0,
+          16,
+          16
+        ],
+        "painted_pixels": 168,
+        "previous_bounds": [
+          2,
+          1,
+          12,
+          11
+        ],
+        "changed": true,
+        "pixel_sha256": "75d3931a841f5a7cfa9ca89c9a3e6378433b82ed356480f174c6d8dbb0599945"
+      },
+      {
+        "sheet": "huditems",
+        "frame": "key",
+        "canvas": [
+          16,
+          16
+        ],
+        "bounds": [
+          0,
+          0,
+          16,
+          16
+        ],
+        "painted_pixels": 112,
+        "previous_bounds": [
+          2,
+          1,
+          12,
+          11
+        ],
+        "changed": true,
+        "pixel_sha256": "a5a73c52eeca742a973287f98268eb8a74a3267ff0819d1ea353bbe89fe52a10"
+      },
+      {
+        "sheet": "huditems",
+        "frame": "heart_piece",
+        "canvas": [
+          16,
+          16
+        ],
+        "bounds": [
+          0,
+          1,
+          16,
+          16
+        ],
+        "painted_pixels": 164,
+        "previous_bounds": [
+          2,
+          2,
+          12,
+          11
+        ],
+        "changed": true,
+        "pixel_sha256": "3f3cded85194c69ce1bebd21575a914027434ef09d4f342d188af2cf9a409744"
+      },
+      {
+        "sheet": "huditems",
+        "frame": "heart_container",
+        "canvas": [
+          16,
+          16
+        ],
+        "bounds": [
+          0,
+          1,
+          16,
+          16
+        ],
+        "painted_pixels": 164,
+        "previous_bounds": [
+          2,
+          2,
+          12,
+          11
+        ],
+        "changed": true,
+        "pixel_sha256": "718fd1383a9537a00614817f676fcfbaa39d3419f37976491b1cf94f24036d96"
+      },
+      {
+        "sheet": "huditems",
+        "frame": "gilt_big",
+        "canvas": [
+          16,
+          16
+        ],
+        "bounds": [
+          0,
+          0,
+          16,
+          16
+        ],
+        "painted_pixels": 180,
+        "previous_bounds": [
+          2,
+          1,
+          12,
+          11
+        ],
+        "changed": true,
+        "pixel_sha256": "99c24c617eb935b16bee85ecd9a1b912354175fbc96bb99dba5d7e6088e7ddd2"
+      },
+      {
+        "sheet": "huditems",
+        "frame": "relic",
+        "canvas": [
+          16,
+          16
+        ],
+        "bounds": [
+          0,
+          0,
+          16,
+          16
+        ],
+        "painted_pixels": 200,
+        "previous_bounds": [
+          2,
+          1,
+          12,
+          11
+        ],
+        "changed": true,
+        "pixel_sha256": "447fd7cfc44c4789e4df52753e4a5e5a07ea5e24db29a6ff7c444221b5b325e1"
+      },
+      {
+        "sheet": "huditems",
+        "frame": "gauntlet",
+        "canvas": [
+          16,
+          16
+        ],
+        "bounds": [
+          0,
+          0,
+          16,
+          16
+        ],
+        "painted_pixels": 178,
+        "previous_bounds": [
+          2,
+          1,
+          12,
+          11
+        ],
+        "changed": true,
+        "pixel_sha256": "ede5b4067e5e7febdbb9358bb4aea41385463c41ea79453190545ec8c57a6305"
+      },
+      {
+        "sheet": "huditems",
+        "frame": "bow",
+        "canvas": [
+          16,
+          16
+        ],
+        "bounds": [
+          3,
+          0,
+          16,
+          16
+        ],
+        "painted_pixels": 92,
+        "previous_bounds": [
+          3,
+          1,
+          12,
+          11
+        ],
+        "changed": true,
+        "pixel_sha256": "85171b770bb972f100cf5895993f1b6c83c3d22c8e2f20016771a5e3a828ffb2"
+      },
+      {
+        "sheet": "huditems",
+        "frame": "hubcap",
+        "canvas": [
+          16,
+          16
+        ],
+        "bounds": [
+          0,
+          0,
+          16,
+          16
+        ],
+        "painted_pixels": 200,
+        "previous_bounds": [
+          2,
+          1,
+          12,
+          11
+        ],
+        "changed": true,
+        "pixel_sha256": "89ebe04f88e6af441e90a240eb3063c65691c40e4a55e461c501d4b25f8975bf"
+      },
+      {
+        "sheet": "huditems",
+        "frame": "map",
+        "canvas": [
+          16,
+          16
+        ],
+        "bounds": [
+          0,
+          0,
+          16,
+          16
+        ],
+        "painted_pixels": 202,
+        "previous_bounds": [
+          2,
+          1,
+          12,
+          11
+        ],
+        "changed": true,
+        "pixel_sha256": "4f4039903cf2a723bb41dc9b91990bd4fa577a7ebcd278b93d378b98fa2e9b07"
+      },
+      {
+        "sheet": "huditems",
+        "frame": "astrolabe",
+        "canvas": [
+          16,
+          16
+        ],
+        "bounds": [
+          0,
+          0,
+          16,
+          16
+        ],
+        "painted_pixels": 200,
+        "previous_bounds": [
+          2,
+          1,
+          12,
+          11
+        ],
+        "changed": true,
+        "pixel_sha256": "6db39122a155789f8111eed875de2a7690a32450fdd21ad190a852a9df078aa6"
+      },
+      {
+        "sheet": "huditems",
+        "frame": "sword",
+        "canvas": [
+          16,
+          16
+        ],
+        "bounds": [
+          0,
+          0,
+          16,
+          15
+        ],
+        "painted_pixels": 123,
+        "previous_bounds": [
+          2,
+          1,
+          12,
+          11
+        ],
+        "changed": true,
+        "pixel_sha256": "714c9580ca36e2956f6011fa788294e86ff4e06a481e2304e98dcac00c559bd0"
+      },
+      {
+        "sheet": "huditems",
+        "frame": "shield",
+        "canvas": [
+          16,
+          16
+        ],
+        "bounds": [
+          0,
+          0,
+          16,
+          16
+        ],
+        "painted_pixels": 202,
+        "previous_bounds": [
+          2,
+          2,
+          12,
+          11
+        ],
+        "changed": true,
+        "pixel_sha256": "d9abde1e248e1b45f9f51ed0b80f22b019ea3de06fb32d6f984a630b65c07b05"
+      },
+      {
+        "sheet": "huditems",
+        "frame": "shield_upgraded",
+        "canvas": [
+          16,
+          16
+        ],
+        "bounds": [
+          0,
+          0,
+          16,
+          16
+        ],
+        "painted_pixels": 202,
+        "previous_bounds": [
+          2,
+          1,
+          12,
+          11
+        ],
+        "changed": true,
+        "pixel_sha256": "7f92d7d6c2b2c0b8770e173150fbafe36c0be5b9c3e1bdbfc05c5e7930f3523f"
+      }
+    ],
+    "changed_frames": [
+      "items/bombs",
+      "items/lamp",
+      "items/cloak",
+      "items/key",
+      "items/heart_piece",
+      "items/heart_container",
+      "items/gilt_big",
+      "items/relic",
+      "items/heart",
+      "items/gilt",
+      "items/bomb_pickup",
+      "items/spark",
+      "items/grail",
+      "items/gauntlet",
+      "items/bow",
+      "items/arrow1",
+      "items/arrow5",
+      "items/arrow10",
+      "items/hubcap",
+      "items/bomb_lit",
+      "pick32/heart",
+      "pick32/gilt",
+      "pick32/bomb_pickup",
+      "pick32/gilt_big",
+      "pick32/key",
+      "pick32/relic",
+      "pick32/grail",
+      "pick32/arrow1",
+      "pick32/arrow5",
+      "pick32/arrow10",
+      "icon32/bombs",
+      "icon32/lamp",
+      "icon32/cloak",
+      "icon32/key",
+      "icon32/heart_piece",
+      "icon32/heart_container",
+      "icon32/gilt_big",
+      "icon32/relic",
+      "icon32/gauntlet",
+      "icon32/bow",
+      "icon32/hubcap",
+      "icon32/map",
+      "icon32/astrolabe",
+      "icon32/sword",
+      "icon32/shield",
+      "icon32/shield_upgraded",
+      "huditems/bombs",
+      "huditems/lamp",
+      "huditems/cloak",
+      "huditems/key",
+      "huditems/heart_piece",
+      "huditems/heart_container",
+      "huditems/gilt_big",
+      "huditems/relic",
+      "huditems/gauntlet",
+      "huditems/bow",
+      "huditems/hubcap",
+      "huditems/map",
+      "huditems/astrolabe",
+      "huditems/sword",
+      "huditems/shield",
+      "huditems/shield_upgraded"
+    ],
+    "source_comparison": "Separate clean interpreters, HUD0/HUD1; exact native nibbles decoded independently from linked OBJ data."
+  },
+  "freeze_provenance": {
+    "unqualified_pilot": false,
+    "source_commit": "4747b6788f18fe32da7d3304f34ce94c22468d5b",
+    "inputs_checked": 267,
+    "freeze_sha256": "d87c8efc5d20a96a036978a966225da8d33d88de630d06ac69d154b3b56a8141"
+  },
+  "protected_scope": {
+    "protected_scalar_arrays": 246,
+    "excluded_pointer_tables": [
+      "room_defs",
+      "sheets",
+      "tile_anims_forest",
+      "tile_anims_myst",
+      "tile_anims_sewer",
+      "tilesets"
+    ],
+    "allowed_changed_arrays": [
+      "icon32_exact_tiles",
+      "sheet_huditems_tiles",
+      "sheet_icon32_tiles",
+      "sheet_items_tiles",
+      "sheet_pick32_tiles"
+    ]
+  },
+  "memory": {
+    "iwram": {
+      "before_bytes": 128,
+      "after_bytes": 128
+    },
+    "bss": {
+      "before_bytes": 21852,
+      "after_bytes": 21780
+    },
+    "ewram": {
+      "before_bytes": 0,
+      "after_bytes": 0
+    },
+    "ewram_bss": {
+      "before_bytes": 251680,
+      "after_bytes": 253152
+    }
+  },
+  "passed": 1090,
+  "total": 1090,
+  "checks": [
+    {
+      "group": "provenance",
+      "name": "prior selected ROM is the delivered forest-cohesion baseline",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "final freeze binds actual ROM bytes and a committed source revision",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "final freeze records all game/art/build inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "Makefile matches current and committed frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "art/blight_reference.py matches current and committed frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "art/blight_reference_source.py matches current and committed frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "art/bloom_animations.py matches current and committed frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "art/bloom_fx.py matches current and committed frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "art/bloom_loads.py matches current and committed frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "art/clean_items.py matches current and committed frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "art/enemy_heart.py matches current and committed frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "art/enemy_studies.py matches current and committed frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "art/enemy_studies_heavy.py matches current and committed frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "art/enemy_studies_palette.py matches current and committed frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "art/enemy_studies_small.py matches current and committed frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "art/enemy_studies_soft.py matches current and committed frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "art/env_pack.py matches current and committed frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "art/faces.py matches current and committed frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "art/folk.py matches current and committed frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "art/forest_art.py matches current and committed frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "art/forest_canopy_adaptive.py matches current and committed frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "art/forest_canopy_adaptive_b.py matches current and committed frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "art/forest_canopy_adaptive_terrain.py matches current and committed frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "art/forest_canopy_emerald.py matches current and committed frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "art/forest_canopy_emerald_terrain.py matches current and committed frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "art/forest_cohesion_props.py matches current and committed frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "art/forest_cohesion_terrain.py matches current and committed frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "art/forest_cohesion_topology.py matches current and committed frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "art/forest_concepts.py matches current and committed frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "art/forest_concepts_folk.py matches current and committed frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "art/forest_concepts_props.py matches current and committed frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "art/forest_concepts_terrain.py matches current and committed frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "art/forest_concepts_v2_folk.py matches current and committed frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "art/forest_concepts_v2_props.py matches current and committed frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "art/forest_concepts_v2_terrain.py matches current and committed frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "art/forest_concepts_v2_topology.py matches current and committed frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "art/forest_concepts_v3_terrain.py matches current and committed frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "art/forest_sprites.py matches current and committed frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "art/forest_tree_study.py matches current and committed frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "art/forest_trees_terrain.py matches current and committed frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "art/healthy_reference.py matches current and committed frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "art/hero.py matches current and committed frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "art/hud_gilt_items.py matches current and committed frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "art/interactive_props.py matches current and committed frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "art/interactive_tiles.py matches current and committed frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "art/items.py matches current and committed frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "art/items32.py matches current and committed frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "art/marks.py matches current and committed frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "art/monsters.py matches current and committed frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "art/pack.py matches current and committed frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "art/pack_tiles.py matches current and committed frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "art/paint.py matches current and committed frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "art/palettes.py matches current and committed frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "art/portraits.py matches current and committed frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "art/px.py matches current and committed frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "art/reboot_actors.py matches current and committed frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "art/reboot_contracts.json matches current and committed frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "art/reboot_core.py matches current and committed frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "art/reboot_items.py matches current and committed frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "art/reboot_terrain.py matches current and committed frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "art/reboot_ui.py matches current and committed frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "art/reference_assets.py matches current and committed frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "art/reference_items.py matches current and committed frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "art/rooms.py matches current and committed frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "art/sample.py matches current and committed frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "art/sewer_concepts.py matches current and committed frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "art/sewer_concepts_npcs.py matches current and committed frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "art/sewer_concepts_terrain.py matches current and committed frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "art/sewer_final.py matches current and committed frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "art/sewer_final_contracts.py matches current and committed frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "art/sewer_v3_fixtures.py matches current and committed frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "art/sprites.py matches current and committed frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "art/style.py matches current and committed frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "art/sw_cut.py matches current and committed frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "art/sw_drain.py matches current and committed frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "art/sw_folk.py matches current and committed frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "art/sw_hall.py matches current and committed frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "art/sw_paint.py matches current and committed frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "art/sw_props.py matches current and committed frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "art/sword_studies.py matches current and committed frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "art/tile_art.py matches current and committed frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "art/tiles.py matches current and committed frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "art/tiles_style.py matches current and committed frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "art/title.py matches current and committed frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "art/ui_font.py matches current and committed frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "art/ui_kit.py matches current and committed frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "art/ui_studies.py matches current and committed frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "art/wood_art.py matches current and committed frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "gba.ld matches current and committed frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "src/actor.c matches current and committed frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "src/actor.h matches current and committed frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "src/ambient.c matches current and committed frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "src/ambient.h matches current and committed frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "src/appearance.c matches current and committed frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "src/appearance.h matches current and committed frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "src/boss.c matches current and committed frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "src/boss.h matches current and committed frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "src/canopy_scene.c matches current and committed frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "src/canopy_scene.h matches current and committed frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "src/crt0.s matches current and committed frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "src/enemy.c matches current and committed frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "src/enemy.h matches current and committed frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "src/forest_paths.c matches current and committed frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "src/forest_paths.h matches current and committed frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "src/forest_trees.c matches current and committed frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "src/forest_trees.h matches current and committed frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "src/game.c matches current and committed frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "src/game.h matches current and committed frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "src/gba.h matches current and committed frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "src/interactive.c matches current and committed frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "src/interactive.h matches current and committed frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "src/items.c matches current and committed frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "src/items.h matches current and committed frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "src/main.c matches current and committed frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "src/menu.c matches current and committed frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "src/menu.h matches current and committed frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "src/menu_layouts_a.c matches current and committed frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "src/menu_layouts_b.c matches current and committed frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "src/menu_studies.c matches current and committed frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "src/menu_studies.h matches current and committed frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "src/myst.c matches current and committed frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "src/myst.h matches current and committed frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "src/npc.c matches current and committed frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "src/npc.h matches current and committed frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "src/objects.c matches current and committed frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "src/objects.h matches current and committed frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "src/player.c matches current and committed frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "src/player.h matches current and committed frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "src/react.c matches current and committed frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "src/react.h matches current and committed frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "src/room.c matches current and committed frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "src/room.h matches current and committed frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "src/roomgen.c matches current and committed frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "src/roomgen.h matches current and committed frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "src/save.c matches current and committed frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "src/save.h matches current and committed frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "src/sound.c matches current and committed frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "src/sound.h matches current and committed frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "src/text.c matches current and committed frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "src/text.h matches current and committed frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "src/tree_study.c matches current and committed frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "src/tree_study.h matches current and committed frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "src/ui.c matches current and committed frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "src/ui.h matches current and committed frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "src/util.c matches current and committed frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "src/util.h matches current and committed frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "src/video.c matches current and committed frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "src/video.h matches current and committed frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "src/vwf.c matches current and committed frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "src/vwf.h matches current and committed frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "src/world.c matches current and committed frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "src/world.h matches current and committed frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "tools/adopted_map_review.py matches current and committed frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "tools/appearance_enemy_publish.py matches current and committed frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "tools/appearance_review.py matches current and committed frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "tools/art_reboot_gallery.py matches current and committed frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "tools/art_reboot_hud_equivalence.py matches current and committed frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "tools/art_reboot_inventory.py matches current and committed frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "tools/art_reboot_latency.py matches current and committed frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "tools/art_reboot_mockups.py matches current and committed frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "tools/art_reboot_performance.py matches current and committed frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "tools/art_reboot_probe.py matches current and committed frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "tools/art_reboot_review.py matches current and committed frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "tools/blight_gallery.py matches current and committed frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "tools/blight_review.py matches current and committed frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "tools/blight_scope_probe.py matches current and committed frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "tools/bloom_budget.py matches current and committed frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "tools/bloom_probe.py matches current and committed frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "tools/bloom_review.py matches current and committed frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "tools/bloom_suite_gallery.py matches current and committed frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "tools/bloom_suite_probe.py matches current and committed frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "tools/bloom_suite_review.py matches current and committed frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "tools/bloom_suite_scope.py matches current and committed frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "tools/build_assets.py matches current and committed frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "tools/compare_frames.py matches current and committed frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "tools/compose_frame.py matches current and committed frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "tools/critical_path.py matches current and committed frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "tools/drain_ui_audit.py matches current and committed frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "tools/drain_ui_gallery.py matches current and committed frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "tools/drain_ui_publish.py matches current and committed frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "tools/drain_ui_review.py matches current and committed frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "tools/enemy_study_audit.py matches current and committed frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "tools/enemy_study_gallery.py matches current and committed frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "tools/enemy_study_review.py matches current and committed frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "tools/engine_contract.py matches current and committed frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "tools/folk_preview.py matches current and committed frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "tools/forest_canopy_adaptive_audit.py matches current and committed frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "tools/forest_canopy_adaptive_gallery.py matches current and committed frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "tools/forest_canopy_adaptive_review.py matches current and committed frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "tools/forest_canopy_emerald_audit.py matches current and committed frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "tools/forest_canopy_emerald_gallery.py matches current and committed frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "tools/forest_cohesion_audit.py matches current and committed frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "tools/forest_cohesion_gallery.py matches current and committed frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "tools/forest_cohesion_review.py matches current and committed frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "tools/forest_cohesion_runtime.py matches current and committed frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "tools/forest_concept_audit.py matches current and committed frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "tools/forest_concept_gallery.py matches current and committed frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "tools/forest_concept_publish.py matches current and committed frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "tools/forest_concept_review.py matches current and committed frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "tools/forest_review.py matches current and committed frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "tools/forest_tree_gallery.py matches current and committed frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "tools/forest_tree_review.py matches current and committed frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "tools/forest_tree_study_audit.py matches current and committed frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "tools/forest_trees_audit.py matches current and committed frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "tools/forest_trees_gallery.py matches current and committed frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "tools/forest_trees_review.py matches current and committed frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "tools/forest_trees_runtime.py matches current and committed frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "tools/forest_v2_audit.py matches current and committed frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "tools/forest_v2_gallery.py matches current and committed frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "tools/forest_v2_publish.py matches current and committed frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "tools/forest_v2_review.py matches current and committed frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "tools/forest_v3_audit.py matches current and committed frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "tools/forest_v3_gallery.py matches current and committed frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "tools/forest_v3_review.py matches current and committed frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "tools/generation_review.py matches current and committed frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "tools/golden_capture.py matches current and committed frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "tools/guard_probe.py matches current and committed frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "tools/hall_probe.py matches current and committed frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "tools/hall_shots.py matches current and committed frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "tools/healthy_gallery.py matches current and committed frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "tools/healthy_review.py matches current and committed frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "tools/healthy_scope_probe.py matches current and committed frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "tools/hud_gilt_audit.py matches current and committed frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "tools/hud_gilt_gallery.py matches current and committed frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "tools/hud_gilt_review.py matches current and committed frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "tools/hud_shots.py matches current and committed frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "tools/import_pack.py matches current and committed frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "tools/import_tiles.py matches current and committed frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "tools/interactive_gallery.py matches current and committed frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "tools/interactive_probe.py matches current and committed frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "tools/interactive_review.py matches current and committed frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "tools/interactive_scope.py matches current and committed frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "tools/items_review.py matches current and committed frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "tools/lift_probe.py matches current and committed frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "tools/mandatory_trials.py matches current and committed frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "tools/menu_probe.py matches current and committed frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "tools/myst_probe.py matches current and committed frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "tools/pack_art.py matches current and committed frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "tools/perf_probe.py matches current and committed frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "tools/pocket_probe.py matches current and committed frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "tools/preview.py matches current and committed frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "tools/probe.py matches current and committed frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "tools/quest_probe.py matches current and committed frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "tools/reference_items_probe.py matches current and committed frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "tools/revisit_probe.py matches current and committed frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "tools/roomdump.py matches current and committed frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "tools/roomgen_probe.py matches current and committed frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "tools/roomgrids.py matches current and committed frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "tools/roomshots.py matches current and committed frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "tools/save_probe.py matches current and committed frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "tools/selected_enemy_audit.py matches current and committed frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "tools/selected_enemy_gallery.py matches current and committed frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "tools/selected_enemy_publish.py matches current and committed frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "tools/sewer_concept_audit.py matches current and committed frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "tools/sewer_concept_gallery.py matches current and committed frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "tools/sewer_concept_publish.py matches current and committed frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "tools/sewer_concept_review.py matches current and committed frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "tools/surface_compare.py matches current and committed frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "tools/surface_probe.py matches current and committed frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "tools/sw_preview.py matches current and committed frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "tools/sword_study_gallery.py matches current and committed frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "tools/sword_study_probe.py matches current and committed frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "tools/sword_study_review.py matches current and committed frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "tools/title_probe.py matches current and committed frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "tools/ui_layout_audit.py matches current and committed frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "tools/ui_layout_gallery.py matches current and committed frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "tools/ui_layout_publish.py matches current and committed frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "tools/ui_layout_review.py matches current and committed frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "tools/ui_shots.py matches current and committed frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "tools/wood_probe.py matches current and committed frozen inputs",
+      "passed": true
+    },
+    {
+      "group": "configuration",
+      "name": "current HUD1/default forest32 and selected controls",
+      "passed": true
+    },
+    {
+      "group": "configuration",
+      "name": "legacy comparison is a current explicitHUD0 build",
+      "passed": true
+    },
+    {
+      "group": "configuration",
+      "name": "HUD0 reproduces every byte of the prior released ROM",
+      "passed": true,
+      "detail": {
+        "sha256": "5fcf4cba1c6ab3a5af4575a5a05a49d9813457a02b4f5d16a7e3abc05e41566e",
+        "bytes": 650168
+      }
+    },
+    {
+      "group": "scope",
+      "name": "all gameplay/region/weapon/save source remains exact",
+      "passed": true,
+      "detail": [
+        "src/actor.h",
+        "src/text.c",
+        "src/text.h"
+      ]
+    },
+    {
+      "group": "source scope",
+      "name": "bg_palettes remains exact",
+      "passed": true
+    },
+    {
+      "group": "source scope",
+      "name": "obj_palettes remains exact",
+      "passed": true
+    },
+    {
+      "group": "source scope",
+      "name": "metatiles remains exact",
+      "passed": true
+    },
+    {
+      "group": "source scope",
+      "name": "rooms remains exact",
+      "passed": true
+    },
+    {
+      "group": "source scope",
+      "name": "all sprite identities remain registered in the same order",
+      "passed": true
+    },
+    {
+      "group": "metadata",
+      "name": "hero w remains exact",
+      "passed": true
+    },
+    {
+      "group": "metadata",
+      "name": "hero h remains exact",
+      "passed": true
+    },
+    {
+      "group": "metadata",
+      "name": "hero pal remains exact",
+      "passed": true
+    },
+    {
+      "group": "metadata",
+      "name": "hero order remains exact",
+      "passed": true
+    },
+    {
+      "group": "metadata",
+      "name": "hero frame_pal remains exact",
+      "passed": true
+    },
+    {
+      "group": "source scope",
+      "name": "hero all source pixels retained",
+      "passed": true
+    },
+    {
+      "group": "metadata",
+      "name": "sword w remains exact",
+      "passed": true
+    },
+    {
+      "group": "metadata",
+      "name": "sword h remains exact",
+      "passed": true
+    },
+    {
+      "group": "metadata",
+      "name": "sword pal remains exact",
+      "passed": true
+    },
+    {
+      "group": "metadata",
+      "name": "sword order remains exact",
+      "passed": true
+    },
+    {
+      "group": "metadata",
+      "name": "sword frame_pal remains exact",
+      "passed": true
+    },
+    {
+      "group": "source scope",
+      "name": "sword all source pixels retained",
+      "passed": true
+    },
+    {
+      "group": "metadata",
+      "name": "shield w remains exact",
+      "passed": true
+    },
+    {
+      "group": "metadata",
+      "name": "shield h remains exact",
+      "passed": true
+    },
+    {
+      "group": "metadata",
+      "name": "shield pal remains exact",
+      "passed": true
+    },
+    {
+      "group": "metadata",
+      "name": "shield order remains exact",
+      "passed": true
+    },
+    {
+      "group": "metadata",
+      "name": "shield frame_pal remains exact",
+      "passed": true
+    },
+    {
+      "group": "source scope",
+      "name": "shield all source pixels retained",
+      "passed": true
+    },
+    {
+      "group": "metadata",
+      "name": "items w remains exact",
+      "passed": true
+    },
+    {
+      "group": "metadata",
+      "name": "items h remains exact",
+      "passed": true
+    },
+    {
+      "group": "metadata",
+      "name": "items pal remains exact",
+      "passed": true
+    },
+    {
+      "group": "metadata",
+      "name": "items order remains exact",
+      "passed": true
+    },
+    {
+      "group": "metadata",
+      "name": "items frame_pal remains exact",
+      "passed": true
+    },
+    {
+      "group": "native",
+      "name": "items linked canvas and frame allocation match native source",
+      "passed": true
+    },
+    {
+      "group": "native",
+      "name": "items/none every packed pixel equals native source",
+      "passed": true
+    },
+    {
+      "group": "native",
+      "name": "items/none has legal15 painted inks and alpha0",
+      "passed": true
+    },
+    {
+      "group": "silhouette",
+      "name": "items/none is one connected item without stray fragments",
+      "passed": true,
+      "detail": {
+        "components8": 0
+      }
+    },
+    {
+      "group": "world scale",
+      "name": "items/none keeps a compact14px-or-smaller pickup body",
+      "passed": true
+    },
+    {
+      "group": "native",
+      "name": "items/bombs every packed pixel equals native source",
+      "passed": true
+    },
+    {
+      "group": "native",
+      "name": "items/bombs has legal15 painted inks and alpha0",
+      "passed": true
+    },
+    {
+      "group": "silhouette",
+      "name": "items/bombs is one connected item without stray fragments",
+      "passed": true,
+      "detail": {
+        "components8": 1
+      }
+    },
+    {
+      "group": "world scale",
+      "name": "items/bombs keeps a compact14px-or-smaller pickup body",
+      "passed": true
+    },
+    {
+      "group": "native",
+      "name": "items/lamp every packed pixel equals native source",
+      "passed": true
+    },
+    {
+      "group": "native",
+      "name": "items/lamp has legal15 painted inks and alpha0",
+      "passed": true
+    },
+    {
+      "group": "silhouette",
+      "name": "items/lamp is one connected item without stray fragments",
+      "passed": true,
+      "detail": {
+        "components8": 1
+      }
+    },
+    {
+      "group": "world scale",
+      "name": "items/lamp keeps a compact14px-or-smaller pickup body",
+      "passed": true
+    },
+    {
+      "group": "native",
+      "name": "items/cloak every packed pixel equals native source",
+      "passed": true
+    },
+    {
+      "group": "native",
+      "name": "items/cloak has legal15 painted inks and alpha0",
+      "passed": true
+    },
+    {
+      "group": "silhouette",
+      "name": "items/cloak is one connected item without stray fragments",
+      "passed": true,
+      "detail": {
+        "components8": 1
+      }
+    },
+    {
+      "group": "world scale",
+      "name": "items/cloak keeps a compact14px-or-smaller pickup body",
+      "passed": true
+    },
+    {
+      "group": "native",
+      "name": "items/key every packed pixel equals native source",
+      "passed": true
+    },
+    {
+      "group": "native",
+      "name": "items/key has legal15 painted inks and alpha0",
+      "passed": true
+    },
+    {
+      "group": "silhouette",
+      "name": "items/key is one connected item without stray fragments",
+      "passed": true,
+      "detail": {
+        "components8": 1
+      }
+    },
+    {
+      "group": "world scale",
+      "name": "items/key keeps a compact14px-or-smaller pickup body",
+      "passed": true
+    },
+    {
+      "group": "native",
+      "name": "items/heart_piece every packed pixel equals native source",
+      "passed": true
+    },
+    {
+      "group": "native",
+      "name": "items/heart_piece has legal15 painted inks and alpha0",
+      "passed": true
+    },
+    {
+      "group": "silhouette",
+      "name": "items/heart_piece is one connected item without stray fragments",
+      "passed": true,
+      "detail": {
+        "components8": 1
+      }
+    },
+    {
+      "group": "world scale",
+      "name": "items/heart_piece keeps a compact14px-or-smaller pickup body",
+      "passed": true
+    },
+    {
+      "group": "native",
+      "name": "items/heart_container every packed pixel equals native source",
+      "passed": true
+    },
+    {
+      "group": "native",
+      "name": "items/heart_container has legal15 painted inks and alpha0",
+      "passed": true
+    },
+    {
+      "group": "silhouette",
+      "name": "items/heart_container is one connected item without stray fragments",
+      "passed": true,
+      "detail": {
+        "components8": 1
+      }
+    },
+    {
+      "group": "world scale",
+      "name": "items/heart_container keeps a compact14px-or-smaller pickup body",
+      "passed": true
+    },
+    {
+      "group": "native",
+      "name": "items/gilt_big every packed pixel equals native source",
+      "passed": true
+    },
+    {
+      "group": "native",
+      "name": "items/gilt_big has legal15 painted inks and alpha0",
+      "passed": true
+    },
+    {
+      "group": "silhouette",
+      "name": "items/gilt_big is one connected item without stray fragments",
+      "passed": true,
+      "detail": {
+        "components8": 1
+      }
+    },
+    {
+      "group": "world scale",
+      "name": "items/gilt_big keeps a compact14px-or-smaller pickup body",
+      "passed": true
+    },
+    {
+      "group": "native",
+      "name": "items/relic every packed pixel equals native source",
+      "passed": true
+    },
+    {
+      "group": "native",
+      "name": "items/relic has legal15 painted inks and alpha0",
+      "passed": true
+    },
+    {
+      "group": "silhouette",
+      "name": "items/relic is one connected item without stray fragments",
+      "passed": true,
+      "detail": {
+        "components8": 1
+      }
+    },
+    {
+      "group": "world scale",
+      "name": "items/relic keeps a compact14px-or-smaller pickup body",
+      "passed": true
+    },
+    {
+      "group": "native",
+      "name": "items/heart every packed pixel equals native source",
+      "passed": true
+    },
+    {
+      "group": "native",
+      "name": "items/heart has legal15 painted inks and alpha0",
+      "passed": true
+    },
+    {
+      "group": "silhouette",
+      "name": "items/heart is one connected item without stray fragments",
+      "passed": true,
+      "detail": {
+        "components8": 1
+      }
+    },
+    {
+      "group": "world scale",
+      "name": "items/heart keeps a compact14px-or-smaller pickup body",
+      "passed": true
+    },
+    {
+      "group": "native",
+      "name": "items/gilt every packed pixel equals native source",
+      "passed": true
+    },
+    {
+      "group": "native",
+      "name": "items/gilt has legal15 painted inks and alpha0",
+      "passed": true
+    },
+    {
+      "group": "silhouette",
+      "name": "items/gilt is one connected item without stray fragments",
+      "passed": true,
+      "detail": {
+        "components8": 1
+      }
+    },
+    {
+      "group": "world scale",
+      "name": "items/gilt keeps a compact14px-or-smaller pickup body",
+      "passed": true
+    },
+    {
+      "group": "native",
+      "name": "items/bomb_pickup every packed pixel equals native source",
+      "passed": true
+    },
+    {
+      "group": "native",
+      "name": "items/bomb_pickup has legal15 painted inks and alpha0",
+      "passed": true
+    },
+    {
+      "group": "silhouette",
+      "name": "items/bomb_pickup is one connected item without stray fragments",
+      "passed": true,
+      "detail": {
+        "components8": 1
+      }
+    },
+    {
+      "group": "world scale",
+      "name": "items/bomb_pickup keeps a compact14px-or-smaller pickup body",
+      "passed": true
+    },
+    {
+      "group": "native",
+      "name": "items/spark every packed pixel equals native source",
+      "passed": true
+    },
+    {
+      "group": "native",
+      "name": "items/spark has legal15 painted inks and alpha0",
+      "passed": true
+    },
+    {
+      "group": "silhouette",
+      "name": "items/spark is one connected item without stray fragments",
+      "passed": true,
+      "detail": {
+        "components8": 1
+      }
+    },
+    {
+      "group": "world scale",
+      "name": "items/spark keeps a compact14px-or-smaller pickup body",
+      "passed": true
+    },
+    {
+      "group": "native",
+      "name": "items/grail every packed pixel equals native source",
+      "passed": true
+    },
+    {
+      "group": "native",
+      "name": "items/grail has legal15 painted inks and alpha0",
+      "passed": true
+    },
+    {
+      "group": "silhouette",
+      "name": "items/grail is one connected item without stray fragments",
+      "passed": true,
+      "detail": {
+        "components8": 1
+      }
+    },
+    {
+      "group": "world scale",
+      "name": "items/grail keeps a compact14px-or-smaller pickup body",
+      "passed": true
+    },
+    {
+      "group": "native",
+      "name": "items/gauntlet every packed pixel equals native source",
+      "passed": true
+    },
+    {
+      "group": "native",
+      "name": "items/gauntlet has legal15 painted inks and alpha0",
+      "passed": true
+    },
+    {
+      "group": "silhouette",
+      "name": "items/gauntlet is one connected item without stray fragments",
+      "passed": true,
+      "detail": {
+        "components8": 1
+      }
+    },
+    {
+      "group": "world scale",
+      "name": "items/gauntlet keeps a compact14px-or-smaller pickup body",
+      "passed": true
+    },
+    {
+      "group": "native",
+      "name": "items/bow every packed pixel equals native source",
+      "passed": true
+    },
+    {
+      "group": "native",
+      "name": "items/bow has legal15 painted inks and alpha0",
+      "passed": true
+    },
+    {
+      "group": "silhouette",
+      "name": "items/bow is one connected item without stray fragments",
+      "passed": true,
+      "detail": {
+        "components8": 1
+      }
+    },
+    {
+      "group": "world scale",
+      "name": "items/bow keeps a compact14px-or-smaller pickup body",
+      "passed": true
+    },
+    {
+      "group": "native",
+      "name": "items/arrow1 every packed pixel equals native source",
+      "passed": true
+    },
+    {
+      "group": "native",
+      "name": "items/arrow1 has legal15 painted inks and alpha0",
+      "passed": true
+    },
+    {
+      "group": "silhouette",
+      "name": "items/arrow1 is one connected item without stray fragments",
+      "passed": true,
+      "detail": {
+        "components8": 1
+      }
+    },
+    {
+      "group": "world scale",
+      "name": "items/arrow1 keeps a compact14px-or-smaller pickup body",
+      "passed": true
+    },
+    {
+      "group": "native",
+      "name": "items/arrow5 every packed pixel equals native source",
+      "passed": true
+    },
+    {
+      "group": "native",
+      "name": "items/arrow5 has legal15 painted inks and alpha0",
+      "passed": true
+    },
+    {
+      "group": "silhouette",
+      "name": "items/arrow5 is one connected item without stray fragments",
+      "passed": true,
+      "detail": {
+        "components8": 1
+      }
+    },
+    {
+      "group": "world scale",
+      "name": "items/arrow5 keeps a compact14px-or-smaller pickup body",
+      "passed": true
+    },
+    {
+      "group": "native",
+      "name": "items/arrow10 every packed pixel equals native source",
+      "passed": true
+    },
+    {
+      "group": "native",
+      "name": "items/arrow10 has legal15 painted inks and alpha0",
+      "passed": true
+    },
+    {
+      "group": "silhouette",
+      "name": "items/arrow10 is one connected item without stray fragments",
+      "passed": true,
+      "detail": {
+        "components8": 1
+      }
+    },
+    {
+      "group": "world scale",
+      "name": "items/arrow10 keeps a compact14px-or-smaller pickup body",
+      "passed": true
+    },
+    {
+      "group": "native",
+      "name": "items/hubcap every packed pixel equals native source",
+      "passed": true
+    },
+    {
+      "group": "native",
+      "name": "items/hubcap has legal15 painted inks and alpha0",
+      "passed": true
+    },
+    {
+      "group": "silhouette",
+      "name": "items/hubcap is one connected item without stray fragments",
+      "passed": true,
+      "detail": {
+        "components8": 1
+      }
+    },
+    {
+      "group": "world scale",
+      "name": "items/hubcap keeps a compact14px-or-smaller pickup body",
+      "passed": true
+    },
+    {
+      "group": "native",
+      "name": "items/bomb_lit every packed pixel equals native source",
+      "passed": true
+    },
+    {
+      "group": "native",
+      "name": "items/bomb_lit has legal15 painted inks and alpha0",
+      "passed": true
+    },
+    {
+      "group": "silhouette",
+      "name": "items/bomb_lit is one connected item without stray fragments",
+      "passed": true,
+      "detail": {
+        "components8": 1
+      }
+    },
+    {
+      "group": "world scale",
+      "name": "items/bomb_lit keeps a compact14px-or-smaller pickup body",
+      "passed": true
+    },
+    {
+      "group": "metadata",
+      "name": "beetle w remains exact",
+      "passed": true
+    },
+    {
+      "group": "metadata",
+      "name": "beetle h remains exact",
+      "passed": true
+    },
+    {
+      "group": "metadata",
+      "name": "beetle pal remains exact",
+      "passed": true
+    },
+    {
+      "group": "metadata",
+      "name": "beetle order remains exact",
+      "passed": true
+    },
+    {
+      "group": "metadata",
+      "name": "beetle frame_pal remains exact",
+      "passed": true
+    },
+    {
+      "group": "source scope",
+      "name": "beetle all source pixels retained",
+      "passed": true
+    },
+    {
+      "group": "metadata",
+      "name": "bat w remains exact",
+      "passed": true
+    },
+    {
+      "group": "metadata",
+      "name": "bat h remains exact",
+      "passed": true
+    },
+    {
+      "group": "metadata",
+      "name": "bat pal remains exact",
+      "passed": true
+    },
+    {
+      "group": "metadata",
+      "name": "bat order remains exact",
+      "passed": true
+    },
+    {
+      "group": "metadata",
+      "name": "bat frame_pal remains exact",
+      "passed": true
+    },
+    {
+      "group": "source scope",
+      "name": "bat all source pixels retained",
+      "passed": true
+    },
+    {
+      "group": "metadata",
+      "name": "slime w remains exact",
+      "passed": true
+    },
+    {
+      "group": "metadata",
+      "name": "slime h remains exact",
+      "passed": true
+    },
+    {
+      "group": "metadata",
+      "name": "slime pal remains exact",
+      "passed": true
+    },
+    {
+      "group": "metadata",
+      "name": "slime order remains exact",
+      "passed": true
+    },
+    {
+      "group": "metadata",
+      "name": "slime frame_pal remains exact",
+      "passed": true
+    },
+    {
+      "group": "source scope",
+      "name": "slime all source pixels retained",
+      "passed": true
+    },
+    {
+      "group": "metadata",
+      "name": "spitter w remains exact",
+      "passed": true
+    },
+    {
+      "group": "metadata",
+      "name": "spitter h remains exact",
+      "passed": true
+    },
+    {
+      "group": "metadata",
+      "name": "spitter pal remains exact",
+      "passed": true
+    },
+    {
+      "group": "metadata",
+      "name": "spitter order remains exact",
+      "passed": true
+    },
+    {
+      "group": "metadata",
+      "name": "spitter frame_pal remains exact",
+      "passed": true
+    },
+    {
+      "group": "source scope",
+      "name": "spitter all source pixels retained",
+      "passed": true
+    },
+    {
+      "group": "metadata",
+      "name": "knight w remains exact",
+      "passed": true
+    },
+    {
+      "group": "metadata",
+      "name": "knight h remains exact",
+      "passed": true
+    },
+    {
+      "group": "metadata",
+      "name": "knight pal remains exact",
+      "passed": true
+    },
+    {
+      "group": "metadata",
+      "name": "knight order remains exact",
+      "passed": true
+    },
+    {
+      "group": "metadata",
+      "name": "knight frame_pal remains exact",
+      "passed": true
+    },
+    {
+      "group": "source scope",
+      "name": "knight all source pixels retained",
+      "passed": true
+    },
+    {
+      "group": "metadata",
+      "name": "ksword w remains exact",
+      "passed": true
+    },
+    {
+      "group": "metadata",
+      "name": "ksword h remains exact",
+      "passed": true
+    },
+    {
+      "group": "metadata",
+      "name": "ksword pal remains exact",
+      "passed": true
+    },
+    {
+      "group": "metadata",
+      "name": "ksword order remains exact",
+      "passed": true
+    },
+    {
+      "group": "metadata",
+      "name": "ksword frame_pal remains exact",
+      "passed": true
+    },
+    {
+      "group": "source scope",
+      "name": "ksword all source pixels retained",
+      "passed": true
+    },
+    {
+      "group": "metadata",
+      "name": "fx w remains exact",
+      "passed": true
+    },
+    {
+      "group": "metadata",
+      "name": "fx h remains exact",
+      "passed": true
+    },
+    {
+      "group": "metadata",
+      "name": "fx pal remains exact",
+      "passed": true
+    },
+    {
+      "group": "metadata",
+      "name": "fx order remains exact",
+      "passed": true
+    },
+    {
+      "group": "metadata",
+      "name": "fx frame_pal remains exact",
+      "passed": true
+    },
+    {
+      "group": "source scope",
+      "name": "fx all source pixels retained",
+      "passed": true
+    },
+    {
+      "group": "metadata",
+      "name": "proj w remains exact",
+      "passed": true
+    },
+    {
+      "group": "metadata",
+      "name": "proj h remains exact",
+      "passed": true
+    },
+    {
+      "group": "metadata",
+      "name": "proj pal remains exact",
+      "passed": true
+    },
+    {
+      "group": "metadata",
+      "name": "proj order remains exact",
+      "passed": true
+    },
+    {
+      "group": "metadata",
+      "name": "proj frame_pal remains exact",
+      "passed": true
+    },
+    {
+      "group": "source scope",
+      "name": "proj all source pixels retained",
+      "passed": true
+    },
+    {
+      "group": "metadata",
+      "name": "npc w remains exact",
+      "passed": true
+    },
+    {
+      "group": "metadata",
+      "name": "npc h remains exact",
+      "passed": true
+    },
+    {
+      "group": "metadata",
+      "name": "npc pal remains exact",
+      "passed": true
+    },
+    {
+      "group": "metadata",
+      "name": "npc order remains exact",
+      "passed": true
+    },
+    {
+      "group": "metadata",
+      "name": "npc frame_pal remains exact",
+      "passed": true
+    },
+    {
+      "group": "source scope",
+      "name": "npc all source pixels retained",
+      "passed": true
+    },
+    {
+      "group": "metadata",
+      "name": "boss w remains exact",
+      "passed": true
+    },
+    {
+      "group": "metadata",
+      "name": "boss h remains exact",
+      "passed": true
+    },
+    {
+      "group": "metadata",
+      "name": "boss pal remains exact",
+      "passed": true
+    },
+    {
+      "group": "metadata",
+      "name": "boss order remains exact",
+      "passed": true
+    },
+    {
+      "group": "metadata",
+      "name": "boss frame_pal remains exact",
+      "passed": true
+    },
+    {
+      "group": "source scope",
+      "name": "boss all source pixels retained",
+      "passed": true
+    },
+    {
+      "group": "metadata",
+      "name": "lift w remains exact",
+      "passed": true
+    },
+    {
+      "group": "metadata",
+      "name": "lift h remains exact",
+      "passed": true
+    },
+    {
+      "group": "metadata",
+      "name": "lift pal remains exact",
+      "passed": true
+    },
+    {
+      "group": "metadata",
+      "name": "lift order remains exact",
+      "passed": true
+    },
+    {
+      "group": "metadata",
+      "name": "lift frame_pal remains exact",
+      "passed": true
+    },
+    {
+      "group": "source scope",
+      "name": "lift all source pixels retained",
+      "passed": true
+    },
+    {
+      "group": "metadata",
+      "name": "arrow w remains exact",
+      "passed": true
+    },
+    {
+      "group": "metadata",
+      "name": "arrow h remains exact",
+      "passed": true
+    },
+    {
+      "group": "metadata",
+      "name": "arrow pal remains exact",
+      "passed": true
+    },
+    {
+      "group": "metadata",
+      "name": "arrow order remains exact",
+      "passed": true
+    },
+    {
+      "group": "metadata",
+      "name": "arrow frame_pal remains exact",
+      "passed": true
+    },
+    {
+      "group": "source scope",
+      "name": "arrow all source pixels retained",
+      "passed": true
+    },
+    {
+      "group": "metadata",
+      "name": "mouth w remains exact",
+      "passed": true
+    },
+    {
+      "group": "metadata",
+      "name": "mouth h remains exact",
+      "passed": true
+    },
+    {
+      "group": "metadata",
+      "name": "mouth pal remains exact",
+      "passed": true
+    },
+    {
+      "group": "metadata",
+      "name": "mouth order remains exact",
+      "passed": true
+    },
+    {
+      "group": "metadata",
+      "name": "mouth frame_pal remains exact",
+      "passed": true
+    },
+    {
+      "group": "source scope",
+      "name": "mouth all source pixels retained",
+      "passed": true
+    },
+    {
+      "group": "metadata",
+      "name": "marks w remains exact",
+      "passed": true
+    },
+    {
+      "group": "metadata",
+      "name": "marks h remains exact",
+      "passed": true
+    },
+    {
+      "group": "metadata",
+      "name": "marks pal remains exact",
+      "passed": true
+    },
+    {
+      "group": "metadata",
+      "name": "marks order remains exact",
+      "passed": true
+    },
+    {
+      "group": "metadata",
+      "name": "marks frame_pal remains exact",
+      "passed": true
+    },
+    {
+      "group": "source scope",
+      "name": "marks all source pixels retained",
+      "passed": true
+    },
+    {
+      "group": "metadata",
+      "name": "dots w remains exact",
+      "passed": true
+    },
+    {
+      "group": "metadata",
+      "name": "dots h remains exact",
+      "passed": true
+    },
+    {
+      "group": "metadata",
+      "name": "dots pal remains exact",
+      "passed": true
+    },
+    {
+      "group": "metadata",
+      "name": "dots order remains exact",
+      "passed": true
+    },
+    {
+      "group": "metadata",
+      "name": "dots frame_pal remains exact",
+      "passed": true
+    },
+    {
+      "group": "source scope",
+      "name": "dots all source pixels retained",
+      "passed": true
+    },
+    {
+      "group": "metadata",
+      "name": "cursor w remains exact",
+      "passed": true
+    },
+    {
+      "group": "metadata",
+      "name": "cursor h remains exact",
+      "passed": true
+    },
+    {
+      "group": "metadata",
+      "name": "cursor pal remains exact",
+      "passed": true
+    },
+    {
+      "group": "metadata",
+      "name": "cursor order remains exact",
+      "passed": true
+    },
+    {
+      "group": "metadata",
+      "name": "cursor frame_pal remains exact",
+      "passed": true
+    },
+    {
+      "group": "source scope",
+      "name": "cursor all source pixels retained",
+      "passed": true
+    },
+    {
+      "group": "metadata",
+      "name": "pick32 w remains exact",
+      "passed": true
+    },
+    {
+      "group": "metadata",
+      "name": "pick32 h remains exact",
+      "passed": true
+    },
+    {
+      "group": "metadata",
+      "name": "pick32 pal remains exact",
+      "passed": true
+    },
+    {
+      "group": "metadata",
+      "name": "pick32 order remains exact",
+      "passed": true
+    },
+    {
+      "group": "metadata",
+      "name": "pick32 frame_pal remains exact",
+      "passed": true
+    },
+    {
+      "group": "native",
+      "name": "pick32 linked canvas and frame allocation match native source",
+      "passed": true
+    },
+    {
+      "group": "native",
+      "name": "pick32/heart every packed pixel equals native source",
+      "passed": true
+    },
+    {
+      "group": "native",
+      "name": "pick32/heart has legal15 painted inks and alpha0",
+      "passed": true
+    },
+    {
+      "group": "silhouette",
+      "name": "pick32/heart is one connected item without stray fragments",
+      "passed": true,
+      "detail": {
+        "components8": 1
+      }
+    },
+    {
+      "group": "world scale",
+      "name": "pick32/heart keeps a compact14px-or-smaller pickup body",
+      "passed": true
+    },
+    {
+      "group": "native",
+      "name": "pick32/gilt every packed pixel equals native source",
+      "passed": true
+    },
+    {
+      "group": "native",
+      "name": "pick32/gilt has legal15 painted inks and alpha0",
+      "passed": true
+    },
+    {
+      "group": "silhouette",
+      "name": "pick32/gilt is one connected item without stray fragments",
+      "passed": true,
+      "detail": {
+        "components8": 1
+      }
+    },
+    {
+      "group": "world scale",
+      "name": "pick32/gilt keeps a compact14px-or-smaller pickup body",
+      "passed": true
+    },
+    {
+      "group": "native",
+      "name": "pick32/bomb_pickup every packed pixel equals native source",
+      "passed": true
+    },
+    {
+      "group": "native",
+      "name": "pick32/bomb_pickup has legal15 painted inks and alpha0",
+      "passed": true
+    },
+    {
+      "group": "silhouette",
+      "name": "pick32/bomb_pickup is one connected item without stray fragments",
+      "passed": true,
+      "detail": {
+        "components8": 1
+      }
+    },
+    {
+      "group": "world scale",
+      "name": "pick32/bomb_pickup keeps a compact14px-or-smaller pickup body",
+      "passed": true
+    },
+    {
+      "group": "native",
+      "name": "pick32/gilt_big every packed pixel equals native source",
+      "passed": true
+    },
+    {
+      "group": "native",
+      "name": "pick32/gilt_big has legal15 painted inks and alpha0",
+      "passed": true
+    },
+    {
+      "group": "silhouette",
+      "name": "pick32/gilt_big is one connected item without stray fragments",
+      "passed": true,
+      "detail": {
+        "components8": 1
+      }
+    },
+    {
+      "group": "world scale",
+      "name": "pick32/gilt_big keeps a compact14px-or-smaller pickup body",
+      "passed": true
+    },
+    {
+      "group": "native",
+      "name": "pick32/key every packed pixel equals native source",
+      "passed": true
+    },
+    {
+      "group": "native",
+      "name": "pick32/key has legal15 painted inks and alpha0",
+      "passed": true
+    },
+    {
+      "group": "silhouette",
+      "name": "pick32/key is one connected item without stray fragments",
+      "passed": true,
+      "detail": {
+        "components8": 1
+      }
+    },
+    {
+      "group": "world scale",
+      "name": "pick32/key keeps a compact14px-or-smaller pickup body",
+      "passed": true
+    },
+    {
+      "group": "native",
+      "name": "pick32/relic every packed pixel equals native source",
+      "passed": true
+    },
+    {
+      "group": "native",
+      "name": "pick32/relic has legal15 painted inks and alpha0",
+      "passed": true
+    },
+    {
+      "group": "silhouette",
+      "name": "pick32/relic is one connected item without stray fragments",
+      "passed": true,
+      "detail": {
+        "components8": 1
+      }
+    },
+    {
+      "group": "world scale",
+      "name": "pick32/relic keeps a compact14px-or-smaller pickup body",
+      "passed": true
+    },
+    {
+      "group": "native",
+      "name": "pick32/grail every packed pixel equals native source",
+      "passed": true
+    },
+    {
+      "group": "native",
+      "name": "pick32/grail has legal15 painted inks and alpha0",
+      "passed": true
+    },
+    {
+      "group": "silhouette",
+      "name": "pick32/grail is one connected item without stray fragments",
+      "passed": true,
+      "detail": {
+        "components8": 1
+      }
+    },
+    {
+      "group": "world scale",
+      "name": "pick32/grail keeps a compact14px-or-smaller pickup body",
+      "passed": true
+    },
+    {
+      "group": "native",
+      "name": "pick32/arrow1 every packed pixel equals native source",
+      "passed": true
+    },
+    {
+      "group": "native",
+      "name": "pick32/arrow1 has legal15 painted inks and alpha0",
+      "passed": true
+    },
+    {
+      "group": "silhouette",
+      "name": "pick32/arrow1 is one connected item without stray fragments",
+      "passed": true,
+      "detail": {
+        "components8": 1
+      }
+    },
+    {
+      "group": "world scale",
+      "name": "pick32/arrow1 keeps a compact14px-or-smaller pickup body",
+      "passed": true
+    },
+    {
+      "group": "native",
+      "name": "pick32/arrow5 every packed pixel equals native source",
+      "passed": true
+    },
+    {
+      "group": "native",
+      "name": "pick32/arrow5 has legal15 painted inks and alpha0",
+      "passed": true
+    },
+    {
+      "group": "silhouette",
+      "name": "pick32/arrow5 is one connected item without stray fragments",
+      "passed": true,
+      "detail": {
+        "components8": 1
+      }
+    },
+    {
+      "group": "world scale",
+      "name": "pick32/arrow5 keeps a compact14px-or-smaller pickup body",
+      "passed": true
+    },
+    {
+      "group": "native",
+      "name": "pick32/arrow10 every packed pixel equals native source",
+      "passed": true
+    },
+    {
+      "group": "native",
+      "name": "pick32/arrow10 has legal15 painted inks and alpha0",
+      "passed": true
+    },
+    {
+      "group": "silhouette",
+      "name": "pick32/arrow10 is one connected item without stray fragments",
+      "passed": true,
+      "detail": {
+        "components8": 1
+      }
+    },
+    {
+      "group": "world scale",
+      "name": "pick32/arrow10 keeps a compact14px-or-smaller pickup body",
+      "passed": true
+    },
+    {
+      "group": "metadata",
+      "name": "icon32 w remains exact",
+      "passed": true
+    },
+    {
+      "group": "metadata",
+      "name": "icon32 h remains exact",
+      "passed": true
+    },
+    {
+      "group": "metadata",
+      "name": "icon32 pal remains exact",
+      "passed": true
+    },
+    {
+      "group": "metadata",
+      "name": "icon32 order remains exact",
+      "passed": true
+    },
+    {
+      "group": "metadata",
+      "name": "icon32 frame_pal remains exact",
+      "passed": true
+    },
+    {
+      "group": "native",
+      "name": "icon32 linked canvas and frame allocation match native source",
+      "passed": true
+    },
+    {
+      "group": "native",
+      "name": "icon32/none every packed pixel equals native source",
+      "passed": true
+    },
+    {
+      "group": "native",
+      "name": "icon32/none has legal15 painted inks and alpha0",
+      "passed": true
+    },
+    {
+      "group": "silhouette",
+      "name": "icon32/none is one connected item without stray fragments",
+      "passed": true,
+      "detail": {
+        "components8": 0
+      }
+    },
+    {
+      "group": "native",
+      "name": "icon32/bombs every packed pixel equals native source",
+      "passed": true
+    },
+    {
+      "group": "native",
+      "name": "icon32/bombs has legal15 painted inks and alpha0",
+      "passed": true
+    },
+    {
+      "group": "silhouette",
+      "name": "icon32/bombs is one connected item without stray fragments",
+      "passed": true,
+      "detail": {
+        "components8": 1
+      }
+    },
+    {
+      "group": "native",
+      "name": "icon32/lamp every packed pixel equals native source",
+      "passed": true
+    },
+    {
+      "group": "native",
+      "name": "icon32/lamp has legal15 painted inks and alpha0",
+      "passed": true
+    },
+    {
+      "group": "silhouette",
+      "name": "icon32/lamp is one connected item without stray fragments",
+      "passed": true,
+      "detail": {
+        "components8": 1
+      }
+    },
+    {
+      "group": "native",
+      "name": "icon32/cloak every packed pixel equals native source",
+      "passed": true
+    },
+    {
+      "group": "native",
+      "name": "icon32/cloak has legal15 painted inks and alpha0",
+      "passed": true
+    },
+    {
+      "group": "silhouette",
+      "name": "icon32/cloak is one connected item without stray fragments",
+      "passed": true,
+      "detail": {
+        "components8": 1
+      }
+    },
+    {
+      "group": "native",
+      "name": "icon32/key every packed pixel equals native source",
+      "passed": true
+    },
+    {
+      "group": "native",
+      "name": "icon32/key has legal15 painted inks and alpha0",
+      "passed": true
+    },
+    {
+      "group": "silhouette",
+      "name": "icon32/key is one connected item without stray fragments",
+      "passed": true,
+      "detail": {
+        "components8": 1
+      }
+    },
+    {
+      "group": "native",
+      "name": "icon32/heart_piece every packed pixel equals native source",
+      "passed": true
+    },
+    {
+      "group": "native",
+      "name": "icon32/heart_piece has legal15 painted inks and alpha0",
+      "passed": true
+    },
+    {
+      "group": "silhouette",
+      "name": "icon32/heart_piece is one connected item without stray fragments",
+      "passed": true,
+      "detail": {
+        "components8": 1
+      }
+    },
+    {
+      "group": "native",
+      "name": "icon32/heart_container every packed pixel equals native source",
+      "passed": true
+    },
+    {
+      "group": "native",
+      "name": "icon32/heart_container has legal15 painted inks and alpha0",
+      "passed": true
+    },
+    {
+      "group": "silhouette",
+      "name": "icon32/heart_container is one connected item without stray fragments",
+      "passed": true,
+      "detail": {
+        "components8": 1
+      }
+    },
+    {
+      "group": "native",
+      "name": "icon32/gilt_big every packed pixel equals native source",
+      "passed": true
+    },
+    {
+      "group": "native",
+      "name": "icon32/gilt_big has legal15 painted inks and alpha0",
+      "passed": true
+    },
+    {
+      "group": "silhouette",
+      "name": "icon32/gilt_big is one connected item without stray fragments",
+      "passed": true,
+      "detail": {
+        "components8": 1
+      }
+    },
+    {
+      "group": "native",
+      "name": "icon32/relic every packed pixel equals native source",
+      "passed": true
+    },
+    {
+      "group": "native",
+      "name": "icon32/relic has legal15 painted inks and alpha0",
+      "passed": true
+    },
+    {
+      "group": "silhouette",
+      "name": "icon32/relic is one connected item without stray fragments",
+      "passed": true,
+      "detail": {
+        "components8": 1
+      }
+    },
+    {
+      "group": "native",
+      "name": "icon32/gauntlet every packed pixel equals native source",
+      "passed": true
+    },
+    {
+      "group": "native",
+      "name": "icon32/gauntlet has legal15 painted inks and alpha0",
+      "passed": true
+    },
+    {
+      "group": "silhouette",
+      "name": "icon32/gauntlet is one connected item without stray fragments",
+      "passed": true,
+      "detail": {
+        "components8": 1
+      }
+    },
+    {
+      "group": "native",
+      "name": "icon32/bow every packed pixel equals native source",
+      "passed": true
+    },
+    {
+      "group": "native",
+      "name": "icon32/bow has legal15 painted inks and alpha0",
+      "passed": true
+    },
+    {
+      "group": "silhouette",
+      "name": "icon32/bow is one connected item without stray fragments",
+      "passed": true,
+      "detail": {
+        "components8": 1
+      }
+    },
+    {
+      "group": "native",
+      "name": "icon32/hubcap every packed pixel equals native source",
+      "passed": true
+    },
+    {
+      "group": "native",
+      "name": "icon32/hubcap has legal15 painted inks and alpha0",
+      "passed": true
+    },
+    {
+      "group": "silhouette",
+      "name": "icon32/hubcap is one connected item without stray fragments",
+      "passed": true,
+      "detail": {
+        "components8": 1
+      }
+    },
+    {
+      "group": "native",
+      "name": "icon32/map every packed pixel equals native source",
+      "passed": true
+    },
+    {
+      "group": "native",
+      "name": "icon32/map has legal15 painted inks and alpha0",
+      "passed": true
+    },
+    {
+      "group": "silhouette",
+      "name": "icon32/map is one connected item without stray fragments",
+      "passed": true,
+      "detail": {
+        "components8": 1
+      }
+    },
+    {
+      "group": "native",
+      "name": "icon32/astrolabe every packed pixel equals native source",
+      "passed": true
+    },
+    {
+      "group": "native",
+      "name": "icon32/astrolabe has legal15 painted inks and alpha0",
+      "passed": true
+    },
+    {
+      "group": "silhouette",
+      "name": "icon32/astrolabe is one connected item without stray fragments",
+      "passed": true,
+      "detail": {
+        "components8": 1
+      }
+    },
+    {
+      "group": "native",
+      "name": "icon32/sword every packed pixel equals native source",
+      "passed": true
+    },
+    {
+      "group": "native",
+      "name": "icon32/sword has legal15 painted inks and alpha0",
+      "passed": true
+    },
+    {
+      "group": "silhouette",
+      "name": "icon32/sword is one connected item without stray fragments",
+      "passed": true,
+      "detail": {
+        "components8": 1
+      }
+    },
+    {
+      "group": "native",
+      "name": "icon32/shield every packed pixel equals native source",
+      "passed": true
+    },
+    {
+      "group": "native",
+      "name": "icon32/shield has legal15 painted inks and alpha0",
+      "passed": true
+    },
+    {
+      "group": "silhouette",
+      "name": "icon32/shield is one connected item without stray fragments",
+      "passed": true,
+      "detail": {
+        "components8": 1
+      }
+    },
+    {
+      "group": "native",
+      "name": "icon32/shield_upgraded every packed pixel equals native source",
+      "passed": true
+    },
+    {
+      "group": "native",
+      "name": "icon32/shield_upgraded has legal15 painted inks and alpha0",
+      "passed": true
+    },
+    {
+      "group": "silhouette",
+      "name": "icon32/shield_upgraded is one connected item without stray fragments",
+      "passed": true,
+      "detail": {
+        "components8": 1
+      }
+    },
+    {
+      "group": "metadata",
+      "name": "uimarks w remains exact",
+      "passed": true
+    },
+    {
+      "group": "metadata",
+      "name": "uimarks h remains exact",
+      "passed": true
+    },
+    {
+      "group": "metadata",
+      "name": "uimarks pal remains exact",
+      "passed": true
+    },
+    {
+      "group": "metadata",
+      "name": "uimarks order remains exact",
+      "passed": true
+    },
+    {
+      "group": "metadata",
+      "name": "uimarks frame_pal remains exact",
+      "passed": true
+    },
+    {
+      "group": "source scope",
+      "name": "uimarks all source pixels retained",
+      "passed": true
+    },
+    {
+      "group": "metadata",
+      "name": "face w remains exact",
+      "passed": true
+    },
+    {
+      "group": "metadata",
+      "name": "face h remains exact",
+      "passed": true
+    },
+    {
+      "group": "metadata",
+      "name": "face pal remains exact",
+      "passed": true
+    },
+    {
+      "group": "metadata",
+      "name": "face order remains exact",
+      "passed": true
+    },
+    {
+      "group": "metadata",
+      "name": "face frame_pal remains exact",
+      "passed": true
+    },
+    {
+      "group": "source scope",
+      "name": "face all source pixels retained",
+      "passed": true
+    },
+    {
+      "group": "metadata",
+      "name": "peddler_head w remains exact",
+      "passed": true
+    },
+    {
+      "group": "metadata",
+      "name": "peddler_head h remains exact",
+      "passed": true
+    },
+    {
+      "group": "metadata",
+      "name": "peddler_head pal remains exact",
+      "passed": true
+    },
+    {
+      "group": "metadata",
+      "name": "peddler_head order remains exact",
+      "passed": true
+    },
+    {
+      "group": "metadata",
+      "name": "peddler_head frame_pal remains exact",
+      "passed": true
+    },
+    {
+      "group": "source scope",
+      "name": "peddler_head all source pixels retained",
+      "passed": true
+    },
+    {
+      "group": "metadata",
+      "name": "peddler_body w remains exact",
+      "passed": true
+    },
+    {
+      "group": "metadata",
+      "name": "peddler_body h remains exact",
+      "passed": true
+    },
+    {
+      "group": "metadata",
+      "name": "peddler_body pal remains exact",
+      "passed": true
+    },
+    {
+      "group": "metadata",
+      "name": "peddler_body order remains exact",
+      "passed": true
+    },
+    {
+      "group": "metadata",
+      "name": "peddler_body frame_pal remains exact",
+      "passed": true
+    },
+    {
+      "group": "source scope",
+      "name": "peddler_body all source pixels retained",
+      "passed": true
+    },
+    {
+      "group": "metadata",
+      "name": "gatekeeper w remains exact",
+      "passed": true
+    },
+    {
+      "group": "metadata",
+      "name": "gatekeeper h remains exact",
+      "passed": true
+    },
+    {
+      "group": "metadata",
+      "name": "gatekeeper pal remains exact",
+      "passed": true
+    },
+    {
+      "group": "metadata",
+      "name": "gatekeeper order remains exact",
+      "passed": true
+    },
+    {
+      "group": "metadata",
+      "name": "gatekeeper frame_pal remains exact",
+      "passed": true
+    },
+    {
+      "group": "source scope",
+      "name": "gatekeeper all source pixels retained",
+      "passed": true
+    },
+    {
+      "group": "metadata",
+      "name": "wisp w remains exact",
+      "passed": true
+    },
+    {
+      "group": "metadata",
+      "name": "wisp h remains exact",
+      "passed": true
+    },
+    {
+      "group": "metadata",
+      "name": "wisp pal remains exact",
+      "passed": true
+    },
+    {
+      "group": "metadata",
+      "name": "wisp order remains exact",
+      "passed": true
+    },
+    {
+      "group": "metadata",
+      "name": "wisp frame_pal remains exact",
+      "passed": true
+    },
+    {
+      "group": "source scope",
+      "name": "wisp all source pixels retained",
+      "passed": true
+    },
+    {
+      "group": "metadata",
+      "name": "bloomfx w remains exact",
+      "passed": true
+    },
+    {
+      "group": "metadata",
+      "name": "bloomfx h remains exact",
+      "passed": true
+    },
+    {
+      "group": "metadata",
+      "name": "bloomfx pal remains exact",
+      "passed": true
+    },
+    {
+      "group": "metadata",
+      "name": "bloomfx order remains exact",
+      "passed": true
+    },
+    {
+      "group": "metadata",
+      "name": "bloomfx frame_pal remains exact",
+      "passed": true
+    },
+    {
+      "group": "source scope",
+      "name": "bloomfx all source pixels retained",
+      "passed": true
+    },
+    {
+      "group": "metadata",
+      "name": "bloomshadow w remains exact",
+      "passed": true
+    },
+    {
+      "group": "metadata",
+      "name": "bloomshadow h remains exact",
+      "passed": true
+    },
+    {
+      "group": "metadata",
+      "name": "bloomshadow pal remains exact",
+      "passed": true
+    },
+    {
+      "group": "metadata",
+      "name": "bloomshadow order remains exact",
+      "passed": true
+    },
+    {
+      "group": "metadata",
+      "name": "bloomshadow frame_pal remains exact",
+      "passed": true
+    },
+    {
+      "group": "source scope",
+      "name": "bloomshadow all source pixels retained",
+      "passed": true
+    },
+    {
+      "group": "metadata",
+      "name": "interactivechest w remains exact",
+      "passed": true
+    },
+    {
+      "group": "metadata",
+      "name": "interactivechest h remains exact",
+      "passed": true
+    },
+    {
+      "group": "metadata",
+      "name": "interactivechest pal remains exact",
+      "passed": true
+    },
+    {
+      "group": "metadata",
+      "name": "interactivechest order remains exact",
+      "passed": true
+    },
+    {
+      "group": "metadata",
+      "name": "interactivechest frame_pal remains exact",
+      "passed": true
+    },
+    {
+      "group": "source scope",
+      "name": "interactivechest all source pixels retained",
+      "passed": true
+    },
+    {
+      "group": "metadata",
+      "name": "interactiveentry w remains exact",
+      "passed": true
+    },
+    {
+      "group": "metadata",
+      "name": "interactiveentry h remains exact",
+      "passed": true
+    },
+    {
+      "group": "metadata",
+      "name": "interactiveentry pal remains exact",
+      "passed": true
+    },
+    {
+      "group": "metadata",
+      "name": "interactiveentry order remains exact",
+      "passed": true
+    },
+    {
+      "group": "metadata",
+      "name": "interactiveentry frame_pal remains exact",
+      "passed": true
+    },
+    {
+      "group": "source scope",
+      "name": "interactiveentry all source pixels retained",
+      "passed": true
+    },
+    {
+      "group": "metadata",
+      "name": "huditems w remains exact",
+      "passed": true
+    },
+    {
+      "group": "metadata",
+      "name": "huditems h remains exact",
+      "passed": true
+    },
+    {
+      "group": "metadata",
+      "name": "huditems pal remains exact",
+      "passed": true
+    },
+    {
+      "group": "metadata",
+      "name": "huditems order remains exact",
+      "passed": true
+    },
+    {
+      "group": "metadata",
+      "name": "huditems frame_pal remains exact",
+      "passed": true
+    },
+    {
+      "group": "native",
+      "name": "huditems linked canvas and frame allocation match native source",
+      "passed": true
+    },
+    {
+      "group": "native",
+      "name": "huditems/none every packed pixel equals native source",
+      "passed": true
+    },
+    {
+      "group": "native",
+      "name": "huditems/none has legal15 painted inks and alpha0",
+      "passed": true
+    },
+    {
+      "group": "silhouette",
+      "name": "huditems/none is one connected item without stray fragments",
+      "passed": true,
+      "detail": {
+        "components8": 0
+      }
+    },
+    {
+      "group": "native",
+      "name": "huditems/bombs every packed pixel equals native source",
+      "passed": true
+    },
+    {
+      "group": "native",
+      "name": "huditems/bombs has legal15 painted inks and alpha0",
+      "passed": true
+    },
+    {
+      "group": "silhouette",
+      "name": "huditems/bombs is one connected item without stray fragments",
+      "passed": true,
+      "detail": {
+        "components8": 1
+      }
+    },
+    {
+      "group": "HUD scale",
+      "name": "bombs equipped icon has a larger native silhouette",
+      "passed": true,
+      "detail": {
+        "before_extent": 10,
+        "after_extent": 16
+      }
+    },
+    {
+      "group": "native",
+      "name": "huditems/lamp every packed pixel equals native source",
+      "passed": true
+    },
+    {
+      "group": "native",
+      "name": "huditems/lamp has legal15 painted inks and alpha0",
+      "passed": true
+    },
+    {
+      "group": "silhouette",
+      "name": "huditems/lamp is one connected item without stray fragments",
+      "passed": true,
+      "detail": {
+        "components8": 1
+      }
+    },
+    {
+      "group": "HUD scale",
+      "name": "lamp equipped icon has a larger native silhouette",
+      "passed": true,
+      "detail": {
+        "before_extent": 10,
+        "after_extent": 16
+      }
+    },
+    {
+      "group": "native",
+      "name": "huditems/cloak every packed pixel equals native source",
+      "passed": true
+    },
+    {
+      "group": "native",
+      "name": "huditems/cloak has legal15 painted inks and alpha0",
+      "passed": true
+    },
+    {
+      "group": "silhouette",
+      "name": "huditems/cloak is one connected item without stray fragments",
+      "passed": true,
+      "detail": {
+        "components8": 1
+      }
+    },
+    {
+      "group": "HUD scale",
+      "name": "cloak equipped icon has a larger native silhouette",
+      "passed": true,
+      "detail": {
+        "before_extent": 10,
+        "after_extent": 16
+      }
+    },
+    {
+      "group": "native",
+      "name": "huditems/key every packed pixel equals native source",
+      "passed": true
+    },
+    {
+      "group": "native",
+      "name": "huditems/key has legal15 painted inks and alpha0",
+      "passed": true
+    },
+    {
+      "group": "silhouette",
+      "name": "huditems/key is one connected item without stray fragments",
+      "passed": true,
+      "detail": {
+        "components8": 1
+      }
+    },
+    {
+      "group": "native",
+      "name": "huditems/heart_piece every packed pixel equals native source",
+      "passed": true
+    },
+    {
+      "group": "native",
+      "name": "huditems/heart_piece has legal15 painted inks and alpha0",
+      "passed": true
+    },
+    {
+      "group": "silhouette",
+      "name": "huditems/heart_piece is one connected item without stray fragments",
+      "passed": true,
+      "detail": {
+        "components8": 1
+      }
+    },
+    {
+      "group": "native",
+      "name": "huditems/heart_container every packed pixel equals native source",
+      "passed": true
+    },
+    {
+      "group": "native",
+      "name": "huditems/heart_container has legal15 painted inks and alpha0",
+      "passed": true
+    },
+    {
+      "group": "silhouette",
+      "name": "huditems/heart_container is one connected item without stray fragments",
+      "passed": true,
+      "detail": {
+        "components8": 1
+      }
+    },
+    {
+      "group": "native",
+      "name": "huditems/gilt_big every packed pixel equals native source",
+      "passed": true
+    },
+    {
+      "group": "native",
+      "name": "huditems/gilt_big has legal15 painted inks and alpha0",
+      "passed": true
+    },
+    {
+      "group": "silhouette",
+      "name": "huditems/gilt_big is one connected item without stray fragments",
+      "passed": true,
+      "detail": {
+        "components8": 1
+      }
+    },
+    {
+      "group": "native",
+      "name": "huditems/relic every packed pixel equals native source",
+      "passed": true
+    },
+    {
+      "group": "native",
+      "name": "huditems/relic has legal15 painted inks and alpha0",
+      "passed": true
+    },
+    {
+      "group": "silhouette",
+      "name": "huditems/relic is one connected item without stray fragments",
+      "passed": true,
+      "detail": {
+        "components8": 1
+      }
+    },
+    {
+      "group": "native",
+      "name": "huditems/gauntlet every packed pixel equals native source",
+      "passed": true
+    },
+    {
+      "group": "native",
+      "name": "huditems/gauntlet has legal15 painted inks and alpha0",
+      "passed": true
+    },
+    {
+      "group": "silhouette",
+      "name": "huditems/gauntlet is one connected item without stray fragments",
+      "passed": true,
+      "detail": {
+        "components8": 1
+      }
+    },
+    {
+      "group": "native",
+      "name": "huditems/bow every packed pixel equals native source",
+      "passed": true
+    },
+    {
+      "group": "native",
+      "name": "huditems/bow has legal15 painted inks and alpha0",
+      "passed": true
+    },
+    {
+      "group": "silhouette",
+      "name": "huditems/bow is one connected item without stray fragments",
+      "passed": true,
+      "detail": {
+        "components8": 1
+      }
+    },
+    {
+      "group": "HUD scale",
+      "name": "bow equipped icon has a larger native silhouette",
+      "passed": true,
+      "detail": {
+        "before_extent": 10,
+        "after_extent": 16
+      }
+    },
+    {
+      "group": "native",
+      "name": "huditems/hubcap every packed pixel equals native source",
+      "passed": true
+    },
+    {
+      "group": "native",
+      "name": "huditems/hubcap has legal15 painted inks and alpha0",
+      "passed": true
+    },
+    {
+      "group": "silhouette",
+      "name": "huditems/hubcap is one connected item without stray fragments",
+      "passed": true,
+      "detail": {
+        "components8": 1
+      }
+    },
+    {
+      "group": "HUD scale",
+      "name": "hubcap equipped icon has a larger native silhouette",
+      "passed": true,
+      "detail": {
+        "before_extent": 10,
+        "after_extent": 16
+      }
+    },
+    {
+      "group": "native",
+      "name": "huditems/map every packed pixel equals native source",
+      "passed": true
+    },
+    {
+      "group": "native",
+      "name": "huditems/map has legal15 painted inks and alpha0",
+      "passed": true
+    },
+    {
+      "group": "silhouette",
+      "name": "huditems/map is one connected item without stray fragments",
+      "passed": true,
+      "detail": {
+        "components8": 1
+      }
+    },
+    {
+      "group": "native",
+      "name": "huditems/astrolabe every packed pixel equals native source",
+      "passed": true
+    },
+    {
+      "group": "native",
+      "name": "huditems/astrolabe has legal15 painted inks and alpha0",
+      "passed": true
+    },
+    {
+      "group": "silhouette",
+      "name": "huditems/astrolabe is one connected item without stray fragments",
+      "passed": true,
+      "detail": {
+        "components8": 1
+      }
+    },
+    {
+      "group": "native",
+      "name": "huditems/sword every packed pixel equals native source",
+      "passed": true
+    },
+    {
+      "group": "native",
+      "name": "huditems/sword has legal15 painted inks and alpha0",
+      "passed": true
+    },
+    {
+      "group": "silhouette",
+      "name": "huditems/sword is one connected item without stray fragments",
+      "passed": true,
+      "detail": {
+        "components8": 1
+      }
+    },
+    {
+      "group": "HUD scale",
+      "name": "sword equipped icon has a larger native silhouette",
+      "passed": true,
+      "detail": {
+        "before_extent": 10,
+        "after_extent": 16
+      }
+    },
+    {
+      "group": "native",
+      "name": "huditems/shield every packed pixel equals native source",
+      "passed": true
+    },
+    {
+      "group": "native",
+      "name": "huditems/shield has legal15 painted inks and alpha0",
+      "passed": true
+    },
+    {
+      "group": "silhouette",
+      "name": "huditems/shield is one connected item without stray fragments",
+      "passed": true,
+      "detail": {
+        "components8": 1
+      }
+    },
+    {
+      "group": "HUD scale",
+      "name": "shield equipped icon has a larger native silhouette",
+      "passed": true,
+      "detail": {
+        "before_extent": 10,
+        "after_extent": 16
+      }
+    },
+    {
+      "group": "native",
+      "name": "huditems/shield_upgraded every packed pixel equals native source",
+      "passed": true
+    },
+    {
+      "group": "native",
+      "name": "huditems/shield_upgraded has legal15 painted inks and alpha0",
+      "passed": true
+    },
+    {
+      "group": "silhouette",
+      "name": "huditems/shield_upgraded is one connected item without stray fragments",
+      "passed": true,
+      "detail": {
+        "components8": 1
+      }
+    },
+    {
+      "group": "HUD scale",
+      "name": "shield_upgraded equipped icon has a larger native silhouette",
+      "passed": true,
+      "detail": {
+        "before_extent": 10,
+        "after_extent": 16
+      }
+    },
+    {
+      "group": "metadata",
+      "name": "glitter w remains exact",
+      "passed": true
+    },
+    {
+      "group": "metadata",
+      "name": "glitter h remains exact",
+      "passed": true
+    },
+    {
+      "group": "metadata",
+      "name": "glitter pal remains exact",
+      "passed": true
+    },
+    {
+      "group": "metadata",
+      "name": "glitter order remains exact",
+      "passed": true
+    },
+    {
+      "group": "metadata",
+      "name": "glitter frame_pal remains exact",
+      "passed": true
+    },
+    {
+      "group": "source scope",
+      "name": "glitter all source pixels retained",
+      "passed": true
+    },
+    {
+      "group": "metadata",
+      "name": "sewerrail w remains exact",
+      "passed": true
+    },
+    {
+      "group": "metadata",
+      "name": "sewerrail h remains exact",
+      "passed": true
+    },
+    {
+      "group": "metadata",
+      "name": "sewerrail pal remains exact",
+      "passed": true
+    },
+    {
+      "group": "metadata",
+      "name": "sewerrail order remains exact",
+      "passed": true
+    },
+    {
+      "group": "metadata",
+      "name": "sewerrail frame_pal remains exact",
+      "passed": true
+    },
+    {
+      "group": "source scope",
+      "name": "sewerrail all source pixels retained",
+      "passed": true
+    },
+    {
+      "group": "metadata",
+      "name": "forestlandmark w remains exact",
+      "passed": true
+    },
+    {
+      "group": "metadata",
+      "name": "forestlandmark h remains exact",
+      "passed": true
+    },
+    {
+      "group": "metadata",
+      "name": "forestlandmark pal remains exact",
+      "passed": true
+    },
+    {
+      "group": "metadata",
+      "name": "forestlandmark order remains exact",
+      "passed": true
+    },
+    {
+      "group": "metadata",
+      "name": "forestlandmark frame_pal remains exact",
+      "passed": true
+    },
+    {
+      "group": "source scope",
+      "name": "forestlandmark all source pixels retained",
+      "passed": true
+    },
+    {
+      "group": "palette",
+      "name": "ground is one16-entry native RGB555 bank",
+      "passed": true
+    },
+    {
+      "group": "palette",
+      "name": "foliage is one16-entry native RGB555 bank",
+      "passed": true
+    },
+    {
+      "group": "palette",
+      "name": "water is one16-entry native RGB555 bank",
+      "passed": true
+    },
+    {
+      "group": "palette",
+      "name": "stone is one16-entry native RGB555 bank",
+      "passed": true
+    },
+    {
+      "group": "palette",
+      "name": "gold is one16-entry native RGB555 bank",
+      "passed": true
+    },
+    {
+      "group": "palette",
+      "name": "hero is one16-entry native RGB555 bank",
+      "passed": true
+    },
+    {
+      "group": "palette",
+      "name": "blight is one16-entry native RGB555 bank",
+      "passed": true
+    },
+    {
+      "group": "palette",
+      "name": "decay_mix is one16-entry native RGB555 bank",
+      "passed": true
+    },
+    {
+      "group": "palette",
+      "name": "rot_water is one16-entry native RGB555 bank",
+      "passed": true
+    },
+    {
+      "group": "palette",
+      "name": "drain is one16-entry native RGB555 bank",
+      "passed": true
+    },
+    {
+      "group": "palette",
+      "name": "ui is one16-entry native RGB555 bank",
+      "passed": true
+    },
+    {
+      "group": "palette",
+      "name": "menu is one16-entry native RGB555 bank",
+      "passed": true
+    },
+    {
+      "group": "palette",
+      "name": "map is one16-entry native RGB555 bank",
+      "passed": true
+    },
+    {
+      "group": "palette",
+      "name": "hud is one16-entry native RGB555 bank",
+      "passed": true
+    },
+    {
+      "group": "palette",
+      "name": "forest_obj_foliage is one16-entry native RGB555 bank",
+      "passed": true
+    },
+    {
+      "group": "palette",
+      "name": "forest_obj_stone is one16-entry native RGB555 bank",
+      "passed": true
+    },
+    {
+      "group": "palette",
+      "name": "forest_tree_study is one16-entry native RGB555 bank",
+      "passed": true
+    },
+    {
+      "group": "palette",
+      "name": "hero is one16-entry native RGB555 bank",
+      "passed": true
+    },
+    {
+      "group": "palette",
+      "name": "fx is one16-entry native RGB555 bank",
+      "passed": true
+    },
+    {
+      "group": "palette",
+      "name": "bugs is one16-entry native RGB555 bank",
+      "passed": true
+    },
+    {
+      "group": "palette",
+      "name": "blight is one16-entry native RGB555 bank",
+      "passed": true
+    },
+    {
+      "group": "palette",
+      "name": "iron is one16-entry native RGB555 bank",
+      "passed": true
+    },
+    {
+      "group": "palette",
+      "name": "folk is one16-entry native RGB555 bank",
+      "passed": true
+    },
+    {
+      "group": "palette",
+      "name": "portrait is one16-entry native RGB555 bank",
+      "passed": true
+    },
+    {
+      "group": "palette",
+      "name": "lift is one16-entry native RGB555 bank",
+      "passed": true
+    },
+    {
+      "group": "palette",
+      "name": "ui is one16-entry native RGB555 bank",
+      "passed": true
+    },
+    {
+      "group": "palette",
+      "name": "gear is one16-entry native RGB555 bank",
+      "passed": true
+    },
+    {
+      "group": "palette",
+      "name": "items is one16-entry native RGB555 bank",
+      "passed": true
+    },
+    {
+      "group": "palette",
+      "name": "pick is one16-entry native RGB555 bank",
+      "passed": true
+    },
+    {
+      "group": "palette",
+      "name": "icons is one16-entry native RGB555 bank",
+      "passed": true
+    },
+    {
+      "group": "palette",
+      "name": "peddler is one16-entry native RGB555 bank",
+      "passed": true
+    },
+    {
+      "group": "palette",
+      "name": "gatekeeper is one16-entry native RGB555 bank",
+      "passed": true
+    },
+    {
+      "group": "palette",
+      "name": "uikit is one16-entry native RGB555 bank",
+      "passed": true
+    },
+    {
+      "group": "art scope",
+      "name": "each item presentation family contains actual redrawn pixels",
+      "passed": true
+    },
+    {
+      "group": "native",
+      "name": "the real menu uses the same redrawn32px item pixels",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "all linked sheet IDs stay exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "all linked metatile IDs stay exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "hero linked physical descriptor remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "hero entire linked sheet remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "sword linked physical descriptor remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "sword entire linked sheet remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "shield linked physical descriptor remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "shield entire linked sheet remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "items linked physical descriptor remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "beetle linked physical descriptor remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "beetle entire linked sheet remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "bat linked physical descriptor remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "bat entire linked sheet remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "slime linked physical descriptor remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "slime entire linked sheet remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "spitter linked physical descriptor remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "spitter entire linked sheet remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "knight linked physical descriptor remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "knight entire linked sheet remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "ksword linked physical descriptor remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "ksword entire linked sheet remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "fx linked physical descriptor remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "fx entire linked sheet remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "proj linked physical descriptor remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "proj entire linked sheet remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "npc linked physical descriptor remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "npc entire linked sheet remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "boss linked physical descriptor remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "boss entire linked sheet remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "lift linked physical descriptor remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "lift entire linked sheet remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "arrow linked physical descriptor remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "arrow entire linked sheet remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "mouth linked physical descriptor remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "mouth entire linked sheet remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "marks linked physical descriptor remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "marks entire linked sheet remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "dots linked physical descriptor remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "dots entire linked sheet remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "cursor linked physical descriptor remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "cursor entire linked sheet remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "pick32 linked physical descriptor remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "icon32 linked physical descriptor remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "uimarks linked physical descriptor remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "uimarks entire linked sheet remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "face linked physical descriptor remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "face entire linked sheet remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "peddler_head linked physical descriptor remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "peddler_head entire linked sheet remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "peddler_body linked physical descriptor remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "peddler_body entire linked sheet remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "gatekeeper linked physical descriptor remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "gatekeeper entire linked sheet remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "wisp linked physical descriptor remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "wisp entire linked sheet remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "bloomfx linked physical descriptor remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "bloomfx entire linked sheet remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "bloomshadow linked physical descriptor remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "bloomshadow entire linked sheet remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "interactivechest linked physical descriptor remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "interactivechest entire linked sheet remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "interactiveentry linked physical descriptor remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "interactiveentry entire linked sheet remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "huditems linked physical descriptor remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "glitter linked physical descriptor remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "glitter entire linked sheet remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "sewerrail linked physical descriptor remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "sewerrail entire linked sheet remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "forestlandmark linked physical descriptor remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "forestlandmark entire linked sheet remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "appearance_mark_tiles linked scalar/material payload remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "appearance_palettes linked scalar/material payload remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "appearance_ui_tiles linked scalar/material payload remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "bloom_swing_age_active linked scalar/material payload remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "bloom_swing_age_phase linked scalar/material payload remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "bloom_swing_hit linked scalar/material payload remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "bloom_swing_origin linked scalar/material payload remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "bloomfx_frame_pal linked scalar/material payload remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "forest_cohesion_decor_alias linked scalar/material payload remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "forest_cohesion_path_alias linked scalar/material payload remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "forest_tree_anchor_x linked scalar/material payload remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "forest_tree_anchor_y linked scalar/material payload remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "forest_tree_entries linked scalar/material payload remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "forest_tree_opaque_rows linked scalar/material payload remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "forest_tree_state linked scalar/material payload remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "forest_tree_variety linked scalar/material payload remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "forest_tree_width linked scalar/material payload remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "forest_v2_canopy_alias linked scalar/material payload remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "forest_v2_canopy_kind linked scalar/material payload remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "forest_v2_overhead linked scalar/material payload remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "forest_v2_pulse_colors linked scalar/material payload remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "forest_v2_pulse_slots linked scalar/material payload remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "forest_v2_special_tree linked scalar/material payload remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "forest_v2_water_alias linked scalar/material payload remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "forest_v2_water_isolated linked scalar/material payload remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "forest_v2_water_kind linked scalar/material payload remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "forest_v3_body_visibility linked scalar/material payload remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "forestlandmark_frame_pal linked scalar/material payload remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "hud_tiles linked scalar/material payload remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "huditems_frame_pal linked scalar/material payload remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "icon32_exact_pal linked scalar/material payload remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "icon32_frame_pal linked scalar/material payload remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "interactivechest_frame_pal linked scalar/material payload remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "interactiveentry_frame_pal linked scalar/material payload remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "items_frame_pal linked scalar/material payload remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "lift_frame_pal linked scalar/material payload remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "metatile_coll linked scalar/material payload remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "metatile_glitter linked scalar/material payload remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "metatile_map_forest linked scalar/material payload remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "metatile_map_myst linked scalar/material payload remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "metatile_map_sewer linked scalar/material payload remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "metatile_prop linked scalar/material payload remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "metatile_type linked scalar/material payload remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "orb_glow linked scalar/material payload remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "pal_bg linked scalar/material payload remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "pal_face linked scalar/material payload remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "pal_obj linked scalar/material payload remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "peddler_act_at linked scalar/material payload remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "peddler_acts linked scalar/material payload remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "pick32_frame_pal linked scalar/material payload remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "room_sewer_main_ground linked scalar/material payload remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "room_sewer_main_objects linked scalar/material payload remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "room_sewer_main_overlay linked scalar/material payload remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "sheet_arrow_tiles linked scalar/material payload remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "sheet_bat_tiles linked scalar/material payload remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "sheet_beetle_tiles linked scalar/material payload remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "sheet_bloomfx_tiles linked scalar/material payload remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "sheet_bloomshadow_tiles linked scalar/material payload remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "sheet_boss_tiles linked scalar/material payload remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "sheet_cursor_tiles linked scalar/material payload remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "sheet_dots_tiles linked scalar/material payload remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "sheet_face_tiles linked scalar/material payload remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "sheet_forestlandmark_tiles linked scalar/material payload remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "sheet_fx_tiles linked scalar/material payload remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "sheet_gatekeeper_tiles linked scalar/material payload remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "sheet_glitter_tiles linked scalar/material payload remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "sheet_hero_tiles linked scalar/material payload remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "sheet_interactivechest_tiles linked scalar/material payload remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "sheet_interactiveentry_tiles linked scalar/material payload remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "sheet_knight_tiles linked scalar/material payload remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "sheet_ksword_tiles linked scalar/material payload remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "sheet_lift_tiles linked scalar/material payload remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "sheet_marks_tiles linked scalar/material payload remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "sheet_mouth_tiles linked scalar/material payload remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "sheet_npc_tiles linked scalar/material payload remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "sheet_peddler_body_tiles linked scalar/material payload remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "sheet_peddler_head_tiles linked scalar/material payload remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "sheet_proj_tiles linked scalar/material payload remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "sheet_sewerrail_tiles linked scalar/material payload remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "sheet_shield_tiles linked scalar/material payload remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "sheet_slime_tiles linked scalar/material payload remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "sheet_spitter_tiles linked scalar/material payload remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "sheet_sword_tiles linked scalar/material payload remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "sheet_uimarks_tiles linked scalar/material payload remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "sheet_wisp_tiles linked scalar/material payload remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "shield_frame_pal linked scalar/material payload remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "sin_table_u linked scalar/material payload remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "tile_anim_forest_0 linked scalar/material payload remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "tile_anim_forest_1 linked scalar/material payload remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "tile_anim_forest_10 linked scalar/material payload remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "tile_anim_forest_11 linked scalar/material payload remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "tile_anim_forest_12 linked scalar/material payload remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "tile_anim_forest_13 linked scalar/material payload remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "tile_anim_forest_14 linked scalar/material payload remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "tile_anim_forest_15 linked scalar/material payload remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "tile_anim_forest_16 linked scalar/material payload remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "tile_anim_forest_17 linked scalar/material payload remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "tile_anim_forest_18 linked scalar/material payload remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "tile_anim_forest_19 linked scalar/material payload remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "tile_anim_forest_2 linked scalar/material payload remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "tile_anim_forest_20 linked scalar/material payload remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "tile_anim_forest_21 linked scalar/material payload remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "tile_anim_forest_22 linked scalar/material payload remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "tile_anim_forest_23 linked scalar/material payload remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "tile_anim_forest_24 linked scalar/material payload remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "tile_anim_forest_25 linked scalar/material payload remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "tile_anim_forest_26 linked scalar/material payload remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "tile_anim_forest_27 linked scalar/material payload remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "tile_anim_forest_28 linked scalar/material payload remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "tile_anim_forest_29 linked scalar/material payload remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "tile_anim_forest_3 linked scalar/material payload remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "tile_anim_forest_30 linked scalar/material payload remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "tile_anim_forest_31 linked scalar/material payload remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "tile_anim_forest_32 linked scalar/material payload remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "tile_anim_forest_33 linked scalar/material payload remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "tile_anim_forest_34 linked scalar/material payload remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "tile_anim_forest_35 linked scalar/material payload remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "tile_anim_forest_36 linked scalar/material payload remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "tile_anim_forest_37 linked scalar/material payload remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "tile_anim_forest_38 linked scalar/material payload remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "tile_anim_forest_39 linked scalar/material payload remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "tile_anim_forest_4 linked scalar/material payload remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "tile_anim_forest_40 linked scalar/material payload remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "tile_anim_forest_41 linked scalar/material payload remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "tile_anim_forest_42 linked scalar/material payload remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "tile_anim_forest_43 linked scalar/material payload remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "tile_anim_forest_44 linked scalar/material payload remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "tile_anim_forest_45 linked scalar/material payload remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "tile_anim_forest_46 linked scalar/material payload remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "tile_anim_forest_47 linked scalar/material payload remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "tile_anim_forest_48 linked scalar/material payload remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "tile_anim_forest_49 linked scalar/material payload remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "tile_anim_forest_5 linked scalar/material payload remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "tile_anim_forest_50 linked scalar/material payload remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "tile_anim_forest_51 linked scalar/material payload remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "tile_anim_forest_52 linked scalar/material payload remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "tile_anim_forest_53 linked scalar/material payload remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "tile_anim_forest_54 linked scalar/material payload remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "tile_anim_forest_55 linked scalar/material payload remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "tile_anim_forest_56 linked scalar/material payload remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "tile_anim_forest_57 linked scalar/material payload remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "tile_anim_forest_58 linked scalar/material payload remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "tile_anim_forest_59 linked scalar/material payload remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "tile_anim_forest_6 linked scalar/material payload remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "tile_anim_forest_60 linked scalar/material payload remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "tile_anim_forest_61 linked scalar/material payload remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "tile_anim_forest_62 linked scalar/material payload remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "tile_anim_forest_63 linked scalar/material payload remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "tile_anim_forest_64 linked scalar/material payload remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "tile_anim_forest_65 linked scalar/material payload remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "tile_anim_forest_66 linked scalar/material payload remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "tile_anim_forest_67 linked scalar/material payload remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "tile_anim_forest_68 linked scalar/material payload remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "tile_anim_forest_69 linked scalar/material payload remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "tile_anim_forest_7 linked scalar/material payload remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "tile_anim_forest_70 linked scalar/material payload remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "tile_anim_forest_71 linked scalar/material payload remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "tile_anim_forest_72 linked scalar/material payload remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "tile_anim_forest_73 linked scalar/material payload remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "tile_anim_forest_74 linked scalar/material payload remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "tile_anim_forest_8 linked scalar/material payload remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "tile_anim_forest_9 linked scalar/material payload remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "tile_anim_myst_0 linked scalar/material payload remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "tile_anim_myst_1 linked scalar/material payload remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "tile_anim_myst_2 linked scalar/material payload remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "tile_anim_myst_3 linked scalar/material payload remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "tile_anim_myst_4 linked scalar/material payload remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "tile_anim_myst_5 linked scalar/material payload remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "tile_anim_sewer_0 linked scalar/material payload remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "tile_anim_sewer_1 linked scalar/material payload remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "tile_anim_sewer_10 linked scalar/material payload remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "tile_anim_sewer_11 linked scalar/material payload remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "tile_anim_sewer_12 linked scalar/material payload remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "tile_anim_sewer_13 linked scalar/material payload remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "tile_anim_sewer_14 linked scalar/material payload remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "tile_anim_sewer_15 linked scalar/material payload remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "tile_anim_sewer_16 linked scalar/material payload remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "tile_anim_sewer_17 linked scalar/material payload remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "tile_anim_sewer_18 linked scalar/material payload remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "tile_anim_sewer_19 linked scalar/material payload remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "tile_anim_sewer_2 linked scalar/material payload remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "tile_anim_sewer_20 linked scalar/material payload remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "tile_anim_sewer_21 linked scalar/material payload remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "tile_anim_sewer_22 linked scalar/material payload remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "tile_anim_sewer_23 linked scalar/material payload remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "tile_anim_sewer_24 linked scalar/material payload remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "tile_anim_sewer_25 linked scalar/material payload remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "tile_anim_sewer_26 linked scalar/material payload remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "tile_anim_sewer_27 linked scalar/material payload remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "tile_anim_sewer_28 linked scalar/material payload remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "tile_anim_sewer_29 linked scalar/material payload remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "tile_anim_sewer_3 linked scalar/material payload remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "tile_anim_sewer_30 linked scalar/material payload remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "tile_anim_sewer_31 linked scalar/material payload remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "tile_anim_sewer_32 linked scalar/material payload remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "tile_anim_sewer_33 linked scalar/material payload remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "tile_anim_sewer_34 linked scalar/material payload remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "tile_anim_sewer_35 linked scalar/material payload remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "tile_anim_sewer_36 linked scalar/material payload remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "tile_anim_sewer_37 linked scalar/material payload remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "tile_anim_sewer_38 linked scalar/material payload remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "tile_anim_sewer_39 linked scalar/material payload remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "tile_anim_sewer_4 linked scalar/material payload remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "tile_anim_sewer_40 linked scalar/material payload remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "tile_anim_sewer_41 linked scalar/material payload remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "tile_anim_sewer_42 linked scalar/material payload remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "tile_anim_sewer_43 linked scalar/material payload remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "tile_anim_sewer_44 linked scalar/material payload remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "tile_anim_sewer_45 linked scalar/material payload remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "tile_anim_sewer_46 linked scalar/material payload remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "tile_anim_sewer_47 linked scalar/material payload remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "tile_anim_sewer_48 linked scalar/material payload remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "tile_anim_sewer_49 linked scalar/material payload remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "tile_anim_sewer_5 linked scalar/material payload remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "tile_anim_sewer_50 linked scalar/material payload remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "tile_anim_sewer_51 linked scalar/material payload remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "tile_anim_sewer_52 linked scalar/material payload remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "tile_anim_sewer_53 linked scalar/material payload remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "tile_anim_sewer_54 linked scalar/material payload remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "tile_anim_sewer_55 linked scalar/material payload remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "tile_anim_sewer_56 linked scalar/material payload remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "tile_anim_sewer_57 linked scalar/material payload remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "tile_anim_sewer_58 linked scalar/material payload remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "tile_anim_sewer_59 linked scalar/material payload remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "tile_anim_sewer_6 linked scalar/material payload remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "tile_anim_sewer_60 linked scalar/material payload remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "tile_anim_sewer_61 linked scalar/material payload remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "tile_anim_sewer_62 linked scalar/material payload remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "tile_anim_sewer_63 linked scalar/material payload remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "tile_anim_sewer_64 linked scalar/material payload remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "tile_anim_sewer_65 linked scalar/material payload remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "tile_anim_sewer_66 linked scalar/material payload remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "tile_anim_sewer_67 linked scalar/material payload remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "tile_anim_sewer_68 linked scalar/material payload remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "tile_anim_sewer_7 linked scalar/material payload remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "tile_anim_sewer_8 linked scalar/material payload remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "tile_anim_sewer_9 linked scalar/material payload remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "tileset_forest_pals linked scalar/material payload remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "tileset_forest_tiles linked scalar/material payload remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "tileset_myst_pals linked scalar/material payload remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "tileset_myst_tiles linked scalar/material payload remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "tileset_sewer_pals linked scalar/material payload remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "tileset_sewer_tiles linked scalar/material payload remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "title_bitmap linked scalar/material payload remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "vwf_bits linked scalar/material payload remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "vwf_w linked scalar/material payload remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "forest resolved terrain/map/animations/palettes remain exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "sewer resolved terrain/map/animations/palettes remain exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "myst resolved terrain/map/animations/palettes remain exact",
+      "passed": true
+    },
+    {
+      "group": "budget",
+      "name": "IWRAM preserves system/stack headroom",
+      "passed": true,
+      "detail": {
+        "used": 21908,
+        "available": 32512
+      }
+    },
+    {
+      "group": "budget",
+      "name": "EWRAM fits physical256KB memory",
+      "passed": true,
+      "detail": {
+        "used": 253152,
+        "headroom": 8992
+      }
+    },
+    {
+      "group": "budget",
+      "name": "forest retains legal BG tile and palette residency",
+      "passed": true,
+      "detail": {
+        "tiles": 656,
+        "banks": 10
+      }
+    },
+    {
+      "group": "budget",
+      "name": "sewer retains legal BG tile and palette residency",
+      "passed": true,
+      "detail": {
+        "tiles": 822,
+        "banks": 1
+      }
+    },
+    {
+      "group": "budget",
+      "name": "myst retains legal BG tile and palette residency",
+      "passed": true,
+      "detail": {
+        "tiles": 107,
+        "banks": 6
+      }
+    },
+    {
+      "group": "budget",
+      "name": "32px minimap occupies the reserved final16OBJ tiles",
+      "passed": true
+    },
+    {
+      "group": "budget",
+      "name": "BG0 text pool remains positive below screenblocks22/23",
+      "passed": true,
+      "detail": {
+        "first_tile": 146,
+        "end_tile": 384,
+        "available_text_tiles": 238,
+        "note": "Dialogue/shop allocation success is separately exercised in real mGBA."
+      }
+    }
+  ]
+}

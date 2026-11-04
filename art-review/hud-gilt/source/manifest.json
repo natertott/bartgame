@@ -1,0 +1,7547 @@
+{
+  "source_commit": "4747b6788f18fe32da7d3304f34ce94c22468d5b",
+  "kind": "Native source paintings, not emulator captures.",
+  "frames": [
+    {
+      "sheet": "items",
+      "frame": "none",
+      "canvas": [
+        16,
+        16
+      ],
+      "visible_bbox": null,
+      "visible_size": [
+        0,
+        0
+      ],
+      "material": "gold",
+      "palette_alias": "gear",
+      "palette_rgb555": [
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          16,
+          24,
+          32
+        ],
+        [
+          48,
+          32,
+          32
+        ],
+        [
+          72,
+          48,
+          32
+        ],
+        [
+          104,
+          64,
+          40
+        ],
+        [
+          136,
+          88,
+          48
+        ],
+        [
+          176,
+          120,
+          56
+        ],
+        [
+          112,
+          80,
+          32
+        ],
+        [
+          168,
+          120,
+          40
+        ],
+        [
+          216,
+          160,
+          56
+        ],
+        [
+          240,
+          200,
+          88
+        ],
+        [
+          248,
+          224,
+          160
+        ],
+        [
+          248,
+          240,
+          200
+        ],
+        [
+          24,
+          72,
+          72
+        ],
+        [
+          56,
+          120,
+          112
+        ],
+        [
+          176,
+          64,
+          80
+        ]
+      ],
+      "inks": [],
+      "indexed": "items-none-indexed.png",
+      "rgba": "items-none.png",
+      "indexed_sha256": "9682ea61f915d04a622e8922ad70f45324a7105ce91bec186aed7834c6d28c86",
+      "rgba_sha256": "50b068e07b4bf235705c19b77da49fdbbc7e98ddc0a46f1c6659cca98c963904",
+      "indexed_file": "native/items-none-indexed.png",
+      "RGBA_file": "native/items-none.png",
+      "RGBA_sha256": "50b068e07b4bf235705c19b77da49fdbbc7e98ddc0a46f1c6659cca98c963904"
+    },
+    {
+      "sheet": "items",
+      "frame": "bombs",
+      "canvas": [
+        16,
+        16
+      ],
+      "visible_bbox": [
+        3,
+        2,
+        13,
+        15
+      ],
+      "visible_size": [
+        10,
+        13
+      ],
+      "material": "blight",
+      "palette_alias": "blight",
+      "palette_rgb555": [
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          16,
+          16,
+          24
+        ],
+        [
+          32,
+          24,
+          40
+        ],
+        [
+          48,
+          32,
+          56
+        ],
+        [
+          72,
+          48,
+          72
+        ],
+        [
+          96,
+          64,
+          88
+        ],
+        [
+          128,
+          80,
+          104
+        ],
+        [
+          160,
+          104,
+          120
+        ],
+        [
+          64,
+          48,
+          48
+        ],
+        [
+          96,
+          64,
+          56
+        ],
+        [
+          136,
+          96,
+          72
+        ],
+        [
+          176,
+          136,
+          88
+        ],
+        [
+          136,
+          40,
+          88
+        ],
+        [
+          192,
+          72,
+          136
+        ],
+        [
+          232,
+          144,
+          184
+        ],
+        [
+          240,
+          216,
+          192
+        ]
+      ],
+      "inks": [
+        1,
+        4,
+        10,
+        12,
+        14
+      ],
+      "indexed": "items-bombs-indexed.png",
+      "rgba": "items-bombs.png",
+      "indexed_sha256": "997354eeaf3eda440eb0436ab5e80de3187079536a1c4e3e838d6c0755ba9dfa",
+      "rgba_sha256": "52b4bc7fe9f798541593f2feb3cae93bf07dde584f7e74062e50daa5470aede3",
+      "indexed_file": "native/items-bombs-indexed.png",
+      "RGBA_file": "native/items-bombs.png",
+      "RGBA_sha256": "52b4bc7fe9f798541593f2feb3cae93bf07dde584f7e74062e50daa5470aede3"
+    },
+    {
+      "sheet": "items",
+      "frame": "lamp",
+      "canvas": [
+        16,
+        16
+      ],
+      "visible_bbox": [
+        3,
+        1,
+        13,
+        15
+      ],
+      "visible_size": [
+        10,
+        14
+      ],
+      "material": "gold",
+      "palette_alias": "gear",
+      "palette_rgb555": [
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          16,
+          24,
+          32
+        ],
+        [
+          48,
+          32,
+          32
+        ],
+        [
+          72,
+          48,
+          32
+        ],
+        [
+          104,
+          64,
+          40
+        ],
+        [
+          136,
+          88,
+          48
+        ],
+        [
+          176,
+          120,
+          56
+        ],
+        [
+          112,
+          80,
+          32
+        ],
+        [
+          168,
+          120,
+          40
+        ],
+        [
+          216,
+          160,
+          56
+        ],
+        [
+          240,
+          200,
+          88
+        ],
+        [
+          248,
+          224,
+          160
+        ],
+        [
+          248,
+          240,
+          200
+        ],
+        [
+          24,
+          72,
+          72
+        ],
+        [
+          56,
+          120,
+          112
+        ],
+        [
+          176,
+          64,
+          80
+        ]
+      ],
+      "inks": [
+        1,
+        2,
+        8,
+        10,
+        11,
+        12
+      ],
+      "indexed": "items-lamp-indexed.png",
+      "rgba": "items-lamp.png",
+      "indexed_sha256": "90201c52b05a304354a1720f8154df1fe83ae4798eecc65642ce6d00e5cb3b4b",
+      "rgba_sha256": "5fde12616d7e4269888721b7b3a69dd69b1d375051bbe2d70966b10361c7124d",
+      "indexed_file": "native/items-lamp-indexed.png",
+      "RGBA_file": "native/items-lamp.png",
+      "RGBA_sha256": "5fde12616d7e4269888721b7b3a69dd69b1d375051bbe2d70966b10361c7124d"
+    },
+    {
+      "sheet": "items",
+      "frame": "cloak",
+      "canvas": [
+        16,
+        16
+      ],
+      "visible_bbox": [
+        2,
+        2,
+        15,
+        15
+      ],
+      "visible_size": [
+        13,
+        13
+      ],
+      "material": "foliage",
+      "palette_alias": "bugs",
+      "palette_rgb555": [
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          16,
+          24,
+          32
+        ],
+        [
+          16,
+          40,
+          40
+        ],
+        [
+          24,
+          56,
+          48
+        ],
+        [
+          32,
+          72,
+          56
+        ],
+        [
+          48,
+          96,
+          72
+        ],
+        [
+          72,
+          120,
+          80
+        ],
+        [
+          104,
+          152,
+          88
+        ],
+        [
+          48,
+          40,
+          32
+        ],
+        [
+          72,
+          56,
+          40
+        ],
+        [
+          104,
+          80,
+          56
+        ],
+        [
+          144,
+          112,
+          72
+        ],
+        [
+          176,
+          144,
+          88
+        ],
+        [
+          24,
+          56,
+          56
+        ],
+        [
+          48,
+          88,
+          80
+        ],
+        [
+          120,
+          152,
+          128
+        ]
+      ],
+      "inks": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        7,
+        12
+      ],
+      "indexed": "items-cloak-indexed.png",
+      "rgba": "items-cloak.png",
+      "indexed_sha256": "afd494241a3c865828f39192c1c29f2e0b451a4a73b82bcf84784f908d62b0c3",
+      "rgba_sha256": "7e0d58a3250bf637058f9e446e9b5daa6eefcb0b712735cc02e29d2e8cf243ee",
+      "indexed_file": "native/items-cloak-indexed.png",
+      "RGBA_file": "native/items-cloak.png",
+      "RGBA_sha256": "7e0d58a3250bf637058f9e446e9b5daa6eefcb0b712735cc02e29d2e8cf243ee"
+    },
+    {
+      "sheet": "items",
+      "frame": "key",
+      "canvas": [
+        16,
+        16
+      ],
+      "visible_bbox": [
+        2,
+        2,
+        14,
+        15
+      ],
+      "visible_size": [
+        12,
+        13
+      ],
+      "material": "gold",
+      "palette_alias": "gear",
+      "palette_rgb555": [
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          16,
+          24,
+          32
+        ],
+        [
+          48,
+          32,
+          32
+        ],
+        [
+          72,
+          48,
+          32
+        ],
+        [
+          104,
+          64,
+          40
+        ],
+        [
+          136,
+          88,
+          48
+        ],
+        [
+          176,
+          120,
+          56
+        ],
+        [
+          112,
+          80,
+          32
+        ],
+        [
+          168,
+          120,
+          40
+        ],
+        [
+          216,
+          160,
+          56
+        ],
+        [
+          240,
+          200,
+          88
+        ],
+        [
+          248,
+          224,
+          160
+        ],
+        [
+          248,
+          240,
+          200
+        ],
+        [
+          24,
+          72,
+          72
+        ],
+        [
+          56,
+          120,
+          112
+        ],
+        [
+          176,
+          64,
+          80
+        ]
+      ],
+      "inks": [
+        1,
+        10,
+        12
+      ],
+      "indexed": "items-key-indexed.png",
+      "rgba": "items-key.png",
+      "indexed_sha256": "1f27586df90bd553d9f5898d8fcd8b90d5483302ad774105bd17eebb9d350ad0",
+      "rgba_sha256": "eaac7adb132905c568e2abe06941b54e6ef31bde2fd13c074ad8827a8c8b7e76",
+      "indexed_file": "native/items-key-indexed.png",
+      "RGBA_file": "native/items-key.png",
+      "RGBA_sha256": "eaac7adb132905c568e2abe06941b54e6ef31bde2fd13c074ad8827a8c8b7e76"
+    },
+    {
+      "sheet": "items",
+      "frame": "heart_piece",
+      "canvas": [
+        16,
+        16
+      ],
+      "visible_bbox": [
+        2,
+        3,
+        15,
+        15
+      ],
+      "visible_size": [
+        13,
+        12
+      ],
+      "material": "hero",
+      "palette_alias": "hero",
+      "palette_rgb555": [
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          16,
+          24,
+          32
+        ],
+        [
+          128,
+          40,
+          48
+        ],
+        [
+          184,
+          56,
+          56
+        ],
+        [
+          224,
+          96,
+          64
+        ],
+        [
+          248,
+          144,
+          80
+        ],
+        [
+          240,
+          216,
+          152
+        ],
+        [
+          248,
+          240,
+          192
+        ],
+        [
+          24,
+          56,
+          40
+        ],
+        [
+          48,
+          80,
+          48
+        ],
+        [
+          80,
+          112,
+          56
+        ],
+        [
+          72,
+          56,
+          32
+        ],
+        [
+          136,
+          96,
+          56
+        ],
+        [
+          136,
+          160,
+          160
+        ],
+        [
+          208,
+          224,
+          192
+        ],
+        [
+          248,
+          248,
+          216
+        ]
+      ],
+      "inks": [
+        1,
+        2,
+        3,
+        4,
+        7
+      ],
+      "indexed": "items-heart_piece-indexed.png",
+      "rgba": "items-heart_piece.png",
+      "indexed_sha256": "5aafe78a4f7b64a8e427c58e854c2d649ac3dce46b83fb260139e537d1180eb9",
+      "rgba_sha256": "5366f3f80f08f6d29ff701b36c8763801efe8016bae9d5179eb61a2c265ca0a5",
+      "indexed_file": "native/items-heart_piece-indexed.png",
+      "RGBA_file": "native/items-heart_piece.png",
+      "RGBA_sha256": "5366f3f80f08f6d29ff701b36c8763801efe8016bae9d5179eb61a2c265ca0a5"
+    },
+    {
+      "sheet": "items",
+      "frame": "heart_container",
+      "canvas": [
+        16,
+        16
+      ],
+      "visible_bbox": [
+        2,
+        3,
+        15,
+        15
+      ],
+      "visible_size": [
+        13,
+        12
+      ],
+      "material": "hero",
+      "palette_alias": "hero",
+      "palette_rgb555": [
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          16,
+          24,
+          32
+        ],
+        [
+          128,
+          40,
+          48
+        ],
+        [
+          184,
+          56,
+          56
+        ],
+        [
+          224,
+          96,
+          64
+        ],
+        [
+          248,
+          144,
+          80
+        ],
+        [
+          240,
+          216,
+          152
+        ],
+        [
+          248,
+          240,
+          192
+        ],
+        [
+          24,
+          56,
+          40
+        ],
+        [
+          48,
+          80,
+          48
+        ],
+        [
+          80,
+          112,
+          56
+        ],
+        [
+          72,
+          56,
+          32
+        ],
+        [
+          136,
+          96,
+          56
+        ],
+        [
+          136,
+          160,
+          160
+        ],
+        [
+          208,
+          224,
+          192
+        ],
+        [
+          248,
+          248,
+          216
+        ]
+      ],
+      "inks": [
+        1,
+        3,
+        4,
+        6,
+        7
+      ],
+      "indexed": "items-heart_container-indexed.png",
+      "rgba": "items-heart_container.png",
+      "indexed_sha256": "8620b4ac71eecc640ce319d14fd9776590aaf9cf5f320efac891dc11451b2ef3",
+      "rgba_sha256": "c402a6ab09a56dc33143193f4ab0f46229e4dac2b5a6c6f706c3236793cce30b",
+      "indexed_file": "native/items-heart_container-indexed.png",
+      "RGBA_file": "native/items-heart_container.png",
+      "RGBA_sha256": "c402a6ab09a56dc33143193f4ab0f46229e4dac2b5a6c6f706c3236793cce30b"
+    },
+    {
+      "sheet": "items",
+      "frame": "gilt_big",
+      "canvas": [
+        16,
+        16
+      ],
+      "visible_bbox": [
+        2,
+        2,
+        14,
+        15
+      ],
+      "visible_size": [
+        12,
+        13
+      ],
+      "material": "gold",
+      "palette_alias": "gear",
+      "palette_rgb555": [
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          16,
+          24,
+          32
+        ],
+        [
+          48,
+          32,
+          32
+        ],
+        [
+          72,
+          48,
+          32
+        ],
+        [
+          104,
+          64,
+          40
+        ],
+        [
+          136,
+          88,
+          48
+        ],
+        [
+          176,
+          120,
+          56
+        ],
+        [
+          112,
+          80,
+          32
+        ],
+        [
+          168,
+          120,
+          40
+        ],
+        [
+          216,
+          160,
+          56
+        ],
+        [
+          240,
+          200,
+          88
+        ],
+        [
+          248,
+          224,
+          160
+        ],
+        [
+          248,
+          240,
+          200
+        ],
+        [
+          24,
+          72,
+          72
+        ],
+        [
+          56,
+          120,
+          112
+        ],
+        [
+          176,
+          64,
+          80
+        ]
+      ],
+      "inks": [
+        1,
+        5,
+        6,
+        10,
+        11
+      ],
+      "indexed": "items-gilt_big-indexed.png",
+      "rgba": "items-gilt_big.png",
+      "indexed_sha256": "c9092851a4e71d383ce76c15ad069ad148d5e67c8232487e6d6410d89d930e48",
+      "rgba_sha256": "06086a09de8f3fea173dd7517359671750d84340a2b47d8c5f5c86d87eb94b87",
+      "indexed_file": "native/items-gilt_big-indexed.png",
+      "RGBA_file": "native/items-gilt_big.png",
+      "RGBA_sha256": "06086a09de8f3fea173dd7517359671750d84340a2b47d8c5f5c86d87eb94b87"
+    },
+    {
+      "sheet": "items",
+      "frame": "relic",
+      "canvas": [
+        16,
+        16
+      ],
+      "visible_bbox": [
+        2,
+        2,
+        14,
+        14
+      ],
+      "visible_size": [
+        12,
+        12
+      ],
+      "material": "gold",
+      "palette_alias": "gear",
+      "palette_rgb555": [
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          16,
+          24,
+          32
+        ],
+        [
+          48,
+          32,
+          32
+        ],
+        [
+          72,
+          48,
+          32
+        ],
+        [
+          104,
+          64,
+          40
+        ],
+        [
+          136,
+          88,
+          48
+        ],
+        [
+          176,
+          120,
+          56
+        ],
+        [
+          112,
+          80,
+          32
+        ],
+        [
+          168,
+          120,
+          40
+        ],
+        [
+          216,
+          160,
+          56
+        ],
+        [
+          240,
+          200,
+          88
+        ],
+        [
+          248,
+          224,
+          160
+        ],
+        [
+          248,
+          240,
+          200
+        ],
+        [
+          24,
+          72,
+          72
+        ],
+        [
+          56,
+          120,
+          112
+        ],
+        [
+          176,
+          64,
+          80
+        ]
+      ],
+      "inks": [
+        1,
+        2,
+        8,
+        11,
+        12,
+        13
+      ],
+      "indexed": "items-relic-indexed.png",
+      "rgba": "items-relic.png",
+      "indexed_sha256": "73bba098223dc41f3b05045c47d824769afd8502dad1c150bec13daa62f2851f",
+      "rgba_sha256": "49a3bd0165c4965a5eaa6737d551b7e411910c4e2eeb785e3a7572910dda7a52",
+      "indexed_file": "native/items-relic-indexed.png",
+      "RGBA_file": "native/items-relic.png",
+      "RGBA_sha256": "49a3bd0165c4965a5eaa6737d551b7e411910c4e2eeb785e3a7572910dda7a52"
+    },
+    {
+      "sheet": "items",
+      "frame": "heart",
+      "canvas": [
+        16,
+        16
+      ],
+      "visible_bbox": [
+        2,
+        3,
+        15,
+        15
+      ],
+      "visible_size": [
+        13,
+        12
+      ],
+      "material": "hero",
+      "palette_alias": "hero",
+      "palette_rgb555": [
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          16,
+          24,
+          32
+        ],
+        [
+          128,
+          40,
+          48
+        ],
+        [
+          184,
+          56,
+          56
+        ],
+        [
+          224,
+          96,
+          64
+        ],
+        [
+          248,
+          144,
+          80
+        ],
+        [
+          240,
+          216,
+          152
+        ],
+        [
+          248,
+          240,
+          192
+        ],
+        [
+          24,
+          56,
+          40
+        ],
+        [
+          48,
+          80,
+          48
+        ],
+        [
+          80,
+          112,
+          56
+        ],
+        [
+          72,
+          56,
+          32
+        ],
+        [
+          136,
+          96,
+          56
+        ],
+        [
+          136,
+          160,
+          160
+        ],
+        [
+          208,
+          224,
+          192
+        ],
+        [
+          248,
+          248,
+          216
+        ]
+      ],
+      "inks": [
+        1,
+        3,
+        4,
+        7
+      ],
+      "indexed": "items-heart-indexed.png",
+      "rgba": "items-heart.png",
+      "indexed_sha256": "814498d9d849f0a65913540a5a4f878d333342cebc363a371f2aaf482639f57f",
+      "rgba_sha256": "0e92442faf66c47f44b2ddaeafef30fa3e2c41449a81b2f44126f1c171a22a75",
+      "indexed_file": "native/items-heart-indexed.png",
+      "RGBA_file": "native/items-heart.png",
+      "RGBA_sha256": "0e92442faf66c47f44b2ddaeafef30fa3e2c41449a81b2f44126f1c171a22a75"
+    },
+    {
+      "sheet": "items",
+      "frame": "gilt",
+      "canvas": [
+        16,
+        16
+      ],
+      "visible_bbox": [
+        4,
+        4,
+        12,
+        14
+      ],
+      "visible_size": [
+        8,
+        10
+      ],
+      "material": "gold",
+      "palette_alias": "gear",
+      "palette_rgb555": [
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          16,
+          24,
+          32
+        ],
+        [
+          48,
+          32,
+          32
+        ],
+        [
+          72,
+          48,
+          32
+        ],
+        [
+          104,
+          64,
+          40
+        ],
+        [
+          136,
+          88,
+          48
+        ],
+        [
+          176,
+          120,
+          56
+        ],
+        [
+          112,
+          80,
+          32
+        ],
+        [
+          168,
+          120,
+          40
+        ],
+        [
+          216,
+          160,
+          56
+        ],
+        [
+          240,
+          200,
+          88
+        ],
+        [
+          248,
+          224,
+          160
+        ],
+        [
+          248,
+          240,
+          200
+        ],
+        [
+          24,
+          72,
+          72
+        ],
+        [
+          56,
+          120,
+          112
+        ],
+        [
+          176,
+          64,
+          80
+        ]
+      ],
+      "inks": [
+        1,
+        9,
+        11,
+        12
+      ],
+      "indexed": "items-gilt-indexed.png",
+      "rgba": "items-gilt.png",
+      "indexed_sha256": "60eb8473b068475baa8235cf355c718fbffb1024ab65b55902a40e2fe7d13fee",
+      "rgba_sha256": "ece513b79161c2a11674d061df8e80bdc485ba62b58e4d31a7200deac26460e8",
+      "indexed_file": "native/items-gilt-indexed.png",
+      "RGBA_file": "native/items-gilt.png",
+      "RGBA_sha256": "ece513b79161c2a11674d061df8e80bdc485ba62b58e4d31a7200deac26460e8"
+    },
+    {
+      "sheet": "items",
+      "frame": "bomb_pickup",
+      "canvas": [
+        16,
+        16
+      ],
+      "visible_bbox": [
+        3,
+        2,
+        13,
+        15
+      ],
+      "visible_size": [
+        10,
+        13
+      ],
+      "material": "blight",
+      "palette_alias": "blight",
+      "palette_rgb555": [
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          16,
+          16,
+          24
+        ],
+        [
+          32,
+          24,
+          40
+        ],
+        [
+          48,
+          32,
+          56
+        ],
+        [
+          72,
+          48,
+          72
+        ],
+        [
+          96,
+          64,
+          88
+        ],
+        [
+          128,
+          80,
+          104
+        ],
+        [
+          160,
+          104,
+          120
+        ],
+        [
+          64,
+          48,
+          48
+        ],
+        [
+          96,
+          64,
+          56
+        ],
+        [
+          136,
+          96,
+          72
+        ],
+        [
+          176,
+          136,
+          88
+        ],
+        [
+          136,
+          40,
+          88
+        ],
+        [
+          192,
+          72,
+          136
+        ],
+        [
+          232,
+          144,
+          184
+        ],
+        [
+          240,
+          216,
+          192
+        ]
+      ],
+      "inks": [
+        1,
+        4,
+        10,
+        12,
+        14
+      ],
+      "indexed": "items-bomb_pickup-indexed.png",
+      "rgba": "items-bomb_pickup.png",
+      "indexed_sha256": "997354eeaf3eda440eb0436ab5e80de3187079536a1c4e3e838d6c0755ba9dfa",
+      "rgba_sha256": "52b4bc7fe9f798541593f2feb3cae93bf07dde584f7e74062e50daa5470aede3",
+      "indexed_file": "native/items-bomb_pickup-indexed.png",
+      "RGBA_file": "native/items-bomb_pickup.png",
+      "RGBA_sha256": "52b4bc7fe9f798541593f2feb3cae93bf07dde584f7e74062e50daa5470aede3"
+    },
+    {
+      "sheet": "items",
+      "frame": "spark",
+      "canvas": [
+        16,
+        16
+      ],
+      "visible_bbox": [
+        2,
+        2,
+        14,
+        14
+      ],
+      "visible_size": [
+        12,
+        12
+      ],
+      "material": "gold",
+      "palette_alias": "gear",
+      "palette_rgb555": [
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          16,
+          24,
+          32
+        ],
+        [
+          48,
+          32,
+          32
+        ],
+        [
+          72,
+          48,
+          32
+        ],
+        [
+          104,
+          64,
+          40
+        ],
+        [
+          136,
+          88,
+          48
+        ],
+        [
+          176,
+          120,
+          56
+        ],
+        [
+          112,
+          80,
+          32
+        ],
+        [
+          168,
+          120,
+          40
+        ],
+        [
+          216,
+          160,
+          56
+        ],
+        [
+          240,
+          200,
+          88
+        ],
+        [
+          248,
+          224,
+          160
+        ],
+        [
+          248,
+          240,
+          200
+        ],
+        [
+          24,
+          72,
+          72
+        ],
+        [
+          56,
+          120,
+          112
+        ],
+        [
+          176,
+          64,
+          80
+        ]
+      ],
+      "inks": [
+        9,
+        11,
+        12
+      ],
+      "indexed": "items-spark-indexed.png",
+      "rgba": "items-spark.png",
+      "indexed_sha256": "af0adecb266a13595ff70deb434d8e13f757ca2dcadd3f4751cfcc8ac8c74503",
+      "rgba_sha256": "7ca99ac51c340846a5cd4e2e20cbb2a155596ed5558ef2fbced89e7696988930",
+      "indexed_file": "native/items-spark-indexed.png",
+      "RGBA_file": "native/items-spark.png",
+      "RGBA_sha256": "7ca99ac51c340846a5cd4e2e20cbb2a155596ed5558ef2fbced89e7696988930"
+    },
+    {
+      "sheet": "items",
+      "frame": "grail",
+      "canvas": [
+        16,
+        16
+      ],
+      "visible_bbox": [
+        2,
+        2,
+        14,
+        15
+      ],
+      "visible_size": [
+        12,
+        13
+      ],
+      "material": "gold",
+      "palette_alias": "gear",
+      "palette_rgb555": [
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          16,
+          24,
+          32
+        ],
+        [
+          48,
+          32,
+          32
+        ],
+        [
+          72,
+          48,
+          32
+        ],
+        [
+          104,
+          64,
+          40
+        ],
+        [
+          136,
+          88,
+          48
+        ],
+        [
+          176,
+          120,
+          56
+        ],
+        [
+          112,
+          80,
+          32
+        ],
+        [
+          168,
+          120,
+          40
+        ],
+        [
+          216,
+          160,
+          56
+        ],
+        [
+          240,
+          200,
+          88
+        ],
+        [
+          248,
+          224,
+          160
+        ],
+        [
+          248,
+          240,
+          200
+        ],
+        [
+          24,
+          72,
+          72
+        ],
+        [
+          56,
+          120,
+          112
+        ],
+        [
+          176,
+          64,
+          80
+        ]
+      ],
+      "inks": [
+        1,
+        9,
+        10,
+        11,
+        12,
+        15
+      ],
+      "indexed": "items-grail-indexed.png",
+      "rgba": "items-grail.png",
+      "indexed_sha256": "0da0c2032d2367242b6ee531b7fc3f385740034ff37963ff3a7e34682b817ef9",
+      "rgba_sha256": "8b8a50e9e70967307edfbaac69f0b2e8af5c2264b4d6b198b0f54030543f85a0",
+      "indexed_file": "native/items-grail-indexed.png",
+      "RGBA_file": "native/items-grail.png",
+      "RGBA_sha256": "8b8a50e9e70967307edfbaac69f0b2e8af5c2264b4d6b198b0f54030543f85a0"
+    },
+    {
+      "sheet": "items",
+      "frame": "gauntlet",
+      "canvas": [
+        16,
+        16
+      ],
+      "visible_bbox": [
+        2,
+        2,
+        15,
+        15
+      ],
+      "visible_size": [
+        13,
+        13
+      ],
+      "material": "gold",
+      "palette_alias": "gear",
+      "palette_rgb555": [
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          16,
+          24,
+          32
+        ],
+        [
+          48,
+          32,
+          32
+        ],
+        [
+          72,
+          48,
+          32
+        ],
+        [
+          104,
+          64,
+          40
+        ],
+        [
+          136,
+          88,
+          48
+        ],
+        [
+          176,
+          120,
+          56
+        ],
+        [
+          112,
+          80,
+          32
+        ],
+        [
+          168,
+          120,
+          40
+        ],
+        [
+          216,
+          160,
+          56
+        ],
+        [
+          240,
+          200,
+          88
+        ],
+        [
+          248,
+          224,
+          160
+        ],
+        [
+          248,
+          240,
+          200
+        ],
+        [
+          24,
+          72,
+          72
+        ],
+        [
+          56,
+          120,
+          112
+        ],
+        [
+          176,
+          64,
+          80
+        ]
+      ],
+      "inks": [
+        1,
+        8,
+        10,
+        12
+      ],
+      "indexed": "items-gauntlet-indexed.png",
+      "rgba": "items-gauntlet.png",
+      "indexed_sha256": "2e566eeedc5d3b8c6cb32b31f5e353d0cda1bca8fcf5e7e035aa97ff3cad5807",
+      "rgba_sha256": "cad17fcc6ec862ae19b1e08916141d49d1987aca4876a3ce3c36333125987c4a",
+      "indexed_file": "native/items-gauntlet-indexed.png",
+      "RGBA_file": "native/items-gauntlet.png",
+      "RGBA_sha256": "cad17fcc6ec862ae19b1e08916141d49d1987aca4876a3ce3c36333125987c4a"
+    },
+    {
+      "sheet": "items",
+      "frame": "bow",
+      "canvas": [
+        16,
+        16
+      ],
+      "visible_bbox": [
+        4,
+        2,
+        14,
+        15
+      ],
+      "visible_size": [
+        10,
+        13
+      ],
+      "material": "gold",
+      "palette_alias": "gear",
+      "palette_rgb555": [
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          16,
+          24,
+          32
+        ],
+        [
+          48,
+          32,
+          32
+        ],
+        [
+          72,
+          48,
+          32
+        ],
+        [
+          104,
+          64,
+          40
+        ],
+        [
+          136,
+          88,
+          48
+        ],
+        [
+          176,
+          120,
+          56
+        ],
+        [
+          112,
+          80,
+          32
+        ],
+        [
+          168,
+          120,
+          40
+        ],
+        [
+          216,
+          160,
+          56
+        ],
+        [
+          240,
+          200,
+          88
+        ],
+        [
+          248,
+          224,
+          160
+        ],
+        [
+          248,
+          240,
+          200
+        ],
+        [
+          24,
+          72,
+          72
+        ],
+        [
+          56,
+          120,
+          112
+        ],
+        [
+          176,
+          64,
+          80
+        ]
+      ],
+      "inks": [
+        1,
+        6,
+        8,
+        11,
+        12
+      ],
+      "indexed": "items-bow-indexed.png",
+      "rgba": "items-bow.png",
+      "indexed_sha256": "0034f5b5733cc442f946c8ec83ccdd953124f70b9d25074cd6f434030db8960a",
+      "rgba_sha256": "146e47d4234a7429a88ad73ce6f0338ace69eeef53a64bfe1efd97b30c44ee33",
+      "indexed_file": "native/items-bow-indexed.png",
+      "RGBA_file": "native/items-bow.png",
+      "RGBA_sha256": "146e47d4234a7429a88ad73ce6f0338ace69eeef53a64bfe1efd97b30c44ee33"
+    },
+    {
+      "sheet": "items",
+      "frame": "arrow1",
+      "canvas": [
+        16,
+        16
+      ],
+      "visible_bbox": [
+        3,
+        3,
+        13,
+        15
+      ],
+      "visible_size": [
+        10,
+        12
+      ],
+      "material": "stone",
+      "palette_alias": "iron",
+      "palette_rgb555": [
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          16,
+          24,
+          32
+        ],
+        [
+          32,
+          40,
+          48
+        ],
+        [
+          48,
+          56,
+          64
+        ],
+        [
+          72,
+          80,
+          80
+        ],
+        [
+          96,
+          104,
+          96
+        ],
+        [
+          136,
+          144,
+          128
+        ],
+        [
+          176,
+          176,
+          152
+        ],
+        [
+          208,
+          208,
+          176
+        ],
+        [
+          48,
+          40,
+          32
+        ],
+        [
+          80,
+          64,
+          48
+        ],
+        [
+          120,
+          96,
+          64
+        ],
+        [
+          160,
+          128,
+          72
+        ],
+        [
+          192,
+          160,
+          96
+        ],
+        [
+          232,
+          208,
+          152
+        ],
+        [
+          248,
+          240,
+          200
+        ]
+      ],
+      "inks": [
+        1,
+        5,
+        7,
+        12
+      ],
+      "indexed": "items-arrow1-indexed.png",
+      "rgba": "items-arrow1.png",
+      "indexed_sha256": "6a86e66b7c3fbd324651b12814c09302400b4dfa96953e944c5828a936b63005",
+      "rgba_sha256": "1763e2fd7df4b6a6913884bbc570aea5e4c1f62bb94ab584f2eccc33949465db",
+      "indexed_file": "native/items-arrow1-indexed.png",
+      "RGBA_file": "native/items-arrow1.png",
+      "RGBA_sha256": "1763e2fd7df4b6a6913884bbc570aea5e4c1f62bb94ab584f2eccc33949465db"
+    },
+    {
+      "sheet": "items",
+      "frame": "arrow5",
+      "canvas": [
+        16,
+        16
+      ],
+      "visible_bbox": [
+        2,
+        3,
+        14,
+        15
+      ],
+      "visible_size": [
+        12,
+        12
+      ],
+      "material": "stone",
+      "palette_alias": "iron",
+      "palette_rgb555": [
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          16,
+          24,
+          32
+        ],
+        [
+          32,
+          40,
+          48
+        ],
+        [
+          48,
+          56,
+          64
+        ],
+        [
+          72,
+          80,
+          80
+        ],
+        [
+          96,
+          104,
+          96
+        ],
+        [
+          136,
+          144,
+          128
+        ],
+        [
+          176,
+          176,
+          152
+        ],
+        [
+          208,
+          208,
+          176
+        ],
+        [
+          48,
+          40,
+          32
+        ],
+        [
+          80,
+          64,
+          48
+        ],
+        [
+          120,
+          96,
+          64
+        ],
+        [
+          160,
+          128,
+          72
+        ],
+        [
+          192,
+          160,
+          96
+        ],
+        [
+          232,
+          208,
+          152
+        ],
+        [
+          248,
+          240,
+          200
+        ]
+      ],
+      "inks": [
+        1,
+        5,
+        7,
+        12
+      ],
+      "indexed": "items-arrow5-indexed.png",
+      "rgba": "items-arrow5.png",
+      "indexed_sha256": "a39de68f09311bf310cf9fdd09bc4218c03e95b5c6fd5ab48503d60d463ed71b",
+      "rgba_sha256": "7f02fb94d41276fc12b1843dbb796be768a82d622cc85e45a0e54aa4c3475dd6",
+      "indexed_file": "native/items-arrow5-indexed.png",
+      "RGBA_file": "native/items-arrow5.png",
+      "RGBA_sha256": "7f02fb94d41276fc12b1843dbb796be768a82d622cc85e45a0e54aa4c3475dd6"
+    },
+    {
+      "sheet": "items",
+      "frame": "arrow10",
+      "canvas": [
+        16,
+        16
+      ],
+      "visible_bbox": [
+        1,
+        3,
+        15,
+        15
+      ],
+      "visible_size": [
+        14,
+        12
+      ],
+      "material": "stone",
+      "palette_alias": "iron",
+      "palette_rgb555": [
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          16,
+          24,
+          32
+        ],
+        [
+          32,
+          40,
+          48
+        ],
+        [
+          48,
+          56,
+          64
+        ],
+        [
+          72,
+          80,
+          80
+        ],
+        [
+          96,
+          104,
+          96
+        ],
+        [
+          136,
+          144,
+          128
+        ],
+        [
+          176,
+          176,
+          152
+        ],
+        [
+          208,
+          208,
+          176
+        ],
+        [
+          48,
+          40,
+          32
+        ],
+        [
+          80,
+          64,
+          48
+        ],
+        [
+          120,
+          96,
+          64
+        ],
+        [
+          160,
+          128,
+          72
+        ],
+        [
+          192,
+          160,
+          96
+        ],
+        [
+          232,
+          208,
+          152
+        ],
+        [
+          248,
+          240,
+          200
+        ]
+      ],
+      "inks": [
+        1,
+        5,
+        7,
+        12
+      ],
+      "indexed": "items-arrow10-indexed.png",
+      "rgba": "items-arrow10.png",
+      "indexed_sha256": "02670ccf2397ff8cb1dbf8ac88006491712b21e394cd81b9515e5690519d3bdb",
+      "rgba_sha256": "42736b486de1c93e6cde6286675fbf7a1f77e1bb3cff7d9eedbe1f9bbdbd70c1",
+      "indexed_file": "native/items-arrow10-indexed.png",
+      "RGBA_file": "native/items-arrow10.png",
+      "RGBA_sha256": "42736b486de1c93e6cde6286675fbf7a1f77e1bb3cff7d9eedbe1f9bbdbd70c1"
+    },
+    {
+      "sheet": "items",
+      "frame": "hubcap",
+      "canvas": [
+        16,
+        16
+      ],
+      "visible_bbox": [
+        2,
+        2,
+        14,
+        14
+      ],
+      "visible_size": [
+        12,
+        12
+      ],
+      "material": "stone",
+      "palette_alias": "iron",
+      "palette_rgb555": [
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          16,
+          24,
+          32
+        ],
+        [
+          32,
+          40,
+          48
+        ],
+        [
+          48,
+          56,
+          64
+        ],
+        [
+          72,
+          80,
+          80
+        ],
+        [
+          96,
+          104,
+          96
+        ],
+        [
+          136,
+          144,
+          128
+        ],
+        [
+          176,
+          176,
+          152
+        ],
+        [
+          208,
+          208,
+          176
+        ],
+        [
+          48,
+          40,
+          32
+        ],
+        [
+          80,
+          64,
+          48
+        ],
+        [
+          120,
+          96,
+          64
+        ],
+        [
+          160,
+          128,
+          72
+        ],
+        [
+          192,
+          160,
+          96
+        ],
+        [
+          232,
+          208,
+          152
+        ],
+        [
+          248,
+          240,
+          200
+        ]
+      ],
+      "inks": [
+        1,
+        2,
+        5,
+        8
+      ],
+      "indexed": "items-hubcap-indexed.png",
+      "rgba": "items-hubcap.png",
+      "indexed_sha256": "f342bd5ef8c770edc50633ef5ce0bedc5a93f0365156160e7cc328b6f5637d7e",
+      "rgba_sha256": "ee862b59de8422fbef751b35d5da5f8bc3330862e3f8204c5d0c380b41a44d95",
+      "indexed_file": "native/items-hubcap-indexed.png",
+      "RGBA_file": "native/items-hubcap.png",
+      "RGBA_sha256": "ee862b59de8422fbef751b35d5da5f8bc3330862e3f8204c5d0c380b41a44d95"
+    },
+    {
+      "sheet": "items",
+      "frame": "bomb_lit",
+      "canvas": [
+        16,
+        16
+      ],
+      "visible_bbox": [
+        3,
+        1,
+        14,
+        15
+      ],
+      "visible_size": [
+        11,
+        14
+      ],
+      "material": "blight",
+      "palette_alias": "blight",
+      "palette_rgb555": [
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          16,
+          16,
+          24
+        ],
+        [
+          32,
+          24,
+          40
+        ],
+        [
+          48,
+          32,
+          56
+        ],
+        [
+          72,
+          48,
+          72
+        ],
+        [
+          96,
+          64,
+          88
+        ],
+        [
+          128,
+          80,
+          104
+        ],
+        [
+          160,
+          104,
+          120
+        ],
+        [
+          64,
+          48,
+          48
+        ],
+        [
+          96,
+          64,
+          56
+        ],
+        [
+          136,
+          96,
+          72
+        ],
+        [
+          176,
+          136,
+          88
+        ],
+        [
+          136,
+          40,
+          88
+        ],
+        [
+          192,
+          72,
+          136
+        ],
+        [
+          232,
+          144,
+          184
+        ],
+        [
+          240,
+          216,
+          192
+        ]
+      ],
+      "inks": [
+        1,
+        4,
+        10,
+        12,
+        14,
+        15
+      ],
+      "indexed": "items-bomb_lit-indexed.png",
+      "rgba": "items-bomb_lit.png",
+      "indexed_sha256": "def4f0a7a1c7adda12c957bd1cd2d7ae3b4ba01a2d86fe06c97ac2e54e230130",
+      "rgba_sha256": "a50b70c863a7d1d1517b99f58cddd5cd12f14d166f6afda7b1bb56b82fac40bd",
+      "indexed_file": "native/items-bomb_lit-indexed.png",
+      "RGBA_file": "native/items-bomb_lit.png",
+      "RGBA_sha256": "a50b70c863a7d1d1517b99f58cddd5cd12f14d166f6afda7b1bb56b82fac40bd"
+    },
+    {
+      "sheet": "pick32",
+      "frame": "heart",
+      "canvas": [
+        16,
+        16
+      ],
+      "visible_bbox": [
+        2,
+        3,
+        15,
+        15
+      ],
+      "visible_size": [
+        13,
+        12
+      ],
+      "material": "hero",
+      "palette_alias": "hero",
+      "palette_rgb555": [
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          16,
+          24,
+          32
+        ],
+        [
+          128,
+          40,
+          48
+        ],
+        [
+          184,
+          56,
+          56
+        ],
+        [
+          224,
+          96,
+          64
+        ],
+        [
+          248,
+          144,
+          80
+        ],
+        [
+          240,
+          216,
+          152
+        ],
+        [
+          248,
+          240,
+          192
+        ],
+        [
+          24,
+          56,
+          40
+        ],
+        [
+          48,
+          80,
+          48
+        ],
+        [
+          80,
+          112,
+          56
+        ],
+        [
+          72,
+          56,
+          32
+        ],
+        [
+          136,
+          96,
+          56
+        ],
+        [
+          136,
+          160,
+          160
+        ],
+        [
+          208,
+          224,
+          192
+        ],
+        [
+          248,
+          248,
+          216
+        ]
+      ],
+      "inks": [
+        1,
+        3,
+        4,
+        7
+      ],
+      "indexed": "pick32-heart-indexed.png",
+      "rgba": "pick32-heart.png",
+      "indexed_sha256": "814498d9d849f0a65913540a5a4f878d333342cebc363a371f2aaf482639f57f",
+      "rgba_sha256": "0e92442faf66c47f44b2ddaeafef30fa3e2c41449a81b2f44126f1c171a22a75",
+      "indexed_file": "native/pick32-heart-indexed.png",
+      "RGBA_file": "native/pick32-heart.png",
+      "RGBA_sha256": "0e92442faf66c47f44b2ddaeafef30fa3e2c41449a81b2f44126f1c171a22a75"
+    },
+    {
+      "sheet": "pick32",
+      "frame": "gilt",
+      "canvas": [
+        16,
+        16
+      ],
+      "visible_bbox": [
+        4,
+        4,
+        12,
+        14
+      ],
+      "visible_size": [
+        8,
+        10
+      ],
+      "material": "gold",
+      "palette_alias": "gear",
+      "palette_rgb555": [
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          16,
+          24,
+          32
+        ],
+        [
+          48,
+          32,
+          32
+        ],
+        [
+          72,
+          48,
+          32
+        ],
+        [
+          104,
+          64,
+          40
+        ],
+        [
+          136,
+          88,
+          48
+        ],
+        [
+          176,
+          120,
+          56
+        ],
+        [
+          112,
+          80,
+          32
+        ],
+        [
+          168,
+          120,
+          40
+        ],
+        [
+          216,
+          160,
+          56
+        ],
+        [
+          240,
+          200,
+          88
+        ],
+        [
+          248,
+          224,
+          160
+        ],
+        [
+          248,
+          240,
+          200
+        ],
+        [
+          24,
+          72,
+          72
+        ],
+        [
+          56,
+          120,
+          112
+        ],
+        [
+          176,
+          64,
+          80
+        ]
+      ],
+      "inks": [
+        1,
+        9,
+        11,
+        12
+      ],
+      "indexed": "pick32-gilt-indexed.png",
+      "rgba": "pick32-gilt.png",
+      "indexed_sha256": "60eb8473b068475baa8235cf355c718fbffb1024ab65b55902a40e2fe7d13fee",
+      "rgba_sha256": "ece513b79161c2a11674d061df8e80bdc485ba62b58e4d31a7200deac26460e8",
+      "indexed_file": "native/pick32-gilt-indexed.png",
+      "RGBA_file": "native/pick32-gilt.png",
+      "RGBA_sha256": "ece513b79161c2a11674d061df8e80bdc485ba62b58e4d31a7200deac26460e8"
+    },
+    {
+      "sheet": "pick32",
+      "frame": "bomb_pickup",
+      "canvas": [
+        16,
+        16
+      ],
+      "visible_bbox": [
+        3,
+        2,
+        13,
+        15
+      ],
+      "visible_size": [
+        10,
+        13
+      ],
+      "material": "blight",
+      "palette_alias": "blight",
+      "palette_rgb555": [
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          16,
+          16,
+          24
+        ],
+        [
+          32,
+          24,
+          40
+        ],
+        [
+          48,
+          32,
+          56
+        ],
+        [
+          72,
+          48,
+          72
+        ],
+        [
+          96,
+          64,
+          88
+        ],
+        [
+          128,
+          80,
+          104
+        ],
+        [
+          160,
+          104,
+          120
+        ],
+        [
+          64,
+          48,
+          48
+        ],
+        [
+          96,
+          64,
+          56
+        ],
+        [
+          136,
+          96,
+          72
+        ],
+        [
+          176,
+          136,
+          88
+        ],
+        [
+          136,
+          40,
+          88
+        ],
+        [
+          192,
+          72,
+          136
+        ],
+        [
+          232,
+          144,
+          184
+        ],
+        [
+          240,
+          216,
+          192
+        ]
+      ],
+      "inks": [
+        1,
+        4,
+        10,
+        12,
+        14
+      ],
+      "indexed": "pick32-bomb_pickup-indexed.png",
+      "rgba": "pick32-bomb_pickup.png",
+      "indexed_sha256": "997354eeaf3eda440eb0436ab5e80de3187079536a1c4e3e838d6c0755ba9dfa",
+      "rgba_sha256": "52b4bc7fe9f798541593f2feb3cae93bf07dde584f7e74062e50daa5470aede3",
+      "indexed_file": "native/pick32-bomb_pickup-indexed.png",
+      "RGBA_file": "native/pick32-bomb_pickup.png",
+      "RGBA_sha256": "52b4bc7fe9f798541593f2feb3cae93bf07dde584f7e74062e50daa5470aede3"
+    },
+    {
+      "sheet": "pick32",
+      "frame": "gilt_big",
+      "canvas": [
+        16,
+        16
+      ],
+      "visible_bbox": [
+        2,
+        2,
+        14,
+        15
+      ],
+      "visible_size": [
+        12,
+        13
+      ],
+      "material": "gold",
+      "palette_alias": "gear",
+      "palette_rgb555": [
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          16,
+          24,
+          32
+        ],
+        [
+          48,
+          32,
+          32
+        ],
+        [
+          72,
+          48,
+          32
+        ],
+        [
+          104,
+          64,
+          40
+        ],
+        [
+          136,
+          88,
+          48
+        ],
+        [
+          176,
+          120,
+          56
+        ],
+        [
+          112,
+          80,
+          32
+        ],
+        [
+          168,
+          120,
+          40
+        ],
+        [
+          216,
+          160,
+          56
+        ],
+        [
+          240,
+          200,
+          88
+        ],
+        [
+          248,
+          224,
+          160
+        ],
+        [
+          248,
+          240,
+          200
+        ],
+        [
+          24,
+          72,
+          72
+        ],
+        [
+          56,
+          120,
+          112
+        ],
+        [
+          176,
+          64,
+          80
+        ]
+      ],
+      "inks": [
+        1,
+        5,
+        6,
+        10,
+        11
+      ],
+      "indexed": "pick32-gilt_big-indexed.png",
+      "rgba": "pick32-gilt_big.png",
+      "indexed_sha256": "c9092851a4e71d383ce76c15ad069ad148d5e67c8232487e6d6410d89d930e48",
+      "rgba_sha256": "06086a09de8f3fea173dd7517359671750d84340a2b47d8c5f5c86d87eb94b87",
+      "indexed_file": "native/pick32-gilt_big-indexed.png",
+      "RGBA_file": "native/pick32-gilt_big.png",
+      "RGBA_sha256": "06086a09de8f3fea173dd7517359671750d84340a2b47d8c5f5c86d87eb94b87"
+    },
+    {
+      "sheet": "pick32",
+      "frame": "key",
+      "canvas": [
+        16,
+        16
+      ],
+      "visible_bbox": [
+        2,
+        2,
+        14,
+        15
+      ],
+      "visible_size": [
+        12,
+        13
+      ],
+      "material": "gold",
+      "palette_alias": "gear",
+      "palette_rgb555": [
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          16,
+          24,
+          32
+        ],
+        [
+          48,
+          32,
+          32
+        ],
+        [
+          72,
+          48,
+          32
+        ],
+        [
+          104,
+          64,
+          40
+        ],
+        [
+          136,
+          88,
+          48
+        ],
+        [
+          176,
+          120,
+          56
+        ],
+        [
+          112,
+          80,
+          32
+        ],
+        [
+          168,
+          120,
+          40
+        ],
+        [
+          216,
+          160,
+          56
+        ],
+        [
+          240,
+          200,
+          88
+        ],
+        [
+          248,
+          224,
+          160
+        ],
+        [
+          248,
+          240,
+          200
+        ],
+        [
+          24,
+          72,
+          72
+        ],
+        [
+          56,
+          120,
+          112
+        ],
+        [
+          176,
+          64,
+          80
+        ]
+      ],
+      "inks": [
+        1,
+        10,
+        12
+      ],
+      "indexed": "pick32-key-indexed.png",
+      "rgba": "pick32-key.png",
+      "indexed_sha256": "1f27586df90bd553d9f5898d8fcd8b90d5483302ad774105bd17eebb9d350ad0",
+      "rgba_sha256": "eaac7adb132905c568e2abe06941b54e6ef31bde2fd13c074ad8827a8c8b7e76",
+      "indexed_file": "native/pick32-key-indexed.png",
+      "RGBA_file": "native/pick32-key.png",
+      "RGBA_sha256": "eaac7adb132905c568e2abe06941b54e6ef31bde2fd13c074ad8827a8c8b7e76"
+    },
+    {
+      "sheet": "pick32",
+      "frame": "relic",
+      "canvas": [
+        16,
+        16
+      ],
+      "visible_bbox": [
+        2,
+        2,
+        14,
+        14
+      ],
+      "visible_size": [
+        12,
+        12
+      ],
+      "material": "gold",
+      "palette_alias": "gear",
+      "palette_rgb555": [
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          16,
+          24,
+          32
+        ],
+        [
+          48,
+          32,
+          32
+        ],
+        [
+          72,
+          48,
+          32
+        ],
+        [
+          104,
+          64,
+          40
+        ],
+        [
+          136,
+          88,
+          48
+        ],
+        [
+          176,
+          120,
+          56
+        ],
+        [
+          112,
+          80,
+          32
+        ],
+        [
+          168,
+          120,
+          40
+        ],
+        [
+          216,
+          160,
+          56
+        ],
+        [
+          240,
+          200,
+          88
+        ],
+        [
+          248,
+          224,
+          160
+        ],
+        [
+          248,
+          240,
+          200
+        ],
+        [
+          24,
+          72,
+          72
+        ],
+        [
+          56,
+          120,
+          112
+        ],
+        [
+          176,
+          64,
+          80
+        ]
+      ],
+      "inks": [
+        1,
+        2,
+        8,
+        11,
+        12,
+        13
+      ],
+      "indexed": "pick32-relic-indexed.png",
+      "rgba": "pick32-relic.png",
+      "indexed_sha256": "73bba098223dc41f3b05045c47d824769afd8502dad1c150bec13daa62f2851f",
+      "rgba_sha256": "49a3bd0165c4965a5eaa6737d551b7e411910c4e2eeb785e3a7572910dda7a52",
+      "indexed_file": "native/pick32-relic-indexed.png",
+      "RGBA_file": "native/pick32-relic.png",
+      "RGBA_sha256": "49a3bd0165c4965a5eaa6737d551b7e411910c4e2eeb785e3a7572910dda7a52"
+    },
+    {
+      "sheet": "pick32",
+      "frame": "grail",
+      "canvas": [
+        16,
+        16
+      ],
+      "visible_bbox": [
+        2,
+        2,
+        14,
+        15
+      ],
+      "visible_size": [
+        12,
+        13
+      ],
+      "material": "gold",
+      "palette_alias": "gear",
+      "palette_rgb555": [
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          16,
+          24,
+          32
+        ],
+        [
+          48,
+          32,
+          32
+        ],
+        [
+          72,
+          48,
+          32
+        ],
+        [
+          104,
+          64,
+          40
+        ],
+        [
+          136,
+          88,
+          48
+        ],
+        [
+          176,
+          120,
+          56
+        ],
+        [
+          112,
+          80,
+          32
+        ],
+        [
+          168,
+          120,
+          40
+        ],
+        [
+          216,
+          160,
+          56
+        ],
+        [
+          240,
+          200,
+          88
+        ],
+        [
+          248,
+          224,
+          160
+        ],
+        [
+          248,
+          240,
+          200
+        ],
+        [
+          24,
+          72,
+          72
+        ],
+        [
+          56,
+          120,
+          112
+        ],
+        [
+          176,
+          64,
+          80
+        ]
+      ],
+      "inks": [
+        1,
+        9,
+        10,
+        11,
+        12,
+        15
+      ],
+      "indexed": "pick32-grail-indexed.png",
+      "rgba": "pick32-grail.png",
+      "indexed_sha256": "0da0c2032d2367242b6ee531b7fc3f385740034ff37963ff3a7e34682b817ef9",
+      "rgba_sha256": "8b8a50e9e70967307edfbaac69f0b2e8af5c2264b4d6b198b0f54030543f85a0",
+      "indexed_file": "native/pick32-grail-indexed.png",
+      "RGBA_file": "native/pick32-grail.png",
+      "RGBA_sha256": "8b8a50e9e70967307edfbaac69f0b2e8af5c2264b4d6b198b0f54030543f85a0"
+    },
+    {
+      "sheet": "pick32",
+      "frame": "arrow1",
+      "canvas": [
+        16,
+        16
+      ],
+      "visible_bbox": [
+        3,
+        3,
+        13,
+        15
+      ],
+      "visible_size": [
+        10,
+        12
+      ],
+      "material": "stone",
+      "palette_alias": "iron",
+      "palette_rgb555": [
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          16,
+          24,
+          32
+        ],
+        [
+          32,
+          40,
+          48
+        ],
+        [
+          48,
+          56,
+          64
+        ],
+        [
+          72,
+          80,
+          80
+        ],
+        [
+          96,
+          104,
+          96
+        ],
+        [
+          136,
+          144,
+          128
+        ],
+        [
+          176,
+          176,
+          152
+        ],
+        [
+          208,
+          208,
+          176
+        ],
+        [
+          48,
+          40,
+          32
+        ],
+        [
+          80,
+          64,
+          48
+        ],
+        [
+          120,
+          96,
+          64
+        ],
+        [
+          160,
+          128,
+          72
+        ],
+        [
+          192,
+          160,
+          96
+        ],
+        [
+          232,
+          208,
+          152
+        ],
+        [
+          248,
+          240,
+          200
+        ]
+      ],
+      "inks": [
+        1,
+        5,
+        7,
+        12
+      ],
+      "indexed": "pick32-arrow1-indexed.png",
+      "rgba": "pick32-arrow1.png",
+      "indexed_sha256": "6a86e66b7c3fbd324651b12814c09302400b4dfa96953e944c5828a936b63005",
+      "rgba_sha256": "1763e2fd7df4b6a6913884bbc570aea5e4c1f62bb94ab584f2eccc33949465db",
+      "indexed_file": "native/pick32-arrow1-indexed.png",
+      "RGBA_file": "native/pick32-arrow1.png",
+      "RGBA_sha256": "1763e2fd7df4b6a6913884bbc570aea5e4c1f62bb94ab584f2eccc33949465db"
+    },
+    {
+      "sheet": "pick32",
+      "frame": "arrow5",
+      "canvas": [
+        16,
+        16
+      ],
+      "visible_bbox": [
+        2,
+        3,
+        14,
+        15
+      ],
+      "visible_size": [
+        12,
+        12
+      ],
+      "material": "stone",
+      "palette_alias": "iron",
+      "palette_rgb555": [
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          16,
+          24,
+          32
+        ],
+        [
+          32,
+          40,
+          48
+        ],
+        [
+          48,
+          56,
+          64
+        ],
+        [
+          72,
+          80,
+          80
+        ],
+        [
+          96,
+          104,
+          96
+        ],
+        [
+          136,
+          144,
+          128
+        ],
+        [
+          176,
+          176,
+          152
+        ],
+        [
+          208,
+          208,
+          176
+        ],
+        [
+          48,
+          40,
+          32
+        ],
+        [
+          80,
+          64,
+          48
+        ],
+        [
+          120,
+          96,
+          64
+        ],
+        [
+          160,
+          128,
+          72
+        ],
+        [
+          192,
+          160,
+          96
+        ],
+        [
+          232,
+          208,
+          152
+        ],
+        [
+          248,
+          240,
+          200
+        ]
+      ],
+      "inks": [
+        1,
+        5,
+        7,
+        12
+      ],
+      "indexed": "pick32-arrow5-indexed.png",
+      "rgba": "pick32-arrow5.png",
+      "indexed_sha256": "a39de68f09311bf310cf9fdd09bc4218c03e95b5c6fd5ab48503d60d463ed71b",
+      "rgba_sha256": "7f02fb94d41276fc12b1843dbb796be768a82d622cc85e45a0e54aa4c3475dd6",
+      "indexed_file": "native/pick32-arrow5-indexed.png",
+      "RGBA_file": "native/pick32-arrow5.png",
+      "RGBA_sha256": "7f02fb94d41276fc12b1843dbb796be768a82d622cc85e45a0e54aa4c3475dd6"
+    },
+    {
+      "sheet": "pick32",
+      "frame": "arrow10",
+      "canvas": [
+        16,
+        16
+      ],
+      "visible_bbox": [
+        1,
+        3,
+        15,
+        15
+      ],
+      "visible_size": [
+        14,
+        12
+      ],
+      "material": "stone",
+      "palette_alias": "iron",
+      "palette_rgb555": [
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          16,
+          24,
+          32
+        ],
+        [
+          32,
+          40,
+          48
+        ],
+        [
+          48,
+          56,
+          64
+        ],
+        [
+          72,
+          80,
+          80
+        ],
+        [
+          96,
+          104,
+          96
+        ],
+        [
+          136,
+          144,
+          128
+        ],
+        [
+          176,
+          176,
+          152
+        ],
+        [
+          208,
+          208,
+          176
+        ],
+        [
+          48,
+          40,
+          32
+        ],
+        [
+          80,
+          64,
+          48
+        ],
+        [
+          120,
+          96,
+          64
+        ],
+        [
+          160,
+          128,
+          72
+        ],
+        [
+          192,
+          160,
+          96
+        ],
+        [
+          232,
+          208,
+          152
+        ],
+        [
+          248,
+          240,
+          200
+        ]
+      ],
+      "inks": [
+        1,
+        5,
+        7,
+        12
+      ],
+      "indexed": "pick32-arrow10-indexed.png",
+      "rgba": "pick32-arrow10.png",
+      "indexed_sha256": "02670ccf2397ff8cb1dbf8ac88006491712b21e394cd81b9515e5690519d3bdb",
+      "rgba_sha256": "42736b486de1c93e6cde6286675fbf7a1f77e1bb3cff7d9eedbe1f9bbdbd70c1",
+      "indexed_file": "native/pick32-arrow10-indexed.png",
+      "RGBA_file": "native/pick32-arrow10.png",
+      "RGBA_sha256": "42736b486de1c93e6cde6286675fbf7a1f77e1bb3cff7d9eedbe1f9bbdbd70c1"
+    },
+    {
+      "sheet": "icon32",
+      "frame": "none",
+      "canvas": [
+        32,
+        32
+      ],
+      "visible_bbox": null,
+      "visible_size": [
+        0,
+        0
+      ],
+      "material": "gold",
+      "palette_alias": "gear",
+      "palette_rgb555": [
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          16,
+          24,
+          32
+        ],
+        [
+          48,
+          32,
+          32
+        ],
+        [
+          72,
+          48,
+          32
+        ],
+        [
+          104,
+          64,
+          40
+        ],
+        [
+          136,
+          88,
+          48
+        ],
+        [
+          176,
+          120,
+          56
+        ],
+        [
+          112,
+          80,
+          32
+        ],
+        [
+          168,
+          120,
+          40
+        ],
+        [
+          216,
+          160,
+          56
+        ],
+        [
+          240,
+          200,
+          88
+        ],
+        [
+          248,
+          224,
+          160
+        ],
+        [
+          248,
+          240,
+          200
+        ],
+        [
+          24,
+          72,
+          72
+        ],
+        [
+          56,
+          120,
+          112
+        ],
+        [
+          176,
+          64,
+          80
+        ]
+      ],
+      "inks": [],
+      "indexed": "icon32-none-indexed.png",
+      "rgba": "icon32-none.png",
+      "indexed_sha256": "1280a523bbd4d64ddbd83d492862c9869ac39517ea2a54d3045eb05331650cf2",
+      "rgba_sha256": "b0775cba09eadf2fde241b35daa28cdcd03af6d23e99e0decd32b42f13f6d220",
+      "indexed_file": "native/icon32-none-indexed.png",
+      "RGBA_file": "native/icon32-none.png",
+      "RGBA_sha256": "b0775cba09eadf2fde241b35daa28cdcd03af6d23e99e0decd32b42f13f6d220"
+    },
+    {
+      "sheet": "icon32",
+      "frame": "bombs",
+      "canvas": [
+        32,
+        32
+      ],
+      "visible_bbox": [
+        3,
+        1,
+        28,
+        31
+      ],
+      "visible_size": [
+        25,
+        30
+      ],
+      "material": "blight",
+      "palette_alias": "blight",
+      "palette_rgb555": [
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          16,
+          16,
+          24
+        ],
+        [
+          32,
+          24,
+          40
+        ],
+        [
+          48,
+          32,
+          56
+        ],
+        [
+          72,
+          48,
+          72
+        ],
+        [
+          96,
+          64,
+          88
+        ],
+        [
+          128,
+          80,
+          104
+        ],
+        [
+          160,
+          104,
+          120
+        ],
+        [
+          64,
+          48,
+          48
+        ],
+        [
+          96,
+          64,
+          56
+        ],
+        [
+          136,
+          96,
+          72
+        ],
+        [
+          176,
+          136,
+          88
+        ],
+        [
+          136,
+          40,
+          88
+        ],
+        [
+          192,
+          72,
+          136
+        ],
+        [
+          232,
+          144,
+          184
+        ],
+        [
+          240,
+          216,
+          192
+        ]
+      ],
+      "inks": [
+        1,
+        4,
+        10,
+        11,
+        12,
+        13,
+        14
+      ],
+      "indexed": "icon32-bombs-indexed.png",
+      "rgba": "icon32-bombs.png",
+      "indexed_sha256": "5e7bf6b912105857243a201610d4999297f62d3e84b0f38a02f1eaeb94dc5b76",
+      "rgba_sha256": "f86262ac73947c38d218daff22206477890cd7953cbbd644a3aaf4d2123dbb05",
+      "indexed_file": "native/icon32-bombs-indexed.png",
+      "RGBA_file": "native/icon32-bombs.png",
+      "RGBA_sha256": "f86262ac73947c38d218daff22206477890cd7953cbbd644a3aaf4d2123dbb05"
+    },
+    {
+      "sheet": "icon32",
+      "frame": "lamp",
+      "canvas": [
+        32,
+        32
+      ],
+      "visible_bbox": [
+        4,
+        1,
+        28,
+        30
+      ],
+      "visible_size": [
+        24,
+        29
+      ],
+      "material": "gold",
+      "palette_alias": "gear",
+      "palette_rgb555": [
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          16,
+          24,
+          32
+        ],
+        [
+          48,
+          32,
+          32
+        ],
+        [
+          72,
+          48,
+          32
+        ],
+        [
+          104,
+          64,
+          40
+        ],
+        [
+          136,
+          88,
+          48
+        ],
+        [
+          176,
+          120,
+          56
+        ],
+        [
+          112,
+          80,
+          32
+        ],
+        [
+          168,
+          120,
+          40
+        ],
+        [
+          216,
+          160,
+          56
+        ],
+        [
+          240,
+          200,
+          88
+        ],
+        [
+          248,
+          224,
+          160
+        ],
+        [
+          248,
+          240,
+          200
+        ],
+        [
+          24,
+          72,
+          72
+        ],
+        [
+          56,
+          120,
+          112
+        ],
+        [
+          176,
+          64,
+          80
+        ]
+      ],
+      "inks": [
+        1,
+        2,
+        3,
+        6,
+        8,
+        10,
+        11,
+        12
+      ],
+      "indexed": "icon32-lamp-indexed.png",
+      "rgba": "icon32-lamp.png",
+      "indexed_sha256": "1d4d82cdcf8864c6b9ffbd9f3b22469a80f76b3f881491221d68cfe8b5900426",
+      "rgba_sha256": "180753cb9d15245057464b1531304d1dc8a1d0841fa249da98c5f99a2a0e08e4",
+      "indexed_file": "native/icon32-lamp-indexed.png",
+      "RGBA_file": "native/icon32-lamp.png",
+      "RGBA_sha256": "180753cb9d15245057464b1531304d1dc8a1d0841fa249da98c5f99a2a0e08e4"
+    },
+    {
+      "sheet": "icon32",
+      "frame": "cloak",
+      "canvas": [
+        32,
+        32
+      ],
+      "visible_bbox": [
+        2,
+        1,
+        30,
+        31
+      ],
+      "visible_size": [
+        28,
+        30
+      ],
+      "material": "foliage",
+      "palette_alias": "bugs",
+      "palette_rgb555": [
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          16,
+          24,
+          32
+        ],
+        [
+          16,
+          40,
+          40
+        ],
+        [
+          24,
+          56,
+          48
+        ],
+        [
+          32,
+          72,
+          56
+        ],
+        [
+          48,
+          96,
+          72
+        ],
+        [
+          72,
+          120,
+          80
+        ],
+        [
+          104,
+          152,
+          88
+        ],
+        [
+          48,
+          40,
+          32
+        ],
+        [
+          72,
+          56,
+          40
+        ],
+        [
+          104,
+          80,
+          56
+        ],
+        [
+          144,
+          112,
+          72
+        ],
+        [
+          176,
+          144,
+          88
+        ],
+        [
+          24,
+          56,
+          56
+        ],
+        [
+          48,
+          88,
+          80
+        ],
+        [
+          120,
+          152,
+          128
+        ]
+      ],
+      "inks": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        12
+      ],
+      "indexed": "icon32-cloak-indexed.png",
+      "rgba": "icon32-cloak.png",
+      "indexed_sha256": "7b67859385906094ccf5ce41cc0973e41ac46a42e88f9d376851482d53b05a60",
+      "rgba_sha256": "805dcb87840e843751f906464aa59a0093e91ff942c6fe8a7512fcb4c9fdc602",
+      "indexed_file": "native/icon32-cloak-indexed.png",
+      "RGBA_file": "native/icon32-cloak.png",
+      "RGBA_sha256": "805dcb87840e843751f906464aa59a0093e91ff942c6fe8a7512fcb4c9fdc602"
+    },
+    {
+      "sheet": "icon32",
+      "frame": "key",
+      "canvas": [
+        32,
+        32
+      ],
+      "visible_bbox": [
+        2,
+        1,
+        32,
+        31
+      ],
+      "visible_size": [
+        30,
+        30
+      ],
+      "material": "gold",
+      "palette_alias": "gear",
+      "palette_rgb555": [
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          16,
+          24,
+          32
+        ],
+        [
+          48,
+          32,
+          32
+        ],
+        [
+          72,
+          48,
+          32
+        ],
+        [
+          104,
+          64,
+          40
+        ],
+        [
+          136,
+          88,
+          48
+        ],
+        [
+          176,
+          120,
+          56
+        ],
+        [
+          112,
+          80,
+          32
+        ],
+        [
+          168,
+          120,
+          40
+        ],
+        [
+          216,
+          160,
+          56
+        ],
+        [
+          240,
+          200,
+          88
+        ],
+        [
+          248,
+          224,
+          160
+        ],
+        [
+          248,
+          240,
+          200
+        ],
+        [
+          24,
+          72,
+          72
+        ],
+        [
+          56,
+          120,
+          112
+        ],
+        [
+          176,
+          64,
+          80
+        ]
+      ],
+      "inks": [
+        1,
+        9,
+        10,
+        11,
+        12
+      ],
+      "indexed": "icon32-key-indexed.png",
+      "rgba": "icon32-key.png",
+      "indexed_sha256": "89696a47c955877c53e0cd8bf0f12da1e5ce62489fee3b5bbe7128c71db86dd0",
+      "rgba_sha256": "0ea81cea89bc656ce1f282ca1899fb6c741326535ffeed35808205a033064ef0",
+      "indexed_file": "native/icon32-key-indexed.png",
+      "RGBA_file": "native/icon32-key.png",
+      "RGBA_sha256": "0ea81cea89bc656ce1f282ca1899fb6c741326535ffeed35808205a033064ef0"
+    },
+    {
+      "sheet": "icon32",
+      "frame": "heart_piece",
+      "canvas": [
+        32,
+        32
+      ],
+      "visible_bbox": [
+        2,
+        4,
+        31,
+        31
+      ],
+      "visible_size": [
+        29,
+        27
+      ],
+      "material": "hero",
+      "palette_alias": "hero",
+      "palette_rgb555": [
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          16,
+          24,
+          32
+        ],
+        [
+          128,
+          40,
+          48
+        ],
+        [
+          184,
+          56,
+          56
+        ],
+        [
+          224,
+          96,
+          64
+        ],
+        [
+          248,
+          144,
+          80
+        ],
+        [
+          240,
+          216,
+          152
+        ],
+        [
+          248,
+          240,
+          192
+        ],
+        [
+          24,
+          56,
+          40
+        ],
+        [
+          48,
+          80,
+          48
+        ],
+        [
+          80,
+          112,
+          56
+        ],
+        [
+          72,
+          56,
+          32
+        ],
+        [
+          136,
+          96,
+          56
+        ],
+        [
+          136,
+          160,
+          160
+        ],
+        [
+          208,
+          224,
+          192
+        ],
+        [
+          248,
+          248,
+          216
+        ]
+      ],
+      "inks": [
+        1,
+        2,
+        3,
+        4,
+        7
+      ],
+      "indexed": "icon32-heart_piece-indexed.png",
+      "rgba": "icon32-heart_piece.png",
+      "indexed_sha256": "a6695878c1852b2967bafc53ff3dcc1c1914fc06084f053632cb8c4c5c3a956e",
+      "rgba_sha256": "bb346e53979c3631bc15783f08fefa4ab26cb8a24b00324d3e6c843c56e10dc1",
+      "indexed_file": "native/icon32-heart_piece-indexed.png",
+      "RGBA_file": "native/icon32-heart_piece.png",
+      "RGBA_sha256": "bb346e53979c3631bc15783f08fefa4ab26cb8a24b00324d3e6c843c56e10dc1"
+    },
+    {
+      "sheet": "icon32",
+      "frame": "heart_container",
+      "canvas": [
+        32,
+        32
+      ],
+      "visible_bbox": [
+        2,
+        4,
+        31,
+        31
+      ],
+      "visible_size": [
+        29,
+        27
+      ],
+      "material": "hero",
+      "palette_alias": "hero",
+      "palette_rgb555": [
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          16,
+          24,
+          32
+        ],
+        [
+          128,
+          40,
+          48
+        ],
+        [
+          184,
+          56,
+          56
+        ],
+        [
+          224,
+          96,
+          64
+        ],
+        [
+          248,
+          144,
+          80
+        ],
+        [
+          240,
+          216,
+          152
+        ],
+        [
+          248,
+          240,
+          192
+        ],
+        [
+          24,
+          56,
+          40
+        ],
+        [
+          48,
+          80,
+          48
+        ],
+        [
+          80,
+          112,
+          56
+        ],
+        [
+          72,
+          56,
+          32
+        ],
+        [
+          136,
+          96,
+          56
+        ],
+        [
+          136,
+          160,
+          160
+        ],
+        [
+          208,
+          224,
+          192
+        ],
+        [
+          248,
+          248,
+          216
+        ]
+      ],
+      "inks": [
+        1,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "indexed": "icon32-heart_container-indexed.png",
+      "rgba": "icon32-heart_container.png",
+      "indexed_sha256": "a127522a92d84e8fc572fecc6778c3b42bcf902ab2a4195ce70884cd7f67116d",
+      "rgba_sha256": "5b203d66d0c11452a5c61b677ee48e4f23622ef61389f7cdb5d0bee4753a720e",
+      "indexed_file": "native/icon32-heart_container-indexed.png",
+      "RGBA_file": "native/icon32-heart_container.png",
+      "RGBA_sha256": "5b203d66d0c11452a5c61b677ee48e4f23622ef61389f7cdb5d0bee4753a720e"
+    },
+    {
+      "sheet": "icon32",
+      "frame": "gilt_big",
+      "canvas": [
+        32,
+        32
+      ],
+      "visible_bbox": [
+        2,
+        2,
+        30,
+        31
+      ],
+      "visible_size": [
+        28,
+        29
+      ],
+      "material": "gold",
+      "palette_alias": "gear",
+      "palette_rgb555": [
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          16,
+          24,
+          32
+        ],
+        [
+          48,
+          32,
+          32
+        ],
+        [
+          72,
+          48,
+          32
+        ],
+        [
+          104,
+          64,
+          40
+        ],
+        [
+          136,
+          88,
+          48
+        ],
+        [
+          176,
+          120,
+          56
+        ],
+        [
+          112,
+          80,
+          32
+        ],
+        [
+          168,
+          120,
+          40
+        ],
+        [
+          216,
+          160,
+          56
+        ],
+        [
+          240,
+          200,
+          88
+        ],
+        [
+          248,
+          224,
+          160
+        ],
+        [
+          248,
+          240,
+          200
+        ],
+        [
+          24,
+          72,
+          72
+        ],
+        [
+          56,
+          120,
+          112
+        ],
+        [
+          176,
+          64,
+          80
+        ]
+      ],
+      "inks": [
+        1,
+        5,
+        6,
+        9,
+        10,
+        12
+      ],
+      "indexed": "icon32-gilt_big-indexed.png",
+      "rgba": "icon32-gilt_big.png",
+      "indexed_sha256": "2376ad97c19b34a594befbf15298a612d52dac3899d7d33ce3be217849f78006",
+      "rgba_sha256": "4072ffe03bab0747a51a7069536d13402f6e6b66f845377a717eb31e4a1b43db",
+      "indexed_file": "native/icon32-gilt_big-indexed.png",
+      "RGBA_file": "native/icon32-gilt_big.png",
+      "RGBA_sha256": "4072ffe03bab0747a51a7069536d13402f6e6b66f845377a717eb31e4a1b43db"
+    },
+    {
+      "sheet": "icon32",
+      "frame": "relic",
+      "canvas": [
+        32,
+        32
+      ],
+      "visible_bbox": [
+        2,
+        2,
+        30,
+        30
+      ],
+      "visible_size": [
+        28,
+        28
+      ],
+      "material": "gold",
+      "palette_alias": "gear",
+      "palette_rgb555": [
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          16,
+          24,
+          32
+        ],
+        [
+          48,
+          32,
+          32
+        ],
+        [
+          72,
+          48,
+          32
+        ],
+        [
+          104,
+          64,
+          40
+        ],
+        [
+          136,
+          88,
+          48
+        ],
+        [
+          176,
+          120,
+          56
+        ],
+        [
+          112,
+          80,
+          32
+        ],
+        [
+          168,
+          120,
+          40
+        ],
+        [
+          216,
+          160,
+          56
+        ],
+        [
+          240,
+          200,
+          88
+        ],
+        [
+          248,
+          224,
+          160
+        ],
+        [
+          248,
+          240,
+          200
+        ],
+        [
+          24,
+          72,
+          72
+        ],
+        [
+          56,
+          120,
+          112
+        ],
+        [
+          176,
+          64,
+          80
+        ]
+      ],
+      "inks": [
+        1,
+        2,
+        6,
+        8,
+        11,
+        12,
+        13
+      ],
+      "indexed": "icon32-relic-indexed.png",
+      "rgba": "icon32-relic.png",
+      "indexed_sha256": "d797f5bbb5cdabd0d665731cb96cfd24e0784f2547b82077dd7143bb193135b6",
+      "rgba_sha256": "5b21e259e66d84c858a8d0fb03133343bcf0f384b6bf0a8ab436d04f8c96e9b9",
+      "indexed_file": "native/icon32-relic-indexed.png",
+      "RGBA_file": "native/icon32-relic.png",
+      "RGBA_sha256": "5b21e259e66d84c858a8d0fb03133343bcf0f384b6bf0a8ab436d04f8c96e9b9"
+    },
+    {
+      "sheet": "icon32",
+      "frame": "gauntlet",
+      "canvas": [
+        32,
+        32
+      ],
+      "visible_bbox": [
+        1,
+        1,
+        31,
+        31
+      ],
+      "visible_size": [
+        30,
+        30
+      ],
+      "material": "gold",
+      "palette_alias": "gear",
+      "palette_rgb555": [
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          16,
+          24,
+          32
+        ],
+        [
+          48,
+          32,
+          32
+        ],
+        [
+          72,
+          48,
+          32
+        ],
+        [
+          104,
+          64,
+          40
+        ],
+        [
+          136,
+          88,
+          48
+        ],
+        [
+          176,
+          120,
+          56
+        ],
+        [
+          112,
+          80,
+          32
+        ],
+        [
+          168,
+          120,
+          40
+        ],
+        [
+          216,
+          160,
+          56
+        ],
+        [
+          240,
+          200,
+          88
+        ],
+        [
+          248,
+          224,
+          160
+        ],
+        [
+          248,
+          240,
+          200
+        ],
+        [
+          24,
+          72,
+          72
+        ],
+        [
+          56,
+          120,
+          112
+        ],
+        [
+          176,
+          64,
+          80
+        ]
+      ],
+      "inks": [
+        1,
+        8,
+        9,
+        11,
+        12
+      ],
+      "indexed": "icon32-gauntlet-indexed.png",
+      "rgba": "icon32-gauntlet.png",
+      "indexed_sha256": "a7d5b77608f478f6962bfed5259285a6c4f3e3ec56596bd4a5536bbf31ee08b2",
+      "rgba_sha256": "ec9d9b2d2382a812226763af5c4be8046884e5efe7ca482b85c07e35fe93e40c",
+      "indexed_file": "native/icon32-gauntlet-indexed.png",
+      "RGBA_file": "native/icon32-gauntlet.png",
+      "RGBA_sha256": "ec9d9b2d2382a812226763af5c4be8046884e5efe7ca482b85c07e35fe93e40c"
+    },
+    {
+      "sheet": "icon32",
+      "frame": "bow",
+      "canvas": [
+        32,
+        32
+      ],
+      "visible_bbox": [
+        7,
+        1,
+        30,
+        32
+      ],
+      "visible_size": [
+        23,
+        31
+      ],
+      "material": "gold",
+      "palette_alias": "gear",
+      "palette_rgb555": [
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          16,
+          24,
+          32
+        ],
+        [
+          48,
+          32,
+          32
+        ],
+        [
+          72,
+          48,
+          32
+        ],
+        [
+          104,
+          64,
+          40
+        ],
+        [
+          136,
+          88,
+          48
+        ],
+        [
+          176,
+          120,
+          56
+        ],
+        [
+          112,
+          80,
+          32
+        ],
+        [
+          168,
+          120,
+          40
+        ],
+        [
+          216,
+          160,
+          56
+        ],
+        [
+          240,
+          200,
+          88
+        ],
+        [
+          248,
+          224,
+          160
+        ],
+        [
+          248,
+          240,
+          200
+        ],
+        [
+          24,
+          72,
+          72
+        ],
+        [
+          56,
+          120,
+          112
+        ],
+        [
+          176,
+          64,
+          80
+        ]
+      ],
+      "inks": [
+        1,
+        6,
+        8,
+        11,
+        12
+      ],
+      "indexed": "icon32-bow-indexed.png",
+      "rgba": "icon32-bow.png",
+      "indexed_sha256": "a7ef4e019717ffa99d5d0df0e8ef162e5d9b3eb9b39657c33e061b83159eae22",
+      "rgba_sha256": "ab8d9b84e6dedd3ecdd556ae2f6d43f8e459e907af64d73a01efd5a9f8015b17",
+      "indexed_file": "native/icon32-bow-indexed.png",
+      "RGBA_file": "native/icon32-bow.png",
+      "RGBA_sha256": "ab8d9b84e6dedd3ecdd556ae2f6d43f8e459e907af64d73a01efd5a9f8015b17"
+    },
+    {
+      "sheet": "icon32",
+      "frame": "hubcap",
+      "canvas": [
+        32,
+        32
+      ],
+      "visible_bbox": [
+        2,
+        2,
+        30,
+        30
+      ],
+      "visible_size": [
+        28,
+        28
+      ],
+      "material": "stone",
+      "palette_alias": "iron",
+      "palette_rgb555": [
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          16,
+          24,
+          32
+        ],
+        [
+          32,
+          40,
+          48
+        ],
+        [
+          48,
+          56,
+          64
+        ],
+        [
+          72,
+          80,
+          80
+        ],
+        [
+          96,
+          104,
+          96
+        ],
+        [
+          136,
+          144,
+          128
+        ],
+        [
+          176,
+          176,
+          152
+        ],
+        [
+          208,
+          208,
+          176
+        ],
+        [
+          48,
+          40,
+          32
+        ],
+        [
+          80,
+          64,
+          48
+        ],
+        [
+          120,
+          96,
+          64
+        ],
+        [
+          160,
+          128,
+          72
+        ],
+        [
+          192,
+          160,
+          96
+        ],
+        [
+          232,
+          208,
+          152
+        ],
+        [
+          248,
+          240,
+          200
+        ]
+      ],
+      "inks": [
+        1,
+        2,
+        3,
+        5,
+        6,
+        7,
+        8
+      ],
+      "indexed": "icon32-hubcap-indexed.png",
+      "rgba": "icon32-hubcap.png",
+      "indexed_sha256": "ac79b148302832050f7657997c7098d10a92c669d5281b64634533823020beba",
+      "rgba_sha256": "16a0f830da0c05d46343069733452e14f72672bd97188d6a6ff9681ba09ca803",
+      "indexed_file": "native/icon32-hubcap-indexed.png",
+      "RGBA_file": "native/icon32-hubcap.png",
+      "RGBA_sha256": "16a0f830da0c05d46343069733452e14f72672bd97188d6a6ff9681ba09ca803"
+    },
+    {
+      "sheet": "icon32",
+      "frame": "map",
+      "canvas": [
+        32,
+        32
+      ],
+      "visible_bbox": [
+        2,
+        2,
+        31,
+        31
+      ],
+      "visible_size": [
+        29,
+        29
+      ],
+      "material": "gold",
+      "palette_alias": "gear",
+      "palette_rgb555": [
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          16,
+          24,
+          32
+        ],
+        [
+          48,
+          32,
+          32
+        ],
+        [
+          72,
+          48,
+          32
+        ],
+        [
+          104,
+          64,
+          40
+        ],
+        [
+          136,
+          88,
+          48
+        ],
+        [
+          176,
+          120,
+          56
+        ],
+        [
+          112,
+          80,
+          32
+        ],
+        [
+          168,
+          120,
+          40
+        ],
+        [
+          216,
+          160,
+          56
+        ],
+        [
+          240,
+          200,
+          88
+        ],
+        [
+          248,
+          224,
+          160
+        ],
+        [
+          248,
+          240,
+          200
+        ],
+        [
+          24,
+          72,
+          72
+        ],
+        [
+          56,
+          120,
+          112
+        ],
+        [
+          176,
+          64,
+          80
+        ]
+      ],
+      "inks": [
+        1,
+        9,
+        11,
+        12,
+        13,
+        15
+      ],
+      "indexed": "icon32-map-indexed.png",
+      "rgba": "icon32-map.png",
+      "indexed_sha256": "426b2affd500a1c42ff4381a75808ca952e69b14e9c2009e9917d7ff1b84809d",
+      "rgba_sha256": "48a72d6ef89f411e2c4a23d7987972843b32a4415b3f4ece06a805dff7af79f1",
+      "indexed_file": "native/icon32-map-indexed.png",
+      "RGBA_file": "native/icon32-map.png",
+      "RGBA_sha256": "48a72d6ef89f411e2c4a23d7987972843b32a4415b3f4ece06a805dff7af79f1"
+    },
+    {
+      "sheet": "icon32",
+      "frame": "astrolabe",
+      "canvas": [
+        32,
+        32
+      ],
+      "visible_bbox": [
+        2,
+        2,
+        30,
+        30
+      ],
+      "visible_size": [
+        28,
+        28
+      ],
+      "material": "gold",
+      "palette_alias": "gear",
+      "palette_rgb555": [
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          16,
+          24,
+          32
+        ],
+        [
+          48,
+          32,
+          32
+        ],
+        [
+          72,
+          48,
+          32
+        ],
+        [
+          104,
+          64,
+          40
+        ],
+        [
+          136,
+          88,
+          48
+        ],
+        [
+          176,
+          120,
+          56
+        ],
+        [
+          112,
+          80,
+          32
+        ],
+        [
+          168,
+          120,
+          40
+        ],
+        [
+          216,
+          160,
+          56
+        ],
+        [
+          240,
+          200,
+          88
+        ],
+        [
+          248,
+          224,
+          160
+        ],
+        [
+          248,
+          240,
+          200
+        ],
+        [
+          24,
+          72,
+          72
+        ],
+        [
+          56,
+          120,
+          112
+        ],
+        [
+          176,
+          64,
+          80
+        ]
+      ],
+      "inks": [
+        1,
+        2,
+        6,
+        8,
+        10,
+        11,
+        12
+      ],
+      "indexed": "icon32-astrolabe-indexed.png",
+      "rgba": "icon32-astrolabe.png",
+      "indexed_sha256": "136569a9bc4289fe53827ef8a6e95f95bd1a13d950a7fd7030af0fe0580858d0",
+      "rgba_sha256": "2250cd6556d47e2ea0004208d48f71d583fc450ddedd8ef4bcab7e320483f0a7",
+      "indexed_file": "native/icon32-astrolabe-indexed.png",
+      "RGBA_file": "native/icon32-astrolabe.png",
+      "RGBA_sha256": "2250cd6556d47e2ea0004208d48f71d583fc450ddedd8ef4bcab7e320483f0a7"
+    },
+    {
+      "sheet": "icon32",
+      "frame": "sword",
+      "canvas": [
+        32,
+        32
+      ],
+      "visible_bbox": [
+        1,
+        2,
+        30,
+        31
+      ],
+      "visible_size": [
+        29,
+        29
+      ],
+      "material": "stone",
+      "palette_alias": "iron",
+      "palette_rgb555": [
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          16,
+          24,
+          32
+        ],
+        [
+          32,
+          40,
+          48
+        ],
+        [
+          48,
+          56,
+          64
+        ],
+        [
+          72,
+          80,
+          80
+        ],
+        [
+          96,
+          104,
+          96
+        ],
+        [
+          136,
+          144,
+          128
+        ],
+        [
+          176,
+          176,
+          152
+        ],
+        [
+          208,
+          208,
+          176
+        ],
+        [
+          48,
+          40,
+          32
+        ],
+        [
+          80,
+          64,
+          48
+        ],
+        [
+          120,
+          96,
+          64
+        ],
+        [
+          160,
+          128,
+          72
+        ],
+        [
+          192,
+          160,
+          96
+        ],
+        [
+          232,
+          208,
+          152
+        ],
+        [
+          248,
+          240,
+          200
+        ]
+      ],
+      "inks": [
+        1,
+        6,
+        7,
+        8,
+        10,
+        12,
+        13
+      ],
+      "indexed": "icon32-sword-indexed.png",
+      "rgba": "icon32-sword.png",
+      "indexed_sha256": "93fed45ff975afde2940e263e2b2aae2eef5c28fcc9bdcd1463b52d906c02c19",
+      "rgba_sha256": "8a28f188d4c8dfbe7c8d83a1355c0203b20e97a960e53e78d691c3e070609411",
+      "indexed_file": "native/icon32-sword-indexed.png",
+      "RGBA_file": "native/icon32-sword.png",
+      "RGBA_sha256": "8a28f188d4c8dfbe7c8d83a1355c0203b20e97a960e53e78d691c3e070609411"
+    },
+    {
+      "sheet": "icon32",
+      "frame": "shield",
+      "canvas": [
+        32,
+        32
+      ],
+      "visible_bbox": [
+        2,
+        2,
+        30,
+        31
+      ],
+      "visible_size": [
+        28,
+        29
+      ],
+      "material": "gold",
+      "palette_alias": "gear",
+      "palette_rgb555": [
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          16,
+          24,
+          32
+        ],
+        [
+          48,
+          32,
+          32
+        ],
+        [
+          72,
+          48,
+          32
+        ],
+        [
+          104,
+          64,
+          40
+        ],
+        [
+          136,
+          88,
+          48
+        ],
+        [
+          176,
+          120,
+          56
+        ],
+        [
+          112,
+          80,
+          32
+        ],
+        [
+          168,
+          120,
+          40
+        ],
+        [
+          216,
+          160,
+          56
+        ],
+        [
+          240,
+          200,
+          88
+        ],
+        [
+          248,
+          224,
+          160
+        ],
+        [
+          248,
+          240,
+          200
+        ],
+        [
+          24,
+          72,
+          72
+        ],
+        [
+          56,
+          120,
+          112
+        ],
+        [
+          176,
+          64,
+          80
+        ]
+      ],
+      "inks": [
+        1,
+        3,
+        4,
+        5,
+        8,
+        10,
+        11,
+        12
+      ],
+      "indexed": "icon32-shield-indexed.png",
+      "rgba": "icon32-shield.png",
+      "indexed_sha256": "02c5b5b664585d291d1f2e7edda58884245e577f23fa1f0cb8e9c961b8d2870e",
+      "rgba_sha256": "1efa883b70f4b2ef3a377832e80b2844dd445d4820a8e7c91456e9ea0dc2c411",
+      "indexed_file": "native/icon32-shield-indexed.png",
+      "RGBA_file": "native/icon32-shield.png",
+      "RGBA_sha256": "1efa883b70f4b2ef3a377832e80b2844dd445d4820a8e7c91456e9ea0dc2c411"
+    },
+    {
+      "sheet": "icon32",
+      "frame": "shield_upgraded",
+      "canvas": [
+        32,
+        32
+      ],
+      "visible_bbox": [
+        2,
+        2,
+        30,
+        31
+      ],
+      "visible_size": [
+        28,
+        29
+      ],
+      "material": "gold",
+      "palette_alias": "gear",
+      "palette_rgb555": [
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          16,
+          24,
+          32
+        ],
+        [
+          48,
+          32,
+          32
+        ],
+        [
+          72,
+          48,
+          32
+        ],
+        [
+          104,
+          64,
+          40
+        ],
+        [
+          136,
+          88,
+          48
+        ],
+        [
+          176,
+          120,
+          56
+        ],
+        [
+          112,
+          80,
+          32
+        ],
+        [
+          168,
+          120,
+          40
+        ],
+        [
+          216,
+          160,
+          56
+        ],
+        [
+          240,
+          200,
+          88
+        ],
+        [
+          248,
+          224,
+          160
+        ],
+        [
+          248,
+          240,
+          200
+        ],
+        [
+          24,
+          72,
+          72
+        ],
+        [
+          56,
+          120,
+          112
+        ],
+        [
+          176,
+          64,
+          80
+        ]
+      ],
+      "inks": [
+        1,
+        9,
+        11,
+        12,
+        13
+      ],
+      "indexed": "icon32-shield_upgraded-indexed.png",
+      "rgba": "icon32-shield_upgraded.png",
+      "indexed_sha256": "eaf42483bbd5e15e08b8db613c4cc83a2f89ae23ce2a3f9b2a77388a66b078dc",
+      "rgba_sha256": "4c989e7ce9ffb84759534cf8778ce7d926a3e03fe22d360d75f9d4d8adc1cb56",
+      "indexed_file": "native/icon32-shield_upgraded-indexed.png",
+      "RGBA_file": "native/icon32-shield_upgraded.png",
+      "RGBA_sha256": "4c989e7ce9ffb84759534cf8778ce7d926a3e03fe22d360d75f9d4d8adc1cb56"
+    },
+    {
+      "sheet": "huditems",
+      "frame": "none",
+      "canvas": [
+        16,
+        16
+      ],
+      "visible_bbox": null,
+      "visible_size": [
+        0,
+        0
+      ],
+      "material": "gold",
+      "palette_alias": "gear",
+      "palette_rgb555": [
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          16,
+          24,
+          32
+        ],
+        [
+          48,
+          32,
+          32
+        ],
+        [
+          72,
+          48,
+          32
+        ],
+        [
+          104,
+          64,
+          40
+        ],
+        [
+          136,
+          88,
+          48
+        ],
+        [
+          176,
+          120,
+          56
+        ],
+        [
+          112,
+          80,
+          32
+        ],
+        [
+          168,
+          120,
+          40
+        ],
+        [
+          216,
+          160,
+          56
+        ],
+        [
+          240,
+          200,
+          88
+        ],
+        [
+          248,
+          224,
+          160
+        ],
+        [
+          248,
+          240,
+          200
+        ],
+        [
+          24,
+          72,
+          72
+        ],
+        [
+          56,
+          120,
+          112
+        ],
+        [
+          176,
+          64,
+          80
+        ]
+      ],
+      "inks": [],
+      "indexed": "huditems-none-indexed.png",
+      "rgba": "huditems-none.png",
+      "indexed_sha256": "9682ea61f915d04a622e8922ad70f45324a7105ce91bec186aed7834c6d28c86",
+      "rgba_sha256": "50b068e07b4bf235705c19b77da49fdbbc7e98ddc0a46f1c6659cca98c963904",
+      "indexed_file": "native/huditems-none-indexed.png",
+      "RGBA_file": "native/huditems-none.png",
+      "RGBA_sha256": "50b068e07b4bf235705c19b77da49fdbbc7e98ddc0a46f1c6659cca98c963904"
+    },
+    {
+      "sheet": "huditems",
+      "frame": "bombs",
+      "canvas": [
+        16,
+        16
+      ],
+      "visible_bbox": [
+        0,
+        0,
+        15,
+        16
+      ],
+      "visible_size": [
+        15,
+        16
+      ],
+      "material": "blight",
+      "palette_alias": "blight",
+      "palette_rgb555": [
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          16,
+          16,
+          24
+        ],
+        [
+          32,
+          24,
+          40
+        ],
+        [
+          48,
+          32,
+          56
+        ],
+        [
+          72,
+          48,
+          72
+        ],
+        [
+          96,
+          64,
+          88
+        ],
+        [
+          128,
+          80,
+          104
+        ],
+        [
+          160,
+          104,
+          120
+        ],
+        [
+          64,
+          48,
+          48
+        ],
+        [
+          96,
+          64,
+          56
+        ],
+        [
+          136,
+          96,
+          72
+        ],
+        [
+          176,
+          136,
+          88
+        ],
+        [
+          136,
+          40,
+          88
+        ],
+        [
+          192,
+          72,
+          136
+        ],
+        [
+          232,
+          144,
+          184
+        ],
+        [
+          240,
+          216,
+          192
+        ]
+      ],
+      "inks": [
+        1,
+        4,
+        10,
+        11,
+        12,
+        13,
+        14
+      ],
+      "indexed": "huditems-bombs-indexed.png",
+      "rgba": "huditems-bombs.png",
+      "indexed_sha256": "4068a20b26c23f5f9fb37c2494971906e91104a17331341a3a1f5742cbf78355",
+      "rgba_sha256": "c9f89273cabfeed4258883f9756fb464e0d4f830300b68cc4a6592241f2936e8",
+      "indexed_file": "native/huditems-bombs-indexed.png",
+      "RGBA_file": "native/huditems-bombs.png",
+      "RGBA_sha256": "c9f89273cabfeed4258883f9756fb464e0d4f830300b68cc4a6592241f2936e8"
+    },
+    {
+      "sheet": "huditems",
+      "frame": "lamp",
+      "canvas": [
+        16,
+        16
+      ],
+      "visible_bbox": [
+        1,
+        0,
+        15,
+        16
+      ],
+      "visible_size": [
+        14,
+        16
+      ],
+      "material": "gold",
+      "palette_alias": "gear",
+      "palette_rgb555": [
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          16,
+          24,
+          32
+        ],
+        [
+          48,
+          32,
+          32
+        ],
+        [
+          72,
+          48,
+          32
+        ],
+        [
+          104,
+          64,
+          40
+        ],
+        [
+          136,
+          88,
+          48
+        ],
+        [
+          176,
+          120,
+          56
+        ],
+        [
+          112,
+          80,
+          32
+        ],
+        [
+          168,
+          120,
+          40
+        ],
+        [
+          216,
+          160,
+          56
+        ],
+        [
+          240,
+          200,
+          88
+        ],
+        [
+          248,
+          224,
+          160
+        ],
+        [
+          248,
+          240,
+          200
+        ],
+        [
+          24,
+          72,
+          72
+        ],
+        [
+          56,
+          120,
+          112
+        ],
+        [
+          176,
+          64,
+          80
+        ]
+      ],
+      "inks": [
+        1,
+        2,
+        3,
+        6,
+        8,
+        10,
+        11,
+        12
+      ],
+      "indexed": "huditems-lamp-indexed.png",
+      "rgba": "huditems-lamp.png",
+      "indexed_sha256": "93f7b250de4eb1f2a2d680b2fda68b7725b0cf15efcf559feb486f101a08b153",
+      "rgba_sha256": "1dc65b94d4b314031f7443fc572ca261dda00ca104e13462905ee7e34ff294a0",
+      "indexed_file": "native/huditems-lamp-indexed.png",
+      "RGBA_file": "native/huditems-lamp.png",
+      "RGBA_sha256": "1dc65b94d4b314031f7443fc572ca261dda00ca104e13462905ee7e34ff294a0"
+    },
+    {
+      "sheet": "huditems",
+      "frame": "cloak",
+      "canvas": [
+        16,
+        16
+      ],
+      "visible_bbox": [
+        0,
+        0,
+        16,
+        16
+      ],
+      "visible_size": [
+        16,
+        16
+      ],
+      "material": "foliage",
+      "palette_alias": "bugs",
+      "palette_rgb555": [
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          16,
+          24,
+          32
+        ],
+        [
+          16,
+          40,
+          40
+        ],
+        [
+          24,
+          56,
+          48
+        ],
+        [
+          32,
+          72,
+          56
+        ],
+        [
+          48,
+          96,
+          72
+        ],
+        [
+          72,
+          120,
+          80
+        ],
+        [
+          104,
+          152,
+          88
+        ],
+        [
+          48,
+          40,
+          32
+        ],
+        [
+          72,
+          56,
+          40
+        ],
+        [
+          104,
+          80,
+          56
+        ],
+        [
+          144,
+          112,
+          72
+        ],
+        [
+          176,
+          144,
+          88
+        ],
+        [
+          24,
+          56,
+          56
+        ],
+        [
+          48,
+          88,
+          80
+        ],
+        [
+          120,
+          152,
+          128
+        ]
+      ],
+      "inks": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        12
+      ],
+      "indexed": "huditems-cloak-indexed.png",
+      "rgba": "huditems-cloak.png",
+      "indexed_sha256": "ca702a8a0c7502c62e10ab9baebad3f817b3a16582446a548cac6ac84cdb50b2",
+      "rgba_sha256": "3a942377ce1f379cb36ad5b3dd0ca472ff940fe2d1da2cffaa0021a6d1ff739c",
+      "indexed_file": "native/huditems-cloak-indexed.png",
+      "RGBA_file": "native/huditems-cloak.png",
+      "RGBA_sha256": "3a942377ce1f379cb36ad5b3dd0ca472ff940fe2d1da2cffaa0021a6d1ff739c"
+    },
+    {
+      "sheet": "huditems",
+      "frame": "key",
+      "canvas": [
+        16,
+        16
+      ],
+      "visible_bbox": [
+        0,
+        0,
+        16,
+        16
+      ],
+      "visible_size": [
+        16,
+        16
+      ],
+      "material": "gold",
+      "palette_alias": "gear",
+      "palette_rgb555": [
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          16,
+          24,
+          32
+        ],
+        [
+          48,
+          32,
+          32
+        ],
+        [
+          72,
+          48,
+          32
+        ],
+        [
+          104,
+          64,
+          40
+        ],
+        [
+          136,
+          88,
+          48
+        ],
+        [
+          176,
+          120,
+          56
+        ],
+        [
+          112,
+          80,
+          32
+        ],
+        [
+          168,
+          120,
+          40
+        ],
+        [
+          216,
+          160,
+          56
+        ],
+        [
+          240,
+          200,
+          88
+        ],
+        [
+          248,
+          224,
+          160
+        ],
+        [
+          248,
+          240,
+          200
+        ],
+        [
+          24,
+          72,
+          72
+        ],
+        [
+          56,
+          120,
+          112
+        ],
+        [
+          176,
+          64,
+          80
+        ]
+      ],
+      "inks": [
+        1,
+        9,
+        10,
+        11,
+        12
+      ],
+      "indexed": "huditems-key-indexed.png",
+      "rgba": "huditems-key.png",
+      "indexed_sha256": "12af3eb535ab8985613a391ef64460e8c588960490d1cf97b875cc53112e3cd6",
+      "rgba_sha256": "9dee124d7a5dddaccaf44267db0030e6219293a6240670066c2c000a739f06ca",
+      "indexed_file": "native/huditems-key-indexed.png",
+      "RGBA_file": "native/huditems-key.png",
+      "RGBA_sha256": "9dee124d7a5dddaccaf44267db0030e6219293a6240670066c2c000a739f06ca"
+    },
+    {
+      "sheet": "huditems",
+      "frame": "heart_piece",
+      "canvas": [
+        16,
+        16
+      ],
+      "visible_bbox": [
+        0,
+        1,
+        16,
+        16
+      ],
+      "visible_size": [
+        16,
+        15
+      ],
+      "material": "hero",
+      "palette_alias": "hero",
+      "palette_rgb555": [
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          16,
+          24,
+          32
+        ],
+        [
+          128,
+          40,
+          48
+        ],
+        [
+          184,
+          56,
+          56
+        ],
+        [
+          224,
+          96,
+          64
+        ],
+        [
+          248,
+          144,
+          80
+        ],
+        [
+          240,
+          216,
+          152
+        ],
+        [
+          248,
+          240,
+          192
+        ],
+        [
+          24,
+          56,
+          40
+        ],
+        [
+          48,
+          80,
+          48
+        ],
+        [
+          80,
+          112,
+          56
+        ],
+        [
+          72,
+          56,
+          32
+        ],
+        [
+          136,
+          96,
+          56
+        ],
+        [
+          136,
+          160,
+          160
+        ],
+        [
+          208,
+          224,
+          192
+        ],
+        [
+          248,
+          248,
+          216
+        ]
+      ],
+      "inks": [
+        1,
+        2,
+        3,
+        4,
+        7
+      ],
+      "indexed": "huditems-heart_piece-indexed.png",
+      "rgba": "huditems-heart_piece.png",
+      "indexed_sha256": "f8d34da990ff6d7a706f1eda50b9f5ee6c6dccf75959d374ab5c3a4d3f35e1e6",
+      "rgba_sha256": "5b0a231b7d3dd71966a3946a7a3cb95ed51187f6e51a72a4e98e7f23d3c57920",
+      "indexed_file": "native/huditems-heart_piece-indexed.png",
+      "RGBA_file": "native/huditems-heart_piece.png",
+      "RGBA_sha256": "5b0a231b7d3dd71966a3946a7a3cb95ed51187f6e51a72a4e98e7f23d3c57920"
+    },
+    {
+      "sheet": "huditems",
+      "frame": "heart_container",
+      "canvas": [
+        16,
+        16
+      ],
+      "visible_bbox": [
+        0,
+        1,
+        16,
+        16
+      ],
+      "visible_size": [
+        16,
+        15
+      ],
+      "material": "hero",
+      "palette_alias": "hero",
+      "palette_rgb555": [
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          16,
+          24,
+          32
+        ],
+        [
+          128,
+          40,
+          48
+        ],
+        [
+          184,
+          56,
+          56
+        ],
+        [
+          224,
+          96,
+          64
+        ],
+        [
+          248,
+          144,
+          80
+        ],
+        [
+          240,
+          216,
+          152
+        ],
+        [
+          248,
+          240,
+          192
+        ],
+        [
+          24,
+          56,
+          40
+        ],
+        [
+          48,
+          80,
+          48
+        ],
+        [
+          80,
+          112,
+          56
+        ],
+        [
+          72,
+          56,
+          32
+        ],
+        [
+          136,
+          96,
+          56
+        ],
+        [
+          136,
+          160,
+          160
+        ],
+        [
+          208,
+          224,
+          192
+        ],
+        [
+          248,
+          248,
+          216
+        ]
+      ],
+      "inks": [
+        1,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "indexed": "huditems-heart_container-indexed.png",
+      "rgba": "huditems-heart_container.png",
+      "indexed_sha256": "0cd9a7c0e7ec2b47594300a3d4a3807c5c973a8914ca47cb6ea21c1307764d52",
+      "rgba_sha256": "de6fde678c16f7aad532ee61ce78e0ab51dac8e84bda7aa4b3b51e7a4885d01e",
+      "indexed_file": "native/huditems-heart_container-indexed.png",
+      "RGBA_file": "native/huditems-heart_container.png",
+      "RGBA_sha256": "de6fde678c16f7aad532ee61ce78e0ab51dac8e84bda7aa4b3b51e7a4885d01e"
+    },
+    {
+      "sheet": "huditems",
+      "frame": "gilt_big",
+      "canvas": [
+        16,
+        16
+      ],
+      "visible_bbox": [
+        0,
+        0,
+        16,
+        16
+      ],
+      "visible_size": [
+        16,
+        16
+      ],
+      "material": "gold",
+      "palette_alias": "gear",
+      "palette_rgb555": [
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          16,
+          24,
+          32
+        ],
+        [
+          48,
+          32,
+          32
+        ],
+        [
+          72,
+          48,
+          32
+        ],
+        [
+          104,
+          64,
+          40
+        ],
+        [
+          136,
+          88,
+          48
+        ],
+        [
+          176,
+          120,
+          56
+        ],
+        [
+          112,
+          80,
+          32
+        ],
+        [
+          168,
+          120,
+          40
+        ],
+        [
+          216,
+          160,
+          56
+        ],
+        [
+          240,
+          200,
+          88
+        ],
+        [
+          248,
+          224,
+          160
+        ],
+        [
+          248,
+          240,
+          200
+        ],
+        [
+          24,
+          72,
+          72
+        ],
+        [
+          56,
+          120,
+          112
+        ],
+        [
+          176,
+          64,
+          80
+        ]
+      ],
+      "inks": [
+        1,
+        5,
+        6,
+        9,
+        10,
+        12
+      ],
+      "indexed": "huditems-gilt_big-indexed.png",
+      "rgba": "huditems-gilt_big.png",
+      "indexed_sha256": "a399836f88a179ff931429974e1b1e319ff28db64abf16c729b7dd3721b27c50",
+      "rgba_sha256": "a049e8dcce59011a4ad012bc66aa9c498d302fbdae2f4571272c2f4e4e1a1242",
+      "indexed_file": "native/huditems-gilt_big-indexed.png",
+      "RGBA_file": "native/huditems-gilt_big.png",
+      "RGBA_sha256": "a049e8dcce59011a4ad012bc66aa9c498d302fbdae2f4571272c2f4e4e1a1242"
+    },
+    {
+      "sheet": "huditems",
+      "frame": "relic",
+      "canvas": [
+        16,
+        16
+      ],
+      "visible_bbox": [
+        0,
+        0,
+        16,
+        16
+      ],
+      "visible_size": [
+        16,
+        16
+      ],
+      "material": "gold",
+      "palette_alias": "gear",
+      "palette_rgb555": [
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          16,
+          24,
+          32
+        ],
+        [
+          48,
+          32,
+          32
+        ],
+        [
+          72,
+          48,
+          32
+        ],
+        [
+          104,
+          64,
+          40
+        ],
+        [
+          136,
+          88,
+          48
+        ],
+        [
+          176,
+          120,
+          56
+        ],
+        [
+          112,
+          80,
+          32
+        ],
+        [
+          168,
+          120,
+          40
+        ],
+        [
+          216,
+          160,
+          56
+        ],
+        [
+          240,
+          200,
+          88
+        ],
+        [
+          248,
+          224,
+          160
+        ],
+        [
+          248,
+          240,
+          200
+        ],
+        [
+          24,
+          72,
+          72
+        ],
+        [
+          56,
+          120,
+          112
+        ],
+        [
+          176,
+          64,
+          80
+        ]
+      ],
+      "inks": [
+        1,
+        2,
+        6,
+        8,
+        11,
+        12,
+        13
+      ],
+      "indexed": "huditems-relic-indexed.png",
+      "rgba": "huditems-relic.png",
+      "indexed_sha256": "998df4932f4761b7ebcf6c00d677fa057d34ee0e11664e5862f701454a21f860",
+      "rgba_sha256": "e17792bf0474431bb0a385ad5c6eacf9564427f7e810cea36c7ab54bdb48ea97",
+      "indexed_file": "native/huditems-relic-indexed.png",
+      "RGBA_file": "native/huditems-relic.png",
+      "RGBA_sha256": "e17792bf0474431bb0a385ad5c6eacf9564427f7e810cea36c7ab54bdb48ea97"
+    },
+    {
+      "sheet": "huditems",
+      "frame": "gauntlet",
+      "canvas": [
+        16,
+        16
+      ],
+      "visible_bbox": [
+        0,
+        0,
+        16,
+        16
+      ],
+      "visible_size": [
+        16,
+        16
+      ],
+      "material": "gold",
+      "palette_alias": "gear",
+      "palette_rgb555": [
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          16,
+          24,
+          32
+        ],
+        [
+          48,
+          32,
+          32
+        ],
+        [
+          72,
+          48,
+          32
+        ],
+        [
+          104,
+          64,
+          40
+        ],
+        [
+          136,
+          88,
+          48
+        ],
+        [
+          176,
+          120,
+          56
+        ],
+        [
+          112,
+          80,
+          32
+        ],
+        [
+          168,
+          120,
+          40
+        ],
+        [
+          216,
+          160,
+          56
+        ],
+        [
+          240,
+          200,
+          88
+        ],
+        [
+          248,
+          224,
+          160
+        ],
+        [
+          248,
+          240,
+          200
+        ],
+        [
+          24,
+          72,
+          72
+        ],
+        [
+          56,
+          120,
+          112
+        ],
+        [
+          176,
+          64,
+          80
+        ]
+      ],
+      "inks": [
+        1,
+        8,
+        9,
+        11,
+        12
+      ],
+      "indexed": "huditems-gauntlet-indexed.png",
+      "rgba": "huditems-gauntlet.png",
+      "indexed_sha256": "788f4fc3011489cd2b7c911978db135739a4f544e268a282f054a668728c8bcc",
+      "rgba_sha256": "7a173533575fd5e863517b736a3db497967d2532a2a908bb1c74fae1e5538993",
+      "indexed_file": "native/huditems-gauntlet-indexed.png",
+      "RGBA_file": "native/huditems-gauntlet.png",
+      "RGBA_sha256": "7a173533575fd5e863517b736a3db497967d2532a2a908bb1c74fae1e5538993"
+    },
+    {
+      "sheet": "huditems",
+      "frame": "bow",
+      "canvas": [
+        16,
+        16
+      ],
+      "visible_bbox": [
+        3,
+        0,
+        16,
+        16
+      ],
+      "visible_size": [
+        13,
+        16
+      ],
+      "material": "gold",
+      "palette_alias": "gear",
+      "palette_rgb555": [
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          16,
+          24,
+          32
+        ],
+        [
+          48,
+          32,
+          32
+        ],
+        [
+          72,
+          48,
+          32
+        ],
+        [
+          104,
+          64,
+          40
+        ],
+        [
+          136,
+          88,
+          48
+        ],
+        [
+          176,
+          120,
+          56
+        ],
+        [
+          112,
+          80,
+          32
+        ],
+        [
+          168,
+          120,
+          40
+        ],
+        [
+          216,
+          160,
+          56
+        ],
+        [
+          240,
+          200,
+          88
+        ],
+        [
+          248,
+          224,
+          160
+        ],
+        [
+          248,
+          240,
+          200
+        ],
+        [
+          24,
+          72,
+          72
+        ],
+        [
+          56,
+          120,
+          112
+        ],
+        [
+          176,
+          64,
+          80
+        ]
+      ],
+      "inks": [
+        1,
+        6,
+        8,
+        11
+      ],
+      "indexed": "huditems-bow-indexed.png",
+      "rgba": "huditems-bow.png",
+      "indexed_sha256": "e8bc7635231373bf6e024d50fa65fcf77d7b736698af5141ef3bfb7ffe4aed0c",
+      "rgba_sha256": "d9e782aa5bc57eb696aa2108a9482d1d807493630e238cc40d2483fb705afca5",
+      "indexed_file": "native/huditems-bow-indexed.png",
+      "RGBA_file": "native/huditems-bow.png",
+      "RGBA_sha256": "d9e782aa5bc57eb696aa2108a9482d1d807493630e238cc40d2483fb705afca5"
+    },
+    {
+      "sheet": "huditems",
+      "frame": "hubcap",
+      "canvas": [
+        16,
+        16
+      ],
+      "visible_bbox": [
+        0,
+        0,
+        16,
+        16
+      ],
+      "visible_size": [
+        16,
+        16
+      ],
+      "material": "stone",
+      "palette_alias": "iron",
+      "palette_rgb555": [
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          16,
+          24,
+          32
+        ],
+        [
+          32,
+          40,
+          48
+        ],
+        [
+          48,
+          56,
+          64
+        ],
+        [
+          72,
+          80,
+          80
+        ],
+        [
+          96,
+          104,
+          96
+        ],
+        [
+          136,
+          144,
+          128
+        ],
+        [
+          176,
+          176,
+          152
+        ],
+        [
+          208,
+          208,
+          176
+        ],
+        [
+          48,
+          40,
+          32
+        ],
+        [
+          80,
+          64,
+          48
+        ],
+        [
+          120,
+          96,
+          64
+        ],
+        [
+          160,
+          128,
+          72
+        ],
+        [
+          192,
+          160,
+          96
+        ],
+        [
+          232,
+          208,
+          152
+        ],
+        [
+          248,
+          240,
+          200
+        ]
+      ],
+      "inks": [
+        1,
+        2,
+        3,
+        5,
+        6,
+        7,
+        8
+      ],
+      "indexed": "huditems-hubcap-indexed.png",
+      "rgba": "huditems-hubcap.png",
+      "indexed_sha256": "2b8d7032d36e7028787bb354a15467d5a18a75a3db8827b047c24b9229928cd5",
+      "rgba_sha256": "657cb0dcf8e7f9e1f3654431ca41cf6536a9c0331d9f560661bf6846633591db",
+      "indexed_file": "native/huditems-hubcap-indexed.png",
+      "RGBA_file": "native/huditems-hubcap.png",
+      "RGBA_sha256": "657cb0dcf8e7f9e1f3654431ca41cf6536a9c0331d9f560661bf6846633591db"
+    },
+    {
+      "sheet": "huditems",
+      "frame": "map",
+      "canvas": [
+        16,
+        16
+      ],
+      "visible_bbox": [
+        0,
+        0,
+        16,
+        16
+      ],
+      "visible_size": [
+        16,
+        16
+      ],
+      "material": "gold",
+      "palette_alias": "gear",
+      "palette_rgb555": [
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          16,
+          24,
+          32
+        ],
+        [
+          48,
+          32,
+          32
+        ],
+        [
+          72,
+          48,
+          32
+        ],
+        [
+          104,
+          64,
+          40
+        ],
+        [
+          136,
+          88,
+          48
+        ],
+        [
+          176,
+          120,
+          56
+        ],
+        [
+          112,
+          80,
+          32
+        ],
+        [
+          168,
+          120,
+          40
+        ],
+        [
+          216,
+          160,
+          56
+        ],
+        [
+          240,
+          200,
+          88
+        ],
+        [
+          248,
+          224,
+          160
+        ],
+        [
+          248,
+          240,
+          200
+        ],
+        [
+          24,
+          72,
+          72
+        ],
+        [
+          56,
+          120,
+          112
+        ],
+        [
+          176,
+          64,
+          80
+        ]
+      ],
+      "inks": [
+        1,
+        9,
+        11,
+        13,
+        15
+      ],
+      "indexed": "huditems-map-indexed.png",
+      "rgba": "huditems-map.png",
+      "indexed_sha256": "4fc6f51b2ee8b23c1903494bbd2dea44709bac43f49e0244094d91314cc896ca",
+      "rgba_sha256": "17232d8b52747cda69953f1fbc72490b35112f68082214da03c8166a8d268002",
+      "indexed_file": "native/huditems-map-indexed.png",
+      "RGBA_file": "native/huditems-map.png",
+      "RGBA_sha256": "17232d8b52747cda69953f1fbc72490b35112f68082214da03c8166a8d268002"
+    },
+    {
+      "sheet": "huditems",
+      "frame": "astrolabe",
+      "canvas": [
+        16,
+        16
+      ],
+      "visible_bbox": [
+        0,
+        0,
+        16,
+        16
+      ],
+      "visible_size": [
+        16,
+        16
+      ],
+      "material": "gold",
+      "palette_alias": "gear",
+      "palette_rgb555": [
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          16,
+          24,
+          32
+        ],
+        [
+          48,
+          32,
+          32
+        ],
+        [
+          72,
+          48,
+          32
+        ],
+        [
+          104,
+          64,
+          40
+        ],
+        [
+          136,
+          88,
+          48
+        ],
+        [
+          176,
+          120,
+          56
+        ],
+        [
+          112,
+          80,
+          32
+        ],
+        [
+          168,
+          120,
+          40
+        ],
+        [
+          216,
+          160,
+          56
+        ],
+        [
+          240,
+          200,
+          88
+        ],
+        [
+          248,
+          224,
+          160
+        ],
+        [
+          248,
+          240,
+          200
+        ],
+        [
+          24,
+          72,
+          72
+        ],
+        [
+          56,
+          120,
+          112
+        ],
+        [
+          176,
+          64,
+          80
+        ]
+      ],
+      "inks": [
+        1,
+        2,
+        6,
+        8,
+        10,
+        11,
+        12
+      ],
+      "indexed": "huditems-astrolabe-indexed.png",
+      "rgba": "huditems-astrolabe.png",
+      "indexed_sha256": "b6acb81da68548d11961432999da4d532a3b18db2182fb3b40cc7a4bdc2c59da",
+      "rgba_sha256": "d6ec8f7217d9b1f631cf950fd5c7fc6d869beec32f7fd25e0cad7f9c54d017ef",
+      "indexed_file": "native/huditems-astrolabe-indexed.png",
+      "RGBA_file": "native/huditems-astrolabe.png",
+      "RGBA_sha256": "d6ec8f7217d9b1f631cf950fd5c7fc6d869beec32f7fd25e0cad7f9c54d017ef"
+    },
+    {
+      "sheet": "huditems",
+      "frame": "sword",
+      "canvas": [
+        16,
+        16
+      ],
+      "visible_bbox": [
+        0,
+        0,
+        16,
+        15
+      ],
+      "visible_size": [
+        16,
+        15
+      ],
+      "material": "stone",
+      "palette_alias": "iron",
+      "palette_rgb555": [
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          16,
+          24,
+          32
+        ],
+        [
+          32,
+          40,
+          48
+        ],
+        [
+          48,
+          56,
+          64
+        ],
+        [
+          72,
+          80,
+          80
+        ],
+        [
+          96,
+          104,
+          96
+        ],
+        [
+          136,
+          144,
+          128
+        ],
+        [
+          176,
+          176,
+          152
+        ],
+        [
+          208,
+          208,
+          176
+        ],
+        [
+          48,
+          40,
+          32
+        ],
+        [
+          80,
+          64,
+          48
+        ],
+        [
+          120,
+          96,
+          64
+        ],
+        [
+          160,
+          128,
+          72
+        ],
+        [
+          192,
+          160,
+          96
+        ],
+        [
+          232,
+          208,
+          152
+        ],
+        [
+          248,
+          240,
+          200
+        ]
+      ],
+      "inks": [
+        1,
+        6,
+        7,
+        8,
+        10,
+        12,
+        13
+      ],
+      "indexed": "huditems-sword-indexed.png",
+      "rgba": "huditems-sword.png",
+      "indexed_sha256": "aa10a198697a66d59b32e8adf17731588d663e7c7d581c4969e9cb3dc41e9a84",
+      "rgba_sha256": "55ee4fc60008f1c2a0cbc98a5587254d3537be94a28da8b7e03982e67a980485",
+      "indexed_file": "native/huditems-sword-indexed.png",
+      "RGBA_file": "native/huditems-sword.png",
+      "RGBA_sha256": "55ee4fc60008f1c2a0cbc98a5587254d3537be94a28da8b7e03982e67a980485"
+    },
+    {
+      "sheet": "huditems",
+      "frame": "shield",
+      "canvas": [
+        16,
+        16
+      ],
+      "visible_bbox": [
+        0,
+        0,
+        16,
+        16
+      ],
+      "visible_size": [
+        16,
+        16
+      ],
+      "material": "gold",
+      "palette_alias": "gear",
+      "palette_rgb555": [
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          16,
+          24,
+          32
+        ],
+        [
+          48,
+          32,
+          32
+        ],
+        [
+          72,
+          48,
+          32
+        ],
+        [
+          104,
+          64,
+          40
+        ],
+        [
+          136,
+          88,
+          48
+        ],
+        [
+          176,
+          120,
+          56
+        ],
+        [
+          112,
+          80,
+          32
+        ],
+        [
+          168,
+          120,
+          40
+        ],
+        [
+          216,
+          160,
+          56
+        ],
+        [
+          240,
+          200,
+          88
+        ],
+        [
+          248,
+          224,
+          160
+        ],
+        [
+          248,
+          240,
+          200
+        ],
+        [
+          24,
+          72,
+          72
+        ],
+        [
+          56,
+          120,
+          112
+        ],
+        [
+          176,
+          64,
+          80
+        ]
+      ],
+      "inks": [
+        1,
+        3,
+        4,
+        5,
+        8,
+        10,
+        11,
+        12
+      ],
+      "indexed": "huditems-shield-indexed.png",
+      "rgba": "huditems-shield.png",
+      "indexed_sha256": "59f29d7e1b0cccfdbd496787f0419b3251379b8c5076f8eb9f1e8920fc034e61",
+      "rgba_sha256": "0f9f082314c02963ff98aa0af181abec478d5835ec499d1eaa42a30fcf882829",
+      "indexed_file": "native/huditems-shield-indexed.png",
+      "RGBA_file": "native/huditems-shield.png",
+      "RGBA_sha256": "0f9f082314c02963ff98aa0af181abec478d5835ec499d1eaa42a30fcf882829"
+    },
+    {
+      "sheet": "huditems",
+      "frame": "shield_upgraded",
+      "canvas": [
+        16,
+        16
+      ],
+      "visible_bbox": [
+        0,
+        0,
+        16,
+        16
+      ],
+      "visible_size": [
+        16,
+        16
+      ],
+      "material": "gold",
+      "palette_alias": "gear",
+      "palette_rgb555": [
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          16,
+          24,
+          32
+        ],
+        [
+          48,
+          32,
+          32
+        ],
+        [
+          72,
+          48,
+          32
+        ],
+        [
+          104,
+          64,
+          40
+        ],
+        [
+          136,
+          88,
+          48
+        ],
+        [
+          176,
+          120,
+          56
+        ],
+        [
+          112,
+          80,
+          32
+        ],
+        [
+          168,
+          120,
+          40
+        ],
+        [
+          216,
+          160,
+          56
+        ],
+        [
+          240,
+          200,
+          88
+        ],
+        [
+          248,
+          224,
+          160
+        ],
+        [
+          248,
+          240,
+          200
+        ],
+        [
+          24,
+          72,
+          72
+        ],
+        [
+          56,
+          120,
+          112
+        ],
+        [
+          176,
+          64,
+          80
+        ]
+      ],
+      "inks": [
+        1,
+        9,
+        11,
+        12,
+        13
+      ],
+      "indexed": "huditems-shield_upgraded-indexed.png",
+      "rgba": "huditems-shield_upgraded.png",
+      "indexed_sha256": "d46806b6f9031f68508589e98302cd821d8c1ec612d3b63ba399ad102eda62ce",
+      "rgba_sha256": "229e769e2047253f8d870de26821c5957dc99475a803bbcc18e03290a7362e88",
+      "indexed_file": "native/huditems-shield_upgraded-indexed.png",
+      "RGBA_file": "native/huditems-shield_upgraded.png",
+      "RGBA_sha256": "229e769e2047253f8d870de26821c5957dc99475a803bbcc18e03290a7362e88"
+    }
+  ],
+  "author_color_note": "RGB555 source values retain their literal multiples-of-eight author colors; actual GBA screenshots show emulator display expansion.",
+  "method": "Native P/4bpp drawings, palette index0 transparent. RGB colors are authored RGB555-aligned multiples of8. No imported images or downscaling. Source art, not emulator captures."
+}

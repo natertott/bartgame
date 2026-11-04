@@ -68,3 +68,16 @@ HUD painting. That pilot is private diagnostic evidence and is not qualified
 for release. Final acceptance requires a new build, actual VBlank/logic-age
 samples and a fresh scene/input review after optimization. Neither a passing
 asset audit nor an attractive screenshot overrides a timing failure.
+
+## Final qualification
+
+Frozen source4747b6788f18fe32da7d3304f34ce94c22468d5b passes1,090/1,090
+independent checks, including267 current/committed input hashes and a fresh
+byte-identical HUD0 build. The reviewed HUD1 ROM is652,024 bytes, SHA256
+`1bd913bc5bf1ad81e9c1dcc7e07ebc38eac855d390a5bb613257f8fbfe128e59`.
+All65 registered item frames include62 effective changed paintings;32 other
+sheets,246 protected scalar payloads and all three region kits remain exact.
+EWRAM is253,152 bytes (8,992 bytes free); IWRAM data/code totals21,908 bytes.
+The committed-source actual capture separately passes290/290, with matched
+idle/walking samples showing zero additional misses. Public reports and
+native images are linked from the [HUD review](../../../../art-review/hud-gilt/README.md).

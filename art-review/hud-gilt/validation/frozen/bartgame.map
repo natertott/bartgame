@@ -1,0 +1,3514 @@
+Archive member included to satisfy reference by file (symbol)
+
+/workspace/setup/sysroot/usr/bin/../lib/gcc/arm-none-eabi/14.2.1/thumb/nofp/libgcc.a(_udivsi3.o)
+                              build/game.o (__aeabi_uidiv)
+/workspace/setup/sysroot/usr/bin/../lib/gcc/arm-none-eabi/14.2.1/thumb/nofp/libgcc.a(_divsi3.o)
+                              build/ambient.o (__aeabi_idiv)
+/workspace/setup/sysroot/usr/bin/../lib/gcc/arm-none-eabi/14.2.1/thumb/nofp/libgcc.a(_dvmd_tls.o)
+                              /workspace/setup/sysroot/usr/bin/../lib/gcc/arm-none-eabi/14.2.1/thumb/nofp/libgcc.a(_udivsi3.o) (__aeabi_idiv0)
+/workspace/setup/sysroot/usr/bin/../lib/gcc/arm-none-eabi/14.2.1/thumb/nofp/libgcc.a(_muldi3.o)
+                              build/util.o (__aeabi_lmul)
+
+Discarded input sections
+
+ .text          0x00000000        0x0 build/actor.o
+ .data          0x00000000        0x0 build/actor.o
+ .bss           0x00000000        0x0 build/actor.o
+ .text.actor_count
+                0x00000000       0x28 build/actor.o
+ .comment       0x00000000       0x27 build/actor.o
+ .ARM.attributes
+                0x00000000       0x2a build/actor.o
+ .text          0x00000000        0x0 build/ambient.o
+ .data          0x00000000        0x0 build/ambient.o
+ .bss           0x00000000        0x0 build/ambient.o
+ .comment       0x00000000       0x27 build/ambient.o
+ .ARM.attributes
+                0x00000000       0x2a build/ambient.o
+ .text          0x00000000        0x0 build/appearance.o
+ .data          0x00000000        0x0 build/appearance.o
+ .bss           0x00000000        0x0 build/appearance.o
+ .text.appearance_revision
+                0x00000000        0xc build/appearance.o
+ .comment       0x00000000       0x27 build/appearance.o
+ .ARM.attributes
+                0x00000000       0x2a build/appearance.o
+ .text          0x00000000        0x0 build/boss.o
+ .data          0x00000000        0x0 build/boss.o
+ .bss           0x00000000        0x0 build/boss.o
+ .text.boss_is_dying
+                0x00000000        0xc build/boss.o
+ .comment       0x00000000       0x27 build/boss.o
+ .ARM.attributes
+                0x00000000       0x2a build/boss.o
+ .text          0x00000000        0x0 build/enemy.o
+ .data          0x00000000        0x0 build/enemy.o
+ .bss           0x00000000        0x0 build/enemy.o
+ .comment       0x00000000       0x27 build/enemy.o
+ .ARM.attributes
+                0x00000000       0x2a build/enemy.o
+ .text          0x00000000        0x0 build/forest_paths.o
+ .data          0x00000000        0x0 build/forest_paths.o
+ .bss           0x00000000        0x0 build/forest_paths.o
+ .comment       0x00000000       0x27 build/forest_paths.o
+ .ARM.attributes
+                0x00000000       0x2a build/forest_paths.o
+ .text          0x00000000        0x0 build/forest_trees.o
+ .data          0x00000000        0x0 build/forest_trees.o
+ .bss           0x00000000        0x0 build/forest_trees.o
+ .text.forest_trees_wood
+                0x00000000       0x1c build/forest_trees.o
+ .text.forest_trees_overlay_cell
+                0x00000000       0xb0 build/forest_trees.o
+ .text.forest_trees_occludes_px
+                0x00000000       0x34 build/forest_trees.o
+ .comment       0x00000000       0x27 build/forest_trees.o
+ .ARM.attributes
+                0x00000000       0x2a build/forest_trees.o
+ .text          0x00000000        0x0 build/game.o
+ .data          0x00000000        0x0 build/game.o
+ .bss           0x00000000        0x0 build/game.o
+ .comment       0x00000000       0x27 build/game.o
+ .ARM.attributes
+                0x00000000       0x2a build/game.o
+ .text          0x00000000        0x0 build/interactive.o
+ .data          0x00000000        0x0 build/interactive.o
+ .bss           0x00000000        0x0 build/interactive.o
+ .comment       0x00000000       0x27 build/interactive.o
+ .ARM.attributes
+                0x00000000       0x2a build/interactive.o
+ .text          0x00000000        0x0 build/items.o
+ .data          0x00000000        0x0 build/items.o
+ .bss           0x00000000        0x0 build/items.o
+ .text.items_draw
+                0x00000000        0x4 build/items.o
+ .comment       0x00000000       0x27 build/items.o
+ .ARM.attributes
+                0x00000000       0x2a build/items.o
+ .text          0x00000000        0x0 build/main.o
+ .data          0x00000000        0x0 build/main.o
+ .bss           0x00000000        0x0 build/main.o
+ .comment       0x00000000       0x27 build/main.o
+ .ARM.attributes
+                0x00000000       0x2a build/main.o
+ .text          0x00000000        0x0 build/menu.o
+ .data          0x00000000        0x0 build/menu.o
+ .bss           0x00000000        0x0 build/menu.o
+ .comment       0x00000000       0x27 build/menu.o
+ .ARM.attributes
+                0x00000000       0x2a build/menu.o
+ .text          0x00000000        0x0 build/menu_layouts_a.o
+ .data          0x00000000        0x0 build/menu_layouts_a.o
+ .bss           0x00000000        0x0 build/menu_layouts_a.o
+ .comment       0x00000000       0x27 build/menu_layouts_a.o
+ .ARM.attributes
+                0x00000000       0x2a build/menu_layouts_a.o
+ .text          0x00000000        0x0 build/menu_layouts_b.o
+ .data          0x00000000        0x0 build/menu_layouts_b.o
+ .bss           0x00000000        0x0 build/menu_layouts_b.o
+ .comment       0x00000000       0x27 build/menu_layouts_b.o
+ .ARM.attributes
+                0x00000000       0x2a build/menu_layouts_b.o
+ .text          0x00000000        0x0 build/menu_studies.o
+ .data          0x00000000        0x0 build/menu_studies.o
+ .bss           0x00000000        0x0 build/menu_studies.o
+ .rodata.str1.4
+                0x00000000       0xa5 build/menu_studies.o
+ .rodata.menu_study_names
+                0x00000000       0x2c build/menu_studies.o
+ .comment       0x00000000       0x27 build/menu_studies.o
+ .ARM.attributes
+                0x00000000       0x2a build/menu_studies.o
+ .text          0x00000000        0x0 build/myst.o
+ .data          0x00000000        0x0 build/myst.o
+ .bss           0x00000000        0x0 build/myst.o
+ .text.myst_kind
+                0x00000000        0xc build/myst.o
+ .comment       0x00000000       0x27 build/myst.o
+ .ARM.attributes
+                0x00000000       0x2a build/myst.o
+ .text          0x00000000        0x0 build/npc.o
+ .data          0x00000000        0x0 build/npc.o
+ .bss           0x00000000        0x0 build/npc.o
+ .comment       0x00000000       0x27 build/npc.o
+ .ARM.attributes
+                0x00000000       0x2a build/npc.o
+ .text          0x00000000        0x0 build/objects.o
+ .data          0x00000000        0x0 build/objects.o
+ .bss           0x00000000        0x0 build/objects.o
+ .comment       0x00000000       0x27 build/objects.o
+ .ARM.attributes
+                0x00000000       0x2a build/objects.o
+ .text          0x00000000        0x0 build/player.o
+ .data          0x00000000        0x0 build/player.o
+ .bss           0x00000000        0x0 build/player.o
+ .text.player_shield_upgrade
+                0x00000000       0x14 build/player.o
+ .text.player_shield_palette
+                0x00000000       0x1c build/player.o
+ .text.player_set_pos
+                0x00000000       0x1c build/player.o
+ .text.player_face
+                0x00000000       0x1c build/player.o
+ .text.player_ledge_jump_sub
+                0x00000000       0x10 build/player.o
+ .comment       0x00000000       0x27 build/player.o
+ .ARM.attributes
+                0x00000000       0x2a build/player.o
+ .text          0x00000000        0x0 build/react.o
+ .data          0x00000000        0x0 build/react.o
+ .bss           0x00000000        0x0 build/react.o
+ .text.room_torch_light
+                0x00000000       0x24 build/react.o
+ .comment       0x00000000       0x27 build/react.o
+ .ARM.attributes
+                0x00000000       0x2a build/react.o
+ .text          0x00000000        0x0 build/room.o
+ .data          0x00000000        0x0 build/room.o
+ .bss           0x00000000        0x0 build/room.o
+ .text.room_build_solid
+                0x00000000       0x4c build/room.o
+ .text.room_canopy_scene_entries
+                0x00000000       0x10 build/room.o
+ .text.room_visual_ground
+                0x00000000       0x10 build/room.o
+ .text.room_visual_overlay
+                0x00000000       0x10 build/room.o
+ .text.room_recoil_fringe_front
+                0x00000000       0x8c build/room.o
+ .comment       0x00000000       0x27 build/room.o
+ .ARM.attributes
+                0x00000000       0x2a build/room.o
+ .text          0x00000000        0x0 build/roomgen.o
+ .data          0x00000000        0x0 build/roomgen.o
+ .bss           0x00000000        0x0 build/roomgen.o
+ .text.roomgen_preview
+                0x00000000      0x404 build/roomgen.o
+ .comment       0x00000000       0x27 build/roomgen.o
+ .ARM.attributes
+                0x00000000       0x2a build/roomgen.o
+ .text          0x00000000        0x0 build/save.o
+ .data          0x00000000        0x0 build/save.o
+ .bss           0x00000000        0x0 build/save.o
+ .text.save_erase
+                0x00000000       0x44 build/save.o
+ .comment       0x00000000       0x27 build/save.o
+ .ARM.attributes
+                0x00000000       0x2a build/save.o
+ .text          0x00000000        0x0 build/sound.o
+ .data          0x00000000        0x0 build/sound.o
+ .bss           0x00000000        0x0 build/sound.o
+ .comment       0x00000000       0x27 build/sound.o
+ .ARM.attributes
+                0x00000000       0x2a build/sound.o
+ .text          0x00000000        0x0 build/text.o
+ .data          0x00000000        0x0 build/text.o
+ .bss           0x00000000        0x0 build/text.o
+ .text.bg0_put  0x00000000       0x2c build/text.o
+ .text.bg0_fill
+                0x00000000       0x74 build/text.o
+ .text.bg0_pool_reset
+                0x00000000       0x14 build/text.o
+ .text.bg0_show
+                0x00000000       0x44 build/text.o
+ .text.face_load
+                0x00000000       0x58 build/text.o
+ .text.face_draw
+                0x00000000       0x24 build/text.o
+ .comment       0x00000000       0x27 build/text.o
+ .ARM.attributes
+                0x00000000       0x2a build/text.o
+ .text          0x00000000        0x0 build/ui.o
+ .data          0x00000000        0x0 build/ui.o
+ .bss           0x00000000        0x0 build/ui.o
+ .text.ui_put   0x00000000       0x18 build/ui.o
+ .text.ui_plate_px
+                0x00000000       0x9c build/ui.o
+ .text.ui_backdrop_clear
+                0x00000000       0x28 build/ui.o
+ .comment       0x00000000       0x27 build/ui.o
+ .ARM.attributes
+                0x00000000       0x2a build/ui.o
+ .text          0x00000000        0x0 build/util.o
+ .data          0x00000000        0x0 build/util.o
+ .bss           0x00000000        0x0 build/util.o
+ .comment       0x00000000       0x27 build/util.o
+ .ARM.attributes
+                0x00000000       0x2a build/util.o
+ .text          0x00000000        0x0 build/video.o
+ .data          0x00000000        0x0 build/video.o
+ .bss           0x00000000        0x0 build/video.o
+ .text.oam_flush
+                0x00000000       0x2c build/video.o
+ .comment       0x00000000       0x27 build/video.o
+ .ARM.attributes
+                0x00000000       0x2a build/video.o
+ .text          0x00000000        0x0 build/vwf.o
+ .data          0x00000000        0x0 build/vwf.o
+ .bss           0x00000000        0x0 build/vwf.o
+ .comment       0x00000000       0x27 build/vwf.o
+ .ARM.attributes
+                0x00000000       0x2a build/vwf.o
+ .text          0x00000000        0x0 build/world.o
+ .data          0x00000000        0x0 build/world.o
+ .bss           0x00000000        0x0 build/world.o
+ .rodata.gate_name.str1.4
+                0x00000000        0x8 build/world.o
+ .text.gate_name
+                0x00000000       0x1c build/world.o
+ .rodata.str1.4
+                0x00000000       0x3c build/world.o
+ .rodata.CSWTCH.84
+                0x00000000       0x14 build/world.o
+ .comment       0x00000000       0x27 build/world.o
+ .ARM.attributes
+                0x00000000       0x2a build/world.o
+ .text          0x00000000        0x0 build/crt0.o
+ .data          0x00000000        0x0 build/crt0.o
+ .bss           0x00000000        0x0 build/crt0.o
+ .ARM.attributes
+                0x00000000       0x1a build/crt0.o
+ .text          0x00000000        0x0 build/assets.o
+ .data          0x00000000        0x0 build/assets.o
+ .bss           0x00000000        0x0 build/assets.o
+ .rodata.ui_tiles
+                0x00000000      0x660 build/assets.o
+ .rodata.face_frame_pal
+                0x00000000        0x6 build/assets.o
+ .rodata.arrow_frame_pal
+                0x00000000        0x3 build/assets.o
+ .rodata.npc_frame_pal
+                0x00000000        0x7 build/assets.o
+ .rodata.sword_frame_pal
+                0x00000000        0x3 build/assets.o
+ .rodata.bloom_sword_hit
+                0x00000000       0x50 build/assets.o
+ .rodata.bloom_sword_origin
+                0x00000000        0x8 build/assets.o
+ .rodata.forest_v2_fringe_alias
+                0x00000000       0x40 build/assets.o
+ .rodata.forest_v2_low_fringe
+                0x00000000      0x855 build/assets.o
+ .rodata.forest_v2_visual_parent
+                0x00000000     0x10aa build/assets.o
+ .comment       0x00000000       0x27 build/assets.o
+ .ARM.attributes
+                0x00000000       0x2a build/assets.o
+ .data          0x00000000        0x0 /workspace/setup/sysroot/usr/bin/../lib/gcc/arm-none-eabi/14.2.1/thumb/nofp/libgcc.a(_udivsi3.o)
+ .bss           0x00000000        0x0 /workspace/setup/sysroot/usr/bin/../lib/gcc/arm-none-eabi/14.2.1/thumb/nofp/libgcc.a(_udivsi3.o)
+ .ARM.attributes
+                0x00000000       0x1c /workspace/setup/sysroot/usr/bin/../lib/gcc/arm-none-eabi/14.2.1/thumb/nofp/libgcc.a(_udivsi3.o)
+ .data          0x00000000        0x0 /workspace/setup/sysroot/usr/bin/../lib/gcc/arm-none-eabi/14.2.1/thumb/nofp/libgcc.a(_divsi3.o)
+ .bss           0x00000000        0x0 /workspace/setup/sysroot/usr/bin/../lib/gcc/arm-none-eabi/14.2.1/thumb/nofp/libgcc.a(_divsi3.o)
+ .ARM.attributes
+                0x00000000       0x1c /workspace/setup/sysroot/usr/bin/../lib/gcc/arm-none-eabi/14.2.1/thumb/nofp/libgcc.a(_divsi3.o)
+ .data          0x00000000        0x0 /workspace/setup/sysroot/usr/bin/../lib/gcc/arm-none-eabi/14.2.1/thumb/nofp/libgcc.a(_dvmd_tls.o)
+ .bss           0x00000000        0x0 /workspace/setup/sysroot/usr/bin/../lib/gcc/arm-none-eabi/14.2.1/thumb/nofp/libgcc.a(_dvmd_tls.o)
+ .ARM.attributes
+                0x00000000       0x1c /workspace/setup/sysroot/usr/bin/../lib/gcc/arm-none-eabi/14.2.1/thumb/nofp/libgcc.a(_dvmd_tls.o)
+ .data          0x00000000        0x0 /workspace/setup/sysroot/usr/bin/../lib/gcc/arm-none-eabi/14.2.1/thumb/nofp/libgcc.a(_muldi3.o)
+ .bss           0x00000000        0x0 /workspace/setup/sysroot/usr/bin/../lib/gcc/arm-none-eabi/14.2.1/thumb/nofp/libgcc.a(_muldi3.o)
+ .comment       0x00000000       0x27 /workspace/setup/sysroot/usr/bin/../lib/gcc/arm-none-eabi/14.2.1/thumb/nofp/libgcc.a(_muldi3.o)
+ .ARM.attributes
+                0x00000000       0x2a /workspace/setup/sysroot/usr/bin/../lib/gcc/arm-none-eabi/14.2.1/thumb/nofp/libgcc.a(_muldi3.o)
+
+Memory Configuration
+
+Name             Origin             Length             Attributes
+rom              0x08000000         0x02000000         xr
+iwram            0x03000000         0x00007f00         xrw
+ewram            0x02000000         0x00040000         rw
+*default*        0x00000000         0xffffffff
+
+Linker script and memory map
+
+
+.text           0x08000000    0x1f3c8
+ *(.text.startup)
+ .text.startup  0x08000000      0x198 build/crt0.o
+                0x08000000                _start
+ *(.text .text.* .gnu.linkonce.t.*)
+ .text.actors_clear
+                0x08000198       0x18 build/actor.o
+                0x08000198                actors_clear
+ .text.actor_new
+                0x080001b0       0x78 build/actor.o
+                0x080001b0                actor_new
+ .text.actor_free
+                0x08000228        0x8 build/actor.o
+                0x08000228                actor_free
+ .text.actor_find
+                0x08000230       0x34 build/actor.o
+                0x08000230                actor_find
+ .text.dir_to_facing
+                0x08000264        0x8 build/actor.o
+                0x08000264                dir_to_facing
+ .text.facing_to_dir
+                0x0800026c        0x4 build/actor.o
+                0x0800026c                facing_to_dir
+ .text.actor_feet_box_solid
+                0x08000270       0x48 build/actor.o
+                0x08000270                actor_feet_box_solid
+ .text.actor_move
+                0x080002b8      0x2c8 build/actor.o
+                0x080002b8                actor_move
+ .text.actor_move_free
+                0x08000580       0x40 build/actor.o
+                0x08000580                actor_move_free
+ .text.actor_gravity
+                0x080005c0       0x2c build/actor.o
+                0x080005c0                actor_gravity
+ .text.actors_overlap
+                0x080005ec       0xf0 build/actor.o
+                0x080005ec                actors_overlap
+ .text.actor_box_overlap
+                0x080006dc       0x68 build/actor.o
+                0x080006dc                actor_box_overlap
+ .text.actor_dir_to
+                0x08000744       0x9c build/actor.o
+                0x08000744                actor_dir_to
+ .text.actor_dist2
+                0x080007e0       0x28 build/actor.o
+                0x080007e0                actor_dist2
+ .text.sprites_reset
+                0x08000808       0x3c build/actor.o
+                0x08000808                sprites_reset
+ .text.sprite_load_frame
+                0x08000844       0xd8 build/actor.o
+                0x08000844                sprite_load_frame
+ .text.sprite_alloc
+                0x0800091c       0x2c build/actor.o
+                0x0800091c                sprite_alloc
+ .text.sprite_load_sheet
+                0x08000948       0x8c build/actor.o
+                0x08000948                sprite_load_sheet
+ .text.actor_set_sheet
+                0x080009d4       0x24 build/actor.o
+                0x080009d4                actor_set_sheet
+ .text.draw_sprite
+                0x080009f8       0xc8 build/actor.o
+                0x080009f8                draw_sprite
+ .text.actor_visual_size
+                0x08000ac0       0x44 build/actor.o
+                0x08000ac0                actor_visual_size
+ .text.actor_draw
+                0x08000b04       0xcc build/actor.o
+                0x08000b04                actor_draw
+ .text.vram_queue_visibility
+                0x08000bd0       0x1c build/actor.o
+                0x08000bd0                vram_queue_visibility
+ .text.vram_queue
+                0x08000bec       0x2c build/actor.o
+                0x08000bec                vram_queue
+ .text.vram_flush_queue
+                0x08000c18       0xa4 build/actor.o
+                0x08000c18                vram_flush_queue
+ .text.surface  0x08000cbc       0xa4 build/ambient.o
+ .text.ambient_room_reset
+                0x08000d60      0x200 build/ambient.o
+                0x08000d60                ambient_room_reset
+ .text.ambient_draw
+                0x08000f60      0x298 build/ambient.o
+                0x08000f60                ambient_draw
+ .text.appearance_save
+                0x080011f8       0x8c build/appearance.o
+                0x080011f8                appearance_save
+ .text.appearance_apply
+                0x08001284       0x60 build/appearance.o
+                0x08001284                appearance_apply
+ .text.appearance_init
+                0x080012e4       0xac build/appearance.o
+                0x080012e4                appearance_init
+ .text.appearance_set_style
+                0x08001390       0x28 build/appearance.o
+                0x08001390                appearance_set_style
+ .text.appearance_set_palette
+                0x080013b8       0x30 build/appearance.o
+                0x080013b8                appearance_set_palette
+ .text.appearance_style
+                0x080013e8        0xc build/appearance.o
+                0x080013e8                appearance_style
+ .text.appearance_palette
+                0x080013f4        0xc build/appearance.o
+                0x080013f4                appearance_palette
+ .text.ui_current_tiles
+                0x08001400       0x1c build/appearance.o
+                0x08001400                ui_current_tiles
+ .text.ui_current_marks
+                0x0800141c       0x18 build/appearance.o
+                0x0800141c                ui_current_marks
+ .text.clamp_in_room
+                0x08001434       0xcc build/boss.o
+ .text.boss_spawn
+                0x08001500       0x78 build/boss.o
+                0x08001500                boss_spawn
+ .text.boss_draw
+                0x08001578       0x58 build/boss.o
+                0x08001578                boss_draw
+ .text.boss_presentation_frame
+                0x080015d0       0x54 build/boss.o
+                0x080015d0                boss_presentation_frame
+ .text.boss_defeated
+                0x08001624       0x2c build/boss.o
+                0x08001624                boss_defeated
+ .text.boss_died
+                0x08001650       0xb8 build/boss.o
+                0x08001650                boss_died
+ .text.boss_update
+                0x08001708      0x324 build/boss.o
+                0x08001708                boss_update
+ .text.enemy_draw_body
+                0x08001a2c       0xf4 build/enemy.o
+ .text.knight_draw_sword
+                0x08001b20      0x150 build/enemy.o
+ .text.enemy_load_sheets_for_theme
+                0x08001c70       0x18 build/enemy.o
+                0x08001c70                enemy_load_sheets_for_theme
+ .text.enemy_pick_type
+                0x08001c88       0xac build/enemy.o
+                0x08001c88                enemy_pick_type
+ .text.enemy_spawn
+                0x08001d34       0xe0 build/enemy.o
+                0x08001d34                enemy_spawn
+ .text.enemies_alive
+                0x08001e14       0x2c build/enemy.o
+                0x08001e14                enemies_alive
+ .text.enemy_kill
+                0x08001e40       0x58 build/enemy.o
+                0x08001e40                enemy_kill
+ .text.enemy_hurt
+                0x08001e98       0x50 build/enemy.o
+                0x08001e98                enemy_hurt
+ .text.enemies_update
+                0x08001ee8      0xa90 build/enemy.o
+                0x08001ee8                enemies_update
+ .text.enemies_draw
+                0x08002978       0x6c build/enemy.o
+                0x08002978                enemies_draw
+ .text.heap_put
+                0x080029e4       0xc4 build/forest_paths.o
+ .text.anchor   0x08002aa8      0x11c build/forest_paths.o
+ .text.forest_paths_refine
+                0x08002bc4      0x818 build/forest_paths.o
+                0x08002bc4                forest_paths_refine
+ .text.plane_ink
+                0x080033dc       0xbc build/forest_trees.o
+ .text.forest_trees_legacy
+                0x08003498       0x6c build/forest_trees.o
+                0x08003498                forest_trees_legacy
+ .text.upper_clear
+                0x08003504       0x90 build/forest_trees.o
+ .text.forest_trees_reset
+                0x08003594       0x30 build/forest_trees.o
+                0x08003594                forest_trees_reset
+ .text.forest_trees_active
+                0x080035c4       0x1c build/forest_trees.o
+                0x080035c4                forest_trees_active
+ .text.forest_trees_plan
+                0x080035e0      0x580 build/forest_trees.o
+                0x080035e0                forest_trees_plan
+ .text.forest_trees_apply_cell
+                0x08003b60      0x104 build/forest_trees.o
+                0x08003b60                forest_trees_apply_cell
+ .text.forest_trees_render
+                0x08003c64       0x88 build/forest_trees.o
+                0x08003c64                forest_trees_render
+ .text.forest_trees_overlay_px
+                0x08003cec       0x14 build/forest_trees.o
+                0x08003cec                forest_trees_overlay_px
+ .text.forest_trees_base_px
+                0x08003d00       0x14 build/forest_trees.o
+                0x08003d00                forest_trees_base_px
+ .text.forest_trees_occludes_body
+                0x08003d14      0x17c build/forest_trees.o
+                0x08003d14                forest_trees_occludes_body
+ .text.forest_trees_priority
+                0x08003e90      0x2c4 build/forest_trees.o
+                0x08003e90                forest_trees_priority
+ .text.forest_trees_video
+                0x08004154       0xb8 build/forest_trees.o
+                0x08004154                forest_trees_video
+ .text.forest_trees_scroll
+                0x0800420c       0x3c build/forest_trees.o
+                0x0800420c                forest_trees_scroll
+ .text.options_draw
+                0x08004248      0x27c build/game.o
+ .text.load_sewer
+                0x080044c4      0x158 build/game.o
+ .text.draw_world
+                0x0800461c       0xc0 build/game.o
+ .text.start_run
+                0x080046dc       0x88 build/game.o
+ .text.title_show
+                0x08004764      0x21c build/game.o
+ .text.game_return_to_hub
+                0x08004980       0x48 build/game.o
+                0x08004980                game_return_to_hub
+ .text.game_give_key_item
+                0x080049c8       0x84 build/game.o
+                0x080049c8                game_give_key_item
+ .text.game_win
+                0x08004a4c       0x30 build/game.o
+                0x08004a4c                game_win
+ .text.game_init
+                0x08004a7c       0x14 build/game.o
+                0x08004a7c                game_init
+ .text.game_update
+                0x08004a90     0x1358 build/game.o
+                0x08004a90                game_update
+ .text.scan_locks
+                0x08005de8       0x88 build/interactive.o
+ .text.draw_landmark
+                0x08005e70       0xf0 build/interactive.o
+ .text.interactive_landmark_tile
+                0x08005f60       0x80 build/interactive.o
+                0x08005f60                interactive_landmark_tile
+ .text.interactive_chest_tile
+                0x08005fe0       0x10 build/interactive.o
+                0x08005fe0                interactive_chest_tile
+ .text.interactive_chest_overlay
+                0x08005ff0       0x14 build/interactive.o
+                0x08005ff0                interactive_chest_overlay
+ .text.interactive_mouth_tile
+                0x08006004       0x14 build/interactive.o
+                0x08006004                interactive_mouth_tile
+ .text.interactive_chest_ready
+                0x08006018       0x10 build/interactive.o
+                0x08006018                interactive_chest_ready
+ .text.interactive_entry_ready
+                0x08006028       0x10 build/interactive.o
+                0x08006028                interactive_entry_ready
+ .text.interactive_chest_tier
+                0x08006038       0x64 build/interactive.o
+                0x08006038                interactive_chest_tier
+ .text.interactive_cell_changed
+                0x0800609c       0x60 build/interactive.o
+                0x0800609c                interactive_cell_changed
+ .text.interactive_room_reset
+                0x080060fc      0x208 build/interactive.o
+                0x080060fc                interactive_room_reset
+ .text.interactive_draw
+                0x08006304      0x334 build/interactive.o
+                0x08006304                interactive_draw
+ .text.items_update
+                0x08006638      0x24c build/items.o
+                0x08006638                items_update
+ .text.startup.main
+                0x08006884       0x40 build/main.o
+                0x08006884                main
+ .text.ms_input_irq
+                0x080068c4       0x64 build/menu.o
+ .text.ms_glyph
+                0x08006928      0x13c build/menu.o
+ .text.ms_fill  0x08006a64       0xec build/menu.o
+ .text.ms_frame
+                0x08006b50      0x1a8 build/menu.o
+ .text.ms_label_width
+                0x08006cf8       0xd0 build/menu.o
+ .text.ms_map_bank
+                0x08006dc8       0xd0 build/menu.o
+ .text.gate_mark
+                0x08006e98       0x4c build/menu.o
+ .text.ms_events
+                0x08006ee4      0x184 build/menu.o
+ .text.ms_icon  0x08007068       0xc0 build/menu.o
+ .text.ms_wrap.constprop.0
+                0x08007128      0x18c build/menu.o
+ .text.gather   0x080072b4       0x4c build/menu.o
+ .text.ms_line  0x08007300       0xe4 build/menu.o
+ .text.ms_box   0x080073e4       0x60 build/menu.o
+ .text.ms_located_marker
+                0x08007444      0x1a0 build/menu.o
+ .text.ms_marker.part.0
+                0x080075e4      0x204 build/menu.o
+ .text.tile_desc
+                0x080077e8       0xd0 build/menu.o
+ .text.fetch_mask
+                0x080078b8      0x22c build/menu.o
+ .text.ms_textfit.part.0
+                0x08007ae4       0xc4 build/menu.o
+ .text.ms_map_info
+                0x08007ba8      0x1e8 build/menu.o
+ .text.ms_map   0x08007d90      0xea0 build/menu.o
+ .text.ms_draw  0x08008c30     0x10c4 build/menu.o
+ .text.menu_open
+                0x08009cf4      0x32c build/menu.o
+                0x08009cf4                menu_open
+ .text.menu_update
+                0x0800a020      0x800 build/menu.o
+                0x0800a020                menu_update
+ .text.menu_layout_a
+                0x0800a820       0x1c build/menu_layouts_a.o
+                0x0800a820                menu_layout_a
+ .text.menu_layout_b
+                0x0800a83c       0x18 build/menu_layouts_b.o
+                0x0800a83c                menu_layout_b
+ .text.menu_study_layout
+                0x0800a854       0x18 build/menu_studies.o
+                0x0800a854                menu_study_layout
+ .text.is_open_floor
+                0x0800a86c       0x64 build/myst.o
+ .text.set_door
+                0x0800a8d0       0x5c build/myst.o
+ .text.spawn_one
+                0x0800a92c       0xcc build/myst.o
+ .text.spawn_wave
+                0x0800a9f8       0x90 build/myst.o
+ .text.finish   0x0800aa88       0xa8 build/myst.o
+ .text.myst_done
+                0x0800ab30       0x18 build/myst.o
+                0x0800ab30                myst_done
+ .text.myst_ground
+                0x0800ab48       0x74 build/myst.o
+                0x0800ab48                myst_ground
+ .text.place_chest
+                0x0800abbc       0x50 build/myst.o
+ .text.myst_build
+                0x0800ac0c      0x7a0 build/myst.o
+                0x0800ac0c                myst_build
+ .text.myst_start_pos
+                0x0800b3ac       0x24 build/myst.o
+                0x0800b3ac                myst_start_pos
+ .text.myst_enter
+                0x0800b3d0       0x94 build/myst.o
+                0x0800b3d0                myst_enter
+ .text.myst_update
+                0x0800b464      0x2cc build/myst.o
+                0x0800b464                myst_update
+ .text.myst_chest_opened
+                0x0800b730       0xfc build/myst.o
+                0x0800b730                myst_chest_opened
+ .text.myst_tile_cleared
+                0x0800b82c      0x108 build/myst.o
+                0x0800b82c                myst_tile_cleared
+ .text.myst_stranger_trade
+                0x0800b934       0x5c build/myst.o
+                0x0800b934                myst_stranger_trade
+ .text.npcs_draw_pass
+                0x0800b990      0x1dc build/npc.o
+ .text.npc_spawn
+                0x0800bb6c      0x1c0 build/npc.o
+                0x0800bb6c                npc_spawn
+ .text.npc_room_reset
+                0x0800bd2c       0x30 build/npc.o
+                0x0800bd2c                npc_room_reset
+ .text.npcs_update
+                0x0800bd5c      0x454 build/npc.o
+                0x0800bd5c                npcs_update
+ .text.npcs_draw_front
+                0x0800c1b0       0x94 build/npc.o
+                0x0800c1b0                npcs_draw_front
+ .text.npcs_draw
+                0x0800c244       0x10 build/npc.o
+                0x0800c244                npcs_draw
+ .text.npc_try_talk
+                0x0800c254      0x5cc build/npc.o
+                0x0800c254                npc_try_talk
+ .text.npc_dialogue_active
+                0x0800c820       0x10 build/npc.o
+                0x0800c820                npc_dialogue_active
+ .text.npc_dialogue_update
+                0x0800c830      0x1ec build/npc.o
+                0x0800c830                npc_dialogue_update
+ .text.ensure_sheets
+                0x0800ca1c       0x90 build/objects.o
+ .text.player_release_overlap.part.0
+                0x0800caac       0x68 build/objects.o
+ .text.icon32_frame_tile.part.0
+                0x0800cb14      0x118 build/objects.o
+ .text.icon32_menu_begin
+                0x0800cc2c       0x4c build/objects.o
+                0x0800cc2c                icon32_menu_begin
+ .text.icon32_menu_end
+                0x0800cc78       0x54 build/objects.o
+                0x0800cc78                icon32_menu_end
+ .text.icon32_frame_tile
+                0x0800cccc       0x38 build/objects.o
+                0x0800cccc                icon32_frame_tile
+ .text.icon32_frame_palette
+                0x0800cd04       0x64 build/objects.o
+                0x0800cd04                icon32_frame_palette
+ .text.objects_room_reset
+                0x0800cd68       0x54 build/objects.o
+                0x0800cd68                objects_room_reset
+ .text.lift_sheet_tile
+                0x0800cdbc       0x14 build/objects.o
+                0x0800cdbc                lift_sheet_tile
+ .text.items_sheet_tile
+                0x0800cdd0       0x14 build/objects.o
+                0x0800cdd0                items_sheet_tile
+ .text.proj_spawn
+                0x0800cde4       0xe0 build/objects.o
+                0x0800cde4                proj_spawn
+ .text.pickup_spawn
+                0x0800cec4       0x68 build/objects.o
+                0x0800cec4                pickup_spawn
+ .text.drop_roll
+                0x0800cf2c       0x80 build/objects.o
+                0x0800cf2c                drop_roll
+ .text.fx_spawn
+                0x0800cfac       0xe8 build/objects.o
+                0x0800cfac                fx_spawn
+ .text.thrown_break
+                0x0800d094       0x60 build/objects.o
+ .text.bomb_place
+                0x0800d0f4       0x94 build/objects.o
+                0x0800d0f4                bomb_place
+ .text.bombs_live
+                0x0800d188       0x2c build/objects.o
+                0x0800d188                bombs_live
+ .text.thrown_spawn
+                0x0800d1b4       0x8c build/objects.o
+                0x0800d1b4                thrown_spawn
+ .text.objects_update
+                0x0800d240      0x7e4 build/objects.o
+                0x0800d240                objects_update
+ .text.objects_draw_hand
+                0x0800da24      0x1fc build/objects.o
+                0x0800da24                objects_draw_hand
+ .text.objects_draw
+                0x0800dc20      0x1bc build/objects.o
+                0x0800dc20                objects_draw
+ .text.input_dir
+                0x0800dddc       0x4c build/player.o
+ .text.facing_tile
+                0x0800de28       0x40 build/player.o
+ .text.action_frame
+                0x0800de68       0x90 build/player.o
+ .text.prepare_canopy_visibility
+                0x0800def8      0x2b8 build/player.o
+ .text.draw_canopy_visibility.part.0
+                0x0800e1b0       0x7c build/player.o
+ .text.draw_load
+                0x0800e22c       0xbc build/player.o
+ .text.player_new_game
+                0x0800e2e8       0x3c build/player.o
+                0x0800e2e8                player_new_game
+ .text.player_equip_keys
+                0x0800e324       0x28 build/player.o
+                0x0800e324                player_equip_keys
+ .text.player_has_item
+                0x0800e34c       0x64 build/player.o
+                0x0800e34c                player_has_item
+ .text.player_equip_set
+                0x0800e3b0       0x44 build/player.o
+                0x0800e3b0                player_equip_set
+ .text.player_auto_equip
+                0x0800e3f4       0x2c build/player.o
+                0x0800e3f4                player_auto_equip
+ .text.player_init
+                0x0800e420      0x144 build/player.o
+                0x0800e420                player_init
+ .text.player_shield_icon
+                0x0800e564       0x14 build/player.o
+                0x0800e564                player_shield_icon
+ .text.player_shield_frame
+                0x0800e578       0x44 build/player.o
+                0x0800e578                player_shield_frame
+ .text.draw_action.part.0
+                0x0800e5bc      0x1d4 build/player.o
+ .text.player_is_vulnerable
+                0x0800e790       0x40 build/player.o
+                0x0800e790                player_is_vulnerable
+ .text.player_hurt
+                0x0800e7d0       0xe4 build/player.o
+                0x0800e7d0                player_hurt
+ .text.check_floor
+                0x0800e8b4      0x160 build/player.o
+ .text.player_heart_piece
+                0x0800ea14       0x28 build/player.o
+                0x0800ea14                player_heart_piece
+ .text.player_heal
+                0x0800ea3c       0x28 build/player.o
+                0x0800ea3c                player_heal
+ .text.player_item_get
+                0x0800ea64       0xb8 build/player.o
+                0x0800ea64                player_item_get
+ .text.player_sword_box
+                0x0800eb1c       0x8c build/player.o
+                0x0800eb1c                player_sword_box
+ .text.player_item_pose
+                0x0800eba8       0x50 build/player.o
+                0x0800eba8                player_item_pose
+ .text.player_lamp_box
+                0x0800ebf8       0x80 build/player.o
+                0x0800ebf8                player_lamp_box
+ .text.player_swallow
+                0x0800ec78       0x48 build/player.o
+                0x0800ec78                player_swallow
+ .text.player_drop_in
+                0x0800ecc0       0x2c build/player.o
+                0x0800ecc0                player_drop_in
+ .text.player_shoot
+                0x0800ecec       0x78 build/player.o
+                0x0800ecec                player_shoot
+ .text.player_update
+                0x0800ed64      0x85c build/player.o
+                0x0800ed64                player_update
+ .text.player_cloak_jump
+                0x0800f5c0       0x5c build/player.o
+                0x0800f5c0                player_cloak_jump
+ .text.player_recoil_priority
+                0x0800f61c        0x4 build/player.o
+                0x0800f61c                player_recoil_priority
+ .text.player_draw
+                0x0800f620      0x7f8 build/player.o
+                0x0800f620                player_draw
+ .text.open_gate_tiles
+                0x0800fe18       0x40 build/react.o
+ .text.ground_under
+                0x0800fe58       0x94 build/react.o
+ .text.tile_gate_side
+                0x0800feec       0x5c build/react.o
+                0x0800feec                tile_gate_side
+ .text.room_crack_open
+                0x0800ff48       0x9c build/react.o
+                0x0800ff48                room_crack_open
+ .text.room_web_burn
+                0x0800ffe4       0xb0 build/react.o
+                0x0800ffe4                room_web_burn
+ .text.room_door_unlock
+                0x08010094       0x44 build/react.o
+                0x08010094                room_door_unlock
+ .text.room_thorn_cut
+                0x080100d8       0xa0 build/react.o
+                0x080100d8                room_thorn_cut
+ .text.room_lift
+                0x08010178       0x80 build/react.o
+                0x08010178                room_lift
+ .text.room_break_lift
+                0x080101f8       0x90 build/react.o
+                0x080101f8                room_break_lift
+ .text.react_cut_box
+                0x08010288       0x6c build/react.o
+                0x08010288                react_cut_box
+ .text.react_burn_box
+                0x080102f4       0x84 build/react.o
+                0x080102f4                react_burn_box
+ .text.room_torches_unlit
+                0x08010378       0x44 build/react.o
+                0x08010378                room_torches_unlit
+ .text.solid_cell_update
+                0x080103bc       0x88 build/room.o
+ .text.forest_local_sick
+                0x08010444       0x88 build/room.o
+ .text.map_write
+                0x080104cc       0xf0 build/room.o
+ .text.canopy_overlay_cell
+                0x080105bc       0x7c build/room.o
+ .text.barrier_floor
+                0x08010638       0xb0 build/room.o
+ .text.canopy_floor
+                0x080106e8       0xc0 build/room.o
+ .text.forest_canopy_at
+                0x080107a8       0x38 build/room.o
+ .text.forest_water_at
+                0x080107e0       0x5c build/room.o
+ .text.forest_path_at
+                0x0801083c       0x84 build/room.o
+ .text.forest_picture.part.0
+                0x080108c0      0x378 build/room.o
+ .text.render_cell
+                0x08010c38      0x378 build/room.o
+ .text.tiles_load
+                0x08010fb0       0x6c build/room.o
+                0x08010fb0                tiles_load
+ .text.tiles_init
+                0x0801101c       0x4c build/room.o
+                0x0801101c                tiles_init
+ .text.tiles_animate
+                0x08011068      0x114 build/room.o
+                0x08011068                tiles_animate
+ .text.room_clear
+                0x0801117c       0x3c build/room.o
+                0x0801117c                room_clear
+ .text.room_set
+                0x080111b8       0x48 build/room.o
+                0x080111b8                room_set
+ .text.room_set_overlay
+                0x08011200       0x2c build/room.o
+                0x08011200                room_set_overlay
+ .text.room_get
+                0x0801122c       0x24 build/room.o
+                0x0801122c                room_get
+ .text.room_get_overlay
+                0x08011250       0x30 build/room.o
+                0x08011250                room_get_overlay
+ .text.room_type
+                0x08011280       0x38 build/room.o
+                0x08011280                room_type
+ .text.room_type_px
+                0x080112b8       0x44 build/room.o
+                0x080112b8                room_type_px
+ .text.room_canopy_scene_reserved
+                0x080112fc       0xf8 build/room.o
+                0x080112fc                room_canopy_scene_reserved
+ .text.room_canopy_projection_clear
+                0x080113f4      0x170 build/room.o
+                0x080113f4                room_canopy_projection_clear
+ .text.room_canopy_overlay_px
+                0x08011564       0x90 build/room.o
+                0x08011564                room_canopy_overlay_px
+ .text.room_canopy_overlaps_body
+                0x080115f4       0xc4 build/room.o
+                0x080115f4                room_canopy_overlaps_body
+ .text.room_prop_priority
+                0x080116b8      0x438 build/room.o
+                0x080116b8                room_prop_priority
+ .text.room_render
+                0x08011af0       0xec build/room.o
+                0x08011af0                room_render
+ .text.room_change
+                0x08011bdc      0x1c8 build/room.o
+                0x08011bdc                room_change
+ .text.room_change_overlay
+                0x08011da4       0x54 build/room.o
+                0x08011da4                room_change_overlay
+ .text.room_solid_px
+                0x08011df8       0x38 build/room.o
+                0x08011df8                room_solid_px
+ .text.room_box_solid
+                0x08011e30       0x60 build/room.o
+                0x08011e30                room_box_solid
+ .text.room_load_def
+                0x08011e90       0xa0 build/room.o
+                0x08011e90                room_load_def
+ .text.room_px_w
+                0x08011f30        0xc build/room.o
+                0x08011f30                room_px_w
+ .text.room_px_h
+                0x08011f3c        0xc build/room.o
+                0x08011f3c                room_px_h
+ .text.camera_update
+                0x08011f48       0xd4 build/room.o
+                0x08011f48                camera_update
+ .text.crect_free
+                0x0801201c       0x5c build/roomgen.o
+ .text.shape_clearings
+                0x08012078      0x210 build/roomgen.o
+ .text.bridge_landings
+                0x08012288      0x1e8 build/roomgen.o
+ .text.cohesion_join_crossings
+                0x08012470      0x5a0 build/roomgen.o
+ .text.grass_edge
+                0x08012a10      0x174 build/roomgen.o
+ .text.required_reserved
+                0x08012b84      0x118 build/roomgen.o
+ .text.arch_event_clear
+                0x08012c9c      0x118 build/roomgen.o
+ .text.trail_story
+                0x08012db4      0x158 build/roomgen.o
+ .text.cohesion_brook
+                0x08012f0c      0x3c4 build/roomgen.o
+ .text.cjoin    0x080132d0       0x88 build/roomgen.o
+ .text.add_waterfalls
+                0x08013358      0x154 build/roomgen.o
+ .text.cohesion_measure
+                0x080134ac      0x1f0 build/roomgen.o
+ .text.mouth_frame_space
+                0x0801369c       0x7c build/roomgen.o
+ .text.lay_rot  0x08013718      0x4c0 build/roomgen.o
+ .text.carve    0x08013bd8       0x24 build/roomgen.o
+ .text.cohesion_wet
+                0x08013bfc       0x24 build/roomgen.o
+ .text.cohesion_route_near.constprop.0
+                0x08013c20       0x7c build/roomgen.o
+ .text.near_door
+                0x08013c9c       0xa4 build/roomgen.o
+ .text.cpath    0x08013d40      0x158 build/roomgen.o
+ .text.cohesion_landform
+                0x08013e98      0x41c build/roomgen.o
+ .text.expand   0x080142b4      0xb44 build/roomgen.o
+ .text.passable
+                0x08014df8       0x28 build/roomgen.o
+ .text.flood_reach
+                0x08014e20       0xd8 build/roomgen.o
+ .text.open_fronted_clearing
+                0x08014ef8      0x3ac build/roomgen.o
+ .text.quest_flood
+                0x080152a4       0x44 build/roomgen.o
+ .text.carve_to_center
+                0x080152e8      0x144 build/roomgen.o
+ .text.connect_mouth_approach
+                0x0801542c      0x254 build/roomgen.o
+ .text.is_floor
+                0x08015680       0x3c build/roomgen.o
+ .text.simple_spot
+                0x080156bc       0xcc build/roomgen.o
+ .text.place_tree_kind
+                0x08015788       0xf0 build/roomgen.o
+ .text.find_spot
+                0x08015878      0x114 build/roomgen.o
+ .text.ensure_spot
+                0x0801598c       0x60 build/roomgen.o
+ .text.ensure_fronted_spot
+                0x080159ec      0x128 build/roomgen.o
+ .text.quest_try_torch
+                0x08015b14      0x228 build/roomgen.o
+ .text.ensure_npc_spot.constprop.0
+                0x08015d3c       0x64 build/roomgen.o
+ .text.simple_block.constprop.0
+                0x08015da0       0xf4 build/roomgen.o
+ .text.plan     0x08015e94      0x508 build/roomgen.o
+ .text.is_plain
+                0x0801639c       0x94 build/roomgen.o
+ .text.cohesion_plain
+                0x08016430       0x74 build/roomgen.o
+ .text.cohesion_solid.isra.0
+                0x080164a4       0x3c build/roomgen.o
+ .text.dig_alcove
+                0x080164e0      0x7fc build/roomgen.o
+ .text.roomgen_build_internal
+                0x08016cdc     0x29a0 build/roomgen.o
+ .text.roomgen_gate_tiles
+                0x0801967c       0x44 build/roomgen.o
+                0x0801967c                roomgen_gate_tiles
+ .text.roomgen_door_pos
+                0x080196c0       0x30 build/roomgen.o
+                0x080196c0                roomgen_door_pos
+ .text.roomgen_blighted
+                0x080196f0       0x24 build/roomgen.o
+                0x080196f0                roomgen_blighted
+ .text.roomgen_build
+                0x08019714       0x10 build/roomgen.o
+                0x08019714                roomgen_build
+ .text.roomgen_preview_details
+                0x08019724      0x108 build/roomgen.o
+                0x08019724                roomgen_preview_details
+ .text.roomgen_preview_events
+                0x0801982c       0x10 build/roomgen.o
+                0x0801982c                roomgen_preview_events
+ .text.file_valid
+                0x0801983c       0x64 build/save.o
+ .text.save_write
+                0x080198a0       0xb4 build/save.o
+                0x080198a0                save_write
+ .text.save_exists
+                0x08019954       0x28 build/save.o
+                0x08019954                save_exists
+ .text.save_load
+                0x0801997c      0x144 build/save.o
+                0x0801997c                save_load
+ .text.sound_init
+                0x08019ac0       0x7c build/sound.o
+                0x08019ac0                sound_init
+ .text.sfx_play
+                0x08019b3c      0x308 build/sound.o
+                0x08019b3c                sfx_play
+ .text.bgm_play
+                0x08019e44       0x70 build/sound.o
+                0x08019e44                bgm_play
+ .text.bgm_stop
+                0x08019eb4       0x2c build/sound.o
+                0x08019eb4                bgm_stop
+ .text.sound_update
+                0x08019ee0      0x188 build/sound.o
+                0x08019ee0                sound_update
+ .text.vitals_line
+                0x0801a068       0xcc build/text.o
+ .text.hud_restore
+                0x0801a134       0xbc build/text.o
+ .text.minimap_pixel
+                0x0801a1f0       0x40 build/text.o
+ .text.shop_detail
+                0x0801a230       0xd8 build/text.o
+ .text.shop_row
+                0x0801a308       0xbc build/text.o
+ .text.hud_frame
+                0x0801a3c4      0x100 build/text.o
+ .text.hud_digits
+                0x0801a4c4      0x188 build/text.o
+ .text.hud_assignment
+                0x0801a64c      0x144 build/text.o
+ .text.hud_gleam
+                0x0801a790       0x50 build/text.o
+ .text.hud_icon
+                0x0801a7e0       0x3c build/text.o
+ .text.minimap_animate
+                0x0801a81c      0x1bc build/text.o
+ .text.text_init
+                0x0801a9d8      0x134 build/text.o
+                0x0801a9d8                text_init
+ .text.bg0_clear
+                0x0801ab0c       0x24 build/text.o
+                0x0801ab0c                bg0_clear
+ .text.bg0_map  0x0801ab30       0x14 build/text.o
+                0x0801ab30                bg0_map
+ .text.bg0_pool_reset_full
+                0x0801ab44       0x40 build/text.o
+                0x0801ab44                bg0_pool_reset_full
+ .text.bg0_canvas
+                0x0801ab84       0x48 build/text.o
+                0x0801ab84                bg0_canvas
+ .text.bg0_plate
+                0x0801abcc      0x130 build/text.o
+                0x0801abcc                bg0_plate
+ .text.text_flush
+                0x0801acfc       0x70 build/text.o
+                0x0801acfc                text_flush
+ .text.textbox_open_named
+                0x0801ad6c      0x218 build/text.o
+                0x0801ad6c                textbox_open_named
+ .text.textbox_open
+                0x0801af84       0x14 build/text.o
+                0x0801af84                textbox_open
+ .text.textbox_active
+                0x0801af98        0xc build/text.o
+                0x0801af98                textbox_active
+ .text.textbox_close
+                0x0801afa4       0x50 build/text.o
+                0x0801afa4                textbox_close
+ .text.textbox_draw
+                0x0801aff4       0x84 build/text.o
+                0x0801aff4                textbox_draw
+ .text.textbox_update
+                0x0801b078      0x2a8 build/text.o
+                0x0801b078                textbox_update
+ .text.shop_open
+                0x0801b320      0x48c build/text.o
+                0x0801b320                shop_open
+ .text.shop_update
+                0x0801b7ac       0xc4 build/text.o
+                0x0801b7ac                shop_update
+ .text.shop_draw
+                0x0801b870      0x118 build/text.o
+                0x0801b870                shop_draw
+ .text.shop_close
+                0x0801b988       0x38 build/text.o
+                0x0801b988                shop_close
+ .text.shop_result
+                0x0801b9c0        0xc build/text.o
+                0x0801b9c0                shop_result
+ .text.shop_active
+                0x0801b9cc        0xc build/text.o
+                0x0801b9cc                shop_active
+ .text.minimap_render
+                0x0801b9d8      0x2e8 build/text.o
+                0x0801b9d8                minimap_render
+ .text.hud_draw
+                0x0801bcc0      0x704 build/text.o
+                0x0801bcc0                hud_draw
+ .text.ui_tile  0x0801c3c4       0x2c build/ui.o
+                0x0801c3c4                ui_tile
+ .text.ui_frame
+                0x0801c3f0      0x118 build/ui.o
+                0x0801c3f0                ui_frame
+ .text.ui_plate
+                0x0801c508      0x12c build/ui.o
+                0x0801c508                ui_plate
+ .text.ui_plate_tiles
+                0x0801c634       0x14 build/ui.o
+                0x0801c634                ui_plate_tiles
+ .text.ui_backdrop_open
+                0x0801c648       0xcc build/ui.o
+                0x0801c648                ui_backdrop_open
+ .text.ui_backdrop_flush
+                0x0801c714       0x2c build/ui.o
+                0x0801c714                ui_backdrop_flush
+ .text.memcpy   0x0801c740       0x3c build/util.o
+                0x0801c740                memcpy
+ .text.memset   0x0801c77c       0x40 build/util.o
+                0x0801c77c                memset
+ .text.memcpy32
+                0x0801c7bc       0x1c build/util.o
+                0x0801c7bc                memcpy32
+ .text.memset32
+                0x0801c7d8       0x10 build/util.o
+                0x0801c7d8                memset32
+ .text.rand_next
+                0x0801c7e8       0x20 build/util.o
+                0x0801c7e8                rand_next
+ .text.rand_range
+                0x0801c808       0x38 build/util.o
+                0x0801c808                rand_range
+ .text.rng_seed
+                0x0801c840       0x34 build/util.o
+                0x0801c840                rng_seed
+ .text.rng_next
+                0x0801c874       0x14 build/util.o
+                0x0801c874                rng_next
+ .text.rng_range
+                0x0801c888       0x28 build/util.o
+                0x0801c888                rng_range
+ .text.hash32   0x0801c8b0       0x7c build/util.o
+                0x0801c8b0                hash32
+ .text.vblank_isr
+                0x0801c92c       0x34 build/video.o
+                0x0801c92c                vblank_isr
+ .text.video_init
+                0x0801c960       0xcc build/video.o
+                0x0801c960                video_init
+ .text.video_show
+                0x0801ca2c       0x1c build/video.o
+                0x0801ca2c                video_show
+ .text.input_read
+                0x0801ca48       0x38 build/video.o
+                0x0801ca48                input_read
+ .text.oam_clear
+                0x0801ca80       0x28 build/video.o
+                0x0801ca80                oam_clear
+ .text.oam_alloc
+                0x0801caa8       0x20 build/video.o
+                0x0801caa8                oam_alloc
+ .text.pal_set_bg
+                0x0801cac8       0x24 build/video.o
+                0x0801cac8                pal_set_bg
+ .text.pal_set_obj
+                0x0801caec       0x24 build/video.o
+                0x0801caec                pal_set_obj
+ .text.fade_start
+                0x0801cb10       0x24 build/video.o
+                0x0801cb10                fade_start
+ .text.fade_done
+                0x0801cb34       0x20 build/video.o
+                0x0801cb34                fade_done
+ .text.fade_set
+                0x0801cb54       0x20 build/video.o
+                0x0801cb54                fade_set
+ .text.fade_update
+                0x0801cb74       0x54 build/video.o
+                0x0801cb74                fade_update
+ .text.video_flush
+                0x0801cbc8      0x244 build/video.o
+                0x0801cbc8                video_flush
+ .text.frame_wait
+                0x0801ce0c       0x10 build/video.o
+                0x0801ce0c                frame_wait
+ .text.vwf_pool
+                0x0801ce1c       0x14 build/vwf.o
+                0x0801ce1c                vwf_pool
+ .text.vwf_canvas
+                0x0801ce30       0x50 build/vwf.o
+                0x0801ce30                vwf_canvas
+ .text.vwf_canvas_at
+                0x0801ce80       0x18 build/vwf.o
+                0x0801ce80                vwf_canvas_at
+ .text.vwf_canvas_obj
+                0x0801ce98       0x10 build/vwf.o
+                0x0801ce98                vwf_canvas_obj
+ .text.vwf_clear
+                0x0801cea8       0x30 build/vwf.o
+                0x0801cea8                vwf_clear
+ .text.vwf_kit  0x0801ced8       0xcc build/vwf.o
+                0x0801ced8                vwf_kit
+ .text.vwf_pixel
+                0x0801cfa4       0x4c build/vwf.o
+                0x0801cfa4                vwf_pixel
+ .text.vwf_kit_px
+                0x0801cff0       0xa8 build/vwf.o
+                0x0801cff0                vwf_kit_px
+ .text.vwf_advance
+                0x0801d098       0x30 build/vwf.o
+                0x0801d098                vwf_advance
+ .text.vwf_glyph
+                0x0801d0c8       0xfc build/vwf.o
+                0x0801d0c8                vwf_glyph
+ .text.vwf_ink  0x0801d1c4       0x18 build/vwf.o
+                0x0801d1c4                vwf_ink
+ .text.vwf_text
+                0x0801d1dc       0x64 build/vwf.o
+                0x0801d1dc                vwf_text
+ .text.vwf_text_fx
+                0x0801d240      0x13c build/vwf.o
+                0x0801d240                vwf_text_fx
+ .text.vwf_width
+                0x0801d37c       0x50 build/vwf.o
+                0x0801d37c                vwf_width
+ .text.vwf_fit  0x0801d3cc       0x90 build/vwf.o
+                0x0801d3cc                vwf_fit
+ .text.vwf_block
+                0x0801d45c       0xc8 build/vwf.o
+                0x0801d45c                vwf_block
+ .text.vwf_flush
+                0x0801d524       0x64 build/vwf.o
+                0x0801d524                vwf_flush
+ .text.vwf_map  0x0801d588       0x6c build/vwf.o
+                0x0801d588                vwf_map
+ .text.vwf_num  0x0801d5f4       0x94 build/vwf.o
+                0x0801d5f4                vwf_num
+ .text.milestones_fit
+                0x0801d688       0x5c build/world.o
+ .text.pass_stage
+                0x0801d6e4       0x5c build/world.o
+ .text.pick_room.constprop.0
+                0x0801d740       0xac build/world.o
+ .text.flood    0x0801d7ec      0x10c build/world.o
+ .text.cell_x   0x0801d8f8       0x10 build/world.o
+                0x0801d8f8                cell_x
+ .text.cell_y   0x0801d908       0x10 build/world.o
+                0x0801d908                cell_y
+ .text.cell_neighbor
+                0x0801d918       0x44 build/world.o
+                0x0801d918                cell_neighbor
+ .text.route_walk
+                0x0801d95c      0x180 build/world.o
+ .text.subtree_holds_key
+                0x0801dadc       0x68 build/world.o
+ .text.world_candidate
+                0x0801db44     0x10a8 build/world.o
+ .text.world_open_gate
+                0x0801ebec       0x48 build/world.o
+                0x0801ebec                world_open_gate
+ .text.world_gate_open
+                0x0801ec34       0x1c build/world.o
+                0x0801ec34                world_gate_open
+ .text.world_route_metrics
+                0x0801ec50      0x130 build/world.o
+                0x0801ec50                world_route_metrics
+ .text.world_generate_tuned
+                0x0801ed80      0x330 build/world.o
+                0x0801ed80                world_generate_tuned
+ .text.world_generate
+                0x0801f0b0       0x14 build/world.o
+                0x0801f0b0                world_generate
+ .text          0x0801f0c4      0x11c /workspace/setup/sysroot/usr/bin/../lib/gcc/arm-none-eabi/14.2.1/thumb/nofp/libgcc.a(_udivsi3.o)
+                0x0801f0c4                __udivsi3
+                0x0801f0c4                __aeabi_uidiv
+                0x0801f1c0                __aeabi_uidivmod
+ .text          0x0801f1e0      0x150 /workspace/setup/sysroot/usr/bin/../lib/gcc/arm-none-eabi/14.2.1/thumb/nofp/libgcc.a(_divsi3.o)
+                0x0801f1e0                __aeabi_idiv
+                0x0801f1e0                __divsi3
+                0x0801f310                __aeabi_idivmod
+ .text          0x0801f330        0x4 /workspace/setup/sysroot/usr/bin/../lib/gcc/arm-none-eabi/14.2.1/thumb/nofp/libgcc.a(_dvmd_tls.o)
+                0x0801f330                __aeabi_ldiv0
+                0x0801f330                __aeabi_idiv0
+ .text          0x0801f334       0x64 /workspace/setup/sysroot/usr/bin/../lib/gcc/arm-none-eabi/14.2.1/thumb/nofp/libgcc.a(_muldi3.o)
+                0x0801f334                __aeabi_lmul
+                0x0801f334                __muldi3
+ .text.__stub   0x0801f398       0x2c linker stubs
+ *(.glue_7)
+ .glue_7        0x0801f3c8        0x0 linker stubs
+ *(.glue_7t)
+ .glue_7t       0x0801f3c8        0x0 linker stubs
+ *(.v4_bx)
+ .v4_bx         0x0801f3c8        0x0 linker stubs
+                0x0801f3c8                        . = ALIGN (0x4)
+
+.vfp11_veneer   0x0801f3c8        0x0
+ .vfp11_veneer  0x0801f3c8        0x0 linker stubs
+
+.iplt           0x0801f3c8        0x0
+ .iplt          0x0801f3c8        0x0 build/actor.o
+
+.igot.plt       0x0801f3c8        0x0
+ .igot.plt      0x0801f3c8        0x0 build/actor.o
+
+.rodata         0x0801f3c8    0x7feb0
+ *(.rodata .rodata.* .gnu.linkonce.r.*)
+ .rodata.gHitboxes
+                0x0801f3c8       0x30 build/actor.o
+                0x0801f3c8                gHitboxes
+ .rodata.str1.4
+                0x0801f3f8     0x1c92 build/appearance.o
+                                 0x60 (size before relaxing)
+ *fill*         0x0802108a        0x2 
+ .rodata.gAppearancePaletteNames
+                0x0802108c        0xc build/appearance.o
+                0x0802108c                gAppearancePaletteNames
+ .rodata.gAppearanceStyleNames
+                0x08021098        0xc build/appearance.o
+                0x08021098                gAppearanceStyleNames
+ .rodata.boss_update
+                0x080210a4       0x18 build/boss.o
+ .rodata.enemies_update
+                0x080210bc       0x3c build/enemy.o
+ .rodata.charge.0
+                0x080210f8        0x3 build/enemy.o
+ *fill*         0x080210fb        0x1 
+ .rodata.poses.1
+                0x080210fc        0xc build/enemy.o
+ .rodata.hand.2
+                0x08021108        0x8 build/enemy.o
+ .rodata.walk_dur.3
+                0x08021110        0x4 build/enemy.o
+ .rodata.gEnemyDefs
+                0x08021114       0x30 build/enemy.o
+                0x08021114                gEnemyDefs
+ .rodata.step.0
+                0x08021144        0x8 build/forest_paths.o
+ .rodata.options_draw.str1.4
+                0x0802114c       0x7c build/game.o
+ .rodata.start_run.str1.4
+                0x0802114c       0x5b build/game.o
+ .rodata.title_show.str1.4
+                0x0802114c       0x15 build/game.o
+ .rodata.game_update.str1.4
+                0x0802114c      0x45c build/game.o
+ .rodata.game_update
+                0x0802114c       0x3c build/game.o
+ .rodata.nudge.4
+                0x08021188        0x4 build/game.o
+ .rodata.str1.4
+                0x0802118c      0x15a build/game.o
+ .rodata.sKeyItemText
+                0x0802118c       0x10 build/game.o
+ .rodata.items_update.str1.4
+                0x0802119c       0x94 build/items.o
+ .rodata.ms_map_info.str1.4
+                0x0802119c       0x3f build/menu.o
+ .rodata.ms_map.str1.4
+                0x0802119c        0xc build/menu.o
+ .rodata.ms_draw.str1.4
+                0x0802119c      0x1c8 build/menu.o
+ .rodata.CSWTCH.478
+                0x0802119c       0x10 build/menu.o
+ .rodata.CSWTCH.408
+                0x080211ac       0x14 build/menu.o
+ .rodata.str1.4
+                0x080211c0      0x615 build/menu.o
+ .rodata.CSWTCH.405
+                0x080211c0       0x1c build/menu.o
+ .rodata.CSWTCH.403
+                0x080211dc       0x1c build/menu.o
+ .rodata.shortname.0
+                0x080211f8       0x20 build/menu.o
+ .rodata.parts.2
+                0x08021218       0x10 build/menu.o
+ .rodata.badge.3
+                0x08021228        0xc build/menu.o
+ *fill*         0x08021234        0x4 
+ .rodata.order.4
+                0x08021238        0x9 build/menu.o
+ *fill*         0x08021241        0x3 
+ .rodata.offset.5
+                0x08021244       0x1a build/menu.o
+ *fill*         0x0802125e        0x2 
+ .rodata.mp.6   0x08021260        0x5 build/menu.o
+ *fill*         0x08021265        0x3 
+ .rodata.sMapSymbol
+                0x08021268       0x6c build/menu.o
+ .rodata.sTabName
+                0x080212d4        0xc build/menu.o
+ .rodata.sArchName
+                0x080212e0       0x20 build/menu.o
+ .rodata.sKeys  0x08021300       0x60 build/menu.o
+ .rodata.sItems
+                0x08021360       0x70 build/menu.o
+ .rodata        0x080213d0        0xc build/menu.o
+ .rodata.str1.4
+                0x080213dc       0xe9 build/menu_layouts_a.o
+ .rodata.sLayouts
+                0x080213dc      0x1e0 build/menu_layouts_a.o
+ .rodata.CSWTCH.1
+                0x080215bc       0x14 build/menu_layouts_b.o
+ .rodata.str1.4
+                0x080215d0      0x133 build/menu_layouts_b.o
+ .rodata.sQuickRibbon
+                0x080215d0       0x60 build/menu_layouts_b.o
+ .rodata.sBarrierIndex
+                0x08021630       0x60 build/menu_layouts_b.o
+ .rodata.sFocusCards
+                0x08021690       0x60 build/menu_layouts_b.o
+ .rodata.sExpeditionDashboard
+                0x080216f0       0x60 build/menu_layouts_b.o
+ .rodata.sTwinAtlas
+                0x08021750       0x60 build/menu_layouts_b.o
+ .rodata.myst_build
+                0x080217b0       0x2c build/myst.o
+ .rodata.myst_update.str1.4
+                0x080217dc       0x38 build/myst.o
+ .rodata.myst_update
+                0x080217dc       0x18 build/myst.o
+ .rodata.myst_chest_opened.str1.4
+                0x080217f4       0xae build/myst.o
+ .rodata.at.0   0x080217f4        0x8 build/myst.o
+ .rodata.at.1   0x080217fc        0x6 build/myst.o
+ *fill*         0x08021802        0x2 
+ .rodata.at.2   0x08021804        0x8 build/myst.o
+ .rodata.at.3   0x0802180c        0xc build/myst.o
+ .rodata.kSize  0x08021818        0x6 build/myst.o
+ *fill*         0x0802181e        0x2 
+ .rodata.kStyle
+                0x08021820       0x48 build/myst.o
+ .rodata.npc_try_talk.str1.4
+                0x08021868      0x857 build/npc.o
+ .rodata.npc_try_talk
+                0x08021868       0x18 build/npc.o
+ .rodata.npc_dialogue_update.str1.4
+                0x08021880       0xa2 build/npc.o
+ .rodata.kActs.0
+                0x08021880        0x4 build/npc.o
+ .rodata.str1.4
+                0x08021884       0xd3 build/npc.o
+ .rodata.sShop  0x08021884       0x30 build/npc.o
+ .rodata.sPortraits
+                0x080218b4        0x6 build/npc.o
+ *fill*         0x080218ba        0x2 
+ .rodata.sNames
+                0x080218bc       0x18 build/npc.o
+ .rodata.sFrames
+                0x080218d4        0x6 build/npc.o
+ *fill*         0x080218da        0x2 
+ .rodata.fx_spawn
+                0x080218dc       0x20 build/objects.o
+ .rodata.objects_update
+                0x080218fc       0x48 build/objects.o
+ .rodata.hand.0
+                0x08021944        0x8 build/objects.o
+ .rodata.frames.1
+                0x0802194c        0xa build/objects.o
+ *fill*         0x08021956        0x2 
+ .rodata.player_has_item
+                0x08021958       0x20 build/player.o
+ .rodata.player_update
+                0x08021978       0x68 build/player.o
+ .rodata.player_draw
+                0x080219e0       0x34 build/player.o
+ .rodata.frame.0
+                0x08021a14        0x4 build/player.o
+ .rodata.at.1   0x08021a18        0x8 build/player.o
+ .rodata.lamp.2
+                0x08021a20        0x4 build/player.o
+ .rodata.bow.3  0x08021a24        0x4 build/player.o
+ .rodata.cape.4
+                0x08021a28        0x4 build/player.o
+ .rodata.origin.5
+                0x08021a2c        0x8 build/player.o
+ .rodata.sCarryFrame
+                0x08021a34        0xc build/player.o
+ .rodata.sCapeFrame
+                0x08021a40        0xc build/player.o
+ .rodata.sBowFrame
+                0x08021a4c        0xc build/player.o
+ .rodata.sUseFrame
+                0x08021a58        0xc build/player.o
+ .rodata.sLiftFrame
+                0x08021a64        0xc build/player.o
+ .rodata.sGuardStep
+                0x08021a70        0x8 build/player.o
+ .rodata.sGuardFrame
+                0x08021a78        0x4 build/player.o
+ .rodata.sHurtFrame
+                0x08021a7c        0x4 build/player.o
+ .rodata.sWalk2Frame
+                0x08021a80        0x4 build/player.o
+ .rodata.sWalk1Frame
+                0x08021a84        0x4 build/player.o
+ .rodata.sIdleFrame
+                0x08021a88        0x4 build/player.o
+ .rodata.d.0    0x08021a8c        0x8 build/react.o
+ .rodata.d.0    0x08021a94        0x8 build/room.o
+ .rodata.expand
+                0x08021a9c       0x1c build/roomgen.o
+ .rodata.roomgen_build_internal
+                0x08021ab8       0x6c build/roomgen.o
+ .rodata.step.1
+                0x08021b24        0x8 build/roomgen.o
+ .rodata.edge.2
+                0x08021b2c       0x20 build/roomgen.o
+ .rodata.d.4    0x08021b4c        0x8 build/roomgen.o
+ .rodata.d.5    0x08021b54        0x8 build/roomgen.o
+ .rodata.shape.7
+                0x08021b5c        0xc build/roomgen.o
+ .rodata.ring.11
+                0x08021b68       0x10 build/roomgen.o
+ .rodata.bend.12
+                0x08021b78       0x18 build/roomgen.o
+ .rodata.widths.13
+                0x08021b90        0x6 build/roomgen.o
+ *fill*         0x08021b96        0x2 
+ .rodata.items.0
+                0x08021b98        0x3 build/save.o
+ *fill*         0x08021b9b        0x1 
+ .rodata.kinds.1
+                0x08021b9c        0x3 build/save.o
+ *fill*         0x08021b9f        0x1 
+ .rodata.gSramId
+                0x08021ba0        0xa build/save.o
+                0x08021ba0                gSramId
+ *fill*         0x08021baa        0x2 
+ .rodata.sfx_play
+                0x08021bac       0x60 build/sound.o
+ .rodata.sSongs
+                0x08021c0c       0x60 build/sound.o
+ .rodata.sWinDrums
+                0x08021c6c       0x10 build/sound.o
+ .rodata.sWinBass
+                0x08021c7c        0xf build/sound.o
+ *fill*         0x08021c8b        0x1 
+ .rodata.sWinMelody
+                0x08021c8c       0x23 build/sound.o
+ *fill*         0x08021caf        0x1 
+ .rodata.sTitleDrums
+                0x08021cb0       0x10 build/sound.o
+ .rodata.sTitleBass
+                0x08021cc0        0x9 build/sound.o
+ *fill*         0x08021cc9        0x3 
+ .rodata.sTitleMelody
+                0x08021ccc       0x21 build/sound.o
+ *fill*         0x08021ced        0x3 
+ .rodata.sBossDrums
+                0x08021cf0       0x10 build/sound.o
+ .rodata.sBossBass
+                0x08021d00       0x21 build/sound.o
+ *fill*         0x08021d21        0x3 
+ .rodata.sBossMelody
+                0x08021d24       0x3d build/sound.o
+ *fill*         0x08021d61        0x3 
+ .rodata.sForestDrums
+                0x08021d64       0x10 build/sound.o
+ .rodata.sForestBass
+                0x08021d74       0x11 build/sound.o
+ *fill*         0x08021d85        0x3 
+ .rodata.sForestMelody
+                0x08021d88       0x57 build/sound.o
+ *fill*         0x08021ddf        0x1 
+ .rodata.sSewerDrums
+                0x08021de0       0x10 build/sound.o
+ .rodata.sSewerBass
+                0x08021df0       0x13 build/sound.o
+ *fill*         0x08021e03        0x1 
+ .rodata.sSewerMelody
+                0x08021e04       0x2b build/sound.o
+ *fill*         0x08021e2f        0x1 
+ .rodata.sNoteFreq
+                0x08021e30       0x78 build/sound.o
+ .rodata.shop_detail.str1.4
+                0x08021ea8        0x8 build/text.o
+ .rodata.hud_icon
+                0x08021ea8       0x20 build/text.o
+ .rodata.shop_open.str1.4
+                0x08021ec8        0xa build/text.o
+ .rodata.letters.0
+                0x08021ec8       0x15 build/text.o
+ *fill*         0x08021edd        0x3 
+ .rodata.digits.1
+                0x08021ee0       0x32 build/text.o
+ *fill*         0x08021f12        0x2 
+ .rodata.bob.3  0x08021f14        0x4 build/text.o
+ .rodata.sHudKeys
+                0x08021f18        0x6 build/text.o
+ *fill*         0x08021f1e        0x2 
+ .rodata.sPlates
+                0x08021f20        0xc build/ui.o
+ .rodata.sFrames
+                0x08021f2c       0x20 build/ui.o
+ .rodata.CSWTCH.53
+                0x08021f4c       0x10 build/vwf.o
+ .rodata.trials.0
+                0x08021f5c        0x3 build/world.o
+ *fill*         0x08021f5f        0x1 
+ .rodata.key_items.1
+                0x08021f60        0x3 build/world.o
+ *fill*         0x08021f63        0x1 
+ .rodata.gate_types.2
+                0x08021f64        0x3 build/world.o
+ *fill*         0x08021f67        0x1 
+ .rodata.fallback.3
+                0x08021f68       0x30 build/world.o
+ .rodata.world_profiles
+                0x08021f98       0x15 build/world.o
+                0x08021f98                world_profiles
+ *fill*         0x08021fad        0x3 
+ .rodata.sDy    0x08021fb0        0x4 build/world.o
+ .rodata.sDx    0x08021fb4        0x4 build/world.o
+ .rodata        0x08021fb8        0xc build/world.o
+ .rodata.sin_table_u
+                0x08021fc4      0x200 build/assets.o
+                0x08021fc4                sin_table_u
+ .rodata.room_defs
+                0x080221c4       0x14 build/assets.o
+                0x080221c4                room_defs
+ .rodata.room_sewer_main_objects
+                0x080221d8       0x10 build/assets.o
+                0x080221d8                room_sewer_main_objects
+ .rodata.room_sewer_main_overlay
+                0x080221e8      0x4b0 build/assets.o
+                0x080221e8                room_sewer_main_overlay
+ .rodata.room_sewer_main_ground
+                0x08022698      0x4b0 build/assets.o
+                0x08022698                room_sewer_main_ground
+ .rodata.title_bitmap
+                0x08022b48    0x12c00 build/assets.o
+                0x08022b48                title_bitmap
+ .rodata.hud_tiles
+                0x08035748       0x80 build/assets.o
+                0x08035748                hud_tiles
+ .rodata.appearance_mark_tiles
+                0x080357c8      0x240 build/assets.o
+                0x080357c8                appearance_mark_tiles
+ .rodata.appearance_palettes
+                0x08035a08       0x60 build/assets.o
+                0x08035a08                appearance_palettes
+ .rodata.appearance_ui_tiles
+                0x08035a68     0x1320 build/assets.o
+                0x08035a68                appearance_ui_tiles
+ .rodata.vwf_bits
+                0x08036d88      0x369 build/assets.o
+                0x08036d88                vwf_bits
+ *fill*         0x080370f1        0x3 
+ .rodata.vwf_w  0x080370f4       0x61 build/assets.o
+                0x080370f4                vwf_w
+ *fill*         0x08037155        0x3 
+ .rodata.peddler_act_at
+                0x08037158        0x6 build/assets.o
+                0x08037158                peddler_act_at
+ *fill*         0x0803715e        0x2 
+ .rodata.peddler_acts
+                0x08037160       0xc0 build/assets.o
+                0x08037160                peddler_acts
+ .rodata.orb_glow
+                0x08037220       0x18 build/assets.o
+                0x08037220                orb_glow
+ .rodata.forestlandmark_frame_pal
+                0x08037238        0x4 build/assets.o
+                0x08037238                forestlandmark_frame_pal
+ .rodata.huditems_frame_pal
+                0x0803723c       0x11 build/assets.o
+                0x0803723c                huditems_frame_pal
+ *fill*         0x0803724d        0x3 
+ .rodata.interactiveentry_frame_pal
+                0x08037250        0x6 build/assets.o
+                0x08037250                interactiveentry_frame_pal
+ *fill*         0x08037256        0x2 
+ .rodata.interactivechest_frame_pal
+                0x08037258        0x8 build/assets.o
+                0x08037258                interactivechest_frame_pal
+ .rodata.bloomfx_frame_pal
+                0x08037260       0x4f build/assets.o
+                0x08037260                bloomfx_frame_pal
+ *fill*         0x080372af        0x1 
+ .rodata.icon32_exact_pal
+                0x080372b0      0x220 build/assets.o
+                0x080372b0                icon32_exact_pal
+ .rodata.icon32_exact_tiles
+                0x080374d0     0x2200 build/assets.o
+                0x080374d0                icon32_exact_tiles
+ .rodata.icon32_frame_pal
+                0x080396d0       0x11 build/assets.o
+                0x080396d0                icon32_frame_pal
+ *fill*         0x080396e1        0x3 
+ .rodata.pick32_frame_pal
+                0x080396e4        0xa build/assets.o
+                0x080396e4                pick32_frame_pal
+ *fill*         0x080396ee        0x2 
+ .rodata.lift_frame_pal
+                0x080396f0        0x4 build/assets.o
+                0x080396f0                lift_frame_pal
+ .rodata.items_frame_pal
+                0x080396f4       0x15 build/assets.o
+                0x080396f4                items_frame_pal
+ *fill*         0x08039709        0x3 
+ .rodata.shield_frame_pal
+                0x0803970c        0x6 build/assets.o
+                0x0803970c                shield_frame_pal
+ *fill*         0x08039712        0x2 
+ .rodata.bloom_swing_hit
+                0x08039714       0x80 build/assets.o
+                0x08039714                bloom_swing_hit
+ .rodata.bloom_swing_origin
+                0x08039794       0x40 build/assets.o
+                0x08039794                bloom_swing_origin
+ .rodata.bloom_swing_age_active
+                0x080397d4       0x12 build/assets.o
+                0x080397d4                bloom_swing_age_active
+ *fill*         0x080397e6        0x2 
+ .rodata.bloom_swing_age_phase
+                0x080397e8       0x12 build/assets.o
+                0x080397e8                bloom_swing_age_phase
+ *fill*         0x080397fa        0x2 
+ .rodata.forest_v3_body_visibility
+                0x080397fc      0x532 build/assets.o
+                0x080397fc                forest_v3_body_visibility
+ *fill*         0x08039d2e        0x2 
+ .rodata.sheets
+                0x08039d30      0x1b0 build/assets.o
+                0x08039d30                sheets
+ .rodata.sheet_forestlandmark_tiles
+                0x08039ee0      0x400 build/assets.o
+                0x08039ee0                sheet_forestlandmark_tiles
+ .rodata.sheet_sewerrail_tiles
+                0x0803a2e0       0x40 build/assets.o
+                0x0803a2e0                sheet_sewerrail_tiles
+ .rodata.sheet_glitter_tiles
+                0x0803a320       0xc0 build/assets.o
+                0x0803a320                sheet_glitter_tiles
+ .rodata.sheet_huditems_tiles
+                0x0803a3e0      0x880 build/assets.o
+                0x0803a3e0                sheet_huditems_tiles
+ .rodata.sheet_interactiveentry_tiles
+                0x0803ac60     0x1800 build/assets.o
+                0x0803ac60                sheet_interactiveentry_tiles
+ .rodata.sheet_interactivechest_tiles
+                0x0803c460     0x1000 build/assets.o
+                0x0803c460                sheet_interactivechest_tiles
+ .rodata.sheet_bloomshadow_tiles
+                0x0803d460       0x40 build/assets.o
+                0x0803d460                sheet_bloomshadow_tiles
+ .rodata.sheet_bloomfx_tiles
+                0x0803d4a0     0x9e00 build/assets.o
+                0x0803d4a0                sheet_bloomfx_tiles
+ .rodata.sheet_wisp_tiles
+                0x080472a0       0x80 build/assets.o
+                0x080472a0                sheet_wisp_tiles
+ .rodata.sheet_gatekeeper_tiles
+                0x08047320      0xc00 build/assets.o
+                0x08047320                sheet_gatekeeper_tiles
+ .rodata.sheet_peddler_body_tiles
+                0x08047f20     0x1e00 build/assets.o
+                0x08047f20                sheet_peddler_body_tiles
+ .rodata.sheet_peddler_head_tiles
+                0x08049d20      0x280 build/assets.o
+                0x08049d20                sheet_peddler_head_tiles
+ .rodata.sheet_face_tiles
+                0x08049fa0     0x3000 build/assets.o
+                0x08049fa0                sheet_face_tiles
+ .rodata.sheet_uimarks_tiles
+                0x0804cfa0       0xc0 build/assets.o
+                0x0804cfa0                sheet_uimarks_tiles
+ .rodata.sheet_icon32_tiles
+                0x0804d060     0x2200 build/assets.o
+                0x0804d060                sheet_icon32_tiles
+ .rodata.sheet_pick32_tiles
+                0x0804f260      0x500 build/assets.o
+                0x0804f260                sheet_pick32_tiles
+ .rodata.sheet_cursor_tiles
+                0x0804f760      0x200 build/assets.o
+                0x0804f760                sheet_cursor_tiles
+ .rodata.sheet_dots_tiles
+                0x0804f960      0x180 build/assets.o
+                0x0804f960                sheet_dots_tiles
+ .rodata.sheet_marks_tiles
+                0x0804fae0      0x680 build/assets.o
+                0x0804fae0                sheet_marks_tiles
+ .rodata.sheet_mouth_tiles
+                0x08050160      0x600 build/assets.o
+                0x08050160                sheet_mouth_tiles
+ .rodata.sheet_arrow_tiles
+                0x08050760      0x180 build/assets.o
+                0x08050760                sheet_arrow_tiles
+ .rodata.sheet_lift_tiles
+                0x080508e0      0x200 build/assets.o
+                0x080508e0                sheet_lift_tiles
+ .rodata.sheet_boss_tiles
+                0x08050ae0     0x3400 build/assets.o
+                0x08050ae0                sheet_boss_tiles
+ .rodata.sheet_npc_tiles
+                0x08053ee0      0xe00 build/assets.o
+                0x08053ee0                sheet_npc_tiles
+ .rodata.sheet_proj_tiles
+                0x08054ce0       0x60 build/assets.o
+                0x08054ce0                sheet_proj_tiles
+ .rodata.sheet_fx_tiles
+                0x08054d40      0x680 build/assets.o
+                0x08054d40                sheet_fx_tiles
+ .rodata.sheet_ksword_tiles
+                0x080553c0      0x100 build/assets.o
+                0x080553c0                sheet_ksword_tiles
+ .rodata.sheet_knight_tiles
+                0x080554c0     0x1800 build/assets.o
+                0x080554c0                sheet_knight_tiles
+ .rodata.sheet_spitter_tiles
+                0x08056cc0      0x600 build/assets.o
+                0x08056cc0                sheet_spitter_tiles
+ .rodata.sheet_slime_tiles
+                0x080572c0      0x180 build/assets.o
+                0x080572c0                sheet_slime_tiles
+ .rodata.sheet_bat_tiles
+                0x08057440      0x180 build/assets.o
+                0x08057440                sheet_bat_tiles
+ .rodata.sheet_beetle_tiles
+                0x080575c0      0x300 build/assets.o
+                0x080575c0                sheet_beetle_tiles
+ .rodata.sheet_items_tiles
+                0x080578c0      0xa80 build/assets.o
+                0x080578c0                sheet_items_tiles
+ .rodata.sheet_shield_tiles
+                0x08058340      0x300 build/assets.o
+                0x08058340                sheet_shield_tiles
+ .rodata.sheet_sword_tiles
+                0x08058640      0x180 build/assets.o
+                0x08058640                sheet_sword_tiles
+ .rodata.sheet_hero_tiles
+                0x080587c0    0x10a00 build/assets.o
+                0x080587c0                sheet_hero_tiles
+ .rodata.forest_cohesion_decor_alias
+                0x080691c0       0x18 build/assets.o
+                0x080691c0                forest_cohesion_decor_alias
+ .rodata.forest_cohesion_path_alias
+                0x080691d8      0x400 build/assets.o
+                0x080691d8                forest_cohesion_path_alias
+ .rodata.forest_v2_pulse_colors
+                0x080695d8       0x80 build/assets.o
+                0x080695d8                forest_v2_pulse_colors
+ .rodata.forest_v2_pulse_slots
+                0x08069658        0x3 build/assets.o
+                0x08069658                forest_v2_pulse_slots
+ *fill*         0x0806965b        0x1 
+ .rodata.forest_v2_water_alias
+                0x0806965c      0x200 build/assets.o
+                0x0806965c                forest_v2_water_alias
+ .rodata.forest_v2_water_isolated
+                0x0806985c        0x4 build/assets.o
+                0x0806985c                forest_v2_water_isolated
+ .rodata.forest_v2_canopy_alias
+                0x08069860     0x1000 build/assets.o
+                0x08069860                forest_v2_canopy_alias
+ .rodata.forest_v2_overhead
+                0x0806a860      0x855 build/assets.o
+                0x0806a860                forest_v2_overhead
+ *fill*         0x0806b0b5        0x3 
+ .rodata.forest_v2_special_tree
+                0x0806b0b8      0x855 build/assets.o
+                0x0806b0b8                forest_v2_special_tree
+ *fill*         0x0806b90d        0x3 
+ .rodata.forest_v2_water_kind
+                0x0806b910      0x855 build/assets.o
+                0x0806b910                forest_v2_water_kind
+ *fill*         0x0806c165        0x3 
+ .rodata.forest_v2_canopy_kind
+                0x0806c168      0x855 build/assets.o
+                0x0806c168                forest_v2_canopy_kind
+ *fill*         0x0806c9bd        0x3 
+ .rodata.tilesets
+                0x0806c9c0       0x54 build/assets.o
+                0x0806c9c0                tilesets
+ .rodata.tile_anims_myst
+                0x0806ca14       0x30 build/assets.o
+ .rodata.tile_anim_myst_5
+                0x0806ca44      0x100 build/assets.o
+                0x0806ca44                tile_anim_myst_5
+ .rodata.tile_anim_myst_4
+                0x0806cb44      0x100 build/assets.o
+                0x0806cb44                tile_anim_myst_4
+ .rodata.tile_anim_myst_3
+                0x0806cc44      0x100 build/assets.o
+                0x0806cc44                tile_anim_myst_3
+ .rodata.tile_anim_myst_2
+                0x0806cd44      0x100 build/assets.o
+                0x0806cd44                tile_anim_myst_2
+ .rodata.tile_anim_myst_1
+                0x0806ce44      0x180 build/assets.o
+                0x0806ce44                tile_anim_myst_1
+ .rodata.tile_anim_myst_0
+                0x0806cfc4      0x100 build/assets.o
+                0x0806cfc4                tile_anim_myst_0
+ .rodata.tileset_myst_pals
+                0x0806d0c4       0xc0 build/assets.o
+                0x0806d0c4                tileset_myst_pals
+ .rodata.metatile_map_myst
+                0x0806d184     0x42a8 build/assets.o
+                0x0806d184                metatile_map_myst
+ .rodata.tileset_myst_tiles
+                0x0807142c      0xd60 build/assets.o
+                0x0807142c                tileset_myst_tiles
+ .rodata.tile_anims_sewer
+                0x0807218c      0x228 build/assets.o
+ .rodata.tile_anim_sewer_68
+                0x080723b4      0x400 build/assets.o
+                0x080723b4                tile_anim_sewer_68
+ .rodata.tile_anim_sewer_67
+                0x080727b4      0x400 build/assets.o
+                0x080727b4                tile_anim_sewer_67
+ .rodata.tile_anim_sewer_66
+                0x08072bb4      0xc00 build/assets.o
+                0x08072bb4                tile_anim_sewer_66
+ .rodata.tile_anim_sewer_65
+                0x080737b4      0x400 build/assets.o
+                0x080737b4                tile_anim_sewer_65
+ .rodata.tile_anim_sewer_64
+                0x08073bb4      0x400 build/assets.o
+                0x08073bb4                tile_anim_sewer_64
+ .rodata.tile_anim_sewer_63
+                0x08073fb4      0x400 build/assets.o
+                0x08073fb4                tile_anim_sewer_63
+ .rodata.tile_anim_sewer_62
+                0x080743b4      0xc00 build/assets.o
+                0x080743b4                tile_anim_sewer_62
+ .rodata.tile_anim_sewer_61
+                0x08074fb4      0x400 build/assets.o
+                0x08074fb4                tile_anim_sewer_61
+ .rodata.tile_anim_sewer_60
+                0x080753b4      0x400 build/assets.o
+                0x080753b4                tile_anim_sewer_60
+ .rodata.tile_anim_sewer_59
+                0x080757b4      0x400 build/assets.o
+                0x080757b4                tile_anim_sewer_59
+ .rodata.tile_anim_sewer_58
+                0x08075bb4      0x400 build/assets.o
+                0x08075bb4                tile_anim_sewer_58
+ .rodata.tile_anim_sewer_57
+                0x08075fb4      0x100 build/assets.o
+                0x08075fb4                tile_anim_sewer_57
+ .rodata.tile_anim_sewer_56
+                0x080760b4      0x400 build/assets.o
+                0x080760b4                tile_anim_sewer_56
+ .rodata.tile_anim_sewer_55
+                0x080764b4      0x400 build/assets.o
+                0x080764b4                tile_anim_sewer_55
+ .rodata.tile_anim_sewer_54
+                0x080768b4      0x400 build/assets.o
+                0x080768b4                tile_anim_sewer_54
+ .rodata.tile_anim_sewer_53
+                0x08076cb4      0x400 build/assets.o
+                0x08076cb4                tile_anim_sewer_53
+ .rodata.tile_anim_sewer_52
+                0x080770b4      0x400 build/assets.o
+                0x080770b4                tile_anim_sewer_52
+ .rodata.tile_anim_sewer_51
+                0x080774b4      0x400 build/assets.o
+                0x080774b4                tile_anim_sewer_51
+ .rodata.tile_anim_sewer_50
+                0x080778b4      0x400 build/assets.o
+                0x080778b4                tile_anim_sewer_50
+ .rodata.tile_anim_sewer_49
+                0x08077cb4      0x400 build/assets.o
+                0x08077cb4                tile_anim_sewer_49
+ .rodata.tile_anim_sewer_48
+                0x080780b4      0x400 build/assets.o
+                0x080780b4                tile_anim_sewer_48
+ .rodata.tile_anim_sewer_47
+                0x080784b4      0x400 build/assets.o
+                0x080784b4                tile_anim_sewer_47
+ .rodata.tile_anim_sewer_46
+                0x080788b4      0x400 build/assets.o
+                0x080788b4                tile_anim_sewer_46
+ .rodata.tile_anim_sewer_45
+                0x08078cb4      0x400 build/assets.o
+                0x08078cb4                tile_anim_sewer_45
+ .rodata.tile_anim_sewer_44
+                0x080790b4      0x400 build/assets.o
+                0x080790b4                tile_anim_sewer_44
+ .rodata.tile_anim_sewer_43
+                0x080794b4      0x400 build/assets.o
+                0x080794b4                tile_anim_sewer_43
+ .rodata.tile_anim_sewer_42
+                0x080798b4      0x400 build/assets.o
+                0x080798b4                tile_anim_sewer_42
+ .rodata.tile_anim_sewer_41
+                0x08079cb4      0x400 build/assets.o
+                0x08079cb4                tile_anim_sewer_41
+ .rodata.tile_anim_sewer_40
+                0x0807a0b4      0x400 build/assets.o
+                0x0807a0b4                tile_anim_sewer_40
+ .rodata.tile_anim_sewer_39
+                0x0807a4b4      0x400 build/assets.o
+                0x0807a4b4                tile_anim_sewer_39
+ .rodata.tile_anim_sewer_38
+                0x0807a8b4      0x400 build/assets.o
+                0x0807a8b4                tile_anim_sewer_38
+ .rodata.tile_anim_sewer_37
+                0x0807acb4      0x400 build/assets.o
+                0x0807acb4                tile_anim_sewer_37
+ .rodata.tile_anim_sewer_36
+                0x0807b0b4      0x400 build/assets.o
+                0x0807b0b4                tile_anim_sewer_36
+ .rodata.tile_anim_sewer_35
+                0x0807b4b4      0x400 build/assets.o
+                0x0807b4b4                tile_anim_sewer_35
+ .rodata.tile_anim_sewer_34
+                0x0807b8b4      0x400 build/assets.o
+                0x0807b8b4                tile_anim_sewer_34
+ .rodata.tile_anim_sewer_33
+                0x0807bcb4      0x400 build/assets.o
+                0x0807bcb4                tile_anim_sewer_33
+ .rodata.tile_anim_sewer_32
+                0x0807c0b4      0x400 build/assets.o
+                0x0807c0b4                tile_anim_sewer_32
+ .rodata.tile_anim_sewer_31
+                0x0807c4b4      0x400 build/assets.o
+                0x0807c4b4                tile_anim_sewer_31
+ .rodata.tile_anim_sewer_30
+                0x0807c8b4      0x400 build/assets.o
+                0x0807c8b4                tile_anim_sewer_30
+ .rodata.tile_anim_sewer_29
+                0x0807ccb4      0x400 build/assets.o
+                0x0807ccb4                tile_anim_sewer_29
+ .rodata.tile_anim_sewer_28
+                0x0807d0b4      0x400 build/assets.o
+                0x0807d0b4                tile_anim_sewer_28
+ .rodata.tile_anim_sewer_27
+                0x0807d4b4      0x400 build/assets.o
+                0x0807d4b4                tile_anim_sewer_27
+ .rodata.tile_anim_sewer_26
+                0x0807d8b4      0x400 build/assets.o
+                0x0807d8b4                tile_anim_sewer_26
+ .rodata.tile_anim_sewer_25
+                0x0807dcb4      0x400 build/assets.o
+                0x0807dcb4                tile_anim_sewer_25
+ .rodata.tile_anim_sewer_24
+                0x0807e0b4      0x400 build/assets.o
+                0x0807e0b4                tile_anim_sewer_24
+ .rodata.tile_anim_sewer_23
+                0x0807e4b4      0x400 build/assets.o
+                0x0807e4b4                tile_anim_sewer_23
+ .rodata.tile_anim_sewer_22
+                0x0807e8b4      0x400 build/assets.o
+                0x0807e8b4                tile_anim_sewer_22
+ .rodata.tile_anim_sewer_21
+                0x0807ecb4      0x400 build/assets.o
+                0x0807ecb4                tile_anim_sewer_21
+ .rodata.tile_anim_sewer_20
+                0x0807f0b4      0x400 build/assets.o
+                0x0807f0b4                tile_anim_sewer_20
+ .rodata.tile_anim_sewer_19
+                0x0807f4b4      0x400 build/assets.o
+                0x0807f4b4                tile_anim_sewer_19
+ .rodata.tile_anim_sewer_18
+                0x0807f8b4      0x400 build/assets.o
+                0x0807f8b4                tile_anim_sewer_18
+ .rodata.tile_anim_sewer_17
+                0x0807fcb4      0x400 build/assets.o
+                0x0807fcb4                tile_anim_sewer_17
+ .rodata.tile_anim_sewer_16
+                0x080800b4      0x400 build/assets.o
+                0x080800b4                tile_anim_sewer_16
+ .rodata.tile_anim_sewer_15
+                0x080804b4      0x400 build/assets.o
+                0x080804b4                tile_anim_sewer_15
+ .rodata.tile_anim_sewer_14
+                0x080808b4      0x400 build/assets.o
+                0x080808b4                tile_anim_sewer_14
+ .rodata.tile_anim_sewer_13
+                0x08080cb4      0x400 build/assets.o
+                0x08080cb4                tile_anim_sewer_13
+ .rodata.tile_anim_sewer_12
+                0x080810b4      0x400 build/assets.o
+                0x080810b4                tile_anim_sewer_12
+ .rodata.tile_anim_sewer_11
+                0x080814b4      0x180 build/assets.o
+                0x080814b4                tile_anim_sewer_11
+ .rodata.tile_anim_sewer_10
+                0x08081634      0x180 build/assets.o
+                0x08081634                tile_anim_sewer_10
+ .rodata.tile_anim_sewer_9
+                0x080817b4      0x180 build/assets.o
+                0x080817b4                tile_anim_sewer_9
+ .rodata.tile_anim_sewer_8
+                0x08081934      0x400 build/assets.o
+                0x08081934                tile_anim_sewer_8
+ .rodata.tile_anim_sewer_7
+                0x08081d34      0x400 build/assets.o
+                0x08081d34                tile_anim_sewer_7
+ .rodata.tile_anim_sewer_6
+                0x08082134      0x400 build/assets.o
+                0x08082134                tile_anim_sewer_6
+ .rodata.tile_anim_sewer_5
+                0x08082534      0x400 build/assets.o
+                0x08082534                tile_anim_sewer_5
+ .rodata.tile_anim_sewer_4
+                0x08082934      0x200 build/assets.o
+                0x08082934                tile_anim_sewer_4
+ .rodata.tile_anim_sewer_3
+                0x08082b34      0x200 build/assets.o
+                0x08082b34                tile_anim_sewer_3
+ .rodata.tile_anim_sewer_2
+                0x08082d34      0x400 build/assets.o
+                0x08082d34                tile_anim_sewer_2
+ .rodata.tile_anim_sewer_1
+                0x08083134      0x400 build/assets.o
+                0x08083134                tile_anim_sewer_1
+ .rodata.tile_anim_sewer_0
+                0x08083534      0x180 build/assets.o
+                0x08083534                tile_anim_sewer_0
+ .rodata.tileset_sewer_pals
+                0x080836b4       0x20 build/assets.o
+                0x080836b4                tileset_sewer_pals
+ .rodata.metatile_map_sewer
+                0x080836d4     0x42a8 build/assets.o
+                0x080836d4                metatile_map_sewer
+ .rodata.tileset_sewer_tiles
+                0x0808797c     0x66c0 build/assets.o
+                0x0808797c                tileset_sewer_tiles
+ .rodata.tile_anims_forest
+                0x0808e03c      0x258 build/assets.o
+ .rodata.tile_anim_forest_74
+                0x0808e294      0x100 build/assets.o
+                0x0808e294                tile_anim_forest_74
+ .rodata.tile_anim_forest_73
+                0x0808e394      0x100 build/assets.o
+                0x0808e394                tile_anim_forest_73
+ .rodata.tile_anim_forest_72
+                0x0808e494      0x100 build/assets.o
+                0x0808e494                tile_anim_forest_72
+ .rodata.tile_anim_forest_71
+                0x0808e594      0x100 build/assets.o
+                0x0808e594                tile_anim_forest_71
+ .rodata.tile_anim_forest_70
+                0x0808e694      0x100 build/assets.o
+                0x0808e694                tile_anim_forest_70
+ .rodata.tile_anim_forest_69
+                0x0808e794      0x100 build/assets.o
+                0x0808e794                tile_anim_forest_69
+ .rodata.tile_anim_forest_68
+                0x0808e894      0x100 build/assets.o
+                0x0808e894                tile_anim_forest_68
+ .rodata.tile_anim_forest_67
+                0x0808e994      0x100 build/assets.o
+                0x0808e994                tile_anim_forest_67
+ .rodata.tile_anim_forest_66
+                0x0808ea94      0x100 build/assets.o
+                0x0808ea94                tile_anim_forest_66
+ .rodata.tile_anim_forest_65
+                0x0808eb94      0x100 build/assets.o
+                0x0808eb94                tile_anim_forest_65
+ .rodata.tile_anim_forest_64
+                0x0808ec94      0x100 build/assets.o
+                0x0808ec94                tile_anim_forest_64
+ .rodata.tile_anim_forest_63
+                0x0808ed94      0x100 build/assets.o
+                0x0808ed94                tile_anim_forest_63
+ .rodata.tile_anim_forest_62
+                0x0808ee94      0x100 build/assets.o
+                0x0808ee94                tile_anim_forest_62
+ .rodata.tile_anim_forest_61
+                0x0808ef94      0x100 build/assets.o
+                0x0808ef94                tile_anim_forest_61
+ .rodata.tile_anim_forest_60
+                0x0808f094      0x100 build/assets.o
+                0x0808f094                tile_anim_forest_60
+ .rodata.tile_anim_forest_59
+                0x0808f194      0x100 build/assets.o
+                0x0808f194                tile_anim_forest_59
+ .rodata.tile_anim_forest_58
+                0x0808f294      0x100 build/assets.o
+                0x0808f294                tile_anim_forest_58
+ .rodata.tile_anim_forest_57
+                0x0808f394      0x100 build/assets.o
+                0x0808f394                tile_anim_forest_57
+ .rodata.tile_anim_forest_56
+                0x0808f494      0x100 build/assets.o
+                0x0808f494                tile_anim_forest_56
+ .rodata.tile_anim_forest_55
+                0x0808f594      0x100 build/assets.o
+                0x0808f594                tile_anim_forest_55
+ .rodata.tile_anim_forest_54
+                0x0808f694      0x100 build/assets.o
+                0x0808f694                tile_anim_forest_54
+ .rodata.tile_anim_forest_53
+                0x0808f794      0x100 build/assets.o
+                0x0808f794                tile_anim_forest_53
+ .rodata.tile_anim_forest_52
+                0x0808f894      0x100 build/assets.o
+                0x0808f894                tile_anim_forest_52
+ .rodata.tile_anim_forest_51
+                0x0808f994      0x100 build/assets.o
+                0x0808f994                tile_anim_forest_51
+ .rodata.tile_anim_forest_50
+                0x0808fa94      0x100 build/assets.o
+                0x0808fa94                tile_anim_forest_50
+ .rodata.tile_anim_forest_49
+                0x0808fb94      0x100 build/assets.o
+                0x0808fb94                tile_anim_forest_49
+ .rodata.tile_anim_forest_48
+                0x0808fc94      0x100 build/assets.o
+                0x0808fc94                tile_anim_forest_48
+ .rodata.tile_anim_forest_47
+                0x0808fd94      0x180 build/assets.o
+                0x0808fd94                tile_anim_forest_47
+ .rodata.tile_anim_forest_46
+                0x0808ff14      0x100 build/assets.o
+                0x0808ff14                tile_anim_forest_46
+ .rodata.tile_anim_forest_45
+                0x08090014      0x100 build/assets.o
+                0x08090014                tile_anim_forest_45
+ .rodata.tile_anim_forest_44
+                0x08090114      0x100 build/assets.o
+                0x08090114                tile_anim_forest_44
+ .rodata.tile_anim_forest_43
+                0x08090214      0x100 build/assets.o
+                0x08090214                tile_anim_forest_43
+ .rodata.tile_anim_forest_42
+                0x08090314      0x100 build/assets.o
+                0x08090314                tile_anim_forest_42
+ .rodata.tile_anim_forest_41
+                0x08090414      0x100 build/assets.o
+                0x08090414                tile_anim_forest_41
+ .rodata.tile_anim_forest_40
+                0x08090514      0x100 build/assets.o
+                0x08090514                tile_anim_forest_40
+ .rodata.tile_anim_forest_39
+                0x08090614      0x100 build/assets.o
+                0x08090614                tile_anim_forest_39
+ .rodata.tile_anim_forest_38
+                0x08090714      0x100 build/assets.o
+                0x08090714                tile_anim_forest_38
+ .rodata.tile_anim_forest_37
+                0x08090814      0x100 build/assets.o
+                0x08090814                tile_anim_forest_37
+ .rodata.tile_anim_forest_36
+                0x08090914      0x100 build/assets.o
+                0x08090914                tile_anim_forest_36
+ .rodata.tile_anim_forest_35
+                0x08090a14      0x100 build/assets.o
+                0x08090a14                tile_anim_forest_35
+ .rodata.tile_anim_forest_34
+                0x08090b14      0x100 build/assets.o
+                0x08090b14                tile_anim_forest_34
+ .rodata.tile_anim_forest_33
+                0x08090c14      0x100 build/assets.o
+                0x08090c14                tile_anim_forest_33
+ .rodata.tile_anim_forest_32
+                0x08090d14      0x100 build/assets.o
+                0x08090d14                tile_anim_forest_32
+ .rodata.tile_anim_forest_31
+                0x08090e14      0x100 build/assets.o
+                0x08090e14                tile_anim_forest_31
+ .rodata.tile_anim_forest_30
+                0x08090f14      0x100 build/assets.o
+                0x08090f14                tile_anim_forest_30
+ .rodata.tile_anim_forest_29
+                0x08091014      0x100 build/assets.o
+                0x08091014                tile_anim_forest_29
+ .rodata.tile_anim_forest_28
+                0x08091114      0x100 build/assets.o
+                0x08091114                tile_anim_forest_28
+ .rodata.tile_anim_forest_27
+                0x08091214      0x100 build/assets.o
+                0x08091214                tile_anim_forest_27
+ .rodata.tile_anim_forest_26
+                0x08091314      0x100 build/assets.o
+                0x08091314                tile_anim_forest_26
+ .rodata.tile_anim_forest_25
+                0x08091414      0x100 build/assets.o
+                0x08091414                tile_anim_forest_25
+ .rodata.tile_anim_forest_24
+                0x08091514      0x100 build/assets.o
+                0x08091514                tile_anim_forest_24
+ .rodata.tile_anim_forest_23
+                0x08091614      0x100 build/assets.o
+                0x08091614                tile_anim_forest_23
+ .rodata.tile_anim_forest_22
+                0x08091714      0x100 build/assets.o
+                0x08091714                tile_anim_forest_22
+ .rodata.tile_anim_forest_21
+                0x08091814      0x180 build/assets.o
+                0x08091814                tile_anim_forest_21
+ .rodata.tile_anim_forest_20
+                0x08091994      0x100 build/assets.o
+                0x08091994                tile_anim_forest_20
+ .rodata.tile_anim_forest_19
+                0x08091a94      0x100 build/assets.o
+                0x08091a94                tile_anim_forest_19
+ .rodata.tile_anim_forest_18
+                0x08091b94      0x100 build/assets.o
+                0x08091b94                tile_anim_forest_18
+ .rodata.tile_anim_forest_17
+                0x08091c94      0x100 build/assets.o
+                0x08091c94                tile_anim_forest_17
+ .rodata.tile_anim_forest_16
+                0x08091d94      0x100 build/assets.o
+                0x08091d94                tile_anim_forest_16
+ .rodata.tile_anim_forest_15
+                0x08091e94      0x100 build/assets.o
+                0x08091e94                tile_anim_forest_15
+ .rodata.tile_anim_forest_14
+                0x08091f94      0x100 build/assets.o
+                0x08091f94                tile_anim_forest_14
+ .rodata.tile_anim_forest_13
+                0x08092094      0x100 build/assets.o
+                0x08092094                tile_anim_forest_13
+ .rodata.tile_anim_forest_12
+                0x08092194      0x100 build/assets.o
+                0x08092194                tile_anim_forest_12
+ .rodata.tile_anim_forest_11
+                0x08092294      0x100 build/assets.o
+                0x08092294                tile_anim_forest_11
+ .rodata.tile_anim_forest_10
+                0x08092394      0x100 build/assets.o
+                0x08092394                tile_anim_forest_10
+ .rodata.tile_anim_forest_9
+                0x08092494      0x100 build/assets.o
+                0x08092494                tile_anim_forest_9
+ .rodata.tile_anim_forest_8
+                0x08092594      0x100 build/assets.o
+                0x08092594                tile_anim_forest_8
+ .rodata.tile_anim_forest_7
+                0x08092694      0x100 build/assets.o
+                0x08092694                tile_anim_forest_7
+ .rodata.tile_anim_forest_6
+                0x08092794      0x100 build/assets.o
+                0x08092794                tile_anim_forest_6
+ .rodata.tile_anim_forest_5
+                0x08092894      0x100 build/assets.o
+                0x08092894                tile_anim_forest_5
+ .rodata.tile_anim_forest_4
+                0x08092994      0x100 build/assets.o
+                0x08092994                tile_anim_forest_4
+ .rodata.tile_anim_forest_3
+                0x08092a94      0x100 build/assets.o
+                0x08092a94                tile_anim_forest_3
+ .rodata.tile_anim_forest_2
+                0x08092b94      0x100 build/assets.o
+                0x08092b94                tile_anim_forest_2
+ .rodata.tile_anim_forest_1
+                0x08092c94      0x100 build/assets.o
+                0x08092c94                tile_anim_forest_1
+ .rodata.tile_anim_forest_0
+                0x08092d94      0x100 build/assets.o
+                0x08092d94                tile_anim_forest_0
+ .rodata.tileset_forest_pals
+                0x08092e94      0x140 build/assets.o
+                0x08092e94                tileset_forest_pals
+ .rodata.metatile_map_forest
+                0x08092fd4     0x42a8 build/assets.o
+                0x08092fd4                metatile_map_forest
+ .rodata.tileset_forest_tiles
+                0x0809727c     0x5200 build/assets.o
+                0x0809727c                tileset_forest_tiles
+ .rodata.forest_tree_variety
+                0x0809c47c        0xc build/assets.o
+                0x0809c47c                forest_tree_variety
+ .rodata.forest_tree_state
+                0x0809c488        0xc build/assets.o
+                0x0809c488                forest_tree_state
+ .rodata.forest_tree_anchor_y
+                0x0809c494        0xc build/assets.o
+                0x0809c494                forest_tree_anchor_y
+ .rodata.forest_tree_anchor_x
+                0x0809c4a0        0xc build/assets.o
+                0x0809c4a0                forest_tree_anchor_x
+ .rodata.forest_tree_width
+                0x0809c4ac        0xc build/assets.o
+                0x0809c4ac                forest_tree_width
+ .rodata.forest_tree_opaque_rows
+                0x0809c4b8      0x600 build/assets.o
+                0x0809c4b8                forest_tree_opaque_rows
+ .rodata.forest_tree_entries
+                0x0809cab8      0x180 build/assets.o
+                0x0809cab8                forest_tree_entries
+ .rodata.metatile_glitter
+                0x0809cc38      0x855 build/assets.o
+                0x0809cc38                metatile_glitter
+ *fill*         0x0809d48d        0x3 
+ .rodata.metatile_prop
+                0x0809d490      0x855 build/assets.o
+                0x0809d490                metatile_prop
+ *fill*         0x0809dce5        0x3 
+ .rodata.metatile_coll
+                0x0809dce8      0x855 build/assets.o
+                0x0809dce8                metatile_coll
+ *fill*         0x0809e53d        0x3 
+ .rodata.metatile_type
+                0x0809e540      0x855 build/assets.o
+                0x0809e540                metatile_type
+ *fill*         0x0809ed95        0x3 
+ .rodata.pal_face
+                0x0809ed98       0xc0 build/assets.o
+                0x0809ed98                pal_face
+ .rodata.pal_obj
+                0x0809ee58      0x200 build/assets.o
+                0x0809ee58                pal_obj
+ .rodata.pal_bg
+                0x0809f058      0x220 build/assets.o
+                0x0809f058                pal_bg
+                0x0809f278                        . = ALIGN (0x4)
+
+.rel.dyn        0x0809f278        0x0
+ .rel.iplt      0x0809f278        0x0 build/actor.o
+
+.ARM.exidx
+ *(.ARM.exidx*)
+
+.iwram          0x03000000       0x80 load address 0x0809f278
+                0x03000000                        __iwram_start = .
+ *_iwram.o(.text .text.* .rodata .rodata.*)
+ *(.iwram .iwram.*)
+ .iwram         0x03000000       0x6c build/crt0.o
+                0x03000000                irq_handler
+ *(.data .data.* .gnu.linkonce.d.*)
+ .data.gForestReviewClock
+                0x0300006c        0x4 build/game.o
+                0x0300006c                gForestReviewClock
+ .data.sLastShieldFrame
+                0x03000070        0x1 build/player.o
+ .data.sLastFrame
+                0x03000071        0x1 build/player.o
+ *fill*         0x03000072        0x2 
+ .data.sTs      0x03000074        0x4 build/room.o
+ .data.sTbFace  0x03000078        0x1 build/text.o
+ *fill*         0x03000079        0x3 
+ .data.sRand    0x0300007c        0x4 build/util.o
+                0x03000080                        . = ALIGN (0x4)
+                0x03000080                        __iwram_end = .
+                0x0809f278                        __iwram_lma = LOADADDR (.iwram)
+
+.bss            0x03000080     0x5514 load address 0x0809f2f8
+                0x03000080                        __bss_start = .
+ *(.bss .bss.* .gnu.linkonce.b.*)
+ .bss.sVisibilityVqPending
+                0x03000080        0x1 build/actor.o
+ *fill*         0x03000081        0x7 
+ .bss.sVisibilityVq
+                0x03000088       0x10 build/actor.o
+ .bss.sVqCount  0x03000098        0x1 build/actor.o
+ *fill*         0x03000099        0x3 
+ .bss.sVq       0x0300009c       0xc0 build/actor.o
+ .bss.sFrameCount
+                0x0300015c        0x1 build/actor.o
+ *fill*         0x0300015d        0x3 
+ .bss.sFrameCache
+                0x03000160       0x20 build/actor.o
+ .bss.sSheetTile
+                0x03000180       0x48 build/actor.o
+ .bss.sNextTile
+                0x030001c8        0x2 build/actor.o
+ *fill*         0x030001ca        0x2 
+ .bss.gActors   0x030001cc     0x1800 build/actor.o
+                0x030001cc                gActors
+ .bss.gAmbientPeaks
+                0x030019cc        0x1 build/ambient.o
+                0x030019cc                gAmbientPeaks
+ .bss.gAmbientVisible
+                0x030019cd        0x1 build/ambient.o
+                0x030019cd                gAmbientVisible
+ .bss.gAmbientPotential
+                0x030019ce        0x1 build/ambient.o
+                0x030019ce                gAmbientPotential
+ *fill*         0x030019cf        0x1 
+ .bss.gAmbientSiteCount
+                0x030019d0        0x2 build/ambient.o
+                0x030019d0                gAmbientSiteCount
+ *fill*         0x030019d2        0x2 
+ .bss.sAmbientFrame
+                0x030019d4        0x4 build/ambient.o
+ .bss.sAmbientTile
+                0x030019d8        0x2 build/ambient.o
+ .bss.sAppearanceRevision
+                0x030019da        0x2 build/appearance.o
+ .bss.gAppearancePalette
+                0x030019dc        0x1 build/appearance.o
+                0x030019dc                gAppearancePalette
+ .bss.gAppearanceStyle
+                0x030019dd        0x1 build/appearance.o
+                0x030019dd                gAppearanceStyle
+ .bss.sBossUploadedFrame
+                0x030019de        0x1 build/boss.o
+ .bss.sDying    0x030019df        0x1 build/boss.o
+ .bss.sBossTile
+                0x030019e0        0x2 build/boss.o
+ *fill*         0x030019e2        0x2 
+ .bss.gEnemyPresentedFrame
+                0x030019e4       0x60 build/enemy.o
+                0x030019e4                gEnemyPresentedFrame
+ .bss.sKswordTile
+                0x03001a44        0x2 build/enemy.o
+ *fill*         0x03001a46        0x2 
+ .bss.sSheetTile
+                0x03001a48        0xc build/enemy.o
+ .bss.sHeapSize
+                0x03001a54        0x4 build/forest_paths.o
+ .bss.v.0       0x03001a58        0x4 build/forest_trees.o
+ .bss.sRoomHeight
+                0x03001a5c        0x1 build/forest_trees.o
+ .bss.sRoomWidth
+                0x03001a5d        0x1 build/forest_trees.o
+ .bss.sRoomCell
+                0x03001a5e        0x1 build/forest_trees.o
+ *fill*         0x03001a5f        0x1 
+ .bss.sRoomSeed
+                0x03001a60        0x4 build/forest_trees.o
+ .bss.sActive   0x03001a64        0x1 build/forest_trees.o
+ *fill*         0x03001a65        0x3 
+ .bss.press.0   0x03001a68        0xc build/game.o
+ .bss.stats.1   0x03001a74        0xc build/game.o
+ .bss.body.2    0x03001a80        0xc build/game.o
+ .bss.plate.3   0x03001a8c        0xc build/game.o
+ .bss.gDbgSpawn
+                0x03001a98        0x4 build/game.o
+                0x03001a98                gDbgSpawn
+ .bss.sWinTimer
+                0x03001a9c        0x2 build/game.o
+ *fill*         0x03001a9e        0x2 
+ .bss.sTitleTextPixels
+                0x03001aa0      0x400 build/game.o
+ .bss.sOptionsHelp
+                0x03001ea0        0xc build/game.o
+ .bss.sOptionsPreview
+                0x03001eac        0xc build/game.o
+ .bss.sOptionsColors
+                0x03001eb8        0xc build/game.o
+ .bss.sOptionsStyle
+                0x03001ec4        0xc build/game.o
+ .bss.sOptionsHeader
+                0x03001ed0        0xc build/game.o
+ .bss.sOptionsCursor
+                0x03001edc        0x1 build/game.o
+ .bss.gTitleOptions
+                0x03001edd        0x1 build/game.o
+                0x03001edd                gTitleOptions
+ *fill*         0x03001ede        0x2 
+ .bss.sTitleMenu
+                0x03001ee0        0xc build/game.o
+ .bss.sDiedFlag
+                0x03001eec        0x1 build/game.o
+ *fill*         0x03001eed        0x3 
+ .bss.sTitleSeed
+                0x03001ef0        0x4 build/game.o
+ .bss.sTitlePhase
+                0x03001ef4        0x1 build/game.o
+ .bss.sDark     0x03001ef5        0x1 build/game.o
+ .bss.sHubcap   0x03001ef6        0x1 build/game.o
+ .bss.sTransPhase
+                0x03001ef7        0x1 build/game.o
+ .bss.sTitleHasSave
+                0x03001ef8        0x1 build/game.o
+ .bss.sTitleCursor
+                0x03001ef9        0x1 build/game.o
+ .bss.sNextSide
+                0x03001efa        0x1 build/game.o
+ .bss.sNextCell
+                0x03001efb        0x1 build/game.o
+ .bss.sNextArea
+                0x03001efc        0x1 build/game.o
+ .bss.sForestReviewWasEnabled
+                0x03001efd        0x1 build/game.o
+ .bss.sForestReviewDisplay
+                0x03001efe        0x2 build/game.o
+ .bss.gForestReviewCamera
+                0x03001f00        0x4 build/game.o
+                0x03001f00                gForestReviewCamera
+ .bss.gForestReviewEnabled
+                0x03001f04        0x1 build/game.o
+                0x03001f04                gForestReviewEnabled
+ *fill*         0x03001f05        0x3 
+ .bss.gSeedOverride
+                0x03001f08        0x4 build/game.o
+                0x03001f08                gSeedOverride
+ .bss.gGame     0x03001f0c       0x10 build/game.o
+                0x03001f0c                gGame
+ .bss.sEntryInterior
+                0x03001f1c        0x1 build/interactive.o
+ .bss.sEntryY   0x03001f1d        0x1 build/interactive.o
+ .bss.sEntryX   0x03001f1e        0x1 build/interactive.o
+ .bss.sChestY   0x03001f1f        0x1 build/interactive.o
+ .bss.sChestX   0x03001f20        0x1 build/interactive.o
+ .bss.sEntryFrame
+                0x03001f21        0x1 build/interactive.o
+ .bss.sChestFrame
+                0x03001f22        0x1 build/interactive.o
+ *fill*         0x03001f23        0x1 
+ .bss.sEntryTile
+                0x03001f24        0x2 build/interactive.o
+ .bss.sChestTile
+                0x03001f26        0x2 build/interactive.o
+ .bss.sLockY    0x03001f28        0x8 build/interactive.o
+ .bss.sLockX    0x03001f30        0x8 build/interactive.o
+ .bss.sLandmarkFrame
+                0x03001f38        0x4 build/interactive.o
+ .bss.sLandmarkTile
+                0x03001f3c        0x8 build/interactive.o
+ .bss.sLampFx   0x03001f44        0x1 build/items.o
+ .bss.sDoorMsgLatch
+                0x03001f45        0x1 build/items.o
+ .bss.gMenuMapMarkerCount
+                0x03001f46        0x1 build/menu.o
+                0x03001f46                gMenuMapMarkerCount
+ *fill*         0x03001f47        0x1 
+ .bss.gMenuMapMarkers
+                0x03001f48       0xc0 build/menu.o
+                0x03001f48                gMenuMapMarkers
+ .bss.gMenuMapEvents
+                0x03002008       0x32 build/menu.o
+                0x03002008                gMenuMapEvents
+ .bss.gMenuStudyDrawFrames
+                0x0300203a        0x2 build/menu.o
+                0x0300203a                gMenuStudyDrawFrames
+ .bss.sStudyHeld
+                0x0300203c        0x2 build/menu.o
+ .bss.sStudyInputWrite
+                0x0300203e        0x1 build/menu.o
+ .bss.sStudyInputRead
+                0x0300203f        0x1 build/menu.o
+ .bss.sStudyInput
+                0x03002040       0x40 build/menu.o
+ .bss.sStudyOldHook
+                0x03002080        0x4 build/menu.o
+ .bss.sStudyKitReady
+                0x03002084        0x1 build/menu.o
+ *fill*         0x03002085        0x3 
+ .bss.sStudy    0x03002088        0x4 build/menu.o
+ .bss.sStudySeed
+                0x0300208c        0x4 build/menu.o
+ .bss.sStudyFocus
+                0x03002090        0x2 build/menu.o
+ .bss.sStudyHaveFocus
+                0x03002092        0x1 build/menu.o
+ .bss.sStudyAnim
+                0x03002093        0x1 build/menu.o
+ .bss.sStudyBg3
+                0x03002094        0x2 build/menu.o
+ *fill*         0x03002096        0x2 
+ .bss.sStudyCanvas
+                0x03002098        0xc build/menu.o
+ .bss.sStudyMapReady
+                0x030020a4        0x1 build/menu.o
+ .bss.sStudyMapMode
+                0x030020a5        0x1 build/menu.o
+ *fill*         0x030020a6        0x2 
+ .bss.sStudyMapRect
+                0x030020a8        0x8 build/menu.o
+ .bss.sStudyBaseReady
+                0x030020b0        0x1 build/menu.o
+ *fill*         0x030020b1        0x3 
+ .bss.sMaskDone
+                0x030020b4        0x4 build/menu.o
+ .bss.sMaskSeed
+                0x030020b8        0x4 build/menu.o
+ .bss.sMapEventsSeed
+                0x030020bc        0x4 build/menu.o
+ .bss.sMapEventsDone
+                0x030020c0        0x4 build/menu.o
+ .bss.sCount    0x030020c4       0x18 build/menu.o
+ .bss.sMapCur   0x030020dc        0x1 build/menu.o
+ .bss.sCursor   0x030020dd        0x1 build/menu.o
+ .bss.sZoom     0x030020de        0x1 build/menu.o
+ .bss.sPage     0x030020df        0x1 build/menu.o
+ .bss.gMenuStudyZoom
+                0x030020e0        0x1 build/menu_studies.o
+                0x030020e0                gMenuStudyZoom
+ .bss.gMenuStudyMapCell
+                0x030020e1        0x1 build/menu_studies.o
+                0x030020e1                gMenuStudyMapCell
+ .bss.gMenuStudyCursor
+                0x030020e2        0x1 build/menu_studies.o
+                0x030020e2                gMenuStudyCursor
+ .bss.gMenuStudyPage
+                0x030020e3        0x1 build/menu_studies.o
+                0x030020e3                gMenuStudyPage
+ .bss.sPrizeY   0x030020e4        0x1 build/myst.o
+ .bss.sPrizeX   0x030020e5        0x1 build/myst.o
+ *fill*         0x030020e6        0x2 
+ .bss.sTotal    0x030020e8        0x4 build/myst.o
+ .bss.sCount    0x030020ec        0x4 build/myst.o
+ .bss.sWave     0x030020f0        0x4 build/myst.o
+ .bss.sTimer    0x030020f4        0x4 build/myst.o
+ .bss.sPhase    0x030020f8        0x4 build/myst.o
+ .bss.sH        0x030020fc        0x4 build/myst.o
+ .bss.sW        0x03002100        0x4 build/myst.o
+ .bss.sStyle    0x03002104        0x4 build/myst.o
+ .bss.sSize     0x03002108        0x4 build/myst.o
+ .bss.sKind     0x0300210c        0x4 build/myst.o
+ .bss.sCell     0x03002110        0x4 build/myst.o
+ .bss.sR        0x03002114        0x4 build/myst.o
+ .bss.sBuf      0x03002118       0xc8 build/npc.o
+ .bss.sGate     0x030021e0       0x14 build/npc.o
+ .bss.sPed      0x030021f4       0x18 build/npc.o
+ .bss.sRailTile
+                0x0300220c        0x2 build/npc.o
+ *fill*         0x0300220e        0x2 
+ .bss.sKeepRng  0x03002210        0x4 build/npc.o
+ .bss.sDlgState
+                0x03002214        0x1 build/npc.o
+ *fill*         0x03002215        0x3 
+ .bss.sTalking  0x03002218        0x4 build/npc.o
+ .bss.sIconMenu
+                0x0300221c        0x1 build/objects.o
+ *fill*         0x0300221d        0x3 
+ .bss.sIconWorldPal
+                0x03002220      0x200 build/objects.o
+ .bss.sIconAge  0x03002420        0x7 build/objects.o
+ *fill*         0x03002427        0x1 
+ .bss.sIconFrame
+                0x03002428        0x7 build/objects.o
+ *fill*         0x0300242f        0x1 
+ .bss.sIconTile
+                0x03002430        0x2 build/objects.o
+ .bss.sPickTile
+                0x03002432        0x2 build/objects.o
+ .bss.sMouthTile
+                0x03002434        0x2 build/objects.o
+ .bss.sArrowTile
+                0x03002436        0x2 build/objects.o
+ .bss.sLiftTile
+                0x03002438        0x2 build/objects.o
+ .bss.sProjTile
+                0x0300243a        0x2 build/objects.o
+ .bss.sFxTile   0x0300243c        0x2 build/objects.o
+ .bss.sItemsTile
+                0x0300243e        0x2 build/objects.o
+ .bss.gSwordStudyRender
+                0x03002440       0x20 build/player.o
+                0x03002440                gSwordStudyRender
+ .bss.gSwordStudyRenderSequence
+                0x03002460        0x4 build/player.o
+                0x03002460                gSwordStudyRenderSequence
+ .bss.sCanopyReady
+                0x03002464        0x1 build/player.o
+ .bss.sCanopyCutoff
+                0x03002465        0x1 build/player.o
+ .bss.sCanopyTile
+                0x03002466        0x2 build/player.o
+ .bss.sUseFacing
+                0x03002468        0x1 build/player.o
+ .bss.sUseLength
+                0x03002469        0x1 build/player.o
+ .bss.sUseTimer
+                0x0300246a        0x1 build/player.o
+ .bss.sUseItem  0x0300246b        0x1 build/player.o
+ .bss.sShadowTile
+                0x0300246c        0x2 build/player.o
+ .bss.sLastActionFrame
+                0x0300246e        0x2 build/player.o
+ .bss.sActionTile
+                0x03002470        0x2 build/player.o
+ .bss.sWalkTimer
+                0x03002472        0x1 build/player.o
+ *fill*         0x03002473        0x1 
+ .bss.gPl       0x03002474       0x26 build/player.o
+                0x03002474                gPl
+ *fill*         0x0300249a        0x2 
+ .bss.gPlayer   0x0300249c        0x4 build/player.o
+                0x0300249c                gPlayer
+ .bss.v.2       0x030024a0        0x4 build/room.o
+ .bss.gAnimTiles
+                0x030024a4        0x1 build/room.o
+                0x030024a4                gAnimTiles
+ *fill*         0x030024a5        0x1 
+ .bss.gCamY     0x030024a6        0x2 build/room.o
+                0x030024a6                gCamY
+ .bss.gCamX     0x030024a8        0x2 build/room.o
+                0x030024a8                gCamX
+ *fill*         0x030024aa        0x2 
+ .bss.rot.3     0x030024ac      0x300 build/roomgen.o
+ .bss.q.6       0x030027ac      0x600 build/roomgen.o
+ .bss.queue.9   0x03002dac      0x600 build/roomgen.o
+ .bss.from.10   0x030033ac      0x300 build/roomgen.o
+ .bss.sClearCount
+                0x030036ac        0x4 build/roomgen.o
+ .bss.sClear    0x030036b0       0x10 build/roomgen.o
+ .bss.sChunk    0x030036c0      0x15e build/roomgen.o
+ .bss.sEntryY   0x0300381e        0x1 build/roomgen.o
+ .bss.sEntryX   0x0300381f        0x1 build/roomgen.o
+ .bss.gForestCohesionInfo
+                0x03003820       0x20 build/roomgen.o
+                0x03003820                gForestCohesionInfo
+ .bss.sStage    0x03003840        0x1 build/roomgen.o
+ .bss.sBlighted
+                0x03003841        0x1 build/roomgen.o
+ .bss.sTrail    0x03003842        0x2 build/roomgen.o
+ .bss.sPath     0x03003844      0x300 build/roomgen.o
+ .bss.sMask     0x03003b44      0x300 build/roomgen.o
+ .bss.sTerraceRow
+                0x03003e44        0x4 build/roomgen.o
+ .bss.sReach    0x03003e48      0x300 build/roomgen.o
+ .bss.sR        0x03004148        0x4 build/roomgen.o
+ .bss.gSpots    0x0300414c       0x3a build/roomgen.o
+                0x0300414c                gSpots
+ .bss.sRow      0x03004186        0x1 build/sound.o
+ .bss.sTickTimer
+                0x03004187        0x1 build/sound.o
+ .bss.sBass     0x03004188        0x8 build/sound.o
+ .bss.sMel      0x03004190        0x8 build/sound.o
+ .bss.sBgm      0x03004198        0x1 build/sound.o
+ .bss.sSfxCur   0x03004199        0x1 build/sound.o
+ .bss.sSfxTimer
+                0x0300419a        0x1 build/sound.o
+ *fill*         0x0300419b        0x1 
+ .bss.v.4       0x0300419c        0x4 build/text.o
+ .bss.sMapGoal  0x030041a0        0x1 build/text.o
+ .bss.sMapArea  0x030041a1        0x1 build/text.o
+ .bss.sMapHere  0x030041a2        0x1 build/text.o
+ *fill*         0x030041a3        0x1 
+ .bss.sMapSeed  0x030041a4        0x4 build/text.o
+ .bss.sMapVisited
+                0x030041a8        0x4 build/text.o
+ .bss.sMapStamp
+                0x030041ac        0x4 build/text.o
+ .bss.sHudGlint
+                0x030041b0        0x4 build/text.o
+ *fill*         0x030041b4        0x4 
+ .bss.sHudPressUntil
+                0x030041b8        0xc build/text.o
+ *fill*         0x030041c4        0x4 
+ .bss.sHudPressed
+                0x030041c8        0x3 build/text.o
+ *fill*         0x030041cb        0x5 
+ .bss.sHudCount
+                0x030041d0        0x6 build/text.o
+ *fill*         0x030041d6        0x2 
+ .bss.sHudIconFrame
+                0x030041d8        0x3 build/text.o
+ *fill*         0x030041db        0x5 
+ .bss.sHudEq    0x030041e0        0x3 build/text.o
+ *fill*         0x030041e3        0x1 
+ .bss.sPurseGilt
+                0x030041e4        0x4 build/text.o
+ .bss.sHudHpMax
+                0x030041e8        0x2 build/text.o
+ .bss.sHudHp    0x030041ea        0x2 build/text.o
+ .bss.sPurse    0x030041ec        0xc build/text.o
+ .bss.sShopHints
+                0x030041f8        0xc build/text.o
+ .bss.sShopBubble
+                0x03004204        0xc build/text.o
+ .bss.sShopPurse
+                0x03004210        0xc build/text.o
+ .bss.sShopDesc
+                0x0300421c        0xc build/text.o
+ .bss.sShopName
+                0x03004228        0xc build/text.o
+ .bss.sShopRows
+                0x03004234       0x24 build/text.o
+ .bss.sShopIconTile
+                0x03004258        0x2 build/text.o
+ .bss.sShopResult
+                0x0300425a        0x1 build/text.o
+ .bss.sShopActive
+                0x0300425b        0x1 build/text.o
+ .bss.sShopCursor
+                0x0300425c        0x1 build/text.o
+ .bss.sShopCount
+                0x0300425d        0x1 build/text.o
+ *fill*         0x0300425e        0x2 
+ .bss.sShopItems
+                0x03004260        0x4 build/text.o
+ .bss.sTbX      0x03004264        0x2 build/text.o
+ .bss.sTbW      0x03004266        0x1 build/text.o
+ .bss.sTbX0     0x03004267        0x1 build/text.o
+ .bss.sTbDirty  0x03004268        0x1 build/text.o
+ .bss.sTbInk    0x03004269        0x1 build/text.o
+ .bss.sTbDone   0x0300426a        0x1 build/text.o
+ .bss.sTbLine   0x0300426b        0x1 build/text.o
+ .bss.gTbActive
+                0x0300426c        0x1 build/text.o
+                0x0300426c                gTbActive
+ *fill*         0x0300426d        0x3 
+ .bss.sTbPos    0x03004270        0x4 build/text.o
+ .bss.sTbText   0x03004274        0x4 build/text.o
+ .bss.sTbName   0x03004278        0xc build/text.o
+ .bss.sTbCanvas
+                0x03004284        0xc build/text.o
+ .bss.sBg0Dirty
+                0x03004290        0x1 build/text.o
+ *fill*         0x03004291        0x7 
+ .bss.sBg0      0x03004298      0x800 build/text.o
+ .bss.gBg3Dirty
+                0x03004a98        0x1 build/ui.o
+                0x03004a98                gBg3Dirty
+ *fill*         0x03004a99        0x3 
+ .bss.gDbg      0x03004a9c       0x20 build/util.o
+                0x03004a9c                gDbg
+ .bss.tmp.0     0x03004abc      0x200 build/video.o
+ .bss.gVBlankHook
+                0x03004cbc        0x4 build/video.o
+                0x03004cbc                gVBlankHook
+ .bss.sFadeSpeed
+                0x03004cc0        0x1 build/video.o
+ .bss.sFadeTarget
+                0x03004cc1        0x1 build/video.o
+ .bss.gFadeLevel
+                0x03004cc2        0x1 build/video.o
+                0x03004cc2                gFadeLevel
+ .bss.gPalDirty
+                0x03004cc3        0x1 build/video.o
+                0x03004cc3                gPalDirty
+ *fill*         0x03004cc4        0x4 
+ .bss.gPalObj   0x03004cc8      0x200 build/video.o
+                0x03004cc8                gPalObj
+ .bss.gPalBg    0x03004ec8      0x200 build/video.o
+                0x03004ec8                gPalBg
+ .bss.gBgScroll
+                0x030050c8       0x10 build/video.o
+                0x030050c8                gBgScroll
+ .bss.gOamCount
+                0x030050d8        0x1 build/video.o
+                0x030050d8                gOamCount
+ *fill*         0x030050d9        0x7 
+ .bss.gOam      0x030050e0      0x400 build/video.o
+                0x030050e0                gOam
+ .bss.gKeysUp   0x030054e0        0x2 build/video.o
+                0x030054e0                gKeysUp
+ .bss.gKeysDown
+                0x030054e2        0x2 build/video.o
+                0x030054e2                gKeysDown
+ .bss.gKeysHeld
+                0x030054e4        0x2 build/video.o
+                0x030054e4                gKeysHeld
+ .bss.gVBlankFlag
+                0x030054e6        0x1 build/video.o
+                0x030054e6                gVBlankFlag
+ *fill*         0x030054e7        0x1 
+ .bss.gFrame    0x030054e8        0x4 build/video.o
+                0x030054e8                gFrame
+ .bss.sEnd      0x030054ec        0x2 build/vwf.o
+ .bss.sNext     0x030054ee        0x2 build/vwf.o
+ .bss.sStageLimit
+                0x030054f0        0x4 build/world.o
+ .bss.sParent   0x030054f4       0x19 build/world.o
+ *fill*         0x0300550d        0x3 
+ .bss.sDist     0x03005510       0x19 build/world.o
+ *fill*         0x03005529        0x3 
+ .bss.sTree     0x0300552c       0x64 build/world.o
+ .bss.gWorldGenerationFallback
+                0x03005590        0x1 build/world.o
+                0x03005590                gWorldGenerationFallback
+ .bss.gWorldGenerationAttempts
+                0x03005591        0x1 build/world.o
+                0x03005591                gWorldGenerationAttempts
+ *(COMMON)
+                0x03005594                        . = ALIGN (0x4)
+ *fill*         0x03005592        0x2 
+                0x03005594                        __bss_end = .
+
+.ewram          0x02000000        0x0 load address 0x0809f2f8
+                0x02000000                        __ewram_start = .
+ *(.ewram .ewram.*)
+                0x02000000                        . = ALIGN (0x4)
+                0x02000000                        __ewram_end = .
+                0x0809f2f8                        __ewram_lma = LOADADDR (.ewram)
+
+.ewram_bss      0x02000000    0x3dce0 load address 0x0809f2f8
+                0x02000000                        __ewram_bss_start = .
+ *(.ewram_bss .ewram_bss.*)
+ .ewram_bss     0x02000000     0x2000 build/ambient.o
+ .ewram_bss     0x02002000     0x2100 build/forest_paths.o
+ .ewram_bss     0x02004100     0x6420 build/forest_trees.o
+                0x02008500                gForestTreeRoots
+                0x02008d00                gForestTreeStats
+                0x02008d20                gForestTrees
+ .ewram_bss     0x0200a520    0x2817c build/menu.o
+ .ewram_bss     0x0203269c      0x218 build/player.o
+                0x0203269c                gForestV3Visibility
+ .ewram_bss     0x020328b4     0x3802 build/room.o
+                0x020328b4                gRoomVisualOverlay
+                0x020330b4                gRoomVisualGround
+                0x020338b4                gRoom
+ *fill*         0x020360b6        0x2 
+ .ewram_bss     0x020360b8     0x2b04 build/roomgen.o
+ .ewram_bss     0x02038bbc      0x2d8 build/save.o
+ .ewram_bss     0x02038e94      0xd40 build/text.o
+ .ewram_bss     0x02039bd4      0xe60 build/ui.o
+                0x0203a234                gBg3
+ .ewram_bss     0x0203aa34       0x10 build/video.o
+                0x0203aa34                gForestV2DisplayedCamera
+                0x0203aa38                gForestTreeDisplayedScroll
+ .ewram_bss     0x0203aa44     0x3000 build/vwf.o
+ .ewram_bss     0x0203da44      0x29c build/world.o
+                0x0203da44                gWorld
+                0x0203dce0                        . = ALIGN (0x4)
+                0x0203dce0                        __ewram_bss_end = .
+                0x0809f2f8                        __rom_end = (LOADADDR (.ewram) + SIZEOF (.ewram))
+
+/DISCARD/
+ *(.comment)
+ *(.note*)
+ *(.ARM.attributes)
+LOAD build/actor.o
+LOAD build/ambient.o
+LOAD build/appearance.o
+LOAD build/boss.o
+LOAD build/enemy.o
+LOAD build/forest_paths.o
+LOAD build/forest_trees.o
+LOAD build/game.o
+LOAD build/interactive.o
+LOAD build/items.o
+LOAD build/main.o
+LOAD build/menu.o
+LOAD build/menu_layouts_a.o
+LOAD build/menu_layouts_b.o
+LOAD build/menu_studies.o
+LOAD build/myst.o
+LOAD build/npc.o
+LOAD build/objects.o
+LOAD build/player.o
+LOAD build/react.o
+LOAD build/room.o
+LOAD build/roomgen.o
+LOAD build/save.o
+LOAD build/sound.o
+LOAD build/text.o
+LOAD build/ui.o
+LOAD build/util.o
+LOAD build/video.o
+LOAD build/vwf.o
+LOAD build/world.o
+LOAD build/crt0.o
+LOAD build/assets.o
+LOAD /workspace/setup/sysroot/usr/bin/../lib/gcc/arm-none-eabi/14.2.1/thumb/nofp/libgcc.a
+OUTPUT(build/bartgame.elf elf32-littlearm)
+LOAD linker stubs
+
+.debug_info     0x00000000    0x3f252
+ .debug_info    0x00000000     0x1a96 build/actor.o
+ .debug_info    0x00001a96      0xced build/ambient.o
+ .debug_info    0x00002783      0x484 build/appearance.o
+ .debug_info    0x00002c07     0x10eb build/boss.o
+ .debug_info    0x00003cf2     0x20ed build/enemy.o
+ .debug_info    0x00005ddf     0x13dc build/forest_paths.o
+ .debug_info    0x000071bb     0x1bba build/forest_trees.o
+ .debug_info    0x00008d75     0x3f37 build/game.o
+ .debug_info    0x0000ccac     0x1541 build/interactive.o
+ .debug_info    0x0000e1ed      0xbeb build/items.o
+ .debug_info    0x0000edd8      0x15f build/main.o
+ .debug_info    0x0000ef37     0x73d6 build/menu.o
+ .debug_info    0x0001630d      0x286 build/menu_layouts_a.o
+ .debug_info    0x00016593      0x2af build/menu_layouts_b.o
+ .debug_info    0x00016842      0x2bc build/menu_studies.o
+ .debug_info    0x00016afe     0x2375 build/myst.o
+ .debug_info    0x00018e73     0x2913 build/npc.o
+ .debug_info    0x0001b786     0x262e build/objects.o
+ .debug_info    0x0001ddb4     0x3acf build/player.o
+ .debug_info    0x00021883     0x182c build/react.o
+ .debug_info    0x000230af     0x3551 build/room.o
+ .debug_info    0x00026600     0xab14 build/roomgen.o
+ .debug_info    0x00031114      0xa9d build/save.o
+ .debug_info    0x00031bb1     0x109b build/sound.o
+ .debug_info    0x00032c4c     0x5020 build/text.o
+ .debug_info    0x00037c6c      0xb03 build/ui.o
+ .debug_info    0x0003876f      0x48a build/util.o
+ .debug_info    0x00038bf9      0x9e5 build/video.o
+ .debug_info    0x000395de     0x12ed build/vwf.o
+ .debug_info    0x0003a8cb     0x25c5 build/world.o
+ .debug_info    0x0003ce90     0x1eea build/assets.o
+ .debug_info    0x0003ed7a       0x3e /workspace/setup/sysroot/usr/bin/../lib/gcc/arm-none-eabi/14.2.1/thumb/nofp/libgcc.a(_udivsi3.o)
+ .debug_info    0x0003edb8       0x3e /workspace/setup/sysroot/usr/bin/../lib/gcc/arm-none-eabi/14.2.1/thumb/nofp/libgcc.a(_divsi3.o)
+ .debug_info    0x0003edf6       0x3c /workspace/setup/sysroot/usr/bin/../lib/gcc/arm-none-eabi/14.2.1/thumb/nofp/libgcc.a(_dvmd_tls.o)
+ .debug_info    0x0003ee32      0x420 /workspace/setup/sysroot/usr/bin/../lib/gcc/arm-none-eabi/14.2.1/thumb/nofp/libgcc.a(_muldi3.o)
+
+.debug_abbrev   0x00000000     0x7924
+ .debug_abbrev  0x00000000      0x4df build/actor.o
+ .debug_abbrev  0x000004df      0x352 build/ambient.o
+ .debug_abbrev  0x00000831      0x242 build/appearance.o
+ .debug_abbrev  0x00000a73      0x39d build/boss.o
+ .debug_abbrev  0x00000e10      0x539 build/enemy.o
+ .debug_abbrev  0x00001349      0x342 build/forest_paths.o
+ .debug_abbrev  0x0000168b      0x4e6 build/forest_trees.o
+ .debug_abbrev  0x00001b71      0x50e build/game.o
+ .debug_abbrev  0x0000207f      0x44e build/interactive.o
+ .debug_abbrev  0x000024cd      0x28e build/items.o
+ .debug_abbrev  0x0000275b       0x62 build/main.o
+ .debug_abbrev  0x000027bd      0x6d1 build/menu.o
+ .debug_abbrev  0x00002e8e      0x104 build/menu_layouts_a.o
+ .debug_abbrev  0x00002f92      0x106 build/menu_layouts_b.o
+ .debug_abbrev  0x00003098      0x132 build/menu_studies.o
+ .debug_abbrev  0x000031ca      0x52c build/myst.o
+ .debug_abbrev  0x000036f6      0x523 build/npc.o
+ .debug_abbrev  0x00003c19      0x56d build/objects.o
+ .debug_abbrev  0x00004186      0x6d5 build/player.o
+ .debug_abbrev  0x0000485b      0x378 build/react.o
+ .debug_abbrev  0x00004bd3      0x635 build/room.o
+ .debug_abbrev  0x00005208      0x68d build/roomgen.o
+ .debug_abbrev  0x00005895      0x2ff build/save.o
+ .debug_abbrev  0x00005b94      0x253 build/sound.o
+ .debug_abbrev  0x00005de7      0x6ce build/text.o
+ .debug_abbrev  0x000064b5      0x320 build/ui.o
+ .debug_abbrev  0x000067d5      0x22a build/util.o
+ .debug_abbrev  0x000069ff      0x34b build/video.o
+ .debug_abbrev  0x00006d4a      0x3ad build/vwf.o
+ .debug_abbrev  0x000070f7      0x531 build/world.o
+ .debug_abbrev  0x00007628      0x134 build/assets.o
+ .debug_abbrev  0x0000775c       0x28 /workspace/setup/sysroot/usr/bin/../lib/gcc/arm-none-eabi/14.2.1/thumb/nofp/libgcc.a(_udivsi3.o)
+ .debug_abbrev  0x00007784       0x28 /workspace/setup/sysroot/usr/bin/../lib/gcc/arm-none-eabi/14.2.1/thumb/nofp/libgcc.a(_divsi3.o)
+ .debug_abbrev  0x000077ac       0x26 /workspace/setup/sysroot/usr/bin/../lib/gcc/arm-none-eabi/14.2.1/thumb/nofp/libgcc.a(_dvmd_tls.o)
+ .debug_abbrev  0x000077d2      0x152 /workspace/setup/sysroot/usr/bin/../lib/gcc/arm-none-eabi/14.2.1/thumb/nofp/libgcc.a(_muldi3.o)
+
+.debug_loclists
+                0x00000000    0x2664d
+ .debug_loclists
+                0x00000000     0x1478 build/actor.o
+ .debug_loclists
+                0x00001478      0x42c build/ambient.o
+ .debug_loclists
+                0x000018a4      0x1cf build/appearance.o
+ .debug_loclists
+                0x00001a73      0x37c build/boss.o
+ .debug_loclists
+                0x00001def     0x11f9 build/enemy.o
+ .debug_loclists
+                0x00002fe8      0xb02 build/forest_paths.o
+ .debug_loclists
+                0x00003aea     0x14ed build/forest_trees.o
+ .debug_loclists
+                0x00004fd7      0xac1 build/game.o
+ .debug_loclists
+                0x00005a98      0x72b build/interactive.o
+ .debug_loclists
+                0x000061c3      0x152 build/items.o
+ .debug_loclists
+                0x00006315     0x56fc build/menu.o
+ .debug_loclists
+                0x0000ba11       0x32 build/menu_layouts_a.o
+ .debug_loclists
+                0x0000ba43       0x32 build/menu_layouts_b.o
+ .debug_loclists
+                0x0000ba75       0x40 build/menu_studies.o
+ .debug_loclists
+                0x0000bab5      0xa02 build/myst.o
+ .debug_loclists
+                0x0000c4b7      0xdd8 build/npc.o
+ .debug_loclists
+                0x0000d28f     0x1017 build/objects.o
+ .debug_loclists
+                0x0000e2a6     0x237e build/player.o
+ .debug_loclists
+                0x00010624      0x6f5 build/react.o
+ .debug_loclists
+                0x00010d19     0x2ac0 build/room.o
+ .debug_loclists
+                0x000137d9     0xb12e build/roomgen.o
+ .debug_loclists
+                0x0001e907      0x21d build/save.o
+ .debug_loclists
+                0x0001eb24      0x803 build/sound.o
+ .debug_loclists
+                0x0001f327     0x25b8 build/text.o
+ .debug_loclists
+                0x000218df      0xaeb build/ui.o
+ .debug_loclists
+                0x000223ca      0x4c4 build/util.o
+ .debug_loclists
+                0x0002288e      0x37c build/video.o
+ .debug_loclists
+                0x00022c0a     0x1398 build/vwf.o
+ .debug_loclists
+                0x00023fa2     0x257d build/world.o
+ .debug_loclists
+                0x0002651f      0x12e /workspace/setup/sysroot/usr/bin/../lib/gcc/arm-none-eabi/14.2.1/thumb/nofp/libgcc.a(_muldi3.o)
+
+.debug_aranges  0x00000000     0x10d0
+ .debug_aranges
+                0x00000000       0xe8 build/actor.o
+ .debug_aranges
+                0x000000e8       0x30 build/ambient.o
+ .debug_aranges
+                0x00000118       0x68 build/appearance.o
+ .debug_aranges
+                0x00000180       0x58 build/boss.o
+ .debug_aranges
+                0x000001d8       0x68 build/enemy.o
+ .debug_aranges
+                0x00000240       0x30 build/forest_paths.o
+ .debug_aranges
+                0x00000270       0xa0 build/forest_trees.o
+ .debug_aranges
+                0x00000310       0x68 build/game.o
+ .debug_aranges
+                0x00000378       0x78 build/interactive.o
+ .debug_aranges
+                0x000003f0       0x28 build/items.o
+ .debug_aranges
+                0x00000418       0x20 build/main.o
+ .debug_aranges
+                0x00000438       0xd0 build/menu.o
+ .debug_aranges
+                0x00000508       0x20 build/menu_layouts_a.o
+ .debug_aranges
+                0x00000528       0x20 build/menu_layouts_b.o
+ .debug_aranges
+                0x00000548       0x20 build/menu_studies.o
+ .debug_aranges
+                0x00000568       0x98 build/myst.o
+ .debug_aranges
+                0x00000600       0x60 build/npc.o
+ .debug_aranges
+                0x00000660       0xc0 build/objects.o
+ .debug_aranges
+                0x00000720      0x138 build/player.o
+ .debug_aranges
+                0x00000858       0x80 build/react.o
+ .debug_aranges
+                0x000008d8      0x158 build/room.o
+ .debug_aranges
+                0x00000a30      0x1a0 build/roomgen.o
+ .debug_aranges
+                0x00000bd0       0x40 build/save.o
+ .debug_aranges
+                0x00000c10       0x40 build/sound.o
+ .debug_aranges
+                0x00000c50      0x148 build/text.o
+ .debug_aranges
+                0x00000d98       0x60 build/ui.o
+ .debug_aranges
+                0x00000df8       0x68 build/util.o
+ .debug_aranges
+                0x00000e60       0x90 build/video.o
+ .debug_aranges
+                0x00000ef0       0xb0 build/vwf.o
+ .debug_aranges
+                0x00000fa0       0x98 build/world.o
+ .debug_aranges
+                0x00001038       0x18 build/assets.o
+ .debug_aranges
+                0x00001050       0x20 /workspace/setup/sysroot/usr/bin/../lib/gcc/arm-none-eabi/14.2.1/thumb/nofp/libgcc.a(_udivsi3.o)
+ .debug_aranges
+                0x00001070       0x20 /workspace/setup/sysroot/usr/bin/../lib/gcc/arm-none-eabi/14.2.1/thumb/nofp/libgcc.a(_divsi3.o)
+ .debug_aranges
+                0x00001090       0x20 /workspace/setup/sysroot/usr/bin/../lib/gcc/arm-none-eabi/14.2.1/thumb/nofp/libgcc.a(_dvmd_tls.o)
+ .debug_aranges
+                0x000010b0       0x20 /workspace/setup/sysroot/usr/bin/../lib/gcc/arm-none-eabi/14.2.1/thumb/nofp/libgcc.a(_muldi3.o)
+
+.debug_rnglists
+                0x00000000     0x5a5d
+ .debug_rnglists
+                0x00000000      0x1eb build/actor.o
+ .debug_rnglists
+                0x000001eb       0x75 build/ambient.o
+ .debug_rnglists
+                0x00000260       0x57 build/appearance.o
+ .debug_rnglists
+                0x000002b7       0x6e build/boss.o
+ .debug_rnglists
+                0x00000325      0x24f build/enemy.o
+ .debug_rnglists
+                0x00000574      0x1d9 build/forest_paths.o
+ .debug_rnglists
+                0x0000074d      0x2ac build/forest_trees.o
+ .debug_rnglists
+                0x000009f9      0x2ed build/game.o
+ .debug_rnglists
+                0x00000ce6       0xf5 build/interactive.o
+ .debug_rnglists
+                0x00000ddb       0x68 build/items.o
+ .debug_rnglists
+                0x00000e43       0x13 build/main.o
+ .debug_rnglists
+                0x00000e56      0xde3 build/menu.o
+ .debug_rnglists
+                0x00001c39       0x13 build/menu_layouts_a.o
+ .debug_rnglists
+                0x00001c4c       0x13 build/menu_layouts_b.o
+ .debug_rnglists
+                0x00001c5f       0x13 build/menu_studies.o
+ .debug_rnglists
+                0x00001c72      0x302 build/myst.o
+ .debug_rnglists
+                0x00001f74      0x421 build/npc.o
+ .debug_rnglists
+                0x00002395      0x36c build/objects.o
+ .debug_rnglists
+                0x00002701      0x63e build/player.o
+ .debug_rnglists
+                0x00002d3f      0x117 build/react.o
+ .debug_rnglists
+                0x00002e56      0x313 build/room.o
+ .debug_rnglists
+                0x00003169     0x17a8 build/roomgen.o
+ .debug_rnglists
+                0x00004911       0x7a build/save.o
+ .debug_rnglists
+                0x0000498b      0x16f build/sound.o
+ .debug_rnglists
+                0x00004afa      0x4bd build/text.o
+ .debug_rnglists
+                0x00004fb7      0x1a0 build/ui.o
+ .debug_rnglists
+                0x00005157       0x67 build/util.o
+ .debug_rnglists
+                0x000051be      0x131 build/video.o
+ .debug_rnglists
+                0x000052ef      0x205 build/vwf.o
+ .debug_rnglists
+                0x000054f4      0x54a build/world.o
+ .debug_rnglists
+                0x00005a3e       0x1f /workspace/setup/sysroot/usr/bin/../lib/gcc/arm-none-eabi/14.2.1/thumb/nofp/libgcc.a(_muldi3.o)
+
+.debug_line     0x00000000    0x2cf1a
+ .debug_line    0x00000000     0x1178 build/actor.o
+ .debug_line    0x00001178      0x674 build/ambient.o
+ .debug_line    0x000017ec      0x47c build/appearance.o
+ .debug_line    0x00001c68      0x869 build/boss.o
+ .debug_line    0x000024d1     0x17a5 build/enemy.o
+ .debug_line    0x00003c76      0xcce build/forest_paths.o
+ .debug_line    0x00004944     0x15e0 build/forest_trees.o
+ .debug_line    0x00005f24     0x1ce5 build/game.o
+ .debug_line    0x00007c09      0xa18 build/interactive.o
+ .debug_line    0x00008621      0x40a build/items.o
+ .debug_line    0x00008a2b       0xa0 build/main.o
+ .debug_line    0x00008acb     0x6a7c build/menu.o
+ .debug_line    0x0000f547       0x81 build/menu_layouts_a.o
+ .debug_line    0x0000f5c8       0x70 build/menu_layouts_b.o
+ .debug_line    0x0000f638       0x7b build/menu_studies.o
+ .debug_line    0x0000f6b3     0x192a build/myst.o
+ .debug_line    0x00010fdd     0x1712 build/npc.o
+ .debug_line    0x000126ef     0x194f build/objects.o
+ .debug_line    0x0001403e     0x31eb build/player.o
+ .debug_line    0x00017229      0x88b build/react.o
+ .debug_line    0x00017ab4     0x28bb build/room.o
+ .debug_line    0x0001a36f     0xa7f4 build/roomgen.o
+ .debug_line    0x00024b63      0x4ae build/save.o
+ .debug_line    0x00025011      0xa58 build/sound.o
+ .debug_line    0x00025a69     0x2aef build/text.o
+ .debug_line    0x00028558      0x717 build/ui.o
+ .debug_line    0x00028c6f      0x35a build/util.o
+ .debug_line    0x00028fc9      0x874 build/video.o
+ .debug_line    0x0002983d      0xe62 build/vwf.o
+ .debug_line    0x0002a69f     0x2602 build/world.o
+ .debug_line    0x0002cca1       0x4c build/assets.o
+ .debug_line    0x0002cced       0x67 /workspace/setup/sysroot/usr/bin/../lib/gcc/arm-none-eabi/14.2.1/thumb/nofp/libgcc.a(_udivsi3.o)
+ .debug_line    0x0002cd54       0x73 /workspace/setup/sysroot/usr/bin/../lib/gcc/arm-none-eabi/14.2.1/thumb/nofp/libgcc.a(_divsi3.o)
+ .debug_line    0x0002cdc7       0x4a /workspace/setup/sysroot/usr/bin/../lib/gcc/arm-none-eabi/14.2.1/thumb/nofp/libgcc.a(_dvmd_tls.o)
+ .debug_line    0x0002ce11      0x109 /workspace/setup/sysroot/usr/bin/../lib/gcc/arm-none-eabi/14.2.1/thumb/nofp/libgcc.a(_muldi3.o)
+
+.debug_str      0x00000000     0x6589
+ .debug_str     0x00000000     0x6589 build/actor.o
+                                0x5ed (size before relaxing)
+ .debug_str     0x00006589      0x5c9 build/ambient.o
+ .debug_str     0x00006589      0x326 build/appearance.o
+ .debug_str     0x00006589      0x834 build/boss.o
+ .debug_str     0x00006589      0xada build/enemy.o
+ .debug_str     0x00006589      0x5e3 build/forest_paths.o
+ .debug_str     0x00006589      0x720 build/forest_trees.o
+ .debug_str     0x00006589     0x1489 build/game.o
+ .debug_str     0x00006589      0x851 build/interactive.o
+ .debug_str     0x00006589      0x698 build/items.o
+ .debug_str     0x00006589      0x1e6 build/main.o
+ .debug_str     0x00006589     0x1385 build/menu.o
+ .debug_str     0x00006589      0x29e build/menu_layouts_a.o
+ .debug_str     0x00006589      0x2dc build/menu_layouts_b.o
+ .debug_str     0x00006589      0x255 build/menu_studies.o
+ .debug_str     0x00006589      0xacc build/myst.o
+ .debug_str     0x00006589      0xc3b build/npc.o
+ .debug_str     0x00006589      0xd29 build/objects.o
+ .debug_str     0x00006589      0xf6a build/player.o
+ .debug_str     0x00006589      0x7ef build/react.o
+ .debug_str     0x00006589      0xca2 build/room.o
+ .debug_str     0x00006589      0xef7 build/roomgen.o
+ .debug_str     0x00006589      0x5c6 build/save.o
+ .debug_str     0x00006589      0x449 build/sound.o
+ .debug_str     0x00006589      0xdd4 build/text.o
+ .debug_str     0x00006589      0x242 build/ui.o
+ .debug_str     0x00006589      0x1c4 build/util.o
+ .debug_str     0x00006589      0x362 build/video.o
+ .debug_str     0x00006589      0x308 build/vwf.o
+ .debug_str     0x00006589      0x8f7 build/world.o
+ .debug_str     0x00006589     0x15a9 build/assets.o
+ .debug_str     0x00006589       0xb2 /workspace/setup/sysroot/usr/bin/../lib/gcc/arm-none-eabi/14.2.1/thumb/nofp/libgcc.a(_udivsi3.o)
+ .debug_str     0x00006589       0xb0 /workspace/setup/sysroot/usr/bin/../lib/gcc/arm-none-eabi/14.2.1/thumb/nofp/libgcc.a(_divsi3.o)
+ .debug_str     0x00006589       0xb3 /workspace/setup/sysroot/usr/bin/../lib/gcc/arm-none-eabi/14.2.1/thumb/nofp/libgcc.a(_dvmd_tls.o)
+ .debug_str     0x00006589      0x668 /workspace/setup/sysroot/usr/bin/../lib/gcc/arm-none-eabi/14.2.1/thumb/nofp/libgcc.a(_muldi3.o)
+
+.debug_frame    0x00000000     0x3514
+ .debug_frame   0x00000000      0x2fc build/actor.o
+ .debug_frame   0x000002fc       0x84 build/ambient.o
+ .debug_frame   0x00000380       0xe0 build/appearance.o
+ .debug_frame   0x00000460      0x104 build/boss.o
+ .debug_frame   0x00000564      0x13c build/enemy.o
+ .debug_frame   0x000006a0       0x94 build/forest_paths.o
+ .debug_frame   0x00000734      0x200 build/forest_trees.o
+ .debug_frame   0x00000934      0x168 build/game.o
+ .debug_frame   0x00000a9c      0x160 build/interactive.o
+ .debug_frame   0x00000bfc       0x48 build/items.o
+ .debug_frame   0x00000c44       0x28 build/main.o
+ .debug_frame   0x00000c6c      0x3bc build/menu.o
+ .debug_frame   0x00001028       0x20 build/menu_layouts_a.o
+ .debug_frame   0x00001048       0x20 build/menu_layouts_b.o
+ .debug_frame   0x00001068       0x28 build/menu_studies.o
+ .debug_frame   0x00001090      0x1f8 build/myst.o
+ .debug_frame   0x00001288      0x140 build/npc.o
+ .debug_frame   0x000013c8      0x288 build/objects.o
+ .debug_frame   0x00001650      0x3d0 build/player.o
+ .debug_frame   0x00001a20      0x1b8 build/react.o
+ .debug_frame   0x00001bd8      0x44c build/room.o
+ .debug_frame   0x00002024      0x708 build/roomgen.o
+ .debug_frame   0x0000272c       0x94 build/save.o
+ .debug_frame   0x000027c0       0x7c build/sound.o
+ .debug_frame   0x0000283c      0x4c0 build/text.o
+ .debug_frame   0x00002cfc      0x11c build/ui.o
+ .debug_frame   0x00002e18       0xdc build/util.o
+ .debug_frame   0x00002ef4      0x150 build/video.o
+ .debug_frame   0x00003044      0x258 build/vwf.o
+ .debug_frame   0x0000329c      0x204 build/world.o
+ .debug_frame   0x000034a0       0x20 /workspace/setup/sysroot/usr/bin/../lib/gcc/arm-none-eabi/14.2.1/thumb/nofp/libgcc.a(_udivsi3.o)
+ .debug_frame   0x000034c0       0x20 /workspace/setup/sysroot/usr/bin/../lib/gcc/arm-none-eabi/14.2.1/thumb/nofp/libgcc.a(_divsi3.o)
+ .debug_frame   0x000034e0       0x34 /workspace/setup/sysroot/usr/bin/../lib/gcc/arm-none-eabi/14.2.1/thumb/nofp/libgcc.a(_muldi3.o)
+
+.debug_line_str
+                0x00000000       0x88
+ .debug_line_str
+                0x00000000       0x88 /workspace/setup/sysroot/usr/bin/../lib/gcc/arm-none-eabi/14.2.1/thumb/nofp/libgcc.a(_udivsi3.o)
+ .debug_line_str
+                0x00000088       0x88 /workspace/setup/sysroot/usr/bin/../lib/gcc/arm-none-eabi/14.2.1/thumb/nofp/libgcc.a(_divsi3.o)
+ .debug_line_str
+                0x00000088       0x88 /workspace/setup/sysroot/usr/bin/../lib/gcc/arm-none-eabi/14.2.1/thumb/nofp/libgcc.a(_dvmd_tls.o)

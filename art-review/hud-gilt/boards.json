@@ -1,0 +1,425 @@
+{
+  "method": "Literal framebuffer/crop placement; nearest-only integer inspection.",
+  "boards": [
+    {
+      "file": "before-after-actual.png",
+      "sha256": "61867d29e3c8d28f5f948d4c4cd31fb4616f3c0207d345600d632d65353dbbec",
+      "panels": [
+        {
+          "source": "actual/before/03-drain.png",
+          "rectangle": [
+            8,
+            70,
+            248,
+            230
+          ],
+          "crop": null,
+          "scale": 1,
+          "RGB_sha256": "d25572422bb1a8229021b5b6bc8c8cd1f83f1021d213e170c67b7bee2858b757"
+        },
+        {
+          "source": "actual/after/03-drain.png",
+          "rectangle": [
+            256,
+            70,
+            496,
+            230
+          ],
+          "crop": null,
+          "scale": 1,
+          "RGB_sha256": "13fc532d4279e71a9eb4e270d55a066fe6ba6add3818a7dab7b9b7f6fdd983ab"
+        },
+        {
+          "source": "actual/before/09-healthy-forest.png",
+          "rectangle": [
+            8,
+            254,
+            248,
+            414
+          ],
+          "crop": null,
+          "scale": 1,
+          "RGB_sha256": "d73537db76fc3099986b98f8dd34b57648717c621f173c186126ba0e9f15be44"
+        },
+        {
+          "source": "actual/after/09-healthy-forest.png",
+          "rectangle": [
+            256,
+            254,
+            496,
+            414
+          ],
+          "crop": null,
+          "scale": 1,
+          "RGB_sha256": "8d599bef9b6ff128b09a334a02d3ab9374dfa13182b1973d322f69a4c5d8801a"
+        },
+        {
+          "source": "actual/before/10-deep-forest.png",
+          "rectangle": [
+            8,
+            438,
+            248,
+            598
+          ],
+          "crop": null,
+          "scale": 1,
+          "RGB_sha256": "8735eb2694d4e0151c213bba9e79299bee9cbc923da5df54d9a896f74b5cabe8"
+        },
+        {
+          "source": "actual/after/10-deep-forest.png",
+          "rectangle": [
+            256,
+            438,
+            496,
+            598
+          ],
+          "crop": null,
+          "scale": 1,
+          "RGB_sha256": "fc3ce1fb0b10d54dc1b51a6b82171d8ec73d548677812f7ebecf356355bc815c"
+        },
+        {
+          "source": "actual/before/11-mystery.png",
+          "rectangle": [
+            8,
+            622,
+            248,
+            782
+          ],
+          "crop": null,
+          "scale": 1,
+          "RGB_sha256": "6b73923103a42e5bbebdb9f2e4fd36200ba35aa975cffca4723339182b9c5839"
+        },
+        {
+          "source": "actual/after/11-mystery.png",
+          "rectangle": [
+            256,
+            622,
+            496,
+            782
+          ],
+          "crop": null,
+          "scale": 1,
+          "RGB_sha256": "00640c94ddcc0a3c41366c60811079b9ad15bb76e2caf544439ddc588306189e"
+        }
+      ]
+    },
+    {
+      "file": "equipment-actual.png",
+      "sha256": "6afe5a554c41b8d851a85c0d5664664787cfb61a4f99138849c6526fbaf9c910",
+      "panels": [
+        {
+          "source": "actual/before/03-drain.png",
+          "rectangle": [
+            8,
+            69,
+            248,
+            93
+          ],
+          "crop": [
+            0,
+            0,
+            240,
+            24
+          ],
+          "scale": 1,
+          "RGB_sha256": "884c4b7f99e1529eafab4c0b2bb4582c779bd84e6b4fd58a3129b4a710e62a26"
+        },
+        {
+          "source": "actual/after/03-drain.png",
+          "rectangle": [
+            256,
+            69,
+            496,
+            93
+          ],
+          "crop": [
+            0,
+            0,
+            240,
+            24
+          ],
+          "scale": 1,
+          "RGB_sha256": "5bde53743f1e50d6f0d3e73d9ad602966f0bbb91830a2bf4b49e966e58b48d4a"
+        },
+        {
+          "source": "actual/before/04-lantern-cape-hubcap.png",
+          "rectangle": [
+            8,
+            129,
+            248,
+            153
+          ],
+          "crop": [
+            0,
+            0,
+            240,
+            24
+          ],
+          "scale": 1,
+          "RGB_sha256": "c678d1e6a6320caf7e019612c515a71abbafa7012a96cb0bc75c5728f4e065fe"
+        },
+        {
+          "source": "actual/after/04-lantern-cape-hubcap.png",
+          "rectangle": [
+            256,
+            129,
+            496,
+            153
+          ],
+          "crop": [
+            0,
+            0,
+            240,
+            24
+          ],
+          "scale": 1,
+          "RGB_sha256": "df6a9eebe58cf5ca2d437c50a3f2fc6121e8dc2d3a6e9fdb174aeee59f8d37d4"
+        },
+        {
+          "source": "actual/before/05-sword-shield-halfheart.png",
+          "rectangle": [
+            8,
+            189,
+            248,
+            213
+          ],
+          "crop": [
+            0,
+            0,
+            240,
+            24
+          ],
+          "scale": 1,
+          "RGB_sha256": "5f1d260d20bafc781644b87d6dbf7899e7747a2d8ec47e688b1a4f4e365b71d3"
+        },
+        {
+          "source": "actual/after/05-sword-shield-halfheart.png",
+          "rectangle": [
+            256,
+            189,
+            496,
+            213
+          ],
+          "crop": [
+            0,
+            0,
+            240,
+            24
+          ],
+          "scale": 1,
+          "RGB_sha256": "b2e98ff29a2312d4ddc86839cd19168e0818971f711b94b42e3b361ccf52942c"
+        },
+        {
+          "source": "actual/before/06-zero-ammunition.png",
+          "rectangle": [
+            8,
+            249,
+            248,
+            273
+          ],
+          "crop": [
+            0,
+            0,
+            240,
+            24
+          ],
+          "scale": 1,
+          "RGB_sha256": "2bedaa6e9eeba92eaa06849228fa1adecac6eca860f49661ccc65dc4d92410b0"
+        },
+        {
+          "source": "actual/after/06-zero-ammunition.png",
+          "rectangle": [
+            256,
+            249,
+            496,
+            273
+          ],
+          "crop": [
+            0,
+            0,
+            240,
+            24
+          ],
+          "scale": 1,
+          "RGB_sha256": "d46b749ecf2924e6fda36414ee00fea5101073ec1444643926748e30b4c451a6"
+        },
+        {
+          "source": "actual/before/07-byte-ammunition-extremes.png",
+          "rectangle": [
+            8,
+            309,
+            248,
+            333
+          ],
+          "crop": [
+            0,
+            0,
+            240,
+            24
+          ],
+          "scale": 1,
+          "RGB_sha256": "cdb41e3046dcbf07b0f0be71901a20ceecd118df9056f6cf9020fd60e9f16c35"
+        },
+        {
+          "source": "actual/after/07-byte-ammunition-extremes.png",
+          "rectangle": [
+            256,
+            309,
+            496,
+            333
+          ],
+          "crop": [
+            0,
+            0,
+            240,
+            24
+          ],
+          "scale": 1,
+          "RGB_sha256": "f4a90e8b9161331ce82fd0d9d1ad11b15045c7d99d96d7a9ed218c3db7fa11fc"
+        },
+        {
+          "source": "actual/before/08-empty-equipment.png",
+          "rectangle": [
+            8,
+            369,
+            248,
+            393
+          ],
+          "crop": [
+            0,
+            0,
+            240,
+            24
+          ],
+          "scale": 1,
+          "RGB_sha256": "08a18316fa480c4c0af57c417e869b4ebedcc35b144ebe1ca122e6344d2c0556"
+        },
+        {
+          "source": "actual/after/08-empty-equipment.png",
+          "rectangle": [
+            256,
+            369,
+            496,
+            393
+          ],
+          "crop": [
+            0,
+            0,
+            240,
+            24
+          ],
+          "scale": 1,
+          "RGB_sha256": "eecc0f4fe43d69f88f213a303aa8ab8736c2f6da60a8a07f2bdd85140a29a9bd"
+        }
+      ]
+    },
+    {
+      "file": "button-feedback-actual.png",
+      "sha256": "8d1558a0e2525068bbc255a13ebf70ae9e3bf293321620de8fd3f376c8ed5bd9",
+      "panels": [
+        {
+          "source": "actual/after/button-A-released.png",
+          "rectangle": [
+            8,
+            63,
+            200,
+            103
+          ],
+          "crop": [
+            144,
+            0,
+            240,
+            20
+          ],
+          "scale": 2,
+          "RGB_sha256": "60c8d54b95a15ba2324a5b4e8c560b4b5b3c631f5d5db631a4b4de3546d1dff3"
+        },
+        {
+          "source": "actual/after/button-A-held.png",
+          "rectangle": [
+            256,
+            63,
+            448,
+            103
+          ],
+          "crop": [
+            144,
+            0,
+            240,
+            20
+          ],
+          "scale": 2,
+          "RGB_sha256": "5dc67b561af696bfacd39656078f9ca15723bddfa0ae74f340b836cb71d59622"
+        },
+        {
+          "source": "actual/after/button-B-released.png",
+          "rectangle": [
+            8,
+            139,
+            200,
+            179
+          ],
+          "crop": [
+            144,
+            0,
+            240,
+            20
+          ],
+          "scale": 2,
+          "RGB_sha256": "f3a2a312a80cfadf18aa37fc1d5b58a9c5872e9cc5f38249e6ad9bde9802bd92"
+        },
+        {
+          "source": "actual/after/button-B-held.png",
+          "rectangle": [
+            256,
+            139,
+            448,
+            179
+          ],
+          "crop": [
+            144,
+            0,
+            240,
+            20
+          ],
+          "scale": 2,
+          "RGB_sha256": "3ed8b1e373c8b00719fb0902ee6e53eb82cae3e74c6c784e654b5ef9711afc5a"
+        },
+        {
+          "source": "actual/after/button-L-released.png",
+          "rectangle": [
+            8,
+            215,
+            200,
+            255
+          ],
+          "crop": [
+            144,
+            0,
+            240,
+            20
+          ],
+          "scale": 2,
+          "RGB_sha256": "f32ed4d4744577246ae0cf396356927fd387edce57fbf956d89622628eda35cb"
+        },
+        {
+          "source": "actual/after/button-L-held.png",
+          "rectangle": [
+            256,
+            215,
+            448,
+            255
+          ],
+          "crop": [
+            144,
+            0,
+            240,
+            20
+          ],
+          "scale": 2,
+          "RGB_sha256": "f79b4bebd7c0c38c70e6ccf9875961816151c8ffe2257f859abe4021c7162bf9"
+        }
+      ]
+    }
+  ]
+}

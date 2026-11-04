@@ -1566,3 +1566,23 @@ and separated gold trim. Equipment pods reach20px only at the upper right.
 Ground drops stay at most14px; existing item material banks deliberately keep
 blightseed highlights wine/magenta. Menu/dialogue skins and their bindings
 remain independently selectable.
+
+**Final frozen-source qualification:** source
+`4747b6788f18fe32da7d3304f34ce94c22468d5b` builds the652,024-byte production
+ROM, SHA256 `1bd913bc5bf1ad81e9c1dcc7e07ebc38eac855d390a5bb613257f8fbfe128e59`.
+The independent audit passes1,090/1,090, binding267 current/committed build
+inputs to the frozen ROM. All65 registered item frames (62 effective redraws)
+are native and correctly packed. The remaining32 sprite sheets,246 protected
+scalar payloads, title/font/menu materials and all three region tilesets,
+palettes and animation payloads retain their source paintings. The fresh
+HUD0 build is byte-identical to the prior forest-room-cohesion ROM; ordinary
+make emits the exact new HUD1 build.
+
+A fresh actual mGBA capture from that committed ROM passes290/290; its retained
+baseline passes210/210. Real idle/walking and paired four-background action
+samples show no extra missed updates. EWRAM use is253,152/262,144 bytes; the
+minimap remains within OBJ tiles1008–1023. The [HUD gallery](../../../art-review/hud-gilt/README.md)
+contains raw native frames, exact animation samples, button feedback and
+separate source catalogs. The [playable build](../../../downloads/hud-gilt-4747b67/README.md)
+is the production handoff. Review fixtures and the finite scope of the
+performance samples remain explicit in the reports.
