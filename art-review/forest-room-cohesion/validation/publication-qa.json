@@ -1,0 +1,2917 @@
+{
+  "gallery_source_commit": "4024902d56c759ca124b2517c73f77e5234be66d",
+  "rom_sha256": "5fcf4cba1c6ab3a5af4575a5a05a49d9813457a02b4f5d16a7e3abc05e41566e",
+  "publication_qa_script_sha256": "9d31c8e6e117dee395d315538020d2a250d8bd6358de2aeaa8ce0e1acf3604b8",
+  "passed": 694,
+  "total": 694,
+  "failures": [],
+  "checks": [
+    {
+      "name": "publication is explicitly frozen profile32",
+      "passed": true
+    },
+    {
+      "name": "board file SHA rooms-actual.png",
+      "passed": true
+    },
+    {
+      "name": "literal native panel rooms-actual.png/0",
+      "passed": true
+    },
+    {
+      "name": "literal native panel rooms-actual.png/1",
+      "passed": true
+    },
+    {
+      "name": "literal native panel rooms-actual.png/2",
+      "passed": true
+    },
+    {
+      "name": "literal native panel rooms-actual.png/3",
+      "passed": true
+    },
+    {
+      "name": "literal native panel rooms-actual.png/4",
+      "passed": true
+    },
+    {
+      "name": "literal native panel rooms-actual.png/5",
+      "passed": true
+    },
+    {
+      "name": "literal native panel rooms-actual.png/6",
+      "passed": true
+    },
+    {
+      "name": "literal native panel rooms-actual.png/7",
+      "passed": true
+    },
+    {
+      "name": "board file SHA native-HUD-actual.png",
+      "passed": true
+    },
+    {
+      "name": "literal native panel native-HUD-actual.png/0",
+      "passed": true
+    },
+    {
+      "name": "literal native panel native-HUD-actual.png/1",
+      "passed": true
+    },
+    {
+      "name": "literal native panel native-HUD-actual.png/2",
+      "passed": true
+    },
+    {
+      "name": "literal native panel native-HUD-actual.png/3",
+      "passed": true
+    },
+    {
+      "name": "literal native panel native-HUD-actual.png/4",
+      "passed": true
+    },
+    {
+      "name": "literal native panel native-HUD-actual.png/5",
+      "passed": true
+    },
+    {
+      "name": "literal native panel native-HUD-actual.png/6",
+      "passed": true
+    },
+    {
+      "name": "literal native panel native-HUD-actual.png/7",
+      "passed": true
+    },
+    {
+      "name": "board file SHA before-after.png",
+      "passed": true
+    },
+    {
+      "name": "literal native panel before-after.png/0",
+      "passed": true
+    },
+    {
+      "name": "literal native panel before-after.png/1",
+      "passed": true
+    },
+    {
+      "name": "literal native panel before-after.png/2",
+      "passed": true
+    },
+    {
+      "name": "literal native panel before-after.png/3",
+      "passed": true
+    },
+    {
+      "name": "literal native panel before-after.png/4",
+      "passed": true
+    },
+    {
+      "name": "literal native panel before-after.png/5",
+      "passed": true
+    },
+    {
+      "name": "literal native panel before-after.png/6",
+      "passed": true
+    },
+    {
+      "name": "literal native panel before-after.png/7",
+      "passed": true
+    },
+    {
+      "name": "literal native panel before-after.png/8",
+      "passed": true
+    },
+    {
+      "name": "literal native panel before-after.png/9",
+      "passed": true
+    },
+    {
+      "name": "literal native panel before-after.png/10",
+      "passed": true
+    },
+    {
+      "name": "literal native panel before-after.png/11",
+      "passed": true
+    },
+    {
+      "name": "literal native panel before-after.png/12",
+      "passed": true
+    },
+    {
+      "name": "literal native panel before-after.png/13",
+      "passed": true
+    },
+    {
+      "name": "literal native panel before-after.png/14",
+      "passed": true
+    },
+    {
+      "name": "literal native panel before-after.png/15",
+      "passed": true
+    },
+    {
+      "name": "board file SHA inspection/healthy-2x.png",
+      "passed": true
+    },
+    {
+      "name": "literal native panel inspection/healthy-2x.png/0",
+      "passed": true
+    },
+    {
+      "name": "board file SHA inspection/mixed-2x.png",
+      "passed": true
+    },
+    {
+      "name": "literal native panel inspection/mixed-2x.png/0",
+      "passed": true
+    },
+    {
+      "name": "board file SHA inspection/deep-2x.png",
+      "passed": true
+    },
+    {
+      "name": "literal native panel inspection/deep-2x.png/0",
+      "passed": true
+    },
+    {
+      "name": "board file SHA inspection/pond-2x.png",
+      "passed": true
+    },
+    {
+      "name": "literal native panel inspection/pond-2x.png/0",
+      "passed": true
+    },
+    {
+      "name": "board file SHA inspection/damp-root-hollow-2x.png",
+      "passed": true
+    },
+    {
+      "name": "literal native panel inspection/damp-root-hollow-2x.png/0",
+      "passed": true
+    },
+    {
+      "name": "board file SHA inspection/dry-glade-2x.png",
+      "passed": true
+    },
+    {
+      "name": "literal native panel inspection/dry-glade-2x.png/0",
+      "passed": true
+    },
+    {
+      "name": "board file SHA inspection/heart-arena-2x.png",
+      "passed": true
+    },
+    {
+      "name": "literal native panel inspection/heart-arena-2x.png/0",
+      "passed": true
+    },
+    {
+      "name": "board file SHA inspection/brook-crossing-2x.png",
+      "passed": true
+    },
+    {
+      "name": "literal native panel inspection/brook-crossing-2x.png/0",
+      "passed": true
+    },
+    {
+      "name": "before complete successful native capture",
+      "passed": true
+    },
+    {
+      "name": "before/healthy full room SHA and native dimensions",
+      "passed": true
+    },
+    {
+      "name": "before/healthy untouched native file healthy/native-HUD.png",
+      "passed": true
+    },
+    {
+      "name": "before/healthy untouched native file healthy/native-arrival.png",
+      "passed": true
+    },
+    {
+      "name": "before/healthy untouched native file healthy/native-HUD-north.png",
+      "passed": true
+    },
+    {
+      "name": "before/healthy untouched native file healthy/native-HUD-west.png",
+      "passed": true
+    },
+    {
+      "name": "before/healthy untouched native file healthy/native-HUD-south.png",
+      "passed": true
+    },
+    {
+      "name": "before/healthy untouched native file healthy/camera-000-000.png",
+      "passed": true
+    },
+    {
+      "name": "before/healthy untouched native file healthy/camera-136-000.png",
+      "passed": true
+    },
+    {
+      "name": "before/healthy untouched native file healthy/camera-272-000.png",
+      "passed": true
+    },
+    {
+      "name": "before/healthy untouched native file healthy/camera-000-112.png",
+      "passed": true
+    },
+    {
+      "name": "before/healthy untouched native file healthy/camera-136-112.png",
+      "passed": true
+    },
+    {
+      "name": "before/healthy untouched native file healthy/camera-272-112.png",
+      "passed": true
+    },
+    {
+      "name": "before/healthy untouched native file healthy/camera-000-224.png",
+      "passed": true
+    },
+    {
+      "name": "before/healthy untouched native file healthy/camera-136-224.png",
+      "passed": true
+    },
+    {
+      "name": "before/healthy untouched native file healthy/camera-272-224.png",
+      "passed": true
+    },
+    {
+      "name": "before/healthy exact native mosaic crop healthy/camera-000-000.png",
+      "passed": true
+    },
+    {
+      "name": "before/healthy exact native mosaic crop healthy/camera-136-000.png",
+      "passed": true
+    },
+    {
+      "name": "before/healthy exact native mosaic crop healthy/camera-272-000.png",
+      "passed": true
+    },
+    {
+      "name": "before/healthy exact native mosaic crop healthy/camera-000-112.png",
+      "passed": true
+    },
+    {
+      "name": "before/healthy exact native mosaic crop healthy/camera-136-112.png",
+      "passed": true
+    },
+    {
+      "name": "before/healthy exact native mosaic crop healthy/camera-272-112.png",
+      "passed": true
+    },
+    {
+      "name": "before/healthy exact native mosaic crop healthy/camera-000-224.png",
+      "passed": true
+    },
+    {
+      "name": "before/healthy exact native mosaic crop healthy/camera-136-224.png",
+      "passed": true
+    },
+    {
+      "name": "before/healthy exact native mosaic crop healthy/camera-272-224.png",
+      "passed": true
+    },
+    {
+      "name": "before/healthy mosaic uses one declared source for each pixel",
+      "passed": true
+    },
+    {
+      "name": "before/healthy/walk video retains native size, full native rate and every frame",
+      "passed": true,
+      "detail": {
+        "width": 240,
+        "height": 160,
+        "avg_frame_rate": "262144/4389",
+        "nb_frames": "168"
+      }
+    },
+    {
+      "name": "before/healthy/walk GIF preserves sampled RGB colors and declared inspection holds",
+      "passed": true,
+      "detail": {
+        "samples": 21,
+        "expected": 21
+      }
+    },
+    {
+      "name": "before/healthy/water_motion video retains native size, full native rate and every frame",
+      "passed": true,
+      "detail": {
+        "width": 240,
+        "height": 160,
+        "avg_frame_rate": "262144/4389",
+        "nb_frames": "96"
+      }
+    },
+    {
+      "name": "before/healthy/water_motion GIF preserves sampled RGB colors and declared inspection holds",
+      "passed": true,
+      "detail": {
+        "samples": 12,
+        "expected": 12
+      }
+    },
+    {
+      "name": "before/mixed full room SHA and native dimensions",
+      "passed": true
+    },
+    {
+      "name": "before/mixed untouched native file mixed/native-HUD.png",
+      "passed": true
+    },
+    {
+      "name": "before/mixed untouched native file mixed/native-arrival.png",
+      "passed": true
+    },
+    {
+      "name": "before/mixed untouched native file mixed/native-HUD-north.png",
+      "passed": true
+    },
+    {
+      "name": "before/mixed untouched native file mixed/native-HUD-west.png",
+      "passed": true
+    },
+    {
+      "name": "before/mixed untouched native file mixed/native-HUD-south.png",
+      "passed": true
+    },
+    {
+      "name": "before/mixed untouched native file mixed/camera-000-000.png",
+      "passed": true
+    },
+    {
+      "name": "before/mixed untouched native file mixed/camera-136-000.png",
+      "passed": true
+    },
+    {
+      "name": "before/mixed untouched native file mixed/camera-272-000.png",
+      "passed": true
+    },
+    {
+      "name": "before/mixed untouched native file mixed/camera-000-112.png",
+      "passed": true
+    },
+    {
+      "name": "before/mixed untouched native file mixed/camera-136-112.png",
+      "passed": true
+    },
+    {
+      "name": "before/mixed untouched native file mixed/camera-272-112.png",
+      "passed": true
+    },
+    {
+      "name": "before/mixed untouched native file mixed/camera-000-224.png",
+      "passed": true
+    },
+    {
+      "name": "before/mixed untouched native file mixed/camera-136-224.png",
+      "passed": true
+    },
+    {
+      "name": "before/mixed untouched native file mixed/camera-272-224.png",
+      "passed": true
+    },
+    {
+      "name": "before/mixed exact native mosaic crop mixed/camera-000-000.png",
+      "passed": true
+    },
+    {
+      "name": "before/mixed exact native mosaic crop mixed/camera-136-000.png",
+      "passed": true
+    },
+    {
+      "name": "before/mixed exact native mosaic crop mixed/camera-272-000.png",
+      "passed": true
+    },
+    {
+      "name": "before/mixed exact native mosaic crop mixed/camera-000-112.png",
+      "passed": true
+    },
+    {
+      "name": "before/mixed exact native mosaic crop mixed/camera-136-112.png",
+      "passed": true
+    },
+    {
+      "name": "before/mixed exact native mosaic crop mixed/camera-272-112.png",
+      "passed": true
+    },
+    {
+      "name": "before/mixed exact native mosaic crop mixed/camera-000-224.png",
+      "passed": true
+    },
+    {
+      "name": "before/mixed exact native mosaic crop mixed/camera-136-224.png",
+      "passed": true
+    },
+    {
+      "name": "before/mixed exact native mosaic crop mixed/camera-272-224.png",
+      "passed": true
+    },
+    {
+      "name": "before/mixed mosaic uses one declared source for each pixel",
+      "passed": true
+    },
+    {
+      "name": "before/mixed/walk video retains native size, full native rate and every frame",
+      "passed": true,
+      "detail": {
+        "width": 240,
+        "height": 160,
+        "avg_frame_rate": "262144/4389",
+        "nb_frames": "168"
+      }
+    },
+    {
+      "name": "before/mixed/walk GIF preserves sampled RGB colors and declared inspection holds",
+      "passed": true,
+      "detail": {
+        "samples": 21,
+        "expected": 21
+      }
+    },
+    {
+      "name": "before/deep full room SHA and native dimensions",
+      "passed": true
+    },
+    {
+      "name": "before/deep untouched native file deep/native-HUD.png",
+      "passed": true
+    },
+    {
+      "name": "before/deep untouched native file deep/native-arrival.png",
+      "passed": true
+    },
+    {
+      "name": "before/deep untouched native file deep/native-HUD-north.png",
+      "passed": true
+    },
+    {
+      "name": "before/deep untouched native file deep/native-HUD-west.png",
+      "passed": true
+    },
+    {
+      "name": "before/deep untouched native file deep/native-HUD-south.png",
+      "passed": true
+    },
+    {
+      "name": "before/deep untouched native file deep/camera-000-000.png",
+      "passed": true
+    },
+    {
+      "name": "before/deep untouched native file deep/camera-136-000.png",
+      "passed": true
+    },
+    {
+      "name": "before/deep untouched native file deep/camera-272-000.png",
+      "passed": true
+    },
+    {
+      "name": "before/deep untouched native file deep/camera-000-112.png",
+      "passed": true
+    },
+    {
+      "name": "before/deep untouched native file deep/camera-136-112.png",
+      "passed": true
+    },
+    {
+      "name": "before/deep untouched native file deep/camera-272-112.png",
+      "passed": true
+    },
+    {
+      "name": "before/deep untouched native file deep/camera-000-224.png",
+      "passed": true
+    },
+    {
+      "name": "before/deep untouched native file deep/camera-136-224.png",
+      "passed": true
+    },
+    {
+      "name": "before/deep untouched native file deep/camera-272-224.png",
+      "passed": true
+    },
+    {
+      "name": "before/deep exact native mosaic crop deep/camera-000-000.png",
+      "passed": true
+    },
+    {
+      "name": "before/deep exact native mosaic crop deep/camera-136-000.png",
+      "passed": true
+    },
+    {
+      "name": "before/deep exact native mosaic crop deep/camera-272-000.png",
+      "passed": true
+    },
+    {
+      "name": "before/deep exact native mosaic crop deep/camera-000-112.png",
+      "passed": true
+    },
+    {
+      "name": "before/deep exact native mosaic crop deep/camera-136-112.png",
+      "passed": true
+    },
+    {
+      "name": "before/deep exact native mosaic crop deep/camera-272-112.png",
+      "passed": true
+    },
+    {
+      "name": "before/deep exact native mosaic crop deep/camera-000-224.png",
+      "passed": true
+    },
+    {
+      "name": "before/deep exact native mosaic crop deep/camera-136-224.png",
+      "passed": true
+    },
+    {
+      "name": "before/deep exact native mosaic crop deep/camera-272-224.png",
+      "passed": true
+    },
+    {
+      "name": "before/deep mosaic uses one declared source for each pixel",
+      "passed": true
+    },
+    {
+      "name": "before/deep/walk video retains native size, full native rate and every frame",
+      "passed": true,
+      "detail": {
+        "width": 240,
+        "height": 160,
+        "avg_frame_rate": "262144/4389",
+        "nb_frames": "168"
+      }
+    },
+    {
+      "name": "before/deep/walk GIF preserves sampled RGB colors and declared inspection holds",
+      "passed": true,
+      "detail": {
+        "samples": 21,
+        "expected": 21
+      }
+    },
+    {
+      "name": "before/deep/water_motion video retains native size, full native rate and every frame",
+      "passed": true,
+      "detail": {
+        "width": 240,
+        "height": 160,
+        "avg_frame_rate": "262144/4389",
+        "nb_frames": "96"
+      }
+    },
+    {
+      "name": "before/deep/water_motion GIF preserves sampled RGB colors and declared inspection holds",
+      "passed": true,
+      "detail": {
+        "samples": 12,
+        "expected": 12
+      }
+    },
+    {
+      "name": "before/pond full room SHA and native dimensions",
+      "passed": true
+    },
+    {
+      "name": "before/pond untouched native file pond/native-HUD.png",
+      "passed": true
+    },
+    {
+      "name": "before/pond untouched native file pond/native-arrival.png",
+      "passed": true
+    },
+    {
+      "name": "before/pond untouched native file pond/native-HUD-north.png",
+      "passed": true
+    },
+    {
+      "name": "before/pond untouched native file pond/native-HUD-west.png",
+      "passed": true
+    },
+    {
+      "name": "before/pond untouched native file pond/native-HUD-south.png",
+      "passed": true
+    },
+    {
+      "name": "before/pond untouched native file pond/camera-000-000.png",
+      "passed": true
+    },
+    {
+      "name": "before/pond untouched native file pond/camera-136-000.png",
+      "passed": true
+    },
+    {
+      "name": "before/pond untouched native file pond/camera-272-000.png",
+      "passed": true
+    },
+    {
+      "name": "before/pond untouched native file pond/camera-000-112.png",
+      "passed": true
+    },
+    {
+      "name": "before/pond untouched native file pond/camera-136-112.png",
+      "passed": true
+    },
+    {
+      "name": "before/pond untouched native file pond/camera-272-112.png",
+      "passed": true
+    },
+    {
+      "name": "before/pond untouched native file pond/camera-000-224.png",
+      "passed": true
+    },
+    {
+      "name": "before/pond untouched native file pond/camera-136-224.png",
+      "passed": true
+    },
+    {
+      "name": "before/pond untouched native file pond/camera-272-224.png",
+      "passed": true
+    },
+    {
+      "name": "before/pond exact native mosaic crop pond/camera-000-000.png",
+      "passed": true
+    },
+    {
+      "name": "before/pond exact native mosaic crop pond/camera-136-000.png",
+      "passed": true
+    },
+    {
+      "name": "before/pond exact native mosaic crop pond/camera-272-000.png",
+      "passed": true
+    },
+    {
+      "name": "before/pond exact native mosaic crop pond/camera-000-112.png",
+      "passed": true
+    },
+    {
+      "name": "before/pond exact native mosaic crop pond/camera-136-112.png",
+      "passed": true
+    },
+    {
+      "name": "before/pond exact native mosaic crop pond/camera-272-112.png",
+      "passed": true
+    },
+    {
+      "name": "before/pond exact native mosaic crop pond/camera-000-224.png",
+      "passed": true
+    },
+    {
+      "name": "before/pond exact native mosaic crop pond/camera-136-224.png",
+      "passed": true
+    },
+    {
+      "name": "before/pond exact native mosaic crop pond/camera-272-224.png",
+      "passed": true
+    },
+    {
+      "name": "before/pond mosaic uses one declared source for each pixel",
+      "passed": true
+    },
+    {
+      "name": "before/pond/water_motion video retains native size, full native rate and every frame",
+      "passed": true,
+      "detail": {
+        "width": 240,
+        "height": 160,
+        "avg_frame_rate": "262144/4389",
+        "nb_frames": "96"
+      }
+    },
+    {
+      "name": "before/pond/water_motion GIF preserves sampled RGB colors and declared inspection holds",
+      "passed": true,
+      "detail": {
+        "samples": 12,
+        "expected": 12
+      }
+    },
+    {
+      "name": "before/damp-root-hollow full room SHA and native dimensions",
+      "passed": true
+    },
+    {
+      "name": "before/damp-root-hollow untouched native file damp-root-hollow/native-HUD.png",
+      "passed": true
+    },
+    {
+      "name": "before/damp-root-hollow untouched native file damp-root-hollow/native-arrival.png",
+      "passed": true
+    },
+    {
+      "name": "before/damp-root-hollow untouched native file damp-root-hollow/native-HUD-north.png",
+      "passed": true
+    },
+    {
+      "name": "before/damp-root-hollow untouched native file damp-root-hollow/native-HUD-west.png",
+      "passed": true
+    },
+    {
+      "name": "before/damp-root-hollow untouched native file damp-root-hollow/native-HUD-south.png",
+      "passed": true
+    },
+    {
+      "name": "before/damp-root-hollow untouched native file damp-root-hollow/camera-000-000.png",
+      "passed": true
+    },
+    {
+      "name": "before/damp-root-hollow untouched native file damp-root-hollow/camera-136-000.png",
+      "passed": true
+    },
+    {
+      "name": "before/damp-root-hollow untouched native file damp-root-hollow/camera-272-000.png",
+      "passed": true
+    },
+    {
+      "name": "before/damp-root-hollow untouched native file damp-root-hollow/camera-000-112.png",
+      "passed": true
+    },
+    {
+      "name": "before/damp-root-hollow untouched native file damp-root-hollow/camera-136-112.png",
+      "passed": true
+    },
+    {
+      "name": "before/damp-root-hollow untouched native file damp-root-hollow/camera-272-112.png",
+      "passed": true
+    },
+    {
+      "name": "before/damp-root-hollow untouched native file damp-root-hollow/camera-000-224.png",
+      "passed": true
+    },
+    {
+      "name": "before/damp-root-hollow untouched native file damp-root-hollow/camera-136-224.png",
+      "passed": true
+    },
+    {
+      "name": "before/damp-root-hollow untouched native file damp-root-hollow/camera-272-224.png",
+      "passed": true
+    },
+    {
+      "name": "before/damp-root-hollow exact native mosaic crop damp-root-hollow/camera-000-000.png",
+      "passed": true
+    },
+    {
+      "name": "before/damp-root-hollow exact native mosaic crop damp-root-hollow/camera-136-000.png",
+      "passed": true
+    },
+    {
+      "name": "before/damp-root-hollow exact native mosaic crop damp-root-hollow/camera-272-000.png",
+      "passed": true
+    },
+    {
+      "name": "before/damp-root-hollow exact native mosaic crop damp-root-hollow/camera-000-112.png",
+      "passed": true
+    },
+    {
+      "name": "before/damp-root-hollow exact native mosaic crop damp-root-hollow/camera-136-112.png",
+      "passed": true
+    },
+    {
+      "name": "before/damp-root-hollow exact native mosaic crop damp-root-hollow/camera-272-112.png",
+      "passed": true
+    },
+    {
+      "name": "before/damp-root-hollow exact native mosaic crop damp-root-hollow/camera-000-224.png",
+      "passed": true
+    },
+    {
+      "name": "before/damp-root-hollow exact native mosaic crop damp-root-hollow/camera-136-224.png",
+      "passed": true
+    },
+    {
+      "name": "before/damp-root-hollow exact native mosaic crop damp-root-hollow/camera-272-224.png",
+      "passed": true
+    },
+    {
+      "name": "before/damp-root-hollow mosaic uses one declared source for each pixel",
+      "passed": true
+    },
+    {
+      "name": "before/dry-glade full room SHA and native dimensions",
+      "passed": true
+    },
+    {
+      "name": "before/dry-glade untouched native file dry-glade/native-HUD.png",
+      "passed": true
+    },
+    {
+      "name": "before/dry-glade untouched native file dry-glade/native-arrival.png",
+      "passed": true
+    },
+    {
+      "name": "before/dry-glade untouched native file dry-glade/native-HUD-north.png",
+      "passed": true
+    },
+    {
+      "name": "before/dry-glade untouched native file dry-glade/native-HUD-west.png",
+      "passed": true
+    },
+    {
+      "name": "before/dry-glade untouched native file dry-glade/native-HUD-south.png",
+      "passed": true
+    },
+    {
+      "name": "before/dry-glade untouched native file dry-glade/camera-000-000.png",
+      "passed": true
+    },
+    {
+      "name": "before/dry-glade untouched native file dry-glade/camera-136-000.png",
+      "passed": true
+    },
+    {
+      "name": "before/dry-glade untouched native file dry-glade/camera-272-000.png",
+      "passed": true
+    },
+    {
+      "name": "before/dry-glade untouched native file dry-glade/camera-000-112.png",
+      "passed": true
+    },
+    {
+      "name": "before/dry-glade untouched native file dry-glade/camera-136-112.png",
+      "passed": true
+    },
+    {
+      "name": "before/dry-glade untouched native file dry-glade/camera-272-112.png",
+      "passed": true
+    },
+    {
+      "name": "before/dry-glade untouched native file dry-glade/camera-000-224.png",
+      "passed": true
+    },
+    {
+      "name": "before/dry-glade untouched native file dry-glade/camera-136-224.png",
+      "passed": true
+    },
+    {
+      "name": "before/dry-glade untouched native file dry-glade/camera-272-224.png",
+      "passed": true
+    },
+    {
+      "name": "before/dry-glade exact native mosaic crop dry-glade/camera-000-000.png",
+      "passed": true
+    },
+    {
+      "name": "before/dry-glade exact native mosaic crop dry-glade/camera-136-000.png",
+      "passed": true
+    },
+    {
+      "name": "before/dry-glade exact native mosaic crop dry-glade/camera-272-000.png",
+      "passed": true
+    },
+    {
+      "name": "before/dry-glade exact native mosaic crop dry-glade/camera-000-112.png",
+      "passed": true
+    },
+    {
+      "name": "before/dry-glade exact native mosaic crop dry-glade/camera-136-112.png",
+      "passed": true
+    },
+    {
+      "name": "before/dry-glade exact native mosaic crop dry-glade/camera-272-112.png",
+      "passed": true
+    },
+    {
+      "name": "before/dry-glade exact native mosaic crop dry-glade/camera-000-224.png",
+      "passed": true
+    },
+    {
+      "name": "before/dry-glade exact native mosaic crop dry-glade/camera-136-224.png",
+      "passed": true
+    },
+    {
+      "name": "before/dry-glade exact native mosaic crop dry-glade/camera-272-224.png",
+      "passed": true
+    },
+    {
+      "name": "before/dry-glade mosaic uses one declared source for each pixel",
+      "passed": true
+    },
+    {
+      "name": "before/heart-arena full room SHA and native dimensions",
+      "passed": true
+    },
+    {
+      "name": "before/heart-arena untouched native file heart-arena/native-HUD.png",
+      "passed": true
+    },
+    {
+      "name": "before/heart-arena untouched native file heart-arena/native-arrival.png",
+      "passed": true
+    },
+    {
+      "name": "before/heart-arena untouched native file heart-arena/native-HUD-north.png",
+      "passed": true
+    },
+    {
+      "name": "before/heart-arena untouched native file heart-arena/native-HUD-west.png",
+      "passed": true
+    },
+    {
+      "name": "before/heart-arena untouched native file heart-arena/native-HUD-south.png",
+      "passed": true
+    },
+    {
+      "name": "before/heart-arena untouched native file heart-arena/camera-000-000.png",
+      "passed": true
+    },
+    {
+      "name": "before/heart-arena untouched native file heart-arena/camera-136-000.png",
+      "passed": true
+    },
+    {
+      "name": "before/heart-arena untouched native file heart-arena/camera-272-000.png",
+      "passed": true
+    },
+    {
+      "name": "before/heart-arena untouched native file heart-arena/camera-000-112.png",
+      "passed": true
+    },
+    {
+      "name": "before/heart-arena untouched native file heart-arena/camera-136-112.png",
+      "passed": true
+    },
+    {
+      "name": "before/heart-arena untouched native file heart-arena/camera-272-112.png",
+      "passed": true
+    },
+    {
+      "name": "before/heart-arena untouched native file heart-arena/camera-000-224.png",
+      "passed": true
+    },
+    {
+      "name": "before/heart-arena untouched native file heart-arena/camera-136-224.png",
+      "passed": true
+    },
+    {
+      "name": "before/heart-arena untouched native file heart-arena/camera-272-224.png",
+      "passed": true
+    },
+    {
+      "name": "before/heart-arena exact native mosaic crop heart-arena/camera-000-000.png",
+      "passed": true
+    },
+    {
+      "name": "before/heart-arena exact native mosaic crop heart-arena/camera-136-000.png",
+      "passed": true
+    },
+    {
+      "name": "before/heart-arena exact native mosaic crop heart-arena/camera-272-000.png",
+      "passed": true
+    },
+    {
+      "name": "before/heart-arena exact native mosaic crop heart-arena/camera-000-112.png",
+      "passed": true
+    },
+    {
+      "name": "before/heart-arena exact native mosaic crop heart-arena/camera-136-112.png",
+      "passed": true
+    },
+    {
+      "name": "before/heart-arena exact native mosaic crop heart-arena/camera-272-112.png",
+      "passed": true
+    },
+    {
+      "name": "before/heart-arena exact native mosaic crop heart-arena/camera-000-224.png",
+      "passed": true
+    },
+    {
+      "name": "before/heart-arena exact native mosaic crop heart-arena/camera-136-224.png",
+      "passed": true
+    },
+    {
+      "name": "before/heart-arena exact native mosaic crop heart-arena/camera-272-224.png",
+      "passed": true
+    },
+    {
+      "name": "before/heart-arena mosaic uses one declared source for each pixel",
+      "passed": true
+    },
+    {
+      "name": "before/brook-crossing full room SHA and native dimensions",
+      "passed": true
+    },
+    {
+      "name": "before/brook-crossing untouched native file brook-crossing/native-HUD.png",
+      "passed": true
+    },
+    {
+      "name": "before/brook-crossing untouched native file brook-crossing/native-arrival.png",
+      "passed": true
+    },
+    {
+      "name": "before/brook-crossing untouched native file brook-crossing/native-HUD-north.png",
+      "passed": true
+    },
+    {
+      "name": "before/brook-crossing untouched native file brook-crossing/native-HUD-west.png",
+      "passed": true
+    },
+    {
+      "name": "before/brook-crossing untouched native file brook-crossing/native-HUD-south.png",
+      "passed": true
+    },
+    {
+      "name": "before/brook-crossing untouched native file brook-crossing/camera-000-000.png",
+      "passed": true
+    },
+    {
+      "name": "before/brook-crossing untouched native file brook-crossing/camera-136-000.png",
+      "passed": true
+    },
+    {
+      "name": "before/brook-crossing untouched native file brook-crossing/camera-272-000.png",
+      "passed": true
+    },
+    {
+      "name": "before/brook-crossing untouched native file brook-crossing/camera-000-112.png",
+      "passed": true
+    },
+    {
+      "name": "before/brook-crossing untouched native file brook-crossing/camera-136-112.png",
+      "passed": true
+    },
+    {
+      "name": "before/brook-crossing untouched native file brook-crossing/camera-272-112.png",
+      "passed": true
+    },
+    {
+      "name": "before/brook-crossing untouched native file brook-crossing/camera-000-224.png",
+      "passed": true
+    },
+    {
+      "name": "before/brook-crossing untouched native file brook-crossing/camera-136-224.png",
+      "passed": true
+    },
+    {
+      "name": "before/brook-crossing untouched native file brook-crossing/camera-272-224.png",
+      "passed": true
+    },
+    {
+      "name": "before/brook-crossing exact native mosaic crop brook-crossing/camera-000-000.png",
+      "passed": true
+    },
+    {
+      "name": "before/brook-crossing exact native mosaic crop brook-crossing/camera-136-000.png",
+      "passed": true
+    },
+    {
+      "name": "before/brook-crossing exact native mosaic crop brook-crossing/camera-272-000.png",
+      "passed": true
+    },
+    {
+      "name": "before/brook-crossing exact native mosaic crop brook-crossing/camera-000-112.png",
+      "passed": true
+    },
+    {
+      "name": "before/brook-crossing exact native mosaic crop brook-crossing/camera-136-112.png",
+      "passed": true
+    },
+    {
+      "name": "before/brook-crossing exact native mosaic crop brook-crossing/camera-272-112.png",
+      "passed": true
+    },
+    {
+      "name": "before/brook-crossing exact native mosaic crop brook-crossing/camera-000-224.png",
+      "passed": true
+    },
+    {
+      "name": "before/brook-crossing exact native mosaic crop brook-crossing/camera-136-224.png",
+      "passed": true
+    },
+    {
+      "name": "before/brook-crossing exact native mosaic crop brook-crossing/camera-272-224.png",
+      "passed": true
+    },
+    {
+      "name": "before/brook-crossing mosaic uses one declared source for each pixel",
+      "passed": true
+    },
+    {
+      "name": "after complete successful native capture",
+      "passed": true
+    },
+    {
+      "name": "after/healthy full room SHA and native dimensions",
+      "passed": true
+    },
+    {
+      "name": "after/healthy untouched native file healthy/native-HUD.png",
+      "passed": true
+    },
+    {
+      "name": "after/healthy untouched native file healthy/native-arrival.png",
+      "passed": true
+    },
+    {
+      "name": "after/healthy untouched native file healthy/native-HUD-north.png",
+      "passed": true
+    },
+    {
+      "name": "after/healthy untouched native file healthy/native-HUD-west.png",
+      "passed": true
+    },
+    {
+      "name": "after/healthy untouched native file healthy/native-HUD-south.png",
+      "passed": true
+    },
+    {
+      "name": "after/healthy untouched native file healthy/camera-000-000.png",
+      "passed": true
+    },
+    {
+      "name": "after/healthy untouched native file healthy/camera-136-000.png",
+      "passed": true
+    },
+    {
+      "name": "after/healthy untouched native file healthy/camera-272-000.png",
+      "passed": true
+    },
+    {
+      "name": "after/healthy untouched native file healthy/camera-000-112.png",
+      "passed": true
+    },
+    {
+      "name": "after/healthy untouched native file healthy/camera-136-112.png",
+      "passed": true
+    },
+    {
+      "name": "after/healthy untouched native file healthy/camera-272-112.png",
+      "passed": true
+    },
+    {
+      "name": "after/healthy untouched native file healthy/camera-000-224.png",
+      "passed": true
+    },
+    {
+      "name": "after/healthy untouched native file healthy/camera-136-224.png",
+      "passed": true
+    },
+    {
+      "name": "after/healthy untouched native file healthy/camera-272-224.png",
+      "passed": true
+    },
+    {
+      "name": "after/healthy exact native mosaic crop healthy/camera-000-000.png",
+      "passed": true
+    },
+    {
+      "name": "after/healthy exact native mosaic crop healthy/camera-136-000.png",
+      "passed": true
+    },
+    {
+      "name": "after/healthy exact native mosaic crop healthy/camera-272-000.png",
+      "passed": true
+    },
+    {
+      "name": "after/healthy exact native mosaic crop healthy/camera-000-112.png",
+      "passed": true
+    },
+    {
+      "name": "after/healthy exact native mosaic crop healthy/camera-136-112.png",
+      "passed": true
+    },
+    {
+      "name": "after/healthy exact native mosaic crop healthy/camera-272-112.png",
+      "passed": true
+    },
+    {
+      "name": "after/healthy exact native mosaic crop healthy/camera-000-224.png",
+      "passed": true
+    },
+    {
+      "name": "after/healthy exact native mosaic crop healthy/camera-136-224.png",
+      "passed": true
+    },
+    {
+      "name": "after/healthy exact native mosaic crop healthy/camera-272-224.png",
+      "passed": true
+    },
+    {
+      "name": "after/healthy mosaic uses one declared source for each pixel",
+      "passed": true
+    },
+    {
+      "name": "after/healthy/walk video retains native size, full native rate and every frame",
+      "passed": true,
+      "detail": {
+        "width": 240,
+        "height": 160,
+        "avg_frame_rate": "262144/4389",
+        "nb_frames": "168"
+      }
+    },
+    {
+      "name": "after/healthy/walk GIF preserves sampled RGB colors and declared inspection holds",
+      "passed": true,
+      "detail": {
+        "samples": 21,
+        "expected": 21
+      }
+    },
+    {
+      "name": "after/healthy/water_motion video retains native size, full native rate and every frame",
+      "passed": true,
+      "detail": {
+        "width": 240,
+        "height": 160,
+        "avg_frame_rate": "262144/4389",
+        "nb_frames": "96"
+      }
+    },
+    {
+      "name": "after/healthy/water_motion GIF preserves sampled RGB colors and declared inspection holds",
+      "passed": true,
+      "detail": {
+        "samples": 12,
+        "expected": 12
+      }
+    },
+    {
+      "name": "after/mixed full room SHA and native dimensions",
+      "passed": true
+    },
+    {
+      "name": "after/mixed untouched native file mixed/native-HUD.png",
+      "passed": true
+    },
+    {
+      "name": "after/mixed untouched native file mixed/native-arrival.png",
+      "passed": true
+    },
+    {
+      "name": "after/mixed untouched native file mixed/native-HUD-north.png",
+      "passed": true
+    },
+    {
+      "name": "after/mixed untouched native file mixed/native-HUD-west.png",
+      "passed": true
+    },
+    {
+      "name": "after/mixed untouched native file mixed/native-HUD-south.png",
+      "passed": true
+    },
+    {
+      "name": "after/mixed untouched native file mixed/camera-000-000.png",
+      "passed": true
+    },
+    {
+      "name": "after/mixed untouched native file mixed/camera-136-000.png",
+      "passed": true
+    },
+    {
+      "name": "after/mixed untouched native file mixed/camera-272-000.png",
+      "passed": true
+    },
+    {
+      "name": "after/mixed untouched native file mixed/camera-000-112.png",
+      "passed": true
+    },
+    {
+      "name": "after/mixed untouched native file mixed/camera-136-112.png",
+      "passed": true
+    },
+    {
+      "name": "after/mixed untouched native file mixed/camera-272-112.png",
+      "passed": true
+    },
+    {
+      "name": "after/mixed untouched native file mixed/camera-000-224.png",
+      "passed": true
+    },
+    {
+      "name": "after/mixed untouched native file mixed/camera-136-224.png",
+      "passed": true
+    },
+    {
+      "name": "after/mixed untouched native file mixed/camera-272-224.png",
+      "passed": true
+    },
+    {
+      "name": "after/mixed exact native mosaic crop mixed/camera-000-000.png",
+      "passed": true
+    },
+    {
+      "name": "after/mixed exact native mosaic crop mixed/camera-136-000.png",
+      "passed": true
+    },
+    {
+      "name": "after/mixed exact native mosaic crop mixed/camera-272-000.png",
+      "passed": true
+    },
+    {
+      "name": "after/mixed exact native mosaic crop mixed/camera-000-112.png",
+      "passed": true
+    },
+    {
+      "name": "after/mixed exact native mosaic crop mixed/camera-136-112.png",
+      "passed": true
+    },
+    {
+      "name": "after/mixed exact native mosaic crop mixed/camera-272-112.png",
+      "passed": true
+    },
+    {
+      "name": "after/mixed exact native mosaic crop mixed/camera-000-224.png",
+      "passed": true
+    },
+    {
+      "name": "after/mixed exact native mosaic crop mixed/camera-136-224.png",
+      "passed": true
+    },
+    {
+      "name": "after/mixed exact native mosaic crop mixed/camera-272-224.png",
+      "passed": true
+    },
+    {
+      "name": "after/mixed mosaic uses one declared source for each pixel",
+      "passed": true
+    },
+    {
+      "name": "after/mixed/walk video retains native size, full native rate and every frame",
+      "passed": true,
+      "detail": {
+        "width": 240,
+        "height": 160,
+        "avg_frame_rate": "262144/4389",
+        "nb_frames": "168"
+      }
+    },
+    {
+      "name": "after/mixed/walk GIF preserves sampled RGB colors and declared inspection holds",
+      "passed": true,
+      "detail": {
+        "samples": 21,
+        "expected": 21
+      }
+    },
+    {
+      "name": "after/deep full room SHA and native dimensions",
+      "passed": true
+    },
+    {
+      "name": "after/deep untouched native file deep/native-HUD.png",
+      "passed": true
+    },
+    {
+      "name": "after/deep untouched native file deep/native-arrival.png",
+      "passed": true
+    },
+    {
+      "name": "after/deep untouched native file deep/native-HUD-north.png",
+      "passed": true
+    },
+    {
+      "name": "after/deep untouched native file deep/native-HUD-west.png",
+      "passed": true
+    },
+    {
+      "name": "after/deep untouched native file deep/native-HUD-south.png",
+      "passed": true
+    },
+    {
+      "name": "after/deep untouched native file deep/camera-000-000.png",
+      "passed": true
+    },
+    {
+      "name": "after/deep untouched native file deep/camera-136-000.png",
+      "passed": true
+    },
+    {
+      "name": "after/deep untouched native file deep/camera-272-000.png",
+      "passed": true
+    },
+    {
+      "name": "after/deep untouched native file deep/camera-000-112.png",
+      "passed": true
+    },
+    {
+      "name": "after/deep untouched native file deep/camera-136-112.png",
+      "passed": true
+    },
+    {
+      "name": "after/deep untouched native file deep/camera-272-112.png",
+      "passed": true
+    },
+    {
+      "name": "after/deep untouched native file deep/camera-000-224.png",
+      "passed": true
+    },
+    {
+      "name": "after/deep untouched native file deep/camera-136-224.png",
+      "passed": true
+    },
+    {
+      "name": "after/deep untouched native file deep/camera-272-224.png",
+      "passed": true
+    },
+    {
+      "name": "after/deep exact native mosaic crop deep/camera-000-000.png",
+      "passed": true
+    },
+    {
+      "name": "after/deep exact native mosaic crop deep/camera-136-000.png",
+      "passed": true
+    },
+    {
+      "name": "after/deep exact native mosaic crop deep/camera-272-000.png",
+      "passed": true
+    },
+    {
+      "name": "after/deep exact native mosaic crop deep/camera-000-112.png",
+      "passed": true
+    },
+    {
+      "name": "after/deep exact native mosaic crop deep/camera-136-112.png",
+      "passed": true
+    },
+    {
+      "name": "after/deep exact native mosaic crop deep/camera-272-112.png",
+      "passed": true
+    },
+    {
+      "name": "after/deep exact native mosaic crop deep/camera-000-224.png",
+      "passed": true
+    },
+    {
+      "name": "after/deep exact native mosaic crop deep/camera-136-224.png",
+      "passed": true
+    },
+    {
+      "name": "after/deep exact native mosaic crop deep/camera-272-224.png",
+      "passed": true
+    },
+    {
+      "name": "after/deep mosaic uses one declared source for each pixel",
+      "passed": true
+    },
+    {
+      "name": "after/deep/walk video retains native size, full native rate and every frame",
+      "passed": true,
+      "detail": {
+        "width": 240,
+        "height": 160,
+        "avg_frame_rate": "262144/4389",
+        "nb_frames": "168"
+      }
+    },
+    {
+      "name": "after/deep/walk GIF preserves sampled RGB colors and declared inspection holds",
+      "passed": true,
+      "detail": {
+        "samples": 21,
+        "expected": 21
+      }
+    },
+    {
+      "name": "after/deep/water_motion video retains native size, full native rate and every frame",
+      "passed": true,
+      "detail": {
+        "width": 240,
+        "height": 160,
+        "avg_frame_rate": "262144/4389",
+        "nb_frames": "96"
+      }
+    },
+    {
+      "name": "after/deep/water_motion GIF preserves sampled RGB colors and declared inspection holds",
+      "passed": true,
+      "detail": {
+        "samples": 12,
+        "expected": 12
+      }
+    },
+    {
+      "name": "after/pond full room SHA and native dimensions",
+      "passed": true
+    },
+    {
+      "name": "after/pond untouched native file pond/native-HUD.png",
+      "passed": true
+    },
+    {
+      "name": "after/pond untouched native file pond/native-arrival.png",
+      "passed": true
+    },
+    {
+      "name": "after/pond untouched native file pond/native-HUD-north.png",
+      "passed": true
+    },
+    {
+      "name": "after/pond untouched native file pond/native-HUD-west.png",
+      "passed": true
+    },
+    {
+      "name": "after/pond untouched native file pond/native-HUD-south.png",
+      "passed": true
+    },
+    {
+      "name": "after/pond untouched native file pond/camera-000-000.png",
+      "passed": true
+    },
+    {
+      "name": "after/pond untouched native file pond/camera-136-000.png",
+      "passed": true
+    },
+    {
+      "name": "after/pond untouched native file pond/camera-272-000.png",
+      "passed": true
+    },
+    {
+      "name": "after/pond untouched native file pond/camera-000-112.png",
+      "passed": true
+    },
+    {
+      "name": "after/pond untouched native file pond/camera-136-112.png",
+      "passed": true
+    },
+    {
+      "name": "after/pond untouched native file pond/camera-272-112.png",
+      "passed": true
+    },
+    {
+      "name": "after/pond untouched native file pond/camera-000-224.png",
+      "passed": true
+    },
+    {
+      "name": "after/pond untouched native file pond/camera-136-224.png",
+      "passed": true
+    },
+    {
+      "name": "after/pond untouched native file pond/camera-272-224.png",
+      "passed": true
+    },
+    {
+      "name": "after/pond exact native mosaic crop pond/camera-000-000.png",
+      "passed": true
+    },
+    {
+      "name": "after/pond exact native mosaic crop pond/camera-136-000.png",
+      "passed": true
+    },
+    {
+      "name": "after/pond exact native mosaic crop pond/camera-272-000.png",
+      "passed": true
+    },
+    {
+      "name": "after/pond exact native mosaic crop pond/camera-000-112.png",
+      "passed": true
+    },
+    {
+      "name": "after/pond exact native mosaic crop pond/camera-136-112.png",
+      "passed": true
+    },
+    {
+      "name": "after/pond exact native mosaic crop pond/camera-272-112.png",
+      "passed": true
+    },
+    {
+      "name": "after/pond exact native mosaic crop pond/camera-000-224.png",
+      "passed": true
+    },
+    {
+      "name": "after/pond exact native mosaic crop pond/camera-136-224.png",
+      "passed": true
+    },
+    {
+      "name": "after/pond exact native mosaic crop pond/camera-272-224.png",
+      "passed": true
+    },
+    {
+      "name": "after/pond mosaic uses one declared source for each pixel",
+      "passed": true
+    },
+    {
+      "name": "after/pond/water_motion video retains native size, full native rate and every frame",
+      "passed": true,
+      "detail": {
+        "width": 240,
+        "height": 160,
+        "avg_frame_rate": "262144/4389",
+        "nb_frames": "96"
+      }
+    },
+    {
+      "name": "after/pond/water_motion GIF preserves sampled RGB colors and declared inspection holds",
+      "passed": true,
+      "detail": {
+        "samples": 12,
+        "expected": 12
+      }
+    },
+    {
+      "name": "after/damp-root-hollow full room SHA and native dimensions",
+      "passed": true
+    },
+    {
+      "name": "after/damp-root-hollow untouched native file damp-root-hollow/native-HUD.png",
+      "passed": true
+    },
+    {
+      "name": "after/damp-root-hollow untouched native file damp-root-hollow/native-arrival.png",
+      "passed": true
+    },
+    {
+      "name": "after/damp-root-hollow untouched native file damp-root-hollow/native-HUD-north.png",
+      "passed": true
+    },
+    {
+      "name": "after/damp-root-hollow untouched native file damp-root-hollow/native-HUD-west.png",
+      "passed": true
+    },
+    {
+      "name": "after/damp-root-hollow untouched native file damp-root-hollow/native-HUD-south.png",
+      "passed": true
+    },
+    {
+      "name": "after/damp-root-hollow untouched native file damp-root-hollow/camera-000-000.png",
+      "passed": true
+    },
+    {
+      "name": "after/damp-root-hollow untouched native file damp-root-hollow/camera-136-000.png",
+      "passed": true
+    },
+    {
+      "name": "after/damp-root-hollow untouched native file damp-root-hollow/camera-272-000.png",
+      "passed": true
+    },
+    {
+      "name": "after/damp-root-hollow untouched native file damp-root-hollow/camera-000-112.png",
+      "passed": true
+    },
+    {
+      "name": "after/damp-root-hollow untouched native file damp-root-hollow/camera-136-112.png",
+      "passed": true
+    },
+    {
+      "name": "after/damp-root-hollow untouched native file damp-root-hollow/camera-272-112.png",
+      "passed": true
+    },
+    {
+      "name": "after/damp-root-hollow untouched native file damp-root-hollow/camera-000-224.png",
+      "passed": true
+    },
+    {
+      "name": "after/damp-root-hollow untouched native file damp-root-hollow/camera-136-224.png",
+      "passed": true
+    },
+    {
+      "name": "after/damp-root-hollow untouched native file damp-root-hollow/camera-272-224.png",
+      "passed": true
+    },
+    {
+      "name": "after/damp-root-hollow exact native mosaic crop damp-root-hollow/camera-000-000.png",
+      "passed": true
+    },
+    {
+      "name": "after/damp-root-hollow exact native mosaic crop damp-root-hollow/camera-136-000.png",
+      "passed": true
+    },
+    {
+      "name": "after/damp-root-hollow exact native mosaic crop damp-root-hollow/camera-272-000.png",
+      "passed": true
+    },
+    {
+      "name": "after/damp-root-hollow exact native mosaic crop damp-root-hollow/camera-000-112.png",
+      "passed": true
+    },
+    {
+      "name": "after/damp-root-hollow exact native mosaic crop damp-root-hollow/camera-136-112.png",
+      "passed": true
+    },
+    {
+      "name": "after/damp-root-hollow exact native mosaic crop damp-root-hollow/camera-272-112.png",
+      "passed": true
+    },
+    {
+      "name": "after/damp-root-hollow exact native mosaic crop damp-root-hollow/camera-000-224.png",
+      "passed": true
+    },
+    {
+      "name": "after/damp-root-hollow exact native mosaic crop damp-root-hollow/camera-136-224.png",
+      "passed": true
+    },
+    {
+      "name": "after/damp-root-hollow exact native mosaic crop damp-root-hollow/camera-272-224.png",
+      "passed": true
+    },
+    {
+      "name": "after/damp-root-hollow mosaic uses one declared source for each pixel",
+      "passed": true
+    },
+    {
+      "name": "after/dry-glade full room SHA and native dimensions",
+      "passed": true
+    },
+    {
+      "name": "after/dry-glade untouched native file dry-glade/native-HUD.png",
+      "passed": true
+    },
+    {
+      "name": "after/dry-glade untouched native file dry-glade/native-arrival.png",
+      "passed": true
+    },
+    {
+      "name": "after/dry-glade untouched native file dry-glade/native-HUD-north.png",
+      "passed": true
+    },
+    {
+      "name": "after/dry-glade untouched native file dry-glade/native-HUD-west.png",
+      "passed": true
+    },
+    {
+      "name": "after/dry-glade untouched native file dry-glade/native-HUD-south.png",
+      "passed": true
+    },
+    {
+      "name": "after/dry-glade untouched native file dry-glade/camera-000-000.png",
+      "passed": true
+    },
+    {
+      "name": "after/dry-glade untouched native file dry-glade/camera-136-000.png",
+      "passed": true
+    },
+    {
+      "name": "after/dry-glade untouched native file dry-glade/camera-272-000.png",
+      "passed": true
+    },
+    {
+      "name": "after/dry-glade untouched native file dry-glade/camera-000-112.png",
+      "passed": true
+    },
+    {
+      "name": "after/dry-glade untouched native file dry-glade/camera-136-112.png",
+      "passed": true
+    },
+    {
+      "name": "after/dry-glade untouched native file dry-glade/camera-272-112.png",
+      "passed": true
+    },
+    {
+      "name": "after/dry-glade untouched native file dry-glade/camera-000-224.png",
+      "passed": true
+    },
+    {
+      "name": "after/dry-glade untouched native file dry-glade/camera-136-224.png",
+      "passed": true
+    },
+    {
+      "name": "after/dry-glade untouched native file dry-glade/camera-272-224.png",
+      "passed": true
+    },
+    {
+      "name": "after/dry-glade exact native mosaic crop dry-glade/camera-000-000.png",
+      "passed": true
+    },
+    {
+      "name": "after/dry-glade exact native mosaic crop dry-glade/camera-136-000.png",
+      "passed": true
+    },
+    {
+      "name": "after/dry-glade exact native mosaic crop dry-glade/camera-272-000.png",
+      "passed": true
+    },
+    {
+      "name": "after/dry-glade exact native mosaic crop dry-glade/camera-000-112.png",
+      "passed": true
+    },
+    {
+      "name": "after/dry-glade exact native mosaic crop dry-glade/camera-136-112.png",
+      "passed": true
+    },
+    {
+      "name": "after/dry-glade exact native mosaic crop dry-glade/camera-272-112.png",
+      "passed": true
+    },
+    {
+      "name": "after/dry-glade exact native mosaic crop dry-glade/camera-000-224.png",
+      "passed": true
+    },
+    {
+      "name": "after/dry-glade exact native mosaic crop dry-glade/camera-136-224.png",
+      "passed": true
+    },
+    {
+      "name": "after/dry-glade exact native mosaic crop dry-glade/camera-272-224.png",
+      "passed": true
+    },
+    {
+      "name": "after/dry-glade mosaic uses one declared source for each pixel",
+      "passed": true
+    },
+    {
+      "name": "after/heart-arena full room SHA and native dimensions",
+      "passed": true
+    },
+    {
+      "name": "after/heart-arena untouched native file heart-arena/native-HUD.png",
+      "passed": true
+    },
+    {
+      "name": "after/heart-arena untouched native file heart-arena/native-arrival.png",
+      "passed": true
+    },
+    {
+      "name": "after/heart-arena untouched native file heart-arena/native-HUD-north.png",
+      "passed": true
+    },
+    {
+      "name": "after/heart-arena untouched native file heart-arena/native-HUD-west.png",
+      "passed": true
+    },
+    {
+      "name": "after/heart-arena untouched native file heart-arena/native-HUD-south.png",
+      "passed": true
+    },
+    {
+      "name": "after/heart-arena untouched native file heart-arena/camera-000-000.png",
+      "passed": true
+    },
+    {
+      "name": "after/heart-arena untouched native file heart-arena/camera-136-000.png",
+      "passed": true
+    },
+    {
+      "name": "after/heart-arena untouched native file heart-arena/camera-272-000.png",
+      "passed": true
+    },
+    {
+      "name": "after/heart-arena untouched native file heart-arena/camera-000-112.png",
+      "passed": true
+    },
+    {
+      "name": "after/heart-arena untouched native file heart-arena/camera-136-112.png",
+      "passed": true
+    },
+    {
+      "name": "after/heart-arena untouched native file heart-arena/camera-272-112.png",
+      "passed": true
+    },
+    {
+      "name": "after/heart-arena untouched native file heart-arena/camera-000-224.png",
+      "passed": true
+    },
+    {
+      "name": "after/heart-arena untouched native file heart-arena/camera-136-224.png",
+      "passed": true
+    },
+    {
+      "name": "after/heart-arena untouched native file heart-arena/camera-272-224.png",
+      "passed": true
+    },
+    {
+      "name": "after/heart-arena exact native mosaic crop heart-arena/camera-000-000.png",
+      "passed": true
+    },
+    {
+      "name": "after/heart-arena exact native mosaic crop heart-arena/camera-136-000.png",
+      "passed": true
+    },
+    {
+      "name": "after/heart-arena exact native mosaic crop heart-arena/camera-272-000.png",
+      "passed": true
+    },
+    {
+      "name": "after/heart-arena exact native mosaic crop heart-arena/camera-000-112.png",
+      "passed": true
+    },
+    {
+      "name": "after/heart-arena exact native mosaic crop heart-arena/camera-136-112.png",
+      "passed": true
+    },
+    {
+      "name": "after/heart-arena exact native mosaic crop heart-arena/camera-272-112.png",
+      "passed": true
+    },
+    {
+      "name": "after/heart-arena exact native mosaic crop heart-arena/camera-000-224.png",
+      "passed": true
+    },
+    {
+      "name": "after/heart-arena exact native mosaic crop heart-arena/camera-136-224.png",
+      "passed": true
+    },
+    {
+      "name": "after/heart-arena exact native mosaic crop heart-arena/camera-272-224.png",
+      "passed": true
+    },
+    {
+      "name": "after/heart-arena mosaic uses one declared source for each pixel",
+      "passed": true
+    },
+    {
+      "name": "after/brook-crossing full room SHA and native dimensions",
+      "passed": true
+    },
+    {
+      "name": "after/brook-crossing untouched native file brook-crossing/native-HUD.png",
+      "passed": true
+    },
+    {
+      "name": "after/brook-crossing untouched native file brook-crossing/native-arrival.png",
+      "passed": true
+    },
+    {
+      "name": "after/brook-crossing untouched native file brook-crossing/native-HUD-north.png",
+      "passed": true
+    },
+    {
+      "name": "after/brook-crossing untouched native file brook-crossing/native-HUD-west.png",
+      "passed": true
+    },
+    {
+      "name": "after/brook-crossing untouched native file brook-crossing/native-HUD-south.png",
+      "passed": true
+    },
+    {
+      "name": "after/brook-crossing untouched native file brook-crossing/camera-000-000.png",
+      "passed": true
+    },
+    {
+      "name": "after/brook-crossing untouched native file brook-crossing/camera-136-000.png",
+      "passed": true
+    },
+    {
+      "name": "after/brook-crossing untouched native file brook-crossing/camera-272-000.png",
+      "passed": true
+    },
+    {
+      "name": "after/brook-crossing untouched native file brook-crossing/camera-000-112.png",
+      "passed": true
+    },
+    {
+      "name": "after/brook-crossing untouched native file brook-crossing/camera-136-112.png",
+      "passed": true
+    },
+    {
+      "name": "after/brook-crossing untouched native file brook-crossing/camera-272-112.png",
+      "passed": true
+    },
+    {
+      "name": "after/brook-crossing untouched native file brook-crossing/camera-000-224.png",
+      "passed": true
+    },
+    {
+      "name": "after/brook-crossing untouched native file brook-crossing/camera-136-224.png",
+      "passed": true
+    },
+    {
+      "name": "after/brook-crossing untouched native file brook-crossing/camera-272-224.png",
+      "passed": true
+    },
+    {
+      "name": "after/brook-crossing exact native mosaic crop brook-crossing/camera-000-000.png",
+      "passed": true
+    },
+    {
+      "name": "after/brook-crossing exact native mosaic crop brook-crossing/camera-136-000.png",
+      "passed": true
+    },
+    {
+      "name": "after/brook-crossing exact native mosaic crop brook-crossing/camera-272-000.png",
+      "passed": true
+    },
+    {
+      "name": "after/brook-crossing exact native mosaic crop brook-crossing/camera-000-112.png",
+      "passed": true
+    },
+    {
+      "name": "after/brook-crossing exact native mosaic crop brook-crossing/camera-136-112.png",
+      "passed": true
+    },
+    {
+      "name": "after/brook-crossing exact native mosaic crop brook-crossing/camera-272-112.png",
+      "passed": true
+    },
+    {
+      "name": "after/brook-crossing exact native mosaic crop brook-crossing/camera-000-224.png",
+      "passed": true
+    },
+    {
+      "name": "after/brook-crossing exact native mosaic crop brook-crossing/camera-136-224.png",
+      "passed": true
+    },
+    {
+      "name": "after/brook-crossing exact native mosaic crop brook-crossing/camera-272-224.png",
+      "passed": true
+    },
+    {
+      "name": "after/brook-crossing mosaic uses one declared source for each pixel",
+      "passed": true
+    },
+    {
+      "name": "after/brook-crossing/water_motion video retains native size, full native rate and every frame",
+      "passed": true,
+      "detail": {
+        "width": 240,
+        "height": 160,
+        "avg_frame_rate": "262144/4389",
+        "nb_frames": "96"
+      }
+    },
+    {
+      "name": "after/brook-crossing/water_motion GIF preserves sampled RGB colors and declared inspection holds",
+      "passed": true,
+      "detail": {
+        "samples": 12,
+        "expected": 12
+      }
+    },
+    {
+      "name": "source catalog contains every requested representative",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "name": "native indexed source before/moss0",
+      "passed": true
+    },
+    {
+      "name": "native indexed source after/moss0",
+      "passed": true
+    },
+    {
+      "name": "native indexed source before/moss1",
+      "passed": true
+    },
+    {
+      "name": "native indexed source after/moss1",
+      "passed": true
+    },
+    {
+      "name": "native indexed source before/moss2",
+      "passed": true
+    },
+    {
+      "name": "native indexed source after/moss2",
+      "passed": true
+    },
+    {
+      "name": "native indexed source before/moss_shade",
+      "passed": true
+    },
+    {
+      "name": "native indexed source after/moss_shade",
+      "passed": true
+    },
+    {
+      "name": "native indexed source before/moss_blight",
+      "passed": true
+    },
+    {
+      "name": "native indexed source after/moss_blight",
+      "passed": true
+    },
+    {
+      "name": "native indexed source before/moss_blight2",
+      "passed": true
+    },
+    {
+      "name": "native indexed source after/moss_blight2",
+      "passed": true
+    },
+    {
+      "name": "native indexed source before/blight_floor",
+      "passed": true
+    },
+    {
+      "name": "native indexed source after/blight_floor",
+      "passed": true
+    },
+    {
+      "name": "native indexed source before/blight_floor2",
+      "passed": true
+    },
+    {
+      "name": "native indexed source after/blight_floor2",
+      "passed": true
+    },
+    {
+      "name": "native indexed source before/blight_vein",
+      "passed": true
+    },
+    {
+      "name": "native indexed source after/blight_vein",
+      "passed": true
+    },
+    {
+      "name": "native indexed source before/moss_flowers",
+      "passed": true
+    },
+    {
+      "name": "native indexed source after/moss_flowers",
+      "passed": true
+    },
+    {
+      "name": "native indexed source before/moss_flowers2",
+      "passed": true
+    },
+    {
+      "name": "native indexed source after/moss_flowers2",
+      "passed": true
+    },
+    {
+      "name": "native indexed source before/leaf_litter",
+      "passed": true
+    },
+    {
+      "name": "native indexed source after/leaf_litter",
+      "passed": true
+    },
+    {
+      "name": "native indexed source before/tall_grass",
+      "passed": true
+    },
+    {
+      "name": "native indexed source after/tall_grass",
+      "passed": true
+    },
+    {
+      "name": "native indexed source before/fern_patch",
+      "passed": true
+    },
+    {
+      "name": "native indexed source after/fern_patch",
+      "passed": true
+    },
+    {
+      "name": "native indexed source before/meadow_4",
+      "passed": true
+    },
+    {
+      "name": "native indexed source after/meadow_4",
+      "passed": true
+    },
+    {
+      "name": "native indexed source before/clover_0",
+      "passed": true
+    },
+    {
+      "name": "native indexed source after/clover_0",
+      "passed": true
+    },
+    {
+      "name": "native indexed source before/shroomring_0",
+      "passed": true
+    },
+    {
+      "name": "native indexed source after/shroomring_0",
+      "passed": true
+    },
+    {
+      "name": "native indexed source before/path",
+      "passed": true
+    },
+    {
+      "name": "native indexed source after/path",
+      "passed": true
+    },
+    {
+      "name": "native indexed source before/path_edge_n",
+      "passed": true
+    },
+    {
+      "name": "native indexed source after/path_edge_n",
+      "passed": true
+    },
+    {
+      "name": "native indexed source before/pedge_1",
+      "passed": true
+    },
+    {
+      "name": "native indexed source after/pedge_1",
+      "passed": true
+    },
+    {
+      "name": "native indexed source before/pedge_3",
+      "passed": true
+    },
+    {
+      "name": "native indexed source after/pedge_3",
+      "passed": true
+    },
+    {
+      "name": "native indexed source before/pedge_c1",
+      "passed": true
+    },
+    {
+      "name": "native indexed source after/pedge_c1",
+      "passed": true
+    },
+    {
+      "name": "native indexed source before/rot_10",
+      "passed": true
+    },
+    {
+      "name": "native indexed source after/rot_10",
+      "passed": true
+    },
+    {
+      "name": "native indexed source before/rot_14",
+      "passed": true
+    },
+    {
+      "name": "native indexed source after/rot_14",
+      "passed": true
+    },
+    {
+      "name": "native indexed source before/water",
+      "passed": true
+    },
+    {
+      "name": "native indexed source after/water",
+      "passed": true
+    },
+    {
+      "name": "native indexed source before/water_1",
+      "passed": true
+    },
+    {
+      "name": "native indexed source after/water_1",
+      "passed": true
+    },
+    {
+      "name": "native indexed source before/water_3",
+      "passed": true
+    },
+    {
+      "name": "native indexed source after/water_3",
+      "passed": true
+    },
+    {
+      "name": "native indexed source before/water_f",
+      "passed": true
+    },
+    {
+      "name": "native indexed source after/water_f",
+      "passed": true
+    },
+    {
+      "name": "native indexed source before/water_c1",
+      "passed": true
+    },
+    {
+      "name": "native indexed source after/water_c1",
+      "passed": true
+    },
+    {
+      "name": "native indexed source before/water_lily",
+      "passed": true
+    },
+    {
+      "name": "native indexed source after/water_lily",
+      "passed": true
+    },
+    {
+      "name": "native indexed source before/water_foam",
+      "passed": true
+    },
+    {
+      "name": "native indexed source after/water_foam",
+      "passed": true
+    },
+    {
+      "name": "native indexed source before/waterfall",
+      "passed": true
+    },
+    {
+      "name": "native indexed source after/waterfall",
+      "passed": true
+    },
+    {
+      "name": "native indexed source before/bridge",
+      "passed": true
+    },
+    {
+      "name": "native indexed source after/bridge",
+      "passed": true
+    },
+    {
+      "name": "native indexed source before/bridge_v",
+      "passed": true
+    },
+    {
+      "name": "native indexed source after/bridge_v",
+      "passed": true
+    },
+    {
+      "name": "native indexed source before/ledge_s",
+      "passed": true
+    },
+    {
+      "name": "native indexed source after/ledge_s",
+      "passed": true
+    },
+    {
+      "name": "native indexed source before/ledge_s_w",
+      "passed": true
+    },
+    {
+      "name": "native indexed source after/ledge_s_w",
+      "passed": true
+    },
+    {
+      "name": "native indexed source before/ledge_s_e",
+      "passed": true
+    },
+    {
+      "name": "native indexed source after/ledge_s_e",
+      "passed": true
+    },
+    {
+      "name": "native indexed source before/ledge_n",
+      "passed": true
+    },
+    {
+      "name": "native indexed source after/ledge_n",
+      "passed": true
+    },
+    {
+      "name": "native indexed source before/pit",
+      "passed": true
+    },
+    {
+      "name": "native indexed source after/pit",
+      "passed": true
+    },
+    {
+      "name": "native indexed source before/pit_inner",
+      "passed": true
+    },
+    {
+      "name": "native indexed source after/pit_inner",
+      "passed": true
+    },
+    {
+      "name": "native indexed source before/forest_blight_pit",
+      "passed": true
+    },
+    {
+      "name": "native indexed source after/forest_blight_pit",
+      "passed": true
+    },
+    {
+      "name": "native indexed source before/blight_pool",
+      "passed": true
+    },
+    {
+      "name": "native indexed source after/blight_pool",
+      "passed": true
+    },
+    {
+      "name": "native indexed source before/rock",
+      "passed": true
+    },
+    {
+      "name": "native indexed source after/rock",
+      "passed": true
+    },
+    {
+      "name": "native indexed source before/rock2",
+      "passed": true
+    },
+    {
+      "name": "native indexed source after/rock2",
+      "passed": true
+    },
+    {
+      "name": "native indexed source before/rock3",
+      "passed": true
+    },
+    {
+      "name": "native indexed source after/rock3",
+      "passed": true
+    },
+    {
+      "name": "native indexed source before/mossy_stone",
+      "passed": true
+    },
+    {
+      "name": "native indexed source after/mossy_stone",
+      "passed": true
+    },
+    {
+      "name": "native indexed source before/sick_rock",
+      "passed": true
+    },
+    {
+      "name": "native indexed source after/sick_rock",
+      "passed": true
+    },
+    {
+      "name": "native indexed source before/bones",
+      "passed": true
+    },
+    {
+      "name": "native indexed source after/bones",
+      "passed": true
+    },
+    {
+      "name": "native indexed source before/sick_bones",
+      "passed": true
+    },
+    {
+      "name": "native indexed source after/sick_bones",
+      "passed": true
+    },
+    {
+      "name": "native indexed source before/stump",
+      "passed": true
+    },
+    {
+      "name": "native indexed source after/stump",
+      "passed": true
+    },
+    {
+      "name": "native indexed source before/sick_stump",
+      "passed": true
+    },
+    {
+      "name": "native indexed source after/sick_stump",
+      "passed": true
+    },
+    {
+      "name": "native indexed source before/hlog_0",
+      "passed": true
+    },
+    {
+      "name": "native indexed source after/hlog_0",
+      "passed": true
+    },
+    {
+      "name": "native indexed source before/hlog_1",
+      "passed": true
+    },
+    {
+      "name": "native indexed source after/hlog_1",
+      "passed": true
+    },
+    {
+      "name": "native indexed source before/fence",
+      "passed": true
+    },
+    {
+      "name": "native indexed source after/fence",
+      "passed": true
+    },
+    {
+      "name": "native indexed source before/pillar",
+      "passed": true
+    },
+    {
+      "name": "native indexed source after/pillar",
+      "passed": true
+    },
+    {
+      "name": "native indexed source before/ruin_wall",
+      "passed": true
+    },
+    {
+      "name": "native indexed source after/ruin_wall",
+      "passed": true
+    },
+    {
+      "name": "native indexed source before/statue",
+      "passed": true
+    },
+    {
+      "name": "native indexed source after/statue",
+      "passed": true
+    },
+    {
+      "name": "native indexed source before/thorn",
+      "passed": true
+    },
+    {
+      "name": "native indexed source after/thorn",
+      "passed": true
+    },
+    {
+      "name": "native indexed source before/crack",
+      "passed": true
+    },
+    {
+      "name": "native indexed source after/crack",
+      "passed": true
+    },
+    {
+      "name": "native indexed source before/web",
+      "passed": true
+    },
+    {
+      "name": "native indexed source after/web",
+      "passed": true
+    },
+    {
+      "name": "native indexed source before/door_locked",
+      "passed": true
+    },
+    {
+      "name": "native indexed source after/door_locked",
+      "passed": true
+    },
+    {
+      "name": "native indexed source before/door_open",
+      "passed": true
+    },
+    {
+      "name": "native indexed source after/door_open",
+      "passed": true
+    },
+    {
+      "name": "native indexed source before/myst_switch",
+      "passed": true
+    },
+    {
+      "name": "native indexed source after/myst_switch",
+      "passed": true
+    },
+    {
+      "name": "native indexed source before/myst_switch_down",
+      "passed": true
+    },
+    {
+      "name": "native indexed source after/myst_switch_down",
+      "passed": true
+    },
+    {
+      "name": "native indexed source before/lantern_post",
+      "passed": true
+    },
+    {
+      "name": "native indexed source after/lantern_post",
+      "passed": true
+    },
+    {
+      "name": "native indexed source before/torch",
+      "passed": true
+    },
+    {
+      "name": "native indexed source after/torch",
+      "passed": true
+    },
+    {
+      "name": "native indexed source before/torch_lit",
+      "passed": true
+    },
+    {
+      "name": "native indexed source after/torch_lit",
+      "passed": true
+    },
+    {
+      "name": "native indexed source before/shrine_plate",
+      "passed": true
+    },
+    {
+      "name": "native indexed source after/shrine_plate",
+      "passed": true
+    },
+    {
+      "name": "native indexed source before/blight_crystal",
+      "passed": true
+    },
+    {
+      "name": "native indexed source after/blight_crystal",
+      "passed": true
+    },
+    {
+      "name": "native indexed source before/mouth_cave",
+      "passed": true
+    },
+    {
+      "name": "native indexed source after/mouth_cave",
+      "passed": true
+    },
+    {
+      "name": "native indexed source before/mouth_hollow",
+      "passed": true
+    },
+    {
+      "name": "native indexed source after/mouth_hollow",
+      "passed": true
+    },
+    {
+      "name": "native indexed source before/mouth_thicket",
+      "passed": true
+    },
+    {
+      "name": "native indexed source after/mouth_thicket",
+      "passed": true
+    },
+    {
+      "name": "native indexed source before/stairs_down",
+      "passed": true
+    },
+    {
+      "name": "native indexed source after/stairs_down",
+      "passed": true
+    },
+    {
+      "name": "native indexed source before/chest",
+      "passed": true
+    },
+    {
+      "name": "native indexed source after/chest",
+      "passed": true
+    },
+    {
+      "name": "native indexed source before/chest_open",
+      "passed": true
+    },
+    {
+      "name": "native indexed source after/chest_open",
+      "passed": true
+    },
+    {
+      "name": "native indexed source before/bush",
+      "passed": true
+    },
+    {
+      "name": "native indexed source after/bush",
+      "passed": true
+    },
+    {
+      "name": "native indexed source before/rock_small",
+      "passed": true
+    },
+    {
+      "name": "native indexed source after/rock_small",
+      "passed": true
+    },
+    {
+      "name": "native indexed source before/boulder",
+      "passed": true
+    },
+    {
+      "name": "native indexed source after/boulder",
+      "passed": true
+    },
+    {
+      "name": "native indexed source before/myst_pot",
+      "passed": true
+    },
+    {
+      "name": "native indexed source after/myst_pot",
+      "passed": true
+    },
+    {
+      "name": "literal source group Meadow/31",
+      "passed": true
+    },
+    {
+      "name": "literal source group Meadow/32",
+      "passed": true
+    },
+    {
+      "name": "literal source group Clover/31",
+      "passed": true
+    },
+    {
+      "name": "literal source group Clover/32",
+      "passed": true
+    },
+    {
+      "name": "literal source group Mushrooms/31",
+      "passed": true
+    },
+    {
+      "name": "literal source group Mushrooms/32",
+      "passed": true
+    },
+    {
+      "name": "literal source group Fallen log/31",
+      "passed": true
+    },
+    {
+      "name": "literal source group Fallen log/32",
+      "passed": true
+    },
+    {
+      "name": "relative link art-review/forest-room-cohesion/README.md -> rooms-actual.png",
+      "passed": true
+    },
+    {
+      "name": "relative link art-review/forest-room-cohesion/README.md -> before-after.png",
+      "passed": true
+    },
+    {
+      "name": "relative link art-review/forest-room-cohesion/README.md -> source/README.md",
+      "passed": true
+    },
+    {
+      "name": "relative link art-review/forest-room-cohesion/README.md -> source/source-manifest.json",
+      "passed": true
+    },
+    {
+      "name": "relative link art-review/forest-room-cohesion/README.md -> native-HUD-actual.png",
+      "passed": true
+    },
+    {
+      "name": "relative link art-review/forest-room-cohesion/README.md -> actual/after/healthy/full-room.png",
+      "passed": true
+    },
+    {
+      "name": "relative link art-review/forest-room-cohesion/README.md -> inspection/healthy-2x.png",
+      "passed": true
+    },
+    {
+      "name": "relative link art-review/forest-room-cohesion/README.md -> actual/after/healthy/walk.mp4",
+      "passed": true
+    },
+    {
+      "name": "relative link art-review/forest-room-cohesion/README.md -> actual/after/healthy/water-motion.mp4",
+      "passed": true
+    },
+    {
+      "name": "relative link art-review/forest-room-cohesion/README.md -> actual/after/mixed/full-room.png",
+      "passed": true
+    },
+    {
+      "name": "relative link art-review/forest-room-cohesion/README.md -> inspection/mixed-2x.png",
+      "passed": true
+    },
+    {
+      "name": "relative link art-review/forest-room-cohesion/README.md -> actual/after/mixed/walk.mp4",
+      "passed": true
+    },
+    {
+      "name": "relative link art-review/forest-room-cohesion/README.md -> actual/after/deep/full-room.png",
+      "passed": true
+    },
+    {
+      "name": "relative link art-review/forest-room-cohesion/README.md -> inspection/deep-2x.png",
+      "passed": true
+    },
+    {
+      "name": "relative link art-review/forest-room-cohesion/README.md -> actual/after/deep/walk.mp4",
+      "passed": true
+    },
+    {
+      "name": "relative link art-review/forest-room-cohesion/README.md -> actual/after/deep/water-motion.mp4",
+      "passed": true
+    },
+    {
+      "name": "relative link art-review/forest-room-cohesion/README.md -> actual/after/pond/full-room.png",
+      "passed": true
+    },
+    {
+      "name": "relative link art-review/forest-room-cohesion/README.md -> inspection/pond-2x.png",
+      "passed": true
+    },
+    {
+      "name": "relative link art-review/forest-room-cohesion/README.md -> actual/after/pond/water-motion.mp4",
+      "passed": true
+    },
+    {
+      "name": "relative link art-review/forest-room-cohesion/README.md -> actual/after/damp-root-hollow/full-room.png",
+      "passed": true
+    },
+    {
+      "name": "relative link art-review/forest-room-cohesion/README.md -> inspection/damp-root-hollow-2x.png",
+      "passed": true
+    },
+    {
+      "name": "relative link art-review/forest-room-cohesion/README.md -> actual/after/dry-glade/full-room.png",
+      "passed": true
+    },
+    {
+      "name": "relative link art-review/forest-room-cohesion/README.md -> inspection/dry-glade-2x.png",
+      "passed": true
+    },
+    {
+      "name": "relative link art-review/forest-room-cohesion/README.md -> actual/after/heart-arena/full-room.png",
+      "passed": true
+    },
+    {
+      "name": "relative link art-review/forest-room-cohesion/README.md -> inspection/heart-arena-2x.png",
+      "passed": true
+    },
+    {
+      "name": "relative link art-review/forest-room-cohesion/README.md -> actual/after/brook-crossing/full-room.png",
+      "passed": true
+    },
+    {
+      "name": "relative link art-review/forest-room-cohesion/README.md -> inspection/brook-crossing-2x.png",
+      "passed": true
+    },
+    {
+      "name": "relative link art-review/forest-room-cohesion/README.md -> actual/after/brook-crossing/water-motion.mp4",
+      "passed": true
+    },
+    {
+      "name": "relative link art-review/forest-room-cohesion/README.md -> ../../downloads/forest-room-cohesion-4024902/forest-room-cohesion-4024902.gba",
+      "passed": true
+    },
+    {
+      "name": "relative link art-review/forest-room-cohesion/README.md -> ../../downloads/forest-room-cohesion-4024902/forest-room-cohesion-4024902.zip",
+      "passed": true
+    },
+    {
+      "name": "relative link art-review/forest-room-cohesion/README.md -> ../../downloads/forest-room-cohesion-4024902/SHA256SUMS.txt",
+      "passed": true
+    },
+    {
+      "name": "relative link art-review/forest-room-cohesion/README.md -> actual/after/capture.json",
+      "passed": true
+    },
+    {
+      "name": "relative link art-review/forest-room-cohesion/README.md -> actual-panel-manifest.json",
+      "passed": true
+    },
+    {
+      "name": "relative link art-review/forest-room-cohesion/README.md -> actual-publication-summary.json",
+      "passed": true
+    },
+    {
+      "name": "relative link art-review/forest-room-cohesion/source/README.md -> materials-source.png",
+      "passed": true
+    },
+    {
+      "name": "relative link art-review/forest-room-cohesion/source/README.md -> groups-source.png",
+      "passed": true
+    },
+    {
+      "name": "relative link art-review/forest-room-cohesion/source/README.md -> source-manifest.json",
+      "passed": true
+    },
+    {
+      "name": "relative link art-review/forest-room-cohesion/source/README.md -> ../README.md",
+      "passed": true
+    },
+    {
+      "name": "relative link downloads/forest-room-cohesion-4024902/README.md -> forest-room-cohesion-4024902.gba",
+      "passed": true
+    },
+    {
+      "name": "relative link downloads/forest-room-cohesion-4024902/README.md -> forest-room-cohesion-4024902.zip",
+      "passed": true
+    },
+    {
+      "name": "relative link downloads/forest-room-cohesion-4024902/README.md -> SHA256SUMS.txt",
+      "passed": true
+    },
+    {
+      "name": "relative link downloads/forest-room-cohesion-4024902/README.md -> ../../art-review/forest-room-cohesion/README.md",
+      "passed": true
+    },
+    {
+      "name": "release ROM SHA matches frozen source",
+      "passed": true
+    },
+    {
+      "name": "release ZIP SHA matches publication",
+      "passed": true
+    },
+    {
+      "name": "ZIP integrity and literal ROM bytes",
+      "passed": true
+    },
+    {
+      "name": "ZIP checksum forest-room-cohesion-4024902.gba",
+      "passed": true
+    },
+    {
+      "name": "ZIP checksum README.txt",
+      "passed": true
+    }
+  ]
+}

@@ -1,0 +1,117 @@
+{
+  "method": "Actual C generation plus native ROM metadata; independent flood-fill and resulting-root checks. Hardware submission suppressed; no render claim.",
+  "rom_sha256": "5fcf4cba1c6ab3a5af4575a5a05a49d9813457a02b4f5d16a7e3abc05e41566e",
+  "statistics": {
+    "requested_seeds": 128,
+    "rooms": 3200,
+    "opened_state_rooms": 800,
+    "approaches": 25543,
+    "pockets": 2619,
+    "determinism": 3200,
+    "boundary_inventory_checks": 32000,
+    "feet_box_rooms": 1600,
+    "trees": 1216122,
+    "wood_cells": 2016771,
+    "authored_cells": 3056,
+    "root_ownership_checks": 2019827,
+    "preview_preservation_checks": 800,
+    "live_scene_cache_checks": 800,
+    "frame_counts": [
+      217643,
+      135009,
+      48304,
+      218401,
+      136016,
+      48332,
+      111403,
+      69949,
+      24964,
+      111683,
+      69464,
+      24954
+    ],
+    "stage_state_counts": [
+      [
+        361773,
+        58724,
+        0
+      ],
+      [
+        177693,
+        129245,
+        16025
+      ],
+      [
+        87220,
+        147169,
+        58555
+      ],
+      [
+        32444,
+        75300,
+        71974
+      ]
+    ],
+    "landscape": {
+      "water_components": 1351,
+      "water_cells": 46080,
+      "bridge_runs": 805,
+      "bridge_landing_checks": 1610,
+      "lantern_posts": 6059,
+      "unanchored_lanterns": 0,
+      "detail_cells": 15484,
+      "details_near_material_context": 15437,
+      "ledge_cells": 0,
+      "failures": 0,
+      "trail_refine_calls": 8256,
+      "trail_physics_failures": 0,
+      "relic_collection_cases": 128,
+      "relic_layout_failures": 0,
+      "motifs": [
+        890,
+        628,
+        723,
+        429,
+        402,
+        128
+      ]
+    },
+    "failures": 0
+  },
+  "exit_code": 0,
+  "compiler": "gcc (Debian 14.2.0-19) 14.2.0",
+  "command": [
+    "gcc",
+    "-O2",
+    "-fno-builtin",
+    "-w",
+    "-ffunction-sections",
+    "-fdata-sections",
+    "-I",
+    "/workspace/bartgame/bartgame/src",
+    "-I",
+    "/workspace/setup/forest-room-cohesion/frozen/v32",
+    "/workspace/setup/forest-room-cohesion/audit-final-402-host/host/generator-check.c",
+    "/workspace/setup/forest-room-cohesion/audit-final-402-host/host/room-logic.c",
+    "/workspace/bartgame/bartgame/src/forest_trees.c",
+    "/workspace/bartgame/bartgame/src/forest_paths.c",
+    "/workspace/bartgame/bartgame/src/world.c",
+    "/workspace/bartgame/bartgame/src/util.c",
+    "/workspace/setup/forest-room-cohesion/audit-final-402-host/host/native-metadata.c",
+    "-Wl,--gc-sections",
+    "-o",
+    "/workspace/setup/forest-room-cohesion/audit-final-402-host/host/generator-check"
+  ],
+  "harness_sha256": "b4861f3d8f9bead424c7d6e16cb8f74891dee51edb6c33975d20d6df4df16fcb",
+  "wrapper_sha256": "e75bd04d0bd234b11870033a8e2374f5b87fbb3bb1b8989a3062f958f4b27c33",
+  "metadata_sha256": "9a75faee35bd605d1f01a608ef97537a25307f6ce401a9d210ef5c58783fed6d",
+  "binary_sha256": "4d1142bb11f11c612a155291fd774ca12bdfa9e6dc80bab133fe633d2b380db2",
+  "source_sha256": {
+    "src/roomgen.c": "1eccbc2d4941f9cd09da1bb1016bf890b83aba539395cfcf21b1f562b4e74cb5",
+    "src/room.c": "ac90cd52f99aeba570a81904a40ede49d214a56be817085c48abcda263abe83d",
+    "src/forest_trees.c": "14927e1c835eb8c838dd6505647c947dbf9953537a3611f24f9750da1916c2f3",
+    "src/forest_paths.c": "44254ab9e10e273a7783848f203dfba2c8d59994a08692204b8bd3832b480e82",
+    "src/world.c": "203716ae6d4044cc1be92fb9c150ba958fe05a01dafa2ddbf3553e24d30b7f4c",
+    "src/util.c": "e8df1ff26b31194d375b0be31364bacd3fd95fb90d983e7dc17ff984e0a05698"
+  }
+}

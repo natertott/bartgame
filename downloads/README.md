@@ -1,10 +1,25 @@
 # BARTGAME downloads
 
 
+## Refined forest rooms and details
+
+The normal build now uses profile32: coherent brooks and ponds, useful
+crossings, worn trail networks and contextual woodland details. The approved
+twelve healthy/sick/dead trees retain their original native drawings.
+
+- [Eight real rooms, matched before/after, native details and videos](../art-review/forest-room-cohesion/README.md)
+- [Download the ROM](https://raw.githubusercontent.com/natertott/bartgame/forest-room-cohesion/downloads/forest-room-cohesion-4024902/forest-room-cohesion-4024902.gba)
+- [Download the ZIP](https://raw.githubusercontent.com/natertott/bartgame/forest-room-cohesion/downloads/forest-room-cohesion-4024902/forest-room-cohesion-4024902.zip)
+- [Build and checksums](forest-room-cohesion-4024902/README.md)
+
+Game/art source `4024902`. Historical profiles0–31 remain byte-identical.
+The earlier tree-only build below is retained for comparison.
+
+
 ## Selected repeated forest trees
 
 The approved healthy, sick and dead 32×32/16×32 trees are integrated into the
-normal procedural forest. Ordinary `make` selects profile31. These are playable
+normal procedural forest. That earlier release selects profile31. These are playable
 builds, with real mGBA complete-room camera mosaics and native HUD views.
 
 - [View the actual rooms and movement clips](../art-review/forest-trees-integrated/README.md)

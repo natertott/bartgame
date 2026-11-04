@@ -1,0 +1,7 @@
+{
+  "command": "make -C bartgame -j4 (no profile override)",
+  "profile": 32,
+  "rom_sha256": "5fcf4cba1c6ab3a5af4575a5a05a49d9813457a02b4f5d16a7e3abc05e41566e",
+  "frozen_rom_sha256": "5fcf4cba1c6ab3a5af4575a5a05a49d9813457a02b4f5d16a7e3abc05e41566e",
+  "byte_identical": true
+}

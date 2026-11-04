@@ -1,0 +1,2346 @@
+{
+  "game_art_source_commit": "4024902d56c759ca124b2517c73f77e5234be66d",
+  "publication_branch": "forest-room-cohesion",
+  "forest_profile": 32,
+  "rom_sha256": "5fcf4cba1c6ab3a5af4575a5a05a49d9813457a02b4f5d16a7e3abc05e41566e",
+  "scope": "Composed procedural forest rooms, native material/detail refinement, matched before/after mGBA evidence and playable release. Earlier failed candidates remain private. Game/art inputs are frozen; verification tools and final documentation are independently hashed.",
+  "checks": {
+    "host_source": [
+      1223,
+      1223
+    ],
+    "capture_audit": [
+      567,
+      567
+    ],
+    "runtime": [
+      80,
+      80
+    ],
+    "after_capture": [
+      338,
+      338
+    ],
+    "before_capture": [
+      336,
+      336
+    ],
+    "publication": [
+      694,
+      694
+    ],
+    "historical_byte_exact_profiles": 32,
+    "host_rooms": 3200,
+    "relic_revisits": 128,
+    "after_native_walk_frames": 504,
+    "after_native_water_frames": 384
+  },
+  "files": {
+    "art-review/forest-room-cohesion/README.md": {
+      "bytes": 4415,
+      "sha256": "d09ca727510448431131811cee5efd8bff61fc7b1147472c02c131ab1bac163d"
+    },
+    "art-review/forest-room-cohesion/actual/after/brook-crossing/BG3_map.bin": {
+      "bytes": 8192,
+      "sha256": "b3ce9d59451ec28e5f7af79c0fd6afc19bf60e9d2d78560bccec68f1094cac09"
+    },
+    "art-review/forest-room-cohesion/actual/after/brook-crossing/BG_maps.bin": {
+      "bytes": 16384,
+      "sha256": "2d12ef2d63583d59b8550bd9dae99ca0fd1f3b8b7b252859d30d8c6732113c04"
+    },
+    "art-review/forest-room-cohesion/actual/after/brook-crossing/BG_tiles.bin": {
+      "bytes": 20992,
+      "sha256": "03fd4f82904608e4a8b2e5fa331031196928c2770aeb5af454f62279c96bc8d9"
+    },
+    "art-review/forest-room-cohesion/actual/after/brook-crossing/camera-000-000.png": {
+      "bytes": 11145,
+      "sha256": "9e3f4c2e639f44bab47061c80ce3df02516ce6996d34725721158d058bcde187"
+    },
+    "art-review/forest-room-cohesion/actual/after/brook-crossing/camera-000-112.png": {
+      "bytes": 10484,
+      "sha256": "e10ae09d32f083ca9f993d7002efb6da8af9cea870d7e25c458e860e3b74f09d"
+    },
+    "art-review/forest-room-cohesion/actual/after/brook-crossing/camera-000-224.png": {
+      "bytes": 11596,
+      "sha256": "b9e3691ddd0a5a09cb2471ad7ac496bc8a06007ab818c829a2961a228e925334"
+    },
+    "art-review/forest-room-cohesion/actual/after/brook-crossing/camera-136-000.png": {
+      "bytes": 12057,
+      "sha256": "3d952d82ee93d1b4c27dbb8c228d6ae9406c26c5ae6466a39d516f224dc38144"
+    },
+    "art-review/forest-room-cohesion/actual/after/brook-crossing/camera-136-112.png": {
+      "bytes": 7932,
+      "sha256": "151a2c365d485b75915d518db600aa31dbaf7bc83023f1665f4a0f29b47f3e32"
+    },
+    "art-review/forest-room-cohesion/actual/after/brook-crossing/camera-136-224.png": {
+      "bytes": 7556,
+      "sha256": "47bef017faa49e0b0c89f3dbf569097ff997dfba8f0d745ee6b32bd9fb8bf8f1"
+    },
+    "art-review/forest-room-cohesion/actual/after/brook-crossing/camera-272-000.png": {
+      "bytes": 12012,
+      "sha256": "e5bdb68382339860821dd3ecf40c0b2aca7d27d4ba11e37ad28ab300c24e7952"
+    },
+    "art-review/forest-room-cohesion/actual/after/brook-crossing/camera-272-112.png": {
+      "bytes": 7200,
+      "sha256": "8a6303cab6a9a532ba1c1180f3fbb4aafc1ed49d4684283481725419ba67bf5c"
+    },
+    "art-review/forest-room-cohesion/actual/after/brook-crossing/camera-272-224.png": {
+      "bytes": 8222,
+      "sha256": "de3a9a54fcab1903ad8fdc850347baeef93006575c0231eebdf5d9f9c06cf469"
+    },
+    "art-review/forest-room-cohesion/actual/after/brook-crossing/full-room.png": {
+      "bytes": 46699,
+      "sha256": "645f695d907c464a08d44886189448599c8d3fd796a3575e1fbec477385c9a8e"
+    },
+    "art-review/forest-room-cohesion/actual/after/brook-crossing/native-HUD-north.png": {
+      "bytes": 8219,
+      "sha256": "96b6e245ef8073c5e9f83e19bf16fbaecc00e123395fa108c7389c86860f5c23"
+    },
+    "art-review/forest-room-cohesion/actual/after/brook-crossing/native-HUD-south.png": {
+      "bytes": 8298,
+      "sha256": "4d873b89842786c39feac1ad15c583601c52b6ebf7e7c348c10a0b544c8a02ce"
+    },
+    "art-review/forest-room-cohesion/actual/after/brook-crossing/native-HUD-west.png": {
+      "bytes": 8166,
+      "sha256": "7d78e2326b9b0b72220fbacafd028f8f8f4c59f5acc72f1d94162f96e84d3a5b"
+    },
+    "art-review/forest-room-cohesion/actual/after/brook-crossing/native-HUD.png": {
+      "bytes": 8326,
+      "sha256": "3e61d9390afdff40876e55c06a171a4a4d73ad2bcd58e9b6f871843859910fe8"
+    },
+    "art-review/forest-room-cohesion/actual/after/brook-crossing/native-arrival.png": {
+      "bytes": 13243,
+      "sha256": "2d4fbc7b272ace854cb84436e9c21e7280e209286b84448349d0f79ac691c316"
+    },
+    "art-review/forest-room-cohesion/actual/after/brook-crossing/room.bin": {
+      "bytes": 10242,
+      "sha256": "af77018b8f80f8ca1e7d459b7da3e2fa69af5d661f152feec3c675c8ac8d41fd"
+    },
+    "art-review/forest-room-cohesion/actual/after/brook-crossing/water-motion.gif": {
+      "bytes": 93532,
+      "sha256": "c8a541a6563fb3be0ffce3be328abf461f1e19bcd0cc60be44363e1ee9169f25"
+    },
+    "art-review/forest-room-cohesion/actual/after/brook-crossing/water-motion.mp4": {
+      "bytes": 34239,
+      "sha256": "9cfdec297ca1f42f479db38a5410281c3524260ec037b292a3b85adae8b6d156"
+    },
+    "art-review/forest-room-cohesion/actual/after/brook-crossing/water-observations.json": {
+      "bytes": 876623,
+      "sha256": "350f2d430e79052372a3607eb2b6f04ef296c6ddd13c366d0044fa93c5a09a18"
+    },
+    "art-review/forest-room-cohesion/actual/after/capture.json": {
+      "bytes": 2465300,
+      "sha256": "5985f2f18c22ec35e6b9a2200e052265a1749afb7f090a95bd9ca383db933075"
+    },
+    "art-review/forest-room-cohesion/actual/after/damp-root-hollow/BG3_map.bin": {
+      "bytes": 8192,
+      "sha256": "a2e62e31bd52a733305a77ae5470f0aed255b735f20b3ebadade0f56ad86e64c"
+    },
+    "art-review/forest-room-cohesion/actual/after/damp-root-hollow/BG_maps.bin": {
+      "bytes": 16384,
+      "sha256": "9b30889811743cadb36e9ff972ac64a1b62872f36e21aeb96c29d7a69bd10d1a"
+    },
+    "art-review/forest-room-cohesion/actual/after/damp-root-hollow/BG_tiles.bin": {
+      "bytes": 20992,
+      "sha256": "2f9d8c6e098a7789230888113f82a4f6d8e35073d0746d1661c7e5cc2d29ce82"
+    },
+    "art-review/forest-room-cohesion/actual/after/damp-root-hollow/camera-000-000.png": {
+      "bytes": 12699,
+      "sha256": "133f666cbeca07d3f6990887ec441fd54a0af06fa1b42899f0d0ed9e7c055ff1"
+    },
+    "art-review/forest-room-cohesion/actual/after/damp-root-hollow/camera-000-112.png": {
+      "bytes": 10781,
+      "sha256": "f7f7c5ebb0b9cffa85acee8b5584d2fc8c1a886e73bee98aaed763281a6964c2"
+    },
+    "art-review/forest-room-cohesion/actual/after/damp-root-hollow/camera-000-224.png": {
+      "bytes": 9489,
+      "sha256": "4dcc44eddbcadadcd2c6271177ab0743251c4ceac8e534ea06a616330a1ec72e"
+    },
+    "art-review/forest-room-cohesion/actual/after/damp-root-hollow/camera-136-000.png": {
+      "bytes": 9908,
+      "sha256": "ea172bca160604f205db1c38877023c3517ae4a399962dcdb800311df7195f23"
+    },
+    "art-review/forest-room-cohesion/actual/after/damp-root-hollow/camera-136-112.png": {
+      "bytes": 8844,
+      "sha256": "5427c2a1eb23df6c2190cd664c55ce673c64af8fa88a8dbe20e747edf523e053"
+    },
+    "art-review/forest-room-cohesion/actual/after/damp-root-hollow/camera-136-224.png": {
+      "bytes": 11117,
+      "sha256": "6aa02e46137c7e49e2cefc05263d43ea40fa72d9a95a13b270e82a7e923c16b2"
+    },
+    "art-review/forest-room-cohesion/actual/after/damp-root-hollow/camera-272-000.png": {
+      "bytes": 11274,
+      "sha256": "c2fde4846d81652996ef0a184a60573d55c67d004993a84c2169dc034e13e352"
+    },
+    "art-review/forest-room-cohesion/actual/after/damp-root-hollow/camera-272-112.png": {
+      "bytes": 10373,
+      "sha256": "7261d1fcb2c55a4b43da7543378fa18d7fcb7337447f84fae2452c3fda2f6b0f"
+    },
+    "art-review/forest-room-cohesion/actual/after/damp-root-hollow/camera-272-224.png": {
+      "bytes": 11932,
+      "sha256": "7c825ae8683e3e97f66d1c17e51b019b8b5e0a84a8e35443bc436d9f424cf282"
+    },
+    "art-review/forest-room-cohesion/actual/after/damp-root-hollow/full-room.png": {
+      "bytes": 48981,
+      "sha256": "385c55d0f07f54ec3c468203b056d5d8855ff06bc3a9db1afcbffeb78ce7d6a9"
+    },
+    "art-review/forest-room-cohesion/actual/after/damp-root-hollow/native-HUD-north.png": {
+      "bytes": 9586,
+      "sha256": "7d04d3ff15ca4a7a6927e85e7d2c819c7cdf7e8196b1fb3a40fbd0168bdfe9a3"
+    },
+    "art-review/forest-room-cohesion/actual/after/damp-root-hollow/native-HUD-south.png": {
+      "bytes": 9614,
+      "sha256": "454383a82ce4c338302c6e6c84a60e65a02f9580125d6194199f1f4989a0e8a3"
+    },
+    "art-review/forest-room-cohesion/actual/after/damp-root-hollow/native-HUD-west.png": {
+      "bytes": 9549,
+      "sha256": "9f0645b72e32dbd8f7857f01da57884615e8ed85a436082649b0967620977fd5"
+    },
+    "art-review/forest-room-cohesion/actual/after/damp-root-hollow/native-HUD.png": {
+      "bytes": 9594,
+      "sha256": "6b29bc751adbf6079fc9475c1f1a71b48381ef330e321ffab76815fd7d67d0a9"
+    },
+    "art-review/forest-room-cohesion/actual/after/damp-root-hollow/native-arrival.png": {
+      "bytes": 11327,
+      "sha256": "7517a62d9e8623c2d5f3fa7eea15ef18fdb85955b5ac8604c2517f6225ab814e"
+    },
+    "art-review/forest-room-cohesion/actual/after/damp-root-hollow/room.bin": {
+      "bytes": 10242,
+      "sha256": "6f75c3d7a587ba4498135794de558ac95b796fdbec0cd1f19e06483d54e953e7"
+    },
+    "art-review/forest-room-cohesion/actual/after/deep/BG3_map.bin": {
+      "bytes": 8192,
+      "sha256": "765af693977f1ad9cf6a950a90ec9543df474c5ea582729694f48cf1a2258ee0"
+    },
+    "art-review/forest-room-cohesion/actual/after/deep/BG_maps.bin": {
+      "bytes": 16384,
+      "sha256": "a4ffeda1e3921e36113d3e3f8986b56c61364b475807c0124a752fad79c27f49"
+    },
+    "art-review/forest-room-cohesion/actual/after/deep/BG_tiles.bin": {
+      "bytes": 20992,
+      "sha256": "774efb1a6b5217de3544ad02f5c785d36e455ab719e08025c21d7aa0681560ef"
+    },
+    "art-review/forest-room-cohesion/actual/after/deep/camera-000-000.png": {
+      "bytes": 13786,
+      "sha256": "7d77b3b0fe847bb1549fb49ca5034af7e9a8feb2d8af2d7956b9faf6e31c6602"
+    },
+    "art-review/forest-room-cohesion/actual/after/deep/camera-000-112.png": {
+      "bytes": 10249,
+      "sha256": "f19aeebc0c3137488b2538edc2f5039a1846cddd6b7b95215fe685b5f8b2c91c"
+    },
+    "art-review/forest-room-cohesion/actual/after/deep/camera-000-224.png": {
+      "bytes": 12210,
+      "sha256": "323e372474492ea0f6c39104fe1346a3a469d419963fd20d1bece14e12f7d102"
+    },
+    "art-review/forest-room-cohesion/actual/after/deep/camera-136-000.png": {
+      "bytes": 14063,
+      "sha256": "0b9e41b87b9fa8e855cd8da1d78a7b169b783c4e7aa7c5a3beb6732564ced60f"
+    },
+    "art-review/forest-room-cohesion/actual/after/deep/camera-136-112.png": {
+      "bytes": 9044,
+      "sha256": "7d1f6e98e2f8ea36b0451ce9b8b827c4cb12b0b2a307cda929c0c411139b37ef"
+    },
+    "art-review/forest-room-cohesion/actual/after/deep/camera-136-224.png": {
+      "bytes": 9506,
+      "sha256": "119324e349f5484ace716169630b253499a7f82044245eee28658331df81d65c"
+    },
+    "art-review/forest-room-cohesion/actual/after/deep/camera-272-000.png": {
+      "bytes": 13966,
+      "sha256": "7ab36f6ae8db1b3ab4bcb3e737de792a7d95e44799aa9f3fc56ae38e5d44cce2"
+    },
+    "art-review/forest-room-cohesion/actual/after/deep/camera-272-112.png": {
+      "bytes": 11918,
+      "sha256": "14ff2f0ede46fddc7b8714a380ec841c791bf91068d3a17236fe2f547393bb4b"
+    },
+    "art-review/forest-room-cohesion/actual/after/deep/camera-272-224.png": {
+      "bytes": 11653,
+      "sha256": "11ef570205c6d2fad8a7cd1fde355fd515a2e66c0855fda185d50e2ea28d23a4"
+    },
+    "art-review/forest-room-cohesion/actual/after/deep/full-room.png": {
+      "bytes": 55840,
+      "sha256": "bad140ef6ff6ed1e932f1a47d300f3931f0366c7189bd8605ccbca5f01ecffaf"
+    },
+    "art-review/forest-room-cohesion/actual/after/deep/native-HUD-north.png": {
+      "bytes": 9503,
+      "sha256": "adf07efe0a42598cb8a0da09040f1fb73457b7f4d7572f5a91f2f9d4941f307b"
+    },
+    "art-review/forest-room-cohesion/actual/after/deep/native-HUD-south.png": {
+      "bytes": 9453,
+      "sha256": "f166f6d8c64270312dc4d1407786c86ccb13d005b94e5d4ec48c49907e0583c5"
+    },
+    "art-review/forest-room-cohesion/actual/after/deep/native-HUD-west.png": {
+      "bytes": 9486,
+      "sha256": "230220820eb64a74497192712b0bd34b6ea5955bfb40f232ee739693110c8430"
+    },
+    "art-review/forest-room-cohesion/actual/after/deep/native-HUD.png": {
+      "bytes": 9479,
+      "sha256": "851d6d6f603f083763d52fc7b19079ad7d816b457b5c60329d476dce4c0c22ae"
+    },
+    "art-review/forest-room-cohesion/actual/after/deep/native-arrival.png": {
+      "bytes": 10698,
+      "sha256": "ea4f5051c47d0418e2c6800ae878fd89f7a43c38cc9832afda171295258ce76a"
+    },
+    "art-review/forest-room-cohesion/actual/after/deep/room.bin": {
+      "bytes": 10242,
+      "sha256": "6ee125741ddf014ed9170e31befa48583d16369b64a89efc82e843825ceca832"
+    },
+    "art-review/forest-room-cohesion/actual/after/deep/walk-observations.json": {
+      "bytes": 470086,
+      "sha256": "6d8723fef5e5c2f47316402fe219ef7d784c32a689a2fe67296fe56c81551344"
+    },
+    "art-review/forest-room-cohesion/actual/after/deep/walk.gif": {
+      "bytes": 144453,
+      "sha256": "269aee44d64a8a8872b6167e74f6ae498f6c36d957d32db747492d4249885bc8"
+    },
+    "art-review/forest-room-cohesion/actual/after/deep/walk.mp4": {
+      "bytes": 150362,
+      "sha256": "5bd5aa463628fc8f6b6ea342bd6f15057712afed167f752a0d827971e6925c56"
+    },
+    "art-review/forest-room-cohesion/actual/after/deep/water-motion.gif": {
+      "bytes": 77121,
+      "sha256": "b44e89a960b560c15f55e28f4dc219ae52285f9a650f2a7ffb4e11c976ca689f"
+    },
+    "art-review/forest-room-cohesion/actual/after/deep/water-motion.mp4": {
+      "bytes": 32890,
+      "sha256": "99e34cee5bcbfdbcac7a76bc52eb12a42716cfab55e0235afeb1eb33850908c5"
+    },
+    "art-review/forest-room-cohesion/actual/after/deep/water-observations.json": {
+      "bytes": 841819,
+      "sha256": "cf79ec36d1e81bd305431e504a82f8e29fca04af37855d749c1bbfc33ecd3b2c"
+    },
+    "art-review/forest-room-cohesion/actual/after/dry-glade/BG3_map.bin": {
+      "bytes": 8192,
+      "sha256": "ebce26d6e7c25c1dea8eb2288b4ec498ec4b8bc1e2fea1a0b8f1cee76f013e6d"
+    },
+    "art-review/forest-room-cohesion/actual/after/dry-glade/BG_maps.bin": {
+      "bytes": 16384,
+      "sha256": "b56a12d7251e57d20c0bbffd0dd8567b27631612d216e084be8c0c66b22945af"
+    },
+    "art-review/forest-room-cohesion/actual/after/dry-glade/BG_tiles.bin": {
+      "bytes": 20992,
+      "sha256": "a1ad2b02f062cb34acf2f7d3fd98bad957366f3c90809f394d3555100b1e5dfe"
+    },
+    "art-review/forest-room-cohesion/actual/after/dry-glade/camera-000-000.png": {
+      "bytes": 9718,
+      "sha256": "cff271a88af123aac55e642ae2b000def7cbda06e6f3d7546c53e21d9d4348cd"
+    },
+    "art-review/forest-room-cohesion/actual/after/dry-glade/camera-000-112.png": {
+      "bytes": 8707,
+      "sha256": "68e19a9332f25b46f08e080b418e901fd8d44f840a5cb2d9420c2ee6705ed9a5"
+    },
+    "art-review/forest-room-cohesion/actual/after/dry-glade/camera-000-224.png": {
+      "bytes": 8834,
+      "sha256": "d1119e7e922eea795f19e2fe4659279e684db3eaed83b5a8d5bbbecf1eaa29f7"
+    },
+    "art-review/forest-room-cohesion/actual/after/dry-glade/camera-136-000.png": {
+      "bytes": 10115,
+      "sha256": "84ad696001735f0e2f7f9ad005fe96e20dfdc3098d8d0044fb447a8558445be2"
+    },
+    "art-review/forest-room-cohesion/actual/after/dry-glade/camera-136-112.png": {
+      "bytes": 7322,
+      "sha256": "4c33c5998224535b249b8d1511a5ecc542565e104c8a7c426e6682edd555cc2f"
+    },
+    "art-review/forest-room-cohesion/actual/after/dry-glade/camera-136-224.png": {
+      "bytes": 6856,
+      "sha256": "723fb928e6b7b8146703ee684c7efcb342b01966bcc980f10c76ee82e194c4c7"
+    },
+    "art-review/forest-room-cohesion/actual/after/dry-glade/camera-272-000.png": {
+      "bytes": 10473,
+      "sha256": "eac9e89711494f4fed1075991074e1c3c5cb283ae4967163fa96397f1ea0e902"
+    },
+    "art-review/forest-room-cohesion/actual/after/dry-glade/camera-272-112.png": {
+      "bytes": 9330,
+      "sha256": "35f85a5b229c8820f84156be50c90567d115e2277f11e8b83007b785b459f9d0"
+    },
+    "art-review/forest-room-cohesion/actual/after/dry-glade/camera-272-224.png": {
+      "bytes": 8996,
+      "sha256": "954b0cbc6ba647944608be90a6d27dcb556f7a567ebc9363b5273f27e1c05f06"
+    },
+    "art-review/forest-room-cohesion/actual/after/dry-glade/full-room.png": {
+      "bytes": 40726,
+      "sha256": "b4f8058bedc9f624531b068fb17fb34a2bfc579c05a716e76e653becf5b95b90"
+    },
+    "art-review/forest-room-cohesion/actual/after/dry-glade/native-HUD-north.png": {
+      "bytes": 6765,
+      "sha256": "f27564486dd5fd6dfe59036af07f4686f7e106a726fdd028859eec145898e099"
+    },
+    "art-review/forest-room-cohesion/actual/after/dry-glade/native-HUD-south.png": {
+      "bytes": 6775,
+      "sha256": "59b1d48491e62b3bf14b99ae76a56e86cf292bf16314b724c5971b06d7cb2715"
+    },
+    "art-review/forest-room-cohesion/actual/after/dry-glade/native-HUD-west.png": {
+      "bytes": 6677,
+      "sha256": "27e37ecb5e1990ce82078876b05b76d993a8fc8a52e1c14e5e2b8881cf52ee85"
+    },
+    "art-review/forest-room-cohesion/actual/after/dry-glade/native-HUD.png": {
+      "bytes": 6756,
+      "sha256": "a5c10616191c64e00bc413e4977022a1142e96667a99929e33c4584a06f18d54"
+    },
+    "art-review/forest-room-cohesion/actual/after/dry-glade/native-arrival.png": {
+      "bytes": 11233,
+      "sha256": "534cc76533722fb3a1bbd34112a9f33a1def6b67eee0e3dc58c5431e2f93d21c"
+    },
+    "art-review/forest-room-cohesion/actual/after/dry-glade/room.bin": {
+      "bytes": 10242,
+      "sha256": "25bad1d947de1c1c48b8b1d0b17654821e00f52833c535ee3cb0cf0f66cde91e"
+    },
+    "art-review/forest-room-cohesion/actual/after/healthy/BG3_map.bin": {
+      "bytes": 8192,
+      "sha256": "372de76ded227468ab1028bd6b48b45b538e542a1fef27040a4d928a91adcb82"
+    },
+    "art-review/forest-room-cohesion/actual/after/healthy/BG_maps.bin": {
+      "bytes": 16384,
+      "sha256": "929b48c7ca1f424110772cba46433ddcc7db20f82a71c127e2754a52c9f9fe09"
+    },
+    "art-review/forest-room-cohesion/actual/after/healthy/BG_tiles.bin": {
+      "bytes": 20992,
+      "sha256": "2f9d8c6e098a7789230888113f82a4f6d8e35073d0746d1661c7e5cc2d29ce82"
+    },
+    "art-review/forest-room-cohesion/actual/after/healthy/camera-000-000.png": {
+      "bytes": 9184,
+      "sha256": "d7decb3a2ab579f6cc69509da0bb0f492d9efd3d9c28200899eb20a84ea7373a"
+    },
+    "art-review/forest-room-cohesion/actual/after/healthy/camera-000-112.png": {
+      "bytes": 7960,
+      "sha256": "8214f4332a84249afd16ffd05e7dc29043dcd64a4837c3b794642ebd0b2bf22f"
+    },
+    "art-review/forest-room-cohesion/actual/after/healthy/camera-000-224.png": {
+      "bytes": 9309,
+      "sha256": "3f6ad8ceb299eeaaca6541e1b6a393b98c35f647c4d91f901c0e90c0def95b54"
+    },
+    "art-review/forest-room-cohesion/actual/after/healthy/camera-136-000.png": {
+      "bytes": 8772,
+      "sha256": "9eb301b574b7712617f50d16feecacd2629d2f5d949fab0fb5b64cd11c7d15c7"
+    },
+    "art-review/forest-room-cohesion/actual/after/healthy/camera-136-112.png": {
+      "bytes": 7258,
+      "sha256": "97b0a82618939dcd42fc0388e4ab4e4c55344a77dbdfbcfef5359e961b7864c9"
+    },
+    "art-review/forest-room-cohesion/actual/after/healthy/camera-136-224.png": {
+      "bytes": 7748,
+      "sha256": "609fc58a64b6a9696f8f65125fa3fc2b49f6eb8787ec2f59b41e65a2a8ea9308"
+    },
+    "art-review/forest-room-cohesion/actual/after/healthy/camera-272-000.png": {
+      "bytes": 10436,
+      "sha256": "ae8e46914048318676d545119d0754bcb22b063c5dc3282313401a01df928177"
+    },
+    "art-review/forest-room-cohesion/actual/after/healthy/camera-272-112.png": {
+      "bytes": 10461,
+      "sha256": "f334e4b706c03ceefef76f65463791c36b18ca651c854cd12af5cc70adeaac25"
+    },
+    "art-review/forest-room-cohesion/actual/after/healthy/camera-272-224.png": {
+      "bytes": 9001,
+      "sha256": "464e94aa85b6571fcafafb6f1301fcddd5ce0bb507dd1482f4f80ea610f0a127"
+    },
+    "art-review/forest-room-cohesion/actual/after/healthy/full-room.png": {
+      "bytes": 42024,
+      "sha256": "d61a9c80b092d1daa45950d89dcb391794c91e2d79ff94cb1f79163141c47c48"
+    },
+    "art-review/forest-room-cohesion/actual/after/healthy/native-HUD-north.png": {
+      "bytes": 7817,
+      "sha256": "7674188e9ba796355a1faaf7a4edf9112d174bd9419900eb7c1de334f731c6bb"
+    },
+    "art-review/forest-room-cohesion/actual/after/healthy/native-HUD-south.png": {
+      "bytes": 7890,
+      "sha256": "5e9137fdb091a68caf2ca7d3059aa94ad0b2d2ec86bc1bee1a011fdb5035c94f"
+    },
+    "art-review/forest-room-cohesion/actual/after/healthy/native-HUD-west.png": {
+      "bytes": 7858,
+      "sha256": "c8bb891f75582a646bafba1b3c69503e58c7d767e8d22556bdf839474bbc9c9c"
+    },
+    "art-review/forest-room-cohesion/actual/after/healthy/native-HUD.png": {
+      "bytes": 7766,
+      "sha256": "7326ecee873f48011dafbe8f4a98c05baaf2dec828bdc2b5862fc2fe539f350e"
+    },
+    "art-review/forest-room-cohesion/actual/after/healthy/native-arrival.png": {
+      "bytes": 9866,
+      "sha256": "a9ceeff490cecd7e25578e84652488d0edb2eaffdba3efac9103af5141bd6e4e"
+    },
+    "art-review/forest-room-cohesion/actual/after/healthy/room.bin": {
+      "bytes": 10242,
+      "sha256": "3edd3ad866e2d951f3aa4b7d58b683292173a06bc4fde74c0afc00008c457a98"
+    },
+    "art-review/forest-room-cohesion/actual/after/healthy/walk-observations.json": {
+      "bytes": 483285,
+      "sha256": "893f211cb82884241e14b256db1159a5d27dbbefb0674783f6c33dc5ab708b60"
+    },
+    "art-review/forest-room-cohesion/actual/after/healthy/walk.gif": {
+      "bytes": 128225,
+      "sha256": "3fc4ea1389845e59e1d1b0b080e63403fb0a7aba59834093582765fbe451585d"
+    },
+    "art-review/forest-room-cohesion/actual/after/healthy/walk.mp4": {
+      "bytes": 111044,
+      "sha256": "c56a6c1ac7a7d16bc844e8d15ddea2cd7b023d3a845b8408c188ca24d2cc234d"
+    },
+    "art-review/forest-room-cohesion/actual/after/healthy/water-motion.gif": {
+      "bytes": 91137,
+      "sha256": "f50fa516d47aeba6cad44de1a3306f3d71b397dde04c654b6f302fe893dc5d56"
+    },
+    "art-review/forest-room-cohesion/actual/after/healthy/water-motion.mp4": {
+      "bytes": 36092,
+      "sha256": "f58b591126fb9be8bb4b2a4821f4e486eb26b7dd231757b3050aed5c54b3820c"
+    },
+    "art-review/forest-room-cohesion/actual/after/healthy/water-observations.json": {
+      "bytes": 865788,
+      "sha256": "f0a948b9ecb35b150361f74b1c7ad632d2aed3e2076bff663f95eb57785f8796"
+    },
+    "art-review/forest-room-cohesion/actual/after/heart-arena/BG3_map.bin": {
+      "bytes": 8192,
+      "sha256": "1b648cee7c18712366e3688af58a58d795533e6d2502900f228659bc798f5285"
+    },
+    "art-review/forest-room-cohesion/actual/after/heart-arena/BG_maps.bin": {
+      "bytes": 16384,
+      "sha256": "4320af8810253239faf8758dc6786cdae84a3d2c7405226bca7e13f09c109782"
+    },
+    "art-review/forest-room-cohesion/actual/after/heart-arena/BG_tiles.bin": {
+      "bytes": 20992,
+      "sha256": "ade3c0f35a51146b065804ebdc82cea0baf1f25349295721d01a547825bbfd7f"
+    },
+    "art-review/forest-room-cohesion/actual/after/heart-arena/camera-000-000.png": {
+      "bytes": 11534,
+      "sha256": "030ff72bc8ee13690244e562d7d80f92051e1ee8e20fcd4bfaf1d233b749aa9b"
+    },
+    "art-review/forest-room-cohesion/actual/after/heart-arena/camera-000-112.png": {
+      "bytes": 8224,
+      "sha256": "a14ed3d9834f71f44d4606b9df3b25356923446654fd497890ace901ce18c51f"
+    },
+    "art-review/forest-room-cohesion/actual/after/heart-arena/camera-000-224.png": {
+      "bytes": 11140,
+      "sha256": "79e11dc78735e1545b63a932e3abe06d8c58e4090ace83b1e6e81ca216987572"
+    },
+    "art-review/forest-room-cohesion/actual/after/heart-arena/camera-136-000.png": {
+      "bytes": 7969,
+      "sha256": "82ec12a0073bf9929fc10fc9a984bb1ff9df50ddf8f0c3d2ef9eb02ea3efa127"
+    },
+    "art-review/forest-room-cohesion/actual/after/heart-arena/camera-136-112.png": {
+      "bytes": 2167,
+      "sha256": "fbe39f09a50bd1e79fd8fbb3214503a0b59e644aa1638ae74f34782ef578847b"
+    },
+    "art-review/forest-room-cohesion/actual/after/heart-arena/camera-136-224.png": {
+      "bytes": 8456,
+      "sha256": "9487017f2d523f293557a20ba4b1abaa763c2ec7a8a9285c58e2da1d1c0d328d"
+    },
+    "art-review/forest-room-cohesion/actual/after/heart-arena/camera-272-000.png": {
+      "bytes": 10506,
+      "sha256": "f88959fc6e9b8a1b0096ce0cce071d5253b0cf37516479f96c2d3e6c22e29702"
+    },
+    "art-review/forest-room-cohesion/actual/after/heart-arena/camera-272-112.png": {
+      "bytes": 7197,
+      "sha256": "fe3fe2373b5c9cceb1228e8eaf52817422bfea418af5a3fe480b2d6ce1e2b871"
+    },
+    "art-review/forest-room-cohesion/actual/after/heart-arena/camera-272-224.png": {
+      "bytes": 10702,
+      "sha256": "0eeef404b5dad6b118e2497e6efadfe52ede022d4d62dcdf9a4c5da49c7fc80f"
+    },
+    "art-review/forest-room-cohesion/actual/after/heart-arena/full-room.png": {
+      "bytes": 44756,
+      "sha256": "a31527d517a1c5bd10ea18446008ec854c810ff70d2bc1749d7039287ae9cf41"
+    },
+    "art-review/forest-room-cohesion/actual/after/heart-arena/native-HUD-north.png": {
+      "bytes": 2935,
+      "sha256": "be4a223885ba25aaab1328d00534e0df1b528788bcd600ffa9b94c7a4e53b739"
+    },
+    "art-review/forest-room-cohesion/actual/after/heart-arena/native-HUD-south.png": {
+      "bytes": 2959,
+      "sha256": "f92b36b48e83fc68de1cd09d99d2e6c6568664832302d2f11ef4c357559da607"
+    },
+    "art-review/forest-room-cohesion/actual/after/heart-arena/native-HUD-west.png": {
+      "bytes": 2921,
+      "sha256": "2591bad4bd2ca8b5b04ba3d02488a56b79988e62b4d1b8edc5f46f409f80a452"
+    },
+    "art-review/forest-room-cohesion/actual/after/heart-arena/native-HUD.png": {
+      "bytes": 2929,
+      "sha256": "32fb1aeeaaa8bc219bf0666feb0e120ad4a1919803732784ee020f6d334101c2"
+    },
+    "art-review/forest-room-cohesion/actual/after/heart-arena/native-arrival.png": {
+      "bytes": 9344,
+      "sha256": "af5bc237273dca936587d804e896134ec5c6c598e87a10a8e8a20838b157444f"
+    },
+    "art-review/forest-room-cohesion/actual/after/heart-arena/room.bin": {
+      "bytes": 10242,
+      "sha256": "f13745dd53db76bd89cb95e3740e6127729299de6555e1d2dce2b45ccf8b4dcb"
+    },
+    "art-review/forest-room-cohesion/actual/after/mixed/BG3_map.bin": {
+      "bytes": 8192,
+      "sha256": "a394fa89c1586d87df9de2732746d4f4df374dd317e492ee17b4173bdbaa8e5b"
+    },
+    "art-review/forest-room-cohesion/actual/after/mixed/BG_maps.bin": {
+      "bytes": 16384,
+      "sha256": "b2fdb61c58b0a06055780b5de0dc21cde6c57fbf38bf7fc8e779c411283566b0"
+    },
+    "art-review/forest-room-cohesion/actual/after/mixed/BG_tiles.bin": {
+      "bytes": 20992,
+      "sha256": "03fd4f82904608e4a8b2e5fa331031196928c2770aeb5af454f62279c96bc8d9"
+    },
+    "art-review/forest-room-cohesion/actual/after/mixed/camera-000-000.png": {
+      "bytes": 13071,
+      "sha256": "684c1b208399dc31037056dbfa98ab579162f7e391f2a7eb5ccebbbe33f701d7"
+    },
+    "art-review/forest-room-cohesion/actual/after/mixed/camera-000-112.png": {
+      "bytes": 11482,
+      "sha256": "8f1296d628c0d71e951f3711c10609c9998af8367bf69b680b1d26fc12ada07d"
+    },
+    "art-review/forest-room-cohesion/actual/after/mixed/camera-000-224.png": {
+      "bytes": 13197,
+      "sha256": "5396db53331adccc10c11acf1e0837dc4de063f6007913822df6f60a791155a8"
+    },
+    "art-review/forest-room-cohesion/actual/after/mixed/camera-136-000.png": {
+      "bytes": 11497,
+      "sha256": "6560a38320c1e0f01cbaf139e92cc1254e391cd9671c6635813cdf00ee17881a"
+    },
+    "art-review/forest-room-cohesion/actual/after/mixed/camera-136-112.png": {
+      "bytes": 8365,
+      "sha256": "0270c0da39e9a5e7d80b73197823acddbbbd0a18ee3dc38df84db8a57100339b"
+    },
+    "art-review/forest-room-cohesion/actual/after/mixed/camera-136-224.png": {
+      "bytes": 11117,
+      "sha256": "316d3db2ea0bf95136d1febc6523d84f862ce5205592075ddb63021488b21f3b"
+    },
+    "art-review/forest-room-cohesion/actual/after/mixed/camera-272-000.png": {
+      "bytes": 12235,
+      "sha256": "e2885af376984d696b473068a126e1ee934bdb39faaeb7d35d7148ed6b341d3c"
+    },
+    "art-review/forest-room-cohesion/actual/after/mixed/camera-272-112.png": {
+      "bytes": 7757,
+      "sha256": "c4f8286b5276012ee29c56e404cf9e9636342472f39594418c6dee2d13975eda"
+    },
+    "art-review/forest-room-cohesion/actual/after/mixed/camera-272-224.png": {
+      "bytes": 10945,
+      "sha256": "29dbf336f67e2ed22ea37713b48c3c734e8262262ee5c1cf27d927d7e33bd2df"
+    },
+    "art-review/forest-room-cohesion/actual/after/mixed/full-room.png": {
+      "bytes": 52264,
+      "sha256": "ec9ac94a22670bc0057526747347d7914e1614b4f2a444b78f070bed7e6cfa37"
+    },
+    "art-review/forest-room-cohesion/actual/after/mixed/native-HUD-north.png": {
+      "bytes": 9056,
+      "sha256": "cb816a04a55585f686a164ba8091eb6f384354ccc7c903763aae592a2f7075d0"
+    },
+    "art-review/forest-room-cohesion/actual/after/mixed/native-HUD-south.png": {
+      "bytes": 9089,
+      "sha256": "c4a32ae2e577cda10cf2b81c0e724497fc53eb8aa991375f6d0d42b6c3a649bb"
+    },
+    "art-review/forest-room-cohesion/actual/after/mixed/native-HUD-west.png": {
+      "bytes": 8989,
+      "sha256": "f379c3d8ac09f1db3a9b14584c0fb7875ca581a1800ba853bae78d73254f80ed"
+    },
+    "art-review/forest-room-cohesion/actual/after/mixed/native-HUD.png": {
+      "bytes": 9042,
+      "sha256": "80131890499ecbc3a0c3798276be81429547e4e27e959a3343b9985318cdf31f"
+    },
+    "art-review/forest-room-cohesion/actual/after/mixed/native-arrival.png": {
+      "bytes": 9282,
+      "sha256": "6cb922fb0c7851ffd948c6aa0b542ec755a4f7b0749a597dba0d1e869fba04f5"
+    },
+    "art-review/forest-room-cohesion/actual/after/mixed/room.bin": {
+      "bytes": 10242,
+      "sha256": "0fc657b2e18ca5c172120f87c2b7b500e7fc714dfd246626624df9c178935f21"
+    },
+    "art-review/forest-room-cohesion/actual/after/mixed/walk-observations.json": {
+      "bytes": 477282,
+      "sha256": "f031331c034f86350b83da59f03730f9bf0b1f851aaad04229be0b7e3180d3d3"
+    },
+    "art-review/forest-room-cohesion/actual/after/mixed/walk.gif": {
+      "bytes": 130780,
+      "sha256": "dd8588f16685e3cf0d0b70a04aa13599a6d447bb5b47df78c6121a4eeacb8c18"
+    },
+    "art-review/forest-room-cohesion/actual/after/mixed/walk.mp4": {
+      "bytes": 99939,
+      "sha256": "ed8c0080c17419bba54aa3f52937bb5f9d605162fe42fe802c2c00009663b6d9"
+    },
+    "art-review/forest-room-cohesion/actual/after/pond/BG3_map.bin": {
+      "bytes": 8192,
+      "sha256": "cd03541786803a8f4db8ac690a7b2317a3500f0acdbf85b05b5ce7d013393274"
+    },
+    "art-review/forest-room-cohesion/actual/after/pond/BG_maps.bin": {
+      "bytes": 16384,
+      "sha256": "eadfb545d2a83e3d77e7fcaeb16dcc3de6ac09227f7a92a228e45813fef9e0be"
+    },
+    "art-review/forest-room-cohesion/actual/after/pond/BG_tiles.bin": {
+      "bytes": 20992,
+      "sha256": "2f9d8c6e098a7789230888113f82a4f6d8e35073d0746d1661c7e5cc2d29ce82"
+    },
+    "art-review/forest-room-cohesion/actual/after/pond/camera-000-000.png": {
+      "bytes": 13533,
+      "sha256": "8905cc88013acc8f777396e59c8279fa69a501447c121e25860844e6765f3151"
+    },
+    "art-review/forest-room-cohesion/actual/after/pond/camera-000-112.png": {
+      "bytes": 11247,
+      "sha256": "f2656fd66c2737340cce569a21ce5c2e5caa86b8213008424de544ab5b2cd0e5"
+    },
+    "art-review/forest-room-cohesion/actual/after/pond/camera-000-224.png": {
+      "bytes": 10702,
+      "sha256": "da274e5a6eca43e19b957ad6868df97d506693ada9c4b5579ccdac0e88eab54b"
+    },
+    "art-review/forest-room-cohesion/actual/after/pond/camera-136-000.png": {
+      "bytes": 12339,
+      "sha256": "46ecc5f8c7f55e90cc5422668522b186fe08ddb83a9e5996fef47a43f8846351"
+    },
+    "art-review/forest-room-cohesion/actual/after/pond/camera-136-112.png": {
+      "bytes": 9467,
+      "sha256": "fd12223d7bd2839ff59c39776b488151f8bd877612d46a7ec1e85cfad62b0452"
+    },
+    "art-review/forest-room-cohesion/actual/after/pond/camera-136-224.png": {
+      "bytes": 10322,
+      "sha256": "0f6d62bf19d7892f20d9240e8b99f61e5935daf0061464970c48bbe0aa4d8280"
+    },
+    "art-review/forest-room-cohesion/actual/after/pond/camera-272-000.png": {
+      "bytes": 13106,
+      "sha256": "b991c45adcec2fd4d945bfa5064b0a0ea5259100a55bde52cf9e80d6f2597729"
+    },
+    "art-review/forest-room-cohesion/actual/after/pond/camera-272-112.png": {
+      "bytes": 11742,
+      "sha256": "a26f164d7a4cc35fc286c57bef43ba6f1956f40e39626ae1105eb1c5af4d6070"
+    },
+    "art-review/forest-room-cohesion/actual/after/pond/camera-272-224.png": {
+      "bytes": 12129,
+      "sha256": "e2f6372e7438243b214363ea74a1e3e9c74a330fc82eabacac9cb5b6990ff9f6"
+    },
+    "art-review/forest-room-cohesion/actual/after/pond/full-room.png": {
+      "bytes": 54159,
+      "sha256": "d4a5be6c488bcd6e8512e51e8b08b7a5e245fb02a2d9ee0feb61da47c5e02ea0"
+    },
+    "art-review/forest-room-cohesion/actual/after/pond/native-HUD-north.png": {
+      "bytes": 10178,
+      "sha256": "410525e594d0f7e8950ac29c04a809019c0cff58d451380dee866187ee6ce63a"
+    },
+    "art-review/forest-room-cohesion/actual/after/pond/native-HUD-south.png": {
+      "bytes": 10183,
+      "sha256": "893f5df14f899f6a71d94f546892d078d02242bb1a9f3739f47429c78faf7480"
+    },
+    "art-review/forest-room-cohesion/actual/after/pond/native-HUD-west.png": {
+      "bytes": 10198,
+      "sha256": "e3cf352144119db2c3c0407a64674b39471f9d5b2e84b7a26e6648c31e90595f"
+    },
+    "art-review/forest-room-cohesion/actual/after/pond/native-HUD.png": {
+      "bytes": 10264,
+      "sha256": "131a8a1f56625c8b33c54ad46efd0cbe7a0f5360faf0bc09d2fdbcc97548de12"
+    },
+    "art-review/forest-room-cohesion/actual/after/pond/native-arrival.png": {
+      "bytes": 13623,
+      "sha256": "dbe0f71104e463adf5623a7ad151edfe0a278e3d42aa6679112430f8b3f150ab"
+    },
+    "art-review/forest-room-cohesion/actual/after/pond/room.bin": {
+      "bytes": 10242,
+      "sha256": "33b13145e51ef5f66eb8e3d1f895593acd4869e54729babac6ce615d5dddd13a"
+    },
+    "art-review/forest-room-cohesion/actual/after/pond/water-motion.gif": {
+      "bytes": 106245,
+      "sha256": "025a2cb99a7698b31bcff5816cbe40beb66d57bfee0f4fd37ae47023eec03089"
+    },
+    "art-review/forest-room-cohesion/actual/after/pond/water-motion.mp4": {
+      "bytes": 41097,
+      "sha256": "77396e0e1b55632642633cb69aaf6f14b41a4a7a06410289bd4eac8c40e0f220"
+    },
+    "art-review/forest-room-cohesion/actual/after/pond/water-observations.json": {
+      "bytes": 888630,
+      "sha256": "64d5450fd2764f27ce279fa46e855d7547a8b973cb2e595638ca43c78d945bef"
+    },
+    "art-review/forest-room-cohesion/actual/before/brook-crossing/BG3_map.bin": {
+      "bytes": 8192,
+      "sha256": "d60765733df402ae93aa5e9abd67d1fa032baba16a869193eb67eb9fe76fa19c"
+    },
+    "art-review/forest-room-cohesion/actual/before/brook-crossing/BG_maps.bin": {
+      "bytes": 16384,
+      "sha256": "18536c3cca6034ddc6db8c9b8cf16f5610fc3c72becd968bc33f7c737b8f8d15"
+    },
+    "art-review/forest-room-cohesion/actual/before/brook-crossing/BG_tiles.bin": {
+      "bytes": 20672,
+      "sha256": "d6a34d359ebb89e41fb925d8c1b503e46b4be53f6de4c752c1d8498aaea5e374"
+    },
+    "art-review/forest-room-cohesion/actual/before/brook-crossing/camera-000-000.png": {
+      "bytes": 10930,
+      "sha256": "7ca8a63fe26f11f38eb0fde940af4513e9dc3844d9bfacc6cb9860563b9c4aec"
+    },
+    "art-review/forest-room-cohesion/actual/before/brook-crossing/camera-000-112.png": {
+      "bytes": 10429,
+      "sha256": "9f09899e5844b1415d33143de7068a3401099f8bbfad139951efa11e9a46b750"
+    },
+    "art-review/forest-room-cohesion/actual/before/brook-crossing/camera-000-224.png": {
+      "bytes": 11302,
+      "sha256": "ac25075c80bcceb523765c5960605f66a4fad119a73cfdc2cb9ccd62a7474a95"
+    },
+    "art-review/forest-room-cohesion/actual/before/brook-crossing/camera-136-000.png": {
+      "bytes": 12949,
+      "sha256": "5226e619f33d549878b5418379751c60e03f2824c50ddb2979056a2a3a9a10fd"
+    },
+    "art-review/forest-room-cohesion/actual/before/brook-crossing/camera-136-112.png": {
+      "bytes": 8913,
+      "sha256": "2c024e67b447f7c1fd2ce5301b718671dc9af375425cb44152c18d75d0eafae4"
+    },
+    "art-review/forest-room-cohesion/actual/before/brook-crossing/camera-136-224.png": {
+      "bytes": 9584,
+      "sha256": "06d4e7067c8dd953140fe57acac6c1de8a2d9f8cb89fc149e47e3affc5b9b6c8"
+    },
+    "art-review/forest-room-cohesion/actual/before/brook-crossing/camera-272-000.png": {
+      "bytes": 12853,
+      "sha256": "f838fb2f324d8fd2ce87a62d6136e5a8f4c22dd41632206881888f4a10f3256d"
+    },
+    "art-review/forest-room-cohesion/actual/before/brook-crossing/camera-272-112.png": {
+      "bytes": 8527,
+      "sha256": "94d9ca217ee4dbcef8b7474ecb7ddcea5f4f74e02cbf2e33d9fe61a7095a02c0"
+    },
+    "art-review/forest-room-cohesion/actual/before/brook-crossing/camera-272-224.png": {
+      "bytes": 10224,
+      "sha256": "3c51f3b922f3d0c265ba120f1ad9368c92450b747802110016d70ac58fef8d4a"
+    },
+    "art-review/forest-room-cohesion/actual/before/brook-crossing/full-room.png": {
+      "bytes": 48331,
+      "sha256": "ce016c2cbbcb25efe94284bbeb4ce5a9383e83b006e9f0b7079cf5ee0e5fcaf2"
+    },
+    "art-review/forest-room-cohesion/actual/before/brook-crossing/native-HUD-north.png": {
+      "bytes": 9070,
+      "sha256": "0bd3e4c5263db7f783afabe588401ede068ea7bff494f4ca2615d33bfd5430cf"
+    },
+    "art-review/forest-room-cohesion/actual/before/brook-crossing/native-HUD-south.png": {
+      "bytes": 9083,
+      "sha256": "416ff97e52d2377a6a944ffc55197abe7aae3072347805250b58c0a4d49cfac7"
+    },
+    "art-review/forest-room-cohesion/actual/before/brook-crossing/native-HUD-west.png": {
+      "bytes": 9066,
+      "sha256": "3c933e4b1ee72d9ebe1632d50567f9eb1df5143408c474ec90a9aefda64ba194"
+    },
+    "art-review/forest-room-cohesion/actual/before/brook-crossing/native-HUD.png": {
+      "bytes": 9239,
+      "sha256": "b08393c6a5f8f990a97320067938f5528044d5368553e2ce8c9d53c6deb59331"
+    },
+    "art-review/forest-room-cohesion/actual/before/brook-crossing/native-arrival.png": {
+      "bytes": 14182,
+      "sha256": "c100f5a10ba5d6f2e8d68b3d856d27e8ef7f8d8ecbaa62871dd874dba6494395"
+    },
+    "art-review/forest-room-cohesion/actual/before/brook-crossing/room.bin": {
+      "bytes": 10242,
+      "sha256": "8c5425e2391266a52edcfdeeaed8c692fc43a141089508086ce8ef86dc3ed6f0"
+    },
+    "art-review/forest-room-cohesion/actual/before/capture.json": {
+      "bytes": 2428332,
+      "sha256": "76a7024a4f707e5e6f5740c314751b484a88c58945509a25786676d127b9f977"
+    },
+    "art-review/forest-room-cohesion/actual/before/damp-root-hollow/BG3_map.bin": {
+      "bytes": 8192,
+      "sha256": "4f81f37aa69b2ffdb8bf19334e49e7619cff9092f2c7650d644ca41d15806183"
+    },
+    "art-review/forest-room-cohesion/actual/before/damp-root-hollow/BG_maps.bin": {
+      "bytes": 16384,
+      "sha256": "98b77a288cbb5328face65870f6c53105f2638232eb250b71329d57a92bf1685"
+    },
+    "art-review/forest-room-cohesion/actual/before/damp-root-hollow/BG_tiles.bin": {
+      "bytes": 20672,
+      "sha256": "d6a34d359ebb89e41fb925d8c1b503e46b4be53f6de4c752c1d8498aaea5e374"
+    },
+    "art-review/forest-room-cohesion/actual/before/damp-root-hollow/camera-000-000.png": {
+      "bytes": 12441,
+      "sha256": "9bce692dc424a4610cd577cb4d4a4b941386415df76f59f6084815f033d4739c"
+    },
+    "art-review/forest-room-cohesion/actual/before/damp-root-hollow/camera-000-112.png": {
+      "bytes": 11504,
+      "sha256": "f2c250973a4449c92f71059ab6b52c3613d44d5834551882adb5cb6ef7999316"
+    },
+    "art-review/forest-room-cohesion/actual/before/damp-root-hollow/camera-000-224.png": {
+      "bytes": 11021,
+      "sha256": "af8a1092855456239786b6096dea6a5c1af9930762f7cf2cf4bbcf13623874f1"
+    },
+    "art-review/forest-room-cohesion/actual/before/damp-root-hollow/camera-136-000.png": {
+      "bytes": 10496,
+      "sha256": "5caf3c3a5655bada3f21fa18033e0c250d936433689abcc5d218ca81a8b2d80d"
+    },
+    "art-review/forest-room-cohesion/actual/before/damp-root-hollow/camera-136-112.png": {
+      "bytes": 10598,
+      "sha256": "dd939377d8b9260a867b264702a0966a1edfc2cf3424aa2ea0a32c48d96c10c2"
+    },
+    "art-review/forest-room-cohesion/actual/before/damp-root-hollow/camera-136-224.png": {
+      "bytes": 12353,
+      "sha256": "d45600a68e4d9d5299c841caf5a4e86bc41ad6bf47644a66e4abec3aec07a6e5"
+    },
+    "art-review/forest-room-cohesion/actual/before/damp-root-hollow/camera-272-000.png": {
+      "bytes": 11968,
+      "sha256": "81f242545c5dd39dd37350fb199028612dc2a287eebd145f33ec56d2c810d4cf"
+    },
+    "art-review/forest-room-cohesion/actual/before/damp-root-hollow/camera-272-112.png": {
+      "bytes": 11682,
+      "sha256": "27f7c6b5d98914382e8296dd87f16036fcd8f955c7d4b308e19d56d27deaf3e3"
+    },
+    "art-review/forest-room-cohesion/actual/before/damp-root-hollow/camera-272-224.png": {
+      "bytes": 12155,
+      "sha256": "b7e958e8a966e4c49cc7e336a7174bcd3d0b0d603ee20a9393b72be0a0644053"
+    },
+    "art-review/forest-room-cohesion/actual/before/damp-root-hollow/full-room.png": {
+      "bytes": 52306,
+      "sha256": "abab20614a21ee3622234efb2f986596fe9cf064108dc78bb40b55cb30194179"
+    },
+    "art-review/forest-room-cohesion/actual/before/damp-root-hollow/native-HUD-north.png": {
+      "bytes": 11229,
+      "sha256": "86c8d4fd831f96052fc31cbd72aaea442c9e75bc784fa956c68f8da8599aa651"
+    },
+    "art-review/forest-room-cohesion/actual/before/damp-root-hollow/native-HUD-south.png": {
+      "bytes": 11163,
+      "sha256": "effb154b7214669b5eb1e405b2f610a955480a3ce76b83519e02a9930edad500"
+    },
+    "art-review/forest-room-cohesion/actual/before/damp-root-hollow/native-HUD-west.png": {
+      "bytes": 11115,
+      "sha256": "a79c6b943b2ff21161001b863e6b5ce597a8297bf19396ad7ebe67cb82498160"
+    },
+    "art-review/forest-room-cohesion/actual/before/damp-root-hollow/native-HUD.png": {
+      "bytes": 11024,
+      "sha256": "de1cc51a434b6334ba3b92e04a0a9a013975fea1d7f4603ff613b2c1b966a21b"
+    },
+    "art-review/forest-room-cohesion/actual/before/damp-root-hollow/native-arrival.png": {
+      "bytes": 11783,
+      "sha256": "cec4af354dae1303033693ee4b2869a93b99ab329da19884f70aff0179aee933"
+    },
+    "art-review/forest-room-cohesion/actual/before/damp-root-hollow/room.bin": {
+      "bytes": 10242,
+      "sha256": "d2b099b69a8ae3c435ff59153d54998426505314078d0dd7523106e0e1a4f9c8"
+    },
+    "art-review/forest-room-cohesion/actual/before/deep/BG3_map.bin": {
+      "bytes": 8192,
+      "sha256": "675a480b0bd45f8e8d3efa5601d99a5c0a3f12a23acebe1bb5088a5667e7d41c"
+    },
+    "art-review/forest-room-cohesion/actual/before/deep/BG_maps.bin": {
+      "bytes": 16384,
+      "sha256": "3d5d917856929f2d54444a2f4b6acda3f1f336514e788323f08240195ccc9b8b"
+    },
+    "art-review/forest-room-cohesion/actual/before/deep/BG_tiles.bin": {
+      "bytes": 20672,
+      "sha256": "2eb33e94aed183ba8890636db40aecc6cd045644d53cb288f7c0178c151686b9"
+    },
+    "art-review/forest-room-cohesion/actual/before/deep/camera-000-000.png": {
+      "bytes": 13788,
+      "sha256": "6da6fbfca4959ea00c4b8fd0fda77daf57a66f52456fd3b43b2f53dd7b4f7496"
+    },
+    "art-review/forest-room-cohesion/actual/before/deep/camera-000-112.png": {
+      "bytes": 11093,
+      "sha256": "beb441833dc34f00e9e7eabae68c19500032796df1ff169edcefd26f9ddd452f"
+    },
+    "art-review/forest-room-cohesion/actual/before/deep/camera-000-224.png": {
+      "bytes": 12338,
+      "sha256": "cc57e2047fb0f0aa054eb832541970963022a5d6ba059760642280b6289c1d4b"
+    },
+    "art-review/forest-room-cohesion/actual/before/deep/camera-136-000.png": {
+      "bytes": 13504,
+      "sha256": "6d94275ffb445615e020e2ce293c5954683c7aac3d7bfc5191234a831d7fd7d6"
+    },
+    "art-review/forest-room-cohesion/actual/before/deep/camera-136-112.png": {
+      "bytes": 10727,
+      "sha256": "e41118b6b8c0728958f2dd7274646965d1e953f24d042fc4bb5ecac2f5ee6dab"
+    },
+    "art-review/forest-room-cohesion/actual/before/deep/camera-136-224.png": {
+      "bytes": 10166,
+      "sha256": "9d67ce06c88b1788ce082d0f6437fdc94f4ab9aaaab22123cc555f3107276c7f"
+    },
+    "art-review/forest-room-cohesion/actual/before/deep/camera-272-000.png": {
+      "bytes": 13913,
+      "sha256": "13f49535fdc4457561fbd2b33d7d1b7329531c5e1830ef8e44b8fbf940f868aa"
+    },
+    "art-review/forest-room-cohesion/actual/before/deep/camera-272-112.png": {
+      "bytes": 12473,
+      "sha256": "1484ba93f932c6e347efa398d79335d4a379c2fb096b0afe05082a9046fa2b1d"
+    },
+    "art-review/forest-room-cohesion/actual/before/deep/camera-272-224.png": {
+      "bytes": 11715,
+      "sha256": "0a36ad3133745d5cc0d399739380130019da2466be1d258b9f0b76e33c640fce"
+    },
+    "art-review/forest-room-cohesion/actual/before/deep/full-room.png": {
+      "bytes": 56127,
+      "sha256": "251afaeff3a305607c53a57f70718acc1ec18ca09d447393d35801e3b51fbb2c"
+    },
+    "art-review/forest-room-cohesion/actual/before/deep/native-HUD-north.png": {
+      "bytes": 11002,
+      "sha256": "39aea653a8c96e7b4527e9cddfafc695a82a16a9b8826cff01012262f2af60ce"
+    },
+    "art-review/forest-room-cohesion/actual/before/deep/native-HUD-south.png": {
+      "bytes": 11066,
+      "sha256": "81d72ae5e906dafb7fa3b20295f19fd63e4f4faed38c22d81af506e715da0405"
+    },
+    "art-review/forest-room-cohesion/actual/before/deep/native-HUD-west.png": {
+      "bytes": 11102,
+      "sha256": "be62f4a2a878329a57c21a9baca0f658b42ff72d2ad667f8d52a7b6d96de622b"
+    },
+    "art-review/forest-room-cohesion/actual/before/deep/native-HUD.png": {
+      "bytes": 11065,
+      "sha256": "6770bef9dd901acad3165ffad5bee21a0fb92b1c8880d545995131651c626192"
+    },
+    "art-review/forest-room-cohesion/actual/before/deep/native-arrival.png": {
+      "bytes": 11305,
+      "sha256": "e6c577f4e95b1690c5ff0096852a0eeeaefe472a62ee1d9f3ace0783c8d4bdc1"
+    },
+    "art-review/forest-room-cohesion/actual/before/deep/room.bin": {
+      "bytes": 10242,
+      "sha256": "56abd452cd9388205d7cccad6f573b7e7106fbd16b3e92e6b9b2c7c9ea94f1ee"
+    },
+    "art-review/forest-room-cohesion/actual/before/deep/walk-observations.json": {
+      "bytes": 471086,
+      "sha256": "c08af33e2069d7b85bad8e5e787feea48e95051e3f21926d1a2548a1f2d1aadf"
+    },
+    "art-review/forest-room-cohesion/actual/before/deep/walk.gif": {
+      "bytes": 161465,
+      "sha256": "0a6d6698118dfd88cc2ca251ea640264015b8649c8df733f0db6cf5583f44cc1"
+    },
+    "art-review/forest-room-cohesion/actual/before/deep/walk.mp4": {
+      "bytes": 173041,
+      "sha256": "9f930f99ff4e72a35fb7beadc7026fbd50f3ca8739083f746ea6bcf606dfd803"
+    },
+    "art-review/forest-room-cohesion/actual/before/deep/water-motion.gif": {
+      "bytes": 111072,
+      "sha256": "25d858d4401f10daa369fd4ffa6573aefb6561533a15d711e1c1fa49454b99d6"
+    },
+    "art-review/forest-room-cohesion/actual/before/deep/water-motion.mp4": {
+      "bytes": 42561,
+      "sha256": "4263cbfa6c6358840f0cf55a3bd81c2f882bd81730239e6d7c29f189f53e7012"
+    },
+    "art-review/forest-room-cohesion/actual/before/deep/water-observations.json": {
+      "bytes": 834378,
+      "sha256": "3a821502e8682e1e840ac6309dfe054e34700e8be605835a9da8939cf7c7f830"
+    },
+    "art-review/forest-room-cohesion/actual/before/dry-glade/BG3_map.bin": {
+      "bytes": 8192,
+      "sha256": "3953f1781faf92c5c071450736ac149d281648d0d0919584e8702cbe09ad0968"
+    },
+    "art-review/forest-room-cohesion/actual/before/dry-glade/BG_maps.bin": {
+      "bytes": 16384,
+      "sha256": "2989d6af5b6e0a1000a1c4ac4460920e0455e64b0e23bcc029f38f4449202c6b"
+    },
+    "art-review/forest-room-cohesion/actual/before/dry-glade/BG_tiles.bin": {
+      "bytes": 20672,
+      "sha256": "d6a34d359ebb89e41fb925d8c1b503e46b4be53f6de4c752c1d8498aaea5e374"
+    },
+    "art-review/forest-room-cohesion/actual/before/dry-glade/camera-000-000.png": {
+      "bytes": 9908,
+      "sha256": "b146eec972e35ef2f5d48e35327ec09a8c2558712e34af5e69199bcadd3a32c2"
+    },
+    "art-review/forest-room-cohesion/actual/before/dry-glade/camera-000-112.png": {
+      "bytes": 8752,
+      "sha256": "4fca8c0fba9acb01fb0447bcd8e9a699c21f4c55808cf150d0565348bab1ea00"
+    },
+    "art-review/forest-room-cohesion/actual/before/dry-glade/camera-000-224.png": {
+      "bytes": 9421,
+      "sha256": "10dd446020e6c5e8bd6b78a9917a0d022b69a0c01f8c9d92e136c73c86b4e86d"
+    },
+    "art-review/forest-room-cohesion/actual/before/dry-glade/camera-136-000.png": {
+      "bytes": 10554,
+      "sha256": "7cfdb327410e3caad137a5db9a2d7d467bcb35c7bbe8770809fe82d008a1044a"
+    },
+    "art-review/forest-room-cohesion/actual/before/dry-glade/camera-136-112.png": {
+      "bytes": 8947,
+      "sha256": "c646278fdf99f9fc7b7702aab205cadce9cfe140ef9ae4174c2cae334d5dd8e1"
+    },
+    "art-review/forest-room-cohesion/actual/before/dry-glade/camera-136-224.png": {
+      "bytes": 9101,
+      "sha256": "3c0d59226b36364a03093df1577d670c10042ff8c913d19931bf4ed7b332fe9e"
+    },
+    "art-review/forest-room-cohesion/actual/before/dry-glade/camera-272-000.png": {
+      "bytes": 10734,
+      "sha256": "bd8bd31d8e5997a9d17366c5dea1407169d737599875281ff8e78ed3f7be25c4"
+    },
+    "art-review/forest-room-cohesion/actual/before/dry-glade/camera-272-112.png": {
+      "bytes": 11535,
+      "sha256": "f57432e1b48dbf28c4094456df3166cce65d41cf3f9777a098a4016236693f71"
+    },
+    "art-review/forest-room-cohesion/actual/before/dry-glade/camera-272-224.png": {
+      "bytes": 11591,
+      "sha256": "8b086b7f17a55fe32695db48204d493bc2c746496567f2e474df0e79f1ca48d1"
+    },
+    "art-review/forest-room-cohesion/actual/before/dry-glade/full-room.png": {
+      "bytes": 43943,
+      "sha256": "c232838cc2524fe139386ea46b5a160e71a3df70ed90b8c0390cfae9441b20ca"
+    },
+    "art-review/forest-room-cohesion/actual/before/dry-glade/native-HUD-north.png": {
+      "bytes": 8284,
+      "sha256": "406276262f4635cc00a52e666ee3abd7dbfe40288496bc6f2d15d6deabf780fc"
+    },
+    "art-review/forest-room-cohesion/actual/before/dry-glade/native-HUD-south.png": {
+      "bytes": 8309,
+      "sha256": "860d71b063ed8251499772d615e030ed587ce76c8ce1dc6a4b13609ea5289517"
+    },
+    "art-review/forest-room-cohesion/actual/before/dry-glade/native-HUD-west.png": {
+      "bytes": 8292,
+      "sha256": "fe984aa6dac30b2c128dc38eb3f78166ded5ada91a0465e0cecbd19d1a83cd2a"
+    },
+    "art-review/forest-room-cohesion/actual/before/dry-glade/native-HUD.png": {
+      "bytes": 8330,
+      "sha256": "2f3bdcbb8cee6b0cf8696431e3ba74692623eec37892738d72443116d49ecc10"
+    },
+    "art-review/forest-room-cohesion/actual/before/dry-glade/native-arrival.png": {
+      "bytes": 11673,
+      "sha256": "1fd7306b236fc95e279afbab142dcf9749937f4c769f11997d496446876cca31"
+    },
+    "art-review/forest-room-cohesion/actual/before/dry-glade/room.bin": {
+      "bytes": 10242,
+      "sha256": "e6873fe8b3bbac881c2b671bf815402ab2b7da2652770de82d09b094e9fde1e0"
+    },
+    "art-review/forest-room-cohesion/actual/before/healthy/BG3_map.bin": {
+      "bytes": 8192,
+      "sha256": "4129e9efaefffad021704fa615914173bf0841dfa5913cb3f6a5d70fc9681885"
+    },
+    "art-review/forest-room-cohesion/actual/before/healthy/BG_maps.bin": {
+      "bytes": 16384,
+      "sha256": "97877fba819471180b664a26b49dd129616b191a851d68fd298659abaa98c77f"
+    },
+    "art-review/forest-room-cohesion/actual/before/healthy/BG_tiles.bin": {
+      "bytes": 20672,
+      "sha256": "d6a34d359ebb89e41fb925d8c1b503e46b4be53f6de4c752c1d8498aaea5e374"
+    },
+    "art-review/forest-room-cohesion/actual/before/healthy/camera-000-000.png": {
+      "bytes": 9974,
+      "sha256": "e4a22a76e0b879694a44899c595562d592aeee37347c08c1b94c7061ed4f668d"
+    },
+    "art-review/forest-room-cohesion/actual/before/healthy/camera-000-112.png": {
+      "bytes": 8991,
+      "sha256": "55f6cb60ceebd61be9f4981417746e668a0d5d5c8395f59d13c98f77709b4208"
+    },
+    "art-review/forest-room-cohesion/actual/before/healthy/camera-000-224.png": {
+      "bytes": 9777,
+      "sha256": "15d9358a49a99d99830e4c25ffa2f81b771b60c57ad4c8a758c745f91dd466e9"
+    },
+    "art-review/forest-room-cohesion/actual/before/healthy/camera-136-000.png": {
+      "bytes": 9869,
+      "sha256": "d31a32fb21bce8309afef6376358b8d0fb125568df053045b8700d829bc9ce0c"
+    },
+    "art-review/forest-room-cohesion/actual/before/healthy/camera-136-112.png": {
+      "bytes": 8937,
+      "sha256": "ef1b556ae5f6c8776240170141e75eaf22476809557a92729d8383d3dcbeec85"
+    },
+    "art-review/forest-room-cohesion/actual/before/healthy/camera-136-224.png": {
+      "bytes": 8695,
+      "sha256": "43ffa58ce14f8aae840bacb18539fd75ee4fa541a2aca124dec563a7a6bdffd3"
+    },
+    "art-review/forest-room-cohesion/actual/before/healthy/camera-272-000.png": {
+      "bytes": 10630,
+      "sha256": "6e8467178c9a278f4cfedb850b774aeb47c963483847b02be658796b1275789a"
+    },
+    "art-review/forest-room-cohesion/actual/before/healthy/camera-272-112.png": {
+      "bytes": 10919,
+      "sha256": "1cece1d5f5de2c2dbd3fc3389f2bec2f9b73173c28863445e60f3843ed9a6290"
+    },
+    "art-review/forest-room-cohesion/actual/before/healthy/camera-272-224.png": {
+      "bytes": 10379,
+      "sha256": "fc96af662bdb8401a3e5a4828d77374fed7692296893477e6b072479c6a3fca0"
+    },
+    "art-review/forest-room-cohesion/actual/before/healthy/full-room.png": {
+      "bytes": 45829,
+      "sha256": "95e9eb4dff3f285d2083b798ad245d4a8531e9022cdf846cb2454dae8ae0ecd7"
+    },
+    "art-review/forest-room-cohesion/actual/before/healthy/native-HUD-north.png": {
+      "bytes": 8832,
+      "sha256": "9541ced5a28f144f51afd8567085d135c5ba2013605417dcd3695ba1383c9164"
+    },
+    "art-review/forest-room-cohesion/actual/before/healthy/native-HUD-south.png": {
+      "bytes": 8983,
+      "sha256": "e310f738b4d12d5188114cc5d6158904981c788a77437892cdcae40ecdcf98f0"
+    },
+    "art-review/forest-room-cohesion/actual/before/healthy/native-HUD-west.png": {
+      "bytes": 8763,
+      "sha256": "897be672d07ec734b532043c1bc9105b8a56cc5315a017054e667cfa3448597a"
+    },
+    "art-review/forest-room-cohesion/actual/before/healthy/native-HUD.png": {
+      "bytes": 8923,
+      "sha256": "31651038b3eccc30cbf00f5ed3119583109a78e763ed9ed41ec2e6a696548594"
+    },
+    "art-review/forest-room-cohesion/actual/before/healthy/native-arrival.png": {
+      "bytes": 10912,
+      "sha256": "d2f89d1225afcdcdc25d6c4a5cd239a58d5cbb8b9aefab1be0c81c61be4cf906"
+    },
+    "art-review/forest-room-cohesion/actual/before/healthy/room.bin": {
+      "bytes": 10242,
+      "sha256": "ecf4212e5cf7af6332d7123ebc7838b23106ac93f8c09c0ca77d8865d9c1f536"
+    },
+    "art-review/forest-room-cohesion/actual/before/healthy/walk-observations.json": {
+      "bytes": 471241,
+      "sha256": "856def918120b14986dc5e08ffdabb02b62aedad13e5cad003449de27e4b57c6"
+    },
+    "art-review/forest-room-cohesion/actual/before/healthy/walk.gif": {
+      "bytes": 157881,
+      "sha256": "c599f2cf17e4ae0a477fb9a29e0c907ae97d76beb9567b7d5206e49fa367aa0d"
+    },
+    "art-review/forest-room-cohesion/actual/before/healthy/walk.mp4": {
+      "bytes": 131999,
+      "sha256": "aca37cadaffdb2d5c5445bec2770bbe35a0c2a6228b1351188195c1cccd70488"
+    },
+    "art-review/forest-room-cohesion/actual/before/healthy/water-motion.gif": {
+      "bytes": 86481,
+      "sha256": "9edae11ce5848ff7a162f58dd73cc0e76a952aac9c100fb560bf3d61d2d0f0dd"
+    },
+    "art-review/forest-room-cohesion/actual/before/healthy/water-motion.mp4": {
+      "bytes": 33787,
+      "sha256": "175388959d2770a9625ee2143c8fae39ed439c1b6dcacf18ca030b9c7ba76cd3"
+    },
+    "art-review/forest-room-cohesion/actual/before/healthy/water-observations.json": {
+      "bytes": 859330,
+      "sha256": "8f8e81037d554a632e4318549bdb54e1c911af0ebee50ea0357a82b4a0675879"
+    },
+    "art-review/forest-room-cohesion/actual/before/heart-arena/BG3_map.bin": {
+      "bytes": 8192,
+      "sha256": "d42b1e05b00dceffe27646559ee4ad2d9dccea5229249f354bd10d1cd5243ee3"
+    },
+    "art-review/forest-room-cohesion/actual/before/heart-arena/BG_maps.bin": {
+      "bytes": 16384,
+      "sha256": "cc498ab43298e1487a5312100505897f4bbff4066f1468b18076326196233daa"
+    },
+    "art-review/forest-room-cohesion/actual/before/heart-arena/BG_tiles.bin": {
+      "bytes": 20672,
+      "sha256": "ff2b397eb39e7f0b355fa50a6863944ee0b9c619deb3bbdba7199c3bc59d2e48"
+    },
+    "art-review/forest-room-cohesion/actual/before/heart-arena/camera-000-000.png": {
+      "bytes": 11604,
+      "sha256": "98c1b37b87fa457bdcd71bd638c99e957738c4d1b0de5d0a24edbcff6646884a"
+    },
+    "art-review/forest-room-cohesion/actual/before/heart-arena/camera-000-112.png": {
+      "bytes": 8234,
+      "sha256": "04c772fa4fe68f7bed1971d4e738051c1ccdbf09a402aea245ba574d18ce12e2"
+    },
+    "art-review/forest-room-cohesion/actual/before/heart-arena/camera-000-224.png": {
+      "bytes": 11060,
+      "sha256": "7aa946243b9b789aef633a930876b8cb2ed61c5ad9cf981cb8f720ee500630ad"
+    },
+    "art-review/forest-room-cohesion/actual/before/heart-arena/camera-136-000.png": {
+      "bytes": 8101,
+      "sha256": "26530ff3d1c730bd1aeedbed77263b3246602ae013574279c3e09cd7bacadbd5"
+    },
+    "art-review/forest-room-cohesion/actual/before/heart-arena/camera-136-112.png": {
+      "bytes": 2302,
+      "sha256": "3602cd0a05e0894684ff5eb1eb74848a6ec4f3bdae5c89bd4a1357619e0b96a5"
+    },
+    "art-review/forest-room-cohesion/actual/before/heart-arena/camera-136-224.png": {
+      "bytes": 8022,
+      "sha256": "bb6ee973cb67b6743952b56c610fc73af93a057d923d430eabb78bfa835fdf70"
+    },
+    "art-review/forest-room-cohesion/actual/before/heart-arena/camera-272-000.png": {
+      "bytes": 10978,
+      "sha256": "9eafc2e34f4206ad6bc0ae427033747f72c22af62b3e5255e8b76642a4612edc"
+    },
+    "art-review/forest-room-cohesion/actual/before/heart-arena/camera-272-112.png": {
+      "bytes": 7931,
+      "sha256": "f3804ff3cf45b8e449518e6fca7cfdb8972cff272d787515181018fbfc23caf5"
+    },
+    "art-review/forest-room-cohesion/actual/before/heart-arena/camera-272-224.png": {
+      "bytes": 10785,
+      "sha256": "ef71f63eaf45be3017a193076f7d934c645d5084f78e8e75e382c408d3895435"
+    },
+    "art-review/forest-room-cohesion/actual/before/heart-arena/full-room.png": {
+      "bytes": 45564,
+      "sha256": "1367ca1584dceb58b87bf8ee5bece929e6ffdd2c8b5e1c9d6d18d3622c6b0968"
+    },
+    "art-review/forest-room-cohesion/actual/before/heart-arena/native-HUD-north.png": {
+      "bytes": 2781,
+      "sha256": "29b507837b9ceff9ef0d4ae0f699e5779521369f0d60d7c57177ef0465bb3b1f"
+    },
+    "art-review/forest-room-cohesion/actual/before/heart-arena/native-HUD-south.png": {
+      "bytes": 2829,
+      "sha256": "af031b02570486c160b329c5de250f743de7cd50ae1c766de636941a3212bbfe"
+    },
+    "art-review/forest-room-cohesion/actual/before/heart-arena/native-HUD-west.png": {
+      "bytes": 2808,
+      "sha256": "ef8144fe3e05c059ec01fe6467123628191c4b64dbf3c5b52d9ca29d8ebf63c6"
+    },
+    "art-review/forest-room-cohesion/actual/before/heart-arena/native-HUD.png": {
+      "bytes": 2998,
+      "sha256": "492d09b048ebbd4fcc658dbedd2db51f896ab5210ef7fcbc138d558260432dd2"
+    },
+    "art-review/forest-room-cohesion/actual/before/heart-arena/native-arrival.png": {
+      "bytes": 9374,
+      "sha256": "08aa54c5af5db90c79ca00681965759021624820c02d759bfbb9d249b5925f8d"
+    },
+    "art-review/forest-room-cohesion/actual/before/heart-arena/room.bin": {
+      "bytes": 10242,
+      "sha256": "2d0d9a3fd58de6306cbd727eb159da363f604b64454eaad2c751db84b4e1825b"
+    },
+    "art-review/forest-room-cohesion/actual/before/mixed/BG3_map.bin": {
+      "bytes": 8192,
+      "sha256": "62cae7fa651cc193d55f728c3eb378f2af293027e9da665358f80b960c37f6e4"
+    },
+    "art-review/forest-room-cohesion/actual/before/mixed/BG_maps.bin": {
+      "bytes": 16384,
+      "sha256": "bde0a99702ca0fbc0302eba2566e94a9a34e4861d442d71c4e140a88053466d2"
+    },
+    "art-review/forest-room-cohesion/actual/before/mixed/BG_tiles.bin": {
+      "bytes": 20672,
+      "sha256": "d6a34d359ebb89e41fb925d8c1b503e46b4be53f6de4c752c1d8498aaea5e374"
+    },
+    "art-review/forest-room-cohesion/actual/before/mixed/camera-000-000.png": {
+      "bytes": 13617,
+      "sha256": "568b01d0ca745abb81b89b214b49ad182acfc82e61877aaabef64e2681f6708b"
+    },
+    "art-review/forest-room-cohesion/actual/before/mixed/camera-000-112.png": {
+      "bytes": 12938,
+      "sha256": "44abce6c209acbb1e4944374276586ed22e5f1cc3c73f04dfff5bc3ca566e5be"
+    },
+    "art-review/forest-room-cohesion/actual/before/mixed/camera-000-224.png": {
+      "bytes": 13901,
+      "sha256": "5d555c3644aa555e23fca867e6c1de5a718052864d943d0700c5bd5e4a41ec5d"
+    },
+    "art-review/forest-room-cohesion/actual/before/mixed/camera-136-000.png": {
+      "bytes": 12665,
+      "sha256": "c903b94a31a4d3cf4cc42efc3a4ebda9015581adb183aa8e4debf2d8cd7d51d4"
+    },
+    "art-review/forest-room-cohesion/actual/before/mixed/camera-136-112.png": {
+      "bytes": 9338,
+      "sha256": "4509e6ac03efce21ff98e7a98bf8e332930cada111883945d165223f1271a3fd"
+    },
+    "art-review/forest-room-cohesion/actual/before/mixed/camera-136-224.png": {
+      "bytes": 11847,
+      "sha256": "1378e9e1521115d28481e2259bdb612c292fb0368723691ea8afeb3475f1ef68"
+    },
+    "art-review/forest-room-cohesion/actual/before/mixed/camera-272-000.png": {
+      "bytes": 13053,
+      "sha256": "cebd55e6a24248fe5d53e2d9b49306e901d21b156fad4a35e596257549407f35"
+    },
+    "art-review/forest-room-cohesion/actual/before/mixed/camera-272-112.png": {
+      "bytes": 8844,
+      "sha256": "0d495dc8de23a6b3e34103f94866b59fc52e6918d3944ffbf8bdb56d3ebeeadd"
+    },
+    "art-review/forest-room-cohesion/actual/before/mixed/camera-272-224.png": {
+      "bytes": 12236,
+      "sha256": "56c76f1170b2fe21bd66bd750b243a4e14ff178d2e39162ae72d26db8d180ff2"
+    },
+    "art-review/forest-room-cohesion/actual/before/mixed/full-room.png": {
+      "bytes": 56383,
+      "sha256": "104381ffc90fd24f731640dbb2da2cf28b1c6c66126147319e1d4acc343ebcf5"
+    },
+    "art-review/forest-room-cohesion/actual/before/mixed/native-HUD-north.png": {
+      "bytes": 10001,
+      "sha256": "9396104a1504166b30d5148cfef7e1c455946308c5faa616a47ff3d5836e5ef0"
+    },
+    "art-review/forest-room-cohesion/actual/before/mixed/native-HUD-south.png": {
+      "bytes": 9991,
+      "sha256": "c7b0a92aa101efaab987c7ce0368589b476eb45ccf3f3d97169f3d5b62833e80"
+    },
+    "art-review/forest-room-cohesion/actual/before/mixed/native-HUD-west.png": {
+      "bytes": 9983,
+      "sha256": "513316a9edad33446f1b81ab1282ae60ae5b18e1767ad0bcbb37127f78f3ca30"
+    },
+    "art-review/forest-room-cohesion/actual/before/mixed/native-HUD.png": {
+      "bytes": 9996,
+      "sha256": "c8eabd4e39e45f0278d2485f2e3e882d16a06f3959392f414819ff186113c64d"
+    },
+    "art-review/forest-room-cohesion/actual/before/mixed/native-arrival.png": {
+      "bytes": 10483,
+      "sha256": "d515d3ba5eab7c644587fd6f7d3ce4100da57d97aeccc51ad87871e7b6c6c906"
+    },
+    "art-review/forest-room-cohesion/actual/before/mixed/room.bin": {
+      "bytes": 10242,
+      "sha256": "5b443affe1c2835e2edd55f106f1be7705d8ad4d563d79e2a1251b21e51f3f2e"
+    },
+    "art-review/forest-room-cohesion/actual/before/mixed/walk-observations.json": {
+      "bytes": 477282,
+      "sha256": "8905d620efe02baf5c0f9c8397b9c4c9b46dee74a96253cbc2d744e660e77219"
+    },
+    "art-review/forest-room-cohesion/actual/before/mixed/walk.gif": {
+      "bytes": 160280,
+      "sha256": "d6a27785a124ba3fdb49ccfec3d40d9476b07e114078901abe8f9a7bf266b658"
+    },
+    "art-review/forest-room-cohesion/actual/before/mixed/walk.mp4": {
+      "bytes": 133379,
+      "sha256": "50a9af29f8f0c4797fad9a4e6118813327721636efb62e5c2f56ddddd05ee93e"
+    },
+    "art-review/forest-room-cohesion/actual/before/pond/BG3_map.bin": {
+      "bytes": 8192,
+      "sha256": "54f95690841f46450dca4f0aa1e935483fa5baaec4a1d2ef244eb0ebed8661de"
+    },
+    "art-review/forest-room-cohesion/actual/before/pond/BG_maps.bin": {
+      "bytes": 16384,
+      "sha256": "f5003da92b064ddd5e0b876405174987f42d442c6b77a7731a754004de8f84c7"
+    },
+    "art-review/forest-room-cohesion/actual/before/pond/BG_tiles.bin": {
+      "bytes": 20672,
+      "sha256": "b35ccbd7e496d5d2a9a1a222d9a96b83ad15351ff54fa947d8c1314e59e08b06"
+    },
+    "art-review/forest-room-cohesion/actual/before/pond/camera-000-000.png": {
+      "bytes": 14112,
+      "sha256": "8fb09220d0a85dc378e60ea7f2501be87779a9c05767e2ab8bad3dc4b417150c"
+    },
+    "art-review/forest-room-cohesion/actual/before/pond/camera-000-112.png": {
+      "bytes": 13066,
+      "sha256": "c3744a1040f5c535f3031db08b60643d24e202dad70f08da4850d4aaa30b7649"
+    },
+    "art-review/forest-room-cohesion/actual/before/pond/camera-000-224.png": {
+      "bytes": 11258,
+      "sha256": "fe498b2dd6e90f8448d7a60ea5fa6cc5a5c4cca02a88f70cc64693180858fa9d"
+    },
+    "art-review/forest-room-cohesion/actual/before/pond/camera-136-000.png": {
+      "bytes": 13391,
+      "sha256": "cc8c27bff579a16c376f546b4c9232a98f281ea4dc990e836e80d3f00d36c294"
+    },
+    "art-review/forest-room-cohesion/actual/before/pond/camera-136-112.png": {
+      "bytes": 13286,
+      "sha256": "39c2f81adba7c0f7ef46986ba531e6c27e7c49bc23a9a591338cc2a047299a18"
+    },
+    "art-review/forest-room-cohesion/actual/before/pond/camera-136-224.png": {
+      "bytes": 11996,
+      "sha256": "d26da998a2bfe85128d371f8682d8f3f69467add1920658d670603f8a805daa1"
+    },
+    "art-review/forest-room-cohesion/actual/before/pond/camera-272-000.png": {
+      "bytes": 13629,
+      "sha256": "1753a5f327f82392c40106a7681c9c070aa29648923b76a59fbff1b911e49ce0"
+    },
+    "art-review/forest-room-cohesion/actual/before/pond/camera-272-112.png": {
+      "bytes": 13732,
+      "sha256": "a23d5cdc45bd9a21cc335e31042d2618d2ee68e215ce81f9a468c83feeced663"
+    },
+    "art-review/forest-room-cohesion/actual/before/pond/camera-272-224.png": {
+      "bytes": 13168,
+      "sha256": "2299658372c5a8b64c31087f054d9cc84a0e72617aa89248d098d5bfbb764c21"
+    },
+    "art-review/forest-room-cohesion/actual/before/pond/full-room.png": {
+      "bytes": 59424,
+      "sha256": "781770e098cdc7fd8becd3140e8e5467d1a9facaaa6c1be2b68ace5022553165"
+    },
+    "art-review/forest-room-cohesion/actual/before/pond/native-HUD-north.png": {
+      "bytes": 13643,
+      "sha256": "981d9f5e774586904e0323537c5b39da94145c4ce9ebd653824c4329c2354316"
+    },
+    "art-review/forest-room-cohesion/actual/before/pond/native-HUD-south.png": {
+      "bytes": 13690,
+      "sha256": "bc2443eaab6794fa22df1c3c7fac17d8c93d74d8bebd2b10de5202f46f9afb33"
+    },
+    "art-review/forest-room-cohesion/actual/before/pond/native-HUD-west.png": {
+      "bytes": 13657,
+      "sha256": "1742ccefe1c55a73cf178ca7f2d64e3d7d1c7c4de5822089e32ae698fa5ac19b"
+    },
+    "art-review/forest-room-cohesion/actual/before/pond/native-HUD.png": {
+      "bytes": 13587,
+      "sha256": "f89cc8afeba1630fcf2176418f55e0b96f8292a3619b0de300954b11d806cf21"
+    },
+    "art-review/forest-room-cohesion/actual/before/pond/native-arrival.png": {
+      "bytes": 14830,
+      "sha256": "f66933f586da186e1336e03a00d1c677a6599c977459aa759ec67b8c0be96f06"
+    },
+    "art-review/forest-room-cohesion/actual/before/pond/room.bin": {
+      "bytes": 10242,
+      "sha256": "0ae1386eb245a7ffda6efe65ba4a8234c3c99d6c8bcf7dabfc94f0fefd338a3f"
+    },
+    "art-review/forest-room-cohesion/actual/before/pond/water-motion.gif": {
+      "bytes": 117615,
+      "sha256": "ce50412592c0a2453da23cb537d3aa30a30573feb0552454ba4712da695a3f05"
+    },
+    "art-review/forest-room-cohesion/actual/before/pond/water-motion.mp4": {
+      "bytes": 41742,
+      "sha256": "400d7eb4de5e2e6cca2254a3e0adbe868f93207b1ff57756fe61adba9212499d"
+    },
+    "art-review/forest-room-cohesion/actual/before/pond/water-observations.json": {
+      "bytes": 879349,
+      "sha256": "635c47043bd4150381b626f2ee09f6d6f48f50e267f11654783d32cf7c6292eb"
+    },
+    "art-review/forest-room-cohesion/actual-panel-manifest.json": {
+      "bytes": 22902,
+      "sha256": "e70893047757d2246481814333d8aa738e30fa38786930196697ee1eb8c2bd0f"
+    },
+    "art-review/forest-room-cohesion/actual-publication-summary.json": {
+      "bytes": 1305,
+      "sha256": "9099193a87d07bdff95b80323a2a0c28f4eef28e99b04d05e69a7530b25dad12"
+    },
+    "art-review/forest-room-cohesion/before-after.png": {
+      "bytes": 705185,
+      "sha256": "8bcf51d64c9cdb66797e6e264d036121a3075630958736f6b1a0ad52d1e1c3b7"
+    },
+    "art-review/forest-room-cohesion/inspection/brook-crossing-2x.png": {
+      "bytes": 76024,
+      "sha256": "937ab34cb1a1ff747b43c3c4a83321c1b86c8604a684b09cbc413ac50636d6df"
+    },
+    "art-review/forest-room-cohesion/inspection/damp-root-hollow-2x.png": {
+      "bytes": 82430,
+      "sha256": "771f274d9f348143a7352ac2d82104e4034abe6afb94a20e05dbede1f2a473d1"
+    },
+    "art-review/forest-room-cohesion/inspection/deep-2x.png": {
+      "bytes": 90828,
+      "sha256": "57a59eeb1a95b1e67047d2a1118c4bcbf9de3ded6e936b2084ad7bc7aea47e62"
+    },
+    "art-review/forest-room-cohesion/inspection/dry-glade-2x.png": {
+      "bytes": 67892,
+      "sha256": "7f410f0001a55d7e3f4eb3f6754362e43372b758c79432988227eda7b0911c3b"
+    },
+    "art-review/forest-room-cohesion/inspection/healthy-2x.png": {
+      "bytes": 66672,
+      "sha256": "65eaaf2185b739200d8ce126ac7d90bd6f40db4ea5a247861f666b9b275bf4b0"
+    },
+    "art-review/forest-room-cohesion/inspection/heart-arena-2x.png": {
+      "bytes": 75304,
+      "sha256": "a2b7490baa193acafc8bfc42b6b114e5ab2ae13a305ccd89647b7ad629fe2c51"
+    },
+    "art-review/forest-room-cohesion/inspection/mixed-2x.png": {
+      "bytes": 82547,
+      "sha256": "4aff2a499d39af81918a910874cd963fbf3ea20128ce6a4d0ea4a151540e74af"
+    },
+    "art-review/forest-room-cohesion/inspection/pond-2x.png": {
+      "bytes": 86936,
+      "sha256": "ac701930cade0ac2c352fddd34a352cc9082b8cf802e946993156b817044858a"
+    },
+    "art-review/forest-room-cohesion/native-HUD-actual.png": {
+      "bytes": 70783,
+      "sha256": "bff79b8288d3e5bd80a8b36110a44448783a99b793a40e5c87001763e5526c0d"
+    },
+    "art-review/forest-room-cohesion/rooms-actual.png": {
+      "bytes": 429514,
+      "sha256": "10b1ffc1f5d13f89f3c71867b050bd6e9d62b7125b1f2836f55f4a779de8aa96"
+    },
+    "art-review/forest-room-cohesion/source/README.md": {
+      "bytes": 1029,
+      "sha256": "e6a4ecfb6ff5757d85e245316d7a37b33d2d4d15684fcfc252fc353c1769084e"
+    },
+    "art-review/forest-room-cohesion/source/groups/clover-31.png": {
+      "bytes": 213,
+      "sha256": "df93c7d5a2def65c729cdd3f8024c628799f45aafcc1df5a0b57afca597f203f"
+    },
+    "art-review/forest-room-cohesion/source/groups/clover-32.png": {
+      "bytes": 277,
+      "sha256": "79726792e0fda70750e75a6ee98453da6c3138a12329632bd0a2aabfb518107e"
+    },
+    "art-review/forest-room-cohesion/source/groups/hlog-31.png": {
+      "bytes": 373,
+      "sha256": "ded41938bc19d7f87fb6b5cab716b3c77c161d03b7e18617d3b55b4faf849639"
+    },
+    "art-review/forest-room-cohesion/source/groups/hlog-32.png": {
+      "bytes": 364,
+      "sha256": "5c7e193092a5731db5c96df9c9361315c228687b2de0160ecf3ebe0b86312940"
+    },
+    "art-review/forest-room-cohesion/source/groups/meadow-31.png": {
+      "bytes": 302,
+      "sha256": "3514938661174503d48d4b2528408a9a552a89a0274800f3ee9a6806db577d21"
+    },
+    "art-review/forest-room-cohesion/source/groups/meadow-32.png": {
+      "bytes": 264,
+      "sha256": "5333032fc1fea55097228bc62e8714eeaa31f1d40597d8f6421959b1c15ba303"
+    },
+    "art-review/forest-room-cohesion/source/groups/shroomring-31.png": {
+      "bytes": 208,
+      "sha256": "a3b9e35008ca49a03443a3a74117434f3304286bb37117e62c817d426e077d26"
+    },
+    "art-review/forest-room-cohesion/source/groups/shroomring-32.png": {
+      "bytes": 278,
+      "sha256": "2f746b763abe47a813cb346964d064f8ca4b634107ba8eebe4b55d376b443786"
+    },
+    "art-review/forest-room-cohesion/source/groups-source.png": {
+      "bytes": 7126,
+      "sha256": "e107b99f956ed3f635e7e3e0db2f8b93d55de2d42ef31556ba1b9d432d25fc05"
+    },
+    "art-review/forest-room-cohesion/source/materials-source.png": {
+      "bytes": 39306,
+      "sha256": "79928cb1df91860449d506e28c4baf73103e584c2de361072a553675982ac9b8"
+    },
+    "art-review/forest-room-cohesion/source/native/31/blight_crystal.png": {
+      "bytes": 924,
+      "sha256": "dac44ca9a3effc4817e37f71d6acb0fc1195ff693a2ad0cf9956bb0113236b26"
+    },
+    "art-review/forest-room-cohesion/source/native/31/blight_floor.png": {
+      "bytes": 865,
+      "sha256": "fb83b22f04cb33533f7de50254c4ea90526759cfac6e0b2230cad3662e50808a"
+    },
+    "art-review/forest-room-cohesion/source/native/31/blight_floor2.png": {
+      "bytes": 880,
+      "sha256": "0b1c49fa7fa717815ad1f84d09aea4787a3cfe6b0ae302c9bc39785e3c8d5dc5"
+    },
+    "art-review/forest-room-cohesion/source/native/31/blight_pool.png": {
+      "bytes": 923,
+      "sha256": "bfc8149a5fbe6560ddb26e0f2c8d70fd275a93429504d0f551dc96d7c75e4967"
+    },
+    "art-review/forest-room-cohesion/source/native/31/blight_vein.png": {
+      "bytes": 883,
+      "sha256": "bb52a762c713d0f58cf62e9682d2a028422e921b0a387824a1937afcdb9b07d8"
+    },
+    "art-review/forest-room-cohesion/source/native/31/bones.png": {
+      "bytes": 904,
+      "sha256": "246729d86672080d0ef572ea685e979c71636ae12fa951c3db84b8d499af5654"
+    },
+    "art-review/forest-room-cohesion/source/native/31/boulder.png": {
+      "bytes": 936,
+      "sha256": "26364392cfdddf101337ea9771fcbada05f6dc1976d6bb1c2f53f206706bc6be"
+    },
+    "art-review/forest-room-cohesion/source/native/31/bridge.png": {
+      "bytes": 880,
+      "sha256": "39624c238a8a803ff85688db057f0ba5eaff2408ff59cbca7df263e36a22d2a0"
+    },
+    "art-review/forest-room-cohesion/source/native/31/bridge_v.png": {
+      "bytes": 882,
+      "sha256": "9e7714e3c8baa062bdda5da342fcd02fc70bbbb608e1abf5ba30d4de73377026"
+    },
+    "art-review/forest-room-cohesion/source/native/31/bush.png": {
+      "bytes": 933,
+      "sha256": "1ba466a1f1ea981bc532ddbf0b07fc6323cd00a5fae17b4cd6e4afc32d918c7e"
+    },
+    "art-review/forest-room-cohesion/source/native/31/chest.png": {
+      "bytes": 931,
+      "sha256": "c6d68c6d8dee6be849fdb3d3ecd57b6019a6c493be287f051a6d7c1ac7e9dc22"
+    },
+    "art-review/forest-room-cohesion/source/native/31/chest_open.png": {
+      "bytes": 916,
+      "sha256": "13010597e9ee9fe343a5592c244e709508208052b9f3b722b9e21c397e519838"
+    },
+    "art-review/forest-room-cohesion/source/native/31/clover_0.png": {
+      "bytes": 888,
+      "sha256": "6a9eb04a147660986709bc45c14f96a49731b12927920bdde7431665147bd62e"
+    },
+    "art-review/forest-room-cohesion/source/native/31/crack.png": {
+      "bytes": 940,
+      "sha256": "31f3870d67459baa09ba7099e1fdae9d5bea8f173ebfaff63102e1b2f94f3d68"
+    },
+    "art-review/forest-room-cohesion/source/native/31/door_locked.png": {
+      "bytes": 890,
+      "sha256": "a388cb0493a199d6d46973d71cbb3113140069aa02a2196078e927d5742c4088"
+    },
+    "art-review/forest-room-cohesion/source/native/31/door_open.png": {
+      "bytes": 865,
+      "sha256": "ac996b07de7a5013120dc3f064257face5545f6eed46ecf11cf2587d56e7aad7"
+    },
+    "art-review/forest-room-cohesion/source/native/31/fence.png": {
+      "bytes": 894,
+      "sha256": "f87edd209cb2673a50ab828376edcf9c9170665ca5535e3d2bb4036d9e60fd40"
+    },
+    "art-review/forest-room-cohesion/source/native/31/fern_patch.png": {
+      "bytes": 929,
+      "sha256": "a6225adf89ffb9b82e0d1d298ac25521a3b8a3f8566a4cef2dc36c73d4c9a2ef"
+    },
+    "art-review/forest-room-cohesion/source/native/31/forest_blight_pit.png": {
+      "bytes": 881,
+      "sha256": "157de1fc67ac59d09659a8740f30563142d0b7741cab77a4bee6267873e5e028"
+    },
+    "art-review/forest-room-cohesion/source/native/31/hlog_0.png": {
+      "bytes": 937,
+      "sha256": "487fc5722c1882ce816887f65b3348f632e8974345ae8dcdfcbe9b2c5e5fa8fe"
+    },
+    "art-review/forest-room-cohesion/source/native/31/hlog_1.png": {
+      "bytes": 928,
+      "sha256": "9e9519078229d0429ae83b56c09a19c6019d434461efeed2a9749cbf3cefc36c"
+    },
+    "art-review/forest-room-cohesion/source/native/31/lantern_post.png": {
+      "bytes": 912,
+      "sha256": "5a97ca3abd65eb7324cc3717aba9e55bc8a20210d62f91c88e48561ce5400a85"
+    },
+    "art-review/forest-room-cohesion/source/native/31/leaf_litter.png": {
+      "bytes": 885,
+      "sha256": "f0349362f936f5cf854ada4f75da767352959f3646b2d07a65512e35e47eccce"
+    },
+    "art-review/forest-room-cohesion/source/native/31/ledge_n.png": {
+      "bytes": 931,
+      "sha256": "a6f4d15b2037db94a3b036c6e3b0952e99d7a07a86cf3decf67749b8ce91ab7c"
+    },
+    "art-review/forest-room-cohesion/source/native/31/ledge_s.png": {
+      "bytes": 929,
+      "sha256": "413379f73025108020b2f4cf590ed2db216b0c052875a04deb9e56334280518e"
+    },
+    "art-review/forest-room-cohesion/source/native/31/ledge_s_e.png": {
+      "bytes": 929,
+      "sha256": "413379f73025108020b2f4cf590ed2db216b0c052875a04deb9e56334280518e"
+    },
+    "art-review/forest-room-cohesion/source/native/31/ledge_s_w.png": {
+      "bytes": 929,
+      "sha256": "413379f73025108020b2f4cf590ed2db216b0c052875a04deb9e56334280518e"
+    },
+    "art-review/forest-room-cohesion/source/native/31/meadow_4.png": {
+      "bytes": 889,
+      "sha256": "e19ee3d9b41cf206e528c5bea1df0ad1f22c816183003d82c25545336936f782"
+    },
+    "art-review/forest-room-cohesion/source/native/31/moss0.png": {
+      "bytes": 865,
+      "sha256": "73fd58dcd8be761fe0fc403f6f1a93dc9e42ab31719c6519368178407541ddd9"
+    },
+    "art-review/forest-room-cohesion/source/native/31/moss1.png": {
+      "bytes": 871,
+      "sha256": "5f7a5299c42c1ae40aedce8975d17f56764e3af8abd68a3096ae26baa37dc557"
+    },
+    "art-review/forest-room-cohesion/source/native/31/moss2.png": {
+      "bytes": 874,
+      "sha256": "174f1f6d0c4dafd1ff478392fe8944419766b3d232a370698376e07755808693"
+    },
+    "art-review/forest-room-cohesion/source/native/31/moss_blight.png": {
+      "bytes": 865,
+      "sha256": "fb83b22f04cb33533f7de50254c4ea90526759cfac6e0b2230cad3662e50808a"
+    },
+    "art-review/forest-room-cohesion/source/native/31/moss_blight2.png": {
+      "bytes": 880,
+      "sha256": "0b1c49fa7fa717815ad1f84d09aea4787a3cfe6b0ae302c9bc39785e3c8d5dc5"
+    },
+    "art-review/forest-room-cohesion/source/native/31/moss_flowers.png": {
+      "bytes": 883,
+      "sha256": "b49f84d622e507e2f29756e78d6cccdf2bf5c365644bcaad584f90c46b9affb4"
+    },
+    "art-review/forest-room-cohesion/source/native/31/moss_flowers2.png": {
+      "bytes": 881,
+      "sha256": "e91853ea99dfaa25c79e67776e7e67f3fd15356642510f483a56cbd83b4976e5"
+    },
+    "art-review/forest-room-cohesion/source/native/31/moss_shade.png": {
+      "bytes": 865,
+      "sha256": "73fd58dcd8be761fe0fc403f6f1a93dc9e42ab31719c6519368178407541ddd9"
+    },
+    "art-review/forest-room-cohesion/source/native/31/mossy_stone.png": {
+      "bytes": 940,
+      "sha256": "f5edecf491756291b322e837fad824983ec4ea7a6a89025882ff28327838b751"
+    },
+    "art-review/forest-room-cohesion/source/native/31/mouth_cave.png": {
+      "bytes": 904,
+      "sha256": "2978b8a8ea5a98bb829a4e43ff3d1dd39c66d21b088d82a5861dfa226d12305e"
+    },
+    "art-review/forest-room-cohesion/source/native/31/mouth_hollow.png": {
+      "bytes": 904,
+      "sha256": "84e6d93c1980f157c050fbff5deeaa6448bd5a1f4aabf54a717f88ece48ca151"
+    },
+    "art-review/forest-room-cohesion/source/native/31/mouth_thicket.png": {
+      "bytes": 904,
+      "sha256": "84e6d93c1980f157c050fbff5deeaa6448bd5a1f4aabf54a717f88ece48ca151"
+    },
+    "art-review/forest-room-cohesion/source/native/31/myst_pot.png": {
+      "bytes": 926,
+      "sha256": "2a74bedac9825a4b3d11433ca789cfaff10d021466b4aeef456e2f6df8ab3a1d"
+    },
+    "art-review/forest-room-cohesion/source/native/31/myst_switch.png": {
+      "bytes": 927,
+      "sha256": "a7196b92813e2b22b585a3adfbe6d5f99c148ad6b5456e91ffd21f28ad65ad72"
+    },
+    "art-review/forest-room-cohesion/source/native/31/myst_switch_down.png": {
+      "bytes": 932,
+      "sha256": "3f26e50c7fcd9d59fa6b000a96b693ccfbc2ff2ad620e127323928bbd62d1aa9"
+    },
+    "art-review/forest-room-cohesion/source/native/31/path.png": {
+      "bytes": 865,
+      "sha256": "ac996b07de7a5013120dc3f064257face5545f6eed46ecf11cf2587d56e7aad7"
+    },
+    "art-review/forest-room-cohesion/source/native/31/path_edge_n.png": {
+      "bytes": 889,
+      "sha256": "6ff1a52a8935af027f91395fbc31eca90c55e2d3a9525a8bb0bc0d16d3c48fd2"
+    },
+    "art-review/forest-room-cohesion/source/native/31/pedge_1.png": {
+      "bytes": 889,
+      "sha256": "6ff1a52a8935af027f91395fbc31eca90c55e2d3a9525a8bb0bc0d16d3c48fd2"
+    },
+    "art-review/forest-room-cohesion/source/native/31/pedge_3.png": {
+      "bytes": 904,
+      "sha256": "914ae07e8b762c0ed0abab875c6400cb67594a961ff64e66ca4d38e67d50ae53"
+    },
+    "art-review/forest-room-cohesion/source/native/31/pedge_c1.png": {
+      "bytes": 883,
+      "sha256": "1422d9a99b9e46fe5f1371cabe269c1429232e4bee0b9bf05ddf101e2af1d42e"
+    },
+    "art-review/forest-room-cohesion/source/native/31/pillar.png": {
+      "bytes": 891,
+      "sha256": "2b6cd9c9bd6fb6ac12a3c3cd9158a97af846ce44391e5aaf38f181ae13ac8b75"
+    },
+    "art-review/forest-room-cohesion/source/native/31/pit.png": {
+      "bytes": 881,
+      "sha256": "157de1fc67ac59d09659a8740f30563142d0b7741cab77a4bee6267873e5e028"
+    },
+    "art-review/forest-room-cohesion/source/native/31/pit_inner.png": {
+      "bytes": 865,
+      "sha256": "787a9043a7b47164f703e684cede500479da26c3fb9933ce8f99694840b5d4c8"
+    },
+    "art-review/forest-room-cohesion/source/native/31/rock.png": {
+      "bytes": 936,
+      "sha256": "26364392cfdddf101337ea9771fcbada05f6dc1976d6bb1c2f53f206706bc6be"
+    },
+    "art-review/forest-room-cohesion/source/native/31/rock2.png": {
+      "bytes": 936,
+      "sha256": "26364392cfdddf101337ea9771fcbada05f6dc1976d6bb1c2f53f206706bc6be"
+    },
+    "art-review/forest-room-cohesion/source/native/31/rock3.png": {
+      "bytes": 936,
+      "sha256": "26364392cfdddf101337ea9771fcbada05f6dc1976d6bb1c2f53f206706bc6be"
+    },
+    "art-review/forest-room-cohesion/source/native/31/rock_small.png": {
+      "bytes": 917,
+      "sha256": "385ec4bf4d9c5139e8ed403273573c403fd18e693569d8e782660adb6ad3d966"
+    },
+    "art-review/forest-room-cohesion/source/native/31/rot_10.png": {
+      "bytes": 882,
+      "sha256": "c9ccc10ada08a787877c5b6179e954eceed8dea5ede25c45f96df023c8cb1083"
+    },
+    "art-review/forest-room-cohesion/source/native/31/rot_14.png": {
+      "bytes": 894,
+      "sha256": "31c5faf860e4819ce56a4e02d9595f0e267cbd046bb02cfdd285f564ad633559"
+    },
+    "art-review/forest-room-cohesion/source/native/31/ruin_wall.png": {
+      "bytes": 905,
+      "sha256": "4c5be554055b79383a82a3277d15c9f9d3d10e68fd8651ce7c1ff9a0c6075692"
+    },
+    "art-review/forest-room-cohesion/source/native/31/shrine_plate.png": {
+      "bytes": 916,
+      "sha256": "2ba4dd064523ca1b25a08ba0f0d111dc32668042f58718de24d05b721351c396"
+    },
+    "art-review/forest-room-cohesion/source/native/31/shroomring_0.png": {
+      "bytes": 880,
+      "sha256": "5cfa857eb048430000dfa210d38df1ca797239492fc01b19a0cfeacf374b0f06"
+    },
+    "art-review/forest-room-cohesion/source/native/31/sick_bones.png": {
+      "bytes": 904,
+      "sha256": "246729d86672080d0ef572ea685e979c71636ae12fa951c3db84b8d499af5654"
+    },
+    "art-review/forest-room-cohesion/source/native/31/sick_rock.png": {
+      "bytes": 940,
+      "sha256": "6d6918855b10b9753ee04e13796561d86afa23642f0fdc93990d29f99878aa7d"
+    },
+    "art-review/forest-room-cohesion/source/native/31/sick_stump.png": {
+      "bytes": 928,
+      "sha256": "5d2abab5828deda051279c7a83babfb8c14c75173258387f5930eb680ef69e42"
+    },
+    "art-review/forest-room-cohesion/source/native/31/stairs_down.png": {
+      "bytes": 893,
+      "sha256": "7f7f846564481bfa92bee1f887fb16ed33dc5714eb6feee181c5f5363a33836f"
+    },
+    "art-review/forest-room-cohesion/source/native/31/statue.png": {
+      "bytes": 917,
+      "sha256": "ac83ee1437d6ab7193d8b3d0f47bc16a2c6e23400e336d97714e50aecd47a5bf"
+    },
+    "art-review/forest-room-cohesion/source/native/31/stump.png": {
+      "bytes": 915,
+      "sha256": "f2125ac7d0fdf16bfd963347233151ba39a95c612d60310a6021b490cff93b39"
+    },
+    "art-review/forest-room-cohesion/source/native/31/tall_grass.png": {
+      "bytes": 929,
+      "sha256": "a6225adf89ffb9b82e0d1d298ac25521a3b8a3f8566a4cef2dc36c73d4c9a2ef"
+    },
+    "art-review/forest-room-cohesion/source/native/31/thorn.png": {
+      "bytes": 950,
+      "sha256": "cb426d8cfe03f7c93bea3b00147176b10ea8fa60808de91548bc7687a7e6ef06"
+    },
+    "art-review/forest-room-cohesion/source/native/31/torch.png": {
+      "bytes": 916,
+      "sha256": "3a443e26597c5aab5bd41d29e92c63491c9875db6083d873c126ac7404e3fbf3"
+    },
+    "art-review/forest-room-cohesion/source/native/31/torch_lit.png": {
+      "bytes": 924,
+      "sha256": "1e2eee7919d09934b287da1bd443053f4136e94fa1ae6917c4d43d6c6d4bb6ad"
+    },
+    "art-review/forest-room-cohesion/source/native/31/water.png": {
+      "bytes": 881,
+      "sha256": "348bfaba5c1debdbd94e75444637d3ce69192116e9bc4dc390045216800e2bea"
+    },
+    "art-review/forest-room-cohesion/source/native/31/water_1.png": {
+      "bytes": 908,
+      "sha256": "f5ca8f0f99284d0dc0e24e79b9f63c5328a6fa04c5897bcbc493d29a3270aca6"
+    },
+    "art-review/forest-room-cohesion/source/native/31/water_3.png": {
+      "bytes": 911,
+      "sha256": "13a066e2c1ca525e56d3663b811cd82a0425aaa80a87b28568fe79cc9188829f"
+    },
+    "art-review/forest-room-cohesion/source/native/31/water_c1.png": {
+      "bytes": 902,
+      "sha256": "81a431554c80ae670b434fa23b8772ffd92c3ca95d0e86e5e72650142a8b9e91"
+    },
+    "art-review/forest-room-cohesion/source/native/31/water_f.png": {
+      "bytes": 921,
+      "sha256": "be4aab8285057c9fcbf8fc4eacb89877dbb2089bb96845954d053108154a3a36"
+    },
+    "art-review/forest-room-cohesion/source/native/31/water_foam.png": {
+      "bytes": 897,
+      "sha256": "5c8d74b2eb968f9a7630f77a49ca23ca896efcea4ed06f2d561e22e23715c49c"
+    },
+    "art-review/forest-room-cohesion/source/native/31/water_lily.png": {
+      "bytes": 899,
+      "sha256": "9688321e9d2ad0039761638004dd220620a1a43815ec8230211aa9c706ace10c"
+    },
+    "art-review/forest-room-cohesion/source/native/31/waterfall.png": {
+      "bytes": 913,
+      "sha256": "9d18ba734826fee5b76a2d2837aece07fcabc0c426d677d2b3f8dcfecb87f1cc"
+    },
+    "art-review/forest-room-cohesion/source/native/31/web.png": {
+      "bytes": 948,
+      "sha256": "75fd5b37a39d60095307d5368983263f1c7b1aa194ed7e3d35f64b4edacf6566"
+    },
+    "art-review/forest-room-cohesion/source/native/32/blight_crystal.png": {
+      "bytes": 926,
+      "sha256": "af92ed0d3a3d385966af94ebc140e5dea1fa503eb29db912d61a4b105605ae30"
+    },
+    "art-review/forest-room-cohesion/source/native/32/blight_floor.png": {
+      "bytes": 865,
+      "sha256": "81f8969e59ed4eb1cc8d6dba5ff57ed9732705cb02d170d5b1d3775070674687"
+    },
+    "art-review/forest-room-cohesion/source/native/32/blight_floor2.png": {
+      "bytes": 881,
+      "sha256": "2db42c10b95cd6e187914a07467efe4f46366185eda8bd76dda207c146842ef3"
+    },
+    "art-review/forest-room-cohesion/source/native/32/blight_pool.png": {
+      "bytes": 914,
+      "sha256": "06b34b6a6663a9ee6d86df99ef650ed94fbf5811c906598016460fb5379d7c39"
+    },
+    "art-review/forest-room-cohesion/source/native/32/blight_vein.png": {
+      "bytes": 882,
+      "sha256": "bbbfc01180c74a35770b931e47f7d489603c17b959c0d4638bc613e02aea5556"
+    },
+    "art-review/forest-room-cohesion/source/native/32/bones.png": {
+      "bytes": 905,
+      "sha256": "cb412be621de1774d432f8b13e7e9c40eb6d9457a29dadaeb5760510983378f0"
+    },
+    "art-review/forest-room-cohesion/source/native/32/boulder.png": {
+      "bytes": 936,
+      "sha256": "26364392cfdddf101337ea9771fcbada05f6dc1976d6bb1c2f53f206706bc6be"
+    },
+    "art-review/forest-room-cohesion/source/native/32/bridge.png": {
+      "bytes": 893,
+      "sha256": "7670ab1f0955dbd3eb05c1a362f43dba0c0337e13cf0970a5382ebed414cbf61"
+    },
+    "art-review/forest-room-cohesion/source/native/32/bridge_v.png": {
+      "bytes": 888,
+      "sha256": "887693879bf990d81fc67173a7cec924f8281594a106969a552f39edbb9aa793"
+    },
+    "art-review/forest-room-cohesion/source/native/32/bush.png": {
+      "bytes": 933,
+      "sha256": "1ba466a1f1ea981bc532ddbf0b07fc6323cd00a5fae17b4cd6e4afc32d918c7e"
+    },
+    "art-review/forest-room-cohesion/source/native/32/chest.png": {
+      "bytes": 928,
+      "sha256": "e1927541e1c56a9b8f971be2f4a01bc0a29219ad84f1ba6d1145e0ebdc655fa9"
+    },
+    "art-review/forest-room-cohesion/source/native/32/chest_open.png": {
+      "bytes": 921,
+      "sha256": "a7b7867ad9807d3205e6851dc69c8ee56b2357bf98bbcdbefda966484942eaa0"
+    },
+    "art-review/forest-room-cohesion/source/native/32/clover_0.png": {
+      "bytes": 897,
+      "sha256": "94eeb5e92b7e7a679e2057943cca72eec4f2088c12e1c6e1e56375f604626379"
+    },
+    "art-review/forest-room-cohesion/source/native/32/crack.png": {
+      "bytes": 937,
+      "sha256": "1280a5337e476a6d9bb2bd0d873eae868fac77b3892047e075ac9f89c5098b96"
+    },
+    "art-review/forest-room-cohesion/source/native/32/door_locked.png": {
+      "bytes": 928,
+      "sha256": "07459fb8c54ad8f58b719e328ff8b64fa1893d9f2c8d475a1a83ec41e5880ede"
+    },
+    "art-review/forest-room-cohesion/source/native/32/door_open.png": {
+      "bytes": 865,
+      "sha256": "ac996b07de7a5013120dc3f064257face5545f6eed46ecf11cf2587d56e7aad7"
+    },
+    "art-review/forest-room-cohesion/source/native/32/fence.png": {
+      "bytes": 908,
+      "sha256": "e5d34f8ae731307090d0faf7932147c0e8084c61a1f1ac27f744b2f4e641a730"
+    },
+    "art-review/forest-room-cohesion/source/native/32/fern_patch.png": {
+      "bytes": 924,
+      "sha256": "63b3226efb62131ab8724b386842b09b927763d7a5881a9aa1ab59357f0a38b7"
+    },
+    "art-review/forest-room-cohesion/source/native/32/forest_blight_pit.png": {
+      "bytes": 897,
+      "sha256": "e2c16c2d25e571e4d53ff1e20f0b14b656f59a1c9ed0a3702a022087adf32415"
+    },
+    "art-review/forest-room-cohesion/source/native/32/hlog_0.png": {
+      "bytes": 939,
+      "sha256": "d2ffa5196d1253ba283f0edd0f8428728ebfe167b920461578fb92c688fafcd6"
+    },
+    "art-review/forest-room-cohesion/source/native/32/hlog_1.png": {
+      "bytes": 930,
+      "sha256": "32c313066e90f54e0343ed83eb3d16cec7f32134d5b8e7c3ca0e191aebffd958"
+    },
+    "art-review/forest-room-cohesion/source/native/32/lantern_post.png": {
+      "bytes": 922,
+      "sha256": "8b3df48e3fe1ad537ddae995ef9a7c44e0881f5a81de4e5f69721b146482bafa"
+    },
+    "art-review/forest-room-cohesion/source/native/32/leaf_litter.png": {
+      "bytes": 892,
+      "sha256": "42b7d4ebc0864379f0849f5d5b5515ac79b7739f001a824c64206dc40f668226"
+    },
+    "art-review/forest-room-cohesion/source/native/32/ledge_n.png": {
+      "bytes": 931,
+      "sha256": "d7a28f6d03da5ebabc812540509fa2881c7ca477f021e3619df2330efb2d81c9"
+    },
+    "art-review/forest-room-cohesion/source/native/32/ledge_s.png": {
+      "bytes": 932,
+      "sha256": "46fa5103ced510a0455c283dff8d1bb8ce7b1b096698b12f67e565c18950d0de"
+    },
+    "art-review/forest-room-cohesion/source/native/32/ledge_s_e.png": {
+      "bytes": 931,
+      "sha256": "a0ab71761e2598d40738e34952ead43e4aa329f353f37c098a43548009975f21"
+    },
+    "art-review/forest-room-cohesion/source/native/32/ledge_s_w.png": {
+      "bytes": 932,
+      "sha256": "5e2941138ff22b85f22694c2fec472f5bbd781d8f9cbc63b23d78c294f022264"
+    },
+    "art-review/forest-room-cohesion/source/native/32/meadow_4.png": {
+      "bytes": 865,
+      "sha256": "73fd58dcd8be761fe0fc403f6f1a93dc9e42ab31719c6519368178407541ddd9"
+    },
+    "art-review/forest-room-cohesion/source/native/32/moss0.png": {
+      "bytes": 865,
+      "sha256": "73fd58dcd8be761fe0fc403f6f1a93dc9e42ab31719c6519368178407541ddd9"
+    },
+    "art-review/forest-room-cohesion/source/native/32/moss1.png": {
+      "bytes": 880,
+      "sha256": "23acbed1663d67dc2cbc9f100de1b49f92782fe54616e9532bd129a7e9e6d6d5"
+    },
+    "art-review/forest-room-cohesion/source/native/32/moss2.png": {
+      "bytes": 881,
+      "sha256": "1477a5e20ce4c86bf153a4d7c9f777caf37a3dfd3bb440c1a84eea62a348fed4"
+    },
+    "art-review/forest-room-cohesion/source/native/32/moss_blight.png": {
+      "bytes": 865,
+      "sha256": "81f8969e59ed4eb1cc8d6dba5ff57ed9732705cb02d170d5b1d3775070674687"
+    },
+    "art-review/forest-room-cohesion/source/native/32/moss_blight2.png": {
+      "bytes": 881,
+      "sha256": "2db42c10b95cd6e187914a07467efe4f46366185eda8bd76dda207c146842ef3"
+    },
+    "art-review/forest-room-cohesion/source/native/32/moss_flowers.png": {
+      "bytes": 893,
+      "sha256": "45b30c1115d833181ebb7244566fc8d18ec0405042d3327c38e611f5b1963f54"
+    },
+    "art-review/forest-room-cohesion/source/native/32/moss_flowers2.png": {
+      "bytes": 893,
+      "sha256": "c518aa365a268899537a01ba19be738acc901c292d6d8d8d69510addd9226b41"
+    },
+    "art-review/forest-room-cohesion/source/native/32/moss_shade.png": {
+      "bytes": 875,
+      "sha256": "f14016c18f65fc0c4531cf94b82fcaaaee3749da9af9909f30c8694e94c0e196"
+    },
+    "art-review/forest-room-cohesion/source/native/32/mossy_stone.png": {
+      "bytes": 904,
+      "sha256": "0129121d8dc1f514ca78d41cceef343cd2382ded359abd6cf4451b10b052a8f1"
+    },
+    "art-review/forest-room-cohesion/source/native/32/mouth_cave.png": {
+      "bytes": 908,
+      "sha256": "cb5b1d3cdb28b7cfc8088c286b355626fa83f8697a880f0166a59d283ff9da10"
+    },
+    "art-review/forest-room-cohesion/source/native/32/mouth_hollow.png": {
+      "bytes": 911,
+      "sha256": "20cf3a0dd9186ffdaf340ddac713c7f3336667b78770dce44c53000bff3238f5"
+    },
+    "art-review/forest-room-cohesion/source/native/32/mouth_thicket.png": {
+      "bytes": 907,
+      "sha256": "e20f35c56a67c89894200824e8b897ff48ee9172b3f6780b51d0d2a00964efba"
+    },
+    "art-review/forest-room-cohesion/source/native/32/myst_pot.png": {
+      "bytes": 926,
+      "sha256": "2a74bedac9825a4b3d11433ca789cfaff10d021466b4aeef456e2f6df8ab3a1d"
+    },
+    "art-review/forest-room-cohesion/source/native/32/myst_switch.png": {
+      "bytes": 921,
+      "sha256": "cc6009178646ac0944c26cf279d47fd57f25b499424129f8de52bfbe110283b6"
+    },
+    "art-review/forest-room-cohesion/source/native/32/myst_switch_down.png": {
+      "bytes": 924,
+      "sha256": "68d2b59ec017858d8638be6b44685990f7b6f17391d2625d876e0d06b3db59cd"
+    },
+    "art-review/forest-room-cohesion/source/native/32/path.png": {
+      "bytes": 865,
+      "sha256": "ac996b07de7a5013120dc3f064257face5545f6eed46ecf11cf2587d56e7aad7"
+    },
+    "art-review/forest-room-cohesion/source/native/32/path_edge_n.png": {
+      "bytes": 885,
+      "sha256": "81d712756e58958cb392f4cb9801eb1d9ebdfc77ee7af59fb63c3a8e59293606"
+    },
+    "art-review/forest-room-cohesion/source/native/32/pedge_1.png": {
+      "bytes": 885,
+      "sha256": "81d712756e58958cb392f4cb9801eb1d9ebdfc77ee7af59fb63c3a8e59293606"
+    },
+    "art-review/forest-room-cohesion/source/native/32/pedge_3.png": {
+      "bytes": 901,
+      "sha256": "bedda5e881ed2020a835e693230b73f88c7a2ba4e39edfc85fdf15aa7d6c23a3"
+    },
+    "art-review/forest-room-cohesion/source/native/32/pedge_c1.png": {
+      "bytes": 877,
+      "sha256": "7595aa7a9400c15608e40ad2a2d4324457163249812777a5c0e317ed2ed1ba0f"
+    },
+    "art-review/forest-room-cohesion/source/native/32/pillar.png": {
+      "bytes": 914,
+      "sha256": "cc7257e7547de8aef8c6fdf40cb67c9d952d17013da6b788917e226c4b794b6e"
+    },
+    "art-review/forest-room-cohesion/source/native/32/pit.png": {
+      "bytes": 897,
+      "sha256": "e2c16c2d25e571e4d53ff1e20f0b14b656f59a1c9ed0a3702a022087adf32415"
+    },
+    "art-review/forest-room-cohesion/source/native/32/pit_inner.png": {
+      "bytes": 865,
+      "sha256": "a28529f463be304b29811ab4b9e8c7f545c0184f38c7743e75c62bf742becfbc"
+    },
+    "art-review/forest-room-cohesion/source/native/32/rock.png": {
+      "bytes": 932,
+      "sha256": "eae90c813643b3be0b92a17df6d82a1100152d0abb42a77bf9bb52bb4dcb2b9d"
+    },
+    "art-review/forest-room-cohesion/source/native/32/rock2.png": {
+      "bytes": 928,
+      "sha256": "d47011a902af95cd83a953d82a87826c0fc812fa9539e9dc36eda061d7e6b647"
+    },
+    "art-review/forest-room-cohesion/source/native/32/rock3.png": {
+      "bytes": 931,
+      "sha256": "17a679e7a46c6b879134cbe881bf174f4199966741c70a153d9a317768d60f8f"
+    },
+    "art-review/forest-room-cohesion/source/native/32/rock_small.png": {
+      "bytes": 917,
+      "sha256": "385ec4bf4d9c5139e8ed403273573c403fd18e693569d8e782660adb6ad3d966"
+    },
+    "art-review/forest-room-cohesion/source/native/32/rot_10.png": {
+      "bytes": 878,
+      "sha256": "7a648b85b1a87b6d4c5c1d56f10e047f3492fff468b7b59ad827d42088bee7ae"
+    },
+    "art-review/forest-room-cohesion/source/native/32/rot_14.png": {
+      "bytes": 885,
+      "sha256": "cc9c2ec773bd5b20441cf420b59574a4b9981a84e952b78c5717c9272fd9ec10"
+    },
+    "art-review/forest-room-cohesion/source/native/32/ruin_wall.png": {
+      "bytes": 918,
+      "sha256": "6b73b2e596d06e31fc84414691a8075c67f3cdeacd17b43f5170d0ec383029f0"
+    },
+    "art-review/forest-room-cohesion/source/native/32/shrine_plate.png": {
+      "bytes": 922,
+      "sha256": "93dddfb3c74a07244958e4533549bfc44cb93a31fd2a539886283df4950bd473"
+    },
+    "art-review/forest-room-cohesion/source/native/32/shroomring_0.png": {
+      "bytes": 893,
+      "sha256": "b1d9e7dfd55808a16b23e876448d764c64478be83923068ea376d761241e12cd"
+    },
+    "art-review/forest-room-cohesion/source/native/32/sick_bones.png": {
+      "bytes": 912,
+      "sha256": "ab344a389c96fff931d3635d12933eec5a3009fa323f6a6c740606907731d519"
+    },
+    "art-review/forest-room-cohesion/source/native/32/sick_rock.png": {
+      "bytes": 936,
+      "sha256": "553c2715f28d04cffe8b13be48979847d3786b33baa132de4e673e3612a88984"
+    },
+    "art-review/forest-room-cohesion/source/native/32/sick_stump.png": {
+      "bytes": 940,
+      "sha256": "c27da6e43afb63e7cf7c9f2ce9bd262700ab73e2b4e7c93a3b6a436e7d7ed3fc"
+    },
+    "art-review/forest-room-cohesion/source/native/32/stairs_down.png": {
+      "bytes": 908,
+      "sha256": "d1180c94102e45109a95f8d8717d60f5d236d90598ceff40afa013e5df34009f"
+    },
+    "art-review/forest-room-cohesion/source/native/32/statue.png": {
+      "bytes": 918,
+      "sha256": "5d5283b2bdd3c761de4bc2a09e554637c7ee39884f617f39d6478cd89f50a1e7"
+    },
+    "art-review/forest-room-cohesion/source/native/32/stump.png": {
+      "bytes": 928,
+      "sha256": "215db533ec1d99dd9ce16c34e8151b563c7bd7a47ad9902908e468ed85a44fe5"
+    },
+    "art-review/forest-room-cohesion/source/native/32/tall_grass.png": {
+      "bytes": 921,
+      "sha256": "257de58fb1a5aa5bd7fa5f162617a06357bf7667474a7e5536c5dcb81c453492"
+    },
+    "art-review/forest-room-cohesion/source/native/32/thorn.png": {
+      "bytes": 953,
+      "sha256": "e975bfad1ab6cdb436c9d39d702e5f8c9cfe6fe5a6a95097205e08a3c6183b59"
+    },
+    "art-review/forest-room-cohesion/source/native/32/torch.png": {
+      "bytes": 898,
+      "sha256": "502ac659f1b9766e7107f70d96f015ec6e40d387970b6cb77babb4d1178d42b7"
+    },
+    "art-review/forest-room-cohesion/source/native/32/torch_lit.png": {
+      "bytes": 925,
+      "sha256": "700eeda80bca4d9dbf385684331c8dca857522dcc6aa2da44221a2d8ef84637f"
+    },
+    "art-review/forest-room-cohesion/source/native/32/water.png": {
+      "bytes": 890,
+      "sha256": "5673e7a9f1d1d12879ad82dbf223e39be3a07ba2691c9f8063d40a9fe79897bf"
+    },
+    "art-review/forest-room-cohesion/source/native/32/water_1.png": {
+      "bytes": 911,
+      "sha256": "cdcff58e008b7c3c81703d1f60ffd4ec0bfb4f18ec5147a69f711b667c767f96"
+    },
+    "art-review/forest-room-cohesion/source/native/32/water_3.png": {
+      "bytes": 918,
+      "sha256": "c279abfa5e498b4f55f6a98d094055ac248dbcd4c2e76bdecfce5cbcae80d225"
+    },
+    "art-review/forest-room-cohesion/source/native/32/water_c1.png": {
+      "bytes": 900,
+      "sha256": "94b1463d41ab989330d74fbc33b5246d85cc9f134dd7a8d4a54393710dea492f"
+    },
+    "art-review/forest-room-cohesion/source/native/32/water_f.png": {
+      "bytes": 914,
+      "sha256": "ff2f0625b2c62d52d8e4a95215302c159b5375d1bc886e210b9272da9a0030ce"
+    },
+    "art-review/forest-room-cohesion/source/native/32/water_foam.png": {
+      "bytes": 899,
+      "sha256": "382cea2fc1bfc581659b9e6064c6cd882b47f415d4eb1742cfcb438d69ba0986"
+    },
+    "art-review/forest-room-cohesion/source/native/32/water_lily.png": {
+      "bytes": 908,
+      "sha256": "440c9e7e166c46f30e53c357a19ca7c9b0e19667d18b5792bd031d71fcbe762c"
+    },
+    "art-review/forest-room-cohesion/source/native/32/waterfall.png": {
+      "bytes": 910,
+      "sha256": "90ff8990c5223ff81d421af7d98b7faa498e4a590fc8ab9aace0dc9d4f8771ec"
+    },
+    "art-review/forest-room-cohesion/source/native/32/web.png": {
+      "bytes": 950,
+      "sha256": "63d3ab5e0381ce19e7e8d11024606543070584dbb4e972f17d9a619d2a529302"
+    },
+    "art-review/forest-room-cohesion/source/source-manifest.json": {
+      "bytes": 178495,
+      "sha256": "3ee753a1570ec034cbd8717e899aff893c2dea8a9d8e213f8bc9f1c49098b9dc"
+    },
+    "art-review/forest-room-cohesion/validation/README.md": {
+      "bytes": 3666,
+      "sha256": "7c25e66ed41db5f26fa104bf3c820da83d65710c47ebcf4f6981560548bb357f"
+    },
+    "art-review/forest-room-cohesion/validation/audit-capture.json": {
+      "bytes": 136365,
+      "sha256": "054a6360a5ec5b493fb6b3a4de3a96cfa359d7a47655edd3c90e85893e92ba27"
+    },
+    "art-review/forest-room-cohesion/validation/audit-host.json": {
+      "bytes": 284736,
+      "sha256": "a4500407ad289ee37a81d9a1aae152117b7185a9404060901b016f9b39004ddd"
+    },
+    "art-review/forest-room-cohesion/validation/builds.json": {
+      "bytes": 12724,
+      "sha256": "1bf293991589275cce1940e276e489c74f386de6df54d719760bbed5652b2797"
+    },
+    "art-review/forest-room-cohesion/validation/default-build.json": {
+      "bytes": 280,
+      "sha256": "f4baff9733ffaee1015434973ada71bccd103a1818bee51086ac58757794a67c"
+    },
+    "art-review/forest-room-cohesion/validation/frozen/v32/assets.h": {
+      "bytes": 84827,
+      "sha256": "40357b7058a01becda07e8c90d2c90a47b0b4dff481017ed362314124e537215"
+    },
+    "art-review/forest-room-cohesion/validation/frozen/v32/bartgame.map": {
+      "bytes": 220631,
+      "sha256": "a15bb2784580544ecf275b613312e0702b7f68019f3b668b18a8080ad963021d"
+    },
+    "art-review/forest-room-cohesion/validation/frozen/v32/coverage.json": {
+      "bytes": 1053489,
+      "sha256": "9af5a4bfd455e57c616626b7cef44d70ab72959f8dab0555a8662d4d5d51df60"
+    },
+    "art-review/forest-room-cohesion/validation/frozen/v32/freeze.json": {
+      "bytes": 14547,
+      "sha256": "f1ab971aaa1f13d46246dce9fdfda03fef399f30468be6d446014da9ed84036f"
+    },
+    "art-review/forest-room-cohesion/validation/host/compile.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "art-review/forest-room-cohesion/validation/host/generator-check.c": {
+      "bytes": 24865,
+      "sha256": "b4861f3d8f9bead424c7d6e16cb8f74891dee51edb6c33975d20d6df4df16fcb"
+    },
+    "art-review/forest-room-cohesion/validation/host/native-metadata.c": {
+      "bytes": 56764,
+      "sha256": "9a75faee35bd605d1f01a608ef97537a25307f6ce401a9d210ef5c58783fed6d"
+    },
+    "art-review/forest-room-cohesion/validation/host/report.json": {
+      "bytes": 3541,
+      "sha256": "61a340c101a9a5eec44a79e431de67cbc2c690c76efecf34837b012b9c8641a4"
+    },
+    "art-review/forest-room-cohesion/validation/host/room-logic.c": {
+      "bytes": 147,
+      "sha256": "e75bd04d0bd234b11870033a8e2374f5b87fbb3bb1b8989a3062f958f4b27c33"
+    },
+    "art-review/forest-room-cohesion/validation/host/run.log": {
+      "bytes": 1006,
+      "sha256": "60f4ea8bbae2993ae9b4186cf19ea5e9e179964c064656556d88026357865d9c"
+    },
+    "art-review/forest-room-cohesion/validation/legacy-preservation.json": {
+      "bytes": 8012,
+      "sha256": "57d334138a80c99fc03abb5db2a5555763a33882f45ebb513c4aa51c885cd67e"
+    },
+    "art-review/forest-room-cohesion/validation/publication-qa.json": {
+      "bytes": 80335,
+      "sha256": "7ae821685cff142d03be9c8d21b40aa0ff434ddd5f1bf9221b528f5262de6d51"
+    },
+    "art-review/forest-room-cohesion/validation/runtime/01-title.png": {
+      "bytes": 7308,
+      "sha256": "16cf4271d3cd2e4960f030926614d64ba3855e3573c083174a20098f36f5553d"
+    },
+    "art-review/forest-room-cohesion/validation/runtime/02-title-options.png": {
+      "bytes": 2790,
+      "sha256": "8cbea4e75774965fc154dbac7562ed3ae5624903d54824edac83fc0d399612ad"
+    },
+    "art-review/forest-room-cohesion/validation/runtime/03-drain.png": {
+      "bytes": 4784,
+      "sha256": "c894b549dcc2400803d07b5d1bdef2ce9062aba809ef09566fdd0af7c8227c07"
+    },
+    "art-review/forest-room-cohesion/validation/runtime/04-forest-before-menu.png": {
+      "bytes": 9806,
+      "sha256": "aac6d8e3fe44979d24adfc24db9e154b22b7a18965fa0232708067b819418d28"
+    },
+    "art-review/forest-room-cohesion/validation/runtime/05-items.png": {
+      "bytes": 3681,
+      "sha256": "9c92e362ae75372bf24b96104e574964477b32f873a72e16647282eae5eddc05"
+    },
+    "art-review/forest-room-cohesion/validation/runtime/06-key-items.png": {
+      "bytes": 3970,
+      "sha256": "ed2e9d458e5793cb20b8f6cd485df37da1eb70082294dbf3ec5e68ce1806e730"
+    },
+    "art-review/forest-room-cohesion/validation/runtime/07-region-map.png": {
+      "bytes": 3063,
+      "sha256": "9174812d409fb1209a9052efddde1b808895b850565c8c3de97c3ed28f2e28d6"
+    },
+    "art-review/forest-room-cohesion/validation/runtime/08-room-map.png": {
+      "bytes": 3191,
+      "sha256": "47105f9fb2c4ebe19b70048625e815436abe34fdb637a83ea586492f18782614"
+    },
+    "art-review/forest-room-cohesion/validation/runtime/09-forest-after-menu.png": {
+      "bytes": 9705,
+      "sha256": "f206870133d15f6ba9fe37a495d7a432117eef2a5644fbc741dfbd4406b256f6"
+    },
+    "art-review/forest-room-cohesion/validation/runtime/10-mystery-interior.png": {
+      "bytes": 3011,
+      "sha256": "3997de5d3b918be6801c4d88ccdb577b5c673cbca56a2c9d8cecf27d495e21e9"
+    },
+    "art-review/forest-room-cohesion/validation/runtime/11-forest-after-mystery.png": {
+      "bytes": 9256,
+      "sha256": "4a9fd7eef62881a23c9ec143551c720f909a330b53e5a7aa240c0d5ff3845b93"
+    },
+    "art-review/forest-room-cohesion/validation/runtime/12-drain-return.png": {
+      "bytes": 7134,
+      "sha256": "31b84d16a3b80b1dd6f35f5f854b69dab4031b11c46f6b06a21b60cf9bf33dd2"
+    },
+    "art-review/forest-room-cohesion/validation/runtime/13-forest-reentry.png": {
+      "bytes": 9717,
+      "sha256": "67a3d115e73bd721aa3b2e163970dbc6898d6952f3f6b30a09e8936bfd1a48a3"
+    },
+    "art-review/forest-room-cohesion/validation/runtime/14-bush-cut-before-menu.png": {
+      "bytes": 8200,
+      "sha256": "78c978bebf9b881d167f185055b2103e66f9d570c49590e9b9e4d468dd68c4df"
+    },
+    "art-review/forest-room-cohesion/validation/runtime/15-bush-cut-after-menu.png": {
+      "bytes": 7859,
+      "sha256": "969473cef9073b0c685e3be150c738af836301ba41f8b1c560770cb60f000333"
+    },
+    "art-review/forest-room-cohesion/validation/runtime/cp1.png": {
+      "bytes": 10296,
+      "sha256": "6da17fb861abcd2242c67ee4716188e90d900b918685e02dfcdf57ceea0ce364"
+    },
+    "art-review/forest-room-cohesion/validation/runtime/cp2.png": {
+      "bytes": 9042,
+      "sha256": "801f925e8964325b768a652b5369e35997011caf77c4f439479efcee3473b931"
+    },
+    "art-review/forest-room-cohesion/validation/runtime/cp3.png": {
+      "bytes": 10976,
+      "sha256": "9869f815c8b878880aab6f814bf8d5b145e904e9a8e50c41e8bd43f945864d86"
+    },
+    "art-review/forest-room-cohesion/validation/runtime/cp4.png": {
+      "bytes": 9446,
+      "sha256": "e3aebd309c474acd1ba2ee641e055f7bb2f698d905f6f19208973660e8eff4dd"
+    },
+    "art-review/forest-room-cohesion/validation/runtime/cp5.png": {
+      "bytes": 9446,
+      "sha256": "e3aebd309c474acd1ba2ee641e055f7bb2f698d905f6f19208973660e8eff4dd"
+    },
+    "art-review/forest-room-cohesion/validation/runtime/report.json": {
+      "bytes": 24376,
+      "sha256": "c16b634487682eda1886136f4c43dc0c7f3021a77b7a2929ffeee7af71bccfcf"
+    },
+    "downloads/forest-room-cohesion-4024902/README.md": {
+      "bytes": 359,
+      "sha256": "86ec70e82c3f2a584b32b5e8c590430e1d3dfe3b57b68617e3159950083afde2"
+    },
+    "downloads/forest-room-cohesion-4024902/README.txt": {
+      "bytes": 525,
+      "sha256": "5c3489a51bd4933a560b94dc96f56ce643eae3642be07c8119cf65aef37f2390"
+    },
+    "downloads/forest-room-cohesion-4024902/SHA256SUMS.txt": {
+      "bytes": 176,
+      "sha256": "15e1ee61ff0dc0f6fcf2975ba7b22bac3c3902bcbaa964d55f1d8066a4944b24"
+    },
+    "downloads/forest-room-cohesion-4024902/forest-room-cohesion-4024902.gba": {
+      "bytes": 650168,
+      "sha256": "5fcf4cba1c6ab3a5af4575a5a05a49d9813457a02b4f5d16a7e3abc05e41566e"
+    },
+    "downloads/forest-room-cohesion-4024902/forest-room-cohesion-4024902.zip": {
+      "bytes": 165380,
+      "sha256": "c1673ec767eb7ee631e6bc1a09bf10f7e6f55e5cd6e573920cae4272cc6c3e1b"
+    }
+  },
+  "verification_tools_sha256": {
+    "bartgame/tools/forest_cohesion_review.py": "7e8d0735bd1c35f4fcc8f75601c55856786917cf4ecf1429e75e91ccf7503219",
+    "bartgame/tools/forest_cohesion_gallery.py": "640dad9671a9b2eb75c7e786090e8529d9b9ff1f83e6e7484fee2f3f69cf42e2",
+    "bartgame/tools/forest_cohesion_audit.py": "a9516f3705d306ea0ab07aa62b0dda7d3d50e9ccf83a5284b9c731e8a7431a73",
+    "bartgame/tools/forest_cohesion_runtime.py": "d6e690395a46a2347e844ad0324ff02a0643600c8c9f30ab7be7a14056ac3be8"
+  },
+  "documentation_sha256": {
+    "bartgame/docs/art-reboot/ART_BIBLE.md": "2a1356be3d3abbb687b2006dcdd3cb5ccef685437b63bcef16b8a283f9542a48",
+    "bartgame/docs/art-reboot/ART_DIRECTION_LOG.md": "664d552cdad36222885af27a981f1060fd8bf2f5eda970215a892808975801fa",
+    "bartgame/docs/art-reboot/REFERENCE_REGISTER.md": "4ed022207fb411d6abf753804b68c5368e626bbd33349446193114083ac3ec1f",
+    "bartgame/docs/art-reboot/references/FOREST_COHESION_CAPTURE.md": "713ae01f8d1efaec5dcbfed3d28ce9da6e789b0fcb4d69c7855882fa77aa455f",
+    "bartgame/docs/art-reboot/references/FOREST_COHESION_GENERATION.md": "621aa14a36a9c34346f75cda83e5c922324c673e12876a09290e50d67043b1f9",
+    "bartgame/docs/art-reboot/references/FOREST_COHESION_PATHS.md": "0dd4019068f66aa56e257cc8a2a1d9236fee191d9b3f3d0f8b2ae15fbfc04a10",
+    "bartgame/docs/art-reboot/references/FOREST_COHESION_PROPS.md": "63c40f2d6fff35b534fe632ca367ea47f9eb91ff617cba3974fd6a93f272d214",
+    "bartgame/docs/art-reboot/references/FOREST_COHESION_REVIEW.md": "45b6ecc2da5ed4ffd39ca4a4d2bd22273c05ba4b44c4af1c2cb9ee7557edd3b8",
+    "bartgame/docs/art-reboot/references/FOREST_COHESION_TERRAIN.md": "edb6073cf85c818d8e2a8dbe780161fcaf86e1f863c0406d8a952e233ca75e1c"
+  },
+  "self_exclusion": "This manifest excludes itself to avoid a circular hash."
+}

@@ -32,10 +32,11 @@ builds retain the earlier comparison sets. Earlier
 Five optional [forest environment studies](docs/FOREST_CONCEPTS.md) explore
 Fern & Oak, Silver Willow, Copper Beech, Velvet Cedar and Pale Orchard.
 `BART_FOREST=1..5` selects their complete terrain, props and forest folk;
-ordinary builds now use the approved repeated-tree forest (`BART_FOREST=31`).
-The [integrated tree review](../art-review/forest-trees-integrated/README.md)
-includes complete generated-room mGBA camera mosaics and a playable ROM.
-`BART_FOREST=0..30` retains historical profiles for comparison.
+ordinary builds use the refined repeated-tree forest (`BART_FOREST=32`).
+The [room-composition review](../art-review/forest-room-cohesion/README.md)
+shows matched generated rooms, native details, movement and water clips, plus
+a playable ROM. The approved twelve tree drawings remain unchanged.
+`BART_FOREST=0..31` retains historical profiles for comparison.
 The [second forest pass](docs/FOREST_CONCEPTS_V2.md), `BART_FOREST=6..10`,
 explores much stronger purple infection, new characters and props, adjacency
 joins and true foreground canopy/underpass depth. Earlier studies remain

@@ -7,6 +7,10 @@
 *.rar
 baserom*.gba
 
+# Refined forest rooms and native material build.
+!/downloads/forest-room-cohesion-4024902/forest-room-cohesion-4024902.gba
+!/downloads/forest-room-cohesion-4024902/forest-room-cohesion-4024902.zip
+
 # Selected compact forest trees, normal playable build.
 !/downloads/forest-trees-integrated-fd7465d/forest-trees-integrated-fd7465d.gba
 !/downloads/forest-trees-integrated-fd7465d/forest-trees-integrated-fd7465d.zip

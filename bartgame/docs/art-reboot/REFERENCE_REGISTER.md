@@ -281,3 +281,14 @@ basis for palette, connected clusters, lighting, contact, clear hierarchy and
 native review. This pass does not claim new web research or unread sources.
 New profile32 evidence must distinguish source-native detail sheets from
 actual generated-room mGBA views and camera mosaics.
+
+
+The final [forest room/detail review](../../../art-review/forest-room-cohesion/README.md)
+binds source`4024902` to eight matched before/after actual mGBA rooms and
+separate native material/group source sheets. The
+[independent critique](references/FOREST_COHESION_REVIEW.md),
+[generation contract](references/FOREST_COHESION_GENERATION.md),
+[trail implementation](references/FOREST_COHESION_PATHS.md) and
+[capture method](references/FOREST_COHESION_CAPTURE.md) record tested scope,
+placement/lighting changes, pixel fidelity and remaining native-grid limits.
+No new external article or game measurement is claimed by this refinement.

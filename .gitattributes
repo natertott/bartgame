@@ -23,3 +23,6 @@
 
 # Exact integrated-tree production linker map.
 /art-review/forest-trees-integrated/validation/frozen/v31/bartgame.map -whitespace
+
+# Exact room-composition production linker map.
+/art-review/forest-room-cohesion/validation/frozen/v32/bartgame.map -whitespace

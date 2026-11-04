@@ -1,0 +1,5326 @@
+{
+  "rom_sha256": "5fcf4cba1c6ab3a5af4575a5a05a49d9813457a02b4f5d16a7e3abc05e41566e",
+  "base_rom_sha256": "977f38406e3f5cf12e7108e3840356d305d364bd665bc0d9ef578ec8f5937e78",
+  "audit_tool_sha256": "a9516f3705d306ea0ab07aa62b0dda7d3d50e9ccf83a5284b9c731e8a7431a73",
+  "command": [
+    "tools/forest_cohesion_audit.py",
+    "--bundle",
+    "/workspace/setup/forest-room-cohesion/frozen/v32",
+    "--base",
+    "/workspace/setup/forest-tree-world/frozen/v31",
+    "--out",
+    "/workspace/setup/forest-room-cohesion/audit-final-402-capture",
+    "--host-seeds",
+    "0",
+    "--capture",
+    "/workspace/setup/forest-room-cohesion/final-after/capture.json"
+  ],
+  "dependencies_sha256": {
+    "forest_trees_audit.py": "901aad854d1dd8b18e2849d8233a8afd644a97a3626ac78beb9aa0ed84f770e8"
+  },
+  "provenance": {
+    "source_commit": "4024902d56c759ca124b2517c73f77e5234be66d",
+    "unfrozen_pilot": false,
+    "baseline_source": "fd7465d87f3dfcec33152254d49b3df629debf26"
+  },
+  "approved_native_art": [
+    {
+      "name": "tree_broad_0_healthy",
+      "size": [
+        32,
+        32
+      ],
+      "anchor": [
+        16,
+        30
+      ],
+      "index_sha256": "34787872fb47ac31b57b9b29779d046b928ee90345840dd3ac109a9c29518d2a",
+      "map_sha256": "a1645606d6128a0aadd1c3606a4f87b97ad4b89c421abb9cd2b34c20bfb9f195"
+    },
+    {
+      "name": "tree_broad_0_sick",
+      "size": [
+        32,
+        32
+      ],
+      "anchor": [
+        16,
+        30
+      ],
+      "index_sha256": "b0ad628a534d16305ce2344e9a028d251c63fb201d4d32e8577be83c5261218a",
+      "map_sha256": "b18b0f62a639db4a6578c4762b22ab6c5c74ee478731d9597a7e69ed8ef468b4"
+    },
+    {
+      "name": "tree_broad_0_dead",
+      "size": [
+        32,
+        32
+      ],
+      "anchor": [
+        16,
+        30
+      ],
+      "index_sha256": "538f76ea7c24d908ebe5edbcbb4662908b4557d69f51ff1c6891af95ba13d843",
+      "map_sha256": "fb97d5d443594429b867c80ce0e794fb55a7873097f3d707348f2857839056fe"
+    },
+    {
+      "name": "tree_broad_1_healthy",
+      "size": [
+        32,
+        32
+      ],
+      "anchor": [
+        16,
+        30
+      ],
+      "index_sha256": "71bc47aaa4200348348ce39fd9bbef2b6d60adde8f76c47520df33b22aab94e7",
+      "map_sha256": "7a72202b84b3a97bcac3169a1060b9dbd409075085572eb77e42a34427aec8e6"
+    },
+    {
+      "name": "tree_broad_1_sick",
+      "size": [
+        32,
+        32
+      ],
+      "anchor": [
+        16,
+        30
+      ],
+      "index_sha256": "57fc590ba66f25f1f6abffa2d5884d7010264f1b583cf23953d9a056d24dca30",
+      "map_sha256": "c4aa82baed1b3806f420ea5cd64ca025b64a4a11d2fc6585b36489e127c63a7b"
+    },
+    {
+      "name": "tree_broad_1_dead",
+      "size": [
+        32,
+        32
+      ],
+      "anchor": [
+        16,
+        30
+      ],
+      "index_sha256": "b56a0e60328bddc427d30a15737022c82bf0d0a8f74b5b7b5b6acde39d39e799",
+      "map_sha256": "5dc6fcc3e738bb84c0128f0cb544b14f5e3425f7ed74bebc8b8a479fd5e59665"
+    },
+    {
+      "name": "tree_narrow_0_healthy",
+      "size": [
+        16,
+        32
+      ],
+      "anchor": [
+        8,
+        30
+      ],
+      "index_sha256": "68411b5502fe91d8997b7417fef3a28b8d4808706e9df00ff9c46ffb53277c5e",
+      "map_sha256": "5396222befd9192436aae339e5a0a6b9a5083e30a14cb075c6f67199de22e6b9"
+    },
+    {
+      "name": "tree_narrow_0_sick",
+      "size": [
+        16,
+        32
+      ],
+      "anchor": [
+        8,
+        30
+      ],
+      "index_sha256": "acc1257db961dc8252d78e0f47fc9508df533fe19412edd84b4d179dfa80340d",
+      "map_sha256": "c60404382ec0005d547a271cb82a3d98e23dbba5da99789efc06124f254f058f"
+    },
+    {
+      "name": "tree_narrow_0_dead",
+      "size": [
+        16,
+        32
+      ],
+      "anchor": [
+        8,
+        30
+      ],
+      "index_sha256": "1db599aa3aa44558ea170c7b71c03db2bf74ac5c96f83b4ab70ed511b8fb272e",
+      "map_sha256": "4deb109016e038b294adbd97b2b5db11fe0fe63b9a7ace39873e6fcc0e0a97c6"
+    },
+    {
+      "name": "tree_narrow_1_healthy",
+      "size": [
+        16,
+        32
+      ],
+      "anchor": [
+        8,
+        30
+      ],
+      "index_sha256": "ceb9261da9dddcbe15b83ef807a3c5a1f75c18dd79fc32978520591c1ecb5f02",
+      "map_sha256": "2645cdce198407af81618a46602457ce5d61dfcf76bdf49d084e53d8228ab082"
+    },
+    {
+      "name": "tree_narrow_1_sick",
+      "size": [
+        16,
+        32
+      ],
+      "anchor": [
+        8,
+        30
+      ],
+      "index_sha256": "70455220d1d3f8fb95afc53c34f53d0c96127f33c7199080d466fed839bf7732",
+      "map_sha256": "76739a671e7daeb24fd8e57eb0ccbd0b5f256de52ab73474cad8b23214f4b8eb"
+    },
+    {
+      "name": "tree_narrow_1_dead",
+      "size": [
+        16,
+        32
+      ],
+      "anchor": [
+        8,
+        30
+      ],
+      "index_sha256": "d389f5806c8c40d12d66cc46eb111bede474771d455834213b3d3db7ac9670d1",
+      "map_sha256": "1a0725a2ae20b612a05f4be2e98059cb058ceaeb642190d85e5742a811dc10ff"
+    }
+  ],
+  "protected_art": {
+    "protected_object_sheets": 36,
+    "protected_scalar_arrays": [
+      "appearance_mark_tiles",
+      "appearance_palettes",
+      "appearance_ui_tiles",
+      "bloomfx_frame_pal",
+      "forestlandmark_frame_pal",
+      "hud_tiles",
+      "huditems_frame_pal",
+      "icon32_exact_pal",
+      "icon32_frame_pal",
+      "interactivechest_frame_pal",
+      "interactiveentry_frame_pal",
+      "items_frame_pal",
+      "lift_frame_pal",
+      "pal_bg",
+      "pal_face",
+      "pal_obj",
+      "pick32_frame_pal",
+      "sheet_huditems_tiles",
+      "shield_frame_pal",
+      "title_bitmap"
+    ],
+    "forest_refinement": {
+      "changed_old_metatiles": [
+        "MOSS1",
+        "MOSS2",
+        "MOSS_BLIGHT2",
+        "MOSS_FLOWERS2",
+        "MOSS_FLOWERS",
+        "TALL_GRASS",
+        "MOSS_SHADE",
+        "PATH_EDGE_N",
+        "BLIGHT_POOL",
+        "LANTERN_POST",
+        "FENCE",
+        "LOG",
+        "BRIDGE",
+        "BRIDGE_V",
+        "THORN",
+        "STUMP",
+        "ROCK",
+        "PILLAR",
+        "RUIN_WALL",
+        "STATUE",
+        "WATER",
+        "WATER_1",
+        "WATER_2",
+        "WATER_3",
+        "WATER_4",
+        "WATER_5",
+        "WATER_6",
+        "WATER_7",
+        "WATER_8",
+        "WATER_9",
+        "WATER_A",
+        "WATER_B",
+        "WATER_C",
+        "WATER_D",
+        "WATER_E",
+        "WATER_F",
+        "WATER_LILY",
+        "PIT",
+        "LEDGE_S",
+        "LEDGE_N",
+        "CRACK",
+        "WEB",
+        "DOOR_LOCKED",
+        "TORCH",
+        "TORCH_LIT",
+        "CHEST",
+        "CHEST_OPEN",
+        "BONES",
+        "MOSSY_STONE",
+        "STAIRS_DOWN",
+        "BLIGHT_GROUND1",
+        "BLIGHT_GROUND2",
+        "BLIGHT_VEIN",
+        "BLIGHT_CRYSTAL",
+        "MEADOW_0",
+        "MEADOW_1",
+        "MEADOW_2",
+        "MEADOW_3",
+        "MEADOW_4",
+        "MEADOW_5",
+        "MEADOW_6",
+        "MEADOW_7",
+        "CLOVER_0",
+        "CLOVER_1",
+        "CLOVER_2",
+        "CLOVER_3",
+        "SHROOMRING_0",
+        "SHROOMRING_1",
+        "SHROOMRING_2",
+        "SHROOMRING_3",
+        "HLOG_0",
+        "HLOG_1",
+        "RAFT_0",
+        "RAFT_1",
+        "RAFT_2",
+        "RAFT_3",
+        "LEDGE_S_W",
+        "LEDGE_S_E",
+        "WATER_C1",
+        "WATER_C2",
+        "WATER_C3",
+        "WATER_C4",
+        "WATER_C5",
+        "WATER_C6",
+        "WATER_C7",
+        "WATER_C8",
+        "WATER_C9",
+        "WATER_CA",
+        "WATER_CB",
+        "WATER_CC",
+        "WATER_CD",
+        "WATER_CE",
+        "WATER_CF",
+        "ROCK2",
+        "ROCK3",
+        "BLIGHT_FLOOR2",
+        "BLIGHT_MIST",
+        "WATERFALL",
+        "WATER_FOAM",
+        "SHORE_1",
+        "SHORE_2",
+        "SHORE_3",
+        "SHORE_4",
+        "SHORE_5",
+        "SHORE_6",
+        "SHORE_7",
+        "SHORE_8",
+        "SHORE_9",
+        "SHORE_A",
+        "SHORE_B",
+        "SHORE_C",
+        "SHORE_D",
+        "SHORE_E",
+        "SHORE_F",
+        "SHORE_C1",
+        "SHORE_C2",
+        "SHORE_C3",
+        "SHORE_C4",
+        "SHORE_C5",
+        "SHORE_C6",
+        "SHORE_C7",
+        "SHORE_C8",
+        "SHORE_C9",
+        "SHORE_CA",
+        "SHORE_CB",
+        "SHORE_CC",
+        "SHORE_CD",
+        "SHORE_CE",
+        "SHORE_CF",
+        "VERGE_1",
+        "VERGE_2",
+        "VERGE_3",
+        "VERGE_4",
+        "VERGE_5",
+        "VERGE_6",
+        "VERGE_7",
+        "VERGE_8",
+        "VERGE_9",
+        "VERGE_A",
+        "VERGE_B",
+        "VERGE_C",
+        "VERGE_D",
+        "VERGE_E",
+        "VERGE_F",
+        "PEDGE_1",
+        "PEDGE_2",
+        "PEDGE_3",
+        "PEDGE_4",
+        "PEDGE_5",
+        "PEDGE_6",
+        "PEDGE_7",
+        "PEDGE_8",
+        "PEDGE_9",
+        "PEDGE_A",
+        "PEDGE_B",
+        "PEDGE_C",
+        "PEDGE_D",
+        "PEDGE_E",
+        "PEDGE_F",
+        "MOUTH_CAVE",
+        "MOUTH_HOLLOW",
+        "MOUTH_THICKET",
+        "PEDGE_C1",
+        "PEDGE_C2",
+        "PEDGE_C3",
+        "PEDGE_C4",
+        "PEDGE_C5",
+        "PEDGE_C6",
+        "PEDGE_C7",
+        "PEDGE_C8",
+        "PEDGE_C9",
+        "PEDGE_CA",
+        "PEDGE_CB",
+        "PEDGE_CC",
+        "PEDGE_CD",
+        "PEDGE_CE",
+        "PEDGE_CF",
+        "VERGE_C1",
+        "VERGE_C2",
+        "VERGE_C3",
+        "VERGE_C4",
+        "VERGE_C5",
+        "VERGE_C6",
+        "VERGE_C7",
+        "VERGE_C8",
+        "VERGE_C9",
+        "VERGE_CA",
+        "VERGE_CB",
+        "VERGE_CC",
+        "VERGE_CD",
+        "VERGE_CE",
+        "VERGE_CF",
+        "ROT_01",
+        "ROT_02",
+        "ROT_03",
+        "ROT_04",
+        "ROT_05",
+        "ROT_06",
+        "ROT_07",
+        "ROT_08",
+        "ROT_09",
+        "ROT_0A",
+        "ROT_0B",
+        "ROT_0C",
+        "ROT_0D",
+        "ROT_0E",
+        "ROT_0F",
+        "ROT_10",
+        "ROT_14",
+        "ROT_18",
+        "ROT_1C",
+        "ROT_20",
+        "ROT_21",
+        "ROT_28",
+        "ROT_29",
+        "ROT_30",
+        "ROT_38",
+        "ROT_40",
+        "ROT_41",
+        "ROT_42",
+        "ROT_43",
+        "ROT_50",
+        "ROT_60",
+        "ROT_61",
+        "ROT_70",
+        "ROT_80",
+        "ROT_82",
+        "ROT_84",
+        "ROT_86",
+        "ROT_90",
+        "ROT_94",
+        "ROT_A0",
+        "ROT_B0",
+        "ROT_C0",
+        "ROT_C2",
+        "ROT_D0",
+        "ROT_E0",
+        "ROT_F0",
+        "FOREST_ROT1",
+        "FOREST_ROT2",
+        "FOREST_ROT3",
+        "FOREST_ROT5",
+        "FOREST_ROT6",
+        "FOREST_ROT7",
+        "LEAF_LITTER",
+        "FERN_PATCH",
+        "SICK_BONES",
+        "SICK_STUMP",
+        "SICK_ROCK",
+        "FOREST_BLIGHT_PIT",
+        "FOREST_BLIGHT_VEIN0",
+        "FOREST_BLIGHT_VEIN1",
+        "FOREST_BLIGHT_VEIN2",
+        "FOREST_BLIGHT_VEIN3",
+        "FOREST_BLIGHT_VEIN4",
+        "FOREST_BLIGHT_VEIN5",
+        "FOREST_BLIGHT_VEIN6",
+        "FOREST_BLIGHT_VEIN7",
+        "SHRINE_PLATE",
+        "F2_WATER_00",
+        "F2_WATER_01",
+        "F2_WATER_02",
+        "F2_WATER_03",
+        "F2_WATER_04",
+        "F2_WATER_05",
+        "F2_WATER_06",
+        "F2_WATER_07",
+        "F2_WATER_08",
+        "F2_WATER_09",
+        "F2_WATER_0A",
+        "F2_WATER_0B",
+        "F2_WATER_0C",
+        "F2_WATER_0D",
+        "F2_WATER_0E",
+        "F2_WATER_0F",
+        "F2_WATER_10",
+        "F2_WATER_14",
+        "F2_WATER_18",
+        "F2_WATER_1C",
+        "F2_WATER_20",
+        "F2_WATER_21",
+        "F2_WATER_28",
+        "F2_WATER_29",
+        "F2_WATER_30",
+        "F2_WATER_38",
+        "F2_WATER_40",
+        "F2_WATER_41",
+        "F2_WATER_42",
+        "F2_WATER_43",
+        "F2_WATER_50",
+        "F2_WATER_60",
+        "F2_WATER_61",
+        "F2_WATER_70",
+        "F2_WATER_80",
+        "F2_WATER_82",
+        "F2_WATER_84",
+        "F2_WATER_86",
+        "F2_WATER_90",
+        "F2_WATER_94",
+        "F2_WATER_A0",
+        "F2_WATER_B0",
+        "F2_WATER_C0",
+        "F2_WATER_C2",
+        "F2_WATER_D0",
+        "F2_WATER_E0",
+        "F2_WATER_F0",
+        "F2_WATER_LILY_ISOLATED",
+        "F2_WATER_FOAM_ISOLATED"
+      ],
+      "retained_old_metatiles": [
+        "MOSS0",
+        "MOSS_BLIGHT",
+        "PATH",
+        "CANOPY",
+        "CANOPY2",
+        "CANOPY_GLINT",
+        "CANOPY_LANTERN",
+        "CANOPY_BLIGHT",
+        "CANOPY_S",
+        "CANOPY_N",
+        "TREE_TOP_NW",
+        "TREE_TOP_NE",
+        "TREE_MID_W",
+        "TREE_MID_E",
+        "TREE_TRUNK_W",
+        "TREE_TRUNK_E",
+        "BUSH",
+        "ROCK_SMALL",
+        "BOULDER",
+        "PIT_INNER",
+        "DOOR_OPEN",
+        "SPARKLE",
+        "RELIC",
+        "BLACK",
+        "BLIGHT_GROUND0",
+        "BLIGHT_FLOOR",
+        "DEAD_TREE",
+        "GTREE_0",
+        "GTREE_1",
+        "GTREE_2",
+        "GTREE_3",
+        "GTREE_4",
+        "GTREE_5",
+        "GTREE_6",
+        "GTREE_7",
+        "GTREE_8",
+        "GTREE_9",
+        "GTREE_10",
+        "GTREE_11",
+        "MEADOW_8",
+        "GBOULDER_0",
+        "GBOULDER_1",
+        "GBOULDER_2",
+        "GBOULDER_3",
+        "TREEROCK_0",
+        "TREEROCK_1",
+        "TREEROCK_2",
+        "TREEROCK_3",
+        "TREE2_0",
+        "TREE2_1",
+        "TREE2_2",
+        "TREE2_3",
+        "TREE2_4",
+        "TREE2_5",
+        "GTREE2_0",
+        "GTREE2_1",
+        "GTREE2_2",
+        "GTREE2_3",
+        "GTREE2_4",
+        "GTREE2_5",
+        "GTREE2_6",
+        "GTREE2_7",
+        "GTREE2_8",
+        "GTREE2_9",
+        "GTREE2_10",
+        "GTREE2_11",
+        "BTREE_0",
+        "BTREE_1",
+        "BTREE_2",
+        "BTREE_3",
+        "BTREE_4",
+        "BTREE_5",
+        "BTREE_6",
+        "BTREE_7",
+        "BTREE_8",
+        "BTREE_9",
+        "BTREE_10",
+        "BTREE_11",
+        "CANOPY_BLIGHT2",
+        "SPARKLE_WHITE",
+        "BLIGHT_WALL",
+        "BLIGHT_WALL2",
+        "BLIGHT_WALL_LIT",
+        "CAVE_WALL",
+        "CAVE_FACE",
+        "CAVE_FLOOR0",
+        "CAVE_FLOOR1",
+        "CAVE_PROP",
+        "CAVE_GLOW",
+        "CAVE_EXIT",
+        "CAVE_FLOOR_SWITCH",
+        "CAVE_FLOOR_LIFT",
+        "CAVE_FLOOR_CHEST",
+        "HOLLOW_WALL",
+        "HOLLOW_FACE",
+        "HOLLOW_FLOOR0",
+        "HOLLOW_FLOOR1",
+        "HOLLOW_PROP",
+        "HOLLOW_GLOW",
+        "HOLLOW_EXIT",
+        "HOLLOW_FLOOR_SWITCH",
+        "HOLLOW_FLOOR_LIFT",
+        "HOLLOW_FLOOR_CHEST",
+        "THICKET_WALL",
+        "THICKET_FACE",
+        "THICKET_FLOOR0",
+        "THICKET_FLOOR1",
+        "THICKET_PROP",
+        "THICKET_GLOW",
+        "THICKET_EXIT",
+        "THICKET_FLOOR_SWITCH",
+        "THICKET_FLOOR_LIFT",
+        "THICKET_FLOOR_CHEST",
+        "MYST_SWITCH",
+        "MYST_SWITCH_DOWN",
+        "MYST_POT",
+        "MYST_CHEST",
+        "MYST_CHEST_OPEN",
+        "MYST_SPRING",
+        "SW_FLOOR0",
+        "SW_FLOOR1",
+        "SW_FLOOR2",
+        "SW_FLOOR_SLIME",
+        "SW_WALL",
+        "SW_WALL_TOP",
+        "SW_WALL_SLIME",
+        "SW_WATER",
+        "SW_LILYPAD",
+        "SW_WATERFALL",
+        "SW_WATER_EDGE_N",
+        "SW_WATER_EDGE_S",
+        "SW_GRATE",
+        "SW_DRAIN_NW",
+        "SW_DRAIN_NE",
+        "SW_DRAIN_SW",
+        "SW_DRAIN_SE",
+        "SW_PIPE",
+        "SW_PIPE_H",
+        "SW_LADDER",
+        "SW_LADDER_DOWN",
+        "SW_HOLE",
+        "SW_TORCH_LIT",
+        "SW_CANDLES",
+        "SW_LANTERN",
+        "SW_BANNER_TEAL",
+        "SW_BANNER_RED",
+        "SW_ARCH",
+        "SW_RUBBLE",
+        "SW_COUNTER",
+        "SW_AWNING_L",
+        "SW_AWNING_R",
+        "SW_RUG_NW",
+        "SW_RUG_NE",
+        "SW_RUG_SW",
+        "SW_RUG_SE",
+        "SW_BARREL",
+        "SW_CRATE",
+        "SW_SKULL",
+        "SW_POT",
+        "SW_GOLD",
+        "SW_FLOOR_GRIME",
+        "SW_FLOOR_GRIME2",
+        "SW_FLOOR_CRACK",
+        "SW_FLOOR_CRACK2",
+        "SW_FLOOR_MOSS",
+        "SW_FLOOR_MOSS2",
+        "SW_FLOOR_PUDDLE",
+        "SW_FLOOR_BONES",
+        "SW_FLOOR_SHROOM",
+        "SW_FLOOR_DRIP",
+        "SW_WALL_CRACK",
+        "SW_WALL_MOSS",
+        "SW_WALL_CHAIN",
+        "SW_WALL_DRIP",
+        "SW_WALL_WEB",
+        "SW_WALL_WEB_R",
+        "SW_WALL_FUNGUS",
+        "SW_WALL_TALLY",
+        "SW_WALL_WINDOW",
+        "SW_WALL_SKULL",
+        "SW_WALL_RUST",
+        "SW_WALL_TOP_MOSS",
+        "SW_WATER_SCUM",
+        "SW_WATER_BUBBLE",
+        "SW_WATER_GLINT",
+        "SW_WATER_EDGE_N_MOSS",
+        "SW_WATER_EDGE_S_MOSS",
+        "SW_GLINT",
+        "SW_GLINT2",
+        "SW_GLINT3",
+        "SW_ARCH_R",
+        "SW_GRATE_R",
+        "SW_COUNTER_R",
+        "SW_FALL_0",
+        "SW_FALL_1",
+        "SW_FALL_2",
+        "SW_FALL_3",
+        "SW_FALL_4",
+        "SW_FALL_5",
+        "ROT_00",
+        "CAVE_CROWN",
+        "CAVE_EDGE_1",
+        "CAVE_EDGE_2",
+        "CAVE_EDGE_3",
+        "CAVE_EDGE_4",
+        "CAVE_EDGE_5",
+        "CAVE_EDGE_6",
+        "CAVE_EDGE_7",
+        "CAVE_EDGE_8",
+        "CAVE_EDGE_9",
+        "CAVE_EDGE_A",
+        "CAVE_EDGE_B",
+        "CAVE_EDGE_C",
+        "CAVE_EDGE_D",
+        "CAVE_EDGE_E",
+        "CAVE_EDGE_F",
+        "CAVE_SPRING",
+        "HOLLOW_CROWN",
+        "HOLLOW_EDGE_1",
+        "HOLLOW_EDGE_2",
+        "HOLLOW_EDGE_3",
+        "HOLLOW_EDGE_4",
+        "HOLLOW_EDGE_5",
+        "HOLLOW_EDGE_6",
+        "HOLLOW_EDGE_7",
+        "HOLLOW_EDGE_8",
+        "HOLLOW_EDGE_9",
+        "HOLLOW_EDGE_A",
+        "HOLLOW_EDGE_B",
+        "HOLLOW_EDGE_C",
+        "HOLLOW_EDGE_D",
+        "HOLLOW_EDGE_E",
+        "HOLLOW_EDGE_F",
+        "HOLLOW_SPRING",
+        "THICKET_CROWN",
+        "THICKET_EDGE_1",
+        "THICKET_EDGE_2",
+        "THICKET_EDGE_3",
+        "THICKET_EDGE_4",
+        "THICKET_EDGE_5",
+        "THICKET_EDGE_6",
+        "THICKET_EDGE_7",
+        "THICKET_EDGE_8",
+        "THICKET_EDGE_9",
+        "THICKET_EDGE_A",
+        "THICKET_EDGE_B",
+        "THICKET_EDGE_C",
+        "THICKET_EDGE_D",
+        "THICKET_EDGE_E",
+        "THICKET_EDGE_F",
+        "THICKET_SPRING",
+        "FOREST_ROT0",
+        "FOREST_ROT4",
+        "FOREST_CANOPY0",
+        "FOREST_CANOPY1",
+        "FOREST_CANOPY2",
+        "FOREST_CANOPY3",
+        "FOREST_CANOPY4",
+        "FOREST_CANOPY5",
+        "BIRCH_0",
+        "BIRCH_1",
+        "BIRCH_2",
+        "BIRCH_3",
+        "BIRCH_4",
+        "BIRCH_5",
+        "FIR_0",
+        "FIR_1",
+        "FIR_2",
+        "FIR_3",
+        "FIR_4",
+        "FIR_5",
+        "SICKTREE_0",
+        "SICKTREE_1",
+        "SICKTREE_2",
+        "SICKTREE_3",
+        "SICKTREE_4",
+        "SICKTREE_5",
+        "SWH_000",
+        "SWH_001",
+        "SWH_002",
+        "SWH_003",
+        "SWH_004",
+        "SWH_005",
+        "SWH_006",
+        "SWH_007",
+        "SWH_008",
+        "SWH_009",
+        "SWH_010",
+        "SWH_011",
+        "SWH_012",
+        "SWH_013",
+        "SWH_014",
+        "SWH_015",
+        "SWH_016",
+        "SWH_017",
+        "SWH_018",
+        "SWH_019",
+        "SWH_020",
+        "SWH_021",
+        "SWH_022",
+        "SWH_023",
+        "SWH_024",
+        "SWH_025",
+        "SWH_026",
+        "SWH_027",
+        "SWH_028",
+        "SWH_029",
+        "SWH_030",
+        "SWH_031",
+        "SWH_032",
+        "SWH_033",
+        "SWH_034",
+        "SWH_035",
+        "SWH_036",
+        "SWH_037",
+        "SWH_038",
+        "SWH_039",
+        "SWH_040",
+        "SWH_041",
+        "SWH_042",
+        "SWH_043",
+        "SWH_044",
+        "SWH_045",
+        "SWH_046",
+        "SWH_047",
+        "SWH_048",
+        "SWH_049",
+        "SWH_050",
+        "SWH_051",
+        "SWH_052",
+        "SWH_053",
+        "SWH_054",
+        "SWH_055",
+        "SWH_056",
+        "SWH_057",
+        "SWH_058",
+        "SWH_059",
+        "SWH_060",
+        "SWH_061",
+        "SWH_062",
+        "SWH_063",
+        "SWH_064",
+        "SWH_065",
+        "SWH_066",
+        "SWH_067",
+        "SWH_068",
+        "SWH_069",
+        "SWH_070",
+        "SWH_071",
+        "SWH_072",
+        "SWH_073",
+        "SWH_074",
+        "SWH_075",
+        "SWH_076",
+        "SWH_077",
+        "SWH_078",
+        "SWH_079",
+        "SWH_080",
+        "SWH_081",
+        "SWH_082",
+        "SWH_083",
+        "SWH_084",
+        "SWH_085",
+        "SWH_086",
+        "SWH_087",
+        "SWH_088",
+        "SWH_089",
+        "SWH_090",
+        "SWH_091",
+        "SWH_092",
+        "SWH_093",
+        "SWH_094",
+        "SWH_095",
+        "SWH_096",
+        "SWH_097",
+        "SWH_098",
+        "SWH_099",
+        "SWH_100",
+        "SWH_101",
+        "SWH_102",
+        "SWH_103",
+        "SWH_104",
+        "SWH_105",
+        "SWH_106",
+        "SWH_107",
+        "SWH_108",
+        "SWH_109",
+        "SWH_110",
+        "SWH_111",
+        "SWH_112",
+        "SWH_113",
+        "SWH_114",
+        "SWH_115",
+        "SWH_116",
+        "SWH_117",
+        "SWH_118",
+        "SWH_119",
+        "SWH_120",
+        "SWH_121",
+        "SWH_122",
+        "SWH_123",
+        "SWH_124",
+        "SWH_125",
+        "SWH_126",
+        "SWH_127",
+        "SWH_128",
+        "SWH_129",
+        "SWH_130",
+        "SWH_131",
+        "SWH_132",
+        "SWH_133",
+        "SWH_134",
+        "SWH_135",
+        "SWH_136",
+        "SWH_137",
+        "SWH_138",
+        "SWH_139",
+        "SWH_140",
+        "SWH_141",
+        "SWH_142",
+        "SWH_143",
+        "SWH_144",
+        "SWH_145",
+        "SWH_146",
+        "SWH_147",
+        "SWH_148",
+        "SWH_149",
+        "SWH_150",
+        "SWH_151",
+        "SWH_152",
+        "SWH_153",
+        "SWH_154",
+        "SWH_155",
+        "SWH_156",
+        "SWH_157",
+        "SWH_158",
+        "SWH_159",
+        "SWH_160",
+        "SWH_161",
+        "SWH_162",
+        "SWH_163",
+        "SWH_164",
+        "SWH_165",
+        "SWH_166",
+        "SWH_167",
+        "SWH_168",
+        "SWH_169",
+        "SWH_170",
+        "SWH_171",
+        "SWH_172",
+        "SWH_173",
+        "SWH_174",
+        "SWH_175",
+        "SWH_176",
+        "SWH_177",
+        "SWH_178",
+        "SWH_179",
+        "SWH_180",
+        "SWH_181",
+        "SWH_182",
+        "SWH_183",
+        "SWH_184",
+        "SWH_185",
+        "SWH_186",
+        "SWH_187",
+        "SWH_188",
+        "SWH_189",
+        "SWH_190",
+        "SWH_191",
+        "SWH_192",
+        "SWH_193",
+        "SWH_194",
+        "SWH_195",
+        "SWH_196",
+        "SWH_197",
+        "SWH_198",
+        "SWH_199",
+        "SWH_200",
+        "SWH_201",
+        "SWH_202",
+        "SWH_203",
+        "SWH_204",
+        "SWH_205",
+        "SWH_206",
+        "SWH_207",
+        "SWH_208",
+        "SWH_209",
+        "SWH_210",
+        "SWH_211",
+        "SWH_212",
+        "SWH_213",
+        "SWH_214",
+        "SWH_215",
+        "SWH_216",
+        "SWH_217",
+        "SWH_218",
+        "SWH_219",
+        "SWH_220",
+        "SWH_221",
+        "SWH_222",
+        "SWH_223",
+        "SWH_224",
+        "SWH_225",
+        "SWH_226",
+        "SWH_227",
+        "SWH_228",
+        "SWH_229",
+        "SWH_230",
+        "SWH_231",
+        "SWH_232",
+        "SWH_233",
+        "SWH_234",
+        "SWH_235",
+        "SWH_236",
+        "SWH_237",
+        "SWH_238",
+        "SWH_239",
+        "SWH_240",
+        "SWH_241",
+        "SWH_242",
+        "SWH_243",
+        "SWH_244",
+        "SWH_245",
+        "SWH_246",
+        "SWH_247",
+        "SWH_248",
+        "SWH_249",
+        "SWH_250",
+        "SWH_251",
+        "SWH_252",
+        "SWH_253",
+        "SWH_254",
+        "SWH_255",
+        "SWH_256",
+        "SWH_257",
+        "SWH_258",
+        "SWH_259",
+        "SWH_260",
+        "SWH_261",
+        "SWH_262",
+        "SWH_263",
+        "SWH_264",
+        "SWH_265",
+        "SWH_266",
+        "SWH_267",
+        "SWH_268",
+        "SWH_269",
+        "SWH_270",
+        "SWH_271",
+        "SWH_272",
+        "SWH_273",
+        "SWH_274",
+        "SWH_275",
+        "SWH_276",
+        "SWH_277",
+        "SWH_278",
+        "SWH_279",
+        "SWH_280",
+        "SWH_281",
+        "SWH_282",
+        "SWH_283",
+        "SWH_284",
+        "SWH_285",
+        "SWH_286",
+        "SWH_287",
+        "SWH_288",
+        "SWH_289",
+        "SWH_290",
+        "SWH_291",
+        "SWH_292",
+        "SWH_293",
+        "SWH_294",
+        "SWH_295",
+        "SWH_296",
+        "SWH_297",
+        "SWH_298",
+        "SWH_299",
+        "SWH_300",
+        "SWH_301",
+        "SWH_302",
+        "SWH_303",
+        "SWH_304",
+        "SWH_305",
+        "SWH_306",
+        "SWH_307",
+        "SWH_308",
+        "SWH_309",
+        "SWH_310",
+        "SWH_311",
+        "SWH_312",
+        "SWH_313",
+        "SWH_314",
+        "SWH_315",
+        "SWH_316",
+        "SWH_317",
+        "SWH_318",
+        "SWH_319",
+        "SWH_320",
+        "SWH_321",
+        "SWH_322",
+        "SWH_323",
+        "SWH_324",
+        "SWH_325",
+        "SWH_326",
+        "SWH_327",
+        "SWH_328",
+        "SWH_329",
+        "SWH_330",
+        "SWH_331",
+        "SWH_332",
+        "SWH_333",
+        "SWH_334",
+        "SWH_335",
+        "SWH_336",
+        "SWH_337",
+        "SWH_338",
+        "SWH_339",
+        "SWH_340",
+        "SWH_341",
+        "SWH_342",
+        "SWH_343",
+        "SWH_344",
+        "SWH_345",
+        "SWH_346",
+        "SWH_347",
+        "SWH_348",
+        "SWH_349",
+        "SWH_350",
+        "SWH_351",
+        "SWH_352",
+        "SWH_353",
+        "SWH_354",
+        "SWH_355",
+        "SWH_356",
+        "SWH_357",
+        "SWH_358",
+        "SWH_359",
+        "SWH_360",
+        "SWH_361",
+        "SWH_362",
+        "SWH_363",
+        "SWH_364",
+        "SWH_365",
+        "SWH_366",
+        "SWH_367",
+        "SWH_368",
+        "SWH_369",
+        "FOREST_BLIGHT_DEAD_TREE",
+        "FOREST_BLIGHT_TREE0",
+        "FOREST_BLIGHT_TREE1",
+        "FOREST_BLIGHT_TREE2",
+        "FOREST_BLIGHT_TREE3",
+        "FOREST_BLIGHT_TREE4",
+        "FOREST_BLIGHT_TREE5",
+        "SWH_F_G_00_00",
+        "SWH_F_G_01_00",
+        "SWH_F_G_02_00",
+        "SWH_F_G_03_00",
+        "SWH_F_G_04_00",
+        "SWH_F_G_05_00",
+        "SWH_F_G_06_00",
+        "SWH_F_G_07_00",
+        "SWH_F_G_08_00",
+        "SWH_F_G_09_00",
+        "SWH_F_G_10_00",
+        "SWH_F_G_11_00",
+        "SWH_F_G_12_00",
+        "SWH_F_G_13_00",
+        "SWH_F_G_14_00",
+        "SWH_F_G_15_00",
+        "SWH_F_G_16_00",
+        "SWH_F_G_17_00",
+        "SWH_F_G_18_00",
+        "SWH_F_G_19_00",
+        "SWH_F_G_20_00",
+        "SWH_F_G_21_00",
+        "SWH_F_G_22_00",
+        "SWH_F_G_23_00",
+        "SWH_F_G_24_00",
+        "SWH_F_G_25_00",
+        "SWH_F_G_26_00",
+        "SWH_F_G_27_00",
+        "SWH_F_G_28_00",
+        "SWH_F_G_29_00",
+        "SWH_F_G_00_01",
+        "SWH_F_G_01_01",
+        "SWH_F_G_02_01",
+        "SWH_F_G_03_01",
+        "SWH_F_G_04_01",
+        "SWH_F_G_05_01",
+        "SWH_F_G_06_01",
+        "SWH_F_G_07_01",
+        "SWH_F_G_08_01",
+        "SWH_F_G_09_01",
+        "SWH_F_G_10_01",
+        "SWH_F_G_11_01",
+        "SWH_F_G_12_01",
+        "SWH_F_G_13_01",
+        "SWH_F_G_14_01",
+        "SWH_F_G_15_01",
+        "SWH_F_G_16_01",
+        "SWH_F_G_17_01",
+        "SWH_F_G_18_01",
+        "SWH_F_G_19_01",
+        "SWH_F_G_20_01",
+        "SWH_F_G_21_01",
+        "SWH_F_G_22_01",
+        "SWH_F_G_23_01",
+        "SWH_F_G_24_01",
+        "SWH_F_G_25_01",
+        "SWH_F_G_26_01",
+        "SWH_F_G_27_01",
+        "SWH_F_G_28_01",
+        "SWH_F_G_29_01",
+        "SWH_F_G_00_02",
+        "SWH_F_G_01_02",
+        "SWH_F_G_02_02",
+        "SWH_F_G_03_02",
+        "SWH_F_G_04_02",
+        "SWH_F_G_05_02",
+        "SWH_F_G_06_02",
+        "SWH_F_G_07_02",
+        "SWH_F_G_08_02",
+        "SWH_F_G_09_02",
+        "SWH_F_G_10_02",
+        "SWH_F_G_11_02",
+        "SWH_F_G_12_02",
+        "SWH_F_G_13_02",
+        "SWH_F_G_14_02",
+        "SWH_F_G_15_02",
+        "SWH_F_G_16_02",
+        "SWH_F_G_17_02",
+        "SWH_F_G_18_02",
+        "SWH_F_G_19_02",
+        "SWH_F_G_20_02",
+        "SWH_F_G_21_02",
+        "SWH_F_G_22_02",
+        "SWH_F_G_23_02",
+        "SWH_F_G_24_02",
+        "SWH_F_G_25_02",
+        "SWH_F_G_26_02",
+        "SWH_F_G_27_02",
+        "SWH_F_G_28_02",
+        "SWH_F_G_29_02",
+        "SWH_F_G_00_03",
+        "SWH_F_G_01_03",
+        "SWH_F_G_02_03",
+        "SWH_F_G_03_03",
+        "SWH_F_G_04_03",
+        "SWH_F_G_05_03",
+        "SWH_F_G_06_03",
+        "SWH_F_G_07_03",
+        "SWH_F_G_08_03",
+        "SWH_F_G_09_03",
+        "SWH_F_G_10_03",
+        "SWH_F_G_11_03",
+        "SWH_F_G_12_03",
+        "SWH_F_G_13_03",
+        "SWH_F_G_14_03",
+        "SWH_F_G_15_03",
+        "SWH_F_G_16_03",
+        "SWH_F_G_17_03",
+        "SWH_F_G_18_03",
+        "SWH_F_G_19_03",
+        "SWH_F_G_20_03",
+        "SWH_F_G_21_03",
+        "SWH_F_G_22_03",
+        "SWH_F_G_23_03",
+        "SWH_F_G_24_03",
+        "SWH_F_G_25_03",
+        "SWH_F_G_26_03",
+        "SWH_F_G_27_03",
+        "SWH_F_G_28_03",
+        "SWH_F_G_29_03",
+        "SWH_F_G_00_04",
+        "SWH_F_G_01_04",
+        "SWH_F_G_02_04",
+        "SWH_F_G_03_04",
+        "SWH_F_G_04_04",
+        "SWH_F_G_05_04",
+        "SWH_F_G_06_04",
+        "SWH_F_G_07_04",
+        "SWH_F_G_08_04",
+        "SWH_F_G_09_04",
+        "SWH_F_G_10_04",
+        "SWH_F_G_11_04",
+        "SWH_F_G_12_04",
+        "SWH_F_G_13_04",
+        "SWH_F_G_14_04",
+        "SWH_F_G_15_04",
+        "SWH_F_G_16_04",
+        "SWH_F_G_17_04",
+        "SWH_F_G_18_04",
+        "SWH_F_G_19_04",
+        "SWH_F_G_20_04",
+        "SWH_F_G_21_04",
+        "SWH_F_G_22_04",
+        "SWH_F_G_23_04",
+        "SWH_F_G_24_04",
+        "SWH_F_G_25_04",
+        "SWH_F_G_26_04",
+        "SWH_F_G_27_04",
+        "SWH_F_G_28_04",
+        "SWH_F_G_29_04",
+        "SWH_F_G_00_05",
+        "SWH_F_G_01_05",
+        "SWH_F_G_02_05",
+        "SWH_F_G_03_05",
+        "SWH_F_G_04_05",
+        "SWH_F_G_05_05",
+        "SWH_F_G_06_05",
+        "SWH_F_G_07_05",
+        "SWH_F_G_08_05",
+        "SWH_F_G_09_05",
+        "SWH_F_G_10_05",
+        "SWH_F_G_11_05",
+        "SWH_F_G_12_05",
+        "SWH_F_G_13_05",
+        "SWH_F_G_14_05",
+        "SWH_F_G_15_05",
+        "SWH_F_G_16_05",
+        "SWH_F_G_17_05",
+        "SWH_F_G_18_05",
+        "SWH_F_G_19_05",
+        "SWH_F_G_20_05",
+        "SWH_F_G_21_05",
+        "SWH_F_G_22_05",
+        "SWH_F_G_23_05",
+        "SWH_F_G_24_05",
+        "SWH_F_G_25_05",
+        "SWH_F_G_26_05",
+        "SWH_F_G_27_05",
+        "SWH_F_G_28_05",
+        "SWH_F_G_29_05",
+        "SWH_F_G_00_06",
+        "SWH_F_G_01_06",
+        "SWH_F_G_02_06",
+        "SWH_F_G_03_06",
+        "SWH_F_G_04_06",
+        "SWH_F_G_05_06",
+        "SWH_F_G_06_06",
+        "SWH_F_G_07_06",
+        "SWH_F_G_08_06",
+        "SWH_F_G_09_06",
+        "SWH_F_G_10_06",
+        "SWH_F_G_11_06",
+        "SWH_F_G_12_06",
+        "SWH_F_G_13_06",
+        "SWH_F_G_14_06",
+        "SWH_F_G_15_06",
+        "SWH_F_G_16_06",
+        "SWH_F_G_17_06",
+        "SWH_F_G_18_06",
+        "SWH_F_G_19_06",
+        "SWH_F_G_20_06",
+        "SWH_F_G_21_06",
+        "SWH_F_G_22_06",
+        "SWH_F_G_23_06",
+        "SWH_F_G_24_06",
+        "SWH_F_G_25_06",
+        "SWH_F_G_26_06",
+        "SWH_F_G_27_06",
+        "SWH_F_G_28_06",
+        "SWH_F_G_29_06",
+        "SWH_F_G_00_07",
+        "SWH_F_G_01_07",
+        "SWH_F_G_02_07",
+        "SWH_F_G_03_07",
+        "SWH_F_G_04_07",
+        "SWH_F_G_05_07",
+        "SWH_F_G_06_07",
+        "SWH_F_G_07_07",
+        "SWH_F_G_08_07",
+        "SWH_F_G_09_07",
+        "SWH_F_G_10_07",
+        "SWH_F_G_11_07",
+        "SWH_F_G_12_07",
+        "SWH_F_G_13_07",
+        "SWH_F_G_14_07",
+        "SWH_F_G_15_07",
+        "SWH_F_G_16_07",
+        "SWH_F_G_17_07",
+        "SWH_F_G_18_07",
+        "SWH_F_G_19_07",
+        "SWH_F_G_20_07",
+        "SWH_F_G_21_07",
+        "SWH_F_G_22_07",
+        "SWH_F_G_23_07",
+        "SWH_F_G_24_07",
+        "SWH_F_G_25_07",
+        "SWH_F_G_26_07",
+        "SWH_F_G_27_07",
+        "SWH_F_G_28_07",
+        "SWH_F_G_29_07",
+        "SWH_F_G_00_08",
+        "SWH_F_G_01_08",
+        "SWH_F_G_02_08",
+        "SWH_F_G_03_08",
+        "SWH_F_G_04_08",
+        "SWH_F_G_05_08",
+        "SWH_F_G_06_08",
+        "SWH_F_G_07_08",
+        "SWH_F_G_08_08",
+        "SWH_F_G_09_08",
+        "SWH_F_G_10_08",
+        "SWH_F_G_11_08",
+        "SWH_F_G_12_08",
+        "SWH_F_G_13_08",
+        "SWH_F_G_14_08",
+        "SWH_F_G_15_08",
+        "SWH_F_G_16_08",
+        "SWH_F_G_17_08",
+        "SWH_F_G_18_08",
+        "SWH_F_G_19_08",
+        "SWH_F_G_20_08",
+        "SWH_F_G_21_08",
+        "SWH_F_G_22_08",
+        "SWH_F_G_23_08",
+        "SWH_F_G_24_08",
+        "SWH_F_G_25_08",
+        "SWH_F_G_26_08",
+        "SWH_F_G_27_08",
+        "SWH_F_G_28_08",
+        "SWH_F_G_29_08",
+        "SWH_F_G_00_09",
+        "SWH_F_G_01_09",
+        "SWH_F_G_02_09",
+        "SWH_F_G_03_09",
+        "SWH_F_G_04_09",
+        "SWH_F_G_05_09",
+        "SWH_F_G_06_09",
+        "SWH_F_G_07_09",
+        "SWH_F_G_08_09",
+        "SWH_F_G_09_09",
+        "SWH_F_G_10_09",
+        "SWH_F_G_11_09",
+        "SWH_F_G_12_09",
+        "SWH_F_G_13_09",
+        "SWH_F_G_14_09",
+        "SWH_F_G_15_09",
+        "SWH_F_G_16_09",
+        "SWH_F_G_17_09",
+        "SWH_F_G_18_09",
+        "SWH_F_G_19_09",
+        "SWH_F_G_20_09",
+        "SWH_F_G_21_09",
+        "SWH_F_G_22_09",
+        "SWH_F_G_23_09",
+        "SWH_F_G_24_09",
+        "SWH_F_G_25_09",
+        "SWH_F_G_26_09",
+        "SWH_F_G_27_09",
+        "SWH_F_G_28_09",
+        "SWH_F_G_29_09",
+        "SWH_F_G_00_10",
+        "SWH_F_G_01_10",
+        "SWH_F_G_02_10",
+        "SWH_F_G_03_10",
+        "SWH_F_G_04_10",
+        "SWH_F_G_05_10",
+        "SWH_F_G_06_10",
+        "SWH_F_G_07_10",
+        "SWH_F_G_08_10",
+        "SWH_F_G_09_10",
+        "SWH_F_G_10_10",
+        "SWH_F_G_11_10",
+        "SWH_F_G_12_10",
+        "SWH_F_G_13_10",
+        "SWH_F_G_14_10",
+        "SWH_F_G_15_10",
+        "SWH_F_G_16_10",
+        "SWH_F_G_17_10",
+        "SWH_F_G_18_10",
+        "SWH_F_G_19_10",
+        "SWH_F_G_20_10",
+        "SWH_F_G_21_10",
+        "SWH_F_G_22_10",
+        "SWH_F_G_23_10",
+        "SWH_F_G_24_10",
+        "SWH_F_G_25_10",
+        "SWH_F_G_26_10",
+        "SWH_F_G_27_10",
+        "SWH_F_G_28_10",
+        "SWH_F_G_29_10",
+        "SWH_F_G_00_11",
+        "SWH_F_G_01_11",
+        "SWH_F_G_02_11",
+        "SWH_F_G_03_11",
+        "SWH_F_G_04_11",
+        "SWH_F_G_05_11",
+        "SWH_F_G_06_11",
+        "SWH_F_G_07_11",
+        "SWH_F_G_08_11",
+        "SWH_F_G_09_11",
+        "SWH_F_G_10_11",
+        "SWH_F_G_11_11",
+        "SWH_F_G_12_11",
+        "SWH_F_G_13_11",
+        "SWH_F_G_14_11",
+        "SWH_F_G_15_11",
+        "SWH_F_G_16_11",
+        "SWH_F_G_17_11",
+        "SWH_F_G_18_11",
+        "SWH_F_G_19_11",
+        "SWH_F_G_20_11",
+        "SWH_F_G_21_11",
+        "SWH_F_G_22_11",
+        "SWH_F_G_23_11",
+        "SWH_F_G_24_11",
+        "SWH_F_G_25_11",
+        "SWH_F_G_26_11",
+        "SWH_F_G_27_11",
+        "SWH_F_G_28_11",
+        "SWH_F_G_29_11",
+        "SWH_F_G_00_12",
+        "SWH_F_G_01_12",
+        "SWH_F_G_02_12",
+        "SWH_F_G_03_12",
+        "SWH_F_G_04_12",
+        "SWH_F_G_05_12",
+        "SWH_F_G_06_12",
+        "SWH_F_G_07_12",
+        "SWH_F_G_08_12",
+        "SWH_F_G_09_12",
+        "SWH_F_G_10_12",
+        "SWH_F_G_11_12",
+        "SWH_F_G_12_12",
+        "SWH_F_G_13_12",
+        "SWH_F_G_14_12",
+        "SWH_F_G_15_12",
+        "SWH_F_G_16_12",
+        "SWH_F_G_17_12",
+        "SWH_F_G_18_12",
+        "SWH_F_G_19_12",
+        "SWH_F_G_20_12",
+        "SWH_F_G_21_12",
+        "SWH_F_G_22_12",
+        "SWH_F_G_23_12",
+        "SWH_F_G_24_12",
+        "SWH_F_G_25_12",
+        "SWH_F_G_26_12",
+        "SWH_F_G_27_12",
+        "SWH_F_G_28_12",
+        "SWH_F_G_29_12",
+        "SWH_F_G_00_13",
+        "SWH_F_G_01_13",
+        "SWH_F_G_02_13",
+        "SWH_F_G_03_13",
+        "SWH_F_G_04_13",
+        "SWH_F_G_05_13",
+        "SWH_F_G_06_13",
+        "SWH_F_G_07_13",
+        "SWH_F_G_08_13",
+        "SWH_F_G_09_13",
+        "SWH_F_G_10_13",
+        "SWH_F_G_11_13",
+        "SWH_F_G_12_13",
+        "SWH_F_G_13_13",
+        "SWH_F_G_14_13",
+        "SWH_F_G_15_13",
+        "SWH_F_G_16_13",
+        "SWH_F_G_17_13",
+        "SWH_F_G_18_13",
+        "SWH_F_G_19_13",
+        "SWH_F_G_20_13",
+        "SWH_F_G_21_13",
+        "SWH_F_G_22_13",
+        "SWH_F_G_23_13",
+        "SWH_F_G_24_13",
+        "SWH_F_G_25_13",
+        "SWH_F_G_26_13",
+        "SWH_F_G_27_13",
+        "SWH_F_G_28_13",
+        "SWH_F_G_29_13",
+        "SWH_F_G_00_14",
+        "SWH_F_G_01_14",
+        "SWH_F_G_02_14",
+        "SWH_F_G_03_14",
+        "SWH_F_G_04_14",
+        "SWH_F_G_05_14",
+        "SWH_F_G_06_14",
+        "SWH_F_G_07_14",
+        "SWH_F_G_08_14",
+        "SWH_F_G_09_14",
+        "SWH_F_G_10_14",
+        "SWH_F_G_11_14",
+        "SWH_F_G_12_14",
+        "SWH_F_G_13_14",
+        "SWH_F_G_14_14",
+        "SWH_F_G_15_14",
+        "SWH_F_G_16_14",
+        "SWH_F_G_17_14",
+        "SWH_F_G_18_14",
+        "SWH_F_G_19_14",
+        "SWH_F_G_20_14",
+        "SWH_F_G_21_14",
+        "SWH_F_G_22_14",
+        "SWH_F_G_23_14",
+        "SWH_F_G_24_14",
+        "SWH_F_G_25_14",
+        "SWH_F_G_26_14",
+        "SWH_F_G_27_14",
+        "SWH_F_G_28_14",
+        "SWH_F_G_29_14",
+        "SWH_F_G_00_15",
+        "SWH_F_G_01_15",
+        "SWH_F_G_02_15",
+        "SWH_F_G_03_15",
+        "SWH_F_G_04_15",
+        "SWH_F_G_05_15",
+        "SWH_F_G_06_15",
+        "SWH_F_G_07_15",
+        "SWH_F_G_08_15",
+        "SWH_F_G_09_15",
+        "SWH_F_G_10_15",
+        "SWH_F_G_11_15",
+        "SWH_F_G_12_15",
+        "SWH_F_G_13_15",
+        "SWH_F_G_14_15",
+        "SWH_F_G_15_15",
+        "SWH_F_G_16_15",
+        "SWH_F_G_17_15",
+        "SWH_F_G_18_15",
+        "SWH_F_G_19_15",
+        "SWH_F_G_20_15",
+        "SWH_F_G_21_15",
+        "SWH_F_G_22_15",
+        "SWH_F_G_23_15",
+        "SWH_F_G_24_15",
+        "SWH_F_G_25_15",
+        "SWH_F_G_26_15",
+        "SWH_F_G_27_15",
+        "SWH_F_G_28_15",
+        "SWH_F_G_29_15",
+        "SWH_F_G_00_16",
+        "SWH_F_G_01_16",
+        "SWH_F_G_02_16",
+        "SWH_F_G_03_16",
+        "SWH_F_G_04_16",
+        "SWH_F_G_05_16",
+        "SWH_F_G_06_16",
+        "SWH_F_G_07_16",
+        "SWH_F_G_08_16",
+        "SWH_F_G_09_16",
+        "SWH_F_G_10_16",
+        "SWH_F_G_11_16",
+        "SWH_F_G_12_16",
+        "SWH_F_G_13_16",
+        "SWH_F_G_14_16",
+        "SWH_F_G_15_16",
+        "SWH_F_G_16_16",
+        "SWH_F_G_17_16",
+        "SWH_F_G_18_16",
+        "SWH_F_G_19_16",
+        "SWH_F_G_20_16",
+        "SWH_F_G_21_16",
+        "SWH_F_G_22_16",
+        "SWH_F_G_23_16",
+        "SWH_F_G_24_16",
+        "SWH_F_G_25_16",
+        "SWH_F_G_26_16",
+        "SWH_F_G_27_16",
+        "SWH_F_G_28_16",
+        "SWH_F_G_29_16",
+        "SWH_F_G_00_17",
+        "SWH_F_G_01_17",
+        "SWH_F_G_02_17",
+        "SWH_F_G_03_17",
+        "SWH_F_G_04_17",
+        "SWH_F_G_05_17",
+        "SWH_F_G_06_17",
+        "SWH_F_G_07_17",
+        "SWH_F_G_08_17",
+        "SWH_F_G_09_17",
+        "SWH_F_G_10_17",
+        "SWH_F_G_11_17",
+        "SWH_F_G_12_17",
+        "SWH_F_G_13_17",
+        "SWH_F_G_14_17",
+        "SWH_F_G_15_17",
+        "SWH_F_G_16_17",
+        "SWH_F_G_17_17",
+        "SWH_F_G_18_17",
+        "SWH_F_G_19_17",
+        "SWH_F_G_20_17",
+        "SWH_F_G_21_17",
+        "SWH_F_G_22_17",
+        "SWH_F_G_23_17",
+        "SWH_F_G_24_17",
+        "SWH_F_G_25_17",
+        "SWH_F_G_26_17",
+        "SWH_F_G_27_17",
+        "SWH_F_G_28_17",
+        "SWH_F_G_29_17",
+        "SWH_F_G_00_18",
+        "SWH_F_G_01_18",
+        "SWH_F_G_02_18",
+        "SWH_F_G_03_18",
+        "SWH_F_G_04_18",
+        "SWH_F_G_05_18",
+        "SWH_F_G_06_18",
+        "SWH_F_G_07_18",
+        "SWH_F_G_08_18",
+        "SWH_F_G_09_18",
+        "SWH_F_G_10_18",
+        "SWH_F_G_11_18",
+        "SWH_F_G_12_18",
+        "SWH_F_G_13_18",
+        "SWH_F_G_14_18",
+        "SWH_F_G_15_18",
+        "SWH_F_G_16_18",
+        "SWH_F_G_17_18",
+        "SWH_F_G_18_18",
+        "SWH_F_G_19_18",
+        "SWH_F_G_20_18",
+        "SWH_F_G_21_18",
+        "SWH_F_G_22_18",
+        "SWH_F_G_23_18",
+        "SWH_F_G_24_18",
+        "SWH_F_G_25_18",
+        "SWH_F_G_26_18",
+        "SWH_F_G_27_18",
+        "SWH_F_G_28_18",
+        "SWH_F_G_29_18",
+        "SWH_F_G_00_19",
+        "SWH_F_G_01_19",
+        "SWH_F_G_02_19",
+        "SWH_F_G_03_19",
+        "SWH_F_G_04_19",
+        "SWH_F_G_05_19",
+        "SWH_F_G_06_19",
+        "SWH_F_G_07_19",
+        "SWH_F_G_08_19",
+        "SWH_F_G_09_19",
+        "SWH_F_G_10_19",
+        "SWH_F_G_11_19",
+        "SWH_F_G_12_19",
+        "SWH_F_G_13_19",
+        "SWH_F_G_14_19",
+        "SWH_F_G_15_19",
+        "SWH_F_G_16_19",
+        "SWH_F_G_17_19",
+        "SWH_F_G_18_19",
+        "SWH_F_G_19_19",
+        "SWH_F_G_20_19",
+        "SWH_F_G_21_19",
+        "SWH_F_G_22_19",
+        "SWH_F_G_23_19",
+        "SWH_F_G_24_19",
+        "SWH_F_G_25_19",
+        "SWH_F_G_26_19",
+        "SWH_F_G_27_19",
+        "SWH_F_G_28_19",
+        "SWH_F_G_29_19",
+        "SWH_F_O_08_01",
+        "SWH_F_O_09_01",
+        "SWH_F_O_10_01",
+        "SWH_F_O_08_02",
+        "SWH_F_O_09_02",
+        "SWH_F_O_10_02",
+        "SWH_F_O_02_05",
+        "SWH_F_O_03_05",
+        "SWH_F_O_04_05",
+        "SWH_F_O_05_05",
+        "SWH_F_O_06_05",
+        "SWH_F_O_02_06",
+        "SWH_F_O_03_06",
+        "SWH_F_O_04_06",
+        "SWH_F_O_05_06",
+        "SWH_F_O_06_06",
+        "SWH_F_O_01_08",
+        "SWH_F_O_03_08",
+        "SWH_F_O_05_08",
+        "SWH_F_O_07_08",
+        "SWH_F_O_09_08",
+        "SWH_F_O_11_08",
+        "SWH_F_O_13_08",
+        "SWH_F_O_16_08",
+        "SWH_F_O_17_08",
+        "SWH_F_O_19_08",
+        "SWH_F_O_21_08",
+        "SWH_F_O_23_08",
+        "SWH_F_O_25_08",
+        "SWH_F_O_27_08",
+        "SWH_F_O_01_16",
+        "SWH_F_O_02_16",
+        "SWH_F_O_03_16",
+        "SWH_F_O_04_16",
+        "SWH_F_O_05_16",
+        "SWH_F_O_06_16",
+        "SWH_F_O_07_16",
+        "SWH_F_O_08_16",
+        "SWH_F_O_09_16",
+        "SWH_F_O_10_16",
+        "SWH_F_O_11_16",
+        "SWH_F_O_12_16",
+        "SWH_F_O_13_16",
+        "SWH_F_O_14_16",
+        "SWH_F_O_15_16",
+        "SWH_F_O_16_16",
+        "SWH_F_O_17_16",
+        "SWH_F_O_18_16",
+        "SWH_F_O_19_16",
+        "SWH_F_O_20_16",
+        "SWH_F_O_21_16",
+        "SWH_F_O_22_16",
+        "SWH_F_O_23_16",
+        "SWH_F_O_24_16",
+        "SWH_F_O_25_16",
+        "SWH_F_O_26_16",
+        "SWH_F_O_27_16",
+        "F2_CANOPY_0_0_00",
+        "F2_CANOPY_0_0_01",
+        "F2_CANOPY_0_0_02",
+        "F2_CANOPY_0_0_03",
+        "F2_CANOPY_0_0_04",
+        "F2_CANOPY_0_0_05",
+        "F2_CANOPY_0_0_06",
+        "F2_CANOPY_0_0_07",
+        "F2_CANOPY_0_0_08",
+        "F2_CANOPY_0_0_09",
+        "F2_CANOPY_0_0_0A",
+        "F2_CANOPY_0_0_0B",
+        "F2_CANOPY_0_0_0C",
+        "F2_CANOPY_0_0_0D",
+        "F2_CANOPY_0_0_0E",
+        "F2_CANOPY_0_0_0F",
+        "F2_CANOPY_0_0_10",
+        "F2_CANOPY_0_0_14",
+        "F2_CANOPY_0_0_18",
+        "F2_CANOPY_0_0_1C",
+        "F2_CANOPY_0_0_20",
+        "F2_CANOPY_0_0_21",
+        "F2_CANOPY_0_0_28",
+        "F2_CANOPY_0_0_29",
+        "F2_CANOPY_0_0_30",
+        "F2_CANOPY_0_0_38",
+        "F2_CANOPY_0_0_40",
+        "F2_CANOPY_0_0_41",
+        "F2_CANOPY_0_0_42",
+        "F2_CANOPY_0_0_43",
+        "F2_CANOPY_0_0_50",
+        "F2_CANOPY_0_0_60",
+        "F2_CANOPY_0_0_61",
+        "F2_CANOPY_0_0_70",
+        "F2_CANOPY_0_0_80",
+        "F2_CANOPY_0_0_82",
+        "F2_CANOPY_0_0_84",
+        "F2_CANOPY_0_0_86",
+        "F2_CANOPY_0_0_90",
+        "F2_CANOPY_0_0_94",
+        "F2_CANOPY_0_0_A0",
+        "F2_CANOPY_0_0_B0",
+        "F2_CANOPY_0_0_C0",
+        "F2_CANOPY_0_0_C2",
+        "F2_CANOPY_0_0_D0",
+        "F2_CANOPY_0_0_E0",
+        "F2_CANOPY_0_0_F0",
+        "F2_CANOPY_0_1_00",
+        "F2_CANOPY_0_1_01",
+        "F2_CANOPY_0_1_02",
+        "F2_CANOPY_0_1_03",
+        "F2_CANOPY_0_1_04",
+        "F2_CANOPY_0_1_05",
+        "F2_CANOPY_0_1_06",
+        "F2_CANOPY_0_1_07",
+        "F2_CANOPY_0_1_08",
+        "F2_CANOPY_0_1_09",
+        "F2_CANOPY_0_1_0A",
+        "F2_CANOPY_0_1_0B",
+        "F2_CANOPY_0_1_0C",
+        "F2_CANOPY_0_1_0D",
+        "F2_CANOPY_0_1_0E",
+        "F2_CANOPY_0_1_0F",
+        "F2_CANOPY_0_1_10",
+        "F2_CANOPY_0_1_14",
+        "F2_CANOPY_0_1_18",
+        "F2_CANOPY_0_1_1C",
+        "F2_CANOPY_0_1_20",
+        "F2_CANOPY_0_1_21",
+        "F2_CANOPY_0_1_28",
+        "F2_CANOPY_0_1_29",
+        "F2_CANOPY_0_1_30",
+        "F2_CANOPY_0_1_38",
+        "F2_CANOPY_0_1_40",
+        "F2_CANOPY_0_1_41",
+        "F2_CANOPY_0_1_42",
+        "F2_CANOPY_0_1_43",
+        "F2_CANOPY_0_1_50",
+        "F2_CANOPY_0_1_60",
+        "F2_CANOPY_0_1_61",
+        "F2_CANOPY_0_1_70",
+        "F2_CANOPY_0_1_80",
+        "F2_CANOPY_0_1_82",
+        "F2_CANOPY_0_1_84",
+        "F2_CANOPY_0_1_86",
+        "F2_CANOPY_0_1_90",
+        "F2_CANOPY_0_1_94",
+        "F2_CANOPY_0_1_A0",
+        "F2_CANOPY_0_1_B0",
+        "F2_CANOPY_0_1_C0",
+        "F2_CANOPY_0_1_C2",
+        "F2_CANOPY_0_1_D0",
+        "F2_CANOPY_0_1_E0",
+        "F2_CANOPY_0_1_F0",
+        "F2_CANOPY_0_2_00",
+        "F2_CANOPY_0_2_01",
+        "F2_CANOPY_0_2_02",
+        "F2_CANOPY_0_2_03",
+        "F2_CANOPY_0_2_04",
+        "F2_CANOPY_0_2_05",
+        "F2_CANOPY_0_2_06",
+        "F2_CANOPY_0_2_07",
+        "F2_CANOPY_0_2_08",
+        "F2_CANOPY_0_2_09",
+        "F2_CANOPY_0_2_0A",
+        "F2_CANOPY_0_2_0B",
+        "F2_CANOPY_0_2_0C",
+        "F2_CANOPY_0_2_0D",
+        "F2_CANOPY_0_2_0E",
+        "F2_CANOPY_0_2_0F",
+        "F2_CANOPY_0_2_10",
+        "F2_CANOPY_0_2_14",
+        "F2_CANOPY_0_2_18",
+        "F2_CANOPY_0_2_1C",
+        "F2_CANOPY_0_2_20",
+        "F2_CANOPY_0_2_21",
+        "F2_CANOPY_0_2_28",
+        "F2_CANOPY_0_2_29",
+        "F2_CANOPY_0_2_30",
+        "F2_CANOPY_0_2_38",
+        "F2_CANOPY_0_2_40",
+        "F2_CANOPY_0_2_41",
+        "F2_CANOPY_0_2_42",
+        "F2_CANOPY_0_2_43",
+        "F2_CANOPY_0_2_50",
+        "F2_CANOPY_0_2_60",
+        "F2_CANOPY_0_2_61",
+        "F2_CANOPY_0_2_70",
+        "F2_CANOPY_0_2_80",
+        "F2_CANOPY_0_2_82",
+        "F2_CANOPY_0_2_84",
+        "F2_CANOPY_0_2_86",
+        "F2_CANOPY_0_2_90",
+        "F2_CANOPY_0_2_94",
+        "F2_CANOPY_0_2_A0",
+        "F2_CANOPY_0_2_B0",
+        "F2_CANOPY_0_2_C0",
+        "F2_CANOPY_0_2_C2",
+        "F2_CANOPY_0_2_D0",
+        "F2_CANOPY_0_2_E0",
+        "F2_CANOPY_0_2_F0",
+        "F2_CANOPY_0_3_00",
+        "F2_CANOPY_0_3_01",
+        "F2_CANOPY_0_3_02",
+        "F2_CANOPY_0_3_03",
+        "F2_CANOPY_0_3_04",
+        "F2_CANOPY_0_3_05",
+        "F2_CANOPY_0_3_06",
+        "F2_CANOPY_0_3_07",
+        "F2_CANOPY_0_3_08",
+        "F2_CANOPY_0_3_09",
+        "F2_CANOPY_0_3_0A",
+        "F2_CANOPY_0_3_0B",
+        "F2_CANOPY_0_3_0C",
+        "F2_CANOPY_0_3_0D",
+        "F2_CANOPY_0_3_0E",
+        "F2_CANOPY_0_3_0F",
+        "F2_CANOPY_0_3_10",
+        "F2_CANOPY_0_3_14",
+        "F2_CANOPY_0_3_18",
+        "F2_CANOPY_0_3_1C",
+        "F2_CANOPY_0_3_20",
+        "F2_CANOPY_0_3_21",
+        "F2_CANOPY_0_3_28",
+        "F2_CANOPY_0_3_29",
+        "F2_CANOPY_0_3_30",
+        "F2_CANOPY_0_3_38",
+        "F2_CANOPY_0_3_40",
+        "F2_CANOPY_0_3_41",
+        "F2_CANOPY_0_3_42",
+        "F2_CANOPY_0_3_43",
+        "F2_CANOPY_0_3_50",
+        "F2_CANOPY_0_3_60",
+        "F2_CANOPY_0_3_61",
+        "F2_CANOPY_0_3_70",
+        "F2_CANOPY_0_3_80",
+        "F2_CANOPY_0_3_82",
+        "F2_CANOPY_0_3_84",
+        "F2_CANOPY_0_3_86",
+        "F2_CANOPY_0_3_90",
+        "F2_CANOPY_0_3_94",
+        "F2_CANOPY_0_3_A0",
+        "F2_CANOPY_0_3_B0",
+        "F2_CANOPY_0_3_C0",
+        "F2_CANOPY_0_3_C2",
+        "F2_CANOPY_0_3_D0",
+        "F2_CANOPY_0_3_E0",
+        "F2_CANOPY_0_3_F0",
+        "F2_FRINGE_0_1",
+        "F2_FRINGE_0_2",
+        "F2_FRINGE_0_3",
+        "F2_FRINGE_0_4",
+        "F2_FRINGE_0_5",
+        "F2_FRINGE_0_6",
+        "F2_FRINGE_0_7",
+        "F2_FRINGE_0_8",
+        "F2_FRINGE_0_9",
+        "F2_FRINGE_0_A",
+        "F2_FRINGE_0_B",
+        "F2_FRINGE_0_C",
+        "F2_FRINGE_0_D",
+        "F2_FRINGE_0_E",
+        "F2_FRINGE_0_F",
+        "F2_CANOPY_1_0_00",
+        "F2_CANOPY_1_0_01",
+        "F2_CANOPY_1_0_02",
+        "F2_CANOPY_1_0_03",
+        "F2_CANOPY_1_0_04",
+        "F2_CANOPY_1_0_05",
+        "F2_CANOPY_1_0_06",
+        "F2_CANOPY_1_0_07",
+        "F2_CANOPY_1_0_08",
+        "F2_CANOPY_1_0_09",
+        "F2_CANOPY_1_0_0A",
+        "F2_CANOPY_1_0_0B",
+        "F2_CANOPY_1_0_0C",
+        "F2_CANOPY_1_0_0D",
+        "F2_CANOPY_1_0_0E",
+        "F2_CANOPY_1_0_0F",
+        "F2_CANOPY_1_0_10",
+        "F2_CANOPY_1_0_14",
+        "F2_CANOPY_1_0_18",
+        "F2_CANOPY_1_0_1C",
+        "F2_CANOPY_1_0_20",
+        "F2_CANOPY_1_0_21",
+        "F2_CANOPY_1_0_28",
+        "F2_CANOPY_1_0_29",
+        "F2_CANOPY_1_0_30",
+        "F2_CANOPY_1_0_38",
+        "F2_CANOPY_1_0_40",
+        "F2_CANOPY_1_0_41",
+        "F2_CANOPY_1_0_42",
+        "F2_CANOPY_1_0_43",
+        "F2_CANOPY_1_0_50",
+        "F2_CANOPY_1_0_60",
+        "F2_CANOPY_1_0_61",
+        "F2_CANOPY_1_0_70",
+        "F2_CANOPY_1_0_80",
+        "F2_CANOPY_1_0_82",
+        "F2_CANOPY_1_0_84",
+        "F2_CANOPY_1_0_86",
+        "F2_CANOPY_1_0_90",
+        "F2_CANOPY_1_0_94",
+        "F2_CANOPY_1_0_A0",
+        "F2_CANOPY_1_0_B0",
+        "F2_CANOPY_1_0_C0",
+        "F2_CANOPY_1_0_C2",
+        "F2_CANOPY_1_0_D0",
+        "F2_CANOPY_1_0_E0",
+        "F2_CANOPY_1_0_F0",
+        "F2_CANOPY_1_1_00",
+        "F2_CANOPY_1_1_01",
+        "F2_CANOPY_1_1_02",
+        "F2_CANOPY_1_1_03",
+        "F2_CANOPY_1_1_04",
+        "F2_CANOPY_1_1_05",
+        "F2_CANOPY_1_1_06",
+        "F2_CANOPY_1_1_07",
+        "F2_CANOPY_1_1_08",
+        "F2_CANOPY_1_1_09",
+        "F2_CANOPY_1_1_0A",
+        "F2_CANOPY_1_1_0B",
+        "F2_CANOPY_1_1_0C",
+        "F2_CANOPY_1_1_0D",
+        "F2_CANOPY_1_1_0E",
+        "F2_CANOPY_1_1_0F",
+        "F2_CANOPY_1_1_10",
+        "F2_CANOPY_1_1_14",
+        "F2_CANOPY_1_1_18",
+        "F2_CANOPY_1_1_1C",
+        "F2_CANOPY_1_1_20",
+        "F2_CANOPY_1_1_21",
+        "F2_CANOPY_1_1_28",
+        "F2_CANOPY_1_1_29",
+        "F2_CANOPY_1_1_30",
+        "F2_CANOPY_1_1_38",
+        "F2_CANOPY_1_1_40",
+        "F2_CANOPY_1_1_41",
+        "F2_CANOPY_1_1_42",
+        "F2_CANOPY_1_1_43",
+        "F2_CANOPY_1_1_50",
+        "F2_CANOPY_1_1_60",
+        "F2_CANOPY_1_1_61",
+        "F2_CANOPY_1_1_70",
+        "F2_CANOPY_1_1_80",
+        "F2_CANOPY_1_1_82",
+        "F2_CANOPY_1_1_84",
+        "F2_CANOPY_1_1_86",
+        "F2_CANOPY_1_1_90",
+        "F2_CANOPY_1_1_94",
+        "F2_CANOPY_1_1_A0",
+        "F2_CANOPY_1_1_B0",
+        "F2_CANOPY_1_1_C0",
+        "F2_CANOPY_1_1_C2",
+        "F2_CANOPY_1_1_D0",
+        "F2_CANOPY_1_1_E0",
+        "F2_CANOPY_1_1_F0",
+        "F2_CANOPY_1_2_00",
+        "F2_CANOPY_1_2_01",
+        "F2_CANOPY_1_2_02",
+        "F2_CANOPY_1_2_03",
+        "F2_CANOPY_1_2_04",
+        "F2_CANOPY_1_2_05",
+        "F2_CANOPY_1_2_06",
+        "F2_CANOPY_1_2_07",
+        "F2_CANOPY_1_2_08",
+        "F2_CANOPY_1_2_09",
+        "F2_CANOPY_1_2_0A",
+        "F2_CANOPY_1_2_0B",
+        "F2_CANOPY_1_2_0C",
+        "F2_CANOPY_1_2_0D",
+        "F2_CANOPY_1_2_0E",
+        "F2_CANOPY_1_2_0F",
+        "F2_CANOPY_1_2_10",
+        "F2_CANOPY_1_2_14",
+        "F2_CANOPY_1_2_18",
+        "F2_CANOPY_1_2_1C",
+        "F2_CANOPY_1_2_20",
+        "F2_CANOPY_1_2_21",
+        "F2_CANOPY_1_2_28",
+        "F2_CANOPY_1_2_29",
+        "F2_CANOPY_1_2_30",
+        "F2_CANOPY_1_2_38",
+        "F2_CANOPY_1_2_40",
+        "F2_CANOPY_1_2_41",
+        "F2_CANOPY_1_2_42",
+        "F2_CANOPY_1_2_43",
+        "F2_CANOPY_1_2_50",
+        "F2_CANOPY_1_2_60",
+        "F2_CANOPY_1_2_61",
+        "F2_CANOPY_1_2_70",
+        "F2_CANOPY_1_2_80",
+        "F2_CANOPY_1_2_82",
+        "F2_CANOPY_1_2_84",
+        "F2_CANOPY_1_2_86",
+        "F2_CANOPY_1_2_90",
+        "F2_CANOPY_1_2_94",
+        "F2_CANOPY_1_2_A0",
+        "F2_CANOPY_1_2_B0",
+        "F2_CANOPY_1_2_C0",
+        "F2_CANOPY_1_2_C2",
+        "F2_CANOPY_1_2_D0",
+        "F2_CANOPY_1_2_E0",
+        "F2_CANOPY_1_2_F0",
+        "F2_CANOPY_1_3_00",
+        "F2_CANOPY_1_3_01",
+        "F2_CANOPY_1_3_02",
+        "F2_CANOPY_1_3_03",
+        "F2_CANOPY_1_3_04",
+        "F2_CANOPY_1_3_05",
+        "F2_CANOPY_1_3_06",
+        "F2_CANOPY_1_3_07",
+        "F2_CANOPY_1_3_08",
+        "F2_CANOPY_1_3_09",
+        "F2_CANOPY_1_3_0A",
+        "F2_CANOPY_1_3_0B",
+        "F2_CANOPY_1_3_0C",
+        "F2_CANOPY_1_3_0D",
+        "F2_CANOPY_1_3_0E",
+        "F2_CANOPY_1_3_0F",
+        "F2_CANOPY_1_3_10",
+        "F2_CANOPY_1_3_14",
+        "F2_CANOPY_1_3_18",
+        "F2_CANOPY_1_3_1C",
+        "F2_CANOPY_1_3_20",
+        "F2_CANOPY_1_3_21",
+        "F2_CANOPY_1_3_28",
+        "F2_CANOPY_1_3_29",
+        "F2_CANOPY_1_3_30",
+        "F2_CANOPY_1_3_38",
+        "F2_CANOPY_1_3_40",
+        "F2_CANOPY_1_3_41",
+        "F2_CANOPY_1_3_42",
+        "F2_CANOPY_1_3_43",
+        "F2_CANOPY_1_3_50",
+        "F2_CANOPY_1_3_60",
+        "F2_CANOPY_1_3_61",
+        "F2_CANOPY_1_3_70",
+        "F2_CANOPY_1_3_80",
+        "F2_CANOPY_1_3_82",
+        "F2_CANOPY_1_3_84",
+        "F2_CANOPY_1_3_86",
+        "F2_CANOPY_1_3_90",
+        "F2_CANOPY_1_3_94",
+        "F2_CANOPY_1_3_A0",
+        "F2_CANOPY_1_3_B0",
+        "F2_CANOPY_1_3_C0",
+        "F2_CANOPY_1_3_C2",
+        "F2_CANOPY_1_3_D0",
+        "F2_CANOPY_1_3_E0",
+        "F2_CANOPY_1_3_F0",
+        "F2_FRINGE_1_1",
+        "F2_FRINGE_1_2",
+        "F2_FRINGE_1_3",
+        "F2_FRINGE_1_4",
+        "F2_FRINGE_1_5",
+        "F2_FRINGE_1_6",
+        "F2_FRINGE_1_7",
+        "F2_FRINGE_1_8",
+        "F2_FRINGE_1_9",
+        "F2_FRINGE_1_A",
+        "F2_FRINGE_1_B",
+        "F2_FRINGE_1_C",
+        "F2_FRINGE_1_D",
+        "F2_FRINGE_1_E",
+        "F2_FRINGE_1_F",
+        "F2_ARCH_0",
+        "F2_ARCH_1"
+      ],
+      "new_visual_metatiles": [
+        "COHESION_DECOR_0_0",
+        "COHESION_DECOR_0_1",
+        "COHESION_DECOR_0_2",
+        "COHESION_DECOR_0_3",
+        "COHESION_DECOR_0_4",
+        "COHESION_DECOR_0_5",
+        "COHESION_DECOR_1_0",
+        "COHESION_DECOR_1_1",
+        "COHESION_DECOR_1_2",
+        "COHESION_DECOR_1_3",
+        "COHESION_DECOR_1_4",
+        "COHESION_DECOR_1_5",
+        "COHESION_PATH_0_00",
+        "COHESION_PATH_0_01",
+        "COHESION_PATH_0_02",
+        "COHESION_PATH_0_03",
+        "COHESION_PATH_0_04",
+        "COHESION_PATH_0_05",
+        "COHESION_PATH_0_06",
+        "COHESION_PATH_0_07",
+        "COHESION_PATH_0_08",
+        "COHESION_PATH_0_09",
+        "COHESION_PATH_0_0A",
+        "COHESION_PATH_0_0B",
+        "COHESION_PATH_0_0C",
+        "COHESION_PATH_0_0D",
+        "COHESION_PATH_0_0E",
+        "COHESION_PATH_0_0F",
+        "COHESION_PATH_0_10",
+        "COHESION_PATH_0_14",
+        "COHESION_PATH_0_18",
+        "COHESION_PATH_0_1C",
+        "COHESION_PATH_0_20",
+        "COHESION_PATH_0_21",
+        "COHESION_PATH_0_28",
+        "COHESION_PATH_0_29",
+        "COHESION_PATH_0_30",
+        "COHESION_PATH_0_38",
+        "COHESION_PATH_0_40",
+        "COHESION_PATH_0_41",
+        "COHESION_PATH_0_42",
+        "COHESION_PATH_0_43",
+        "COHESION_PATH_0_50",
+        "COHESION_PATH_0_60",
+        "COHESION_PATH_0_61",
+        "COHESION_PATH_0_70",
+        "COHESION_PATH_0_80",
+        "COHESION_PATH_0_82",
+        "COHESION_PATH_0_84",
+        "COHESION_PATH_0_86",
+        "COHESION_PATH_0_90",
+        "COHESION_PATH_0_94",
+        "COHESION_PATH_0_A0",
+        "COHESION_PATH_0_B0",
+        "COHESION_PATH_0_C0",
+        "COHESION_PATH_0_C2",
+        "COHESION_PATH_0_D0",
+        "COHESION_PATH_0_E0",
+        "COHESION_PATH_0_F0",
+        "COHESION_PATH_1_00",
+        "COHESION_PATH_1_01",
+        "COHESION_PATH_1_02",
+        "COHESION_PATH_1_03",
+        "COHESION_PATH_1_04",
+        "COHESION_PATH_1_05",
+        "COHESION_PATH_1_06",
+        "COHESION_PATH_1_07",
+        "COHESION_PATH_1_08",
+        "COHESION_PATH_1_09",
+        "COHESION_PATH_1_0A",
+        "COHESION_PATH_1_0B",
+        "COHESION_PATH_1_0C",
+        "COHESION_PATH_1_0D",
+        "COHESION_PATH_1_0E",
+        "COHESION_PATH_1_0F",
+        "COHESION_PATH_1_10",
+        "COHESION_PATH_1_14",
+        "COHESION_PATH_1_18",
+        "COHESION_PATH_1_1C",
+        "COHESION_PATH_1_20",
+        "COHESION_PATH_1_21",
+        "COHESION_PATH_1_28",
+        "COHESION_PATH_1_29",
+        "COHESION_PATH_1_30",
+        "COHESION_PATH_1_38",
+        "COHESION_PATH_1_40",
+        "COHESION_PATH_1_41",
+        "COHESION_PATH_1_42",
+        "COHESION_PATH_1_43",
+        "COHESION_PATH_1_50",
+        "COHESION_PATH_1_60",
+        "COHESION_PATH_1_61",
+        "COHESION_PATH_1_70",
+        "COHESION_PATH_1_80",
+        "COHESION_PATH_1_82",
+        "COHESION_PATH_1_84",
+        "COHESION_PATH_1_86",
+        "COHESION_PATH_1_90",
+        "COHESION_PATH_1_94",
+        "COHESION_PATH_1_A0",
+        "COHESION_PATH_1_B0",
+        "COHESION_PATH_1_C0",
+        "COHESION_PATH_1_C2",
+        "COHESION_PATH_1_D0",
+        "COHESION_PATH_1_E0",
+        "COHESION_PATH_1_F0"
+      ],
+      "comparison": "Resolved native RGB555/alpha pixels and all declared animation phases; retained families are not falsely claimed redrawn."
+    }
+  },
+  "captures": {
+    "manifest_sha256": "5985f2f18c22ec35e6b9a2200e052265a1749afb7f090a95bd9ca383db933075",
+    "rooms": [
+      {
+        "name": "healthy",
+        "stage": 0,
+        "views": 9,
+        "different_overlap_pixels": 14,
+        "overlap_note": "Native ambient glitter uses viewport-edge/HUD culling and per-view budgets; overlap differences are reported, not blended or painted.",
+        "walk": {
+          "frames": 168,
+          "minimum_visible_current_native_Bloom_pixels": 79,
+          "guarded_frames": 10,
+          "occluded_frames": 11,
+          "missed_logic_updates": 2,
+          "timing": "Literal intervals reported; performance comparison requires matched scenes and conditions, not old unrelated thresholds."
+        }
+      },
+      {
+        "name": "mixed",
+        "stage": 2,
+        "views": 9,
+        "different_overlap_pixels": 108,
+        "overlap_note": "Native ambient glitter uses viewport-edge/HUD culling and per-view budgets; overlap differences are reported, not blended or painted.",
+        "walk": {
+          "frames": 168,
+          "minimum_visible_current_native_Bloom_pixels": 95,
+          "guarded_frames": 5,
+          "occluded_frames": 5,
+          "missed_logic_updates": 1,
+          "timing": "Literal intervals reported; performance comparison requires matched scenes and conditions, not old unrelated thresholds."
+        }
+      },
+      {
+        "name": "deep",
+        "stage": 3,
+        "views": 9,
+        "different_overlap_pixels": 57,
+        "overlap_note": "Native ambient glitter uses viewport-edge/HUD culling and per-view budgets; overlap differences are reported, not blended or painted.",
+        "walk": {
+          "frames": 168,
+          "minimum_visible_current_native_Bloom_pixels": 90,
+          "guarded_frames": 0,
+          "occluded_frames": 7,
+          "missed_logic_updates": 0,
+          "timing": "Literal intervals reported; performance comparison requires matched scenes and conditions, not old unrelated thresholds."
+        }
+      },
+      {
+        "name": "pond",
+        "stage": 2,
+        "views": 9,
+        "different_overlap_pixels": 18,
+        "overlap_note": "Native ambient glitter uses viewport-edge/HUD culling and per-view budgets; overlap differences are reported, not blended or painted.",
+        "walk": null
+      },
+      {
+        "name": "damp-root-hollow",
+        "stage": 1,
+        "views": 9,
+        "different_overlap_pixels": 54,
+        "overlap_note": "Native ambient glitter uses viewport-edge/HUD culling and per-view budgets; overlap differences are reported, not blended or painted.",
+        "walk": null
+      },
+      {
+        "name": "dry-glade",
+        "stage": 0,
+        "views": 9,
+        "different_overlap_pixels": 108,
+        "overlap_note": "Native ambient glitter uses viewport-edge/HUD culling and per-view budgets; overlap differences are reported, not blended or painted.",
+        "walk": null
+      },
+      {
+        "name": "heart-arena",
+        "stage": 3,
+        "views": 9,
+        "different_overlap_pixels": 15,
+        "overlap_note": "Native ambient glitter uses viewport-edge/HUD culling and per-view budgets; overlap differences are reported, not blended or painted.",
+        "walk": null
+      },
+      {
+        "name": "brook-crossing",
+        "stage": 1,
+        "views": 9,
+        "different_overlap_pixels": 45,
+        "overlap_note": "Native ambient glitter uses viewport-edge/HUD culling and per-view budgets; overlap differences are reported, not blended or painted.",
+        "walk": null
+      }
+    ],
+    "provenance": "Independent exact native PNG/crop/camera/hash verification; no source re-render or image repair."
+  },
+  "checks": [
+    {
+      "group": "provenance",
+      "name": "frozen ROM hash/profile match the loaded bytes",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "art/blight_reference.py matches frozen input",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "art/blight_reference_source.py matches frozen input",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "art/bloom_animations.py matches frozen input",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "art/bloom_fx.py matches frozen input",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "art/bloom_loads.py matches frozen input",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "art/clean_items.py matches frozen input",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "art/enemy_heart.py matches frozen input",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "art/enemy_studies.py matches frozen input",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "art/enemy_studies_heavy.py matches frozen input",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "art/enemy_studies_palette.py matches frozen input",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "art/enemy_studies_small.py matches frozen input",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "art/enemy_studies_soft.py matches frozen input",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "art/env_pack.py matches frozen input",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "art/faces.py matches frozen input",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "art/folk.py matches frozen input",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "art/forest_art.py matches frozen input",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "art/forest_canopy_adaptive.py matches frozen input",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "art/forest_canopy_adaptive_b.py matches frozen input",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "art/forest_canopy_adaptive_terrain.py matches frozen input",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "art/forest_canopy_emerald.py matches frozen input",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "art/forest_canopy_emerald_terrain.py matches frozen input",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "art/forest_cohesion_props.py matches frozen input",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "art/forest_cohesion_terrain.py matches frozen input",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "art/forest_cohesion_topology.py matches frozen input",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "art/forest_concepts.py matches frozen input",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "art/forest_concepts_folk.py matches frozen input",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "art/forest_concepts_props.py matches frozen input",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "art/forest_concepts_terrain.py matches frozen input",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "art/forest_concepts_v2_folk.py matches frozen input",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "art/forest_concepts_v2_props.py matches frozen input",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "art/forest_concepts_v2_terrain.py matches frozen input",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "art/forest_concepts_v2_topology.py matches frozen input",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "art/forest_concepts_v3_terrain.py matches frozen input",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "art/forest_sprites.py matches frozen input",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "art/forest_tree_study.py matches frozen input",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "art/forest_trees_terrain.py matches frozen input",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "art/healthy_reference.py matches frozen input",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "art/hero.py matches frozen input",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "art/interactive_props.py matches frozen input",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "art/interactive_tiles.py matches frozen input",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "art/items.py matches frozen input",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "art/items32.py matches frozen input",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "art/marks.py matches frozen input",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "art/monsters.py matches frozen input",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "art/pack.py matches frozen input",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "art/pack_tiles.py matches frozen input",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "art/paint.py matches frozen input",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "art/palettes.py matches frozen input",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "art/portraits.py matches frozen input",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "art/px.py matches frozen input",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "art/reboot_actors.py matches frozen input",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "art/reboot_core.py matches frozen input",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "art/reboot_items.py matches frozen input",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "art/reboot_terrain.py matches frozen input",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "art/reboot_ui.py matches frozen input",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "art/reference_assets.py matches frozen input",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "art/reference_items.py matches frozen input",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "art/rooms.py matches frozen input",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "art/sample.py matches frozen input",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "art/sewer_concepts.py matches frozen input",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "art/sewer_concepts_npcs.py matches frozen input",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "art/sewer_concepts_terrain.py matches frozen input",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "art/sewer_final.py matches frozen input",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "art/sewer_final_contracts.py matches frozen input",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "art/sewer_v3_fixtures.py matches frozen input",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "art/sprites.py matches frozen input",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "art/style.py matches frozen input",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "art/sw_cut.py matches frozen input",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "art/sw_drain.py matches frozen input",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "art/sw_folk.py matches frozen input",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "art/sw_hall.py matches frozen input",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "art/sw_paint.py matches frozen input",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "art/sw_props.py matches frozen input",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "art/sword_studies.py matches frozen input",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "art/tile_art.py matches frozen input",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "art/tiles.py matches frozen input",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "art/tiles_style.py matches frozen input",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "art/title.py matches frozen input",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "art/ui_font.py matches frozen input",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "art/ui_kit.py matches frozen input",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "art/ui_studies.py matches frozen input",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "art/wood_art.py matches frozen input",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "art/reboot_contracts.json matches frozen input",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "Makefile matches frozen input",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "gba.ld matches frozen input",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "tools/build_assets.py matches frozen input",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "src/actor.c matches frozen input",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "src/actor.h matches frozen input",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "src/ambient.c matches frozen input",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "src/ambient.h matches frozen input",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "src/appearance.c matches frozen input",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "src/appearance.h matches frozen input",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "src/boss.c matches frozen input",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "src/boss.h matches frozen input",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "src/canopy_scene.c matches frozen input",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "src/canopy_scene.h matches frozen input",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "src/crt0.s matches frozen input",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "src/enemy.c matches frozen input",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "src/enemy.h matches frozen input",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "src/forest_paths.c matches frozen input",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "src/forest_paths.h matches frozen input",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "src/forest_trees.c matches frozen input",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "src/forest_trees.h matches frozen input",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "src/game.c matches frozen input",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "src/game.h matches frozen input",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "src/gba.h matches frozen input",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "src/interactive.c matches frozen input",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "src/interactive.h matches frozen input",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "src/items.c matches frozen input",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "src/items.h matches frozen input",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "src/main.c matches frozen input",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "src/menu.c matches frozen input",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "src/menu.h matches frozen input",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "src/menu_layouts_a.c matches frozen input",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "src/menu_layouts_b.c matches frozen input",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "src/menu_studies.c matches frozen input",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "src/menu_studies.h matches frozen input",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "src/myst.c matches frozen input",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "src/myst.h matches frozen input",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "src/npc.c matches frozen input",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "src/npc.h matches frozen input",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "src/objects.c matches frozen input",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "src/objects.h matches frozen input",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "src/player.c matches frozen input",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "src/player.h matches frozen input",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "src/react.c matches frozen input",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "src/react.h matches frozen input",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "src/room.c matches frozen input",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "src/room.h matches frozen input",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "src/roomgen.c matches frozen input",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "src/roomgen.h matches frozen input",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "src/save.c matches frozen input",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "src/save.h matches frozen input",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "src/sound.c matches frozen input",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "src/sound.h matches frozen input",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "src/text.c matches frozen input",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "src/text.h matches frozen input",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "src/tree_study.c matches frozen input",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "src/tree_study.h matches frozen input",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "src/ui.c matches frozen input",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "src/ui.h matches frozen input",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "src/util.c matches frozen input",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "src/util.h matches frozen input",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "src/video.c matches frozen input",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "src/video.h matches frozen input",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "src/vwf.c matches frozen input",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "src/vwf.h matches frozen input",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "src/world.c matches frozen input",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "src/world.h matches frozen input",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "src/world.c preserves the 5x5 progression engine",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "src/world.h preserves the 5x5 progression engine",
+      "passed": true
+    },
+    {
+      "group": "native",
+      "name": "approved painter bytes remain exact",
+      "passed": true
+    },
+    {
+      "group": "native",
+      "name": "profile32 is the room-cohesion profile",
+      "passed": true
+    },
+    {
+      "group": "budget",
+      "name": "forest BG leaves map memory for the third world layer",
+      "passed": true,
+      "detail": {
+        "used": 656,
+        "limit": 768
+      }
+    },
+    {
+      "group": "budget",
+      "name": "forest palette use stays within twelve world banks",
+      "passed": true,
+      "detail": {
+        "used": 10,
+        "limit": 12
+      }
+    },
+    {
+      "group": "native",
+      "name": "approved shared RGB555 bank survives packing",
+      "passed": true
+    },
+    {
+      "group": "native",
+      "name": "tree bank is not recolored by another material pulse",
+      "passed": true
+    },
+    {
+      "group": "native",
+      "name": "all twelve native widths survive descriptor packing",
+      "passed": true
+    },
+    {
+      "group": "native",
+      "name": "native anchor_x descriptor is exact",
+      "passed": true
+    },
+    {
+      "group": "native",
+      "name": "native anchor_y descriptor is exact",
+      "passed": true
+    },
+    {
+      "group": "native",
+      "name": "native state descriptor is exact",
+      "passed": true
+    },
+    {
+      "group": "native",
+      "name": "native variety descriptor is exact",
+      "passed": true
+    },
+    {
+      "group": "native",
+      "name": "tree_broad_0_healthy preserves every native pixel and hardware flip",
+      "passed": true
+    },
+    {
+      "group": "native",
+      "name": "tree_broad_0_healthy has exact canvas, ground anchor and bank",
+      "passed": true
+    },
+    {
+      "group": "native",
+      "name": "tree_broad_0_healthy fast depth-sorting row masks equal every source alpha bit",
+      "passed": true
+    },
+    {
+      "group": "native",
+      "name": "tree_broad_0_sick preserves every native pixel and hardware flip",
+      "passed": true
+    },
+    {
+      "group": "native",
+      "name": "tree_broad_0_sick has exact canvas, ground anchor and bank",
+      "passed": true
+    },
+    {
+      "group": "native",
+      "name": "tree_broad_0_sick fast depth-sorting row masks equal every source alpha bit",
+      "passed": true
+    },
+    {
+      "group": "native",
+      "name": "tree_broad_0_dead preserves every native pixel and hardware flip",
+      "passed": true
+    },
+    {
+      "group": "native",
+      "name": "tree_broad_0_dead has exact canvas, ground anchor and bank",
+      "passed": true
+    },
+    {
+      "group": "native",
+      "name": "tree_broad_0_dead fast depth-sorting row masks equal every source alpha bit",
+      "passed": true
+    },
+    {
+      "group": "native",
+      "name": "tree_broad_1_healthy preserves every native pixel and hardware flip",
+      "passed": true
+    },
+    {
+      "group": "native",
+      "name": "tree_broad_1_healthy has exact canvas, ground anchor and bank",
+      "passed": true
+    },
+    {
+      "group": "native",
+      "name": "tree_broad_1_healthy fast depth-sorting row masks equal every source alpha bit",
+      "passed": true
+    },
+    {
+      "group": "native",
+      "name": "tree_broad_1_sick preserves every native pixel and hardware flip",
+      "passed": true
+    },
+    {
+      "group": "native",
+      "name": "tree_broad_1_sick has exact canvas, ground anchor and bank",
+      "passed": true
+    },
+    {
+      "group": "native",
+      "name": "tree_broad_1_sick fast depth-sorting row masks equal every source alpha bit",
+      "passed": true
+    },
+    {
+      "group": "native",
+      "name": "tree_broad_1_dead preserves every native pixel and hardware flip",
+      "passed": true
+    },
+    {
+      "group": "native",
+      "name": "tree_broad_1_dead has exact canvas, ground anchor and bank",
+      "passed": true
+    },
+    {
+      "group": "native",
+      "name": "tree_broad_1_dead fast depth-sorting row masks equal every source alpha bit",
+      "passed": true
+    },
+    {
+      "group": "native",
+      "name": "tree_narrow_0_healthy preserves every native pixel and hardware flip",
+      "passed": true
+    },
+    {
+      "group": "native",
+      "name": "tree_narrow_0_healthy has exact canvas, ground anchor and bank",
+      "passed": true
+    },
+    {
+      "group": "native",
+      "name": "tree_narrow_0_healthy fast depth-sorting row masks equal every source alpha bit",
+      "passed": true
+    },
+    {
+      "group": "native",
+      "name": "tree_narrow_0_sick preserves every native pixel and hardware flip",
+      "passed": true
+    },
+    {
+      "group": "native",
+      "name": "tree_narrow_0_sick has exact canvas, ground anchor and bank",
+      "passed": true
+    },
+    {
+      "group": "native",
+      "name": "tree_narrow_0_sick fast depth-sorting row masks equal every source alpha bit",
+      "passed": true
+    },
+    {
+      "group": "native",
+      "name": "tree_narrow_0_dead preserves every native pixel and hardware flip",
+      "passed": true
+    },
+    {
+      "group": "native",
+      "name": "tree_narrow_0_dead has exact canvas, ground anchor and bank",
+      "passed": true
+    },
+    {
+      "group": "native",
+      "name": "tree_narrow_0_dead fast depth-sorting row masks equal every source alpha bit",
+      "passed": true
+    },
+    {
+      "group": "native",
+      "name": "tree_narrow_1_healthy preserves every native pixel and hardware flip",
+      "passed": true
+    },
+    {
+      "group": "native",
+      "name": "tree_narrow_1_healthy has exact canvas, ground anchor and bank",
+      "passed": true
+    },
+    {
+      "group": "native",
+      "name": "tree_narrow_1_healthy fast depth-sorting row masks equal every source alpha bit",
+      "passed": true
+    },
+    {
+      "group": "native",
+      "name": "tree_narrow_1_sick preserves every native pixel and hardware flip",
+      "passed": true
+    },
+    {
+      "group": "native",
+      "name": "tree_narrow_1_sick has exact canvas, ground anchor and bank",
+      "passed": true
+    },
+    {
+      "group": "native",
+      "name": "tree_narrow_1_sick fast depth-sorting row masks equal every source alpha bit",
+      "passed": true
+    },
+    {
+      "group": "native",
+      "name": "tree_narrow_1_dead preserves every native pixel and hardware flip",
+      "passed": true
+    },
+    {
+      "group": "native",
+      "name": "tree_narrow_1_dead has exact canvas, ground anchor and bank",
+      "passed": true
+    },
+    {
+      "group": "native",
+      "name": "tree_narrow_1_dead fast depth-sorting row masks equal every source alpha bit",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "all existing metatile identifiers remain stable",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "sewer resolved tiles remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "sewer resolved tile_count remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "sewer resolved palettes remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "sewer resolved palette_count remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "sewer resolved animations remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "sewer original map entries remain exact after new forest IDs append",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "myst resolved tiles remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "myst resolved tile_count remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "myst resolved palettes remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "myst resolved palette_count remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "myst resolved animations remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "myst original map entries remain exact after new forest IDs append",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "metatile_type original physical/visual metadata prefix remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "metatile_coll original physical/visual metadata prefix remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "metatile_prop original physical/visual metadata prefix remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "metatile_glitter original physical/visual metadata prefix remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "arrow complete object sheet remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "bat complete object sheet remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "beetle complete object sheet remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "bloomfx complete object sheet remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "bloomshadow complete object sheet remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "boss complete object sheet remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "cursor complete object sheet remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "dots complete object sheet remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "face complete object sheet remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "forestlandmark complete object sheet remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "fx complete object sheet remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "gatekeeper complete object sheet remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "glitter complete object sheet remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "hero complete object sheet remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "huditems complete object sheet remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "icon32 complete object sheet remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "interactivechest complete object sheet remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "interactiveentry complete object sheet remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "items complete object sheet remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "knight complete object sheet remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "ksword complete object sheet remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "lift complete object sheet remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "marks complete object sheet remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "mouth complete object sheet remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "npc complete object sheet remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "peddler_body complete object sheet remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "peddler_head complete object sheet remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "pick32 complete object sheet remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "proj complete object sheet remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "sewerrail complete object sheet remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "shield complete object sheet remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "slime complete object sheet remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "spitter complete object sheet remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "sword complete object sheet remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "uimarks complete object sheet remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "wisp complete object sheet remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "appearance_mark_tiles protected scalar payload remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "appearance_palettes protected scalar payload remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "appearance_ui_tiles protected scalar payload remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "bloomfx_frame_pal protected scalar payload remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "forestlandmark_frame_pal protected scalar payload remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "hud_tiles protected scalar payload remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "huditems_frame_pal protected scalar payload remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "icon32_exact_pal protected scalar payload remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "icon32_frame_pal protected scalar payload remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "interactivechest_frame_pal protected scalar payload remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "interactiveentry_frame_pal protected scalar payload remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "items_frame_pal protected scalar payload remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "lift_frame_pal protected scalar payload remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "pal_bg protected scalar payload remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "pal_face protected scalar payload remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "pal_obj protected scalar payload remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "pick32_frame_pal protected scalar payload remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "sheet_huditems_tiles protected scalar payload remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "shield_frame_pal protected scalar payload remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "title_bitmap protected scalar payload remains exact",
+      "passed": true
+    },
+    {
+      "group": "scope",
+      "name": "all global BG palette bytes remain exact outside area-local forest loading",
+      "passed": true
+    },
+    {
+      "group": "art",
+      "name": "forest refinement changes actual packed terrain rather than only a screenshot",
+      "passed": true,
+      "detail": {
+        "changed": 308
+      }
+    },
+    {
+      "group": "capture",
+      "name": "real mGBA capture binds the same frozen ROM",
+      "passed": true
+    },
+    {
+      "group": "capture",
+      "name": "healthy full-room PNG has declared native dimensions/hash",
+      "passed": true
+    },
+    {
+      "group": "capture",
+      "name": "healthy camera-000-000.png is an untouched native camera PNG",
+      "passed": true
+    },
+    {
+      "group": "capture",
+      "name": "healthy camera-000-000.png pixels copied literally into mosaic",
+      "passed": true
+    },
+    {
+      "group": "capture",
+      "name": "healthy camera-000-000.png actual world planes share camera",
+      "passed": true
+    },
+    {
+      "group": "capture",
+      "name": "healthy camera-136-000.png is an untouched native camera PNG",
+      "passed": true
+    },
+    {
+      "group": "capture",
+      "name": "healthy camera-136-000.png pixels copied literally into mosaic",
+      "passed": true
+    },
+    {
+      "group": "capture",
+      "name": "healthy camera-136-000.png actual world planes share camera",
+      "passed": true
+    },
+    {
+      "group": "capture",
+      "name": "healthy camera-272-000.png is an untouched native camera PNG",
+      "passed": true
+    },
+    {
+      "group": "capture",
+      "name": "healthy camera-272-000.png pixels copied literally into mosaic",
+      "passed": true
+    },
+    {
+      "group": "capture",
+      "name": "healthy camera-272-000.png actual world planes share camera",
+      "passed": true
+    },
+    {
+      "group": "capture",
+      "name": "healthy camera-000-112.png is an untouched native camera PNG",
+      "passed": true
+    },
+    {
+      "group": "capture",
+      "name": "healthy camera-000-112.png pixels copied literally into mosaic",
+      "passed": true
+    },
+    {
+      "group": "capture",
+      "name": "healthy camera-000-112.png actual world planes share camera",
+      "passed": true
+    },
+    {
+      "group": "capture",
+      "name": "healthy camera-136-112.png is an untouched native camera PNG",
+      "passed": true
+    },
+    {
+      "group": "capture",
+      "name": "healthy camera-136-112.png pixels copied literally into mosaic",
+      "passed": true
+    },
+    {
+      "group": "capture",
+      "name": "healthy camera-136-112.png actual world planes share camera",
+      "passed": true
+    },
+    {
+      "group": "capture",
+      "name": "healthy camera-272-112.png is an untouched native camera PNG",
+      "passed": true
+    },
+    {
+      "group": "capture",
+      "name": "healthy camera-272-112.png pixels copied literally into mosaic",
+      "passed": true
+    },
+    {
+      "group": "capture",
+      "name": "healthy camera-272-112.png actual world planes share camera",
+      "passed": true
+    },
+    {
+      "group": "capture",
+      "name": "healthy camera-000-224.png is an untouched native camera PNG",
+      "passed": true
+    },
+    {
+      "group": "capture",
+      "name": "healthy camera-000-224.png pixels copied literally into mosaic",
+      "passed": true
+    },
+    {
+      "group": "capture",
+      "name": "healthy camera-000-224.png actual world planes share camera",
+      "passed": true
+    },
+    {
+      "group": "capture",
+      "name": "healthy camera-136-224.png is an untouched native camera PNG",
+      "passed": true
+    },
+    {
+      "group": "capture",
+      "name": "healthy camera-136-224.png pixels copied literally into mosaic",
+      "passed": true
+    },
+    {
+      "group": "capture",
+      "name": "healthy camera-136-224.png actual world planes share camera",
+      "passed": true
+    },
+    {
+      "group": "capture",
+      "name": "healthy camera-272-224.png is an untouched native camera PNG",
+      "passed": true
+    },
+    {
+      "group": "capture",
+      "name": "healthy camera-272-224.png pixels copied literally into mosaic",
+      "passed": true
+    },
+    {
+      "group": "capture",
+      "name": "healthy camera-272-224.png actual world planes share camera",
+      "passed": true
+    },
+    {
+      "group": "capture",
+      "name": "healthy full room uses exactly nine views and one source per pixel",
+      "passed": true
+    },
+    {
+      "group": "capture",
+      "name": "healthy actor coordinates/RNG are held through the camera fixture",
+      "passed": true
+    },
+    {
+      "group": "capture",
+      "name": "healthy native-arrival.png normal HUD evidence stays native",
+      "passed": true
+    },
+    {
+      "group": "capture",
+      "name": "healthy native-HUD.png normal HUD evidence stays native",
+      "passed": true
+    },
+    {
+      "group": "capture",
+      "name": "healthy native-HUD-north.png normal HUD evidence stays native",
+      "passed": true
+    },
+    {
+      "group": "capture",
+      "name": "healthy native-HUD-west.png normal HUD evidence stays native",
+      "passed": true
+    },
+    {
+      "group": "capture",
+      "name": "healthy native-HUD-south.png normal HUD evidence stays native",
+      "passed": true
+    },
+    {
+      "group": "walk",
+      "name": "healthy real walk source/guard/palette/scanout and native PNG pixel proof",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "group": "walk",
+      "name": "healthy visible body count agrees with complete captured sequence",
+      "passed": true,
+      "detail": {
+        "minimum": 79,
+        "frames": 168,
+        "guarded_frames": 10,
+        "occluded_frames": 11
+      }
+    },
+    {
+      "group": "timing",
+      "name": "healthy literal missed native updates are reported without historical threshold substitution",
+      "passed": true,
+      "detail": {
+        "actual_missed_updates": 2,
+        "frame_perfect_claim": false
+      }
+    },
+    {
+      "group": "capture",
+      "name": "mixed full-room PNG has declared native dimensions/hash",
+      "passed": true
+    },
+    {
+      "group": "capture",
+      "name": "mixed camera-000-000.png is an untouched native camera PNG",
+      "passed": true
+    },
+    {
+      "group": "capture",
+      "name": "mixed camera-000-000.png pixels copied literally into mosaic",
+      "passed": true
+    },
+    {
+      "group": "capture",
+      "name": "mixed camera-000-000.png actual world planes share camera",
+      "passed": true
+    },
+    {
+      "group": "capture",
+      "name": "mixed camera-136-000.png is an untouched native camera PNG",
+      "passed": true
+    },
+    {
+      "group": "capture",
+      "name": "mixed camera-136-000.png pixels copied literally into mosaic",
+      "passed": true
+    },
+    {
+      "group": "capture",
+      "name": "mixed camera-136-000.png actual world planes share camera",
+      "passed": true
+    },
+    {
+      "group": "capture",
+      "name": "mixed camera-272-000.png is an untouched native camera PNG",
+      "passed": true
+    },
+    {
+      "group": "capture",
+      "name": "mixed camera-272-000.png pixels copied literally into mosaic",
+      "passed": true
+    },
+    {
+      "group": "capture",
+      "name": "mixed camera-272-000.png actual world planes share camera",
+      "passed": true
+    },
+    {
+      "group": "capture",
+      "name": "mixed camera-000-112.png is an untouched native camera PNG",
+      "passed": true
+    },
+    {
+      "group": "capture",
+      "name": "mixed camera-000-112.png pixels copied literally into mosaic",
+      "passed": true
+    },
+    {
+      "group": "capture",
+      "name": "mixed camera-000-112.png actual world planes share camera",
+      "passed": true
+    },
+    {
+      "group": "capture",
+      "name": "mixed camera-136-112.png is an untouched native camera PNG",
+      "passed": true
+    },
+    {
+      "group": "capture",
+      "name": "mixed camera-136-112.png pixels copied literally into mosaic",
+      "passed": true
+    },
+    {
+      "group": "capture",
+      "name": "mixed camera-136-112.png actual world planes share camera",
+      "passed": true
+    },
+    {
+      "group": "capture",
+      "name": "mixed camera-272-112.png is an untouched native camera PNG",
+      "passed": true
+    },
+    {
+      "group": "capture",
+      "name": "mixed camera-272-112.png pixels copied literally into mosaic",
+      "passed": true
+    },
+    {
+      "group": "capture",
+      "name": "mixed camera-272-112.png actual world planes share camera",
+      "passed": true
+    },
+    {
+      "group": "capture",
+      "name": "mixed camera-000-224.png is an untouched native camera PNG",
+      "passed": true
+    },
+    {
+      "group": "capture",
+      "name": "mixed camera-000-224.png pixels copied literally into mosaic",
+      "passed": true
+    },
+    {
+      "group": "capture",
+      "name": "mixed camera-000-224.png actual world planes share camera",
+      "passed": true
+    },
+    {
+      "group": "capture",
+      "name": "mixed camera-136-224.png is an untouched native camera PNG",
+      "passed": true
+    },
+    {
+      "group": "capture",
+      "name": "mixed camera-136-224.png pixels copied literally into mosaic",
+      "passed": true
+    },
+    {
+      "group": "capture",
+      "name": "mixed camera-136-224.png actual world planes share camera",
+      "passed": true
+    },
+    {
+      "group": "capture",
+      "name": "mixed camera-272-224.png is an untouched native camera PNG",
+      "passed": true
+    },
+    {
+      "group": "capture",
+      "name": "mixed camera-272-224.png pixels copied literally into mosaic",
+      "passed": true
+    },
+    {
+      "group": "capture",
+      "name": "mixed camera-272-224.png actual world planes share camera",
+      "passed": true
+    },
+    {
+      "group": "capture",
+      "name": "mixed full room uses exactly nine views and one source per pixel",
+      "passed": true
+    },
+    {
+      "group": "capture",
+      "name": "mixed actor coordinates/RNG are held through the camera fixture",
+      "passed": true
+    },
+    {
+      "group": "capture",
+      "name": "mixed native-arrival.png normal HUD evidence stays native",
+      "passed": true
+    },
+    {
+      "group": "capture",
+      "name": "mixed native-HUD.png normal HUD evidence stays native",
+      "passed": true
+    },
+    {
+      "group": "capture",
+      "name": "mixed native-HUD-north.png normal HUD evidence stays native",
+      "passed": true
+    },
+    {
+      "group": "capture",
+      "name": "mixed native-HUD-west.png normal HUD evidence stays native",
+      "passed": true
+    },
+    {
+      "group": "capture",
+      "name": "mixed native-HUD-south.png normal HUD evidence stays native",
+      "passed": true
+    },
+    {
+      "group": "walk",
+      "name": "mixed real walk source/guard/palette/scanout and native PNG pixel proof",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "group": "walk",
+      "name": "mixed visible body count agrees with complete captured sequence",
+      "passed": true,
+      "detail": {
+        "minimum": 95,
+        "frames": 168,
+        "guarded_frames": 5,
+        "occluded_frames": 5
+      }
+    },
+    {
+      "group": "timing",
+      "name": "mixed literal missed native updates are reported without historical threshold substitution",
+      "passed": true,
+      "detail": {
+        "actual_missed_updates": 1,
+        "frame_perfect_claim": false
+      }
+    },
+    {
+      "group": "capture",
+      "name": "deep full-room PNG has declared native dimensions/hash",
+      "passed": true
+    },
+    {
+      "group": "capture",
+      "name": "deep camera-000-000.png is an untouched native camera PNG",
+      "passed": true
+    },
+    {
+      "group": "capture",
+      "name": "deep camera-000-000.png pixels copied literally into mosaic",
+      "passed": true
+    },
+    {
+      "group": "capture",
+      "name": "deep camera-000-000.png actual world planes share camera",
+      "passed": true
+    },
+    {
+      "group": "capture",
+      "name": "deep camera-136-000.png is an untouched native camera PNG",
+      "passed": true
+    },
+    {
+      "group": "capture",
+      "name": "deep camera-136-000.png pixels copied literally into mosaic",
+      "passed": true
+    },
+    {
+      "group": "capture",
+      "name": "deep camera-136-000.png actual world planes share camera",
+      "passed": true
+    },
+    {
+      "group": "capture",
+      "name": "deep camera-272-000.png is an untouched native camera PNG",
+      "passed": true
+    },
+    {
+      "group": "capture",
+      "name": "deep camera-272-000.png pixels copied literally into mosaic",
+      "passed": true
+    },
+    {
+      "group": "capture",
+      "name": "deep camera-272-000.png actual world planes share camera",
+      "passed": true
+    },
+    {
+      "group": "capture",
+      "name": "deep camera-000-112.png is an untouched native camera PNG",
+      "passed": true
+    },
+    {
+      "group": "capture",
+      "name": "deep camera-000-112.png pixels copied literally into mosaic",
+      "passed": true
+    },
+    {
+      "group": "capture",
+      "name": "deep camera-000-112.png actual world planes share camera",
+      "passed": true
+    },
+    {
+      "group": "capture",
+      "name": "deep camera-136-112.png is an untouched native camera PNG",
+      "passed": true
+    },
+    {
+      "group": "capture",
+      "name": "deep camera-136-112.png pixels copied literally into mosaic",
+      "passed": true
+    },
+    {
+      "group": "capture",
+      "name": "deep camera-136-112.png actual world planes share camera",
+      "passed": true
+    },
+    {
+      "group": "capture",
+      "name": "deep camera-272-112.png is an untouched native camera PNG",
+      "passed": true
+    },
+    {
+      "group": "capture",
+      "name": "deep camera-272-112.png pixels copied literally into mosaic",
+      "passed": true
+    },
+    {
+      "group": "capture",
+      "name": "deep camera-272-112.png actual world planes share camera",
+      "passed": true
+    },
+    {
+      "group": "capture",
+      "name": "deep camera-000-224.png is an untouched native camera PNG",
+      "passed": true
+    },
+    {
+      "group": "capture",
+      "name": "deep camera-000-224.png pixels copied literally into mosaic",
+      "passed": true
+    },
+    {
+      "group": "capture",
+      "name": "deep camera-000-224.png actual world planes share camera",
+      "passed": true
+    },
+    {
+      "group": "capture",
+      "name": "deep camera-136-224.png is an untouched native camera PNG",
+      "passed": true
+    },
+    {
+      "group": "capture",
+      "name": "deep camera-136-224.png pixels copied literally into mosaic",
+      "passed": true
+    },
+    {
+      "group": "capture",
+      "name": "deep camera-136-224.png actual world planes share camera",
+      "passed": true
+    },
+    {
+      "group": "capture",
+      "name": "deep camera-272-224.png is an untouched native camera PNG",
+      "passed": true
+    },
+    {
+      "group": "capture",
+      "name": "deep camera-272-224.png pixels copied literally into mosaic",
+      "passed": true
+    },
+    {
+      "group": "capture",
+      "name": "deep camera-272-224.png actual world planes share camera",
+      "passed": true
+    },
+    {
+      "group": "capture",
+      "name": "deep full room uses exactly nine views and one source per pixel",
+      "passed": true
+    },
+    {
+      "group": "capture",
+      "name": "deep actor coordinates/RNG are held through the camera fixture",
+      "passed": true
+    },
+    {
+      "group": "capture",
+      "name": "deep native-arrival.png normal HUD evidence stays native",
+      "passed": true
+    },
+    {
+      "group": "capture",
+      "name": "deep native-HUD.png normal HUD evidence stays native",
+      "passed": true
+    },
+    {
+      "group": "capture",
+      "name": "deep native-HUD-north.png normal HUD evidence stays native",
+      "passed": true
+    },
+    {
+      "group": "capture",
+      "name": "deep native-HUD-west.png normal HUD evidence stays native",
+      "passed": true
+    },
+    {
+      "group": "capture",
+      "name": "deep native-HUD-south.png normal HUD evidence stays native",
+      "passed": true
+    },
+    {
+      "group": "walk",
+      "name": "deep real walk source/guard/palette/scanout and native PNG pixel proof",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "group": "walk",
+      "name": "deep visible body count agrees with complete captured sequence",
+      "passed": true,
+      "detail": {
+        "minimum": 90,
+        "frames": 168,
+        "guarded_frames": 0,
+        "occluded_frames": 7
+      }
+    },
+    {
+      "group": "timing",
+      "name": "deep literal missed native updates are reported without historical threshold substitution",
+      "passed": true,
+      "detail": {
+        "actual_missed_updates": 0,
+        "frame_perfect_claim": false
+      }
+    },
+    {
+      "group": "capture",
+      "name": "pond full-room PNG has declared native dimensions/hash",
+      "passed": true
+    },
+    {
+      "group": "capture",
+      "name": "pond camera-000-000.png is an untouched native camera PNG",
+      "passed": true
+    },
+    {
+      "group": "capture",
+      "name": "pond camera-000-000.png pixels copied literally into mosaic",
+      "passed": true
+    },
+    {
+      "group": "capture",
+      "name": "pond camera-000-000.png actual world planes share camera",
+      "passed": true
+    },
+    {
+      "group": "capture",
+      "name": "pond camera-136-000.png is an untouched native camera PNG",
+      "passed": true
+    },
+    {
+      "group": "capture",
+      "name": "pond camera-136-000.png pixels copied literally into mosaic",
+      "passed": true
+    },
+    {
+      "group": "capture",
+      "name": "pond camera-136-000.png actual world planes share camera",
+      "passed": true
+    },
+    {
+      "group": "capture",
+      "name": "pond camera-272-000.png is an untouched native camera PNG",
+      "passed": true
+    },
+    {
+      "group": "capture",
+      "name": "pond camera-272-000.png pixels copied literally into mosaic",
+      "passed": true
+    },
+    {
+      "group": "capture",
+      "name": "pond camera-272-000.png actual world planes share camera",
+      "passed": true
+    },
+    {
+      "group": "capture",
+      "name": "pond camera-000-112.png is an untouched native camera PNG",
+      "passed": true
+    },
+    {
+      "group": "capture",
+      "name": "pond camera-000-112.png pixels copied literally into mosaic",
+      "passed": true
+    },
+    {
+      "group": "capture",
+      "name": "pond camera-000-112.png actual world planes share camera",
+      "passed": true
+    },
+    {
+      "group": "capture",
+      "name": "pond camera-136-112.png is an untouched native camera PNG",
+      "passed": true
+    },
+    {
+      "group": "capture",
+      "name": "pond camera-136-112.png pixels copied literally into mosaic",
+      "passed": true
+    },
+    {
+      "group": "capture",
+      "name": "pond camera-136-112.png actual world planes share camera",
+      "passed": true
+    },
+    {
+      "group": "capture",
+      "name": "pond camera-272-112.png is an untouched native camera PNG",
+      "passed": true
+    },
+    {
+      "group": "capture",
+      "name": "pond camera-272-112.png pixels copied literally into mosaic",
+      "passed": true
+    },
+    {
+      "group": "capture",
+      "name": "pond camera-272-112.png actual world planes share camera",
+      "passed": true
+    },
+    {
+      "group": "capture",
+      "name": "pond camera-000-224.png is an untouched native camera PNG",
+      "passed": true
+    },
+    {
+      "group": "capture",
+      "name": "pond camera-000-224.png pixels copied literally into mosaic",
+      "passed": true
+    },
+    {
+      "group": "capture",
+      "name": "pond camera-000-224.png actual world planes share camera",
+      "passed": true
+    },
+    {
+      "group": "capture",
+      "name": "pond camera-136-224.png is an untouched native camera PNG",
+      "passed": true
+    },
+    {
+      "group": "capture",
+      "name": "pond camera-136-224.png pixels copied literally into mosaic",
+      "passed": true
+    },
+    {
+      "group": "capture",
+      "name": "pond camera-136-224.png actual world planes share camera",
+      "passed": true
+    },
+    {
+      "group": "capture",
+      "name": "pond camera-272-224.png is an untouched native camera PNG",
+      "passed": true
+    },
+    {
+      "group": "capture",
+      "name": "pond camera-272-224.png pixels copied literally into mosaic",
+      "passed": true
+    },
+    {
+      "group": "capture",
+      "name": "pond camera-272-224.png actual world planes share camera",
+      "passed": true
+    },
+    {
+      "group": "capture",
+      "name": "pond full room uses exactly nine views and one source per pixel",
+      "passed": true
+    },
+    {
+      "group": "capture",
+      "name": "pond actor coordinates/RNG are held through the camera fixture",
+      "passed": true
+    },
+    {
+      "group": "capture",
+      "name": "pond native-arrival.png normal HUD evidence stays native",
+      "passed": true
+    },
+    {
+      "group": "capture",
+      "name": "pond native-HUD.png normal HUD evidence stays native",
+      "passed": true
+    },
+    {
+      "group": "capture",
+      "name": "pond native-HUD-north.png normal HUD evidence stays native",
+      "passed": true
+    },
+    {
+      "group": "capture",
+      "name": "pond native-HUD-west.png normal HUD evidence stays native",
+      "passed": true
+    },
+    {
+      "group": "capture",
+      "name": "pond native-HUD-south.png normal HUD evidence stays native",
+      "passed": true
+    },
+    {
+      "group": "capture",
+      "name": "damp-root-hollow full-room PNG has declared native dimensions/hash",
+      "passed": true
+    },
+    {
+      "group": "capture",
+      "name": "damp-root-hollow camera-000-000.png is an untouched native camera PNG",
+      "passed": true
+    },
+    {
+      "group": "capture",
+      "name": "damp-root-hollow camera-000-000.png pixels copied literally into mosaic",
+      "passed": true
+    },
+    {
+      "group": "capture",
+      "name": "damp-root-hollow camera-000-000.png actual world planes share camera",
+      "passed": true
+    },
+    {
+      "group": "capture",
+      "name": "damp-root-hollow camera-136-000.png is an untouched native camera PNG",
+      "passed": true
+    },
+    {
+      "group": "capture",
+      "name": "damp-root-hollow camera-136-000.png pixels copied literally into mosaic",
+      "passed": true
+    },
+    {
+      "group": "capture",
+      "name": "damp-root-hollow camera-136-000.png actual world planes share camera",
+      "passed": true
+    },
+    {
+      "group": "capture",
+      "name": "damp-root-hollow camera-272-000.png is an untouched native camera PNG",
+      "passed": true
+    },
+    {
+      "group": "capture",
+      "name": "damp-root-hollow camera-272-000.png pixels copied literally into mosaic",
+      "passed": true
+    },
+    {
+      "group": "capture",
+      "name": "damp-root-hollow camera-272-000.png actual world planes share camera",
+      "passed": true
+    },
+    {
+      "group": "capture",
+      "name": "damp-root-hollow camera-000-112.png is an untouched native camera PNG",
+      "passed": true
+    },
+    {
+      "group": "capture",
+      "name": "damp-root-hollow camera-000-112.png pixels copied literally into mosaic",
+      "passed": true
+    },
+    {
+      "group": "capture",
+      "name": "damp-root-hollow camera-000-112.png actual world planes share camera",
+      "passed": true
+    },
+    {
+      "group": "capture",
+      "name": "damp-root-hollow camera-136-112.png is an untouched native camera PNG",
+      "passed": true
+    },
+    {
+      "group": "capture",
+      "name": "damp-root-hollow camera-136-112.png pixels copied literally into mosaic",
+      "passed": true
+    },
+    {
+      "group": "capture",
+      "name": "damp-root-hollow camera-136-112.png actual world planes share camera",
+      "passed": true
+    },
+    {
+      "group": "capture",
+      "name": "damp-root-hollow camera-272-112.png is an untouched native camera PNG",
+      "passed": true
+    },
+    {
+      "group": "capture",
+      "name": "damp-root-hollow camera-272-112.png pixels copied literally into mosaic",
+      "passed": true
+    },
+    {
+      "group": "capture",
+      "name": "damp-root-hollow camera-272-112.png actual world planes share camera",
+      "passed": true
+    },
+    {
+      "group": "capture",
+      "name": "damp-root-hollow camera-000-224.png is an untouched native camera PNG",
+      "passed": true
+    },
+    {
+      "group": "capture",
+      "name": "damp-root-hollow camera-000-224.png pixels copied literally into mosaic",
+      "passed": true
+    },
+    {
+      "group": "capture",
+      "name": "damp-root-hollow camera-000-224.png actual world planes share camera",
+      "passed": true
+    },
+    {
+      "group": "capture",
+      "name": "damp-root-hollow camera-136-224.png is an untouched native camera PNG",
+      "passed": true
+    },
+    {
+      "group": "capture",
+      "name": "damp-root-hollow camera-136-224.png pixels copied literally into mosaic",
+      "passed": true
+    },
+    {
+      "group": "capture",
+      "name": "damp-root-hollow camera-136-224.png actual world planes share camera",
+      "passed": true
+    },
+    {
+      "group": "capture",
+      "name": "damp-root-hollow camera-272-224.png is an untouched native camera PNG",
+      "passed": true
+    },
+    {
+      "group": "capture",
+      "name": "damp-root-hollow camera-272-224.png pixels copied literally into mosaic",
+      "passed": true
+    },
+    {
+      "group": "capture",
+      "name": "damp-root-hollow camera-272-224.png actual world planes share camera",
+      "passed": true
+    },
+    {
+      "group": "capture",
+      "name": "damp-root-hollow full room uses exactly nine views and one source per pixel",
+      "passed": true
+    },
+    {
+      "group": "capture",
+      "name": "damp-root-hollow actor coordinates/RNG are held through the camera fixture",
+      "passed": true
+    },
+    {
+      "group": "capture",
+      "name": "damp-root-hollow native-arrival.png normal HUD evidence stays native",
+      "passed": true
+    },
+    {
+      "group": "capture",
+      "name": "damp-root-hollow native-HUD.png normal HUD evidence stays native",
+      "passed": true
+    },
+    {
+      "group": "capture",
+      "name": "damp-root-hollow native-HUD-north.png normal HUD evidence stays native",
+      "passed": true
+    },
+    {
+      "group": "capture",
+      "name": "damp-root-hollow native-HUD-west.png normal HUD evidence stays native",
+      "passed": true
+    },
+    {
+      "group": "capture",
+      "name": "damp-root-hollow native-HUD-south.png normal HUD evidence stays native",
+      "passed": true
+    },
+    {
+      "group": "capture",
+      "name": "dry-glade full-room PNG has declared native dimensions/hash",
+      "passed": true
+    },
+    {
+      "group": "capture",
+      "name": "dry-glade camera-000-000.png is an untouched native camera PNG",
+      "passed": true
+    },
+    {
+      "group": "capture",
+      "name": "dry-glade camera-000-000.png pixels copied literally into mosaic",
+      "passed": true
+    },
+    {
+      "group": "capture",
+      "name": "dry-glade camera-000-000.png actual world planes share camera",
+      "passed": true
+    },
+    {
+      "group": "capture",
+      "name": "dry-glade camera-136-000.png is an untouched native camera PNG",
+      "passed": true
+    },
+    {
+      "group": "capture",
+      "name": "dry-glade camera-136-000.png pixels copied literally into mosaic",
+      "passed": true
+    },
+    {
+      "group": "capture",
+      "name": "dry-glade camera-136-000.png actual world planes share camera",
+      "passed": true
+    },
+    {
+      "group": "capture",
+      "name": "dry-glade camera-272-000.png is an untouched native camera PNG",
+      "passed": true
+    },
+    {
+      "group": "capture",
+      "name": "dry-glade camera-272-000.png pixels copied literally into mosaic",
+      "passed": true
+    },
+    {
+      "group": "capture",
+      "name": "dry-glade camera-272-000.png actual world planes share camera",
+      "passed": true
+    },
+    {
+      "group": "capture",
+      "name": "dry-glade camera-000-112.png is an untouched native camera PNG",
+      "passed": true
+    },
+    {
+      "group": "capture",
+      "name": "dry-glade camera-000-112.png pixels copied literally into mosaic",
+      "passed": true
+    },
+    {
+      "group": "capture",
+      "name": "dry-glade camera-000-112.png actual world planes share camera",
+      "passed": true
+    },
+    {
+      "group": "capture",
+      "name": "dry-glade camera-136-112.png is an untouched native camera PNG",
+      "passed": true
+    },
+    {
+      "group": "capture",
+      "name": "dry-glade camera-136-112.png pixels copied literally into mosaic",
+      "passed": true
+    },
+    {
+      "group": "capture",
+      "name": "dry-glade camera-136-112.png actual world planes share camera",
+      "passed": true
+    },
+    {
+      "group": "capture",
+      "name": "dry-glade camera-272-112.png is an untouched native camera PNG",
+      "passed": true
+    },
+    {
+      "group": "capture",
+      "name": "dry-glade camera-272-112.png pixels copied literally into mosaic",
+      "passed": true
+    },
+    {
+      "group": "capture",
+      "name": "dry-glade camera-272-112.png actual world planes share camera",
+      "passed": true
+    },
+    {
+      "group": "capture",
+      "name": "dry-glade camera-000-224.png is an untouched native camera PNG",
+      "passed": true
+    },
+    {
+      "group": "capture",
+      "name": "dry-glade camera-000-224.png pixels copied literally into mosaic",
+      "passed": true
+    },
+    {
+      "group": "capture",
+      "name": "dry-glade camera-000-224.png actual world planes share camera",
+      "passed": true
+    },
+    {
+      "group": "capture",
+      "name": "dry-glade camera-136-224.png is an untouched native camera PNG",
+      "passed": true
+    },
+    {
+      "group": "capture",
+      "name": "dry-glade camera-136-224.png pixels copied literally into mosaic",
+      "passed": true
+    },
+    {
+      "group": "capture",
+      "name": "dry-glade camera-136-224.png actual world planes share camera",
+      "passed": true
+    },
+    {
+      "group": "capture",
+      "name": "dry-glade camera-272-224.png is an untouched native camera PNG",
+      "passed": true
+    },
+    {
+      "group": "capture",
+      "name": "dry-glade camera-272-224.png pixels copied literally into mosaic",
+      "passed": true
+    },
+    {
+      "group": "capture",
+      "name": "dry-glade camera-272-224.png actual world planes share camera",
+      "passed": true
+    },
+    {
+      "group": "capture",
+      "name": "dry-glade full room uses exactly nine views and one source per pixel",
+      "passed": true
+    },
+    {
+      "group": "capture",
+      "name": "dry-glade actor coordinates/RNG are held through the camera fixture",
+      "passed": true
+    },
+    {
+      "group": "capture",
+      "name": "dry-glade native-arrival.png normal HUD evidence stays native",
+      "passed": true
+    },
+    {
+      "group": "capture",
+      "name": "dry-glade native-HUD.png normal HUD evidence stays native",
+      "passed": true
+    },
+    {
+      "group": "capture",
+      "name": "dry-glade native-HUD-north.png normal HUD evidence stays native",
+      "passed": true
+    },
+    {
+      "group": "capture",
+      "name": "dry-glade native-HUD-west.png normal HUD evidence stays native",
+      "passed": true
+    },
+    {
+      "group": "capture",
+      "name": "dry-glade native-HUD-south.png normal HUD evidence stays native",
+      "passed": true
+    },
+    {
+      "group": "capture",
+      "name": "heart-arena full-room PNG has declared native dimensions/hash",
+      "passed": true
+    },
+    {
+      "group": "capture",
+      "name": "heart-arena camera-000-000.png is an untouched native camera PNG",
+      "passed": true
+    },
+    {
+      "group": "capture",
+      "name": "heart-arena camera-000-000.png pixels copied literally into mosaic",
+      "passed": true
+    },
+    {
+      "group": "capture",
+      "name": "heart-arena camera-000-000.png actual world planes share camera",
+      "passed": true
+    },
+    {
+      "group": "capture",
+      "name": "heart-arena camera-136-000.png is an untouched native camera PNG",
+      "passed": true
+    },
+    {
+      "group": "capture",
+      "name": "heart-arena camera-136-000.png pixels copied literally into mosaic",
+      "passed": true
+    },
+    {
+      "group": "capture",
+      "name": "heart-arena camera-136-000.png actual world planes share camera",
+      "passed": true
+    },
+    {
+      "group": "capture",
+      "name": "heart-arena camera-272-000.png is an untouched native camera PNG",
+      "passed": true
+    },
+    {
+      "group": "capture",
+      "name": "heart-arena camera-272-000.png pixels copied literally into mosaic",
+      "passed": true
+    },
+    {
+      "group": "capture",
+      "name": "heart-arena camera-272-000.png actual world planes share camera",
+      "passed": true
+    },
+    {
+      "group": "capture",
+      "name": "heart-arena camera-000-112.png is an untouched native camera PNG",
+      "passed": true
+    },
+    {
+      "group": "capture",
+      "name": "heart-arena camera-000-112.png pixels copied literally into mosaic",
+      "passed": true
+    },
+    {
+      "group": "capture",
+      "name": "heart-arena camera-000-112.png actual world planes share camera",
+      "passed": true
+    },
+    {
+      "group": "capture",
+      "name": "heart-arena camera-136-112.png is an untouched native camera PNG",
+      "passed": true
+    },
+    {
+      "group": "capture",
+      "name": "heart-arena camera-136-112.png pixels copied literally into mosaic",
+      "passed": true
+    },
+    {
+      "group": "capture",
+      "name": "heart-arena camera-136-112.png actual world planes share camera",
+      "passed": true
+    },
+    {
+      "group": "capture",
+      "name": "heart-arena camera-272-112.png is an untouched native camera PNG",
+      "passed": true
+    },
+    {
+      "group": "capture",
+      "name": "heart-arena camera-272-112.png pixels copied literally into mosaic",
+      "passed": true
+    },
+    {
+      "group": "capture",
+      "name": "heart-arena camera-272-112.png actual world planes share camera",
+      "passed": true
+    },
+    {
+      "group": "capture",
+      "name": "heart-arena camera-000-224.png is an untouched native camera PNG",
+      "passed": true
+    },
+    {
+      "group": "capture",
+      "name": "heart-arena camera-000-224.png pixels copied literally into mosaic",
+      "passed": true
+    },
+    {
+      "group": "capture",
+      "name": "heart-arena camera-000-224.png actual world planes share camera",
+      "passed": true
+    },
+    {
+      "group": "capture",
+      "name": "heart-arena camera-136-224.png is an untouched native camera PNG",
+      "passed": true
+    },
+    {
+      "group": "capture",
+      "name": "heart-arena camera-136-224.png pixels copied literally into mosaic",
+      "passed": true
+    },
+    {
+      "group": "capture",
+      "name": "heart-arena camera-136-224.png actual world planes share camera",
+      "passed": true
+    },
+    {
+      "group": "capture",
+      "name": "heart-arena camera-272-224.png is an untouched native camera PNG",
+      "passed": true
+    },
+    {
+      "group": "capture",
+      "name": "heart-arena camera-272-224.png pixels copied literally into mosaic",
+      "passed": true
+    },
+    {
+      "group": "capture",
+      "name": "heart-arena camera-272-224.png actual world planes share camera",
+      "passed": true
+    },
+    {
+      "group": "capture",
+      "name": "heart-arena full room uses exactly nine views and one source per pixel",
+      "passed": true
+    },
+    {
+      "group": "capture",
+      "name": "heart-arena actor coordinates/RNG are held through the camera fixture",
+      "passed": true
+    },
+    {
+      "group": "capture",
+      "name": "heart-arena native-arrival.png normal HUD evidence stays native",
+      "passed": true
+    },
+    {
+      "group": "capture",
+      "name": "heart-arena native-HUD.png normal HUD evidence stays native",
+      "passed": true
+    },
+    {
+      "group": "capture",
+      "name": "heart-arena native-HUD-north.png normal HUD evidence stays native",
+      "passed": true
+    },
+    {
+      "group": "capture",
+      "name": "heart-arena native-HUD-west.png normal HUD evidence stays native",
+      "passed": true
+    },
+    {
+      "group": "capture",
+      "name": "heart-arena native-HUD-south.png normal HUD evidence stays native",
+      "passed": true
+    },
+    {
+      "group": "capture",
+      "name": "brook-crossing full-room PNG has declared native dimensions/hash",
+      "passed": true
+    },
+    {
+      "group": "capture",
+      "name": "brook-crossing camera-000-000.png is an untouched native camera PNG",
+      "passed": true
+    },
+    {
+      "group": "capture",
+      "name": "brook-crossing camera-000-000.png pixels copied literally into mosaic",
+      "passed": true
+    },
+    {
+      "group": "capture",
+      "name": "brook-crossing camera-000-000.png actual world planes share camera",
+      "passed": true
+    },
+    {
+      "group": "capture",
+      "name": "brook-crossing camera-136-000.png is an untouched native camera PNG",
+      "passed": true
+    },
+    {
+      "group": "capture",
+      "name": "brook-crossing camera-136-000.png pixels copied literally into mosaic",
+      "passed": true
+    },
+    {
+      "group": "capture",
+      "name": "brook-crossing camera-136-000.png actual world planes share camera",
+      "passed": true
+    },
+    {
+      "group": "capture",
+      "name": "brook-crossing camera-272-000.png is an untouched native camera PNG",
+      "passed": true
+    },
+    {
+      "group": "capture",
+      "name": "brook-crossing camera-272-000.png pixels copied literally into mosaic",
+      "passed": true
+    },
+    {
+      "group": "capture",
+      "name": "brook-crossing camera-272-000.png actual world planes share camera",
+      "passed": true
+    },
+    {
+      "group": "capture",
+      "name": "brook-crossing camera-000-112.png is an untouched native camera PNG",
+      "passed": true
+    },
+    {
+      "group": "capture",
+      "name": "brook-crossing camera-000-112.png pixels copied literally into mosaic",
+      "passed": true
+    },
+    {
+      "group": "capture",
+      "name": "brook-crossing camera-000-112.png actual world planes share camera",
+      "passed": true
+    },
+    {
+      "group": "capture",
+      "name": "brook-crossing camera-136-112.png is an untouched native camera PNG",
+      "passed": true
+    },
+    {
+      "group": "capture",
+      "name": "brook-crossing camera-136-112.png pixels copied literally into mosaic",
+      "passed": true
+    },
+    {
+      "group": "capture",
+      "name": "brook-crossing camera-136-112.png actual world planes share camera",
+      "passed": true
+    },
+    {
+      "group": "capture",
+      "name": "brook-crossing camera-272-112.png is an untouched native camera PNG",
+      "passed": true
+    },
+    {
+      "group": "capture",
+      "name": "brook-crossing camera-272-112.png pixels copied literally into mosaic",
+      "passed": true
+    },
+    {
+      "group": "capture",
+      "name": "brook-crossing camera-272-112.png actual world planes share camera",
+      "passed": true
+    },
+    {
+      "group": "capture",
+      "name": "brook-crossing camera-000-224.png is an untouched native camera PNG",
+      "passed": true
+    },
+    {
+      "group": "capture",
+      "name": "brook-crossing camera-000-224.png pixels copied literally into mosaic",
+      "passed": true
+    },
+    {
+      "group": "capture",
+      "name": "brook-crossing camera-000-224.png actual world planes share camera",
+      "passed": true
+    },
+    {
+      "group": "capture",
+      "name": "brook-crossing camera-136-224.png is an untouched native camera PNG",
+      "passed": true
+    },
+    {
+      "group": "capture",
+      "name": "brook-crossing camera-136-224.png pixels copied literally into mosaic",
+      "passed": true
+    },
+    {
+      "group": "capture",
+      "name": "brook-crossing camera-136-224.png actual world planes share camera",
+      "passed": true
+    },
+    {
+      "group": "capture",
+      "name": "brook-crossing camera-272-224.png is an untouched native camera PNG",
+      "passed": true
+    },
+    {
+      "group": "capture",
+      "name": "brook-crossing camera-272-224.png pixels copied literally into mosaic",
+      "passed": true
+    },
+    {
+      "group": "capture",
+      "name": "brook-crossing camera-272-224.png actual world planes share camera",
+      "passed": true
+    },
+    {
+      "group": "capture",
+      "name": "brook-crossing full room uses exactly nine views and one source per pixel",
+      "passed": true
+    },
+    {
+      "group": "capture",
+      "name": "brook-crossing actor coordinates/RNG are held through the camera fixture",
+      "passed": true
+    },
+    {
+      "group": "capture",
+      "name": "brook-crossing native-arrival.png normal HUD evidence stays native",
+      "passed": true
+    },
+    {
+      "group": "capture",
+      "name": "brook-crossing native-HUD.png normal HUD evidence stays native",
+      "passed": true
+    },
+    {
+      "group": "capture",
+      "name": "brook-crossing native-HUD-north.png normal HUD evidence stays native",
+      "passed": true
+    },
+    {
+      "group": "capture",
+      "name": "brook-crossing native-HUD-west.png normal HUD evidence stays native",
+      "passed": true
+    },
+    {
+      "group": "capture",
+      "name": "brook-crossing native-HUD-south.png normal HUD evidence stays native",
+      "passed": true
+    },
+    {
+      "group": "capture",
+      "name": "healthy, mixed and deep ordinary rooms all have native evidence",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "audit helper was held through execution",
+      "passed": true
+    },
+    {
+      "group": "provenance",
+      "name": "frozen ROM/header/map remained unchanged",
+      "passed": true
+    }
+  ],
+  "passed": 567,
+  "total": 567,
+  "failures": []
+}

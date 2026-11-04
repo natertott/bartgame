@@ -1,0 +1,32 @@
+{
+  "source_commit": "4024902d56c759ca124b2517c73f77e5234be66d",
+  "forest_variant": 32,
+  "rom_sha256": "5fcf4cba1c6ab3a5af4575a5a05a49d9813457a02b4f5d16a7e3abc05e41566e",
+  "gallery_tool_sha256": "640dad9671a9b2eb75c7e786090e8529d9b9ff1f83e6e7484fee2f3f69cf42e2",
+  "gallery_dependency_sha256": {
+    "forest_trees_gallery.py": "9d78d73dd785e9b648fdfa2850c0443a333498990c57af1f43fcc351c8a61f2d"
+  },
+  "capture_report_sha256": "5985f2f18c22ec35e6b9a2200e052265a1749afb7f090a95bd9ca383db933075",
+  "baseline_report_sha256": "76a7024a4f707e5e6f5740c314751b484a88c58945509a25786676d127b9f977",
+  "rooms": 8,
+  "native_camera_frames": 72,
+  "copied_media": 343,
+  "boards": 11,
+  "release": {
+    "folder": "forest-room-cohesion-4024902",
+    "rom": "forest-room-cohesion-4024902.gba",
+    "zip": "forest-room-cohesion-4024902.zip",
+    "rom_sha256": "5fcf4cba1c6ab3a5af4575a5a05a49d9813457a02b4f5d16a7e3abc05e41566e",
+    "zip_sha256": "c1673ec767eb7ee631e6bc1a09bf10f7e6f55e5cd6e573920cae4272cc6c3e1b",
+    "rom_bytes": 650168,
+    "zip_bytes": 165380
+  },
+  "source_catalog": {
+    "file": "source/materials-source.png",
+    "assets": 79,
+    "changed_assets": 69,
+    "missing_names": [],
+    "manifest_sha256": "3ee753a1570ec034cbd8717e899aff893c2dea8a9d8e213f8bc9f1c49098b9dc"
+  },
+  "frozen": true
+}

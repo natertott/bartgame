@@ -1452,3 +1452,40 @@ run passes all checks, including128 collected-relic rebuilds, and actual
 mGBA progression/menu/cache checks pass80/80. This changes no approved tree
 pixels, item rewards, enemy health or world-graph/save contract. Final source
 and native evidence are regenerated after this correction.
+
+
+**Final qualification, 2026-11-04:** game/art source
+`4024902d56c759ca124b2517c73f77e5234be66d`, selected profile32, is frozen.
+ROM SHA256: `5fcf4cba1c6ab3a5af4575a5a05a49d9813457a02b4f5d16a7e3abc05e41566e`.
+All33 profiles build and historical0–31 remain byte-for-byte identical.
+Ordinary `make` emits the exact reviewed ROM. Native residency is656/768 BG
+subtiles and10/12 world banks; the approved tree paintings/palette stay exact.
+
+Fresh real mGBA before/after evidence covers the same eight seeded cells:
+healthy/mixed/deep, closed pond, damp hollow, dry glade, Heart terrain and a
+second intermediate-blight brook. After capture passes338/338 checks; before
+passes336/336. Their144 raw native camera views remain available beside the
+registered full-room mosaics, HUD/arrival images, three new walks and four
+new water clips. All504 walking frames have paired native body/guard proof;
+minimum colored/connected Bloom is79/14,95/24,90/14. Missed logic intervals
+are2/1/0 versus1/1/0 in the old rooms; different geometry/routes prevent a
+broad performance comparison and no frame-perfect claim is made.
+
+Independent frozen-source/host audit passes1223/1223, native capture audit
+567/567, actual mGBA integration80/80 and publication QA694/694. The128-seed
+host corpus covers3,200 rooms,800 opened states,25,543 required approaches,
+2,619 item pockets,32,000 item/boundary combinations,1,600 real-feet cases,
+805 bridge runs/1,610 valid landings and6,059 anchored lanterns. All8,256
+trail refinements change no physical metadata;128 relic-collection rebuilds
+preserve paths/lamps. Actual trials, bombs, candle, cape and Heart entry pass.
+
+The [room/detail review](../../../art-review/forest-room-cohesion/README.md)
+includes the actual photos and separate79-asset native source catalog
+(69 effective refinements), plus full native group assemblies. The
+[playable ROM/ZIP](../../../downloads/forest-room-cohesion-4024902/README.md)
+is the production handoff. Shared actors/items/menus and other regions remain
+protected. Old random ledge columns/large disconnected floor prefabs are
+retired from32 generation. Remaining minor limits: native16px orthogonality
+in some pond/path contours, restrained deep-floor detail and repeated tree
+texture. The eight visually reviewed rooms are finite examples, not a claim
+that every generated room was viewed or aesthetically perfected.

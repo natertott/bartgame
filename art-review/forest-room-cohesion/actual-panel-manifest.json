@@ -1,0 +1,807 @@
+{
+  "source_commit": "4024902d56c759ca124b2517c73f77e5234be66d",
+  "forest_variant": 32,
+  "boards": [
+    {
+      "file": "rooms-actual.png",
+      "size": [
+        1568,
+        1332
+      ],
+      "sha256": "10b1ffc1f5d13f89f3c71867b050bd6e9d62b7125b1f2836f55f4a779de8aa96",
+      "panels": [
+        {
+          "case": "healthy",
+          "source": "actual/after/healthy/full-room.png",
+          "native_size": [
+            512,
+            384
+          ],
+          "scale": 1,
+          "source_sha256": "d61a9c80b092d1daa45950d89dcb391794c91e2d79ff94cb1f79163141c47c48",
+          "rectangle": [
+            8,
+            84,
+            520,
+            468
+          ],
+          "source_RGB_sha256": "1904909731b5390d481f63e2cfba2562e4141f0168dc92db4dbe771470e734de"
+        },
+        {
+          "case": "mixed",
+          "source": "actual/after/mixed/full-room.png",
+          "native_size": [
+            512,
+            384
+          ],
+          "scale": 1,
+          "source_sha256": "ec9ac94a22670bc0057526747347d7914e1614b4f2a444b78f070bed7e6cfa37",
+          "rectangle": [
+            528,
+            84,
+            1040,
+            468
+          ],
+          "source_RGB_sha256": "df621b4259dca313ad493dc8fb002589262db57ece145e7f78ce8cbc118ec5fb"
+        },
+        {
+          "case": "deep",
+          "source": "actual/after/deep/full-room.png",
+          "native_size": [
+            512,
+            384
+          ],
+          "scale": 1,
+          "source_sha256": "bad140ef6ff6ed1e932f1a47d300f3931f0366c7189bd8605ccbca5f01ecffaf",
+          "rectangle": [
+            1048,
+            84,
+            1560,
+            468
+          ],
+          "source_RGB_sha256": "7afead7650b6b5e73b4f953b6b697bc4a9cb2f6bacbfe3d6b7f8c8608ee3d823"
+        },
+        {
+          "case": "pond",
+          "source": "actual/after/pond/full-room.png",
+          "native_size": [
+            512,
+            384
+          ],
+          "scale": 1,
+          "source_sha256": "d4a5be6c488bcd6e8512e51e8b08b7a5e245fb02a2d9ee0feb61da47c5e02ea0",
+          "rectangle": [
+            8,
+            512,
+            520,
+            896
+          ],
+          "source_RGB_sha256": "f051b400e52d314a795659a77d93769215d2bee25567141997deb8a1be4afda5"
+        },
+        {
+          "case": "damp-root-hollow",
+          "source": "actual/after/damp-root-hollow/full-room.png",
+          "native_size": [
+            512,
+            384
+          ],
+          "scale": 1,
+          "source_sha256": "385c55d0f07f54ec3c468203b056d5d8855ff06bc3a9db1afcbffeb78ce7d6a9",
+          "rectangle": [
+            528,
+            512,
+            1040,
+            896
+          ],
+          "source_RGB_sha256": "b6406049982d4038e2ce073cde72b13f2f3f1c6800a053041451e72bb40a94da"
+        },
+        {
+          "case": "dry-glade",
+          "source": "actual/after/dry-glade/full-room.png",
+          "native_size": [
+            512,
+            384
+          ],
+          "scale": 1,
+          "source_sha256": "b4f8058bedc9f624531b068fb17fb34a2bfc579c05a716e76e653becf5b95b90",
+          "rectangle": [
+            1048,
+            512,
+            1560,
+            896
+          ],
+          "source_RGB_sha256": "5d5082e3ca622b5dc8b739b3ad114426b13bfc910851198666e35c854f692ed2"
+        },
+        {
+          "case": "heart-arena",
+          "source": "actual/after/heart-arena/full-room.png",
+          "native_size": [
+            512,
+            384
+          ],
+          "scale": 1,
+          "source_sha256": "a31527d517a1c5bd10ea18446008ec854c810ff70d2bc1749d7039287ae9cf41",
+          "rectangle": [
+            8,
+            940,
+            520,
+            1324
+          ],
+          "source_RGB_sha256": "9a71a97ec00592c7b5c597401ad4103c884ff9aba4f8e0266f355511ac615fb0"
+        },
+        {
+          "case": "brook-crossing",
+          "source": "actual/after/brook-crossing/full-room.png",
+          "native_size": [
+            512,
+            384
+          ],
+          "scale": 1,
+          "source_sha256": "645f695d907c464a08d44886189448599c8d3fd796a3575e1fbec477385c9a8e",
+          "rectangle": [
+            528,
+            940,
+            1040,
+            1324
+          ],
+          "source_RGB_sha256": "e5a8b88585b62316c0c22364c034c89a7bd5565e7c4e423e011d7ea4c9b75aca"
+        }
+      ],
+      "frozen": true
+    },
+    {
+      "file": "native-HUD-actual.png",
+      "size": [
+        752,
+        660
+      ],
+      "sha256": "bff79b8288d3e5bd80a8b36110a44448783a99b793a40e5c87001763e5526c0d",
+      "panels": [
+        {
+          "case": "healthy",
+          "source": "actual/after/healthy/native-HUD.png",
+          "native_size": [
+            240,
+            160
+          ],
+          "scale": 1,
+          "source_sha256": "7326ecee873f48011dafbe8f4a98c05baaf2dec828bdc2b5862fc2fe539f350e",
+          "rectangle": [
+            8,
+            84,
+            248,
+            244
+          ],
+          "source_RGB_sha256": "9cbf9d6791c51b727baa7cffb750332b7948e3fe9f6d41b34a06df556d0aeabc"
+        },
+        {
+          "case": "mixed",
+          "source": "actual/after/mixed/native-HUD.png",
+          "native_size": [
+            240,
+            160
+          ],
+          "scale": 1,
+          "source_sha256": "80131890499ecbc3a0c3798276be81429547e4e27e959a3343b9985318cdf31f",
+          "rectangle": [
+            256,
+            84,
+            496,
+            244
+          ],
+          "source_RGB_sha256": "24e815452fd1b12b0b22dafb7b63170373f5fc0ac065effedee96b591e00f91c"
+        },
+        {
+          "case": "deep",
+          "source": "actual/after/deep/native-HUD.png",
+          "native_size": [
+            240,
+            160
+          ],
+          "scale": 1,
+          "source_sha256": "851d6d6f603f083763d52fc7b19079ad7d816b457b5c60329d476dce4c0c22ae",
+          "rectangle": [
+            504,
+            84,
+            744,
+            244
+          ],
+          "source_RGB_sha256": "14e542fe1fdbae9dfc1c6d060a04cf0362c1f9e9ecf17f255f7106cc5da58863"
+        },
+        {
+          "case": "pond",
+          "source": "actual/after/pond/native-HUD.png",
+          "native_size": [
+            240,
+            160
+          ],
+          "scale": 1,
+          "source_sha256": "131a8a1f56625c8b33c54ad46efd0cbe7a0f5360faf0bc09d2fdbcc97548de12",
+          "rectangle": [
+            8,
+            288,
+            248,
+            448
+          ],
+          "source_RGB_sha256": "c5eb01e086940560ace6f8f439c4d6db3cf70beb451ea398cba15f843b2c61a3"
+        },
+        {
+          "case": "damp-root-hollow",
+          "source": "actual/after/damp-root-hollow/native-HUD.png",
+          "native_size": [
+            240,
+            160
+          ],
+          "scale": 1,
+          "source_sha256": "6b29bc751adbf6079fc9475c1f1a71b48381ef330e321ffab76815fd7d67d0a9",
+          "rectangle": [
+            256,
+            288,
+            496,
+            448
+          ],
+          "source_RGB_sha256": "122513c29ca8a7a2ecba2e582e3e17d4c4ebc21374cd66b5eaac83cb0e364d37"
+        },
+        {
+          "case": "dry-glade",
+          "source": "actual/after/dry-glade/native-HUD.png",
+          "native_size": [
+            240,
+            160
+          ],
+          "scale": 1,
+          "source_sha256": "a5c10616191c64e00bc413e4977022a1142e96667a99929e33c4584a06f18d54",
+          "rectangle": [
+            504,
+            288,
+            744,
+            448
+          ],
+          "source_RGB_sha256": "3f7042c882beaf8b16c3899441209d4cae96e91b0e7d0c72a86824eaad1387f5"
+        },
+        {
+          "case": "heart-arena",
+          "source": "actual/after/heart-arena/native-HUD.png",
+          "native_size": [
+            240,
+            160
+          ],
+          "scale": 1,
+          "source_sha256": "32fb1aeeaaa8bc219bf0666feb0e120ad4a1919803732784ee020f6d334101c2",
+          "rectangle": [
+            8,
+            492,
+            248,
+            652
+          ],
+          "source_RGB_sha256": "3d542c00699698ea3b3dd2c7fecfa3cd7bff29cf22e240531488c435b54b4d0b"
+        },
+        {
+          "case": "brook-crossing",
+          "source": "actual/after/brook-crossing/native-HUD.png",
+          "native_size": [
+            240,
+            160
+          ],
+          "scale": 1,
+          "source_sha256": "3e61d9390afdff40876e55c06a171a4a4d73ad2bcd58e9b6f871843859910fe8",
+          "rectangle": [
+            256,
+            492,
+            496,
+            652
+          ],
+          "source_RGB_sha256": "68f878e5e9a23a096e43c4b9a1ee7f798bb12bc50ba99214d693941d940b52c6"
+        }
+      ],
+      "frozen": true
+    },
+    {
+      "file": "before-after.png",
+      "size": [
+        1048,
+        3472
+      ],
+      "sha256": "8bcf51d64c9cdb66797e6e264d036121a3075630958736f6b1a0ad52d1e1c3b7",
+      "panels": [
+        {
+          "case": "healthy",
+          "source": "actual/before/healthy/full-room.png",
+          "native_size": [
+            512,
+            384
+          ],
+          "scale": 1,
+          "source_sha256": "95e9eb4dff3f285d2083b798ad245d4a8531e9022cdf846cb2454dae8ae0ecd7",
+          "rectangle": [
+            8,
+            84,
+            520,
+            468
+          ],
+          "source_RGB_sha256": "9e650a880a4a268c94cd6bff02a489764e8bf79ff60d5f9cf86c8969842ef256"
+        },
+        {
+          "case": "healthy",
+          "source": "actual/after/healthy/full-room.png",
+          "native_size": [
+            512,
+            384
+          ],
+          "scale": 1,
+          "source_sha256": "d61a9c80b092d1daa45950d89dcb391794c91e2d79ff94cb1f79163141c47c48",
+          "rectangle": [
+            528,
+            84,
+            1040,
+            468
+          ],
+          "source_RGB_sha256": "1904909731b5390d481f63e2cfba2562e4141f0168dc92db4dbe771470e734de"
+        },
+        {
+          "case": "mixed",
+          "source": "actual/before/mixed/full-room.png",
+          "native_size": [
+            512,
+            384
+          ],
+          "scale": 1,
+          "source_sha256": "104381ffc90fd24f731640dbb2da2cf28b1c6c66126147319e1d4acc343ebcf5",
+          "rectangle": [
+            8,
+            512,
+            520,
+            896
+          ],
+          "source_RGB_sha256": "6a0621ba09d5ae64f254cc4c41e0d915e56efde1c580691521efffcfcc96d773"
+        },
+        {
+          "case": "mixed",
+          "source": "actual/after/mixed/full-room.png",
+          "native_size": [
+            512,
+            384
+          ],
+          "scale": 1,
+          "source_sha256": "ec9ac94a22670bc0057526747347d7914e1614b4f2a444b78f070bed7e6cfa37",
+          "rectangle": [
+            528,
+            512,
+            1040,
+            896
+          ],
+          "source_RGB_sha256": "df621b4259dca313ad493dc8fb002589262db57ece145e7f78ce8cbc118ec5fb"
+        },
+        {
+          "case": "deep",
+          "source": "actual/before/deep/full-room.png",
+          "native_size": [
+            512,
+            384
+          ],
+          "scale": 1,
+          "source_sha256": "251afaeff3a305607c53a57f70718acc1ec18ca09d447393d35801e3b51fbb2c",
+          "rectangle": [
+            8,
+            940,
+            520,
+            1324
+          ],
+          "source_RGB_sha256": "d2fd9338a0976a824a9711d909a55164ff10fe8c3a03047f473ac758557324a4"
+        },
+        {
+          "case": "deep",
+          "source": "actual/after/deep/full-room.png",
+          "native_size": [
+            512,
+            384
+          ],
+          "scale": 1,
+          "source_sha256": "bad140ef6ff6ed1e932f1a47d300f3931f0366c7189bd8605ccbca5f01ecffaf",
+          "rectangle": [
+            528,
+            940,
+            1040,
+            1324
+          ],
+          "source_RGB_sha256": "7afead7650b6b5e73b4f953b6b697bc4a9cb2f6bacbfe3d6b7f8c8608ee3d823"
+        },
+        {
+          "case": "pond",
+          "source": "actual/before/pond/full-room.png",
+          "native_size": [
+            512,
+            384
+          ],
+          "scale": 1,
+          "source_sha256": "781770e098cdc7fd8becd3140e8e5467d1a9facaaa6c1be2b68ace5022553165",
+          "rectangle": [
+            8,
+            1368,
+            520,
+            1752
+          ],
+          "source_RGB_sha256": "1ec5f254464fcff49a160122c276f4ad9704d4ec85f5d2ba2b9230f44ea275b1"
+        },
+        {
+          "case": "pond",
+          "source": "actual/after/pond/full-room.png",
+          "native_size": [
+            512,
+            384
+          ],
+          "scale": 1,
+          "source_sha256": "d4a5be6c488bcd6e8512e51e8b08b7a5e245fb02a2d9ee0feb61da47c5e02ea0",
+          "rectangle": [
+            528,
+            1368,
+            1040,
+            1752
+          ],
+          "source_RGB_sha256": "f051b400e52d314a795659a77d93769215d2bee25567141997deb8a1be4afda5"
+        },
+        {
+          "case": "damp-root-hollow",
+          "source": "actual/before/damp-root-hollow/full-room.png",
+          "native_size": [
+            512,
+            384
+          ],
+          "scale": 1,
+          "source_sha256": "abab20614a21ee3622234efb2f986596fe9cf064108dc78bb40b55cb30194179",
+          "rectangle": [
+            8,
+            1796,
+            520,
+            2180
+          ],
+          "source_RGB_sha256": "5e885f1ff9b29eac02ebed37fdf09e4820fe84f0edf827e55c413cfc152dab7f"
+        },
+        {
+          "case": "damp-root-hollow",
+          "source": "actual/after/damp-root-hollow/full-room.png",
+          "native_size": [
+            512,
+            384
+          ],
+          "scale": 1,
+          "source_sha256": "385c55d0f07f54ec3c468203b056d5d8855ff06bc3a9db1afcbffeb78ce7d6a9",
+          "rectangle": [
+            528,
+            1796,
+            1040,
+            2180
+          ],
+          "source_RGB_sha256": "b6406049982d4038e2ce073cde72b13f2f3f1c6800a053041451e72bb40a94da"
+        },
+        {
+          "case": "dry-glade",
+          "source": "actual/before/dry-glade/full-room.png",
+          "native_size": [
+            512,
+            384
+          ],
+          "scale": 1,
+          "source_sha256": "c232838cc2524fe139386ea46b5a160e71a3df70ed90b8c0390cfae9441b20ca",
+          "rectangle": [
+            8,
+            2224,
+            520,
+            2608
+          ],
+          "source_RGB_sha256": "7f6f8d94f364c2cf08e2205b0595dde795f6c0845f52c91b476431cc464fd4fa"
+        },
+        {
+          "case": "dry-glade",
+          "source": "actual/after/dry-glade/full-room.png",
+          "native_size": [
+            512,
+            384
+          ],
+          "scale": 1,
+          "source_sha256": "b4f8058bedc9f624531b068fb17fb34a2bfc579c05a716e76e653becf5b95b90",
+          "rectangle": [
+            528,
+            2224,
+            1040,
+            2608
+          ],
+          "source_RGB_sha256": "5d5082e3ca622b5dc8b739b3ad114426b13bfc910851198666e35c854f692ed2"
+        },
+        {
+          "case": "heart-arena",
+          "source": "actual/before/heart-arena/full-room.png",
+          "native_size": [
+            512,
+            384
+          ],
+          "scale": 1,
+          "source_sha256": "1367ca1584dceb58b87bf8ee5bece929e6ffdd2c8b5e1c9d6d18d3622c6b0968",
+          "rectangle": [
+            8,
+            2652,
+            520,
+            3036
+          ],
+          "source_RGB_sha256": "f4afc0a8519f576b5073ddb5ff187c30cd615c14e177b3f0d9c8253887e2043b"
+        },
+        {
+          "case": "heart-arena",
+          "source": "actual/after/heart-arena/full-room.png",
+          "native_size": [
+            512,
+            384
+          ],
+          "scale": 1,
+          "source_sha256": "a31527d517a1c5bd10ea18446008ec854c810ff70d2bc1749d7039287ae9cf41",
+          "rectangle": [
+            528,
+            2652,
+            1040,
+            3036
+          ],
+          "source_RGB_sha256": "9a71a97ec00592c7b5c597401ad4103c884ff9aba4f8e0266f355511ac615fb0"
+        },
+        {
+          "case": "brook-crossing",
+          "source": "actual/before/brook-crossing/full-room.png",
+          "native_size": [
+            512,
+            384
+          ],
+          "scale": 1,
+          "source_sha256": "ce016c2cbbcb25efe94284bbeb4ce5a9383e83b006e9f0b7079cf5ee0e5fcaf2",
+          "rectangle": [
+            8,
+            3080,
+            520,
+            3464
+          ],
+          "source_RGB_sha256": "6fdb49f6773400623c1ebb32301f2a8b2ce670904bafa941e522b0abd4e83b88"
+        },
+        {
+          "case": "brook-crossing",
+          "source": "actual/after/brook-crossing/full-room.png",
+          "native_size": [
+            512,
+            384
+          ],
+          "scale": 1,
+          "source_sha256": "645f695d907c464a08d44886189448599c8d3fd796a3575e1fbec477385c9a8e",
+          "rectangle": [
+            528,
+            3080,
+            1040,
+            3464
+          ],
+          "source_RGB_sha256": "e5a8b88585b62316c0c22364c034c89a7bd5565e7c4e423e011d7ea4c9b75aca"
+        }
+      ],
+      "frozen": true
+    },
+    {
+      "file": "inspection/healthy-2x.png",
+      "size": [
+        1040,
+        860
+      ],
+      "sha256": "65eaaf2185b739200d8ce126ac7d90bd6f40db4ea5a247861f666b9b275bf4b0",
+      "panels": [
+        {
+          "case": "healthy",
+          "source": "actual/after/healthy/full-room.png",
+          "native_size": [
+            512,
+            384
+          ],
+          "scale": 2,
+          "source_sha256": "d61a9c80b092d1daa45950d89dcb391794c91e2d79ff94cb1f79163141c47c48",
+          "rectangle": [
+            8,
+            84,
+            1032,
+            852
+          ],
+          "source_RGB_sha256": "1904909731b5390d481f63e2cfba2562e4141f0168dc92db4dbe771470e734de"
+        }
+      ],
+      "frozen": true
+    },
+    {
+      "file": "inspection/mixed-2x.png",
+      "size": [
+        1040,
+        860
+      ],
+      "sha256": "4aff2a499d39af81918a910874cd963fbf3ea20128ce6a4d0ea4a151540e74af",
+      "panels": [
+        {
+          "case": "mixed",
+          "source": "actual/after/mixed/full-room.png",
+          "native_size": [
+            512,
+            384
+          ],
+          "scale": 2,
+          "source_sha256": "ec9ac94a22670bc0057526747347d7914e1614b4f2a444b78f070bed7e6cfa37",
+          "rectangle": [
+            8,
+            84,
+            1032,
+            852
+          ],
+          "source_RGB_sha256": "df621b4259dca313ad493dc8fb002589262db57ece145e7f78ce8cbc118ec5fb"
+        }
+      ],
+      "frozen": true
+    },
+    {
+      "file": "inspection/deep-2x.png",
+      "size": [
+        1040,
+        860
+      ],
+      "sha256": "57a59eeb1a95b1e67047d2a1118c4bcbf9de3ded6e936b2084ad7bc7aea47e62",
+      "panels": [
+        {
+          "case": "deep",
+          "source": "actual/after/deep/full-room.png",
+          "native_size": [
+            512,
+            384
+          ],
+          "scale": 2,
+          "source_sha256": "bad140ef6ff6ed1e932f1a47d300f3931f0366c7189bd8605ccbca5f01ecffaf",
+          "rectangle": [
+            8,
+            84,
+            1032,
+            852
+          ],
+          "source_RGB_sha256": "7afead7650b6b5e73b4f953b6b697bc4a9cb2f6bacbfe3d6b7f8c8608ee3d823"
+        }
+      ],
+      "frozen": true
+    },
+    {
+      "file": "inspection/pond-2x.png",
+      "size": [
+        1040,
+        860
+      ],
+      "sha256": "ac701930cade0ac2c352fddd34a352cc9082b8cf802e946993156b817044858a",
+      "panels": [
+        {
+          "case": "pond",
+          "source": "actual/after/pond/full-room.png",
+          "native_size": [
+            512,
+            384
+          ],
+          "scale": 2,
+          "source_sha256": "d4a5be6c488bcd6e8512e51e8b08b7a5e245fb02a2d9ee0feb61da47c5e02ea0",
+          "rectangle": [
+            8,
+            84,
+            1032,
+            852
+          ],
+          "source_RGB_sha256": "f051b400e52d314a795659a77d93769215d2bee25567141997deb8a1be4afda5"
+        }
+      ],
+      "frozen": true
+    },
+    {
+      "file": "inspection/damp-root-hollow-2x.png",
+      "size": [
+        1040,
+        860
+      ],
+      "sha256": "771f274d9f348143a7352ac2d82104e4034abe6afb94a20e05dbede1f2a473d1",
+      "panels": [
+        {
+          "case": "damp-root-hollow",
+          "source": "actual/after/damp-root-hollow/full-room.png",
+          "native_size": [
+            512,
+            384
+          ],
+          "scale": 2,
+          "source_sha256": "385c55d0f07f54ec3c468203b056d5d8855ff06bc3a9db1afcbffeb78ce7d6a9",
+          "rectangle": [
+            8,
+            84,
+            1032,
+            852
+          ],
+          "source_RGB_sha256": "b6406049982d4038e2ce073cde72b13f2f3f1c6800a053041451e72bb40a94da"
+        }
+      ],
+      "frozen": true
+    },
+    {
+      "file": "inspection/dry-glade-2x.png",
+      "size": [
+        1040,
+        860
+      ],
+      "sha256": "7f410f0001a55d7e3f4eb3f6754362e43372b758c79432988227eda7b0911c3b",
+      "panels": [
+        {
+          "case": "dry-glade",
+          "source": "actual/after/dry-glade/full-room.png",
+          "native_size": [
+            512,
+            384
+          ],
+          "scale": 2,
+          "source_sha256": "b4f8058bedc9f624531b068fb17fb34a2bfc579c05a716e76e653becf5b95b90",
+          "rectangle": [
+            8,
+            84,
+            1032,
+            852
+          ],
+          "source_RGB_sha256": "5d5082e3ca622b5dc8b739b3ad114426b13bfc910851198666e35c854f692ed2"
+        }
+      ],
+      "frozen": true
+    },
+    {
+      "file": "inspection/heart-arena-2x.png",
+      "size": [
+        1040,
+        860
+      ],
+      "sha256": "a2b7490baa193acafc8bfc42b6b114e5ab2ae13a305ccd89647b7ad629fe2c51",
+      "panels": [
+        {
+          "case": "heart-arena",
+          "source": "actual/after/heart-arena/full-room.png",
+          "native_size": [
+            512,
+            384
+          ],
+          "scale": 2,
+          "source_sha256": "a31527d517a1c5bd10ea18446008ec854c810ff70d2bc1749d7039287ae9cf41",
+          "rectangle": [
+            8,
+            84,
+            1032,
+            852
+          ],
+          "source_RGB_sha256": "9a71a97ec00592c7b5c597401ad4103c884ff9aba4f8e0266f355511ac615fb0"
+        }
+      ],
+      "frozen": true
+    },
+    {
+      "file": "inspection/brook-crossing-2x.png",
+      "size": [
+        1040,
+        860
+      ],
+      "sha256": "937ab34cb1a1ff747b43c3c4a83321c1b86c8604a684b09cbc413ac50636d6df",
+      "panels": [
+        {
+          "case": "brook-crossing",
+          "source": "actual/after/brook-crossing/full-room.png",
+          "native_size": [
+            512,
+            384
+          ],
+          "scale": 2,
+          "source_sha256": "645f695d907c464a08d44886189448599c8d3fd796a3575e1fbec477385c9a8e",
+          "rectangle": [
+            8,
+            84,
+            1032,
+            852
+          ],
+          "source_RGB_sha256": "e5a8b88585b62316c0c22364c034c89a7bd5565e7c4e423e011d7ea4c9b75aca"
+        }
+      ],
+      "frozen": true
+    }
+  ]
+}
