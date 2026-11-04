@@ -1,21 +1,21 @@
 # Performance diagnosis and preservation
 
-The baseline is delivered source11b872e9897320398fa02344cef1418733c04e9a,
-ROM SHA2561bd913bc5bf1ad81e9c1dcc7e07ebc38eac855d390a5bb613257f8fbfe128e59.
+The baseline is delivered source 11b872e9897320398fa02344cef1418733c04e9a,
+ROM SHA256 1bd913bc5bf1ad81e9c1dcc7e07ebc38eac855d390a5bb613257f8fbfe128e59.
 Production throughput is measured with ordinary, uninstrumented mGBA ROMs.
-A separate PROFILE1 build uses unused GBA timers2/3 to identify CPU cost.
+A separate PROFILE=1 build uses unused GBA timers 2/3 to identify CPU cost.
 The final playable build has no profiler code, counters, timer setup or
-per-frame profiler overhead. Native refresh is262144/4389Hz, about59.73Hz;
-a completed gameplay-update ratio0.5 means about29.86 updates per second.
+per-frame profiler overhead. Native refresh is262144/4389 Hz, about 59.73 Hz;
+a completed gameplay-update ratio 0.5 means about 29.86 updates per second.
 
 ## Diagnosed causes
 
 Ordinary torch/darkness rooms recount every cell's unlit censer state each
-frame. One representative room spends about88,650 cycles on darkness/camera,
+frame. One representative room spends about 88,650 cycles on darkness/camera,
 mostly this repeated scan. The same room also repeats glitter selection and
 actor-bound queries in both draw passes, consumes about39,000 cycles on
 animated-tile scheduling, and performs substantial sprite-depth work. Its
-mean instrumented update exceeds330,000 cycles against a280,896-cycle native
+mean instrumented update exceeds 330,000 cycles against a 280,896-cycle native
 frame budget. Six to eight natural enemies can therefore tip a room into
 half-speed gameplay; the enemy AI itself is a much smaller part of that case.
 
@@ -34,18 +34,18 @@ The changes avoid equivalent work rather than reducing content:
 - Use conservative row indexes for trees, overhead, water and possible props;
   original depth predicates still make every visible decision.
 - Place small measured drawing/collision routines in fast internal RAM. Their
-  collision/movement bodies remain unchanged. Retain at least4KB stack space
-  with a linker assertion. Animated-tile scheduling uses1,104 bytes of static
+  collision/movement bodies remain unchanged. Retain at least 4KB stack space
+  with a linker assertion. Animated-tile scheduling uses 1,104 bytes of static
   local stack; foreground glitter uses a bounded actor-box scratch array.
 - Avoid empty actor kinds in object/hand painting, unchanged HUD mapping
   uploads and duplicate numeral pixel writes. Numeral output remains exact.
-- Remove1,200 software divisions per menu redraw and hoist one immutable
+- Remove 1,200 software divisions per menu redraw and hoist one immutable
   tile-kit pointer, preserving all native menu maps, preferences and controls.
 
 ## Evidence and limits
 
 [Measured production results and actual recordings](../../../performance-review/README.md)
-include75 natural forest cells across three seeds,24 generated interiors
+include 75 natural forest cells across three seeds, 24 generated interiors
 covering all three styles and ten mystery kinds, combat/action/UI contexts,
 30 additional sustained synthetic swarms, and a separately warmed dark room.
 Natural rosters are retained. Synthetic populations are explicitly labelled,
@@ -75,7 +75,7 @@ development-only cycle-accounting build. Rebuild with `make PROFILE=0` before
 shipping. The profile stamp recompiles the C objects when switching modes.
 
 - `tools/performance_scenarios.py`: native gameplay/frame workload survey.
-- `tools/performance_profile.py`: timer-cycle attribution on PROFILE1 only.
+- `tools/performance_profile.py`: timer-cycle attribution on PROFILE=1 only.
 - `tools/performance_regression.py`: source/art/mechanics/native qualification.
 - `tools/perf_*_equivalence.py`: focused old/new differential checks.
 - `tools/performance_publish.py`: measured review, exact media and release.
@@ -85,3 +85,37 @@ shipping. The profile stamp recompiles the C objects when switching modes.
 [visibility](../PERFORMANCE_VISIBILITY.md), [effects](../PERFORMANCE_EFFECTS.md),
 [scenarios](../PERFORMANCE_SCENARIOS.md) and [regression](REGRESSION.md) notes
 record individual proof boundaries rather than treating check counts as FPS.
+
+## Frozen production qualification
+
+Source: `c09e29092e0d2ba6107659f975ed0c3ec41c3936`.
+ROM: 655,332 bytes, SHA256
+`59f1e54cbbbac7e8f31b4e0c4623db72fe1f2a2190c7ceee5cc6fd559c6be898`.
+
+| Production measurement | Previous | Optimized |
+| --- | ---: | ---: |
+| 75 natural rooms | 12,723 /13,500 updates | 13,500 /13,500 |
+| 30 sustained enemy fixtures | 4,423 /5,400 | 5,400 /5,400 |
+| Warmed dark room | 90 /180 | 180 /180 |
+| 146-context corpus | 24,033 /25,920 | 25,907 /25,920 |
+
+All sustained populations retain their actual enemies, including 24-member
+groups. Initial enemy types and counts match the reference. The wider corpus
+retains 13 repeated-update observations; 12 occur at initial sampling
+boundaries and one occurs in a mixed 16-enemy combat case. These are retained
+in the published traces. Cold item/key/overview/zoom entry improves by one
+to two video frames. An additional 900-frame live Heart/projectile pressure
+sample reaches 899 updates versus 898 previously.
+
+The independent committed-build qualification passes 900/900. Every authored
+art file and packed native asset remains exact. All 24 matched forest renders
+and 45 menu/preference renders are pixel-identical. The actual gameplay
+suites pass HUD 290, progression 80, saves 6, quests 12, pockets 18 and revisits 8.
+Differential algorithm tests and undefined-behavior checks also pass.
+
+Internal RAM holds 3,948 bytes of initialized data/hot code and 22,316 bytes
+of static data. The system stack retains 6,248 bytes below its 0x03007F00
+start, exceeding the enforced 4KB minimum. External RAM uses 253,248 bytes,
+leaving 8,896 bytes. Normal make is verified to emit the exact frozen ROM with
+no profiler symbols. Both diagnostic timer builds use identical measurement
+wrappers; their CPU-cycle plots are separate from production FPS evidence.

@@ -29,3 +29,6 @@
 
 # Exact reviewed gilt HUD production linker map.
 /art-review/hud-gilt/validation/frozen/bartgame.map -whitespace
+
+# Preserve the exact reviewed performance linker map.
+/performance-review/validation/frozen/bartgame.map -whitespace

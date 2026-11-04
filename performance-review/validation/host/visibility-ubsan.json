@@ -1,0 +1,48 @@
+{
+  "method": "Compare packed canopy queries and Bloom guard against the original pixels.\n\nHost execution maps a private fake GBA VRAM range, varies actual live entries,\ntile alpha/flips, room bounds, legacy foliage and both tree planes, and compares\nthe optimized row query with32 original scalar calls. The complete original\nprepare_canopy_visibility function is read from the frozen baseline revision;\nall133 native poses, palette classifications, flips and both tree priorities\nare compared byte-for-byte, including diagnostics and queue arguments. This\nalso compares240,000 depth queries with the complete original priority\nfunction, varying planted owner rows and native body bounds. This is a\npure-query/guard equivalence check, not an emulator performance claim.",
+  "baseline_source": "11b872e9897320398fa02344cef1418733c04e9a",
+  "passed": true,
+  "output": "PASS rows=240000 scalar_pixels=7680000 native_guard_cases=38552 frames=133 depth_cases=240000 prop_cases=240000 mutations=20360\n",
+  "source_sha256": {
+    "src/forest_trees.c": "0cbff5d4d7dcf488fa9a53a5705ea1f2f4de5298f2a96693df733c200dfae5a9",
+    "src/forest_trees.h": "c64d3105a1ab1d3bcb1640f355deeb4e44342c57ae2feb6bb580a899128b7b6f",
+    "src/room.c": "6ae3583e7c834bf1399d875ed343f20c15616da18c407175473c2d38e47b90a4",
+    "src/room.h": "786ae0182fc4685e4a4a1d4f0a6cfbe28aeaba017751480c85e90f32522e2c48",
+    "src/player.c": "7ff0dde31687d8cee682fdcd13bd7cc765009afa8ea1333a87e0f9dd812a7e4e",
+    "src/forest_depth_iwram.c": "1302e3b27cf1c729ca8a76eb3df7555449bd8936a39ee315378051392c94c930"
+  },
+  "compiler_command": [
+    "gcc",
+    "-fsanitize=undefined",
+    "-fno-sanitize-recover=undefined",
+    "-O2",
+    "-fno-builtin",
+    "-fno-strict-aliasing",
+    "-ffunction-sections",
+    "-fdata-sections",
+    "-Wno-attributes",
+    "-Wno-pointer-to-int-cast",
+    "-Wno-int-to-pointer-cast",
+    "-I/workspace/bartgame/bartgame/src",
+    "-I/workspace/bartgame/bartgame/build/gen",
+    "/workspace/setup/performance/final-host/visibility-host/driver.c",
+    "/workspace/setup/performance/final-host/visibility-host/trees.c",
+    "/workspace/setup/performance/final-host/visibility-host/player.c",
+    "/workspace/setup/performance/final-host/visibility-host/room.c",
+    "/workspace/bartgame/bartgame/src/forest_depth_iwram.c",
+    "/workspace/bartgame/bartgame/build/gen/assets.c",
+    "-Wl,--gc-sections",
+    "-o",
+    "/workspace/setup/performance/final-host/visibility-ubsan"
+  ],
+  "counts": {
+    "row_queries": 240000,
+    "scalar_pixel_queries": 7680000,
+    "native_guard_cases": 38552,
+    "hero_frames": 133,
+    "depth_cases": 240000,
+    "prop_cases": 240000,
+    "mutations": 20360
+  },
+  "sanitizer": "undefined, no recovery"
+}

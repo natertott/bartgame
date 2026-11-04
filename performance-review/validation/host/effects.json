@@ -1,0 +1,21 @@
+{
+  "passed": true,
+  "glitter_cases": 65536,
+  "glitter_draw_calls": 106666,
+  "actor_visual_queries_before": 1511437,
+  "actor_visual_queries_after": 541764,
+  "map_cases": 50000,
+  "map_uploads_before": 50000,
+  "map_uploads_after": 5185,
+  "number_cases": 138048,
+  "method": "Compare the original and optimized glitter selection/HUD map algorithms.\n\nThe actual C source from the baseline revision and current checkout is compiled\nfor the host, with deterministic room/actor/render fixtures. Glitter calls,\nordering, priorities, frame counters and HUD shadow-map bytes must agree.\nThis establishes algorithm equivalence, not native GBA timing or full-game\nvisual correctness; the separate mGBA performance/render runs cover those.",
+  "baseline": "11b872e9897320398fa02344cef1418733c04e9a",
+  "current_source_sha256": {
+    "before/ambient.c": "3b53f1202201322acd952ce9b72d71613468327bfa735f11ae4b40feaa5294fd",
+    "before/text.c": "9772686f9054faf4336b84fc2531f27bc5e611a2dec03a817660d8071df695aa",
+    "after/ambient.c": "934270c50a47a70f00b822c9de6232301d9b0ee7c7dc6fcc17377d7e6c76154b",
+    "after/text.c": "37ec2f9fc769038a8c7d4b95963d0d4fb5830c8e7ceef6e648760f18f2d893c2"
+  },
+  "tool_sha256": "2094b642d9cdb82363dabbc54913ff01930c64d305f8a331df781ca7ceed34f1",
+  "executable_sha256": "bb486a33999d98eb0b441f0a5e8504ad761e50788596cbdb37e2c58ce6ab1c52"
+}

@@ -1,0 +1,1541 @@
+{
+  "method": "Actual frozen-camera PPU views, actor/clock/pose isolation fixtures. No VRAM, palette, framebuffer or terrain injection.",
+  "cases": [
+    {
+      "phase": "before",
+      "room": "healthy",
+      "seed": "0xb4a7",
+      "cell": 16,
+      "camera": [
+        0,
+        0
+      ],
+      "clock": 256,
+      "player": [
+        88,
+        110
+      ],
+      "file": "isolated-native/before/healthy-000-000-256.png",
+      "sha256": "e9ac10d29719cec8481fde30fccde8d4fc9ce3284978d6fd5505f1055a3a10c0",
+      "RGB_sha256": "f66ab3dc7e47becded54dbd965de4cce8a626fb09cf2441fa6d2cc8ae075a3fd",
+      "guard": [
+        0,
+        0,
+        104,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        65535
+      ]
+    },
+    {
+      "phase": "before",
+      "room": "healthy",
+      "seed": "0xb4a7",
+      "cell": 16,
+      "camera": [
+        0,
+        0
+      ],
+      "clock": 288,
+      "player": [
+        88,
+        110
+      ],
+      "file": "isolated-native/before/healthy-000-000-288.png",
+      "sha256": "2ac275a4212ffa55fe9e7b27f6bc01e07b9fa402e99c387b35c616df906e0aee",
+      "RGB_sha256": "50463eb1f3b020fd43edbe79a937af5b1a4fa483f1b609582d11001a7771499e",
+      "guard": [
+        0,
+        0,
+        104,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        65535
+      ]
+    },
+    {
+      "phase": "before",
+      "room": "healthy",
+      "seed": "0xb4a7",
+      "cell": 16,
+      "camera": [
+        136,
+        112
+      ],
+      "clock": 256,
+      "player": [
+        168,
+        158
+      ],
+      "file": "isolated-native/before/healthy-136-112-256.png",
+      "sha256": "417ba5df1aa7caaf598d705e59569cd56c12f9b9917321a858cf0886c766573c",
+      "RGB_sha256": "cea51b59320289331b6673522771fababc5a0450ca05217c8d95767d0f1bbfba",
+      "guard": [
+        0,
+        0,
+        104,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        65535
+      ]
+    },
+    {
+      "phase": "before",
+      "room": "healthy",
+      "seed": "0xb4a7",
+      "cell": 16,
+      "camera": [
+        136,
+        112
+      ],
+      "clock": 288,
+      "player": [
+        168,
+        158
+      ],
+      "file": "isolated-native/before/healthy-136-112-288.png",
+      "sha256": "05a4ca532202a989027035ff8c10105975ae153e843855d57eb3e3fc84fbba04",
+      "RGB_sha256": "fda834bc8671f631de692a9ede731f23016758eb670ec0a430c2129f7d07b64c",
+      "guard": [
+        0,
+        0,
+        104,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        65535
+      ]
+    },
+    {
+      "phase": "before",
+      "room": "healthy",
+      "seed": "0xb4a7",
+      "cell": 16,
+      "camera": [
+        272,
+        224
+      ],
+      "clock": 256,
+      "player": [
+        392,
+        270
+      ],
+      "file": "isolated-native/before/healthy-272-224-256.png",
+      "sha256": "2e318a411496c9a04cbbcb5d3f5fd43b8069374228603a4a387f8114e5f17754",
+      "RGB_sha256": "498aff0df77529c6800e4fca2b3cea6285afad28de692f7bdeb50837a2466a0b",
+      "guard": [
+        0,
+        0,
+        104,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        65535
+      ]
+    },
+    {
+      "phase": "before",
+      "room": "healthy",
+      "seed": "0xb4a7",
+      "cell": 16,
+      "camera": [
+        272,
+        224
+      ],
+      "clock": 288,
+      "player": [
+        392,
+        270
+      ],
+      "file": "isolated-native/before/healthy-272-224-288.png",
+      "sha256": "474ad58cbfba6e5c36ec54c13f31d87e82be21ebed536b01d2589cda383efc8b",
+      "RGB_sha256": "1f9c07eaac19f9867ebd4a347c743d9e37f6fc9ce1556514ccf2c6efd6e9d4c2",
+      "guard": [
+        0,
+        0,
+        104,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        65535
+      ]
+    },
+    {
+      "phase": "before",
+      "room": "mixed",
+      "seed": "0xb4a7",
+      "cell": 0,
+      "camera": [
+        0,
+        0
+      ],
+      "clock": 256,
+      "player": [
+        216,
+        110
+      ],
+      "file": "isolated-native/before/mixed-000-000-256.png",
+      "sha256": "c3e47eb7b5fbb48ddb3ba87f291f3b0090bbe04ece94f58400cce0f508fddf53",
+      "RGB_sha256": "ff0c096eed3205ef4e59e353b4679cec2e6fe6aff6c81a50a23f60dc37ed3ffd",
+      "guard": [
+        0,
+        0,
+        88,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        65535
+      ]
+    },
+    {
+      "phase": "before",
+      "room": "mixed",
+      "seed": "0xb4a7",
+      "cell": 0,
+      "camera": [
+        0,
+        0
+      ],
+      "clock": 288,
+      "player": [
+        216,
+        110
+      ],
+      "file": "isolated-native/before/mixed-000-000-288.png",
+      "sha256": "829872bf1ff0f388e9068605be768510730a92d714d9500a2a9a0c1abd967461",
+      "RGB_sha256": "94bb785577cc0bb0b65f47299c0a271d04d47f40447a9c1c8143d64a0ec2d518",
+      "guard": [
+        0,
+        0,
+        88,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        65535
+      ]
+    },
+    {
+      "phase": "before",
+      "room": "mixed",
+      "seed": "0xb4a7",
+      "cell": 0,
+      "camera": [
+        136,
+        112
+      ],
+      "clock": 256,
+      "player": [
+        328,
+        222
+      ],
+      "file": "isolated-native/before/mixed-136-112-256.png",
+      "sha256": "b3a65633106cb2b6e57e6122ec0a16847c207ce140917014e1067ca4f022e589",
+      "RGB_sha256": "bfd3a64fcce5d06375345cd592c5d8f25ba32e4e62e6fa4288537cebd6f6305b",
+      "guard": [
+        0,
+        0,
+        88,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        65535
+      ]
+    },
+    {
+      "phase": "before",
+      "room": "mixed",
+      "seed": "0xb4a7",
+      "cell": 0,
+      "camera": [
+        136,
+        112
+      ],
+      "clock": 288,
+      "player": [
+        328,
+        222
+      ],
+      "file": "isolated-native/before/mixed-136-112-288.png",
+      "sha256": "9279299d93fc814a6c3f84cd7587a285eddbd0dae6d6bb46426360e33db5a6aa",
+      "RGB_sha256": "b3b6bc21a7d79ce44f9eca23d1c219175309e322eccd6b46a4f0cd68aa5d626d",
+      "guard": [
+        0,
+        0,
+        88,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        65535
+      ]
+    },
+    {
+      "phase": "before",
+      "room": "mixed",
+      "seed": "0xb4a7",
+      "cell": 0,
+      "camera": [
+        272,
+        224
+      ],
+      "clock": 256,
+      "player": [
+        376,
+        318
+      ],
+      "file": "isolated-native/before/mixed-272-224-256.png",
+      "sha256": "3a5ecaf1ec9b4719b86492c859cbdedb9835674c8f393ffb4f99052859391d53",
+      "RGB_sha256": "5a0ec1a0bf3270f57079fb2991407b3683b87ce7ea0502fcca653f84252730c1",
+      "guard": [
+        1,
+        0,
+        88,
+        21,
+        226,
+        116,
+        95,
+        37,
+        83,
+        24,
+        2,
+        1
+      ]
+    },
+    {
+      "phase": "before",
+      "room": "mixed",
+      "seed": "0xb4a7",
+      "cell": 0,
+      "camera": [
+        272,
+        224
+      ],
+      "clock": 288,
+      "player": [
+        376,
+        318
+      ],
+      "file": "isolated-native/before/mixed-272-224-288.png",
+      "sha256": "2cee5af273ad2ec5a8685f8e6934e98e8b56f32290bcef687c804fa247cbf950",
+      "RGB_sha256": "370e1bec0aeab31fd8705693bc1cf97da81c95d17b95869aa187f90a327ad72b",
+      "guard": [
+        1,
+        0,
+        88,
+        21,
+        226,
+        116,
+        95,
+        37,
+        83,
+        24,
+        2,
+        2
+      ]
+    },
+    {
+      "phase": "before",
+      "room": "pond",
+      "seed": "0xb4a7",
+      "cell": 15,
+      "camera": [
+        0,
+        0
+      ],
+      "clock": 256,
+      "player": [
+        216,
+        126
+      ],
+      "file": "isolated-native/before/pond-000-000-256.png",
+      "sha256": "b0946525cda23486859e107ff169d047e2ccbfbd4bf2f4679630c1cfff35e49a",
+      "RGB_sha256": "3d27c866a2f048a215309b42a474753e3a7e70b2a5e63f5a95bf0a208403f626",
+      "guard": [
+        0,
+        0,
+        88,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        65535
+      ]
+    },
+    {
+      "phase": "before",
+      "room": "pond",
+      "seed": "0xb4a7",
+      "cell": 15,
+      "camera": [
+        0,
+        0
+      ],
+      "clock": 288,
+      "player": [
+        216,
+        126
+      ],
+      "file": "isolated-native/before/pond-000-000-288.png",
+      "sha256": "277d9556aff64600173d7117e3cd2a39419b9e27012c0c6954c37799b0732872",
+      "RGB_sha256": "ae73c429aae7197f258a796c0e3ba3f3eb8396c650faeb7ce558df6cb0f08b05",
+      "guard": [
+        0,
+        0,
+        88,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        65535
+      ]
+    },
+    {
+      "phase": "before",
+      "room": "pond",
+      "seed": "0xb4a7",
+      "cell": 15,
+      "camera": [
+        136,
+        112
+      ],
+      "clock": 256,
+      "player": [
+        216,
+        254
+      ],
+      "file": "isolated-native/before/pond-136-112-256.png",
+      "sha256": "5ff76581248a69f145315c38f50a314b793b4348bada669f8f28c8d361a2cd1f",
+      "RGB_sha256": "0df4f2e44934bdb425a81d031dc818454dae86543b76b32679557dc09e405add",
+      "guard": [
+        0,
+        0,
+        88,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        65535
+      ]
+    },
+    {
+      "phase": "before",
+      "room": "pond",
+      "seed": "0xb4a7",
+      "cell": 15,
+      "camera": [
+        136,
+        112
+      ],
+      "clock": 288,
+      "player": [
+        216,
+        254
+      ],
+      "file": "isolated-native/before/pond-136-112-288.png",
+      "sha256": "a5d35127664143eee446828e5da891b1347bfe6a6883b257139545b54f6cfcc8",
+      "RGB_sha256": "0128a9ede92a82bf6eb547680bb3675613b3da0a8cf58deaeb5a5b524b1ba089",
+      "guard": [
+        0,
+        0,
+        88,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        65535
+      ]
+    },
+    {
+      "phase": "before",
+      "room": "pond",
+      "seed": "0xb4a7",
+      "cell": 15,
+      "camera": [
+        272,
+        224
+      ],
+      "clock": 256,
+      "player": [
+        296,
+        270
+      ],
+      "file": "isolated-native/before/pond-272-224-256.png",
+      "sha256": "dcb73f75d3eb68c6251bb4a8b54cbfcb083ea3e058e05b914998545920e80db1",
+      "RGB_sha256": "e4410a0dd4a35a745411cd08690be463569416122abd94bd31d01fc8d4433444",
+      "guard": [
+        1,
+        0,
+        88,
+        21,
+        226,
+        116,
+        95,
+        37,
+        87,
+        27,
+        2,
+        1
+      ]
+    },
+    {
+      "phase": "before",
+      "room": "pond",
+      "seed": "0xb4a7",
+      "cell": 15,
+      "camera": [
+        272,
+        224
+      ],
+      "clock": 288,
+      "player": [
+        296,
+        270
+      ],
+      "file": "isolated-native/before/pond-272-224-288.png",
+      "sha256": "fec2a9ca453d0702efa5ee235fba351c30e7f628376cb3d51c42522e4647b308",
+      "RGB_sha256": "8e5cc6d6de47d0c84bb2058611f2427e761a690323c95180db59b0db0e65fbbb",
+      "guard": [
+        1,
+        0,
+        88,
+        21,
+        226,
+        116,
+        95,
+        37,
+        87,
+        27,
+        2,
+        1
+      ]
+    },
+    {
+      "phase": "before",
+      "room": "deep",
+      "seed": "0x6",
+      "cell": 4,
+      "camera": [
+        0,
+        0
+      ],
+      "clock": 256,
+      "player": [
+        120,
+        190
+      ],
+      "file": "isolated-native/before/deep-000-000-256.png",
+      "sha256": "7d77b3b0fe847bb1549fb49ca5034af7e9a8feb2d8af2d7956b9faf6e31c6602",
+      "RGB_sha256": "cbde7254c1c1f9e98f4ce0ea6172a72a0857e4cb91665358f442bdc2621f9a21",
+      "guard": [
+        0,
+        0,
+        56,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        65535
+      ]
+    },
+    {
+      "phase": "before",
+      "room": "deep",
+      "seed": "0x6",
+      "cell": 4,
+      "camera": [
+        0,
+        0
+      ],
+      "clock": 288,
+      "player": [
+        120,
+        190
+      ],
+      "file": "isolated-native/before/deep-000-000-288.png",
+      "sha256": "269e261b0d0b2d43219287c9181404afb0f17f608cf847ac5ddebb57bdb55a5c",
+      "RGB_sha256": "57491d5b639b98d735271394fdc58b376720c6132b68df0869b95b75749ca36c",
+      "guard": [
+        0,
+        0,
+        56,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        65535
+      ]
+    },
+    {
+      "phase": "before",
+      "room": "deep",
+      "seed": "0x6",
+      "cell": 4,
+      "camera": [
+        136,
+        112
+      ],
+      "clock": 256,
+      "player": [
+        264,
+        206
+      ],
+      "file": "isolated-native/before/deep-136-112-256.png",
+      "sha256": "783375482fc5e971e57bf6d398a0fdc55e73f0078b867b59ecfa76d15f1036f8",
+      "RGB_sha256": "9c5b5671bb4abe0e5fe8ddefa23d2fbf7d2c909781f72bfa943e70858e3c5619",
+      "guard": [
+        0,
+        0,
+        56,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        65535
+      ]
+    },
+    {
+      "phase": "before",
+      "room": "deep",
+      "seed": "0x6",
+      "cell": 4,
+      "camera": [
+        136,
+        112
+      ],
+      "clock": 288,
+      "player": [
+        264,
+        206
+      ],
+      "file": "isolated-native/before/deep-136-112-288.png",
+      "sha256": "98fa53d6bf4cc5a82132365a008f1b80f58b0ce24a614e4dd67ded6d28f4a496",
+      "RGB_sha256": "a38ddf417705063693b10bc31b980701520173d33c95322f2ed14b8425adffa0",
+      "guard": [
+        0,
+        0,
+        56,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        65535
+      ]
+    },
+    {
+      "phase": "before",
+      "room": "deep",
+      "seed": "0x6",
+      "cell": 4,
+      "camera": [
+        272,
+        224
+      ],
+      "clock": 256,
+      "player": [
+        296,
+        286
+      ],
+      "file": "isolated-native/before/deep-272-224-256.png",
+      "sha256": "711896820f69e5b6f469dd318f263cabd43ed80fca32c4b12bfa7f232cb59e73",
+      "RGB_sha256": "f0bb2be6312cfef6a22ff7ee9f0e79275c663d55e2f1adbc327aaeeb722ede8e",
+      "guard": [
+        0,
+        0,
+        56,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        65535
+      ]
+    },
+    {
+      "phase": "before",
+      "room": "deep",
+      "seed": "0x6",
+      "cell": 4,
+      "camera": [
+        272,
+        224
+      ],
+      "clock": 288,
+      "player": [
+        296,
+        286
+      ],
+      "file": "isolated-native/before/deep-272-224-288.png",
+      "sha256": "2045c58fea80648320360946b88bd1863595abf453168c56a7bd2e03cdb7d80e",
+      "RGB_sha256": "9b7ab76b034e7a80482fe26ca5ed07687f7cdd3f72ce76ba5afd98eec24db3d5",
+      "guard": [
+        0,
+        0,
+        56,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        65535
+      ]
+    },
+    {
+      "phase": "after",
+      "room": "healthy",
+      "seed": "0xb4a7",
+      "cell": 16,
+      "camera": [
+        0,
+        0
+      ],
+      "clock": 256,
+      "player": [
+        88,
+        110
+      ],
+      "file": "isolated-native/after/healthy-000-000-256.png",
+      "sha256": "e9ac10d29719cec8481fde30fccde8d4fc9ce3284978d6fd5505f1055a3a10c0",
+      "RGB_sha256": "f66ab3dc7e47becded54dbd965de4cce8a626fb09cf2441fa6d2cc8ae075a3fd",
+      "guard": [
+        0,
+        0,
+        104,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        65535
+      ]
+    },
+    {
+      "phase": "after",
+      "room": "healthy",
+      "seed": "0xb4a7",
+      "cell": 16,
+      "camera": [
+        0,
+        0
+      ],
+      "clock": 288,
+      "player": [
+        88,
+        110
+      ],
+      "file": "isolated-native/after/healthy-000-000-288.png",
+      "sha256": "2ac275a4212ffa55fe9e7b27f6bc01e07b9fa402e99c387b35c616df906e0aee",
+      "RGB_sha256": "50463eb1f3b020fd43edbe79a937af5b1a4fa483f1b609582d11001a7771499e",
+      "guard": [
+        0,
+        0,
+        104,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        65535
+      ]
+    },
+    {
+      "phase": "after",
+      "room": "healthy",
+      "seed": "0xb4a7",
+      "cell": 16,
+      "camera": [
+        136,
+        112
+      ],
+      "clock": 256,
+      "player": [
+        168,
+        158
+      ],
+      "file": "isolated-native/after/healthy-136-112-256.png",
+      "sha256": "417ba5df1aa7caaf598d705e59569cd56c12f9b9917321a858cf0886c766573c",
+      "RGB_sha256": "cea51b59320289331b6673522771fababc5a0450ca05217c8d95767d0f1bbfba",
+      "guard": [
+        0,
+        0,
+        104,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        65535
+      ]
+    },
+    {
+      "phase": "after",
+      "room": "healthy",
+      "seed": "0xb4a7",
+      "cell": 16,
+      "camera": [
+        136,
+        112
+      ],
+      "clock": 288,
+      "player": [
+        168,
+        158
+      ],
+      "file": "isolated-native/after/healthy-136-112-288.png",
+      "sha256": "05a4ca532202a989027035ff8c10105975ae153e843855d57eb3e3fc84fbba04",
+      "RGB_sha256": "fda834bc8671f631de692a9ede731f23016758eb670ec0a430c2129f7d07b64c",
+      "guard": [
+        0,
+        0,
+        104,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        65535
+      ]
+    },
+    {
+      "phase": "after",
+      "room": "healthy",
+      "seed": "0xb4a7",
+      "cell": 16,
+      "camera": [
+        272,
+        224
+      ],
+      "clock": 256,
+      "player": [
+        392,
+        270
+      ],
+      "file": "isolated-native/after/healthy-272-224-256.png",
+      "sha256": "2e318a411496c9a04cbbcb5d3f5fd43b8069374228603a4a387f8114e5f17754",
+      "RGB_sha256": "498aff0df77529c6800e4fca2b3cea6285afad28de692f7bdeb50837a2466a0b",
+      "guard": [
+        0,
+        0,
+        104,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        65535
+      ]
+    },
+    {
+      "phase": "after",
+      "room": "healthy",
+      "seed": "0xb4a7",
+      "cell": 16,
+      "camera": [
+        272,
+        224
+      ],
+      "clock": 288,
+      "player": [
+        392,
+        270
+      ],
+      "file": "isolated-native/after/healthy-272-224-288.png",
+      "sha256": "474ad58cbfba6e5c36ec54c13f31d87e82be21ebed536b01d2589cda383efc8b",
+      "RGB_sha256": "1f9c07eaac19f9867ebd4a347c743d9e37f6fc9ce1556514ccf2c6efd6e9d4c2",
+      "guard": [
+        0,
+        0,
+        104,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        65535
+      ]
+    },
+    {
+      "phase": "after",
+      "room": "mixed",
+      "seed": "0xb4a7",
+      "cell": 0,
+      "camera": [
+        0,
+        0
+      ],
+      "clock": 256,
+      "player": [
+        216,
+        110
+      ],
+      "file": "isolated-native/after/mixed-000-000-256.png",
+      "sha256": "c3e47eb7b5fbb48ddb3ba87f291f3b0090bbe04ece94f58400cce0f508fddf53",
+      "RGB_sha256": "ff0c096eed3205ef4e59e353b4679cec2e6fe6aff6c81a50a23f60dc37ed3ffd",
+      "guard": [
+        0,
+        0,
+        88,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        65535
+      ]
+    },
+    {
+      "phase": "after",
+      "room": "mixed",
+      "seed": "0xb4a7",
+      "cell": 0,
+      "camera": [
+        0,
+        0
+      ],
+      "clock": 288,
+      "player": [
+        216,
+        110
+      ],
+      "file": "isolated-native/after/mixed-000-000-288.png",
+      "sha256": "829872bf1ff0f388e9068605be768510730a92d714d9500a2a9a0c1abd967461",
+      "RGB_sha256": "94bb785577cc0bb0b65f47299c0a271d04d47f40447a9c1c8143d64a0ec2d518",
+      "guard": [
+        0,
+        0,
+        88,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        65535
+      ]
+    },
+    {
+      "phase": "after",
+      "room": "mixed",
+      "seed": "0xb4a7",
+      "cell": 0,
+      "camera": [
+        136,
+        112
+      ],
+      "clock": 256,
+      "player": [
+        328,
+        222
+      ],
+      "file": "isolated-native/after/mixed-136-112-256.png",
+      "sha256": "b3a65633106cb2b6e57e6122ec0a16847c207ce140917014e1067ca4f022e589",
+      "RGB_sha256": "bfd3a64fcce5d06375345cd592c5d8f25ba32e4e62e6fa4288537cebd6f6305b",
+      "guard": [
+        0,
+        0,
+        88,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        65535
+      ]
+    },
+    {
+      "phase": "after",
+      "room": "mixed",
+      "seed": "0xb4a7",
+      "cell": 0,
+      "camera": [
+        136,
+        112
+      ],
+      "clock": 288,
+      "player": [
+        328,
+        222
+      ],
+      "file": "isolated-native/after/mixed-136-112-288.png",
+      "sha256": "9279299d93fc814a6c3f84cd7587a285eddbd0dae6d6bb46426360e33db5a6aa",
+      "RGB_sha256": "b3b6bc21a7d79ce44f9eca23d1c219175309e322eccd6b46a4f0cd68aa5d626d",
+      "guard": [
+        0,
+        0,
+        88,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        65535
+      ]
+    },
+    {
+      "phase": "after",
+      "room": "mixed",
+      "seed": "0xb4a7",
+      "cell": 0,
+      "camera": [
+        272,
+        224
+      ],
+      "clock": 256,
+      "player": [
+        376,
+        318
+      ],
+      "file": "isolated-native/after/mixed-272-224-256.png",
+      "sha256": "3a5ecaf1ec9b4719b86492c859cbdedb9835674c8f393ffb4f99052859391d53",
+      "RGB_sha256": "5a0ec1a0bf3270f57079fb2991407b3683b87ce7ea0502fcca653f84252730c1",
+      "guard": [
+        1,
+        0,
+        88,
+        21,
+        226,
+        116,
+        95,
+        37,
+        83,
+        24,
+        2,
+        1
+      ]
+    },
+    {
+      "phase": "after",
+      "room": "mixed",
+      "seed": "0xb4a7",
+      "cell": 0,
+      "camera": [
+        272,
+        224
+      ],
+      "clock": 288,
+      "player": [
+        376,
+        318
+      ],
+      "file": "isolated-native/after/mixed-272-224-288.png",
+      "sha256": "2cee5af273ad2ec5a8685f8e6934e98e8b56f32290bcef687c804fa247cbf950",
+      "RGB_sha256": "370e1bec0aeab31fd8705693bc1cf97da81c95d17b95869aa187f90a327ad72b",
+      "guard": [
+        1,
+        0,
+        88,
+        21,
+        226,
+        116,
+        95,
+        37,
+        83,
+        24,
+        2,
+        2
+      ]
+    },
+    {
+      "phase": "after",
+      "room": "pond",
+      "seed": "0xb4a7",
+      "cell": 15,
+      "camera": [
+        0,
+        0
+      ],
+      "clock": 256,
+      "player": [
+        216,
+        126
+      ],
+      "file": "isolated-native/after/pond-000-000-256.png",
+      "sha256": "b0946525cda23486859e107ff169d047e2ccbfbd4bf2f4679630c1cfff35e49a",
+      "RGB_sha256": "3d27c866a2f048a215309b42a474753e3a7e70b2a5e63f5a95bf0a208403f626",
+      "guard": [
+        0,
+        0,
+        88,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        65535
+      ]
+    },
+    {
+      "phase": "after",
+      "room": "pond",
+      "seed": "0xb4a7",
+      "cell": 15,
+      "camera": [
+        0,
+        0
+      ],
+      "clock": 288,
+      "player": [
+        216,
+        126
+      ],
+      "file": "isolated-native/after/pond-000-000-288.png",
+      "sha256": "277d9556aff64600173d7117e3cd2a39419b9e27012c0c6954c37799b0732872",
+      "RGB_sha256": "ae73c429aae7197f258a796c0e3ba3f3eb8396c650faeb7ce558df6cb0f08b05",
+      "guard": [
+        0,
+        0,
+        88,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        65535
+      ]
+    },
+    {
+      "phase": "after",
+      "room": "pond",
+      "seed": "0xb4a7",
+      "cell": 15,
+      "camera": [
+        136,
+        112
+      ],
+      "clock": 256,
+      "player": [
+        216,
+        254
+      ],
+      "file": "isolated-native/after/pond-136-112-256.png",
+      "sha256": "5ff76581248a69f145315c38f50a314b793b4348bada669f8f28c8d361a2cd1f",
+      "RGB_sha256": "0df4f2e44934bdb425a81d031dc818454dae86543b76b32679557dc09e405add",
+      "guard": [
+        0,
+        0,
+        88,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        65535
+      ]
+    },
+    {
+      "phase": "after",
+      "room": "pond",
+      "seed": "0xb4a7",
+      "cell": 15,
+      "camera": [
+        136,
+        112
+      ],
+      "clock": 288,
+      "player": [
+        216,
+        254
+      ],
+      "file": "isolated-native/after/pond-136-112-288.png",
+      "sha256": "a5d35127664143eee446828e5da891b1347bfe6a6883b257139545b54f6cfcc8",
+      "RGB_sha256": "0128a9ede92a82bf6eb547680bb3675613b3da0a8cf58deaeb5a5b524b1ba089",
+      "guard": [
+        0,
+        0,
+        88,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        65535
+      ]
+    },
+    {
+      "phase": "after",
+      "room": "pond",
+      "seed": "0xb4a7",
+      "cell": 15,
+      "camera": [
+        272,
+        224
+      ],
+      "clock": 256,
+      "player": [
+        296,
+        270
+      ],
+      "file": "isolated-native/after/pond-272-224-256.png",
+      "sha256": "dcb73f75d3eb68c6251bb4a8b54cbfcb083ea3e058e05b914998545920e80db1",
+      "RGB_sha256": "e4410a0dd4a35a745411cd08690be463569416122abd94bd31d01fc8d4433444",
+      "guard": [
+        1,
+        0,
+        88,
+        21,
+        226,
+        116,
+        95,
+        37,
+        87,
+        27,
+        2,
+        1
+      ]
+    },
+    {
+      "phase": "after",
+      "room": "pond",
+      "seed": "0xb4a7",
+      "cell": 15,
+      "camera": [
+        272,
+        224
+      ],
+      "clock": 288,
+      "player": [
+        296,
+        270
+      ],
+      "file": "isolated-native/after/pond-272-224-288.png",
+      "sha256": "fec2a9ca453d0702efa5ee235fba351c30e7f628376cb3d51c42522e4647b308",
+      "RGB_sha256": "8e5cc6d6de47d0c84bb2058611f2427e761a690323c95180db59b0db0e65fbbb",
+      "guard": [
+        1,
+        0,
+        88,
+        21,
+        226,
+        116,
+        95,
+        37,
+        87,
+        27,
+        2,
+        1
+      ]
+    },
+    {
+      "phase": "after",
+      "room": "deep",
+      "seed": "0x6",
+      "cell": 4,
+      "camera": [
+        0,
+        0
+      ],
+      "clock": 256,
+      "player": [
+        120,
+        190
+      ],
+      "file": "isolated-native/after/deep-000-000-256.png",
+      "sha256": "7d77b3b0fe847bb1549fb49ca5034af7e9a8feb2d8af2d7956b9faf6e31c6602",
+      "RGB_sha256": "cbde7254c1c1f9e98f4ce0ea6172a72a0857e4cb91665358f442bdc2621f9a21",
+      "guard": [
+        0,
+        0,
+        56,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        65535
+      ]
+    },
+    {
+      "phase": "after",
+      "room": "deep",
+      "seed": "0x6",
+      "cell": 4,
+      "camera": [
+        0,
+        0
+      ],
+      "clock": 288,
+      "player": [
+        120,
+        190
+      ],
+      "file": "isolated-native/after/deep-000-000-288.png",
+      "sha256": "269e261b0d0b2d43219287c9181404afb0f17f608cf847ac5ddebb57bdb55a5c",
+      "RGB_sha256": "57491d5b639b98d735271394fdc58b376720c6132b68df0869b95b75749ca36c",
+      "guard": [
+        0,
+        0,
+        56,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        65535
+      ]
+    },
+    {
+      "phase": "after",
+      "room": "deep",
+      "seed": "0x6",
+      "cell": 4,
+      "camera": [
+        136,
+        112
+      ],
+      "clock": 256,
+      "player": [
+        264,
+        206
+      ],
+      "file": "isolated-native/after/deep-136-112-256.png",
+      "sha256": "783375482fc5e971e57bf6d398a0fdc55e73f0078b867b59ecfa76d15f1036f8",
+      "RGB_sha256": "9c5b5671bb4abe0e5fe8ddefa23d2fbf7d2c909781f72bfa943e70858e3c5619",
+      "guard": [
+        0,
+        0,
+        56,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        65535
+      ]
+    },
+    {
+      "phase": "after",
+      "room": "deep",
+      "seed": "0x6",
+      "cell": 4,
+      "camera": [
+        136,
+        112
+      ],
+      "clock": 288,
+      "player": [
+        264,
+        206
+      ],
+      "file": "isolated-native/after/deep-136-112-288.png",
+      "sha256": "98fa53d6bf4cc5a82132365a008f1b80f58b0ce24a614e4dd67ded6d28f4a496",
+      "RGB_sha256": "a38ddf417705063693b10bc31b980701520173d33c95322f2ed14b8425adffa0",
+      "guard": [
+        0,
+        0,
+        56,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        65535
+      ]
+    },
+    {
+      "phase": "after",
+      "room": "deep",
+      "seed": "0x6",
+      "cell": 4,
+      "camera": [
+        272,
+        224
+      ],
+      "clock": 256,
+      "player": [
+        296,
+        286
+      ],
+      "file": "isolated-native/after/deep-272-224-256.png",
+      "sha256": "711896820f69e5b6f469dd318f263cabd43ed80fca32c4b12bfa7f232cb59e73",
+      "RGB_sha256": "f0bb2be6312cfef6a22ff7ee9f0e79275c663d55e2f1adbc327aaeeb722ede8e",
+      "guard": [
+        0,
+        0,
+        56,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        65535
+      ]
+    },
+    {
+      "phase": "after",
+      "room": "deep",
+      "seed": "0x6",
+      "cell": 4,
+      "camera": [
+        272,
+        224
+      ],
+      "clock": 288,
+      "player": [
+        296,
+        286
+      ],
+      "file": "isolated-native/after/deep-272-224-288.png",
+      "sha256": "2045c58fea80648320360946b88bd1863595abf453168c56a7bd2e03cdb7d80e",
+      "RGB_sha256": "9b7ab76b034e7a80482fe26ca5ed07687f7cdd3f72ce76ba5afd98eec24db3d5",
+      "guard": [
+        0,
+        0,
+        56,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        65535
+      ]
+    }
+  ]
+}

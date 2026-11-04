@@ -1,0 +1,26 @@
+{
+  "method": "Differential test of the unlit-torch cache through actual room write APIs.\n\nThe original/candidate room mutation and torch-count C functions are compiled\nagainst native ROM metadata. Video/forest/interactive rendering is stubbed,\nwhile room geometry, collision rebuilding and barrier-substrate selection use\nthe extracted C. Preview-details uses its actual save/restore function with a\ndisclosed deterministic generator stub that calls the real room write APIs.\nNo generator, game, art or ARM build is changed by this test.",
+  "before_source": "11b872e9897320398fa02344cef1418733c04e9a",
+  "after_source": "c09e29092e0d2ba6107659f975ed0c3ec41c3936",
+  "source_sha256": {
+    "before": {
+      "room.c": "ac90cd52f99aeba570a81904a40ede49d214a56be817085c48abcda263abe83d",
+      "react.c": "5eeb327cfea6670cd1adb04ccac094247da1335bd83e81f8595da1e4a031855b",
+      "roomgen.c": "1eccbc2d4941f9cd09da1bb1016bf890b83aba539395cfcf21b1f562b4e74cb5"
+    },
+    "after": {
+      "room.c": "6ae3583e7c834bf1399d875ed343f20c15616da18c407175473c2d38e47b90a4",
+      "react.c": "0f42d55dbd6a64f2ac68f7c69e4a263ec7005c2cde70275549d14e3e3db2393f",
+      "roomgen.c": "272fe98f1799078ec125c0f29eb8abdbc59289567f8715e4ce041228446c60a2"
+    }
+  },
+  "native_rom_sha256": "1bd913bc5bf1ad81e9c1dcc7e07ebc38eac855d390a5bb613257f8fbfe128e59",
+  "passed": true,
+  "cases": 12959,
+  "checks": 259347,
+  "cache_hits": 90713,
+  "room_type_calls": 3407986,
+  "preview_cases": 29,
+  "invalid_coordinate_writes": 6855,
+  "torch_lit_transitions": 42
+}

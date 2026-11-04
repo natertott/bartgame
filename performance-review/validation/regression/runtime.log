@@ -1,0 +1,126 @@
+PASS forest cohesion profile32 is loaded
+PASS ordinary boot reaches native title bitmap
+PASS title Options opens through real input
+PASS Options returns to title without forest layer
+PASS normal Start begins in the Drain
+PASS Drain boot does not enable forest BG3 roots
+PASS Drain boot restores the ordinary menu BG3screen22
+PASS real ladder input enters generated entry room
+PASS entry forest uses all three world layers
+PASS entry forest reserves BG3screen12 charbase0 size64
+PASS entry forest keeps floor behind tree bases
+PASS Start opens item page
+PASS item menu owns BG3screen22 size32 charbase0
+PASS R opens key-item page
+PASS R opens region map
+PASS A opens room zoom map
+PASS B returns to overview map
+PASS Start returns to normal world
+PASS returned forest uses all three world layers
+PASS returned forest reserves BG3screen12 charbase0 size64
+PASS returned forest keeps floor behind tree bases
+PASS menu restores exact bg1
+PASS menu restores exact bg2
+PASS menu restores exact bg3
+PASS menu restores exact static_atlas
+PASS menu restores exact collision
+PASS menu restores exact root_owners
+PASS menu restores exact placements
+PASS menu restores exact tree_palette
+PASS menu restores exact motif_metadata
+PASS generated room contains a safely approachable cuttable bush
+PASS ordinary sword input cuts the generated bush
+PASS bush cut updates the real collision grid
+PASS room_change preserves planted tree placements
+PASS room_change preserves planted tree root_owners
+PASS room_change preserves planted tree bg3
+PASS post-cut item menu opens
+PASS post-cut item menu closes
+PASS same-room cache restores cut-room bg1
+PASS same-room cache restores cut-room bg2
+PASS same-room cache restores cut-room bg3
+PASS same-room cache restores cut-room static_atlas
+PASS same-room cache restores cut-room collision
+PASS same-room cache restores cut-room root_owners
+PASS same-room cache restores cut-room placements
+PASS same-room cache restores cut-room tree_palette
+PASS same-room cache restores cut-room motif_metadata
+PASS cut floor and open collision survive menu redraw
+PASS transition request settles in area1 cell0
+PASS existing mystery mouth enters its generated interior
+PASS mystery interior does not enable forest BG3 roots
+PASS mystery interior restores the ordinary menu BG3screen22
+PASS transition request settles in area1 cell0
+PASS forest after mystery uses all three world layers
+PASS forest after mystery reserves BG3screen12 charbase0 size64
+PASS forest after mystery keeps floor behind tree bases
+PASS transition request settles in area0 cell0
+PASS Drain return does not enable forest BG3 roots
+PASS Drain return restores the ordinary menu BG3screen22
+PASS forest re-entry uses all three world layers
+PASS forest re-entry reserves BG3screen12 charbase0 size64
+PASS forest re-entry keeps floor behind tree bases
+seed 0xb4a7
+entry 22 goal 20 path [22, 23, 18, 19, 14, 9, 4, 3, 2, 1, 6, 5, 10, 15, 20]
+gates [(23, 0, 'CRACK'), (4, 3, 'WEB'), (15, 2, 'CHASM')]
+keys [11, 7, 0]
+PASS ENTRY: the drain leads to the entry cell     cell 22
+PASS critical path: ENTRY: the drain leads to the entry cell
+   cross 22 side 3: 22 -> 21 pos (490, 200) hp 24
+   cross 21 side 0: 21 -> 16 pos (256, 364) hp 24
+   cross 16 side 0: 16 -> 11 pos (256, 364) hp 24
+PASS TRIAL: reached the seed trial room           cell 11
+PASS critical path: TRIAL: reached the seed trial room
+PASS TRIAL: its event is completed and claimed    
+PASS critical path: TRIAL: its event is completed and claimed
+PASS KEYS: the earned chest grants the bombs      items 0x43 bombs 10
+PASS critical path: KEYS: the earned chest grants the bombs
+   cross 11 side 2: 11 -> 16 pos (256, 52) hp 24
+   cross 16 side 2: 16 -> 21 pos (256, 52) hp 24
+   cross 21 side 1: 21 -> 22 pos (22, 200) hp 24
+   cross 22 side 1: 22 -> 23 pos (22, 200) hp 24
+PASS CRACK: reached the cracked wall              cell 23
+PASS critical path: CRACK: reached the cracked wall
+PASS CRACK: the bomb opened it                    cell 23 -> 18
+PASS critical path: CRACK: the bomb opened it
+   cross 18 side 3: 18 -> 17 pos (490, 200) hp 24
+   cross 17 side 0: 17 -> 12 pos (256, 364) hp 24
+   cross 12 side 0: 12 -> 7 pos (256, 364) hp 24
+PASS TRIAL: reached the candle trial room         cell 7
+PASS critical path: TRIAL: reached the candle trial room
+PASS TRIAL: its event is completed and claimed    
+PASS critical path: TRIAL: its event is completed and claimed
+PASS KEYS: the earned chest grants the lamp       items 0x47
+PASS critical path: KEYS: the earned chest grants the lamp
+   cross 7 side 2: 7 -> 12 pos (256, 52) hp 24
+   cross 12 side 2: 12 -> 17 pos (256, 52) hp 24
+   cross 17 side 1: 17 -> 18 pos (22, 200) hp 24
+   cross 18 side 0: 18 -> 13 pos (256, 364) hp 24
+   cross 13 side 1: 13 -> 14 pos (22, 200) hp 24
+   cross 14 side 0: 14 -> 9 pos (256, 364) hp 24
+   cross 9 side 0: 9 -> 4 pos (256, 364) hp 24
+PASS WEB: reached the web                         cell 4
+PASS critical path: WEB: reached the web
+PASS WEB: the lamp burned it                      cell 4 -> 3
+PASS critical path: WEB: the lamp burned it
+   cross 3 side 3: 3 -> 2 pos (490, 200) hp 24
+   cross 2 side 3: 2 -> 1 pos (490, 200) hp 24
+   cross 1 side 3: 1 -> 0 pos (490, 200) hp 24
+PASS TRIAL: reached the cape trial room           cell 0
+PASS critical path: TRIAL: reached the cape trial room
+PASS TRIAL: its event is completed and claimed    
+PASS critical path: TRIAL: its event is completed and claimed
+PASS KEYS: the earned chest grants the cloak      items 0x4f
+PASS critical path: KEYS: the earned chest grants the cloak
+   cross 0 side 2: 0 -> 5 pos (256, 52) hp 24
+   cross 5 side 2: 5 -> 10 pos (256, 52) hp 24
+   cross 10 side 2: 10 -> 15 pos (256, 52) hp 24
+PASS CHASM: reached the chasm                     cell 15
+PASS critical path: CHASM: reached the chasm
+PASS CHASM: the cloak crossed it                  cell 20 (hp 24)
+PASS critical path: CHASM: the cloak crossed it
+PASS GOAL: the goal room is entered               cell 20
+PASS critical path: GOAL: the goal room is entered
+RESULT PASS 17/17
+PASS all actual required trials/item gates reach the Heart room
+RESULT 80 / 80

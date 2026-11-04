@@ -1,0 +1,4413 @@
+{
+  "kind": "Untouched native mGBA framebuffers and exact sampled GIFs; no interpolation or repainting.",
+  "cases": [
+    {
+      "suite": "broad",
+      "name": "forest-0000b4a7-cell10",
+      "label": "Natural forest: seed0xB4A7 / room10",
+      "phases": {
+        "before": {
+          "gif": "actual/before/forest-0000b4a7-cell10/motion.gif",
+          "raw_frames": 180,
+          "sample_step": 6,
+          "duration_ms": 100,
+          "frames": [
+            {
+              "file": "clips/forest-0000b4a7-cell10/000.png",
+              "sha256": "de1a4da7894246e7c33123b46b3f932c762b3b50e38d824cd2fd6babd9625791",
+              "gFrame": 3125,
+              "logic": 2342
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/001.png",
+              "sha256": "b5f01a9f99a47167076d17a474c9c88370c2fa940dacdb4714e8f7ecb695324e",
+              "gFrame": 3126,
+              "logic": 2343
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/002.png",
+              "sha256": "b5f01a9f99a47167076d17a474c9c88370c2fa940dacdb4714e8f7ecb695324e",
+              "gFrame": 3127,
+              "logic": 2343
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/003.png",
+              "sha256": "8c9fb1dfab48f6d56dfcf9c5d2ed28ba90af1b8d3addf76614f5ceaa84f8797c",
+              "gFrame": 3128,
+              "logic": 2344
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/004.png",
+              "sha256": "8c9fb1dfab48f6d56dfcf9c5d2ed28ba90af1b8d3addf76614f5ceaa84f8797c",
+              "gFrame": 3129,
+              "logic": 2344
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/005.png",
+              "sha256": "c2bfe47e7806f4156c43f8602772abd1255ddb548981c073ae091c128b3032cc",
+              "gFrame": 3130,
+              "logic": 2345
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/006.png",
+              "sha256": "c2bfe47e7806f4156c43f8602772abd1255ddb548981c073ae091c128b3032cc",
+              "gFrame": 3131,
+              "logic": 2345
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/007.png",
+              "sha256": "ca482f36190823daff040773753420a3b02c23b17c39bc65784e284866b5a9f0",
+              "gFrame": 3132,
+              "logic": 2346
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/008.png",
+              "sha256": "ca482f36190823daff040773753420a3b02c23b17c39bc65784e284866b5a9f0",
+              "gFrame": 3133,
+              "logic": 2346
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/009.png",
+              "sha256": "1cd39857fa0d14ae7d3e1c10e9a00118513bb19a8d9727dd1cb838465aa7fda8",
+              "gFrame": 3134,
+              "logic": 2347
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/010.png",
+              "sha256": "1cd39857fa0d14ae7d3e1c10e9a00118513bb19a8d9727dd1cb838465aa7fda8",
+              "gFrame": 3135,
+              "logic": 2347
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/011.png",
+              "sha256": "26680703bd2524bd262c0d3befab12a261ae832295ccc200c2a4d54aac560b2b",
+              "gFrame": 3136,
+              "logic": 2348
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/012.png",
+              "sha256": "26680703bd2524bd262c0d3befab12a261ae832295ccc200c2a4d54aac560b2b",
+              "gFrame": 3137,
+              "logic": 2348
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/013.png",
+              "sha256": "397aaf6e921d68cbcbdca007675073808afec022981fae4f6e081954ab0674eb",
+              "gFrame": 3138,
+              "logic": 2349
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/014.png",
+              "sha256": "397aaf6e921d68cbcbdca007675073808afec022981fae4f6e081954ab0674eb",
+              "gFrame": 3139,
+              "logic": 2349
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/015.png",
+              "sha256": "3633c08159c234e1c6983559df56a1c294113ad350b1b2507c83dd7ed69ea2ac",
+              "gFrame": 3140,
+              "logic": 2350
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/016.png",
+              "sha256": "3633c08159c234e1c6983559df56a1c294113ad350b1b2507c83dd7ed69ea2ac",
+              "gFrame": 3141,
+              "logic": 2350
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/017.png",
+              "sha256": "91dd20416c3846913a38f08d240e278f4fad5e4acd67f8313ab49767f7014b4d",
+              "gFrame": 3142,
+              "logic": 2351
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/018.png",
+              "sha256": "91dd20416c3846913a38f08d240e278f4fad5e4acd67f8313ab49767f7014b4d",
+              "gFrame": 3143,
+              "logic": 2351
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/019.png",
+              "sha256": "051f07477fc60bd7f0c356bd9d96a8d085e9d8792c92150e230a757287fa4032",
+              "gFrame": 3144,
+              "logic": 2352
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/020.png",
+              "sha256": "051f07477fc60bd7f0c356bd9d96a8d085e9d8792c92150e230a757287fa4032",
+              "gFrame": 3145,
+              "logic": 2352
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/021.png",
+              "sha256": "68d1f0b03e4efc5a89ff73e62cfb407abedbaf8300c45c0090465569e8b5b352",
+              "gFrame": 3146,
+              "logic": 2353
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/022.png",
+              "sha256": "68d1f0b03e4efc5a89ff73e62cfb407abedbaf8300c45c0090465569e8b5b352",
+              "gFrame": 3147,
+              "logic": 2353
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/023.png",
+              "sha256": "8cc082d3359a37b3d4de0f8f0f961ca8a3a73578fcb7ce9099e39887e775a34b",
+              "gFrame": 3148,
+              "logic": 2354
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/024.png",
+              "sha256": "8cc082d3359a37b3d4de0f8f0f961ca8a3a73578fcb7ce9099e39887e775a34b",
+              "gFrame": 3149,
+              "logic": 2354
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/025.png",
+              "sha256": "8471b936468289a2c093073555059feb74735e66e4b79bfda4274fc677d0aa32",
+              "gFrame": 3150,
+              "logic": 2355
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/026.png",
+              "sha256": "8471b936468289a2c093073555059feb74735e66e4b79bfda4274fc677d0aa32",
+              "gFrame": 3151,
+              "logic": 2355
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/027.png",
+              "sha256": "db0ae935b169e36842de9551bae4d26312b2185aa0100752cb806894ef4e8c9a",
+              "gFrame": 3152,
+              "logic": 2356
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/028.png",
+              "sha256": "db0ae935b169e36842de9551bae4d26312b2185aa0100752cb806894ef4e8c9a",
+              "gFrame": 3153,
+              "logic": 2356
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/029.png",
+              "sha256": "cc4bd8b0801766dd0b5682bc560567381cf6a8f10bfbfca058f09552ab0e5b16",
+              "gFrame": 3154,
+              "logic": 2357
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/030.png",
+              "sha256": "cc4bd8b0801766dd0b5682bc560567381cf6a8f10bfbfca058f09552ab0e5b16",
+              "gFrame": 3155,
+              "logic": 2357
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/031.png",
+              "sha256": "0cf9adc80fc116d6117cf7edb57016a99cc5a2a7affb3a6e6478d4f396abe917",
+              "gFrame": 3156,
+              "logic": 2358
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/032.png",
+              "sha256": "0cf9adc80fc116d6117cf7edb57016a99cc5a2a7affb3a6e6478d4f396abe917",
+              "gFrame": 3157,
+              "logic": 2358
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/033.png",
+              "sha256": "d8095415bef43051895bbb7942ebf0a10e6c7af5f82b61cffed03ecca38019c9",
+              "gFrame": 3158,
+              "logic": 2359
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/034.png",
+              "sha256": "d8095415bef43051895bbb7942ebf0a10e6c7af5f82b61cffed03ecca38019c9",
+              "gFrame": 3159,
+              "logic": 2359
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/035.png",
+              "sha256": "30a310942174b1e539e7b8ef094b37f6bead9ec9c8dc1e53665bdac027bd1f31",
+              "gFrame": 3160,
+              "logic": 2360
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/036.png",
+              "sha256": "30a310942174b1e539e7b8ef094b37f6bead9ec9c8dc1e53665bdac027bd1f31",
+              "gFrame": 3161,
+              "logic": 2360
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/037.png",
+              "sha256": "08be0dd4a306650f55cbb5b544e08def97bb44b62bb4a1cc01b2cac987be9136",
+              "gFrame": 3162,
+              "logic": 2361
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/038.png",
+              "sha256": "08be0dd4a306650f55cbb5b544e08def97bb44b62bb4a1cc01b2cac987be9136",
+              "gFrame": 3163,
+              "logic": 2361
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/039.png",
+              "sha256": "0f1beaf61be661f554e4d90b5e9474e6cd40aff5a9316b841a15c10d34d647d3",
+              "gFrame": 3164,
+              "logic": 2362
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/040.png",
+              "sha256": "0f1beaf61be661f554e4d90b5e9474e6cd40aff5a9316b841a15c10d34d647d3",
+              "gFrame": 3165,
+              "logic": 2362
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/041.png",
+              "sha256": "4a78f189ea403c50fad1e87c5f0046b9124f559f0f542208f87aa1f4f96bc47c",
+              "gFrame": 3166,
+              "logic": 2363
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/042.png",
+              "sha256": "4a78f189ea403c50fad1e87c5f0046b9124f559f0f542208f87aa1f4f96bc47c",
+              "gFrame": 3167,
+              "logic": 2363
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/043.png",
+              "sha256": "268181d235563908fef85b9841fe3de9216d98ea92ebaa8546db3047575d83e7",
+              "gFrame": 3168,
+              "logic": 2364
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/044.png",
+              "sha256": "268181d235563908fef85b9841fe3de9216d98ea92ebaa8546db3047575d83e7",
+              "gFrame": 3169,
+              "logic": 2364
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/045.png",
+              "sha256": "954d23e9df06ce0500af4fb1221dade2f8eb85a702696e3051c432c20c935784",
+              "gFrame": 3170,
+              "logic": 2365
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/046.png",
+              "sha256": "954d23e9df06ce0500af4fb1221dade2f8eb85a702696e3051c432c20c935784",
+              "gFrame": 3171,
+              "logic": 2365
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/047.png",
+              "sha256": "2063e4ca97658ad9b4cfc964102be91448a19cd2f7dfe0c60901bc23eeb5fb5d",
+              "gFrame": 3172,
+              "logic": 2366
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/048.png",
+              "sha256": "2063e4ca97658ad9b4cfc964102be91448a19cd2f7dfe0c60901bc23eeb5fb5d",
+              "gFrame": 3173,
+              "logic": 2366
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/049.png",
+              "sha256": "7c54b2ec0edf170ae273e1b26a21892e51ef03afac14568c111a849277413256",
+              "gFrame": 3174,
+              "logic": 2367
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/050.png",
+              "sha256": "7c54b2ec0edf170ae273e1b26a21892e51ef03afac14568c111a849277413256",
+              "gFrame": 3175,
+              "logic": 2367
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/051.png",
+              "sha256": "2d24cf941564e79bde6bdbb0ff4dc7788354c90ed5177a0ac410c2bd395f2078",
+              "gFrame": 3176,
+              "logic": 2368
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/052.png",
+              "sha256": "2d24cf941564e79bde6bdbb0ff4dc7788354c90ed5177a0ac410c2bd395f2078",
+              "gFrame": 3177,
+              "logic": 2368
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/053.png",
+              "sha256": "b74cb10e03c35dd20fb05ddad71528e39be6d00fbf054cbdf6f04f3e242a2de3",
+              "gFrame": 3178,
+              "logic": 2369
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/054.png",
+              "sha256": "b74cb10e03c35dd20fb05ddad71528e39be6d00fbf054cbdf6f04f3e242a2de3",
+              "gFrame": 3179,
+              "logic": 2369
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/055.png",
+              "sha256": "aed447e3585b9d9919d02c7d3dcbc033f07fa82afa320657e8f7f02183330344",
+              "gFrame": 3180,
+              "logic": 2370
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/056.png",
+              "sha256": "9752b212b5b9e17004f1ddcab3a338b553a7e76995d4e6f75162879f20f96737",
+              "gFrame": 3181,
+              "logic": 2370
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/057.png",
+              "sha256": "1e09df34b12c42c2ae35858f6a704d8305736a8552e4dc0dcc5091a60efe55e3",
+              "gFrame": 3182,
+              "logic": 2371
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/058.png",
+              "sha256": "1e09df34b12c42c2ae35858f6a704d8305736a8552e4dc0dcc5091a60efe55e3",
+              "gFrame": 3183,
+              "logic": 2371
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/059.png",
+              "sha256": "2b7a06152b161f6e2fd529b37c4d2db37435a8882ce9d7ebace38822804b23d3",
+              "gFrame": 3184,
+              "logic": 2372
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/060.png",
+              "sha256": "2b7a06152b161f6e2fd529b37c4d2db37435a8882ce9d7ebace38822804b23d3",
+              "gFrame": 3185,
+              "logic": 2372
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/061.png",
+              "sha256": "89e5ccb8f01908182889529aead755c62850b69a8e4fea07916bd64d85a6c666",
+              "gFrame": 3186,
+              "logic": 2373
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/062.png",
+              "sha256": "89e5ccb8f01908182889529aead755c62850b69a8e4fea07916bd64d85a6c666",
+              "gFrame": 3187,
+              "logic": 2373
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/063.png",
+              "sha256": "97b585400e99a60a1cb2e721f0b6efed0be12af720e1347589805298f2a84815",
+              "gFrame": 3188,
+              "logic": 2374
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/064.png",
+              "sha256": "97b585400e99a60a1cb2e721f0b6efed0be12af720e1347589805298f2a84815",
+              "gFrame": 3189,
+              "logic": 2374
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/065.png",
+              "sha256": "e8184c88c09dda8a977a82f16ffaaadf29d5ebfab6a52d0697f896c041bbd776",
+              "gFrame": 3190,
+              "logic": 2375
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/066.png",
+              "sha256": "e8184c88c09dda8a977a82f16ffaaadf29d5ebfab6a52d0697f896c041bbd776",
+              "gFrame": 3191,
+              "logic": 2375
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/067.png",
+              "sha256": "de5694613e04145e2e43a5239e5d49fddbf2f824362045f9b63082ad8eea321a",
+              "gFrame": 3192,
+              "logic": 2376
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/068.png",
+              "sha256": "801d89f02c28fefa0408c244547f066d6d2e05b522d1aa142fcab54e1888f6a6",
+              "gFrame": 3193,
+              "logic": 2376
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/069.png",
+              "sha256": "1bf6ddd5969ea1e0ff21fbdb23b10f953cc2510501dd11667331647e69e3c50a",
+              "gFrame": 3194,
+              "logic": 2377
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/070.png",
+              "sha256": "53b38dfed617b3cbba204fa5969f46013774febad753223e71c31f22db52e0a3",
+              "gFrame": 3195,
+              "logic": 2377
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/071.png",
+              "sha256": "9a512c04a97e32186a7c456bca9d42ccf594b237594fae6d2e61c3b7e0ecf853",
+              "gFrame": 3196,
+              "logic": 2378
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/072.png",
+              "sha256": "7ef5e0c8c940a356b7208cc8c4a94bbb9a6cafa0147db68006c1b83b3aebb5f9",
+              "gFrame": 3197,
+              "logic": 2378
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/073.png",
+              "sha256": "6daf04632cbc70fb5167fd6fc3d43a76b66f591eae6d3788f55d12cd38aaf870",
+              "gFrame": 3198,
+              "logic": 2379
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/074.png",
+              "sha256": "6daf04632cbc70fb5167fd6fc3d43a76b66f591eae6d3788f55d12cd38aaf870",
+              "gFrame": 3199,
+              "logic": 2379
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/075.png",
+              "sha256": "ada3f55abacdebb86915262d176d68bd4a6df030b311198ba5a1f02871581958",
+              "gFrame": 3200,
+              "logic": 2380
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/076.png",
+              "sha256": "ada3f55abacdebb86915262d176d68bd4a6df030b311198ba5a1f02871581958",
+              "gFrame": 3201,
+              "logic": 2380
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/077.png",
+              "sha256": "45a0ba09ee4931177d1afc392daefe3ce7ec32ecac4082e55fd7cec8f39fa5f7",
+              "gFrame": 3202,
+              "logic": 2381
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/078.png",
+              "sha256": "45a0ba09ee4931177d1afc392daefe3ce7ec32ecac4082e55fd7cec8f39fa5f7",
+              "gFrame": 3203,
+              "logic": 2381
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/079.png",
+              "sha256": "059e6fa8902f0f63d235c79162fac5c50e89ffff1135280f341980f78bd8eb91",
+              "gFrame": 3204,
+              "logic": 2382
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/080.png",
+              "sha256": "059e6fa8902f0f63d235c79162fac5c50e89ffff1135280f341980f78bd8eb91",
+              "gFrame": 3205,
+              "logic": 2382
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/081.png",
+              "sha256": "bbf227a9b9f4867b02307c6cd263c81d1e69bd654ea39590f77ee6fe74c609bd",
+              "gFrame": 3206,
+              "logic": 2383
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/082.png",
+              "sha256": "bbf227a9b9f4867b02307c6cd263c81d1e69bd654ea39590f77ee6fe74c609bd",
+              "gFrame": 3207,
+              "logic": 2383
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/083.png",
+              "sha256": "9b6b7dbde08d2b8ef6519b9fef9576f8d009d8a154035d690b5591f949e3a0eb",
+              "gFrame": 3208,
+              "logic": 2384
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/084.png",
+              "sha256": "9b6b7dbde08d2b8ef6519b9fef9576f8d009d8a154035d690b5591f949e3a0eb",
+              "gFrame": 3209,
+              "logic": 2384
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/085.png",
+              "sha256": "b6306af93b93f152f637df25c1faed1ab2c0d53647f5e0038796f4cd8221b647",
+              "gFrame": 3210,
+              "logic": 2385
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/086.png",
+              "sha256": "b6306af93b93f152f637df25c1faed1ab2c0d53647f5e0038796f4cd8221b647",
+              "gFrame": 3211,
+              "logic": 2385
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/087.png",
+              "sha256": "84fb9d862c71a22d9d8af4cf39c8bbdc7f77ef8afa931c0b232345ea7da4ccf7",
+              "gFrame": 3212,
+              "logic": 2386
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/088.png",
+              "sha256": "84fb9d862c71a22d9d8af4cf39c8bbdc7f77ef8afa931c0b232345ea7da4ccf7",
+              "gFrame": 3213,
+              "logic": 2386
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/089.png",
+              "sha256": "96c786d690b186723b75506c1f697f4f09a9e1f4012da49a9a5014820c09e04c",
+              "gFrame": 3214,
+              "logic": 2387
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/090.png",
+              "sha256": "96c786d690b186723b75506c1f697f4f09a9e1f4012da49a9a5014820c09e04c",
+              "gFrame": 3215,
+              "logic": 2387
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/091.png",
+              "sha256": "eff3e633bf398af2a9b66d085d0efbc2beaee98b022fe70674d5523b794779cb",
+              "gFrame": 3216,
+              "logic": 2388
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/092.png",
+              "sha256": "eff3e633bf398af2a9b66d085d0efbc2beaee98b022fe70674d5523b794779cb",
+              "gFrame": 3217,
+              "logic": 2388
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/093.png",
+              "sha256": "29a229bc1ea01159feef227f8f63e0f4f0b33c2c936988cf608a3d67962ab47b",
+              "gFrame": 3218,
+              "logic": 2389
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/094.png",
+              "sha256": "29a229bc1ea01159feef227f8f63e0f4f0b33c2c936988cf608a3d67962ab47b",
+              "gFrame": 3219,
+              "logic": 2389
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/095.png",
+              "sha256": "64fba5de253bfcd4267e494d20fbf17511f4ebaf704059c69c04247b3e2577dc",
+              "gFrame": 3220,
+              "logic": 2390
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/096.png",
+              "sha256": "64fba5de253bfcd4267e494d20fbf17511f4ebaf704059c69c04247b3e2577dc",
+              "gFrame": 3221,
+              "logic": 2390
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/097.png",
+              "sha256": "3b6a42b638d2b9ff0a4cd6218a87999340c03a590efdbca2afea24613fc80325",
+              "gFrame": 3222,
+              "logic": 2391
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/098.png",
+              "sha256": "3b6a42b638d2b9ff0a4cd6218a87999340c03a590efdbca2afea24613fc80325",
+              "gFrame": 3223,
+              "logic": 2391
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/099.png",
+              "sha256": "8bff1520ae8b3529e9e168dfc8257ba60cdb861a90c3ba7386d13b874c132cba",
+              "gFrame": 3224,
+              "logic": 2392
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/100.png",
+              "sha256": "8bff1520ae8b3529e9e168dfc8257ba60cdb861a90c3ba7386d13b874c132cba",
+              "gFrame": 3225,
+              "logic": 2392
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/101.png",
+              "sha256": "3b7b1b25e0523f1ba58e43d09bfafc6ca152123142aa17759ac9fb70180b9cb7",
+              "gFrame": 3226,
+              "logic": 2393
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/102.png",
+              "sha256": "3b7b1b25e0523f1ba58e43d09bfafc6ca152123142aa17759ac9fb70180b9cb7",
+              "gFrame": 3227,
+              "logic": 2393
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/103.png",
+              "sha256": "6e433de329ade0f3aef79108507e4b51c381ac817886ed423f26e2b86992b0f0",
+              "gFrame": 3228,
+              "logic": 2394
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/104.png",
+              "sha256": "6e433de329ade0f3aef79108507e4b51c381ac817886ed423f26e2b86992b0f0",
+              "gFrame": 3229,
+              "logic": 2394
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/105.png",
+              "sha256": "2144e1df645fe8bf5c6d5d2f6e9ed12f2c4e8b03fb769f1b4dddfd07eb7d3ab6",
+              "gFrame": 3230,
+              "logic": 2395
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/106.png",
+              "sha256": "2144e1df645fe8bf5c6d5d2f6e9ed12f2c4e8b03fb769f1b4dddfd07eb7d3ab6",
+              "gFrame": 3231,
+              "logic": 2395
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/107.png",
+              "sha256": "19a720ebca6febe1bf15e390f06bf6e62599c6bbf734b429ba05794395d45ebf",
+              "gFrame": 3232,
+              "logic": 2396
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/108.png",
+              "sha256": "19a720ebca6febe1bf15e390f06bf6e62599c6bbf734b429ba05794395d45ebf",
+              "gFrame": 3233,
+              "logic": 2396
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/109.png",
+              "sha256": "a61d32d6190b8ebdf3f72d61a5a8574c44358580871b68ccc1ec786e60bdae12",
+              "gFrame": 3234,
+              "logic": 2397
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/110.png",
+              "sha256": "a61d32d6190b8ebdf3f72d61a5a8574c44358580871b68ccc1ec786e60bdae12",
+              "gFrame": 3235,
+              "logic": 2397
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/111.png",
+              "sha256": "fec3dd9a461ce6608e0959a2f9b3ecf9338191935c0060a4db95ec5f42f4e7e5",
+              "gFrame": 3236,
+              "logic": 2398
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/112.png",
+              "sha256": "fec3dd9a461ce6608e0959a2f9b3ecf9338191935c0060a4db95ec5f42f4e7e5",
+              "gFrame": 3237,
+              "logic": 2398
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/113.png",
+              "sha256": "a6869be3a69d6fbedc1b8ec343333e8d2325bd5676751f1cecb1a05872f8f67e",
+              "gFrame": 3238,
+              "logic": 2399
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/114.png",
+              "sha256": "a6869be3a69d6fbedc1b8ec343333e8d2325bd5676751f1cecb1a05872f8f67e",
+              "gFrame": 3239,
+              "logic": 2399
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/115.png",
+              "sha256": "4d516d429c829889fc4d17a7443715c0a79ac3e9f07b28cf790ba9380a10e8d0",
+              "gFrame": 3240,
+              "logic": 2400
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/116.png",
+              "sha256": "4d516d429c829889fc4d17a7443715c0a79ac3e9f07b28cf790ba9380a10e8d0",
+              "gFrame": 3241,
+              "logic": 2400
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/117.png",
+              "sha256": "54fe219e9340f1c6859658bf8679e0611bdf211d7aa68bba19706bb822d86dcf",
+              "gFrame": 3242,
+              "logic": 2401
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/118.png",
+              "sha256": "54fe219e9340f1c6859658bf8679e0611bdf211d7aa68bba19706bb822d86dcf",
+              "gFrame": 3243,
+              "logic": 2401
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/119.png",
+              "sha256": "220fd04a9721f22de212d58e44ca7f44352ef0d0bb912447af28f5e49dec6ff3",
+              "gFrame": 3244,
+              "logic": 2402
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/120.png",
+              "sha256": "220fd04a9721f22de212d58e44ca7f44352ef0d0bb912447af28f5e49dec6ff3",
+              "gFrame": 3245,
+              "logic": 2402
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/121.png",
+              "sha256": "b6b832c6e4ca08520b6b312f4fb37558c373af59737cc0154ab81cf88664bd01",
+              "gFrame": 3246,
+              "logic": 2403
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/122.png",
+              "sha256": "b6b832c6e4ca08520b6b312f4fb37558c373af59737cc0154ab81cf88664bd01",
+              "gFrame": 3247,
+              "logic": 2403
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/123.png",
+              "sha256": "53d749a55c5365865f0ec70dd80d9430a0a9c66744ef2e578340bd3b0349454d",
+              "gFrame": 3248,
+              "logic": 2404
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/124.png",
+              "sha256": "53d749a55c5365865f0ec70dd80d9430a0a9c66744ef2e578340bd3b0349454d",
+              "gFrame": 3249,
+              "logic": 2404
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/125.png",
+              "sha256": "c01c5a14158e6d9ee15fcc89d7307354f66a04872fdd7a80cd51b6aa8eb1720e",
+              "gFrame": 3250,
+              "logic": 2405
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/126.png",
+              "sha256": "c01c5a14158e6d9ee15fcc89d7307354f66a04872fdd7a80cd51b6aa8eb1720e",
+              "gFrame": 3251,
+              "logic": 2405
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/127.png",
+              "sha256": "b12733e3c741428db64a67d6aae2c92003441cd0e29102be1feeff19c8d5a3f0",
+              "gFrame": 3252,
+              "logic": 2406
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/128.png",
+              "sha256": "b12733e3c741428db64a67d6aae2c92003441cd0e29102be1feeff19c8d5a3f0",
+              "gFrame": 3253,
+              "logic": 2406
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/129.png",
+              "sha256": "52c5eff800e31d2804c869669e30f204b458a9b7cf644e6ffd51ebdc8fe73301",
+              "gFrame": 3254,
+              "logic": 2407
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/130.png",
+              "sha256": "52c5eff800e31d2804c869669e30f204b458a9b7cf644e6ffd51ebdc8fe73301",
+              "gFrame": 3255,
+              "logic": 2407
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/131.png",
+              "sha256": "c4bc0c46fb253114c0b91cda912e6eb9adea445ac1debe96975be1ba903e1a00",
+              "gFrame": 3256,
+              "logic": 2408
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/132.png",
+              "sha256": "c4bc0c46fb253114c0b91cda912e6eb9adea445ac1debe96975be1ba903e1a00",
+              "gFrame": 3257,
+              "logic": 2408
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/133.png",
+              "sha256": "831bdc3510f1bb95596a35195592052e65a9b574e89209272ac30271cf2b33c6",
+              "gFrame": 3258,
+              "logic": 2409
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/134.png",
+              "sha256": "831bdc3510f1bb95596a35195592052e65a9b574e89209272ac30271cf2b33c6",
+              "gFrame": 3259,
+              "logic": 2409
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/135.png",
+              "sha256": "73a9ceeef808b9cb96f38d5e978cc841099b8c7717d5375cd03cc4d8236c5234",
+              "gFrame": 3260,
+              "logic": 2410
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/136.png",
+              "sha256": "73a9ceeef808b9cb96f38d5e978cc841099b8c7717d5375cd03cc4d8236c5234",
+              "gFrame": 3261,
+              "logic": 2410
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/137.png",
+              "sha256": "86d22785687e54058cfe64cae73d5a402fa8e077c27a61470b5599382007f688",
+              "gFrame": 3262,
+              "logic": 2411
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/138.png",
+              "sha256": "86d22785687e54058cfe64cae73d5a402fa8e077c27a61470b5599382007f688",
+              "gFrame": 3263,
+              "logic": 2411
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/139.png",
+              "sha256": "a2b41e5ab55e550cb786426531a868acebdb5f70f49053da0c77b4b6ef10d12e",
+              "gFrame": 3264,
+              "logic": 2412
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/140.png",
+              "sha256": "a2b41e5ab55e550cb786426531a868acebdb5f70f49053da0c77b4b6ef10d12e",
+              "gFrame": 3265,
+              "logic": 2412
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/141.png",
+              "sha256": "d01c8300e92afa0ac283fa920062905a9bcfa5624138435801b61f8dbcf619ef",
+              "gFrame": 3266,
+              "logic": 2413
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/142.png",
+              "sha256": "d01c8300e92afa0ac283fa920062905a9bcfa5624138435801b61f8dbcf619ef",
+              "gFrame": 3267,
+              "logic": 2413
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/143.png",
+              "sha256": "18ffbfe1ffbcf4e6ce256d7151fcd92c7faab9b104daf208723709a2ff788fe6",
+              "gFrame": 3268,
+              "logic": 2414
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/144.png",
+              "sha256": "18ffbfe1ffbcf4e6ce256d7151fcd92c7faab9b104daf208723709a2ff788fe6",
+              "gFrame": 3269,
+              "logic": 2414
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/145.png",
+              "sha256": "dc57483d89f3d5630864e8367813df91331272b227dc6739006153c492ec3d00",
+              "gFrame": 3270,
+              "logic": 2415
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/146.png",
+              "sha256": "dc57483d89f3d5630864e8367813df91331272b227dc6739006153c492ec3d00",
+              "gFrame": 3271,
+              "logic": 2415
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/147.png",
+              "sha256": "0be7e2e469e4d5816de3fbd7798e71bfbfe3f254bb2aedbbd3a2d467adea209f",
+              "gFrame": 3272,
+              "logic": 2416
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/148.png",
+              "sha256": "0be7e2e469e4d5816de3fbd7798e71bfbfe3f254bb2aedbbd3a2d467adea209f",
+              "gFrame": 3273,
+              "logic": 2416
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/149.png",
+              "sha256": "6d1427ada73080b5ab82142020030d5843925add50a19c8346dc4924d560173d",
+              "gFrame": 3274,
+              "logic": 2417
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/150.png",
+              "sha256": "6d1427ada73080b5ab82142020030d5843925add50a19c8346dc4924d560173d",
+              "gFrame": 3275,
+              "logic": 2417
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/151.png",
+              "sha256": "6894430fe1319680524d63e2f59217eee8408049a6a8c78e84515a70359c282f",
+              "gFrame": 3276,
+              "logic": 2418
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/152.png",
+              "sha256": "6894430fe1319680524d63e2f59217eee8408049a6a8c78e84515a70359c282f",
+              "gFrame": 3277,
+              "logic": 2418
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/153.png",
+              "sha256": "c9e056fa29e791884050bc7c28e660750d87de62c6e94b764585f76cd84a5257",
+              "gFrame": 3278,
+              "logic": 2419
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/154.png",
+              "sha256": "c9e056fa29e791884050bc7c28e660750d87de62c6e94b764585f76cd84a5257",
+              "gFrame": 3279,
+              "logic": 2419
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/155.png",
+              "sha256": "3ce6772f575c20e3170a83e80a2760794f11ea5e9bf4e6a9d63a7311e4e3f245",
+              "gFrame": 3280,
+              "logic": 2420
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/156.png",
+              "sha256": "3ce6772f575c20e3170a83e80a2760794f11ea5e9bf4e6a9d63a7311e4e3f245",
+              "gFrame": 3281,
+              "logic": 2420
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/157.png",
+              "sha256": "702605c91ee4caebf139533e0f8b553ef58d3999bdd25f4baa387a7ce65ab32e",
+              "gFrame": 3282,
+              "logic": 2421
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/158.png",
+              "sha256": "702605c91ee4caebf139533e0f8b553ef58d3999bdd25f4baa387a7ce65ab32e",
+              "gFrame": 3283,
+              "logic": 2421
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/159.png",
+              "sha256": "8a07359118e1e2b491298cde176d4dc8b19b9db2ffeb8e70a388820745141050",
+              "gFrame": 3284,
+              "logic": 2422
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/160.png",
+              "sha256": "8a07359118e1e2b491298cde176d4dc8b19b9db2ffeb8e70a388820745141050",
+              "gFrame": 3285,
+              "logic": 2422
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/161.png",
+              "sha256": "d2c8fb6e24da82652d09a75835d5bf68df5a9e726591e4f3604b3dabb6976a89",
+              "gFrame": 3286,
+              "logic": 2423
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/162.png",
+              "sha256": "d2c8fb6e24da82652d09a75835d5bf68df5a9e726591e4f3604b3dabb6976a89",
+              "gFrame": 3287,
+              "logic": 2423
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/163.png",
+              "sha256": "91b4458027daabc6dee26f185b7d41c3b6db7f64bafaff87382633ada7c76776",
+              "gFrame": 3288,
+              "logic": 2424
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/164.png",
+              "sha256": "91b4458027daabc6dee26f185b7d41c3b6db7f64bafaff87382633ada7c76776",
+              "gFrame": 3289,
+              "logic": 2424
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/165.png",
+              "sha256": "6ad6a07096c4d73291e202a5305253d847e19c500dc73672b65dabb4653b3470",
+              "gFrame": 3290,
+              "logic": 2425
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/166.png",
+              "sha256": "6ad6a07096c4d73291e202a5305253d847e19c500dc73672b65dabb4653b3470",
+              "gFrame": 3291,
+              "logic": 2425
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/167.png",
+              "sha256": "537dd5944a410ca1a0236210522a7b44f3d565742c48683b8b9cb9a3580e6e53",
+              "gFrame": 3292,
+              "logic": 2426
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/168.png",
+              "sha256": "537dd5944a410ca1a0236210522a7b44f3d565742c48683b8b9cb9a3580e6e53",
+              "gFrame": 3293,
+              "logic": 2426
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/169.png",
+              "sha256": "419401b02cfd7df69cef4e106d828a1ccaf3a402d097a1c574517a87ecb18aa2",
+              "gFrame": 3294,
+              "logic": 2427
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/170.png",
+              "sha256": "419401b02cfd7df69cef4e106d828a1ccaf3a402d097a1c574517a87ecb18aa2",
+              "gFrame": 3295,
+              "logic": 2427
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/171.png",
+              "sha256": "26e08aaf6f01063a31cf99906736ed0159cd3654b6f9bc44d6f658a687dd83f2",
+              "gFrame": 3296,
+              "logic": 2428
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/172.png",
+              "sha256": "26e08aaf6f01063a31cf99906736ed0159cd3654b6f9bc44d6f658a687dd83f2",
+              "gFrame": 3297,
+              "logic": 2428
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/173.png",
+              "sha256": "180f3ee25b8cc6e46cc9b4b36804cc4ae3183dd0a04e399b34f15e3071a73290",
+              "gFrame": 3298,
+              "logic": 2429
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/174.png",
+              "sha256": "180f3ee25b8cc6e46cc9b4b36804cc4ae3183dd0a04e399b34f15e3071a73290",
+              "gFrame": 3299,
+              "logic": 2429
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/175.png",
+              "sha256": "7fb4c34acd4c287ba184220c9ba7e3be43ebb4f3c67e4d04174d6408b227245a",
+              "gFrame": 3300,
+              "logic": 2430
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/176.png",
+              "sha256": "7fb4c34acd4c287ba184220c9ba7e3be43ebb4f3c67e4d04174d6408b227245a",
+              "gFrame": 3301,
+              "logic": 2430
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/177.png",
+              "sha256": "8725da01cb1ae1edf358ec305189441d4ebeae3bd8a4866c9f27745d149fbf42",
+              "gFrame": 3302,
+              "logic": 2431
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/178.png",
+              "sha256": "8725da01cb1ae1edf358ec305189441d4ebeae3bd8a4866c9f27745d149fbf42",
+              "gFrame": 3303,
+              "logic": 2431
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/179.png",
+              "sha256": "fb602b3e3daf15a9e5d62c2caa51ad075534598d52cf75b19a85caa6a0f3753c",
+              "gFrame": 3304,
+              "logic": 2432
+            }
+          ]
+        },
+        "after": {
+          "gif": "actual/after/forest-0000b4a7-cell10/motion.gif",
+          "raw_frames": 180,
+          "sample_step": 6,
+          "duration_ms": 100,
+          "frames": [
+            {
+              "file": "clips/forest-0000b4a7-cell10/000.png",
+              "sha256": "f8d16e5dbadf4aaab272ac8adc048e3e6caeea60e850585501c057a195d56b96",
+              "gFrame": 3096,
+              "logic": 2496
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/001.png",
+              "sha256": "f9d264b9e46b2ec3f58038f2315543903983650a62368ba0769378581e72f684",
+              "gFrame": 3097,
+              "logic": 2497
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/002.png",
+              "sha256": "e4393040b28db163fb553cb6bec8d68cf3ab0cf4f1a7a51d92454ab7d3139b8d",
+              "gFrame": 3098,
+              "logic": 2498
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/003.png",
+              "sha256": "2069d8ae0b29ac5bdbee31bab47bb63ff58afd8c71238ff439f9a2b4e43b98ba",
+              "gFrame": 3099,
+              "logic": 2499
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/004.png",
+              "sha256": "090b32621df55c1aaf43b2cf3246f407eea72cb8e523a258243d76585b020fca",
+              "gFrame": 3100,
+              "logic": 2500
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/005.png",
+              "sha256": "ee91e208cd7c50a8a78206cfd63b7068e6d4bf739fa4fbc7933a14803f2df41d",
+              "gFrame": 3101,
+              "logic": 2501
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/006.png",
+              "sha256": "ed61931a09a0d9c81bb5a72eae1fd87d49d49fe78597b55f5779743c721821eb",
+              "gFrame": 3102,
+              "logic": 2502
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/007.png",
+              "sha256": "56dd9443736d41be8925c190f75259a5e09bc0ac0077e42957a6def1e96ac10a",
+              "gFrame": 3103,
+              "logic": 2503
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/008.png",
+              "sha256": "fa2b19b6876bdde75384310273c448519c92e70c4119c8367f00d25d8f205ff5",
+              "gFrame": 3104,
+              "logic": 2504
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/009.png",
+              "sha256": "d180942402633db3732c4ca5285360d411f68eeb8cf1e316d20bf7660a39f7b3",
+              "gFrame": 3105,
+              "logic": 2505
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/010.png",
+              "sha256": "f45b4f121841fd3db5d67683973a272ad13edab8102f81fe997249271873dca5",
+              "gFrame": 3106,
+              "logic": 2506
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/011.png",
+              "sha256": "913175438c381b4a2dd1d8a7535f0fc98bc0d833f971c0029d6de18b30dd2e5b",
+              "gFrame": 3107,
+              "logic": 2507
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/012.png",
+              "sha256": "cf1ab31e45805e897c801e288d92da2b583f64f09c9ff818c5703addb853a35d",
+              "gFrame": 3108,
+              "logic": 2508
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/013.png",
+              "sha256": "b3faef484d4b169a1e24ce17d6408bcdae9d00ba0b27e018bfbbe68e4b9afb62",
+              "gFrame": 3109,
+              "logic": 2509
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/014.png",
+              "sha256": "9063ea372651a483e10a07dc5317a36a7b152b10747d0dc32069b969745156cb",
+              "gFrame": 3110,
+              "logic": 2510
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/015.png",
+              "sha256": "f29ceae6fba8c138476e6cf6221bdfff228b9fbed95277f4314d1f3a5e183efb",
+              "gFrame": 3111,
+              "logic": 2511
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/016.png",
+              "sha256": "64ad0a61991b1b3f040dbd6874ff838f13c73f0b6bedad93fdc953c5d1f735b8",
+              "gFrame": 3112,
+              "logic": 2512
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/017.png",
+              "sha256": "7768c1c00e8fc975ee91d3231ad4550336506e891c8bcd1c38faa42888bf6f8a",
+              "gFrame": 3113,
+              "logic": 2513
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/018.png",
+              "sha256": "8940167d5e324acfa3103ae9cb1d7ee59014082f827499d5e7218e59406d3087",
+              "gFrame": 3114,
+              "logic": 2514
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/019.png",
+              "sha256": "efa01cf9680eb1a86a578adea9b22ae6cd0e8f2b4b9ed4ee59ffcfbe411e45ce",
+              "gFrame": 3115,
+              "logic": 2515
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/020.png",
+              "sha256": "3b78d267b28394f8e039d02aa0517084ba02c4ea957ad094ed4315a5dbc506b8",
+              "gFrame": 3116,
+              "logic": 2516
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/021.png",
+              "sha256": "0cef7496a3eef0621999e59add277d39e6ddc80810c30da29f0908422cafa65c",
+              "gFrame": 3117,
+              "logic": 2517
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/022.png",
+              "sha256": "c16510e48bd2dfc5a1e9a9e20c2c38ca96fd9a970b468fb7b390d53329ad14af",
+              "gFrame": 3118,
+              "logic": 2518
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/023.png",
+              "sha256": "17593a43a6ff31f65a101013bce80d6d97cea65882b57fb8d7d621e79eb30f9c",
+              "gFrame": 3119,
+              "logic": 2519
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/024.png",
+              "sha256": "7af906104de7c04471fc9f9590628c91524568d28209d382ca08b2d1ec6b0bfd",
+              "gFrame": 3120,
+              "logic": 2520
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/025.png",
+              "sha256": "1dcc68d4fbaab4341a44f676e90ecb924ae771f0831b30f631620ed70e799231",
+              "gFrame": 3121,
+              "logic": 2521
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/026.png",
+              "sha256": "a48830f383d9c2532c8d6e2af39e39b224629ce82a318c58a982a5f85a57a16a",
+              "gFrame": 3122,
+              "logic": 2522
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/027.png",
+              "sha256": "f29386afc6bb68fa98d6953d3bf8aeca5e7c20e9e6d17eaa0a7ca055aeb6078b",
+              "gFrame": 3123,
+              "logic": 2523
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/028.png",
+              "sha256": "3ac9691a8e57605621d11c38fe5a9be639c2a6cf592809b2cf1b49a4667a9177",
+              "gFrame": 3124,
+              "logic": 2524
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/029.png",
+              "sha256": "4c40dbaede081afeb62ab39d2638d1418b39c32663411e8774cdf5f952ce8b12",
+              "gFrame": 3125,
+              "logic": 2525
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/030.png",
+              "sha256": "849a8125a60ffc9e076c5eb52e59a6ad506488e857d96bf4554f5da3089e2837",
+              "gFrame": 3126,
+              "logic": 2526
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/031.png",
+              "sha256": "615c332a560eaa921828763dba9218ded75b9ebdc6503436250a9eecfe1bc2d2",
+              "gFrame": 3127,
+              "logic": 2527
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/032.png",
+              "sha256": "9b11b59d0f1940bcf856b5739d4bf431dfad8ea44967e85062c979ba916add3f",
+              "gFrame": 3128,
+              "logic": 2528
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/033.png",
+              "sha256": "86056e624101c95330d97cb0be5e00574e8b6abc8b6cd2678bd7a4279d42ae0d",
+              "gFrame": 3129,
+              "logic": 2529
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/034.png",
+              "sha256": "547931c7c327abe04d3fc023462b36e92a41af99db72e8d98fbeaff696061535",
+              "gFrame": 3130,
+              "logic": 2530
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/035.png",
+              "sha256": "4f5561413166604f939fcc5c77c7dad80281cbbf9d1687ed00cd7c128d9b5056",
+              "gFrame": 3131,
+              "logic": 2531
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/036.png",
+              "sha256": "904477f0ccbd7d25a796f99268d792c5fe1d1ee6b1e516ec536f5638259f0573",
+              "gFrame": 3132,
+              "logic": 2532
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/037.png",
+              "sha256": "f30ac4619318ebcb3ad0aa8de690451c90639ca2b969a895803314b9f8a2b04a",
+              "gFrame": 3133,
+              "logic": 2533
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/038.png",
+              "sha256": "221d12bc48f2dfda2d351944349f71c2e288686a0f5df20d8d1db137bc7bd944",
+              "gFrame": 3134,
+              "logic": 2534
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/039.png",
+              "sha256": "64c593b3f4c1c980cf85d71c10f137965b66af127cad664d8aeddf4da12c550d",
+              "gFrame": 3135,
+              "logic": 2535
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/040.png",
+              "sha256": "f8948d7b5b7d945dc5c06f0316e280bee1971345fe6f2d66c436a807bd5e7670",
+              "gFrame": 3136,
+              "logic": 2536
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/041.png",
+              "sha256": "36e617afe2264246c7ead8508af326318fc6ff86add8580777591937f9d76596",
+              "gFrame": 3137,
+              "logic": 2537
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/042.png",
+              "sha256": "907fc6c37f60bd1268817294366092fc4dc689068f5d8254926566bb64e6de65",
+              "gFrame": 3138,
+              "logic": 2538
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/043.png",
+              "sha256": "9041588ce35243d5495023d9003857ebaf756cf0d531415579a10be1998e84fb",
+              "gFrame": 3139,
+              "logic": 2539
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/044.png",
+              "sha256": "f98572a1469e4ad80e1f5f7b81b3606879fb4f4f6202d65a48bf2e4c7deb5ba9",
+              "gFrame": 3140,
+              "logic": 2540
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/045.png",
+              "sha256": "56daf18527b6f1eacf22b9a394c905f6e500ff9da275f4e1b2222bbfc9f05ae1",
+              "gFrame": 3141,
+              "logic": 2541
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/046.png",
+              "sha256": "e355cc0519ff7ed99f32ef99cc9d3dcd2145074f611793bb948981bf5c917766",
+              "gFrame": 3142,
+              "logic": 2542
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/047.png",
+              "sha256": "b38c8f66c643a7d58cbccb5fe8fe039bac6e851e83b6cf9c89567302099f53b4",
+              "gFrame": 3143,
+              "logic": 2543
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/048.png",
+              "sha256": "b5881925256d728e7dbdd05e7fa630fd43cfc1976f9efce888b8b1c7b0468e21",
+              "gFrame": 3144,
+              "logic": 2544
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/049.png",
+              "sha256": "70e6dae66b58da4f5e1d15770c7086fb87b650f10dd18ee405761e37cf8bd62b",
+              "gFrame": 3145,
+              "logic": 2545
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/050.png",
+              "sha256": "59852de4724ed36b9d11ac7cdee469676efe6916ee33f0294bdf59137f9915b0",
+              "gFrame": 3146,
+              "logic": 2546
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/051.png",
+              "sha256": "4500c40ad59ca68c89f758a1fca2184aba9b97c831f5ea45fbfc57c3055bb679",
+              "gFrame": 3147,
+              "logic": 2547
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/052.png",
+              "sha256": "ce938ad397734673f28b01044129b4250ed19e13aef90be504e741946e18b954",
+              "gFrame": 3148,
+              "logic": 2548
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/053.png",
+              "sha256": "f34c80f450e4dc8a0d18ead1a5460b86aeb59e197862cd89d20bc5293f95e596",
+              "gFrame": 3149,
+              "logic": 2549
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/054.png",
+              "sha256": "08b45c15879d122caf33e58f45455f7c4a487d8ae91a66398fc990997a8457ff",
+              "gFrame": 3150,
+              "logic": 2550
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/055.png",
+              "sha256": "a295bd89e73803f543a95f3f90a07a69214414f601828c550d177d199e465bec",
+              "gFrame": 3151,
+              "logic": 2551
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/056.png",
+              "sha256": "5b992ce561028152c1b3c911eb2dac351b0574da5bd46c3ebb145914feb2cf60",
+              "gFrame": 3152,
+              "logic": 2552
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/057.png",
+              "sha256": "e7ed809d3e3dcb6b29d66dc5d81bf3f8072259203f69d97fcd775cea691aaf94",
+              "gFrame": 3153,
+              "logic": 2553
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/058.png",
+              "sha256": "3a37315cbcf14001ffccae3dfc8f2fab57a0b9bd5957b8d408cd4d98f8c0573f",
+              "gFrame": 3154,
+              "logic": 2554
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/059.png",
+              "sha256": "3a8dfc964b352447067b0f59c4d72c9f61e7e78a7893def2ac3b45227ad5c13e",
+              "gFrame": 3155,
+              "logic": 2555
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/060.png",
+              "sha256": "560909c45536dcc1e8ac3eb4a7a68286dca811f39ea07e70bbbf7d29557a9a8f",
+              "gFrame": 3156,
+              "logic": 2556
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/061.png",
+              "sha256": "45b6b53754ce945f39e04b9930d1bfcee927e9119fb08b539c87cac32c16c64e",
+              "gFrame": 3157,
+              "logic": 2557
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/062.png",
+              "sha256": "35b5218e4daf6e1d1e1cb77de57753eb9bff70d6e08bfcc83d222c5568e71ee4",
+              "gFrame": 3158,
+              "logic": 2558
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/063.png",
+              "sha256": "80c96bdef9ad1909ef9ec3aab9846cc7d2e953c5dd245cea2c2da9634d3fcdef",
+              "gFrame": 3159,
+              "logic": 2559
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/064.png",
+              "sha256": "243d14157792f521b57e02a045baff3df455c318395865ad354ea9ec59ed6219",
+              "gFrame": 3160,
+              "logic": 2560
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/065.png",
+              "sha256": "767b89740c293ff731f666f6c0d128e1ed6d78837f901a74268db696017048f3",
+              "gFrame": 3161,
+              "logic": 2561
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/066.png",
+              "sha256": "7e333346c63b30f88a6ca27106fc1ee531db129ac27b20e2bd3a6f89d7625bb1",
+              "gFrame": 3162,
+              "logic": 2562
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/067.png",
+              "sha256": "55d88322643cf1025d734ea24f45ab71acd38e5958251bcc4c3228abd54dbf0b",
+              "gFrame": 3163,
+              "logic": 2563
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/068.png",
+              "sha256": "9de60c461d374dac3da76561618037e203d9dc029efb7485bf938648ebe1f5d5",
+              "gFrame": 3164,
+              "logic": 2564
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/069.png",
+              "sha256": "c5b20917b758a2495fb782368e39d8526e31867a2e22d0e0f2bb80f22d4962e0",
+              "gFrame": 3165,
+              "logic": 2565
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/070.png",
+              "sha256": "186dc5109ffcf33e58ca8c7055da88922cbfa1289cbe63dc7a439b81947810ef",
+              "gFrame": 3166,
+              "logic": 2566
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/071.png",
+              "sha256": "f073fbc58eab196d77572043ec8eed1150ec00b708e5dfff55d1dc0347ab9eab",
+              "gFrame": 3167,
+              "logic": 2567
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/072.png",
+              "sha256": "0fb8408a87ef690883bb9db540b00c03b535a0f126b458ece76346bcd0c06ae2",
+              "gFrame": 3168,
+              "logic": 2568
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/073.png",
+              "sha256": "da94c3fc2876ce611a2bad288395cb8397a7707e6785afd88da71c6580211d53",
+              "gFrame": 3169,
+              "logic": 2569
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/074.png",
+              "sha256": "a2566e93e6ac336158997524924c03cc3b96c513b255baa1608dd0fb34242bd5",
+              "gFrame": 3170,
+              "logic": 2570
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/075.png",
+              "sha256": "6bbd87884326b1b5ee274e31fc338f011668a6ffb2dcd2905e3f967037ad54c5",
+              "gFrame": 3171,
+              "logic": 2571
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/076.png",
+              "sha256": "dfeddcda734dacf0782e1eabce9ffe79ae83f03ea71a0a099ac0e0098ad02154",
+              "gFrame": 3172,
+              "logic": 2572
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/077.png",
+              "sha256": "46092225defb90a3ca548849e34e55ec1acfc57c17d372e43a44052c942d9ac3",
+              "gFrame": 3173,
+              "logic": 2573
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/078.png",
+              "sha256": "8d9d22ce5b5def0d36ad463b031db0f444e96d0efee754693defe5e3eaecf61f",
+              "gFrame": 3174,
+              "logic": 2574
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/079.png",
+              "sha256": "057fd3f82d0eb47ec13e02efd79f41545b048defc94f65f589342b1b942ca41b",
+              "gFrame": 3175,
+              "logic": 2575
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/080.png",
+              "sha256": "b473e623533247263e08e9baef7170d69ec8ae6bf4cd3422ff57479f70063cb6",
+              "gFrame": 3176,
+              "logic": 2576
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/081.png",
+              "sha256": "06b8fab74fc077990d6243787c701265f0b24a048fa55b29cc0ff288d41de7a5",
+              "gFrame": 3177,
+              "logic": 2577
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/082.png",
+              "sha256": "031e6fd26839b923b46fcfc9284e2c0f5d69ae8a30d0da8591410989c8ecd918",
+              "gFrame": 3178,
+              "logic": 2578
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/083.png",
+              "sha256": "132133fbb65fd4ce9547e58628fa92689b8b09b78913f3dd1036f89079db2140",
+              "gFrame": 3179,
+              "logic": 2579
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/084.png",
+              "sha256": "131fdd749b9b2a093edabb72c5c7fc4280ee013dd68e61872f36c80fb0e62123",
+              "gFrame": 3180,
+              "logic": 2580
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/085.png",
+              "sha256": "843f4bee213e6f3ba6a0d8c03d3b3ad37e9aaac330eb1b96fa2599aacaba051b",
+              "gFrame": 3181,
+              "logic": 2581
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/086.png",
+              "sha256": "1c6f2803e88ef403f4d1ed4ef9d4cc665263c2511218e611832fb1e1a71a7156",
+              "gFrame": 3182,
+              "logic": 2582
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/087.png",
+              "sha256": "c02d6fa1a30fa07e8e36975004c38ee41a76e04e5bb20fccb8ab9c7c48bdff5e",
+              "gFrame": 3183,
+              "logic": 2583
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/088.png",
+              "sha256": "c77513ef08af984e023ad1846d91c62dd13b9da30c436f26dc172b6949e147dd",
+              "gFrame": 3184,
+              "logic": 2584
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/089.png",
+              "sha256": "1c2f217ddac1952952f3c685a57b2393c02d9020c1c29415231026fc1d34503c",
+              "gFrame": 3185,
+              "logic": 2585
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/090.png",
+              "sha256": "eb1a21b49926de1dd3ca91f241c9a5600650404a1b877b46e61616a04959bca7",
+              "gFrame": 3186,
+              "logic": 2586
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/091.png",
+              "sha256": "ce8cdf1ed8a6001bf1f271bde63d90a72781a57e86b0439814d3a16781955f52",
+              "gFrame": 3187,
+              "logic": 2587
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/092.png",
+              "sha256": "db08c2fa74eaa9c9cd12b1faedcc2afba746470f7a6b1b1b0f15a3e554a414c0",
+              "gFrame": 3188,
+              "logic": 2588
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/093.png",
+              "sha256": "ef29acd3d7c8c3f5dfa13023118abed62411902526e2d973884240d245830cc9",
+              "gFrame": 3189,
+              "logic": 2589
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/094.png",
+              "sha256": "46be98ce98446657db5de5cafa1a37192734ddda0196e982bd3cc27f5842ccdf",
+              "gFrame": 3190,
+              "logic": 2590
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/095.png",
+              "sha256": "5f41b4e78f2177cf613825943a9d9b650f3f2495c0e55e6e8aae0168d653f175",
+              "gFrame": 3191,
+              "logic": 2591
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/096.png",
+              "sha256": "afdc179b1a7f89bab1c31592c3be938f8a105f6178986ba90f52110855835f5a",
+              "gFrame": 3192,
+              "logic": 2592
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/097.png",
+              "sha256": "d73e83a2a8271b379c125a03de04699e82d5632f7a4a7f4921f4799b5673da51",
+              "gFrame": 3193,
+              "logic": 2593
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/098.png",
+              "sha256": "14d8ffd0fad9037b1aca26bb7a954f1359ccdb9689f4b5cc8d3fbfd9eb9727d1",
+              "gFrame": 3194,
+              "logic": 2594
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/099.png",
+              "sha256": "5a3013d5d0166f1c06b280076e126e2db5213d498bf419fc85d33066e0c6ace4",
+              "gFrame": 3195,
+              "logic": 2595
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/100.png",
+              "sha256": "df73ac0d1a47d550bdc85938ceea94cb4615a0838f5e7d1e8e339fe000513d04",
+              "gFrame": 3196,
+              "logic": 2596
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/101.png",
+              "sha256": "cbaba5c91c04f26d9ae9ecb437de71104dbebb4dcd64ea9c4793da42678af270",
+              "gFrame": 3197,
+              "logic": 2597
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/102.png",
+              "sha256": "a1b45ebc3ef9c411d4c6bba22fcdebd55646de6e6b9e98734affc86f5ccbb4a7",
+              "gFrame": 3198,
+              "logic": 2598
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/103.png",
+              "sha256": "63468c20ccadcea2d8fcaa169ed0b0cf058859cf1d1152ea75247e89aabdb4f7",
+              "gFrame": 3199,
+              "logic": 2599
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/104.png",
+              "sha256": "a471d687cb47d4e7db813f270fca1521712ca31154be44dcb65d2fae5ff2533a",
+              "gFrame": 3200,
+              "logic": 2600
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/105.png",
+              "sha256": "1b25577c4bfa533bd0ece5528405556fc6b15d5e54425f29f5927e5704c49406",
+              "gFrame": 3201,
+              "logic": 2601
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/106.png",
+              "sha256": "0bc2f29e9df3e0fc3c090393c3a7ddcdc43e38f32a3b75d2f1065b19b6880094",
+              "gFrame": 3202,
+              "logic": 2602
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/107.png",
+              "sha256": "991b5bb865facf90bff69a53ef7bb25c48431ac8b0b3bfb802ba6835e56168ec",
+              "gFrame": 3203,
+              "logic": 2603
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/108.png",
+              "sha256": "2c7bcf1c80115f3611abfe34d37cb3ac70fc489eb74d801ec5169a182895be70",
+              "gFrame": 3204,
+              "logic": 2604
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/109.png",
+              "sha256": "b4dd578f2cb6ea0a95433365d4e7be8d97ba4b201349967dea09ff8fe3272e4c",
+              "gFrame": 3205,
+              "logic": 2605
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/110.png",
+              "sha256": "d07041f0bc7039077a816c5341c726d77a08cd760e13c7d43274f08f10b30403",
+              "gFrame": 3206,
+              "logic": 2606
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/111.png",
+              "sha256": "ba2ce58b28bbf1b8afa609ca0e2e09fa8d4a48fbc533d86f5634c437663b55ef",
+              "gFrame": 3207,
+              "logic": 2607
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/112.png",
+              "sha256": "208136b3b848a33be11df01fadfdebc096d278733ffd4ca05f5550ae6ace541d",
+              "gFrame": 3208,
+              "logic": 2608
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/113.png",
+              "sha256": "8e0bfca9154bdabfdb0ab10481b66701d2ee2135ea0eb3a3e8bd29cb224987e6",
+              "gFrame": 3209,
+              "logic": 2609
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/114.png",
+              "sha256": "de98f6c12c711e1f65c7868c9c97dd64fbb6d703145b7c0460a0e3cbdb880a47",
+              "gFrame": 3210,
+              "logic": 2610
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/115.png",
+              "sha256": "0f5828c342f41a0beda53d195046b91c3fe077ca5a9f502e33c49a09f2843bd0",
+              "gFrame": 3211,
+              "logic": 2611
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/116.png",
+              "sha256": "75ff8b1e623e763b15b5a2fec0e280f321bf66932928e7256243d55ddac3b156",
+              "gFrame": 3212,
+              "logic": 2612
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/117.png",
+              "sha256": "13d5f2e0b2bbf7f26990a84f6c9795b570596add175112b3cb21e3b851d93430",
+              "gFrame": 3213,
+              "logic": 2613
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/118.png",
+              "sha256": "d32820aa46b1e5520e0e36c8422be46082d4594636df4f8dbcf24f6734f07d8e",
+              "gFrame": 3214,
+              "logic": 2614
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/119.png",
+              "sha256": "91ca0148b317620d6fbc0c2a72e8a4d589c944af950300dd2e7ce44c2128961c",
+              "gFrame": 3215,
+              "logic": 2615
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/120.png",
+              "sha256": "43a1208ebd70156d5d92c8cf8fa9dab8328b9af29cdb59f1433083ef4085d523",
+              "gFrame": 3216,
+              "logic": 2616
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/121.png",
+              "sha256": "e5fc78851cd5d1552053fff029bdc1ef8375ba2abd6bd7ee67f670255364ca7a",
+              "gFrame": 3217,
+              "logic": 2617
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/122.png",
+              "sha256": "d67c436097ecbb330d78a6e86dfd9c4f993f5e45d776d3dd62f5df302fe73785",
+              "gFrame": 3218,
+              "logic": 2618
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/123.png",
+              "sha256": "9340219ae48a068e8933b850496f3c6e6ebf219bc306a320637da440717a8418",
+              "gFrame": 3219,
+              "logic": 2619
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/124.png",
+              "sha256": "d9985a4de2855335262386a0c266a55b70865b497a24d6e30d6fc9c3fafc705c",
+              "gFrame": 3220,
+              "logic": 2620
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/125.png",
+              "sha256": "27f3a08262b33f65d6f91e799e478e3f2415bac4f0e3a814a986e53a18986930",
+              "gFrame": 3221,
+              "logic": 2621
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/126.png",
+              "sha256": "c7a6a924530955f06763bbbd89910a2ca304c7267aefa604919ffaaecfdd5845",
+              "gFrame": 3222,
+              "logic": 2622
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/127.png",
+              "sha256": "4798479c4b3c522a3e74e7d74b0f68e1e66b0eb3607393a5afc6d64a4c23bc45",
+              "gFrame": 3223,
+              "logic": 2623
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/128.png",
+              "sha256": "c6b9d7e8e8cb09a85c6b02a4451776fbf63bea75241a590038b557e15d9b6bd0",
+              "gFrame": 3224,
+              "logic": 2624
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/129.png",
+              "sha256": "c6f2750d6205aa4815ba151b6b5e4a26e6591a29c9c62872f50f6cdd3ab30a58",
+              "gFrame": 3225,
+              "logic": 2625
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/130.png",
+              "sha256": "04c314aa1a76a06c57ef4e2b51d010169c42510582a5a733754a99f551da8102",
+              "gFrame": 3226,
+              "logic": 2626
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/131.png",
+              "sha256": "03b66d957d52318e0f5ece59b91a493c60c1fd9e64e88db95f1bf76738d1cfdb",
+              "gFrame": 3227,
+              "logic": 2627
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/132.png",
+              "sha256": "55bec771224469c08b020006bba2181182f8003a9e59a386630bcb93cd739ed8",
+              "gFrame": 3228,
+              "logic": 2628
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/133.png",
+              "sha256": "8bbc389ffa3053da6b568bafbab3615ae1cc3242baeb41397a2e8bd48245612c",
+              "gFrame": 3229,
+              "logic": 2629
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/134.png",
+              "sha256": "2c7e7a8e07c6381d0e9393c2f37c7919f58cd42795a2a147481a0ac836f13fa5",
+              "gFrame": 3230,
+              "logic": 2630
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/135.png",
+              "sha256": "b5d2ece35287fa2dd2dec478fd9654ef1180c41384fe01604e8e26e3c34e1226",
+              "gFrame": 3231,
+              "logic": 2631
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/136.png",
+              "sha256": "8ffcf8a426ebb09d0549faa074fc24c0e8a0af1fb977e94812f7bdea15d238df",
+              "gFrame": 3232,
+              "logic": 2632
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/137.png",
+              "sha256": "45f905f8a0d8a7e7e4db71cda268abd4f85c695d3e5845d653e76ec891c43b6b",
+              "gFrame": 3233,
+              "logic": 2633
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/138.png",
+              "sha256": "96831318a1063cd7f037f6aad8b848c14d00a129693dcbba98ce616daca8ec05",
+              "gFrame": 3234,
+              "logic": 2634
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/139.png",
+              "sha256": "2ff226eb345fe2001183ba400d02b30b0a48f305cae5377d7d187924380dc9b7",
+              "gFrame": 3235,
+              "logic": 2635
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/140.png",
+              "sha256": "65e97830d7f3fdf61049d9b46fda8ddcf889620544f43f4bdab964f92981fa5c",
+              "gFrame": 3236,
+              "logic": 2636
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/141.png",
+              "sha256": "82160500b9e978dceb793381c64d94a19fd2d837e50ffe6e4ab10347daa99303",
+              "gFrame": 3237,
+              "logic": 2637
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/142.png",
+              "sha256": "edf7c3b223c96ccd31761a1c0cf9c924331b8a9717ee570c86dc601522c60c58",
+              "gFrame": 3238,
+              "logic": 2638
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/143.png",
+              "sha256": "1d1de944e1f4db992895aa5efd5dbc87c23b9c596ecba0c0590cdd0012f667b6",
+              "gFrame": 3239,
+              "logic": 2639
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/144.png",
+              "sha256": "583a953c675f2902be187668e0adb55f44d18409c08d937d3824f4ac7051e6fd",
+              "gFrame": 3240,
+              "logic": 2640
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/145.png",
+              "sha256": "3ec4ebe16f9feada043feaea6ee98f5cb204721b280f81e351bf841255493be9",
+              "gFrame": 3241,
+              "logic": 2641
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/146.png",
+              "sha256": "74e0d0f829a4a08db61cf05d80c95975ff0ecf204c9e70fbe3831ea576525c58",
+              "gFrame": 3242,
+              "logic": 2642
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/147.png",
+              "sha256": "565a76ec78b24de696c5a5d98caff5fce726d98d4664ea26ce2fed93f7663f1b",
+              "gFrame": 3243,
+              "logic": 2643
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/148.png",
+              "sha256": "902d85894dcf4b489dbec25098406e20614ae0443722e0f6617cdd465185f2ab",
+              "gFrame": 3244,
+              "logic": 2644
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/149.png",
+              "sha256": "f92635099b0398291a37995a9e245daf91ec2cf3cea608da4799da13036a5e7a",
+              "gFrame": 3245,
+              "logic": 2645
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/150.png",
+              "sha256": "dcb6d0c7f9cdbd8eaadd3ed97d9bc48f788e1616846ff3788e2812e4bfc1f03e",
+              "gFrame": 3246,
+              "logic": 2646
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/151.png",
+              "sha256": "d1bf362c5197b15db195784438336693bd1bfe49a25762ec34ee85ec5b910385",
+              "gFrame": 3247,
+              "logic": 2647
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/152.png",
+              "sha256": "b7e90b39955a282e0fb9c8d048f68462efabdffc3a609b75d1abd18ae26a68e9",
+              "gFrame": 3248,
+              "logic": 2648
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/153.png",
+              "sha256": "1db920ab3d77ce31cf65fc1594bf9e54f13283937295f326288f440d0d9486d3",
+              "gFrame": 3249,
+              "logic": 2649
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/154.png",
+              "sha256": "136da41b8f53743855b1dad5920a5a789e6927e51a373926aef380ac99da68e3",
+              "gFrame": 3250,
+              "logic": 2650
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/155.png",
+              "sha256": "8213c6437cbf2739b2413f10ffea84d8810176843b5db4b2125c5f6f5057ca2b",
+              "gFrame": 3251,
+              "logic": 2651
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/156.png",
+              "sha256": "c438572f0190ba7b14df0fe88dc4ce86e5d737922e769c26fe548c6d5675b409",
+              "gFrame": 3252,
+              "logic": 2652
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/157.png",
+              "sha256": "056b44f4d2559374c8513c2184b99f20c058f8532651c3ad9de9e42a5fd46de8",
+              "gFrame": 3253,
+              "logic": 2653
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/158.png",
+              "sha256": "d2a61b80861522b745575f54591118c46a6169b8def44ba83b9615b8eea8d4cc",
+              "gFrame": 3254,
+              "logic": 2654
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/159.png",
+              "sha256": "8e546150f1161110a4742864c8f6c8ca5ad44ac5d6a668b343710480f51dc08e",
+              "gFrame": 3255,
+              "logic": 2655
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/160.png",
+              "sha256": "0819182d6cfcc3ea62b3fa3c11953dd0022f1845530423d4dcf1be38aed89987",
+              "gFrame": 3256,
+              "logic": 2656
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/161.png",
+              "sha256": "fe82a0351ca6756874c060ccc97d76954a8f0aa5666dfe50737144af4e0d01f1",
+              "gFrame": 3257,
+              "logic": 2657
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/162.png",
+              "sha256": "50577473759539d09909331f3c9c752ad40231677feaf51cc2466f16690e9d3f",
+              "gFrame": 3258,
+              "logic": 2658
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/163.png",
+              "sha256": "b5f6cde1f207d7f7c7b8b3e984426b9edde42abc758f17fbddc72731cb5ae3d8",
+              "gFrame": 3259,
+              "logic": 2659
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/164.png",
+              "sha256": "1f0cfa6b0f3f4fd9ca5910aaf0517f33dbf81ad14ee5ce9c826610d8c7710cc8",
+              "gFrame": 3260,
+              "logic": 2660
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/165.png",
+              "sha256": "5ba203c9a67f4a9676aa6ba08ab7ff8c06cfd928f70bfe99b9e77f12ba27ae9c",
+              "gFrame": 3261,
+              "logic": 2661
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/166.png",
+              "sha256": "8c3fddae2b88341758eb0fca6707cae84a4a6144b9fb171e770df9f5f5226247",
+              "gFrame": 3262,
+              "logic": 2662
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/167.png",
+              "sha256": "1b9b61908ca3837c300bfe0cd08ee41a93d75dc011182ee6722c8bd4dca02a3a",
+              "gFrame": 3263,
+              "logic": 2663
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/168.png",
+              "sha256": "d66b03a67ee88b0a2dc67a5a9f044ab6c83001edf64bfa36d7b17462a0e7d2c4",
+              "gFrame": 3264,
+              "logic": 2664
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/169.png",
+              "sha256": "3ad381dd6bcffe5dc6b4cb670daa85b3fd65f3d21b40f4b3b97d2afc8ac7de6a",
+              "gFrame": 3265,
+              "logic": 2665
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/170.png",
+              "sha256": "751ef72d228f356c3f6b141e46042cc6374cdeaaa12451af57057472d9e54821",
+              "gFrame": 3266,
+              "logic": 2666
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/171.png",
+              "sha256": "4436fe933e630a174362c430e9fed817300f40f5bc49c655acae442822338a07",
+              "gFrame": 3267,
+              "logic": 2667
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/172.png",
+              "sha256": "8f5e0e1d0c8182efb5eb5a22ea973fc605f174de60b0757a1228028182b14773",
+              "gFrame": 3268,
+              "logic": 2668
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/173.png",
+              "sha256": "5967846efed14ad38e1a9326c38418fca932b3716c02b72a9c6d4408c80eff24",
+              "gFrame": 3269,
+              "logic": 2669
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/174.png",
+              "sha256": "4cf1a8d15f7895f8584b84a1395d106c263eb37e09bbd7ed102e266f923fe08e",
+              "gFrame": 3270,
+              "logic": 2670
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/175.png",
+              "sha256": "ef915ff2e018124bec51459da6dca22c673fe84018079ee531eb06d972ea4147",
+              "gFrame": 3271,
+              "logic": 2671
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/176.png",
+              "sha256": "6cb68ec15c762cc0ad25494ff136d020e7983271dffdc916d5e8acabeb74c4c8",
+              "gFrame": 3272,
+              "logic": 2672
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/177.png",
+              "sha256": "2df72e3516f45d80e0dec0a6b2c810184ab46d200d8c0dea905ff35f4fc1de1d",
+              "gFrame": 3273,
+              "logic": 2673
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/178.png",
+              "sha256": "557c763ec660efada1d3a0fb6dfedc09dffb6fb3d4995286be81ac39d71911a7",
+              "gFrame": 3274,
+              "logic": 2674
+            },
+            {
+              "file": "clips/forest-0000b4a7-cell10/179.png",
+              "sha256": "fc70d50a68c4924360cc71e97e5cbea1fffec4273ad4921e6ceaf2508365e00b",
+              "gFrame": 3275,
+              "logic": 2675
+            }
+          ]
+        }
+      }
+    },
+    {
+      "suite": "throughput",
+      "name": "stress-knights-24",
+      "label": "Synthetic24 Confessors / no player offense",
+      "phases": {
+        "before": {
+          "gif": "actual/before/stress-knights-24/motion.gif",
+          "raw_frames": 180,
+          "sample_step": 6,
+          "duration_ms": 100,
+          "frames": [
+            {
+              "file": "clips/stress-knights-24/000.png",
+              "sha256": "ee4b22ed6089df171a441389aa12ae83b1aa8a352332853fa00d9a18c232eda7",
+              "gFrame": 244,
+              "logic": 130
+            },
+            {
+              "file": "clips/stress-knights-24/001.png",
+              "sha256": "ee4b22ed6089df171a441389aa12ae83b1aa8a352332853fa00d9a18c232eda7",
+              "gFrame": 245,
+              "logic": 130
+            },
+            {
+              "file": "clips/stress-knights-24/002.png",
+              "sha256": "19ddbd2df070995fb6e3e545c93b7483ec433cfc830430da004f7360472c3089",
+              "gFrame": 246,
+              "logic": 131
+            },
+            {
+              "file": "clips/stress-knights-24/003.png",
+              "sha256": "19ddbd2df070995fb6e3e545c93b7483ec433cfc830430da004f7360472c3089",
+              "gFrame": 247,
+              "logic": 131
+            },
+            {
+              "file": "clips/stress-knights-24/004.png",
+              "sha256": "d173628c204795f1b5cb8c306efdcbe49c0e63c2ec4979f47f2abe856ee39f98",
+              "gFrame": 248,
+              "logic": 132
+            },
+            {
+              "file": "clips/stress-knights-24/005.png",
+              "sha256": "d173628c204795f1b5cb8c306efdcbe49c0e63c2ec4979f47f2abe856ee39f98",
+              "gFrame": 249,
+              "logic": 132
+            },
+            {
+              "file": "clips/stress-knights-24/006.png",
+              "sha256": "4a3140e28dd21a01e7da62da6f8777d32a2220d66718002462f9bd5a243b7458",
+              "gFrame": 250,
+              "logic": 133
+            },
+            {
+              "file": "clips/stress-knights-24/007.png",
+              "sha256": "4a3140e28dd21a01e7da62da6f8777d32a2220d66718002462f9bd5a243b7458",
+              "gFrame": 251,
+              "logic": 133
+            },
+            {
+              "file": "clips/stress-knights-24/008.png",
+              "sha256": "572d04d2a81eecfedafedabf8a994e4332b5cb6445dcfc0e6502ecdff65e4134",
+              "gFrame": 252,
+              "logic": 134
+            },
+            {
+              "file": "clips/stress-knights-24/009.png",
+              "sha256": "572d04d2a81eecfedafedabf8a994e4332b5cb6445dcfc0e6502ecdff65e4134",
+              "gFrame": 253,
+              "logic": 134
+            },
+            {
+              "file": "clips/stress-knights-24/010.png",
+              "sha256": "de55475d42c87c266c1008d96d17cdc9efd06b6c356cd07405c5ca31b01e3f67",
+              "gFrame": 254,
+              "logic": 135
+            },
+            {
+              "file": "clips/stress-knights-24/011.png",
+              "sha256": "de55475d42c87c266c1008d96d17cdc9efd06b6c356cd07405c5ca31b01e3f67",
+              "gFrame": 255,
+              "logic": 135
+            },
+            {
+              "file": "clips/stress-knights-24/012.png",
+              "sha256": "09aebfb0f8a0a93b56da08859b756d87024b15352b68ea5dd59a8595a84ab1c7",
+              "gFrame": 256,
+              "logic": 136
+            },
+            {
+              "file": "clips/stress-knights-24/013.png",
+              "sha256": "09aebfb0f8a0a93b56da08859b756d87024b15352b68ea5dd59a8595a84ab1c7",
+              "gFrame": 257,
+              "logic": 136
+            },
+            {
+              "file": "clips/stress-knights-24/014.png",
+              "sha256": "cb6d655af8332272588bbdc79a73737da865bb7158d295a503e46c4de8bccba0",
+              "gFrame": 258,
+              "logic": 137
+            },
+            {
+              "file": "clips/stress-knights-24/015.png",
+              "sha256": "cb6d655af8332272588bbdc79a73737da865bb7158d295a503e46c4de8bccba0",
+              "gFrame": 259,
+              "logic": 137
+            },
+            {
+              "file": "clips/stress-knights-24/016.png",
+              "sha256": "32851ba88de169d9859691f20a911c6b7eb13b884cd702c3c3bccff1895c7d1d",
+              "gFrame": 260,
+              "logic": 138
+            },
+            {
+              "file": "clips/stress-knights-24/017.png",
+              "sha256": "32851ba88de169d9859691f20a911c6b7eb13b884cd702c3c3bccff1895c7d1d",
+              "gFrame": 261,
+              "logic": 138
+            },
+            {
+              "file": "clips/stress-knights-24/018.png",
+              "sha256": "f1f7b9334564464d58632f5e151722479463677280ff8359f637fa39ac6d6fee",
+              "gFrame": 262,
+              "logic": 139
+            },
+            {
+              "file": "clips/stress-knights-24/019.png",
+              "sha256": "f1f7b9334564464d58632f5e151722479463677280ff8359f637fa39ac6d6fee",
+              "gFrame": 263,
+              "logic": 139
+            },
+            {
+              "file": "clips/stress-knights-24/020.png",
+              "sha256": "22ad7b16ea444a0348abc0b96f0a4541cf4fcb9d248f9f378c4c22b0230ba84f",
+              "gFrame": 264,
+              "logic": 140
+            },
+            {
+              "file": "clips/stress-knights-24/021.png",
+              "sha256": "22ad7b16ea444a0348abc0b96f0a4541cf4fcb9d248f9f378c4c22b0230ba84f",
+              "gFrame": 265,
+              "logic": 140
+            },
+            {
+              "file": "clips/stress-knights-24/022.png",
+              "sha256": "eff9329d9a95cf860de61388a08e67aa252bcface7f2be7c7f1975285b995ea9",
+              "gFrame": 266,
+              "logic": 141
+            },
+            {
+              "file": "clips/stress-knights-24/023.png",
+              "sha256": "eff9329d9a95cf860de61388a08e67aa252bcface7f2be7c7f1975285b995ea9",
+              "gFrame": 267,
+              "logic": 141
+            },
+            {
+              "file": "clips/stress-knights-24/024.png",
+              "sha256": "4e3df64178580a14e485fcc70f931bc396d4b113d2e5350b10cf82d711f0504d",
+              "gFrame": 268,
+              "logic": 142
+            },
+            {
+              "file": "clips/stress-knights-24/025.png",
+              "sha256": "4e3df64178580a14e485fcc70f931bc396d4b113d2e5350b10cf82d711f0504d",
+              "gFrame": 269,
+              "logic": 142
+            },
+            {
+              "file": "clips/stress-knights-24/026.png",
+              "sha256": "d0af622eb7f1604d8e753d8e9b2119fe1c5e12ba08e46d6a2662919232c0871d",
+              "gFrame": 270,
+              "logic": 143
+            },
+            {
+              "file": "clips/stress-knights-24/027.png",
+              "sha256": "d0af622eb7f1604d8e753d8e9b2119fe1c5e12ba08e46d6a2662919232c0871d",
+              "gFrame": 271,
+              "logic": 143
+            },
+            {
+              "file": "clips/stress-knights-24/028.png",
+              "sha256": "caee2e88cdb9c6c5843f53775ecf8b4004c706fa91ddd61bb5a788d970e6e770",
+              "gFrame": 272,
+              "logic": 144
+            },
+            {
+              "file": "clips/stress-knights-24/029.png",
+              "sha256": "caee2e88cdb9c6c5843f53775ecf8b4004c706fa91ddd61bb5a788d970e6e770",
+              "gFrame": 273,
+              "logic": 144
+            },
+            {
+              "file": "clips/stress-knights-24/030.png",
+              "sha256": "902809c8acd511b98ff434983dfa5e7d4e27edeb902363806e800bcac3de919d",
+              "gFrame": 274,
+              "logic": 145
+            },
+            {
+              "file": "clips/stress-knights-24/031.png",
+              "sha256": "902809c8acd511b98ff434983dfa5e7d4e27edeb902363806e800bcac3de919d",
+              "gFrame": 275,
+              "logic": 145
+            },
+            {
+              "file": "clips/stress-knights-24/032.png",
+              "sha256": "0f9beb4f22c936195c645b5722759355c7e8797fe95423c197894afeda448b48",
+              "gFrame": 276,
+              "logic": 146
+            },
+            {
+              "file": "clips/stress-knights-24/033.png",
+              "sha256": "0f9beb4f22c936195c645b5722759355c7e8797fe95423c197894afeda448b48",
+              "gFrame": 277,
+              "logic": 146
+            },
+            {
+              "file": "clips/stress-knights-24/034.png",
+              "sha256": "8ad90ed93d136ffc8a1c4b230607592462bfe34814659e2c338b3643ea8ea03f",
+              "gFrame": 278,
+              "logic": 147
+            },
+            {
+              "file": "clips/stress-knights-24/035.png",
+              "sha256": "8ad90ed93d136ffc8a1c4b230607592462bfe34814659e2c338b3643ea8ea03f",
+              "gFrame": 279,
+              "logic": 147
+            },
+            {
+              "file": "clips/stress-knights-24/036.png",
+              "sha256": "84d5028a23d33eab6490de1dab8d8ef9a8893fde88b04697576f4860cf356726",
+              "gFrame": 280,
+              "logic": 148
+            },
+            {
+              "file": "clips/stress-knights-24/037.png",
+              "sha256": "84d5028a23d33eab6490de1dab8d8ef9a8893fde88b04697576f4860cf356726",
+              "gFrame": 281,
+              "logic": 148
+            },
+            {
+              "file": "clips/stress-knights-24/038.png",
+              "sha256": "a404baa1ff317f86ede15bf46ad511ba9115725ce0ba9ab2d75ceb6b666ca103",
+              "gFrame": 282,
+              "logic": 149
+            },
+            {
+              "file": "clips/stress-knights-24/039.png",
+              "sha256": "a404baa1ff317f86ede15bf46ad511ba9115725ce0ba9ab2d75ceb6b666ca103",
+              "gFrame": 283,
+              "logic": 149
+            },
+            {
+              "file": "clips/stress-knights-24/040.png",
+              "sha256": "f1db5711badc231a807495a72267ad97f4e2ce2c34886bcd411303b849757801",
+              "gFrame": 284,
+              "logic": 150
+            },
+            {
+              "file": "clips/stress-knights-24/041.png",
+              "sha256": "f1db5711badc231a807495a72267ad97f4e2ce2c34886bcd411303b849757801",
+              "gFrame": 285,
+              "logic": 150
+            },
+            {
+              "file": "clips/stress-knights-24/042.png",
+              "sha256": "83ea11e7b4f76186cd2acd70458fee62616f907f941a86bc23d1664f68623e11",
+              "gFrame": 286,
+              "logic": 151
+            },
+            {
+              "file": "clips/stress-knights-24/043.png",
+              "sha256": "83ea11e7b4f76186cd2acd70458fee62616f907f941a86bc23d1664f68623e11",
+              "gFrame": 287,
+              "logic": 151
+            },
+            {
+              "file": "clips/stress-knights-24/044.png",
+              "sha256": "94a528b0314d20f01e8c82a17c8abd535b6372e98888f2bbe652a1871ebd09a8",
+              "gFrame": 288,
+              "logic": 152
+            },
+            {
+              "file": "clips/stress-knights-24/045.png",
+              "sha256": "94a528b0314d20f01e8c82a17c8abd535b6372e98888f2bbe652a1871ebd09a8",
+              "gFrame": 289,
+              "logic": 152
+            },
+            {
+              "file": "clips/stress-knights-24/046.png",
+              "sha256": "b2077997d64fe443e99073367ee8f0bb117ab94794abe1c80e5a69c53dd6eb62",
+              "gFrame": 290,
+              "logic": 153
+            },
+            {
+              "file": "clips/stress-knights-24/047.png",
+              "sha256": "b2077997d64fe443e99073367ee8f0bb117ab94794abe1c80e5a69c53dd6eb62",
+              "gFrame": 291,
+              "logic": 153
+            },
+            {
+              "file": "clips/stress-knights-24/048.png",
+              "sha256": "4df414a51437dfd5cf8dcd507afaf1544f1ad2f0149bf8f8c5282a7cd542cea6",
+              "gFrame": 292,
+              "logic": 154
+            },
+            {
+              "file": "clips/stress-knights-24/049.png",
+              "sha256": "4df414a51437dfd5cf8dcd507afaf1544f1ad2f0149bf8f8c5282a7cd542cea6",
+              "gFrame": 293,
+              "logic": 154
+            },
+            {
+              "file": "clips/stress-knights-24/050.png",
+              "sha256": "1ad061f6ba35378d769f471d01c528e31cf4d879dc436c1e3bab7da1a4ab9a5c",
+              "gFrame": 294,
+              "logic": 155
+            },
+            {
+              "file": "clips/stress-knights-24/051.png",
+              "sha256": "1ad061f6ba35378d769f471d01c528e31cf4d879dc436c1e3bab7da1a4ab9a5c",
+              "gFrame": 295,
+              "logic": 155
+            },
+            {
+              "file": "clips/stress-knights-24/052.png",
+              "sha256": "3dc9bdbe293fbac76ea59293b5220a4797449c403083cf48cc2c6268a00e84d8",
+              "gFrame": 296,
+              "logic": 156
+            },
+            {
+              "file": "clips/stress-knights-24/053.png",
+              "sha256": "3dc9bdbe293fbac76ea59293b5220a4797449c403083cf48cc2c6268a00e84d8",
+              "gFrame": 297,
+              "logic": 156
+            },
+            {
+              "file": "clips/stress-knights-24/054.png",
+              "sha256": "0c8eee22243d062a3909f577059d07b8a94a04e74db3474b20d461add2ccf181",
+              "gFrame": 298,
+              "logic": 157
+            },
+            {
+              "file": "clips/stress-knights-24/055.png",
+              "sha256": "0c8eee22243d062a3909f577059d07b8a94a04e74db3474b20d461add2ccf181",
+              "gFrame": 299,
+              "logic": 157
+            },
+            {
+              "file": "clips/stress-knights-24/056.png",
+              "sha256": "d7065d68e193aebab1e0776e1f370dde1348a419f0770bfa8ba154942270cad1",
+              "gFrame": 300,
+              "logic": 158
+            },
+            {
+              "file": "clips/stress-knights-24/057.png",
+              "sha256": "d7065d68e193aebab1e0776e1f370dde1348a419f0770bfa8ba154942270cad1",
+              "gFrame": 301,
+              "logic": 158
+            },
+            {
+              "file": "clips/stress-knights-24/058.png",
+              "sha256": "a811c64d29511bab2714ec96fbfb88684b77af80ccdd5d0d782729023d9b3e56",
+              "gFrame": 302,
+              "logic": 159
+            },
+            {
+              "file": "clips/stress-knights-24/059.png",
+              "sha256": "a811c64d29511bab2714ec96fbfb88684b77af80ccdd5d0d782729023d9b3e56",
+              "gFrame": 303,
+              "logic": 159
+            },
+            {
+              "file": "clips/stress-knights-24/060.png",
+              "sha256": "c044c84e359fca52e0554bc09652bf21cce175dd6686be993c1173666a81e3dc",
+              "gFrame": 304,
+              "logic": 160
+            },
+            {
+              "file": "clips/stress-knights-24/061.png",
+              "sha256": "c044c84e359fca52e0554bc09652bf21cce175dd6686be993c1173666a81e3dc",
+              "gFrame": 305,
+              "logic": 160
+            },
+            {
+              "file": "clips/stress-knights-24/062.png",
+              "sha256": "2f54315310bf01b828f35af56d77f71eea7c81fef4031f891dc1d73bb4e715b3",
+              "gFrame": 306,
+              "logic": 161
+            },
+            {
+              "file": "clips/stress-knights-24/063.png",
+              "sha256": "2f54315310bf01b828f35af56d77f71eea7c81fef4031f891dc1d73bb4e715b3",
+              "gFrame": 307,
+              "logic": 161
+            },
+            {
+              "file": "clips/stress-knights-24/064.png",
+              "sha256": "f7338b49dfba72f0d9bdd674e6c03953ff438e3e986b392a0be4409151a9864f",
+              "gFrame": 308,
+              "logic": 162
+            },
+            {
+              "file": "clips/stress-knights-24/065.png",
+              "sha256": "f7338b49dfba72f0d9bdd674e6c03953ff438e3e986b392a0be4409151a9864f",
+              "gFrame": 309,
+              "logic": 162
+            },
+            {
+              "file": "clips/stress-knights-24/066.png",
+              "sha256": "e4cd5e1b37eee23a725a14bb861de365e08baa6789fd62d8a0e1daa9dce9de6e",
+              "gFrame": 310,
+              "logic": 163
+            },
+            {
+              "file": "clips/stress-knights-24/067.png",
+              "sha256": "e4cd5e1b37eee23a725a14bb861de365e08baa6789fd62d8a0e1daa9dce9de6e",
+              "gFrame": 311,
+              "logic": 163
+            },
+            {
+              "file": "clips/stress-knights-24/068.png",
+              "sha256": "1a1db683293acddd9a25fd43657c983c2e63315b0200013d54941e14042d4a4f",
+              "gFrame": 312,
+              "logic": 164
+            },
+            {
+              "file": "clips/stress-knights-24/069.png",
+              "sha256": "1a1db683293acddd9a25fd43657c983c2e63315b0200013d54941e14042d4a4f",
+              "gFrame": 313,
+              "logic": 164
+            },
+            {
+              "file": "clips/stress-knights-24/070.png",
+              "sha256": "92ce1e433a2a5d0604b53c9a3cb441e8fe659be3dc00452fafa9baa0b66e8959",
+              "gFrame": 314,
+              "logic": 165
+            },
+            {
+              "file": "clips/stress-knights-24/071.png",
+              "sha256": "92ce1e433a2a5d0604b53c9a3cb441e8fe659be3dc00452fafa9baa0b66e8959",
+              "gFrame": 315,
+              "logic": 165
+            },
+            {
+              "file": "clips/stress-knights-24/072.png",
+              "sha256": "10436b4381ce78f932d0eb27f703ad9263037fe93aa2da1b19c73b8710fca171",
+              "gFrame": 316,
+              "logic": 166
+            },
+            {
+              "file": "clips/stress-knights-24/073.png",
+              "sha256": "10436b4381ce78f932d0eb27f703ad9263037fe93aa2da1b19c73b8710fca171",
+              "gFrame": 317,
+              "logic": 166
+            },
+            {
+              "file": "clips/stress-knights-24/074.png",
+              "sha256": "c5b0c8c299bc36e02b54c713816b25e0a79216558c40f5050d971c8affd44087",
+              "gFrame": 318,
+              "logic": 167
+            },
+            {
+              "file": "clips/stress-knights-24/075.png",
+              "sha256": "c5b0c8c299bc36e02b54c713816b25e0a79216558c40f5050d971c8affd44087",
+              "gFrame": 319,
+              "logic": 167
+            },
+            {
+              "file": "clips/stress-knights-24/076.png",
+              "sha256": "3c71b10d632bf02005f5a19b20cf31c1ffd41101d4fb20075c5a9bb62c5144ff",
+              "gFrame": 320,
+              "logic": 168
+            },
+            {
+              "file": "clips/stress-knights-24/077.png",
+              "sha256": "3c71b10d632bf02005f5a19b20cf31c1ffd41101d4fb20075c5a9bb62c5144ff",
+              "gFrame": 321,
+              "logic": 168
+            },
+            {
+              "file": "clips/stress-knights-24/078.png",
+              "sha256": "1a548b682b23116e435f413989f94ef05156271441c8e58a5d289bb5c7fa9b1f",
+              "gFrame": 322,
+              "logic": 169
+            },
+            {
+              "file": "clips/stress-knights-24/079.png",
+              "sha256": "1a548b682b23116e435f413989f94ef05156271441c8e58a5d289bb5c7fa9b1f",
+              "gFrame": 323,
+              "logic": 169
+            },
+            {
+              "file": "clips/stress-knights-24/080.png",
+              "sha256": "e93e4b0f29a14d261701499a5154a70dd7539598ed5172893261609903983b47",
+              "gFrame": 324,
+              "logic": 170
+            },
+            {
+              "file": "clips/stress-knights-24/081.png",
+              "sha256": "e93e4b0f29a14d261701499a5154a70dd7539598ed5172893261609903983b47",
+              "gFrame": 325,
+              "logic": 170
+            },
+            {
+              "file": "clips/stress-knights-24/082.png",
+              "sha256": "4cfb348b3207f0614f92bf49b41e3195ed1bbf515cd5dfccfa3e3b069e49684c",
+              "gFrame": 326,
+              "logic": 171
+            },
+            {
+              "file": "clips/stress-knights-24/083.png",
+              "sha256": "4cfb348b3207f0614f92bf49b41e3195ed1bbf515cd5dfccfa3e3b069e49684c",
+              "gFrame": 327,
+              "logic": 171
+            },
+            {
+              "file": "clips/stress-knights-24/084.png",
+              "sha256": "cfce1ab16dcda060edeab0fc86e53adbf8918cd24510013004805c67bfb8cd3f",
+              "gFrame": 328,
+              "logic": 172
+            },
+            {
+              "file": "clips/stress-knights-24/085.png",
+              "sha256": "cfce1ab16dcda060edeab0fc86e53adbf8918cd24510013004805c67bfb8cd3f",
+              "gFrame": 329,
+              "logic": 172
+            },
+            {
+              "file": "clips/stress-knights-24/086.png",
+              "sha256": "7035466851f47ab463c3f30db582e2fe9b9cf20b922ecac6b323bbfea43789a4",
+              "gFrame": 330,
+              "logic": 173
+            },
+            {
+              "file": "clips/stress-knights-24/087.png",
+              "sha256": "7035466851f47ab463c3f30db582e2fe9b9cf20b922ecac6b323bbfea43789a4",
+              "gFrame": 331,
+              "logic": 173
+            },
+            {
+              "file": "clips/stress-knights-24/088.png",
+              "sha256": "b4aafc06d1073a84dc753b491f1061c2e50a3d9290ebbfd00ded8ff821b35d74",
+              "gFrame": 332,
+              "logic": 174
+            },
+            {
+              "file": "clips/stress-knights-24/089.png",
+              "sha256": "b4aafc06d1073a84dc753b491f1061c2e50a3d9290ebbfd00ded8ff821b35d74",
+              "gFrame": 333,
+              "logic": 174
+            },
+            {
+              "file": "clips/stress-knights-24/090.png",
+              "sha256": "08c59c365a3dc11c84a6ebb9ba2e15415dbc5340b8b40f76428abcbefafa9fd8",
+              "gFrame": 334,
+              "logic": 175
+            },
+            {
+              "file": "clips/stress-knights-24/091.png",
+              "sha256": "08c59c365a3dc11c84a6ebb9ba2e15415dbc5340b8b40f76428abcbefafa9fd8",
+              "gFrame": 335,
+              "logic": 175
+            },
+            {
+              "file": "clips/stress-knights-24/092.png",
+              "sha256": "5cd4ea3ed0c509ae7c330636841efd018f5b1b590e9ddb3d0ed784b0571060e8",
+              "gFrame": 336,
+              "logic": 176
+            },
+            {
+              "file": "clips/stress-knights-24/093.png",
+              "sha256": "5cd4ea3ed0c509ae7c330636841efd018f5b1b590e9ddb3d0ed784b0571060e8",
+              "gFrame": 337,
+              "logic": 176
+            },
+            {
+              "file": "clips/stress-knights-24/094.png",
+              "sha256": "7002eb74bb299fb5506da670af1213951961ba0c2f88a0bc2c102203a5cf94a4",
+              "gFrame": 338,
+              "logic": 177
+            },
+            {
+              "file": "clips/stress-knights-24/095.png",
+              "sha256": "7002eb74bb299fb5506da670af1213951961ba0c2f88a0bc2c102203a5cf94a4",
+              "gFrame": 339,
+              "logic": 177
+            },
+            {
+              "file": "clips/stress-knights-24/096.png",
+              "sha256": "ec456c7acdb758f59c5f09bc097623f10030c6feccbbe97495531d410aa595c4",
+              "gFrame": 340,
+              "logic": 178
+            },
+            {
+              "file": "clips/stress-knights-24/097.png",
+              "sha256": "ec456c7acdb758f59c5f09bc097623f10030c6feccbbe97495531d410aa595c4",
+              "gFrame": 341,
+              "logic": 178
+            },
+            {
+              "file": "clips/stress-knights-24/098.png",
+              "sha256": "088478a9050356770fe7b90ebad2a7dc163b3a9ff8af5ae89242f92604e5e20e",
+              "gFrame": 342,
+              "logic": 179
+            },
+            {
+              "file": "clips/stress-knights-24/099.png",
+              "sha256": "088478a9050356770fe7b90ebad2a7dc163b3a9ff8af5ae89242f92604e5e20e",
+              "gFrame": 343,
+              "logic": 179
+            },
+            {
+              "file": "clips/stress-knights-24/100.png",
+              "sha256": "46c23cf29047e822e08999d6d3196a047ca837edcd343c1ed795c8c2a4631631",
+              "gFrame": 344,
+              "logic": 180
+            },
+            {
+              "file": "clips/stress-knights-24/101.png",
+              "sha256": "46c23cf29047e822e08999d6d3196a047ca837edcd343c1ed795c8c2a4631631",
+              "gFrame": 345,
+              "logic": 180
+            },
+            {
+              "file": "clips/stress-knights-24/102.png",
+              "sha256": "f81d36639e6a0eec127a03cd72d95605f61af77987edce99c1b555cdc35329c2",
+              "gFrame": 346,
+              "logic": 181
+            },
+            {
+              "file": "clips/stress-knights-24/103.png",
+              "sha256": "f81d36639e6a0eec127a03cd72d95605f61af77987edce99c1b555cdc35329c2",
+              "gFrame": 347,
+              "logic": 181
+            },
+            {
+              "file": "clips/stress-knights-24/104.png",
+              "sha256": "0e84eb25b142a0c6e376793d565407380585bfbf26cbbe053c7a6113e48f401e",
+              "gFrame": 348,
+              "logic": 182
+            },
+            {
+              "file": "clips/stress-knights-24/105.png",
+              "sha256": "0e84eb25b142a0c6e376793d565407380585bfbf26cbbe053c7a6113e48f401e",
+              "gFrame": 349,
+              "logic": 182
+            },
+            {
+              "file": "clips/stress-knights-24/106.png",
+              "sha256": "33bdbe16209d11345082aef1ce0349be38caf3f138b62ebc22514c1d02bff5a1",
+              "gFrame": 350,
+              "logic": 183
+            },
+            {
+              "file": "clips/stress-knights-24/107.png",
+              "sha256": "33bdbe16209d11345082aef1ce0349be38caf3f138b62ebc22514c1d02bff5a1",
+              "gFrame": 351,
+              "logic": 183
+            },
+            {
+              "file": "clips/stress-knights-24/108.png",
+              "sha256": "9f53118ea4dd546c56ea07b40ca177f7c184e1d3520b5b2d9aaf5e1c234aaeb8",
+              "gFrame": 352,
+              "logic": 184
+            },
+            {
+              "file": "clips/stress-knights-24/109.png",
+              "sha256": "9f53118ea4dd546c56ea07b40ca177f7c184e1d3520b5b2d9aaf5e1c234aaeb8",
+              "gFrame": 353,
+              "logic": 184
+            },
+            {
+              "file": "clips/stress-knights-24/110.png",
+              "sha256": "599072b1a8d112f47418df9553280a77808fa8125791ef01182adc25bffd7f28",
+              "gFrame": 354,
+              "logic": 185
+            },
+            {
+              "file": "clips/stress-knights-24/111.png",
+              "sha256": "599072b1a8d112f47418df9553280a77808fa8125791ef01182adc25bffd7f28",
+              "gFrame": 355,
+              "logic": 185
+            },
+            {
+              "file": "clips/stress-knights-24/112.png",
+              "sha256": "5b153043da2a6430670c0027979f7995bbd2a425ffae99c8c0ea05c308c58954",
+              "gFrame": 356,
+              "logic": 186
+            },
+            {
+              "file": "clips/stress-knights-24/113.png",
+              "sha256": "5b153043da2a6430670c0027979f7995bbd2a425ffae99c8c0ea05c308c58954",
+              "gFrame": 357,
+              "logic": 186
+            },
+            {
+              "file": "clips/stress-knights-24/114.png",
+              "sha256": "a575caeeca4a099acd11791d368887c0a7710a29550e38c2402e8bad87ae8238",
+              "gFrame": 358,
+              "logic": 187
+            },
+            {
+              "file": "clips/stress-knights-24/115.png",
+              "sha256": "a575caeeca4a099acd11791d368887c0a7710a29550e38c2402e8bad87ae8238",
+              "gFrame": 359,
+              "logic": 187
+            },
+            {
+              "file": "clips/stress-knights-24/116.png",
+              "sha256": "bdc8b0dea4c47923afd54e9b1f8a605748fcf95913b3d9c3daf1cd40bf4c981e",
+              "gFrame": 360,
+              "logic": 188
+            },
+            {
+              "file": "clips/stress-knights-24/117.png",
+              "sha256": "bdc8b0dea4c47923afd54e9b1f8a605748fcf95913b3d9c3daf1cd40bf4c981e",
+              "gFrame": 361,
+              "logic": 188
+            },
+            {
+              "file": "clips/stress-knights-24/118.png",
+              "sha256": "1ea8bcddfe04b7b803c1c37f44acff475f4c1061c991394784781a9d85964311",
+              "gFrame": 362,
+              "logic": 189
+            },
+            {
+              "file": "clips/stress-knights-24/119.png",
+              "sha256": "1ea8bcddfe04b7b803c1c37f44acff475f4c1061c991394784781a9d85964311",
+              "gFrame": 363,
+              "logic": 189
+            },
+            {
+              "file": "clips/stress-knights-24/120.png",
+              "sha256": "320afae12ed68b9e39d620a2172fd234574239cba9312a5d78206cc7bb919b97",
+              "gFrame": 364,
+              "logic": 190
+            },
+            {
+              "file": "clips/stress-knights-24/121.png",
+              "sha256": "320afae12ed68b9e39d620a2172fd234574239cba9312a5d78206cc7bb919b97",
+              "gFrame": 365,
+              "logic": 190
+            },
+            {
+              "file": "clips/stress-knights-24/122.png",
+              "sha256": "e26b40fd26f963dba64406115c2c0dcd33ba6f77a3a1f53400eedcd141544e42",
+              "gFrame": 366,
+              "logic": 191
+            },
+            {
+              "file": "clips/stress-knights-24/123.png",
+              "sha256": "e26b40fd26f963dba64406115c2c0dcd33ba6f77a3a1f53400eedcd141544e42",
+              "gFrame": 367,
+              "logic": 191
+            },
+            {
+              "file": "clips/stress-knights-24/124.png",
+              "sha256": "76f525c9eaf642ffe2e7d0f82434550638e4ccbca85f7339ae4e85e9dda91b62",
+              "gFrame": 368,
+              "logic": 192
+            },
+            {
+              "file": "clips/stress-knights-24/125.png",
+              "sha256": "76f525c9eaf642ffe2e7d0f82434550638e4ccbca85f7339ae4e85e9dda91b62",
+              "gFrame": 369,
+              "logic": 192
+            },
+            {
+              "file": "clips/stress-knights-24/126.png",
+              "sha256": "0a299e8fb5e85c070b71f9bd92aa9f1e0228b6051a76f4a9c1d46205995bba49",
+              "gFrame": 370,
+              "logic": 193
+            },
+            {
+              "file": "clips/stress-knights-24/127.png",
+              "sha256": "0a299e8fb5e85c070b71f9bd92aa9f1e0228b6051a76f4a9c1d46205995bba49",
+              "gFrame": 371,
+              "logic": 193
+            },
+            {
+              "file": "clips/stress-knights-24/128.png",
+              "sha256": "a8e37c56cd6d31c5c2de04c711ec8b563f755227bfadbd280eddcefa6c57b136",
+              "gFrame": 372,
+              "logic": 194
+            },
+            {
+              "file": "clips/stress-knights-24/129.png",
+              "sha256": "a8e37c56cd6d31c5c2de04c711ec8b563f755227bfadbd280eddcefa6c57b136",
+              "gFrame": 373,
+              "logic": 194
+            },
+            {
+              "file": "clips/stress-knights-24/130.png",
+              "sha256": "f007e84988b599c110af8c18c32f56f5ecea915321c40817982b59f96801c8c3",
+              "gFrame": 374,
+              "logic": 195
+            },
+            {
+              "file": "clips/stress-knights-24/131.png",
+              "sha256": "f007e84988b599c110af8c18c32f56f5ecea915321c40817982b59f96801c8c3",
+              "gFrame": 375,
+              "logic": 195
+            },
+            {
+              "file": "clips/stress-knights-24/132.png",
+              "sha256": "3dc2655cc521aa0f823a035ac9e37746865892fa2ba7b7ce37db71ea4cc658bf",
+              "gFrame": 376,
+              "logic": 196
+            },
+            {
+              "file": "clips/stress-knights-24/133.png",
+              "sha256": "3dc2655cc521aa0f823a035ac9e37746865892fa2ba7b7ce37db71ea4cc658bf",
+              "gFrame": 377,
+              "logic": 196
+            },
+            {
+              "file": "clips/stress-knights-24/134.png",
+              "sha256": "cc0be099320d71aaa74d5476485832c5903af0ceec3f3d078d0a1c1497c178ef",
+              "gFrame": 378,
+              "logic": 197
+            },
+            {
+              "file": "clips/stress-knights-24/135.png",
+              "sha256": "cc0be099320d71aaa74d5476485832c5903af0ceec3f3d078d0a1c1497c178ef",
+              "gFrame": 379,
+              "logic": 197
+            },
+            {
+              "file": "clips/stress-knights-24/136.png",
+              "sha256": "26117053f39d77dd4df66c01bec147f8191b0d68197aa7551cdcbbd61240b149",
+              "gFrame": 380,
+              "logic": 198
+            },
+            {
+              "file": "clips/stress-knights-24/137.png",
+              "sha256": "26117053f39d77dd4df66c01bec147f8191b0d68197aa7551cdcbbd61240b149",
+              "gFrame": 381,
+              "logic": 198
+            },
+            {
+              "file": "clips/stress-knights-24/138.png",
+              "sha256": "5b33b299bd2a4bb8944c40e121c4fabca231888d5d80c868af0c9ae56803aff1",
+              "gFrame": 382,
+              "logic": 199
+            },
+            {
+              "file": "clips/stress-knights-24/139.png",
+              "sha256": "5b33b299bd2a4bb8944c40e121c4fabca231888d5d80c868af0c9ae56803aff1",
+              "gFrame": 383,
+              "logic": 199
+            },
+            {
+              "file": "clips/stress-knights-24/140.png",
+              "sha256": "5dfdd2c30ad3ca9023247abdd1b8fd28ec97b7f168389476cd0a59f10c294879",
+              "gFrame": 384,
+              "logic": 200
+            },
+            {
+              "file": "clips/stress-knights-24/141.png",
+              "sha256": "5dfdd2c30ad3ca9023247abdd1b8fd28ec97b7f168389476cd0a59f10c294879",
+              "gFrame": 385,
+              "logic": 200
+            },
+            {
+              "file": "clips/stress-knights-24/142.png",
+              "sha256": "b097f66044c582b744d494b17d668a201d6aec78db0864220d20f190d17bb818",
+              "gFrame": 386,
+              "logic": 201
+            },
+            {
+              "file": "clips/stress-knights-24/143.png",
+              "sha256": "b097f66044c582b744d494b17d668a201d6aec78db0864220d20f190d17bb818",
+              "gFrame": 387,
+              "logic": 201
+            },
+            {
+              "file": "clips/stress-knights-24/144.png",
+              "sha256": "e24f30ddab555ecaeb127d1061c561d282365ca982877a769366087a0e291cb5",
+              "gFrame": 388,
+              "logic": 202
+            },
+            {
+              "file": "clips/stress-knights-24/145.png",
+              "sha256": "e24f30ddab555ecaeb127d1061c561d282365ca982877a769366087a0e291cb5",
+              "gFrame": 389,
+              "logic": 202
+            },
+            {
+              "file": "clips/stress-knights-24/146.png",
+              "sha256": "a72bc326de6730bd262d39dd1b611d4fb7fb5e1dee633e59abdc2f5a7e578dc9",
+              "gFrame": 390,
+              "logic": 203
+            },
+            {
+              "file": "clips/stress-knights-24/147.png",
+              "sha256": "a72bc326de6730bd262d39dd1b611d4fb7fb5e1dee633e59abdc2f5a7e578dc9",
+              "gFrame": 391,
+              "logic": 203
+            },
+            {
+              "file": "clips/stress-knights-24/148.png",
+              "sha256": "22701f09fce0497ddbe0c276e18f1cedf706987d9b8433c26e214bd236c00b4b",
+              "gFrame": 392,
+              "logic": 204
+            },
+            {
+              "file": "clips/stress-knights-24/149.png",
+              "sha256": "22701f09fce0497ddbe0c276e18f1cedf706987d9b8433c26e214bd236c00b4b",
+              "gFrame": 393,
+              "logic": 204
+            },
+            {
+              "file": "clips/stress-knights-24/150.png",
+              "sha256": "a03be28b63a6e7d7ae94b3bc494259e695b6dde31b6f9fc343e7a58b203b320d",
+              "gFrame": 394,
+              "logic": 205
+            },
+            {
+              "file": "clips/stress-knights-24/151.png",
+              "sha256": "a03be28b63a6e7d7ae94b3bc494259e695b6dde31b6f9fc343e7a58b203b320d",
+              "gFrame": 395,
+              "logic": 205
+            },
+            {
+              "file": "clips/stress-knights-24/152.png",
+              "sha256": "50ed44696c5093adf54affe7038e749c7aa2942f7317593c98ad7f91493b3e7b",
+              "gFrame": 396,
+              "logic": 206
+            },
+            {
+              "file": "clips/stress-knights-24/153.png",
+              "sha256": "50ed44696c5093adf54affe7038e749c7aa2942f7317593c98ad7f91493b3e7b",
+              "gFrame": 397,
+              "logic": 206
+            },
+            {
+              "file": "clips/stress-knights-24/154.png",
+              "sha256": "17f1b592c385b2c3f5fca4ea1cfada156997a700b89ccf96ec0ea9d4ddbda1c9",
+              "gFrame": 398,
+              "logic": 207
+            },
+            {
+              "file": "clips/stress-knights-24/155.png",
+              "sha256": "17f1b592c385b2c3f5fca4ea1cfada156997a700b89ccf96ec0ea9d4ddbda1c9",
+              "gFrame": 399,
+              "logic": 207
+            },
+            {
+              "file": "clips/stress-knights-24/156.png",
+              "sha256": "200b5fd082f01309369d7f3cd0415cdb0f99e56e6881a7a2518bee486009ad2a",
+              "gFrame": 400,
+              "logic": 208
+            },
+            {
+              "file": "clips/stress-knights-24/157.png",
+              "sha256": "200b5fd082f01309369d7f3cd0415cdb0f99e56e6881a7a2518bee486009ad2a",
+              "gFrame": 401,
+              "logic": 208
+            },
+            {
+              "file": "clips/stress-knights-24/158.png",
+              "sha256": "e660763ab7ac48b504b5388213e2378a5395c60a3f7a65d0879e650ec23fac68",
+              "gFrame": 402,
+              "logic": 209
+            },
+            {
+              "file": "clips/stress-knights-24/159.png",
+              "sha256": "e660763ab7ac48b504b5388213e2378a5395c60a3f7a65d0879e650ec23fac68",
+              "gFrame": 403,
+              "logic": 209
+            },
+            {
+              "file": "clips/stress-knights-24/160.png",
+              "sha256": "cf20fb4868d23b5e817100e27496846cdc327df9b2fe1aa3c07ed4438fb1fe57",
+              "gFrame": 404,
+              "logic": 210
+            },
+            {
+              "file": "clips/stress-knights-24/161.png",
+              "sha256": "cf20fb4868d23b5e817100e27496846cdc327df9b2fe1aa3c07ed4438fb1fe57",
+              "gFrame": 405,
+              "logic": 210
+            },
+            {
+              "file": "clips/stress-knights-24/162.png",
+              "sha256": "62d642b508c15bf84b75b04d552b36ae50ebd7ddbe4d1466b150129a5c69a0e0",
+              "gFrame": 406,
+              "logic": 211
+            },
+            {
+              "file": "clips/stress-knights-24/163.png",
+              "sha256": "62d642b508c15bf84b75b04d552b36ae50ebd7ddbe4d1466b150129a5c69a0e0",
+              "gFrame": 407,
+              "logic": 211
+            },
+            {
+              "file": "clips/stress-knights-24/164.png",
+              "sha256": "ee70f61d6cc7784de8cc44f60971d6963fc28101f3bc8e40ee6b2f043e993214",
+              "gFrame": 408,
+              "logic": 212
+            },
+            {
+              "file": "clips/stress-knights-24/165.png",
+              "sha256": "ee70f61d6cc7784de8cc44f60971d6963fc28101f3bc8e40ee6b2f043e993214",
+              "gFrame": 409,
+              "logic": 212
+            },
+            {
+              "file": "clips/stress-knights-24/166.png",
+              "sha256": "295cab55494cb94554397599c943487714929dee2b3d2b01f3f5962518ec2937",
+              "gFrame": 410,
+              "logic": 213
+            },
+            {
+              "file": "clips/stress-knights-24/167.png",
+              "sha256": "295cab55494cb94554397599c943487714929dee2b3d2b01f3f5962518ec2937",
+              "gFrame": 411,
+              "logic": 213
+            },
+            {
+              "file": "clips/stress-knights-24/168.png",
+              "sha256": "b00656cebcd5c29b6429c203519609638a60037ef9def42f32a7dc9b28ba9029",
+              "gFrame": 412,
+              "logic": 214
+            },
+            {
+              "file": "clips/stress-knights-24/169.png",
+              "sha256": "b00656cebcd5c29b6429c203519609638a60037ef9def42f32a7dc9b28ba9029",
+              "gFrame": 413,
+              "logic": 214
+            },
+            {
+              "file": "clips/stress-knights-24/170.png",
+              "sha256": "c38fcc76c67039aa876332c8d48357557ef2645fd971073b18e49963555115c6",
+              "gFrame": 414,
+              "logic": 215
+            },
+            {
+              "file": "clips/stress-knights-24/171.png",
+              "sha256": "c38fcc76c67039aa876332c8d48357557ef2645fd971073b18e49963555115c6",
+              "gFrame": 415,
+              "logic": 215
+            },
+            {
+              "file": "clips/stress-knights-24/172.png",
+              "sha256": "910f11d6e75fa87aff3d940dcef56a7d41bbb3e13daae47d7136cdc17fd79d61",
+              "gFrame": 416,
+              "logic": 216
+            },
+            {
+              "file": "clips/stress-knights-24/173.png",
+              "sha256": "910f11d6e75fa87aff3d940dcef56a7d41bbb3e13daae47d7136cdc17fd79d61",
+              "gFrame": 417,
+              "logic": 216
+            },
+            {
+              "file": "clips/stress-knights-24/174.png",
+              "sha256": "a8e5fb19b704e68db01cbd37ef98ee4a30a02f1f894b91ba59517952c0f76346",
+              "gFrame": 418,
+              "logic": 217
+            },
+            {
+              "file": "clips/stress-knights-24/175.png",
+              "sha256": "a8e5fb19b704e68db01cbd37ef98ee4a30a02f1f894b91ba59517952c0f76346",
+              "gFrame": 419,
+              "logic": 217
+            },
+            {
+              "file": "clips/stress-knights-24/176.png",
+              "sha256": "5ea71f41ad609f47deddd87d273969ad34123fd85d9bb329de2b5b466895d44a",
+              "gFrame": 420,
+              "logic": 218
+            },
+            {
+              "file": "clips/stress-knights-24/177.png",
+              "sha256": "5ea71f41ad609f47deddd87d273969ad34123fd85d9bb329de2b5b466895d44a",
+              "gFrame": 421,
+              "logic": 218
+            },
+            {
+              "file": "clips/stress-knights-24/178.png",
+              "sha256": "10f5245e366be770c2886c3455943b8bacb42a7abe6a1577a3499403e1ac38c8",
+              "gFrame": 422,
+              "logic": 219
+            },
+            {
+              "file": "clips/stress-knights-24/179.png",
+              "sha256": "10f5245e366be770c2886c3455943b8bacb42a7abe6a1577a3499403e1ac38c8",
+              "gFrame": 423,
+              "logic": 219
+            }
+          ]
+        },
+        "after": {
+          "gif": "actual/after/stress-knights-24/motion.gif",
+          "raw_frames": 180,
+          "sample_step": 6,
+          "duration_ms": 100,
+          "frames": [
+            {
+              "file": "clips/stress-knights-24/000.png",
+              "sha256": "c469ae8dd5c9b5bf2bf21d29c79c09f5983820bed890701080b28412e475ecaf",
+              "gFrame": 244,
+              "logic": 135
+            },
+            {
+              "file": "clips/stress-knights-24/001.png",
+              "sha256": "45cf55ec15b3e47270a684efef56a6e4d27d1d590b6d05f8339e3dddfac5608d",
+              "gFrame": 245,
+              "logic": 136
+            },
+            {
+              "file": "clips/stress-knights-24/002.png",
+              "sha256": "79ab10dbccf27368b5f5d62cdb3a431f953d70e6bd2cbc05e5da6ee079b27aa4",
+              "gFrame": 246,
+              "logic": 137
+            },
+            {
+              "file": "clips/stress-knights-24/003.png",
+              "sha256": "e5166617786e46ea59a73550855fec4540c077b79200898933329b7aa0383a1b",
+              "gFrame": 247,
+              "logic": 138
+            },
+            {
+              "file": "clips/stress-knights-24/004.png",
+              "sha256": "3b66636ba07e3bf2b6d7611bdd53f6dedc645b6ea32d4ff2da4fccb4e5dda9a9",
+              "gFrame": 248,
+              "logic": 139
+            },
+            {
+              "file": "clips/stress-knights-24/005.png",
+              "sha256": "3513bee7206efb1ed43a4375dd39f1459c3fc817fa1b46d01eee51fd97b4c9d7",
+              "gFrame": 249,
+              "logic": 140
+            },
+            {
+              "file": "clips/stress-knights-24/006.png",
+              "sha256": "7420f7a355c428b1ebc6f76fdf7d9561c37d397bd65d7231a345211e64d2e1cf",
+              "gFrame": 250,
+              "logic": 141
+            },
+            {
+              "file": "clips/stress-knights-24/007.png",
+              "sha256": "c79b8a0b6116519b7b023d4abf9c1374e925a41a4f1a70c220b853c376db1113",
+              "gFrame": 251,
+              "logic": 142
+            },
+            {
+              "file": "clips/stress-knights-24/008.png",
+              "sha256": "f41c28b916a5bf35151a08b94c9f1ee4ef1db16cd68e17f19b0692541104d6d1",
+              "gFrame": 252,
+              "logic": 143
+            },
+            {
+              "file": "clips/stress-knights-24/009.png",
+              "sha256": "76414480ca4c335b5ce59dde7b6726bfbd9b03dd00860ff23c3923a579ec4503",
+              "gFrame": 253,
+              "logic": 144
+            },
+            {
+              "file": "clips/stress-knights-24/010.png",
+              "sha256": "6b02dd7208ab9516d4b63bfcd85179bf9f738efdf3a3f3b5261aff6b0407ad99",
+              "gFrame": 254,
+              "logic": 145
+            },
+            {
+              "file": "clips/stress-knights-24/011.png",
+              "sha256": "d310b8684297785805bce91a673c7c0ae707fa4971abad3e3ea6b39cd658e68b",
+              "gFrame": 255,
+              "logic": 146
+            },
+            {
+              "file": "clips/stress-knights-24/012.png",
+              "sha256": "c78e6ec442977e85e48f0b7736983b5f964d0c720f2ed87da2a207027ef139d5",
+              "gFrame": 256,
+              "logic": 147
+            },
+            {
+              "file": "clips/stress-knights-24/013.png",
+              "sha256": "cba47e634fb0a6afde0204cbfc7d57aab2d737b15dd37101afe4452628a69934",
+              "gFrame": 257,
+              "logic": 148
+            },
+            {
+              "file": "clips/stress-knights-24/014.png",
+              "sha256": "2cec8ba7a8b531c33bda2caeffa3111ea66a15b9afca4deee5991653d0352b1d",
+              "gFrame": 258,
+              "logic": 149
+            },
+            {
+              "file": "clips/stress-knights-24/015.png",
+              "sha256": "185e8a53afe561fabb9f70b7c229786fb47632e3b16d19653fa4a44fd45352f4",
+              "gFrame": 259,
+              "logic": 150
+            },
+            {
+              "file": "clips/stress-knights-24/016.png",
+              "sha256": "46207fc09b12236d27eceebfe78a1e59766773741c99a2cdb78f20d3aa415949",
+              "gFrame": 260,
+              "logic": 151
+            },
+            {
+              "file": "clips/stress-knights-24/017.png",
+              "sha256": "2b9d90c49b20c17699d577503994566d1dfe235309edb868fe0d41394d595785",
+              "gFrame": 261,
+              "logic": 152
+            },
+            {
+              "file": "clips/stress-knights-24/018.png",
+              "sha256": "a0c432ce443cd0ee11286e3b2e7521ea472fccc8f9bfe5842c1bb605334454cf",
+              "gFrame": 262,
+              "logic": 153
+            },
+            {
+              "file": "clips/stress-knights-24/019.png",
+              "sha256": "201a8bc9b25661acc86a0ee0e07c1b0a558e9d5e21dd980e091595833c99331b",
+              "gFrame": 263,
+              "logic": 154
+            },
+            {
+              "file": "clips/stress-knights-24/020.png",
+              "sha256": "3cab04ee67a83539977e7c43fa46f2fa0c2e7c1c5593f9e8c07b2de4024c768c",
+              "gFrame": 264,
+              "logic": 155
+            },
+            {
+              "file": "clips/stress-knights-24/021.png",
+              "sha256": "20420e1482ec98be3433c5e5e0a5c413069e42d8dd79fd4988b79925087f4a7e",
+              "gFrame": 265,
+              "logic": 156
+            },
+            {
+              "file": "clips/stress-knights-24/022.png",
+              "sha256": "222eaecb31d198a7df41442e2f9d752c3d54e00b8b01fb4229dea1d929b94635",
+              "gFrame": 266,
+              "logic": 157
+            },
+            {
+              "file": "clips/stress-knights-24/023.png",
+              "sha256": "4eab7634665a77ca2497955a4ad021fd1322f414fa5f41305b83175857e5e178",
+              "gFrame": 267,
+              "logic": 158
+            },
+            {
+              "file": "clips/stress-knights-24/024.png",
+              "sha256": "99d6946d31ba94f662b4c287f18c5b3326b43ae7697d495363c0b93fdf7f0583",
+              "gFrame": 268,
+              "logic": 159
+            },
+            {
+              "file": "clips/stress-knights-24/025.png",
+              "sha256": "63f669295f0fbcc3a1ac3e9d4be07092b3685679c48dc29de682cf7db0d0e667",
+              "gFrame": 269,
+              "logic": 160
+            },
+            {
+              "file": "clips/stress-knights-24/026.png",
+              "sha256": "42a10b0fea986afe266873e5ec9b2d186de9b3324295b4e2eef42dfcfbe152c9",
+              "gFrame": 270,
+              "logic": 161
+            },
+            {
+              "file": "clips/stress-knights-24/027.png",
+              "sha256": "25ffa612d39bb3e72c4b36f8d118899abb1adcea1747c0ea52414fd9b9a5ab1c",
+              "gFrame": 271,
+              "logic": 162
+            },
+            {
+              "file": "clips/stress-knights-24/028.png",
+              "sha256": "c9c6bf3d7f9d2c69a5b87e6155951b42c09e49063ee34040469afdbca3f101ed",
+              "gFrame": 272,
+              "logic": 163
+            },
+            {
+              "file": "clips/stress-knights-24/029.png",
+              "sha256": "a3e88cc2d1b6abda68d31f4983c6e6f2abb7204e3326e54634768c3fe9301b0e",
+              "gFrame": 273,
+              "logic": 164
+            },
+            {
+              "file": "clips/stress-knights-24/030.png",
+              "sha256": "9b976fb4d1ed636ed0a89e42cc7ce5deb38442a18943ffd7aa79f6fa30404709",
+              "gFrame": 274,
+              "logic": 165
+            },
+            {
+              "file": "clips/stress-knights-24/031.png",
+              "sha256": "e1cbee0d92f3909a09a507d4ed2ef71a18e2f55e865a1d52e4ed30fcebcf98c1",
+              "gFrame": 275,
+              "logic": 166
+            },
+            {
+              "file": "clips/stress-knights-24/032.png",
+              "sha256": "d5c3cddfffad0993b4add65dadd48ae95ff043b2ad5c7fc25e2cc06b5536ec97",
+              "gFrame": 276,
+              "logic": 167
+            },
+            {
+              "file": "clips/stress-knights-24/033.png",
+              "sha256": "10f77e8165373370f8f5fe306b3b162d8e818ddd5638ccc63dec94638b7591e0",
+              "gFrame": 277,
+              "logic": 168
+            },
+            {
+              "file": "clips/stress-knights-24/034.png",
+              "sha256": "01efcbe7f57f52334201e9ce43a1a9fcc83d6f9d772868220607e25c7a142786",
+              "gFrame": 278,
+              "logic": 169
+            },
+            {
+              "file": "clips/stress-knights-24/035.png",
+              "sha256": "cf0c2353acea07e0d0e6796a97f8996a722806df6c602ca24750507780f90f67",
+              "gFrame": 279,
+              "logic": 170
+            },
+            {
+              "file": "clips/stress-knights-24/036.png",
+              "sha256": "efae26e00feb8c772f67acb47846e6525abfa20efbd5d84331db48b9d8d6bbe3",
+              "gFrame": 280,
+              "logic": 171
+            },
+            {
+              "file": "clips/stress-knights-24/037.png",
+              "sha256": "70dc330c24c8485e464145344139c8e8ddcdc381127d29155becbff71d62a4f4",
+              "gFrame": 281,
+              "logic": 172
+            },
+            {
+              "file": "clips/stress-knights-24/038.png",
+              "sha256": "b1733e3e77ecd6e732b041e8b1c896b4acee9ad2b4bbd77912a3b4b15f7c50fb",
+              "gFrame": 282,
+              "logic": 173
+            },
+            {
+              "file": "clips/stress-knights-24/039.png",
+              "sha256": "47c32c3624ae97a053d25910b5cf0a795e889d0b218aa88874134b69a5408be3",
+              "gFrame": 283,
+              "logic": 174
+            },
+            {
+              "file": "clips/stress-knights-24/040.png",
+              "sha256": "703e6b32f3bed89dd2152911fd93b8086a394ab9e8adb97b3f2699a3013c23cd",
+              "gFrame": 284,
+              "logic": 175
+            },
+            {
+              "file": "clips/stress-knights-24/041.png",
+              "sha256": "eb8bf268be290c8d77eb17234daad5db4d91c83f18ef0aeff24f134f748307a0",
+              "gFrame": 285,
+              "logic": 176
+            },
+            {
+              "file": "clips/stress-knights-24/042.png",
+              "sha256": "41d01aaf2108437e9125c684817ed23dee60f8fb2552676c909a9c9ec53a1035",
+              "gFrame": 286,
+              "logic": 177
+            },
+            {
+              "file": "clips/stress-knights-24/043.png",
+              "sha256": "c18afb6c19e4d55ce927ca72124c16fe7df8317c081fb2c2846836ad84913340",
+              "gFrame": 287,
+              "logic": 178
+            },
+            {
+              "file": "clips/stress-knights-24/044.png",
+              "sha256": "ac3ea6585e1782988feb7b85853252acdc33ad8c8f2b6d5d991bfcfbf3c38cec",
+              "gFrame": 288,
+              "logic": 179
+            },
+            {
+              "file": "clips/stress-knights-24/045.png",
+              "sha256": "2f9deca5ef0edcfb593403daf73ae6a47ea60d7eec583bf0c44d40c757987d0c",
+              "gFrame": 289,
+              "logic": 180
+            },
+            {
+              "file": "clips/stress-knights-24/046.png",
+              "sha256": "fa25fb0d6d796c7df072d2e2895ca267f25f700c2626ba31671c34828499047c",
+              "gFrame": 290,
+              "logic": 181
+            },
+            {
+              "file": "clips/stress-knights-24/047.png",
+              "sha256": "a07392b2857052e4ceca8591e5359a6fb9c54d21d03e90b3e0fcdf01b5b1859a",
+              "gFrame": 291,
+              "logic": 182
+            },
+            {
+              "file": "clips/stress-knights-24/048.png",
+              "sha256": "7a79074862149e8e4cd1dad7b2a90d4f078a02c00ee9fea4d1129e93de418653",
+              "gFrame": 292,
+              "logic": 183
+            },
+            {
+              "file": "clips/stress-knights-24/049.png",
+              "sha256": "2fffa7a505e5431918c7d065519468b027e38e9253fb595c8cf5cf6156cf1e8b",
+              "gFrame": 293,
+              "logic": 184
+            },
+            {
+              "file": "clips/stress-knights-24/050.png",
+              "sha256": "bc5177408d7f79a12b4cf8dc647e6b0921f921eec36577ab4fa814c630824614",
+              "gFrame": 294,
+              "logic": 185
+            },
+            {
+              "file": "clips/stress-knights-24/051.png",
+              "sha256": "19ae826ddb5a6585d5ca478e40ddbdb89d1eeb6a4d1d817dce953eb2df15e849",
+              "gFrame": 295,
+              "logic": 186
+            },
+            {
+              "file": "clips/stress-knights-24/052.png",
+              "sha256": "6b678a44d6629c346f1a5ebedac17dc7836f21507b4df6a1cdfbea08b130a712",
+              "gFrame": 296,
+              "logic": 187
+            },
+            {
+              "file": "clips/stress-knights-24/053.png",
+              "sha256": "d3e9b3f184d86819bddd84eac6af814be4bea96be359efbc18f8e4e0d516d4ea",
+              "gFrame": 297,
+              "logic": 188
+            },
+            {
+              "file": "clips/stress-knights-24/054.png",
+              "sha256": "5634379242ac0be07063bea1e8b3b17469aed9e1d0e94c8d04100d999bab9632",
+              "gFrame": 298,
+              "logic": 189
+            },
+            {
+              "file": "clips/stress-knights-24/055.png",
+              "sha256": "b569b646192f3d94617c60f10bc6bd1391a633d900388f760a5a0fb23d4d1e81",
+              "gFrame": 299,
+              "logic": 190
+            },
+            {
+              "file": "clips/stress-knights-24/056.png",
+              "sha256": "9faed07e79bc16a91a91fb8bf59307884fe9618b2f63cad4fa572bf919a42f32",
+              "gFrame": 300,
+              "logic": 191
+            },
+            {
+              "file": "clips/stress-knights-24/057.png",
+              "sha256": "2a40d437735855a0a1f20d41341b0098a4026cb15f13914cf424eed4a9302d6c",
+              "gFrame": 301,
+              "logic": 192
+            },
+            {
+              "file": "clips/stress-knights-24/058.png",
+              "sha256": "7131d96e6fefe98af3bd3fe888f539a2832f095d2132d4c5834fcfe97e7af514",
+              "gFrame": 302,
+              "logic": 193
+            },
+            {
+              "file": "clips/stress-knights-24/059.png",
+              "sha256": "c2e054b42dd43c2bcefe21def0877eab36a30e9c177d3353d8665501acb13314",
+              "gFrame": 303,
+              "logic": 194
+            },
+            {
+              "file": "clips/stress-knights-24/060.png",
+              "sha256": "7ea272f13740dec137ef239dac119d775bfb782a971ccac5e2ae6a072bbf6e75",
+              "gFrame": 304,
+              "logic": 195
+            },
+            {
+              "file": "clips/stress-knights-24/061.png",
+              "sha256": "f0c44c8d02336505dd333409f57702d5ac4166ab88c92c05be55a36b0cc5dff8",
+              "gFrame": 305,
+              "logic": 196
+            },
+            {
+              "file": "clips/stress-knights-24/062.png",
+              "sha256": "56d1270c47af8a000e18ceca79726c5220bbbab149ad62fee35519744e72d62d",
+              "gFrame": 306,
+              "logic": 197
+            },
+            {
+              "file": "clips/stress-knights-24/063.png",
+              "sha256": "d2d4e48ead7e0fae3b9c1c7abfbdfe328b195bc02167baf78e58827e0f1a6e63",
+              "gFrame": 307,
+              "logic": 198
+            },
+            {
+              "file": "clips/stress-knights-24/064.png",
+              "sha256": "491a928024eded9af5177e90d7b9a7f87b754ddd1fda62aa994ce1640fdf2aef",
+              "gFrame": 308,
+              "logic": 199
+            },
+            {
+              "file": "clips/stress-knights-24/065.png",
+              "sha256": "e5bd86f7cf04ed01c782ae48ad1a06d39d6ebab67142e3b6d94c4e05a05c759c",
+              "gFrame": 309,
+              "logic": 200
+            },
+            {
+              "file": "clips/stress-knights-24/066.png",
+              "sha256": "20abf19b00a45dd6913a6d7e599bfa82f25e4bc76fbbc8c05fbeb028f9a225d9",
+              "gFrame": 310,
+              "logic": 201
+            },
+            {
+              "file": "clips/stress-knights-24/067.png",
+              "sha256": "4f7c4076f275e428db996efc3ed4f84231f7aa77cfe4fb3e453f4d2b386fde49",
+              "gFrame": 311,
+              "logic": 202
+            },
+            {
+              "file": "clips/stress-knights-24/068.png",
+              "sha256": "5c5d13a2c246f549973077d07a49183acaeb7e97ff319cee59e302ce72667b7f",
+              "gFrame": 312,
+              "logic": 203
+            },
+            {
+              "file": "clips/stress-knights-24/069.png",
+              "sha256": "2306c68589f09755d51ac936c32a93283d86f9e99df514703cad4455a7e83126",
+              "gFrame": 313,
+              "logic": 204
+            },
+            {
+              "file": "clips/stress-knights-24/070.png",
+              "sha256": "651873b6e2dd3eb8a5f982a03140a07efc40357a524d5e3e110fb02ffeee8aaa",
+              "gFrame": 314,
+              "logic": 205
+            },
+            {
+              "file": "clips/stress-knights-24/071.png",
+              "sha256": "6d282a3db6048370f6509722f3d03293a7d746439623bee2275d997c03a6d476",
+              "gFrame": 315,
+              "logic": 206
+            },
+            {
+              "file": "clips/stress-knights-24/072.png",
+              "sha256": "586ea37df843b6bb459ada173115a4581be9c502724eb31c77e85ee921bd2a17",
+              "gFrame": 316,
+              "logic": 207
+            },
+            {
+              "file": "clips/stress-knights-24/073.png",
+              "sha256": "c469de4a76e86f81503bfd1ba0540b6ad09495d541637428ac8e4e7c47a36469",
+              "gFrame": 317,
+              "logic": 208
+            },
+            {
+              "file": "clips/stress-knights-24/074.png",
+              "sha256": "3468c81b4faf53cdabeb85278c52c363f4ebe39db8550b8e1965060d041665a5",
+              "gFrame": 318,
+              "logic": 209
+            },
+            {
+              "file": "clips/stress-knights-24/075.png",
+              "sha256": "059d745089162212d73abb1dbe99be068d442c25a3ff07b4ad4a42fd8fac199f",
+              "gFrame": 319,
+              "logic": 210
+            },
+            {
+              "file": "clips/stress-knights-24/076.png",
+              "sha256": "6a2f6245745106f151e7325e0f41047138d9963e5f071cd241fb37ff0bdf865c",
+              "gFrame": 320,
+              "logic": 211
+            },
+            {
+              "file": "clips/stress-knights-24/077.png",
+              "sha256": "1842bd7ce4c7b1ffd2ed56f3b07255e2a021ffed804d797c9029a9294168a302",
+              "gFrame": 321,
+              "logic": 212
+            },
+            {
+              "file": "clips/stress-knights-24/078.png",
+              "sha256": "22e3ebf5fcd4bc6d1cb746e7fe3c80fc34df143382fbca7a2b2a526a44a8e7f4",
+              "gFrame": 322,
+              "logic": 213
+            },
+            {
+              "file": "clips/stress-knights-24/079.png",
+              "sha256": "76cedcc883eab88ce99e6e35457dc9f762dde7877bf8ecca9a43c12b6137b050",
+              "gFrame": 323,
+              "logic": 214
+            },
+            {
+              "file": "clips/stress-knights-24/080.png",
+              "sha256": "e05e62000737cff3102133f677e47cd15c2ad151aa01d2e115bc3184cb8b051b",
+              "gFrame": 324,
+              "logic": 215
+            },
+            {
+              "file": "clips/stress-knights-24/081.png",
+              "sha256": "1f30b10820f7f3195e5455b91e94e1e62e086ef2c4fe1edd9f1b56151816b88c",
+              "gFrame": 325,
+              "logic": 216
+            },
+            {
+              "file": "clips/stress-knights-24/082.png",
+              "sha256": "aa3e562bcdbed4f6e55759f9248e2cb693218e503d75f901b0d29b9598a54dea",
+              "gFrame": 326,
+              "logic": 217
+            },
+            {
+              "file": "clips/stress-knights-24/083.png",
+              "sha256": "a4c1a6e114825710ef98a15a5b883d78cc7402e8a6873e455d79b3e2c312afd5",
+              "gFrame": 327,
+              "logic": 218
+            },
+            {
+              "file": "clips/stress-knights-24/084.png",
+              "sha256": "efeca6bfbfeb1fe6056ac309325d57034bff678e151125c824804ce3c5648113",
+              "gFrame": 328,
+              "logic": 219
+            },
+            {
+              "file": "clips/stress-knights-24/085.png",
+              "sha256": "ad2ab93fcfb8bded28fbc590715ba091059c9dfdf169764be106f662fecc5303",
+              "gFrame": 329,
+              "logic": 220
+            },
+            {
+              "file": "clips/stress-knights-24/086.png",
+              "sha256": "0f3866a8c162ffc8347efe35db4ecff02be532a6c24b3eb10dc15d82dfd8a32d",
+              "gFrame": 330,
+              "logic": 221
+            },
+            {
+              "file": "clips/stress-knights-24/087.png",
+              "sha256": "30addc8ac90416477837ca05ee3ec02bfa5b63baf29a1ee5eeb3f1cd33c08c87",
+              "gFrame": 331,
+              "logic": 222
+            },
+            {
+              "file": "clips/stress-knights-24/088.png",
+              "sha256": "513d6948f582da7f76084357687899f017726d2fa74ef72e22652c73a366e43a",
+              "gFrame": 332,
+              "logic": 223
+            },
+            {
+              "file": "clips/stress-knights-24/089.png",
+              "sha256": "2f8f344a2ac3566d4ac170fb312cc01a6837e8522ed5c38e3989dd21e67e4c19",
+              "gFrame": 333,
+              "logic": 224
+            },
+            {
+              "file": "clips/stress-knights-24/090.png",
+              "sha256": "bb2f02ee1aa4dadeb7c80becab3f049f565756469426791eb65f0d159b3eae43",
+              "gFrame": 334,
+              "logic": 225
+            },
+            {
+              "file": "clips/stress-knights-24/091.png",
+              "sha256": "8dd7e8a52215090741fe2ef9f2f97423b3ea31a053187756cf7e346dc1f93aa9",
+              "gFrame": 335,
+              "logic": 226
+            },
+            {
+              "file": "clips/stress-knights-24/092.png",
+              "sha256": "807d37d6a302f3efcf44bad922a759c54dabf22d6f688b0b595e548d2087b774",
+              "gFrame": 336,
+              "logic": 227
+            },
+            {
+              "file": "clips/stress-knights-24/093.png",
+              "sha256": "1bda22ee86170292d15a3deeed797d823eae37f0697dc792d0bd3190f6f18605",
+              "gFrame": 337,
+              "logic": 228
+            },
+            {
+              "file": "clips/stress-knights-24/094.png",
+              "sha256": "df5cca99d39b1cc8c118792690a1c50bf2c20c0476d6d20d1fc82e372693ca1b",
+              "gFrame": 338,
+              "logic": 229
+            },
+            {
+              "file": "clips/stress-knights-24/095.png",
+              "sha256": "acff5187deb240aff98c5f4da404ee243e8ba6104a2d5f3037a6540cacf688ee",
+              "gFrame": 339,
+              "logic": 230
+            },
+            {
+              "file": "clips/stress-knights-24/096.png",
+              "sha256": "37e3b6f09ee75fbbe37ddd1a5960e5a2cf6755535cfc08be2fe75471173038ca",
+              "gFrame": 340,
+              "logic": 231
+            },
+            {
+              "file": "clips/stress-knights-24/097.png",
+              "sha256": "41a5f95e4dbfcd7b38eeb5824dc5f1cba1b8f4969da9d87a87b7be5e060c953c",
+              "gFrame": 341,
+              "logic": 232
+            },
+            {
+              "file": "clips/stress-knights-24/098.png",
+              "sha256": "998c06cce6f06c836fcfcdcd2d13a8e5802f2f9d27e2d6a34ac7d8af5a410bb9",
+              "gFrame": 342,
+              "logic": 233
+            },
+            {
+              "file": "clips/stress-knights-24/099.png",
+              "sha256": "38fb5da2629f501b52927f05e847e5ae6e525b74bf12868e6ce0850f2c50f961",
+              "gFrame": 343,
+              "logic": 234
+            },
+            {
+              "file": "clips/stress-knights-24/100.png",
+              "sha256": "8d96daf6cd50cd195660f9c76383ed4c4314b5c1d05b1f1a19bfd10b439eaad7",
+              "gFrame": 344,
+              "logic": 235
+            },
+            {
+              "file": "clips/stress-knights-24/101.png",
+              "sha256": "a2b546bd0e6ce78e4316864b0799a8e17fedddb00fca6dcaca44f24340cfacdb",
+              "gFrame": 345,
+              "logic": 236
+            },
+            {
+              "file": "clips/stress-knights-24/102.png",
+              "sha256": "80b699f30be18f26d6cd6b9831c9d4c2b86aeaad02dcc33774a18721106e0e33",
+              "gFrame": 346,
+              "logic": 237
+            },
+            {
+              "file": "clips/stress-knights-24/103.png",
+              "sha256": "994f9007ab3b9fc6f56903bf50955b2687dd56d72e772824d601a7f93ddc8066",
+              "gFrame": 347,
+              "logic": 238
+            },
+            {
+              "file": "clips/stress-knights-24/104.png",
+              "sha256": "2ba790eee8aafdd68d6d41091c58030649703750658fab38d67f64d523568f1f",
+              "gFrame": 348,
+              "logic": 239
+            },
+            {
+              "file": "clips/stress-knights-24/105.png",
+              "sha256": "6eb6d0b5a5d2c078f1c7e21ec16a32e538cd31dbe233e77b780df175480e6b59",
+              "gFrame": 349,
+              "logic": 240
+            },
+            {
+              "file": "clips/stress-knights-24/106.png",
+              "sha256": "a49bb34e92662d702f9bad240a3bed974f252035c1fc02a20b7f8b7928568dc2",
+              "gFrame": 350,
+              "logic": 241
+            },
+            {
+              "file": "clips/stress-knights-24/107.png",
+              "sha256": "8aa0b9f3ec693b23de62fb2ab59afc353cc578b5ce7a5f5176affaf6f4185a2b",
+              "gFrame": 351,
+              "logic": 242
+            },
+            {
+              "file": "clips/stress-knights-24/108.png",
+              "sha256": "23f63da480b9d4946c91d199e09d0486598df5ae9e0ef90fa12e122a9b77be76",
+              "gFrame": 352,
+              "logic": 243
+            },
+            {
+              "file": "clips/stress-knights-24/109.png",
+              "sha256": "51300321fe30513530f6f3c4de2aea647bf9dbebfde0b45af2179707514a1a76",
+              "gFrame": 353,
+              "logic": 244
+            },
+            {
+              "file": "clips/stress-knights-24/110.png",
+              "sha256": "9ab9ad7df30da9a0812b686a18d40c9f8b675fc92e74bb50efe791a62d086810",
+              "gFrame": 354,
+              "logic": 245
+            },
+            {
+              "file": "clips/stress-knights-24/111.png",
+              "sha256": "e75c86aa8a287c333a8fbaedf75d1af3f05f9f21b48300e0da90e2c27dd0ae15",
+              "gFrame": 355,
+              "logic": 246
+            },
+            {
+              "file": "clips/stress-knights-24/112.png",
+              "sha256": "426be454e5fa327ff9b1212708592da6ac83964e53161ccdf30eebf921919a09",
+              "gFrame": 356,
+              "logic": 247
+            },
+            {
+              "file": "clips/stress-knights-24/113.png",
+              "sha256": "0f766ba94f3bfaeee977b52cf02d9abd267216a50625c173fc8a2b5f1708c82e",
+              "gFrame": 357,
+              "logic": 248
+            },
+            {
+              "file": "clips/stress-knights-24/114.png",
+              "sha256": "4e16006ca65cb1250447b7bc4352f2e6179da43139d018d4947be7fca884de3e",
+              "gFrame": 358,
+              "logic": 249
+            },
+            {
+              "file": "clips/stress-knights-24/115.png",
+              "sha256": "76ff0704b804fa7035ed079746de25500fe63c379d73921267e90f86a2c90b60",
+              "gFrame": 359,
+              "logic": 250
+            },
+            {
+              "file": "clips/stress-knights-24/116.png",
+              "sha256": "7e093da0a9a9af6e86b1b9738d07ca5e5ae198d71f0d92d77aed14b72dbd889c",
+              "gFrame": 360,
+              "logic": 251
+            },
+            {
+              "file": "clips/stress-knights-24/117.png",
+              "sha256": "ff10552e54f8959c761ee4562e7561318166ca577ca71bc46bae64442be9100b",
+              "gFrame": 361,
+              "logic": 252
+            },
+            {
+              "file": "clips/stress-knights-24/118.png",
+              "sha256": "3c01229ed6c41ab67e8f6e4d67165044389a24d94882349bbb31a916ed51845c",
+              "gFrame": 362,
+              "logic": 253
+            },
+            {
+              "file": "clips/stress-knights-24/119.png",
+              "sha256": "e3d6e63e14737a8d9a38437c9dd734f92ae977b0a5a8006a105593f9516c17f4",
+              "gFrame": 363,
+              "logic": 254
+            },
+            {
+              "file": "clips/stress-knights-24/120.png",
+              "sha256": "2acf5d42f2f84bc228c28a5ec6d181991c40d27aeab42a2b1b5fccb9ff93ad68",
+              "gFrame": 364,
+              "logic": 255
+            },
+            {
+              "file": "clips/stress-knights-24/121.png",
+              "sha256": "60053ff9127d01457c7486d4d52250aef40c43b77bec3d37cb2467b8a387c758",
+              "gFrame": 365,
+              "logic": 256
+            },
+            {
+              "file": "clips/stress-knights-24/122.png",
+              "sha256": "2dcf4141731742912759a0ff7ab872cb4a3a18645e2a432024fef11fbc4c90e6",
+              "gFrame": 366,
+              "logic": 257
+            },
+            {
+              "file": "clips/stress-knights-24/123.png",
+              "sha256": "34fccf1fc4ca360c39ae1105c3524e0aff313cd0143ae9c158a9f490b8fa2abe",
+              "gFrame": 367,
+              "logic": 258
+            },
+            {
+              "file": "clips/stress-knights-24/124.png",
+              "sha256": "b27787c356d1eb62aead42567e173d272c7b9713407a84571c8e7b05ed9307bb",
+              "gFrame": 368,
+              "logic": 259
+            },
+            {
+              "file": "clips/stress-knights-24/125.png",
+              "sha256": "04f4364645e2560ee3ad2bf525846f6cd55c2e61a028e4f0d804af25703f1acc",
+              "gFrame": 369,
+              "logic": 260
+            },
+            {
+              "file": "clips/stress-knights-24/126.png",
+              "sha256": "dac436d2724288402616526add9443201fe3a06e21c324c90f0317d7891c6caf",
+              "gFrame": 370,
+              "logic": 261
+            },
+            {
+              "file": "clips/stress-knights-24/127.png",
+              "sha256": "dd34467e0d45acb7e420f881b1e0968da956ef9f55fb6b32d5d4aefdc885dc0c",
+              "gFrame": 371,
+              "logic": 262
+            },
+            {
+              "file": "clips/stress-knights-24/128.png",
+              "sha256": "66aba7360747d128adc766b3ee6f6c6ff28a1a991d64d73413f07c5d2b0c109d",
+              "gFrame": 372,
+              "logic": 263
+            },
+            {
+              "file": "clips/stress-knights-24/129.png",
+              "sha256": "4789a07f4ba8b9c3a4b11ff1828a72e3483678ee6906e9809a4a1a686b917a33",
+              "gFrame": 373,
+              "logic": 264
+            },
+            {
+              "file": "clips/stress-knights-24/130.png",
+              "sha256": "9494a8856699a150a640374580c1ac7b625d49faff2189e776f089148554ff8f",
+              "gFrame": 374,
+              "logic": 265
+            },
+            {
+              "file": "clips/stress-knights-24/131.png",
+              "sha256": "0348a1e76e9b198969a81521098bcae1f57b972cc01e1a376a84212a298ef3f0",
+              "gFrame": 375,
+              "logic": 266
+            },
+            {
+              "file": "clips/stress-knights-24/132.png",
+              "sha256": "88952c3ce1b49cf31898486b3315806235c89ee6af48269fdc74998f866c74b7",
+              "gFrame": 376,
+              "logic": 267
+            },
+            {
+              "file": "clips/stress-knights-24/133.png",
+              "sha256": "e15e78ded731d58cc41292e19fa1e67a2e166f1567f8312e21a8c7043c0815f4",
+              "gFrame": 377,
+              "logic": 268
+            },
+            {
+              "file": "clips/stress-knights-24/134.png",
+              "sha256": "a68764bb93ae12811d96496afa23e02e52f9a5d1fd666613175da6a3ff8f0fc6",
+              "gFrame": 378,
+              "logic": 269
+            },
+            {
+              "file": "clips/stress-knights-24/135.png",
+              "sha256": "1d0722d959578803b298212ae4e845d8cb08944567efb0dd7c562ca898cd37fb",
+              "gFrame": 379,
+              "logic": 270
+            },
+            {
+              "file": "clips/stress-knights-24/136.png",
+              "sha256": "fb9d82becacfa195672b33e6fc515d2fb736e85a9fa54251bb39bb12ed1daa55",
+              "gFrame": 380,
+              "logic": 271
+            },
+            {
+              "file": "clips/stress-knights-24/137.png",
+              "sha256": "a4ae7d662dc9a519854d2e3a2652e354c5132cdb841028d0a51b7361514ae5e2",
+              "gFrame": 381,
+              "logic": 272
+            },
+            {
+              "file": "clips/stress-knights-24/138.png",
+              "sha256": "576e366efe7246ae7b8519a8d64255374536a936ac438f28b2f130c9569b59df",
+              "gFrame": 382,
+              "logic": 273
+            },
+            {
+              "file": "clips/stress-knights-24/139.png",
+              "sha256": "e7fca8d6142e9238a76b3df433627362ec04d777677fd26d570470badf0b4224",
+              "gFrame": 383,
+              "logic": 274
+            },
+            {
+              "file": "clips/stress-knights-24/140.png",
+              "sha256": "1828d72bac944e259fe9e1d1559ed50925f8d9860804f12027daaa1b3a0c332e",
+              "gFrame": 384,
+              "logic": 275
+            },
+            {
+              "file": "clips/stress-knights-24/141.png",
+              "sha256": "a38bec8c7b28b276d5aae7bd741ec8df51dbb5b2690b91458464e8432be3d58a",
+              "gFrame": 385,
+              "logic": 276
+            },
+            {
+              "file": "clips/stress-knights-24/142.png",
+              "sha256": "cd46a57c3152d17575d5fa4a37ac27a3d20435a561d55b0ef61ffff5eaeee6ba",
+              "gFrame": 386,
+              "logic": 277
+            },
+            {
+              "file": "clips/stress-knights-24/143.png",
+              "sha256": "1987d776dd7be7910b14926bf23b1a0cdb81d2784ffd4ec68c64354234134bc5",
+              "gFrame": 387,
+              "logic": 278
+            },
+            {
+              "file": "clips/stress-knights-24/144.png",
+              "sha256": "b628fc06abc14758a5612f34fcba949aca5f22779b739b5dc9ff854bad3837e8",
+              "gFrame": 388,
+              "logic": 279
+            },
+            {
+              "file": "clips/stress-knights-24/145.png",
+              "sha256": "8416aed48d8bbec4610cbe2f61a13f2a6d68de2b255a3a66dbcf761419ffb364",
+              "gFrame": 389,
+              "logic": 280
+            },
+            {
+              "file": "clips/stress-knights-24/146.png",
+              "sha256": "f5f8a11f61d4b4a81eb7dceb6e8e2777d2098cd900d3a835a79b9d3822dd21bf",
+              "gFrame": 390,
+              "logic": 281
+            },
+            {
+              "file": "clips/stress-knights-24/147.png",
+              "sha256": "17b83c672692748a4a78468df7e8543b8cde11b7294b2a5b3b789cb3b3c95ada",
+              "gFrame": 391,
+              "logic": 282
+            },
+            {
+              "file": "clips/stress-knights-24/148.png",
+              "sha256": "694288b323381a6d6a5530713d3d00d09197a39e5f386cda42b0abac9591f2ff",
+              "gFrame": 392,
+              "logic": 283
+            },
+            {
+              "file": "clips/stress-knights-24/149.png",
+              "sha256": "5019f8fed91d1afe60a0a7574900201bc70f8a9d639eb05b5d90dd41ac635351",
+              "gFrame": 393,
+              "logic": 284
+            },
+            {
+              "file": "clips/stress-knights-24/150.png",
+              "sha256": "911249d28a8af499d65747eb5489f9e15598803d84e2d61dbfa46512800c5a80",
+              "gFrame": 394,
+              "logic": 285
+            },
+            {
+              "file": "clips/stress-knights-24/151.png",
+              "sha256": "94c2462ff7080a96fa78400ad8ec702877f89aef28da94a9cf28eecd636c5edc",
+              "gFrame": 395,
+              "logic": 286
+            },
+            {
+              "file": "clips/stress-knights-24/152.png",
+              "sha256": "9054294f8450781a9fc019408f74918a05ba7440f14d0d3de04a906a1dc7adfb",
+              "gFrame": 396,
+              "logic": 287
+            },
+            {
+              "file": "clips/stress-knights-24/153.png",
+              "sha256": "76d80364f3855fdd3fc42910cec3510da8d4dff8449663187afddb4dd7b90956",
+              "gFrame": 397,
+              "logic": 288
+            },
+            {
+              "file": "clips/stress-knights-24/154.png",
+              "sha256": "7474b60c6cc54ccacbe2d19c65e331ca2c57f92de768625237be2d50a81817ae",
+              "gFrame": 398,
+              "logic": 289
+            },
+            {
+              "file": "clips/stress-knights-24/155.png",
+              "sha256": "bbf72b6176d73c8ecdec39387e37e05e8f9e2c22cff90e72375e0419ae24959e",
+              "gFrame": 399,
+              "logic": 290
+            },
+            {
+              "file": "clips/stress-knights-24/156.png",
+              "sha256": "f4f1aa8cbdafd3f17a3d9d8c7f0e83d021e305a836b419259ec9098b7ac8ab10",
+              "gFrame": 400,
+              "logic": 291
+            },
+            {
+              "file": "clips/stress-knights-24/157.png",
+              "sha256": "10bfce64278386448f51a0f9aa43c638fb7b6926f53f9d8a93885a5125944201",
+              "gFrame": 401,
+              "logic": 292
+            },
+            {
+              "file": "clips/stress-knights-24/158.png",
+              "sha256": "7b4474d22add7b01b5b79cbd56dde42788388d34cf102730c0b46207c5f877a5",
+              "gFrame": 402,
+              "logic": 293
+            },
+            {
+              "file": "clips/stress-knights-24/159.png",
+              "sha256": "6ea1d43aeb6f65436e4bcffae8e50b77fed3f20658feca54926f622ee603436e",
+              "gFrame": 403,
+              "logic": 294
+            },
+            {
+              "file": "clips/stress-knights-24/160.png",
+              "sha256": "4c404c0481a4e414f37f48709191fbe247e2e13b77fb1df4ed5d15dbd740c296",
+              "gFrame": 404,
+              "logic": 295
+            },
+            {
+              "file": "clips/stress-knights-24/161.png",
+              "sha256": "88041fee8a785a404585e1af9f0babf31942a1f20150976d7668e0a82cdd9c13",
+              "gFrame": 405,
+              "logic": 296
+            },
+            {
+              "file": "clips/stress-knights-24/162.png",
+              "sha256": "c53794661466796bb6180a0679c50e6ebf45049334d7ab0d5283a6ed8348787a",
+              "gFrame": 406,
+              "logic": 297
+            },
+            {
+              "file": "clips/stress-knights-24/163.png",
+              "sha256": "11fd423c65710d37e2d180fb19b55f42a3f408ca9a137baf3872f6b31b2c1c6c",
+              "gFrame": 407,
+              "logic": 298
+            },
+            {
+              "file": "clips/stress-knights-24/164.png",
+              "sha256": "a1c78486f0d3845efc2315d5ee8047ca3e21554a5c27629dc8f689006ab1621e",
+              "gFrame": 408,
+              "logic": 299
+            },
+            {
+              "file": "clips/stress-knights-24/165.png",
+              "sha256": "11957aef3ee51c390b824893d4513dd507a113db5d9a01cefb0a1c25971b53ba",
+              "gFrame": 409,
+              "logic": 300
+            },
+            {
+              "file": "clips/stress-knights-24/166.png",
+              "sha256": "67988848235c122a195a2b83738cc6a6292bbd500a6e76a14c7a92b0f73a4898",
+              "gFrame": 410,
+              "logic": 301
+            },
+            {
+              "file": "clips/stress-knights-24/167.png",
+              "sha256": "999979b764899822e891a345ce3f4e8aa28309c67d9f3edde28d13955acfb768",
+              "gFrame": 411,
+              "logic": 302
+            },
+            {
+              "file": "clips/stress-knights-24/168.png",
+              "sha256": "910244687b86f581e3b05932995ba27c145d7e2a9172a138db34a197cd581b1f",
+              "gFrame": 412,
+              "logic": 303
+            },
+            {
+              "file": "clips/stress-knights-24/169.png",
+              "sha256": "f3721480e7152170a94a8a9e78cb5d749513880790a7d2afe6e9b339d818a493",
+              "gFrame": 413,
+              "logic": 304
+            },
+            {
+              "file": "clips/stress-knights-24/170.png",
+              "sha256": "9b6bef40d9939a4c75dd76045657e8f6d631a856b946c634c068b3b015d52865",
+              "gFrame": 414,
+              "logic": 305
+            },
+            {
+              "file": "clips/stress-knights-24/171.png",
+              "sha256": "5d59b59e01ec632d26f15b12af5ccc4df1fa61a45ffc897c73d408ee5a76f088",
+              "gFrame": 415,
+              "logic": 306
+            },
+            {
+              "file": "clips/stress-knights-24/172.png",
+              "sha256": "1a23abf92a9df4cdcd935f3ce16711a8dafe45e60cf56720b9bb3fc8b83530ed",
+              "gFrame": 416,
+              "logic": 307
+            },
+            {
+              "file": "clips/stress-knights-24/173.png",
+              "sha256": "e562293e1ac4522ce2df2456f9d5494a3f96be3812a2a71f9cf888c8161fae22",
+              "gFrame": 417,
+              "logic": 308
+            },
+            {
+              "file": "clips/stress-knights-24/174.png",
+              "sha256": "95e0561489177e5697dbb0dc5bebb4dcea292636b611687f351cef70e0a6709a",
+              "gFrame": 418,
+              "logic": 309
+            },
+            {
+              "file": "clips/stress-knights-24/175.png",
+              "sha256": "9dbc0a09fe84a31d1306f7cf491d50675ec87e6b085ea624a431bc725e5fc216",
+              "gFrame": 419,
+              "logic": 310
+            },
+            {
+              "file": "clips/stress-knights-24/176.png",
+              "sha256": "543cf6046c00875e39ad1f004c4690607b39476fc4b42ce1cdf4149f4437cf71",
+              "gFrame": 420,
+              "logic": 311
+            },
+            {
+              "file": "clips/stress-knights-24/177.png",
+              "sha256": "ebb3f7b467a32dd2bec9cf25174d68c8aa11ff6a53b04aff2e1ae38c1c18a6e8",
+              "gFrame": 421,
+              "logic": 312
+            },
+            {
+              "file": "clips/stress-knights-24/178.png",
+              "sha256": "ef83492018fd68b0d14e0995e165bfbf00a6783fdfcf389be3ae98d8a612c491",
+              "gFrame": 422,
+              "logic": 313
+            },
+            {
+              "file": "clips/stress-knights-24/179.png",
+              "sha256": "0b43536b10b69bc0d70f6c3dcbc310bc65c4edb9e20dacfb49037ac23cbd5190",
+              "gFrame": 423,
+              "logic": 314
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "board_panels": [
+    {
+      "file": "actual/before/forest-0000b4a7-cell10/native.png",
+      "rectangle": [
+        8,
+        66,
+        248,
+        226
+      ],
+      "RGB_sha256": "e9957d1a72f662b40379232d0541f1f9ec6e8fd8275026f61971f5a36a97cb3a"
+    },
+    {
+      "file": "actual/after/forest-0000b4a7-cell10/native.png",
+      "rectangle": [
+        256,
+        66,
+        496,
+        226
+      ],
+      "RGB_sha256": "87cf6b0fdde3bad1efc09291970fdc06b891feea1dae2790ca4a9dda0ee34d56"
+    },
+    {
+      "file": "actual/before/stress-knights-24/native.png",
+      "rectangle": [
+        8,
+        254,
+        248,
+        414
+      ],
+      "RGB_sha256": "f8815b645079a4875cd7d56aaf1f2778cbf07e710ec8bdf0097d0bc1c0e1315b"
+    },
+    {
+      "file": "actual/after/stress-knights-24/native.png",
+      "rectangle": [
+        256,
+        254,
+        496,
+        414
+      ],
+      "RGB_sha256": "fdc4d7427dc4418acda25c7bf25a50c42a89a31ff7083b9e3e811413409ab6d9"
+    }
+  ]
+}

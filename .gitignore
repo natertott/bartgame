@@ -231,3 +231,8 @@ docs/sim_runs.json
 !/downloads/hud-gilt-4747b67/hud-gilt-4747b67.gba
 !/downloads/hud-gilt-4747b67/hud-gilt-4747b67.zip
 !/art-review/hud-gilt/validation/frozen/bartgame.map
+
+# Qualified performance build and exact production linker map
+!/downloads/performance-c09e290/performance-c09e290.gba
+!/downloads/performance-c09e290/performance-c09e290.zip
+!/performance-review/validation/frozen/bartgame.map

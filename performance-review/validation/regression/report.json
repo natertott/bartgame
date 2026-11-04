@@ -1,0 +1,3672 @@
+{
+  "method": "Independent art, gameplay-scope and actual-ROM regression qualification.\n\nPerformance is measured by the separate natural/stress survey. These tests\nexercise gameplay, UI and save contracts; they do not claim an unassisted run.\nNo game or art source is changed by this tool.\n",
+  "baseline_commit": "11b872e9897320398fa02344cef1418733c04e9a",
+  "source_commit": "c09e29092e0d2ba6107659f975ed0c3ec41c3936",
+  "before_rom_sha256": "1bd913bc5bf1ad81e9c1dcc7e07ebc38eac855d390a5bb613257f8fbfe128e59",
+  "rom_sha256": "59f1e54cbbbac7e8f31b4e0c4623db72fe1f2a2190c7ceee5cc6fd559c6be898",
+  "tool_sha256": "ab6afa093598c9bd557c4e851898456c02c12f3c0cddea7aa5a626e55100a818",
+  "passed": 900,
+  "total": 900,
+  "checks": [
+    {
+      "name": "authored source exact bartgame/art/blight_reference.py",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/blight_reference_source.py",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/bloom_animations.py",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/bloom_fx.py",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/bloom_loads.py",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/clean_items.py",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/enemy_heart.py",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/enemy_studies.py",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/enemy_studies_heavy.py",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/enemy_studies_palette.py",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/enemy_studies_small.py",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/enemy_studies_soft.py",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/env_pack.py",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/faces.py",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/folk.py",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/forest_art.py",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/forest_canopy_adaptive.py",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/forest_canopy_adaptive_b.py",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/forest_canopy_adaptive_terrain.py",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/forest_canopy_emerald.py",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/forest_canopy_emerald_terrain.py",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/forest_cohesion_props.py",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/forest_cohesion_terrain.py",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/forest_cohesion_topology.py",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/forest_concepts.py",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/forest_concepts_folk.py",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/forest_concepts_props.py",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/forest_concepts_terrain.py",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/forest_concepts_v2_folk.py",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/forest_concepts_v2_props.py",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/forest_concepts_v2_terrain.py",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/forest_concepts_v2_topology.py",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/forest_concepts_v3_terrain.py",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/forest_sprites.py",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/forest_tree_study.py",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/forest_trees_terrain.py",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/healthy_reference.py",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/hero.py",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/hud_gilt_items.py",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/interactive_props.py",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/interactive_tiles.py",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/items.py",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/items32.py",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/marks.py",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/monsters.py",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/pack.py",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/pack/arrow.png",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/pack/bat.png",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/pack/beetle.png",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/pack/boss.png",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/pack/currency32.png",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/pack/cursor.png",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/pack/dots.png",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/pack/folk32.png",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/pack/fx.png",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/pack/hero.png",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/pack/icon32.png",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/pack/items.png",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/pack/knight.png",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/pack/ksword.png",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/pack/lift.png",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/pack/marks.png",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/pack/mouth.png",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/pack/npc.png",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/pack/pack.json",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/pack/pick32.png",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/pack/portrait.png",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/pack/proj.png",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/pack/shield.png",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/pack/shield_menu.png",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/pack/shield_upgraded.png",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/pack/slime.png",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/pack/spitter.png",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/pack/sword.png",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/pack/tiles/blight.png",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/pack/tiles/cliff.png",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/pack/tiles/forest.png",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/pack/tiles/hud.png",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/pack/tiles/props.png",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/pack/tiles/sewer.png",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/pack/tiles/stone.png",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/pack/tiles/wood.png",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/pack_tiles.py",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/paint.py",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/palettes.py",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/portraits.py",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/px.py",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/reboot_actors.py",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/reboot_contracts.json",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/reboot_core.py",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/reboot_items.py",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/reboot_terrain.py",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/reboot_ui.py",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/blight-reference.jpg",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/board_forest.jpg",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/board_sewer.jpg",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/board_sheets.jpg",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/board_ui.jpg",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/items-reference.jpg",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack/CHANGELOG.md",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack/README.md",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack/frame_index.csv",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack/manifest.json",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack/palettes/blight.gba.pal",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack/palettes/blight.pal.txt",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack/palettes/blight_tile.gba.pal",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack/palettes/blight_tile.pal.txt",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack/palettes/bugs.gba.pal",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack/palettes/bugs.pal.txt",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack/palettes/folk.gba.pal",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack/palettes/folk.pal.txt",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack/palettes/forest.gba.pal",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack/palettes/forest.pal.txt",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack/palettes/fx.gba.pal",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack/palettes/fx.pal.txt",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack/palettes/hero.gba.pal",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack/palettes/hero.pal.txt",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack/palettes/hud.gba.pal",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack/palettes/hud.pal.txt",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack/palettes/iron.gba.pal",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack/palettes/iron.pal.txt",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack/palettes/lift.gba.pal",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack/palettes/lift.pal.txt",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack/palettes/portrait.gba.pal",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack/palettes/portrait.pal.txt",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack/palettes/props.gba.pal",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack/palettes/props.pal.txt",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack/palettes/sewer.gba.pal",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack/palettes/sewer.pal.txt",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack/palettes/stone.gba.pal",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack/palettes/stone.pal.txt",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack/palettes/ui.gba.pal",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack/palettes/ui.pal.txt",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack/sheets/characters/folk32.png",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack/sheets/characters/hero.png",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack/sheets/characters/npc.png",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack/sheets/characters/portrait.png",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack/sheets/characters/shield.png",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack/sheets/characters/shield_upgraded.png",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack/sheets/characters/sword.png",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack/sheets/effects/arrow.png",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack/sheets/effects/fx.png",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack/sheets/effects/mouth.png",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack/sheets/effects/proj.png",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack/sheets/map/cursor.png",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack/sheets/map/dots.png",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack/sheets/map/marks.png",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack/sheets/monsters/bat.png",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack/sheets/monsters/beetle.png",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack/sheets/monsters/boss.png",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack/sheets/monsters/knight.png",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack/sheets/monsters/ksword.png",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack/sheets/monsters/slime.png",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack/sheets/monsters/spitter.png",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack/sheets/objects/currency32.png",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack/sheets/objects/icon32.png",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack/sheets/objects/items.png",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack/sheets/objects/lift.png",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack/sheets/objects/pick32.png",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack/sheets/objects/shield_menu.png",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack/sheets/tiles/blight.png",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack/sheets/tiles/cliff.png",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack/sheets/tiles/forest.png",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack/sheets/tiles/props.png",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack/sheets/tiles/sewer.png",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack/sheets/tiles/stone.png",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack/sheets/tiles/wood.png",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack/sheets/ui/hud.png",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack/sprite_frames.h",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack/validation_report.json",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack_art/bloom.png",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack_art/folk.png",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack_art/hub_folk.png",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack_art/icons.png",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack_art/items16.png",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack_art/pickups.png",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack_art/portraits.png",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack_art/shields.png",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack_v3/AGENT_HANDOFF.md",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack_v3/OVERVIEW.png",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack_v3/STYLE_REFRESH_NOTES.md",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack_v3/assets/drain_props/d_awning.png",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack_v3/assets/drain_props/d_banners.png",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack_v3/assets/drain_props/d_candles.png",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack_v3/assets/drain_props/d_counter.png",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack_v3/assets/drain_props/d_lantern.png",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack_v3/assets/drain_props/d_pot.png",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack_v3/assets/drain_props/d_props.png",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack_v3/assets/drain_props/d_rug.png",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack_v3/assets/drain_props/d_torch.png",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack_v3/assets/drain_spare/d_glints.png",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack_v3/assets/drain_spare/d_wall_fungus.png",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack_v3/assets/drain_stone/d_arch.png",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack_v3/assets/drain_stone/d_bank_above.png",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack_v3/assets/drain_stone/d_bank_below.png",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack_v3/assets/drain_stone/d_bones.png",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack_v3/assets/drain_stone/d_crack.png",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack_v3/assets/drain_stone/d_drain.png",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack_v3/assets/drain_stone/d_drip.png",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack_v3/assets/drain_stone/d_floor.png",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack_v3/assets/drain_stone/d_grime.png",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack_v3/assets/drain_stone/d_hole.png",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack_v3/assets/drain_stone/d_moss.png",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack_v3/assets/drain_stone/d_pipes.png",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack_v3/assets/drain_stone/d_puddle.png",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack_v3/assets/drain_stone/d_shroom.png",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack_v3/assets/drain_stone/d_wall.png",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack_v3/assets/drain_stone/d_wall_drip.png",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack_v3/assets/drain_stone/d_wall_marks.png",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack_v3/assets/drain_stone/d_wall_top.png",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack_v3/assets/drain_stone/d_wall_web.png",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack_v3/assets/drain_stone/d_wall_window.png",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack_v3/assets/drain_water/d_bubble.png",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack_v3/assets/drain_water/d_grate.png",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack_v3/assets/drain_water/d_ladder.png",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack_v3/assets/drain_water/d_water.png",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack_v3/assets/drain_water/d_water_marks.png",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack_v3/assets/drain_water/d_waterfall.png",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack_v3/assets/myst_cave/cave.png",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack_v3/assets/myst_cave/plate.png",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack_v3/assets/myst_cave/pot.png",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack_v3/assets/myst_cave/room_chest.png",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack_v3/assets/myst_cave/spring.png",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack_v3/assets/myst_wood/hollow.png",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack_v3/assets/myst_wood/thicket.png",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack_v3/assets/wood_blight/blight_floor.png",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack_v3/assets/wood_blight/blight_floor_pits.png",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack_v3/assets/wood_blight/blight_ground.png",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack_v3/assets/wood_blight/blight_ground_lit.png",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack_v3/assets/wood_blight/blight_pool.png",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack_v3/assets/wood_blight/blight_tree.png",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack_v3/assets/wood_blight/blight_vein.png",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack_v3/assets/wood_blight/blight_wall.png",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack_v3/assets/wood_blight/blight_wall_lit.png",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack_v3/assets/wood_blight/canopy_sick.png",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack_v3/assets/wood_blight/canopy_sick_lit.png",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack_v3/assets/wood_blight/crystal.png",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack_v3/assets/wood_blight/dead_tree.png",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack_v3/assets/wood_blight/mist.png",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack_v3/assets/wood_ground/bones.png",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack_v3/assets/wood_ground/clover.png",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack_v3/assets/wood_ground/fairy_ring.png",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack_v3/assets/wood_ground/flagstone.png",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack_v3/assets/wood_ground/flowers.png",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack_v3/assets/wood_ground/grass.png",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack_v3/assets/wood_ground/grass_stain.png",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack_v3/assets/wood_ground/meadow.png",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack_v3/assets/wood_ground/shore.png",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack_v3/assets/wood_ground/shore_corner.png",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack_v3/assets/wood_ground/tall_grass.png",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack_v3/assets/wood_ground/trail.png",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack_v3/assets/wood_ground/trail_edge.png",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack_v3/assets/wood_ground/verge.png",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack_v3/assets/wood_leaf/bush.png",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack_v3/assets/wood_leaf/canopy.png",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack_v3/assets/wood_leaf/canopy_crown.png",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack_v3/assets/wood_leaf/canopy_face.png",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack_v3/assets/wood_leaf/canopy_glint.png",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack_v3/assets/wood_leaf/canopy_lantern.png",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack_v3/assets/wood_leaf/great_tree.png",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack_v3/assets/wood_leaf/great_tree_2.png",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack_v3/assets/wood_leaf/hollow_log.png",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack_v3/assets/wood_leaf/lantern_post.png",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack_v3/assets/wood_leaf/log.png",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack_v3/assets/wood_leaf/stump.png",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack_v3/assets/wood_leaf/thorns.png",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack_v3/assets/wood_leaf/tree.png",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack_v3/assets/wood_leaf/tree_lantern.png",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack_v3/assets/wood_spare/sparkle.png",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack_v3/assets/wood_spare/sparkle_white.png",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack_v3/assets/wood_stone/boulder.png",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack_v3/assets/wood_stone/censer.png",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack_v3/assets/wood_stone/censer_lit.png",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack_v3/assets/wood_stone/chest.png",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack_v3/assets/wood_stone/cliff.png",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack_v3/assets/wood_stone/crack.png",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack_v3/assets/wood_stone/door_locked.png",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack_v3/assets/wood_stone/door_open.png",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack_v3/assets/wood_stone/great_boulder.png",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack_v3/assets/wood_stone/mouths.png",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack_v3/assets/wood_stone/pillar.png",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack_v3/assets/wood_stone/pit.png",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack_v3/assets/wood_stone/rocks.png",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack_v3/assets/wood_stone/ruin_wall.png",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack_v3/assets/wood_stone/stairs.png",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack_v3/assets/wood_stone/statue.png",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack_v3/assets/wood_stone/stone_small.png",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack_v3/assets/wood_stone/tree_rock.png",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack_v3/assets/wood_stone/web.png",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack_v3/assets/wood_water/bridge.png",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack_v3/assets/wood_water/bridge_ns.png",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack_v3/assets/wood_water/foam.png",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack_v3/assets/wood_water/lily.png",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack_v3/assets/wood_water/lily_raft.png",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack_v3/assets/wood_water/water.png",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack_v3/assets/wood_water/water_bank.png",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack_v3/assets/wood_water/water_nick.png",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack_v3/assets/wood_water/waterfall.png",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack_v3/atlases/atlas_manifest.json",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack_v3/atlases/drain_props.png",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack_v3/atlases/drain_spare.png",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack_v3/atlases/drain_stone.png",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack_v3/atlases/drain_water.png",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack_v3/atlases/myst_cave.png",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack_v3/atlases/myst_wood.png",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack_v3/atlases/wood_blight.png",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack_v3/atlases/wood_ground.png",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack_v3/atlases/wood_leaf.png",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack_v3/atlases/wood_spare.png",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack_v3/atlases/wood_stone.png",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack_v3/atlases/wood_water.png",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack_v3/gba_4bpp/drain_props/d_awning.4bpp",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack_v3/gba_4bpp/drain_props/d_banners.4bpp",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack_v3/gba_4bpp/drain_props/d_candles.4bpp",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack_v3/gba_4bpp/drain_props/d_counter.4bpp",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack_v3/gba_4bpp/drain_props/d_lantern.4bpp",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack_v3/gba_4bpp/drain_props/d_pot.4bpp",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack_v3/gba_4bpp/drain_props/d_props.4bpp",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack_v3/gba_4bpp/drain_props/d_rug.4bpp",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack_v3/gba_4bpp/drain_props/d_torch.4bpp",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack_v3/gba_4bpp/drain_spare/d_glints.4bpp",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack_v3/gba_4bpp/drain_spare/d_wall_fungus.4bpp",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack_v3/gba_4bpp/drain_stone/d_arch.4bpp",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack_v3/gba_4bpp/drain_stone/d_bank_above.4bpp",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack_v3/gba_4bpp/drain_stone/d_bank_below.4bpp",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack_v3/gba_4bpp/drain_stone/d_bones.4bpp",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack_v3/gba_4bpp/drain_stone/d_crack.4bpp",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack_v3/gba_4bpp/drain_stone/d_drain.4bpp",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack_v3/gba_4bpp/drain_stone/d_drip.4bpp",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack_v3/gba_4bpp/drain_stone/d_floor.4bpp",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack_v3/gba_4bpp/drain_stone/d_grime.4bpp",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack_v3/gba_4bpp/drain_stone/d_hole.4bpp",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack_v3/gba_4bpp/drain_stone/d_moss.4bpp",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack_v3/gba_4bpp/drain_stone/d_pipes.4bpp",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack_v3/gba_4bpp/drain_stone/d_puddle.4bpp",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack_v3/gba_4bpp/drain_stone/d_shroom.4bpp",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack_v3/gba_4bpp/drain_stone/d_wall.4bpp",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack_v3/gba_4bpp/drain_stone/d_wall_drip.4bpp",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack_v3/gba_4bpp/drain_stone/d_wall_marks.4bpp",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack_v3/gba_4bpp/drain_stone/d_wall_top.4bpp",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack_v3/gba_4bpp/drain_stone/d_wall_web.4bpp",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack_v3/gba_4bpp/drain_stone/d_wall_window.4bpp",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack_v3/gba_4bpp/drain_water/d_bubble.4bpp",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack_v3/gba_4bpp/drain_water/d_grate.4bpp",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack_v3/gba_4bpp/drain_water/d_ladder.4bpp",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack_v3/gba_4bpp/drain_water/d_water.4bpp",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack_v3/gba_4bpp/drain_water/d_water_marks.4bpp",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack_v3/gba_4bpp/drain_water/d_waterfall.4bpp",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack_v3/gba_4bpp/myst_cave/cave.4bpp",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack_v3/gba_4bpp/myst_cave/plate.4bpp",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack_v3/gba_4bpp/myst_cave/pot.4bpp",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack_v3/gba_4bpp/myst_cave/room_chest.4bpp",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack_v3/gba_4bpp/myst_cave/spring.4bpp",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack_v3/gba_4bpp/myst_wood/hollow.4bpp",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack_v3/gba_4bpp/myst_wood/thicket.4bpp",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack_v3/gba_4bpp/wood_blight/blight_floor.4bpp",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack_v3/gba_4bpp/wood_blight/blight_floor_pits.4bpp",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack_v3/gba_4bpp/wood_blight/blight_ground.4bpp",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack_v3/gba_4bpp/wood_blight/blight_ground_lit.4bpp",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack_v3/gba_4bpp/wood_blight/blight_pool.4bpp",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack_v3/gba_4bpp/wood_blight/blight_tree.4bpp",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack_v3/gba_4bpp/wood_blight/blight_vein.4bpp",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack_v3/gba_4bpp/wood_blight/blight_wall.4bpp",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack_v3/gba_4bpp/wood_blight/blight_wall_lit.4bpp",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack_v3/gba_4bpp/wood_blight/canopy_sick.4bpp",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack_v3/gba_4bpp/wood_blight/canopy_sick_lit.4bpp",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack_v3/gba_4bpp/wood_blight/crystal.4bpp",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack_v3/gba_4bpp/wood_blight/dead_tree.4bpp",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack_v3/gba_4bpp/wood_blight/mist.4bpp",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack_v3/gba_4bpp/wood_ground/bones.4bpp",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack_v3/gba_4bpp/wood_ground/clover.4bpp",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack_v3/gba_4bpp/wood_ground/fairy_ring.4bpp",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack_v3/gba_4bpp/wood_ground/flagstone.4bpp",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack_v3/gba_4bpp/wood_ground/flowers.4bpp",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack_v3/gba_4bpp/wood_ground/grass.4bpp",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack_v3/gba_4bpp/wood_ground/grass_stain.4bpp",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack_v3/gba_4bpp/wood_ground/meadow.4bpp",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack_v3/gba_4bpp/wood_ground/shore.4bpp",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack_v3/gba_4bpp/wood_ground/shore_corner.4bpp",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack_v3/gba_4bpp/wood_ground/tall_grass.4bpp",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack_v3/gba_4bpp/wood_ground/trail.4bpp",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack_v3/gba_4bpp/wood_ground/trail_edge.4bpp",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack_v3/gba_4bpp/wood_ground/verge.4bpp",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack_v3/gba_4bpp/wood_leaf/bush.4bpp",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack_v3/gba_4bpp/wood_leaf/canopy.4bpp",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack_v3/gba_4bpp/wood_leaf/canopy_crown.4bpp",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack_v3/gba_4bpp/wood_leaf/canopy_face.4bpp",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack_v3/gba_4bpp/wood_leaf/canopy_glint.4bpp",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack_v3/gba_4bpp/wood_leaf/canopy_lantern.4bpp",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack_v3/gba_4bpp/wood_leaf/great_tree.4bpp",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack_v3/gba_4bpp/wood_leaf/great_tree_2.4bpp",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack_v3/gba_4bpp/wood_leaf/hollow_log.4bpp",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack_v3/gba_4bpp/wood_leaf/lantern_post.4bpp",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack_v3/gba_4bpp/wood_leaf/log.4bpp",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack_v3/gba_4bpp/wood_leaf/stump.4bpp",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack_v3/gba_4bpp/wood_leaf/thorns.4bpp",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack_v3/gba_4bpp/wood_leaf/tree.4bpp",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack_v3/gba_4bpp/wood_leaf/tree_lantern.4bpp",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack_v3/gba_4bpp/wood_spare/sparkle.4bpp",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack_v3/gba_4bpp/wood_spare/sparkle_white.4bpp",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack_v3/gba_4bpp/wood_stone/boulder.4bpp",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack_v3/gba_4bpp/wood_stone/censer.4bpp",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack_v3/gba_4bpp/wood_stone/censer_lit.4bpp",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack_v3/gba_4bpp/wood_stone/chest.4bpp",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack_v3/gba_4bpp/wood_stone/cliff.4bpp",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack_v3/gba_4bpp/wood_stone/crack.4bpp",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack_v3/gba_4bpp/wood_stone/door_locked.4bpp",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack_v3/gba_4bpp/wood_stone/door_open.4bpp",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack_v3/gba_4bpp/wood_stone/great_boulder.4bpp",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack_v3/gba_4bpp/wood_stone/mouths.4bpp",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack_v3/gba_4bpp/wood_stone/pillar.4bpp",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack_v3/gba_4bpp/wood_stone/pit.4bpp",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack_v3/gba_4bpp/wood_stone/rocks.4bpp",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack_v3/gba_4bpp/wood_stone/ruin_wall.4bpp",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack_v3/gba_4bpp/wood_stone/stairs.4bpp",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack_v3/gba_4bpp/wood_stone/statue.4bpp",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack_v3/gba_4bpp/wood_stone/stone_small.4bpp",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack_v3/gba_4bpp/wood_stone/tree_rock.4bpp",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack_v3/gba_4bpp/wood_stone/web.4bpp",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack_v3/gba_4bpp/wood_water/bridge.4bpp",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack_v3/gba_4bpp/wood_water/bridge_ns.4bpp",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack_v3/gba_4bpp/wood_water/foam.4bpp",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack_v3/gba_4bpp/wood_water/lily.4bpp",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack_v3/gba_4bpp/wood_water/lily_raft.4bpp",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack_v3/gba_4bpp/wood_water/water.4bpp",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack_v3/gba_4bpp/wood_water/water_bank.4bpp",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack_v3/gba_4bpp/wood_water/water_nick.4bpp",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack_v3/gba_4bpp/wood_water/waterfall.4bpp",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack_v3/gba_palettes/drain_props.json",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack_v3/gba_palettes/drain_props.pal",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack_v3/gba_palettes/drain_spare.json",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack_v3/gba_palettes/drain_spare.pal",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack_v3/gba_palettes/drain_stone.json",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack_v3/gba_palettes/drain_stone.pal",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack_v3/gba_palettes/drain_water.json",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack_v3/gba_palettes/drain_water.pal",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack_v3/gba_palettes/myst_cave.json",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack_v3/gba_palettes/myst_cave.pal",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack_v3/gba_palettes/myst_wood.json",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack_v3/gba_palettes/myst_wood.pal",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack_v3/gba_palettes/wood_blight.json",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack_v3/gba_palettes/wood_blight.pal",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack_v3/gba_palettes/wood_ground.json",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack_v3/gba_palettes/wood_ground.pal",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack_v3/gba_palettes/wood_leaf.json",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack_v3/gba_palettes/wood_leaf.pal",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack_v3/gba_palettes/wood_spare.json",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack_v3/gba_palettes/wood_spare.pal",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack_v3/gba_palettes/wood_stone.json",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack_v3/gba_palettes/wood_stone.pal",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack_v3/gba_palettes/wood_water.json",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack_v3/gba_palettes/wood_water.pal",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack_v3/manifest.json",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack_v3/previews/BLIGHT_240x160.png",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack_v3/previews/BLIGHT_240x160_ZOOM.png",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack_v3/previews/DRAIN_240x160.png",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack_v3/previews/DRAIN_240x160_ZOOM.png",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack_v3/previews/WOOD_240x160.png",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack_v3/previews/WOOD_240x160_ZOOM.png",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack_v3/previews/drain_props_CATALOG.png",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack_v3/previews/drain_spare_CATALOG.png",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack_v3/previews/drain_stone_CATALOG.png",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack_v3/previews/drain_stone_CATALOG_ZOOM.png",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack_v3/previews/drain_water_CATALOG.png",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack_v3/previews/myst_cave_CATALOG.png",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack_v3/previews/myst_wood_CATALOG.png",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack_v3/previews/wood_blight_CATALOG.png",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack_v3/previews/wood_blight_CATALOG_ZOOM.png",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack_v3/previews/wood_ground_CATALOG.png",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack_v3/previews/wood_leaf_CATALOG.png",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack_v3/previews/wood_leaf_CATALOG_ZOOM.png",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack_v3/previews/wood_spare_CATALOG.png",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack_v3/previews/wood_stone_CATALOG.png",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/pack_v3/previews/wood_water_CATALOG.png",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/shields-reference.jpg",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/tile_art/blight.webp",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/tile_art/drain.webp",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ref/title-reference.jpg",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/reference_assets.py",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/reference_items.py",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/rooms.py",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/sample.py",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/sewer_concepts.py",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/sewer_concepts_npcs.py",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/sewer_concepts_terrain.py",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/sewer_final.py",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/sewer_final_contracts.py",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/sewer_v3_fixtures.py",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/sprites.py",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/style.py",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/sw_cut.py",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/sw_drain.py",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/sw_folk.py",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/sw_hall.py",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/sw_paint.py",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/sw_props.py",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/sword_studies.py",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/tile_art.py",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/tile_art/tiles.json",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/tiles.py",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/tiles_style.py",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/title.py",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ui_font.py",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ui_kit.py",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/ui_studies.py",
+      "passed": true
+    },
+    {
+      "name": "authored source exact bartgame/art/wood_art.py",
+      "passed": true
+    },
+    {
+      "name": "protected actor declarations exact except IWRAM placement",
+      "passed": true
+    },
+    {
+      "name": "protected gameplay source exact bartgame/src/ambient.h",
+      "passed": true
+    },
+    {
+      "name": "protected gameplay source exact bartgame/src/appearance.c",
+      "passed": true
+    },
+    {
+      "name": "protected gameplay source exact bartgame/src/appearance.h",
+      "passed": true
+    },
+    {
+      "name": "protected gameplay source exact bartgame/src/boss.c",
+      "passed": true
+    },
+    {
+      "name": "protected gameplay source exact bartgame/src/boss.h",
+      "passed": true
+    },
+    {
+      "name": "protected gameplay source exact bartgame/src/canopy_scene.c",
+      "passed": true
+    },
+    {
+      "name": "protected gameplay source exact bartgame/src/canopy_scene.h",
+      "passed": true
+    },
+    {
+      "name": "protected gameplay source exact bartgame/src/crt0.s",
+      "passed": true
+    },
+    {
+      "name": "protected gameplay source exact bartgame/src/enemy.h",
+      "passed": true
+    },
+    {
+      "name": "protected gameplay source exact bartgame/src/forest_paths.c",
+      "passed": true
+    },
+    {
+      "name": "protected gameplay source exact bartgame/src/forest_paths.h",
+      "passed": true
+    },
+    {
+      "name": "protected gameplay source exact bartgame/src/game.h",
+      "passed": true
+    },
+    {
+      "name": "protected gameplay source exact bartgame/src/gba.h",
+      "passed": true
+    },
+    {
+      "name": "protected gameplay source exact bartgame/src/interactive.c",
+      "passed": true
+    },
+    {
+      "name": "protected gameplay source exact bartgame/src/interactive.h",
+      "passed": true
+    },
+    {
+      "name": "protected gameplay source exact bartgame/src/items.c",
+      "passed": true
+    },
+    {
+      "name": "protected gameplay source exact bartgame/src/items.h",
+      "passed": true
+    },
+    {
+      "name": "menu exact except two tested pure presentation rewrites",
+      "passed": true
+    },
+    {
+      "name": "protected gameplay source exact bartgame/src/menu.h",
+      "passed": true
+    },
+    {
+      "name": "protected gameplay source exact bartgame/src/menu_layouts_a.c",
+      "passed": true
+    },
+    {
+      "name": "protected gameplay source exact bartgame/src/menu_layouts_b.c",
+      "passed": true
+    },
+    {
+      "name": "protected gameplay source exact bartgame/src/menu_studies.c",
+      "passed": true
+    },
+    {
+      "name": "protected gameplay source exact bartgame/src/menu_studies.h",
+      "passed": true
+    },
+    {
+      "name": "protected gameplay source exact bartgame/src/myst.c",
+      "passed": true
+    },
+    {
+      "name": "protected gameplay source exact bartgame/src/myst.h",
+      "passed": true
+    },
+    {
+      "name": "protected gameplay source exact bartgame/src/npc.c",
+      "passed": true
+    },
+    {
+      "name": "protected gameplay source exact bartgame/src/npc.h",
+      "passed": true
+    },
+    {
+      "name": "protected gameplay source exact bartgame/src/objects.h",
+      "passed": true
+    },
+    {
+      "name": "protected gameplay source exact bartgame/src/player.h",
+      "passed": true
+    },
+    {
+      "name": "room generation exact except explicit preview cache invalidation",
+      "passed": true
+    },
+    {
+      "name": "protected gameplay source exact bartgame/src/roomgen.h",
+      "passed": true
+    },
+    {
+      "name": "protected gameplay source exact bartgame/src/save.c",
+      "passed": true
+    },
+    {
+      "name": "protected gameplay source exact bartgame/src/save.h",
+      "passed": true
+    },
+    {
+      "name": "protected gameplay source exact bartgame/src/sound.c",
+      "passed": true
+    },
+    {
+      "name": "protected gameplay source exact bartgame/src/sound.h",
+      "passed": true
+    },
+    {
+      "name": "protected gameplay source exact bartgame/src/text.h",
+      "passed": true
+    },
+    {
+      "name": "protected gameplay source exact bartgame/src/tree_study.c",
+      "passed": true
+    },
+    {
+      "name": "protected gameplay source exact bartgame/src/tree_study.h",
+      "passed": true
+    },
+    {
+      "name": "protected gameplay source exact bartgame/src/ui.c",
+      "passed": true
+    },
+    {
+      "name": "protected gameplay source exact bartgame/src/ui.h",
+      "passed": true
+    },
+    {
+      "name": "protected gameplay source exact bartgame/src/util.c",
+      "passed": true
+    },
+    {
+      "name": "protected gameplay source exact bartgame/src/util.h",
+      "passed": true
+    },
+    {
+      "name": "protected gameplay source exact bartgame/src/video.c",
+      "passed": true
+    },
+    {
+      "name": "protected gameplay source exact bartgame/src/video.h",
+      "passed": true
+    },
+    {
+      "name": "protected gameplay source exact bartgame/src/vwf.c",
+      "passed": true
+    },
+    {
+      "name": "protected gameplay source exact bartgame/src/vwf.h",
+      "passed": true
+    },
+    {
+      "name": "protected gameplay source exact bartgame/src/world.c",
+      "passed": true
+    },
+    {
+      "name": "protected gameplay source exact bartgame/src/world.h",
+      "passed": true
+    },
+    {
+      "name": "unchanged logical behavior prefix enemy.c",
+      "passed": true
+    },
+    {
+      "name": "unchanged logical behavior prefix player.c",
+      "passed": true
+    },
+    {
+      "name": "unchanged logical behavior prefix actor.c",
+      "passed": true
+    },
+    {
+      "name": "unchanged logical behavior prefix objects.c",
+      "passed": true
+    },
+    {
+      "name": "all generated numeric IDs/contracts exact",
+      "passed": true
+    },
+    {
+      "name": "all authored array families retained",
+      "passed": true
+    },
+    {
+      "name": "linked native payload exact appearance_mark_tiles",
+      "passed": true
+    },
+    {
+      "name": "linked native payload exact appearance_palettes",
+      "passed": true
+    },
+    {
+      "name": "linked native payload exact appearance_ui_tiles",
+      "passed": true
+    },
+    {
+      "name": "linked native payload exact bloom_swing_age_active",
+      "passed": true
+    },
+    {
+      "name": "linked native payload exact bloom_swing_age_phase",
+      "passed": true
+    },
+    {
+      "name": "linked native payload exact bloom_swing_hit",
+      "passed": true
+    },
+    {
+      "name": "linked native payload exact bloom_swing_origin",
+      "passed": true
+    },
+    {
+      "name": "linked native payload exact bloomfx_frame_pal",
+      "passed": true
+    },
+    {
+      "name": "linked native payload exact forest_cohesion_decor_alias",
+      "passed": true
+    },
+    {
+      "name": "linked native payload exact forest_cohesion_path_alias",
+      "passed": true
+    },
+    {
+      "name": "linked native payload exact forest_tree_anchor_x",
+      "passed": true
+    },
+    {
+      "name": "linked native payload exact forest_tree_anchor_y",
+      "passed": true
+    },
+    {
+      "name": "linked native payload exact forest_tree_entries",
+      "passed": true
+    },
+    {
+      "name": "linked native payload exact forest_tree_opaque_rows",
+      "passed": true
+    },
+    {
+      "name": "linked native payload exact forest_tree_state",
+      "passed": true
+    },
+    {
+      "name": "linked native payload exact forest_tree_variety",
+      "passed": true
+    },
+    {
+      "name": "linked native payload exact forest_tree_width",
+      "passed": true
+    },
+    {
+      "name": "linked native payload exact forest_v2_canopy_alias",
+      "passed": true
+    },
+    {
+      "name": "linked native payload exact forest_v2_canopy_kind",
+      "passed": true
+    },
+    {
+      "name": "linked native payload exact forest_v2_overhead",
+      "passed": true
+    },
+    {
+      "name": "linked native payload exact forest_v2_pulse_colors",
+      "passed": true
+    },
+    {
+      "name": "linked native payload exact forest_v2_pulse_slots",
+      "passed": true
+    },
+    {
+      "name": "linked native payload exact forest_v2_special_tree",
+      "passed": true
+    },
+    {
+      "name": "linked native payload exact forest_v2_water_alias",
+      "passed": true
+    },
+    {
+      "name": "linked native payload exact forest_v2_water_isolated",
+      "passed": true
+    },
+    {
+      "name": "linked native payload exact forest_v2_water_kind",
+      "passed": true
+    },
+    {
+      "name": "linked native payload exact forest_v3_body_visibility",
+      "passed": true
+    },
+    {
+      "name": "linked native payload exact forestlandmark_frame_pal",
+      "passed": true
+    },
+    {
+      "name": "linked native payload exact hud_tiles",
+      "passed": true
+    },
+    {
+      "name": "linked native payload exact huditems_frame_pal",
+      "passed": true
+    },
+    {
+      "name": "linked native payload exact icon32_exact_pal",
+      "passed": true
+    },
+    {
+      "name": "linked native payload exact icon32_exact_tiles",
+      "passed": true
+    },
+    {
+      "name": "linked native payload exact icon32_frame_pal",
+      "passed": true
+    },
+    {
+      "name": "linked native payload exact interactivechest_frame_pal",
+      "passed": true
+    },
+    {
+      "name": "linked native payload exact interactiveentry_frame_pal",
+      "passed": true
+    },
+    {
+      "name": "linked native payload exact items_frame_pal",
+      "passed": true
+    },
+    {
+      "name": "linked native payload exact lift_frame_pal",
+      "passed": true
+    },
+    {
+      "name": "linked native payload exact metatile_coll",
+      "passed": true
+    },
+    {
+      "name": "linked native payload exact metatile_glitter",
+      "passed": true
+    },
+    {
+      "name": "linked native payload exact metatile_map_forest",
+      "passed": true
+    },
+    {
+      "name": "linked native payload exact metatile_map_myst",
+      "passed": true
+    },
+    {
+      "name": "linked native payload exact metatile_map_sewer",
+      "passed": true
+    },
+    {
+      "name": "linked native payload exact metatile_prop",
+      "passed": true
+    },
+    {
+      "name": "linked native payload exact metatile_type",
+      "passed": true
+    },
+    {
+      "name": "linked native payload exact orb_glow",
+      "passed": true
+    },
+    {
+      "name": "linked native payload exact pal_bg",
+      "passed": true
+    },
+    {
+      "name": "linked native payload exact pal_face",
+      "passed": true
+    },
+    {
+      "name": "linked native payload exact pal_obj",
+      "passed": true
+    },
+    {
+      "name": "linked native payload exact peddler_act_at",
+      "passed": true
+    },
+    {
+      "name": "linked native payload exact peddler_acts",
+      "passed": true
+    },
+    {
+      "name": "linked native payload exact pick32_frame_pal",
+      "passed": true
+    },
+    {
+      "name": "linked native payload exact room_sewer_main_ground",
+      "passed": true
+    },
+    {
+      "name": "linked native payload exact room_sewer_main_objects",
+      "passed": true
+    },
+    {
+      "name": "linked native payload exact room_sewer_main_overlay",
+      "passed": true
+    },
+    {
+      "name": "linked native payload exact sheet_arrow_tiles",
+      "passed": true
+    },
+    {
+      "name": "linked native payload exact sheet_bat_tiles",
+      "passed": true
+    },
+    {
+      "name": "linked native payload exact sheet_beetle_tiles",
+      "passed": true
+    },
+    {
+      "name": "linked native payload exact sheet_bloomfx_tiles",
+      "passed": true
+    },
+    {
+      "name": "linked native payload exact sheet_bloomshadow_tiles",
+      "passed": true
+    },
+    {
+      "name": "linked native payload exact sheet_boss_tiles",
+      "passed": true
+    },
+    {
+      "name": "linked native payload exact sheet_cursor_tiles",
+      "passed": true
+    },
+    {
+      "name": "linked native payload exact sheet_dots_tiles",
+      "passed": true
+    },
+    {
+      "name": "linked native payload exact sheet_face_tiles",
+      "passed": true
+    },
+    {
+      "name": "linked native payload exact sheet_forestlandmark_tiles",
+      "passed": true
+    },
+    {
+      "name": "linked native payload exact sheet_fx_tiles",
+      "passed": true
+    },
+    {
+      "name": "linked native payload exact sheet_gatekeeper_tiles",
+      "passed": true
+    },
+    {
+      "name": "linked native payload exact sheet_glitter_tiles",
+      "passed": true
+    },
+    {
+      "name": "linked native payload exact sheet_hero_tiles",
+      "passed": true
+    },
+    {
+      "name": "linked native payload exact sheet_huditems_tiles",
+      "passed": true
+    },
+    {
+      "name": "linked native payload exact sheet_icon32_tiles",
+      "passed": true
+    },
+    {
+      "name": "linked native payload exact sheet_interactivechest_tiles",
+      "passed": true
+    },
+    {
+      "name": "linked native payload exact sheet_interactiveentry_tiles",
+      "passed": true
+    },
+    {
+      "name": "linked native payload exact sheet_items_tiles",
+      "passed": true
+    },
+    {
+      "name": "linked native payload exact sheet_knight_tiles",
+      "passed": true
+    },
+    {
+      "name": "linked native payload exact sheet_ksword_tiles",
+      "passed": true
+    },
+    {
+      "name": "linked native payload exact sheet_lift_tiles",
+      "passed": true
+    },
+    {
+      "name": "linked native payload exact sheet_marks_tiles",
+      "passed": true
+    },
+    {
+      "name": "linked native payload exact sheet_mouth_tiles",
+      "passed": true
+    },
+    {
+      "name": "linked native payload exact sheet_npc_tiles",
+      "passed": true
+    },
+    {
+      "name": "linked native payload exact sheet_peddler_body_tiles",
+      "passed": true
+    },
+    {
+      "name": "linked native payload exact sheet_peddler_head_tiles",
+      "passed": true
+    },
+    {
+      "name": "linked native payload exact sheet_pick32_tiles",
+      "passed": true
+    },
+    {
+      "name": "linked native payload exact sheet_proj_tiles",
+      "passed": true
+    },
+    {
+      "name": "linked native payload exact sheet_sewerrail_tiles",
+      "passed": true
+    },
+    {
+      "name": "linked native payload exact sheet_shield_tiles",
+      "passed": true
+    },
+    {
+      "name": "linked native payload exact sheet_slime_tiles",
+      "passed": true
+    },
+    {
+      "name": "linked native payload exact sheet_spitter_tiles",
+      "passed": true
+    },
+    {
+      "name": "linked native payload exact sheet_sword_tiles",
+      "passed": true
+    },
+    {
+      "name": "linked native payload exact sheet_uimarks_tiles",
+      "passed": true
+    },
+    {
+      "name": "linked native payload exact sheet_wisp_tiles",
+      "passed": true
+    },
+    {
+      "name": "linked native payload exact shield_frame_pal",
+      "passed": true
+    },
+    {
+      "name": "linked native payload exact sin_table_u",
+      "passed": true
+    },
+    {
+      "name": "linked native payload exact tile_anim_forest_0",
+      "passed": true
+    },
+    {
+      "name": "linked native payload exact tile_anim_forest_1",
+      "passed": true
+    },
+    {
+      "name": "linked native payload exact tile_anim_forest_10",
+      "passed": true
+    },
+    {
+      "name": "linked native payload exact tile_anim_forest_11",
+      "passed": true
+    },
+    {
+      "name": "linked native payload exact tile_anim_forest_12",
+      "passed": true
+    },
+    {
+      "name": "linked native payload exact tile_anim_forest_13",
+      "passed": true
+    },
+    {
+      "name": "linked native payload exact tile_anim_forest_14",
+      "passed": true
+    },
+    {
+      "name": "linked native payload exact tile_anim_forest_15",
+      "passed": true
+    },
+    {
+      "name": "linked native payload exact tile_anim_forest_16",
+      "passed": true
+    },
+    {
+      "name": "linked native payload exact tile_anim_forest_17",
+      "passed": true
+    },
+    {
+      "name": "linked native payload exact tile_anim_forest_18",
+      "passed": true
+    },
+    {
+      "name": "linked native payload exact tile_anim_forest_19",
+      "passed": true
+    },
+    {
+      "name": "linked native payload exact tile_anim_forest_2",
+      "passed": true
+    },
+    {
+      "name": "linked native payload exact tile_anim_forest_20",
+      "passed": true
+    },
+    {
+      "name": "linked native payload exact tile_anim_forest_21",
+      "passed": true
+    },
+    {
+      "name": "linked native payload exact tile_anim_forest_22",
+      "passed": true
+    },
+    {
+      "name": "linked native payload exact tile_anim_forest_23",
+      "passed": true
+    },
+    {
+      "name": "linked native payload exact tile_anim_forest_24",
+      "passed": true
+    },
+    {
+      "name": "linked native payload exact tile_anim_forest_25",
+      "passed": true
+    },
+    {
+      "name": "linked native payload exact tile_anim_forest_26",
+      "passed": true
+    },
+    {
+      "name": "linked native payload exact tile_anim_forest_27",
+      "passed": true
+    },
+    {
+      "name": "linked native payload exact tile_anim_forest_28",
+      "passed": true
+    },
+    {
+      "name": "linked native payload exact tile_anim_forest_29",
+      "passed": true
+    },
+    {
+      "name": "linked native payload exact tile_anim_forest_3",
+      "passed": true
+    },
+    {
+      "name": "linked native payload exact tile_anim_forest_30",
+      "passed": true
+    },
+    {
+      "name": "linked native payload exact tile_anim_forest_31",
+      "passed": true
+    },
+    {
+      "name": "linked native payload exact tile_anim_forest_32",
+      "passed": true
+    },
+    {
+      "name": "linked native payload exact tile_anim_forest_33",
+      "passed": true
+    },
+    {
+      "name": "linked native payload exact tile_anim_forest_34",
+      "passed": true
+    },
+    {
+      "name": "linked native payload exact tile_anim_forest_35",
+      "passed": true
+    },
+    {
+      "name": "linked native payload exact tile_anim_forest_36",
+      "passed": true
+    },
+    {
+      "name": "linked native payload exact tile_anim_forest_37",
+      "passed": true
+    },
+    {
+      "name": "linked native payload exact tile_anim_forest_38",
+      "passed": true
+    },
+    {
+      "name": "linked native payload exact tile_anim_forest_39",
+      "passed": true
+    },
+    {
+      "name": "linked native payload exact tile_anim_forest_4",
+      "passed": true
+    },
+    {
+      "name": "linked native payload exact tile_anim_forest_40",
+      "passed": true
+    },
+    {
+      "name": "linked native payload exact tile_anim_forest_41",
+      "passed": true
+    },
+    {
+      "name": "linked native payload exact tile_anim_forest_42",
+      "passed": true
+    },
+    {
+      "name": "linked native payload exact tile_anim_forest_43",
+      "passed": true
+    },
+    {
+      "name": "linked native payload exact tile_anim_forest_44",
+      "passed": true
+    },
+    {
+      "name": "linked native payload exact tile_anim_forest_45",
+      "passed": true
+    },
+    {
+      "name": "linked native payload exact tile_anim_forest_46",
+      "passed": true
+    },
+    {
+      "name": "linked native payload exact tile_anim_forest_47",
+      "passed": true
+    },
+    {
+      "name": "linked native payload exact tile_anim_forest_48",
+      "passed": true
+    },
+    {
+      "name": "linked native payload exact tile_anim_forest_49",
+      "passed": true
+    },
+    {
+      "name": "linked native payload exact tile_anim_forest_5",
+      "passed": true
+    },
+    {
+      "name": "linked native payload exact tile_anim_forest_50",
+      "passed": true
+    },
+    {
+      "name": "linked native payload exact tile_anim_forest_51",
+      "passed": true
+    },
+    {
+      "name": "linked native payload exact tile_anim_forest_52",
+      "passed": true
+    },
+    {
+      "name": "linked native payload exact tile_anim_forest_53",
+      "passed": true
+    },
+    {
+      "name": "linked native payload exact tile_anim_forest_54",
+      "passed": true
+    },
+    {
+      "name": "linked native payload exact tile_anim_forest_55",
+      "passed": true
+    },
+    {
+      "name": "linked native payload exact tile_anim_forest_56",
+      "passed": true
+    },
+    {
+      "name": "linked native payload exact tile_anim_forest_57",
+      "passed": true
+    },
+    {
+      "name": "linked native payload exact tile_anim_forest_58",
+      "passed": true
+    },
+    {
+      "name": "linked native payload exact tile_anim_forest_59",
+      "passed": true
+    },
+    {
+      "name": "linked native payload exact tile_anim_forest_6",
+      "passed": true
+    },
+    {
+      "name": "linked native payload exact tile_anim_forest_60",
+      "passed": true
+    },
+    {
+      "name": "linked native payload exact tile_anim_forest_61",
+      "passed": true
+    },
+    {
+      "name": "linked native payload exact tile_anim_forest_62",
+      "passed": true
+    },
+    {
+      "name": "linked native payload exact tile_anim_forest_63",
+      "passed": true
+    },
+    {
+      "name": "linked native payload exact tile_anim_forest_64",
+      "passed": true
+    },
+    {
+      "name": "linked native payload exact tile_anim_forest_65",
+      "passed": true
+    },
+    {
+      "name": "linked native payload exact tile_anim_forest_66",
+      "passed": true
+    },
+    {
+      "name": "linked native payload exact tile_anim_forest_67",
+      "passed": true
+    },
+    {
+      "name": "linked native payload exact tile_anim_forest_68",
+      "passed": true
+    },
+    {
+      "name": "linked native payload exact tile_anim_forest_69",
+      "passed": true
+    },
+    {
+      "name": "linked native payload exact tile_anim_forest_7",
+      "passed": true
+    },
+    {
+      "name": "linked native payload exact tile_anim_forest_70",
+      "passed": true
+    },
+    {
+      "name": "linked native payload exact tile_anim_forest_71",
+      "passed": true
+    },
+    {
+      "name": "linked native payload exact tile_anim_forest_72",
+      "passed": true
+    },
+    {
+      "name": "linked native payload exact tile_anim_forest_73",
+      "passed": true
+    },
+    {
+      "name": "linked native payload exact tile_anim_forest_74",
+      "passed": true
+    },
+    {
+      "name": "linked native payload exact tile_anim_forest_8",
+      "passed": true
+    },
+    {
+      "name": "linked native payload exact tile_anim_forest_9",
+      "passed": true
+    },
+    {
+      "name": "linked native payload exact tile_anim_myst_0",
+      "passed": true
+    },
+    {
+      "name": "linked native payload exact tile_anim_myst_1",
+      "passed": true
+    },
+    {
+      "name": "linked native payload exact tile_anim_myst_2",
+      "passed": true
+    },
+    {
+      "name": "linked native payload exact tile_anim_myst_3",
+      "passed": true
+    },
+    {
+      "name": "linked native payload exact tile_anim_myst_4",
+      "passed": true
+    },
+    {
+      "name": "linked native payload exact tile_anim_myst_5",
+      "passed": true
+    },
+    {
+      "name": "linked native payload exact tile_anim_sewer_0",
+      "passed": true
+    },
+    {
+      "name": "linked native payload exact tile_anim_sewer_1",
+      "passed": true
+    },
+    {
+      "name": "linked native payload exact tile_anim_sewer_10",
+      "passed": true
+    },
+    {
+      "name": "linked native payload exact tile_anim_sewer_11",
+      "passed": true
+    },
+    {
+      "name": "linked native payload exact tile_anim_sewer_12",
+      "passed": true
+    },
+    {
+      "name": "linked native payload exact tile_anim_sewer_13",
+      "passed": true
+    },
+    {
+      "name": "linked native payload exact tile_anim_sewer_14",
+      "passed": true
+    },
+    {
+      "name": "linked native payload exact tile_anim_sewer_15",
+      "passed": true
+    },
+    {
+      "name": "linked native payload exact tile_anim_sewer_16",
+      "passed": true
+    },
+    {
+      "name": "linked native payload exact tile_anim_sewer_17",
+      "passed": true
+    },
+    {
+      "name": "linked native payload exact tile_anim_sewer_18",
+      "passed": true
+    },
+    {
+      "name": "linked native payload exact tile_anim_sewer_19",
+      "passed": true
+    },
+    {
+      "name": "linked native payload exact tile_anim_sewer_2",
+      "passed": true
+    },
+    {
+      "name": "linked native payload exact tile_anim_sewer_20",
+      "passed": true
+    },
+    {
+      "name": "linked native payload exact tile_anim_sewer_21",
+      "passed": true
+    },
+    {
+      "name": "linked native payload exact tile_anim_sewer_22",
+      "passed": true
+    },
+    {
+      "name": "linked native payload exact tile_anim_sewer_23",
+      "passed": true
+    },
+    {
+      "name": "linked native payload exact tile_anim_sewer_24",
+      "passed": true
+    },
+    {
+      "name": "linked native payload exact tile_anim_sewer_25",
+      "passed": true
+    },
+    {
+      "name": "linked native payload exact tile_anim_sewer_26",
+      "passed": true
+    },
+    {
+      "name": "linked native payload exact tile_anim_sewer_27",
+      "passed": true
+    },
+    {
+      "name": "linked native payload exact tile_anim_sewer_28",
+      "passed": true
+    },
+    {
+      "name": "linked native payload exact tile_anim_sewer_29",
+      "passed": true
+    },
+    {
+      "name": "linked native payload exact tile_anim_sewer_3",
+      "passed": true
+    },
+    {
+      "name": "linked native payload exact tile_anim_sewer_30",
+      "passed": true
+    },
+    {
+      "name": "linked native payload exact tile_anim_sewer_31",
+      "passed": true
+    },
+    {
+      "name": "linked native payload exact tile_anim_sewer_32",
+      "passed": true
+    },
+    {
+      "name": "linked native payload exact tile_anim_sewer_33",
+      "passed": true
+    },
+    {
+      "name": "linked native payload exact tile_anim_sewer_34",
+      "passed": true
+    },
+    {
+      "name": "linked native payload exact tile_anim_sewer_35",
+      "passed": true
+    },
+    {
+      "name": "linked native payload exact tile_anim_sewer_36",
+      "passed": true
+    },
+    {
+      "name": "linked native payload exact tile_anim_sewer_37",
+      "passed": true
+    },
+    {
+      "name": "linked native payload exact tile_anim_sewer_38",
+      "passed": true
+    },
+    {
+      "name": "linked native payload exact tile_anim_sewer_39",
+      "passed": true
+    },
+    {
+      "name": "linked native payload exact tile_anim_sewer_4",
+      "passed": true
+    },
+    {
+      "name": "linked native payload exact tile_anim_sewer_40",
+      "passed": true
+    },
+    {
+      "name": "linked native payload exact tile_anim_sewer_41",
+      "passed": true
+    },
+    {
+      "name": "linked native payload exact tile_anim_sewer_42",
+      "passed": true
+    },
+    {
+      "name": "linked native payload exact tile_anim_sewer_43",
+      "passed": true
+    },
+    {
+      "name": "linked native payload exact tile_anim_sewer_44",
+      "passed": true
+    },
+    {
+      "name": "linked native payload exact tile_anim_sewer_45",
+      "passed": true
+    },
+    {
+      "name": "linked native payload exact tile_anim_sewer_46",
+      "passed": true
+    },
+    {
+      "name": "linked native payload exact tile_anim_sewer_47",
+      "passed": true
+    },
+    {
+      "name": "linked native payload exact tile_anim_sewer_48",
+      "passed": true
+    },
+    {
+      "name": "linked native payload exact tile_anim_sewer_49",
+      "passed": true
+    },
+    {
+      "name": "linked native payload exact tile_anim_sewer_5",
+      "passed": true
+    },
+    {
+      "name": "linked native payload exact tile_anim_sewer_50",
+      "passed": true
+    },
+    {
+      "name": "linked native payload exact tile_anim_sewer_51",
+      "passed": true
+    },
+    {
+      "name": "linked native payload exact tile_anim_sewer_52",
+      "passed": true
+    },
+    {
+      "name": "linked native payload exact tile_anim_sewer_53",
+      "passed": true
+    },
+    {
+      "name": "linked native payload exact tile_anim_sewer_54",
+      "passed": true
+    },
+    {
+      "name": "linked native payload exact tile_anim_sewer_55",
+      "passed": true
+    },
+    {
+      "name": "linked native payload exact tile_anim_sewer_56",
+      "passed": true
+    },
+    {
+      "name": "linked native payload exact tile_anim_sewer_57",
+      "passed": true
+    },
+    {
+      "name": "linked native payload exact tile_anim_sewer_58",
+      "passed": true
+    },
+    {
+      "name": "linked native payload exact tile_anim_sewer_59",
+      "passed": true
+    },
+    {
+      "name": "linked native payload exact tile_anim_sewer_6",
+      "passed": true
+    },
+    {
+      "name": "linked native payload exact tile_anim_sewer_60",
+      "passed": true
+    },
+    {
+      "name": "linked native payload exact tile_anim_sewer_61",
+      "passed": true
+    },
+    {
+      "name": "linked native payload exact tile_anim_sewer_62",
+      "passed": true
+    },
+    {
+      "name": "linked native payload exact tile_anim_sewer_63",
+      "passed": true
+    },
+    {
+      "name": "linked native payload exact tile_anim_sewer_64",
+      "passed": true
+    },
+    {
+      "name": "linked native payload exact tile_anim_sewer_65",
+      "passed": true
+    },
+    {
+      "name": "linked native payload exact tile_anim_sewer_66",
+      "passed": true
+    },
+    {
+      "name": "linked native payload exact tile_anim_sewer_67",
+      "passed": true
+    },
+    {
+      "name": "linked native payload exact tile_anim_sewer_68",
+      "passed": true
+    },
+    {
+      "name": "linked native payload exact tile_anim_sewer_7",
+      "passed": true
+    },
+    {
+      "name": "linked native payload exact tile_anim_sewer_8",
+      "passed": true
+    },
+    {
+      "name": "linked native payload exact tile_anim_sewer_9",
+      "passed": true
+    },
+    {
+      "name": "linked native payload exact tileset_forest_pals",
+      "passed": true
+    },
+    {
+      "name": "linked native payload exact tileset_forest_tiles",
+      "passed": true
+    },
+    {
+      "name": "linked native payload exact tileset_myst_pals",
+      "passed": true
+    },
+    {
+      "name": "linked native payload exact tileset_myst_tiles",
+      "passed": true
+    },
+    {
+      "name": "linked native payload exact tileset_sewer_pals",
+      "passed": true
+    },
+    {
+      "name": "linked native payload exact tileset_sewer_tiles",
+      "passed": true
+    },
+    {
+      "name": "linked native payload exact title_bitmap",
+      "passed": true
+    },
+    {
+      "name": "linked native payload exact vwf_bits",
+      "passed": true
+    },
+    {
+      "name": "linked native payload exact vwf_w",
+      "passed": true
+    },
+    {
+      "name": "all36 sprite sheet IDs retained",
+      "passed": true
+    },
+    {
+      "name": "resolved native sheet exact arrow",
+      "passed": true
+    },
+    {
+      "name": "resolved native sheet exact bat",
+      "passed": true
+    },
+    {
+      "name": "resolved native sheet exact beetle",
+      "passed": true
+    },
+    {
+      "name": "resolved native sheet exact bloomfx",
+      "passed": true
+    },
+    {
+      "name": "resolved native sheet exact bloomshadow",
+      "passed": true
+    },
+    {
+      "name": "resolved native sheet exact boss",
+      "passed": true
+    },
+    {
+      "name": "resolved native sheet exact cursor",
+      "passed": true
+    },
+    {
+      "name": "resolved native sheet exact dots",
+      "passed": true
+    },
+    {
+      "name": "resolved native sheet exact face",
+      "passed": true
+    },
+    {
+      "name": "resolved native sheet exact forestlandmark",
+      "passed": true
+    },
+    {
+      "name": "resolved native sheet exact fx",
+      "passed": true
+    },
+    {
+      "name": "resolved native sheet exact gatekeeper",
+      "passed": true
+    },
+    {
+      "name": "resolved native sheet exact glitter",
+      "passed": true
+    },
+    {
+      "name": "resolved native sheet exact hero",
+      "passed": true
+    },
+    {
+      "name": "resolved native sheet exact huditems",
+      "passed": true
+    },
+    {
+      "name": "resolved native sheet exact icon32",
+      "passed": true
+    },
+    {
+      "name": "resolved native sheet exact interactivechest",
+      "passed": true
+    },
+    {
+      "name": "resolved native sheet exact interactiveentry",
+      "passed": true
+    },
+    {
+      "name": "resolved native sheet exact items",
+      "passed": true
+    },
+    {
+      "name": "resolved native sheet exact knight",
+      "passed": true
+    },
+    {
+      "name": "resolved native sheet exact ksword",
+      "passed": true
+    },
+    {
+      "name": "resolved native sheet exact lift",
+      "passed": true
+    },
+    {
+      "name": "resolved native sheet exact marks",
+      "passed": true
+    },
+    {
+      "name": "resolved native sheet exact mouth",
+      "passed": true
+    },
+    {
+      "name": "resolved native sheet exact npc",
+      "passed": true
+    },
+    {
+      "name": "resolved native sheet exact peddler_body",
+      "passed": true
+    },
+    {
+      "name": "resolved native sheet exact peddler_head",
+      "passed": true
+    },
+    {
+      "name": "resolved native sheet exact pick32",
+      "passed": true
+    },
+    {
+      "name": "resolved native sheet exact proj",
+      "passed": true
+    },
+    {
+      "name": "resolved native sheet exact sewerrail",
+      "passed": true
+    },
+    {
+      "name": "resolved native sheet exact shield",
+      "passed": true
+    },
+    {
+      "name": "resolved native sheet exact slime",
+      "passed": true
+    },
+    {
+      "name": "resolved native sheet exact spitter",
+      "passed": true
+    },
+    {
+      "name": "resolved native sheet exact sword",
+      "passed": true
+    },
+    {
+      "name": "resolved native sheet exact uimarks",
+      "passed": true
+    },
+    {
+      "name": "resolved native sheet exact wisp",
+      "passed": true
+    },
+    {
+      "name": "resolved full terrain/animation set exact sewer",
+      "passed": true
+    },
+    {
+      "name": "resolved full terrain/animation set exact forest",
+      "passed": true
+    },
+    {
+      "name": "resolved full terrain/animation set exact myst",
+      "passed": true
+    },
+    {
+      "name": "production ROM excludes development cycle-profiler data",
+      "passed": true
+    },
+    {
+      "name": "healthy isolated room semantic geometry exact",
+      "passed": true
+    },
+    {
+      "name": "healthy native camera0,0 clock256 exact",
+      "passed": true
+    },
+    {
+      "name": "healthy native camera0,0 clock288 exact",
+      "passed": true
+    },
+    {
+      "name": "healthy native camera136,112 clock256 exact",
+      "passed": true
+    },
+    {
+      "name": "healthy native camera136,112 clock288 exact",
+      "passed": true
+    },
+    {
+      "name": "healthy native camera272,224 clock256 exact",
+      "passed": true
+    },
+    {
+      "name": "healthy native camera272,224 clock288 exact",
+      "passed": true
+    },
+    {
+      "name": "mixed isolated room semantic geometry exact",
+      "passed": true
+    },
+    {
+      "name": "mixed native camera0,0 clock256 exact",
+      "passed": true
+    },
+    {
+      "name": "mixed native camera0,0 clock288 exact",
+      "passed": true
+    },
+    {
+      "name": "mixed native camera136,112 clock256 exact",
+      "passed": true
+    },
+    {
+      "name": "mixed native camera136,112 clock288 exact",
+      "passed": true
+    },
+    {
+      "name": "mixed native camera272,224 clock256 exact",
+      "passed": true
+    },
+    {
+      "name": "mixed native camera272,224 clock288 exact",
+      "passed": true
+    },
+    {
+      "name": "pond isolated room semantic geometry exact",
+      "passed": true
+    },
+    {
+      "name": "pond native camera0,0 clock256 exact",
+      "passed": true
+    },
+    {
+      "name": "pond native camera0,0 clock288 exact",
+      "passed": true
+    },
+    {
+      "name": "pond native camera136,112 clock256 exact",
+      "passed": true
+    },
+    {
+      "name": "pond native camera136,112 clock288 exact",
+      "passed": true
+    },
+    {
+      "name": "pond native camera272,224 clock256 exact",
+      "passed": true
+    },
+    {
+      "name": "pond native camera272,224 clock288 exact",
+      "passed": true
+    },
+    {
+      "name": "deep isolated room semantic geometry exact",
+      "passed": true
+    },
+    {
+      "name": "deep native camera0,0 clock256 exact",
+      "passed": true
+    },
+    {
+      "name": "deep native camera0,0 clock288 exact",
+      "passed": true
+    },
+    {
+      "name": "deep native camera136,112 clock256 exact",
+      "passed": true
+    },
+    {
+      "name": "deep native camera136,112 clock288 exact",
+      "passed": true
+    },
+    {
+      "name": "deep native camera272,224 clock256 exact",
+      "passed": true
+    },
+    {
+      "name": "deep native camera272,224 clock288 exact",
+      "passed": true
+    },
+    {
+      "name": "isolated native comparison includes canopy visibility guard",
+      "passed": true,
+      "detail": 8
+    },
+    {
+      "name": "hud command succeeds",
+      "passed": true
+    },
+    {
+      "name": "hud report exists",
+      "passed": true
+    },
+    {
+      "name": "hud all reported checks pass",
+      "passed": true,
+      "detail": {
+        "passed": 290,
+        "total": 290
+      }
+    },
+    {
+      "name": "hud uses exact qualified ROM",
+      "passed": true
+    },
+    {
+      "name": "hud expected test coverage",
+      "passed": true,
+      "detail": 290
+    },
+    {
+      "name": "runtime command succeeds",
+      "passed": true
+    },
+    {
+      "name": "runtime report exists",
+      "passed": true
+    },
+    {
+      "name": "runtime all reported checks pass",
+      "passed": true,
+      "detail": {
+        "passed": 80,
+        "total": 80
+      }
+    },
+    {
+      "name": "runtime uses exact qualified ROM",
+      "passed": true
+    },
+    {
+      "name": "runtime expected test coverage",
+      "passed": true,
+      "detail": 80
+    },
+    {
+      "name": "save_probe command succeeds",
+      "passed": true
+    },
+    {
+      "name": "save_probe final status/count passes",
+      "passed": true
+    },
+    {
+      "name": "quest_probe command succeeds",
+      "passed": true
+    },
+    {
+      "name": "quest_probe final status/count passes",
+      "passed": true
+    },
+    {
+      "name": "pocket_probe command succeeds",
+      "passed": true
+    },
+    {
+      "name": "pocket_probe final status/count passes",
+      "passed": true
+    },
+    {
+      "name": "revisit_probe command succeeds",
+      "passed": true
+    },
+    {
+      "name": "revisit_probe final status/count passes",
+      "passed": true
+    }
+  ],
+  "suites": [
+    {
+      "name": "hud",
+      "returncode": 0,
+      "log": "hud.log",
+      "report": "hud/report.json",
+      "report_sha256": "3bc02bff498bc13a1c6ea31e62cd35797c8940abfe79e480ef4f7271dcea36d9",
+      "passed": 290,
+      "total": 290
+    },
+    {
+      "name": "runtime",
+      "returncode": 0,
+      "log": "runtime.log",
+      "report": "runtime/report.json",
+      "report_sha256": "d67c2ca9c537d5e530f1db23703395c8257d640c8530b9ad07d02139b519f4ce",
+      "passed": 80,
+      "total": 80
+    },
+    {
+      "name": "save_probe",
+      "returncode": 0,
+      "log": "save_probe.log",
+      "passed": 6,
+      "total": 6
+    },
+    {
+      "name": "quest_probe",
+      "returncode": 0,
+      "log": "quest_probe.log",
+      "passed": 12,
+      "total": 12
+    },
+    {
+      "name": "pocket_probe",
+      "returncode": 0,
+      "log": "pocket_probe.log",
+      "passed": 18,
+      "total": 18
+    },
+    {
+      "name": "revisit_probe",
+      "returncode": 0,
+      "log": "revisit_probe.log",
+      "passed": 8,
+      "total": 8
+    }
+  ],
+  "scope_only": false
+}

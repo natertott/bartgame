@@ -1,6 +1,21 @@
 # BARTGAME downloads
 
 
+## Optimized game engine
+
+Measured room/crowd bottlenecks are removed while preserving the existing art,
+enemy AI, effects and mechanics. The review includes real mGBA frame traces,
+recordings, CPU diagnosis, native comparisons and the tested limits.
+
+- [Full diagnosis, performance charts and recordings](../performance-review/README.md)
+- [Download ROM](https://raw.githubusercontent.com/natertott/bartgame/performance-optimization/downloads/performance-c09e290/performance-c09e290.gba)
+- [Download ZIP](https://raw.githubusercontent.com/natertott/bartgame/performance-optimization/downloads/performance-c09e290/performance-c09e290.zip)
+- [Build identity and checksums](performance-c09e290/README.md)
+
+Source `c09e2909`. All 75 sampled natural rooms and all 30 sustained enemy
+fixtures run at full sampled cadence. The preceding art/UI release below
+remains available for comparison.
+
 ## Gleaming HUD and native item refresh
 
 Larger item silhouettes and A/B/L medallions, press illumination, restrained

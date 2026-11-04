@@ -1,0 +1,18 @@
+seed 0xb4a7 roles {0: 'KEY', 1: 'hunt', 2: 'hunt', 3: 'hunt', 4: 'keych', 5: 'fetch', 7: 'KEY', 8: 'chest', 9: 'hunt', 10: 'torch', 11: 'KEY', 12: 'chest', 15: 'hunt', 16: 'keych', 17: 'chest', 18: 'chest', 20: 'GOAL', 21: 'chest', 22: 'ENTRY', 23: 'relic', 24: 'chest'}
+PASS HUNT: reached the hermit                     cell 1
+PASS HUNT: the hermit stands in his glade         {'kind': 5, 'type': 2, 'state': 0, 'timer': 0, 'x': 200, 'y': 158, 'z': 0, 'speed': 0, 'hp': 0, 'coll': 0, 'facing': 2}
+   talk: box 1 state 1 hero (200, 179)
+   talk: box 1 state 1 hero (200, 179)
+PASS HUNT: the reward key is given                keys 3 -> 4
+PASS FETCH: reached the relic chamber             cell 23 (want 23)
+PASS FETCH: the relic lies there                  {'kind': 4, 'type': 5, 'state': 0, 'timer': 0, 'x': 88, 'y': 140, 'z': 8, 'speed': 0, 'hp': 0, 'coll': 0, 'facing': 2}
+PASS FETCH: the relic is carried                  items 0x1f
+PASS FETCH: back to the nun                       cell 5
+   talk: box 1 state 1 hero (168, 147)
+PASS FETCH: the nun grants a heart container      hp_max 24 -> 32
+PASS TORCH: reached the gardener                  cell 10
+PASS TORCH: four censers stand cold               [(15, 7), (16, 9), (24, 11), (22, 17)]
+PASS TORCH: the lamp lights them                  lit 4
+   talk: box 1 state 1 hero (408, 291)
+PASS TORCH: the gardener pays a key               keys 4 -> 5
+RESULT PASS 12/12

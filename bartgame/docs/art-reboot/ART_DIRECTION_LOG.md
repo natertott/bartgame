@@ -1628,3 +1628,18 @@ only explicitly invalidated caches and equivalent rendering work change.
 The [technical notes](../performance/README.md) and
 [measured review](../../../performance-review/README.md) contain methods and
 limits. Final committed-source evidence is regenerated before delivery.
+
+**Final production qualification:** committed source `c09e2909` builds the
+655,332-byte uninstrumented ROM, SHA256
+`59f1e54cbbbac7e8f31b4e0c4623db72fe1f2a2190c7ceee5cc6fd559c6be898`.
+Fresh actual mGBA runs restore all75 sampled natural rooms and all30 sustained
+4–24-enemy fixtures to full sampled cadence, without removing enemies.
+The146-context corpus improves24,033/25,920 to25,907/25,920 updates; its13
+remaining boundary/combat observations are preserved in the report.
+
+Independent qualification passes900/900. All24 native forest comparisons
+and45 menu/style/color comparisons remain pixel-identical. Every authored
+art file, palette and packed native asset remains exact. The
+[measured diagnosis and playable build](../../../performance-review/README.md)
+include plots, original frame traces and real recordings. This pass changes
+engine efficiency; it adopts no new art style or visual reference.

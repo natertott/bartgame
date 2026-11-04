@@ -1,0 +1,9 @@
+PASS relic room has a side pocket (13, 9, 1, 13, 10, 2)
+PASS the placed relic exists 
+PASS normal collection grants the relic 
+PASS collection persists on its source cell 
+PASS pocket coordinates and kind survive revisit (13, 9, 1, 13, 10, 2)
+PASS the claimed relic does not respawn after hand-in 
+PASS the same pocket remains open 
+PASS pedestal coordinates are stable 
+RESULT PASS 8/8

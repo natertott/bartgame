@@ -1,0 +1,16 @@
+{
+  "method": "Compare actual object/hand painters after pool-kind rejection.\n\nThe original/candidate functions and their release-overlap helpers execute on\nidentical96-actor pools. The unchanged renderer/native sheet descriptors and\na deterministic pure terrain-priority stub record every painter call, OAM\nbyte and all gameplay state bytes. Fixtures include released loads, arrows,\nflames, eight-frame bomb handoff, gated hoards, hidden/hurt states and full OAM.\nActual scene rendering/cycles remain the native performance suite's scope.",
+  "before_source": "11b872e9897320398fa02344cef1418733c04e9a",
+  "after_source": "c09e29092e0d2ba6107659f975ed0c3ec41c3936",
+  "tool_sha256": "e2cd1677e88e90be651ff6d2b09c7e5a75c2458f4e433eb176c3a1f8bc6427c6",
+  "objects_before_sha256": "8c0e807163ba1258aafc0521dbcf61437f35f2f8e545368ba35d24017d542f76",
+  "objects_after_sha256": "88d446894f128e59f3ee006b638c1c57f14303bd8189c2ddd18deb2c5e699656",
+  "native_rom_sha256": "1bd913bc5bf1ad81e9c1dcc7e07ebc38eac855d390a5bb613257f8fbfe128e59",
+  "passed": true,
+  "cases": 107704,
+  "painter_calls": 604195,
+  "oam_entries": 39687,
+  "release_overlap_calls_avoided": 29922703,
+  "full_oam_cases": 34950,
+  "randomized_96_actor_pools": 8192
+}

@@ -1,0 +1,291 @@
+PASS ordinary boot reaches native title
+PASS real title Options opens
+PASS Options returns to native title
+PASS ordinary opening text is active
+PASS unnamed dialogue suppresses map over continuation arrow
+PASS opening dialogue closes back to gameplay
+PASS 14-after-unnamed-dialogue top HUD stays within24px
+PASS 14-after-unnamed-dialogue leaves north-center opening
+PASS 14-after-unnamed-dialogue empty slot0 has no item OBJ
+PASS 14-after-unnamed-dialogue slot1 uses exact nativeSWORD icon
+PASS 14-after-unnamed-dialogue slot1 uses correct item palette
+PASS 14-after-unnamed-dialogue slot2 uses exact nativeSHIELD icon
+PASS 14-after-unnamed-dialogue slot2 uses correct item palette
+PASS 14-after-unnamed-dialogue actual gilt glyphs match full resource value
+PASS 14-after-unnamed-dialogue slot0 has no unrelated ammo label
+PASS 14-after-unnamed-dialogue slot1 has no unrelated ammo label
+PASS 14-after-unnamed-dialogue slot2 has no unrelated ammo label
+PASS ordinary Start enters Drain
+PASS 03-drain top HUD stays within24px
+PASS 03-drain leaves north-center opening
+PASS 03-drain slot0 uses exact nativeBOMBS icon
+PASS 03-drain slot0 uses correct item palette
+PASS 03-drain slot1 uses exact nativeSHIELD icon
+PASS 03-drain slot1 uses correct item palette
+PASS 03-drain slot2 uses exact nativeBOW icon
+PASS 03-drain slot2 uses correct item palette
+PASS 03-drain actual gilt glyphs match full resource value
+PASS 03-drain slot0 actual ammo glyphs match99
+PASS 03-drain slot1 has no unrelated ammo label
+PASS 03-drain slot2 actual ammo glyphs match99
+PASS 04-lantern-cape-hubcap top HUD stays within24px
+PASS 04-lantern-cape-hubcap leaves north-center opening
+PASS 04-lantern-cape-hubcap slot0 uses exact nativeLAMP icon
+PASS 04-lantern-cape-hubcap slot0 uses correct item palette
+PASS 04-lantern-cape-hubcap slot1 uses exact nativeCLOAK icon
+PASS 04-lantern-cape-hubcap slot1 uses correct item palette
+PASS 04-lantern-cape-hubcap slot2 uses exact nativeHUBCAP icon
+PASS 04-lantern-cape-hubcap slot2 uses correct item palette
+PASS 04-lantern-cape-hubcap actual gilt glyphs match full resource value
+PASS 04-lantern-cape-hubcap slot0 has no unrelated ammo label
+PASS 04-lantern-cape-hubcap slot1 has no unrelated ammo label
+PASS 04-lantern-cape-hubcap slot2 has no unrelated ammo label
+PASS 05-sword-shield-halfheart top HUD stays within24px
+PASS 05-sword-shield-halfheart leaves north-center opening
+PASS 05-sword-shield-halfheart slot0 uses exact nativeSWORD icon
+PASS 05-sword-shield-halfheart slot0 uses correct item palette
+PASS 05-sword-shield-halfheart slot1 uses exact nativeSHIELD icon
+PASS 05-sword-shield-halfheart slot1 uses correct item palette
+PASS 05-sword-shield-halfheart empty slot2 has no item OBJ
+PASS 05-sword-shield-halfheart actual gilt glyphs match full resource value
+PASS 05-sword-shield-halfheart slot0 has no unrelated ammo label
+PASS 05-sword-shield-halfheart slot1 has no unrelated ammo label
+PASS 05-sword-shield-halfheart slot2 has no unrelated ammo label
+PASS 06-zero-ammunition top HUD stays within24px
+PASS 06-zero-ammunition leaves north-center opening
+PASS 06-zero-ammunition slot0 uses exact nativeBOMBS icon
+PASS 06-zero-ammunition slot0 uses correct item palette
+PASS 06-zero-ammunition slot1 uses exact nativeBOW icon
+PASS 06-zero-ammunition slot1 uses correct item palette
+PASS 06-zero-ammunition slot2 uses exact nativeSHIELD icon
+PASS 06-zero-ammunition slot2 uses correct item palette
+PASS 06-zero-ammunition actual gilt glyphs match full resource value
+PASS 06-zero-ammunition slot0 actual ammo glyphs match0
+PASS 06-zero-ammunition slot1 actual ammo glyphs match0
+PASS 06-zero-ammunition slot2 has no unrelated ammo label
+PASS 07-byte-ammunition-extremes top HUD stays within24px
+PASS 07-byte-ammunition-extremes leaves north-center opening
+PASS 07-byte-ammunition-extremes slot0 uses exact nativeBOMBS icon
+PASS 07-byte-ammunition-extremes slot0 uses correct item palette
+PASS 07-byte-ammunition-extremes slot1 uses exact nativeBOW icon
+PASS 07-byte-ammunition-extremes slot1 uses correct item palette
+PASS 07-byte-ammunition-extremes slot2 uses exact nativeSWORD icon
+PASS 07-byte-ammunition-extremes slot2 uses correct item palette
+PASS 07-byte-ammunition-extremes actual gilt glyphs match full resource value
+PASS 07-byte-ammunition-extremes slot0 actual ammo glyphs match255
+PASS 07-byte-ammunition-extremes slot1 actual ammo glyphs match255
+PASS 07-byte-ammunition-extremes slot2 has no unrelated ammo label
+PASS 08-empty-equipment top HUD stays within24px
+PASS 08-empty-equipment leaves north-center opening
+PASS 08-empty-equipment empty slot0 has no item OBJ
+PASS 08-empty-equipment empty slot1 has no item OBJ
+PASS 08-empty-equipment empty slot2 has no item OBJ
+PASS 08-empty-equipment actual gilt glyphs match full resource value
+PASS 08-empty-equipment slot0 has no unrelated ammo label
+PASS 08-empty-equipment slot1 has no unrelated ammo label
+PASS 08-empty-equipment slot2 has no unrelated ammo label
+PASS real Drain ladder enters forest entry
+PASS 09-healthy-forest top HUD stays within24px
+PASS 09-healthy-forest leaves north-center opening
+PASS 09-healthy-forest slot0 uses exact nativeBOMBS icon
+PASS 09-healthy-forest slot0 uses correct item palette
+PASS 09-healthy-forest slot1 uses exact nativeSHIELD icon
+PASS 09-healthy-forest slot1 uses correct item palette
+PASS 09-healthy-forest slot2 uses exact nativeBOW icon
+PASS 09-healthy-forest slot2 uses correct item palette
+PASS 09-healthy-forest actual gilt glyphs match full resource value
+PASS 09-healthy-forest slot0 actual ammo glyphs match99
+PASS 09-healthy-forest slot1 has no unrelated ammo label
+PASS 09-healthy-forest slot2 actual ammo glyphs match99
+PASS natural entry minimap keeps unvisited rooms undisclosed
+PASS Start opens item menu
+PASS R reaches key menu
+PASS R reaches overview map
+PASS A reaches room zoom
+PASS Start returns to gameplay
+PASS menu restores room
+PASS menu restores bg1
+PASS menu restores bg2
+PASS menu restores bg3
+PASS menu restores world
+PASS 24-after-menu top HUD stays within24px
+PASS 24-after-menu leaves north-center opening
+PASS 24-after-menu slot0 uses exact nativeBOMBS icon
+PASS 24-after-menu slot0 uses correct item palette
+PASS 24-after-menu slot1 uses exact nativeSHIELD icon
+PASS 24-after-menu slot1 uses correct item palette
+PASS 24-after-menu slot2 uses exact nativeBOW icon
+PASS 24-after-menu slot2 uses correct item palette
+PASS 24-after-menu actual gilt glyphs match full resource value
+PASS 24-after-menu slot0 actual ammo glyphs match99
+PASS 24-after-menu slot1 has no unrelated ammo label
+PASS 24-after-menu slot2 actual ammo glyphs match99
+PASS requested transition settles area1 cell20
+PASS deep scene uses natural high-blight cell
+PASS 10-deep-forest top HUD stays within24px
+PASS 10-deep-forest leaves north-center opening
+PASS 10-deep-forest slot0 uses exact nativeBOMBS icon
+PASS 10-deep-forest slot0 uses correct item palette
+PASS 10-deep-forest slot1 uses exact nativeSHIELD icon
+PASS 10-deep-forest slot1 uses correct item palette
+PASS 10-deep-forest slot2 uses exact nativeBOW icon
+PASS 10-deep-forest slot2 uses correct item palette
+PASS 10-deep-forest actual gilt glyphs match full resource value
+PASS 10-deep-forest slot0 actual ammo glyphs match99
+PASS 10-deep-forest slot1 has no unrelated ammo label
+PASS 10-deep-forest slot2 actual ammo glyphs match99
+PASS requested transition settles area1 cell20
+PASS 180-frame idle sample keeps near-baseline logic cadence
+PASS current room alone has two visible blink phases
+PASS non-current room faces do not flash with border
+PASS current marker stays distinct in both phases
+PASS 180 actual HUD simulation frames captured
+PASS native minimap hardware allocation valid
+PASS minimap width grows about25percent
+PASS minimap animates in actual hardware pixels
+PASS gold top border shimmer animates in actual hardware pixels
+PASS button-A-released top HUD stays within24px
+PASS button-A-released leaves north-center opening
+PASS button-A-released slot0 uses exact nativeSHIELD icon
+PASS button-A-released slot0 uses correct item palette
+PASS button-A-released slot1 uses exact nativeSHIELD icon
+PASS button-A-released slot1 uses correct item palette
+PASS button-A-released slot2 uses exact nativeSHIELD icon
+PASS button-A-released slot2 uses correct item palette
+PASS button-A-released actual gilt glyphs match full resource value
+PASS button-A-released slot0 has no unrelated ammo label
+PASS button-A-released slot1 has no unrelated ammo label
+PASS button-A-released slot2 has no unrelated ammo label
+PASS button-A-held top HUD stays within24px
+PASS button-A-held leaves north-center opening
+PASS button-A-held slot0 uses exact nativeSHIELD icon
+PASS button-A-held slot0 uses correct item palette
+PASS button-A-held slot1 uses exact nativeSHIELD icon
+PASS button-A-held slot1 uses correct item palette
+PASS button-A-held slot2 uses exact nativeSHIELD icon
+PASS button-A-held slot2 uses correct item palette
+PASS button-A-held actual gilt glyphs match full resource value
+PASS button-A-held slot0 has no unrelated ammo label
+PASS button-A-held slot1 has no unrelated ammo label
+PASS button-A-held slot2 has no unrelated ammo label
+PASS A physical input reaches real key scanner
+PASS A release keeps brief readable afterglow
+PASS A illuminates its associated button label
+PASS A leaves other button labels unchanged
+PASS button-B-released top HUD stays within24px
+PASS button-B-released leaves north-center opening
+PASS button-B-released slot0 uses exact nativeSHIELD icon
+PASS button-B-released slot0 uses correct item palette
+PASS button-B-released slot1 uses exact nativeSHIELD icon
+PASS button-B-released slot1 uses correct item palette
+PASS button-B-released slot2 uses exact nativeSHIELD icon
+PASS button-B-released slot2 uses correct item palette
+PASS button-B-released actual gilt glyphs match full resource value
+PASS button-B-released slot0 has no unrelated ammo label
+PASS button-B-released slot1 has no unrelated ammo label
+PASS button-B-released slot2 has no unrelated ammo label
+PASS button-B-held top HUD stays within24px
+PASS button-B-held leaves north-center opening
+PASS button-B-held slot0 uses exact nativeSHIELD icon
+PASS button-B-held slot0 uses correct item palette
+PASS button-B-held slot1 uses exact nativeSHIELD icon
+PASS button-B-held slot1 uses correct item palette
+PASS button-B-held slot2 uses exact nativeSHIELD icon
+PASS button-B-held slot2 uses correct item palette
+PASS button-B-held actual gilt glyphs match full resource value
+PASS button-B-held slot0 has no unrelated ammo label
+PASS button-B-held slot1 has no unrelated ammo label
+PASS button-B-held slot2 has no unrelated ammo label
+PASS B physical input reaches real key scanner
+PASS B release keeps brief readable afterglow
+PASS B illuminates its associated button label
+PASS B leaves other button labels unchanged
+PASS button-L-released top HUD stays within24px
+PASS button-L-released leaves north-center opening
+PASS button-L-released slot0 uses exact nativeSHIELD icon
+PASS button-L-released slot0 uses correct item palette
+PASS button-L-released slot1 uses exact nativeSHIELD icon
+PASS button-L-released slot1 uses correct item palette
+PASS button-L-released slot2 uses exact nativeSHIELD icon
+PASS button-L-released slot2 uses correct item palette
+PASS button-L-released actual gilt glyphs match full resource value
+PASS button-L-released slot0 has no unrelated ammo label
+PASS button-L-released slot1 has no unrelated ammo label
+PASS button-L-released slot2 has no unrelated ammo label
+PASS button-L-held top HUD stays within24px
+PASS button-L-held leaves north-center opening
+PASS button-L-held slot0 uses exact nativeSHIELD icon
+PASS button-L-held slot0 uses correct item palette
+PASS button-L-held slot1 uses exact nativeSHIELD icon
+PASS button-L-held slot1 uses correct item palette
+PASS button-L-held slot2 uses exact nativeSHIELD icon
+PASS button-L-held slot2 uses correct item palette
+PASS button-L-held actual gilt glyphs match full resource value
+PASS button-L-held slot0 has no unrelated ammo label
+PASS button-L-held slot1 has no unrelated ammo label
+PASS button-L-held slot2 has no unrelated ammo label
+PASS L physical input reaches real key scanner
+PASS L release keeps brief readable afterglow
+PASS L illuminates its associated button label
+PASS L leaves other button labels unchanged
+PASS walk timing uses a natural open feet strip
+PASS real directional input moves Bloom during timing sample
+PASS 144-frame actual walking keeps near-baseline logic cadence
+PASS requested transition settles area1 cell11
+PASS real mystery mouth enters generated interior
+PASS 11-mystery top HUD stays within24px
+PASS 11-mystery leaves north-center opening
+PASS 11-mystery slot0 uses exact nativeBOMBS icon
+PASS 11-mystery slot0 uses correct item palette
+PASS 11-mystery slot1 uses exact nativeSHIELD icon
+PASS 11-mystery slot1 uses correct item palette
+PASS 11-mystery slot2 uses exact nativeBOW icon
+PASS 11-mystery slot2 uses correct item palette
+PASS 11-mystery actual gilt glyphs match full resource value
+PASS 11-mystery slot0 actual ammo glyphs match99
+PASS 11-mystery slot1 has no unrelated ammo label
+PASS 11-mystery slot2 actual ammo glyphs match99
+PASS mystery minimap locates player in actual parent room
+PASS requested transition settles area0 cell0
+PASS 12-drain-return top HUD stays within24px
+PASS 12-drain-return leaves north-center opening
+PASS 12-drain-return slot0 uses exact nativeBOMBS icon
+PASS 12-drain-return slot0 uses correct item palette
+PASS 12-drain-return slot1 uses exact nativeSHIELD icon
+PASS 12-drain-return slot1 uses correct item palette
+PASS 12-drain-return slot2 uses exact nativeBOW icon
+PASS 12-drain-return slot2 uses correct item palette
+PASS 12-drain-return actual gilt glyphs match full resource value
+PASS 12-drain-return slot0 actual ammo glyphs match99
+PASS 12-drain-return slot1 has no unrelated ammo label
+PASS 12-drain-return slot2 actual ammo glyphs match99
+PASS actual wizard conversation opens named dialogue
+PASS named dialogue suppresses map over continuation arrow
+PASS wizard dialogue closes back to gameplay
+PASS 16-after-wizard-dialogue top HUD stays within24px
+PASS 16-after-wizard-dialogue leaves north-center opening
+PASS 16-after-wizard-dialogue slot0 uses exact nativeBOMBS icon
+PASS 16-after-wizard-dialogue slot0 uses correct item palette
+PASS 16-after-wizard-dialogue slot1 uses exact nativeSHIELD icon
+PASS 16-after-wizard-dialogue slot1 uses correct item palette
+PASS 16-after-wizard-dialogue slot2 uses exact nativeBOW icon
+PASS 16-after-wizard-dialogue slot2 uses correct item palette
+PASS 16-after-wizard-dialogue actual gilt glyphs match full resource value
+PASS 16-after-wizard-dialogue slot0 actual ammo glyphs match99
+PASS 16-after-wizard-dialogue slot1 has no unrelated ammo label
+PASS 16-after-wizard-dialogue slot2 actual ammo glyphs match99
+PASS actual frog market opens
+PASS frog market returns to gameplay
+PASS 18-after-market top HUD stays within24px
+PASS 18-after-market leaves north-center opening
+PASS 18-after-market slot0 uses exact nativeBOMBS icon
+PASS 18-after-market slot0 uses correct item palette
+PASS 18-after-market slot1 uses exact nativeSHIELD icon
+PASS 18-after-market slot1 uses correct item palette
+PASS 18-after-market slot2 uses exact nativeBOW icon
+PASS 18-after-market slot2 uses correct item palette
+PASS 18-after-market actual gilt glyphs match full resource value
+PASS 18-after-market slot0 actual ammo glyphs match99
+PASS 18-after-market slot1 has no unrelated ammo label
+PASS 18-after-market slot2 actual ammo glyphs match99
+290/290; complete=True

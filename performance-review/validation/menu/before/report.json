@@ -1,0 +1,1995 @@
+{
+  "method": "Real mGBA menu equivalence through all nine title appearance settings.\n\nEvery skin/palette pair is selected using the real title Options and D-pad\ncontrols. A seeded new game reaches the Drain normally. An explicit full\ninventory fixture then exercises item/key/region/zoom pages through ordinary\nStart/R/A inputs. Native screenshots are untouched240x160 framebuffers; no\npalette, frame clock, menu cursor, input-global or framebuffer is injected.",
+  "phase": "before",
+  "source_commit": "11b872e9897320398fa02344cef1418733c04e9a",
+  "rom_sha256": "1bd913bc5bf1ad81e9c1dcc7e07ebc38eac855d390a5bb613257f8fbfe128e59",
+  "tool_sha256": "70d2bc915989ab8ea072c9595431938ece39ec66422e4c562838ba73979a5b69",
+  "emulator": "mGBA0.10.5",
+  "fixtures": [
+    "Seed0xb4a7 written through the existing seed override before real title New Game.",
+    "Ordinary title Options/D-pad selects each3x3 style/palette combination; settings globals are read only.",
+    "Full inventory, keys/heart fragments, hearts/gilt/ammo and A/B/L assignments are explicit resource fixtures.",
+    "No actor, terrain, palette, framebuffer, UI cursor, input-global or animation clock is modified."
+  ],
+  "settings": [
+    {
+      "style": 0,
+      "palette": 0,
+      "inventory_sha256": "b950e3b28a2760a301f31cf0254e5a346170a83032cf95686987605a1e1f7dff",
+      "seed": 46247,
+      "selected_style": 0,
+      "selected_palette": 0
+    },
+    {
+      "style": 0,
+      "palette": 1,
+      "inventory_sha256": "b950e3b28a2760a301f31cf0254e5a346170a83032cf95686987605a1e1f7dff",
+      "seed": 46247,
+      "selected_style": 0,
+      "selected_palette": 1
+    },
+    {
+      "style": 0,
+      "palette": 2,
+      "inventory_sha256": "b950e3b28a2760a301f31cf0254e5a346170a83032cf95686987605a1e1f7dff",
+      "seed": 46247,
+      "selected_style": 0,
+      "selected_palette": 2
+    },
+    {
+      "style": 1,
+      "palette": 0,
+      "inventory_sha256": "b950e3b28a2760a301f31cf0254e5a346170a83032cf95686987605a1e1f7dff",
+      "seed": 46247,
+      "selected_style": 1,
+      "selected_palette": 0
+    },
+    {
+      "style": 1,
+      "palette": 1,
+      "inventory_sha256": "b950e3b28a2760a301f31cf0254e5a346170a83032cf95686987605a1e1f7dff",
+      "seed": 46247,
+      "selected_style": 1,
+      "selected_palette": 1
+    },
+    {
+      "style": 1,
+      "palette": 2,
+      "inventory_sha256": "b950e3b28a2760a301f31cf0254e5a346170a83032cf95686987605a1e1f7dff",
+      "seed": 46247,
+      "selected_style": 1,
+      "selected_palette": 2
+    },
+    {
+      "style": 2,
+      "palette": 0,
+      "inventory_sha256": "b950e3b28a2760a301f31cf0254e5a346170a83032cf95686987605a1e1f7dff",
+      "seed": 46247,
+      "selected_style": 2,
+      "selected_palette": 0
+    },
+    {
+      "style": 2,
+      "palette": 1,
+      "inventory_sha256": "b950e3b28a2760a301f31cf0254e5a346170a83032cf95686987605a1e1f7dff",
+      "seed": 46247,
+      "selected_style": 2,
+      "selected_palette": 1
+    },
+    {
+      "style": 2,
+      "palette": 2,
+      "inventory_sha256": "b950e3b28a2760a301f31cf0254e5a346170a83032cf95686987605a1e1f7dff",
+      "seed": 46247,
+      "selected_style": 2,
+      "selected_palette": 2
+    }
+  ],
+  "media": [
+    {
+      "file": "style0-palette0-options.png",
+      "bytes": 2802,
+      "sha256": "6d572e2bd32bb610e3f8a7f70b55b3098cd76f67df509829007db078fa1a3c6a",
+      "RGB_sha256": "337ec4e19b3733441fcc5c29cff650ae3eaf7c7f51c66316ac98a9003ad17538",
+      "size": [
+        240,
+        160
+      ],
+      "style": 0,
+      "palette": 0,
+      "gFrame": 188,
+      "game_state": 0,
+      "area": 0
+    },
+    {
+      "file": "style0-palette0-items.png",
+      "bytes": 6283,
+      "sha256": "0185123e4e84a44b5d1af39f24db7f90ba6590884acd86b1611291895ac47feb",
+      "RGB_sha256": "68f1d41114e468ddecab4c9a8b998c198dabb3865349043adfb2f6ed96ea076d",
+      "size": [
+        240,
+        160
+      ],
+      "style": 0,
+      "palette": 0,
+      "gFrame": 538,
+      "game_state": 4,
+      "area": 0,
+      "page": 0,
+      "cursor": 0,
+      "map_cell": 22,
+      "zoom": 0
+    },
+    {
+      "file": "style0-palette0-keys.png",
+      "bytes": 5945,
+      "sha256": "31438ae13aa569020e87771bd1920a993b028ab7e61458c1e94d106cf9c59bc9",
+      "RGB_sha256": "8176f7165aa3200346b43bae771173d93de81a99d79117b75a017b6047de8fdf",
+      "size": [
+        240,
+        160
+      ],
+      "style": 0,
+      "palette": 0,
+      "gFrame": 661,
+      "game_state": 4,
+      "area": 0,
+      "page": 1,
+      "cursor": 0,
+      "map_cell": 22,
+      "zoom": 0
+    },
+    {
+      "file": "style0-palette0-overview.png",
+      "bytes": 3677,
+      "sha256": "e8d22a0cc76162b6a1821ce39e6fc2ba36194120014b2b8ed13882ddc684dbb6",
+      "RGB_sha256": "a5f27ef0cf08a8d800e28da220a7dc497e6d12eca40f311ad99f1fad8d702005",
+      "size": [
+        240,
+        160
+      ],
+      "style": 0,
+      "palette": 0,
+      "gFrame": 784,
+      "game_state": 4,
+      "area": 0,
+      "page": 2,
+      "cursor": 0,
+      "map_cell": 22,
+      "zoom": 0
+    },
+    {
+      "file": "style0-palette0-zoom.png",
+      "bytes": 3132,
+      "sha256": "49cb500bbd97b3dddefa3307c68eec683bd91fad5ff71d672142d09b8c297abe",
+      "RGB_sha256": "40e84c82f838eb65d368eed93e7653c8296845d3979a15f7d584df8446734ec5",
+      "size": [
+        240,
+        160
+      ],
+      "style": 0,
+      "palette": 0,
+      "gFrame": 907,
+      "game_state": 4,
+      "area": 0,
+      "page": 2,
+      "cursor": 0,
+      "map_cell": 22,
+      "zoom": 1
+    },
+    {
+      "file": "style0-palette1-options.png",
+      "bytes": 2822,
+      "sha256": "16609bddcf54ae72171dd765bd9dc61a80d5d1c66622f3179602383067e06dcb",
+      "RGB_sha256": "5944154e9f5cc02cf40b3eb235d3f3be937235e1d509437772e92e2d0d6ddbcf",
+      "size": [
+        240,
+        160
+      ],
+      "style": 0,
+      "palette": 1,
+      "gFrame": 241,
+      "game_state": 0,
+      "area": 0
+    },
+    {
+      "file": "style0-palette1-items.png",
+      "bytes": 6262,
+      "sha256": "5456f2f9b14754cdf6ba59125a965c9d59be5789ba111f5fd59d7bd851b29762",
+      "RGB_sha256": "ac58c4305f9274b5e037c70a88d03a964e521f62e16751d059eab7656273ca21",
+      "size": [
+        240,
+        160
+      ],
+      "style": 0,
+      "palette": 1,
+      "gFrame": 591,
+      "game_state": 4,
+      "area": 0,
+      "page": 0,
+      "cursor": 0,
+      "map_cell": 22,
+      "zoom": 0
+    },
+    {
+      "file": "style0-palette1-keys.png",
+      "bytes": 5911,
+      "sha256": "2c699a4675c330d2dea568468cf513330e57685d31a3c92bf2ecb9c1ee86336a",
+      "RGB_sha256": "196145eda2f460532c8237e0aa91a1456053b529752556fa1181fc28dade2400",
+      "size": [
+        240,
+        160
+      ],
+      "style": 0,
+      "palette": 1,
+      "gFrame": 714,
+      "game_state": 4,
+      "area": 0,
+      "page": 1,
+      "cursor": 0,
+      "map_cell": 22,
+      "zoom": 0
+    },
+    {
+      "file": "style0-palette1-overview.png",
+      "bytes": 3648,
+      "sha256": "8ce571e49c9a16c67558937e351ea8fe5dee2910430f6b06b1fb5b113b438798",
+      "RGB_sha256": "c9876bb521df45c1aa7bf241bd9829815ea7ae3171419fd98a49bb40518c4c5c",
+      "size": [
+        240,
+        160
+      ],
+      "style": 0,
+      "palette": 1,
+      "gFrame": 837,
+      "game_state": 4,
+      "area": 0,
+      "page": 2,
+      "cursor": 0,
+      "map_cell": 22,
+      "zoom": 0
+    },
+    {
+      "file": "style0-palette1-zoom.png",
+      "bytes": 3115,
+      "sha256": "786416b8e6aeaae5013928953d8fe2cc953c011d258f3c77dbbd6be20373b2cf",
+      "RGB_sha256": "0f78abd548fabb5582f27d37047cdeeef9ace8895151094cd217810a2068a4a1",
+      "size": [
+        240,
+        160
+      ],
+      "style": 0,
+      "palette": 1,
+      "gFrame": 960,
+      "game_state": 4,
+      "area": 0,
+      "page": 2,
+      "cursor": 0,
+      "map_cell": 22,
+      "zoom": 1
+    },
+    {
+      "file": "style0-palette2-options.png",
+      "bytes": 2821,
+      "sha256": "e7ae8be72180293c719a765a75178b3aa08688e700f12571cffeff4ff0b79f0b",
+      "RGB_sha256": "997f3fd7da602689a0c96d84cd0bd9be8dac8befc28660756e229f5a19e6bf8d",
+      "size": [
+        240,
+        160
+      ],
+      "style": 0,
+      "palette": 2,
+      "gFrame": 294,
+      "game_state": 0,
+      "area": 0
+    },
+    {
+      "file": "style0-palette2-items.png",
+      "bytes": 6328,
+      "sha256": "5a49a50e78849d00a36d383fcef39129327377491a5b3d49e7b1ed2ab4f97374",
+      "RGB_sha256": "16b5813ad60f5a494f88865aca46b87bf1d0d56d6c355074fc34602341141b8d",
+      "size": [
+        240,
+        160
+      ],
+      "style": 0,
+      "palette": 2,
+      "gFrame": 644,
+      "game_state": 4,
+      "area": 0,
+      "page": 0,
+      "cursor": 0,
+      "map_cell": 22,
+      "zoom": 0
+    },
+    {
+      "file": "style0-palette2-keys.png",
+      "bytes": 6037,
+      "sha256": "cce4de3bf52f902b8e02e17370ea4d21b95541219c47d882d60369723b08fc0e",
+      "RGB_sha256": "653fd678a89939072ecb53f580e6a8711df62cf7188233e4dc58b837b9fe6e5c",
+      "size": [
+        240,
+        160
+      ],
+      "style": 0,
+      "palette": 2,
+      "gFrame": 767,
+      "game_state": 4,
+      "area": 0,
+      "page": 1,
+      "cursor": 0,
+      "map_cell": 22,
+      "zoom": 0
+    },
+    {
+      "file": "style0-palette2-overview.png",
+      "bytes": 3660,
+      "sha256": "ad6ac807e4f004807b0eaeb1b422e130a9c27f249f3e194d86aeea9e8667aa58",
+      "RGB_sha256": "ca72b92680839502df341781715f3a948f0b68f8accdbf1e15193e45719398d7",
+      "size": [
+        240,
+        160
+      ],
+      "style": 0,
+      "palette": 2,
+      "gFrame": 890,
+      "game_state": 4,
+      "area": 0,
+      "page": 2,
+      "cursor": 0,
+      "map_cell": 22,
+      "zoom": 0
+    },
+    {
+      "file": "style0-palette2-zoom.png",
+      "bytes": 3118,
+      "sha256": "94630490336e78d02274debb961e2f3152eea686a6820a93f06efd0c96d31ca2",
+      "RGB_sha256": "1db2b32f8ff2f92044b69bbc6607bc6523d396bb1729b1d39f84096e696da8f5",
+      "size": [
+        240,
+        160
+      ],
+      "style": 0,
+      "palette": 2,
+      "gFrame": 1013,
+      "game_state": 4,
+      "area": 0,
+      "page": 2,
+      "cursor": 0,
+      "map_cell": 22,
+      "zoom": 1
+    },
+    {
+      "file": "style1-palette0-options.png",
+      "bytes": 2818,
+      "sha256": "aed130b8fe3a35b66f7910af0be0339193f1917f528d1bbaf4ed8cd458dd4f39",
+      "RGB_sha256": "45cdcebef44193a832de885bc2ae92068241e0292ffb17ff2732eb0771b1a305",
+      "size": [
+        240,
+        160
+      ],
+      "style": 1,
+      "palette": 0,
+      "gFrame": 241,
+      "game_state": 0,
+      "area": 0
+    },
+    {
+      "file": "style1-palette0-items.png",
+      "bytes": 6238,
+      "sha256": "eed9bd32968de88bbe54cdb78d0a68c24f281cfbc407b45bd259b0b33b7fe6d9",
+      "RGB_sha256": "001b62a3d4785df82e208722531378bc5a7f986388e2bd7a760d427df1fa4622",
+      "size": [
+        240,
+        160
+      ],
+      "style": 1,
+      "palette": 0,
+      "gFrame": 591,
+      "game_state": 4,
+      "area": 0,
+      "page": 0,
+      "cursor": 0,
+      "map_cell": 22,
+      "zoom": 0
+    },
+    {
+      "file": "style1-palette0-keys.png",
+      "bytes": 5890,
+      "sha256": "1c6c8d716cb359d3a92264fb37f96024ecfd3c6f29a8138f033fc072e3a1433b",
+      "RGB_sha256": "0b93b1d64c6f77ce53c4ccac0c076ba489b6c97b451c7fbc2d72cb4a866e32a0",
+      "size": [
+        240,
+        160
+      ],
+      "style": 1,
+      "palette": 0,
+      "gFrame": 714,
+      "game_state": 4,
+      "area": 0,
+      "page": 1,
+      "cursor": 0,
+      "map_cell": 22,
+      "zoom": 0
+    },
+    {
+      "file": "style1-palette0-overview.png",
+      "bytes": 3785,
+      "sha256": "e5e9f70c21a1ff243adce3dd94c7e3f6a64a788ccad29a6abf44b0ccfa596a94",
+      "RGB_sha256": "a1eb3e3ad10abb725a616106244698c8c570178d3db42b3f3e00f2a9b93ff4bb",
+      "size": [
+        240,
+        160
+      ],
+      "style": 1,
+      "palette": 0,
+      "gFrame": 837,
+      "game_state": 4,
+      "area": 0,
+      "page": 2,
+      "cursor": 0,
+      "map_cell": 22,
+      "zoom": 0
+    },
+    {
+      "file": "style1-palette0-zoom.png",
+      "bytes": 3227,
+      "sha256": "dde65e5eae91cdb5fcbb8f720e9c0b007ea99330ddf8571fcf1a71b567e38202",
+      "RGB_sha256": "be2b52e01e3844d63c75d7811204e4d551e830699d04891095bab80675bc0198",
+      "size": [
+        240,
+        160
+      ],
+      "style": 1,
+      "palette": 0,
+      "gFrame": 960,
+      "game_state": 4,
+      "area": 0,
+      "page": 2,
+      "cursor": 0,
+      "map_cell": 22,
+      "zoom": 1
+    },
+    {
+      "file": "style1-palette1-options.png",
+      "bytes": 2825,
+      "sha256": "e119f792692fca27b47dded482cf8721d409b9ca578c595535a88aa90368685d",
+      "RGB_sha256": "27029ce9f86c36e7501aab7e76bd1d27b174d74b448ccac1baee0c24e7ff5bc4",
+      "size": [
+        240,
+        160
+      ],
+      "style": 1,
+      "palette": 1,
+      "gFrame": 294,
+      "game_state": 0,
+      "area": 0
+    },
+    {
+      "file": "style1-palette1-items.png",
+      "bytes": 6173,
+      "sha256": "8c0f619e948f9725874f8f97f63ac7814504e2bded1b2084b606feedfd65bfdd",
+      "RGB_sha256": "a5509cc1c2bd05ba8f3fb3debab4053656a55897eefd608cf73101f61d11cfca",
+      "size": [
+        240,
+        160
+      ],
+      "style": 1,
+      "palette": 1,
+      "gFrame": 644,
+      "game_state": 4,
+      "area": 0,
+      "page": 0,
+      "cursor": 0,
+      "map_cell": 22,
+      "zoom": 0
+    },
+    {
+      "file": "style1-palette1-keys.png",
+      "bytes": 5883,
+      "sha256": "84f83927e1a54008bf55f06ebf77cd1803f33aa1c1ed119d55a12a0a9da40208",
+      "RGB_sha256": "fc15867ca1c639fdc6892bc13190f8beab3076ce74749f313564d3126e3b685e",
+      "size": [
+        240,
+        160
+      ],
+      "style": 1,
+      "palette": 1,
+      "gFrame": 767,
+      "game_state": 4,
+      "area": 0,
+      "page": 1,
+      "cursor": 0,
+      "map_cell": 22,
+      "zoom": 0
+    },
+    {
+      "file": "style1-palette1-overview.png",
+      "bytes": 3768,
+      "sha256": "44412bff4c3bf99df835efb707a24ea6e1049e68ce80df0db707c6f175942cc8",
+      "RGB_sha256": "2324fdf07aca7c6f7156a629746bac40a7794b05a18b29bf37c5b1afaa82b0fe",
+      "size": [
+        240,
+        160
+      ],
+      "style": 1,
+      "palette": 1,
+      "gFrame": 890,
+      "game_state": 4,
+      "area": 0,
+      "page": 2,
+      "cursor": 0,
+      "map_cell": 22,
+      "zoom": 0
+    },
+    {
+      "file": "style1-palette1-zoom.png",
+      "bytes": 3215,
+      "sha256": "548371183a7657457ffbd2e0c804849174d98be19ee2bc5fae4370029d89b55f",
+      "RGB_sha256": "5b07db4355c2e19613c37f9de3f163172ba3e9ddd1c8e7c7c6a93b7362b49be2",
+      "size": [
+        240,
+        160
+      ],
+      "style": 1,
+      "palette": 1,
+      "gFrame": 1013,
+      "game_state": 4,
+      "area": 0,
+      "page": 2,
+      "cursor": 0,
+      "map_cell": 22,
+      "zoom": 1
+    },
+    {
+      "file": "style1-palette2-options.png",
+      "bytes": 2816,
+      "sha256": "72d173ffd95c4c48a981e9a027bba7d9ce5092cc1477749705a6cabca96d5f62",
+      "RGB_sha256": "c35dfa45b422273d22f05eff02f0c829424487113226bde6a008d459afbadc60",
+      "size": [
+        240,
+        160
+      ],
+      "style": 1,
+      "palette": 2,
+      "gFrame": 347,
+      "game_state": 0,
+      "area": 0
+    },
+    {
+      "file": "style1-palette2-items.png",
+      "bytes": 6149,
+      "sha256": "5af18a6c5b88ef30048dda64d8596f5b38282f265ffbbe7948544362d97da119",
+      "RGB_sha256": "dad8d85d62395dd9a2060977833a0d4ffe15309d5992c2e07241a92ba678b496",
+      "size": [
+        240,
+        160
+      ],
+      "style": 1,
+      "palette": 2,
+      "gFrame": 697,
+      "game_state": 4,
+      "area": 0,
+      "page": 0,
+      "cursor": 0,
+      "map_cell": 22,
+      "zoom": 0
+    },
+    {
+      "file": "style1-palette2-keys.png",
+      "bytes": 5842,
+      "sha256": "26064bd407e51fc4c8374d939746af8e17725af584fdbd4717ab7694ccaf5644",
+      "RGB_sha256": "75b1a93714797aa261bb0e1f08081fa53263c30643c4f05ea757137b5c745ea1",
+      "size": [
+        240,
+        160
+      ],
+      "style": 1,
+      "palette": 2,
+      "gFrame": 820,
+      "game_state": 4,
+      "area": 0,
+      "page": 1,
+      "cursor": 0,
+      "map_cell": 22,
+      "zoom": 0
+    },
+    {
+      "file": "style1-palette2-overview.png",
+      "bytes": 3818,
+      "sha256": "edd6958b078ef26e90729d58892676abcb71d9ff055c9ef440a7f06534929a81",
+      "RGB_sha256": "4e3e17a7a1586d68af4d3949ad32a86e33f42b442ebd4b2bc2a7ca9ba440263d",
+      "size": [
+        240,
+        160
+      ],
+      "style": 1,
+      "palette": 2,
+      "gFrame": 943,
+      "game_state": 4,
+      "area": 0,
+      "page": 2,
+      "cursor": 0,
+      "map_cell": 22,
+      "zoom": 0
+    },
+    {
+      "file": "style1-palette2-zoom.png",
+      "bytes": 3219,
+      "sha256": "81fc66ddce0931a39ffb3e6712c72d904b280cd79fe5c1174e86a000b9692eb2",
+      "RGB_sha256": "7f3185f736449bbecea389ecf70cc7dc063c932aa848ca8d6b4b0981a0add623",
+      "size": [
+        240,
+        160
+      ],
+      "style": 1,
+      "palette": 2,
+      "gFrame": 1066,
+      "game_state": 4,
+      "area": 0,
+      "page": 2,
+      "cursor": 0,
+      "map_cell": 22,
+      "zoom": 1
+    },
+    {
+      "file": "style2-palette0-options.png",
+      "bytes": 2804,
+      "sha256": "d66746cd4b8a4062809c35a054e25a51e2a340486127925f5465b9bb1a7de996",
+      "RGB_sha256": "90a281b3df2d028259fa6d63541f33cd7fb0decce9520f7ce475dd58094d1d1d",
+      "size": [
+        240,
+        160
+      ],
+      "style": 2,
+      "palette": 0,
+      "gFrame": 294,
+      "game_state": 0,
+      "area": 0
+    },
+    {
+      "file": "style2-palette0-items.png",
+      "bytes": 6400,
+      "sha256": "c05de647db5d63db452af2203b75a2be8c8e6f981b977f0664e225d984e4dd62",
+      "RGB_sha256": "1acba4d32e644a2bb41fc3fb520557c823c6834bfa79f9ba8ed3d434f52d6722",
+      "size": [
+        240,
+        160
+      ],
+      "style": 2,
+      "palette": 0,
+      "gFrame": 644,
+      "game_state": 4,
+      "area": 0,
+      "page": 0,
+      "cursor": 0,
+      "map_cell": 22,
+      "zoom": 0
+    },
+    {
+      "file": "style2-palette0-keys.png",
+      "bytes": 6035,
+      "sha256": "24f1a58d83c96d78fd5892cdf8ee97e78a2408657388ccbf0f67929a5ee60289",
+      "RGB_sha256": "07c07275cb78f24356e18ca8c3adaf21252516a3613f49708d44cc898f815354",
+      "size": [
+        240,
+        160
+      ],
+      "style": 2,
+      "palette": 0,
+      "gFrame": 767,
+      "game_state": 4,
+      "area": 0,
+      "page": 1,
+      "cursor": 0,
+      "map_cell": 22,
+      "zoom": 0
+    },
+    {
+      "file": "style2-palette0-overview.png",
+      "bytes": 3678,
+      "sha256": "9ec562922850b281e0ff60021aa55a6c2c07d136fda484f6aa307aa098e6ddd8",
+      "RGB_sha256": "674f9073201d75c70c05bec72931880ef8482df8a2b321aefbddd4dcd7c067d3",
+      "size": [
+        240,
+        160
+      ],
+      "style": 2,
+      "palette": 0,
+      "gFrame": 890,
+      "game_state": 4,
+      "area": 0,
+      "page": 2,
+      "cursor": 0,
+      "map_cell": 22,
+      "zoom": 0
+    },
+    {
+      "file": "style2-palette0-zoom.png",
+      "bytes": 3124,
+      "sha256": "e05ef613d4e9872de51a44b60a084e6a9c1f3af014c82534f0e00a5f12b85c08",
+      "RGB_sha256": "16933a5bf23349a201c414a6cb0871b9f383b80b6656714fac20f7b1f94d2e2b",
+      "size": [
+        240,
+        160
+      ],
+      "style": 2,
+      "palette": 0,
+      "gFrame": 1013,
+      "game_state": 4,
+      "area": 0,
+      "page": 2,
+      "cursor": 0,
+      "map_cell": 22,
+      "zoom": 1
+    },
+    {
+      "file": "style2-palette1-options.png",
+      "bytes": 2862,
+      "sha256": "1bb2f202ce485d8274623013e33965e96e30b0153558add1218dddbcbe6db013",
+      "RGB_sha256": "6843c9ae3a0da21ae2d9ede1de7c0a308a1a3d435ea8cc24cd9efe556efd38e8",
+      "size": [
+        240,
+        160
+      ],
+      "style": 2,
+      "palette": 1,
+      "gFrame": 347,
+      "game_state": 0,
+      "area": 0
+    },
+    {
+      "file": "style2-palette1-items.png",
+      "bytes": 6466,
+      "sha256": "8a5d3617801657bf43abac8b57d7ff62bf07909026ef3df5f3d8e0eb5db13dcd",
+      "RGB_sha256": "92da7bb90b8aaa05eb1981eb0eb9545292469b2634d6f0ebe1a298071be569bb",
+      "size": [
+        240,
+        160
+      ],
+      "style": 2,
+      "palette": 1,
+      "gFrame": 697,
+      "game_state": 4,
+      "area": 0,
+      "page": 0,
+      "cursor": 0,
+      "map_cell": 22,
+      "zoom": 0
+    },
+    {
+      "file": "style2-palette1-keys.png",
+      "bytes": 6157,
+      "sha256": "09b42dec1b59ce65c10ee907057b28c1200473742c2fb748ed31ba856efa434f",
+      "RGB_sha256": "35b8c934dae036da5eadef3357e121800fe936f208a64b38369c77cb51152b34",
+      "size": [
+        240,
+        160
+      ],
+      "style": 2,
+      "palette": 1,
+      "gFrame": 820,
+      "game_state": 4,
+      "area": 0,
+      "page": 1,
+      "cursor": 0,
+      "map_cell": 22,
+      "zoom": 0
+    },
+    {
+      "file": "style2-palette1-overview.png",
+      "bytes": 3677,
+      "sha256": "99de7c75a2c4662b05fd0c4a02aee41656c09dfd6bde76d9f850cdaa78825ab5",
+      "RGB_sha256": "958488426c1ad0b8fe17cab8c98c69e59e22bd9f476b7a213e78268224c79dcd",
+      "size": [
+        240,
+        160
+      ],
+      "style": 2,
+      "palette": 1,
+      "gFrame": 943,
+      "game_state": 4,
+      "area": 0,
+      "page": 2,
+      "cursor": 0,
+      "map_cell": 22,
+      "zoom": 0
+    },
+    {
+      "file": "style2-palette1-zoom.png",
+      "bytes": 3149,
+      "sha256": "d328f229c18e881b2b023c43b17a9b3f0ad2c43f223253ce7b3b57a37e784c37",
+      "RGB_sha256": "80f35e6f38bf0ebaf0f3412a8433e87a1a3b694af9efa2b2808b3d1a786ecd40",
+      "size": [
+        240,
+        160
+      ],
+      "style": 2,
+      "palette": 1,
+      "gFrame": 1066,
+      "game_state": 4,
+      "area": 0,
+      "page": 2,
+      "cursor": 0,
+      "map_cell": 22,
+      "zoom": 1
+    },
+    {
+      "file": "style2-palette2-options.png",
+      "bytes": 2825,
+      "sha256": "7c4b7681741f3859fb4fbff53b0aeb5bb001baac7f8f0681c807b73e239f23bc",
+      "RGB_sha256": "1f5f87cbc82fe8ab7fecc51017e42aeef930cd914325e806f8473011ecb76a11",
+      "size": [
+        240,
+        160
+      ],
+      "style": 2,
+      "palette": 2,
+      "gFrame": 400,
+      "game_state": 0,
+      "area": 0
+    },
+    {
+      "file": "style2-palette2-items.png",
+      "bytes": 6422,
+      "sha256": "a7926ec2a6432e4dae31cf2359de5b0f0572e6d51ed928ffd0f54f4c5bf78d3a",
+      "RGB_sha256": "b06327c0518bd8726ac5dba2d1f76b7cd08dd4167f22f0e17e62675a32f4ceda",
+      "size": [
+        240,
+        160
+      ],
+      "style": 2,
+      "palette": 2,
+      "gFrame": 750,
+      "game_state": 4,
+      "area": 0,
+      "page": 0,
+      "cursor": 0,
+      "map_cell": 22,
+      "zoom": 0
+    },
+    {
+      "file": "style2-palette2-keys.png",
+      "bytes": 6062,
+      "sha256": "5d511465415bdb88410b8c7fe079603e66cf565845873d65c80629c4325d2d5a",
+      "RGB_sha256": "9e3323ba6fd510805ce1bb6b3ef602059344fbdc4ac8e037442fad5549a429ae",
+      "size": [
+        240,
+        160
+      ],
+      "style": 2,
+      "palette": 2,
+      "gFrame": 873,
+      "game_state": 4,
+      "area": 0,
+      "page": 1,
+      "cursor": 0,
+      "map_cell": 22,
+      "zoom": 0
+    },
+    {
+      "file": "style2-palette2-overview.png",
+      "bytes": 3676,
+      "sha256": "12608b313d7a8d63d39f683570e764bfecb3bfbae35e821ace5b504211225a2d",
+      "RGB_sha256": "26b0e63b3415692e6b11791547113c95eb62904a41d71502d0e3911fe7d82c49",
+      "size": [
+        240,
+        160
+      ],
+      "style": 2,
+      "palette": 2,
+      "gFrame": 996,
+      "game_state": 4,
+      "area": 0,
+      "page": 2,
+      "cursor": 0,
+      "map_cell": 22,
+      "zoom": 0
+    },
+    {
+      "file": "style2-palette2-zoom.png",
+      "bytes": 3145,
+      "sha256": "00c7f01a780c9cde4bc166b4056e5e1a93cefa630240d63ea90524e6f166c505",
+      "RGB_sha256": "8bc36cee9b109a6ac4aeb784cda4f67de7385893f3cd57896e73f2930c3e71b1",
+      "size": [
+        240,
+        160
+      ],
+      "style": 2,
+      "palette": 2,
+      "gFrame": 1119,
+      "game_state": 4,
+      "area": 0,
+      "page": 2,
+      "cursor": 0,
+      "map_cell": 22,
+      "zoom": 1
+    }
+  ],
+  "checks": [
+    {
+      "name": "style0-palette0 native title",
+      "passed": true
+    },
+    {
+      "name": "style0-palette0 real Options opens",
+      "passed": true
+    },
+    {
+      "name": "style0-palette0 physical controls select appearance",
+      "passed": true
+    },
+    {
+      "name": "style0-palette0 Options closes to title",
+      "passed": true
+    },
+    {
+      "name": "style0-palette0 actual new game reaches Drain",
+      "passed": true
+    },
+    {
+      "name": "style0-palette0 opening dialogue dismissed normally",
+      "passed": true
+    },
+    {
+      "name": "style0-palette0 actual item menu opens",
+      "passed": true
+    },
+    {
+      "name": "style0-palette0-items actual page",
+      "passed": true,
+      "detail": {
+        "file": "style0-palette0-items.png",
+        "bytes": 6283,
+        "sha256": "0185123e4e84a44b5d1af39f24db7f90ba6590884acd86b1611291895ac47feb",
+        "RGB_sha256": "68f1d41114e468ddecab4c9a8b998c198dabb3865349043adfb2f6ed96ea076d",
+        "size": [
+          240,
+          160
+        ],
+        "style": 0,
+        "palette": 0,
+        "gFrame": 538,
+        "game_state": 4,
+        "area": 0,
+        "page": 0,
+        "cursor": 0,
+        "map_cell": 22,
+        "zoom": 0
+      }
+    },
+    {
+      "name": "style0-palette0-keys actual page",
+      "passed": true,
+      "detail": {
+        "file": "style0-palette0-keys.png",
+        "bytes": 5945,
+        "sha256": "31438ae13aa569020e87771bd1920a993b028ab7e61458c1e94d106cf9c59bc9",
+        "RGB_sha256": "8176f7165aa3200346b43bae771173d93de81a99d79117b75a017b6047de8fdf",
+        "size": [
+          240,
+          160
+        ],
+        "style": 0,
+        "palette": 0,
+        "gFrame": 661,
+        "game_state": 4,
+        "area": 0,
+        "page": 1,
+        "cursor": 0,
+        "map_cell": 22,
+        "zoom": 0
+      }
+    },
+    {
+      "name": "style0-palette0-overview actual page",
+      "passed": true,
+      "detail": {
+        "file": "style0-palette0-overview.png",
+        "bytes": 3677,
+        "sha256": "e8d22a0cc76162b6a1821ce39e6fc2ba36194120014b2b8ed13882ddc684dbb6",
+        "RGB_sha256": "a5f27ef0cf08a8d800e28da220a7dc497e6d12eca40f311ad99f1fad8d702005",
+        "size": [
+          240,
+          160
+        ],
+        "style": 0,
+        "palette": 0,
+        "gFrame": 784,
+        "game_state": 4,
+        "area": 0,
+        "page": 2,
+        "cursor": 0,
+        "map_cell": 22,
+        "zoom": 0
+      }
+    },
+    {
+      "name": "style0-palette0-zoom actual page",
+      "passed": true,
+      "detail": {
+        "file": "style0-palette0-zoom.png",
+        "bytes": 3132,
+        "sha256": "49cb500bbd97b3dddefa3307c68eec683bd91fad5ff71d672142d09b8c297abe",
+        "RGB_sha256": "40e84c82f838eb65d368eed93e7653c8296845d3979a15f7d584df8446734ec5",
+        "size": [
+          240,
+          160
+        ],
+        "style": 0,
+        "palette": 0,
+        "gFrame": 907,
+        "game_state": 4,
+        "area": 0,
+        "page": 2,
+        "cursor": 0,
+        "map_cell": 22,
+        "zoom": 1
+      }
+    },
+    {
+      "name": "style0-palette1 native title",
+      "passed": true
+    },
+    {
+      "name": "style0-palette1 real Options opens",
+      "passed": true
+    },
+    {
+      "name": "style0-palette1 physical controls select appearance",
+      "passed": true
+    },
+    {
+      "name": "style0-palette1 Options closes to title",
+      "passed": true
+    },
+    {
+      "name": "style0-palette1 actual new game reaches Drain",
+      "passed": true
+    },
+    {
+      "name": "style0-palette1 opening dialogue dismissed normally",
+      "passed": true
+    },
+    {
+      "name": "style0-palette1 actual item menu opens",
+      "passed": true
+    },
+    {
+      "name": "style0-palette1-items actual page",
+      "passed": true,
+      "detail": {
+        "file": "style0-palette1-items.png",
+        "bytes": 6262,
+        "sha256": "5456f2f9b14754cdf6ba59125a965c9d59be5789ba111f5fd59d7bd851b29762",
+        "RGB_sha256": "ac58c4305f9274b5e037c70a88d03a964e521f62e16751d059eab7656273ca21",
+        "size": [
+          240,
+          160
+        ],
+        "style": 0,
+        "palette": 1,
+        "gFrame": 591,
+        "game_state": 4,
+        "area": 0,
+        "page": 0,
+        "cursor": 0,
+        "map_cell": 22,
+        "zoom": 0
+      }
+    },
+    {
+      "name": "style0-palette1-keys actual page",
+      "passed": true,
+      "detail": {
+        "file": "style0-palette1-keys.png",
+        "bytes": 5911,
+        "sha256": "2c699a4675c330d2dea568468cf513330e57685d31a3c92bf2ecb9c1ee86336a",
+        "RGB_sha256": "196145eda2f460532c8237e0aa91a1456053b529752556fa1181fc28dade2400",
+        "size": [
+          240,
+          160
+        ],
+        "style": 0,
+        "palette": 1,
+        "gFrame": 714,
+        "game_state": 4,
+        "area": 0,
+        "page": 1,
+        "cursor": 0,
+        "map_cell": 22,
+        "zoom": 0
+      }
+    },
+    {
+      "name": "style0-palette1-overview actual page",
+      "passed": true,
+      "detail": {
+        "file": "style0-palette1-overview.png",
+        "bytes": 3648,
+        "sha256": "8ce571e49c9a16c67558937e351ea8fe5dee2910430f6b06b1fb5b113b438798",
+        "RGB_sha256": "c9876bb521df45c1aa7bf241bd9829815ea7ae3171419fd98a49bb40518c4c5c",
+        "size": [
+          240,
+          160
+        ],
+        "style": 0,
+        "palette": 1,
+        "gFrame": 837,
+        "game_state": 4,
+        "area": 0,
+        "page": 2,
+        "cursor": 0,
+        "map_cell": 22,
+        "zoom": 0
+      }
+    },
+    {
+      "name": "style0-palette1-zoom actual page",
+      "passed": true,
+      "detail": {
+        "file": "style0-palette1-zoom.png",
+        "bytes": 3115,
+        "sha256": "786416b8e6aeaae5013928953d8fe2cc953c011d258f3c77dbbd6be20373b2cf",
+        "RGB_sha256": "0f78abd548fabb5582f27d37047cdeeef9ace8895151094cd217810a2068a4a1",
+        "size": [
+          240,
+          160
+        ],
+        "style": 0,
+        "palette": 1,
+        "gFrame": 960,
+        "game_state": 4,
+        "area": 0,
+        "page": 2,
+        "cursor": 0,
+        "map_cell": 22,
+        "zoom": 1
+      }
+    },
+    {
+      "name": "style0-palette2 native title",
+      "passed": true
+    },
+    {
+      "name": "style0-palette2 real Options opens",
+      "passed": true
+    },
+    {
+      "name": "style0-palette2 physical controls select appearance",
+      "passed": true
+    },
+    {
+      "name": "style0-palette2 Options closes to title",
+      "passed": true
+    },
+    {
+      "name": "style0-palette2 actual new game reaches Drain",
+      "passed": true
+    },
+    {
+      "name": "style0-palette2 opening dialogue dismissed normally",
+      "passed": true
+    },
+    {
+      "name": "style0-palette2 actual item menu opens",
+      "passed": true
+    },
+    {
+      "name": "style0-palette2-items actual page",
+      "passed": true,
+      "detail": {
+        "file": "style0-palette2-items.png",
+        "bytes": 6328,
+        "sha256": "5a49a50e78849d00a36d383fcef39129327377491a5b3d49e7b1ed2ab4f97374",
+        "RGB_sha256": "16b5813ad60f5a494f88865aca46b87bf1d0d56d6c355074fc34602341141b8d",
+        "size": [
+          240,
+          160
+        ],
+        "style": 0,
+        "palette": 2,
+        "gFrame": 644,
+        "game_state": 4,
+        "area": 0,
+        "page": 0,
+        "cursor": 0,
+        "map_cell": 22,
+        "zoom": 0
+      }
+    },
+    {
+      "name": "style0-palette2-keys actual page",
+      "passed": true,
+      "detail": {
+        "file": "style0-palette2-keys.png",
+        "bytes": 6037,
+        "sha256": "cce4de3bf52f902b8e02e17370ea4d21b95541219c47d882d60369723b08fc0e",
+        "RGB_sha256": "653fd678a89939072ecb53f580e6a8711df62cf7188233e4dc58b837b9fe6e5c",
+        "size": [
+          240,
+          160
+        ],
+        "style": 0,
+        "palette": 2,
+        "gFrame": 767,
+        "game_state": 4,
+        "area": 0,
+        "page": 1,
+        "cursor": 0,
+        "map_cell": 22,
+        "zoom": 0
+      }
+    },
+    {
+      "name": "style0-palette2-overview actual page",
+      "passed": true,
+      "detail": {
+        "file": "style0-palette2-overview.png",
+        "bytes": 3660,
+        "sha256": "ad6ac807e4f004807b0eaeb1b422e130a9c27f249f3e194d86aeea9e8667aa58",
+        "RGB_sha256": "ca72b92680839502df341781715f3a948f0b68f8accdbf1e15193e45719398d7",
+        "size": [
+          240,
+          160
+        ],
+        "style": 0,
+        "palette": 2,
+        "gFrame": 890,
+        "game_state": 4,
+        "area": 0,
+        "page": 2,
+        "cursor": 0,
+        "map_cell": 22,
+        "zoom": 0
+      }
+    },
+    {
+      "name": "style0-palette2-zoom actual page",
+      "passed": true,
+      "detail": {
+        "file": "style0-palette2-zoom.png",
+        "bytes": 3118,
+        "sha256": "94630490336e78d02274debb961e2f3152eea686a6820a93f06efd0c96d31ca2",
+        "RGB_sha256": "1db2b32f8ff2f92044b69bbc6607bc6523d396bb1729b1d39f84096e696da8f5",
+        "size": [
+          240,
+          160
+        ],
+        "style": 0,
+        "palette": 2,
+        "gFrame": 1013,
+        "game_state": 4,
+        "area": 0,
+        "page": 2,
+        "cursor": 0,
+        "map_cell": 22,
+        "zoom": 1
+      }
+    },
+    {
+      "name": "style1-palette0 native title",
+      "passed": true
+    },
+    {
+      "name": "style1-palette0 real Options opens",
+      "passed": true
+    },
+    {
+      "name": "style1-palette0 physical controls select appearance",
+      "passed": true
+    },
+    {
+      "name": "style1-palette0 Options closes to title",
+      "passed": true
+    },
+    {
+      "name": "style1-palette0 actual new game reaches Drain",
+      "passed": true
+    },
+    {
+      "name": "style1-palette0 opening dialogue dismissed normally",
+      "passed": true
+    },
+    {
+      "name": "style1-palette0 actual item menu opens",
+      "passed": true
+    },
+    {
+      "name": "style1-palette0-items actual page",
+      "passed": true,
+      "detail": {
+        "file": "style1-palette0-items.png",
+        "bytes": 6238,
+        "sha256": "eed9bd32968de88bbe54cdb78d0a68c24f281cfbc407b45bd259b0b33b7fe6d9",
+        "RGB_sha256": "001b62a3d4785df82e208722531378bc5a7f986388e2bd7a760d427df1fa4622",
+        "size": [
+          240,
+          160
+        ],
+        "style": 1,
+        "palette": 0,
+        "gFrame": 591,
+        "game_state": 4,
+        "area": 0,
+        "page": 0,
+        "cursor": 0,
+        "map_cell": 22,
+        "zoom": 0
+      }
+    },
+    {
+      "name": "style1-palette0-keys actual page",
+      "passed": true,
+      "detail": {
+        "file": "style1-palette0-keys.png",
+        "bytes": 5890,
+        "sha256": "1c6c8d716cb359d3a92264fb37f96024ecfd3c6f29a8138f033fc072e3a1433b",
+        "RGB_sha256": "0b93b1d64c6f77ce53c4ccac0c076ba489b6c97b451c7fbc2d72cb4a866e32a0",
+        "size": [
+          240,
+          160
+        ],
+        "style": 1,
+        "palette": 0,
+        "gFrame": 714,
+        "game_state": 4,
+        "area": 0,
+        "page": 1,
+        "cursor": 0,
+        "map_cell": 22,
+        "zoom": 0
+      }
+    },
+    {
+      "name": "style1-palette0-overview actual page",
+      "passed": true,
+      "detail": {
+        "file": "style1-palette0-overview.png",
+        "bytes": 3785,
+        "sha256": "e5e9f70c21a1ff243adce3dd94c7e3f6a64a788ccad29a6abf44b0ccfa596a94",
+        "RGB_sha256": "a1eb3e3ad10abb725a616106244698c8c570178d3db42b3f3e00f2a9b93ff4bb",
+        "size": [
+          240,
+          160
+        ],
+        "style": 1,
+        "palette": 0,
+        "gFrame": 837,
+        "game_state": 4,
+        "area": 0,
+        "page": 2,
+        "cursor": 0,
+        "map_cell": 22,
+        "zoom": 0
+      }
+    },
+    {
+      "name": "style1-palette0-zoom actual page",
+      "passed": true,
+      "detail": {
+        "file": "style1-palette0-zoom.png",
+        "bytes": 3227,
+        "sha256": "dde65e5eae91cdb5fcbb8f720e9c0b007ea99330ddf8571fcf1a71b567e38202",
+        "RGB_sha256": "be2b52e01e3844d63c75d7811204e4d551e830699d04891095bab80675bc0198",
+        "size": [
+          240,
+          160
+        ],
+        "style": 1,
+        "palette": 0,
+        "gFrame": 960,
+        "game_state": 4,
+        "area": 0,
+        "page": 2,
+        "cursor": 0,
+        "map_cell": 22,
+        "zoom": 1
+      }
+    },
+    {
+      "name": "style1-palette1 native title",
+      "passed": true
+    },
+    {
+      "name": "style1-palette1 real Options opens",
+      "passed": true
+    },
+    {
+      "name": "style1-palette1 physical controls select appearance",
+      "passed": true
+    },
+    {
+      "name": "style1-palette1 Options closes to title",
+      "passed": true
+    },
+    {
+      "name": "style1-palette1 actual new game reaches Drain",
+      "passed": true
+    },
+    {
+      "name": "style1-palette1 opening dialogue dismissed normally",
+      "passed": true
+    },
+    {
+      "name": "style1-palette1 actual item menu opens",
+      "passed": true
+    },
+    {
+      "name": "style1-palette1-items actual page",
+      "passed": true,
+      "detail": {
+        "file": "style1-palette1-items.png",
+        "bytes": 6173,
+        "sha256": "8c0f619e948f9725874f8f97f63ac7814504e2bded1b2084b606feedfd65bfdd",
+        "RGB_sha256": "a5509cc1c2bd05ba8f3fb3debab4053656a55897eefd608cf73101f61d11cfca",
+        "size": [
+          240,
+          160
+        ],
+        "style": 1,
+        "palette": 1,
+        "gFrame": 644,
+        "game_state": 4,
+        "area": 0,
+        "page": 0,
+        "cursor": 0,
+        "map_cell": 22,
+        "zoom": 0
+      }
+    },
+    {
+      "name": "style1-palette1-keys actual page",
+      "passed": true,
+      "detail": {
+        "file": "style1-palette1-keys.png",
+        "bytes": 5883,
+        "sha256": "84f83927e1a54008bf55f06ebf77cd1803f33aa1c1ed119d55a12a0a9da40208",
+        "RGB_sha256": "fc15867ca1c639fdc6892bc13190f8beab3076ce74749f313564d3126e3b685e",
+        "size": [
+          240,
+          160
+        ],
+        "style": 1,
+        "palette": 1,
+        "gFrame": 767,
+        "game_state": 4,
+        "area": 0,
+        "page": 1,
+        "cursor": 0,
+        "map_cell": 22,
+        "zoom": 0
+      }
+    },
+    {
+      "name": "style1-palette1-overview actual page",
+      "passed": true,
+      "detail": {
+        "file": "style1-palette1-overview.png",
+        "bytes": 3768,
+        "sha256": "44412bff4c3bf99df835efb707a24ea6e1049e68ce80df0db707c6f175942cc8",
+        "RGB_sha256": "2324fdf07aca7c6f7156a629746bac40a7794b05a18b29bf37c5b1afaa82b0fe",
+        "size": [
+          240,
+          160
+        ],
+        "style": 1,
+        "palette": 1,
+        "gFrame": 890,
+        "game_state": 4,
+        "area": 0,
+        "page": 2,
+        "cursor": 0,
+        "map_cell": 22,
+        "zoom": 0
+      }
+    },
+    {
+      "name": "style1-palette1-zoom actual page",
+      "passed": true,
+      "detail": {
+        "file": "style1-palette1-zoom.png",
+        "bytes": 3215,
+        "sha256": "548371183a7657457ffbd2e0c804849174d98be19ee2bc5fae4370029d89b55f",
+        "RGB_sha256": "5b07db4355c2e19613c37f9de3f163172ba3e9ddd1c8e7c7c6a93b7362b49be2",
+        "size": [
+          240,
+          160
+        ],
+        "style": 1,
+        "palette": 1,
+        "gFrame": 1013,
+        "game_state": 4,
+        "area": 0,
+        "page": 2,
+        "cursor": 0,
+        "map_cell": 22,
+        "zoom": 1
+      }
+    },
+    {
+      "name": "style1-palette2 native title",
+      "passed": true
+    },
+    {
+      "name": "style1-palette2 real Options opens",
+      "passed": true
+    },
+    {
+      "name": "style1-palette2 physical controls select appearance",
+      "passed": true
+    },
+    {
+      "name": "style1-palette2 Options closes to title",
+      "passed": true
+    },
+    {
+      "name": "style1-palette2 actual new game reaches Drain",
+      "passed": true
+    },
+    {
+      "name": "style1-palette2 opening dialogue dismissed normally",
+      "passed": true
+    },
+    {
+      "name": "style1-palette2 actual item menu opens",
+      "passed": true
+    },
+    {
+      "name": "style1-palette2-items actual page",
+      "passed": true,
+      "detail": {
+        "file": "style1-palette2-items.png",
+        "bytes": 6149,
+        "sha256": "5af18a6c5b88ef30048dda64d8596f5b38282f265ffbbe7948544362d97da119",
+        "RGB_sha256": "dad8d85d62395dd9a2060977833a0d4ffe15309d5992c2e07241a92ba678b496",
+        "size": [
+          240,
+          160
+        ],
+        "style": 1,
+        "palette": 2,
+        "gFrame": 697,
+        "game_state": 4,
+        "area": 0,
+        "page": 0,
+        "cursor": 0,
+        "map_cell": 22,
+        "zoom": 0
+      }
+    },
+    {
+      "name": "style1-palette2-keys actual page",
+      "passed": true,
+      "detail": {
+        "file": "style1-palette2-keys.png",
+        "bytes": 5842,
+        "sha256": "26064bd407e51fc4c8374d939746af8e17725af584fdbd4717ab7694ccaf5644",
+        "RGB_sha256": "75b1a93714797aa261bb0e1f08081fa53263c30643c4f05ea757137b5c745ea1",
+        "size": [
+          240,
+          160
+        ],
+        "style": 1,
+        "palette": 2,
+        "gFrame": 820,
+        "game_state": 4,
+        "area": 0,
+        "page": 1,
+        "cursor": 0,
+        "map_cell": 22,
+        "zoom": 0
+      }
+    },
+    {
+      "name": "style1-palette2-overview actual page",
+      "passed": true,
+      "detail": {
+        "file": "style1-palette2-overview.png",
+        "bytes": 3818,
+        "sha256": "edd6958b078ef26e90729d58892676abcb71d9ff055c9ef440a7f06534929a81",
+        "RGB_sha256": "4e3e17a7a1586d68af4d3949ad32a86e33f42b442ebd4b2bc2a7ca9ba440263d",
+        "size": [
+          240,
+          160
+        ],
+        "style": 1,
+        "palette": 2,
+        "gFrame": 943,
+        "game_state": 4,
+        "area": 0,
+        "page": 2,
+        "cursor": 0,
+        "map_cell": 22,
+        "zoom": 0
+      }
+    },
+    {
+      "name": "style1-palette2-zoom actual page",
+      "passed": true,
+      "detail": {
+        "file": "style1-palette2-zoom.png",
+        "bytes": 3219,
+        "sha256": "81fc66ddce0931a39ffb3e6712c72d904b280cd79fe5c1174e86a000b9692eb2",
+        "RGB_sha256": "7f3185f736449bbecea389ecf70cc7dc063c932aa848ca8d6b4b0981a0add623",
+        "size": [
+          240,
+          160
+        ],
+        "style": 1,
+        "palette": 2,
+        "gFrame": 1066,
+        "game_state": 4,
+        "area": 0,
+        "page": 2,
+        "cursor": 0,
+        "map_cell": 22,
+        "zoom": 1
+      }
+    },
+    {
+      "name": "style2-palette0 native title",
+      "passed": true
+    },
+    {
+      "name": "style2-palette0 real Options opens",
+      "passed": true
+    },
+    {
+      "name": "style2-palette0 physical controls select appearance",
+      "passed": true
+    },
+    {
+      "name": "style2-palette0 Options closes to title",
+      "passed": true
+    },
+    {
+      "name": "style2-palette0 actual new game reaches Drain",
+      "passed": true
+    },
+    {
+      "name": "style2-palette0 opening dialogue dismissed normally",
+      "passed": true
+    },
+    {
+      "name": "style2-palette0 actual item menu opens",
+      "passed": true
+    },
+    {
+      "name": "style2-palette0-items actual page",
+      "passed": true,
+      "detail": {
+        "file": "style2-palette0-items.png",
+        "bytes": 6400,
+        "sha256": "c05de647db5d63db452af2203b75a2be8c8e6f981b977f0664e225d984e4dd62",
+        "RGB_sha256": "1acba4d32e644a2bb41fc3fb520557c823c6834bfa79f9ba8ed3d434f52d6722",
+        "size": [
+          240,
+          160
+        ],
+        "style": 2,
+        "palette": 0,
+        "gFrame": 644,
+        "game_state": 4,
+        "area": 0,
+        "page": 0,
+        "cursor": 0,
+        "map_cell": 22,
+        "zoom": 0
+      }
+    },
+    {
+      "name": "style2-palette0-keys actual page",
+      "passed": true,
+      "detail": {
+        "file": "style2-palette0-keys.png",
+        "bytes": 6035,
+        "sha256": "24f1a58d83c96d78fd5892cdf8ee97e78a2408657388ccbf0f67929a5ee60289",
+        "RGB_sha256": "07c07275cb78f24356e18ca8c3adaf21252516a3613f49708d44cc898f815354",
+        "size": [
+          240,
+          160
+        ],
+        "style": 2,
+        "palette": 0,
+        "gFrame": 767,
+        "game_state": 4,
+        "area": 0,
+        "page": 1,
+        "cursor": 0,
+        "map_cell": 22,
+        "zoom": 0
+      }
+    },
+    {
+      "name": "style2-palette0-overview actual page",
+      "passed": true,
+      "detail": {
+        "file": "style2-palette0-overview.png",
+        "bytes": 3678,
+        "sha256": "9ec562922850b281e0ff60021aa55a6c2c07d136fda484f6aa307aa098e6ddd8",
+        "RGB_sha256": "674f9073201d75c70c05bec72931880ef8482df8a2b321aefbddd4dcd7c067d3",
+        "size": [
+          240,
+          160
+        ],
+        "style": 2,
+        "palette": 0,
+        "gFrame": 890,
+        "game_state": 4,
+        "area": 0,
+        "page": 2,
+        "cursor": 0,
+        "map_cell": 22,
+        "zoom": 0
+      }
+    },
+    {
+      "name": "style2-palette0-zoom actual page",
+      "passed": true,
+      "detail": {
+        "file": "style2-palette0-zoom.png",
+        "bytes": 3124,
+        "sha256": "e05ef613d4e9872de51a44b60a084e6a9c1f3af014c82534f0e00a5f12b85c08",
+        "RGB_sha256": "16933a5bf23349a201c414a6cb0871b9f383b80b6656714fac20f7b1f94d2e2b",
+        "size": [
+          240,
+          160
+        ],
+        "style": 2,
+        "palette": 0,
+        "gFrame": 1013,
+        "game_state": 4,
+        "area": 0,
+        "page": 2,
+        "cursor": 0,
+        "map_cell": 22,
+        "zoom": 1
+      }
+    },
+    {
+      "name": "style2-palette1 native title",
+      "passed": true
+    },
+    {
+      "name": "style2-palette1 real Options opens",
+      "passed": true
+    },
+    {
+      "name": "style2-palette1 physical controls select appearance",
+      "passed": true
+    },
+    {
+      "name": "style2-palette1 Options closes to title",
+      "passed": true
+    },
+    {
+      "name": "style2-palette1 actual new game reaches Drain",
+      "passed": true
+    },
+    {
+      "name": "style2-palette1 opening dialogue dismissed normally",
+      "passed": true
+    },
+    {
+      "name": "style2-palette1 actual item menu opens",
+      "passed": true
+    },
+    {
+      "name": "style2-palette1-items actual page",
+      "passed": true,
+      "detail": {
+        "file": "style2-palette1-items.png",
+        "bytes": 6466,
+        "sha256": "8a5d3617801657bf43abac8b57d7ff62bf07909026ef3df5f3d8e0eb5db13dcd",
+        "RGB_sha256": "92da7bb90b8aaa05eb1981eb0eb9545292469b2634d6f0ebe1a298071be569bb",
+        "size": [
+          240,
+          160
+        ],
+        "style": 2,
+        "palette": 1,
+        "gFrame": 697,
+        "game_state": 4,
+        "area": 0,
+        "page": 0,
+        "cursor": 0,
+        "map_cell": 22,
+        "zoom": 0
+      }
+    },
+    {
+      "name": "style2-palette1-keys actual page",
+      "passed": true,
+      "detail": {
+        "file": "style2-palette1-keys.png",
+        "bytes": 6157,
+        "sha256": "09b42dec1b59ce65c10ee907057b28c1200473742c2fb748ed31ba856efa434f",
+        "RGB_sha256": "35b8c934dae036da5eadef3357e121800fe936f208a64b38369c77cb51152b34",
+        "size": [
+          240,
+          160
+        ],
+        "style": 2,
+        "palette": 1,
+        "gFrame": 820,
+        "game_state": 4,
+        "area": 0,
+        "page": 1,
+        "cursor": 0,
+        "map_cell": 22,
+        "zoom": 0
+      }
+    },
+    {
+      "name": "style2-palette1-overview actual page",
+      "passed": true,
+      "detail": {
+        "file": "style2-palette1-overview.png",
+        "bytes": 3677,
+        "sha256": "99de7c75a2c4662b05fd0c4a02aee41656c09dfd6bde76d9f850cdaa78825ab5",
+        "RGB_sha256": "958488426c1ad0b8fe17cab8c98c69e59e22bd9f476b7a213e78268224c79dcd",
+        "size": [
+          240,
+          160
+        ],
+        "style": 2,
+        "palette": 1,
+        "gFrame": 943,
+        "game_state": 4,
+        "area": 0,
+        "page": 2,
+        "cursor": 0,
+        "map_cell": 22,
+        "zoom": 0
+      }
+    },
+    {
+      "name": "style2-palette1-zoom actual page",
+      "passed": true,
+      "detail": {
+        "file": "style2-palette1-zoom.png",
+        "bytes": 3149,
+        "sha256": "d328f229c18e881b2b023c43b17a9b3f0ad2c43f223253ce7b3b57a37e784c37",
+        "RGB_sha256": "80f35e6f38bf0ebaf0f3412a8433e87a1a3b694af9efa2b2808b3d1a786ecd40",
+        "size": [
+          240,
+          160
+        ],
+        "style": 2,
+        "palette": 1,
+        "gFrame": 1066,
+        "game_state": 4,
+        "area": 0,
+        "page": 2,
+        "cursor": 0,
+        "map_cell": 22,
+        "zoom": 1
+      }
+    },
+    {
+      "name": "style2-palette2 native title",
+      "passed": true
+    },
+    {
+      "name": "style2-palette2 real Options opens",
+      "passed": true
+    },
+    {
+      "name": "style2-palette2 physical controls select appearance",
+      "passed": true
+    },
+    {
+      "name": "style2-palette2 Options closes to title",
+      "passed": true
+    },
+    {
+      "name": "style2-palette2 actual new game reaches Drain",
+      "passed": true
+    },
+    {
+      "name": "style2-palette2 opening dialogue dismissed normally",
+      "passed": true
+    },
+    {
+      "name": "style2-palette2 actual item menu opens",
+      "passed": true
+    },
+    {
+      "name": "style2-palette2-items actual page",
+      "passed": true,
+      "detail": {
+        "file": "style2-palette2-items.png",
+        "bytes": 6422,
+        "sha256": "a7926ec2a6432e4dae31cf2359de5b0f0572e6d51ed928ffd0f54f4c5bf78d3a",
+        "RGB_sha256": "b06327c0518bd8726ac5dba2d1f76b7cd08dd4167f22f0e17e62675a32f4ceda",
+        "size": [
+          240,
+          160
+        ],
+        "style": 2,
+        "palette": 2,
+        "gFrame": 750,
+        "game_state": 4,
+        "area": 0,
+        "page": 0,
+        "cursor": 0,
+        "map_cell": 22,
+        "zoom": 0
+      }
+    },
+    {
+      "name": "style2-palette2-keys actual page",
+      "passed": true,
+      "detail": {
+        "file": "style2-palette2-keys.png",
+        "bytes": 6062,
+        "sha256": "5d511465415bdb88410b8c7fe079603e66cf565845873d65c80629c4325d2d5a",
+        "RGB_sha256": "9e3323ba6fd510805ce1bb6b3ef602059344fbdc4ac8e037442fad5549a429ae",
+        "size": [
+          240,
+          160
+        ],
+        "style": 2,
+        "palette": 2,
+        "gFrame": 873,
+        "game_state": 4,
+        "area": 0,
+        "page": 1,
+        "cursor": 0,
+        "map_cell": 22,
+        "zoom": 0
+      }
+    },
+    {
+      "name": "style2-palette2-overview actual page",
+      "passed": true,
+      "detail": {
+        "file": "style2-palette2-overview.png",
+        "bytes": 3676,
+        "sha256": "12608b313d7a8d63d39f683570e764bfecb3bfbae35e821ace5b504211225a2d",
+        "RGB_sha256": "26b0e63b3415692e6b11791547113c95eb62904a41d71502d0e3911fe7d82c49",
+        "size": [
+          240,
+          160
+        ],
+        "style": 2,
+        "palette": 2,
+        "gFrame": 996,
+        "game_state": 4,
+        "area": 0,
+        "page": 2,
+        "cursor": 0,
+        "map_cell": 22,
+        "zoom": 0
+      }
+    },
+    {
+      "name": "style2-palette2-zoom actual page",
+      "passed": true,
+      "detail": {
+        "file": "style2-palette2-zoom.png",
+        "bytes": 3145,
+        "sha256": "00c7f01a780c9cde4bc166b4056e5e1a93cefa630240d63ea90524e6f166c505",
+        "RGB_sha256": "8bc36cee9b109a6ac4aeb784cda4f67de7385893f3cd57896e73f2930c3e71b1",
+        "size": [
+          240,
+          160
+        ],
+        "style": 2,
+        "palette": 2,
+        "gFrame": 1119,
+        "game_state": 4,
+        "area": 0,
+        "page": 2,
+        "cursor": 0,
+        "map_cell": 22,
+        "zoom": 1
+      }
+    }
+  ],
+  "passed": 99,
+  "total": 99,
+  "complete": true,
+  "error": null
+}

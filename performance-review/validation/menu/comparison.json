@@ -1,0 +1,372 @@
+{
+  "method": "Real mGBA menu equivalence through all nine title appearance settings.\n\nEvery skin/palette pair is selected using the real title Options and D-pad\ncontrols. A seeded new game reaches the Drain normally. An explicit full\ninventory fixture then exercises item/key/region/zoom pages through ordinary\nStart/R/A inputs. Native screenshots are untouched240x160 framebuffers; no\npalette, frame clock, menu cursor, input-global or framebuffer is injected.",
+  "before_rom_sha256": "1bd913bc5bf1ad81e9c1dcc7e07ebc38eac855d390a5bb613257f8fbfe128e59",
+  "after_rom_sha256": "59f1e54cbbbac7e8f31b4e0c4623db72fe1f2a2190c7ceee5cc6fd559c6be898",
+  "before_source": "11b872e9897320398fa02344cef1418733c04e9a",
+  "after_source": "c09e29092e0d2ba6107659f975ed0c3ec41c3936",
+  "tool_sha256": "70d2bc915989ab8ea072c9595431938ece39ec66422e4c562838ba73979a5b69",
+  "checks": [
+    {
+      "file": "style0-palette0-options.png",
+      "passed": true,
+      "before_RGB_sha256": "337ec4e19b3733441fcc5c29cff650ae3eaf7c7f51c66316ac98a9003ad17538",
+      "after_RGB_sha256": "337ec4e19b3733441fcc5c29cff650ae3eaf7c7f51c66316ac98a9003ad17538",
+      "native_pixels_equal": true,
+      "menu_state_equal": true
+    },
+    {
+      "file": "style0-palette0-items.png",
+      "passed": true,
+      "before_RGB_sha256": "68f1d41114e468ddecab4c9a8b998c198dabb3865349043adfb2f6ed96ea076d",
+      "after_RGB_sha256": "68f1d41114e468ddecab4c9a8b998c198dabb3865349043adfb2f6ed96ea076d",
+      "native_pixels_equal": true,
+      "menu_state_equal": true
+    },
+    {
+      "file": "style0-palette0-keys.png",
+      "passed": true,
+      "before_RGB_sha256": "8176f7165aa3200346b43bae771173d93de81a99d79117b75a017b6047de8fdf",
+      "after_RGB_sha256": "8176f7165aa3200346b43bae771173d93de81a99d79117b75a017b6047de8fdf",
+      "native_pixels_equal": true,
+      "menu_state_equal": true
+    },
+    {
+      "file": "style0-palette0-overview.png",
+      "passed": true,
+      "before_RGB_sha256": "a5f27ef0cf08a8d800e28da220a7dc497e6d12eca40f311ad99f1fad8d702005",
+      "after_RGB_sha256": "a5f27ef0cf08a8d800e28da220a7dc497e6d12eca40f311ad99f1fad8d702005",
+      "native_pixels_equal": true,
+      "menu_state_equal": true
+    },
+    {
+      "file": "style0-palette0-zoom.png",
+      "passed": true,
+      "before_RGB_sha256": "40e84c82f838eb65d368eed93e7653c8296845d3979a15f7d584df8446734ec5",
+      "after_RGB_sha256": "40e84c82f838eb65d368eed93e7653c8296845d3979a15f7d584df8446734ec5",
+      "native_pixels_equal": true,
+      "menu_state_equal": true
+    },
+    {
+      "file": "style0-palette1-options.png",
+      "passed": true,
+      "before_RGB_sha256": "5944154e9f5cc02cf40b3eb235d3f3be937235e1d509437772e92e2d0d6ddbcf",
+      "after_RGB_sha256": "5944154e9f5cc02cf40b3eb235d3f3be937235e1d509437772e92e2d0d6ddbcf",
+      "native_pixels_equal": true,
+      "menu_state_equal": true
+    },
+    {
+      "file": "style0-palette1-items.png",
+      "passed": true,
+      "before_RGB_sha256": "ac58c4305f9274b5e037c70a88d03a964e521f62e16751d059eab7656273ca21",
+      "after_RGB_sha256": "ac58c4305f9274b5e037c70a88d03a964e521f62e16751d059eab7656273ca21",
+      "native_pixels_equal": true,
+      "menu_state_equal": true
+    },
+    {
+      "file": "style0-palette1-keys.png",
+      "passed": true,
+      "before_RGB_sha256": "196145eda2f460532c8237e0aa91a1456053b529752556fa1181fc28dade2400",
+      "after_RGB_sha256": "196145eda2f460532c8237e0aa91a1456053b529752556fa1181fc28dade2400",
+      "native_pixels_equal": true,
+      "menu_state_equal": true
+    },
+    {
+      "file": "style0-palette1-overview.png",
+      "passed": true,
+      "before_RGB_sha256": "c9876bb521df45c1aa7bf241bd9829815ea7ae3171419fd98a49bb40518c4c5c",
+      "after_RGB_sha256": "c9876bb521df45c1aa7bf241bd9829815ea7ae3171419fd98a49bb40518c4c5c",
+      "native_pixels_equal": true,
+      "menu_state_equal": true
+    },
+    {
+      "file": "style0-palette1-zoom.png",
+      "passed": true,
+      "before_RGB_sha256": "0f78abd548fabb5582f27d37047cdeeef9ace8895151094cd217810a2068a4a1",
+      "after_RGB_sha256": "0f78abd548fabb5582f27d37047cdeeef9ace8895151094cd217810a2068a4a1",
+      "native_pixels_equal": true,
+      "menu_state_equal": true
+    },
+    {
+      "file": "style0-palette2-options.png",
+      "passed": true,
+      "before_RGB_sha256": "997f3fd7da602689a0c96d84cd0bd9be8dac8befc28660756e229f5a19e6bf8d",
+      "after_RGB_sha256": "997f3fd7da602689a0c96d84cd0bd9be8dac8befc28660756e229f5a19e6bf8d",
+      "native_pixels_equal": true,
+      "menu_state_equal": true
+    },
+    {
+      "file": "style0-palette2-items.png",
+      "passed": true,
+      "before_RGB_sha256": "16b5813ad60f5a494f88865aca46b87bf1d0d56d6c355074fc34602341141b8d",
+      "after_RGB_sha256": "16b5813ad60f5a494f88865aca46b87bf1d0d56d6c355074fc34602341141b8d",
+      "native_pixels_equal": true,
+      "menu_state_equal": true
+    },
+    {
+      "file": "style0-palette2-keys.png",
+      "passed": true,
+      "before_RGB_sha256": "653fd678a89939072ecb53f580e6a8711df62cf7188233e4dc58b837b9fe6e5c",
+      "after_RGB_sha256": "653fd678a89939072ecb53f580e6a8711df62cf7188233e4dc58b837b9fe6e5c",
+      "native_pixels_equal": true,
+      "menu_state_equal": true
+    },
+    {
+      "file": "style0-palette2-overview.png",
+      "passed": true,
+      "before_RGB_sha256": "ca72b92680839502df341781715f3a948f0b68f8accdbf1e15193e45719398d7",
+      "after_RGB_sha256": "ca72b92680839502df341781715f3a948f0b68f8accdbf1e15193e45719398d7",
+      "native_pixels_equal": true,
+      "menu_state_equal": true
+    },
+    {
+      "file": "style0-palette2-zoom.png",
+      "passed": true,
+      "before_RGB_sha256": "1db2b32f8ff2f92044b69bbc6607bc6523d396bb1729b1d39f84096e696da8f5",
+      "after_RGB_sha256": "1db2b32f8ff2f92044b69bbc6607bc6523d396bb1729b1d39f84096e696da8f5",
+      "native_pixels_equal": true,
+      "menu_state_equal": true
+    },
+    {
+      "file": "style1-palette0-options.png",
+      "passed": true,
+      "before_RGB_sha256": "45cdcebef44193a832de885bc2ae92068241e0292ffb17ff2732eb0771b1a305",
+      "after_RGB_sha256": "45cdcebef44193a832de885bc2ae92068241e0292ffb17ff2732eb0771b1a305",
+      "native_pixels_equal": true,
+      "menu_state_equal": true
+    },
+    {
+      "file": "style1-palette0-items.png",
+      "passed": true,
+      "before_RGB_sha256": "001b62a3d4785df82e208722531378bc5a7f986388e2bd7a760d427df1fa4622",
+      "after_RGB_sha256": "001b62a3d4785df82e208722531378bc5a7f986388e2bd7a760d427df1fa4622",
+      "native_pixels_equal": true,
+      "menu_state_equal": true
+    },
+    {
+      "file": "style1-palette0-keys.png",
+      "passed": true,
+      "before_RGB_sha256": "0b93b1d64c6f77ce53c4ccac0c076ba489b6c97b451c7fbc2d72cb4a866e32a0",
+      "after_RGB_sha256": "0b93b1d64c6f77ce53c4ccac0c076ba489b6c97b451c7fbc2d72cb4a866e32a0",
+      "native_pixels_equal": true,
+      "menu_state_equal": true
+    },
+    {
+      "file": "style1-palette0-overview.png",
+      "passed": true,
+      "before_RGB_sha256": "a1eb3e3ad10abb725a616106244698c8c570178d3db42b3f3e00f2a9b93ff4bb",
+      "after_RGB_sha256": "a1eb3e3ad10abb725a616106244698c8c570178d3db42b3f3e00f2a9b93ff4bb",
+      "native_pixels_equal": true,
+      "menu_state_equal": true
+    },
+    {
+      "file": "style1-palette0-zoom.png",
+      "passed": true,
+      "before_RGB_sha256": "be2b52e01e3844d63c75d7811204e4d551e830699d04891095bab80675bc0198",
+      "after_RGB_sha256": "be2b52e01e3844d63c75d7811204e4d551e830699d04891095bab80675bc0198",
+      "native_pixels_equal": true,
+      "menu_state_equal": true
+    },
+    {
+      "file": "style1-palette1-options.png",
+      "passed": true,
+      "before_RGB_sha256": "27029ce9f86c36e7501aab7e76bd1d27b174d74b448ccac1baee0c24e7ff5bc4",
+      "after_RGB_sha256": "27029ce9f86c36e7501aab7e76bd1d27b174d74b448ccac1baee0c24e7ff5bc4",
+      "native_pixels_equal": true,
+      "menu_state_equal": true
+    },
+    {
+      "file": "style1-palette1-items.png",
+      "passed": true,
+      "before_RGB_sha256": "a5509cc1c2bd05ba8f3fb3debab4053656a55897eefd608cf73101f61d11cfca",
+      "after_RGB_sha256": "a5509cc1c2bd05ba8f3fb3debab4053656a55897eefd608cf73101f61d11cfca",
+      "native_pixels_equal": true,
+      "menu_state_equal": true
+    },
+    {
+      "file": "style1-palette1-keys.png",
+      "passed": true,
+      "before_RGB_sha256": "fc15867ca1c639fdc6892bc13190f8beab3076ce74749f313564d3126e3b685e",
+      "after_RGB_sha256": "fc15867ca1c639fdc6892bc13190f8beab3076ce74749f313564d3126e3b685e",
+      "native_pixels_equal": true,
+      "menu_state_equal": true
+    },
+    {
+      "file": "style1-palette1-overview.png",
+      "passed": true,
+      "before_RGB_sha256": "2324fdf07aca7c6f7156a629746bac40a7794b05a18b29bf37c5b1afaa82b0fe",
+      "after_RGB_sha256": "2324fdf07aca7c6f7156a629746bac40a7794b05a18b29bf37c5b1afaa82b0fe",
+      "native_pixels_equal": true,
+      "menu_state_equal": true
+    },
+    {
+      "file": "style1-palette1-zoom.png",
+      "passed": true,
+      "before_RGB_sha256": "5b07db4355c2e19613c37f9de3f163172ba3e9ddd1c8e7c7c6a93b7362b49be2",
+      "after_RGB_sha256": "5b07db4355c2e19613c37f9de3f163172ba3e9ddd1c8e7c7c6a93b7362b49be2",
+      "native_pixels_equal": true,
+      "menu_state_equal": true
+    },
+    {
+      "file": "style1-palette2-options.png",
+      "passed": true,
+      "before_RGB_sha256": "c35dfa45b422273d22f05eff02f0c829424487113226bde6a008d459afbadc60",
+      "after_RGB_sha256": "c35dfa45b422273d22f05eff02f0c829424487113226bde6a008d459afbadc60",
+      "native_pixels_equal": true,
+      "menu_state_equal": true
+    },
+    {
+      "file": "style1-palette2-items.png",
+      "passed": true,
+      "before_RGB_sha256": "dad8d85d62395dd9a2060977833a0d4ffe15309d5992c2e07241a92ba678b496",
+      "after_RGB_sha256": "dad8d85d62395dd9a2060977833a0d4ffe15309d5992c2e07241a92ba678b496",
+      "native_pixels_equal": true,
+      "menu_state_equal": true
+    },
+    {
+      "file": "style1-palette2-keys.png",
+      "passed": true,
+      "before_RGB_sha256": "75b1a93714797aa261bb0e1f08081fa53263c30643c4f05ea757137b5c745ea1",
+      "after_RGB_sha256": "75b1a93714797aa261bb0e1f08081fa53263c30643c4f05ea757137b5c745ea1",
+      "native_pixels_equal": true,
+      "menu_state_equal": true
+    },
+    {
+      "file": "style1-palette2-overview.png",
+      "passed": true,
+      "before_RGB_sha256": "4e3e17a7a1586d68af4d3949ad32a86e33f42b442ebd4b2bc2a7ca9ba440263d",
+      "after_RGB_sha256": "4e3e17a7a1586d68af4d3949ad32a86e33f42b442ebd4b2bc2a7ca9ba440263d",
+      "native_pixels_equal": true,
+      "menu_state_equal": true
+    },
+    {
+      "file": "style1-palette2-zoom.png",
+      "passed": true,
+      "before_RGB_sha256": "7f3185f736449bbecea389ecf70cc7dc063c932aa848ca8d6b4b0981a0add623",
+      "after_RGB_sha256": "7f3185f736449bbecea389ecf70cc7dc063c932aa848ca8d6b4b0981a0add623",
+      "native_pixels_equal": true,
+      "menu_state_equal": true
+    },
+    {
+      "file": "style2-palette0-options.png",
+      "passed": true,
+      "before_RGB_sha256": "90a281b3df2d028259fa6d63541f33cd7fb0decce9520f7ce475dd58094d1d1d",
+      "after_RGB_sha256": "90a281b3df2d028259fa6d63541f33cd7fb0decce9520f7ce475dd58094d1d1d",
+      "native_pixels_equal": true,
+      "menu_state_equal": true
+    },
+    {
+      "file": "style2-palette0-items.png",
+      "passed": true,
+      "before_RGB_sha256": "1acba4d32e644a2bb41fc3fb520557c823c6834bfa79f9ba8ed3d434f52d6722",
+      "after_RGB_sha256": "1acba4d32e644a2bb41fc3fb520557c823c6834bfa79f9ba8ed3d434f52d6722",
+      "native_pixels_equal": true,
+      "menu_state_equal": true
+    },
+    {
+      "file": "style2-palette0-keys.png",
+      "passed": true,
+      "before_RGB_sha256": "07c07275cb78f24356e18ca8c3adaf21252516a3613f49708d44cc898f815354",
+      "after_RGB_sha256": "07c07275cb78f24356e18ca8c3adaf21252516a3613f49708d44cc898f815354",
+      "native_pixels_equal": true,
+      "menu_state_equal": true
+    },
+    {
+      "file": "style2-palette0-overview.png",
+      "passed": true,
+      "before_RGB_sha256": "674f9073201d75c70c05bec72931880ef8482df8a2b321aefbddd4dcd7c067d3",
+      "after_RGB_sha256": "674f9073201d75c70c05bec72931880ef8482df8a2b321aefbddd4dcd7c067d3",
+      "native_pixels_equal": true,
+      "menu_state_equal": true
+    },
+    {
+      "file": "style2-palette0-zoom.png",
+      "passed": true,
+      "before_RGB_sha256": "16933a5bf23349a201c414a6cb0871b9f383b80b6656714fac20f7b1f94d2e2b",
+      "after_RGB_sha256": "16933a5bf23349a201c414a6cb0871b9f383b80b6656714fac20f7b1f94d2e2b",
+      "native_pixels_equal": true,
+      "menu_state_equal": true
+    },
+    {
+      "file": "style2-palette1-options.png",
+      "passed": true,
+      "before_RGB_sha256": "6843c9ae3a0da21ae2d9ede1de7c0a308a1a3d435ea8cc24cd9efe556efd38e8",
+      "after_RGB_sha256": "6843c9ae3a0da21ae2d9ede1de7c0a308a1a3d435ea8cc24cd9efe556efd38e8",
+      "native_pixels_equal": true,
+      "menu_state_equal": true
+    },
+    {
+      "file": "style2-palette1-items.png",
+      "passed": true,
+      "before_RGB_sha256": "92da7bb90b8aaa05eb1981eb0eb9545292469b2634d6f0ebe1a298071be569bb",
+      "after_RGB_sha256": "92da7bb90b8aaa05eb1981eb0eb9545292469b2634d6f0ebe1a298071be569bb",
+      "native_pixels_equal": true,
+      "menu_state_equal": true
+    },
+    {
+      "file": "style2-palette1-keys.png",
+      "passed": true,
+      "before_RGB_sha256": "35b8c934dae036da5eadef3357e121800fe936f208a64b38369c77cb51152b34",
+      "after_RGB_sha256": "35b8c934dae036da5eadef3357e121800fe936f208a64b38369c77cb51152b34",
+      "native_pixels_equal": true,
+      "menu_state_equal": true
+    },
+    {
+      "file": "style2-palette1-overview.png",
+      "passed": true,
+      "before_RGB_sha256": "958488426c1ad0b8fe17cab8c98c69e59e22bd9f476b7a213e78268224c79dcd",
+      "after_RGB_sha256": "958488426c1ad0b8fe17cab8c98c69e59e22bd9f476b7a213e78268224c79dcd",
+      "native_pixels_equal": true,
+      "menu_state_equal": true
+    },
+    {
+      "file": "style2-palette1-zoom.png",
+      "passed": true,
+      "before_RGB_sha256": "80f35e6f38bf0ebaf0f3412a8433e87a1a3b694af9efa2b2808b3d1a786ecd40",
+      "after_RGB_sha256": "80f35e6f38bf0ebaf0f3412a8433e87a1a3b694af9efa2b2808b3d1a786ecd40",
+      "native_pixels_equal": true,
+      "menu_state_equal": true
+    },
+    {
+      "file": "style2-palette2-options.png",
+      "passed": true,
+      "before_RGB_sha256": "1f5f87cbc82fe8ab7fecc51017e42aeef930cd914325e806f8473011ecb76a11",
+      "after_RGB_sha256": "1f5f87cbc82fe8ab7fecc51017e42aeef930cd914325e806f8473011ecb76a11",
+      "native_pixels_equal": true,
+      "menu_state_equal": true
+    },
+    {
+      "file": "style2-palette2-items.png",
+      "passed": true,
+      "before_RGB_sha256": "b06327c0518bd8726ac5dba2d1f76b7cd08dd4167f22f0e17e62675a32f4ceda",
+      "after_RGB_sha256": "b06327c0518bd8726ac5dba2d1f76b7cd08dd4167f22f0e17e62675a32f4ceda",
+      "native_pixels_equal": true,
+      "menu_state_equal": true
+    },
+    {
+      "file": "style2-palette2-keys.png",
+      "passed": true,
+      "before_RGB_sha256": "9e3323ba6fd510805ce1bb6b3ef602059344fbdc4ac8e037442fad5549a429ae",
+      "after_RGB_sha256": "9e3323ba6fd510805ce1bb6b3ef602059344fbdc4ac8e037442fad5549a429ae",
+      "native_pixels_equal": true,
+      "menu_state_equal": true
+    },
+    {
+      "file": "style2-palette2-overview.png",
+      "passed": true,
+      "before_RGB_sha256": "26b0e63b3415692e6b11791547113c95eb62904a41d71502d0e3911fe7d82c49",
+      "after_RGB_sha256": "26b0e63b3415692e6b11791547113c95eb62904a41d71502d0e3911fe7d82c49",
+      "native_pixels_equal": true,
+      "menu_state_equal": true
+    },
+    {
+      "file": "style2-palette2-zoom.png",
+      "passed": true,
+      "before_RGB_sha256": "8bc36cee9b109a6ac4aeb784cda4f67de7385893f3cd57896e73f2930c3e71b1",
+      "after_RGB_sha256": "8bc36cee9b109a6ac4aeb784cda4f67de7385893f3cd57896e73f2930c3e71b1",
+      "native_pixels_equal": true,
+      "menu_state_equal": true
+    }
+  ],
+  "passed": 45,
+  "total": 45
+}

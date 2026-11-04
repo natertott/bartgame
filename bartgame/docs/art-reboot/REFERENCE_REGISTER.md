@@ -318,3 +318,9 @@ It uses actual mGBA timing, source profiling and differential/native render
 checks; no new visual reference, commercial-game measurement or art revision
 is claimed. Existing art and design rules remain unchanged. See the direction
 log and the forthcoming measured performance review for final qualification.
+
+Final source `c09e2909` is qualified by the
+[performance review](../../../performance-review/README.md). The updated
+[technical record](../performance/README.md) separates actual production
+throughput, diagnostic timer profiles, exact algorithm/native comparisons
+and finite test coverage. Artwork and visual references remain unchanged.

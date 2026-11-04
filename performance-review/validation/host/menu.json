@@ -1,0 +1,16 @@
+{
+  "method": "Exact native map/kit output tests for the small cold-menu optimizations.\n\nCompile the actual old/new BG-map prefixes and kit-cache C functions. Compare\nall1024 map entries, every ordered write, all four native kit flips, opacity\nmasks and glyph bit masks for the three linked frame styles. Palette roles\nare tested across all16 banks; cache warm/cold behavior is retained. The real\nnine style/color menu-frame comparison is a separate mGBA test.",
+  "before_source": "11b872e9897320398fa02344cef1418733c04e9a",
+  "after_source": "c09e29092e0d2ba6107659f975ed0c3ec41c3936",
+  "tool_sha256": "4bad51428b9a927e09e73bda20c70cd84c23e773ccfccb534421383b0b3538b1",
+  "before_menu_sha256": "46c2a6003ac0a8eadb93962f8f4f84bec0401d71105908e1ec7d0709327d7e9c",
+  "after_menu_sha256": "7d97e69f4e9b4a2c47a8d3513d8352bdae9a1504a6820221f8e02707ec0934a2",
+  "native_rom_sha256": "1bd913bc5bf1ad81e9c1dcc7e07ebc38eac855d390a5bb613257f8fbfe128e59",
+  "passed": true,
+  "map_cases": 16,
+  "ordered_map_writes_compared": 25984,
+  "native_kit_cases": 6,
+  "native_frame_styles": 3,
+  "kit_lookup_calls_avoided": 4893,
+  "software_map_divisions_removed_per_redraw": 1200
+}

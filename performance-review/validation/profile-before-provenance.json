@@ -1,0 +1,14 @@
+{
+  "source_commit": "11b872e9897320398fa02344cef1418733c04e9a",
+  "PROFILE": 1,
+  "development_only": true,
+  "rom_sha256": "1ef5484ff845645d98d602f126c219a6fa79e2d086bf1dde40122269b5a6d71a",
+  "excluded_from_release": true,
+  "profiling_source_sha256": {
+    "src/main.c": "b63ad9711af35974b6e67970983afcbc7f46438f50eedd4ee81a65287cba7e73",
+    "src/game.c": "4367fd039bd2296bc29a2f4275d8e4791cefa0c95f7056e9d758b62a2479275a",
+    "src/performance.c": "447c83e2d7216c2df8e610b12a1dad10a645fd1e4f58ec3b73ea1c4b981b7a57",
+    "src/performance.h": "028c90fb080dcb602bcbe7866285e8647b50b1f48ca72f6b07496e0c9009e602"
+  },
+  "note": "Baseline sources are preserved at their delivered revision except the identical main/game measurement wrappers and new profiler files; optimized sources use the frozen performance revision. These timer builds are diagnostic only."
+}

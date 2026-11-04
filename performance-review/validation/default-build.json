@@ -1,0 +1,8 @@
+{
+  "source_commit": "c09e29092e0d2ba6107659f975ed0c3ec41c3936",
+  "rom_sha256": "59f1e54cbbbac7e8f31b4e0c4623db72fe1f2a2190c7ceee5cc6fd559c6be898",
+  "PROFILE": 0,
+  "exact_frozen_rom": true,
+  "no_profiler_symbols": true,
+  "passed": true
+}

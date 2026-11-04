@@ -1,0 +1,14 @@
+{
+  "method": "Host differential test for viewport culls and unchanged actor geometry.\n\nCompile the actual old/new C draw functions against one pure deterministic\ndepth stub and the original OAM writer. Exhaustive native viewport edges and\nrandom canvases compare all OAM bytes and Actor bytes, including full OAM,\nhurt blinking, hidden actors and blades visible while their owner is outside\nthe viewport. This establishes cull equivalence; actual forest depth and\ngameplay are qualified separately in the mGBA comparison suite.",
+  "before_source": "11b872e9897320398fa02344cef1418733c04e9a",
+  "after_source": "c09e29092e0d2ba6107659f975ed0c3ec41c3936",
+  "actor_before_sha256": "da9600bb4ec3d564ea6fd495591610c9cd4d6317f2c2bcb9c4eca355621f6b4f",
+  "actor_after_sha256": "5a5a03b7b7a0fdc7c040043c413f1e76c341dc9f58e73adc56df7f75096ef252",
+  "enemy_before_sha256": "30360d13631456f8f6ea0dc8e5f97841b40d6ef9327092e9e3db585048d90f2d",
+  "enemy_after_sha256": "0a11fa16794aef530bd95395bf221155a87ba200322812f48b71cb1dad7250fa",
+  "cases": 513184,
+  "body_depth_calls_avoided": 232279,
+  "blade_depth_calls_avoided": 63224,
+  "visible_blades_with_offscreen_owner": 846,
+  "passed": true
+}

@@ -1,0 +1,321 @@
+{
+  "source_commit": "c09e29092e0d2ba6107659f975ed0c3ec41c3936",
+  "rom_sha256": "59f1e54cbbbac7e8f31b4e0c4623db72fe1f2a2190c7ceee5cc6fd559c6be898",
+  "tool_sha256": "e1ea09d24ce30c33dfe6187f6eeea7e5c0e231eafa74d7060157c95a7efa7684",
+  "passed": 11,
+  "total": 11,
+  "checks": [
+    {
+      "name": "broad final source/ROM/tool/reference/complete/count",
+      "passed": true
+    },
+    {
+      "name": "broad forest-0000b4a7-cell10180 raw hashes and30 exact GIF samples",
+      "passed": true
+    },
+    {
+      "name": "broad stress-knights-16180 raw hashes and30 exact GIF samples",
+      "passed": true
+    },
+    {
+      "name": "broad context stability, no catch-up inflation, and idle roster checks",
+      "passed": true
+    },
+    {
+      "name": "throughput final source/ROM/tool/reference/complete/count",
+      "passed": true
+    },
+    {
+      "name": "throughput stress-knights-24180 raw hashes and30 exact GIF samples",
+      "passed": true
+    },
+    {
+      "name": "throughput context stability, no catch-up inflation, and idle roster checks",
+      "passed": true
+    },
+    {
+      "name": "steady final source/ROM/tool/reference/complete/count",
+      "passed": true
+    },
+    {
+      "name": "steady context stability, no catch-up inflation, and idle roster checks",
+      "passed": true
+    },
+    {
+      "name": "heart-extended final source/ROM/tool/reference/complete/count",
+      "passed": true
+    },
+    {
+      "name": "heart-extended context stability, no catch-up inflation, and idle roster checks",
+      "passed": true
+    }
+  ],
+  "matched_metrics": {
+    "broad": {
+      "scenarios": 146,
+      "before_updates": 24033,
+      "before_frames": 25920,
+      "after_updates": 25907,
+      "after_frames": 25920,
+      "before_misses": 1887,
+      "after_misses": 13,
+      "reference_matches": {
+        "fixture_point": 146,
+        "initial_enemy_types": 146,
+        "initial_enemy_count": 146,
+        "initial_player_position": 144,
+        "initial_camera": 113
+      },
+      "natural": {
+        "before_updates": 12723,
+        "before_frames": 13500,
+        "after_updates": 13500,
+        "after_frames": 13500,
+        "before_slow_rooms": 41,
+        "after_slow_rooms": 0
+      },
+      "residuals": [
+        {
+          "name": "drain-0000b4a7",
+          "ratio": 0.9944444444444445,
+          "misses": 1,
+          "videos": [
+            1
+          ]
+        },
+        {
+          "name": "drain-deadbeef",
+          "ratio": 0.9944444444444445,
+          "misses": 1,
+          "videos": [
+            1
+          ]
+        },
+        {
+          "name": "drain-00000007",
+          "ratio": 0.9944444444444445,
+          "misses": 1,
+          "videos": [
+            1
+          ]
+        },
+        {
+          "name": "stress-mixed-16",
+          "ratio": 0.9944444444444445,
+          "misses": 1,
+          "videos": [
+            178
+          ]
+        },
+        {
+          "name": "actions-healthy-bombs",
+          "ratio": 0.9944444444444445,
+          "misses": 1,
+          "videos": [
+            1
+          ]
+        },
+        {
+          "name": "actions-healthy-bow",
+          "ratio": 0.9944444444444445,
+          "misses": 1,
+          "videos": [
+            1
+          ]
+        },
+        {
+          "name": "actions-healthy-fire",
+          "ratio": 0.9944444444444445,
+          "misses": 1,
+          "videos": [
+            1
+          ]
+        },
+        {
+          "name": "actions-deep-bombs",
+          "ratio": 0.9944444444444445,
+          "misses": 1,
+          "videos": [
+            1
+          ]
+        },
+        {
+          "name": "actions-deep-bow",
+          "ratio": 0.9944444444444445,
+          "misses": 1,
+          "videos": [
+            1
+          ]
+        },
+        {
+          "name": "actions-deep-fire",
+          "ratio": 0.9944444444444445,
+          "misses": 1,
+          "videos": [
+            1
+          ]
+        },
+        {
+          "name": "actions-heart-bombs",
+          "ratio": 0.9944444444444445,
+          "misses": 1,
+          "videos": [
+            1
+          ]
+        },
+        {
+          "name": "actions-heart-bow",
+          "ratio": 0.9944444444444445,
+          "misses": 1,
+          "videos": [
+            1
+          ]
+        },
+        {
+          "name": "actions-heart-fire",
+          "ratio": 0.9944444444444445,
+          "misses": 1,
+          "videos": [
+            1
+          ]
+        }
+      ],
+      "menus_before": [
+        {
+          "kind": "menu",
+          "target": "items",
+          "video_frames": 8,
+          "vblanks": 8,
+          "draw_frames": 4
+        },
+        {
+          "kind": "menu",
+          "target": "keys",
+          "video_frames": 4,
+          "vblanks": 4,
+          "draw_frames": 3
+        },
+        {
+          "kind": "menu",
+          "target": "overview",
+          "video_frames": 11,
+          "vblanks": 11,
+          "draw_frames": 10
+        },
+        {
+          "kind": "menu",
+          "target": "zoom",
+          "video_frames": 23,
+          "vblanks": 23,
+          "draw_frames": 22
+        },
+        {
+          "kind": "menu",
+          "target": "overview-return",
+          "video_frames": 3,
+          "vblanks": 3,
+          "draw_frames": 2
+        },
+        {
+          "kind": "menu",
+          "target": "close",
+          "video_frames": 3,
+          "vblanks": 3,
+          "draw_frames": 2
+        }
+      ],
+      "menus_after": [
+        {
+          "kind": "menu",
+          "target": "items",
+          "video_frames": 7,
+          "vblanks": 7,
+          "draw_frames": 3
+        },
+        {
+          "kind": "menu",
+          "target": "keys",
+          "video_frames": 3,
+          "vblanks": 3,
+          "draw_frames": 2
+        },
+        {
+          "kind": "menu",
+          "target": "overview",
+          "video_frames": 9,
+          "vblanks": 9,
+          "draw_frames": 8
+        },
+        {
+          "kind": "menu",
+          "target": "zoom",
+          "video_frames": 22,
+          "vblanks": 22,
+          "draw_frames": 21
+        },
+        {
+          "kind": "menu",
+          "target": "overview-return",
+          "video_frames": 3,
+          "vblanks": 3,
+          "draw_frames": 1
+        },
+        {
+          "kind": "menu",
+          "target": "close",
+          "video_frames": 3,
+          "vblanks": 3,
+          "draw_frames": 1
+        }
+      ]
+    },
+    "throughput": {
+      "scenarios": 30,
+      "before_updates": 4423,
+      "before_frames": 5400,
+      "after_updates": 5400,
+      "after_frames": 5400,
+      "before_misses": 977,
+      "after_misses": 0,
+      "reference_matches": {
+        "fixture_point": 30,
+        "initial_enemy_types": 30,
+        "initial_enemy_count": 30,
+        "initial_player_position": 28,
+        "initial_camera": 16
+      }
+    },
+    "steady": {
+      "scenarios": 1,
+      "before_updates": 90,
+      "before_frames": 180,
+      "after_updates": 180,
+      "after_frames": 180,
+      "before_misses": 90,
+      "after_misses": 0,
+      "reference_matches": {
+        "fixture_point": 1,
+        "initial_enemy_types": 1,
+        "initial_enemy_count": 1,
+        "initial_player_position": 0,
+        "initial_camera": 0
+      }
+    },
+    "heart-extended": {
+      "scenarios": 1,
+      "before_updates": 898,
+      "before_frames": 900,
+      "after_updates": 899,
+      "after_frames": 900,
+      "before_misses": 2,
+      "after_misses": 1,
+      "reference_matches": {
+        "fixture_point": 1,
+        "initial_enemy_types": 1,
+        "initial_enemy_count": 1,
+        "initial_player_position": 1,
+        "initial_camera": 0
+      }
+    }
+  }
+}

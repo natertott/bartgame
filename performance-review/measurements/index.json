@@ -1,0 +1,250 @@
+{
+  "raw": [
+    {
+      "phase": "before",
+      "suite": "broad",
+      "file": "measurements/before-broad.json.gz",
+      "sha256": "7e72d44710709a910bc5f671769b2e3d1829d0c2e03e33f90317028617e34d93",
+      "bytes": 399968,
+      "original_sha256": "5a905d6e58aafd931ba48695943ec53ed7d38a522d22e7771d19ddec61d30867",
+      "original_bytes": 13666029
+    },
+    {
+      "phase": "before",
+      "suite": "throughput",
+      "file": "measurements/before-throughput.json.gz",
+      "sha256": "35f17493328183201f107094cda4c3e51950bcc75daa662e15da460d5f739f21",
+      "bytes": 86281,
+      "original_sha256": "07e23ef9ccac84829e94788621e1ea953113e1c89942813ceba2663249793f80",
+      "original_bytes": 2839558
+    },
+    {
+      "phase": "before",
+      "suite": "steady",
+      "file": "measurements/before-steady.json.gz",
+      "sha256": "9a18331485f5675d0aadb810aed452c60cbcf9ecf261485fa872ba8140562c02",
+      "bytes": 4870,
+      "original_sha256": "71886fd29c23b747e2c6f2fe98f759c826cea55fe7b863b54490ac0290c200fd",
+      "original_bytes": 97509
+    },
+    {
+      "phase": "after",
+      "suite": "broad",
+      "file": "measurements/after-broad.json.gz",
+      "sha256": "1c4c61924e3aaebbf365b723940ad81083ef7be4ac6163e882f8cfe8fedaf75c",
+      "bytes": 411727,
+      "original_sha256": "d22b52af017eca177c93bbf22daddbf4a0690d8bc1c5f0fe70fe1782a3fb8032",
+      "original_bytes": 13709132
+    },
+    {
+      "phase": "after",
+      "suite": "throughput",
+      "file": "measurements/after-throughput.json.gz",
+      "sha256": "efedac8d5b11bbb72f10469438faac48887b3e3f1355210ddde90851ff31713d",
+      "bytes": 90132,
+      "original_sha256": "77f46490540eae198f68add97a8dfde9b29a77a43f5907b2458d4f0e5c099448",
+      "original_bytes": 2849466
+    },
+    {
+      "phase": "after",
+      "suite": "steady",
+      "file": "measurements/after-steady.json.gz",
+      "sha256": "f4c537f8f26956811eeb1fb8bbf59fc39204dfdc96bfc8b1b5170a6ec79d8387",
+      "bytes": 4928,
+      "original_sha256": "73db47271d382318ad9aedfa800a6262f698ef17aa5dc157d578ae1164e32d04",
+      "original_bytes": 97483
+    }
+  ],
+  "graphs": [
+    "graphs/instrumented-phases.png",
+    "graphs/natural-room-throughput.png",
+    "graphs/selected-timing.png",
+    "graphs/synthetic-throughput.png"
+  ],
+  "host_reports": [
+    {
+      "name": "actor",
+      "file": "validation/host/actor.json",
+      "sha256": "1d16f7d1533702f8b526b938978a94eaa808bf047b2956e59ea3f907a46970a6",
+      "method": "Host differential test for viewport culls and unchanged actor geometry.\n\nCompile the actual old/new C draw functions against one pure deterministic\ndepth stub and the original OAM writer. Exhaustive native viewport edges and\nrandom canvases compare all OAM bytes and Actor bytes, including full OAM,\nhurt blinking, hidden actors and blades visible while their owner is outside\nthe viewport. This establishes cull equivalence; actual forest depth and\ngameplay are qualified separately in the mGBA comparison suite.",
+      "passed": true,
+      "total": null,
+      "counts": {
+        "cases": 513184
+      }
+    },
+    {
+      "name": "effects",
+      "file": "validation/host/effects.json",
+      "sha256": "a4079efd9b41aa1d35166c042fb75b68834c1bac9bef6bb9a12daf2cd8e437df",
+      "method": "Compare the original and optimized glitter selection/HUD map algorithms.\n\nThe actual C source from the baseline revision and current checkout is compiled\nfor the host, with deterministic room/actor/render fixtures. Glitter calls,\nordering, priorities, frame counters and HUD shadow-map bytes must agree.\nThis establishes algorithm equivalence, not native GBA timing or full-game\nvisual correctness; the separate mGBA performance/render runs cover those.",
+      "passed": true,
+      "total": null,
+      "counts": {
+        "glitter_cases": 65536,
+        "map_cases": 50000,
+        "number_cases": 138048
+      }
+    },
+    {
+      "name": "visibility",
+      "file": "validation/host/visibility.json",
+      "sha256": "90bf78916d18b03e681294e15df5a0125385e51ada1dc28b0ed69f13dd97901e",
+      "method": "Compare packed canopy queries and Bloom guard against the original pixels.\n\nHost execution maps a private fake GBA VRAM range, varies actual live entries,\ntile alpha/flips, room bounds, legacy foliage and both tree planes, and compares\nthe optimized row query with32 original scalar calls. The complete original\nprepare_canopy_visibility function is read from the frozen baseline revision;\nall133 native poses, palette classifications, flips and both tree priorities\nare compared byte-for-byte, including diagnostics and queue arguments. This\nalso compares240,000 depth queries with the complete original priority\nfunction, varying planted owner rows and native body bounds. This is a\npure-query/guard equivalence check, not an emulator performance claim.",
+      "passed": true,
+      "total": null,
+      "counts": {
+        "counts": {
+          "row_queries": 240000,
+          "scalar_pixel_queries": 7680000,
+          "native_guard_cases": 38552,
+          "hero_frames": 133,
+          "depth_cases": 240000,
+          "prop_cases": 240000,
+          "mutations": 20360
+        }
+      }
+    },
+    {
+      "name": "objects",
+      "file": "validation/host/objects.json",
+      "sha256": "ec4fa3e00b9c5f209474f18611a1006b5aef37584617e09e5042c88734632caf",
+      "method": "Compare actual object/hand painters after pool-kind rejection.\n\nThe original/candidate functions and their release-overlap helpers execute on\nidentical96-actor pools. The unchanged renderer/native sheet descriptors and\na deterministic pure terrain-priority stub record every painter call, OAM\nbyte and all gameplay state bytes. Fixtures include released loads, arrows,\nflames, eight-frame bomb handoff, gated hoards, hidden/hurt states and full OAM.\nActual scene rendering/cycles remain the native performance suite's scope.",
+      "passed": true,
+      "total": null,
+      "counts": {
+        "cases": 107704
+      }
+    },
+    {
+      "name": "system",
+      "file": "validation/host/system.json",
+      "sha256": "ec6707d04fbe5065a343989da45a8fe0955d7d6ad5a546b0de1b505536d6b2bd",
+      "method": "Differential host qualification for animation scheduling and torch caching.\n\nThe actual baseline/candidate animation C functions run against all three\nlinked ROM descriptor/payload sets and synthetic valid byte-sized descriptors.\nRecorded DMA destinations, ordered bytes, palette writes and volatile clock\nread counts must match. Explicit clock-read fixtures model wrap, reset and\ninterrupt changes between the due test and frame selection. These host tests\ndo not replace real mGBA progression, framebuffer or cycle measurements.",
+      "passed": true,
+      "total": null,
+      "counts": {
+        "animation": {
+          "cases": 244052,
+          "synthetic_cases": 205316,
+          "dma_events": 512772,
+          "palette_events": 12910,
+          "clock_read_value_changes": 3552202,
+          "disabled_animation_cases": 3,
+          "passed": true,
+          "native_descriptor_sets": [
+            {
+              "area": "sewer",
+              "index": 1,
+              "descriptors": 69,
+              "speeds": [
+                4,
+                8,
+                12
+              ]
+            },
+            {
+              "area": "forest",
+              "index": 0,
+              "descriptors": 75,
+              "speeds": [
+                6,
+                10,
+                14,
+                16,
+                18,
+                20,
+                24
+              ]
+            },
+            {
+              "area": "myst",
+              "index": 2,
+              "descriptors": 6,
+              "speeds": [
+                6,
+                12,
+                14
+              ]
+            }
+          ],
+          "frame_speed_pairs": 65025,
+          "zero_frame_descriptors_in_mixed_set": 24,
+          "before_room_sha256": "ac90cd52f99aeba570a81904a40ede49d214a56be817085c48abcda263abe83d",
+          "after_room_sha256": "6ae3583e7c834bf1399d875ed343f20c15616da18c407175473c2d38e47b90a4"
+        },
+        "torches": {
+          "method": "Differential test of the unlit-torch cache through actual room write APIs.\n\nThe original/candidate room mutation and torch-count C functions are compiled\nagainst native ROM metadata. Video/forest/interactive rendering is stubbed,\nwhile room geometry, collision rebuilding and barrier-substrate selection use\nthe extracted C. Preview-details uses its actual save/restore function with a\ndisclosed deterministic generator stub that calls the real room write APIs.\nNo generator, game, art or ARM build is changed by this test.",
+          "before_source": "11b872e9897320398fa02344cef1418733c04e9a",
+          "after_source": "c09e29092e0d2ba6107659f975ed0c3ec41c3936",
+          "source_sha256": {
+            "before": {
+              "room.c": "ac90cd52f99aeba570a81904a40ede49d214a56be817085c48abcda263abe83d",
+              "react.c": "5eeb327cfea6670cd1adb04ccac094247da1335bd83e81f8595da1e4a031855b",
+              "roomgen.c": "1eccbc2d4941f9cd09da1bb1016bf890b83aba539395cfcf21b1f562b4e74cb5"
+            },
+            "after": {
+              "room.c": "6ae3583e7c834bf1399d875ed343f20c15616da18c407175473c2d38e47b90a4",
+              "react.c": "0f42d55dbd6a64f2ac68f7c69e4a263ec7005c2cde70275549d14e3e3db2393f",
+              "roomgen.c": "272fe98f1799078ec125c0f29eb8abdbc59289567f8715e4ce041228446c60a2"
+            }
+          },
+          "native_rom_sha256": "1bd913bc5bf1ad81e9c1dcc7e07ebc38eac855d390a5bb613257f8fbfe128e59",
+          "passed": true,
+          "cases": 12959,
+          "checks": 259347,
+          "cache_hits": 90713,
+          "room_type_calls": 3407986,
+          "preview_cases": 29,
+          "invalid_coordinate_writes": 6855,
+          "torch_lit_transitions": 42
+        }
+      }
+    },
+    {
+      "name": "torch",
+      "file": "validation/host/torch.json",
+      "sha256": "25da6576aac659ca72e2ca14c7286c359837372d89f22de49dd9c283ee3b9264",
+      "method": "Differential test of the unlit-torch cache through actual room write APIs.\n\nThe original/candidate room mutation and torch-count C functions are compiled\nagainst native ROM metadata. Video/forest/interactive rendering is stubbed,\nwhile room geometry, collision rebuilding and barrier-substrate selection use\nthe extracted C. Preview-details uses its actual save/restore function with a\ndisclosed deterministic generator stub that calls the real room write APIs.\nNo generator, game, art or ARM build is changed by this test.",
+      "passed": true,
+      "total": null,
+      "counts": {
+        "cases": 12959
+      }
+    },
+    {
+      "name": "menu",
+      "file": "validation/host/menu.json",
+      "sha256": "35163cffefecce5472a7cbba3291e9e8f02522096e16346a48ea38cdf539411d",
+      "method": "Exact native map/kit output tests for the small cold-menu optimizations.\n\nCompile the actual old/new BG-map prefixes and kit-cache C functions. Compare\nall1024 map entries, every ordered write, all four native kit flips, opacity\nmasks and glyph bit masks for the three linked frame styles. Palette roles\nare tested across all16 banks; cache warm/cold behavior is retained. The real\nnine style/color menu-frame comparison is a separate mGBA test.",
+      "passed": true,
+      "total": null,
+      "counts": {
+        "map_cases": 16
+      }
+    },
+    {
+      "name": "visibility-ubsan",
+      "file": "validation/host/visibility-ubsan.json",
+      "sha256": "6e37417f1c1a6e4e387a2f3ff655a3ce22266eeb4fd20d7a5e65140a7f953ae7",
+      "method": "Compare packed canopy queries and Bloom guard against the original pixels.\n\nHost execution maps a private fake GBA VRAM range, varies actual live entries,\ntile alpha/flips, room bounds, legacy foliage and both tree planes, and compares\nthe optimized row query with32 original scalar calls. The complete original\nprepare_canopy_visibility function is read from the frozen baseline revision;\nall133 native poses, palette classifications, flips and both tree priorities\nare compared byte-for-byte, including diagnostics and queue arguments. This\nalso compares240,000 depth queries with the complete original priority\nfunction, varying planted owner rows and native body bounds. This is a\npure-query/guard equivalence check, not an emulator performance claim.",
+      "passed": true,
+      "total": null,
+      "counts": {
+        "counts": {
+          "row_queries": 240000,
+          "scalar_pixel_queries": 7680000,
+          "native_guard_cases": 38552,
+          "hero_frames": 133,
+          "depth_cases": 240000,
+          "prop_cases": 240000,
+          "mutations": 20360
+        }
+      }
+    }
+  ],
+  "source_commit": "c09e29092e0d2ba6107659f975ed0c3ec41c3936",
+  "rom_sha256": "59f1e54cbbbac7e8f31b4e0c4623db72fe1f2a2190c7ceee5cc6fd559c6be898",
+  "gallery_tool_sha256": "a462c5a1b00273afc63988c6d6695653268bd1f3c2affe9c2578d2b1ca03ab89",
+  "instrumented_note": "Only JSON CPU profiles are published. Development-only profiling binaries are excluded from downloads."
+}
