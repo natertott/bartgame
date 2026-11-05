@@ -51,6 +51,7 @@ const u16* room_canopy_scene_entries(u16 mt);
 #define OBJ_SPAWN 3
 #define OBJ_SHOP 4
 #define OBJ_SIGN 5
+#define OBJ_ARCADE 6
 
 void tiles_init(void);
 void tiles_load(int set); /* TS_FOREST, TS_SEWER, TS_MYST */

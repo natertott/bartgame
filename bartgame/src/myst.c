@@ -31,6 +31,7 @@
 #include "react.h"
 #include "game.h"
 #include "myst.h"
+#include "journal.h"
 
 /* a style's tiles: its wall, the wall's face along the top and crown
    along the bottom, its floors, the floor's edges by the walls beside it
@@ -398,6 +399,7 @@ static void give_prize(void) {
     }
     if (gPl.gilt > 999)
         gPl.gilt = 999;
+    journal_note_owned();
     gWorld.myst_flags[sCell] |= MF_DONE;
     sfx_play(SFX_CHEST);
 }

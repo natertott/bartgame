@@ -5,6 +5,7 @@
 #include "actor.h"
 #include "interactive.h"
 #include "ambient.h"
+#include "cabinet.h"
 #if BART_FOREST_VARIANT >= 6
 #include "player.h"
 #endif
@@ -90,6 +91,8 @@ bool8 IWRAM_CODE actor_feet_box_solid(const Actor* a, int px, int py) {
         hh = MIN(hh, 5);
         cy = py - hh;
     }
+    if (gCabinetActive && a->kind==AK_PLAYER &&
+        cabinet_box_solid(cx-hw,cy-hh,cx+hw-1,cy+hh-1)) return TRUE;
     return room_box_solid(cx - hw, cy - hh, cx + hw - 1, cy + hh - 1);
 }
 
@@ -277,6 +280,7 @@ void sprites_reset(void) {
     sFrameCount = 0;
     interactive_room_reset();
     ambient_room_reset();
+    cabinet_room_reset();
 }
 
 u16 sprite_load_frame(int sheet, int frame) {

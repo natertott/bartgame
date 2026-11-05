@@ -1687,3 +1687,62 @@ terrain, sprite payloads and palettes stay exact in both builds.
 The [gallery and playable handoff](../../../enemy-prototype-review/README.md)
 separates original pose studies, real gameplay capture, disclosed fixtures
 and unimplemented later proposals. New enemy art remains provisional.
+
+## Original music, production enemies and memory cabinet — 2026-11-05
+
+**Authority:** the user asks for a normal ROM with the three newest enemies,
+the original music on `forest-art`, and a retro sewer cabinet cataloging items
+and enemies the player has encountered. Their approval promotes the three
+mechanic studies; it does not replace the selected old bestiary or Heart.
+
+**Adopted local art:** a32×64 hardware canvas carries a27×44 wine-wood/brass
+arcade cabinet with a teal CRT, joystick, buttons, PLAY marquee and contact
+shadow. Its two poses differ in nine screen pixels. Existing FX inks supply
+all colors. It stands on the original north bank at tile24,6; only the authored
+object list and its foot collision change. No floor, wall, bridge, ladder,
+market, wizard, Bloom, existing item or glitter painting is redrawn.
+[Cabinet construction](../arcade-journal/CABINET_ART.md) distinguishes native
+source inspection from the upcoming actual mGBA captures.
+
+**Adopted interaction:** the cabinet's journal has24 item entries and9 enemy
+entries, discovered by visible world bodies, visible shop stock or acquisition.
+Unknown entries show??? without names, previews or stats. L/R selects tabs,
+D-pad browses, A opens notes, B goes back/leaves and Start leaves. The existing
+menu/dialogue frame and independent palette settings apply. A separate
+checksummed dual-slot profile preserves discoveries across runs without
+changing v1/v2 run serialization or the appearance record. The
+[UI contract](../arcade-journal/UI.md) and [data contract](../arcade-journal/DATA.md)
+record exact scope and restore rules.
+
+**Integration:** production enemies retain their source poses and actual
+combat timing. New16px bodies stream four tiles per actor into recycled slots,
+with bounded VBlank transfers. Snout admission leaves a flanking cross; Maw
+gets a finite safe-warning fallback for mandatory encounters. These explicit
+production adaptations are recorded in
+[the enemy integration note](../enemy-prototypes/PRODUCTION.md).
+
+**Music source:** the fetched remote `forest-art` tip is
+`cad41afcc9041b0a346fe052aba54f2caa19043a`, later than the stale local branch.
+Its original native recordings provide Undertow Circuit, Verdant Afterimage,
+Heart of Chrome, Dawn Overture and Aurora Unbound for the current scenes.
+The [music note](../arcade-journal/MUSIC.md) and audio manifest bind original
+source hashes and conversion; score-source availability is stated explicitly.
+This is original game music, not a new visual reference or composition.
+
+**Qualification in progress:** initial actual mGBA views show the cabinet,
+working index/full notes, concealed unknowns and restored sewer. A25-room
+pilot includes all three new enemies with exact streamed native frames and
+full sampled cadence. Final source, ROM, music loops, gameplay/profile checks
+and capture provenance are recorded after the remaining integration hooks
+are frozen.
+
+**Pre-freeze corrections:** native playback exposed pre-existing zero-period
+menu/text/item tones that held indefinitely. Only held tones now stop at their
+declared effect timeout; naturally decaying effects keep their tails. Actual
+source/loop waveform and real sword-to-Grail tests qualify music separately
+from visual evidence. A code review also found that movement overwrote the
+Maw fallback anchor kept in velocity fields. Its anchor now uses four dedicated
+actor bytes; native second-cycle motion, real sword recoil and fallback tests
+confirm it survives. An exact rational route stepper removes repeated software
+divisions while preserving91,184,129 sampled coordinates across1,050,625
+differential vectors. No AI schedule, sampling path or source pose is reduced.

@@ -9,6 +9,7 @@
 #include "save.h"
 #include "myst.h"
 #include "appearance.h"
+#include "journal.h"
 
 #define SRAM ((volatile u8*)0x0E000000)
 #define SAVE_MAGIC 0x54524142u /* "BART" */
@@ -31,6 +32,7 @@ typedef struct {
 /* A future larger run must not silently grow into the independent settings
    record. This adds no field and changes neither existing save version. */
 typedef char SaveFitsBeforeAppearance[(sizeof(SaveFile) <= APPEARANCE_SRAM_OFFSET) ? 1 : -1];
+typedef char SaveFitsBeforeJournal[(sizeof(SaveFile) <= JOURNAL_SRAM_OFFSET) ? 1 : -1];
 
 static SaveFile sFile EWRAM_BSS;
 
@@ -125,6 +127,7 @@ bool8 save_load(void) {
     gGame.kills = sFile.kills;
     gGame.run_frames = sFile.run_frames;
     gGame.seed = gWorld.seed;
+    journal_note_owned();
     if (sFile.version == SAVE_LEGACY_VERSION) {
         migrate_legacy_trials();
         save_write(); /* persist the upgraded record with a fresh checksum */

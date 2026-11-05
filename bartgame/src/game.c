@@ -26,6 +26,9 @@ extern u16 items_sheet_tile(void);
 #include "interactive.h"
 #include "ambient.h"
 #include "appearance.h"
+#include "cabinet.h"
+#include "arcade.h"
+#include "journal.h"
 #if BART_ENEMY_LAB
 #include "enemy_prototypes.h"
 #endif
@@ -151,6 +154,8 @@ static void load_sewer(int at_drain) {
             npc_spawn(NPC_SAGE, ob[1] * 16 + 8, ob[2] * 16 + 14);
         if (ob[0] == OBJ_SHOP)
             npc_spawn(NPC_MERCHANT, ob[1] * 16 + 8, ob[2] * 16 + 14);
+        if (ob[0] == OBJ_ARCADE)
+            cabinet_spawn(ob[1]*16+8,ob[2]*16+14);
         if (ob[0] == OBJ_SPAWN && !at_drain) {
             sx = ob[1] * 16 + 8;
             sy = ob[2] * 16 + 14;
@@ -731,6 +736,7 @@ static void update_win(void) {
 /* ----------------------------------------------------------- states -- */
 void game_init(void) {
     appearance_init();
+    journal_init();
     text_init(); /* load saved marker/kit geometry before the title picker */
     title_show();
 }
@@ -748,11 +754,13 @@ static void draw_world(void) {
         dark_spare(gOamCount);
     PERF_CALL(PF_GLITTER_FRONT,ambient_draw(TRUE));
     PERF_CALL(PF_FOLK_FRONT,npcs_draw_front());
+    cabinet_draw(TRUE);
     PERF_CALL(PF_INTERACTIVE_BACK,interactive_draw(FALSE));
     PERF_CALL(PF_PLAYER_DRAW,player_draw());
     PERF_CALL(PF_ENEMIES_DRAW,enemies_draw());
     PERF_CALL(PF_FOLK_DRAW,npcs_draw());
     PERF_CALL(PF_OBJECTS_DRAW,objects_draw());
+    cabinet_draw(FALSE);
     PERF_CALL(PF_INTERACTIVE_FRONT,interactive_draw(TRUE));
     PERF_CALL(PF_GLITTER_BACK,ambient_draw(FALSE));
 }
@@ -789,6 +797,10 @@ static void update_play(void) {
     if (textbox_active()) {
         textbox_update();
         draw_world();
+        return;
+    }
+    if ((gKeysDown&KEY_A) && cabinet_try_interact()) {
+        gKeysDown &= ~KEY_A;
         return;
     }
     if ((gKeysDown & KEY_A) && npc_try_talk()) {
@@ -895,6 +907,13 @@ void game_update(void) {
         case GS_MAP:
             menu_update();
             if (gGame.state == GS_PLAY) {
+                oam_clear();
+                draw_world();
+            }
+            break;
+        case GS_ARCADE:
+            arcade_update();
+            if (gGame.state==GS_PLAY) {
                 oam_clear();
                 draw_world();
             }

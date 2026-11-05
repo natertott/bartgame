@@ -7,6 +7,7 @@
 #include "gba.h"
 #include "video.h"
 #include "text.h"
+#include "journal.h"
 #include "ui.h"
 #include "room.h"
 #include "player.h"
@@ -471,6 +472,7 @@ void shop_draw(void) {
     face_draw(SH_FACE_X, SH_FACE_Y, 0);
     for (i = 0; i < sShopCount; i++)
         draw_sprite(SH_ICON_X, SH_ROW_Y(i) * 8, SHEET_ITEMS, sShopIconTile, sShopItems[i].icon, 0, 0, items_frame_pal[sShopItems[i].icon]);
+    for (i=0;i<sShopCount;i++) journal_note_shop_icon(sShopItems[i].icon);
     draw_sprite(SH_DET_X * 8 + 6, 70, SHEET_ITEMS, sShopIconTile, sShopItems[sShopCursor].icon, 0, 0, items_frame_pal[sShopItems[sShopCursor].icon]);
 }
 

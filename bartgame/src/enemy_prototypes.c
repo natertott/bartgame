@@ -1,6 +1,6 @@
-/* Original, review-only translations of three curated TMC mechanics.
-   Production encounters, enemy IDs and save data are untouched at LAB=0.
-   Numbers and deliberate adaptations are recorded in the proposal report. */
+/* Original translations of three curated TMC mechanics, now admitted into
+   production encounters. LAB1 retains isolated demonstration controls only.
+   Numbers/adaptations and production safety rules are recorded in the notes. */
 #include "gba.h"
 #include "video.h"
 #include "util.h"
@@ -15,10 +15,11 @@
 #include "game.h"
 #include "text.h"
 
+u16 gEnemyPrototypeEvents[EP_EVENT_COUNT];
 #if BART_ENEMY_LAB
 u8 gEnemyPrototypeRequest, gEnemyPrototypeCase, gEnemyPrototypeSpawned;
-u16 gEnemyPrototypeEvents[EP_EVENT_COUNT];
 s16 gEnemyPrototypePositions[8];
+#endif
 
 enum { PO_IDLE, PO_WALK1, PO_WALK2, PO_TELL, PO_ATTACK, PO_RECOVER, PO_HURT, PO_BURIED };
 
@@ -46,6 +47,23 @@ static bool8 dry_safe(int x,int y) {
         return FALSE;
 #endif
     return TRUE;
+}
+
+/* Spawn markers already belong to the generated reachable component. Repair
+   only a near-edge native footprint, without teleporting across an obstacle. */
+bool8 enemy_prototypes_spawn_point(int type,int* px,int* py) {
+    static const s8 offset[][2]={{0,0},{0,-4},{0,4},{-4,0},{4,0},
+        {0,-8},{0,8},{-8,0},{8,0},{-8,-8},{8,-8},{-8,8},{8,8}};
+    int i,ox=*px,oy=*py;
+    for(i=0;i<(int)(sizeof(offset)/sizeof(offset[0]));i++) {
+        int x=ox+offset[i][0],y=oy+offset[i][1];
+        if(!dry_safe(x,y)) continue;
+        if(type==EN_RELIQUARY_SNOUT &&
+           (!dry_footprint(x-16,y) || !dry_footprint(x+16,y) ||
+            !dry_footprint(x,y-16) || !dry_footprint(x,y+16))) continue;
+        *px=x;*py=y;return TRUE;
+    }
+    return FALSE;
 }
 
 static bool8 move_dry(Actor* e, int speed) {
@@ -89,8 +107,10 @@ static void begin(Actor* e,int state,int ticks,int p) {
 void enemy_prototypes_init(Actor* e) {
     e->facing=dir_to_facing(actor_dir_to(e,gPlayer));
     e->dir=facing_to_dir(e->facing);
-    /* Store the emergence anchor in free actor fields; no extra actor pool. */
-    e->vx=PX(e->x); e->vy=PX(e->y);
+    /* Movement owns vx/vy. Keep the original dry spawn anchor in four free
+       bytes instead, so a later burrow survives exposed motion and recoil. */
+    e->v[0]=PX(e->x)&255;e->v[1]=(PX(e->x)>>8)&255;
+    e->v[2]=PX(e->y)&255;e->v[3]=(PX(e->y)>>8)&255;
     if (e->type==EN_PROTO_LEEVER) {
         e->flags &= ~(AF_HITTABLE|AF_HURTS);
         begin(e,EP_BURIED,90,PO_BURIED);
@@ -138,9 +158,20 @@ static void rope_update(Actor* e) {
 static bool8 reachable_dry(int x,int y) {
     int i,ox=PX(gPlayer->x),oy=PX(gPlayer->y),dx=x-ox,dy=y-oy;
     int steps=(MAX(ABS(dx),ABS(dy))+3)/4;
+    int qx,qy,rx,ry,ex=0,ey=0,sx=dx<0?-1:1,sy=dy<0?-1:1;
     if (!dry_footprint(ox,oy)) return FALSE;
-    for (i=1;i<=steps;i++)
-        if (!dry_footprint(ox+dx*i/steps,oy+dy*i/steps)) return FALSE;
+    if (!steps) return TRUE;
+    /* Exact rational DDA: these are the same C-truncated coordinates as
+       ox+dx*i/steps,oy+dy*i/steps, without two divisions at every sample.
+       Signed quotients and positive residual carries preserve negative rays. */
+    qx=dx/steps;qy=dy/steps;
+    rx=ABS(dx)-ABS(qx)*steps;ry=ABS(dy)-ABS(qy)*steps;
+    for (i=1;i<=steps;i++) {
+        ox+=qx;oy+=qy;ex+=rx;ey+=ry;
+        if(ex>=steps) {ox+=sx;ex-=steps;}
+        if(ey>=steps) {oy+=sy;ey-=steps;}
+        if (!dry_footprint(ox,oy)) return FALSE;
+    }
     return TRUE;
 }
 
@@ -152,11 +183,35 @@ static bool8 maw_emergence(Actor* e) {
         int y=PX(gPlayer->y)-(COS(d*8)*r>>14);
         int dx=x-PX(gPlayer->x),dy=y-PX(gPlayer->y);
         if (dx*dx+dy*dy<40*40 || !dry_safe(x,y) || !reachable_dry(x,y)) continue;
-        e->x=Q16(x);e->y=Q16(y);
+        e->x=Q16(x);e->y=Q16(y);e->v[5]=0;
         return TRUE;
     }
     if (actor_dist2(e,gPlayer)>=40*40 && dry_safe(PX(e->x),PX(e->y)) &&
-        reachable_dry(PX(e->x),PX(e->y))) return TRUE;
+        reachable_dry(PX(e->x),PX(e->y))) {e->v[5]=0;return TRUE;}
+#if !BART_ENEMY_LAB
+    /* The lab intentionally exposes strict admission failures. A real last
+       wave must not stay buried forever merely because sight is obstructed.
+       Try readable close dry sites, then the original validated floor anchor.
+       A player camping that anchor still receives the full harmless24 tell. */
+    if (++e->v[5]>=3) {
+        static const s8 radius[]={48,32,16};
+        static const s8 axis[4][2]={{0,-1},{1,0},{0,1},{-1,0}};
+        int r,d;
+        for(r=0;r<3;r++) for(d=0;d<4;d++) {
+            int x=PX(gPlayer->x)+axis[d][0]*radius[r];
+            int y=PX(gPlayer->y)+axis[d][1]*radius[r];
+            if(dry_safe(x,y) && reachable_dry(x,y)) {
+                e->x=Q16(x);e->y=Q16(y);e->v[5]=0;return TRUE;
+            }
+        }
+        {
+            int ax=e->v[0]|(e->v[1]<<8),ay=e->v[2]|(e->v[3]<<8);
+            if(dry_safe(ax,ay)) {
+                e->x=Q16(ax);e->y=Q16(ay);e->v[5]=0;return TRUE;
+            }
+        }
+    }
+#endif
     gEnemyPrototypeEvents[EP_EVENT_UNSAFE]++;
     return FALSE;
 }
@@ -272,6 +327,7 @@ bool8 enemy_prototypes_accept_hit(Actor* e,int damage,int from_dir) {
     return TRUE;
 }
 
+#if BART_ENEMY_LAB
 /* Find the nearest safe native floor footprint. Prefer an open cross, while
    preserving the entire actual generated room and all its tile artwork. */
 static bool8 fixture_floor(int tx,int ty,int min_player,int* outx,int* outy) {

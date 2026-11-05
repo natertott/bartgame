@@ -16,9 +16,8 @@
 #include "enemy.h"
 #include "boss.h"
 #include "game.h"
-#if BART_ENEMY_LAB
 #include "enemy_prototypes.h"
-#endif
+#include "journal.h"
 
 const EnemyDef gEnemyDefs[EN_COUNT] = {
     [EN_BEETLE] = { SHEET_BEETLE, 2, Q8(0.5), 2, HB_SMALL, AF_HITTABLE | AF_HURTS, 0 },
@@ -27,17 +26,76 @@ const EnemyDef gEnemyDefs[EN_COUNT] = {
     [EN_SLIME] = { SHEET_SLIME, 4, Q8(0.125), 2, HB_MED, AF_HITTABLE | AF_HURTS, 1 },
     [EN_KNIGHT] = { SHEET_KNIGHT, 10, Q8(0.375), 4, HB_TALL, AF_HITTABLE | AF_HURTS | AF_SOLID, 2 }, /* five sword hits */
     [EN_BOSS] = { SHEET_KNIGHT, 40, Q8(0.5), 4, HB_BIG, AF_HITTABLE | AF_HURTS | AF_BOSS, 2 },
-#if BART_ENEMY_LAB
-    /* Review-only mechanics. These are never selected by enemy_pick_type. */
+    /* Native compact mechanics admitted to ordinary generated encounters. */
     [EN_PROTO_ROPE] = { SHEET_PROTO_ROPE, 4, Q8(0.5), 2, HB_SMALL, AF_HITTABLE | AF_HURTS, 0 },
     [EN_PROTO_LEEVER] = { SHEET_PROTO_LEEVER, 6, Q8(0.5), 2, HB_MED, 0, 0 },
     [EN_PROTO_HELMASAUR] = { SHEET_PROTO_HELMASAUR, 4, Q8(1.0), 2, HB_MED, AF_HITTABLE | AF_HURTS, 0 },
-#endif
 };
 
 static u16 sSheetTile[EN_COUNT];
 static u16 sKswordTile;
 u8 gEnemyPresentedFrame[ACTOR_MAX];
+
+#if !BART_ENEMY_LAB
+/* New bodies retain their complete32-pose ROM strips but only one16x16 frame
+   per living body in OBJ. Released slots are reused by any later wave/actor.
+   High bit marks a pending VBlank upload;255 is an invalid cached frame.
+   This dedicated queue cannot exhaust the ordinary16-upload UI/body queue. */
+typedef struct {u16 tile;u8 owner,frame;} EnemyStreamSlot;
+static EnemyStreamSlot sStream[ACTOR_MAX] EWRAM_BSS;
+static u8 sStreamCount;
+
+static bool8 stream_assign(Actor* e) {
+    int i;
+    /* actor_free/room fixtures can retire a body without enemy_kill. Reclaim
+       stale ownership before allocating, including a recycled actor index. */
+    for(i=0;i<sStreamCount;i++) if(sStream[i].owner) {
+        Actor* old=&gActors[sStream[i].owner];
+        if(old==e || old->kind!=AK_ENEMY || old->type<EN_PROTO_ROPE || old->sub!=i+1) {
+            sStream[i].owner=0;sStream[i].frame=255;
+        }
+    }
+    for(i=0;i<sStreamCount;i++) if(!sStream[i].owner) break;
+    if(i==sStreamCount) {
+        u16 tile=sprite_alloc(sheets[e->sheet].frame_tiles);
+        if(!tile) return FALSE;
+        sStream[i].tile=tile;
+        sStreamCount++;
+    }
+    sStream[i].owner=e-gActors;
+    sStream[i].frame=255;
+    e->sub=i+1;
+    e->tile=sStream[i].tile;
+    return TRUE;
+}
+
+static void stream_release(Actor* e) {
+    int i=e->sub-1;
+    if(e->sub && i<sStreamCount && sStream[i].owner==e-gActors) {
+        sStream[i].owner=0;sStream[i].frame=255;
+    }
+    e->sub=0;
+}
+#endif
+
+void enemies_flush_frames(void) {
+#if !BART_ENEMY_LAB
+    int i;
+    for(i=0;i<sStreamCount;i++) {
+        EnemyStreamSlot* slot=&sStream[i];
+        if(slot->owner && slot->frame!=255 && (slot->frame&128)) {
+            Actor* e=&gActors[slot->owner];
+            int frame=slot->frame&127;
+            if(e->kind==AK_ENEMY && e->type>=EN_PROTO_ROPE && e->sub==i+1) {
+                const SpriteSheet* sh=&sheets[e->sheet];
+                dma3_copy32(sh->tiles+frame*sh->frame_tiles*16,
+                            OBJ_TILE(slot->tile),sh->frame_tiles*32);
+                slot->frame=frame;
+            } else {slot->owner=0;slot->frame=255;}
+        }
+    }
+#endif
+}
 
 /* enemy states */
 enum { ES_IDLE, ES_WALK, ES_CHASE, ES_PAUSE, ES_SPIT, ES_HOP, ES_WINDUP, ES_SWING, ES_RECOVER, ES_DIE, ES_REST, ES_FLY };
@@ -48,9 +106,15 @@ void enemy_load_sheets_for_theme(int theme) {
     for (i = 0; i < EN_COUNT; i++)
         sSheetTile[i] = 0;
     sKswordTile = 0;
+#if !BART_ENEMY_LAB
+    memset(sStream,0,sizeof(sStream));sStreamCount=0;
+#endif
 }
 
 static void ensure_sheet(int type) {
+#if !BART_ENEMY_LAB
+    if(type>=EN_PROTO_ROPE) return; /* one recycled native frame per body */
+#endif
 #if BART_ENEMY_VARIANT
     /* The boss owns one streamed frame. Loading the unused knight sheet
        here would waste192 OBJ tiles before boss_spawn replaces it. */
@@ -67,24 +131,44 @@ static void ensure_sheet(int type) {
 int enemy_pick_type(int theme, int stage, u32 roll) {
     int r = roll % 100;
     switch (theme) {
-        case 0: /* bugs */
-            if (stage >= 2 && r < 15) return EN_KNIGHT;
-            return r < 55 ? EN_BEETLE : EN_BAT;
-        case 1: /* blight */
-            if (stage >= 2 && r < 12) return EN_KNIGHT;
-            return r < 50 ? EN_SPITTER : r < 80 ? EN_SLIME : EN_BEETLE;
-        case 2: /* dead */
-            if (stage >= 1 && r < 25) return EN_KNIGHT;
-            return r < 60 ? EN_BAT : EN_SLIME;
+        case 0: /* healthy bugs: introduce the clear straight charge first */
+            if (r < 22) return EN_GILT_LEECH;
+            if (stage >= 1 && r < 34) return EN_ROOT_MAW;
+            if (stage >= 2 && r < 44) return EN_RELIQUARY_SNOUT;
+            if (stage >= 2 && r < 56) return EN_KNIGHT;
+            return r < 78 ? EN_BEETLE : EN_BAT;
+        case 1: /* growing infection: the announced root ambusher is common */
+            if (r < 24) return EN_ROOT_MAW;
+            if (r < 39) return EN_GILT_LEECH;
+            if (stage >= 1 && r < 51) return EN_RELIQUARY_SNOUT;
+            if (stage >= 2 && r < 61) return EN_KNIGHT;
+            return r < 79 ? EN_SPITTER : r < 93 ? EN_SLIME : EN_BEETLE;
+        case 2: /* dead wood: armor appears after the first progression task */
+            if (r < 20) return EN_ROOT_MAW;
+            if (r < 35) return EN_GILT_LEECH;
+            if (stage >= 1 && r < 52) return EN_RELIQUARY_SNOUT;
+            if (stage >= 1 && r < 67) return EN_KNIGHT;
+            return r < 84 ? EN_BAT : EN_SLIME;
         default:
-            if (stage >= 2 && r < 15) return EN_KNIGHT;
-            return r < 30 ? EN_BEETLE : r < 55 ? EN_BAT : r < 80 ? EN_SPITTER : EN_SLIME;
+            if (r < 18) return EN_GILT_LEECH;
+            if (r < 34) return EN_ROOT_MAW;
+            if (stage >= 1 && r < 46) return EN_RELIQUARY_SNOUT;
+            if (stage >= 2 && r < 58) return EN_KNIGHT;
+            return r < 69 ? EN_BEETLE : r < 80 ? EN_BAT : r < 91 ? EN_SPITTER : EN_SLIME;
     }
 }
 
 Actor* enemy_spawn(int type, int px, int py) {
-    const EnemyDef* d = &gEnemyDefs[type];
+    const EnemyDef* d;
     Actor* a;
+    if(type<0 || type>=EN_COUNT) return NULL;
+#if !BART_ENEMY_LAB
+    /* A generated marker may sit beside a rounded tree/water edge. New ground
+       bodies need a dry native footprint; keep any repair within8 pixels. */
+    if(type>=EN_PROTO_ROPE && !enemy_prototypes_spawn_point(type,&px,&py))
+        type=EN_BEETLE; /* visible, sword-solvable admission fallback */
+#endif
+    d=&gEnemyDefs[type];
     ensure_sheet(type);
     a = actor_new(AK_ENEMY, type, px, py);
     if (!a)
@@ -100,14 +184,15 @@ Actor* enemy_spawn(int type, int px, int py) {
     a->timer = 10 + rand_range(30);
     a->dir = rand_range(4) * 8;
     a->facing = dir_to_facing(a->dir);
-#if BART_ENEMY_LAB
     if (type >= EN_PROTO_ROPE) {
-        /* A failed lab allocation must not draw over Bloom's resident tiles. */
+#if BART_ENEMY_LAB
         if (!sSheetTile[type]) { actor_free(a); return NULL; }
+#else
+        if (!stream_assign(a)) { actor_free(a); return NULL; }
+#endif
         enemy_prototypes_init(a);
         return a;
     }
-#endif
     if (type == EN_BAT) {
         a->state = ES_REST;
         a->timer = 30 + rand_range(90);
@@ -119,12 +204,16 @@ Actor* enemy_spawn(int type, int px, int py) {
 int enemies_alive(void) {
     int i, n = 0;
     for (i = 1; i < ACTOR_MAX; i++)
-        if (gActors[i].kind == AK_ENEMY && gActors[i].state != ES_DIE)
-            n++;
+        if (gActors[i].kind == AK_ENEMY &&
+            (gActors[i].type >= EN_PROTO_ROPE || gActors[i].state != ES_DIE))
+            n++; /* New states use their own vocabulary; buried still lives. */
     return n;
 }
 
 void enemy_kill(Actor* e) {
+#if !BART_ENEMY_LAB
+    if(e->type>=EN_PROTO_ROPE) stream_release(e);
+#endif
     gGame.kills++;
     fx_spawn(FX_PUFF, PX(e->x), PX(e->y) - 8);
     drop_roll(PX(e->x), PX(e->y), rand_next());
@@ -137,10 +226,8 @@ void enemy_kill(Actor* e) {
 void enemy_hurt(Actor* e, int damage, int from_dir, int knockback) {
     if (e->iframes)
         return;
-#if BART_ENEMY_LAB
     if (e->type >= EN_PROTO_ROPE && !enemy_prototypes_accept_hit(e, damage, from_dir))
         return;
-#endif
     e->hp -= damage;
     e->iframes = 12;
     e->kb_dir = from_dir;
@@ -461,12 +548,10 @@ static void enemy_common(Actor* e) {
     /* knockback overrides the AI's movement */
     if (e->kb_timer) {
         e->kb_timer--;
-#if BART_ENEMY_LAB
         if (e->type >= EN_PROTO_ROPE) {
             enemy_prototypes_recoil(e);
             return;
         }
-#endif
         if (e->flags & AF_FLYING)
             actor_move_free(e, e->kb_speed, e->kb_dir);
         else
@@ -480,11 +565,9 @@ static void enemy_common(Actor* e) {
         case EN_SLIME: slime_update(e); break;
         case EN_KNIGHT: knight_update(e); break;
         case EN_BOSS: boss_update(e); break;
-#if BART_ENEMY_LAB
         case EN_PROTO_ROPE:
         case EN_PROTO_LEEVER:
         case EN_PROTO_HELMASAUR: enemy_prototypes_update(e); break;
-#endif
     }
 }
 
@@ -584,8 +667,26 @@ static void enemy_draw_body(Actor* e) {
     u8 ai_frame = e->frame;
     e->frame = enemy_presentation_frame(e);
     gEnemyPresentedFrame[e - gActors] = e->frame;
-    if (e->type == EN_BOSS) boss_draw(e);
-    else actor_draw(e);
+    {
+        int before=gOamCount;
+        if (e->type == EN_BOSS) boss_draw(e);
+#if !BART_ENEMY_LAB
+        else if(e->type>=EN_PROTO_ROPE) {
+            u8 frame=e->frame;
+            int slot=e->sub-1;
+            e->frame=0;
+            actor_draw(e);
+            e->frame=frame;
+            if(gOamCount>before && e->sub && slot<sStreamCount &&
+               sStream[slot].owner==e-gActors && sStream[slot].frame!=frame)
+                sStream[slot].frame=128|frame;
+        }
+#endif
+        else actor_draw(e);
+        /* An actor's presence elsewhere in a generated room is not a sighting.
+           Discovery follows a body actually submitted into the viewport. */
+        if(gOamCount>before) journal_note_enemy(e->type);
+    }
     e->frame = ai_frame;
 }
 

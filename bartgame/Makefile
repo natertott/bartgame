@@ -74,7 +74,7 @@ ifneq ($(BART_ENEMY),$(filter $(BART_ENEMY),0 1 2 3 4 5 6 7 8 9 10 11))
 $(error BART_ENEMY must be one integer in 0..11)
 endif
 ENEMY_STAMP := $(GEN)/enemy-profile-$(BART_ENEMY).stamp
-# Experimental mechanics are isolated from ordinary runs and save data.
+# Optional lab fixtures; all three mechanics also live in normal encounters.
 BART_ENEMY_LAB ?= 0
 ifneq ($(words $(BART_ENEMY_LAB)),1)
 $(error BART_ENEMY_LAB must be 0 or 1)
@@ -119,9 +119,6 @@ SRC_C     := $(filter-out %_iwram.c,$(wildcard src/*.c))
 ifeq ($(PROFILE),0)
 SRC_C     := $(filter-out src/performance.c,$(SRC_C))
 endif
-ifeq ($(BART_ENEMY_LAB),0)
-SRC_C     := $(filter-out src/enemy_prototypes.c,$(SRC_C))
-endif
 ifneq ($(BART_FOREST),30)
 SRC_C     := $(filter-out src/tree_study.c,$(SRC_C))
 endif
@@ -148,7 +145,8 @@ ART       := $(wildcard art/reboot_*.py) art/reboot_contracts.json tools/build_a
              $(wildcard art/forest_concepts*.py) $(wildcard art/forest_canopy_adaptive*.py) \
              $(wildcard art/forest_canopy_emerald*.py) $(wildcard art/forest_tree_study*.py) \
              $(wildcard art/forest_trees*.py) $(wildcard art/forest_cohesion*.py) \
-             $(wildcard art/hud_gilt*.py) $(wildcard art/enemy_prototypes*.py)
+             $(wildcard art/hud_gilt*.py) $(wildcard art/enemy_prototypes*.py) \
+             art/arcade_cabinet.py
 
 OBJS := $(patsubst src/%.c,$(BUILD)/%.o,$(SRC_C)) \
         $(patsubst src/%.c,$(BUILD)/%.o,$(SRC_IWRAM)) \
@@ -226,6 +224,10 @@ $(BUILD)/%.o: src/%.c $(GEN)/assets.h $(PROFILE_STAMP)
 $(BUILD)/%.o: src/%.s
 	@mkdir -p $(BUILD)
 	$(CC) $(ARCH) -c $< -o $@
+
+# The assembler embeds the original recordings directly; a re-import must
+# relink even when the small assembly wrapper itself has not changed.
+$(BUILD)/original_music_pcm.o: $(wildcard audio/original/pcm/*.pcm)
 
 $(BUILD)/$(TARGET).elf: $(OBJS) gba.ld
 	$(LD) $(LDFLAGS) $(OBJS) $(LIBS) -o $@

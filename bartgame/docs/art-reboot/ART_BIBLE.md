@@ -514,3 +514,32 @@ simple punctuation need honest exceptions, not arbitrary pixels to defeat a
 hash comparison. Review the full action suite, pickups, foreground/background,
 entrances, all room styles, NPCs, boss, title, HUD, bag, map, dialogue, shop,
 death and victory. A pretty forest screenshot alone is not completion.
+
+## Sewer memory cabinet and expanded encounters — 2026-11-05
+
+The user now adopts Gilt Leech, Root Maw and Reliquary Snout into the normal
+forest roster, alongside the five existing families and broken purple Heart.
+This supersedes their lab-only status above. Preserve their native16px
+silhouettes and visible attack/vulnerability phases. Normal rooms stream each
+body's actual source frame into four OBJ tiles; presentation must never
+silently turn into Bloom pixels when a sheet allocation fails. Spawn armored
+creatures where the player can flank them; temporary burrowing must not leave
+a required clear-room enemy unreachable forever. The optional lab remains a
+review tool, not the production starting state or granted inventory.
+
+The Drain gains one retro game cabinet as a furnishing, retaining its room
+layout and all prior material paintings. Wine-dark wood, worn brass, a teal
+CRT, joystick/buttons and a grounding shadow connect the machine to the same
+filth-and-gilt vocabulary. Its native32×64 canvas contains a roughly27×44
+painting; only nine screen pixels animate, slowly. Keep its physical collider
+at the feet rather than the tall picture. Place it against the north-bank
+architecture with a clear front approach, away from the ladder and bridge.
+
+The cabinet opens a persistent discovery journal. Items and enemies have
+separate tabs, readable native previews and concise factual notes. Unknown
+entries reveal no name, image or combat statistics. Existing menu frame and
+palette choices apply. Full notes must fit without clipping, and leaving must
+restore room maps, palette and borrowed preview tiles. The index is read-only:
+opening an entry does not grant its item, spawn its enemy or unlock a fact.
+Discoveries survive new runs and deaths in their own versioned profile record;
+run saves and appearance settings remain independent.

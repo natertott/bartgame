@@ -7,6 +7,7 @@
 #include "player.h"
 #include "sound.h"
 #include "objects.h"
+#include "journal.h"
 #include "enemy.h"
 #include "react.h"
 #include "game.h"
@@ -252,6 +253,7 @@ static void pickup_update(Actor* a) {
     bool8 reached = actors_overlap(a, gPlayer) ||
                     (player_sword_box(&sx0, &sy0, &sx1, &sy1) && actor_box_overlap(a, sx0, sy0, sx1, sy1));
     if (a->timer > 6 && reached) {
+        journal_note_pickup(a->type);
         switch (a->type) {
             case PK_HEART: player_heal(8); sfx_play(SFX_HEART); break;
             case PK_GILT: gPl.gilt += 1; sfx_play(SFX_PICKUP); break;
@@ -629,11 +631,17 @@ void objects_draw(void) {
                or cracked stones that the player needs to recognize. */
             if ((a->flags & AF_HIDDEN) || (a->iframes && (gFrame & 2)))
                 continue;
+            int submitted=gOamCount;
             draw_sprite(PX(a->x)-a->w/2-gCamX,PX(a->y)-a->h-PX(a->z)-gCamY,
                         a->sheet,a->tile,a->frame,a->hflip,2,a->pal);
+            if (gOamCount>submitted) journal_note_pickup(a->type);
             continue;
         }
-        if (a->kind == AK_PROJ || a->kind == AK_PICKUP || a->kind == AK_FX || a->kind == AK_OBJECT)
+        if (a->kind == AK_PROJ || a->kind == AK_PICKUP || a->kind == AK_FX || a->kind == AK_OBJECT) {
+            int submitted=gOamCount;
             actor_draw(a);
+            if (a->kind==AK_PICKUP && gOamCount>submitted)
+                journal_note_pickup(a->type);
+        }
     }
 }

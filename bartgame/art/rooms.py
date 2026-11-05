@@ -4,11 +4,13 @@ from pathlib import Path
 from copy import deepcopy
 import sewer_concepts as SC
 
-OBJ_NPC,OBJ_EXIT,OBJ_SPAWN,OBJ_SHOP,OBJ_SIGN=range(1,6)
+OBJ_NPC,OBJ_EXIT,OBJ_SPAWN,OBJ_SHOP,OBJ_SIGN,OBJ_ARCADE=range(1,7)
 ROOMS=deepcopy(json.loads((Path(__file__).parent/'reboot_contracts.json').read_text())['rooms'])
 if SC.VARIANT == 9:
     from sewer_final_contracts import ROOM
     ROOMS[0] = deepcopy(ROOM)
+# A furnishing on the existing north-bank floor; no floor/architecture changes.
+ROOMS[0]['objects'].append([OBJ_ARCADE, 24, 6, 0])
 LEGEND={'  ':None}
 
 

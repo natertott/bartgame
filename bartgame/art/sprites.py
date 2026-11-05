@@ -192,13 +192,17 @@ if SC.VARIANT:
 if FOREST_LANDMARK_SHEET is not None:
     SHEETS.append(FOREST_LANDMARK_SHEET)
 
-# Optional original mechanic studies append after every production sheet.
-# The default import does not load them or change any existing frame/ID.
-if os.environ.get('BART_ENEMY_LAB', '0') == '1':
-    import enemy_prototypes
-    for sheet in enemy_prototypes.build_sheets():
-        SHEETS.append(sheet)
-        for frame in sheet['frames']:
-            COVERAGE.append({'sheet': sheet['name'], 'frame': frame,
-                             'owner': 'enemy_prototypes', 'canvas': [16, 16],
-                             'review_only': True})
+# Approved mechanic additions append without renumbering older sheets.
+import enemy_prototypes
+for sheet in enemy_prototypes.build_sheets():
+    SHEETS.append(sheet)
+    for frame in sheet['frames']:
+        COVERAGE.append({'sheet': sheet['name'], 'frame': frame,
+                         'owner': 'enemy_prototypes', 'canvas': [16, 16],
+                         'production': True})
+
+from arcade_cabinet import build_sheet as arcade_sheet
+SHEETS.append(arcade_sheet())
+for frame in SHEETS[-1]['frames']:
+    COVERAGE.append({'sheet': 'arcade', 'frame': frame, 'owner': 'arcade_cabinet',
+                     'canvas': [32, 64], 'production': True})

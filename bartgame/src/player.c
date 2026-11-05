@@ -13,6 +13,7 @@
 #endif
 #include "actor.h"
 #include "player.h"
+#include "journal.h"
 #include "sound.h"
 #include "react.h"
 #include "objects.h"
@@ -81,6 +82,7 @@ void player_new_game(void) {
     /* the Drain Cap is in the pack from the start, on no button */
     gPl.items2 = ITEM2_HUBCAP;
     gPl.arrows = 0;
+    journal_note_owned();
 }
 
 /* ------------------------------------------------------------- equip -- */
@@ -173,6 +175,7 @@ void player_init(int px, int py, int facing) {
 
 void player_shield_upgrade(void) {
     gPl.items2 |= ITEM2_SHIELD_UPGRADE;
+    journal_note_owned();
 }
 
 int player_shield_icon(void) {
@@ -271,6 +274,7 @@ bool8 player_hurt(int damage, int from_dir) {
 }
 
 void player_heart_piece(void) {
+    journal_note_item(JI_HEART_PIECE);
     gPl.hearts_pieces++;
     if (gPl.hearts_pieces >= 4) {
         gPl.hearts_pieces = 0;
@@ -288,6 +292,8 @@ void player_heal(int amount) {
 void player_item_get(int item_bit, int sprite_frame) {
     Actor* a = gPlayer;
     gPl.items |= item_bit;
+    journal_note_icon(sprite_frame);
+    journal_note_owned();
     gPl.got_item = sprite_frame;
     gPl.got_timer = 0;
     a->state = PS_ITEMGET;

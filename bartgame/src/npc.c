@@ -20,6 +20,7 @@
 #include "react.h"
 #include "game.h"
 #include "npc.h"
+#include "journal.h"
 #include "myst.h"
 
 static Actor* sTalking;
@@ -484,6 +485,7 @@ static void talk_nun(Actor* a) {
         c->flags |= CF_QUEST_DONE;
         gPl.items &= ~ITEM_RELIC;
         gPl.hp_max += 8;
+        journal_note_item(JI_HEART_CONTAINER);
         gPl.hp = gPl.hp_max;
         sfx_play(SFX_SECRET);
         start_text("My relic! Here, the only gift I have: a heart that was once a saint's.|It beats on your stalk now. A " INK_HIGH "heart container" INK_BASE ".");

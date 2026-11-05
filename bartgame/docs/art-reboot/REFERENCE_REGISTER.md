@@ -344,3 +344,26 @@ The [proposal report](../enemy-prototypes/PROPOSALS.md) separates three optional
 playable experiments from thirteen later families. Historical names identify
 source mechanics; new names, drawings and tuning remain provisional. Original
 tool dependencies such as Gust Jar are recorded, not silently transplanted.
+
+## Sewer arcade and adopted enemy additions — 2026-11-05
+
+Direct reference: the user's request for a retro game cabinet that presents
+discovered items/enemies, plus adoption of the three source-led enemy studies.
+Existing read native-art rules, tutorial application matrix and pinned GBA
+menu findings guide silhouette, material grouping, readable focus and short
+help. No new external arcade photograph or commercial sprite is claimed.
+The original cabinet drawing reuses the current FX/gold bank and matched
+Drain materials; the journal reuses the selected runtime menu skins.
+[Cabinet art](../arcade-journal/CABINET_ART.md),
+[UI](../arcade-journal/UI.md) and [data](../arcade-journal/DATA.md) record the
+implementation and distinguish source inspection from actual emulator views.
+
+Original music source: remote `forest-art` commit
+`cad41afcc9041b0a346fe052aba54f2caa19043a`, its original first-thirty soundtrack
+manifest and lossless native mGBA recordings. The
+[music source note](../arcade-journal/MUSIC.md) and
+[audio manifest](../../audio/original/manifest.json) identify the five adopted
+tracks, exact source blobs and faithful native-hardware playback conversion.
+Later unrelated uploaded-song recreations are not used. Original score/player
+sources are unavailable in that branch/history; their existence is not
+inferred from the recordings. This source supplies music, not pixel-art advice.

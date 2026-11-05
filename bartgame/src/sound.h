@@ -9,10 +9,13 @@ enum {
     SFX_COUNT
 };
 
-enum { BGM_NONE, BGM_SEWER, BGM_FOREST, BGM_BOSS, BGM_TITLE, BGM_WIN };
+enum { BGM_NONE, BGM_SEWER, BGM_FOREST, BGM_BOSS, BGM_TITLE, BGM_WIN, BGM_COUNT };
 
 void sound_init(void);
 void sound_update(void);
+void sound_vblank(void); /* physical-frame sample clock; installed by sound_init */
+extern volatile u16 gOriginalMusicBgm, gOriginalMusicTrack;
+extern volatile u32 gOriginalMusicSamples, gOriginalMusicLoops, gOriginalMusicDmaOffset;
 void sfx_play(int id);
 void bgm_play(int id);
 void bgm_stop(void);

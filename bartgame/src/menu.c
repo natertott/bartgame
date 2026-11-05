@@ -91,7 +91,7 @@ static const MenuItem sItems[] = {
     { EQ_BOMBS, ITEM_BOMBS, F_ICON32_BOMBS, "Blightseeds", "Seeds that burst. They " INK_HIGH "open cracked walls" INK_BASE " and break the stones." },
     { EQ_LAMP, ITEM_LAMP, F_ICON32_LAMP, "Grail Lamp", "A flame not of this wood. It " INK_HIGH "burns webs and thorns" INK_BASE " and lights censers." },
     { EQ_CLOAK, ITEM_CLOAK, F_ICON32_CLOAK, "Petal Cloak", "Petals that catch the air. Press it walking to " INK_HIGH "leap a chasm" INK_BASE " or a pit." },
-    { EQ_BOW, 0x100 | ITEM2_BOW, F_ICON32_BOW, "Thorn Bow", "Yew and gut. An arrow takes two hearts from a beast; the walls stop it." },
+    { EQ_BOW, 0x100 | ITEM2_BOW, F_ICON32_BOW, "Thorn Bow", "Yew and gut. An arrow deals 2 enemy HP; the walls stop it." },
     { EQ_HUBCAP, 0x100 | ITEM2_HUBCAP, F_ICON32_HUBCAP, "Drain Cap", "Iron from the hub. The muck opens and " INK_HIGH "takes you home" INK_BASE " to the drain." },
 };
 #define ITEM_COUNT ((int)(sizeof(sItems) / sizeof(sItems[0])))
