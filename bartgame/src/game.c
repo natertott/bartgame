@@ -665,7 +665,7 @@ static void update_title(void) {
 static u16 sWinTimer;
 
 void game_win(void) {
-    save_write(); /* the run is kept at a win */
+    save_erase(); /* Victory retires this run; journal/settings are separate. */
     gGame.state = GS_WIN;
     sWinTimer = 0;
     fade_start(16, 1);

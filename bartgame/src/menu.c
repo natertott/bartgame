@@ -8,8 +8,8 @@
    is won, a quest giver until the quest is paid, a chest until opened,
    a shrine until used, the Nun's relic from her asking to its taking.
    The Map draws every cell; the Astrolabe adds the chests, the Heart
-   and the barriers between rooms. Nothing is saved here: the game saves
-   itself at a win and at a death.
+   and the barriers between rooms. The game saves unfinished runs at death;
+   a victory retires the run so the next game starts fresh.
 
    BG3 carries the panels and the map's picture (charblock 3, which the
    room maps own while the game plays and get back on the way out), the

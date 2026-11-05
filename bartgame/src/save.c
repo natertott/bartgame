@@ -63,10 +63,22 @@ static bool8 file_valid(void) {
            sFile.sum == checksum((const u8*)&sFile, sizeof(SaveFile) - 4);
 }
 
+/* Earlier versions saved victories with the Heart already gone. Such a
+   world has no remaining ending to play; only unfinished runs can continue.
+   Check the goal index before looking into a serialized world. */
+static bool8 file_continuable(void) {
+    return file_valid() && sFile.world.goal < CELLS &&
+           !(sFile.world.cells[sFile.world.goal].flags & CF_CLEARED);
+}
+
 void save_write(void) {
 #if BART_ENEMY_LAB
     return; /* Review encounters never persist granted tools or run progress. */
 #endif
+    if (gWorld.goal < CELLS && (gWorld.cells[gWorld.goal].flags & CF_CLEARED)) {
+        save_erase(); /* Death/manual saves after the Heart cannot revive it. */
+        return;
+    }
     volatile const char* id = gSramId;
     (void)*id;
     sFile.magic = SAVE_MAGIC;
@@ -86,7 +98,7 @@ bool8 save_exists(void) {
     return FALSE;
 #endif
     sram_read(&sFile, sizeof(SaveFile));
-    return file_valid();
+    return file_continuable();
 }
 
 /* Old runs stored a free overworld item chest and an unrelated optional
@@ -119,7 +131,7 @@ bool8 save_load(void) {
     return FALSE;
 #endif
     sram_read(&sFile, sizeof(SaveFile));
-    if (!file_valid())
+    if (!file_continuable())
         return FALSE;
     gWorld = sFile.world;
     gPl = sFile.pl;
