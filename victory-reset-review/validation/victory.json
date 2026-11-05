@@ -1,0 +1,790 @@
+{
+  "method": "Verify win-to-new-run lifecycle in the actual normal ROM under mGBA.\n\nThe Heart keeps its real40HP, AI, flags and timers; sword inputs and Grail\npickup produce victory. Disclosed fixtures position/heal/protect the player,\nuse the existing room-transition request, seed generation and inject private\nserialized SRAM records for compatibility/profile cases. A separate death-save\ncounterprobe sets player death state/timer, never an enemy's. Native PNGs are\nuntouched framebuffers. No save file outside these private cores is opened.\n",
+  "source_commit": "bcb7a0e0f0fdb8421c295cbab82f50edb6d88429",
+  "rom_sha256": "40c4b7f3738459c7b4fe3866687086fb6441196f4e871ec2f839663cc619e559",
+  "tool_sha256": "9966e760fd065d0c4bfff7322776b3e7ff232d03f8efda1752efe55e5393bc3e",
+  "fixtures": [
+    "Independent in-memory32768-byte SRAM starts erased; valid journal/appearance records are explicit profile fixtures, not earned catalogue coverage.",
+    "Ordinary death/save counterprobes set only player PS_DEAD/dead_timer; normal save serialization and title/Continue run in the ROM.",
+    "Compatibility inputs alter serialized version/checksum and goal or non-goal cleared flags; no enemy or terrain is edited.",
+    "The real fight bypasses maze travel with the existing transition request, supplies player health/invulnerability and positions only the player. Enemy original40HP, AI, state, flags and timers remain live.",
+    "Actual B sword inputs kill the Heart, and touching its actual spawned Grail triggers GS_WIN. Native captures remain untouched."
+  ],
+  "checks": [
+    {
+      "name": "ordinary unfinished death produces valid version2 record",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "v1 unfinished title eligibility",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "v1 unfinished preserves profile/settings while examining save",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "v1 unfinished Continue retains seed/inventory",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "v1 unfinished continued Heart remains available",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "v1 completed title eligibility",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "v1 completed preserves profile/settings while examining save",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "v1 completed uses new seed",
+      "passed": true,
+      "detail": "0xc0df"
+    },
+    {
+      "name": "v1 completed returns to ordinary Drain",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "v1 completed Heart is alive and all gates/loot reset",
+      "passed": true,
+      "detail": 24
+    },
+    {
+      "name": "v1 completed restores starting inventory only",
+      "passed": true,
+      "detail": {
+        "hp": 24,
+        "max_hp": 24,
+        "gilt": 0,
+        "keys": 0,
+        "bombs": 0,
+        "items": 65,
+        "arrows": 0,
+        "items2": 2
+      }
+    },
+    {
+      "name": "v1 completed resets run counters",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "v2 unfinished title eligibility",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "v2 unfinished preserves profile/settings while examining save",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "v2 unfinished Continue retains seed/inventory",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "v2 unfinished continued Heart remains available",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "v2 completed title eligibility",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "v2 completed preserves profile/settings while examining save",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "v2 completed uses new seed",
+      "passed": true,
+      "detail": "0xc0e0"
+    },
+    {
+      "name": "v2 completed returns to ordinary Drain",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "v2 completed Heart is alive and all gates/loot reset",
+      "passed": true,
+      "detail": 4
+    },
+    {
+      "name": "v2 completed restores starting inventory only",
+      "passed": true,
+      "detail": {
+        "hp": 24,
+        "max_hp": 24,
+        "gilt": 0,
+        "keys": 0,
+        "bombs": 0,
+        "items": 65,
+        "arrows": 0,
+        "items2": 2
+      }
+    },
+    {
+      "name": "v2 completed resets run counters",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "cleared non-goal cell does not retire active run",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "non-goal cleared marker survives ordinary Continue",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Continue rechecks a checkpoint retired after title draw",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "death cannot serialize a cleared-goal checkpoint",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "completed-state death guard preserves profile/settings",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "real victory begins from a resumable checkpoint",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "original40HP Heart dies to actual sword inputs",
+      "passed": true,
+      "detail": [
+        {
+          "attempt": 0,
+          "hp": 40,
+          "state": 0,
+          "x": 272,
+          "y": 192
+        },
+        {
+          "attempt": 1,
+          "hp": 38,
+          "state": 0,
+          "x": 272,
+          "y": 174
+        },
+        {
+          "attempt": 2,
+          "hp": 36,
+          "state": 1,
+          "x": 273,
+          "y": 156
+        },
+        {
+          "attempt": 3,
+          "hp": 34,
+          "state": 1,
+          "x": 273,
+          "y": 142
+        },
+        {
+          "attempt": 4,
+          "hp": 32,
+          "state": 1,
+          "x": 273,
+          "y": 128
+        },
+        {
+          "attempt": 5,
+          "hp": 30,
+          "state": 1,
+          "x": 273,
+          "y": 115
+        },
+        {
+          "attempt": 6,
+          "hp": 28,
+          "state": 1,
+          "x": 273,
+          "y": 101
+        },
+        {
+          "attempt": 7,
+          "hp": 26,
+          "state": 2,
+          "x": 273,
+          "y": 88
+        },
+        {
+          "attempt": 8,
+          "hp": 20,
+          "state": 2,
+          "x": 273,
+          "y": 50
+        },
+        {
+          "attempt": 9,
+          "hp": 20,
+          "state": 5,
+          "x": 273,
+          "y": 34
+        },
+        {
+          "attempt": 10,
+          "hp": 18,
+          "state": 5,
+          "x": 273,
+          "y": 16
+        },
+        {
+          "attempt": 11,
+          "hp": 16,
+          "state": 1,
+          "x": 259,
+          "y": 18
+        },
+        {
+          "attempt": 12,
+          "hp": 14,
+          "state": 1,
+          "x": 259,
+          "y": 25
+        },
+        {
+          "attempt": 13,
+          "hp": 12,
+          "state": 1,
+          "x": 259,
+          "y": 33
+        },
+        {
+          "attempt": 14,
+          "hp": 10,
+          "state": 4,
+          "x": 259,
+          "y": 53
+        },
+        {
+          "attempt": 15,
+          "hp": 8,
+          "state": 4,
+          "x": 259,
+          "y": 80
+        },
+        {
+          "attempt": 16,
+          "hp": 6,
+          "state": 2,
+          "x": 259,
+          "y": 85
+        },
+        {
+          "attempt": 17,
+          "hp": 0,
+          "state": 6,
+          "x": 259,
+          "y": 47
+        },
+        {
+          "attempt": 18,
+          "hp": 0,
+          "state": 6,
+          "x": 259,
+          "y": 32
+        },
+        {
+          "attempt": 19,
+          "hp": 0,
+          "state": 6,
+          "x": 258,
+          "y": 31
+        },
+        {
+          "attempt": 20,
+          "hp": 0,
+          "state": 6,
+          "x": 258,
+          "y": 31
+        },
+        {
+          "attempt": 21,
+          "hp": 0,
+          "state": 6,
+          "x": 258,
+          "y": 31
+        },
+        {
+          "attempt": 22,
+          "hp": 0,
+          "state": 6,
+          "x": 258,
+          "y": 31
+        },
+        {
+          "attempt": 23,
+          "hp": 0,
+          "state": 6,
+          "x": 258,
+          "y": 31
+        },
+        {
+          "attempt": 24,
+          "hp": 0,
+          "state": 6,
+          "x": 258,
+          "y": 31
+        },
+        {
+          "attempt": 25,
+          "hp": 0,
+          "state": 6,
+          "x": 258,
+          "y": 31
+        },
+        {
+          "attempt": 26,
+          "hp": 0,
+          "state": 6,
+          "x": 258,
+          "y": 31
+        },
+        {
+          "attempt": 27,
+          "hp": 0,
+          "state": 6,
+          "x": 258,
+          "y": 31
+        },
+        {
+          "attempt": 28,
+          "hp": 0,
+          "state": 6,
+          "x": 258,
+          "y": 31
+        },
+        {
+          "attempt": 29,
+          "hp": 0,
+          "state": 6,
+          "x": 258,
+          "y": 31
+        },
+        {
+          "attempt": 30,
+          "hp": 0,
+          "state": 6,
+          "x": 258,
+          "y": 31
+        }
+      ]
+    },
+    {
+      "name": "real boss death spawns Grail",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "goal cleared by real boss death",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "touching actual Grail wins",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "win immediately retires prior checkpoint",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "win learns real Heart and Grail discoveries",
+      "passed": true,
+      "detail": [
+        4276507,
+        160
+      ]
+    },
+    {
+      "name": "win preserves appearance preference values",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "victory screen retains run statistics",
+      "passed": true,
+      "detail": [
+        37,
+        1,
+        0
+      ]
+    },
+    {
+      "name": "same-session home screen no longer offers Continue",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "returning home keeps journal/settings",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "same-session next play uses new seed",
+      "passed": true,
+      "detail": "0xc0ffee"
+    },
+    {
+      "name": "same-session next play returns to ordinary Drain",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "same-session next play Heart is alive and all gates/loot reset",
+      "passed": true,
+      "detail": 11
+    },
+    {
+      "name": "same-session next play restores starting inventory only",
+      "passed": true,
+      "detail": {
+        "hp": 24,
+        "max_hp": 24,
+        "gilt": 0,
+        "keys": 0,
+        "bombs": 0,
+        "items": 65,
+        "arrows": 0,
+        "items2": 2
+      }
+    },
+    {
+      "name": "same-session next play resets run counters",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "next run retains discoveries/settings",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "cold restart after victory has no Continue",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "cold restart recovers journal/preferences",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "cold-restart next play uses new seed",
+      "passed": true,
+      "detail": "0xd00d"
+    },
+    {
+      "name": "cold-restart next play returns to ordinary Drain",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "cold-restart next play Heart is alive and all gates/loot reset",
+      "passed": true,
+      "detail": 0
+    },
+    {
+      "name": "cold-restart next play restores starting inventory only",
+      "passed": true,
+      "detail": {
+        "hp": 24,
+        "max_hp": 24,
+        "gilt": 0,
+        "keys": 0,
+        "bombs": 0,
+        "items": 65,
+        "arrows": 0,
+        "items2": 2
+      }
+    },
+    {
+      "name": "cold-restart next play resets run counters",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "cold new run retains profile and preferences",
+      "passed": true,
+      "detail": null
+    }
+  ],
+  "passed": 53,
+  "total": 53,
+  "fight": [
+    {
+      "attempt": 0,
+      "hp": 40,
+      "state": 0,
+      "x": 272,
+      "y": 192
+    },
+    {
+      "attempt": 1,
+      "hp": 38,
+      "state": 0,
+      "x": 272,
+      "y": 174
+    },
+    {
+      "attempt": 2,
+      "hp": 36,
+      "state": 1,
+      "x": 273,
+      "y": 156
+    },
+    {
+      "attempt": 3,
+      "hp": 34,
+      "state": 1,
+      "x": 273,
+      "y": 142
+    },
+    {
+      "attempt": 4,
+      "hp": 32,
+      "state": 1,
+      "x": 273,
+      "y": 128
+    },
+    {
+      "attempt": 5,
+      "hp": 30,
+      "state": 1,
+      "x": 273,
+      "y": 115
+    },
+    {
+      "attempt": 6,
+      "hp": 28,
+      "state": 1,
+      "x": 273,
+      "y": 101
+    },
+    {
+      "attempt": 7,
+      "hp": 26,
+      "state": 2,
+      "x": 273,
+      "y": 88
+    },
+    {
+      "attempt": 8,
+      "hp": 20,
+      "state": 2,
+      "x": 273,
+      "y": 50
+    },
+    {
+      "attempt": 9,
+      "hp": 20,
+      "state": 5,
+      "x": 273,
+      "y": 34
+    },
+    {
+      "attempt": 10,
+      "hp": 18,
+      "state": 5,
+      "x": 273,
+      "y": 16
+    },
+    {
+      "attempt": 11,
+      "hp": 16,
+      "state": 1,
+      "x": 259,
+      "y": 18
+    },
+    {
+      "attempt": 12,
+      "hp": 14,
+      "state": 1,
+      "x": 259,
+      "y": 25
+    },
+    {
+      "attempt": 13,
+      "hp": 12,
+      "state": 1,
+      "x": 259,
+      "y": 33
+    },
+    {
+      "attempt": 14,
+      "hp": 10,
+      "state": 4,
+      "x": 259,
+      "y": 53
+    },
+    {
+      "attempt": 15,
+      "hp": 8,
+      "state": 4,
+      "x": 259,
+      "y": 80
+    },
+    {
+      "attempt": 16,
+      "hp": 6,
+      "state": 2,
+      "x": 259,
+      "y": 85
+    },
+    {
+      "attempt": 17,
+      "hp": 0,
+      "state": 6,
+      "x": 259,
+      "y": 47
+    },
+    {
+      "attempt": 18,
+      "hp": 0,
+      "state": 6,
+      "x": 259,
+      "y": 32
+    },
+    {
+      "attempt": 19,
+      "hp": 0,
+      "state": 6,
+      "x": 258,
+      "y": 31
+    },
+    {
+      "attempt": 20,
+      "hp": 0,
+      "state": 6,
+      "x": 258,
+      "y": 31
+    },
+    {
+      "attempt": 21,
+      "hp": 0,
+      "state": 6,
+      "x": 258,
+      "y": 31
+    },
+    {
+      "attempt": 22,
+      "hp": 0,
+      "state": 6,
+      "x": 258,
+      "y": 31
+    },
+    {
+      "attempt": 23,
+      "hp": 0,
+      "state": 6,
+      "x": 258,
+      "y": 31
+    },
+    {
+      "attempt": 24,
+      "hp": 0,
+      "state": 6,
+      "x": 258,
+      "y": 31
+    },
+    {
+      "attempt": 25,
+      "hp": 0,
+      "state": 6,
+      "x": 258,
+      "y": 31
+    },
+    {
+      "attempt": 26,
+      "hp": 0,
+      "state": 6,
+      "x": 258,
+      "y": 31
+    },
+    {
+      "attempt": 27,
+      "hp": 0,
+      "state": 6,
+      "x": 258,
+      "y": 31
+    },
+    {
+      "attempt": 28,
+      "hp": 0,
+      "state": 6,
+      "x": 258,
+      "y": 31
+    },
+    {
+      "attempt": 29,
+      "hp": 0,
+      "state": 6,
+      "x": 258,
+      "y": 31
+    },
+    {
+      "attempt": 30,
+      "hp": 0,
+      "state": 6,
+      "x": 258,
+      "y": 31
+    }
+  ],
+  "media": [
+    {
+      "file": "01-grail-before-win.png",
+      "sha256": "7c5ec5ed95806c634b90ec4f3e0017f5126c1ab434727a827b68ffda8ea599d8",
+      "kind": "untouched native240x160 mGBA framebuffer"
+    },
+    {
+      "file": "02-victory-summary.png",
+      "sha256": "b8993259a982d71c8f6a8731c4b1eb4e1050e4e9791adc019ede6a42258d1d84",
+      "kind": "untouched native240x160 mGBA framebuffer"
+    },
+    {
+      "file": "03-home-after-win.png",
+      "sha256": "5130d7ac4a3c9ea0f6ad64ae5e64b1a0d1936a5a342d03f62996256e3af9be28",
+      "kind": "untouched native240x160 mGBA framebuffer"
+    },
+    {
+      "file": "04-fresh-run.png",
+      "sha256": "070f7f9d1308966bb4ca089f06be2dba1ec3f33c5be5da92e55c363d2e2bac36",
+      "kind": "untouched native240x160 mGBA framebuffer"
+    },
+    {
+      "file": "05-cold-home-after-win.png",
+      "sha256": "86e27c41eb33096f0bc261dc73a1f55e9ec7fbc0e45e680f00171b4e8a6b2b7c",
+      "kind": "untouched native240x160 mGBA framebuffer"
+    }
+  ],
+  "error": null
+}

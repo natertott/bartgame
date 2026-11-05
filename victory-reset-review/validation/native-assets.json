@@ -1,0 +1,180 @@
+{
+  "rom_sha256": "40c4b7f3738459c7b4fe3866687086fb6441196f4e871ec2f839663cc619e559",
+  "before_rom_sha256": "341b7926b9a5f79ad35a789adf4b5c321fd3b5b149e94d648b50025740c6be98",
+  "checks": [
+    {
+      "name": "hero",
+      "exact": true
+    },
+    {
+      "name": "sword",
+      "exact": true
+    },
+    {
+      "name": "shield",
+      "exact": true
+    },
+    {
+      "name": "items",
+      "exact": true
+    },
+    {
+      "name": "beetle",
+      "exact": true
+    },
+    {
+      "name": "bat",
+      "exact": true
+    },
+    {
+      "name": "slime",
+      "exact": true
+    },
+    {
+      "name": "spitter",
+      "exact": true
+    },
+    {
+      "name": "knight",
+      "exact": true
+    },
+    {
+      "name": "ksword",
+      "exact": true
+    },
+    {
+      "name": "fx",
+      "exact": true
+    },
+    {
+      "name": "proj",
+      "exact": true
+    },
+    {
+      "name": "npc",
+      "exact": true
+    },
+    {
+      "name": "boss",
+      "exact": true
+    },
+    {
+      "name": "lift",
+      "exact": true
+    },
+    {
+      "name": "arrow",
+      "exact": true
+    },
+    {
+      "name": "mouth",
+      "exact": true
+    },
+    {
+      "name": "marks",
+      "exact": true
+    },
+    {
+      "name": "dots",
+      "exact": true
+    },
+    {
+      "name": "cursor",
+      "exact": true
+    },
+    {
+      "name": "pick32",
+      "exact": true
+    },
+    {
+      "name": "icon32",
+      "exact": true
+    },
+    {
+      "name": "uimarks",
+      "exact": true
+    },
+    {
+      "name": "face",
+      "exact": true
+    },
+    {
+      "name": "peddler_head",
+      "exact": true
+    },
+    {
+      "name": "peddler_body",
+      "exact": true
+    },
+    {
+      "name": "gatekeeper",
+      "exact": true
+    },
+    {
+      "name": "wisp",
+      "exact": true
+    },
+    {
+      "name": "bloomfx",
+      "exact": true
+    },
+    {
+      "name": "bloomshadow",
+      "exact": true
+    },
+    {
+      "name": "interactivechest",
+      "exact": true
+    },
+    {
+      "name": "interactiveentry",
+      "exact": true
+    },
+    {
+      "name": "huditems",
+      "exact": true
+    },
+    {
+      "name": "glitter",
+      "exact": true
+    },
+    {
+      "name": "sewerrail",
+      "exact": true
+    },
+    {
+      "name": "forestlandmark",
+      "exact": true
+    },
+    {
+      "name": "proto_rope",
+      "exact": true
+    },
+    {
+      "name": "proto_leever",
+      "exact": true
+    },
+    {
+      "name": "proto_helmasaur",
+      "exact": true
+    },
+    {
+      "name": "arcade",
+      "exact": true
+    },
+    {
+      "name": "forest",
+      "exact": true
+    },
+    {
+      "name": "sewer",
+      "exact": true
+    },
+    {
+      "name": "myst",
+      "exact": true
+    }
+  ],
+  "passed": 43,
+  "total": 43
+}

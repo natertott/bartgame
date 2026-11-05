@@ -249,3 +249,8 @@ docs/sim_runs.json
 !/downloads/arcade-journal-1527dd8/bartgame-1527dd8.gba
 !/downloads/arcade-journal-1527dd8/bartgame-1527dd8.zip
 !/downloads/arcade-journal-1527dd8/native-evidence.zip
+
+# Completed-run lifecycle fix and verified main ROM.
+!/downloads/victory-reset-bcb7a0e/bartgame-bcb7a0e.gba
+!/downloads/victory-reset-bcb7a0e/bartgame-bcb7a0e.zip
+!/downloads/victory-reset-bcb7a0e/victory-evidence.zip
