@@ -1,0 +1,49 @@
+{
+  "method": "Exercise the actual journal C against private SRAM, without building assets.\n\nLinux and a host C compiler are required. Only #include directives are removed\nfrom journal.c/h; their code is compiled intact with fixed-width game types,\nthe actual PlayerState declaration/enums and source-contract art identifiers.\nThis establishes storage/data behavior, not native artwork or emulator timing.\n",
+  "passed": true,
+  "results": [
+    {
+      "BART_ENEMY_LAB": 0,
+      "passed": true,
+      "command": [
+        "cc",
+        "-std=gnu11",
+        "-O2",
+        "-DBART_ENEMY_LAB=0",
+        "/workspace/setup/arcade-release/final/journal-host/journal-host.c",
+        "-o",
+        "/workspace/setup/arcade-release/final/journal-host/journal-host-0"
+      ],
+      "functional_checks": 132,
+      "protected_byte_checks": 65408
+    },
+    {
+      "BART_ENEMY_LAB": 1,
+      "passed": true,
+      "command": [
+        "cc",
+        "-std=gnu11",
+        "-O2",
+        "-DBART_ENEMY_LAB=1",
+        "/workspace/setup/arcade-release/final/journal-host/journal-host.c",
+        "-o",
+        "/workspace/setup/arcade-release/final/journal-host/journal-host-1"
+      ],
+      "functional_checks": 9,
+      "protected_byte_checks": 0
+    }
+  ],
+  "source_hashes": {
+    "src/journal.c": "e7743a44cd38502850230833f2653f252a2b4ec2cf56d695d032c59ffaff5333",
+    "src/journal.h": "7f38324800e4f5e0d7fcd2f9668ded66f35267527cf54c79f2aab581b64c1ee3",
+    "src/player.h": "0f64172f389f311dbee797eaf0905b4032bb9cbad120181977578608e5e5e204",
+    "src/enemy.h": "8ea071090e450199cbef1c551407082e465baa6496e0c48f396020819f26fa7b",
+    "src/appearance.h": "b432cbe720f1d4471f7f65694e37081b4f9b42a71449fc2d4034754712304f3f",
+    "art/reboot_contracts.json": "3f3c22aeb93f63308ddc42f79e849145c5e8c12950e37ba14ded67773b44d0d8",
+    "art/palettes.py": "f715f6207034f404721d5a22f140acbd540793032540177d93102c3818275a6d",
+    "art/enemy_prototypes.py": "360a9432b8f89b17be8c1195051dfe91b1af5f9158f3db3e731760e7300b0d9e"
+  },
+  "compiled_source_sha256": "94007f683982bd1ce10ed05013ff8c0f56e0eafbc272d5cabcd0dce44ec9495f",
+  "tool_sha256": "fdec7030b22d7b1de809c6eb197e56ea049ca40975db674b1bdc3d28c76d2b86",
+  "limits": "Private Linux SRAM simulation; no emulator or real cartridge write/power-loss claim. Art identifiers derive from contracts; native previews need separate ROM verification."
+}

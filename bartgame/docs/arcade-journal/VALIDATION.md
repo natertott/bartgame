@@ -58,3 +58,17 @@ frames with GBA-derived durations, and decoded pixels/timings are checked.
 No artwork, terrain, palette, OAM or VRAM is injected by this helper. The only
 actor-death assignment exercises the actual run-save path; it does not stand
 in for a combat victory. No external user's save file is opened or modified.
+
+## Final release
+
+Game source1527dd84c92f47bf5f498cbff35cdd179cad48af produces ROM
+341b7926b9a5f79ad35a789adf4b5c321fd3b5b149e94d648b50025740c6be98,
+9,538,580 bytes. The final frozen-ROM journal suite passes157/157; its
+source tool, fixtures and raw evidence are linked from the
+[release review](../../../arcade-journal-review/README.md).
+Additional fresh suites pass662 native UI checks,75 production combat checks,
+69 audio checks and296 preserved-asset checks. Native catalogue coverage uses
+explicit private profile records, while natural discovery/persistence is
+verified independently. Audio retains original soundtrack provenance and raw
+unprocessed emulator WAVs. Full traces and precise performance limits remain
+available in the archive rather than being replaced by a single pass count.

@@ -1,0 +1,8350 @@
+{
+  "schema": 1,
+  "method": "Reproducible mGBA workload survey with natural rosters and explicit stress fixtures.\n\nNo terrain, artwork, framebuffer, enemy HP, AI or frame clock is changed. Natural\ncases retain all generated actors. Controlled stress cases explicitly replace the\nroster through the game's developer spawn request; their counts are not asserted\nas naturally generated gameplay. Player health/inventory and room positioning are\nfixtures. Raw VBlank/logic ages distinguish repeated video frames from modal or\ntransition states, which are reported separately rather than called slow logic.",
+  "emulator": "mGBA0.10.5",
+  "source_commit": "1527dd84c92f47bf5f498cbff35cdd179cad48af",
+  "rom_sha256": "341b7926b9a5f79ad35a789adf4b5c321fd3b5b149e94d648b50025740c6be98",
+  "tool_sha256": "e1ea09d24ce30c33dfe6187f6eeea7e5c0e231eafa74d7060157c95a7efa7684",
+  "fixtures": [
+    "Seed pinned before normal title Start. Original generated terrain and room rosters retained in natural cases.",
+    "Existing transition request navigates rooms, bypassing travel/gates only for workload coverage; its generation/fade latency is separately recorded.",
+    "Player is positioned on an actually walkable central floor near the densest local enemy group. No ground tiles are edited.",
+    "Full ordinary inventory,80maximum player health,99ammo and ten hearts exercise the real HUD. Player health is restored each video frame; enemy HP, AI, timers and RNG remain live.",
+    "Natural cases never remove or inject enemies. Explicit stress cases clear only nonplayer actors, then use the existing gDbgSpawn enemy-spawn path at stated counts/types.",
+    "When --reference is supplied, the baseline planned player tile is reused; camera easing and enemy AI/HP are never forced to manufacture equal state.",
+    "Optional --warmup runs ordinary unheld simulation/health restoration before each nonmodal sample, separating steady camera workloads from arrival/camera approach.",
+    "Inputs are a fixed video-frame schedule. Faster builds may consequently advance more simulation updates; performance traces are not a claim of identical world states at equal video ages.",
+    "All screenshots are native untouched240x160 mGBA framebuffers. Modal and transition states are reported separately from expected gameplay updates."
+  ],
+  "complete": true,
+  "seeds": [
+    "0xb4a7",
+    "0xdeadbeef",
+    "0x7"
+  ],
+  "configured_frames": 180,
+  "warmup_frames": 0,
+  "reference_report_sha256": null,
+  "reference_source_commit": null,
+  "scenarios": [
+    {
+      "name": "drain-0000b4a7",
+      "kind": "drain",
+      "seed": "0xb4a7",
+      "input_mode": "idle",
+      "metadata": {},
+      "warmup_frames": 0,
+      "initial": {
+        "area": 0,
+        "cell": 0,
+        "position": [
+          200,
+          270
+        ],
+        "camera": [
+          80,
+          160
+        ],
+        "roster": {
+          "kinds": {
+            "1": 1,
+            "5": 2
+          },
+          "enemy_types": {},
+          "enemies": 0,
+          "enemies_near_viewport": 0,
+          "actors": 3
+        }
+      },
+      "video_frames": 180,
+      "vblanks": 180,
+      "logic_updates": 179,
+      "eligible_gameplay_frames": 180,
+      "eligible_gameplay_updates": 179,
+      "update_ratio": 0.9944444444444445,
+      "missed_gameplay_updates": 1,
+      "logic_delta_histogram": {
+        "1": 179,
+        "0": 1
+      },
+      "longest_repeat": 1,
+      "game_states": {
+        "1": 180
+      },
+      "player_states": {
+        "0": 180
+      },
+      "oam_peak": 14,
+      "ambient_potential_peak": 12,
+      "ending": {
+        "area": 0,
+        "cell": 0,
+        "roster": {
+          "kinds": {
+            "1": 1,
+            "5": 2
+          },
+          "enemy_types": {},
+          "enemies": 0,
+          "enemies_near_viewport": 0,
+          "actors": 3
+        }
+      },
+      "samples_retained_frames": 180,
+      "actor_samples_retained_frames": 12
+    },
+    {
+      "name": "forest-0000b4a7-cell00",
+      "kind": "natural",
+      "seed": "0xb4a7",
+      "input_mode": "combat",
+      "metadata": {
+        "stage": 2,
+        "role": 3,
+        "goal": false,
+        "point": [
+          280,
+          206
+        ],
+        "fixture_point": [
+          280,
+          206
+        ]
+      },
+      "warmup_frames": 0,
+      "initial": {
+        "area": 1,
+        "cell": 0,
+        "position": [
+          280,
+          206
+        ],
+        "camera": [
+          244,
+          102
+        ],
+        "roster": {
+          "kinds": {
+            "1": 1,
+            "2": 6,
+            "4": 1
+          },
+          "enemy_types": {
+            "4": 1,
+            "3": 3,
+            "7": 2
+          },
+          "enemies": 6,
+          "enemies_near_viewport": 5,
+          "actors": 8
+        }
+      },
+      "video_frames": 180,
+      "vblanks": 180,
+      "logic_updates": 180,
+      "eligible_gameplay_frames": 180,
+      "eligible_gameplay_updates": 180,
+      "update_ratio": 1.0,
+      "missed_gameplay_updates": 0,
+      "logic_delta_histogram": {
+        "1": 180
+      },
+      "longest_repeat": 0,
+      "game_states": {
+        "1": 180
+      },
+      "player_states": {
+        "2": 116,
+        "0": 36,
+        "3": 8,
+        "5": 20
+      },
+      "oam_peak": 20,
+      "ambient_potential_peak": 12,
+      "ending": {
+        "area": 1,
+        "cell": 0,
+        "roster": {
+          "kinds": {
+            "1": 1,
+            "2": 5,
+            "4": 1
+          },
+          "enemy_types": {
+            "4": 1,
+            "3": 2,
+            "7": 2
+          },
+          "enemies": 5,
+          "enemies_near_viewport": 5,
+          "actors": 7
+        }
+      },
+      "samples_retained_frames": 180,
+      "actor_samples_retained_frames": 12
+    },
+    {
+      "name": "forest-0000b4a7-cell01",
+      "kind": "natural",
+      "seed": "0xb4a7",
+      "input_mode": "combat",
+      "metadata": {
+        "stage": 2,
+        "role": 5,
+        "goal": false,
+        "point": [
+          264,
+          174
+        ],
+        "fixture_point": [
+          264,
+          174
+        ]
+      },
+      "warmup_frames": 0,
+      "initial": {
+        "area": 1,
+        "cell": 1,
+        "position": [
+          264,
+          174
+        ],
+        "camera": [
+          244,
+          70
+        ],
+        "roster": {
+          "kinds": {
+            "1": 1,
+            "2": 7,
+            "5": 1,
+            "4": 1
+          },
+          "enemy_types": {
+            "7": 2,
+            "6": 1,
+            "3": 2,
+            "1": 2
+          },
+          "enemies": 7,
+          "enemies_near_viewport": 4,
+          "actors": 10
+        }
+      },
+      "video_frames": 180,
+      "vblanks": 180,
+      "logic_updates": 180,
+      "eligible_gameplay_frames": 180,
+      "eligible_gameplay_updates": 180,
+      "update_ratio": 1.0,
+      "missed_gameplay_updates": 0,
+      "logic_delta_histogram": {
+        "1": 180
+      },
+      "longest_repeat": 0,
+      "game_states": {
+        "1": 180
+      },
+      "player_states": {
+        "2": 122,
+        "0": 42,
+        "3": 16
+      },
+      "oam_peak": 22,
+      "ambient_potential_peak": 12,
+      "ending": {
+        "area": 1,
+        "cell": 1,
+        "roster": {
+          "kinds": {
+            "1": 1,
+            "2": 7,
+            "5": 1,
+            "4": 1
+          },
+          "enemy_types": {
+            "7": 2,
+            "6": 1,
+            "3": 2,
+            "1": 2
+          },
+          "enemies": 7,
+          "enemies_near_viewport": 6,
+          "actors": 10
+        }
+      },
+      "samples_retained_frames": 180,
+      "actor_samples_retained_frames": 12
+    },
+    {
+      "name": "forest-0000b4a7-cell02",
+      "kind": "natural",
+      "seed": "0xb4a7",
+      "input_mode": "combat",
+      "metadata": {
+        "stage": 2,
+        "role": 5,
+        "goal": false,
+        "point": [
+          264,
+          254
+        ],
+        "fixture_point": [
+          264,
+          254
+        ]
+      },
+      "warmup_frames": 0,
+      "initial": {
+        "area": 1,
+        "cell": 2,
+        "position": [
+          264,
+          254
+        ],
+        "camera": [
+          244,
+          124
+        ],
+        "roster": {
+          "kinds": {
+            "1": 1,
+            "2": 6,
+            "5": 1
+          },
+          "enemy_types": {
+            "4": 1,
+            "6": 1,
+            "2": 1,
+            "7": 1,
+            "3": 1,
+            "1": 1
+          },
+          "enemies": 6,
+          "enemies_near_viewport": 4,
+          "actors": 8
+        }
+      },
+      "video_frames": 180,
+      "vblanks": 180,
+      "logic_updates": 180,
+      "eligible_gameplay_frames": 180,
+      "eligible_gameplay_updates": 180,
+      "update_ratio": 1.0,
+      "missed_gameplay_updates": 0,
+      "logic_delta_histogram": {
+        "1": 180
+      },
+      "longest_repeat": 0,
+      "game_states": {
+        "1": 180
+      },
+      "player_states": {
+        "2": 89,
+        "0": 59,
+        "3": 32
+      },
+      "oam_peak": 23,
+      "ambient_potential_peak": 12,
+      "ending": {
+        "area": 1,
+        "cell": 2,
+        "roster": {
+          "kinds": {
+            "1": 1,
+            "2": 4,
+            "5": 1
+          },
+          "enemy_types": {
+            "4": 1,
+            "2": 1,
+            "7": 1,
+            "1": 1
+          },
+          "enemies": 4,
+          "enemies_near_viewport": 4,
+          "actors": 6
+        }
+      },
+      "samples_retained_frames": 180,
+      "actor_samples_retained_frames": 12
+    },
+    {
+      "name": "forest-0000b4a7-cell03",
+      "kind": "natural",
+      "seed": "0xb4a7",
+      "input_mode": "combat",
+      "metadata": {
+        "stage": 2,
+        "role": 5,
+        "goal": false,
+        "point": [
+          200,
+          254
+        ],
+        "fixture_point": [
+          200,
+          254
+        ]
+      },
+      "warmup_frames": 0,
+      "initial": {
+        "area": 1,
+        "cell": 3,
+        "position": [
+          200,
+          254
+        ],
+        "camera": [
+          244,
+          124
+        ],
+        "roster": {
+          "kinds": {
+            "1": 1,
+            "2": 6,
+            "5": 1,
+            "4": 1
+          },
+          "enemy_types": {
+            "1": 1,
+            "6": 1,
+            "2": 1,
+            "7": 2,
+            "4": 1
+          },
+          "enemies": 6,
+          "enemies_near_viewport": 2,
+          "actors": 9
+        }
+      },
+      "video_frames": 180,
+      "vblanks": 180,
+      "logic_updates": 180,
+      "eligible_gameplay_frames": 180,
+      "eligible_gameplay_updates": 180,
+      "update_ratio": 1.0,
+      "missed_gameplay_updates": 0,
+      "logic_delta_histogram": {
+        "1": 180
+      },
+      "longest_repeat": 0,
+      "game_states": {
+        "1": 180
+      },
+      "player_states": {
+        "2": 115,
+        "0": 49,
+        "3": 16
+      },
+      "oam_peak": 22,
+      "ambient_potential_peak": 12,
+      "ending": {
+        "area": 1,
+        "cell": 3,
+        "roster": {
+          "kinds": {
+            "1": 1,
+            "2": 6,
+            "5": 1,
+            "4": 1
+          },
+          "enemy_types": {
+            "1": 1,
+            "6": 1,
+            "2": 1,
+            "7": 2,
+            "4": 1
+          },
+          "enemies": 6,
+          "enemies_near_viewport": 6,
+          "actors": 9
+        }
+      },
+      "samples_retained_frames": 180,
+      "actor_samples_retained_frames": 12
+    },
+    {
+      "name": "forest-0000b4a7-cell04",
+      "kind": "natural",
+      "seed": "0xb4a7",
+      "input_mode": "combat",
+      "metadata": {
+        "stage": 1,
+        "role": 10,
+        "goal": false,
+        "point": [
+          328,
+          190
+        ],
+        "fixture_point": [
+          328,
+          190
+        ]
+      },
+      "warmup_frames": 0,
+      "initial": {
+        "area": 1,
+        "cell": 4,
+        "position": [
+          328,
+          190
+        ],
+        "camera": [
+          164,
+          196
+        ],
+        "roster": {
+          "kinds": {
+            "1": 1,
+            "2": 5,
+            "4": 1
+          },
+          "enemy_types": {
+            "7": 1,
+            "0": 1,
+            "8": 2,
+            "6": 1
+          },
+          "enemies": 5,
+          "enemies_near_viewport": 2,
+          "actors": 7
+        }
+      },
+      "video_frames": 180,
+      "vblanks": 180,
+      "logic_updates": 180,
+      "eligible_gameplay_frames": 180,
+      "eligible_gameplay_updates": 180,
+      "update_ratio": 1.0,
+      "missed_gameplay_updates": 0,
+      "logic_delta_histogram": {
+        "1": 180
+      },
+      "longest_repeat": 0,
+      "game_states": {
+        "1": 180
+      },
+      "player_states": {
+        "2": 94,
+        "0": 62,
+        "3": 24
+      },
+      "oam_peak": 22,
+      "ambient_potential_peak": 12,
+      "ending": {
+        "area": 1,
+        "cell": 4,
+        "roster": {
+          "kinds": {
+            "1": 1,
+            "2": 4,
+            "4": 1
+          },
+          "enemy_types": {
+            "7": 1,
+            "8": 2,
+            "6": 1
+          },
+          "enemies": 4,
+          "enemies_near_viewport": 3,
+          "actors": 6
+        }
+      },
+      "samples_retained_frames": 180,
+      "actor_samples_retained_frames": 12
+    },
+    {
+      "name": "forest-0000b4a7-cell05",
+      "kind": "natural",
+      "seed": "0xb4a7",
+      "input_mode": "combat",
+      "metadata": {
+        "stage": 2,
+        "role": 6,
+        "goal": false,
+        "point": [
+          200,
+          190
+        ],
+        "fixture_point": [
+          200,
+          190
+        ]
+      },
+      "warmup_frames": 0,
+      "initial": {
+        "area": 1,
+        "cell": 5,
+        "position": [
+          200,
+          190
+        ],
+        "camera": [
+          108,
+          28
+        ],
+        "roster": {
+          "kinds": {
+            "1": 1,
+            "2": 3,
+            "5": 1,
+            "4": 1
+          },
+          "enemy_types": {
+            "6": 1,
+            "7": 1,
+            "1": 1
+          },
+          "enemies": 3,
+          "enemies_near_viewport": 1,
+          "actors": 6
+        }
+      },
+      "video_frames": 180,
+      "vblanks": 180,
+      "logic_updates": 180,
+      "eligible_gameplay_frames": 180,
+      "eligible_gameplay_updates": 180,
+      "update_ratio": 1.0,
+      "missed_gameplay_updates": 0,
+      "logic_delta_histogram": {
+        "1": 180
+      },
+      "longest_repeat": 0,
+      "game_states": {
+        "1": 180
+      },
+      "player_states": {
+        "2": 94,
+        "0": 34,
+        "3": 16,
+        "4": 36
+      },
+      "oam_peak": 19,
+      "ambient_potential_peak": 12,
+      "ending": {
+        "area": 1,
+        "cell": 5,
+        "roster": {
+          "kinds": {
+            "1": 1,
+            "2": 2,
+            "5": 1,
+            "4": 2,
+            "7": 1
+          },
+          "enemy_types": {
+            "7": 1,
+            "1": 1
+          },
+          "enemies": 2,
+          "enemies_near_viewport": 2,
+          "actors": 7
+        }
+      },
+      "samples_retained_frames": 180,
+      "actor_samples_retained_frames": 12
+    },
+    {
+      "name": "forest-0000b4a7-cell06",
+      "kind": "natural",
+      "seed": "0xb4a7",
+      "input_mode": "combat",
+      "metadata": {
+        "stage": 2,
+        "role": 0,
+        "goal": false,
+        "point": [
+          296,
+          174
+        ],
+        "fixture_point": [
+          296,
+          174
+        ]
+      },
+      "warmup_frames": 0,
+      "initial": {
+        "area": 1,
+        "cell": 6,
+        "position": [
+          296,
+          174
+        ],
+        "camera": [
+          164,
+          28
+        ],
+        "roster": {
+          "kinds": {
+            "1": 1,
+            "2": 6,
+            "4": 1
+          },
+          "enemy_types": {
+            "0": 1,
+            "8": 1,
+            "4": 3,
+            "6": 1
+          },
+          "enemies": 6,
+          "enemies_near_viewport": 5,
+          "actors": 8
+        }
+      },
+      "video_frames": 180,
+      "vblanks": 180,
+      "logic_updates": 180,
+      "eligible_gameplay_frames": 180,
+      "eligible_gameplay_updates": 180,
+      "update_ratio": 1.0,
+      "missed_gameplay_updates": 0,
+      "logic_delta_histogram": {
+        "1": 180
+      },
+      "longest_repeat": 0,
+      "game_states": {
+        "1": 180
+      },
+      "player_states": {
+        "2": 78,
+        "0": 67,
+        "3": 35
+      },
+      "oam_peak": 24,
+      "ambient_potential_peak": 12,
+      "ending": {
+        "area": 1,
+        "cell": 6,
+        "roster": {
+          "kinds": {
+            "1": 1,
+            "2": 6,
+            "4": 1
+          },
+          "enemy_types": {
+            "0": 1,
+            "8": 1,
+            "4": 3,
+            "6": 1
+          },
+          "enemies": 6,
+          "enemies_near_viewport": 6,
+          "actors": 8
+        }
+      },
+      "samples_retained_frames": 180,
+      "actor_samples_retained_frames": 12
+    },
+    {
+      "name": "forest-0000b4a7-cell07",
+      "kind": "natural",
+      "seed": "0xb4a7",
+      "input_mode": "combat",
+      "metadata": {
+        "stage": 1,
+        "role": 3,
+        "goal": false,
+        "point": [
+          328,
+          238
+        ],
+        "fixture_point": [
+          328,
+          238
+        ]
+      },
+      "warmup_frames": 0,
+      "initial": {
+        "area": 1,
+        "cell": 7,
+        "position": [
+          328,
+          238
+        ],
+        "camera": [
+          164,
+          196
+        ],
+        "roster": {
+          "kinds": {
+            "1": 1,
+            "2": 6,
+            "4": 1
+          },
+          "enemy_types": {
+            "0": 4,
+            "1": 1,
+            "7": 1
+          },
+          "enemies": 6,
+          "enemies_near_viewport": 6,
+          "actors": 8
+        }
+      },
+      "video_frames": 180,
+      "vblanks": 180,
+      "logic_updates": 180,
+      "eligible_gameplay_frames": 180,
+      "eligible_gameplay_updates": 180,
+      "update_ratio": 1.0,
+      "missed_gameplay_updates": 0,
+      "logic_delta_histogram": {
+        "1": 180
+      },
+      "longest_repeat": 0,
+      "game_states": {
+        "1": 180
+      },
+      "player_states": {
+        "2": 60,
+        "0": 68,
+        "3": 32,
+        "5": 20
+      },
+      "oam_peak": 22,
+      "ambient_potential_peak": 12,
+      "ending": {
+        "area": 1,
+        "cell": 7,
+        "roster": {
+          "kinds": {
+            "1": 1,
+            "2": 5,
+            "4": 2
+          },
+          "enemy_types": {
+            "0": 3,
+            "1": 1,
+            "7": 1
+          },
+          "enemies": 5,
+          "enemies_near_viewport": 4,
+          "actors": 8
+        }
+      },
+      "samples_retained_frames": 180,
+      "actor_samples_retained_frames": 12
+    },
+    {
+      "name": "forest-0000b4a7-cell08",
+      "kind": "natural",
+      "seed": "0xb4a7",
+      "input_mode": "combat",
+      "metadata": {
+        "stage": 1,
+        "role": 4,
+        "goal": false,
+        "point": [
+          232,
+          222
+        ],
+        "fixture_point": [
+          232,
+          222
+        ]
+      },
+      "warmup_frames": 0,
+      "initial": {
+        "area": 1,
+        "cell": 8,
+        "position": [
+          232,
+          222
+        ],
+        "camera": [
+          112,
+          196
+        ],
+        "roster": {
+          "kinds": {
+            "1": 1,
+            "2": 6,
+            "4": 1
+          },
+          "enemy_types": {
+            "0": 4,
+            "6": 2
+          },
+          "enemies": 6,
+          "enemies_near_viewport": 6,
+          "actors": 8
+        }
+      },
+      "video_frames": 180,
+      "vblanks": 180,
+      "logic_updates": 180,
+      "eligible_gameplay_frames": 180,
+      "eligible_gameplay_updates": 180,
+      "update_ratio": 1.0,
+      "missed_gameplay_updates": 0,
+      "logic_delta_histogram": {
+        "1": 180
+      },
+      "longest_repeat": 0,
+      "game_states": {
+        "1": 180
+      },
+      "player_states": {
+        "2": 22,
+        "3": 40,
+        "0": 72,
+        "5": 46
+      },
+      "oam_peak": 22,
+      "ambient_potential_peak": 12,
+      "ending": {
+        "area": 1,
+        "cell": 8,
+        "roster": {
+          "kinds": {
+            "1": 1,
+            "2": 5,
+            "4": 1
+          },
+          "enemy_types": {
+            "0": 3,
+            "6": 2
+          },
+          "enemies": 5,
+          "enemies_near_viewport": 5,
+          "actors": 7
+        }
+      },
+      "samples_retained_frames": 180,
+      "actor_samples_retained_frames": 12
+    },
+    {
+      "name": "forest-0000b4a7-cell09",
+      "kind": "natural",
+      "seed": "0xb4a7",
+      "input_mode": "combat",
+      "metadata": {
+        "stage": 1,
+        "role": 5,
+        "goal": false,
+        "point": [
+          280,
+          190
+        ],
+        "fixture_point": [
+          280,
+          190
+        ]
+      },
+      "warmup_frames": 0,
+      "initial": {
+        "area": 1,
+        "cell": 9,
+        "position": [
+          280,
+          190
+        ],
+        "camera": [
+          160,
+          28
+        ],
+        "roster": {
+          "kinds": {
+            "1": 1,
+            "2": 5,
+            "5": 1
+          },
+          "enemy_types": {
+            "8": 1,
+            "6": 1,
+            "3": 1,
+            "0": 1,
+            "2": 1
+          },
+          "enemies": 5,
+          "enemies_near_viewport": 4,
+          "actors": 7
+        }
+      },
+      "video_frames": 180,
+      "vblanks": 180,
+      "logic_updates": 180,
+      "eligible_gameplay_frames": 180,
+      "eligible_gameplay_updates": 180,
+      "update_ratio": 1.0,
+      "missed_gameplay_updates": 0,
+      "logic_delta_histogram": {
+        "1": 180
+      },
+      "longest_repeat": 0,
+      "game_states": {
+        "1": 180
+      },
+      "player_states": {
+        "2": 74,
+        "0": 66,
+        "3": 40
+      },
+      "oam_peak": 21,
+      "ambient_potential_peak": 12,
+      "ending": {
+        "area": 1,
+        "cell": 9,
+        "roster": {
+          "kinds": {
+            "1": 1,
+            "2": 4,
+            "5": 1
+          },
+          "enemy_types": {
+            "8": 1,
+            "6": 1,
+            "3": 1,
+            "2": 1
+          },
+          "enemies": 4,
+          "enemies_near_viewport": 4,
+          "actors": 6
+        }
+      },
+      "samples_retained_frames": 180,
+      "actor_samples_retained_frames": 12
+    },
+    {
+      "name": "forest-0000b4a7-cell10",
+      "kind": "natural",
+      "seed": "0xb4a7",
+      "input_mode": "combat",
+      "metadata": {
+        "stage": 2,
+        "role": 7,
+        "goal": false,
+        "point": [
+          312,
+          254
+        ],
+        "fixture_point": [
+          312,
+          254
+        ]
+      },
+      "warmup_frames": 0,
+      "initial": {
+        "area": 1,
+        "cell": 10,
+        "position": [
+          312,
+          254
+        ],
+        "camera": [
+          164,
+          28
+        ],
+        "roster": {
+          "kinds": {
+            "1": 1,
+            "2": 6,
+            "5": 1,
+            "4": 1
+          },
+          "enemy_types": {
+            "2": 1,
+            "3": 2,
+            "8": 1,
+            "0": 1,
+            "6": 1
+          },
+          "enemies": 6,
+          "enemies_near_viewport": 1,
+          "actors": 9
+        }
+      },
+      "video_frames": 180,
+      "vblanks": 180,
+      "logic_updates": 180,
+      "eligible_gameplay_frames": 180,
+      "eligible_gameplay_updates": 180,
+      "update_ratio": 1.0,
+      "missed_gameplay_updates": 0,
+      "logic_delta_histogram": {
+        "1": 180
+      },
+      "longest_repeat": 0,
+      "game_states": {
+        "1": 180
+      },
+      "player_states": {
+        "2": 135,
+        "0": 37,
+        "3": 8
+      },
+      "oam_peak": 22,
+      "ambient_potential_peak": 12,
+      "ending": {
+        "area": 1,
+        "cell": 10,
+        "roster": {
+          "kinds": {
+            "1": 1,
+            "7": 1,
+            "2": 4,
+            "5": 1,
+            "4": 3
+          },
+          "enemy_types": {
+            "3": 1,
+            "8": 1,
+            "0": 1,
+            "6": 1
+          },
+          "enemies": 4,
+          "enemies_near_viewport": 4,
+          "actors": 10
+        }
+      },
+      "samples_retained_frames": 180,
+      "actor_samples_retained_frames": 12
+    },
+    {
+      "name": "forest-0000b4a7-cell11",
+      "kind": "natural",
+      "seed": "0xb4a7",
+      "input_mode": "combat",
+      "metadata": {
+        "stage": 0,
+        "role": 3,
+        "goal": false,
+        "point": [
+          216,
+          206
+        ],
+        "fixture_point": [
+          216,
+          206
+        ]
+      },
+      "warmup_frames": 0,
+      "initial": {
+        "area": 1,
+        "cell": 11,
+        "position": [
+          216,
+          206
+        ],
+        "camera": [
+          108,
+          196
+        ],
+        "roster": {
+          "kinds": {
+            "1": 1,
+            "2": 5,
+            "4": 1
+          },
+          "enemy_types": {
+            "2": 2,
+            "3": 2,
+            "6": 1
+          },
+          "enemies": 5,
+          "enemies_near_viewport": 4,
+          "actors": 7
+        }
+      },
+      "video_frames": 180,
+      "vblanks": 180,
+      "logic_updates": 180,
+      "eligible_gameplay_frames": 180,
+      "eligible_gameplay_updates": 180,
+      "update_ratio": 1.0,
+      "missed_gameplay_updates": 0,
+      "logic_delta_histogram": {
+        "1": 180
+      },
+      "longest_repeat": 0,
+      "game_states": {
+        "1": 180
+      },
+      "player_states": {
+        "2": 75,
+        "0": 53,
+        "3": 37,
+        "5": 15
+      },
+      "oam_peak": 22,
+      "ambient_potential_peak": 12,
+      "ending": {
+        "area": 1,
+        "cell": 11,
+        "roster": {
+          "kinds": {
+            "1": 1,
+            "2": 5,
+            "4": 1
+          },
+          "enemy_types": {
+            "2": 2,
+            "3": 2,
+            "6": 1
+          },
+          "enemies": 5,
+          "enemies_near_viewport": 5,
+          "actors": 7
+        }
+      },
+      "samples_retained_frames": 180,
+      "actor_samples_retained_frames": 12
+    },
+    {
+      "name": "forest-0000b4a7-cell12",
+      "kind": "natural",
+      "seed": "0xb4a7",
+      "input_mode": "combat",
+      "metadata": {
+        "stage": 1,
+        "role": 4,
+        "goal": false,
+        "point": [
+          296,
+          222
+        ],
+        "fixture_point": [
+          296,
+          222
+        ]
+      },
+      "warmup_frames": 0,
+      "initial": {
+        "area": 1,
+        "cell": 12,
+        "position": [
+          296,
+          222
+        ],
+        "camera": [
+          164,
+          28
+        ],
+        "roster": {
+          "kinds": {
+            "1": 1,
+            "2": 5
+          },
+          "enemy_types": {
+            "6": 1,
+            "4": 1,
+            "3": 1,
+            "0": 1,
+            "7": 1
+          },
+          "enemies": 5,
+          "enemies_near_viewport": 0,
+          "actors": 6
+        }
+      },
+      "video_frames": 180,
+      "vblanks": 180,
+      "logic_updates": 180,
+      "eligible_gameplay_frames": 180,
+      "eligible_gameplay_updates": 180,
+      "update_ratio": 1.0,
+      "missed_gameplay_updates": 0,
+      "logic_delta_histogram": {
+        "1": 180
+      },
+      "longest_repeat": 0,
+      "game_states": {
+        "1": 180
+      },
+      "player_states": {
+        "2": 138,
+        "0": 42
+      },
+      "oam_peak": 24,
+      "ambient_potential_peak": 12,
+      "ending": {
+        "area": 1,
+        "cell": 12,
+        "roster": {
+          "kinds": {
+            "1": 1,
+            "2": 3
+          },
+          "enemy_types": {
+            "6": 1,
+            "4": 1,
+            "7": 1
+          },
+          "enemies": 3,
+          "enemies_near_viewport": 2,
+          "actors": 4
+        }
+      },
+      "samples_retained_frames": 180,
+      "actor_samples_retained_frames": 12
+    },
+    {
+      "name": "forest-0000b4a7-cell13",
+      "kind": "natural",
+      "seed": "0xb4a7",
+      "input_mode": "combat",
+      "metadata": {
+        "stage": 1,
+        "role": 0,
+        "goal": false,
+        "point": [
+          280,
+          222
+        ],
+        "fixture_point": [
+          280,
+          222
+        ]
+      },
+      "warmup_frames": 0,
+      "initial": {
+        "area": 1,
+        "cell": 13,
+        "position": [
+          280,
+          222
+        ],
+        "camera": [
+          160,
+          28
+        ],
+        "roster": {
+          "kinds": {
+            "1": 1,
+            "2": 5,
+            "4": 1
+          },
+          "enemy_types": {
+            "7": 3,
+            "0": 1,
+            "8": 1
+          },
+          "enemies": 5,
+          "enemies_near_viewport": 1,
+          "actors": 7
+        }
+      },
+      "video_frames": 180,
+      "vblanks": 180,
+      "logic_updates": 180,
+      "eligible_gameplay_frames": 180,
+      "eligible_gameplay_updates": 180,
+      "update_ratio": 1.0,
+      "missed_gameplay_updates": 0,
+      "logic_delta_histogram": {
+        "1": 180
+      },
+      "longest_repeat": 0,
+      "game_states": {
+        "1": 180
+      },
+      "player_states": {
+        "2": 107,
+        "0": 49,
+        "3": 24
+      },
+      "oam_peak": 19,
+      "ambient_potential_peak": 12,
+      "ending": {
+        "area": 1,
+        "cell": 13,
+        "roster": {
+          "kinds": {
+            "1": 1,
+            "2": 5,
+            "4": 1
+          },
+          "enemy_types": {
+            "7": 3,
+            "0": 1,
+            "8": 1
+          },
+          "enemies": 5,
+          "enemies_near_viewport": 5,
+          "actors": 7
+        }
+      },
+      "samples_retained_frames": 180,
+      "actor_samples_retained_frames": 12
+    },
+    {
+      "name": "forest-0000b4a7-cell14",
+      "kind": "natural",
+      "seed": "0xb4a7",
+      "input_mode": "combat",
+      "metadata": {
+        "stage": 1,
+        "role": 0,
+        "goal": false,
+        "point": [
+          264,
+          206
+        ],
+        "fixture_point": [
+          264,
+          206
+        ]
+      },
+      "warmup_frames": 0,
+      "initial": {
+        "area": 1,
+        "cell": 14,
+        "position": [
+          264,
+          206
+        ],
+        "camera": [
+          144,
+          28
+        ],
+        "roster": {
+          "kinds": {
+            "1": 1,
+            "2": 5
+          },
+          "enemy_types": {
+            "6": 4,
+            "1": 1
+          },
+          "enemies": 5,
+          "enemies_near_viewport": 4,
+          "actors": 6
+        }
+      },
+      "video_frames": 180,
+      "vblanks": 180,
+      "logic_updates": 180,
+      "eligible_gameplay_frames": 180,
+      "eligible_gameplay_updates": 180,
+      "update_ratio": 1.0,
+      "missed_gameplay_updates": 0,
+      "logic_delta_histogram": {
+        "1": 180
+      },
+      "longest_repeat": 0,
+      "game_states": {
+        "1": 180
+      },
+      "player_states": {
+        "2": 138,
+        "0": 42
+      },
+      "oam_peak": 20,
+      "ambient_potential_peak": 12,
+      "ending": {
+        "area": 1,
+        "cell": 14,
+        "roster": {
+          "kinds": {
+            "1": 1,
+            "2": 4
+          },
+          "enemy_types": {
+            "6": 3,
+            "1": 1
+          },
+          "enemies": 4,
+          "enemies_near_viewport": 4,
+          "actors": 5
+        }
+      },
+      "samples_retained_frames": 180,
+      "actor_samples_retained_frames": 12
+    },
+    {
+      "name": "forest-0000b4a7-cell15",
+      "kind": "natural",
+      "seed": "0xb4a7",
+      "input_mode": "combat",
+      "metadata": {
+        "stage": 2,
+        "role": 5,
+        "goal": false,
+        "point": [
+          264,
+          222
+        ],
+        "fixture_point": [
+          264,
+          222
+        ]
+      },
+      "warmup_frames": 0,
+      "initial": {
+        "area": 1,
+        "cell": 15,
+        "position": [
+          264,
+          222
+        ],
+        "camera": [
+          144,
+          28
+        ],
+        "roster": {
+          "kinds": {
+            "1": 1,
+            "2": 6,
+            "5": 1,
+            "4": 1
+          },
+          "enemy_types": {
+            "8": 1,
+            "4": 1,
+            "1": 2,
+            "6": 1,
+            "0": 1
+          },
+          "enemies": 6,
+          "enemies_near_viewport": 2,
+          "actors": 9
+        }
+      },
+      "video_frames": 180,
+      "vblanks": 180,
+      "logic_updates": 180,
+      "eligible_gameplay_frames": 180,
+      "eligible_gameplay_updates": 180,
+      "update_ratio": 1.0,
+      "missed_gameplay_updates": 0,
+      "logic_delta_histogram": {
+        "1": 180
+      },
+      "longest_repeat": 0,
+      "game_states": {
+        "1": 180
+      },
+      "player_states": {
+        "2": 127,
+        "0": 45,
+        "3": 8
+      },
+      "oam_peak": 21,
+      "ambient_potential_peak": 12,
+      "ending": {
+        "area": 1,
+        "cell": 15,
+        "roster": {
+          "kinds": {
+            "1": 1,
+            "2": 5,
+            "5": 1,
+            "4": 1
+          },
+          "enemy_types": {
+            "8": 1,
+            "4": 1,
+            "1": 1,
+            "6": 1,
+            "0": 1
+          },
+          "enemies": 5,
+          "enemies_near_viewport": 5,
+          "actors": 8
+        }
+      },
+      "samples_retained_frames": 180,
+      "actor_samples_retained_frames": 12
+    },
+    {
+      "name": "forest-0000b4a7-cell16",
+      "kind": "natural",
+      "seed": "0xb4a7",
+      "input_mode": "combat",
+      "metadata": {
+        "stage": 0,
+        "role": 10,
+        "goal": false,
+        "point": [
+          216,
+          206
+        ],
+        "fixture_point": [
+          216,
+          206
+        ]
+      },
+      "warmup_frames": 0,
+      "initial": {
+        "area": 1,
+        "cell": 16,
+        "position": [
+          216,
+          206
+        ],
+        "camera": [
+          108,
+          28
+        ],
+        "roster": {
+          "kinds": {
+            "1": 1,
+            "2": 5
+          },
+          "enemy_types": {
+            "0": 4,
+            "6": 1
+          },
+          "enemies": 5,
+          "enemies_near_viewport": 3,
+          "actors": 6
+        }
+      },
+      "video_frames": 180,
+      "vblanks": 180,
+      "logic_updates": 180,
+      "eligible_gameplay_frames": 180,
+      "eligible_gameplay_updates": 180,
+      "update_ratio": 1.0,
+      "missed_gameplay_updates": 0,
+      "logic_delta_histogram": {
+        "1": 180
+      },
+      "longest_repeat": 0,
+      "game_states": {
+        "1": 180
+      },
+      "player_states": {
+        "2": 69,
+        "3": 32,
+        "0": 45,
+        "5": 34
+      },
+      "oam_peak": 21,
+      "ambient_potential_peak": 12,
+      "ending": {
+        "area": 1,
+        "cell": 16,
+        "roster": {
+          "kinds": {
+            "1": 1,
+            "2": 4
+          },
+          "enemy_types": {
+            "0": 3,
+            "6": 1
+          },
+          "enemies": 4,
+          "enemies_near_viewport": 3,
+          "actors": 5
+        }
+      },
+      "samples_retained_frames": 180,
+      "actor_samples_retained_frames": 12
+    },
+    {
+      "name": "forest-0000b4a7-cell17",
+      "kind": "natural",
+      "seed": "0xb4a7",
+      "input_mode": "combat",
+      "metadata": {
+        "stage": 1,
+        "role": 4,
+        "goal": false,
+        "point": [
+          168,
+          270
+        ],
+        "fixture_point": [
+          168,
+          270
+        ]
+      },
+      "warmup_frames": 0,
+      "initial": {
+        "area": 1,
+        "cell": 17,
+        "position": [
+          168,
+          270
+        ],
+        "camera": [
+          108,
+          28
+        ],
+        "roster": {
+          "kinds": {
+            "1": 1,
+            "2": 5,
+            "4": 1
+          },
+          "enemy_types": {
+            "7": 1,
+            "4": 1,
+            "3": 1,
+            "1": 1,
+            "8": 1
+          },
+          "enemies": 5,
+          "enemies_near_viewport": 2,
+          "actors": 7
+        }
+      },
+      "video_frames": 180,
+      "vblanks": 180,
+      "logic_updates": 180,
+      "eligible_gameplay_frames": 180,
+      "eligible_gameplay_updates": 180,
+      "update_ratio": 1.0,
+      "missed_gameplay_updates": 0,
+      "logic_delta_histogram": {
+        "1": 180
+      },
+      "longest_repeat": 0,
+      "game_states": {
+        "1": 180
+      },
+      "player_states": {
+        "2": 110,
+        "0": 42,
+        "3": 8,
+        "5": 20
+      },
+      "oam_peak": 20,
+      "ambient_potential_peak": 12,
+      "ending": {
+        "area": 1,
+        "cell": 17,
+        "roster": {
+          "kinds": {
+            "1": 1,
+            "2": 4,
+            "4": 2
+          },
+          "enemy_types": {
+            "7": 1,
+            "4": 1,
+            "1": 1,
+            "8": 1
+          },
+          "enemies": 4,
+          "enemies_near_viewport": 4,
+          "actors": 7
+        }
+      },
+      "samples_retained_frames": 180,
+      "actor_samples_retained_frames": 12
+    },
+    {
+      "name": "forest-0000b4a7-cell18",
+      "kind": "natural",
+      "seed": "0xb4a7",
+      "input_mode": "combat",
+      "metadata": {
+        "stage": 1,
+        "role": 4,
+        "goal": false,
+        "point": [
+          216,
+          190
+        ],
+        "fixture_point": [
+          216,
+          190
+        ]
+      },
+      "warmup_frames": 0,
+      "initial": {
+        "area": 1,
+        "cell": 18,
+        "position": [
+          216,
+          190
+        ],
+        "camera": [
+          108,
+          28
+        ],
+        "roster": {
+          "kinds": {
+            "1": 1,
+            "2": 5,
+            "4": 1
+          },
+          "enemy_types": {
+            "6": 1,
+            "3": 2,
+            "4": 2
+          },
+          "enemies": 5,
+          "enemies_near_viewport": 4,
+          "actors": 7
+        }
+      },
+      "video_frames": 180,
+      "vblanks": 180,
+      "logic_updates": 180,
+      "eligible_gameplay_frames": 180,
+      "eligible_gameplay_updates": 180,
+      "update_ratio": 1.0,
+      "missed_gameplay_updates": 0,
+      "logic_delta_histogram": {
+        "1": 180
+      },
+      "longest_repeat": 0,
+      "game_states": {
+        "1": 180
+      },
+      "player_states": {
+        "2": 132,
+        "0": 40,
+        "3": 8
+      },
+      "oam_peak": 20,
+      "ambient_potential_peak": 12,
+      "ending": {
+        "area": 1,
+        "cell": 18,
+        "roster": {
+          "kinds": {
+            "1": 1,
+            "2": 4,
+            "4": 1
+          },
+          "enemy_types": {
+            "6": 1,
+            "4": 2,
+            "3": 1
+          },
+          "enemies": 4,
+          "enemies_near_viewport": 4,
+          "actors": 6
+        }
+      },
+      "samples_retained_frames": 180,
+      "actor_samples_retained_frames": 12
+    },
+    {
+      "name": "forest-0000b4a7-cell19",
+      "kind": "natural",
+      "seed": "0xb4a7",
+      "input_mode": "combat",
+      "metadata": {
+        "stage": 1,
+        "role": 0,
+        "goal": false,
+        "point": [
+          312,
+          190
+        ],
+        "fixture_point": [
+          312,
+          190
+        ]
+      },
+      "warmup_frames": 0,
+      "initial": {
+        "area": 1,
+        "cell": 19,
+        "position": [
+          312,
+          190
+        ],
+        "camera": [
+          164,
+          28
+        ],
+        "roster": {
+          "kinds": {
+            "1": 1,
+            "2": 6
+          },
+          "enemy_types": {
+            "1": 1,
+            "0": 3,
+            "6": 2
+          },
+          "enemies": 6,
+          "enemies_near_viewport": 1,
+          "actors": 7
+        }
+      },
+      "video_frames": 180,
+      "vblanks": 180,
+      "logic_updates": 180,
+      "eligible_gameplay_frames": 180,
+      "eligible_gameplay_updates": 180,
+      "update_ratio": 1.0,
+      "missed_gameplay_updates": 0,
+      "logic_delta_histogram": {
+        "1": 180
+      },
+      "longest_repeat": 0,
+      "game_states": {
+        "1": 180
+      },
+      "player_states": {
+        "2": 43,
+        "3": 8,
+        "0": 23,
+        "4": 72,
+        "5": 34
+      },
+      "oam_peak": 21,
+      "ambient_potential_peak": 12,
+      "ending": {
+        "area": 1,
+        "cell": 19,
+        "roster": {
+          "kinds": {
+            "1": 1,
+            "2": 4,
+            "7": 2,
+            "4": 1
+          },
+          "enemy_types": {
+            "1": 1,
+            "0": 1,
+            "6": 2
+          },
+          "enemies": 4,
+          "enemies_near_viewport": 3,
+          "actors": 8
+        }
+      },
+      "samples_retained_frames": 180,
+      "actor_samples_retained_frames": 12
+    },
+    {
+      "name": "forest-0000b4a7-cell20",
+      "kind": "natural",
+      "seed": "0xb4a7",
+      "input_mode": "combat",
+      "metadata": {
+        "stage": 3,
+        "role": 2,
+        "goal": true,
+        "point": [
+          248,
+          190
+        ],
+        "fixture_point": [
+          248,
+          190
+        ]
+      },
+      "warmup_frames": 0,
+      "initial": {
+        "area": 1,
+        "cell": 20,
+        "position": [
+          248,
+          190
+        ],
+        "camera": [
+          128,
+          28
+        ],
+        "roster": {
+          "kinds": {
+            "1": 1,
+            "2": 1
+          },
+          "enemy_types": {
+            "5": 1
+          },
+          "enemies": 1,
+          "enemies_near_viewport": 1,
+          "actors": 2
+        }
+      },
+      "video_frames": 180,
+      "vblanks": 180,
+      "logic_updates": 180,
+      "eligible_gameplay_frames": 180,
+      "eligible_gameplay_updates": 180,
+      "update_ratio": 1.0,
+      "missed_gameplay_updates": 0,
+      "logic_delta_histogram": {
+        "1": 180
+      },
+      "longest_repeat": 0,
+      "game_states": {
+        "1": 180
+      },
+      "player_states": {
+        "2": 138,
+        "0": 42
+      },
+      "oam_peak": 16,
+      "ambient_potential_peak": 8,
+      "ending": {
+        "area": 1,
+        "cell": 20,
+        "roster": {
+          "kinds": {
+            "1": 1,
+            "2": 1,
+            "3": 8
+          },
+          "enemy_types": {
+            "5": 1
+          },
+          "enemies": 1,
+          "enemies_near_viewport": 1,
+          "actors": 10
+        }
+      },
+      "samples_retained_frames": 180,
+      "actor_samples_retained_frames": 12
+    },
+    {
+      "name": "forest-0000b4a7-cell21",
+      "kind": "natural",
+      "seed": "0xb4a7",
+      "input_mode": "combat",
+      "metadata": {
+        "stage": 0,
+        "role": 4,
+        "goal": false,
+        "point": [
+          248,
+          222
+        ],
+        "fixture_point": [
+          248,
+          222
+        ]
+      },
+      "warmup_frames": 0,
+      "initial": {
+        "area": 1,
+        "cell": 21,
+        "position": [
+          248,
+          222
+        ],
+        "camera": [
+          128,
+          28
+        ],
+        "roster": {
+          "kinds": {
+            "1": 1,
+            "2": 5,
+            "4": 1
+          },
+          "enemy_types": {
+            "7": 2,
+            "3": 1,
+            "1": 2
+          },
+          "enemies": 5,
+          "enemies_near_viewport": 4,
+          "actors": 7
+        }
+      },
+      "video_frames": 180,
+      "vblanks": 180,
+      "logic_updates": 180,
+      "eligible_gameplay_frames": 180,
+      "eligible_gameplay_updates": 180,
+      "update_ratio": 1.0,
+      "missed_gameplay_updates": 0,
+      "logic_delta_histogram": {
+        "1": 180
+      },
+      "longest_repeat": 0,
+      "game_states": {
+        "1": 180
+      },
+      "player_states": {
+        "2": 80,
+        "0": 48,
+        "3": 40,
+        "5": 12
+      },
+      "oam_peak": 20,
+      "ambient_potential_peak": 12,
+      "ending": {
+        "area": 1,
+        "cell": 21,
+        "roster": {
+          "kinds": {
+            "1": 1,
+            "2": 5,
+            "4": 1
+          },
+          "enemy_types": {
+            "7": 2,
+            "3": 1,
+            "1": 2
+          },
+          "enemies": 5,
+          "enemies_near_viewport": 5,
+          "actors": 7
+        }
+      },
+      "samples_retained_frames": 180,
+      "actor_samples_retained_frames": 12
+    },
+    {
+      "name": "forest-0000b4a7-cell22",
+      "kind": "natural",
+      "seed": "0xb4a7",
+      "input_mode": "combat",
+      "metadata": {
+        "stage": 0,
+        "role": 1,
+        "goal": false,
+        "point": [
+          296,
+          190
+        ],
+        "fixture_point": [
+          296,
+          190
+        ]
+      },
+      "warmup_frames": 0,
+      "initial": {
+        "area": 1,
+        "cell": 22,
+        "position": [
+          296,
+          190
+        ],
+        "camera": [
+          244,
+          86
+        ],
+        "roster": {
+          "kinds": {
+            "1": 1,
+            "2": 3
+          },
+          "enemy_types": {
+            "6": 1,
+            "7": 1,
+            "3": 1
+          },
+          "enemies": 3,
+          "enemies_near_viewport": 3,
+          "actors": 4
+        }
+      },
+      "video_frames": 180,
+      "vblanks": 180,
+      "logic_updates": 180,
+      "eligible_gameplay_frames": 180,
+      "eligible_gameplay_updates": 180,
+      "update_ratio": 1.0,
+      "missed_gameplay_updates": 0,
+      "logic_delta_histogram": {
+        "1": 180
+      },
+      "longest_repeat": 0,
+      "game_states": {
+        "1": 180
+      },
+      "player_states": {
+        "2": 84,
+        "0": 52,
+        "3": 24,
+        "5": 20
+      },
+      "oam_peak": 19,
+      "ambient_potential_peak": 12,
+      "ending": {
+        "area": 1,
+        "cell": 22,
+        "roster": {
+          "kinds": {
+            "1": 1,
+            "2": 3
+          },
+          "enemy_types": {
+            "6": 1,
+            "7": 1,
+            "3": 1
+          },
+          "enemies": 3,
+          "enemies_near_viewport": 3,
+          "actors": 4
+        }
+      },
+      "samples_retained_frames": 180,
+      "actor_samples_retained_frames": 12
+    },
+    {
+      "name": "forest-0000b4a7-cell23",
+      "kind": "natural",
+      "seed": "0xb4a7",
+      "input_mode": "combat",
+      "metadata": {
+        "stage": 0,
+        "role": 8,
+        "goal": false,
+        "point": [
+          248,
+          270
+        ],
+        "fixture_point": [
+          248,
+          270
+        ]
+      },
+      "warmup_frames": 0,
+      "initial": {
+        "area": 1,
+        "cell": 23,
+        "position": [
+          248,
+          270
+        ],
+        "camera": [
+          128,
+          28
+        ],
+        "roster": {
+          "kinds": {
+            "1": 1,
+            "2": 4,
+            "4": 1
+          },
+          "enemy_types": {
+            "6": 2,
+            "7": 1,
+            "3": 1
+          },
+          "enemies": 4,
+          "enemies_near_viewport": 2,
+          "actors": 6
+        }
+      },
+      "video_frames": 180,
+      "vblanks": 180,
+      "logic_updates": 180,
+      "eligible_gameplay_frames": 180,
+      "eligible_gameplay_updates": 180,
+      "update_ratio": 1.0,
+      "missed_gameplay_updates": 0,
+      "logic_delta_histogram": {
+        "1": 180
+      },
+      "longest_repeat": 0,
+      "game_states": {
+        "1": 180
+      },
+      "player_states": {
+        "2": 134,
+        "0": 38,
+        "3": 8
+      },
+      "oam_peak": 19,
+      "ambient_potential_peak": 12,
+      "ending": {
+        "area": 1,
+        "cell": 23,
+        "roster": {
+          "kinds": {
+            "1": 1,
+            "2": 4,
+            "4": 1
+          },
+          "enemy_types": {
+            "6": 2,
+            "7": 1,
+            "3": 1
+          },
+          "enemies": 4,
+          "enemies_near_viewport": 4,
+          "actors": 6
+        }
+      },
+      "samples_retained_frames": 180,
+      "actor_samples_retained_frames": 12
+    },
+    {
+      "name": "forest-0000b4a7-cell24",
+      "kind": "natural",
+      "seed": "0xb4a7",
+      "input_mode": "combat",
+      "metadata": {
+        "stage": 0,
+        "role": 4,
+        "goal": false,
+        "point": [
+          232,
+          110
+        ],
+        "fixture_point": [
+          232,
+          110
+        ]
+      },
+      "warmup_frames": 0,
+      "initial": {
+        "area": 1,
+        "cell": 24,
+        "position": [
+          232,
+          110
+        ],
+        "camera": [
+          28,
+          68
+        ],
+        "roster": {
+          "kinds": {
+            "1": 1,
+            "2": 4
+          },
+          "enemy_types": {
+            "6": 1,
+            "7": 1,
+            "0": 1,
+            "1": 1
+          },
+          "enemies": 4,
+          "enemies_near_viewport": 2,
+          "actors": 5
+        }
+      },
+      "video_frames": 180,
+      "vblanks": 180,
+      "logic_updates": 180,
+      "eligible_gameplay_frames": 180,
+      "eligible_gameplay_updates": 180,
+      "update_ratio": 1.0,
+      "missed_gameplay_updates": 0,
+      "logic_delta_histogram": {
+        "1": 180
+      },
+      "longest_repeat": 0,
+      "game_states": {
+        "1": 180
+      },
+      "player_states": {
+        "2": 58,
+        "3": 24,
+        "0": 44,
+        "5": 54
+      },
+      "oam_peak": 19,
+      "ambient_potential_peak": 12,
+      "ending": {
+        "area": 1,
+        "cell": 24,
+        "roster": {
+          "kinds": {
+            "1": 1,
+            "2": 4
+          },
+          "enemy_types": {
+            "6": 1,
+            "7": 1,
+            "0": 1,
+            "1": 1
+          },
+          "enemies": 4,
+          "enemies_near_viewport": 4,
+          "actors": 5
+        }
+      },
+      "samples_retained_frames": 180,
+      "actor_samples_retained_frames": 12
+    },
+    {
+      "name": "drain-deadbeef",
+      "kind": "drain",
+      "seed": "0xdeadbeef",
+      "input_mode": "idle",
+      "metadata": {},
+      "warmup_frames": 0,
+      "initial": {
+        "area": 0,
+        "cell": 0,
+        "position": [
+          200,
+          270
+        ],
+        "camera": [
+          80,
+          160
+        ],
+        "roster": {
+          "kinds": {
+            "1": 1,
+            "5": 2
+          },
+          "enemy_types": {},
+          "enemies": 0,
+          "enemies_near_viewport": 0,
+          "actors": 3
+        }
+      },
+      "video_frames": 180,
+      "vblanks": 180,
+      "logic_updates": 179,
+      "eligible_gameplay_frames": 180,
+      "eligible_gameplay_updates": 179,
+      "update_ratio": 0.9944444444444445,
+      "missed_gameplay_updates": 1,
+      "logic_delta_histogram": {
+        "1": 179,
+        "0": 1
+      },
+      "longest_repeat": 1,
+      "game_states": {
+        "1": 180
+      },
+      "player_states": {
+        "0": 180
+      },
+      "oam_peak": 15,
+      "ambient_potential_peak": 12,
+      "ending": {
+        "area": 0,
+        "cell": 0,
+        "roster": {
+          "kinds": {
+            "1": 1,
+            "5": 2
+          },
+          "enemy_types": {},
+          "enemies": 0,
+          "enemies_near_viewport": 0,
+          "actors": 3
+        }
+      },
+      "samples_retained_frames": 180,
+      "actor_samples_retained_frames": 12
+    },
+    {
+      "name": "forest-deadbeef-cell00",
+      "kind": "natural",
+      "seed": "0xdeadbeef",
+      "input_mode": "combat",
+      "metadata": {
+        "stage": 2,
+        "role": 9,
+        "goal": false,
+        "point": [
+          184,
+          190
+        ],
+        "fixture_point": [
+          184,
+          190
+        ]
+      },
+      "warmup_frames": 0,
+      "initial": {
+        "area": 1,
+        "cell": 0,
+        "position": [
+          184,
+          190
+        ],
+        "camera": [
+          244,
+          86
+        ],
+        "roster": {
+          "kinds": {
+            "1": 1,
+            "2": 3,
+            "4": 1
+          },
+          "enemy_types": {
+            "1": 2,
+            "2": 1
+          },
+          "enemies": 3,
+          "enemies_near_viewport": 0,
+          "actors": 5
+        }
+      },
+      "video_frames": 180,
+      "vblanks": 180,
+      "logic_updates": 180,
+      "eligible_gameplay_frames": 180,
+      "eligible_gameplay_updates": 180,
+      "update_ratio": 1.0,
+      "missed_gameplay_updates": 0,
+      "logic_delta_histogram": {
+        "1": 180
+      },
+      "longest_repeat": 0,
+      "game_states": {
+        "1": 180
+      },
+      "player_states": {
+        "2": 117,
+        "0": 47,
+        "3": 16
+      },
+      "oam_peak": 22,
+      "ambient_potential_peak": 12,
+      "ending": {
+        "area": 1,
+        "cell": 0,
+        "roster": {
+          "kinds": {
+            "1": 1,
+            "2": 2,
+            "4": 1,
+            "3": 1
+          },
+          "enemy_types": {
+            "2": 1,
+            "1": 1
+          },
+          "enemies": 2,
+          "enemies_near_viewport": 2,
+          "actors": 5
+        }
+      },
+      "samples_retained_frames": 180,
+      "actor_samples_retained_frames": 12
+    },
+    {
+      "name": "forest-deadbeef-cell01",
+      "kind": "natural",
+      "seed": "0xdeadbeef",
+      "input_mode": "combat",
+      "metadata": {
+        "stage": 2,
+        "role": 7,
+        "goal": false,
+        "point": [
+          264,
+          158
+        ],
+        "fixture_point": [
+          264,
+          158
+        ]
+      },
+      "warmup_frames": 0,
+      "initial": {
+        "area": 1,
+        "cell": 1,
+        "position": [
+          264,
+          158
+        ],
+        "camera": [
+          244,
+          68
+        ],
+        "roster": {
+          "kinds": {
+            "1": 1,
+            "2": 7,
+            "5": 1,
+            "4": 1
+          },
+          "enemy_types": {
+            "2": 4,
+            "3": 1,
+            "8": 1,
+            "7": 1
+          },
+          "enemies": 7,
+          "enemies_near_viewport": 5,
+          "actors": 10
+        }
+      },
+      "video_frames": 180,
+      "vblanks": 180,
+      "logic_updates": 180,
+      "eligible_gameplay_frames": 180,
+      "eligible_gameplay_updates": 180,
+      "update_ratio": 1.0,
+      "missed_gameplay_updates": 0,
+      "logic_delta_histogram": {
+        "1": 180
+      },
+      "longest_repeat": 0,
+      "game_states": {
+        "1": 180
+      },
+      "player_states": {
+        "2": 95,
+        "0": 61,
+        "3": 24
+      },
+      "oam_peak": 27,
+      "ambient_potential_peak": 12,
+      "ending": {
+        "area": 1,
+        "cell": 1,
+        "roster": {
+          "kinds": {
+            "1": 1,
+            "2": 6,
+            "5": 1,
+            "4": 2
+          },
+          "enemy_types": {
+            "2": 3,
+            "3": 1,
+            "8": 1,
+            "7": 1
+          },
+          "enemies": 6,
+          "enemies_near_viewport": 5,
+          "actors": 10
+        }
+      },
+      "samples_retained_frames": 180,
+      "actor_samples_retained_frames": 12
+    },
+    {
+      "name": "forest-deadbeef-cell02",
+      "kind": "natural",
+      "seed": "0xdeadbeef",
+      "input_mode": "combat",
+      "metadata": {
+        "stage": 2,
+        "role": 0,
+        "goal": false,
+        "point": [
+          216,
+          206
+        ],
+        "fixture_point": [
+          216,
+          206
+        ]
+      },
+      "warmup_frames": 0,
+      "initial": {
+        "area": 1,
+        "cell": 2,
+        "position": [
+          216,
+          206
+        ],
+        "camera": [
+          244,
+          102
+        ],
+        "roster": {
+          "kinds": {
+            "1": 1,
+            "2": 7,
+            "4": 1
+          },
+          "enemy_types": {
+            "1": 1,
+            "4": 3,
+            "0": 2,
+            "7": 1
+          },
+          "enemies": 7,
+          "enemies_near_viewport": 4,
+          "actors": 9
+        }
+      },
+      "video_frames": 180,
+      "vblanks": 180,
+      "logic_updates": 180,
+      "eligible_gameplay_frames": 180,
+      "eligible_gameplay_updates": 180,
+      "update_ratio": 1.0,
+      "missed_gameplay_updates": 0,
+      "logic_delta_histogram": {
+        "1": 180
+      },
+      "longest_repeat": 0,
+      "game_states": {
+        "1": 180
+      },
+      "player_states": {
+        "2": 96,
+        "0": 60,
+        "3": 24
+      },
+      "oam_peak": 23,
+      "ambient_potential_peak": 12,
+      "ending": {
+        "area": 1,
+        "cell": 2,
+        "roster": {
+          "kinds": {
+            "1": 1,
+            "2": 7,
+            "4": 1
+          },
+          "enemy_types": {
+            "1": 1,
+            "4": 3,
+            "0": 2,
+            "7": 1
+          },
+          "enemies": 7,
+          "enemies_near_viewport": 7,
+          "actors": 9
+        }
+      },
+      "samples_retained_frames": 180,
+      "actor_samples_retained_frames": 12
+    },
+    {
+      "name": "forest-deadbeef-cell03",
+      "kind": "natural",
+      "seed": "0xdeadbeef",
+      "input_mode": "combat",
+      "metadata": {
+        "stage": 2,
+        "role": 0,
+        "goal": false,
+        "point": [
+          248,
+          158
+        ],
+        "fixture_point": [
+          248,
+          158
+        ]
+      },
+      "warmup_frames": 0,
+      "initial": {
+        "area": 1,
+        "cell": 3,
+        "position": [
+          248,
+          158
+        ],
+        "camera": [
+          244,
+          68
+        ],
+        "roster": {
+          "kinds": {
+            "1": 1,
+            "2": 7
+          },
+          "enemy_types": {
+            "4": 2,
+            "3": 2,
+            "8": 2,
+            "7": 1
+          },
+          "enemies": 7,
+          "enemies_near_viewport": 5,
+          "actors": 8
+        }
+      },
+      "video_frames": 180,
+      "vblanks": 180,
+      "logic_updates": 180,
+      "eligible_gameplay_frames": 180,
+      "eligible_gameplay_updates": 180,
+      "update_ratio": 1.0,
+      "missed_gameplay_updates": 0,
+      "logic_delta_histogram": {
+        "1": 180
+      },
+      "longest_repeat": 0,
+      "game_states": {
+        "1": 180
+      },
+      "player_states": {
+        "2": 69,
+        "0": 59,
+        "3": 35,
+        "5": 17
+      },
+      "oam_peak": 23,
+      "ambient_potential_peak": 12,
+      "ending": {
+        "area": 1,
+        "cell": 3,
+        "roster": {
+          "kinds": {
+            "1": 1,
+            "2": 7
+          },
+          "enemy_types": {
+            "4": 2,
+            "3": 2,
+            "8": 2,
+            "7": 1
+          },
+          "enemies": 7,
+          "enemies_near_viewport": 7,
+          "actors": 8
+        }
+      },
+      "samples_retained_frames": 180,
+      "actor_samples_retained_frames": 12
+    },
+    {
+      "name": "forest-deadbeef-cell04",
+      "kind": "natural",
+      "seed": "0xdeadbeef",
+      "input_mode": "combat",
+      "metadata": {
+        "stage": 3,
+        "role": 4,
+        "goal": false,
+        "point": [
+          360,
+          222
+        ],
+        "fixture_point": [
+          360,
+          222
+        ]
+      },
+      "warmup_frames": 0,
+      "initial": {
+        "area": 1,
+        "cell": 4,
+        "position": [
+          360,
+          222
+        ],
+        "camera": [
+          164,
+          196
+        ],
+        "roster": {
+          "kinds": {
+            "1": 1,
+            "2": 8,
+            "4": 1
+          },
+          "enemy_types": {
+            "0": 1,
+            "6": 2,
+            "7": 2,
+            "4": 1,
+            "1": 2
+          },
+          "enemies": 8,
+          "enemies_near_viewport": 7,
+          "actors": 10
+        }
+      },
+      "video_frames": 180,
+      "vblanks": 180,
+      "logic_updates": 180,
+      "eligible_gameplay_frames": 180,
+      "eligible_gameplay_updates": 180,
+      "update_ratio": 1.0,
+      "missed_gameplay_updates": 0,
+      "logic_delta_histogram": {
+        "1": 180
+      },
+      "longest_repeat": 0,
+      "game_states": {
+        "1": 180
+      },
+      "player_states": {
+        "2": 34,
+        "3": 32,
+        "0": 60,
+        "5": 54
+      },
+      "oam_peak": 27,
+      "ambient_potential_peak": 12,
+      "ending": {
+        "area": 1,
+        "cell": 4,
+        "roster": {
+          "kinds": {
+            "1": 1,
+            "2": 8,
+            "4": 1
+          },
+          "enemy_types": {
+            "0": 1,
+            "6": 2,
+            "7": 2,
+            "4": 1,
+            "1": 2
+          },
+          "enemies": 8,
+          "enemies_near_viewport": 8,
+          "actors": 10
+        }
+      },
+      "samples_retained_frames": 180,
+      "actor_samples_retained_frames": 12
+    },
+    {
+      "name": "forest-deadbeef-cell05",
+      "kind": "natural",
+      "seed": "0xdeadbeef",
+      "input_mode": "combat",
+      "metadata": {
+        "stage": 0,
+        "role": 9,
+        "goal": false,
+        "point": [
+          296,
+          158
+        ],
+        "fixture_point": [
+          296,
+          158
+        ]
+      },
+      "warmup_frames": 0,
+      "initial": {
+        "area": 1,
+        "cell": 5,
+        "position": [
+          296,
+          158
+        ],
+        "camera": [
+          164,
+          196
+        ],
+        "roster": {
+          "kinds": {
+            "1": 1,
+            "2": 3,
+            "4": 1
+          },
+          "enemy_types": {
+            "0": 2,
+            "6": 1
+          },
+          "enemies": 3,
+          "enemies_near_viewport": 1,
+          "actors": 5
+        }
+      },
+      "video_frames": 180,
+      "vblanks": 180,
+      "logic_updates": 180,
+      "eligible_gameplay_frames": 180,
+      "eligible_gameplay_updates": 180,
+      "update_ratio": 1.0,
+      "missed_gameplay_updates": 0,
+      "logic_delta_histogram": {
+        "1": 180
+      },
+      "longest_repeat": 0,
+      "game_states": {
+        "1": 180
+      },
+      "player_states": {
+        "2": 82,
+        "0": 46,
+        "3": 32,
+        "5": 20
+      },
+      "oam_peak": 19,
+      "ambient_potential_peak": 12,
+      "ending": {
+        "area": 1,
+        "cell": 5,
+        "roster": {
+          "kinds": {
+            "1": 1,
+            "2": 3,
+            "4": 1
+          },
+          "enemy_types": {
+            "0": 2,
+            "6": 1
+          },
+          "enemies": 3,
+          "enemies_near_viewport": 2,
+          "actors": 5
+        }
+      },
+      "samples_retained_frames": 180,
+      "actor_samples_retained_frames": 12
+    },
+    {
+      "name": "forest-deadbeef-cell06",
+      "kind": "natural",
+      "seed": "0xdeadbeef",
+      "input_mode": "combat",
+      "metadata": {
+        "stage": 2,
+        "role": 3,
+        "goal": false,
+        "point": [
+          296,
+          190
+        ],
+        "fixture_point": [
+          296,
+          190
+        ]
+      },
+      "warmup_frames": 0,
+      "initial": {
+        "area": 1,
+        "cell": 6,
+        "position": [
+          296,
+          190
+        ],
+        "camera": [
+          164,
+          28
+        ],
+        "roster": {
+          "kinds": {
+            "1": 1,
+            "2": 6,
+            "4": 1
+          },
+          "enemy_types": {
+            "4": 2,
+            "1": 1,
+            "8": 1,
+            "0": 2
+          },
+          "enemies": 6,
+          "enemies_near_viewport": 4,
+          "actors": 8
+        }
+      },
+      "video_frames": 180,
+      "vblanks": 180,
+      "logic_updates": 180,
+      "eligible_gameplay_frames": 180,
+      "eligible_gameplay_updates": 180,
+      "update_ratio": 1.0,
+      "missed_gameplay_updates": 0,
+      "logic_delta_histogram": {
+        "1": 180
+      },
+      "longest_repeat": 0,
+      "game_states": {
+        "1": 180
+      },
+      "player_states": {
+        "2": 73,
+        "0": 55,
+        "3": 32,
+        "5": 20
+      },
+      "oam_peak": 22,
+      "ambient_potential_peak": 12,
+      "ending": {
+        "area": 1,
+        "cell": 6,
+        "roster": {
+          "kinds": {
+            "1": 1,
+            "2": 6,
+            "4": 1
+          },
+          "enemy_types": {
+            "4": 2,
+            "1": 1,
+            "8": 1,
+            "0": 2
+          },
+          "enemies": 6,
+          "enemies_near_viewport": 6,
+          "actors": 8
+        }
+      },
+      "samples_retained_frames": 180,
+      "actor_samples_retained_frames": 12
+    },
+    {
+      "name": "forest-deadbeef-cell07",
+      "kind": "natural",
+      "seed": "0xdeadbeef",
+      "input_mode": "combat",
+      "metadata": {
+        "stage": 1,
+        "role": 0,
+        "goal": false,
+        "point": [
+          264,
+          206
+        ],
+        "fixture_point": [
+          264,
+          206
+        ]
+      },
+      "warmup_frames": 0,
+      "initial": {
+        "area": 1,
+        "cell": 7,
+        "position": [
+          264,
+          206
+        ],
+        "camera": [
+          144,
+          28
+        ],
+        "roster": {
+          "kinds": {
+            "1": 1,
+            "2": 6,
+            "4": 1
+          },
+          "enemy_types": {
+            "8": 1,
+            "3": 3,
+            "1": 2
+          },
+          "enemies": 6,
+          "enemies_near_viewport": 2,
+          "actors": 8
+        }
+      },
+      "video_frames": 180,
+      "vblanks": 180,
+      "logic_updates": 180,
+      "eligible_gameplay_frames": 180,
+      "eligible_gameplay_updates": 180,
+      "update_ratio": 1.0,
+      "missed_gameplay_updates": 0,
+      "logic_delta_histogram": {
+        "1": 180
+      },
+      "longest_repeat": 0,
+      "game_states": {
+        "1": 180
+      },
+      "player_states": {
+        "2": 138,
+        "0": 42
+      },
+      "oam_peak": 20,
+      "ambient_potential_peak": 12,
+      "ending": {
+        "area": 1,
+        "cell": 7,
+        "roster": {
+          "kinds": {
+            "1": 1,
+            "2": 4,
+            "4": 1
+          },
+          "enemy_types": {
+            "8": 1,
+            "3": 2,
+            "1": 1
+          },
+          "enemies": 4,
+          "enemies_near_viewport": 4,
+          "actors": 6
+        }
+      },
+      "samples_retained_frames": 180,
+      "actor_samples_retained_frames": 12
+    },
+    {
+      "name": "forest-deadbeef-cell08",
+      "kind": "natural",
+      "seed": "0xdeadbeef",
+      "input_mode": "combat",
+      "metadata": {
+        "stage": 3,
+        "role": 2,
+        "goal": true,
+        "point": [
+          248,
+          190
+        ],
+        "fixture_point": [
+          248,
+          190
+        ]
+      },
+      "warmup_frames": 0,
+      "initial": {
+        "area": 1,
+        "cell": 8,
+        "position": [
+          248,
+          190
+        ],
+        "camera": [
+          244,
+          86
+        ],
+        "roster": {
+          "kinds": {
+            "1": 1,
+            "2": 1
+          },
+          "enemy_types": {
+            "5": 1
+          },
+          "enemies": 1,
+          "enemies_near_viewport": 1,
+          "actors": 2
+        }
+      },
+      "video_frames": 180,
+      "vblanks": 180,
+      "logic_updates": 180,
+      "eligible_gameplay_frames": 180,
+      "eligible_gameplay_updates": 180,
+      "update_ratio": 1.0,
+      "missed_gameplay_updates": 0,
+      "logic_delta_histogram": {
+        "1": 180
+      },
+      "longest_repeat": 0,
+      "game_states": {
+        "1": 180
+      },
+      "player_states": {
+        "2": 119,
+        "0": 52,
+        "3": 9
+      },
+      "oam_peak": 17,
+      "ambient_potential_peak": 6,
+      "ending": {
+        "area": 1,
+        "cell": 8,
+        "roster": {
+          "kinds": {
+            "1": 1,
+            "2": 1,
+            "3": 7
+          },
+          "enemy_types": {
+            "5": 1
+          },
+          "enemies": 1,
+          "enemies_near_viewport": 1,
+          "actors": 9
+        }
+      },
+      "samples_retained_frames": 180,
+      "actor_samples_retained_frames": 12
+    },
+    {
+      "name": "forest-deadbeef-cell09",
+      "kind": "natural",
+      "seed": "0xdeadbeef",
+      "input_mode": "combat",
+      "metadata": {
+        "stage": 3,
+        "role": 6,
+        "goal": false,
+        "point": [
+          152,
+          174
+        ],
+        "fixture_point": [
+          152,
+          174
+        ]
+      },
+      "warmup_frames": 0,
+      "initial": {
+        "area": 1,
+        "cell": 9,
+        "position": [
+          152,
+          174
+        ],
+        "camera": [
+          108,
+          28
+        ],
+        "roster": {
+          "kinds": {
+            "1": 1,
+            "2": 3,
+            "5": 1
+          },
+          "enemy_types": {
+            "1": 1,
+            "7": 1,
+            "8": 1
+          },
+          "enemies": 3,
+          "enemies_near_viewport": 2,
+          "actors": 5
+        }
+      },
+      "video_frames": 180,
+      "vblanks": 180,
+      "logic_updates": 180,
+      "eligible_gameplay_frames": 180,
+      "eligible_gameplay_updates": 180,
+      "update_ratio": 1.0,
+      "missed_gameplay_updates": 0,
+      "logic_delta_histogram": {
+        "1": 180
+      },
+      "longest_repeat": 0,
+      "game_states": {
+        "1": 180
+      },
+      "player_states": {
+        "2": 58,
+        "3": 32,
+        "0": 70,
+        "5": 20
+      },
+      "oam_peak": 19,
+      "ambient_potential_peak": 12,
+      "ending": {
+        "area": 1,
+        "cell": 9,
+        "roster": {
+          "kinds": {
+            "1": 1,
+            "2": 3,
+            "5": 1
+          },
+          "enemy_types": {
+            "1": 1,
+            "7": 1,
+            "8": 1
+          },
+          "enemies": 3,
+          "enemies_near_viewport": 3,
+          "actors": 5
+        }
+      },
+      "samples_retained_frames": 180,
+      "actor_samples_retained_frames": 12
+    },
+    {
+      "name": "forest-deadbeef-cell10",
+      "kind": "natural",
+      "seed": "0xdeadbeef",
+      "input_mode": "combat",
+      "metadata": {
+        "stage": 0,
+        "role": 4,
+        "goal": false,
+        "point": [
+          184,
+          190
+        ],
+        "fixture_point": [
+          184,
+          190
+        ]
+      },
+      "warmup_frames": 0,
+      "initial": {
+        "area": 1,
+        "cell": 10,
+        "position": [
+          184,
+          190
+        ],
+        "camera": [
+          108,
+          28
+        ],
+        "roster": {
+          "kinds": {
+            "1": 1,
+            "2": 5,
+            "4": 1
+          },
+          "enemy_types": {
+            "6": 1,
+            "0": 2,
+            "1": 2
+          },
+          "enemies": 5,
+          "enemies_near_viewport": 3,
+          "actors": 7
+        }
+      },
+      "video_frames": 180,
+      "vblanks": 180,
+      "logic_updates": 180,
+      "eligible_gameplay_frames": 180,
+      "eligible_gameplay_updates": 180,
+      "update_ratio": 1.0,
+      "missed_gameplay_updates": 0,
+      "logic_delta_histogram": {
+        "1": 180
+      },
+      "longest_repeat": 0,
+      "game_states": {
+        "1": 180
+      },
+      "player_states": {
+        "2": 73,
+        "3": 32,
+        "0": 41,
+        "5": 34
+      },
+      "oam_peak": 23,
+      "ambient_potential_peak": 12,
+      "ending": {
+        "area": 1,
+        "cell": 10,
+        "roster": {
+          "kinds": {
+            "1": 1,
+            "2": 2,
+            "4": 2
+          },
+          "enemy_types": {
+            "6": 1,
+            "1": 1
+          },
+          "enemies": 2,
+          "enemies_near_viewport": 2,
+          "actors": 5
+        }
+      },
+      "samples_retained_frames": 180,
+      "actor_samples_retained_frames": 12
+    },
+    {
+      "name": "forest-deadbeef-cell11",
+      "kind": "natural",
+      "seed": "0xdeadbeef",
+      "input_mode": "combat",
+      "metadata": {
+        "stage": 0,
+        "role": 10,
+        "goal": false,
+        "point": [
+          312,
+          206
+        ],
+        "fixture_point": [
+          312,
+          206
+        ]
+      },
+      "warmup_frames": 0,
+      "initial": {
+        "area": 1,
+        "cell": 11,
+        "position": [
+          312,
+          206
+        ],
+        "camera": [
+          244,
+          102
+        ],
+        "roster": {
+          "kinds": {
+            "1": 1,
+            "2": 4,
+            "4": 1
+          },
+          "enemy_types": {
+            "2": 3,
+            "7": 1
+          },
+          "enemies": 4,
+          "enemies_near_viewport": 4,
+          "actors": 6
+        }
+      },
+      "video_frames": 180,
+      "vblanks": 180,
+      "logic_updates": 180,
+      "eligible_gameplay_frames": 180,
+      "eligible_gameplay_updates": 180,
+      "update_ratio": 1.0,
+      "missed_gameplay_updates": 0,
+      "logic_delta_histogram": {
+        "1": 180
+      },
+      "longest_repeat": 0,
+      "game_states": {
+        "1": 180
+      },
+      "player_states": {
+        "2": 119,
+        "0": 53,
+        "3": 8
+      },
+      "oam_peak": 18,
+      "ambient_potential_peak": 12,
+      "ending": {
+        "area": 1,
+        "cell": 11,
+        "roster": {
+          "kinds": {
+            "1": 1,
+            "2": 4,
+            "4": 1
+          },
+          "enemy_types": {
+            "2": 3,
+            "7": 1
+          },
+          "enemies": 4,
+          "enemies_near_viewport": 4,
+          "actors": 6
+        }
+      },
+      "samples_retained_frames": 180,
+      "actor_samples_retained_frames": 12
+    },
+    {
+      "name": "forest-deadbeef-cell12",
+      "kind": "natural",
+      "seed": "0xdeadbeef",
+      "input_mode": "combat",
+      "metadata": {
+        "stage": 1,
+        "role": 4,
+        "goal": false,
+        "point": [
+          248,
+          174
+        ],
+        "fixture_point": [
+          248,
+          174
+        ]
+      },
+      "warmup_frames": 0,
+      "initial": {
+        "area": 1,
+        "cell": 12,
+        "position": [
+          248,
+          174
+        ],
+        "camera": [
+          128,
+          28
+        ],
+        "roster": {
+          "kinds": {
+            "1": 1,
+            "2": 6,
+            "4": 1
+          },
+          "enemy_types": {
+            "7": 2,
+            "2": 2,
+            "1": 1,
+            "0": 1
+          },
+          "enemies": 6,
+          "enemies_near_viewport": 2,
+          "actors": 8
+        }
+      },
+      "video_frames": 180,
+      "vblanks": 180,
+      "logic_updates": 180,
+      "eligible_gameplay_frames": 180,
+      "eligible_gameplay_updates": 180,
+      "update_ratio": 1.0,
+      "missed_gameplay_updates": 0,
+      "logic_delta_histogram": {
+        "1": 180
+      },
+      "longest_repeat": 0,
+      "game_states": {
+        "1": 180
+      },
+      "player_states": {
+        "2": 103,
+        "0": 41,
+        "3": 16,
+        "5": 20
+      },
+      "oam_peak": 22,
+      "ambient_potential_peak": 12,
+      "ending": {
+        "area": 1,
+        "cell": 12,
+        "roster": {
+          "kinds": {
+            "1": 1,
+            "2": 6,
+            "4": 1
+          },
+          "enemy_types": {
+            "7": 2,
+            "2": 2,
+            "1": 1,
+            "0": 1
+          },
+          "enemies": 6,
+          "enemies_near_viewport": 6,
+          "actors": 8
+        }
+      },
+      "samples_retained_frames": 180,
+      "actor_samples_retained_frames": 12
+    },
+    {
+      "name": "forest-deadbeef-cell13",
+      "kind": "natural",
+      "seed": "0xdeadbeef",
+      "input_mode": "combat",
+      "metadata": {
+        "stage": 1,
+        "role": 0,
+        "goal": false,
+        "point": [
+          200,
+          238
+        ],
+        "fixture_point": [
+          200,
+          238
+        ]
+      },
+      "warmup_frames": 0,
+      "initial": {
+        "area": 1,
+        "cell": 13,
+        "position": [
+          200,
+          238
+        ],
+        "camera": [
+          244,
+          124
+        ],
+        "roster": {
+          "kinds": {
+            "1": 1,
+            "2": 6,
+            "4": 1
+          },
+          "enemy_types": {
+            "1": 3,
+            "0": 1,
+            "6": 1,
+            "7": 1
+          },
+          "enemies": 6,
+          "enemies_near_viewport": 2,
+          "actors": 8
+        }
+      },
+      "video_frames": 180,
+      "vblanks": 180,
+      "logic_updates": 180,
+      "eligible_gameplay_frames": 180,
+      "eligible_gameplay_updates": 180,
+      "update_ratio": 1.0,
+      "missed_gameplay_updates": 0,
+      "logic_delta_histogram": {
+        "1": 180
+      },
+      "longest_repeat": 0,
+      "game_states": {
+        "1": 180
+      },
+      "player_states": {
+        "2": 56,
+        "3": 32,
+        "0": 58,
+        "5": 34
+      },
+      "oam_peak": 21,
+      "ambient_potential_peak": 12,
+      "ending": {
+        "area": 1,
+        "cell": 13,
+        "roster": {
+          "kinds": {
+            "1": 1,
+            "2": 6,
+            "4": 1
+          },
+          "enemy_types": {
+            "1": 3,
+            "0": 1,
+            "6": 1,
+            "7": 1
+          },
+          "enemies": 6,
+          "enemies_near_viewport": 5,
+          "actors": 8
+        }
+      },
+      "samples_retained_frames": 180,
+      "actor_samples_retained_frames": 12
+    },
+    {
+      "name": "forest-deadbeef-cell14",
+      "kind": "natural",
+      "seed": "0xdeadbeef",
+      "input_mode": "combat",
+      "metadata": {
+        "stage": 1,
+        "role": 0,
+        "goal": false,
+        "point": [
+          280,
+          174
+        ],
+        "fixture_point": [
+          280,
+          174
+        ]
+      },
+      "warmup_frames": 0,
+      "initial": {
+        "area": 1,
+        "cell": 14,
+        "position": [
+          280,
+          174
+        ],
+        "camera": [
+          160,
+          196
+        ],
+        "roster": {
+          "kinds": {
+            "1": 1,
+            "2": 6,
+            "4": 1
+          },
+          "enemy_types": {
+            "6": 3,
+            "7": 1,
+            "0": 2
+          },
+          "enemies": 6,
+          "enemies_near_viewport": 4,
+          "actors": 8
+        }
+      },
+      "video_frames": 180,
+      "vblanks": 180,
+      "logic_updates": 180,
+      "eligible_gameplay_frames": 180,
+      "eligible_gameplay_updates": 180,
+      "update_ratio": 1.0,
+      "missed_gameplay_updates": 0,
+      "logic_delta_histogram": {
+        "1": 180
+      },
+      "longest_repeat": 0,
+      "game_states": {
+        "1": 180
+      },
+      "player_states": {
+        "2": 138,
+        "0": 42
+      },
+      "oam_peak": 20,
+      "ambient_potential_peak": 12,
+      "ending": {
+        "area": 1,
+        "cell": 14,
+        "roster": {
+          "kinds": {
+            "1": 1,
+            "2": 6,
+            "4": 1
+          },
+          "enemy_types": {
+            "6": 3,
+            "7": 1,
+            "0": 2
+          },
+          "enemies": 6,
+          "enemies_near_viewport": 3,
+          "actors": 8
+        }
+      },
+      "samples_retained_frames": 180,
+      "actor_samples_retained_frames": 12
+    },
+    {
+      "name": "forest-deadbeef-cell15",
+      "kind": "natural",
+      "seed": "0xdeadbeef",
+      "input_mode": "combat",
+      "metadata": {
+        "stage": 0,
+        "role": 3,
+        "goal": false,
+        "point": [
+          296,
+          254
+        ],
+        "fixture_point": [
+          296,
+          254
+        ]
+      },
+      "warmup_frames": 0,
+      "initial": {
+        "area": 1,
+        "cell": 15,
+        "position": [
+          296,
+          254
+        ],
+        "camera": [
+          164,
+          196
+        ],
+        "roster": {
+          "kinds": {
+            "1": 1,
+            "2": 5,
+            "4": 1
+          },
+          "enemy_types": {
+            "1": 3,
+            "7": 2
+          },
+          "enemies": 5,
+          "enemies_near_viewport": 3,
+          "actors": 7
+        }
+      },
+      "video_frames": 180,
+      "vblanks": 180,
+      "logic_updates": 180,
+      "eligible_gameplay_frames": 180,
+      "eligible_gameplay_updates": 180,
+      "update_ratio": 1.0,
+      "missed_gameplay_updates": 0,
+      "logic_delta_histogram": {
+        "1": 180
+      },
+      "longest_repeat": 0,
+      "game_states": {
+        "1": 180
+      },
+      "player_states": {
+        "2": 72,
+        "0": 58,
+        "3": 16,
+        "5": 34
+      },
+      "oam_peak": 21,
+      "ambient_potential_peak": 12,
+      "ending": {
+        "area": 1,
+        "cell": 15,
+        "roster": {
+          "kinds": {
+            "1": 1,
+            "2": 5,
+            "4": 1
+          },
+          "enemy_types": {
+            "1": 3,
+            "7": 2
+          },
+          "enemies": 5,
+          "enemies_near_viewport": 5,
+          "actors": 7
+        }
+      },
+      "samples_retained_frames": 180,
+      "actor_samples_retained_frames": 12
+    },
+    {
+      "name": "forest-deadbeef-cell16",
+      "kind": "natural",
+      "seed": "0xdeadbeef",
+      "input_mode": "combat",
+      "metadata": {
+        "stage": 0,
+        "role": 4,
+        "goal": false,
+        "point": [
+          184,
+          174
+        ],
+        "fixture_point": [
+          184,
+          174
+        ]
+      },
+      "warmup_frames": 0,
+      "initial": {
+        "area": 1,
+        "cell": 16,
+        "position": [
+          184,
+          174
+        ],
+        "camera": [
+          108,
+          28
+        ],
+        "roster": {
+          "kinds": {
+            "1": 1,
+            "2": 5
+          },
+          "enemy_types": {
+            "0": 4,
+            "6": 1
+          },
+          "enemies": 5,
+          "enemies_near_viewport": 5,
+          "actors": 6
+        }
+      },
+      "video_frames": 180,
+      "vblanks": 180,
+      "logic_updates": 180,
+      "eligible_gameplay_frames": 180,
+      "eligible_gameplay_updates": 180,
+      "update_ratio": 1.0,
+      "missed_gameplay_updates": 0,
+      "logic_delta_histogram": {
+        "1": 180
+      },
+      "longest_repeat": 0,
+      "game_states": {
+        "1": 180
+      },
+      "player_states": {
+        "2": 54,
+        "3": 32,
+        "0": 68,
+        "5": 26
+      },
+      "oam_peak": 22,
+      "ambient_potential_peak": 12,
+      "ending": {
+        "area": 1,
+        "cell": 16,
+        "roster": {
+          "kinds": {
+            "1": 1,
+            "2": 3
+          },
+          "enemy_types": {
+            "0": 2,
+            "6": 1
+          },
+          "enemies": 3,
+          "enemies_near_viewport": 2,
+          "actors": 4
+        }
+      },
+      "samples_retained_frames": 180,
+      "actor_samples_retained_frames": 12
+    },
+    {
+      "name": "forest-deadbeef-cell17",
+      "kind": "natural",
+      "seed": "0xdeadbeef",
+      "input_mode": "combat",
+      "metadata": {
+        "stage": 0,
+        "role": 4,
+        "goal": false,
+        "point": [
+          248,
+          126
+        ],
+        "fixture_point": [
+          248,
+          126
+        ]
+      },
+      "warmup_frames": 0,
+      "initial": {
+        "area": 1,
+        "cell": 17,
+        "position": [
+          248,
+          126
+        ],
+        "camera": [
+          244,
+          68
+        ],
+        "roster": {
+          "kinds": {
+            "1": 1,
+            "2": 5
+          },
+          "enemy_types": {
+            "7": 3,
+            "3": 1,
+            "1": 1
+          },
+          "enemies": 5,
+          "enemies_near_viewport": 3,
+          "actors": 6
+        }
+      },
+      "video_frames": 180,
+      "vblanks": 180,
+      "logic_updates": 180,
+      "eligible_gameplay_frames": 180,
+      "eligible_gameplay_updates": 180,
+      "update_ratio": 1.0,
+      "missed_gameplay_updates": 0,
+      "logic_delta_histogram": {
+        "1": 180
+      },
+      "longest_repeat": 0,
+      "game_states": {
+        "1": 180
+      },
+      "player_states": {
+        "2": 82,
+        "0": 56,
+        "3": 8,
+        "5": 34
+      },
+      "oam_peak": 21,
+      "ambient_potential_peak": 12,
+      "ending": {
+        "area": 1,
+        "cell": 17,
+        "roster": {
+          "kinds": {
+            "1": 1,
+            "2": 4,
+            "7": 1,
+            "4": 1
+          },
+          "enemy_types": {
+            "7": 3,
+            "1": 1
+          },
+          "enemies": 4,
+          "enemies_near_viewport": 4,
+          "actors": 7
+        }
+      },
+      "samples_retained_frames": 180,
+      "actor_samples_retained_frames": 12
+    },
+    {
+      "name": "forest-deadbeef-cell18",
+      "kind": "natural",
+      "seed": "0xdeadbeef",
+      "input_mode": "combat",
+      "metadata": {
+        "stage": 0,
+        "role": 10,
+        "goal": false,
+        "point": [
+          216,
+          254
+        ],
+        "fixture_point": [
+          216,
+          254
+        ]
+      },
+      "warmup_frames": 0,
+      "initial": {
+        "area": 1,
+        "cell": 18,
+        "position": [
+          216,
+          254
+        ],
+        "camera": [
+          28,
+          124
+        ],
+        "roster": {
+          "kinds": {
+            "1": 1,
+            "2": 4,
+            "4": 1
+          },
+          "enemy_types": {
+            "0": 3,
+            "6": 1
+          },
+          "enemies": 4,
+          "enemies_near_viewport": 4,
+          "actors": 6
+        }
+      },
+      "video_frames": 180,
+      "vblanks": 180,
+      "logic_updates": 180,
+      "eligible_gameplay_frames": 180,
+      "eligible_gameplay_updates": 180,
+      "update_ratio": 1.0,
+      "missed_gameplay_updates": 0,
+      "logic_delta_histogram": {
+        "1": 180
+      },
+      "longest_repeat": 0,
+      "game_states": {
+        "1": 180
+      },
+      "player_states": {
+        "2": 95,
+        "0": 61,
+        "3": 24
+      },
+      "oam_peak": 20,
+      "ambient_potential_peak": 12,
+      "ending": {
+        "area": 1,
+        "cell": 18,
+        "roster": {
+          "kinds": {
+            "1": 1,
+            "2": 3,
+            "4": 1
+          },
+          "enemy_types": {
+            "0": 2,
+            "6": 1
+          },
+          "enemies": 3,
+          "enemies_near_viewport": 3,
+          "actors": 5
+        }
+      },
+      "samples_retained_frames": 180,
+      "actor_samples_retained_frames": 12
+    },
+    {
+      "name": "forest-deadbeef-cell19",
+      "kind": "natural",
+      "seed": "0xdeadbeef",
+      "input_mode": "combat",
+      "metadata": {
+        "stage": 1,
+        "role": 0,
+        "goal": false,
+        "point": [
+          296,
+          222
+        ],
+        "fixture_point": [
+          296,
+          222
+        ]
+      },
+      "warmup_frames": 0,
+      "initial": {
+        "area": 1,
+        "cell": 19,
+        "position": [
+          296,
+          222
+        ],
+        "camera": [
+          164,
+          28
+        ],
+        "roster": {
+          "kinds": {
+            "1": 1,
+            "2": 6,
+            "4": 1
+          },
+          "enemy_types": {
+            "6": 4,
+            "0": 1,
+            "1": 1
+          },
+          "enemies": 6,
+          "enemies_near_viewport": 3,
+          "actors": 8
+        }
+      },
+      "video_frames": 180,
+      "vblanks": 180,
+      "logic_updates": 180,
+      "eligible_gameplay_frames": 180,
+      "eligible_gameplay_updates": 180,
+      "update_ratio": 1.0,
+      "missed_gameplay_updates": 0,
+      "logic_delta_histogram": {
+        "1": 180
+      },
+      "longest_repeat": 0,
+      "game_states": {
+        "1": 180
+      },
+      "player_states": {
+        "2": 62,
+        "0": 60,
+        "3": 32,
+        "5": 26
+      },
+      "oam_peak": 22,
+      "ambient_potential_peak": 12,
+      "ending": {
+        "area": 1,
+        "cell": 19,
+        "roster": {
+          "kinds": {
+            "1": 1,
+            "2": 6,
+            "4": 1
+          },
+          "enemy_types": {
+            "6": 4,
+            "0": 1,
+            "1": 1
+          },
+          "enemies": 6,
+          "enemies_near_viewport": 6,
+          "actors": 8
+        }
+      },
+      "samples_retained_frames": 180,
+      "actor_samples_retained_frames": 12
+    },
+    {
+      "name": "forest-deadbeef-cell20",
+      "kind": "natural",
+      "seed": "0xdeadbeef",
+      "input_mode": "combat",
+      "metadata": {
+        "stage": 0,
+        "role": 8,
+        "goal": false,
+        "point": [
+          200,
+          126
+        ],
+        "fixture_point": [
+          200,
+          126
+        ]
+      },
+      "warmup_frames": 0,
+      "initial": {
+        "area": 1,
+        "cell": 20,
+        "position": [
+          200,
+          126
+        ],
+        "camera": [
+          108,
+          22
+        ],
+        "roster": {
+          "kinds": {
+            "1": 1,
+            "2": 5,
+            "4": 1
+          },
+          "enemy_types": {
+            "7": 2,
+            "2": 3
+          },
+          "enemies": 5,
+          "enemies_near_viewport": 5,
+          "actors": 7
+        }
+      },
+      "video_frames": 180,
+      "vblanks": 180,
+      "logic_updates": 180,
+      "eligible_gameplay_frames": 180,
+      "eligible_gameplay_updates": 180,
+      "update_ratio": 1.0,
+      "missed_gameplay_updates": 0,
+      "logic_delta_histogram": {
+        "1": 180
+      },
+      "longest_repeat": 0,
+      "game_states": {
+        "1": 180
+      },
+      "player_states": {
+        "2": 138,
+        "0": 42
+      },
+      "oam_peak": 20,
+      "ambient_potential_peak": 12,
+      "ending": {
+        "area": 1,
+        "cell": 20,
+        "roster": {
+          "kinds": {
+            "1": 1,
+            "2": 5,
+            "4": 1
+          },
+          "enemy_types": {
+            "7": 2,
+            "2": 3
+          },
+          "enemies": 5,
+          "enemies_near_viewport": 4,
+          "actors": 7
+        }
+      },
+      "samples_retained_frames": 180,
+      "actor_samples_retained_frames": 12
+    },
+    {
+      "name": "forest-deadbeef-cell21",
+      "kind": "natural",
+      "seed": "0xdeadbeef",
+      "input_mode": "combat",
+      "metadata": {
+        "stage": 0,
+        "role": 5,
+        "goal": false,
+        "point": [
+          232,
+          206
+        ],
+        "fixture_point": [
+          232,
+          206
+        ]
+      },
+      "warmup_frames": 0,
+      "initial": {
+        "area": 1,
+        "cell": 21,
+        "position": [
+          232,
+          213
+        ],
+        "camera": [
+          112,
+          28
+        ],
+        "roster": {
+          "kinds": {
+            "1": 1,
+            "2": 5,
+            "5": 1,
+            "4": 1
+          },
+          "enemy_types": {
+            "0": 3,
+            "6": 1,
+            "1": 1
+          },
+          "enemies": 5,
+          "enemies_near_viewport": 3,
+          "actors": 8
+        }
+      },
+      "video_frames": 180,
+      "vblanks": 180,
+      "logic_updates": 180,
+      "eligible_gameplay_frames": 180,
+      "eligible_gameplay_updates": 180,
+      "update_ratio": 1.0,
+      "missed_gameplay_updates": 0,
+      "logic_delta_histogram": {
+        "1": 180
+      },
+      "longest_repeat": 0,
+      "game_states": {
+        "1": 180
+      },
+      "player_states": {
+        "2": 129,
+        "0": 43,
+        "3": 8
+      },
+      "oam_peak": 24,
+      "ambient_potential_peak": 12,
+      "ending": {
+        "area": 1,
+        "cell": 21,
+        "roster": {
+          "kinds": {
+            "1": 1,
+            "2": 4,
+            "5": 1,
+            "4": 1
+          },
+          "enemy_types": {
+            "0": 3,
+            "6": 1
+          },
+          "enemies": 4,
+          "enemies_near_viewport": 4,
+          "actors": 7
+        }
+      },
+      "samples_retained_frames": 180,
+      "actor_samples_retained_frames": 12
+    },
+    {
+      "name": "forest-deadbeef-cell22",
+      "kind": "natural",
+      "seed": "0xdeadbeef",
+      "input_mode": "combat",
+      "metadata": {
+        "stage": 0,
+        "role": 1,
+        "goal": false,
+        "point": [
+          264,
+          190
+        ],
+        "fixture_point": [
+          264,
+          190
+        ]
+      },
+      "warmup_frames": 0,
+      "initial": {
+        "area": 1,
+        "cell": 22,
+        "position": [
+          264,
+          190
+        ],
+        "camera": [
+          244,
+          86
+        ],
+        "roster": {
+          "kinds": {
+            "1": 1,
+            "2": 3
+          },
+          "enemy_types": {
+            "0": 3
+          },
+          "enemies": 3,
+          "enemies_near_viewport": 3,
+          "actors": 4
+        }
+      },
+      "video_frames": 180,
+      "vblanks": 180,
+      "logic_updates": 180,
+      "eligible_gameplay_frames": 180,
+      "eligible_gameplay_updates": 180,
+      "update_ratio": 1.0,
+      "missed_gameplay_updates": 0,
+      "logic_delta_histogram": {
+        "1": 180
+      },
+      "longest_repeat": 0,
+      "game_states": {
+        "1": 180
+      },
+      "player_states": {
+        "2": 66,
+        "3": 48,
+        "0": 66
+      },
+      "oam_peak": 18,
+      "ambient_potential_peak": 12,
+      "ending": {
+        "area": 1,
+        "cell": 22,
+        "roster": {
+          "kinds": {
+            "1": 1,
+            "2": 2
+          },
+          "enemy_types": {
+            "0": 2
+          },
+          "enemies": 2,
+          "enemies_near_viewport": 2,
+          "actors": 3
+        }
+      },
+      "samples_retained_frames": 180,
+      "actor_samples_retained_frames": 12
+    },
+    {
+      "name": "forest-deadbeef-cell23",
+      "kind": "natural",
+      "seed": "0xdeadbeef",
+      "input_mode": "combat",
+      "metadata": {
+        "stage": 0,
+        "role": 4,
+        "goal": false,
+        "point": [
+          280,
+          190
+        ],
+        "fixture_point": [
+          280,
+          190
+        ]
+      },
+      "warmup_frames": 0,
+      "initial": {
+        "area": 1,
+        "cell": 23,
+        "position": [
+          280,
+          190
+        ],
+        "camera": [
+          28,
+          86
+        ],
+        "roster": {
+          "kinds": {
+            "1": 1,
+            "2": 5,
+            "4": 1
+          },
+          "enemy_types": {
+            "1": 2,
+            "7": 2,
+            "0": 1
+          },
+          "enemies": 5,
+          "enemies_near_viewport": 4,
+          "actors": 7
+        }
+      },
+      "video_frames": 180,
+      "vblanks": 180,
+      "logic_updates": 180,
+      "eligible_gameplay_frames": 180,
+      "eligible_gameplay_updates": 180,
+      "update_ratio": 1.0,
+      "missed_gameplay_updates": 0,
+      "logic_delta_histogram": {
+        "1": 180
+      },
+      "longest_repeat": 0,
+      "game_states": {
+        "1": 180
+      },
+      "player_states": {
+        "2": 117,
+        "0": 47,
+        "3": 16
+      },
+      "oam_peak": 22,
+      "ambient_potential_peak": 12,
+      "ending": {
+        "area": 1,
+        "cell": 23,
+        "roster": {
+          "kinds": {
+            "1": 1,
+            "2": 4,
+            "4": 1
+          },
+          "enemy_types": {
+            "1": 2,
+            "7": 2
+          },
+          "enemies": 4,
+          "enemies_near_viewport": 4,
+          "actors": 6
+        }
+      },
+      "samples_retained_frames": 180,
+      "actor_samples_retained_frames": 12
+    },
+    {
+      "name": "forest-deadbeef-cell24",
+      "kind": "natural",
+      "seed": "0xdeadbeef",
+      "input_mode": "combat",
+      "metadata": {
+        "stage": 1,
+        "role": 3,
+        "goal": false,
+        "point": [
+          264,
+          238
+        ],
+        "fixture_point": [
+          264,
+          238
+        ]
+      },
+      "warmup_frames": 0,
+      "initial": {
+        "area": 1,
+        "cell": 24,
+        "position": [
+          264,
+          238
+        ],
+        "camera": [
+          144,
+          28
+        ],
+        "roster": {
+          "kinds": {
+            "1": 1,
+            "2": 6,
+            "4": 1
+          },
+          "enemy_types": {
+            "0": 3,
+            "3": 2,
+            "6": 1
+          },
+          "enemies": 6,
+          "enemies_near_viewport": 2,
+          "actors": 8
+        }
+      },
+      "video_frames": 180,
+      "vblanks": 180,
+      "logic_updates": 180,
+      "eligible_gameplay_frames": 180,
+      "eligible_gameplay_updates": 180,
+      "update_ratio": 1.0,
+      "missed_gameplay_updates": 0,
+      "logic_delta_histogram": {
+        "1": 180
+      },
+      "longest_repeat": 0,
+      "game_states": {
+        "1": 180
+      },
+      "player_states": {
+        "2": 27,
+        "0": 67,
+        "3": 40,
+        "5": 46
+      },
+      "oam_peak": 21,
+      "ambient_potential_peak": 12,
+      "ending": {
+        "area": 1,
+        "cell": 24,
+        "roster": {
+          "kinds": {
+            "1": 1,
+            "2": 6,
+            "4": 1
+          },
+          "enemy_types": {
+            "0": 3,
+            "3": 2,
+            "6": 1
+          },
+          "enemies": 6,
+          "enemies_near_viewport": 5,
+          "actors": 8
+        }
+      },
+      "samples_retained_frames": 180,
+      "actor_samples_retained_frames": 12
+    },
+    {
+      "name": "drain-00000007",
+      "kind": "drain",
+      "seed": "0x7",
+      "input_mode": "idle",
+      "metadata": {},
+      "warmup_frames": 0,
+      "initial": {
+        "area": 0,
+        "cell": 0,
+        "position": [
+          200,
+          270
+        ],
+        "camera": [
+          80,
+          160
+        ],
+        "roster": {
+          "kinds": {
+            "1": 1,
+            "5": 2
+          },
+          "enemy_types": {},
+          "enemies": 0,
+          "enemies_near_viewport": 0,
+          "actors": 3
+        }
+      },
+      "video_frames": 180,
+      "vblanks": 180,
+      "logic_updates": 179,
+      "eligible_gameplay_frames": 180,
+      "eligible_gameplay_updates": 179,
+      "update_ratio": 0.9944444444444445,
+      "missed_gameplay_updates": 1,
+      "logic_delta_histogram": {
+        "1": 179,
+        "0": 1
+      },
+      "longest_repeat": 1,
+      "game_states": {
+        "1": 180
+      },
+      "player_states": {
+        "0": 180
+      },
+      "oam_peak": 15,
+      "ambient_potential_peak": 12,
+      "ending": {
+        "area": 0,
+        "cell": 0,
+        "roster": {
+          "kinds": {
+            "1": 1,
+            "5": 2
+          },
+          "enemy_types": {},
+          "enemies": 0,
+          "enemies_near_viewport": 0,
+          "actors": 3
+        }
+      },
+      "samples_retained_frames": 180,
+      "actor_samples_retained_frames": 12
+    },
+    {
+      "name": "forest-00000007-cell00",
+      "kind": "natural",
+      "seed": "0x7",
+      "input_mode": "combat",
+      "metadata": {
+        "stage": 1,
+        "role": 4,
+        "goal": false,
+        "point": [
+          328,
+          206
+        ],
+        "fixture_point": [
+          328,
+          206
+        ]
+      },
+      "warmup_frames": 0,
+      "initial": {
+        "area": 1,
+        "cell": 0,
+        "position": [
+          328,
+          206
+        ],
+        "camera": [
+          244,
+          102
+        ],
+        "roster": {
+          "kinds": {
+            "1": 1,
+            "2": 5,
+            "4": 1
+          },
+          "enemy_types": {
+            "2": 3,
+            "7": 1,
+            "6": 1
+          },
+          "enemies": 5,
+          "enemies_near_viewport": 4,
+          "actors": 7
+        }
+      },
+      "video_frames": 180,
+      "vblanks": 180,
+      "logic_updates": 180,
+      "eligible_gameplay_frames": 180,
+      "eligible_gameplay_updates": 180,
+      "update_ratio": 1.0,
+      "missed_gameplay_updates": 0,
+      "logic_delta_histogram": {
+        "1": 180
+      },
+      "longest_repeat": 0,
+      "game_states": {
+        "1": 180
+      },
+      "player_states": {
+        "2": 138,
+        "0": 42
+      },
+      "oam_peak": 21,
+      "ambient_potential_peak": 12,
+      "ending": {
+        "area": 1,
+        "cell": 0,
+        "roster": {
+          "kinds": {
+            "1": 1,
+            "2": 5,
+            "4": 1
+          },
+          "enemy_types": {
+            "2": 3,
+            "7": 1,
+            "6": 1
+          },
+          "enemies": 5,
+          "enemies_near_viewport": 5,
+          "actors": 7
+        }
+      },
+      "samples_retained_frames": 180,
+      "actor_samples_retained_frames": 12
+    },
+    {
+      "name": "forest-00000007-cell01",
+      "kind": "natural",
+      "seed": "0x7",
+      "input_mode": "combat",
+      "metadata": {
+        "stage": 1,
+        "role": 10,
+        "goal": false,
+        "point": [
+          280,
+          158
+        ],
+        "fixture_point": [
+          280,
+          158
+        ]
+      },
+      "warmup_frames": 0,
+      "initial": {
+        "area": 1,
+        "cell": 1,
+        "position": [
+          280,
+          158
+        ],
+        "camera": [
+          244,
+          68
+        ],
+        "roster": {
+          "kinds": {
+            "1": 1,
+            "2": 5,
+            "4": 1
+          },
+          "enemy_types": {
+            "1": 1,
+            "2": 2,
+            "6": 1,
+            "3": 1
+          },
+          "enemies": 5,
+          "enemies_near_viewport": 3,
+          "actors": 7
+        }
+      },
+      "video_frames": 180,
+      "vblanks": 180,
+      "logic_updates": 180,
+      "eligible_gameplay_frames": 180,
+      "eligible_gameplay_updates": 180,
+      "update_ratio": 1.0,
+      "missed_gameplay_updates": 0,
+      "logic_delta_histogram": {
+        "1": 180
+      },
+      "longest_repeat": 0,
+      "game_states": {
+        "1": 180
+      },
+      "player_states": {
+        "2": 138,
+        "0": 42
+      },
+      "oam_peak": 21,
+      "ambient_potential_peak": 12,
+      "ending": {
+        "area": 1,
+        "cell": 1,
+        "roster": {
+          "kinds": {
+            "1": 1,
+            "2": 5,
+            "4": 1
+          },
+          "enemy_types": {
+            "1": 1,
+            "2": 2,
+            "6": 1,
+            "3": 1
+          },
+          "enemies": 5,
+          "enemies_near_viewport": 5,
+          "actors": 7
+        }
+      },
+      "samples_retained_frames": 180,
+      "actor_samples_retained_frames": 12
+    },
+    {
+      "name": "forest-00000007-cell02",
+      "kind": "natural",
+      "seed": "0x7",
+      "input_mode": "combat",
+      "metadata": {
+        "stage": 2,
+        "role": 8,
+        "goal": false,
+        "point": [
+          296,
+          254
+        ],
+        "fixture_point": [
+          296,
+          254
+        ]
+      },
+      "warmup_frames": 0,
+      "initial": {
+        "area": 1,
+        "cell": 2,
+        "position": [
+          296,
+          254
+        ],
+        "camera": [
+          244,
+          124
+        ],
+        "roster": {
+          "kinds": {
+            "1": 1,
+            "2": 6,
+            "4": 2
+          },
+          "enemy_types": {
+            "6": 2,
+            "3": 1,
+            "7": 1,
+            "8": 1,
+            "2": 1
+          },
+          "enemies": 6,
+          "enemies_near_viewport": 5,
+          "actors": 9
+        }
+      },
+      "video_frames": 180,
+      "vblanks": 180,
+      "logic_updates": 180,
+      "eligible_gameplay_frames": 180,
+      "eligible_gameplay_updates": 180,
+      "update_ratio": 1.0,
+      "missed_gameplay_updates": 0,
+      "logic_delta_histogram": {
+        "1": 180
+      },
+      "longest_repeat": 0,
+      "game_states": {
+        "1": 180
+      },
+      "player_states": {
+        "2": 138,
+        "0": 42
+      },
+      "oam_peak": 24,
+      "ambient_potential_peak": 12,
+      "ending": {
+        "area": 1,
+        "cell": 2,
+        "roster": {
+          "kinds": {
+            "1": 1,
+            "2": 6,
+            "4": 2
+          },
+          "enemy_types": {
+            "6": 2,
+            "3": 1,
+            "7": 1,
+            "8": 1,
+            "2": 1
+          },
+          "enemies": 6,
+          "enemies_near_viewport": 5,
+          "actors": 9
+        }
+      },
+      "samples_retained_frames": 180,
+      "actor_samples_retained_frames": 12
+    },
+    {
+      "name": "forest-00000007-cell03",
+      "kind": "natural",
+      "seed": "0x7",
+      "input_mode": "combat",
+      "metadata": {
+        "stage": 2,
+        "role": 0,
+        "goal": false,
+        "point": [
+          312,
+          190
+        ],
+        "fixture_point": [
+          312,
+          190
+        ]
+      },
+      "warmup_frames": 0,
+      "initial": {
+        "area": 1,
+        "cell": 3,
+        "position": [
+          312,
+          190
+        ],
+        "camera": [
+          164,
+          196
+        ],
+        "roster": {
+          "kinds": {
+            "1": 1,
+            "2": 7,
+            "4": 1
+          },
+          "enemy_types": {
+            "0": 1,
+            "1": 3,
+            "7": 1,
+            "8": 1,
+            "4": 1
+          },
+          "enemies": 7,
+          "enemies_near_viewport": 3,
+          "actors": 9
+        }
+      },
+      "video_frames": 180,
+      "vblanks": 180,
+      "logic_updates": 180,
+      "eligible_gameplay_frames": 180,
+      "eligible_gameplay_updates": 180,
+      "update_ratio": 1.0,
+      "missed_gameplay_updates": 0,
+      "logic_delta_histogram": {
+        "1": 180
+      },
+      "longest_repeat": 0,
+      "game_states": {
+        "1": 180
+      },
+      "player_states": {
+        "2": 138,
+        "0": 42
+      },
+      "oam_peak": 22,
+      "ambient_potential_peak": 12,
+      "ending": {
+        "area": 1,
+        "cell": 3,
+        "roster": {
+          "kinds": {
+            "1": 1,
+            "2": 5,
+            "7": 1,
+            "4": 2
+          },
+          "enemy_types": {
+            "0": 1,
+            "1": 1,
+            "7": 1,
+            "8": 1,
+            "4": 1
+          },
+          "enemies": 5,
+          "enemies_near_viewport": 4,
+          "actors": 9
+        }
+      },
+      "samples_retained_frames": 180,
+      "actor_samples_retained_frames": 12
+    },
+    {
+      "name": "forest-00000007-cell04",
+      "kind": "natural",
+      "seed": "0x7",
+      "input_mode": "combat",
+      "metadata": {
+        "stage": 3,
+        "role": 2,
+        "goal": true,
+        "point": [
+          248,
+          190
+        ],
+        "fixture_point": [
+          248,
+          190
+        ]
+      },
+      "warmup_frames": 0,
+      "initial": {
+        "area": 1,
+        "cell": 4,
+        "position": [
+          248,
+          190
+        ],
+        "camera": [
+          128,
+          196
+        ],
+        "roster": {
+          "kinds": {
+            "1": 1,
+            "2": 1
+          },
+          "enemy_types": {
+            "5": 1
+          },
+          "enemies": 1,
+          "enemies_near_viewport": 1,
+          "actors": 2
+        }
+      },
+      "video_frames": 180,
+      "vblanks": 180,
+      "logic_updates": 180,
+      "eligible_gameplay_frames": 180,
+      "eligible_gameplay_updates": 180,
+      "update_ratio": 1.0,
+      "missed_gameplay_updates": 0,
+      "logic_delta_histogram": {
+        "1": 180
+      },
+      "longest_repeat": 0,
+      "game_states": {
+        "1": 180
+      },
+      "player_states": {
+        "2": 138,
+        "0": 42
+      },
+      "oam_peak": 17,
+      "ambient_potential_peak": 10,
+      "ending": {
+        "area": 1,
+        "cell": 4,
+        "roster": {
+          "kinds": {
+            "1": 1,
+            "2": 1,
+            "3": 8
+          },
+          "enemy_types": {
+            "5": 1
+          },
+          "enemies": 1,
+          "enemies_near_viewport": 1,
+          "actors": 10
+        }
+      },
+      "samples_retained_frames": 180,
+      "actor_samples_retained_frames": 12
+    },
+    {
+      "name": "forest-00000007-cell05",
+      "kind": "natural",
+      "seed": "0x7",
+      "input_mode": "combat",
+      "metadata": {
+        "stage": 1,
+        "role": 4,
+        "goal": false,
+        "point": [
+          264,
+          222
+        ],
+        "fixture_point": [
+          264,
+          222
+        ]
+      },
+      "warmup_frames": 0,
+      "initial": {
+        "area": 1,
+        "cell": 5,
+        "position": [
+          264,
+          222
+        ],
+        "camera": [
+          244,
+          118
+        ],
+        "roster": {
+          "kinds": {
+            "1": 1,
+            "2": 6,
+            "4": 1
+          },
+          "enemy_types": {
+            "1": 1,
+            "0": 3,
+            "7": 1,
+            "8": 1
+          },
+          "enemies": 6,
+          "enemies_near_viewport": 5,
+          "actors": 8
+        }
+      },
+      "video_frames": 180,
+      "vblanks": 180,
+      "logic_updates": 180,
+      "eligible_gameplay_frames": 180,
+      "eligible_gameplay_updates": 180,
+      "update_ratio": 1.0,
+      "missed_gameplay_updates": 0,
+      "logic_delta_histogram": {
+        "1": 180
+      },
+      "longest_repeat": 0,
+      "game_states": {
+        "1": 180
+      },
+      "player_states": {
+        "2": 85,
+        "0": 55,
+        "3": 40
+      },
+      "oam_peak": 21,
+      "ambient_potential_peak": 12,
+      "ending": {
+        "area": 1,
+        "cell": 5,
+        "roster": {
+          "kinds": {
+            "1": 1,
+            "2": 4,
+            "4": 1
+          },
+          "enemy_types": {
+            "0": 2,
+            "7": 1,
+            "8": 1
+          },
+          "enemies": 4,
+          "enemies_near_viewport": 4,
+          "actors": 6
+        }
+      },
+      "samples_retained_frames": 180,
+      "actor_samples_retained_frames": 12
+    },
+    {
+      "name": "forest-00000007-cell06",
+      "kind": "natural",
+      "seed": "0x7",
+      "input_mode": "combat",
+      "metadata": {
+        "stage": 1,
+        "role": 5,
+        "goal": false,
+        "point": [
+          248,
+          190
+        ],
+        "fixture_point": [
+          248,
+          190
+        ]
+      },
+      "warmup_frames": 0,
+      "initial": {
+        "area": 1,
+        "cell": 6,
+        "position": [
+          248,
+          190
+        ],
+        "camera": [
+          128,
+          28
+        ],
+        "roster": {
+          "kinds": {
+            "1": 1,
+            "2": 6,
+            "5": 1,
+            "4": 1
+          },
+          "enemy_types": {
+            "0": 4,
+            "1": 1,
+            "6": 1
+          },
+          "enemies": 6,
+          "enemies_near_viewport": 4,
+          "actors": 9
+        }
+      },
+      "video_frames": 180,
+      "vblanks": 180,
+      "logic_updates": 180,
+      "eligible_gameplay_frames": 180,
+      "eligible_gameplay_updates": 180,
+      "update_ratio": 1.0,
+      "missed_gameplay_updates": 0,
+      "logic_delta_histogram": {
+        "1": 180
+      },
+      "longest_repeat": 0,
+      "game_states": {
+        "1": 180
+      },
+      "player_states": {
+        "2": 138,
+        "0": 42
+      },
+      "oam_peak": 21,
+      "ambient_potential_peak": 12,
+      "ending": {
+        "area": 1,
+        "cell": 6,
+        "roster": {
+          "kinds": {
+            "1": 1,
+            "2": 5,
+            "5": 1,
+            "4": 1
+          },
+          "enemy_types": {
+            "0": 4,
+            "1": 1
+          },
+          "enemies": 5,
+          "enemies_near_viewport": 5,
+          "actors": 8
+        }
+      },
+      "samples_retained_frames": 180,
+      "actor_samples_retained_frames": 12
+    },
+    {
+      "name": "forest-00000007-cell07",
+      "kind": "natural",
+      "seed": "0x7",
+      "input_mode": "combat",
+      "metadata": {
+        "stage": 3,
+        "role": 5,
+        "goal": false,
+        "point": [
+          184,
+          206
+        ],
+        "fixture_point": [
+          184,
+          206
+        ]
+      },
+      "warmup_frames": 0,
+      "initial": {
+        "area": 1,
+        "cell": 7,
+        "position": [
+          184,
+          206
+        ],
+        "camera": [
+          108,
+          28
+        ],
+        "roster": {
+          "kinds": {
+            "1": 1,
+            "2": 7,
+            "5": 1
+          },
+          "enemy_types": {
+            "4": 2,
+            "3": 1,
+            "6": 3,
+            "0": 1
+          },
+          "enemies": 7,
+          "enemies_near_viewport": 0,
+          "actors": 9
+        }
+      },
+      "video_frames": 180,
+      "vblanks": 180,
+      "logic_updates": 180,
+      "eligible_gameplay_frames": 180,
+      "eligible_gameplay_updates": 180,
+      "update_ratio": 1.0,
+      "missed_gameplay_updates": 0,
+      "logic_delta_histogram": {
+        "1": 180
+      },
+      "longest_repeat": 0,
+      "game_states": {
+        "1": 180
+      },
+      "player_states": {
+        "2": 128,
+        "0": 44,
+        "3": 8
+      },
+      "oam_peak": 20,
+      "ambient_potential_peak": 12,
+      "ending": {
+        "area": 1,
+        "cell": 7,
+        "roster": {
+          "kinds": {
+            "1": 1,
+            "2": 6,
+            "5": 1
+          },
+          "enemy_types": {
+            "4": 2,
+            "6": 3,
+            "0": 1
+          },
+          "enemies": 6,
+          "enemies_near_viewport": 4,
+          "actors": 8
+        }
+      },
+      "samples_retained_frames": 180,
+      "actor_samples_retained_frames": 12
+    },
+    {
+      "name": "forest-00000007-cell08",
+      "kind": "natural",
+      "seed": "0x7",
+      "input_mode": "combat",
+      "metadata": {
+        "stage": 2,
+        "role": 3,
+        "goal": false,
+        "point": [
+          200,
+          206
+        ],
+        "fixture_point": [
+          200,
+          206
+        ]
+      },
+      "warmup_frames": 0,
+      "initial": {
+        "area": 1,
+        "cell": 8,
+        "position": [
+          200,
+          206
+        ],
+        "camera": [
+          108,
+          28
+        ],
+        "roster": {
+          "kinds": {
+            "1": 1,
+            "2": 6,
+            "4": 1
+          },
+          "enemy_types": {
+            "7": 2,
+            "0": 1,
+            "8": 1,
+            "4": 1,
+            "3": 1
+          },
+          "enemies": 6,
+          "enemies_near_viewport": 4,
+          "actors": 8
+        }
+      },
+      "video_frames": 180,
+      "vblanks": 180,
+      "logic_updates": 180,
+      "eligible_gameplay_frames": 180,
+      "eligible_gameplay_updates": 180,
+      "update_ratio": 1.0,
+      "missed_gameplay_updates": 0,
+      "logic_delta_histogram": {
+        "1": 180
+      },
+      "longest_repeat": 0,
+      "game_states": {
+        "1": 180
+      },
+      "player_states": {
+        "2": 94,
+        "0": 50,
+        "3": 16,
+        "5": 20
+      },
+      "oam_peak": 22,
+      "ambient_potential_peak": 12,
+      "ending": {
+        "area": 1,
+        "cell": 8,
+        "roster": {
+          "kinds": {
+            "1": 1,
+            "2": 6,
+            "4": 1
+          },
+          "enemy_types": {
+            "7": 2,
+            "0": 1,
+            "8": 1,
+            "4": 1,
+            "3": 1
+          },
+          "enemies": 6,
+          "enemies_near_viewport": 6,
+          "actors": 8
+        }
+      },
+      "samples_retained_frames": 180,
+      "actor_samples_retained_frames": 12
+    },
+    {
+      "name": "forest-00000007-cell09",
+      "kind": "natural",
+      "seed": "0x7",
+      "input_mode": "combat",
+      "metadata": {
+        "stage": 3,
+        "role": 10,
+        "goal": false,
+        "point": [
+          248,
+          126
+        ],
+        "fixture_point": [
+          248,
+          126
+        ]
+      },
+      "warmup_frames": 0,
+      "initial": {
+        "area": 1,
+        "cell": 9,
+        "position": [
+          248,
+          126
+        ],
+        "camera": [
+          128,
+          22
+        ],
+        "roster": {
+          "kinds": {
+            "1": 1,
+            "2": 7,
+            "4": 1
+          },
+          "enemy_types": {
+            "3": 2,
+            "4": 1,
+            "8": 1,
+            "2": 1,
+            "7": 1,
+            "0": 1
+          },
+          "enemies": 7,
+          "enemies_near_viewport": 5,
+          "actors": 9
+        }
+      },
+      "video_frames": 180,
+      "vblanks": 180,
+      "logic_updates": 180,
+      "eligible_gameplay_frames": 180,
+      "eligible_gameplay_updates": 180,
+      "update_ratio": 1.0,
+      "missed_gameplay_updates": 0,
+      "logic_delta_histogram": {
+        "1": 180
+      },
+      "longest_repeat": 0,
+      "game_states": {
+        "1": 180
+      },
+      "player_states": {
+        "2": 121,
+        "0": 51,
+        "3": 8
+      },
+      "oam_peak": 21,
+      "ambient_potential_peak": 12,
+      "ending": {
+        "area": 1,
+        "cell": 9,
+        "roster": {
+          "kinds": {
+            "1": 1,
+            "2": 6,
+            "4": 1
+          },
+          "enemy_types": {
+            "3": 1,
+            "4": 1,
+            "8": 1,
+            "2": 1,
+            "7": 1,
+            "0": 1
+          },
+          "enemies": 6,
+          "enemies_near_viewport": 4,
+          "actors": 8
+        }
+      },
+      "samples_retained_frames": 180,
+      "actor_samples_retained_frames": 12
+    },
+    {
+      "name": "forest-00000007-cell10",
+      "kind": "natural",
+      "seed": "0x7",
+      "input_mode": "combat",
+      "metadata": {
+        "stage": 1,
+        "role": 4,
+        "goal": false,
+        "point": [
+          200,
+          206
+        ],
+        "fixture_point": [
+          200,
+          206
+        ]
+      },
+      "warmup_frames": 0,
+      "initial": {
+        "area": 1,
+        "cell": 10,
+        "position": [
+          200,
+          206
+        ],
+        "camera": [
+          108,
+          28
+        ],
+        "roster": {
+          "kinds": {
+            "1": 1,
+            "2": 6,
+            "4": 1
+          },
+          "enemy_types": {
+            "0": 3,
+            "1": 2,
+            "6": 1
+          },
+          "enemies": 6,
+          "enemies_near_viewport": 4,
+          "actors": 8
+        }
+      },
+      "video_frames": 180,
+      "vblanks": 180,
+      "logic_updates": 180,
+      "eligible_gameplay_frames": 180,
+      "eligible_gameplay_updates": 180,
+      "update_ratio": 1.0,
+      "missed_gameplay_updates": 0,
+      "logic_delta_histogram": {
+        "1": 180
+      },
+      "longest_repeat": 0,
+      "game_states": {
+        "1": 180
+      },
+      "player_states": {
+        "2": 115,
+        "0": 49,
+        "3": 16
+      },
+      "oam_peak": 23,
+      "ambient_potential_peak": 12,
+      "ending": {
+        "area": 1,
+        "cell": 10,
+        "roster": {
+          "kinds": {
+            "1": 1,
+            "2": 3,
+            "4": 1
+          },
+          "enemy_types": {
+            "0": 2,
+            "6": 1
+          },
+          "enemies": 3,
+          "enemies_near_viewport": 2,
+          "actors": 5
+        }
+      },
+      "samples_retained_frames": 180,
+      "actor_samples_retained_frames": 12
+    },
+    {
+      "name": "forest-00000007-cell11",
+      "kind": "natural",
+      "seed": "0x7",
+      "input_mode": "combat",
+      "metadata": {
+        "stage": 1,
+        "role": 3,
+        "goal": false,
+        "point": [
+          248,
+          222
+        ],
+        "fixture_point": [
+          248,
+          222
+        ]
+      },
+      "warmup_frames": 0,
+      "initial": {
+        "area": 1,
+        "cell": 11,
+        "position": [
+          248,
+          222
+        ],
+        "camera": [
+          128,
+          196
+        ],
+        "roster": {
+          "kinds": {
+            "1": 1,
+            "2": 6,
+            "4": 1
+          },
+          "enemy_types": {
+            "6": 1,
+            "1": 2,
+            "0": 2,
+            "7": 1
+          },
+          "enemies": 6,
+          "enemies_near_viewport": 4,
+          "actors": 8
+        }
+      },
+      "video_frames": 180,
+      "vblanks": 180,
+      "logic_updates": 180,
+      "eligible_gameplay_frames": 180,
+      "eligible_gameplay_updates": 180,
+      "update_ratio": 1.0,
+      "missed_gameplay_updates": 0,
+      "logic_delta_histogram": {
+        "1": 180
+      },
+      "longest_repeat": 0,
+      "game_states": {
+        "1": 180
+      },
+      "player_states": {
+        "2": 138,
+        "0": 42
+      },
+      "oam_peak": 19,
+      "ambient_potential_peak": 12,
+      "ending": {
+        "area": 1,
+        "cell": 11,
+        "roster": {
+          "kinds": {
+            "1": 1,
+            "2": 5,
+            "4": 2,
+            "7": 1
+          },
+          "enemy_types": {
+            "6": 1,
+            "1": 1,
+            "0": 2,
+            "7": 1
+          },
+          "enemies": 5,
+          "enemies_near_viewport": 4,
+          "actors": 9
+        }
+      },
+      "samples_retained_frames": 180,
+      "actor_samples_retained_frames": 12
+    },
+    {
+      "name": "forest-00000007-cell12",
+      "kind": "natural",
+      "seed": "0x7",
+      "input_mode": "combat",
+      "metadata": {
+        "stage": 3,
+        "role": 7,
+        "goal": false,
+        "point": [
+          248,
+          222
+        ],
+        "fixture_point": [
+          248,
+          222
+        ]
+      },
+      "warmup_frames": 0,
+      "initial": {
+        "area": 1,
+        "cell": 12,
+        "position": [
+          248,
+          222
+        ],
+        "camera": [
+          128,
+          28
+        ],
+        "roster": {
+          "kinds": {
+            "1": 1,
+            "2": 8,
+            "5": 1,
+            "4": 1
+          },
+          "enemy_types": {
+            "0": 2,
+            "1": 3,
+            "4": 1,
+            "7": 1,
+            "6": 1
+          },
+          "enemies": 8,
+          "enemies_near_viewport": 2,
+          "actors": 11
+        }
+      },
+      "video_frames": 180,
+      "vblanks": 180,
+      "logic_updates": 180,
+      "eligible_gameplay_frames": 180,
+      "eligible_gameplay_updates": 180,
+      "update_ratio": 1.0,
+      "missed_gameplay_updates": 0,
+      "logic_delta_histogram": {
+        "1": 180
+      },
+      "longest_repeat": 0,
+      "game_states": {
+        "1": 180
+      },
+      "player_states": {
+        "2": 138,
+        "0": 42
+      },
+      "oam_peak": 29,
+      "ambient_potential_peak": 12,
+      "ending": {
+        "area": 1,
+        "cell": 12,
+        "roster": {
+          "kinds": {
+            "1": 1,
+            "2": 6,
+            "5": 1,
+            "4": 1
+          },
+          "enemy_types": {
+            "0": 2,
+            "4": 1,
+            "7": 1,
+            "1": 1,
+            "6": 1
+          },
+          "enemies": 6,
+          "enemies_near_viewport": 6,
+          "actors": 9
+        }
+      },
+      "samples_retained_frames": 180,
+      "actor_samples_retained_frames": 12
+    },
+    {
+      "name": "forest-00000007-cell13",
+      "kind": "natural",
+      "seed": "0x7",
+      "input_mode": "combat",
+      "metadata": {
+        "stage": 3,
+        "role": 0,
+        "goal": false,
+        "point": [
+          344,
+          206
+        ],
+        "fixture_point": [
+          344,
+          206
+        ]
+      },
+      "warmup_frames": 0,
+      "initial": {
+        "area": 1,
+        "cell": 13,
+        "position": [
+          344,
+          206
+        ],
+        "camera": [
+          244,
+          102
+        ],
+        "roster": {
+          "kinds": {
+            "1": 1,
+            "2": 7,
+            "4": 1
+          },
+          "enemy_types": {
+            "0": 2,
+            "2": 1,
+            "6": 1,
+            "4": 1,
+            "8": 1,
+            "3": 1
+          },
+          "enemies": 7,
+          "enemies_near_viewport": 7,
+          "actors": 9
+        }
+      },
+      "video_frames": 180,
+      "vblanks": 180,
+      "logic_updates": 180,
+      "eligible_gameplay_frames": 180,
+      "eligible_gameplay_updates": 180,
+      "update_ratio": 1.0,
+      "missed_gameplay_updates": 0,
+      "logic_delta_histogram": {
+        "1": 180
+      },
+      "longest_repeat": 0,
+      "game_states": {
+        "1": 180
+      },
+      "player_states": {
+        "2": 69,
+        "0": 60,
+        "3": 17,
+        "5": 34
+      },
+      "oam_peak": 22,
+      "ambient_potential_peak": 12,
+      "ending": {
+        "area": 1,
+        "cell": 13,
+        "roster": {
+          "kinds": {
+            "1": 1,
+            "2": 6,
+            "4": 1,
+            "3": 1
+          },
+          "enemy_types": {
+            "2": 1,
+            "6": 1,
+            "0": 1,
+            "4": 1,
+            "8": 1,
+            "3": 1
+          },
+          "enemies": 6,
+          "enemies_near_viewport": 5,
+          "actors": 9
+        }
+      },
+      "samples_retained_frames": 180,
+      "actor_samples_retained_frames": 12
+    },
+    {
+      "name": "forest-00000007-cell14",
+      "kind": "natural",
+      "seed": "0x7",
+      "input_mode": "combat",
+      "metadata": {
+        "stage": 3,
+        "role": 6,
+        "goal": false,
+        "point": [
+          232,
+          142
+        ],
+        "fixture_point": [
+          232,
+          142
+        ]
+      },
+      "warmup_frames": 0,
+      "initial": {
+        "area": 1,
+        "cell": 14,
+        "position": [
+          232,
+          147
+        ],
+        "camera": [
+          112,
+          28
+        ],
+        "roster": {
+          "kinds": {
+            "1": 1,
+            "2": 3,
+            "5": 1,
+            "4": 1
+          },
+          "enemy_types": {
+            "1": 1,
+            "0": 1,
+            "7": 1
+          },
+          "enemies": 3,
+          "enemies_near_viewport": 1,
+          "actors": 6
+        }
+      },
+      "video_frames": 180,
+      "vblanks": 180,
+      "logic_updates": 180,
+      "eligible_gameplay_frames": 180,
+      "eligible_gameplay_updates": 180,
+      "update_ratio": 1.0,
+      "missed_gameplay_updates": 0,
+      "logic_delta_histogram": {
+        "1": 180
+      },
+      "longest_repeat": 0,
+      "game_states": {
+        "1": 180
+      },
+      "player_states": {
+        "2": 138,
+        "0": 42
+      },
+      "oam_peak": 18,
+      "ambient_potential_peak": 12,
+      "ending": {
+        "area": 1,
+        "cell": 14,
+        "roster": {
+          "kinds": {
+            "1": 1,
+            "2": 3,
+            "5": 1,
+            "4": 1
+          },
+          "enemy_types": {
+            "1": 1,
+            "0": 1,
+            "7": 1
+          },
+          "enemies": 3,
+          "enemies_near_viewport": 1,
+          "actors": 6
+        }
+      },
+      "samples_retained_frames": 180,
+      "actor_samples_retained_frames": 12
+    },
+    {
+      "name": "forest-00000007-cell15",
+      "kind": "natural",
+      "seed": "0x7",
+      "input_mode": "combat",
+      "metadata": {
+        "stage": 1,
+        "role": 4,
+        "goal": false,
+        "point": [
+          264,
+          222
+        ],
+        "fixture_point": [
+          264,
+          222
+        ]
+      },
+      "warmup_frames": 0,
+      "initial": {
+        "area": 1,
+        "cell": 15,
+        "position": [
+          264,
+          222
+        ],
+        "camera": [
+          144,
+          28
+        ],
+        "roster": {
+          "kinds": {
+            "1": 1,
+            "2": 5,
+            "4": 1
+          },
+          "enemy_types": {
+            "8": 1,
+            "3": 1,
+            "7": 1,
+            "4": 1,
+            "6": 1
+          },
+          "enemies": 5,
+          "enemies_near_viewport": 3,
+          "actors": 7
+        }
+      },
+      "video_frames": 180,
+      "vblanks": 180,
+      "logic_updates": 180,
+      "eligible_gameplay_frames": 180,
+      "eligible_gameplay_updates": 180,
+      "update_ratio": 1.0,
+      "missed_gameplay_updates": 0,
+      "logic_delta_histogram": {
+        "1": 180
+      },
+      "longest_repeat": 0,
+      "game_states": {
+        "1": 180
+      },
+      "player_states": {
+        "2": 90,
+        "0": 50,
+        "3": 40
+      },
+      "oam_peak": 21,
+      "ambient_potential_peak": 12,
+      "ending": {
+        "area": 1,
+        "cell": 15,
+        "roster": {
+          "kinds": {
+            "1": 1,
+            "2": 5,
+            "4": 1
+          },
+          "enemy_types": {
+            "8": 1,
+            "3": 1,
+            "7": 1,
+            "4": 1,
+            "6": 1
+          },
+          "enemies": 5,
+          "enemies_near_viewport": 5,
+          "actors": 7
+        }
+      },
+      "samples_retained_frames": 180,
+      "actor_samples_retained_frames": 12
+    },
+    {
+      "name": "forest-00000007-cell16",
+      "kind": "natural",
+      "seed": "0x7",
+      "input_mode": "combat",
+      "metadata": {
+        "stage": 1,
+        "role": 4,
+        "goal": false,
+        "point": [
+          264,
+          190
+        ],
+        "fixture_point": [
+          264,
+          190
+        ]
+      },
+      "warmup_frames": 0,
+      "initial": {
+        "area": 1,
+        "cell": 16,
+        "position": [
+          264,
+          190
+        ],
+        "camera": [
+          144,
+          28
+        ],
+        "roster": {
+          "kinds": {
+            "1": 1,
+            "2": 5
+          },
+          "enemy_types": {
+            "8": 1,
+            "2": 2,
+            "6": 1,
+            "1": 1
+          },
+          "enemies": 5,
+          "enemies_near_viewport": 4,
+          "actors": 6
+        }
+      },
+      "video_frames": 180,
+      "vblanks": 180,
+      "logic_updates": 180,
+      "eligible_gameplay_frames": 180,
+      "eligible_gameplay_updates": 180,
+      "update_ratio": 1.0,
+      "missed_gameplay_updates": 0,
+      "logic_delta_histogram": {
+        "1": 180
+      },
+      "longest_repeat": 0,
+      "game_states": {
+        "1": 180
+      },
+      "player_states": {
+        "2": 135,
+        "0": 37,
+        "3": 8
+      },
+      "oam_peak": 20,
+      "ambient_potential_peak": 12,
+      "ending": {
+        "area": 1,
+        "cell": 16,
+        "roster": {
+          "kinds": {
+            "1": 1,
+            "2": 5
+          },
+          "enemy_types": {
+            "8": 1,
+            "2": 2,
+            "6": 1,
+            "1": 1
+          },
+          "enemies": 5,
+          "enemies_near_viewport": 5,
+          "actors": 6
+        }
+      },
+      "samples_retained_frames": 180,
+      "actor_samples_retained_frames": 12
+    },
+    {
+      "name": "forest-00000007-cell17",
+      "kind": "natural",
+      "seed": "0x7",
+      "input_mode": "combat",
+      "metadata": {
+        "stage": 0,
+        "role": 5,
+        "goal": false,
+        "point": [
+          280,
+          190
+        ],
+        "fixture_point": [
+          280,
+          190
+        ]
+      },
+      "warmup_frames": 0,
+      "initial": {
+        "area": 1,
+        "cell": 17,
+        "position": [
+          280,
+          190
+        ],
+        "camera": [
+          160,
+          196
+        ],
+        "roster": {
+          "kinds": {
+            "1": 1,
+            "2": 4,
+            "5": 1,
+            "4": 1
+          },
+          "enemy_types": {
+            "0": 3,
+            "7": 1
+          },
+          "enemies": 4,
+          "enemies_near_viewport": 4,
+          "actors": 7
+        }
+      },
+      "video_frames": 180,
+      "vblanks": 180,
+      "logic_updates": 180,
+      "eligible_gameplay_frames": 180,
+      "eligible_gameplay_updates": 180,
+      "update_ratio": 1.0,
+      "missed_gameplay_updates": 0,
+      "logic_delta_histogram": {
+        "1": 180
+      },
+      "longest_repeat": 0,
+      "game_states": {
+        "1": 180
+      },
+      "player_states": {
+        "2": 39,
+        "3": 40,
+        "0": 55,
+        "5": 46
+      },
+      "oam_peak": 24,
+      "ambient_potential_peak": 12,
+      "ending": {
+        "area": 1,
+        "cell": 17,
+        "roster": {
+          "kinds": {
+            "1": 1,
+            "2": 2,
+            "5": 1,
+            "4": 3
+          },
+          "enemy_types": {
+            "7": 1,
+            "0": 1
+          },
+          "enemies": 2,
+          "enemies_near_viewport": 2,
+          "actors": 7
+        }
+      },
+      "samples_retained_frames": 180,
+      "actor_samples_retained_frames": 12
+    },
+    {
+      "name": "forest-00000007-cell18",
+      "kind": "natural",
+      "seed": "0x7",
+      "input_mode": "combat",
+      "metadata": {
+        "stage": 3,
+        "role": 4,
+        "goal": false,
+        "point": [
+          248,
+          190
+        ],
+        "fixture_point": [
+          248,
+          190
+        ]
+      },
+      "warmup_frames": 0,
+      "initial": {
+        "area": 1,
+        "cell": 18,
+        "position": [
+          248,
+          190
+        ],
+        "camera": [
+          244,
+          86
+        ],
+        "roster": {
+          "kinds": {
+            "1": 1,
+            "2": 7,
+            "4": 1
+          },
+          "enemy_types": {
+            "4": 2,
+            "0": 2,
+            "6": 2,
+            "3": 1
+          },
+          "enemies": 7,
+          "enemies_near_viewport": 3,
+          "actors": 9
+        }
+      },
+      "video_frames": 180,
+      "vblanks": 180,
+      "logic_updates": 180,
+      "eligible_gameplay_frames": 180,
+      "eligible_gameplay_updates": 180,
+      "update_ratio": 1.0,
+      "missed_gameplay_updates": 0,
+      "logic_delta_histogram": {
+        "1": 180
+      },
+      "longest_repeat": 0,
+      "game_states": {
+        "1": 180
+      },
+      "player_states": {
+        "2": 62,
+        "0": 52,
+        "3": 32,
+        "5": 34
+      },
+      "oam_peak": 23,
+      "ambient_potential_peak": 12,
+      "ending": {
+        "area": 1,
+        "cell": 18,
+        "roster": {
+          "kinds": {
+            "1": 1,
+            "2": 6,
+            "4": 1
+          },
+          "enemy_types": {
+            "4": 2,
+            "6": 2,
+            "3": 1,
+            "0": 1
+          },
+          "enemies": 6,
+          "enemies_near_viewport": 6,
+          "actors": 8
+        }
+      },
+      "samples_retained_frames": 180,
+      "actor_samples_retained_frames": 12
+    },
+    {
+      "name": "forest-00000007-cell19",
+      "kind": "natural",
+      "seed": "0x7",
+      "input_mode": "combat",
+      "metadata": {
+        "stage": 3,
+        "role": 4,
+        "goal": false,
+        "point": [
+          216,
+          174
+        ],
+        "fixture_point": [
+          216,
+          174
+        ]
+      },
+      "warmup_frames": 0,
+      "initial": {
+        "area": 1,
+        "cell": 19,
+        "position": [
+          216,
+          174
+        ],
+        "camera": [
+          108,
+          28
+        ],
+        "roster": {
+          "kinds": {
+            "1": 1,
+            "2": 7,
+            "4": 1
+          },
+          "enemy_types": {
+            "0": 2,
+            "4": 2,
+            "7": 1,
+            "6": 1,
+            "1": 1
+          },
+          "enemies": 7,
+          "enemies_near_viewport": 5,
+          "actors": 9
+        }
+      },
+      "video_frames": 180,
+      "vblanks": 180,
+      "logic_updates": 180,
+      "eligible_gameplay_frames": 180,
+      "eligible_gameplay_updates": 180,
+      "update_ratio": 1.0,
+      "missed_gameplay_updates": 0,
+      "logic_delta_histogram": {
+        "1": 180
+      },
+      "longest_repeat": 0,
+      "game_states": {
+        "1": 180
+      },
+      "player_states": {
+        "2": 138,
+        "0": 42
+      },
+      "oam_peak": 24,
+      "ambient_potential_peak": 12,
+      "ending": {
+        "area": 1,
+        "cell": 19,
+        "roster": {
+          "kinds": {
+            "1": 1,
+            "2": 7,
+            "4": 1
+          },
+          "enemy_types": {
+            "0": 2,
+            "4": 2,
+            "7": 1,
+            "6": 1,
+            "1": 1
+          },
+          "enemies": 7,
+          "enemies_near_viewport": 5,
+          "actors": 9
+        }
+      },
+      "samples_retained_frames": 180,
+      "actor_samples_retained_frames": 12
+    },
+    {
+      "name": "forest-00000007-cell20",
+      "kind": "natural",
+      "seed": "0x7",
+      "input_mode": "combat",
+      "metadata": {
+        "stage": 1,
+        "role": 4,
+        "goal": false,
+        "point": [
+          264,
+          142
+        ],
+        "fixture_point": [
+          264,
+          142
+        ]
+      },
+      "warmup_frames": 0,
+      "initial": {
+        "area": 1,
+        "cell": 20,
+        "position": [
+          264,
+          142
+        ],
+        "camera": [
+          144,
+          28
+        ],
+        "roster": {
+          "kinds": {
+            "1": 1,
+            "2": 5,
+            "4": 1
+          },
+          "enemy_types": {
+            "0": 2,
+            "1": 1,
+            "6": 2
+          },
+          "enemies": 5,
+          "enemies_near_viewport": 4,
+          "actors": 7
+        }
+      },
+      "video_frames": 180,
+      "vblanks": 180,
+      "logic_updates": 180,
+      "eligible_gameplay_frames": 180,
+      "eligible_gameplay_updates": 180,
+      "update_ratio": 1.0,
+      "missed_gameplay_updates": 0,
+      "logic_delta_histogram": {
+        "1": 180
+      },
+      "longest_repeat": 0,
+      "game_states": {
+        "1": 180
+      },
+      "player_states": {
+        "2": 93,
+        "0": 51,
+        "3": 22,
+        "5": 14
+      },
+      "oam_peak": 21,
+      "ambient_potential_peak": 12,
+      "ending": {
+        "area": 1,
+        "cell": 20,
+        "roster": {
+          "kinds": {
+            "1": 1,
+            "2": 5,
+            "4": 1
+          },
+          "enemy_types": {
+            "0": 2,
+            "1": 1,
+            "6": 2
+          },
+          "enemies": 5,
+          "enemies_near_viewport": 4,
+          "actors": 7
+        }
+      },
+      "samples_retained_frames": 180,
+      "actor_samples_retained_frames": 12
+    },
+    {
+      "name": "forest-00000007-cell21",
+      "kind": "natural",
+      "seed": "0x7",
+      "input_mode": "combat",
+      "metadata": {
+        "stage": 0,
+        "role": 4,
+        "goal": false,
+        "point": [
+          280,
+          190
+        ],
+        "fixture_point": [
+          280,
+          190
+        ]
+      },
+      "warmup_frames": 0,
+      "initial": {
+        "area": 1,
+        "cell": 21,
+        "position": [
+          280,
+          190
+        ],
+        "camera": [
+          244,
+          86
+        ],
+        "roster": {
+          "kinds": {
+            "1": 1,
+            "2": 5,
+            "4": 1
+          },
+          "enemy_types": {
+            "1": 2,
+            "7": 1,
+            "0": 2
+          },
+          "enemies": 5,
+          "enemies_near_viewport": 3,
+          "actors": 7
+        }
+      },
+      "video_frames": 180,
+      "vblanks": 180,
+      "logic_updates": 180,
+      "eligible_gameplay_frames": 180,
+      "eligible_gameplay_updates": 180,
+      "update_ratio": 1.0,
+      "missed_gameplay_updates": 0,
+      "logic_delta_histogram": {
+        "1": 180
+      },
+      "longest_repeat": 0,
+      "game_states": {
+        "1": 180
+      },
+      "player_states": {
+        "2": 138,
+        "0": 42
+      },
+      "oam_peak": 20,
+      "ambient_potential_peak": 12,
+      "ending": {
+        "area": 1,
+        "cell": 21,
+        "roster": {
+          "kinds": {
+            "1": 1,
+            "2": 4,
+            "4": 1
+          },
+          "enemy_types": {
+            "1": 1,
+            "7": 1,
+            "0": 2
+          },
+          "enemies": 4,
+          "enemies_near_viewport": 2,
+          "actors": 6
+        }
+      },
+      "samples_retained_frames": 180,
+      "actor_samples_retained_frames": 12
+    },
+    {
+      "name": "forest-00000007-cell22",
+      "kind": "natural",
+      "seed": "0x7",
+      "input_mode": "combat",
+      "metadata": {
+        "stage": 0,
+        "role": 1,
+        "goal": false,
+        "point": [
+          280,
+          206
+        ],
+        "fixture_point": [
+          280,
+          206
+        ]
+      },
+      "warmup_frames": 0,
+      "initial": {
+        "area": 1,
+        "cell": 22,
+        "position": [
+          280,
+          206
+        ],
+        "camera": [
+          160,
+          28
+        ],
+        "roster": {
+          "kinds": {
+            "1": 1,
+            "2": 3
+          },
+          "enemy_types": {
+            "7": 2,
+            "0": 1
+          },
+          "enemies": 3,
+          "enemies_near_viewport": 1,
+          "actors": 4
+        }
+      },
+      "video_frames": 180,
+      "vblanks": 180,
+      "logic_updates": 180,
+      "eligible_gameplay_frames": 180,
+      "eligible_gameplay_updates": 180,
+      "update_ratio": 1.0,
+      "missed_gameplay_updates": 0,
+      "logic_delta_histogram": {
+        "1": 180
+      },
+      "longest_repeat": 0,
+      "game_states": {
+        "1": 180
+      },
+      "player_states": {
+        "2": 72,
+        "0": 64,
+        "3": 24,
+        "5": 20
+      },
+      "oam_peak": 19,
+      "ambient_potential_peak": 12,
+      "ending": {
+        "area": 1,
+        "cell": 22,
+        "roster": {
+          "kinds": {
+            "1": 1,
+            "2": 3
+          },
+          "enemy_types": {
+            "7": 2,
+            "0": 1
+          },
+          "enemies": 3,
+          "enemies_near_viewport": 3,
+          "actors": 4
+        }
+      },
+      "samples_retained_frames": 180,
+      "actor_samples_retained_frames": 12
+    },
+    {
+      "name": "forest-00000007-cell23",
+      "kind": "natural",
+      "seed": "0x7",
+      "input_mode": "combat",
+      "metadata": {
+        "stage": 0,
+        "role": 3,
+        "goal": false,
+        "point": [
+          184,
+          206
+        ],
+        "fixture_point": [
+          184,
+          206
+        ]
+      },
+      "warmup_frames": 0,
+      "initial": {
+        "area": 1,
+        "cell": 23,
+        "position": [
+          184,
+          206
+        ],
+        "camera": [
+          28,
+          102
+        ],
+        "roster": {
+          "kinds": {
+            "1": 1,
+            "2": 5,
+            "4": 1
+          },
+          "enemy_types": {
+            "0": 5
+          },
+          "enemies": 5,
+          "enemies_near_viewport": 4,
+          "actors": 7
+        }
+      },
+      "video_frames": 180,
+      "vblanks": 180,
+      "logic_updates": 180,
+      "eligible_gameplay_frames": 180,
+      "eligible_gameplay_updates": 180,
+      "update_ratio": 1.0,
+      "missed_gameplay_updates": 0,
+      "logic_delta_histogram": {
+        "1": 180
+      },
+      "longest_repeat": 0,
+      "game_states": {
+        "1": 180
+      },
+      "player_states": {
+        "2": 43,
+        "3": 40,
+        "0": 63,
+        "5": 34
+      },
+      "oam_peak": 20,
+      "ambient_potential_peak": 12,
+      "ending": {
+        "area": 1,
+        "cell": 23,
+        "roster": {
+          "kinds": {
+            "1": 1,
+            "2": 4,
+            "4": 1
+          },
+          "enemy_types": {
+            "0": 4
+          },
+          "enemies": 4,
+          "enemies_near_viewport": 3,
+          "actors": 6
+        }
+      },
+      "samples_retained_frames": 180,
+      "actor_samples_retained_frames": 12
+    },
+    {
+      "name": "forest-00000007-cell24",
+      "kind": "natural",
+      "seed": "0x7",
+      "input_mode": "combat",
+      "metadata": {
+        "stage": 3,
+        "role": 5,
+        "goal": false,
+        "point": [
+          296,
+          254
+        ],
+        "fixture_point": [
+          296,
+          254
+        ]
+      },
+      "warmup_frames": 0,
+      "initial": {
+        "area": 1,
+        "cell": 24,
+        "position": [
+          296,
+          254
+        ],
+        "camera": [
+          164,
+          28
+        ],
+        "roster": {
+          "kinds": {
+            "1": 1,
+            "2": 8,
+            "5": 1,
+            "4": 1
+          },
+          "enemy_types": {
+            "0": 2,
+            "1": 3,
+            "6": 2,
+            "7": 1
+          },
+          "enemies": 8,
+          "enemies_near_viewport": 3,
+          "actors": 11
+        }
+      },
+      "video_frames": 180,
+      "vblanks": 180,
+      "logic_updates": 180,
+      "eligible_gameplay_frames": 180,
+      "eligible_gameplay_updates": 180,
+      "update_ratio": 1.0,
+      "missed_gameplay_updates": 0,
+      "logic_delta_histogram": {
+        "1": 180
+      },
+      "longest_repeat": 0,
+      "game_states": {
+        "1": 180
+      },
+      "player_states": {
+        "2": 90,
+        "0": 46,
+        "3": 24,
+        "5": 20
+      },
+      "oam_peak": 21,
+      "ambient_potential_peak": 12,
+      "ending": {
+        "area": 1,
+        "cell": 24,
+        "roster": {
+          "kinds": {
+            "1": 1,
+            "2": 7,
+            "5": 1,
+            "4": 2
+          },
+          "enemy_types": {
+            "0": 2,
+            "6": 2,
+            "1": 2,
+            "7": 1
+          },
+          "enemies": 7,
+          "enemies_near_viewport": 7,
+          "actors": 11
+        }
+      },
+      "samples_retained_frames": 180,
+      "actor_samples_retained_frames": 12
+    }
+  ],
+  "transitions": [
+    {
+      "area": 1,
+      "cell": 0,
+      "video_frames": 49,
+      "vblanks": 49,
+      "logic_updates": 2
+    },
+    {
+      "area": 1,
+      "cell": 1,
+      "video_frames": 48,
+      "vblanks": 48,
+      "logic_updates": 2
+    },
+    {
+      "area": 1,
+      "cell": 2,
+      "video_frames": 54,
+      "vblanks": 54,
+      "logic_updates": 2
+    },
+    {
+      "area": 1,
+      "cell": 3,
+      "video_frames": 52,
+      "vblanks": 52,
+      "logic_updates": 2
+    },
+    {
+      "area": 1,
+      "cell": 4,
+      "video_frames": 48,
+      "vblanks": 48,
+      "logic_updates": 2
+    },
+    {
+      "area": 1,
+      "cell": 5,
+      "video_frames": 52,
+      "vblanks": 52,
+      "logic_updates": 2
+    },
+    {
+      "area": 1,
+      "cell": 6,
+      "video_frames": 56,
+      "vblanks": 56,
+      "logic_updates": 2
+    },
+    {
+      "area": 1,
+      "cell": 7,
+      "video_frames": 50,
+      "vblanks": 50,
+      "logic_updates": 2
+    },
+    {
+      "area": 1,
+      "cell": 8,
+      "video_frames": 51,
+      "vblanks": 51,
+      "logic_updates": 2
+    },
+    {
+      "area": 1,
+      "cell": 9,
+      "video_frames": 51,
+      "vblanks": 51,
+      "logic_updates": 2
+    },
+    {
+      "area": 1,
+      "cell": 10,
+      "video_frames": 54,
+      "vblanks": 54,
+      "logic_updates": 2
+    },
+    {
+      "area": 1,
+      "cell": 11,
+      "video_frames": 49,
+      "vblanks": 49,
+      "logic_updates": 2
+    },
+    {
+      "area": 1,
+      "cell": 12,
+      "video_frames": 48,
+      "vblanks": 48,
+      "logic_updates": 2
+    },
+    {
+      "area": 1,
+      "cell": 13,
+      "video_frames": 49,
+      "vblanks": 49,
+      "logic_updates": 2
+    },
+    {
+      "area": 1,
+      "cell": 14,
+      "video_frames": 49,
+      "vblanks": 49,
+      "logic_updates": 2
+    },
+    {
+      "area": 1,
+      "cell": 15,
+      "video_frames": 51,
+      "vblanks": 51,
+      "logic_updates": 2
+    },
+    {
+      "area": 1,
+      "cell": 16,
+      "video_frames": 50,
+      "vblanks": 50,
+      "logic_updates": 2
+    },
+    {
+      "area": 1,
+      "cell": 17,
+      "video_frames": 51,
+      "vblanks": 51,
+      "logic_updates": 2
+    },
+    {
+      "area": 1,
+      "cell": 18,
+      "video_frames": 51,
+      "vblanks": 51,
+      "logic_updates": 2
+    },
+    {
+      "area": 1,
+      "cell": 19,
+      "video_frames": 48,
+      "vblanks": 48,
+      "logic_updates": 2
+    },
+    {
+      "area": 1,
+      "cell": 20,
+      "video_frames": 43,
+      "vblanks": 43,
+      "logic_updates": 2
+    },
+    {
+      "area": 1,
+      "cell": 21,
+      "video_frames": 48,
+      "vblanks": 48,
+      "logic_updates": 2
+    },
+    {
+      "area": 1,
+      "cell": 22,
+      "video_frames": 48,
+      "vblanks": 48,
+      "logic_updates": 2
+    },
+    {
+      "area": 1,
+      "cell": 23,
+      "video_frames": 49,
+      "vblanks": 49,
+      "logic_updates": 2
+    },
+    {
+      "area": 1,
+      "cell": 24,
+      "video_frames": 48,
+      "vblanks": 48,
+      "logic_updates": 2
+    },
+    {
+      "area": 1,
+      "cell": 0,
+      "video_frames": 50,
+      "vblanks": 50,
+      "logic_updates": 2
+    },
+    {
+      "area": 1,
+      "cell": 1,
+      "video_frames": 53,
+      "vblanks": 53,
+      "logic_updates": 2
+    },
+    {
+      "area": 1,
+      "cell": 2,
+      "video_frames": 53,
+      "vblanks": 53,
+      "logic_updates": 2
+    },
+    {
+      "area": 1,
+      "cell": 3,
+      "video_frames": 52,
+      "vblanks": 52,
+      "logic_updates": 2
+    },
+    {
+      "area": 1,
+      "cell": 4,
+      "video_frames": 47,
+      "vblanks": 47,
+      "logic_updates": 2
+    },
+    {
+      "area": 1,
+      "cell": 5,
+      "video_frames": 47,
+      "vblanks": 47,
+      "logic_updates": 2
+    },
+    {
+      "area": 1,
+      "cell": 6,
+      "video_frames": 51,
+      "vblanks": 51,
+      "logic_updates": 2
+    },
+    {
+      "area": 1,
+      "cell": 7,
+      "video_frames": 50,
+      "vblanks": 50,
+      "logic_updates": 2
+    },
+    {
+      "area": 1,
+      "cell": 8,
+      "video_frames": 43,
+      "vblanks": 43,
+      "logic_updates": 2
+    },
+    {
+      "area": 1,
+      "cell": 9,
+      "video_frames": 46,
+      "vblanks": 46,
+      "logic_updates": 2
+    },
+    {
+      "area": 1,
+      "cell": 10,
+      "video_frames": 52,
+      "vblanks": 52,
+      "logic_updates": 2
+    },
+    {
+      "area": 1,
+      "cell": 11,
+      "video_frames": 50,
+      "vblanks": 50,
+      "logic_updates": 2
+    },
+    {
+      "area": 1,
+      "cell": 12,
+      "video_frames": 49,
+      "vblanks": 49,
+      "logic_updates": 2
+    },
+    {
+      "area": 1,
+      "cell": 13,
+      "video_frames": 50,
+      "vblanks": 50,
+      "logic_updates": 2
+    },
+    {
+      "area": 1,
+      "cell": 14,
+      "video_frames": 50,
+      "vblanks": 50,
+      "logic_updates": 2
+    },
+    {
+      "area": 1,
+      "cell": 15,
+      "video_frames": 49,
+      "vblanks": 49,
+      "logic_updates": 2
+    },
+    {
+      "area": 1,
+      "cell": 16,
+      "video_frames": 50,
+      "vblanks": 50,
+      "logic_updates": 2
+    },
+    {
+      "area": 1,
+      "cell": 17,
+      "video_frames": 50,
+      "vblanks": 50,
+      "logic_updates": 2
+    },
+    {
+      "area": 1,
+      "cell": 18,
+      "video_frames": 47,
+      "vblanks": 47,
+      "logic_updates": 2
+    },
+    {
+      "area": 1,
+      "cell": 19,
+      "video_frames": 51,
+      "vblanks": 51,
+      "logic_updates": 2
+    },
+    {
+      "area": 1,
+      "cell": 20,
+      "video_frames": 49,
+      "vblanks": 49,
+      "logic_updates": 2
+    },
+    {
+      "area": 1,
+      "cell": 21,
+      "video_frames": 49,
+      "vblanks": 49,
+      "logic_updates": 2
+    },
+    {
+      "area": 1,
+      "cell": 22,
+      "video_frames": 48,
+      "vblanks": 48,
+      "logic_updates": 2
+    },
+    {
+      "area": 1,
+      "cell": 23,
+      "video_frames": 49,
+      "vblanks": 49,
+      "logic_updates": 2
+    },
+    {
+      "area": 1,
+      "cell": 24,
+      "video_frames": 51,
+      "vblanks": 51,
+      "logic_updates": 2
+    },
+    {
+      "area": 1,
+      "cell": 0,
+      "video_frames": 50,
+      "vblanks": 50,
+      "logic_updates": 2
+    },
+    {
+      "area": 1,
+      "cell": 1,
+      "video_frames": 51,
+      "vblanks": 51,
+      "logic_updates": 2
+    },
+    {
+      "area": 1,
+      "cell": 2,
+      "video_frames": 53,
+      "vblanks": 53,
+      "logic_updates": 2
+    },
+    {
+      "area": 1,
+      "cell": 3,
+      "video_frames": 52,
+      "vblanks": 52,
+      "logic_updates": 2
+    },
+    {
+      "area": 1,
+      "cell": 4,
+      "video_frames": 43,
+      "vblanks": 43,
+      "logic_updates": 2
+    },
+    {
+      "area": 1,
+      "cell": 5,
+      "video_frames": 50,
+      "vblanks": 50,
+      "logic_updates": 2
+    },
+    {
+      "area": 1,
+      "cell": 6,
+      "video_frames": 49,
+      "vblanks": 49,
+      "logic_updates": 2
+    },
+    {
+      "area": 1,
+      "cell": 7,
+      "video_frames": 44,
+      "vblanks": 44,
+      "logic_updates": 2
+    },
+    {
+      "area": 1,
+      "cell": 8,
+      "video_frames": 49,
+      "vblanks": 49,
+      "logic_updates": 2
+    },
+    {
+      "area": 1,
+      "cell": 9,
+      "video_frames": 45,
+      "vblanks": 45,
+      "logic_updates": 2
+    },
+    {
+      "area": 1,
+      "cell": 10,
+      "video_frames": 49,
+      "vblanks": 49,
+      "logic_updates": 2
+    },
+    {
+      "area": 1,
+      "cell": 11,
+      "video_frames": 50,
+      "vblanks": 50,
+      "logic_updates": 2
+    },
+    {
+      "area": 1,
+      "cell": 12,
+      "video_frames": 48,
+      "vblanks": 48,
+      "logic_updates": 2
+    },
+    {
+      "area": 1,
+      "cell": 13,
+      "video_frames": 45,
+      "vblanks": 45,
+      "logic_updates": 2
+    },
+    {
+      "area": 1,
+      "cell": 14,
+      "video_frames": 44,
+      "vblanks": 44,
+      "logic_updates": 2
+    },
+    {
+      "area": 1,
+      "cell": 15,
+      "video_frames": 50,
+      "vblanks": 50,
+      "logic_updates": 2
+    },
+    {
+      "area": 1,
+      "cell": 16,
+      "video_frames": 52,
+      "vblanks": 52,
+      "logic_updates": 2
+    },
+    {
+      "area": 1,
+      "cell": 17,
+      "video_frames": 49,
+      "vblanks": 49,
+      "logic_updates": 2
+    },
+    {
+      "area": 1,
+      "cell": 18,
+      "video_frames": 45,
+      "vblanks": 45,
+      "logic_updates": 2
+    },
+    {
+      "area": 1,
+      "cell": 19,
+      "video_frames": 46,
+      "vblanks": 46,
+      "logic_updates": 2
+    },
+    {
+      "area": 1,
+      "cell": 20,
+      "video_frames": 49,
+      "vblanks": 49,
+      "logic_updates": 2
+    },
+    {
+      "area": 1,
+      "cell": 21,
+      "video_frames": 48,
+      "vblanks": 48,
+      "logic_updates": 2
+    },
+    {
+      "area": 1,
+      "cell": 22,
+      "video_frames": 49,
+      "vblanks": 49,
+      "logic_updates": 2
+    },
+    {
+      "area": 1,
+      "cell": 23,
+      "video_frames": 50,
+      "vblanks": 50,
+      "logic_updates": 2
+    },
+    {
+      "area": 1,
+      "cell": 24,
+      "video_frames": 47,
+      "vblanks": 47,
+      "logic_updates": 2
+    }
+  ],
+  "media": [
+    {
+      "file": "native/drain-0000b4a7.png",
+      "sha256": "66bd8b1e93db8adf6fce89132dd24293e895c16f87eac0d699f4de014696235d",
+      "size": [
+        240,
+        160
+      ],
+      "kind": "untouched actual mGBA framebuffer"
+    },
+    {
+      "file": "native/forest-0000b4a7-cell00.png",
+      "sha256": "3a9ad3cc5266939c2a1687053f1714cd10fafec67706ddf4f59ab23ff74a904a",
+      "size": [
+        240,
+        160
+      ],
+      "kind": "untouched actual mGBA framebuffer"
+    },
+    {
+      "file": "native/forest-0000b4a7-cell01.png",
+      "sha256": "17472f71f495257f36acbcca97fa367696230e81bb8506588f78b61d956b220d",
+      "size": [
+        240,
+        160
+      ],
+      "kind": "untouched actual mGBA framebuffer"
+    },
+    {
+      "file": "native/forest-0000b4a7-cell02.png",
+      "sha256": "c88e6c21f23c826e3ea4bf84919dedd1665e11bfa24cca45cb8889e7083d50a8",
+      "size": [
+        240,
+        160
+      ],
+      "kind": "untouched actual mGBA framebuffer"
+    },
+    {
+      "file": "native/forest-0000b4a7-cell03.png",
+      "sha256": "96ac059bd854b256de338e57feabf25aeb3a4747a122a3c0fc6d65d64e51bc36",
+      "size": [
+        240,
+        160
+      ],
+      "kind": "untouched actual mGBA framebuffer"
+    },
+    {
+      "file": "native/forest-0000b4a7-cell06.png",
+      "sha256": "8a6c700b432a3bdbd39bbc509b77fd76be368757e8a2a260eb685b99e162fd0e",
+      "size": [
+        240,
+        160
+      ],
+      "kind": "untouched actual mGBA framebuffer"
+    },
+    {
+      "file": "native/forest-0000b4a7-cell07.png",
+      "sha256": "737055ef4548e683e656ac6b2a70ba540697fc49b4bc85ec2ccffb4439cd6760",
+      "size": [
+        240,
+        160
+      ],
+      "kind": "untouched actual mGBA framebuffer"
+    },
+    {
+      "file": "native/forest-0000b4a7-cell08.png",
+      "sha256": "4ea071794c036a3e592264f6614ecbcbc1a1e5929c75b05d4a0ce8611e52d0bd",
+      "size": [
+        240,
+        160
+      ],
+      "kind": "untouched actual mGBA framebuffer"
+    },
+    {
+      "file": "native/forest-0000b4a7-cell10.png",
+      "sha256": "4215af57fb870866d75b8ca13cc70c83e420d673e3a7e58e08859514aac0877f",
+      "size": [
+        240,
+        160
+      ],
+      "kind": "untouched actual mGBA framebuffer"
+    },
+    {
+      "file": "native/forest-0000b4a7-cell15.png",
+      "sha256": "05c53cbaa70dd8a8435b3d0b4d8ba2e1742de73956ea9e768d3c243ce5bbf603",
+      "size": [
+        240,
+        160
+      ],
+      "kind": "untouched actual mGBA framebuffer"
+    },
+    {
+      "file": "native/forest-0000b4a7-cell19.png",
+      "sha256": "61d1bfce08eaefb7af20cb467d8333ce8497517e7061ced27de06413078e7b83",
+      "size": [
+        240,
+        160
+      ],
+      "kind": "untouched actual mGBA framebuffer"
+    },
+    {
+      "file": "native/drain-deadbeef.png",
+      "sha256": "6f33290368112b00e3c0b928e86560a25a2a652aaaa26e00a9a3b68f5d97c12a",
+      "size": [
+        240,
+        160
+      ],
+      "kind": "untouched actual mGBA framebuffer"
+    },
+    {
+      "file": "native/forest-deadbeef-cell01.png",
+      "sha256": "5a0be4713286096334b3bf883b988cd2e47d2f1021696863a76d1b8b12e2e22e",
+      "size": [
+        240,
+        160
+      ],
+      "kind": "untouched actual mGBA framebuffer"
+    },
+    {
+      "file": "native/forest-deadbeef-cell02.png",
+      "sha256": "28b6f69709ccbd6a9ae85e2749636787fb93eff0a5ae83c5721446aec86a1b0e",
+      "size": [
+        240,
+        160
+      ],
+      "kind": "untouched actual mGBA framebuffer"
+    },
+    {
+      "file": "native/forest-deadbeef-cell03.png",
+      "sha256": "f06c435fbfbde95766ac2dec0ca095869af3eb20c6c94262fb1b83eeaa5933b4",
+      "size": [
+        240,
+        160
+      ],
+      "kind": "untouched actual mGBA framebuffer"
+    },
+    {
+      "file": "native/forest-deadbeef-cell04.png",
+      "sha256": "efe97d7c94bee075459007a1797924e6101ed2eb71046143cd367e1100aadf70",
+      "size": [
+        240,
+        160
+      ],
+      "kind": "untouched actual mGBA framebuffer"
+    },
+    {
+      "file": "native/forest-deadbeef-cell06.png",
+      "sha256": "9f8d610bdbcd145ffc7791f2a05a1d72c7ca36623e24481abef22dcd1d262974",
+      "size": [
+        240,
+        160
+      ],
+      "kind": "untouched actual mGBA framebuffer"
+    },
+    {
+      "file": "native/forest-deadbeef-cell07.png",
+      "sha256": "f77bb165063acb894a3d05682c03008b74757f59b3be187994116c23a2fbaa62",
+      "size": [
+        240,
+        160
+      ],
+      "kind": "untouched actual mGBA framebuffer"
+    },
+    {
+      "file": "native/forest-deadbeef-cell12.png",
+      "sha256": "f1728dde428c2a07f1c9e41c84cba34fe6a833ff2cfd90017c5e3870e52c615b",
+      "size": [
+        240,
+        160
+      ],
+      "kind": "untouched actual mGBA framebuffer"
+    },
+    {
+      "file": "native/forest-deadbeef-cell13.png",
+      "sha256": "cc4ea663f84278b5c6cee2bd9fb76256e41d78416019c52df43df7b99d6ca21c",
+      "size": [
+        240,
+        160
+      ],
+      "kind": "untouched actual mGBA framebuffer"
+    },
+    {
+      "file": "native/forest-deadbeef-cell14.png",
+      "sha256": "35d0a6a8c641edb91c69dc8f0adbc8c70048e7baba21d0c169dd30ede3786b4c",
+      "size": [
+        240,
+        160
+      ],
+      "kind": "untouched actual mGBA framebuffer"
+    },
+    {
+      "file": "native/forest-deadbeef-cell19.png",
+      "sha256": "d49ef68fa7b993d52be2ad9762aade03c95983fb40ff0ced9aa2cd85cc8c6891",
+      "size": [
+        240,
+        160
+      ],
+      "kind": "untouched actual mGBA framebuffer"
+    },
+    {
+      "file": "native/forest-deadbeef-cell24.png",
+      "sha256": "45601ca8b2c42b63ee842b193a0239257327901e419202dc4662a4c5e180d811",
+      "size": [
+        240,
+        160
+      ],
+      "kind": "untouched actual mGBA framebuffer"
+    },
+    {
+      "file": "native/drain-00000007.png",
+      "sha256": "287e044490320b8dfe6b5f2fa5b87474a1045c9667be5f5de3f4993187361168",
+      "size": [
+        240,
+        160
+      ],
+      "kind": "untouched actual mGBA framebuffer"
+    },
+    {
+      "file": "native/forest-00000007-cell02.png",
+      "sha256": "5d5d2bc39054d997e8eb78c3842d42787458915a1072601d363d8e158358accd",
+      "size": [
+        240,
+        160
+      ],
+      "kind": "untouched actual mGBA framebuffer"
+    },
+    {
+      "file": "native/forest-00000007-cell03.png",
+      "sha256": "55f23b3d10dd7eb1f846ff60c93978f188319755e6b7d923bb4e7aad3693b001",
+      "size": [
+        240,
+        160
+      ],
+      "kind": "untouched actual mGBA framebuffer"
+    },
+    {
+      "file": "native/forest-00000007-cell05.png",
+      "sha256": "07e3edd868216c5e52d042863d2d1349b47ebf0515e8ae8c2028654262ad3289",
+      "size": [
+        240,
+        160
+      ],
+      "kind": "untouched actual mGBA framebuffer"
+    },
+    {
+      "file": "native/forest-00000007-cell06.png",
+      "sha256": "3fcb05b94ee6e5c7b4f35e7b509745cda66ee4e8944291ce02f620c1f6b5c66e",
+      "size": [
+        240,
+        160
+      ],
+      "kind": "untouched actual mGBA framebuffer"
+    },
+    {
+      "file": "native/forest-00000007-cell07.png",
+      "sha256": "233a3938e03111ed0d0f7556377ac0701f4306be0033713a5f7b2d4721cc7c14",
+      "size": [
+        240,
+        160
+      ],
+      "kind": "untouched actual mGBA framebuffer"
+    },
+    {
+      "file": "native/forest-00000007-cell08.png",
+      "sha256": "0e689830583eeab31b7cd245043d10bcab30c8e87de8d904e2832124a171d5b9",
+      "size": [
+        240,
+        160
+      ],
+      "kind": "untouched actual mGBA framebuffer"
+    },
+    {
+      "file": "native/forest-00000007-cell09.png",
+      "sha256": "ed0c3879ef05d09222f635d9f1325d61ce0617a2abf4d019da9a3ff1f584bd26",
+      "size": [
+        240,
+        160
+      ],
+      "kind": "untouched actual mGBA framebuffer"
+    },
+    {
+      "file": "native/forest-00000007-cell10.png",
+      "sha256": "78ea02781516a55100844872cbf07460da15e827e259b58b2779d309ee68893d",
+      "size": [
+        240,
+        160
+      ],
+      "kind": "untouched actual mGBA framebuffer"
+    },
+    {
+      "file": "native/forest-00000007-cell11.png",
+      "sha256": "37d3aff08820679b70276bd37ce39a2f6b66f351b64b5b626dee16e154191cfe",
+      "size": [
+        240,
+        160
+      ],
+      "kind": "untouched actual mGBA framebuffer"
+    },
+    {
+      "file": "native/forest-00000007-cell12.png",
+      "sha256": "cd07df723f309a7acc4cda580502f8c61179cc07c6e9e90a3e317e0fdd02d455",
+      "size": [
+        240,
+        160
+      ],
+      "kind": "untouched actual mGBA framebuffer"
+    },
+    {
+      "file": "native/forest-00000007-cell13.png",
+      "sha256": "adaa10a52886156498ecf2e97c463f5c321df123af0c07e50444774a5973812a",
+      "size": [
+        240,
+        160
+      ],
+      "kind": "untouched actual mGBA framebuffer"
+    },
+    {
+      "file": "native/forest-00000007-cell18.png",
+      "sha256": "5cc2d1a526261561445ee26d99665679ee49631abd5359b92afc14fe903b0058",
+      "size": [
+        240,
+        160
+      ],
+      "kind": "untouched actual mGBA framebuffer"
+    },
+    {
+      "file": "native/forest-00000007-cell19.png",
+      "sha256": "767c4ccc0f284ca87c7d50e2e791989b2a11b7764690297942888545e277b9e5",
+      "size": [
+        240,
+        160
+      ],
+      "kind": "untouched actual mGBA framebuffer"
+    },
+    {
+      "file": "native/forest-00000007-cell24.png",
+      "sha256": "1113a2a7d1685b3e8953ccca6b6c771b1da7fbd9c273bca50ab001e7152b50a2",
+      "size": [
+        240,
+        160
+      ],
+      "kind": "untouched actual mGBA framebuffer"
+    }
+  ],
+  "clips": [],
+  "checks": [
+    {
+      "name": "forest-0000b4a7-cell00 root occupancy cache matches original owner grid",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "forest-0000b4a7-cell01 root occupancy cache matches original owner grid",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "forest-0000b4a7-cell02 root occupancy cache matches original owner grid",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "forest-0000b4a7-cell03 root occupancy cache matches original owner grid",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "forest-0000b4a7-cell04 root occupancy cache matches original owner grid",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "forest-0000b4a7-cell05 root occupancy cache matches original owner grid",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "forest-0000b4a7-cell06 root occupancy cache matches original owner grid",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "forest-0000b4a7-cell07 root occupancy cache matches original owner grid",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "forest-0000b4a7-cell08 root occupancy cache matches original owner grid",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "forest-0000b4a7-cell09 root occupancy cache matches original owner grid",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "forest-0000b4a7-cell10 root occupancy cache matches original owner grid",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "forest-0000b4a7-cell11 root occupancy cache matches original owner grid",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "forest-0000b4a7-cell12 root occupancy cache matches original owner grid",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "forest-0000b4a7-cell13 root occupancy cache matches original owner grid",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "forest-0000b4a7-cell14 root occupancy cache matches original owner grid",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "forest-0000b4a7-cell15 root occupancy cache matches original owner grid",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "forest-0000b4a7-cell16 root occupancy cache matches original owner grid",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "forest-0000b4a7-cell17 root occupancy cache matches original owner grid",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "forest-0000b4a7-cell18 root occupancy cache matches original owner grid",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "forest-0000b4a7-cell19 root occupancy cache matches original owner grid",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "forest-0000b4a7-cell20 root occupancy cache matches original owner grid",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "forest-0000b4a7-cell21 root occupancy cache matches original owner grid",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "forest-0000b4a7-cell22 root occupancy cache matches original owner grid",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "forest-0000b4a7-cell23 root occupancy cache matches original owner grid",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "forest-0000b4a7-cell24 root occupancy cache matches original owner grid",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "forest-deadbeef-cell00 root occupancy cache matches original owner grid",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "forest-deadbeef-cell01 root occupancy cache matches original owner grid",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "forest-deadbeef-cell02 root occupancy cache matches original owner grid",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "forest-deadbeef-cell03 root occupancy cache matches original owner grid",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "forest-deadbeef-cell04 root occupancy cache matches original owner grid",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "forest-deadbeef-cell05 root occupancy cache matches original owner grid",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "forest-deadbeef-cell06 root occupancy cache matches original owner grid",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "forest-deadbeef-cell07 root occupancy cache matches original owner grid",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "forest-deadbeef-cell08 root occupancy cache matches original owner grid",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "forest-deadbeef-cell09 root occupancy cache matches original owner grid",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "forest-deadbeef-cell10 root occupancy cache matches original owner grid",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "forest-deadbeef-cell11 root occupancy cache matches original owner grid",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "forest-deadbeef-cell12 root occupancy cache matches original owner grid",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "forest-deadbeef-cell13 root occupancy cache matches original owner grid",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "forest-deadbeef-cell14 root occupancy cache matches original owner grid",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "forest-deadbeef-cell15 root occupancy cache matches original owner grid",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "forest-deadbeef-cell16 root occupancy cache matches original owner grid",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "forest-deadbeef-cell17 root occupancy cache matches original owner grid",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "forest-deadbeef-cell18 root occupancy cache matches original owner grid",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "forest-deadbeef-cell19 root occupancy cache matches original owner grid",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "forest-deadbeef-cell20 root occupancy cache matches original owner grid",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "forest-deadbeef-cell21 root occupancy cache matches original owner grid",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "forest-deadbeef-cell22 root occupancy cache matches original owner grid",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "forest-deadbeef-cell23 root occupancy cache matches original owner grid",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "forest-deadbeef-cell24 root occupancy cache matches original owner grid",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "forest-00000007-cell00 root occupancy cache matches original owner grid",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "forest-00000007-cell01 root occupancy cache matches original owner grid",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "forest-00000007-cell02 root occupancy cache matches original owner grid",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "forest-00000007-cell03 root occupancy cache matches original owner grid",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "forest-00000007-cell04 root occupancy cache matches original owner grid",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "forest-00000007-cell05 root occupancy cache matches original owner grid",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "forest-00000007-cell06 root occupancy cache matches original owner grid",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "forest-00000007-cell07 root occupancy cache matches original owner grid",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "forest-00000007-cell08 root occupancy cache matches original owner grid",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "forest-00000007-cell09 root occupancy cache matches original owner grid",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "forest-00000007-cell10 root occupancy cache matches original owner grid",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "forest-00000007-cell11 root occupancy cache matches original owner grid",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "forest-00000007-cell12 root occupancy cache matches original owner grid",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "forest-00000007-cell13 root occupancy cache matches original owner grid",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "forest-00000007-cell14 root occupancy cache matches original owner grid",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "forest-00000007-cell15 root occupancy cache matches original owner grid",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "forest-00000007-cell16 root occupancy cache matches original owner grid",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "forest-00000007-cell17 root occupancy cache matches original owner grid",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "forest-00000007-cell18 root occupancy cache matches original owner grid",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "forest-00000007-cell19 root occupancy cache matches original owner grid",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "forest-00000007-cell20 root occupancy cache matches original owner grid",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "forest-00000007-cell21 root occupancy cache matches original owner grid",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "forest-00000007-cell22 root occupancy cache matches original owner grid",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "forest-00000007-cell23 root occupancy cache matches original owner grid",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "forest-00000007-cell24 root occupancy cache matches original owner grid",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "all25 natural rooms per seed measured",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "ROM bytes remain unchanged",
+      "passed": true,
+      "detail": null
+    }
+  ],
+  "passed": 77,
+  "total": 77,
+  "errors": [],
+  "summary": {
+    "scenarios": 78,
+    "natural_rooms": 75,
+    "video_frames": 14040,
+    "eligible_frames": 14040,
+    "eligible_updates": 14037,
+    "worst": [
+      {
+        "name": "drain-0000b4a7",
+        "ratio": 0.9944444444444445,
+        "missed": 1,
+        "enemies": 0,
+        "oam": 14
+      },
+      {
+        "name": "drain-deadbeef",
+        "ratio": 0.9944444444444445,
+        "missed": 1,
+        "enemies": 0,
+        "oam": 15
+      },
+      {
+        "name": "drain-00000007",
+        "ratio": 0.9944444444444445,
+        "missed": 1,
+        "enemies": 0,
+        "oam": 15
+      },
+      {
+        "name": "forest-0000b4a7-cell00",
+        "ratio": 1.0,
+        "missed": 0,
+        "enemies": 6,
+        "oam": 20
+      },
+      {
+        "name": "forest-0000b4a7-cell01",
+        "ratio": 1.0,
+        "missed": 0,
+        "enemies": 7,
+        "oam": 22
+      },
+      {
+        "name": "forest-0000b4a7-cell02",
+        "ratio": 1.0,
+        "missed": 0,
+        "enemies": 6,
+        "oam": 23
+      },
+      {
+        "name": "forest-0000b4a7-cell03",
+        "ratio": 1.0,
+        "missed": 0,
+        "enemies": 6,
+        "oam": 22
+      },
+      {
+        "name": "forest-0000b4a7-cell04",
+        "ratio": 1.0,
+        "missed": 0,
+        "enemies": 5,
+        "oam": 22
+      },
+      {
+        "name": "forest-0000b4a7-cell05",
+        "ratio": 1.0,
+        "missed": 0,
+        "enemies": 3,
+        "oam": 19
+      },
+      {
+        "name": "forest-0000b4a7-cell06",
+        "ratio": 1.0,
+        "missed": 0,
+        "enemies": 6,
+        "oam": 24
+      },
+      {
+        "name": "forest-0000b4a7-cell07",
+        "ratio": 1.0,
+        "missed": 0,
+        "enemies": 6,
+        "oam": 22
+      },
+      {
+        "name": "forest-0000b4a7-cell08",
+        "ratio": 1.0,
+        "missed": 0,
+        "enemies": 6,
+        "oam": 22
+      },
+      {
+        "name": "forest-0000b4a7-cell09",
+        "ratio": 1.0,
+        "missed": 0,
+        "enemies": 5,
+        "oam": 21
+      },
+      {
+        "name": "forest-0000b4a7-cell10",
+        "ratio": 1.0,
+        "missed": 0,
+        "enemies": 6,
+        "oam": 22
+      },
+      {
+        "name": "forest-0000b4a7-cell11",
+        "ratio": 1.0,
+        "missed": 0,
+        "enemies": 5,
+        "oam": 22
+      }
+    ],
+    "elapsed_seconds": 20.37
+  },
+  "original_report_sha256": "8854bde6a55aaf99a32abe96ea4481fd82f0b4609ee5ba7b57e5bd2df0c5f5ba",
+  "original_report_archive_path": "natural/report.json",
+  "raw_trace_archive": "../../downloads/arcade-journal-1527dd8/native-evidence.zip"
+}

@@ -242,3 +242,10 @@ docs/sim_runs.json
 !/downloads/glitter-enemies-ef63b92/enemy-lab-ef63b92.gba
 !/downloads/glitter-enemies-ef63b92/bartgame-and-enemy-lab.zip
 !/downloads/glitter-enemies-ef63b92/native-evidence.zip
+
+# Independent clean production build used for the arcade/music release.
+/bartgame/build_arcade_frozen/
+# Rebuilt main ROM, original soundtrack and discovery cabinet handoff.
+!/downloads/arcade-journal-1527dd8/bartgame-1527dd8.gba
+!/downloads/arcade-journal-1527dd8/bartgame-1527dd8.zip
+!/downloads/arcade-journal-1527dd8/native-evidence.zip

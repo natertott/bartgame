@@ -1,0 +1,1499 @@
+{
+  "method": "Compare decoded native assets with the previous main ROM and three-enemy lab.\n\nPointer-bearing tables are compared through their decoded contents. The only\nexisting authored-room change allowed here is the appended arcade object.\n",
+  "before_rom_sha256": "cc57a1f790740ebcd6fc487e126cb970c41f79bc780e4f6bdd9530fc0d7e0d46",
+  "old_lab_sha256": "ecc4c5effe2b1e872e9520387585ab0687ed8f3b634011b2a0076d226967d653",
+  "rom_sha256": "341b7926b9a5f79ad35a789adf4b5c321fd3b5b149e94d648b50025740c6be98",
+  "tool_sha256": "673eebbabdb7e8c71f44753dd1324fde5dcf6d101298c0cf3da7f8d6b3fd0f75",
+  "checks": [
+    {
+      "name": "normal production entry mode",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "hero original sprite and ID exact",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "sword original sprite and ID exact",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "shield original sprite and ID exact",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "items original sprite and ID exact",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "beetle original sprite and ID exact",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "bat original sprite and ID exact",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "slime original sprite and ID exact",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "spitter original sprite and ID exact",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "knight original sprite and ID exact",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "ksword original sprite and ID exact",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "fx original sprite and ID exact",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "proj original sprite and ID exact",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "npc original sprite and ID exact",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "boss original sprite and ID exact",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "lift original sprite and ID exact",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "arrow original sprite and ID exact",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "mouth original sprite and ID exact",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "marks original sprite and ID exact",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "dots original sprite and ID exact",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "cursor original sprite and ID exact",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "pick32 original sprite and ID exact",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "icon32 original sprite and ID exact",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "uimarks original sprite and ID exact",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "face original sprite and ID exact",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "peddler_head original sprite and ID exact",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "peddler_body original sprite and ID exact",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "gatekeeper original sprite and ID exact",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "wisp original sprite and ID exact",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "bloomfx original sprite and ID exact",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "bloomshadow original sprite and ID exact",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "interactivechest original sprite and ID exact",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "interactiveentry original sprite and ID exact",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "huditems original sprite and ID exact",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "glitter original sprite and ID exact",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "sewerrail original sprite and ID exact",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "forestlandmark original sprite and ID exact",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "proto_rope approved study pixels preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "proto_leever approved study pixels preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "proto_helmasaur approved study pixels preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "forest decoded tiles/map/palettes/animations exact",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "sewer decoded tiles/map/palettes/animations exact",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "myst decoded tiles/map/palettes/animations exact",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "sin_table_u native packed payload exact",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "room_sewer_main_overlay native packed payload exact",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "room_sewer_main_ground native packed payload exact",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "title_bitmap native packed payload exact",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "hud_tiles native packed payload exact",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "appearance_mark_tiles native packed payload exact",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "appearance_palettes native packed payload exact",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "appearance_ui_tiles native packed payload exact",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "vwf_bits native packed payload exact",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "vwf_w native packed payload exact",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "peddler_act_at native packed payload exact",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "peddler_acts native packed payload exact",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "orb_glow native packed payload exact",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "forestlandmark_frame_pal native packed payload exact",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "huditems_frame_pal native packed payload exact",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "interactiveentry_frame_pal native packed payload exact",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "interactivechest_frame_pal native packed payload exact",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "bloomfx_frame_pal native packed payload exact",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "icon32_exact_pal native packed payload exact",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "icon32_exact_tiles native packed payload exact",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "icon32_frame_pal native packed payload exact",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "pick32_frame_pal native packed payload exact",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "lift_frame_pal native packed payload exact",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "items_frame_pal native packed payload exact",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "shield_frame_pal native packed payload exact",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "bloom_swing_hit native packed payload exact",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "bloom_swing_origin native packed payload exact",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "bloom_swing_age_active native packed payload exact",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "bloom_swing_age_phase native packed payload exact",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "forest_v3_body_visibility native packed payload exact",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "sheet_forestlandmark_tiles native packed payload exact",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "sheet_sewerrail_tiles native packed payload exact",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "sheet_glitter_tiles native packed payload exact",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "sheet_huditems_tiles native packed payload exact",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "sheet_interactiveentry_tiles native packed payload exact",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "sheet_interactivechest_tiles native packed payload exact",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "sheet_bloomshadow_tiles native packed payload exact",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "sheet_bloomfx_tiles native packed payload exact",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "sheet_wisp_tiles native packed payload exact",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "sheet_gatekeeper_tiles native packed payload exact",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "sheet_peddler_body_tiles native packed payload exact",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "sheet_peddler_head_tiles native packed payload exact",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "sheet_face_tiles native packed payload exact",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "sheet_uimarks_tiles native packed payload exact",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "sheet_icon32_tiles native packed payload exact",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "sheet_pick32_tiles native packed payload exact",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "sheet_cursor_tiles native packed payload exact",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "sheet_dots_tiles native packed payload exact",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "sheet_marks_tiles native packed payload exact",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "sheet_mouth_tiles native packed payload exact",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "sheet_arrow_tiles native packed payload exact",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "sheet_lift_tiles native packed payload exact",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "sheet_boss_tiles native packed payload exact",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "sheet_npc_tiles native packed payload exact",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "sheet_proj_tiles native packed payload exact",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "sheet_fx_tiles native packed payload exact",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "sheet_ksword_tiles native packed payload exact",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "sheet_knight_tiles native packed payload exact",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "sheet_spitter_tiles native packed payload exact",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "sheet_slime_tiles native packed payload exact",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "sheet_bat_tiles native packed payload exact",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "sheet_beetle_tiles native packed payload exact",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "sheet_items_tiles native packed payload exact",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "sheet_shield_tiles native packed payload exact",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "sheet_sword_tiles native packed payload exact",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "sheet_hero_tiles native packed payload exact",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "forest_cohesion_decor_alias native packed payload exact",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "forest_cohesion_path_alias native packed payload exact",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "forest_v2_pulse_colors native packed payload exact",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "forest_v2_pulse_slots native packed payload exact",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "forest_v2_water_alias native packed payload exact",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "forest_v2_water_isolated native packed payload exact",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "forest_v2_canopy_alias native packed payload exact",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "forest_v2_overhead native packed payload exact",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "forest_v2_special_tree native packed payload exact",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "forest_v2_water_kind native packed payload exact",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "forest_v2_canopy_kind native packed payload exact",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "tile_anim_myst_5 native packed payload exact",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "tile_anim_myst_4 native packed payload exact",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "tile_anim_myst_3 native packed payload exact",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "tile_anim_myst_2 native packed payload exact",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "tile_anim_myst_1 native packed payload exact",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "tile_anim_myst_0 native packed payload exact",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "tileset_myst_pals native packed payload exact",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "metatile_map_myst native packed payload exact",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "tileset_myst_tiles native packed payload exact",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "tile_anim_sewer_68 native packed payload exact",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "tile_anim_sewer_67 native packed payload exact",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "tile_anim_sewer_66 native packed payload exact",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "tile_anim_sewer_65 native packed payload exact",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "tile_anim_sewer_64 native packed payload exact",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "tile_anim_sewer_63 native packed payload exact",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "tile_anim_sewer_62 native packed payload exact",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "tile_anim_sewer_61 native packed payload exact",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "tile_anim_sewer_60 native packed payload exact",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "tile_anim_sewer_59 native packed payload exact",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "tile_anim_sewer_58 native packed payload exact",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "tile_anim_sewer_57 native packed payload exact",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "tile_anim_sewer_56 native packed payload exact",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "tile_anim_sewer_55 native packed payload exact",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "tile_anim_sewer_54 native packed payload exact",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "tile_anim_sewer_53 native packed payload exact",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "tile_anim_sewer_52 native packed payload exact",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "tile_anim_sewer_51 native packed payload exact",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "tile_anim_sewer_50 native packed payload exact",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "tile_anim_sewer_49 native packed payload exact",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "tile_anim_sewer_48 native packed payload exact",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "tile_anim_sewer_47 native packed payload exact",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "tile_anim_sewer_46 native packed payload exact",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "tile_anim_sewer_45 native packed payload exact",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "tile_anim_sewer_44 native packed payload exact",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "tile_anim_sewer_43 native packed payload exact",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "tile_anim_sewer_42 native packed payload exact",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "tile_anim_sewer_41 native packed payload exact",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "tile_anim_sewer_40 native packed payload exact",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "tile_anim_sewer_39 native packed payload exact",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "tile_anim_sewer_38 native packed payload exact",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "tile_anim_sewer_37 native packed payload exact",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "tile_anim_sewer_36 native packed payload exact",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "tile_anim_sewer_35 native packed payload exact",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "tile_anim_sewer_34 native packed payload exact",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "tile_anim_sewer_33 native packed payload exact",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "tile_anim_sewer_32 native packed payload exact",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "tile_anim_sewer_31 native packed payload exact",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "tile_anim_sewer_30 native packed payload exact",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "tile_anim_sewer_29 native packed payload exact",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "tile_anim_sewer_28 native packed payload exact",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "tile_anim_sewer_27 native packed payload exact",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "tile_anim_sewer_26 native packed payload exact",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "tile_anim_sewer_25 native packed payload exact",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "tile_anim_sewer_24 native packed payload exact",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "tile_anim_sewer_23 native packed payload exact",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "tile_anim_sewer_22 native packed payload exact",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "tile_anim_sewer_21 native packed payload exact",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "tile_anim_sewer_20 native packed payload exact",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "tile_anim_sewer_19 native packed payload exact",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "tile_anim_sewer_18 native packed payload exact",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "tile_anim_sewer_17 native packed payload exact",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "tile_anim_sewer_16 native packed payload exact",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "tile_anim_sewer_15 native packed payload exact",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "tile_anim_sewer_14 native packed payload exact",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "tile_anim_sewer_13 native packed payload exact",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "tile_anim_sewer_12 native packed payload exact",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "tile_anim_sewer_11 native packed payload exact",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "tile_anim_sewer_10 native packed payload exact",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "tile_anim_sewer_9 native packed payload exact",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "tile_anim_sewer_8 native packed payload exact",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "tile_anim_sewer_7 native packed payload exact",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "tile_anim_sewer_6 native packed payload exact",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "tile_anim_sewer_5 native packed payload exact",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "tile_anim_sewer_4 native packed payload exact",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "tile_anim_sewer_3 native packed payload exact",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "tile_anim_sewer_2 native packed payload exact",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "tile_anim_sewer_1 native packed payload exact",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "tile_anim_sewer_0 native packed payload exact",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "tileset_sewer_pals native packed payload exact",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "metatile_map_sewer native packed payload exact",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "tileset_sewer_tiles native packed payload exact",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "tile_anim_forest_74 native packed payload exact",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "tile_anim_forest_73 native packed payload exact",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "tile_anim_forest_72 native packed payload exact",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "tile_anim_forest_71 native packed payload exact",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "tile_anim_forest_70 native packed payload exact",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "tile_anim_forest_69 native packed payload exact",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "tile_anim_forest_68 native packed payload exact",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "tile_anim_forest_67 native packed payload exact",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "tile_anim_forest_66 native packed payload exact",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "tile_anim_forest_65 native packed payload exact",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "tile_anim_forest_64 native packed payload exact",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "tile_anim_forest_63 native packed payload exact",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "tile_anim_forest_62 native packed payload exact",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "tile_anim_forest_61 native packed payload exact",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "tile_anim_forest_60 native packed payload exact",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "tile_anim_forest_59 native packed payload exact",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "tile_anim_forest_58 native packed payload exact",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "tile_anim_forest_57 native packed payload exact",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "tile_anim_forest_56 native packed payload exact",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "tile_anim_forest_55 native packed payload exact",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "tile_anim_forest_54 native packed payload exact",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "tile_anim_forest_53 native packed payload exact",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "tile_anim_forest_52 native packed payload exact",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "tile_anim_forest_51 native packed payload exact",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "tile_anim_forest_50 native packed payload exact",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "tile_anim_forest_49 native packed payload exact",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "tile_anim_forest_48 native packed payload exact",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "tile_anim_forest_47 native packed payload exact",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "tile_anim_forest_46 native packed payload exact",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "tile_anim_forest_45 native packed payload exact",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "tile_anim_forest_44 native packed payload exact",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "tile_anim_forest_43 native packed payload exact",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "tile_anim_forest_42 native packed payload exact",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "tile_anim_forest_41 native packed payload exact",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "tile_anim_forest_40 native packed payload exact",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "tile_anim_forest_39 native packed payload exact",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "tile_anim_forest_38 native packed payload exact",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "tile_anim_forest_37 native packed payload exact",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "tile_anim_forest_36 native packed payload exact",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "tile_anim_forest_35 native packed payload exact",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "tile_anim_forest_34 native packed payload exact",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "tile_anim_forest_33 native packed payload exact",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "tile_anim_forest_32 native packed payload exact",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "tile_anim_forest_31 native packed payload exact",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "tile_anim_forest_30 native packed payload exact",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "tile_anim_forest_29 native packed payload exact",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "tile_anim_forest_28 native packed payload exact",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "tile_anim_forest_27 native packed payload exact",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "tile_anim_forest_26 native packed payload exact",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "tile_anim_forest_25 native packed payload exact",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "tile_anim_forest_24 native packed payload exact",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "tile_anim_forest_23 native packed payload exact",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "tile_anim_forest_22 native packed payload exact",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "tile_anim_forest_21 native packed payload exact",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "tile_anim_forest_20 native packed payload exact",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "tile_anim_forest_19 native packed payload exact",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "tile_anim_forest_18 native packed payload exact",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "tile_anim_forest_17 native packed payload exact",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "tile_anim_forest_16 native packed payload exact",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "tile_anim_forest_15 native packed payload exact",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "tile_anim_forest_14 native packed payload exact",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "tile_anim_forest_13 native packed payload exact",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "tile_anim_forest_12 native packed payload exact",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "tile_anim_forest_11 native packed payload exact",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "tile_anim_forest_10 native packed payload exact",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "tile_anim_forest_9 native packed payload exact",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "tile_anim_forest_8 native packed payload exact",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "tile_anim_forest_7 native packed payload exact",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "tile_anim_forest_6 native packed payload exact",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "tile_anim_forest_5 native packed payload exact",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "tile_anim_forest_4 native packed payload exact",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "tile_anim_forest_3 native packed payload exact",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "tile_anim_forest_2 native packed payload exact",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "tile_anim_forest_1 native packed payload exact",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "tile_anim_forest_0 native packed payload exact",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "tileset_forest_pals native packed payload exact",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "metatile_map_forest native packed payload exact",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "tileset_forest_tiles native packed payload exact",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "forest_tree_variety native packed payload exact",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "forest_tree_state native packed payload exact",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "forest_tree_anchor_y native packed payload exact",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "forest_tree_anchor_x native packed payload exact",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "forest_tree_width native packed payload exact",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "forest_tree_opaque_rows native packed payload exact",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "forest_tree_entries native packed payload exact",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "metatile_glitter native packed payload exact",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "metatile_prop native packed payload exact",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "metatile_coll native packed payload exact",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "metatile_type native packed payload exact",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "pal_face native packed payload exact",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "pal_obj native packed payload exact",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "pal_bg native packed payload exact",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "old room object list retained plus one cabinet",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "cabinet valid32x64 two native frames",
+      "passed": true,
+      "detail": {
+        "tile_count": 64,
+        "frame_tiles": 32,
+        "shape": 2,
+        "size": 3,
+        "pal": 1,
+        "width": 32,
+        "height": 64
+      }
+    },
+    {
+      "name": "cabinet screen-only slow pulse remains compact",
+      "passed": true,
+      "detail": 6
+    }
+  ],
+  "passed": 296,
+  "total": 296
+}

@@ -1746,3 +1746,31 @@ actor bytes; native second-cycle motion, real sword recoil and fallback tests
 confirm it survives. An exact rational route stepper removes repeated software
 divisions while preserving91,184,129 sampled coordinates across1,050,625
 differential vectors. No AI schedule, sampling path or source pose is reduced.
+
+**Final production qualification:** committed game source
+`1527dd84c92f47bf5f498cbff35cdd179cad48af` clean-builds the9,538,580-byte
+normal ROM, SHA256
+`341b7926b9a5f79ad35a789adf4b5c321fd3b5b149e94d648b50025740c6be98`.
+Fresh actual mGBA qualification passes157 journal/gameplay/profile checks,
+662 UI checks across33 entries and9 appearance combinations,75 production
+combat/memory checks and69 original-audio checks including all five full
+loops. The original36 sprite sheets, three terrain packs, authored room
+paintings, title/font/UI payloads and the approved three new sprite strips
+remain exact (296 asset checks); only the cabinet painting is added.
+
+All75 sampled natural forest rooms retain13,500/13,500 updates. Thirty
+sustained4–24-enemy baseline workloads retain5,400/5,400. The broader natural
+survey retains three one-frame Drain startup observations, and a separate
+24-Maw synchronized emergence retains one boundary repeat (299/300); neither
+is hidden by claiming a universal frame-rate guarantee. Strict mixed-nine-
+family, second-burrow anchor, required-trial and streaming reuse tests pass.
+Peak mixed world allocation is608 tiles below the876-tile reserved HUD
+boundary. EWRAM retains7,536 free bytes and the linker preserves its4KB
+minimum system-stack guard.
+
+The [actual game review and downloads](../../../arcade-journal-review/README.md)
+separate earned discoveries from full-catalogue profile fixtures and source
+cabinet inspection. Every native image/raw WAV, state trace, source input
+hash, exact test tool and frozen build bundle is retained in the evidence
+archive. The original art/glitter direction and current menu choices remain
+in force; the three enemy additions, local cabinet and journal are adopted.

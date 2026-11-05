@@ -1,0 +1,114 @@
+{
+  "media": [
+    {
+      "file": "cabinet.png",
+      "sha256": "f52a761b9ed1da345ee573198d93734e904ab749030d4b45790ba9cca94ee095",
+      "source": "journal/06-drain-after-journal.png"
+    },
+    {
+      "file": "items.png",
+      "sha256": "ca7036929be9907d233d5234f95a6b8c26ced3157661ae8146174b6bc456aa0e",
+      "source": "journal/02-journal-known-sword.png"
+    },
+    {
+      "file": "unknown-enemies.png",
+      "sha256": "689a6366b5de21ef84e15d5f4923714f0836ee175a3317c098bd3c32079c60ca",
+      "source": "journal/04-journal-unknown-enemy.png"
+    },
+    {
+      "file": "item-notes.png",
+      "sha256": "7156c36c1ba3a9f08ccdd78ccdc6248fcd7d8f68f93c33c91234fe8b824d5e2a",
+      "source": "journal/05-journal-known-notes.png"
+    },
+    {
+      "file": "earned-enemies.png",
+      "sha256": "0c0016e43d3ddb566f0cd01661ff80280312d30cf07461ed934fb1e26d6b0326",
+      "source": "journal/10-earned-enemy-journal.png"
+    },
+    {
+      "file": "root-maw-notes.png",
+      "sha256": "45fade695ec96a72b4636d9aa008257f1d5b09fcafb5f89f30944bfc0fd555cb",
+      "source": "ui/style0-palette0/page1-entry07.png"
+    },
+    {
+      "file": "all-enemies.png",
+      "sha256": "160d891703d0a631d183e0ba8ab35c1a65f70bab75cd1349531dc1964b322cbd",
+      "source": "ui/all-enemies-winebound-native.png"
+    },
+    {
+      "file": "appearances.png",
+      "sha256": "21015e056c0254cab4dd7843ad4c4068a006584575aa9998f0f55212dc6ef19c",
+      "source": "ui/nine-appearance-combinations-native.png"
+    },
+    {
+      "file": "blightseeds-notes.png",
+      "sha256": "88d7bf017209bbd6ba5840b078558c1ae1c3b619432739e12693dd7c560cd7f2",
+      "source": "ui/style0-palette0/page0-entry03.png"
+    },
+    {
+      "file": "heart-notes.png",
+      "sha256": "8e4401b45b9dd51f47c4fc28c0e35efca7b1d93ea3bf6184324b0f65aff102b9",
+      "source": "ui/style1-palette1/page1-entry05.png"
+    },
+    {
+      "file": "cabinet-source.png",
+      "sha256": "bc1c51a9930976a578d6c8691d955b7385c94e1587b4e78599603553a8db2590",
+      "source": "labelled native source artwork"
+    },
+    {
+      "file": "forest-new-enemies.gif",
+      "sha256": "7c91c525a41223552d5e2041e252ccc6096ccb025a443e0847104d478dd2408c",
+      "source": "journal/natural-cell-03/motion.gif"
+    },
+    {
+      "file": "cabinet-journal.gif",
+      "sha256": "e765f224b43f153d769c0cf33fc616d68bef873988a668d6b2462ff969918a24",
+      "source": "journal/cabinet-and-journal/motion.gif"
+    },
+    {
+      "file": "mixed-enemies.gif",
+      "sha256": "92061adac9f03bd6332135f40af5fce1fe295ad94874a8de719ec053ab92a61a",
+      "source": "enemies/all-nine-mixed-production/motion.gif"
+    },
+    {
+      "file": "maw-combat.gif",
+      "sha256": "fdde8ad2415db59290a0846fc44a9fb7ee66b83f0295fe65498c9602cf57b1a1",
+      "source": "enemies/maw-buried-surface-production/motion.gif"
+    },
+    {
+      "file": "snout-combat.gif",
+      "sha256": "bbf83a41b11330da758c137bf1f8dd36c32dd4554ae724010e16c09ee5709420",
+      "source": "enemies/snout-front-rear-production/motion.gif"
+    },
+    {
+      "file": "audio/sewer.mp3",
+      "sha256": "938bbba12e2b0ecbcfdf6417f001bef69306bda8472c9b196d6c06e077c874c9",
+      "source": "actual mGBA WAV sewer-preview.wav",
+      "encoding": "MP3 listening copy; raw untouched stereo WAV in archive"
+    },
+    {
+      "file": "audio/forest.mp3",
+      "sha256": "9660d8162700c1591c5ff54babb1213fd43351243c429d53aea23dc860b0e993",
+      "source": "actual mGBA WAV forest-preview.wav",
+      "encoding": "MP3 listening copy; raw untouched stereo WAV in archive"
+    },
+    {
+      "file": "audio/boss.mp3",
+      "sha256": "92f0dc3899cfd6afc924ab33e6ddce1b7c6c813ce4838648cd7f0802c5fb9b5f",
+      "source": "actual mGBA WAV boss-preview.wav",
+      "encoding": "MP3 listening copy; raw untouched stereo WAV in archive"
+    },
+    {
+      "file": "audio/title.mp3",
+      "sha256": "47aaa39e81fdc0503dfdd8cec76c0cb2e9606d9e336afc8b89d3e90612aa4cdc",
+      "source": "actual mGBA WAV title-preview.wav",
+      "encoding": "MP3 listening copy; raw untouched stereo WAV in archive"
+    },
+    {
+      "file": "audio/win.mp3",
+      "sha256": "4a32f0bbf211cb2aa2d8b8ff2c0dd0ff71c8d0804a7161963abd2c72d2f54d7e",
+      "source": "actual mGBA WAV win-preview.wav",
+      "encoding": "MP3 listening copy; raw untouched stereo WAV in archive"
+    }
+  ]
+}

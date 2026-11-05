@@ -1,0 +1,14 @@
+{
+  "method": "Actual extracted reachable_dry C, dry-footprint recorder, exhaustive comparison to original signed C division at every sample.",
+  "source_sha256": "209b3e1307d5c9770def83a1976ad5844d1d429b5de22bcaa8f199aa946fe3bb",
+  "function_sha256": "12e718111503571d0c41a8537d4f26ac2a2c8fb1f6c1450ddbbcf7aa0d4b5501",
+  "harness_sha256": "732a2ca719fb5359bfa2b2ee4873e85eac4d74c61ebf79555da037fc3187fe64",
+  "vectors": 1050625,
+  "sample_coordinates": 91184129,
+  "dx_dy_range": [
+    -512,
+    512
+  ],
+  "zero_vector": true,
+  "passed": true
+}

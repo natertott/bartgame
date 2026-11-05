@@ -1,0 +1,2958 @@
+{
+  "schema": 1,
+  "method": "Reproducible mGBA workload survey with natural rosters and explicit stress fixtures.\n\nNo terrain, artwork, framebuffer, enemy HP, AI or frame clock is changed. Natural\ncases retain all generated actors. Controlled stress cases explicitly replace the\nroster through the game's developer spawn request; their counts are not asserted\nas naturally generated gameplay. Player health/inventory and room positioning are\nfixtures. Raw VBlank/logic ages distinguish repeated video frames from modal or\ntransition states, which are reported separately rather than called slow logic.",
+  "emulator": "mGBA0.10.5",
+  "source_commit": "1527dd84c92f47bf5f498cbff35cdd179cad48af",
+  "rom_sha256": "341b7926b9a5f79ad35a789adf4b5c321fd3b5b149e94d648b50025740c6be98",
+  "tool_sha256": "e1ea09d24ce30c33dfe6187f6eeea7e5c0e231eafa74d7060157c95a7efa7684",
+  "fixtures": [
+    "Seed pinned before normal title Start. Original generated terrain and room rosters retained in natural cases.",
+    "Existing transition request navigates rooms, bypassing travel/gates only for workload coverage; its generation/fade latency is separately recorded.",
+    "Player is positioned on an actually walkable central floor near the densest local enemy group. No ground tiles are edited.",
+    "Full ordinary inventory,80maximum player health,99ammo and ten hearts exercise the real HUD. Player health is restored each video frame; enemy HP, AI, timers and RNG remain live.",
+    "Natural cases never remove or inject enemies. Explicit stress cases clear only nonplayer actors, then use the existing gDbgSpawn enemy-spawn path at stated counts/types.",
+    "When --reference is supplied, the baseline planned player tile is reused; camera easing and enemy AI/HP are never forced to manufacture equal state.",
+    "Optional --warmup runs ordinary unheld simulation/health restoration before each nonmodal sample, separating steady camera workloads from arrival/camera approach.",
+    "Inputs are a fixed video-frame schedule. Faster builds may consequently advance more simulation updates; performance traces are not a claim of identical world states at equal video ages.",
+    "All screenshots are native untouched240x160 mGBA framebuffers. Modal and transition states are reported separately from expected gameplay updates."
+  ],
+  "complete": true,
+  "seeds": [
+    "0xb4a7",
+    "0xdeadbeef",
+    "0x7"
+  ],
+  "configured_frames": 180,
+  "warmup_frames": 0,
+  "reference_report_sha256": null,
+  "reference_source_commit": null,
+  "scenarios": [
+    {
+      "name": "stress-beetles-04",
+      "kind": "stress-throughput",
+      "seed": "0xb4a7",
+      "input_mode": "idle",
+      "metadata": {
+        "replaced_roster": true,
+        "requested_enemies": 4,
+        "enemy_family": "beetles",
+        "synthetic_throughput": true,
+        "player_offense": false,
+        "fixture_point": [
+          296,
+          190
+        ]
+      },
+      "warmup_frames": 0,
+      "initial": {
+        "area": 1,
+        "cell": 22,
+        "position": [
+          296,
+          190
+        ],
+        "camera": [
+          176,
+          148
+        ],
+        "roster": {
+          "kinds": {
+            "1": 1,
+            "2": 4
+          },
+          "enemy_types": {
+            "0": 4
+          },
+          "enemies": 4,
+          "enemies_near_viewport": 4,
+          "actors": 5
+        }
+      },
+      "video_frames": 180,
+      "vblanks": 180,
+      "logic_updates": 180,
+      "eligible_gameplay_frames": 180,
+      "eligible_gameplay_updates": 180,
+      "update_ratio": 1.0,
+      "missed_gameplay_updates": 0,
+      "logic_delta_histogram": {
+        "1": 180
+      },
+      "longest_repeat": 0,
+      "game_states": {
+        "1": 180
+      },
+      "player_states": {
+        "0": 180
+      },
+      "oam_peak": 19,
+      "ambient_potential_peak": 12,
+      "ending": {
+        "area": 1,
+        "cell": 22,
+        "roster": {
+          "kinds": {
+            "1": 1,
+            "2": 4
+          },
+          "enemy_types": {
+            "0": 4
+          },
+          "enemies": 4,
+          "enemies_near_viewport": 4,
+          "actors": 5
+        }
+      },
+      "samples_retained_frames": 180,
+      "actor_samples_retained_frames": 12
+    },
+    {
+      "name": "stress-beetles-08",
+      "kind": "stress-throughput",
+      "seed": "0xb4a7",
+      "input_mode": "idle",
+      "metadata": {
+        "replaced_roster": true,
+        "requested_enemies": 8,
+        "enemy_family": "beetles",
+        "synthetic_throughput": true,
+        "player_offense": false,
+        "fixture_point": [
+          296,
+          190
+        ]
+      },
+      "warmup_frames": 0,
+      "initial": {
+        "area": 1,
+        "cell": 22,
+        "position": [
+          296,
+          190
+        ],
+        "camera": [
+          176,
+          148
+        ],
+        "roster": {
+          "kinds": {
+            "1": 1,
+            "2": 8
+          },
+          "enemy_types": {
+            "0": 8
+          },
+          "enemies": 8,
+          "enemies_near_viewport": 8,
+          "actors": 9
+        }
+      },
+      "video_frames": 180,
+      "vblanks": 180,
+      "logic_updates": 180,
+      "eligible_gameplay_frames": 180,
+      "eligible_gameplay_updates": 180,
+      "update_ratio": 1.0,
+      "missed_gameplay_updates": 0,
+      "logic_delta_histogram": {
+        "1": 180
+      },
+      "longest_repeat": 0,
+      "game_states": {
+        "1": 180
+      },
+      "player_states": {
+        "0": 180
+      },
+      "oam_peak": 23,
+      "ambient_potential_peak": 12,
+      "ending": {
+        "area": 1,
+        "cell": 22,
+        "roster": {
+          "kinds": {
+            "1": 1,
+            "2": 8
+          },
+          "enemy_types": {
+            "0": 8
+          },
+          "enemies": 8,
+          "enemies_near_viewport": 8,
+          "actors": 9
+        }
+      },
+      "samples_retained_frames": 180,
+      "actor_samples_retained_frames": 12
+    },
+    {
+      "name": "stress-beetles-12",
+      "kind": "stress-throughput",
+      "seed": "0xb4a7",
+      "input_mode": "idle",
+      "metadata": {
+        "replaced_roster": true,
+        "requested_enemies": 12,
+        "enemy_family": "beetles",
+        "synthetic_throughput": true,
+        "player_offense": false,
+        "fixture_point": [
+          296,
+          190
+        ]
+      },
+      "warmup_frames": 0,
+      "initial": {
+        "area": 1,
+        "cell": 22,
+        "position": [
+          296,
+          190
+        ],
+        "camera": [
+          176,
+          148
+        ],
+        "roster": {
+          "kinds": {
+            "1": 1,
+            "2": 12
+          },
+          "enemy_types": {
+            "0": 12
+          },
+          "enemies": 12,
+          "enemies_near_viewport": 12,
+          "actors": 13
+        }
+      },
+      "video_frames": 180,
+      "vblanks": 180,
+      "logic_updates": 180,
+      "eligible_gameplay_frames": 180,
+      "eligible_gameplay_updates": 180,
+      "update_ratio": 1.0,
+      "missed_gameplay_updates": 0,
+      "logic_delta_histogram": {
+        "1": 180
+      },
+      "longest_repeat": 0,
+      "game_states": {
+        "1": 180
+      },
+      "player_states": {
+        "0": 132,
+        "3": 48
+      },
+      "oam_peak": 29,
+      "ambient_potential_peak": 12,
+      "ending": {
+        "area": 1,
+        "cell": 22,
+        "roster": {
+          "kinds": {
+            "1": 1,
+            "2": 12
+          },
+          "enemy_types": {
+            "0": 12
+          },
+          "enemies": 12,
+          "enemies_near_viewport": 12,
+          "actors": 13
+        }
+      },
+      "samples_retained_frames": 180,
+      "actor_samples_retained_frames": 12
+    },
+    {
+      "name": "stress-beetles-16",
+      "kind": "stress-throughput",
+      "seed": "0xb4a7",
+      "input_mode": "idle",
+      "metadata": {
+        "replaced_roster": true,
+        "requested_enemies": 16,
+        "enemy_family": "beetles",
+        "synthetic_throughput": true,
+        "player_offense": false,
+        "fixture_point": [
+          296,
+          190
+        ]
+      },
+      "warmup_frames": 0,
+      "initial": {
+        "area": 1,
+        "cell": 22,
+        "position": [
+          296,
+          190
+        ],
+        "camera": [
+          176,
+          148
+        ],
+        "roster": {
+          "kinds": {
+            "1": 1,
+            "2": 16
+          },
+          "enemy_types": {
+            "0": 16
+          },
+          "enemies": 16,
+          "enemies_near_viewport": 16,
+          "actors": 17
+        }
+      },
+      "video_frames": 180,
+      "vblanks": 180,
+      "logic_updates": 180,
+      "eligible_gameplay_frames": 180,
+      "eligible_gameplay_updates": 180,
+      "update_ratio": 1.0,
+      "missed_gameplay_updates": 0,
+      "logic_delta_histogram": {
+        "1": 180
+      },
+      "longest_repeat": 0,
+      "game_states": {
+        "1": 180
+      },
+      "player_states": {
+        "0": 132,
+        "3": 48
+      },
+      "oam_peak": 32,
+      "ambient_potential_peak": 12,
+      "ending": {
+        "area": 1,
+        "cell": 22,
+        "roster": {
+          "kinds": {
+            "1": 1,
+            "2": 16
+          },
+          "enemy_types": {
+            "0": 16
+          },
+          "enemies": 16,
+          "enemies_near_viewport": 16,
+          "actors": 17
+        }
+      },
+      "samples_retained_frames": 180,
+      "actor_samples_retained_frames": 12
+    },
+    {
+      "name": "stress-beetles-24",
+      "kind": "stress-throughput",
+      "seed": "0xb4a7",
+      "input_mode": "idle",
+      "metadata": {
+        "replaced_roster": true,
+        "requested_enemies": 24,
+        "enemy_family": "beetles",
+        "synthetic_throughput": true,
+        "player_offense": false,
+        "fixture_point": [
+          296,
+          190
+        ]
+      },
+      "warmup_frames": 0,
+      "initial": {
+        "area": 1,
+        "cell": 22,
+        "position": [
+          293,
+          201
+        ],
+        "camera": [
+          173,
+          148
+        ],
+        "roster": {
+          "kinds": {
+            "1": 1,
+            "2": 24
+          },
+          "enemy_types": {
+            "0": 24
+          },
+          "enemies": 24,
+          "enemies_near_viewport": 24,
+          "actors": 25
+        }
+      },
+      "video_frames": 180,
+      "vblanks": 180,
+      "logic_updates": 180,
+      "eligible_gameplay_frames": 180,
+      "eligible_gameplay_updates": 180,
+      "update_ratio": 1.0,
+      "missed_gameplay_updates": 0,
+      "logic_delta_histogram": {
+        "1": 180
+      },
+      "longest_repeat": 0,
+      "game_states": {
+        "1": 180
+      },
+      "player_states": {
+        "0": 132,
+        "3": 48
+      },
+      "oam_peak": 39,
+      "ambient_potential_peak": 12,
+      "ending": {
+        "area": 1,
+        "cell": 22,
+        "roster": {
+          "kinds": {
+            "1": 1,
+            "2": 24
+          },
+          "enemy_types": {
+            "0": 24
+          },
+          "enemies": 24,
+          "enemies_near_viewport": 24,
+          "actors": 25
+        }
+      },
+      "samples_retained_frames": 180,
+      "actor_samples_retained_frames": 12
+    },
+    {
+      "name": "stress-bats-04",
+      "kind": "stress-throughput",
+      "seed": "0xb4a7",
+      "input_mode": "idle",
+      "metadata": {
+        "replaced_roster": true,
+        "requested_enemies": 4,
+        "enemy_family": "bats",
+        "synthetic_throughput": true,
+        "player_offense": false,
+        "fixture_point": [
+          296,
+          190
+        ]
+      },
+      "warmup_frames": 0,
+      "initial": {
+        "area": 1,
+        "cell": 22,
+        "position": [
+          296,
+          190
+        ],
+        "camera": [
+          176,
+          148
+        ],
+        "roster": {
+          "kinds": {
+            "1": 1,
+            "2": 4
+          },
+          "enemy_types": {
+            "1": 4
+          },
+          "enemies": 4,
+          "enemies_near_viewport": 4,
+          "actors": 5
+        }
+      },
+      "video_frames": 180,
+      "vblanks": 180,
+      "logic_updates": 180,
+      "eligible_gameplay_frames": 180,
+      "eligible_gameplay_updates": 180,
+      "update_ratio": 1.0,
+      "missed_gameplay_updates": 0,
+      "logic_delta_histogram": {
+        "1": 180
+      },
+      "longest_repeat": 0,
+      "game_states": {
+        "1": 180
+      },
+      "player_states": {
+        "0": 156,
+        "3": 24
+      },
+      "oam_peak": 19,
+      "ambient_potential_peak": 12,
+      "ending": {
+        "area": 1,
+        "cell": 22,
+        "roster": {
+          "kinds": {
+            "1": 1,
+            "2": 4
+          },
+          "enemy_types": {
+            "1": 4
+          },
+          "enemies": 4,
+          "enemies_near_viewport": 4,
+          "actors": 5
+        }
+      },
+      "samples_retained_frames": 180,
+      "actor_samples_retained_frames": 12
+    },
+    {
+      "name": "stress-bats-08",
+      "kind": "stress-throughput",
+      "seed": "0xb4a7",
+      "input_mode": "idle",
+      "metadata": {
+        "replaced_roster": true,
+        "requested_enemies": 8,
+        "enemy_family": "bats",
+        "synthetic_throughput": true,
+        "player_offense": false,
+        "fixture_point": [
+          296,
+          190
+        ]
+      },
+      "warmup_frames": 0,
+      "initial": {
+        "area": 1,
+        "cell": 22,
+        "position": [
+          296,
+          190
+        ],
+        "camera": [
+          176,
+          148
+        ],
+        "roster": {
+          "kinds": {
+            "1": 1,
+            "2": 8
+          },
+          "enemy_types": {
+            "1": 8
+          },
+          "enemies": 8,
+          "enemies_near_viewport": 8,
+          "actors": 9
+        }
+      },
+      "video_frames": 180,
+      "vblanks": 180,
+      "logic_updates": 180,
+      "eligible_gameplay_frames": 180,
+      "eligible_gameplay_updates": 180,
+      "update_ratio": 1.0,
+      "missed_gameplay_updates": 0,
+      "logic_delta_histogram": {
+        "1": 180
+      },
+      "longest_repeat": 0,
+      "game_states": {
+        "1": 180
+      },
+      "player_states": {
+        "0": 156,
+        "3": 24
+      },
+      "oam_peak": 23,
+      "ambient_potential_peak": 12,
+      "ending": {
+        "area": 1,
+        "cell": 22,
+        "roster": {
+          "kinds": {
+            "1": 1,
+            "2": 8
+          },
+          "enemy_types": {
+            "1": 8
+          },
+          "enemies": 8,
+          "enemies_near_viewport": 8,
+          "actors": 9
+        }
+      },
+      "samples_retained_frames": 180,
+      "actor_samples_retained_frames": 12
+    },
+    {
+      "name": "stress-bats-12",
+      "kind": "stress-throughput",
+      "seed": "0xb4a7",
+      "input_mode": "idle",
+      "metadata": {
+        "replaced_roster": true,
+        "requested_enemies": 12,
+        "enemy_family": "bats",
+        "synthetic_throughput": true,
+        "player_offense": false,
+        "fixture_point": [
+          296,
+          190
+        ]
+      },
+      "warmup_frames": 0,
+      "initial": {
+        "area": 1,
+        "cell": 22,
+        "position": [
+          296,
+          190
+        ],
+        "camera": [
+          176,
+          148
+        ],
+        "roster": {
+          "kinds": {
+            "1": 1,
+            "2": 12
+          },
+          "enemy_types": {
+            "1": 12
+          },
+          "enemies": 12,
+          "enemies_near_viewport": 12,
+          "actors": 13
+        }
+      },
+      "video_frames": 180,
+      "vblanks": 180,
+      "logic_updates": 180,
+      "eligible_gameplay_frames": 180,
+      "eligible_gameplay_updates": 180,
+      "update_ratio": 1.0,
+      "missed_gameplay_updates": 0,
+      "logic_delta_histogram": {
+        "1": 180
+      },
+      "longest_repeat": 0,
+      "game_states": {
+        "1": 180
+      },
+      "player_states": {
+        "0": 156,
+        "3": 24
+      },
+      "oam_peak": 27,
+      "ambient_potential_peak": 12,
+      "ending": {
+        "area": 1,
+        "cell": 22,
+        "roster": {
+          "kinds": {
+            "1": 1,
+            "2": 12
+          },
+          "enemy_types": {
+            "1": 12
+          },
+          "enemies": 12,
+          "enemies_near_viewport": 12,
+          "actors": 13
+        }
+      },
+      "samples_retained_frames": 180,
+      "actor_samples_retained_frames": 12
+    },
+    {
+      "name": "stress-bats-16",
+      "kind": "stress-throughput",
+      "seed": "0xb4a7",
+      "input_mode": "idle",
+      "metadata": {
+        "replaced_roster": true,
+        "requested_enemies": 16,
+        "enemy_family": "bats",
+        "synthetic_throughput": true,
+        "player_offense": false,
+        "fixture_point": [
+          296,
+          190
+        ]
+      },
+      "warmup_frames": 0,
+      "initial": {
+        "area": 1,
+        "cell": 22,
+        "position": [
+          296,
+          190
+        ],
+        "camera": [
+          176,
+          148
+        ],
+        "roster": {
+          "kinds": {
+            "1": 1,
+            "2": 16
+          },
+          "enemy_types": {
+            "1": 16
+          },
+          "enemies": 16,
+          "enemies_near_viewport": 16,
+          "actors": 17
+        }
+      },
+      "video_frames": 180,
+      "vblanks": 180,
+      "logic_updates": 180,
+      "eligible_gameplay_frames": 180,
+      "eligible_gameplay_updates": 180,
+      "update_ratio": 1.0,
+      "missed_gameplay_updates": 0,
+      "logic_delta_histogram": {
+        "1": 180
+      },
+      "longest_repeat": 0,
+      "game_states": {
+        "1": 180
+      },
+      "player_states": {
+        "0": 155,
+        "3": 25
+      },
+      "oam_peak": 31,
+      "ambient_potential_peak": 12,
+      "ending": {
+        "area": 1,
+        "cell": 22,
+        "roster": {
+          "kinds": {
+            "1": 1,
+            "2": 16
+          },
+          "enemy_types": {
+            "1": 16
+          },
+          "enemies": 16,
+          "enemies_near_viewport": 16,
+          "actors": 17
+        }
+      },
+      "samples_retained_frames": 180,
+      "actor_samples_retained_frames": 12
+    },
+    {
+      "name": "stress-bats-24",
+      "kind": "stress-throughput",
+      "seed": "0xb4a7",
+      "input_mode": "idle",
+      "metadata": {
+        "replaced_roster": true,
+        "requested_enemies": 24,
+        "enemy_family": "bats",
+        "synthetic_throughput": true,
+        "player_offense": false,
+        "fixture_point": [
+          296,
+          190
+        ]
+      },
+      "warmup_frames": 0,
+      "initial": {
+        "area": 1,
+        "cell": 22,
+        "position": [
+          296,
+          190
+        ],
+        "camera": [
+          176,
+          148
+        ],
+        "roster": {
+          "kinds": {
+            "1": 1,
+            "2": 24
+          },
+          "enemy_types": {
+            "1": 24
+          },
+          "enemies": 24,
+          "enemies_near_viewport": 24,
+          "actors": 25
+        }
+      },
+      "video_frames": 180,
+      "vblanks": 180,
+      "logic_updates": 180,
+      "eligible_gameplay_frames": 180,
+      "eligible_gameplay_updates": 180,
+      "update_ratio": 1.0,
+      "missed_gameplay_updates": 0,
+      "logic_delta_histogram": {
+        "1": 180
+      },
+      "longest_repeat": 0,
+      "game_states": {
+        "1": 180
+      },
+      "player_states": {
+        "0": 140,
+        "3": 40
+      },
+      "oam_peak": 40,
+      "ambient_potential_peak": 12,
+      "ending": {
+        "area": 1,
+        "cell": 22,
+        "roster": {
+          "kinds": {
+            "1": 1,
+            "2": 24
+          },
+          "enemy_types": {
+            "1": 24
+          },
+          "enemies": 24,
+          "enemies_near_viewport": 24,
+          "actors": 25
+        }
+      },
+      "samples_retained_frames": 180,
+      "actor_samples_retained_frames": 12
+    },
+    {
+      "name": "stress-spitters-04",
+      "kind": "stress-throughput",
+      "seed": "0xb4a7",
+      "input_mode": "idle",
+      "metadata": {
+        "replaced_roster": true,
+        "requested_enemies": 4,
+        "enemy_family": "spitters",
+        "synthetic_throughput": true,
+        "player_offense": false,
+        "fixture_point": [
+          296,
+          190
+        ]
+      },
+      "warmup_frames": 0,
+      "initial": {
+        "area": 1,
+        "cell": 22,
+        "position": [
+          296,
+          190
+        ],
+        "camera": [
+          176,
+          148
+        ],
+        "roster": {
+          "kinds": {
+            "1": 1,
+            "2": 4
+          },
+          "enemy_types": {
+            "2": 4
+          },
+          "enemies": 4,
+          "enemies_near_viewport": 4,
+          "actors": 5
+        }
+      },
+      "video_frames": 180,
+      "vblanks": 180,
+      "logic_updates": 180,
+      "eligible_gameplay_frames": 180,
+      "eligible_gameplay_updates": 180,
+      "update_ratio": 1.0,
+      "missed_gameplay_updates": 0,
+      "logic_delta_histogram": {
+        "1": 180
+      },
+      "longest_repeat": 0,
+      "game_states": {
+        "1": 180
+      },
+      "player_states": {
+        "0": 180
+      },
+      "oam_peak": 20,
+      "ambient_potential_peak": 12,
+      "ending": {
+        "area": 1,
+        "cell": 22,
+        "roster": {
+          "kinds": {
+            "1": 1,
+            "2": 4
+          },
+          "enemy_types": {
+            "2": 4
+          },
+          "enemies": 4,
+          "enemies_near_viewport": 4,
+          "actors": 5
+        }
+      },
+      "samples_retained_frames": 180,
+      "actor_samples_retained_frames": 12
+    },
+    {
+      "name": "stress-spitters-08",
+      "kind": "stress-throughput",
+      "seed": "0xb4a7",
+      "input_mode": "idle",
+      "metadata": {
+        "replaced_roster": true,
+        "requested_enemies": 8,
+        "enemy_family": "spitters",
+        "synthetic_throughput": true,
+        "player_offense": false,
+        "fixture_point": [
+          296,
+          190
+        ]
+      },
+      "warmup_frames": 0,
+      "initial": {
+        "area": 1,
+        "cell": 22,
+        "position": [
+          296,
+          190
+        ],
+        "camera": [
+          176,
+          148
+        ],
+        "roster": {
+          "kinds": {
+            "1": 1,
+            "2": 8
+          },
+          "enemy_types": {
+            "2": 8
+          },
+          "enemies": 8,
+          "enemies_near_viewport": 8,
+          "actors": 9
+        }
+      },
+      "video_frames": 180,
+      "vblanks": 180,
+      "logic_updates": 180,
+      "eligible_gameplay_frames": 180,
+      "eligible_gameplay_updates": 180,
+      "update_ratio": 1.0,
+      "missed_gameplay_updates": 0,
+      "logic_delta_histogram": {
+        "1": 180
+      },
+      "longest_repeat": 0,
+      "game_states": {
+        "1": 180
+      },
+      "player_states": {
+        "0": 172,
+        "3": 8
+      },
+      "oam_peak": 26,
+      "ambient_potential_peak": 12,
+      "ending": {
+        "area": 1,
+        "cell": 22,
+        "roster": {
+          "kinds": {
+            "1": 1,
+            "2": 8
+          },
+          "enemy_types": {
+            "2": 8
+          },
+          "enemies": 8,
+          "enemies_near_viewport": 8,
+          "actors": 9
+        }
+      },
+      "samples_retained_frames": 180,
+      "actor_samples_retained_frames": 12
+    },
+    {
+      "name": "stress-spitters-12",
+      "kind": "stress-throughput",
+      "seed": "0xb4a7",
+      "input_mode": "idle",
+      "metadata": {
+        "replaced_roster": true,
+        "requested_enemies": 12,
+        "enemy_family": "spitters",
+        "synthetic_throughput": true,
+        "player_offense": false,
+        "fixture_point": [
+          296,
+          190
+        ]
+      },
+      "warmup_frames": 0,
+      "initial": {
+        "area": 1,
+        "cell": 22,
+        "position": [
+          296,
+          190
+        ],
+        "camera": [
+          176,
+          148
+        ],
+        "roster": {
+          "kinds": {
+            "1": 1,
+            "2": 12
+          },
+          "enemy_types": {
+            "2": 12
+          },
+          "enemies": 12,
+          "enemies_near_viewport": 12,
+          "actors": 13
+        }
+      },
+      "video_frames": 180,
+      "vblanks": 180,
+      "logic_updates": 180,
+      "eligible_gameplay_frames": 180,
+      "eligible_gameplay_updates": 180,
+      "update_ratio": 1.0,
+      "missed_gameplay_updates": 0,
+      "logic_delta_histogram": {
+        "1": 180
+      },
+      "longest_repeat": 0,
+      "game_states": {
+        "1": 180
+      },
+      "player_states": {
+        "0": 164,
+        "3": 16
+      },
+      "oam_peak": 29,
+      "ambient_potential_peak": 12,
+      "ending": {
+        "area": 1,
+        "cell": 22,
+        "roster": {
+          "kinds": {
+            "1": 1,
+            "2": 12,
+            "3": 3
+          },
+          "enemy_types": {
+            "2": 12
+          },
+          "enemies": 12,
+          "enemies_near_viewport": 12,
+          "actors": 16
+        }
+      },
+      "samples_retained_frames": 180,
+      "actor_samples_retained_frames": 12
+    },
+    {
+      "name": "stress-spitters-16",
+      "kind": "stress-throughput",
+      "seed": "0xb4a7",
+      "input_mode": "idle",
+      "metadata": {
+        "replaced_roster": true,
+        "requested_enemies": 16,
+        "enemy_family": "spitters",
+        "synthetic_throughput": true,
+        "player_offense": false,
+        "fixture_point": [
+          296,
+          190
+        ]
+      },
+      "warmup_frames": 0,
+      "initial": {
+        "area": 1,
+        "cell": 22,
+        "position": [
+          296,
+          190
+        ],
+        "camera": [
+          176,
+          148
+        ],
+        "roster": {
+          "kinds": {
+            "1": 1,
+            "2": 16
+          },
+          "enemy_types": {
+            "2": 16
+          },
+          "enemies": 16,
+          "enemies_near_viewport": 16,
+          "actors": 17
+        }
+      },
+      "video_frames": 180,
+      "vblanks": 180,
+      "logic_updates": 180,
+      "eligible_gameplay_frames": 180,
+      "eligible_gameplay_updates": 180,
+      "update_ratio": 1.0,
+      "missed_gameplay_updates": 0,
+      "logic_delta_histogram": {
+        "1": 180
+      },
+      "longest_repeat": 0,
+      "game_states": {
+        "1": 180
+      },
+      "player_states": {
+        "0": 172,
+        "3": 8
+      },
+      "oam_peak": 35,
+      "ambient_potential_peak": 12,
+      "ending": {
+        "area": 1,
+        "cell": 22,
+        "roster": {
+          "kinds": {
+            "1": 1,
+            "2": 16,
+            "3": 1,
+            "7": 1
+          },
+          "enemy_types": {
+            "2": 16
+          },
+          "enemies": 16,
+          "enemies_near_viewport": 16,
+          "actors": 19
+        }
+      },
+      "samples_retained_frames": 180,
+      "actor_samples_retained_frames": 12
+    },
+    {
+      "name": "stress-spitters-24",
+      "kind": "stress-throughput",
+      "seed": "0xb4a7",
+      "input_mode": "idle",
+      "metadata": {
+        "replaced_roster": true,
+        "requested_enemies": 24,
+        "enemy_family": "spitters",
+        "synthetic_throughput": true,
+        "player_offense": false,
+        "fixture_point": [
+          296,
+          190
+        ]
+      },
+      "warmup_frames": 0,
+      "initial": {
+        "area": 1,
+        "cell": 22,
+        "position": [
+          296,
+          190
+        ],
+        "camera": [
+          176,
+          148
+        ],
+        "roster": {
+          "kinds": {
+            "1": 1,
+            "2": 24
+          },
+          "enemy_types": {
+            "2": 24
+          },
+          "enemies": 24,
+          "enemies_near_viewport": 24,
+          "actors": 25
+        }
+      },
+      "video_frames": 180,
+      "vblanks": 180,
+      "logic_updates": 180,
+      "eligible_gameplay_frames": 180,
+      "eligible_gameplay_updates": 180,
+      "update_ratio": 1.0,
+      "missed_gameplay_updates": 0,
+      "logic_delta_histogram": {
+        "1": 180
+      },
+      "longest_repeat": 0,
+      "game_states": {
+        "1": 180
+      },
+      "player_states": {
+        "0": 155,
+        "3": 25
+      },
+      "oam_peak": 42,
+      "ambient_potential_peak": 12,
+      "ending": {
+        "area": 1,
+        "cell": 22,
+        "roster": {
+          "kinds": {
+            "1": 1,
+            "2": 24,
+            "3": 3
+          },
+          "enemy_types": {
+            "2": 24
+          },
+          "enemies": 24,
+          "enemies_near_viewport": 24,
+          "actors": 28
+        }
+      },
+      "samples_retained_frames": 180,
+      "actor_samples_retained_frames": 12
+    },
+    {
+      "name": "stress-slimes-04",
+      "kind": "stress-throughput",
+      "seed": "0xb4a7",
+      "input_mode": "idle",
+      "metadata": {
+        "replaced_roster": true,
+        "requested_enemies": 4,
+        "enemy_family": "slimes",
+        "synthetic_throughput": true,
+        "player_offense": false,
+        "fixture_point": [
+          296,
+          190
+        ]
+      },
+      "warmup_frames": 0,
+      "initial": {
+        "area": 1,
+        "cell": 22,
+        "position": [
+          296,
+          190
+        ],
+        "camera": [
+          176,
+          148
+        ],
+        "roster": {
+          "kinds": {
+            "1": 1,
+            "2": 4
+          },
+          "enemy_types": {
+            "3": 4
+          },
+          "enemies": 4,
+          "enemies_near_viewport": 4,
+          "actors": 5
+        }
+      },
+      "video_frames": 180,
+      "vblanks": 180,
+      "logic_updates": 180,
+      "eligible_gameplay_frames": 180,
+      "eligible_gameplay_updates": 180,
+      "update_ratio": 1.0,
+      "missed_gameplay_updates": 0,
+      "logic_delta_histogram": {
+        "1": 180
+      },
+      "longest_repeat": 0,
+      "game_states": {
+        "1": 180
+      },
+      "player_states": {
+        "0": 180
+      },
+      "oam_peak": 19,
+      "ambient_potential_peak": 12,
+      "ending": {
+        "area": 1,
+        "cell": 22,
+        "roster": {
+          "kinds": {
+            "1": 1,
+            "2": 4
+          },
+          "enemy_types": {
+            "3": 4
+          },
+          "enemies": 4,
+          "enemies_near_viewport": 4,
+          "actors": 5
+        }
+      },
+      "samples_retained_frames": 180,
+      "actor_samples_retained_frames": 12
+    },
+    {
+      "name": "stress-slimes-08",
+      "kind": "stress-throughput",
+      "seed": "0xb4a7",
+      "input_mode": "idle",
+      "metadata": {
+        "replaced_roster": true,
+        "requested_enemies": 8,
+        "enemy_family": "slimes",
+        "synthetic_throughput": true,
+        "player_offense": false,
+        "fixture_point": [
+          296,
+          190
+        ]
+      },
+      "warmup_frames": 0,
+      "initial": {
+        "area": 1,
+        "cell": 22,
+        "position": [
+          296,
+          190
+        ],
+        "camera": [
+          176,
+          148
+        ],
+        "roster": {
+          "kinds": {
+            "1": 1,
+            "2": 8
+          },
+          "enemy_types": {
+            "3": 8
+          },
+          "enemies": 8,
+          "enemies_near_viewport": 8,
+          "actors": 9
+        }
+      },
+      "video_frames": 180,
+      "vblanks": 180,
+      "logic_updates": 180,
+      "eligible_gameplay_frames": 180,
+      "eligible_gameplay_updates": 180,
+      "update_ratio": 1.0,
+      "missed_gameplay_updates": 0,
+      "logic_delta_histogram": {
+        "1": 180
+      },
+      "longest_repeat": 0,
+      "game_states": {
+        "1": 180
+      },
+      "player_states": {
+        "0": 180
+      },
+      "oam_peak": 23,
+      "ambient_potential_peak": 12,
+      "ending": {
+        "area": 1,
+        "cell": 22,
+        "roster": {
+          "kinds": {
+            "1": 1,
+            "2": 8
+          },
+          "enemy_types": {
+            "3": 8
+          },
+          "enemies": 8,
+          "enemies_near_viewport": 8,
+          "actors": 9
+        }
+      },
+      "samples_retained_frames": 180,
+      "actor_samples_retained_frames": 12
+    },
+    {
+      "name": "stress-slimes-12",
+      "kind": "stress-throughput",
+      "seed": "0xb4a7",
+      "input_mode": "idle",
+      "metadata": {
+        "replaced_roster": true,
+        "requested_enemies": 12,
+        "enemy_family": "slimes",
+        "synthetic_throughput": true,
+        "player_offense": false,
+        "fixture_point": [
+          296,
+          190
+        ]
+      },
+      "warmup_frames": 0,
+      "initial": {
+        "area": 1,
+        "cell": 22,
+        "position": [
+          296,
+          190
+        ],
+        "camera": [
+          176,
+          148
+        ],
+        "roster": {
+          "kinds": {
+            "1": 1,
+            "2": 12
+          },
+          "enemy_types": {
+            "3": 12
+          },
+          "enemies": 12,
+          "enemies_near_viewport": 12,
+          "actors": 13
+        }
+      },
+      "video_frames": 180,
+      "vblanks": 180,
+      "logic_updates": 180,
+      "eligible_gameplay_frames": 180,
+      "eligible_gameplay_updates": 180,
+      "update_ratio": 1.0,
+      "missed_gameplay_updates": 0,
+      "logic_delta_histogram": {
+        "1": 180
+      },
+      "longest_repeat": 0,
+      "game_states": {
+        "1": 180
+      },
+      "player_states": {
+        "0": 140,
+        "3": 40
+      },
+      "oam_peak": 28,
+      "ambient_potential_peak": 12,
+      "ending": {
+        "area": 1,
+        "cell": 22,
+        "roster": {
+          "kinds": {
+            "1": 1,
+            "2": 12
+          },
+          "enemy_types": {
+            "3": 12
+          },
+          "enemies": 12,
+          "enemies_near_viewport": 12,
+          "actors": 13
+        }
+      },
+      "samples_retained_frames": 180,
+      "actor_samples_retained_frames": 12
+    },
+    {
+      "name": "stress-slimes-16",
+      "kind": "stress-throughput",
+      "seed": "0xb4a7",
+      "input_mode": "idle",
+      "metadata": {
+        "replaced_roster": true,
+        "requested_enemies": 16,
+        "enemy_family": "slimes",
+        "synthetic_throughput": true,
+        "player_offense": false,
+        "fixture_point": [
+          296,
+          190
+        ]
+      },
+      "warmup_frames": 0,
+      "initial": {
+        "area": 1,
+        "cell": 22,
+        "position": [
+          296,
+          190
+        ],
+        "camera": [
+          176,
+          148
+        ],
+        "roster": {
+          "kinds": {
+            "1": 1,
+            "2": 16
+          },
+          "enemy_types": {
+            "3": 16
+          },
+          "enemies": 16,
+          "enemies_near_viewport": 16,
+          "actors": 17
+        }
+      },
+      "video_frames": 180,
+      "vblanks": 180,
+      "logic_updates": 180,
+      "eligible_gameplay_frames": 180,
+      "eligible_gameplay_updates": 180,
+      "update_ratio": 1.0,
+      "missed_gameplay_updates": 0,
+      "logic_delta_histogram": {
+        "1": 180
+      },
+      "longest_repeat": 0,
+      "game_states": {
+        "1": 180
+      },
+      "player_states": {
+        "0": 137,
+        "3": 43
+      },
+      "oam_peak": 32,
+      "ambient_potential_peak": 12,
+      "ending": {
+        "area": 1,
+        "cell": 22,
+        "roster": {
+          "kinds": {
+            "1": 1,
+            "2": 16
+          },
+          "enemy_types": {
+            "3": 16
+          },
+          "enemies": 16,
+          "enemies_near_viewport": 16,
+          "actors": 17
+        }
+      },
+      "samples_retained_frames": 180,
+      "actor_samples_retained_frames": 12
+    },
+    {
+      "name": "stress-slimes-24",
+      "kind": "stress-throughput",
+      "seed": "0xb4a7",
+      "input_mode": "idle",
+      "metadata": {
+        "replaced_roster": true,
+        "requested_enemies": 24,
+        "enemy_family": "slimes",
+        "synthetic_throughput": true,
+        "player_offense": false,
+        "fixture_point": [
+          296,
+          190
+        ]
+      },
+      "warmup_frames": 0,
+      "initial": {
+        "area": 1,
+        "cell": 22,
+        "position": [
+          296,
+          190
+        ],
+        "camera": [
+          176,
+          148
+        ],
+        "roster": {
+          "kinds": {
+            "1": 1,
+            "2": 24
+          },
+          "enemy_types": {
+            "3": 24
+          },
+          "enemies": 24,
+          "enemies_near_viewport": 24,
+          "actors": 25
+        }
+      },
+      "video_frames": 180,
+      "vblanks": 180,
+      "logic_updates": 180,
+      "eligible_gameplay_frames": 180,
+      "eligible_gameplay_updates": 180,
+      "update_ratio": 1.0,
+      "missed_gameplay_updates": 0,
+      "logic_delta_histogram": {
+        "1": 180
+      },
+      "longest_repeat": 0,
+      "game_states": {
+        "1": 180
+      },
+      "player_states": {
+        "0": 132,
+        "3": 48
+      },
+      "oam_peak": 41,
+      "ambient_potential_peak": 12,
+      "ending": {
+        "area": 1,
+        "cell": 22,
+        "roster": {
+          "kinds": {
+            "1": 1,
+            "2": 24
+          },
+          "enemy_types": {
+            "3": 24
+          },
+          "enemies": 24,
+          "enemies_near_viewport": 24,
+          "actors": 25
+        }
+      },
+      "samples_retained_frames": 180,
+      "actor_samples_retained_frames": 12
+    },
+    {
+      "name": "stress-knights-04",
+      "kind": "stress-throughput",
+      "seed": "0xb4a7",
+      "input_mode": "idle",
+      "metadata": {
+        "replaced_roster": true,
+        "requested_enemies": 4,
+        "enemy_family": "knights",
+        "synthetic_throughput": true,
+        "player_offense": false,
+        "fixture_point": [
+          296,
+          190
+        ]
+      },
+      "warmup_frames": 0,
+      "initial": {
+        "area": 1,
+        "cell": 22,
+        "position": [
+          296,
+          190
+        ],
+        "camera": [
+          176,
+          148
+        ],
+        "roster": {
+          "kinds": {
+            "1": 1,
+            "2": 4
+          },
+          "enemy_types": {
+            "4": 4
+          },
+          "enemies": 4,
+          "enemies_near_viewport": 4,
+          "actors": 5
+        }
+      },
+      "video_frames": 180,
+      "vblanks": 180,
+      "logic_updates": 180,
+      "eligible_gameplay_frames": 180,
+      "eligible_gameplay_updates": 180,
+      "update_ratio": 1.0,
+      "missed_gameplay_updates": 0,
+      "logic_delta_histogram": {
+        "1": 180
+      },
+      "longest_repeat": 0,
+      "game_states": {
+        "1": 180
+      },
+      "player_states": {
+        "0": 180
+      },
+      "oam_peak": 19,
+      "ambient_potential_peak": 12,
+      "ending": {
+        "area": 1,
+        "cell": 22,
+        "roster": {
+          "kinds": {
+            "1": 1,
+            "2": 4
+          },
+          "enemy_types": {
+            "4": 4
+          },
+          "enemies": 4,
+          "enemies_near_viewport": 4,
+          "actors": 5
+        }
+      },
+      "samples_retained_frames": 180,
+      "actor_samples_retained_frames": 12
+    },
+    {
+      "name": "stress-knights-08",
+      "kind": "stress-throughput",
+      "seed": "0xb4a7",
+      "input_mode": "idle",
+      "metadata": {
+        "replaced_roster": true,
+        "requested_enemies": 8,
+        "enemy_family": "knights",
+        "synthetic_throughput": true,
+        "player_offense": false,
+        "fixture_point": [
+          296,
+          190
+        ]
+      },
+      "warmup_frames": 0,
+      "initial": {
+        "area": 1,
+        "cell": 22,
+        "position": [
+          296,
+          190
+        ],
+        "camera": [
+          176,
+          148
+        ],
+        "roster": {
+          "kinds": {
+            "1": 1,
+            "2": 8
+          },
+          "enemy_types": {
+            "4": 8
+          },
+          "enemies": 8,
+          "enemies_near_viewport": 8,
+          "actors": 9
+        }
+      },
+      "video_frames": 180,
+      "vblanks": 180,
+      "logic_updates": 180,
+      "eligible_gameplay_frames": 180,
+      "eligible_gameplay_updates": 180,
+      "update_ratio": 1.0,
+      "missed_gameplay_updates": 0,
+      "logic_delta_histogram": {
+        "1": 180
+      },
+      "longest_repeat": 0,
+      "game_states": {
+        "1": 180
+      },
+      "player_states": {
+        "0": 180
+      },
+      "oam_peak": 23,
+      "ambient_potential_peak": 12,
+      "ending": {
+        "area": 1,
+        "cell": 22,
+        "roster": {
+          "kinds": {
+            "1": 1,
+            "2": 8
+          },
+          "enemy_types": {
+            "4": 8
+          },
+          "enemies": 8,
+          "enemies_near_viewport": 8,
+          "actors": 9
+        }
+      },
+      "samples_retained_frames": 180,
+      "actor_samples_retained_frames": 12
+    },
+    {
+      "name": "stress-knights-12",
+      "kind": "stress-throughput",
+      "seed": "0xb4a7",
+      "input_mode": "idle",
+      "metadata": {
+        "replaced_roster": true,
+        "requested_enemies": 12,
+        "enemy_family": "knights",
+        "synthetic_throughput": true,
+        "player_offense": false,
+        "fixture_point": [
+          296,
+          190
+        ]
+      },
+      "warmup_frames": 0,
+      "initial": {
+        "area": 1,
+        "cell": 22,
+        "position": [
+          296,
+          190
+        ],
+        "camera": [
+          176,
+          148
+        ],
+        "roster": {
+          "kinds": {
+            "1": 1,
+            "2": 12
+          },
+          "enemy_types": {
+            "4": 12
+          },
+          "enemies": 12,
+          "enemies_near_viewport": 12,
+          "actors": 13
+        }
+      },
+      "video_frames": 180,
+      "vblanks": 180,
+      "logic_updates": 180,
+      "eligible_gameplay_frames": 180,
+      "eligible_gameplay_updates": 180,
+      "update_ratio": 1.0,
+      "missed_gameplay_updates": 0,
+      "logic_delta_histogram": {
+        "1": 180
+      },
+      "longest_repeat": 0,
+      "game_states": {
+        "1": 180
+      },
+      "player_states": {
+        "0": 164,
+        "3": 16
+      },
+      "oam_peak": 27,
+      "ambient_potential_peak": 12,
+      "ending": {
+        "area": 1,
+        "cell": 22,
+        "roster": {
+          "kinds": {
+            "1": 1,
+            "2": 12
+          },
+          "enemy_types": {
+            "4": 12
+          },
+          "enemies": 12,
+          "enemies_near_viewport": 12,
+          "actors": 13
+        }
+      },
+      "samples_retained_frames": 180,
+      "actor_samples_retained_frames": 12
+    },
+    {
+      "name": "stress-knights-16",
+      "kind": "stress-throughput",
+      "seed": "0xb4a7",
+      "input_mode": "idle",
+      "metadata": {
+        "replaced_roster": true,
+        "requested_enemies": 16,
+        "enemy_family": "knights",
+        "synthetic_throughput": true,
+        "player_offense": false,
+        "fixture_point": [
+          296,
+          190
+        ]
+      },
+      "warmup_frames": 0,
+      "initial": {
+        "area": 1,
+        "cell": 22,
+        "position": [
+          296,
+          190
+        ],
+        "camera": [
+          176,
+          148
+        ],
+        "roster": {
+          "kinds": {
+            "1": 1,
+            "2": 16
+          },
+          "enemy_types": {
+            "4": 16
+          },
+          "enemies": 16,
+          "enemies_near_viewport": 16,
+          "actors": 17
+        }
+      },
+      "video_frames": 180,
+      "vblanks": 180,
+      "logic_updates": 180,
+      "eligible_gameplay_frames": 180,
+      "eligible_gameplay_updates": 180,
+      "update_ratio": 1.0,
+      "missed_gameplay_updates": 0,
+      "logic_delta_histogram": {
+        "1": 180
+      },
+      "longest_repeat": 0,
+      "game_states": {
+        "1": 180
+      },
+      "player_states": {
+        "0": 164,
+        "3": 16
+      },
+      "oam_peak": 33,
+      "ambient_potential_peak": 12,
+      "ending": {
+        "area": 1,
+        "cell": 22,
+        "roster": {
+          "kinds": {
+            "1": 1,
+            "2": 16
+          },
+          "enemy_types": {
+            "4": 16
+          },
+          "enemies": 16,
+          "enemies_near_viewport": 16,
+          "actors": 17
+        }
+      },
+      "samples_retained_frames": 180,
+      "actor_samples_retained_frames": 12
+    },
+    {
+      "name": "stress-knights-24",
+      "kind": "stress-throughput",
+      "seed": "0xb4a7",
+      "input_mode": "idle",
+      "metadata": {
+        "replaced_roster": true,
+        "requested_enemies": 24,
+        "enemy_family": "knights",
+        "synthetic_throughput": true,
+        "player_offense": false,
+        "fixture_point": [
+          296,
+          190
+        ]
+      },
+      "warmup_frames": 0,
+      "initial": {
+        "area": 1,
+        "cell": 22,
+        "position": [
+          300,
+          201
+        ],
+        "camera": [
+          180,
+          148
+        ],
+        "roster": {
+          "kinds": {
+            "1": 1,
+            "2": 24
+          },
+          "enemy_types": {
+            "4": 24
+          },
+          "enemies": 24,
+          "enemies_near_viewport": 24,
+          "actors": 25
+        }
+      },
+      "video_frames": 180,
+      "vblanks": 180,
+      "logic_updates": 180,
+      "eligible_gameplay_frames": 180,
+      "eligible_gameplay_updates": 180,
+      "update_ratio": 1.0,
+      "missed_gameplay_updates": 0,
+      "logic_delta_histogram": {
+        "1": 180
+      },
+      "longest_repeat": 0,
+      "game_states": {
+        "1": 180
+      },
+      "player_states": {
+        "0": 156,
+        "3": 24
+      },
+      "oam_peak": 44,
+      "ambient_potential_peak": 12,
+      "ending": {
+        "area": 1,
+        "cell": 22,
+        "roster": {
+          "kinds": {
+            "1": 1,
+            "2": 24
+          },
+          "enemy_types": {
+            "4": 24
+          },
+          "enemies": 24,
+          "enemies_near_viewport": 24,
+          "actors": 25
+        }
+      },
+      "samples_retained_frames": 180,
+      "actor_samples_retained_frames": 12
+    },
+    {
+      "name": "stress-mixed-04",
+      "kind": "stress-throughput",
+      "seed": "0xb4a7",
+      "input_mode": "idle",
+      "metadata": {
+        "replaced_roster": true,
+        "requested_enemies": 4,
+        "enemy_family": "mixed",
+        "synthetic_throughput": true,
+        "player_offense": false,
+        "fixture_point": [
+          296,
+          190
+        ]
+      },
+      "warmup_frames": 0,
+      "initial": {
+        "area": 1,
+        "cell": 22,
+        "position": [
+          296,
+          190
+        ],
+        "camera": [
+          176,
+          136
+        ],
+        "roster": {
+          "kinds": {
+            "1": 1,
+            "2": 4
+          },
+          "enemy_types": {
+            "0": 1,
+            "1": 1,
+            "2": 1,
+            "3": 1
+          },
+          "enemies": 4,
+          "enemies_near_viewport": 4,
+          "actors": 5
+        }
+      },
+      "video_frames": 180,
+      "vblanks": 180,
+      "logic_updates": 180,
+      "eligible_gameplay_frames": 180,
+      "eligible_gameplay_updates": 180,
+      "update_ratio": 1.0,
+      "missed_gameplay_updates": 0,
+      "logic_delta_histogram": {
+        "1": 180
+      },
+      "longest_repeat": 0,
+      "game_states": {
+        "1": 180
+      },
+      "player_states": {
+        "0": 180
+      },
+      "oam_peak": 19,
+      "ambient_potential_peak": 12,
+      "ending": {
+        "area": 1,
+        "cell": 22,
+        "roster": {
+          "kinds": {
+            "1": 1,
+            "2": 4
+          },
+          "enemy_types": {
+            "0": 1,
+            "1": 1,
+            "2": 1,
+            "3": 1
+          },
+          "enemies": 4,
+          "enemies_near_viewport": 4,
+          "actors": 5
+        }
+      },
+      "samples_retained_frames": 180,
+      "actor_samples_retained_frames": 12
+    },
+    {
+      "name": "stress-mixed-08",
+      "kind": "stress-throughput",
+      "seed": "0xb4a7",
+      "input_mode": "idle",
+      "metadata": {
+        "replaced_roster": true,
+        "requested_enemies": 8,
+        "enemy_family": "mixed",
+        "synthetic_throughput": true,
+        "player_offense": false,
+        "fixture_point": [
+          296,
+          190
+        ]
+      },
+      "warmup_frames": 0,
+      "initial": {
+        "area": 1,
+        "cell": 22,
+        "position": [
+          296,
+          190
+        ],
+        "camera": [
+          176,
+          132
+        ],
+        "roster": {
+          "kinds": {
+            "1": 1,
+            "2": 8
+          },
+          "enemy_types": {
+            "0": 2,
+            "1": 2,
+            "2": 2,
+            "3": 1,
+            "4": 1
+          },
+          "enemies": 8,
+          "enemies_near_viewport": 8,
+          "actors": 9
+        }
+      },
+      "video_frames": 180,
+      "vblanks": 180,
+      "logic_updates": 180,
+      "eligible_gameplay_frames": 180,
+      "eligible_gameplay_updates": 180,
+      "update_ratio": 1.0,
+      "missed_gameplay_updates": 0,
+      "logic_delta_histogram": {
+        "1": 180
+      },
+      "longest_repeat": 0,
+      "game_states": {
+        "1": 180
+      },
+      "player_states": {
+        "0": 172,
+        "3": 8
+      },
+      "oam_peak": 23,
+      "ambient_potential_peak": 12,
+      "ending": {
+        "area": 1,
+        "cell": 22,
+        "roster": {
+          "kinds": {
+            "1": 1,
+            "2": 8
+          },
+          "enemy_types": {
+            "0": 2,
+            "1": 2,
+            "2": 2,
+            "3": 1,
+            "4": 1
+          },
+          "enemies": 8,
+          "enemies_near_viewport": 8,
+          "actors": 9
+        }
+      },
+      "samples_retained_frames": 180,
+      "actor_samples_retained_frames": 12
+    },
+    {
+      "name": "stress-mixed-12",
+      "kind": "stress-throughput",
+      "seed": "0xb4a7",
+      "input_mode": "idle",
+      "metadata": {
+        "replaced_roster": true,
+        "requested_enemies": 12,
+        "enemy_family": "mixed",
+        "synthetic_throughput": true,
+        "player_offense": false,
+        "fixture_point": [
+          296,
+          190
+        ]
+      },
+      "warmup_frames": 0,
+      "initial": {
+        "area": 1,
+        "cell": 22,
+        "position": [
+          296,
+          190
+        ],
+        "camera": [
+          176,
+          132
+        ],
+        "roster": {
+          "kinds": {
+            "1": 1,
+            "2": 12
+          },
+          "enemy_types": {
+            "0": 3,
+            "1": 3,
+            "2": 2,
+            "3": 2,
+            "4": 2
+          },
+          "enemies": 12,
+          "enemies_near_viewport": 12,
+          "actors": 13
+        }
+      },
+      "video_frames": 180,
+      "vblanks": 180,
+      "logic_updates": 180,
+      "eligible_gameplay_frames": 180,
+      "eligible_gameplay_updates": 180,
+      "update_ratio": 1.0,
+      "missed_gameplay_updates": 0,
+      "logic_delta_histogram": {
+        "1": 180
+      },
+      "longest_repeat": 0,
+      "game_states": {
+        "1": 180
+      },
+      "player_states": {
+        "0": 156,
+        "3": 24
+      },
+      "oam_peak": 27,
+      "ambient_potential_peak": 12,
+      "ending": {
+        "area": 1,
+        "cell": 22,
+        "roster": {
+          "kinds": {
+            "1": 1,
+            "2": 12,
+            "3": 1
+          },
+          "enemy_types": {
+            "0": 3,
+            "1": 3,
+            "2": 2,
+            "3": 2,
+            "4": 2
+          },
+          "enemies": 12,
+          "enemies_near_viewport": 12,
+          "actors": 14
+        }
+      },
+      "samples_retained_frames": 180,
+      "actor_samples_retained_frames": 12
+    },
+    {
+      "name": "stress-mixed-16",
+      "kind": "stress-throughput",
+      "seed": "0xb4a7",
+      "input_mode": "idle",
+      "metadata": {
+        "replaced_roster": true,
+        "requested_enemies": 16,
+        "enemy_family": "mixed",
+        "synthetic_throughput": true,
+        "player_offense": false,
+        "fixture_point": [
+          296,
+          190
+        ]
+      },
+      "warmup_frames": 0,
+      "initial": {
+        "area": 1,
+        "cell": 22,
+        "position": [
+          296,
+          190
+        ],
+        "camera": [
+          176,
+          132
+        ],
+        "roster": {
+          "kinds": {
+            "1": 1,
+            "2": 16
+          },
+          "enemy_types": {
+            "0": 4,
+            "1": 3,
+            "2": 3,
+            "3": 3,
+            "4": 3
+          },
+          "enemies": 16,
+          "enemies_near_viewport": 16,
+          "actors": 17
+        }
+      },
+      "video_frames": 180,
+      "vblanks": 180,
+      "logic_updates": 180,
+      "eligible_gameplay_frames": 180,
+      "eligible_gameplay_updates": 180,
+      "update_ratio": 1.0,
+      "missed_gameplay_updates": 0,
+      "logic_delta_histogram": {
+        "1": 180
+      },
+      "longest_repeat": 0,
+      "game_states": {
+        "1": 180
+      },
+      "player_states": {
+        "0": 164,
+        "3": 16
+      },
+      "oam_peak": 34,
+      "ambient_potential_peak": 12,
+      "ending": {
+        "area": 1,
+        "cell": 22,
+        "roster": {
+          "kinds": {
+            "1": 1,
+            "2": 16
+          },
+          "enemy_types": {
+            "0": 4,
+            "1": 3,
+            "2": 3,
+            "3": 3,
+            "4": 3
+          },
+          "enemies": 16,
+          "enemies_near_viewport": 16,
+          "actors": 17
+        }
+      },
+      "samples_retained_frames": 180,
+      "actor_samples_retained_frames": 12
+    },
+    {
+      "name": "stress-mixed-24",
+      "kind": "stress-throughput",
+      "seed": "0xb4a7",
+      "input_mode": "idle",
+      "metadata": {
+        "replaced_roster": true,
+        "requested_enemies": 24,
+        "enemy_family": "mixed",
+        "synthetic_throughput": true,
+        "player_offense": false,
+        "fixture_point": [
+          296,
+          190
+        ]
+      },
+      "warmup_frames": 0,
+      "initial": {
+        "area": 1,
+        "cell": 22,
+        "position": [
+          296,
+          190
+        ],
+        "camera": [
+          176,
+          132
+        ],
+        "roster": {
+          "kinds": {
+            "1": 1,
+            "2": 24
+          },
+          "enemy_types": {
+            "0": 5,
+            "1": 5,
+            "2": 5,
+            "3": 5,
+            "4": 4
+          },
+          "enemies": 24,
+          "enemies_near_viewport": 24,
+          "actors": 25
+        }
+      },
+      "video_frames": 180,
+      "vblanks": 180,
+      "logic_updates": 180,
+      "eligible_gameplay_frames": 180,
+      "eligible_gameplay_updates": 180,
+      "update_ratio": 1.0,
+      "missed_gameplay_updates": 0,
+      "logic_delta_histogram": {
+        "1": 180
+      },
+      "longest_repeat": 0,
+      "game_states": {
+        "1": 180
+      },
+      "player_states": {
+        "0": 156,
+        "3": 24
+      },
+      "oam_peak": 41,
+      "ambient_potential_peak": 12,
+      "ending": {
+        "area": 1,
+        "cell": 22,
+        "roster": {
+          "kinds": {
+            "1": 1,
+            "2": 24
+          },
+          "enemy_types": {
+            "0": 5,
+            "1": 5,
+            "2": 5,
+            "3": 5,
+            "4": 4
+          },
+          "enemies": 24,
+          "enemies_near_viewport": 24,
+          "actors": 25
+        }
+      },
+      "samples_retained_frames": 180,
+      "actor_samples_retained_frames": 12
+    }
+  ],
+  "transitions": [
+    {
+      "area": 1,
+      "cell": 22,
+      "video_frames": 48,
+      "vblanks": 48,
+      "logic_updates": 2
+    },
+    {
+      "area": 1,
+      "cell": 22,
+      "video_frames": 48,
+      "vblanks": 48,
+      "logic_updates": 2
+    },
+    {
+      "area": 1,
+      "cell": 22,
+      "video_frames": 48,
+      "vblanks": 48,
+      "logic_updates": 2
+    },
+    {
+      "area": 1,
+      "cell": 22,
+      "video_frames": 48,
+      "vblanks": 48,
+      "logic_updates": 2
+    },
+    {
+      "area": 1,
+      "cell": 22,
+      "video_frames": 48,
+      "vblanks": 48,
+      "logic_updates": 2
+    },
+    {
+      "area": 1,
+      "cell": 22,
+      "video_frames": 48,
+      "vblanks": 48,
+      "logic_updates": 2
+    },
+    {
+      "area": 1,
+      "cell": 22,
+      "video_frames": 48,
+      "vblanks": 48,
+      "logic_updates": 2
+    },
+    {
+      "area": 1,
+      "cell": 22,
+      "video_frames": 48,
+      "vblanks": 48,
+      "logic_updates": 2
+    },
+    {
+      "area": 1,
+      "cell": 22,
+      "video_frames": 48,
+      "vblanks": 48,
+      "logic_updates": 2
+    },
+    {
+      "area": 1,
+      "cell": 22,
+      "video_frames": 48,
+      "vblanks": 48,
+      "logic_updates": 2
+    },
+    {
+      "area": 1,
+      "cell": 22,
+      "video_frames": 48,
+      "vblanks": 48,
+      "logic_updates": 2
+    },
+    {
+      "area": 1,
+      "cell": 22,
+      "video_frames": 48,
+      "vblanks": 48,
+      "logic_updates": 2
+    },
+    {
+      "area": 1,
+      "cell": 22,
+      "video_frames": 48,
+      "vblanks": 48,
+      "logic_updates": 2
+    },
+    {
+      "area": 1,
+      "cell": 22,
+      "video_frames": 48,
+      "vblanks": 48,
+      "logic_updates": 2
+    },
+    {
+      "area": 1,
+      "cell": 22,
+      "video_frames": 48,
+      "vblanks": 48,
+      "logic_updates": 2
+    },
+    {
+      "area": 1,
+      "cell": 22,
+      "video_frames": 48,
+      "vblanks": 48,
+      "logic_updates": 2
+    },
+    {
+      "area": 1,
+      "cell": 22,
+      "video_frames": 48,
+      "vblanks": 48,
+      "logic_updates": 2
+    },
+    {
+      "area": 1,
+      "cell": 22,
+      "video_frames": 48,
+      "vblanks": 48,
+      "logic_updates": 2
+    },
+    {
+      "area": 1,
+      "cell": 22,
+      "video_frames": 48,
+      "vblanks": 48,
+      "logic_updates": 2
+    },
+    {
+      "area": 1,
+      "cell": 22,
+      "video_frames": 48,
+      "vblanks": 48,
+      "logic_updates": 2
+    },
+    {
+      "area": 1,
+      "cell": 22,
+      "video_frames": 48,
+      "vblanks": 48,
+      "logic_updates": 2
+    },
+    {
+      "area": 1,
+      "cell": 22,
+      "video_frames": 48,
+      "vblanks": 48,
+      "logic_updates": 2
+    },
+    {
+      "area": 1,
+      "cell": 22,
+      "video_frames": 48,
+      "vblanks": 48,
+      "logic_updates": 2
+    },
+    {
+      "area": 1,
+      "cell": 22,
+      "video_frames": 48,
+      "vblanks": 48,
+      "logic_updates": 2
+    },
+    {
+      "area": 1,
+      "cell": 22,
+      "video_frames": 48,
+      "vblanks": 48,
+      "logic_updates": 2
+    },
+    {
+      "area": 1,
+      "cell": 22,
+      "video_frames": 48,
+      "vblanks": 48,
+      "logic_updates": 2
+    },
+    {
+      "area": 1,
+      "cell": 22,
+      "video_frames": 48,
+      "vblanks": 48,
+      "logic_updates": 2
+    },
+    {
+      "area": 1,
+      "cell": 22,
+      "video_frames": 48,
+      "vblanks": 48,
+      "logic_updates": 2
+    },
+    {
+      "area": 1,
+      "cell": 22,
+      "video_frames": 48,
+      "vblanks": 48,
+      "logic_updates": 2
+    },
+    {
+      "area": 1,
+      "cell": 22,
+      "video_frames": 48,
+      "vblanks": 48,
+      "logic_updates": 2
+    }
+  ],
+  "media": [],
+  "clips": [],
+  "checks": [
+    {
+      "name": "stress-beetles-04 root occupancy cache matches original owner grid",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "stress-beetles-08 root occupancy cache matches original owner grid",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "stress-beetles-12 root occupancy cache matches original owner grid",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "stress-beetles-16 root occupancy cache matches original owner grid",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "stress-beetles-24 root occupancy cache matches original owner grid",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "stress-bats-04 root occupancy cache matches original owner grid",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "stress-bats-08 root occupancy cache matches original owner grid",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "stress-bats-12 root occupancy cache matches original owner grid",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "stress-bats-16 root occupancy cache matches original owner grid",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "stress-bats-24 root occupancy cache matches original owner grid",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "stress-spitters-04 root occupancy cache matches original owner grid",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "stress-spitters-08 root occupancy cache matches original owner grid",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "stress-spitters-12 root occupancy cache matches original owner grid",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "stress-spitters-16 root occupancy cache matches original owner grid",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "stress-spitters-24 root occupancy cache matches original owner grid",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "stress-slimes-04 root occupancy cache matches original owner grid",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "stress-slimes-08 root occupancy cache matches original owner grid",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "stress-slimes-12 root occupancy cache matches original owner grid",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "stress-slimes-16 root occupancy cache matches original owner grid",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "stress-slimes-24 root occupancy cache matches original owner grid",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "stress-knights-04 root occupancy cache matches original owner grid",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "stress-knights-08 root occupancy cache matches original owner grid",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "stress-knights-12 root occupancy cache matches original owner grid",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "stress-knights-16 root occupancy cache matches original owner grid",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "stress-knights-24 root occupancy cache matches original owner grid",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "stress-mixed-04 root occupancy cache matches original owner grid",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "stress-mixed-08 root occupancy cache matches original owner grid",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "stress-mixed-12 root occupancy cache matches original owner grid",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "stress-mixed-16 root occupancy cache matches original owner grid",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "stress-mixed-24 root occupancy cache matches original owner grid",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "ROM bytes remain unchanged",
+      "passed": true,
+      "detail": null
+    }
+  ],
+  "passed": 31,
+  "total": 31,
+  "errors": [],
+  "summary": {
+    "scenarios": 30,
+    "natural_rooms": 0,
+    "video_frames": 5400,
+    "eligible_frames": 5400,
+    "eligible_updates": 5400,
+    "worst": [
+      {
+        "name": "stress-beetles-04",
+        "ratio": 1.0,
+        "missed": 0,
+        "enemies": 4,
+        "oam": 19
+      },
+      {
+        "name": "stress-beetles-08",
+        "ratio": 1.0,
+        "missed": 0,
+        "enemies": 8,
+        "oam": 23
+      },
+      {
+        "name": "stress-beetles-12",
+        "ratio": 1.0,
+        "missed": 0,
+        "enemies": 12,
+        "oam": 29
+      },
+      {
+        "name": "stress-beetles-16",
+        "ratio": 1.0,
+        "missed": 0,
+        "enemies": 16,
+        "oam": 32
+      },
+      {
+        "name": "stress-beetles-24",
+        "ratio": 1.0,
+        "missed": 0,
+        "enemies": 24,
+        "oam": 39
+      },
+      {
+        "name": "stress-bats-04",
+        "ratio": 1.0,
+        "missed": 0,
+        "enemies": 4,
+        "oam": 19
+      },
+      {
+        "name": "stress-bats-08",
+        "ratio": 1.0,
+        "missed": 0,
+        "enemies": 8,
+        "oam": 23
+      },
+      {
+        "name": "stress-bats-12",
+        "ratio": 1.0,
+        "missed": 0,
+        "enemies": 12,
+        "oam": 27
+      },
+      {
+        "name": "stress-bats-16",
+        "ratio": 1.0,
+        "missed": 0,
+        "enemies": 16,
+        "oam": 31
+      },
+      {
+        "name": "stress-bats-24",
+        "ratio": 1.0,
+        "missed": 0,
+        "enemies": 24,
+        "oam": 40
+      },
+      {
+        "name": "stress-spitters-04",
+        "ratio": 1.0,
+        "missed": 0,
+        "enemies": 4,
+        "oam": 20
+      },
+      {
+        "name": "stress-spitters-08",
+        "ratio": 1.0,
+        "missed": 0,
+        "enemies": 8,
+        "oam": 26
+      },
+      {
+        "name": "stress-spitters-12",
+        "ratio": 1.0,
+        "missed": 0,
+        "enemies": 12,
+        "oam": 29
+      },
+      {
+        "name": "stress-spitters-16",
+        "ratio": 1.0,
+        "missed": 0,
+        "enemies": 16,
+        "oam": 35
+      },
+      {
+        "name": "stress-spitters-24",
+        "ratio": 1.0,
+        "missed": 0,
+        "enemies": 24,
+        "oam": 42
+      }
+    ],
+    "elapsed_seconds": 8.73
+  },
+  "original_report_sha256": "adf9711e1f79e86f29a2d7ef9df0facc36e498cedb311d2c7fd6410488481a4d",
+  "original_report_archive_path": "stress/report.json",
+  "raw_trace_archive": "../../downloads/arcade-journal-1527dd8/native-evidence.zip"
+}

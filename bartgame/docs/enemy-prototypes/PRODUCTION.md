@@ -93,7 +93,41 @@ implementation.
 
 ## Evidence
 
-The parent integration records the final normal/lab build hashes, real mGBA
-room census, accepted damage, last-Maw completion, native ROM-to-VRAM frame
-comparisons, pool reuse, mixed allocation and cadence. Until those runs finish,
-this note describes implementation and intended checks, not a passed release.
+The [production combat harness](../../tools/enemy_production_review.py) passes
+75/75 checks against the9538580-byte pre-freeze production candidate, SHA256
+`341b7926b9a5f79ad35a789adf4b5c321fd3b5b149e94d648b50025740c6be98`.
+Eight scenarios cover2741 actual mGBA video frames and25923 exact native
+ROM-to-VRAM frame comparisons. Maximum sampled world allocation is608 tiles,
+below the876-tile HUD boundary.
+
+Actual sword inputs verify Snout front clang/rear damage and Maw buried versus
+exposed damage. The second Maw cycle proves the stored anchor survives real
+exposed movement and sword recoil, then guarantees its later narrow-origin
+fallback. A real required two-wave trial receives a disclosed eight-Maw roster
+fixture, retains those living buried actors, proceeds only after actual
+full-fuse bomb kills, reuses freed streamed tiles, and awards victory after
+killing its final Maw. No enemy HP, state, timers, facing or flags are assigned
+by the capture harness; coordinate-only bomb target placement is explicitly
+identified as a damage-interface counterprobe.
+
+The goal-room fixture retains its real Heart and adds the other eight actual
+families; all nine coexist for240/240 sampled updates. Synthetic24-Leech and
+24-Snout cases produce300/300 updates each. A synchronized24-Maw emergence
+produces299/300, preserving one isolated repeated video frame at the transition.
+That exceeds the normal twelve-marker room cap and is recorded as a finite
+performance observation, not called full cadence. The stress criterion is at
+least99% throughput with no consecutive repeated frames; all strict mechanic,
+frame-fidelity, allocation and progression checks remain independent. Companion
+natural-room coverage is recorded by the parent release rather than inferred
+from this synthetic stress case.
+
+The parent integration records the eventual committed-source bundle and
+fresh final capture provenance. Source-art pose boards remain distinct from
+actual mGBA gameplay frames.
+
+Final committed source1527dd84c92f47bf5f498cbff35cdd179cad48af reproduces that
+candidate ROM exactly. The fresh final75/75 run, actual recordings and precise
+299/300 synthetic-Maw observation are linked from the
+[production release](../../../arcade-journal-review/README.md). The release
+also binds the untouched three native study strips to the old lab ROM and
+preserves every earlier production sprite payload and identifier.

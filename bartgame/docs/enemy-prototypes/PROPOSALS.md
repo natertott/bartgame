@@ -2,6 +2,12 @@
 
 2026-11-04 · review proposal, not an adopted replacement bestiary
 
+**2026-11-05 update:** the user has adopted the first three candidates into the
+normal game. See [production integration](PRODUCTION.md) and the
+[rebuilt ROM review](../../../arcade-journal-review/README.md). The lab-only
+status below records the original proposal; the remaining thirteen families
+are still proposals.
+
 The first three candidates add **a committed straight charge, an announced
 burrowing ambush, and armor that rewards flanking**. These mechanics add new
 combat decisions without requiring a new item or replacing the five selected

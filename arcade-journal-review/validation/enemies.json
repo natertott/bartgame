@@ -1,0 +1,4688 @@
+{
+  "method": "Real mGBA production combat, streaming and wave-boundary qualification.\n\nDisclosed fixtures: normal title seed and transition requests; private blank\nSRAM; player loadout/healing; existing gDbgSpawn path; nonplayer actor isolation\nand safe coordinate-only actor positioning. Enemy HP, AI state/facing, timers,\nposes and flags are never assigned. Terrain, clocks, palettes, VRAM, OAM and\nframebuffers are never edited. Bomb counterprobes place target coordinates into\nan ordinarily timed blast; they are not unassisted combat recordings.\n",
+  "source_commit": "1527dd84c92f47bf5f498cbff35cdd179cad48af",
+  "rom_sha256": "341b7926b9a5f79ad35a789adf4b5c321fd3b5b149e94d648b50025740c6be98",
+  "tool_sha256": "d4fd6d5fdb98d47b931ceafc314a34d6daeadb2d72cbe6ab859033761f516627",
+  "checks": [
+    {
+      "name": "ordinary production build",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "exact rational route coordinates match original C division",
+      "passed": true,
+      "detail": {
+        "method": "Actual extracted reachable_dry C, dry-footprint recorder, exhaustive comparison to original signed C division at every sample.",
+        "source_sha256": "209b3e1307d5c9770def83a1976ad5844d1d429b5de22bcaa8f199aa946fe3bb",
+        "function_sha256": "12e718111503571d0c41a8537d4f26ac2a2c8fb1f6c1450ddbbcf7aa0d4b5501",
+        "harness_sha256": "732a2ca719fb5359bfa2b2ee4873e85eac4d74c61ebf79555da037fc3187fe64",
+        "vectors": 1050625,
+        "sample_coordinates": 91184129,
+        "dx_dy_range": [
+          -512,
+          512
+        ],
+        "zero_vector": true,
+        "passed": true
+      }
+    },
+    {
+      "name": "controlled type8 request produces1 actual bodies",
+      "passed": true,
+      "detail": [
+        {
+          "index": 1,
+          "kind": 2,
+          "type": 8,
+          "state": 0,
+          "sub": 1,
+          "timer": 20,
+          "timer2": 0,
+          "direction": 8,
+          "facing": 1,
+          "x": 220.0,
+          "y": 157.0,
+          "hp": 4,
+          "iframes": 0,
+          "kb": 0,
+          "flags": 10,
+          "sheet": 38,
+          "frame": 9,
+          "tile": 268,
+          "palette": 1,
+          "anchor": [
+            216,
+            157
+          ],
+          "velocity": [
+            256,
+            0
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Snout enters its natural locked60-update tell",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "front sword approach is real safe floor",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "actual front sword clang preserves4HP",
+      "passed": true,
+      "detail": {
+        "index": 1,
+        "kind": 2,
+        "type": 8,
+        "state": 1,
+        "sub": 1,
+        "timer": 35,
+        "timer2": 0,
+        "direction": 8,
+        "facing": 1,
+        "x": 258.0,
+        "y": 208.0,
+        "hp": 4,
+        "iframes": 0,
+        "kb": 0,
+        "flags": 10,
+        "sheet": 38,
+        "frame": 13,
+        "tile": 268,
+        "palette": 1,
+        "anchor": [
+          216,
+          157
+        ],
+        "velocity": [
+          0,
+          256
+        ]
+      }
+    },
+    {
+      "name": "rear sword approach is real safe floor",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "actual rear sword removes2HP",
+      "passed": true,
+      "detail": {
+        "index": 1,
+        "kind": 2,
+        "type": 8,
+        "state": 1,
+        "sub": 1,
+        "timer": 21,
+        "timer2": 0,
+        "direction": 8,
+        "facing": 1,
+        "x": 276.0,
+        "y": 208.0,
+        "hp": 2,
+        "iframes": 0,
+        "kb": 0,
+        "flags": 10,
+        "sheet": 38,
+        "frame": 13,
+        "tile": 268,
+        "palette": 1,
+        "anchor": [
+          216,
+          157
+        ],
+        "velocity": [
+          384,
+          0
+        ]
+      }
+    },
+    {
+      "name": "snout-front-rear-production GIF keeps exact native pixels/timing",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "snout-front-rear-production exact ROM-to-VRAM streamed frame payloads",
+      "passed": true,
+      "detail": {
+        "samples": 71
+      }
+    },
+    {
+      "name": "snout-front-rear-production world OBJ below reserved HUD",
+      "passed": true,
+      "detail": 288
+    },
+    {
+      "name": "controlled type7 request produces1 actual bodies",
+      "passed": true,
+      "detail": [
+        {
+          "index": 1,
+          "kind": 2,
+          "type": 7,
+          "state": 4,
+          "sub": 1,
+          "timer": 86,
+          "timer2": 0,
+          "direction": 8,
+          "facing": 1,
+          "x": 212.0,
+          "y": 142.0,
+          "hp": 6,
+          "iframes": 0,
+          "kb": 0,
+          "flags": 0,
+          "sheet": 37,
+          "frame": 29,
+          "tile": 268,
+          "palette": 3,
+          "anchor": [
+            212,
+            142
+          ],
+          "velocity": [
+            0,
+            0
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Maw begins live, buried and protected",
+      "passed": true,
+      "detail": {
+        "index": 1,
+        "kind": 2,
+        "type": 7,
+        "state": 4,
+        "sub": 1,
+        "timer": 86,
+        "timer2": 0,
+        "direction": 8,
+        "facing": 1,
+        "x": 212.0,
+        "y": 142.0,
+        "hp": 6,
+        "iframes": 0,
+        "kb": 0,
+        "flags": 0,
+        "sheet": 37,
+        "frame": 29,
+        "tile": 268,
+        "palette": 3,
+        "anchor": [
+          212,
+          142
+        ],
+        "velocity": [
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "name": "buried sword approach is safe",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "actual sword leaves buried6HP unchanged",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Maw enters24-update harmless emergence",
+      "passed": true,
+      "detail": {
+        "index": 1,
+        "kind": 2,
+        "type": 7,
+        "state": 5,
+        "sub": 1,
+        "timer": 24,
+        "timer2": 0,
+        "direction": 8,
+        "facing": 0,
+        "x": 234.0,
+        "y": 203.0,
+        "hp": 6,
+        "iframes": 0,
+        "kb": 0,
+        "flags": 0,
+        "sheet": 37,
+        "frame": 12,
+        "tile": 268,
+        "palette": 3,
+        "anchor": [
+          212,
+          142
+        ],
+        "velocity": [
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "name": "Maw naturally exposes for180updates",
+      "passed": true,
+      "detail": {
+        "index": 1,
+        "kind": 2,
+        "type": 7,
+        "state": 6,
+        "sub": 1,
+        "timer": 180,
+        "timer2": 0,
+        "direction": 0,
+        "facing": 0,
+        "x": 234.0,
+        "y": 203.0,
+        "hp": 6,
+        "iframes": 0,
+        "kb": 0,
+        "flags": 10,
+        "sheet": 37,
+        "frame": 16,
+        "tile": 268,
+        "palette": 3,
+        "anchor": [
+          212,
+          142
+        ],
+        "velocity": [
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "name": "surface sword approach is safe",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "actual sword removes2 exposed HP",
+      "passed": true,
+      "detail": {
+        "index": 1,
+        "kind": 2,
+        "type": 7,
+        "state": 6,
+        "sub": 1,
+        "timer": 164,
+        "timer2": 0,
+        "direction": 0,
+        "facing": 0,
+        "x": 234.0,
+        "y": 213.0,
+        "hp": 4,
+        "iframes": 0,
+        "kb": 0,
+        "flags": 10,
+        "sheet": 37,
+        "frame": 8,
+        "tile": 268,
+        "palette": 3,
+        "anchor": [
+          212,
+          142
+        ],
+        "velocity": [
+          0,
+          -128
+        ]
+      }
+    },
+    {
+      "name": "Maw returns to240-update buried cooldown",
+      "passed": true,
+      "detail": {
+        "index": 1,
+        "kind": 2,
+        "type": 7,
+        "state": 4,
+        "sub": 1,
+        "timer": 240,
+        "timer2": 0,
+        "direction": 0,
+        "facing": 0,
+        "x": 234.0,
+        "y": 173.0,
+        "hp": 4,
+        "iframes": 0,
+        "kb": 0,
+        "flags": 0,
+        "sheet": 37,
+        "frame": 28,
+        "tile": 268,
+        "palette": 3,
+        "anchor": [
+          212,
+          142
+        ],
+        "velocity": [
+          0,
+          -128
+        ]
+      }
+    },
+    {
+      "name": "original anchor survives actual movement and sword recoil",
+      "passed": true,
+      "detail": [
+        212,
+        142
+      ]
+    },
+    {
+      "name": "subsequent burrow retries genuinely obstructed origin",
+      "passed": true,
+      "detail": [
+        1,
+        3,
+        0,
+        1,
+        2,
+        1,
+        0
+      ]
+    },
+    {
+      "name": "second-cycle fallback returns to unchanged original anchor",
+      "passed": true,
+      "detail": {
+        "index": 1,
+        "kind": 2,
+        "type": 7,
+        "state": 5,
+        "sub": 1,
+        "timer": 24,
+        "timer2": 0,
+        "direction": 0,
+        "facing": 1,
+        "x": 212.0,
+        "y": 142.0,
+        "hp": 4,
+        "iframes": 0,
+        "kb": 0,
+        "flags": 0,
+        "sheet": 37,
+        "frame": 13,
+        "tile": 268,
+        "palette": 3,
+        "anchor": [
+          212,
+          142
+        ],
+        "velocity": [
+          0,
+          -128
+        ]
+      }
+    },
+    {
+      "name": "maw-buried-surface-production GIF keeps exact native pixels/timing",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "maw-buried-surface-production exact ROM-to-VRAM streamed frame payloads",
+      "passed": true,
+      "detail": {
+        "samples": 668
+      }
+    },
+    {
+      "name": "maw-buried-surface-production world OBJ below reserved HUD",
+      "passed": true,
+      "detail": 288
+    },
+    {
+      "name": "controlled type7 request produces1 actual bodies",
+      "passed": true,
+      "detail": [
+        {
+          "index": 1,
+          "kind": 2,
+          "type": 7,
+          "state": 4,
+          "sub": 1,
+          "timer": 86,
+          "timer2": 0,
+          "direction": 8,
+          "facing": 1,
+          "x": 212.0,
+          "y": 142.0,
+          "hp": 6,
+          "iframes": 0,
+          "kb": 0,
+          "flags": 0,
+          "sheet": 37,
+          "frame": 29,
+          "tile": 268,
+          "palette": 3,
+          "anchor": [
+            212,
+            142
+          ],
+          "velocity": [
+            0,
+            0
+          ]
+        }
+      ]
+    },
+    {
+      "name": "strict-origin failures are genuinely exercised",
+      "passed": true,
+      "detail": {
+        "before": 0,
+        "events": [
+          1,
+          2,
+          0,
+          0,
+          2,
+          0,
+          0
+        ],
+        "player": [
+          486,
+          186
+        ]
+      }
+    },
+    {
+      "name": "Maw finite fallback uses validated anchor with24harmless tell",
+      "passed": true,
+      "detail": {
+        "anchor": [
+          212,
+          142
+        ],
+        "emerged": {
+          "index": 1,
+          "kind": 2,
+          "type": 7,
+          "state": 5,
+          "sub": 1,
+          "timer": 24,
+          "timer2": 0,
+          "direction": 8,
+          "facing": 1,
+          "x": 212.0,
+          "y": 142.0,
+          "hp": 6,
+          "iframes": 0,
+          "kb": 0,
+          "flags": 0,
+          "sheet": 37,
+          "frame": 13,
+          "tile": 268,
+          "palette": 3,
+          "anchor": [
+            212,
+            142
+          ],
+          "velocity": [
+            0,
+            0
+          ]
+        },
+        "video_frames": 146
+      }
+    },
+    {
+      "name": "fallback naturally becomes hittable after warning",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "maw-finite-narrow-footing exact ROM-to-VRAM streamed frame payloads",
+      "passed": true,
+      "detail": {
+        "samples": 170
+      }
+    },
+    {
+      "name": "maw-finite-narrow-footing world OBJ below reserved HUD",
+      "passed": true,
+      "detail": 288
+    },
+    {
+      "name": "controlled type6 request produces24 actual bodies",
+      "passed": true,
+      "detail": [
+        {
+          "index": 1,
+          "kind": 2,
+          "type": 6,
+          "state": 0,
+          "sub": 1,
+          "timer": 24,
+          "timer2": 0,
+          "direction": 8,
+          "facing": 1,
+          "x": 214.0,
+          "y": 142.0,
+          "hp": 4,
+          "iframes": 0,
+          "kb": 0,
+          "flags": 10,
+          "sheet": 36,
+          "frame": 9,
+          "tile": 268,
+          "palette": 10,
+          "anchor": [
+            212,
+            142
+          ],
+          "velocity": [
+            128,
+            0
+          ]
+        },
+        {
+          "index": 2,
+          "kind": 2,
+          "type": 6,
+          "state": 0,
+          "sub": 2,
+          "timer": 24,
+          "timer2": 0,
+          "direction": 16,
+          "facing": 2,
+          "x": 228.0,
+          "y": 144.0,
+          "hp": 4,
+          "iframes": 0,
+          "kb": 0,
+          "flags": 10,
+          "sheet": 36,
+          "frame": 10,
+          "tile": 272,
+          "palette": 10,
+          "anchor": [
+            228,
+            142
+          ],
+          "velocity": [
+            0,
+            128
+          ]
+        },
+        {
+          "index": 3,
+          "kind": 2,
+          "type": 6,
+          "state": 0,
+          "sub": 3,
+          "timer": 24,
+          "timer2": 0,
+          "direction": 16,
+          "facing": 2,
+          "x": 244.0,
+          "y": 144.0,
+          "hp": 4,
+          "iframes": 0,
+          "kb": 0,
+          "flags": 10,
+          "sheet": 36,
+          "frame": 10,
+          "tile": 288,
+          "palette": 10,
+          "anchor": [
+            244,
+            142
+          ],
+          "velocity": [
+            0,
+            128
+          ]
+        },
+        {
+          "index": 4,
+          "kind": 2,
+          "type": 6,
+          "state": 0,
+          "sub": 4,
+          "timer": 24,
+          "timer2": 0,
+          "direction": 16,
+          "facing": 2,
+          "x": 260.0,
+          "y": 144.0,
+          "hp": 4,
+          "iframes": 0,
+          "kb": 0,
+          "flags": 10,
+          "sheet": 36,
+          "frame": 10,
+          "tile": 292,
+          "palette": 10,
+          "anchor": [
+            260,
+            142
+          ],
+          "velocity": [
+            0,
+            128
+          ]
+        },
+        {
+          "index": 5,
+          "kind": 2,
+          "type": 6,
+          "state": 1,
+          "sub": 5,
+          "timer": 27,
+          "timer2": 0,
+          "direction": 16,
+          "facing": 2,
+          "x": 276.0,
+          "y": 142.0,
+          "hp": 4,
+          "iframes": 0,
+          "kb": 0,
+          "flags": 10,
+          "sheet": 36,
+          "frame": 14,
+          "tile": 296,
+          "palette": 10,
+          "anchor": [
+            276,
+            142
+          ],
+          "velocity": [
+            0,
+            0
+          ]
+        },
+        {
+          "index": 6,
+          "kind": 2,
+          "type": 6,
+          "state": 0,
+          "sub": 6,
+          "timer": 24,
+          "timer2": 0,
+          "direction": 16,
+          "facing": 2,
+          "x": 292.0,
+          "y": 144.0,
+          "hp": 4,
+          "iframes": 0,
+          "kb": 0,
+          "flags": 10,
+          "sheet": 36,
+          "frame": 10,
+          "tile": 300,
+          "palette": 10,
+          "anchor": [
+            292,
+            142
+          ],
+          "velocity": [
+            0,
+            128
+          ]
+        },
+        {
+          "index": 7,
+          "kind": 2,
+          "type": 6,
+          "state": 0,
+          "sub": 7,
+          "timer": 24,
+          "timer2": 0,
+          "direction": 16,
+          "facing": 2,
+          "x": 308.0,
+          "y": 144.0,
+          "hp": 4,
+          "iframes": 0,
+          "kb": 0,
+          "flags": 10,
+          "sheet": 36,
+          "frame": 10,
+          "tile": 304,
+          "palette": 10,
+          "anchor": [
+            308,
+            142
+          ],
+          "velocity": [
+            0,
+            128
+          ]
+        },
+        {
+          "index": 8,
+          "kind": 2,
+          "type": 6,
+          "state": 0,
+          "sub": 8,
+          "timer": 24,
+          "timer2": 0,
+          "direction": 24,
+          "facing": 3,
+          "x": 322.0,
+          "y": 142.0,
+          "hp": 4,
+          "iframes": 0,
+          "kb": 0,
+          "flags": 10,
+          "sheet": 36,
+          "frame": 11,
+          "tile": 308,
+          "palette": 10,
+          "anchor": [
+            324,
+            142
+          ],
+          "velocity": [
+            -128,
+            0
+          ]
+        },
+        {
+          "index": 9,
+          "kind": 2,
+          "type": 6,
+          "state": 0,
+          "sub": 9,
+          "timer": 24,
+          "timer2": 0,
+          "direction": 8,
+          "facing": 1,
+          "x": 214.0,
+          "y": 154.0,
+          "hp": 4,
+          "iframes": 0,
+          "kb": 0,
+          "flags": 10,
+          "sheet": 36,
+          "frame": 9,
+          "tile": 312,
+          "palette": 10,
+          "anchor": [
+            212,
+            154
+          ],
+          "velocity": [
+            128,
+            0
+          ]
+        },
+        {
+          "index": 10,
+          "kind": 2,
+          "type": 6,
+          "state": 0,
+          "sub": 10,
+          "timer": 24,
+          "timer2": 0,
+          "direction": 8,
+          "facing": 1,
+          "x": 230.0,
+          "y": 154.0,
+          "hp": 4,
+          "iframes": 0,
+          "kb": 0,
+          "flags": 10,
+          "sheet": 36,
+          "frame": 9,
+          "tile": 316,
+          "palette": 10,
+          "anchor": [
+            228,
+            154
+          ],
+          "velocity": [
+            128,
+            0
+          ]
+        },
+        {
+          "index": 11,
+          "kind": 2,
+          "type": 6,
+          "state": 0,
+          "sub": 11,
+          "timer": 24,
+          "timer2": 0,
+          "direction": 16,
+          "facing": 2,
+          "x": 244.0,
+          "y": 156.0,
+          "hp": 4,
+          "iframes": 0,
+          "kb": 0,
+          "flags": 10,
+          "sheet": 36,
+          "frame": 10,
+          "tile": 320,
+          "palette": 10,
+          "anchor": [
+            244,
+            154
+          ],
+          "velocity": [
+            0,
+            128
+          ]
+        },
+        {
+          "index": 12,
+          "kind": 2,
+          "type": 6,
+          "state": 0,
+          "sub": 12,
+          "timer": 24,
+          "timer2": 0,
+          "direction": 16,
+          "facing": 2,
+          "x": 260.0,
+          "y": 156.0,
+          "hp": 4,
+          "iframes": 0,
+          "kb": 0,
+          "flags": 10,
+          "sheet": 36,
+          "frame": 10,
+          "tile": 324,
+          "palette": 10,
+          "anchor": [
+            260,
+            154
+          ],
+          "velocity": [
+            0,
+            128
+          ]
+        },
+        {
+          "index": 13,
+          "kind": 2,
+          "type": 6,
+          "state": 1,
+          "sub": 13,
+          "timer": 27,
+          "timer2": 0,
+          "direction": 16,
+          "facing": 2,
+          "x": 276.0,
+          "y": 154.0,
+          "hp": 4,
+          "iframes": 0,
+          "kb": 0,
+          "flags": 10,
+          "sheet": 36,
+          "frame": 14,
+          "tile": 328,
+          "palette": 10,
+          "anchor": [
+            276,
+            154
+          ],
+          "velocity": [
+            0,
+            0
+          ]
+        },
+        {
+          "index": 14,
+          "kind": 2,
+          "type": 6,
+          "state": 0,
+          "sub": 14,
+          "timer": 24,
+          "timer2": 0,
+          "direction": 16,
+          "facing": 2,
+          "x": 292.0,
+          "y": 156.0,
+          "hp": 4,
+          "iframes": 0,
+          "kb": 0,
+          "flags": 10,
+          "sheet": 36,
+          "frame": 10,
+          "tile": 332,
+          "palette": 10,
+          "anchor": [
+            292,
+            154
+          ],
+          "velocity": [
+            0,
+            128
+          ]
+        },
+        {
+          "index": 15,
+          "kind": 2,
+          "type": 6,
+          "state": 0,
+          "sub": 15,
+          "timer": 24,
+          "timer2": 0,
+          "direction": 16,
+          "facing": 2,
+          "x": 308.0,
+          "y": 156.0,
+          "hp": 4,
+          "iframes": 0,
+          "kb": 0,
+          "flags": 10,
+          "sheet": 36,
+          "frame": 10,
+          "tile": 336,
+          "palette": 10,
+          "anchor": [
+            308,
+            154
+          ],
+          "velocity": [
+            0,
+            128
+          ]
+        },
+        {
+          "index": 16,
+          "kind": 2,
+          "type": 6,
+          "state": 0,
+          "sub": 16,
+          "timer": 24,
+          "timer2": 0,
+          "direction": 24,
+          "facing": 3,
+          "x": 322.0,
+          "y": 154.0,
+          "hp": 4,
+          "iframes": 0,
+          "kb": 0,
+          "flags": 10,
+          "sheet": 36,
+          "frame": 11,
+          "tile": 340,
+          "palette": 10,
+          "anchor": [
+            324,
+            154
+          ],
+          "velocity": [
+            -128,
+            0
+          ]
+        },
+        {
+          "index": 17,
+          "kind": 2,
+          "type": 6,
+          "state": 0,
+          "sub": 17,
+          "timer": 24,
+          "timer2": 0,
+          "direction": 8,
+          "facing": 1,
+          "x": 214.0,
+          "y": 174.0,
+          "hp": 4,
+          "iframes": 0,
+          "kb": 0,
+          "flags": 10,
+          "sheet": 36,
+          "frame": 9,
+          "tile": 344,
+          "palette": 10,
+          "anchor": [
+            212,
+            174
+          ],
+          "velocity": [
+            128,
+            0
+          ]
+        },
+        {
+          "index": 18,
+          "kind": 2,
+          "type": 6,
+          "state": 0,
+          "sub": 18,
+          "timer": 24,
+          "timer2": 0,
+          "direction": 8,
+          "facing": 1,
+          "x": 230.0,
+          "y": 174.0,
+          "hp": 4,
+          "iframes": 0,
+          "kb": 0,
+          "flags": 10,
+          "sheet": 36,
+          "frame": 9,
+          "tile": 348,
+          "palette": 10,
+          "anchor": [
+            228,
+            174
+          ],
+          "velocity": [
+            128,
+            0
+          ]
+        },
+        {
+          "index": 19,
+          "kind": 2,
+          "type": 6,
+          "state": 0,
+          "sub": 19,
+          "timer": 24,
+          "timer2": 0,
+          "direction": 8,
+          "facing": 1,
+          "x": 246.0,
+          "y": 174.0,
+          "hp": 4,
+          "iframes": 0,
+          "kb": 0,
+          "flags": 10,
+          "sheet": 36,
+          "frame": 9,
+          "tile": 352,
+          "palette": 10,
+          "anchor": [
+            244,
+            174
+          ],
+          "velocity": [
+            128,
+            0
+          ]
+        },
+        {
+          "index": 20,
+          "kind": 2,
+          "type": 6,
+          "state": 0,
+          "sub": 20,
+          "timer": 24,
+          "timer2": 0,
+          "direction": 16,
+          "facing": 2,
+          "x": 260.0,
+          "y": 176.0,
+          "hp": 4,
+          "iframes": 0,
+          "kb": 0,
+          "flags": 10,
+          "sheet": 36,
+          "frame": 10,
+          "tile": 356,
+          "palette": 10,
+          "anchor": [
+            260,
+            174
+          ],
+          "velocity": [
+            0,
+            128
+          ]
+        },
+        {
+          "index": 21,
+          "kind": 2,
+          "type": 6,
+          "state": 0,
+          "sub": 21,
+          "timer": 24,
+          "timer2": 0,
+          "direction": 16,
+          "facing": 2,
+          "x": 276.0,
+          "y": 176.0,
+          "hp": 4,
+          "iframes": 0,
+          "kb": 0,
+          "flags": 10,
+          "sheet": 36,
+          "frame": 10,
+          "tile": 360,
+          "palette": 10,
+          "anchor": [
+            276,
+            174
+          ],
+          "velocity": [
+            0,
+            128
+          ]
+        },
+        {
+          "index": 22,
+          "kind": 2,
+          "type": 6,
+          "state": 0,
+          "sub": 22,
+          "timer": 24,
+          "timer2": 0,
+          "direction": 24,
+          "facing": 3,
+          "x": 290.0,
+          "y": 174.0,
+          "hp": 4,
+          "iframes": 0,
+          "kb": 0,
+          "flags": 10,
+          "sheet": 36,
+          "frame": 11,
+          "tile": 364,
+          "palette": 10,
+          "anchor": [
+            292,
+            174
+          ],
+          "velocity": [
+            -128,
+            0
+          ]
+        },
+        {
+          "index": 23,
+          "kind": 2,
+          "type": 6,
+          "state": 0,
+          "sub": 23,
+          "timer": 24,
+          "timer2": 0,
+          "direction": 24,
+          "facing": 3,
+          "x": 306.0,
+          "y": 174.0,
+          "hp": 4,
+          "iframes": 0,
+          "kb": 0,
+          "flags": 10,
+          "sheet": 36,
+          "frame": 11,
+          "tile": 368,
+          "palette": 10,
+          "anchor": [
+            308,
+            174
+          ],
+          "velocity": [
+            -128,
+            0
+          ]
+        },
+        {
+          "index": 24,
+          "kind": 2,
+          "type": 6,
+          "state": 0,
+          "sub": 24,
+          "timer": 24,
+          "timer2": 0,
+          "direction": 24,
+          "facing": 3,
+          "x": 322.0,
+          "y": 174.0,
+          "hp": 4,
+          "iframes": 0,
+          "kb": 0,
+          "flags": 10,
+          "sheet": 36,
+          "frame": 11,
+          "tile": 372,
+          "palette": 10,
+          "anchor": [
+            324,
+            174
+          ],
+          "velocity": [
+            -128,
+            0
+          ]
+        }
+      ]
+    },
+    {
+      "name": "type624-body crowd stays>=99percent without consecutive repeats",
+      "passed": true,
+      "detail": {
+        "type": 6,
+        "actual_bodies": 24,
+        "video_frames": 300,
+        "updates": 300,
+        "deltas": {
+          "1": 300
+        },
+        "full_cadence": true,
+        "longest_repeat_run": 0,
+        "repeated_video_indices": [],
+        "scope": "Synthetic24-body load exceeds normal12 spawn-marker cap. Raw isolated boundary repeats remain observations; native natural rooms have separate strict full-cadence checks."
+      }
+    },
+    {
+      "name": "type6 all24 bodies remain alive without enemy HP edits",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "type6 uses no more24 recycled4-tile slots",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "sustained-type6-24 exact ROM-to-VRAM streamed frame payloads",
+      "passed": true,
+      "detail": {
+        "samples": 7200
+      }
+    },
+    {
+      "name": "sustained-type6-24 world OBJ below reserved HUD",
+      "passed": true,
+      "detail": 376
+    },
+    {
+      "name": "controlled type7 request produces24 actual bodies",
+      "passed": true,
+      "detail": [
+        {
+          "index": 1,
+          "kind": 2,
+          "type": 7,
+          "state": 4,
+          "sub": 1,
+          "timer": 86,
+          "timer2": 0,
+          "direction": 8,
+          "facing": 1,
+          "x": 212.0,
+          "y": 142.0,
+          "hp": 6,
+          "iframes": 0,
+          "kb": 0,
+          "flags": 0,
+          "sheet": 37,
+          "frame": 29,
+          "tile": 268,
+          "palette": 3,
+          "anchor": [
+            212,
+            142
+          ],
+          "velocity": [
+            0,
+            0
+          ]
+        },
+        {
+          "index": 2,
+          "kind": 2,
+          "type": 7,
+          "state": 4,
+          "sub": 2,
+          "timer": 86,
+          "timer2": 0,
+          "direction": 16,
+          "facing": 2,
+          "x": 228.0,
+          "y": 142.0,
+          "hp": 6,
+          "iframes": 0,
+          "kb": 0,
+          "flags": 0,
+          "sheet": 37,
+          "frame": 30,
+          "tile": 272,
+          "palette": 3,
+          "anchor": [
+            228,
+            142
+          ],
+          "velocity": [
+            0,
+            0
+          ]
+        },
+        {
+          "index": 3,
+          "kind": 2,
+          "type": 7,
+          "state": 4,
+          "sub": 3,
+          "timer": 86,
+          "timer2": 0,
+          "direction": 16,
+          "facing": 2,
+          "x": 244.0,
+          "y": 142.0,
+          "hp": 6,
+          "iframes": 0,
+          "kb": 0,
+          "flags": 0,
+          "sheet": 37,
+          "frame": 30,
+          "tile": 288,
+          "palette": 3,
+          "anchor": [
+            244,
+            142
+          ],
+          "velocity": [
+            0,
+            0
+          ]
+        },
+        {
+          "index": 4,
+          "kind": 2,
+          "type": 7,
+          "state": 4,
+          "sub": 4,
+          "timer": 86,
+          "timer2": 0,
+          "direction": 16,
+          "facing": 2,
+          "x": 260.0,
+          "y": 142.0,
+          "hp": 6,
+          "iframes": 0,
+          "kb": 0,
+          "flags": 0,
+          "sheet": 37,
+          "frame": 30,
+          "tile": 292,
+          "palette": 3,
+          "anchor": [
+            260,
+            142
+          ],
+          "velocity": [
+            0,
+            0
+          ]
+        },
+        {
+          "index": 5,
+          "kind": 2,
+          "type": 7,
+          "state": 4,
+          "sub": 5,
+          "timer": 86,
+          "timer2": 0,
+          "direction": 16,
+          "facing": 2,
+          "x": 276.0,
+          "y": 142.0,
+          "hp": 6,
+          "iframes": 0,
+          "kb": 0,
+          "flags": 0,
+          "sheet": 37,
+          "frame": 30,
+          "tile": 296,
+          "palette": 3,
+          "anchor": [
+            276,
+            142
+          ],
+          "velocity": [
+            0,
+            0
+          ]
+        },
+        {
+          "index": 6,
+          "kind": 2,
+          "type": 7,
+          "state": 4,
+          "sub": 6,
+          "timer": 86,
+          "timer2": 0,
+          "direction": 16,
+          "facing": 2,
+          "x": 292.0,
+          "y": 142.0,
+          "hp": 6,
+          "iframes": 0,
+          "kb": 0,
+          "flags": 0,
+          "sheet": 37,
+          "frame": 30,
+          "tile": 300,
+          "palette": 3,
+          "anchor": [
+            292,
+            142
+          ],
+          "velocity": [
+            0,
+            0
+          ]
+        },
+        {
+          "index": 7,
+          "kind": 2,
+          "type": 7,
+          "state": 4,
+          "sub": 7,
+          "timer": 86,
+          "timer2": 0,
+          "direction": 16,
+          "facing": 2,
+          "x": 308.0,
+          "y": 142.0,
+          "hp": 6,
+          "iframes": 0,
+          "kb": 0,
+          "flags": 0,
+          "sheet": 37,
+          "frame": 30,
+          "tile": 304,
+          "palette": 3,
+          "anchor": [
+            308,
+            142
+          ],
+          "velocity": [
+            0,
+            0
+          ]
+        },
+        {
+          "index": 8,
+          "kind": 2,
+          "type": 7,
+          "state": 4,
+          "sub": 8,
+          "timer": 86,
+          "timer2": 0,
+          "direction": 24,
+          "facing": 3,
+          "x": 324.0,
+          "y": 142.0,
+          "hp": 6,
+          "iframes": 0,
+          "kb": 0,
+          "flags": 0,
+          "sheet": 37,
+          "frame": 31,
+          "tile": 308,
+          "palette": 3,
+          "anchor": [
+            324,
+            142
+          ],
+          "velocity": [
+            0,
+            0
+          ]
+        },
+        {
+          "index": 9,
+          "kind": 2,
+          "type": 7,
+          "state": 4,
+          "sub": 9,
+          "timer": 86,
+          "timer2": 0,
+          "direction": 8,
+          "facing": 1,
+          "x": 212.0,
+          "y": 154.0,
+          "hp": 6,
+          "iframes": 0,
+          "kb": 0,
+          "flags": 0,
+          "sheet": 37,
+          "frame": 29,
+          "tile": 312,
+          "palette": 3,
+          "anchor": [
+            212,
+            154
+          ],
+          "velocity": [
+            0,
+            0
+          ]
+        },
+        {
+          "index": 10,
+          "kind": 2,
+          "type": 7,
+          "state": 4,
+          "sub": 10,
+          "timer": 86,
+          "timer2": 0,
+          "direction": 8,
+          "facing": 1,
+          "x": 228.0,
+          "y": 154.0,
+          "hp": 6,
+          "iframes": 0,
+          "kb": 0,
+          "flags": 0,
+          "sheet": 37,
+          "frame": 29,
+          "tile": 316,
+          "palette": 3,
+          "anchor": [
+            228,
+            154
+          ],
+          "velocity": [
+            0,
+            0
+          ]
+        },
+        {
+          "index": 11,
+          "kind": 2,
+          "type": 7,
+          "state": 4,
+          "sub": 11,
+          "timer": 86,
+          "timer2": 0,
+          "direction": 16,
+          "facing": 2,
+          "x": 244.0,
+          "y": 154.0,
+          "hp": 6,
+          "iframes": 0,
+          "kb": 0,
+          "flags": 0,
+          "sheet": 37,
+          "frame": 30,
+          "tile": 320,
+          "palette": 3,
+          "anchor": [
+            244,
+            154
+          ],
+          "velocity": [
+            0,
+            0
+          ]
+        },
+        {
+          "index": 12,
+          "kind": 2,
+          "type": 7,
+          "state": 4,
+          "sub": 12,
+          "timer": 86,
+          "timer2": 0,
+          "direction": 16,
+          "facing": 2,
+          "x": 260.0,
+          "y": 154.0,
+          "hp": 6,
+          "iframes": 0,
+          "kb": 0,
+          "flags": 0,
+          "sheet": 37,
+          "frame": 30,
+          "tile": 324,
+          "palette": 3,
+          "anchor": [
+            260,
+            154
+          ],
+          "velocity": [
+            0,
+            0
+          ]
+        },
+        {
+          "index": 13,
+          "kind": 2,
+          "type": 7,
+          "state": 4,
+          "sub": 13,
+          "timer": 86,
+          "timer2": 0,
+          "direction": 16,
+          "facing": 2,
+          "x": 276.0,
+          "y": 154.0,
+          "hp": 6,
+          "iframes": 0,
+          "kb": 0,
+          "flags": 0,
+          "sheet": 37,
+          "frame": 30,
+          "tile": 328,
+          "palette": 3,
+          "anchor": [
+            276,
+            154
+          ],
+          "velocity": [
+            0,
+            0
+          ]
+        },
+        {
+          "index": 14,
+          "kind": 2,
+          "type": 7,
+          "state": 4,
+          "sub": 14,
+          "timer": 86,
+          "timer2": 0,
+          "direction": 16,
+          "facing": 2,
+          "x": 292.0,
+          "y": 154.0,
+          "hp": 6,
+          "iframes": 0,
+          "kb": 0,
+          "flags": 0,
+          "sheet": 37,
+          "frame": 30,
+          "tile": 332,
+          "palette": 3,
+          "anchor": [
+            292,
+            154
+          ],
+          "velocity": [
+            0,
+            0
+          ]
+        },
+        {
+          "index": 15,
+          "kind": 2,
+          "type": 7,
+          "state": 4,
+          "sub": 15,
+          "timer": 86,
+          "timer2": 0,
+          "direction": 16,
+          "facing": 2,
+          "x": 308.0,
+          "y": 154.0,
+          "hp": 6,
+          "iframes": 0,
+          "kb": 0,
+          "flags": 0,
+          "sheet": 37,
+          "frame": 30,
+          "tile": 336,
+          "palette": 3,
+          "anchor": [
+            308,
+            154
+          ],
+          "velocity": [
+            0,
+            0
+          ]
+        },
+        {
+          "index": 16,
+          "kind": 2,
+          "type": 7,
+          "state": 4,
+          "sub": 16,
+          "timer": 86,
+          "timer2": 0,
+          "direction": 24,
+          "facing": 3,
+          "x": 324.0,
+          "y": 154.0,
+          "hp": 6,
+          "iframes": 0,
+          "kb": 0,
+          "flags": 0,
+          "sheet": 37,
+          "frame": 31,
+          "tile": 340,
+          "palette": 3,
+          "anchor": [
+            324,
+            154
+          ],
+          "velocity": [
+            0,
+            0
+          ]
+        },
+        {
+          "index": 17,
+          "kind": 2,
+          "type": 7,
+          "state": 4,
+          "sub": 17,
+          "timer": 86,
+          "timer2": 0,
+          "direction": 8,
+          "facing": 1,
+          "x": 212.0,
+          "y": 174.0,
+          "hp": 6,
+          "iframes": 0,
+          "kb": 0,
+          "flags": 0,
+          "sheet": 37,
+          "frame": 29,
+          "tile": 344,
+          "palette": 3,
+          "anchor": [
+            212,
+            174
+          ],
+          "velocity": [
+            0,
+            0
+          ]
+        },
+        {
+          "index": 18,
+          "kind": 2,
+          "type": 7,
+          "state": 4,
+          "sub": 18,
+          "timer": 86,
+          "timer2": 0,
+          "direction": 8,
+          "facing": 1,
+          "x": 228.0,
+          "y": 174.0,
+          "hp": 6,
+          "iframes": 0,
+          "kb": 0,
+          "flags": 0,
+          "sheet": 37,
+          "frame": 29,
+          "tile": 348,
+          "palette": 3,
+          "anchor": [
+            228,
+            174
+          ],
+          "velocity": [
+            0,
+            0
+          ]
+        },
+        {
+          "index": 19,
+          "kind": 2,
+          "type": 7,
+          "state": 4,
+          "sub": 19,
+          "timer": 86,
+          "timer2": 0,
+          "direction": 8,
+          "facing": 1,
+          "x": 244.0,
+          "y": 174.0,
+          "hp": 6,
+          "iframes": 0,
+          "kb": 0,
+          "flags": 0,
+          "sheet": 37,
+          "frame": 29,
+          "tile": 352,
+          "palette": 3,
+          "anchor": [
+            244,
+            174
+          ],
+          "velocity": [
+            0,
+            0
+          ]
+        },
+        {
+          "index": 20,
+          "kind": 2,
+          "type": 7,
+          "state": 4,
+          "sub": 20,
+          "timer": 86,
+          "timer2": 0,
+          "direction": 16,
+          "facing": 2,
+          "x": 260.0,
+          "y": 174.0,
+          "hp": 6,
+          "iframes": 0,
+          "kb": 0,
+          "flags": 0,
+          "sheet": 37,
+          "frame": 30,
+          "tile": 356,
+          "palette": 3,
+          "anchor": [
+            260,
+            174
+          ],
+          "velocity": [
+            0,
+            0
+          ]
+        },
+        {
+          "index": 21,
+          "kind": 2,
+          "type": 7,
+          "state": 4,
+          "sub": 21,
+          "timer": 86,
+          "timer2": 0,
+          "direction": 16,
+          "facing": 2,
+          "x": 276.0,
+          "y": 174.0,
+          "hp": 6,
+          "iframes": 0,
+          "kb": 0,
+          "flags": 0,
+          "sheet": 37,
+          "frame": 30,
+          "tile": 360,
+          "palette": 3,
+          "anchor": [
+            276,
+            174
+          ],
+          "velocity": [
+            0,
+            0
+          ]
+        },
+        {
+          "index": 22,
+          "kind": 2,
+          "type": 7,
+          "state": 4,
+          "sub": 22,
+          "timer": 86,
+          "timer2": 0,
+          "direction": 24,
+          "facing": 3,
+          "x": 292.0,
+          "y": 174.0,
+          "hp": 6,
+          "iframes": 0,
+          "kb": 0,
+          "flags": 0,
+          "sheet": 37,
+          "frame": 31,
+          "tile": 364,
+          "palette": 3,
+          "anchor": [
+            292,
+            174
+          ],
+          "velocity": [
+            0,
+            0
+          ]
+        },
+        {
+          "index": 23,
+          "kind": 2,
+          "type": 7,
+          "state": 4,
+          "sub": 23,
+          "timer": 86,
+          "timer2": 0,
+          "direction": 24,
+          "facing": 3,
+          "x": 308.0,
+          "y": 174.0,
+          "hp": 6,
+          "iframes": 0,
+          "kb": 0,
+          "flags": 0,
+          "sheet": 37,
+          "frame": 31,
+          "tile": 368,
+          "palette": 3,
+          "anchor": [
+            308,
+            174
+          ],
+          "velocity": [
+            0,
+            0
+          ]
+        },
+        {
+          "index": 24,
+          "kind": 2,
+          "type": 7,
+          "state": 4,
+          "sub": 24,
+          "timer": 86,
+          "timer2": 0,
+          "direction": 24,
+          "facing": 3,
+          "x": 324.0,
+          "y": 174.0,
+          "hp": 6,
+          "iframes": 0,
+          "kb": 0,
+          "flags": 0,
+          "sheet": 37,
+          "frame": 31,
+          "tile": 372,
+          "palette": 3,
+          "anchor": [
+            324,
+            174
+          ],
+          "velocity": [
+            0,
+            0
+          ]
+        }
+      ]
+    },
+    {
+      "name": "type724-body crowd stays>=99percent without consecutive repeats",
+      "passed": true,
+      "detail": {
+        "type": 7,
+        "actual_bodies": 24,
+        "video_frames": 300,
+        "updates": 299,
+        "deltas": {
+          "1": 299,
+          "0": 1
+        },
+        "full_cadence": false,
+        "longest_repeat_run": 1,
+        "repeated_video_indices": [
+          86
+        ],
+        "scope": "Synthetic24-body load exceeds normal12 spawn-marker cap. Raw isolated boundary repeats remain observations; native natural rooms have separate strict full-cadence checks."
+      }
+    },
+    {
+      "name": "type7 all24 bodies remain alive without enemy HP edits",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "type7 uses no more24 recycled4-tile slots",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "sustained-type7-24 exact ROM-to-VRAM streamed frame payloads",
+      "passed": true,
+      "detail": {
+        "samples": 7200
+      }
+    },
+    {
+      "name": "sustained-type7-24 world OBJ below reserved HUD",
+      "passed": true,
+      "detail": 376
+    },
+    {
+      "name": "controlled type8 request produces24 actual bodies",
+      "passed": true,
+      "detail": [
+        {
+          "index": 1,
+          "kind": 2,
+          "type": 8,
+          "state": 0,
+          "sub": 1,
+          "timer": 20,
+          "timer2": 0,
+          "direction": 8,
+          "facing": 1,
+          "x": 220.0,
+          "y": 157.0,
+          "hp": 4,
+          "iframes": 0,
+          "kb": 0,
+          "flags": 10,
+          "sheet": 38,
+          "frame": 9,
+          "tile": 268,
+          "palette": 1,
+          "anchor": [
+            216,
+            157
+          ],
+          "velocity": [
+            256,
+            0
+          ]
+        },
+        {
+          "index": 2,
+          "kind": 2,
+          "type": 8,
+          "state": 0,
+          "sub": 2,
+          "timer": 20,
+          "timer2": 0,
+          "direction": 16,
+          "facing": 2,
+          "x": 232.0,
+          "y": 161.0,
+          "hp": 4,
+          "iframes": 0,
+          "kb": 0,
+          "flags": 10,
+          "sheet": 38,
+          "frame": 10,
+          "tile": 272,
+          "palette": 1,
+          "anchor": [
+            232,
+            157
+          ],
+          "velocity": [
+            0,
+            256
+          ]
+        },
+        {
+          "index": 3,
+          "kind": 2,
+          "type": 8,
+          "state": 0,
+          "sub": 3,
+          "timer": 20,
+          "timer2": 0,
+          "direction": 16,
+          "facing": 2,
+          "x": 248.0,
+          "y": 161.0,
+          "hp": 4,
+          "iframes": 0,
+          "kb": 0,
+          "flags": 10,
+          "sheet": 38,
+          "frame": 10,
+          "tile": 288,
+          "palette": 1,
+          "anchor": [
+            248,
+            157
+          ],
+          "velocity": [
+            0,
+            256
+          ]
+        },
+        {
+          "index": 4,
+          "kind": 2,
+          "type": 8,
+          "state": 0,
+          "sub": 4,
+          "timer": 20,
+          "timer2": 0,
+          "direction": 16,
+          "facing": 2,
+          "x": 264.0,
+          "y": 161.0,
+          "hp": 4,
+          "iframes": 0,
+          "kb": 0,
+          "flags": 10,
+          "sheet": 38,
+          "frame": 10,
+          "tile": 292,
+          "palette": 1,
+          "anchor": [
+            264,
+            157
+          ],
+          "velocity": [
+            0,
+            256
+          ]
+        },
+        {
+          "index": 5,
+          "kind": 2,
+          "type": 8,
+          "state": 0,
+          "sub": 5,
+          "timer": 20,
+          "timer2": 0,
+          "direction": 16,
+          "facing": 2,
+          "x": 280.0,
+          "y": 161.0,
+          "hp": 4,
+          "iframes": 0,
+          "kb": 0,
+          "flags": 10,
+          "sheet": 38,
+          "frame": 10,
+          "tile": 296,
+          "palette": 1,
+          "anchor": [
+            280,
+            157
+          ],
+          "velocity": [
+            0,
+            256
+          ]
+        },
+        {
+          "index": 6,
+          "kind": 2,
+          "type": 8,
+          "state": 0,
+          "sub": 6,
+          "timer": 20,
+          "timer2": 0,
+          "direction": 16,
+          "facing": 2,
+          "x": 296.0,
+          "y": 161.0,
+          "hp": 4,
+          "iframes": 0,
+          "kb": 0,
+          "flags": 10,
+          "sheet": 38,
+          "frame": 10,
+          "tile": 300,
+          "palette": 1,
+          "anchor": [
+            296,
+            157
+          ],
+          "velocity": [
+            0,
+            256
+          ]
+        },
+        {
+          "index": 7,
+          "kind": 2,
+          "type": 8,
+          "state": 0,
+          "sub": 7,
+          "timer": 20,
+          "timer2": 0,
+          "direction": 16,
+          "facing": 2,
+          "x": 312.0,
+          "y": 161.0,
+          "hp": 4,
+          "iframes": 0,
+          "kb": 0,
+          "flags": 10,
+          "sheet": 38,
+          "frame": 10,
+          "tile": 304,
+          "palette": 1,
+          "anchor": [
+            312,
+            157
+          ],
+          "velocity": [
+            0,
+            256
+          ]
+        },
+        {
+          "index": 8,
+          "kind": 2,
+          "type": 8,
+          "state": 0,
+          "sub": 8,
+          "timer": 20,
+          "timer2": 0,
+          "direction": 16,
+          "facing": 2,
+          "x": 328.0,
+          "y": 161.0,
+          "hp": 4,
+          "iframes": 0,
+          "kb": 0,
+          "flags": 10,
+          "sheet": 38,
+          "frame": 10,
+          "tile": 308,
+          "palette": 1,
+          "anchor": [
+            328,
+            157
+          ],
+          "velocity": [
+            0,
+            256
+          ]
+        },
+        {
+          "index": 9,
+          "kind": 2,
+          "type": 8,
+          "state": 0,
+          "sub": 9,
+          "timer": 20,
+          "timer2": 0,
+          "direction": 8,
+          "facing": 1,
+          "x": 220.0,
+          "y": 169.0,
+          "hp": 4,
+          "iframes": 0,
+          "kb": 0,
+          "flags": 10,
+          "sheet": 38,
+          "frame": 9,
+          "tile": 312,
+          "palette": 1,
+          "anchor": [
+            216,
+            169
+          ],
+          "velocity": [
+            256,
+            0
+          ]
+        },
+        {
+          "index": 10,
+          "kind": 2,
+          "type": 8,
+          "state": 0,
+          "sub": 10,
+          "timer": 20,
+          "timer2": 0,
+          "direction": 8,
+          "facing": 1,
+          "x": 236.0,
+          "y": 169.0,
+          "hp": 4,
+          "iframes": 0,
+          "kb": 0,
+          "flags": 10,
+          "sheet": 38,
+          "frame": 9,
+          "tile": 316,
+          "palette": 1,
+          "anchor": [
+            232,
+            169
+          ],
+          "velocity": [
+            256,
+            0
+          ]
+        },
+        {
+          "index": 11,
+          "kind": 2,
+          "type": 8,
+          "state": 0,
+          "sub": 11,
+          "timer": 20,
+          "timer2": 0,
+          "direction": 16,
+          "facing": 2,
+          "x": 248.0,
+          "y": 173.0,
+          "hp": 4,
+          "iframes": 0,
+          "kb": 0,
+          "flags": 10,
+          "sheet": 38,
+          "frame": 10,
+          "tile": 320,
+          "palette": 1,
+          "anchor": [
+            248,
+            169
+          ],
+          "velocity": [
+            0,
+            256
+          ]
+        },
+        {
+          "index": 12,
+          "kind": 2,
+          "type": 8,
+          "state": 0,
+          "sub": 12,
+          "timer": 20,
+          "timer2": 0,
+          "direction": 16,
+          "facing": 2,
+          "x": 264.0,
+          "y": 173.0,
+          "hp": 4,
+          "iframes": 0,
+          "kb": 0,
+          "flags": 10,
+          "sheet": 38,
+          "frame": 10,
+          "tile": 324,
+          "palette": 1,
+          "anchor": [
+            264,
+            169
+          ],
+          "velocity": [
+            0,
+            256
+          ]
+        },
+        {
+          "index": 13,
+          "kind": 2,
+          "type": 8,
+          "state": 0,
+          "sub": 13,
+          "timer": 20,
+          "timer2": 0,
+          "direction": 16,
+          "facing": 2,
+          "x": 280.0,
+          "y": 173.0,
+          "hp": 4,
+          "iframes": 0,
+          "kb": 0,
+          "flags": 10,
+          "sheet": 38,
+          "frame": 10,
+          "tile": 328,
+          "palette": 1,
+          "anchor": [
+            280,
+            169
+          ],
+          "velocity": [
+            0,
+            256
+          ]
+        },
+        {
+          "index": 14,
+          "kind": 2,
+          "type": 8,
+          "state": 0,
+          "sub": 14,
+          "timer": 20,
+          "timer2": 0,
+          "direction": 16,
+          "facing": 2,
+          "x": 296.0,
+          "y": 173.0,
+          "hp": 4,
+          "iframes": 0,
+          "kb": 0,
+          "flags": 10,
+          "sheet": 38,
+          "frame": 10,
+          "tile": 332,
+          "palette": 1,
+          "anchor": [
+            296,
+            169
+          ],
+          "velocity": [
+            0,
+            256
+          ]
+        },
+        {
+          "index": 15,
+          "kind": 2,
+          "type": 8,
+          "state": 0,
+          "sub": 15,
+          "timer": 20,
+          "timer2": 0,
+          "direction": 16,
+          "facing": 2,
+          "x": 312.0,
+          "y": 173.0,
+          "hp": 4,
+          "iframes": 0,
+          "kb": 0,
+          "flags": 10,
+          "sheet": 38,
+          "frame": 10,
+          "tile": 336,
+          "palette": 1,
+          "anchor": [
+            312,
+            169
+          ],
+          "velocity": [
+            0,
+            256
+          ]
+        },
+        {
+          "index": 16,
+          "kind": 2,
+          "type": 8,
+          "state": 0,
+          "sub": 16,
+          "timer": 20,
+          "timer2": 0,
+          "direction": 24,
+          "facing": 3,
+          "x": 324.0,
+          "y": 169.0,
+          "hp": 4,
+          "iframes": 0,
+          "kb": 0,
+          "flags": 10,
+          "sheet": 38,
+          "frame": 11,
+          "tile": 340,
+          "palette": 1,
+          "anchor": [
+            328,
+            169
+          ],
+          "velocity": [
+            -256,
+            0
+          ]
+        },
+        {
+          "index": 17,
+          "kind": 2,
+          "type": 8,
+          "state": 0,
+          "sub": 17,
+          "timer": 20,
+          "timer2": 0,
+          "direction": 8,
+          "facing": 1,
+          "x": 220.0,
+          "y": 189.0,
+          "hp": 4,
+          "iframes": 0,
+          "kb": 0,
+          "flags": 10,
+          "sheet": 38,
+          "frame": 9,
+          "tile": 344,
+          "palette": 1,
+          "anchor": [
+            216,
+            189
+          ],
+          "velocity": [
+            256,
+            0
+          ]
+        },
+        {
+          "index": 18,
+          "kind": 2,
+          "type": 8,
+          "state": 0,
+          "sub": 18,
+          "timer": 20,
+          "timer2": 0,
+          "direction": 8,
+          "facing": 1,
+          "x": 236.0,
+          "y": 189.0,
+          "hp": 4,
+          "iframes": 0,
+          "kb": 0,
+          "flags": 10,
+          "sheet": 38,
+          "frame": 9,
+          "tile": 348,
+          "palette": 1,
+          "anchor": [
+            232,
+            189
+          ],
+          "velocity": [
+            256,
+            0
+          ]
+        },
+        {
+          "index": 19,
+          "kind": 2,
+          "type": 8,
+          "state": 0,
+          "sub": 19,
+          "timer": 20,
+          "timer2": 0,
+          "direction": 8,
+          "facing": 1,
+          "x": 252.0,
+          "y": 189.0,
+          "hp": 4,
+          "iframes": 0,
+          "kb": 0,
+          "flags": 10,
+          "sheet": 38,
+          "frame": 9,
+          "tile": 352,
+          "palette": 1,
+          "anchor": [
+            248,
+            189
+          ],
+          "velocity": [
+            256,
+            0
+          ]
+        },
+        {
+          "index": 20,
+          "kind": 2,
+          "type": 8,
+          "state": 0,
+          "sub": 20,
+          "timer": 20,
+          "timer2": 0,
+          "direction": 16,
+          "facing": 2,
+          "x": 264.0,
+          "y": 193.0,
+          "hp": 4,
+          "iframes": 0,
+          "kb": 0,
+          "flags": 10,
+          "sheet": 38,
+          "frame": 10,
+          "tile": 356,
+          "palette": 1,
+          "anchor": [
+            264,
+            189
+          ],
+          "velocity": [
+            0,
+            256
+          ]
+        },
+        {
+          "index": 21,
+          "kind": 2,
+          "type": 8,
+          "state": 0,
+          "sub": 21,
+          "timer": 20,
+          "timer2": 0,
+          "direction": 16,
+          "facing": 2,
+          "x": 280.0,
+          "y": 193.0,
+          "hp": 4,
+          "iframes": 0,
+          "kb": 0,
+          "flags": 10,
+          "sheet": 38,
+          "frame": 10,
+          "tile": 360,
+          "palette": 1,
+          "anchor": [
+            280,
+            189
+          ],
+          "velocity": [
+            0,
+            256
+          ]
+        },
+        {
+          "index": 22,
+          "kind": 2,
+          "type": 8,
+          "state": 0,
+          "sub": 22,
+          "timer": 20,
+          "timer2": 0,
+          "direction": 16,
+          "facing": 2,
+          "x": 296.0,
+          "y": 193.0,
+          "hp": 4,
+          "iframes": 0,
+          "kb": 0,
+          "flags": 10,
+          "sheet": 38,
+          "frame": 10,
+          "tile": 364,
+          "palette": 1,
+          "anchor": [
+            296,
+            189
+          ],
+          "velocity": [
+            0,
+            256
+          ]
+        },
+        {
+          "index": 23,
+          "kind": 2,
+          "type": 8,
+          "state": 0,
+          "sub": 23,
+          "timer": 20,
+          "timer2": 0,
+          "direction": 24,
+          "facing": 3,
+          "x": 308.0,
+          "y": 189.0,
+          "hp": 4,
+          "iframes": 0,
+          "kb": 0,
+          "flags": 10,
+          "sheet": 38,
+          "frame": 11,
+          "tile": 368,
+          "palette": 1,
+          "anchor": [
+            312,
+            189
+          ],
+          "velocity": [
+            -256,
+            0
+          ]
+        },
+        {
+          "index": 24,
+          "kind": 2,
+          "type": 8,
+          "state": 0,
+          "sub": 24,
+          "timer": 20,
+          "timer2": 0,
+          "direction": 24,
+          "facing": 3,
+          "x": 324.0,
+          "y": 189.0,
+          "hp": 4,
+          "iframes": 0,
+          "kb": 0,
+          "flags": 10,
+          "sheet": 38,
+          "frame": 11,
+          "tile": 372,
+          "palette": 1,
+          "anchor": [
+            328,
+            189
+          ],
+          "velocity": [
+            -256,
+            0
+          ]
+        }
+      ]
+    },
+    {
+      "name": "type824-body crowd stays>=99percent without consecutive repeats",
+      "passed": true,
+      "detail": {
+        "type": 8,
+        "actual_bodies": 24,
+        "video_frames": 300,
+        "updates": 300,
+        "deltas": {
+          "1": 300
+        },
+        "full_cadence": true,
+        "longest_repeat_run": 0,
+        "repeated_video_indices": [],
+        "scope": "Synthetic24-body load exceeds normal12 spawn-marker cap. Raw isolated boundary repeats remain observations; native natural rooms have separate strict full-cadence checks."
+      }
+    },
+    {
+      "name": "type8 all24 bodies remain alive without enemy HP edits",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "type8 uses no more24 recycled4-tile slots",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "sustained-type8-24 exact ROM-to-VRAM streamed frame payloads",
+      "passed": true,
+      "detail": {
+        "samples": 7200
+      }
+    },
+    {
+      "name": "sustained-type8-24 world OBJ below reserved HUD",
+      "passed": true,
+      "detail": 376
+    },
+    {
+      "name": "mixed fixture retains real spawned Heart",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "all nine actual enemy families coexist",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "nine-family mixed full sampled cadence",
+      "passed": true,
+      "detail": {
+        "1": 240
+      }
+    },
+    {
+      "name": "nine-family fixture never loses a family",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "all-nine-mixed-production GIF keeps exact native pixels/timing",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "all-nine-mixed-production exact ROM-to-VRAM streamed frame payloads",
+      "passed": true,
+      "detail": {
+        "samples": 720
+      }
+    },
+    {
+      "name": "all-nine-mixed-production world OBJ below reserved HUD",
+      "passed": true,
+      "detail": 608
+    },
+    {
+      "name": "controlled type7 request produces8 actual bodies",
+      "passed": true,
+      "detail": [
+        {
+          "index": 1,
+          "kind": 2,
+          "type": 7,
+          "state": 4,
+          "sub": 1,
+          "timer": 86,
+          "timer2": 0,
+          "direction": 16,
+          "facing": 2,
+          "x": 60.0,
+          "y": 48.0,
+          "hp": 6,
+          "iframes": 0,
+          "kb": 0,
+          "flags": 0,
+          "sheet": 37,
+          "frame": 30,
+          "tile": 300,
+          "palette": 3,
+          "anchor": [
+            60,
+            48
+          ],
+          "velocity": [
+            0,
+            0
+          ]
+        },
+        {
+          "index": 2,
+          "kind": 2,
+          "type": 7,
+          "state": 4,
+          "sub": 2,
+          "timer": 86,
+          "timer2": 0,
+          "direction": 16,
+          "facing": 2,
+          "x": 76.0,
+          "y": 48.0,
+          "hp": 6,
+          "iframes": 0,
+          "kb": 0,
+          "flags": 0,
+          "sheet": 37,
+          "frame": 30,
+          "tile": 304,
+          "palette": 3,
+          "anchor": [
+            76,
+            48
+          ],
+          "velocity": [
+            0,
+            0
+          ]
+        },
+        {
+          "index": 3,
+          "kind": 2,
+          "type": 7,
+          "state": 4,
+          "sub": 3,
+          "timer": 86,
+          "timer2": 0,
+          "direction": 16,
+          "facing": 2,
+          "x": 92.0,
+          "y": 48.0,
+          "hp": 6,
+          "iframes": 0,
+          "kb": 0,
+          "flags": 0,
+          "sheet": 37,
+          "frame": 30,
+          "tile": 332,
+          "palette": 3,
+          "anchor": [
+            92,
+            48
+          ],
+          "velocity": [
+            0,
+            0
+          ]
+        },
+        {
+          "index": 4,
+          "kind": 2,
+          "type": 7,
+          "state": 4,
+          "sub": 4,
+          "timer": 86,
+          "timer2": 0,
+          "direction": 16,
+          "facing": 2,
+          "x": 108.0,
+          "y": 48.0,
+          "hp": 6,
+          "iframes": 0,
+          "kb": 0,
+          "flags": 0,
+          "sheet": 37,
+          "frame": 30,
+          "tile": 336,
+          "palette": 3,
+          "anchor": [
+            108,
+            48
+          ],
+          "velocity": [
+            0,
+            0
+          ]
+        },
+        {
+          "index": 5,
+          "kind": 2,
+          "type": 7,
+          "state": 4,
+          "sub": 5,
+          "timer": 86,
+          "timer2": 0,
+          "direction": 16,
+          "facing": 2,
+          "x": 124.0,
+          "y": 48.0,
+          "hp": 6,
+          "iframes": 0,
+          "kb": 0,
+          "flags": 0,
+          "sheet": 37,
+          "frame": 30,
+          "tile": 340,
+          "palette": 3,
+          "anchor": [
+            124,
+            48
+          ],
+          "velocity": [
+            0,
+            0
+          ]
+        },
+        {
+          "index": 6,
+          "kind": 2,
+          "type": 7,
+          "state": 4,
+          "sub": 6,
+          "timer": 86,
+          "timer2": 0,
+          "direction": 16,
+          "facing": 2,
+          "x": 140.0,
+          "y": 48.0,
+          "hp": 6,
+          "iframes": 0,
+          "kb": 0,
+          "flags": 0,
+          "sheet": 37,
+          "frame": 30,
+          "tile": 344,
+          "palette": 3,
+          "anchor": [
+            140,
+            48
+          ],
+          "velocity": [
+            0,
+            0
+          ]
+        },
+        {
+          "index": 7,
+          "kind": 2,
+          "type": 7,
+          "state": 4,
+          "sub": 7,
+          "timer": 86,
+          "timer2": 0,
+          "direction": 16,
+          "facing": 2,
+          "x": 156.0,
+          "y": 48.0,
+          "hp": 6,
+          "iframes": 0,
+          "kb": 0,
+          "flags": 0,
+          "sheet": 37,
+          "frame": 30,
+          "tile": 348,
+          "palette": 3,
+          "anchor": [
+            156,
+            48
+          ],
+          "velocity": [
+            0,
+            0
+          ]
+        },
+        {
+          "index": 8,
+          "kind": 2,
+          "type": 7,
+          "state": 4,
+          "sub": 8,
+          "timer": 86,
+          "timer2": 0,
+          "direction": 16,
+          "facing": 2,
+          "x": 172.0,
+          "y": 48.0,
+          "hp": 6,
+          "iframes": 0,
+          "kb": 0,
+          "flags": 0,
+          "sheet": 37,
+          "frame": 30,
+          "tile": 352,
+          "palette": 3,
+          "anchor": [
+            172,
+            48
+          ],
+          "velocity": [
+            0,
+            0
+          ]
+        }
+      ]
+    },
+    {
+      "name": "buried live wave does not complete trial",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "wave has live Maws before bomb input",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "wave counterprobe uses an actual planted bomb",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "every target is naturally exposed or retreating at fuse149",
+      "passed": true,
+      "detail": [
+        {
+          "index": 1,
+          "kind": 2,
+          "type": 7,
+          "state": 7,
+          "sub": 1,
+          "timer": 16,
+          "timer2": 0,
+          "direction": 6,
+          "facing": 1,
+          "x": 157.9375,
+          "y": 84.96875,
+          "hp": 6,
+          "iframes": 0,
+          "kb": 0,
+          "flags": 2,
+          "sheet": 37,
+          "frame": 21,
+          "tile": 300,
+          "palette": 3,
+          "anchor": [
+            60,
+            48
+          ],
+          "velocity": [
+            118,
+            -49
+          ]
+        },
+        {
+          "index": 2,
+          "kind": 2,
+          "type": 7,
+          "state": 7,
+          "sub": 2,
+          "timer": 16,
+          "timer2": 0,
+          "direction": 4,
+          "facing": 1,
+          "x": 180.890625,
+          "y": 93.59375,
+          "hp": 6,
+          "iframes": 0,
+          "kb": 0,
+          "flags": 2,
+          "sheet": 37,
+          "frame": 21,
+          "tile": 304,
+          "palette": 3,
+          "anchor": [
+            76,
+            48
+          ],
+          "velocity": [
+            90,
+            -91
+          ]
+        },
+        {
+          "index": 3,
+          "kind": 2,
+          "type": 7,
+          "state": 7,
+          "sub": 3,
+          "timer": 16,
+          "timer2": 0,
+          "direction": 7,
+          "facing": 1,
+          "x": 158.671875,
+          "y": 79.59375,
+          "hp": 6,
+          "iframes": 0,
+          "kb": 0,
+          "flags": 2,
+          "sheet": 37,
+          "frame": 21,
+          "tile": 332,
+          "palette": 3,
+          "anchor": [
+            92,
+            48
+          ],
+          "velocity": [
+            125,
+            -25
+          ]
+        },
+        {
+          "index": 4,
+          "kind": 2,
+          "type": 7,
+          "state": 7,
+          "sub": 4,
+          "timer": 16,
+          "timer2": 0,
+          "direction": 3,
+          "facing": 0,
+          "x": 191.0625,
+          "y": 83.859375,
+          "hp": 6,
+          "iframes": 0,
+          "kb": 0,
+          "flags": 2,
+          "sheet": 37,
+          "frame": 20,
+          "tile": 336,
+          "palette": 3,
+          "anchor": [
+            108,
+            48
+          ],
+          "velocity": [
+            71,
+            -107
+          ]
+        },
+        {
+          "index": 5,
+          "kind": 2,
+          "type": 7,
+          "state": 7,
+          "sub": 5,
+          "timer": 16,
+          "timer2": 0,
+          "direction": 6,
+          "facing": 1,
+          "x": 153.65625,
+          "y": 88.71875,
+          "hp": 6,
+          "iframes": 0,
+          "kb": 0,
+          "flags": 2,
+          "sheet": 37,
+          "frame": 21,
+          "tile": 340,
+          "palette": 3,
+          "anchor": [
+            124,
+            48
+          ],
+          "velocity": [
+            118,
+            -49
+          ]
+        },
+        {
+          "index": 6,
+          "kind": 2,
+          "type": 7,
+          "state": 7,
+          "sub": 6,
+          "timer": 16,
+          "timer2": 0,
+          "direction": 3,
+          "facing": 0,
+          "x": 184.234375,
+          "y": 89.65625,
+          "hp": 6,
+          "iframes": 0,
+          "kb": 0,
+          "flags": 2,
+          "sheet": 37,
+          "frame": 20,
+          "tile": 344,
+          "palette": 3,
+          "anchor": [
+            140,
+            48
+          ],
+          "velocity": [
+            71,
+            -107
+          ]
+        },
+        {
+          "index": 7,
+          "kind": 2,
+          "type": 7,
+          "state": 7,
+          "sub": 7,
+          "timer": 16,
+          "timer2": 0,
+          "direction": 5,
+          "facing": 1,
+          "x": 128.59375,
+          "y": 121.828125,
+          "hp": 6,
+          "iframes": 0,
+          "kb": 0,
+          "flags": 2,
+          "sheet": 37,
+          "frame": 21,
+          "tile": 348,
+          "palette": 3,
+          "anchor": [
+            156,
+            48
+          ],
+          "velocity": [
+            106,
+            -72
+          ]
+        },
+        {
+          "index": 8,
+          "kind": 2,
+          "type": 7,
+          "state": 7,
+          "sub": 8,
+          "timer": 16,
+          "timer2": 0,
+          "direction": 5,
+          "facing": 1,
+          "x": 209.6875,
+          "y": 64.90625,
+          "hp": 6,
+          "iframes": 0,
+          "kb": 0,
+          "flags": 2,
+          "sheet": 37,
+          "frame": 21,
+          "tile": 352,
+          "palette": 3,
+          "anchor": [
+            172,
+            48
+          ],
+          "velocity": [
+            106,
+            -72
+          ]
+        }
+      ]
+    },
+    {
+      "name": "actual8damage blast kills all6HP wave targets",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "name": "death releases every streamed slot",
+      "passed": true,
+      "detail": [
+        {
+          "slot": 0,
+          "tile": 300,
+          "owner": 0,
+          "frame": 255
+        },
+        {
+          "slot": 1,
+          "tile": 304,
+          "owner": 0,
+          "frame": 255
+        },
+        {
+          "slot": 2,
+          "tile": 332,
+          "owner": 0,
+          "frame": 255
+        },
+        {
+          "slot": 3,
+          "tile": 336,
+          "owner": 0,
+          "frame": 255
+        },
+        {
+          "slot": 4,
+          "tile": 340,
+          "owner": 0,
+          "frame": 255
+        },
+        {
+          "slot": 5,
+          "tile": 344,
+          "owner": 0,
+          "frame": 255
+        },
+        {
+          "slot": 6,
+          "tile": 348,
+          "owner": 0,
+          "frame": 255
+        },
+        {
+          "slot": 7,
+          "tile": 352,
+          "owner": 0,
+          "frame": 255
+        }
+      ]
+    },
+    {
+      "name": "next real trial wave begins after all8 killed",
+      "passed": true,
+      "detail": [
+        {
+          "index": 1,
+          "kind": 2,
+          "type": 0,
+          "state": 0,
+          "sub": 0,
+          "timer": 23,
+          "timer2": 0,
+          "direction": 24,
+          "facing": 3,
+          "x": 200.0,
+          "y": 158.0,
+          "hp": 2,
+          "iframes": 0,
+          "kb": 0,
+          "flags": 10,
+          "sheet": 4,
+          "frame": 0,
+          "tile": 308,
+          "palette": 10
+        },
+        {
+          "index": 3,
+          "kind": 2,
+          "type": 0,
+          "state": 0,
+          "sub": 0,
+          "timer": 21,
+          "timer2": 0,
+          "direction": 8,
+          "facing": 1,
+          "x": 152.0,
+          "y": 62.0,
+          "hp": 2,
+          "iframes": 0,
+          "kb": 0,
+          "flags": 10,
+          "sheet": 4,
+          "frame": 0,
+          "tile": 308,
+          "palette": 10
+        },
+        {
+          "index": 5,
+          "kind": 2,
+          "type": 7,
+          "state": 4,
+          "sub": 1,
+          "timer": 90,
+          "timer2": 0,
+          "direction": 8,
+          "facing": 1,
+          "x": 88.0,
+          "y": 174.0,
+          "hp": 6,
+          "iframes": 0,
+          "kb": 0,
+          "flags": 0,
+          "sheet": 37,
+          "frame": 29,
+          "tile": 300,
+          "palette": 3,
+          "anchor": [
+            88,
+            174
+          ],
+          "velocity": [
+            0,
+            0
+          ]
+        },
+        {
+          "index": 7,
+          "kind": 2,
+          "type": 6,
+          "state": 0,
+          "sub": 2,
+          "timer": 24,
+          "timer2": 0,
+          "direction": 0,
+          "facing": 0,
+          "x": 216.0,
+          "y": 94.0,
+          "hp": 4,
+          "iframes": 0,
+          "kb": 0,
+          "flags": 10,
+          "sheet": 36,
+          "frame": 0,
+          "tile": 304,
+          "palette": 10,
+          "anchor": [
+            216,
+            94
+          ],
+          "velocity": [
+            0,
+            0
+          ]
+        }
+      ]
+    },
+    {
+      "name": "new wave reuses prior streamed tile",
+      "passed": true,
+      "detail": [
+        {
+          "index": 1,
+          "kind": 2,
+          "type": 7,
+          "state": 4,
+          "sub": 1,
+          "timer": 86,
+          "timer2": 0,
+          "direction": 16,
+          "facing": 2,
+          "x": 84.0,
+          "y": 44.0,
+          "hp": 6,
+          "iframes": 0,
+          "kb": 0,
+          "flags": 0,
+          "sheet": 37,
+          "frame": 30,
+          "tile": 300,
+          "palette": 3,
+          "anchor": [
+            84,
+            44
+          ],
+          "velocity": [
+            0,
+            0
+          ]
+        }
+      ]
+    },
+    {
+      "name": "wave has live Maws before bomb input",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "wave counterprobe uses an actual planted bomb",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "every target is naturally exposed or retreating at fuse149",
+      "passed": true,
+      "detail": [
+        {
+          "index": 1,
+          "kind": 2,
+          "type": 7,
+          "state": 7,
+          "sub": 1,
+          "timer": 16,
+          "timer2": 0,
+          "direction": 2,
+          "facing": 0,
+          "x": 205.59375,
+          "y": 77.828125,
+          "hp": 6,
+          "iframes": 0,
+          "kb": 0,
+          "flags": 2,
+          "sheet": 37,
+          "frame": 20,
+          "tile": 300,
+          "palette": 3,
+          "anchor": [
+            84,
+            44
+          ],
+          "velocity": [
+            48,
+            -119
+          ]
+        }
+      ]
+    },
+    {
+      "name": "actual8damage blast kills all6HP wave targets",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "name": "death releases every streamed slot",
+      "passed": true,
+      "detail": [
+        {
+          "slot": 0,
+          "tile": 300,
+          "owner": 0,
+          "frame": 255
+        },
+        {
+          "slot": 1,
+          "tile": 304,
+          "owner": 0,
+          "frame": 255
+        },
+        {
+          "slot": 2,
+          "tile": 332,
+          "owner": 0,
+          "frame": 255
+        },
+        {
+          "slot": 3,
+          "tile": 336,
+          "owner": 0,
+          "frame": 255
+        },
+        {
+          "slot": 4,
+          "tile": 340,
+          "owner": 0,
+          "frame": 255
+        },
+        {
+          "slot": 5,
+          "tile": 344,
+          "owner": 0,
+          "frame": 255
+        },
+        {
+          "slot": 6,
+          "tile": 348,
+          "owner": 0,
+          "frame": 255
+        },
+        {
+          "slot": 7,
+          "tile": 352,
+          "owner": 0,
+          "frame": 255
+        }
+      ]
+    },
+    {
+      "name": "final Maw death unlocks actual trial victory",
+      "passed": true,
+      "detail": {
+        "flags": 6,
+        "enemies": []
+      }
+    },
+    {
+      "name": "required-trial-eight-maws GIF keeps exact native pixels/timing",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "required-trial-eight-maws exact ROM-to-VRAM streamed frame payloads",
+      "passed": true,
+      "detail": {
+        "samples": 2694
+      }
+    },
+    {
+      "name": "required-trial-eight-maws world OBJ below reserved HUD",
+      "passed": true,
+      "detail": 356
+    }
+  ],
+  "passed": 75,
+  "total": 75,
+  "scenarios": [
+    {
+      "name": "snout-front-rear-production",
+      "note": "Real normal-build B sword: front blocked, rear accepted. Coordinates only are fixtures; HP, facing and AI clocks remain live.",
+      "fixtures": [
+        {
+          "action": "coordinate-only actor position",
+          "actor": 1,
+          "position": [
+            258,
+            208
+          ],
+          "player_facing": null
+        },
+        {
+          "action": "coordinate-only actor position",
+          "actor": 0,
+          "position": [
+            280,
+            208
+          ],
+          "player_facing": 3
+        },
+        {
+          "action": "coordinate-only actor position",
+          "actor": 0,
+          "position": [
+            236,
+            208
+          ],
+          "player_facing": 1
+        }
+      ],
+      "trace_frames": 71
+    },
+    {
+      "name": "maw-buried-surface-production",
+      "note": "Production live Maw phase/damage cycle and second-burrow fallback after actual exposed movement and sword recoil; coordinate/player healing fixtures only.",
+      "fixtures": [
+        {
+          "action": "coordinate-only actor position",
+          "actor": 0,
+          "position": [
+            234,
+            142
+          ],
+          "player_facing": 3
+        },
+        {
+          "action": "coordinate-only actor position",
+          "actor": 0,
+          "position": [
+            234,
+            181
+          ],
+          "player_facing": 2
+        },
+        {
+          "action": "coordinate-only actor position",
+          "actor": 0,
+          "position": [
+            486,
+            186
+          ],
+          "player_facing": 0
+        }
+      ],
+      "trace_frames": 668
+    },
+    {
+      "name": "maw-finite-narrow-footing",
+      "note": "Player-only coordinate fixture on a real walkable fringe narrower than a Maw footprint forces strict ray rejection. Original validated spawn anchor guarantees finite emergence; no terrain, enemy state/timer/HP or phase assignment.",
+      "fixtures": [],
+      "trace_frames": 170
+    },
+    {
+      "name": "sustained-type6-24",
+      "note": "Controlled sustained24-body request, real AI/HP and original terrain. Player HP restored for survival. No offense. First emergence/collision bursts included.",
+      "fixtures": [],
+      "trace_frames": 300
+    },
+    {
+      "name": "sustained-type7-24",
+      "note": "Controlled sustained24-body request, real AI/HP and original terrain. Player HP restored for survival. No offense. First emergence/collision bursts included.",
+      "fixtures": [],
+      "trace_frames": 300
+    },
+    {
+      "name": "sustained-type8-24",
+      "note": "Controlled sustained24-body request, real AI/HP and original terrain. Player HP restored for survival. No offense. First emergence/collision bursts included.",
+      "fixtures": [],
+      "trace_frames": 300
+    },
+    {
+      "name": "all-nine-mixed-production",
+      "note": "Real goal-room Heart plus developer requests for the other eight distinct families. Existing terrain/AI/HP remain live; player healing is a survival fixture.",
+      "fixtures": [],
+      "trace_frames": 240
+    },
+    {
+      "name": "required-trial-eight-maws",
+      "note": "First actual required wave replaced with8live Maws, second with1throughdeveloper requests. All kills are real full-fuse bombs; target coordinate-only overlap is disclosed. Trial phase/victory flags and enemy HP/state/timers never assigned.",
+      "fixtures": [
+        {
+          "action": "coordinate-only actor position",
+          "actor": 0,
+          "position": [
+            146,
+            48
+          ],
+          "player_facing": 1
+        },
+        {
+          "action": "coordinate-only actor position",
+          "actor": 0,
+          "position": [
+            226,
+            48
+          ],
+          "player_facing": 0
+        },
+        {
+          "action": "coordinate-only actor position",
+          "actor": 1,
+          "position": [
+            162,
+            48
+          ],
+          "player_facing": null
+        },
+        {
+          "action": "coordinate-only actor position",
+          "actor": 2,
+          "position": [
+            162,
+            48
+          ],
+          "player_facing": null
+        },
+        {
+          "action": "coordinate-only actor position",
+          "actor": 3,
+          "position": [
+            162,
+            48
+          ],
+          "player_facing": null
+        },
+        {
+          "action": "coordinate-only actor position",
+          "actor": 4,
+          "position": [
+            162,
+            48
+          ],
+          "player_facing": null
+        },
+        {
+          "action": "coordinate-only actor position",
+          "actor": 5,
+          "position": [
+            162,
+            48
+          ],
+          "player_facing": null
+        },
+        {
+          "action": "coordinate-only actor position",
+          "actor": 6,
+          "position": [
+            162,
+            48
+          ],
+          "player_facing": null
+        },
+        {
+          "action": "coordinate-only actor position",
+          "actor": 7,
+          "position": [
+            162,
+            48
+          ],
+          "player_facing": null
+        },
+        {
+          "action": "coordinate-only actor position",
+          "actor": 8,
+          "position": [
+            162,
+            48
+          ],
+          "player_facing": null
+        },
+        {
+          "action": "controlled actor isolation",
+          "removed": [
+            [
+              1,
+              2,
+              0
+            ],
+            [
+              2,
+              7,
+              0
+            ],
+            [
+              3,
+              2,
+              0
+            ],
+            [
+              4,
+              7,
+              0
+            ],
+            [
+              5,
+              2,
+              7
+            ],
+            [
+              6,
+              7,
+              0
+            ],
+            [
+              7,
+              2,
+              6
+            ],
+            [
+              8,
+              7,
+              0
+            ],
+            [
+              12,
+              4,
+              1
+            ],
+            [
+              13,
+              4,
+              7
+            ],
+            [
+              14,
+              4,
+              1
+            ],
+            [
+              15,
+              4,
+              9
+            ],
+            [
+              16,
+              4,
+              8
+            ],
+            [
+              17,
+              4,
+              1
+            ],
+            [
+              18,
+              4,
+              1
+            ],
+            [
+              19,
+              4,
+              9
+            ]
+          ],
+          "keep_real_boss": false
+        },
+        {
+          "action": "coordinate-only actor position",
+          "actor": 0,
+          "position": [
+            144,
+            104
+          ],
+          "player_facing": 0
+        },
+        {
+          "action": "existing developer spawn request",
+          "type": 7,
+          "count": 1
+        },
+        {
+          "action": "coordinate-only actor position",
+          "actor": 0,
+          "position": [
+            146,
+            48
+          ],
+          "player_facing": 1
+        },
+        {
+          "action": "coordinate-only actor position",
+          "actor": 0,
+          "position": [
+            226,
+            48
+          ],
+          "player_facing": 0
+        },
+        {
+          "action": "coordinate-only actor position",
+          "actor": 1,
+          "position": [
+            162,
+            48
+          ],
+          "player_facing": null
+        }
+      ],
+      "trace_frames": 692
+    }
+  ],
+  "performance_observations": [
+    {
+      "type": 6,
+      "actual_bodies": 24,
+      "video_frames": 300,
+      "updates": 300,
+      "deltas": {
+        "1": 300
+      },
+      "full_cadence": true,
+      "longest_repeat_run": 0,
+      "repeated_video_indices": [],
+      "scope": "Synthetic24-body load exceeds normal12 spawn-marker cap. Raw isolated boundary repeats remain observations; native natural rooms have separate strict full-cadence checks."
+    },
+    {
+      "type": 7,
+      "actual_bodies": 24,
+      "video_frames": 300,
+      "updates": 299,
+      "deltas": {
+        "1": 299,
+        "0": 1
+      },
+      "full_cadence": false,
+      "longest_repeat_run": 1,
+      "repeated_video_indices": [
+        86
+      ],
+      "scope": "Synthetic24-body load exceeds normal12 spawn-marker cap. Raw isolated boundary repeats remain observations; native natural rooms have separate strict full-cadence checks."
+    },
+    {
+      "type": 8,
+      "actual_bodies": 24,
+      "video_frames": 300,
+      "updates": 300,
+      "deltas": {
+        "1": 300
+      },
+      "full_cadence": true,
+      "longest_repeat_run": 0,
+      "repeated_video_indices": [],
+      "scope": "Synthetic24-body load exceeds normal12 spawn-marker cap. Raw isolated boundary repeats remain observations; native natural rooms have separate strict full-cadence checks."
+    }
+  ],
+  "media": [
+    {
+      "file": "snout-front-rear-production/motion.gif",
+      "sha256": "bbf83a41b11330da758c137bf1f8dd36c32dd4554ae724010e16c09ee5709420",
+      "kind": "actual native mGBA sampled playback",
+      "exact_palette": true,
+      "colour_count": 83,
+      "duration_ms": 1190,
+      "timeline_frames": 18
+    },
+    {
+      "file": "maw-buried-surface-production/motion.gif",
+      "sha256": "fdde8ad2415db59290a0846fc44a9fb7ee66b83f0295fe65498c9602cf57b1a1",
+      "kind": "actual native mGBA sampled playback",
+      "exact_palette": true,
+      "colour_count": 80,
+      "duration_ms": 11180,
+      "timeline_frames": 167
+    },
+    {
+      "file": "all-nine-mixed-production/motion.gif",
+      "sha256": "92061adac9f03bd6332135f40af5fce1fe295ad94874a8de719ec053ab92a61a",
+      "kind": "actual native mGBA sampled playback",
+      "exact_palette": true,
+      "colour_count": 99,
+      "duration_ms": 4020,
+      "timeline_frames": 60
+    },
+    {
+      "file": "required-trial-eight-maws/motion.gif",
+      "sha256": "233a6fb8883086f379578f758b05b4e539b2da25ff1fcb1166e4133845dd4853",
+      "kind": "actual native mGBA sampled playback",
+      "exact_palette": true,
+      "colour_count": 64,
+      "duration_ms": 11590,
+      "timeline_frames": 173
+    }
+  ],
+  "fixtures": [
+    {
+      "action": "existing room transition request",
+      "area": 1,
+      "cell": 22,
+      "side": 0
+    },
+    {
+      "action": "coordinate-only actor position",
+      "actor": 0,
+      "position": [
+        264,
+        216
+      ],
+      "player_facing": 0
+    },
+    {
+      "action": "controlled actor isolation",
+      "removed": [
+        [
+          1,
+          2,
+          6
+        ],
+        [
+          2,
+          2,
+          7
+        ],
+        [
+          3,
+          2,
+          3
+        ]
+      ],
+      "keep_real_boss": false
+    },
+    {
+      "action": "existing developer spawn request",
+      "type": 8,
+      "count": 1
+    },
+    {
+      "action": "coordinate-only actor position",
+      "actor": 1,
+      "position": [
+        258,
+        208
+      ],
+      "player_facing": null
+    },
+    {
+      "action": "coordinate-only actor position",
+      "actor": 0,
+      "position": [
+        280,
+        208
+      ],
+      "player_facing": 3
+    },
+    {
+      "action": "coordinate-only actor position",
+      "actor": 0,
+      "position": [
+        236,
+        208
+      ],
+      "player_facing": 1
+    },
+    {
+      "action": "existing room transition request",
+      "area": 1,
+      "cell": 22,
+      "side": 0
+    },
+    {
+      "action": "coordinate-only actor position",
+      "actor": 0,
+      "position": [
+        264,
+        200
+      ],
+      "player_facing": 0
+    },
+    {
+      "action": "controlled actor isolation",
+      "removed": [
+        [
+          1,
+          2,
+          6
+        ],
+        [
+          2,
+          2,
+          7
+        ],
+        [
+          3,
+          2,
+          3
+        ]
+      ],
+      "keep_real_boss": false
+    },
+    {
+      "action": "existing developer spawn request",
+      "type": 7,
+      "count": 1
+    },
+    {
+      "action": "coordinate-only actor position",
+      "actor": 0,
+      "position": [
+        234,
+        142
+      ],
+      "player_facing": 3
+    },
+    {
+      "action": "coordinate-only actor position",
+      "actor": 0,
+      "position": [
+        234,
+        181
+      ],
+      "player_facing": 2
+    },
+    {
+      "action": "coordinate-only actor position",
+      "actor": 0,
+      "position": [
+        486,
+        186
+      ],
+      "player_facing": 0
+    },
+    {
+      "action": "existing room transition request",
+      "area": 1,
+      "cell": 22,
+      "side": 0
+    },
+    {
+      "action": "coordinate-only actor position",
+      "actor": 0,
+      "position": [
+        264,
+        200
+      ],
+      "player_facing": 0
+    },
+    {
+      "action": "controlled actor isolation",
+      "removed": [
+        [
+          1,
+          2,
+          6
+        ],
+        [
+          2,
+          2,
+          7
+        ],
+        [
+          3,
+          2,
+          3
+        ]
+      ],
+      "keep_real_boss": false
+    },
+    {
+      "action": "existing developer spawn request",
+      "type": 7,
+      "count": 1
+    },
+    {
+      "action": "coordinate-only actor position",
+      "actor": 0,
+      "position": [
+        486,
+        186
+      ],
+      "player_facing": 0
+    },
+    {
+      "action": "existing room transition request",
+      "area": 1,
+      "cell": 22,
+      "side": 0
+    },
+    {
+      "action": "coordinate-only actor position",
+      "actor": 0,
+      "position": [
+        264,
+        200
+      ],
+      "player_facing": 0
+    },
+    {
+      "action": "controlled actor isolation",
+      "removed": [
+        [
+          1,
+          2,
+          6
+        ],
+        [
+          2,
+          2,
+          7
+        ],
+        [
+          3,
+          2,
+          3
+        ]
+      ],
+      "keep_real_boss": false
+    },
+    {
+      "action": "existing developer spawn request",
+      "type": 6,
+      "count": 24
+    },
+    {
+      "action": "existing room transition request",
+      "area": 1,
+      "cell": 22,
+      "side": 0
+    },
+    {
+      "action": "coordinate-only actor position",
+      "actor": 0,
+      "position": [
+        264,
+        200
+      ],
+      "player_facing": 0
+    },
+    {
+      "action": "controlled actor isolation",
+      "removed": [
+        [
+          1,
+          2,
+          6
+        ],
+        [
+          2,
+          2,
+          7
+        ],
+        [
+          3,
+          2,
+          3
+        ]
+      ],
+      "keep_real_boss": false
+    },
+    {
+      "action": "existing developer spawn request",
+      "type": 7,
+      "count": 24
+    },
+    {
+      "action": "existing room transition request",
+      "area": 1,
+      "cell": 22,
+      "side": 0
+    },
+    {
+      "action": "coordinate-only actor position",
+      "actor": 0,
+      "position": [
+        264,
+        216
+      ],
+      "player_facing": 0
+    },
+    {
+      "action": "controlled actor isolation",
+      "removed": [
+        [
+          1,
+          2,
+          6
+        ],
+        [
+          2,
+          2,
+          7
+        ],
+        [
+          3,
+          2,
+          3
+        ]
+      ],
+      "keep_real_boss": false
+    },
+    {
+      "action": "existing developer spawn request",
+      "type": 8,
+      "count": 24
+    },
+    {
+      "action": "existing room transition request",
+      "area": 1,
+      "cell": 20,
+      "side": 0
+    },
+    {
+      "action": "controlled actor isolation",
+      "removed": [],
+      "keep_real_boss": true
+    },
+    {
+      "action": "coordinate-only actor position",
+      "actor": 0,
+      "position": [
+        256,
+        192
+      ],
+      "player_facing": 0
+    },
+    {
+      "action": "existing developer spawn request",
+      "type": 0,
+      "count": 1
+    },
+    {
+      "action": "existing developer spawn request",
+      "type": 1,
+      "count": 1
+    },
+    {
+      "action": "existing developer spawn request",
+      "type": 2,
+      "count": 1
+    },
+    {
+      "action": "existing developer spawn request",
+      "type": 3,
+      "count": 1
+    },
+    {
+      "action": "existing developer spawn request",
+      "type": 4,
+      "count": 1
+    },
+    {
+      "action": "existing developer spawn request",
+      "type": 6,
+      "count": 1
+    },
+    {
+      "action": "existing developer spawn request",
+      "type": 7,
+      "count": 1
+    },
+    {
+      "action": "existing developer spawn request",
+      "type": 8,
+      "count": 1
+    },
+    {
+      "action": "existing room transition request",
+      "area": 2,
+      "cell": 7,
+      "side": 0
+    },
+    {
+      "action": "coordinate-only actor position",
+      "actor": 0,
+      "position": [
+        144,
+        104
+      ],
+      "player_facing": 0
+    },
+    {
+      "action": "controlled actor isolation",
+      "removed": [
+        [
+          1,
+          2,
+          6
+        ],
+        [
+          3,
+          2,
+          7
+        ],
+        [
+          5,
+          2,
+          0
+        ]
+      ],
+      "keep_real_boss": false
+    },
+    {
+      "action": "existing developer spawn request",
+      "type": 7,
+      "count": 8
+    },
+    {
+      "action": "coordinate-only actor position",
+      "actor": 0,
+      "position": [
+        146,
+        48
+      ],
+      "player_facing": 1
+    },
+    {
+      "action": "coordinate-only actor position",
+      "actor": 0,
+      "position": [
+        226,
+        48
+      ],
+      "player_facing": 0
+    },
+    {
+      "action": "coordinate-only actor position",
+      "actor": 1,
+      "position": [
+        162,
+        48
+      ],
+      "player_facing": null
+    },
+    {
+      "action": "coordinate-only actor position",
+      "actor": 2,
+      "position": [
+        162,
+        48
+      ],
+      "player_facing": null
+    },
+    {
+      "action": "coordinate-only actor position",
+      "actor": 3,
+      "position": [
+        162,
+        48
+      ],
+      "player_facing": null
+    },
+    {
+      "action": "coordinate-only actor position",
+      "actor": 4,
+      "position": [
+        162,
+        48
+      ],
+      "player_facing": null
+    },
+    {
+      "action": "coordinate-only actor position",
+      "actor": 5,
+      "position": [
+        162,
+        48
+      ],
+      "player_facing": null
+    },
+    {
+      "action": "coordinate-only actor position",
+      "actor": 6,
+      "position": [
+        162,
+        48
+      ],
+      "player_facing": null
+    },
+    {
+      "action": "coordinate-only actor position",
+      "actor": 7,
+      "position": [
+        162,
+        48
+      ],
+      "player_facing": null
+    },
+    {
+      "action": "coordinate-only actor position",
+      "actor": 8,
+      "position": [
+        162,
+        48
+      ],
+      "player_facing": null
+    },
+    {
+      "action": "controlled actor isolation",
+      "removed": [
+        [
+          1,
+          2,
+          0
+        ],
+        [
+          2,
+          7,
+          0
+        ],
+        [
+          3,
+          2,
+          0
+        ],
+        [
+          4,
+          7,
+          0
+        ],
+        [
+          5,
+          2,
+          7
+        ],
+        [
+          6,
+          7,
+          0
+        ],
+        [
+          7,
+          2,
+          6
+        ],
+        [
+          8,
+          7,
+          0
+        ],
+        [
+          12,
+          4,
+          1
+        ],
+        [
+          13,
+          4,
+          7
+        ],
+        [
+          14,
+          4,
+          1
+        ],
+        [
+          15,
+          4,
+          9
+        ],
+        [
+          16,
+          4,
+          8
+        ],
+        [
+          17,
+          4,
+          1
+        ],
+        [
+          18,
+          4,
+          1
+        ],
+        [
+          19,
+          4,
+          9
+        ]
+      ],
+      "keep_real_boss": false
+    },
+    {
+      "action": "coordinate-only actor position",
+      "actor": 0,
+      "position": [
+        144,
+        104
+      ],
+      "player_facing": 0
+    },
+    {
+      "action": "existing developer spawn request",
+      "type": 7,
+      "count": 1
+    },
+    {
+      "action": "coordinate-only actor position",
+      "actor": 0,
+      "position": [
+        146,
+        48
+      ],
+      "player_facing": 1
+    },
+    {
+      "action": "coordinate-only actor position",
+      "actor": 0,
+      "position": [
+        226,
+        48
+      ],
+      "player_facing": 0
+    },
+    {
+      "action": "coordinate-only actor position",
+      "actor": 1,
+      "position": [
+        162,
+        48
+      ],
+      "player_facing": null
+    }
+  ],
+  "errors": [],
+  "original_report_sha256": "70c53feb8fe6fbf26c8ee2128e6ae4ed61f382a4c08ff18980f1aaa89320a0fe",
+  "original_report_archive_path": "enemies/report.json",
+  "raw_trace_archive": "../../downloads/arcade-journal-1527dd8/native-evidence.zip"
+}

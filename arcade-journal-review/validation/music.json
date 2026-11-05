@@ -1,0 +1,4116 @@
+{
+  "method": "Qualify original music through real mGBA gameplay contexts and audio output.\n\nNavigation requests, player health restoration and the existing sword-assisted\nboss fight are disclosed fixtures. Music state, clocks, PCM, sound registers,\nDMA and frame counters are never assigned. Captures are unprocessed emulator\n16-bit stereo output. The source comparison uses the actual imported ROM PCM,\nnot synthesis of a replacement melody. Full physical-frame samples establish\nsample-clock and loop behavior even while normal logic/modal menus are busy.\n",
+  "emulator": "mGBA0.10.5",
+  "rom_sha256": "341b7926b9a5f79ad35a789adf4b5c321fd3b5b149e94d648b50025740c6be98",
+  "source_commit": "1527dd84c92f47bf5f498cbff35cdd179cad48af",
+  "tool_sha256": "6bcc6026c3f5920e3d786d77366c14b83671efdd6f561ed548a6459375b335b6",
+  "manifest_sha256": "4f7ee0b1a0d676d379b00f8784a816dd3e72effd34c62be7e4daac7c77ba45a2",
+  "fixtures": [
+    "Seed0xb4a7 pinned before ordinary title Start; new emulator SRAM for this tool only.",
+    "Forest/goal navigation uses existing transition request fields, bypassing travel/gates but retaining real generation, actors and music selection.",
+    "Full-loop forest/boss recordings use the real pause menu to keep combat still; the menu input IRQ chains the audio heartbeat.",
+    "Player health/invulnerability restoration and coordinate-only positioning accompany real sword inputs to obtain the Grail; enemy HP/state/timers remain live.",
+    "No audio state, sample clock, source pointer, sound register, DMA register or framebuffer is injected. WAVs are raw mGBA output; PCM comparison resampling is diagnostic only."
+  ],
+  "checks": [
+    {
+      "name": "sewer original track descriptor",
+      "passed": true,
+      "detail": {
+        "pcm": 134370016,
+        "samples": 1966272,
+        "loop_sample": 0,
+        "total_frames": 3584,
+        "loop_frame": 0,
+        "source_id": 1
+      }
+    },
+    {
+      "name": "sewer complete ROM PCM matches source-import hash",
+      "passed": true,
+      "detail": "7b4908fde903383234a04d146d13a8e4689b2cb518230f1b968c9cda5dde534d"
+    },
+    {
+      "name": "sewer musical FIFO guard and ROM bounds",
+      "passed": true,
+      "detail": 8192
+    },
+    {
+      "name": "forest original track descriptor",
+      "passed": true,
+      "detail": {
+        "pcm": 136344480,
+        "samples": 1685376,
+        "loop_sample": 0,
+        "total_frames": 3072,
+        "loop_frame": 0,
+        "source_id": 2
+      }
+    },
+    {
+      "name": "forest complete ROM PCM matches source-import hash",
+      "passed": true,
+      "detail": "409ab2bead7ca952c4a6048e4f0a70e3292a92c811a2a22f75d83ae57141cfaa"
+    },
+    {
+      "name": "forest musical FIFO guard and ROM bounds",
+      "passed": true,
+      "detail": 8192
+    },
+    {
+      "name": "boss original track descriptor",
+      "passed": true,
+      "detail": {
+        "pcm": 138038048,
+        "samples": 1310666,
+        "loop_sample": 0,
+        "total_frames": 2389,
+        "loop_frame": 0,
+        "source_id": 3
+      }
+    },
+    {
+      "name": "boss complete ROM PCM matches source-import hash",
+      "passed": true,
+      "detail": "481d7681a3a04a0d7be98229aaca09ed3d5922b85efb5c8fe02e737ce009dacc"
+    },
+    {
+      "name": "boss musical FIFO guard and ROM bounds",
+      "passed": true,
+      "detail": 8198
+    },
+    {
+      "name": "title original track descriptor",
+      "passed": true,
+      "detail": {
+        "pcm": 139356912,
+        "samples": 2330011,
+        "loop_sample": 291320,
+        "total_frames": 4247,
+        "loop_frame": 531,
+        "source_id": 26
+      }
+    },
+    {
+      "name": "title complete ROM PCM matches source-import hash",
+      "passed": true,
+      "detail": "07f17bbd79367e66ee22326aa2808045bb735446fa83c936b2c3cb059fa24441"
+    },
+    {
+      "name": "title musical FIFO guard and ROM bounds",
+      "passed": true,
+      "detail": 8197
+    },
+    {
+      "name": "win original track descriptor",
+      "passed": true,
+      "detail": {
+        "pcm": 141695120,
+        "samples": 1521886,
+        "loop_sample": 0,
+        "total_frames": 2774,
+        "loop_frame": 0,
+        "source_id": 25
+      }
+    },
+    {
+      "name": "win complete ROM PCM matches source-import hash",
+      "passed": true,
+      "detail": "8ae2059cd9bc3b9b9e985c5cfd1943d96eabef6d7185ce73d71da95abc16996c"
+    },
+    {
+      "name": "win musical FIFO guard and ROM bounds",
+      "passed": true,
+      "detail": 8194
+    },
+    {
+      "name": "title natural game context selects original catalog track",
+      "passed": true,
+      "detail": {
+        "bgm": 4,
+        "track": 26,
+        "samples": 58440,
+        "loops": 0,
+        "dma_offset": 0,
+        "frame": 109,
+        "game_state": 0,
+        "run_frames": 0
+      }
+    },
+    {
+      "name": "title actual Timer1 samples advance at32768Hz through every physical frame",
+      "passed": true,
+      "detail": {
+        "frames": 4320,
+        "max_sample_delta": 549,
+        "bad_intervals": []
+      }
+    },
+    {
+      "name": "title real loop observed without clock injection",
+      "passed": true,
+      "detail": {
+        "frame": 4140,
+        "audio_sample": 3056778,
+        "previous": {
+          "bgm": 4,
+          "track": 26,
+          "samples": 2329748,
+          "loops": 0,
+          "dma_offset": 0,
+          "frame": 4249,
+          "game_state": 0,
+          "run_frames": 0
+        },
+        "current": {
+          "bgm": 4,
+          "track": 26,
+          "samples": 291604,
+          "loops": 1,
+          "dma_offset": 291604,
+          "frame": 4250,
+          "game_state": 0,
+          "run_frames": 0
+        }
+      }
+    },
+    {
+      "name": "title loop DMA points inside the correct original ROM stream",
+      "passed": true,
+      "detail": {
+        "bgm": 4,
+        "track": 26,
+        "samples": 389807,
+        "loops": 1,
+        "dma_offset": 291604,
+        "frame": 4429,
+        "game_state": 0,
+        "run_frames": 0
+      }
+    },
+    {
+      "name": "title DMA and hardware sample clocks remain enabled",
+      "passed": true,
+      "detail": {
+        "timer0": 128,
+        "timer1": 132,
+        "dma1": "0xb6400000"
+      }
+    },
+    {
+      "name": "title actual audio is non-silent and unclipped",
+      "passed": true,
+      "detail": {
+        "rms16": 2107.7669953685413,
+        "peak16": 14726
+      }
+    },
+    {
+      "name": "title original mono mix routes equally to both speakers",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "title actual waveform matches imported original ROM PCM",
+      "passed": true,
+      "detail": {
+        "correlation": 0.9873818417971613,
+        "source_offset_44100": 11753,
+        "source_rms": 0.08719971534741763,
+        "observed_rms": 0.06432393762100044
+      }
+    },
+    {
+      "name": "title audible loop follows musical continuation without silent guard",
+      "passed": true,
+      "detail": {
+        "correlation": 0.9818232033261126,
+        "source_offset_44100": 11391,
+        "source_rms": 0.11903846548055336,
+        "observed_rms": 0.08808176314328735
+      }
+    },
+    {
+      "name": "physical music sample clock survives busy New Game generation",
+      "passed": true,
+      "detail": {
+        "video_frames": 40,
+        "busy_intervals": 39
+      }
+    },
+    {
+      "name": "real sword input produces pulse1 SFX without restarting original music",
+      "passed": true,
+      "detail": {
+        "before": {
+          "bgm": 1,
+          "track": 1,
+          "samples": 96051,
+          "loops": 0,
+          "dma_offset": 0,
+          "frame": 4647,
+          "game_state": 1,
+          "run_frames": 174
+        },
+        "after": {
+          "bgm": 1,
+          "track": 1,
+          "samples": 105926,
+          "loops": 0,
+          "dma_offset": 0,
+          "frame": 4665,
+          "game_state": 1,
+          "run_frames": 192
+        },
+        "pulse1": [
+          "0x0",
+          "0x0",
+          "-0x3e80",
+          "-0x3e80",
+          "-0x3e80",
+          "-0x3e80",
+          "-0x3e80",
+          "-0x3e80",
+          "-0x3e80",
+          "-0x3e80",
+          "-0x3e80",
+          "-0x3e80",
+          "-0x3e80",
+          "-0x3e80",
+          "-0x3e80",
+          "-0x3e80"
+        ]
+      }
+    },
+    {
+      "name": "sewer natural game context selects original catalog track",
+      "passed": true,
+      "detail": {
+        "bgm": 1,
+        "track": 1,
+        "samples": 188220,
+        "loops": 0,
+        "dma_offset": 0,
+        "frame": 4815,
+        "game_state": 1,
+        "run_frames": 342
+      }
+    },
+    {
+      "name": "sewer actual Timer1 samples advance at32768Hz through every physical frame",
+      "passed": true,
+      "detail": {
+        "frames": 3420,
+        "max_sample_delta": 549,
+        "bad_intervals": []
+      }
+    },
+    {
+      "name": "sewer real loop observed without clock injection",
+      "passed": true,
+      "detail": {
+        "frame": 3240,
+        "audio_sample": 2392263,
+        "previous": {
+          "bgm": 1,
+          "track": 1,
+          "samples": 1965765,
+          "loops": 0,
+          "dma_offset": 0,
+          "frame": 8055,
+          "game_state": 1,
+          "run_frames": 3582
+        },
+        "current": {
+          "bgm": 1,
+          "track": 1,
+          "samples": 40,
+          "loops": 1,
+          "dma_offset": 40,
+          "frame": 8056,
+          "game_state": 1,
+          "run_frames": 3583
+        }
+      }
+    },
+    {
+      "name": "sewer loop DMA points inside the correct original ROM stream",
+      "passed": true,
+      "detail": {
+        "bgm": 1,
+        "track": 1,
+        "samples": 98243,
+        "loops": 1,
+        "dma_offset": 40,
+        "frame": 8235,
+        "game_state": 1,
+        "run_frames": 3762
+      }
+    },
+    {
+      "name": "sewer DMA and hardware sample clocks remain enabled",
+      "passed": true,
+      "detail": {
+        "timer0": 128,
+        "timer1": 132,
+        "dma1": "0xb6400000"
+      }
+    },
+    {
+      "name": "sewer actual audio is non-silent and unclipped",
+      "passed": true,
+      "detail": {
+        "rms16": 1914.5965885891046,
+        "peak16": 13024
+      }
+    },
+    {
+      "name": "sewer original mono mix routes equally to both speakers",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "sewer actual waveform matches imported original ROM PCM",
+      "passed": true,
+      "detail": {
+        "correlation": 0.9775793631964337,
+        "source_offset_44100": 11750,
+        "source_rms": 0.07974110713833463,
+        "observed_rms": 0.05842885056908217
+      }
+    },
+    {
+      "name": "sewer audible loop follows musical continuation without silent guard",
+      "passed": true,
+      "detail": {
+        "correlation": 0.9784629490184594,
+        "source_offset_44100": 11066,
+        "source_rms": 0.059664113776365504,
+        "observed_rms": 0.04363250581705575
+      }
+    },
+    {
+      "name": "real pause menu opens for clean music observation",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "period0 menu SFX ends while original music continues",
+      "passed": true,
+      "detail": "0x0"
+    },
+    {
+      "name": "forest natural game context selects original catalog track",
+      "passed": true,
+      "detail": {
+        "bgm": 2,
+        "track": 2,
+        "samples": 143835,
+        "loops": 0,
+        "dma_offset": 0,
+        "frame": 8545,
+        "game_state": 4,
+        "run_frames": 3795
+      }
+    },
+    {
+      "name": "forest actual Timer1 samples advance at32768Hz through every physical frame",
+      "passed": true,
+      "detail": {
+        "frames": 2989,
+        "max_sample_delta": 549,
+        "bad_intervals": []
+      }
+    },
+    {
+      "name": "forest real loop observed without clock injection",
+      "passed": true,
+      "detail": {
+        "frame": 2809,
+        "audio_sample": 2074035,
+        "previous": {
+          "bgm": 2,
+          "track": 2,
+          "samples": 1684923,
+          "loops": 0,
+          "dma_offset": 0,
+          "frame": 11354,
+          "game_state": 4,
+          "run_frames": 3795
+        },
+        "current": {
+          "bgm": 2,
+          "track": 2,
+          "samples": 96,
+          "loops": 1,
+          "dma_offset": 96,
+          "frame": 11355,
+          "game_state": 4,
+          "run_frames": 3795
+        }
+      }
+    },
+    {
+      "name": "forest loop DMA points inside the correct original ROM stream",
+      "passed": true,
+      "detail": {
+        "bgm": 2,
+        "track": 2,
+        "samples": 98299,
+        "loops": 1,
+        "dma_offset": 96,
+        "frame": 11534,
+        "game_state": 4,
+        "run_frames": 3795
+      }
+    },
+    {
+      "name": "forest DMA and hardware sample clocks remain enabled",
+      "passed": true,
+      "detail": {
+        "timer0": 128,
+        "timer1": 132,
+        "dma1": "0xb6400000"
+      }
+    },
+    {
+      "name": "forest actual audio is non-silent and unclipped",
+      "passed": true,
+      "detail": {
+        "rms16": 1949.5869286895127,
+        "peak16": 14252
+      }
+    },
+    {
+      "name": "forest original mono mix routes equally to both speakers",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "forest actual waveform matches imported original ROM PCM",
+      "passed": true,
+      "detail": {
+        "correlation": 0.9783455708313694,
+        "source_offset_44100": 11753,
+        "source_rms": 0.08139315881281463,
+        "observed_rms": 0.05949665763834398
+      }
+    },
+    {
+      "name": "forest audible loop follows musical continuation without silent guard",
+      "passed": true,
+      "detail": {
+        "correlation": 0.9748815948008936,
+        "source_offset_44100": 11143,
+        "source_rms": 0.060985171289040734,
+        "observed_rms": 0.044380909523878576
+      }
+    },
+    {
+      "name": "real pause menu opens for clean music observation",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "period0 menu SFX ends while original music continues",
+      "passed": true,
+      "detail": "0x0"
+    },
+    {
+      "name": "boss natural game context selects original catalog track",
+      "passed": true,
+      "detail": {
+        "bgm": 3,
+        "track": 3,
+        "samples": 144426,
+        "loops": 0,
+        "dma_offset": 0,
+        "frame": 11861,
+        "game_state": 4,
+        "run_frames": 3837
+      }
+    },
+    {
+      "name": "boss actual Timer1 samples advance at32768Hz through every physical frame",
+      "passed": true,
+      "detail": {
+        "frames": 2305,
+        "max_sample_delta": 549,
+        "bad_intervals": []
+      }
+    },
+    {
+      "name": "boss real loop observed without clock injection",
+      "passed": true,
+      "detail": {
+        "frame": 2125,
+        "audio_sample": 1569000,
+        "previous": {
+          "bgm": 3,
+          "track": 3,
+          "samples": 1310255,
+          "loops": 0,
+          "dma_offset": 0,
+          "frame": 13986,
+          "game_state": 4,
+          "run_frames": 3837
+        },
+        "current": {
+          "bgm": 3,
+          "track": 3,
+          "samples": 136,
+          "loops": 1,
+          "dma_offset": 136,
+          "frame": 13987,
+          "game_state": 4,
+          "run_frames": 3837
+        }
+      }
+    },
+    {
+      "name": "boss loop DMA points inside the correct original ROM stream",
+      "passed": true,
+      "detail": {
+        "bgm": 3,
+        "track": 3,
+        "samples": 98339,
+        "loops": 1,
+        "dma_offset": 136,
+        "frame": 14166,
+        "game_state": 4,
+        "run_frames": 3837
+      }
+    },
+    {
+      "name": "boss DMA and hardware sample clocks remain enabled",
+      "passed": true,
+      "detail": {
+        "timer0": 128,
+        "timer1": 132,
+        "dma1": "0xb6400000"
+      }
+    },
+    {
+      "name": "boss actual audio is non-silent and unclipped",
+      "passed": true,
+      "detail": {
+        "rms16": 2446.9614154169462,
+        "peak16": 14089
+      }
+    },
+    {
+      "name": "boss original mono mix routes equally to both speakers",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "boss actual waveform matches imported original ROM PCM",
+      "passed": true,
+      "detail": {
+        "correlation": 0.9783647735141882,
+        "source_offset_44100": 11752,
+        "source_rms": 0.10210691609157443,
+        "observed_rms": 0.07467533599997844
+      }
+    },
+    {
+      "name": "boss audible loop follows musical continuation without silent guard",
+      "passed": true,
+      "detail": {
+        "correlation": 0.9770778494981216,
+        "source_offset_44100": 11197,
+        "source_rms": 0.07972427622713579,
+        "observed_rms": 0.05843156142504837
+      }
+    },
+    {
+      "name": "Heart retains original40 HP and dies to actual sword hits",
+      "passed": true,
+      "detail": [
+        40,
+        38,
+        36,
+        34,
+        32,
+        30,
+        28,
+        22,
+        22,
+        20,
+        18,
+        16,
+        14,
+        10,
+        8,
+        8,
+        6,
+        4,
+        2,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "name": "real Heart death drops its Grail",
+      "passed": true,
+      "detail": {
+        "kind": 4,
+        "type": 6,
+        "state": 0,
+        "timer": 154,
+        "x": 259,
+        "y": 70,
+        "z": 0,
+        "speed": 0,
+        "hp": 0,
+        "coll": 0,
+        "facing": 2
+      }
+    },
+    {
+      "name": "actual sword victory and Grail trigger original victory music",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "win natural game context selects original catalog track",
+      "passed": true,
+      "detail": {
+        "bgm": 5,
+        "track": 25,
+        "samples": 236857,
+        "loops": 0,
+        "dma_offset": 0,
+        "frame": 15508,
+        "game_state": 6,
+        "run_frames": 4736
+      }
+    },
+    {
+      "name": "win actual Timer1 samples advance at32768Hz through every physical frame",
+      "passed": true,
+      "detail": {
+        "frames": 2522,
+        "max_sample_delta": 549,
+        "bad_intervals": []
+      }
+    },
+    {
+      "name": "win real loop observed without clock injection",
+      "passed": true,
+      "detail": {
+        "frame": 2342,
+        "audio_sample": 1729223,
+        "previous": {
+          "bgm": 5,
+          "track": 25,
+          "samples": 1521736,
+          "loops": 0,
+          "dma_offset": 0,
+          "frame": 17850,
+          "game_state": 6,
+          "run_frames": 4736
+        },
+        "current": {
+          "bgm": 5,
+          "track": 25,
+          "samples": 396,
+          "loops": 1,
+          "dma_offset": 396,
+          "frame": 17851,
+          "game_state": 6,
+          "run_frames": 4736
+        }
+      }
+    },
+    {
+      "name": "win loop DMA points inside the correct original ROM stream",
+      "passed": true,
+      "detail": {
+        "bgm": 5,
+        "track": 25,
+        "samples": 98599,
+        "loops": 1,
+        "dma_offset": 396,
+        "frame": 18030,
+        "game_state": 6,
+        "run_frames": 4736
+      }
+    },
+    {
+      "name": "win DMA and hardware sample clocks remain enabled",
+      "passed": true,
+      "detail": {
+        "timer0": 128,
+        "timer1": 132,
+        "dma1": "0xb6400000"
+      }
+    },
+    {
+      "name": "win actual audio is non-silent and unclipped",
+      "passed": true,
+      "detail": {
+        "rms16": 1698.848095974266,
+        "peak16": 13300
+      }
+    },
+    {
+      "name": "win original mono mix routes equally to both speakers",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "win actual waveform matches imported original ROM PCM",
+      "passed": true,
+      "detail": {
+        "correlation": 0.978020521360665,
+        "source_offset_44100": 11749,
+        "source_rms": 0.07078662704379443,
+        "observed_rms": 0.05184472824910758
+      }
+    },
+    {
+      "name": "win audible loop follows musical continuation without silent guard",
+      "passed": true,
+      "detail": {
+        "correlation": 0.9781775552637051,
+        "source_offset_44100": 11548,
+        "source_rms": 0.06668391588434776,
+        "observed_rms": 0.04894038027057792
+      }
+    }
+  ],
+  "passed": 69,
+  "total": 69,
+  "scenarios": [
+    {
+      "role": "title",
+      "source_track": 26,
+      "source_title": "Crown of the Afterlight - Dawn Overture",
+      "initial": {
+        "bgm": 4,
+        "track": 26,
+        "samples": 58440,
+        "loops": 0,
+        "dma_offset": 0,
+        "frame": 109,
+        "game_state": 0,
+        "run_frames": 0
+      },
+      "final": {
+        "bgm": 4,
+        "track": 26,
+        "samples": 389807,
+        "loops": 1,
+        "dma_offset": 291604,
+        "frame": 4429,
+        "game_state": 0,
+        "run_frames": 0
+      },
+      "video_frames": 4320,
+      "audio_samples": 3189686,
+      "sampled_trace": [
+        {
+          "video_index": 0,
+          "bgm": 4,
+          "track": 26,
+          "samples": 58989,
+          "loops": 0,
+          "dma_offset": 0,
+          "frame": 110,
+          "game_state": 0,
+          "run_frames": 0
+        },
+        {
+          "video_index": 60,
+          "bgm": 4,
+          "track": 26,
+          "samples": 91906,
+          "loops": 0,
+          "dma_offset": 0,
+          "frame": 170,
+          "game_state": 0,
+          "run_frames": 0
+        },
+        {
+          "video_index": 120,
+          "bgm": 4,
+          "track": 26,
+          "samples": 124824,
+          "loops": 0,
+          "dma_offset": 0,
+          "frame": 230,
+          "game_state": 0,
+          "run_frames": 0
+        },
+        {
+          "video_index": 180,
+          "bgm": 4,
+          "track": 26,
+          "samples": 157741,
+          "loops": 0,
+          "dma_offset": 0,
+          "frame": 290,
+          "game_state": 0,
+          "run_frames": 0
+        },
+        {
+          "video_index": 240,
+          "bgm": 4,
+          "track": 26,
+          "samples": 190659,
+          "loops": 0,
+          "dma_offset": 0,
+          "frame": 350,
+          "game_state": 0,
+          "run_frames": 0
+        },
+        {
+          "video_index": 300,
+          "bgm": 4,
+          "track": 26,
+          "samples": 223576,
+          "loops": 0,
+          "dma_offset": 0,
+          "frame": 410,
+          "game_state": 0,
+          "run_frames": 0
+        },
+        {
+          "video_index": 360,
+          "bgm": 4,
+          "track": 26,
+          "samples": 256494,
+          "loops": 0,
+          "dma_offset": 0,
+          "frame": 470,
+          "game_state": 0,
+          "run_frames": 0
+        },
+        {
+          "video_index": 420,
+          "bgm": 4,
+          "track": 26,
+          "samples": 289411,
+          "loops": 0,
+          "dma_offset": 0,
+          "frame": 530,
+          "game_state": 0,
+          "run_frames": 0
+        },
+        {
+          "video_index": 480,
+          "bgm": 4,
+          "track": 26,
+          "samples": 322329,
+          "loops": 0,
+          "dma_offset": 0,
+          "frame": 590,
+          "game_state": 0,
+          "run_frames": 0
+        },
+        {
+          "video_index": 540,
+          "bgm": 4,
+          "track": 26,
+          "samples": 355246,
+          "loops": 0,
+          "dma_offset": 0,
+          "frame": 650,
+          "game_state": 0,
+          "run_frames": 0
+        },
+        {
+          "video_index": 600,
+          "bgm": 4,
+          "track": 26,
+          "samples": 388164,
+          "loops": 0,
+          "dma_offset": 0,
+          "frame": 710,
+          "game_state": 0,
+          "run_frames": 0
+        },
+        {
+          "video_index": 660,
+          "bgm": 4,
+          "track": 26,
+          "samples": 421081,
+          "loops": 0,
+          "dma_offset": 0,
+          "frame": 770,
+          "game_state": 0,
+          "run_frames": 0
+        },
+        {
+          "video_index": 720,
+          "bgm": 4,
+          "track": 26,
+          "samples": 453999,
+          "loops": 0,
+          "dma_offset": 0,
+          "frame": 830,
+          "game_state": 0,
+          "run_frames": 0
+        },
+        {
+          "video_index": 780,
+          "bgm": 4,
+          "track": 26,
+          "samples": 486916,
+          "loops": 0,
+          "dma_offset": 0,
+          "frame": 890,
+          "game_state": 0,
+          "run_frames": 0
+        },
+        {
+          "video_index": 840,
+          "bgm": 4,
+          "track": 26,
+          "samples": 519834,
+          "loops": 0,
+          "dma_offset": 0,
+          "frame": 950,
+          "game_state": 0,
+          "run_frames": 0
+        },
+        {
+          "video_index": 900,
+          "bgm": 4,
+          "track": 26,
+          "samples": 552751,
+          "loops": 0,
+          "dma_offset": 0,
+          "frame": 1010,
+          "game_state": 0,
+          "run_frames": 0
+        },
+        {
+          "video_index": 960,
+          "bgm": 4,
+          "track": 26,
+          "samples": 585669,
+          "loops": 0,
+          "dma_offset": 0,
+          "frame": 1070,
+          "game_state": 0,
+          "run_frames": 0
+        },
+        {
+          "video_index": 1020,
+          "bgm": 4,
+          "track": 26,
+          "samples": 618586,
+          "loops": 0,
+          "dma_offset": 0,
+          "frame": 1130,
+          "game_state": 0,
+          "run_frames": 0
+        },
+        {
+          "video_index": 1080,
+          "bgm": 4,
+          "track": 26,
+          "samples": 651504,
+          "loops": 0,
+          "dma_offset": 0,
+          "frame": 1190,
+          "game_state": 0,
+          "run_frames": 0
+        },
+        {
+          "video_index": 1140,
+          "bgm": 4,
+          "track": 26,
+          "samples": 684421,
+          "loops": 0,
+          "dma_offset": 0,
+          "frame": 1250,
+          "game_state": 0,
+          "run_frames": 0
+        },
+        {
+          "video_index": 1200,
+          "bgm": 4,
+          "track": 26,
+          "samples": 717339,
+          "loops": 0,
+          "dma_offset": 0,
+          "frame": 1310,
+          "game_state": 0,
+          "run_frames": 0
+        },
+        {
+          "video_index": 1260,
+          "bgm": 4,
+          "track": 26,
+          "samples": 750256,
+          "loops": 0,
+          "dma_offset": 0,
+          "frame": 1370,
+          "game_state": 0,
+          "run_frames": 0
+        },
+        {
+          "video_index": 1320,
+          "bgm": 4,
+          "track": 26,
+          "samples": 783174,
+          "loops": 0,
+          "dma_offset": 0,
+          "frame": 1430,
+          "game_state": 0,
+          "run_frames": 0
+        },
+        {
+          "video_index": 1380,
+          "bgm": 4,
+          "track": 26,
+          "samples": 816091,
+          "loops": 0,
+          "dma_offset": 0,
+          "frame": 1490,
+          "game_state": 0,
+          "run_frames": 0
+        },
+        {
+          "video_index": 1440,
+          "bgm": 4,
+          "track": 26,
+          "samples": 849009,
+          "loops": 0,
+          "dma_offset": 0,
+          "frame": 1550,
+          "game_state": 0,
+          "run_frames": 0
+        },
+        {
+          "video_index": 1500,
+          "bgm": 4,
+          "track": 26,
+          "samples": 881926,
+          "loops": 0,
+          "dma_offset": 0,
+          "frame": 1610,
+          "game_state": 0,
+          "run_frames": 0
+        },
+        {
+          "video_index": 1560,
+          "bgm": 4,
+          "track": 26,
+          "samples": 914844,
+          "loops": 0,
+          "dma_offset": 0,
+          "frame": 1670,
+          "game_state": 0,
+          "run_frames": 0
+        },
+        {
+          "video_index": 1620,
+          "bgm": 4,
+          "track": 26,
+          "samples": 947761,
+          "loops": 0,
+          "dma_offset": 0,
+          "frame": 1730,
+          "game_state": 0,
+          "run_frames": 0
+        },
+        {
+          "video_index": 1680,
+          "bgm": 4,
+          "track": 26,
+          "samples": 980679,
+          "loops": 0,
+          "dma_offset": 0,
+          "frame": 1790,
+          "game_state": 0,
+          "run_frames": 0
+        },
+        {
+          "video_index": 1740,
+          "bgm": 4,
+          "track": 26,
+          "samples": 1013596,
+          "loops": 0,
+          "dma_offset": 0,
+          "frame": 1850,
+          "game_state": 0,
+          "run_frames": 0
+        },
+        {
+          "video_index": 1800,
+          "bgm": 4,
+          "track": 26,
+          "samples": 1046514,
+          "loops": 0,
+          "dma_offset": 0,
+          "frame": 1910,
+          "game_state": 0,
+          "run_frames": 0
+        },
+        {
+          "video_index": 1860,
+          "bgm": 4,
+          "track": 26,
+          "samples": 1079431,
+          "loops": 0,
+          "dma_offset": 0,
+          "frame": 1970,
+          "game_state": 0,
+          "run_frames": 0
+        },
+        {
+          "video_index": 1920,
+          "bgm": 4,
+          "track": 26,
+          "samples": 1112349,
+          "loops": 0,
+          "dma_offset": 0,
+          "frame": 2030,
+          "game_state": 0,
+          "run_frames": 0
+        },
+        {
+          "video_index": 1980,
+          "bgm": 4,
+          "track": 26,
+          "samples": 1145266,
+          "loops": 0,
+          "dma_offset": 0,
+          "frame": 2090,
+          "game_state": 0,
+          "run_frames": 0
+        },
+        {
+          "video_index": 2040,
+          "bgm": 4,
+          "track": 26,
+          "samples": 1178184,
+          "loops": 0,
+          "dma_offset": 0,
+          "frame": 2150,
+          "game_state": 0,
+          "run_frames": 0
+        },
+        {
+          "video_index": 2100,
+          "bgm": 4,
+          "track": 26,
+          "samples": 1211101,
+          "loops": 0,
+          "dma_offset": 0,
+          "frame": 2210,
+          "game_state": 0,
+          "run_frames": 0
+        },
+        {
+          "video_index": 2160,
+          "bgm": 4,
+          "track": 26,
+          "samples": 1244019,
+          "loops": 0,
+          "dma_offset": 0,
+          "frame": 2270,
+          "game_state": 0,
+          "run_frames": 0
+        },
+        {
+          "video_index": 2220,
+          "bgm": 4,
+          "track": 26,
+          "samples": 1276936,
+          "loops": 0,
+          "dma_offset": 0,
+          "frame": 2330,
+          "game_state": 0,
+          "run_frames": 0
+        },
+        {
+          "video_index": 2280,
+          "bgm": 4,
+          "track": 26,
+          "samples": 1309854,
+          "loops": 0,
+          "dma_offset": 0,
+          "frame": 2390,
+          "game_state": 0,
+          "run_frames": 0
+        },
+        {
+          "video_index": 2340,
+          "bgm": 4,
+          "track": 26,
+          "samples": 1342771,
+          "loops": 0,
+          "dma_offset": 0,
+          "frame": 2450,
+          "game_state": 0,
+          "run_frames": 0
+        },
+        {
+          "video_index": 2400,
+          "bgm": 4,
+          "track": 26,
+          "samples": 1375689,
+          "loops": 0,
+          "dma_offset": 0,
+          "frame": 2510,
+          "game_state": 0,
+          "run_frames": 0
+        },
+        {
+          "video_index": 2460,
+          "bgm": 4,
+          "track": 26,
+          "samples": 1408606,
+          "loops": 0,
+          "dma_offset": 0,
+          "frame": 2570,
+          "game_state": 0,
+          "run_frames": 0
+        },
+        {
+          "video_index": 2520,
+          "bgm": 4,
+          "track": 26,
+          "samples": 1441524,
+          "loops": 0,
+          "dma_offset": 0,
+          "frame": 2630,
+          "game_state": 0,
+          "run_frames": 0
+        },
+        {
+          "video_index": 2580,
+          "bgm": 4,
+          "track": 26,
+          "samples": 1474441,
+          "loops": 0,
+          "dma_offset": 0,
+          "frame": 2690,
+          "game_state": 0,
+          "run_frames": 0
+        },
+        {
+          "video_index": 2640,
+          "bgm": 4,
+          "track": 26,
+          "samples": 1507359,
+          "loops": 0,
+          "dma_offset": 0,
+          "frame": 2750,
+          "game_state": 0,
+          "run_frames": 0
+        },
+        {
+          "video_index": 2700,
+          "bgm": 4,
+          "track": 26,
+          "samples": 1540276,
+          "loops": 0,
+          "dma_offset": 0,
+          "frame": 2810,
+          "game_state": 0,
+          "run_frames": 0
+        },
+        {
+          "video_index": 2760,
+          "bgm": 4,
+          "track": 26,
+          "samples": 1573194,
+          "loops": 0,
+          "dma_offset": 0,
+          "frame": 2870,
+          "game_state": 0,
+          "run_frames": 0
+        },
+        {
+          "video_index": 2820,
+          "bgm": 4,
+          "track": 26,
+          "samples": 1606111,
+          "loops": 0,
+          "dma_offset": 0,
+          "frame": 2930,
+          "game_state": 0,
+          "run_frames": 0
+        },
+        {
+          "video_index": 2880,
+          "bgm": 4,
+          "track": 26,
+          "samples": 1639029,
+          "loops": 0,
+          "dma_offset": 0,
+          "frame": 2990,
+          "game_state": 0,
+          "run_frames": 0
+        },
+        {
+          "video_index": 2940,
+          "bgm": 4,
+          "track": 26,
+          "samples": 1671946,
+          "loops": 0,
+          "dma_offset": 0,
+          "frame": 3050,
+          "game_state": 0,
+          "run_frames": 0
+        },
+        {
+          "video_index": 3000,
+          "bgm": 4,
+          "track": 26,
+          "samples": 1704864,
+          "loops": 0,
+          "dma_offset": 0,
+          "frame": 3110,
+          "game_state": 0,
+          "run_frames": 0
+        },
+        {
+          "video_index": 3060,
+          "bgm": 4,
+          "track": 26,
+          "samples": 1737781,
+          "loops": 0,
+          "dma_offset": 0,
+          "frame": 3170,
+          "game_state": 0,
+          "run_frames": 0
+        },
+        {
+          "video_index": 3120,
+          "bgm": 4,
+          "track": 26,
+          "samples": 1770699,
+          "loops": 0,
+          "dma_offset": 0,
+          "frame": 3230,
+          "game_state": 0,
+          "run_frames": 0
+        },
+        {
+          "video_index": 3180,
+          "bgm": 4,
+          "track": 26,
+          "samples": 1803616,
+          "loops": 0,
+          "dma_offset": 0,
+          "frame": 3290,
+          "game_state": 0,
+          "run_frames": 0
+        },
+        {
+          "video_index": 3240,
+          "bgm": 4,
+          "track": 26,
+          "samples": 1836534,
+          "loops": 0,
+          "dma_offset": 0,
+          "frame": 3350,
+          "game_state": 0,
+          "run_frames": 0
+        },
+        {
+          "video_index": 3300,
+          "bgm": 4,
+          "track": 26,
+          "samples": 1869451,
+          "loops": 0,
+          "dma_offset": 0,
+          "frame": 3410,
+          "game_state": 0,
+          "run_frames": 0
+        },
+        {
+          "video_index": 3360,
+          "bgm": 4,
+          "track": 26,
+          "samples": 1902369,
+          "loops": 0,
+          "dma_offset": 0,
+          "frame": 3470,
+          "game_state": 0,
+          "run_frames": 0
+        },
+        {
+          "video_index": 3420,
+          "bgm": 4,
+          "track": 26,
+          "samples": 1935286,
+          "loops": 0,
+          "dma_offset": 0,
+          "frame": 3530,
+          "game_state": 0,
+          "run_frames": 0
+        },
+        {
+          "video_index": 3480,
+          "bgm": 4,
+          "track": 26,
+          "samples": 1968204,
+          "loops": 0,
+          "dma_offset": 0,
+          "frame": 3590,
+          "game_state": 0,
+          "run_frames": 0
+        },
+        {
+          "video_index": 3540,
+          "bgm": 4,
+          "track": 26,
+          "samples": 2001121,
+          "loops": 0,
+          "dma_offset": 0,
+          "frame": 3650,
+          "game_state": 0,
+          "run_frames": 0
+        },
+        {
+          "video_index": 3600,
+          "bgm": 4,
+          "track": 26,
+          "samples": 2034039,
+          "loops": 0,
+          "dma_offset": 0,
+          "frame": 3710,
+          "game_state": 0,
+          "run_frames": 0
+        },
+        {
+          "video_index": 3660,
+          "bgm": 4,
+          "track": 26,
+          "samples": 2066956,
+          "loops": 0,
+          "dma_offset": 0,
+          "frame": 3770,
+          "game_state": 0,
+          "run_frames": 0
+        },
+        {
+          "video_index": 3720,
+          "bgm": 4,
+          "track": 26,
+          "samples": 2099874,
+          "loops": 0,
+          "dma_offset": 0,
+          "frame": 3830,
+          "game_state": 0,
+          "run_frames": 0
+        },
+        {
+          "video_index": 3780,
+          "bgm": 4,
+          "track": 26,
+          "samples": 2132791,
+          "loops": 0,
+          "dma_offset": 0,
+          "frame": 3890,
+          "game_state": 0,
+          "run_frames": 0
+        },
+        {
+          "video_index": 3840,
+          "bgm": 4,
+          "track": 26,
+          "samples": 2165709,
+          "loops": 0,
+          "dma_offset": 0,
+          "frame": 3950,
+          "game_state": 0,
+          "run_frames": 0
+        },
+        {
+          "video_index": 3900,
+          "bgm": 4,
+          "track": 26,
+          "samples": 2198626,
+          "loops": 0,
+          "dma_offset": 0,
+          "frame": 4010,
+          "game_state": 0,
+          "run_frames": 0
+        },
+        {
+          "video_index": 3960,
+          "bgm": 4,
+          "track": 26,
+          "samples": 2231544,
+          "loops": 0,
+          "dma_offset": 0,
+          "frame": 4070,
+          "game_state": 0,
+          "run_frames": 0
+        },
+        {
+          "video_index": 4020,
+          "bgm": 4,
+          "track": 26,
+          "samples": 2264461,
+          "loops": 0,
+          "dma_offset": 0,
+          "frame": 4130,
+          "game_state": 0,
+          "run_frames": 0
+        },
+        {
+          "video_index": 4080,
+          "bgm": 4,
+          "track": 26,
+          "samples": 2297379,
+          "loops": 0,
+          "dma_offset": 0,
+          "frame": 4190,
+          "game_state": 0,
+          "run_frames": 0
+        },
+        {
+          "video_index": 4140,
+          "bgm": 4,
+          "track": 26,
+          "samples": 291604,
+          "loops": 1,
+          "dma_offset": 291604,
+          "frame": 4250,
+          "game_state": 0,
+          "run_frames": 0
+        },
+        {
+          "video_index": 4200,
+          "bgm": 4,
+          "track": 26,
+          "samples": 324520,
+          "loops": 1,
+          "dma_offset": 291604,
+          "frame": 4310,
+          "game_state": 0,
+          "run_frames": 0
+        },
+        {
+          "video_index": 4260,
+          "bgm": 4,
+          "track": 26,
+          "samples": 357438,
+          "loops": 1,
+          "dma_offset": 291604,
+          "frame": 4370,
+          "game_state": 0,
+          "run_frames": 0
+        }
+      ],
+      "boundary": {
+        "frame": 4140,
+        "audio_sample": 3056778,
+        "previous": {
+          "bgm": 4,
+          "track": 26,
+          "samples": 2329748,
+          "loops": 0,
+          "dma_offset": 0,
+          "frame": 4249,
+          "game_state": 0,
+          "run_frames": 0
+        },
+        "current": {
+          "bgm": 4,
+          "track": 26,
+          "samples": 291604,
+          "loops": 1,
+          "dma_offset": 291604,
+          "frame": 4250,
+          "game_state": 0,
+          "run_frames": 0
+        }
+      },
+      "waveform": {
+        "correlation": 0.9873818417971613,
+        "source_offset_44100": 11753,
+        "source_rms": 0.08719971534741763,
+        "observed_rms": 0.06432393762100044
+      },
+      "loop_waveform": {
+        "correlation": 0.9818232033261126,
+        "source_offset_44100": 11391,
+        "source_rms": 0.11903846548055336,
+        "observed_rms": 0.08808176314328735
+      },
+      "preview_sha256": "1a954986fc70968420aaed93bfd1d998fef11dcb24674125a0aea4eb741947c4",
+      "loop_sha256": "5f346c69f9c99efeb4d14d0e89e0d6ad377c35b0e9c403d7d5632462e4ca9696"
+    },
+    {
+      "role": "sewer",
+      "source_track": 1,
+      "source_title": "Undertow Circuit",
+      "initial": {
+        "bgm": 1,
+        "track": 1,
+        "samples": 188220,
+        "loops": 0,
+        "dma_offset": 0,
+        "frame": 4815,
+        "game_state": 1,
+        "run_frames": 342
+      },
+      "final": {
+        "bgm": 1,
+        "track": 1,
+        "samples": 98243,
+        "loops": 1,
+        "dma_offset": 40,
+        "frame": 8235,
+        "game_state": 1,
+        "run_frames": 3762
+      },
+      "video_frames": 3420,
+      "audio_samples": 2525166,
+      "sampled_trace": [
+        {
+          "video_index": 0,
+          "bgm": 1,
+          "track": 1,
+          "samples": 188769,
+          "loops": 0,
+          "dma_offset": 0,
+          "frame": 4816,
+          "game_state": 1,
+          "run_frames": 343
+        },
+        {
+          "video_index": 60,
+          "bgm": 1,
+          "track": 1,
+          "samples": 221686,
+          "loops": 0,
+          "dma_offset": 0,
+          "frame": 4876,
+          "game_state": 1,
+          "run_frames": 403
+        },
+        {
+          "video_index": 120,
+          "bgm": 1,
+          "track": 1,
+          "samples": 254604,
+          "loops": 0,
+          "dma_offset": 0,
+          "frame": 4936,
+          "game_state": 1,
+          "run_frames": 463
+        },
+        {
+          "video_index": 180,
+          "bgm": 1,
+          "track": 1,
+          "samples": 287521,
+          "loops": 0,
+          "dma_offset": 0,
+          "frame": 4996,
+          "game_state": 1,
+          "run_frames": 523
+        },
+        {
+          "video_index": 240,
+          "bgm": 1,
+          "track": 1,
+          "samples": 320439,
+          "loops": 0,
+          "dma_offset": 0,
+          "frame": 5056,
+          "game_state": 1,
+          "run_frames": 583
+        },
+        {
+          "video_index": 300,
+          "bgm": 1,
+          "track": 1,
+          "samples": 353356,
+          "loops": 0,
+          "dma_offset": 0,
+          "frame": 5116,
+          "game_state": 1,
+          "run_frames": 643
+        },
+        {
+          "video_index": 360,
+          "bgm": 1,
+          "track": 1,
+          "samples": 386274,
+          "loops": 0,
+          "dma_offset": 0,
+          "frame": 5176,
+          "game_state": 1,
+          "run_frames": 703
+        },
+        {
+          "video_index": 420,
+          "bgm": 1,
+          "track": 1,
+          "samples": 419191,
+          "loops": 0,
+          "dma_offset": 0,
+          "frame": 5236,
+          "game_state": 1,
+          "run_frames": 763
+        },
+        {
+          "video_index": 480,
+          "bgm": 1,
+          "track": 1,
+          "samples": 452109,
+          "loops": 0,
+          "dma_offset": 0,
+          "frame": 5296,
+          "game_state": 1,
+          "run_frames": 823
+        },
+        {
+          "video_index": 540,
+          "bgm": 1,
+          "track": 1,
+          "samples": 485026,
+          "loops": 0,
+          "dma_offset": 0,
+          "frame": 5356,
+          "game_state": 1,
+          "run_frames": 883
+        },
+        {
+          "video_index": 600,
+          "bgm": 1,
+          "track": 1,
+          "samples": 517944,
+          "loops": 0,
+          "dma_offset": 0,
+          "frame": 5416,
+          "game_state": 1,
+          "run_frames": 943
+        },
+        {
+          "video_index": 660,
+          "bgm": 1,
+          "track": 1,
+          "samples": 550861,
+          "loops": 0,
+          "dma_offset": 0,
+          "frame": 5476,
+          "game_state": 1,
+          "run_frames": 1003
+        },
+        {
+          "video_index": 720,
+          "bgm": 1,
+          "track": 1,
+          "samples": 583779,
+          "loops": 0,
+          "dma_offset": 0,
+          "frame": 5536,
+          "game_state": 1,
+          "run_frames": 1063
+        },
+        {
+          "video_index": 780,
+          "bgm": 1,
+          "track": 1,
+          "samples": 616696,
+          "loops": 0,
+          "dma_offset": 0,
+          "frame": 5596,
+          "game_state": 1,
+          "run_frames": 1123
+        },
+        {
+          "video_index": 840,
+          "bgm": 1,
+          "track": 1,
+          "samples": 649614,
+          "loops": 0,
+          "dma_offset": 0,
+          "frame": 5656,
+          "game_state": 1,
+          "run_frames": 1183
+        },
+        {
+          "video_index": 900,
+          "bgm": 1,
+          "track": 1,
+          "samples": 682531,
+          "loops": 0,
+          "dma_offset": 0,
+          "frame": 5716,
+          "game_state": 1,
+          "run_frames": 1243
+        },
+        {
+          "video_index": 960,
+          "bgm": 1,
+          "track": 1,
+          "samples": 715449,
+          "loops": 0,
+          "dma_offset": 0,
+          "frame": 5776,
+          "game_state": 1,
+          "run_frames": 1303
+        },
+        {
+          "video_index": 1020,
+          "bgm": 1,
+          "track": 1,
+          "samples": 748366,
+          "loops": 0,
+          "dma_offset": 0,
+          "frame": 5836,
+          "game_state": 1,
+          "run_frames": 1363
+        },
+        {
+          "video_index": 1080,
+          "bgm": 1,
+          "track": 1,
+          "samples": 781284,
+          "loops": 0,
+          "dma_offset": 0,
+          "frame": 5896,
+          "game_state": 1,
+          "run_frames": 1423
+        },
+        {
+          "video_index": 1140,
+          "bgm": 1,
+          "track": 1,
+          "samples": 814201,
+          "loops": 0,
+          "dma_offset": 0,
+          "frame": 5956,
+          "game_state": 1,
+          "run_frames": 1483
+        },
+        {
+          "video_index": 1200,
+          "bgm": 1,
+          "track": 1,
+          "samples": 847119,
+          "loops": 0,
+          "dma_offset": 0,
+          "frame": 6016,
+          "game_state": 1,
+          "run_frames": 1543
+        },
+        {
+          "video_index": 1260,
+          "bgm": 1,
+          "track": 1,
+          "samples": 880036,
+          "loops": 0,
+          "dma_offset": 0,
+          "frame": 6076,
+          "game_state": 1,
+          "run_frames": 1603
+        },
+        {
+          "video_index": 1320,
+          "bgm": 1,
+          "track": 1,
+          "samples": 912954,
+          "loops": 0,
+          "dma_offset": 0,
+          "frame": 6136,
+          "game_state": 1,
+          "run_frames": 1663
+        },
+        {
+          "video_index": 1380,
+          "bgm": 1,
+          "track": 1,
+          "samples": 945871,
+          "loops": 0,
+          "dma_offset": 0,
+          "frame": 6196,
+          "game_state": 1,
+          "run_frames": 1723
+        },
+        {
+          "video_index": 1440,
+          "bgm": 1,
+          "track": 1,
+          "samples": 978789,
+          "loops": 0,
+          "dma_offset": 0,
+          "frame": 6256,
+          "game_state": 1,
+          "run_frames": 1783
+        },
+        {
+          "video_index": 1500,
+          "bgm": 1,
+          "track": 1,
+          "samples": 1011706,
+          "loops": 0,
+          "dma_offset": 0,
+          "frame": 6316,
+          "game_state": 1,
+          "run_frames": 1843
+        },
+        {
+          "video_index": 1560,
+          "bgm": 1,
+          "track": 1,
+          "samples": 1044624,
+          "loops": 0,
+          "dma_offset": 0,
+          "frame": 6376,
+          "game_state": 1,
+          "run_frames": 1903
+        },
+        {
+          "video_index": 1620,
+          "bgm": 1,
+          "track": 1,
+          "samples": 1077541,
+          "loops": 0,
+          "dma_offset": 0,
+          "frame": 6436,
+          "game_state": 1,
+          "run_frames": 1963
+        },
+        {
+          "video_index": 1680,
+          "bgm": 1,
+          "track": 1,
+          "samples": 1110459,
+          "loops": 0,
+          "dma_offset": 0,
+          "frame": 6496,
+          "game_state": 1,
+          "run_frames": 2023
+        },
+        {
+          "video_index": 1740,
+          "bgm": 1,
+          "track": 1,
+          "samples": 1143376,
+          "loops": 0,
+          "dma_offset": 0,
+          "frame": 6556,
+          "game_state": 1,
+          "run_frames": 2083
+        },
+        {
+          "video_index": 1800,
+          "bgm": 1,
+          "track": 1,
+          "samples": 1176294,
+          "loops": 0,
+          "dma_offset": 0,
+          "frame": 6616,
+          "game_state": 1,
+          "run_frames": 2143
+        },
+        {
+          "video_index": 1860,
+          "bgm": 1,
+          "track": 1,
+          "samples": 1209211,
+          "loops": 0,
+          "dma_offset": 0,
+          "frame": 6676,
+          "game_state": 1,
+          "run_frames": 2203
+        },
+        {
+          "video_index": 1920,
+          "bgm": 1,
+          "track": 1,
+          "samples": 1242129,
+          "loops": 0,
+          "dma_offset": 0,
+          "frame": 6736,
+          "game_state": 1,
+          "run_frames": 2263
+        },
+        {
+          "video_index": 1980,
+          "bgm": 1,
+          "track": 1,
+          "samples": 1275046,
+          "loops": 0,
+          "dma_offset": 0,
+          "frame": 6796,
+          "game_state": 1,
+          "run_frames": 2323
+        },
+        {
+          "video_index": 2040,
+          "bgm": 1,
+          "track": 1,
+          "samples": 1307964,
+          "loops": 0,
+          "dma_offset": 0,
+          "frame": 6856,
+          "game_state": 1,
+          "run_frames": 2383
+        },
+        {
+          "video_index": 2100,
+          "bgm": 1,
+          "track": 1,
+          "samples": 1340881,
+          "loops": 0,
+          "dma_offset": 0,
+          "frame": 6916,
+          "game_state": 1,
+          "run_frames": 2443
+        },
+        {
+          "video_index": 2160,
+          "bgm": 1,
+          "track": 1,
+          "samples": 1373799,
+          "loops": 0,
+          "dma_offset": 0,
+          "frame": 6976,
+          "game_state": 1,
+          "run_frames": 2503
+        },
+        {
+          "video_index": 2220,
+          "bgm": 1,
+          "track": 1,
+          "samples": 1406716,
+          "loops": 0,
+          "dma_offset": 0,
+          "frame": 7036,
+          "game_state": 1,
+          "run_frames": 2563
+        },
+        {
+          "video_index": 2280,
+          "bgm": 1,
+          "track": 1,
+          "samples": 1439634,
+          "loops": 0,
+          "dma_offset": 0,
+          "frame": 7096,
+          "game_state": 1,
+          "run_frames": 2623
+        },
+        {
+          "video_index": 2340,
+          "bgm": 1,
+          "track": 1,
+          "samples": 1472551,
+          "loops": 0,
+          "dma_offset": 0,
+          "frame": 7156,
+          "game_state": 1,
+          "run_frames": 2683
+        },
+        {
+          "video_index": 2400,
+          "bgm": 1,
+          "track": 1,
+          "samples": 1505469,
+          "loops": 0,
+          "dma_offset": 0,
+          "frame": 7216,
+          "game_state": 1,
+          "run_frames": 2743
+        },
+        {
+          "video_index": 2460,
+          "bgm": 1,
+          "track": 1,
+          "samples": 1538386,
+          "loops": 0,
+          "dma_offset": 0,
+          "frame": 7276,
+          "game_state": 1,
+          "run_frames": 2803
+        },
+        {
+          "video_index": 2520,
+          "bgm": 1,
+          "track": 1,
+          "samples": 1571304,
+          "loops": 0,
+          "dma_offset": 0,
+          "frame": 7336,
+          "game_state": 1,
+          "run_frames": 2863
+        },
+        {
+          "video_index": 2580,
+          "bgm": 1,
+          "track": 1,
+          "samples": 1604221,
+          "loops": 0,
+          "dma_offset": 0,
+          "frame": 7396,
+          "game_state": 1,
+          "run_frames": 2923
+        },
+        {
+          "video_index": 2640,
+          "bgm": 1,
+          "track": 1,
+          "samples": 1637139,
+          "loops": 0,
+          "dma_offset": 0,
+          "frame": 7456,
+          "game_state": 1,
+          "run_frames": 2983
+        },
+        {
+          "video_index": 2700,
+          "bgm": 1,
+          "track": 1,
+          "samples": 1670056,
+          "loops": 0,
+          "dma_offset": 0,
+          "frame": 7516,
+          "game_state": 1,
+          "run_frames": 3043
+        },
+        {
+          "video_index": 2760,
+          "bgm": 1,
+          "track": 1,
+          "samples": 1702974,
+          "loops": 0,
+          "dma_offset": 0,
+          "frame": 7576,
+          "game_state": 1,
+          "run_frames": 3103
+        },
+        {
+          "video_index": 2820,
+          "bgm": 1,
+          "track": 1,
+          "samples": 1735891,
+          "loops": 0,
+          "dma_offset": 0,
+          "frame": 7636,
+          "game_state": 1,
+          "run_frames": 3163
+        },
+        {
+          "video_index": 2880,
+          "bgm": 1,
+          "track": 1,
+          "samples": 1768809,
+          "loops": 0,
+          "dma_offset": 0,
+          "frame": 7696,
+          "game_state": 1,
+          "run_frames": 3223
+        },
+        {
+          "video_index": 2940,
+          "bgm": 1,
+          "track": 1,
+          "samples": 1801726,
+          "loops": 0,
+          "dma_offset": 0,
+          "frame": 7756,
+          "game_state": 1,
+          "run_frames": 3283
+        },
+        {
+          "video_index": 3000,
+          "bgm": 1,
+          "track": 1,
+          "samples": 1834644,
+          "loops": 0,
+          "dma_offset": 0,
+          "frame": 7816,
+          "game_state": 1,
+          "run_frames": 3343
+        },
+        {
+          "video_index": 3060,
+          "bgm": 1,
+          "track": 1,
+          "samples": 1867561,
+          "loops": 0,
+          "dma_offset": 0,
+          "frame": 7876,
+          "game_state": 1,
+          "run_frames": 3403
+        },
+        {
+          "video_index": 3120,
+          "bgm": 1,
+          "track": 1,
+          "samples": 1900479,
+          "loops": 0,
+          "dma_offset": 0,
+          "frame": 7936,
+          "game_state": 1,
+          "run_frames": 3463
+        },
+        {
+          "video_index": 3180,
+          "bgm": 1,
+          "track": 1,
+          "samples": 1933396,
+          "loops": 0,
+          "dma_offset": 0,
+          "frame": 7996,
+          "game_state": 1,
+          "run_frames": 3523
+        },
+        {
+          "video_index": 3240,
+          "bgm": 1,
+          "track": 1,
+          "samples": 40,
+          "loops": 1,
+          "dma_offset": 40,
+          "frame": 8056,
+          "game_state": 1,
+          "run_frames": 3583
+        },
+        {
+          "video_index": 3300,
+          "bgm": 1,
+          "track": 1,
+          "samples": 32956,
+          "loops": 1,
+          "dma_offset": 40,
+          "frame": 8116,
+          "game_state": 1,
+          "run_frames": 3643
+        },
+        {
+          "video_index": 3360,
+          "bgm": 1,
+          "track": 1,
+          "samples": 65874,
+          "loops": 1,
+          "dma_offset": 40,
+          "frame": 8176,
+          "game_state": 1,
+          "run_frames": 3703
+        }
+      ],
+      "boundary": {
+        "frame": 3240,
+        "audio_sample": 2392263,
+        "previous": {
+          "bgm": 1,
+          "track": 1,
+          "samples": 1965765,
+          "loops": 0,
+          "dma_offset": 0,
+          "frame": 8055,
+          "game_state": 1,
+          "run_frames": 3582
+        },
+        "current": {
+          "bgm": 1,
+          "track": 1,
+          "samples": 40,
+          "loops": 1,
+          "dma_offset": 40,
+          "frame": 8056,
+          "game_state": 1,
+          "run_frames": 3583
+        }
+      },
+      "waveform": {
+        "correlation": 0.9775793631964337,
+        "source_offset_44100": 11750,
+        "source_rms": 0.07974110713833463,
+        "observed_rms": 0.05842885056908217
+      },
+      "loop_waveform": {
+        "correlation": 0.9784629490184594,
+        "source_offset_44100": 11066,
+        "source_rms": 0.059664113776365504,
+        "observed_rms": 0.04363250581705575
+      },
+      "preview_sha256": "6ad08e4ebb1e3788dcbd81218487a9419b730ec842b668682cc6db7db6f8be93",
+      "loop_sha256": "39cbf880d56d91cadc6aa7ae2b8a33518d367eea708ac016f256eddbf217748b"
+    },
+    {
+      "role": "forest",
+      "source_track": 2,
+      "source_title": "Verdant Afterimage",
+      "initial": {
+        "bgm": 2,
+        "track": 2,
+        "samples": 143835,
+        "loops": 0,
+        "dma_offset": 0,
+        "frame": 8545,
+        "game_state": 4,
+        "run_frames": 3795
+      },
+      "final": {
+        "bgm": 2,
+        "track": 2,
+        "samples": 98299,
+        "loops": 1,
+        "dma_offset": 96,
+        "frame": 11534,
+        "game_state": 4,
+        "run_frames": 3795
+      },
+      "video_frames": 2989,
+      "audio_samples": 2206937,
+      "sampled_trace": [
+        {
+          "video_index": 0,
+          "bgm": 2,
+          "track": 2,
+          "samples": 144384,
+          "loops": 0,
+          "dma_offset": 0,
+          "frame": 8546,
+          "game_state": 4,
+          "run_frames": 3795
+        },
+        {
+          "video_index": 60,
+          "bgm": 2,
+          "track": 2,
+          "samples": 177301,
+          "loops": 0,
+          "dma_offset": 0,
+          "frame": 8606,
+          "game_state": 4,
+          "run_frames": 3795
+        },
+        {
+          "video_index": 120,
+          "bgm": 2,
+          "track": 2,
+          "samples": 210219,
+          "loops": 0,
+          "dma_offset": 0,
+          "frame": 8666,
+          "game_state": 4,
+          "run_frames": 3795
+        },
+        {
+          "video_index": 180,
+          "bgm": 2,
+          "track": 2,
+          "samples": 243136,
+          "loops": 0,
+          "dma_offset": 0,
+          "frame": 8726,
+          "game_state": 4,
+          "run_frames": 3795
+        },
+        {
+          "video_index": 240,
+          "bgm": 2,
+          "track": 2,
+          "samples": 276054,
+          "loops": 0,
+          "dma_offset": 0,
+          "frame": 8786,
+          "game_state": 4,
+          "run_frames": 3795
+        },
+        {
+          "video_index": 300,
+          "bgm": 2,
+          "track": 2,
+          "samples": 308971,
+          "loops": 0,
+          "dma_offset": 0,
+          "frame": 8846,
+          "game_state": 4,
+          "run_frames": 3795
+        },
+        {
+          "video_index": 360,
+          "bgm": 2,
+          "track": 2,
+          "samples": 341889,
+          "loops": 0,
+          "dma_offset": 0,
+          "frame": 8906,
+          "game_state": 4,
+          "run_frames": 3795
+        },
+        {
+          "video_index": 420,
+          "bgm": 2,
+          "track": 2,
+          "samples": 374806,
+          "loops": 0,
+          "dma_offset": 0,
+          "frame": 8966,
+          "game_state": 4,
+          "run_frames": 3795
+        },
+        {
+          "video_index": 480,
+          "bgm": 2,
+          "track": 2,
+          "samples": 407724,
+          "loops": 0,
+          "dma_offset": 0,
+          "frame": 9026,
+          "game_state": 4,
+          "run_frames": 3795
+        },
+        {
+          "video_index": 540,
+          "bgm": 2,
+          "track": 2,
+          "samples": 440641,
+          "loops": 0,
+          "dma_offset": 0,
+          "frame": 9086,
+          "game_state": 4,
+          "run_frames": 3795
+        },
+        {
+          "video_index": 600,
+          "bgm": 2,
+          "track": 2,
+          "samples": 473559,
+          "loops": 0,
+          "dma_offset": 0,
+          "frame": 9146,
+          "game_state": 4,
+          "run_frames": 3795
+        },
+        {
+          "video_index": 660,
+          "bgm": 2,
+          "track": 2,
+          "samples": 506476,
+          "loops": 0,
+          "dma_offset": 0,
+          "frame": 9206,
+          "game_state": 4,
+          "run_frames": 3795
+        },
+        {
+          "video_index": 720,
+          "bgm": 2,
+          "track": 2,
+          "samples": 539394,
+          "loops": 0,
+          "dma_offset": 0,
+          "frame": 9266,
+          "game_state": 4,
+          "run_frames": 3795
+        },
+        {
+          "video_index": 780,
+          "bgm": 2,
+          "track": 2,
+          "samples": 572311,
+          "loops": 0,
+          "dma_offset": 0,
+          "frame": 9326,
+          "game_state": 4,
+          "run_frames": 3795
+        },
+        {
+          "video_index": 840,
+          "bgm": 2,
+          "track": 2,
+          "samples": 605229,
+          "loops": 0,
+          "dma_offset": 0,
+          "frame": 9386,
+          "game_state": 4,
+          "run_frames": 3795
+        },
+        {
+          "video_index": 900,
+          "bgm": 2,
+          "track": 2,
+          "samples": 638146,
+          "loops": 0,
+          "dma_offset": 0,
+          "frame": 9446,
+          "game_state": 4,
+          "run_frames": 3795
+        },
+        {
+          "video_index": 960,
+          "bgm": 2,
+          "track": 2,
+          "samples": 671064,
+          "loops": 0,
+          "dma_offset": 0,
+          "frame": 9506,
+          "game_state": 4,
+          "run_frames": 3795
+        },
+        {
+          "video_index": 1020,
+          "bgm": 2,
+          "track": 2,
+          "samples": 703981,
+          "loops": 0,
+          "dma_offset": 0,
+          "frame": 9566,
+          "game_state": 4,
+          "run_frames": 3795
+        },
+        {
+          "video_index": 1080,
+          "bgm": 2,
+          "track": 2,
+          "samples": 736899,
+          "loops": 0,
+          "dma_offset": 0,
+          "frame": 9626,
+          "game_state": 4,
+          "run_frames": 3795
+        },
+        {
+          "video_index": 1140,
+          "bgm": 2,
+          "track": 2,
+          "samples": 769816,
+          "loops": 0,
+          "dma_offset": 0,
+          "frame": 9686,
+          "game_state": 4,
+          "run_frames": 3795
+        },
+        {
+          "video_index": 1200,
+          "bgm": 2,
+          "track": 2,
+          "samples": 802734,
+          "loops": 0,
+          "dma_offset": 0,
+          "frame": 9746,
+          "game_state": 4,
+          "run_frames": 3795
+        },
+        {
+          "video_index": 1260,
+          "bgm": 2,
+          "track": 2,
+          "samples": 835651,
+          "loops": 0,
+          "dma_offset": 0,
+          "frame": 9806,
+          "game_state": 4,
+          "run_frames": 3795
+        },
+        {
+          "video_index": 1320,
+          "bgm": 2,
+          "track": 2,
+          "samples": 868569,
+          "loops": 0,
+          "dma_offset": 0,
+          "frame": 9866,
+          "game_state": 4,
+          "run_frames": 3795
+        },
+        {
+          "video_index": 1380,
+          "bgm": 2,
+          "track": 2,
+          "samples": 901486,
+          "loops": 0,
+          "dma_offset": 0,
+          "frame": 9926,
+          "game_state": 4,
+          "run_frames": 3795
+        },
+        {
+          "video_index": 1440,
+          "bgm": 2,
+          "track": 2,
+          "samples": 934404,
+          "loops": 0,
+          "dma_offset": 0,
+          "frame": 9986,
+          "game_state": 4,
+          "run_frames": 3795
+        },
+        {
+          "video_index": 1500,
+          "bgm": 2,
+          "track": 2,
+          "samples": 967321,
+          "loops": 0,
+          "dma_offset": 0,
+          "frame": 10046,
+          "game_state": 4,
+          "run_frames": 3795
+        },
+        {
+          "video_index": 1560,
+          "bgm": 2,
+          "track": 2,
+          "samples": 1000239,
+          "loops": 0,
+          "dma_offset": 0,
+          "frame": 10106,
+          "game_state": 4,
+          "run_frames": 3795
+        },
+        {
+          "video_index": 1620,
+          "bgm": 2,
+          "track": 2,
+          "samples": 1033156,
+          "loops": 0,
+          "dma_offset": 0,
+          "frame": 10166,
+          "game_state": 4,
+          "run_frames": 3795
+        },
+        {
+          "video_index": 1680,
+          "bgm": 2,
+          "track": 2,
+          "samples": 1066074,
+          "loops": 0,
+          "dma_offset": 0,
+          "frame": 10226,
+          "game_state": 4,
+          "run_frames": 3795
+        },
+        {
+          "video_index": 1740,
+          "bgm": 2,
+          "track": 2,
+          "samples": 1098991,
+          "loops": 0,
+          "dma_offset": 0,
+          "frame": 10286,
+          "game_state": 4,
+          "run_frames": 3795
+        },
+        {
+          "video_index": 1800,
+          "bgm": 2,
+          "track": 2,
+          "samples": 1131909,
+          "loops": 0,
+          "dma_offset": 0,
+          "frame": 10346,
+          "game_state": 4,
+          "run_frames": 3795
+        },
+        {
+          "video_index": 1860,
+          "bgm": 2,
+          "track": 2,
+          "samples": 1164826,
+          "loops": 0,
+          "dma_offset": 0,
+          "frame": 10406,
+          "game_state": 4,
+          "run_frames": 3795
+        },
+        {
+          "video_index": 1920,
+          "bgm": 2,
+          "track": 2,
+          "samples": 1197744,
+          "loops": 0,
+          "dma_offset": 0,
+          "frame": 10466,
+          "game_state": 4,
+          "run_frames": 3795
+        },
+        {
+          "video_index": 1980,
+          "bgm": 2,
+          "track": 2,
+          "samples": 1230661,
+          "loops": 0,
+          "dma_offset": 0,
+          "frame": 10526,
+          "game_state": 4,
+          "run_frames": 3795
+        },
+        {
+          "video_index": 2040,
+          "bgm": 2,
+          "track": 2,
+          "samples": 1263579,
+          "loops": 0,
+          "dma_offset": 0,
+          "frame": 10586,
+          "game_state": 4,
+          "run_frames": 3795
+        },
+        {
+          "video_index": 2100,
+          "bgm": 2,
+          "track": 2,
+          "samples": 1296496,
+          "loops": 0,
+          "dma_offset": 0,
+          "frame": 10646,
+          "game_state": 4,
+          "run_frames": 3795
+        },
+        {
+          "video_index": 2160,
+          "bgm": 2,
+          "track": 2,
+          "samples": 1329414,
+          "loops": 0,
+          "dma_offset": 0,
+          "frame": 10706,
+          "game_state": 4,
+          "run_frames": 3795
+        },
+        {
+          "video_index": 2220,
+          "bgm": 2,
+          "track": 2,
+          "samples": 1362331,
+          "loops": 0,
+          "dma_offset": 0,
+          "frame": 10766,
+          "game_state": 4,
+          "run_frames": 3795
+        },
+        {
+          "video_index": 2280,
+          "bgm": 2,
+          "track": 2,
+          "samples": 1395249,
+          "loops": 0,
+          "dma_offset": 0,
+          "frame": 10826,
+          "game_state": 4,
+          "run_frames": 3795
+        },
+        {
+          "video_index": 2340,
+          "bgm": 2,
+          "track": 2,
+          "samples": 1428166,
+          "loops": 0,
+          "dma_offset": 0,
+          "frame": 10886,
+          "game_state": 4,
+          "run_frames": 3795
+        },
+        {
+          "video_index": 2400,
+          "bgm": 2,
+          "track": 2,
+          "samples": 1461084,
+          "loops": 0,
+          "dma_offset": 0,
+          "frame": 10946,
+          "game_state": 4,
+          "run_frames": 3795
+        },
+        {
+          "video_index": 2460,
+          "bgm": 2,
+          "track": 2,
+          "samples": 1494001,
+          "loops": 0,
+          "dma_offset": 0,
+          "frame": 11006,
+          "game_state": 4,
+          "run_frames": 3795
+        },
+        {
+          "video_index": 2520,
+          "bgm": 2,
+          "track": 2,
+          "samples": 1526919,
+          "loops": 0,
+          "dma_offset": 0,
+          "frame": 11066,
+          "game_state": 4,
+          "run_frames": 3795
+        },
+        {
+          "video_index": 2580,
+          "bgm": 2,
+          "track": 2,
+          "samples": 1559836,
+          "loops": 0,
+          "dma_offset": 0,
+          "frame": 11126,
+          "game_state": 4,
+          "run_frames": 3795
+        },
+        {
+          "video_index": 2640,
+          "bgm": 2,
+          "track": 2,
+          "samples": 1592754,
+          "loops": 0,
+          "dma_offset": 0,
+          "frame": 11186,
+          "game_state": 4,
+          "run_frames": 3795
+        },
+        {
+          "video_index": 2700,
+          "bgm": 2,
+          "track": 2,
+          "samples": 1625671,
+          "loops": 0,
+          "dma_offset": 0,
+          "frame": 11246,
+          "game_state": 4,
+          "run_frames": 3795
+        },
+        {
+          "video_index": 2760,
+          "bgm": 2,
+          "track": 2,
+          "samples": 1658589,
+          "loops": 0,
+          "dma_offset": 0,
+          "frame": 11306,
+          "game_state": 4,
+          "run_frames": 3795
+        },
+        {
+          "video_index": 2809,
+          "bgm": 2,
+          "track": 2,
+          "samples": 96,
+          "loops": 1,
+          "dma_offset": 96,
+          "frame": 11355,
+          "game_state": 4,
+          "run_frames": 3795
+        },
+        {
+          "video_index": 2820,
+          "bgm": 2,
+          "track": 2,
+          "samples": 6130,
+          "loops": 1,
+          "dma_offset": 96,
+          "frame": 11366,
+          "game_state": 4,
+          "run_frames": 3795
+        },
+        {
+          "video_index": 2880,
+          "bgm": 2,
+          "track": 2,
+          "samples": 39047,
+          "loops": 1,
+          "dma_offset": 96,
+          "frame": 11426,
+          "game_state": 4,
+          "run_frames": 3795
+        },
+        {
+          "video_index": 2940,
+          "bgm": 2,
+          "track": 2,
+          "samples": 71965,
+          "loops": 1,
+          "dma_offset": 96,
+          "frame": 11486,
+          "game_state": 4,
+          "run_frames": 3795
+        }
+      ],
+      "boundary": {
+        "frame": 2809,
+        "audio_sample": 2074035,
+        "previous": {
+          "bgm": 2,
+          "track": 2,
+          "samples": 1684923,
+          "loops": 0,
+          "dma_offset": 0,
+          "frame": 11354,
+          "game_state": 4,
+          "run_frames": 3795
+        },
+        "current": {
+          "bgm": 2,
+          "track": 2,
+          "samples": 96,
+          "loops": 1,
+          "dma_offset": 96,
+          "frame": 11355,
+          "game_state": 4,
+          "run_frames": 3795
+        }
+      },
+      "waveform": {
+        "correlation": 0.9783455708313694,
+        "source_offset_44100": 11753,
+        "source_rms": 0.08139315881281463,
+        "observed_rms": 0.05949665763834398
+      },
+      "loop_waveform": {
+        "correlation": 0.9748815948008936,
+        "source_offset_44100": 11143,
+        "source_rms": 0.060985171289040734,
+        "observed_rms": 0.044380909523878576
+      },
+      "preview_sha256": "680daf11e2e4b0c1341811b08a0445f2f9c5eee0d0a75b6494aa15daca4dd47c",
+      "loop_sha256": "9242f8dd6f6ef6a93d78bbdb8f043044a06362aa4b149fcee42faa2605dbdda4"
+    },
+    {
+      "role": "boss",
+      "source_track": 3,
+      "source_title": "Heart of Chrome",
+      "initial": {
+        "bgm": 3,
+        "track": 3,
+        "samples": 144426,
+        "loops": 0,
+        "dma_offset": 0,
+        "frame": 11861,
+        "game_state": 4,
+        "run_frames": 3837
+      },
+      "final": {
+        "bgm": 3,
+        "track": 3,
+        "samples": 98339,
+        "loops": 1,
+        "dma_offset": 136,
+        "frame": 14166,
+        "game_state": 4,
+        "run_frames": 3837
+      },
+      "video_frames": 2305,
+      "audio_samples": 1701903,
+      "sampled_trace": [
+        {
+          "video_index": 0,
+          "bgm": 3,
+          "track": 3,
+          "samples": 144975,
+          "loops": 0,
+          "dma_offset": 0,
+          "frame": 11862,
+          "game_state": 4,
+          "run_frames": 3837
+        },
+        {
+          "video_index": 60,
+          "bgm": 3,
+          "track": 3,
+          "samples": 177893,
+          "loops": 0,
+          "dma_offset": 0,
+          "frame": 11922,
+          "game_state": 4,
+          "run_frames": 3837
+        },
+        {
+          "video_index": 120,
+          "bgm": 3,
+          "track": 3,
+          "samples": 210810,
+          "loops": 0,
+          "dma_offset": 0,
+          "frame": 11982,
+          "game_state": 4,
+          "run_frames": 3837
+        },
+        {
+          "video_index": 180,
+          "bgm": 3,
+          "track": 3,
+          "samples": 243728,
+          "loops": 0,
+          "dma_offset": 0,
+          "frame": 12042,
+          "game_state": 4,
+          "run_frames": 3837
+        },
+        {
+          "video_index": 240,
+          "bgm": 3,
+          "track": 3,
+          "samples": 276645,
+          "loops": 0,
+          "dma_offset": 0,
+          "frame": 12102,
+          "game_state": 4,
+          "run_frames": 3837
+        },
+        {
+          "video_index": 300,
+          "bgm": 3,
+          "track": 3,
+          "samples": 309563,
+          "loops": 0,
+          "dma_offset": 0,
+          "frame": 12162,
+          "game_state": 4,
+          "run_frames": 3837
+        },
+        {
+          "video_index": 360,
+          "bgm": 3,
+          "track": 3,
+          "samples": 342480,
+          "loops": 0,
+          "dma_offset": 0,
+          "frame": 12222,
+          "game_state": 4,
+          "run_frames": 3837
+        },
+        {
+          "video_index": 420,
+          "bgm": 3,
+          "track": 3,
+          "samples": 375398,
+          "loops": 0,
+          "dma_offset": 0,
+          "frame": 12282,
+          "game_state": 4,
+          "run_frames": 3837
+        },
+        {
+          "video_index": 480,
+          "bgm": 3,
+          "track": 3,
+          "samples": 408315,
+          "loops": 0,
+          "dma_offset": 0,
+          "frame": 12342,
+          "game_state": 4,
+          "run_frames": 3837
+        },
+        {
+          "video_index": 540,
+          "bgm": 3,
+          "track": 3,
+          "samples": 441233,
+          "loops": 0,
+          "dma_offset": 0,
+          "frame": 12402,
+          "game_state": 4,
+          "run_frames": 3837
+        },
+        {
+          "video_index": 600,
+          "bgm": 3,
+          "track": 3,
+          "samples": 474150,
+          "loops": 0,
+          "dma_offset": 0,
+          "frame": 12462,
+          "game_state": 4,
+          "run_frames": 3837
+        },
+        {
+          "video_index": 660,
+          "bgm": 3,
+          "track": 3,
+          "samples": 507068,
+          "loops": 0,
+          "dma_offset": 0,
+          "frame": 12522,
+          "game_state": 4,
+          "run_frames": 3837
+        },
+        {
+          "video_index": 720,
+          "bgm": 3,
+          "track": 3,
+          "samples": 539985,
+          "loops": 0,
+          "dma_offset": 0,
+          "frame": 12582,
+          "game_state": 4,
+          "run_frames": 3837
+        },
+        {
+          "video_index": 780,
+          "bgm": 3,
+          "track": 3,
+          "samples": 572903,
+          "loops": 0,
+          "dma_offset": 0,
+          "frame": 12642,
+          "game_state": 4,
+          "run_frames": 3837
+        },
+        {
+          "video_index": 840,
+          "bgm": 3,
+          "track": 3,
+          "samples": 605820,
+          "loops": 0,
+          "dma_offset": 0,
+          "frame": 12702,
+          "game_state": 4,
+          "run_frames": 3837
+        },
+        {
+          "video_index": 900,
+          "bgm": 3,
+          "track": 3,
+          "samples": 638738,
+          "loops": 0,
+          "dma_offset": 0,
+          "frame": 12762,
+          "game_state": 4,
+          "run_frames": 3837
+        },
+        {
+          "video_index": 960,
+          "bgm": 3,
+          "track": 3,
+          "samples": 671655,
+          "loops": 0,
+          "dma_offset": 0,
+          "frame": 12822,
+          "game_state": 4,
+          "run_frames": 3837
+        },
+        {
+          "video_index": 1020,
+          "bgm": 3,
+          "track": 3,
+          "samples": 704573,
+          "loops": 0,
+          "dma_offset": 0,
+          "frame": 12882,
+          "game_state": 4,
+          "run_frames": 3837
+        },
+        {
+          "video_index": 1080,
+          "bgm": 3,
+          "track": 3,
+          "samples": 737490,
+          "loops": 0,
+          "dma_offset": 0,
+          "frame": 12942,
+          "game_state": 4,
+          "run_frames": 3837
+        },
+        {
+          "video_index": 1140,
+          "bgm": 3,
+          "track": 3,
+          "samples": 770408,
+          "loops": 0,
+          "dma_offset": 0,
+          "frame": 13002,
+          "game_state": 4,
+          "run_frames": 3837
+        },
+        {
+          "video_index": 1200,
+          "bgm": 3,
+          "track": 3,
+          "samples": 803325,
+          "loops": 0,
+          "dma_offset": 0,
+          "frame": 13062,
+          "game_state": 4,
+          "run_frames": 3837
+        },
+        {
+          "video_index": 1260,
+          "bgm": 3,
+          "track": 3,
+          "samples": 836243,
+          "loops": 0,
+          "dma_offset": 0,
+          "frame": 13122,
+          "game_state": 4,
+          "run_frames": 3837
+        },
+        {
+          "video_index": 1320,
+          "bgm": 3,
+          "track": 3,
+          "samples": 869160,
+          "loops": 0,
+          "dma_offset": 0,
+          "frame": 13182,
+          "game_state": 4,
+          "run_frames": 3837
+        },
+        {
+          "video_index": 1380,
+          "bgm": 3,
+          "track": 3,
+          "samples": 902078,
+          "loops": 0,
+          "dma_offset": 0,
+          "frame": 13242,
+          "game_state": 4,
+          "run_frames": 3837
+        },
+        {
+          "video_index": 1440,
+          "bgm": 3,
+          "track": 3,
+          "samples": 934995,
+          "loops": 0,
+          "dma_offset": 0,
+          "frame": 13302,
+          "game_state": 4,
+          "run_frames": 3837
+        },
+        {
+          "video_index": 1500,
+          "bgm": 3,
+          "track": 3,
+          "samples": 967913,
+          "loops": 0,
+          "dma_offset": 0,
+          "frame": 13362,
+          "game_state": 4,
+          "run_frames": 3837
+        },
+        {
+          "video_index": 1560,
+          "bgm": 3,
+          "track": 3,
+          "samples": 1000830,
+          "loops": 0,
+          "dma_offset": 0,
+          "frame": 13422,
+          "game_state": 4,
+          "run_frames": 3837
+        },
+        {
+          "video_index": 1620,
+          "bgm": 3,
+          "track": 3,
+          "samples": 1033748,
+          "loops": 0,
+          "dma_offset": 0,
+          "frame": 13482,
+          "game_state": 4,
+          "run_frames": 3837
+        },
+        {
+          "video_index": 1680,
+          "bgm": 3,
+          "track": 3,
+          "samples": 1066665,
+          "loops": 0,
+          "dma_offset": 0,
+          "frame": 13542,
+          "game_state": 4,
+          "run_frames": 3837
+        },
+        {
+          "video_index": 1740,
+          "bgm": 3,
+          "track": 3,
+          "samples": 1099583,
+          "loops": 0,
+          "dma_offset": 0,
+          "frame": 13602,
+          "game_state": 4,
+          "run_frames": 3837
+        },
+        {
+          "video_index": 1800,
+          "bgm": 3,
+          "track": 3,
+          "samples": 1132500,
+          "loops": 0,
+          "dma_offset": 0,
+          "frame": 13662,
+          "game_state": 4,
+          "run_frames": 3837
+        },
+        {
+          "video_index": 1860,
+          "bgm": 3,
+          "track": 3,
+          "samples": 1165418,
+          "loops": 0,
+          "dma_offset": 0,
+          "frame": 13722,
+          "game_state": 4,
+          "run_frames": 3837
+        },
+        {
+          "video_index": 1920,
+          "bgm": 3,
+          "track": 3,
+          "samples": 1198335,
+          "loops": 0,
+          "dma_offset": 0,
+          "frame": 13782,
+          "game_state": 4,
+          "run_frames": 3837
+        },
+        {
+          "video_index": 1980,
+          "bgm": 3,
+          "track": 3,
+          "samples": 1231253,
+          "loops": 0,
+          "dma_offset": 0,
+          "frame": 13842,
+          "game_state": 4,
+          "run_frames": 3837
+        },
+        {
+          "video_index": 2040,
+          "bgm": 3,
+          "track": 3,
+          "samples": 1264170,
+          "loops": 0,
+          "dma_offset": 0,
+          "frame": 13902,
+          "game_state": 4,
+          "run_frames": 3837
+        },
+        {
+          "video_index": 2100,
+          "bgm": 3,
+          "track": 3,
+          "samples": 1297088,
+          "loops": 0,
+          "dma_offset": 0,
+          "frame": 13962,
+          "game_state": 4,
+          "run_frames": 3837
+        },
+        {
+          "video_index": 2125,
+          "bgm": 3,
+          "track": 3,
+          "samples": 136,
+          "loops": 1,
+          "dma_offset": 136,
+          "frame": 13987,
+          "game_state": 4,
+          "run_frames": 3837
+        },
+        {
+          "video_index": 2160,
+          "bgm": 3,
+          "track": 3,
+          "samples": 19337,
+          "loops": 1,
+          "dma_offset": 136,
+          "frame": 14022,
+          "game_state": 4,
+          "run_frames": 3837
+        },
+        {
+          "video_index": 2220,
+          "bgm": 3,
+          "track": 3,
+          "samples": 52254,
+          "loops": 1,
+          "dma_offset": 136,
+          "frame": 14082,
+          "game_state": 4,
+          "run_frames": 3837
+        },
+        {
+          "video_index": 2280,
+          "bgm": 3,
+          "track": 3,
+          "samples": 85172,
+          "loops": 1,
+          "dma_offset": 136,
+          "frame": 14142,
+          "game_state": 4,
+          "run_frames": 3837
+        }
+      ],
+      "boundary": {
+        "frame": 2125,
+        "audio_sample": 1569000,
+        "previous": {
+          "bgm": 3,
+          "track": 3,
+          "samples": 1310255,
+          "loops": 0,
+          "dma_offset": 0,
+          "frame": 13986,
+          "game_state": 4,
+          "run_frames": 3837
+        },
+        "current": {
+          "bgm": 3,
+          "track": 3,
+          "samples": 136,
+          "loops": 1,
+          "dma_offset": 136,
+          "frame": 13987,
+          "game_state": 4,
+          "run_frames": 3837
+        }
+      },
+      "waveform": {
+        "correlation": 0.9783647735141882,
+        "source_offset_44100": 11752,
+        "source_rms": 0.10210691609157443,
+        "observed_rms": 0.07467533599997844
+      },
+      "loop_waveform": {
+        "correlation": 0.9770778494981216,
+        "source_offset_44100": 11197,
+        "source_rms": 0.07972427622713579,
+        "observed_rms": 0.05843156142504837
+      },
+      "preview_sha256": "1d798840bddc239ef47dc3884f0db72ba1ab281627d823050a31c3d6ad957cdb",
+      "loop_sha256": "965b688ed45e8d07e24cc4a8a8448037b0da57ac6edfccb159d32468f65a48fa"
+    },
+    {
+      "role": "win",
+      "source_track": 25,
+      "source_title": "Aurora Unbound",
+      "initial": {
+        "bgm": 5,
+        "track": 25,
+        "samples": 236857,
+        "loops": 0,
+        "dma_offset": 0,
+        "frame": 15508,
+        "game_state": 6,
+        "run_frames": 4736
+      },
+      "final": {
+        "bgm": 5,
+        "track": 25,
+        "samples": 98599,
+        "loops": 1,
+        "dma_offset": 396,
+        "frame": 18030,
+        "game_state": 6,
+        "run_frames": 4736
+      },
+      "video_frames": 2522,
+      "audio_samples": 1862126,
+      "sampled_trace": [
+        {
+          "video_index": 0,
+          "bgm": 5,
+          "track": 25,
+          "samples": 237405,
+          "loops": 0,
+          "dma_offset": 0,
+          "frame": 15509,
+          "game_state": 6,
+          "run_frames": 4736
+        },
+        {
+          "video_index": 60,
+          "bgm": 5,
+          "track": 25,
+          "samples": 270323,
+          "loops": 0,
+          "dma_offset": 0,
+          "frame": 15569,
+          "game_state": 6,
+          "run_frames": 4736
+        },
+        {
+          "video_index": 120,
+          "bgm": 5,
+          "track": 25,
+          "samples": 303240,
+          "loops": 0,
+          "dma_offset": 0,
+          "frame": 15629,
+          "game_state": 6,
+          "run_frames": 4736
+        },
+        {
+          "video_index": 180,
+          "bgm": 5,
+          "track": 25,
+          "samples": 336158,
+          "loops": 0,
+          "dma_offset": 0,
+          "frame": 15689,
+          "game_state": 6,
+          "run_frames": 4736
+        },
+        {
+          "video_index": 240,
+          "bgm": 5,
+          "track": 25,
+          "samples": 369075,
+          "loops": 0,
+          "dma_offset": 0,
+          "frame": 15749,
+          "game_state": 6,
+          "run_frames": 4736
+        },
+        {
+          "video_index": 300,
+          "bgm": 5,
+          "track": 25,
+          "samples": 401993,
+          "loops": 0,
+          "dma_offset": 0,
+          "frame": 15809,
+          "game_state": 6,
+          "run_frames": 4736
+        },
+        {
+          "video_index": 360,
+          "bgm": 5,
+          "track": 25,
+          "samples": 434910,
+          "loops": 0,
+          "dma_offset": 0,
+          "frame": 15869,
+          "game_state": 6,
+          "run_frames": 4736
+        },
+        {
+          "video_index": 420,
+          "bgm": 5,
+          "track": 25,
+          "samples": 467828,
+          "loops": 0,
+          "dma_offset": 0,
+          "frame": 15929,
+          "game_state": 6,
+          "run_frames": 4736
+        },
+        {
+          "video_index": 480,
+          "bgm": 5,
+          "track": 25,
+          "samples": 500745,
+          "loops": 0,
+          "dma_offset": 0,
+          "frame": 15989,
+          "game_state": 6,
+          "run_frames": 4736
+        },
+        {
+          "video_index": 540,
+          "bgm": 5,
+          "track": 25,
+          "samples": 533663,
+          "loops": 0,
+          "dma_offset": 0,
+          "frame": 16049,
+          "game_state": 6,
+          "run_frames": 4736
+        },
+        {
+          "video_index": 600,
+          "bgm": 5,
+          "track": 25,
+          "samples": 566580,
+          "loops": 0,
+          "dma_offset": 0,
+          "frame": 16109,
+          "game_state": 6,
+          "run_frames": 4736
+        },
+        {
+          "video_index": 660,
+          "bgm": 5,
+          "track": 25,
+          "samples": 599498,
+          "loops": 0,
+          "dma_offset": 0,
+          "frame": 16169,
+          "game_state": 6,
+          "run_frames": 4736
+        },
+        {
+          "video_index": 720,
+          "bgm": 5,
+          "track": 25,
+          "samples": 632415,
+          "loops": 0,
+          "dma_offset": 0,
+          "frame": 16229,
+          "game_state": 6,
+          "run_frames": 4736
+        },
+        {
+          "video_index": 780,
+          "bgm": 5,
+          "track": 25,
+          "samples": 665333,
+          "loops": 0,
+          "dma_offset": 0,
+          "frame": 16289,
+          "game_state": 6,
+          "run_frames": 4736
+        },
+        {
+          "video_index": 840,
+          "bgm": 5,
+          "track": 25,
+          "samples": 698250,
+          "loops": 0,
+          "dma_offset": 0,
+          "frame": 16349,
+          "game_state": 6,
+          "run_frames": 4736
+        },
+        {
+          "video_index": 900,
+          "bgm": 5,
+          "track": 25,
+          "samples": 731168,
+          "loops": 0,
+          "dma_offset": 0,
+          "frame": 16409,
+          "game_state": 6,
+          "run_frames": 4736
+        },
+        {
+          "video_index": 960,
+          "bgm": 5,
+          "track": 25,
+          "samples": 764085,
+          "loops": 0,
+          "dma_offset": 0,
+          "frame": 16469,
+          "game_state": 6,
+          "run_frames": 4736
+        },
+        {
+          "video_index": 1020,
+          "bgm": 5,
+          "track": 25,
+          "samples": 797003,
+          "loops": 0,
+          "dma_offset": 0,
+          "frame": 16529,
+          "game_state": 6,
+          "run_frames": 4736
+        },
+        {
+          "video_index": 1080,
+          "bgm": 5,
+          "track": 25,
+          "samples": 829920,
+          "loops": 0,
+          "dma_offset": 0,
+          "frame": 16589,
+          "game_state": 6,
+          "run_frames": 4736
+        },
+        {
+          "video_index": 1140,
+          "bgm": 5,
+          "track": 25,
+          "samples": 862838,
+          "loops": 0,
+          "dma_offset": 0,
+          "frame": 16649,
+          "game_state": 6,
+          "run_frames": 4736
+        },
+        {
+          "video_index": 1200,
+          "bgm": 5,
+          "track": 25,
+          "samples": 895755,
+          "loops": 0,
+          "dma_offset": 0,
+          "frame": 16709,
+          "game_state": 6,
+          "run_frames": 4736
+        },
+        {
+          "video_index": 1260,
+          "bgm": 5,
+          "track": 25,
+          "samples": 928673,
+          "loops": 0,
+          "dma_offset": 0,
+          "frame": 16769,
+          "game_state": 6,
+          "run_frames": 4736
+        },
+        {
+          "video_index": 1320,
+          "bgm": 5,
+          "track": 25,
+          "samples": 961590,
+          "loops": 0,
+          "dma_offset": 0,
+          "frame": 16829,
+          "game_state": 6,
+          "run_frames": 4736
+        },
+        {
+          "video_index": 1380,
+          "bgm": 5,
+          "track": 25,
+          "samples": 994508,
+          "loops": 0,
+          "dma_offset": 0,
+          "frame": 16889,
+          "game_state": 6,
+          "run_frames": 4736
+        },
+        {
+          "video_index": 1440,
+          "bgm": 5,
+          "track": 25,
+          "samples": 1027425,
+          "loops": 0,
+          "dma_offset": 0,
+          "frame": 16949,
+          "game_state": 6,
+          "run_frames": 4736
+        },
+        {
+          "video_index": 1500,
+          "bgm": 5,
+          "track": 25,
+          "samples": 1060343,
+          "loops": 0,
+          "dma_offset": 0,
+          "frame": 17009,
+          "game_state": 6,
+          "run_frames": 4736
+        },
+        {
+          "video_index": 1560,
+          "bgm": 5,
+          "track": 25,
+          "samples": 1093260,
+          "loops": 0,
+          "dma_offset": 0,
+          "frame": 17069,
+          "game_state": 6,
+          "run_frames": 4736
+        },
+        {
+          "video_index": 1620,
+          "bgm": 5,
+          "track": 25,
+          "samples": 1126178,
+          "loops": 0,
+          "dma_offset": 0,
+          "frame": 17129,
+          "game_state": 6,
+          "run_frames": 4736
+        },
+        {
+          "video_index": 1680,
+          "bgm": 5,
+          "track": 25,
+          "samples": 1159095,
+          "loops": 0,
+          "dma_offset": 0,
+          "frame": 17189,
+          "game_state": 6,
+          "run_frames": 4736
+        },
+        {
+          "video_index": 1740,
+          "bgm": 5,
+          "track": 25,
+          "samples": 1192013,
+          "loops": 0,
+          "dma_offset": 0,
+          "frame": 17249,
+          "game_state": 6,
+          "run_frames": 4736
+        },
+        {
+          "video_index": 1800,
+          "bgm": 5,
+          "track": 25,
+          "samples": 1224930,
+          "loops": 0,
+          "dma_offset": 0,
+          "frame": 17309,
+          "game_state": 6,
+          "run_frames": 4736
+        },
+        {
+          "video_index": 1860,
+          "bgm": 5,
+          "track": 25,
+          "samples": 1257848,
+          "loops": 0,
+          "dma_offset": 0,
+          "frame": 17369,
+          "game_state": 6,
+          "run_frames": 4736
+        },
+        {
+          "video_index": 1920,
+          "bgm": 5,
+          "track": 25,
+          "samples": 1290765,
+          "loops": 0,
+          "dma_offset": 0,
+          "frame": 17429,
+          "game_state": 6,
+          "run_frames": 4736
+        },
+        {
+          "video_index": 1980,
+          "bgm": 5,
+          "track": 25,
+          "samples": 1323683,
+          "loops": 0,
+          "dma_offset": 0,
+          "frame": 17489,
+          "game_state": 6,
+          "run_frames": 4736
+        },
+        {
+          "video_index": 2040,
+          "bgm": 5,
+          "track": 25,
+          "samples": 1356600,
+          "loops": 0,
+          "dma_offset": 0,
+          "frame": 17549,
+          "game_state": 6,
+          "run_frames": 4736
+        },
+        {
+          "video_index": 2100,
+          "bgm": 5,
+          "track": 25,
+          "samples": 1389518,
+          "loops": 0,
+          "dma_offset": 0,
+          "frame": 17609,
+          "game_state": 6,
+          "run_frames": 4736
+        },
+        {
+          "video_index": 2160,
+          "bgm": 5,
+          "track": 25,
+          "samples": 1422435,
+          "loops": 0,
+          "dma_offset": 0,
+          "frame": 17669,
+          "game_state": 6,
+          "run_frames": 4736
+        },
+        {
+          "video_index": 2220,
+          "bgm": 5,
+          "track": 25,
+          "samples": 1455353,
+          "loops": 0,
+          "dma_offset": 0,
+          "frame": 17729,
+          "game_state": 6,
+          "run_frames": 4736
+        },
+        {
+          "video_index": 2280,
+          "bgm": 5,
+          "track": 25,
+          "samples": 1488270,
+          "loops": 0,
+          "dma_offset": 0,
+          "frame": 17789,
+          "game_state": 6,
+          "run_frames": 4736
+        },
+        {
+          "video_index": 2340,
+          "bgm": 5,
+          "track": 25,
+          "samples": 1521188,
+          "loops": 0,
+          "dma_offset": 0,
+          "frame": 17849,
+          "game_state": 6,
+          "run_frames": 4736
+        },
+        {
+          "video_index": 2342,
+          "bgm": 5,
+          "track": 25,
+          "samples": 396,
+          "loops": 1,
+          "dma_offset": 396,
+          "frame": 17851,
+          "game_state": 6,
+          "run_frames": 4736
+        },
+        {
+          "video_index": 2400,
+          "bgm": 5,
+          "track": 25,
+          "samples": 32215,
+          "loops": 1,
+          "dma_offset": 396,
+          "frame": 17909,
+          "game_state": 6,
+          "run_frames": 4736
+        },
+        {
+          "video_index": 2460,
+          "bgm": 5,
+          "track": 25,
+          "samples": 65133,
+          "loops": 1,
+          "dma_offset": 396,
+          "frame": 17969,
+          "game_state": 6,
+          "run_frames": 4736
+        },
+        {
+          "video_index": 2520,
+          "bgm": 5,
+          "track": 25,
+          "samples": 98050,
+          "loops": 1,
+          "dma_offset": 396,
+          "frame": 18029,
+          "game_state": 6,
+          "run_frames": 4736
+        }
+      ],
+      "boundary": {
+        "frame": 2342,
+        "audio_sample": 1729223,
+        "previous": {
+          "bgm": 5,
+          "track": 25,
+          "samples": 1521736,
+          "loops": 0,
+          "dma_offset": 0,
+          "frame": 17850,
+          "game_state": 6,
+          "run_frames": 4736
+        },
+        "current": {
+          "bgm": 5,
+          "track": 25,
+          "samples": 396,
+          "loops": 1,
+          "dma_offset": 396,
+          "frame": 17851,
+          "game_state": 6,
+          "run_frames": 4736
+        }
+      },
+      "waveform": {
+        "correlation": 0.978020521360665,
+        "source_offset_44100": 11749,
+        "source_rms": 0.07078662704379443,
+        "observed_rms": 0.05184472824910758
+      },
+      "loop_waveform": {
+        "correlation": 0.9781775552637051,
+        "source_offset_44100": 11548,
+        "source_rms": 0.06668391588434776,
+        "observed_rms": 0.04894038027057792
+      },
+      "preview_sha256": "ca61ccc6d02818c4de7c9b9b34c9aac2991cdf5c812201d98fd02947d2f4efb1",
+      "loop_sha256": "43fb1b703fd008eb175a0691131adf65ecfa26fd3f732aafcc35b929a90c2635"
+    }
+  ],
+  "error": null,
+  "media": [
+    {
+      "file": "boss-context.png",
+      "sha256": "9793a08a2af298966fff297173f455b965d882e1758032488d3af57c85c0337f",
+      "bytes": 3969
+    },
+    {
+      "file": "boss-loop.wav",
+      "sha256": "965b688ed45e8d07e24cc4a8a8448037b0da57ac6edfccb159d32468f65a48fa",
+      "bytes": 352844
+    },
+    {
+      "file": "boss-preview.wav",
+      "sha256": "1d798840bddc239ef47dc3884f0db72ba1ab281627d823050a31c3d6ad957cdb",
+      "bytes": 2116844
+    },
+    {
+      "file": "forest-context.png",
+      "sha256": "9793a08a2af298966fff297173f455b965d882e1758032488d3af57c85c0337f",
+      "bytes": 3969
+    },
+    {
+      "file": "forest-loop.wav",
+      "sha256": "9242f8dd6f6ef6a93d78bbdb8f043044a06362aa4b149fcee42faa2605dbdda4",
+      "bytes": 352844
+    },
+    {
+      "file": "forest-preview.wav",
+      "sha256": "680daf11e2e4b0c1341811b08a0445f2f9c5eee0d0a75b6494aa15daca4dd47c",
+      "bytes": 2116844
+    },
+    {
+      "file": "sewer-context.png",
+      "sha256": "cd5b3a61ba7fa46042aa2662b1c51f5ad66fdb4fe66deb16b66b0c99546f8787",
+      "bytes": 5152
+    },
+    {
+      "file": "sewer-loop.wav",
+      "sha256": "39cbf880d56d91cadc6aa7ae2b8a33518d367eea708ac016f256eddbf217748b",
+      "bytes": 352844
+    },
+    {
+      "file": "sewer-preview.wav",
+      "sha256": "6ad08e4ebb1e3788dcbd81218487a9419b730ec842b668682cc6db7db6f8be93",
+      "bytes": 2116844
+    },
+    {
+      "file": "title-context.png",
+      "sha256": "bde259155cb705d7b117f0ef9607958762e19f3a5efcd15fc96ae286f3965e32",
+      "bytes": 7307
+    },
+    {
+      "file": "title-loop.wav",
+      "sha256": "5f346c69f9c99efeb4d14d0e89e0d6ad377c35b0e9c403d7d5632462e4ca9696",
+      "bytes": 352844
+    },
+    {
+      "file": "title-preview.wav",
+      "sha256": "1a954986fc70968420aaed93bfd1d998fef11dcb24674125a0aea4eb741947c4",
+      "bytes": 2116844
+    },
+    {
+      "file": "win-context.png",
+      "sha256": "d350d9dab281b9fba615d3eb9dfcd81b5feea64e7359762281121313731561ca",
+      "bytes": 2329
+    },
+    {
+      "file": "win-loop.wav",
+      "sha256": "43fb1b703fd008eb175a0691131adf65ecfa26fd3f732aafcc35b929a90c2635",
+      "bytes": 352844
+    },
+    {
+      "file": "win-preview.wav",
+      "sha256": "ca61ccc6d02818c4de7c9b9b34c9aac2991cdf5c812201d98fd02947d2f4efb1",
+      "bytes": 2116844
+    }
+  ],
+  "original_report_sha256": "054322a85620385114ec354d3f19d95540cd004845445e5e1a099c5276936536",
+  "original_report_archive_path": "music/report.json",
+  "raw_trace_archive": "../../downloads/arcade-journal-1527dd8/native-evidence.zip"
+}
