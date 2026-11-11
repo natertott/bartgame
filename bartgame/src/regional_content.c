@@ -17,9 +17,11 @@
 
 RegionalContentSpots gRegionalSpots EWRAM_BSS;
 RegionalContentDiscovery gRegionalDiscovery[RC_ROOMS] EWRAM_BSS;
+u8 gRegionalQuestArea EWRAM_BSS;
 static RegionalContentPlan sPlan[RC_ROOMS] EWRAM_BSS;
 static u32 sPlanSeed[3];
 static u8 sPlanReady,sArea,sCell;
+static u8 sPlanQuestArea;
 static u32 sReach[ROOM_MAX_H] EWRAM_BSS;
 static u32 sReserved[ROOM_MAX_H] EWRAM_BSS;
 static u32 sCore[ROOM_MAX_H] EWRAM_BSS;
@@ -34,6 +36,8 @@ static RegionalContentRect sRects[4];
 static Spot sAdmittedSpawns[24] EWRAM_BSS;
 static u8 sSpawnTerrace[24] EWRAM_BSS;
 static u8 sSpawnCount;
+static u8 sProbing;
+static bool8 board_fits(int cell);
 
 int regional_content_index(int area,int cell) {
     if(cell<0||cell>=25)return -1;
@@ -57,22 +61,66 @@ static int choose_cell(int region,int excluded0,int excluded1,u32 salt,bool8 ear
     }
     return chosen;
 }
-static int quest_cell(int kind) {
-    int cell,chosen=-1;u32 best=0;
-    if(kind!=HQ_BLOCKS)return choose_cell(0,-1,-1,0x51554553u,TRUE);
-    /* Broad fields are preferable for the certified5x5 board plus its dry
-       walking ring. The physical fit is still checked when placed. */
-    for(cell=0;cell<25;cell++)if(ordinary_cell(0,cell)) {
-        int broad=gWorld.cells[cell].arch==ARCH_GLADE||gWorld.cells[cell].arch==ARCH_ARENA;
-        u32 score=(broad?0x40000000u:0)+(3-MIN(3,gWorld.cells[cell].stage))*0x10000000u+
-            (hash32(gGame.seed,0x51554553u+cell*131)&0x0fffffffu);
-        if(chosen<0||score>best){chosen=cell;best=score;}
+static int early_cream_quest_cell(void) {
+    u8 seen[50],queue[50];int head=0,tail=0,n,i,chosen=-1;u32 best=0;
+    if(gCreamWorld.entry_node>=50||gCreamWorld.goal_node>=50||gCreamWorld.entry_node==gCreamWorld.goal_node)return -1;
+    memset(seen,0,sizeof(seen));seen[gCreamWorld.entry_node]=1;queue[tail++]=gCreamWorld.entry_node;
+    while(head<tail) {
+        n=queue[head++];
+        for(i=0;i<cream_edge_count(n);i++) {
+            const CreamEdge* e=cream_edge(n,i);
+            if(!e->require&&e->target<50&&!seen[e->target]){seen[e->target]=1;queue[tail++]=e->target;}
+        }
+    }
+    for(n=0;n<25;n++)if(ordinary_cell(1,n)&&seen[n*2]) {
+        int bits=gCreamWorld.content[n*2]&(CC_CONTENT_CHEST|CC_CONTENT_NPC|CC_CONTENT_HEAL|CC_CONTENT_CACHE|CC_CONTENT_MISSION),count=0;
+        u32 score;
+        for(i=0;i<8;i++)count+=(bits>>i)&1;
+        score=(5-count)*0x10000000u+(hash32(gGame.seed,0x51554543u+n*131)&0x0fffffffu);
+        if(chosen<0||score>best){chosen=n;best=score;}
     }
     return chosen;
 }
-static int red_fusion_cell(void) {
+static u32 initial_forest_rooms(void) {
+    u32 seen=1u<<gWorld.entry;u8 queue[25];int head=0,tail=0,side;
+    queue[tail++]=gWorld.entry;
+    while(head<tail) {
+        int from=queue[head++];
+        for(side=0;side<4;side++) {
+            int next=cell_neighbor(from,side),gate=gWorld.cells[from].gate[side],i;bool8 trial=FALSE;
+            if(next<0||(seen&(1u<<next))||(gate!=GATE_OPEN&&gate!=GATE_THORN&&gate!=GATE_EXIT))continue;
+            for(i=0;i<3;i++)if((from==gWorld.gate_cell[i]&&side==gWorld.gate_side[i])||
+               (next==gWorld.gate_cell[i]&&((side+2)&3)==gWorld.gate_side[i]))trial=TRUE;
+            if(!trial){seen|=1u<<next;queue[tail++]=next;}
+        }
+    }
+    return seen;
+}
+static int quest_cell(int kind,int region) {
+    int cell,chosen=-1,pass;u32 best=0,eligible;
+    if(region)return early_cream_quest_cell();
+    eligible=initial_forest_rooms();
+    /* A stage-zero label can still sit behind a small-key gate. Use the
+       immutable initial graph, then certify the actual board, giver and
+       entrance together on the generated seed geometry before dealing it. */
+    for(pass=0;pass<25;pass++) {
+        chosen=-1;best=0;
+        for(cell=0;cell<25;cell++)if(ordinary_cell(0,cell)&&(eligible&(1u<<cell))) {
+            u32 score=hash32(gGame.seed,0x51554553u+cell*131)&0x0fffffffu;
+            if(kind==HQ_BLOCKS) {
+                int broad=gWorld.cells[cell].arch==ARCH_GLADE||gWorld.cells[cell].arch==ARCH_ARENA;
+                score+=(broad?0x40000000u:0)+(3-MIN(3,gWorld.cells[cell].stage))*0x10000000u;
+            }
+            if(chosen<0||score>best){chosen=cell;best=score;}
+        }
+        if(chosen<0||kind!=HQ_BLOCKS||board_fits(chosen))return chosen;
+        eligible&=~(1u<<chosen);
+    }
+    return -1;
+}
+static int red_fusion_cell(int excluded) {
     int cell,chosen=-1;u32 best=0;
-    for(cell=0;cell<25;cell++)if(ordinary_cell(1,cell)) {
+    for(cell=0;cell<25;cell++)if(ordinary_cell(1,cell)&&cell!=excluded) {
         int bits=gCreamWorld.content[cell*2]&(CC_CONTENT_CHEST|CC_CONTENT_NPC|CC_CONTENT_HEAL|CC_CONTENT_CACHE|CC_CONTENT_MISSION);
         int count=0,i;u32 score;
         for(i=0;i<8;i++)count+=(bits>>i)&1;
@@ -89,7 +137,7 @@ static void build_plan(void) {
     static const u8 base[]={HS_ITEM,HS_MINIBOSS,HS_NPC,HS_WAVES,HS_POTS,HS_FAIRY,
         HS_MEMORY_SHOW,HS_MEMORY_INPUT,HS_SWITCHES,HS_BLOCK_TEMPLATE,HS_BLOCK_MAZE,
         HS_TORCHES,HS_CLEANUP,HS_SURVIVE,HS_PORTAL,HS_POCKET,HS_BOSS,HS_GOLD_GATE};
-    int region,cell,i,j,quest,green,blue,red,wave[2];
+    int region,cell,i,j,quest,quest_region,green,blue,red,wave[2];
     u32 offset=hash32(gGame.seed,0x52454749u)%46;
     memset(sPlan,RC_NONE,sizeof(sPlan));
     for(region=0;region<2;region++) {
@@ -132,11 +180,12 @@ static void build_plan(void) {
     }
     /* A single side quest is selected at run start. Ordinary givers prefer
        the pre-tool Forest; a block giver prefers a broad verified field. */
-    i=HQ_POT+hash32(gGame.seed,0x51554537u)%7;quest=quest_cell(i);
-    if(quest>=0)sPlan[quest].quest_kind=i;
-    green=choose_cell(0,quest,-1,0x46555330u,TRUE);
-    blue=choose_cell(0,quest,green,0x46555331u,FALSE);
-    red=red_fusion_cell();
+    i=HQ_POT+hash32(gGame.seed,0x51554537u)%7;quest_region=gRegionalQuestArea==AREA_CREAM;
+    quest=quest_cell(i,quest_region);
+    if(quest>=0)sPlan[quest_region*25+quest].quest_kind=i;
+    green=choose_cell(0,quest_region?-1:quest,-1,0x46555330u,TRUE);
+    blue=choose_cell(0,quest_region?-1:quest,green,0x46555331u,FALSE);
+    red=red_fusion_cell(quest_region?quest:-1);
     if(green>=0)sPlan[green].fusion_color=0;
     if(blue>=0)sPlan[blue].fusion_color=1;
     if(red>=0)sPlan[25+red].fusion_color=2;
@@ -171,20 +220,20 @@ static void build_plan(void) {
     }
     for(i=0;i<RC_ROOMS;i++) {
         RegionalContentPlan* p=&sPlan[i];
-        if(region_area(i/25)==AREA_CREAM&&(p->has_wave||p->fusion_color!=RC_NONE)) {
+        if(region_area(i/25)==AREA_CREAM&&(p->has_wave||p->fusion_color!=RC_NONE||p->quest_kind)) {
             p->terrace=CC_LOWER;p->stage=gCreamWorld.stage[p->cell*2];
         }
         if(p->interior_site!=RC_NONE&&!p->quest_kind&&p->fusion_color==RC_NONE&&!p->has_wave&&p->traversal_variant==RC_NONE&&
            (hash32(gGame.seed,i+0x4d454348u)&1)==0)
             p->field_mechanism_variant=hash32(gGame.seed,i+0x4649454cu)%4;
     }
-    sPlanSeed[0]=gGame.seed;sPlanSeed[1]=gWorld.seed;sPlanSeed[2]=gCreamWorld.seed;sPlanReady=1;
+    sPlanSeed[0]=gGame.seed;sPlanSeed[1]=gWorld.seed;sPlanSeed[2]=gCreamWorld.seed;sPlanQuestArea=gRegionalQuestArea;sPlanReady=1;
 }
 static bool8 ensure_plan(void) {
     if(gWorld.entry>=25||gWorld.goal>=25||gWorld.entry==gWorld.goal||
        gCreamWorld.entry_node>=50||gCreamWorld.goal_node>=50||
        cream_cell(gCreamWorld.entry_node)==cream_cell(gCreamWorld.goal_node))return FALSE;
-    if(!sPlanReady||sPlanSeed[0]!=gGame.seed||sPlanSeed[1]!=gWorld.seed||sPlanSeed[2]!=gCreamWorld.seed)build_plan();
+    if(!sPlanReady||sPlanSeed[0]!=gGame.seed||sPlanSeed[1]!=gWorld.seed||sPlanSeed[2]!=gCreamWorld.seed||sPlanQuestArea!=gRegionalQuestArea)build_plan();
     return TRUE;
 }
 void regional_content_clear(void) {
@@ -195,6 +244,9 @@ void regional_content_clear(void) {
     sRectCount=0;sArea=sCell=RC_NONE;
 }
 void regional_content_new_run(void) {
+    int kind=HQ_POT+hash32(gGame.seed,0x51554537u)%7;
+    gRegionalQuestArea=AREA_FOREST;
+    if(kind!=HQ_BLOCKS&&(hash32(gGame.seed,0x51524547u)&1)&&handoff_region_unlocked(AREA_CREAM)&&early_cream_quest_cell()>=0)gRegionalQuestArea=AREA_CREAM;
     sPlanReady=0;memset(gRegionalDiscovery,0,sizeof(gRegionalDiscovery));regional_content_clear();
 }
 bool8 regional_content_get(int area,int cell,RegionalContentPlan* out) {
@@ -214,42 +266,50 @@ static bool8 forest_passable(int cell,int side) {
     if(gate==GATE_THORN)return (gPl.items&ITEM_SWORD)!=0;
     return TRUE;
 }
-bool8 regional_content_reachable(int area,int cell) {
-    RegionalContentPlan p;u8 seen[50],queue[50];int head=0,tail=0,i,n;
-    if(!regional_content_get(area,cell,&p))return FALSE;
-    memset(seen,0,sizeof(seen));
-    if(area==AREA_FOREST) {
-        u8 price[25];int changed=1,passes;
-        memset(price,255,sizeof(price));price[gWorld.entry]=0;
-        /* Count each still-locked key door on the cheapest route instead of
-           treating one held key as permission to pass arbitrarily many. */
-        for(passes=0;passes<25&&changed;passes++) {
-            changed=0;
-            for(n=0;n<25;n++)if(price[n]!=255)for(i=0;i<4;i++) {
-                int next=cell_neighbor(n,i),cost;
-                if(next<0||!forest_passable(n,i))continue;
-                cost=price[n]+(gWorld.cells[n].gate[i]==GATE_LOCK&&!world_gate_open(n,i));
-                if(cost<price[next]){price[next]=cost;changed=1;}
-            }
+void regional_content_reach_masks(u32 out[2]) {
+    u8 seen[50],queue[50],price[25];int head=0,tail=0,i,n,step;u8 tokens;
+    if(!out)return;
+    out[0]=out[1]=0;
+    if(!ensure_plan())return;
+    memset(seen,0,sizeof(seen));memset(price,255,sizeof(price));price[gWorld.entry]=0;
+    /* Twenty-five-node Dijkstra counts unopened key doors once per search.
+       Other barriers use the same live item and earned-trial predicates as
+       actual walking; no reward or switch is assumed collected en route. */
+    for(step=0;step<25;step++) {
+        int chosen=-1,best=255;
+        for(n=0;n<25;n++)if(!seen[n]&&price[n]<best){chosen=n;best=price[n];}
+        if(chosen<0||best>gPl.keys)break;
+        seen[chosen]=1;out[0]|=1u<<chosen;
+        for(i=0;i<4;i++) {
+            int next=cell_neighbor(chosen,i),cost;
+            if(next<0||!forest_passable(chosen,i))continue;
+            cost=best+(gWorld.cells[chosen].gate[i]==GATE_LOCK&&!world_gate_open(chosen,i));
+            if(cost<price[next])price[next]=cost;
         }
-        return price[cell]!=255&&price[cell]<=gPl.keys;
     }
-    if(!handoff_region_unlocked(AREA_CREAM))return FALSE;
+    if(!handoff_region_unlocked(AREA_CREAM))return;
+    tokens=world_tokens_cream_mask();memset(seen,0,sizeof(seen));
     queue[tail++]=gCreamWorld.entry_node;seen[gCreamWorld.entry_node]=1;
     while(head<tail) {
-        n=queue[head++];if(n==cream_node(cell,p.terrace))return TRUE;
+        n=queue[head++];
         for(i=0;i<cream_edge_count(n);i++) {
             const CreamEdge* e=cream_edge(n,i);
-            if(e->target<50&&!seen[e->target]&&world_tokens_cream_open(e->require)){seen[e->target]=1;queue[tail++]=e->target;}
+            if(e->target<50&&!seen[e->target]&&(tokens&e->require)==e->require){seen[e->target]=1;queue[tail++]=e->target;}
         }
     }
-    return FALSE;
+    for(n=0;n<25;n++)if(seen[cream_node(n,sPlan[25+n].terrace)])out[1]|=1u<<n;
+}
+bool8 regional_content_reachable(int area,int cell) {
+    u32 masks[2];int at=regional_content_index(area,cell);
+    if(at<0)return FALSE;
+    regional_content_reach_masks(masks);return (masks[at/25]&(1u<<cell))!=0;
 }
 bool8 regional_content_find(int kind,int after,bool8 reachable,RegionalContentPlan* out) {
-    int i;
+    int i;u32 masks[2]={0,0};
     if(!out||!ensure_plan())return FALSE;
+    if(reachable)regional_content_reach_masks(masks);
     for(i=MAX(-1,after)+1;i<RC_ROOMS;i++)if(sPlan[i].event_kind==kind&&
-        (!reachable||regional_content_reachable(sPlan[i].area,sPlan[i].cell))){*out=sPlan[i];return TRUE;}
+        (!reachable||(masks[i/25]&(1u<<sPlan[i].cell)))){*out=sPlan[i];return TRUE;}
     return FALSE;
 }
 bool8 regional_content_fusion(int color,RegionalContentPlan* out) {
@@ -274,7 +334,7 @@ bool8 regional_content_door_open(int area,int cell) {
 static bool8 dry(int x,int y,int terrace) {
     int type,surface;
     if(x<1||y<1||x>=gRoom.w-1||y>=gRoom.h-1)return FALSE;
-    type=room_type(x,y);surface=legacy_surface_at(x*16+8,y*16+12);
+    type=room_type(x,y);surface=sProbing?LS_NONE:legacy_surface_at(x*16+8,y*16+12);
     if(type!=TT_FLOOR&&type!=TT_DOOR_OPEN&&type!=TT_CHEST_OPEN&&type!=TT_SWITCH)return FALSE;
     if(surface==LS_ICE||surface==LS_SWAMP||surface==LS_LAVA||surface==LS_CRUMBLE)return FALSE;
     if(sArea==AREA_CREAM&&cream_room_terrace_at(x*16+8,y*16+14,terrace)!=terrace)return FALSE;
@@ -445,7 +505,7 @@ bool8 regional_content_prepare_rect(int w,int h,RegionalContentRect* out) {
     for(y=1;y<gRoom.h-1;y++){for(x=1;x<gRoom.w-1;x++)if(reached(x,y)&&dry(x,y,gRegionalSpots.terrace))break;if(x<gRoom.w-1)break;}
     component(x,y,gRegionalSpots.terrace);take_rect(out);
 #if BART_FOREST_VARIANT >= 31
-    if(sArea==AREA_FOREST)forest_trees_plan();
+    if(sArea==AREA_FOREST&&!sProbing)forest_trees_plan();
 #endif
     return TRUE;
 }
@@ -531,6 +591,60 @@ bool8 regional_content_spawn_point(int terrace,int ordinal,Spot* point) {
     *point=chosen;
     if(sSpawnCount<24){sAdmittedSpawns[sSpawnCount]=chosen;sSpawnTerrace[sSpawnCount++]=terrace;}
     return TRUE;
+}
+/* Only a small admission snapshot is needed: the room builder owns its
+   existing full-room preview buffer. Keep the live component, reservations,
+   discovery and cache identity intact while testing a prospective giver. */
+typedef struct {
+    RegionalContentSpots spots;
+    RegionalContentDiscovery discovery;
+    RegionalContentPlan plan;
+    u32 reach[ROOM_MAX_H],reserved[ROOM_MAX_H],core[ROOM_MAX_H];
+    u32 forest_reserved[ROOM_MAX_H],forest_landmarks[ROOM_MAX_H];
+    u32 original_reach[ROOM_MAX_H],components[2][ROOM_MAX_H];
+    RegionalContentRect rects[4];
+    Spot spawns[24];u8 spawn_terrace[24];
+    u32 seeds[3];
+    u8 area,cell,rect_count,component_ready,spawn_count,plan_ready,plan_area;
+} RegionalProbeState;
+static RegionalProbeState sProbe EWRAM_BSS;
+static bool8 board_probe(int cell) {
+    room_build_solid();
+    regional_content_place(AREA_FOREST,cell);
+    return gRegionalSpots.quest_rect.w==7&&gRegionalSpots.quest_rect.h==7&&
+        gRegionalSpots.has_npc&&gRegionalSpots.has_door&&gRegionalSpots.has_cache&&
+        regional_content_validate_routes();
+}
+static bool8 board_fits(int cell) {
+    bool8 result;
+    sProbe.spots=gRegionalSpots;sProbe.discovery=gRegionalDiscovery[cell];sProbe.plan=sPlan[cell];
+    memcpy(sProbe.reach,sReach,sizeof(sReach));memcpy(sProbe.reserved,sReserved,sizeof(sReserved));
+    memcpy(sProbe.core,sCore,sizeof(sCore));memcpy(sProbe.forest_reserved,sForestReserved,sizeof(sForestReserved));
+    memcpy(sProbe.forest_landmarks,sForestLandmarks,sizeof(sForestLandmarks));
+    memcpy(sProbe.original_reach,sOriginalReach,sizeof(sOriginalReach));memcpy(sProbe.components,sComponents,sizeof(sComponents));
+    memcpy(sProbe.rects,sRects,sizeof(sRects));memcpy(sProbe.spawns,sAdmittedSpawns,sizeof(sAdmittedSpawns));
+    memcpy(sProbe.spawn_terrace,sSpawnTerrace,sizeof(sSpawnTerrace));memcpy(sProbe.seeds,sPlanSeed,sizeof(sPlanSeed));
+    sProbe.area=sArea;sProbe.cell=sCell;sProbe.rect_count=sRectCount;sProbe.component_ready=sComponentReady;
+    sProbe.spawn_count=sSpawnCount;sProbe.plan_ready=sPlanReady;sProbe.plan_area=sPlanQuestArea;
+    memset(&gRegionalDiscovery[cell],0,sizeof(gRegionalDiscovery[cell]));sPlan[cell].quest_kind=HQ_BLOCKS;
+    sPlanSeed[0]=gGame.seed;sPlanSeed[1]=gWorld.seed;sPlanSeed[2]=gCreamWorld.seed;
+    sPlanQuestArea=gRegionalQuestArea;sPlanReady=1;sProbing=1;
+    result=roomgen_content_probe(cell,board_probe);sProbing=0;
+    gRegionalSpots=sProbe.spots;gRegionalDiscovery[cell]=sProbe.discovery;sPlan[cell]=sProbe.plan;
+    memcpy(sReach,sProbe.reach,sizeof(sReach));memcpy(sReserved,sProbe.reserved,sizeof(sReserved));
+    memcpy(sCore,sProbe.core,sizeof(sCore));memcpy(sForestReserved,sProbe.forest_reserved,sizeof(sForestReserved));
+    memcpy(sForestLandmarks,sProbe.forest_landmarks,sizeof(sForestLandmarks));
+    memcpy(sOriginalReach,sProbe.original_reach,sizeof(sOriginalReach));memcpy(sComponents,sProbe.components,sizeof(sComponents));
+    memcpy(sRects,sProbe.rects,sizeof(sRects));memcpy(sAdmittedSpawns,sProbe.spawns,sizeof(sAdmittedSpawns));
+    memcpy(sSpawnTerrace,sProbe.spawn_terrace,sizeof(sSpawnTerrace));memcpy(sPlanSeed,sProbe.seeds,sizeof(sPlanSeed));
+    sArea=sProbe.area;sCell=sProbe.cell;sRectCount=sProbe.rect_count;sComponentReady=sProbe.component_ready;
+    sSpawnCount=sProbe.spawn_count;sPlanReady=sProbe.plan_ready;sPlanQuestArea=sProbe.plan_area;
+    return result;
+}
+void regional_content_mechanism_failed(void) {
+    int at=regional_content_index(sArea,sCell);
+    gRegionalSpots.has_mechanism=0;
+    if(at>=0)gRegionalDiscovery[at].marks&=~RC_MARK_MECHANISM;
 }
 void regional_content_place(int area,int cell) {
     RegionalContentPlan p;RegionalContentDiscovery* record;int at,x=-1,y=-1,i;
@@ -628,6 +742,8 @@ u8 regional_content_marks(int area,int cell,RegionalContentDiscovery* out) {
     if(p.interior_site!=RC_NONE)planned|=RC_MARK_DOOR;
     if(p.quest_kind&&!(gHandoffState.completed[p.field_site>>3]&(1u<<(p.field_site&7))))planned|=RC_MARK_QUEST;
     if(p.has_wave)planned|=RC_MARK_WAVE;
+    if(gHandoffState.quest.kind==HQ_COURIER&&gHandoffState.quest.state==2&&
+       gHandoffState.quest.target_area==area&&gHandoffState.quest.target_cell==cell)planned|=RC_MARK_QUEST;
     if(p.fusion_color!=RC_NONE&&!(gHandoffState.fusion_flags&(1u<<p.fusion_color)))planned|=RC_MARK_FUSION;
     planned|=marks&(RC_MARK_CACHE|RC_MARK_MECHANISM|RC_MARK_QUEST);
     out->marks=marks;return planned;

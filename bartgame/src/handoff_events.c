@@ -590,7 +590,7 @@ static bool8 regional_trials_ready(void){
 }
 static void contract_next(void){
  int step=gHandoffState.contract_step,region,cell,chosen=255,count=0,kind=HC_EVENT;
- RegionalContentPlan target;u32 roll=hash32(gGame.seed,0xC4A100u+step);
+ u32 reachable[2],roll=hash32(gGame.seed,0xC4A100u+step);
  gHandoffState.contract_state=1;
  if(step==3&&!regional_trials_ready()){gHandoffState.contract_state=0;gHandoffState.contract_kind=HC_BOSS;gHandoffState.contract_target=0;return;}
  if(step>=4){gHandoffState.contract_kind=HC_ITEM;gHandoffState.contract_item=LI_EARTH_ELEMENT;materialize_goal();return;}
@@ -599,17 +599,20 @@ static void contract_next(void){
  if(step==2)kind=HC_ITEM;
  else if(step==3)kind=HC_BOSS;
  else if(step==1)kind=(roll&1)?HC_QUEST:HC_WAVE;
+ /* One traversal snapshot serves the entire deal. Re-solving both region
+    graphs for each candidate stalled the ARM7 for dozens of video frames. */
+ regional_content_reach_masks(reachable);
  for(int pass=0;pass<3&&chosen==255;pass++){
   for(region=0;region<2;region++)for(cell=0;cell<25;cell++){
    RegionalContentPlan p;int site=255;
-   if(!regional_content_get(region?AREA_CREAM:AREA_FOREST,cell,&p)||!regional_content_reachable(p.area,p.cell))continue;
+   if(!(reachable[region]&(1u<<cell))||!regional_content_get(region?AREA_CREAM:AREA_FOREST,cell,&p))continue;
    if(kind==HC_ITEM){RegionalContentDiscovery d;regional_content_marks(p.area,p.cell,&d);if(p.interior_site!=RC_NONE&&p.fusion_color==RC_NONE&&d.cache.x&&d.cache.y)site=p.field_site;}
    else if(kind==HC_QUEST){HandoffQuest*q=&gHandoffState.quest;if(p.quest_kind&&(q->state==1||q->state==2)&&q->origin_area==p.area&&q->origin_cell==p.cell&&!HBIT(gHandoffState.completed,p.field_site))site=p.field_site;}
    else if(kind==HC_WAVE){if(p.has_wave)site=p.field_site;}
    else if(p.interior_site!=RC_NONE&&regional_content_door_open(p.area,p.cell)&&event_completable(p.event_kind)&&(p.event_kind!=HS_OBJECT_COURSE||handoff_objects_can_solve(p.mechanism_variant))&&(!HBIT(gHandoffState.completed,p.interior_site)||(kind==HC_BOSS&&pass>0))){
     if(kind==HC_BOSS?(p.event_kind==HS_BOSS||(p.event_kind==HS_MINIBOSS&&p.stage>=2)):p.event_kind!=HS_BOSS)site=p.interior_site;
    }
-   if(site!=255&&hash32(roll,site)%(++count)==0){chosen=site;target=p;}
+   if(site!=255&&hash32(roll,site)%(++count)==0)chosen=site;
   }
   /* A depleted event pool or unavailable side quest becomes the next regional
      wave; a fresh physical item cache is the final bounded fallback. */
@@ -621,7 +624,12 @@ static void contract_next(void){
  }
  gHandoffState.contract_kind=kind;gHandoffState.contract_target=chosen;
  if(kind==HC_ITEM)gHandoffState.contract_item=reward_pick(LCAT_KEY,1,hash32(roll,17));
- (void)target;
+}
+static bool8 entitlement_would_strand_cream(void){
+ HandoffQuest*q=&gHandoffState.quest;RegionalContentPlan p;
+ if(gHandoffState.entitlement_mode||gHandoffState.score>=500||gHandoffState.wins)return FALSE;
+ if((q->state==1||q->state==2)&&(q->origin_area==AREA_CREAM||(q->kind==HQ_COURIER&&q->target_area==AREA_CREAM)))return TRUE;
+ return gHandoffState.contract_state==1&&decode_site(gHandoffState.contract_target,&p)&&p.area==AREA_CREAM;
 }
 void handoff_resume_regional(bool8 legacy){
  if(legacy){gHandoffState.contract_step=0;gHandoffState.contract_state=0;gHandoffState.contract_target=0;if(gHandoffState.quest.origin_area==AREA_HANDOFF)clear_bytes(&gHandoffState.quest,sizeof(gHandoffState.quest));}
@@ -766,7 +774,7 @@ void handoff_menu_update(void){
    gPl.gilt-=price;give(gHandoffState.stock[choice]);if(choice==0)gHandoffState.heart_purchases++;else if(choice>2)gHandoffState.shop_bought|=1<<choice;return;}
   case HM_FUSE:fusion_hint(choice);return;
   case HM_TROPHY:
-   if(choice==1){gHandoffState.entitlement_mode^=1;gHandoffState.difficulty=MIN(gHandoffState.difficulty,handoff_difficulty_cap());save_write();say(gHandoffState.entitlement_mode?"Optional entitlement challenges enabled. Existing world features remain available.":"Optional entitlement challenges disabled.");}
+   if(choice==1){if(entitlement_would_strand_cream()){say("Finish your current Cream quest or seal before enabling this restriction. Its accepted task stays available.");return;}gHandoffState.entitlement_mode^=1;gHandoffState.difficulty=MIN(gHandoffState.difficulty,handoff_difficulty_cap());save_write();say(gHandoffState.entitlement_mode?"Optional entitlement challenges enabled. Existing world features remain available.":"Optional entitlement challenges disabled.");}
    else if(choice==2)menu_open(HM_DIFFICULTY);
    else{char msg[130];char*p=cat(msg,"Rank ");p=num(p,gHandoffState.rank);p=cat(p," / score ");p=num(p,gHandoffState.score);p=cat(p," / wins ");p=num(p,gHandoffState.wins);p=cat(p," / deaths ");p=num(p,gHandoffState.deaths);cat(p,". Ranks: 50, 250, 800, 2000 points.");say(msg);}return;
   case HM_DIFFICULTY:

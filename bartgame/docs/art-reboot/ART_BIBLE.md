@@ -1,8 +1,8 @@
 # BARTGAME art direction: gilt and rot
 
-This is the common art direction for the current build and the eight future
-areas. The Drain is the hub; the Blighted Forest is area one of nine. Future
-area names and themes remain undecided. New art must extend this vocabulary,
+This is the common art direction for the current build and seven future
+areas. The Drain is the hub; the Blighted Forest and the Curdled Cream are the
+first two of nine areas. The remaining names and themes are undecided. New art must extend this vocabulary,
 not introduce another sprite pack.
 
 The [research](RESEARCH.md), [asset audit](ASSET_AUDIT.md) and
@@ -488,7 +488,7 @@ the selected roster. Lab run saving is disabled to protect real progression.
 
 ## Area adaptation sheet
 
-For each of the eight future areas, fill in these fields before making tiles:
+For each of the seven future areas, fill in these fields before making tiles:
 
 1. Primary solid, floor, liquid and organic materials.
 2. One glorious material/light and one filthy material, shown together.
@@ -586,3 +586,26 @@ additional health growth beyond that receives an exactHP readout below the
 purse within the same20px band. Up to ten hearts retain the selected original
 picture. Internal item helpers stay out of the visible discovery catalogue
 while their stable saved identifiers remain reserved.
+
+### Regional deployment and the second Drain ladder
+
+The Cream entrance in the Drain now uses a second copy of the Forest wall
+ladder, including its native arrow and stone surround. This is an explicit
+user choice replacing the earlier Cream arch. Copy the complete composition;
+its pictured rungs, interaction strip and reserved return point must agree.
+Do not move the selected market, wizard, cabinet, bridge or storage to fit it.
+
+Restored events belong to the two generated regions. Reuse the resident cave,
+hollow and thicket thresholds when their complete footprint fits. A constrained
+side pocket may use the small native hatch with the same visible open/closed
+state as its actual access. Map markers refer to the doorway's real tile.
+Crossings and puzzle boards require a reserved, playable footprint before any
+art is stamped; decorative mold or flowers may be cleared inside that pocket,
+but existing landmarks, interactions, mandatory gates and arrival routes are
+protected. No map icon or planned feature can substitute for visible geometry.
+
+New Drain services reuse the selected visual vocabulary. A small physical cot
+and reward chest append new frames; old frames and sheet IDs remain unchanged.
+Field mechanisms stream individual native frames rather than an entire study
+atlas. Existing unpainted mobility slots may become resident in the Forest;
+the old visible terrain mappings and all their referenced pixels stay intact.

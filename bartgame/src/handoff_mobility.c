@@ -12,6 +12,7 @@
 #include "sound.h"
 #include "util.h"
 #include "world_tokens.h"
+#include "regional_content.h"
 
 u8 gMobilityMode,gMobilityLayer,gMobilityCartPoint;
 s16 gMobilityCartX,gMobilityCartY;
@@ -137,11 +138,28 @@ void handoff_mobility_build_regional(u32 seed,int pattern,int site) {
  room_set(sMob.px,sMob.py,prize_taken()?MT_LH_MOB_OPEN:MT_LH_MOB_PRIZE);
  room_set(sMob.signx,sMob.signy,MT_LH_MOB_SIGN);room_build_solid();
 }
+static bool8 mobility_floor_decoration(u16 mt) {
+ if(mt==MT_NONE)return TRUE;
+ if(metatile_type[mt]!=TT_FLOOR)return FALSE;
+ return !metatile_prop[mt]||mt==MT_CREAM_MOLD_S0||mt==MT_CREAM_MOLD_S1||mt==MT_CREAM_MOLD_S2;
+}
+typedef struct {u16 ground[30],overlay[30],underlay[30];} MobilityFieldBackup;
+static void mobility_field_backup(MobilityFieldBackup*b,int x,int y,int w,int h) {
+ for(int yy=0;yy<h;yy++)for(int xx=0;xx<w;xx++){int i=yy*w+xx,j=(y+yy)*ROOM_MAX_W+x+xx;b->ground[i]=room_get(x+xx,y+yy);b->overlay[i]=room_get_overlay(x+xx,y+yy);b->underlay[i]=gRoom.underlay[j];}
+}
+static bool8 mobility_field_validate(const MobilityFieldBackup*b,int x,int y,int w,int h) {
+ room_build_solid();
+ if(regional_content_validate_routes())return TRUE;
+ for(int yy=0;yy<h;yy++)for(int xx=0;xx<w;xx++){int i=yy*w+xx,j=(y+yy)*ROOM_MAX_W+x+xx;room_set(x+xx,y+yy,b->ground[i]);room_set_overlay(x+xx,y+yy,b->overlay[i]);gRoom.underlay[j]=b->underlay[i];}
+ room_build_solid();handoff_mobility_reset();return FALSE;
+}
 bool8 handoff_mobility_build_field(u32 seed,int pattern,int site,int x,int y,int w,int h) {
- u16 floor;int middle;
- if(w<5||h<5||x<1||y<1||x+w>=gRoom.w||y+h>=gRoom.h)return FALSE;
+ u16 floor;int middle;MobilityFieldBackup before;
+ if(w<5||w>6||h!=5||x<1||y<1||x+w>=gRoom.w||y+h>=gRoom.h)return FALSE;
  for(int yy=y;yy<y+h;yy++)for(int xx=x;xx<x+w;xx++)
-  if(room_type(xx,yy)!=TT_FLOOR||room_get_overlay(xx,yy)!=MT_NONE||legacy_surface_at(xx*16+8,yy*16+8)!=LS_NONE||room_box_solid(xx*16+1,yy*16+1,xx*16+14,yy*16+14))return FALSE;
+  if(room_type(xx,yy)!=TT_FLOOR||!mobility_floor_decoration(room_get_overlay(xx,yy))||legacy_surface_at(xx*16+8,yy*16+8)!=LS_NONE||room_box_solid(xx*16+1,yy*16+1,xx*16+14,yy*16+14))return FALSE;
+ mobility_field_backup(&before,x,y,w,h);
+ for(int yy=y;yy<y+h;yy++)for(int xx=x;xx<x+w;xx++)room_set_overlay(xx,yy,MT_NONE);
  floor=room_get(x,y);activate(1,1,pattern%3,site);sMob.prize=1;middle=y+h/2;
  if(sMob.pattern==0) {
   sMob.cart=1;rect(x+2,y+1,x+w-3,y+h-2,MT_LH_MOB_WATER);
@@ -155,7 +173,7 @@ bool8 handoff_mobility_build_field(u32 seed,int pattern,int site,int x,int y,int
   sMob.chute=1;chute_face(x+1,x+w-2,y,y+h-1);sMob.px=x+w-2;sMob.py=y+h-1;sMob.signx=x;sMob.signy=y;
  }
  room_set(sMob.px,sMob.py,prize_taken()?MT_LH_MOB_OPEN:MT_LH_MOB_PRIZE);
- room_set(sMob.signx,sMob.signy,MT_LH_MOB_SIGN);room_build_solid();(void)seed;return TRUE;
+ room_set(sMob.signx,sMob.signy,MT_LH_MOB_SIGN);(void)seed;return mobility_field_validate(&before,x,y,w,h);
 }
 
 bool8 handoff_mobility_handles_floor(int px,int py) {

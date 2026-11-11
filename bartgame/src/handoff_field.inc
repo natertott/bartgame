@@ -105,8 +105,8 @@ static void field_quest_start(void){
  q->stake=q->difficulty<4?0:q->difficulty<8?1:q->difficulty<12?2:3;
  q->origin_area=gGame.area;q->origin_cell=gGame.cell;q->quota=kind==HQ_HUNT?7+rng_range(&s.rng,7):kind==HQ_POT?MAX(1,r.point_count):1;
  q->timer=kind==HQ_HUNT?1800:kind==HQ_STEALTH?2400:kind==HQ_SCAV?2700:0;
- q->target_area=gGame.area==AREA_FOREST?AREA_CREAM:AREA_FOREST;
- q->target_cell=q->target_area==AREA_FOREST?gWorld.entry:cream_cell(gCreamWorld.entry_node);
+ q->target_area=kind==HQ_COURIER?(gGame.area==AREA_FOREST?AREA_CREAM:AREA_FOREST):gGame.area;
+ q->target_cell=kind==HQ_COURIER?(q->target_area==AREA_FOREST?gWorld.entry:cream_cell(gCreamWorld.entry_node)):gGame.cell;
  q->cargo_x=sx(r.point_count?r.points[0].x:r.giver.x);q->cargo_y=sy(r.point_count?r.points[0].y:r.giver.y);q->cargo_ground=1;
  q->receiver_x=sx(r.receiver.x);q->receiver_y=sy(r.receiver.y);s.clean=0;q->mode=hash32(s.seed,41)%3;
  if(kind==HQ_POT)q->wave=s.count=hash32(s.seed,29)%MAX(1,r.point_count);
@@ -193,17 +193,17 @@ static void regional_enter(int area,int cell){
  if(regional_quest_local()&&q->state==2){
   if(q->kind==HQ_BLOCKS)field_board_setup();
   if(q->kind==HQ_POT){s.clean=q->count;s.count=q->wave;}
-  if(q->kind==HQ_CARRY){q->cargo_held=q->cargo_flying=0;q->cargo_ground=1;q->cargo_x=sx(r.giver.x);q->cargo_y=sy(r.giver.y);}
+  if(q->kind==HQ_CARRY){q->cargo_held=q->cargo_flying=0;q->cargo_ground=1;q->cargo_x=sx(r.points[0].x);q->cargo_y=sy(r.points[0].y);if(q->count){cast_wave();field_refill(MIN(4,q->count));}}
  }
  if(gRegionalSpots.has_mechanism&&r.plan.fusion_color==2){
   RegionalContentRect* b=&gRegionalSpots.mechanism_rect;
-  if(handoff_objects_build_fusion(s.seed,b->x,b->y,b->w,b->h))handoff_objects_enter();
+  if(handoff_objects_build_fusion(s.seed,b->x,b->y,b->w,b->h))handoff_objects_enter();else regional_content_mechanism_failed();
  }else if(gRegionalSpots.has_mechanism&&r.plan.field_mechanism_variant!=RC_NONE){
   RegionalContentRect* b=&gRegionalSpots.mechanism_rect;
-  if(handoff_objects_build_field(s.seed,r.plan.field_mechanism_variant,b->x,b->y,b->w,b->h))handoff_objects_enter();
+  if(handoff_objects_build_field(s.seed,r.plan.field_mechanism_variant,b->x,b->y,b->w,b->h))handoff_objects_enter();else regional_content_mechanism_failed();
  }
  if(r.plan.traversal_variant!=RC_NONE&&gRegionalSpots.traversal_rect.w){
-  RegionalContentRect*b=&gRegionalSpots.traversal_rect;handoff_mobility_build_field(s.seed,r.plan.traversal_variant,r.plan.field_site,b->x,b->y,b->w,b->h);
+  RegionalContentRect*b=&gRegionalSpots.traversal_rect;if(!handoff_mobility_build_field(s.seed,r.plan.traversal_variant,r.plan.field_site,b->x,b->y,b->w,b->h))regional_content_mechanism_failed();
  }
  if(r.plan.has_wave){s.cast_count=0;if(field_has(PX(gPlayer->x)/16,PX(gPlayer->y)/16))field_wave_begin();}
 }
@@ -221,6 +221,9 @@ static bool8 regional_interact(void){
   if(regional_content_get(q->origin_area,q->origin_cell,&origin))HSET(gHandoffState.completed,origin.field_site);
   gHandoffState.score+=30;refresh_rank();field_reward(1);handoff_notify(HN_QUEST,q->origin_area,q->origin_cell,0);say("A parcel between the wood and the high cliffs. Delivered safely; your reward is here.");return TRUE;
  }
+ /* A recovered pot takes priority over its giver's reminder. This also
+    handles a throw that lands inside the NPC's interaction radius. */
+ if(regional_quest_local()&&q->state==2&&q->kind==HQ_CARRY&&q->cargo_ground&&!gPl.carry&&near(q->cargo_x,q->cargo_y,22)){q->cargo_ground=0;q->cargo_held=1;gPl.carry=CARRY_POT;gPlayer->state=PS_LIFT;gPlayer->timer=0;sfx_play(SFX_ITEM);return TRUE;}
  if(gRegionalSpots.has_npc&&near(sx(r.giver.x),sy(r.giver.y),24)){
   if(r.plan.fusion_color!=RC_NONE){fuse(r.plan.fusion_color);return TRUE;}
   if(r.plan.quest_kind&&r.plan.quest_kind!=RC_NONE){
@@ -236,8 +239,7 @@ static bool8 regional_interact(void){
  if(regional_quest_local()&&q->state==2){
   if(q->kind==HQ_POT)for(int i=0;i<r.point_count;i++)if(!(s.clean&(1u<<i))&&near(sx(r.points[i].x),sy(r.points[i].y),18)){s.clean|=1u<<i;q->count=s.clean;sfx_play(SFX_HIT);if(i==s.count)field_quest_win();return TRUE;}
   if(q->kind==HQ_CARRY){
-   if(q->cargo_ground&&!gPl.carry&&near(q->cargo_x,q->cargo_y,22)){q->cargo_ground=0;q->cargo_held=1;gPl.carry=CARRY_POT;gPlayer->state=PS_LIFT;gPlayer->timer=0;sfx_play(SFX_ITEM);return TRUE;}
-   if(q->cargo_held&&near(q->receiver_x,q->receiver_y,24)){if(q->wave<2||field_alive()){say("Two ambushes stand between this pot and rest.");return TRUE;}q->cargo_held=0;gPl.carry=CARRY_NONE;gPlayer->state=PS_NORMAL;field_quest_win();say("Not a crack. A careful field delivery.");return TRUE;}
+   if(q->cargo_held&&near(q->receiver_x,q->receiver_y,24)){if(q->wave<2||q->count||field_alive()){say("Two ambushes stand between this pot and rest.");return TRUE;}q->cargo_held=0;gPl.carry=CARRY_NONE;gPlayer->state=PS_NORMAL;field_quest_win();say("Not a crack. A careful field delivery.");return TRUE;}
   }
   if(q->kind==HQ_BLOCKS&&r.board){if(near(sx(BOARD_X+2),sy(BOARD_Y+5),22)){handoff_board_reset();return TRUE;}if(handoff_board_push(gPlayer->facing))return TRUE;}
  }
@@ -250,6 +252,7 @@ static void regional_enemy_killed(int type,int px,int py){
  if(!owned)return;
  if(r.plan.has_wave&&gHandoffState.remaining[r.wave_site])gHandoffState.remaining[r.wave_site]--;
  if(regional_quest_local()&&q->state==2&&q->kind==HQ_HUNT){q->count++;if(q->count>=q->quota)field_quest_win();}
+ if(regional_quest_local()&&q->state==2&&q->kind==HQ_CARRY&&q->count)q->count--;
 }
 static void regional_tool(int kind,int x0,int y0,int x1,int y1){
  HandoffQuest*q=&gHandoffState.quest;if(!regional_scene())return;
@@ -307,7 +310,8 @@ static void regional_tick(void){
    }
    if(q->kind==HQ_CARRY){
     if(q->cargo_held&&gPl.carry!=CARRY_POT&&!q->cargo_flying){q->cargo_held=0;q->cargo_ground=1;q->cargo_x=PX(gPlayer->x);q->cargo_y=PX(gPlayer->y);}
-    if(q->cargo_held&&field_has(PX(gPlayer->x)/16,PX(gPlayer->y)/16)&&((q->wave==0&&ABS(PX(gPlayer->x)-sx(r.giver.x))+ABS(PX(gPlayer->y)-sy(r.giver.y))>40)||(q->wave==1&&!field_alive()&&near(q->receiver_x,q->receiver_y,64)))){q->wave++;cast_wave();field_refill(q->wave+2);sfx_play(SFX_SPIT);}
+    if(q->count&&!r.cadence&&field_has(PX(gPlayer->x)/16,PX(gPlayer->y)/16))field_refill(MIN(4,q->count));
+    if(q->cargo_held&&!q->count&&field_has(PX(gPlayer->x)/16,PX(gPlayer->y)/16)&&((q->wave==0&&ABS(PX(gPlayer->x)-sx(r.giver.x))+ABS(PX(gPlayer->y)-sy(r.giver.y))>40)||(q->wave==1&&!field_alive()&&near(q->receiver_x,q->receiver_y,64)))){q->wave++;q->count=MAX(field_alive(),q->wave+2);cast_wave();field_refill(MIN(4,q->count));sfx_play(SFX_SPIT);}
    }
    if(q->kind==HQ_BLOCKS&&r.board&&gHandoffBoardSolved)field_quest_win();
   }

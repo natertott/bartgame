@@ -13,6 +13,7 @@
 #include "sound.h"
 #include "text.h"
 #include "game.h"
+#include "regional_content.h"
 #include "util.h"
 
 #define HO_LIMIT 24
@@ -247,12 +248,31 @@ void handoff_objects_build_regional(u32 seed,int pattern) {
   sObjects[i].state=1;sObjects[i].solid=0;sObjects[i].frame=HO_BIG_DOOR*2+1;sObjects[i].last_frame=sObjects[i].frame;
  }
 }
+static bool8 field_floor_decoration(u16 mt) {
+ if(mt==MT_NONE)return TRUE;
+ if(metatile_type[mt]!=TT_FLOOR)return FALSE;
+ /* Most floor flecks have no height. Cream mould uses prop priority for
+    its ink, but is still noninteractive ground dressing, not a landmark. */
+ return !metatile_prop[mt]||mt==MT_CREAM_MOLD_S0||mt==MT_CREAM_MOLD_S1||mt==MT_CREAM_MOLD_S2;
+}
+typedef struct {u16 ground[30],overlay[30],underlay[30];} ObjectFieldBackup;
+static void object_field_backup(ObjectFieldBackup*b,int x,int y,int w,int h) {
+ for(int yy=0;yy<h;yy++)for(int xx=0;xx<w;xx++){int i=yy*w+xx,j=(y+yy)*ROOM_MAX_W+x+xx;b->ground[i]=room_get(x+xx,y+yy);b->overlay[i]=room_get_overlay(x+xx,y+yy);b->underlay[i]=gRoom.underlay[j];}
+}
+static bool8 object_field_validate(const ObjectFieldBackup*b,int x,int y,int w,int h) {
+ room_build_solid();
+ if(regional_content_validate_routes())return TRUE;
+ for(int yy=0;yy<h;yy++)for(int xx=0;xx<w;xx++){int i=yy*w+xx,j=(y+yy)*ROOM_MAX_W+x+xx;room_set(x+xx,y+yy,b->ground[i]);room_set_overlay(x+xx,y+yy,b->overlay[i]);gRoom.underlay[j]=b->underlay[i];}
+ room_build_solid();handoff_objects_reset();return FALSE;
+}
 bool8 handoff_objects_build_field(u32 seed,int variant,int x,int y,int w,int h) {
- Mechanism*m;
- if(w<5||h<4||x<1||y<1||x+w>=gRoom.w||y+h>=gRoom.h)return FALSE;
+ Mechanism*m;ObjectFieldBackup before;
+ if(w<5||w>6||h<4||h>5||x<1||y<1||x+w>=gRoom.w||y+h>=gRoom.h)return FALSE;
  /* The planner reserves dry floor. Refuse changed or occupied footprints. */
  for(int yy=y;yy<y+h;yy++)for(int xx=x;xx<x+w;xx++)
-  if(room_box_solid(xx*16+1,yy*16+1,xx*16+14,yy*16+14)||room_get_overlay(xx,yy)!=MT_NONE||room_type(xx,yy)!=TT_FLOOR||legacy_surface_at(xx*16+8,yy*16+8)!=LS_NONE)return FALSE;
+  if(room_box_solid(xx*16+1,yy*16+1,xx*16+14,yy*16+14)||!field_floor_decoration(room_get_overlay(xx,yy))||room_type(xx,yy)!=TT_FLOOR||legacy_surface_at(xx*16+8,yy*16+8)!=LS_NONE)return FALSE;
+ object_field_backup(&before,x,y,w,h);
+ for(int yy=y;yy<y+h;yy++)for(int xx=x;xx<x+w;xx++)room_set_overlay(xx,yy,MT_NONE);
  handoff_objects_reset();sObj.active=sObj.regional=sObj.field=1;sObj.seed=seed;
  sObj.pattern=variant%HANDOFF_REGIONAL_MECHANISMS;sObj.variant=sObj.pattern%4;sObj.required_goals=128;sObj.interlock=1;
  sObj.field_left=x*16;sObj.field_top=y*16;sObj.field_right=(x+w)*16-1;sObj.field_bottom=(y+h)*16-1;
@@ -268,10 +288,13 @@ bool8 handoff_objects_build_field(u32 seed,int variant,int x,int y,int w,int h) 
  case 9:add(HO_WEATHER,x+1,y+1,1,1);break;
  }
  m=add(HO_TARGET,x+w-2,y+h-2,0,128);if(m)m->mode=1;
- return TRUE;
+ return object_field_validate(&before,x,y,w,h);
 }
 
 bool8 handoff_objects_build_fusion(u32 seed,int x,int y,int w,int h) {
+ ObjectFieldBackup before;
+ if(w<5||w>6||h!=5||x<1||y<1||x+w>=gRoom.w||y+h>=gRoom.h)return FALSE;
+ object_field_backup(&before,x,y,w,h);
  if(h<5||!handoff_objects_build_field(seed,0,x,y,w,h))return FALSE;
  u16 island=room_get(x+2,y+2);
  memset(sObjects,0,sizeof(sObjects));sObj.count=0;sObj.fusion=1;sObj.interlock=0;
@@ -281,7 +304,7 @@ bool8 handoff_objects_build_fusion(u32 seed,int x,int y,int w,int h) {
  room_set(x+2,y+2,island);
  if(gHandoffState.fusion_flags&4)room_set(x+2,y+3,MT_LH_MOB_RAMP);
  Mechanism*m=add(HO_TARGET,x+2,y+2,0,128);if(m)m->mode=3;
- room_build_solid();return TRUE;
+ return object_field_validate(&before,x,y,w,h);
 }
 
 void handoff_objects_enter(void) {

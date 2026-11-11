@@ -36,12 +36,18 @@ typedef struct {
 } RegionalContentDiscovery;
 extern RegionalContentSpots gRegionalSpots;
 extern RegionalContentDiscovery gRegionalDiscovery[RC_ROOMS];
+/* Latched when the run starts, rather than changing when score or an
+   optional entitlement setting changes. Stored by the v3 extension. */
+extern u8 gRegionalQuestArea;
 
 int regional_content_index(int area,int cell);
 void regional_content_new_run(void);
 bool8 regional_content_get(int area,int cell,RegionalContentPlan* out);
 /* Uses live capabilities and actual graph edges, never grants trial facts. */
 bool8 regional_content_reachable(int area,int cell);
+/* One live capability query for a whole objective-selection pass. Bit n
+   represents room n at its actual planned terrace, not any part of it. */
+void regional_content_reach_masks(u32 out[2]);
 bool8 regional_content_find(int event_kind,int after_index,bool8 reachable,RegionalContentPlan* out);
 bool8 regional_content_fusion(int color,RegionalContentPlan* out);
 bool8 regional_content_door_open(int area,int cell);
@@ -58,6 +64,9 @@ bool8 regional_content_rect(int w,int h,RegionalContentRect* out);
    preserves all landmarks and refuses to connect a sealed component. */
 bool8 regional_content_prepare_rect(int w,int h,RegionalContentRect* out);
 bool8 regional_content_validate_routes(void);
+/* A transactional field builder can reject its stamp. Do not retain a map
+   marker claiming that a planned mechanism exists after that rejection. */
+void regional_content_mechanism_failed(void);
 /* Keep original enemy populations off added props, pools and approaches.
    The requested spot is retained when safe; replacements remain on its
    original terrace and are separated from earlier admitted spawns. */

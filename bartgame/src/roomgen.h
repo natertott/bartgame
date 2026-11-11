@@ -53,5 +53,9 @@ void roomgen_gate_tiles(int side, int* x0, int* y0, int* x1, int* y1);
    retain every authored feature front, border arrival and hidden route. */
 bool8 roomgen_content_reserved(int tx,int ty);
 bool8 roomgen_content_landmark_reserved(int tx,int ty);
+/* Transactional base-room admission at run planning time. The callback sees
+   the real closed/default room; Room, landmarks, progress, RNG and fine
+   collision are restored. No renderer or actor update is invoked. */
+bool8 roomgen_content_probe(int cell,bool8 (*probe)(int cell));
 
 #endif

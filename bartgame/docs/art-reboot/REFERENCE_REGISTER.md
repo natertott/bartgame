@@ -383,3 +383,12 @@ are reference material, not features to reinstate. The current user's
 preservation rule and impact-bomb request override conflicting old behavior.
 [The audit](../../../docs/handoff-restoration/AUDIT.md) records these
 distinctions explicitly rather than treating every enum label as a feature.
+
+The user's subsequent regional-integration request explicitly supersedes the
+invented Challenge Annex access hub and the Drain's Cream arch: deploy the
+restored features into Forest/Cream and reuse the Forest wall ladder for the
+Cream entrance. No new external artwork was used for this pass. Existing
+resident terrain, selected ladder composition and handoff native mechanism
+paintings supply the visual vocabulary. New cot/chest frames are original
+native additions. The current source-to-acceptance mapping is in
+[regional integration acceptance](../regional-integration/ACCEPTANCE.md).

@@ -1884,3 +1884,29 @@ The previous endpoint-positioning test missed this normal walking behavior.
 D-pad, A and shield inputs; it does not assign position, state or camera.
 The new ROM also passes the earned Cream route and original boundary controls.
 See [the door repair and native evidence](../../../curdled-cream-review/door-fix/README.md).
+
+## 2026-11-11 — Regional handoff deployment and Cream wall ladder
+
+**Status:** adopted user-directed integration. The user requests moving the
+Challenge Annex's features into the real Forest and Cream, and replacing the
+Cream Drain door with another ladder matching the Forest ladder. The invented
+Annex selection hub is removed from normal access; its internal scene IDs
+remain for saved-data compatibility and generated interiors.
+
+The complete selected Forest ladder composition is copied onto the Drain wall
+at x312. Its original arrow, palette and lighting are preserved. Market,
+wizard, cabinet, storage and bridge are not relocated. A physical cot and
+first-clear chest append two Cream-folk atlas frames, retaining every earlier
+frame and sheet identifier. New field entrances use the existing regional
+thresholds, with a compact hatch for constrained pockets. Maps display their
+actual placed coordinates. Mobility stamps reuse the new handoff art in
+previously unpainted resident Forest slots; old visible mappings are protected.
+
+Placement and rendering are qualified separately. Native testing caught
+decorative floor overlays rejecting crossing stamps despite a valid planned
+rectangle; this is treated as an integration defect, not as successful content
+coverage. Native room/doorway/service captures, footprint sweeps, art-prefix
+comparison and complete real-input quest/chain evidence are recorded in the
+[regional integration notes](../regional-integration/ACCEPTANCE.md), with
+exact build identities and disclosed navigation fixtures. Historical arch
+captures above remain evidence of their own older builds.

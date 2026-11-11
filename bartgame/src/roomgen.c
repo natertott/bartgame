@@ -20,6 +20,7 @@
 #include "roomgen.h"
 #include "myst.h"
 #include "react.h"
+#include "room_shapes.h"
 #if BART_FOREST_VARIANT == 32
 #include "forest_paths.h"
 #endif
@@ -2823,6 +2824,10 @@ void roomgen_build(int cell) {
    Suppressing room_render keeps BG characters/maps and live animation intact.
    Generator scratch is disposable after a build, as for terrain preview. */
 static Room sPreviewRoom EWRAM_BSS;
+static bool8 (*sContentProbe)(int cell) EWRAM_BSS;
+static bool8 sContentProbeResult EWRAM_BSS;
+static u8 sContentMask[H][W] EWRAM_BSS;
+static u8 sContentPath[H][W] EWRAM_BSS;
 void roomgen_preview_details(int cell, u8* marks, const u8** mask, const u8** path) {
     RoomSpots previous_spots;
     u8 previous_marks[MP_COUNT * 2];
@@ -2844,6 +2849,7 @@ void roomgen_preview_details(int cell, u8* marks, const u8** mask, const u8** pa
     memcpy(previous_cohesion,gForestCohesionInfo,sizeof(previous_cohesion));
 #endif
     roomgen_build_internal(cell, FALSE);
+    if(sContentProbe)sContentProbeResult=sContentProbe(cell);
     memcpy(marks, gWorld.mark[cell], MP_COUNT * 2);
     if (mask) *mask = &sMask[0][0];
     if (path) *path = &sPath[0][0];
@@ -2871,4 +2877,26 @@ bool8 roomgen_content_landmark_reserved(int x,int y) {
     if(required_reserved(x,y))return TRUE;
 #endif
     return FALSE;
+}
+
+bool8 roomgen_content_probe(int cell,bool8 (*probe)(int cell)) {
+    Cell previous;u8 previous_myst,previous_dirty,marks[MP_COUNT*2];u32 revision;
+    int x,y;bool8 result;
+    if(cell<0||cell>=CELLS||!probe||sContentProbe)return FALSE;
+    previous=gWorld.cells[cell];previous_myst=gWorld.myst_flags[cell];
+    revision=gRoomRevision;previous_dirty=gRoomTorchesDirty;
+    memcpy(sContentMask,sMask,sizeof(sMask));memcpy(sContentPath,sPath,sizeof(sPath));
+    /* Admission is a seed-layout question. Later opened gates, claimed
+       furniture or solved trials must not move the selected quest giver. */
+    gWorld.cells[cell].opened=0;gWorld.cells[cell].flags=0;gWorld.myst_flags[cell]=0;
+    sContentProbe=probe;sContentProbeResult=FALSE;
+    roomgen_preview_details(cell,marks,0,0);
+    result=sContentProbeResult;sContentProbe=0;
+    gWorld.cells[cell]=previous;gWorld.myst_flags[cell]=previous_myst;
+    memcpy(sMask,sContentMask,sizeof(sMask));memcpy(sPath,sContentPath,sizeof(sPath));
+    /* room_clear on the temporary room also clears optional fine masks. */
+    room_shapes_clear();
+    for(y=0;y<gRoom.h;y++)for(x=0;x<gRoom.w;x++)room_shape_tile(x,y,room_get(x,y));
+    gRoomRevision=revision;gRoomTorchesDirty=previous_dirty;
+    return result;
 }

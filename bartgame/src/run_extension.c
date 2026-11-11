@@ -28,6 +28,7 @@ typedef struct {
     u8 gates[CC_NODES];
     HandoffState handoff;
     RegionalContentDiscovery discovery[RC_ROOMS];
+    u8 quest_area,reserved[3];
     u32 sum;
 } ExtraRun;
 #define EX_LEGACY_BYTES (offsetof(ExtraRun,discovery)+sizeof(u32))
@@ -117,6 +118,8 @@ static bool8 extra_valid(void) {
         (c->visited>>CC_ROOMS) || (c->chests[1]>>18) || (c->cleared[1]>>18) ||
         (c->healed[1]>>18)) return FALSE;
     for (i=0;i<CC_NODES;i++) if (sExtra.gates[i]&~((1u<<CC_EDGE_MAX)-1u)) return FALSE;
+    if(!legacy && ((sExtra.quest_area!=AREA_FOREST && sExtra.quest_area!=AREA_CREAM) ||
+       sExtra.reserved[0] || sExtra.reserved[1] || sExtra.reserved[2]))return FALSE;
     if(!legacy)for(i=0;i<RC_ROOMS;i++) {
         const RegionalContentDiscovery* d=&sExtra.discovery[i];
         if((d->marks&~127u) || d->terrace>1)return FALSE;
@@ -166,6 +169,7 @@ void run_extension_write(u32 base_sum) {
     sExtra.version=EX_VERSION;sExtra.size=sizeof(sExtra);sExtra.inventory=gLegacyInventory;
     sExtra.cream=gCreamProgress;memcpy(sExtra.gates,gCreamOpenEdges,sizeof(sExtra.gates));
     sExtra.handoff=gHandoffState;memcpy(sExtra.discovery,gRegionalDiscovery,sizeof(sExtra.discovery));
+    sExtra.quest_area=gRegionalQuestArea;
     sExtra.sum=sum_bytes(&sExtra,offsetof(ExtraRun,sum));
     write_record(&sExtra,EX_BASE+(sSlot^1)*EX_SLOT_BYTES,sizeof(sExtra));
     sSlot^=1;sGeneration=sExtra.generation;run_profile_write();
@@ -194,7 +198,7 @@ bool8 run_extension_load(u32 base_sum,u32 seed) {
     memcpy(gCreamOpenEdges,sExtra.gates,sizeof(sExtra.gates));
     gCreamNode=gCreamProgress.node;
     if(sExtra.version==EX_LEGACY_VERSION)regional_content_new_run();
-    else memcpy(gRegionalDiscovery,sExtra.discovery,sizeof(sExtra.discovery));
+    else {memcpy(gRegionalDiscovery,sExtra.discovery,sizeof(sExtra.discovery));gRegionalQuestArea=sExtra.quest_area;}
     handoff_resume_regional(sExtra.version==EX_LEGACY_VERSION);
     return TRUE;
 }
