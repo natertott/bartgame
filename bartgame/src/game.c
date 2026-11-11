@@ -64,6 +64,9 @@ static u8 sCreamNextFacing;
 static u8 sDropOriginCell,sDropStep,sDropFrame;
 static struct {u8 area,cell,node; s16 x,y;u8 facing;} sAnnexReturn;
 static u16 sNewDoorTile[2];
+static u8 sNewDoorLatched;
+static const s16 sNewDoorX[2]={17*16+8,28*16+8};
+enum { SEWER_DOOR_FOOT=6*16+14, SEWER_DOOR_RETURN=SEWER_DOOR_FOOT+20 };
 
 static const char* const sKeyItemText[4] = {
     "",
@@ -167,6 +170,7 @@ static void load_sewer(int at_drain) {
     actors_clear();
     sprites_reset();
     sNewDoorTile[0]=sNewDoorTile[1]=0;
+    sNewDoorLatched=0;
     objects_room_reset();
     npc_room_reset();
     gDbg[4] = def->object_count;
@@ -190,8 +194,8 @@ static void load_sewer(int at_drain) {
             facing = FACE_S;
         }
     }
-    if(at_drain==2){sx=28*16+8;sy=6*16+34;facing=FACE_S;}
-    if(at_drain==3){sx=17*16+8;sy=6*16+34;facing=FACE_S;}
+    if(at_drain==2){sx=sNewDoorX[1];sy=SEWER_DOOR_RETURN;facing=FACE_S;}
+    if(at_drain==3){sx=sNewDoorX[0];sy=SEWER_DOOR_RETURN;facing=FACE_S;}
     player_init(sx, sy, facing);
     legacy_items_room_reset();
     handoff_room_enter(AREA_SEWER,0);
@@ -310,6 +314,28 @@ void game_leave_cream(void){begin_transition(AREA_SEWER,0,2);}
 void game_return_to_hub(void) {
     sHubcap = 1;
     begin_transition(AREA_SEWER, 0, 0);
+}
+
+/* Both new arches share their rendered threshold and interaction bounds.
+   Walking north enters at the sill. A also works after Bloom has walked
+   inside the arch, instead of requiring him to step back below its picture. */
+static bool8 sewer_use_new_door(bool8 walking_in) {
+    int px,py,i;
+    if(gGame.area!=AREA_SEWER||gPlayer->state!=PS_NORMAL)return FALSE;
+    if(walking_in && (sNewDoorLatched || !(gKeysHeld&KEY_UP) || gPlayer->facing!=FACE_N))return FALSE;
+    px=PX(gPlayer->x);py=PX(gPlayer->y);
+    if(py<SEWER_DOOR_FOOT-48 || py>=SEWER_DOOR_FOOT+42)return FALSE;
+    if(walking_in && py>SEWER_DOOR_FOOT+8)return FALSE;
+    for(i=0;i<2;i++) {
+        if(ABS(px-sNewDoorX[i])>(walking_in?12:21))continue;
+        /* A denied opt-in lock is announced once per upward approach. */
+        sNewDoorLatched=1;
+        if(i==0)game_open_handoff(HS_HUB,HS_HUB);
+        else if(!handoff_region_unlocked(AREA_CREAM))textbox_open("The ascent requires 500 remembrance or one victory in Entitlement mode.");
+        else game_travel_cream(gCreamWorld.entry_node,-1,-1,FACE_N,0);
+        return TRUE;
+    }
+    return FALSE;
 }
 
 /* --------------------------------------------------------- chests -- */
@@ -459,6 +485,7 @@ static void check_exits(void) {
         return;
     }
     if (gGame.area == AREA_SEWER) {
+        if(sewer_use_new_door(TRUE))return;
         if (room_type_px(px, py - 4) == TT_EXIT)
             begin_transition(AREA_FOREST, gWorld.entry, SIDE_S);
         return;
@@ -858,7 +885,7 @@ static void draw_world(void) {
     if(gGame.area==AREA_SEWER) {
         int i;for(i=0;i<2;i++) {
             if(!sNewDoorTile[i])sNewDoorTile[i]=sprite_load_frame(SHEET_CREAMDOORS,1-i);
-            if(sNewDoorTile[i])draw_sprite((i?28:17)*16-8-gCamX,6*16+14-sheets[SHEET_CREAMDOORS].h-gCamY,SHEET_CREAMDOORS,sNewDoorTile[i],0,0,2,sheets[SHEET_CREAMDOORS].pal);
+            if(sNewDoorTile[i])draw_sprite(sNewDoorX[i]-16-gCamX,SEWER_DOOR_FOOT-sheets[SHEET_CREAMDOORS].h-gCamY,SHEET_CREAMDOORS,sNewDoorTile[i],0,0,2,sheets[SHEET_CREAMDOORS].pal);
         }
     }
     PERF_CALL(PF_ENEMIES_DRAW,enemies_draw());
@@ -888,6 +915,7 @@ static void update_play(void) {
     enemy_prototypes_tick();
 #endif
     debug_spawn();
+    if(!(gKeysHeld&KEY_UP))sNewDoorLatched=0;
     if(handoff_menu_active()){bomb_charge_cancel();handoff_menu_update();return;}
     if (npc_dialogue_active()) {
         bomb_charge_cancel();
@@ -908,11 +936,7 @@ static void update_play(void) {
     }
     if((gKeysDown&KEY_A)&&gPlayer->state==PS_CARRY&&handoff_try_interact()) {gKeysDown&=~KEY_A;if(!handoff_menu_active())draw_world();return;}
     if((gKeysDown&KEY_A)&&gPlayer->state==PS_NORMAL) {
-        if(gGame.area==AREA_SEWER) {
-            int px=PX(gPlayer->x),py=PX(gPlayer->y);
-            if(ABS(px-(17*16+8))<22&&ABS(py-(6*16+34))<22){gKeysDown&=~KEY_A;game_open_handoff(HS_HUB,HS_HUB);return;}
-            if(ABS(px-(28*16+8))<22&&ABS(py-(6*16+34))<22){gKeysDown&=~KEY_A;if(!handoff_region_unlocked(AREA_CREAM))textbox_open("The ascent requires 500 remembrance or one victory in Entitlement mode.");else game_travel_cream(gCreamWorld.entry_node,-1,-1,FACE_N,0);return;}
-        }
+        if(sewer_use_new_door(FALSE)){gKeysDown&=~KEY_A;return;}
         if(cream_runtime_interact()||handoff_try_interact()){gKeysDown&=~KEY_A;if(!handoff_menu_active())draw_world();return;}
     }
     if ((gKeysDown&KEY_A) && cabinet_try_interact()) {
