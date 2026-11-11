@@ -16,6 +16,7 @@
 #include "legacy_items.h"
 #include "legacy_enemies.h"
 #include "handoff_events.h"
+#include "handoff_objects.h"
 
 static u16 sItemsTile, sFxTile, sProjTile, sLiftTile, sArrowTile, sMouthTile, sPickTile, sIconTile;
 #define ICON_CACHE_SLOTS 7
@@ -175,6 +176,7 @@ static void proj_update(Actor* a) {
         a->frame = F_PROJ_SPORE;
     /* walls stop seeds and shards; spores drift through canopy */
     bool8 wall = a->type == PJ_ARROW ? room_box_solid(px-3,py-17,px+2,py-12) : room_solid_px(px,py-4);
+    if(handoff_objects_box_solid(px-3,py-17,px+2,py-4))wall=TRUE;
     if (a->type != PJ_SPORE && wall) {
         fx_spawn(FX_SPARK, px, py);
         actor_free(a);
@@ -497,7 +499,7 @@ static void thrown_update(Actor* a) {
         return;
     }
     int px = PX(a->x), py = PX(a->y);
-    if (a->z <= 0 || px < 8 || py < 8 || px > room_px_w() - 8 || py > room_px_h() - 8 || (a->timer > 4 && room_solid_px(px, py - 4))) {
+    if (a->z <= 0 || px < 8 || py < 8 || px > room_px_w() - 8 || py > room_px_h() - 8 || (a->timer > 4 && (room_solid_px(px, py - 4)||handoff_objects_box_solid(px-3,py-7,px+3,py)))) {
         a->z = 0;
         thrown_break(a);
         return;

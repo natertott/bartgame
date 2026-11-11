@@ -4,6 +4,7 @@
 
 /* the pause menu: items, key items, the map; Select saves */
 void menu_open(void);
+void menu_open_map_at(int cell);
 void menu_update(void);
 
 #endif

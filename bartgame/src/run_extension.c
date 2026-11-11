@@ -5,12 +5,15 @@
 #include "handoff_events.h"
 #include "cream_runtime.h"
 #include "cream_room.h"
+#include "regional_content.h"
+#include "game.h"
 #include "util.h"
 #include "journal.h"
 #include <stddef.h>
 #define SRAM_BYTES ((volatile u8*)0x0e000000)
 #define EX_MAGIC 0x58455243u
-#define EX_VERSION 2 /* first published layout includes u16 Four-Seal item IDs */
+#define EX_VERSION RUN_EXTENSION_VERSION /* actual map anchors append after v2 */
+#define EX_LEGACY_VERSION RUN_EXTENSION_LEGACY_VERSION
 #define PROFILE_MAGIC 0x50485242u
 #define EX_SLOT_BYTES RUN_EXTENSION_SLOT_BYTES
 #define EX_BASE RUN_EXTENSION_SRAM_BASE
@@ -24,8 +27,10 @@ typedef struct {
     CreamProgress cream;
     u8 gates[CC_NODES];
     HandoffState handoff;
+    RegionalContentDiscovery discovery[RC_ROOMS];
     u32 sum;
 } ExtraRun;
+#define EX_LEGACY_BYTES (offsetof(ExtraRun,discovery)+sizeof(u32))
 typedef struct {
     u32 magic,generation;
     u16 version,size;
@@ -37,6 +42,7 @@ typedef char ProfileFitsSlot[(sizeof(MetaRecord)<=PROFILE_BYTES)?1:-1];
 typedef char ExtensionBeforeProfile[(EX_BASE+2*EX_SLOT_BYTES<=PROFILE_BASE)?1:-1];
 typedef char ProfileBeforeJournal[(PROFILE_BASE+2*PROFILE_BYTES<=JOURNAL_SRAM_OFFSET)?1:-1];
 typedef char StableMetaPrefix[(META_BYTES==16)?1:-1];
+typedef char StablePublishedV2[(EX_LEGACY_BYTES==RUN_EXTENSION_LEGACY_BYTES)?1:-1];
 static ExtraRun sExtra EWRAM_BSS;
 static u32 sGeneration,sProfileGeneration;
 static u8 sSlot,sProfileSlot,sProfileLoaded;
@@ -62,28 +68,61 @@ static bool8 inventory_valid(const LegacyInventory* p) {
         if (p->bottles[i] && (p->bottles[i]<LI_BOTTLE_BUTTER || p->bottles[i]>LI_CHARM_DIN)) return FALSE;
     return TRUE;
 }
-static bool8 handoff_valid(const HandoffState* p) {
+static bool8 discovery_spot_valid(Spot p) {
+    return (p.x==255&&p.y==255) || (p.x<32&&p.y<24);
+}
+static bool8 handoff_valid(const HandoffState* p,bool8 legacy) {
     int i;
     if (!meta_valid((const u8*)p) || (p->food_mask>>HF_COUNT) ||
         (p->charm_mask&~7u) || p->draft_round>3 || p->draft_state>HDRAFT_DONE ||
         (p->gold_owned&~15u) || (p->gold_fused&~15u) || (p->fusion_flags&~7u) ||
         p->contract_step>4 || p->contract_kind>HC_ITEM || p->contract_state>2 ||
-        p->contract_target>=HS_COUNT || p->memory_length>6 || p->memory_known>1 ||
+        p->memory_length>6 || p->memory_known>1 ||
         p->quest.kind>HQ_BLOCKS || p->quest.state>4) return FALSE;
+    if(legacy) {
+        if(p->contract_target>=HS_COUNT)return FALSE;
+    } else if(p->contract_state==1) {
+        if(!p->contract_kind || p->contract_target<RC_FIELD_BASE ||
+           p->contract_target>=RC_INTERIOR_BASE+46)return FALSE;
+        if((p->contract_kind==HC_WAVE || p->contract_kind==HC_QUEST) &&
+           p->contract_target>=RC_INTERIOR_BASE)return FALSE;
+    } else if(p->contract_target && (p->contract_target<RC_FIELD_BASE ||
+               p->contract_target>=RC_INTERIOR_BASE+46))return FALSE;
+    if(p->quest.state==2) {
+        const HandoffQuest* q=&p->quest;
+        if(q->kind==HQ_NONE)return FALSE;
+        if((q->origin_area==AREA_FOREST || q->origin_area==AREA_CREAM) && q->origin_cell>=25)return FALSE;
+        if(q->origin_area!=AREA_FOREST && q->origin_area!=AREA_CREAM && q->origin_area!=AREA_HANDOFF)return FALSE;
+        if(q->kind==HQ_COURIER && ((q->target_area!=AREA_FOREST && q->target_area!=AREA_CREAM) || q->target_cell>=25))return FALSE;
+    }
     for (i=0;i<6;i++) if (p->memory_code[i]>3) return FALSE;
     for (i=0;i<3;i++) if (p->fuser_cell[i]>=25 || p->fuser_shape[i]>=3) return FALSE;
     return TRUE;
 }
 static bool8 extra_valid(void) {
     int i;
+    bool8 legacy=sExtra.version==EX_LEGACY_VERSION;
     const CreamProgress* c=&sExtra.cream;
-    if (sExtra.magic!=EX_MAGIC || sExtra.version!=EX_VERSION || sExtra.size!=sizeof(sExtra) ||
-        sExtra.sum!=sum_bytes(&sExtra,offsetof(ExtraRun,sum)) ||
-        !inventory_valid(&sExtra.inventory) || !handoff_valid(&sExtra.handoff) ||
+    if(sExtra.magic!=EX_MAGIC)return FALSE;
+    if(legacy) {
+        u32 old_sum;
+        /* The old footer occupies the first four appended bytes. Reading
+           through the existing EWRAM buffer avoids a second 1.4KB stack copy. */
+        memcpy(&old_sum,sExtra.discovery,sizeof(old_sum));
+        if(sExtra.size!=EX_LEGACY_BYTES || old_sum!=sum_bytes(&sExtra,offsetof(ExtraRun,discovery)))return FALSE;
+    } else if(sExtra.version!=EX_VERSION || sExtra.size!=sizeof(sExtra) ||
+              sExtra.sum!=sum_bytes(&sExtra,offsetof(ExtraRun,sum)))return FALSE;
+    if (!inventory_valid(&sExtra.inventory) || !handoff_valid(&sExtra.handoff,legacy) ||
         c->node>=CC_NODES || (c->rewards&~7u) || c->boss_dead>1 || c->reserved ||
         (c->visited>>CC_ROOMS) || (c->chests[1]>>18) || (c->cleared[1]>>18) ||
         (c->healed[1]>>18)) return FALSE;
     for (i=0;i<CC_NODES;i++) if (sExtra.gates[i]&~((1u<<CC_EDGE_MAX)-1u)) return FALSE;
+    if(!legacy)for(i=0;i<RC_ROOMS;i++) {
+        const RegionalContentDiscovery* d=&sExtra.discovery[i];
+        if((d->marks&~127u) || d->terrace>1)return FALSE;
+        if(!discovery_spot_valid(d->door) || !discovery_spot_valid(d->npc) ||
+           !discovery_spot_valid(d->mechanism) || !discovery_spot_valid(d->cache))return FALSE;
+    }
     return TRUE;
 }
 static bool8 profile_valid(const MetaRecord* p) {
@@ -126,7 +165,8 @@ void run_extension_write(u32 base_sum) {
     sExtra.generation=sGeneration+1;sExtra.base_sum=base_sum;
     sExtra.version=EX_VERSION;sExtra.size=sizeof(sExtra);sExtra.inventory=gLegacyInventory;
     sExtra.cream=gCreamProgress;memcpy(sExtra.gates,gCreamOpenEdges,sizeof(sExtra.gates));
-    sExtra.handoff=gHandoffState;sExtra.sum=sum_bytes(&sExtra,offsetof(ExtraRun,sum));
+    sExtra.handoff=gHandoffState;memcpy(sExtra.discovery,gRegionalDiscovery,sizeof(sExtra.discovery));
+    sExtra.sum=sum_bytes(&sExtra,offsetof(ExtraRun,sum));
     write_record(&sExtra,EX_BASE+(sSlot^1)*EX_SLOT_BYTES,sizeof(sExtra));
     sSlot^=1;sGeneration=sExtra.generation;run_profile_write();
 #else
@@ -136,6 +176,8 @@ void run_extension_write(u32 base_sum) {
 bool8 run_extension_finished(u32 base_sum) {return find_extra(base_sum)&&sExtra.cream.boss_dead;}
 static void seed_extension(u32 seed) {
     legacy_items_new_run();legacy_items_seed_owned();handoff_new_run(seed);cream_runtime_new_run(seed);
+    regional_content_new_run();
+    handoff_resume_regional(FALSE);
 }
 bool8 run_extension_load(u32 base_sum,u32 seed) {
     u8 meta[META_BYTES];
@@ -151,6 +193,9 @@ bool8 run_extension_load(u32 base_sum,u32 seed) {
     else run_profile_write(); /* Recover a lost profile from a complete run. */
     memcpy(gCreamOpenEdges,sExtra.gates,sizeof(sExtra.gates));
     gCreamNode=gCreamProgress.node;
+    if(sExtra.version==EX_LEGACY_VERSION)regional_content_new_run();
+    else memcpy(gRegionalDiscovery,sExtra.discovery,sizeof(sExtra.discovery));
+    handoff_resume_regional(sExtra.version==EX_LEGACY_VERSION);
     return TRUE;
 }
 void run_extension_erase(void) {

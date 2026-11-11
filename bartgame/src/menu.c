@@ -32,6 +32,8 @@
 #include "menu_studies.h"
 #include "gear_menu.h"
 #include "bomb_throw.h"
+#include "regional_content.h"
+#include "handoff_events.h"
 
 #define MAP_PAL PAL_SLOT_MAP
 #define PIC_BASE (UI_BG3 + UI_TILE_COUNT) /* the map's picture after the kit */
@@ -908,7 +910,8 @@ static void ms_details(const MenuItem* item){
 /* One semantic vocabulary serves overview, chamber and legend. These are
    final seven-pixel pictograms, never a filtered copy of an item image.
    Bright marks have a dark one-pixel contour against every terrain value. */
-enum { MM_YOU, MM_DOOR, MM_TASK, MM_CHEST, MM_HEAL, MM_HEART, MM_FOLK, MM_RELIC, MM_GATE, MM_COUNT };
+enum { MM_YOU, MM_DOOR, MM_TASK, MM_CHEST, MM_HEAL, MM_HEART, MM_FOLK, MM_RELIC, MM_GATE,
+       MM_WAVE, MM_FUSION, MM_GOAL, MM_WORK, MM_MORE, MM_COUNT };
 static const struct { const char* name; u8 rows[7]; } sMapSymbol[MM_COUNT] = {
     {"You",   { 8,28,62,127,8,8,8 }},
     {"Door",  {28,62,99,99,99,99,127}},
@@ -919,10 +922,15 @@ static const struct { const char* name; u8 rows[7]; } sMapSymbol[MM_COUNT] = {
     {"Folk",  {127,64,64,124,64,64,64}},
     {"Relic", {8,28,62,127,62,28,8}},
     {"Gate",  {127,85,85,85,85,85,127}},
+    {"Wave",  {65,65,65,73,85,99,65}},
+    {"Fusion",{28,34,73,85,73,34,28}},
+    {"Goal",  {8,8,42,127,42,8,8}},
+    {"Work",  {34,127,34,93,34,127,34}},
+    {"More",  {0,8,8,62,8,8,0}},
 };
 /* Read-only review state. The game never consumes these reports. */
-u16 gMenuMapEvents[25];
-MenuMapMarker gMenuMapMarkers[16];
+u16 gMenuMapEvents[25] EWRAM_BSS;
+MenuMapMarker gMenuMapMarkers[16] EWRAM_BSS;
 u8 gMenuMapMarkerCount;
 
 static void ms_marker(int x,int y,int kind,int ink){
@@ -950,6 +958,16 @@ static u16 ms_events(int cell){
         for(side=0;side<4;side++)if(gate_mark(cell,side)>=0){out|=1<<MM_GATE;break;}
     }
     if(relic_cell()==cell)out|=1<<MM_RELIC;
+    if(known(cell)) {
+        RegionalContentDiscovery d;u8 flags=regional_content_marks(AREA_FOREST,cell,&d);
+        if(flags&RC_MARK_DOOR)out|=1<<MM_DOOR;
+        if(flags&RC_MARK_QUEST)out|=1<<MM_TASK;
+        if(flags&RC_MARK_WAVE)out|=1<<MM_WAVE;
+        if(flags&RC_MARK_MECHANISM)out|=1<<MM_WORK;
+        if(flags&RC_MARK_FUSION)out|=1<<MM_FUSION;
+        if(flags&RC_MARK_CACHE)out|=1<<MM_CHEST;
+    }
+    {int area,at,tx,ty;if(handoff_chain_location(&area,&at,&tx,&ty)&&area==AREA_FOREST&&at==cell)out|=1<<MM_GOAL;}
     return out;
 }
 static const u8* ms_event_positions(int cell){
@@ -999,14 +1017,17 @@ static void ms_draw_located_markers(void){
     }
 }
 static void ms_room_contents(MSRect r,u16 mask){
-    static const u8 order[]={MM_YOU,MM_DOOR,MM_TASK,MM_FOLK,MM_CHEST,MM_HEAL,MM_RELIC,MM_HEART,MM_GATE};
-    int n=0,i,cols=MAX(1,(r.w-2)/9),rows,total=0,startx,starty;
+    static const u8 order[]={MM_GOAL,MM_YOU,MM_DOOR,MM_TASK,MM_WAVE,MM_FUSION,MM_WORK,MM_FOLK,MM_CHEST,MM_HEAL,MM_RELIC,MM_HEART,MM_GATE,MM_MORE};
+    int gap=(mask&~511u)?8:9;
+    int n=0,i,cols=MAX(1,(r.w-2)/gap),rows,total=0,startx,starty,visible,capacity;
     for(i=0;i<MM_COUNT;i++)if(mask&(1<<order[i]))total++;
     if(!total)return;
-    cols=MIN(cols,total);rows=(total+cols-1)/cols;
-    startx=r.x+(r.w-cols*9)/2+4;starty=r.y+(r.h-rows*9)/2+4;
+    cols=MIN(cols,total);capacity=cols*MAX(1,(r.h-1)/9);visible=MIN(total,capacity);rows=(visible+cols-1)/cols;
+    startx=r.x+(r.w-cols*gap)/2+gap/2;starty=r.y+(r.h-rows*9)/2+4;
     for(i=0;i<MM_COUNT;i++)if(mask&(1<<order[i])){
-        ms_marker(startx+(n%cols)*9,starty+(n/cols)*9,order[i],order[i]==MM_YOU?MAP_INK_GOLD:MAP_INK_CREAM);n++;
+        int kind=total>capacity&&n==capacity-1?MM_MORE:order[i];
+        if(n>=visible)break;
+        ms_marker(startx+(n%cols)*gap,starty+(n/cols)*9,kind,kind==MM_YOU||kind==MM_GOAL?MAP_INK_GOLD:MAP_INK_CREAM);n++;
     }
 }
 static void ms_map(MSRect box,int zoom,int mode){
@@ -1049,6 +1070,18 @@ static void ms_map(MSRect box,int zoom,int mode){
                 int x0,y0,x1,y1,tx,ty;roomgen_gate_tiles(side,&x0,&y0,&x1,&y1);tx=(x0+x1)/2;ty=(y0+y1)/2;
                 ms_located_marker(box,base_x+(((x0+x1+1)*8-16)*scale)/16,base_y+(((y0+y1+1)*8-32)*scale)/16,MM_GATE,tx,ty);
             }}
+            {
+                RegionalContentDiscovery d;regional_content_marks(AREA_FOREST,sMapCur,&d);
+                static const u8 flags[]={RC_MARK_DOOR,RC_MARK_QUEST,RC_MARK_WAVE,RC_MARK_MECHANISM,RC_MARK_FUSION,RC_MARK_CACHE};
+                static const u8 kinds[]={MM_DOOR,MM_TASK,MM_WAVE,MM_WORK,MM_FUSION,MM_CHEST};
+                const Spot* point[6]={&d.door,&d.npc,&d.npc,&d.mechanism,&d.npc,&d.cache};
+                for(int i=0;i<6;i++)if((d.marks&flags[i])&&point[i]->x<32&&point[i]->y<24) {
+                    int tx=point[i]->x,ty=point[i]->y;
+                    ms_located_marker(box,base_x+(tx-1)*scale+scale/2,base_y+(ty-2)*scale+scale/2,kinds[i],tx,ty);
+                }
+                {int area,cell,tx,ty;if(handoff_chain_location(&area,&cell,&tx,&ty)&&area==AREA_FOREST&&cell==sMapCur&&tx>=0&&tx<32&&ty>=0&&ty<24)
+                    ms_located_marker(box,base_x+(tx-1)*scale+scale/2,base_y+(ty-2)*scale+scale/2,MM_GOAL,tx,ty);}
+            }
             if(gGame.area==AREA_FOREST&&gGame.cell==sMapCur)ms_located_marker(box,base_x+(PX(gPlayer->x)-16)*scale/16,base_y+(PX(gPlayer->y)-32)*scale/16,MM_YOU,PX(gPlayer->x)/16,PX(gPlayer->y)/16);
             /* All tethers are underneath all symbols, so a later nearby
                callout cannot scratch through another icon's body. */
@@ -1106,16 +1139,17 @@ cursor:
     ms_box(base_x+(sMapCur%5)*cw,base_y+(sMapCur/5)*ch,cw,ch,MAP_INK_GOLD);
 }
 static void ms_map_info(MSRect r){
-    Cell* c=&gWorld.cells[sMapCur];int y,i;
+    Cell* c=&gWorld.cells[sMapCur];int y,i;u16 events=ms_events(sMapCur);
     if(!ms_valid(r))return;
     ms_frame(r,0);
     if(r.h<=24){ms_textfit(r.x+4,r.y+4,r.w-8,"You Door Task Folk Chest Heal Relic Heart Gate",UI_INK_CREAM);return;}
     ms_wrap((MSRect){r.x+4,r.y+4,r.w-8,18},known(sMapCur)?sArchName[c->arch]:"Unknown wood",UI_INK_HIGH,9);y=r.y+24;
-    for(i=0;i<MM_COUNT&&y+8<=r.y+r.h-3;i++,y+=9){
+    for(i=0;i<MM_COUNT&&y+8<=r.y+r.h-3;i++)if(events&(1<<i)){
         int dx,dy;const u8* rows=sMapSymbol[i].rows;
         /* UI palette copy of exactly the same native map pictogram. */
         for(dy=0;dy<7;dy++)for(dx=0;dx<7;dx++)if(rows[dy]&(1<<(6-dx)))ms_pixel(r.x+4+dx,y+dy,UI_INK_GOLD);
         ms_textfit(r.x+14,y,r.w-18,sMapSymbol[i].name,UI_INK_CREAM);
+        y+=9;
     }
 }
 static void ms_upload(void){
@@ -1225,7 +1259,7 @@ static void ms_update(void){
     if(gKeysDown&KEY_R){
         if(sPage<PG_MAP&&n)sStudyFocus[sPage]=idx[sCursor];
         sPage=(sPage+1)%PG_COUNT;
-        if(sPage==PG_MAP && gGame.area==AREA_CREAM){ms_restore();gear_menu_open_map();return;}
+        if(sPage==PG_MAP && gear_menu_region(NULL)==AREA_CREAM){ms_restore();gear_menu_open_map();return;}
         if(sPage<PG_MAP){int i;n=gather(sPage==PG_KEYS?sKeys:sItems,sPage==PG_KEYS?KEY_COUNT:ITEM_COUNT,idx);sCursor=0;for(i=0;i<n;i++)if(idx[i]==sStudyFocus[sPage])sCursor=i;}
         dirty=1;
     }else if(sPage==PG_MAP){
@@ -1266,6 +1300,16 @@ void menu_open(void) {
     draw_page();
     gGame.state = GS_MAP;
     sfx_play(SFX_MENU);
+}
+
+void menu_open_map_at(int cell) {
+    menu_open();sPage=PG_MAP;sZoom=0;sMapCur=CLAMP(cell,0,CELLS-1);
+#if BART_MENU_VARIANT
+    sStudyBaseReady=0;sStudyMapReady=0;ms_draw();
+#else
+    draw_page();
+#endif
+    gKeysDown=0;
 }
 
 static void menu_close(void) {

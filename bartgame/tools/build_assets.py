@@ -217,7 +217,7 @@ for r in rooms.ROOMS:
             hub_used |= set(rooms.expand(r[layer], r['w'], r['h'], mt_names))
 MYST_EXTRA = {'torch', 'torch_lit', 'boulder', 'chest', 'chest_open', 'sparkle', 'black', 'moss0', 'moss1', 'moss2'}
 SETS = [
-    ('forest', lambda n, i: not n.startswith(('sw_', 'swh_', 'cave_', 'hollow_', 'thicket_', 'myst_', 'cream_', 'lh_'))),
+    ('forest', lambda n, i: n.startswith('lh_mob_') or not n.startswith(('sw_', 'swh_', 'cave_', 'hollow_', 'thicket_', 'myst_', 'cream_', 'lh_'))),
     ('sewer', lambda n, i: i in hub_used or (SC.VARIANT != 9 and n.startswith('swh_'))),
     ('myst', lambda n, i: n.startswith(('cave_', 'hollow_', 'thicket_', 'myst_', 'lh_')) or n in MYST_EXTRA),
     ('cream', lambda n, i: n.startswith(('cream_','lh_'))),
@@ -251,7 +251,7 @@ for si, (sname, pred) in enumerate(SETS):
                                else palettes.BG_PALETTES)
     if sname == 'cream':
         area_palette_colors.update(cream_terrain.PALETTES)
-    if sname in ('cream','myst'):
+    if sname in ('forest','cream','myst'):
         area_palette_colors.update(handoff_items.BGPALETTES)
     ts = Tileset(limit=768 if FOREST_CONCEPTS.TREE_WORLD and sname == 'forest' else 1024)
     ts.add([[0] * 8 for _ in range(8)], 0, 0)  # tile 0 blank

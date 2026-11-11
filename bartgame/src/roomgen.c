@@ -2860,3 +2860,15 @@ void roomgen_preview_details(int cell, u8* marks, const u8** mask, const u8** pa
 void roomgen_preview_events(int cell, u8* marks) {
     roomgen_preview_details(cell, marks, 0, 0);
 }
+
+bool8 roomgen_content_reserved(int x,int y) {
+    if(!inside(x,y)||sPath[y][x])return TRUE;
+    return roomgen_content_landmark_reserved(x,y);
+}
+bool8 roomgen_content_landmark_reserved(int x,int y) {
+    if(!inside(x,y)||near_door(x,y))return TRUE;
+#if BART_FOREST_VARIANT >= 6
+    if(required_reserved(x,y))return TRUE;
+#endif
+    return FALSE;
+}

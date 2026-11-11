@@ -39,10 +39,12 @@ def sym(name):
     return _syms[name]
 
 
-def boot(rom=ROM, frames=30, seed=0xB4A7, start=True):
+def boot(rom=ROM, frames=30, seed=0xB4A7, start=True, finish_draft=True):
     """Boot to the title, pin the run seed, press Start, and wait for the
     sewer. seed=None leaves the title's own roll. start=False stays on the
-    title screen."""
+    title screen. New regional builds choose the first offer in each opening
+    round through real A inputs; finish_draft=False leaves that flow to a test.
+    Older ROMs without the opening sentinel retain their original inputs."""
     img = mgba.image.Image(240, 160)
     c = mgba.core.load_path(rom)
     c.set_video_buffer(img)
@@ -70,6 +72,18 @@ def boot(rom=ROM, frames=30, seed=0xB4A7, start=True):
     # the opening text box
     press(c, 'A', 2, 20)
     press(c, 'A', 2, 20)
+    if finish_draft:
+        try:
+            pending = sym('gStartingDraft')
+        except KeyError:
+            pending = None
+        if pending is not None:
+            for _ in range(120):
+                if not r8(c, pending):
+                    break
+                press(c, 'A', 2, 22)
+            else:
+                raise RuntimeError('the opening three-choice draft did not finish')
     return c
 
 

@@ -251,7 +251,7 @@ void legacy_enemy_room_reset(void) {
 static Actor* child(Actor* e,int type,int x,int y,int mode) {
     Actor* c;
     sChildParent=e-gActors;sChildMode=mode;c=enemy_spawn(type,x,y);sChildParent=0;sChildMode=0;
-    if(c)cream_runtime_track_enemy(c,e);
+    if(c){cream_runtime_track_enemy(c,e);handoff_track_enemy(c,e);}
     return c;
 }
 void legacy_enemy_init(Actor* e) {

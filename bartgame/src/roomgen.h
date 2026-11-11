@@ -49,5 +49,9 @@ void roomgen_preview_events(int cell, u8* marks);
 void roomgen_preview_details(int cell, u8* marks, const u8** mask, const u8** path);
 void roomgen_door_pos(int side, int* px, int* py);
 void roomgen_gate_tiles(int side, int* x0, int* y0, int* x1, int* y1);
+/* Read only, immediately after the live build: an added regional stamp must
+   retain every authored feature front, border arrival and hidden route. */
+bool8 roomgen_content_reserved(int tx,int ty);
+bool8 roomgen_content_landmark_reserved(int tx,int ty);
 
 #endif

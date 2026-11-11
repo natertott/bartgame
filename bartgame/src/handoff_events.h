@@ -22,6 +22,8 @@ enum { HF_SWORD_KNOCKBACK, HF_WALK_SPEED, HF_STEADFAST, HF_CURSE_KNOCKBACK,
        HF_SWORD_EDGE, HF_CURSE_BLUNT, HF_BEAM_ANY, HF_FLEET, HF_COUNT };
 enum { HC_NAYRU=1, HC_FARORE=2, HC_DIN=4 };
 enum { HDRAFT_NONE, HDRAFT_RUNNING, HDRAFT_DONE };
+/* Ordinary Drain services; these never select or warp to content rooms. */
+enum { HRS_DRAFT=1,HRS_INN,HRS_SHOP,HRS_FUSE,HRS_TROPHY,HRS_HINT,HRS_CHAIN,HRS_DIFFICULTY };
 #define HTOOL_DIG 32
 #define HTOOL_WATER 33
 #define HANDOFF_FLEET 0x104
@@ -72,6 +74,7 @@ void handoff_new_run(u32 seed);
 void handoff_on_win(void);
 void handoff_on_death(void);
 void handoff_room_enter(int area,int cell);
+void handoff_suspend_region(void);
 void handoff_build(int site,int kind,u32 seed);
 void handoff_enter(void); /* after player_init and sprite reset */
 void handoff_start_pos(int* px,int* py);
@@ -85,8 +88,16 @@ int handoff_requested_site(void);
 void handoff_clear_request(void);
 int handoff_current_site(void);
 int handoff_current_kind(void);
+int handoff_site_kind(int site);
 bool8 handoff_menu_active(void);
 void handoff_menu_update(void);
+bool8 handoff_open_service(int service);
+bool8 handoff_starting_draft(void);
+bool8 handoff_claim_inn_reward(void);
+bool8 handoff_chain_location(int* area,int* cell,int* tx,int* ty);
+void handoff_chain_text(char* out,int capacity);
+bool8 handoff_chain_target_valid(int site);
+void handoff_resume_regional(bool8 legacy);
 
 void handoff_notify(int kind,int area,int cell,int item);
 void handoff_tile_cleared(int tx,int ty);
@@ -94,6 +105,7 @@ void handoff_tool_box(int kind,int x0,int y0,int x1,int y1);
 void handoff_cargo_thrown(Actor* object);
 bool8 handoff_cargo_land(Actor* object);
 void handoff_on_enemy_killed(int type,int px,int py);
+void handoff_track_enemy(Actor* enemy,const Actor* parent);
 void handoff_kinstone_drop(int color,int shape,int px,int py);
 int handoff_map_mark(int area,int cell); /* fuser/pocket marker, Compass only */
 

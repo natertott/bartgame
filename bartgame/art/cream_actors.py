@@ -181,11 +181,58 @@ def sewer_door(style=0):
     return padded
 
 
+def drain_bed():
+    """A narrow cot with an ivory pillow and patched blanket at native size."""
+    image=Image.new('P',(32,32),0);d=ImageDraw.Draw(image)
+    # Vertical length and an exposed pale pillow carry the familiar bed read.
+    d.polygon([(6,5),(8,2),(24,2),(26,5),(26,28),(24,31),(7,30),(5,27),(5,7)],fill=1)
+    d.polygon([(8,5),(23,5),(24,7),(24,26),(8,27)],fill=11)
+    d.rectangle((8,7,23,25),fill=6)
+    d.rectangle((9,8,22,13),fill=7);d.line((10,8,21,8),fill=8)
+    d.line((10,13,21,13),fill=5)
+    d.polygon([(8,15),(23,15),(23,26),(9,27)],fill=3)
+    d.line((9,15,22,15),fill=5);d.line((9,16,9,25),fill=4)
+    d.rectangle((14,20,19,24),fill=4);d.line((15,20,18,20),fill=6)
+    d.line((8,27,23,27),fill=12);d.line((8,28,23,28),fill=10)
+    for x,y in ((5,3),(24,3),(6,28),(24,28)):
+        d.rectangle((x,y,x+2,min(31,y+3)),fill=1)
+        d.line((x,y,x,y+2),fill=12);d.point((x,y),fill=14)
+    return image
+
+
+def drain_trophy():
+    """One unmistakable gold cup on a tarnished low plinth, in the FX bank."""
+    image=Image.new('P',(32,32),0);d=ImageDraw.Draw(image)
+    d.ellipse((7,27,25,31),fill=1)
+    d.polygon([(8,23),(23,23),(26,27),(24,30),(8,30),(5,27)],fill=1)
+    d.polygon([(9,24),(22,24),(24,27),(8,27)],fill=7)
+    d.line((9,24,21,24),fill=9);d.line((9,28,23,28),fill=3)
+    d.rectangle((14,15,18,22),fill=1);d.rectangle((15,15,17,21),fill=9)
+    d.line((15,16,15,20),fill=11)
+    d.ellipse((6,5,13,14),outline=1,width=3);d.ellipse((20,5,27,14),outline=1,width=3)
+    d.arc((7,6,13,13),75,285,fill=9,width=1)
+    d.arc((20,6,26,13),255,105,fill=8,width=1)
+    d.polygon([(9,4),(24,4),(22,13),(19,17),(14,17),(11,13)],fill=1)
+    d.polygon([(11,6),(22,6),(20,12),(18,15),(15,15),(13,12)],fill=9)
+    d.line((12,7,13,11),fill=12,width=2)
+    d.line((11,5,22,5),fill=11);d.line((14,22,19,22),fill=10)
+    d.rectangle((15,8,18,11),fill=15);d.point((15,8),fill=11)
+    return image
+
+
 def build_sheets():
+    folk_frames={'folk%d_%s'%(s,p):A.ink_rows(folk(s,i))
+                 for s in range(3) for i,p in enumerate(('idle','walk1','walk2','talk'))}
+    # Append to an existing late-added family: all sheet IDs and its twelve
+    # original frame IDs/pixels remain exact. The legacy ascent picture stays
+    # available for old evidence; the real Drain now repeats its BG ladder.
+    folk_frames['drain_bed']=A.ink_rows(drain_bed())
+    folk_frames['drain_trophy']=A.ink_rows(drain_trophy())
     return [
         dict(name='creamdoors',w=32,h=64,pal='iron',frames={'ascent':A.ink_rows(sewer_door(0)),'annex':A.ink_rows(sewer_door(1)),'return':A.ink_rows(sewer_door(2))}),
         dict(name='creamclimb',w=32,h=32,pal='hero',frames={'climb_%d'%i:A.ink_rows(climb_frame(i)) for i in range(4)}),
-        dict(name='creamfolk',w=32,h=32,pal='iron',frames={'folk%d_%s'%(s,p):A.ink_rows(folk(s,i)) for s in range(3) for i,p in enumerate(('idle','walk1','walk2','talk'))}),
+        dict(name='creamfolk',w=32,h=32,pal='iron',frames=folk_frames,
+             frame_pal={name:'fx' if name=='drain_trophy' else 'iron' for name in folk_frames}),
         dict(name='cream_boss',w=32,h=64,pal='blight',frames={p+'_'+f:A.ink_rows(peak_boss(p,f)) for p in POSES for f in FACES}),
     ]
 
@@ -194,16 +241,17 @@ def write_review(destination):
     destination=Path(destination);destination.mkdir(parents=True,exist_ok=True)
     sheets=build_sheets();font=ImageFont.load_default();canvas=Image.new('RGB',(640,1150),(24,24,32));d=ImageDraw.Draw(canvas);d.fontmode='1'
     d.text((6,5),'SOURCE ART / native canvases; added frames only, no old art changed',fill=(240,232,200),font=font)
-    banks={'hero':R.PALETTES['hero'],'iron':R.PALETTES['stone'],'blight':R.PALETTES['blight']}
+    banks={'hero':R.PALETTES['hero'],'iron':R.PALETTES['stone'],'blight':R.PALETTES['blight'],'fx':R.PALETTES['gold']}
     y=30;manifest=[]
     for sheet in sheets:
         d.text((6,y),sheet['name'],fill=(240,232,200),font=font);y+=16
         for i,(name,raw) in enumerate(sheet['frames'].items()):
-            image=Image.new('P',(sheet['w'],sheet['h']));image.putdata([int(c,16) for row in raw for c in row]);colors=[int(v[j:j+2],16) for v in banks[sheet['pal']] for j in (1,3,5)];image.putpalette(colors+[0]*(768-len(colors)))
+            bank=sheet.get('frame_pal',{}).get(name,sheet['pal'])
+            image=Image.new('P',(sheet['w'],sheet['h']));image.putdata([int(c,16) for row in raw for c in row]);colors=[int(v[j:j+2],16) for v in banks[bank] for j in (1,3,5)];image.putpalette(colors+[0]*(768-len(colors)))
             cols=6 if len(sheet['frames'])<=12 else 8;stride=102 if cols==6 else 78;rowh=sheet['h']*(2 if cols==6 else 1)+18
             x=8+(i%cols)*stride;yy=y+(i//cols)*rowh;canvas.paste(image.convert('RGB'),(x,yy));d.text((x,yy+sheet['h']+1),name,fill=(216,208,184),font=font)
             if len(sheet['frames'])<=12:canvas.paste(image.convert('RGB').resize((sheet['w']*2,sheet['h']*2),Image.Resampling.NEAREST),(x+32,yy))
-            manifest.append(dict(sheet=sheet['name'],frame=name,canvas=[sheet['w'],sheet['h']],palette=sheet['pal']))
+            manifest.append(dict(sheet=sheet['name'],frame=name,canvas=[sheet['w'],sheet['h']],palette=bank))
         y+=((len(sheet['frames'])+cols-1)//cols)*rowh+12
     canvas.crop((0,0,640,y)).save(destination/'actors-source.png');(destination/'actors-manifest.json').write_text(json.dumps(manifest,indent=2)+'\n')
 

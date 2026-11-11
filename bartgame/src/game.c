@@ -37,11 +37,14 @@ extern u16 items_sheet_tile(void);
 #include "bomb_throw.h"
 #include "run_extension.h"
 #include "gear_menu.h"
+#include "regional_content.h"
+#include "hub_services.h"
 #if BART_ENEMY_LAB
 #include "enemy_prototypes.h"
 #endif
 
 GameState gGame;
+u8 gStartingDraft; /* opening choices are new-run state, never a Continue fixture */
 u32 gSeedOverride; /* probes set this before pressing Start */
 #if BART_FOREST_VARIANT >= 31
 u8 gForestReviewEnabled;
@@ -63,10 +66,8 @@ static s16 sCreamNextX,sCreamNextY;
 static u8 sCreamNextFacing;
 static u8 sDropOriginCell,sDropStep,sDropFrame;
 static struct {u8 area,cell,node; s16 x,y;u8 facing;} sAnnexReturn;
-static u16 sNewDoorTile[2];
 static u8 sNewDoorLatched;
-static const s16 sNewDoorX[2]={17*16+8,28*16+8};
-enum { SEWER_DOOR_FOOT=6*16+14, SEWER_DOOR_RETURN=SEWER_DOOR_FOOT+20 };
+enum { SIDE_REGIONAL_RETURN=5 };
 
 static const char* const sKeyItemText[4] = {
     "",
@@ -169,10 +170,11 @@ static void load_sewer(int at_drain) {
     legacy_surface_clear();
     actors_clear();
     sprites_reset();
-    sNewDoorTile[0]=sNewDoorTile[1]=0;
     sNewDoorLatched=0;
     objects_room_reset();
     npc_room_reset();
+    regional_content_clear();
+    hub_services_build();
     gDbg[4] = def->object_count;
     for (i = 0; i < def->object_count; i++) {
         const u8* ob = &def->objects[i * 4];
@@ -194,11 +196,12 @@ static void load_sewer(int at_drain) {
             facing = FACE_S;
         }
     }
-    if(at_drain==2){sx=sNewDoorX[1];sy=SEWER_DOOR_RETURN;facing=FACE_S;}
-    if(at_drain==3){sx=sNewDoorX[0];sy=SEWER_DOOR_RETURN;facing=FACE_S;}
+    if(at_drain==2){sx=HUB_CREAM_LADDER_X;sy=HUB_CREAM_RETURN_Y;facing=FACE_S;}
+    if(at_drain==3){sx=17*16+8;sy=6*16+34;facing=FACE_S;}
     player_init(sx, sy, facing);
     legacy_items_room_reset();
     handoff_room_enter(AREA_SEWER,0);
+    hub_services_enter();
     camera_update(sx, sy - 16, TRUE);
     dark_off();
     minimap_render();
@@ -215,7 +218,10 @@ static void load_forest(int cell, int from_side) {
     actors_clear();
     sprites_reset();
     npc_room_reset();
-    if (from_side == SIDE_MOUTH && gSpots.has_mouth) {
+    if(from_side==SIDE_REGIONAL_RETURN) {
+        px=sAnnexReturn.x;py=sAnnexReturn.y;
+        player_init(px,py,sAnnexReturn.facing);
+    } else if (from_side == SIDE_MOUTH && gSpots.has_mouth) {
         px = gSpots.mouth.x * 16 + 8;
         py = (gSpots.mouth.y + 1) * 16 + 14;
         player_init(px, py, FACE_S);
@@ -223,10 +229,12 @@ static void load_forest(int cell, int from_side) {
         roomgen_door_pos(from_side, &px, &py);
         player_init(px, py, (from_side + 2) & 3);
     }
+    regional_content_place(AREA_FOREST,cell);
     camera_update(px, py - 16, TRUE);
     spawn_cell_objects();
     legacy_items_room_reset();
     handoff_room_enter(AREA_FOREST,cell);
+    room_render(); /* Added regional stamps and planted-tree ownership agree. */
     dark_off();
     minimap_render();
     {
@@ -243,6 +251,7 @@ static void load_myst(int cell) {
     gGame.cell = cell;
     tiles_load(TS_MYST);
     legacy_surface_clear();
+    regional_content_clear();
     myst_build(cell);
     actors_clear();
     sprites_reset();
@@ -267,11 +276,12 @@ static void load_cream(int node,int px,int py,int facing) {
         if(node==gCreamWorld.entry_node){px=(gCreamRoom.return_door.x+1)*16;py=(gCreamRoom.return_door.y+1)*16+14;}
         else{px=p->spawns[0].x*16+8;py=p->spawns[0].y*16+14;}
     }
-    player_init(px,py,facing);legacy_items_room_reset();cream_runtime_enter();
-    camera_update(px,py-16,TRUE);dark_off();minimap_render();handoff_room_enter(AREA_CREAM,gGame.cell);
+    player_init(px,py,facing);regional_content_place(AREA_CREAM,gGame.cell);legacy_items_room_reset();cream_runtime_enter();
+    camera_update(px,py-16,TRUE);dark_off();minimap_render();handoff_room_enter(AREA_CREAM,gGame.cell);room_render();
 }
 static void load_handoff(int site,int kind) {
     int px,py;gGame.area=AREA_HANDOFF;gGame.cell=0;
+    regional_content_clear();
     tiles_load(TS_MYST);legacy_surface_clear();memset(&gSpots,0,sizeof(gSpots));
     handoff_build(site,kind,hash32(gGame.seed,site*1009+17));actors_clear();sprites_reset();objects_room_reset();npc_room_reset();enemy_load_sheets_for_theme(0);
     handoff_start_pos(&px,&py);player_init(px,py,FACE_N);legacy_items_room_reset();handoff_enter();camera_update(px,py-16,TRUE);dark_off();minimap_render();
@@ -291,6 +301,7 @@ void game_travel_cream(int node,int px,int py,int facing,int drop_rows) {
     if(node<0||node>=CC_NODES)return;
     sCreamNextNode=node;sCreamNextX=px;sCreamNextY=py;sCreamNextFacing=facing;sCreamDropRows=CLAMP(drop_rows,0,4);
     if(sCreamDropRows && gGame.area==AREA_CREAM && cream_cell(node)>gGame.cell) {
+        handoff_suspend_region();regional_content_clear();
         /* Preserve the committed fall across every intervening room. The
            skipped terraces are scenery during this travel, never landings. */
         sDropOriginCell=gGame.cell;sDropStep=sDropFrame=0;
@@ -316,26 +327,19 @@ void game_return_to_hub(void) {
     begin_transition(AREA_SEWER, 0, 0);
 }
 
-/* Both new arches share their rendered threshold and interaction bounds.
-   Walking north enters at the sill. A also works after Bloom has walked
-   inside the arch, instead of requiring him to step back below its picture. */
+/* The Cream exit repeats the Forest ladder's BG artwork and EXIT tile.
+   Both walking onto its rungs and A at its foot use the same destination. */
 static bool8 sewer_use_new_door(bool8 walking_in) {
-    int px,py,i;
+    int px,py;bool8 rung;
     if(gGame.area!=AREA_SEWER||gPlayer->state!=PS_NORMAL)return FALSE;
-    if(walking_in && (sNewDoorLatched || !(gKeysHeld&KEY_UP) || gPlayer->facing!=FACE_N))return FALSE;
     px=PX(gPlayer->x);py=PX(gPlayer->y);
-    if(py<SEWER_DOOR_FOOT-48 || py>=SEWER_DOOR_FOOT+42)return FALSE;
-    if(walking_in && py>SEWER_DOOR_FOOT+8)return FALSE;
-    for(i=0;i<2;i++) {
-        if(ABS(px-sNewDoorX[i])>(walking_in?12:21))continue;
-        /* A denied opt-in lock is announced once per upward approach. */
-        sNewDoorLatched=1;
-        if(i==0)game_open_handoff(HS_HUB,HS_HUB);
-        else if(!handoff_region_unlocked(AREA_CREAM))textbox_open("The ascent requires 500 remembrance or one victory in Entitlement mode.");
-        else game_travel_cream(gCreamWorld.entry_node,-1,-1,FACE_N,0);
-        return TRUE;
-    }
-    return FALSE;
+    if(ABS(px-HUB_CREAM_LADDER_X)>(walking_in?12:21)||py<24||py>116)return FALSE;
+    rung=room_type_px(px,py-4)==TT_EXIT;
+    if(walking_in && (sNewDoorLatched || (!rung && (!(gKeysHeld&KEY_UP)||gPlayer->facing!=FACE_N||py>62))))return FALSE;
+    sNewDoorLatched=1;
+    if(!handoff_region_unlocked(AREA_CREAM))textbox_open("The ascent requires 500 remembrance or one victory in Entitlement mode.");
+    else game_travel_cream(gCreamWorld.entry_node,-1,-1,FACE_N,0);
+    return TRUE;
 }
 
 /* --------------------------------------------------------- chests -- */
@@ -476,17 +480,17 @@ static void check_exits(void) {
     if(gGame.area==AREA_CREAM){cream_runtime_update();return;}
     if(gGame.area==AREA_HANDOFF) {
         int request=handoff_requested_site();
-        if(request!=HANDOFF_NO_REQUEST){handoff_clear_request();game_open_handoff(request,request);return;}
+        if(request!=HANDOFF_NO_REQUEST){handoff_clear_request();game_open_handoff(request,handoff_site_kind(request));return;}
         if(handoff_wants_exit()) {
-            if((handoff_current_site()>HS_HUB&&handoff_current_site()<=31)||(handoff_current_site()>=128&&handoff_current_site()<=131)){game_open_handoff(HS_HUB,HS_HUB);return;}
-            if(sAnnexReturn.area==AREA_CREAM)game_travel_cream(sAnnexReturn.node,sAnnexReturn.x,sAnnexReturn.y,sAnnexReturn.facing,0);
+            if(sAnnexReturn.area==AREA_FOREST)begin_transition(AREA_FOREST,sAnnexReturn.cell,SIDE_REGIONAL_RETURN);
+            else if(sAnnexReturn.area==AREA_CREAM)game_travel_cream(sAnnexReturn.node,sAnnexReturn.x,sAnnexReturn.y,sAnnexReturn.facing,0);
             else begin_transition(AREA_SEWER,0,3);
         }
         return;
     }
     if (gGame.area == AREA_SEWER) {
         if(sewer_use_new_door(TRUE))return;
-        if (room_type_px(px, py - 4) == TT_EXIT)
+        if (room_type_px(px, py - 4) == TT_EXIT && ABS(px-HUB_CREAM_LADDER_X)>12)
             begin_transition(AREA_FOREST, gWorld.entry, SIDE_S);
         return;
     }
@@ -703,7 +707,8 @@ static void start_run(u32 seed) {
     gGame.kills = 0;
     world_generate(seed);
     player_new_game();
-    legacy_items_new_run();legacy_items_seed_owned();handoff_new_run(seed);cream_runtime_new_run(seed);run_profile_write();
+    legacy_items_new_run();legacy_items_seed_owned();handoff_new_run(seed);cream_runtime_new_run(seed);regional_content_new_run();handoff_resume_regional(FALSE);run_profile_write();
+    gStartingDraft=1;
     title_restore_world();
     gAnimTiles = 1;
     bg0_clear();
@@ -712,6 +717,7 @@ static void start_run(u32 seed) {
     /* Review-only ROM: ordinary generated forest, isolated test encounters.
        This branch is absent from the normal game and its random roster. */
     load_forest(gWorld.entry, SIDE_S);
+    gStartingDraft=0;
     gPl.items=ITEM_SWORD|ITEM_BOMBS|ITEM_LAMP|ITEM_CLOAK|ITEM_GAUNTLET|ITEM_SHIELD;
     gPl.items2=ITEM2_BOW|ITEM2_MAP;
     gPl.bombs=20;gPl.arrows=50;
@@ -733,6 +739,7 @@ static void start_run(u32 seed) {
 
 /* a saved run wakes in the drain with everything it had */
 static void continue_run(void) {
+    gStartingDraft=0;
     if (!save_load()) {
         start_run(sTitleSeed >> 4);
         return;
@@ -783,8 +790,10 @@ static void update_title(void) {
 
 /* -------------------------------------------------------------- win -- */
 static u16 sWinTimer;
+static u8 sWinKind;
 
-void game_win(void) {
+static void finish_run(int kind) {
+    sWinKind=kind;
     handoff_on_win();
     save_erase(); /* Victory retires this run; journal/settings are separate. */
     gGame.state = GS_WIN;
@@ -792,6 +801,8 @@ void game_win(void) {
     fade_start(16, 1);
     bgm_play(BGM_WIN);
 }
+void game_win(void) {finish_run(gCreamProgress.boss_dead?1:0);}
+void game_win_chain(void) {finish_run(2);}
 
 static void update_win(void) {
     sWinTimer++;
@@ -802,9 +813,9 @@ static void update_win(void) {
     if (sWinTimer == 40) {
         static Canvas plate, body, stats, press;
         int secs = gGame.run_frames / 60, i, x;
-        const char* heading=gCreamProgress.boss_dead?"The summit is stilled":"The Heart is cut";
-        const char* line1=gCreamProgress.boss_dead?"The mountain exhales, slowly.":"The wood breathes again, slowly.";
-        const char* line2=gCreamProgress.boss_dead?"A violet flame sleeps in the curd.":"Somewhere a king stops dreaming.";
+        const char* heading=sWinKind==2?"The four seals shine":sWinKind==1?"The summit is stilled":"The Heart is cut";
+        const char* line1=sWinKind==2?"Earth answers the wandering root.":sWinKind==1?"The mountain exhales, slowly.":"The wood breathes again, slowly.";
+        const char* line2=sWinKind==2?"Gilt and rot share a final light.":sWinKind==1?"A violet flame sleeps in the curd.":"Somewhere a king stops dreaming.";
         char buf[12];
         u16* m;
         actors_clear();
@@ -878,20 +889,16 @@ static void draw_world(void) {
     PERF_CALL(PF_GLITTER_FRONT,ambient_draw(TRUE));
     PERF_CALL(PF_FOLK_FRONT,npcs_draw_front());
     cabinet_draw(TRUE);
+    hub_services_draw(TRUE);
     PERF_CALL(PF_INTERACTIVE_BACK,interactive_draw(FALSE));
     PERF_CALL(PF_PLAYER_DRAW,player_draw());
     legacy_items_draw();
     cream_runtime_draw();handoff_draw();
-    if(gGame.area==AREA_SEWER) {
-        int i;for(i=0;i<2;i++) {
-            if(!sNewDoorTile[i])sNewDoorTile[i]=sprite_load_frame(SHEET_CREAMDOORS,1-i);
-            if(sNewDoorTile[i])draw_sprite(sNewDoorX[i]-16-gCamX,SEWER_DOOR_FOOT-sheets[SHEET_CREAMDOORS].h-gCamY,SHEET_CREAMDOORS,sNewDoorTile[i],0,0,2,sheets[SHEET_CREAMDOORS].pal);
-        }
-    }
     PERF_CALL(PF_ENEMIES_DRAW,enemies_draw());
     PERF_CALL(PF_FOLK_DRAW,npcs_draw());
     PERF_CALL(PF_OBJECTS_DRAW,objects_draw());
     cabinet_draw(FALSE);
+    hub_services_draw(FALSE);
     PERF_CALL(PF_INTERACTIVE_FRONT,interactive_draw(TRUE));
     PERF_CALL(PF_GLITTER_BACK,ambient_draw(FALSE));
 }
@@ -934,6 +941,14 @@ static void update_play(void) {
         draw_world();
         return;
     }
+    if(gStartingDraft) {
+        if(gHandoffState.draft_state==HDRAFT_DONE)gStartingDraft=0;
+        else if(handoff_starting_draft())return;
+    }
+    if(gPlayer->state==PS_NORMAL) {
+        u16 used=hub_services_try_interact(gKeysDown);
+        if(used){gKeysDown&=~used;if(!handoff_menu_active())draw_world();return;}
+    }
     if((gKeysDown&KEY_A)&&gPlayer->state==PS_CARRY&&handoff_try_interact()) {gKeysDown&=~KEY_A;if(!handoff_menu_active())draw_world();return;}
     if((gKeysDown&KEY_A)&&gPlayer->state==PS_NORMAL) {
         if(sewer_use_new_door(FALSE)){gKeysDown&=~KEY_A;return;}
@@ -954,7 +969,7 @@ static void update_play(void) {
         return;
     }
     bool8 tool_movement=legacy_items_pre_player();
-    if(!tool_movement&&!cream_runtime_pre_player()&&!handoff_pre_player())PERF_CALL(PF_PLAYER_UPDATE,player_update());
+    if(!tool_movement&&!handoff_pre_player()&&!cream_runtime_pre_player())PERF_CALL(PF_PLAYER_UPDATE,player_update());
     legacy_items_post_player();
     if (gPlayer->state == PS_DEAD) {
         if (gPl.dead_timer > 120) {

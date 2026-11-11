@@ -352,6 +352,10 @@ static void projectile_update(Actor* a) {
         if(boom){a->state=1;a->coll=1;}else{actor_free(a);return;}
     }
     handoff_tool_box(hitkind,px-5,py-10,px+5,py+1);
+    if(handoff_objects_box_solid(px-4,py-9,px+4,py)) {
+        if(boom){a->state=1;a->coll=1;}
+        else{actor_free(a);return;}
+    }
     for(i=1;i<ACTOR_MAX;i++) {
         Actor* e=&gActors[i];
         if(e->kind==AK_ENEMY&&!e->iframes&&legacy_enemy_hit_parts(e,px-5,py-10,px+5,py+1,hitkind,a->damage,a->dir)) {

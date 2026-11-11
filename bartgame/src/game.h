@@ -17,6 +17,7 @@ typedef struct {
 } GameState;
 
 extern GameState gGame;
+extern u8 gStartingDraft;
 
 #if BART_FOREST_VARIANT >= 31
 /* Developer camera-only panorama fixture. Zero in ordinary gameplay. The
@@ -30,6 +31,7 @@ extern u32 gForestReviewClock;
 void game_init(void);
 void game_update(void);
 void game_win(void);
+void game_win_chain(void); /* additional handoff Earth Element ending */
 void game_legacy_boss_defeated(int type);
 void game_travel_cream(int node,int px,int py,int facing,int drop_rows);
 void game_open_handoff(int site,int kind);

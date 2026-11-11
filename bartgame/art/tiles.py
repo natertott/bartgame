@@ -123,3 +123,4 @@ import handoff_mobility
 METATILES.extend(handoff_mobility.METATILES)
 import handoff_shapes
 METATILES.extend(handoff_shapes.METATILES)
+METATILES.extend(handoff_mobility.FIELD_METATILES)

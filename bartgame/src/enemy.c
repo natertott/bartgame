@@ -211,6 +211,7 @@ Actor* enemy_spawn(int type, int px, int py) {
     a->dir = rand_range(4) * 8;
     a->facing = dir_to_facing(a->dir);
     cream_runtime_track_enemy(a,NULL);
+    handoff_track_enemy(a,NULL);
     if (type >= EN_PROTO_ROPE) {
 #if BART_ENEMY_LAB
         if (!sSheetTile[type]) { actor_free(a); return NULL; }

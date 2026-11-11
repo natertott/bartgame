@@ -98,3 +98,27 @@ def chute(phase):
 
 def build_sheets():
     return [dict(name='handoff_mobility',w=32,h=32,pal='gear',frames={**{f'cart_{f}{p}':rows(cart(f,p)) for f in ('n','e','s','w') for p in (0,1)},**{f'parachute{p}':rows(chute(p)) for p in (0,1)}})]
+
+# Appended after all prior metatile families by art/tiles.py. Suspended rails
+# retain visible water between their sleepers and WATER semantics underneath;
+# the cart, rather than an opaque dirt tile, supplies the rider's support.
+def wet_rail(kind):
+    im,d=new(fill=3)
+    d.line((0,5,6,5),fill=4);d.line((9,13,15,13),fill=5)
+    def horizontal():
+        for x in (2,8,14):d.line((x,1,x,14),fill=8,width=2);d.line((x+1,1,x+1,14),fill=10)
+        for y in (3,11):d.line((0,y,15,y),fill=1,width=2);d.line((0,y-1,15,y-1),fill=11)
+    if kind=='v':
+        horizontal();im=im.transpose(Image.Transpose.ROTATE_90)
+    else:
+        horizontal()
+        if kind in ('se','nw'):
+            d.rectangle((0,0,15,15),fill=3)
+            for x,y in ((3,3),(11,11)):
+                d.line((x,15,x,y,15,y),fill=1,width=2)
+                d.line((x-1,15,x-1,y-1,15,y-1),fill=11)
+            if kind=='nw':im=im.rotate(180)
+        elif kind=='stop':
+            d.ellipse((4,4,11,11),fill=1);d.ellipse((5,5,10,10),fill=11)
+    return im
+FIELD_METATILES=[dict(name='lh_mob_wet_'+k,pal='lh_element',type='WATER',coll=0,art=rows(wet_rail(k))) for k in ('h','v','se','nw','stop')]

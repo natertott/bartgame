@@ -19,13 +19,15 @@
 #include "cream_room.h"
 #include "journal.h"
 #include "save.h"
+#include "regional_content.h"
+#include "cream_runtime.h"
 
 #define HBIT(a,n) (((a)[(unsigned)(n)>>3]>>((n)&7))&1)
 #define HSET(a,n) ((a)[(unsigned)(n)>>3]|=1u<<((n)&7))
 #define FOOD(n) ((gHandoffState.food_mask>>(n))&1u)
 #define CARGO_MAGIC 0xCB
-#define BOARD_X 7
-#define BOARD_Y 8
+#define BOARD_X s.board_x
+#define BOARD_Y s.board_y
 #define NODE_X 16
 #define NODE_Y 11
 HandoffState gHandoffState EWRAM_BSS;
@@ -41,9 +43,32 @@ static struct {
     u8 site,kind,phase,count,quota,request,exit,plate,last_plate;
     u8 memory_input,memory_show,prize,theme,scene_active,cargo_next;
     u8 switch_mask,stealth_alert,visited_courier,return_kind;
-    u8 cast[5],shares[5],cast_count,flavor,wave_target;
+    u8 cast[5],shares[5],cast_count,flavor,wave_target,board_x,board_y,goal_spawned;
 } s __attribute__((section(".ewram_bss.handoff_runtime")));
+/* Loaded field context. Only small topology/anchor records are retained;
+   outdoor floors, trees and mandatory routes belong to their normal generator. */
+static struct {
+    RegionalContentPlan plan;
+    u8 active,quest_ready,board,point_count,wave_site,cadence,goal_spawned;
+    u8 component[96];
+    u8 owned[ACTOR_MAX];
+    u16 queue[768],pause,tile;
+    Spot points[12],giver,receiver;
+    RegionalContentRect board_rect;
+} r __attribute__((section(".ewram_bss.regional_events")));
 static void quest_fail(void);
+static void contract_next(void);
+static bool8 regional_quest_local(void);
+static void regional_enter(int area,int cell);
+static void regional_tick(void);
+static bool8 regional_interact(void);
+static void regional_draw(void);
+static void regional_enemy_killed(int type,int px,int py);
+static void regional_tool(int kind,int x0,int y0,int x1,int y1);
+static void regional_tile(int tx,int ty);
+static bool8 regional_scene(void);
+static bool8 decode_site(int site,RegionalContentPlan* out);
+static void materialize_goal(void);
 static void refresh_rank(void){u32 score=gHandoffState.score;gHandoffState.rank=score>=2000?4:score>=800?3:score>=250?2:score>=50?1:0;}
 static const s8 sDX[4]={0,1,0,-1},sDY[4]={-1,0,1,0};
 static const s16 sDesk[8][2]={{7,8},{12,8},{17,8},{22,8},{7,14},{12,14},{17,14},{22,14}};
@@ -375,7 +400,7 @@ bool8 handoff_board_push(int d){
 }
 bool8 handoff_box_solid(int x0,int y0,int x1,int y1){
  const HandoffPuzzle* p;int tx,ty,i;
- if(gGame.area!=AREA_HANDOFF)return FALSE;
+ if(gGame.area!=AREA_HANDOFF){if(handoff_objects_box_solid(x0,y0,x1,y1)||handoff_mobility_box_solid(x0,y0,x1,y1))return TRUE;if(!regional_quest_local()||!r.board)return FALSE;}
  if(s.kind==HS_TRAVERSAL)return handoff_mobility_box_solid(x0,y0,x1,y1);
  if(s.kind==HS_OBJECT_COURSE)return handoff_objects_box_solid(x0,y0,x1,y1);
  if(!board_kind())return FALSE;
@@ -402,7 +427,7 @@ static void finish(void){
 static void claim(void){
  int item;if(!s.prize||!HBIT(gHandoffState.won,s.site))return;
  s.prize=0;room_change_overlay(NODE_X,NODE_Y,MT_MYST_CHEST_OPEN);gHandoffState.won[s.site>>3]&=~(1<<(s.site&7));
- item=gHandoffState.contract_state==1&&gHandoffState.contract_kind==HC_ITEM&&s.site==HANDOFF_CONTRACT_BASE+gHandoffState.contract_step?gHandoffState.contract_item:random_reward(s.kind==HS_BOSS?2:s.kind==HS_MINIBOSS?1:-1);give(item);sfx_play(SFX_CHEST);
+ item=gHandoffState.contract_state==1&&gHandoffState.contract_kind==HC_ITEM&&s.site==gHandoffState.contract_target?gHandoffState.contract_item:random_reward(s.kind==HS_BOSS?2:s.kind==HS_MINIBOSS?1:-1);give(item);sfx_play(SFX_CHEST);
 }
 typedef struct{u8 min_diff,weight,slots,percent,force;u8 role[5],share[5];} WaveShape;
 /* Source's ten ordinary shapes plus its later Elite Trio addition. */
@@ -516,25 +541,84 @@ static void quest_start(int kind){
 enum { HM_NONE,HM_DRAFT,HM_INN,HM_SHOP,HM_FUSE,HM_TROPHY,HM_HINT,HM_CHALLENGE,HM_CONTRACT,HM_DIFFICULTY };
 static struct{u16 display,bg3,blend,alpha,brightness; s16 x,y;u8 active,cursor,top,repeat,old_anim;} m __attribute__((section(".ewram_bss.handoff_menu")));
 static int menu_count(void){return m.active==HM_DRAFT?3:m.active==HM_INN?3:m.active==HM_SHOP?6:m.active==HM_FUSE?5:m.active==HM_TROPHY?3:m.active==HM_CHALLENGE?HS_COUNT+2:m.active==HM_CONTRACT?3:m.active==HM_DIFFICULTY?13:1;}
-static const char* menu_title(void){return m.active==HM_DRAFT?"Three Gifts / choose one":m.active==HM_INN?"The Three Beds":m.active==HM_SHOP?"Annex Exchange":m.active==HM_FUSE?"Kinstone Fusions":m.active==HM_TROPHY?"Trophy & Entitlements":m.active==HM_HINT?"A Quiet Hint":m.active==HM_CHALLENGE?"Optional Challenges":m.active==HM_DIFFICULTY?"Difficulty 0 to 12":"Four-step Contract";}
+static const char* menu_title(void){return m.active==HM_DRAFT?"Three Gifts / choose one":m.active==HM_INN?"The Three Beds":m.active==HM_SHOP?"Peddler Exchange":m.active==HM_FUSE?"Kinstone Fusions":m.active==HM_TROPHY?"Trophy & Entitlements":m.active==HM_HINT?"A Quiet Hint":m.active==HM_CHALLENGE?"Optional Challenges":m.active==HM_DIFFICULTY?"Difficulty 0 to 12":"Four-step Contract";}
 static void menu_close(void){
  gAnimTiles=m.old_anim;bg0_clear();gBg3Dirty=0;REG_BG3CNT=m.bg3;gBgScroll[3][0]=m.x;gBgScroll[3][1]=m.y;
  room_render();video_show(m.display);REG_BLDCNT=m.blend;REG_BLDALPHA=m.alpha;REG_BLDY=m.brightness;m.active=0;gKeysDown=0;
 }
-static void contract_next(void){
- int step=gHandoffState.contract_step;u32 roll=rng_next(&s.rng);gHandoffState.contract_state=1;
- if(step>=4){gHandoffState.contract_state=2;gHandoffState.score+=200;refresh_rank();give(LI_HEART_CONTAINER);give(LI_FOURSWORD);say("Four seals fulfilled. Your optional contract is complete. The Forest Heart and the summit remain yours to seek.");return;}
- if(step==3){gHandoffState.contract_kind=HC_BOSS;gHandoffState.contract_target=HS_BOSS;}
- else if(step==2){gHandoffState.contract_kind=HC_ITEM;gHandoffState.contract_item=reward_pick(LCAT_KEY,1,roll);gHandoffState.contract_target=HS_POCKET;}
- else if(step==1){gHandoffState.contract_kind=(roll&1)?HC_QUEST:HC_WAVE;gHandoffState.contract_target=(roll&1)?HS_QUEST_HUNT:HS_WAVES;}
- else{gHandoffState.contract_kind=HC_EVENT;gHandoffState.contract_target=HS_POTS+(roll%2)*5;}
- /* Each seal owns a fresh site, independent of optional exploration. */
- {
-  int site=HANDOFF_CONTRACT_BASE+step;
-  gHandoffState.completed[site>>3]&=~(1u<<(site&7));
-  gHandoffState.won[site>>3]&=~(1u<<(site&7));
-  gHandoffState.wave[site]=gHandoffState.remaining[site]=0;
+static bool8 decode_site(int site,RegionalContentPlan* out){
+ int region,cell;
+ for(region=0;region<2;region++)for(cell=0;cell<25;cell++){
+  RegionalContentPlan p;if(!regional_content_get(region?AREA_CREAM:AREA_FOREST,cell,&p))continue;
+  if(p.field_site==site||p.interior_site==site){if(out)*out=p;return TRUE;}
  }
+ return FALSE;
+}
+bool8 handoff_chain_target_valid(int site){return site>=RC_FIELD_BASE&&site<128&&decode_site(site,NULL);}
+static bool8 event_completable(int kind){
+ if(kind==HS_TORCHES)return legacy_item_owned(LI_LANTERN_OFF)||legacy_item_owned(LI_FIRE_ROD);
+ if(kind==HS_CLEANUP)return legacy_item_owned(LI_LANTERN_OFF)||legacy_item_owned(LI_FIRE_ROD)||legacy_item_owned(LI_GUST_JAR);
+ if(kind==HS_NPC)return gPl.gilt>=10;
+ if(kind==HS_BOSS)return legacy_enemy_can_spawn(LE_GIANT_CHUCHU_GREEN)&&legacy_enemy_can_spawn(LE_BIG_OCTOROK);
+ return kind!=HS_MEMORY_SHOW&&kind!=HS_MEMORY_INPUT&&kind!=HS_GOLD_GATE&&kind!=HS_OBJECT_COURSE&&kind!=HS_TRAVERSAL&&kind!=HS_WAVES&&kind!=HS_ARENA;
+}
+static void contract_next(void){
+ int step=gHandoffState.contract_step,region,cell,chosen=255,count=0,kind=HC_EVENT;
+ RegionalContentPlan target;u32 roll=hash32(gGame.seed,0xC4A100u+step);
+ gHandoffState.contract_state=1;
+ if(step>=4){gHandoffState.contract_kind=HC_ITEM;gHandoffState.contract_item=LI_EARTH_ELEMENT;materialize_goal();return;}
+ /* Each next objective is dealt against live traversal facts. The item step
+    is a guaranteed cache in a reachable field, never a lucky reward draw. */
+ if(step==2)kind=HC_ITEM;
+ else if(step==3)kind=HC_BOSS;
+ else if(step==1)kind=(roll&1)?HC_QUEST:HC_WAVE;
+ for(int pass=0;pass<3&&chosen==255;pass++){
+  for(region=0;region<2;region++)for(cell=0;cell<25;cell++){
+   RegionalContentPlan p;int site=255;
+   if(!regional_content_get(region?AREA_CREAM:AREA_FOREST,cell,&p)||!regional_content_reachable(p.area,p.cell))continue;
+   if(kind==HC_ITEM){RegionalContentDiscovery d;regional_content_marks(p.area,p.cell,&d);if(p.interior_site!=RC_NONE&&d.cache.x&&d.cache.y)site=p.field_site;}
+   else if(kind==HC_QUEST){HandoffQuest*q=&gHandoffState.quest;if(p.quest_kind&&(q->state==1||q->state==2)&&q->origin_area==p.area&&q->origin_cell==p.cell&&!HBIT(gHandoffState.completed,p.field_site))site=p.field_site;}
+   else if(kind==HC_WAVE){if(p.has_wave)site=p.field_site;}
+   else if(p.interior_site!=RC_NONE&&regional_content_door_open(p.area,p.cell)&&event_completable(p.event_kind)&&!HBIT(gHandoffState.completed,p.interior_site)){
+    if(kind==HC_BOSS?p.event_kind==HS_BOSS:p.event_kind!=HS_BOSS)site=p.interior_site;
+   }
+   if(site!=255&&hash32(roll,site)%(++count)==0){chosen=site;target=p;}
+  }
+  /* A depleted event pool or unavailable side quest becomes the next regional
+     wave; a fresh physical item cache is the final bounded fallback. */
+  if(chosen==255){kind=pass?HC_ITEM:HC_WAVE;count=0;}
+ }
+ if(chosen==255){gHandoffState.contract_state=0;gHandoffState.contract_target=0;return;}
+ gHandoffState.contract_kind=kind;gHandoffState.contract_target=chosen;
+ if(kind==HC_ITEM)gHandoffState.contract_item=reward_pick(LCAT_KEY,1,hash32(roll,17));
+ (void)target;
+}
+void handoff_resume_regional(bool8 legacy){
+ if(legacy){gHandoffState.contract_step=0;gHandoffState.contract_state=0;gHandoffState.contract_target=0;if(gHandoffState.quest.origin_area==AREA_HANDOFF)clear_bytes(&gHandoffState.quest,sizeof(gHandoffState.quest));}
+ if(gHandoffState.contract_state==2)return;
+ if(!gHandoffState.contract_state||!handoff_chain_target_valid(gHandoffState.contract_target))contract_next();
+}
+bool8 handoff_chain_location(int* area,int* cell,int* tx,int* ty){
+ RegionalContentPlan p;RegionalContentDiscovery d;int site=gHandoffState.contract_target;
+ if(gHandoffState.contract_state!=1||!decode_site(site,&p))return FALSE;
+ if(area)*area=p.area;
+ if(cell)*cell=p.cell;
+ regional_content_marks(p.area,p.cell,&d);
+ Spot point=site==p.interior_site?d.door:gHandoffState.contract_kind==HC_ITEM?d.cache:d.npc;
+ if(tx)*tx=point.x&&point.y?point.x:-1;
+ if(ty)*ty=point.x&&point.y?point.y:-1;
+ return TRUE;
+}
+void handoff_chain_text(char* out,int capacity){
+ char text[160],*p=text;int area,cell;const char* action;
+ if(capacity<1)return;
+ if(gHandoffState.contract_state==1&&gHandoffState.contract_step==4){const char*message="Final seal: collect the Earth Element at the marked reward.";for(int i=0;i<capacity-1;i++){out[i]=message[i];if(!message[i])return;}out[capacity-1]=0;return;}
+ if(!handoff_chain_location(&area,&cell,NULL,NULL)){p=cat(p,gHandoffState.contract_state==2?"Four regional seals complete.":"Explore a region to discover the next seal.");}
+ else{
+  action=gHandoffState.contract_kind==HC_EVENT?"Solve the marked chamber":gHandoffState.contract_kind==HC_WAVE?"Clear the next field wave":gHandoffState.contract_kind==HC_BOSS?"Defeat the chamber guardian":gHandoffState.contract_kind==HC_QUEST?"Complete the local quest":"Open the marked gift cache";
+  p=cat(p,"Seal ");p=num(p,gHandoffState.contract_step+1);p=cat(p,"/4: ");p=cat(p,action);p=cat(p," in ");p=cat(p,area==AREA_FOREST?"Forest ":"Cream ");p=num(p,cell%5+1);p=cat(p,",");p=num(p,cell/5+1);cat(p,".");
+ }
+ for(int i=0;i<capacity-1;i++){out[i]=text[i];if(!text[i])return;}out[capacity-1]=0;
 }
 static void menu_row(int index,char* out){
  char* p=out;out[0]=0;
@@ -546,7 +630,7 @@ static void menu_row(int index,char* out){
  case HM_TROPHY:p=cat(p,index==0?"View rank and record":index==1?"Toggle optional entitlement challenge":"Choose run difficulty");break;
  case HM_CHALLENGE:p=cat(p,index+1<HS_COUNT?sSiteNames[index+1]:index==HS_COUNT-1?"Moving Crossing Workshop":index==HS_COUNT?"Secrets & Weather Workshop":"Tool Targets Workshop");break;
  case HM_DIFFICULTY:p=cat(p,"Difficulty ");p=num(p,index);p=cat(p,index==gHandoffState.difficulty?" / current":"");break;
- case HM_CONTRACT:p=cat(p,index==0?"Begin / inspect four-step contract":index==1?"Travel to the current contract":"Retire optional contract");break;
+ case HM_CONTRACT:p=cat(p,index==0?"Inspect current regional seal":index==1?"Read route directions":"Set aside regional seals");break;
  default:p=cat(p,"Follow the small gilt lanterns.");break;
  }
  (void)p;
@@ -582,6 +666,23 @@ static void menu_open(int kind){
  REG_BG3CNT=BGCNT_PRIO(3)|BGCNT_CHARBASE(3)|BGCNT_SCREENBASE(22)|BGCNT_SIZE_32x32;gBgScroll[3][0]=gBgScroll[3][1]=0;REG_BLDCNT=REG_BLDY=0;
  ui_backdrop_open();video_show(DCNT_MODE0|DCNT_BG0|DCNT_BG3|DCNT_OBJ|DCNT_OBJ_1D);menu_paint();gKeysDown=0;sfx_play(SFX_MENU);
 }
+bool8 handoff_open_service(int service){
+ static const u8 modes[]={HM_NONE,HM_DRAFT,HM_INN,HM_SHOP,HM_FUSE,HM_TROPHY,HM_HINT,HM_CONTRACT,HM_DIFFICULTY};
+ if(service<HRS_DRAFT||service>HRS_DIFFICULTY||m.active||textbox_active())return FALSE;
+ if(service==HRS_DRAFT){
+  if(gHandoffState.draft_state==HDRAFT_DONE){say("Your three starting gifts are already chosen.");return TRUE;}
+  if(!gHandoffState.draft_state){gHandoffState.draft_state=HDRAFT_RUNNING;gHandoffState.draft_round=0;roll_draft();}
+ }
+ menu_open(modes[service]);return TRUE;
+}
+bool8 handoff_starting_draft(void){
+ if(gGame.area!=AREA_SEWER||gHandoffState.draft_state==HDRAFT_DONE||textbox_active()||m.active)return FALSE;
+ return handoff_open_service(HRS_DRAFT);
+}
+bool8 handoff_claim_inn_reward(void){
+ int item=gHandoffState.inn_reward;if(!item)return FALSE;
+ gHandoffState.inn_reward=0;give(item);sfx_play(SFX_CHEST);return TRUE;
+}
 bool8 handoff_menu_active(void){return m.active!=0;}
 static void fuse(int index){
  if(index<3){int shape=gHandoffState.fuser_shape[index];
@@ -589,7 +690,7 @@ static void fuse(int index){
   if(!gHandoffState.kinstone_shapes[index][shape]){char msg[130];char*p=cat(msg,"This fuser needs a ");p=cat(p,index==0?"green":index==1?"blue":"red");p=cat(p,shape==0?" upper-right tooth":" lower-right tooth");if(shape==1)p=cat(msg,index==0?"This fuser needs a green left tooth":index==1?"This fuser needs a blue left tooth":"This fuser needs a red left tooth");cat(p," half. No match; the fuser will wait.");say(msg);return;}
   gHandoffState.kinstone_shapes[index][shape]--;if(gLegacyInventory.kinstones[index])gLegacyInventory.kinstones[index]--;
   gHandoffState.fusion_flags|=1<<index;give(index==0?LI_KINSTONE_BAG:index==1?LI_RUPEE100:LI_BOTTLE1);
-  say("Two halves meet. A cache, cave and crossing open in the annex. The old roads keep their gates.");
+  say(index==0?"Two halves meet. The green cache in this region opens.":index==1?"Two halves meet. The blue pocket entrance in this region opens.":"Two halves meet. The broken crossing in this region rises.");
  }else if(index==3){if(!(gHandoffState.gold_owned&1)){say("The Flow seal needs its gold half.");return;}gHandoffState.gold_fused|=1;say("The golden Flow seal opens.");}
  else{if((gHandoffState.gold_owned&14)!=14){say("Three statue halves are needed: left, middle and right.");return;}gHandoffState.gold_fused|=14;say("Three golden statues awaken. Their final cache opens.");}
  sfx_play(SFX_SECRET);
@@ -605,7 +706,7 @@ void handoff_menu_update(void){
   switch(mode){
   case HM_DRAFT:
    give(gHandoffState.draft[choice]);gHandoffState.draft_round++;
-   if(gHandoffState.draft_round>=3){gHandoffState.draft_state=HDRAFT_DONE;say("Three gifts chosen. These optional gifts join your normal starting equipment.");}
+   if(gHandoffState.draft_round>=3){gHandoffState.draft_state=HDRAFT_DONE;say("Three starting gifts chosen. The regional seals await; the old Heart and summit routes also remain.");}
    else{roll_draft();menu_open(HM_DRAFT);}return;
   case HM_INN:{int price=handoff_shop_price(choice==0?50:choice==1?200:500);if(gPl.gilt<price){say("Not enough gilt for that bed.");return;}
    if(gHandoffState.inn_reward){say("Collect the chest beside your bed before buying another stay.");return;}
@@ -628,11 +729,9 @@ void handoff_menu_update(void){
    if((choice+1==HS_CLEANUP)&&!legacy_item_owned(LI_LANTERN_OFF)&&!legacy_item_owned(LI_FIRE_ROD)&&!legacy_item_owned(LI_GUST_JAR)){say("Clean-up needs a lantern or Gust Jar. Find either, then return.");return;}
    s.request=choice+1;return;
   case HM_CONTRACT:
-   if(choice==2){gHandoffState.contract_state=0;say("Optional contract retired. The run continues.");return;}
+   if(choice==2){gHandoffState.contract_state=0;say("The seals are set aside. The Heart and summit routes remain open.");return;}
    if(!gHandoffState.contract_state){gHandoffState.contract_step=0;contract_next();}
-   if(choice==1&&gHandoffState.contract_state==1){if(!handoff_event_unlocked(gHandoffState.contract_target)){say("This contract seal awaits the optional entitlement unlock. Earn score or wins, or switch to ordinary mode.");return;}s.request=HANDOFF_CONTRACT_BASE+gHandoffState.contract_step;}
-   else{char msg[150];char*p=cat(msg,"Seal ");p=num(p,gHandoffState.contract_step+1);p=cat(p," of 4: ");p=cat(p,sSiteNames[gHandoffState.contract_target]);
-    if(gHandoffState.contract_kind==HC_ITEM){p=cat(p,". Seek ");p=cat(p,item_name(gHandoffState.contract_item));}cat(p,". Travel from this desk when ready.");say(msg);}return;
+   {char msg[160];handoff_chain_text(msg,sizeof(msg));say(msg);}return;
   default:say("Paths tell one story. Lanterns tell another. Follow gilt lamps to a feature, or search the unmarked corners.");return;
   }
  }
@@ -657,14 +756,29 @@ static void paint_border(void){
  }
  room_set(15,22,MT_CAVE_EXIT);room_set(16,22,MT_CAVE_EXIT);
 }
+static void regional_theme(const RegionalContentPlan* p){
+ int style=p->area==AREA_FOREST?hash32(gGame.seed,p->cell+0x5448454du)%3:0;
+ if(!style)return;
+ /* Existing native cave/hollow/thicket families carry identical semantic
+    members. A regional chamber therefore inherits its woodland material
+    without altering any earlier asset or substituting an outdoor room. */
+ for(int y=0;y<gRoom.h;y++)for(int x=0;x<gRoom.w;x++){
+  int t=room_get(x,y),mapped=t;
+  if(t>=MT_CAVE_WALL&&t<=MT_CAVE_FLOOR_CHEST)mapped=t+style*10;
+  else if(t>=MT_CAVE_CROWN&&t<=MT_CAVE_SPRING)mapped=t+style*17;
+  if(mapped!=t)room_set(x,y,mapped);
+ }
+}
 void handoff_build(int site,int kind,u32 seed){
- int i;u8 food_scene=s.scene_active;(void)food_scene;
- if(gHandoffState.quest.state==2&&gHandoffState.quest.kind!=HQ_COURIER&&gHandoffState.quest.origin_cell!=site)quest_fail();
- handoff_objects_reset();
+ int i;RegionalContentPlan rp;bool8 regional=decode_site(site,&rp)&&site==rp.interior_site;
+ clear_bytes(&r,sizeof(r));
+ if(regional)kind=rp.event_kind;
+ if(gHandoffState.quest.state==2&&gHandoffState.quest.origin_area==AREA_HANDOFF&&gHandoffState.quest.kind!=HQ_COURIER&&gHandoffState.quest.origin_cell!=site)quest_fail();
+ handoff_objects_reset();handoff_mobility_reset();
  if(site>=HANDOFF_CONTRACT_BASE&&site<HANDOFF_CONTRACT_BASE+4)kind=gHandoffState.contract_state==1?gHandoffState.contract_target:HS_ITEM;
  if(site>=HANDOFF_OBJECT_SITE1&&site<=HANDOFF_OBJECT_SITE3){kind=HS_OBJECT_COURSE;seed=(seed&~0x300u)|((site-HANDOFF_OBJECT_SITE1+1)<<8);}
  else if(kind==HS_OBJECT_COURSE)seed&=~0x300u;
- s.site=CLAMP(site,0,255);s.kind=CLAMP(kind,0,HS_COUNT-1);s.seed=seed;s.clock=0;s.phase=0;s.count=0;s.quota=0;s.timer=0;s.plate=255;s.last_plate=255;s.memory_input=0;s.memory_show=0;s.exit=0;s.request=255;s.clean=0;s.switch_mask=0;s.cast_count=0;s.prize=HBIT(gHandoffState.won,s.site);s.recipient_x=s.recipient_y=-1;
+ s.board_x=7;s.board_y=8;s.site=CLAMP(site,0,255);s.kind=CLAMP(kind,0,HS_COUNT-1);s.seed=seed;s.clock=0;s.phase=0;s.count=0;s.quota=0;s.timer=0;s.plate=255;s.last_plate=255;s.memory_input=0;s.memory_show=0;s.exit=0;s.request=255;s.clean=0;s.switch_mask=0;s.cast_count=0;s.goal_spawned=0;s.prize=HBIT(gHandoffState.won,s.site);s.recipient_x=s.recipient_y=-1;
  rng_seed(&s.rng,hash32(seed,site+kind*257));clear_bytes(sHalves,sizeof(sHalves));clear_bytes(sHalfTile,sizeof(sHalfTile));
  tiles_load(TS_MYST);paint_border();
  if(board_kind()){
@@ -693,8 +807,9 @@ void handoff_build(int site,int kind,u32 seed){
  if(s.kind==HS_FAIRY)room_set_overlay(NODE_X,NODE_Y,MT_MYST_SPRING);
  if(s.kind==HS_HUB&&gHandoffState.inn_reward)room_set_overlay(12,10,MT_MYST_CHEST);
  if(s.prize)room_set_overlay(NODE_X,NODE_Y,MT_MYST_CHEST);
- if(s.kind==HS_TRAVERSAL)handoff_mobility_build(seed);
- if(s.kind==HS_OBJECT_COURSE)handoff_objects_build(seed);
+ if(s.kind==HS_TRAVERSAL){if(regional)handoff_mobility_build_regional(seed,rp.traversal_variant,site);else handoff_mobility_build(seed);}
+ if(s.kind==HS_OBJECT_COURSE){if(regional)handoff_objects_build_regional(seed,rp.mechanism_variant);else handoff_objects_build(seed);}
+ if(regional)regional_theme(&rp);
  HSET(gHandoffState.visited,s.site);room_build_solid();room_render();
 }
 void handoff_start_pos(int* x,int* y){
@@ -707,7 +822,7 @@ void handoff_enter(void){
  if(s.kind==HS_TRAVERSAL){s.tile=0;return;}
  s.tile=sprite_load_sheet(SHEET_HANDOFF);
  if(FOOD(HF_FLEET))s.invulnerable=MAX(s.invulnerable,120);
- if(finished()){s.phase=9;return;}
+ if(finished()){s.phase=9;materialize_goal();return;}
  switch(s.kind){
  case HS_ITEM:case HS_NPC:s.phase=0;break;
  case HS_FAIRY:legacy_item_spawn(LI_FAIRY,sx(14),sy(11));legacy_item_spawn(LI_FAIRY,sx(18),sy(11));break;
@@ -734,24 +849,17 @@ static bool8 flood_from_hero(int tx,int ty){
  for(i=0;i<=n;i++)if(room_box_solid(px+(x-px)*i/n-5,py+(y-py)*i/n-9,px+(x-px)*i/n+5,py+(y-py)*i/n))return FALSE;
  return TRUE;
 }
+void handoff_suspend_region(void){
+ clear_bytes(&r,sizeof(r));handoff_objects_reset();handoff_mobility_reset();
+ sFieldTile=0;s.recipient_x=s.recipient_y=-1;clear_bytes(sHalves,sizeof(sHalves));
+}
 void handoff_room_enter(int area,int cell){
- int i,r,tx,ty;
- handoff_objects_reset();
- if(gHandoffState.quest.state==2&&gHandoffState.quest.kind!=HQ_COURIER)quest_fail();
- s.scene_active=0;sFieldTile=0;s.recipient_x=s.recipient_y=-1;clear_bytes(sHalves,sizeof(sHalves));clear_bytes(sHalfTile,sizeof(sHalfTile));
+ handoff_objects_reset();handoff_mobility_reset();clear_bytes(&r,sizeof(r));
+ s.scene_active=0;sFieldTile=0;s.recipient_x=s.recipient_y=-1;
+ clear_bytes(sHalves,sizeof(sHalves));clear_bytes(sHalfTile,sizeof(sHalfTile));
  if(FOOD(HF_FLEET))s.invulnerable=MAX(s.invulnerable,120);
  if(!gPlayer)return;
- if(area!=AREA_FOREST&&area!=AREA_CREAM)return;
- for(i=0;i<3;i++)if(gHandoffState.fuser_cell[i]==cell&&!(gHandoffState.fusion_flags&(1<<i)))break;
- if(i==3&&!(gHandoffState.quest.state==2&&gHandoffState.quest.kind==HQ_COURIER&&gHandoffState.quest.target_area==area&&gHandoffState.quest.target_cell==cell))return;
- tx=PX(gPlayer->x)/16;ty=PX(gPlayer->y)/16;
- for(r=2;r<7;r++)for(int dy=-r;dy<=r;dy++)for(int dx=-r;dx<=r;dx++){
-  int x=tx+dx,y=ty+dy;if(ABS(dx)!=r&&ABS(dy)!=r)continue;
-  if(x<2||y<2||x>=gRoom.w-2||y>=gRoom.h-2||room_type(x,y)!=TT_FLOOR||room_get_overlay(x,y)!=MT_NONE||!flood_from_hero(x,y))continue;
-  if(area==AREA_CREAM&&cream_room_feature_reserved(x,y))continue;
-  s.recipient_x=sx(x);s.recipient_y=sy(y);s.visited_courier=i;
-  sFieldTile=sprite_load_frame(SHEET_HANDOFF,HA_FUSER);return;
- }
+ if(area==AREA_FOREST||area==AREA_CREAM)regional_enter(area,cell);
 }
 int handoff_map_mark(int area,int cell){
  int i;if(!legacy_item_owned(LI_COMPASS)||(area!=AREA_FOREST&&area!=AREA_CREAM))return 0;
@@ -759,18 +867,35 @@ int handoff_map_mark(int area,int cell){
  if(gHandoffState.quest.kind==HQ_COURIER&&gHandoffState.quest.state==2&&gHandoffState.quest.target_area==area&&gHandoffState.quest.target_cell==cell)return 2;
  return 0;
 }
+static void materialize_goal(void){
+ int x,y;u8* spawned;
+ if(gGame.state!=GS_PLAY||gHandoffState.contract_state!=1||gHandoffState.contract_step!=4||gHandoffState.contract_item!=LI_EARTH_ELEMENT)return;
+ if(gGame.area==AREA_HANDOFF&&s.site==gHandoffState.contract_target){x=sx(NODE_X);y=sy(NODE_Y);spawned=&s.goal_spawned;}
+ else if(r.active&&r.plan.field_site==gHandoffState.contract_target){x=sx(gRegionalSpots.cache.x);y=sy(gRegionalSpots.cache.y);spawned=&r.goal_spawned;}
+ else return;
+ if(!*spawned&&legacy_item_spawn(LI_EARTH_ELEMENT,x,y)){*spawned=1;sfx_play(SFX_SECRET);}
+}
 void handoff_notify(int kind,int area,int cell,int item){
- int match=0;int c=gHandoffState.contract_kind;
+ int match=0,site=255,c=gHandoffState.contract_kind;
  if(gHandoffState.contract_state!=1)return;
- if(area==AREA_HANDOFF)cell=s.site;
+ if(gHandoffState.contract_step==4){
+  if(kind==HN_ITEM&&item==LI_EARTH_ELEMENT){gHandoffState.contract_state=2;gHandoffState.contract_target=0;gHandoffState.score+=200;refresh_rank();give(LI_FOURSWORD);game_win_chain();}
+  return;
+ }
+ if(area==AREA_HANDOFF)site=s.site;
+ else{RegionalContentPlan p;if(regional_content_get(area,cell,&p))site=p.field_site;}
  if(c==HC_ITEM)match=kind==HN_ITEM&&item==gHandoffState.contract_item;
- else if(area==AREA_HANDOFF&&cell==HANDOFF_CONTRACT_BASE+gHandoffState.contract_step){
+ else if(site==gHandoffState.contract_target){
   if(c==HC_EVENT)match=kind==HN_EVENT;
   else if(c==HC_WAVE)match=kind==HN_WAVE;
   else if(c==HC_BOSS)match=kind==HN_BOSS;
   else if(c==HC_QUEST)match=kind==HN_QUEST;
  }
- if(match){int element=LI_EARTH_ELEMENT+gHandoffState.contract_step;gHandoffState.contract_step++;give(element);contract_next();sfx_play(SFX_SECRET);} (void)area;
+ if(match){
+  int step=gHandoffState.contract_step;gHandoffState.contract_step++;sfx_play(SFX_SECRET);
+  if(step<3){give(LI_FIRE_ELEMENT+step);contract_next();}
+  else{gHandoffState.contract_kind=HC_ITEM;gHandoffState.contract_item=LI_EARTH_ELEMENT;materialize_goal();}
+ }
 }
 void handoff_kinstone_drop(int color,int shape,int px,int py){
  int i;color=CLAMP(color,0,2);shape=CLAMP(shape,0,2);
@@ -789,6 +914,7 @@ void handoff_kinstone_drop(int color,int shape,int px,int py){
 }
 void handoff_on_enemy_killed(int type,int px,int py){
  HandoffQuest*q=&gHandoffState.quest;
+ if(!inside_hand())regional_enemy_killed(type,px,py);
  if(inside_hand()){
   if(gHandoffState.remaining[s.site])gHandoffState.remaining[s.site]--;
   if(q->state==2&&q->kind==HQ_HUNT&&q->origin_cell==s.site){q->count++;if(q->count>=q->quota)quest_win();}
@@ -807,7 +933,7 @@ void handoff_tile_cleared(int tx,int ty){
 }
 void handoff_tool_box(int kind,int x0,int y0,int x1,int y1){
  HandoffQuest*q=&gHandoffState.quest;int i;
- if(!inside_hand())return;
+ if(!inside_hand()){regional_tool(kind,x0,y0,x1,y1);return;}
  if(s.kind==HS_OBJECT_COURSE){handoff_objects_tool_box(kind,x0,y0,x1,y1);return;}
  if(s.kind==HS_CLEANUP||s.kind==HS_TORCHES)for(i=0;i<s.quota;i++){
   int x=sx(s.kind==HS_TORCHES?8+i*8:7+(i%4)*6),y=sy(s.kind==HS_TORCHES?10:7+(i/4)*5);
@@ -821,14 +947,14 @@ void handoff_tool_box(int kind,int x0,int y0,int x1,int y1){
 }
 void handoff_cargo_thrown(Actor*a){
  HandoffQuest*q=&gHandoffState.quest;
- if(!a||!inside_hand()||q->state!=2||q->kind!=HQ_CARRY||!q->cargo_held||a->v[0]!=CARRY_POT)return;
+ if(!a||(!inside_hand()&&!regional_quest_local())||q->state!=2||q->kind!=HQ_CARRY||!q->cargo_held||a->v[0]!=CARRY_POT)return;
  a->v[5]=CARGO_MAGIC;q->cargo_held=0;q->cargo_flying=1;
 }
 bool8 handoff_cargo_land(Actor*a){
  HandoffQuest*q=&gHandoffState.quest;int x,y;
  if(!a||a->v[5]!=CARGO_MAGIC)return FALSE;
  x=PX(a->x);y=PX(a->y);q->cargo_flying=0;q->cargo_ground=1;
- if(room_type_px(x,y)!=TT_FLOOR){x=sx(8);y=sy(17);}
+ if(room_type_px(x,y)!=TT_FLOOR){x=!inside_hand()&&r.active?sx(r.giver.x):sx(8);y=!inside_hand()&&r.active?sy(r.giver.y):sy(17);}
  q->cargo_x=x;q->cargo_y=y;actor_free(a);return TRUE;
 }
 static void draw_prop(int frame,int x,int y,int priority){
@@ -875,6 +1001,7 @@ static bool8 watcher_sees(int wx,int wy,int face){
 }
 bool8 handoff_try_interact(void){
  HandoffQuest*q=&gHandoffState.quest;int i;
+ if(!inside_hand()&&regional_interact())return TRUE;
  if(s.recipient_x>=0&&!inside_hand()&&near(s.recipient_x,s.recipient_y,24)){
   if(q->state==2&&q->kind==HQ_COURIER&&q->target_area==gGame.area&&q->target_cell==gGame.cell){
    q->state=3;gHandoffState.score+=30;refresh_rank();give(random_reward(1));handoff_notify(HN_QUEST,gGame.area,gGame.cell,0);
@@ -914,9 +1041,12 @@ bool8 handoff_try_interact(void){
  }
  if(s.kind==HS_PORTAL&&near(sx(NODE_X),sy(NODE_Y),28)){
   if(!legacy_item_owned(LI_OCARINA)&&!legacy_item_owned(LI_ROCS_CAPE))give(LI_ROCS_CAPE);
-  finish();s.request=HS_POCKET;return TRUE;
+  finish();
+  if(s.site>=RC_INTERIOR_BASE&&s.site<128){RegionalContentPlan p;if(regional_content_find(HS_POCKET,-1,TRUE,&p))s.request=p.interior_site;else s.exit=1;}
+  else s.request=HS_POCKET;
+  return TRUE;
  }
- if(s.kind==HS_POCKET&&finished()&&near(sx(16),sy(19),24)){s.request=HS_HUB;return TRUE;}
+ if(s.kind==HS_POCKET&&finished()&&near(sx(16),sy(19),24)){if(s.site>=RC_INTERIOR_BASE&&s.site<128)s.exit=1;else s.request=HS_HUB;return TRUE;}
  if(s.kind==HS_GOLD_GATE){
   if(near(sx(12),sy(10),24)){fuse(3);if(gHandoffState.gold_fused&1)for(i=11;i<16;i++)room_change(i,8,MT_CAVE_FLOOR0);return TRUE;}
   if(near(sx(19),sy(10),24)){fuse(4);if((gHandoffState.gold_fused&14)==14)for(i=16;i<=20;i++)room_change(i,8,MT_CAVE_FLOOR0);return TRUE;}
@@ -934,7 +1064,8 @@ bool8 handoff_try_interact(void){
  return FALSE;
 }
 bool8 handoff_pre_player(void){
- if(!inside_hand()||!gPlayer)return FALSE;
+ if(!inside_hand()&&r.active&&(handoff_mobility_pre_player()||handoff_objects_pre_player()))return TRUE;
+ if((!inside_hand()&&!regional_quest_local())||!gPlayer)return FALSE;
  if(s.sleep_timer){gKeysDown=0;gKeysHeld=0;return TRUE;}
  if(s.kind==HS_TRAVERSAL)return handoff_mobility_pre_player();
  if(s.kind==HS_OBJECT_COURSE)return handoff_objects_pre_player();
@@ -953,6 +1084,12 @@ bool8 handoff_pre_player(void){
 }
 void handoff_update(void){
  HandoffQuest*q=&gHandoffState.quest;int i,x0,y0,x1,y1;
+ if(gGame.state==GS_WIN||gGame.state==GS_DEAD||gGame.state==GS_TRANSITION)return;
+ if(q->origin_area!=AREA_HANDOFF){
+  if(q->state==1&&!textbox_active())q->state=2;
+  if(q->state==2&&q->timer&&!--q->timer)quest_fail();
+ }
+ materialize_goal();
  s.clock++;if(s.invulnerable)s.invulnerable--;if(s.picolyte_ticks)s.picolyte_ticks--;
  if(FOOD(HF_CURSE_ROT)&&(gFrame&255)==0&&gPl.hp>2)gPl.hp--;
  /* These effects are local visual overlays; normal menu/text blending remains
@@ -964,16 +1101,16 @@ void handoff_update(void){
    int c=sHalves[i].color,a=sHalves[i].shape;sHalves[i].active=0;journal_note_legacy_item(LI_KINSTONE);gHandoffState.kinstone_shapes[c][a]=MIN(legacy_item_owned(LI_KINSTONE_BAG)?99:9,gHandoffState.kinstone_shapes[c][a]+1);gLegacyInventory.kinstones[c]=MIN(999,gLegacyInventory.kinstones[c]+1);sfx_play(SFX_PICKUP);
   }
  }
- if(!inside_hand())return;
  if(s.sleep_timer){
   s.sleep_timer--;
-  if(s.sleep_timer==90){player_heal(s.sleep_choice==0?MAX(8,gPl.hp_max/4):s.sleep_choice==1?MAX(16,gPl.hp_max/2):gPl.hp_max);if(s.sleep_choice){gHandoffState.inn_reward=random_reward(s.sleep_choice-1);room_change_overlay(12,10,MT_MYST_CHEST);}}
+  if(s.sleep_timer==90){player_heal(s.sleep_choice==0?MAX(8,gPl.hp_max/4):s.sleep_choice==1?MAX(16,gPl.hp_max/2):gPl.hp_max);if(s.sleep_choice){gHandoffState.inn_reward=random_reward(s.sleep_choice-1);if(inside_hand())room_change_overlay(12,10,MT_MYST_CHEST);}}
   if(s.sleep_timer==45)fade_start(0,1);
   if(!s.sleep_timer){gPlayer->state=PS_NORMAL;gPl.input_lock=0;sfx_play(SFX_HEART);say(gHandoffState.inn_reward?"Rested. Your promised chest waits beside the bed.":"Rested. The Drain murmurs beyond the wall.");}
   return;
  }
+ if(!inside_hand()){regional_tick();return;}
  if(gPlayer&&PX(gPlayer->y)>22*16&&PX(gPlayer->x)>14*16&&PX(gPlayer->x)<18*16){
-  if(s.kind==HS_POCKET){s.request=HS_HUB;return;}
+  if(s.kind==HS_POCKET&&(s.site<RC_INTERIOR_BASE||s.site>=128)){s.request=HS_HUB;return;}
   s.exit=1;return;
  }
  if(s.kind==HS_TRAVERSAL){handoff_mobility_update();return;}
@@ -1017,6 +1154,7 @@ void handoff_update(void){
 void handoff_draw(void){
  int i;HandoffQuest*q=&gHandoffState.quest;
  if(!inside_hand()){
+  regional_draw();
   if(s.recipient_x>=0&&sFieldTile)draw_sprite(s.recipient_x-8-gCamX,s.recipient_y-16-gCamY,SHEET_HANDOFF,sFieldTile,0,0,1,PAL_OBJ_FX);
   for(i=0;i<8;i++)if(sHalves[i].active){
    LooseHalf*h=&sHalves[i];u16 tile=sHalfTile[h->color][h->shape];
@@ -1058,8 +1196,10 @@ void handoff_draw(void){
  }
  for(i=0;i<8;i++)if(sHalves[i].active)draw_prop(HA_GREEN_HALF+sHalves[i].color*3+sHalves[i].shape,sHalves[i].x,sHalves[i].y,1);
 }
+#include "handoff_field.inc"
 bool8 handoff_wants_exit(void){return s.exit;}
 int handoff_requested_site(void){return s.request;}
 void handoff_clear_request(void){s.request=255;s.exit=0;}
 int handoff_current_site(void){return s.site;}
 int handoff_current_kind(void){return s.kind;}
+int handoff_site_kind(int site){RegionalContentPlan p;if(decode_site(site,&p)&&site==p.interior_site)return p.event_kind;return site>=0&&site<HS_COUNT?site:site>=HANDOFF_OBJECT_SITE1&&site<=HANDOFF_OBJECT_SITE3?HS_OBJECT_COURSE:HS_ITEM;}
