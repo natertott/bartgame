@@ -1,0 +1,117 @@
+{
+  "cream-earned-route": {
+    "passed": 59,
+    "total": 59,
+    "rom_sha256": "b348cf4d628aee1abb9b71d8885a9f04094332c5252490ff2dd8f8e7cd0bf1b8"
+  },
+  "cream-room-art": {
+    "passed": 65,
+    "total": 65,
+    "rom_sha256": "b348cf4d628aee1abb9b71d8885a9f04094332c5252490ff2dd8f8e7cd0bf1b8"
+  },
+  "cream-three-room-drop": {
+    "passed": 28,
+    "total": 28,
+    "rom_sha256": "b348cf4d628aee1abb9b71d8885a9f04094332c5252490ff2dd8f8e7cd0bf1b8"
+  },
+  "cream-four-room-drop": {
+    "passed": 28,
+    "total": 28,
+    "rom_sha256": "b348cf4d628aee1abb9b71d8885a9f04094332c5252490ff2dd8f8e7cd0bf1b8"
+  },
+  "items": {
+    "passed": 19,
+    "total": 19,
+    "rom_sha256": "b348cf4d628aee1abb9b71d8885a9f04094332c5252490ff2dd8f8e7cd0bf1b8"
+  },
+  "objects": {
+    "passed": 48,
+    "total": 48,
+    "rom_sha256": "b348cf4d628aee1abb9b71d8885a9f04094332c5252490ff2dd8f8e7cd0bf1b8"
+  },
+  "forms": {
+    "passed": 8,
+    "total": 8,
+    "rom_sha256": "b348cf4d628aee1abb9b71d8885a9f04094332c5252490ff2dd8f8e7cd0bf1b8"
+  },
+  "mechanisms": {
+    "passed": 20,
+    "total": 20,
+    "rom_sha256": "b348cf4d628aee1abb9b71d8885a9f04094332c5252490ff2dd8f8e7cd0bf1b8"
+  },
+  "mobility": {
+    "passed": 32,
+    "total": 32,
+    "rom_sha256": "b348cf4d628aee1abb9b71d8885a9f04094332c5252490ff2dd8f8e7cd0bf1b8"
+  },
+  "catalogue": {
+    "passed": 227,
+    "total": 227,
+    "rom_sha256": "b348cf4d628aee1abb9b71d8885a9f04094332c5252490ff2dd8f8e7cd0bf1b8"
+  },
+  "gear-ui": {
+    "passed": 27,
+    "total": 27,
+    "rom_sha256": "b348cf4d628aee1abb9b71d8885a9f04094332c5252490ff2dd8f8e7cd0bf1b8"
+  },
+  "enemies": {
+    "passed": 267,
+    "total": 267,
+    "rom_sha256": "b348cf4d628aee1abb9b71d8885a9f04094332c5252490ff2dd8f8e7cd0bf1b8"
+  },
+  "services": {
+    "passed": 14,
+    "total": 14,
+    "rom_sha256": "b348cf4d628aee1abb9b71d8885a9f04094332c5252490ff2dd8f8e7cd0bf1b8"
+  },
+  "quests": {
+    "passed": 14,
+    "total": 14,
+    "rom_sha256": "b348cf4d628aee1abb9b71d8885a9f04094332c5252490ff2dd8f8e7cd0bf1b8"
+  },
+  "contract": {
+    "passed": 14,
+    "total": 14,
+    "rom_sha256": "b348cf4d628aee1abb9b71d8885a9f04094332c5252490ff2dd8f8e7cd0bf1b8"
+  },
+  "meta-save": {
+    "passed": 14,
+    "total": 14,
+    "rom_sha256": "b348cf4d628aee1abb9b71d8885a9f04094332c5252490ff2dd8f8e7cd0bf1b8"
+  },
+  "annex-audio": {
+    "passed": 14,
+    "total": 14,
+    "rom_sha256": "b348cf4d628aee1abb9b71d8885a9f04094332c5252490ff2dd8f8e7cd0bf1b8"
+  },
+  "boundaries": {
+    "passed": 29,
+    "total": 29,
+    "rom_sha256": "b348cf4d628aee1abb9b71d8885a9f04094332c5252490ff2dd8f8e7cd0bf1b8"
+  },
+  "original-forest": {
+    "passed": 21,
+    "total": 21,
+    "rom_sha256": "b348cf4d628aee1abb9b71d8885a9f04094332c5252490ff2dd8f8e7cd0bf1b8"
+  },
+  "victory-save": {
+    "passed": 53,
+    "total": 53,
+    "rom_sha256": "b348cf4d628aee1abb9b71d8885a9f04094332c5252490ff2dd8f8e7cd0bf1b8"
+  },
+  "original-music": {
+    "passed": 69,
+    "total": 69,
+    "rom_sha256": "b348cf4d628aee1abb9b71d8885a9f04094332c5252490ff2dd8f8e7cd0bf1b8"
+  },
+  "integration-guards": {
+    "passed": 8,
+    "total": 8,
+    "rom_sha256": "b348cf4d628aee1abb9b71d8885a9f04094332c5252490ff2dd8f8e7cd0bf1b8"
+  },
+  "performance": {
+    "passed": 127,
+    "total": 127,
+    "rom_sha256": "b348cf4d628aee1abb9b71d8885a9f04094332c5252490ff2dd8f8e7cd0bf1b8"
+  }
+}

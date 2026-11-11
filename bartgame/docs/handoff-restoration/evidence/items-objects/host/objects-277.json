@@ -1,0 +1,16 @@
+{
+  "checks": 277,
+  "object_kinds": 42,
+  "result": "pass",
+  "tool_sha256": "80cce2af627e444488fd081647e0616d1c27b2d5f557eb16a2a7be65c4bf7d72",
+  "compiled_fixture_sha256": "33b11b8b1cfe1fd32c6ed6b97836f4d3ed2f1c21cc2a962577a76c782ce5292b",
+  "source_hashes": {
+    "src/handoff_objects.c": "352e61569f624bb4dcbc43a63729dd48496288d8bf5c655167e774a7b4f0c1fc",
+    "src/handoff_objects.h": "d8e8e48b73f14d6e2c72d9d6933447c970161d2bbced13960c4fcf2dc46167da",
+    "src/actor.h": "78d397f4763c534c8f5a3090099809bde99126fb531ac417d8f12d6e77970d4a",
+    "src/player.h": "a18fd809d440fd8db0b51e29a1af884d34534e70889d033f9be18c7a9abb24e9",
+    "src/legacy_items.h": "ea21190aaab869abe4377dc20360274570db8f2bd225c974d9c3618924791565",
+    "src/handoff_events.h": "4befbf9fa3df1228ccaa0bdf73a26bfe90c1f13123fb3e20b3c4b70dd521e339"
+  },
+  "scope": "Actual course C compiled into an explicit host room/input fixture; not GBA rendering/performance."
+}

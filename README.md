@@ -6,6 +6,10 @@ See the [native art reboot and actual mGBA recordings](art-review/reboot/README.
 [art direction for all nine planned areas](bartgame/docs/art-reboot/ART_BIBLE.md).
 The standalone build uses original native artwork and needs no commercial ROM.
 
+Latest playable expansion: [The Curdled Cream and additive handoff restoration](curdled-cream-review/README.md),
+with the ROM, complete feature audit and actual mGBA recordings. Existing art,
+Forest trials, selected sword animation and original music are preserved.
+
 Latest forest: [composed brooks, ponds, trails and woodland details,
 with matched actual mGBA rooms](art-review/forest-room-cohesion/README.md).
 

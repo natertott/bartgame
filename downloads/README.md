@@ -1,5 +1,14 @@
 # BARTGAME downloads
 
+## Curdled Cream and handoff restoration — current release
+
+- [ROM](https://raw.githubusercontent.com/natertott/bartgame/handoff-restoration-curdled-cream/downloads/curdled-cream-0b9344d7/bartgame-0b9344d7.gba)
+- [ZIP](https://raw.githubusercontent.com/natertott/bartgame/handoff-restoration-curdled-cream/downloads/curdled-cream-0b9344d7/bartgame-0b9344d7.zip)
+- [Actual mGBA gallery, controls and qualification](../curdled-cream-review/README.md)
+- [Checksums and frozen evidence](curdled-cream-0b9344d7/README.md)
+
+Adds the directed5×5 climbing region, impact-thrown bombs and the restored
+handoff systems. Existing sprite artwork and the original soundtrack remain.
 
 ## Optimized game engine
 

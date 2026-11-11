@@ -179,3 +179,35 @@ peak observed OAM is58 of128. These are disclosed samples and fixtures, not a
 universal frame-rate claim. The native Satchel/atlas repeat passes27 checks,
 including two-frame presses during redraw, eventual input-queue drain,
 assignment, zoom, and terrain/BG3/HUD restoration.
+
+## Published release qualification
+
+The exact release ROM is bound to source `0b9344d781e65e304d245bd9ae4aecdbc7056837`
+and SHA256 `b348cf4d628aee1abb9b71d8885a9f04094332c5252490ff2dd8f8e7cd0bf1b8`.
+The final repeat passes 267 native enemy/render/physics checks and 27 Satchel/
+atlas checks. Its 29 actual mGBA cases preserve 13,320/13,320 updates for the 74
+species admitted into a pitless annex, plus a separate real generated Forest
+hole for Rollobite. Six 600-frame stress cases admit 20 light actors or 12
+cost-26 heavy actors—including Madderpillar's full chain and three flails—in
+Forest, Cream and annex, retaining 3,600/3,600 updates. Peak observed world OBJ
+allocation is 744/876 tiles and OAM 58/128. All sampled enemy frames match the
+actual ROM-to-VRAM stream. Independent 4bpp decoding matches all 2,540 new
+handoff painter frames without a mismatch.
+
+The released peak support passes 72 actual attacking frames at exactly z=16
+and vertical velocity 0, with displayed blade geometry and source contact boxes
+in agreement. A real Cape press launches at 16.5, peaks at 33.5, lands back at 16,
+and ordinary rightward walking leaves the support and returns to floor 0.
+This closes the earlier jump-takeoff review item. No enemy state/health/timer,
+frame clock, terrain, palette, VRAM, OAM or framebuffer assignments supply these
+results. Navigation, actor isolation, tool ownership, safe coordinate approach,
+private SRAM and per-frame player healing are explicit review fixtures.
+
+Exact native reports and untouched PNG/GIF samples:
+`/workspace/setup/handoff-enemies-native/release3/` and
+`/workspace/setup/curdled-cream/gear-ui-final-review/release3/`.
+The final neutral host suite passes 547,668 sanitized assertions, including
+minish Pesto's two 2-unit bites/release and red Wisp counter admission. The
+150-assertion actual-player support regression remains separate from native
+execution. Reported samples are evidence of the stated scenarios, rather than
+a universal performance guarantee.

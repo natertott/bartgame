@@ -1,6 +1,6 @@
 # Original-game handoff restoration audit
 
-This is the requirement ledger for the additive restoration requested on 2026-11-11. It is a **baseline audit**, not a claim that concurrent implementation is complete. Baseline: `3fa7774eb72e67f155f91107a772ca1fd202fc8f`. The standalone game is `bartgame/`; the outer repository contains the TMC/QUICKSTART oracle.
+This records the **current additive implementation and its qualification** for the restoration requested on 2026-11-11. All 494 entries retain a historical baseline plus a separate current status, executable evidence and test scope in [features.json](features.json). Historical baseline: `3fa7774eb72e67f155f91107a772ca1fd202fc8f`. The standalone game is `bartgame/`; the outer repository contains the TMC/QUICKSTART oracle.
 
 ## Authority and scope
 
@@ -32,11 +32,11 @@ The nine-area architecture is a future capacity requirement. The user supplies o
 
 The starting standalone build has selected Bloom movement, roll, cape, lift/throw, sword and shield behavior; seven usable equipped items plus key tools; a 25-room Forest with three guaranteed item trials; ten mystery kinds; six NPC roles; and nine enemies, including the recent Rope/Leever/Helmasaur adaptations. It also has the current menus/themes/maps, original music, discovery cabinet and completed-run invalidation. A related current enemy family is **not** proof that every source form or special counter is complete.
 
-Major missing vocabulary includes Gust/Pacci/Mitts/Boots/Flippers/bottles/sword arts/clones; ice/swamp/lava/moving platforms/cart/Minish puzzles; matching kinstones/fusers; tiered economy and charms; paired memory/cleanup/solver-backed boards; seven full quest forms; adaptive chain/endless role waves; meta progression; and Curdled Cream climbing.
+At that baseline, missing vocabulary included Gust/Pacci/Mitts/Boots/Flippers/bottles/sword arts/clones; ice/swamp/lava/moving platforms/cart/Minish puzzles; matching kinstones/fusers; tiered economy and charms; paired memory/cleanup/solver-backed boards; seven full quest forms; adaptive chain/endless role waves; meta progression; and Curdled Cream climbing.
 
 ## Ledger conventions
 
-Each row is separately actionable. The machine ledger adds detailed requirements, citations, baseline evidence, an owner and acceptance criteria. “Partial” means related current behavior, not finished handoff coverage. Restoration status starts as `not_evaluated_by_audit`; an implementing agent must supply runtime evidence to promote it.
+Each row is separately actionable. The machine ledger adds detailed requirements, citations, baseline evidence, an owner and acceptance criteria. “Partial” means related current behavior, not finished handoff coverage. Current restoration status and separate code/host/native qualification fields are populated for all 494 entries. A catalogue picture, connected mechanic, host proof and native input test remain different evidence.
 
 | Baseline status | Count |
 | --- | ---: |
@@ -593,83 +593,120 @@ Unsafe raw forms such as boss children, Gyorg child, Sluggula, Wall Master and E
 
 A feature needs every applicable path: obtainable/enterable through play, actual mechanic, visible art, correct damage/weakness/collision, success/failure/reset/reward, save/reload, new-run reset and resource admission. A registry, flavor text, enum, static stat or menu entry does not meet this gate.
 
-Validate seed proofs against the actual C generator. Check real room tiles and directed links, exercise input transitions, capture native 240×160 mGBA output, measure busy rooms with original music, and preserve existing art checksums. No build or runtime testing was performed by this audit agent.
+Validate seed proofs against the actual C generator. Check real room tiles and directed links, exercise input transitions, capture native 240×160 mGBA output, measure busy rooms with original music, and preserve existing art checksums. The baseline audit itself performed no build or runtime tests. The current qualification below records the subsequent implementation and measured tests.
 
-## Implementation reconciliation — 2026-11-11
+## Current implementation and final qualification
 
-The baseline columns above remain unchanged. All494machine rows now carry
-separate restoration status, executable source pointers and individual review
-notes. Code connection, actual-C host proof and native emulator observations are
-separate evidence. Native qualification means the stated scenario and disclosed
-fixtures, never every seed or a bit-identical source-engine reproduction.
+Final source: `0b9344d781e65e304d245bd9ae4aecdbc7056837`.
+Final ROM SHA-256: `b348cf4d628aee1abb9b71d8885a9f04094332c5252490ff2dd8f8e7cd0bf1b8`.
+The baseline columns above remain historical. Each machine ledger row has a
+separate current `restoration_status`, executable source references and scoped
+`qualification` fields. A catalogue image, connected mechanic, host proof and
+native input test remain different evidence.
 
-| Restoration qualification | Rows |
+Current additions include the independent 25-room Curdled Cream directed
+climbing/drop/cave puzzle, all 71 curated enemy forms plus scripted boss
+adaptations, actual handoff tools, skills, bottles, forms and surfaces, seven
+quests, the optional four-seal contract, all four Elements, economy, charms,
+fusions, meta persistence and 1,528 certified push boards. The authored Drain,
+approved Forest progression, ordinary sword feel, original music and existing
+artwork remain. The cabinet lists 139 meaningful items and 84 enemies while
+retaining 146 stable raw item identifiers.
+
+| Current qualification | Rows |
 | --- | ---: |
-| `baseline_retained_pending_native` | 24 |
-| `code_connected_pending_native` | 391 |
-| `native_sample_qualified` | 15 |
-| `host_logic_qualified_pending_native` | 14 |
+| `baseline_preserved_qualified` | 23 |
+| `native_sample_qualified` | 181 |
+| `code_connected_pending_native` | 247 |
+| `host_logic_qualified_pending_native` | 10 |
 | `retired_exempt` | 2 |
 | `host_geometry_qualified_pending_native` | 9 |
-| `partial_runtime` | 2 |
-| `pending_performance_qualification` | 10 |
-| `pending_art_qualification` | 6 |
+| `host_equivalence_qualified` | 1 |
 | `reference_exempt` | 21 |
 
-The cabinet appends the source vocabulary and four golden-half discoveries to
-its original stable IDs:146items and84enemies. Actual-C tests cover all metadata,
-high discovery bits, JRN1migration, interrupted writes, stable caller storage,
-LAB isolation and independent run/profile recovery. The native migration/death/
-coldContinue test preserves source records, old discoveries and appearance;
-complete final-build catalogue scrolling/preview review is separate.
 
-Cream qualification combines100000actual-C capability graphs with100000complete
-physical roomsets:2.5Mrooms,9.9Mroute-trigger checks and9.9Mtarget-clearance checks,
-22,899,209spawns and3,376,541content approaches, with zero failures. An independent
-Python state solver reconstructs1000graphs with all8inherited item masks. The
-physical batch caches actual C-built rooms only in host memory; no substitute
-generator or mock geometry supplies the checks. The graph occupies1392bytes.
-A byte-identical independent Python generator twin is still not implemented.
+Exact final-ROM evidence:
 
-Real mGBA inputs complete the seeded0xB4A7route, all three actual objective
-rewards, Bomb/Lamp/Cape+Pacci barriers and the peak fight. Pacci exposes the head,
-Bloom climbs the bowed back and16actual sword hits defeat the32HPcore before
-GS_WIN. Separate3/4-row descent controls and the Traversal Court prove the other
-large-drop/cart/parachute/over-under/fusion behaviors. The progression run uses
-only disclosed hero navigation/facing fixtures; no grants, health, enemyAI/HP,
-completion/gate, terrain or video-memory writes. It is not an unassisted run.
+- **32/32 mobility/profile controls**: cart riding and stopping, B/L equipment
+  ownership, steerable parachute, both bridge planes, dry deck with and without
+  Flippers, bow use above confirmed underlying water, actual lower-water dive
+  and unsupported drowning, red-fusion bridge/cache, genuine hazard death,
+  save and cold Continue of progress, discoveries and preferences.
+- **227/227 catalogue checks**: every visible item and enemy identifier maps to
+  the exact native preview pixels/palette; actor and terrain freeze, then
+  return to the live Drain. Complete knowledge is an explicit private UI
+  fixture, rather than an earned memory claim. Sentinel defenses and actual
+  tail/aggregate boss statistics have truthful labels.
+- **59/59 full-route and 28/28 each long-drop controls**: all three actual trial
+  rewards, Bomb/Lamp/Cape+Pacci gates, cave transfer and a real peak win;
+  separate three- and four-row falls show intervening generated terrain.
+  Native art review passes 65 checks. These tests disclose hero navigation and
+  facing fixtures; they do not assign rewards, enemy HP/state, completion,
+  gates, terrain or video output.
+- **267/267 enemy action checks and 74 appended roster samples**: each sampled
+  entry actually runs 180 updates, totaling 13,320 updates and physical frames.
+  Targeted tool, capture, armor, lifecycle and stress tests have narrower
+  per-feature scopes. Independent native asset decoding checks 2,540 source
+  frames. This qualifies observed current-port behavior and rendering,
+  rather than complete original-AI equivalence or every possible counter.
+- **95 item/object/form/mechanism checks** and **27 gear-interface checks**:
+  real tools and reachable course mechanisms, possession navigation/equipping,
+  room atlas/zoom, rapid input, native icons and return to unchanged terrain.
+  Loadout, navigation and unrelated-actor isolation fixtures are disclosed.
+- **Event/service suites** pass 14 service, 28 quest, 22 adaptive-contract and
+  19 meta power-cycle checks. They exercise the draft, 50-gilt inn, source boards,
+  memory, all seven quest success paths, a real four-seal contract and profile
+  continuity. Per-row entries preserve untested failure paths, alternate beds,
+  fusion details and unlock thresholds as code-connected scopes.
+- **Original-game regression**: 21 Forest, 53 victory/save, 69 music and eight
+  integration-guard checks pass. Original-art preservation passes 2,232 checks
+  across all 40 original sheets and existing tile/palette/identifier contracts.
+- **Resources**: 146 scenarios, 127 checks and 26,160 video frames, including
+  75 natural Forest rooms, stress rosters, interiors, actions and menus;
+  29 native boundary checks also pass. This is representative workload
+  coverage, rather than every possible new-area actor combination.
 
-The Traversal Court has real cart stops, steerable parachute descent, two bridge
-collision planes and a red-fusion physical bridge with a once-only cache.
-The mechanism courses now add push/pull with exit reservation, linked doors and
-levers, platforms, traps, weather/wind, a directional reflected light ray,
-jar portal, large ice, thawing flower, barrel web and validated down-stair/hole
-links. Shared original-engine families are documented adaptations, rather than
-a claim that every old cinematic wrapper is a separate new enemy or feature.
-Nine new fine collision shapes match their actual native masks in6851Cchecks.
+Host qualification includes 100,000 actual-C capability graphs and 100,000
+complete physical roomsets. The latter covers 2.5 million rooms, 9.9 million
+route triggers and target landings each, 22,899,209 spawn checks, 3,376,541
+content fronts and 100,000 dry reachable hub-return fronts, with zero failures.
+The graph occupies 1,392 bytes and has bounded attempts plus a checked fixed
+certificate. Python independently solves 1,000 C graphs with all eight
+inherited capability masks.
 
-Common runtime token queries now cover inventory, counted keys, switches,
-fusions, solved puzzles and both region boss facts. Actual Scavenger placement
-uses removable-ground predicates, a dry-component flood and bounded ring scan;
-invalid placement falls back to visible content. The mandatory Cream solver
-retains a compact three-capability proof, rather than pretending every optional
-meta fact has been added to a global state explosion.
+The independent Python generator twin also matches **every byte** of the
+actual C record for **1,000 generated seeds and six explicit fixed-certificate
+controls**: **1,400,352 bytes** including padding and unused edge slots. It
+implements explicit unsigned 32-bit arithmetic and PRNG behavior, ordered
+construction and rejection, and manual serialization. Expected generation
+never calls C or parses C output/source. The fixed certificate is independently
+reconstructed from its original shape seed with content seed zero. Boundary
+and full-width seeds are covered; no natural fallback occurs in these cases,
+so explicit certificate controls are separately identified. This closes
+`generator.twin`; it is an engineering equivalence result, rather than an
+exhaustive 32-bit seed or native gameplay proof.
 
-Source resolutions retained during implementation:
+Actual-C host suites also pass 1,951 production and 1,868 LAB journal checks
+with 97,600 protected-byte checks; 1,479 extension-v2 checks with 48,640 protected
+bytes; 2,184 common-token/hidden-placement checks; 1,511 transport controls;
+and **16,067 fine-mask collision checks**. The extension preserves the original
+base save layouts and uses independent versioned records. Reports retain
+source/build hashes and explicit adapters/fixtures.
 
-- The later live13-row difficulty schedule overrides older Gaussian prose.
-  Wave roles use real admission filtering with a bounded fallback.
-- `PL_SWORD_THRUST` is the trained roll slide in `src/item/itemSword.c`; its
-  directional4/6HPblade supplements the selected ordinary step-and-cut.
-- Inn sleep/fade, actual bed cache, four Element prizes, kinstone-bag gift,
-  town/grave keys, clone occupancy, dive feedback and forced burn movement
-  are executable additions; native final-build tests remain authoritative.
-- Score/win unlocks and difficulty caps apply to optional entitlement mode.
-  Default access to the approved game remains available. Seven unnamed
-  future regions remain architectural capacity, not invented finished areas.
+No named runtime implementation gap remains in the current ledger. Many rows
+remain `code_connected_pending_native`: their implementation and reachable
+caller are present, while the entire per-feature acceptance matrix has not
+been independently exercised in mGBA. Native evidence is representative; it
+does not claim an unassisted run, every keyframe on every background, every
+possible encounter combination or 100,000 native playthroughs.
 
-Remaining `partial_runtime` details are engineering qualification: an independent
-byte-identical Python generator twin and final complete resource proof. Native
-performance/art rows deliberately await the exact final-ROM tests. Sources,
-commands, hashes and explicit scope are retained in the machine ledger and
-[bartgame module notes](../../bartgame/docs/handoff-restoration/JOURNAL.md).
+Reference distinctions remain explicit: raw child/cinematic forms and old ROM
+formats are provenance, retired chest lottery/cage-switch are not reintroduced,
+research proposals are not silently made requirements, and seven unnamed future
+regions are not invented as completed content. Forest and Cream state remain
+independent; the nine-region architecture provides future capacity.
+
+[Module implementation notes](../../bartgame/docs/handoff-restoration/JOURNAL.md)
+and each machine row retain precise current sources, source exceptions and
+separate host/native evidence. Verification artifacts are copied into the
+published review bundle; workspace report paths identify their original runs.

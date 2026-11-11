@@ -1,0 +1,14 @@
+{
+  "source_commit": "0b9344d781e65e304d245bd9ae4aecdbc7056837",
+  "rom_sha256": "b348cf4d628aee1abb9b71d8885a9f04094332c5252490ff2dd8f8e7cd0bf1b8",
+  "compiler": "arm-none-eabi-gcc (15:14.2.rel1-1) 14.2.1 20241119",
+  "python": "Python 3.12.14",
+  "build_command": "make -C bartgame -j4",
+  "build_files": {
+    "bartgame.gba": "b348cf4d628aee1abb9b71d8885a9f04094332c5252490ff2dd8f8e7cd0bf1b8",
+    "bartgame.elf": "ad56de0c11a9ec0c1821242e0c59ff8080083b55cba4eb2cdb209226e539fc48",
+    "bartgame.map": "e6b7fb91ea93ec6ae754ffd3a2d654ba8f73082a63fae90c28ff1bf49471bf3d",
+    "assets.h": "3700d8321b2b7b6e6b615911bdb09ac97c01e45a946eb6ad65ae64e65ca6d1e5"
+  },
+  "source_identity": "The publication commit only adds documentation, tooling and evidence after this runtime-source commit."
+}

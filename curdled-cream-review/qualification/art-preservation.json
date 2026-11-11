@@ -1,0 +1,8938 @@
+{
+  "checks": [
+    {
+      "check": "stable sheet ID hero",
+      "pass": true
+    },
+    {
+      "check": "unchanged sheet pixels/geometry hero",
+      "pass": true
+    },
+    {
+      "check": "stable sheet ID sword",
+      "pass": true
+    },
+    {
+      "check": "unchanged sheet pixels/geometry sword",
+      "pass": true
+    },
+    {
+      "check": "stable sheet ID shield",
+      "pass": true
+    },
+    {
+      "check": "unchanged sheet pixels/geometry shield",
+      "pass": true
+    },
+    {
+      "check": "stable sheet ID items",
+      "pass": true
+    },
+    {
+      "check": "unchanged sheet pixels/geometry items",
+      "pass": true
+    },
+    {
+      "check": "stable sheet ID beetle",
+      "pass": true
+    },
+    {
+      "check": "unchanged sheet pixels/geometry beetle",
+      "pass": true
+    },
+    {
+      "check": "stable sheet ID bat",
+      "pass": true
+    },
+    {
+      "check": "unchanged sheet pixels/geometry bat",
+      "pass": true
+    },
+    {
+      "check": "stable sheet ID slime",
+      "pass": true
+    },
+    {
+      "check": "unchanged sheet pixels/geometry slime",
+      "pass": true
+    },
+    {
+      "check": "stable sheet ID spitter",
+      "pass": true
+    },
+    {
+      "check": "unchanged sheet pixels/geometry spitter",
+      "pass": true
+    },
+    {
+      "check": "stable sheet ID knight",
+      "pass": true
+    },
+    {
+      "check": "unchanged sheet pixels/geometry knight",
+      "pass": true
+    },
+    {
+      "check": "stable sheet ID ksword",
+      "pass": true
+    },
+    {
+      "check": "unchanged sheet pixels/geometry ksword",
+      "pass": true
+    },
+    {
+      "check": "stable sheet ID fx",
+      "pass": true
+    },
+    {
+      "check": "unchanged sheet pixels/geometry fx",
+      "pass": true
+    },
+    {
+      "check": "stable sheet ID proj",
+      "pass": true
+    },
+    {
+      "check": "unchanged sheet pixels/geometry proj",
+      "pass": true
+    },
+    {
+      "check": "stable sheet ID npc",
+      "pass": true
+    },
+    {
+      "check": "unchanged sheet pixels/geometry npc",
+      "pass": true
+    },
+    {
+      "check": "stable sheet ID boss",
+      "pass": true
+    },
+    {
+      "check": "unchanged sheet pixels/geometry boss",
+      "pass": true
+    },
+    {
+      "check": "stable sheet ID lift",
+      "pass": true
+    },
+    {
+      "check": "unchanged sheet pixels/geometry lift",
+      "pass": true
+    },
+    {
+      "check": "stable sheet ID arrow",
+      "pass": true
+    },
+    {
+      "check": "unchanged sheet pixels/geometry arrow",
+      "pass": true
+    },
+    {
+      "check": "stable sheet ID mouth",
+      "pass": true
+    },
+    {
+      "check": "unchanged sheet pixels/geometry mouth",
+      "pass": true
+    },
+    {
+      "check": "stable sheet ID marks",
+      "pass": true
+    },
+    {
+      "check": "unchanged sheet pixels/geometry marks",
+      "pass": true
+    },
+    {
+      "check": "stable sheet ID dots",
+      "pass": true
+    },
+    {
+      "check": "unchanged sheet pixels/geometry dots",
+      "pass": true
+    },
+    {
+      "check": "stable sheet ID cursor",
+      "pass": true
+    },
+    {
+      "check": "unchanged sheet pixels/geometry cursor",
+      "pass": true
+    },
+    {
+      "check": "stable sheet ID pick32",
+      "pass": true
+    },
+    {
+      "check": "unchanged sheet pixels/geometry pick32",
+      "pass": true
+    },
+    {
+      "check": "stable sheet ID icon32",
+      "pass": true
+    },
+    {
+      "check": "unchanged sheet pixels/geometry icon32",
+      "pass": true
+    },
+    {
+      "check": "stable sheet ID uimarks",
+      "pass": true
+    },
+    {
+      "check": "unchanged sheet pixels/geometry uimarks",
+      "pass": true
+    },
+    {
+      "check": "stable sheet ID face",
+      "pass": true
+    },
+    {
+      "check": "unchanged sheet pixels/geometry face",
+      "pass": true
+    },
+    {
+      "check": "stable sheet ID peddler_head",
+      "pass": true
+    },
+    {
+      "check": "unchanged sheet pixels/geometry peddler_head",
+      "pass": true
+    },
+    {
+      "check": "stable sheet ID peddler_body",
+      "pass": true
+    },
+    {
+      "check": "unchanged sheet pixels/geometry peddler_body",
+      "pass": true
+    },
+    {
+      "check": "stable sheet ID gatekeeper",
+      "pass": true
+    },
+    {
+      "check": "unchanged sheet pixels/geometry gatekeeper",
+      "pass": true
+    },
+    {
+      "check": "stable sheet ID wisp",
+      "pass": true
+    },
+    {
+      "check": "unchanged sheet pixels/geometry wisp",
+      "pass": true
+    },
+    {
+      "check": "stable sheet ID bloomfx",
+      "pass": true
+    },
+    {
+      "check": "unchanged sheet pixels/geometry bloomfx",
+      "pass": true
+    },
+    {
+      "check": "stable sheet ID bloomshadow",
+      "pass": true
+    },
+    {
+      "check": "unchanged sheet pixels/geometry bloomshadow",
+      "pass": true
+    },
+    {
+      "check": "stable sheet ID interactivechest",
+      "pass": true
+    },
+    {
+      "check": "unchanged sheet pixels/geometry interactivechest",
+      "pass": true
+    },
+    {
+      "check": "stable sheet ID interactiveentry",
+      "pass": true
+    },
+    {
+      "check": "unchanged sheet pixels/geometry interactiveentry",
+      "pass": true
+    },
+    {
+      "check": "stable sheet ID huditems",
+      "pass": true
+    },
+    {
+      "check": "unchanged sheet pixels/geometry huditems",
+      "pass": true
+    },
+    {
+      "check": "stable sheet ID glitter",
+      "pass": true
+    },
+    {
+      "check": "unchanged sheet pixels/geometry glitter",
+      "pass": true
+    },
+    {
+      "check": "stable sheet ID sewerrail",
+      "pass": true
+    },
+    {
+      "check": "unchanged sheet pixels/geometry sewerrail",
+      "pass": true
+    },
+    {
+      "check": "stable sheet ID forestlandmark",
+      "pass": true
+    },
+    {
+      "check": "unchanged sheet pixels/geometry forestlandmark",
+      "pass": true
+    },
+    {
+      "check": "stable sheet ID proto_rope",
+      "pass": true
+    },
+    {
+      "check": "unchanged sheet pixels/geometry proto_rope",
+      "pass": true
+    },
+    {
+      "check": "stable sheet ID proto_leever",
+      "pass": true
+    },
+    {
+      "check": "unchanged sheet pixels/geometry proto_leever",
+      "pass": true
+    },
+    {
+      "check": "stable sheet ID proto_helmasaur",
+      "pass": true
+    },
+    {
+      "check": "unchanged sheet pixels/geometry proto_helmasaur",
+      "pass": true
+    },
+    {
+      "check": "stable sheet ID arcade",
+      "pass": true
+    },
+    {
+      "check": "unchanged sheet pixels/geometry arcade",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID MOSS0",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID MOSS1",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID MOSS2",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID MOSS_BLIGHT",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID MOSS_BLIGHT2",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID MOSS_FLOWERS2",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID MOSS_FLOWERS",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID TALL_GRASS",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID MOSS_SHADE",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID PATH",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID PATH_EDGE_N",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID BLIGHT_POOL",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID CANOPY",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID CANOPY2",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID CANOPY_GLINT",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID CANOPY_LANTERN",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID CANOPY_BLIGHT",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID CANOPY_S",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID CANOPY_N",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID TREE_TOP_NW",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID TREE_TOP_NE",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID TREE_MID_W",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID TREE_MID_E",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID TREE_TRUNK_W",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID TREE_TRUNK_E",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID LANTERN_POST",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID FENCE",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID LOG",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID BRIDGE",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID BRIDGE_V",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID THORN",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID STUMP",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID BUSH",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID ROCK_SMALL",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID BOULDER",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID ROCK",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID PILLAR",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID RUIN_WALL",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID STATUE",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID WATER",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID WATER_1",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID WATER_2",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID WATER_3",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID WATER_4",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID WATER_5",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID WATER_6",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID WATER_7",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID WATER_8",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID WATER_9",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID WATER_A",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID WATER_B",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID WATER_C",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID WATER_D",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID WATER_E",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID WATER_F",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID WATER_LILY",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID PIT",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID PIT_INNER",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID LEDGE_S",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID LEDGE_N",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID CRACK",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID WEB",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID DOOR_LOCKED",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID DOOR_OPEN",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID TORCH",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID TORCH_LIT",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID CHEST",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID CHEST_OPEN",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID BONES",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SPARKLE",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID RELIC",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID MOSSY_STONE",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID BLACK",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID STAIRS_DOWN",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID BLIGHT_GROUND0",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID BLIGHT_GROUND1",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID BLIGHT_GROUND2",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID BLIGHT_FLOOR",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID BLIGHT_VEIN",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID BLIGHT_CRYSTAL",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID DEAD_TREE",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID GTREE_0",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID GTREE_1",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID GTREE_2",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID GTREE_3",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID GTREE_4",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID GTREE_5",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID GTREE_6",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID GTREE_7",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID GTREE_8",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID GTREE_9",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID GTREE_10",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID GTREE_11",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID MEADOW_0",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID MEADOW_1",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID MEADOW_2",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID MEADOW_3",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID MEADOW_4",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID MEADOW_5",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID MEADOW_6",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID MEADOW_7",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID MEADOW_8",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID CLOVER_0",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID CLOVER_1",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID CLOVER_2",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID CLOVER_3",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SHROOMRING_0",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SHROOMRING_1",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SHROOMRING_2",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SHROOMRING_3",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID GBOULDER_0",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID GBOULDER_1",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID GBOULDER_2",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID GBOULDER_3",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID HLOG_0",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID HLOG_1",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID RAFT_0",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID RAFT_1",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID RAFT_2",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID RAFT_3",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID LEDGE_S_W",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID LEDGE_S_E",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID WATER_C1",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID WATER_C2",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID WATER_C3",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID WATER_C4",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID WATER_C5",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID WATER_C6",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID WATER_C7",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID WATER_C8",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID WATER_C9",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID WATER_CA",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID WATER_CB",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID WATER_CC",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID WATER_CD",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID WATER_CE",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID WATER_CF",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID ROCK2",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID ROCK3",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID TREEROCK_0",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID TREEROCK_1",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID TREEROCK_2",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID TREEROCK_3",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID TREE2_0",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID TREE2_1",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID TREE2_2",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID TREE2_3",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID TREE2_4",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID TREE2_5",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID GTREE2_0",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID GTREE2_1",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID GTREE2_2",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID GTREE2_3",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID GTREE2_4",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID GTREE2_5",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID GTREE2_6",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID GTREE2_7",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID GTREE2_8",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID GTREE2_9",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID GTREE2_10",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID GTREE2_11",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID BTREE_0",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID BTREE_1",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID BTREE_2",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID BTREE_3",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID BTREE_4",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID BTREE_5",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID BTREE_6",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID BTREE_7",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID BTREE_8",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID BTREE_9",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID BTREE_10",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID BTREE_11",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID BLIGHT_FLOOR2",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID BLIGHT_MIST",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID CANOPY_BLIGHT2",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SPARKLE_WHITE",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID WATERFALL",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID WATER_FOAM",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID BLIGHT_WALL",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID BLIGHT_WALL2",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID BLIGHT_WALL_LIT",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SHORE_1",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SHORE_2",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SHORE_3",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SHORE_4",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SHORE_5",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SHORE_6",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SHORE_7",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SHORE_8",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SHORE_9",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SHORE_A",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SHORE_B",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SHORE_C",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SHORE_D",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SHORE_E",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SHORE_F",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SHORE_C1",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SHORE_C2",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SHORE_C3",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SHORE_C4",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SHORE_C5",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SHORE_C6",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SHORE_C7",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SHORE_C8",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SHORE_C9",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SHORE_CA",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SHORE_CB",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SHORE_CC",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SHORE_CD",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SHORE_CE",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SHORE_CF",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID VERGE_1",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID VERGE_2",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID VERGE_3",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID VERGE_4",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID VERGE_5",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID VERGE_6",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID VERGE_7",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID VERGE_8",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID VERGE_9",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID VERGE_A",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID VERGE_B",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID VERGE_C",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID VERGE_D",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID VERGE_E",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID VERGE_F",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID PEDGE_1",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID PEDGE_2",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID PEDGE_3",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID PEDGE_4",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID PEDGE_5",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID PEDGE_6",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID PEDGE_7",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID PEDGE_8",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID PEDGE_9",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID PEDGE_A",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID PEDGE_B",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID PEDGE_C",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID PEDGE_D",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID PEDGE_E",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID PEDGE_F",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID CAVE_WALL",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID CAVE_FACE",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID CAVE_FLOOR0",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID CAVE_FLOOR1",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID CAVE_PROP",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID CAVE_GLOW",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID CAVE_EXIT",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID CAVE_FLOOR_SWITCH",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID CAVE_FLOOR_LIFT",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID CAVE_FLOOR_CHEST",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID HOLLOW_WALL",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID HOLLOW_FACE",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID HOLLOW_FLOOR0",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID HOLLOW_FLOOR1",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID HOLLOW_PROP",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID HOLLOW_GLOW",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID HOLLOW_EXIT",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID HOLLOW_FLOOR_SWITCH",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID HOLLOW_FLOOR_LIFT",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID HOLLOW_FLOOR_CHEST",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID THICKET_WALL",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID THICKET_FACE",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID THICKET_FLOOR0",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID THICKET_FLOOR1",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID THICKET_PROP",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID THICKET_GLOW",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID THICKET_EXIT",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID THICKET_FLOOR_SWITCH",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID THICKET_FLOOR_LIFT",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID THICKET_FLOOR_CHEST",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID MOUTH_CAVE",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID MOUTH_HOLLOW",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID MOUTH_THICKET",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID MYST_SWITCH",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID MYST_SWITCH_DOWN",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID MYST_POT",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID MYST_CHEST",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID MYST_CHEST_OPEN",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID MYST_SPRING",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SW_FLOOR0",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SW_FLOOR1",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SW_FLOOR2",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SW_FLOOR_SLIME",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SW_WALL",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SW_WALL_TOP",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SW_WALL_SLIME",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SW_WATER",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SW_LILYPAD",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SW_WATERFALL",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SW_WATER_EDGE_N",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SW_WATER_EDGE_S",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SW_GRATE",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SW_DRAIN_NW",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SW_DRAIN_NE",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SW_DRAIN_SW",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SW_DRAIN_SE",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SW_PIPE",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SW_PIPE_H",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SW_LADDER",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SW_LADDER_DOWN",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SW_HOLE",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SW_TORCH_LIT",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SW_CANDLES",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SW_LANTERN",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SW_BANNER_TEAL",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SW_BANNER_RED",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SW_ARCH",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SW_RUBBLE",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SW_COUNTER",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SW_AWNING_L",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SW_AWNING_R",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SW_RUG_NW",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SW_RUG_NE",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SW_RUG_SW",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SW_RUG_SE",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SW_BARREL",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SW_CRATE",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SW_SKULL",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SW_POT",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SW_GOLD",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SW_FLOOR_GRIME",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SW_FLOOR_GRIME2",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SW_FLOOR_CRACK",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SW_FLOOR_CRACK2",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SW_FLOOR_MOSS",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SW_FLOOR_MOSS2",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SW_FLOOR_PUDDLE",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SW_FLOOR_BONES",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SW_FLOOR_SHROOM",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SW_FLOOR_DRIP",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SW_WALL_CRACK",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SW_WALL_MOSS",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SW_WALL_CHAIN",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SW_WALL_DRIP",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SW_WALL_WEB",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SW_WALL_WEB_R",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SW_WALL_FUNGUS",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SW_WALL_TALLY",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SW_WALL_WINDOW",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SW_WALL_SKULL",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SW_WALL_RUST",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SW_WALL_TOP_MOSS",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SW_WATER_SCUM",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SW_WATER_BUBBLE",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SW_WATER_GLINT",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SW_WATER_EDGE_N_MOSS",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SW_WATER_EDGE_S_MOSS",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SW_GLINT",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SW_GLINT2",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SW_GLINT3",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SW_ARCH_R",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SW_GRATE_R",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SW_COUNTER_R",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SW_FALL_0",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SW_FALL_1",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SW_FALL_2",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SW_FALL_3",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SW_FALL_4",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SW_FALL_5",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID PEDGE_C1",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID PEDGE_C2",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID PEDGE_C3",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID PEDGE_C4",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID PEDGE_C5",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID PEDGE_C6",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID PEDGE_C7",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID PEDGE_C8",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID PEDGE_C9",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID PEDGE_CA",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID PEDGE_CB",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID PEDGE_CC",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID PEDGE_CD",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID PEDGE_CE",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID PEDGE_CF",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID VERGE_C1",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID VERGE_C2",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID VERGE_C3",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID VERGE_C4",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID VERGE_C5",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID VERGE_C6",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID VERGE_C7",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID VERGE_C8",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID VERGE_C9",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID VERGE_CA",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID VERGE_CB",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID VERGE_CC",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID VERGE_CD",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID VERGE_CE",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID VERGE_CF",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID ROT_00",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID ROT_01",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID ROT_02",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID ROT_03",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID ROT_04",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID ROT_05",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID ROT_06",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID ROT_07",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID ROT_08",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID ROT_09",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID ROT_0A",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID ROT_0B",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID ROT_0C",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID ROT_0D",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID ROT_0E",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID ROT_0F",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID ROT_10",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID ROT_14",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID ROT_18",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID ROT_1C",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID ROT_20",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID ROT_21",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID ROT_28",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID ROT_29",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID ROT_30",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID ROT_38",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID ROT_40",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID ROT_41",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID ROT_42",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID ROT_43",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID ROT_50",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID ROT_60",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID ROT_61",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID ROT_70",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID ROT_80",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID ROT_82",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID ROT_84",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID ROT_86",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID ROT_90",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID ROT_94",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID ROT_A0",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID ROT_B0",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID ROT_C0",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID ROT_C2",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID ROT_D0",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID ROT_E0",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID ROT_F0",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID CAVE_CROWN",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID CAVE_EDGE_1",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID CAVE_EDGE_2",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID CAVE_EDGE_3",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID CAVE_EDGE_4",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID CAVE_EDGE_5",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID CAVE_EDGE_6",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID CAVE_EDGE_7",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID CAVE_EDGE_8",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID CAVE_EDGE_9",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID CAVE_EDGE_A",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID CAVE_EDGE_B",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID CAVE_EDGE_C",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID CAVE_EDGE_D",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID CAVE_EDGE_E",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID CAVE_EDGE_F",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID CAVE_SPRING",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID HOLLOW_CROWN",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID HOLLOW_EDGE_1",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID HOLLOW_EDGE_2",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID HOLLOW_EDGE_3",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID HOLLOW_EDGE_4",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID HOLLOW_EDGE_5",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID HOLLOW_EDGE_6",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID HOLLOW_EDGE_7",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID HOLLOW_EDGE_8",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID HOLLOW_EDGE_9",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID HOLLOW_EDGE_A",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID HOLLOW_EDGE_B",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID HOLLOW_EDGE_C",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID HOLLOW_EDGE_D",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID HOLLOW_EDGE_E",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID HOLLOW_EDGE_F",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID HOLLOW_SPRING",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID THICKET_CROWN",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID THICKET_EDGE_1",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID THICKET_EDGE_2",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID THICKET_EDGE_3",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID THICKET_EDGE_4",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID THICKET_EDGE_5",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID THICKET_EDGE_6",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID THICKET_EDGE_7",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID THICKET_EDGE_8",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID THICKET_EDGE_9",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID THICKET_EDGE_A",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID THICKET_EDGE_B",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID THICKET_EDGE_C",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID THICKET_EDGE_D",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID THICKET_EDGE_E",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID THICKET_EDGE_F",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID THICKET_SPRING",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID FOREST_ROT0",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID FOREST_ROT1",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID FOREST_ROT2",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID FOREST_ROT3",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID FOREST_ROT4",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID FOREST_ROT5",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID FOREST_ROT6",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID FOREST_ROT7",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID FOREST_CANOPY0",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID FOREST_CANOPY1",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID FOREST_CANOPY2",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID FOREST_CANOPY3",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID FOREST_CANOPY4",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID FOREST_CANOPY5",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID BIRCH_0",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID BIRCH_1",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID BIRCH_2",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID BIRCH_3",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID BIRCH_4",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID BIRCH_5",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID FIR_0",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID FIR_1",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID FIR_2",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID FIR_3",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID FIR_4",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID FIR_5",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SICKTREE_0",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SICKTREE_1",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SICKTREE_2",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SICKTREE_3",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SICKTREE_4",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SICKTREE_5",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID LEAF_LITTER",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID FERN_PATCH",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SICK_BONES",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SICK_STUMP",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SICK_ROCK",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_000",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_001",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_002",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_003",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_004",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_005",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_006",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_007",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_008",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_009",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_010",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_011",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_012",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_013",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_014",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_015",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_016",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_017",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_018",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_019",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_020",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_021",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_022",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_023",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_024",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_025",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_026",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_027",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_028",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_029",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_030",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_031",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_032",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_033",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_034",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_035",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_036",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_037",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_038",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_039",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_040",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_041",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_042",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_043",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_044",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_045",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_046",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_047",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_048",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_049",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_050",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_051",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_052",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_053",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_054",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_055",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_056",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_057",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_058",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_059",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_060",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_061",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_062",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_063",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_064",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_065",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_066",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_067",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_068",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_069",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_070",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_071",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_072",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_073",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_074",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_075",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_076",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_077",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_078",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_079",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_080",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_081",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_082",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_083",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_084",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_085",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_086",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_087",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_088",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_089",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_090",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_091",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_092",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_093",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_094",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_095",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_096",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_097",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_098",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_099",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_100",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_101",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_102",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_103",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_104",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_105",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_106",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_107",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_108",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_109",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_110",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_111",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_112",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_113",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_114",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_115",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_116",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_117",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_118",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_119",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_120",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_121",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_122",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_123",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_124",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_125",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_126",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_127",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_128",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_129",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_130",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_131",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_132",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_133",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_134",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_135",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_136",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_137",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_138",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_139",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_140",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_141",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_142",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_143",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_144",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_145",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_146",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_147",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_148",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_149",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_150",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_151",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_152",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_153",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_154",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_155",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_156",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_157",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_158",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_159",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_160",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_161",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_162",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_163",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_164",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_165",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_166",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_167",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_168",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_169",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_170",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_171",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_172",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_173",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_174",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_175",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_176",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_177",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_178",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_179",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_180",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_181",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_182",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_183",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_184",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_185",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_186",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_187",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_188",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_189",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_190",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_191",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_192",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_193",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_194",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_195",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_196",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_197",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_198",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_199",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_200",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_201",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_202",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_203",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_204",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_205",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_206",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_207",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_208",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_209",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_210",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_211",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_212",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_213",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_214",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_215",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_216",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_217",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_218",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_219",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_220",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_221",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_222",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_223",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_224",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_225",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_226",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_227",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_228",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_229",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_230",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_231",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_232",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_233",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_234",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_235",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_236",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_237",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_238",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_239",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_240",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_241",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_242",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_243",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_244",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_245",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_246",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_247",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_248",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_249",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_250",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_251",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_252",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_253",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_254",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_255",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_256",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_257",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_258",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_259",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_260",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_261",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_262",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_263",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_264",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_265",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_266",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_267",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_268",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_269",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_270",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_271",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_272",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_273",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_274",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_275",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_276",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_277",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_278",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_279",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_280",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_281",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_282",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_283",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_284",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_285",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_286",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_287",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_288",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_289",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_290",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_291",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_292",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_293",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_294",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_295",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_296",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_297",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_298",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_299",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_300",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_301",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_302",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_303",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_304",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_305",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_306",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_307",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_308",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_309",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_310",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_311",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_312",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_313",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_314",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_315",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_316",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_317",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_318",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_319",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_320",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_321",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_322",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_323",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_324",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_325",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_326",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_327",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_328",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_329",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_330",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_331",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_332",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_333",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_334",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_335",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_336",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_337",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_338",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_339",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_340",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_341",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_342",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_343",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_344",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_345",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_346",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_347",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_348",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_349",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_350",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_351",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_352",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_353",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_354",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_355",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_356",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_357",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_358",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_359",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_360",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_361",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_362",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_363",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_364",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_365",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_366",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_367",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_368",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_369",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID FOREST_BLIGHT_PIT",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID FOREST_BLIGHT_DEAD_TREE",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID FOREST_BLIGHT_VEIN0",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID FOREST_BLIGHT_VEIN1",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID FOREST_BLIGHT_VEIN2",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID FOREST_BLIGHT_VEIN3",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID FOREST_BLIGHT_VEIN4",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID FOREST_BLIGHT_VEIN5",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID FOREST_BLIGHT_VEIN6",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID FOREST_BLIGHT_VEIN7",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID FOREST_BLIGHT_TREE0",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID FOREST_BLIGHT_TREE1",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID FOREST_BLIGHT_TREE2",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID FOREST_BLIGHT_TREE3",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID FOREST_BLIGHT_TREE4",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID FOREST_BLIGHT_TREE5",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SHRINE_PLATE",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_00_00",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_01_00",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_02_00",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_03_00",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_04_00",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_05_00",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_06_00",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_07_00",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_08_00",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_09_00",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_10_00",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_11_00",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_12_00",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_13_00",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_14_00",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_15_00",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_16_00",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_17_00",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_18_00",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_19_00",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_20_00",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_21_00",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_22_00",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_23_00",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_24_00",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_25_00",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_26_00",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_27_00",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_28_00",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_29_00",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_00_01",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_01_01",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_02_01",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_03_01",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_04_01",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_05_01",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_06_01",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_07_01",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_08_01",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_09_01",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_10_01",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_11_01",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_12_01",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_13_01",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_14_01",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_15_01",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_16_01",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_17_01",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_18_01",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_19_01",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_20_01",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_21_01",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_22_01",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_23_01",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_24_01",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_25_01",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_26_01",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_27_01",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_28_01",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_29_01",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_00_02",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_01_02",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_02_02",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_03_02",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_04_02",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_05_02",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_06_02",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_07_02",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_08_02",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_09_02",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_10_02",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_11_02",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_12_02",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_13_02",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_14_02",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_15_02",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_16_02",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_17_02",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_18_02",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_19_02",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_20_02",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_21_02",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_22_02",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_23_02",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_24_02",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_25_02",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_26_02",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_27_02",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_28_02",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_29_02",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_00_03",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_01_03",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_02_03",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_03_03",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_04_03",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_05_03",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_06_03",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_07_03",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_08_03",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_09_03",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_10_03",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_11_03",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_12_03",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_13_03",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_14_03",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_15_03",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_16_03",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_17_03",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_18_03",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_19_03",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_20_03",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_21_03",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_22_03",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_23_03",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_24_03",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_25_03",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_26_03",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_27_03",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_28_03",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_29_03",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_00_04",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_01_04",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_02_04",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_03_04",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_04_04",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_05_04",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_06_04",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_07_04",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_08_04",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_09_04",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_10_04",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_11_04",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_12_04",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_13_04",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_14_04",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_15_04",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_16_04",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_17_04",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_18_04",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_19_04",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_20_04",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_21_04",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_22_04",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_23_04",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_24_04",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_25_04",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_26_04",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_27_04",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_28_04",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_29_04",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_00_05",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_01_05",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_02_05",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_03_05",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_04_05",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_05_05",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_06_05",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_07_05",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_08_05",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_09_05",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_10_05",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_11_05",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_12_05",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_13_05",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_14_05",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_15_05",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_16_05",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_17_05",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_18_05",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_19_05",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_20_05",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_21_05",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_22_05",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_23_05",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_24_05",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_25_05",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_26_05",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_27_05",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_28_05",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_29_05",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_00_06",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_01_06",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_02_06",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_03_06",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_04_06",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_05_06",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_06_06",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_07_06",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_08_06",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_09_06",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_10_06",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_11_06",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_12_06",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_13_06",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_14_06",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_15_06",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_16_06",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_17_06",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_18_06",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_19_06",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_20_06",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_21_06",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_22_06",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_23_06",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_24_06",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_25_06",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_26_06",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_27_06",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_28_06",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_29_06",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_00_07",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_01_07",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_02_07",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_03_07",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_04_07",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_05_07",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_06_07",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_07_07",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_08_07",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_09_07",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_10_07",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_11_07",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_12_07",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_13_07",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_14_07",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_15_07",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_16_07",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_17_07",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_18_07",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_19_07",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_20_07",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_21_07",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_22_07",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_23_07",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_24_07",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_25_07",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_26_07",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_27_07",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_28_07",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_29_07",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_00_08",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_01_08",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_02_08",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_03_08",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_04_08",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_05_08",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_06_08",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_07_08",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_08_08",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_09_08",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_10_08",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_11_08",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_12_08",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_13_08",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_14_08",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_15_08",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_16_08",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_17_08",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_18_08",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_19_08",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_20_08",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_21_08",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_22_08",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_23_08",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_24_08",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_25_08",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_26_08",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_27_08",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_28_08",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_29_08",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_00_09",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_01_09",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_02_09",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_03_09",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_04_09",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_05_09",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_06_09",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_07_09",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_08_09",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_09_09",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_10_09",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_11_09",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_12_09",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_13_09",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_14_09",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_15_09",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_16_09",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_17_09",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_18_09",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_19_09",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_20_09",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_21_09",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_22_09",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_23_09",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_24_09",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_25_09",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_26_09",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_27_09",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_28_09",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_29_09",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_00_10",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_01_10",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_02_10",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_03_10",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_04_10",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_05_10",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_06_10",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_07_10",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_08_10",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_09_10",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_10_10",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_11_10",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_12_10",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_13_10",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_14_10",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_15_10",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_16_10",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_17_10",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_18_10",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_19_10",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_20_10",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_21_10",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_22_10",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_23_10",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_24_10",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_25_10",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_26_10",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_27_10",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_28_10",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_29_10",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_00_11",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_01_11",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_02_11",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_03_11",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_04_11",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_05_11",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_06_11",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_07_11",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_08_11",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_09_11",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_10_11",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_11_11",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_12_11",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_13_11",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_14_11",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_15_11",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_16_11",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_17_11",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_18_11",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_19_11",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_20_11",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_21_11",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_22_11",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_23_11",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_24_11",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_25_11",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_26_11",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_27_11",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_28_11",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_29_11",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_00_12",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_01_12",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_02_12",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_03_12",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_04_12",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_05_12",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_06_12",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_07_12",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_08_12",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_09_12",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_10_12",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_11_12",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_12_12",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_13_12",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_14_12",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_15_12",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_16_12",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_17_12",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_18_12",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_19_12",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_20_12",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_21_12",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_22_12",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_23_12",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_24_12",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_25_12",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_26_12",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_27_12",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_28_12",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_29_12",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_00_13",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_01_13",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_02_13",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_03_13",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_04_13",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_05_13",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_06_13",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_07_13",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_08_13",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_09_13",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_10_13",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_11_13",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_12_13",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_13_13",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_14_13",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_15_13",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_16_13",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_17_13",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_18_13",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_19_13",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_20_13",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_21_13",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_22_13",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_23_13",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_24_13",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_25_13",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_26_13",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_27_13",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_28_13",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_29_13",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_00_14",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_01_14",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_02_14",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_03_14",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_04_14",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_05_14",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_06_14",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_07_14",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_08_14",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_09_14",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_10_14",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_11_14",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_12_14",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_13_14",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_14_14",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_15_14",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_16_14",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_17_14",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_18_14",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_19_14",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_20_14",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_21_14",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_22_14",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_23_14",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_24_14",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_25_14",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_26_14",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_27_14",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_28_14",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_29_14",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_00_15",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_01_15",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_02_15",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_03_15",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_04_15",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_05_15",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_06_15",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_07_15",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_08_15",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_09_15",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_10_15",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_11_15",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_12_15",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_13_15",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_14_15",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_15_15",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_16_15",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_17_15",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_18_15",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_19_15",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_20_15",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_21_15",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_22_15",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_23_15",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_24_15",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_25_15",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_26_15",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_27_15",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_28_15",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_29_15",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_00_16",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_01_16",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_02_16",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_03_16",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_04_16",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_05_16",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_06_16",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_07_16",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_08_16",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_09_16",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_10_16",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_11_16",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_12_16",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_13_16",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_14_16",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_15_16",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_16_16",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_17_16",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_18_16",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_19_16",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_20_16",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_21_16",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_22_16",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_23_16",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_24_16",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_25_16",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_26_16",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_27_16",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_28_16",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_29_16",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_00_17",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_01_17",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_02_17",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_03_17",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_04_17",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_05_17",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_06_17",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_07_17",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_08_17",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_09_17",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_10_17",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_11_17",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_12_17",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_13_17",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_14_17",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_15_17",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_16_17",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_17_17",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_18_17",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_19_17",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_20_17",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_21_17",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_22_17",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_23_17",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_24_17",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_25_17",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_26_17",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_27_17",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_28_17",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_29_17",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_00_18",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_01_18",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_02_18",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_03_18",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_04_18",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_05_18",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_06_18",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_07_18",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_08_18",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_09_18",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_10_18",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_11_18",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_12_18",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_13_18",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_14_18",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_15_18",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_16_18",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_17_18",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_18_18",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_19_18",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_20_18",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_21_18",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_22_18",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_23_18",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_24_18",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_25_18",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_26_18",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_27_18",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_28_18",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_29_18",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_00_19",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_01_19",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_02_19",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_03_19",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_04_19",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_05_19",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_06_19",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_07_19",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_08_19",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_09_19",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_10_19",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_11_19",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_12_19",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_13_19",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_14_19",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_15_19",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_16_19",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_17_19",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_18_19",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_19_19",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_20_19",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_21_19",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_22_19",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_23_19",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_24_19",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_25_19",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_26_19",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_27_19",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_28_19",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_G_29_19",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_O_08_01",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_O_09_01",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_O_10_01",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_O_08_02",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_O_09_02",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_O_10_02",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_O_02_05",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_O_03_05",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_O_04_05",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_O_05_05",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_O_06_05",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_O_02_06",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_O_03_06",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_O_04_06",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_O_05_06",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_O_06_06",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_O_01_08",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_O_03_08",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_O_05_08",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_O_07_08",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_O_09_08",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_O_11_08",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_O_13_08",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_O_16_08",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_O_17_08",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_O_19_08",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_O_21_08",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_O_23_08",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_O_25_08",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_O_27_08",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_O_01_16",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_O_02_16",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_O_03_16",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_O_04_16",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_O_05_16",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_O_06_16",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_O_07_16",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_O_08_16",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_O_09_16",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_O_10_16",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_O_11_16",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_O_12_16",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_O_13_16",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_O_14_16",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_O_15_16",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_O_16_16",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_O_17_16",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_O_18_16",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_O_19_16",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_O_20_16",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_O_21_16",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_O_22_16",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_O_23_16",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_O_24_16",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_O_25_16",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_O_26_16",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID SWH_F_O_27_16",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_0_0_00",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_0_0_01",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_0_0_02",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_0_0_03",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_0_0_04",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_0_0_05",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_0_0_06",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_0_0_07",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_0_0_08",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_0_0_09",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_0_0_0A",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_0_0_0B",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_0_0_0C",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_0_0_0D",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_0_0_0E",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_0_0_0F",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_0_0_10",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_0_0_14",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_0_0_18",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_0_0_1C",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_0_0_20",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_0_0_21",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_0_0_28",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_0_0_29",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_0_0_30",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_0_0_38",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_0_0_40",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_0_0_41",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_0_0_42",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_0_0_43",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_0_0_50",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_0_0_60",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_0_0_61",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_0_0_70",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_0_0_80",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_0_0_82",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_0_0_84",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_0_0_86",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_0_0_90",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_0_0_94",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_0_0_A0",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_0_0_B0",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_0_0_C0",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_0_0_C2",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_0_0_D0",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_0_0_E0",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_0_0_F0",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_0_1_00",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_0_1_01",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_0_1_02",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_0_1_03",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_0_1_04",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_0_1_05",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_0_1_06",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_0_1_07",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_0_1_08",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_0_1_09",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_0_1_0A",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_0_1_0B",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_0_1_0C",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_0_1_0D",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_0_1_0E",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_0_1_0F",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_0_1_10",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_0_1_14",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_0_1_18",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_0_1_1C",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_0_1_20",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_0_1_21",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_0_1_28",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_0_1_29",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_0_1_30",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_0_1_38",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_0_1_40",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_0_1_41",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_0_1_42",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_0_1_43",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_0_1_50",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_0_1_60",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_0_1_61",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_0_1_70",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_0_1_80",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_0_1_82",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_0_1_84",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_0_1_86",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_0_1_90",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_0_1_94",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_0_1_A0",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_0_1_B0",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_0_1_C0",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_0_1_C2",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_0_1_D0",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_0_1_E0",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_0_1_F0",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_0_2_00",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_0_2_01",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_0_2_02",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_0_2_03",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_0_2_04",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_0_2_05",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_0_2_06",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_0_2_07",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_0_2_08",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_0_2_09",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_0_2_0A",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_0_2_0B",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_0_2_0C",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_0_2_0D",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_0_2_0E",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_0_2_0F",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_0_2_10",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_0_2_14",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_0_2_18",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_0_2_1C",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_0_2_20",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_0_2_21",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_0_2_28",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_0_2_29",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_0_2_30",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_0_2_38",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_0_2_40",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_0_2_41",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_0_2_42",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_0_2_43",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_0_2_50",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_0_2_60",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_0_2_61",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_0_2_70",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_0_2_80",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_0_2_82",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_0_2_84",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_0_2_86",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_0_2_90",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_0_2_94",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_0_2_A0",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_0_2_B0",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_0_2_C0",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_0_2_C2",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_0_2_D0",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_0_2_E0",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_0_2_F0",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_0_3_00",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_0_3_01",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_0_3_02",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_0_3_03",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_0_3_04",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_0_3_05",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_0_3_06",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_0_3_07",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_0_3_08",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_0_3_09",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_0_3_0A",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_0_3_0B",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_0_3_0C",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_0_3_0D",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_0_3_0E",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_0_3_0F",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_0_3_10",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_0_3_14",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_0_3_18",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_0_3_1C",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_0_3_20",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_0_3_21",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_0_3_28",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_0_3_29",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_0_3_30",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_0_3_38",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_0_3_40",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_0_3_41",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_0_3_42",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_0_3_43",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_0_3_50",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_0_3_60",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_0_3_61",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_0_3_70",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_0_3_80",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_0_3_82",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_0_3_84",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_0_3_86",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_0_3_90",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_0_3_94",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_0_3_A0",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_0_3_B0",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_0_3_C0",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_0_3_C2",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_0_3_D0",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_0_3_E0",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_0_3_F0",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_FRINGE_0_1",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_FRINGE_0_2",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_FRINGE_0_3",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_FRINGE_0_4",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_FRINGE_0_5",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_FRINGE_0_6",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_FRINGE_0_7",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_FRINGE_0_8",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_FRINGE_0_9",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_FRINGE_0_A",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_FRINGE_0_B",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_FRINGE_0_C",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_FRINGE_0_D",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_FRINGE_0_E",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_FRINGE_0_F",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_1_0_00",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_1_0_01",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_1_0_02",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_1_0_03",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_1_0_04",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_1_0_05",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_1_0_06",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_1_0_07",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_1_0_08",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_1_0_09",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_1_0_0A",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_1_0_0B",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_1_0_0C",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_1_0_0D",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_1_0_0E",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_1_0_0F",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_1_0_10",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_1_0_14",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_1_0_18",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_1_0_1C",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_1_0_20",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_1_0_21",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_1_0_28",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_1_0_29",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_1_0_30",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_1_0_38",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_1_0_40",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_1_0_41",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_1_0_42",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_1_0_43",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_1_0_50",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_1_0_60",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_1_0_61",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_1_0_70",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_1_0_80",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_1_0_82",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_1_0_84",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_1_0_86",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_1_0_90",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_1_0_94",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_1_0_A0",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_1_0_B0",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_1_0_C0",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_1_0_C2",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_1_0_D0",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_1_0_E0",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_1_0_F0",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_1_1_00",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_1_1_01",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_1_1_02",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_1_1_03",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_1_1_04",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_1_1_05",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_1_1_06",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_1_1_07",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_1_1_08",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_1_1_09",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_1_1_0A",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_1_1_0B",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_1_1_0C",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_1_1_0D",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_1_1_0E",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_1_1_0F",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_1_1_10",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_1_1_14",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_1_1_18",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_1_1_1C",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_1_1_20",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_1_1_21",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_1_1_28",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_1_1_29",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_1_1_30",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_1_1_38",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_1_1_40",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_1_1_41",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_1_1_42",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_1_1_43",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_1_1_50",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_1_1_60",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_1_1_61",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_1_1_70",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_1_1_80",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_1_1_82",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_1_1_84",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_1_1_86",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_1_1_90",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_1_1_94",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_1_1_A0",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_1_1_B0",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_1_1_C0",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_1_1_C2",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_1_1_D0",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_1_1_E0",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_1_1_F0",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_1_2_00",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_1_2_01",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_1_2_02",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_1_2_03",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_1_2_04",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_1_2_05",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_1_2_06",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_1_2_07",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_1_2_08",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_1_2_09",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_1_2_0A",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_1_2_0B",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_1_2_0C",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_1_2_0D",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_1_2_0E",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_1_2_0F",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_1_2_10",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_1_2_14",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_1_2_18",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_1_2_1C",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_1_2_20",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_1_2_21",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_1_2_28",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_1_2_29",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_1_2_30",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_1_2_38",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_1_2_40",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_1_2_41",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_1_2_42",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_1_2_43",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_1_2_50",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_1_2_60",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_1_2_61",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_1_2_70",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_1_2_80",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_1_2_82",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_1_2_84",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_1_2_86",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_1_2_90",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_1_2_94",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_1_2_A0",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_1_2_B0",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_1_2_C0",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_1_2_C2",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_1_2_D0",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_1_2_E0",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_1_2_F0",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_1_3_00",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_1_3_01",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_1_3_02",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_1_3_03",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_1_3_04",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_1_3_05",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_1_3_06",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_1_3_07",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_1_3_08",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_1_3_09",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_1_3_0A",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_1_3_0B",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_1_3_0C",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_1_3_0D",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_1_3_0E",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_1_3_0F",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_1_3_10",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_1_3_14",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_1_3_18",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_1_3_1C",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_1_3_20",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_1_3_21",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_1_3_28",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_1_3_29",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_1_3_30",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_1_3_38",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_1_3_40",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_1_3_41",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_1_3_42",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_1_3_43",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_1_3_50",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_1_3_60",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_1_3_61",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_1_3_70",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_1_3_80",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_1_3_82",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_1_3_84",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_1_3_86",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_1_3_90",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_1_3_94",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_1_3_A0",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_1_3_B0",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_1_3_C0",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_1_3_C2",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_1_3_D0",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_1_3_E0",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_CANOPY_1_3_F0",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_FRINGE_1_1",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_FRINGE_1_2",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_FRINGE_1_3",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_FRINGE_1_4",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_FRINGE_1_5",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_FRINGE_1_6",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_FRINGE_1_7",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_FRINGE_1_8",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_FRINGE_1_9",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_FRINGE_1_A",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_FRINGE_1_B",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_FRINGE_1_C",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_FRINGE_1_D",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_FRINGE_1_E",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_FRINGE_1_F",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_WATER_00",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_WATER_01",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_WATER_02",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_WATER_03",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_WATER_04",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_WATER_05",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_WATER_06",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_WATER_07",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_WATER_08",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_WATER_09",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_WATER_0A",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_WATER_0B",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_WATER_0C",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_WATER_0D",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_WATER_0E",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_WATER_0F",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_WATER_10",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_WATER_14",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_WATER_18",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_WATER_1C",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_WATER_20",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_WATER_21",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_WATER_28",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_WATER_29",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_WATER_30",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_WATER_38",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_WATER_40",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_WATER_41",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_WATER_42",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_WATER_43",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_WATER_50",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_WATER_60",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_WATER_61",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_WATER_70",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_WATER_80",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_WATER_82",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_WATER_84",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_WATER_86",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_WATER_90",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_WATER_94",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_WATER_A0",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_WATER_B0",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_WATER_C0",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_WATER_C2",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_WATER_D0",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_WATER_E0",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_WATER_F0",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_WATER_LILY_ISOLATED",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_WATER_FOAM_ISOLATED",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_ARCH_0",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID F2_ARCH_1",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID COHESION_PATH_0_00",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID COHESION_PATH_0_01",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID COHESION_PATH_0_02",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID COHESION_PATH_0_03",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID COHESION_PATH_0_04",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID COHESION_PATH_0_05",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID COHESION_PATH_0_06",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID COHESION_PATH_0_07",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID COHESION_PATH_0_08",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID COHESION_PATH_0_09",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID COHESION_PATH_0_0A",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID COHESION_PATH_0_0B",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID COHESION_PATH_0_0C",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID COHESION_PATH_0_0D",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID COHESION_PATH_0_0E",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID COHESION_PATH_0_0F",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID COHESION_PATH_0_10",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID COHESION_PATH_0_14",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID COHESION_PATH_0_18",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID COHESION_PATH_0_1C",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID COHESION_PATH_0_20",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID COHESION_PATH_0_21",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID COHESION_PATH_0_28",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID COHESION_PATH_0_29",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID COHESION_PATH_0_30",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID COHESION_PATH_0_38",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID COHESION_PATH_0_40",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID COHESION_PATH_0_41",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID COHESION_PATH_0_42",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID COHESION_PATH_0_43",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID COHESION_PATH_0_50",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID COHESION_PATH_0_60",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID COHESION_PATH_0_61",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID COHESION_PATH_0_70",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID COHESION_PATH_0_80",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID COHESION_PATH_0_82",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID COHESION_PATH_0_84",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID COHESION_PATH_0_86",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID COHESION_PATH_0_90",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID COHESION_PATH_0_94",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID COHESION_PATH_0_A0",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID COHESION_PATH_0_B0",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID COHESION_PATH_0_C0",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID COHESION_PATH_0_C2",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID COHESION_PATH_0_D0",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID COHESION_PATH_0_E0",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID COHESION_PATH_0_F0",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID COHESION_PATH_1_00",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID COHESION_PATH_1_01",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID COHESION_PATH_1_02",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID COHESION_PATH_1_03",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID COHESION_PATH_1_04",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID COHESION_PATH_1_05",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID COHESION_PATH_1_06",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID COHESION_PATH_1_07",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID COHESION_PATH_1_08",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID COHESION_PATH_1_09",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID COHESION_PATH_1_0A",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID COHESION_PATH_1_0B",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID COHESION_PATH_1_0C",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID COHESION_PATH_1_0D",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID COHESION_PATH_1_0E",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID COHESION_PATH_1_0F",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID COHESION_PATH_1_10",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID COHESION_PATH_1_14",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID COHESION_PATH_1_18",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID COHESION_PATH_1_1C",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID COHESION_PATH_1_20",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID COHESION_PATH_1_21",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID COHESION_PATH_1_28",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID COHESION_PATH_1_29",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID COHESION_PATH_1_30",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID COHESION_PATH_1_38",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID COHESION_PATH_1_40",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID COHESION_PATH_1_41",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID COHESION_PATH_1_42",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID COHESION_PATH_1_43",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID COHESION_PATH_1_50",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID COHESION_PATH_1_60",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID COHESION_PATH_1_61",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID COHESION_PATH_1_70",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID COHESION_PATH_1_80",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID COHESION_PATH_1_82",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID COHESION_PATH_1_84",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID COHESION_PATH_1_86",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID COHESION_PATH_1_90",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID COHESION_PATH_1_94",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID COHESION_PATH_1_A0",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID COHESION_PATH_1_B0",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID COHESION_PATH_1_C0",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID COHESION_PATH_1_C2",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID COHESION_PATH_1_D0",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID COHESION_PATH_1_E0",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID COHESION_PATH_1_F0",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID COHESION_DECOR_0_0",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID COHESION_DECOR_0_1",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID COHESION_DECOR_0_2",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID COHESION_DECOR_0_3",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID COHESION_DECOR_0_4",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID COHESION_DECOR_0_5",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID COHESION_DECOR_1_0",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID COHESION_DECOR_1_1",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID COHESION_DECOR_1_2",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID COHESION_DECOR_1_3",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID COHESION_DECOR_1_4",
+      "pass": true
+    },
+    {
+      "check": "stable metatile ID COHESION_DECOR_1_5",
+      "pass": true
+    },
+    {
+      "check": "unchanged forest tiles prefix",
+      "pass": true
+    },
+    {
+      "check": "unchanged forest map prefix",
+      "pass": true
+    },
+    {
+      "check": "unchanged forest palettes prefix",
+      "pass": true
+    },
+    {
+      "check": "unchanged forest animations",
+      "pass": true
+    },
+    {
+      "check": "unchanged sewer tiles prefix",
+      "pass": true
+    },
+    {
+      "check": "unchanged sewer map prefix",
+      "pass": true
+    },
+    {
+      "check": "unchanged sewer palettes prefix",
+      "pass": true
+    },
+    {
+      "check": "unchanged sewer animations",
+      "pass": true
+    },
+    {
+      "check": "unchanged myst tiles prefix",
+      "pass": true
+    },
+    {
+      "check": "unchanged myst map prefix",
+      "pass": true
+    },
+    {
+      "check": "unchanged myst palettes prefix",
+      "pass": true
+    },
+    {
+      "check": "unchanged myst animations",
+      "pass": true
+    },
+    {
+      "check": "unchanged metatile_type",
+      "pass": true
+    },
+    {
+      "check": "unchanged metatile_coll",
+      "pass": true
+    },
+    {
+      "check": "unchanged metatile_prop",
+      "pass": true
+    },
+    {
+      "check": "unchanged metatile_glitter",
+      "pass": true
+    },
+    {
+      "check": "unchanged pal_obj",
+      "pass": true
+    },
+    {
+      "check": "unchanged pal_face",
+      "pass": true
+    },
+    {
+      "check": "unchanged title_bitmap",
+      "pass": true
+    }
+  ],
+  "passed": 2232,
+  "failed": 0,
+  "baseline_sheets": 40,
+  "current_sheets": 126,
+  "baseline_metatiles": 2133,
+  "current_metatiles": 2322
+}

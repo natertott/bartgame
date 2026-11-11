@@ -11,13 +11,32 @@ navigation fixtures, not an unassisted playthrough.
 Use --stop-after-long-drop --seed 5 or --seed 1432 to qualify the3/4-row falls.
 """
 from pathlib import Path
-import sys,ctypes as C,json,hashlib,struct,argparse,atexit
+import sys,ctypes as C,json,hashlib,struct,argparse,atexit,subprocess
 import probe as P,cream_graph_review as G
 import mgba.core,mgba.image
 parser=argparse.ArgumentParser(description=__doc__);parser.add_argument('--bundle',required=True);parser.add_argument('--out',required=True);parser.add_argument('--seed',type=lambda x:int(x,0),default=0xb4a7);parser.add_argument('--stop-after-long-drop',action='store_true');parser.add_argument('--panoramas',action='store_true');args=parser.parse_args()
 out=Path(args.out).resolve();out.mkdir(parents=True,exist_ok=True);bundle=Path(args.bundle).resolve()
 P.ROM=str(bundle/'bartgame.gba');P.MAP=str(bundle/'bartgame.map');P._syms=None
 checks=[];fixtures=[];review_complete=False;fatal_errors=[];harness_sha256=hashlib.sha256(Path(__file__).read_bytes()).hexdigest()
+def handoff_abi_offset():
+ # Compile only a constant from the exact pinned header using the real ARM
+ # ABI. The gameplay ROM and its RAM remain read-only during this adapter.
+ game=Path(__file__).resolve().parents[1];folder=out/'abi';folder.mkdir(exist_ok=True)
+ commit=(bundle/'source-commit.txt').read_text().strip()
+ header=subprocess.check_output(['git','-C',str(game),'show',commit+':bartgame/src/handoff_events.h'])
+ (folder/'handoff_events.h').write_bytes(header)
+ source='#include "handoff_events.h"\nconst unsigned int completed_offset __attribute__((used,section(".abi")))=__builtin_offsetof(HandoffState,completed);\n'
+ (folder/'offset.c').write_text(source)
+ command=['arm-none-eabi-gcc','-mthumb','-mcpu=arm7tdmi','-fno-builtin','-I',str(folder),'-I',str(game/'src'),'-I',str(bundle),'-c',str(folder/'offset.c'),'-o',str(folder/'offset.o')]
+ built=subprocess.run(command,capture_output=True,text=True);(folder/'compile.log').write_text(built.stdout+built.stderr);built.check_returncode()
+ subprocess.run(['arm-none-eabi-objcopy','-O','binary','--only-section=.abi',str(folder/'offset.o'),str(folder/'offset.bin')],check=True,capture_output=True)
+ data=(folder/'offset.bin').read_bytes()
+ if len(data)!=4:raise AssertionError('unexpected ARM offsetof constant size')
+ value=int.from_bytes(data,'little')
+ (folder/'provenance.json').write_text(json.dumps(dict(source_commit=commit,header_sha256=hashlib.sha256(header).hexdigest(),compiler_command=command,completed_offset=value),indent=2))
+ return value
+completed_offset=handoff_abi_offset()
+
 def w32(c,addr,n):P.w16(c,addr,n&65535);P.w16(c,addr+2,(n>>16)&65535)
 def raw(c,addr,size):return bytes(P.r8(c,addr+i) for i in range(size))
 def world(c):return G.World.from_buffer_copy(raw(c,P.sym('gCreamWorld'),C.sizeof(G.World)))
@@ -79,7 +98,7 @@ def review_exception(kind,value,tb):
  fatal_errors.append(str(value));sys.__excepthook__(kind,value,tb)
 sys.excepthook=review_exception
 def save_report():
- (out/'report.json').write_text(json.dumps(dict(checks=checks,fixtures=fixtures,seed=args.seed,scope_complete=review_complete,errors=fatal_errors,harness_sha256=harness_sha256,assets_header_sha256=hashlib.sha256((bundle/'assets.h').read_bytes()).hexdigest(),final=core_status(),sha256=hashlib.sha256((bundle/'bartgame.gba').read_bytes()).hexdigest(),limitations='Navigation fixtures select hero position, standing state and facing. Seed and erased in-memory SRAM are explicit start fixtures. All equipment choices and tools/rewards/combat use real input. No enemy HP/state, inventory grants, player health, completion, gates, terrain, palette, VRAM or framebuffer writes.'),indent=2))
+ (out/'report.json').write_text(json.dumps(dict(checks=checks,fixtures=fixtures,seed=args.seed,scope_complete=review_complete,errors=fatal_errors,handoff_completed_offset=completed_offset,harness_sha256=harness_sha256,assets_header_sha256=hashlib.sha256((bundle/'assets.h').read_bytes()).hexdigest(),final=core_status(),sha256=hashlib.sha256((bundle/'bartgame.gba').read_bytes()).hexdigest(),limitations='Navigation fixtures select hero position, standing state and facing. Seed and erased in-memory SRAM are explicit start fixtures. All equipment choices and tools/rewards/combat use real input. No enemy HP/state, inventory grants, player health, completion, gates, terrain, palette, VRAM or framebuffer writes.'),indent=2))
 atexit.register(save_report)
 def return_from_trial():
  tp(c,16*16+8,21*16+14);P.run(c,3);drive('DOWN',100,lambda:status(c)['area']!=4);return dismiss()
@@ -147,12 +166,14 @@ def edge(n,i):
    if active_capture is not None and tick%2==0:active_capture.append((status(c),c.bg_video.to_pil().convert('RGB').copy()))
   if capture_local:
    samples=active_capture;active_capture=None;fall=[st['actor'] for st,im in samples if st['actor']['state']==5 and st['actor']['z']>0]
-   check('local drop begins at the physical takeoff lip',bool(fall) and abs(fall[0]['y']-fall[0]['z']-takeoff_y)<=3,dict(takeoff_y=takeoff_y,first=fall[0] if fall else None))
+   before_fall=[st['actor']['y'] for st,im in samples if st['node']==n and st['actor']['state']!=5]
+   physical_takeoff=before_fall[-1] if before_fall else takeoff_y
+   check('local drop begins at the physical takeoff lip',bool(fall) and abs(fall[0]['y']-fall[0]['z']-physical_takeoff)<=3,dict(takeoff_y=physical_takeoff,fixture_start_y=takeoff_y,first=fall[0] if fall else None))
    speed=[fall[k]['z']-fall[k+1]['z'] for k in range(len(fall)-1)]
    check('local drop accelerates down and lands upright',len(speed)>5 and sum(speed[-3:])>=sum(speed[:3]) and P.actor(c,0)['z']==0 and P.actor(c,0)['state']==0,dict(speed=speed,landed=P.actor(c,0)))
    images=[im for st,im in samples]
    if images:images[0].save(out/'local-drop.gif',save_all=True,append_images=images[1:],duration=33,loop=0,optimize=False)
-   (out/'local-drop.json').write_text(json.dumps(dict(takeoff_y=takeoff_y,frames=[st for st,im in samples]),indent=2));local_drop_proved=True
+   (out/'local-drop.json').write_text(json.dumps(dict(takeoff_y=physical_takeoff,fixture_start_y=takeoff_y,frames=[st for st,im in samples]),indent=2));local_drop_proved=True
   if e.flags&1:
    samples=active_capture;active_capture=None;span=target//5-cell//5;cells=list(dict.fromkeys(st['cell'] for st,im in samples))
    check('long drop renders every intervening actual room',cells==list(range(cell,target+1,5)),dict(span=span,cells=cells))
@@ -183,7 +204,8 @@ def mission(which):
   else:P.run(c,3)
  check('real task%d opens'%(which+1),status(c)['area']==4,core_status());shot(c,'trial%d-enter'%(which+1))
 def enemies():return [(i,P.actor(c,i)) for i in range(1,96) if P.r8(c,P.sym('gActors')+i*64)==2]
-def task_done(site):return bool(P.r8(c,P.sym('gHandoffState')+89+(site>>3))&(1<<(site&7)))
+def task_done(site):return bool(P.r8(c,P.sym('gHandoffState')+completed_offset+(site>>3))&(1<<(site&7)))
+
 def combat(kind,limit=600):
  damage=[]
  for iteration in range(limit):

@@ -1854,3 +1854,16 @@ displays139 playable item entries and84 enemy entries;146 raw saved item IDs
 remain stable, including hidden helpers. Twenty hearts and an exactHP
 overflow panel fit the existing20px HUD height. New Light Arrows reuse the
 original cardinal arrow paintings without replacing any old pixels.
+
+**Published qualification:** source `0b9344d781e65e304d245bd9ae4aecdbc7056837`,
+ROM SHA256 `b348cf4d628aee1abb9b71d8885a9f04094332c5252490ff2dd8f8e7cd0bf1b8`,
+passes 267 native enemy/physics/render checks and 27 Satchel/atlas checks.
+All 2,540 new handoff painter frames decode exactly from the released ROM.
+Seventy-two native mounted sword frames retain stable z=16/zvel=0 and matching
+blade contact. An actual Cape jump launches from 16.5, peaks at 33.5 and lands
+onto 16; walking off returns to ordinary ground. This resolves the earlier
+pending jump-start entry. Six new-roster workload samples retain 3,600/3,600
+updates, including complete multipart chains in all three tested backgrounds;
+peak observed world OBJ 744/876 and OAM 58/128. Unedited native frames, exact
+source/frame traces and disclosed fixtures remain distinct from source atlases
+in the [enemy qualification notes](../handoff-restoration/ENEMIES.md).

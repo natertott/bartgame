@@ -73,7 +73,7 @@ def main():
   tp(c,72,343);P.run(c,25)
   oldeq=raw(c,at('PlayerState','equip'),3);olditems2=P.r8(c,at('PlayerState','items2'));oldowned=P.r32(c,at('LegacyInventory','owned'))
   P.w8(c,at('PlayerState','equip')+1,7);P.w8(c,at('PlayerState','equip')+2,16);P.w8(c,at('PlayerState','items2'),olditems2|2);w32(c,at('LegacyInventory','owned'),oldowned|(1<<21))
-  fixtures.append(dict(kind='temporary transportation gear interference loadout',B='DrainCap',L='PegasusBoots',restored=True))
+  gear_fixture=dict(kind='temporary transportation gear interference loadout',B='DrainCap',L='PegasusBoots',restored=False);fixtures.append(gear_fixture)
   P.press(c,'A',2,2);check('A boards realcart',status(c)['mode']==1,status(c));r=drive(c,'B',10,'cart-draincap-guard')
   check('DrainCap cannot overwrite cart state',all(x['mode']==1 and x['actor']['state']==0 for x in r),status(c))
   r=drive(c,'L',30,'cart');check('Boots cannot steal cart movement',all(x['mode']==1 and x['actor']['state']==0 for x in r),status(c));P.press(c,'A',2,2)
@@ -82,13 +82,28 @@ def main():
    if not status(c)['mode']:break
   check('A dismounts at safe stop',i<500 and status(c)['actor']['state']==0 and not P.r8(c,at('PlayerState','input_lock')),status(c));shot(c,'cart-stop')
   for index,b in enumerate(oldeq):P.w8(c,at('PlayerState','equip')+index,b)
-  P.w8(c,at('PlayerState','items2'),olditems2);w32(c,at('LegacyInventory','owned'),oldowned)
+  P.w8(c,at('PlayerState','items2'),olditems2);w32(c,at('LegacyInventory','owned'),oldowned);gear_fixture['restored']=True
   tp(c,88,110);P.run(c,25);P.press(c,'R',2,1);check('R launches parachute',status(c)['mode']==2,status(c));drive(c,'LEFT',40,'parachute');drive(c,'RIGHT',25)
   for i in range(250):
    c.run_frame()
    if not status(c)['mode']:break
   check('steered parachute lands lower shelf',i<250 and status(c)['actor']['y']==190 and status(c)['actor']['z']==0,status(c));shot(c,'parachute-land')
-  tp(c,248,350);P.run(c,4);r=drive(c,'UP',200,'bridge-over');check('end ramp selects raised bridge',any(x['layer']==1 for x in r),status(c));check('raised route avoids waterfall',all(x['actor']['state']!=7 for x in r));drive(c,'UP',50);check('north bank exitsupperplane',status(c)['layer']==0,status(c))
+  tp(c,248,350);P.run(c,4);r=drive(c,'UP',200,'bridge-over');check('end ramp selects raised bridge',any(x['layer']==1 for x in r),status(c));check('raised route avoids waterfall',all(x['actor']['state']!=4 for x in r));drive(c,'UP',50);check('north bank exitsupperplane',status(c)['layer']==0,status(c))
+  # Underlying water must not alter swimming speed or steal A gear input
+  # when a real raised floor supports Flippers-owning feet.
+  flipword=at('LegacyInventory','owned')+8;oldflip=P.r32(c,flipword);oldeqa=P.r8(c,at('PlayerState','equip'));oldarrows=P.r8(c,at('PlayerState','arrows'));olditems2=P.r8(c,at('PlayerState','items2'))
+  support_fixture=dict(kind='temporary Flippers+bow gear control',restored=False);fixtures.append(support_fixture)
+  w32(c,flipword,oldflip|(1<<6));P.w8(c,at('PlayerState','equip'),6);P.w8(c,at('PlayerState','items2'),olditems2|1);P.w8(c,at('PlayerState','arrows'),2)
+  tp(c,248,110);P.run(c,3);r=drive(c,'DOWN',60,'bridge-flippers');check('Flippers retain drydeck walking speed',status(c)['layer']==1 and status(c)['actor']['y']>=180 and all(x['actor']['state']!=4 for x in r),status(c))
+  body=status(c)['actor'];ground=P.r16(c,P.sym('gRoom')+2+(((body['y']-1)//16)*32+body['x']//16)*2)&65535
+  waterid=int(__import__('re').search(r'^#define MT_LH_MOB_WATER (\d+)',(bundle/'assets.h').read_text(),__import__('re').M)[1]);check('gear control stands on deck above actualwater',ground==waterid and status(c)['layer']==1,dict(ground=ground,waterid=waterid,body=body))
+  P.press(c,'A',2,5);check('deck A uses equippedbow instead of diving',P.r8(c,at('PlayerState','arrows'))==1,dict(arrows=P.r8(c,at('PlayerState','arrows')),state=status(c)))
+  drive(c,'UP',100);check('Flipperdeck walk exits upper plane',status(c)['layer']==0,status(c))
+  tp(c,168,174);P.run(c,4);check('Flippers support real lowerwater swimming',status(c)['layer']==0 and status(c)['actor']['state']==0,status(c))
+  ammo_before=P.r8(c,at('PlayerState','arrows'));check('lowerwater divecontrol starts with readygear',P.r8(c,at('PlayerState','item_cooldown'))==0)
+  P.press(c,'A',2,5);check('actual lowerwater A dives instead of firingbow',P.r8(c,at('PlayerState','arrows'))==ammo_before and status(c)['actor']['state']==0,dict(arrows=P.r8(c,at('PlayerState','arrows')),state=status(c)));shot(c,'lower-water-dive');P.run(c,100)
+  P.w8(c,at('PlayerState','equip'),oldeqa);P.w8(c,at('PlayerState','items2'),olditems2);P.w8(c,at('PlayerState','arrows'),oldarrows);w32(c,flipword,oldflip);support_fixture['restored']=True
+  tp(c,168,174);r=drive(c,'RIGHT',10,'lower-water-control');check('unsupported lowerwater still drowns',any(x['actor']['state']==4 for x in r),status(c));P.run(c,45)
   tp(c,120,238);P.run(c,5);r=drive(c,'RIGHT',190,'bridge-under');check('lower bank passes under bridge',all(x['layer']==0 for x in r),status(c));shot(c,'underpass')
   tp(c,248,350);drive(c,'DOWN',24);settle(c,4,0)
   shape=P.r8(c,at('HandoffState','fuser_shape')+2);P.w8(c,at('HandoffState','kinstone_shapes')+6+shape,1);P.w16(c,at('LegacyInventory','kinstones')+4,1);fixtures.append(dict(kind='one matching redhalf ingredient',shape=shape,earned=False));choose(c,22,8,2);settle(c,4,0)

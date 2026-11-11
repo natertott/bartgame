@@ -66,8 +66,19 @@ use `PROFILE=0`; `PROFILE=1` is development-only cycle accounting.
 ## Current game
 
 The Drain is the hub, with the Billious Peddler, Pale Gatekeeper and a
-stone-framed, brass-rung ladder to the forest. The forest is area one of nine;
-the other eight areas have not been implemented.
+stone-framed, brass-rung ladder to the forest. The Forest and The Curdled Cream
+are the first two regions of nine; seven future regions remain unspecified.
+Two additional arches in the Drain reach the Cream and the optional Challenge
+Annex. See the [current release, controls and actual mGBA views](../curdled-cream-review/README.md)
+and the [complete handoff ledger](../docs/handoff-restoration/AUDIT.md).
+
+The Cream is a separate 5×5 directed climbing puzzle: two terraces per room,
+upward climbs, lateral connections, caves and committed one-to-four-screen
+descents. Three earned tools unlock its summit route. The boss occupies a
+random top-row peak. Its original native terrain and actors append to the
+existing art pack. The Annex supplies restored gear, seven quest forms,
+solver-certified puzzle boards, shops, fusions and four mechanism courts;
+Select from the existing pause screen opens its expanded Satchel and atlas.
 
 The forest is a seeded 5×5 maze with a balanced target of 24–32 required room
 crossings. Three required trials award Blightseed Bombs, the candle/Grail Lamp
@@ -81,7 +92,9 @@ See [forest generation](docs/FOREST_GENERATION.md) for the generation rules.
 Caves, hollows and thickets contain treasure, healing, merchants, fights,
 floor plates, censers or lifting puzzles. Forest strangers offer quests.
 The deepest room contains the Blight Heart; defeating it releases the Grail.
-Death and victory save to SRAM, and continuing wakes Bloom in the Drain.
+Death saves a resumable run to SRAM; victory retires the completed run, so the
+next play starts a new seed. Extended gear, both regional maps and preferences
+use a separate checksummed save extension, retaining the earlier save format.
 
 ## Controls
 
@@ -93,9 +106,12 @@ Death and victory save to SRAM, and continuing wakes Bloom in the Drain.
 | L | Use/hold assigned item. Initially the Bark Shield; guarding fixes facing and slows walking. |
 | R | Roll while walking; lift while standing; throw a carried object. |
 | Start | Open/close the item, key-item and map pages. |
+| Select in pause | Open the expanded Satchel; A/B/L assign, R opens its atlas, Select returns to the original pause. |
 
 Assign items to A/B/L in the pause menu. The sword cuts bushes, gathers nearby
-hearts/coins and reflects seeds. Bombs open cracked stone, the candle burns
+hearts/coins and reflects seeds. Hold and release the bomb button to throw:
+a tap drops at Bloom's feet, half a second reaches 1½ tiles, one second caps at
+2 tiles. Bombs explode on ground/wall impact. Bombs open cracked stone, the candle burns
 webs/brush and lights censers, and the cloak jumps gaps. The bow uses arrows;
 the Drain Cap returns Bloom to the hub. The Rot Gauntlet permits heavy lifting.
 A sword swing while carrying drops the load. Approach a chest from below to

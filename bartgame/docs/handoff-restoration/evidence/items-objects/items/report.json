@@ -1,0 +1,594 @@
+{
+  "checks": [
+    {
+      "name": "real fresh run in sewer",
+      "passed": true,
+      "detail": {
+        "actor": {
+          "kind": 1,
+          "type": 0,
+          "state": 0,
+          "timer": 0,
+          "x": 200,
+          "y": 270,
+          "z": 0,
+          "speed": 0,
+          "hp": 0,
+          "coll": 0,
+          "facing": 0
+        },
+        "state": 1
+      }
+    },
+    {
+      "name": "boomerang input spawns explicit tool actor",
+      "passed": true,
+      "detail": [
+        {
+          "i": 3,
+          "kind": 6,
+          "type": 23,
+          "state": 0,
+          "timer": 3,
+          "x": 206,
+          "y": 265,
+          "z": 5,
+          "speed": 512,
+          "hp": 0,
+          "coll": 0,
+          "facing": 1,
+          "v": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        }
+      ]
+    },
+    {
+      "name": "boomerang damage matches tool",
+      "passed": true,
+      "detail": [
+        {
+          "i": 3,
+          "kind": 6,
+          "type": 23,
+          "state": 0,
+          "timer": 3,
+          "x": 206,
+          "y": 265,
+          "z": 5,
+          "speed": 512,
+          "hp": 0,
+          "coll": 0,
+          "facing": 1,
+          "v": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        }
+      ]
+    },
+    {
+      "name": "magic-boomerang input spawns explicit tool actor",
+      "passed": true,
+      "detail": [
+        {
+          "i": 3,
+          "kind": 6,
+          "type": 23,
+          "state": 0,
+          "timer": 3,
+          "x": 207,
+          "y": 265,
+          "z": 5,
+          "speed": 640,
+          "hp": 0,
+          "coll": 0,
+          "facing": 1,
+          "v": [
+            1,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        }
+      ]
+    },
+    {
+      "name": "magic-boomerang damage matches tool",
+      "passed": true,
+      "detail": [
+        {
+          "i": 3,
+          "kind": 6,
+          "type": 23,
+          "state": 0,
+          "timer": 3,
+          "x": 207,
+          "y": 265,
+          "z": 5,
+          "speed": 640,
+          "hp": 0,
+          "coll": 0,
+          "facing": 1,
+          "v": [
+            1,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        }
+      ]
+    },
+    {
+      "name": "pacci input spawns explicit tool actor",
+      "passed": true,
+      "detail": [
+        {
+          "i": 3,
+          "kind": 6,
+          "type": 23,
+          "state": 0,
+          "timer": 3,
+          "x": 206,
+          "y": 265,
+          "z": 5,
+          "speed": 512,
+          "hp": 0,
+          "coll": 0,
+          "facing": 1,
+          "v": [
+            2,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        }
+      ]
+    },
+    {
+      "name": "pacci damage matches tool",
+      "passed": true,
+      "detail": [
+        {
+          "i": 3,
+          "kind": 6,
+          "type": 23,
+          "state": 0,
+          "timer": 3,
+          "x": 206,
+          "y": 265,
+          "z": 5,
+          "speed": 512,
+          "hp": 0,
+          "coll": 0,
+          "facing": 1,
+          "v": [
+            2,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        }
+      ]
+    },
+    {
+      "name": "fire-rod input spawns explicit tool actor",
+      "passed": true,
+      "detail": [
+        {
+          "i": 3,
+          "kind": 6,
+          "type": 23,
+          "state": 0,
+          "timer": 3,
+          "x": 212,
+          "y": 265,
+          "z": 5,
+          "speed": 1024,
+          "hp": 0,
+          "coll": 0,
+          "facing": 1,
+          "v": [
+            3,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        }
+      ]
+    },
+    {
+      "name": "fire-rod damage matches tool",
+      "passed": true,
+      "detail": [
+        {
+          "i": 3,
+          "kind": 6,
+          "type": 23,
+          "state": 0,
+          "timer": 3,
+          "x": 212,
+          "y": 265,
+          "z": 5,
+          "speed": 1024,
+          "hp": 0,
+          "coll": 0,
+          "facing": 1,
+          "v": [
+            3,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        }
+      ]
+    },
+    {
+      "name": "light-arrow input spawns explicit tool actor",
+      "passed": true,
+      "detail": [
+        {
+          "i": 3,
+          "kind": 6,
+          "type": 23,
+          "state": 0,
+          "timer": 3,
+          "x": 212,
+          "y": 265,
+          "z": 5,
+          "speed": 1024,
+          "hp": 0,
+          "coll": 0,
+          "facing": 1,
+          "v": [
+            4,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        }
+      ]
+    },
+    {
+      "name": "light-arrow damage matches tool",
+      "passed": true,
+      "detail": [
+        {
+          "i": 3,
+          "kind": 6,
+          "type": 23,
+          "state": 0,
+          "timer": 3,
+          "x": 212,
+          "y": 265,
+          "z": 5,
+          "speed": 1024,
+          "hp": 0,
+          "coll": 0,
+          "facing": 1,
+          "v": [
+            4,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Light Arrow consumes one arrow",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Gust medium charge releases gust",
+      "passed": true,
+      "detail": [
+        {
+          "i": 3,
+          "kind": 6,
+          "type": 23,
+          "state": 0,
+          "timer": 2,
+          "x": 204,
+          "y": 265,
+          "z": 5,
+          "speed": 512,
+          "hp": 0,
+          "coll": 0,
+          "facing": 1,
+          "v": [
+            6,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Boots windup then 3px dash",
+      "passed": true,
+      "detail": {
+        "start": [
+          64,
+          224
+        ],
+        "x": [
+          64,
+          64,
+          64,
+          64,
+          64,
+          64,
+          64,
+          64,
+          64,
+          64,
+          64,
+          64,
+          64,
+          64,
+          64,
+          64,
+          67,
+          70,
+          73,
+          76,
+          79,
+          82,
+          85,
+          88,
+          91
+        ]
+      }
+    },
+    {
+      "name": "Cape takes actual jump state and height",
+      "passed": true,
+      "detail": {
+        "kind": 1,
+        "type": 0,
+        "state": 5,
+        "timer": 7,
+        "x": 208,
+        "y": 270,
+        "z": 11,
+        "speed": 320,
+        "hp": 0,
+        "coll": 0,
+        "facing": 1
+      }
+    },
+    {
+      "name": "Mitts keeps standard movement state",
+      "passed": true,
+      "detail": {
+        "kind": 1,
+        "type": 0,
+        "state": 0,
+        "timer": 34,
+        "x": 200,
+        "y": 270,
+        "z": 0,
+        "speed": 0,
+        "hp": 0,
+        "coll": 0,
+        "facing": 1
+      }
+    },
+    {
+      "name": "native impact self damage occurs",
+      "passed": true,
+      "detail": {
+        "before": 24,
+        "after": 20
+      }
+    },
+    {
+      "name": "Red Potion cures real damage and empties bottle",
+      "passed": true,
+      "detail": {
+        "hp": 24,
+        "bottle": 0
+      }
+    },
+    {
+      "name": "Bottled Fairy automatically rescues real lethal blast",
+      "passed": true,
+      "detail": {
+        "hp": 24,
+        "state": 0
+      }
+    }
+  ],
+  "fixtures": [
+    {
+      "kind": "loadout ownership and ammunition only",
+      "all118": true,
+      "arrows": 40,
+      "bombs": 20
+    },
+    {
+      "kind": "loadout equipment only",
+      "B": 10
+    },
+    {
+      "kind": "navigation position/facing only",
+      "x": 200,
+      "y": 270,
+      "face": 1
+    },
+    {
+      "kind": "loadout equipment only",
+      "B": 11
+    },
+    {
+      "kind": "navigation position/facing only",
+      "x": 200,
+      "y": 270,
+      "face": 1
+    },
+    {
+      "kind": "loadout equipment only",
+      "B": 14
+    },
+    {
+      "kind": "navigation position/facing only",
+      "x": 200,
+      "y": 270,
+      "face": 1
+    },
+    {
+      "kind": "loadout equipment only",
+      "B": 17
+    },
+    {
+      "kind": "navigation position/facing only",
+      "x": 200,
+      "y": 270,
+      "face": 1
+    },
+    {
+      "kind": "loadout equipment only",
+      "B": 9
+    },
+    {
+      "kind": "navigation position/facing only",
+      "x": 200,
+      "y": 270,
+      "face": 1
+    },
+    {
+      "kind": "loadout equipment only",
+      "B": 13
+    },
+    {
+      "kind": "navigation position/facing only",
+      "x": 200,
+      "y": 270,
+      "face": 1
+    },
+    {
+      "kind": "loadout equipment only",
+      "B": 16
+    },
+    {
+      "kind": "navigation position/facing only",
+      "x": 64,
+      "y": 224,
+      "face": 1
+    },
+    {
+      "kind": "loadout equipment only",
+      "B": 4
+    },
+    {
+      "kind": "navigation position/facing only",
+      "x": 200,
+      "y": 270,
+      "face": 1
+    },
+    {
+      "kind": "loadout equipment only",
+      "B": 15
+    },
+    {
+      "kind": "navigation position/facing only",
+      "x": 200,
+      "y": 270,
+      "face": 1
+    },
+    {
+      "kind": "bottle1 contents loadout",
+      "value": "Red Potion"
+    },
+    {
+      "kind": "loadout equipment only",
+      "B": 2
+    },
+    {
+      "kind": "navigation position/facing only",
+      "x": 200,
+      "y": 270,
+      "face": 1
+    },
+    {
+      "kind": "loadout equipment only",
+      "B": 19
+    },
+    {
+      "kind": "bottle1 contents loadout",
+      "value": "Fairy"
+    },
+    {
+      "kind": "loadout equipment only",
+      "B": 2
+    },
+    {
+      "kind": "navigation position/facing only",
+      "x": 200,
+      "y": 270,
+      "face": 1
+    },
+    {
+      "kind": "navigation position/facing only",
+      "x": 200,
+      "y": 270,
+      "face": 1
+    },
+    {
+      "kind": "navigation position/facing only",
+      "x": 200,
+      "y": 270,
+      "face": 1
+    },
+    {
+      "kind": "navigation position/facing only",
+      "x": 200,
+      "y": 270,
+      "face": 1
+    },
+    {
+      "kind": "navigation position/facing only",
+      "x": 200,
+      "y": 270,
+      "face": 1
+    },
+    {
+      "kind": "navigation position/facing only",
+      "x": 200,
+      "y": 270,
+      "face": 1
+    }
+  ],
+  "rom_sha256": "b348cf4d628aee1abb9b71d8885a9f04094332c5252490ff2dd8f8e7cd0bf1b8",
+  "notes": "Only loadout and navigation fixtures. No HP/AI/action/completion/geometry/framebuffer writes."
+}

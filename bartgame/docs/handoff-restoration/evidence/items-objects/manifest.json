@@ -1,0 +1,238 @@
+{
+  "rom_sha256": "b348cf4d628aee1abb9b71d8885a9f04094332c5252490ff2dd8f8e7cd0bf1b8",
+  "source_commit": "0b9344d781e65e304d245bd9ae4aecdbc7056837",
+  "checks": {
+    "items": 19,
+    "objects": 48,
+    "forms": 8,
+    "mechanisms": 20
+  },
+  "total_checks": 95,
+  "images": "untouched native240x160 mGBA framebuffers",
+  "files": [
+    {
+      "file": "items/boomerang.png",
+      "sha256": "60e331c9352fd949e6df99ba3a6bb655392ba8e78aef42ac9fb4f0648a8124b9"
+    },
+    {
+      "file": "items/boots.png",
+      "sha256": "2d2ea5e601f621cfcd1c828b73e3d0133b1af2a5ebc2ddc97cf2592f45eb864c"
+    },
+    {
+      "file": "items/cape.png",
+      "sha256": "1fe0e7b9ce85d19afa08297d94f30ced3fe6935cdce1ae83c99253fd96ecee41"
+    },
+    {
+      "file": "items/fairy-rescue.png",
+      "sha256": "1276ed07aede8c0199e5e42c98afa4a3732a382ea022473816ef58adc3d346d3"
+    },
+    {
+      "file": "items/fire-rod.png",
+      "sha256": "e8011850071855f02b506f911880f76e3cac023e3f8c1bf8ce60dccd9e80b562"
+    },
+    {
+      "file": "items/gust-release.png",
+      "sha256": "6e032b053c74804f5bb53c1c3500e0ecdb36c347471eec2689f2adfca2a79447"
+    },
+    {
+      "file": "items/light-arrow.png",
+      "sha256": "fa3fd5388f65bef9f4daee98f639df9117aebafa6d46016fac45a032e906f418"
+    },
+    {
+      "file": "items/magic-boomerang.png",
+      "sha256": "93b556270bf2c387927870222f5d2de6d7c354646124992ceb74145b33619a30"
+    },
+    {
+      "file": "items/mitts.png",
+      "sha256": "70de590b343524282e0f389d7a22cda8baa18dbab8227e4d12638fe7b41e5544"
+    },
+    {
+      "file": "items/pacci.png",
+      "sha256": "e2259ff922a16e169b0f4cbf9ce6576f5305026e2f8426514421eb9434144bd3"
+    },
+    {
+      "file": "items/report.json",
+      "sha256": "a38fe0cd4fb916eb629320e98584f787f4b20c2aba10ff137e594d805fd122ce"
+    },
+    {
+      "file": "objects/course-28-entry.png",
+      "sha256": "e78e07584057dc3cb94ff33f5085fa956cc44d44a25857704ddb1ca293f13612"
+    },
+    {
+      "file": "objects/course-28-ne.png",
+      "sha256": "2f5b2a12107c14784d0022d13da9316a58fbb841886ce43342c6e6fd45342461"
+    },
+    {
+      "file": "objects/course-28-nw.png",
+      "sha256": "44c6264a97e061d240d58860b8222b7ef2fc0edc9556d6c285bc92a8b17de91b"
+    },
+    {
+      "file": "objects/course-28-se.png",
+      "sha256": "5a82f52a3c3ba46c492d78a547185e726f820bc406d0d3a8db88a18b66eb72f5"
+    },
+    {
+      "file": "objects/course-28-sw.png",
+      "sha256": "7dcfecf6802e4b84d37bc26f21d862575e77a2c247dcbe97c0b8e0e83f90ad3f"
+    },
+    {
+      "file": "objects/course-29-entry.png",
+      "sha256": "2a2f0d0b71f59c6f4e3cb4a16fe7ca18cbbebd61a395f5468371f9a279f8655d"
+    },
+    {
+      "file": "objects/course-29-ne.png",
+      "sha256": "dba0c99df838329ce4a0bf3b04f37dd6453ff4f8a3070d357e253a9924eddeec"
+    },
+    {
+      "file": "objects/course-29-nw.png",
+      "sha256": "41a78b47f74f61fe3cb0d3bc450adc50978c73fe42dce2925a5f05ed930343cd"
+    },
+    {
+      "file": "objects/course-29-se.png",
+      "sha256": "72f91fe144096d592b289bc5aa865ff6d2f85190c478ebca860944b838e29632"
+    },
+    {
+      "file": "objects/course-29-sw.png",
+      "sha256": "eb2d3dd94d621d5bd9daf5e89da22f09a20c38e83e79ad0e46d0a731af72b987"
+    },
+    {
+      "file": "objects/course-30-entry.png",
+      "sha256": "5bbb42ac2ae86654470f7c4b84b87abc7a8847d69e129648f2802a524597ee5f"
+    },
+    {
+      "file": "objects/course-30-ne.png",
+      "sha256": "8f83c7fc49855518adc4fa5a57e0d505a84fdc2ae30937c4199272c5b23dca6d"
+    },
+    {
+      "file": "objects/course-30-nw.png",
+      "sha256": "9068b09fa727dd6053c4ce8f57d6dc73a7f46eb9cee204ee6cc68580384ee0dc"
+    },
+    {
+      "file": "objects/course-30-se.png",
+      "sha256": "f5420a20c782f40202735769c2e466cf7385bd872b1712b57574c4e26e9ae6ab"
+    },
+    {
+      "file": "objects/course-30-sw.png",
+      "sha256": "224d3d5945af4fa9a2e1979ef349fc6c53173b265425308d375a316a3a503ea4"
+    },
+    {
+      "file": "objects/course-31-entry.png",
+      "sha256": "75465252629fb39c30fba18600b19acf6a7760549bf21a49f1932bb4b3db0bf5"
+    },
+    {
+      "file": "objects/course-31-ne.png",
+      "sha256": "e63c608839b37ee1046cedb981f22fcb11c3258ef08c67e9ef0144649f802d93"
+    },
+    {
+      "file": "objects/course-31-nw.png",
+      "sha256": "4cde9a54c1cc9812aeb932b4227bf59b7acee166f389bf8ea800b1b8f3052789"
+    },
+    {
+      "file": "objects/course-31-se.png",
+      "sha256": "faab537279965ed918eeb65472692f43719fbe3d16e1a50e32b051a3ad0c582b"
+    },
+    {
+      "file": "objects/course-31-sw.png",
+      "sha256": "13e046ae70ed3e7a07a1c735b1ba7adbac2b4751b4390621d1726297bb586f13"
+    },
+    {
+      "file": "objects/progress.json",
+      "sha256": "8b45277c667c2cc05960bd7d4af587518a4c4e5ce847d8086178b51a77c932c9"
+    },
+    {
+      "file": "objects/report.json",
+      "sha256": "ceef7a5604c30db86a28462815a99bd1cc94dfd3291a52be2e6e20fe7a5d4afa"
+    },
+    {
+      "file": "forms/clone-formation.png",
+      "sha256": "200183ed00121b34792434dd270f4ed2c2c25ccce315f946fc8db91b99d63cba"
+    },
+    {
+      "file": "forms/clone-pressure-plates.png",
+      "sha256": "e1532abc99929515b567c85c3df797c3e726b6b9b80108728518b683c7bd701c"
+    },
+    {
+      "file": "forms/clone-sword-same-phase.png",
+      "sha256": "2c69de6fe45a8959b3870f21ce218c50211d2bb5aa8ce7f438b06c4ca125651b"
+    },
+    {
+      "file": "forms/course-30-entry.png",
+      "sha256": "953b590351186a562eebcb9c19f702fa974b6fb46e31d47d2be9d21f0abd74a3"
+    },
+    {
+      "file": "forms/inside-minish-pocket.png",
+      "sha256": "3d32b880657abb8ba5c3d6f034be113a3773100b35df91945ab287ae1480d8c9"
+    },
+    {
+      "file": "forms/report.json",
+      "sha256": "8a3f592b5d251458c4661728342ed3788b8747fd06c04fd322164c2deeca9871"
+    },
+    {
+      "file": "forms/shrink-on-real-portal.png",
+      "sha256": "3dd86fd79f224962697ce1ca3ce76af07ad1b64c496e067887a023aa86dae7d1"
+    },
+    {
+      "file": "mechanisms/bow-eye-switch.png",
+      "sha256": "edd77a72f6f278f2fb680450aa6bf61d68b910bee6ac7e61dbcd4b3344f747a1"
+    },
+    {
+      "file": "mechanisms/completed-court.png",
+      "sha256": "61e215dff0273dce5ae15f1102daf19426ce1521404e12fb6aafc0a855afbc2e"
+    },
+    {
+      "file": "mechanisms/course-28-entry.png",
+      "sha256": "e78e07584057dc3cb94ff33f5085fa956cc44d44a25857704ddb1ca293f13612"
+    },
+    {
+      "file": "mechanisms/course-31-entry.png",
+      "sha256": "48dbf68f41eeea7946da9dd433e442154b5693a4352e7ebbcadf19eec6a0e56d"
+    },
+    {
+      "file": "mechanisms/gust-load-release.png",
+      "sha256": "4fe94b49be1127ff17a9fc95cadf655f5191f1332e24515ee9dccff390535b59"
+    },
+    {
+      "file": "mechanisms/hit-lever.png",
+      "sha256": "732e3d7c661a14acf3b3ec59780bab5669075d4ca39468fbdd061f23065a3225"
+    },
+    {
+      "file": "mechanisms/lantern-light-switch.png",
+      "sha256": "2b8c08e05a1ec9da588e4aae87aa0116d9d1aeea615de710d41ed7c0284b68ab"
+    },
+    {
+      "file": "mechanisms/lever-7.png",
+      "sha256": "45f614d3b0fd09ac09c61c2d8f68f0271a1456fcae9f93f7a6954901fb204897"
+    },
+    {
+      "file": "mechanisms/lever-8.png",
+      "sha256": "fd91cece594f992c0bfd6b91913bf1998078041ad815e5083936936ff2863d08"
+    },
+    {
+      "file": "mechanisms/mineral-water-melt.png",
+      "sha256": "da575bbda0ae7e08632f24346e75906a46f2954c22bb6423ac47e99946e1013a"
+    },
+    {
+      "file": "mechanisms/mirror-reflected-ray.png",
+      "sha256": "6e14c99f7c33b8e41269e9d19c5e566cb3ab75f871733b5e8284a56418662945"
+    },
+    {
+      "file": "mechanisms/pacci-flipped-pot.png",
+      "sha256": "8ccc11acdbc1a741bd466c0b029a98ecd7313ef9bb332b08b132f1e632719f23"
+    },
+    {
+      "file": "mechanisms/report.json",
+      "sha256": "1b7ed3e8fd9cca69eaea50bd59eb153c0eb133a5b5973344dfdc6da20fa83970"
+    },
+    {
+      "file": "mechanisms/statue-push.png",
+      "sha256": "d537dd50012e593062495c864ed6ef4aac7750206b744a6502ddad9cbc0c0983"
+    },
+    {
+      "file": "host/bomb-259.json",
+      "sha256": "1178fb4331d5c07138a80781e80258e7b227d09be08ab3c6dd604eebabeca8eb"
+    },
+    {
+      "file": "host/objects-277.json",
+      "sha256": "d256b8c6ec4d09d5b68b69ca85ba13a3da9bddc3229deec7ce42d1a04364e583"
+    }
+  ]
+}

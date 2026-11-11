@@ -11,7 +11,8 @@ local choices rather than a replacement palette for the other regions.
 `art/cream_terrain.py` supplies 142 new 16×16 metatiles, with eight added 16-colour
 RGB555 banks. Quiet ivory/curd floor stays readable at all three corruption
 levels. Approach paths retain the same ivory substrate with light scuff marks,
-so generated route rectangles never read as pasted brown blocks. Ochre shadows and irregular horizontal strata describe the cliff faces;
+so generated route rectangles never read as pasted brown blocks. Ochre shadows
+and irregular horizontal strata describe the cliff faces;
 the deepest stage adds luminous purple veins while preserving pale walkways.
 Distinct side faces avoid treating the top wall as a wall sliding down the sides.
 Continuous climbable fissures contain regular, clearly lit handholds. Only real
@@ -92,23 +93,32 @@ engine's 8-pixel collision rules. The final qualification passed:
 - 25,344 actual graph trigger checks and 25,344 target landing clearances;
 - 58,559 enemy spawn clearances and 768 task approach checks;
 - every sampled chest, folk, heal and cache approach;
-- 160 closed gate footprint, native restoration and persistence checks.
+- 160 closed gate footprint, native restoration and persistence checks;
+- 256 dry, reachable entry-return fronts.
 
 The graph agent also ran `tools/cream_room_batch_review.py` across 100,000
-seeds:2.5 million actual C-built rooms,9.9 million route/arrival pairs,
-22,899,209 spawn checks and 3,472,886 content-front checks, with zero failures.
+seeds: 2.5 million actual C-built rooms, 9.9 million route/arrival pairs,
+22,899,209 spawn checks, 3,376,541 content-front checks and 100,000 dry,
+reachable hub-return fronts, with zero failures.
 This uses the same qualified 8-pixel collision host adapter; its 25-room cache is
 a host-only optimization and adds no ROM or game RAM cache. Runtime animation
 and combat remain separately verified through mGBA.
 
 ARM syntax checks for the room and runtime pass with `-Wall -Werror`.
 
-Actual mGBA integration 3 review completed the three real mandatory tasks,
+The published mGBA release at source `0b9344d781e65e304d245bd9ae4aecdbc7056837`
+(ROM SHA256 `b348cf4d628aee1abb9b71d8885a9f04094332c5252490ff2dd8f8e7cd0bf1b8`)
+completed the three real mandatory tasks,
 earned Bombs, Lamp, Cape and Pacci, opened physical bomb and flame gates with
 their real tools, traversed cave folds and the final combined seal, and reached
 the summit. Pacci hit the painted head, the real boss ramp raised Bloom to z 16,
 and sixteen real sword blows reduced the peak monster from 32 HP to zero. The
-game entered its actual win state. The full review passed 54 checks.
+game entered its actual win state. The full review passed 59 checks. A separate run also completed the win with
+three exact room panoramas, passing 65 checks. Separate three- and four-row
+fall runs each passed 28 checks. All four runs completed their requested scope
+with zero failed checks or harness errors. The new return stairs genuinely land
+at the matching Drain door (456,130); re-entry arrives at (400,350). Local falls
+begin at the actual takeoff height and accelerate into a stable landing.
 
 Separate seeded runs proved every intermediate background during long falls:
 
@@ -120,6 +130,11 @@ Run `python tools/cream_runtime_review.py --bundle <frozen-ROM-directory>
 --out <directory>` for the full seeded proof. Add `--seed 5
 --stop-after-long-drop` or `--seed 1432 --stop-after-long-drop` for the other
 fall spans. Its native 240×160 PNGs and sampled GIFs come from real mGBA video.
+The read-only ABI adapter compiles `__builtin_offsetof(HandoffState,completed)`
+from the bundle's exact pinned source header using the ARM compiler. Its header,
+object, extracted constant and command provenance remain under `abi/`, avoiding
+a stale completion offset when persistent fields change width.
+
 Hero position, facing and standing state are disclosed navigation fixtures;
 seed selection and erased private SRAM are explicit new-run fixtures. The
 harness makes real pause-menu choices and presses actual game buttons. It does
@@ -127,7 +142,15 @@ not assign inventory grants, player health, enemy health/state, completion bits,
 gates, terrain, palettes, VRAM or framebuffer pixels. This establishes mechanic
 execution with navigation fixtures, rather than an unassisted playthrough.
 
-The source/host evidence is in `/workspace/setup/curdled-cream/`; the parent
-integration owns the final pinned ROM, emulator suite and published gallery.
+The [public native gallery](../../../curdled-cream-review/README.md) links the
+published screenshots and qualification reports. Full working evidence is in
+`/workspace/setup/curdled-cream/release3-native-{win,art,span3,span4}/`. The
+separate read-only `tools/cream_public_views.py` records a settled ordinary
+cave view and both atlas levels through real menu input, with its executed
+program and provenance under `release3-public-views/`.
+
+Panoramas are 512×384 disjoint crop mosaics of nine untouched 240×160 native
+mGBA camera frames. They are not a single oversized GBA framebuffer. Every
+literal crop and the unchanged room/collision state are checked.
 Host graph/collision qualification does not establish complete combat victory
 or animation performance. Those require the separate production-ROM review.

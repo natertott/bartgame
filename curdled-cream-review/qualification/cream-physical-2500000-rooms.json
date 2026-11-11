@@ -1,0 +1,23 @@
+{
+  "passed": true,
+  "method": "Batch actual Cream C geometry with a single native host process.\n\nReuses cream_room_review.py's explicit8px collision/metadata adapter. Per seed,\nall25 actual rooms are built once and cached in host memory; no mock topology\nor procedural geometry replaces C. C then floods both dry components and\nchecks every route, actual target clearance, spawn and content approach.\nThis is host geometry evidence, not native AI/input/timing qualification.\n",
+  "seeds": 100000,
+  "rooms": 2500000,
+  "routes": 9900000,
+  "arrivals": 9900000,
+  "spawn_checks": 22899209,
+  "content_fronts": 3376541,
+  "hub_return_fronts": 100000,
+  "failures": 0,
+  "elapsed_seconds": 58.40013003349304,
+  "source_hashes": {
+    "src/cream_world.c": "6a024e86016e77b37247b68dd99672e69d04f298e9ea0e58ea92b6ace55b1d48",
+    "src/cream_world.h": "28c8cf2021515656e6fea7ae58122c04df09cc36ca06ea7bcb7f6087e963d3cb",
+    "src/cream_world_fallback.inc": "5ee91af8296715c9a1d87fd0301a31c9305fccf6f1ac352806b107fc31d08b56",
+    "src/cream_room.c": "8ef23bb9234f1f2406767c921f9cad0bcecd0368722c98463ef39598bfafe3e2",
+    "src/cream_room.h": "ffdbc0885ed29c7eb2e620724637134140fde756d189f11af29d9bc1e9be3728",
+    "art/cream_terrain.py": "3109371cc02dc6e78a4ef6e995f5d6717619f0cda8be616bfc95dc01d6359dc2",
+    "tools/cream_room_review.py": "7bffc6bed0a6bd5c8ce1cff0ea46b74c43a7e21309c2faacdce296cc2133f26c"
+  },
+  "tool_sha256": "08a9f7fa0bb936e01d5d218a289f25211a1bdb7f9311b659576dbeb48f88ca38"
+}

@@ -54,3 +54,22 @@ checksum/generation selection, malformed bounds, profile precedence/recovery,
 seed matching and erasure isolation. LAB checks confirm no extension/profile
 writes. Runtime-only initialization is explicitly stubbed; old base-save
 migration and native hardware behavior still require integration evidence.
+
+
+## Final native qualification
+
+Exact release3 ROM SHA-256
+`b348cf4d628aee1abb9b71d8885a9f04094332c5252490ff2dd8f8e7cd0bf1b8`:
+`tools/journal_catalogue_native.py` passes227checks across all139visible items
+and84enemies. It reads the frozen ROM's metadata and verifies raw-ID selection,
+actual preview VRAM pixels, palette RAM, unchanged actors/terrain and return to
+live play. Complete knowledge is an explicitly serialized private UI fixture,
+not claimed earned discovery. The visible list omits seven source-only helpers
+and the excluded Wallet; storage retains146stable raw IDs.
+
+`tools/mobility_native_review.py` separately passes32real-input/profile checks,
+including oldJRN1migration, an actual hazard death/save, and coldContinue which
+preserves earned gilt/fusion/cache completion and prior discoveries/settings.
+These fixtures are disclosed independently of the full-catalogue presentation
+fixture. Extension records now use the public version2 layout; independent meta
+profiles retain their own version1 format.

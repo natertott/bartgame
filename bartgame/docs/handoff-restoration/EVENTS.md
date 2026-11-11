@@ -204,19 +204,22 @@ and facing were navigation fixtures; the Mitts were actually drafted.
 That review caught an overlay-only pot whose logical ground was not
 liftable, a row/plate-height mismatch in the menu, and the need to stop
 post-completion refills in Cream's required trial sites. These have source
-fixes, all verified in the final integration-5 build. The reproducible
+fixes, all verified in the final frozen build. The reproducible
 `tools/handoff_events_native.py` copies a ROM into a private test bundle,
 derives current extension offsets from C, and performs native interactions,
 including every pot lift/throw required to find the seeded pot.
 
-Final integration-5 mGBA evidence (SHA-256
-`c9a9d9e619a8d04ad61537bf2c7c79fa1a29e091cd74ebd39619cf25343205e5`):
+Final release revision `0b9344d781e65e304d245bd9ae4aecdbc7056837` mGBA evidence (SHA-256
+`b348cf4d628aee1abb9b71d8885a9f04094332c5252490ff2dd8f8e7cd0bf1b8`):
 services **14/14**, all seven quests **28/28**, the complete four-seal
 contract **22/22**, and actual preference-save/reset/Continue **19/19**.
 The contract completes a fresh board after its ordinary counterpart was
 already cleared, fights the real wave and boss, grants its displayed item,
 and awards all four Elements and Fourfold Sword. Preference changes restore
 both the profile and matching completed run flags after reset.
+The original sewer song (source track 1) also remained selected through a
+real annex shop open/close, with its hardware-clocked PCM position advancing
+1,280,600 → 1,354,664 → 1,429,277 samples.
 
 ```sh
 python3 tools/handoff_events_native.py --out /tmp/handoff-services

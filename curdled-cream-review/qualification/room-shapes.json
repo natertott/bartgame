@@ -1,0 +1,7 @@
+{
+  "checks": 16067,
+  "passed": 16067,
+  "failed": 0,
+  "native_shapes": 9,
+  "method": "Execute actual shape/room collision C and compare it to native art alpha.\n\nPrivate host adapters supply the unchanged coarse grid and room storage.\nThe tested fine-mask, point-query and inclusive box-query functions are the\nactual production sources. This qualifies geometry, not emulator timing.\n"
+}

@@ -1,0 +1,595 @@
+{
+  "scope": "Settled public gallery only; full win proof is a separate run.",
+  "source_commit": "0b9344d781e65e304d245bd9ae4aecdbc7056837",
+  "rom_sha256": "b348cf4d628aee1abb9b71d8885a9f04094332c5252490ff2dd8f8e7cd0bf1b8",
+  "wrapper_sha256": "06ab840a4c58255a38d53c2868f515267d74af024426a343a52eb413bb3df8e5",
+  "executed_source_sha256": "e3675c1950c075d7b5e19a10880b1f44c1d8e3a05c22d2ae9034f01369b5e88d",
+  "camera": [
+    0,
+    22
+  ],
+  "fixtures": [
+    {
+      "kind": "hero position/standing/facing navigation",
+      "x": 456,
+      "y": 130,
+      "frame": 57,
+      "area": 0,
+      "cell": 0
+    },
+    {
+      "kind": "hero position/standing/facing navigation",
+      "x": 400,
+      "y": 350,
+      "frame": 78,
+      "area": 3,
+      "cell": 21
+    },
+    {
+      "kind": "hero position/standing/facing navigation",
+      "x": 456,
+      "y": 130,
+      "frame": 200,
+      "area": 0,
+      "cell": 21
+    },
+    {
+      "kind": "hero position/standing/facing navigation",
+      "x": 280,
+      "y": 135,
+      "frame": 247,
+      "area": 3,
+      "cell": 21
+    },
+    {
+      "kind": "hero position/standing/facing navigation",
+      "x": 280,
+      "y": 24,
+      "frame": 279,
+      "area": 3,
+      "cell": 21
+    },
+    {
+      "kind": "hero position/standing/facing navigation",
+      "x": 20,
+      "y": 318,
+      "frame": 329,
+      "area": 3,
+      "cell": 16
+    },
+    {
+      "kind": "hero position/standing/facing navigation",
+      "x": 304,
+      "y": 364,
+      "frame": 379,
+      "area": 3,
+      "cell": 15
+    },
+    {
+      "kind": "hero position/standing/facing navigation",
+      "x": 176,
+      "y": 124,
+      "frame": 461,
+      "area": 3,
+      "cell": 20
+    },
+    {
+      "kind": "hero position/standing/facing navigation",
+      "x": 232,
+      "y": 326,
+      "frame": 512,
+      "area": 3,
+      "cell": 20
+    },
+    {
+      "kind": "hero position/standing/facing navigation",
+      "x": 152,
+      "y": 174,
+      "frame": 557,
+      "area": 4,
+      "cell": 0
+    },
+    {
+      "kind": "hero position/standing/facing navigation",
+      "x": 216,
+      "y": 174,
+      "frame": 561,
+      "area": 4,
+      "cell": 0
+    },
+    {
+      "kind": "hero position/standing/facing navigation",
+      "x": 280,
+      "y": 174,
+      "frame": 565,
+      "area": 4,
+      "cell": 0
+    },
+    {
+      "kind": "hero position/standing/facing navigation",
+      "x": 344,
+      "y": 174,
+      "frame": 569,
+      "area": 4,
+      "cell": 0
+    },
+    {
+      "kind": "hero position/standing/facing navigation",
+      "x": 152,
+      "y": 174,
+      "frame": 572,
+      "area": 4,
+      "cell": 0
+    },
+    {
+      "kind": "hero position/standing/facing navigation",
+      "x": 280,
+      "y": 174,
+      "frame": 576,
+      "area": 4,
+      "cell": 0
+    },
+    {
+      "kind": "hero position/standing/facing navigation",
+      "x": 264,
+      "y": 350,
+      "frame": 580,
+      "area": 4,
+      "cell": 0
+    },
+    {
+      "kind": "hero position/standing/facing navigation",
+      "x": 312,
+      "y": 151,
+      "frame": 694,
+      "area": 3,
+      "cell": 20
+    },
+    {
+      "kind": "hero position/standing/facing navigation",
+      "x": 312,
+      "y": 24,
+      "frame": 726,
+      "area": 3,
+      "cell": 20
+    },
+    {
+      "kind": "hero position/standing/facing navigation",
+      "x": 312,
+      "y": 135,
+      "frame": 776,
+      "area": 3,
+      "cell": 15
+    },
+    {
+      "kind": "hero position/standing/facing navigation",
+      "x": 492,
+      "y": 110,
+      "frame": 805,
+      "area": 3,
+      "cell": 15
+    },
+    {
+      "kind": "hero position/standing/facing navigation",
+      "x": 280,
+      "y": 24,
+      "frame": 856,
+      "area": 3,
+      "cell": 16
+    },
+    {
+      "kind": "hero position/standing/facing navigation",
+      "x": 280,
+      "y": 151,
+      "frame": 906,
+      "area": 3,
+      "cell": 11
+    },
+    {
+      "kind": "hero position/standing/facing navigation",
+      "x": 492,
+      "y": 110,
+      "frame": 938,
+      "area": 3,
+      "cell": 11
+    },
+    {
+      "kind": "hero position/standing/facing navigation",
+      "x": 448,
+      "y": 110,
+      "frame": 963,
+      "area": 3,
+      "cell": 12
+    },
+    {
+      "kind": "hero facing navigation",
+      "facing": 2,
+      "frame": 963
+    },
+    {
+      "kind": "hero position/standing/facing navigation",
+      "x": 448,
+      "y": 110,
+      "frame": 1000,
+      "area": 3,
+      "cell": 12
+    },
+    {
+      "kind": "hero facing navigation",
+      "facing": 2,
+      "frame": 1000
+    },
+    {
+      "kind": "hero position/standing/facing navigation",
+      "x": 448,
+      "y": 124,
+      "frame": 1055,
+      "area": 3,
+      "cell": 12
+    },
+    {
+      "kind": "hero position/standing/facing navigation",
+      "x": 492,
+      "y": 318,
+      "frame": 1217,
+      "area": 3,
+      "cell": 22
+    },
+    {
+      "kind": "hero position/standing/facing navigation",
+      "x": 492,
+      "y": 318,
+      "frame": 1268,
+      "area": 3,
+      "cell": 23
+    },
+    {
+      "kind": "hero position/standing/facing navigation",
+      "x": 248,
+      "y": 151,
+      "frame": 1322,
+      "area": 3,
+      "cell": 24
+    },
+    {
+      "kind": "hero position/standing/facing navigation",
+      "x": 248,
+      "y": 24,
+      "frame": 1354,
+      "area": 3,
+      "cell": 24
+    },
+    {
+      "kind": "hero position/standing/facing navigation",
+      "x": 248,
+      "y": 135,
+      "frame": 1404,
+      "area": 3,
+      "cell": 19
+    },
+    {
+      "kind": "hero position/standing/facing navigation",
+      "x": 232,
+      "y": 118,
+      "frame": 1410,
+      "area": 3,
+      "cell": 19
+    },
+    {
+      "kind": "hero position/standing/facing navigation",
+      "x": 32,
+      "y": 174,
+      "frame": 1454,
+      "area": 4,
+      "cell": 0
+    },
+    {
+      "kind": "hero facing navigation",
+      "facing": 1,
+      "frame": 1454
+    },
+    {
+      "kind": "hero position/standing/facing navigation",
+      "x": 304,
+      "y": 270,
+      "frame": 1478,
+      "area": 4,
+      "cell": 0
+    },
+    {
+      "kind": "hero facing navigation",
+      "facing": 1,
+      "frame": 1478
+    },
+    {
+      "kind": "hero position/standing/facing navigation",
+      "x": 322,
+      "y": 270,
+      "frame": 1502,
+      "area": 4,
+      "cell": 0
+    },
+    {
+      "kind": "hero facing navigation",
+      "facing": 1,
+      "frame": 1502
+    },
+    {
+      "kind": "hero position/standing/facing navigation",
+      "x": 256,
+      "y": 94,
+      "frame": 1526,
+      "area": 4,
+      "cell": 0
+    },
+    {
+      "kind": "hero facing navigation",
+      "facing": 1,
+      "frame": 1526
+    },
+    {
+      "kind": "hero position/standing/facing navigation",
+      "x": 274,
+      "y": 94,
+      "frame": 1550,
+      "area": 4,
+      "cell": 0
+    },
+    {
+      "kind": "hero facing navigation",
+      "facing": 1,
+      "frame": 1550
+    },
+    {
+      "kind": "hero position/standing/facing navigation",
+      "x": 256,
+      "y": 169,
+      "frame": 1574,
+      "area": 4,
+      "cell": 0
+    },
+    {
+      "kind": "hero facing navigation",
+      "facing": 1,
+      "frame": 1574
+    },
+    {
+      "kind": "hero position/standing/facing navigation",
+      "x": 59,
+      "y": 302,
+      "frame": 1597,
+      "area": 4,
+      "cell": 0
+    },
+    {
+      "kind": "hero facing navigation",
+      "facing": 1,
+      "frame": 1597
+    },
+    {
+      "kind": "hero position/standing/facing navigation",
+      "x": 77,
+      "y": 302,
+      "frame": 1621,
+      "area": 4,
+      "cell": 0
+    },
+    {
+      "kind": "hero facing navigation",
+      "facing": 1,
+      "frame": 1621
+    },
+    {
+      "kind": "hero position/standing/facing navigation",
+      "x": 251,
+      "y": 222,
+      "frame": 1645,
+      "area": 4,
+      "cell": 0
+    },
+    {
+      "kind": "hero facing navigation",
+      "facing": 1,
+      "frame": 1645
+    },
+    {
+      "kind": "hero position/standing/facing navigation",
+      "x": 368,
+      "y": 142,
+      "frame": 1669,
+      "area": 4,
+      "cell": 0
+    },
+    {
+      "kind": "hero facing navigation",
+      "facing": 1,
+      "frame": 1669
+    },
+    {
+      "kind": "hero position/standing/facing navigation",
+      "x": 71,
+      "y": 94,
+      "frame": 1693,
+      "area": 4,
+      "cell": 0
+    },
+    {
+      "kind": "hero facing navigation",
+      "facing": 1,
+      "frame": 1693
+    },
+    {
+      "kind": "hero position/standing/facing navigation",
+      "x": 381,
+      "y": 286,
+      "frame": 1717,
+      "area": 4,
+      "cell": 0
+    },
+    {
+      "kind": "hero facing navigation",
+      "facing": 1,
+      "frame": 1717
+    },
+    {
+      "kind": "hero position/standing/facing navigation",
+      "x": 381,
+      "y": 186,
+      "frame": 1741,
+      "area": 4,
+      "cell": 0
+    },
+    {
+      "kind": "hero facing navigation",
+      "facing": 1,
+      "frame": 1741
+    },
+    {
+      "kind": "hero position/standing/facing navigation",
+      "x": 374,
+      "y": 186,
+      "frame": 1765,
+      "area": 4,
+      "cell": 0
+    },
+    {
+      "kind": "hero facing navigation",
+      "facing": 1,
+      "frame": 1765
+    },
+    {
+      "kind": "hero position/standing/facing navigation",
+      "x": 288,
+      "y": 190,
+      "frame": 1789,
+      "area": 4,
+      "cell": 0
+    },
+    {
+      "kind": "hero facing navigation",
+      "facing": 1,
+      "frame": 1789
+    },
+    {
+      "kind": "hero position/standing/facing navigation",
+      "x": 368,
+      "y": 294,
+      "frame": 1813,
+      "area": 4,
+      "cell": 0
+    },
+    {
+      "kind": "hero facing navigation",
+      "facing": 1,
+      "frame": 1813
+    },
+    {
+      "kind": "hero position/standing/facing navigation",
+      "x": 113,
+      "y": 254,
+      "frame": 1837,
+      "area": 4,
+      "cell": 0
+    },
+    {
+      "kind": "hero facing navigation",
+      "facing": 1,
+      "frame": 1837
+    },
+    {
+      "kind": "hero position/standing/facing navigation",
+      "x": 264,
+      "y": 350,
+      "frame": 1860,
+      "area": 4,
+      "cell": 0
+    },
+    {
+      "kind": "hero position/standing/facing navigation",
+      "x": 176,
+      "y": 124,
+      "frame": 1962,
+      "area": 3,
+      "cell": 19
+    },
+    {
+      "kind": "hero position/standing/facing navigation",
+      "x": 240,
+      "y": 364,
+      "frame": 2039,
+      "area": 3,
+      "cell": 19
+    },
+    {
+      "kind": "hero position/standing/facing navigation",
+      "x": 20,
+      "y": 110,
+      "frame": 2122,
+      "area": 3,
+      "cell": 24
+    },
+    {
+      "kind": "hero position/standing/facing navigation",
+      "x": 20,
+      "y": 110,
+      "frame": 2175,
+      "area": 3,
+      "cell": 23
+    },
+    {
+      "kind": "hero position/standing/facing navigation",
+      "x": 112,
+      "y": 126,
+      "frame": 2203,
+      "area": 3,
+      "cell": 22
+    },
+    {
+      "kind": "hero facing navigation",
+      "facing": 0,
+      "frame": 2203
+    }
+  ],
+  "images": [
+    {
+      "file": "cave-and-terrace.png",
+      "size": [
+        240,
+        160
+      ],
+      "sha256": "21617fa51044d9f52d2ac063632b0821d686eb91dec803f052ac3de651da4698"
+    },
+    {
+      "file": "atlas-upper-overview.png",
+      "size": [
+        240,
+        160
+      ],
+      "sha256": "9962ed7d18961f36b36a202752b011528be775e950aa8693d8f4253781cb6ff9"
+    },
+    {
+      "file": "atlas-upper-room.png",
+      "size": [
+        240,
+        160
+      ],
+      "sha256": "eb18779c91b274b7dcd49bdf006a662423333d2fc052196edf8ae20896338525"
+    },
+    {
+      "file": "atlas-lower-room.png",
+      "size": [
+        240,
+        160
+      ],
+      "sha256": "6e4ce6166a2ba5da7340490a29174a27be20490f4557940b252bb0a6cf97a34b"
+    },
+    {
+      "file": "atlas-lower-overview.png",
+      "size": [
+        240,
+        160
+      ],
+      "sha256": "58d8a303fb0b78948890db8ac5d6d1219f80e4419f1f3b21bf7781aabb752aac"
+    }
+  ]
+}

@@ -1,0 +1,12 @@
+{
+  "checks": 259,
+  "result": "pass",
+  "algorithm": "actual bomb_throw.c",
+  "evidence": "Recorded from the already completed successful host execution; no rerun. Bomb simulation source unchanged since that pass.",
+  "tool_sha256": "9daf038f33b562229798ff098c39ba2721cc28e7de162980f5d00733459c9aef",
+  "source_hashes": {
+    "src/bomb_throw.c": "7e55f70f7f3a730233b0a94cc83f8c5079d08b5f6a973fe859fa4dd15d9f4d3d",
+    "src/bomb_throw.h": "8ebfb3888e8dda61b4f77855efe7838cdce77480612ff65a96d1afe32189ad92"
+  },
+  "scope": "Host room/input spies establish charge, release, path, wall impact, ammo and remote behavior; not GBA rendering/performance."
+}

@@ -131,3 +131,36 @@ front. The earlier256-seed independent Python geometry review additionally
 checks preview purity and native gate restoration/persistence. Native mGBA
 progression separately proves one full seeded route and the peak fight; it is
 not labeled an unassisted playthrough or universal native proof.
+
+## Independent generator equivalence
+
+`tools/cream_world_twin.py` independently generates the same graph in Python.
+It uses explicit unsigned 32-bit xorshift and mixing arithmetic, preserves
+candidate/rejection and reservoir order, and serializes the record manually.
+Expected generation never calls C or reads/parses its output or source. Its
+capability validator independently enumerates canonical states and reverse
+edges instead of reproducing C's incoming-node/mask-inversion algorithm.
+
+The final comparison passes **1,000 generated seeds and six explicit certified
+fallbacks**, comparing all **1,392 bytes** per record: **1,400,352 bytes** total.
+This includes every edge slot, content/stage/corruption field, route metric,
+attempt/fallback flag and zero padding byte. Seeds include 0, 1, `0xffffffff`,
+the first-attempt zero-shape control, small sequential values and deterministic
+full-width pseudorandom values. All five peak columns and all three long-drop
+spans occur. No natural fallback occurs in these 1,000 cases, so the six
+explicit fallback controls are reported separately.
+
+The fixed certificate is reconstructed independently using its original
+shape seed `0x4ce2a547` with content seed 0, followed by the requested run seed
+and certified flags. The Python tool copies no graph literal from C. The
+comparison adapter compiles the unchanged production C and reads its observed
+record only after the Python expected record is complete. Before/after source
+hashes prove that this verification does not change the runtime generator.
+
+```sh
+python3 tools/cream_world_twin.py \
+  --out /path/to/cream-python-twin --seeds 1000
+```
+
+The result is host equivalence for these cases, not an exhaustive proof over
+all 32-bit seeds or a substitute for the separately recorded native input tests.

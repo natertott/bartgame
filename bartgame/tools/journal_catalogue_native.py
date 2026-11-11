@@ -60,7 +60,7 @@ def main():
    okay=okay and native==raw(c,src,tiles*32) and raw(c,0x5000200+6*32,32)==raw(c,ps,32)
    check(('enemy' if page else 'item')+' nativepreview%d'%rawid,okay,dict(cursor=cursor,raw_id=rawid,sheet=sheet,frame=frame,palette=pal,tiles=tiles,expected=expected))
    rows.append(dict(page=page,index=index,raw_id=rawid,sheet=sheet,frame=frame,palette=pal,tiles=tiles,sha256=SHA(native)))
-   if (not page and rawid in (0,24,42,83,117,141,142,143,144,145)) or (page and rawid in (0,9,41,79,80,81,82,83)):
+   if (not page and rawid in (0,24,42,83,117,141,142,143,144,145)) or (page and rawid in (0,9,28,29,41,64,65,66,67,79,80,81,82,83)):
     shot(c,('enemy' if page else 'item')+'-%03d-index'%rawid);P.press(c,'A',2,4);shot(c,('enemy' if page else 'item')+'-%03d-notes'%rawid);P.press(c,'B',2,4)
    if index<total-1:P.press(c,'DOWN',2,4)
  check('catalogue freezes actual actor state',raw(c,P.sym('gActors'),96*64)==actors_before)

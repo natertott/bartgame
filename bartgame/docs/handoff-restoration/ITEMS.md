@@ -109,3 +109,7 @@ Spin first, and clones press the same live plates as the hero. Diving has an
 explicit submerged visual and vulnerability predicate. Shallow water is1px
 walking between dry1.25 and deep0.75; burning forces a3px run, with R to put it
 out. These added movement paths reuse the selected Bloom walk poses.
+
+Final release3 qualification supersedes the initial diagnostic pass: all19item
+checks,48world-frame checks,8form checks and20mechanism-action checks pass.
+See [native evidence and exact ROM hash](evidence/items-objects/README.md).

@@ -37,3 +37,21 @@ planes, priority, hazard masks, cardinals and safe cart stops, all descent
 controls/bounds, once-only fusion rewards, and inert hooks outside the new
 court. This qualifies movement/state logic. Native emulator input, visual and
 performance qualification remains a separate integration check.
+
+
+## Final native controls
+
+Exact release3 SHA-256
+`b348cf4d628aee1abb9b71d8885a9f04094332c5252490ff2dd8f8e7cd0bf1b8`
+passes32mGBA controls in `tools/mobility_native_review.py`. The upper bridge
+uses a real support provider in both ordinary and legacy floor/swim logic.
+With Flippers owned, A fires a bow above confirmed underlying water; below,
+the same A input dives and consumes no arrow. Unsupported lower water still
+drowns. These opposite controls caught and corrected a real double-floor-check
+regression before publishing. B/DrainCap and L/Boots cannot overwrite cart
+movement. Actual fusion, prize, hazard death/save and coldContinue also pass.
+
+Only player navigation, explicit temporary gear/ingredient fixtures and private
+SRAM are assigned. Gates, completions, AI, terrain, OAM/VRAM, palettes and PPU
+pixels are never assigned. Temporary gear is restored before the genuine death
+checkpoint. PNG/GIFs are untouched native framebuffer captures.

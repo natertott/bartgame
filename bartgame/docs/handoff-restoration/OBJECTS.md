@@ -54,9 +54,12 @@ integrated mGBA review distinguish code-connected behavior from actions
 observed in the emulator.
 
 `python tools/handoff_objects_host.py --out OUT` executes the actual course C
-against explicit room/input spies. Its262checks cover all four course bounds,
+against explicit room/input spies. Its277checks cover all four course bounds,
 exact32-update/16px pushing, exit reservation, clone pressure, fire/mineral
 versus ordinary water on ice, thawing and suction,180/240update timers, the
 actual three-row appearing bridge, reflected-ray receiver contact and inert
 hooks after reset. The fixture does not establish rendering quality or GBA
 performance; `handoff_objects_native.py` records the real emulator separately.
+
+Final release3 qualification: all95item/object native checks pass; see
+[evidence and exact ROM hash](evidence/items-objects/README.md).
