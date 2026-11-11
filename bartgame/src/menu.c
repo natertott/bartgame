@@ -30,6 +30,8 @@
 #include "game.h"
 #include "menu.h"
 #include "menu_studies.h"
+#include "gear_menu.h"
+#include "bomb_throw.h"
 
 #define MAP_PAL PAL_SLOT_MAP
 #define PIC_BASE (UI_BG3 + UI_TILE_COUNT) /* the map's picture after the kit */
@@ -695,8 +697,10 @@ static void overview_sprites(void) {
 #define MS_TILES (30*20)
 static u32 sStudyPixels[MS_TILES*8] EWRAM_BSS;
 static u32 sStudyWorld[32768/4] EWRAM_BSS;
-static u32 sStudyBase[3][MS_TILES*8] EWRAM_BSS;
-static u8 sStudyBaseReady;
+/* Cursor redraws retain the current native page background. Rebuilding the
+   same small frame on a page change frees38KB for additive area systems. */
+static u32 sStudyBase[MS_TILES*8] EWRAM_BSS;
+static u8 sStudyBaseReady, sStudyBasePage;
 static u32 sStudyMapPicture[MS_TILES*8] EWRAM_BSS;
 static MSRect sStudyMapRect;
 static u8 sStudyMapMode,sStudyMapReady;
@@ -1126,7 +1130,7 @@ static void ms_draw(void){
     /* Preserve the exact600 entries and their order without two software
        divisions per tile on ARM7TDMI. The unused right/bottom cells stay clear. */
     for(y=0,i=0;y<20;y++)for(x=0;x<30;x++,i++)gBg3[y*32+x]=i|(UI_PAL<<12);
-    if(sStudyBaseReady&(1<<sPage))dma3_copy32(sStudyBase[sPage],sStudyPixels,sizeof(sStudyPixels));
+    if(sStudyBaseReady && sStudyBasePage==sPage)dma3_copy32(sStudyBase,sStudyPixels,sizeof(sStudyPixels));
     else{
         vwf_clear(&sStudyCanvas,UI_INK_NAVY);
     ms_frame((MSRect){0,0,240,160},0);
@@ -1134,7 +1138,7 @@ static void ms_draw(void){
     ms_textfit(170,3,64,sTabName[sPage],UI_INK_HIGH);
     ms_textfit(7,14,224,sPage==PG_MAP?"Known rooms and unfinished finds":sStudy->purpose,UI_INK_DIM);
     ms_line(4,146,235,146,UI_INK_GOLD_DARK);
-        dma3_copy32(sStudyPixels,sStudyBase[sPage],sizeof(sStudyPixels));sStudyBaseReady|=1<<sPage;
+        dma3_copy32(sStudyPixels,sStudyBase,sizeof(sStudyPixels));sStudyBaseReady=1;sStudyBasePage=sPage;
     }
     if(sPage==PG_MAP){
         MSRect primary=sStudy->overview;
@@ -1162,7 +1166,7 @@ static void ms_draw(void){
         }
         ms_details(n?&list[idx[sCursor]]:NULL);
         if(!n)ms_textfit(12,32,200,"Nothing carried yet",UI_INK_DIM);
-        ms_textfit(7,149,226,sPage==PG_ITEMS?"A/B/L equip   R page   Start close":"R page   Start close",UI_INK_CREAM);
+        ms_textfit(7,149,226,sPage==PG_ITEMS?"A/B/L equip R page Sel satchel Start":"R page Sel satchel Start close",UI_INK_CREAM);
     }
     ms_assignment_line();ms_upload();ms_sync();gMenuStudyDrawFrames=gFrame-start;
 }
@@ -1178,7 +1182,7 @@ static void ms_sprites(void){
     }
 }
 static void ms_restore(void){
-    int i,set=gGame.area==AREA_SEWER?TS_SEWER:gGame.area==AREA_MYST?TS_MYST:TS_FOREST;const Tileset* ts=&tilesets[set];
+    int i,set=gGame.area==AREA_SEWER?TS_SEWER:(gGame.area==AREA_MYST||gGame.area==AREA_HANDOFF)?TS_MYST:gGame.area==AREA_CREAM?TS_CREAM:TS_FOREST;const Tileset* ts=&tilesets[set];
     dma3_copy32(sStudyWorld,CHARBLOCK(0),sizeof(sStudyWorld));
     dma3_copy32(sStudyHud,OBJ_TILE(OBJ_TILE_HUD_ICONS),sizeof(sStudyHud));
     for(i=0;i<ts->anim_count;i++){const TileAnim* a=&ts->anims[i];int f;if(!a->frames||!a->speed)continue;f=(gFrame/a->speed)%a->frames;dma3_copy32(a->data+f*64,CHARBLOCK(0)+a->tile*16,128);}
@@ -1221,6 +1225,7 @@ static void ms_update(void){
     if(gKeysDown&KEY_R){
         if(sPage<PG_MAP&&n)sStudyFocus[sPage]=idx[sCursor];
         sPage=(sPage+1)%PG_COUNT;
+        if(sPage==PG_MAP && gGame.area==AREA_CREAM){ms_restore();gear_menu_open_map();return;}
         if(sPage<PG_MAP){int i;n=gather(sPage==PG_KEYS?sKeys:sItems,sPage==PG_KEYS?KEY_COUNT:ITEM_COUNT,idx);sCursor=0;for(i=0;i<n;i++)if(idx[i]==sStudyFocus[sPage])sCursor=i;}
         dirty=1;
     }else if(sPage==PG_MAP){
@@ -1242,6 +1247,7 @@ static void ms_update(void){
 
 /* -------------------------------------------------------------- open -- */
 void menu_open(void) {
+    bomb_charge_cancel();
 #if BART_MENU_VARIANT
     ms_open();
     return;
@@ -1304,6 +1310,12 @@ static void equip_icon(int eq, int px, int py, int prio) {
 }
 
 void menu_update(void) {
+    if(gKeysDown&KEY_SELECT){
+#if BART_MENU_VARIANT
+        ms_restore();
+#endif
+        gear_menu_open();return;
+    }
 #if BART_MENU_VARIANT
     ms_update();
     return;

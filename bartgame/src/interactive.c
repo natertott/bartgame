@@ -104,7 +104,7 @@ void interactive_room_reset(void) {
     memset(sLockX,255,sizeof(sLockX));
     memset(sLockY,255,sizeof(sLockY));
 #endif
-    if (gGame.area == AREA_SEWER)
+    if (gGame.area == AREA_SEWER || gGame.area>=AREA_CREAM)
         return;
     for (y=0;y<gRoom.h;y++) for (x=0;x<gRoom.w;x++) {
         interactive_cell_changed(x,y);
@@ -169,6 +169,7 @@ static void draw_landmark(int slot,int frame,int x,int y,bool8 behind) {
 #endif
 
 void interactive_draw(bool8 behind) {
+    if(gGame.area>=AREA_CREAM)return;
 #if BART_FOREST_VARIANT >= 6
     if(gGame.area==AREA_FOREST) {
         int side;

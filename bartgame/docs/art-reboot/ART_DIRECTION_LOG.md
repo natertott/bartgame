@@ -1768,9 +1768,89 @@ Peak mixed world allocation is608 tiles below the876-tile reserved HUD
 boundary. EWRAM retains7,536 free bytes and the linker preserves its4KB
 minimum system-stack guard.
 
+## 2026-11-11 — additive restoration and The Curdled Cream
+
+The user requested the original-game handoff's missing vocabulary alongside
+the current game, plus a second procedurally generated area. The preservation
+rule supersedes earlier redesign requests: existing sprites are protected.
+The original Forest's three trials, Heart ending, original music and compact
+glitter settings remain the baseline. The explicit exception replaces the
+player's timed planted bomb with a charged throw and impact explosion.
+
+New native terrain and actors share the existing silhouette, contrast and
+material rules. Cream walking ground stays warm and quiet; horizontal cliff
+bands communicate height; handholds, drop lips and caves match directed
+travel. Purple contamination is concentrated in seams and enemies rather
+than washing out the walking surface. Door arrows and signs distinguish the
+mountain ascent from the restoration annex in the Drain. Added equipment,
+status effects and enemies receive new indexed sheets; existing sheets are
+not repainted. The expanded discovery index keeps unknown content hidden.
+
+Implementation and verification records live in
+[the restoration audit](../../../docs/handoff-restoration/AUDIT.md),
+[the new-area graph notes](../curdled-cream/GRAPH.md), and the accompanying
+item/enemy/event notes. Record final emulator evidence and preservation
+checks there before marking this integration complete.
+
 The [actual game review and downloads](../../../arcade-journal-review/README.md)
 separate earned discoveries from full-catalogue profile fixtures and source
 cabinet inspection. Every native image/raw WAV, state trace, source input
 hash, exact test tool and frozen build bundle is retained in the evidence
 archive. The original art/glitter direction and current menu choices remain
 in force; the three enemy additions, local cabinet and journal are adopted.
+
+## 2026-11-11 — Additive traversal-court material cues
+
+The handoff restoration adds17 native16px terrain stamps and10 native32px
+cart/parachute frames in `art/handoff_mobility.py`. Existing art and palettes
+remain protected. Brass paired rails and round stops identify the cart route;
+wide horizontal cliff bands and a high-contrast downward arrow identify the
+parachute launch. The ivory silk canopy has a clear hanging silhouette.
+Slatted bridge gaps reveal the lower corridor, while real elevation/collision
+and end ramps distinguish travel above and below. Red fusion physically
+repairs an optional bridge instead of displaying a reward-only message.
+
+This applies the current art bible's native-size, upper-left light, deliberate
+clusters and interaction hierarchy. The source atlas was inspected separately
+from host state tests; neither is represented as a native emulator capture.
+See [mobility notes](../handoff-restoration/MOBILITY.md) for controls,
+1,511 actual-C logic checks and remaining ROM-review obligations.
+
+## 2026-11-11 — Additive handoff bestiary and registered peak support
+
+The user's feature-restoration request protects every approved existing
+painting. The added curated roster therefore receives separate original
+native16×16/32×32 sheets rather than replacing Coin Toad, Quill Moth, Trumpet
+Bellflower, Pear Bladder, Moth Confessor, the three newer forest creatures or
+the broken Heart. Existing RGB555 blight and gold banks provide the inks;
+no earlier palette is recolored. Hinged jaws, jointed hop legs, propellers,
+weapon preparation and directional armor carry mechanics before ornament.
+Removed coats and frozen boss phases have their own complete pose strips.
+
+The summit creature's separate32×64 art registers its plated head, mouth,
+back core and folded support surface with actual contact. Raised support is
+resolved before gravity and sword geometry; AI cannot lift Bloom after a hit
+box was captured. Grounded foot motion, a full18-frame sword swing and a
+jump from/onto the exposed back share that physical plane. This extends the
+existing foot-anchor/blade-contact rule, without changing Bloom's paintings.
+[Enemy notes](../handoff-restoration/ENEMIES.md) distinguish source atlases,
+123,899 native-asset checks, host-state tests and actual mGBA captures. Source
+studies are never presented as emulator footage. Integration4 native enemy
+checks, high-load samples and fast-input Satchel checks are recorded there;
+the later jump-takeoff adjustment awaits its next frozen native review.
+
+## 2026-11-11 — Native integration corrections
+
+Native room review replaced rectangular brown approach paths with scuffed
+curd on the same pale substrate. The entry has a downward return arch and a
+reserved landing. The Four Sword copies share the selected step-and-cut
+body/blade phase. Exact collision/art checks cover the new two-pixel shapes.
+The peak's exposed back is a real raised support surface resolved before
+weapon collision; its closed pose removes the apparent open core afterward.
+
+The Satchel and atlas preserve the selected kit. Native review corrected
+graphics-bank restoration and queued brief input during redraw. The cabinet
+displays139 playable item entries and84 enemy entries;146 raw saved item IDs
+remain stable, including hidden helpers. Twenty hearts and an exactHP
+overflow panel fit the existing20px HUD height. New Light Arrows reuse the
+original cardinal arrow paintings without replacing any old pixels.

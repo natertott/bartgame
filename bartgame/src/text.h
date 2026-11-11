@@ -60,5 +60,6 @@ bool8 shop_active(void);
    the pause menu retains the detailed map. */
 void hud_draw(void);
 void minimap_render(void);
+void hud_invalidate_icons(void); /* a full-screen native gear page borrowed HUD OBJ tiles */
 
 #endif

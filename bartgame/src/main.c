@@ -10,6 +10,7 @@
 #include "game.h"
 #include "performance.h"
 #include "enemy.h"
+#include "legacy_items.h"
 
 int main(void) {
     video_init();
@@ -23,7 +24,7 @@ int main(void) {
         perf_frame_begin();
         PERF_CALL(PF_VIDEO,video_flush());
         PERF_CALL(PF_TEXT_FLUSH,text_flush());
-        PERF_CALL(PF_UPLOAD,{vram_flush_queue();enemies_flush_frames();});
+        PERF_CALL(PF_UPLOAD,{vram_flush_queue();enemies_flush_frames();legacy_items_flush_frames();});
         PERF_CALL(PF_TILE_ANIMATION,tiles_animate());
         PERF_CALL(PF_INPUT,input_read());
         oam_clear();

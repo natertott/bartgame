@@ -12,6 +12,10 @@
 #include "react.h"
 #include "game.h"
 #include "world.h"
+#include "bomb_throw.h"
+#include "legacy_items.h"
+#include "legacy_enemies.h"
+#include "handoff_events.h"
 
 static u16 sItemsTile, sFxTile, sProjTile, sLiftTile, sArrowTile, sMouthTile, sPickTile, sIconTile;
 #define ICON_CACHE_SLOTS 7
@@ -128,6 +132,11 @@ u16 items_sheet_tile(void) {
     return sItemsTile;
 }
 
+u16 arrow_sheet_tile(void) {
+    if(!sArrowTile)sArrowTile=sprite_load_sheet(SHEET_ARROW);
+    return sArrowTile;
+}
+
 /* ------------------------------------------------------- projectiles -- */
 Actor* proj_spawn(int type, int px, int py, int dir, int speed, int damage, bool8 from_player) {
     ensure_sheets();
@@ -135,9 +144,7 @@ Actor* proj_spawn(int type, int px, int py, int dir, int speed, int damage, bool
     if (!a)
         return NULL;
     if (type == PJ_ARROW) {
-        if (!sArrowTile)
-            sArrowTile = sprite_load_sheet(SHEET_ARROW);
-        actor_set_sheet(a, SHEET_ARROW, sArrowTile);
+        actor_set_sheet(a, SHEET_ARROW, arrow_sheet_tile());
         a->frame = dir == DIR_N ? F_ARROW_N : dir == DIR_S ? F_ARROW_S : F_ARROW_E;
         a->hflip = (dir == DIR_W);
     } else {
@@ -157,6 +164,7 @@ Actor* proj_spawn(int type, int px, int py, int dir, int speed, int damage, bool
 }
 
 static void proj_update(Actor* a) {
+    if(legacy_projectile_update(a)) return;
     actor_move_free(a, a->speed, a->dir);
     int px = PX(a->x), py = PX(a->y);
     if (++a->timer > 150 || px < 0 || py < 0 || px > room_px_w() || py > room_px_h()) {
@@ -198,10 +206,14 @@ static void proj_update(Actor* a) {
         int i;
         for (i = 1; i < ACTOR_MAX; i++) {
             Actor* e = &gActors[i];
-            if (e->kind != AK_ENEMY || !(e->flags & AF_HITTABLE) || e->iframes)
+            if (e->kind != AK_ENEMY || e->iframes)
                 continue;
-            if (actors_overlap(a, e)) {
-                enemy_hurt(e, a->damage, a->dir, Q8(1.5));
+            const Hitbox* hb=&gHitboxes[a->hitbox];
+            int cx=PX(a->x)+hb->ox,cy=PX(a->y)+hb->oy;
+            bool8 parts=legacy_enemy_owns(e->type)&&legacy_enemy_hit_parts(e,cx-hb->hw,cy-hb->hh,cx+hb->hw-1,cy+hb->hh-1,a->type==PJ_ARROW?LE_HIT_ARROW:LE_HIT_REFLECTED,a->damage,a->dir);
+            if (parts || ((e->flags&AF_HITTABLE)&&actors_overlap(a, e))) {
+                if(!parts)
+                legacy_item_hit(e,a->type==PJ_ARROW?LE_HIT_ARROW:LE_HIT_REFLECTED,a->damage,a->dir,Q8(1.5));
                 fx_spawn(FX_SPARK, px, py);
                 actor_free(a);
                 return;
@@ -301,6 +313,12 @@ void drop_roll(int px, int py, u32 roll) {
     /* with the bow, the dead drop arrows: one often, five sometimes, ten rarely */
     else if (r >= 12 && (gPl.items2 & ITEM2_BOW))
         pickup_spawn(r < 14 ? PK_ARROW1 : r < 15 ? PK_ARROW5 : PK_ARROW10, px, py);
+    /* Food/picolyte bonuses add to the selected drop; unbuffed drops retain
+       their original exact roll and allocation order. */
+    if(handoff_drop_bias(0)&&((roll>>4)&3)==0)pickup_spawn(PK_GILT,px-5,py);
+    if(handoff_drop_bias(1)&&((roll>>6)&3)==0)handoff_kinstone_drop((roll>>12)%3,(roll>>15)%3,px+5,py);
+    if(handoff_drop_bias(2)&&((roll>>8)&3)==0)pickup_spawn(PK_HEART,px,py+5);
+    if(handoff_drop_bias(3)&&((roll>>10)&15)==0)pickup_spawn(PK_GILT_BIG,px,py-5);
 }
 
 /* ----------------------------------------------------------- effects -- */
@@ -427,7 +445,8 @@ void bomb_place(int px, int py) {
 int bombs_live(void) {
     int i, n = 0;
     for (i = 1; i < ACTOR_MAX; i++)
-        if (gActors[i].kind == AK_OBJECT && gActors[i].type == FX_BOMB_OBJ)
+        if (gActors[i].kind == AK_OBJECT &&
+            (gActors[i].type == FX_BOMB_OBJ || gActors[i].type == OBJ_IMPACT_BOMB))
             n++;
     return n;
 }
@@ -454,10 +473,12 @@ Actor* thrown_spawn(int kind, int px, int py, int facing) {
     a->prio = 1;
     a->v[0] = kind;
     a->timer = 0;
+    handoff_cargo_thrown(a);
     return a;
 }
 
 static void thrown_break(Actor* a) {
+    if(handoff_cargo_land(a)) return;
     int px = PX(a->x), py = PX(a->y);
     fx_spawn(FX_PUFF, px, py - PX(a->z));
     sfx_play(SFX_BUMP);
@@ -483,10 +504,14 @@ static void thrown_update(Actor* a) {
     }
     for (i = 1; i < ACTOR_MAX; i++) {
         Actor* e = &gActors[i];
-        if (e->kind != AK_ENEMY || !(e->flags & AF_HITTABLE) || e->iframes)
+        if (e->kind != AK_ENEMY || e->iframes)
             continue;
-        if (actors_overlap(a, e)) {
-            enemy_hurt(e, a->damage, a->dir, Q8(1.5));
+        const Hitbox* hb=&gHitboxes[a->hitbox];
+        int cx=PX(a->x)+hb->ox,cy=PX(a->y)+hb->oy;
+        bool8 parts=legacy_enemy_owns(e->type)&&legacy_enemy_hit_parts(e,cx-hb->hw,cy-hb->hh,cx+hb->hw-1,cy+hb->hh-1,LE_HIT_THROWN,a->damage,a->dir);
+        if (parts || ((e->flags&AF_HITTABLE)&&actors_overlap(a, e))) {
+            if(!parts)
+            legacy_item_hit(e,LE_HIT_THROWN,a->damage,a->dir,Q8(1.5));
             thrown_break(a);
             return;
         }
@@ -495,8 +520,8 @@ static void thrown_update(Actor* a) {
 
 /* The blast: a 40x40 box. Hurts enemies for 8, the player for 4, and
    opens cracked walls whose tile touches the box. */
-static void bomb_explode(Actor* a) {
-    int px = PX(a->x), py = PX(a->y);
+void objects_blast(int px,int py) {
+    Actor origin={0};origin.x=Q16(px);origin.y=Q16(py);
     int x0 = px - 20, y0 = py - 24, x1 = px + 20, y1 = py + 16;
     int i, tx, ty;
     Actor* fx = fx_spawn(FX_BLAST, px, py - 8);
@@ -506,11 +531,12 @@ static void bomb_explode(Actor* a) {
         Actor* e = &gActors[i];
         if (e->kind != AK_ENEMY)
             continue;
-        if (actor_box_overlap(e, x0, y0, x1, y1))
-            enemy_hurt(e, 8, actor_dir_to(a, e), Q8(2.0));
+        bool8 parts=legacy_enemy_owns(e->type)&&legacy_enemy_hit_parts(e,x0,y0,x1,y1,LE_HIT_BOMB,8,actor_dir_to(&origin,e));
+        if (!parts && actor_box_overlap(e, x0, y0, x1, y1))
+            legacy_item_hit(e,LE_HIT_BOMB,8,actor_dir_to(&origin,e),Q8(2.0));
     }
     if (actor_box_overlap(gPlayer, x0, y0, x1, y1))
-        player_hurt(4, actor_dir_to(a, gPlayer));
+        player_hurt(4, actor_dir_to(&origin,gPlayer));
     for (ty = (y0 >> 4); ty <= (y1 >> 4); ty++)
         for (tx = (x0 >> 4); tx <= (x1 >> 4); tx++) {
             if (room_type(tx, ty) == TT_CRACK)
@@ -518,7 +544,12 @@ static void bomb_explode(Actor* a) {
             else if (room_type(tx, ty) == TT_LIFT1)
                 room_break_lift(tx, ty);
         }
+}
+
+static void bomb_explode(Actor* a) {
+    int px=PX(a->x),py=PX(a->y);
     actor_free(a);
+    objects_blast(px,py);
 }
 
 static void bomb_update(Actor* a) {
@@ -539,12 +570,15 @@ void objects_update(void) {
     int i;
     for (i = 1; i < ACTOR_MAX; i++) {
         Actor* a = &gActors[i];
+        if(legacy_items_actor_owned(a)){legacy_items_actor_update(a);continue;}
         switch (a->kind) {
             case AK_PROJ: proj_update(a); break;
             case AK_PICKUP: pickup_update(a); break;
             case AK_FX: fx_update(a); break;
             case AK_OBJECT:
-                if (a->type == OBJ_THROWN)
+                if(a->type==OBJ_IMPACT_BOMB)
+                    bomb_throw_update(a);
+                else if (a->type == OBJ_THROWN)
                     thrown_update(a);
                 else
                     bomb_update(a);
@@ -619,6 +653,9 @@ void objects_draw(void) {
         if(a->kind!=AK_PROJ && a->kind!=AK_PICKUP &&
            a->kind!=AK_FX && a->kind!=AK_OBJECT)
             continue;
+        if(a->kind==AK_PROJ && legacy_projectile_draw(a)) continue;
+        if(legacy_items_actor_owned(a)){legacy_items_actor_draw(a);continue;}
+        if(a->kind==AK_OBJECT && a->type==OBJ_IMPACT_BOMB) {bomb_throw_draw(a);continue;}
         if (player_release_overlap(a))
             continue;
         if (a->kind==AK_OBJECT && a->type==FX_BOMB_OBJ && a->timer2<8 && player_hand_composite())

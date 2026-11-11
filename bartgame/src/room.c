@@ -2,6 +2,7 @@
 #include "gba.h"
 #include "video.h"
 #include "room.h"
+#include "room_shapes.h"
 #include "interactive.h"
 #include "game.h"
 #include "world.h"
@@ -115,6 +116,7 @@ void tiles_animate(void) {
 }
 
 void room_clear(int w, int h, u16 fill) {
+    room_shapes_clear();
     gRoomTorchesDirty=1;gRoomRevision++;
     int i;
     gRoom.w = w;
@@ -131,6 +133,7 @@ void room_set(int mx, int my, u16 mt) {
     if (mx < 0 || my < 0 || mx >= gRoom.w || my >= gRoom.h)
         return;
     gRoom.ground[my * ROOM_MAX_W + mx] = mt;
+    room_shape_tile(mx,my,mt);
     if (mt == MT_NONE || !metatile_prop[mt])
         gRoom.underlay[my * ROOM_MAX_W + mx] = mt;
 }
@@ -818,6 +821,7 @@ void room_change(int mx, int my, u16 mt) {
            metatile_type[mt]==TT_FLOOR && base!=MT_NONE)
             mt=base;
         gRoom.ground[i]=mt;
+        room_shape_tile(mx,my,mt);
         if(mt==MT_NONE || !metatile_prop[mt])gRoom.underlay[i]=mt;
     }
     solid_cell_update(mx, my);
@@ -860,6 +864,7 @@ void room_change_overlay(int mx, int my, u16 mt) {
 bool8 room_solid_px(int px, int py) {
     if (px < 0 || py < 0 || px >= gRoom.w * 16 || py >= gRoom.h * 16)
         return TRUE;
+    if(gRoomShapeCount){int shaped=room_shape_solid(px,py);if(shaped>=0)return shaped;}
     return gRoom.solid[(py >> 3) * 64 + (px >> 3)];
 }
 
@@ -868,6 +873,11 @@ bool8 IWRAM_CODE room_box_solid(int x0, int y0, int x1, int y1) {
     int x, y;
     if (x0 < 0 || y0 < 0 || x1 >= gRoom.w * 16 || y1 >= gRoom.h * 16)
         return TRUE;
+    if(gRoomShapeCount){
+        for(y=y0>>1;y<=(y1>>1);y++)for(x=x0>>1;x<=(x1>>1);x++)
+            if(room_solid_px(x*2,y*2))return TRUE;
+        return FALSE;
+    }
     for (y = y0 >> 3; y <= (y1 >> 3); y++)
         for (x = x0 >> 3; x <= (x1 >> 3); x++)
             if (gRoom.solid[y * 64 + x])

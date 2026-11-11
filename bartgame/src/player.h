@@ -3,7 +3,7 @@
 #include "gba.h"
 #include "actor.h"
 
-enum { PS_NORMAL, PS_ROLL, PS_ATTACK, PS_HURT, PS_FALL, PS_JUMP, PS_ITEMGET, PS_DEAD, PS_TALK, PS_FROZEN, PS_LIFT, PS_CARRY, PS_SWALLOWED };
+enum { PS_NORMAL, PS_ROLL, PS_ATTACK, PS_HURT, PS_FALL, PS_JUMP, PS_ITEMGET, PS_DEAD, PS_TALK, PS_FROZEN, PS_LIFT, PS_CARRY, PS_SWALLOWED, PS_CLIMB };
 
 /* items, as bits in gPl.items */
 #define ITEM_SWORD 0x01
@@ -60,6 +60,7 @@ void player_init(int px, int py, int facing);
 void player_new_game(void);
 void player_update(void);
 void player_draw(void);
+void player_draw_clone(int px,int py); /* same body/action clock and native blade as Bloom */
 #if BART_FOREST_VARIANT >= 6
 int player_recoil_priority(const Actor* actor,int terrain_priority);
 #endif
@@ -76,6 +77,7 @@ bool8 player_lamp_box(int* x0, int* y0, int* x1, int* y1);
 bool8 player_is_vulnerable(void);
 void player_set_pos(int px, int py);
 void player_face(int facing);
+void player_external_walk_tick(int speed,int direction); /* added owned movement reuses the selected body walk */
 void player_cloak_jump(void);
 u16 player_equip_keys(int eq);     /* the key bits of the buttons holding eq */
 void player_equip_set(int slot, int eq);

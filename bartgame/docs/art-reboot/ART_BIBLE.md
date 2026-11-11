@@ -543,3 +543,46 @@ restore room maps, palette and borrowed preview tiles. The index is read-only:
 opening an entry does not grant its item, spawn its enemy or unlock a fact.
 Discoveries survive new runs and deaths in their own versioned profile record;
 run saves and appearance settings remain independent.
+
+### Additive mountain area and handoff restoration
+
+The Curdled Cream uses warm ivory curds, ochre strata, mold greens and darker
+cliff recesses. Glowing violet remains the danger/corruption ink. Increasing
+corruption changes the seams and growths while preserving the readable pale
+walking surface. Horizontal strata describe height; a recessed pair of
+handholds identifies climbable faces. Ordinary cliff faces cannot be climbed.
+Terrace lips, handholds, cave mouths and committed drop notches must agree
+with the directed route graph. Render an intervening cliff during a long
+drop rather than treating several screens as an unexplained teleport.
+
+All added art begins on native indexed canvases. Metatiles remain16×16;
+ordinary pickups16×16; small enemies16×16; larger enemies32×32; the mountain
+boss32×64. A32×48 doorway composition occupies a valid32×64 hardware canvas
+with16 transparent rows above it. New sheets/metatiles append after the
+previous identifiers. Existing art, palettes, title, HUD and character
+animations are protected; restoration supplies new pictures only for new
+content. Additive equipment uses the existing three button pods and their
+press feedback, including ammunition for remote bombs and light arrows.
+
+The user's annotated Mount Crenel image is a traversal reference: blue
+routes combine reversible climbs and lateral terraces; red arrows commit to
+lower landings, sometimes skipping several rooms. New terrain is original
+art rather than traced or imported reference pixels.
+
+New mechanism rocks may use exact2px collision masks: diagonals, half tiles
+and a three-eighths width. Transparent native pixels and collision must agree,
+including asymmetric overlay quarters. Existing areas retain their original
+8px grid and unchanged collision layout. Minish feet test their complete4×4
+footprint, including entering and leaving a small gap.
+
+Four Sword copies reuse Bloom's unchanged body, sword pixels, action clock
+and translated contact box. Raised enemy platforms resolve support before
+player physics and sword queries. Their rendered pose closes when the
+platform/core stops being available. The mountain entry has visible return
+stairs with a downward arrow and a reserved approach.
+
+The approved HUD keeps its existing size. A second row supports twenty hearts;
+additional health growth beyond that receives an exactHP readout below the
+purse within the same20px band. Up to ten hearts retain the selected original
+picture. Internal item helpers stay out of the visible discovery catalogue
+while their stable saved identifiers remain reserved.

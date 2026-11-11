@@ -4,7 +4,8 @@
 #include "actor.h"
 
 enum { EN_BEETLE, EN_BAT, EN_SPITTER, EN_SLIME, EN_KNIGHT, EN_BOSS,
-    EN_GILT_LEECH, EN_ROOT_MAW, EN_RELIQUARY_SNOUT, EN_COUNT };
+    EN_GILT_LEECH, EN_ROOT_MAW, EN_RELIQUARY_SNOUT, EN_EXISTING_COUNT,
+    EN_COUNT=EN_EXISTING_COUNT+75 };
 /* Historical lab names remain stable for saved diagnostics and capture tools. */
 #define EN_PROTO_ROPE EN_GILT_LEECH
 #define EN_PROTO_LEEVER EN_ROOT_MAW
@@ -20,7 +21,9 @@ typedef struct {
     u8 drop;     /* drop table id */
 } EnemyDef;
 
-extern const EnemyDef gEnemyDefs[EN_COUNT];
+extern const EnemyDef gEnemyDefs[EN_EXISTING_COUNT];
+const EnemyDef* enemy_definition(int type);
+void enemy_invalidate_frame(Actor* enemy);
 
 Actor* enemy_spawn(int type, int px, int py);
 void enemies_update(void);

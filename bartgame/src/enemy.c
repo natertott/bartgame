@@ -16,10 +16,14 @@
 #include "enemy.h"
 #include "boss.h"
 #include "game.h"
+#include "legacy_enemies.h"
+#include "legacy_items.h"
+#include "handoff_events.h"
+#include "cream_runtime.h"
 #include "enemy_prototypes.h"
 #include "journal.h"
 
-const EnemyDef gEnemyDefs[EN_COUNT] = {
+const EnemyDef gEnemyDefs[EN_EXISTING_COUNT] = {
     [EN_BEETLE] = { SHEET_BEETLE, 2, Q8(0.5), 2, HB_SMALL, AF_HITTABLE | AF_HURTS, 0 },
     [EN_BAT] = { SHEET_BAT, 2, Q8(1.0), 2, HB_SMALL, AF_HITTABLE | AF_HURTS | AF_FLYING | AF_PRIO1, 0 },
     [EN_SPITTER] = { SHEET_SPITTER, 2, Q8(0.375), 2, HB_MED, AF_HITTABLE | AF_HURTS, 1 },
@@ -32,6 +36,15 @@ const EnemyDef gEnemyDefs[EN_COUNT] = {
     [EN_PROTO_HELMASAUR] = { SHEET_PROTO_HELMASAUR, 4, Q8(1.0), 2, HB_MED, AF_HITTABLE | AF_HURTS, 0 },
 };
 
+const EnemyDef* enemy_definition(int type) {
+    const LegacyEnemyDef* legacy;
+    if(type>=LEGACY_ENEMY_BASE) {
+        legacy=legacy_enemy_def(type);
+        return legacy ? &legacy->base : &gEnemyDefs[EN_BEETLE];
+    }
+    return &gEnemyDefs[(unsigned)type<EN_EXISTING_COUNT?type:EN_BEETLE];
+}
+
 static u16 sSheetTile[EN_COUNT];
 static u16 sKswordTile;
 u8 gEnemyPresentedFrame[ACTOR_MAX];
@@ -41,7 +54,7 @@ u8 gEnemyPresentedFrame[ACTOR_MAX];
    per living body in OBJ. Released slots are reused by any later wave/actor.
    High bit marks a pending VBlank upload;255 is an invalid cached frame.
    This dedicated queue cannot exhaust the ordinary16-upload UI/body queue. */
-typedef struct {u16 tile;u8 owner,frame;} EnemyStreamSlot;
+typedef struct {u16 tile;u8 owner,frame,capacity,pad[3];} EnemyStreamSlot;
 static EnemyStreamSlot sStream[ACTOR_MAX] EWRAM_BSS;
 static u8 sStreamCount;
 
@@ -55,11 +68,13 @@ static bool8 stream_assign(Actor* e) {
             sStream[i].owner=0;sStream[i].frame=255;
         }
     }
-    for(i=0;i<sStreamCount;i++) if(!sStream[i].owner) break;
+    for(i=0;i<sStreamCount;i++)
+        if(!sStream[i].owner && sStream[i].capacity>=sheets[e->sheet].frame_tiles) break;
     if(i==sStreamCount) {
         u16 tile=sprite_alloc(sheets[e->sheet].frame_tiles);
         if(!tile) return FALSE;
         sStream[i].tile=tile;
+        sStream[i].capacity=sheets[e->sheet].frame_tiles;
         sStreamCount++;
     }
     sStream[i].owner=e-gActors;
@@ -97,6 +112,15 @@ void enemies_flush_frames(void) {
 #endif
 }
 
+void enemy_invalidate_frame(Actor* e) {
+#if !BART_ENEMY_LAB
+    int index=e->sub-1;
+    if(e->sub && index<sStreamCount && sStream[index].owner==e-gActors)sStream[index].frame=255;
+#else
+    (void)e;
+#endif
+}
+
 /* enemy states */
 enum { ES_IDLE, ES_WALK, ES_CHASE, ES_PAUSE, ES_SPIT, ES_HOP, ES_WINDUP, ES_SWING, ES_RECOVER, ES_DIE, ES_REST, ES_FLY };
 
@@ -109,6 +133,7 @@ void enemy_load_sheets_for_theme(int theme) {
 #if !BART_ENEMY_LAB
     memset(sStream,0,sizeof(sStream));sStreamCount=0;
 #endif
+    legacy_enemy_room_reset();
 }
 
 static void ensure_sheet(int type) {
@@ -122,7 +147,7 @@ static void ensure_sheet(int type) {
         return;
 #endif
     if (!sSheetTile[type])
-        sSheetTile[type] = sprite_load_sheet(gEnemyDefs[type].sheet);
+        sSheetTile[type] = sprite_load_sheet(enemy_definition(type)->sheet);
     if (type == EN_KNIGHT && !sKswordTile)
         sKswordTile = sprite_load_sheet(SHEET_KSWORD);
 }
@@ -162,13 +187,14 @@ Actor* enemy_spawn(int type, int px, int py) {
     const EnemyDef* d;
     Actor* a;
     if(type<0 || type>=EN_COUNT) return NULL;
+    if(legacy_enemy_owns(type)&&!legacy_enemy_can_spawn(type))return NULL;
 #if !BART_ENEMY_LAB
     /* A generated marker may sit beside a rounded tree/water edge. New ground
        bodies need a dry native footprint; keep any repair within8 pixels. */
-    if(type>=EN_PROTO_ROPE && !enemy_prototypes_spawn_point(type,&px,&py))
+    if(type>=EN_PROTO_ROPE && type<EN_EXISTING_COUNT && !enemy_prototypes_spawn_point(type,&px,&py))
         type=EN_BEETLE; /* visible, sword-solvable admission fallback */
 #endif
-    d=&gEnemyDefs[type];
+    d=enemy_definition(type);
     ensure_sheet(type);
     a = actor_new(AK_ENEMY, type, px, py);
     if (!a)
@@ -184,13 +210,15 @@ Actor* enemy_spawn(int type, int px, int py) {
     a->timer = 10 + rand_range(30);
     a->dir = rand_range(4) * 8;
     a->facing = dir_to_facing(a->dir);
+    cream_runtime_track_enemy(a,NULL);
     if (type >= EN_PROTO_ROPE) {
 #if BART_ENEMY_LAB
         if (!sSheetTile[type]) { actor_free(a); return NULL; }
 #else
         if (!stream_assign(a)) { actor_free(a); return NULL; }
 #endif
-        enemy_prototypes_init(a);
+        if(legacy_enemy_owns(type)) legacy_enemy_init(a);
+        else enemy_prototypes_init(a);
         return a;
     }
     if (type == EN_BAT) {
@@ -218,7 +246,9 @@ void enemy_kill(Actor* e) {
     fx_spawn(FX_PUFF, PX(e->x), PX(e->y) - 8);
     drop_roll(PX(e->x), PX(e->y), rand_next());
     sfx_play(SFX_KILL);
-    if (e->flags & AF_BOSS)
+    handoff_on_enemy_killed(e->type,PX(e->x),PX(e->y));
+    if(legacy_enemy_owns(e->type)) legacy_enemy_on_death(e);
+    else if (e->flags & AF_BOSS)
         boss_died(e);
     actor_free(e);
 }
@@ -226,7 +256,9 @@ void enemy_kill(Actor* e) {
 void enemy_hurt(Actor* e, int damage, int from_dir, int knockback) {
     if (e->iframes)
         return;
-    if (e->type >= EN_PROTO_ROPE && !enemy_prototypes_accept_hit(e, damage, from_dir))
+    if(legacy_enemy_owns(e->type) && !legacy_enemy_accept_hit(e,gLegacyHitKind,&damage,from_dir))
+        return;
+    if (e->type >= EN_PROTO_ROPE && e->type<EN_EXISTING_COUNT && !enemy_prototypes_accept_hit(e, damage, from_dir))
         return;
     e->hp -= damage;
     e->iframes = 12;
@@ -238,7 +270,7 @@ void enemy_hurt(Actor* e, int damage, int from_dir, int knockback) {
     else
         sfx_play(SFX_HIT);
     if (e->hp <= 0) {
-        if (e->flags & AF_BOSS) {
+        if ((e->flags & AF_BOSS) && !legacy_enemy_owns(e->type)) {
             boss_defeated(e);
             return;
         }
@@ -355,7 +387,7 @@ static void spitter_update(Actor* e) {
         case ES_IDLE:
             if (--e->timer == 0) {
                 e->state = ES_WALK;
-                e->timer = walk_dur[rand_range(4)];
+                e->timer = handoff_enemy_fire_delay(walk_dur[rand_range(4)]);
                 /* turn: toward the player half the time, else random */
                 e->dir = (rand_next() & 1) ? toward_player_4(e) : rand_range(4) * 8;
                 e->facing = dir_to_facing(e->dir);
@@ -374,7 +406,7 @@ static void spitter_update(Actor* e) {
                     e->timer = 24;
                 } else {
                     e->state = ES_IDLE;
-                    e->timer = 24 + rand_range(57);
+                    e->timer = handoff_enemy_fire_delay(24 + rand_range(57));
                 }
             }
             break;
@@ -392,7 +424,7 @@ static void spitter_update(Actor* e) {
             }
             if (e->timer == 0) {
                 e->state = ES_IDLE;
-                e->timer = 24 + rand_range(57);
+                e->timer = handoff_enemy_fire_delay(24 + rand_range(57));
             }
             break;
     }
@@ -545,6 +577,7 @@ static void knight_update(Actor* e) {
 
 /* ------------------------------------------------------------ common -- */
 static void enemy_common(Actor* e) {
+    if(legacy_enemy_owns(e->type)) { legacy_enemy_update(e); return; }
     /* knockback overrides the AI's movement */
     if (e->kb_timer) {
         e->kb_timer--;
@@ -585,15 +618,19 @@ void enemies_update(void) {
         if (e->kind != AK_ENEMY)
             continue; /* died in its update */
         /* the sword */
-        if (sword && (e->flags & AF_HITTABLE) && !e->iframes && actor_box_overlap(e, sx0, sy0, sx1, sy1)) {
+        if (sword && !e->iframes) {
             int from = actor_dir_to(gPlayer, e);
-            enemy_hurt(e, gPl.sword_dmg, from, Q8(1.5));
+            int damage=handoff_outgoing_damage(legacy_player_outgoing_damage(gPl.sword_dmg));
+            bool8 parts=legacy_enemy_owns(e->type) && legacy_enemy_hit_parts(e,sx0,sy0,sx1,sy1,LE_HIT_SWORD,damage,from);
+            if(!parts && (e->flags&AF_HITTABLE) && actor_box_overlap(e,sx0,sy0,sx1,sy1))
+                legacy_item_hit(e,LE_HIT_SWORD,damage,from,handoff_sword_knockback(Q8(1.5)));
             if (e->kind != AK_ENEMY)
                 continue;
         }
         /* contact: the hero is knocked back, and the biter recoils too
            (TMC: the enemy side of the matrix gets 1.0 px/f) */
         if ((e->flags & AF_HURTS) && player_is_vulnerable() && actors_overlap(e, gPlayer)) {
+            if(legacy_enemy_owns(e->type) && legacy_enemy_contact(e)) continue;
             player_hurt(e->damage, actor_dir_to(e, gPlayer));
             if (!(e->flags & AF_BOSS) && e->type != EN_KNIGHT) {
                 e->kb_dir = actor_dir_to(gPlayer, e);
@@ -688,6 +725,7 @@ static void enemy_draw_body(Actor* e) {
         if(gOamCount>before) journal_note_enemy(e->type);
     }
     e->frame = ai_frame;
+    if(legacy_enemy_owns(e->type)) legacy_enemy_extra_draw(e);
 }
 
 void enemies_draw(void) {

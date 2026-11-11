@@ -367,3 +367,19 @@ tracks, exact source blobs and faithful native-hardware playback conversion.
 Later unrelated uploaded-song recreations are not used. Original score/player
 sources are unavailable in that branch/history; their existence is not
 inferred from the recordings. This source supplies music, not pixel-art advice.
+
+## Mount Crenel traversal annotation and original-game handoff
+
+User-supplied annotated Mount Crenel image, received2026-11-11: blue paths
+mark lateral movement and climbing; red arrows mark downward commitments.
+Used to study connected terraces, long climb faces, cave folds and multiroom
+drops. It supplies traversal structure, not reusable game graphics. New
+Cream terrain/actors are authored as indexed native pixel art.
+
+Repository `docs/newgame/00_README.md` and its numbered handoff documents are
+the authoritative feature inventory. `12_FROM_SCRATCH_ENGINE.md` establishes
+the original engine; historical TMC binary formats and retired chest lottery
+are reference material, not features to reinstate. The current user's
+preservation rule and impact-bomb request override conflicting old behavior.
+[The audit](../../../docs/handoff-restoration/AUDIT.md) records these
+distinctions explicitly rather than treating every enum label as a feature.

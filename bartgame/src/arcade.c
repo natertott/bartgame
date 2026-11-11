@@ -30,17 +30,18 @@ static u32 sWorldPreview[PREVIEW_MAX_TILES * 8] EWRAM_BSS;
 static Canvas sHeader, sList, sInfo, sNote, sFooter;
 
 static int entry_count(void) {
-    return gArcadePage ? journal_enemy_count() : journal_item_count();
+    return journal_list_count(gArcadePage);
 }
 
 static bool8 seen(int index) {
-    return gArcadePage ? journal_enemy_seen(index) : journal_item_seen(index);
+    int raw=journal_list_id(gArcadePage,index);
+    return gArcadePage ? journal_enemy_seen(raw) : journal_item_seen(raw);
 }
 
 /* No undiscovered name, stat, frame or palette reaches presentation code. */
-static const JournalEntry* entry(int index) {
+static const JournalEntry* entry(int index,JournalEntry* storage) {
     if (!seen(index)) return NULL;
-    return gArcadePage ? journal_enemy_entry(index) : journal_item_entry(index);
+    return journal_entry(gArcadePage,journal_list_id(gArcadePage,index),storage) ? storage : NULL;
 }
 
 static char* append(char* out, const char* text) {
@@ -96,7 +97,8 @@ static void sync_cursor(void) {
 }
 
 static void load_preview(void) {
-    const JournalEntry* e = entry(gArcadeCursor);
+    JournalEntry storage;
+    const JournalEntry* e = entry(gArcadeCursor,&storage);
     const SpriteSheet* sh;
     const u16 *pixels, *palette;
     gArcadePreviewTiles = 0;
@@ -133,8 +135,7 @@ static void draw_header(void) {
     for (page = 0; page < 2; page++) {
         int x = page * 112;
         count_label(label, page ? "Enemies" : "Items",
-                    page ? journal_enemies_found() : journal_items_found(),
-                    page ? journal_enemy_count() : journal_item_count());
+                    journal_list_found(page), journal_list_count(page));
         ui_plate_px(&sHeader, x, 0, 14, page == gArcadePage ? PL_TABON : PL_TAB);
         vwf_text(&sHeader, x + (112-vwf_width(label))/2, 4, label,
                  page == gArcadePage ? UI_INK_HIGH : UI_INK_CREAM);
@@ -143,14 +144,15 @@ static void draw_header(void) {
 }
 
 static void draw_index(void) {
-    const JournalEntry* chosen = entry(gArcadeCursor);
+    JournalEntry chosenStorage,rowStorage;
+    const JournalEntry* chosen = entry(gArcadeCursor,&chosenStorage);
     int row;
     ui_frame(gBg3, UI_BG3, 1, 4, 14, 14, FR_PANEL);
     ui_frame(gBg3, UI_BG3, 15, 4, 14, 14, FR_PANEL);
     bg0_canvas(&sList, 2, 5, 11, 12);
     for (row = 0; row < ARCADE_ROWS && gArcadeTop+row < entry_count(); row++) {
         int index = gArcadeTop+row;
-        const JournalEntry* e = entry(index);
+        const JournalEntry* e = entry(index,&rowStorage);
         int ink = e ? UI_INK_CREAM : UI_INK_DIM;
         if (index == gArcadeCursor) {
             ui_plate_px(&sList, 0, row * 16, 11, PL_TABON);
@@ -164,10 +166,12 @@ static void draw_index(void) {
         vwf_block(&sInfo, 0, 1, 88, 10, chosen->name, UI_INK_GOLD, 2);
         if (gArcadePage) {
             char stats[40];
-            char* out = append(stats, "HP ");
-            out = append_num(out, chosen->hp);
-            out = append(out, " / touch ");
-            append_num(out, chosen->damage);
+            if(chosen->hp==255)append(stats,"Special defenses");
+            else {
+                char* out=append(stats,"HP ");
+                out=append_num(out,chosen->hp);out=append(out," / touch ");
+                append_num(out,chosen->damage);
+            }
             fit_text(&sInfo, 0, 22, 88, stats, UI_INK_CREAM);
         }
     } else {
@@ -187,7 +191,8 @@ static void draw_index(void) {
 }
 
 static void draw_notes(void) {
-    const JournalEntry* e = entry(gArcadeCursor);
+    JournalEntry storage;
+    const JournalEntry* e = entry(gArcadeCursor,&storage);
     char label[40];
     /* Unlike the compact index, the full notes never truncate an entry's
        name or description. Native image, stat units and text have their
@@ -202,9 +207,9 @@ static void draw_notes(void) {
         vwf_block(&sInfo, 0, 4, 136, 11,
                   "Explore the wood. This memory appears after you encounter it.", UI_INK_DIM, 7);
     } else if (gArcadePage) {
-        char* out = append(label, "Health: ");
-        out = append_num(out, e->hp);
-        append(out, " HP");
+        char* out;
+        if(e->hp==255)append(label,"Special defenses");
+        else {out=append(label,"Health: ");out=append_num(out,e->hp);append(out," HP");}
         vwf_text(&sInfo, 0, 0, label, UI_INK_HIGH);
         out = append(label, "Touch: ");
         out = append_num(out, e->damage);

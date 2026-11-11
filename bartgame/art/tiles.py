@@ -112,3 +112,14 @@ if FC.COHESION_ROUND:
     import forest_cohesion_topology as FCT
     FOREST_COHESION_TOPOLOGY = FCT.append(METATILES, COVERAGE)
     FOREST_V2_TOPOLOGY['specs'].extend(FOREST_COHESION_TOPOLOGY['specs'])
+
+# Additive areas keep every previous semantic and metatile identifier stable.
+import cream_terrain
+TYPES = list(TYPES) + ['CLIMB']
+METATILES.extend(cream_terrain.METATILES)
+import handoff_items
+METATILES.extend(handoff_items.SURFACE_METATILES)
+import handoff_mobility
+METATILES.extend(handoff_mobility.METATILES)
+import handoff_shapes
+METATILES.extend(handoff_shapes.METATILES)

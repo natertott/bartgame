@@ -33,6 +33,8 @@ import reboot_actors  # noqa: E402
 import sewer_concepts as SC  # noqa: E402
 import ui_studies as UI_STUDIES  # noqa: E402
 import forest_concepts as FOREST_CONCEPTS  # noqa: E402
+import cream_terrain  # noqa: E402
+import handoff_items  # noqa: E402
 
 # Some canonical IDs (moss, a torch, a boulder) are shared between regions.
 # A forest refinement must not repaint the Drain or mystery-room kit. Read
@@ -215,9 +217,10 @@ for r in rooms.ROOMS:
             hub_used |= set(rooms.expand(r[layer], r['w'], r['h'], mt_names))
 MYST_EXTRA = {'torch', 'torch_lit', 'boulder', 'chest', 'chest_open', 'sparkle', 'black', 'moss0', 'moss1', 'moss2'}
 SETS = [
-    ('forest', lambda n, i: not n.startswith(('sw_', 'swh_', 'cave_', 'hollow_', 'thicket_', 'myst_'))),
+    ('forest', lambda n, i: not n.startswith(('sw_', 'swh_', 'cave_', 'hollow_', 'thicket_', 'myst_', 'cream_', 'lh_'))),
     ('sewer', lambda n, i: i in hub_used or (SC.VARIANT != 9 and n.startswith('swh_'))),
-    ('myst', lambda n, i: n.startswith(('cave_', 'hollow_', 'thicket_', 'myst_')) or n in MYST_EXTRA),
+    ('myst', lambda n, i: n.startswith(('cave_', 'hollow_', 'thicket_', 'myst_', 'lh_')) or n in MYST_EXTRA),
+    ('cream', lambda n, i: n.startswith(('cream_','lh_'))),
 ]
 TYPES_IDX = {t: i for i, t in enumerate(TYPES)}
 mt_type = [TYPES_IDX[mt['type']] for mt in tiles.METATILES]
@@ -246,6 +249,10 @@ for si, (sname, pred) in enumerate(SETS):
                      if protected31 and sname != 'forest' else tiles.METATILES)
     area_palette_colors = dict(protected31['palettes'] if protected31 and sname != 'forest'
                                else palettes.BG_PALETTES)
+    if sname == 'cream':
+        area_palette_colors.update(cream_terrain.PALETTES)
+    if sname in ('cream','myst'):
+        area_palette_colors.update(handoff_items.BGPALETTES)
     ts = Tileset(limit=768 if FOREST_CONCEPTS.TREE_WORLD and sname == 'forest' else 1024)
     ts.add([[0] * 8 for _ in range(8)], 0, 0)  # tile 0 blank
     entries = []
@@ -559,9 +566,9 @@ if FOREST_CONCEPTS.VARIANT >= 6:
                                 for corner in range(16)) + '},')
     c.append('};')
     h.append('#define FOREST_V2_PULSE_COUNT %d' % len(forest_v2_pulses))
-    h += ['extern const u8 forest_v2_pulse_slots[3][FOREST_V2_PULSE_COUNT];',
+    h += ['extern const u8 forest_v2_pulse_slots[%d][FOREST_V2_PULSE_COUNT];' % len(SETS),
           'extern const u16 forest_v2_pulse_colors[FOREST_V2_PULSE_COUNT][4][16];']
-    c.append('const u8 forest_v2_pulse_slots[3][FOREST_V2_PULSE_COUNT] = {')
+    c.append('const u8 forest_v2_pulse_slots[%d][FOREST_V2_PULSE_COUNT] = {' % len(SETS))
     for row in forest_v2_pulse_slots:
         c.append('  {' + ','.join(map(str, row)) + '},')
     c.append('};')

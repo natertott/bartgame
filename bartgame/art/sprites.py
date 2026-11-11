@@ -206,3 +206,18 @@ SHEETS.append(arcade_sheet())
 for frame in SHEETS[-1]['frames']:
     COVERAGE.append({'sheet': 'arcade', 'frame': frame, 'owner': 'arcade_cabinet',
                      'canvas': [32, 64], 'production': True})
+
+import cream_actors
+import handoff_items
+import handoff_enemies
+import handoff_events
+import handoff_mobility
+import handoff_objects
+for owner,module in (('cream_actors',cream_actors),('handoff_items',handoff_items),
+                     ('handoff_enemies',handoff_enemies),('handoff_events',handoff_events),
+                     ('handoff_mobility',handoff_mobility),('handoff_objects',handoff_objects)):
+    for sheet in module.build_sheets():
+        SHEETS.append(sheet)
+        for frame in sheet['frames']:
+            COVERAGE.append({'sheet':sheet['name'],'frame':frame,'owner':owner,
+                             'canvas':[sheet['w'],sheet['h']],'production':True})

@@ -18,6 +18,9 @@
 #include "game.h"
 #include "assets.h"
 #include "appearance.h"
+#include "legacy_items.h"
+#include "cream_runtime.h"
+#include "bomb_throw.h"
 
 #define BG0_MAP SCREENBLOCK(23)
 #define PAL_HUD (PAL_SLOT_HUD << 12) /* native heart tiles */
@@ -203,6 +206,7 @@ static void tb_newline(void) {
 }
 
 void textbox_open_named(const char* name, int face, const char* s) {
+    bomb_charge_cancel();
     u16* m = bg0_map();
     int y, ctx = face >= 0 ? TB_DIV + 1 : TB_X + 1;
     sTbFace = face;
@@ -576,13 +580,13 @@ static void hud_gleam(int x,int width,int phase) {
     }
 }
 
-static void hud_heart(int x,int fill) {
+static void hud_heart(int x,int y,int fill) {
     int tile=fill>=8?HT_HEART_FULL:fill>=4?HT_HEART_HALF:HT_HEART_EMPTY;
     int xx,yy;
     for(yy=0;yy<8;yy++)for(xx=0;xx<8;xx++) {
         int at=(tile-HUD_TILE_BASE)*16+yy*2+xx/4;
         int ink=(hud_tiles[at]>>((xx&3)*4))&15;
-        if(ink)vwf_pixel(&sPurse,x+xx,2+yy,ink);
+        if(ink)vwf_pixel(&sPurse,x+xx,y+yy,ink);
     }
 }
 
@@ -676,6 +680,7 @@ static void hud_assignment(int x,int slot,bool8 pressed) {
 }
 
 static int hud_icon(int eq) {
+    if(eq>=EQ_COUNT) {const LegacyItemDef* d=legacy_item_def(legacy_equip_item(eq));return d?d->frame:-1;}
     switch(eq) {
         case EQ_SWORD:return F_ICON32_SWORD;
         case EQ_SHIELD:return player_shield_icon();
@@ -702,10 +707,21 @@ static void hud_restore(int x0,int y0,int x1,int y1) {
 }
 
 static void hud_panel_base(void) {
-    int s,hearts=MIN(10,(gPl.hp_max+7)/8);
+    int s,hearts=MIN(20,(gPl.hp_max+7)/8);
     vwf_clear(&sPurse,0);
-    if(hearts)hud_frame(0,hearts*8+4,12);
+    if(hearts)hud_frame(0,MIN(10,hearts)*8+4,hearts>10?20:12);
     hud_frame(83,33,12);hud_coin();
+    if(gPl.hp_max>160) {
+        /* Existing quarter-heart growth is retained. Beyond twenty hearts,
+           precise HP fits below the purse within the same twenty rows. */
+        static const u8 hp[2][5]={{5,5,7,5,5},{7,5,7,4,4}};
+        int letter,x,y;
+        vitals_line(84,12,145,19,VI_OUTLINE);vitals_line(85,13,144,18,VI_EMPTY);
+        vitals_line(87,12,142,12,VI_GOLD_DARK);vwf_pixel(&sPurse,87,12,VI_IVORY);
+        for(letter=0;letter<2;letter++)for(y=0;y<5;y++)for(x=0;x<3;x++)if(hp[letter][y]&(4>>x))
+            vwf_pixel(&sPurse,85+letter*4+x,14+y,VI_TEXT);
+        for(y=0;y<5;y++)vwf_pixel(&sPurse,118-y/2,14+y,VI_TEXT);
+    }
     for(s=0;s<SLOT_COUNT;s++)if(hud_icon(gPl.equip[s])>=0) {
         int x=HUD_EQUIP_X(s);
         hud_frame(x,HUD_POD_WIDTH,HUD_POD_HEIGHT);
@@ -732,21 +748,22 @@ static void hud_init(void) {
 
 static void hud_refresh(void) {
     const SpriteSheet* icons=&sheets[SHEET_HUDITEMS];
-    int s,i,hearts=MIN(10,(gPl.hp_max+7)/8);
+    int s,i,hearts=MIN(20,(gPl.hp_max+7)/8);
     u32 clock=gFrame,glint=clock>>4;
     u8 count_dirty=0,button_dirty=0;
     bool8 reset=sHudHp<0 || sHudHpMax!=gPl.hp_max;
     bool8 dirty=FALSE;
     for(s=0;s<SLOT_COUNT;s++) {
         int eq=gPl.equip[s],f=hud_icon(eq);
-        int count=eq==EQ_BOMBS?gPl.bombs:eq==EQ_BOW?gPl.arrows:-1;
+        int count=(eq==EQ_BOMBS||eq==EQ_REMOTE_BOMBS)?gPl.bombs:(eq==EQ_BOW||eq==EQ_LIGHT_ARROW)?gPl.arrows:-1;
         bool8 pressed;
         if(gKeysHeld&sHudKeys[s])sHudPressUntil[s]=clock+6;
         pressed=(gKeysHeld&sHudKeys[s])!=0 || (s32)(sHudPressUntil[s]-clock)>0;
         if(eq!=sHudEq[s])reset=TRUE;
         if(eq!=sHudEq[s] || sHudIconFrame[s]!=(u8)f) {
-            if(f>=0)vram_queue(icons->tiles+f*icons->frame_tiles*16,
-                OBJ_TILE(OBJ_TILE_HUD_ICONS+s*16),icons->frame_tiles*32);
+            const SpriteSheet* source=eq>=EQ_COUNT?&sheets[SHEET_HANDOFF_ITEMS]:icons;
+            if(f>=0)vram_queue(source->tiles+f*source->frame_tiles*16,
+                OBJ_TILE(OBJ_TILE_HUD_ICONS+s*16),source->frame_tiles*32);
         }
         if(count!=sHudCount[s])count_dirty|=1<<s;
         if(pressed!=sHudPressed[s])button_dirty|=1<<s;
@@ -759,7 +776,11 @@ static void hud_refresh(void) {
         for(i=0;i<hearts;i++) {
             int current=gPl.hp-i*8,old=sHudHp-i*8;
             int a=current>=8?2:current>=4?1:0,b=old>=8?2:old>=4?1:0;
-            if(reset || a!=b)hud_heart(2+i*8,current);
+            if(reset || a!=b)hud_heart(2+(i%10)*8,i<10?2:11,current);
+        }
+        if(gPl.hp_max>160) {
+            if(!reset){hud_restore(95,13,115,19);hud_restore(120,13,142,19);}
+            hud_digits(96,14,gPl.hp);hud_digits(121,14,gPl.hp_max);
         }
         dirty=TRUE;
     }
@@ -815,13 +836,14 @@ static void hud_sprites(void) {
     int s;
     for(s=0;s<SLOT_COUNT;s++)if(hud_icon(sHudEq[s])>=0)
         obj_square(HUD_EQUIP_X(s)+12,2,1,OBJ_TILE_HUD_ICONS+s*16,
-                   huditems_frame_pal[sHudIconFrame[s]]);
+                   sHudEq[s]>=EQ_COUNT?sheets[SHEET_HANDOFF_ITEMS].pal:huditems_frame_pal[sHudIconFrame[s]]);
     /* The larger map would cover the dialogue's continuation cue. Its place
        is immediately restored after the modal box closes. */
     if(!textbox_active())obj_square(HUD_MAP_X,HUD_MAP_Y,2,OBJ_TILE_MINIMAP,PAL_OBJ_UIKIT);
 }
 
 static u32 minimap_visited(void) {
+    if(gGame.area==AREA_CREAM)return gCreamProgress.visited;
     int i;u32 bits=0;
     for(i=0;i<CELLS;i++)if(gWorld.cells[i].flags&CF_VISITED)bits|=1u<<i;
     return bits;
@@ -890,7 +912,9 @@ void minimap_render(void) {
     for(i=0;i<CELLS;i++) {
         Cell* cell=&gWorld.cells[i];
         int cx=2+(i%MAZE_W)*4,cy=2+(i/MAZE_W)*4;
-        bool8 seen=(cell->flags&CF_VISITED)!=0,goal=i==gWorld.goal;
+        bool8 cream=gGame.area==AREA_CREAM;
+        bool8 seen=cream?(gCreamProgress.visited&(1u<<i))!=0:(cell->flags&CF_VISITED)!=0;
+        bool8 goal=i==(cream?cream_cell(gCreamWorld.goal_node):gWorld.goal);
         for(y=0;y<3;y++)for(x=0;x<3;x++) {
             int ink=!seen?UI_INK_RAISED:goal?UI_INK_GOLD:(y==0?OBJ_INK_GREEN_LIT:OBJ_INK_GREEN);
             minimap_pixel(cx+x,cy+y,ink);
@@ -1070,6 +1094,7 @@ static void hud_assignment(int x,int slot) {
 }
 
 static int hud_icon(int eq) {
+    if(eq>=EQ_COUNT) {const LegacyItemDef* d=legacy_item_def(legacy_equip_item(eq));return d?d->frame:-1;}
     switch(eq) {
         case EQ_SWORD:return F_ICON32_SWORD;
         case EQ_SHIELD:return player_shield_icon();
@@ -1117,7 +1142,7 @@ static void hud_refresh(void) {
     }
     for(s=0;s<SLOT_COUNT;s++) {
         int eq=gPl.equip[s],f=hud_icon(eq),x=HUD_EQUIP_X(s);
-        int count=eq==EQ_BOMBS?gPl.bombs:eq==EQ_BOW?gPl.arrows:-1;
+        int count=(eq==EQ_BOMBS||eq==EQ_REMOTE_BOMBS)?gPl.bombs:(eq==EQ_BOW||eq==EQ_LIGHT_ARROW)?gPl.arrows:-1;
         if(reset || eq!=sHudEq[s] || sHudIconFrame[s]!=(u8)f || count!=sHudCount[s]) {
             vitals_line(x,0,x+29,11,0);
             if(f>=0) {
@@ -1156,7 +1181,7 @@ static void hud_sprites(void) {
     int s;
     for(s=0;s<SLOT_COUNT;s++)if(hud_icon(sHudEq[s])>=0)
         obj_square(HUD_EQUIP_X(s)+4,0,1,OBJ_TILE_HUD_ICONS+s*16,
-                   huditems_frame_pal[sHudIconFrame[s]]);
+                   sHudEq[s]>=EQ_COUNT?sheets[SHEET_HANDOFF_ITEMS].pal:huditems_frame_pal[sHudIconFrame[s]]);
     obj_square(222,142,1,OBJ_TILE_MINIMAP,PAL_OBJ_UIKIT);
 }
 
@@ -1178,7 +1203,9 @@ void minimap_render(void) {
     for(i=0;i<CELLS;i++) {
         Cell* cell=&gWorld.cells[i];
         int cx=1+(i%MAZE_W)*3,cy=1+(i/MAZE_W)*3;
-        bool8 seen=(cell->flags&CF_VISITED)!=0,goal=i==gWorld.goal;
+        bool8 cream=gGame.area==AREA_CREAM;
+        bool8 seen=cream?(gCreamProgress.visited&(1u<<i))!=0:(cell->flags&CF_VISITED)!=0;
+        bool8 goal=i==(cream?cream_cell(gCreamWorld.goal_node):gWorld.goal);
         for(y=0;y<2;y++)for(x=0;x<2;x++) {
             int ink=!seen?UI_INK_RAISED:goal?UI_INK_GOLD:(y==0?OBJ_INK_GREEN_LIT:OBJ_INK_GREEN);
             if(i==here)ink=gGame.area==AREA_FOREST?(x==0?UI_INK_PALE:UI_INK_RED):UI_INK_CREAM;
@@ -1196,3 +1223,9 @@ void minimap_render(void) {
 }
 
 #endif /* BART_HUD_VARIANT */
+
+void hud_invalidate_icons(void) {
+    int i;
+    for(i=0;i<SLOT_COUNT;i++){sHudEq[i]=255;sHudIconFrame[i]=255;sHudCount[i]=-1;}
+    hud_stale();
+}

@@ -6,6 +6,8 @@
 #include "interactive.h"
 #include "ambient.h"
 #include "cabinet.h"
+#include "handoff_events.h"
+#include "legacy_items.h"
 #if BART_FOREST_VARIANT >= 6
 #include "player.h"
 #endif
@@ -86,6 +88,7 @@ bool8 IWRAM_CODE actor_feet_box_solid(const Actor* a, int px, int py) {
         hb = &gHitboxes[a->hitbox];
     int cx = px + hb->ox, cy = py + hb->oy;
     int hw = hb->hw, hh = hb->hh;
+    if(a->kind==AK_PLAYER && legacy_player_minish()) {hw=2;hh=2;cy=py-2;}
     if (a->kind != AK_PLAYER) {
         /* enemies collide with a short box at their feet */
         hh = MIN(hh, 5);
@@ -93,12 +96,20 @@ bool8 IWRAM_CODE actor_feet_box_solid(const Actor* a, int px, int py) {
     }
     if (gCabinetActive && a->kind==AK_PLAYER &&
         cabinet_box_solid(cx-hw,cy-hh,cx+hw-1,cy+hh-1)) return TRUE;
+    if(a->kind==AK_PLAYER && handoff_box_solid(cx-hw,cy-hh,cx+hw-1,cy+hh-1)) return TRUE;
+    if(a->kind==AK_PLAYER && legacy_player_minish()) {
+        int x,y;
+        for(y=cy-hh;y<cy+hh;y++)for(x=cx-hw;x<cx+hw;x++)
+            if(room_solid_px(x,y)&&!legacy_minish_gap_at(x,y))return TRUE;
+        return FALSE;
+    }
     return room_box_solid(cx - hw, cy - hh, cx + hw - 1, cy + hh - 1);
 }
 
 /* Move with tile collision, one pixel at a time when blocked, with corner
    assist: a hero caught on the edge of a tile is nudged around it. */
 bool8 IWRAM_CODE actor_move(Actor* a, int speed, int dir) {
+    if(a->kind==AK_ENEMY)speed=handoff_enemy_speed(speed);
     int d8 = dir * 8;
     s32 vx = (speed * SIN(d8)) >> 14;
     s32 vy = -(speed * COS(d8)) >> 14;
@@ -169,6 +180,7 @@ bool8 IWRAM_CODE actor_move(Actor* a, int speed, int dir) {
 }
 
 void actor_move_free(Actor* a, int speed, int dir) {
+    if(a->kind==AK_ENEMY)speed=handoff_enemy_speed(speed);
     int d8 = dir * 8;
     s32 vx = (speed * SIN(d8)) >> 14;
     s32 vy = -(speed * COS(d8)) >> 14;

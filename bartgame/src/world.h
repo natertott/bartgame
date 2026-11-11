@@ -88,6 +88,7 @@ void world_route_metrics(WorldRouteMetrics* out);
 int cell_neighbor(int cell, int side);
 void world_open_gate(int cell, int side);
 bool8 world_gate_open(int cell, int side);
+bool8 world_trial_gate_ready(int cell,int side); /* added loot sources cannot bypass the three original trials */
 int cell_x(int cell);
 int cell_y(int cell);
 const char* gate_name(int gate);

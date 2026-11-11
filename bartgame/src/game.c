@@ -29,6 +29,14 @@ extern u16 items_sheet_tile(void);
 #include "cabinet.h"
 #include "arcade.h"
 #include "journal.h"
+#include "legacy_items.h"
+#include "legacy_enemies.h"
+#include "handoff_events.h"
+#include "cream_runtime.h"
+#include "cream_room.h"
+#include "bomb_throw.h"
+#include "run_extension.h"
+#include "gear_menu.h"
 #if BART_ENEMY_LAB
 #include "enemy_prototypes.h"
 #endif
@@ -50,10 +58,16 @@ static u8 sNextArea, sNextCell, sNextSide;
 static u8 sTitleCursor, sTitleHasSave; /* the title's choice when a save exists */
 static u8 sTransPhase;
 static u8 sHubcap; /* the pending transition is the Drain Cap's: drop in at the spawn */
+static u8 sCreamNextNode,sCreamDropRows,sHandoffSite,sHandoffKind;
+static s16 sCreamNextX,sCreamNextY;
+static u8 sCreamNextFacing;
+static u8 sDropOriginCell,sDropStep,sDropFrame;
+static struct {u8 area,cell,node; s16 x,y;u8 facing;} sAnnexReturn;
+static u16 sNewDoorTile[2];
 
 static const char* const sKeyItemText[4] = {
     "",
-    "You found the " INK_HIGH "Blightseeds" INK_BASE "!|Dark seeds that burst. Equip them, then plant one beside a cracked seal.",
+    "You found the " INK_HIGH "Blightseeds" INK_BASE "!|Hold the button to aim farther; release to throw. They burst on landing. Tap to drop one at your feet.",
     "You found the " INK_HIGH "Grail Lamp" INK_BASE "!|A flame that is not of this wood. Equip it to burn webs and brush, and to light censers.",
     "You found the " INK_HIGH "Petal Cloak" INK_BASE "!|Equip it to leap. A chasm is only a breath wide; look for treasure beyond broken ground.",
 };
@@ -61,18 +75,25 @@ static const char* const sKeyItemText[4] = {
 /* --------------------------------------------------------- darkness -- */
 /* The gardener's rooms are dark: a window of light around the hero that
    grows with every censer lit and flares while the lamp swings. */
-static u8 sDark;
+static u8 sDark,sDimActive;
 
 static void dark_off(void) {
     sDark = 0;
+    sDimActive=0;
     REG_DISPCNT &= ~(DCNT_WIN0 | DCNT_OBJWIN);
     REG_BLDCNT = 0;
     REG_BLDY = 0;
 }
 
 static void dark_update(void) {
-    if (!sDark)
+    if (!sDark) {
+        int dim=handoff_visual_dim();
+        if(dim) {
+            sDimActive=1;REG_DISPCNT=(REG_DISPCNT&~DCNT_WIN0)|DCNT_OBJWIN;
+            REG_WINOUT=0x1f3f;REG_BLDCNT=0x00c0|0x0016;REG_BLDY=dim;
+        } else if(sDimActive){sDimActive=0;REG_DISPCNT&=~DCNT_OBJWIN;REG_BLDCNT=REG_BLDY=0;}
         return;
+    }
     int unlit = room_torches_unlit();
     if (unlit == 0) {
         dark_off();
@@ -142,8 +163,10 @@ static void load_sewer(int at_drain) {
     gGame.area = AREA_SEWER;
     tiles_load(TS_SEWER);
     room_load_def(def);
+    legacy_surface_clear();
     actors_clear();
     sprites_reset();
+    sNewDoorTile[0]=sNewDoorTile[1]=0;
     objects_room_reset();
     npc_room_reset();
     gDbg[4] = def->object_count;
@@ -167,7 +190,11 @@ static void load_sewer(int at_drain) {
             facing = FACE_S;
         }
     }
+    if(at_drain==2){sx=28*16+8;sy=6*16+34;facing=FACE_S;}
+    if(at_drain==3){sx=17*16+8;sy=6*16+34;facing=FACE_S;}
     player_init(sx, sy, facing);
+    legacy_items_room_reset();
+    handoff_room_enter(AREA_SEWER,0);
     camera_update(sx, sy - 16, TRUE);
     dark_off();
     minimap_render();
@@ -179,6 +206,7 @@ static void load_forest(int cell, int from_side) {
     gGame.cell = cell;
     gWorld.cells[cell].flags |= CF_VISITED;
     tiles_load(TS_FOREST);
+    legacy_surface_clear();
     roomgen_build(cell);
     actors_clear();
     sprites_reset();
@@ -193,6 +221,8 @@ static void load_forest(int cell, int from_side) {
     }
     camera_update(px, py - 16, TRUE);
     spawn_cell_objects();
+    legacy_items_room_reset();
+    handoff_room_enter(AREA_FOREST,cell);
     dark_off();
     minimap_render();
     {
@@ -208,6 +238,7 @@ static void load_myst(int cell) {
     gGame.area = AREA_MYST;
     gGame.cell = cell;
     tiles_load(TS_MYST);
+    legacy_surface_clear();
     myst_build(cell);
     actors_clear();
     sprites_reset();
@@ -219,9 +250,31 @@ static void load_myst(int cell) {
     camera_update(px, py - 16, TRUE);
     dark_off();
     myst_enter();
+    legacy_items_room_reset();
+    handoff_room_enter(AREA_MYST,cell);
+}
+
+static void load_cream(int node,int px,int py,int facing) {
+    gGame.area=AREA_CREAM;gGame.cell=cream_cell(node);
+    tiles_load(TS_CREAM);legacy_surface_clear();memset(&gSpots,0,sizeof(gSpots));
+    cream_runtime_build(node);actors_clear();sprites_reset();objects_room_reset();npc_room_reset();enemy_load_sheets_for_theme(gCreamWorld.corruption[gGame.cell]);
+    if(px<0||py<0){
+        CreamTerraceSpots* p=&gCreamRoom.terrace[cream_terrace(node)];
+        if(node==gCreamWorld.entry_node){px=(gCreamRoom.return_door.x+1)*16;py=(gCreamRoom.return_door.y+1)*16+14;}
+        else{px=p->spawns[0].x*16+8;py=p->spawns[0].y*16+14;}
+    }
+    player_init(px,py,facing);legacy_items_room_reset();cream_runtime_enter();
+    camera_update(px,py-16,TRUE);dark_off();minimap_render();handoff_room_enter(AREA_CREAM,gGame.cell);
+}
+static void load_handoff(int site,int kind) {
+    int px,py;gGame.area=AREA_HANDOFF;gGame.cell=0;
+    tiles_load(TS_MYST);legacy_surface_clear();memset(&gSpots,0,sizeof(gSpots));
+    handoff_build(site,kind,hash32(gGame.seed,site*1009+17));actors_clear();sprites_reset();objects_room_reset();npc_room_reset();enemy_load_sheets_for_theme(0);
+    handoff_start_pos(&px,&py);player_init(px,py,FACE_N);legacy_items_room_reset();handoff_enter();camera_update(px,py-16,TRUE);dark_off();minimap_render();
 }
 
 static void begin_transition(int area, int cell, int side) {
+    bomb_charge_cancel();
     sNextArea = area;
     sNextCell = cell;
     sNextSide = side;
@@ -229,6 +282,30 @@ static void begin_transition(int area, int cell, int side) {
     gGame.state = GS_TRANSITION;
     fade_start(16, 2);
 }
+
+void game_travel_cream(int node,int px,int py,int facing,int drop_rows) {
+    if(node<0||node>=CC_NODES)return;
+    sCreamNextNode=node;sCreamNextX=px;sCreamNextY=py;sCreamNextFacing=facing;sCreamDropRows=CLAMP(drop_rows,0,4);
+    if(sCreamDropRows && gGame.area==AREA_CREAM && cream_cell(node)>gGame.cell) {
+        /* Preserve the committed fall across every intervening room. The
+           skipped terraces are scenery during this travel, never landings. */
+        sDropOriginCell=gGame.cell;sDropStep=sDropFrame=0;
+        sTransPhase=2;gGame.state=GS_TRANSITION;bomb_charge_cancel();
+        gPl.sword_active=gPl.shield_up=gPl.lamp_timer=0;
+        gPlayer->state=PS_JUMP;gPlayer->sub=2;gPlayer->z=0;fade_set(0);sfx_play(SFX_FALL);return;
+    }
+    begin_transition(AREA_CREAM,cream_cell(node),0);
+}
+void game_open_handoff(int site,int kind) {
+    if(gGame.area!=AREA_HANDOFF) {
+        sAnnexReturn.area=gGame.area;sAnnexReturn.cell=gGame.cell;sAnnexReturn.node=gCreamNode;sAnnexReturn.x=PX(gPlayer->x);sAnnexReturn.y=PX(gPlayer->y);sAnnexReturn.facing=gPlayer->facing;
+    }
+    sHandoffSite=site;sHandoffKind=kind;begin_transition(AREA_HANDOFF,0,0);
+}
+void game_legacy_boss_defeated(int type) {
+    if(gGame.area==AREA_CREAM && type==LE_CREAM_GLEEROK){gCreamProgress.boss_dead=1;game_win();}
+}
+void game_leave_cream(void){begin_transition(AREA_SEWER,0,2);}
 
 void game_return_to_hub(void) {
     sHubcap = 1;
@@ -370,6 +447,17 @@ static void check_exits(void) {
     int px = PX(a->x), py = PX(a->y);
     if (a->state == PS_FALL || a->state == PS_DEAD || a->state == PS_ITEMGET)
         return;
+    if(gGame.area==AREA_CREAM){cream_runtime_update();return;}
+    if(gGame.area==AREA_HANDOFF) {
+        int request=handoff_requested_site();
+        if(request!=HANDOFF_NO_REQUEST){handoff_clear_request();game_open_handoff(request,request);return;}
+        if(handoff_wants_exit()) {
+            if((handoff_current_site()>HS_HUB&&handoff_current_site()<=31)||(handoff_current_site()>=128&&handoff_current_site()<=131)){game_open_handoff(HS_HUB,HS_HUB);return;}
+            if(sAnnexReturn.area==AREA_CREAM)game_travel_cream(sAnnexReturn.node,sAnnexReturn.x,sAnnexReturn.y,sAnnexReturn.facing,0);
+            else begin_transition(AREA_SEWER,0,3);
+        }
+        return;
+    }
     if (gGame.area == AREA_SEWER) {
         if (room_type_px(px, py - 4) == TT_EXIT)
             begin_transition(AREA_FOREST, gWorld.entry, SIDE_S);
@@ -402,6 +490,10 @@ static void check_exits(void) {
         side = SIDE_E;
     if (side < 0)
         return;
+    if(!world_trial_gate_ready(cell,side)) {
+        int x,y;roomgen_door_pos(side,&x,&y);player_set_pos(x,y);gPlayer->state=PS_NORMAL;gPlayer->z=gPlayer->zvel=0;
+        textbox_open("This crossing still bears a trial seal.|Complete this wood's required task and claim its reward. Tools found elsewhere cannot break that oath.");return;
+    }
     int n = cell_neighbor(cell, side);
     if (n < 0 || gWorld.cells[cell].gate[side] == GATE_WALL) {
         a->x = CLAMP(px, 8, room_px_w() - 8) << 16;
@@ -584,6 +676,7 @@ static void start_run(u32 seed) {
     gGame.kills = 0;
     world_generate(seed);
     player_new_game();
+    legacy_items_new_run();legacy_items_seed_owned();handoff_new_run(seed);cream_runtime_new_run(seed);run_profile_write();
     title_restore_world();
     gAnimTiles = 1;
     bg0_clear();
@@ -665,6 +758,7 @@ static void update_title(void) {
 static u16 sWinTimer;
 
 void game_win(void) {
+    handoff_on_win();
     save_erase(); /* Victory retires this run; journal/settings are separate. */
     gGame.state = GS_WIN;
     sWinTimer = 0;
@@ -681,6 +775,9 @@ static void update_win(void) {
     if (sWinTimer == 40) {
         static Canvas plate, body, stats, press;
         int secs = gGame.run_frames / 60, i, x;
+        const char* heading=gCreamProgress.boss_dead?"The summit is stilled":"The Heart is cut";
+        const char* line1=gCreamProgress.boss_dead?"The mountain exhales, slowly.":"The wood breathes again, slowly.";
+        const char* line2=gCreamProgress.boss_dead?"A violet flame sleeps in the curd.":"Somewhere a king stops dreaming.";
         char buf[12];
         u16* m;
         actors_clear();
@@ -691,17 +788,15 @@ static void update_win(void) {
         /* the tale's end in a panel under a gold plate, the run's count in
            two columns under a rule */
         ui_frame(m, UI_BG0, 3, 4, 24, 12, FR_PANEL);
-        x = ui_plate_tiles(vwf_width("The Heart is cut"), 6);
-        bg0_plate(&plate, (30 - x) / 2, 3, "The Heart is cut", UI_INK_GOLD, TRUE);
+        x = ui_plate_tiles(vwf_width(heading), 6);
+        bg0_plate(&plate, (30 - x) / 2, 3, heading, UI_INK_GOLD, TRUE);
         bg0_canvas(&body, 4, 6, 22, 3);
         vwf_clear(&body, UI_INK_NAVY); /* BG0 alone: nothing behind the panel */
         /* These words have a guaranteed themed panel behind them. A dark
            outline would merge the vellum theme's dark body letters into
            thick blobs; reserve the outline for floating title prompts. */
-        vwf_text(&body, (body.tw * 8 - vwf_width("The wood breathes again, slowly.")) / 2,
-                 2, "The wood breathes again, slowly.", UI_INK_CREAM);
-        vwf_text(&body, (body.tw * 8 - vwf_width("Somewhere a king stops dreaming.")) / 2,
-                 13, "Somewhere a king stops dreaming.", UI_INK_CREAM);
+        vwf_text(&body, (body.tw * 8 - vwf_width(line1)) / 2,2,line1,UI_INK_CREAM);
+        vwf_text(&body, (body.tw * 8 - vwf_width(line2)) / 2,13,line2,UI_INK_CREAM);
         ui_tile(m, UI_BG0, 6, 10, UI_RULE_END, UI_HF);
         for (i = 7; i < 23; i++)
             ui_tile(m, UI_BG0, i, 10, UI_RULE, 0);
@@ -736,6 +831,7 @@ static void update_win(void) {
 /* ----------------------------------------------------------- states -- */
 void game_init(void) {
     appearance_init();
+    handoff_init();run_extension_init();
     journal_init();
     text_init(); /* load saved marker/kit geometry before the title picker */
     title_show();
@@ -750,13 +846,21 @@ static void draw_world(void) {
 #if BART_FOREST_VARIANT >= 31
     }
 #endif
-    if (sDark)
+    if (sDark||sDimActive)
         dark_spare(gOamCount);
     PERF_CALL(PF_GLITTER_FRONT,ambient_draw(TRUE));
     PERF_CALL(PF_FOLK_FRONT,npcs_draw_front());
     cabinet_draw(TRUE);
     PERF_CALL(PF_INTERACTIVE_BACK,interactive_draw(FALSE));
     PERF_CALL(PF_PLAYER_DRAW,player_draw());
+    legacy_items_draw();
+    cream_runtime_draw();handoff_draw();
+    if(gGame.area==AREA_SEWER) {
+        int i;for(i=0;i<2;i++) {
+            if(!sNewDoorTile[i])sNewDoorTile[i]=sprite_load_frame(SHEET_CREAMDOORS,1-i);
+            if(sNewDoorTile[i])draw_sprite((i?28:17)*16-8-gCamX,6*16+14-sheets[SHEET_CREAMDOORS].h-gCamY,SHEET_CREAMDOORS,sNewDoorTile[i],0,0,2,sheets[SHEET_CREAMDOORS].pal);
+        }
+    }
     PERF_CALL(PF_ENEMIES_DRAW,enemies_draw());
     PERF_CALL(PF_FOLK_DRAW,npcs_draw());
     PERF_CALL(PF_OBJECTS_DRAW,objects_draw());
@@ -784,7 +888,9 @@ static void update_play(void) {
     enemy_prototypes_tick();
 #endif
     debug_spawn();
+    if(handoff_menu_active()){bomb_charge_cancel();handoff_menu_update();return;}
     if (npc_dialogue_active()) {
+        bomb_charge_cancel();
         npc_dialogue_update();
         if (shop_active()) {
             shop_draw(); /* the whole screen: no world behind it */
@@ -795,15 +901,27 @@ static void update_play(void) {
         return;
     }
     if (textbox_active()) {
+        bomb_charge_cancel();
         textbox_update();
         draw_world();
         return;
     }
+    if((gKeysDown&KEY_A)&&gPlayer->state==PS_CARRY&&handoff_try_interact()) {gKeysDown&=~KEY_A;if(!handoff_menu_active())draw_world();return;}
+    if((gKeysDown&KEY_A)&&gPlayer->state==PS_NORMAL) {
+        if(gGame.area==AREA_SEWER) {
+            int px=PX(gPlayer->x),py=PX(gPlayer->y);
+            if(ABS(px-(17*16+8))<22&&ABS(py-(6*16+34))<22){gKeysDown&=~KEY_A;game_open_handoff(HS_HUB,HS_HUB);return;}
+            if(ABS(px-(28*16+8))<22&&ABS(py-(6*16+34))<22){gKeysDown&=~KEY_A;if(!handoff_region_unlocked(AREA_CREAM))textbox_open("The ascent requires 500 remembrance or one victory in Entitlement mode.");else game_travel_cream(gCreamWorld.entry_node,-1,-1,FACE_N,0);return;}
+        }
+        if(cream_runtime_interact()||handoff_try_interact()){gKeysDown&=~KEY_A;if(!handoff_menu_active())draw_world();return;}
+    }
     if ((gKeysDown&KEY_A) && cabinet_try_interact()) {
+        bomb_charge_cancel();
         gKeysDown &= ~KEY_A;
         return;
     }
     if ((gKeysDown & KEY_A) && npc_try_talk()) {
+        bomb_charge_cancel();
         gKeysDown &= ~KEY_A;
         if (shop_active())
             shop_draw();
@@ -811,11 +929,14 @@ static void update_play(void) {
             draw_world();
         return;
     }
-    PERF_CALL(PF_PLAYER_UPDATE,player_update());
+    bool8 tool_movement=legacy_items_pre_player();
+    if(!tool_movement&&!cream_runtime_pre_player()&&!handoff_pre_player())PERF_CALL(PF_PLAYER_UPDATE,player_update());
+    legacy_items_post_player();
     if (gPlayer->state == PS_DEAD) {
         if (gPl.dead_timer > 120) {
             gPl.hp = gPl.hp_max;
             gGame.deaths++;
+            handoff_on_death();run_profile_write();
             sDiedFlag = 1;
             save_write(); /* and at a death: the wood keeps what was opened */
             begin_transition(AREA_SEWER, 0, 0);
@@ -824,15 +945,18 @@ static void update_play(void) {
         return;
     }
     if (gKeysDown & KEY_START) {
+        bomb_charge_cancel();
         menu_open();
         return;
     }
     PERF_CALL(PF_ITEMS_UPDATE,items_update());
+    legacy_items_update();
     PERF_CALL(PF_ENEMIES_UPDATE,enemies_update());
     PERF_CALL(PF_NPCS_UPDATE,npcs_update());
     PERF_CALL(PF_OBJECTS_UPDATE,objects_update());
     if (gGame.area == AREA_MYST)
         PERF_CALL(PF_ROOM_EVENTS,myst_update());
+    handoff_update();
     PERF_CALL(PF_ROOM_EVENTS,check_chest());
     PERF_CALL(PF_ROOM_EVENTS,check_shrine());
     PERF_CALL(PF_ROOM_EVENTS,check_exits());
@@ -842,17 +966,43 @@ static void update_play(void) {
 }
 
 static void update_transition(void) {
+    if(sTransPhase==2) {
+        int speed=MIN(9,2+sDropFrame/6),px=PX(gPlayer->x),py=PX(gPlayer->y)+speed;
+        sDropFrame=MIN(60,sDropFrame+1);gPlayer->state=PS_JUMP;gPlayer->sub=2;gPlayer->z=0;gPlayer->y=Q16(py);
+        if(py>=room_px_h()+16) {
+            int next=sDropOriginCell+(++sDropStep)*CC_WIDTH;
+            if(sDropStep>=sCreamDropRows || next>=CC_ROOMS || next==cream_cell(sCreamNextNode)) {
+                load_cream(sCreamNextNode,sCreamNextX,sCreamNextY,sCreamNextFacing);
+                cream_runtime_drop(1);gGame.state=GS_PLAY;sCreamDropRows=0;return;
+            }
+            /* A real generated intervening cliff is rendered with its own
+               palette and geometry, but no interactions or AI are advanced. */
+            u32 visited=gCreamProgress.visited;
+            gGame.area=AREA_CREAM;gGame.cell=next;tiles_load(TS_CREAM);legacy_surface_clear();
+            cream_runtime_build(cream_node(next,CC_UPPER));gCreamProgress.visited=visited;
+            actors_clear();sprites_reset();objects_room_reset();npc_room_reset();enemy_load_sheets_for_theme(gCreamWorld.corruption[next]);
+            player_init(CLAMP(px,24,room_px_w()-24),14,FACE_S);legacy_items_room_reset();cream_runtime_room_reset();gPlayer->state=PS_JUMP;gPlayer->sub=2;gPlayer->z=0;
+            camera_update(PX(gPlayer->x),0,TRUE);dark_off();minimap_render();
+        } else camera_update(px,py-16,FALSE);
+        draw_world();return;
+    }
     draw_world();
     if (sTransPhase == 0) {
         if (!fade_done())
             return;
         if (sNextArea == AREA_SEWER) {
-            load_sewer(sHubcap ? 0 : 1);
+            load_sewer(sHubcap ? 0 : sNextSide==2?2:sNextSide==3?3:1);
             if (sHubcap) {
                 sHubcap = 0;
                 player_drop_in();
             }
             bgm_play(BGM_SEWER);
+        } else if(sNextArea==AREA_CREAM) {
+            load_cream(sCreamNextNode,sCreamNextX,sCreamNextY,sCreamNextFacing);
+            if(sCreamDropRows)cream_runtime_drop(sCreamDropRows);
+            bgm_play(BGM_FOREST);
+        } else if(sNextArea==AREA_HANDOFF) {
+            load_handoff(sHandoffSite,sHandoffKind);
         } else if (sNextArea == AREA_MYST) {
             load_myst(sNextCell);
         } else {
@@ -905,7 +1055,7 @@ void game_update(void) {
         case GS_PLAY: update_play(); break;
         case GS_TRANSITION: update_transition(); break;
         case GS_MAP:
-            menu_update();
+            if(gear_menu_active())gear_menu_update();else menu_update();
             if (gGame.state == GS_PLAY) {
                 oam_clear();
                 draw_world();

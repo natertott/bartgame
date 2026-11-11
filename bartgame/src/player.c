@@ -13,6 +13,13 @@
 #endif
 #include "actor.h"
 #include "player.h"
+#include "legacy_items.h"
+#include "handoff_events.h"
+#include "cream_runtime.h"
+#include "legacy_enemies.h"
+#include "bomb_throw.h"
+#include "handoff_mobility.h"
+#include "handoff_objects.h"
 #include "journal.h"
 #include "sound.h"
 #include "react.h"
@@ -21,8 +28,12 @@
 #include "game.h"
 #endif
 
+/* The additive mobility callback is above the local facing helper. */
+static int facing_from_dir(int dir,int cur);
+
 Actor* gPlayer;
 PlayerState gPl;
+static u8 sCarryEnemy;
 
 #define WALK_SPEED Q8(1.25)
 #define ROLL_FRAMES 24
@@ -94,10 +105,18 @@ u16 player_equip_keys(int eq) {
         k |= KEY_B;
     if (gPl.equip[SLOT_L] == eq)
         k |= KEY_L;
+    if(eq==EQ_SWORD||eq==EQ_SHIELD) {
+        int i;for(i=0;i<SLOT_COUNT;i++) {
+            int held=gPl.equip[i];
+            if(held>=EQ_COUNT && (eq==EQ_SWORD?legacy_equip_sword(held):legacy_equip_shield(held)))
+                k|=i==SLOT_A?KEY_A:i==SLOT_B?KEY_B:KEY_L;
+        }
+    }
     return k;
 }
 
 bool8 player_has_item(int eq) {
+    if(eq>=EQ_COUNT) return legacy_equip_owned(eq);
     switch (eq) {
         case EQ_SWORD: return (gPl.items & ITEM_SWORD) != 0;
         case EQ_BOMBS: return (gPl.items & ITEM_BOMBS) != 0;
@@ -136,6 +155,7 @@ void player_auto_equip(int eq) {
 }
 
 void player_init(int px, int py, int facing) {
+    sCarryEnemy=0;
     Actor* a = &gActors[0];
     memset(a, 0, sizeof(*a));
     gPlayer = a;
@@ -212,8 +232,15 @@ void player_face(int facing) {
     gPlayer->dir = facing_to_dir(facing);
 }
 
+void player_external_walk_tick(int speed,int direction) {
+    gPlayer->speed=speed;
+    if(speed>0){gPlayer->dir=direction;gPlayer->facing=facing_from_dir(direction,gPlayer->facing);sWalkTimer++;}
+    else sWalkTimer=0;
+}
+
 bool8 player_is_vulnerable(void) {
     Actor* a = gPlayer;
+    if(legacy_player_submerged())return FALSE;
     if (a->iframes)
         return FALSE;
     if (a->state == PS_ROLL && a->timer < 18)
@@ -249,7 +276,11 @@ bool8 player_hurt(int damage, int from_dir) {
             return FALSE;
         }
     }
+    damage=legacy_player_incoming_damage(handoff_incoming_damage(damage));
+    if(damage<=0)return FALSE;
     gPl.hp -= damage;
+    legacy_player_on_hurt();
+    if(sCarryEnemy){legacy_enemy_throw(&gActors[sCarryEnemy],from_dir,16);sCarryEnemy=0;}
     if (gPl.hp < 0)
         gPl.hp = 0;
     gPl.carry = CARRY_NONE;
@@ -260,7 +291,7 @@ bool8 player_hurt(int damage, int from_dir) {
     a->state = PS_HURT;
     a->timer = HURT_FRAMES;
     a->kb_dir = from_dir;
-    a->kb_speed = Q8(1.5);
+    a->kb_speed = handoff_player_knockback(Q8(1.5));
     a->iframes = 30;
     gPl.sword_active = 0;
     gPl.lamp_timer = 0;
@@ -430,12 +461,15 @@ static int ledge_ahead(int dir) {
 
 static void start_jump(int dir, int forward_speed, s32 zvel) {
     Actor* a = gPlayer;
+    int support = legacy_enemy_platform_height(PX(a->x),PX(a->y));
     a->state = PS_JUMP;
     a->dir = dir;
     a->facing = dir_to_facing(dir);
     a->speed = forward_speed;
     a->zvel = zvel;
-    a->z = Q16(0.5);
+    /* Take off from the surface under the feet, including an exposed back.
+       A raised platform must not drop Bloom to floor0 before his jump. */
+    a->z = Q16(0.5) + (support < 0 ? 0 : Q16(support));
     a->timer = 0;
     gPl.sword_active = 0;
 }
@@ -461,7 +495,9 @@ static void check_floor(void) {
         return;
     /* the feet point: the moment it crosses into water or a hole, in */
     int px = PX(a->x), py = PX(a->y) - 4;
+    if(handoff_mobility_handles_floor(px,py)||handoff_objects_support(px,py))return;
     u8 t = room_type_px(px, py);
+    if(legacy_player_handles_floor(t)) return;
     if (t == TT_PIT || t == TT_WATER) {
         start_fall(t == TT_WATER, px >> 4, py >> 4);
         return;
@@ -508,12 +544,21 @@ static bool8 try_lift(void) {
         sfx_play(SFX_BUMP);
         return TRUE;
     }
+    {
+        int i;for(i=1;i<ACTOR_MAX;i++) {
+            Actor* e=&gActors[i];
+            if(legacy_enemy_liftable(e)&&ABS(PX(e->x)-(tx*16+8))<18&&ABS(PX(e->y)-(ty*16+12))<18&&legacy_enemy_lift(e)) {
+                sCarryEnemy=i;gPl.carry=CARRY_NONE;a->state=PS_LIFT;a->timer=0;a->speed=0;gPl.sword_active=0;sfx_play(SFX_PICKUP);return TRUE;
+            }
+        }
+    }
     return FALSE;
 }
 
 static void throw_carried(void) {
     Actor* a = gPlayer;
-    thrown_spawn(gPl.carry, PX(a->x), PX(a->y), a->facing);
+    if(sCarryEnemy){legacy_enemy_throw(&gActors[sCarryEnemy],facing_to_dir(a->facing),32);sCarryEnemy=0;}
+    else thrown_spawn(gPl.carry, PX(a->x), PX(a->y), a->facing);
     gPl.carry = CARRY_NONE;
     a->state = PS_NORMAL;
     a->timer = 0;
@@ -592,7 +637,7 @@ static void state_normal(void) {
         } else {
             gPl.push_timer = 0;
         }
-        a->speed = gPl.shield_up ? WALK_SPEED / 2 : WALK_SPEED;
+        a->speed = legacy_player_walk_speed(handoff_walk_speed(gPl.shield_up ? WALK_SPEED / 2 : WALK_SPEED));
         actor_move(a, a->speed, dir);
         sWalkTimer++;
     }
@@ -644,6 +689,7 @@ static void state_carry(void) {
     /* a sword swing drops the load at the feet, where it breaks, and
        the swing follows */
     if (gKeysDown & player_equip_keys(EQ_SWORD)) {
+        if(sCarryEnemy){legacy_enemy_throw(&gActors[sCarryEnemy],facing_to_dir(a->facing),8);sCarryEnemy=0;a->state=PS_NORMAL;gPl.queued_attack=1;return;}
         Actor* t = thrown_spawn(gPl.carry, PX(a->x), PX(a->y), a->facing);
         if (t) {
             t->speed = 0;
@@ -662,7 +708,7 @@ static void state_carry(void) {
     } else {
         a->facing = facing_from_dir(dir, a->facing);
         a->dir = dir;
-        a->speed = WALK_SPEED;
+        a->speed = legacy_player_walk_speed(handoff_walk_speed(WALK_SPEED));
         actor_move(a, a->speed, dir);
         sWalkTimer++;
     }
@@ -728,13 +774,15 @@ static void state_jump(void) {
         else
             actor_move(a, a->speed, a->dir);
     }
-    if (a->z <= 0) {
+    int support = legacy_enemy_platform_height(PX(a->x),PX(a->y));
+    s32 floor_z = support < 0 ? 0 : Q16(support);
+    if (a->z <= floor_z && (support < 0 || a->zvel <= 0)) {
         if (a->sub == 2) {
             /* down from the drain's ceiling: a thump and a puff */
             fx_spawn(FX_PUFF, PX(a->x), PX(a->y) - 4);
             sfx_play(SFX_BUMP);
         }
-        a->z = 0;
+        a->z = floor_z;
         a->zvel = 0;
         a->sub = 0;
         a->state = PS_NORMAL;
@@ -824,6 +872,19 @@ static void state_dead(void) {
 void player_update(void) {
     Actor* a = gPlayer;
     bool8 landed = FALSE;
+    bool8 supported = FALSE;
+    int support = legacy_enemy_platform_height(PX(a->x),PX(a->y));
+    s32 floor_z = support < 0 ? 0 : Q16(support);
+    /* A real raised surface owns standing height before collision derives
+       the sword box. Jumps use the same surface as their landing plane.
+       Outside the exposed back, support==-1 preserves ordinary floor0. */
+    if (support >= 0 && a->state != PS_JUMP && a->state != PS_FALL &&
+        a->state != PS_DEAD && a->state != PS_SWALLOWED &&
+        a->z <= floor_z && a->zvel <= 0) {
+        a->z = floor_z;
+        a->zvel = 0;
+        supported = TRUE;
+    }
     if (sUseTimer)
         sUseTimer--;
     if (a->iframes)
@@ -831,12 +892,12 @@ void player_update(void) {
     /* Hurt and wall-bounce recovery must not freeze an existing flight.
        JUMP advances its own arc; all other live airborne poses keep the
        same gravity even after the short knockback timer has expired. */
-    if (a->state != PS_JUMP && a->state != PS_FALL && a->state != PS_DEAD &&
+    if (!supported && a->state != PS_JUMP && a->state != PS_FALL && a->state != PS_DEAD &&
         a->state != PS_SWALLOWED && (a->z > 0 || a->zvel > 0)) {
         a->z += a->zvel;
         a->zvel -= Q16(0.125);
-        if (a->z <= 0) {
-            a->z = 0;
+        if (a->z <= floor_z && (support < 0 || a->zvel <= 0)) {
+            a->z = floor_z;
             a->zvel = 0;
             landed = TRUE;
         }
@@ -1040,6 +1101,19 @@ static void draw_ground_shadow(Actor* a) {
                 sShadowTile, 0, 0, prio, PAL_OBJ_HERO);
 }
 
+void player_draw_clone(int px,int py) {
+    Actor clone=*gPlayer;
+    clone.x=Q16(px);clone.y=Q16(py);
+    clone.prio=room_type_px(px,py-1)==TT_FRONT?1:2;
+    clone.prio=room_prop_priority(px,py,PX(clone.z),18,24,clone.prio);
+    /* Only the Four Sword/guard are duplicated; consumable tools still have
+       one owner. Body and blade use the exact main-player phase/geometry. */
+    if(clone.state==PS_ATTACK||gPl.shield_up)draw_action(&clone,FALSE);
+    actor_draw(&clone);
+    if(clone.state==PS_ATTACK||gPl.shield_up)draw_action(&clone,TRUE);
+    draw_ground_shadow(&clone);
+}
+
 #if BART_FOREST_VARIANT >= 6
 int player_recoil_priority(const Actor* a,int priority) {
 #if BART_FOREST_VARIANT >= 11
@@ -1153,6 +1227,8 @@ static void draw_canopy_visibility(Actor* a) {
 
 void player_draw(void) {
     Actor* a = gPlayer;
+    if(cream_runtime_draw_player())return;
+    if(legacy_player_draw_override()) return;
     int frame;
     int f = a->facing;
 #if BART_FOREST_VARIANT >= 11
@@ -1165,6 +1241,7 @@ void player_draw(void) {
        hides the shopkeeper's legs (art/sw_hall.py) */
     a->prio = (room_type_px(PX(a->x), PX(a->y) - 1) == TT_FRONT) ? 1 : 2;
     a->prio=room_prop_priority(PX(a->x),PX(a->y),PX(a->z),18,24,a->prio);
+    a->prio=handoff_mobility_priority(a->prio);
 #if BART_FOREST_VARIANT >= 6
     a->prio=player_recoil_priority(a,a->prio);
 #endif
@@ -1314,6 +1391,7 @@ void player_draw(void) {
     if ((a->state == PS_LIFT || a->state == PS_CARRY) && gPl.carry && f != FACE_N)
         draw_load(a);
     objects_draw_hand(FALSE);
+    bomb_charge_draw(FALSE);
     draw_action(a,FALSE);
 #if BART_FOREST_VARIANT >= 11
     a->prio=body_priority;
@@ -1323,6 +1401,7 @@ void player_draw(void) {
     draw_canopy_visibility(a);
 #endif
     draw_action(a,TRUE);
+    bomb_charge_draw(TRUE);
     objects_draw_hand(TRUE);
     if ((a->state == PS_LIFT || a->state == PS_CARRY) && gPl.carry && f == FACE_N)
         draw_load(a);

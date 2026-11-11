@@ -10,6 +10,9 @@
 #include "myst.h"
 #include "appearance.h"
 #include "journal.h"
+#include "run_extension.h"
+#include "cream_runtime.h"
+#include "legacy_items.h"
 
 #define SRAM ((volatile u8*)0x0E000000)
 #define SAVE_MAGIC 0x54524142u /* "BART" */
@@ -33,6 +36,7 @@ typedef struct {
    record. This adds no field and changes neither existing save version. */
 typedef char SaveFitsBeforeAppearance[(sizeof(SaveFile) <= APPEARANCE_SRAM_OFFSET) ? 1 : -1];
 typedef char SaveFitsBeforeJournal[(sizeof(SaveFile) <= JOURNAL_SRAM_OFFSET) ? 1 : -1];
+typedef char SaveFitsBeforeExtension[(sizeof(SaveFile) <= RUN_EXTENSION_SRAM_BASE) ? 1 : -1];
 
 static SaveFile sFile EWRAM_BSS;
 
@@ -68,14 +72,14 @@ static bool8 file_valid(void) {
    Check the goal index before looking into a serialized world. */
 static bool8 file_continuable(void) {
     return file_valid() && sFile.world.goal < CELLS &&
-           !(sFile.world.cells[sFile.world.goal].flags & CF_CLEARED);
+           !(sFile.world.cells[sFile.world.goal].flags & CF_CLEARED) && !run_extension_finished(sFile.sum);
 }
 
 void save_write(void) {
 #if BART_ENEMY_LAB
     return; /* Review encounters never persist granted tools or run progress. */
 #endif
-    if (gWorld.goal < CELLS && (gWorld.cells[gWorld.goal].flags & CF_CLEARED)) {
+    if (gCreamProgress.boss_dead || (gWorld.goal < CELLS && (gWorld.cells[gWorld.goal].flags & CF_CLEARED))) {
         save_erase(); /* Death/manual saves after the Heart cannot revive it. */
         return;
     }
@@ -90,6 +94,7 @@ void save_write(void) {
     sFile.kills = gGame.kills;
     sFile.run_frames = gGame.run_frames;
     sFile.sum = checksum((const u8*)&sFile, sizeof(SaveFile) - 4);
+    run_extension_write(sFile.sum);
     sram_write(&sFile, sizeof(SaveFile));
 }
 
@@ -139,6 +144,11 @@ bool8 save_load(void) {
     gGame.kills = sFile.kills;
     gGame.run_frames = sFile.run_frames;
     gGame.seed = gWorld.seed;
+    run_extension_load(sFile.sum,gWorld.seed);
+    /* A missing/corrupt optional extension must not leave an equipped tool
+       whose ownership record could not be recovered. Original IDs keep
+       their original save interpretation. */
+    {int slot;for(slot=0;slot<SLOT_COUNT;slot++)if(gPl.equip[slot]>=EQ_COUNT && !legacy_equip_owned(gPl.equip[slot]))gPl.equip[slot]=EQ_NONE;}
     journal_note_owned();
     if (sFile.version == SAVE_LEGACY_VERSION) {
         migrate_legacy_trials();
@@ -154,4 +164,5 @@ void save_erase(void) {
     int i;
     for (i = 0; i < 8; i++)
         SRAM[i] = 0;
+    run_extension_erase();
 }

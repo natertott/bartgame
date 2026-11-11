@@ -55,6 +55,19 @@ bool8 world_gate_open(int cell, int side) {
     return (gWorld.cells[cell].opened >> side) & 1;
 }
 
+bool8 world_trial_gate_ready(int cell,int side) {
+    int i;
+    for(i=0;i<3;i++) {
+        int from=gWorld.gate_cell[i],dir=gWorld.gate_side[i];
+        if(from>=CELLS||dir>=4)return FALSE;
+        if((cell==from&&side==dir)||(cell==cell_neighbor(from,dir)&&side==opposite(dir))) {
+            int key=gWorld.key_cell[i];
+            return key<CELLS && (gWorld.cells[key].flags&CF_ITEM_TAKEN) && (gWorld.myst_flags[key]&MF_WON);
+        }
+    }
+    return TRUE;
+}
+
 const char* gate_name(int gate) {
     switch (gate) {
         case GATE_THORN: return "thorns";

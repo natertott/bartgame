@@ -16,33 +16,16 @@
 #include "react.h"
 #include "game.h"
 #include "items.h"
+#include "bomb_throw.h"
+#include "legacy_items.h"
+#include "handoff_mobility.h"
 
 static u8 sDoorMsgLatch;
 static u8 sLampFx;
 
-static void use_bomb(void) {
-    Actor* a = gPlayer;
-    if (gPl.bombs == 0 || bombs_live() >= 2)
-        return;
-    int px = PX(a->x), py = PX(a->y);
-    switch (a->facing) {
-        case FACE_N: py -= 18; break;
-        case FACE_S: py += 14; break;
-        case FACE_E: px += 16; break;
-        default: px -= 16; break;
-    }
-    /* never inside a wall: fall back to the feet */
-    if (room_solid_px(px, py - 4))
-        px = PX(a->x), py = PX(a->y);
-    gPl.bombs--;
-    bomb_place(px, py);
-    gPl.item_cooldown = 12;
-    player_item_pose(EQ_BOMBS);
-}
-
 static void use_bow(void) {
     if (player_shoot()) {
-        gPl.item_cooldown = 16;
+        gPl.item_cooldown = legacy_item_owned(LI_ARROW_BUTTERFLY)?8:16;
         player_item_pose(EQ_BOW);
     } else
         sfx_play(SFX_BUMP);
@@ -72,10 +55,13 @@ static void use_lamp(void) {
    The sword is the player's (player.c); the rest is here. */
 void items_update(void) {
     Actor* a = gPlayer;
-    if (a->state == PS_NORMAL && !gPl.item_cooldown) {
-        if (gKeysDown & player_equip_keys(EQ_BOMBS))
-            use_bomb();
-        else if (gKeysDown & player_equip_keys(EQ_LAMP))
+    if(handoff_mobility_busy()){bomb_charge_cancel();return;}
+    if(legacy_player_status(LPS_FREEZE)||legacy_player_status(LPS_SHOCK)||legacy_player_status(LPS_CAPTURE)) {
+        bomb_charge_cancel();return;
+    }
+    bomb_charge_update();
+    if (a->state == PS_NORMAL && !gPl.item_cooldown && !gBombChargeKey) {
+        if (gKeysDown & player_equip_keys(EQ_LAMP))
             use_lamp();
         else if (gKeysDown & player_equip_keys(EQ_CLOAK)) {
             player_cloak_jump();
@@ -126,4 +112,5 @@ void items_update(void) {
 }
 
 void items_draw(void) {
+    bomb_charge_draw(FALSE);
 }

@@ -1,0 +1,39 @@
+# Traversal annex
+
+The Challenge desk's appended Traversal Court supplies three real movement
+systems without changing any existing Drain/Forest/Cream room artwork.
+`handoff_events.c` exclusively dispatches its build, interaction, movement,
+collision, update and draw hooks, avoiding duplicate simulation. Player floor
+and priority hooks apply only while this court is active.
+
+- A brass minecart follows four connected rail segments using fixed-point
+  motion. A boards it; A again requests dismount at the next round station.
+  Both station exits are dry. Riding consumes ordinary player movement and
+  item input; dismount restores walking and a valid safe-ground history.
+- R on the western arrow shelf launches an original silk parachute. Left/right
+  steers within the landing shelf, up slows descent, down speeds it and A folds
+  it for a faster drop. The height, steering bounds, lower landing and control
+  restoration are mechanical state, not a sprite-only imitation of falling.
+- A slatted bridge has two collision planes at the same screen coordinates.
+  The end ramps enter the upper deck, whose side rails prevent lateral leaks.
+  The middle bank remains a distinct walkable lower underpass. Raised feet
+  suppress the underlying water hazard; upper Bloom uses OBJ priority1 so the
+  BG1 deck stays behind Bloom and priority0 HUD/dialogue stays readable.
+
+Red kinstone fusion also inserts a physical bridge to the optional island's
+100-gilt cache. Its claimed bit persists in the existing per-run annex
+completion array; rebuilding the court cannot farm the prize. Ordinary paths
+and the permanent southern exit remain available without fusion.
+
+`art/handoff_mobility.py` appends17 native16×16 metatiles and10 original32×32
+OBJ frames. All use unchanged existing `lh_earth`, `lh_element` and gear banks.
+Horizontal material clusters, sparse upper-left metal highlights, open bridge
+slats and a pale recognizable parachute preserve the common art direction.
+The old Bloom sprite supplies the rider and hanging body; it is not repainted.
+
+`tools/handoff_mobility_host.py` compiles the actual C movement/course module
+with explicit host input/room fixtures. It passes1,511 checks for both bridge
+planes, priority, hazard masks, cardinals and safe cart stops, all descent
+controls/bounds, once-only fusion rewards, and inert hooks outside the new
+court. This qualifies movement/state logic. Native emulator input, visual and
+performance qualification remains a separate integration check.
