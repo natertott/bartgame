@@ -16,6 +16,7 @@
 #include "video.h"
 #include "util.h"
 #include "world_tokens.h"
+#include "regional_content.h"
 
 CreamProgress gCreamProgress;
 u8 gCreamNode;
@@ -79,9 +80,12 @@ void cream_runtime_enter(void) {
         CreamTerraceSpots* p=spots(node);
         if((p->content&CC_CONTENT_ENEMIES)&&gGame.cell!=cream_cell(gCreamWorld.goal_node)&&!bit_get(gCreamProgress.cleared,node)) {
             for(i=0;i<p->spawn_count;i++) {
+                Spot point=p->spawns[i];
+                if(!regional_content_spawn_point(t,i,&point))continue;
+                p->spawns[i]=point;
                 int type=handoff_pick_enemy(gCreamWorld.stage[node],gCreamWorld.corruption[gGame.cell],hash32(gCreamProgress.seed,node*13+i));
                 if(type<0||type>=EN_COUNT||!legacy_enemy_can_spawn(type))type=EN_PROTO_ROPE;
-                Actor* e=enemy_spawn(type,p->spawns[i].x*16+8,p->spawns[i].y*16+14);
+                Actor* e=enemy_spawn(type,point.x*16+8,point.y*16+14);
                 if(e){sHadEnemies[t]=1;sEnemyTerrace[e-gActors]=t;}
             }
         }

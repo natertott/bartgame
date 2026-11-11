@@ -280,6 +280,7 @@ int actor_dist2(const Actor* a, const Actor* b) {
 
 /* ------------------------------------------------------------ sprites -- */
 static u16 sNextTile;
+u16 gSpriteAllocFailures EWRAM_BSS;
 static u16 sSheetTile[SHEET_COUNT];
 
 /* single frames resident on their own, for a sheet whose frames are
@@ -291,6 +292,7 @@ static u8 sFrameCount;
 void sprites_reset(void) {
     int i;
     sNextTile = OBJ_TILE_FIRST_FREE;
+    gSpriteAllocFailures=0;
     for (i = 0; i < SHEET_COUNT; i++)
         sSheetTile[i] = 0xFFFF;
     sFrameCount = 0;
@@ -305,8 +307,10 @@ u16 sprite_load_frame(int sheet, int frame) {
     for (i = 0; i < sFrameCount; i++)
         if (sFrameCache[i].sheet == sheet && sFrameCache[i].frame == frame)
             return sFrameCache[i].tile;
-    if (sFrameCount == FRAME_CACHE || sNextTile + sh->frame_tiles > OBJ_TILE_SHEETS_END)
+    if (sFrameCount == FRAME_CACHE || sNextTile + sh->frame_tiles > OBJ_TILE_SHEETS_END) {
+        gSpriteAllocFailures++;
         return 0;
+    }
     u16 base = sNextTile;
     sNextTile += (sh->frame_tiles + 1) & ~1;
     dma3_copy32(sh->tiles + frame * sh->frame_tiles * 16, OBJ_TILE(base), sh->frame_tiles * 32);
@@ -320,8 +324,10 @@ u16 sprite_load_frame(int sheet, int frame) {
 /* tiles held for a sprite whose frames stream in one at a time (the
    hub's two keepers): nothing is copied */
 u16 sprite_alloc(int tiles) {
-    if (sNextTile + tiles > OBJ_TILE_SHEETS_END)
+    if (sNextTile + tiles > OBJ_TILE_SHEETS_END) {
+        gSpriteAllocFailures++;
         return 0;
+    }
     u16 base = sNextTile;
     sNextTile += (tiles + 1) & ~1;
     return base;
@@ -331,8 +337,10 @@ u16 sprite_load_sheet(int sheet) {
     if (sSheetTile[sheet] != 0xFFFF)
         return sSheetTile[sheet];
     const SpriteSheet* sh = &sheets[sheet];
-    if (sNextTile + sh->tile_count > OBJ_TILE_SHEETS_END)
+    if (sNextTile + sh->tile_count > OBJ_TILE_SHEETS_END) {
+        gSpriteAllocFailures++;
         return 0;
+    }
     u16 base = sNextTile;
     sNextTile += (sh->tile_count + 1) & ~1;
     dma3_copy32(sh->tiles, OBJ_TILE(base), sh->tile_count * 32);

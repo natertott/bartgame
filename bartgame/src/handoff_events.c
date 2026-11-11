@@ -19,6 +19,7 @@
 #include "cream_room.h"
 #include "journal.h"
 #include "save.h"
+#include "myst.h"
 #include "regional_content.h"
 #include "cream_runtime.h"
 
@@ -49,10 +50,10 @@ static struct {
    outdoor floors, trees and mandatory routes belong to their normal generator. */
 static struct {
     RegionalContentPlan plan;
-    u8 active,quest_ready,board,point_count,wave_site,cadence,goal_spawned;
-    u8 component[96];
+    u8 active,quest_ready,board,point_count,wave_site,cadence,goal_spawned,door_latch,door_frame,door_sheet,door_pal,door_base,scav_dir;
+    u8 component[96],scav_path[768];
     u8 owned[ACTOR_MAX];
-    u16 queue[768],pause,tile;
+    u16 queue[768],pause,tile,door_tile,icons[32];
     Spot points[12],giver,receiver;
     RegionalContentRect board_rect;
 } r __attribute__((section(".ewram_bss.regional_events")));
@@ -68,6 +69,7 @@ static void regional_tool(int kind,int x0,int y0,int x1,int y1);
 static void regional_tile(int tx,int ty);
 static bool8 regional_scene(void);
 static bool8 decode_site(int site,RegionalContentPlan* out);
+static bool8 regional_door_solid(int x0,int y0,int x1,int y1);
 static void materialize_goal(void);
 static void refresh_rank(void){u32 score=gHandoffState.score;gHandoffState.rank=score>=2000?4:score>=800?3:score>=250?2:score>=50?1:0;}
 static const s8 sDX[4]={0,1,0,-1},sDY[4]={-1,0,1,0};
@@ -115,13 +117,13 @@ static bool8 eligible(int item){
  if(item==LI_LIGHT_ARROW||item==LI_ARROW_BUTTERFLY)return legacy_item_owned(LI_BOW);
  if(item==LI_MAGIC_BOOMERANG)return legacy_item_owned(LI_BOOMERANG);
  if(item==LI_BLUE_SWORD)return legacy_item_owned(LI_RED_SWORD);
+ if(item==LI_FOURSWORD)return legacy_item_owned(LI_BLUE_SWORD);
  if(item==LI_SKILL_DOWN_THRUST)return legacy_item_owned(LI_ROCS_CAPE);
  if(item==LI_SKILL_GREAT_SPIN||item>=LI_SKILL_FAST_SPIN)return legacy_item_owned(LI_SKILL_SPIN_ATTACK);
  if(item==LI_GREEN_SWORD)return legacy_item_owned(LI_SKILL_SWORD_BEAM)&&!FOOD(HF_BEAM_ANY);
  if(item==LI_DIG_BUTTERFLY)return legacy_item_owned(LI_MOLE_MITTS);
  if(item==LI_SWIM_BUTTERFLY)return legacy_item_owned(LI_FLIPPERS);
- if(item==LI_BOTTLE_BLUE_POTION||item==LI_BOTTLE_RED_POTION||item==LI_BOTTLE_FAIRY||
-    (item>=LI_CHARM_NAYRU&&item<=LI_CHARM_DIN))return bottle_empty();
+ if(item>=LI_BOTTLE_BUTTER&&item<=LI_CHARM_DIN)return bottle_empty();
  return TRUE;
 }
 typedef struct{u16 item;u8 cat,tier,repeat;} Reward;
@@ -129,6 +131,15 @@ static const Reward sRewards[]={
  {LI_RUPEE50,LCAT_REWARD,0,1},
  {LI_HEART_PIECE,LCAT_REWARD,0,1},
  {LI_BOTTLE_BLUE_POTION,LCAT_REWARD,0,1},
+ {LI_BOTTLE_BUTTER,LCAT_REWARD,0,1},
+ {LI_BOTTLE_MILK,LCAT_REWARD,0,1},
+ {LI_BOTTLE_MINERAL_WATER,LCAT_REWARD,0,1},
+ {LI_BOTTLE_PICOLYTE_RED,LCAT_REWARD|LCAT_CHARM,0,1},
+ {LI_BOTTLE_PICOLYTE_ORANGE,LCAT_REWARD|LCAT_CHARM,0,1},
+ {LI_BOTTLE_PICOLYTE_YELLOW,LCAT_REWARD|LCAT_CHARM,0,1},
+ {LI_BOTTLE_PICOLYTE_GREEN,LCAT_REWARD|LCAT_CHARM,0,1},
+ {LI_BOTTLE_PICOLYTE_BLUE,LCAT_REWARD|LCAT_CHARM,0,1},
+ {LI_BOTTLE_PICOLYTE_WHITE,LCAT_REWARD|LCAT_CHARM,0,1},
  {LI_BOTTLE1,LCAT_REWARD,0,1},
  {LI_RUPEE100,LCAT_REWARD,1,1},
  {LI_BOTTLE_RED_POTION,LCAT_REWARD,1,1},
@@ -146,6 +157,7 @@ static const Reward sRewards[]={
  {LI_FIRE_ROD,LCAT_WEAPON,1,0},
  {LI_RED_SWORD,LCAT_WEAPON,1,0},
  {LI_BLUE_SWORD,LCAT_WEAPON,2,0},
+ {LI_FOURSWORD,LCAT_WEAPON|LCAT_KEY,2,0},
  {LI_QST_LONLON_KEY,LCAT_KEY,1,0},
  {LI_QST_GRAVEYARD_KEY,LCAT_KEY,1,0},
  {HANDOFF_GOLD_FLOW,LCAT_KEY,1,0},
@@ -400,7 +412,7 @@ bool8 handoff_board_push(int d){
 }
 bool8 handoff_box_solid(int x0,int y0,int x1,int y1){
  const HandoffPuzzle* p;int tx,ty,i;
- if(gGame.area!=AREA_HANDOFF){if(handoff_objects_box_solid(x0,y0,x1,y1)||handoff_mobility_box_solid(x0,y0,x1,y1))return TRUE;if(!regional_quest_local()||!r.board)return FALSE;}
+ if(gGame.area!=AREA_HANDOFF){if(regional_door_solid(x0,y0,x1,y1)||handoff_objects_box_solid(x0,y0,x1,y1)||handoff_mobility_box_solid(x0,y0,x1,y1))return TRUE;if(!regional_quest_local()||!r.board)return FALSE;}
  if(s.kind==HS_TRAVERSAL)return handoff_mobility_box_solid(x0,y0,x1,y1);
  if(s.kind==HS_OBJECT_COURSE)return handoff_objects_box_solid(x0,y0,x1,y1);
  if(!board_kind())return FALSE;
@@ -422,7 +434,7 @@ static void finish(void){
  if(finished())return;
  HSET(gHandoffState.completed,s.site);HSET(gHandoffState.won,s.site);
  s.phase=9;s.prize=1;room_change_overlay(NODE_X,NODE_Y,MT_MYST_CHEST);sfx_play(SFX_SECRET);fx_spawn(FX_SPARK,sx(NODE_X),sy(NODE_Y));
- handoff_notify(s.kind==HS_WAVES||s.kind==HS_ARENA?HN_WAVE:s.kind==HS_BOSS?HN_BOSS:HN_EVENT,AREA_HANDOFF,s.site,0);
+ handoff_notify(s.kind==HS_WAVES||s.kind==HS_ARENA?HN_WAVE:(s.kind==HS_BOSS||(s.kind==HS_MINIBOSS&&gHandoffState.contract_kind==HC_BOSS&&gHandoffState.contract_target==s.site))?HN_BOSS:HN_EVENT,AREA_HANDOFF,s.site,0);
 }
 static void claim(void){
  int item;if(!s.prize||!HBIT(gHandoffState.won,s.site))return;
@@ -444,16 +456,16 @@ static const WaveShape sShapes[]={
  {6,8,2,100,0,{LE_ROLE_RANGED,LE_ROLE_SLOW},{40,60}},
  {8,7,1,25,6,{LE_ROLE_HEAVY},{100}}
 };
-static void cast_wave(void){
+static void cast_wave_at(int difficulty){
  int i,j,total=0,roll,shape=0,budget=20;
- for(i=0;i<ARRAY_COUNT(sShapes);i++)if(sShapes[i].min_diff<=gHandoffState.difficulty)total+=sShapes[i].weight;
+ for(i=0;i<ARRAY_COUNT(sShapes);i++)if(sShapes[i].min_diff<=difficulty)total+=sShapes[i].weight;
  roll=rng_range(&s.rng,total);
- for(i=0;i<ARRAY_COUNT(sShapes);i++)if(sShapes[i].min_diff<=gHandoffState.difficulty){if(roll<sShapes[i].weight){shape=i;break;}roll-=sShapes[i].weight;}
+ for(i=0;i<ARRAY_COUNT(sShapes);i++)if(sShapes[i].min_diff<=difficulty){if(roll<sShapes[i].weight){shape=i;break;}roll-=sShapes[i].weight;}
  s.theme=shape;s.cast_count=0;s.flavor=rng_range(&s.rng,4)==0?1+rng_range(&s.rng,5):0;
  for(i=0;i<sShapes[shape].slots;i++){
   int type=-1;
   for(j=0;j<48;j++){
-   int n=sShapes[shape].force?legacy_enemy_pick(sShapes[shape].force,rng_next(&s.rng)):handoff_pick_enemy(gHandoffState.difficulty,sShapes[shape].role[i],rng_next(&s.rng));
+   int n=sShapes[shape].force?legacy_enemy_pick(sShapes[shape].force,rng_next(&s.rng)):handoff_pick_enemy(difficulty,sShapes[shape].role[i],rng_next(&s.rng));
    const LegacyEnemyDef*d=legacy_enemy_def(n);int k;
    if(!d||d->cost>budget||!legacy_enemy_can_spawn(n))continue;
    for(k=0;k<s.cast_count;k++)if(s.cast[k]==n)break;
@@ -463,8 +475,9 @@ static void cast_wave(void){
   }
   if(type>=0){s.cast[s.cast_count]=type;s.shares[s.cast_count]=sShapes[shape].share[i];s.cast_count++;}
  }
- if(!s.cast_count){s.cast[0]=handoff_pick_enemy(gHandoffState.difficulty,0,rng_next(&s.rng));s.shares[0]=100;s.cast_count=1;}
+ if(!s.cast_count){s.cast[0]=handoff_pick_enemy(difficulty,0,rng_next(&s.rng));s.shares[0]=100;s.cast_count=1;}
 }
+static void cast_wave(void){cast_wave_at(gHandoffState.difficulty);}
 static int wave_pick(void){
  int i,total=0,r;for(i=0;i<s.cast_count;i++)total+=s.shares[i];if(!total)return handoff_pick_enemy(gHandoffState.difficulty,0,rng_next(&s.rng));
  r=rng_range(&s.rng,total);for(i=0;i<s.cast_count;i++){if(r<s.shares[i])return s.cast[i];r-=s.shares[i];}return s.cast[0];
@@ -484,6 +497,12 @@ static bool8 spawn_one(int forced){
   if(enemy_spawn(chosen,px,py)){fx_spawn(FX_PUFF,px,py-8);return TRUE;}
  }
  return FALSE;
+}
+static int chamber_boss_type(void){
+ static const u8 bosses[]={LE_GIANT_CHUCHU_GREEN,LE_GIANT_CHUCHU_ELECTRIC,LE_BIG_OCTOROK};
+ int first=hash32(s.seed,s.site)%3;
+ for(int i=0;i<3;i++){int type=bosses[(first+i)%3];if(legacy_enemy_can_spawn(type))return type;}
+ return bosses[first];
 }
 static void refill(int target){int i;for(i=enemies_alive();i<target&&i<7;i++)if(!spawn_one(-1))break;}
 static void wave_begin(void){
@@ -541,7 +560,7 @@ static void quest_start(int kind){
 enum { HM_NONE,HM_DRAFT,HM_INN,HM_SHOP,HM_FUSE,HM_TROPHY,HM_HINT,HM_CHALLENGE,HM_CONTRACT,HM_DIFFICULTY };
 static struct{u16 display,bg3,blend,alpha,brightness; s16 x,y;u8 active,cursor,top,repeat,old_anim;} m __attribute__((section(".ewram_bss.handoff_menu")));
 static int menu_count(void){return m.active==HM_DRAFT?3:m.active==HM_INN?3:m.active==HM_SHOP?6:m.active==HM_FUSE?5:m.active==HM_TROPHY?3:m.active==HM_CHALLENGE?HS_COUNT+2:m.active==HM_CONTRACT?3:m.active==HM_DIFFICULTY?13:1;}
-static const char* menu_title(void){return m.active==HM_DRAFT?"Three Gifts / choose one":m.active==HM_INN?"The Three Beds":m.active==HM_SHOP?"Peddler Exchange":m.active==HM_FUSE?"Kinstone Fusions":m.active==HM_TROPHY?"Trophy & Entitlements":m.active==HM_HINT?"A Quiet Hint":m.active==HM_CHALLENGE?"Optional Challenges":m.active==HM_DIFFICULTY?"Difficulty 0 to 12":"Four-step Contract";}
+static const char* menu_title(void){return m.active==HM_DRAFT?"Three Gifts / choose one":m.active==HM_INN?"The Three Beds":m.active==HM_SHOP?"Peddler Exchange":m.active==HM_FUSE?"Shaped Stone Broker":m.active==HM_TROPHY?"Trophy & Entitlements":m.active==HM_HINT?"A Quiet Hint":m.active==HM_CHALLENGE?"Optional Challenges":m.active==HM_DIFFICULTY?"Difficulty 0 to 12":"Four-step Contract";}
 static void menu_close(void){
  gAnimTiles=m.old_anim;bg0_clear();gBg3Dirty=0;REG_BG3CNT=m.bg3;gBgScroll[3][0]=m.x;gBgScroll[3][1]=m.y;
  room_render();video_show(m.display);REG_BLDCNT=m.blend;REG_BLDALPHA=m.alpha;REG_BLDY=m.brightness;m.active=0;gKeysDown=0;
@@ -559,13 +578,21 @@ static bool8 event_completable(int kind){
  if(kind==HS_TORCHES)return legacy_item_owned(LI_LANTERN_OFF)||legacy_item_owned(LI_FIRE_ROD);
  if(kind==HS_CLEANUP)return legacy_item_owned(LI_LANTERN_OFF)||legacy_item_owned(LI_FIRE_ROD)||legacy_item_owned(LI_GUST_JAR);
  if(kind==HS_NPC)return gPl.gilt>=10;
- if(kind==HS_BOSS)return legacy_enemy_can_spawn(LE_GIANT_CHUCHU_GREEN)&&legacy_enemy_can_spawn(LE_BIG_OCTOROK);
- return kind!=HS_MEMORY_SHOW&&kind!=HS_MEMORY_INPUT&&kind!=HS_GOLD_GATE&&kind!=HS_OBJECT_COURSE&&kind!=HS_TRAVERSAL&&kind!=HS_WAVES&&kind!=HS_ARENA;
+ if(kind==HS_MEMORY_INPUT)return gHandoffState.memory_known!=0;
+ if(kind==HS_GOLD_GATE)return (gHandoffState.gold_owned&15)==15;
+ if(kind==HS_BOSS)return TRUE; /* all three original boss adaptations have ordinary-weapon fallbacks */
+ return kind!=HS_MEMORY_SHOW&&kind!=HS_WAVES&&kind!=HS_ARENA;
+}
+static bool8 regional_trials_ready(void){
+ if((gCreamProgress.rewards&7)==7)return TRUE;
+ for(int i=0;i<3;i++){int cell=gWorld.key_cell[i];if(cell>=25||!(gWorld.cells[cell].flags&CF_ITEM_TAKEN)||!(gWorld.myst_flags[cell]&MF_WON))return FALSE;}
+ return TRUE;
 }
 static void contract_next(void){
  int step=gHandoffState.contract_step,region,cell,chosen=255,count=0,kind=HC_EVENT;
  RegionalContentPlan target;u32 roll=hash32(gGame.seed,0xC4A100u+step);
  gHandoffState.contract_state=1;
+ if(step==3&&!regional_trials_ready()){gHandoffState.contract_state=0;gHandoffState.contract_kind=HC_BOSS;gHandoffState.contract_target=0;return;}
  if(step>=4){gHandoffState.contract_kind=HC_ITEM;gHandoffState.contract_item=LI_EARTH_ELEMENT;materialize_goal();return;}
  /* Each next objective is dealt against live traversal facts. The item step
     is a guaranteed cache in a reachable field, never a lucky reward draw. */
@@ -576,19 +603,22 @@ static void contract_next(void){
   for(region=0;region<2;region++)for(cell=0;cell<25;cell++){
    RegionalContentPlan p;int site=255;
    if(!regional_content_get(region?AREA_CREAM:AREA_FOREST,cell,&p)||!regional_content_reachable(p.area,p.cell))continue;
-   if(kind==HC_ITEM){RegionalContentDiscovery d;regional_content_marks(p.area,p.cell,&d);if(p.interior_site!=RC_NONE&&d.cache.x&&d.cache.y)site=p.field_site;}
+   if(kind==HC_ITEM){RegionalContentDiscovery d;regional_content_marks(p.area,p.cell,&d);if(p.interior_site!=RC_NONE&&p.fusion_color==RC_NONE&&d.cache.x&&d.cache.y)site=p.field_site;}
    else if(kind==HC_QUEST){HandoffQuest*q=&gHandoffState.quest;if(p.quest_kind&&(q->state==1||q->state==2)&&q->origin_area==p.area&&q->origin_cell==p.cell&&!HBIT(gHandoffState.completed,p.field_site))site=p.field_site;}
    else if(kind==HC_WAVE){if(p.has_wave)site=p.field_site;}
-   else if(p.interior_site!=RC_NONE&&regional_content_door_open(p.area,p.cell)&&event_completable(p.event_kind)&&!HBIT(gHandoffState.completed,p.interior_site)){
-    if(kind==HC_BOSS?p.event_kind==HS_BOSS:p.event_kind!=HS_BOSS)site=p.interior_site;
+   else if(p.interior_site!=RC_NONE&&regional_content_door_open(p.area,p.cell)&&event_completable(p.event_kind)&&(p.event_kind!=HS_OBJECT_COURSE||handoff_objects_can_solve(p.mechanism_variant))&&(!HBIT(gHandoffState.completed,p.interior_site)||(kind==HC_BOSS&&pass>0))){
+    if(kind==HC_BOSS?(p.event_kind==HS_BOSS||(p.event_kind==HS_MINIBOSS&&p.stage>=2)):p.event_kind!=HS_BOSS)site=p.interior_site;
    }
    if(site!=255&&hash32(roll,site)%(++count)==0){chosen=site;target=p;}
   }
   /* A depleted event pool or unavailable side quest becomes the next regional
      wave; a fresh physical item cache is the final bounded fallback. */
-  if(chosen==255){kind=pass?HC_ITEM:HC_WAVE;count=0;}
+  if(chosen==255){if(step<3)kind=pass?HC_ITEM:HC_WAVE;count=0;}
  }
- if(chosen==255){gHandoffState.contract_state=0;gHandoffState.contract_target=0;return;}
+ if(chosen==255){gHandoffState.contract_state=0;gHandoffState.contract_kind=step==3?HC_BOSS:kind;gHandoffState.contract_target=0;return;}
+ if(step==3&&HBIT(gHandoffState.completed,chosen)){
+  gHandoffState.completed[chosen>>3]&=~(1u<<(chosen&7));gHandoffState.won[chosen>>3]&=~(1u<<(chosen&7));
+ }
  gHandoffState.contract_kind=kind;gHandoffState.contract_target=chosen;
  if(kind==HC_ITEM)gHandoffState.contract_item=reward_pick(LCAT_KEY,1,hash32(roll,17));
  (void)target;
@@ -612,6 +642,7 @@ bool8 handoff_chain_location(int* area,int* cell,int* tx,int* ty){
 void handoff_chain_text(char* out,int capacity){
  char text[160],*p=text;int area,cell;const char* action;
  if(capacity<1)return;
+ if(gHandoffState.contract_step==3&&gHandoffState.contract_state==0){const char*message=regional_trials_ready()?"Final seal: explore the regions to reach a guardian's chamber.":"Final seal awaits three earned Forest or Cream trials. Finish their tasks and claim their tools.";for(int i=0;i<capacity-1;i++){out[i]=message[i];if(!message[i])return;}out[capacity-1]=0;return;}
  if(gHandoffState.contract_state==1&&gHandoffState.contract_step==4){const char*message="Final seal: collect the Earth Element at the marked reward.";for(int i=0;i<capacity-1;i++){out[i]=message[i];if(!message[i])return;}out[capacity-1]=0;return;}
  if(!handoff_chain_location(&area,&cell,NULL,NULL)){p=cat(p,gHandoffState.contract_state==2?"Four regional seals complete.":"Explore a region to discover the next seal.");}
  else{
@@ -620,13 +651,21 @@ void handoff_chain_text(char* out,int capacity){
  }
  for(int i=0;i<capacity-1;i++){out[i]=text[i];if(!text[i])return;}out[capacity-1]=0;
 }
+static void regional_hint(char* out,int capacity){
+ char text[240],*p=text;int missing=-1;
+ for(int i=0;i<3;i++){int c=gWorld.key_cell[i];if(c<25&&(!(gWorld.cells[c].flags&CF_ITEM_TAKEN)||!(gWorld.myst_flags[c]&MF_WON))){missing=i;break;}}
+ if(missing>=0){int c=gWorld.key_cell[missing];p=cat(p,"A trial in Forest ");p=num(p,c%5+1);p=cat(p,",");p=num(p,c/5+1);p=cat(p,missing==0?" holds the seeds for cracked stone.":missing==1?" holds the flame for silk and brush.":" holds the cape for the broken path.");cat(p," Its chamber must be won and its gift claimed.");}
+ else if((gCreamProgress.rewards&7)!=7){int i=0;while(i<3&&(gCreamProgress.rewards&(1<<i)))i++;int n=gCreamWorld.reward_node[MIN(i,2)],c=cream_cell(n);p=cat(p,"Climb and explore Cream ");p=num(p,c%5+1);p=cat(p,",");p=num(p,c/5+1);cat(p,". A local trial offers another ascent tool. Ledges drop; climbing marks lead upward.");}
+ else{handoff_chain_text(text,sizeof(text));}
+ for(int i=0;i<capacity-1;i++){out[i]=text[i];if(!text[i])return;}if(capacity>0)out[capacity-1]=0;
+}
 static void menu_row(int index,char* out){
  char* p=out;out[0]=0;
  switch(m.active){
  case HM_DRAFT:p=cat(p,item_name(gHandoffState.draft[index]));break;
  case HM_INN:p=cat(p,index==0?"Plain bed / 50 gilt":index==1?"Soft bed + common / 200 gilt":"Canopy bed + uncommon / 500 gilt");break;
  case HM_SHOP:{int cost=gHandoffState.prices[index]+(index==0?25*gHandoffState.heart_purchases:0);p=cat(p,gHandoffState.shop_bought&(1<<index)?"SOLD":item_name(gHandoffState.stock[index]));p=cat(p," / ");p=num(p,handoff_shop_price(MIN(999,cost)));break;}
- case HM_FUSE:{static const char*const names[]={"Green wandering fuser","Blue wandering fuser","Red wandering fuser","Flow golden gate","Three golden statues"};p=cat(p,names[index]);break;}
+ case HM_FUSE:{static const char*const names[]={"Locate green fuser","Locate blue fuser","Locate red fuser","Locate Flow gold seal","Locate three gold statues"};p=cat(p,names[index]);break;}
  case HM_TROPHY:p=cat(p,index==0?"View rank and record":index==1?"Toggle optional entitlement challenge":"Choose run difficulty");break;
  case HM_CHALLENGE:p=cat(p,index+1<HS_COUNT?sSiteNames[index+1]:index==HS_COUNT-1?"Moving Crossing Workshop":index==HS_COUNT?"Secrets & Weather Workshop":"Tool Targets Workshop");break;
  case HM_DIFFICULTY:p=cat(p,"Difficulty ");p=num(p,index);p=cat(p,index==gHandoffState.difficulty?" / current":"");break;
@@ -639,11 +678,11 @@ static const char* menu_note(void){
  if(m.active==HM_DRAFT){const LegacyItemDef*d=legacy_item_def(gHandoffState.draft[m.cursor]);return d?d->description:"A golden half opens an optional fusion gate.";}
  if(m.active==HM_INN)return m.cursor==0?"Restore 25% max health; at least one heart.":m.cursor==1?"Restore 50%; at least two hearts. Common chest.":"Restore all health. Uncommon chest; never rare.";
  if(m.active==HM_SHOP){const LegacyItemDef*d=legacy_item_def(gHandoffState.stock[m.cursor]);return d?d->description:"A practical supply.";}
- if(m.active==HM_FUSE)return "Match a colored shaped half; gold opens its own gate. No main trial is replaced.";
+ if(m.active==HM_FUSE)return "The broker points to real fusers and seals. Meet them in the regions to join your halves.";
  if(m.active==HM_CHALLENGE)return "Optional annex rooms preserve every existing Forest trial. Exit south whenever safe.";
  if(m.active==HM_HINT)return "Paths tell one story. Lanterns can tell another. A keyhole, cracked rock, web or gap each asks for its tool.";
  if(m.active==HM_CONTRACT)return "Four adaptive steps: event, waves/quest, key item, boss. Current regions and boss wins are unchanged.";
- if(m.active==HM_DIFFICULTY)return "Higher difficulty changes optional wave tiers and announced quest stakes. Zero is a gentle first run.";
+ if(m.active==HM_DIFFICULTY)return "Higher difficulty changes regional wave odds and announced quest stakes. Zero is a gentle first run.";
  return "Ranks unlock optional challenge access, never remove tools or access from the existing game.";
 }
 static void menu_paint(void){
@@ -695,6 +734,16 @@ static void fuse(int index){
  else{if((gHandoffState.gold_owned&14)!=14){say("Three statue halves are needed: left, middle and right.");return;}gHandoffState.gold_fused|=14;say("Three golden statues awaken. Their final cache opens.");}
  sfx_play(SFX_SECRET);
 }
+static void fusion_hint(int index){
+ RegionalContentPlan p;char message[180],*out=message;bool8 found;
+ if(index<3)found=regional_content_fusion(index,&p);
+ else found=regional_content_find(HS_GOLD_GATE,-1,FALSE,&p);
+ if(!found){say("No stone voice answers yet. Explore a region and return.");return;}
+ out=cat(out,index==0?"The green fuser waits in ":index==1?"The blue fuser waits in ":index==2?"The red fuser waits in ":index==3?"Bring the Flow gold half to the sealed chamber in ":"Bring left, middle and right gold halves to the statues in ");
+ out=cat(out,p.area==AREA_FOREST?"Forest ":"Cream ");out=num(out,p.cell%5+1);out=cat(out,",");out=num(out,p.cell/5+1);out=cat(out,".");
+ if(index<3){out=cat(out," Its cut is ");out=cat(out,gHandoffState.fuser_shape[index]==0?"upper-right.":gHandoffState.fuser_shape[index]==1?"left.":"lower-right.");}
+ say(message);
+}
 void handoff_menu_update(void){
  u16 move=gKeysDown&(KEY_UP|KEY_DOWN);bool8 dirty=FALSE;
  if(!m.active)return;
@@ -715,7 +764,7 @@ void handoff_menu_update(void){
    if(gHandoffState.shop_bought&(1<<choice)){say("That item has sold.");return;}if(gPl.gilt<price){say("Not enough gilt.");return;}
    if(choice>2&&!eligible(gHandoffState.stock[choice])){say("You already own that gift, or need its prerequisite. No gilt taken.");return;}
    gPl.gilt-=price;give(gHandoffState.stock[choice]);if(choice==0)gHandoffState.heart_purchases++;else if(choice>2)gHandoffState.shop_bought|=1<<choice;return;}
-  case HM_FUSE:fuse(choice);return;
+  case HM_FUSE:fusion_hint(choice);return;
   case HM_TROPHY:
    if(choice==1){gHandoffState.entitlement_mode^=1;gHandoffState.difficulty=MIN(gHandoffState.difficulty,handoff_difficulty_cap());save_write();say(gHandoffState.entitlement_mode?"Optional entitlement challenges enabled. Existing world features remain available.":"Optional entitlement challenges disabled.");}
    else if(choice==2)menu_open(HM_DIFFICULTY);
@@ -730,9 +779,9 @@ void handoff_menu_update(void){
    s.request=choice+1;return;
   case HM_CONTRACT:
    if(choice==2){gHandoffState.contract_state=0;say("The seals are set aside. The Heart and summit routes remain open.");return;}
-   if(!gHandoffState.contract_state){gHandoffState.contract_step=0;contract_next();}
+   if(!gHandoffState.contract_state){if(gHandoffState.contract_step!=3)gHandoffState.contract_step=0;contract_next();}
    {char msg[160];handoff_chain_text(msg,sizeof(msg));say(msg);}return;
-  default:say("Paths tell one story. Lanterns tell another. Follow gilt lamps to a feature, or search the unmarked corners.");return;
+  default:{char message[240];regional_hint(message,sizeof(message));say(message);}return;
   }
  }
  if(dirty){menu_paint();sfx_play(SFX_MENU);}
@@ -828,14 +877,17 @@ void handoff_enter(void){
  case HS_FAIRY:legacy_item_spawn(LI_FAIRY,sx(14),sy(11));legacy_item_spawn(LI_FAIRY,sx(18),sy(11));break;
  case HS_WAVES:case HS_ARENA:case HS_SURVIVE:wave_begin();s.timer=s.kind==HS_SURVIVE?1200:0;break;
  case HS_MINIBOSS:s.phase=spawn_one(LE_DARK_NUT_0)?1:0;break;
- case HS_BOSS:s.phase=spawn_one((s.seed&1)?LE_GIANT_CHUCHU_GREEN:LE_BIG_OCTOROK)?1:0;break;
+ case HS_BOSS:s.phase=spawn_one(chamber_boss_type())?1:0;break;
  case HS_MEMORY_INPUT:
   if(!gHandoffState.memory_known)say("Four plates answer a memory from the paired Learn chamber. Visit it, then return. South remains open.");
   break;
  case HS_QUEST_POT:case HS_QUEST_HUNT:case HS_QUEST_SCAV:case HS_QUEST_STEALTH:case HS_QUEST_CARRY:case HS_QUEST_COURIER:case HS_QUEST_BLOCKS:
   if(gHandoffState.quest.state==2&&gHandoffState.quest.kind==HQ_COURIER&&s.kind==HS_QUEST_COURIER)break;
   quest_start(s.kind-HS_QUEST_POT+HQ_POT);break;
- case HS_PORTAL:say("The violet arch leads to a sealed pocket. Solve its trial; an escape tool will be supplied before entry if needed.");break;
+ case HS_PORTAL:
+  if(s.site>=RC_INTERIOR_BASE&&s.site<128){wave_begin();s.phase=1;say("Three waves sleep around this arch. Clear them to wake the paired pocket entrance.");}
+  else say("The violet arch leads to a sealed pocket. An escape tool is supplied before entry if needed.");
+  break;
  case HS_POCKET:
   if(!legacy_item_owned(LI_OCARINA)&&!legacy_item_owned(LI_ROCS_CAPE))give(LI_ROCS_CAPE);
   wave_begin();s.phase=1;break;
@@ -871,9 +923,9 @@ static void materialize_goal(void){
  int x,y;u8* spawned;
  if(gGame.state!=GS_PLAY||gHandoffState.contract_state!=1||gHandoffState.contract_step!=4||gHandoffState.contract_item!=LI_EARTH_ELEMENT)return;
  if(gGame.area==AREA_HANDOFF&&s.site==gHandoffState.contract_target){x=sx(NODE_X);y=sy(NODE_Y);spawned=&s.goal_spawned;}
- else if(r.active&&r.plan.field_site==gHandoffState.contract_target){x=sx(gRegionalSpots.cache.x);y=sy(gRegionalSpots.cache.y);spawned=&r.goal_spawned;}
+ else if(regional_scene()&&r.plan.field_site==gHandoffState.contract_target){x=sx(gRegionalSpots.cache.x);y=sy(gRegionalSpots.cache.y);spawned=&r.goal_spawned;}
  else return;
- if(!*spawned&&legacy_item_spawn(LI_EARTH_ELEMENT,x,y)){*spawned=1;sfx_play(SFX_SECRET);}
+ if(!*spawned&&legacy_item_spawn(LI_EARTH_ELEMENT,x,y)){*spawned=1;if(gGame.area==AREA_HANDOFF){s.prize=0;room_change_overlay(NODE_X,NODE_Y,MT_MYST_CHEST_OPEN);}sfx_play(SFX_SECRET);}
 }
 void handoff_notify(int kind,int area,int cell,int item){
  int match=0,site=255,c=gHandoffState.contract_kind;
@@ -954,7 +1006,7 @@ bool8 handoff_cargo_land(Actor*a){
  HandoffQuest*q=&gHandoffState.quest;int x,y;
  if(!a||a->v[5]!=CARGO_MAGIC)return FALSE;
  x=PX(a->x);y=PX(a->y);q->cargo_flying=0;q->cargo_ground=1;
- if(room_type_px(x,y)!=TT_FLOOR){x=!inside_hand()&&r.active?sx(r.giver.x):sx(8);y=!inside_hand()&&r.active?sy(r.giver.y):sy(17);}
+ if(room_type_px(x,y)!=TT_FLOOR){x=!inside_hand()&&regional_scene()?sx(r.giver.x):sx(8);y=!inside_hand()&&regional_scene()?sy(r.giver.y):sy(17);}
  q->cargo_x=x;q->cargo_y=y;actor_free(a);return TRUE;
 }
 static void draw_prop(int frame,int x,int y,int priority){
@@ -1040,9 +1092,13 @@ bool8 handoff_try_interact(void){
   return TRUE;
  }
  if(s.kind==HS_PORTAL&&near(sx(NODE_X),sy(NODE_Y),28)){
+  if(s.site>=RC_INTERIOR_BASE&&s.site<128&&!finished()){say("The portal sleeps until its three waves are cleared.");return TRUE;}
   if(!legacy_item_owned(LI_OCARINA)&&!legacy_item_owned(LI_ROCS_CAPE))give(LI_ROCS_CAPE);
   finish();
-  if(s.site>=RC_INTERIOR_BASE&&s.site<128){RegionalContentPlan p;if(regional_content_find(HS_POCKET,-1,TRUE,&p))s.request=p.interior_site;else s.exit=1;}
+  if(s.site>=RC_INTERIOR_BASE&&s.site<128){RegionalContentPlan p;int after=-1;bool8 found=FALSE;
+   while(regional_content_find(HS_POCKET,after,TRUE,&p)){if(p.fusion_color!=1){s.request=p.interior_site;found=TRUE;break;}after=regional_content_index(p.area,p.cell);}
+   if(!found)s.exit=1;
+  }
   else s.request=HS_POCKET;
   return TRUE;
  }
@@ -1064,8 +1120,8 @@ bool8 handoff_try_interact(void){
  return FALSE;
 }
 bool8 handoff_pre_player(void){
- if(!inside_hand()&&r.active&&(handoff_mobility_pre_player()||handoff_objects_pre_player()))return TRUE;
- if((!inside_hand()&&!regional_quest_local())||!gPlayer)return FALSE;
+ if(!inside_hand()&&regional_scene()&&(handoff_mobility_pre_player()||handoff_objects_pre_player()))return TRUE;
+ if((!inside_hand()&&(!regional_quest_local()||!r.board||gHandoffState.quest.state!=2))||!gPlayer)return FALSE;
  if(s.sleep_timer){gKeysDown=0;gKeysHeld=0;return TRUE;}
  if(s.kind==HS_TRAVERSAL)return handoff_mobility_pre_player();
  if(s.kind==HS_OBJECT_COURSE)return handoff_objects_pre_player();
@@ -1089,6 +1145,7 @@ void handoff_update(void){
   if(q->state==1&&!textbox_active())q->state=2;
   if(q->state==2&&q->timer&&!--q->timer)quest_fail();
  }
+ if(!gHandoffState.contract_state&&gHandoffState.contract_step==3&&(gFrame&31)==0)contract_next();
  materialize_goal();
  s.clock++;if(s.invulnerable)s.invulnerable--;if(s.picolyte_ticks)s.picolyte_ticks--;
  if(FOOD(HF_CURSE_ROT)&&(gFrame&255)==0&&gPl.hp>2)gPl.hp--;
@@ -1135,9 +1192,9 @@ void handoff_update(void){
  if(s.kind==HS_MEMORY_SHOW||s.kind==HS_MEMORY_INPUT)memory_tick();
  if(s.kind==HS_SWITCHES)switch_tick();
  if((s.kind==HS_CLEANUP||s.kind==HS_TORCHES)&&!s.clean&&!finished())finish();
- if((s.kind==HS_MINIBOSS||s.kind==HS_BOSS)&&!s.phase&&!s.cadence)s.phase=spawn_one(s.kind==HS_MINIBOSS?LE_DARK_NUT_0:(s.seed&1)?LE_GIANT_CHUCHU_GREEN:LE_BIG_OCTOROK)?1:0;
+ if((s.kind==HS_MINIBOSS||s.kind==HS_BOSS)&&!s.phase&&!s.cadence)s.phase=spawn_one(s.kind==HS_MINIBOSS?LE_DARK_NUT_0:chamber_boss_type())?1:0;
  if(s.kind==HS_MINIBOSS&&s.phase==1&&!enemies_alive())finish();
- if(s.kind==HS_WAVES||s.kind==HS_ARENA||s.kind==HS_SURVIVE||s.kind==HS_POCKET){
+ if(s.kind==HS_WAVES||s.kind==HS_ARENA||s.kind==HS_SURVIVE||s.kind==HS_POCKET||(s.kind==HS_PORTAL&&s.site>=RC_INTERIOR_BASE&&s.site<128)){
   if(s.kind==HS_SURVIVE&&s.timer&&!--s.timer)finish();
   if(!s.cadence&&(!finished()||(s.prize&&(s.site<160||s.site>162))||s.kind==HS_ARENA)){
    if(!gHandoffState.remaining[s.site]&&s.kind!=HS_SURVIVE){
@@ -1178,7 +1235,7 @@ void handoff_draw(void){
  }
  if(s.kind==HS_TORCHES)for(i=0;i<3;i++)draw_prop(s.clean&(1u<<i)?HA_TORCH_OFF:HA_TORCH_LIT,sx(8+i*8),sy(10),1);
  if(s.kind==HS_CLEANUP)for(i=0;i<s.quota;i++)if(s.clean&(1u<<i))draw_prop(i<6&&s.theme!=1?HA_WEB:HA_DUST,sx(7+(i%4)*6),sy(7+(i/4)*5),2);
- if(s.kind==HS_PORTAL||s.kind==HS_POCKET)draw_prop(HA_PORTAL,sx(16),sy(s.kind==HS_PORTAL?11:19),1);
+ if(s.kind==HS_PORTAL||s.kind==HS_POCKET)draw_prop(s.kind==HS_PORTAL&&!finished()?HA_GOAL:HA_PORTAL,sx(16),sy(s.kind==HS_PORTAL?11:19),1);
  if(s.kind==HS_GOLD_GATE){draw_prop(HA_GOLD,sx(12),sy(10),1);draw_prop(HA_GOLD,sx(19),sy(10),1);}
  if(s.kind==HS_NPC)draw_prop(HA_FUSER,sx(NODE_X),sy(NODE_Y),1);
  if(s.kind==HS_ITEM&&!finished())draw_prop(HA_TOKEN,sx(NODE_X),sy(NODE_Y),1);

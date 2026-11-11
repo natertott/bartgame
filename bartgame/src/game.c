@@ -139,8 +139,11 @@ static void spawn_cell_objects(void) {
     enemy_load_sheets_for_theme(c->theme);
     objects_room_reset();
     for (i = 0; i < gSpots.spawn_count; i++) {
+        Spot point=gSpots.spawns[i];
+        if(!regional_content_spawn_point(0,i,&point))continue;
+        gSpots.spawns[i]=point;
         int type = enemy_pick_type(c->theme, c->stage, hash32(gWorld.seed, gGame.cell * 31 + i));
-        enemy_spawn(type, gSpots.spawns[i].x * 16 + 8, gSpots.spawns[i].y * 16 + 14);
+        enemy_spawn(type, point.x * 16 + 8, point.y * 16 + 14);
     }
     if (gSpots.has_boss && !(c->flags & CF_CLEARED))
         boss_spawn(gSpots.boss.x * 16 + 16, gSpots.boss.y * 16 + 16);
@@ -473,6 +476,7 @@ static void check_shrine(void) {
 
 /* ------------------------------------------------------------ exits -- */
 static void check_exits(void) {
+    if(gGame.state!=GS_PLAY)return;
     Actor* a = gPlayer;
     int px = PX(a->x), py = PX(a->y);
     if (a->state == PS_FALL || a->state == PS_DEAD || a->state == PS_ITEMGET)
@@ -733,7 +737,7 @@ static void start_run(u32 seed) {
     textbox_open("Enemy prototype lab.|Select: next encounter. B: sword. L: shield. A: bombs. Start: change tools.|Work in progress: charge, burrow, armor, then mixed.");
 #else
     bgm_play(BGM_SEWER);
-    textbox_open("You wake in the drain. The stalk you grew on is your spine now. Up the ladder is the wood.");
+    textbox_open("You wake in the drain. The stalk you grew on is your spine now.|Two ladders rise above the sludge. Left: the wood. Right: the Curdled Cream.");
 #endif
 }
 
@@ -996,6 +1000,7 @@ static void update_play(void) {
     if (gGame.area == AREA_MYST)
         PERF_CALL(PF_ROOM_EVENTS,myst_update());
     handoff_update();
+    if(gGame.state!=GS_PLAY){draw_world();return;}
     PERF_CALL(PF_ROOM_EVENTS,check_chest());
     PERF_CALL(PF_ROOM_EVENTS,check_shrine());
     PERF_CALL(PF_ROOM_EVENTS,check_exits());

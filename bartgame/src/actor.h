@@ -103,6 +103,7 @@ int facing_to_dir(int facing);
 void sprites_reset(void);
 u16 sprite_load_sheet(int sheet);
 u16 sprite_load_frame(int sheet, int frame); /* one frame resident; frame 0 of the result */
+extern u16 gSpriteAllocFailures; /* read-only scene diagnostics; reset with sprites */
 u16 sprite_alloc(int tiles);                 /* tiles held, for frames streamed in */
 void actor_set_sheet(Actor* a, int sheet, u16 tile);
 void actor_visual_size(const Actor* a, int* width, int* height);

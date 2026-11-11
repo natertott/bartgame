@@ -9,6 +9,8 @@ void handoff_objects_build(u32 seed);
    and a reachable reward goal beyond its own mechanism, not a workshop menu. */
 #define HANDOFF_REGIONAL_MECHANISMS 12
 void handoff_objects_build_regional(u32 seed,int pattern);
+bool8 handoff_objects_can_solve(int pattern);
+bool8 handoff_objects_field_can_solve(int variant);
 /* Small optional field objectives use only OBJ art over reserved dry ground. */
 bool8 handoff_objects_build_field(u32 seed,int variant,int x,int y,int w,int h);
 bool8 handoff_objects_build_fusion(u32 seed,int x,int y,int w,int h);

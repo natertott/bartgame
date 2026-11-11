@@ -23,6 +23,8 @@ static u8 sPlanReady,sArea,sCell;
 static u32 sReach[ROOM_MAX_H] EWRAM_BSS;
 static u32 sReserved[ROOM_MAX_H] EWRAM_BSS;
 static u32 sCore[ROOM_MAX_H] EWRAM_BSS;
+static u32 sForestReserved[ROOM_MAX_H] EWRAM_BSS;
+static u32 sForestLandmarks[ROOM_MAX_H] EWRAM_BSS;
 static u32 sOriginalReach[ROOM_MAX_H] EWRAM_BSS;
 static u32 sComponents[2][ROOM_MAX_H] EWRAM_BSS;
 static u8 sComponentReady;
@@ -64,6 +66,21 @@ static int quest_cell(int kind) {
         int broad=gWorld.cells[cell].arch==ARCH_GLADE||gWorld.cells[cell].arch==ARCH_ARENA;
         u32 score=(broad?0x40000000u:0)+(3-MIN(3,gWorld.cells[cell].stage))*0x10000000u+
             (hash32(gGame.seed,0x51554553u+cell*131)&0x0fffffffu);
+        if(chosen<0||score>best){chosen=cell;best=score;}
+    }
+    return chosen;
+}
+static int red_fusion_cell(void) {
+    int cell,chosen=-1;u32 best=0;
+    for(cell=0;cell<25;cell++)if(ordinary_cell(1,cell)) {
+        int bits=gCreamWorld.content[cell*2]&(CC_CONTENT_CHEST|CC_CONTENT_NPC|CC_CONTENT_HEAL|CC_CONTENT_CACHE|CC_CONTENT_MISSION);
+        int count=0,i;u32 score;
+        for(i=0;i<8;i++)count+=(bits>>i)&1;
+        /* The optional island needs a real five-by-five bank. Prefer a
+           lower terrace without existing furniture over a merely early
+           shelf whose shrine, chest and landing already consume its room. */
+        score=(5-count)*0x10000000u+(3-MIN(3,gCreamWorld.stage[cell*2]))*0x02000000u+
+            (hash32(gGame.seed,0x46555332u+cell*131)&0x01ffffffu);
         if(chosen<0||score>best){chosen=cell;best=score;}
     }
     return chosen;
@@ -113,13 +130,13 @@ static void build_plan(void) {
             else p->event_kind=base[(slot-33)%14];
         }
     }
-    /* A single side quest is selected at run start. Its giver is before
-       the first Forest item cut; other regions remain valid delivery goals. */
+    /* A single side quest is selected at run start. Ordinary givers prefer
+       the pre-tool Forest; a block giver prefers a broad verified field. */
     i=HQ_POT+hash32(gGame.seed,0x51554537u)%7;quest=quest_cell(i);
     if(quest>=0)sPlan[quest].quest_kind=i;
     green=choose_cell(0,quest,-1,0x46555330u,TRUE);
     blue=choose_cell(0,quest,green,0x46555331u,FALSE);
-    red=choose_cell(1,-1,-1,0x46555332u,TRUE);
+    red=red_fusion_cell();
     if(green>=0)sPlan[green].fusion_color=0;
     if(blue>=0)sPlan[blue].fusion_color=1;
     if(red>=0)sPlan[25+red].fusion_color=2;
@@ -132,11 +149,21 @@ static void build_plan(void) {
         sPlan[i].event_kind=kind;sPlan[i].mechanism_variant=mechanism;sPlan[i].traversal_variant=traversal;
         break;
     }
+    if(hash32(gGame.seed,0x504f5254u)%3) {
+        for(i=0;i<RC_ROOMS;i++)if(sPlan[i].event_kind==HS_PORTAL)sPlan[i].event_kind=HS_SURVIVE;
+    } else {
+        /* A portal's pocket is separate from the blue fusion door, so one
+           feature cannot silently bypass the other's physical lock. */
+        for(i=RC_ROOMS-1;i>=0;i--)if(sPlan[i].event_kind==HS_ITEM&&sPlan[i].fusion_color!=1){sPlan[i].event_kind=HS_POCKET;break;}
+    }
     for(region=0;region<2;region++) {
         u32 best=0;wave[region]=-1;
         for(cell=0;cell<25;cell++) {
             RegionalContentPlan* p=&sPlan[region*25+cell];u32 score;
             if(!ordinary_cell(region,cell)||p->quest_kind||p->fusion_color!=RC_NONE)continue;
+            if(!region&&(gWorld.cells[cell].role==ROLE_KEYITEM||
+               gWorld.cells[cell].role==ROLE_NPC_HUNT||gWorld.cells[cell].role==ROLE_NPC_FETCH||
+               gWorld.cells[cell].role==ROLE_NPC_TORCH))continue;
             score=(3-MIN(3,p->stage))*0x10000000u+(hash32(gGame.seed,cell+region*53+0x57415645u)&0x0fffffffu);
             if(wave[region]<0||score>best){best=score;wave[region]=cell;}
         }
@@ -163,6 +190,7 @@ static bool8 ensure_plan(void) {
 void regional_content_clear(void) {
     memset(&gRegionalSpots,0,sizeof(gRegionalSpots));
     memset(sReach,0,sizeof(sReach));memset(sReserved,0,sizeof(sReserved));memset(sCore,0,sizeof(sCore));
+    memset(sForestReserved,0,sizeof(sForestReserved));memset(sForestLandmarks,0,sizeof(sForestLandmarks));
     memset(sComponents,0,sizeof(sComponents));sComponentReady=sSpawnCount=0;
     sRectCount=0;sArea=sCell=RC_NONE;
 }
@@ -204,7 +232,7 @@ bool8 regional_content_reachable(int area,int cell) {
                 if(cost<price[next]){price[next]=cost;changed=1;}
             }
         }
-        return price[cell]<=gPl.keys;
+        return price[cell]!=255&&price[cell]<=gPl.keys;
     }
     if(!handoff_region_unlocked(AREA_CREAM))return FALSE;
     queue[tail++]=gCreamWorld.entry_node;seen[gCreamWorld.entry_node]=1;
@@ -230,9 +258,17 @@ bool8 regional_content_fusion(int color,RegionalContentPlan* out) {
     return FALSE;
 }
 bool8 regional_content_door_open(int area,int cell) {
-    RegionalContentPlan p;
-    return regional_content_get(area,cell,&p)&&p.interior_site!=RC_NONE&&
-        (p.fusion_color!=1||(gHandoffState.fusion_flags&2));
+    RegionalContentPlan p;int i;
+    if(!regional_content_get(area,cell,&p)||p.interior_site==RC_NONE)return FALSE;
+    if(p.fusion_color==1)return (gHandoffState.fusion_flags&2)!=0;
+    if(p.event_kind==HS_POCKET) {
+        for(i=0;i<RC_ROOMS;i++)if(sPlan[i].event_kind==HS_PORTAL) {
+            int site=sPlan[i].interior_site;
+            return (gHandoffState.completed[site>>3]&(1u<<(site&7)))!=0;
+        }
+        return FALSE;
+    }
+    return TRUE;
 }
 
 static bool8 dry(int x,int y,int terrace) {
@@ -275,7 +311,7 @@ static bool8 landmark_reserved(int x,int y) {
             if(ABS(x-px/16)<=2&&ABS(y-py/16)<=2)return TRUE;
         }
     } else {
-        if(roomgen_content_landmark_reserved(x,y))return TRUE;
+        if(sForestLandmarks[y]&(1u<<x))return TRUE;
         if(gSpots.has_treasure&&ABS(x-gSpots.treasure.x)<=2&&ABS(y-gSpots.treasure.y)<=2)return TRUE;
         if(gSpots.pocket_kind&&ABS(x-gSpots.pocket_gate.x)<=2&&ABS(y-gSpots.pocket_gate.y)<=2)return TRUE;
         if(gSpots.has_boss&&ABS(x-gSpots.boss.x)<=4&&ABS(y-gSpots.boss.y)<=4)return TRUE;
@@ -283,7 +319,7 @@ static bool8 landmark_reserved(int x,int y) {
     return FALSE;
 }
 static bool8 core_reserved(int x,int y) {
-    return landmark_reserved(x,y)||(sArea==AREA_FOREST&&roomgen_content_reserved(x,y));
+    return landmark_reserved(x,y)||(sArea==AREA_FOREST&&x>=0&&x<32&&y>=0&&y<32&&(sForestReserved[y]&(1u<<x)));
 }
 bool8 regional_content_reserved(int x,int y) {
     if(sArea!=AREA_FOREST&&sArea!=AREA_CREAM)return FALSE;
@@ -331,7 +367,7 @@ static bool8 compact_point(Spot old,Spot* out) {
 }
 static bool8 rect_ok(int x,int y,int w,int h) {
     int xx,yy;
-    if(x<2||y<2||x+w>=gRoom.w-2||y+h>=gRoom.h-2)return FALSE;
+    if(x<2||y<2||x+w>gRoom.w-2||y+h>gRoom.h-2)return FALSE;
     for(yy=y;yy<y+h;yy++)for(xx=x;xx<x+w;xx++)
         if(!reached(xx,yy)||core_reserved(xx,yy)||(sReserved[yy]&(1u<<xx)))return FALSE;
     return TRUE;
@@ -342,7 +378,7 @@ static void take_rect(const RegionalContentRect* rect) {
 bool8 regional_content_rect(int w,int h,RegionalContentRect* out) {
     int x,y,xx,yy,found=0;u32 best=0;
     if(!out||w<1||h<1||w>16||h>12||sRectCount>=4)return FALSE;
-    for(y=2;y+h<gRoom.h-2;y++)for(x=2;x+w<gRoom.w-2;x++) {
+    for(y=2;y+h<=gRoom.h-2;y++)for(x=2;x+w<=gRoom.w-2;x++) {
         u32 score;bool8 valid=TRUE;
         for(yy=y;yy<y+h&&valid;yy++)for(xx=x;xx<x+w;xx++)
             if(!reached(xx,yy)||core_reserved(xx,yy)||(sReserved[yy]&(1u<<xx))){valid=FALSE;break;}
@@ -372,7 +408,7 @@ static bool8 clearing_cell(int x,int y) {
 }
 static bool8 clearing_ok(int x,int y,int w,int h,int* count) {
     int xx,yy,touched=0,carved=0;
-    if(x<2||y<2||x+w>=gRoom.w-2||y+h>=gRoom.h-2)return FALSE;
+    if(x<2||y<2||x+w>gRoom.w-2||y+h>gRoom.h-2)return FALSE;
     for(yy=y;yy<y+h;yy++)for(xx=x;xx<x+w;xx++) {
         if(!clearing_cell(xx,yy))return FALSE;
         if(reached(xx,yy))touched=1;else carved++;
@@ -390,7 +426,7 @@ bool8 regional_content_prepare_rect(int w,int h,RegionalContentRect* out) {
     int x,y,xx,yy,carved,best_carved=0,found=0;u32 best=0;
     if(regional_content_rect(w,h,out))return TRUE;
     if(!out||w<1||h<1||w>16||h>12||sRectCount>=4)return FALSE;
-    for(y=2;y+h<gRoom.h-2;y++)for(x=2;x+w<gRoom.w-2;x++) {
+    for(y=2;y+h<=gRoom.h-2;y++)for(x=2;x+w<=gRoom.w-2;x++) {
         u32 score;if(!clearing_ok(x,y,w,h,&carved))continue;
         score=hash32(gGame.seed,x*811+y*3571+sCell*57+sArea*8911+w*53+h);
         if(!found||carved<best_carved||(carved==best_carved&&score>best)) {
@@ -444,6 +480,58 @@ static bool8 feature_rect(const RegionalContentDiscovery* record,int w,int h,boo
     }
     return clearing?regional_content_prepare_rect(w,h,out):regional_content_rect(w,h,out);
 }
+static bool8 spawn_clear(Spot p,int terrace,bool8 broad,int spacing) {
+    int x,y,i,r=broad?1:0;
+    if(!dry(p.x,p.y,terrace))return FALSE;
+    for(y=p.y-r;y<=p.y+r;y++)for(x=p.x-r;x<=p.x+r;x++)
+        if(x<1||y<1||x>=gRoom.w-1||y>=gRoom.h-1||(sReserved[y]&(1u<<x)))return FALSE;
+    for(y=p.y-r;y<=p.y+r;y++)for(x=p.x-r;x<=p.x+r;x++)if(!dry(x,y,terrace))return FALSE;
+    for(i=0;i<sSpawnCount;i++)if(sSpawnTerrace[i]==terrace&&ABS(p.x-sAdmittedSpawns[i].x)+ABS(p.y-sAdmittedSpawns[i].y)<spacing)return FALSE;
+    return TRUE;
+}
+static void spawn_component(int terrace,Spot origin) {
+    int x=-1,y=-1,i;
+    if(sComponentReady&(1u<<terrace))return;
+    if(dry(origin.x,origin.y,terrace)){x=origin.x;y=origin.y;}
+    if(x<0&&sArea==AREA_CREAM) {
+        CreamTerraceSpots* part=&gCreamRoom.terrace[terrace];
+        for(i=0;i<part->spawn_count;i++)if(dry(part->spawns[i].x,part->spawns[i].y,terrace)){x=part->spawns[i].x;y=part->spawns[i].y;break;}
+    }
+    if(x<0)for(y=1;y<gRoom.h-1;y++){for(x=1;x<gRoom.w-1;x++)if(dry(x,y,terrace))break;if(x<gRoom.w-1)break;}
+    component(x,y,terrace);
+    if(terrace!=gRegionalSpots.terrace)memcpy(sReach,sComponents[gRegionalSpots.terrace],sizeof(sReach));
+}
+static bool8 original_spawn(Spot p,int terrace) {
+    int i,count;Spot* spots;
+    if(sArea==AREA_CREAM){count=gCreamRoom.terrace[terrace].spawn_count;spots=gCreamRoom.terrace[terrace].spawns;}
+    else {count=gSpots.spawn_count;spots=gSpots.spawns;}
+    for(i=0;i<count;i++)if(spots[i].x==p.x&&spots[i].y==p.y&&!(sReserved[p.y]&(1u<<p.x)))return TRUE;
+    return FALSE;
+}
+bool8 regional_content_spawn_point(int terrace,int ordinal,Spot* point) {
+    int x,y,pass,found=0;u32 best=0;Spot chosen;
+    if(!point)return FALSE;
+    if(sArea!=AREA_FOREST&&sArea!=AREA_CREAM)return TRUE;
+    if(sArea==AREA_FOREST)terrace=0;else terrace&=1;
+    if(spawn_clear(*point,terrace,FALSE,1)){chosen=*point;found=1;}
+    if(!found) {
+        spawn_component(terrace,*point);
+        for(pass=0;pass<2&&!found;pass++)for(y=2;y<gRoom.h-2;y++)for(x=2;x<gRoom.w-2;x++) {
+            Spot candidate={(u8)x,(u8)y};u32 score;
+            if(!(sComponents[terrace][y]&(1u<<x))||(sCore[y]&(1u<<x)))continue;
+            if(sArea==AREA_FOREST&&sForestLandmarks[y]&(1u<<x))continue;
+            if(original_spawn(candidate,terrace))continue;
+            score=hash32(gGame.seed,sCell*7919+ordinal*4099+x*97+y*257+terrace*104729);
+            if(found&&score<=best)continue;
+            if(!spawn_clear(candidate,terrace,pass==0,pass==0?3:1))continue;
+            found=1;best=score;chosen=candidate;
+        }
+    }
+    if(!found)return FALSE;
+    *point=chosen;
+    if(sSpawnCount<24){sAdmittedSpawns[sSpawnCount]=chosen;sSpawnTerrace[sSpawnCount++]=terrace;}
+    return TRUE;
+}
 void regional_content_place(int area,int cell) {
     RegionalContentPlan p;RegionalContentDiscovery* record;int at,x=-1,y=-1,i;
     bool8 courier=gHandoffState.quest.state==2&&gHandoffState.quest.kind==HQ_COURIER&&
@@ -454,6 +542,11 @@ void regional_content_place(int area,int cell) {
     if(at<0||!regional_content_get(area,cell,&p))return;
     sArea=area;sCell=cell;gRegionalSpots.terrace=p.terrace;record=&gRegionalDiscovery[at];
     if(p.interior_site==RC_NONE&&!courier)return; /* no side events in entry/boss rooms */
+    if(area==AREA_FOREST)for(y=0;y<gRoom.h;y++)for(x=0;x<gRoom.w;x++) {
+        if(roomgen_content_reserved(x,y))sForestReserved[y]|=1u<<x;
+        if(roomgen_content_landmark_reserved(x,y))sForestLandmarks[y]|=1u<<x;
+    }
+    x=y=-1;
     if(area==AREA_CREAM) {
         CreamTerraceSpots* part=&gCreamRoom.terrace[p.terrace];
         for(i=0;i<part->spawn_count;i++)if(dry(part->spawns[i].x,part->spawns[i].y,p.terrace)){x=part->spawns[i].x;y=part->spawns[i].y;break;}

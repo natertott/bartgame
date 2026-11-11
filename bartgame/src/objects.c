@@ -176,7 +176,7 @@ static void proj_update(Actor* a) {
         a->frame = F_PROJ_SPORE;
     /* walls stop seeds and shards; spores drift through canopy */
     bool8 wall = a->type == PJ_ARROW ? room_box_solid(px-3,py-17,px+2,py-12) : room_solid_px(px,py-4);
-    if(handoff_objects_box_solid(px-3,py-17,px+2,py-4))wall=TRUE;
+    if(handoff_objects_box_solid(px-3,py-(a->type==PJ_ARROW?17:9),px+2,py-(a->type==PJ_ARROW?12:4)))wall=TRUE;
     if (a->type != PJ_SPORE && wall) {
         fx_spawn(FX_SPARK, px, py);
         actor_free(a);

@@ -138,6 +138,27 @@ static void bonus_goal(int x,int y,int bit) {
  Mechanism*m=radd(HO_TARGET,x,y,0,0);if(m){m->mode=2;m->link=bit;
   if(gHandoffState.remaining[handoff_current_site()]&(1u<<bit))m->state=1;}
 }
+bool8 handoff_objects_can_solve(int pattern) {
+ int i;bool8 bottle=FALSE,mineral=FALSE;
+ for(i=0;i<4;i++)if(legacy_item_owned(LI_BOTTLE1+i)){bottle=TRUE;if(gLegacyInventory.bottles[i]==LI_BOTTLE_MINERAL_WATER)mineral=TRUE;}
+ switch(pattern%HANDOFF_REGIONAL_MECHANISMS) {
+ case 4:return bottle;
+ case 7:return legacy_item_owned(LI_POWER_BRACELETS)||legacy_item_owned(LI_FOURSWORD);
+ case 8:return legacy_item_owned(LI_MIRROR_SHIELD);
+ case 9:return legacy_item_owned(LI_FOURSWORD);
+ case 10:return legacy_item_owned(LI_PACCI_CANE)&&(legacy_item_owned(LI_BOW)||legacy_item_owned(LI_LIGHT_ARROW));
+ case 11:return legacy_item_owned(LI_FIRE_ROD)||(mineral&&legacy_item_owned(LI_LANTERN_OFF));
+ default:return TRUE;
+ }
+}
+bool8 handoff_objects_field_can_solve(int variant) {
+ switch(variant&3) {
+ case 1:return legacy_item_owned(LI_LANTERN_OFF)||legacy_item_owned(LI_FIRE_ROD);
+ case 2:for(int i=0;i<4;i++)if(legacy_item_owned(LI_BOTTLE1+i))return TRUE;return FALSE;
+ case 3:return legacy_item_owned(LI_PACCI_CANE);
+ default:return TRUE;
+ }
+}
 void handoff_objects_build_regional(u32 seed,int pattern) {
  Mechanism *m,*a,*b;
  handoff_objects_reset();sObj.active=sObj.regional=1;sObj.seed=seed;
@@ -187,6 +208,7 @@ void handoff_objects_build_regional(u32 seed,int pattern) {
  case 7: /* Farm/grave keys and three styles of handle guard a compact crypt. */
   rwall(9,3,28,15);m=radd(HO_METAL_DOOR,15,9,1,0);if(m)m->mode=3;
   radd(HO_PULL_LEVER,8,16,1,1);radd(HO_PUSH_LEVER,15,16,1,2);radd(HO_BIG_LEVER,23,16,1,4);
+  for(int i=0;i<4;i++)room_set(rx(18+i*2),19,MT_LH_CLONE_PLATE);
   rwall(6,4,11,8);rwall(6,20,27,23);
   for(int y=3;y<6;y++){rpatch(4,y,1,1,MT_CAVE_WALL);rpatch(11,y,1,1,MT_CAVE_WALL);rpatch(20,y,1,1,MT_CAVE_WALL);rpatch(27,y,1,1,MT_CAVE_WALL);}
   m=radd(HO_BIG_DOOR,8,6,1,0);if(m)m->mode=1;
@@ -196,8 +218,8 @@ void handoff_objects_build_regional(u32 seed,int pattern) {
   reward_goal(15,5);break;
  case 8: /* Reflect the ray into its north receiver to release the shrine seal. */
   rwall(8,3,28,15);m=radd(HO_METAL_DOOR,15,8,1,0);
-  a=radd(HO_LIGHT_RECEIVER,15,5,0,1);if(a)a->link=0;
-  radd(HO_LIGHT_RAY,15,10,0,0);reward_goal(15,4);break;
+  a=radd(HO_LIGHT_RECEIVER,15,9,0,1);if(a)a->link=0;
+  radd(HO_LIGHT_RAY,15,12,0,0);reward_goal(15,4);break;
  case 9: /* A Four Sword formation opens a real gate; the jar is a small route. */
   rwall(9,4,27,15);m=radd(HO_METAL_DOOR,15,9,1,0);if(m)m->mode=1;
   for(int i=0;i<4;i++)room_set(rx(10+i*2),19,MT_LH_CLONE_PLATE);
@@ -218,6 +240,11 @@ void handoff_objects_build_regional(u32 seed,int pattern) {
   rpatch(11,11,10,2,MT_LH_ICE);rpatch(5,18,4,1,MT_LH_SHALLOW);rpatch(22,18,4,1,MT_LH_SWAMP);
   room_set(rx(25),10,MT_LH_CRUMBLE);room_set(rx(6),11,MT_LH_DUST);room_set(rx(20),18,MT_LH_ICE_BLOCK);
   reward_goal(15,5);break;
+ }
+ /* Consumed regional keys leave their matching doors open on later visits. */
+ for(int i=0;i<sObj.count;i++)if(sObjects[i].type==HO_BIG_DOOR&&sObjects[i].mode<3&&
+    (gHandoffState.remaining[handoff_current_site()]&(1u<<(8+sObjects[i].mode)))) {
+  sObjects[i].state=1;sObjects[i].solid=0;sObjects[i].frame=HO_BIG_DOOR*2+1;sObjects[i].last_frame=sObjects[i].frame;
  }
 }
 bool8 handoff_objects_build_field(u32 seed,int variant,int x,int y,int w,int h) {
@@ -266,7 +293,8 @@ void handoff_objects_enter(void) {
   enemy_spawn(LE_KEESE_0,sObjects[i].x+20,sObjects[i].y-36);break;
  }
  if(!sObj.regional&&sObj.variant==0&&!legacy_item_owned(LI_BIG_KEY))legacy_item_spawn(LI_BIG_KEY,5*16+8,18*16+8);
- if(sObj.regional&&!sObj.field&&sObj.pattern==1&&!legacy_item_owned(LI_BIG_KEY))legacy_item_spawn(LI_BIG_KEY,rx(7)*16+8,17*16+8);
+ if(sObj.regional&&!sObj.field&&sObj.pattern==1&&!(gHandoffState.remaining[handoff_current_site()]&0x100)&&!legacy_item_owned(LI_BIG_KEY))legacy_item_spawn(LI_BIG_KEY,rx(7)*16+8,17*16+8);
+ if(sObj.regional&&!sObj.field&&sObj.pattern==10&&!gPl.arrows&&(legacy_item_owned(LI_BOW)||legacy_item_owned(LI_LIGHT_ARROW)))legacy_item_spawn(LI_ARROWS5,rx(15)*16+8,18*16+8);
  if(sObj.regional) {
   static const char* const clues[HANDOFF_REGIONAL_MECHANISMS]={
    "The stone keeper rests beside an empty pressure plate. Its weight may open the northern seal.",
@@ -277,7 +305,7 @@ void handoff_objects_enter(void) {
    "Paired stairs and violet pads reach the upper pocket. The southern passage remains the way home.",
    "The handle on this bank raises the bridge. The far bank holds a golden mark.",
    "Pull, push, and weight answer the three handles. Smaller locks remember farm and grave keys.",
-   "Face the falling light with a mirror. Its receiver waits above the seal.",
+   "Face the falling light with a mirror. Its receiver is fixed to the front of the northern seal.",
    "Three copies can hold the plates. A small jar offers another route to a hidden alcove.",
    "Turn the pot, strike the eye, and cut the far handle. The jar can send a clod across the gap.",
    "Fire frees the flower and silk; mineral water also melts the great ice. Three signs wake the northern seal."};
@@ -347,7 +375,9 @@ bool8 handoff_objects_pre_player(void) {
   if(kind==HO_BIG_DOOR) {
    int key=m->mode==1?LI_QST_LONLON_KEY:m->mode==2?LI_QST_GRAVEYARD_KEY:LI_BIG_KEY;
    if(!legacy_item_owned(key)){textbox_open(m->mode==1?"The farm gate needs the Farm Key.":m->mode==2?"The grave gate needs the Graveyard Key.":"The large keyhole needs a Big Key. Ordinary keys do not fit.");return TRUE;}
-   legacy_item_remove(key);m->solid=0;m->state=1;flag_goal(m);ping(m);gKeysDown&=~KEY_R;return TRUE;
+   legacy_item_remove(key);m->solid=0;m->state=1;
+   if(sObj.regional&&!sObj.field)gHandoffState.remaining[handoff_current_site()]|=1u<<(8+m->mode);
+   flag_goal(m);ping(m);gKeysDown&=~KEY_R;return TRUE;
   }
   if(kind==HO_HIDDEN_LADDER) {
    if(m->state){player_set_pos(m->x,m->y+4);sObj.climb_ticks=64;}
