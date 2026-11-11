@@ -434,6 +434,7 @@ int legacy_player_walk_speed(int speed) {
     if(s.status[LPS_SLOW])speed=speed*2/3;
     if(s.sword_charge)speed=MIN(speed,Q8(.875));
     if(s.jar_held)speed=MIN(speed,Q8(.5));
+    if(handoff_mobility_handles_floor(PX(gPlayer->x),PX(gPlayer->y)-1)||handoff_objects_support(PX(gPlayer->x),PX(gPlayer->y)-1))return speed;
     if(surface==LS_DUST||surface==LS_SWAMP)speed=MIN(speed,Q8(.75));
     if(surface==LS_SHALLOW)speed=MIN(speed,Q8(1));
     if(surface==LS_SLOPE_X||surface==LS_SLOPE_Y)speed=MAX(Q8(.5),speed-Q8(.3125));
@@ -441,6 +442,7 @@ int legacy_player_walk_speed(int speed) {
     return speed;
 }
 bool8 legacy_player_handles_floor(int type) {
+    if(handoff_mobility_handles_floor(PX(gPlayer->x),PX(gPlayer->y)-1))return TRUE;
     if(handoff_objects_support(PX(gPlayer->x),PX(gPlayer->y)-1))return TRUE;
     if(s.minish&&legacy_surface_at(PX(gPlayer->x),PX(gPlayer->y)-1)==LS_MINISH_GAP)return TRUE;
     return type==TT_WATER&&legacy_item_owned(LI_FLIPPERS);
