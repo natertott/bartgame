@@ -672,7 +672,7 @@ void legacy_items_post_player(void) {
                 fx_spawn(FX_PUFF,px,py);start_fall(FALSE);
             }
         }
-        if(room_type_px(px,py)==TT_WATER&&legacy_item_owned(LI_FLIPPERS)) {
+        if(room_type_px(px,py)==TT_WATER&&legacy_item_owned(LI_FLIPPERS)&&!handoff_mobility_handles_floor(px,py)&&!handoff_objects_support(px,py)) {
             if((gKeysDown&KEY_A)&&!s.dive){s.dive=90;gKeysDown&=~KEY_A;}
             if(s.dive)s.dive--;
             if((gFrame&15)==0)fx_spawn(FX_PUFF,px,py+1);
