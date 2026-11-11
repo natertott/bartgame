@@ -1,0 +1,3960 @@
+{
+  "rom_sha256": "e8df68ad63350948894742cad7e4f4085600857f26ec55aaa545b0697cd9954e",
+  "source_commit": "2bc08ecad81e0acbf52933cf6d69c3ad2e2414ce",
+  "tool_sha256": "95a962ed3d173f82992589529fdf564cc36a1b6ec932807e38ff0036b4f4766c",
+  "checks": [
+    {
+      "name": "dry ordinary-spawn route to cream arch",
+      "passed": true,
+      "observed": {
+        "approach": [
+          456,
+          130
+        ],
+        "reachable": true,
+        "path_length_px": 396
+      }
+    },
+    {
+      "name": "dry ordinary-spawn route to annex arch",
+      "passed": true,
+      "observed": {
+        "approach": [
+          280,
+          130
+        ],
+        "reachable": true,
+        "path_length_px": 220
+      }
+    },
+    {
+      "name": "real A enters Cream at its visible entry stairs",
+      "passed": true,
+      "observed": {
+        "state": 1,
+        "area": 3,
+        "cell": 21,
+        "player": {
+          "kind": 1,
+          "type": 0,
+          "state": 0,
+          "timer": 0,
+          "x": 400,
+          "y": 350,
+          "z": 0,
+          "speed": 0,
+          "hp": 0,
+          "coll": 0,
+          "facing": 0
+        },
+        "text": 0,
+        "player_health": [
+          24,
+          24
+        ]
+      }
+    },
+    {
+      "name": "real A on entry stairs returns to Cream Sewer arch",
+      "passed": true,
+      "observed": {
+        "state": 1,
+        "area": 0,
+        "cell": 21,
+        "player": {
+          "kind": 1,
+          "type": 0,
+          "state": 0,
+          "timer": 0,
+          "x": 456,
+          "y": 130,
+          "z": 0,
+          "speed": 0,
+          "hp": 0,
+          "coll": 0,
+          "facing": 2
+        },
+        "text": 0,
+        "player_health": [
+          24,
+          24
+        ]
+      }
+    },
+    {
+      "name": "real A enters optional Annex",
+      "passed": true,
+      "observed": {
+        "state": 1,
+        "area": 4,
+        "cell": 0,
+        "player": {
+          "kind": 1,
+          "type": 0,
+          "state": 0,
+          "timer": 0,
+          "x": 264,
+          "y": 334,
+          "z": 0,
+          "speed": 0,
+          "hp": 0,
+          "coll": 0,
+          "facing": 0
+        },
+        "text": 0,
+        "player_health": [
+          24,
+          24
+        ]
+      }
+    },
+    {
+      "name": "real A opens Annex Inn modal",
+      "passed": true,
+      "observed": {
+        "mode": 2,
+        "status": {
+          "state": 1,
+          "area": 4,
+          "cell": 0,
+          "player": {
+            "kind": 1,
+            "type": 0,
+            "state": 0,
+            "timer": 0,
+            "x": 200,
+            "y": 158,
+            "z": 0,
+            "speed": 0,
+            "hp": 0,
+            "coll": 0,
+            "facing": 0
+          },
+          "text": 0,
+          "player_health": [
+            24,
+            24
+          ]
+        }
+      }
+    },
+    {
+      "name": "music advances during Annex Inn modal",
+      "passed": true,
+      "observed": {
+        "physical_frames": 30,
+        "before": {
+          "gOriginalMusicBgm": 1,
+          "gOriginalMusicTrack": 1,
+          "gOriginalMusicSamples": 28835,
+          "gOriginalMusicLoops": 0,
+          "gOriginalMusicDmaOffset": 0,
+          "gVBlankHook": 134444761,
+          "dma1_control": 3057647616,
+          "dma1_source": 817377464,
+          "timer0_control": 128,
+          "timer1_control": 132
+        },
+        "after": {
+          "gOriginalMusicBgm": 1,
+          "gOriginalMusicTrack": 1,
+          "gOriginalMusicSamples": 45293,
+          "gOriginalMusicLoops": 0,
+          "gOriginalMusicDmaOffset": 0,
+          "gVBlankHook": 134444761,
+          "dma1_control": 3057647616,
+          "dma1_source": 817377464,
+          "timer0_control": 128,
+          "timer1_control": 132
+        }
+      }
+    },
+    {
+      "name": "Annex modal closes and preserves original VBlank hook",
+      "passed": true,
+      "observed": {
+        "mode": 0,
+        "hook_before": 134444761,
+        "hook_after": 134444761
+      }
+    },
+    {
+      "name": "real downward walk leaves Annex at matching Sewer arch",
+      "passed": true,
+      "observed": {
+        "state": 1,
+        "area": 0,
+        "cell": 0,
+        "player": {
+          "kind": 1,
+          "type": 0,
+          "state": 0,
+          "timer": 0,
+          "x": 280,
+          "y": 130,
+          "z": 0,
+          "speed": 0,
+          "hp": 0,
+          "coll": 0,
+          "facing": 2
+        },
+        "text": 0,
+        "player_health": [
+          24,
+          24
+        ]
+      }
+    },
+    {
+      "name": "music advances during ordinary Sewer play",
+      "passed": true,
+      "observed": {
+        "physical_frames": 30,
+        "before": {
+          "gOriginalMusicBgm": 1,
+          "gOriginalMusicTrack": 1,
+          "gOriginalMusicSamples": 51132,
+          "gOriginalMusicLoops": 0,
+          "gOriginalMusicDmaOffset": 0,
+          "gVBlankHook": 134444761,
+          "dma1_control": 3057647616,
+          "dma1_source": 817377464,
+          "timer0_control": 128,
+          "timer1_control": 132
+        },
+        "after": {
+          "gOriginalMusicBgm": 1,
+          "gOriginalMusicTrack": 1,
+          "gOriginalMusicSamples": 67590,
+          "gOriginalMusicLoops": 0,
+          "gOriginalMusicDmaOffset": 0,
+          "gVBlankHook": 134444761,
+          "dma1_control": 3057647616,
+          "dma1_source": 817377464,
+          "timer0_control": 128,
+          "timer1_control": 132
+        }
+      }
+    },
+    {
+      "name": "old pause opens from real Start and chains original music hook",
+      "passed": true,
+      "observed": {
+        "status": {
+          "state": 4,
+          "area": 0,
+          "cell": 0,
+          "player": {
+            "kind": 1,
+            "type": 0,
+            "state": 0,
+            "timer": 0,
+            "x": 200,
+            "y": 270,
+            "z": 0,
+            "speed": 0,
+            "hp": 0,
+            "coll": 0,
+            "facing": 0
+          },
+          "text": 0,
+          "player_health": [
+            24,
+            24
+          ]
+        },
+        "saved_hook": 134444761
+      }
+    },
+    {
+      "name": "music advances during original pause",
+      "passed": true,
+      "observed": {
+        "physical_frames": 30,
+        "before": {
+          "gOriginalMusicBgm": 1,
+          "gOriginalMusicTrack": 1,
+          "gOriginalMusicSamples": 74174,
+          "gOriginalMusicLoops": 0,
+          "gOriginalMusicDmaOffset": 0,
+          "gVBlankHook": 134361729,
+          "dma1_control": 3057647616,
+          "dma1_source": 817377464,
+          "timer0_control": 128,
+          "timer1_control": 132
+        },
+        "after": {
+          "gOriginalMusicBgm": 1,
+          "gOriginalMusicTrack": 1,
+          "gOriginalMusicSamples": 90633,
+          "gOriginalMusicLoops": 0,
+          "gOriginalMusicDmaOffset": 0,
+          "gVBlankHook": 134361729,
+          "dma1_control": 3057647616,
+          "dma1_source": 817377464,
+          "timer0_control": 128,
+          "timer1_control": 132
+        }
+      }
+    },
+    {
+      "name": "real Select opens Satchel and chains original music hook",
+      "passed": true,
+      "observed": {
+        "gear": {
+          "sActive": 1,
+          "sPage": 0,
+          "sZoom": 0
+        },
+        "saved_hook": 134444761
+      }
+    },
+    {
+      "name": "music advances during Select Satchel",
+      "passed": true,
+      "observed": {
+        "physical_frames": 30,
+        "before": {
+          "gOriginalMusicBgm": 1,
+          "gOriginalMusicTrack": 1,
+          "gOriginalMusicSamples": 97216,
+          "gOriginalMusicLoops": 0,
+          "gOriginalMusicDmaOffset": 0,
+          "gVBlankHook": 134274661,
+          "dma1_control": 3057647616,
+          "dma1_source": 817377464,
+          "timer0_control": 128,
+          "timer1_control": 132
+        },
+        "after": {
+          "gOriginalMusicBgm": 1,
+          "gOriginalMusicTrack": 1,
+          "gOriginalMusicSamples": 113675,
+          "gOriginalMusicLoops": 0,
+          "gOriginalMusicDmaOffset": 0,
+          "gVBlankHook": 134274661,
+          "dma1_control": 3057647616,
+          "dma1_source": 817377464,
+          "timer0_control": 128,
+          "timer1_control": 132
+        }
+      }
+    },
+    {
+      "name": "real R opens native atlas",
+      "passed": true,
+      "observed": {
+        "sActive": 1,
+        "sPage": 1,
+        "sZoom": 0
+      }
+    },
+    {
+      "name": "music advances during native atlas",
+      "passed": true,
+      "observed": {
+        "physical_frames": 30,
+        "before": {
+          "gOriginalMusicBgm": 1,
+          "gOriginalMusicTrack": 1,
+          "gOriginalMusicSamples": 120258,
+          "gOriginalMusicLoops": 0,
+          "gOriginalMusicDmaOffset": 0,
+          "gVBlankHook": 134274661,
+          "dma1_control": 3057647616,
+          "dma1_source": 2634194178,
+          "timer0_control": 128,
+          "timer1_control": 132
+        },
+        "after": {
+          "gOriginalMusicBgm": 1,
+          "gOriginalMusicTrack": 1,
+          "gOriginalMusicSamples": 136717,
+          "gOriginalMusicLoops": 0,
+          "gOriginalMusicDmaOffset": 0,
+          "gVBlankHook": 134274661,
+          "dma1_control": 3057647616,
+          "dma1_source": 817377464,
+          "timer0_control": 128,
+          "timer1_control": 132
+        }
+      }
+    },
+    {
+      "name": "real A opens atlas room zoom",
+      "passed": true,
+      "observed": {
+        "sActive": 1,
+        "sPage": 1,
+        "sZoom": 1
+      }
+    },
+    {
+      "name": "music advances during native atlas room zoom",
+      "passed": true,
+      "observed": {
+        "physical_frames": 30,
+        "before": {
+          "gOriginalMusicBgm": 1,
+          "gOriginalMusicTrack": 1,
+          "gOriginalMusicSamples": 143301,
+          "gOriginalMusicLoops": 0,
+          "gOriginalMusicDmaOffset": 0,
+          "gVBlankHook": 134274661,
+          "dma1_control": 3057647616,
+          "dma1_source": 817377464,
+          "timer0_control": 128,
+          "timer1_control": 132
+        },
+        "after": {
+          "gOriginalMusicBgm": 1,
+          "gOriginalMusicTrack": 1,
+          "gOriginalMusicSamples": 159759,
+          "gOriginalMusicLoops": 0,
+          "gOriginalMusicDmaOffset": 0,
+          "gVBlankHook": 134274661,
+          "dma1_control": 3057647616,
+          "dma1_source": 817377464,
+          "timer0_control": 128,
+          "timer1_control": 132
+        }
+      }
+    },
+    {
+      "name": "Satchel atlas returns to play and restores music hook",
+      "passed": true,
+      "observed": {
+        "initial_hook": 134444761,
+        "after": {
+          "gOriginalMusicBgm": 1,
+          "gOriginalMusicTrack": 1,
+          "gOriginalMusicSamples": 166343,
+          "gOriginalMusicLoops": 0,
+          "gOriginalMusicDmaOffset": 0,
+          "gVBlankHook": 134444761,
+          "dma1_control": 3057647616,
+          "dma1_source": 817377464,
+          "timer0_control": 128,
+          "timer1_control": 132
+        },
+        "status": {
+          "state": 1,
+          "area": 0,
+          "cell": 0,
+          "player": {
+            "kind": 1,
+            "type": 0,
+            "state": 0,
+            "timer": 0,
+            "x": 200,
+            "y": 270,
+            "z": 0,
+            "speed": 0,
+            "hp": 0,
+            "coll": 0,
+            "facing": 0
+          },
+          "text": 0,
+          "player_health": [
+            24,
+            24
+          ]
+        }
+      }
+    },
+    {
+      "name": "music advances during play after nested pause/Satchel/atlas",
+      "passed": true,
+      "observed": {
+        "physical_frames": 30,
+        "before": {
+          "gOriginalMusicBgm": 1,
+          "gOriginalMusicTrack": 1,
+          "gOriginalMusicSamples": 166343,
+          "gOriginalMusicLoops": 0,
+          "gOriginalMusicDmaOffset": 0,
+          "gVBlankHook": 134444761,
+          "dma1_control": 3057647616,
+          "dma1_source": 817377464,
+          "timer0_control": 128,
+          "timer1_control": 132
+        },
+        "after": {
+          "gOriginalMusicBgm": 1,
+          "gOriginalMusicTrack": 1,
+          "gOriginalMusicSamples": 182802,
+          "gOriginalMusicLoops": 0,
+          "gOriginalMusicDmaOffset": 0,
+          "gVBlankHook": 134444761,
+          "dma1_control": 3057647616,
+          "dma1_source": 817377464,
+          "timer0_control": 128,
+          "timer1_control": 132
+        }
+      }
+    },
+    {
+      "name": "bomb test starts with full gear and no earned trial prizes",
+      "passed": true,
+      "observed": {
+        "gate_cell": 23,
+        "gate_side": 0,
+        "key_cells": [
+          11,
+          7,
+          0
+        ],
+        "tiles": [
+          {
+            "x": 15,
+            "y": 1,
+            "mt": 60,
+            "type": 9
+          },
+          {
+            "x": 16,
+            "y": 1,
+            "mt": 60,
+            "type": 9
+          }
+        ],
+        "inventory": {
+          "items": 127,
+          "items2": 31
+        }
+      }
+    },
+    {
+      "name": "bomb actual input activates its native tool",
+      "passed": true,
+      "observed": {
+        "evidence": [
+          {
+            "pos": [
+              256,
+              40
+            ],
+            "state": 0,
+            "charge": 1,
+            "lamp": 0
+          },
+          {
+            "pos": [
+              256,
+              40
+            ],
+            "state": 0,
+            "charge": 2,
+            "lamp": 0
+          },
+          {
+            "pos": [
+              256,
+              40
+            ],
+            "state": 0,
+            "charge": 3,
+            "lamp": 0
+          },
+          {
+            "pos": [
+              256,
+              40
+            ],
+            "state": 0,
+            "charge": 4,
+            "lamp": 0
+          },
+          {
+            "pos": [
+              256,
+              40
+            ],
+            "state": 0,
+            "charge": 5,
+            "lamp": 0
+          }
+        ],
+        "bombs": 98
+      }
+    },
+    {
+      "name": "bomb cannot bypass original mandatory trial gate",
+      "passed": true,
+      "observed": {
+        "before": [
+          {
+            "x": 15,
+            "y": 1,
+            "mt": 60,
+            "type": 9
+          },
+          {
+            "x": 16,
+            "y": 1,
+            "mt": 60,
+            "type": 9
+          }
+        ],
+        "after": [
+          {
+            "x": 15,
+            "y": 1,
+            "mt": 60,
+            "type": 9
+          },
+          {
+            "x": 16,
+            "y": 1,
+            "mt": 60,
+            "type": 9
+          }
+        ],
+        "opened_unchanged": true,
+        "trial_prizes_unchanged": true,
+        "message": "A trial seal holds this crossing.|Complete this wood's required task and claim its prize. A tool found elsewhere does not break the oath.",
+        "status": {
+          "state": 1,
+          "area": 1,
+          "cell": 23,
+          "player": {
+            "kind": 1,
+            "type": 0,
+            "state": 3,
+            "timer": 8,
+            "x": 256,
+            "y": 40,
+            "z": 0,
+            "speed": 0,
+            "hp": 0,
+            "coll": 1,
+            "facing": 0
+          },
+          "text": 1,
+          "player_health": [
+            20,
+            24
+          ]
+        }
+      }
+    },
+    {
+      "name": "lamp test starts with full gear and no earned trial prizes",
+      "passed": true,
+      "observed": {
+        "gate_cell": 4,
+        "gate_side": 3,
+        "key_cells": [
+          11,
+          7,
+          0
+        ],
+        "tiles": [
+          {
+            "x": 0,
+            "y": 11,
+            "mt": 61,
+            "type": 10
+          },
+          {
+            "x": 0,
+            "y": 12,
+            "mt": 61,
+            "type": 10
+          }
+        ],
+        "inventory": {
+          "items": 127,
+          "items2": 31
+        }
+      }
+    },
+    {
+      "name": "lamp actual input activates its native tool",
+      "passed": true,
+      "observed": {
+        "evidence": [
+          {
+            "pos": [
+              21,
+              200
+            ],
+            "state": 0,
+            "charge": 0,
+            "lamp": 20
+          },
+          {
+            "pos": [
+              21,
+              200
+            ],
+            "state": 0,
+            "charge": 0,
+            "lamp": 20
+          },
+          {
+            "pos": [
+              21,
+              200
+            ],
+            "state": 0,
+            "charge": 0,
+            "lamp": 20,
+            "text": 1
+          },
+          {
+            "pos": [
+              21,
+              200
+            ],
+            "state": 0,
+            "charge": 0,
+            "lamp": 20,
+            "text": 1
+          },
+          {
+            "pos": [
+              21,
+              200
+            ],
+            "state": 0,
+            "charge": 0,
+            "lamp": 20,
+            "text": 1
+          }
+        ],
+        "bombs": 99
+      }
+    },
+    {
+      "name": "lamp cannot bypass original mandatory trial gate",
+      "passed": true,
+      "observed": {
+        "before": [
+          {
+            "x": 0,
+            "y": 11,
+            "mt": 61,
+            "type": 10
+          },
+          {
+            "x": 0,
+            "y": 12,
+            "mt": 61,
+            "type": 10
+          }
+        ],
+        "after": [
+          {
+            "x": 0,
+            "y": 11,
+            "mt": 61,
+            "type": 10
+          },
+          {
+            "x": 0,
+            "y": 12,
+            "mt": 61,
+            "type": 10
+          }
+        ],
+        "opened_unchanged": true,
+        "trial_prizes_unchanged": true,
+        "message": "A trial seal holds this crossing.|Complete this wood's required task and claim its prize. A tool found elsewhere does not break the oath.",
+        "status": {
+          "state": 1,
+          "area": 1,
+          "cell": 4,
+          "player": {
+            "kind": 1,
+            "type": 0,
+            "state": 0,
+            "timer": 0,
+            "x": 21,
+            "y": 200,
+            "z": 0,
+            "speed": 0,
+            "hp": 0,
+            "coll": 8,
+            "facing": 3
+          },
+          "text": 1,
+          "player_health": [
+            24,
+            24
+          ]
+        }
+      }
+    },
+    {
+      "name": "cape test starts with full gear and no earned trial prizes",
+      "passed": true,
+      "observed": {
+        "gate_cell": 15,
+        "gate_side": 2,
+        "key_cells": [
+          11,
+          7,
+          0
+        ],
+        "tiles": [
+          {
+            "x": 15,
+            "y": 23,
+            "mt": 56,
+            "type": 2
+          },
+          {
+            "x": 16,
+            "y": 23,
+            "mt": 56,
+            "type": 2
+          }
+        ],
+        "inventory": {
+          "items": 127,
+          "items2": 31
+        }
+      }
+    },
+    {
+      "name": "cape actual input activates its native tool",
+      "passed": true,
+      "observed": {
+        "evidence": [
+          {
+            "pos": [
+              256,
+              356
+            ],
+            "state": 5,
+            "charge": 0,
+            "lamp": 0
+          },
+          {
+            "pos": [
+              256,
+              357
+            ],
+            "state": 5,
+            "charge": 0,
+            "lamp": 0
+          },
+          {
+            "pos": [
+              256,
+              359
+            ],
+            "state": 5,
+            "charge": 0,
+            "lamp": 0,
+            "text": 0
+          },
+          {
+            "pos": [
+              256,
+              365
+            ],
+            "state": 5,
+            "charge": 0,
+            "lamp": 0,
+            "text": 0
+          },
+          {
+            "pos": [
+              256,
+              371
+            ],
+            "state": 5,
+            "charge": 0,
+            "lamp": 0,
+            "text": 0
+          }
+        ],
+        "bombs": 99
+      }
+    },
+    {
+      "name": "cape cannot bypass original mandatory trial gate",
+      "passed": true,
+      "observed": {
+        "before": [
+          {
+            "x": 15,
+            "y": 23,
+            "mt": 56,
+            "type": 2
+          },
+          {
+            "x": 16,
+            "y": 23,
+            "mt": 56,
+            "type": 2
+          }
+        ],
+        "after": [
+          {
+            "x": 15,
+            "y": 23,
+            "mt": 56,
+            "type": 2
+          },
+          {
+            "x": 16,
+            "y": 23,
+            "mt": 56,
+            "type": 2
+          }
+        ],
+        "opened_unchanged": true,
+        "trial_prizes_unchanged": true,
+        "message": "This crossing still bears a trial seal.|Complete this wood's required task and claim its reward. Tools found elsewhere cannot break that oath.",
+        "status": {
+          "state": 1,
+          "area": 1,
+          "cell": 15,
+          "player": {
+            "kind": 1,
+            "type": 0,
+            "state": 0,
+            "timer": 22,
+            "x": 256,
+            "y": 364,
+            "z": 0,
+            "speed": 320,
+            "hp": 0,
+            "coll": 0,
+            "facing": 2
+          },
+          "text": 1,
+          "player_health": [
+            24,
+            24
+          ]
+        }
+      }
+    }
+  ],
+  "trace": {
+    "sewer_reachability": {
+      "room_metatiles": [
+        30,
+        20
+      ],
+      "spawn": [
+        200,
+        270
+      ],
+      "dry_spawn": true,
+      "reachable_4px_nodes": 2588,
+      "cabinet": [
+        1,
+        392,
+        110
+      ],
+      "policy": "Live Room 8px collision, player 10x8 feet box; feet hazard excludes PIT/WATER/HURT; cabinet collision included; moving NPCs excluded.",
+      "cream": {
+        "approach": [
+          456,
+          130
+        ],
+        "reachable": true,
+        "path_length_px": 396,
+        "path": [
+          [
+            200,
+            270
+          ],
+          [
+            204,
+            270
+          ],
+          [
+            208,
+            270
+          ],
+          [
+            212,
+            270
+          ],
+          [
+            216,
+            270
+          ],
+          [
+            220,
+            270
+          ],
+          [
+            224,
+            270
+          ],
+          [
+            228,
+            270
+          ],
+          [
+            232,
+            270
+          ],
+          [
+            236,
+            270
+          ],
+          [
+            240,
+            270
+          ],
+          [
+            244,
+            270
+          ],
+          [
+            248,
+            270
+          ],
+          [
+            248,
+            266
+          ],
+          [
+            248,
+            262
+          ],
+          [
+            248,
+            258
+          ],
+          [
+            248,
+            254
+          ],
+          [
+            248,
+            250
+          ],
+          [
+            248,
+            246
+          ],
+          [
+            248,
+            242
+          ],
+          [
+            248,
+            238
+          ],
+          [
+            248,
+            234
+          ],
+          [
+            248,
+            230
+          ],
+          [
+            248,
+            226
+          ],
+          [
+            248,
+            222
+          ],
+          [
+            248,
+            218
+          ],
+          [
+            248,
+            214
+          ],
+          [
+            248,
+            210
+          ],
+          [
+            248,
+            206
+          ],
+          [
+            248,
+            202
+          ],
+          [
+            248,
+            198
+          ],
+          [
+            248,
+            194
+          ],
+          [
+            248,
+            190
+          ],
+          [
+            248,
+            186
+          ],
+          [
+            248,
+            182
+          ],
+          [
+            248,
+            178
+          ],
+          [
+            248,
+            174
+          ],
+          [
+            248,
+            170
+          ],
+          [
+            248,
+            166
+          ],
+          [
+            248,
+            162
+          ],
+          [
+            248,
+            158
+          ],
+          [
+            248,
+            154
+          ],
+          [
+            248,
+            150
+          ],
+          [
+            248,
+            146
+          ],
+          [
+            248,
+            142
+          ],
+          [
+            252,
+            142
+          ],
+          [
+            256,
+            142
+          ],
+          [
+            260,
+            142
+          ],
+          [
+            264,
+            142
+          ],
+          [
+            268,
+            142
+          ],
+          [
+            272,
+            142
+          ],
+          [
+            276,
+            142
+          ],
+          [
+            280,
+            142
+          ],
+          [
+            284,
+            142
+          ],
+          [
+            288,
+            142
+          ],
+          [
+            292,
+            142
+          ],
+          [
+            296,
+            142
+          ],
+          [
+            300,
+            142
+          ],
+          [
+            304,
+            142
+          ],
+          [
+            308,
+            142
+          ],
+          [
+            312,
+            142
+          ],
+          [
+            316,
+            142
+          ],
+          [
+            320,
+            142
+          ],
+          [
+            324,
+            142
+          ],
+          [
+            328,
+            142
+          ],
+          [
+            332,
+            142
+          ],
+          [
+            336,
+            142
+          ],
+          [
+            340,
+            142
+          ],
+          [
+            344,
+            142
+          ],
+          [
+            348,
+            142
+          ],
+          [
+            352,
+            142
+          ],
+          [
+            356,
+            142
+          ],
+          [
+            360,
+            142
+          ],
+          [
+            364,
+            142
+          ],
+          [
+            368,
+            142
+          ],
+          [
+            372,
+            142
+          ],
+          [
+            376,
+            142
+          ],
+          [
+            380,
+            142
+          ],
+          [
+            384,
+            142
+          ],
+          [
+            388,
+            142
+          ],
+          [
+            392,
+            142
+          ],
+          [
+            396,
+            142
+          ],
+          [
+            400,
+            142
+          ],
+          [
+            404,
+            142
+          ],
+          [
+            408,
+            142
+          ],
+          [
+            412,
+            142
+          ],
+          [
+            416,
+            142
+          ],
+          [
+            420,
+            142
+          ],
+          [
+            424,
+            142
+          ],
+          [
+            428,
+            142
+          ],
+          [
+            432,
+            142
+          ],
+          [
+            436,
+            142
+          ],
+          [
+            440,
+            142
+          ],
+          [
+            444,
+            142
+          ],
+          [
+            448,
+            142
+          ],
+          [
+            452,
+            142
+          ],
+          [
+            456,
+            142
+          ],
+          [
+            456,
+            138
+          ],
+          [
+            456,
+            134
+          ],
+          [
+            456,
+            130
+          ]
+        ]
+      },
+      "annex": {
+        "approach": [
+          280,
+          130
+        ],
+        "reachable": true,
+        "path_length_px": 220,
+        "path": [
+          [
+            200,
+            270
+          ],
+          [
+            204,
+            270
+          ],
+          [
+            208,
+            270
+          ],
+          [
+            212,
+            270
+          ],
+          [
+            216,
+            270
+          ],
+          [
+            220,
+            270
+          ],
+          [
+            224,
+            270
+          ],
+          [
+            228,
+            270
+          ],
+          [
+            232,
+            270
+          ],
+          [
+            236,
+            270
+          ],
+          [
+            240,
+            270
+          ],
+          [
+            244,
+            270
+          ],
+          [
+            248,
+            270
+          ],
+          [
+            248,
+            266
+          ],
+          [
+            248,
+            262
+          ],
+          [
+            248,
+            258
+          ],
+          [
+            248,
+            254
+          ],
+          [
+            248,
+            250
+          ],
+          [
+            248,
+            246
+          ],
+          [
+            248,
+            242
+          ],
+          [
+            248,
+            238
+          ],
+          [
+            248,
+            234
+          ],
+          [
+            248,
+            230
+          ],
+          [
+            248,
+            226
+          ],
+          [
+            248,
+            222
+          ],
+          [
+            248,
+            218
+          ],
+          [
+            248,
+            214
+          ],
+          [
+            248,
+            210
+          ],
+          [
+            248,
+            206
+          ],
+          [
+            248,
+            202
+          ],
+          [
+            248,
+            198
+          ],
+          [
+            248,
+            194
+          ],
+          [
+            248,
+            190
+          ],
+          [
+            248,
+            186
+          ],
+          [
+            248,
+            182
+          ],
+          [
+            248,
+            178
+          ],
+          [
+            248,
+            174
+          ],
+          [
+            248,
+            170
+          ],
+          [
+            248,
+            166
+          ],
+          [
+            248,
+            162
+          ],
+          [
+            248,
+            158
+          ],
+          [
+            248,
+            154
+          ],
+          [
+            248,
+            150
+          ],
+          [
+            248,
+            146
+          ],
+          [
+            248,
+            142
+          ],
+          [
+            252,
+            142
+          ],
+          [
+            256,
+            142
+          ],
+          [
+            260,
+            142
+          ],
+          [
+            264,
+            142
+          ],
+          [
+            268,
+            142
+          ],
+          [
+            272,
+            142
+          ],
+          [
+            276,
+            142
+          ],
+          [
+            280,
+            142
+          ],
+          [
+            280,
+            138
+          ],
+          [
+            280,
+            134
+          ],
+          [
+            280,
+            130
+          ]
+        ]
+      }
+    },
+    "trial_bomb": {
+      "world": {
+        "cells": [
+          {
+            "gate": [
+              0,
+              2,
+              1,
+              0
+            ],
+            "role": 3,
+            "arg": 3,
+            "stage": 2
+          },
+          {
+            "gate": [
+              0,
+              1,
+              1,
+              2
+            ],
+            "role": 5,
+            "arg": 0,
+            "stage": 2
+          },
+          {
+            "gate": [
+              0,
+              2,
+              0,
+              1
+            ],
+            "role": 5,
+            "arg": 0,
+            "stage": 2
+          },
+          {
+            "gate": [
+              0,
+              4,
+              0,
+              2
+            ],
+            "role": 5,
+            "arg": 0,
+            "stage": 2
+          },
+          {
+            "gate": [
+              0,
+              0,
+              1,
+              4
+            ],
+            "role": 10,
+            "arg": 3,
+            "stage": 1
+          },
+          {
+            "gate": [
+              1,
+              1,
+              1,
+              0
+            ],
+            "role": 6,
+            "arg": 23,
+            "stage": 2
+          },
+          {
+            "gate": [
+              1,
+              0,
+              0,
+              1
+            ],
+            "role": 0,
+            "arg": 0,
+            "stage": 2
+          },
+          {
+            "gate": [
+              0,
+              0,
+              2,
+              0
+            ],
+            "role": 3,
+            "arg": 2,
+            "stage": 1
+          },
+          {
+            "gate": [
+              0,
+              0,
+              5,
+              0
+            ],
+            "role": 4,
+            "arg": 5,
+            "stage": 1
+          },
+          {
+            "gate": [
+              1,
+              0,
+              2,
+              0
+            ],
+            "role": 5,
+            "arg": 0,
+            "stage": 1
+          },
+          {
+            "gate": [
+              1,
+              0,
+              2,
+              0
+            ],
+            "role": 7,
+            "arg": 0,
+            "stage": 2
+          },
+          {
+            "gate": [
+              0,
+              0,
+              2,
+              0
+            ],
+            "role": 3,
+            "arg": 1,
+            "stage": 0
+          },
+          {
+            "gate": [
+              2,
+              0,
+              1,
+              0
+            ],
+            "role": 4,
+            "arg": 8,
+            "stage": 1
+          },
+          {
+            "gate": [
+              5,
+              1,
+              1,
+              0
+            ],
+            "role": 0,
+            "arg": 0,
+            "stage": 1
+          },
+          {
+            "gate": [
+              2,
+              0,
+              1,
+              1
+            ],
+            "role": 0,
+            "arg": 0,
+            "stage": 1
+          },
+          {
+            "gate": [
+              2,
+              0,
+              6,
+              0
+            ],
+            "role": 5,
+            "arg": 0,
+            "stage": 2
+          },
+          {
+            "gate": [
+              2,
+              0,
+              1,
+              0
+            ],
+            "role": 10,
+            "arg": 3,
+            "stage": 0
+          },
+          {
+            "gate": [
+              1,
+              1,
+              0,
+              0
+            ],
+            "role": 4,
+            "arg": 0,
+            "stage": 1
+          },
+          {
+            "gate": [
+              1,
+              1,
+              3,
+              1
+            ],
+            "role": 4,
+            "arg": 7,
+            "stage": 1
+          },
+          {
+            "gate": [
+              1,
+              0,
+              0,
+              1
+            ],
+            "role": 0,
+            "arg": 0,
+            "stage": 1
+          },
+          {
+            "gate": [
+              6,
+              0,
+              0,
+              0
+            ],
+            "role": 2,
+            "arg": 0,
+            "stage": 3
+          },
+          {
+            "gate": [
+              1,
+              1,
+              0,
+              0
+            ],
+            "role": 4,
+            "arg": 6,
+            "stage": 0
+          },
+          {
+            "gate": [
+              0,
+              1,
+              7,
+              1
+            ],
+            "role": 1,
+            "arg": 0,
+            "stage": 0
+          },
+          {
+            "gate": [
+              3,
+              5,
+              0,
+              1
+            ],
+            "role": 8,
+            "arg": 0,
+            "stage": 0
+          },
+          {
+            "gate": [
+              0,
+              0,
+              0,
+              5
+            ],
+            "role": 4,
+            "arg": 4,
+            "stage": 0
+          }
+        ],
+        "entry": 22,
+        "goal": 20,
+        "gate_cell": [
+          23,
+          4,
+          15
+        ],
+        "gate_side": [
+          0,
+          3,
+          2
+        ],
+        "key_cell": [
+          11,
+          7,
+          0
+        ],
+        "path": [
+          22,
+          23,
+          18,
+          19,
+          14,
+          9,
+          4,
+          3,
+          2,
+          1,
+          6,
+          5,
+          10,
+          15,
+          20
+        ]
+      },
+      "before_flags": {
+        "flags": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "opened": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "myst_flags": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      "after_flags": {
+        "flags": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0
+        ],
+        "opened": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "myst_flags": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      "frames": [
+        {
+          "pos": [
+            256,
+            40
+          ],
+          "state": 0,
+          "charge": 1,
+          "lamp": 0
+        },
+        {
+          "pos": [
+            256,
+            40
+          ],
+          "state": 0,
+          "charge": 2,
+          "lamp": 0
+        },
+        {
+          "pos": [
+            256,
+            40
+          ],
+          "state": 0,
+          "charge": 3,
+          "lamp": 0
+        },
+        {
+          "pos": [
+            256,
+            40
+          ],
+          "state": 0,
+          "charge": 4,
+          "lamp": 0
+        },
+        {
+          "pos": [
+            256,
+            40
+          ],
+          "state": 0,
+          "charge": 5,
+          "lamp": 0
+        },
+        {
+          "pos": [
+            256,
+            40
+          ],
+          "state": 0,
+          "charge": 6,
+          "lamp": 0
+        },
+        {
+          "pos": [
+            256,
+            40
+          ],
+          "state": 0,
+          "charge": 7,
+          "lamp": 0
+        },
+        {
+          "pos": [
+            256,
+            40
+          ],
+          "state": 0,
+          "charge": 8,
+          "lamp": 0
+        },
+        {
+          "pos": [
+            256,
+            40
+          ],
+          "state": 0,
+          "charge": 9,
+          "lamp": 0
+        },
+        {
+          "pos": [
+            256,
+            40
+          ],
+          "state": 0,
+          "charge": 10,
+          "lamp": 0
+        },
+        {
+          "pos": [
+            256,
+            40
+          ],
+          "state": 0,
+          "charge": 11,
+          "lamp": 0
+        },
+        {
+          "pos": [
+            256,
+            40
+          ],
+          "state": 0,
+          "charge": 12,
+          "lamp": 0
+        },
+        {
+          "pos": [
+            256,
+            40
+          ],
+          "state": 0,
+          "charge": 13,
+          "lamp": 0
+        },
+        {
+          "pos": [
+            256,
+            40
+          ],
+          "state": 0,
+          "charge": 14,
+          "lamp": 0
+        },
+        {
+          "pos": [
+            256,
+            40
+          ],
+          "state": 0,
+          "charge": 15,
+          "lamp": 0
+        },
+        {
+          "pos": [
+            256,
+            40
+          ],
+          "state": 0,
+          "charge": 16,
+          "lamp": 0
+        },
+        {
+          "pos": [
+            256,
+            40
+          ],
+          "state": 0,
+          "charge": 17,
+          "lamp": 0
+        },
+        {
+          "pos": [
+            256,
+            40
+          ],
+          "state": 0,
+          "charge": 18,
+          "lamp": 0
+        },
+        {
+          "pos": [
+            256,
+            40
+          ],
+          "state": 0,
+          "charge": 19,
+          "lamp": 0
+        },
+        {
+          "pos": [
+            256,
+            40
+          ],
+          "state": 0,
+          "charge": 20,
+          "lamp": 0
+        },
+        {
+          "pos": [
+            256,
+            40
+          ],
+          "state": 0,
+          "charge": 21,
+          "lamp": 0
+        },
+        {
+          "pos": [
+            256,
+            40
+          ],
+          "state": 0,
+          "charge": 22,
+          "lamp": 0
+        },
+        {
+          "pos": [
+            256,
+            40
+          ],
+          "state": 0,
+          "charge": 23,
+          "lamp": 0
+        },
+        {
+          "pos": [
+            256,
+            40
+          ],
+          "state": 0,
+          "charge": 24,
+          "lamp": 0
+        },
+        {
+          "pos": [
+            256,
+            40
+          ],
+          "state": 0,
+          "charge": 25,
+          "lamp": 0
+        },
+        {
+          "pos": [
+            256,
+            40
+          ],
+          "state": 0,
+          "charge": 26,
+          "lamp": 0
+        },
+        {
+          "pos": [
+            256,
+            40
+          ],
+          "state": 0,
+          "charge": 27,
+          "lamp": 0
+        },
+        {
+          "pos": [
+            256,
+            40
+          ],
+          "state": 0,
+          "charge": 28,
+          "lamp": 0
+        },
+        {
+          "pos": [
+            256,
+            40
+          ],
+          "state": 0,
+          "charge": 29,
+          "lamp": 0
+        },
+        {
+          "pos": [
+            256,
+            40
+          ],
+          "state": 0,
+          "charge": 30,
+          "lamp": 0
+        },
+        {
+          "pos": [
+            256,
+            40
+          ],
+          "state": 0,
+          "charge": 0,
+          "lamp": 0,
+          "text": 0
+        },
+        {
+          "pos": [
+            256,
+            40
+          ],
+          "state": 3,
+          "charge": 0,
+          "lamp": 0,
+          "text": 1
+        },
+        {
+          "pos": [
+            256,
+            40
+          ],
+          "state": 3,
+          "charge": 0,
+          "lamp": 0,
+          "text": 1
+        },
+        {
+          "pos": [
+            256,
+            40
+          ],
+          "state": 3,
+          "charge": 0,
+          "lamp": 0,
+          "text": 1
+        },
+        {
+          "pos": [
+            256,
+            40
+          ],
+          "state": 3,
+          "charge": 0,
+          "lamp": 0,
+          "text": 1
+        },
+        {
+          "pos": [
+            256,
+            40
+          ],
+          "state": 3,
+          "charge": 0,
+          "lamp": 0,
+          "text": 1
+        },
+        {
+          "pos": [
+            256,
+            40
+          ],
+          "state": 3,
+          "charge": 0,
+          "lamp": 0,
+          "text": 1
+        },
+        {
+          "pos": [
+            256,
+            40
+          ],
+          "state": 3,
+          "charge": 0,
+          "lamp": 0,
+          "text": 1
+        },
+        {
+          "pos": [
+            256,
+            40
+          ],
+          "state": 3,
+          "charge": 0,
+          "lamp": 0,
+          "text": 1
+        },
+        {
+          "pos": [
+            256,
+            40
+          ],
+          "state": 3,
+          "charge": 0,
+          "lamp": 0,
+          "text": 1
+        },
+        {
+          "pos": [
+            256,
+            40
+          ],
+          "state": 3,
+          "charge": 0,
+          "lamp": 0,
+          "text": 1
+        },
+        {
+          "pos": [
+            256,
+            40
+          ],
+          "state": 3,
+          "charge": 0,
+          "lamp": 0,
+          "text": 1
+        },
+        {
+          "pos": [
+            256,
+            40
+          ],
+          "state": 3,
+          "charge": 0,
+          "lamp": 0,
+          "text": 1
+        },
+        {
+          "pos": [
+            256,
+            40
+          ],
+          "state": 3,
+          "charge": 0,
+          "lamp": 0,
+          "text": 1
+        },
+        {
+          "pos": [
+            256,
+            40
+          ],
+          "state": 3,
+          "charge": 0,
+          "lamp": 0,
+          "text": 1
+        },
+        {
+          "pos": [
+            256,
+            40
+          ],
+          "state": 3,
+          "charge": 0,
+          "lamp": 0,
+          "text": 1
+        },
+        {
+          "pos": [
+            256,
+            40
+          ],
+          "state": 3,
+          "charge": 0,
+          "lamp": 0,
+          "text": 1
+        },
+        {
+          "pos": [
+            256,
+            40
+          ],
+          "state": 3,
+          "charge": 0,
+          "lamp": 0,
+          "text": 1
+        },
+        {
+          "pos": [
+            256,
+            40
+          ],
+          "state": 3,
+          "charge": 0,
+          "lamp": 0,
+          "text": 1
+        },
+        {
+          "pos": [
+            256,
+            40
+          ],
+          "state": 3,
+          "charge": 0,
+          "lamp": 0,
+          "text": 1
+        }
+      ]
+    },
+    "trial_lamp": {
+      "world": {
+        "cells": [
+          {
+            "gate": [
+              0,
+              2,
+              1,
+              0
+            ],
+            "role": 3,
+            "arg": 3,
+            "stage": 2
+          },
+          {
+            "gate": [
+              0,
+              1,
+              1,
+              2
+            ],
+            "role": 5,
+            "arg": 0,
+            "stage": 2
+          },
+          {
+            "gate": [
+              0,
+              2,
+              0,
+              1
+            ],
+            "role": 5,
+            "arg": 0,
+            "stage": 2
+          },
+          {
+            "gate": [
+              0,
+              4,
+              0,
+              2
+            ],
+            "role": 5,
+            "arg": 0,
+            "stage": 2
+          },
+          {
+            "gate": [
+              0,
+              0,
+              1,
+              4
+            ],
+            "role": 10,
+            "arg": 3,
+            "stage": 1
+          },
+          {
+            "gate": [
+              1,
+              1,
+              1,
+              0
+            ],
+            "role": 6,
+            "arg": 23,
+            "stage": 2
+          },
+          {
+            "gate": [
+              1,
+              0,
+              0,
+              1
+            ],
+            "role": 0,
+            "arg": 0,
+            "stage": 2
+          },
+          {
+            "gate": [
+              0,
+              0,
+              2,
+              0
+            ],
+            "role": 3,
+            "arg": 2,
+            "stage": 1
+          },
+          {
+            "gate": [
+              0,
+              0,
+              5,
+              0
+            ],
+            "role": 4,
+            "arg": 5,
+            "stage": 1
+          },
+          {
+            "gate": [
+              1,
+              0,
+              2,
+              0
+            ],
+            "role": 5,
+            "arg": 0,
+            "stage": 1
+          },
+          {
+            "gate": [
+              1,
+              0,
+              2,
+              0
+            ],
+            "role": 7,
+            "arg": 0,
+            "stage": 2
+          },
+          {
+            "gate": [
+              0,
+              0,
+              2,
+              0
+            ],
+            "role": 3,
+            "arg": 1,
+            "stage": 0
+          },
+          {
+            "gate": [
+              2,
+              0,
+              1,
+              0
+            ],
+            "role": 4,
+            "arg": 8,
+            "stage": 1
+          },
+          {
+            "gate": [
+              5,
+              1,
+              1,
+              0
+            ],
+            "role": 0,
+            "arg": 0,
+            "stage": 1
+          },
+          {
+            "gate": [
+              2,
+              0,
+              1,
+              1
+            ],
+            "role": 0,
+            "arg": 0,
+            "stage": 1
+          },
+          {
+            "gate": [
+              2,
+              0,
+              6,
+              0
+            ],
+            "role": 5,
+            "arg": 0,
+            "stage": 2
+          },
+          {
+            "gate": [
+              2,
+              0,
+              1,
+              0
+            ],
+            "role": 10,
+            "arg": 3,
+            "stage": 0
+          },
+          {
+            "gate": [
+              1,
+              1,
+              0,
+              0
+            ],
+            "role": 4,
+            "arg": 0,
+            "stage": 1
+          },
+          {
+            "gate": [
+              1,
+              1,
+              3,
+              1
+            ],
+            "role": 4,
+            "arg": 7,
+            "stage": 1
+          },
+          {
+            "gate": [
+              1,
+              0,
+              0,
+              1
+            ],
+            "role": 0,
+            "arg": 0,
+            "stage": 1
+          },
+          {
+            "gate": [
+              6,
+              0,
+              0,
+              0
+            ],
+            "role": 2,
+            "arg": 0,
+            "stage": 3
+          },
+          {
+            "gate": [
+              1,
+              1,
+              0,
+              0
+            ],
+            "role": 4,
+            "arg": 6,
+            "stage": 0
+          },
+          {
+            "gate": [
+              0,
+              1,
+              7,
+              1
+            ],
+            "role": 1,
+            "arg": 0,
+            "stage": 0
+          },
+          {
+            "gate": [
+              3,
+              5,
+              0,
+              1
+            ],
+            "role": 8,
+            "arg": 0,
+            "stage": 0
+          },
+          {
+            "gate": [
+              0,
+              0,
+              0,
+              5
+            ],
+            "role": 4,
+            "arg": 4,
+            "stage": 0
+          }
+        ],
+        "entry": 22,
+        "goal": 20,
+        "gate_cell": [
+          23,
+          4,
+          15
+        ],
+        "gate_side": [
+          0,
+          3,
+          2
+        ],
+        "key_cell": [
+          11,
+          7,
+          0
+        ],
+        "path": [
+          22,
+          23,
+          18,
+          19,
+          14,
+          9,
+          4,
+          3,
+          2,
+          1,
+          6,
+          5,
+          10,
+          15,
+          20
+        ]
+      },
+      "before_flags": {
+        "flags": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "opened": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "myst_flags": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      "after_flags": {
+        "flags": [
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "opened": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "myst_flags": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      "frames": [
+        {
+          "pos": [
+            21,
+            200
+          ],
+          "state": 0,
+          "charge": 0,
+          "lamp": 20
+        },
+        {
+          "pos": [
+            21,
+            200
+          ],
+          "state": 0,
+          "charge": 0,
+          "lamp": 20
+        },
+        {
+          "pos": [
+            21,
+            200
+          ],
+          "state": 0,
+          "charge": 0,
+          "lamp": 20,
+          "text": 1
+        },
+        {
+          "pos": [
+            21,
+            200
+          ],
+          "state": 0,
+          "charge": 0,
+          "lamp": 20,
+          "text": 1
+        },
+        {
+          "pos": [
+            21,
+            200
+          ],
+          "state": 0,
+          "charge": 0,
+          "lamp": 20,
+          "text": 1
+        },
+        {
+          "pos": [
+            21,
+            200
+          ],
+          "state": 0,
+          "charge": 0,
+          "lamp": 20,
+          "text": 1
+        },
+        {
+          "pos": [
+            21,
+            200
+          ],
+          "state": 0,
+          "charge": 0,
+          "lamp": 20,
+          "text": 1
+        },
+        {
+          "pos": [
+            21,
+            200
+          ],
+          "state": 0,
+          "charge": 0,
+          "lamp": 20,
+          "text": 1
+        },
+        {
+          "pos": [
+            21,
+            200
+          ],
+          "state": 0,
+          "charge": 0,
+          "lamp": 20,
+          "text": 1
+        },
+        {
+          "pos": [
+            21,
+            200
+          ],
+          "state": 0,
+          "charge": 0,
+          "lamp": 20,
+          "text": 1
+        },
+        {
+          "pos": [
+            21,
+            200
+          ],
+          "state": 0,
+          "charge": 0,
+          "lamp": 20,
+          "text": 1
+        },
+        {
+          "pos": [
+            21,
+            200
+          ],
+          "state": 0,
+          "charge": 0,
+          "lamp": 20,
+          "text": 1
+        },
+        {
+          "pos": [
+            21,
+            200
+          ],
+          "state": 0,
+          "charge": 0,
+          "lamp": 20,
+          "text": 1
+        },
+        {
+          "pos": [
+            21,
+            200
+          ],
+          "state": 0,
+          "charge": 0,
+          "lamp": 20,
+          "text": 1
+        },
+        {
+          "pos": [
+            21,
+            200
+          ],
+          "state": 0,
+          "charge": 0,
+          "lamp": 20,
+          "text": 1
+        },
+        {
+          "pos": [
+            21,
+            200
+          ],
+          "state": 0,
+          "charge": 0,
+          "lamp": 20,
+          "text": 1
+        },
+        {
+          "pos": [
+            21,
+            200
+          ],
+          "state": 0,
+          "charge": 0,
+          "lamp": 20,
+          "text": 1
+        },
+        {
+          "pos": [
+            21,
+            200
+          ],
+          "state": 0,
+          "charge": 0,
+          "lamp": 20,
+          "text": 1
+        },
+        {
+          "pos": [
+            21,
+            200
+          ],
+          "state": 0,
+          "charge": 0,
+          "lamp": 20,
+          "text": 1
+        },
+        {
+          "pos": [
+            21,
+            200
+          ],
+          "state": 0,
+          "charge": 0,
+          "lamp": 20,
+          "text": 1
+        },
+        {
+          "pos": [
+            21,
+            200
+          ],
+          "state": 0,
+          "charge": 0,
+          "lamp": 20,
+          "text": 1
+        },
+        {
+          "pos": [
+            21,
+            200
+          ],
+          "state": 0,
+          "charge": 0,
+          "lamp": 20,
+          "text": 1
+        }
+      ]
+    },
+    "trial_cape": {
+      "world": {
+        "cells": [
+          {
+            "gate": [
+              0,
+              2,
+              1,
+              0
+            ],
+            "role": 3,
+            "arg": 3,
+            "stage": 2
+          },
+          {
+            "gate": [
+              0,
+              1,
+              1,
+              2
+            ],
+            "role": 5,
+            "arg": 0,
+            "stage": 2
+          },
+          {
+            "gate": [
+              0,
+              2,
+              0,
+              1
+            ],
+            "role": 5,
+            "arg": 0,
+            "stage": 2
+          },
+          {
+            "gate": [
+              0,
+              4,
+              0,
+              2
+            ],
+            "role": 5,
+            "arg": 0,
+            "stage": 2
+          },
+          {
+            "gate": [
+              0,
+              0,
+              1,
+              4
+            ],
+            "role": 10,
+            "arg": 3,
+            "stage": 1
+          },
+          {
+            "gate": [
+              1,
+              1,
+              1,
+              0
+            ],
+            "role": 6,
+            "arg": 23,
+            "stage": 2
+          },
+          {
+            "gate": [
+              1,
+              0,
+              0,
+              1
+            ],
+            "role": 0,
+            "arg": 0,
+            "stage": 2
+          },
+          {
+            "gate": [
+              0,
+              0,
+              2,
+              0
+            ],
+            "role": 3,
+            "arg": 2,
+            "stage": 1
+          },
+          {
+            "gate": [
+              0,
+              0,
+              5,
+              0
+            ],
+            "role": 4,
+            "arg": 5,
+            "stage": 1
+          },
+          {
+            "gate": [
+              1,
+              0,
+              2,
+              0
+            ],
+            "role": 5,
+            "arg": 0,
+            "stage": 1
+          },
+          {
+            "gate": [
+              1,
+              0,
+              2,
+              0
+            ],
+            "role": 7,
+            "arg": 0,
+            "stage": 2
+          },
+          {
+            "gate": [
+              0,
+              0,
+              2,
+              0
+            ],
+            "role": 3,
+            "arg": 1,
+            "stage": 0
+          },
+          {
+            "gate": [
+              2,
+              0,
+              1,
+              0
+            ],
+            "role": 4,
+            "arg": 8,
+            "stage": 1
+          },
+          {
+            "gate": [
+              5,
+              1,
+              1,
+              0
+            ],
+            "role": 0,
+            "arg": 0,
+            "stage": 1
+          },
+          {
+            "gate": [
+              2,
+              0,
+              1,
+              1
+            ],
+            "role": 0,
+            "arg": 0,
+            "stage": 1
+          },
+          {
+            "gate": [
+              2,
+              0,
+              6,
+              0
+            ],
+            "role": 5,
+            "arg": 0,
+            "stage": 2
+          },
+          {
+            "gate": [
+              2,
+              0,
+              1,
+              0
+            ],
+            "role": 10,
+            "arg": 3,
+            "stage": 0
+          },
+          {
+            "gate": [
+              1,
+              1,
+              0,
+              0
+            ],
+            "role": 4,
+            "arg": 0,
+            "stage": 1
+          },
+          {
+            "gate": [
+              1,
+              1,
+              3,
+              1
+            ],
+            "role": 4,
+            "arg": 7,
+            "stage": 1
+          },
+          {
+            "gate": [
+              1,
+              0,
+              0,
+              1
+            ],
+            "role": 0,
+            "arg": 0,
+            "stage": 1
+          },
+          {
+            "gate": [
+              6,
+              0,
+              0,
+              0
+            ],
+            "role": 2,
+            "arg": 0,
+            "stage": 3
+          },
+          {
+            "gate": [
+              1,
+              1,
+              0,
+              0
+            ],
+            "role": 4,
+            "arg": 6,
+            "stage": 0
+          },
+          {
+            "gate": [
+              0,
+              1,
+              7,
+              1
+            ],
+            "role": 1,
+            "arg": 0,
+            "stage": 0
+          },
+          {
+            "gate": [
+              3,
+              5,
+              0,
+              1
+            ],
+            "role": 8,
+            "arg": 0,
+            "stage": 0
+          },
+          {
+            "gate": [
+              0,
+              0,
+              0,
+              5
+            ],
+            "role": 4,
+            "arg": 4,
+            "stage": 0
+          }
+        ],
+        "entry": 22,
+        "goal": 20,
+        "gate_cell": [
+          23,
+          4,
+          15
+        ],
+        "gate_side": [
+          0,
+          3,
+          2
+        ],
+        "key_cell": [
+          11,
+          7,
+          0
+        ],
+        "path": [
+          22,
+          23,
+          18,
+          19,
+          14,
+          9,
+          4,
+          3,
+          2,
+          1,
+          6,
+          5,
+          10,
+          15,
+          20
+        ]
+      },
+      "before_flags": {
+        "flags": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "opened": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "myst_flags": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      "after_flags": {
+        "flags": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "opened": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "myst_flags": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      "frames": [
+        {
+          "pos": [
+            256,
+            356
+          ],
+          "state": 5,
+          "charge": 0,
+          "lamp": 0
+        },
+        {
+          "pos": [
+            256,
+            357
+          ],
+          "state": 5,
+          "charge": 0,
+          "lamp": 0
+        },
+        {
+          "pos": [
+            256,
+            359
+          ],
+          "state": 5,
+          "charge": 0,
+          "lamp": 0,
+          "text": 0
+        },
+        {
+          "pos": [
+            256,
+            365
+          ],
+          "state": 5,
+          "charge": 0,
+          "lamp": 0,
+          "text": 0
+        },
+        {
+          "pos": [
+            256,
+            371
+          ],
+          "state": 5,
+          "charge": 0,
+          "lamp": 0,
+          "text": 0
+        },
+        {
+          "pos": [
+            256,
+            377
+          ],
+          "state": 5,
+          "charge": 0,
+          "lamp": 0,
+          "text": 0
+        },
+        {
+          "pos": [
+            256,
+            364
+          ],
+          "state": 0,
+          "charge": 0,
+          "lamp": 0,
+          "text": 1
+        },
+        {
+          "pos": [
+            256,
+            364
+          ],
+          "state": 0,
+          "charge": 0,
+          "lamp": 0,
+          "text": 1
+        },
+        {
+          "pos": [
+            256,
+            364
+          ],
+          "state": 0,
+          "charge": 0,
+          "lamp": 0,
+          "text": 1
+        },
+        {
+          "pos": [
+            256,
+            364
+          ],
+          "state": 0,
+          "charge": 0,
+          "lamp": 0,
+          "text": 1
+        },
+        {
+          "pos": [
+            256,
+            364
+          ],
+          "state": 0,
+          "charge": 0,
+          "lamp": 0,
+          "text": 1
+        },
+        {
+          "pos": [
+            256,
+            364
+          ],
+          "state": 0,
+          "charge": 0,
+          "lamp": 0,
+          "text": 1
+        },
+        {
+          "pos": [
+            256,
+            364
+          ],
+          "state": 0,
+          "charge": 0,
+          "lamp": 0,
+          "text": 1
+        },
+        {
+          "pos": [
+            256,
+            364
+          ],
+          "state": 0,
+          "charge": 0,
+          "lamp": 0,
+          "text": 1
+        },
+        {
+          "pos": [
+            256,
+            364
+          ],
+          "state": 0,
+          "charge": 0,
+          "lamp": 0,
+          "text": 1
+        },
+        {
+          "pos": [
+            256,
+            364
+          ],
+          "state": 0,
+          "charge": 0,
+          "lamp": 0,
+          "text": 1
+        },
+        {
+          "pos": [
+            256,
+            364
+          ],
+          "state": 0,
+          "charge": 0,
+          "lamp": 0,
+          "text": 1
+        },
+        {
+          "pos": [
+            256,
+            364
+          ],
+          "state": 0,
+          "charge": 0,
+          "lamp": 0,
+          "text": 1
+        },
+        {
+          "pos": [
+            256,
+            364
+          ],
+          "state": 0,
+          "charge": 0,
+          "lamp": 0,
+          "text": 1
+        },
+        {
+          "pos": [
+            256,
+            364
+          ],
+          "state": 0,
+          "charge": 0,
+          "lamp": 0,
+          "text": 1
+        },
+        {
+          "pos": [
+            256,
+            364
+          ],
+          "state": 0,
+          "charge": 0,
+          "lamp": 0,
+          "text": 1
+        },
+        {
+          "pos": [
+            256,
+            364
+          ],
+          "state": 0,
+          "charge": 0,
+          "lamp": 0,
+          "text": 1
+        }
+      ]
+    }
+  },
+  "fixtures": "Native integration checks for the frozen release, without rebuilding it.\n\nOnly explicit fixtures are the deterministic title seed, player navigation\n(position/facing/safe standing point), pending normal room transitions, and a\nfull player inventory for negative trial tests. The probe never writes enemy\nstate/HP, terrain/collision, trial/completion flags, audio state or framebuffer.\nDry Sewer reachability is computed from the actual loaded Room and ROM tile\ntypes; interaction/return and modal/audio behavior use real mGBA key inputs.\n",
+  "completed": true,
+  "passed": true
+}

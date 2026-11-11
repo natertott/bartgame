@@ -1867,3 +1867,20 @@ updates, including complete multipart chains in all three tested backgrounds;
 peak observed world OBJ 744/876 and OAM 58/128. Unedited native frames, exact
 source/frame traces and disclosed fixtures remain distinct from source atlases
 in the [enemy qualification notes](../handoff-restoration/ENEMIES.md).
+
+## Drain arch activation, recorded 2026-11-11
+
+**Status:** adopted local interaction correction after the user's report that
+the Curdled Cream door did not work. Door pixels and the Drain layout remain
+unchanged. The drawn arch ends at world y110, but the earlier A-only trigger
+was centered twenty pixels below it. Walking into the picture left the trigger.
+Both new arches now share their picture's anchor, accept A throughout the
+visible arch and approach, and enter on a northward walk across the sill. Return
+positions remain below the sill, preventing immediate re-entry. Optional lock
+messages are latched until the upward input is released.
+
+The previous endpoint-positioning test missed this normal walking behavior.
+`tools/sewer_entrance_review.py` now walks from the real Drain spawn using
+D-pad, A and shield inputs; it does not assign position, state or camera.
+The new ROM also passes the earned Cream route and original boundary controls.
+See [the door repair and native evidence](../../../curdled-cream-review/door-fix/README.md).

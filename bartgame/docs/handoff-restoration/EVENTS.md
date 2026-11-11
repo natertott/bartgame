@@ -5,8 +5,49 @@ ordinary starting equipment, and boss win flow remain in place. The new
 optional annex uses `AREA_HANDOFF = 4`; source event IDs are appended rather
 than repurposing existing mystery-room IDs. The Drain's new annex entrance
 leads to eight working service desks. A challenge desk reaches every new
-site. Cream's three required tool trials use separate saved site IDs
+site. Cream's three tool-trial sites use separate saved site IDs
 160–162, so optional annex completions cannot complete those trials.
+
+## Provenance and unfinished regional integration
+
+**The Challenge Annex was an implementation invention.** The handoff did not
+specify an Annex, a challenge-selection desk, four mechanism workshops, or an
+optional Four Seals menu. These were added as a way to expose restored systems
+while retaining the existing game. Preserving existing features did not require
+putting the additions in a separate area.
+
+The underlying services and mechanics have source provenance. Chapter 06,
+lines 12–18, describes hub drafts, an inn, a shop, a trophy case and hints.
+However, chapter 06, lines 116–118, explicitly places events on generated-area
+room nodes, and lines 122–143 place the seven quest types in regional content.
+Chapter 07's architecture places puzzles, NPCs and other content through the
+area generator. The Annex's menus and fixed courses are not that integration.
+
+The current deployment is narrower than the earlier completion claim:
+
+- The seven added quest state machines start in Annex sites. Courier delivery
+  reaches the Forest, but it is an Annex-to-Forest errand, not an errand between
+  two generated regions. Wandering fusers also appear in the Forest and Cream.
+- The added memory pair, certified block boards, cleanup, portal/pocket and
+  other event variants are exposed through Annex selection. Cream uses three
+  specific generated trial sites for switches, waves and a miniboss; this does
+  not place the whole new event vocabulary throughout generated areas.
+- The new mechanism and traversal families are demonstrated in Annex courts.
+  Their physical behavior is implemented, but procedural placement of those
+  families as regional obstacles, routes and rewards remains unfinished.
+- The endless arena and adaptive four-step contract are Annex modes. They do
+  not implement regional escalating waves or a chain selecting objectives from
+  the generated world. The opening loadout draft is an optional Annex service,
+  rather than part of the ordinary run-start sequence.
+- Colored fusion consequences currently open Annex caches, a pocket and a
+  course bridge. Field fusers alone do not provide generated regional fusion
+  gates. The opt-in Cream entitlement threshold is also an implementation
+  adaptation, not a user-specified entrance requirement.
+
+Existing Forest content, new field enemies and tools, the Cream's traversal
+graph and its three trials remain real game content. Native tests below still
+qualify the particular mechanics and scenes they exercised. They do not prove
+completion of the missing regional placement and run-flow integration.
 
 ## Sources and adaptations
 

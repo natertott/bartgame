@@ -1,0 +1,541 @@
+{
+  "source_commit": "2bc08ecad81e0acbf52933cf6d69c3ad2e2414ce",
+  "rom_sha256": "e8df68ad63350948894742cad7e4f4085600857f26ec55aaa545b0697cd9954e",
+  "emulator": "mGBA0.10.5",
+  "files": [
+    {
+      "path": "frozen/bartgame.gba",
+      "sha256": "e8df68ad63350948894742cad7e4f4085600857f26ec55aaa545b0697cd9954e",
+      "bytes": 10568420,
+      "kind": "frozen build"
+    },
+    {
+      "path": "frozen/bartgame.elf",
+      "sha256": "f68f0d4da5b9c4575d3897f5ba36ffe66120512c5c2eae8104ff7d85dd1ea5b5",
+      "bytes": 12232296,
+      "kind": "frozen build"
+    },
+    {
+      "path": "frozen/bartgame.map",
+      "sha256": "4c6053855f1cfa5638cfb93dbff61c83e15f20631a2a669cff6028cdd3fb823d",
+      "bytes": 256670,
+      "kind": "frozen build"
+    },
+    {
+      "path": "frozen/assets.h",
+      "sha256": "3700d8321b2b7b6e6b615911bdb09ac97c01e45a946eb6ad65ae64e65ca6d1e5",
+      "bytes": 219911,
+      "kind": "frozen build"
+    },
+    {
+      "path": "frozen/source-commit.txt",
+      "sha256": "d47d3da5608ea113c7d431bbc71f4956b8fdd52498feb5e3b3b00a64ffc8a115",
+      "bytes": 41,
+      "kind": "frozen build"
+    },
+    {
+      "path": "native/natural-entrances/annex-walk-approach.png",
+      "sha256": "5a174d8d9f8470328a6426f5646e74448e724ec7f04207ec2e7affaffd6a9d7c",
+      "bytes": 7782,
+      "kind": "actual mGBA output/report"
+    },
+    {
+      "path": "native/natural-entrances/annex-walk-result.png",
+      "sha256": "41f55415240a3e6567bd48f95048e915e19610d464e528e4a3f0e77162f8d0b1",
+      "bytes": 2766,
+      "kind": "actual mGBA output/report"
+    },
+    {
+      "path": "native/natural-entrances/annex-walk.gif",
+      "sha256": "d154ac6e171c357d25499b5311465505de8b91940f7291939032a83cf5a66f9b",
+      "bytes": 43141,
+      "kind": "actual mGBA output/report"
+    },
+    {
+      "path": "native/natural-entrances/cream-front-A-approach.png",
+      "sha256": "a3661769fcf68ce4b0efd0c431706c0e71964b2368910861e855758e1e980722",
+      "bytes": 7857,
+      "kind": "actual mGBA output/report"
+    },
+    {
+      "path": "native/natural-entrances/cream-front-A-arrival.png",
+      "sha256": "7bf9c655f3060eb9a7e9d6449ff189e3fc743ec0f988ccc347647afd70ff43d0",
+      "bytes": 3852,
+      "kind": "actual mGBA output/report"
+    },
+    {
+      "path": "native/natural-entrances/cream-front-A.gif",
+      "sha256": "c3c39e79085d99bdfbbf7a7f851ea8ddd7d27e6386215966f6f1224bf89d6705",
+      "bytes": 31183,
+      "kind": "actual mGBA output/report"
+    },
+    {
+      "path": "native/natural-entrances/cream-return-no-bounce.png",
+      "sha256": "408cba359eb8ea1b3dd9c110e6dddae699217bd0fcab97c30ed9922aced796ac",
+      "bytes": 7836,
+      "kind": "actual mGBA output/report"
+    },
+    {
+      "path": "native/natural-entrances/cream-visible-A-approach.png",
+      "sha256": "a3661769fcf68ce4b0efd0c431706c0e71964b2368910861e855758e1e980722",
+      "bytes": 7857,
+      "kind": "actual mGBA output/report"
+    },
+    {
+      "path": "native/natural-entrances/cream-visible-A-before.png",
+      "sha256": "75b8dcd7bd34cf762a4acf19dff9a569d1fc8186ed61a85faa5ca3a4c4d54888",
+      "bytes": 7832,
+      "kind": "actual mGBA output/report"
+    },
+    {
+      "path": "native/natural-entrances/cream-visible-A-result.png",
+      "sha256": "2053ee71a92c4f44c9fdcaa7b4a3ce99294fac0182158c1e153a881d907b580c",
+      "bytes": 3847,
+      "kind": "actual mGBA output/report"
+    },
+    {
+      "path": "native/natural-entrances/cream-visible-A.gif",
+      "sha256": "68cd44962795c59bf5a7dfc86cc01f37ab1dab2a69223c7789be6478b532860a",
+      "bytes": 101697,
+      "kind": "actual mGBA output/report"
+    },
+    {
+      "path": "native/natural-entrances/cream-walk-approach.png",
+      "sha256": "a3661769fcf68ce4b0efd0c431706c0e71964b2368910861e855758e1e980722",
+      "bytes": 7857,
+      "kind": "actual mGBA output/report"
+    },
+    {
+      "path": "native/natural-entrances/cream-walk-result.png",
+      "sha256": "e2a61378bc2c18b9ec752292d2a206ca8fa1f25cfb88673acb1bd5be77f1176b",
+      "bytes": 3858,
+      "kind": "actual mGBA output/report"
+    },
+    {
+      "path": "native/natural-entrances/cream-walk.gif",
+      "sha256": "835492df8c762e3f93ce80489a886f042218c064e65c28641b6d1fadff1a0faa",
+      "bytes": 43191,
+      "kind": "actual mGBA output/report"
+    },
+    {
+      "path": "native/natural-entrances/entitlement-approach.png",
+      "sha256": "5a174d8d9f8470328a6426f5646e74448e724ec7f04207ec2e7affaffd6a9d7c",
+      "bytes": 7782,
+      "kind": "actual mGBA output/report"
+    },
+    {
+      "path": "native/natural-entrances/entitlement-locked-arch.png",
+      "sha256": "dd83d8564d66347736757ee7fb88ad191ff76cd856e55646890ef69b2778af16",
+      "bytes": 7047,
+      "kind": "actual mGBA output/report"
+    },
+    {
+      "path": "native/natural-entrances/report.json",
+      "sha256": "cf0c3cb78d1bdb32c81c2ca87d0aa7901eca8f2d727a06cca36a342e6aa123c4",
+      "bytes": 1713700,
+      "kind": "actual mGBA output/report"
+    },
+    {
+      "path": "native/boundaries/01-sewer-cream-approach.png",
+      "sha256": "607a6b677436d2aa438cd47ec64a5405be3fb1c8cfdd6dfc1da80052c6a393b9",
+      "bytes": 4728,
+      "kind": "actual mGBA output/report"
+    },
+    {
+      "path": "native/boundaries/02-cream-entry-stairs.png",
+      "sha256": "c241ddbf0ed68fc864047d2d34b50b16ebd74356e17893d5470cd714e90d4bf2",
+      "bytes": 3849,
+      "kind": "actual mGBA output/report"
+    },
+    {
+      "path": "native/boundaries/03-cream-returns-matching-sewer-arch.png",
+      "sha256": "03798dbe4a1efa5f7da1cb7167ffa22bfb41eb5fd5e8537f85c202a04676cbcc",
+      "bytes": 7808,
+      "kind": "actual mGBA output/report"
+    },
+    {
+      "path": "native/boundaries/04-annex-entry.png",
+      "sha256": "7966e5fdfae7149004cee1844acc684c06c3b837914c07c1f40067de112ac707",
+      "bytes": 2800,
+      "kind": "actual mGBA output/report"
+    },
+    {
+      "path": "native/boundaries/05-annex-inn-modal.png",
+      "sha256": "eefaa47f42b31825bd973a829709ecf1d0702a99e6eb71e1586f850ada730911",
+      "bytes": 2583,
+      "kind": "actual mGBA output/report"
+    },
+    {
+      "path": "native/boundaries/06-annex-returns-matching-sewer-arch.png",
+      "sha256": "bfa956a384318a961d85c1c3c6e280d6e948818d578b95885b0351937091a8dd",
+      "bytes": 7638,
+      "kind": "actual mGBA output/report"
+    },
+    {
+      "path": "native/boundaries/07-original-pause.png",
+      "sha256": "c8f8e1d42eb59fe519b7d8231675dace900ea0d1852f34e4296a25392876f550",
+      "bytes": 3993,
+      "kind": "actual mGBA output/report"
+    },
+    {
+      "path": "native/boundaries/08-select-satchel.png",
+      "sha256": "6bff14f0384b9538ea8d9193142ba9383a50491b088ee8b0e4808e49ced61747",
+      "bytes": 4498,
+      "kind": "actual mGBA output/report"
+    },
+    {
+      "path": "native/boundaries/09-satchel-atlas.png",
+      "sha256": "f7e2b41bec48d55fba3372f637e306537760f0bcb7bc5ab25408af88f217a4ff",
+      "bytes": 3157,
+      "kind": "actual mGBA output/report"
+    },
+    {
+      "path": "native/boundaries/10-native-atlas-zoom.png",
+      "sha256": "04b4f62a545f2bfb11475cf922db1dbc50a8a13a249cbe4cecddcb5c42039962",
+      "bytes": 2789,
+      "kind": "actual mGBA output/report"
+    },
+    {
+      "path": "native/boundaries/report.json",
+      "sha256": "06fb65b867f37840ff687554a5858040637d6c853a02f3afca517acfba6a3b1a",
+      "bytes": 70534,
+      "kind": "actual mGBA output/report"
+    },
+    {
+      "path": "native/boundaries/trial-bomb-no-bypass.png",
+      "sha256": "5a1b7ade14e2509ddbecf886258259d57cb30d64a98ccd056db5d1209a9e3a47",
+      "bytes": 8396,
+      "kind": "actual mGBA output/report"
+    },
+    {
+      "path": "native/boundaries/trial-cape-no-bypass.png",
+      "sha256": "b0456b0c3740d2f27e62257cfd9d0ae9df0ea68ba32067b806519e7432fccfa4",
+      "bytes": 9106,
+      "kind": "actual mGBA output/report"
+    },
+    {
+      "path": "native/boundaries/trial-lamp-no-bypass.png",
+      "sha256": "ab263b8c15c5effdd8692d0b202f15c2ee1009a0dd0e9f802fbc05210c875675",
+      "bytes": 9257,
+      "kind": "actual mGBA output/report"
+    },
+    {
+      "path": "native/earned-cream-route/abi/provenance.json",
+      "sha256": "cc9f5b8f39c6d97b7c1268de197f5403abceda7b65c8c9587a0befcc5a15484c",
+      "bytes": 614,
+      "kind": "actual mGBA output/report"
+    },
+    {
+      "path": "native/earned-cream-route/cream-entry.png",
+      "sha256": "84a3567210bc4be9bf23ebc0fc020a99b80fd627ed8f847b7cf868b1468608e7",
+      "bytes": 3852,
+      "kind": "actual mGBA output/report"
+    },
+    {
+      "path": "native/earned-cream-route/cream-return-stairs.png",
+      "sha256": "c241ddbf0ed68fc864047d2d34b50b16ebd74356e17893d5470cd714e90d4bf2",
+      "bytes": 3849,
+      "kind": "actual mGBA output/report"
+    },
+    {
+      "path": "native/earned-cream-route/drop-2-cell-12.png",
+      "sha256": "b9e1989a00ac07f09a4d5a1e6bb4fc8898823f22c87591222ba13f88ea5561d6",
+      "bytes": 4142,
+      "kind": "actual mGBA output/report"
+    },
+    {
+      "path": "native/earned-cream-route/drop-2-cell-17.png",
+      "sha256": "14bcaa68e67c259f4f319e4bfeb909d925f880c4704b4d2e7b383e341e51e9b8",
+      "bytes": 4437,
+      "kind": "actual mGBA output/report"
+    },
+    {
+      "path": "native/earned-cream-route/drop-2-cell-22.png",
+      "sha256": "89b05c6cfa256ca89781113ea6ad91f5391ff6a965888426a8d411b49f9e36a0",
+      "bytes": 4173,
+      "kind": "actual mGBA output/report"
+    },
+    {
+      "path": "native/earned-cream-route/drop-2-rooms.gif",
+      "sha256": "241a0b682a7c4b44a1ef5e1ab7a8adfa8638491bde80ad9b1cd60b58f98f0bed",
+      "bytes": 231343,
+      "kind": "actual mGBA output/report"
+    },
+    {
+      "path": "native/earned-cream-route/earned-bombs.png",
+      "sha256": "f20250be01764f6a8a97cf12b6a93b5b0fc568001191d07fe3dc31ee3e65c8a0",
+      "bytes": 3522,
+      "kind": "actual mGBA output/report"
+    },
+    {
+      "path": "native/earned-cream-route/earned-cape-pacci.png",
+      "sha256": "458ded85b97adc25ad37e250e5c5c4fa64baf548fce4371dc3c4c0620a8478ce",
+      "bytes": 4092,
+      "kind": "actual mGBA output/report"
+    },
+    {
+      "path": "native/earned-cream-route/earned-lamp.png",
+      "sha256": "e503e3ec4cd06fdea7f196761ed5d3d1195582ef63f20a46ada159da50fba884",
+      "bytes": 4560,
+      "kind": "actual mGBA output/report"
+    },
+    {
+      "path": "native/earned-cream-route/equip-07.png",
+      "sha256": "2d865d8849cf6f7c45ef953e87b0b76c31e20770f730421157b8f6bbc29a920b",
+      "bytes": 4660,
+      "kind": "actual mGBA output/report"
+    },
+    {
+      "path": "native/earned-cream-route/equip-0f.png",
+      "sha256": "9f5b40417bd9fbf718c3967a5db3d491005c1410c97862d2c5710b0fad82789c",
+      "bytes": 4982,
+      "kind": "actual mGBA output/report"
+    },
+    {
+      "path": "native/earned-cream-route/equip-12.png",
+      "sha256": "f5bfb15d6900cd27b4a944a78fed85dc87989f33b6e5d4690f21b9a79b06ff27",
+      "bytes": 5247,
+      "kind": "actual mGBA output/report"
+    },
+    {
+      "path": "native/earned-cream-route/initial.json",
+      "sha256": "17eee99981274d6e80c6abdcc2cfd88497326a7fc8cf7405589e26eeea71b79c",
+      "bytes": 14415,
+      "kind": "actual mGBA output/report"
+    },
+    {
+      "path": "native/earned-cream-route/local-drop.gif",
+      "sha256": "7379c591f71c43ede37c4d3616345bc0d68cccd12f9fac61a323f7f23ef00706",
+      "bytes": 102542,
+      "kind": "actual mGBA output/report"
+    },
+    {
+      "path": "native/earned-cream-route/local-drop.json",
+      "sha256": "49cf635958e89824c61883cc1d4d628d22f360eca86a014d39cdf639379a0436",
+      "bytes": 8448,
+      "kind": "actual mGBA output/report"
+    },
+    {
+      "path": "native/earned-cream-route/long-drop.json",
+      "sha256": "d200cb5456f6402af866739c18eb46d250340685be5b6296e3edd46076fa5653",
+      "bytes": 46576,
+      "kind": "actual mGBA output/report"
+    },
+    {
+      "path": "native/earned-cream-route/opened-gate-25.png",
+      "sha256": "f7a7d8260ae333645cef0eb8fae617f5059f46a60769ce143a44db46d0ef0a49",
+      "bytes": 4239,
+      "kind": "actual mGBA output/report"
+    },
+    {
+      "path": "native/earned-cream-route/opened-gate-45.png",
+      "sha256": "26fb4392dc844e12dc8396ae998c36c8ed20f40fa6d2055ff303536526c61a08",
+      "bytes": 3899,
+      "kind": "actual mGBA output/report"
+    },
+    {
+      "path": "native/earned-cream-route/peak-combat.json",
+      "sha256": "fe066ea8bd2871d8a647a5aee7517d48cf88f8dc0b6e76702fe080a48994e1a3",
+      "bytes": 94058,
+      "kind": "actual mGBA output/report"
+    },
+    {
+      "path": "native/earned-cream-route/peak-core-combat.gif",
+      "sha256": "f6e75c1d2d88336635b51b08e210fb791a4caf9f66386034a0b4b846f732bf5f",
+      "bytes": 145977,
+      "kind": "actual mGBA output/report"
+    },
+    {
+      "path": "native/earned-cream-route/peak-core-hit-001.png",
+      "sha256": "7a967efcbd27e392d8ec419012cd075fdf16f0c670d2fee5efe2d9a241f2166a",
+      "bytes": 3984,
+      "kind": "actual mGBA output/report"
+    },
+    {
+      "path": "native/earned-cream-route/peak-core-hit-002.png",
+      "sha256": "4cf35c3258c6c79ba542906a8b3703805d3afee18623913a9d94034e159695c1",
+      "bytes": 3996,
+      "kind": "actual mGBA output/report"
+    },
+    {
+      "path": "native/earned-cream-route/peak-core-hit-003.png",
+      "sha256": "c41b0e4dcb66cd04f986953fb798db3578a6c2456815ba5d19b1d6615274e48f",
+      "bytes": 3990,
+      "kind": "actual mGBA output/report"
+    },
+    {
+      "path": "native/earned-cream-route/peak-core-hit-004.png",
+      "sha256": "8c2013c9eb372f52482ed2cadd17d2984fbdaf73f8bde734405caee457205df0",
+      "bytes": 3987,
+      "kind": "actual mGBA output/report"
+    },
+    {
+      "path": "native/earned-cream-route/peak-core-hit-005.png",
+      "sha256": "349e778c588c94cc3fc07c72ab5ba4d82953a44a3604f1f06334ff6d6f1c5b20",
+      "bytes": 3987,
+      "kind": "actual mGBA output/report"
+    },
+    {
+      "path": "native/earned-cream-route/peak-core-hit-006.png",
+      "sha256": "237d4b94939c390a5f8f698bbc77a89ab50ca3969622909018ee8127630f801c",
+      "bytes": 3991,
+      "kind": "actual mGBA output/report"
+    },
+    {
+      "path": "native/earned-cream-route/peak-core-hit-007.png",
+      "sha256": "9198abbbb489496c62b1e21df329d3c69d63dd67c29ac491efd06e49acde057a",
+      "bytes": 3982,
+      "kind": "actual mGBA output/report"
+    },
+    {
+      "path": "native/earned-cream-route/peak-core-hit-008.png",
+      "sha256": "030d2f16cffa9e4c28331dea588aed6659312d28df4d5f22cd0b6ab9be20f58b",
+      "bytes": 3985,
+      "kind": "actual mGBA output/report"
+    },
+    {
+      "path": "native/earned-cream-route/peak-core-hit-009.png",
+      "sha256": "87a39f55de797c5f235c5893b4c0d1efbcd57f5f57274e80c220802619140f7f",
+      "bytes": 3991,
+      "kind": "actual mGBA output/report"
+    },
+    {
+      "path": "native/earned-cream-route/peak-core-hit-010.png",
+      "sha256": "461868f47ff59c6bc940e43b1c74cc8e5f39985b69bf87c593d533b75b84c330",
+      "bytes": 3992,
+      "kind": "actual mGBA output/report"
+    },
+    {
+      "path": "native/earned-cream-route/peak-core-hit-011.png",
+      "sha256": "54ab509a414e1959ae7f6a3b4c581494f56f43139e68fda77412e5ab4ae8808d",
+      "bytes": 3994,
+      "kind": "actual mGBA output/report"
+    },
+    {
+      "path": "native/earned-cream-route/peak-core-hit-012.png",
+      "sha256": "b26361809fa821ab700a2cdb71bbd946ad874bc474f38caaaadc597d8fac8610",
+      "bytes": 3989,
+      "kind": "actual mGBA output/report"
+    },
+    {
+      "path": "native/earned-cream-route/peak-core-hit-013.png",
+      "sha256": "7086efb1a59ee2f755eb7f2beefc206a50037909ff2fdda5daaf382db8dfd3f2",
+      "bytes": 3995,
+      "kind": "actual mGBA output/report"
+    },
+    {
+      "path": "native/earned-cream-route/peak-core-hit-014.png",
+      "sha256": "732b1f222c64af19973f428175671ac2456868951fb07a4f7c3b1faae1bec54a",
+      "bytes": 3989,
+      "kind": "actual mGBA output/report"
+    },
+    {
+      "path": "native/earned-cream-route/peak-core-hit-015.png",
+      "sha256": "f7319706b91ba308acabdd71f0b6bdc6dea7ffd9f15a68f1bb220f8ab5ca2930",
+      "bytes": 3996,
+      "kind": "actual mGBA output/report"
+    },
+    {
+      "path": "native/earned-cream-route/peak-core-hit-016.png",
+      "sha256": "47fbde60709a27683035d7b385f06dd1447f68c6548272758e15a335cf3bc15e",
+      "bytes": 192,
+      "kind": "actual mGBA output/report"
+    },
+    {
+      "path": "native/earned-cream-route/peak-pacci-exposes-core.png",
+      "sha256": "038510068b4b1114250fb8ed27c2ad709407ebf636fc84318905e47ff5a872af",
+      "bytes": 3596,
+      "kind": "actual mGBA output/report"
+    },
+    {
+      "path": "native/earned-cream-route/peak-real-arrival.png",
+      "sha256": "b818145921f41b14f0bc8fca4f4687bc5d055c3731960d64d67cda67b45830cd",
+      "bytes": 3785,
+      "kind": "actual mGBA output/report"
+    },
+    {
+      "path": "native/earned-cream-route/peak-result.png",
+      "sha256": "5b4c12e9f2f629ddc2e55577761724b4c9ad918bbae9b3df11e7d4a1299cb809",
+      "bytes": 2323,
+      "kind": "actual mGBA output/report"
+    },
+    {
+      "path": "native/earned-cream-route/progression.json",
+      "sha256": "2927ba3308f05e153e4c90f166933738d91a259f12323b0b7f705d893695198d",
+      "bytes": 58063,
+      "kind": "actual mGBA output/report"
+    },
+    {
+      "path": "native/earned-cream-route/report.json",
+      "sha256": "31a9070b49ed33d864047cd18e9826e8a8d21c422cfecbe83cce3cd9ce3c7e02",
+      "bytes": 81710,
+      "kind": "actual mGBA output/report"
+    },
+    {
+      "path": "native/earned-cream-route/returned-to-drain.png",
+      "sha256": "010514331574a26d2ad966d3a54696b18364320f872939afe3e659252d5db632",
+      "bytes": 7807,
+      "kind": "actual mGBA output/report"
+    },
+    {
+      "path": "native/earned-cream-route/sewer.png",
+      "sha256": "4ea14342f575cde672a11723a54a3b860105522ccc79c5c9956d9b213010b78c",
+      "bytes": 5049,
+      "kind": "actual mGBA output/report"
+    },
+    {
+      "path": "native/earned-cream-route/trial1-enter.png",
+      "sha256": "24265a8cb22e16b8da3ebf136950f6d4e8d908b2111b93f4594e0fd8252da05c",
+      "bytes": 2717,
+      "kind": "actual mGBA output/report"
+    },
+    {
+      "path": "native/earned-cream-route/trial1-switches-finished.png",
+      "sha256": "a520325b4552469976fd94f7834f780d91ff8db572525028d4e514d2ffa4a546",
+      "bytes": 2714,
+      "kind": "actual mGBA output/report"
+    },
+    {
+      "path": "native/earned-cream-route/trial2-enter.png",
+      "sha256": "c2abe9293bc0b58d383bca5f5c38be0590ea121895c331a84ccba93de675360e",
+      "bytes": 3062,
+      "kind": "actual mGBA output/report"
+    },
+    {
+      "path": "native/earned-cream-route/trial2-wave-finished.png",
+      "sha256": "ba7a58f8e0d4e11f239052820dbc14e71145ffd55b24229238b034458c1fb8d8",
+      "bytes": 2406,
+      "kind": "actual mGBA output/report"
+    },
+    {
+      "path": "native/earned-cream-route/trial3-darknut-finished.png",
+      "sha256": "2f233c71faea3bdec80f7d15be8ac3be2e2acf15dd1a5608ba6401694667dec4",
+      "bytes": 2840,
+      "kind": "actual mGBA output/report"
+    },
+    {
+      "path": "native/earned-cream-route/trial3-enter.png",
+      "sha256": "a49d5c12b2dca6511ae697821de494e9e2313330472e4be8d316a347b1a61408",
+      "bytes": 2843,
+      "kind": "actual mGBA output/report"
+    },
+    {
+      "path": "qualification/art-preservation.json",
+      "sha256": "2246868c7f50376faba609a7b2f60c6a3daba3de3092a50d867da5faf0ed6df0",
+      "bytes": 214811,
+      "kind": "qualification/build metadata"
+    },
+    {
+      "path": "qualification/published-failing-entrances.json",
+      "sha256": "dc623cd04becdb9329822e3dc1b17197754373df5b7041bfa8eaec86cd9924c1",
+      "bytes": 1713635,
+      "kind": "qualification/build metadata"
+    },
+    {
+      "path": "qualification/build.log",
+      "sha256": "04d48a48ac78e3a92149ab2136614f5ac2928d6e04451e4a0b3a5b215c4addfe",
+      "bytes": 1712,
+      "kind": "qualification/build metadata"
+    }
+  ]
+}

@@ -1,11 +1,23 @@
 # Curdled Cream and additive handoff restoration
 
+**Entrance repair available:** [download the corrected ROM and see natural-input
+verification](door-fix/README.md). Walking into the visible Cream arch now
+works. The original build and its evidence below retain their own identity.
+
+
 [Download the ROM](https://raw.githubusercontent.com/natertott/bartgame/handoff-restoration-curdled-cream/downloads/curdled-cream-0b9344d7/bartgame-0b9344d7.gba) · [ZIP](https://raw.githubusercontent.com/natertott/bartgame/handoff-restoration-curdled-cream/downloads/curdled-cream-0b9344d7/bartgame-0b9344d7.zip) · [Checksums and frozen evidence](../downloads/curdled-cream-0b9344d7/README.md)
 
 This normal standalone build adds The Curdled Cream, impact-thrown bombs and
 the playable systems from the original-game handoff. Existing Forest/Drain
 art, Bloom's selected Step-and-cut, original music, the three Forest trials,
 appearance options, discovery cabinet and completed-run reset remain.
+
+**Integration correction:** the Challenge Annex was invented for this
+implementation; it was not specified in the handoff. It exposes working
+services, quests and mechanism demonstrations, but much of that content has not
+been integrated into generated regional play as the handoff described. The
+earlier statement that the handoff restoration was complete was too broad.
+[What is implemented and what remains to integrate](../bartgame/docs/handoff-restoration/EVENTS.md#provenance-and-unfinished-regional-integration).
 
 Source: `0b9344d781e65e304d245bd9ae4aecdbc7056837`.
 ROM SHA256: `b348cf4d628aee1abb9b71d8885a9f04094332c5252490ff2dd8f8e7cd0bf1b8`.
@@ -77,10 +89,12 @@ enemy forms, feasibility notes and the seven unspecified future regions.
   switches, Minish gaps, clone pressure plates, tool-specific surfaces,
   moving platforms, a minecart, parachute and a bridge with an upper deck and
   lower underpass. Four optional courts expose these verbs through real objects.
-- **Quests and economy:** all seven quest forms, memory and cleanup games,
+- **Quests and economy in Annex sites:** all seven quest forms, memory and cleanup games,
   1,528 solver-certified push boards, shops, three-pick drafts, an inn, matching
   kinstone fusers, food, bottled charms, equipment upgrades, an adaptive four-step
-  contract and cross-run progression. These accompany the original Forest tasks.
+  contract and cross-run progression. Courier delivery also reaches the Forest.
+  Regional placement of the full new quest/event vocabulary remains unfinished;
+  existing Forest tasks remain available.
 - **Enemies:** 75 appended original visual forms adapt the curated handoff
   mechanics and extra boss setups, alongside the existing nine. Counters include
   suction, flipping, shield rebounds, elemental armor, exposed tails, capture

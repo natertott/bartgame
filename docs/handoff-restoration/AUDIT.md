@@ -1,6 +1,6 @@
 # Original-game handoff restoration audit
 
-This records the **current additive implementation and its qualification** for the restoration requested on 2026-11-11. All 494 entries retain a historical baseline plus a separate current status, executable evidence and test scope in [features.json](features.json). Historical baseline: `3fa7774eb72e67f155f91107a772ca1fd202fc8f`. The standalone game is `bartgame/`; the outer repository contains the TMC/QUICKSTART oracle.
+This records the **current additive implementation, unfinished integration and qualification** for the restoration requested on 2026-11-11. All 494 entries retain a historical baseline plus a separate current status, executable evidence and test scope in [features.json](features.json). Historical baseline: `3fa7774eb72e67f155f91107a772ca1fd202fc8f`. The standalone game is `bartgame/`; the outer repository contains the TMC/QUICKSTART oracle.
 
 ## Authority and scope
 
@@ -595,7 +595,7 @@ A feature needs every applicable path: obtainable/enterable through play, actual
 
 Validate seed proofs against the actual C generator. Check real room tiles and directed links, exercise input transitions, capture native 240×160 mGBA output, measure busy rooms with original music, and preserve existing art checksums. The baseline audit itself performed no build or runtime tests. The current qualification below records the subsequent implementation and measured tests.
 
-## Current implementation and final qualification
+## Current implementation and scoped qualification
 
 Final source: `0b9344d781e65e304d245bd9ae4aecdbc7056837`.
 Final ROM SHA-256: `b348cf4d628aee1abb9b71d8885a9f04094332c5252490ff2dd8f8e7cd0bf1b8`.
@@ -613,12 +613,38 @@ approved Forest progression, ordinary sword feel, original music and existing
 artwork remain. The cabinet lists 139 meaningful items and 84 enemies while
 retaining 146 stable raw item identifiers.
 
+### Correction: Annex access is not regional integration
+
+The Challenge Annex, its selection menus and optional Four Seals contract were
+invented implementation choices, not locations or run modes specified by the
+handoff. The source describes hub services at chapter 06, lines 12–18, but also
+requires events to become generated room-node decorations at lines 116–118 and
+quests to inhabit regions at lines 122–143. The earlier claim that no named
+implementation gap remained was too broad: working mechanics and reachable
+demonstration rooms do not complete those placement requirements.
+
+Regional integration remains unfinished for the seven added quest forms, the
+full added event vocabulary, the new mechanism/traversal families and colored
+fusion consequences. The current courier starts in the Annex and ends in the
+Forest. The current endless arena and four-step chain use Annex instances,
+rather than regional wave progression and objectives selected from the generated
+world. The draft is an optional Annex service, not the ordinary opening flow.
+Preserving existing Forest features did not require these choices.
+
+The Cream's three trial sites, its climbing/cave/drop graph, new field enemies,
+tool rewards and wandering fusers are actual regional additions. This correction
+does not discard their tests or the Annex mechanics. The machine ledger now
+records deployment separately and marks the directly affected integration
+requirements `partial_integration`; its native evidence retains its original
+mechanical scope. See the [deployment detail](../../bartgame/docs/handoff-restoration/EVENTS.md#provenance-and-unfinished-regional-integration).
+
 | Current qualification | Rows |
 | --- | ---: |
 | `baseline_preserved_qualified` | 23 |
-| `native_sample_qualified` | 181 |
-| `code_connected_pending_native` | 247 |
+| `native_sample_qualified` | 179 |
+| `code_connected_pending_native` | 244 |
 | `host_logic_qualified_pending_native` | 10 |
+| `partial_integration` | 5 |
 | `retired_exempt` | 2 |
 | `host_geometry_qualified_pending_native` | 9 |
 | `host_equivalence_qualified` | 1 |
@@ -693,10 +719,12 @@ and **16,067 fine-mask collision checks**. The extension preserves the original
 base save layouts and uses independent versioned records. Reports retain
 source/build hashes and explicit adapters/fixtures.
 
-No named runtime implementation gap remains in the current ledger. Many rows
-remain `code_connected_pending_native`: their implementation and reachable
-caller are present, while the entire per-feature acceptance matrix has not
-been independently exercised in mGBA. Native evidence is representative; it
+Named regional integration gaps remain as described above and in the machine
+ledger. Many other rows remain `code_connected_pending_native`: executable
+mechanics and reachable callers are present, while the entire per-feature
+acceptance matrix has not been independently exercised in mGBA. An Annex test
+is evidence of that scene, not proof of generated-world deployment. Native
+evidence is representative; it
 does not claim an unassisted run, every keyframe on every background, every
 possible encounter combination or 100,000 native playthroughs.
 

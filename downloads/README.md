@@ -1,6 +1,14 @@
 # BARTGAME downloads
 
-## Curdled Cream and handoff restoration — current release
+## Curdled Cream entrance repair — current release
+
+- [Download repaired ROM](https://raw.githubusercontent.com/natertott/bartgame/handoff-restoration-curdled-cream/downloads/curdled-cream-door-2bc08eca/bartgame-2bc08eca.gba)
+- [ZIP and checksums](curdled-cream-door-2bc08eca/README.md)
+- [Real-input door verification and Annex provenance correction](../curdled-cream-review/door-fix/README.md)
+
+Fixes walking into the Cream/Annex arches and pressing A inside them.
+
+## Curdled Cream and handoff restoration — preceding build
 
 - [ROM](https://raw.githubusercontent.com/natertott/bartgame/handoff-restoration-curdled-cream/downloads/curdled-cream-0b9344d7/bartgame-0b9344d7.gba)
 - [ZIP](https://raw.githubusercontent.com/natertott/bartgame/handoff-restoration-curdled-cream/downloads/curdled-cream-0b9344d7/bartgame-0b9344d7.zip)

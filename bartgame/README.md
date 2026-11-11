@@ -79,6 +79,10 @@ random top-row peak. Its original native terrain and actors append to the
 existing art pack. The Annex supplies restored gear, seven quest forms,
 solver-certified puzzle boards, shops, fusions and four mechanism courts;
 Select from the existing pause screen opens its expanded Satchel and atlas.
+The Annex and its challenge menus were invented implementation choices, not
+locations specified by the handoff. Most of those added quests and mechanisms
+currently live in Annex sites; integrating the full vocabulary into generated
+regional content remains unfinished. See the [deployment correction](docs/handoff-restoration/EVENTS.md#provenance-and-unfinished-regional-integration).
 
 The forest is a seeded 5×5 maze with a balanced target of 24–32 required room
 crossings. Three required trials award Blightseed Bombs, the candle/Grail Lamp

@@ -9122,7 +9122,9 @@
         ],
         "native_scope": "Exact release3, seed0xB4A7, fresh private SRAM. Player position/facing are navigation fixtures; actual buttons perform interactions, pushes, lifts, drops, combat and delivery. No HP, enemy, terrain, puzzle/completion flags or quest-counter writes. Quests additionally assign already-drafted Mole Mitts to A; source inventory is not invented. One ordinary-mode complete three-round draft; no claim of statistical60/30/10 verification or all prerequisite/capacity cases in native play.",
         "rom_sha256": "b348cf4d628aee1abb9b71d8885a9f04094332c5252490ff2dd8f8e7cd0bf1b8"
-      }
+      },
+      "integration_status": "optional_annex_service_normal_opening_flow_pending",
+      "integration_notes": "The three selection rounds work as an optional Annex service. They are not part of the normal run-start sequence or its first-area selection flow as described in chapter05:130-137."
     },
     {
       "id": "run.safe_entry",
@@ -9193,7 +9195,7 @@
       "classification": "runtime_requirement",
       "baseline_status": "missing",
       "baseline_evidence": [],
-      "restoration_status": "native_sample_qualified",
+      "restoration_status": "partial_integration",
       "suggested_owner": "handoff_events",
       "acceptance": "Exercise the behavior through reachable gameplay; inspect state and real emulator output. A name, catalogue entry, dialogue line or enum alone is not implementation.",
       "restoration_evidence": [
@@ -9212,7 +9214,9 @@
         ],
         "native_scope": "Exact release3, seed0xB4A7, fresh private SRAM. Player position/facing are navigation fixtures; actual buttons perform interactions, pushes, lifts, drops, combat and delivery. No HP, enemy, terrain, puzzle/completion flags or quest-counter writes. Quests additionally assign already-drafted Mole Mitts to A; source inventory is not invented. Dedicated-instance lifecycle and all four actual steps are asserted. Combat uses real B sword attacks; an actual Fairy Well interaction heals before boss, without HP writes. No contract state/counter/enemy/completion writes. This annex adaptation preserves the current main Forest progression rather than claiming original authored-region equivalence.",
         "rom_sha256": "b348cf4d628aee1abb9b71d8885a9f04094332c5252490ff2dd8f8e7cd0bf1b8"
-      }
+      },
+      "integration_status": "regional_integration_incomplete",
+      "integration_notes": "The four-step contract is implemented and tested in dedicated Annex instances. Selecting adaptive objectives from the generated regional world remains unfinished; the Annex contract is not equivalent to that integration."
     },
     {
       "id": "run.chain_item",
@@ -9413,7 +9417,7 @@
       "classification": "runtime_requirement",
       "baseline_status": "missing",
       "baseline_evidence": [],
-      "restoration_status": "code_connected_pending_native",
+      "restoration_status": "partial_integration",
       "suggested_owner": "handoff_enemies",
       "acceptance": "Exercise the behavior through reachable gameplay; inspect state and real emulator output. A name, catalogue entry, dialogue line or enum alone is not implementation.",
       "restoration_evidence": [
@@ -9429,7 +9433,9 @@
         ],
         "native": [],
         "native_scope": "Executable reachable annex behavior. Separate events suites document services14/14, quests28/28, contract22/22 and meta19/19 on their stated frozen build; these are not silently relabeled as the final ROM."
-      }
+      },
+      "integration_status": "regional_integration_incomplete",
+      "integration_notes": "The Annex endless arena implements escalating quota/refill behavior. Deploying the added regional wave progression through generated regions remains unfinished."
     },
     {
       "id": "wave.refill",
@@ -9471,7 +9477,7 @@
       "classification": "runtime_requirement",
       "baseline_status": "missing",
       "baseline_evidence": [],
-      "restoration_status": "code_connected_pending_native",
+      "restoration_status": "partial_integration",
       "suggested_owner": "handoff_enemies",
       "acceptance": "Exercise the behavior through reachable gameplay; inspect state and real emulator output. A name, catalogue entry, dialogue line or enum alone is not implementation.",
       "restoration_evidence": [
@@ -9487,7 +9493,9 @@
         ],
         "native": [],
         "native_scope": "Executable reachable annex behavior. Separate events suites document services14/14, quests28/28, contract22/22 and meta19/19 on their stated frozen build; these are not silently relabeled as the final ROM."
-      }
+      },
+      "integration_status": "regional_integration_incomplete",
+      "integration_notes": "The added quota-wave first-clear system is implemented for Annex sites. This does not complete generated-regional quota waves and their one-time regional clear rewards; existing Forest rewards remain separate."
     },
     {
       "id": "wave.roles",
@@ -9753,7 +9761,9 @@
         ],
         "native_scope": "Exact release3, seed0xB4A7, fresh private SRAM. Player position/facing are navigation fixtures; actual buttons perform interactions, pushes, lifts, drops, combat and delivery. No HP, enemy, terrain, puzzle/completion flags or quest-counter writes. Quests additionally assign already-drafted Mole Mitts to A; source inventory is not invented. Actual A chest claim and subsequent contract progress are asserted; this sample does not validate every reward category or all possible item prerequisites.",
         "rom_sha256": "b348cf4d628aee1abb9b71d8885a9f04094332c5252490ff2dd8f8e7cd0bf1b8"
-      }
+      },
+      "integration_status": "annex_implementation_full_regional_placement_pending",
+      "integration_notes": "The added event implementation is exposed through Annex sites. Cream also places three specific trial kinds (switches, waves, miniboss); the full added event vocabulary is not integrated into generated regions. Existing Forest events of related kinds are retained."
     },
     {
       "id": "event.MINIBOSS",
@@ -9783,7 +9793,9 @@
         ],
         "native": [],
         "native_scope": "Executable reachable annex behavior. Separate events suites document services14/14, quests28/28, contract22/22 and meta19/19 on their stated frozen build; these are not silently relabeled as the final ROM."
-      }
+      },
+      "integration_status": "limited_cream_trial_placement",
+      "integration_notes": "The added event implementation is exposed through Annex sites. Cream also places three specific trial kinds (switches, waves, miniboss); the full added event vocabulary is not integrated into generated regions. Existing Forest events of related kinds are retained."
     },
     {
       "id": "event.NPC",
@@ -9813,7 +9825,9 @@
         ],
         "native": [],
         "native_scope": "Executable reachable annex behavior. Separate events suites document services14/14, quests28/28, contract22/22 and meta19/19 on their stated frozen build; these are not silently relabeled as the final ROM."
-      }
+      },
+      "integration_status": "annex_implementation_full_regional_placement_pending",
+      "integration_notes": "The added event implementation is exposed through Annex sites. Cream also places three specific trial kinds (switches, waves, miniboss); the full added event vocabulary is not integrated into generated regions. Existing Forest events of related kinds are retained."
     },
     {
       "id": "event.WAVES",
@@ -9843,7 +9857,9 @@
         ],
         "native": [],
         "native_scope": "Executable reachable annex behavior. Separate events suites document services14/14, quests28/28, contract22/22 and meta19/19 on their stated frozen build; these are not silently relabeled as the final ROM."
-      }
+      },
+      "integration_status": "limited_cream_trial_placement",
+      "integration_notes": "The added event implementation is exposed through Annex sites. Cream also places three specific trial kinds (switches, waves, miniboss); the full added event vocabulary is not integrated into generated regions. Existing Forest events of related kinds are retained."
     },
     {
       "id": "event.POT_LOTTERY",
@@ -9873,7 +9889,9 @@
         ],
         "native": [],
         "native_scope": "Executable reachable annex behavior. Separate events suites document services14/14, quests28/28, contract22/22 and meta19/19 on their stated frozen build; these are not silently relabeled as the final ROM."
-      }
+      },
+      "integration_status": "annex_implementation_full_regional_placement_pending",
+      "integration_notes": "The added event implementation is exposed through Annex sites. Cream also places three specific trial kinds (switches, waves, miniboss); the full added event vocabulary is not integrated into generated regions. Existing Forest events of related kinds are retained."
     },
     {
       "id": "event.FAIRY",
@@ -9906,7 +9924,9 @@
         ],
         "native_scope": "Exact release3, seed0xB4A7, fresh private SRAM. Player position/facing are navigation fixtures; actual buttons perform interactions, pushes, lifts, drops, combat and delivery. No HP, enemy, terrain, puzzle/completion flags or quest-counter writes. Quests additionally assign already-drafted Mole Mitts to A; source inventory is not invented. Healing interaction is used in the real contract route, without HP writes; no blanket fairy/bottle capture qualification.",
         "rom_sha256": "b348cf4d628aee1abb9b71d8885a9f04094332c5252490ff2dd8f8e7cd0bf1b8"
-      }
+      },
+      "integration_status": "annex_implementation_full_regional_placement_pending",
+      "integration_notes": "The added event implementation is exposed through Annex sites. Cream also places three specific trial kinds (switches, waves, miniboss); the full added event vocabulary is not integrated into generated regions. Existing Forest events of related kinds are retained."
     },
     {
       "id": "event.MEMORY",
@@ -9937,7 +9957,9 @@
         ],
         "native_scope": "Exact release3, seed0xB4A7, fresh private SRAM. Player position/facing are navigation fixtures; actual buttons perform interactions, pushes, lifts, drops, combat and delivery. No HP, enemy, terrain, puzzle/completion flags or quest-counter writes. Quests additionally assign already-drafted Mole Mitts to A; source inventory is not invented. Learn state and actual Recall completion are asserted; incorrect-input reset and other seeds remain outside this native sample.",
         "rom_sha256": "b348cf4d628aee1abb9b71d8885a9f04094332c5252490ff2dd8f8e7cd0bf1b8"
-      }
+      },
+      "integration_status": "annex_implementation_full_regional_placement_pending",
+      "integration_notes": "The added event implementation is exposed through Annex sites. Cream also places three specific trial kinds (switches, waves, miniboss); the full added event vocabulary is not integrated into generated regions. Existing Forest events of related kinds are retained."
     },
     {
       "id": "event.PUZZLE",
@@ -9970,7 +9992,9 @@
         ],
         "native_scope": "Exact release3, seed0xB4A7, fresh private SRAM. Player position/facing are navigation fixtures; actual buttons perform interactions, pushes, lifts, drops, combat and delivery. No HP, enemy, terrain, puzzle/completion flags or quest-counter writes. Quests additionally assign already-drafted Mole Mitts to A; source inventory is not invented. Only the neighboring-toggle variant is directly exercised; this is not native qualification of all three switch rule sets.",
         "rom_sha256": "b348cf4d628aee1abb9b71d8885a9f04094332c5252490ff2dd8f8e7cd0bf1b8"
-      }
+      },
+      "integration_status": "limited_cream_trial_placement",
+      "integration_notes": "The added event implementation is exposed through Annex sites. Cream also places three specific trial kinds (switches, waves, miniboss); the full added event vocabulary is not integrated into generated regions. Existing Forest events of related kinds are retained."
     },
     {
       "id": "event.BLOCKS",
@@ -10003,7 +10027,9 @@
         ],
         "native_scope": "Exact release3, seed0xB4A7, fresh private SRAM. Player position/facing are navigation fixtures; actual buttons perform interactions, pushes, lifts, drops, combat and delivery. No HP, enemy, terrain, puzzle/completion flags or quest-counter writes. Quests additionally assign already-drafted Mole Mitts to A; source inventory is not invented. Reads the actual ROM pool and live blocks, navigates to each certified far side, presses A, and asserts real push count/solved flag. No block or solved-state injection. Three boards at one run seed; exact-board cell matching, axis-respecting positive routes and reachable maze goal demonstrated. No native blanket claim for all pool entries or every illegal action.",
         "rom_sha256": "b348cf4d628aee1abb9b71d8885a9f04094332c5252490ff2dd8f8e7cd0bf1b8"
-      }
+      },
+      "integration_status": "annex_implementation_full_regional_placement_pending",
+      "integration_notes": "The added event implementation is exposed through Annex sites. Cream also places three specific trial kinds (switches, waves, miniboss); the full added event vocabulary is not integrated into generated regions. Existing Forest events of related kinds are retained."
     },
     {
       "id": "event.TORCHES",
@@ -10033,7 +10059,9 @@
         ],
         "native": [],
         "native_scope": "Executable reachable annex behavior. Separate events suites document services14/14, quests28/28, contract22/22 and meta19/19 on their stated frozen build; these are not silently relabeled as the final ROM."
-      }
+      },
+      "integration_status": "annex_implementation_full_regional_placement_pending",
+      "integration_notes": "The added event implementation is exposed through Annex sites. Cream also places three specific trial kinds (switches, waves, miniboss); the full added event vocabulary is not integrated into generated regions. Existing Forest events of related kinds are retained."
     },
     {
       "id": "event.CLEANUP",
@@ -10061,7 +10089,9 @@
         ],
         "native": [],
         "native_scope": "Executable reachable annex behavior. Separate events suites document services14/14, quests28/28, contract22/22 and meta19/19 on their stated frozen build; these are not silently relabeled as the final ROM."
-      }
+      },
+      "integration_status": "annex_implementation_full_regional_placement_pending",
+      "integration_notes": "The added event implementation is exposed through Annex sites. Cream also places three specific trial kinds (switches, waves, miniboss); the full added event vocabulary is not integrated into generated regions. Existing Forest events of related kinds are retained."
     },
     {
       "id": "event.CHEST_LOTTERY",
@@ -10257,7 +10287,9 @@
         ],
         "native_scope": "Exact release3, seed0xB4A7, fresh private SRAM. Player position/facing are navigation fixtures; actual buttons perform interactions, pushes, lifts, drops, combat and delivery. No HP, enemy, terrain, puzzle/completion flags or quest-counter writes. Quests additionally assign already-drafted Mole Mitts to A; source inventory is not invented. Native search/lift and quest completion are asserted; the prize chest collection/revisit is not separately asserted for this specific quest.",
         "rom_sha256": "b348cf4d628aee1abb9b71d8885a9f04094332c5252490ff2dd8f8e7cd0bf1b8"
-      }
+      },
+      "integration_status": "annex_origin_regional_placement_pending",
+      "integration_notes": "Added quest implementation is selected at an Annex site. Native success-path evidence qualifies that implementation; it does not establish generator placement of this quest in ordinary regional content."
     },
     {
       "id": "quest.hunt",
@@ -10289,7 +10321,9 @@
         ],
         "native_scope": "Exact release3, seed0xB4A7, fresh private SRAM. Player position/facing are navigation fixtures; actual buttons perform interactions, pushes, lifts, drops, combat and delivery. No HP, enemy, terrain, puzzle/completion flags or quest-counter writes. Quests additionally assign already-drafted Mole Mitts to A; source inventory is not invented. Real enemy actors and real sword damage/deaths satisfy the native quest counter. No enemy removal, damage/HP edits or timer/counter/completion writes.",
         "rom_sha256": "b348cf4d628aee1abb9b71d8885a9f04094332c5252490ff2dd8f8e7cd0bf1b8"
-      }
+      },
+      "integration_status": "annex_origin_regional_placement_pending",
+      "integration_notes": "Added quest implementation is selected at an Annex site. Native success-path evidence qualifies that implementation; it does not establish generator placement of this quest in ordinary regional content."
     },
     {
       "id": "quest.scav",
@@ -10321,7 +10355,9 @@
         ],
         "native_scope": "Exact release3, seed0xB4A7, fresh private SRAM. Player position/facing are navigation fixtures; actual buttons perform interactions, pushes, lifts, drops, combat and delivery. No HP, enemy, terrain, puzzle/completion flags or quest-counter writes. Quests additionally assign already-drafted Mole Mitts to A; source inventory is not invented. Only actual LS_DIG hidden placement, dry reachable approach and native Mitts-use completion are sampled. Player navigation and reassignment of an already-owned tool are explicit fixtures.",
         "rom_sha256": "b348cf4d628aee1abb9b71d8885a9f04094332c5252490ff2dd8f8e7cd0bf1b8"
-      }
+      },
+      "integration_status": "annex_origin_regional_placement_pending",
+      "integration_notes": "Added quest implementation is selected at an Annex site. Native success-path evidence qualifies that implementation; it does not establish generator placement of this quest in ordinary regional content."
     },
     {
       "id": "quest.stealth",
@@ -10353,7 +10389,9 @@
         ],
         "native_scope": "Exact release3, seed0xB4A7, fresh private SRAM. Player position/facing are navigation fixtures; actual buttons perform interactions, pushes, lifts, drops, combat and delivery. No HP, enemy, terrain, puzzle/completion flags or quest-counter writes. Quests additionally assign already-drafted Mole Mitts to A; source inventory is not invented. After one starting-position fixture, continuous movement inputs traverse the room without a direct teleport to the goal. Success only; no claim of negative cone-detection tests.",
         "rom_sha256": "b348cf4d628aee1abb9b71d8885a9f04094332c5252490ff2dd8f8e7cd0bf1b8"
-      }
+      },
+      "integration_status": "annex_origin_regional_placement_pending",
+      "integration_notes": "Added quest implementation is selected at an Annex site. Native success-path evidence qualifies that implementation; it does not establish generator placement of this quest in ordinary regional content."
     },
     {
       "id": "quest.carry",
@@ -10385,7 +10423,9 @@
         ],
         "native_scope": "Exact release3, seed0xB4A7, fresh private SRAM. Player position/facing are navigation fixtures; actual buttons perform interactions, pushes, lifts, drops, combat and delivery. No HP, enemy, terrain, puzzle/completion flags or quest-counter writes. Quests additionally assign already-drafted Mole Mitts to A; source inventory is not invented. Both real enemy waves and cargo mechanics complete through controls. Position/facing fixtures relocate Bloom, never cargo/enemies/HP/quest state. The actual PS_CARRY delivery path is asserted.",
         "rom_sha256": "b348cf4d628aee1abb9b71d8885a9f04094332c5252490ff2dd8f8e7cd0bf1b8"
-      }
+      },
+      "integration_status": "annex_origin_regional_placement_pending",
+      "integration_notes": "Added quest implementation is selected at an Annex site. Native success-path evidence qualifies that implementation; it does not establish generator placement of this quest in ordinary regional content."
     },
     {
       "id": "quest.courier",
@@ -10398,7 +10438,7 @@
       "classification": "runtime_requirement",
       "baseline_status": "missing",
       "baseline_evidence": [],
-      "restoration_status": "native_sample_qualified",
+      "restoration_status": "partial_integration",
       "suggested_owner": "handoff_events",
       "acceptance": "Exercise the behavior through reachable gameplay; inspect state and real emulator output. A name, catalogue entry, dialogue line or enum alone is not implementation.",
       "restoration_evidence": [
@@ -10417,7 +10457,9 @@
         ],
         "native_scope": "Exact release3, seed0xB4A7, fresh private SRAM. Player position/facing are navigation fixtures; actual buttons perform interactions, pushes, lifts, drops, combat and delivery. No HP, enemy, terrain, puzzle/completion flags or quest-counter writes. Quests additionally assign already-drafted Mole Mitts to A; source inventory is not invented. Native recipient coordinates and actual delivery/completed state are checked; room transitions use real exits/inputs with navigation-only player/safe-floor positioning at the Forest entrance.",
         "rom_sha256": "b348cf4d628aee1abb9b71d8885a9f04094332c5252490ff2dd8f8e7cd0bf1b8"
-      }
+      },
+      "integration_status": "regional_integration_incomplete",
+      "integration_notes": "The implemented delivery starts in an authored Annex quest room and ends at the Forest entry. The requirement to deliver between two generated regions remains unfinished."
     },
     {
       "id": "quest.blocks",
@@ -10449,7 +10491,9 @@
         ],
         "native_scope": "Exact release3, seed0xB4A7, fresh private SRAM. Player position/facing are navigation fixtures; actual buttons perform interactions, pushes, lifts, drops, combat and delivery. No HP, enemy, terrain, puzzle/completion flags or quest-counter writes. Quests additionally assign already-drafted Mole Mitts to A; source inventory is not invented. Live board and quest completion at one seed; no blocks or goal-state edits. Native reset and failure cases remain pending.",
         "rom_sha256": "b348cf4d628aee1abb9b71d8885a9f04094332c5252490ff2dd8f8e7cd0bf1b8"
-      }
+      },
+      "integration_status": "annex_origin_regional_placement_pending",
+      "integration_notes": "Added quest implementation is selected at an Annex site. Native success-path evidence qualifies that implementation; it does not establish generator placement of this quest in ordinary regional content."
     },
     {
       "id": "quest.stakes",
@@ -10478,7 +10522,9 @@
         ],
         "native": [],
         "native_scope": "Executable reachable annex behavior. Separate events suites document services14/14, quests28/28, contract22/22 and meta19/19 on their stated frozen build; these are not silently relabeled as the final ROM."
-      }
+      },
+      "integration_status": "annex_origin_regional_placement_pending",
+      "integration_notes": "Added quest implementation is selected at an Annex site. Native success-path evidence qualifies that implementation; it does not establish generator placement of this quest in ordinary regional content."
     },
     {
       "id": "quest.preserve",
@@ -10491,7 +10537,7 @@
       "classification": "runtime_requirement",
       "baseline_status": "missing",
       "baseline_evidence": [],
-      "restoration_status": "code_connected_pending_native",
+      "restoration_status": "partial_integration",
       "suggested_owner": "handoff_events",
       "acceptance": "Exercise the behavior through reachable gameplay; inspect state and real emulator output. A name, catalogue entry, dialogue line or enum alone is not implementation.",
       "restoration_evidence": [
@@ -10507,7 +10553,9 @@
         ],
         "native": [],
         "native_scope": "Executable reachable annex behavior. Separate events suites document services14/14, quests28/28, contract22/22 and meta19/19 on their stated frozen build; these are not silently relabeled as the final ROM."
-      }
+      },
+      "integration_status": "regional_integration_incomplete",
+      "integration_notes": "Existing Forest quests remain. All seven added quest kinds are accessible through Annex selection, but their placement alongside existing quests in generated regional content remains unfinished."
     },
     {
       "id": "puzzle.template",
@@ -30834,17 +30882,19 @@
     "native_sample_qualified": "Actual mGBA input/state/PPU evidence qualifies the stated scenario and disclosed fixtures; it does not claim all seeds or source-bit-identical behavior.",
     "baseline_preserved_qualified": "Existing selected feature retained; original art/ID checks and representative final-ROM regression evidence are attached. This does not claim every historical scenario was replayed.",
     "native_catalogue_qualified": "Actual final-ROM catalogue verifies raw-ID translation, native image/palette and readable notes; this is presentation evidence, not proof of every item use or enemy AI.",
-    "host_equivalence_qualified": "Independent Python production-generator mirror and explicit unsigned integer/PRNG behavior match every actual-C record byte for the stated boundary/full-width seeds and explicit fixed-certificate controls. Engineering-method qualification, not a claim of all-seed or native gameplay coverage."
+    "host_equivalence_qualified": "Independent Python production-generator mirror and explicit unsigned integer/PRNG behavior match every actual-C record byte for the stated boundary/full-width seeds and explicit fixed-certificate controls. Engineering-method qualification, not a claim of all-seed or native gameplay coverage.",
+    "partial_integration": "The mechanic is implemented and may have native evidence, but a required generated-region placement or normal run-flow integration detail remains unfinished. Existing mechanical qualification is retained separately."
   },
   "restoration_review": {
     "date": "2026-11-11",
-    "mode": "Final source implementation reviewed; all 494 rows retain historical baseline plus independent code/host/native qualification. Representative tests are not universal native proof.",
+    "mode": "Mechanical implementation and scoped qualification retained. User-question provenance review identifies unfinished generated-region and normal run-flow integration; Annex demonstrations are not equivalent to that deployment.",
     "baseline_unchanged": true,
     "counts": {
       "baseline_preserved_qualified": 23,
-      "native_sample_qualified": 181,
-      "code_connected_pending_native": 247,
+      "native_sample_qualified": 179,
+      "code_connected_pending_native": 244,
       "host_logic_qualified_pending_native": 10,
+      "partial_integration": 5,
       "retired_exempt": 2,
       "host_geometry_qualified_pending_native": 9,
       "host_equivalence_qualified": 1,
@@ -30861,7 +30911,13 @@
       "fine_shapes": "/workspace/setup/curdled-cream/shape-host-final/report.json",
       "independent_generator_twin": "/workspace/setup/curdled-cream/python-twin/report.json"
     },
-    "remaining_detail_gaps": [],
+    "remaining_detail_gaps": [
+      "run.chain",
+      "quest.courier",
+      "quest.preserve",
+      "wave.endless",
+      "wave.first_clear"
+    ],
     "native_evidence": [
       "/workspace/setup/curdled-cream/mobility-release3/report.json",
       "/workspace/setup/curdled-cream/journal-release3/report.json",
@@ -30913,6 +30969,156 @@
       "bartgame/docs/handoff-restoration/evidence/items-objects/objects/report.json"
     ],
     "final_source_commit": "0b9344d781e65e304d245bd9ae4aecdbc7056837",
-    "final_rom_sha256": "b348cf4d628aee1abb9b71d8885a9f04094332c5252490ff2dd8f8e7cd0bf1b8"
+    "final_rom_sha256": "b348cf4d628aee1abb9b71d8885a9f04094332c5252490ff2dd8f8e7cd0bf1b8",
+    "remaining_integration_gaps": [
+      "regional_event_placement",
+      "regional_quest_placement",
+      "regional_mechanism_placement",
+      "regional_waves_and_chain",
+      "regional_fusion_consequences",
+      "opening_loadout_flow"
+    ]
+  },
+  "integration_review": {
+    "trigger": "User asked whether Challenge Annex was specified by the handoff.",
+    "annex_provenance": "The separate Challenge Annex, selection desks, workshops and optional Four Seals menu were invented implementation choices. Its component services/mechanics have handoff provenance; the packaging does not.",
+    "preservation_interpretation": "Retaining existing features did not require isolating additions in an Annex. Existing native mechanical tests remain valid within their disclosed scenes.",
+    "status": "unfinished_regional_and_run_flow_integration",
+    "gaps": [
+      {
+        "id": "regional_event_placement",
+        "feature_ids": [
+          "event.ITEM_DROP",
+          "event.MINIBOSS",
+          "event.NPC",
+          "event.WAVES",
+          "event.POT_LOTTERY",
+          "event.FAIRY",
+          "event.MEMORY",
+          "event.PUZZLE",
+          "event.BLOCKS",
+          "event.TORCHES",
+          "event.CLEANUP"
+        ],
+        "current_scope": "Annex selection plus three specific Cream trial kinds; existing Forest events remain.",
+        "missing_scope": "Generator placement and verification of the full added event vocabulary on regional room nodes, including paired memory, boards, cleanup and portal/pocket links.",
+        "sources": [
+          "docs/newgame/06_CURRENT_GAME_DESIGN.md:86-118",
+          "docs/newgame/07_PROCGEN_DESIGN.md:50-61"
+        ]
+      },
+      {
+        "id": "regional_quest_placement",
+        "feature_ids": [
+          "quest.pot",
+          "quest.hunt",
+          "quest.scav",
+          "quest.stealth",
+          "quest.carry",
+          "quest.courier",
+          "quest.blocks",
+          "quest.preserve"
+        ],
+        "current_scope": "All seven added quest state machines start in Annex sites. Courier also reaches the Forest recipient.",
+        "missing_scope": "Place added quest givers, objectives and receivers in generated regions alongside existing quests; provide actual generated-region pairs for courier delivery.",
+        "sources": [
+          "docs/newgame/06_CURRENT_GAME_DESIGN.md:120-143"
+        ]
+      },
+      {
+        "id": "regional_mechanism_placement",
+        "feature_ids": [
+          "object.pushableStatue",
+          "object.pushableGrave",
+          "object.pushableFurniture",
+          "object.metalDoor",
+          "object.bossDoor",
+          "object.lightDoor",
+          "object.hitSwitch",
+          "object.eyeSwitch",
+          "object.lightableSwitch",
+          "object.pullableLever",
+          "object.pushableLever",
+          "object.bigPushableLever",
+          "object.hittableLever",
+          "object.lightRay",
+          "object.trapdoor",
+          "object.rotatingTrapdoor",
+          "object.floatingPlatform",
+          "object.lavaPlatform",
+          "object.lilypadLarge",
+          "object.lilypadSmall",
+          "object.minecart",
+          "object.railtrack",
+          "object.fan",
+          "object.fanWind",
+          "object.whirlwind",
+          "object.steam",
+          "object.guruguruBar",
+          "object.fireballChain",
+          "object.hiddenLadderDown",
+          "object.beanstalk",
+          "object.warpPoint",
+          "object.jarPortal",
+          "object.bigIceBlock",
+          "object.frozenFlower",
+          "object.barrelSpiderweb",
+          "player.minecart",
+          "player.parachute",
+          "surface.bridge_layers",
+          "manager.appearing_bridge"
+        ],
+        "current_scope": "New mechanism and traversal families are demonstrated in four object courts and one traversal court.",
+        "missing_scope": "Use those families as verified generated regional routes, obstacles, secrets and rewards, with appropriate teaching, prerequisites and component-aware placement.",
+        "sources": [
+          "docs/newgame/07_PROCGEN_DESIGN.md:21-23",
+          "docs/newgame/07_PROCGEN_DESIGN.md:50-61",
+          "docs/newgame/07_PROCGEN_DESIGN.md:229-242"
+        ]
+      },
+      {
+        "id": "regional_waves_and_chain",
+        "feature_ids": [
+          "wave.endless",
+          "wave.first_clear",
+          "run.chain",
+          "run.chain_item",
+          "run.chain_goal"
+        ],
+        "current_scope": "Endless waves and four-step objectives work in Annex instances.",
+        "missing_scope": "Regional wave progression and adaptive objectives selected from reachable generated-world content, coexisting with current Forest and Cream victories.",
+        "sources": [
+          "docs/newgame/06_CURRENT_GAME_DESIGN.md:23-36",
+          "docs/newgame/06_CURRENT_GAME_DESIGN.md:63-84",
+          "docs/newgame/07_PROCGEN_DESIGN.md:69-85"
+        ]
+      },
+      {
+        "id": "regional_fusion_consequences",
+        "feature_ids": [
+          "economy.fusion",
+          "economy.fuser_movement",
+          "manager.appearing_bridge"
+        ],
+        "current_scope": "Field fusers exist; colored fusion consequences open Annex caches, a pocket and a course bridge.",
+        "missing_scope": "Place corresponding persistent fusion soft gates and consequences in generated regional topology; field NPC placement alone does not provide those gates.",
+        "sources": [
+          "docs/newgame/05_ITEMS_AND_ECONOMY.md:106-121",
+          "docs/newgame/07_PROCGEN_DESIGN.md:21-23"
+        ]
+      },
+      {
+        "id": "opening_loadout_flow",
+        "feature_ids": [
+          "run.draft"
+        ],
+        "current_scope": "Working optional Annex draft.",
+        "missing_scope": "Integrate the three-round draft into the normal opening-loadout/first-area flow while preserving existing starting equipment and progression.",
+        "sources": [
+          "docs/newgame/05_ITEMS_AND_ECONOMY.md:130-137",
+          "docs/newgame/06_CURRENT_GAME_DESIGN.md:12-22"
+        ]
+      }
+    ]
   }
 }
