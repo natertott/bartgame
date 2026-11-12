@@ -142,6 +142,21 @@ the floor; it does not become a different barrel.
 
 ## Perspective and traversability
 
+For the Cream polish studies, a large wall drawing needs a complete finished
+silhouette, not an opaque rectangular substrate erasing the rock beneath it.
+Native masks preserve internal rock shadows while exterior pixels reveal the
+actual continuous backing. Keep this decoration behind actors. Fit complete
+drawings after regional doors, mechanisms and puzzle boards occupy their final
+footprints; a successful fit before those stamps is insufficient.
+Climbing strips span their real paired columns as one drawing, with two rails
+or a single intentional handhold pattern and coherent floor/wall joins.
+Drop sills project a shallow visible lip over a darker face without advertising
+an extra walkable tile. Shade on the supported destination floor connects back
+to the actual cliff foot and under the ledge, retaining path grain. Bright
+blue waterfalls may use one, two or three complete cells of width, with their
+outer banks only at the outside of the complete sheet. These are local Cream
+review directions; other regions keep their established materials and palettes.
+
 Cream's local ledge vocabulary distinguishes a raised, rooted, irregular
 blocked rim from a low, broad, worn drop sill with handed endcaps. The open
 sill belongs only to a real directed drop. A cliff-toe seam describes height;

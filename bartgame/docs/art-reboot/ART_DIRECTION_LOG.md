@@ -2007,3 +2007,34 @@ climb timing is unchanged. Default0 reproduces production exactly. The
 [gallery](../../../cream-depth-review/README.md) preserves actual live clips,
 registered room surveys, source drawings and finite-evidence limits. This
 remains a review synthesis, not a new global palette or production selection.
+
+## 2026-11-12 — Five Cream polish layers, ladders and blue falls
+
+**Status:** five optional refinements7–11, not a new default. The user asks
+for cleaner wall detail, complete silhouettes, more ledge-like projecting drop
+edges, shadows connected to the wall, many better integrated ladder options,
+and brighter blue waterfalls of one to three tiles in width. Five refinements
+explore Pearlstone Folds, Faulted Chalk, Ribbed Karst, Weathered Curdstone and
+Velvet Travertine, retaining the selected Rind floor/cliff banks. Fifteen native
+ladder concepts supply an explicit comparison sheet; five selected examples
+appear in the five playable studies. Four-frame blue water sheets share their
+complete exact animations where identical, preserving their native pixels.
+
+Source inspection identified opaque panel rectangles erasing the backing,
+features placed after wall composition, and two copies of a16px ladder drawing
+producing four rails. The new renderer composes genuine native silhouette
+masks with the real backing on BG ground in reserved character slots, leaving
+actors' existing draw order intact. Complete panel admission checks its actual
+room footprint and the finite character budget. Final composition follows all
+regional furniture/mechanisms. Native32px ladders use different paired halves
+with floor-colored foot joins. Actual source-drop solid faces gain a projecting
+underside, while destination-floor shade continues from the physical wall to
+the true arrival. Water occupies measured unused solid cliff; it never paints
+over a climb, door, route or event or changes dry-floor physics.
+
+The existing viewed Mount Crenel note and tutorial application rules guide this
+pass; no new commercial screenshot research or imported game pixels are claimed.
+Native source sheets, independent ROM/geometry checks, frozen renderer surveys
+and ordinary live movement/water clips must retain separate labels and pinned
+provenance. Earlier0–6 profiles and all non-Cream artwork are protected. Final
+budgets, visual corrections and evidence belong in the polish review gallery.

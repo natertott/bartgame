@@ -8,8 +8,8 @@ import os
 from PIL import Image, ImageDraw
 
 VARIANT = int(os.environ.get('BART_CREAM', '0'))
-if not 0 <= VARIANT <= 6:
-    raise ValueError('BART_CREAM must be one integer in 0..6')
+if not 0 <= VARIANT <= 11:
+    raise ValueError('BART_CREAM must be one integer in 0..11')
 STYLES = (
     ('Original Cream', None),
     ('Curdstone Karst', 'cream_style_karst'),
@@ -18,6 +18,11 @@ STYLES = (
     ('Gilt Quarry', 'cream_style_quarry'),
     ('Black Rind Terraces', 'cream_style_rind'),
     ('Fractured Rind', 'cream_style_depth'),
+    ('Pearlstone Folds', 'cream_style_polish'),
+    ('Faulted Chalk', 'cream_style_polish'),
+    ('Ribbed Karst', 'cream_style_polish'),
+    ('Weathered Curdstone', 'cream_style_polish'),
+    ('Velvet Travertine', 'cream_style_polish'),
 )
 PAINTERS = ('floor', 'cliff', 'climb', 'rim', 'cave', 'water', 'prop', 'chest', 'pit')
 BANKS = ('cream_floor0', 'cream_floor1', 'cream_floor2',
@@ -68,7 +73,7 @@ def install(namespace):
             elif VARIANT == 4:
                 draw.rectangle((5,0,10,5),fill=0)
                 draw.line((7,4,7,5),fill=3)
-            elif VARIANT in (5, 6):
+            elif VARIANT >= 5:
                 draw.rectangle((6,5,8,8),fill=2)
                 draw.point((7,7),fill=3)
         return image

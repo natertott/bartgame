@@ -220,7 +220,8 @@ SETS = [
     ('forest', lambda n, i: n.startswith('lh_mob_') or not n.startswith(('sw_', 'swh_', 'cave_', 'hollow_', 'thicket_', 'myst_', 'cream_', 'lh_'))),
     ('sewer', lambda n, i: i in hub_used or (SC.VARIANT != 9 and n.startswith('swh_'))),
     ('myst', lambda n, i: n.startswith(('cave_', 'hollow_', 'thicket_', 'myst_', 'lh_')) or n in MYST_EXTRA),
-    ('cream', lambda n, i: n.startswith(('cream_','lh_'))),
+    ('cream', lambda n, i: n.startswith(('cream_','lh_')) and not
+     (cream_terrain.VARIANT >= 7 and n.startswith('cream_depth_'))),
 ]
 TYPES_IDX = {t: i for i, t in enumerate(TYPES)}
 mt_type = [TYPES_IDX[mt['type']] for mt in tiles.METATILES]
@@ -228,8 +229,11 @@ mt_coll = [mt.get('coll', tiles.default_coll(mt['type'])) for mt in tiles.METATI
 for i, mt in enumerate(tiles.METATILES):
     h.append('#define MT_%s %d' % (cname(mt['name']), i))
 h.append('#define METATILE_COUNT %d' % len(tiles.METATILES))
-if cream_terrain.VARIANT == 6:
-    import cream_depth_assets as CD
+if cream_terrain.VARIANT >= 6:
+    if cream_terrain.VARIANT >= 7:
+        import cream_polish_assets as CD
+    else:
+        import cream_depth_assets as CD
     h.append('typedef struct { u16 first; u8 w,h; } CreamVisualPanel;')
     h.append('extern const CreamVisualPanel cream_visual_panels[3][7];')
     c.append('const CreamVisualPanel cream_visual_panels[3][7] = {\n' + ',\n'.join(
@@ -244,6 +248,15 @@ if cream_terrain.VARIANT == 6:
     c.append('const u16 cream_visual_landing_path[3][4][6] = {\n' + ',\n'.join(
         '{' + ','.join('{' + ','.join(str(mt_names[n]) for n in row) + '}' for row in stage)
         + '}' for stage in CD.TABLES['landing_path']) + '\n};')
+    if cream_terrain.VARIANT >= 7:
+        def polish_ids(values):
+            if isinstance(values,list):return '{'+','.join(polish_ids(v) for v in values)+'}'
+            return str(mt_names[values]) if values is not None else '65535'
+        for key,dims in (('climb','[3][3][2]'),('underside','[3][2]'),
+                         ('shade','[3][8][3][3]'),('fall','[3][3][3][3]')):
+            h.append('extern const u16 cream_polish_%s%s;'%(key,dims))
+            c.append('const u16 cream_polish_%s%s = %s;'%(key,dims,polish_ids(CD.TABLES[key])))
+        h.append('#define CREAM_POLISH_BLEND_RESERVE 128')
 c.append(c_array_u8('metatile_type', mt_type))
 h.append('extern const u8 metatile_type[];')
 c.append(c_array_u8('metatile_coll', mt_coll))
@@ -269,7 +282,8 @@ for si, (sname, pred) in enumerate(SETS):
         area_palette_colors.update(cream_terrain.PALETTES)
     if sname in ('forest','cream','myst'):
         area_palette_colors.update(handoff_items.BGPALETTES)
-    ts = Tileset(limit=768 if FOREST_CONCEPTS.TREE_WORLD and sname == 'forest' else 1024)
+    ts = Tileset(limit=896 if cream_terrain.VARIANT >= 7 and sname == 'cream' else
+                 768 if FOREST_CONCEPTS.TREE_WORLD and sname == 'forest' else 1024)
     ts.add([[0] * 8 for _ in range(8)], 0, 0)  # tile 0 blank
     entries = []
     anims = []
@@ -303,7 +317,8 @@ for si, (sname, pred) in enumerate(SETS):
         # match alone would let unrelated moving surfaces overwrite each other.
         animation_key = None
         if animated and ((SC.VARIANT == 9 and sname == 'sewer') or
-                         (FOREST_CONCEPTS.VARIANT >= 6 and sname == 'forest')):
+                         (FOREST_CONCEPTS.VARIANT >= 6 and sname == 'forest') or
+                         (cream_terrain.VARIANT >= 7 and sname == 'cream')):
             animation_key = (tuple(tuple(fr) for fr in frames),
                              mt.get('anim_speed', 8), tuple(qpals))
             if animation_key in animation_cache:
@@ -452,6 +467,13 @@ for si, (sname, pred) in enumerate(SETS):
             'retired': 'forest_trees_terrain.owns() legacy canopy and authored tree pictures',
             'collision': 'Generated solid tree-base cells preserved; no full32px canvas collider.',
         }
+    if sname == 'cream' and cream_terrain.VARIANT >= 7:
+        alpha=[]
+        for tile in ts.tiles:
+            inks=[(byte>>shift)&15 for byte in tile for shift in (0,4)]
+            alpha.append(0 if not any(inks) else 1 if all(inks) else 2)
+        c.append(c_array_u8('cream_polish_tile_alpha',alpha))
+        h.append('extern const u8 cream_polish_tile_alpha[];')
     c.append(c_array_u16('tileset_%s_tiles' % sname, bytes_to_u16(b''.join(ts.tiles))))
     c.append(c_array_u16('metatile_map_%s' % sname, entries, 8))
     c.append(c_array_u16('tileset_%s_pals' % sname, [rgb15(x) for n in set_pals for x in area_palette_colors[n]]))

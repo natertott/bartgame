@@ -20,4 +20,13 @@ extern u8 gCreamVisualPanelKinds[7];
    Refresh only re-dresses borders and destination floors after gate changes. */
 void cream_visuals_build(void);
 void cream_visuals_refresh(void);
+
+/* Polish studies7--11 compose only after regional content has claimed its
+   final footprints. These declarations add no storage to earlier builds. */
+typedef struct { u8 x,y,w,h; } CreamPolishFall;
+extern u16 gCreamPolishWallPaint[32*32];
+extern u8 gCreamPolishShadeRole[CREAM_ROOM_W*CREAM_ROOM_H];
+extern CreamPolishFall gCreamPolishFall;
+extern u16 gCreamPolishLadderCells,gCreamPolishUndersideCells;
+void cream_polish_prepare(void);
 #endif

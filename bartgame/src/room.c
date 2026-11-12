@@ -10,6 +10,9 @@
 #include "myst.h"
 #include "appearance.h"
 #include "react.h"
+#if BART_CREAM_VARIANT >= 7
+#include "cream_polish_blend.h"
+#endif
 #if BART_FOREST_VARIANT >= 19
 #include "canopy_scene.h"
 #endif
@@ -235,6 +238,12 @@ static void map_write(int sb_base, int mx, int my, u16 mt) {
         return;
     }
     const u16* e = &sTs->map[mt * 4];
+#if BART_CREAM_VARIANT >= 7
+    if(sb_base==SB_GROUND && gGame.area==AREA_CREAM) {
+        const u16* blended=cream_polish_blend_entries(mx,my,mt,sTs);
+        if(blended)e=blended;
+    }
+#endif
     m[0] = e[0];
     m[1] = e[1];
     m[32] = e[2];

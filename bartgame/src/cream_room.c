@@ -6,7 +6,7 @@
 #include "actor.h"
 #include "util.h"
 #include "video.h"
-#if BART_CREAM_VARIANT == 6
+#if BART_CREAM_VARIANT >= 6
 #include "cream_visuals.h"
 #endif
 
@@ -307,10 +307,12 @@ void cream_room_build(int cell) {
        dry14x8body; lower component remains physically separated below. */
     if(cream_cell(gCreamWorld.goal_node)==cell)floor_rect(4,2,28,11,FALSE);
     for(t=0;t<2;t++)paint_routes(t);
+#if BART_CREAM_VARIANT < 7
     if((noise(3,9)&3)==0) {
         static const u16 fall[3]={MT_CREAM_FALL_S0,MT_CREAM_FALL_S1,MT_CREAM_FALL_S2};
         for(y=gCreamRoom.upper_bottom[3]+2;y<gCreamRoom.lower_top[3]-1;y++)if(room_type(3,y)==TT_SOLID)room_set(3,y,fall[s]);
     }
+#endif
     for(t=0;t<2;t++)spots(t);
     /* Contextual mold grows only at cliff feet/outer ledge corners. Never on
        a route, a landing, a chest front, a mission or an enemy marker. */
@@ -321,6 +323,8 @@ void cream_room_build(int cell) {
     }
 #if BART_CREAM_VARIANT == 6
     cream_visuals_build();
+#elif BART_CREAM_VARIANT >= 7
+    cream_polish_prepare();
 #endif
     room_build_solid();room_render();
 }
@@ -450,7 +454,7 @@ bool8 cream_room_unlock_edge(int node,int index) {
      if(reverse>=0 && cream_edge(e->target,reverse)->require==e->require)gCreamOpenEdges[e->target]|=1u<<reverse;}
     if(cream_cell(node)==gCreamRoom.cell) {
         paint_gate(node,index,TRUE);
-#if BART_CREAM_VARIANT == 6
+#if BART_CREAM_VARIANT >= 6
         cream_visuals_refresh();
 #endif
         room_build_solid();room_render();

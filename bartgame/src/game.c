@@ -23,6 +23,9 @@ extern u16 items_sheet_tile(void);
 #include "save.h"
 #include "game.h"
 #include "performance.h"
+#if BART_CREAM_VARIANT >= 7
+#include "cream_visuals.h"
+#endif
 #include "interactive.h"
 #include "ambient.h"
 #include "appearance.h"
@@ -279,8 +282,13 @@ static void load_cream(int node,int px,int py,int facing) {
         if(node==gCreamWorld.entry_node){px=(gCreamRoom.return_door.x+1)*16;py=(gCreamRoom.return_door.y+1)*16+14;}
         else{px=p->spawns[0].x*16+8;py=p->spawns[0].y*16+14;}
     }
-    player_init(px,py,facing);regional_content_place(AREA_CREAM,gGame.cell);legacy_items_room_reset();cream_runtime_enter();
-    camera_update(px,py-16,TRUE);dark_off();minimap_render();handoff_room_enter(AREA_CREAM,gGame.cell);room_render();
+    player_init(px,py,facing);regional_content_place(AREA_CREAM,gGame.cell);
+    legacy_items_room_reset();cream_runtime_enter();
+    camera_update(px,py-16,TRUE);dark_off();minimap_render();handoff_room_enter(AREA_CREAM,gGame.cell);
+#if BART_CREAM_VARIANT >= 7
+    cream_visuals_build();
+#endif
+    room_render();
 }
 static void load_handoff(int site,int kind) {
     int px,py;gGame.area=AREA_HANDOFF;gGame.cell=0;
