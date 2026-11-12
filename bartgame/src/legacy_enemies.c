@@ -1254,10 +1254,14 @@ bool8 legacy_enemy_can_spawn(int type) {
         if(e->kind!=AK_ENEMY) continue;
         q=legacy_enemy_def(e->type);
         if(!q) {cost++;continue;}
+        /* The Acro metadata reserves six bodies for a new stack. Its live
+           members each cost one, including attached children: releasing the
+           stack must not turn the same six actors into 36 budget units. */
+        if(q->family==LF_ACRO_BANDIT)cost++;
         if(e->v[3]) continue;
         if(q->family==f) n++;
         if(q->family==LF_MOLDORM||q->family==LF_MOLDWORM||q->family==LF_MADDERPILLAR) trail_n++;
-        cost+=q->cost;
+        if(q->family!=LF_ACRO_BANDIT)cost+=q->cost;
     }
     if(!sChildMode && (n>=d->cap||cost+d->cost>26)) return FALSE;
     if((f==LF_MOLDORM||f==LF_MOLDWORM||f==LF_MADDERPILLAR)&&trail_n>=TRAIL_COUNT) return FALSE;

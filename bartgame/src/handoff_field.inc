@@ -60,10 +60,18 @@ static bool8 field_spawn(int type){
   if(!found||value>score){score=value;best.x=x;best.y=y;found=TRUE;}
  }
  if(!found)return FALSE;
- if(type<0)type=wave_pick();
- if(!legacy_enemy_can_spawn(type))return FALSE;
- Actor*a=enemy_spawn(type,sx(best.x),sy(best.y));if(!a)return FALSE;
- r.owned[a-gActors]=1;fx_spawn(FX_PUFF,PX(a->x),PX(a->y)-8);return TRUE;
+ /* Other terraces may change the live family/cost budget after the cast was
+    chosen. Try its other members, then the normal eligible source pool. All
+    attempts retain the same verified component, footprint and safe distance. */
+ int chosen=type<0?wave_pick():type;
+ for(int attempt=0;attempt<1+s.cast_count+8;attempt++){
+  Actor*a;
+  if(attempt){if(type>=0)return FALSE;chosen=attempt<=s.cast_count?s.cast[attempt-1]:handoff_pick_enemy(gHandoffState.difficulty,0,rng_next(&s.rng));}
+  if(chosen<0||!legacy_enemy_can_spawn(chosen))continue;
+  a=enemy_spawn(chosen,sx(best.x),sy(best.y));if(!a)continue;
+  r.owned[a-gActors]=1;fx_spawn(FX_PUFF,PX(a->x),PX(a->y)-8);return TRUE;
+ }
+ return FALSE;
 }
 static void field_refill(int target){
  int count=field_alive();for(int i=count;i<target&&i<6;i++)if(!field_spawn(-1))break;

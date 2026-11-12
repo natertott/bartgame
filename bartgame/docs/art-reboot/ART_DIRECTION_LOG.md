@@ -1896,7 +1896,8 @@ remain for saved-data compatibility and generated interiors.
 The complete selected Forest ladder composition is copied onto the Drain wall
 at x312. Its original arrow, palette and lighting are preserved. Market,
 wizard, cabinet, storage and bridge are not relocated. A physical cot and
-first-clear chest append two Cream-folk atlas frames, retaining every earlier
+trophy append two Cream-folk atlas frames; the bedside reward chest reuses
+the existing brass chest picture, retaining every earlier
 frame and sheet identifier. New field entrances use the existing regional
 thresholds, with a compact hatch for constrained pockets. Maps display their
 actual placed coordinates. Mobility stamps reuse the new handoff art in

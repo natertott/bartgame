@@ -605,7 +605,8 @@ but existing landmarks, interactions, mandatory gates and arrival routes are
 protected. No map icon or planned feature can substitute for visible geometry.
 
 New Drain services reuse the selected visual vocabulary. A small physical cot
-and reward chest append new frames; old frames and sheet IDs remain unchanged.
+and trophy append new frames; the bedside reward chest reuses the existing
+brass chest frame. Old frames and sheet IDs remain unchanged.
 Field mechanisms stream individual native frames rather than an entire study
 atlas. Existing unpainted mobility slots may become resident in the Forest;
 the old visible terrain mappings and all their referenced pixels stay intact.

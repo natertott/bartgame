@@ -122,7 +122,7 @@ void handoff_mobility_build_regional(u32 seed,int pattern,int site) {
  u16 floor=room_get(16,20);int phase=seed&1;
  activate(1,0,pattern%3,site);sMob.prize=1;
  if(sMob.pattern==0) {
-  sMob.cart=1;rect(11,4,20,20,MT_LH_MOB_WATER);
+  sMob.cart=1;rect(11,4,20,18,MT_LH_MOB_WATER);
   /* A long suspended railway joins two dry banks. Water remains visible
      between sleepers and still drowns an unmounted walker. */
   rail_loop(5,6+phase,25,18);sMob.px=25;sMob.py=10;sMob.signx=5;sMob.signy=20;
