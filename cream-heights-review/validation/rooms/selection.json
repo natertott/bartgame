@@ -1,0 +1,432 @@
+{
+  "seed": 46247,
+  "rooms": [
+    {
+      "seed": 46247,
+      "cell": 0,
+      "archetype": 3,
+      "platforms": 3,
+      "climbs": 3,
+      "drops": 0,
+      "max_height": 4,
+      "heights": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ]
+    },
+    {
+      "seed": 46247,
+      "cell": 1,
+      "archetype": 0,
+      "platforms": 1,
+      "climbs": 1,
+      "drops": 1,
+      "max_height": 4,
+      "heights": [
+        0,
+        3,
+        4
+      ]
+    },
+    {
+      "seed": 46247,
+      "cell": 2,
+      "archetype": 2,
+      "platforms": 3,
+      "climbs": 3,
+      "drops": 1,
+      "max_height": 5,
+      "heights": [
+        0,
+        1,
+        3,
+        4,
+        5
+      ]
+    },
+    {
+      "seed": 46247,
+      "cell": 3,
+      "archetype": 7,
+      "platforms": 0,
+      "climbs": 0,
+      "drops": 0,
+      "max_height": 4,
+      "heights": [
+        0,
+        4
+      ]
+    },
+    {
+      "seed": 46247,
+      "cell": 4,
+      "archetype": 4,
+      "platforms": 3,
+      "climbs": 3,
+      "drops": 1,
+      "max_height": 4,
+      "heights": [
+        0,
+        1,
+        3,
+        4
+      ]
+    },
+    {
+      "seed": 46247,
+      "cell": 5,
+      "archetype": 6,
+      "platforms": 4,
+      "climbs": 4,
+      "drops": 2,
+      "max_height": 5,
+      "heights": [
+        0,
+        1,
+        3,
+        4,
+        5
+      ]
+    },
+    {
+      "seed": 46247,
+      "cell": 6,
+      "archetype": 0,
+      "platforms": 1,
+      "climbs": 1,
+      "drops": 1,
+      "max_height": 4,
+      "heights": [
+        0,
+        3,
+        4
+      ]
+    },
+    {
+      "seed": 46247,
+      "cell": 7,
+      "archetype": 1,
+      "platforms": 3,
+      "climbs": 3,
+      "drops": 2,
+      "max_height": 4,
+      "heights": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ]
+    },
+    {
+      "seed": 46247,
+      "cell": 8,
+      "archetype": 2,
+      "platforms": 3,
+      "climbs": 3,
+      "drops": 3,
+      "max_height": 4,
+      "heights": [
+        0,
+        1,
+        3,
+        4
+      ]
+    },
+    {
+      "seed": 46247,
+      "cell": 9,
+      "archetype": 3,
+      "platforms": 3,
+      "climbs": 3,
+      "drops": 0,
+      "max_height": 5,
+      "heights": [
+        0,
+        1,
+        2,
+        4,
+        5
+      ]
+    },
+    {
+      "seed": 46247,
+      "cell": 10,
+      "archetype": 2,
+      "platforms": 3,
+      "climbs": 3,
+      "drops": 3,
+      "max_height": 5,
+      "heights": [
+        0,
+        1,
+        3,
+        4,
+        5
+      ]
+    },
+    {
+      "seed": 46247,
+      "cell": 11,
+      "archetype": 4,
+      "platforms": 3,
+      "climbs": 3,
+      "drops": 1,
+      "max_height": 4,
+      "heights": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ]
+    },
+    {
+      "seed": 46247,
+      "cell": 12,
+      "archetype": 3,
+      "platforms": 3,
+      "climbs": 3,
+      "drops": 0,
+      "max_height": 4,
+      "heights": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ]
+    },
+    {
+      "seed": 46247,
+      "cell": 13,
+      "archetype": 1,
+      "platforms": 3,
+      "climbs": 3,
+      "drops": 0,
+      "max_height": 4,
+      "heights": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ]
+    },
+    {
+      "seed": 46247,
+      "cell": 14,
+      "archetype": 1,
+      "platforms": 3,
+      "climbs": 3,
+      "drops": 1,
+      "max_height": 4,
+      "heights": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ]
+    },
+    {
+      "seed": 46247,
+      "cell": 15,
+      "archetype": 3,
+      "platforms": 3,
+      "climbs": 3,
+      "drops": 1,
+      "max_height": 5,
+      "heights": [
+        0,
+        1,
+        2,
+        4,
+        5
+      ]
+    },
+    {
+      "seed": 46247,
+      "cell": 16,
+      "archetype": 1,
+      "platforms": 3,
+      "climbs": 3,
+      "drops": 1,
+      "max_height": 4,
+      "heights": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ]
+    },
+    {
+      "seed": 46247,
+      "cell": 17,
+      "archetype": 5,
+      "platforms": 4,
+      "climbs": 4,
+      "drops": 2,
+      "max_height": 4,
+      "heights": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ]
+    },
+    {
+      "seed": 46247,
+      "cell": 18,
+      "archetype": 5,
+      "platforms": 3,
+      "climbs": 3,
+      "drops": 1,
+      "max_height": 5,
+      "heights": [
+        0,
+        3,
+        4,
+        5
+      ]
+    },
+    {
+      "seed": 46247,
+      "cell": 19,
+      "archetype": 3,
+      "platforms": 3,
+      "climbs": 3,
+      "drops": 0,
+      "max_height": 4,
+      "heights": [
+        0,
+        1,
+        2,
+        4
+      ]
+    },
+    {
+      "seed": 46247,
+      "cell": 20,
+      "archetype": 2,
+      "platforms": 3,
+      "climbs": 3,
+      "drops": 2,
+      "max_height": 4,
+      "heights": [
+        0,
+        1,
+        3,
+        4
+      ]
+    },
+    {
+      "seed": 46247,
+      "cell": 21,
+      "archetype": 3,
+      "platforms": 3,
+      "climbs": 3,
+      "drops": 0,
+      "max_height": 4,
+      "heights": [
+        0,
+        2,
+        3,
+        4
+      ]
+    },
+    {
+      "seed": 46247,
+      "cell": 22,
+      "archetype": 4,
+      "platforms": 3,
+      "climbs": 3,
+      "drops": 1,
+      "max_height": 4,
+      "heights": [
+        0,
+        1,
+        3,
+        4
+      ]
+    },
+    {
+      "seed": 46247,
+      "cell": 23,
+      "archetype": 2,
+      "platforms": 3,
+      "climbs": 3,
+      "drops": 1,
+      "max_height": 4,
+      "heights": [
+        0,
+        1,
+        3,
+        4
+      ]
+    },
+    {
+      "seed": 46247,
+      "cell": 24,
+      "archetype": 4,
+      "platforms": 3,
+      "climbs": 3,
+      "drops": 2,
+      "max_height": 5,
+      "heights": [
+        0,
+        1,
+        3,
+        4,
+        5
+      ]
+    }
+  ],
+  "selections": {
+    "3": [
+      16,
+      15,
+      46247
+    ],
+    "0": [
+      8,
+      1,
+      46247
+    ],
+    "2": [
+      20,
+      10,
+      46247
+    ],
+    "7": [
+      2,
+      3,
+      46247
+    ],
+    "4": [
+      18,
+      24,
+      46247
+    ],
+    "6": [
+      21,
+      5,
+      46247
+    ],
+    "1": [
+      18,
+      7,
+      46247
+    ],
+    "5": [
+      21,
+      17,
+      46247
+    ]
+  }
+}

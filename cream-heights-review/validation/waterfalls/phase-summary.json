@@ -1,0 +1,56 @@
+{
+  "rom_sha256": "a2e98b9551213c5335e826c59642fea5c03a4998746a811d5a9d464a96e24f86",
+  "source_commit": "f4b917f7964941d488c4d20fce073f3f58b950bc",
+  "seed": 0,
+  "cases": [
+    {
+      "width": 1,
+      "cell": 6,
+      "actual_fall": {
+        "x": 16,
+        "y": 9,
+        "w": 1,
+        "h": 7
+      },
+      "minimum_hp": 32,
+      "distinct_native_phases": 4,
+      "recorded_simulation_frames": 96,
+      "gif_sample_frames": 24,
+      "all_visible": true,
+      "gif_sha256": "416291c5d794fa88e41f8c2eb3cd72faf6dbcb689c90d886547e5258b2d80f96"
+    },
+    {
+      "width": 2,
+      "cell": 10,
+      "actual_fall": {
+        "x": 13,
+        "y": 8,
+        "w": 2,
+        "h": 7
+      },
+      "minimum_hp": 32,
+      "distinct_native_phases": 4,
+      "recorded_simulation_frames": 96,
+      "gif_sample_frames": 24,
+      "all_visible": true,
+      "gif_sha256": "abc1718b2c3addd04946a8f61e38b8e07f1d650e665e87b1346ef0f40585371e"
+    },
+    {
+      "width": 3,
+      "cell": 24,
+      "actual_fall": {
+        "x": 6,
+        "y": 12,
+        "w": 3,
+        "h": 4
+      },
+      "minimum_hp": 32,
+      "distinct_native_phases": 4,
+      "recorded_simulation_frames": 96,
+      "gif_sample_frames": 22,
+      "all_visible": true,
+      "gif_sha256": "cba40468afbc5e9ac5f5428e981e1865890d98076ad2079039eda27ad6f6abf9"
+    }
+  ],
+  "complete": true
+}

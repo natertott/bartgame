@@ -452,8 +452,9 @@ projections, controls or generated terrain. No new website, commercial ROM,
 missing PDF figure or inaccessible review was consulted in this pass.
 
 [CREAM_WEATHERED_HEIGHTS.md](CREAM_WEATHERED_HEIGHTS.md) records the native
-art/topology contracts and ten actual-game map implementations. Final frozen
-source, ROM digest, native mGBA gallery and independent audit are pending;
-source fixtures do not qualify live behavior. This entry preserves the
-earlier Cream galleries as historical evidence rather than assigning their
-results to new geometry or menu code.
+art/topology contracts and ten actual-game map implementations. The final
+[Weathered Heights gallery](../../../cream-heights-review/README.md) binds
+source `f4b917f7`, the exact ROM digest, actual mGBA menus/clips and independent
+source/native/geometry audits. The new evidence supersedes its preliminary
+source fixtures for live behavior. Earlier Cream galleries retain their own
+historical build scope.

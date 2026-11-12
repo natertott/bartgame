@@ -1,0 +1,12 @@
+{
+  "static_native_8x8_characters": 861,
+  "available_dynamic_characters": 163,
+  "total_limit": 1024,
+  "optional_panels_reserve_for_later_climb_joins": 16,
+  "palette_banks": 10,
+  "ewram_bytes": 255788,
+  "ewram_remaining": 6356,
+  "profile": 12,
+  "source_commit": "f4b917f7964941d488c4d20fce073f3f58b950bc",
+  "rom_sha256": "a2e98b9551213c5335e826c59642fea5c03a4998746a811d5a9d464a96e24f86"
+}

@@ -1,0 +1,2476 @@
+{
+  "rom_sha256": "a2e98b9551213c5335e826c59642fea5c03a4998746a811d5a9d464a96e24f86",
+  "source_commit": "f4b917f7964941d488c4d20fce073f3f58b950bc",
+  "tool_sha256": "90b1a2acf9aaa81b03cdc87b9408278be9018d1e750a564cf1d59a5f745e12d5",
+  "charted_fixture": false,
+  "fixture": "Fresh normal discovery state.",
+  "before": {
+    "frames": 368,
+    "clock": 357,
+    "run_frames": 214,
+    "state": 1,
+    "area": 3,
+    "cell": 21,
+    "node": 42,
+    "actor": {
+      "kind": 1,
+      "type": 0,
+      "state": 0,
+      "timer": 0,
+      "x": 400,
+      "y": 350,
+      "z": 0,
+      "speed": 0,
+      "hp": 0,
+      "coll": 0,
+      "facing": 0
+    },
+    "health": [
+      32,
+      32
+    ],
+    "text": 0,
+    "camera": [
+      272,
+      224
+    ]
+  },
+  "paused_snapshot": {
+    "room": "411c1de9bdc299fb5c7db49213e0c19c6b20214da537a4e970a7327e9b00fa6d",
+    "topology": "11a372a6c205cb90bd4aca7877d67e91fc022078a9ca42aeb4815283149449b6",
+    "world": "fb2f099f9c62a418311dfec5401c98cd31d826c0b642a1d4e5d07c8d3f512de9",
+    "progress": "7e98700947ba12a0010a6e9f9e8e2fb95da9103806ca7c4344f10ca4d7a88603",
+    "player": "488d44a9b23de8b3eea9150459051f68f25b3bcc650eaf62107b21ce3f3cb6a0",
+    "inventory": "1dd6c6dc84689fa508fa27f8708948a956b4344f6bf88d5d382a5ca5cbf45bad",
+    "handoff": "a6cd98d6e5bbff2c8678a7d292ce7379acf9e8cc1bad49851761f0479c33e9c2",
+    "actors": "abe92699997ff9cfab0a89b271c85ffe5cce2f7531d2cc6bdb79f232b1e8a3f6",
+    "gates": "cc2786e1f9910a9d811400edcddaf7075195f7a16b216dcbefba3bc7c4f2ae51",
+    "node": 42,
+    "run_frames": 215,
+    "actor": {
+      "kind": 1,
+      "state": 0,
+      "x": 400,
+      "y": 350,
+      "z": 0,
+      "facing": 0
+    }
+  },
+  "images": [
+    {
+      "concept": 0,
+      "zoom": 0,
+      "file": "01-overview.png",
+      "sha256": "a9235a48eed73fd60945d67fdbc823ff7d9db7b5171898b7d69dc49318319e63",
+      "edge_sha256": "f76fdb9f44cad17acb8cb1334df13ccf9d068016ea087b26f5014771f87e70ca"
+    },
+    {
+      "concept": 0,
+      "zoom": 1,
+      "file": "01-zoom.png",
+      "sha256": "2c0887eb7bd2bab43bee0a48fc0d9e43724671064dca0013382337d9ee5f2877",
+      "edge_sha256": "e79076e693cee1853f94649e3a1fcb0ccc5b7e5a2b394268b0dece8bc5542286"
+    },
+    {
+      "concept": 1,
+      "zoom": 0,
+      "file": "02-overview.png",
+      "sha256": "4d1441c1124d86333b8639898e17e2a5a8635c2b823a432955ec9279409db808",
+      "edge_sha256": "c119d06e86e70443eb8c21d0627c1a114ddedc583f1a20cd928745811f381961"
+    },
+    {
+      "concept": 1,
+      "zoom": 1,
+      "file": "02-zoom.png",
+      "sha256": "f69d6e019b54d6a89800c21b2eae731e3e38658fbb49a2442826821e15416676",
+      "edge_sha256": "a04d8c15c7b5d562954fa71cfe600d8777cc9b5effd0ffad9c29807eed3a1593"
+    },
+    {
+      "concept": 2,
+      "zoom": 0,
+      "file": "03-overview.png",
+      "sha256": "5a91d86c0c76264de78ce71a1690de6c4abba27aa192295380627078b0751282",
+      "edge_sha256": "c51b0e646914f29b05fe98f889a966f923391c01e1d6b16360715118060fc6bd"
+    },
+    {
+      "concept": 2,
+      "zoom": 1,
+      "file": "03-zoom.png",
+      "sha256": "a03088a50ee3cdabf26916e90095a969bfc7da81d95151f3f4e8b72e23afb75f",
+      "edge_sha256": "5e982a773c12ebd416cf8a3fbc161cf6e3834c9a747d499fad1045b468f6a737"
+    },
+    {
+      "concept": 3,
+      "zoom": 0,
+      "file": "04-overview.png",
+      "sha256": "104dd9e487876faca50bc40747e800e681da8c8bc3ef8c1d25633fe1cae44a14",
+      "edge_sha256": "ec7517e4b860a80213a6b17d096c00193215e9c06a16edd4b0cff028318e62b0"
+    },
+    {
+      "concept": 3,
+      "zoom": 1,
+      "file": "04-zoom.png",
+      "sha256": "3e56f74cb690adf1cfb9665289f0f6ac0ab3c5a7a95ef271b9ae5a92e82e8276",
+      "edge_sha256": "eb80e32a76a286be993c5066039c4cc91d84ef03f5e5db96c633cb68980a50de"
+    },
+    {
+      "concept": 4,
+      "zoom": 0,
+      "file": "05-overview.png",
+      "sha256": "36bf63ce49e824a7543ada735b291060d3989e50bdb6ff7ee841b8bdd88608f0",
+      "edge_sha256": "3fe2de47d42065d893dd0824faf3380707d1ead056fa4de2d163623eaef78ce5"
+    },
+    {
+      "concept": 4,
+      "zoom": 1,
+      "file": "05-zoom.png",
+      "sha256": "741535fac6ecb1cd6bddadd59369db416cd814fc204f64a43d057a72c88455a2",
+      "edge_sha256": "f2dac3ea9b84fe128ad14e48098dd848527322f70c77b9cdbad07d0f1a9ad0b2"
+    },
+    {
+      "concept": 5,
+      "zoom": 0,
+      "file": "06-overview.png",
+      "sha256": "f62e070823e00d7a548ee2dc3942de1e871b2d5563b8743501d289942bb1828a",
+      "edge_sha256": "02626df5679022814606220ce70f84b7d3b9f32b7410060d7d4a5b13ebed5acd"
+    },
+    {
+      "concept": 5,
+      "zoom": 1,
+      "file": "06-zoom.png",
+      "sha256": "0a7599924dc2ff51bac7176a09345a9cf6d3336d0cba9cb1dfcee11e31c477db",
+      "edge_sha256": "245f48516781d98ab06d54e32526376fd374fa523af167a5cf866c5712913f5f"
+    },
+    {
+      "concept": 6,
+      "zoom": 0,
+      "file": "07-overview.png",
+      "sha256": "5e0574053a734f595ecbb49adcabd2bf9e6b77dd586bf9c1271c0703327340f2",
+      "edge_sha256": "64d068939d5f2f2032e4100cd5e335c24aaab25db747d80e0ac134439cdb83ee"
+    },
+    {
+      "concept": 6,
+      "zoom": 1,
+      "file": "07-zoom.png",
+      "sha256": "fa7c2f9107e9d68e5f47274a978a64c4e2c6b6d24656d19023a5e8080ad48dd3",
+      "edge_sha256": "18406bdc067ca84f8302c1d5cd2bfebc14e708852c98a38686a419647cceca21"
+    },
+    {
+      "concept": 7,
+      "zoom": 0,
+      "file": "08-overview.png",
+      "sha256": "491378afd2dd91e3335ccfaae4044ec770b1afb002a4dea6bf5463bf52115fd1",
+      "edge_sha256": "cf33d756f863ff83ac9f0e9e3417c11ccfbde7a98672440417de17b08558c06f"
+    },
+    {
+      "concept": 7,
+      "zoom": 1,
+      "file": "08-zoom.png",
+      "sha256": "fb31286d51f75333524f191ad6e9eb73a9da8fa0a2ee9617ffa4e4372700fa92",
+      "edge_sha256": "a40e79c4f7d1cf09ffc096696c0b2966fa2c8959a52d8c449bb21dff464667c8"
+    },
+    {
+      "concept": 8,
+      "zoom": 0,
+      "file": "09-overview.png",
+      "sha256": "2f4e11607e5a70fc0e5763d724b1d63ebdc1fe01f1ed2c049f3fa6cf78201672",
+      "edge_sha256": "916379eeb0acc48633ead6d26752245b68e1301644fe0257d8c2319e43939ee6"
+    },
+    {
+      "concept": 8,
+      "zoom": 1,
+      "file": "09-zoom.png",
+      "sha256": "767d5cb0e5e90526bc973a83ec46233464e3895c51e0e6abfdbec3209f86cf51",
+      "edge_sha256": "b4a3ad531afed562c877df08a63a36228bc70d22d175639badc66238d21d5886"
+    },
+    {
+      "concept": 9,
+      "zoom": 0,
+      "file": "10-overview.png",
+      "sha256": "d10c8b2a7556b6109cd386e0fe1c07c73f6d68feb986f49bb498f6776d2f7f3a",
+      "edge_sha256": "538effbc6b4ab73e753e057e3d79535818c72ffaabb9870b09b0de09fa87f79a"
+    },
+    {
+      "concept": 9,
+      "zoom": 1,
+      "file": "10-zoom.png",
+      "sha256": "f1edd78b6d1684424647e6d09fcbd44eff80787084263eaef92cf14f74b35506",
+      "edge_sha256": "afae123de0812628358c6dd69afd258a04a0bbdb1ff93b0fec9fa4b89247ec2b"
+    }
+  ],
+  "redraw_timings": [
+    {
+      "key": "R",
+      "concept": 0,
+      "zoom": 0,
+      "hardware_frames": 17
+    },
+    {
+      "key": "A",
+      "concept": 0,
+      "zoom": 1,
+      "hardware_frames": 17
+    },
+    {
+      "key": "B",
+      "concept": 0,
+      "zoom": 0,
+      "hardware_frames": 13
+    },
+    {
+      "key": "L",
+      "concept": 1,
+      "zoom": 0,
+      "hardware_frames": 13
+    },
+    {
+      "key": "A",
+      "concept": 1,
+      "zoom": 1,
+      "hardware_frames": 13
+    },
+    {
+      "key": "B",
+      "concept": 1,
+      "zoom": 0,
+      "hardware_frames": 13
+    },
+    {
+      "key": "L",
+      "concept": 2,
+      "zoom": 0,
+      "hardware_frames": 9
+    },
+    {
+      "key": "A",
+      "concept": 2,
+      "zoom": 1,
+      "hardware_frames": 13
+    },
+    {
+      "key": "B",
+      "concept": 2,
+      "zoom": 0,
+      "hardware_frames": 9
+    },
+    {
+      "key": "L",
+      "concept": 3,
+      "zoom": 0,
+      "hardware_frames": 5
+    },
+    {
+      "key": "A",
+      "concept": 3,
+      "zoom": 1,
+      "hardware_frames": 9
+    },
+    {
+      "key": "B",
+      "concept": 3,
+      "zoom": 0,
+      "hardware_frames": 5
+    },
+    {
+      "key": "L",
+      "concept": 4,
+      "zoom": 0,
+      "hardware_frames": 9
+    },
+    {
+      "key": "A",
+      "concept": 4,
+      "zoom": 1,
+      "hardware_frames": 17
+    },
+    {
+      "key": "B",
+      "concept": 4,
+      "zoom": 0,
+      "hardware_frames": 9
+    },
+    {
+      "key": "L",
+      "concept": 5,
+      "zoom": 0,
+      "hardware_frames": 13
+    },
+    {
+      "key": "A",
+      "concept": 5,
+      "zoom": 1,
+      "hardware_frames": 13
+    },
+    {
+      "key": "B",
+      "concept": 5,
+      "zoom": 0,
+      "hardware_frames": 13
+    },
+    {
+      "key": "L",
+      "concept": 6,
+      "zoom": 0,
+      "hardware_frames": 9
+    },
+    {
+      "key": "A",
+      "concept": 6,
+      "zoom": 1,
+      "hardware_frames": 13
+    },
+    {
+      "key": "B",
+      "concept": 6,
+      "zoom": 0,
+      "hardware_frames": 9
+    },
+    {
+      "key": "L",
+      "concept": 7,
+      "zoom": 0,
+      "hardware_frames": 13
+    },
+    {
+      "key": "A",
+      "concept": 7,
+      "zoom": 1,
+      "hardware_frames": 13
+    },
+    {
+      "key": "B",
+      "concept": 7,
+      "zoom": 0,
+      "hardware_frames": 13
+    },
+    {
+      "key": "L",
+      "concept": 8,
+      "zoom": 0,
+      "hardware_frames": 13
+    },
+    {
+      "key": "A",
+      "concept": 8,
+      "zoom": 1,
+      "hardware_frames": 13
+    },
+    {
+      "key": "B",
+      "concept": 8,
+      "zoom": 0,
+      "hardware_frames": 13
+    },
+    {
+      "key": "L",
+      "concept": 9,
+      "zoom": 0,
+      "hardware_frames": 9
+    },
+    {
+      "key": "A",
+      "concept": 9,
+      "zoom": 1,
+      "hardware_frames": 13
+    },
+    {
+      "key": "B",
+      "concept": 9,
+      "zoom": 0,
+      "hardware_frames": 9
+    },
+    {
+      "key": "UP",
+      "concept": 9,
+      "zoom": 0,
+      "hardware_frames": 9
+    },
+    {
+      "key": "A",
+      "concept": 9,
+      "zoom": 1,
+      "hardware_frames": 9
+    }
+  ],
+  "checks": [
+    {
+      "name": "normal opening draft completed with positive health",
+      "passed": true,
+      "observed": null
+    },
+    {
+      "name": "navigation begins in living ordinary ground state",
+      "passed": true,
+      "observed": {
+        "frames": 280,
+        "clock": 269,
+        "run_frames": 173,
+        "state": 1,
+        "area": 0,
+        "cell": 0,
+        "node": 42,
+        "actor": {
+          "kind": 1,
+          "type": 0,
+          "state": 0,
+          "timer": 0,
+          "x": 200,
+          "y": 270,
+          "z": 0,
+          "speed": 0,
+          "hp": 0,
+          "coll": 0,
+          "facing": 0
+        },
+        "health": [
+          32,
+          32
+        ],
+        "text": 0,
+        "camera": [
+          80,
+          160
+        ]
+      }
+    },
+    {
+      "name": "actual UP input enters Cream through Drain ladder",
+      "passed": true,
+      "observed": null
+    },
+    {
+      "name": "real START opens the pause menu",
+      "passed": true,
+      "observed": null
+    },
+    {
+      "name": "real menu navigation opens graphical Cream map",
+      "passed": true,
+      "observed": null
+    },
+    {
+      "name": "actual map concept selector matches 1",
+      "passed": true,
+      "observed": null
+    },
+    {
+      "name": "actual map zoom matches input",
+      "passed": true,
+      "observed": null
+    },
+    {
+      "name": "atlas metadata names the real live room",
+      "passed": true,
+      "observed": null
+    },
+    {
+      "name": "unknown rooms expose no event information",
+      "passed": true,
+      "observed": null
+    },
+    {
+      "name": "native atlas heights match every actual physical room cell",
+      "passed": true,
+      "observed": null
+    },
+    {
+      "name": "native atlas owners match every actual physical room cell",
+      "passed": true,
+      "observed": null
+    },
+    {
+      "name": "native atlas player marker uses actual room position",
+      "passed": true,
+      "observed": null
+    },
+    {
+      "name": "all concepts and scales use identical actual room data",
+      "passed": true,
+      "observed": null
+    },
+    {
+      "name": "pause-map view never mutates live game state",
+      "passed": true,
+      "observed": {
+        "concept": 0,
+        "zoom": 0,
+        "before": {
+          "room": "411c1de9bdc299fb5c7db49213e0c19c6b20214da537a4e970a7327e9b00fa6d",
+          "topology": "11a372a6c205cb90bd4aca7877d67e91fc022078a9ca42aeb4815283149449b6",
+          "world": "fb2f099f9c62a418311dfec5401c98cd31d826c0b642a1d4e5d07c8d3f512de9",
+          "progress": "7e98700947ba12a0010a6e9f9e8e2fb95da9103806ca7c4344f10ca4d7a88603",
+          "player": "488d44a9b23de8b3eea9150459051f68f25b3bcc650eaf62107b21ce3f3cb6a0",
+          "inventory": "1dd6c6dc84689fa508fa27f8708948a956b4344f6bf88d5d382a5ca5cbf45bad",
+          "handoff": "a6cd98d6e5bbff2c8678a7d292ce7379acf9e8cc1bad49851761f0479c33e9c2",
+          "actors": "abe92699997ff9cfab0a89b271c85ffe5cce2f7531d2cc6bdb79f232b1e8a3f6",
+          "gates": "cc2786e1f9910a9d811400edcddaf7075195f7a16b216dcbefba3bc7c4f2ae51",
+          "node": 42,
+          "run_frames": 215,
+          "actor": {
+            "kind": 1,
+            "state": 0,
+            "x": 400,
+            "y": 350,
+            "z": 0,
+            "facing": 0
+          }
+        },
+        "after": {
+          "room": "411c1de9bdc299fb5c7db49213e0c19c6b20214da537a4e970a7327e9b00fa6d",
+          "topology": "11a372a6c205cb90bd4aca7877d67e91fc022078a9ca42aeb4815283149449b6",
+          "world": "fb2f099f9c62a418311dfec5401c98cd31d826c0b642a1d4e5d07c8d3f512de9",
+          "progress": "7e98700947ba12a0010a6e9f9e8e2fb95da9103806ca7c4344f10ca4d7a88603",
+          "player": "488d44a9b23de8b3eea9150459051f68f25b3bcc650eaf62107b21ce3f3cb6a0",
+          "inventory": "1dd6c6dc84689fa508fa27f8708948a956b4344f6bf88d5d382a5ca5cbf45bad",
+          "handoff": "a6cd98d6e5bbff2c8678a7d292ce7379acf9e8cc1bad49851761f0479c33e9c2",
+          "actors": "abe92699997ff9cfab0a89b271c85ffe5cce2f7531d2cc6bdb79f232b1e8a3f6",
+          "gates": "cc2786e1f9910a9d811400edcddaf7075195f7a16b216dcbefba3bc7c4f2ae51",
+          "node": 42,
+          "run_frames": 215,
+          "actor": {
+            "kind": 1,
+            "state": 0,
+            "x": 400,
+            "y": 350,
+            "z": 0,
+            "facing": 0
+          }
+        }
+      }
+    },
+    {
+      "name": "actual map zoom matches input",
+      "passed": true,
+      "observed": null
+    },
+    {
+      "name": "atlas metadata names the real live room",
+      "passed": true,
+      "observed": null
+    },
+    {
+      "name": "unknown rooms expose no event information",
+      "passed": true,
+      "observed": null
+    },
+    {
+      "name": "native atlas heights match every actual physical room cell",
+      "passed": true,
+      "observed": null
+    },
+    {
+      "name": "native atlas owners match every actual physical room cell",
+      "passed": true,
+      "observed": null
+    },
+    {
+      "name": "native atlas player marker uses actual room position",
+      "passed": true,
+      "observed": null
+    },
+    {
+      "name": "all concepts and scales use identical actual room data",
+      "passed": true,
+      "observed": null
+    },
+    {
+      "name": "pause-map view never mutates live game state",
+      "passed": true,
+      "observed": {
+        "concept": 0,
+        "zoom": 1,
+        "before": {
+          "room": "411c1de9bdc299fb5c7db49213e0c19c6b20214da537a4e970a7327e9b00fa6d",
+          "topology": "11a372a6c205cb90bd4aca7877d67e91fc022078a9ca42aeb4815283149449b6",
+          "world": "fb2f099f9c62a418311dfec5401c98cd31d826c0b642a1d4e5d07c8d3f512de9",
+          "progress": "7e98700947ba12a0010a6e9f9e8e2fb95da9103806ca7c4344f10ca4d7a88603",
+          "player": "488d44a9b23de8b3eea9150459051f68f25b3bcc650eaf62107b21ce3f3cb6a0",
+          "inventory": "1dd6c6dc84689fa508fa27f8708948a956b4344f6bf88d5d382a5ca5cbf45bad",
+          "handoff": "a6cd98d6e5bbff2c8678a7d292ce7379acf9e8cc1bad49851761f0479c33e9c2",
+          "actors": "abe92699997ff9cfab0a89b271c85ffe5cce2f7531d2cc6bdb79f232b1e8a3f6",
+          "gates": "cc2786e1f9910a9d811400edcddaf7075195f7a16b216dcbefba3bc7c4f2ae51",
+          "node": 42,
+          "run_frames": 215,
+          "actor": {
+            "kind": 1,
+            "state": 0,
+            "x": 400,
+            "y": 350,
+            "z": 0,
+            "facing": 0
+          }
+        },
+        "after": {
+          "room": "411c1de9bdc299fb5c7db49213e0c19c6b20214da537a4e970a7327e9b00fa6d",
+          "topology": "11a372a6c205cb90bd4aca7877d67e91fc022078a9ca42aeb4815283149449b6",
+          "world": "fb2f099f9c62a418311dfec5401c98cd31d826c0b642a1d4e5d07c8d3f512de9",
+          "progress": "7e98700947ba12a0010a6e9f9e8e2fb95da9103806ca7c4344f10ca4d7a88603",
+          "player": "488d44a9b23de8b3eea9150459051f68f25b3bcc650eaf62107b21ce3f3cb6a0",
+          "inventory": "1dd6c6dc84689fa508fa27f8708948a956b4344f6bf88d5d382a5ca5cbf45bad",
+          "handoff": "a6cd98d6e5bbff2c8678a7d292ce7379acf9e8cc1bad49851761f0479c33e9c2",
+          "actors": "abe92699997ff9cfab0a89b271c85ffe5cce2f7531d2cc6bdb79f232b1e8a3f6",
+          "gates": "cc2786e1f9910a9d811400edcddaf7075195f7a16b216dcbefba3bc7c4f2ae51",
+          "node": 42,
+          "run_frames": 215,
+          "actor": {
+            "kind": 1,
+            "state": 0,
+            "x": 400,
+            "y": 350,
+            "z": 0,
+            "facing": 0
+          }
+        }
+      }
+    },
+    {
+      "name": "actual map concept selector matches 2",
+      "passed": true,
+      "observed": null
+    },
+    {
+      "name": "actual map zoom matches input",
+      "passed": true,
+      "observed": null
+    },
+    {
+      "name": "atlas metadata names the real live room",
+      "passed": true,
+      "observed": null
+    },
+    {
+      "name": "unknown rooms expose no event information",
+      "passed": true,
+      "observed": null
+    },
+    {
+      "name": "native atlas heights match every actual physical room cell",
+      "passed": true,
+      "observed": null
+    },
+    {
+      "name": "native atlas owners match every actual physical room cell",
+      "passed": true,
+      "observed": null
+    },
+    {
+      "name": "native atlas player marker uses actual room position",
+      "passed": true,
+      "observed": null
+    },
+    {
+      "name": "all concepts and scales use identical actual room data",
+      "passed": true,
+      "observed": null
+    },
+    {
+      "name": "pause-map view never mutates live game state",
+      "passed": true,
+      "observed": {
+        "concept": 1,
+        "zoom": 0,
+        "before": {
+          "room": "411c1de9bdc299fb5c7db49213e0c19c6b20214da537a4e970a7327e9b00fa6d",
+          "topology": "11a372a6c205cb90bd4aca7877d67e91fc022078a9ca42aeb4815283149449b6",
+          "world": "fb2f099f9c62a418311dfec5401c98cd31d826c0b642a1d4e5d07c8d3f512de9",
+          "progress": "7e98700947ba12a0010a6e9f9e8e2fb95da9103806ca7c4344f10ca4d7a88603",
+          "player": "488d44a9b23de8b3eea9150459051f68f25b3bcc650eaf62107b21ce3f3cb6a0",
+          "inventory": "1dd6c6dc84689fa508fa27f8708948a956b4344f6bf88d5d382a5ca5cbf45bad",
+          "handoff": "a6cd98d6e5bbff2c8678a7d292ce7379acf9e8cc1bad49851761f0479c33e9c2",
+          "actors": "abe92699997ff9cfab0a89b271c85ffe5cce2f7531d2cc6bdb79f232b1e8a3f6",
+          "gates": "cc2786e1f9910a9d811400edcddaf7075195f7a16b216dcbefba3bc7c4f2ae51",
+          "node": 42,
+          "run_frames": 215,
+          "actor": {
+            "kind": 1,
+            "state": 0,
+            "x": 400,
+            "y": 350,
+            "z": 0,
+            "facing": 0
+          }
+        },
+        "after": {
+          "room": "411c1de9bdc299fb5c7db49213e0c19c6b20214da537a4e970a7327e9b00fa6d",
+          "topology": "11a372a6c205cb90bd4aca7877d67e91fc022078a9ca42aeb4815283149449b6",
+          "world": "fb2f099f9c62a418311dfec5401c98cd31d826c0b642a1d4e5d07c8d3f512de9",
+          "progress": "7e98700947ba12a0010a6e9f9e8e2fb95da9103806ca7c4344f10ca4d7a88603",
+          "player": "488d44a9b23de8b3eea9150459051f68f25b3bcc650eaf62107b21ce3f3cb6a0",
+          "inventory": "1dd6c6dc84689fa508fa27f8708948a956b4344f6bf88d5d382a5ca5cbf45bad",
+          "handoff": "a6cd98d6e5bbff2c8678a7d292ce7379acf9e8cc1bad49851761f0479c33e9c2",
+          "actors": "abe92699997ff9cfab0a89b271c85ffe5cce2f7531d2cc6bdb79f232b1e8a3f6",
+          "gates": "cc2786e1f9910a9d811400edcddaf7075195f7a16b216dcbefba3bc7c4f2ae51",
+          "node": 42,
+          "run_frames": 215,
+          "actor": {
+            "kind": 1,
+            "state": 0,
+            "x": 400,
+            "y": 350,
+            "z": 0,
+            "facing": 0
+          }
+        }
+      }
+    },
+    {
+      "name": "actual map zoom matches input",
+      "passed": true,
+      "observed": null
+    },
+    {
+      "name": "atlas metadata names the real live room",
+      "passed": true,
+      "observed": null
+    },
+    {
+      "name": "unknown rooms expose no event information",
+      "passed": true,
+      "observed": null
+    },
+    {
+      "name": "native atlas heights match every actual physical room cell",
+      "passed": true,
+      "observed": null
+    },
+    {
+      "name": "native atlas owners match every actual physical room cell",
+      "passed": true,
+      "observed": null
+    },
+    {
+      "name": "native atlas player marker uses actual room position",
+      "passed": true,
+      "observed": null
+    },
+    {
+      "name": "all concepts and scales use identical actual room data",
+      "passed": true,
+      "observed": null
+    },
+    {
+      "name": "pause-map view never mutates live game state",
+      "passed": true,
+      "observed": {
+        "concept": 1,
+        "zoom": 1,
+        "before": {
+          "room": "411c1de9bdc299fb5c7db49213e0c19c6b20214da537a4e970a7327e9b00fa6d",
+          "topology": "11a372a6c205cb90bd4aca7877d67e91fc022078a9ca42aeb4815283149449b6",
+          "world": "fb2f099f9c62a418311dfec5401c98cd31d826c0b642a1d4e5d07c8d3f512de9",
+          "progress": "7e98700947ba12a0010a6e9f9e8e2fb95da9103806ca7c4344f10ca4d7a88603",
+          "player": "488d44a9b23de8b3eea9150459051f68f25b3bcc650eaf62107b21ce3f3cb6a0",
+          "inventory": "1dd6c6dc84689fa508fa27f8708948a956b4344f6bf88d5d382a5ca5cbf45bad",
+          "handoff": "a6cd98d6e5bbff2c8678a7d292ce7379acf9e8cc1bad49851761f0479c33e9c2",
+          "actors": "abe92699997ff9cfab0a89b271c85ffe5cce2f7531d2cc6bdb79f232b1e8a3f6",
+          "gates": "cc2786e1f9910a9d811400edcddaf7075195f7a16b216dcbefba3bc7c4f2ae51",
+          "node": 42,
+          "run_frames": 215,
+          "actor": {
+            "kind": 1,
+            "state": 0,
+            "x": 400,
+            "y": 350,
+            "z": 0,
+            "facing": 0
+          }
+        },
+        "after": {
+          "room": "411c1de9bdc299fb5c7db49213e0c19c6b20214da537a4e970a7327e9b00fa6d",
+          "topology": "11a372a6c205cb90bd4aca7877d67e91fc022078a9ca42aeb4815283149449b6",
+          "world": "fb2f099f9c62a418311dfec5401c98cd31d826c0b642a1d4e5d07c8d3f512de9",
+          "progress": "7e98700947ba12a0010a6e9f9e8e2fb95da9103806ca7c4344f10ca4d7a88603",
+          "player": "488d44a9b23de8b3eea9150459051f68f25b3bcc650eaf62107b21ce3f3cb6a0",
+          "inventory": "1dd6c6dc84689fa508fa27f8708948a956b4344f6bf88d5d382a5ca5cbf45bad",
+          "handoff": "a6cd98d6e5bbff2c8678a7d292ce7379acf9e8cc1bad49851761f0479c33e9c2",
+          "actors": "abe92699997ff9cfab0a89b271c85ffe5cce2f7531d2cc6bdb79f232b1e8a3f6",
+          "gates": "cc2786e1f9910a9d811400edcddaf7075195f7a16b216dcbefba3bc7c4f2ae51",
+          "node": 42,
+          "run_frames": 215,
+          "actor": {
+            "kind": 1,
+            "state": 0,
+            "x": 400,
+            "y": 350,
+            "z": 0,
+            "facing": 0
+          }
+        }
+      }
+    },
+    {
+      "name": "actual map concept selector matches 3",
+      "passed": true,
+      "observed": null
+    },
+    {
+      "name": "actual map zoom matches input",
+      "passed": true,
+      "observed": null
+    },
+    {
+      "name": "atlas metadata names the real live room",
+      "passed": true,
+      "observed": null
+    },
+    {
+      "name": "unknown rooms expose no event information",
+      "passed": true,
+      "observed": null
+    },
+    {
+      "name": "native atlas heights match every actual physical room cell",
+      "passed": true,
+      "observed": null
+    },
+    {
+      "name": "native atlas owners match every actual physical room cell",
+      "passed": true,
+      "observed": null
+    },
+    {
+      "name": "native atlas player marker uses actual room position",
+      "passed": true,
+      "observed": null
+    },
+    {
+      "name": "all concepts and scales use identical actual room data",
+      "passed": true,
+      "observed": null
+    },
+    {
+      "name": "pause-map view never mutates live game state",
+      "passed": true,
+      "observed": {
+        "concept": 2,
+        "zoom": 0,
+        "before": {
+          "room": "411c1de9bdc299fb5c7db49213e0c19c6b20214da537a4e970a7327e9b00fa6d",
+          "topology": "11a372a6c205cb90bd4aca7877d67e91fc022078a9ca42aeb4815283149449b6",
+          "world": "fb2f099f9c62a418311dfec5401c98cd31d826c0b642a1d4e5d07c8d3f512de9",
+          "progress": "7e98700947ba12a0010a6e9f9e8e2fb95da9103806ca7c4344f10ca4d7a88603",
+          "player": "488d44a9b23de8b3eea9150459051f68f25b3bcc650eaf62107b21ce3f3cb6a0",
+          "inventory": "1dd6c6dc84689fa508fa27f8708948a956b4344f6bf88d5d382a5ca5cbf45bad",
+          "handoff": "a6cd98d6e5bbff2c8678a7d292ce7379acf9e8cc1bad49851761f0479c33e9c2",
+          "actors": "abe92699997ff9cfab0a89b271c85ffe5cce2f7531d2cc6bdb79f232b1e8a3f6",
+          "gates": "cc2786e1f9910a9d811400edcddaf7075195f7a16b216dcbefba3bc7c4f2ae51",
+          "node": 42,
+          "run_frames": 215,
+          "actor": {
+            "kind": 1,
+            "state": 0,
+            "x": 400,
+            "y": 350,
+            "z": 0,
+            "facing": 0
+          }
+        },
+        "after": {
+          "room": "411c1de9bdc299fb5c7db49213e0c19c6b20214da537a4e970a7327e9b00fa6d",
+          "topology": "11a372a6c205cb90bd4aca7877d67e91fc022078a9ca42aeb4815283149449b6",
+          "world": "fb2f099f9c62a418311dfec5401c98cd31d826c0b642a1d4e5d07c8d3f512de9",
+          "progress": "7e98700947ba12a0010a6e9f9e8e2fb95da9103806ca7c4344f10ca4d7a88603",
+          "player": "488d44a9b23de8b3eea9150459051f68f25b3bcc650eaf62107b21ce3f3cb6a0",
+          "inventory": "1dd6c6dc84689fa508fa27f8708948a956b4344f6bf88d5d382a5ca5cbf45bad",
+          "handoff": "a6cd98d6e5bbff2c8678a7d292ce7379acf9e8cc1bad49851761f0479c33e9c2",
+          "actors": "abe92699997ff9cfab0a89b271c85ffe5cce2f7531d2cc6bdb79f232b1e8a3f6",
+          "gates": "cc2786e1f9910a9d811400edcddaf7075195f7a16b216dcbefba3bc7c4f2ae51",
+          "node": 42,
+          "run_frames": 215,
+          "actor": {
+            "kind": 1,
+            "state": 0,
+            "x": 400,
+            "y": 350,
+            "z": 0,
+            "facing": 0
+          }
+        }
+      }
+    },
+    {
+      "name": "actual map zoom matches input",
+      "passed": true,
+      "observed": null
+    },
+    {
+      "name": "atlas metadata names the real live room",
+      "passed": true,
+      "observed": null
+    },
+    {
+      "name": "unknown rooms expose no event information",
+      "passed": true,
+      "observed": null
+    },
+    {
+      "name": "native atlas heights match every actual physical room cell",
+      "passed": true,
+      "observed": null
+    },
+    {
+      "name": "native atlas owners match every actual physical room cell",
+      "passed": true,
+      "observed": null
+    },
+    {
+      "name": "native atlas player marker uses actual room position",
+      "passed": true,
+      "observed": null
+    },
+    {
+      "name": "all concepts and scales use identical actual room data",
+      "passed": true,
+      "observed": null
+    },
+    {
+      "name": "pause-map view never mutates live game state",
+      "passed": true,
+      "observed": {
+        "concept": 2,
+        "zoom": 1,
+        "before": {
+          "room": "411c1de9bdc299fb5c7db49213e0c19c6b20214da537a4e970a7327e9b00fa6d",
+          "topology": "11a372a6c205cb90bd4aca7877d67e91fc022078a9ca42aeb4815283149449b6",
+          "world": "fb2f099f9c62a418311dfec5401c98cd31d826c0b642a1d4e5d07c8d3f512de9",
+          "progress": "7e98700947ba12a0010a6e9f9e8e2fb95da9103806ca7c4344f10ca4d7a88603",
+          "player": "488d44a9b23de8b3eea9150459051f68f25b3bcc650eaf62107b21ce3f3cb6a0",
+          "inventory": "1dd6c6dc84689fa508fa27f8708948a956b4344f6bf88d5d382a5ca5cbf45bad",
+          "handoff": "a6cd98d6e5bbff2c8678a7d292ce7379acf9e8cc1bad49851761f0479c33e9c2",
+          "actors": "abe92699997ff9cfab0a89b271c85ffe5cce2f7531d2cc6bdb79f232b1e8a3f6",
+          "gates": "cc2786e1f9910a9d811400edcddaf7075195f7a16b216dcbefba3bc7c4f2ae51",
+          "node": 42,
+          "run_frames": 215,
+          "actor": {
+            "kind": 1,
+            "state": 0,
+            "x": 400,
+            "y": 350,
+            "z": 0,
+            "facing": 0
+          }
+        },
+        "after": {
+          "room": "411c1de9bdc299fb5c7db49213e0c19c6b20214da537a4e970a7327e9b00fa6d",
+          "topology": "11a372a6c205cb90bd4aca7877d67e91fc022078a9ca42aeb4815283149449b6",
+          "world": "fb2f099f9c62a418311dfec5401c98cd31d826c0b642a1d4e5d07c8d3f512de9",
+          "progress": "7e98700947ba12a0010a6e9f9e8e2fb95da9103806ca7c4344f10ca4d7a88603",
+          "player": "488d44a9b23de8b3eea9150459051f68f25b3bcc650eaf62107b21ce3f3cb6a0",
+          "inventory": "1dd6c6dc84689fa508fa27f8708948a956b4344f6bf88d5d382a5ca5cbf45bad",
+          "handoff": "a6cd98d6e5bbff2c8678a7d292ce7379acf9e8cc1bad49851761f0479c33e9c2",
+          "actors": "abe92699997ff9cfab0a89b271c85ffe5cce2f7531d2cc6bdb79f232b1e8a3f6",
+          "gates": "cc2786e1f9910a9d811400edcddaf7075195f7a16b216dcbefba3bc7c4f2ae51",
+          "node": 42,
+          "run_frames": 215,
+          "actor": {
+            "kind": 1,
+            "state": 0,
+            "x": 400,
+            "y": 350,
+            "z": 0,
+            "facing": 0
+          }
+        }
+      }
+    },
+    {
+      "name": "actual map concept selector matches 4",
+      "passed": true,
+      "observed": null
+    },
+    {
+      "name": "actual map zoom matches input",
+      "passed": true,
+      "observed": null
+    },
+    {
+      "name": "atlas metadata names the real live room",
+      "passed": true,
+      "observed": null
+    },
+    {
+      "name": "unknown rooms expose no event information",
+      "passed": true,
+      "observed": null
+    },
+    {
+      "name": "native atlas heights match every actual physical room cell",
+      "passed": true,
+      "observed": null
+    },
+    {
+      "name": "native atlas owners match every actual physical room cell",
+      "passed": true,
+      "observed": null
+    },
+    {
+      "name": "native atlas player marker uses actual room position",
+      "passed": true,
+      "observed": null
+    },
+    {
+      "name": "all concepts and scales use identical actual room data",
+      "passed": true,
+      "observed": null
+    },
+    {
+      "name": "pause-map view never mutates live game state",
+      "passed": true,
+      "observed": {
+        "concept": 3,
+        "zoom": 0,
+        "before": {
+          "room": "411c1de9bdc299fb5c7db49213e0c19c6b20214da537a4e970a7327e9b00fa6d",
+          "topology": "11a372a6c205cb90bd4aca7877d67e91fc022078a9ca42aeb4815283149449b6",
+          "world": "fb2f099f9c62a418311dfec5401c98cd31d826c0b642a1d4e5d07c8d3f512de9",
+          "progress": "7e98700947ba12a0010a6e9f9e8e2fb95da9103806ca7c4344f10ca4d7a88603",
+          "player": "488d44a9b23de8b3eea9150459051f68f25b3bcc650eaf62107b21ce3f3cb6a0",
+          "inventory": "1dd6c6dc84689fa508fa27f8708948a956b4344f6bf88d5d382a5ca5cbf45bad",
+          "handoff": "a6cd98d6e5bbff2c8678a7d292ce7379acf9e8cc1bad49851761f0479c33e9c2",
+          "actors": "abe92699997ff9cfab0a89b271c85ffe5cce2f7531d2cc6bdb79f232b1e8a3f6",
+          "gates": "cc2786e1f9910a9d811400edcddaf7075195f7a16b216dcbefba3bc7c4f2ae51",
+          "node": 42,
+          "run_frames": 215,
+          "actor": {
+            "kind": 1,
+            "state": 0,
+            "x": 400,
+            "y": 350,
+            "z": 0,
+            "facing": 0
+          }
+        },
+        "after": {
+          "room": "411c1de9bdc299fb5c7db49213e0c19c6b20214da537a4e970a7327e9b00fa6d",
+          "topology": "11a372a6c205cb90bd4aca7877d67e91fc022078a9ca42aeb4815283149449b6",
+          "world": "fb2f099f9c62a418311dfec5401c98cd31d826c0b642a1d4e5d07c8d3f512de9",
+          "progress": "7e98700947ba12a0010a6e9f9e8e2fb95da9103806ca7c4344f10ca4d7a88603",
+          "player": "488d44a9b23de8b3eea9150459051f68f25b3bcc650eaf62107b21ce3f3cb6a0",
+          "inventory": "1dd6c6dc84689fa508fa27f8708948a956b4344f6bf88d5d382a5ca5cbf45bad",
+          "handoff": "a6cd98d6e5bbff2c8678a7d292ce7379acf9e8cc1bad49851761f0479c33e9c2",
+          "actors": "abe92699997ff9cfab0a89b271c85ffe5cce2f7531d2cc6bdb79f232b1e8a3f6",
+          "gates": "cc2786e1f9910a9d811400edcddaf7075195f7a16b216dcbefba3bc7c4f2ae51",
+          "node": 42,
+          "run_frames": 215,
+          "actor": {
+            "kind": 1,
+            "state": 0,
+            "x": 400,
+            "y": 350,
+            "z": 0,
+            "facing": 0
+          }
+        }
+      }
+    },
+    {
+      "name": "actual map zoom matches input",
+      "passed": true,
+      "observed": null
+    },
+    {
+      "name": "atlas metadata names the real live room",
+      "passed": true,
+      "observed": null
+    },
+    {
+      "name": "unknown rooms expose no event information",
+      "passed": true,
+      "observed": null
+    },
+    {
+      "name": "native atlas heights match every actual physical room cell",
+      "passed": true,
+      "observed": null
+    },
+    {
+      "name": "native atlas owners match every actual physical room cell",
+      "passed": true,
+      "observed": null
+    },
+    {
+      "name": "native atlas player marker uses actual room position",
+      "passed": true,
+      "observed": null
+    },
+    {
+      "name": "all concepts and scales use identical actual room data",
+      "passed": true,
+      "observed": null
+    },
+    {
+      "name": "pause-map view never mutates live game state",
+      "passed": true,
+      "observed": {
+        "concept": 3,
+        "zoom": 1,
+        "before": {
+          "room": "411c1de9bdc299fb5c7db49213e0c19c6b20214da537a4e970a7327e9b00fa6d",
+          "topology": "11a372a6c205cb90bd4aca7877d67e91fc022078a9ca42aeb4815283149449b6",
+          "world": "fb2f099f9c62a418311dfec5401c98cd31d826c0b642a1d4e5d07c8d3f512de9",
+          "progress": "7e98700947ba12a0010a6e9f9e8e2fb95da9103806ca7c4344f10ca4d7a88603",
+          "player": "488d44a9b23de8b3eea9150459051f68f25b3bcc650eaf62107b21ce3f3cb6a0",
+          "inventory": "1dd6c6dc84689fa508fa27f8708948a956b4344f6bf88d5d382a5ca5cbf45bad",
+          "handoff": "a6cd98d6e5bbff2c8678a7d292ce7379acf9e8cc1bad49851761f0479c33e9c2",
+          "actors": "abe92699997ff9cfab0a89b271c85ffe5cce2f7531d2cc6bdb79f232b1e8a3f6",
+          "gates": "cc2786e1f9910a9d811400edcddaf7075195f7a16b216dcbefba3bc7c4f2ae51",
+          "node": 42,
+          "run_frames": 215,
+          "actor": {
+            "kind": 1,
+            "state": 0,
+            "x": 400,
+            "y": 350,
+            "z": 0,
+            "facing": 0
+          }
+        },
+        "after": {
+          "room": "411c1de9bdc299fb5c7db49213e0c19c6b20214da537a4e970a7327e9b00fa6d",
+          "topology": "11a372a6c205cb90bd4aca7877d67e91fc022078a9ca42aeb4815283149449b6",
+          "world": "fb2f099f9c62a418311dfec5401c98cd31d826c0b642a1d4e5d07c8d3f512de9",
+          "progress": "7e98700947ba12a0010a6e9f9e8e2fb95da9103806ca7c4344f10ca4d7a88603",
+          "player": "488d44a9b23de8b3eea9150459051f68f25b3bcc650eaf62107b21ce3f3cb6a0",
+          "inventory": "1dd6c6dc84689fa508fa27f8708948a956b4344f6bf88d5d382a5ca5cbf45bad",
+          "handoff": "a6cd98d6e5bbff2c8678a7d292ce7379acf9e8cc1bad49851761f0479c33e9c2",
+          "actors": "abe92699997ff9cfab0a89b271c85ffe5cce2f7531d2cc6bdb79f232b1e8a3f6",
+          "gates": "cc2786e1f9910a9d811400edcddaf7075195f7a16b216dcbefba3bc7c4f2ae51",
+          "node": 42,
+          "run_frames": 215,
+          "actor": {
+            "kind": 1,
+            "state": 0,
+            "x": 400,
+            "y": 350,
+            "z": 0,
+            "facing": 0
+          }
+        }
+      }
+    },
+    {
+      "name": "actual map concept selector matches 5",
+      "passed": true,
+      "observed": null
+    },
+    {
+      "name": "actual map zoom matches input",
+      "passed": true,
+      "observed": null
+    },
+    {
+      "name": "atlas metadata names the real live room",
+      "passed": true,
+      "observed": null
+    },
+    {
+      "name": "unknown rooms expose no event information",
+      "passed": true,
+      "observed": null
+    },
+    {
+      "name": "native atlas heights match every actual physical room cell",
+      "passed": true,
+      "observed": null
+    },
+    {
+      "name": "native atlas owners match every actual physical room cell",
+      "passed": true,
+      "observed": null
+    },
+    {
+      "name": "native atlas player marker uses actual room position",
+      "passed": true,
+      "observed": null
+    },
+    {
+      "name": "all concepts and scales use identical actual room data",
+      "passed": true,
+      "observed": null
+    },
+    {
+      "name": "pause-map view never mutates live game state",
+      "passed": true,
+      "observed": {
+        "concept": 4,
+        "zoom": 0,
+        "before": {
+          "room": "411c1de9bdc299fb5c7db49213e0c19c6b20214da537a4e970a7327e9b00fa6d",
+          "topology": "11a372a6c205cb90bd4aca7877d67e91fc022078a9ca42aeb4815283149449b6",
+          "world": "fb2f099f9c62a418311dfec5401c98cd31d826c0b642a1d4e5d07c8d3f512de9",
+          "progress": "7e98700947ba12a0010a6e9f9e8e2fb95da9103806ca7c4344f10ca4d7a88603",
+          "player": "488d44a9b23de8b3eea9150459051f68f25b3bcc650eaf62107b21ce3f3cb6a0",
+          "inventory": "1dd6c6dc84689fa508fa27f8708948a956b4344f6bf88d5d382a5ca5cbf45bad",
+          "handoff": "a6cd98d6e5bbff2c8678a7d292ce7379acf9e8cc1bad49851761f0479c33e9c2",
+          "actors": "abe92699997ff9cfab0a89b271c85ffe5cce2f7531d2cc6bdb79f232b1e8a3f6",
+          "gates": "cc2786e1f9910a9d811400edcddaf7075195f7a16b216dcbefba3bc7c4f2ae51",
+          "node": 42,
+          "run_frames": 215,
+          "actor": {
+            "kind": 1,
+            "state": 0,
+            "x": 400,
+            "y": 350,
+            "z": 0,
+            "facing": 0
+          }
+        },
+        "after": {
+          "room": "411c1de9bdc299fb5c7db49213e0c19c6b20214da537a4e970a7327e9b00fa6d",
+          "topology": "11a372a6c205cb90bd4aca7877d67e91fc022078a9ca42aeb4815283149449b6",
+          "world": "fb2f099f9c62a418311dfec5401c98cd31d826c0b642a1d4e5d07c8d3f512de9",
+          "progress": "7e98700947ba12a0010a6e9f9e8e2fb95da9103806ca7c4344f10ca4d7a88603",
+          "player": "488d44a9b23de8b3eea9150459051f68f25b3bcc650eaf62107b21ce3f3cb6a0",
+          "inventory": "1dd6c6dc84689fa508fa27f8708948a956b4344f6bf88d5d382a5ca5cbf45bad",
+          "handoff": "a6cd98d6e5bbff2c8678a7d292ce7379acf9e8cc1bad49851761f0479c33e9c2",
+          "actors": "abe92699997ff9cfab0a89b271c85ffe5cce2f7531d2cc6bdb79f232b1e8a3f6",
+          "gates": "cc2786e1f9910a9d811400edcddaf7075195f7a16b216dcbefba3bc7c4f2ae51",
+          "node": 42,
+          "run_frames": 215,
+          "actor": {
+            "kind": 1,
+            "state": 0,
+            "x": 400,
+            "y": 350,
+            "z": 0,
+            "facing": 0
+          }
+        }
+      }
+    },
+    {
+      "name": "actual map zoom matches input",
+      "passed": true,
+      "observed": null
+    },
+    {
+      "name": "atlas metadata names the real live room",
+      "passed": true,
+      "observed": null
+    },
+    {
+      "name": "unknown rooms expose no event information",
+      "passed": true,
+      "observed": null
+    },
+    {
+      "name": "native atlas heights match every actual physical room cell",
+      "passed": true,
+      "observed": null
+    },
+    {
+      "name": "native atlas owners match every actual physical room cell",
+      "passed": true,
+      "observed": null
+    },
+    {
+      "name": "native atlas player marker uses actual room position",
+      "passed": true,
+      "observed": null
+    },
+    {
+      "name": "all concepts and scales use identical actual room data",
+      "passed": true,
+      "observed": null
+    },
+    {
+      "name": "pause-map view never mutates live game state",
+      "passed": true,
+      "observed": {
+        "concept": 4,
+        "zoom": 1,
+        "before": {
+          "room": "411c1de9bdc299fb5c7db49213e0c19c6b20214da537a4e970a7327e9b00fa6d",
+          "topology": "11a372a6c205cb90bd4aca7877d67e91fc022078a9ca42aeb4815283149449b6",
+          "world": "fb2f099f9c62a418311dfec5401c98cd31d826c0b642a1d4e5d07c8d3f512de9",
+          "progress": "7e98700947ba12a0010a6e9f9e8e2fb95da9103806ca7c4344f10ca4d7a88603",
+          "player": "488d44a9b23de8b3eea9150459051f68f25b3bcc650eaf62107b21ce3f3cb6a0",
+          "inventory": "1dd6c6dc84689fa508fa27f8708948a956b4344f6bf88d5d382a5ca5cbf45bad",
+          "handoff": "a6cd98d6e5bbff2c8678a7d292ce7379acf9e8cc1bad49851761f0479c33e9c2",
+          "actors": "abe92699997ff9cfab0a89b271c85ffe5cce2f7531d2cc6bdb79f232b1e8a3f6",
+          "gates": "cc2786e1f9910a9d811400edcddaf7075195f7a16b216dcbefba3bc7c4f2ae51",
+          "node": 42,
+          "run_frames": 215,
+          "actor": {
+            "kind": 1,
+            "state": 0,
+            "x": 400,
+            "y": 350,
+            "z": 0,
+            "facing": 0
+          }
+        },
+        "after": {
+          "room": "411c1de9bdc299fb5c7db49213e0c19c6b20214da537a4e970a7327e9b00fa6d",
+          "topology": "11a372a6c205cb90bd4aca7877d67e91fc022078a9ca42aeb4815283149449b6",
+          "world": "fb2f099f9c62a418311dfec5401c98cd31d826c0b642a1d4e5d07c8d3f512de9",
+          "progress": "7e98700947ba12a0010a6e9f9e8e2fb95da9103806ca7c4344f10ca4d7a88603",
+          "player": "488d44a9b23de8b3eea9150459051f68f25b3bcc650eaf62107b21ce3f3cb6a0",
+          "inventory": "1dd6c6dc84689fa508fa27f8708948a956b4344f6bf88d5d382a5ca5cbf45bad",
+          "handoff": "a6cd98d6e5bbff2c8678a7d292ce7379acf9e8cc1bad49851761f0479c33e9c2",
+          "actors": "abe92699997ff9cfab0a89b271c85ffe5cce2f7531d2cc6bdb79f232b1e8a3f6",
+          "gates": "cc2786e1f9910a9d811400edcddaf7075195f7a16b216dcbefba3bc7c4f2ae51",
+          "node": 42,
+          "run_frames": 215,
+          "actor": {
+            "kind": 1,
+            "state": 0,
+            "x": 400,
+            "y": 350,
+            "z": 0,
+            "facing": 0
+          }
+        }
+      }
+    },
+    {
+      "name": "actual map concept selector matches 6",
+      "passed": true,
+      "observed": null
+    },
+    {
+      "name": "actual map zoom matches input",
+      "passed": true,
+      "observed": null
+    },
+    {
+      "name": "atlas metadata names the real live room",
+      "passed": true,
+      "observed": null
+    },
+    {
+      "name": "unknown rooms expose no event information",
+      "passed": true,
+      "observed": null
+    },
+    {
+      "name": "native atlas heights match every actual physical room cell",
+      "passed": true,
+      "observed": null
+    },
+    {
+      "name": "native atlas owners match every actual physical room cell",
+      "passed": true,
+      "observed": null
+    },
+    {
+      "name": "native atlas player marker uses actual room position",
+      "passed": true,
+      "observed": null
+    },
+    {
+      "name": "all concepts and scales use identical actual room data",
+      "passed": true,
+      "observed": null
+    },
+    {
+      "name": "pause-map view never mutates live game state",
+      "passed": true,
+      "observed": {
+        "concept": 5,
+        "zoom": 0,
+        "before": {
+          "room": "411c1de9bdc299fb5c7db49213e0c19c6b20214da537a4e970a7327e9b00fa6d",
+          "topology": "11a372a6c205cb90bd4aca7877d67e91fc022078a9ca42aeb4815283149449b6",
+          "world": "fb2f099f9c62a418311dfec5401c98cd31d826c0b642a1d4e5d07c8d3f512de9",
+          "progress": "7e98700947ba12a0010a6e9f9e8e2fb95da9103806ca7c4344f10ca4d7a88603",
+          "player": "488d44a9b23de8b3eea9150459051f68f25b3bcc650eaf62107b21ce3f3cb6a0",
+          "inventory": "1dd6c6dc84689fa508fa27f8708948a956b4344f6bf88d5d382a5ca5cbf45bad",
+          "handoff": "a6cd98d6e5bbff2c8678a7d292ce7379acf9e8cc1bad49851761f0479c33e9c2",
+          "actors": "abe92699997ff9cfab0a89b271c85ffe5cce2f7531d2cc6bdb79f232b1e8a3f6",
+          "gates": "cc2786e1f9910a9d811400edcddaf7075195f7a16b216dcbefba3bc7c4f2ae51",
+          "node": 42,
+          "run_frames": 215,
+          "actor": {
+            "kind": 1,
+            "state": 0,
+            "x": 400,
+            "y": 350,
+            "z": 0,
+            "facing": 0
+          }
+        },
+        "after": {
+          "room": "411c1de9bdc299fb5c7db49213e0c19c6b20214da537a4e970a7327e9b00fa6d",
+          "topology": "11a372a6c205cb90bd4aca7877d67e91fc022078a9ca42aeb4815283149449b6",
+          "world": "fb2f099f9c62a418311dfec5401c98cd31d826c0b642a1d4e5d07c8d3f512de9",
+          "progress": "7e98700947ba12a0010a6e9f9e8e2fb95da9103806ca7c4344f10ca4d7a88603",
+          "player": "488d44a9b23de8b3eea9150459051f68f25b3bcc650eaf62107b21ce3f3cb6a0",
+          "inventory": "1dd6c6dc84689fa508fa27f8708948a956b4344f6bf88d5d382a5ca5cbf45bad",
+          "handoff": "a6cd98d6e5bbff2c8678a7d292ce7379acf9e8cc1bad49851761f0479c33e9c2",
+          "actors": "abe92699997ff9cfab0a89b271c85ffe5cce2f7531d2cc6bdb79f232b1e8a3f6",
+          "gates": "cc2786e1f9910a9d811400edcddaf7075195f7a16b216dcbefba3bc7c4f2ae51",
+          "node": 42,
+          "run_frames": 215,
+          "actor": {
+            "kind": 1,
+            "state": 0,
+            "x": 400,
+            "y": 350,
+            "z": 0,
+            "facing": 0
+          }
+        }
+      }
+    },
+    {
+      "name": "actual map zoom matches input",
+      "passed": true,
+      "observed": null
+    },
+    {
+      "name": "atlas metadata names the real live room",
+      "passed": true,
+      "observed": null
+    },
+    {
+      "name": "unknown rooms expose no event information",
+      "passed": true,
+      "observed": null
+    },
+    {
+      "name": "native atlas heights match every actual physical room cell",
+      "passed": true,
+      "observed": null
+    },
+    {
+      "name": "native atlas owners match every actual physical room cell",
+      "passed": true,
+      "observed": null
+    },
+    {
+      "name": "native atlas player marker uses actual room position",
+      "passed": true,
+      "observed": null
+    },
+    {
+      "name": "all concepts and scales use identical actual room data",
+      "passed": true,
+      "observed": null
+    },
+    {
+      "name": "pause-map view never mutates live game state",
+      "passed": true,
+      "observed": {
+        "concept": 5,
+        "zoom": 1,
+        "before": {
+          "room": "411c1de9bdc299fb5c7db49213e0c19c6b20214da537a4e970a7327e9b00fa6d",
+          "topology": "11a372a6c205cb90bd4aca7877d67e91fc022078a9ca42aeb4815283149449b6",
+          "world": "fb2f099f9c62a418311dfec5401c98cd31d826c0b642a1d4e5d07c8d3f512de9",
+          "progress": "7e98700947ba12a0010a6e9f9e8e2fb95da9103806ca7c4344f10ca4d7a88603",
+          "player": "488d44a9b23de8b3eea9150459051f68f25b3bcc650eaf62107b21ce3f3cb6a0",
+          "inventory": "1dd6c6dc84689fa508fa27f8708948a956b4344f6bf88d5d382a5ca5cbf45bad",
+          "handoff": "a6cd98d6e5bbff2c8678a7d292ce7379acf9e8cc1bad49851761f0479c33e9c2",
+          "actors": "abe92699997ff9cfab0a89b271c85ffe5cce2f7531d2cc6bdb79f232b1e8a3f6",
+          "gates": "cc2786e1f9910a9d811400edcddaf7075195f7a16b216dcbefba3bc7c4f2ae51",
+          "node": 42,
+          "run_frames": 215,
+          "actor": {
+            "kind": 1,
+            "state": 0,
+            "x": 400,
+            "y": 350,
+            "z": 0,
+            "facing": 0
+          }
+        },
+        "after": {
+          "room": "411c1de9bdc299fb5c7db49213e0c19c6b20214da537a4e970a7327e9b00fa6d",
+          "topology": "11a372a6c205cb90bd4aca7877d67e91fc022078a9ca42aeb4815283149449b6",
+          "world": "fb2f099f9c62a418311dfec5401c98cd31d826c0b642a1d4e5d07c8d3f512de9",
+          "progress": "7e98700947ba12a0010a6e9f9e8e2fb95da9103806ca7c4344f10ca4d7a88603",
+          "player": "488d44a9b23de8b3eea9150459051f68f25b3bcc650eaf62107b21ce3f3cb6a0",
+          "inventory": "1dd6c6dc84689fa508fa27f8708948a956b4344f6bf88d5d382a5ca5cbf45bad",
+          "handoff": "a6cd98d6e5bbff2c8678a7d292ce7379acf9e8cc1bad49851761f0479c33e9c2",
+          "actors": "abe92699997ff9cfab0a89b271c85ffe5cce2f7531d2cc6bdb79f232b1e8a3f6",
+          "gates": "cc2786e1f9910a9d811400edcddaf7075195f7a16b216dcbefba3bc7c4f2ae51",
+          "node": 42,
+          "run_frames": 215,
+          "actor": {
+            "kind": 1,
+            "state": 0,
+            "x": 400,
+            "y": 350,
+            "z": 0,
+            "facing": 0
+          }
+        }
+      }
+    },
+    {
+      "name": "actual map concept selector matches 7",
+      "passed": true,
+      "observed": null
+    },
+    {
+      "name": "actual map zoom matches input",
+      "passed": true,
+      "observed": null
+    },
+    {
+      "name": "atlas metadata names the real live room",
+      "passed": true,
+      "observed": null
+    },
+    {
+      "name": "unknown rooms expose no event information",
+      "passed": true,
+      "observed": null
+    },
+    {
+      "name": "native atlas heights match every actual physical room cell",
+      "passed": true,
+      "observed": null
+    },
+    {
+      "name": "native atlas owners match every actual physical room cell",
+      "passed": true,
+      "observed": null
+    },
+    {
+      "name": "native atlas player marker uses actual room position",
+      "passed": true,
+      "observed": null
+    },
+    {
+      "name": "all concepts and scales use identical actual room data",
+      "passed": true,
+      "observed": null
+    },
+    {
+      "name": "pause-map view never mutates live game state",
+      "passed": true,
+      "observed": {
+        "concept": 6,
+        "zoom": 0,
+        "before": {
+          "room": "411c1de9bdc299fb5c7db49213e0c19c6b20214da537a4e970a7327e9b00fa6d",
+          "topology": "11a372a6c205cb90bd4aca7877d67e91fc022078a9ca42aeb4815283149449b6",
+          "world": "fb2f099f9c62a418311dfec5401c98cd31d826c0b642a1d4e5d07c8d3f512de9",
+          "progress": "7e98700947ba12a0010a6e9f9e8e2fb95da9103806ca7c4344f10ca4d7a88603",
+          "player": "488d44a9b23de8b3eea9150459051f68f25b3bcc650eaf62107b21ce3f3cb6a0",
+          "inventory": "1dd6c6dc84689fa508fa27f8708948a956b4344f6bf88d5d382a5ca5cbf45bad",
+          "handoff": "a6cd98d6e5bbff2c8678a7d292ce7379acf9e8cc1bad49851761f0479c33e9c2",
+          "actors": "abe92699997ff9cfab0a89b271c85ffe5cce2f7531d2cc6bdb79f232b1e8a3f6",
+          "gates": "cc2786e1f9910a9d811400edcddaf7075195f7a16b216dcbefba3bc7c4f2ae51",
+          "node": 42,
+          "run_frames": 215,
+          "actor": {
+            "kind": 1,
+            "state": 0,
+            "x": 400,
+            "y": 350,
+            "z": 0,
+            "facing": 0
+          }
+        },
+        "after": {
+          "room": "411c1de9bdc299fb5c7db49213e0c19c6b20214da537a4e970a7327e9b00fa6d",
+          "topology": "11a372a6c205cb90bd4aca7877d67e91fc022078a9ca42aeb4815283149449b6",
+          "world": "fb2f099f9c62a418311dfec5401c98cd31d826c0b642a1d4e5d07c8d3f512de9",
+          "progress": "7e98700947ba12a0010a6e9f9e8e2fb95da9103806ca7c4344f10ca4d7a88603",
+          "player": "488d44a9b23de8b3eea9150459051f68f25b3bcc650eaf62107b21ce3f3cb6a0",
+          "inventory": "1dd6c6dc84689fa508fa27f8708948a956b4344f6bf88d5d382a5ca5cbf45bad",
+          "handoff": "a6cd98d6e5bbff2c8678a7d292ce7379acf9e8cc1bad49851761f0479c33e9c2",
+          "actors": "abe92699997ff9cfab0a89b271c85ffe5cce2f7531d2cc6bdb79f232b1e8a3f6",
+          "gates": "cc2786e1f9910a9d811400edcddaf7075195f7a16b216dcbefba3bc7c4f2ae51",
+          "node": 42,
+          "run_frames": 215,
+          "actor": {
+            "kind": 1,
+            "state": 0,
+            "x": 400,
+            "y": 350,
+            "z": 0,
+            "facing": 0
+          }
+        }
+      }
+    },
+    {
+      "name": "actual map zoom matches input",
+      "passed": true,
+      "observed": null
+    },
+    {
+      "name": "atlas metadata names the real live room",
+      "passed": true,
+      "observed": null
+    },
+    {
+      "name": "unknown rooms expose no event information",
+      "passed": true,
+      "observed": null
+    },
+    {
+      "name": "native atlas heights match every actual physical room cell",
+      "passed": true,
+      "observed": null
+    },
+    {
+      "name": "native atlas owners match every actual physical room cell",
+      "passed": true,
+      "observed": null
+    },
+    {
+      "name": "native atlas player marker uses actual room position",
+      "passed": true,
+      "observed": null
+    },
+    {
+      "name": "all concepts and scales use identical actual room data",
+      "passed": true,
+      "observed": null
+    },
+    {
+      "name": "pause-map view never mutates live game state",
+      "passed": true,
+      "observed": {
+        "concept": 6,
+        "zoom": 1,
+        "before": {
+          "room": "411c1de9bdc299fb5c7db49213e0c19c6b20214da537a4e970a7327e9b00fa6d",
+          "topology": "11a372a6c205cb90bd4aca7877d67e91fc022078a9ca42aeb4815283149449b6",
+          "world": "fb2f099f9c62a418311dfec5401c98cd31d826c0b642a1d4e5d07c8d3f512de9",
+          "progress": "7e98700947ba12a0010a6e9f9e8e2fb95da9103806ca7c4344f10ca4d7a88603",
+          "player": "488d44a9b23de8b3eea9150459051f68f25b3bcc650eaf62107b21ce3f3cb6a0",
+          "inventory": "1dd6c6dc84689fa508fa27f8708948a956b4344f6bf88d5d382a5ca5cbf45bad",
+          "handoff": "a6cd98d6e5bbff2c8678a7d292ce7379acf9e8cc1bad49851761f0479c33e9c2",
+          "actors": "abe92699997ff9cfab0a89b271c85ffe5cce2f7531d2cc6bdb79f232b1e8a3f6",
+          "gates": "cc2786e1f9910a9d811400edcddaf7075195f7a16b216dcbefba3bc7c4f2ae51",
+          "node": 42,
+          "run_frames": 215,
+          "actor": {
+            "kind": 1,
+            "state": 0,
+            "x": 400,
+            "y": 350,
+            "z": 0,
+            "facing": 0
+          }
+        },
+        "after": {
+          "room": "411c1de9bdc299fb5c7db49213e0c19c6b20214da537a4e970a7327e9b00fa6d",
+          "topology": "11a372a6c205cb90bd4aca7877d67e91fc022078a9ca42aeb4815283149449b6",
+          "world": "fb2f099f9c62a418311dfec5401c98cd31d826c0b642a1d4e5d07c8d3f512de9",
+          "progress": "7e98700947ba12a0010a6e9f9e8e2fb95da9103806ca7c4344f10ca4d7a88603",
+          "player": "488d44a9b23de8b3eea9150459051f68f25b3bcc650eaf62107b21ce3f3cb6a0",
+          "inventory": "1dd6c6dc84689fa508fa27f8708948a956b4344f6bf88d5d382a5ca5cbf45bad",
+          "handoff": "a6cd98d6e5bbff2c8678a7d292ce7379acf9e8cc1bad49851761f0479c33e9c2",
+          "actors": "abe92699997ff9cfab0a89b271c85ffe5cce2f7531d2cc6bdb79f232b1e8a3f6",
+          "gates": "cc2786e1f9910a9d811400edcddaf7075195f7a16b216dcbefba3bc7c4f2ae51",
+          "node": 42,
+          "run_frames": 215,
+          "actor": {
+            "kind": 1,
+            "state": 0,
+            "x": 400,
+            "y": 350,
+            "z": 0,
+            "facing": 0
+          }
+        }
+      }
+    },
+    {
+      "name": "actual map concept selector matches 8",
+      "passed": true,
+      "observed": null
+    },
+    {
+      "name": "actual map zoom matches input",
+      "passed": true,
+      "observed": null
+    },
+    {
+      "name": "atlas metadata names the real live room",
+      "passed": true,
+      "observed": null
+    },
+    {
+      "name": "unknown rooms expose no event information",
+      "passed": true,
+      "observed": null
+    },
+    {
+      "name": "native atlas heights match every actual physical room cell",
+      "passed": true,
+      "observed": null
+    },
+    {
+      "name": "native atlas owners match every actual physical room cell",
+      "passed": true,
+      "observed": null
+    },
+    {
+      "name": "native atlas player marker uses actual room position",
+      "passed": true,
+      "observed": null
+    },
+    {
+      "name": "all concepts and scales use identical actual room data",
+      "passed": true,
+      "observed": null
+    },
+    {
+      "name": "pause-map view never mutates live game state",
+      "passed": true,
+      "observed": {
+        "concept": 7,
+        "zoom": 0,
+        "before": {
+          "room": "411c1de9bdc299fb5c7db49213e0c19c6b20214da537a4e970a7327e9b00fa6d",
+          "topology": "11a372a6c205cb90bd4aca7877d67e91fc022078a9ca42aeb4815283149449b6",
+          "world": "fb2f099f9c62a418311dfec5401c98cd31d826c0b642a1d4e5d07c8d3f512de9",
+          "progress": "7e98700947ba12a0010a6e9f9e8e2fb95da9103806ca7c4344f10ca4d7a88603",
+          "player": "488d44a9b23de8b3eea9150459051f68f25b3bcc650eaf62107b21ce3f3cb6a0",
+          "inventory": "1dd6c6dc84689fa508fa27f8708948a956b4344f6bf88d5d382a5ca5cbf45bad",
+          "handoff": "a6cd98d6e5bbff2c8678a7d292ce7379acf9e8cc1bad49851761f0479c33e9c2",
+          "actors": "abe92699997ff9cfab0a89b271c85ffe5cce2f7531d2cc6bdb79f232b1e8a3f6",
+          "gates": "cc2786e1f9910a9d811400edcddaf7075195f7a16b216dcbefba3bc7c4f2ae51",
+          "node": 42,
+          "run_frames": 215,
+          "actor": {
+            "kind": 1,
+            "state": 0,
+            "x": 400,
+            "y": 350,
+            "z": 0,
+            "facing": 0
+          }
+        },
+        "after": {
+          "room": "411c1de9bdc299fb5c7db49213e0c19c6b20214da537a4e970a7327e9b00fa6d",
+          "topology": "11a372a6c205cb90bd4aca7877d67e91fc022078a9ca42aeb4815283149449b6",
+          "world": "fb2f099f9c62a418311dfec5401c98cd31d826c0b642a1d4e5d07c8d3f512de9",
+          "progress": "7e98700947ba12a0010a6e9f9e8e2fb95da9103806ca7c4344f10ca4d7a88603",
+          "player": "488d44a9b23de8b3eea9150459051f68f25b3bcc650eaf62107b21ce3f3cb6a0",
+          "inventory": "1dd6c6dc84689fa508fa27f8708948a956b4344f6bf88d5d382a5ca5cbf45bad",
+          "handoff": "a6cd98d6e5bbff2c8678a7d292ce7379acf9e8cc1bad49851761f0479c33e9c2",
+          "actors": "abe92699997ff9cfab0a89b271c85ffe5cce2f7531d2cc6bdb79f232b1e8a3f6",
+          "gates": "cc2786e1f9910a9d811400edcddaf7075195f7a16b216dcbefba3bc7c4f2ae51",
+          "node": 42,
+          "run_frames": 215,
+          "actor": {
+            "kind": 1,
+            "state": 0,
+            "x": 400,
+            "y": 350,
+            "z": 0,
+            "facing": 0
+          }
+        }
+      }
+    },
+    {
+      "name": "actual map zoom matches input",
+      "passed": true,
+      "observed": null
+    },
+    {
+      "name": "atlas metadata names the real live room",
+      "passed": true,
+      "observed": null
+    },
+    {
+      "name": "unknown rooms expose no event information",
+      "passed": true,
+      "observed": null
+    },
+    {
+      "name": "native atlas heights match every actual physical room cell",
+      "passed": true,
+      "observed": null
+    },
+    {
+      "name": "native atlas owners match every actual physical room cell",
+      "passed": true,
+      "observed": null
+    },
+    {
+      "name": "native atlas player marker uses actual room position",
+      "passed": true,
+      "observed": null
+    },
+    {
+      "name": "all concepts and scales use identical actual room data",
+      "passed": true,
+      "observed": null
+    },
+    {
+      "name": "pause-map view never mutates live game state",
+      "passed": true,
+      "observed": {
+        "concept": 7,
+        "zoom": 1,
+        "before": {
+          "room": "411c1de9bdc299fb5c7db49213e0c19c6b20214da537a4e970a7327e9b00fa6d",
+          "topology": "11a372a6c205cb90bd4aca7877d67e91fc022078a9ca42aeb4815283149449b6",
+          "world": "fb2f099f9c62a418311dfec5401c98cd31d826c0b642a1d4e5d07c8d3f512de9",
+          "progress": "7e98700947ba12a0010a6e9f9e8e2fb95da9103806ca7c4344f10ca4d7a88603",
+          "player": "488d44a9b23de8b3eea9150459051f68f25b3bcc650eaf62107b21ce3f3cb6a0",
+          "inventory": "1dd6c6dc84689fa508fa27f8708948a956b4344f6bf88d5d382a5ca5cbf45bad",
+          "handoff": "a6cd98d6e5bbff2c8678a7d292ce7379acf9e8cc1bad49851761f0479c33e9c2",
+          "actors": "abe92699997ff9cfab0a89b271c85ffe5cce2f7531d2cc6bdb79f232b1e8a3f6",
+          "gates": "cc2786e1f9910a9d811400edcddaf7075195f7a16b216dcbefba3bc7c4f2ae51",
+          "node": 42,
+          "run_frames": 215,
+          "actor": {
+            "kind": 1,
+            "state": 0,
+            "x": 400,
+            "y": 350,
+            "z": 0,
+            "facing": 0
+          }
+        },
+        "after": {
+          "room": "411c1de9bdc299fb5c7db49213e0c19c6b20214da537a4e970a7327e9b00fa6d",
+          "topology": "11a372a6c205cb90bd4aca7877d67e91fc022078a9ca42aeb4815283149449b6",
+          "world": "fb2f099f9c62a418311dfec5401c98cd31d826c0b642a1d4e5d07c8d3f512de9",
+          "progress": "7e98700947ba12a0010a6e9f9e8e2fb95da9103806ca7c4344f10ca4d7a88603",
+          "player": "488d44a9b23de8b3eea9150459051f68f25b3bcc650eaf62107b21ce3f3cb6a0",
+          "inventory": "1dd6c6dc84689fa508fa27f8708948a956b4344f6bf88d5d382a5ca5cbf45bad",
+          "handoff": "a6cd98d6e5bbff2c8678a7d292ce7379acf9e8cc1bad49851761f0479c33e9c2",
+          "actors": "abe92699997ff9cfab0a89b271c85ffe5cce2f7531d2cc6bdb79f232b1e8a3f6",
+          "gates": "cc2786e1f9910a9d811400edcddaf7075195f7a16b216dcbefba3bc7c4f2ae51",
+          "node": 42,
+          "run_frames": 215,
+          "actor": {
+            "kind": 1,
+            "state": 0,
+            "x": 400,
+            "y": 350,
+            "z": 0,
+            "facing": 0
+          }
+        }
+      }
+    },
+    {
+      "name": "actual map concept selector matches 9",
+      "passed": true,
+      "observed": null
+    },
+    {
+      "name": "actual map zoom matches input",
+      "passed": true,
+      "observed": null
+    },
+    {
+      "name": "atlas metadata names the real live room",
+      "passed": true,
+      "observed": null
+    },
+    {
+      "name": "unknown rooms expose no event information",
+      "passed": true,
+      "observed": null
+    },
+    {
+      "name": "native atlas heights match every actual physical room cell",
+      "passed": true,
+      "observed": null
+    },
+    {
+      "name": "native atlas owners match every actual physical room cell",
+      "passed": true,
+      "observed": null
+    },
+    {
+      "name": "native atlas player marker uses actual room position",
+      "passed": true,
+      "observed": null
+    },
+    {
+      "name": "all concepts and scales use identical actual room data",
+      "passed": true,
+      "observed": null
+    },
+    {
+      "name": "pause-map view never mutates live game state",
+      "passed": true,
+      "observed": {
+        "concept": 8,
+        "zoom": 0,
+        "before": {
+          "room": "411c1de9bdc299fb5c7db49213e0c19c6b20214da537a4e970a7327e9b00fa6d",
+          "topology": "11a372a6c205cb90bd4aca7877d67e91fc022078a9ca42aeb4815283149449b6",
+          "world": "fb2f099f9c62a418311dfec5401c98cd31d826c0b642a1d4e5d07c8d3f512de9",
+          "progress": "7e98700947ba12a0010a6e9f9e8e2fb95da9103806ca7c4344f10ca4d7a88603",
+          "player": "488d44a9b23de8b3eea9150459051f68f25b3bcc650eaf62107b21ce3f3cb6a0",
+          "inventory": "1dd6c6dc84689fa508fa27f8708948a956b4344f6bf88d5d382a5ca5cbf45bad",
+          "handoff": "a6cd98d6e5bbff2c8678a7d292ce7379acf9e8cc1bad49851761f0479c33e9c2",
+          "actors": "abe92699997ff9cfab0a89b271c85ffe5cce2f7531d2cc6bdb79f232b1e8a3f6",
+          "gates": "cc2786e1f9910a9d811400edcddaf7075195f7a16b216dcbefba3bc7c4f2ae51",
+          "node": 42,
+          "run_frames": 215,
+          "actor": {
+            "kind": 1,
+            "state": 0,
+            "x": 400,
+            "y": 350,
+            "z": 0,
+            "facing": 0
+          }
+        },
+        "after": {
+          "room": "411c1de9bdc299fb5c7db49213e0c19c6b20214da537a4e970a7327e9b00fa6d",
+          "topology": "11a372a6c205cb90bd4aca7877d67e91fc022078a9ca42aeb4815283149449b6",
+          "world": "fb2f099f9c62a418311dfec5401c98cd31d826c0b642a1d4e5d07c8d3f512de9",
+          "progress": "7e98700947ba12a0010a6e9f9e8e2fb95da9103806ca7c4344f10ca4d7a88603",
+          "player": "488d44a9b23de8b3eea9150459051f68f25b3bcc650eaf62107b21ce3f3cb6a0",
+          "inventory": "1dd6c6dc84689fa508fa27f8708948a956b4344f6bf88d5d382a5ca5cbf45bad",
+          "handoff": "a6cd98d6e5bbff2c8678a7d292ce7379acf9e8cc1bad49851761f0479c33e9c2",
+          "actors": "abe92699997ff9cfab0a89b271c85ffe5cce2f7531d2cc6bdb79f232b1e8a3f6",
+          "gates": "cc2786e1f9910a9d811400edcddaf7075195f7a16b216dcbefba3bc7c4f2ae51",
+          "node": 42,
+          "run_frames": 215,
+          "actor": {
+            "kind": 1,
+            "state": 0,
+            "x": 400,
+            "y": 350,
+            "z": 0,
+            "facing": 0
+          }
+        }
+      }
+    },
+    {
+      "name": "actual map zoom matches input",
+      "passed": true,
+      "observed": null
+    },
+    {
+      "name": "atlas metadata names the real live room",
+      "passed": true,
+      "observed": null
+    },
+    {
+      "name": "unknown rooms expose no event information",
+      "passed": true,
+      "observed": null
+    },
+    {
+      "name": "native atlas heights match every actual physical room cell",
+      "passed": true,
+      "observed": null
+    },
+    {
+      "name": "native atlas owners match every actual physical room cell",
+      "passed": true,
+      "observed": null
+    },
+    {
+      "name": "native atlas player marker uses actual room position",
+      "passed": true,
+      "observed": null
+    },
+    {
+      "name": "all concepts and scales use identical actual room data",
+      "passed": true,
+      "observed": null
+    },
+    {
+      "name": "pause-map view never mutates live game state",
+      "passed": true,
+      "observed": {
+        "concept": 8,
+        "zoom": 1,
+        "before": {
+          "room": "411c1de9bdc299fb5c7db49213e0c19c6b20214da537a4e970a7327e9b00fa6d",
+          "topology": "11a372a6c205cb90bd4aca7877d67e91fc022078a9ca42aeb4815283149449b6",
+          "world": "fb2f099f9c62a418311dfec5401c98cd31d826c0b642a1d4e5d07c8d3f512de9",
+          "progress": "7e98700947ba12a0010a6e9f9e8e2fb95da9103806ca7c4344f10ca4d7a88603",
+          "player": "488d44a9b23de8b3eea9150459051f68f25b3bcc650eaf62107b21ce3f3cb6a0",
+          "inventory": "1dd6c6dc84689fa508fa27f8708948a956b4344f6bf88d5d382a5ca5cbf45bad",
+          "handoff": "a6cd98d6e5bbff2c8678a7d292ce7379acf9e8cc1bad49851761f0479c33e9c2",
+          "actors": "abe92699997ff9cfab0a89b271c85ffe5cce2f7531d2cc6bdb79f232b1e8a3f6",
+          "gates": "cc2786e1f9910a9d811400edcddaf7075195f7a16b216dcbefba3bc7c4f2ae51",
+          "node": 42,
+          "run_frames": 215,
+          "actor": {
+            "kind": 1,
+            "state": 0,
+            "x": 400,
+            "y": 350,
+            "z": 0,
+            "facing": 0
+          }
+        },
+        "after": {
+          "room": "411c1de9bdc299fb5c7db49213e0c19c6b20214da537a4e970a7327e9b00fa6d",
+          "topology": "11a372a6c205cb90bd4aca7877d67e91fc022078a9ca42aeb4815283149449b6",
+          "world": "fb2f099f9c62a418311dfec5401c98cd31d826c0b642a1d4e5d07c8d3f512de9",
+          "progress": "7e98700947ba12a0010a6e9f9e8e2fb95da9103806ca7c4344f10ca4d7a88603",
+          "player": "488d44a9b23de8b3eea9150459051f68f25b3bcc650eaf62107b21ce3f3cb6a0",
+          "inventory": "1dd6c6dc84689fa508fa27f8708948a956b4344f6bf88d5d382a5ca5cbf45bad",
+          "handoff": "a6cd98d6e5bbff2c8678a7d292ce7379acf9e8cc1bad49851761f0479c33e9c2",
+          "actors": "abe92699997ff9cfab0a89b271c85ffe5cce2f7531d2cc6bdb79f232b1e8a3f6",
+          "gates": "cc2786e1f9910a9d811400edcddaf7075195f7a16b216dcbefba3bc7c4f2ae51",
+          "node": 42,
+          "run_frames": 215,
+          "actor": {
+            "kind": 1,
+            "state": 0,
+            "x": 400,
+            "y": 350,
+            "z": 0,
+            "facing": 0
+          }
+        }
+      }
+    },
+    {
+      "name": "actual map concept selector matches 10",
+      "passed": true,
+      "observed": null
+    },
+    {
+      "name": "actual map zoom matches input",
+      "passed": true,
+      "observed": null
+    },
+    {
+      "name": "atlas metadata names the real live room",
+      "passed": true,
+      "observed": null
+    },
+    {
+      "name": "unknown rooms expose no event information",
+      "passed": true,
+      "observed": null
+    },
+    {
+      "name": "native atlas heights match every actual physical room cell",
+      "passed": true,
+      "observed": null
+    },
+    {
+      "name": "native atlas owners match every actual physical room cell",
+      "passed": true,
+      "observed": null
+    },
+    {
+      "name": "native atlas player marker uses actual room position",
+      "passed": true,
+      "observed": null
+    },
+    {
+      "name": "all concepts and scales use identical actual room data",
+      "passed": true,
+      "observed": null
+    },
+    {
+      "name": "pause-map view never mutates live game state",
+      "passed": true,
+      "observed": {
+        "concept": 9,
+        "zoom": 0,
+        "before": {
+          "room": "411c1de9bdc299fb5c7db49213e0c19c6b20214da537a4e970a7327e9b00fa6d",
+          "topology": "11a372a6c205cb90bd4aca7877d67e91fc022078a9ca42aeb4815283149449b6",
+          "world": "fb2f099f9c62a418311dfec5401c98cd31d826c0b642a1d4e5d07c8d3f512de9",
+          "progress": "7e98700947ba12a0010a6e9f9e8e2fb95da9103806ca7c4344f10ca4d7a88603",
+          "player": "488d44a9b23de8b3eea9150459051f68f25b3bcc650eaf62107b21ce3f3cb6a0",
+          "inventory": "1dd6c6dc84689fa508fa27f8708948a956b4344f6bf88d5d382a5ca5cbf45bad",
+          "handoff": "a6cd98d6e5bbff2c8678a7d292ce7379acf9e8cc1bad49851761f0479c33e9c2",
+          "actors": "abe92699997ff9cfab0a89b271c85ffe5cce2f7531d2cc6bdb79f232b1e8a3f6",
+          "gates": "cc2786e1f9910a9d811400edcddaf7075195f7a16b216dcbefba3bc7c4f2ae51",
+          "node": 42,
+          "run_frames": 215,
+          "actor": {
+            "kind": 1,
+            "state": 0,
+            "x": 400,
+            "y": 350,
+            "z": 0,
+            "facing": 0
+          }
+        },
+        "after": {
+          "room": "411c1de9bdc299fb5c7db49213e0c19c6b20214da537a4e970a7327e9b00fa6d",
+          "topology": "11a372a6c205cb90bd4aca7877d67e91fc022078a9ca42aeb4815283149449b6",
+          "world": "fb2f099f9c62a418311dfec5401c98cd31d826c0b642a1d4e5d07c8d3f512de9",
+          "progress": "7e98700947ba12a0010a6e9f9e8e2fb95da9103806ca7c4344f10ca4d7a88603",
+          "player": "488d44a9b23de8b3eea9150459051f68f25b3bcc650eaf62107b21ce3f3cb6a0",
+          "inventory": "1dd6c6dc84689fa508fa27f8708948a956b4344f6bf88d5d382a5ca5cbf45bad",
+          "handoff": "a6cd98d6e5bbff2c8678a7d292ce7379acf9e8cc1bad49851761f0479c33e9c2",
+          "actors": "abe92699997ff9cfab0a89b271c85ffe5cce2f7531d2cc6bdb79f232b1e8a3f6",
+          "gates": "cc2786e1f9910a9d811400edcddaf7075195f7a16b216dcbefba3bc7c4f2ae51",
+          "node": 42,
+          "run_frames": 215,
+          "actor": {
+            "kind": 1,
+            "state": 0,
+            "x": 400,
+            "y": 350,
+            "z": 0,
+            "facing": 0
+          }
+        }
+      }
+    },
+    {
+      "name": "actual map zoom matches input",
+      "passed": true,
+      "observed": null
+    },
+    {
+      "name": "atlas metadata names the real live room",
+      "passed": true,
+      "observed": null
+    },
+    {
+      "name": "unknown rooms expose no event information",
+      "passed": true,
+      "observed": null
+    },
+    {
+      "name": "native atlas heights match every actual physical room cell",
+      "passed": true,
+      "observed": null
+    },
+    {
+      "name": "native atlas owners match every actual physical room cell",
+      "passed": true,
+      "observed": null
+    },
+    {
+      "name": "native atlas player marker uses actual room position",
+      "passed": true,
+      "observed": null
+    },
+    {
+      "name": "all concepts and scales use identical actual room data",
+      "passed": true,
+      "observed": null
+    },
+    {
+      "name": "pause-map view never mutates live game state",
+      "passed": true,
+      "observed": {
+        "concept": 9,
+        "zoom": 1,
+        "before": {
+          "room": "411c1de9bdc299fb5c7db49213e0c19c6b20214da537a4e970a7327e9b00fa6d",
+          "topology": "11a372a6c205cb90bd4aca7877d67e91fc022078a9ca42aeb4815283149449b6",
+          "world": "fb2f099f9c62a418311dfec5401c98cd31d826c0b642a1d4e5d07c8d3f512de9",
+          "progress": "7e98700947ba12a0010a6e9f9e8e2fb95da9103806ca7c4344f10ca4d7a88603",
+          "player": "488d44a9b23de8b3eea9150459051f68f25b3bcc650eaf62107b21ce3f3cb6a0",
+          "inventory": "1dd6c6dc84689fa508fa27f8708948a956b4344f6bf88d5d382a5ca5cbf45bad",
+          "handoff": "a6cd98d6e5bbff2c8678a7d292ce7379acf9e8cc1bad49851761f0479c33e9c2",
+          "actors": "abe92699997ff9cfab0a89b271c85ffe5cce2f7531d2cc6bdb79f232b1e8a3f6",
+          "gates": "cc2786e1f9910a9d811400edcddaf7075195f7a16b216dcbefba3bc7c4f2ae51",
+          "node": 42,
+          "run_frames": 215,
+          "actor": {
+            "kind": 1,
+            "state": 0,
+            "x": 400,
+            "y": 350,
+            "z": 0,
+            "facing": 0
+          }
+        },
+        "after": {
+          "room": "411c1de9bdc299fb5c7db49213e0c19c6b20214da537a4e970a7327e9b00fa6d",
+          "topology": "11a372a6c205cb90bd4aca7877d67e91fc022078a9ca42aeb4815283149449b6",
+          "world": "fb2f099f9c62a418311dfec5401c98cd31d826c0b642a1d4e5d07c8d3f512de9",
+          "progress": "7e98700947ba12a0010a6e9f9e8e2fb95da9103806ca7c4344f10ca4d7a88603",
+          "player": "488d44a9b23de8b3eea9150459051f68f25b3bcc650eaf62107b21ce3f3cb6a0",
+          "inventory": "1dd6c6dc84689fa508fa27f8708948a956b4344f6bf88d5d382a5ca5cbf45bad",
+          "handoff": "a6cd98d6e5bbff2c8678a7d292ce7379acf9e8cc1bad49851761f0479c33e9c2",
+          "actors": "abe92699997ff9cfab0a89b271c85ffe5cce2f7531d2cc6bdb79f232b1e8a3f6",
+          "gates": "cc2786e1f9910a9d811400edcddaf7075195f7a16b216dcbefba3bc7c4f2ae51",
+          "node": 42,
+          "run_frames": 215,
+          "actor": {
+            "kind": 1,
+            "state": 0,
+            "x": 400,
+            "y": 350,
+            "z": 0,
+            "facing": 0
+          }
+        }
+      }
+    },
+    {
+      "name": "ten overview bodies have distinct native edge layouts",
+      "passed": true,
+      "observed": null
+    },
+    {
+      "name": "ten zoom bodies have distinct native edge layouts",
+      "passed": true,
+      "observed": null
+    },
+    {
+      "name": "charted atlas redraws complete within48hardwareframes",
+      "passed": true,
+      "observed": [
+        {
+          "key": "R",
+          "concept": 0,
+          "zoom": 0,
+          "hardware_frames": 17
+        },
+        {
+          "key": "A",
+          "concept": 0,
+          "zoom": 1,
+          "hardware_frames": 17
+        },
+        {
+          "key": "B",
+          "concept": 0,
+          "zoom": 0,
+          "hardware_frames": 13
+        },
+        {
+          "key": "L",
+          "concept": 1,
+          "zoom": 0,
+          "hardware_frames": 13
+        },
+        {
+          "key": "A",
+          "concept": 1,
+          "zoom": 1,
+          "hardware_frames": 13
+        },
+        {
+          "key": "B",
+          "concept": 1,
+          "zoom": 0,
+          "hardware_frames": 13
+        },
+        {
+          "key": "L",
+          "concept": 2,
+          "zoom": 0,
+          "hardware_frames": 9
+        },
+        {
+          "key": "A",
+          "concept": 2,
+          "zoom": 1,
+          "hardware_frames": 13
+        },
+        {
+          "key": "B",
+          "concept": 2,
+          "zoom": 0,
+          "hardware_frames": 9
+        },
+        {
+          "key": "L",
+          "concept": 3,
+          "zoom": 0,
+          "hardware_frames": 5
+        },
+        {
+          "key": "A",
+          "concept": 3,
+          "zoom": 1,
+          "hardware_frames": 9
+        },
+        {
+          "key": "B",
+          "concept": 3,
+          "zoom": 0,
+          "hardware_frames": 5
+        },
+        {
+          "key": "L",
+          "concept": 4,
+          "zoom": 0,
+          "hardware_frames": 9
+        },
+        {
+          "key": "A",
+          "concept": 4,
+          "zoom": 1,
+          "hardware_frames": 17
+        },
+        {
+          "key": "B",
+          "concept": 4,
+          "zoom": 0,
+          "hardware_frames": 9
+        },
+        {
+          "key": "L",
+          "concept": 5,
+          "zoom": 0,
+          "hardware_frames": 13
+        },
+        {
+          "key": "A",
+          "concept": 5,
+          "zoom": 1,
+          "hardware_frames": 13
+        },
+        {
+          "key": "B",
+          "concept": 5,
+          "zoom": 0,
+          "hardware_frames": 13
+        },
+        {
+          "key": "L",
+          "concept": 6,
+          "zoom": 0,
+          "hardware_frames": 9
+        },
+        {
+          "key": "A",
+          "concept": 6,
+          "zoom": 1,
+          "hardware_frames": 13
+        },
+        {
+          "key": "B",
+          "concept": 6,
+          "zoom": 0,
+          "hardware_frames": 9
+        },
+        {
+          "key": "L",
+          "concept": 7,
+          "zoom": 0,
+          "hardware_frames": 13
+        },
+        {
+          "key": "A",
+          "concept": 7,
+          "zoom": 1,
+          "hardware_frames": 13
+        },
+        {
+          "key": "B",
+          "concept": 7,
+          "zoom": 0,
+          "hardware_frames": 13
+        },
+        {
+          "key": "L",
+          "concept": 8,
+          "zoom": 0,
+          "hardware_frames": 13
+        },
+        {
+          "key": "A",
+          "concept": 8,
+          "zoom": 1,
+          "hardware_frames": 13
+        },
+        {
+          "key": "B",
+          "concept": 8,
+          "zoom": 0,
+          "hardware_frames": 13
+        },
+        {
+          "key": "L",
+          "concept": 9,
+          "zoom": 0,
+          "hardware_frames": 9
+        },
+        {
+          "key": "A",
+          "concept": 9,
+          "zoom": 1,
+          "hardware_frames": 13
+        },
+        {
+          "key": "B",
+          "concept": 9,
+          "zoom": 0,
+          "hardware_frames": 9
+        },
+        {
+          "key": "UP",
+          "concept": 9,
+          "zoom": 0,
+          "hardware_frames": 9
+        },
+        {
+          "key": "A",
+          "concept": 9,
+          "zoom": 1,
+          "hardware_frames": 9
+        }
+      ]
+    },
+    {
+      "name": "atlas metadata names the real live room",
+      "passed": true,
+      "observed": null
+    },
+    {
+      "name": "unknown rooms expose no event information",
+      "passed": true,
+      "observed": null
+    },
+    {
+      "name": "unknown selected room hides all terrain and markers",
+      "passed": true,
+      "observed": null
+    },
+    {
+      "name": "actual Dpad selects another generated room",
+      "passed": true,
+      "observed": null
+    },
+    {
+      "name": "selecting another room leaves live terrain/progression untouched",
+      "passed": true,
+      "observed": null
+    },
+    {
+      "name": "atlas metadata names the real live room",
+      "passed": true,
+      "observed": null
+    },
+    {
+      "name": "unknown rooms expose no event information",
+      "passed": true,
+      "observed": null
+    },
+    {
+      "name": "unknown selected room hides all terrain and markers",
+      "passed": true,
+      "observed": null
+    },
+    {
+      "name": "actual A zoom retains the selected room",
+      "passed": true,
+      "observed": null
+    },
+    {
+      "name": "zooming another room leaves all paused gameplay untouched",
+      "passed": true,
+      "observed": null
+    },
+    {
+      "name": "actual START closes atlas to living game",
+      "passed": true,
+      "observed": null
+    },
+    {
+      "name": "all native BG2 masked cells exactly preserve actual backing",
+      "passed": true,
+      "observed": {
+        "painted_cells": 80,
+        "dynamic_subtiles": 117,
+        "capacity": 163
+      }
+    }
+  ],
+  "native_world_restored": true,
+  "complete": true
+}

@@ -686,4 +686,10 @@ mutate terrain, routes, progress or the player. Sections, exploded shelves and
 height envelopes are explanatory diagrams: separated layers and projected
 surfaces never create a gameplay connection. See
 [Weathered heights and map contracts](CREAM_WEATHERED_HEIGHTS.md) for the ten
-review layouts, controls, limitations and pending final qualification.
+review layouts, controls, limitations and the final qualified gallery.
+
+Map height keys describe occupied floor levels, never the macro-climb sentinel.
+Use actual endpoint interpolation to draw shafts. Cache loaded-room height
+summaries and reuse the paused selected-room snapshot when cycling styles;
+changing a diagram must not repeatedly regenerate the entire known region.
+Parchment labels retain a native dark outline for contrast.

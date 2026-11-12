@@ -1,0 +1,1867 @@
+{
+  "rom_sha256": "a2e98b9551213c5335e826c59642fea5c03a4998746a811d5a9d464a96e24f86",
+  "choices": {
+    "climb": {
+      "cell": 0,
+      "index": 0,
+      "owner": 0
+    },
+    "drop": {
+      "cell": 1,
+      "index": 0,
+      "owner": 1
+    }
+  },
+  "cases": [
+    {
+      "kind": "climb",
+      "selection": {
+        "cell": 0,
+        "index": 0,
+        "owner": 0
+      },
+      "before": {
+        "frames": 439,
+        "clock": 428,
+        "run_frames": 244,
+        "state": 1,
+        "area": 3,
+        "cell": 0,
+        "node": 0,
+        "actor": {
+          "kind": 1,
+          "type": 0,
+          "state": 0,
+          "timer": 0,
+          "x": 112,
+          "y": 266,
+          "z": 0,
+          "speed": 0,
+          "hp": 0,
+          "coll": 0,
+          "facing": 0
+        },
+        "health": [
+          32,
+          32
+        ],
+        "text": 0,
+        "camera": [
+          96,
+          158
+        ]
+      },
+      "after": {
+        "frames": 523,
+        "clock": 512,
+        "run_frames": 328,
+        "state": 1,
+        "area": 3,
+        "cell": 0,
+        "node": 0,
+        "actor": {
+          "kind": 1,
+          "type": 0,
+          "state": 0,
+          "timer": 0,
+          "x": 112,
+          "y": 222,
+          "z": 0,
+          "speed": 0,
+          "hp": 0,
+          "coll": 0,
+          "facing": 0
+        },
+        "health": [
+          28,
+          32
+        ],
+        "text": 0,
+        "camera": [
+          0,
+          118
+        ]
+      },
+      "trace": {
+        "keys": [
+          "UP"
+        ],
+        "frames": 82,
+        "before": {
+          "frames": 439,
+          "clock": 428,
+          "run_frames": 244,
+          "state": 1,
+          "area": 3,
+          "cell": 0,
+          "node": 0,
+          "actor": {
+            "kind": 1,
+            "type": 0,
+            "state": 0,
+            "timer": 0,
+            "x": 112,
+            "y": 266,
+            "z": 0,
+            "speed": 0,
+            "hp": 0,
+            "coll": 0,
+            "facing": 0
+          },
+          "health": [
+            32,
+            32
+          ],
+          "text": 0,
+          "camera": [
+            96,
+            158
+          ]
+        },
+        "after": {
+          "frames": 521,
+          "clock": 510,
+          "run_frames": 326,
+          "state": 1,
+          "area": 3,
+          "cell": 0,
+          "node": 0,
+          "actor": {
+            "kind": 1,
+            "type": 0,
+            "state": 0,
+            "timer": 0,
+            "x": 112,
+            "y": 222,
+            "z": 0,
+            "speed": 213,
+            "hp": 0,
+            "coll": 0,
+            "facing": 0
+          },
+          "health": [
+            28,
+            32
+          ],
+          "text": 0,
+          "camera": [
+            0,
+            118
+          ]
+        },
+        "state_changes": [
+          {
+            "frames": 440,
+            "clock": 429,
+            "run_frames": 245,
+            "state": 1,
+            "area": 3,
+            "cell": 0,
+            "node": 0,
+            "actor": {
+              "kind": 1,
+              "type": 0,
+              "state": 0,
+              "timer": 0,
+              "x": 120,
+              "y": 265,
+              "z": 0,
+              "speed": 0,
+              "hp": 0,
+              "coll": 0,
+              "facing": 0
+            },
+            "health": [
+              32,
+              32
+            ],
+            "text": 0,
+            "camera": [
+              92,
+              161
+            ]
+          },
+          {
+            "frames": 446,
+            "clock": 435,
+            "run_frames": 251,
+            "state": 1,
+            "area": 3,
+            "cell": 0,
+            "node": 0,
+            "actor": {
+              "kind": 1,
+              "type": 0,
+              "state": 13,
+              "timer": 0,
+              "x": 120,
+              "y": 259,
+              "z": 0,
+              "speed": 0,
+              "hp": 0,
+              "coll": 0,
+              "facing": 0
+            },
+            "health": [
+              32,
+              32
+            ],
+            "text": 0,
+            "camera": [
+              68,
+              155
+            ]
+          },
+          {
+            "frames": 453,
+            "clock": 442,
+            "run_frames": 258,
+            "state": 1,
+            "area": 3,
+            "cell": 0,
+            "node": 0,
+            "actor": {
+              "kind": 1,
+              "type": 0,
+              "state": 3,
+              "timer": 8,
+              "x": 112,
+              "y": 252,
+              "z": 0,
+              "speed": 0,
+              "hp": 0,
+              "coll": 0,
+              "facing": 0
+            },
+            "health": [
+              30,
+              32
+            ],
+            "text": 0,
+            "camera": [
+              40,
+              148
+            ]
+          },
+          {
+            "frames": 461,
+            "clock": 450,
+            "run_frames": 266,
+            "state": 1,
+            "area": 3,
+            "cell": 0,
+            "node": 0,
+            "actor": {
+              "kind": 1,
+              "type": 0,
+              "state": 0,
+              "timer": 0,
+              "x": 109,
+              "y": 263,
+              "z": 0,
+              "speed": 0,
+              "hp": 0,
+              "coll": 0,
+              "facing": 0
+            },
+            "health": [
+              30,
+              32
+            ],
+            "text": 0,
+            "camera": [
+              8,
+              159
+            ]
+          },
+          {
+            "frames": 465,
+            "clock": 454,
+            "run_frames": 270,
+            "state": 1,
+            "area": 3,
+            "cell": 0,
+            "node": 0,
+            "actor": {
+              "kind": 1,
+              "type": 0,
+              "state": 13,
+              "timer": 0,
+              "x": 104,
+              "y": 259,
+              "z": 0,
+              "speed": 0,
+              "hp": 0,
+              "coll": 0,
+              "facing": 0
+            },
+            "health": [
+              30,
+              32
+            ],
+            "text": 0,
+            "camera": [
+              0,
+              155
+            ]
+          },
+          {
+            "frames": 486,
+            "clock": 475,
+            "run_frames": 291,
+            "state": 1,
+            "area": 3,
+            "cell": 0,
+            "node": 0,
+            "actor": {
+              "kind": 1,
+              "type": 0,
+              "state": 3,
+              "timer": 8,
+              "x": 112,
+              "y": 238,
+              "z": 0,
+              "speed": 0,
+              "hp": 0,
+              "coll": 0,
+              "facing": 0
+            },
+            "health": [
+              28,
+              32
+            ],
+            "text": 0,
+            "camera": [
+              0,
+              134
+            ]
+          },
+          {
+            "frames": 494,
+            "clock": 483,
+            "run_frames": 299,
+            "state": 1,
+            "area": 3,
+            "cell": 0,
+            "node": 0,
+            "actor": {
+              "kind": 1,
+              "type": 0,
+              "state": 0,
+              "timer": 0,
+              "x": 107,
+              "y": 249,
+              "z": 0,
+              "speed": 0,
+              "hp": 0,
+              "coll": 0,
+              "facing": 0
+            },
+            "health": [
+              28,
+              32
+            ],
+            "text": 0,
+            "camera": [
+              0,
+              145
+            ]
+          },
+          {
+            "frames": 495,
+            "clock": 484,
+            "run_frames": 300,
+            "state": 1,
+            "area": 3,
+            "cell": 0,
+            "node": 0,
+            "actor": {
+              "kind": 1,
+              "type": 0,
+              "state": 13,
+              "timer": 0,
+              "x": 112,
+              "y": 248,
+              "z": 0,
+              "speed": 0,
+              "hp": 0,
+              "coll": 0,
+              "facing": 0
+            },
+            "health": [
+              28,
+              32
+            ],
+            "text": 0,
+            "camera": [
+              0,
+              144
+            ]
+          },
+          {
+            "frames": 516,
+            "clock": 505,
+            "run_frames": 321,
+            "state": 1,
+            "area": 3,
+            "cell": 0,
+            "node": 0,
+            "actor": {
+              "kind": 1,
+              "type": 0,
+              "state": 0,
+              "timer": 0,
+              "x": 112,
+              "y": 227,
+              "z": 0,
+              "speed": 0,
+              "hp": 0,
+              "coll": 0,
+              "facing": 0
+            },
+            "health": [
+              28,
+              32
+            ],
+            "text": 0,
+            "camera": [
+              0,
+              123
+            ]
+          }
+        ],
+        "minimum_health": 28,
+        "climb_frames": 49
+      },
+      "checks": [
+        {
+          "name": "normal opening draft completed with positive health",
+          "passed": true,
+          "observed": null
+        },
+        {
+          "name": "navigation begins in living ordinary ground state",
+          "passed": true,
+          "observed": {
+            "frames": 280,
+            "clock": 269,
+            "run_frames": 173,
+            "state": 1,
+            "area": 0,
+            "cell": 0,
+            "node": 42,
+            "actor": {
+              "kind": 1,
+              "type": 0,
+              "state": 0,
+              "timer": 0,
+              "x": 200,
+              "y": 270,
+              "z": 0,
+              "speed": 0,
+              "hp": 0,
+              "coll": 0,
+              "facing": 0
+            },
+            "health": [
+              32,
+              32
+            ],
+            "text": 0,
+            "camera": [
+              80,
+              160
+            ]
+          }
+        },
+        {
+          "name": "actual UP input enters Cream through Drain ladder",
+          "passed": true,
+          "observed": null
+        },
+        {
+          "name": "ordinary load selected actual generated room",
+          "passed": true,
+          "observed": {
+            "frames": 411,
+            "clock": 400,
+            "run_frames": 216,
+            "state": 1,
+            "area": 3,
+            "cell": 0,
+            "node": 0,
+            "actor": {
+              "kind": 1,
+              "type": 0,
+              "state": 0,
+              "timer": 0,
+              "x": 120,
+              "y": 222,
+              "z": 0,
+              "speed": 0,
+              "hp": 0,
+              "coll": 0,
+              "facing": 0
+            },
+            "health": [
+              32,
+              32
+            ],
+            "text": 0,
+            "camera": [
+              0,
+              118
+            ]
+          }
+        },
+        {
+          "name": "navigation begins in living ordinary ground state",
+          "passed": true,
+          "observed": {
+            "frames": 411,
+            "clock": 400,
+            "run_frames": 216,
+            "state": 1,
+            "area": 3,
+            "cell": 0,
+            "node": 0,
+            "actor": {
+              "kind": 1,
+              "type": 0,
+              "state": 0,
+              "timer": 0,
+              "x": 120,
+              "y": 222,
+              "z": 0,
+              "speed": 0,
+              "hp": 0,
+              "coll": 0,
+              "facing": 0
+            },
+            "health": [
+              32,
+              32
+            ],
+            "text": 0,
+            "camera": [
+              0,
+              118
+            ]
+          }
+        },
+        {
+          "name": "navigation begins in living ordinary ground state",
+          "passed": true,
+          "observed": {
+            "frames": 437,
+            "clock": 426,
+            "run_frames": 242,
+            "state": 1,
+            "area": 3,
+            "cell": 0,
+            "node": 0,
+            "actor": {
+              "kind": 1,
+              "type": 0,
+              "state": 0,
+              "timer": 0,
+              "x": 424,
+              "y": 254,
+              "z": 0,
+              "speed": 0,
+              "hp": 0,
+              "coll": 0,
+              "facing": 0
+            },
+            "health": [
+              32,
+              32
+            ],
+            "text": 0,
+            "camera": [
+              104,
+              150
+            ]
+          }
+        },
+        {
+          "name": "actual extra-climb input uses climb animation",
+          "passed": true,
+          "observed": null
+        },
+        {
+          "name": "extra climb reaches supported higher platform",
+          "passed": true,
+          "observed": {
+            "frames": 523,
+            "clock": 512,
+            "run_frames": 328,
+            "state": 1,
+            "area": 3,
+            "cell": 0,
+            "node": 0,
+            "actor": {
+              "kind": 1,
+              "type": 0,
+              "state": 0,
+              "timer": 0,
+              "x": 112,
+              "y": 222,
+              "z": 0,
+              "speed": 0,
+              "hp": 0,
+              "coll": 0,
+              "facing": 0
+            },
+            "health": [
+              28,
+              32
+            ],
+            "text": 0,
+            "camera": [
+              0,
+              118
+            ]
+          }
+        },
+        {
+          "name": "local elevation traversal preserves macrocomponent",
+          "passed": true,
+          "observed": {
+            "before": 0,
+            "after": 0
+          }
+        },
+        {
+          "name": "local traversal preserves positive health",
+          "passed": true,
+          "observed": null
+        }
+      ]
+    },
+    {
+      "kind": "drop",
+      "selection": {
+        "cell": 1,
+        "index": 0,
+        "owner": 1
+      },
+      "before": {
+        "frames": 520,
+        "clock": 509,
+        "run_frames": 272,
+        "state": 1,
+        "area": 3,
+        "cell": 1,
+        "node": 3,
+        "actor": {
+          "kind": 1,
+          "type": 0,
+          "state": 0,
+          "timer": 0,
+          "x": 384,
+          "y": 139,
+          "z": 0,
+          "speed": 0,
+          "hp": 0,
+          "coll": 0,
+          "facing": 2
+        },
+        "health": [
+          32,
+          32
+        ],
+        "text": 0,
+        "camera": [
+          264,
+          102
+        ]
+      },
+      "after": {
+        "frames": 554,
+        "clock": 543,
+        "run_frames": 306,
+        "state": 1,
+        "area": 3,
+        "cell": 1,
+        "node": 3,
+        "actor": {
+          "kind": 1,
+          "type": 0,
+          "state": 0,
+          "timer": 34,
+          "x": 384,
+          "y": 238,
+          "z": 0,
+          "speed": 0,
+          "hp": 0,
+          "coll": 0,
+          "facing": 2
+        },
+        "health": [
+          32,
+          32
+        ],
+        "text": 0,
+        "camera": [
+          264,
+          134
+        ]
+      },
+      "trace": {
+        "keys": [
+          "DOWN"
+        ],
+        "frames": 32,
+        "before": {
+          "frames": 520,
+          "clock": 509,
+          "run_frames": 272,
+          "state": 1,
+          "area": 3,
+          "cell": 1,
+          "node": 3,
+          "actor": {
+            "kind": 1,
+            "type": 0,
+            "state": 0,
+            "timer": 0,
+            "x": 384,
+            "y": 139,
+            "z": 0,
+            "speed": 0,
+            "hp": 0,
+            "coll": 0,
+            "facing": 2
+          },
+          "health": [
+            32,
+            32
+          ],
+          "text": 0,
+          "camera": [
+            264,
+            102
+          ]
+        },
+        "after": {
+          "frames": 552,
+          "clock": 541,
+          "run_frames": 304,
+          "state": 1,
+          "area": 3,
+          "cell": 1,
+          "node": 3,
+          "actor": {
+            "kind": 1,
+            "type": 0,
+            "state": 0,
+            "timer": 34,
+            "x": 384,
+            "y": 238,
+            "z": 0,
+            "speed": 320,
+            "hp": 0,
+            "coll": 0,
+            "facing": 2
+          },
+          "health": [
+            32,
+            32
+          ],
+          "text": 0,
+          "camera": [
+            264,
+            134
+          ]
+        },
+        "state_changes": [
+          {
+            "frames": 521,
+            "clock": 510,
+            "run_frames": 273,
+            "state": 1,
+            "area": 3,
+            "cell": 1,
+            "node": 3,
+            "actor": {
+              "kind": 1,
+              "type": 0,
+              "state": 5,
+              "timer": 4,
+              "x": 384,
+              "y": 238,
+              "z": 96,
+              "speed": 320,
+              "hp": 0,
+              "coll": 0,
+              "facing": 2
+            },
+            "health": [
+              32,
+              32
+            ],
+            "text": 0,
+            "camera": [
+              264,
+              106
+            ]
+          },
+          {
+            "frames": 552,
+            "clock": 541,
+            "run_frames": 304,
+            "state": 1,
+            "area": 3,
+            "cell": 1,
+            "node": 3,
+            "actor": {
+              "kind": 1,
+              "type": 0,
+              "state": 0,
+              "timer": 34,
+              "x": 384,
+              "y": 238,
+              "z": 0,
+              "speed": 320,
+              "hp": 0,
+              "coll": 0,
+              "facing": 2
+            },
+            "health": [
+              32,
+              32
+            ],
+            "text": 0,
+            "camera": [
+              264,
+              134
+            ]
+          }
+        ],
+        "minimum_health": 32,
+        "climb_frames": 0
+      },
+      "checks": [
+        {
+          "name": "normal opening draft completed with positive health",
+          "passed": true,
+          "observed": null
+        },
+        {
+          "name": "navigation begins in living ordinary ground state",
+          "passed": true,
+          "observed": {
+            "frames": 280,
+            "clock": 269,
+            "run_frames": 173,
+            "state": 1,
+            "area": 0,
+            "cell": 0,
+            "node": 42,
+            "actor": {
+              "kind": 1,
+              "type": 0,
+              "state": 0,
+              "timer": 0,
+              "x": 200,
+              "y": 270,
+              "z": 0,
+              "speed": 0,
+              "hp": 0,
+              "coll": 0,
+              "facing": 0
+            },
+            "health": [
+              32,
+              32
+            ],
+            "text": 0,
+            "camera": [
+              80,
+              160
+            ]
+          }
+        },
+        {
+          "name": "actual UP input enters Cream through Drain ladder",
+          "passed": true,
+          "observed": null
+        },
+        {
+          "name": "ordinary load selected actual generated room",
+          "passed": true,
+          "observed": {
+            "frames": 418,
+            "clock": 407,
+            "run_frames": 216,
+            "state": 1,
+            "area": 3,
+            "cell": 1,
+            "node": 2,
+            "actor": {
+              "kind": 1,
+              "type": 0,
+              "state": 0,
+              "timer": 0,
+              "x": 440,
+              "y": 318,
+              "z": 0,
+              "speed": 0,
+              "hp": 0,
+              "coll": 0,
+              "facing": 0
+            },
+            "health": [
+              32,
+              32
+            ],
+            "text": 0,
+            "camera": [
+              272,
+              214
+            ]
+          }
+        },
+        {
+          "name": "navigation begins in living ordinary ground state",
+          "passed": true,
+          "observed": {
+            "frames": 418,
+            "clock": 407,
+            "run_frames": 216,
+            "state": 1,
+            "area": 3,
+            "cell": 1,
+            "node": 2,
+            "actor": {
+              "kind": 1,
+              "type": 0,
+              "state": 0,
+              "timer": 0,
+              "x": 440,
+              "y": 318,
+              "z": 0,
+              "speed": 0,
+              "hp": 0,
+              "coll": 0,
+              "facing": 0
+            },
+            "health": [
+              32,
+              32
+            ],
+            "text": 0,
+            "camera": [
+              272,
+              214
+            ]
+          }
+        },
+        {
+          "name": "ordinary load selected actual generated component",
+          "passed": true,
+          "observed": {
+            "frames": 492,
+            "clock": 481,
+            "run_frames": 244,
+            "state": 1,
+            "area": 3,
+            "cell": 1,
+            "node": 3,
+            "actor": {
+              "kind": 1,
+              "type": 0,
+              "state": 0,
+              "timer": 0,
+              "x": 440,
+              "y": 110,
+              "z": 0,
+              "speed": 0,
+              "hp": 0,
+              "coll": 0,
+              "facing": 0
+            },
+            "health": [
+              32,
+              32
+            ],
+            "text": 0,
+            "camera": [
+              272,
+              6
+            ]
+          }
+        },
+        {
+          "name": "navigation begins in living ordinary ground state",
+          "passed": true,
+          "observed": {
+            "frames": 492,
+            "clock": 481,
+            "run_frames": 244,
+            "state": 1,
+            "area": 3,
+            "cell": 1,
+            "node": 3,
+            "actor": {
+              "kind": 1,
+              "type": 0,
+              "state": 0,
+              "timer": 0,
+              "x": 440,
+              "y": 110,
+              "z": 0,
+              "speed": 0,
+              "hp": 0,
+              "coll": 0,
+              "facing": 0
+            },
+            "health": [
+              32,
+              32
+            ],
+            "text": 0,
+            "camera": [
+              272,
+              6
+            ]
+          }
+        },
+        {
+          "name": "navigation begins in living ordinary ground state",
+          "passed": true,
+          "observed": {
+            "frames": 518,
+            "clock": 507,
+            "run_frames": 270,
+            "state": 1,
+            "area": 3,
+            "cell": 1,
+            "node": 3,
+            "actor": {
+              "kind": 1,
+              "type": 0,
+              "state": 0,
+              "timer": 0,
+              "x": 392,
+              "y": 222,
+              "z": 0,
+              "speed": 0,
+              "hp": 0,
+              "coll": 0,
+              "facing": 0
+            },
+            "health": [
+              32,
+              32
+            ],
+            "text": 0,
+            "camera": [
+              272,
+              110
+            ]
+          }
+        },
+        {
+          "name": "actual extra-drop input produces physical falling body",
+          "passed": true,
+          "observed": {
+            "keys": [
+              "DOWN"
+            ],
+            "frames": 32,
+            "before": {
+              "frames": 520,
+              "clock": 509,
+              "run_frames": 272,
+              "state": 1,
+              "area": 3,
+              "cell": 1,
+              "node": 3,
+              "actor": {
+                "kind": 1,
+                "type": 0,
+                "state": 0,
+                "timer": 0,
+                "x": 384,
+                "y": 139,
+                "z": 0,
+                "speed": 0,
+                "hp": 0,
+                "coll": 0,
+                "facing": 2
+              },
+              "health": [
+                32,
+                32
+              ],
+              "text": 0,
+              "camera": [
+                264,
+                102
+              ]
+            },
+            "after": {
+              "frames": 552,
+              "clock": 541,
+              "run_frames": 304,
+              "state": 1,
+              "area": 3,
+              "cell": 1,
+              "node": 3,
+              "actor": {
+                "kind": 1,
+                "type": 0,
+                "state": 0,
+                "timer": 34,
+                "x": 384,
+                "y": 238,
+                "z": 0,
+                "speed": 320,
+                "hp": 0,
+                "coll": 0,
+                "facing": 2
+              },
+              "health": [
+                32,
+                32
+              ],
+              "text": 0,
+              "camera": [
+                264,
+                134
+              ]
+            },
+            "state_changes": [
+              {
+                "frames": 521,
+                "clock": 510,
+                "run_frames": 273,
+                "state": 1,
+                "area": 3,
+                "cell": 1,
+                "node": 3,
+                "actor": {
+                  "kind": 1,
+                  "type": 0,
+                  "state": 5,
+                  "timer": 4,
+                  "x": 384,
+                  "y": 238,
+                  "z": 96,
+                  "speed": 320,
+                  "hp": 0,
+                  "coll": 0,
+                  "facing": 2
+                },
+                "health": [
+                  32,
+                  32
+                ],
+                "text": 0,
+                "camera": [
+                  264,
+                  106
+                ]
+              },
+              {
+                "frames": 552,
+                "clock": 541,
+                "run_frames": 304,
+                "state": 1,
+                "area": 3,
+                "cell": 1,
+                "node": 3,
+                "actor": {
+                  "kind": 1,
+                  "type": 0,
+                  "state": 0,
+                  "timer": 34,
+                  "x": 384,
+                  "y": 238,
+                  "z": 0,
+                  "speed": 320,
+                  "hp": 0,
+                  "coll": 0,
+                  "facing": 2
+                },
+                "health": [
+                  32,
+                  32
+                ],
+                "text": 0,
+                "camera": [
+                  264,
+                  134
+                ]
+              }
+            ],
+            "minimum_health": 32,
+            "climb_frames": 0
+          }
+        },
+        {
+          "name": "extra drop lands at authoritative local target",
+          "passed": true,
+          "observed": {
+            "frames": 554,
+            "clock": 543,
+            "run_frames": 306,
+            "state": 1,
+            "area": 3,
+            "cell": 1,
+            "node": 3,
+            "actor": {
+              "kind": 1,
+              "type": 0,
+              "state": 0,
+              "timer": 34,
+              "x": 384,
+              "y": 238,
+              "z": 0,
+              "speed": 0,
+              "hp": 0,
+              "coll": 0,
+              "facing": 2
+            },
+            "health": [
+              32,
+              32
+            ],
+            "text": 0,
+            "camera": [
+              264,
+              134
+            ]
+          }
+        },
+        {
+          "name": "local elevation traversal preserves macrocomponent",
+          "passed": true,
+          "observed": {
+            "before": 3,
+            "after": 3
+          }
+        },
+        {
+          "name": "local traversal preserves positive health",
+          "passed": true,
+          "observed": null
+        }
+      ]
+    }
+  ],
+  "checks": [
+    {
+      "name": "normal opening draft completed with positive health",
+      "passed": true,
+      "observed": null
+    },
+    {
+      "name": "navigation begins in living ordinary ground state",
+      "passed": true,
+      "observed": {
+        "frames": 280,
+        "clock": 269,
+        "run_frames": 173,
+        "state": 1,
+        "area": 0,
+        "cell": 0,
+        "node": 42,
+        "actor": {
+          "kind": 1,
+          "type": 0,
+          "state": 0,
+          "timer": 0,
+          "x": 200,
+          "y": 270,
+          "z": 0,
+          "speed": 0,
+          "hp": 0,
+          "coll": 0,
+          "facing": 0
+        },
+        "health": [
+          32,
+          32
+        ],
+        "text": 0,
+        "camera": [
+          80,
+          160
+        ]
+      }
+    },
+    {
+      "name": "actual UP input enters Cream through Drain ladder",
+      "passed": true,
+      "observed": null
+    },
+    {
+      "name": "ordinary load selected actual generated room",
+      "passed": true,
+      "observed": {
+        "frames": 411,
+        "clock": 400,
+        "run_frames": 216,
+        "state": 1,
+        "area": 3,
+        "cell": 0,
+        "node": 0,
+        "actor": {
+          "kind": 1,
+          "type": 0,
+          "state": 0,
+          "timer": 0,
+          "x": 120,
+          "y": 222,
+          "z": 0,
+          "speed": 0,
+          "hp": 0,
+          "coll": 0,
+          "facing": 0
+        },
+        "health": [
+          32,
+          32
+        ],
+        "text": 0,
+        "camera": [
+          0,
+          118
+        ]
+      }
+    },
+    {
+      "name": "navigation begins in living ordinary ground state",
+      "passed": true,
+      "observed": {
+        "frames": 411,
+        "clock": 400,
+        "run_frames": 216,
+        "state": 1,
+        "area": 3,
+        "cell": 0,
+        "node": 0,
+        "actor": {
+          "kind": 1,
+          "type": 0,
+          "state": 0,
+          "timer": 0,
+          "x": 120,
+          "y": 222,
+          "z": 0,
+          "speed": 0,
+          "hp": 0,
+          "coll": 0,
+          "facing": 0
+        },
+        "health": [
+          32,
+          32
+        ],
+        "text": 0,
+        "camera": [
+          0,
+          118
+        ]
+      }
+    },
+    {
+      "name": "navigation begins in living ordinary ground state",
+      "passed": true,
+      "observed": {
+        "frames": 437,
+        "clock": 426,
+        "run_frames": 242,
+        "state": 1,
+        "area": 3,
+        "cell": 0,
+        "node": 0,
+        "actor": {
+          "kind": 1,
+          "type": 0,
+          "state": 0,
+          "timer": 0,
+          "x": 424,
+          "y": 254,
+          "z": 0,
+          "speed": 0,
+          "hp": 0,
+          "coll": 0,
+          "facing": 0
+        },
+        "health": [
+          32,
+          32
+        ],
+        "text": 0,
+        "camera": [
+          104,
+          150
+        ]
+      }
+    },
+    {
+      "name": "actual extra-climb input uses climb animation",
+      "passed": true,
+      "observed": null
+    },
+    {
+      "name": "extra climb reaches supported higher platform",
+      "passed": true,
+      "observed": {
+        "frames": 523,
+        "clock": 512,
+        "run_frames": 328,
+        "state": 1,
+        "area": 3,
+        "cell": 0,
+        "node": 0,
+        "actor": {
+          "kind": 1,
+          "type": 0,
+          "state": 0,
+          "timer": 0,
+          "x": 112,
+          "y": 222,
+          "z": 0,
+          "speed": 0,
+          "hp": 0,
+          "coll": 0,
+          "facing": 0
+        },
+        "health": [
+          28,
+          32
+        ],
+        "text": 0,
+        "camera": [
+          0,
+          118
+        ]
+      }
+    },
+    {
+      "name": "local elevation traversal preserves macrocomponent",
+      "passed": true,
+      "observed": {
+        "before": 0,
+        "after": 0
+      }
+    },
+    {
+      "name": "local traversal preserves positive health",
+      "passed": true,
+      "observed": null
+    },
+    {
+      "name": "normal opening draft completed with positive health",
+      "passed": true,
+      "observed": null
+    },
+    {
+      "name": "navigation begins in living ordinary ground state",
+      "passed": true,
+      "observed": {
+        "frames": 280,
+        "clock": 269,
+        "run_frames": 173,
+        "state": 1,
+        "area": 0,
+        "cell": 0,
+        "node": 42,
+        "actor": {
+          "kind": 1,
+          "type": 0,
+          "state": 0,
+          "timer": 0,
+          "x": 200,
+          "y": 270,
+          "z": 0,
+          "speed": 0,
+          "hp": 0,
+          "coll": 0,
+          "facing": 0
+        },
+        "health": [
+          32,
+          32
+        ],
+        "text": 0,
+        "camera": [
+          80,
+          160
+        ]
+      }
+    },
+    {
+      "name": "actual UP input enters Cream through Drain ladder",
+      "passed": true,
+      "observed": null
+    },
+    {
+      "name": "ordinary load selected actual generated room",
+      "passed": true,
+      "observed": {
+        "frames": 418,
+        "clock": 407,
+        "run_frames": 216,
+        "state": 1,
+        "area": 3,
+        "cell": 1,
+        "node": 2,
+        "actor": {
+          "kind": 1,
+          "type": 0,
+          "state": 0,
+          "timer": 0,
+          "x": 440,
+          "y": 318,
+          "z": 0,
+          "speed": 0,
+          "hp": 0,
+          "coll": 0,
+          "facing": 0
+        },
+        "health": [
+          32,
+          32
+        ],
+        "text": 0,
+        "camera": [
+          272,
+          214
+        ]
+      }
+    },
+    {
+      "name": "navigation begins in living ordinary ground state",
+      "passed": true,
+      "observed": {
+        "frames": 418,
+        "clock": 407,
+        "run_frames": 216,
+        "state": 1,
+        "area": 3,
+        "cell": 1,
+        "node": 2,
+        "actor": {
+          "kind": 1,
+          "type": 0,
+          "state": 0,
+          "timer": 0,
+          "x": 440,
+          "y": 318,
+          "z": 0,
+          "speed": 0,
+          "hp": 0,
+          "coll": 0,
+          "facing": 0
+        },
+        "health": [
+          32,
+          32
+        ],
+        "text": 0,
+        "camera": [
+          272,
+          214
+        ]
+      }
+    },
+    {
+      "name": "ordinary load selected actual generated component",
+      "passed": true,
+      "observed": {
+        "frames": 492,
+        "clock": 481,
+        "run_frames": 244,
+        "state": 1,
+        "area": 3,
+        "cell": 1,
+        "node": 3,
+        "actor": {
+          "kind": 1,
+          "type": 0,
+          "state": 0,
+          "timer": 0,
+          "x": 440,
+          "y": 110,
+          "z": 0,
+          "speed": 0,
+          "hp": 0,
+          "coll": 0,
+          "facing": 0
+        },
+        "health": [
+          32,
+          32
+        ],
+        "text": 0,
+        "camera": [
+          272,
+          6
+        ]
+      }
+    },
+    {
+      "name": "navigation begins in living ordinary ground state",
+      "passed": true,
+      "observed": {
+        "frames": 492,
+        "clock": 481,
+        "run_frames": 244,
+        "state": 1,
+        "area": 3,
+        "cell": 1,
+        "node": 3,
+        "actor": {
+          "kind": 1,
+          "type": 0,
+          "state": 0,
+          "timer": 0,
+          "x": 440,
+          "y": 110,
+          "z": 0,
+          "speed": 0,
+          "hp": 0,
+          "coll": 0,
+          "facing": 0
+        },
+        "health": [
+          32,
+          32
+        ],
+        "text": 0,
+        "camera": [
+          272,
+          6
+        ]
+      }
+    },
+    {
+      "name": "navigation begins in living ordinary ground state",
+      "passed": true,
+      "observed": {
+        "frames": 518,
+        "clock": 507,
+        "run_frames": 270,
+        "state": 1,
+        "area": 3,
+        "cell": 1,
+        "node": 3,
+        "actor": {
+          "kind": 1,
+          "type": 0,
+          "state": 0,
+          "timer": 0,
+          "x": 392,
+          "y": 222,
+          "z": 0,
+          "speed": 0,
+          "hp": 0,
+          "coll": 0,
+          "facing": 0
+        },
+        "health": [
+          32,
+          32
+        ],
+        "text": 0,
+        "camera": [
+          272,
+          110
+        ]
+      }
+    },
+    {
+      "name": "actual extra-drop input produces physical falling body",
+      "passed": true,
+      "observed": {
+        "keys": [
+          "DOWN"
+        ],
+        "frames": 32,
+        "before": {
+          "frames": 520,
+          "clock": 509,
+          "run_frames": 272,
+          "state": 1,
+          "area": 3,
+          "cell": 1,
+          "node": 3,
+          "actor": {
+            "kind": 1,
+            "type": 0,
+            "state": 0,
+            "timer": 0,
+            "x": 384,
+            "y": 139,
+            "z": 0,
+            "speed": 0,
+            "hp": 0,
+            "coll": 0,
+            "facing": 2
+          },
+          "health": [
+            32,
+            32
+          ],
+          "text": 0,
+          "camera": [
+            264,
+            102
+          ]
+        },
+        "after": {
+          "frames": 552,
+          "clock": 541,
+          "run_frames": 304,
+          "state": 1,
+          "area": 3,
+          "cell": 1,
+          "node": 3,
+          "actor": {
+            "kind": 1,
+            "type": 0,
+            "state": 0,
+            "timer": 34,
+            "x": 384,
+            "y": 238,
+            "z": 0,
+            "speed": 320,
+            "hp": 0,
+            "coll": 0,
+            "facing": 2
+          },
+          "health": [
+            32,
+            32
+          ],
+          "text": 0,
+          "camera": [
+            264,
+            134
+          ]
+        },
+        "state_changes": [
+          {
+            "frames": 521,
+            "clock": 510,
+            "run_frames": 273,
+            "state": 1,
+            "area": 3,
+            "cell": 1,
+            "node": 3,
+            "actor": {
+              "kind": 1,
+              "type": 0,
+              "state": 5,
+              "timer": 4,
+              "x": 384,
+              "y": 238,
+              "z": 96,
+              "speed": 320,
+              "hp": 0,
+              "coll": 0,
+              "facing": 2
+            },
+            "health": [
+              32,
+              32
+            ],
+            "text": 0,
+            "camera": [
+              264,
+              106
+            ]
+          },
+          {
+            "frames": 552,
+            "clock": 541,
+            "run_frames": 304,
+            "state": 1,
+            "area": 3,
+            "cell": 1,
+            "node": 3,
+            "actor": {
+              "kind": 1,
+              "type": 0,
+              "state": 0,
+              "timer": 34,
+              "x": 384,
+              "y": 238,
+              "z": 0,
+              "speed": 320,
+              "hp": 0,
+              "coll": 0,
+              "facing": 2
+            },
+            "health": [
+              32,
+              32
+            ],
+            "text": 0,
+            "camera": [
+              264,
+              134
+            ]
+          }
+        ],
+        "minimum_health": 32,
+        "climb_frames": 0
+      }
+    },
+    {
+      "name": "extra drop lands at authoritative local target",
+      "passed": true,
+      "observed": {
+        "frames": 554,
+        "clock": 543,
+        "run_frames": 306,
+        "state": 1,
+        "area": 3,
+        "cell": 1,
+        "node": 3,
+        "actor": {
+          "kind": 1,
+          "type": 0,
+          "state": 0,
+          "timer": 34,
+          "x": 384,
+          "y": 238,
+          "z": 0,
+          "speed": 0,
+          "hp": 0,
+          "coll": 0,
+          "facing": 2
+        },
+        "health": [
+          32,
+          32
+        ],
+        "text": 0,
+        "camera": [
+          264,
+          134
+        ]
+      }
+    },
+    {
+      "name": "local elevation traversal preserves macrocomponent",
+      "passed": true,
+      "observed": {
+        "before": 3,
+        "after": 3
+      }
+    },
+    {
+      "name": "local traversal preserves positive health",
+      "passed": true,
+      "observed": null
+    }
+  ],
+  "complete": true
+}

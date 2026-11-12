@@ -2057,8 +2057,8 @@ physical contracts stay unchanged. Default0 and previous6 reproduce exactly.
 
 **Status:** selected local Cream materials implemented in profile12; the ten
 map arrangements are working review alternatives, with no winning map design
-selected. Final source/build identifiers and independent mGBA qualification
-are pending. Earlier review results above do not qualify this new profile.
+selected. Final source `f4b917f7` and ROM `a2e98b9551213c53…` are qualified
+below and in the new gallery. Earlier profiles retain their own evidence.
 
 The user prefers polish **#4 Weathered Curdstone**, carved **Stone Steps,
 Carved Ascent and Alternating Pins**, and waterfall **#2**. They reject long
@@ -2079,8 +2079,8 @@ steps. Baseline0 and raised heights1–6 remain distinct from the routing
 sentinel7. Local additions stay inside their original macrocomponent; paired
 lateral routes, required item gates, incoming landings, content approaches
 and the summit fighting space remain protected contracts. Content and spawn
-coordinates follow their final actual platforms. The finite generation audit
-must still establish these properties across the final source.
+coordinates follow their final actual platforms. The final finite audit
+establishes these properties over 3,200 closed/open builds across 64 seeds.
 
 Ten 240×160 graphical pause maps test contours, isometric relief, a real
 section, exploded floors, route diagrams, room cards, engineering plans,
@@ -2096,8 +2096,31 @@ Affected sources are `art/cream_dynamic_art.py`, the profile12 asset dispatch,
 `cream_topology.*`, Cream traversal/room composition and `cream_map_*` with
 the existing menu restoration hooks. The detailed
 [implementation and review note](CREAM_WEATHERED_HEIGHTS.md) records scope,
-controls, ten names, risks and the pending evidence checklist. Existing read
+controls, ten names, risks and final qualification. Existing read
 tutorial applications, pinned menu observations and the viewed Mount Crenel
 note remain the study sources; no fresh external research or imported game
 pixels are claimed. Synthetic native source previews, registered whole-room
 surveys and ordinary mGBA menu/traversal captures must retain separate labels.
+
+**Final qualification:** [Weathered Heights gallery](../../../cream-heights-review/README.md),
+source `f4b917f7964941d488c4d20fce073f3f58b950bc`, ROM
+`a2e98b9551213c5335e826c59642fea5c03a4998746a811d5a9d464a96e24f86`.
+All 7,193 source/native checks and 3,200 generated-room builds pass, including
+12,672 macro-route and 4,502 local-drop checks. Eight registered room surveys,
+20 actual pause screens, live climbing, local/two/four-screen drops, all three
+blue waterfall widths and a full earned three-gift/boss run pass. Map snapshots,
+fog and a real-input Forest→Cream-atlas→Forest cache round trip preserve play.
+
+Native review corrected asymmetric closed-target arrival overlaps, moved chests
+occupying optional drop landings, shared BG3 setup ordering, phantom shaft
+levels in height legends and pale parchment text. Actual room height summaries
+are cached while loading; style/zoom changes reuse one immutable paused plan.
+Charted redraws fell from 77–93 to 9–29 hardware frames, initial 17. A finite
+25-room timing sample per build retained 1.000 gameplay updates per hardware
+frame; room-load p95 increased from 50 to 57 frames. First Map-item reveals
+of uncached unvisited rooms remain outside that redraw timing sample.
+
+The bank holds 861 static native characters, 163 available blend characters and
+ten palettes; carved climbs precede optional panels, which leave 16 slots for
+later structural joins. Old production0 and Weathered10 rebuild byte for byte.
+The normal workspace ROM is restored to0; the downloadable review ROM enables12.

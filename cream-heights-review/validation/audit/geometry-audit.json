@@ -1,0 +1,930 @@
+{
+  "counts": {
+    "macro capability graph exact": 64,
+    "independent400state gate/no-trap solver": 64,
+    "room_builds": 3200,
+    "active topology matches actualroom": 3200,
+    "topology boundedrecords": 3200,
+    "new local deadend platform has content": 9074,
+    "map topology preview never mutates loaded game": 3200,
+    "map content coordinates match actual relocated features": 3200,
+    "previewing another room never changes loaded game": 3200,
+    "physical floorheight valid": 3200,
+    "each macrocomponent has supported physicalfloor": 6400,
+    "allsameownerplatforms reachable viarealwalk/climb/drop": 6400,
+    "local routes have no physicaltrap": 6400,
+    "reachable content approach npc": 746,
+    "enemy spawn supported/reachable": 29364,
+    "reachable content approach chest": 1940,
+    "livecomponent matches supported owner": 1224781,
+    "no unguardedwalk bypass betweenmacroowners": 2057880,
+    "heightchange usesactualclimb/face": 2057880,
+    "localdrop sameowner positiveheight": 4502,
+    "localdrop actuallanding supported": 4502,
+    "actuallocaldrop routes exacttarget": 4502,
+    "localdrop respectsdirection/intention": 4502,
+    "every real macro route trigger matches graph": 12672,
+    "reciprocal variable WALK lanes align": 5124,
+    "alladmittedmacroarrivals physicallyclear": 12672,
+    "cosmeticrefresh preservesnewphysicaltopology": 3200,
+    "cosmeticrefresh preserves complete paint and shade roles": 3200,
+    "nativeblendcapacity neveroverflows": 3200,
+    "allcompleteclimbglyphs fitwithoutfallback": 3200,
+    "reachable content approach heal": 886,
+    "reachable content approach cache": 366,
+    "reachable content approach mission": 384,
+    "opening macro gates never remodels local platforms/content": 1600
+  },
+  "failures": [],
+  "archetypes": {
+    "3": 438,
+    "4": 460,
+    "2": 426,
+    "7": 128,
+    "5": 412,
+    "0": 430,
+    "6": 480,
+    "1": 426
+  },
+  "height_counts": {
+    "5": 1356,
+    "4": 1108,
+    "2": 128,
+    "3": 588,
+    "6": 20
+  },
+  "physical_islands": {
+    "2": 2384,
+    "3": 2150,
+    "1": 1094,
+    "5": 74,
+    "4": 698
+  },
+  "waterfall_widths": [
+    1,
+    2,
+    3
+  ],
+  "samples": [
+    {
+      "seed": 0,
+      "cell": 0,
+      "gates": 63,
+      "archetype": 3,
+      "heights": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "climbs": 3,
+      "drops": 1,
+      "platforms": 3,
+      "topology_sha256": "b51231df70d1e21b42e7cac373c5bbce761ac1defb4d0feddb00b31e814bb7ea",
+      "ground_sha256": "1b3410c9d333b763f1ec3919d67b3e8eca3cc09bc636f38240390b2c0704624c"
+    },
+    {
+      "seed": 0,
+      "cell": 1,
+      "gates": 63,
+      "archetype": 4,
+      "heights": [
+        0,
+        1,
+        3,
+        4
+      ],
+      "climbs": 3,
+      "drops": 3,
+      "platforms": 3,
+      "topology_sha256": "d8109d438d499cd4ff2396c5a581da70874b5108cfda40fbafeba9a440cee235",
+      "ground_sha256": "b01473eb5071ce3088a7fbab0460ed54a72eb5a9efdb905d96dca4e923d38f83"
+    },
+    {
+      "seed": 0,
+      "cell": 2,
+      "gates": 63,
+      "archetype": 2,
+      "heights": [
+        0,
+        1,
+        3,
+        4
+      ],
+      "climbs": 3,
+      "drops": 2,
+      "platforms": 3,
+      "topology_sha256": "21025ceddc50a037a61fc54fda8d4b4fd09785ded87fbde1e59f771352cf1a53",
+      "ground_sha256": "a95cfd1a7d663496740da1e55b0e8818c1b0cc607a17801b150d97ea59d369e8"
+    },
+    {
+      "seed": 0,
+      "cell": 3,
+      "gates": 63,
+      "archetype": 2,
+      "heights": [
+        0,
+        1,
+        3,
+        4
+      ],
+      "climbs": 3,
+      "drops": 1,
+      "platforms": 3,
+      "topology_sha256": "9229b4089aed0bd1d475d68e36eb524a20dde1c1fb6df3cef53ddd8c61da8c28",
+      "ground_sha256": "214dd4d5e627c02d99edeb3f25a5917292030853650a027fc10b8b5074d264eb"
+    },
+    {
+      "seed": 0,
+      "cell": 4,
+      "gates": 63,
+      "archetype": 7,
+      "heights": [
+        0,
+        4
+      ],
+      "climbs": 0,
+      "drops": 0,
+      "platforms": 0,
+      "topology_sha256": "63ed257360584710efa253c3f7336cba1d8a538ded1422a27662b15249a36ad1",
+      "ground_sha256": "72e8936634ab6afd8b7b3a29c9058782548dfc5ebe039dc98a3217064340e377"
+    },
+    {
+      "seed": 0,
+      "cell": 5,
+      "gates": 63,
+      "archetype": 5,
+      "heights": [
+        0,
+        1,
+        2,
+        4
+      ],
+      "climbs": 4,
+      "drops": 2,
+      "platforms": 4,
+      "topology_sha256": "4437c978ca8e91db865797eb485754130abd10549916c954166de3e7791e789d",
+      "ground_sha256": "35161e1e0d25e443a8bc4d0c8ee99497a25e63474e4f3b78a9ad38d9e8ab19a9"
+    },
+    {
+      "seed": 0,
+      "cell": 6,
+      "gates": 63,
+      "archetype": 3,
+      "heights": [
+        0,
+        1,
+        2,
+        4,
+        5
+      ],
+      "climbs": 3,
+      "drops": 1,
+      "platforms": 3,
+      "topology_sha256": "9a6f0ee958d69b2daff27658f4bb868584e0dca7bea9ca37f2527f9ee5c55d70",
+      "ground_sha256": "39c9e975b2f1973989c91d85c9a9bcdcf7be826c6885c6449423522dc26a7feb"
+    },
+    {
+      "seed": 0,
+      "cell": 7,
+      "gates": 63,
+      "archetype": 5,
+      "heights": [
+        0,
+        1,
+        2,
+        4
+      ],
+      "climbs": 4,
+      "drops": 1,
+      "platforms": 4,
+      "topology_sha256": "731a9b6d43c1de872bee26b9d6b4dc846c6ef03e44cdf70b7a98b114199ebb53",
+      "ground_sha256": "db88219ee409bded4a3ec299613e8422ee630a4407e85b8c81bce4aabeedb716"
+    },
+    {
+      "seed": 0,
+      "cell": 8,
+      "gates": 63,
+      "archetype": 3,
+      "heights": [
+        0,
+        1,
+        2,
+        4,
+        5
+      ],
+      "climbs": 3,
+      "drops": 3,
+      "platforms": 3,
+      "topology_sha256": "b27deed81c19629175e92a1ad28ebdcafc86d7114a4e3cccefb7e15ef1df6cad",
+      "ground_sha256": "be625d470cfffc431015998a26f5224acb91c58a840c323b88116a53a91a2524"
+    },
+    {
+      "seed": 0,
+      "cell": 9,
+      "gates": 63,
+      "archetype": 2,
+      "heights": [
+        0,
+        1,
+        4
+      ],
+      "climbs": 3,
+      "drops": 2,
+      "platforms": 3,
+      "topology_sha256": "04db11b24c329f3d8b1c4a657183e396c4f4415f611035155efcbd69265eb45a",
+      "ground_sha256": "26d4f538d840113563049d637eab653b5250dd87b921deabd17c10ab1e87c620"
+    },
+    {
+      "seed": 0,
+      "cell": 10,
+      "gates": 63,
+      "archetype": 5,
+      "heights": [
+        0,
+        3,
+        4,
+        5
+      ],
+      "climbs": 4,
+      "drops": 0,
+      "platforms": 4,
+      "topology_sha256": "bc237f75d1287977a129ddbf368db9cda15a5d341c78b521fc032e71eb13621b",
+      "ground_sha256": "4e45e95d23f872e6aacde1709adb6a7769805e33a3b476242998a100438099e8"
+    },
+    {
+      "seed": 0,
+      "cell": 11,
+      "gates": 63,
+      "archetype": 3,
+      "heights": [
+        0,
+        1,
+        2,
+        4,
+        5
+      ],
+      "climbs": 3,
+      "drops": 0,
+      "platforms": 3,
+      "topology_sha256": "d9ca5bb0f4848632748e99d7fd9776e7671527b2abd31fd29e4a7b34a0da40d1",
+      "ground_sha256": "1cb45e3c0ead1b994c52bcf1aa390851c9e789658d050f87f203bafb352d711d"
+    },
+    {
+      "seed": 0,
+      "cell": 12,
+      "gates": 63,
+      "archetype": 4,
+      "heights": [
+        0,
+        1,
+        3,
+        4
+      ],
+      "climbs": 3,
+      "drops": 2,
+      "platforms": 3,
+      "topology_sha256": "7e4714d853037a932c9e71ab08a470602390e3b3447c6c9b1e0d93c524e33478",
+      "ground_sha256": "2499c3ccef91efd7a379afef9e89cb63ed2ff01ed2062ecb016a439d841e9eb3"
+    },
+    {
+      "seed": 0,
+      "cell": 13,
+      "gates": 63,
+      "archetype": 0,
+      "heights": [
+        0,
+        1,
+        4
+      ],
+      "climbs": 1,
+      "drops": 0,
+      "platforms": 1,
+      "topology_sha256": "c5a5fb734d01ca3cb0eceb2ba4208a23114b74f42740a0fbc8c8c0786243fb3d",
+      "ground_sha256": "096c0786dcfd5e5aaea71c30e8a25a80216c0410e7190263f25631261e8d2dd6"
+    },
+    {
+      "seed": 0,
+      "cell": 14,
+      "gates": 63,
+      "archetype": 6,
+      "heights": [
+        0,
+        1,
+        3,
+        4
+      ],
+      "climbs": 4,
+      "drops": 2,
+      "platforms": 4,
+      "topology_sha256": "367d4ec384e3a8c142da7d59de0624b122d7f9b465cbc27ea5e297ae7664e978",
+      "ground_sha256": "f9c7d694ead8822e1690efde5092aef6bf4086ea84eeb8c32b5fd6d51ddea4e5"
+    },
+    {
+      "seed": 0,
+      "cell": 15,
+      "gates": 63,
+      "archetype": 5,
+      "heights": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "climbs": 4,
+      "drops": 2,
+      "platforms": 4,
+      "topology_sha256": "4ddbd7ca5c11e60495bc99d6dba56e8226b49b4aeb3f8271c0b597d0ca205a93",
+      "ground_sha256": "21c36186f8e7a77bb1f592435ff68faf0905b62ce63c0e271e1e2621f17fb6dc"
+    },
+    {
+      "seed": 0,
+      "cell": 16,
+      "gates": 63,
+      "archetype": 1,
+      "heights": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "climbs": 3,
+      "drops": 1,
+      "platforms": 3,
+      "topology_sha256": "ae7308adbd4dd24a0c8e34b982c99ed33932234debc9617feb584417a70ac32d",
+      "ground_sha256": "5923d75bd56d41d8e1c3c9f23281d83acff31c880674f94c1901d4983a9c9a4d"
+    },
+    {
+      "seed": 0,
+      "cell": 17,
+      "gates": 63,
+      "archetype": 3,
+      "heights": [
+        0,
+        1,
+        2,
+        4,
+        5
+      ],
+      "climbs": 3,
+      "drops": 1,
+      "platforms": 3,
+      "topology_sha256": "09bb733119cda16d0643f5401203ebd7970d7cb9c4646ceaae60f585bc411471",
+      "ground_sha256": "7b1ed818b861acba2dfff0c66a4bcefbe51fbae9fb9ef7347968a8c921f19a0b"
+    },
+    {
+      "seed": 0,
+      "cell": 18,
+      "gates": 63,
+      "archetype": 0,
+      "heights": [
+        0,
+        1,
+        4
+      ],
+      "climbs": 1,
+      "drops": 1,
+      "platforms": 1,
+      "topology_sha256": "185a9482fa358c38e66d646c07ce83ed578cdf3823450c4fee722faf119986da",
+      "ground_sha256": "b15ad5c3a9c4654195a348c655ae7378db8c27371f220427b8e143555db42d88"
+    },
+    {
+      "seed": 0,
+      "cell": 19,
+      "gates": 63,
+      "archetype": 2,
+      "heights": [
+        0,
+        2,
+        3,
+        4
+      ],
+      "climbs": 3,
+      "drops": 1,
+      "platforms": 3,
+      "topology_sha256": "bceb4f2b64a265e0baee14abf3cb37569bf8f5ee5f83052e6474a3f76b4bae4e",
+      "ground_sha256": "54c79c9c5a1a877e10e42d13a6f8b8149a3f97d71ee40f0bb8c1ff979cf88109"
+    },
+    {
+      "seed": 0,
+      "cell": 20,
+      "gates": 63,
+      "archetype": 3,
+      "heights": [
+        0,
+        1,
+        2,
+        4,
+        5
+      ],
+      "climbs": 3,
+      "drops": 1,
+      "platforms": 3,
+      "topology_sha256": "658106627368649407d1452697a520a0816ae9841ed0d77cc02f8c411ab838ce",
+      "ground_sha256": "a569ebb8c9002bce3060e15acf523b60ccb17090f5140c9909273b1e7d6dd798"
+    },
+    {
+      "seed": 0,
+      "cell": 21,
+      "gates": 63,
+      "archetype": 1,
+      "heights": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "climbs": 3,
+      "drops": 1,
+      "platforms": 3,
+      "topology_sha256": "630c2245a43151ab7dffd7e2ff523b088dde6b8c3bab0b67db04592f93c39973",
+      "ground_sha256": "8d907ccef4bc838a7a6038be865fe809c5358b2944a5d27dccbc61b5e34015fd"
+    },
+    {
+      "seed": 0,
+      "cell": 22,
+      "gates": 63,
+      "archetype": 1,
+      "heights": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "climbs": 3,
+      "drops": 2,
+      "platforms": 3,
+      "topology_sha256": "d37db55580875da6a8ace6f95a64e5c10a9c0ad44b754e7009906f1b7d6fa1fb",
+      "ground_sha256": "caa72d881e10ac9be991fce8ed9dd6d3cbf24c0edfbe035c48151b630cc12d64"
+    },
+    {
+      "seed": 0,
+      "cell": 23,
+      "gates": 63,
+      "archetype": 0,
+      "heights": [
+        0,
+        3,
+        4
+      ],
+      "climbs": 1,
+      "drops": 0,
+      "platforms": 1,
+      "topology_sha256": "3b87793c8495445534723df71484ba56c69d2ea68e262ed7cb2b71de17597ca2",
+      "ground_sha256": "55ba48157bc25327523e8f126f79ada3e510f74c52cbf4c6bb045cc32d496020"
+    },
+    {
+      "seed": 0,
+      "cell": 24,
+      "gates": 63,
+      "archetype": 5,
+      "heights": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "climbs": 4,
+      "drops": 2,
+      "platforms": 4,
+      "topology_sha256": "db6164b29da6fe9a4945260dc395991c3eb2cb35eba18420d29bf743222478e8",
+      "ground_sha256": "daaf5dda5ca46fb6199e6422ed7148a463659f49f4df76c75d3abf5f9c0ead9f"
+    },
+    {
+      "seed": 1,
+      "cell": 0,
+      "gates": 63,
+      "archetype": 6,
+      "heights": [
+        0,
+        1,
+        3,
+        4
+      ],
+      "climbs": 3,
+      "drops": 1,
+      "platforms": 3,
+      "topology_sha256": "9b4b2156e3e785c466652b75d2870a072bf20cdf834dc0c349b33b7e84823a88",
+      "ground_sha256": "b14346e7673746e18fc017c1b380e16cb0d2f789187e4d825ce3ee869398f92b"
+    },
+    {
+      "seed": 1,
+      "cell": 1,
+      "gates": 63,
+      "archetype": 7,
+      "heights": [
+        0,
+        4
+      ],
+      "climbs": 0,
+      "drops": 0,
+      "platforms": 0,
+      "topology_sha256": "0b52859c6663b870a4e1fc252c7a8ca54d98aef592f06ffc9f399a484eaa9c51",
+      "ground_sha256": "51a017b6d95b79a9724d92a4ad603be71f947e028e53f8a4421d17d59b775591"
+    },
+    {
+      "seed": 1,
+      "cell": 2,
+      "gates": 63,
+      "archetype": 0,
+      "heights": [
+        0,
+        1,
+        4
+      ],
+      "climbs": 1,
+      "drops": 0,
+      "platforms": 1,
+      "topology_sha256": "2f680ad869a5e662dd22a7b0715782b69ce636b54ac1aeb12161acde032cb3fa",
+      "ground_sha256": "9cce678b0d0a2a485fc44fedc6eb3f019e07a83fe9009435875f68c4de955c83"
+    },
+    {
+      "seed": 1,
+      "cell": 3,
+      "gates": 63,
+      "archetype": 3,
+      "heights": [
+        0,
+        1,
+        3,
+        4
+      ],
+      "climbs": 3,
+      "drops": 1,
+      "platforms": 3,
+      "topology_sha256": "e7b8dfb30e2cff9ba52cc95f72bda3716b125a381e954bb6cf9cf11c47ab2ec2",
+      "ground_sha256": "25bde90a53a6ddcb32fe489f35f481358ac4771d66d71289f01811fbd0611b82"
+    },
+    {
+      "seed": 1,
+      "cell": 4,
+      "gates": 63,
+      "archetype": 1,
+      "heights": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "climbs": 3,
+      "drops": 1,
+      "platforms": 3,
+      "topology_sha256": "eed69fed671ffb684787c840983ec2bbfe675080deceb0e3a105a1eb4fe26772",
+      "ground_sha256": "3b64b37fb12a733b7804831f75f4b26b7b582b59d7e1605c0f647fa4bf537b67"
+    },
+    {
+      "seed": 1,
+      "cell": 5,
+      "gates": 63,
+      "archetype": 6,
+      "heights": [
+        0,
+        1,
+        3,
+        4
+      ],
+      "climbs": 4,
+      "drops": 2,
+      "platforms": 4,
+      "topology_sha256": "b8fdb330294925281e38a0614ee1b8fe10c6726c25a19cc7263074eaeca4da4a",
+      "ground_sha256": "04365b3312e68f6c7191ebd046f8e87744408aa076f324f28004f77debdb2869"
+    },
+    {
+      "seed": 1,
+      "cell": 6,
+      "gates": 63,
+      "archetype": 0,
+      "heights": [
+        0,
+        3,
+        4
+      ],
+      "climbs": 1,
+      "drops": 1,
+      "platforms": 1,
+      "topology_sha256": "08b3ee7ad2c07735065f0f03569687965faeb348b609d6b82015dc2c3449230a",
+      "ground_sha256": "33bb0305e247746c13a8d948cbc01a40e28153074de8d3d0bf9598a7d060383b"
+    },
+    {
+      "seed": 1,
+      "cell": 7,
+      "gates": 63,
+      "archetype": 1,
+      "heights": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "climbs": 3,
+      "drops": 1,
+      "platforms": 3,
+      "topology_sha256": "a6f129813ce839c6e90f2946aee01fd67328a825d6c2043b1cfc6c7474797fe1",
+      "ground_sha256": "7c45d35f4c7b920136d74a3e2ce9f437e6da342a2e6ebf70147bad8d9604c704"
+    },
+    {
+      "seed": 1,
+      "cell": 8,
+      "gates": 63,
+      "archetype": 5,
+      "heights": [
+        0,
+        3,
+        4
+      ],
+      "climbs": 4,
+      "drops": 2,
+      "platforms": 4,
+      "topology_sha256": "84b946d3f01db4daac2a1e93a739e09b8b7f5754b607971902a2b34bb8200c84",
+      "ground_sha256": "fb6ab94825eec81a29336b7801c3b05011698546254255eb571973f3de057b7a"
+    },
+    {
+      "seed": 1,
+      "cell": 9,
+      "gates": 63,
+      "archetype": 4,
+      "heights": [
+        0,
+        1,
+        3,
+        4
+      ],
+      "climbs": 3,
+      "drops": 1,
+      "platforms": 3,
+      "topology_sha256": "8921baf121ce9d314d0399df384c2d756e70fa421389ee3f881010d49c5e14e1",
+      "ground_sha256": "b4bc4f905c5b0a9b09f402acac8391610d7bb3573b9a4114a878840edd49d6e5"
+    },
+    {
+      "seed": 1,
+      "cell": 10,
+      "gates": 63,
+      "archetype": 6,
+      "heights": [
+        0,
+        1,
+        3,
+        4
+      ],
+      "climbs": 4,
+      "drops": 2,
+      "platforms": 4,
+      "topology_sha256": "f19cd00b88edff5ce6be5e84788ae8d167127b2e81ee4815c72935f5bf0bd8b5",
+      "ground_sha256": "ce1f007e69faf0ccef1b53178f10b36aebee1926bf94ebd4c9f11e833720e873"
+    },
+    {
+      "seed": 1,
+      "cell": 11,
+      "gates": 63,
+      "archetype": 6,
+      "heights": [
+        0,
+        1,
+        3,
+        4,
+        5
+      ],
+      "climbs": 4,
+      "drops": 2,
+      "platforms": 4,
+      "topology_sha256": "eecbb83ef73f3b4e6050f1f25e03ccfcfd71c6ac4594f02c5fbb288f95ecfcd9",
+      "ground_sha256": "37bf8dc40a29996ab4a228240adbc7c030afc485217f0a639cb8473c1a6d9ab5"
+    },
+    {
+      "seed": 1,
+      "cell": 12,
+      "gates": 63,
+      "archetype": 1,
+      "heights": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "climbs": 3,
+      "drops": 1,
+      "platforms": 3,
+      "topology_sha256": "22b5aede9bde9e76c8acefb258c11c2fdefb293365fe03af584b5fc952e073e1",
+      "ground_sha256": "eb76a5086064d17f4c261411c5d4ab1ef42f55e5913db181e9b1f5c65536db11"
+    },
+    {
+      "seed": 1,
+      "cell": 13,
+      "gates": 63,
+      "archetype": 1,
+      "heights": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "climbs": 3,
+      "drops": 1,
+      "platforms": 3,
+      "topology_sha256": "3d707c1f0e56122b85af27240b3f62d6fc1c46c17b7c301875ea59e302dedbfc",
+      "ground_sha256": "37c78d0c2fa0466069c7cc3b5f13631ff9d3b2f69596ebc4b5f658cfbccab18f"
+    },
+    {
+      "seed": 1,
+      "cell": 14,
+      "gates": 63,
+      "archetype": 2,
+      "heights": [
+        0,
+        1,
+        3,
+        4
+      ],
+      "climbs": 3,
+      "drops": 3,
+      "platforms": 3,
+      "topology_sha256": "1e643872599888f73527d75c438ad9ab5b5b70661bdc3c9c5106092c3089cffe",
+      "ground_sha256": "43b3b97053d7dc9a40df2d268c77b4d65a246b89702ce2ddf8a8011736f720e7"
+    },
+    {
+      "seed": 1,
+      "cell": 15,
+      "gates": 63,
+      "archetype": 6,
+      "heights": [
+        0,
+        1,
+        3,
+        4,
+        5
+      ],
+      "climbs": 4,
+      "drops": 1,
+      "platforms": 4,
+      "topology_sha256": "5ec5674d22cbf19a9b3ede862f84ee399a19edfc67a04d63071247c3fa93f3ea",
+      "ground_sha256": "e6aaf6c0b63c455c650867e3688d7ca9ceed91232debb61694164ad657672253"
+    },
+    {
+      "seed": 1,
+      "cell": 16,
+      "gates": 63,
+      "archetype": 6,
+      "heights": [
+        0,
+        1,
+        3,
+        4
+      ],
+      "climbs": 4,
+      "drops": 3,
+      "platforms": 4,
+      "topology_sha256": "3309c7fb205ae08ca881019611693d39d114e3de24554d8d9c32a4f9e367948f",
+      "ground_sha256": "f43f3aeef5a185ffd78c15d0f5c0ff0747bf2ce5d4c639b3a6877bc746d15238"
+    },
+    {
+      "seed": 1,
+      "cell": 17,
+      "gates": 63,
+      "archetype": 3,
+      "heights": [
+        0,
+        1,
+        2,
+        4,
+        5
+      ],
+      "climbs": 3,
+      "drops": 0,
+      "platforms": 3,
+      "topology_sha256": "45a15f622dd791cfb33043caa195382503e3d6357b0846f209cdaf075470fbe3",
+      "ground_sha256": "5eead4321ccde8fbb9f294eb7b28429f150828f7d3463702bade0fbc4a4856a6"
+    },
+    {
+      "seed": 1,
+      "cell": 18,
+      "gates": 63,
+      "archetype": 5,
+      "heights": [
+        0,
+        1,
+        3,
+        4
+      ],
+      "climbs": 3,
+      "drops": 2,
+      "platforms": 3,
+      "topology_sha256": "cad52c8491b172e368d009e9bf34c198cd7197e3a9449b71e2e10fe30235df41",
+      "ground_sha256": "1fa37442164f87500c5e2bd96727628ede920355a1232af0b918c70a26d17271"
+    },
+    {
+      "seed": 1,
+      "cell": 19,
+      "gates": 63,
+      "archetype": 6,
+      "heights": [
+        0,
+        1,
+        4,
+        5
+      ],
+      "climbs": 4,
+      "drops": 3,
+      "platforms": 4,
+      "topology_sha256": "09c0c288af0d9091ade5ae16a993c4ac12131409b87ab477f063bccc553e6cf6",
+      "ground_sha256": "8e86903d73071fd94bd53dddbfbb12fdf041caf008f39b45fafaa9d1ee2ba8fb"
+    },
+    {
+      "seed": 1,
+      "cell": 20,
+      "gates": 63,
+      "archetype": 5,
+      "heights": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "climbs": 3,
+      "drops": 1,
+      "platforms": 3,
+      "topology_sha256": "81f93ce3b4dae09d9d47a43b77bb1852c366d47ba6dede0c59ee61a81ed2dab8",
+      "ground_sha256": "25ccad8163b0b3a90ae94cd0f099892b4f60afdac407f3074ccc84fbdfb12c99"
+    },
+    {
+      "seed": 1,
+      "cell": 21,
+      "gates": 63,
+      "archetype": 4,
+      "heights": [
+        0,
+        1,
+        3,
+        4
+      ],
+      "climbs": 3,
+      "drops": 2,
+      "platforms": 3,
+      "topology_sha256": "804562c0bfc5b6daf3e6e1a9ec7f28f8cc2ba965d43da8029b0825893bf0319f",
+      "ground_sha256": "5b79adea4f580cf1e7b982914e94b18f72ec803d7f89513689bda561f817049b"
+    },
+    {
+      "seed": 1,
+      "cell": 22,
+      "gates": 63,
+      "archetype": 4,
+      "heights": [
+        0,
+        1,
+        4,
+        5
+      ],
+      "climbs": 2,
+      "drops": 1,
+      "platforms": 2,
+      "topology_sha256": "ed31af12e3a61be00398c8f2fcd0cc049eaa056d2132210964123d589cf120b3",
+      "ground_sha256": "411ceec6afdc8a4d60f8ee2cab4fe95506d1925cd053ddb4c16d784b5e4b55d1"
+    },
+    {
+      "seed": 1,
+      "cell": 23,
+      "gates": 63,
+      "archetype": 1,
+      "heights": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "climbs": 3,
+      "drops": 1,
+      "platforms": 3,
+      "topology_sha256": "8c20f06f43c9ce8ed8b7d55b056c84c3787f8614e53814e5fef3d5c300616054",
+      "ground_sha256": "1e1b4cb51bbb44e45a48a6bef516d71fb8886cb8c50dabe68df29a85240ec072"
+    },
+    {
+      "seed": 1,
+      "cell": 24,
+      "gates": 63,
+      "archetype": 6,
+      "heights": [
+        0,
+        1,
+        3,
+        4
+      ],
+      "climbs": 4,
+      "drops": 2,
+      "platforms": 4,
+      "topology_sha256": "b2e38c38b9614930b5c9fd6fb67e6bd7445f6b1c0cadfb1d3148c06858f3789a",
+      "ground_sha256": "c016985d4a1dc8e2039436e1c69b5fcbf7ea6b8ed479cf7a5f31cc9c80cb63bc"
+    }
+  ],
+  "scope": "Pinned actualC core room/topology/compositor. Regional furniture is covered separately in actual native runs."
+}

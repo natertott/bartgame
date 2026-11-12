@@ -1,0 +1,4706 @@
+{
+  "checks": [
+    {
+      "name": "real new run boots",
+      "passed": true,
+      "detail": {
+        "state": 1,
+        "area": 0,
+        "cell": 0,
+        "node": 42,
+        "actor": {
+          "kind": 1,
+          "type": 0,
+          "state": 0,
+          "timer": 0,
+          "x": 200,
+          "y": 270,
+          "z": 0,
+          "speed": 0,
+          "hp": 0,
+          "coll": 0,
+          "facing": 0
+        },
+        "text": 0
+      }
+    },
+    {
+      "name": "real sewer ascent enters Cream",
+      "passed": true,
+      "detail": {
+        "state": 1,
+        "area": 3,
+        "cell": 21,
+        "node": 42,
+        "actor": {
+          "kind": 1,
+          "type": 0,
+          "state": 0,
+          "timer": 0,
+          "x": 400,
+          "y": 350,
+          "z": 0,
+          "speed": 0,
+          "hp": 0,
+          "coll": 0,
+          "facing": 0
+        },
+        "text": 0
+      }
+    },
+    {
+      "name": "visible entry returns to Drain without an escape item",
+      "passed": true,
+      "detail": {
+        "state": 1,
+        "area": 0,
+        "cell": 21,
+        "node": 42,
+        "actor": {
+          "kind": 1,
+          "type": 0,
+          "state": 0,
+          "timer": 0,
+          "x": 312,
+          "y": 94,
+          "z": 0,
+          "speed": 0,
+          "hp": 0,
+          "coll": 0,
+          "facing": 2
+        },
+        "text": 0
+      }
+    },
+    {
+      "name": "Drain ascent re-enters the same generated Cream",
+      "passed": true,
+      "detail": {
+        "state": 1,
+        "area": 3,
+        "cell": 21,
+        "node": 42,
+        "actor": {
+          "kind": 1,
+          "type": 0,
+          "state": 0,
+          "timer": 0,
+          "x": 400,
+          "y": 350,
+          "z": 0,
+          "speed": 0,
+          "hp": 0,
+          "coll": 0,
+          "facing": 0
+        },
+        "text": 0
+      }
+    },
+    {
+      "name": "real graph edge reaches target",
+      "passed": true,
+      "detail": {
+        "node": 42,
+        "index": 0,
+        "target": 43,
+        "kind": 2,
+        "status": {
+          "state": 1,
+          "area": 3,
+          "cell": 21,
+          "node": 43,
+          "actor": {
+            "kind": 1,
+            "type": 0,
+            "state": 0,
+            "timer": 0,
+            "x": 272,
+            "y": 131,
+            "z": 0,
+            "speed": 0,
+            "hp": 0,
+            "coll": 0,
+            "facing": 0
+          },
+          "text": 0,
+          "rewards": 0,
+          "items": 67,
+          "hp": 24,
+          "bombs": 10,
+          "equip": [
+            0,
+            1,
+            5
+          ]
+        }
+      }
+    },
+    {
+      "name": "real graph edge reaches target",
+      "passed": true,
+      "detail": {
+        "node": 43,
+        "index": 1,
+        "target": 32,
+        "kind": 2,
+        "status": {
+          "state": 1,
+          "area": 3,
+          "cell": 16,
+          "node": 32,
+          "actor": {
+            "kind": 1,
+            "type": 0,
+            "state": 0,
+            "timer": 0,
+            "x": 272,
+            "y": 362,
+            "z": 0,
+            "speed": 0,
+            "hp": 0,
+            "coll": 0,
+            "facing": 0
+          },
+          "text": 0,
+          "rewards": 0,
+          "items": 67,
+          "hp": 24,
+          "bombs": 10,
+          "equip": [
+            0,
+            1,
+            5
+          ]
+        }
+      }
+    },
+    {
+      "name": "real graph edge reaches target",
+      "passed": true,
+      "detail": {
+        "node": 32,
+        "index": 1,
+        "target": 30,
+        "kind": 1,
+        "status": {
+          "state": 1,
+          "area": 3,
+          "cell": 15,
+          "node": 30,
+          "actor": {
+            "kind": 1,
+            "type": 0,
+            "state": 0,
+            "timer": 0,
+            "x": 488,
+            "y": 318,
+            "z": 0,
+            "speed": 0,
+            "hp": 0,
+            "coll": 0,
+            "facing": 3
+          },
+          "text": 0,
+          "rewards": 0,
+          "items": 67,
+          "hp": 24,
+          "bombs": 10,
+          "equip": [
+            0,
+            1,
+            5
+          ]
+        }
+      }
+    },
+    {
+      "name": "real graph edge reaches target",
+      "passed": true,
+      "detail": {
+        "node": 30,
+        "index": 1,
+        "target": 41,
+        "kind": 3,
+        "status": {
+          "state": 1,
+          "area": 3,
+          "cell": 20,
+          "node": 41,
+          "actor": {
+            "kind": 1,
+            "type": 0,
+            "state": 0,
+            "timer": 34,
+            "x": 304,
+            "y": 78,
+            "z": 0,
+            "speed": 0,
+            "hp": 0,
+            "coll": 0,
+            "facing": 2
+          },
+          "text": 0,
+          "rewards": 0,
+          "items": 67,
+          "hp": 24,
+          "bombs": 10,
+          "equip": [
+            0,
+            1,
+            5
+          ]
+        }
+      }
+    },
+    {
+      "name": "local drop begins at the physical takeoff lip",
+      "passed": true,
+      "detail": {
+        "takeoff_y": 128,
+        "fixture_start_y": 124,
+        "first": {
+          "kind": 1,
+          "type": 0,
+          "state": 5,
+          "timer": 4,
+          "x": 176,
+          "y": 286,
+          "z": 158,
+          "speed": 320,
+          "hp": 0,
+          "coll": 4,
+          "facing": 2
+        }
+      }
+    },
+    {
+      "name": "local drop accelerates down and lands upright",
+      "passed": true,
+      "detail": {
+        "speed": [
+          1,
+          3,
+          2,
+          5,
+          6,
+          8,
+          9,
+          10,
+          12,
+          14,
+          14,
+          17,
+          17,
+          19
+        ],
+        "landed": {
+          "kind": 1,
+          "type": 0,
+          "state": 0,
+          "timer": 34,
+          "x": 176,
+          "y": 286,
+          "z": 0,
+          "speed": 0,
+          "hp": 0,
+          "coll": 4,
+          "facing": 2
+        }
+      }
+    },
+    {
+      "name": "real graph edge reaches target",
+      "passed": true,
+      "detail": {
+        "node": 41,
+        "index": 1,
+        "target": 40,
+        "kind": 3,
+        "status": {
+          "state": 1,
+          "area": 3,
+          "cell": 20,
+          "node": 40,
+          "actor": {
+            "kind": 1,
+            "type": 0,
+            "state": 0,
+            "timer": 34,
+            "x": 176,
+            "y": 286,
+            "z": 0,
+            "speed": 0,
+            "hp": 0,
+            "coll": 4,
+            "facing": 2
+          },
+          "text": 0,
+          "rewards": 0,
+          "items": 67,
+          "hp": 22,
+          "bombs": 10,
+          "equip": [
+            0,
+            1,
+            5
+          ]
+        }
+      }
+    },
+    {
+      "name": "real task1 opens",
+      "passed": true,
+      "detail": {
+        "state": 1,
+        "area": 4,
+        "cell": 0,
+        "node": 40,
+        "actor": {
+          "kind": 1,
+          "type": 0,
+          "state": 0,
+          "timer": 0,
+          "x": 264,
+          "y": 334,
+          "z": 0,
+          "speed": 0,
+          "hp": 0,
+          "coll": 0,
+          "facing": 0
+        },
+        "text": 0,
+        "rewards": 0,
+        "items": 67,
+        "hp": 22,
+        "bombs": 10,
+        "equip": [
+          0,
+          1,
+          5
+        ]
+      }
+    },
+    {
+      "name": "first real trial earns Blightseeds",
+      "passed": true,
+      "detail": {
+        "state": 1,
+        "area": 3,
+        "cell": 20,
+        "node": 40,
+        "actor": {
+          "kind": 1,
+          "type": 0,
+          "state": 0,
+          "timer": 0,
+          "x": 136,
+          "y": 182,
+          "z": 0,
+          "speed": 0,
+          "hp": 0,
+          "coll": 0,
+          "facing": 2
+        },
+        "text": 0,
+        "rewards": 1,
+        "items": 67,
+        "hp": 22,
+        "bombs": 20,
+        "equip": [
+          0,
+          1,
+          5
+        ]
+      }
+    },
+    {
+      "name": "earned item is present in real satchel",
+      "passed": true,
+      "detail": {
+        "item": 7,
+        "possessions": [
+          1,
+          7,
+          13,
+          68,
+          75,
+          89
+        ]
+      }
+    },
+    {
+      "name": "real graph edge reaches target",
+      "passed": true,
+      "detail": {
+        "node": 40,
+        "index": 0,
+        "target": 41,
+        "kind": 2,
+        "status": {
+          "state": 1,
+          "area": 3,
+          "cell": 20,
+          "node": 41,
+          "actor": {
+            "kind": 1,
+            "type": 0,
+            "state": 0,
+            "timer": 0,
+            "x": 304,
+            "y": 147,
+            "z": 0,
+            "speed": 0,
+            "hp": 0,
+            "coll": 0,
+            "facing": 0
+          },
+          "text": 0,
+          "rewards": 1,
+          "items": 67,
+          "hp": 22,
+          "bombs": 20,
+          "equip": [
+            2,
+            1,
+            5
+          ]
+        }
+      }
+    },
+    {
+      "name": "real graph edge reaches target",
+      "passed": true,
+      "detail": {
+        "node": 41,
+        "index": 0,
+        "target": 30,
+        "kind": 2,
+        "status": {
+          "state": 1,
+          "area": 3,
+          "cell": 15,
+          "node": 30,
+          "actor": {
+            "kind": 1,
+            "type": 0,
+            "state": 0,
+            "timer": 0,
+            "x": 304,
+            "y": 362,
+            "z": 0,
+            "speed": 0,
+            "hp": 0,
+            "coll": 0,
+            "facing": 0
+          },
+          "text": 0,
+          "rewards": 1,
+          "items": 67,
+          "hp": 22,
+          "bombs": 20,
+          "equip": [
+            2,
+            1,
+            5
+          ]
+        }
+      }
+    },
+    {
+      "name": "real graph edge reaches target",
+      "passed": true,
+      "detail": {
+        "node": 30,
+        "index": 2,
+        "target": 31,
+        "kind": 2,
+        "status": {
+          "state": 1,
+          "area": 3,
+          "cell": 15,
+          "node": 31,
+          "actor": {
+            "kind": 1,
+            "type": 0,
+            "state": 0,
+            "timer": 0,
+            "x": 312,
+            "y": 133,
+            "z": 0,
+            "speed": 0,
+            "hp": 0,
+            "coll": 0,
+            "facing": 0
+          },
+          "text": 0,
+          "rewards": 1,
+          "items": 67,
+          "hp": 22,
+          "bombs": 20,
+          "equip": [
+            2,
+            1,
+            5
+          ]
+        }
+      }
+    },
+    {
+      "name": "real graph edge reaches target",
+      "passed": true,
+      "detail": {
+        "node": 31,
+        "index": 1,
+        "target": 33,
+        "kind": 1,
+        "status": {
+          "state": 1,
+          "area": 3,
+          "cell": 16,
+          "node": 33,
+          "actor": {
+            "kind": 1,
+            "type": 0,
+            "state": 0,
+            "timer": 0,
+            "x": 24,
+            "y": 78,
+            "z": 0,
+            "speed": 0,
+            "hp": 0,
+            "coll": 0,
+            "facing": 1
+          },
+          "text": 0,
+          "rewards": 1,
+          "items": 67,
+          "hp": 22,
+          "bombs": 20,
+          "equip": [
+            2,
+            1,
+            5
+          ]
+        }
+      }
+    },
+    {
+      "name": "real graph edge reaches target",
+      "passed": true,
+      "detail": {
+        "node": 33,
+        "index": 1,
+        "target": 22,
+        "kind": 2,
+        "status": {
+          "state": 1,
+          "area": 3,
+          "cell": 11,
+          "node": 22,
+          "actor": {
+            "kind": 1,
+            "type": 0,
+            "state": 0,
+            "timer": 0,
+            "x": 272,
+            "y": 362,
+            "z": 0,
+            "speed": 0,
+            "hp": 0,
+            "coll": 0,
+            "facing": 0
+          },
+          "text": 0,
+          "rewards": 1,
+          "items": 67,
+          "hp": 22,
+          "bombs": 20,
+          "equip": [
+            2,
+            1,
+            5
+          ]
+        }
+      }
+    },
+    {
+      "name": "real graph edge reaches target",
+      "passed": true,
+      "detail": {
+        "node": 22,
+        "index": 1,
+        "target": 23,
+        "kind": 2,
+        "status": {
+          "state": 1,
+          "area": 3,
+          "cell": 11,
+          "node": 23,
+          "actor": {
+            "kind": 1,
+            "type": 0,
+            "state": 0,
+            "timer": 0,
+            "x": 272,
+            "y": 147,
+            "z": 0,
+            "speed": 0,
+            "hp": 0,
+            "coll": 0,
+            "facing": 0
+          },
+          "text": 0,
+          "rewards": 1,
+          "items": 67,
+          "hp": 22,
+          "bombs": 20,
+          "equip": [
+            2,
+            1,
+            5
+          ]
+        }
+      }
+    },
+    {
+      "name": "real graph edge reaches target",
+      "passed": true,
+      "detail": {
+        "node": 23,
+        "index": 1,
+        "target": 25,
+        "kind": 1,
+        "status": {
+          "state": 1,
+          "area": 3,
+          "cell": 12,
+          "node": 25,
+          "actor": {
+            "kind": 1,
+            "type": 0,
+            "state": 0,
+            "timer": 0,
+            "x": 24,
+            "y": 110,
+            "z": 0,
+            "speed": 0,
+            "hp": 0,
+            "coll": 0,
+            "facing": 1
+          },
+          "text": 0,
+          "rewards": 1,
+          "items": 67,
+          "hp": 22,
+          "bombs": 20,
+          "equip": [
+            2,
+            1,
+            5
+          ]
+        }
+      }
+    },
+    {
+      "name": "real tool clears generated route barrier",
+      "passed": true,
+      "detail": {
+        "node": 25,
+        "edge": 1,
+        "require": 1,
+        "kind": 3,
+        "actor": {
+          "kind": 1,
+          "type": 0,
+          "state": 3,
+          "timer": 2,
+          "x": 448,
+          "y": 119,
+          "z": 0,
+          "speed": 0,
+          "hp": 0,
+          "coll": 0,
+          "facing": 2
+        },
+        "gate_type": 0
+      }
+    },
+    {
+      "name": "long drop renders every intervening actual room",
+      "passed": true,
+      "detail": {
+        "span": 2,
+        "cells": [
+          12,
+          17,
+          22
+        ]
+      }
+    },
+    {
+      "name": "long drop physically lands on its requested terrace",
+      "passed": true,
+      "detail": {
+        "target": 44,
+        "landed": {
+          "state": 1,
+          "area": 3,
+          "cell": 22,
+          "node": 44,
+          "actor": {
+            "kind": 1,
+            "type": 0,
+            "state": 0,
+            "timer": 0,
+            "x": 460,
+            "y": 302,
+            "z": 0,
+            "speed": 0,
+            "hp": 0,
+            "coll": 0,
+            "facing": 2
+          },
+          "text": 0,
+          "rewards": 1,
+          "items": 67,
+          "hp": 14,
+          "bombs": 19,
+          "equip": [
+            2,
+            1,
+            5
+          ]
+        }
+      }
+    },
+    {
+      "name": "real graph edge reaches target",
+      "passed": true,
+      "detail": {
+        "node": 25,
+        "index": 1,
+        "target": 44,
+        "kind": 3,
+        "status": {
+          "state": 1,
+          "area": 3,
+          "cell": 22,
+          "node": 44,
+          "actor": {
+            "kind": 1,
+            "type": 0,
+            "state": 0,
+            "timer": 0,
+            "x": 460,
+            "y": 302,
+            "z": 0,
+            "speed": 0,
+            "hp": 0,
+            "coll": 0,
+            "facing": 2
+          },
+          "text": 0,
+          "rewards": 1,
+          "items": 67,
+          "hp": 14,
+          "bombs": 19,
+          "equip": [
+            2,
+            1,
+            5
+          ]
+        }
+      }
+    },
+    {
+      "name": "real graph edge reaches target",
+      "passed": true,
+      "detail": {
+        "node": 44,
+        "index": 0,
+        "target": 46,
+        "kind": 1,
+        "status": {
+          "state": 1,
+          "area": 3,
+          "cell": 23,
+          "node": 46,
+          "actor": {
+            "kind": 1,
+            "type": 0,
+            "state": 0,
+            "timer": 0,
+            "x": 24,
+            "y": 334,
+            "z": 0,
+            "speed": 0,
+            "hp": 0,
+            "coll": 0,
+            "facing": 1
+          },
+          "text": 0,
+          "rewards": 1,
+          "items": 67,
+          "hp": 14,
+          "bombs": 19,
+          "equip": [
+            2,
+            1,
+            5
+          ]
+        }
+      }
+    },
+    {
+      "name": "real graph edge reaches target",
+      "passed": true,
+      "detail": {
+        "node": 46,
+        "index": 0,
+        "target": 48,
+        "kind": 1,
+        "status": {
+          "state": 1,
+          "area": 3,
+          "cell": 24,
+          "node": 48,
+          "actor": {
+            "kind": 1,
+            "type": 0,
+            "state": 0,
+            "timer": 0,
+            "x": 24,
+            "y": 302,
+            "z": 0,
+            "speed": 0,
+            "hp": 0,
+            "coll": 0,
+            "facing": 1
+          },
+          "text": 0,
+          "rewards": 1,
+          "items": 67,
+          "hp": 14,
+          "bombs": 19,
+          "equip": [
+            2,
+            1,
+            5
+          ]
+        }
+      }
+    },
+    {
+      "name": "real graph edge reaches target",
+      "passed": true,
+      "detail": {
+        "node": 48,
+        "index": 0,
+        "target": 49,
+        "kind": 2,
+        "status": {
+          "state": 1,
+          "area": 3,
+          "cell": 24,
+          "node": 49,
+          "actor": {
+            "kind": 1,
+            "type": 0,
+            "state": 0,
+            "timer": 0,
+            "x": 240,
+            "y": 147,
+            "z": 0,
+            "speed": 0,
+            "hp": 0,
+            "coll": 0,
+            "facing": 0
+          },
+          "text": 0,
+          "rewards": 1,
+          "items": 67,
+          "hp": 14,
+          "bombs": 19,
+          "equip": [
+            2,
+            1,
+            5
+          ]
+        }
+      }
+    },
+    {
+      "name": "real graph edge reaches target",
+      "passed": true,
+      "detail": {
+        "node": 49,
+        "index": 1,
+        "target": 38,
+        "kind": 2,
+        "status": {
+          "state": 1,
+          "area": 3,
+          "cell": 19,
+          "node": 38,
+          "actor": {
+            "kind": 1,
+            "type": 0,
+            "state": 0,
+            "timer": 0,
+            "x": 240,
+            "y": 362,
+            "z": 0,
+            "speed": 0,
+            "hp": 0,
+            "coll": 0,
+            "facing": 0
+          },
+          "text": 0,
+          "rewards": 1,
+          "items": 67,
+          "hp": 14,
+          "bombs": 19,
+          "equip": [
+            2,
+            1,
+            5
+          ]
+        }
+      }
+    },
+    {
+      "name": "real graph edge reaches target",
+      "passed": true,
+      "detail": {
+        "node": 38,
+        "index": 1,
+        "target": 39,
+        "kind": 2,
+        "status": {
+          "state": 1,
+          "area": 3,
+          "cell": 19,
+          "node": 39,
+          "actor": {
+            "kind": 1,
+            "type": 0,
+            "state": 0,
+            "timer": 0,
+            "x": 240,
+            "y": 131,
+            "z": 0,
+            "speed": 0,
+            "hp": 0,
+            "coll": 0,
+            "facing": 0
+          },
+          "text": 0,
+          "rewards": 1,
+          "items": 67,
+          "hp": 14,
+          "bombs": 19,
+          "equip": [
+            2,
+            1,
+            5
+          ]
+        }
+      }
+    },
+    {
+      "name": "real task2 opens",
+      "passed": true,
+      "detail": {
+        "state": 1,
+        "area": 4,
+        "cell": 0,
+        "node": 39,
+        "actor": {
+          "kind": 1,
+          "type": 0,
+          "state": 0,
+          "timer": 0,
+          "x": 264,
+          "y": 334,
+          "z": 0,
+          "speed": 0,
+          "hp": 0,
+          "coll": 0,
+          "facing": 0
+        },
+        "text": 0,
+        "rewards": 1,
+        "items": 67,
+        "hp": 14,
+        "bombs": 19,
+        "equip": [
+          2,
+          1,
+          5
+        ]
+      }
+    },
+    {
+      "name": "trial2-wave defeated by actual attacks",
+      "passed": true,
+      "detail": {
+        "hits": [
+          {
+            "iteration": 0,
+            "type": 13,
+            "before": 2,
+            "after": 4
+          },
+          {
+            "iteration": 1,
+            "type": 17,
+            "before": 4,
+            "after": 2
+          },
+          {
+            "iteration": 2,
+            "type": 17,
+            "before": 2,
+            "after": 4
+          },
+          {
+            "iteration": 3,
+            "type": 17,
+            "before": 4,
+            "after": 2
+          },
+          {
+            "iteration": 4,
+            "type": 17,
+            "before": 2,
+            "after": 4
+          },
+          {
+            "iteration": 5,
+            "type": 18,
+            "before": 4,
+            "after": 2
+          },
+          {
+            "iteration": 6,
+            "type": 18,
+            "before": 2,
+            "after": 0
+          },
+          {
+            "iteration": 8,
+            "type": 15,
+            "before": 2,
+            "after": 1
+          },
+          {
+            "iteration": 9,
+            "type": 14,
+            "before": 1,
+            "after": 2
+          },
+          {
+            "iteration": 10,
+            "type": 15,
+            "before": 2,
+            "after": 0
+          },
+          {
+            "iteration": 11,
+            "type": 11,
+            "before": 1,
+            "after": 0
+          },
+          {
+            "iteration": 13,
+            "type": 15,
+            "before": 2,
+            "after": 0
+          },
+          {
+            "iteration": 14,
+            "type": 15,
+            "before": 2,
+            "after": 0
+          },
+          {
+            "iteration": 15,
+            "type": 15,
+            "before": 2,
+            "after": 0
+          }
+        ],
+        "remaining": [
+          [
+            2,
+            {
+              "kind": 2,
+              "type": 15,
+              "state": 1,
+              "timer": 9,
+              "x": 95,
+              "y": 302,
+              "z": 0,
+              "speed": 96,
+              "hp": 2,
+              "coll": 0,
+              "facing": 1
+            }
+          ],
+          [
+            4,
+            {
+              "kind": 2,
+              "type": 15,
+              "state": 1,
+              "timer": 29,
+              "x": 423,
+              "y": 78,
+              "z": 0,
+              "speed": 96,
+              "hp": 2,
+              "coll": 0,
+              "facing": 3
+            }
+          ],
+          [
+            12,
+            {
+              "kind": 2,
+              "type": 15,
+              "state": 1,
+              "timer": 10,
+              "x": 115,
+              "y": 165,
+              "z": 0,
+              "speed": 96,
+              "hp": 2,
+              "coll": 0,
+              "facing": 2
+            }
+          ]
+        ],
+        "status": {
+          "state": 1,
+          "area": 4,
+          "cell": 0,
+          "node": 39,
+          "actor": {
+            "kind": 1,
+            "type": 0,
+            "state": 0,
+            "timer": 18,
+            "x": 307,
+            "y": 190,
+            "z": 0,
+            "speed": 0,
+            "hp": 0,
+            "coll": 0,
+            "facing": 1
+          },
+          "text": 0,
+          "rewards": 1,
+          "items": 67,
+          "hp": 24,
+          "bombs": 25,
+          "equip": [
+            2,
+            1,
+            5
+          ]
+        }
+      }
+    },
+    {
+      "name": "second real trial earns Lamp",
+      "passed": true,
+      "detail": {
+        "state": 1,
+        "area": 3,
+        "cell": 19,
+        "node": 39,
+        "actor": {
+          "kind": 1,
+          "type": 0,
+          "state": 0,
+          "timer": 0,
+          "x": 232,
+          "y": 118,
+          "z": 0,
+          "speed": 0,
+          "hp": 0,
+          "coll": 0,
+          "facing": 0
+        },
+        "text": 0,
+        "rewards": 3,
+        "items": 71,
+        "hp": 24,
+        "bombs": 25,
+        "equip": [
+          2,
+          1,
+          5
+        ]
+      }
+    },
+    {
+      "name": "real graph edge reaches target",
+      "passed": true,
+      "detail": {
+        "node": 39,
+        "index": 0,
+        "target": 38,
+        "kind": 3,
+        "status": {
+          "state": 1,
+          "area": 3,
+          "cell": 19,
+          "node": 38,
+          "actor": {
+            "kind": 1,
+            "type": 0,
+            "state": 0,
+            "timer": 34,
+            "x": 176,
+            "y": 302,
+            "z": 0,
+            "speed": 0,
+            "hp": 0,
+            "coll": 4,
+            "facing": 2
+          },
+          "text": 0,
+          "rewards": 3,
+          "items": 71,
+          "hp": 22,
+          "bombs": 25,
+          "equip": [
+            2,
+            1,
+            5
+          ]
+        }
+      }
+    },
+    {
+      "name": "real graph edge reaches target",
+      "passed": true,
+      "detail": {
+        "node": 38,
+        "index": 0,
+        "target": 49,
+        "kind": 3,
+        "status": {
+          "state": 1,
+          "area": 3,
+          "cell": 24,
+          "node": 49,
+          "actor": {
+            "kind": 1,
+            "type": 0,
+            "state": 0,
+            "timer": 34,
+            "x": 240,
+            "y": 78,
+            "z": 0,
+            "speed": 0,
+            "hp": 0,
+            "coll": 0,
+            "facing": 2
+          },
+          "text": 0,
+          "rewards": 3,
+          "items": 71,
+          "hp": 22,
+          "bombs": 25,
+          "equip": [
+            2,
+            1,
+            5
+          ]
+        }
+      }
+    },
+    {
+      "name": "real graph edge reaches target",
+      "passed": true,
+      "detail": {
+        "node": 49,
+        "index": 0,
+        "target": 47,
+        "kind": 1,
+        "status": {
+          "state": 1,
+          "area": 3,
+          "cell": 23,
+          "node": 47,
+          "actor": {
+            "kind": 1,
+            "type": 0,
+            "state": 0,
+            "timer": 0,
+            "x": 488,
+            "y": 94,
+            "z": 0,
+            "speed": 0,
+            "hp": 0,
+            "coll": 0,
+            "facing": 3
+          },
+          "text": 0,
+          "rewards": 3,
+          "items": 71,
+          "hp": 22,
+          "bombs": 25,
+          "equip": [
+            2,
+            1,
+            5
+          ]
+        }
+      }
+    },
+    {
+      "name": "real graph edge reaches target",
+      "passed": true,
+      "detail": {
+        "node": 47,
+        "index": 0,
+        "target": 45,
+        "kind": 1,
+        "status": {
+          "state": 1,
+          "area": 3,
+          "cell": 22,
+          "node": 45,
+          "actor": {
+            "kind": 1,
+            "type": 0,
+            "state": 0,
+            "timer": 0,
+            "x": 488,
+            "y": 78,
+            "z": 0,
+            "speed": 0,
+            "hp": 0,
+            "coll": 0,
+            "facing": 3
+          },
+          "text": 0,
+          "rewards": 3,
+          "items": 71,
+          "hp": 22,
+          "bombs": 25,
+          "equip": [
+            2,
+            1,
+            5
+          ]
+        }
+      }
+    },
+    {
+      "name": "earned item is present in real satchel",
+      "passed": true,
+      "detail": {
+        "item": 15,
+        "possessions": [
+          1,
+          7,
+          13,
+          15,
+          68,
+          75,
+          89
+        ]
+      }
+    },
+    {
+      "name": "real tool clears generated route barrier",
+      "passed": true,
+      "detail": {
+        "node": 45,
+        "edge": 2,
+        "require": 3,
+        "kind": 4,
+        "actor": {
+          "kind": 1,
+          "type": 0,
+          "state": 0,
+          "timer": 0,
+          "x": 112,
+          "y": 126,
+          "z": 0,
+          "speed": 0,
+          "hp": 0,
+          "coll": 0,
+          "facing": 0
+        },
+        "gate_type": 24
+      }
+    },
+    {
+      "name": "real graph edge reaches target",
+      "passed": true,
+      "detail": {
+        "node": 45,
+        "index": 2,
+        "target": 36,
+        "kind": 4,
+        "status": {
+          "state": 1,
+          "area": 3,
+          "cell": 18,
+          "node": 36,
+          "actor": {
+            "kind": 1,
+            "type": 0,
+            "state": 0,
+            "timer": 0,
+            "x": 112,
+            "y": 350,
+            "z": 0,
+            "speed": 0,
+            "hp": 0,
+            "coll": 0,
+            "facing": 2
+          },
+          "text": 0,
+          "rewards": 3,
+          "items": 71,
+          "hp": 22,
+          "bombs": 25,
+          "equip": [
+            3,
+            1,
+            5
+          ]
+        }
+      }
+    },
+    {
+      "name": "real graph edge reaches target",
+      "passed": true,
+      "detail": {
+        "node": 36,
+        "index": 0,
+        "target": 37,
+        "kind": 2,
+        "status": {
+          "state": 1,
+          "area": 3,
+          "cell": 18,
+          "node": 37,
+          "actor": {
+            "kind": 1,
+            "type": 0,
+            "state": 0,
+            "timer": 0,
+            "x": 304,
+            "y": 147,
+            "z": 0,
+            "speed": 0,
+            "hp": 0,
+            "coll": 0,
+            "facing": 0
+          },
+          "text": 0,
+          "rewards": 3,
+          "items": 71,
+          "hp": 22,
+          "bombs": 25,
+          "equip": [
+            3,
+            1,
+            5
+          ]
+        }
+      }
+    },
+    {
+      "name": "real graph edge reaches target",
+      "passed": true,
+      "detail": {
+        "node": 37,
+        "index": 0,
+        "target": 26,
+        "kind": 2,
+        "status": {
+          "state": 1,
+          "area": 3,
+          "cell": 13,
+          "node": 26,
+          "actor": {
+            "kind": 1,
+            "type": 0,
+            "state": 0,
+            "timer": 0,
+            "x": 304,
+            "y": 362,
+            "z": 0,
+            "speed": 0,
+            "hp": 0,
+            "coll": 0,
+            "facing": 0
+          },
+          "text": 0,
+          "rewards": 3,
+          "items": 71,
+          "hp": 22,
+          "bombs": 25,
+          "equip": [
+            3,
+            1,
+            5
+          ]
+        }
+      }
+    },
+    {
+      "name": "real graph edge reaches target",
+      "passed": true,
+      "detail": {
+        "node": 26,
+        "index": 1,
+        "target": 27,
+        "kind": 2,
+        "status": {
+          "state": 1,
+          "area": 3,
+          "cell": 13,
+          "node": 27,
+          "actor": {
+            "kind": 1,
+            "type": 0,
+            "state": 0,
+            "timer": 0,
+            "x": 304,
+            "y": 147,
+            "z": 0,
+            "speed": 0,
+            "hp": 0,
+            "coll": 0,
+            "facing": 0
+          },
+          "text": 0,
+          "rewards": 3,
+          "items": 71,
+          "hp": 22,
+          "bombs": 25,
+          "equip": [
+            3,
+            1,
+            5
+          ]
+        }
+      }
+    },
+    {
+      "name": "real task3 opens",
+      "passed": true,
+      "detail": {
+        "state": 1,
+        "area": 4,
+        "cell": 0,
+        "node": 27,
+        "actor": {
+          "kind": 1,
+          "type": 0,
+          "state": 0,
+          "timer": 0,
+          "x": 264,
+          "y": 334,
+          "z": 0,
+          "speed": 0,
+          "hp": 0,
+          "coll": 0,
+          "facing": 0
+        },
+        "text": 0,
+        "rewards": 3,
+        "items": 71,
+        "hp": 22,
+        "bombs": 25,
+        "equip": [
+          3,
+          1,
+          5
+        ]
+      }
+    },
+    {
+      "name": "trial3-darknut defeated by actual attacks",
+      "passed": true,
+      "detail": {
+        "hits": [
+          {
+            "iteration": 9,
+            "type": 74,
+            "before": 12,
+            "after": 10
+          },
+          {
+            "iteration": 10,
+            "type": 74,
+            "before": 10,
+            "after": 8
+          },
+          {
+            "iteration": 11,
+            "type": 74,
+            "before": 8,
+            "after": 6
+          },
+          {
+            "iteration": 16,
+            "type": 74,
+            "before": 6,
+            "after": 4
+          },
+          {
+            "iteration": 17,
+            "type": 74,
+            "before": 4,
+            "after": 2
+          },
+          {
+            "iteration": 18,
+            "type": 74,
+            "before": 2,
+            "after": 0
+          }
+        ],
+        "remaining": [],
+        "status": {
+          "state": 1,
+          "area": 4,
+          "cell": 0,
+          "node": 27,
+          "actor": {
+            "kind": 1,
+            "type": 0,
+            "state": 0,
+            "timer": 18,
+            "x": 124,
+            "y": 270,
+            "z": 0,
+            "speed": 0,
+            "hp": 0,
+            "coll": 0,
+            "facing": 1
+          },
+          "text": 0,
+          "rewards": 3,
+          "items": 71,
+          "hp": 18,
+          "bombs": 25,
+          "equip": [
+            3,
+            1,
+            5
+          ]
+        }
+      }
+    },
+    {
+      "name": "third real trial earns Cape and Pacci",
+      "passed": true,
+      "detail": {
+        "state": 1,
+        "area": 3,
+        "cell": 13,
+        "node": 27,
+        "actor": {
+          "kind": 1,
+          "type": 0,
+          "state": 0,
+          "timer": 0,
+          "x": 120,
+          "y": 182,
+          "z": 0,
+          "speed": 0,
+          "hp": 0,
+          "coll": 0,
+          "facing": 0
+        },
+        "text": 0,
+        "rewards": 7,
+        "items": 79,
+        "hp": 18,
+        "bombs": 25,
+        "equip": [
+          3,
+          1,
+          5
+        ]
+      }
+    },
+    {
+      "name": "real graph edge reaches target",
+      "passed": true,
+      "detail": {
+        "node": 27,
+        "index": 0,
+        "target": 26,
+        "kind": 3,
+        "status": {
+          "state": 1,
+          "area": 3,
+          "cell": 13,
+          "node": 26,
+          "actor": {
+            "kind": 1,
+            "type": 0,
+            "state": 0,
+            "timer": 34,
+            "x": 176,
+            "y": 302,
+            "z": 0,
+            "speed": 0,
+            "hp": 0,
+            "coll": 4,
+            "facing": 2
+          },
+          "text": 0,
+          "rewards": 7,
+          "items": 79,
+          "hp": 16,
+          "bombs": 25,
+          "equip": [
+            3,
+            1,
+            5
+          ]
+        }
+      }
+    },
+    {
+      "name": "real graph edge reaches target",
+      "passed": true,
+      "detail": {
+        "node": 26,
+        "index": 0,
+        "target": 28,
+        "kind": 1,
+        "status": {
+          "state": 1,
+          "area": 3,
+          "cell": 14,
+          "node": 28,
+          "actor": {
+            "kind": 1,
+            "type": 0,
+            "state": 0,
+            "timer": 0,
+            "x": 24,
+            "y": 334,
+            "z": 0,
+            "speed": 0,
+            "hp": 0,
+            "coll": 0,
+            "facing": 1
+          },
+          "text": 0,
+          "rewards": 7,
+          "items": 79,
+          "hp": 16,
+          "bombs": 25,
+          "equip": [
+            3,
+            1,
+            5
+          ]
+        }
+      }
+    },
+    {
+      "name": "real graph edge reaches target",
+      "passed": true,
+      "detail": {
+        "node": 28,
+        "index": 0,
+        "target": 29,
+        "kind": 2,
+        "status": {
+          "state": 1,
+          "area": 3,
+          "cell": 14,
+          "node": 29,
+          "actor": {
+            "kind": 1,
+            "type": 0,
+            "state": 0,
+            "timer": 0,
+            "x": 240,
+            "y": 131,
+            "z": 0,
+            "speed": 0,
+            "hp": 0,
+            "coll": 0,
+            "facing": 0
+          },
+          "text": 0,
+          "rewards": 7,
+          "items": 79,
+          "hp": 16,
+          "bombs": 25,
+          "equip": [
+            3,
+            1,
+            5
+          ]
+        }
+      }
+    },
+    {
+      "name": "real graph edge reaches target",
+      "passed": true,
+      "detail": {
+        "node": 29,
+        "index": 0,
+        "target": 18,
+        "kind": 2,
+        "status": {
+          "state": 1,
+          "area": 3,
+          "cell": 9,
+          "node": 18,
+          "actor": {
+            "kind": 1,
+            "type": 0,
+            "state": 0,
+            "timer": 0,
+            "x": 240,
+            "y": 362,
+            "z": 0,
+            "speed": 0,
+            "hp": 0,
+            "coll": 0,
+            "facing": 0
+          },
+          "text": 0,
+          "rewards": 7,
+          "items": 79,
+          "hp": 16,
+          "bombs": 25,
+          "equip": [
+            3,
+            1,
+            5
+          ]
+        }
+      }
+    },
+    {
+      "name": "real graph edge reaches target",
+      "passed": true,
+      "detail": {
+        "node": 18,
+        "index": 0,
+        "target": 16,
+        "kind": 1,
+        "status": {
+          "state": 1,
+          "area": 3,
+          "cell": 8,
+          "node": 16,
+          "actor": {
+            "kind": 1,
+            "type": 0,
+            "state": 0,
+            "timer": 0,
+            "x": 488,
+            "y": 350,
+            "z": 0,
+            "speed": 0,
+            "hp": 0,
+            "coll": 0,
+            "facing": 3
+          },
+          "text": 0,
+          "rewards": 7,
+          "items": 79,
+          "hp": 16,
+          "bombs": 25,
+          "equip": [
+            3,
+            1,
+            5
+          ]
+        }
+      }
+    },
+    {
+      "name": "real graph edge reaches target",
+      "passed": true,
+      "detail": {
+        "node": 16,
+        "index": 0,
+        "target": 17,
+        "kind": 2,
+        "status": {
+          "state": 1,
+          "area": 3,
+          "cell": 8,
+          "node": 17,
+          "actor": {
+            "kind": 1,
+            "type": 0,
+            "state": 0,
+            "timer": 0,
+            "x": 304,
+            "y": 147,
+            "z": 0,
+            "speed": 0,
+            "hp": 0,
+            "coll": 0,
+            "facing": 0
+          },
+          "text": 0,
+          "rewards": 7,
+          "items": 79,
+          "hp": 16,
+          "bombs": 25,
+          "equip": [
+            3,
+            1,
+            5
+          ]
+        }
+      }
+    },
+    {
+      "name": "real graph edge reaches target",
+      "passed": true,
+      "detail": {
+        "node": 17,
+        "index": 0,
+        "target": 6,
+        "kind": 2,
+        "status": {
+          "state": 1,
+          "area": 3,
+          "cell": 3,
+          "node": 6,
+          "actor": {
+            "kind": 1,
+            "type": 0,
+            "state": 0,
+            "timer": 0,
+            "x": 304,
+            "y": 362,
+            "z": 0,
+            "speed": 0,
+            "hp": 0,
+            "coll": 0,
+            "facing": 0
+          },
+          "text": 0,
+          "rewards": 7,
+          "items": 79,
+          "hp": 16,
+          "bombs": 25,
+          "equip": [
+            3,
+            1,
+            5
+          ]
+        }
+      }
+    },
+    {
+      "name": "real graph edge reaches target",
+      "passed": true,
+      "detail": {
+        "node": 6,
+        "index": 0,
+        "target": 7,
+        "kind": 2,
+        "status": {
+          "state": 1,
+          "area": 3,
+          "cell": 3,
+          "node": 7,
+          "actor": {
+            "kind": 1,
+            "type": 0,
+            "state": 0,
+            "timer": 0,
+            "x": 304,
+            "y": 195,
+            "z": 0,
+            "speed": 0,
+            "hp": 0,
+            "coll": 0,
+            "facing": 0
+          },
+          "text": 0,
+          "rewards": 7,
+          "items": 79,
+          "hp": 16,
+          "bombs": 25,
+          "equip": [
+            3,
+            1,
+            5
+          ]
+        }
+      }
+    },
+    {
+      "name": "real route reaches peak with three earned gifts",
+      "passed": true,
+      "detail": {
+        "state": 1,
+        "area": 3,
+        "cell": 3,
+        "node": 7,
+        "actor": {
+          "kind": 1,
+          "type": 0,
+          "state": 0,
+          "timer": 0,
+          "x": 304,
+          "y": 195,
+          "z": 0,
+          "speed": 0,
+          "hp": 0,
+          "coll": 0,
+          "facing": 0
+        },
+        "text": 0,
+        "rewards": 7,
+        "items": 79,
+        "hp": 16,
+        "bombs": 25,
+        "equip": [
+          3,
+          1,
+          5
+        ]
+      }
+    },
+    {
+      "name": "earned item is present in real satchel",
+      "passed": true,
+      "detail": {
+        "item": 18,
+        "possessions": [
+          1,
+          7,
+          13,
+          15,
+          18,
+          20,
+          68,
+          75,
+          89
+        ]
+      }
+    },
+    {
+      "name": "Pacci genuinely opens the painted peak head",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Bloom genuinely mounts the exposed back",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "peak defeated through actual Pacci and raised sword hits",
+      "passed": true,
+      "detail": {
+        "status": {
+          "state": 6,
+          "area": 3,
+          "cell": 3,
+          "node": 7,
+          "actor": {
+            "kind": 1,
+            "type": 0,
+            "state": 2,
+            "timer": 4,
+            "x": 264,
+            "y": 165,
+            "z": 16,
+            "speed": 0,
+            "hp": 0,
+            "coll": 0,
+            "facing": 0
+          },
+          "text": 0,
+          "rewards": 7,
+          "items": 79,
+          "hp": 16,
+          "bombs": 25,
+          "equip": [
+            14,
+            1,
+            5
+          ]
+        },
+        "trace": [
+          {
+            "attack": 0,
+            "before": {
+              "kind": 2,
+              "type": 83,
+              "state": 1,
+              "timer": 22,
+              "x": 264,
+              "y": 160,
+              "z": 0,
+              "speed": 96,
+              "hp": 32,
+              "coll": 0,
+              "facing": 0
+            },
+            "after": {
+              "kind": 2,
+              "type": 83,
+              "state": 7,
+              "timer": 194,
+              "x": 264,
+              "y": 157,
+              "z": 0,
+              "speed": 96,
+              "hp": 32,
+              "coll": 0,
+              "facing": 0
+            },
+            "player": {
+              "kind": 1,
+              "type": 0,
+              "state": 0,
+              "timer": 0,
+              "x": 265,
+              "y": 92,
+              "z": 0,
+              "speed": 0,
+              "hp": 0,
+              "coll": 0,
+              "facing": 2
+            },
+            "health": 16
+          },
+          {
+            "attack": 1,
+            "before": {
+              "kind": 2,
+              "type": 83,
+              "state": 7,
+              "timer": 194,
+              "x": 264,
+              "y": 157,
+              "z": 0,
+              "speed": 96,
+              "hp": 32,
+              "coll": 0,
+              "facing": 0
+            },
+            "after": {
+              "kind": 2,
+              "type": 83,
+              "state": 7,
+              "timer": 131,
+              "x": 264,
+              "y": 157,
+              "z": 0,
+              "speed": 96,
+              "hp": 30,
+              "coll": 0,
+              "facing": 0
+            },
+            "player": {
+              "kind": 1,
+              "type": 0,
+              "state": 0,
+              "timer": 18,
+              "x": 264,
+              "y": 165,
+              "z": 16,
+              "speed": 0,
+              "hp": 0,
+              "coll": 0,
+              "facing": 0
+            },
+            "health": 16
+          },
+          {
+            "attack": 2,
+            "before": {
+              "kind": 2,
+              "type": 83,
+              "state": 7,
+              "timer": 131,
+              "x": 264,
+              "y": 157,
+              "z": 0,
+              "speed": 96,
+              "hp": 30,
+              "coll": 0,
+              "facing": 0
+            },
+            "after": {
+              "kind": 2,
+              "type": 83,
+              "state": 7,
+              "timer": 131,
+              "x": 264,
+              "y": 157,
+              "z": 0,
+              "speed": 96,
+              "hp": 28,
+              "coll": 0,
+              "facing": 0
+            },
+            "player": {
+              "kind": 1,
+              "type": 0,
+              "state": 0,
+              "timer": 18,
+              "x": 264,
+              "y": 165,
+              "z": 16,
+              "speed": 0,
+              "hp": 0,
+              "coll": 0,
+              "facing": 0
+            },
+            "health": 16
+          },
+          {
+            "attack": 3,
+            "before": {
+              "kind": 2,
+              "type": 83,
+              "state": 7,
+              "timer": 131,
+              "x": 264,
+              "y": 157,
+              "z": 0,
+              "speed": 96,
+              "hp": 28,
+              "coll": 0,
+              "facing": 0
+            },
+            "after": {
+              "kind": 2,
+              "type": 83,
+              "state": 7,
+              "timer": 131,
+              "x": 264,
+              "y": 157,
+              "z": 0,
+              "speed": 96,
+              "hp": 26,
+              "coll": 0,
+              "facing": 0
+            },
+            "player": {
+              "kind": 1,
+              "type": 0,
+              "state": 0,
+              "timer": 18,
+              "x": 264,
+              "y": 165,
+              "z": 16,
+              "speed": 0,
+              "hp": 0,
+              "coll": 0,
+              "facing": 0
+            },
+            "health": 16
+          },
+          {
+            "attack": 4,
+            "before": {
+              "kind": 2,
+              "type": 83,
+              "state": 7,
+              "timer": 131,
+              "x": 264,
+              "y": 157,
+              "z": 0,
+              "speed": 96,
+              "hp": 26,
+              "coll": 0,
+              "facing": 0
+            },
+            "after": {
+              "kind": 2,
+              "type": 83,
+              "state": 7,
+              "timer": 131,
+              "x": 264,
+              "y": 157,
+              "z": 0,
+              "speed": 96,
+              "hp": 24,
+              "coll": 0,
+              "facing": 0
+            },
+            "player": {
+              "kind": 1,
+              "type": 0,
+              "state": 0,
+              "timer": 18,
+              "x": 264,
+              "y": 165,
+              "z": 16,
+              "speed": 0,
+              "hp": 0,
+              "coll": 0,
+              "facing": 0
+            },
+            "health": 16
+          },
+          {
+            "attack": 5,
+            "before": {
+              "kind": 2,
+              "type": 83,
+              "state": 7,
+              "timer": 131,
+              "x": 264,
+              "y": 157,
+              "z": 0,
+              "speed": 96,
+              "hp": 24,
+              "coll": 0,
+              "facing": 0
+            },
+            "after": {
+              "kind": 2,
+              "type": 83,
+              "state": 7,
+              "timer": 131,
+              "x": 264,
+              "y": 157,
+              "z": 0,
+              "speed": 96,
+              "hp": 22,
+              "coll": 0,
+              "facing": 0
+            },
+            "player": {
+              "kind": 1,
+              "type": 0,
+              "state": 0,
+              "timer": 18,
+              "x": 264,
+              "y": 165,
+              "z": 16,
+              "speed": 0,
+              "hp": 0,
+              "coll": 0,
+              "facing": 0
+            },
+            "health": 16
+          },
+          {
+            "attack": 6,
+            "before": {
+              "kind": 2,
+              "type": 83,
+              "state": 7,
+              "timer": 131,
+              "x": 264,
+              "y": 157,
+              "z": 0,
+              "speed": 96,
+              "hp": 22,
+              "coll": 0,
+              "facing": 0
+            },
+            "after": {
+              "kind": 2,
+              "type": 83,
+              "state": 7,
+              "timer": 131,
+              "x": 264,
+              "y": 157,
+              "z": 0,
+              "speed": 96,
+              "hp": 20,
+              "coll": 0,
+              "facing": 0
+            },
+            "player": {
+              "kind": 1,
+              "type": 0,
+              "state": 0,
+              "timer": 18,
+              "x": 264,
+              "y": 165,
+              "z": 16,
+              "speed": 0,
+              "hp": 0,
+              "coll": 0,
+              "facing": 0
+            },
+            "health": 16
+          },
+          {
+            "attack": 7,
+            "before": {
+              "kind": 2,
+              "type": 83,
+              "state": 7,
+              "timer": 131,
+              "x": 264,
+              "y": 157,
+              "z": 0,
+              "speed": 96,
+              "hp": 20,
+              "coll": 0,
+              "facing": 0
+            },
+            "after": {
+              "kind": 2,
+              "type": 83,
+              "state": 7,
+              "timer": 131,
+              "x": 264,
+              "y": 157,
+              "z": 0,
+              "speed": 96,
+              "hp": 18,
+              "coll": 0,
+              "facing": 0
+            },
+            "player": {
+              "kind": 1,
+              "type": 0,
+              "state": 0,
+              "timer": 18,
+              "x": 264,
+              "y": 165,
+              "z": 16,
+              "speed": 0,
+              "hp": 0,
+              "coll": 0,
+              "facing": 0
+            },
+            "health": 16
+          },
+          {
+            "attack": 8,
+            "before": {
+              "kind": 2,
+              "type": 83,
+              "state": 7,
+              "timer": 131,
+              "x": 264,
+              "y": 157,
+              "z": 0,
+              "speed": 96,
+              "hp": 18,
+              "coll": 0,
+              "facing": 0
+            },
+            "after": {
+              "kind": 2,
+              "type": 83,
+              "state": 7,
+              "timer": 131,
+              "x": 264,
+              "y": 157,
+              "z": 0,
+              "speed": 96,
+              "hp": 16,
+              "coll": 0,
+              "facing": 0
+            },
+            "player": {
+              "kind": 1,
+              "type": 0,
+              "state": 0,
+              "timer": 18,
+              "x": 264,
+              "y": 165,
+              "z": 16,
+              "speed": 0,
+              "hp": 0,
+              "coll": 0,
+              "facing": 0
+            },
+            "health": 16
+          },
+          {
+            "attack": 9,
+            "before": {
+              "kind": 2,
+              "type": 83,
+              "state": 7,
+              "timer": 131,
+              "x": 264,
+              "y": 157,
+              "z": 0,
+              "speed": 96,
+              "hp": 16,
+              "coll": 0,
+              "facing": 0
+            },
+            "after": {
+              "kind": 2,
+              "type": 83,
+              "state": 7,
+              "timer": 131,
+              "x": 264,
+              "y": 157,
+              "z": 0,
+              "speed": 96,
+              "hp": 14,
+              "coll": 0,
+              "facing": 0
+            },
+            "player": {
+              "kind": 1,
+              "type": 0,
+              "state": 0,
+              "timer": 18,
+              "x": 264,
+              "y": 165,
+              "z": 16,
+              "speed": 0,
+              "hp": 0,
+              "coll": 0,
+              "facing": 0
+            },
+            "health": 16
+          },
+          {
+            "attack": 10,
+            "before": {
+              "kind": 2,
+              "type": 83,
+              "state": 7,
+              "timer": 131,
+              "x": 264,
+              "y": 157,
+              "z": 0,
+              "speed": 96,
+              "hp": 14,
+              "coll": 0,
+              "facing": 0
+            },
+            "after": {
+              "kind": 2,
+              "type": 83,
+              "state": 7,
+              "timer": 131,
+              "x": 264,
+              "y": 157,
+              "z": 0,
+              "speed": 96,
+              "hp": 12,
+              "coll": 0,
+              "facing": 0
+            },
+            "player": {
+              "kind": 1,
+              "type": 0,
+              "state": 0,
+              "timer": 18,
+              "x": 264,
+              "y": 165,
+              "z": 16,
+              "speed": 0,
+              "hp": 0,
+              "coll": 0,
+              "facing": 0
+            },
+            "health": 16
+          },
+          {
+            "attack": 11,
+            "before": {
+              "kind": 2,
+              "type": 83,
+              "state": 7,
+              "timer": 131,
+              "x": 264,
+              "y": 157,
+              "z": 0,
+              "speed": 96,
+              "hp": 12,
+              "coll": 0,
+              "facing": 0
+            },
+            "after": {
+              "kind": 2,
+              "type": 83,
+              "state": 7,
+              "timer": 131,
+              "x": 264,
+              "y": 157,
+              "z": 0,
+              "speed": 96,
+              "hp": 10,
+              "coll": 0,
+              "facing": 0
+            },
+            "player": {
+              "kind": 1,
+              "type": 0,
+              "state": 0,
+              "timer": 18,
+              "x": 264,
+              "y": 165,
+              "z": 16,
+              "speed": 0,
+              "hp": 0,
+              "coll": 0,
+              "facing": 0
+            },
+            "health": 16
+          },
+          {
+            "attack": 12,
+            "before": {
+              "kind": 2,
+              "type": 83,
+              "state": 7,
+              "timer": 131,
+              "x": 264,
+              "y": 157,
+              "z": 0,
+              "speed": 96,
+              "hp": 10,
+              "coll": 0,
+              "facing": 0
+            },
+            "after": {
+              "kind": 2,
+              "type": 83,
+              "state": 7,
+              "timer": 131,
+              "x": 264,
+              "y": 157,
+              "z": 0,
+              "speed": 96,
+              "hp": 8,
+              "coll": 0,
+              "facing": 0
+            },
+            "player": {
+              "kind": 1,
+              "type": 0,
+              "state": 0,
+              "timer": 18,
+              "x": 264,
+              "y": 165,
+              "z": 16,
+              "speed": 0,
+              "hp": 0,
+              "coll": 0,
+              "facing": 0
+            },
+            "health": 16
+          },
+          {
+            "attack": 13,
+            "before": {
+              "kind": 2,
+              "type": 83,
+              "state": 7,
+              "timer": 131,
+              "x": 264,
+              "y": 157,
+              "z": 0,
+              "speed": 96,
+              "hp": 8,
+              "coll": 0,
+              "facing": 0
+            },
+            "after": {
+              "kind": 2,
+              "type": 83,
+              "state": 7,
+              "timer": 131,
+              "x": 264,
+              "y": 157,
+              "z": 0,
+              "speed": 96,
+              "hp": 6,
+              "coll": 0,
+              "facing": 0
+            },
+            "player": {
+              "kind": 1,
+              "type": 0,
+              "state": 0,
+              "timer": 18,
+              "x": 264,
+              "y": 165,
+              "z": 16,
+              "speed": 0,
+              "hp": 0,
+              "coll": 0,
+              "facing": 0
+            },
+            "health": 16
+          },
+          {
+            "attack": 14,
+            "before": {
+              "kind": 2,
+              "type": 83,
+              "state": 7,
+              "timer": 131,
+              "x": 264,
+              "y": 157,
+              "z": 0,
+              "speed": 96,
+              "hp": 6,
+              "coll": 0,
+              "facing": 0
+            },
+            "after": {
+              "kind": 2,
+              "type": 83,
+              "state": 7,
+              "timer": 131,
+              "x": 264,
+              "y": 157,
+              "z": 0,
+              "speed": 96,
+              "hp": 4,
+              "coll": 0,
+              "facing": 0
+            },
+            "player": {
+              "kind": 1,
+              "type": 0,
+              "state": 0,
+              "timer": 18,
+              "x": 264,
+              "y": 165,
+              "z": 16,
+              "speed": 0,
+              "hp": 0,
+              "coll": 0,
+              "facing": 0
+            },
+            "health": 16
+          },
+          {
+            "attack": 15,
+            "before": {
+              "kind": 2,
+              "type": 83,
+              "state": 7,
+              "timer": 131,
+              "x": 264,
+              "y": 157,
+              "z": 0,
+              "speed": 96,
+              "hp": 4,
+              "coll": 0,
+              "facing": 0
+            },
+            "after": {
+              "kind": 2,
+              "type": 83,
+              "state": 7,
+              "timer": 131,
+              "x": 264,
+              "y": 157,
+              "z": 0,
+              "speed": 96,
+              "hp": 2,
+              "coll": 0,
+              "facing": 0
+            },
+            "player": {
+              "kind": 1,
+              "type": 0,
+              "state": 0,
+              "timer": 18,
+              "x": 264,
+              "y": 165,
+              "z": 16,
+              "speed": 0,
+              "hp": 0,
+              "coll": 0,
+              "facing": 0
+            },
+            "health": 16
+          },
+          {
+            "attack": 16,
+            "before": {
+              "kind": 2,
+              "type": 83,
+              "state": 7,
+              "timer": 131,
+              "x": 264,
+              "y": 157,
+              "z": 0,
+              "speed": 96,
+              "hp": 2,
+              "coll": 0,
+              "facing": 0
+            },
+            "after": {
+              "kind": 0,
+              "type": 83,
+              "state": 7,
+              "timer": 124,
+              "x": 264,
+              "y": 157,
+              "z": 0,
+              "speed": 96,
+              "hp": 0,
+              "coll": 0,
+              "facing": 0
+            },
+            "player": {
+              "kind": 1,
+              "type": 0,
+              "state": 2,
+              "timer": 4,
+              "x": 264,
+              "y": 165,
+              "z": 16,
+              "speed": 0,
+              "hp": 0,
+              "coll": 0,
+              "facing": 0
+            },
+            "health": 16
+          }
+        ]
+      }
+    }
+  ],
+  "fixtures": [
+    {
+      "kind": "hero position/standing/facing navigation",
+      "x": 312,
+      "y": 94,
+      "frame": 195,
+      "area": 0,
+      "cell": 0
+    },
+    {
+      "kind": "hero position/standing/facing navigation",
+      "x": 400,
+      "y": 350,
+      "frame": 215,
+      "area": 3,
+      "cell": 21
+    },
+    {
+      "kind": "hero position/standing/facing navigation",
+      "x": 312,
+      "y": 94,
+      "frame": 337,
+      "area": 0,
+      "cell": 21
+    },
+    {
+      "kind": "hero position/standing/facing navigation",
+      "x": 280,
+      "y": 135,
+      "frame": 384,
+      "area": 3,
+      "cell": 21
+    },
+    {
+      "kind": "hero position/standing/facing navigation",
+      "x": 280,
+      "y": 24,
+      "frame": 416,
+      "area": 3,
+      "cell": 21
+    },
+    {
+      "kind": "hero position/standing/facing navigation",
+      "x": 20,
+      "y": 318,
+      "frame": 466,
+      "area": 3,
+      "cell": 16
+    },
+    {
+      "kind": "hero position/standing/facing navigation",
+      "x": 304,
+      "y": 364,
+      "frame": 516,
+      "area": 3,
+      "cell": 15
+    },
+    {
+      "kind": "hero position/standing/facing navigation",
+      "x": 176,
+      "y": 124,
+      "frame": 598,
+      "area": 3,
+      "cell": 20
+    },
+    {
+      "kind": "hero position/standing/facing navigation",
+      "x": 136,
+      "y": 182,
+      "frame": 648,
+      "area": 3,
+      "cell": 20
+    },
+    {
+      "kind": "hero position/standing/facing navigation",
+      "x": 152,
+      "y": 174,
+      "frame": 692,
+      "area": 4,
+      "cell": 0
+    },
+    {
+      "kind": "hero position/standing/facing navigation",
+      "x": 216,
+      "y": 174,
+      "frame": 695,
+      "area": 4,
+      "cell": 0
+    },
+    {
+      "kind": "hero position/standing/facing navigation",
+      "x": 280,
+      "y": 174,
+      "frame": 698,
+      "area": 4,
+      "cell": 0
+    },
+    {
+      "kind": "hero position/standing/facing navigation",
+      "x": 344,
+      "y": 174,
+      "frame": 701,
+      "area": 4,
+      "cell": 0
+    },
+    {
+      "kind": "hero position/standing/facing navigation",
+      "x": 152,
+      "y": 174,
+      "frame": 704,
+      "area": 4,
+      "cell": 0
+    },
+    {
+      "kind": "hero position/standing/facing navigation",
+      "x": 280,
+      "y": 174,
+      "frame": 708,
+      "area": 4,
+      "cell": 0
+    },
+    {
+      "kind": "hero position/standing/facing navigation",
+      "x": 264,
+      "y": 350,
+      "frame": 712,
+      "area": 4,
+      "cell": 0
+    },
+    {
+      "kind": "hero position/standing/facing navigation",
+      "x": 312,
+      "y": 151,
+      "frame": 821,
+      "area": 3,
+      "cell": 20
+    },
+    {
+      "kind": "hero position/standing/facing navigation",
+      "x": 312,
+      "y": 24,
+      "frame": 853,
+      "area": 3,
+      "cell": 20
+    },
+    {
+      "kind": "hero position/standing/facing navigation",
+      "x": 312,
+      "y": 135,
+      "frame": 903,
+      "area": 3,
+      "cell": 15
+    },
+    {
+      "kind": "hero position/standing/facing navigation",
+      "x": 492,
+      "y": 78,
+      "frame": 932,
+      "area": 3,
+      "cell": 15
+    },
+    {
+      "kind": "hero position/standing/facing navigation",
+      "x": 280,
+      "y": 24,
+      "frame": 983,
+      "area": 3,
+      "cell": 16
+    },
+    {
+      "kind": "hero position/standing/facing navigation",
+      "x": 280,
+      "y": 151,
+      "frame": 1033,
+      "area": 3,
+      "cell": 11
+    },
+    {
+      "kind": "hero position/standing/facing navigation",
+      "x": 492,
+      "y": 110,
+      "frame": 1065,
+      "area": 3,
+      "cell": 11
+    },
+    {
+      "kind": "hero position/standing/facing navigation",
+      "x": 448,
+      "y": 110,
+      "frame": 1090,
+      "area": 3,
+      "cell": 12
+    },
+    {
+      "kind": "hero facing navigation",
+      "facing": 2,
+      "frame": 1090
+    },
+    {
+      "kind": "hero position/standing/facing navigation",
+      "x": 448,
+      "y": 110,
+      "frame": 1127,
+      "area": 3,
+      "cell": 12
+    },
+    {
+      "kind": "hero facing navigation",
+      "facing": 2,
+      "frame": 1127
+    },
+    {
+      "kind": "hero position/standing/facing navigation",
+      "x": 448,
+      "y": 124,
+      "frame": 1173,
+      "area": 3,
+      "cell": 12
+    },
+    {
+      "kind": "hero position/standing/facing navigation",
+      "x": 492,
+      "y": 334,
+      "frame": 1334,
+      "area": 3,
+      "cell": 22
+    },
+    {
+      "kind": "hero position/standing/facing navigation",
+      "x": 492,
+      "y": 302,
+      "frame": 1385,
+      "area": 3,
+      "cell": 23
+    },
+    {
+      "kind": "hero position/standing/facing navigation",
+      "x": 248,
+      "y": 151,
+      "frame": 1436,
+      "area": 3,
+      "cell": 24
+    },
+    {
+      "kind": "hero position/standing/facing navigation",
+      "x": 248,
+      "y": 24,
+      "frame": 1468,
+      "area": 3,
+      "cell": 24
+    },
+    {
+      "kind": "hero position/standing/facing navigation",
+      "x": 248,
+      "y": 135,
+      "frame": 1518,
+      "area": 3,
+      "cell": 19
+    },
+    {
+      "kind": "hero position/standing/facing navigation",
+      "x": 232,
+      "y": 118,
+      "frame": 1524,
+      "area": 3,
+      "cell": 19
+    },
+    {
+      "kind": "hero position/standing/facing navigation",
+      "x": 32,
+      "y": 174,
+      "frame": 1567,
+      "area": 4,
+      "cell": 0
+    },
+    {
+      "kind": "hero facing navigation",
+      "facing": 1,
+      "frame": 1567
+    },
+    {
+      "kind": "hero position/standing/facing navigation",
+      "x": 304,
+      "y": 270,
+      "frame": 1591,
+      "area": 4,
+      "cell": 0
+    },
+    {
+      "kind": "hero facing navigation",
+      "facing": 1,
+      "frame": 1591
+    },
+    {
+      "kind": "hero position/standing/facing navigation",
+      "x": 322,
+      "y": 270,
+      "frame": 1615,
+      "area": 4,
+      "cell": 0
+    },
+    {
+      "kind": "hero facing navigation",
+      "facing": 1,
+      "frame": 1615
+    },
+    {
+      "kind": "hero position/standing/facing navigation",
+      "x": 256,
+      "y": 94,
+      "frame": 1639,
+      "area": 4,
+      "cell": 0
+    },
+    {
+      "kind": "hero facing navigation",
+      "facing": 1,
+      "frame": 1639
+    },
+    {
+      "kind": "hero position/standing/facing navigation",
+      "x": 274,
+      "y": 94,
+      "frame": 1663,
+      "area": 4,
+      "cell": 0
+    },
+    {
+      "kind": "hero facing navigation",
+      "facing": 1,
+      "frame": 1663
+    },
+    {
+      "kind": "hero position/standing/facing navigation",
+      "x": 48,
+      "y": 293,
+      "frame": 1686,
+      "area": 4,
+      "cell": 0
+    },
+    {
+      "kind": "hero facing navigation",
+      "facing": 1,
+      "frame": 1686
+    },
+    {
+      "kind": "hero position/standing/facing navigation",
+      "x": 66,
+      "y": 293,
+      "frame": 1710,
+      "area": 4,
+      "cell": 0
+    },
+    {
+      "kind": "hero facing navigation",
+      "facing": 1,
+      "frame": 1710
+    },
+    {
+      "kind": "hero position/standing/facing navigation",
+      "x": 256,
+      "y": 86,
+      "frame": 1734,
+      "area": 4,
+      "cell": 0
+    },
+    {
+      "kind": "hero facing navigation",
+      "facing": 1,
+      "frame": 1734
+    },
+    {
+      "kind": "hero position/standing/facing navigation",
+      "x": 256,
+      "y": 218,
+      "frame": 1758,
+      "area": 4,
+      "cell": 0
+    },
+    {
+      "kind": "hero facing navigation",
+      "facing": 1,
+      "frame": 1758
+    },
+    {
+      "kind": "hero position/standing/facing navigation",
+      "x": 368,
+      "y": 142,
+      "frame": 1782,
+      "area": 4,
+      "cell": 0
+    },
+    {
+      "kind": "hero facing navigation",
+      "facing": 1,
+      "frame": 1782
+    },
+    {
+      "kind": "hero position/standing/facing navigation",
+      "x": 70,
+      "y": 94,
+      "frame": 1806,
+      "area": 4,
+      "cell": 0
+    },
+    {
+      "kind": "hero facing navigation",
+      "facing": 1,
+      "frame": 1806
+    },
+    {
+      "kind": "hero position/standing/facing navigation",
+      "x": 378,
+      "y": 188,
+      "frame": 1830,
+      "area": 4,
+      "cell": 0
+    },
+    {
+      "kind": "hero facing navigation",
+      "facing": 1,
+      "frame": 1830
+    },
+    {
+      "kind": "hero position/standing/facing navigation",
+      "x": 384,
+      "y": 297,
+      "frame": 1854,
+      "area": 4,
+      "cell": 0
+    },
+    {
+      "kind": "hero facing navigation",
+      "facing": 1,
+      "frame": 1854
+    },
+    {
+      "kind": "hero position/standing/facing navigation",
+      "x": 384,
+      "y": 297,
+      "frame": 1878,
+      "area": 4,
+      "cell": 0
+    },
+    {
+      "kind": "hero facing navigation",
+      "facing": 1,
+      "frame": 1878
+    },
+    {
+      "kind": "hero position/standing/facing navigation",
+      "x": 272,
+      "y": 131,
+      "frame": 1902,
+      "area": 4,
+      "cell": 0
+    },
+    {
+      "kind": "hero facing navigation",
+      "facing": 1,
+      "frame": 1902
+    },
+    {
+      "kind": "hero position/standing/facing navigation",
+      "x": 307,
+      "y": 190,
+      "frame": 1926,
+      "area": 4,
+      "cell": 0
+    },
+    {
+      "kind": "hero facing navigation",
+      "facing": 1,
+      "frame": 1926
+    },
+    {
+      "kind": "hero position/standing/facing navigation",
+      "x": 264,
+      "y": 350,
+      "frame": 1949,
+      "area": 4,
+      "cell": 0
+    },
+    {
+      "kind": "hero position/standing/facing navigation",
+      "x": 176,
+      "y": 124,
+      "frame": 2048,
+      "area": 3,
+      "cell": 19
+    },
+    {
+      "kind": "hero position/standing/facing navigation",
+      "x": 240,
+      "y": 364,
+      "frame": 2125,
+      "area": 3,
+      "cell": 19
+    },
+    {
+      "kind": "hero position/standing/facing navigation",
+      "x": 20,
+      "y": 94,
+      "frame": 2208,
+      "area": 3,
+      "cell": 24
+    },
+    {
+      "kind": "hero position/standing/facing navigation",
+      "x": 20,
+      "y": 78,
+      "frame": 2258,
+      "area": 3,
+      "cell": 23
+    },
+    {
+      "kind": "hero position/standing/facing navigation",
+      "x": 112,
+      "y": 126,
+      "frame": 2285,
+      "area": 3,
+      "cell": 22
+    },
+    {
+      "kind": "hero facing navigation",
+      "facing": 0,
+      "frame": 2285
+    },
+    {
+      "kind": "hero position/standing/facing navigation",
+      "x": 112,
+      "y": 126,
+      "frame": 2330,
+      "area": 3,
+      "cell": 22
+    },
+    {
+      "kind": "hero position/standing/facing navigation",
+      "x": 312,
+      "y": 151,
+      "frame": 2381,
+      "area": 3,
+      "cell": 18
+    },
+    {
+      "kind": "hero position/standing/facing navigation",
+      "x": 312,
+      "y": 24,
+      "frame": 2413,
+      "area": 3,
+      "cell": 18
+    },
+    {
+      "kind": "hero position/standing/facing navigation",
+      "x": 312,
+      "y": 151,
+      "frame": 2463,
+      "area": 3,
+      "cell": 13
+    },
+    {
+      "kind": "hero position/standing/facing navigation",
+      "x": 120,
+      "y": 182,
+      "frame": 2469,
+      "area": 3,
+      "cell": 13
+    },
+    {
+      "kind": "hero position/standing/facing navigation",
+      "x": 86,
+      "y": 270,
+      "frame": 2513,
+      "area": 4,
+      "cell": 0
+    },
+    {
+      "kind": "hero position/standing/facing navigation",
+      "x": 56,
+      "y": 315,
+      "frame": 2515,
+      "area": 4,
+      "cell": 0
+    },
+    {
+      "kind": "hero position/standing/facing navigation",
+      "x": 56,
+      "y": 315,
+      "frame": 2519,
+      "area": 4,
+      "cell": 0
+    },
+    {
+      "kind": "hero position/standing/facing navigation",
+      "x": 56,
+      "y": 315,
+      "frame": 2523,
+      "area": 4,
+      "cell": 0
+    },
+    {
+      "kind": "hero position/standing/facing navigation",
+      "x": 56,
+      "y": 315,
+      "frame": 2527,
+      "area": 4,
+      "cell": 0
+    },
+    {
+      "kind": "hero position/standing/facing navigation",
+      "x": 56,
+      "y": 315,
+      "frame": 2531,
+      "area": 4,
+      "cell": 0
+    },
+    {
+      "kind": "hero position/standing/facing navigation",
+      "x": 57,
+      "y": 315,
+      "frame": 2535,
+      "area": 4,
+      "cell": 0
+    },
+    {
+      "kind": "hero position/standing/facing navigation",
+      "x": 59,
+      "y": 315,
+      "frame": 2539,
+      "area": 4,
+      "cell": 0
+    },
+    {
+      "kind": "hero position/standing/facing navigation",
+      "x": 60,
+      "y": 315,
+      "frame": 2543,
+      "area": 4,
+      "cell": 0
+    },
+    {
+      "kind": "hero position/standing/facing navigation",
+      "x": 40,
+      "y": 270,
+      "frame": 2547,
+      "area": 4,
+      "cell": 0
+    },
+    {
+      "kind": "hero facing navigation",
+      "facing": 1,
+      "frame": 2547
+    },
+    {
+      "kind": "hero position/standing/facing navigation",
+      "x": 58,
+      "y": 270,
+      "frame": 2571,
+      "area": 4,
+      "cell": 0
+    },
+    {
+      "kind": "hero facing navigation",
+      "facing": 1,
+      "frame": 2571
+    },
+    {
+      "kind": "hero position/standing/facing navigation",
+      "x": 76,
+      "y": 270,
+      "frame": 2595,
+      "area": 4,
+      "cell": 0
+    },
+    {
+      "kind": "hero facing navigation",
+      "facing": 1,
+      "frame": 2595
+    },
+    {
+      "kind": "hero position/standing/facing navigation",
+      "x": 94,
+      "y": 270,
+      "frame": 2619,
+      "area": 4,
+      "cell": 0
+    },
+    {
+      "kind": "hero facing navigation",
+      "facing": 1,
+      "frame": 2619
+    },
+    {
+      "kind": "hero position/standing/facing navigation",
+      "x": 114,
+      "y": 315,
+      "frame": 2643,
+      "area": 4,
+      "cell": 0
+    },
+    {
+      "kind": "hero position/standing/facing navigation",
+      "x": 113,
+      "y": 315,
+      "frame": 2647,
+      "area": 4,
+      "cell": 0
+    },
+    {
+      "kind": "hero position/standing/facing navigation",
+      "x": 111,
+      "y": 315,
+      "frame": 2651,
+      "area": 4,
+      "cell": 0
+    },
+    {
+      "kind": "hero position/standing/facing navigation",
+      "x": 88,
+      "y": 270,
+      "frame": 2655,
+      "area": 4,
+      "cell": 0
+    },
+    {
+      "kind": "hero facing navigation",
+      "facing": 1,
+      "frame": 2655
+    },
+    {
+      "kind": "hero position/standing/facing navigation",
+      "x": 106,
+      "y": 270,
+      "frame": 2679,
+      "area": 4,
+      "cell": 0
+    },
+    {
+      "kind": "hero facing navigation",
+      "facing": 1,
+      "frame": 2679
+    },
+    {
+      "kind": "hero position/standing/facing navigation",
+      "x": 124,
+      "y": 270,
+      "frame": 2703,
+      "area": 4,
+      "cell": 0
+    },
+    {
+      "kind": "hero facing navigation",
+      "facing": 1,
+      "frame": 2703
+    },
+    {
+      "kind": "hero position/standing/facing navigation",
+      "x": 264,
+      "y": 350,
+      "frame": 2726,
+      "area": 4,
+      "cell": 0
+    },
+    {
+      "kind": "hero position/standing/facing navigation",
+      "x": 176,
+      "y": 124,
+      "frame": 2848,
+      "area": 3,
+      "cell": 13
+    },
+    {
+      "kind": "hero position/standing/facing navigation",
+      "x": 492,
+      "y": 334,
+      "frame": 2925,
+      "area": 3,
+      "cell": 13
+    },
+    {
+      "kind": "hero position/standing/facing navigation",
+      "x": 248,
+      "y": 135,
+      "frame": 2976,
+      "area": 3,
+      "cell": 14
+    },
+    {
+      "kind": "hero position/standing/facing navigation",
+      "x": 248,
+      "y": 24,
+      "frame": 3008,
+      "area": 3,
+      "cell": 14
+    },
+    {
+      "kind": "hero position/standing/facing navigation",
+      "x": 20,
+      "y": 350,
+      "frame": 3058,
+      "area": 3,
+      "cell": 9
+    },
+    {
+      "kind": "hero position/standing/facing navigation",
+      "x": 312,
+      "y": 151,
+      "frame": 3108,
+      "area": 3,
+      "cell": 8
+    },
+    {
+      "kind": "hero position/standing/facing navigation",
+      "x": 312,
+      "y": 24,
+      "frame": 3140,
+      "area": 3,
+      "cell": 8
+    },
+    {
+      "kind": "hero position/standing/facing navigation",
+      "x": 312,
+      "y": 199,
+      "frame": 3190,
+      "area": 3,
+      "cell": 3
+    },
+    {
+      "kind": "hero position/standing/facing navigation",
+      "x": 265,
+      "y": 87,
+      "frame": 3199,
+      "area": 3,
+      "cell": 3
+    },
+    {
+      "kind": "hero facing navigation",
+      "facing": 2,
+      "frame": 3199
+    },
+    {
+      "kind": "hero position/standing/facing navigation",
+      "x": 265,
+      "y": 92,
+      "frame": 3231,
+      "area": 3,
+      "cell": 3
+    },
+    {
+      "kind": "hero facing navigation",
+      "facing": 2,
+      "frame": 3231
+    },
+    {
+      "kind": "hero position/standing/facing navigation",
+      "x": 264,
+      "y": 165,
+      "frame": 3253,
+      "area": 3,
+      "cell": 3
+    },
+    {
+      "kind": "hero facing navigation",
+      "facing": 0,
+      "frame": 3253
+    },
+    {
+      "kind": "hero position/standing/facing navigation",
+      "x": 264,
+      "y": 165,
+      "frame": 3279,
+      "area": 3,
+      "cell": 3
+    },
+    {
+      "kind": "hero facing navigation",
+      "facing": 0,
+      "frame": 3279
+    },
+    {
+      "kind": "hero position/standing/facing navigation",
+      "x": 264,
+      "y": 165,
+      "frame": 3305,
+      "area": 3,
+      "cell": 3
+    },
+    {
+      "kind": "hero facing navigation",
+      "facing": 0,
+      "frame": 3305
+    },
+    {
+      "kind": "hero position/standing/facing navigation",
+      "x": 264,
+      "y": 165,
+      "frame": 3331,
+      "area": 3,
+      "cell": 3
+    },
+    {
+      "kind": "hero facing navigation",
+      "facing": 0,
+      "frame": 3331
+    },
+    {
+      "kind": "hero position/standing/facing navigation",
+      "x": 264,
+      "y": 165,
+      "frame": 3357,
+      "area": 3,
+      "cell": 3
+    },
+    {
+      "kind": "hero facing navigation",
+      "facing": 0,
+      "frame": 3357
+    },
+    {
+      "kind": "hero position/standing/facing navigation",
+      "x": 264,
+      "y": 165,
+      "frame": 3383,
+      "area": 3,
+      "cell": 3
+    },
+    {
+      "kind": "hero facing navigation",
+      "facing": 0,
+      "frame": 3383
+    },
+    {
+      "kind": "hero position/standing/facing navigation",
+      "x": 264,
+      "y": 165,
+      "frame": 3409,
+      "area": 3,
+      "cell": 3
+    },
+    {
+      "kind": "hero facing navigation",
+      "facing": 0,
+      "frame": 3409
+    },
+    {
+      "kind": "hero position/standing/facing navigation",
+      "x": 264,
+      "y": 165,
+      "frame": 3435,
+      "area": 3,
+      "cell": 3
+    },
+    {
+      "kind": "hero facing navigation",
+      "facing": 0,
+      "frame": 3435
+    },
+    {
+      "kind": "hero position/standing/facing navigation",
+      "x": 264,
+      "y": 165,
+      "frame": 3461,
+      "area": 3,
+      "cell": 3
+    },
+    {
+      "kind": "hero facing navigation",
+      "facing": 0,
+      "frame": 3461
+    },
+    {
+      "kind": "hero position/standing/facing navigation",
+      "x": 264,
+      "y": 165,
+      "frame": 3487,
+      "area": 3,
+      "cell": 3
+    },
+    {
+      "kind": "hero facing navigation",
+      "facing": 0,
+      "frame": 3487
+    },
+    {
+      "kind": "hero position/standing/facing navigation",
+      "x": 264,
+      "y": 165,
+      "frame": 3513,
+      "area": 3,
+      "cell": 3
+    },
+    {
+      "kind": "hero facing navigation",
+      "facing": 0,
+      "frame": 3513
+    },
+    {
+      "kind": "hero position/standing/facing navigation",
+      "x": 264,
+      "y": 165,
+      "frame": 3539,
+      "area": 3,
+      "cell": 3
+    },
+    {
+      "kind": "hero facing navigation",
+      "facing": 0,
+      "frame": 3539
+    },
+    {
+      "kind": "hero position/standing/facing navigation",
+      "x": 264,
+      "y": 165,
+      "frame": 3565,
+      "area": 3,
+      "cell": 3
+    },
+    {
+      "kind": "hero facing navigation",
+      "facing": 0,
+      "frame": 3565
+    },
+    {
+      "kind": "hero position/standing/facing navigation",
+      "x": 264,
+      "y": 165,
+      "frame": 3591,
+      "area": 3,
+      "cell": 3
+    },
+    {
+      "kind": "hero facing navigation",
+      "facing": 0,
+      "frame": 3591
+    },
+    {
+      "kind": "hero position/standing/facing navigation",
+      "x": 264,
+      "y": 165,
+      "frame": 3617,
+      "area": 3,
+      "cell": 3
+    },
+    {
+      "kind": "hero facing navigation",
+      "facing": 0,
+      "frame": 3617
+    },
+    {
+      "kind": "hero position/standing/facing navigation",
+      "x": 264,
+      "y": 165,
+      "frame": 3643,
+      "area": 3,
+      "cell": 3
+    },
+    {
+      "kind": "hero facing navigation",
+      "facing": 0,
+      "frame": 3643
+    }
+  ],
+  "boss_trace": [
+    {
+      "attack": 0,
+      "before": {
+        "kind": 2,
+        "type": 83,
+        "state": 1,
+        "timer": 22,
+        "x": 264,
+        "y": 160,
+        "z": 0,
+        "speed": 96,
+        "hp": 32,
+        "coll": 0,
+        "facing": 0
+      },
+      "after": {
+        "kind": 2,
+        "type": 83,
+        "state": 7,
+        "timer": 194,
+        "x": 264,
+        "y": 157,
+        "z": 0,
+        "speed": 96,
+        "hp": 32,
+        "coll": 0,
+        "facing": 0
+      },
+      "player": {
+        "kind": 1,
+        "type": 0,
+        "state": 0,
+        "timer": 0,
+        "x": 265,
+        "y": 92,
+        "z": 0,
+        "speed": 0,
+        "hp": 0,
+        "coll": 0,
+        "facing": 2
+      },
+      "health": 16
+    },
+    {
+      "attack": 1,
+      "before": {
+        "kind": 2,
+        "type": 83,
+        "state": 7,
+        "timer": 194,
+        "x": 264,
+        "y": 157,
+        "z": 0,
+        "speed": 96,
+        "hp": 32,
+        "coll": 0,
+        "facing": 0
+      },
+      "after": {
+        "kind": 2,
+        "type": 83,
+        "state": 7,
+        "timer": 131,
+        "x": 264,
+        "y": 157,
+        "z": 0,
+        "speed": 96,
+        "hp": 30,
+        "coll": 0,
+        "facing": 0
+      },
+      "player": {
+        "kind": 1,
+        "type": 0,
+        "state": 0,
+        "timer": 18,
+        "x": 264,
+        "y": 165,
+        "z": 16,
+        "speed": 0,
+        "hp": 0,
+        "coll": 0,
+        "facing": 0
+      },
+      "health": 16
+    },
+    {
+      "attack": 2,
+      "before": {
+        "kind": 2,
+        "type": 83,
+        "state": 7,
+        "timer": 131,
+        "x": 264,
+        "y": 157,
+        "z": 0,
+        "speed": 96,
+        "hp": 30,
+        "coll": 0,
+        "facing": 0
+      },
+      "after": {
+        "kind": 2,
+        "type": 83,
+        "state": 7,
+        "timer": 131,
+        "x": 264,
+        "y": 157,
+        "z": 0,
+        "speed": 96,
+        "hp": 28,
+        "coll": 0,
+        "facing": 0
+      },
+      "player": {
+        "kind": 1,
+        "type": 0,
+        "state": 0,
+        "timer": 18,
+        "x": 264,
+        "y": 165,
+        "z": 16,
+        "speed": 0,
+        "hp": 0,
+        "coll": 0,
+        "facing": 0
+      },
+      "health": 16
+    },
+    {
+      "attack": 3,
+      "before": {
+        "kind": 2,
+        "type": 83,
+        "state": 7,
+        "timer": 131,
+        "x": 264,
+        "y": 157,
+        "z": 0,
+        "speed": 96,
+        "hp": 28,
+        "coll": 0,
+        "facing": 0
+      },
+      "after": {
+        "kind": 2,
+        "type": 83,
+        "state": 7,
+        "timer": 131,
+        "x": 264,
+        "y": 157,
+        "z": 0,
+        "speed": 96,
+        "hp": 26,
+        "coll": 0,
+        "facing": 0
+      },
+      "player": {
+        "kind": 1,
+        "type": 0,
+        "state": 0,
+        "timer": 18,
+        "x": 264,
+        "y": 165,
+        "z": 16,
+        "speed": 0,
+        "hp": 0,
+        "coll": 0,
+        "facing": 0
+      },
+      "health": 16
+    },
+    {
+      "attack": 4,
+      "before": {
+        "kind": 2,
+        "type": 83,
+        "state": 7,
+        "timer": 131,
+        "x": 264,
+        "y": 157,
+        "z": 0,
+        "speed": 96,
+        "hp": 26,
+        "coll": 0,
+        "facing": 0
+      },
+      "after": {
+        "kind": 2,
+        "type": 83,
+        "state": 7,
+        "timer": 131,
+        "x": 264,
+        "y": 157,
+        "z": 0,
+        "speed": 96,
+        "hp": 24,
+        "coll": 0,
+        "facing": 0
+      },
+      "player": {
+        "kind": 1,
+        "type": 0,
+        "state": 0,
+        "timer": 18,
+        "x": 264,
+        "y": 165,
+        "z": 16,
+        "speed": 0,
+        "hp": 0,
+        "coll": 0,
+        "facing": 0
+      },
+      "health": 16
+    },
+    {
+      "attack": 5,
+      "before": {
+        "kind": 2,
+        "type": 83,
+        "state": 7,
+        "timer": 131,
+        "x": 264,
+        "y": 157,
+        "z": 0,
+        "speed": 96,
+        "hp": 24,
+        "coll": 0,
+        "facing": 0
+      },
+      "after": {
+        "kind": 2,
+        "type": 83,
+        "state": 7,
+        "timer": 131,
+        "x": 264,
+        "y": 157,
+        "z": 0,
+        "speed": 96,
+        "hp": 22,
+        "coll": 0,
+        "facing": 0
+      },
+      "player": {
+        "kind": 1,
+        "type": 0,
+        "state": 0,
+        "timer": 18,
+        "x": 264,
+        "y": 165,
+        "z": 16,
+        "speed": 0,
+        "hp": 0,
+        "coll": 0,
+        "facing": 0
+      },
+      "health": 16
+    },
+    {
+      "attack": 6,
+      "before": {
+        "kind": 2,
+        "type": 83,
+        "state": 7,
+        "timer": 131,
+        "x": 264,
+        "y": 157,
+        "z": 0,
+        "speed": 96,
+        "hp": 22,
+        "coll": 0,
+        "facing": 0
+      },
+      "after": {
+        "kind": 2,
+        "type": 83,
+        "state": 7,
+        "timer": 131,
+        "x": 264,
+        "y": 157,
+        "z": 0,
+        "speed": 96,
+        "hp": 20,
+        "coll": 0,
+        "facing": 0
+      },
+      "player": {
+        "kind": 1,
+        "type": 0,
+        "state": 0,
+        "timer": 18,
+        "x": 264,
+        "y": 165,
+        "z": 16,
+        "speed": 0,
+        "hp": 0,
+        "coll": 0,
+        "facing": 0
+      },
+      "health": 16
+    },
+    {
+      "attack": 7,
+      "before": {
+        "kind": 2,
+        "type": 83,
+        "state": 7,
+        "timer": 131,
+        "x": 264,
+        "y": 157,
+        "z": 0,
+        "speed": 96,
+        "hp": 20,
+        "coll": 0,
+        "facing": 0
+      },
+      "after": {
+        "kind": 2,
+        "type": 83,
+        "state": 7,
+        "timer": 131,
+        "x": 264,
+        "y": 157,
+        "z": 0,
+        "speed": 96,
+        "hp": 18,
+        "coll": 0,
+        "facing": 0
+      },
+      "player": {
+        "kind": 1,
+        "type": 0,
+        "state": 0,
+        "timer": 18,
+        "x": 264,
+        "y": 165,
+        "z": 16,
+        "speed": 0,
+        "hp": 0,
+        "coll": 0,
+        "facing": 0
+      },
+      "health": 16
+    },
+    {
+      "attack": 8,
+      "before": {
+        "kind": 2,
+        "type": 83,
+        "state": 7,
+        "timer": 131,
+        "x": 264,
+        "y": 157,
+        "z": 0,
+        "speed": 96,
+        "hp": 18,
+        "coll": 0,
+        "facing": 0
+      },
+      "after": {
+        "kind": 2,
+        "type": 83,
+        "state": 7,
+        "timer": 131,
+        "x": 264,
+        "y": 157,
+        "z": 0,
+        "speed": 96,
+        "hp": 16,
+        "coll": 0,
+        "facing": 0
+      },
+      "player": {
+        "kind": 1,
+        "type": 0,
+        "state": 0,
+        "timer": 18,
+        "x": 264,
+        "y": 165,
+        "z": 16,
+        "speed": 0,
+        "hp": 0,
+        "coll": 0,
+        "facing": 0
+      },
+      "health": 16
+    },
+    {
+      "attack": 9,
+      "before": {
+        "kind": 2,
+        "type": 83,
+        "state": 7,
+        "timer": 131,
+        "x": 264,
+        "y": 157,
+        "z": 0,
+        "speed": 96,
+        "hp": 16,
+        "coll": 0,
+        "facing": 0
+      },
+      "after": {
+        "kind": 2,
+        "type": 83,
+        "state": 7,
+        "timer": 131,
+        "x": 264,
+        "y": 157,
+        "z": 0,
+        "speed": 96,
+        "hp": 14,
+        "coll": 0,
+        "facing": 0
+      },
+      "player": {
+        "kind": 1,
+        "type": 0,
+        "state": 0,
+        "timer": 18,
+        "x": 264,
+        "y": 165,
+        "z": 16,
+        "speed": 0,
+        "hp": 0,
+        "coll": 0,
+        "facing": 0
+      },
+      "health": 16
+    },
+    {
+      "attack": 10,
+      "before": {
+        "kind": 2,
+        "type": 83,
+        "state": 7,
+        "timer": 131,
+        "x": 264,
+        "y": 157,
+        "z": 0,
+        "speed": 96,
+        "hp": 14,
+        "coll": 0,
+        "facing": 0
+      },
+      "after": {
+        "kind": 2,
+        "type": 83,
+        "state": 7,
+        "timer": 131,
+        "x": 264,
+        "y": 157,
+        "z": 0,
+        "speed": 96,
+        "hp": 12,
+        "coll": 0,
+        "facing": 0
+      },
+      "player": {
+        "kind": 1,
+        "type": 0,
+        "state": 0,
+        "timer": 18,
+        "x": 264,
+        "y": 165,
+        "z": 16,
+        "speed": 0,
+        "hp": 0,
+        "coll": 0,
+        "facing": 0
+      },
+      "health": 16
+    },
+    {
+      "attack": 11,
+      "before": {
+        "kind": 2,
+        "type": 83,
+        "state": 7,
+        "timer": 131,
+        "x": 264,
+        "y": 157,
+        "z": 0,
+        "speed": 96,
+        "hp": 12,
+        "coll": 0,
+        "facing": 0
+      },
+      "after": {
+        "kind": 2,
+        "type": 83,
+        "state": 7,
+        "timer": 131,
+        "x": 264,
+        "y": 157,
+        "z": 0,
+        "speed": 96,
+        "hp": 10,
+        "coll": 0,
+        "facing": 0
+      },
+      "player": {
+        "kind": 1,
+        "type": 0,
+        "state": 0,
+        "timer": 18,
+        "x": 264,
+        "y": 165,
+        "z": 16,
+        "speed": 0,
+        "hp": 0,
+        "coll": 0,
+        "facing": 0
+      },
+      "health": 16
+    },
+    {
+      "attack": 12,
+      "before": {
+        "kind": 2,
+        "type": 83,
+        "state": 7,
+        "timer": 131,
+        "x": 264,
+        "y": 157,
+        "z": 0,
+        "speed": 96,
+        "hp": 10,
+        "coll": 0,
+        "facing": 0
+      },
+      "after": {
+        "kind": 2,
+        "type": 83,
+        "state": 7,
+        "timer": 131,
+        "x": 264,
+        "y": 157,
+        "z": 0,
+        "speed": 96,
+        "hp": 8,
+        "coll": 0,
+        "facing": 0
+      },
+      "player": {
+        "kind": 1,
+        "type": 0,
+        "state": 0,
+        "timer": 18,
+        "x": 264,
+        "y": 165,
+        "z": 16,
+        "speed": 0,
+        "hp": 0,
+        "coll": 0,
+        "facing": 0
+      },
+      "health": 16
+    },
+    {
+      "attack": 13,
+      "before": {
+        "kind": 2,
+        "type": 83,
+        "state": 7,
+        "timer": 131,
+        "x": 264,
+        "y": 157,
+        "z": 0,
+        "speed": 96,
+        "hp": 8,
+        "coll": 0,
+        "facing": 0
+      },
+      "after": {
+        "kind": 2,
+        "type": 83,
+        "state": 7,
+        "timer": 131,
+        "x": 264,
+        "y": 157,
+        "z": 0,
+        "speed": 96,
+        "hp": 6,
+        "coll": 0,
+        "facing": 0
+      },
+      "player": {
+        "kind": 1,
+        "type": 0,
+        "state": 0,
+        "timer": 18,
+        "x": 264,
+        "y": 165,
+        "z": 16,
+        "speed": 0,
+        "hp": 0,
+        "coll": 0,
+        "facing": 0
+      },
+      "health": 16
+    },
+    {
+      "attack": 14,
+      "before": {
+        "kind": 2,
+        "type": 83,
+        "state": 7,
+        "timer": 131,
+        "x": 264,
+        "y": 157,
+        "z": 0,
+        "speed": 96,
+        "hp": 6,
+        "coll": 0,
+        "facing": 0
+      },
+      "after": {
+        "kind": 2,
+        "type": 83,
+        "state": 7,
+        "timer": 131,
+        "x": 264,
+        "y": 157,
+        "z": 0,
+        "speed": 96,
+        "hp": 4,
+        "coll": 0,
+        "facing": 0
+      },
+      "player": {
+        "kind": 1,
+        "type": 0,
+        "state": 0,
+        "timer": 18,
+        "x": 264,
+        "y": 165,
+        "z": 16,
+        "speed": 0,
+        "hp": 0,
+        "coll": 0,
+        "facing": 0
+      },
+      "health": 16
+    },
+    {
+      "attack": 15,
+      "before": {
+        "kind": 2,
+        "type": 83,
+        "state": 7,
+        "timer": 131,
+        "x": 264,
+        "y": 157,
+        "z": 0,
+        "speed": 96,
+        "hp": 4,
+        "coll": 0,
+        "facing": 0
+      },
+      "after": {
+        "kind": 2,
+        "type": 83,
+        "state": 7,
+        "timer": 131,
+        "x": 264,
+        "y": 157,
+        "z": 0,
+        "speed": 96,
+        "hp": 2,
+        "coll": 0,
+        "facing": 0
+      },
+      "player": {
+        "kind": 1,
+        "type": 0,
+        "state": 0,
+        "timer": 18,
+        "x": 264,
+        "y": 165,
+        "z": 16,
+        "speed": 0,
+        "hp": 0,
+        "coll": 0,
+        "facing": 0
+      },
+      "health": 16
+    },
+    {
+      "attack": 16,
+      "before": {
+        "kind": 2,
+        "type": 83,
+        "state": 7,
+        "timer": 131,
+        "x": 264,
+        "y": 157,
+        "z": 0,
+        "speed": 96,
+        "hp": 2,
+        "coll": 0,
+        "facing": 0
+      },
+      "after": {
+        "kind": 0,
+        "type": 83,
+        "state": 7,
+        "timer": 124,
+        "x": 264,
+        "y": 157,
+        "z": 0,
+        "speed": 96,
+        "hp": 0,
+        "coll": 0,
+        "facing": 0
+      },
+      "player": {
+        "kind": 1,
+        "type": 0,
+        "state": 2,
+        "timer": 4,
+        "x": 264,
+        "y": 165,
+        "z": 16,
+        "speed": 0,
+        "hp": 0,
+        "coll": 0,
+        "facing": 0
+      },
+      "health": 16
+    }
+  ],
+  "sha256": "a2e98b9551213c5335e826c59642fea5c03a4998746a811d5a9d464a96e24f86",
+  "final": {
+    "state": 6,
+    "area": 3,
+    "cell": 3,
+    "node": 7,
+    "actor": {
+      "kind": 0,
+      "type": 0,
+      "state": 0,
+      "timer": 0,
+      "x": 0,
+      "y": 0,
+      "z": 0,
+      "speed": 0,
+      "hp": 0,
+      "coll": 0,
+      "facing": 0
+    },
+    "text": 0,
+    "rewards": 7,
+    "items": 79,
+    "hp": 16,
+    "bombs": 25,
+    "equip": [
+      14,
+      1,
+      5
+    ]
+  }
+}

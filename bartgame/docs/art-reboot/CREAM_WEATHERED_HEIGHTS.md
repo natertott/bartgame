@@ -176,26 +176,43 @@ restoration/input hooks. Profile-specific audit and capture tools accompany
 the implementation. This documentation does not report their results before
 the final source is frozen.
 
-## Pending final verification
+## Final qualification
 
-At this documentation handoff, **final source commit, ROM hash, final asset
-budgets, generation counts and independent runtime results are pending**.
-Earlier profile7–11 evidence is historical and cannot qualify profile12.
-Host source mockups are labelled synthetic fixtures; they are not mGBA runs.
+Frozen source: `f4b917f7964941d488c4d20fce073f3f58b950bc`. ROM SHA-256:
+`a2e98b9551213c5335e826c59642fea5c03a4998746a811d5a9d464a96e24f86`.
+The [actual gallery](../../../cream-heights-review/README.md) and its
+[aggregate qualification](../../../cream-heights-review/validation/qualification.json)
+record the exact finite test scope.
 
-The final record should bind one source/build to:
+- 7,193 source/native checks pass. Cream uses 861 static native characters,
+  163 available blended characters, ten palette banks and 6,356 free EWRAM bytes.
+  Optional wall painting leaves 16 blend slots for later structural joins.
+- 3,200 actual-C builds across 64 seeds pass content, support, ownership, gate,
+  arrival, local-drop and refresh checks. All eight room families occur.
+- Eight whole-room surveys, 20 charted native pause screens, fresh fog and
+  actual menu/Forest-cache restoration pass. All map views share the same
+  actual selected-room data and preserve gameplay state.
+- Ordinary input clips verify carved climbs, local jumps, two- and four-screen
+  drops. Four actual waterfall phases remain visible in each of three widths.
+- A full earned run passes all three trial gifts, real barriers and Pacci,
+  mounting and sword boss combat, then checks fresh-run reset.
+- The 25-room timing comparison retains 1.000 updates per hardware frame in
+  both builds. Room-load p95 changes 50→57 frames, including fades. Charted
+  map redraws take 9–29 frames, initial 17; uncached Map-item reveals were
+  not included in that timing sample.
+- Production0 and prior Weathered10 rebuild byte for byte. The workspace
+  remains restored to0; the review download explicitly enables12.
 
-1. Native palette/character budgets and protected-region comparisons.
-2. Seeded room/graph audits for real support, same-owner local climbs,
-   required gates, paired lateral routes, useful dead ends, content approaches
-   and protected summit space, with finite scope reported.
-3. Ordinary mGBA climbing and local/multiroom drops across varied rooms;
-   visible animated one-, two- and three-cell blue falls; joined wall art and
-   correct ledge/landing shading at native size.
-4. All ten actual-game overview/zoom pairs, early fog state, complete map
-   input navigation and unchanged live-state snapshots across previews.
-5. Menu/room restoration, positive player health, timing/performance checks
-   appropriate to the added room construction and honest remaining risks.
+The last native review fixes preserve a truthful height key: shaft sentinel7
+is never a floor. Shafts interpolate actual endpoints, and exploded diagrams
+exclude shaft-only intermediate planes. A small dark native outline keeps
+parchment text readable. Height summaries are recorded from actual loaded
+rooms; paused style and zoom changes reuse one immutable selected-room plan.
+Seed changes invalidate those summaries. Borrowed Forest caches invalidate
+and recompute correctly after the Cream atlas closes.
 
-Registered whole-room surveys, a single live 240×160 viewport, movement clips
-and source sheets must retain distinct labels and pinned provenance.
+Registered whole-room surveys assemble exact cropped renderer-camera frames.
+Ordinary clips and menu screenshots use normal mGBA frames with disclosed seed,
+loader and hero-navigation fixtures; game rewards, gate states and combat
+outcomes are earned by real inputs. The gallery keeps these evidence types
+and their limitations explicit.

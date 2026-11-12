@@ -1,0 +1,241 @@
+{
+  "rom_sha256": "a2e98b9551213c5335e826c59642fea5c03a4998746a811d5a9d464a96e24f86",
+  "source_commit": "f4b917f7964941d488c4d20fce073f3f58b950bc",
+  "profile": 12,
+  "sections": {
+    "native": {
+      "report": "native-audit.json",
+      "report_sha256": "80811935b8eec79636e1de81564691d029d52e6a19ed2e797d96c825b766b77c",
+      "complete": true
+    },
+    "geometry": {
+      "report": "geometry-audit.json",
+      "report_sha256": "a5a90781b195958cf17fc6930edf285bcc087ebf9e675146fdc15c808f967493",
+      "complete": true
+    },
+    "rooms": {
+      "report": "rooms/report.json",
+      "report_sha256": "aa44b27397fc5445d2657f435f87952b12a9e012fd6b48c7833df1b5bfd30cef",
+      "complete": true
+    },
+    "maps": {
+      "report": "maps/report.json",
+      "report_sha256": "27aa22f63d7e270777231a47b3cd31478359e47a8b73c876fe58a480e0c25b6c",
+      "complete": true
+    },
+    "maps_fresh": {
+      "report": "maps-fresh/report.json",
+      "report_sha256": "b8627e813ffcdc6538722c5d536297070f9912f53b79b5ba17d4ad1dfd5de0b5",
+      "complete": true
+    },
+    "local_actions": {
+      "report": "local-actions/report.json",
+      "report_sha256": "1066cfa6896f2b8b5e961eb5506691bc085b2ad76c241ad587f563665591fb06",
+      "complete": true
+    },
+    "waterfalls": {
+      "report": "waterfalls/report.json",
+      "report_sha256": "0721f2f7a9723f3ff3eab77503bf507a564b43ff336f5388b1e239d205e3e261",
+      "complete": true
+    },
+    "earned": {
+      "report": "earned/report.json",
+      "report_sha256": "fc4099d91ef2a36ee28aa2cc66543eeda996b55e8061d00e0f2d578125d7095f",
+      "complete": true
+    },
+    "earned_long": {
+      "report": "earned-long/report.json",
+      "report_sha256": "3fadb5e335c4a0e4d3d1b5b8f7ab999cca360c4a2faa6bc664f0563e54c336a2",
+      "complete": true
+    },
+    "performance": {
+      "report": "performance/report.json",
+      "report_sha256": "72dd8f9252028792020b52b8ee785f33130b93bf2e1168c5c7f4585343e19b70",
+      "complete": true
+    },
+    "forest_cache": {
+      "report": "forest-cache/report.json",
+      "report_sha256": "76ad5e3567abc7fe74aeaffcae4dd44644cb8c59969cedc9fa35cbd01b287ea9",
+      "complete": true
+    }
+  },
+  "checks": [
+    {
+      "name": "all11finalqualificationsections complete",
+      "passed": true
+    },
+    {
+      "name": "allavailable frozen source and ROM identities agree",
+      "passed": true
+    },
+    {
+      "name": "exactly8actualroomfamilies captured",
+      "passed": true
+    },
+    {
+      "name": "all20nativecomparisonmaps exist",
+      "passed": true
+    },
+    {
+      "name": "freshmap contains undiscovered rooms",
+      "passed": true
+    }
+  ],
+  "identity_checks": [
+    {
+      "section": "native",
+      "rom_sha256_matches": true
+    },
+    {
+      "section": "native",
+      "source_commit_matches": true
+    },
+    {
+      "section": "rooms",
+      "rom_sha256_matches": true
+    },
+    {
+      "section": "rooms",
+      "source_commit_matches": true
+    },
+    {
+      "section": "maps",
+      "rom_sha256_matches": true
+    },
+    {
+      "section": "maps",
+      "source_commit_matches": true
+    },
+    {
+      "section": "maps_fresh",
+      "rom_sha256_matches": true
+    },
+    {
+      "section": "maps_fresh",
+      "source_commit_matches": true
+    },
+    {
+      "section": "local_actions",
+      "rom_sha256_matches": true
+    },
+    {
+      "section": "waterfalls",
+      "rom_sha256_matches": true
+    },
+    {
+      "section": "earned",
+      "rom_sha256_matches": true
+    },
+    {
+      "section": "earned",
+      "source_commit_matches": true
+    },
+    {
+      "section": "earned_long",
+      "rom_sha256_matches": true
+    },
+    {
+      "section": "earned_long",
+      "source_commit_matches": true
+    },
+    {
+      "section": "forest_cache",
+      "rom_sha256_matches": true
+    },
+    {
+      "section": "forest_cache",
+      "source_commit_matches": true
+    },
+    {
+      "section": "performance",
+      "rom_sha256_matches": true
+    },
+    {
+      "section": "performance",
+      "source_commit_matches": true
+    }
+  ],
+  "evidence": {
+    "native_checks": {
+      "passed": 7193,
+      "total": 7193
+    },
+    "actual_C_geometry": {
+      "seeds": 64,
+      "room_builds": 3200,
+      "macro_trigger_queries": 12672,
+      "local_drop_queries": 4502,
+      "archetypes": {
+        "3": 438,
+        "4": 460,
+        "2": 426,
+        "7": 128,
+        "5": 412,
+        "0": 430,
+        "6": 480,
+        "1": 426
+      },
+      "height_count_distribution": {
+        "5": 1356,
+        "4": 1108,
+        "2": 128,
+        "3": 588,
+        "6": 20
+      },
+      "failures": []
+    },
+    "native_room_families": 8,
+    "comparison_maps": 20,
+    "comparison_room": 5,
+    "comparison_floor_levels": [
+      0,
+      1,
+      3,
+      4,
+      5
+    ],
+    "map_readonly_checks": 240,
+    "fresh_map_checks": 190,
+    "atlas_redraw_hardware_frames": {
+      "min": 9,
+      "max": 29,
+      "initial": 17,
+      "previous_r2_min": 77,
+      "previous_r2_max": 93
+    },
+    "earned_progression": {
+      "full_checks": 63,
+      "four_room_drop_checks": 28
+    },
+    "performance": {
+      "rooms_per_build": 25,
+      "steady_updates_per_hardware_frame": {
+        "previous-weathered": 1.0,
+        "dynamic": 1.0
+      },
+      "load_p95_lower_order_statistic": {
+        "previous-weathered": 50,
+        "dynamic": 57
+      },
+      "quantile_definition": "lower order statistic at floor(0.95*(sample_count-1))",
+      "load_max_hardware_frames": {
+        "previous-weathered": 51,
+        "dynamic": 60
+      },
+      "living_samples": 50
+    }
+  },
+  "fixture_scope": [
+    "Native240x160 screens are real mGBA outputs.512x384 room images are registered frozen camera-crop mosaics, not single framebuffer frames.",
+    "Isolated reviews disclose deterministic new-run seeds, ordinary room-load requests and hero position/facing navigation. No inventory/health/completion/enemy/terrain/palette/framebuffer results are written.",
+    "The20comparisonmap atlas visits25rooms through ordinary loads for discovery; it is not an earned exploration claim. Fresh-map evidence uses a separate fresh core. Earned tools/gates/boss and retirement use real inputs."
+  ],
+  "limitations": [
+    "Finite64-seed geometry and representative native motion/art review do not exhaust every possible seed.",
+    "Host geometry proof covers actual core/topology/compositor; regional furniture is qualified by representative native rooms and earned routes.",
+    "Timing samples compare25living stationary rooms per build in mGBA, not maximal enemy stress or physical GBA hardware.",
+    "The9\u201329frame chart timing has25visited/cached room summaries. First reveal of unvisited rooms by an earned Map item is not timed.",
+    "All10pause maps remain review concepts; the final preferred layout is not selected."
+  ],
+  "complete": true
+}
