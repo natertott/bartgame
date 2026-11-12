@@ -48,4 +48,10 @@ void cream_room_set_chest_open(int node,bool8 opened);
 void cream_room_preview(int cell,CreamRoomInfo* out,u8 mask[CREAM_ROOM_W*CREAM_ROOM_H]);
 void cream_room_cave_pos(int terrace,int* px,int* py);
 void cream_room_drop_pos(int node,int edge_index,int* px,int* py);
+#if BART_CREAM_VARIANT == 12
+/* Pure standing approach to this edge's shared side-to-side room hinge. */
+void cream_room_walk_pos(int node,int edge_index,int* px,int* py);
+/* Repaint moved existing content after a pure topology plan updates spots. */
+void cream_room_relocate_features(const CreamRoomInfo* old_info);
+#endif
 #endif

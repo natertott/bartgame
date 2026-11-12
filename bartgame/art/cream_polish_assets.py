@@ -79,7 +79,7 @@ def build():
         tables['drop'].append([add('drop_s%d_v%d'%(s,v),S.rim(s,v,True),fb,'FLOOR') for v in range(2)])
         edges=[]
         for k,kind in enumerate(('solid_left','solid_right','drop_left','drop_right','toe')):
-            im=E.edge(s,kind)
+            im=S.D.edge(s,kind) if S.DYNAMIC and kind in ('solid_left','solid_right','toe') else E.edge(s,kind)
             if kind.startswith('drop_'):
                 im=S.rim(s,k-2,True);d=ImageDraw.Draw(im)
                 x=0 if kind=='drop_left' else 15
@@ -89,8 +89,8 @@ def build():
         tables['edge'].append(edges)
         climbs=[]
         for k,kind in enumerate(('top','mid','bottom')):
-            im=L.foot_floor(S.LADDER,s) if kind=='bottom' else L.ladder(S.LADDER,s,kind)
-            climbs.append([add('climb_s%d_k%d_h%d'%(s,k,x),im.crop((x*16,0,x*16+16,16)),fb if kind=='bottom' else cb,'CLIMB') for x in range(2)])
+            im=L.foot_floor(S.LADDER,s) if kind=='bottom' else S.D.masked_ladder(0,s,kind) if S.DYNAMIC else L.ladder(S.LADDER,s,kind)
+            climbs.append([add('climb_s%d_k%d_h%d'%(s,k,x),im.crop((x*16,0,x*16+16,16)),fb if kind=='bottom' else cb,'CLIMB',alpha=S.DYNAMIC and kind!='bottom') for x in range(2)])
         tables['climb'].append(climbs)
         im=underside(s)
         tables['underside'].append([add('underside_s%d_h%d'%(s,x),im.crop((x*16,0,x*16+16,16)),cb) for x in range(2)])
@@ -106,10 +106,29 @@ def build():
             kinds=[]
             for k,kind in enumerate(('top','mid','bottom')):
                 kinds.append([add('fall_s%d_w%d_k%d_x%d'%(s,width,k,x),None,'cream_water',frames=[
-                    W.fall(S.STYLE,s,width,kind,phase).crop((x*16,0,x*16+16,16)) for phase in range(W.PHASES)])
+                    W.fall(S.WATER_STYLE,0 if S.DYNAMIC else s,width,kind,phase).crop((x*16,0,x*16+16,16)) for phase in range(W.PHASES)])
                     for x in range(width)]+[None]*(3-width))
             falls.append(kinds)
         tables['fall'].append(falls)
+    if S.DYNAMIC:
+        tables['dynamic_climb']=[];tables['climb_backing']=[];tables['climb_floor']=[];tables['dynamic_edge']=[]
+        for s in range(3):
+            cb='cream_cliff%d'%s;fb='cream_floor%d'%s
+            tables['dynamic_edge'].append([add('dynamic_edge_s%d_%s'%(s,kind),S.D.edge(s,kind),cb) for kind in ('cap_left','cap_mid','cap_right')])
+            designs=[tables['climb'][s]]
+            for design in (1,2):
+                kinds=[]
+                for k,kind in enumerate(('top','mid','bottom')):
+                    im=S.D.foot_floor(design,s) if kind=='bottom' else S.D.masked_ladder(design,s,kind)
+                    kinds.append([add('dynamic_climb_s%d_d%d_k%d_h%d'%(s,design,k,x),
+                                      im.crop((x*16,0,x*16+16,16)),fb if kind=='bottom' else cb,
+                                      'CLIMB',alpha=kind!='bottom') for x in range(2)])
+                designs.append(kinds)
+            tables['dynamic_climb'].append(designs)
+            im=S.WALLS.backing(S.STYLE,s)
+            tables['climb_backing'].append([add('climb_backing_s%d_%d_%d'%(s,x,y),
+                im.crop((x*16,y*16,x*16+16,y*16+16)),cb,'CLIMB') for y in range(3) for x in range(8)])
+            tables['climb_floor'].append([add('climb_floor_s%d_v%d'%(s,v),S.floor(s,v),fb,'CLIMB') for v in range(4)])
     return mts,tables
 
 

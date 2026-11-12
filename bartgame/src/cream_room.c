@@ -9,6 +9,9 @@
 #if BART_CREAM_VARIANT >= 6
 #include "cream_visuals.h"
 #endif
+#if BART_CREAM_VARIANT == 12
+#include "cream_topology.h"
+#endif
 
 CreamRoomInfo gCreamRoom;
 u8 gCreamOpenEdges[CC_NODES];
@@ -61,6 +64,24 @@ static const u16 sChest[2][2][2]={
 
 static int walk_y(int terrace) {return terrace==CC_UPPER?6:19;}
 static int cave_y(int terrace) {return terrace==CC_UPPER?6:19;}
+#if BART_CREAM_VARIANT == 12
+/* Both neighboring rooms derive the same side-route hinge. The wide lanes
+   still meet their own component, but a whole area no longer repeats two
+   perfectly straight horizontal interfaces in every room. */
+static int walk_lane_y(int from_node,const CreamEdge* edge) {
+    int a=cream_cell(from_node),b=edge?cream_cell(edge->target):a;
+    int low=MIN(a,b),high=MAX(a,b),t=cream_terrace(from_node);
+    u32 value=hash32(gCreamWorld.seed^0x4c414e45u,low*157+high*31+t*701);
+    return (t==CC_UPPER?4:18)+(value&3);
+}
+
+void cream_room_walk_pos(int node,int index,int* px,int* py) {
+    const CreamEdge* edge=cream_edge(node,index);
+    int west=edge && cream_cell(edge->target)%CC_WIDTH<cream_cell(node)%CC_WIDTH;
+    if(px)*px=west?24:CREAM_ROOM_W*16-24;
+    if(py)*py=walk_lane_y(node,edge)*16+14;
+}
+#endif
 static u32 noise(int x,int y) {return hash32(gCreamWorld.seed^0xC0AD1234u,(gCreamRoom.cell+1)*977+x*37+y*97);}
 static int stage(void) {return MIN(gCreamRoom.stage,2);}
 static bool8 valid(int x,int y) {return x>=0 && y>=0 && x<CREAM_ROOM_W && y<CREAM_ROOM_H;}
@@ -108,10 +129,21 @@ static void gate_rect(int node,int index,int* x0,int* y0,int* x1,int* y1) {
     *x0=x;*x1=x+1;*y0=*y1=gCreamRoom.lower_top[x];
     if(!e)return;
     if(e->kind==CC_WALK) {
+#if BART_CREAM_VARIANT == 12
+        y=walk_lane_y(node,e);
+#endif
         x=(other%CC_WIDTH < gCreamRoom.cell%CC_WIDTH)?1:30;
         *x0=*x1=x;*y0=y-1;*y1=y+1;
     } else if(e->kind==CC_CAVE) {
         *x0=6;*x1=7;*y0=*y1=cave_y(t)+(e->require==CC_TOKEN_CAPE_PACCI);
+#if BART_CREAM_VARIANT == 12
+    } else if(e->kind==CC_CLIMB && other==gCreamRoom.cell) {
+        /* An uneven lower shelf must not offer a side entrance above the
+           gate. Close every row beside the first accessible shaft foot. */
+        *y0=MIN(MIN(gCreamRoom.lower_top[x-1],gCreamRoom.lower_top[x]),
+                MIN(gCreamRoom.lower_top[x+1],gCreamRoom.lower_top[x+2]));
+        *y1=MAX(gCreamRoom.lower_top[x],gCreamRoom.lower_top[x+1]);
+#endif
     } else if(e->kind==CC_CLIMB && other!=gCreamRoom.cell) {
         *x0=x;*x1=x+1;*y0=*y1=2;
     } else if(e->kind==CC_DROP) {
@@ -216,7 +248,12 @@ static void paint_routes(int terrace) {
         const CreamEdge* e=cream_edge(node,i);int target=cream_cell(e->target);
         if(e->kind==CC_WALK) {
             x=target%CC_WIDTH < gCreamRoom.cell%CC_WIDTH?0:28;
+#if BART_CREAM_VARIANT == 12
+            y=walk_lane_y(node,e);
+            floor_rect(x,y-1,x+3,y+1,TRUE);
+#else
             floor_rect(x,walk_y(t)-1,x+3,walk_y(t)+1,TRUE);
+#endif
         } else if(e->kind==CC_CLIMB && target==gCreamRoom.cell) {
             for(x=gCreamRoom.climb_x;x<=gCreamRoom.climb_x+1;x++) {
                 int top=gCreamRoom.upper_bottom[x]+1,bottom=gCreamRoom.lower_top[x];
@@ -240,9 +277,52 @@ static void chest_tiles(int terrace,bool8 opened) {
     for(y=0;y<2;y++)for(x=0;x<2;x++)room_set_overlay(p.x+x,p.y-1+y,sChest[opened!=0][y][x]);
 }
 
+#if BART_CREAM_VARIANT == 12
+static bool8 moved_spot(Spot before,Spot after) {
+    return before.x!=after.x || before.y!=after.y;
+}
+
+void cream_room_relocate_features(const CreamRoomInfo* old_info) {
+    int t,x,y;
+    if(!old_info)return;
+    for(t=0;t<2;t++) {
+        const CreamTerraceSpots* old=&old_info->terrace[t];
+        const CreamTerraceSpots* next=&gCreamRoom.terrace[t];
+        if((next->content&CC_CONTENT_CHEST) && moved_spot(old->chest,next->chest)) {
+            for(y=0;y<2;y++)for(x=0;x<2;x++) {
+                int tx=old->chest.x+x,ty=old->chest.y-1+y;
+                u16 overlay=room_get_overlay(tx,ty);
+                if(overlay==sChest[0][y][x] || overlay==sChest[1][y][x])
+                    room_set_overlay(tx,ty,MT_NONE);
+            }
+            chest_tiles(t,FALSE);
+        }
+        if((next->content&CC_CONTENT_MISSION) && moved_spot(old->mission,next->mission)) {
+            if(room_get_overlay(old->mission.x,old->mission.y)==MT_CREAM_TRIAL)
+                room_set_overlay(old->mission.x,old->mission.y,MT_NONE);
+            room_set_overlay(next->mission.x,next->mission.y,MT_CREAM_TRIAL);
+        }
+        if((next->content&CC_CONTENT_CACHE) && !(next->content&CC_CONTENT_CHEST) &&
+           moved_spot(old->cache,next->cache)) {
+            if(room_get_overlay(old->cache.x,old->cache.y)==MT_CREAM_CACHE)
+                room_set_overlay(old->cache.x,old->cache.y,MT_NONE);
+            room_set_overlay(next->cache.x,next->cache.y,MT_CREAM_CACHE);
+        }
+        if((next->content&CC_CONTENT_HEAL) && moved_spot(old->heal,next->heal)) {
+            if(room_get_overlay(old->heal.x,old->heal.y)==MT_CREAM_SHRINE)
+                room_set_overlay(old->heal.x,old->heal.y,MT_NONE);
+            room_set_overlay(next->heal.x,next->heal.y,MT_CREAM_SHRINE);
+        }
+    }
+}
+#endif
+
 void cream_room_set_chest_open(int node,bool8 opened) {
     if(node<0 || node>=CC_NODES || cream_cell(node)!=gCreamRoom.cell || !(gCreamRoom.terrace[cream_terrace(node)].content&CC_CONTENT_CHEST))return;
     chest_tiles(cream_terrace(node),opened);
+#if BART_CREAM_VARIANT == 12
+    cream_topology_sync();
+#endif
     room_build_solid();room_render();
 }
 
@@ -282,6 +362,9 @@ static void spots(int terrace) {
 
 void cream_room_build(int cell) {
     int x,y,t,s;
+#if BART_CREAM_VARIANT == 12
+    cream_topology_prepare();
+#endif
     cell=CLAMP(cell,0,CC_ROOMS-1);memset(&gCreamRoom,0,sizeof(gCreamRoom));gCreamRoom.cell=cell;
     gCreamRoom.stage=MIN(gCreamWorld.corruption[cell],2);profiles(cell);s=stage();
     room_clear(CREAM_ROOM_W,CREAM_ROOM_H,sCliff[s][1][0]);
@@ -321,6 +404,9 @@ void cream_room_build(int cell) {
         if(room_type(x,y)==TT_FLOOR && (noise(x,y)&3)==0 && ABS(x-gCreamRoom.climb_x)>3)
             room_set_overlay(x,y,sMold[s]);
     }
+#if BART_CREAM_VARIANT == 12
+    cream_topology_apply();
+#endif
 #if BART_CREAM_VARIANT == 6
     cream_visuals_build();
 #elif BART_CREAM_VARIANT >= 7
@@ -331,14 +417,23 @@ void cream_room_build(int cell) {
 
 int cream_room_terrace_at(int px,int py,int current) {
     int x=CLAMP(px>>4,0,31),y=(py-4)>>4;
+#if BART_CREAM_VARIANT == 12
+    int legacy=y<=gCreamRoom.upper_bottom[x]?CC_UPPER:
+               y>=gCreamRoom.lower_top[x]?CC_LOWER:current;
+    return cream_topology_component_at(px,py,legacy);
+#else
     if(y<=gCreamRoom.upper_bottom[x])return CC_UPPER;
     if(y>=gCreamRoom.lower_top[x])return CC_LOWER;
     return current;
+#endif
 }
 
 bool8 cream_room_feature_reserved(int x,int y) {
     static const u8 flags[5]={CC_CONTENT_CHEST,CC_CONTENT_NPC,CC_CONTENT_HEAL,CC_CONTENT_CACHE,CC_CONTENT_MISSION};
     int t,i;
+#if BART_CREAM_VARIANT == 12
+    if(cream_topology_reserved(x,y))return TRUE;
+#endif
     for(t=0;t<2;t++) {
         const CreamTerraceSpots* p=&gCreamRoom.terrace[t];
         const Spot* feature[5]={&p->chest,&p->npc,&p->heal,&p->cache,&p->mission};
@@ -363,6 +458,35 @@ static void arrival_profile(int cell,int x,int* upper,int* lower,int* climb) {
     *lower=15+(((x+((n>>8)&7))/7)&1)+(motif==3 && x>20);
     *climb=12+2*(hash32(gCreamWorld.seed,(cell%CC_WIDTH)*53+0xCA)%5);
 }
+#if BART_CREAM_VARIANT == 12
+/* A directed entrance can be ungated while the return route in its target
+   still has a barrier. Land on the dry interior side of that barrier without
+   opening it. This query stays pure: topology planning also uses arrivals to
+   reserve their supported approaches before the target room is loaded. */
+static void arrival_clear_target_gate(const CreamEdge* entrance,int* px,int* py) {
+    int node=entrance->target,t=cream_terrace(node),cell=cream_cell(node),i;
+    for(i=0;i<cream_edge_count(node);i++) {
+        const CreamEdge* gate=cream_edge(node,i);
+        int x0,x1,y0,y1;
+        if(!gate->require || (gCreamOpenEdges[node]&(1u<<i)))continue;
+        if(entrance->kind==CC_WALK && gate->kind==CC_WALK) {
+            int left=cream_cell(gate->target)%CC_WIDTH<cell%CC_WIDTH;
+            x0=x1=left?1:30;y0=walk_lane_y(node,gate)-1;y1=y0+2;
+        } else if(entrance->kind==CC_CLIMB && gate->kind==CC_DROP && t==CC_LOWER) {
+            int upper,lower,cx;
+            arrival_profile(cell,10,&upper,&lower,&cx);
+            x0=cx;x1=cx+1;y0=y1=22;
+        } else continue;
+        /* Match Bloom's grounded feet box, including Cape pits which do not
+           block a collision query but must never be an arrival surface. */
+        if(*px+3<x0*16 || *px-4>=(x1+1)*16 ||
+           *py-1<y0*16 || *py-7>=(y1+1)*16)continue;
+        if(entrance->kind==CC_WALK)*px=(x0==1?2:29)*16+8;
+        else *py=21*16+14;
+    }
+}
+#endif
+
 void cream_room_arrival(int from_node,const CreamEdge* edge,int* px,int* py,int* facing) {
     int t=edge?cream_terrace(edge->target):CC_LOWER;
     int from=cream_cell(from_node),to=edge?cream_cell(edge->target):gCreamRoom.cell;
@@ -373,6 +497,9 @@ void cream_room_arrival(int from_node,const CreamEdge* edge,int* px,int* py,int*
     if(edge->kind==CC_WALK) {
         bool8 east=to%CC_WIDTH>from%CC_WIDTH;
         *px=east?24:CREAM_ROOM_W*16-24;*facing=east?FACE_E:FACE_W;
+#if BART_CREAM_VARIANT == 12
+        *py=walk_lane_y(from_node,edge)*16+14;
+#endif
     } else if(edge->kind==CC_CAVE) {
         cream_room_cave_pos(t,px,py);*py=(cave_y(t)+2)*16+14;*facing=FACE_S;
     } else if(edge->kind==CC_CLIMB) {
@@ -390,6 +517,9 @@ void cream_room_arrival(int from_node,const CreamEdge* edge,int* px,int* py,int*
         }
         *facing=FACE_S;
     }
+#if BART_CREAM_VARIANT == 12
+    arrival_clear_target_gate(edge,px,py);
+#endif
 }
 
 bool8 cream_room_route(int node,int px,int py,int facing,u16 intent,CreamRoomRoute* out) {
@@ -398,7 +528,11 @@ bool8 cream_room_route(int node,int px,int py,int facing,u16 intent,CreamRoomRou
     memset(out,0,sizeof(*out));
     for(i=0;i<cream_edge_count(node);i++) {
         const CreamEdge* e=cream_edge(node,i);int target=cream_cell(e->target),mode=CCR_NONE,x,y;
+#if BART_CREAM_VARIANT == 12
+        if(e->kind==CC_WALK && ABS(py-(walk_lane_y(node,e)*16+14))<=18) {
+#else
         if(e->kind==CC_WALK && ABS(py-(walk_y(t)*16+14))<=18) {
+#endif
             if(target%CC_WIDTH<gCreamRoom.cell%CC_WIDTH && px<=12 && (intent&KEY_LEFT))mode=CCR_WALK;
             if(target%CC_WIDTH>gCreamRoom.cell%CC_WIDTH && px>=CREAM_ROOM_W*16-12 && (intent&KEY_RIGHT))mode=CCR_WALK;
         } else if(e->kind==CC_CLIMB) {
@@ -454,6 +588,16 @@ bool8 cream_room_unlock_edge(int node,int index) {
      if(reverse>=0 && cream_edge(e->target,reverse)->require==e->require)gCreamOpenEdges[e->target]|=1u<<reverse;}
     if(cream_cell(node)==gCreamRoom.cell) {
         paint_gate(node,index,TRUE);
+#if BART_CREAM_VARIANT == 12
+        {
+            const CreamEdge* edge=cream_edge(node,index);
+            int reverse=cream_find_edge(edge->target,node);
+            if(cream_cell(edge->target)==gCreamRoom.cell && reverse>=0 &&
+               cream_edge(edge->target,reverse)->require==edge->require)
+                paint_gate(edge->target,reverse,TRUE);
+        }
+        cream_topology_sync();
+#endif
 #if BART_CREAM_VARIANT >= 6
         cream_visuals_refresh();
 #endif
@@ -485,12 +629,20 @@ void cream_room_preview(int cell,CreamRoomInfo* out,u8 mask[CREAM_ROOM_W*CREAM_R
             const CreamEdge* e=cream_edge(node,i);int target=cream_cell(e->target),x0=cx,x1=cx+1,y0=out->lower_top[cx],y1=y0;
             if(e->kind==CC_WALK) {
                 int left=target%5<cell%5;
+#if BART_CREAM_VARIANT == 12
+                wy=walk_lane_y(node,e);
+#endif
                 for(y=wy-1;y<=wy+1;y++)for(x=left?0:28;x<=(left?3:31);x++)mask[y*32+x]=t+1;
                 x0=x1=left?1:30;y0=wy-1;y1=wy+1;
             } else if(e->kind==CC_CLIMB) {
                 if(target==cell) {
                     for(x=cx;x<=cx+1;x++)for(y=out->upper_bottom[x]+1;y<=out->lower_top[x];y++)mask[y*32+x]=3;
                     for(y=out->lower_top[cx]+1;y<=19;y++)for(x=cx-1;x<=cx+2;x++)mask[y*32+x]=1;
+#if BART_CREAM_VARIANT == 12
+                    y0=MIN(MIN(out->lower_top[cx-1],out->lower_top[cx]),
+                           MIN(out->lower_top[cx+1],out->lower_top[cx+2]));
+                    y1=MAX(out->lower_top[cx],out->lower_top[cx+1]);
+#endif
                 } else {for(x=cx;x<=cx+1;x++)for(y=0;y<=MAX(3,upper_top(out,x));y++)mask[y*32+x]=3;y0=y1=2;}
             } else if(e->kind==CC_DROP) {
                 x0=t==CC_LOWER?cx:(e->flags&CC_LONG_DROP)?27:10;x1=x0+1;

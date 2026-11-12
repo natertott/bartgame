@@ -13,6 +13,11 @@ static u16 sLookup[HASH_SLOTS] EWRAM_BSS;
 static u16 sEntries[CELLS][4] EWRAM_BSS;
 static u16 sBases[CELLS] EWRAM_BSS;
 
+#if BART_CREAM_VARIANT == 12
+static u16 sAdmissionLimit;
+void cream_polish_blend_limit(u16 limit) {sAdmissionLimit=MIN(limit,CREAM_POLISH_BLEND_RESERVE);}
+#endif
+
 static unsigned key_hash(u16 base,u16 paint) {
     return ((unsigned)base*37u+(unsigned)paint*101u)&(HASH_SLOTS-1);
 }
@@ -61,8 +66,68 @@ void cream_polish_blend_reset(void) {
     gCreamPolishBlendCount=gCreamPolishBlendRejected=gCreamPolishBlendOverflow=0;
     memset(sLookup,0,sizeof(sLookup));
     memset(sBases,0xff,sizeof(sBases));
+#if BART_CREAM_VARIANT == 12
+    sAdmissionLimit=CREAM_POLISH_BLEND_RESERVE;
+#endif
 }
 
+#if BART_CREAM_VARIANT == 12
+/* A complete carved shaft is admitted atomically, with repeated middle glyphs.
+   Planning never uploads a partially admitted strip or consumes failed keys. */
+bool8 cream_polish_blend_grid(int x,int y,int w,int h,const u16* paint_grid) {
+    const Tileset* ts=&tilesets[TS_CREAM];
+    u16 scratch[64][4];
+    u16 pending_base[256],pending_paint[256];
+    int dx,dy,q,new_count=0,old_count=gCreamPolishBlendCount;
+    if(w<1 || h<1 || w*h>64 || x<0 || y<0 || x+w>CREAM_ROOM_W || y+h>CREAM_ROOM_H)return FALSE;
+    for(dy=0;dy<h;dy++)for(dx=0;dx<w;dx++) {
+        int at=(y+dy)*ROOM_MAX_W+x+dx,p=dy*w+dx;
+        u16 base=gRoom.ground[at],paint=paint_grid[p];
+        if(paint==MT_NONE)continue;
+        if(base>=METATILE_COUNT || paint>=METATILE_COUNT)goto reject;
+        for(q=0;q<4;q++) {
+            u16 b=ts->map[base*4+q],a=ts->map[paint*4+q],entry;
+            unsigned kind=cream_polish_tile_alpha[a&1023];
+            if(kind==0)entry=b;
+            else if(kind==1)entry=a;
+            else {
+                int i;
+                if((a&0xf000)!=(b&0xf000))goto reject;
+                i=find(b,a,FALSE);
+                if(i<0) {
+                    int n;
+                    for(n=0;n<new_count;n++)if(pending_base[n]==b && pending_paint[n]==a)break;
+                    if(n==new_count) {
+                        if(old_count+new_count>=sAdmissionLimit)goto reject;
+                        pending_base[n]=b;pending_paint[n]=a;new_count++;
+                    }
+                    i=old_count+n;
+                }
+                if(ts->tile_count+i>=1024){gCreamPolishBlendOverflow++;goto reject;}
+                entry=(b&0xf000)|(ts->tile_count+i);
+            }
+            scratch[p][q]=entry;
+        }
+    }
+    for(q=0;q<new_count;q++)find(pending_base[q],pending_paint[q],TRUE);
+    for(q=old_count;q<gCreamPolishBlendCount;q++)upload(ts,q);
+    for(dy=0;dy<h;dy++)for(dx=0;dx<w;dx++) {
+        int at=(y+dy)*ROOM_MAX_W+x+dx,p=dy*w+dx;
+        if(paint_grid[p]==MT_NONE)continue;
+        sBases[at]=gRoom.ground[at];
+        for(q=0;q<4;q++)sEntries[at][q]=scratch[p][q];
+    }
+    return TRUE;
+reject:
+    gCreamPolishBlendRejected++;return FALSE;
+}
+bool8 cream_polish_blend_fits(int x,int y,u16 first,int w,int h) {
+    u16 paint[12];int i;
+    if(w<1 || h<1 || w*h>12)return FALSE;
+    for(i=0;i<w*h;i++)paint[i]=first+i;
+    return cream_polish_blend_grid(x,y,w,h,paint);
+}
+#else
 bool8 cream_polish_blend_fits(int x,int y,u16 first,int w,int h) {
     const Tileset* ts=&tilesets[TS_CREAM];
     u16 scratch[12][4];
@@ -110,6 +175,8 @@ bool8 cream_polish_blend_fits(int x,int y,u16 first,int w,int h) {
 reject:
     gCreamPolishBlendRejected++;return FALSE;
 }
+
+#endif
 
 const u16* cream_polish_blend_entries(int x,int y,u16 base,const Tileset* ts) {
     int at=y*ROOM_MAX_W+x;

@@ -26,6 +26,9 @@ extern u16 items_sheet_tile(void);
 #if BART_CREAM_VARIANT >= 7
 #include "cream_visuals.h"
 #endif
+#if BART_CREAM_VARIANT == 12
+#include "cream_topology.h"
+#endif
 #include "interactive.h"
 #include "ambient.h"
 #include "appearance.h"
@@ -285,6 +288,9 @@ static void load_cream(int node,int px,int py,int facing) {
     player_init(px,py,facing);regional_content_place(AREA_CREAM,gGame.cell);
     legacy_items_room_reset();cream_runtime_enter();
     camera_update(px,py-16,TRUE);dark_off();minimap_render();handoff_room_enter(AREA_CREAM,gGame.cell);
+#if BART_CREAM_VARIANT == 12
+    cream_topology_sync();
+#endif
 #if BART_CREAM_VARIANT >= 7
     cream_visuals_build();
 #endif
@@ -1034,6 +1040,11 @@ static void update_transition(void) {
             cream_runtime_build(cream_node(next,CC_UPPER));gCreamProgress.visited=visited;
             actors_clear();sprites_reset();objects_room_reset();npc_room_reset();enemy_load_sheets_for_theme(gCreamWorld.corruption[next]);
             player_init(CLAMP(px,24,room_px_w()-24),14,FACE_S);legacy_items_room_reset();cream_runtime_room_reset();gPlayer->state=PS_JUMP;gPlayer->sub=2;gPlayer->z=0;
+#if BART_CREAM_VARIANT == 12
+            /* Intervening screens show the same native physical topology,
+               without starting their actors, optional events or rewards. */
+            cream_topology_sync();cream_visuals_build();room_render();
+#endif
             camera_update(PX(gPlayer->x),0,TRUE);dark_off();minimap_render();
         } else camera_update(px,py-16,FALSE);
         draw_world();return;

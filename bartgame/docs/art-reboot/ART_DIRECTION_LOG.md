@@ -2052,3 +2052,52 @@ small native transition; decorative mold no longer breaks floor shade, and
 stepped ledge endcaps remain stable on refresh. Load-time composition uses
 atomic budget admission and packed native rows; active frame timing and
 physical contracts stay unchanged. Default0 and previous6 reproduce exactly.
+
+## 2026-11-12 — Weathered Curdstone, varied physical terraces and ten maps
+
+**Status:** selected local Cream materials implemented in profile12; the ten
+map arrangements are working review alternatives, with no winning map design
+selected. Final source/build identifiers and independent mGBA qualification
+are pending. Earlier review results above do not qualify this new profile.
+
+The user prefers polish **#4 Weathered Curdstone**, carved **Stone Steps,
+Carved Ascent and Alternating Pins**, and waterfall **#2**. They reject long
+vertical strips interrupting the horizontal rock, repeated two-story room
+layouts and the text-based mountain map. The new profile keeps the selected
+Weathered master silhouettes and Rind material banks, authors exact joined
+horizontal backing endpoints and replaces long bright returns with short
+stone planes. Carved designs6/7/8 now paint their meaningful treads, grooves,
+pegs and joins through native masks, allowing continuous backing outside the
+carving instead of an opaque shaft rectangle. Whitewater Ribbons retains four
+native blue animation phases and complete one-, two- and three-cell widths.
+
+`cream_topology.c` composes eight seeded local archetypes: Open Shelf, Folded
+Stair, Broken Mesa, Switchback, High Grotto, Narrow Spurs, Double Ridge and
+Peak Arena. Added platforms have real supported floors, height transitions,
+climbing cells and optional directed local drops, rather than decorative
+steps. Baseline0 and raised heights1–6 remain distinct from the routing
+sentinel7. Local additions stay inside their original macrocomponent; paired
+lateral routes, required item gates, incoming landings, content approaches
+and the summit fighting space remain protected contracts. Content and spawn
+coordinates follow their final actual platforms. The finite generation audit
+must still establish these properties across the final source.
+
+Ten 240×160 graphical pause maps test contours, isometric relief, a real
+section, exploded floors, route diagrams, room cards, engineering plans,
+stained glass, focus/context and a plan/height profile. L cycles forward,
+Select backward, A opens the selected room, B returns from zoom, R opens
+items and Start closes. They share actual or pure-preview topology, real
+markers and the current visited/Map fog policy; viewing is read-only. A slice
+does not show every off-slice event, and separated layers or an envelope do
+not promise a connected path. Those limits belong beside the designs rather
+than being hidden by an attractive diagram.
+
+Affected sources are `art/cream_dynamic_art.py`, the profile12 asset dispatch,
+`cream_topology.*`, Cream traversal/room composition and `cream_map_*` with
+the existing menu restoration hooks. The detailed
+[implementation and review note](CREAM_WEATHERED_HEIGHTS.md) records scope,
+controls, ten names, risks and the pending evidence checklist. Existing read
+tutorial applications, pinned menu observations and the viewed Mount Crenel
+note remain the study sources; no fresh external research or imported game
+pixels are claimed. Synthetic native source previews, registered whole-room
+surveys and ordinary mGBA menu/traversal captures must retain separate labels.

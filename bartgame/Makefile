@@ -97,10 +97,10 @@ FOREST_STAMP := $(GEN)/forest-profile-$(BART_FOREST).stamp
 # Unselected Cream environment studies. Zero retains production artwork.
 BART_CREAM ?= 0
 ifneq ($(words $(BART_CREAM)),1)
-$(error BART_CREAM must be one integer in 0..11)
+$(error BART_CREAM must be one integer in 0..12)
 endif
-ifneq ($(BART_CREAM),$(filter $(BART_CREAM),0 1 2 3 4 5 6 7 8 9 10 11))
-$(error BART_CREAM must be one integer in 0..11)
+ifneq ($(BART_CREAM),$(filter $(BART_CREAM),0 1 2 3 4 5 6 7 8 9 10 11 12))
+$(error BART_CREAM must be one integer in 0..12)
 endif
 CREAM_STAMP := $(GEN)/cream-profile-$(BART_CREAM).stamp
 
@@ -129,8 +129,11 @@ SRC_C     := $(filter-out %_iwram.c,$(wildcard src/*.c))
 ifneq ($(BART_CREAM),6)
 SRC_C     := $(filter-out src/cream_visuals.c,$(SRC_C))
 endif
-ifeq ($(filter $(BART_CREAM),7 8 9 10 11),)
+ifeq ($(filter $(BART_CREAM),7 8 9 10 11 12),)
 SRC_C     := $(filter-out src/cream_polish.c src/cream_polish_blend.c,$(SRC_C))
+endif
+ifneq ($(BART_CREAM),12)
+SRC_C     := $(filter-out src/cream_topology.c src/cream_map_concepts.c src/cream_map_forms_a.c src/cream_map_forms_b.c,$(SRC_C))
 endif
 ifeq ($(PROFILE),0)
 SRC_C     := $(filter-out src/performance.c,$(SRC_C))

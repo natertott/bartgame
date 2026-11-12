@@ -431,3 +431,29 @@ repeated ladder halves and an offscreen live capture; the
 [polish notes](../curdled-cream/POLISH_STUDIES.md) and
 [final gallery](../../../cream-polish-review/README.md) record their corrections
 and distinguish original source sheets from live/frozen renderer evidence.
+
+## Selected Weathered heights and graphical Cream maps — 2026-11-12
+
+Direct reference: the latest user selection of Weathered Curdstone polish
+#4, Stone Steps / Carved Ascent / Alternating Pins, and waterfall #2, together
+with criticism of vertical wall seams, repeated two-level rooms and the
+text-based pause map. These choices authorize the local profile12 synthesis
+and physical room variety; they do not adopt one of its ten map concepts.
+
+This pass reuses the already-read tutorial application rules
+[G01–G18](REFERENCE_APPLICATION.md), the recorded
+[Mount Crenel observations](../curdled-cream/CRENEL_REFERENCE.md) and pinned
+[GBA menu source study](references/GBA_MENU_RESEARCH.md). In particular,
+connected material clusters and selective edge strength guide the continuous
+stone backing and carved climb masks; stable focus, scale continuity and
+separate knowledge layers guide the graphical maps. Those are applications
+to original BARTGAME designs, not claims that another game used these exact
+projections, controls or generated terrain. No new website, commercial ROM,
+missing PDF figure or inaccessible review was consulted in this pass.
+
+[CREAM_WEATHERED_HEIGHTS.md](CREAM_WEATHERED_HEIGHTS.md) records the native
+art/topology contracts and ten actual-game map implementations. Final frozen
+source, ROM digest, native mGBA gallery and independent audit are pending;
+source fixtures do not qualify live behavior. This entry preserves the
+earlier Cream galleries as historical evidence rather than assigning their
+results to new geometry or menu code.

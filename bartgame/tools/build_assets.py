@@ -256,7 +256,12 @@ if cream_terrain.VARIANT >= 6:
                          ('shade','[3][8][3][3]'),('fall','[3][3][3][3]')):
             h.append('extern const u16 cream_polish_%s%s;'%(key,dims))
             c.append('const u16 cream_polish_%s%s = %s;'%(key,dims,polish_ids(CD.TABLES[key])))
-        h.append('#define CREAM_POLISH_BLEND_RESERVE 128')
+        if cream_terrain.VARIANT != 12:
+            h.append('#define CREAM_POLISH_BLEND_RESERVE 128')
+        if cream_terrain.VARIANT == 12:
+            for key,dims in (('dynamic_climb','[3][3][3][2]'),('climb_backing','[3][24]'),('climb_floor','[3][4]'),('dynamic_edge','[3][3]')):
+                h.append('extern const u16 cream_polish_%s%s;'%(key,dims))
+                c.append('const u16 cream_polish_%s%s = %s;'%(key,dims,polish_ids(CD.TABLES[key])))
 c.append(c_array_u8('metatile_type', mt_type))
 h.append('extern const u8 metatile_type[];')
 c.append(c_array_u8('metatile_coll', mt_coll))
@@ -468,6 +473,8 @@ for si, (sname, pred) in enumerate(SETS):
             'collision': 'Generated solid tree-base cells preserved; no full32px canvas collider.',
         }
     if sname == 'cream' and cream_terrain.VARIANT >= 7:
+        if cream_terrain.VARIANT == 12:
+            h.append('#define CREAM_POLISH_BLEND_RESERVE %d' % (1024-len(ts.tiles)))
         alpha=[]
         for tile in ts.tiles:
             inks=[(byte>>shift)&15 for byte in tile for shift in (0,4)]

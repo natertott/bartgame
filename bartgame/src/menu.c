@@ -72,8 +72,13 @@ static u8 sCursor;
 static u8 sMapCur;
 static u8 sOverviewDone;
 static u16 sMarksTile, sDotsTile;
+#if BART_CREAM_VARIANT == 12
+static u16 sTiles[PIC_TW * PIC_TH * 16] EWRAM_BSS ALIGN4;
+static u8 sMasks[CELLS][32 * 24] EWRAM_BSS ALIGN4;
+#else
 static u16 sTiles[PIC_TW * PIC_TH * 16] EWRAM_BSS;
 static u8 sMasks[CELLS][32 * 24] EWRAM_BSS;
+#endif
 static Canvas sTabs, sDesc, sCount[2], sInfo, sLegend, sSide;
 #if BART_MENU_VARIANT
 static u8 sMapEventMarks[CELLS][MP_COUNT*2] EWRAM_BSS;
@@ -1439,3 +1444,23 @@ void menu_update(void) {
         draw_page();
     }
 }
+
+#if BART_CREAM_VARIANT == 12
+/* The Cream atlas borrows dormant Forest-menu buffers, rather than keeping
+   another19KB framebuffer permanently resident. Invalidate those caches. */
+u16* menu_cream_pixel_scratch(void) {
+    sOverviewDone=0;sMaskDone=0;
+#if BART_MENU_VARIANT
+    sStudyMapReady=0;sStudyBaseReady=0;sMapEventsDone=0;
+#endif
+    return (u16*)sMasks;
+}
+void* menu_cream_plan_scratch(void) {
+#if BART_MENU_VARIANT
+    /* Forest study caches are dormant while the Cream atlas is open. */
+    return sStudyBase;
+#else
+    return sTiles;
+#endif
+}
+#endif

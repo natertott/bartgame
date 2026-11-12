@@ -19,6 +19,9 @@
 #include "regional_content.h"
 #include "handoff_events.h"
 #include "world.h"
+#if BART_CREAM_VARIANT == 12
+#include "cream_map_concepts.h"
+#endif
 
 enum { GM_SATCHEL,GM_MAP };
 #define GM_PAGE 12
@@ -362,6 +365,9 @@ static void zoom_body(void) {
     (void)node;vwf_flush(&sBody,FALSE);
 }
 static void atlas(void) {
+#if BART_CREAM_VARIANT == 12
+    cream_map_render(sMapCell,sZoom,gCreamMapConcept);return;
+#endif
     blank();bg0_canvas(&sHead,2,1,26,1);text_at(&sHead,0,0,"THE CURDLED CREAM",UI_INK_GOLD);
     bg0_canvas(&sFoot,1,19,28,1);text_at(&sFoot,0,0,sZoom?"B overview  L shelf  R satchel":"A room  L shelf  B back  R satchel",UI_INK_CREAM);
     if(sZoom) {
@@ -375,7 +381,12 @@ static void atlas(void) {
     }
     map_side();sync();
 }
-static void redraw(void) {if(sPage==GM_SATCHEL)satchel();else atlas();}
+static void redraw(void) {
+#if BART_CREAM_VARIANT == 12
+    if(sPage==GM_SATCHEL)cream_map_leave();
+#endif
+    if(sPage==GM_SATCHEL)satchel();else atlas();
+}
 static void open_page(int page) {
     sActive=1;sPage=page;sCursor=sZoom=0;sFilter=2;
     sInputRead=sInputWrite=0;sInputHeld=(~REG_KEYINPUT)&KEY_ANY;
@@ -396,6 +407,9 @@ void gear_menu_open_map(void) {
     open_page(GM_MAP);
 }
 static void close(bool8 old_menu) {
+#if BART_CREAM_VARIANT == 12
+    cream_map_leave();
+#endif
     sActive=0;gVBlankHook=sOldHook;icon32_menu_end();hud_invalidate_icons();gKeysDown=0;
     REG_BG3CNT=sSavedBg3;gBgScroll[3][0]=sSavedScroll[0];gBgScroll[3][1]=sSavedScroll[1];
     if(old_menu) {menu_open();return;}
@@ -418,6 +432,9 @@ void gear_menu_update(void) {
         sPage^=1;sZoom=0;dirty=TRUE;
     }
     else if(gKeysDown&KEY_SELECT) {
+#if BART_CREAM_VARIANT == 12
+        if(sPage==GM_MAP){gCreamMapConcept=(gCreamMapConcept+9)%10;redraw();sfx_play(SFX_MENU);return;}
+#endif
         close(TRUE);return;
     } else if(sPage==GM_SATCHEL) {
         int c=sCursor;
@@ -435,7 +452,14 @@ void gear_menu_update(void) {
     } else {
         int c=sMapCell;
         if(gKeysDown&KEY_B) {if(sZoom){sZoom=0;dirty=TRUE;}else{close(TRUE);return;}}
-        if(gKeysDown&KEY_L) {sTerrace^=1;dirty=TRUE;}
+        if(gKeysDown&KEY_L) {
+#if BART_CREAM_VARIANT == 12
+            gCreamMapConcept=(gCreamMapConcept+1)%10;
+#else
+            sTerrace^=1;
+#endif
+            dirty=TRUE;
+        }
         if(!sZoom) {
             if((gKeysDown&KEY_LEFT)&&c%5)c--;
             if((gKeysDown&KEY_RIGHT)&&c%5<4)c++;
@@ -447,5 +471,9 @@ void gear_menu_update(void) {
     }
     if(dirty) {redraw();sfx_play(SFX_MENU);}
     if(sPage==GM_SATCHEL)item_sprites();
-    else if((gFrame&15)==0) {if(sZoom)zoom_body();else overview_body();}
+    else if((gFrame&15)==0) {
+#if BART_CREAM_VARIANT != 12
+        if(sZoom)zoom_body();else overview_body();
+#endif
+    }
 }

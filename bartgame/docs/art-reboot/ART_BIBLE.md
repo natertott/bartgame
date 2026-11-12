@@ -648,3 +648,42 @@ selection consistent with the actual room composer: complementary halves form
 one illustration, and the rendered rim must carry height when it replaces a
 cliff-top tile. [The study notes](../curdled-cream/ART_STUDIES.md) distinguish
 source assemblies, registered native camera mosaics and ordinary live footage.
+
+### Selected Weathered Curdstone and physical room heights
+
+The latest Cream direction selects polish study **#4 Weathered Curdstone**,
+the carved **Stone Steps / Carved Ascent / Alternating Pins** family and
+waterfall **#2 Whitewater Ribbons**. Profile `BART_CREAM=12` combines those
+local choices with room-local physical terraces. Earlier profiles and all
+other regions retain their own recorded styles; this is not a new shared
+palette or permission to redraw Bloom, enemies or the HUD.
+
+Broad horizontal rock beds must continue through their backing repeats.
+Do not break them with a bright room-high side strip, dark panel matte or
+opaque climbing shaft. Keep complete Weathered master silhouettes, short
+material returns and quiet continuous backing. Carved climbs reveal that
+backing outside their actual treads, recessed grooves, pegs and endpoint
+joins; recess shadows remain deliberately opaque. Regular climbing marks
+belong only to real climbable cells. Blue falls keep four authored motion
+phases and whole one-, two- or three-cell sheets with banks at the outside.
+
+Room variety must come from physical support and elevation, not only a new
+wall painting. The profile12 composer has eight seeded archetypes, with
+additional terraces and climbs occupying measured usable space. Baseline
+ground is level0; raised local surfaces can reach levels1–6. The two existing
+macro progression components still own their floors, gates and inter-room
+connections. Local terraces may not bridge a required gate, erase an arrival,
+or strand a fixture. A neighboring room's paired lateral boundary remains a
+real shared route. Takeoff lips and landing shade continue to describe actual
+drop endpoints, while blocked rims remain structurally different.
+
+Cream pause-map review now has ten native graphical arrangements. Each uses
+the actual active room or the same deterministic pure topology preview for a
+known noncurrent room. Preserve the existing visited/Map knowledge policy,
+separate player and cursor, completed-content state and actual feature
+coordinates. Map drawing and cycling must not generate a different run or
+mutate terrain, routes, progress or the player. Sections, exploded shelves and
+height envelopes are explanatory diagrams: separated layers and projected
+surfaces never create a gameplay connection. See
+[Weathered heights and map contracts](CREAM_WEATHERED_HEIGHTS.md) for the ten
+review layouts, controls, limitations and pending final qualification.

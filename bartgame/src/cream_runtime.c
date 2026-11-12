@@ -17,6 +17,9 @@
 #include "util.h"
 #include "world_tokens.h"
 #include "regional_content.h"
+#if BART_CREAM_VARIANT == 12
+#include "cream_topology.h"
+#endif
 
 CreamProgress gCreamProgress;
 u8 gCreamNode;
@@ -35,6 +38,18 @@ static bool8 bit_get(const u32* b,int n) {return (b[n>>5]>>(n&31))&1;}
 static void bit_set(u32* b,int n) {b[n>>5]|=1u<<(n&31);}
 static CreamTerraceSpots* spots(int node) {return &gCreamRoom.terrace[cream_terrace(node)];}
 static bool8 near_spot(Spot p,int radius) {
+#if BART_CREAM_VARIANT == 12
+    /* A chest/task on a perch belongs to its physical level. Proximity
+       through the vertical face must not replace reaching its approach. */
+    int here=cream_topology_height_at(PX(gPlayer->x)>>4,(PX(gPlayer->y)-4)>>4);
+    int there=cream_topology_height_at(p.x,p.y+1);
+    if(there<0)there=cream_topology_height_at(p.x,p.y);
+    /* Solid feature pixels hide support in the walkability map, while their
+       packed level still records the floor directly beneath the object. */
+    if(there<0 && gCreamTopology.active && p.x<CREAM_ROOM_W && p.y<CREAM_ROOM_H)
+        there=gCreamTopology.cells[p.y*CREAM_ROOM_W+p.x]&CT_HEIGHT_MASK;
+    if(here>=0 && there>=0 && here!=there)return FALSE;
+#endif
     return ABS(PX(gPlayer->x)-(p.x*16+8))<=radius && ABS(PX(gPlayer->y)-(p.y*16+22))<=radius;
 }
 
@@ -110,6 +125,16 @@ void cream_runtime_return(void) {
         for(int j=0;j<cream_edge_count(node);j++)if(cream_edge(node,j)->require==CC_TOKEN_ALL && cream_runtime_tokens()==CC_TOKEN_ALL)cream_room_unlock_edge(node,j);
     }
 }
+#if BART_CREAM_VARIANT == 12
+static bool8 component_change_open(int target) {
+    int index=cream_find_edge(gCreamNode,target);
+    const CreamEdge* edge=index>=0?cream_edge(gCreamNode,index):0;
+    if(!edge || (edge->kind!=CC_CLIMB && edge->kind!=CC_DROP) ||
+       !world_tokens_cream_open(edge->require))return FALSE;
+    return !edge->require || edge->require==CC_TOKEN_CAPE_PACCI ||
+           (gCreamOpenEdges[gCreamNode]&(1u<<index));
+}
+#endif
 bool8 cream_runtime_pre_player(void) {
     Actor* a=gPlayer;
     if(gGame.area!=AREA_CREAM)return FALSE;
@@ -149,11 +174,38 @@ bool8 cream_runtime_pre_player(void) {
         if(!room_box_solid(px-4,next-7,px+3,next-1)) {a->y=Q16(next);a->anim_t++;}
         a->facing=dy<0?FACE_N:FACE_S;
     }
+#if BART_CREAM_VARIANT == 12
+    /* A paired carved climb is one32px surface. Keep Bloom between its
+       halves instead of offsetting the body to the center of one half. */
+    {
+        int cx=gCreamRoom.climb_x,x=CLAMP(px>>4,0,31),y=CLAMP((py-4)>>4,0,23);
+        int left=x,right=x;
+        if(x>=cx && x<=cx+1)a->x=Q16((cx+1)*16);
+        else {
+            while(left>0 && room_type(left-1,y)==TT_CLIMB)left--;
+            while(right<31 && room_type(right+1,y)==TT_CLIMB)right++;
+            a->x=Q16((left+right+1)*8);
+        }
+    }
+#else
     a->x=Q16((px>>4)*16+8);
+#endif
     if(room_type_px(PX(a->x),PX(a->y)-4)!=TT_CLIMB && !room_solid_px(PX(a->x),PX(a->y)-4)) {
+#if BART_CREAM_VARIANT == 12
+        int terrace=cream_room_terrace_at(PX(a->x),PX(a->y),cream_terrace(gCreamNode));
+        int target=cream_node(gGame.cell,terrace);
+        if(target!=gCreamNode && !component_change_open(target)) {
+            player_set_pos(gPl.safe_x,gPl.safe_y);
+            a->state=PS_NORMAL;a->sub=0;a->z=a->zvel=0;
+            sRouteCooldown=20;sfx_play(SFX_BUMP);return TRUE;
+        }
+        a->state=PS_NORMAL;gPl.safe_x=PX(a->x);gPl.safe_y=PX(a->y);
+        gCreamNode=gCreamProgress.node=target;
+#else
         a->state=PS_NORMAL;gPl.safe_x=PX(a->x);gPl.safe_y=PX(a->y);
         int terrace=cream_room_terrace_at(PX(a->x),PX(a->y),cream_terrace(gCreamNode));
         gCreamNode=gCreamProgress.node=cream_node(gGame.cell,terrace);
+#endif
     }
     return TRUE;
 }
@@ -224,6 +276,21 @@ void cream_runtime_update(void) {
     if(sRouteCooldown){sRouteCooldown--;return;}
     if(gPlayer->state!=PS_NORMAL&&gPlayer->state!=PS_CLIMB)return;
     if(gPlayer->z)return;
+#if BART_CREAM_VARIANT == 12
+    /* Micro terraces belong to their existing macro graph component. Their
+       short descents animate a real supported landing without inventing a
+       graph edge, reloading actors, or bypassing a required route gate. */
+    if(gPlayer->state==PS_NORMAL &&
+       cream_room_terrace_at(PX(gPlayer->x),PX(gPlayer->y),cream_terrace(gCreamNode))==cream_terrace(gCreamNode)) {
+        int lx,ly,height;
+        if(cream_topology_local_drop(PX(gPlayer->x),PX(gPlayer->y),gPlayer->facing,
+                                     gKeysHeld|gKeysDown,&lx,&ly,&height)) {
+            player_set_pos(lx,ly);
+            begin_drop(1,height);
+            return;
+        }
+    }
+#endif
     if(cream_runtime_tokens()==CC_TOKEN_ALL) {
         int index;for(index=0;index<cream_edge_count(gCreamNode);index++) {
             const CreamEdge* gate=cream_edge(gCreamNode,index);

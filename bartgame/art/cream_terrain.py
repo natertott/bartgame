@@ -265,7 +265,8 @@ def build():
         add('mold_s%d'%stage,prop('mold',stage),'cream_props',prop=1)
         for kind in ('water','fall'):
             out.append(dict(name='cream_%s_s%d'%(kind,stage),pal='cream_water',type='WATER' if kind=='water' else 'SOLID',coll=0 if kind=='water' else 15,
-                            frames=[rows(water(stage,p,kind=='fall')) for p in range(2)],anim_speed=16))
+                            frames=[rows(water(stage,p,kind=='fall')) for p in range(4 if VARIANT==12 and kind=='fall' else 2)],
+                            anim_speed=8 if VARIANT==12 and kind=='fall' else 16))
     for kind,tt,coll in [('trial','FLOOR',0),('cache','FLOOR',0),('ward','SOLID',15),('lamp','TORCH',15),('shrine','FLOOR',0),('switch','SWITCH',0)]:
         add(kind,prop(kind),'cream_props',tt,coll,prop=int(kind!='switch'))
     add('lamp_lit',prop('lamp',phase=1),'cream_props','TORCH_LIT',15,prop=1)

@@ -5,6 +5,9 @@
 #include "room.h"
 #include "util.h"
 #include "cream_polish_blend.h"
+#if BART_CREAM_VARIANT == 12
+#include "cream_topology.h"
+#endif
 
 #if BART_CREAM_VARIANT >= 7
 CreamVisualLanding gCreamVisualLandings[CC_NODES*CC_EDGE_MAX] EWRAM_BSS;
@@ -23,6 +26,7 @@ static u16 sShadePaint[CREAM_ROOM_W*CREAM_ROOM_H] EWRAM_BSS;
 static u8 sFloorMaterial[CREAM_ROOM_W*CREAM_ROOM_H] EWRAM_BSS;
 static bool8 sReady;
 
+#if BART_CREAM_VARIANT != 12
 static const u16 sMid[3][2]={
  {MT_CREAM_CLIFF_MID_S0_V0,MT_CREAM_CLIFF_MID_S0_V1},
  {MT_CREAM_CLIFF_MID_S1_V0,MT_CREAM_CLIFF_MID_S1_V1},
@@ -33,6 +37,7 @@ static const u16 sBase[3][2]={
  {MT_CREAM_CLIFF_BASE_S1_V0,MT_CREAM_CLIFF_BASE_S1_V1},
  {MT_CREAM_CLIFF_BASE_S2_V0,MT_CREAM_CLIFF_BASE_S2_V1}
 };
+#endif
 static const u16 sRim[3]={MT_CREAM_RIM_S0,MT_CREAM_RIM_S1,MT_CREAM_RIM_S2};
 static const u16 sDrop[3]={MT_CREAM_DROP_S0,MT_CREAM_DROP_S1,MT_CREAM_DROP_S2};
 static const u16 sFloor[3][4]={
@@ -64,19 +69,87 @@ static bool8 substitute(int x,int y,u16 replacement) {
     room_set(x,y,replacement);return TRUE;
 }
 
+#if BART_CREAM_VARIANT == 12
+/* Native fallbacks deliberately share a quiet ink. Replace every actual rock
+   cell, including protected route backing and the room returns, before decals.
+   A reservation protects gameplay space; it must not leave an empty matte. */
+static u8 sBackingX,sBackingY;
+u16 gCreamPolishClimbFallbacks;
+static bool8 dynamic_rock(u16 mt) {
+    int s=visual_stage(),i;
+    static const u16 first[3]={MT_CREAM_CLIFF_TOP_S0_V0,MT_CREAM_CLIFF_TOP_S1_V0,MT_CREAM_CLIFF_TOP_S2_V0};
+    if(mt>=first[s] && mt<first[s]+10)return TRUE;
+    if(mt==sRim[s])return TRUE;
+    for(i=0;i<24;i++)if(mt==cream_visual_backing[s][i])return TRUE;
+    for(i=0;i<2;i++)if(mt==cream_visual_rim[s][i] || mt==cream_polish_underside[s][i])return TRUE;
+    for(i=0;i<3;i++)if(mt==cream_polish_dynamic_edge[s][i])return TRUE;
+    return mt==cream_visual_edge[s][0] || mt==cream_visual_edge[s][1] || mt==cream_visual_edge[s][4];
+}
+static int backing_index(int x,int y) {return ((y+sBackingY)%3)*8+((x+sBackingX)&7);}
+static bool8 dynamic_support(int x,int y) {
+    u8 c;int kind;
+    if(!in_room(x,y) || !gCreamTopology.active)return FALSE;
+    c=gCreamTopology.cells[y*CREAM_ROOM_W+x];kind=room_type(x,y);
+    return (c&CT_SUPPORT) && !(c&CT_CLIMB) && (kind==TT_FLOOR || kind==TT_MYST);
+}
+static void continuous_walls(void) {
+    int x,y,s=visual_stage();u32 phase=variation(41,29);
+    sBackingX=phase&7;sBackingY=(phase>>5)%3;
+    for(y=0;y<CREAM_ROOM_H;y++)for(x=0;x<CREAM_ROOM_W;x++)
+        if(dynamic_rock(room_get(x,y)))substitute(x,y,cream_visual_backing[s][backing_index(x,y)]);
+}
+#endif
+
 static bool8 native_wall(int x,int y) {
     int s=visual_stage();u16 mt;
     if(!in_room(x,y) || room_get_overlay(x,y)!=MT_NONE ||
        cream_room_feature_reserved(x,y))return FALSE;
     mt=room_get(x,y);
+#if BART_CREAM_VARIANT == 12
+    (void)s;return dynamic_rock(mt);
+#else
     return mt==sMid[s][0] || mt==sMid[s][1] || mt==sBase[s][0] ||
            mt==sBase[s][1] || mt==sRim[s];
+#endif
 }
 
 /* A fall is one complete native-width sheet in real unclaimed wall, with
    one top and one basin/foam foot. It never overwrites a door, route, floor
    or regional stamp, and never turns dry traversable ground into water. */
 static void waterfalls(void) {
+#if BART_CREAM_VARIANT == 12
+    u32 n=variation(97,53);int desired=1+((n>>7)%3),width,s=visual_stage();
+    memset(&gCreamPolishFall,0,sizeof(gCreamPolishFall));
+    if((n&3)!=0)return;
+    for(width=desired;width>=1;width--) {
+        int x,y,dx,best_x=-1,best_y=0,best_h=0,best_score=-32767;
+        for(x=2;x+width<=30;x++)for(y=0;y<CREAM_ROOM_H-3;y++) {
+            int end=y,score;bool8 clear=TRUE;
+            for(dx=0;dx<width;dx++)if(!native_wall(x+dx,y)){clear=FALSE;break;}
+            if(!clear)continue;
+            for(dx=0;dx<width;dx++)if(!native_wall(x+dx,y-1))break;
+            if(dx==width)continue;
+            /* Measure complete clear faces, not a guessed macro interval.
+               The basin must meet supported dry floor across its full width. */
+            while(end<CREAM_ROOM_H-1) {
+                for(dx=0;dx<width;dx++)if(!native_wall(x+dx,end))break;
+                if(dx<width)break;
+                end++;
+            }
+            if(end-y<3)continue;
+            for(dx=0;dx<width;dx++)if(!dynamic_support(x+dx,end)){clear=FALSE;break;}
+            if(!clear)continue;
+            score=(end-y)*16+(variation(x,y)&31);
+            if(score>best_score){best_score=score;best_x=x;best_y=y;best_h=end-y;}
+        }
+        if(best_x<0)continue;
+        for(y=0;y<best_h;y++)for(dx=0;dx<width;dx++) {
+            int kind=y==0?0:y==best_h-1?2:1;
+            substitute(best_x+dx,best_y+y,cream_polish_fall[s][width-1][kind][dx]);
+        }
+        gCreamPolishFall=(CreamPolishFall){best_x,best_y,width,best_h};return;
+    }
+#else
     u32 n=hash32(gCreamWorld.seed^0xC0AD1234u,(gCreamRoom.cell+1)*977+3*37+9*97);
     int width,desired=1+((n>>7)%3),s=visual_stage();
     memset(&gCreamPolishFall,0,sizeof(gCreamPolishFall));
@@ -107,12 +180,60 @@ static void waterfalls(void) {
         gCreamPolishFall=(CreamPolishFall){x,best_y,width,best_h};
         return;
     }
+#endif
 }
 
 /* The physical climb is two cells wide. Draw one32px ladder across those
    cells, rather than repeating a16px four-rail motif. A gate may interrupt
    either end; caps follow the actual remaining climb cells. */
 static void paired_ladders(void) {
+#if BART_CREAM_VARIANT == 12
+    int anchor,y,pass,s=visual_stage(),design=variation(71,83)%3;
+    gCreamPolishLadderCells=gCreamPolishClimbFallbacks=0;
+    memset(sPanelSpace,0,sizeof(sPanelSpace));
+    /* Authoritative strip anchors handle staggered macro ends and every new
+       local ascent. A final pass catches any future native paired climb. */
+    for(pass=0;pass<gCreamTopology.climbs+2;pass++) {
+        if(pass==0)anchor=gCreamRoom.climb_x;
+        else if(pass<=gCreamTopology.climbs)anchor=gCreamTopology.climb[pass-1].x;
+        else anchor=0;
+        for(;anchor<CREAM_ROOM_W-1;anchor++) {
+            for(y=0;y<CREAM_ROOM_H;) {
+                u16 paint[64];int top=y,bottom,dy,dx,count=0;
+                bool8 found=FALSE;
+                for(dx=0;dx<2;dx++)if(room_type(anchor+dx,y)==TT_CLIMB &&
+                    !sPanelSpace[y*CREAM_ROOM_W+anchor+dx])found=TRUE;
+                if(!found){y++;continue;}
+                bottom=y;
+                while(bottom+1<CREAM_ROOM_H && (room_type(anchor,bottom+1)==TT_CLIMB ||
+                      room_type(anchor+1,bottom+1)==TT_CLIMB))bottom++;
+                for(dy=top;dy<=bottom;dy++)for(dx=0;dx<2;dx++) {
+                    int tx=anchor+dx,at=dy*CREAM_ROOM_W+tx,p=(dy-top)*2+dx,kind;
+                    paint[p]=MT_NONE;
+                    if(room_type(tx,dy)!=TT_CLIMB || sPanelSpace[at])continue;
+                    sPanelSpace[at]=1;
+                    kind=room_type(tx,dy+1)!=TT_CLIMB && dynamic_support(tx,dy+1)?2:
+                         room_type(tx,dy-1)!=TT_CLIMB?0:1;
+                    substitute(tx,dy,kind==2?cream_polish_climb_floor[s][variation(tx,dy)&3]:
+                               cream_polish_climb_backing[s][backing_index(tx,dy)]);
+                    paint[p]=cream_polish_dynamic_climb[s][design][kind][dx];count++;
+                    gCreamPolishWallPaint[dy*ROOM_MAX_W+tx]=MT_NONE;
+                }
+                /* Never publish half a shaft, missing rungs or a partial mask.
+                   All ascents get first claim on the finite native blend bank. */
+                if(cream_polish_blend_grid(anchor,top,2,bottom-top+1,paint)) {
+                    for(dy=top;dy<=bottom;dy++)for(dx=0;dx<2;dx++) {
+                        u16 mt=paint[(dy-top)*2+dx];
+                        if(mt!=MT_NONE)gCreamPolishWallPaint[dy*ROOM_MAX_W+anchor+dx]=mt;
+                    }
+                    gCreamPolishLadderCells+=count;
+                } else gCreamPolishClimbFallbacks++;
+                y=bottom+1;
+            }
+            if(pass<=gCreamTopology.climbs)break;
+        }
+    }
+#else
     int x,y,s=visual_stage();
     gCreamPolishLadderCells=0;
     for(x=gCreamRoom.climb_x;x<=gCreamRoom.climb_x+1;x++)for(y=0;y<CREAM_ROOM_H;y++) {
@@ -121,6 +242,7 @@ static void paired_ladders(void) {
         kind=room_type(x,y-1)!=TT_CLIMB?0:room_type(x,y+1)!=TT_CLIMB?2:1;
         if(substitute(x,y,cream_polish_climb[s][kind][x-gCreamRoom.climb_x]))gCreamPolishLadderCells++;
     }
+#endif
 }
 
 static bool8 panel_fits(int x,int y,int p) {
@@ -144,7 +266,17 @@ static bool8 panel_fits(int x,int y,int p) {
 
 static bool8 reserve_panel(int x,int y,int p) {
     const CreamVisualPanel* panel=&cream_visual_panels[visual_stage()][p];
+#if BART_CREAM_VARIANT == 12
+    bool8 result;
+    /* Gates may reveal a new foot/backing join later in the same room. Leave
+       those structural glyphs room even when optional painting is plentiful. */
+    cream_polish_blend_limit(CREAM_POLISH_BLEND_RESERVE-16);
+    result=cream_polish_blend_fits(x,y,panel->first,panel->w,panel->h);
+    cream_polish_blend_limit(CREAM_POLISH_BLEND_RESERVE);
+    return result;
+#else
     return cream_polish_blend_fits(x,y,panel->first,panel->w,panel->h);
+#endif
 }
 
 static void place_panel(int x,int y,int p) {
@@ -170,6 +302,9 @@ static void wall_panels(void) {
     int x,y,p,s=visual_stage(),best_x=-1,best_y=0,best=-32767,available=0,attempt;
     u32 backing_phase=variation(41,29);
     int backing_x=backing_phase&7,backing_y=(backing_phase>>5)%3;
+#if BART_CREAM_VARIANT == 12
+    (void)backing_x;(void)backing_y;
+#endif
     gCreamVisualPanelCount=gCreamVisualPanelCells=0;
     memset(gCreamVisualPanelKinds,0,sizeof(gCreamVisualPanelKinds));
     memset(sPanelSpace,0,sizeof(sPanelSpace));
@@ -178,14 +313,23 @@ static void wall_panels(void) {
        raised rim, waterfall, gate or foreground object is never flattened. */
     for(y=0;y<CREAM_ROOM_H;y++)for(x=2;x<30;x++) {
         int index=y*ROOM_MAX_W+x;u16 mt=gRoom.ground[index];
+#if BART_CREAM_VARIANT == 12
+        if(dynamic_rock(mt) && !dynamic_support(x,y-1) && !dynamic_support(x,y+1) &&
+           !dynamic_support(x-1,y) && !dynamic_support(x+1,y) &&
+           gCreamPolishWallPaint[index]==MT_NONE &&
+           gRoom.overlay[index]==MT_NONE && !cream_room_feature_reserved(x,y)) {
+#else
         if((mt==sMid[s][0] || mt==sMid[s][1]) &&
            gRoom.overlay[index]==MT_NONE && !cream_room_feature_reserved(x,y)) {
+#endif
             sPanelSpace[y*CREAM_ROOM_W+x]=1;
             sOriginalRows[y]|=1u<<x;available++;
             /* Quiet areas are parts of one broad native rock painting, not
                another exposed grid of little scalloped midface stamps. The
                phase is continuous across the measured room face. */
+#if BART_CREAM_VARIANT != 12
             substitute(x,y,cream_visual_backing[s][((y+backing_y)%3)*8+((x+backing_x)&7)]);
+#endif
         }
     }
     /* One rare, large, closed blind arch. Prefer the principal cliff, and
@@ -267,7 +411,68 @@ static int path_variant(u16 mt,int s) {
     return -1;
 }
 
+#if BART_CREAM_VARIANT == 12
+static int shade_material(int x,int y);
+static bool8 stamp_shade(int x,int y,u16 tile,int role);
+#endif
+
 static void ledge_edges(void) {
+#if BART_CREAM_VARIANT == 12
+    int x,y,s=visual_stage();
+    gCreamVisualRimCount=gCreamVisualDropCount=gCreamVisualToeCount=0;
+    gCreamPolishUndersideCells=0;
+    /* Open sills are truthful: only actual directed macro/local takeoffs
+       receive the low edge. Everything else retains a solid raised face. */
+    for(y=0;y<CREAM_ROOM_H;y++)for(x=0;x<CREAM_ROOM_W;x++) {
+        u16 tile;
+        if(!open_drop(room_get(x,y),s))continue;
+        tile=cream_visual_drop[s][(x+y)&1];
+        if(y<CREAM_ROOM_H-1) {
+            if(!open_drop(room_get(x-1,y),s))tile=cream_visual_edge[s][2];
+            else if(!open_drop(room_get(x+1,y),s))tile=cream_visual_edge[s][3];
+        }
+        if(substitute(x,y,tile))gCreamVisualDropCount++;
+    }
+    /* All measured support boundaries matter, not just the two old profile
+       rows. This gives inset shelves and raised mesas their own visible mass. */
+    for(y=0;y<CREAM_ROOM_H;y++)for(x=0;x<CREAM_ROOM_W;x++) {
+        u16 tile;bool8 left,right;
+        if(!dynamic_rock(room_get(x,y)))continue;
+        tile=cream_visual_backing[s][backing_index(x,y)];
+        if(dynamic_support(x,y-1)) {
+            int source=open_drop(room_get(x,y-1),s)?y-1:
+                       y>=2 && open_drop(room_get(x,y-2),s) &&
+                       cream_topology_height_at(x,y-1)==cream_topology_height_at(x,y-2)?y-2:-1;
+            if(source>=0) {
+                /* An uneven macro sill can retain one supported row before
+                   its real face. Project the underside on the solid face,
+                   never onto that still-walkable intervening row. */
+                int half=open_drop(room_get(x-1,source),s)?1:0;
+                tile=cream_polish_underside[s][half];
+                gCreamPolishUndersideCells++;
+            } else {
+                left=dynamic_support(x-1,y-1) && in_room(x-1,y) && dynamic_rock(room_get(x-1,y));
+                right=dynamic_support(x+1,y-1) && in_room(x+1,y) && dynamic_rock(room_get(x+1,y));
+                tile=cream_polish_dynamic_edge[s][!left?0:!right?2:1];
+                gCreamVisualRimCount++;
+            }
+        } else if(dynamic_support(x,y+1))tile=cream_visual_edge[s][4];
+        else if(dynamic_support(x-1,y))tile=cream_visual_edge[s][1];
+        else if(dynamic_support(x+1,y))tile=cream_visual_edge[s][0];
+        substitute(x,y,tile);
+    }
+    /* A retained grain contact on every true cliff foot. Later landing shade
+       extends this same native material to the actual destination feet. */
+    for(y=1;y<CREAM_ROOM_H;y++)for(x=0;x<CREAM_ROOM_W;x++) {
+        int material;u16 above;
+        if(!dynamic_support(x,y))continue;
+        above=room_get(x,y-1);
+        if(above>=METATILE_COUNT || metatile_prop[above] || room_get_overlay(x,y-1)!=MT_NONE ||
+           metatile_type[above]!=TT_SOLID || metatile_coll[above]!=15)continue;
+        material=shade_material(x,y);
+        if(material>=0 && stamp_shade(x,y,cream_polish_shade[s][material][0][1],1))gCreamVisualToeCount++;
+    }
+#else
     int x,y,s=visual_stage(),terrace,i,dx;
     gCreamVisualRimCount=gCreamVisualDropCount=gCreamVisualToeCount=0;
     gCreamPolishUndersideCells=0;
@@ -336,6 +541,7 @@ static void ledge_edges(void) {
        raised-rim pass. Report the final visible rim, not that intermediate. */
     gCreamVisualRimCount=0;
     for(x=2;x<30;x++)if(solid_rim(room_get(x,gCreamRoom.upper_bottom[x]+1),s))gCreamVisualRimCount++;
+#endif
 }
 
 /* Recover the exact unshaded native floor/path. New semantic furniture is
@@ -444,6 +650,39 @@ static void landing_shadows(void) {
             if(stamp_shade(x,y,tile,3))cue->parts|=1u<<part;
         }
     }
+#if BART_CREAM_VARIANT == 12
+    /* Local drops preserve the macrocomponent but have equally real arrivals.
+       Reuse the measured, connected wall-to-feet shade rather than inventing
+       detached puddle shapes beneath each new platform. edge255 marks a
+       local cue; its physical record stays in gCreamTopology.drop. */
+    for(i=0;i<gCreamTopology.drops && gCreamVisualLandingCount<CC_NODES*CC_EDGE_MAX;i++) {
+        const CreamTopologyDrop* drop=&gCreamTopology.drop[i];
+        CreamVisualLanding* cue=&gCreamVisualLandings[gCreamVisualLandingCount++];
+        int column,part,level=cream_topology_height_at(drop->landing_x>>4,(drop->landing_y-4)>>4);
+        cue->x=drop->landing_x;cue->y=drop->landing_y;
+        cue->from=cream_node(gCreamRoom.cell,drop->owner);cue->edge=255;
+        cue->x0=(drop->landing_x>>4)-1;cue->y0=drop->landing_y>>4;
+        cue->parts=0;cue->flags=CREAM_VISUAL_ACTIVE;
+        for(column=0;column<3;column++) {
+            int x=cue->x0+column,top=cue->y0,y;
+            if(shade_material(x,top)<0 || cream_topology_height_at(x,top)!=level)continue;
+            while(top>0 && shade_material(x,top-1)>=0 && cream_topology_height_at(x,top-1)==level)top--;
+            if(top<=0 || !supports_floor_shadow(x,top-1))continue;
+            for(y=top;y<cue->y0;y++) {
+                int material=shade_material(x,y),kind=y==top?0:1;
+                if(material<0)break;
+                stamp_shade(x,y,cream_polish_shade[s][material][kind][column],kind==0?1:2);
+            }
+        }
+        for(part=0;part<6;part++) {
+            int x=cue->x0+part%3,y=cue->y0+part/3,material=shade_material(x,y);
+            u16 tile;
+            if(material<0 || cream_topology_height_at(x,y)!=level)continue;
+            tile=material<4?cream_visual_landing[s][part]:cream_visual_landing_path[s][material-4][part];
+            if(stamp_shade(x,y,tile,3))cue->parts|=1u<<part;
+        }
+    }
+#endif
 }
 
 void cream_polish_prepare(void) {
@@ -458,6 +697,9 @@ void cream_polish_prepare(void) {
     gCreamVisualLandingCount=gCreamVisualPanelCount=gCreamVisualPanelCells=0;
     gCreamVisualRimCount=gCreamVisualDropCount=gCreamVisualToeCount=0;
     gCreamPolishLadderCells=gCreamPolishUndersideCells=0;
+#if BART_CREAM_VARIANT == 12
+    gCreamPolishClimbFallbacks=0;
+#endif
     memset(gCreamVisualPanelKinds,0,sizeof(gCreamVisualPanelKinds));
 }
 
@@ -473,7 +715,12 @@ void cream_visuals_build(void) {
         int material=original_floor(room_get(x,y),visual_stage());
         sFloorMaterial[y*CREAM_ROOM_W+x]=material<0?255:material;
     }
+#if BART_CREAM_VARIANT == 12
+    continuous_walls();paired_ladders();waterfalls();ledge_edges();wall_panels();
+    sReady=TRUE;landing_shadows();
+#else
     waterfalls();wall_panels();sReady=TRUE;cream_visuals_refresh();
+#endif
 }
 
 #endif

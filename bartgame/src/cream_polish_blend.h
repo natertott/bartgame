@@ -7,5 +7,9 @@ extern u16 gCreamPolishWallPaint[ROOM_MAX_W*ROOM_MAX_H];
 extern u16 gCreamPolishBlendCount,gCreamPolishBlendRejected,gCreamPolishBlendOverflow;
 void cream_polish_blend_reset(void);
 bool8 cream_polish_blend_fits(int x,int y,u16 first,int w,int h);
+#if BART_CREAM_VARIANT == 12
+void cream_polish_blend_limit(u16 limit);
+bool8 cream_polish_blend_grid(int x,int y,int w,int h,const u16* paint);
+#endif
 const u16* cream_polish_blend_entries(int x,int y,u16 base,const Tileset* ts);
 #endif

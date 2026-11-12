@@ -1,6 +1,6 @@
 """Five native Cream refinements; original regions/profiles stay independent."""
 import os
-from PIL import ImageDraw
+from PIL import Image, ImageDraw
 from cream_style_depth import floor, cave
 from cream_style_rind import PALETTES as RIND, prop, chest, pit
 import cream_polish_water as W
@@ -8,19 +8,32 @@ import cream_polish_ladders as L
 import cream_polish_walls_a as A
 import cream_polish_walls_b as B
 
-STYLE = int(os.environ.get('BART_CREAM','7'))-7
+PROFILE = int(os.environ.get('BART_CREAM','7'))
+DYNAMIC = PROFILE == 12
+STYLE = 3 if DYNAMIC else PROFILE-7
 assert 0 <= STYLE < 5
-WALLS = A if STYLE < 3 else B
+if DYNAMIC:
+    import cream_dynamic_art as D
+WALLS = D if DYNAMIC else A if STYLE < 3 else B
+WATER_STYLE = 1 if DYNAMIC else STYLE
 PALETTES = {name:list(colors) for name,colors in RIND.items()}
 PALETTES['cream_water'] = list(W.PALETTE)
-LADDER = L.RECOMMENDED[STYLE]
+LADDER = 6 if DYNAMIC else L.RECOMMENDED[STYLE]
 
 
 def cliff(stage=0,kind='mid',variant=0):
+    if DYNAMIC:
+        # Native backing is composed after every semantic fixture. Keeping
+        # these equivalent logical fallbacks shared avoids redundant VRAM.
+        return Image.new('P',(16,16),3)
     return WALLS.filler(STYLE,stage,kind,variant)
 
 
 def climb(stage=0,kind='mid'):
+    if DYNAMIC:
+        # Semantic fallback only. The final compositor supplies a complete
+        # carved decal over actual CLIMB backing instead of a32px matte.
+        return Image.new('P',(16,16),3)
     image = L.foot_floor(LADDER,stage) if kind == 'bottom' else L.ladder(LADDER,stage,kind)
     return image.crop((0,0,16,16))
 
@@ -43,4 +56,5 @@ def rim(stage=0,variant=0,drop=False):
 
 
 def water(stage=0,phase=0,fall=False):
-    return W.fall(STYLE,stage,1,'mid',phase) if fall else W.pool(STYLE,stage,phase)
+    if DYNAMIC:stage=0  # clear blue water contrasts with infected rock veins
+    return W.fall(WATER_STYLE,stage,1,'mid',phase) if fall else W.pool(WATER_STYLE,stage,phase)
