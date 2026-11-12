@@ -228,10 +228,16 @@ class Audit:
             for value in values:
                 if isinstance(value,list):yield from flatten(value)
                 else:yield rom.tile_ids[value.upper()]
-        for key in ('rim','drop','edge','landing','floor_toe','landing_path'):
+        for key in ('rim','drop','edge','landing','floor_toe','landing_path','backing'):
             ids=list(flatten(source['tables'][key]))
             self.equal('native_composition_tables',key+' resolves exact source IDs',
                        struct.pack('<%dH'%len(ids),*ids),rom.array('cream_visual_'+key))
+        for stage in source['tables']['backing']:
+            ids=list(flatten(stage))
+            self.check('native_composition_tables','native128x48 backing contiguous solid cells',
+                       len(ids)==24 and ids==list(range(ids[0],ids[0]+24)) and all(
+                           i in self.added.values() and arrays['type'][i]==rom.defs['TT_SOLID'] and
+                           arrays['coll'][i]==15 and arrays['prop'][i]==0 for i in ids))
         return total
 
     def geometry(self):

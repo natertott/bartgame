@@ -353,21 +353,68 @@ def _compact(d, stage, variant):
                 [(11, 22), (14, 22), (16, 25), (13, 26), (11, 24)]))
 
 
+def backing(stage=0):
+    """A quiet native 128x48 rock mass beneath the larger wall paintings.
+
+    Broad unequal bedding planes replace the old repeating 16px scallop.
+    The outside two pixels stay at material ink 3 so the composer can join
+    spans and stop them at irregular solid-room boundaries without a frame.
+    These are subdued far-side planes, never bright projecting shelf caps.
+    """
+    stage = max(0, min(2, int(stage)))
+    im, d = _canvas((128, 48), stage)
+    # One broad tilted rock bed and an unequal opposing bed below it.  All
+    # turns are authored at this final size; no small repeated texture stamp.
+    d.polygon([(4, 8), (22, 4), (39, 5), (51, 8), (67, 7),
+               (86, 13), (89, 17), (75, 20), (62, 18), (51, 16),
+               (33, 18), (21, 14), (8, 15)], fill=4)
+    d.polygon([(91, 6), (108, 5), (122, 11), (123, 19),
+               (113, 23), (101, 20), (95, 15), (86, 13)], fill=4)
+    d.polygon([(7, 31), (22, 27), (39, 29), (54, 25), (72, 28),
+               (88, 26), (107, 30), (122, 28), (124, 35),
+               (112, 40), (96, 39), (83, 43), (63, 39), (48, 41),
+               (33, 36), (18, 38), (5, 36)], fill=4)
+    # Wider shadow wedges break the bands into connected material faces.
+    d.polygon([(26, 10), (41, 11), (52, 14), (44, 16),
+               (32, 14), (22, 14)], fill=3)
+    d.polygon([(61, 31), (76, 30), (88, 33), (94, 37),
+               (81, 39), (70, 35), (55, 35)], fill=3)
+    # Strata are separate unequal runs with no repeating hardware-cell phase.
+    # No black edge, bright cap, circular clod, freestanding crack or glint.
+    d.line([(12, 19), (22, 21), (34, 20), (43, 22), (55, 22)], fill=2)
+    d.line([(82, 22), (94, 24), (104, 23), (115, 25)], fill=2)
+    d.line([(29, 39), (39, 41), (50, 40), (59, 42)], fill=2)
+    # Mold attaches to two of those recesses and stays sparse enough to be
+    # subordinate when a substantial portion of this backing is exposed.
+    d.polygon([(19, 20), (26, 20), (30, 22), (27, 24),
+               (22, 23)], fill=9)
+    d.line([(22, 21), (26, 21), (28, 22)], fill=10)
+    d.polygon([(92, 24), (99, 23), (105, 25), (104, 29),
+               (98, 31), (92, 28)], fill=9)
+    d.polygon([(95, 25), (101, 25), (102, 27), (98, 29),
+               (95, 28)], fill=10)
+    d.line([(95, 25), (98, 24), (101, 25)], fill=11)
+    if stage:
+        # A single weak spot in one wet seam, not a new wall-wide crack layer.
+        d.line([(106, 23), (104, 26), (106, 29), (104, 32)], fill=2)
+    if stage == 2:
+        d.line([(106, 23), (104, 26), (106, 29), (104, 32)], fill=12)
+        d.line([(105, 25), (104, 26), (106, 29)], fill=13)
+        d.point((104, 26), fill=14)
+    return im
+
+
 def filler(stage=0, kind='mid', variant=0):
     """Quiet 16px solid backing for thin remnants between whole paintings.
 
     It deliberately carries no fans, tiny cracks or arch motif.  The large
-    panels supply the illustration; this subdued connected stone supplies the
-    joins.  Boundary kinds add only restrained plane/contact cues.  Physical
-    cliff edges and the visible upper rim use the dedicated border painter.
+    panels and native 128px backing supply the illustration; mid remnants are
+    flat material 3, with no centered 16px polygon or repeating scallop.  Only
+    boundary kinds add restrained edge planes/contact cues.  Physical cliff
+    edges and the visible upper rim use the dedicated border painter.
     """
     stage = max(0, min(2, int(stage)))
     im, d = _canvas((16, 16), stage)
-    if int(variant) % 2:
-        d.polygon([(0, 6), (5, 4), (11, 5), (15, 8), (12, 10),
-                   (5, 9), (0, 10)], fill=4)
-    else:
-        d.polygon([(0, 2), (6, 2), (10, 4), (8, 6), (2, 5), (0, 6)], fill=4)
     if kind == 'top':
         d.rectangle((0, 0, 15, 2), fill=4)
         d.line((0, 3, 15, 3), fill=2)

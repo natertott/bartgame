@@ -235,7 +235,7 @@ if cream_terrain.VARIANT == 6:
     c.append('const CreamVisualPanel cream_visual_panels[3][7] = {\n' + ',\n'.join(
         '{' + ','.join('{%d,%d,%d}' % (mt_names[p['first']], p['w'], p['h']) for p in row) + '}'
         for row in CD.TABLES['panels']) + '\n};')
-    for key, count in (('rim',2), ('drop',2), ('edge',5), ('landing',6), ('floor_toe',2)):
+    for key, count in (('rim',2), ('drop',2), ('edge',5), ('landing',6), ('floor_toe',2), ('backing',24)):
         symbol = 'cream_visual_' + key
         h.append('extern const u16 %s[3][%d];' % (symbol, count))
         c.append('const u16 %s[3][%d] = {\n' % (symbol, count) + ',\n'.join(

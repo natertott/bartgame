@@ -64,9 +64,17 @@ def build():
         floor_toes.append([add('cream_depth_floor_toe_s%d_v%d' % (stage, v), edges.floor_toe(stage, v), fb) for v in range(2)])
         path_landings.append([[add('cream_depth_landing_path_s%d_v%d_p%d' % (stage, v, part),
                                    landing_path(stage, v, part), fb) for part in range(6)] for v in range(4)])
+    backings = []
+    for stage in range(3):
+        image = walls.backing(stage)
+        assert image.size == (128, 48)
+        backings.append([add('cream_depth_backing_s%d_%d_%d' % (stage, x, y),
+                             image.crop((x*16, y*16, x*16+16, y*16+16)),
+                             'cream_cliff%d' % stage, True)
+                         for y in range(3) for x in range(8)])
     assert len(panels[0]) == 7
     return result, dict(panels=panels, rim=rims, drop=drops, edge=sides, landing=landings,
-                        floor_toe=floor_toes, landing_path=path_landings)
+                        floor_toe=floor_toes, landing_path=path_landings, backing=backings)
 
 
 METATILES, TABLES = build()
@@ -100,5 +108,17 @@ def write_review(folder):
                 canvas.paste(im.convert('RGB'),(264+v*36+drop*18,22+stage*150+113))
     canvas.save(folder/'native-source-atlas.png')
     canvas.resize((width*3,474*3),Image.Resampling.NEAREST).save(folder/'source-atlas-3x.png')
+    backing_sheet = Image.new('RGB', (256, 222), '#15141c')
+    labels = ImageDraw.Draw(backing_sheet)
+    labels.text((4, 2), '128x48 NATIVE ROCK / SOURCE ONLY', fill='#e0d8c0')
+    for stage in range(3):
+        im = walls.backing(stage).copy()
+        colors = [int(c[i:i+2],16) for c in walls.PALETTES['cream_cliff%d' % stage] for i in (1,3,5)]
+        im.putpalette(colors + [0]*(768-len(colors)))
+        y = 22 + stage*64
+        backing_sheet.paste(im.convert('RGB'), (4,y))
+        labels.text((140,y+12), ('HEALTHY','SOUR','DEEP')[stage], fill='#e0d8c0')
+    backing_sheet.save(folder/'backing-source-native.png')
+    backing_sheet.resize((768,666),Image.Resampling.NEAREST).save(folder/'backing-source-3x.png')
     (folder/'source-inventory.json').write_text(json.dumps(dict(panels=walls.SPECS, tables=TABLES,
                                                             added_metatiles=len(METATILES)),indent=2)+'\n')

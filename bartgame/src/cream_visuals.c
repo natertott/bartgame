@@ -94,6 +94,8 @@ static int original_run(int x,int y) {
 
 static void wall_panels(void) {
     int x,y,p,s=visual_stage(),best_x=-1,best_y=0,best=-32767,available=0,attempt;
+    u32 backing_phase=variation(41,29);
+    int backing_x=backing_phase&7,backing_y=(backing_phase>>5)%3;
     gCreamVisualPanelCount=gCreamVisualPanelCells=0;
     memset(gCreamVisualPanelKinds,0,sizeof(gCreamVisualPanelKinds));
     memset(sPanelSpace,0,sizeof(sPanelSpace));
@@ -106,6 +108,10 @@ static void wall_panels(void) {
            gRoom.overlay[index]==MT_NONE && !cream_room_feature_reserved(x,y)) {
             sPanelSpace[y*CREAM_ROOM_W+x]=1;
             sOriginalRows[y]|=1u<<x;available++;
+            /* Quiet areas are parts of one broad native rock painting, not
+               another exposed grid of little scalloped midface stamps. The
+               phase is continuous across the measured room face. */
+            substitute(x,y,cream_visual_backing[s][((y+backing_y)%3)*8+((x+backing_x)&7)]);
         }
     }
     /* One rare, large, closed blind arch. Prefer the principal cliff, and
@@ -121,8 +127,8 @@ static void wall_panels(void) {
     /* Candidate anchors span the measured faces at unequal x/y offsets.
        A top-to-bottom first-fit would align every 32px panel in two-row bands,
        even with many drawings. Seeded anchors break that mechanical rhythm.
-       Quiet backing deliberately occupies at least a third of the face. */
-    for(attempt=0;attempt<192 && gCreamVisualPanelCells*3<available*2;attempt++) {
+       Quiet backing deliberately occupies at least a quarter of the face. */
+    for(attempt=0;attempt<192 && gCreamVisualPanelCells*4<available*3;attempt++) {
         u32 anchor=variation(attempt*3+7,attempt*11+17),n;
         int choice[4],i,wide,variant;
         x=2+anchor%26;y=(anchor>>8)%(CREAM_ROOM_H-1);
@@ -134,7 +140,7 @@ static void wall_panels(void) {
         for(i=0;i<4;i++) {
             const CreamVisualPanel* panel;
             p=choice[i];panel=&cream_visual_panels[s][p];
-            if((gCreamVisualPanelCells+panel->w*panel->h)*3>available*2)continue;
+            if((gCreamVisualPanelCells+panel->w*panel->h)*4>available*3)continue;
             if(panel_fits(x,y,p)){place_panel(x,y,p);break;}
         }
     }
@@ -143,7 +149,7 @@ static void wall_panels(void) {
     for(y=0;y<CREAM_ROOM_H-1;y++)for(x=2;x<30;x++) {
         int first;
         if(sPanelSpace[y*CREAM_ROOM_W+x]!=1 || original_run(x,y)>3 || original_run(x,y+1)>3)continue;
-        if((gCreamVisualPanelCells+4)*3>available*2)continue;
+        if((gCreamVisualPanelCells+4)*4>available*3)continue;
         first=5+((variation(x,y)>>13)&1);
         if(panel_fits(x,y,first))place_panel(x,y,first);
         else if(panel_fits(x,y,first==5?6:5))place_panel(x,y,first==5?6:5);
