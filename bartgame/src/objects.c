@@ -20,9 +20,16 @@
 
 static u16 sItemsTile, sFxTile, sProjTile, sLiftTile, sArrowTile, sMouthTile, sPickTile, sIconTile;
 #define ICON_CACHE_SLOTS 7
+#define ICON_CACHE_TILES (ICON_CACHE_SLOTS*16)
+#define ICON_MENU_TILE (OBJ_TILE_SHEETS_END-ICON_CACHE_TILES)
+#define ICON_MENU_SAVE_TILES (ICON_CACHE_TILES+60)
 static u8 sIconFrame[ICON_CACHE_SLOTS], sIconAge[ICON_CACHE_SLOTS];
 static u16 sIconWorldPal[256] ALIGN4;
 static u8 sIconMenu;
+/* Actors are paused while menus use their final112 character slots. Include
+   the adjoining60 HUD slots so the primary menu and Satchel share one exact
+   restore contract without allocating from an already-full combat heap. */
+static u16 sIconMenuWorldTiles[ICON_MENU_SAVE_TILES*16] EWRAM_BSS ALIGN4;
 
 static void icon32_invalidate(void) {
     memset(sIconFrame,0xFF,sizeof(sIconFrame));
@@ -33,14 +40,20 @@ static void icon32_invalidate(void) {
    there. Retain the live colours (including portrait/orb animation), rather
    than rebuilding them from default ROM palettes when the bag closes. */
 void icon32_menu_begin(void) {
-    if (!sIconMenu)
+    if (!sIconMenu) {
+        vram_flush_queue();
         memcpy32(sIconWorldPal,gPalObj,sizeof(sIconWorldPal));
+        dma3_copy32((const void*)OBJ_TILE(ICON_MENU_TILE),sIconMenuWorldTiles,sizeof(sIconMenuWorldTiles));
+    }
     sIconMenu=1;
     icon32_invalidate();
 }
 
 void icon32_menu_end(void) {
     if (sIconMenu) {
+        /* No queued menu upload may run after the live bank is restored. */
+        vram_flush_queue();
+        dma3_copy32(sIconMenuWorldTiles,OBJ_TILE(ICON_MENU_TILE),sizeof(sIconMenuWorldTiles));
         memcpy32(gPalObj,sIconWorldPal,sizeof(sIconWorldPal));
         gPalDirty=1;
     }
@@ -67,11 +80,13 @@ static void ensure_sheets(void) {
 u16 icon32_frame_tile(int frame) {
     int i, slot = -1;
     const SpriteSheet* sh = &sheets[SHEET_ICON32];
-    if (!sIconTile) {
+    u16 base;
+    if (!sIconMenu && !sIconTile) {
         sIconTile = sprite_alloc(ICON_CACHE_SLOTS * sh->frame_tiles);
         if (!sIconTile)
             return 0;
     }
+    base=sIconMenu?ICON_MENU_TILE:sIconTile;
     for (i=0;i<ICON_CACHE_SLOTS;i++)
         if (sIconFrame[i] == frame) {
             slot=i;
@@ -88,7 +103,7 @@ u16 icon32_frame_tile(int frame) {
         }
         const u16* pixels=sIconMenu?icon32_exact_tiles:sh->tiles;
         vram_queue(pixels + frame * sh->frame_tiles * 16,
-                   OBJ_TILE(sIconTile + slot * sh->frame_tiles), sh->frame_tiles * 32);
+                   OBJ_TILE(base + slot * sh->frame_tiles), sh->frame_tiles * 32);
         if (sIconMenu)
             pal_set_obj(slot,&icon32_exact_pal[frame*16]);
         sIconFrame[slot]=frame;
@@ -101,7 +116,7 @@ u16 icon32_frame_tile(int frame) {
         if (i!=slot && sIconFrame[i]!=0xFF && sIconAge[i]<age)
             sIconAge[i]++;
     sIconAge[slot]=0;
-    return sIconTile + slot * sh->frame_tiles;
+    return base + slot * sh->frame_tiles;
 }
 
 int icon32_frame_palette(int frame) {

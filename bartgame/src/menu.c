@@ -20,6 +20,8 @@
 #include "room.h"
 #include "actor.h"
 #include "player.h"
+#include "legacy_items.h"
+#include "journal.h"
 #include "sound.h"
 #include "text.h"
 #include "ui.h"
@@ -92,26 +94,27 @@ typedef struct {
     u8 icon;        /* a frame of the icon sheet */
     const char* name;
     const char* desc;
+    u8 legacy;      /* zero for original art; otherwise a stable catalog ID */
 } MenuItem;
 
 static const MenuItem sItems[] = {
-    { EQ_SWORD, ITEM_SWORD, F_ICON32_SWORD, "Sword", "A simple blade with a hopeful edge. It cuts bushes and turns seeds back." },
-    { EQ_SHIELD, ITEM_SHIELD, F_ICON32_SHIELD, "Bark Shield", "Planks bound in brass. Held up, it turns bites and seeds from the front." },
-    { EQ_BOMBS, ITEM_BOMBS, F_ICON32_BOMBS, "Blightseeds", "Seeds that burst. They " INK_HIGH "open cracked walls" INK_BASE " and break the stones." },
-    { EQ_LAMP, ITEM_LAMP, F_ICON32_LAMP, "Grail Lamp", "A flame not of this wood. It " INK_HIGH "burns webs and thorns" INK_BASE " and lights censers." },
-    { EQ_CLOAK, ITEM_CLOAK, F_ICON32_CLOAK, "Petal Cloak", "Petals that catch the air. Press it walking to " INK_HIGH "leap a chasm" INK_BASE " or a pit." },
-    { EQ_BOW, 0x100 | ITEM2_BOW, F_ICON32_BOW, "Thorn Bow", "Yew and gut. An arrow deals 2 enemy HP; the walls stop it." },
-    { EQ_HUBCAP, 0x100 | ITEM2_HUBCAP, F_ICON32_HUBCAP, "Drain Cap", "Iron from the hub. The muck opens and " INK_HIGH "takes you home" INK_BASE " to the drain." },
+    { EQ_SWORD, ITEM_SWORD, F_ICON32_SWORD, "Sword", "A simple blade with a hopeful edge. It cuts bushes and turns seeds back.", 0 },
+    { EQ_SHIELD, ITEM_SHIELD, F_ICON32_SHIELD, "Bark Shield", "Planks bound in brass. Held up, it turns bites and seeds from the front.", 0 },
+    { EQ_BOMBS, ITEM_BOMBS, F_ICON32_BOMBS, "Blightseeds", "Seeds that burst. They " INK_HIGH "open cracked walls" INK_BASE " and break the stones.", 0 },
+    { EQ_LAMP, ITEM_LAMP, F_ICON32_LAMP, "Grail Lamp", "A flame not of this wood. It " INK_HIGH "burns webs and thorns" INK_BASE " and lights censers.", 0 },
+    { EQ_CLOAK, ITEM_CLOAK, F_ICON32_CLOAK, "Petal Cloak", "Petals that catch the air. Press it walking to " INK_HIGH "leap a chasm" INK_BASE " or a pit.", 0 },
+    { EQ_BOW, 0x100 | ITEM2_BOW, F_ICON32_BOW, "Thorn Bow", "Yew and gut. An arrow deals 2 enemy HP; the walls stop it.", 0 },
+    { EQ_HUBCAP, 0x100 | ITEM2_HUBCAP, F_ICON32_HUBCAP, "Drain Cap", "Iron from the hub. The muck opens and " INK_HIGH "takes you home" INK_BASE " to the drain.", 0 },
 };
 #define ITEM_COUNT ((int)(sizeof(sItems) / sizeof(sItems[0])))
 
 static const MenuItem sKeys[] = {
-    { EQ_NONE, 0, F_ICON32_HEART_PIECE, "Pieces of Heart", "Quarters of a heart, from chests and mysteries. " INK_HIGH "Four grow a whole heart." INK_BASE },
-    { EQ_NONE, 0, F_ICON32_KEY, "Small Keys", "The dead keep them, and chests. Each " INK_HIGH "opens a locked door" INK_BASE ": walk into it." },
-    { EQ_NONE, ITEM_GAUNTLET, F_ICON32_GAUNTLET, "Root Gauntlet", "Worn, not held. Roots that " INK_HIGH "lift boulders" INK_BASE ": press R before one." },
-    { EQ_NONE, ITEM_RELIC, F_ICON32_RELIC, "the Relic", "The Weeping Nun's, taken from another chamber. " INK_HIGH "Bring it back to her." INK_BASE },
-    { EQ_NONE, 0x100 | ITEM2_MAP, F_ICON32_MAP, "Map of the Wood", "Every chamber drawn, seen or not. The marks still wait to be found." },
-    { EQ_NONE, 0x100 | ITEM2_ASTROLABE, F_ICON32_ASTROLABE, "Astrolabe", "Brass that remembers. The map shows " INK_HIGH "chests, the Heart" INK_BASE " and the barriers." },
+    { EQ_NONE, 0, F_ICON32_HEART_PIECE, "Pieces of Heart", "Quarters of a heart, from chests and mysteries. " INK_HIGH "Four grow a whole heart." INK_BASE, 0 },
+    { EQ_NONE, 0, F_ICON32_KEY, "Small Keys", "The dead keep them, and chests. Each " INK_HIGH "opens a locked door" INK_BASE ": walk into it.", 0 },
+    { EQ_NONE, ITEM_GAUNTLET, F_ICON32_GAUNTLET, "Root Gauntlet", "Worn, not held. Roots that " INK_HIGH "lift boulders" INK_BASE ": press R before one.", 0 },
+    { EQ_NONE, ITEM_RELIC, F_ICON32_RELIC, "the Relic", "The Weeping Nun's, taken from another chamber. " INK_HIGH "Bring it back to her." INK_BASE, 0 },
+    { EQ_NONE, 0x100 | ITEM2_MAP, F_ICON32_MAP, "Map of the Wood", "Every chamber drawn, seen or not. The marks still wait to be found.", 0 },
+    { EQ_NONE, 0x100 | ITEM2_ASTROLABE, F_ICON32_ASTROLABE, "Astrolabe", "Brass that remembers. The map shows " INK_HIGH "chests, the Heart" INK_BASE " and the barriers.", 0 },
 };
 #define KEY_COUNT ((int)(sizeof(sKeys) / sizeof(sKeys[0])))
 
@@ -122,7 +125,7 @@ static bool8 owned(const MenuItem* it) {
     if (it->bit == 0)
         return TRUE;
     if (it->bit >= 0x100)
-        return (gPl.items2 & (it->bit >> 8)) != 0;
+        return (gPl.items2 & (it->bit & 0xff)) != 0;
     return (gPl.items & it->bit) != 0;
 }
 
@@ -700,10 +703,11 @@ static void overview_sprites(void) {
 #if BART_MENU_VARIANT
 /* Optional layout studies borrow paused-world BG character memory. The full
    native 240x160 page fits600 4bpp tiles across charblocks0/1. We retain those
-   world bytes and HUD-resident icon bytes, then restore them on return. */
+   overwritten world bytes and HUD-resident icon bytes, then restore on return. */
 #define MS_TILES (30*20)
 static u32 sStudyPixels[MS_TILES*8] EWRAM_BSS;
-static u32 sStudyWorld[32768/4] EWRAM_BSS;
+/* The page overwrites only its600characters; higher world tiles stay live. */
+static u32 sStudyWorld[MS_TILES*8] EWRAM_BSS;
 /* Cursor redraws retain the current native page background. Rebuilding the
    same small frame on a page change frees38KB for additive area systems. */
 static u32 sStudyBase[MS_TILES*8] EWRAM_BSS;
@@ -715,6 +719,90 @@ static u32 sStudyHud[60*8] EWRAM_BSS;
 static Canvas sStudyCanvas;
 static u16 sStudyBg3;
 static u8 sStudyAnim,sStudyHaveFocus,sStudyFocus[2];
+#define MS_PAGE_SIZE 7
+#define MS_LIST_MAX (LI_COUNT+ITEM_COUNT+4)
+static u32 sStudyOwned[4];
+static u8 sStudyCoreOwned[2];
+/* Catalog entries remain in ROM. A single resolved view avoids duplicating
+   the complete item definitions in scarce resident RAM. */
+static MenuItem sStudyItem;
+static int ms_base_count(int page){return page==PG_KEYS?KEY_COUNT:ITEM_COUNT;}
+static const MenuItem* ms_base_list(int page){return page==PG_KEYS?sKeys:sItems;}
+static bool8 ms_base_alias(int item){
+    switch(item){
+    case LI_SMITH_SWORD:case LI_SHIELD:case LI_BOMBS:case LI_LANTERN_OFF:
+    case LI_LANTERN_ON:case LI_ROCS_CAPE:case LI_BOW:case LI_POWER_BRACELETS:
+    case LI_MAP:case LI_COMPASS:case LI_HEART_PIECE:case LI_SMALL_KEY:return TRUE;
+    default:return FALSE;
+    }
+}
+static bool8 ms_catalog_owned(int item){
+    if(item==LI_KINSTONE&&(gLegacyInventory.kinstones[0]||gLegacyInventory.kinstones[1]||gLegacyInventory.kinstones[2]))return TRUE;
+    return legacy_item_owned(item);
+}
+static int ms_gather(int page,u8* out){
+    int i,n,base=ms_base_count(page);const MenuItem* list=ms_base_list(page);
+    if(page==PG_MAP)return 0;
+    n=gather(list,base,out);
+    for(i=1;i<LI_COUNT;i++){
+        const LegacyItemDef* d=legacy_item_def(i);
+        if(ms_base_alias(i)||!ms_catalog_owned(i)||(d->flags&LIF_HIDDEN))continue;
+        if((d->equip!=EQ_NONE)!=(page==PG_ITEMS))continue;
+        out[n++]=base+i;
+    }
+    if(page==PG_KEYS)for(i=0;i<4;i++)if(gHandoffState.gold_owned&(1u<<i))out[n++]=base+LI_COUNT+i;
+    return n;
+}
+static const MenuItem* ms_item(int page,int index){
+    int base=ms_base_count(page);const LegacyItemDef* d;
+    if(index<base)return &ms_base_list(page)[index];
+    if(index>=base+LI_COUNT){
+        JournalEntry entry;int half=index-base-LI_COUNT;
+        journal_entry(0,JI_GOLD_FLOW+half,&entry);
+        sStudyItem=(MenuItem){EQ_NONE,0,entry.frame,entry.name,entry.description,LI_COUNT+half};
+        return &sStudyItem;
+    }
+    d=legacy_item_def(index-base);
+    sStudyItem=(MenuItem){d->equip,0,0,d->name,d->description,index-base};
+    return &sStudyItem;
+}
+static int ms_page_start(void){return(sCursor/MS_PAGE_SIZE)*MS_PAGE_SIZE;}
+static void ms_focus_cursor(int page,const u8* idx,int n){
+    int i;sCursor=0;
+    for(i=0;i<n;i++)if(idx[i]==sStudyFocus[page]){sCursor=i;break;}
+}
+static void ms_owned_snapshot(bool8 first){
+    int item,page,new_tool=-1,new_key=-1;
+    for(page=0;page<2;page++){
+        const MenuItem* list=ms_base_list(page);u8 bits=0;int i;
+        for(i=0;i<ms_base_count(page);i++)if(owned(&list[i])){
+            bits|=1<<i;
+            if(!first&&!(sStudyCoreOwned[page]&(1<<i))){
+                if(page==PG_ITEMS)new_tool=i;else new_key=i;
+            }
+        }
+        sStudyCoreOwned[page]=bits;
+    }
+    for(item=1;item<LI_COUNT;item++){
+        int word=item>>5,bit=item&31;u32 mask=1u<<bit;
+        bool8 current=ms_catalog_owned(item);
+        const LegacyItemDef* d=legacy_item_def(item);
+        if(current && !(sStudyOwned[word]&mask) && !ms_base_alias(item) && !(d->flags&LIF_HIDDEN)){
+            if(d->equip!=EQ_NONE)new_tool=ITEM_COUNT+item;
+            else if(!first)new_key=KEY_COUNT+item;
+        }
+        if(current)sStudyOwned[word]|=mask;else sStudyOwned[word]&=~mask;
+    }
+    for(item=0;item<4;item++){
+        int id=LI_COUNT+item,word=id>>5;u32 mask=1u<<(id&31);
+        bool8 current=(gHandoffState.gold_owned&(1u<<item))!=0;
+        if(current&&!(sStudyOwned[word]&mask)&&!first)new_key=KEY_COUNT+id;
+        if(current)sStudyOwned[word]|=mask;else sStudyOwned[word]&=~mask;
+    }
+    if(new_key>=0)sStudyFocus[PG_KEYS]=new_key;
+    if(new_tool>=0){sPage=PG_ITEMS;sStudyFocus[PG_ITEMS]=new_tool;}
+    else if(new_key>=0)sPage=PG_KEYS;
+}
 static u32 sStudySeed;
 static const MenuLayout* sStudy;
 /* Word-based native drawing keeps cursor updates within a video frame;
@@ -728,6 +816,9 @@ static volatile u16 sStudyInput[32];
 static volatile u8 sStudyInputRead,sStudyInputWrite;
 static u16 sStudyHeld;
 u16 gMenuStudyDrawFrames;
+/* Read-only inventory presentation telemetry; gameplay never consumes it. */
+u8 gMenuStudyItem,gMenuStudyCount,gMenuStudyInventoryPage,gMenuStudyInventoryPages;
+u8 gMenuInventoryVisible[MS_PAGE_SIZE];
 static void ms_input_irq(void){
     u16 now=~REG_KEYINPUT&KEY_ANY,down=now&~sStudyHeld;
     if(down){u8 next=(sStudyInputWrite+1)&31;if(next!=sStudyInputRead){sStudyInput[sStudyInputWrite]=down;sStudyInputWrite=next;}}
@@ -837,8 +928,8 @@ static const char* ms_use(const MenuItem* item){
     switch(item->eq){case EQ_SWORD:return "Cut brush. Turn seeds.";case EQ_SHIELD:return "Block frontal attacks.";case EQ_BOMBS:return "Blast cracked stone.";case EQ_LAMP:return "Burn webs and brush.";case EQ_CLOAK:return "Leap pits and chasms.";case EQ_BOW:return "Arrows stop at walls.";case EQ_HUBCAP:return "Return to the Drain.";default:return item->desc;}
 }
 static int ms_count(const MenuItem* item){
-    if(item->eq==EQ_BOMBS)return gPl.bombs;
-    if(item->eq==EQ_BOW)return gPl.arrows;
+    if(item->eq==EQ_BOMBS||item->eq==EQ_REMOTE_BOMBS)return gPl.bombs;
+    if(item->eq==EQ_BOW||item->eq==EQ_LIGHT_ARROW)return gPl.arrows;
     if(item==&sKeys[0])return gPl.hearts_pieces;
     if(item==&sKeys[1])return gPl.keys;
     return -1;
@@ -856,7 +947,27 @@ static void ms_icon(int frame,int x,int y,int size,int slot){
         draw_sprite(x,y,SHEET_HUDITEMS,tile,0,0,1,mp);
     }
 }
-static MSPoint ms_slot(int compact,int original){return sStudy->slots[sStudy->mode==MS_WHEEL?original:compact];}
+static void ms_item_icon(const MenuItem* item,int x,int y,int size,int slot){
+    if(item->legacy){
+        const SpriteSheet* sh=&sheets[SHEET_HANDOFF_ITEMS];
+        int frame=item->legacy>=LI_COUNT?item->icon:legacy_item_def(item->legacy)->frame;
+        int tile=OBJ_TILE_HUD_ICONS+slot*4;
+        vram_queue(sh->tiles+frame*sh->frame_tiles*16,OBJ_TILE(tile),sh->frame_tiles*32);
+        pal_set_obj(12,&pal_obj[sh->pal*16]);
+        draw_sprite(x+(size-16)/2,y+(size-16)/2,SHEET_HANDOFF_ITEMS,tile,0,0,1,12);
+    }else ms_icon(ms_frame_of(item),x,y,size,slot);
+}
+static const MenuItem* ms_equipment_item(int eq){
+    int j,item;
+    for(j=0;j<ITEM_COUNT;j++)if(sItems[j].eq==eq)return &sItems[j];
+    item=legacy_equip_item(eq);
+    return item>0&&item<LI_COUNT?ms_item(PG_ITEMS,ITEM_COUNT+item):NULL;
+}
+static MSPoint ms_slot(int compact,int original){
+    /* Compact every page into the existing seven physical slots. Catalog
+       IDs are identities, never indices into a fixed-size layout recipe. */
+    (void)original;return sStudy->slots[compact%MS_PAGE_SIZE];
+}
 static int ms_label_width(MSPoint p){
     int edge=232;MSRect r[4]={sStudy->detail,sStudy->equipment,sStudy->status,sStudy->preview};int i;
     for(i=0;i<4;i++)if(ms_valid(r[i])&&r[i].x>p.x&&r[i].y<p.y+16&&r[i].y+r[i].h>p.y)edge=MIN(edge,r[i].x-4);
@@ -881,7 +992,7 @@ static void ms_assignment_line(void){
     static const char* const shortname[8]={"--","Sword","Seeds","Lamp","Cloak","Shield","Bow","Cap"};
     int s;if(sPage!=PG_ITEMS||(sStudy->flags&MS_EQUIPMENT))return;
     ms_fill(7,13,226,10,UI_INK_NAVY);
-    for(s=0;s<3;s++){int eq=gPl.equip[s],x=8+s*76;ms_text(x,14,button[s],UI_INK_GOLD);ms_textfit(x+10,14,64,eq<8?shortname[eq]:"--",UI_INK_CREAM);}
+    for(s=0;s<3;s++){int eq=gPl.equip[s],x=8+s*76;ms_text(x,14,button[s],UI_INK_GOLD);ms_textfit(x+10,14,64,eq<8?shortname[eq]:legacy_item_def(legacy_equip_item(eq))->name,UI_INK_CREAM);}
 }
 static void ms_status(void){
     MSRect r=sStudy->status;char b[24],num[8];int y,x;
@@ -1160,9 +1271,22 @@ static void ms_map_info(MSRect r){
 static void ms_upload(void){
     vram_queue(sStudyPixels,CHARBLOCK(0),sizeof(sStudyPixels));gBg3Dirty=1;
 }
-static void ms_sync(void){gMenuStudyPage=sPage;gMenuStudyCursor=sCursor;gMenuStudyMapCell=sMapCur;gMenuStudyZoom=sZoom;}
+static void ms_sync(void){
+    u8 idx[MS_LIST_MAX];int n=ms_gather(sPage,idx),selected=n?idx[sCursor]:0;
+    static const u8 key_ids[KEY_COUNT]={LI_HEART_PIECE,LI_SMALL_KEY,LI_POWER_BRACELETS,0,LI_MAP,LI_COMPASS};
+    gMenuStudyPage=sPage;gMenuStudyCursor=sCursor;gMenuStudyMapCell=sMapCur;gMenuStudyZoom=sZoom;
+    gMenuStudyCount=n;gMenuStudyInventoryPage=n?sCursor/MS_PAGE_SIZE+1:0;
+    gMenuStudyInventoryPages=(n+MS_PAGE_SIZE-1)/MS_PAGE_SIZE;
+    gMenuStudyItem=n?(selected>=ms_base_count(sPage)?selected-ms_base_count(sPage):
+        sPage==PG_KEYS?key_ids[selected]:legacy_equip_item(sItems[selected].eq)):0;
+    {int i,start=ms_page_start();for(i=0;i<MS_PAGE_SIZE;i++){
+        int value=start+i<n?idx[start+i]:0;
+        gMenuInventoryVisible[i]=start+i>=n?0:value>=ms_base_count(sPage)?value-ms_base_count(sPage):
+            sPage==PG_KEYS?key_ids[value]:legacy_equip_item(sItems[value].eq);
+    }}
+}
 static void ms_draw(void){
-    u32 start=gFrame;int i,x,y,n,count_at=0;u8 idx[7];const MenuItem* list=sPage==PG_KEYS?sKeys:sItems;
+    u32 start=gFrame;int i,x,y,n,count_at=0;u8 idx[MS_LIST_MAX];
     bg0_clear();bg0_pool_reset_full();
     sStudyCanvas=(Canvas){0,30,20,0,sStudyPixels};
     for(i=0;i<32*32;i++)gBg3[i]=UI_PAL<<12;
@@ -1190,34 +1314,51 @@ static void ms_draw(void){
         else{ms_map(primary,0,sStudy->map_mode);if(sStudy->map_mode==MS_MAP_DUAL)ms_map(sStudy->chamber,1,sStudy->map_mode);ms_map_info(sStudy->map_info);}
         ms_textfit(7,149,226,sZoom?"D-pad room  B overview  R page  Start close":"D-pad browse  A zoom  R page  Start close",UI_INK_CREAM);
     }else{
-        n=gather(list,sPage==PG_KEYS?KEY_COUNT:ITEM_COUNT,idx);
+        n=ms_gather(sPage,idx);
         if(sCursor>=n)sCursor=n?n-1:0;
         if((sStudy->flags&MS_PREVIEW)){MSRect p=ms_valid(sStudy->preview)?sStudy->preview:sStudy->overview;ms_map(p,0,sStudy->map_mode);}
         ms_assignments();ms_status();
         if(sStudy->mode==MS_WHEEL){for(i=0;i<7;i++){MSPoint p=sStudy->slots[i];ms_frame((MSRect){p.x,p.y,32,32},3);}}
-        for(i=0;i<n;i++){
-            MSPoint p=ms_slot(i,idx[i]);int frame=sStudy->icon_size;
+        for(i=ms_page_start();i<n&&i<ms_page_start()+MS_PAGE_SIZE;i++){
+            const MenuItem* item=ms_item(sPage,idx[i]);
+            MSPoint p=ms_slot(i%MS_PAGE_SIZE,idx[i]);int frame=sStudy->icon_size;
             ms_frame((MSRect){p.x,p.y,frame,frame},i==sCursor?2:1);
-            if((sStudy->flags&MS_LABELS)||sStudy->mode==MS_LIST){const char* label=(sStudy->flags&MS_PURPOSE)&&sPage==PG_ITEMS?ms_verb(list[idx[i]].eq):list[idx[i]].name;ms_textfit(p.x+frame+4,p.y+(frame-8)/2,ms_label_width(p),label,i==sCursor?UI_INK_HIGH:UI_INK_CREAM);}
-            if(i==sCursor&&list[idx[i]].eq!=EQ_NONE){int s;for(s=0;s<3;s++)if(gPl.equip[s]==list[idx[i]].eq){static const char* const l[3]={"A","B","L"};ms_textfit(p.x+2+s*6,p.y+frame-9,6,l[s],UI_INK_PALE);}}
-            {int count=ms_count(&list[idx[i]]);if(count>=0&&frame==32)ms_count_overlay(count_at++,p,frame,count);
+            if((sStudy->flags&MS_LABELS)||sStudy->mode==MS_LIST){const char* label=(sStudy->flags&MS_PURPOSE)&&sPage==PG_ITEMS?ms_verb(item->eq):item->name;ms_textfit(p.x+frame+4,p.y+(frame-8)/2,ms_label_width(p),label,i==sCursor?UI_INK_HIGH:UI_INK_CREAM);}
+            if(i==sCursor&&item->eq!=EQ_NONE){int s;for(s=0;s<3;s++)if(gPl.equip[s]==item->eq){static const char* const l[3]={"A","B","L"};ms_textfit(p.x+2+s*6,p.y+frame-9,6,l[s],UI_INK_PALE);}}
+            {int count=ms_count(item);if(count>=0&&frame==32)ms_count_overlay(count_at++,p,frame,count);
              else if(count>=0&&sStudy->mode==MS_LIST){char b[5];int width=ms_label_width(p);vwf_num(b,count,0);ms_textfit(p.x+frame+4+MAX(0,width-vwf_width(b)),p.y+4,vwf_width(b),b,UI_INK_GOLD);}}
         }
-        ms_details(n?&list[idx[sCursor]]:NULL);
+        ms_details(n?ms_item(sPage,idx[sCursor]):NULL);
+        if(n>MS_PAGE_SIZE){
+            char a[6],b[6];int x;
+            ms_fill(166,2,69,10,UI_INK_NAVY);
+            x=ms_text(167,3,sTabName[sPage],UI_INK_HIGH);
+            x=ms_text(x+4,3,vwf_num(a,sCursor/MS_PAGE_SIZE+1,0),UI_INK_CREAM);
+            x=ms_text(x,3,"/",UI_INK_DIM);
+            ms_text(x,3,vwf_num(b,(n+MS_PAGE_SIZE-1)/MS_PAGE_SIZE,0),UI_INK_CREAM);
+        }
         if(!n)ms_textfit(12,32,200,"Nothing carried yet",UI_INK_DIM);
         ms_textfit(7,149,226,sPage==PG_ITEMS?"A/B/L equip R page Sel satchel Start":"R page Sel satchel Start close",UI_INK_CREAM);
     }
     ms_assignment_line();ms_upload();ms_sync();gMenuStudyDrawFrames=gFrame-start;
 }
 static void ms_sprites(void){
-    int i,n;u8 idx[7];const MenuItem* list=sPage==PG_KEYS?sKeys:sItems;
+    int i,n;u8 idx[MS_LIST_MAX];
     if(sPage==PG_MAP)return;
-    n=gather(list,sPage==PG_KEYS?KEY_COUNT:ITEM_COUNT,idx);
-    for(i=0;i<n;i++){MSPoint p=ms_slot(i,idx[i]);ms_icon(ms_frame_of(&list[idx[i]]),p.x,p.y,sStudy->icon_size,i);}
-    if(n&&sStudy->mode==MS_FOCUS&&sStudy->detail.w>=112)ms_icon(ms_frame_of(&list[idx[sCursor]]),sStudy->detail.x+4,sStudy->detail.y+12,32,0);
+    n=ms_gather(sPage,idx);if(sCursor>=n)sCursor=n?n-1:0;
+    for(i=ms_page_start();i<n&&i<ms_page_start()+MS_PAGE_SIZE;i++){
+        MSPoint p=ms_slot(i%MS_PAGE_SIZE,idx[i]);
+        ms_item_icon(ms_item(sPage,idx[i]),p.x,p.y,sStudy->icon_size,i%MS_PAGE_SIZE);
+    }
+    if(n&&sStudy->mode==MS_FOCUS&&sStudy->detail.w>=112)
+        ms_item_icon(ms_item(sPage,idx[sCursor]),sStudy->detail.x+4,sStudy->detail.y+12,32,sCursor%MS_PAGE_SIZE);
     if((sStudy->flags&MS_EQUIPMENT)&&ms_valid(sStudy->equipment)){
         MSRect r=sStudy->equipment;bool8 row=r.w>=r.h;
-        for(i=0;i<3;i++){int j;for(j=0;j<ITEM_COUNT;j++)if(sItems[j].eq==gPl.equip[i]){int x=r.x+4+(row?i*(r.w-8)/3:0),y=r.y+4+(!row?i*(r.h-8)/3:0);ms_icon(ms_frame_of(&sItems[j]),x+10,y,16,12+i);break;}}
+        for(i=0;i<3;i++){
+            const MenuItem* item=ms_equipment_item(gPl.equip[i]);
+            int x=r.x+4+(row?i*(r.w-8)/3:0),y=r.y+4+(!row?i*(r.h-8)/3:0);
+            if(item)ms_item_icon(item,x+10,y,16,12+i);
+        }
     }
 }
 static void ms_restore(void){
@@ -1228,11 +1369,16 @@ static void ms_restore(void){
     REG_BG3CNT=sStudyBg3;gAnimTiles=sStudyAnim;gVBlankHook=sStudyOldHook;
 }
 static void ms_open(void){
-    int n,i;u8 idx[7];
+    int n;bool8 first;u8 idx[MS_LIST_MAX];
     sStudy=menu_study_layout(BART_MENU_VARIANT);sStudyKitReady=0;sStudyBaseReady=0;ms_cache_kit();sStudyMapReady=0;
     sStudyInputRead=sStudyInputWrite=0;sStudyHeld=~REG_KEYINPUT&KEY_ANY;sStudyOldHook=gVBlankHook;gVBlankHook=ms_input_irq;
-    if(!sStudyHaveFocus||sStudySeed!=gWorld.seed){sStudyFocus[0]=sStudyFocus[1]=0;sMapCur=gGame.area==AREA_FOREST?gGame.cell:gWorld.entry;sZoom=0;sStudySeed=gWorld.seed;sStudyHaveFocus=1;}
-    sPage=PG_ITEMS;n=gather(sItems,ITEM_COUNT,idx);sCursor=0;for(i=0;i<n;i++)if(idx[i]==sStudyFocus[0])sCursor=i;
+    first=!sStudyHaveFocus||sStudySeed!=gWorld.seed;
+    if(first){
+        memset(sStudyOwned,0,sizeof(sStudyOwned));memset(sStudyCoreOwned,0,sizeof(sStudyCoreOwned));
+        sStudyFocus[0]=sStudyFocus[1]=0;sMapCur=gGame.area==AREA_FOREST?gGame.cell:gWorld.entry;
+        sZoom=0;sStudySeed=gWorld.seed;sStudyHaveFocus=1;
+    }
+    sPage=PG_ITEMS;ms_owned_snapshot(first);n=ms_gather(sPage,idx);ms_focus_cursor(sPage,idx,n);
     icon32_menu_begin();bg0_clear();bg0_pool_reset_full();
     dma3_copy32((const void*)CHARBLOCK(0),sStudyWorld,sizeof(sStudyWorld));dma3_copy32((const void*)OBJ_TILE(OBJ_TILE_HUD_ICONS),sStudyHud,sizeof(sStudyHud));
     sStudyBg3=REG_BG3CNT;sStudyAnim=gAnimTiles;gAnimTiles=0;
@@ -1247,25 +1393,32 @@ static void ms_open(void){
     video_show(DCNT_BG0|DCNT_BG3|DCNT_OBJ);ms_draw();gGame.state=GS_MAP;sfx_play(SFX_MENU);
 }
 static int ms_move(int n,const u8* idx){
-    int axis=0,sign=0,i,best=sCursor,bestscore=0x7fffffff;MSPoint a;
+    int axis=0,sign=0,i,best=sCursor,bestscore=0x7fffffff,start=ms_page_start(),end=MIN(n,start+MS_PAGE_SIZE);MSPoint a;
     if(gKeysDown&KEY_RIGHT){axis=0;sign=1;}else if(gKeysDown&KEY_LEFT){axis=0;sign=-1;}else if(gKeysDown&KEY_DOWN){axis=1;sign=1;}else if(gKeysDown&KEY_UP){axis=1;sign=-1;}else return 0;
     if(!n)return 0;
-    a=ms_slot(sCursor,idx[sCursor]);
-    for(i=0;i<n;i++)if(i!=sCursor){MSPoint b=ms_slot(i,idx[i]);int dx=b.x-a.x,dy=b.y-a.y,along=axis?dy:dx,off=axis?ABS(dx):ABS(dy),score;
+    a=ms_slot(sCursor-start,idx[sCursor]);
+    for(i=start;i<end;i++)if(i!=sCursor){
+        MSPoint b=ms_slot(i-start,idx[i]);int dx=b.x-a.x,dy=b.y-a.y,along=axis?dy:dx,off=axis?ABS(dx):ABS(dy),score;
         if(along*sign<=0)continue;
-        score=along*along+off*off*3;if(score<bestscore){bestscore=score;best=i;}}
+        score=along*along+off*off*3;if(score<bestscore){bestscore=score;best=i;}
+    }
+    if(best==sCursor){
+        if(sign>0&&end<n)best=end;
+        else if(sign<0&&start>0)best=start-1;
+    }
     if(best==sCursor)return 0;
     sCursor=best;return 1;
 }
 static void ms_update(void){
-    u8 idx[7];const MenuItem* list=sPage==PG_KEYS?sKeys:sItems;int n=gather(list,sPage==PG_KEYS?KEY_COUNT:ITEM_COUNT,idx),dirty=0;
+    u8 idx[MS_LIST_MAX];int n=ms_gather(sPage,idx),dirty=0;
     gKeysDown=0;if(sStudyInputRead!=sStudyInputWrite){gKeysDown=sStudyInput[sStudyInputRead];sStudyInputRead=(sStudyInputRead+1)&31;}
     if(gKeysDown&KEY_START){ms_restore();menu_close();return;}
+    if(gKeysDown&KEY_SELECT){ms_restore();gear_menu_open();return;}
     if(gKeysDown&KEY_R){
         if(sPage<PG_MAP&&n)sStudyFocus[sPage]=idx[sCursor];
         sPage=(sPage+1)%PG_COUNT;
         if(sPage==PG_MAP && gear_menu_region(NULL)==AREA_CREAM){ms_restore();gear_menu_open_map();return;}
-        if(sPage<PG_MAP){int i;n=gather(sPage==PG_KEYS?sKeys:sItems,sPage==PG_KEYS?KEY_COUNT:ITEM_COUNT,idx);sCursor=0;for(i=0;i<n;i++)if(idx[i]==sStudyFocus[sPage])sCursor=i;}
+        if(sPage<PG_MAP){n=ms_gather(sPage,idx);ms_focus_cursor(sPage,idx,n);}
         dirty=1;
     }else if(sPage==PG_MAP){
         int x=sMapCur%5,y=sMapCur/5;
@@ -1278,7 +1431,11 @@ static void ms_update(void){
     }else{
         if(sCursor>=n)sCursor=n?n-1:0;
         if(ms_move(n,idx)){sStudyFocus[sPage]=idx[sCursor];dirty=1;}
-        if(sPage==PG_ITEMS&&n&&(gKeysDown&(KEY_A|KEY_B|KEY_L))){int slot=gKeysDown&KEY_A?SLOT_A:gKeysDown&KEY_B?SLOT_B:SLOT_L;player_equip_set(slot,list[idx[sCursor]].eq);sfx_play(SFX_ITEM);dirty=1;}
+        if(sPage==PG_ITEMS&&n&&(gKeysDown&(KEY_A|KEY_B|KEY_L))){
+            const MenuItem* item=ms_item(sPage,idx[sCursor]);
+            int slot=gKeysDown&KEY_A?SLOT_A:gKeysDown&KEY_B?SLOT_B:SLOT_L;
+            if(item->eq!=EQ_NONE){player_equip_set(slot,item->eq);sfx_play(SFX_ITEM);dirty=1;}
+        }
     }
     if(dirty){ms_draw();sfx_play(SFX_MENU);}ms_sprites();ms_sync();
 }
@@ -1359,15 +1516,11 @@ static void equip_icon(int eq, int px, int py, int prio) {
 }
 
 void menu_update(void) {
-    if(gKeysDown&KEY_SELECT){
-#if BART_MENU_VARIANT
-        ms_restore();
-#endif
-        gear_menu_open();return;
-    }
 #if BART_MENU_VARIANT
     ms_update();
     return;
+#else
+    if(gKeysDown&KEY_SELECT){gear_menu_open();return;}
 #endif
     static u8 idx[ITEM_COUNT];
     /* Restore actor palettes before submitting any icon draws for the

@@ -69,6 +69,18 @@ void text_init(void) {
     bg0_clear();
 }
 
+/* The full-screen Cream atlas uses the same physical charblock as the HUD,
+   hearts and BG0 frame kit. Dynamic HUD invalidation alone cannot repair
+   those immutable resident pixels. Drain older queued uploads first, then
+   restore only the resident ranges; new page/world drawing owns its canvases. */
+void text_restore_resident(void) {
+    vram_flush_queue();
+    dma3_fill32(0, CHARBLOCK(2), 32);
+    dma3_copy32(hud_tiles, CHARBLOCK(2) + HUD_TILE_BASE * 16, HUD_TILE_COUNT * 32);
+    dma3_copy32(ui_current_tiles(), CHARBLOCK(2) + UI_BG0 * 16, UI_TILE_COUNT * 32);
+    hud_invalidate_icons();
+}
+
 void bg0_clear(void) {
     memset32(sBg0, 0, sizeof(sBg0));
     sBg0Dirty = 1;

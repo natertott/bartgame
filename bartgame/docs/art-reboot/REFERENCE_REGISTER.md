@@ -471,3 +471,11 @@ comparison captures remain tied to their original frozen source.
 The [selected native gallery](../../../cream-selected-map-review/README.md)
 records the new code/ROM identity and exact comparison to 33 original #4
 marker stamps. The reference pixels were reused without repainting.
+
+## Pause display repair — 2026-11-12
+
+Direct reference: the user's missing-new-item and lingering-artifact report.
+The reproduction uses actual opening-draft gifts and ordinary Cream map/menu
+inputs. Read-only native memory is compared with the ROM's resident HUD and
+UI-kit art to identify the overwrite. Existing selected Workbench and item
+art are preserved; no external art reference or replacement sprites are added.

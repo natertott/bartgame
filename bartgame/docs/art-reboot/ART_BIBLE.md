@@ -707,3 +707,17 @@ hidden and all markers retain actual room coordinates.
 This selection is the normal profile12 map. Normal builds now enable12.
 L no longer cycles review styles; Select returns through the standard menu.
 Keep the original ten-design gallery as historical review evidence.
+
+### Pause inventory and borrowed graphics
+
+The first pause inventory reads the complete owned catalogue, including new
+tools, passives and gold fusion halves. Keep the selected Workbench layout
+and paginate its seven slots; newly received equipment is selected on first
+open. Native legacy 16px icons remain centered in the 32px slots. Exact core
+32px artwork and gameplay inventories stay unchanged.
+
+A full-screen map that borrows BG0 character memory must restore the resident
+blank, heart/HUD and frame-kit pixels before reopening another page or play.
+Invalidating only the dynamic HUD cache is insufficient. Menu icon borrowing
+also restores the exact actor/HUD character bank and object palettes. Complete
+a page's pending uploads before changing ownership of shared graphics memory.

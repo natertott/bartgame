@@ -98,6 +98,7 @@ static void gather(void) {
 }
 static void queue_icons(void) {
     const SpriteSheet* sheet=&sheets[SHEET_HANDOFF_ITEMS];int i,start=(sCursor/GM_PAGE)*GM_PAGE;
+    pal_set_obj(12,&pal_obj[sheet->pal*16]);
     for(i=0;i<GM_PAGE;i++) {
         int item=start+i<sCount?sList[start+i]:LI_NONE;
         sIcons[i]=item;
@@ -110,6 +111,9 @@ static void queue_icons(void) {
 static void satchel(void) {
     int i,start;
     const LegacyItemDef* chosen;
+    /* Twelve icons and four text canvases fill the16-entry upload queue.
+       Finish the previous owner before admitting this complete page. */
+    vram_flush_queue();
     blank();gather();start=(sCursor/GM_PAGE)*GM_PAGE;
     bg0_canvas(&sHead,2,1,26,2);
     text_at(&sHead,0,0,"THE SATCHEL",UI_INK_GOLD);
@@ -418,7 +422,7 @@ static void close(bool8 old_menu) {
 static void item_sprites(void) {
     int i;
     for(i=0;i<GM_PAGE;i++)if(sIcons[i])draw_sprite((2+(i%4)*4)*8+8,(4+(i/4)*3)*8+4,
-        SHEET_HANDOFF_ITEMS,OBJ_TILE_HUD_ICONS+i*4,0,0,1,sheets[SHEET_HANDOFF_ITEMS].pal);
+        SHEET_HANDOFF_ITEMS,OBJ_TILE_HUD_ICONS+i*4,0,0,1,12);
 }
 void gear_menu_update(void) {
     bool8 dirty=FALSE;

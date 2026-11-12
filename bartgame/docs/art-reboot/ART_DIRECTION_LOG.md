@@ -2145,3 +2145,31 @@ checks pass, including 33 rendered icon stamps exactly matching the historical
 fog, normal controls and the real-input Forest cache round trip. Redraws take
 9–17 hardware frames in this sample. Explicit profiles0 and10 reproduce their
 old ROM hashes; normal profile12 reproduces the selected frozen ROM.
+
+## 2026-11-12 — Pause inventory refresh and persistent graphics repair
+
+The user reports new items missing until touring the pause pages, followed by
+persistent visual debris. Native reproduction uses actual opening-draft
+awards: Mole Mitts, Heart Container and Peril Beam. The old primary screen
+only lists seven hard-coded tools; the later Satchel scans the full catalogue.
+The Cream atlas also overwrites resident BG0 HUD/frame tiles and restores only
+the dynamic cache, leaving its native pixels damaged after return.
+
+The primary Workbench now reads the owned catalogue, uses seven-slot pages
+and focuses newly received items. Core icons remain unchanged; existing 16px
+legacy art is centered in the slots. Gold fusion halves and counter-only
+Kinstones use their actual saved state. Independent high-bit ownership masks
+and queued Select presses are corrected.
+
+Shared graphics are now restored as complete resources: BG0 resident tiles,
+actor/HUD object pixels and palettes. Paused 32px icons borrow a backed-up bank
+instead of allocating from a full combat sprite heap. Satchel upload batches
+start with a drained queue and use the exact source item palette. The primary
+background backs up only the 600 characters it overwrites, freeing room for the
+complete object restore. No game item effects or sprite artwork are redesigned.
+
+The full item report distinguishes 139 visible arcade entries from unique
+possessions: 129 have acquisition/state paths; 10 visible legacy entries have no
+current award route. Seven hidden helpers and Fleet's separate effect bit are
+documented in [the catalogue](../items/PLAYER_ITEM_CATALOG.md). Native
+before/after evidence and final build identity accompany the repair gallery.

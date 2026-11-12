@@ -8,6 +8,9 @@
 #include "vwf.h"
 
 void text_init(void);
+/* Reload fixed BG0 tiles after an atlas borrows charblock2. Keeps active
+   canvases, text-pool allocation, appearance and gameplay state intact. */
+void text_restore_resident(void);
 void text_flush(void);
 void bg0_clear(void);
 void bg0_put(int tx, int ty, u16 tile);

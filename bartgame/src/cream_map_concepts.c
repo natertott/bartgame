@@ -256,6 +256,7 @@ void cream_map_render(int cell,bool8 zoom,int concept){
 void cream_map_leave(void){
     if(!sActive)return;
     sActive=FALSE;pal_set_bg(PAL_SLOT_MAP,sSavedMap);gPalBg[0]=sBackdrop;gPalDirty=1;
+    text_restore_resident();
     REG_BG3CNT=BGCNT_PRIO(3)|BGCNT_CHARBASE(3)|BGCNT_SCREENBASE(22)|BGCNT_SIZE_32x32;
     ui_backdrop_open();video_show(DCNT_BG0|DCNT_BG3|DCNT_OBJ);
 }

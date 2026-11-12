@@ -35,5 +35,9 @@ typedef struct { u8 cell,kind; s16 x,y,source_x,source_y; u8 tile_x,tile_y; } Me
 extern u16 gMenuMapEvents[25];
 extern MenuMapMarker gMenuMapMarkers[16];
 extern u8 gMenuMapMarkerCount;
+/* Read-only inventory diagnostics. Visible IDs are legacy catalog IDs; gold
+   halves use LI_COUNT..LI_COUNT+3 and original-only entries report0. */
+extern u8 gMenuStudyItem,gMenuStudyCount,gMenuStudyInventoryPage,gMenuStudyInventoryPages;
+extern u8 gMenuInventoryVisible[7];
 extern u16 gMenuStudyDrawFrames; /* most recent completed redraw, video IRQ ticks */
 #endif
