@@ -4,6 +4,32 @@
 #include "cream_map_concepts.h"
 
 static bool8 walk_kind(int k) {return k!=CMT_WALL && k!=CMT_GATE;}
+static bool8 floor_kind(int k) {
+    return k==CMT_FLOOR || k==CMT_DROP || k==CMT_CAVE;
+}
+static bool8 occupied_level(const CreamMapData* d,int at) {
+    return floor_kind(d->kind[at]) && d->height[at]<7;
+}
+static int map_height(const CreamMapData* d,int x,int y) {
+    int at,h,up=-1,down=-1,hu=0,hd=0,k;
+    if(x<0 || x>=32 || y<0 || y>=24)return 0;
+    at=y*32+x;h=d->height[at];
+    if(h<7 && d->kind[at]!=CMT_CLIMB)return h;
+    /* A shaft's routing sentinel7 is not a floor. Its drawn rise follows
+       actual supported endpoints, without adding those intermediate values
+       to occupied-floor keys or physical height ranges. */
+    for(k=1;k<24;k++) {
+        if(up<0 && y-k>=0 && occupied_level(d,(y-k)*32+x)) {
+            up=y-k;hu=d->height[up*32+x];
+        }
+        if(down<0 && y+k<24 && occupied_level(d,(y+k)*32+x)) {
+            down=y+k;hd=d->height[down*32+x];
+        }
+        if(up>=0 && down>=0)break;
+    }
+    if(up>=0 && down>=0)return (hu*(down-y)+hd*(y-up))/(down-up);
+    return up>=0?hu:down>=0?hd:0;
+}
 static int level_ink(int z) {return CM_LOW+CLAMP(z,0,4);}
 static int terrain_ink(int k,int z) {
     return k==CMT_WALL?CM_INK:k==CMT_WATER?CM_WATER:
@@ -77,24 +103,24 @@ static void plan(const CreamMapData* d,int x,int y,int w,int h,int mode,bool8 ma
     cm_fill(x,y,w,h,CM_INK);
     if(!room_known(d)){question(x+w/2,y+h/2);return;}
     for(ty=0;ty<24;ty++)for(tx=0;tx<32;tx++) {
-        int at=ty*32+tx,k=d->kind[at],z=d->height[at];
+        int at=ty*32+tx,k=d->kind[at],z=map_height(d,tx,ty);
         int px=x+tx*w/32,py=y+ty*h/24,ww=x+(tx+1)*w/32-px,hh=y+(ty+1)*h/24-py;
         if(k==CMT_WALL)continue;
         if(mode==1) {
             cm_fill(px,py,ww,hh,k==CMT_WATER?CM_WATER:CM_BG);
-            if(ty==0 || d->kind[at-32]==CMT_WALL || d->height[at-32]!=z)
+            if(ty==0 || d->kind[at-32]==CMT_WALL || map_height(d,tx,ty-1)!=z)
                 cm_line(px,py,px+ww-1,py,CM_PALE);
-            if(tx==0 || d->kind[at-1]==CMT_WALL || d->height[at-1]!=z)
+            if(tx==0 || d->kind[at-1]==CMT_WALL || map_height(d,tx-1,ty)!=z)
                 cm_line(px,py,px,py+hh-1,CM_EDGE);
-            if(ty==23 || d->kind[at+32]==CMT_WALL || d->height[at+32]!=z)
+            if(ty==23 || d->kind[at+32]==CMT_WALL || map_height(d,tx,ty+1)!=z)
                 cm_line(px,py+hh-1,px+ww-1,py+hh-1,CM_GOLD_DIM);
-            if(tx==31 || d->kind[at+1]==CMT_WALL || d->height[at+1]!=z)
+            if(tx==31 || d->kind[at+1]==CMT_WALL || map_height(d,tx+1,ty)!=z)
                 cm_line(px+ww-1,py,px+ww-1,py+hh-1,CM_EDGE);
         } else {
             cm_fill(px,py,ww,hh,terrain_ink(k,z));
-            if(ty==0 || d->kind[at-32]==CMT_WALL || d->height[at-32]>z)
+            if(ty==0 || d->kind[at-32]==CMT_WALL || map_height(d,tx,ty-1)>z)
                 cm_line(px,py,px+ww-1,py,CM_PALE);
-            if(ty==23 || d->kind[at+32]==CMT_WALL || d->height[at+32]<z) {
+            if(ty==23 || d->kind[at+32]==CMT_WALL || map_height(d,tx,ty+1)<z) {
                 cm_line(px,py+hh-1,px+ww-1,py+hh-1,CM_INK);
                 if(mode==2 && hh>2)cm_line(px,py+hh-2,px+ww-1,py+hh-2,CM_EDGE);
             }
@@ -116,8 +142,8 @@ static void plan(const CreamMapData* d,int x,int y,int w,int h,int mode,bool8 ma
 static void height_key(const CreamMapData* d,int x,int y,int w,int h,bool8 cairn) {
     int z,n=0,max_z=0;u32 present=0;
     if(!room_known(d))return;
-    for(z=0;z<32*24;z++)if(walk_kind(d->kind[z])) {
-        int hh=MIN(d->height[z],15);present|=1u<<hh;max_z=MAX(max_z,hh);
+    for(z=0;z<32*24;z++)if(occupied_level(d,z)) {
+        int hh=d->height[z];present|=1u<<hh;max_z=MAX(max_z,hh);
     }
     for(z=0;z<=max_z;z++)if(present&(1u<<z))n++;
     if(!n)return;
@@ -245,10 +271,10 @@ static void glass_room(const CreamMapData* d) {
     if(!room_known(d)){question(120,81);return;}
     cm_fill(x-2,y-2,w+4,h+4,CM_INK);
     for(ty=0;ty<24;ty++)for(tx=0;tx<32;tx++) {
-        int at=ty*32+tx,k=d->kind[at],level=MIN(d->height[at],15);
+        int at=ty*32+tx,k=d->kind[at],level=map_height(d,tx,ty);
         int px=x+tx*w/32,py=y+ty*h/24,ww=x+(tx+1)*w/32-px,hh=y+(ty+1)*h/24-py;
         if(k==CMT_WALL)continue;
-        levels|=1u<<level;
+        if(occupied_level(d,at))levels|=1u<<d->height[at];
         cm_fill(px,py,ww,hh,terrain_ink(k,level));
         /* A few subdued diagonal facets describe glass, not a new route.
            Their contrast is weaker than the true height-boundary leading. */
@@ -256,11 +282,11 @@ static void glass_room(const CreamMapData* d) {
             cm_line(px+1,py,px+ww-2,py+hh-1,CM_EDGE);
             cm_pixel(px+1,py,CM_PALE);
         }
-        if(ty==0 || d->kind[at-32]==CMT_WALL || d->height[at-32]!=level)
+        if(ty==0 || d->kind[at-32]==CMT_WALL || map_height(d,tx,ty-1)!=level)
             cm_line(px,py,px+ww-1,py,CM_GOLD);
-        if(tx==0 || d->kind[at-1]==CMT_WALL || d->height[at-1]!=level)
+        if(tx==0 || d->kind[at-1]==CMT_WALL || map_height(d,tx-1,ty)!=level)
             cm_line(px,py,px,py+hh-1,CM_GOLD_DIM);
-        if(ty==23 || d->kind[at+32]==CMT_WALL || d->height[at+32]<level) {
+        if(ty==23 || d->kind[at+32]==CMT_WALL || map_height(d,tx,ty+1)<level) {
             cm_line(px,py+hh-1,px+ww-1,py+hh-1,CM_GOLD_DIM);
             if(hh>2)cm_line(px,py+hh-2,px+ww-1,py+hh-2,CM_INK);
         }
@@ -346,12 +372,12 @@ static void ridge_profile(const CreamMapData* d,int x,int y,int w,int h) {
     int tx,ty,max_z=1;
     if(!room_known(d))return;
     for(ty=0;ty<24;ty++)for(tx=0;tx<32;tx++)
-        if(walk_kind(d->kind[ty*32+tx]))max_z=MAX(max_z,MIN(d->height[ty*32+tx],15));
+        if(occupied_level(d,ty*32+tx))max_z=MAX(max_z,d->height[ty*32+tx]);
     cm_line(x,y+h-1,x+w-1,y+h-1,CM_GOLD_DIM);
     for(tx=0;tx<32;tx++) {
         int z=-1,climb=0;
         for(ty=0;ty<24;ty++)if(walk_kind(d->kind[ty*32+tx])) {
-            z=MAX(z,MIN(d->height[ty*32+tx],15));
+            z=MAX(z,map_height(d,tx,ty));
             if(d->kind[ty*32+tx]==CMT_CLIMB)climb=1;
         }
         if(z<0)continue;
@@ -383,7 +409,7 @@ static void plan_and_escarpment(const CreamMapData* d) {
         int cell=row*5+d->selected%5,y=43+row*18;
         cm_line(180,y+12,225,y+12,CM_EDGE);
         if(!d->known[cell]){cm_pixel(203,y+6,CM_GOLD_DIM);continue;}
-        int low=MIN(d->low[cell],7),high=MIN(d->high[cell],7);
+        int low=MIN(d->low[cell],6),high=MIN(d->high[cell],6);
         cm_fill(184+low*3,y+2,MAX(4,(high-low+1)*4),9,level_ink(high));
         cm_line(184+low*3,y+1,184+low*3+MAX(4,(high-low+1)*4)-1,y+1,CM_PALE);
         if(cell==d->selected)cm_box(180,y-1,46,15,CM_GOLD);

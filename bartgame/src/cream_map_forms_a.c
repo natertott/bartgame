@@ -279,9 +279,14 @@ static void ma_section(const CreamMapData* d) {
 
 static int ma_levels(const CreamMapData* d,u8 levels[7]) {
     unsigned bits=0;int x,y,h,n=0;
-    for(y=0;y<24;y++)for(x=0;x<32;x++)
-        if(ma_floor(d,x,y)||d->kind[y*32+x]==CMT_WATER||d->kind[y*32+x]==CMT_GATE)
+    for(y=0;y<24;y++)for(x=0;x<32;x++) {
+        int k=d->kind[y*32+x];
+        /* Shafts connect floors; interpolated shaft heights are not new
+           occupied floor planes in the exploded diagram. */
+        if(k==CMT_CLIMB || d->height[y*32+x]>=7)continue;
+        if(ma_floor(d,x,y)||k==CMT_WATER||k==CMT_GATE)
             bits|=1u<<ma_clamp(ma_height(d,x,y),0,6);
+    }
     for(h=0;h<=6;h++)if(bits&(1u<<h))levels[n++]=h;
     return n;
 }

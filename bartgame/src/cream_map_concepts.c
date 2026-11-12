@@ -27,7 +27,7 @@ static CMWork* sWork EWRAM_BSS;
 static u16* sPixels EWRAM_BSS;
 static u16 sSavedMap[16] EWRAM_BSS;
 static u16 sBackdrop;
-static bool8 sActive;
+static bool8 sActive,sLightText;
 static u8 sHeightSummary[25][3] EWRAM_BSS;
 static u32 sHeightSeed,sHeightKnown;
 static void height_seed(void) {
@@ -67,8 +67,26 @@ void cm_line(int x0,int y0,int x1,int y1,int ink){
 }
 void cm_box(int x,int y,int w,int h,int ink){if(w<1||h<1)return;cm_line(x,y,x+w-1,y,ink);cm_line(x,y+h-1,x+w-1,y+h-1,ink);cm_line(x,y,x,y+h-1,ink);cm_line(x+w-1,y,x+w-1,y+h-1,ink);}
 void cm_text(int x,int y,const char* text,int ink){
-    while(*text && x<240){unsigned ch=(u8)*text++;int g,r,b;if(ch==' '){x+=VWF_SPACE;continue;}if(ch<VWF_FIRST||ch>=VWF_FIRST+VWF_COUNT)ch='?';g=ch-VWF_FIRST;
-        for(r=0;r<VWF_HEIGHT;r++){u8 bits=vwf_bits[g*VWF_HEIGHT+r];for(b=0;bits;b++,bits>>=1)if(bits&1)cm_pixel(x+b,y+r,ink);}x+=vwf_w[g]+1;}
+    while(*text && x<240){
+        unsigned ch=(u8)*text++;int g,r,b;
+        if(ch==' '){x+=VWF_SPACE;continue;}
+        if(ch<VWF_FIRST||ch>=VWF_FIRST+VWF_COUNT)ch='?';
+        g=ch-VWF_FIRST;
+        /* Parchment keeps the same tiny glyphs legible with a native dark
+           outline, including when a label crosses a dark inset plan. */
+        if(sLightText)for(r=0;r<VWF_HEIGHT;r++) {
+            u8 bits=vwf_bits[g*VWF_HEIGHT+r];
+            for(b=0;bits;b++,bits>>=1)if(bits&1){
+                cm_pixel(x+b-1,y+r,CM_INK);cm_pixel(x+b+1,y+r,CM_INK);
+                cm_pixel(x+b,y+r-1,CM_INK);cm_pixel(x+b,y+r+1,CM_INK);
+            }
+        }
+        for(r=0;r<VWF_HEIGHT;r++){
+            u8 bits=vwf_bits[g*VWF_HEIGHT+r];
+            for(b=0;bits;b++,bits>>=1)if(bits&1)cm_pixel(x+b,y+r,ink);
+        }
+        x+=vwf_w[g]+1;
+    }
 }
 void cm_number(int x,int y,int value,int ink){char buf[10];cm_text(x,y,vwf_num(buf,value,0),ink);}
 void cm_diamond(int x,int y,int w,int h,int ink,bool8 fill){
@@ -204,6 +222,7 @@ void cm_region_grid(const CreamMapData* d,int x,int y,int w,int h,int mode){
     }
 }
 static void palette(int style){
+    sLightText=style==2 || style==4;
     u16 p[16]={RGB15(2,2,4),RGB15(4,4,6),RGB15(9,10,10),RGB15(13,14,12),RGB15(17,17,13),RGB15(21,20,15),RGB15(25,23,18),RGB15(5,17,25),RGB15(20,8,25),RGB15(31,25,11),RGB15(18,13,7),RGB15(11,12,13),RGB15(31,30,26),RGB15(29,8,10),RGB15(10,23,15),RGB15(28,27,23)};
     if(style==2||style==4){p[0]=RGB15(26,24,18);p[1]=RGB15(7,7,8);p[2]=RGB15(14,13,10);p[11]=RGB15(17,14,10);p[12]=RGB15(31,30,25);}
     if(style==6){p[0]=RGB15(2,5,10);p[1]=RGB15(3,8,15);p[2]=RGB15(5,12,18);p[3]=RGB15(8,15,20);p[4]=RGB15(12,19,23);p[5]=RGB15(17,23,26);p[6]=RGB15(22,27,29);p[11]=RGB15(10,18,23);}
