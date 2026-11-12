@@ -74,8 +74,10 @@ rules G01–G18 remain authoritative. This study uses those already recorded
 sources and the user's Mount Crenel traversal annotation; it does not claim new
 external research or import another game's art.
 
-Review artifacts and exact build/capture identities will be linked from the
-repository's Cream art gallery after the native runs finish.
+[The actual mGBA gallery](../../../cream-art-review/README.md) contains final
+matched whole rooms, ordinary live climbing, source atlases and exact build/
+capture identities. Final source4966dab4 passes5983 asset audit checks and366
+native capture checks across control+5studies; production0 remains byte-exact.
 
 ## Native-review corrections
 

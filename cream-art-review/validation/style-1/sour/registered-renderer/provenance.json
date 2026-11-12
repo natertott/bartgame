@@ -1,0 +1,254 @@
+{
+  "label": "Registered renderer views and nine-camera crop mosaic; not ordinary gameplay frames",
+  "method": "Nine untouched 240x160 native mGBA PNGs; literal disjoint crops form 512x384.",
+  "review_clock": 256,
+  "frame_assignment": "gFrame=255 immediately before each frozen render only",
+  "before": {
+    "frames": 422,
+    "clock": 411,
+    "run_frames": 260,
+    "state": 1,
+    "area": 3,
+    "cell": 18,
+    "node": 36,
+    "actor": {
+      "kind": 1,
+      "type": 0,
+      "state": 0,
+      "timer": 0,
+      "x": 312,
+      "y": 266,
+      "z": 0,
+      "speed": 0,
+      "hp": 0,
+      "coll": 0,
+      "facing": 0
+    },
+    "health": [
+      30,
+      32
+    ],
+    "text": 0
+  },
+  "after": {
+    "frames": 467,
+    "clock": 256,
+    "run_frames": 260,
+    "state": 1,
+    "area": 3,
+    "cell": 18,
+    "node": 36,
+    "actor": {
+      "kind": 1,
+      "type": 0,
+      "state": 0,
+      "timer": 0,
+      "x": 312,
+      "y": 266,
+      "z": 0,
+      "speed": 0,
+      "hp": 0,
+      "coll": 0,
+      "facing": 0
+    },
+    "health": [
+      30,
+      32
+    ],
+    "text": 0
+  },
+  "room_unchanged": true,
+  "all_player_fields_unchanged": true,
+  "graph_unchanged": true,
+  "crop_copy_exact": true,
+  "semantics": {
+    "room_raw_sha256": "74a2e4c9ac660c3a05b40640d780c3dc2fa731183a96ed56b31bef28ca1ed95d",
+    "ground_types_sha256": "717d630530eab8c18eeca16604794718440dcbc09944921b4e60e38db497f820",
+    "overlay_types_sha256": "8dc520efd3739e5097a0b80a26d79cb286e9f7b59627cfaa7c6245a1a559d707",
+    "solid_sha256": "bae50bfc78cb247ebe1758a23b2a0d0d6d8065029e08a34cf74ad742a7686205",
+    "overlay_occupancy_sha256": "f9d0515f30479a270a8107f961a71fd9e01ec667748ed2ec171ce95e92f9f995",
+    "climb_mask_sha256": "0929a4e6ca9f69fd8652c7f821c74a98502323da4a8595a790e01abda928aeea"
+  },
+  "views": [
+    {
+      "camera": [
+        0,
+        0
+      ],
+      "file": "camera-0-0.png",
+      "world_crop": [
+        0,
+        0,
+        188,
+        136
+      ],
+      "source_crop": [
+        0,
+        0,
+        188,
+        136
+      ],
+      "png_sha256": "4b673bfe615b55e7fdf6b22d6fed014586bcee6011fbace5b3f186c24abe70c9"
+    },
+    {
+      "camera": [
+        136,
+        0
+      ],
+      "file": "camera-136-0.png",
+      "world_crop": [
+        188,
+        0,
+        324,
+        136
+      ],
+      "source_crop": [
+        52,
+        0,
+        188,
+        136
+      ],
+      "png_sha256": "6c69a5637124cc7cecb3c5d592c8d3e97d53a335456d7f056095c6093d6e6097"
+    },
+    {
+      "camera": [
+        272,
+        0
+      ],
+      "file": "camera-272-0.png",
+      "world_crop": [
+        324,
+        0,
+        512,
+        136
+      ],
+      "source_crop": [
+        52,
+        0,
+        240,
+        136
+      ],
+      "png_sha256": "d35a74b30bf062920f86f40b28dbf5de92544de633dcff9b15a7eeeb4ceab1ed"
+    },
+    {
+      "camera": [
+        0,
+        112
+      ],
+      "file": "camera-0-112.png",
+      "world_crop": [
+        0,
+        136,
+        188,
+        248
+      ],
+      "source_crop": [
+        0,
+        24,
+        188,
+        136
+      ],
+      "png_sha256": "d15183838e466c8e90e13f1504925542b41c765af8b1f216007282a0f7bd2b60"
+    },
+    {
+      "camera": [
+        136,
+        112
+      ],
+      "file": "camera-136-112.png",
+      "world_crop": [
+        188,
+        136,
+        324,
+        248
+      ],
+      "source_crop": [
+        52,
+        24,
+        188,
+        136
+      ],
+      "png_sha256": "cc42e3904306044d7ae2220e2b679de171104359610dec0ebfa77c8a140cb66f"
+    },
+    {
+      "camera": [
+        272,
+        112
+      ],
+      "file": "camera-272-112.png",
+      "world_crop": [
+        324,
+        136,
+        512,
+        248
+      ],
+      "source_crop": [
+        52,
+        24,
+        240,
+        136
+      ],
+      "png_sha256": "0e4f156c624c98507eb594d8155f10618d09fa3e62576a2cb4b0993c9108568e"
+    },
+    {
+      "camera": [
+        0,
+        224
+      ],
+      "file": "camera-0-224.png",
+      "world_crop": [
+        0,
+        248,
+        188,
+        384
+      ],
+      "source_crop": [
+        0,
+        24,
+        188,
+        160
+      ],
+      "png_sha256": "d48f8166343cad34ce756664d88fddc1b4b3019ad03cf944defd062fcb4dc6b1"
+    },
+    {
+      "camera": [
+        136,
+        224
+      ],
+      "file": "camera-136-224.png",
+      "world_crop": [
+        188,
+        248,
+        324,
+        384
+      ],
+      "source_crop": [
+        52,
+        24,
+        188,
+        160
+      ],
+      "png_sha256": "c64e9eac1f350bcd817647e84d4388486003c5aa0b799c122e7a9d5ef2f99211"
+    },
+    {
+      "camera": [
+        272,
+        224
+      ],
+      "file": "camera-272-224.png",
+      "world_crop": [
+        324,
+        248,
+        512,
+        384
+      ],
+      "source_crop": [
+        52,
+        24,
+        240,
+        160
+      ],
+      "png_sha256": "c533d27b004f36d231b5e841425210ba162986d4d422dc28ef4fcd58c21c6f4e"
+    }
+  ]
+}

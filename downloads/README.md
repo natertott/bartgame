@@ -1,5 +1,13 @@
 # BARTGAME downloads
 
+## Five optional Cream art directions
+
+- [Download all five playable studies](https://raw.githubusercontent.com/natertott/bartgame/cream-art-studies/downloads/cream-art-studies-4966dab4/five-cream-art-studies.zip)
+- [Matched mGBA gallery, live climbs and individual ROMs](../cream-art-review/README.md)
+- [Hashes and native evidence](cream-art-studies-4966dab4/README.md)
+
+New Cream terrain and interactables; the production default remains unchanged.
+
 ## Regional handoff integration — current release
 
 - [Download ROM](https://raw.githubusercontent.com/natertott/bartgame/handoff-restoration-curdled-cream/downloads/regional-handoff-51880a55/bartgame-51880a55.gba)

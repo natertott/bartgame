@@ -1952,3 +1952,14 @@ non-Cream preservation, matched whole-room captures and live climb review are
 required before presenting the five as implemented alternatives. Source sheets
 remain explicitly labelled as source art; registered camera mosaics remain
 separate from ordinary live240×160 frames.
+
+**Final native review:** source4966dab4, all five study ROMs use10 area palette
+banks and375–408 background subtiles. The independent audit passes5983 checks;
+the matched capture suite passes366 across the control and five studies.
+Three real climbs per style preserve route/timing/positive health. Default0
+is exactly the published production ROM. Native review corrected misleading
+ward keyholes, transparent floor-plate corners, unlit lamp states and Rind floor
+wallpaper. Remaining visible repetition/busy deep Moldglass detail is recorded
+as a critique, not hidden by a fidelity statistic. See the
+[final gallery](../../../cream-art-review/README.md) for the five unselected
+options and explicit source/registered-renderer/live-footage distinctions.

@@ -64,6 +64,14 @@ The [performance diagnosis](docs/performance/README.md) and
 engine without reducing artwork, enemies, effects or mechanics. Normal builds
 use `PROFILE=0`; `PROFILE=1` is development-only cycle accounting.
 
+## Cream environment studies
+
+[Five new native material directions](../cream-art-review/README.md) add shelf
+depth, clear climbing grips, stronger interactables and structural corruption.
+`BART_CREAM=1..5` builds the review alternatives; default0 retains the existing
+production art. Matched actual mGBA room mosaics and ordinary live climb clips
+keep review rendering separate from gameplay footage.
+
 ## Current game
 
 The Drain is the hub, with the Billious Peddler, Pale Gatekeeper and a

@@ -1,0 +1,812 @@
+{
+  "label": "Ordinary 240x160 live simulation with actual UP input",
+  "before": {
+    "frames": 391,
+    "clock": 380,
+    "run_frames": 258,
+    "state": 1,
+    "area": 3,
+    "cell": 21,
+    "node": 42,
+    "actor": {
+      "kind": 1,
+      "type": 0,
+      "state": 0,
+      "timer": 0,
+      "x": 280,
+      "y": 266,
+      "z": 0,
+      "speed": 0,
+      "hp": 0,
+      "coll": 0,
+      "facing": 0
+    },
+    "health": [
+      32,
+      32
+    ],
+    "text": 0
+  },
+  "after": {
+    "frames": 526,
+    "clock": 515,
+    "run_frames": 393,
+    "state": 1,
+    "area": 3,
+    "cell": 21,
+    "node": 43,
+    "actor": {
+      "kind": 1,
+      "type": 0,
+      "state": 0,
+      "timer": 0,
+      "x": 280,
+      "y": 131,
+      "z": 0,
+      "speed": 0,
+      "hp": 0,
+      "coll": 0,
+      "facing": 0
+    },
+    "health": [
+      32,
+      32
+    ],
+    "text": 0
+  },
+  "frames": 135,
+  "sampled_every": 4,
+  "minimum_health": 32,
+  "climb_frames": 128,
+  "assignments": "No review camera/clock/frame assignments in this fresh ordinary core.",
+  "raw_frames": [
+    {
+      "frame": 0,
+      "file": "raw-frames/frame-0000.png",
+      "player": {
+        "kind": 1,
+        "type": 0,
+        "state": 0,
+        "timer": 0,
+        "x": 280,
+        "y": 265,
+        "z": 0,
+        "speed": 0,
+        "hp": 0,
+        "coll": 0,
+        "facing": 0
+      },
+      "node": 42,
+      "health": [
+        32,
+        32
+      ]
+    },
+    {
+      "frame": 4,
+      "file": "raw-frames/frame-0004.png",
+      "player": {
+        "kind": 1,
+        "type": 0,
+        "state": 0,
+        "timer": 0,
+        "x": 280,
+        "y": 261,
+        "z": 0,
+        "speed": 0,
+        "hp": 0,
+        "coll": 0,
+        "facing": 0
+      },
+      "node": 42,
+      "health": [
+        32,
+        32
+      ]
+    },
+    {
+      "frame": 8,
+      "file": "raw-frames/frame-0008.png",
+      "player": {
+        "kind": 1,
+        "type": 0,
+        "state": 13,
+        "timer": 0,
+        "x": 280,
+        "y": 257,
+        "z": 0,
+        "speed": 0,
+        "hp": 0,
+        "coll": 0,
+        "facing": 0
+      },
+      "node": 42,
+      "health": [
+        32,
+        32
+      ]
+    },
+    {
+      "frame": 12,
+      "file": "raw-frames/frame-0012.png",
+      "player": {
+        "kind": 1,
+        "type": 0,
+        "state": 13,
+        "timer": 0,
+        "x": 280,
+        "y": 253,
+        "z": 0,
+        "speed": 0,
+        "hp": 0,
+        "coll": 0,
+        "facing": 0
+      },
+      "node": 42,
+      "health": [
+        32,
+        32
+      ]
+    },
+    {
+      "frame": 16,
+      "file": "raw-frames/frame-0016.png",
+      "player": {
+        "kind": 1,
+        "type": 0,
+        "state": 13,
+        "timer": 0,
+        "x": 280,
+        "y": 249,
+        "z": 0,
+        "speed": 0,
+        "hp": 0,
+        "coll": 0,
+        "facing": 0
+      },
+      "node": 42,
+      "health": [
+        32,
+        32
+      ]
+    },
+    {
+      "frame": 20,
+      "file": "raw-frames/frame-0020.png",
+      "player": {
+        "kind": 1,
+        "type": 0,
+        "state": 13,
+        "timer": 0,
+        "x": 280,
+        "y": 245,
+        "z": 0,
+        "speed": 0,
+        "hp": 0,
+        "coll": 0,
+        "facing": 0
+      },
+      "node": 42,
+      "health": [
+        32,
+        32
+      ]
+    },
+    {
+      "frame": 24,
+      "file": "raw-frames/frame-0024.png",
+      "player": {
+        "kind": 1,
+        "type": 0,
+        "state": 13,
+        "timer": 0,
+        "x": 280,
+        "y": 241,
+        "z": 0,
+        "speed": 0,
+        "hp": 0,
+        "coll": 0,
+        "facing": 0
+      },
+      "node": 42,
+      "health": [
+        32,
+        32
+      ]
+    },
+    {
+      "frame": 28,
+      "file": "raw-frames/frame-0028.png",
+      "player": {
+        "kind": 1,
+        "type": 0,
+        "state": 13,
+        "timer": 0,
+        "x": 280,
+        "y": 237,
+        "z": 0,
+        "speed": 0,
+        "hp": 0,
+        "coll": 0,
+        "facing": 0
+      },
+      "node": 42,
+      "health": [
+        32,
+        32
+      ]
+    },
+    {
+      "frame": 32,
+      "file": "raw-frames/frame-0032.png",
+      "player": {
+        "kind": 1,
+        "type": 0,
+        "state": 13,
+        "timer": 0,
+        "x": 280,
+        "y": 233,
+        "z": 0,
+        "speed": 0,
+        "hp": 0,
+        "coll": 0,
+        "facing": 0
+      },
+      "node": 42,
+      "health": [
+        32,
+        32
+      ]
+    },
+    {
+      "frame": 36,
+      "file": "raw-frames/frame-0036.png",
+      "player": {
+        "kind": 1,
+        "type": 0,
+        "state": 13,
+        "timer": 0,
+        "x": 280,
+        "y": 229,
+        "z": 0,
+        "speed": 0,
+        "hp": 0,
+        "coll": 0,
+        "facing": 0
+      },
+      "node": 42,
+      "health": [
+        32,
+        32
+      ]
+    },
+    {
+      "frame": 40,
+      "file": "raw-frames/frame-0040.png",
+      "player": {
+        "kind": 1,
+        "type": 0,
+        "state": 13,
+        "timer": 0,
+        "x": 280,
+        "y": 225,
+        "z": 0,
+        "speed": 0,
+        "hp": 0,
+        "coll": 0,
+        "facing": 0
+      },
+      "node": 42,
+      "health": [
+        32,
+        32
+      ]
+    },
+    {
+      "frame": 44,
+      "file": "raw-frames/frame-0044.png",
+      "player": {
+        "kind": 1,
+        "type": 0,
+        "state": 13,
+        "timer": 0,
+        "x": 280,
+        "y": 221,
+        "z": 0,
+        "speed": 0,
+        "hp": 0,
+        "coll": 0,
+        "facing": 0
+      },
+      "node": 42,
+      "health": [
+        32,
+        32
+      ]
+    },
+    {
+      "frame": 48,
+      "file": "raw-frames/frame-0048.png",
+      "player": {
+        "kind": 1,
+        "type": 0,
+        "state": 13,
+        "timer": 0,
+        "x": 280,
+        "y": 217,
+        "z": 0,
+        "speed": 0,
+        "hp": 0,
+        "coll": 0,
+        "facing": 0
+      },
+      "node": 42,
+      "health": [
+        32,
+        32
+      ]
+    },
+    {
+      "frame": 52,
+      "file": "raw-frames/frame-0052.png",
+      "player": {
+        "kind": 1,
+        "type": 0,
+        "state": 13,
+        "timer": 0,
+        "x": 280,
+        "y": 213,
+        "z": 0,
+        "speed": 0,
+        "hp": 0,
+        "coll": 0,
+        "facing": 0
+      },
+      "node": 42,
+      "health": [
+        32,
+        32
+      ]
+    },
+    {
+      "frame": 56,
+      "file": "raw-frames/frame-0056.png",
+      "player": {
+        "kind": 1,
+        "type": 0,
+        "state": 13,
+        "timer": 0,
+        "x": 280,
+        "y": 209,
+        "z": 0,
+        "speed": 0,
+        "hp": 0,
+        "coll": 0,
+        "facing": 0
+      },
+      "node": 42,
+      "health": [
+        32,
+        32
+      ]
+    },
+    {
+      "frame": 60,
+      "file": "raw-frames/frame-0060.png",
+      "player": {
+        "kind": 1,
+        "type": 0,
+        "state": 13,
+        "timer": 0,
+        "x": 280,
+        "y": 205,
+        "z": 0,
+        "speed": 0,
+        "hp": 0,
+        "coll": 0,
+        "facing": 0
+      },
+      "node": 42,
+      "health": [
+        32,
+        32
+      ]
+    },
+    {
+      "frame": 64,
+      "file": "raw-frames/frame-0064.png",
+      "player": {
+        "kind": 1,
+        "type": 0,
+        "state": 13,
+        "timer": 0,
+        "x": 280,
+        "y": 201,
+        "z": 0,
+        "speed": 0,
+        "hp": 0,
+        "coll": 0,
+        "facing": 0
+      },
+      "node": 42,
+      "health": [
+        32,
+        32
+      ]
+    },
+    {
+      "frame": 68,
+      "file": "raw-frames/frame-0068.png",
+      "player": {
+        "kind": 1,
+        "type": 0,
+        "state": 13,
+        "timer": 0,
+        "x": 280,
+        "y": 197,
+        "z": 0,
+        "speed": 0,
+        "hp": 0,
+        "coll": 0,
+        "facing": 0
+      },
+      "node": 42,
+      "health": [
+        32,
+        32
+      ]
+    },
+    {
+      "frame": 72,
+      "file": "raw-frames/frame-0072.png",
+      "player": {
+        "kind": 1,
+        "type": 0,
+        "state": 13,
+        "timer": 0,
+        "x": 280,
+        "y": 193,
+        "z": 0,
+        "speed": 0,
+        "hp": 0,
+        "coll": 0,
+        "facing": 0
+      },
+      "node": 42,
+      "health": [
+        32,
+        32
+      ]
+    },
+    {
+      "frame": 76,
+      "file": "raw-frames/frame-0076.png",
+      "player": {
+        "kind": 1,
+        "type": 0,
+        "state": 13,
+        "timer": 0,
+        "x": 280,
+        "y": 189,
+        "z": 0,
+        "speed": 0,
+        "hp": 0,
+        "coll": 0,
+        "facing": 0
+      },
+      "node": 42,
+      "health": [
+        32,
+        32
+      ]
+    },
+    {
+      "frame": 80,
+      "file": "raw-frames/frame-0080.png",
+      "player": {
+        "kind": 1,
+        "type": 0,
+        "state": 13,
+        "timer": 0,
+        "x": 280,
+        "y": 185,
+        "z": 0,
+        "speed": 0,
+        "hp": 0,
+        "coll": 0,
+        "facing": 0
+      },
+      "node": 42,
+      "health": [
+        32,
+        32
+      ]
+    },
+    {
+      "frame": 84,
+      "file": "raw-frames/frame-0084.png",
+      "player": {
+        "kind": 1,
+        "type": 0,
+        "state": 13,
+        "timer": 0,
+        "x": 280,
+        "y": 181,
+        "z": 0,
+        "speed": 0,
+        "hp": 0,
+        "coll": 0,
+        "facing": 0
+      },
+      "node": 42,
+      "health": [
+        32,
+        32
+      ]
+    },
+    {
+      "frame": 88,
+      "file": "raw-frames/frame-0088.png",
+      "player": {
+        "kind": 1,
+        "type": 0,
+        "state": 13,
+        "timer": 0,
+        "x": 280,
+        "y": 177,
+        "z": 0,
+        "speed": 0,
+        "hp": 0,
+        "coll": 0,
+        "facing": 0
+      },
+      "node": 42,
+      "health": [
+        32,
+        32
+      ]
+    },
+    {
+      "frame": 92,
+      "file": "raw-frames/frame-0092.png",
+      "player": {
+        "kind": 1,
+        "type": 0,
+        "state": 13,
+        "timer": 0,
+        "x": 280,
+        "y": 173,
+        "z": 0,
+        "speed": 0,
+        "hp": 0,
+        "coll": 0,
+        "facing": 0
+      },
+      "node": 42,
+      "health": [
+        32,
+        32
+      ]
+    },
+    {
+      "frame": 96,
+      "file": "raw-frames/frame-0096.png",
+      "player": {
+        "kind": 1,
+        "type": 0,
+        "state": 13,
+        "timer": 0,
+        "x": 280,
+        "y": 169,
+        "z": 0,
+        "speed": 0,
+        "hp": 0,
+        "coll": 0,
+        "facing": 0
+      },
+      "node": 42,
+      "health": [
+        32,
+        32
+      ]
+    },
+    {
+      "frame": 100,
+      "file": "raw-frames/frame-0100.png",
+      "player": {
+        "kind": 1,
+        "type": 0,
+        "state": 13,
+        "timer": 0,
+        "x": 280,
+        "y": 165,
+        "z": 0,
+        "speed": 0,
+        "hp": 0,
+        "coll": 0,
+        "facing": 0
+      },
+      "node": 42,
+      "health": [
+        32,
+        32
+      ]
+    },
+    {
+      "frame": 104,
+      "file": "raw-frames/frame-0104.png",
+      "player": {
+        "kind": 1,
+        "type": 0,
+        "state": 13,
+        "timer": 0,
+        "x": 280,
+        "y": 161,
+        "z": 0,
+        "speed": 0,
+        "hp": 0,
+        "coll": 0,
+        "facing": 0
+      },
+      "node": 42,
+      "health": [
+        32,
+        32
+      ]
+    },
+    {
+      "frame": 108,
+      "file": "raw-frames/frame-0108.png",
+      "player": {
+        "kind": 1,
+        "type": 0,
+        "state": 13,
+        "timer": 0,
+        "x": 280,
+        "y": 157,
+        "z": 0,
+        "speed": 0,
+        "hp": 0,
+        "coll": 0,
+        "facing": 0
+      },
+      "node": 42,
+      "health": [
+        32,
+        32
+      ]
+    },
+    {
+      "frame": 112,
+      "file": "raw-frames/frame-0112.png",
+      "player": {
+        "kind": 1,
+        "type": 0,
+        "state": 13,
+        "timer": 0,
+        "x": 280,
+        "y": 153,
+        "z": 0,
+        "speed": 0,
+        "hp": 0,
+        "coll": 0,
+        "facing": 0
+      },
+      "node": 42,
+      "health": [
+        32,
+        32
+      ]
+    },
+    {
+      "frame": 116,
+      "file": "raw-frames/frame-0116.png",
+      "player": {
+        "kind": 1,
+        "type": 0,
+        "state": 13,
+        "timer": 0,
+        "x": 280,
+        "y": 149,
+        "z": 0,
+        "speed": 0,
+        "hp": 0,
+        "coll": 0,
+        "facing": 0
+      },
+      "node": 42,
+      "health": [
+        32,
+        32
+      ]
+    },
+    {
+      "frame": 120,
+      "file": "raw-frames/frame-0120.png",
+      "player": {
+        "kind": 1,
+        "type": 0,
+        "state": 13,
+        "timer": 0,
+        "x": 280,
+        "y": 145,
+        "z": 0,
+        "speed": 0,
+        "hp": 0,
+        "coll": 0,
+        "facing": 0
+      },
+      "node": 42,
+      "health": [
+        32,
+        32
+      ]
+    },
+    {
+      "frame": 124,
+      "file": "raw-frames/frame-0124.png",
+      "player": {
+        "kind": 1,
+        "type": 0,
+        "state": 13,
+        "timer": 0,
+        "x": 280,
+        "y": 141,
+        "z": 0,
+        "speed": 0,
+        "hp": 0,
+        "coll": 0,
+        "facing": 0
+      },
+      "node": 42,
+      "health": [
+        32,
+        32
+      ]
+    },
+    {
+      "frame": 128,
+      "file": "raw-frames/frame-0128.png",
+      "player": {
+        "kind": 1,
+        "type": 0,
+        "state": 13,
+        "timer": 0,
+        "x": 280,
+        "y": 137,
+        "z": 0,
+        "speed": 0,
+        "hp": 0,
+        "coll": 0,
+        "facing": 0
+      },
+      "node": 42,
+      "health": [
+        32,
+        32
+      ]
+    },
+    {
+      "frame": 132,
+      "file": "raw-frames/frame-0132.png",
+      "player": {
+        "kind": 1,
+        "type": 0,
+        "state": 13,
+        "timer": 0,
+        "x": 280,
+        "y": 133,
+        "z": 0,
+        "speed": 0,
+        "hp": 0,
+        "coll": 0,
+        "facing": 0
+      },
+      "node": 42,
+      "health": [
+        32,
+        32
+      ]
+    }
+  ]
+}

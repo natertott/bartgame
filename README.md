@@ -6,6 +6,8 @@ See the [native art reboot and actual mGBA recordings](art-review/reboot/README.
 [art direction for all nine planned areas](bartgame/docs/art-reboot/ART_BIBLE.md).
 The standalone build uses original native artwork and needs no commercial ROM.
 
+New optional art studies: [five native Curdled Cream directions, actual mGBA rooms and live climbs](cream-art-review/README.md). Production art remains unchanged while these are reviewed.
+
 Latest playable release: [regional handoff integration, ROM and actual mGBA gallery](regional-handoff-review/README.md).
 Restored events, quests, fusions and mechanisms now live in the generated
 Forest and Cream. The Cream entrance is a second Forest-style wall ladder.

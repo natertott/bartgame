@@ -1,0 +1,428 @@
+{
+  "seed": 46247,
+  "generated_seed": 4030825150,
+  "reference_source_commit": "51880a55e6ecf86728f3a0923e5547e7bdeed5a0",
+  "reference_rom_sha256": "0dd8554384b53e618140f8c61590fc7e6a7ff0888f296ece034a95f357b34fdd",
+  "tool_sha256": "ca462f6c43217b1ba253e919594f1d2c66980c15f56fd8ebfdfe73aaf5bc7646",
+  "styles": [
+    {
+      "style": 0,
+      "source_commit": "4966dab4132218b9d2692fbb62165a22c70f52c3",
+      "rom_sha256": "0dd8554384b53e618140f8c61590fc7e6a7ff0888f296ece034a95f357b34fdd",
+      "tool_sha256": "ca462f6c43217b1ba253e919594f1d2c66980c15f56fd8ebfdfe73aaf5bc7646",
+      "complete": true,
+      "checks_passed": 61,
+      "checks_total": 61,
+      "graph_exact": true,
+      "cases": [
+        {
+          "name": "healthy",
+          "cell": 21,
+          "features_exact": true,
+          "physical_semantics_exact": {
+            "ground_types_sha256": true,
+            "overlay_types_sha256": true,
+            "solid_sha256": true,
+            "overlay_occupancy_sha256": true,
+            "climb_mask_sha256": true
+          },
+          "raw_room_ids_exact": true,
+          "panorama_changed_pixels": 0,
+          "panorama_pixels": 196608,
+          "real_climb_frames": 128,
+          "real_input_frames": 135,
+          "minimum_health": 32,
+          "input_outcome_exact": true,
+          "control_all_png_and_gif_bytes_exact": true
+        },
+        {
+          "name": "sour",
+          "cell": 18,
+          "features_exact": true,
+          "physical_semantics_exact": {
+            "ground_types_sha256": true,
+            "overlay_types_sha256": true,
+            "solid_sha256": true,
+            "overlay_occupancy_sha256": true,
+            "climb_mask_sha256": true
+          },
+          "raw_room_ids_exact": true,
+          "panorama_changed_pixels": 0,
+          "panorama_pixels": 196608,
+          "real_climb_frames": 112,
+          "real_input_frames": 119,
+          "minimum_health": 30,
+          "input_outcome_exact": true,
+          "control_all_png_and_gif_bytes_exact": true
+        },
+        {
+          "name": "deep",
+          "cell": 0,
+          "features_exact": true,
+          "physical_semantics_exact": {
+            "ground_types_sha256": true,
+            "overlay_types_sha256": true,
+            "solid_sha256": true,
+            "overlay_occupancy_sha256": true,
+            "climb_mask_sha256": true
+          },
+          "raw_room_ids_exact": true,
+          "panorama_changed_pixels": 0,
+          "panorama_pixels": 196608,
+          "real_climb_frames": 144,
+          "real_input_frames": 151,
+          "minimum_health": 30,
+          "input_outcome_exact": true,
+          "control_all_png_and_gif_bytes_exact": true
+        }
+      ]
+    },
+    {
+      "style": 1,
+      "source_commit": "4966dab4132218b9d2692fbb62165a22c70f52c3",
+      "rom_sha256": "f5eb072725f244aa3be6264dce8d9aa6f28ca55497cbb231c046cfacb290db0c",
+      "tool_sha256": "ca462f6c43217b1ba253e919594f1d2c66980c15f56fd8ebfdfe73aaf5bc7646",
+      "complete": true,
+      "checks_passed": 61,
+      "checks_total": 61,
+      "graph_exact": true,
+      "cases": [
+        {
+          "name": "healthy",
+          "cell": 21,
+          "features_exact": true,
+          "physical_semantics_exact": {
+            "ground_types_sha256": true,
+            "overlay_types_sha256": true,
+            "solid_sha256": true,
+            "overlay_occupancy_sha256": true,
+            "climb_mask_sha256": true
+          },
+          "raw_room_ids_exact": false,
+          "panorama_changed_pixels": 195591,
+          "panorama_pixels": 196608,
+          "real_climb_frames": 128,
+          "real_input_frames": 135,
+          "minimum_health": 32,
+          "input_outcome_exact": true
+        },
+        {
+          "name": "sour",
+          "cell": 18,
+          "features_exact": true,
+          "physical_semantics_exact": {
+            "ground_types_sha256": true,
+            "overlay_types_sha256": true,
+            "solid_sha256": true,
+            "overlay_occupancy_sha256": true,
+            "climb_mask_sha256": true
+          },
+          "raw_room_ids_exact": false,
+          "panorama_changed_pixels": 193330,
+          "panorama_pixels": 196608,
+          "real_climb_frames": 112,
+          "real_input_frames": 119,
+          "minimum_health": 30,
+          "input_outcome_exact": true
+        },
+        {
+          "name": "deep",
+          "cell": 0,
+          "features_exact": true,
+          "physical_semantics_exact": {
+            "ground_types_sha256": true,
+            "overlay_types_sha256": true,
+            "solid_sha256": true,
+            "overlay_occupancy_sha256": true,
+            "climb_mask_sha256": true
+          },
+          "raw_room_ids_exact": false,
+          "panorama_changed_pixels": 190996,
+          "panorama_pixels": 196608,
+          "real_climb_frames": 144,
+          "real_input_frames": 151,
+          "minimum_health": 30,
+          "input_outcome_exact": true
+        }
+      ]
+    },
+    {
+      "style": 2,
+      "source_commit": "4966dab4132218b9d2692fbb62165a22c70f52c3",
+      "rom_sha256": "908bce5f8b6ce64d8e4ea5dc1409149f0d9eeb17d076e659985467ccaef34a3c",
+      "tool_sha256": "ca462f6c43217b1ba253e919594f1d2c66980c15f56fd8ebfdfe73aaf5bc7646",
+      "complete": true,
+      "checks_passed": 61,
+      "checks_total": 61,
+      "graph_exact": true,
+      "cases": [
+        {
+          "name": "healthy",
+          "cell": 21,
+          "features_exact": true,
+          "physical_semantics_exact": {
+            "ground_types_sha256": true,
+            "overlay_types_sha256": true,
+            "solid_sha256": true,
+            "overlay_occupancy_sha256": true,
+            "climb_mask_sha256": true
+          },
+          "raw_room_ids_exact": false,
+          "panorama_changed_pixels": 190406,
+          "panorama_pixels": 196608,
+          "real_climb_frames": 128,
+          "real_input_frames": 135,
+          "minimum_health": 32,
+          "input_outcome_exact": true
+        },
+        {
+          "name": "sour",
+          "cell": 18,
+          "features_exact": true,
+          "physical_semantics_exact": {
+            "ground_types_sha256": true,
+            "overlay_types_sha256": true,
+            "solid_sha256": true,
+            "overlay_occupancy_sha256": true,
+            "climb_mask_sha256": true
+          },
+          "raw_room_ids_exact": false,
+          "panorama_changed_pixels": 192672,
+          "panorama_pixels": 196608,
+          "real_climb_frames": 112,
+          "real_input_frames": 119,
+          "minimum_health": 30,
+          "input_outcome_exact": true
+        },
+        {
+          "name": "deep",
+          "cell": 0,
+          "features_exact": true,
+          "physical_semantics_exact": {
+            "ground_types_sha256": true,
+            "overlay_types_sha256": true,
+            "solid_sha256": true,
+            "overlay_occupancy_sha256": true,
+            "climb_mask_sha256": true
+          },
+          "raw_room_ids_exact": false,
+          "panorama_changed_pixels": 191647,
+          "panorama_pixels": 196608,
+          "real_climb_frames": 144,
+          "real_input_frames": 151,
+          "minimum_health": 30,
+          "input_outcome_exact": true
+        }
+      ]
+    },
+    {
+      "style": 3,
+      "source_commit": "4966dab4132218b9d2692fbb62165a22c70f52c3",
+      "rom_sha256": "dbe4c9dc587ebab0d2c2e609043b757955209b185e12091faeffd869d11fde7d",
+      "tool_sha256": "ca462f6c43217b1ba253e919594f1d2c66980c15f56fd8ebfdfe73aaf5bc7646",
+      "complete": true,
+      "checks_passed": 61,
+      "checks_total": 61,
+      "graph_exact": true,
+      "cases": [
+        {
+          "name": "healthy",
+          "cell": 21,
+          "features_exact": true,
+          "physical_semantics_exact": {
+            "ground_types_sha256": true,
+            "overlay_types_sha256": true,
+            "solid_sha256": true,
+            "overlay_occupancy_sha256": true,
+            "climb_mask_sha256": true
+          },
+          "raw_room_ids_exact": false,
+          "panorama_changed_pixels": 195335,
+          "panorama_pixels": 196608,
+          "real_climb_frames": 128,
+          "real_input_frames": 135,
+          "minimum_health": 32,
+          "input_outcome_exact": true
+        },
+        {
+          "name": "sour",
+          "cell": 18,
+          "features_exact": true,
+          "physical_semantics_exact": {
+            "ground_types_sha256": true,
+            "overlay_types_sha256": true,
+            "solid_sha256": true,
+            "overlay_occupancy_sha256": true,
+            "climb_mask_sha256": true
+          },
+          "raw_room_ids_exact": false,
+          "panorama_changed_pixels": 193346,
+          "panorama_pixels": 196608,
+          "real_climb_frames": 112,
+          "real_input_frames": 119,
+          "minimum_health": 30,
+          "input_outcome_exact": true
+        },
+        {
+          "name": "deep",
+          "cell": 0,
+          "features_exact": true,
+          "physical_semantics_exact": {
+            "ground_types_sha256": true,
+            "overlay_types_sha256": true,
+            "solid_sha256": true,
+            "overlay_occupancy_sha256": true,
+            "climb_mask_sha256": true
+          },
+          "raw_room_ids_exact": false,
+          "panorama_changed_pixels": 191919,
+          "panorama_pixels": 196608,
+          "real_climb_frames": 144,
+          "real_input_frames": 151,
+          "minimum_health": 30,
+          "input_outcome_exact": true
+        }
+      ]
+    },
+    {
+      "style": 4,
+      "source_commit": "4966dab4132218b9d2692fbb62165a22c70f52c3",
+      "rom_sha256": "bea2e1a974e27bf0ea29e2cf681962e134c30967b822414169193913153731c3",
+      "tool_sha256": "ca462f6c43217b1ba253e919594f1d2c66980c15f56fd8ebfdfe73aaf5bc7646",
+      "complete": true,
+      "checks_passed": 61,
+      "checks_total": 61,
+      "graph_exact": true,
+      "cases": [
+        {
+          "name": "healthy",
+          "cell": 21,
+          "features_exact": true,
+          "physical_semantics_exact": {
+            "ground_types_sha256": true,
+            "overlay_types_sha256": true,
+            "solid_sha256": true,
+            "overlay_occupancy_sha256": true,
+            "climb_mask_sha256": true
+          },
+          "raw_room_ids_exact": false,
+          "panorama_changed_pixels": 195609,
+          "panorama_pixels": 196608,
+          "real_climb_frames": 128,
+          "real_input_frames": 135,
+          "minimum_health": 32,
+          "input_outcome_exact": true
+        },
+        {
+          "name": "sour",
+          "cell": 18,
+          "features_exact": true,
+          "physical_semantics_exact": {
+            "ground_types_sha256": true,
+            "overlay_types_sha256": true,
+            "solid_sha256": true,
+            "overlay_occupancy_sha256": true,
+            "climb_mask_sha256": true
+          },
+          "raw_room_ids_exact": false,
+          "panorama_changed_pixels": 193346,
+          "panorama_pixels": 196608,
+          "real_climb_frames": 112,
+          "real_input_frames": 119,
+          "minimum_health": 30,
+          "input_outcome_exact": true
+        },
+        {
+          "name": "deep",
+          "cell": 0,
+          "features_exact": true,
+          "physical_semantics_exact": {
+            "ground_types_sha256": true,
+            "overlay_types_sha256": true,
+            "solid_sha256": true,
+            "overlay_occupancy_sha256": true,
+            "climb_mask_sha256": true
+          },
+          "raw_room_ids_exact": false,
+          "panorama_changed_pixels": 191847,
+          "panorama_pixels": 196608,
+          "real_climb_frames": 144,
+          "real_input_frames": 151,
+          "minimum_health": 30,
+          "input_outcome_exact": true
+        }
+      ]
+    },
+    {
+      "style": 5,
+      "source_commit": "4966dab4132218b9d2692fbb62165a22c70f52c3",
+      "rom_sha256": "37f4e3542454aa665597aa530857cd0121013879920f35b5ab4c7ed56748da0f",
+      "tool_sha256": "ca462f6c43217b1ba253e919594f1d2c66980c15f56fd8ebfdfe73aaf5bc7646",
+      "complete": true,
+      "checks_passed": 61,
+      "checks_total": 61,
+      "graph_exact": true,
+      "cases": [
+        {
+          "name": "healthy",
+          "cell": 21,
+          "features_exact": true,
+          "physical_semantics_exact": {
+            "ground_types_sha256": true,
+            "overlay_types_sha256": true,
+            "solid_sha256": true,
+            "overlay_occupancy_sha256": true,
+            "climb_mask_sha256": true
+          },
+          "raw_room_ids_exact": false,
+          "panorama_changed_pixels": 195586,
+          "panorama_pixels": 196608,
+          "real_climb_frames": 128,
+          "real_input_frames": 135,
+          "minimum_health": 32,
+          "input_outcome_exact": true
+        },
+        {
+          "name": "sour",
+          "cell": 18,
+          "features_exact": true,
+          "physical_semantics_exact": {
+            "ground_types_sha256": true,
+            "overlay_types_sha256": true,
+            "solid_sha256": true,
+            "overlay_occupancy_sha256": true,
+            "climb_mask_sha256": true
+          },
+          "raw_room_ids_exact": false,
+          "panorama_changed_pixels": 193346,
+          "panorama_pixels": 196608,
+          "real_climb_frames": 112,
+          "real_input_frames": 119,
+          "minimum_health": 30,
+          "input_outcome_exact": true
+        },
+        {
+          "name": "deep",
+          "cell": 0,
+          "features_exact": true,
+          "physical_semantics_exact": {
+            "ground_types_sha256": true,
+            "overlay_types_sha256": true,
+            "solid_sha256": true,
+            "overlay_occupancy_sha256": true,
+            "climb_mask_sha256": true
+          },
+          "raw_room_ids_exact": false,
+          "panorama_changed_pixels": 191919,
+          "panorama_pixels": 196608,
+          "real_climb_frames": 144,
+          "real_input_frames": 151,
+          "minimum_health": 30,
+          "input_outcome_exact": true
+        }
+      ]
+    }
+  ],
+  "complete": true,
+  "disclosure": "Registered panoramas are nine-camera native renderer crop mosaics with frozen review clock256. Ordinary live footage uses separate fresh cores, real opening draft/ladder/UP input and living hero position/facing navigation; sour/deep use disclosed ordinary room-load requests for isolated art comparison. This does not prove an earned progression route. No gameplay-state/pixel repair writes."
+}

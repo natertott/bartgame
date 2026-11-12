@@ -1,0 +1,781 @@
+{
+  "source_commit": "4966dab4132218b9d2692fbb62165a22c70f52c3",
+  "normal_production_unchanged": true,
+  "variants": [
+    {
+      "number": 0,
+      "name": "Original Cream",
+      "slug": "original",
+      "rom_sha256": "0dd8554384b53e618140f8c61590fc7e6a7ff0888f296ece034a95f357b34fdd",
+      "source_commit": "4966dab4132218b9d2692fbb62165a22c70f52c3",
+      "report": "validation/style-0/report.json"
+    },
+    {
+      "number": 1,
+      "name": "Curdstone Karst",
+      "slug": "curdstone-karst",
+      "rom_sha256": "f5eb072725f244aa3be6264dce8d9aa6f28ca55497cbb231c046cfacb290db0c",
+      "source_commit": "4966dab4132218b9d2692fbb62165a22c70f52c3",
+      "report": "validation/style-1/report.json",
+      "rom": "01-curdstone-karst-4966dab4.gba"
+    },
+    {
+      "number": 2,
+      "name": "Brine Basilica",
+      "slug": "brine-basilica",
+      "rom_sha256": "908bce5f8b6ce64d8e4ea5dc1409149f0d9eeb17d076e659985467ccaef34a3c",
+      "source_commit": "4966dab4132218b9d2692fbb62165a22c70f52c3",
+      "report": "validation/style-2/report.json",
+      "rom": "02-brine-basilica-4966dab4.gba"
+    },
+    {
+      "number": 3,
+      "name": "Moldglass Crags",
+      "slug": "moldglass-crags",
+      "rom_sha256": "dbe4c9dc587ebab0d2c2e609043b757955209b185e12091faeffd869d11fde7d",
+      "source_commit": "4966dab4132218b9d2692fbb62165a22c70f52c3",
+      "report": "validation/style-3/report.json",
+      "rom": "03-moldglass-crags-4966dab4.gba"
+    },
+    {
+      "number": 4,
+      "name": "Gilt Quarry",
+      "slug": "gilt-quarry",
+      "rom_sha256": "bea2e1a974e27bf0ea29e2cf681962e134c30967b822414169193913153731c3",
+      "source_commit": "4966dab4132218b9d2692fbb62165a22c70f52c3",
+      "report": "validation/style-4/report.json",
+      "rom": "04-gilt-quarry-4966dab4.gba"
+    },
+    {
+      "number": 5,
+      "name": "Black Rind Terraces",
+      "slug": "black-rind-terraces",
+      "rom_sha256": "37f4e3542454aa665597aa530857cd0121013879920f35b5ab4c7ed56748da0f",
+      "source_commit": "4966dab4132218b9d2692fbb62165a22c70f52c3",
+      "report": "validation/style-5/report.json",
+      "rom": "05-black-rind-terraces-4966dab4.gba"
+    }
+  ],
+  "gallery": [
+    {
+      "file": "images/00-original-healthy-room.png",
+      "source": "/workspace/setup/cream-studies/native-r2/style-0/healthy/registered-renderer/full-room.png",
+      "sha256": "daef16d18b6c6c51e20d8a7068b4e96d024b9352c0ab73a9696c3df30c5d01da",
+      "kind": "registered512x384 mosaic of9 actual native camera frames; frozen renderer, HUD hidden",
+      "rom_sha256": "0dd8554384b53e618140f8c61590fc7e6a7ff0888f296ece034a95f357b34fdd",
+      "style": 0
+    },
+    {
+      "file": "images/00-original-healthy-start.png",
+      "source": "/workspace/setup/cream-studies/native-r2/style-0/healthy/ordinary-live/start.png",
+      "sha256": "e253efbeb54431cfa546eb63fb134ca1a413808207e664e1818e9333b72a9ac7",
+      "kind": "ordinary live240x160 mGBA frame",
+      "rom_sha256": "0dd8554384b53e618140f8c61590fc7e6a7ff0888f296ece034a95f357b34fdd",
+      "style": 0
+    },
+    {
+      "file": "images/00-original-healthy-climbing.png",
+      "source": "/workspace/setup/cream-studies/native-r2/style-0/healthy/ordinary-live/climbing.png",
+      "sha256": "5106b12f207d61016a9e5ef780694f12d48f67ae5957f3c3a580c7657f60376c",
+      "kind": "ordinary live240x160 mGBA frame",
+      "rom_sha256": "0dd8554384b53e618140f8c61590fc7e6a7ff0888f296ece034a95f357b34fdd",
+      "style": 0
+    },
+    {
+      "file": "images/00-original-healthy-landed.png",
+      "source": "/workspace/setup/cream-studies/native-r2/style-0/healthy/ordinary-live/landed.png",
+      "sha256": "7cecffee11aaa932e42b13aa0230f34fe0824608a292c9bbd57e186fded3bf21",
+      "kind": "ordinary live240x160 mGBA frame",
+      "rom_sha256": "0dd8554384b53e618140f8c61590fc7e6a7ff0888f296ece034a95f357b34fdd",
+      "style": 0
+    },
+    {
+      "file": "images/00-original-healthy-climb.gif",
+      "source": "/workspace/setup/cream-studies/native-r2/style-0/healthy/ordinary-live/climb.gif",
+      "sha256": "8e752bc05eff7d6e4435db0ce311e52baf80200799dcb3b6a7b27704eb315eae",
+      "kind": "actual real-input mGBA climb recording",
+      "rom_sha256": "0dd8554384b53e618140f8c61590fc7e6a7ff0888f296ece034a95f357b34fdd",
+      "style": 0
+    },
+    {
+      "file": "images/00-original-sour-room.png",
+      "source": "/workspace/setup/cream-studies/native-r2/style-0/sour/registered-renderer/full-room.png",
+      "sha256": "90d4d92dd03244f38cc34ebef2997d6f55a688735c8f2a52316feb3b3d684dd2",
+      "kind": "registered512x384 mosaic of9 actual native camera frames; frozen renderer, HUD hidden",
+      "rom_sha256": "0dd8554384b53e618140f8c61590fc7e6a7ff0888f296ece034a95f357b34fdd",
+      "style": 0
+    },
+    {
+      "file": "images/00-original-sour-start.png",
+      "source": "/workspace/setup/cream-studies/native-r2/style-0/sour/ordinary-live/start.png",
+      "sha256": "55ee0623dd898857873ac45fae81b787b91c21c4deafe7aefa26b5278df659fd",
+      "kind": "ordinary live240x160 mGBA frame",
+      "rom_sha256": "0dd8554384b53e618140f8c61590fc7e6a7ff0888f296ece034a95f357b34fdd",
+      "style": 0
+    },
+    {
+      "file": "images/00-original-sour-climbing.png",
+      "source": "/workspace/setup/cream-studies/native-r2/style-0/sour/ordinary-live/climbing.png",
+      "sha256": "544aa14fa43d3c1e1d3ed2a97b380ff883abbd3c8fff9e9bb8a87f5f462d53bb",
+      "kind": "ordinary live240x160 mGBA frame",
+      "rom_sha256": "0dd8554384b53e618140f8c61590fc7e6a7ff0888f296ece034a95f357b34fdd",
+      "style": 0
+    },
+    {
+      "file": "images/00-original-sour-landed.png",
+      "source": "/workspace/setup/cream-studies/native-r2/style-0/sour/ordinary-live/landed.png",
+      "sha256": "7bd2f23bdcb4d642397c30ab7bea510914c3fcd7c988edca27532c63d1d8447b",
+      "kind": "ordinary live240x160 mGBA frame",
+      "rom_sha256": "0dd8554384b53e618140f8c61590fc7e6a7ff0888f296ece034a95f357b34fdd",
+      "style": 0
+    },
+    {
+      "file": "images/00-original-sour-climb.gif",
+      "source": "/workspace/setup/cream-studies/native-r2/style-0/sour/ordinary-live/climb.gif",
+      "sha256": "d2a352fa1cab82a195ce4de0c2906d61d2bcf7a5310fe1f70e69bb02a2240e4c",
+      "kind": "actual real-input mGBA climb recording",
+      "rom_sha256": "0dd8554384b53e618140f8c61590fc7e6a7ff0888f296ece034a95f357b34fdd",
+      "style": 0
+    },
+    {
+      "file": "images/00-original-deep-room.png",
+      "source": "/workspace/setup/cream-studies/native-r2/style-0/deep/registered-renderer/full-room.png",
+      "sha256": "577124360d407f36968393bea0261e0c55031988e85c0e6bc623d666e8aaf98a",
+      "kind": "registered512x384 mosaic of9 actual native camera frames; frozen renderer, HUD hidden",
+      "rom_sha256": "0dd8554384b53e618140f8c61590fc7e6a7ff0888f296ece034a95f357b34fdd",
+      "style": 0
+    },
+    {
+      "file": "images/00-original-deep-start.png",
+      "source": "/workspace/setup/cream-studies/native-r2/style-0/deep/ordinary-live/start.png",
+      "sha256": "04bada1d61b546ab2a6564a255af5e0ec4e11fdd747c39ae4dc1dc00d4e26821",
+      "kind": "ordinary live240x160 mGBA frame",
+      "rom_sha256": "0dd8554384b53e618140f8c61590fc7e6a7ff0888f296ece034a95f357b34fdd",
+      "style": 0
+    },
+    {
+      "file": "images/00-original-deep-climbing.png",
+      "source": "/workspace/setup/cream-studies/native-r2/style-0/deep/ordinary-live/climbing.png",
+      "sha256": "57ccc788db0a468b76301e81a2f7394c39f7767a4178f6c6ee1e8935507b99da",
+      "kind": "ordinary live240x160 mGBA frame",
+      "rom_sha256": "0dd8554384b53e618140f8c61590fc7e6a7ff0888f296ece034a95f357b34fdd",
+      "style": 0
+    },
+    {
+      "file": "images/00-original-deep-landed.png",
+      "source": "/workspace/setup/cream-studies/native-r2/style-0/deep/ordinary-live/landed.png",
+      "sha256": "2b4f7172ccc8260110647c8cead9e36e6dc9d83db2b82970b37eec8f5f9942d3",
+      "kind": "ordinary live240x160 mGBA frame",
+      "rom_sha256": "0dd8554384b53e618140f8c61590fc7e6a7ff0888f296ece034a95f357b34fdd",
+      "style": 0
+    },
+    {
+      "file": "images/00-original-deep-climb.gif",
+      "source": "/workspace/setup/cream-studies/native-r2/style-0/deep/ordinary-live/climb.gif",
+      "sha256": "7ac001b3c21a108ba12ebe51462122d96b8f20166b6d85b4e0a1f3cb830d032d",
+      "kind": "actual real-input mGBA climb recording",
+      "rom_sha256": "0dd8554384b53e618140f8c61590fc7e6a7ff0888f296ece034a95f357b34fdd",
+      "style": 0
+    },
+    {
+      "file": "images/01-curdstone-karst-healthy-room.png",
+      "source": "/workspace/setup/cream-studies/native-r2/style-1/healthy/registered-renderer/full-room.png",
+      "sha256": "6ca1cbb6e4d9649b75e26de81023b901d06dc1aadf16a4d170249eea2e12042f",
+      "kind": "registered512x384 mosaic of9 actual native camera frames; frozen renderer, HUD hidden",
+      "rom_sha256": "f5eb072725f244aa3be6264dce8d9aa6f28ca55497cbb231c046cfacb290db0c",
+      "style": 1
+    },
+    {
+      "file": "images/01-curdstone-karst-healthy-start.png",
+      "source": "/workspace/setup/cream-studies/native-r2/style-1/healthy/ordinary-live/start.png",
+      "sha256": "83901aa55347e0f1b93b8463eab9fbb37af3d619a4513b6d8330e19a0c15f01e",
+      "kind": "ordinary live240x160 mGBA frame",
+      "rom_sha256": "f5eb072725f244aa3be6264dce8d9aa6f28ca55497cbb231c046cfacb290db0c",
+      "style": 1
+    },
+    {
+      "file": "images/01-curdstone-karst-healthy-climbing.png",
+      "source": "/workspace/setup/cream-studies/native-r2/style-1/healthy/ordinary-live/climbing.png",
+      "sha256": "e0f6367a1fad006bad2f3519057741061e8f37e56a6eeb656a88bb24d368901f",
+      "kind": "ordinary live240x160 mGBA frame",
+      "rom_sha256": "f5eb072725f244aa3be6264dce8d9aa6f28ca55497cbb231c046cfacb290db0c",
+      "style": 1
+    },
+    {
+      "file": "images/01-curdstone-karst-healthy-landed.png",
+      "source": "/workspace/setup/cream-studies/native-r2/style-1/healthy/ordinary-live/landed.png",
+      "sha256": "a75fab075022b6b9912627bbf907135cc16dc8111ed68dcba950a7d3835b843b",
+      "kind": "ordinary live240x160 mGBA frame",
+      "rom_sha256": "f5eb072725f244aa3be6264dce8d9aa6f28ca55497cbb231c046cfacb290db0c",
+      "style": 1
+    },
+    {
+      "file": "images/01-curdstone-karst-healthy-climb.gif",
+      "source": "/workspace/setup/cream-studies/native-r2/style-1/healthy/ordinary-live/climb.gif",
+      "sha256": "9380501774400ca4743fdd904d2cfb547fa448d5e6b0818ae6fe99588c976c4b",
+      "kind": "actual real-input mGBA climb recording",
+      "rom_sha256": "f5eb072725f244aa3be6264dce8d9aa6f28ca55497cbb231c046cfacb290db0c",
+      "style": 1
+    },
+    {
+      "file": "images/01-curdstone-karst-sour-room.png",
+      "source": "/workspace/setup/cream-studies/native-r2/style-1/sour/registered-renderer/full-room.png",
+      "sha256": "e4351c864951cb757c38a26c2fa5006a3e7b402552bf5153166727dd801b197c",
+      "kind": "registered512x384 mosaic of9 actual native camera frames; frozen renderer, HUD hidden",
+      "rom_sha256": "f5eb072725f244aa3be6264dce8d9aa6f28ca55497cbb231c046cfacb290db0c",
+      "style": 1
+    },
+    {
+      "file": "images/01-curdstone-karst-sour-start.png",
+      "source": "/workspace/setup/cream-studies/native-r2/style-1/sour/ordinary-live/start.png",
+      "sha256": "850cdef731517b39ef2d4f10526cd65a0eb35106dbe24fd857bb93d1fc3f171c",
+      "kind": "ordinary live240x160 mGBA frame",
+      "rom_sha256": "f5eb072725f244aa3be6264dce8d9aa6f28ca55497cbb231c046cfacb290db0c",
+      "style": 1
+    },
+    {
+      "file": "images/01-curdstone-karst-sour-climbing.png",
+      "source": "/workspace/setup/cream-studies/native-r2/style-1/sour/ordinary-live/climbing.png",
+      "sha256": "d69812acd17b56e9df3d5ef46bc9719b2d1aa549b00bc42de3ac129c152527f4",
+      "kind": "ordinary live240x160 mGBA frame",
+      "rom_sha256": "f5eb072725f244aa3be6264dce8d9aa6f28ca55497cbb231c046cfacb290db0c",
+      "style": 1
+    },
+    {
+      "file": "images/01-curdstone-karst-sour-landed.png",
+      "source": "/workspace/setup/cream-studies/native-r2/style-1/sour/ordinary-live/landed.png",
+      "sha256": "6aad0736a2d11bea9fb8582dff880c48b809c83523b6263f7ccbfac95b0c0d6a",
+      "kind": "ordinary live240x160 mGBA frame",
+      "rom_sha256": "f5eb072725f244aa3be6264dce8d9aa6f28ca55497cbb231c046cfacb290db0c",
+      "style": 1
+    },
+    {
+      "file": "images/01-curdstone-karst-sour-climb.gif",
+      "source": "/workspace/setup/cream-studies/native-r2/style-1/sour/ordinary-live/climb.gif",
+      "sha256": "2ee653336e260048a4d5f13f469d9e6159c373ef5218c16e92227a457749d955",
+      "kind": "actual real-input mGBA climb recording",
+      "rom_sha256": "f5eb072725f244aa3be6264dce8d9aa6f28ca55497cbb231c046cfacb290db0c",
+      "style": 1
+    },
+    {
+      "file": "images/01-curdstone-karst-deep-room.png",
+      "source": "/workspace/setup/cream-studies/native-r2/style-1/deep/registered-renderer/full-room.png",
+      "sha256": "cfa890d08fab416d0b28b620f3ae23fa37acdd5d57af0fc5822c950370a93cdf",
+      "kind": "registered512x384 mosaic of9 actual native camera frames; frozen renderer, HUD hidden",
+      "rom_sha256": "f5eb072725f244aa3be6264dce8d9aa6f28ca55497cbb231c046cfacb290db0c",
+      "style": 1
+    },
+    {
+      "file": "images/01-curdstone-karst-deep-start.png",
+      "source": "/workspace/setup/cream-studies/native-r2/style-1/deep/ordinary-live/start.png",
+      "sha256": "81eea88d3d3b225ebfa9a8154044d665d13d96b54f03dfc2b1dd30ea082ef14f",
+      "kind": "ordinary live240x160 mGBA frame",
+      "rom_sha256": "f5eb072725f244aa3be6264dce8d9aa6f28ca55497cbb231c046cfacb290db0c",
+      "style": 1
+    },
+    {
+      "file": "images/01-curdstone-karst-deep-climbing.png",
+      "source": "/workspace/setup/cream-studies/native-r2/style-1/deep/ordinary-live/climbing.png",
+      "sha256": "e49f157241db7feee73d6f89a857375713d7f27c40c9b196dbfc45ff34ac2a7c",
+      "kind": "ordinary live240x160 mGBA frame",
+      "rom_sha256": "f5eb072725f244aa3be6264dce8d9aa6f28ca55497cbb231c046cfacb290db0c",
+      "style": 1
+    },
+    {
+      "file": "images/01-curdstone-karst-deep-landed.png",
+      "source": "/workspace/setup/cream-studies/native-r2/style-1/deep/ordinary-live/landed.png",
+      "sha256": "df062ed6b6a33137c996b4a1e5d51b8e439f08ff0c8991191990b455448e9abe",
+      "kind": "ordinary live240x160 mGBA frame",
+      "rom_sha256": "f5eb072725f244aa3be6264dce8d9aa6f28ca55497cbb231c046cfacb290db0c",
+      "style": 1
+    },
+    {
+      "file": "images/01-curdstone-karst-deep-climb.gif",
+      "source": "/workspace/setup/cream-studies/native-r2/style-1/deep/ordinary-live/climb.gif",
+      "sha256": "93a1b8969415a3da6adf62af94e835992d56454ba93af9380e365a7d3ed683bd",
+      "kind": "actual real-input mGBA climb recording",
+      "rom_sha256": "f5eb072725f244aa3be6264dce8d9aa6f28ca55497cbb231c046cfacb290db0c",
+      "style": 1
+    },
+    {
+      "file": "images/02-brine-basilica-healthy-room.png",
+      "source": "/workspace/setup/cream-studies/native-r2/style-2/healthy/registered-renderer/full-room.png",
+      "sha256": "7fa8350f76f559ba7c52511ccdd0ae0706f4a9c1f03f122b983a2777e481b97d",
+      "kind": "registered512x384 mosaic of9 actual native camera frames; frozen renderer, HUD hidden",
+      "rom_sha256": "908bce5f8b6ce64d8e4ea5dc1409149f0d9eeb17d076e659985467ccaef34a3c",
+      "style": 2
+    },
+    {
+      "file": "images/02-brine-basilica-healthy-start.png",
+      "source": "/workspace/setup/cream-studies/native-r2/style-2/healthy/ordinary-live/start.png",
+      "sha256": "e33b1eab0095afda2198668b3222dcb6b0e888bd1dde413c82ad2ef850fecde0",
+      "kind": "ordinary live240x160 mGBA frame",
+      "rom_sha256": "908bce5f8b6ce64d8e4ea5dc1409149f0d9eeb17d076e659985467ccaef34a3c",
+      "style": 2
+    },
+    {
+      "file": "images/02-brine-basilica-healthy-climbing.png",
+      "source": "/workspace/setup/cream-studies/native-r2/style-2/healthy/ordinary-live/climbing.png",
+      "sha256": "484903707d8e3c6c9edbe3038420ff9d0e6de13a72f8f46035aeed1895547cc9",
+      "kind": "ordinary live240x160 mGBA frame",
+      "rom_sha256": "908bce5f8b6ce64d8e4ea5dc1409149f0d9eeb17d076e659985467ccaef34a3c",
+      "style": 2
+    },
+    {
+      "file": "images/02-brine-basilica-healthy-landed.png",
+      "source": "/workspace/setup/cream-studies/native-r2/style-2/healthy/ordinary-live/landed.png",
+      "sha256": "9ca1e3b4db214acf3704a23936328a1989b630d8b0a0cadc4202febc049dad8e",
+      "kind": "ordinary live240x160 mGBA frame",
+      "rom_sha256": "908bce5f8b6ce64d8e4ea5dc1409149f0d9eeb17d076e659985467ccaef34a3c",
+      "style": 2
+    },
+    {
+      "file": "images/02-brine-basilica-healthy-climb.gif",
+      "source": "/workspace/setup/cream-studies/native-r2/style-2/healthy/ordinary-live/climb.gif",
+      "sha256": "4dd2ed5e330ef595500de77e625a104031d5f16f90745a2db2ba1ce91ad8fdc0",
+      "kind": "actual real-input mGBA climb recording",
+      "rom_sha256": "908bce5f8b6ce64d8e4ea5dc1409149f0d9eeb17d076e659985467ccaef34a3c",
+      "style": 2
+    },
+    {
+      "file": "images/02-brine-basilica-sour-room.png",
+      "source": "/workspace/setup/cream-studies/native-r2/style-2/sour/registered-renderer/full-room.png",
+      "sha256": "1d78cd25c4d62ffbf03c44ebe9646ec3dfee25931866bd968b0d775c497123ab",
+      "kind": "registered512x384 mosaic of9 actual native camera frames; frozen renderer, HUD hidden",
+      "rom_sha256": "908bce5f8b6ce64d8e4ea5dc1409149f0d9eeb17d076e659985467ccaef34a3c",
+      "style": 2
+    },
+    {
+      "file": "images/02-brine-basilica-sour-start.png",
+      "source": "/workspace/setup/cream-studies/native-r2/style-2/sour/ordinary-live/start.png",
+      "sha256": "8f4ebcd1a5153c4a3b0ed44382bb141de3afdc97c6a77642988754a5e61c84bd",
+      "kind": "ordinary live240x160 mGBA frame",
+      "rom_sha256": "908bce5f8b6ce64d8e4ea5dc1409149f0d9eeb17d076e659985467ccaef34a3c",
+      "style": 2
+    },
+    {
+      "file": "images/02-brine-basilica-sour-climbing.png",
+      "source": "/workspace/setup/cream-studies/native-r2/style-2/sour/ordinary-live/climbing.png",
+      "sha256": "abebd247c87d75965833d2db034252e5658bb744c3b848cc0142fa0ab90b01da",
+      "kind": "ordinary live240x160 mGBA frame",
+      "rom_sha256": "908bce5f8b6ce64d8e4ea5dc1409149f0d9eeb17d076e659985467ccaef34a3c",
+      "style": 2
+    },
+    {
+      "file": "images/02-brine-basilica-sour-landed.png",
+      "source": "/workspace/setup/cream-studies/native-r2/style-2/sour/ordinary-live/landed.png",
+      "sha256": "193f3bbfe37d8857d081f1556513e283014abedc73570b25d37a99004522ce16",
+      "kind": "ordinary live240x160 mGBA frame",
+      "rom_sha256": "908bce5f8b6ce64d8e4ea5dc1409149f0d9eeb17d076e659985467ccaef34a3c",
+      "style": 2
+    },
+    {
+      "file": "images/02-brine-basilica-sour-climb.gif",
+      "source": "/workspace/setup/cream-studies/native-r2/style-2/sour/ordinary-live/climb.gif",
+      "sha256": "98d490f534314de038f99cf26ae78c3622ae3875acee070930322aeac009080f",
+      "kind": "actual real-input mGBA climb recording",
+      "rom_sha256": "908bce5f8b6ce64d8e4ea5dc1409149f0d9eeb17d076e659985467ccaef34a3c",
+      "style": 2
+    },
+    {
+      "file": "images/02-brine-basilica-deep-room.png",
+      "source": "/workspace/setup/cream-studies/native-r2/style-2/deep/registered-renderer/full-room.png",
+      "sha256": "4a5d43a5d1ced8dd46b414c2cb6d556e15b153d2c81eb2fc2c01b4cf4bdb0a69",
+      "kind": "registered512x384 mosaic of9 actual native camera frames; frozen renderer, HUD hidden",
+      "rom_sha256": "908bce5f8b6ce64d8e4ea5dc1409149f0d9eeb17d076e659985467ccaef34a3c",
+      "style": 2
+    },
+    {
+      "file": "images/02-brine-basilica-deep-start.png",
+      "source": "/workspace/setup/cream-studies/native-r2/style-2/deep/ordinary-live/start.png",
+      "sha256": "a3ebb878661ed98f099149eb237b9b9a9126db63ff4677023c051a2e595a75c2",
+      "kind": "ordinary live240x160 mGBA frame",
+      "rom_sha256": "908bce5f8b6ce64d8e4ea5dc1409149f0d9eeb17d076e659985467ccaef34a3c",
+      "style": 2
+    },
+    {
+      "file": "images/02-brine-basilica-deep-climbing.png",
+      "source": "/workspace/setup/cream-studies/native-r2/style-2/deep/ordinary-live/climbing.png",
+      "sha256": "011c5c1081132e35a003230ded27c6fb41bc14dce9511942e5b07a16cbc77500",
+      "kind": "ordinary live240x160 mGBA frame",
+      "rom_sha256": "908bce5f8b6ce64d8e4ea5dc1409149f0d9eeb17d076e659985467ccaef34a3c",
+      "style": 2
+    },
+    {
+      "file": "images/02-brine-basilica-deep-landed.png",
+      "source": "/workspace/setup/cream-studies/native-r2/style-2/deep/ordinary-live/landed.png",
+      "sha256": "1b3895f703bf08d96f7c654d520e3435c4f9c375ea170edacd964e93520adf04",
+      "kind": "ordinary live240x160 mGBA frame",
+      "rom_sha256": "908bce5f8b6ce64d8e4ea5dc1409149f0d9eeb17d076e659985467ccaef34a3c",
+      "style": 2
+    },
+    {
+      "file": "images/02-brine-basilica-deep-climb.gif",
+      "source": "/workspace/setup/cream-studies/native-r2/style-2/deep/ordinary-live/climb.gif",
+      "sha256": "49028d7985c414f394c7cdeaa3c203c43b873ce17a207e7a4b49a0dfbacd1cf4",
+      "kind": "actual real-input mGBA climb recording",
+      "rom_sha256": "908bce5f8b6ce64d8e4ea5dc1409149f0d9eeb17d076e659985467ccaef34a3c",
+      "style": 2
+    },
+    {
+      "file": "images/03-moldglass-crags-healthy-room.png",
+      "source": "/workspace/setup/cream-studies/native-r2/style-3/healthy/registered-renderer/full-room.png",
+      "sha256": "940120e3de0ca70cd7e7627c7e95e08bc68e726430027fd79d08223762cbe335",
+      "kind": "registered512x384 mosaic of9 actual native camera frames; frozen renderer, HUD hidden",
+      "rom_sha256": "dbe4c9dc587ebab0d2c2e609043b757955209b185e12091faeffd869d11fde7d",
+      "style": 3
+    },
+    {
+      "file": "images/03-moldglass-crags-healthy-start.png",
+      "source": "/workspace/setup/cream-studies/native-r2/style-3/healthy/ordinary-live/start.png",
+      "sha256": "258de3382178b19a1fbc19b41c28cb429caf60dd9c708364c58acfe425a447c3",
+      "kind": "ordinary live240x160 mGBA frame",
+      "rom_sha256": "dbe4c9dc587ebab0d2c2e609043b757955209b185e12091faeffd869d11fde7d",
+      "style": 3
+    },
+    {
+      "file": "images/03-moldglass-crags-healthy-climbing.png",
+      "source": "/workspace/setup/cream-studies/native-r2/style-3/healthy/ordinary-live/climbing.png",
+      "sha256": "e13a48be5bc49990cfc7acfd923877bea3a666bb19134e7ebc2f7dbcebfebfae",
+      "kind": "ordinary live240x160 mGBA frame",
+      "rom_sha256": "dbe4c9dc587ebab0d2c2e609043b757955209b185e12091faeffd869d11fde7d",
+      "style": 3
+    },
+    {
+      "file": "images/03-moldglass-crags-healthy-landed.png",
+      "source": "/workspace/setup/cream-studies/native-r2/style-3/healthy/ordinary-live/landed.png",
+      "sha256": "8cfc82a6f6035a5be277e4a04af10003206945cb3503f2acaac718c21f0fb54e",
+      "kind": "ordinary live240x160 mGBA frame",
+      "rom_sha256": "dbe4c9dc587ebab0d2c2e609043b757955209b185e12091faeffd869d11fde7d",
+      "style": 3
+    },
+    {
+      "file": "images/03-moldglass-crags-healthy-climb.gif",
+      "source": "/workspace/setup/cream-studies/native-r2/style-3/healthy/ordinary-live/climb.gif",
+      "sha256": "2a2cde7928c721e4a41aa6c3cf82979f05e7697090e50c430c2233bbe0011b17",
+      "kind": "actual real-input mGBA climb recording",
+      "rom_sha256": "dbe4c9dc587ebab0d2c2e609043b757955209b185e12091faeffd869d11fde7d",
+      "style": 3
+    },
+    {
+      "file": "images/03-moldglass-crags-sour-room.png",
+      "source": "/workspace/setup/cream-studies/native-r2/style-3/sour/registered-renderer/full-room.png",
+      "sha256": "7cb19e63f84fb8cf7ddd92e7edbf5a66d7bd4c4dcb85bb3ddc26dc4eff85d6e0",
+      "kind": "registered512x384 mosaic of9 actual native camera frames; frozen renderer, HUD hidden",
+      "rom_sha256": "dbe4c9dc587ebab0d2c2e609043b757955209b185e12091faeffd869d11fde7d",
+      "style": 3
+    },
+    {
+      "file": "images/03-moldglass-crags-sour-start.png",
+      "source": "/workspace/setup/cream-studies/native-r2/style-3/sour/ordinary-live/start.png",
+      "sha256": "19af10a3eeb04dd20b7eb9244a0096cfa6e0a5cdf04ed091e78082eb533ea22a",
+      "kind": "ordinary live240x160 mGBA frame",
+      "rom_sha256": "dbe4c9dc587ebab0d2c2e609043b757955209b185e12091faeffd869d11fde7d",
+      "style": 3
+    },
+    {
+      "file": "images/03-moldglass-crags-sour-climbing.png",
+      "source": "/workspace/setup/cream-studies/native-r2/style-3/sour/ordinary-live/climbing.png",
+      "sha256": "4bf02fcd6ded7265d8a48820189b03417e738f6ffe415045c87ea9fd8de052bf",
+      "kind": "ordinary live240x160 mGBA frame",
+      "rom_sha256": "dbe4c9dc587ebab0d2c2e609043b757955209b185e12091faeffd869d11fde7d",
+      "style": 3
+    },
+    {
+      "file": "images/03-moldglass-crags-sour-landed.png",
+      "source": "/workspace/setup/cream-studies/native-r2/style-3/sour/ordinary-live/landed.png",
+      "sha256": "84aca991479d5cb7eb76bd0b79b9efa7cc2b676e5a86cb218d2077a43f89efe5",
+      "kind": "ordinary live240x160 mGBA frame",
+      "rom_sha256": "dbe4c9dc587ebab0d2c2e609043b757955209b185e12091faeffd869d11fde7d",
+      "style": 3
+    },
+    {
+      "file": "images/03-moldglass-crags-sour-climb.gif",
+      "source": "/workspace/setup/cream-studies/native-r2/style-3/sour/ordinary-live/climb.gif",
+      "sha256": "c93931b1763e8ad2abc0411d13d5496cbb2dffb49c33757621115e48bed69167",
+      "kind": "actual real-input mGBA climb recording",
+      "rom_sha256": "dbe4c9dc587ebab0d2c2e609043b757955209b185e12091faeffd869d11fde7d",
+      "style": 3
+    },
+    {
+      "file": "images/03-moldglass-crags-deep-room.png",
+      "source": "/workspace/setup/cream-studies/native-r2/style-3/deep/registered-renderer/full-room.png",
+      "sha256": "336d8b202485e7180f5378c7f5ce6c3eee042596c231c5a5e080fe6941c3f9f7",
+      "kind": "registered512x384 mosaic of9 actual native camera frames; frozen renderer, HUD hidden",
+      "rom_sha256": "dbe4c9dc587ebab0d2c2e609043b757955209b185e12091faeffd869d11fde7d",
+      "style": 3
+    },
+    {
+      "file": "images/03-moldglass-crags-deep-start.png",
+      "source": "/workspace/setup/cream-studies/native-r2/style-3/deep/ordinary-live/start.png",
+      "sha256": "2fae35a366f947868703a7111ef9b4234cc1a061de3aacab4f430debef581c51",
+      "kind": "ordinary live240x160 mGBA frame",
+      "rom_sha256": "dbe4c9dc587ebab0d2c2e609043b757955209b185e12091faeffd869d11fde7d",
+      "style": 3
+    },
+    {
+      "file": "images/03-moldglass-crags-deep-climbing.png",
+      "source": "/workspace/setup/cream-studies/native-r2/style-3/deep/ordinary-live/climbing.png",
+      "sha256": "7df66cd97470c3883fad84235358a98cac67151458f93e2e58a06472655d83f4",
+      "kind": "ordinary live240x160 mGBA frame",
+      "rom_sha256": "dbe4c9dc587ebab0d2c2e609043b757955209b185e12091faeffd869d11fde7d",
+      "style": 3
+    },
+    {
+      "file": "images/03-moldglass-crags-deep-landed.png",
+      "source": "/workspace/setup/cream-studies/native-r2/style-3/deep/ordinary-live/landed.png",
+      "sha256": "0b6ed4a7b7554571abe395c0c6bbfb22823ca0efe18ecc40eb0292a9c6dc54bd",
+      "kind": "ordinary live240x160 mGBA frame",
+      "rom_sha256": "dbe4c9dc587ebab0d2c2e609043b757955209b185e12091faeffd869d11fde7d",
+      "style": 3
+    },
+    {
+      "file": "images/03-moldglass-crags-deep-climb.gif",
+      "source": "/workspace/setup/cream-studies/native-r2/style-3/deep/ordinary-live/climb.gif",
+      "sha256": "a64284f15bd3757b262ce9e89f30e14605fadb8227a605c38de7d35e8427d7da",
+      "kind": "actual real-input mGBA climb recording",
+      "rom_sha256": "dbe4c9dc587ebab0d2c2e609043b757955209b185e12091faeffd869d11fde7d",
+      "style": 3
+    },
+    {
+      "file": "images/04-gilt-quarry-healthy-room.png",
+      "source": "/workspace/setup/cream-studies/native-r2/style-4/healthy/registered-renderer/full-room.png",
+      "sha256": "512aae9ac2f3f0649a867ca2598264a07e69d2ffbb56b8d3f92be800862c57e6",
+      "kind": "registered512x384 mosaic of9 actual native camera frames; frozen renderer, HUD hidden",
+      "rom_sha256": "bea2e1a974e27bf0ea29e2cf681962e134c30967b822414169193913153731c3",
+      "style": 4
+    },
+    {
+      "file": "images/04-gilt-quarry-healthy-start.png",
+      "source": "/workspace/setup/cream-studies/native-r2/style-4/healthy/ordinary-live/start.png",
+      "sha256": "0fb90cf165735bff67e627687cc010e6b73ff587df93650b9314af4df9ec8732",
+      "kind": "ordinary live240x160 mGBA frame",
+      "rom_sha256": "bea2e1a974e27bf0ea29e2cf681962e134c30967b822414169193913153731c3",
+      "style": 4
+    },
+    {
+      "file": "images/04-gilt-quarry-healthy-climbing.png",
+      "source": "/workspace/setup/cream-studies/native-r2/style-4/healthy/ordinary-live/climbing.png",
+      "sha256": "34eed729a6ace55394ca47c6ce7772457e77401297df26adcbcce4bea6a5d7f0",
+      "kind": "ordinary live240x160 mGBA frame",
+      "rom_sha256": "bea2e1a974e27bf0ea29e2cf681962e134c30967b822414169193913153731c3",
+      "style": 4
+    },
+    {
+      "file": "images/04-gilt-quarry-healthy-landed.png",
+      "source": "/workspace/setup/cream-studies/native-r2/style-4/healthy/ordinary-live/landed.png",
+      "sha256": "26146d03a40495e2deea85e2d95997d71b5b2a1b2bb71d9960fad9dfdab16408",
+      "kind": "ordinary live240x160 mGBA frame",
+      "rom_sha256": "bea2e1a974e27bf0ea29e2cf681962e134c30967b822414169193913153731c3",
+      "style": 4
+    },
+    {
+      "file": "images/04-gilt-quarry-healthy-climb.gif",
+      "source": "/workspace/setup/cream-studies/native-r2/style-4/healthy/ordinary-live/climb.gif",
+      "sha256": "8ac09745b6026b7fed51238acc38fa1acb22c190d73855fbd9c2b732e7ae56ea",
+      "kind": "actual real-input mGBA climb recording",
+      "rom_sha256": "bea2e1a974e27bf0ea29e2cf681962e134c30967b822414169193913153731c3",
+      "style": 4
+    },
+    {
+      "file": "images/04-gilt-quarry-sour-room.png",
+      "source": "/workspace/setup/cream-studies/native-r2/style-4/sour/registered-renderer/full-room.png",
+      "sha256": "7db04cd8cc0abd614a946cf74e1ae0a7a4f796caa99e99e30cf9b8b21918f5f9",
+      "kind": "registered512x384 mosaic of9 actual native camera frames; frozen renderer, HUD hidden",
+      "rom_sha256": "bea2e1a974e27bf0ea29e2cf681962e134c30967b822414169193913153731c3",
+      "style": 4
+    },
+    {
+      "file": "images/04-gilt-quarry-sour-start.png",
+      "source": "/workspace/setup/cream-studies/native-r2/style-4/sour/ordinary-live/start.png",
+      "sha256": "bbbd535ea0d81812d0382692603b0f4cacdb8e0e2141d116b43ab79bdc149e40",
+      "kind": "ordinary live240x160 mGBA frame",
+      "rom_sha256": "bea2e1a974e27bf0ea29e2cf681962e134c30967b822414169193913153731c3",
+      "style": 4
+    },
+    {
+      "file": "images/04-gilt-quarry-sour-climbing.png",
+      "source": "/workspace/setup/cream-studies/native-r2/style-4/sour/ordinary-live/climbing.png",
+      "sha256": "770aea9b93ee97cdba3bc1381820478d3aa83196c6e51bd3db5c695efac0200e",
+      "kind": "ordinary live240x160 mGBA frame",
+      "rom_sha256": "bea2e1a974e27bf0ea29e2cf681962e134c30967b822414169193913153731c3",
+      "style": 4
+    },
+    {
+      "file": "images/04-gilt-quarry-sour-landed.png",
+      "source": "/workspace/setup/cream-studies/native-r2/style-4/sour/ordinary-live/landed.png",
+      "sha256": "42e2269d84ad440e2a50d326f81c74b5841ea785b211c790f4a313b764e55ba4",
+      "kind": "ordinary live240x160 mGBA frame",
+      "rom_sha256": "bea2e1a974e27bf0ea29e2cf681962e134c30967b822414169193913153731c3",
+      "style": 4
+    },
+    {
+      "file": "images/04-gilt-quarry-sour-climb.gif",
+      "source": "/workspace/setup/cream-studies/native-r2/style-4/sour/ordinary-live/climb.gif",
+      "sha256": "b4cc1997fbfd9d80b655b0d9f4147476fb90ae82e7af64030f303b6375a995e7",
+      "kind": "actual real-input mGBA climb recording",
+      "rom_sha256": "bea2e1a974e27bf0ea29e2cf681962e134c30967b822414169193913153731c3",
+      "style": 4
+    },
+    {
+      "file": "images/04-gilt-quarry-deep-room.png",
+      "source": "/workspace/setup/cream-studies/native-r2/style-4/deep/registered-renderer/full-room.png",
+      "sha256": "84a71469957d8570711aec5be378b171eeb146822d5c7a7d21feca1a554c0896",
+      "kind": "registered512x384 mosaic of9 actual native camera frames; frozen renderer, HUD hidden",
+      "rom_sha256": "bea2e1a974e27bf0ea29e2cf681962e134c30967b822414169193913153731c3",
+      "style": 4
+    },
+    {
+      "file": "images/04-gilt-quarry-deep-start.png",
+      "source": "/workspace/setup/cream-studies/native-r2/style-4/deep/ordinary-live/start.png",
+      "sha256": "e148bf38010a4d584aeb54a6f649244f00d84771ea23f8774e3cab58d3710863",
+      "kind": "ordinary live240x160 mGBA frame",
+      "rom_sha256": "bea2e1a974e27bf0ea29e2cf681962e134c30967b822414169193913153731c3",
+      "style": 4
+    },
+    {
+      "file": "images/04-gilt-quarry-deep-climbing.png",
+      "source": "/workspace/setup/cream-studies/native-r2/style-4/deep/ordinary-live/climbing.png",
+      "sha256": "18aa56b7660e6eb1839b3f0117f73fbcdf755d16815f69ae2b6d3d1351b8b101",
+      "kind": "ordinary live240x160 mGBA frame",
+      "rom_sha256": "bea2e1a974e27bf0ea29e2cf681962e134c30967b822414169193913153731c3",
+      "style": 4
+    },
+    {
+      "file": "images/04-gilt-quarry-deep-landed.png",
+      "source": "/workspace/setup/cream-studies/native-r2/style-4/deep/ordinary-live/landed.png",
+      "sha256": "6255b900ebebfeb8a9b6175faf15d8784bf359395b72ac052432db5b4d5ce6ca",
+      "kind": "ordinary live240x160 mGBA frame",
+      "rom_sha256": "bea2e1a974e27bf0ea29e2cf681962e134c30967b822414169193913153731c3",
+      "style": 4
+    },
+    {
+      "file": "images/04-gilt-quarry-deep-climb.gif",
+      "source": "/workspace/setup/cream-studies/native-r2/style-4/deep/ordinary-live/climb.gif",
+      "sha256": "a634b074dfd93c933f9ea3191c0b956f9471a72c34e917021cb88f21dbae1b01",
+      "kind": "actual real-input mGBA climb recording",
+      "rom_sha256": "bea2e1a974e27bf0ea29e2cf681962e134c30967b822414169193913153731c3",
+      "style": 4
+    },
+    {
+      "file": "images/05-black-rind-terraces-healthy-room.png",
+      "source": "/workspace/setup/cream-studies/native-r2/style-5/healthy/registered-renderer/full-room.png",
+      "sha256": "5c93752930e7f50cebee6e10ec6a4bff0135945a99b94690ec78c4757d5d3ddb",
+      "kind": "registered512x384 mosaic of9 actual native camera frames; frozen renderer, HUD hidden",
+      "rom_sha256": "37f4e3542454aa665597aa530857cd0121013879920f35b5ab4c7ed56748da0f",
+      "style": 5
+    },
+    {
+      "file": "images/05-black-rind-terraces-healthy-start.png",
+      "source": "/workspace/setup/cream-studies/native-r2/style-5/healthy/ordinary-live/start.png",
+      "sha256": "664ec95ce493ab2b8b62e7798d210b7b0213285d434555778f41c21102c2c657",
+      "kind": "ordinary live240x160 mGBA frame",
+      "rom_sha256": "37f4e3542454aa665597aa530857cd0121013879920f35b5ab4c7ed56748da0f",
+      "style": 5
+    },
+    {
+      "file": "images/05-black-rind-terraces-healthy-climbing.png",
+      "source": "/workspace/setup/cream-studies/native-r2/style-5/healthy/ordinary-live/climbing.png",
+      "sha256": "a7e2b9fc5a5b062038860843c36fc8e4c71b6081aebb9aa018919100e9113f84",
+      "kind": "ordinary live240x160 mGBA frame",
+      "rom_sha256": "37f4e3542454aa665597aa530857cd0121013879920f35b5ab4c7ed56748da0f",
+      "style": 5
+    },
+    {
+      "file": "images/05-black-rind-terraces-healthy-landed.png",
+      "source": "/workspace/setup/cream-studies/native-r2/style-5/healthy/ordinary-live/landed.png",
+      "sha256": "59cf624fa6e3ed764da8d1a77a50964092a323a345b3a3075a01a112bd7a749f",
+      "kind": "ordinary live240x160 mGBA frame",
+      "rom_sha256": "37f4e3542454aa665597aa530857cd0121013879920f35b5ab4c7ed56748da0f",
+      "style": 5
+    },
+    {
+      "file": "images/05-black-rind-terraces-healthy-climb.gif",
+      "source": "/workspace/setup/cream-studies/native-r2/style-5/healthy/ordinary-live/climb.gif",
+      "sha256": "b72b413fea0a08d5e017b54399f0e93d3a663cccbba54f9eb5d2f9ddb9b34e0d",
+      "kind": "actual real-input mGBA climb recording",
+      "rom_sha256": "37f4e3542454aa665597aa530857cd0121013879920f35b5ab4c7ed56748da0f",
+      "style": 5
+    },
+    {
+      "file": "images/05-black-rind-terraces-sour-room.png",
+      "source": "/workspace/setup/cream-studies/native-r2/style-5/sour/registered-renderer/full-room.png",
+      "sha256": "e4734ac50b02d052441ce9c25acfdcfe515996d2807755179453218d21aede8c",
+      "kind": "registered512x384 mosaic of9 actual native camera frames; frozen renderer, HUD hidden",
+      "rom_sha256": "37f4e3542454aa665597aa530857cd0121013879920f35b5ab4c7ed56748da0f",
+      "style": 5
+    },
+    {
+      "file": "images/05-black-rind-terraces-sour-start.png",
+      "source": "/workspace/setup/cream-studies/native-r2/style-5/sour/ordinary-live/start.png",
+      "sha256": "386e59115c2f730e040c92feee9168037a02adb5ed972ce0443141be7c47bfc5",
+      "kind": "ordinary live240x160 mGBA frame",
+      "rom_sha256": "37f4e3542454aa665597aa530857cd0121013879920f35b5ab4c7ed56748da0f",
+      "style": 5
+    },
+    {
+      "file": "images/05-black-rind-terraces-sour-climbing.png",
+      "source": "/workspace/setup/cream-studies/native-r2/style-5/sour/ordinary-live/climbing.png",
+      "sha256": "b99e14b420558b2f2f4207625be2646361d1289f0051bcbf3eedb27ce8e88335",
+      "kind": "ordinary live240x160 mGBA frame",
+      "rom_sha256": "37f4e3542454aa665597aa530857cd0121013879920f35b5ab4c7ed56748da0f",
+      "style": 5
+    },
+    {
+      "file": "images/05-black-rind-terraces-sour-landed.png",
+      "source": "/workspace/setup/cream-studies/native-r2/style-5/sour/ordinary-live/landed.png",
+      "sha256": "a2318745b3ab99bd9f5f9f779dd78041da1326c51a33aab881c62e6695bdc356",
+      "kind": "ordinary live240x160 mGBA frame",
+      "rom_sha256": "37f4e3542454aa665597aa530857cd0121013879920f35b5ab4c7ed56748da0f",
+      "style": 5
+    },
+    {
+      "file": "images/05-black-rind-terraces-sour-climb.gif",
+      "source": "/workspace/setup/cream-studies/native-r2/style-5/sour/ordinary-live/climb.gif",
+      "sha256": "149c628c7e8396fb13cfd94618311f4a7b2f14865063c2b205eb2769b86df6e9",
+      "kind": "actual real-input mGBA climb recording",
+      "rom_sha256": "37f4e3542454aa665597aa530857cd0121013879920f35b5ab4c7ed56748da0f",
+      "style": 5
+    },
+    {
+      "file": "images/05-black-rind-terraces-deep-room.png",
+      "source": "/workspace/setup/cream-studies/native-r2/style-5/deep/registered-renderer/full-room.png",
+      "sha256": "1a61f69e32db3cbde1c2cbf37d5ec7d3677e57dde1d3cfcb5fffbfd043fc66ed",
+      "kind": "registered512x384 mosaic of9 actual native camera frames; frozen renderer, HUD hidden",
+      "rom_sha256": "37f4e3542454aa665597aa530857cd0121013879920f35b5ab4c7ed56748da0f",
+      "style": 5
+    },
+    {
+      "file": "images/05-black-rind-terraces-deep-start.png",
+      "source": "/workspace/setup/cream-studies/native-r2/style-5/deep/ordinary-live/start.png",
+      "sha256": "ab0babb30c9484f92531cacd46a443c261647568ab8db6cafc94f109b70c146f",
+      "kind": "ordinary live240x160 mGBA frame",
+      "rom_sha256": "37f4e3542454aa665597aa530857cd0121013879920f35b5ab4c7ed56748da0f",
+      "style": 5
+    },
+    {
+      "file": "images/05-black-rind-terraces-deep-climbing.png",
+      "source": "/workspace/setup/cream-studies/native-r2/style-5/deep/ordinary-live/climbing.png",
+      "sha256": "5fb2fceedd1073e15d2a4b1d157ac1f54dcd98c8364d4791f72503e2a05cbcb8",
+      "kind": "ordinary live240x160 mGBA frame",
+      "rom_sha256": "37f4e3542454aa665597aa530857cd0121013879920f35b5ab4c7ed56748da0f",
+      "style": 5
+    },
+    {
+      "file": "images/05-black-rind-terraces-deep-landed.png",
+      "source": "/workspace/setup/cream-studies/native-r2/style-5/deep/ordinary-live/landed.png",
+      "sha256": "6af8f0f87899128781bc6c0c3fdf739b89c4ded7caf28aa4dbda3e3c44468891",
+      "kind": "ordinary live240x160 mGBA frame",
+      "rom_sha256": "37f4e3542454aa665597aa530857cd0121013879920f35b5ab4c7ed56748da0f",
+      "style": 5
+    },
+    {
+      "file": "images/05-black-rind-terraces-deep-climb.gif",
+      "source": "/workspace/setup/cream-studies/native-r2/style-5/deep/ordinary-live/climb.gif",
+      "sha256": "09e72cafa5b10b1a8a4e88a78335b829ef2861140cce1f7b18c455df3b7ae85a",
+      "kind": "actual real-input mGBA climb recording",
+      "rom_sha256": "37f4e3542454aa665597aa530857cd0121013879920f35b5ab4c7ed56748da0f",
+      "style": 5
+    }
+  ]
+}

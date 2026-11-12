@@ -1,0 +1,59 @@
+{
+  "source_commit": "4966dab4132218b9d2692fbb62165a22c70f52c3",
+  "normal_production_unchanged": true,
+  "variants": [
+    {
+      "number": 0,
+      "name": "Original Cream",
+      "slug": "original",
+      "rom_sha256": "0dd8554384b53e618140f8c61590fc7e6a7ff0888f296ece034a95f357b34fdd",
+      "source_commit": "4966dab4132218b9d2692fbb62165a22c70f52c3",
+      "report": "validation/style-0/report.json"
+    },
+    {
+      "number": 1,
+      "name": "Curdstone Karst",
+      "slug": "curdstone-karst",
+      "rom_sha256": "f5eb072725f244aa3be6264dce8d9aa6f28ca55497cbb231c046cfacb290db0c",
+      "source_commit": "4966dab4132218b9d2692fbb62165a22c70f52c3",
+      "report": "validation/style-1/report.json",
+      "rom": "01-curdstone-karst-4966dab4.gba"
+    },
+    {
+      "number": 2,
+      "name": "Brine Basilica",
+      "slug": "brine-basilica",
+      "rom_sha256": "908bce5f8b6ce64d8e4ea5dc1409149f0d9eeb17d076e659985467ccaef34a3c",
+      "source_commit": "4966dab4132218b9d2692fbb62165a22c70f52c3",
+      "report": "validation/style-2/report.json",
+      "rom": "02-brine-basilica-4966dab4.gba"
+    },
+    {
+      "number": 3,
+      "name": "Moldglass Crags",
+      "slug": "moldglass-crags",
+      "rom_sha256": "dbe4c9dc587ebab0d2c2e609043b757955209b185e12091faeffd869d11fde7d",
+      "source_commit": "4966dab4132218b9d2692fbb62165a22c70f52c3",
+      "report": "validation/style-3/report.json",
+      "rom": "03-moldglass-crags-4966dab4.gba"
+    },
+    {
+      "number": 4,
+      "name": "Gilt Quarry",
+      "slug": "gilt-quarry",
+      "rom_sha256": "bea2e1a974e27bf0ea29e2cf681962e134c30967b822414169193913153731c3",
+      "source_commit": "4966dab4132218b9d2692fbb62165a22c70f52c3",
+      "report": "validation/style-4/report.json",
+      "rom": "04-gilt-quarry-4966dab4.gba"
+    },
+    {
+      "number": 5,
+      "name": "Black Rind Terraces",
+      "slug": "black-rind-terraces",
+      "rom_sha256": "37f4e3542454aa665597aa530857cd0121013879920f35b5ab4c7ed56748da0f",
+      "source_commit": "4966dab4132218b9d2692fbb62165a22c70f52c3",
+      "report": "validation/style-5/report.json",
+      "rom": "05-black-rind-terraces-4966dab4.gba"
+    }
+  ]
+}

@@ -1,0 +1,1612 @@
+{
+  "source_commit": "4966dab4132218b9d2692fbb62165a22c70f52c3",
+  "rom_sha256": "908bce5f8b6ce64d8e4ea5dc1409149f0d9eeb17d076e659985467ccaef34a3c",
+  "tool_sha256": "ca462f6c43217b1ba253e919594f1d2c66980c15f56fd8ebfdfe73aaf5bc7646",
+  "seed": 46247,
+  "generated_seed": 4030825150,
+  "graph_sha256": "fb2f099f9c62a418311dfec5401c98cd31d826c0b642a1d4e5d07c8d3f512de9",
+  "cases": [
+    {
+      "name": "healthy",
+      "corruption": 0,
+      "cell": 21,
+      "lower_node": 42,
+      "upper_node": 43,
+      "cave": false,
+      "chest": false,
+      "entry": true,
+      "edges": [
+        {
+          "node": 42,
+          "index": 0,
+          "target": 43,
+          "kind": 2,
+          "require": 0,
+          "flags": 0
+        },
+        {
+          "node": 43,
+          "index": 0,
+          "target": 42,
+          "kind": 3,
+          "require": 0,
+          "flags": 0
+        },
+        {
+          "node": 43,
+          "index": 1,
+          "target": 32,
+          "kind": 2,
+          "require": 0,
+          "flags": 0
+        }
+      ],
+      "info": {
+        "cell": 21,
+        "corruption": 0,
+        "motif": 2,
+        "climb_x": 16,
+        "upper_bottom": [
+          7,
+          7,
+          7,
+          8,
+          8,
+          8,
+          8,
+          8,
+          7,
+          7,
+          7,
+          7,
+          7,
+          7,
+          7,
+          7,
+          7,
+          7,
+          8,
+          8,
+          8,
+          9,
+          9,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8
+        ],
+        "lower_top": [
+          15,
+          15,
+          15,
+          15,
+          15,
+          15,
+          16,
+          16,
+          16,
+          16,
+          16,
+          16,
+          16,
+          15,
+          15,
+          15,
+          15,
+          15,
+          15,
+          15,
+          16,
+          16,
+          16,
+          16,
+          16,
+          16,
+          16,
+          15,
+          15,
+          15,
+          15,
+          15
+        ],
+        "terrace": [
+          {
+            "content": 136,
+            "chest": [
+              24,
+              20
+            ],
+            "npc": [
+              20,
+              21
+            ],
+            "mission": [
+              14,
+              19
+            ]
+          },
+          {
+            "content": 1,
+            "chest": [
+              24,
+              6
+            ],
+            "npc": [
+              20,
+              4
+            ],
+            "mission": [
+              14,
+              6
+            ]
+          }
+        ],
+        "return_door": [
+          24,
+          20
+        ],
+        "dry_foot": [
+          280,
+          266
+        ]
+      },
+      "semantics": {
+        "room_raw_sha256": "96df95bd2d4d2de35223057baa76dbe44984018fd98beef7e39b61a458d45d0c",
+        "ground_types_sha256": "86df638e782019d61a8fdb8f01f05e61525f15f86f2d84296b01f9dd675112de",
+        "overlay_types_sha256": "95a709e08e4611d230a87fc4290b52fb88ab448fa3290ebedc2388d85e97b2f1",
+        "solid_sha256": "e51709d5f35527ea1aa812c932de03e92e01ba85b239556baae28d61c5405ee1",
+        "overlay_occupancy_sha256": "9fefa93c3260b336e16426506251ebb4400fccc7a5bda47a2e6ae32f11abbbc2",
+        "climb_mask_sha256": "78854472e995ae8bf2e86a7a6f22e1aef6a792690797c4118f7eb9dee77a1707"
+      },
+      "panorama": {
+        "file": "healthy/registered-renderer/full-room.png",
+        "room_unchanged": true,
+        "all_player_fields_unchanged": true,
+        "crop_copy_exact": true
+      },
+      "live": {
+        "file": "healthy/ordinary-live/climb.gif",
+        "frames": 135,
+        "minimum_health": 32,
+        "climb_frames": 128
+      },
+      "checks": [
+        {
+          "name": "normal opening draft completed with positive health",
+          "passed": true,
+          "observed": null
+        },
+        {
+          "name": "navigation begins in living ordinary ground state",
+          "passed": true,
+          "observed": {
+            "frames": 280,
+            "clock": 269,
+            "run_frames": 173,
+            "state": 1,
+            "area": 0,
+            "cell": 0,
+            "node": 42,
+            "actor": {
+              "kind": 1,
+              "type": 0,
+              "state": 0,
+              "timer": 0,
+              "x": 200,
+              "y": 270,
+              "z": 0,
+              "speed": 0,
+              "hp": 0,
+              "coll": 0,
+              "facing": 0
+            },
+            "health": [
+              32,
+              32
+            ],
+            "text": 0
+          }
+        },
+        {
+          "name": "actual UP input enters Cream through Drain ladder",
+          "passed": true,
+          "observed": null
+        },
+        {
+          "name": "climb starts on dry physical floor below real shaft",
+          "passed": true,
+          "observed": {
+            "x": 280,
+            "y": 266,
+            "climb_x": 16,
+            "ground": 0
+          }
+        },
+        {
+          "name": "navigation begins in living ordinary ground state",
+          "passed": true,
+          "observed": {
+            "frames": 371,
+            "clock": 360,
+            "run_frames": 238,
+            "state": 1,
+            "area": 3,
+            "cell": 21,
+            "node": 42,
+            "actor": {
+              "kind": 1,
+              "type": 0,
+              "state": 0,
+              "timer": 0,
+              "x": 400,
+              "y": 350,
+              "z": 0,
+              "speed": 0,
+              "hp": 0,
+              "coll": 0,
+              "facing": 0
+            },
+            "health": [
+              32,
+              32
+            ],
+            "text": 0
+          }
+        },
+        {
+          "name": "prepared hero remains alive below shaft",
+          "passed": true,
+          "observed": {
+            "frames": 391,
+            "clock": 380,
+            "run_frames": 258,
+            "state": 1,
+            "area": 3,
+            "cell": 21,
+            "node": 42,
+            "actor": {
+              "kind": 1,
+              "type": 0,
+              "state": 0,
+              "timer": 0,
+              "x": 280,
+              "y": 266,
+              "z": 0,
+              "speed": 0,
+              "hp": 0,
+              "coll": 0,
+              "facing": 0
+            },
+            "health": [
+              32,
+              32
+            ],
+            "text": 0
+          }
+        },
+        {
+          "name": "registered panorama copies raw native pixels exactly",
+          "passed": true,
+          "observed": null
+        },
+        {
+          "name": "frozen camera preserves room collision and all player fields",
+          "passed": true,
+          "observed": null
+        },
+        {
+          "name": "frozen camera preserves graph and player position/health",
+          "passed": true,
+          "observed": null
+        },
+        {
+          "name": "normal opening draft completed with positive health",
+          "passed": true,
+          "observed": null
+        },
+        {
+          "name": "navigation begins in living ordinary ground state",
+          "passed": true,
+          "observed": {
+            "frames": 280,
+            "clock": 269,
+            "run_frames": 173,
+            "state": 1,
+            "area": 0,
+            "cell": 0,
+            "node": 42,
+            "actor": {
+              "kind": 1,
+              "type": 0,
+              "state": 0,
+              "timer": 0,
+              "x": 200,
+              "y": 270,
+              "z": 0,
+              "speed": 0,
+              "hp": 0,
+              "coll": 0,
+              "facing": 0
+            },
+            "health": [
+              32,
+              32
+            ],
+            "text": 0
+          }
+        },
+        {
+          "name": "actual UP input enters Cream through Drain ladder",
+          "passed": true,
+          "observed": null
+        },
+        {
+          "name": "climb starts on dry physical floor below real shaft",
+          "passed": true,
+          "observed": {
+            "x": 280,
+            "y": 266,
+            "climb_x": 16,
+            "ground": 0
+          }
+        },
+        {
+          "name": "navigation begins in living ordinary ground state",
+          "passed": true,
+          "observed": {
+            "frames": 371,
+            "clock": 360,
+            "run_frames": 238,
+            "state": 1,
+            "area": 3,
+            "cell": 21,
+            "node": 42,
+            "actor": {
+              "kind": 1,
+              "type": 0,
+              "state": 0,
+              "timer": 0,
+              "x": 400,
+              "y": 350,
+              "z": 0,
+              "speed": 0,
+              "hp": 0,
+              "coll": 0,
+              "facing": 0
+            },
+            "health": [
+              32,
+              32
+            ],
+            "text": 0
+          }
+        },
+        {
+          "name": "prepared hero remains alive below shaft",
+          "passed": true,
+          "observed": {
+            "frames": 391,
+            "clock": 380,
+            "run_frames": 258,
+            "state": 1,
+            "area": 3,
+            "cell": 21,
+            "node": 42,
+            "actor": {
+              "kind": 1,
+              "type": 0,
+              "state": 0,
+              "timer": 0,
+              "x": 280,
+              "y": 266,
+              "z": 0,
+              "speed": 0,
+              "hp": 0,
+              "coll": 0,
+              "facing": 0
+            },
+            "health": [
+              32,
+              32
+            ],
+            "text": 0
+          }
+        },
+        {
+          "name": "fresh renderer and ordinary cores have identical room semantics",
+          "passed": true,
+          "observed": null
+        },
+        {
+          "name": "ordinary core never enables review camera",
+          "passed": true,
+          "observed": null
+        },
+        {
+          "name": "real UP produces actual PS_CLIMB and upper-node arrival",
+          "passed": true,
+          "observed": {
+            "before": {
+              "frames": 391,
+              "clock": 380,
+              "run_frames": 258,
+              "state": 1,
+              "area": 3,
+              "cell": 21,
+              "node": 42,
+              "actor": {
+                "kind": 1,
+                "type": 0,
+                "state": 0,
+                "timer": 0,
+                "x": 280,
+                "y": 266,
+                "z": 0,
+                "speed": 0,
+                "hp": 0,
+                "coll": 0,
+                "facing": 0
+              },
+              "health": [
+                32,
+                32
+              ],
+              "text": 0
+            },
+            "after": {
+              "frames": 526,
+              "clock": 515,
+              "run_frames": 393,
+              "state": 1,
+              "area": 3,
+              "cell": 21,
+              "node": 43,
+              "actor": {
+                "kind": 1,
+                "type": 0,
+                "state": 0,
+                "timer": 0,
+                "x": 280,
+                "y": 131,
+                "z": 0,
+                "speed": 0,
+                "hp": 0,
+                "coll": 0,
+                "facing": 0
+              },
+              "health": [
+                32,
+                32
+              ],
+              "text": 0
+            },
+            "climb_frames": 128
+          }
+        },
+        {
+          "name": "live clip uses advancing simulation and positive health",
+          "passed": true,
+          "observed": null
+        }
+      ]
+    },
+    {
+      "name": "sour",
+      "corruption": 1,
+      "cell": 18,
+      "lower_node": 36,
+      "upper_node": 37,
+      "cave": true,
+      "chest": false,
+      "entry": false,
+      "edges": [
+        {
+          "node": 36,
+          "index": 0,
+          "target": 37,
+          "kind": 2,
+          "require": 0,
+          "flags": 0
+        },
+        {
+          "node": 36,
+          "index": 1,
+          "target": 45,
+          "kind": 4,
+          "require": 0,
+          "flags": 4
+        },
+        {
+          "node": 37,
+          "index": 0,
+          "target": 26,
+          "kind": 2,
+          "require": 0,
+          "flags": 0
+        },
+        {
+          "node": 37,
+          "index": 1,
+          "target": 36,
+          "kind": 3,
+          "require": 0,
+          "flags": 0
+        }
+      ],
+      "info": {
+        "cell": 18,
+        "corruption": 1,
+        "motif": 0,
+        "climb_x": 18,
+        "upper_bottom": [
+          7,
+          7,
+          8,
+          8,
+          8,
+          8,
+          8,
+          7,
+          7,
+          7,
+          7,
+          7,
+          7,
+          7,
+          7,
+          7,
+          7,
+          8,
+          8,
+          8,
+          8,
+          8,
+          7,
+          7,
+          7,
+          7,
+          7,
+          7,
+          7,
+          7,
+          7,
+          7
+        ],
+        "lower_top": [
+          15,
+          15,
+          15,
+          15,
+          15,
+          16,
+          16,
+          16,
+          16,
+          16,
+          16,
+          16,
+          15,
+          15,
+          15,
+          15,
+          15,
+          15,
+          15,
+          16,
+          16,
+          16,
+          16,
+          16,
+          16,
+          16,
+          15,
+          15,
+          15,
+          15,
+          15,
+          15
+        ],
+        "terrace": [
+          {
+            "content": 5,
+            "chest": [
+              24,
+              20
+            ],
+            "npc": [
+              20,
+              21
+            ],
+            "mission": [
+              14,
+              19
+            ]
+          },
+          {
+            "content": 9,
+            "chest": [
+              24,
+              6
+            ],
+            "npc": [
+              20,
+              4
+            ],
+            "mission": [
+              14,
+              6
+            ]
+          }
+        ],
+        "return_door": [
+          24,
+          20
+        ],
+        "dry_foot": [
+          312,
+          266
+        ]
+      },
+      "semantics": {
+        "room_raw_sha256": "74a2e4c9ac660c3a05b40640d780c3dc2fa731183a96ed56b31bef28ca1ed95d",
+        "ground_types_sha256": "717d630530eab8c18eeca16604794718440dcbc09944921b4e60e38db497f820",
+        "overlay_types_sha256": "8dc520efd3739e5097a0b80a26d79cb286e9f7b59627cfaa7c6245a1a559d707",
+        "solid_sha256": "bae50bfc78cb247ebe1758a23b2a0d0d6d8065029e08a34cf74ad742a7686205",
+        "overlay_occupancy_sha256": "f9d0515f30479a270a8107f961a71fd9e01ec667748ed2ec171ce95e92f9f995",
+        "climb_mask_sha256": "0929a4e6ca9f69fd8652c7f821c74a98502323da4a8595a790e01abda928aeea"
+      },
+      "panorama": {
+        "file": "sour/registered-renderer/full-room.png",
+        "room_unchanged": true,
+        "all_player_fields_unchanged": true,
+        "crop_copy_exact": true
+      },
+      "live": {
+        "file": "sour/ordinary-live/climb.gif",
+        "frames": 119,
+        "minimum_health": 30,
+        "climb_frames": 112
+      },
+      "checks": [
+        {
+          "name": "normal opening draft completed with positive health",
+          "passed": true,
+          "observed": null
+        },
+        {
+          "name": "navigation begins in living ordinary ground state",
+          "passed": true,
+          "observed": {
+            "frames": 280,
+            "clock": 269,
+            "run_frames": 173,
+            "state": 1,
+            "area": 0,
+            "cell": 0,
+            "node": 42,
+            "actor": {
+              "kind": 1,
+              "type": 0,
+              "state": 0,
+              "timer": 0,
+              "x": 200,
+              "y": 270,
+              "z": 0,
+              "speed": 0,
+              "hp": 0,
+              "coll": 0,
+              "facing": 0
+            },
+            "health": [
+              32,
+              32
+            ],
+            "text": 0
+          }
+        },
+        {
+          "name": "actual UP input enters Cream through Drain ladder",
+          "passed": true,
+          "observed": null
+        },
+        {
+          "name": "ordinary load selected actual generated room",
+          "passed": true,
+          "observed": {
+            "frames": 378,
+            "clock": 367,
+            "run_frames": 216,
+            "state": 1,
+            "area": 3,
+            "cell": 18,
+            "node": 36,
+            "actor": {
+              "kind": 1,
+              "type": 0,
+              "state": 0,
+              "timer": 0,
+              "x": 184,
+              "y": 318,
+              "z": 0,
+              "speed": 0,
+              "hp": 0,
+              "coll": 0,
+              "facing": 0
+            },
+            "health": [
+              32,
+              32
+            ],
+            "text": 0
+          }
+        },
+        {
+          "name": "climb starts on dry physical floor below real shaft",
+          "passed": true,
+          "observed": {
+            "x": 312,
+            "y": 266,
+            "climb_x": 18,
+            "ground": 0
+          }
+        },
+        {
+          "name": "navigation begins in living ordinary ground state",
+          "passed": true,
+          "observed": {
+            "frames": 402,
+            "clock": 391,
+            "run_frames": 240,
+            "state": 1,
+            "area": 3,
+            "cell": 18,
+            "node": 36,
+            "actor": {
+              "kind": 1,
+              "type": 0,
+              "state": 0,
+              "timer": 0,
+              "x": 184,
+              "y": 330,
+              "z": 0,
+              "speed": 0,
+              "hp": 0,
+              "coll": 0,
+              "facing": 0
+            },
+            "health": [
+              30,
+              32
+            ],
+            "text": 0
+          }
+        },
+        {
+          "name": "prepared hero remains alive below shaft",
+          "passed": true,
+          "observed": {
+            "frames": 422,
+            "clock": 411,
+            "run_frames": 260,
+            "state": 1,
+            "area": 3,
+            "cell": 18,
+            "node": 36,
+            "actor": {
+              "kind": 1,
+              "type": 0,
+              "state": 0,
+              "timer": 0,
+              "x": 312,
+              "y": 266,
+              "z": 0,
+              "speed": 0,
+              "hp": 0,
+              "coll": 0,
+              "facing": 0
+            },
+            "health": [
+              30,
+              32
+            ],
+            "text": 0
+          }
+        },
+        {
+          "name": "registered panorama copies raw native pixels exactly",
+          "passed": true,
+          "observed": null
+        },
+        {
+          "name": "frozen camera preserves room collision and all player fields",
+          "passed": true,
+          "observed": null
+        },
+        {
+          "name": "frozen camera preserves graph and player position/health",
+          "passed": true,
+          "observed": null
+        },
+        {
+          "name": "normal opening draft completed with positive health",
+          "passed": true,
+          "observed": null
+        },
+        {
+          "name": "navigation begins in living ordinary ground state",
+          "passed": true,
+          "observed": {
+            "frames": 280,
+            "clock": 269,
+            "run_frames": 173,
+            "state": 1,
+            "area": 0,
+            "cell": 0,
+            "node": 42,
+            "actor": {
+              "kind": 1,
+              "type": 0,
+              "state": 0,
+              "timer": 0,
+              "x": 200,
+              "y": 270,
+              "z": 0,
+              "speed": 0,
+              "hp": 0,
+              "coll": 0,
+              "facing": 0
+            },
+            "health": [
+              32,
+              32
+            ],
+            "text": 0
+          }
+        },
+        {
+          "name": "actual UP input enters Cream through Drain ladder",
+          "passed": true,
+          "observed": null
+        },
+        {
+          "name": "ordinary load selected actual generated room",
+          "passed": true,
+          "observed": {
+            "frames": 378,
+            "clock": 367,
+            "run_frames": 216,
+            "state": 1,
+            "area": 3,
+            "cell": 18,
+            "node": 36,
+            "actor": {
+              "kind": 1,
+              "type": 0,
+              "state": 0,
+              "timer": 0,
+              "x": 184,
+              "y": 318,
+              "z": 0,
+              "speed": 0,
+              "hp": 0,
+              "coll": 0,
+              "facing": 0
+            },
+            "health": [
+              32,
+              32
+            ],
+            "text": 0
+          }
+        },
+        {
+          "name": "climb starts on dry physical floor below real shaft",
+          "passed": true,
+          "observed": {
+            "x": 312,
+            "y": 266,
+            "climb_x": 18,
+            "ground": 0
+          }
+        },
+        {
+          "name": "navigation begins in living ordinary ground state",
+          "passed": true,
+          "observed": {
+            "frames": 402,
+            "clock": 391,
+            "run_frames": 240,
+            "state": 1,
+            "area": 3,
+            "cell": 18,
+            "node": 36,
+            "actor": {
+              "kind": 1,
+              "type": 0,
+              "state": 0,
+              "timer": 0,
+              "x": 184,
+              "y": 330,
+              "z": 0,
+              "speed": 0,
+              "hp": 0,
+              "coll": 0,
+              "facing": 0
+            },
+            "health": [
+              30,
+              32
+            ],
+            "text": 0
+          }
+        },
+        {
+          "name": "prepared hero remains alive below shaft",
+          "passed": true,
+          "observed": {
+            "frames": 422,
+            "clock": 411,
+            "run_frames": 260,
+            "state": 1,
+            "area": 3,
+            "cell": 18,
+            "node": 36,
+            "actor": {
+              "kind": 1,
+              "type": 0,
+              "state": 0,
+              "timer": 0,
+              "x": 312,
+              "y": 266,
+              "z": 0,
+              "speed": 0,
+              "hp": 0,
+              "coll": 0,
+              "facing": 0
+            },
+            "health": [
+              30,
+              32
+            ],
+            "text": 0
+          }
+        },
+        {
+          "name": "fresh renderer and ordinary cores have identical room semantics",
+          "passed": true,
+          "observed": null
+        },
+        {
+          "name": "ordinary core never enables review camera",
+          "passed": true,
+          "observed": null
+        },
+        {
+          "name": "real UP produces actual PS_CLIMB and upper-node arrival",
+          "passed": true,
+          "observed": {
+            "before": {
+              "frames": 422,
+              "clock": 411,
+              "run_frames": 260,
+              "state": 1,
+              "area": 3,
+              "cell": 18,
+              "node": 36,
+              "actor": {
+                "kind": 1,
+                "type": 0,
+                "state": 0,
+                "timer": 0,
+                "x": 312,
+                "y": 266,
+                "z": 0,
+                "speed": 0,
+                "hp": 0,
+                "coll": 0,
+                "facing": 0
+              },
+              "health": [
+                30,
+                32
+              ],
+              "text": 0
+            },
+            "after": {
+              "frames": 541,
+              "clock": 530,
+              "run_frames": 379,
+              "state": 1,
+              "area": 3,
+              "cell": 18,
+              "node": 37,
+              "actor": {
+                "kind": 1,
+                "type": 0,
+                "state": 0,
+                "timer": 0,
+                "x": 312,
+                "y": 147,
+                "z": 0,
+                "speed": 0,
+                "hp": 0,
+                "coll": 0,
+                "facing": 0
+              },
+              "health": [
+                30,
+                32
+              ],
+              "text": 0
+            },
+            "climb_frames": 112
+          }
+        },
+        {
+          "name": "live clip uses advancing simulation and positive health",
+          "passed": true,
+          "observed": null
+        }
+      ]
+    },
+    {
+      "name": "deep",
+      "corruption": 2,
+      "cell": 0,
+      "lower_node": 0,
+      "upper_node": 1,
+      "cave": false,
+      "chest": true,
+      "entry": false,
+      "edges": [
+        {
+          "node": 0,
+          "index": 0,
+          "target": 2,
+          "kind": 1,
+          "require": 0,
+          "flags": 0
+        },
+        {
+          "node": 0,
+          "index": 1,
+          "target": 1,
+          "kind": 2,
+          "require": 0,
+          "flags": 0
+        },
+        {
+          "node": 1,
+          "index": 0,
+          "target": 0,
+          "kind": 3,
+          "require": 0,
+          "flags": 0
+        }
+      ],
+      "info": {
+        "cell": 0,
+        "corruption": 2,
+        "motif": 0,
+        "climb_x": 18,
+        "upper_bottom": [
+          8,
+          8,
+          8,
+          7,
+          7,
+          7,
+          7,
+          7,
+          7,
+          7,
+          7,
+          7,
+          7,
+          8,
+          8,
+          8,
+          8,
+          8,
+          7,
+          7,
+          7,
+          7,
+          7,
+          7,
+          7,
+          7,
+          7,
+          7,
+          8,
+          8,
+          8,
+          8
+        ],
+        "lower_top": [
+          15,
+          15,
+          15,
+          15,
+          16,
+          16,
+          16,
+          16,
+          16,
+          16,
+          16,
+          15,
+          15,
+          15,
+          15,
+          15,
+          15,
+          15,
+          16,
+          16,
+          16,
+          16,
+          16,
+          16,
+          16,
+          15,
+          15,
+          15,
+          15,
+          15,
+          15,
+          15
+        ],
+        "terrace": [
+          {
+            "content": 5,
+            "chest": [
+              24,
+              20
+            ],
+            "npc": [
+              20,
+              21
+            ],
+            "mission": [
+              14,
+              19
+            ]
+          },
+          {
+            "content": 3,
+            "chest": [
+              24,
+              6
+            ],
+            "npc": [
+              20,
+              4
+            ],
+            "mission": [
+              14,
+              6
+            ]
+          }
+        ],
+        "return_door": [
+          24,
+          20
+        ],
+        "dry_foot": [
+          312,
+          282
+        ]
+      },
+      "semantics": {
+        "room_raw_sha256": "373fdce81096592f5a25a670534bfcb1326255b7e45ca9e2259e75fd752ec3c5",
+        "ground_types_sha256": "bd4eefacb661692dad0661a73100eb19191c8f0a271955006ea53a82b89a2c78",
+        "overlay_types_sha256": "2426cf2e2447d9206d38cbf6ee3ee1dfa43dbf0ea6b80957969017b584f66008",
+        "solid_sha256": "16e9e5572446c2125227faf443a8c6b226fcb215a4ca0558a6454fb5ec51b1ac",
+        "overlay_occupancy_sha256": "06fdb9e2032f91a5d66a1f622afa9fccb7e432ed3df49d4ec6fca34b8ff26949",
+        "climb_mask_sha256": "2dff6feecacd1e22a93ae8abe0cdb23bf47baa0f6db21bc2784e34df5721594c"
+      },
+      "panorama": {
+        "file": "deep/registered-renderer/full-room.png",
+        "room_unchanged": true,
+        "all_player_fields_unchanged": true,
+        "crop_copy_exact": true
+      },
+      "live": {
+        "file": "deep/ordinary-live/climb.gif",
+        "frames": 151,
+        "minimum_health": 30,
+        "climb_frames": 144
+      },
+      "checks": [
+        {
+          "name": "normal opening draft completed with positive health",
+          "passed": true,
+          "observed": null
+        },
+        {
+          "name": "navigation begins in living ordinary ground state",
+          "passed": true,
+          "observed": {
+            "frames": 280,
+            "clock": 269,
+            "run_frames": 173,
+            "state": 1,
+            "area": 0,
+            "cell": 0,
+            "node": 42,
+            "actor": {
+              "kind": 1,
+              "type": 0,
+              "state": 0,
+              "timer": 0,
+              "x": 200,
+              "y": 270,
+              "z": 0,
+              "speed": 0,
+              "hp": 0,
+              "coll": 0,
+              "facing": 0
+            },
+            "health": [
+              32,
+              32
+            ],
+            "text": 0
+          }
+        },
+        {
+          "name": "actual UP input enters Cream through Drain ladder",
+          "passed": true,
+          "observed": null
+        },
+        {
+          "name": "ordinary load selected actual generated room",
+          "passed": true,
+          "observed": {
+            "frames": 385,
+            "clock": 374,
+            "run_frames": 216,
+            "state": 1,
+            "area": 3,
+            "cell": 0,
+            "node": 0,
+            "actor": {
+              "kind": 1,
+              "type": 0,
+              "state": 0,
+              "timer": 0,
+              "x": 184,
+              "y": 318,
+              "z": 0,
+              "speed": 0,
+              "hp": 0,
+              "coll": 0,
+              "facing": 0
+            },
+            "health": [
+              32,
+              32
+            ],
+            "text": 0
+          }
+        },
+        {
+          "name": "climb starts on dry physical floor below real shaft",
+          "passed": true,
+          "observed": {
+            "x": 312,
+            "y": 282,
+            "climb_x": 18,
+            "ground": 0
+          }
+        },
+        {
+          "name": "navigation begins in living ordinary ground state",
+          "passed": true,
+          "observed": {
+            "frames": 409,
+            "clock": 398,
+            "run_frames": 240,
+            "state": 1,
+            "area": 3,
+            "cell": 0,
+            "node": 0,
+            "actor": {
+              "kind": 1,
+              "type": 0,
+              "state": 0,
+              "timer": 0,
+              "x": 184,
+              "y": 330,
+              "z": 0,
+              "speed": 0,
+              "hp": 0,
+              "coll": 0,
+              "facing": 0
+            },
+            "health": [
+              30,
+              32
+            ],
+            "text": 0
+          }
+        },
+        {
+          "name": "prepared hero remains alive below shaft",
+          "passed": true,
+          "observed": {
+            "frames": 429,
+            "clock": 418,
+            "run_frames": 260,
+            "state": 1,
+            "area": 3,
+            "cell": 0,
+            "node": 0,
+            "actor": {
+              "kind": 1,
+              "type": 0,
+              "state": 0,
+              "timer": 0,
+              "x": 312,
+              "y": 282,
+              "z": 0,
+              "speed": 0,
+              "hp": 0,
+              "coll": 0,
+              "facing": 0
+            },
+            "health": [
+              30,
+              32
+            ],
+            "text": 0
+          }
+        },
+        {
+          "name": "registered panorama copies raw native pixels exactly",
+          "passed": true,
+          "observed": null
+        },
+        {
+          "name": "frozen camera preserves room collision and all player fields",
+          "passed": true,
+          "observed": null
+        },
+        {
+          "name": "frozen camera preserves graph and player position/health",
+          "passed": true,
+          "observed": null
+        },
+        {
+          "name": "normal opening draft completed with positive health",
+          "passed": true,
+          "observed": null
+        },
+        {
+          "name": "navigation begins in living ordinary ground state",
+          "passed": true,
+          "observed": {
+            "frames": 280,
+            "clock": 269,
+            "run_frames": 173,
+            "state": 1,
+            "area": 0,
+            "cell": 0,
+            "node": 42,
+            "actor": {
+              "kind": 1,
+              "type": 0,
+              "state": 0,
+              "timer": 0,
+              "x": 200,
+              "y": 270,
+              "z": 0,
+              "speed": 0,
+              "hp": 0,
+              "coll": 0,
+              "facing": 0
+            },
+            "health": [
+              32,
+              32
+            ],
+            "text": 0
+          }
+        },
+        {
+          "name": "actual UP input enters Cream through Drain ladder",
+          "passed": true,
+          "observed": null
+        },
+        {
+          "name": "ordinary load selected actual generated room",
+          "passed": true,
+          "observed": {
+            "frames": 385,
+            "clock": 374,
+            "run_frames": 216,
+            "state": 1,
+            "area": 3,
+            "cell": 0,
+            "node": 0,
+            "actor": {
+              "kind": 1,
+              "type": 0,
+              "state": 0,
+              "timer": 0,
+              "x": 184,
+              "y": 318,
+              "z": 0,
+              "speed": 0,
+              "hp": 0,
+              "coll": 0,
+              "facing": 0
+            },
+            "health": [
+              32,
+              32
+            ],
+            "text": 0
+          }
+        },
+        {
+          "name": "climb starts on dry physical floor below real shaft",
+          "passed": true,
+          "observed": {
+            "x": 312,
+            "y": 282,
+            "climb_x": 18,
+            "ground": 0
+          }
+        },
+        {
+          "name": "navigation begins in living ordinary ground state",
+          "passed": true,
+          "observed": {
+            "frames": 409,
+            "clock": 398,
+            "run_frames": 240,
+            "state": 1,
+            "area": 3,
+            "cell": 0,
+            "node": 0,
+            "actor": {
+              "kind": 1,
+              "type": 0,
+              "state": 0,
+              "timer": 0,
+              "x": 184,
+              "y": 330,
+              "z": 0,
+              "speed": 0,
+              "hp": 0,
+              "coll": 0,
+              "facing": 0
+            },
+            "health": [
+              30,
+              32
+            ],
+            "text": 0
+          }
+        },
+        {
+          "name": "prepared hero remains alive below shaft",
+          "passed": true,
+          "observed": {
+            "frames": 429,
+            "clock": 418,
+            "run_frames": 260,
+            "state": 1,
+            "area": 3,
+            "cell": 0,
+            "node": 0,
+            "actor": {
+              "kind": 1,
+              "type": 0,
+              "state": 0,
+              "timer": 0,
+              "x": 312,
+              "y": 282,
+              "z": 0,
+              "speed": 0,
+              "hp": 0,
+              "coll": 0,
+              "facing": 0
+            },
+            "health": [
+              30,
+              32
+            ],
+            "text": 0
+          }
+        },
+        {
+          "name": "fresh renderer and ordinary cores have identical room semantics",
+          "passed": true,
+          "observed": null
+        },
+        {
+          "name": "ordinary core never enables review camera",
+          "passed": true,
+          "observed": null
+        },
+        {
+          "name": "real UP produces actual PS_CLIMB and upper-node arrival",
+          "passed": true,
+          "observed": {
+            "before": {
+              "frames": 429,
+              "clock": 418,
+              "run_frames": 260,
+              "state": 1,
+              "area": 3,
+              "cell": 0,
+              "node": 0,
+              "actor": {
+                "kind": 1,
+                "type": 0,
+                "state": 0,
+                "timer": 0,
+                "x": 312,
+                "y": 282,
+                "z": 0,
+                "speed": 0,
+                "hp": 0,
+                "coll": 0,
+                "facing": 0
+              },
+              "health": [
+                30,
+                32
+              ],
+              "text": 0
+            },
+            "after": {
+              "frames": 580,
+              "clock": 569,
+              "run_frames": 411,
+              "state": 1,
+              "area": 3,
+              "cell": 0,
+              "node": 1,
+              "actor": {
+                "kind": 1,
+                "type": 0,
+                "state": 0,
+                "timer": 0,
+                "x": 312,
+                "y": 131,
+                "z": 0,
+                "speed": 0,
+                "hp": 0,
+                "coll": 0,
+                "facing": 0
+              },
+              "health": [
+                30,
+                32
+              ],
+              "text": 0
+            },
+            "climb_frames": 144
+          }
+        },
+        {
+          "name": "live clip uses advancing simulation and positive health",
+          "passed": true,
+          "observed": null
+        }
+      ]
+    }
+  ],
+  "complete": true,
+  "scope": "Art comparison, not an earned progression route. Fresh private cores per registered renderer and ordinary live case.",
+  "prohibited_writes": "No player health/inventory/equipment, enemy, progression, gate, terrain, palette, VRAM or framebuffer assignments. No player action/z/standing override."
+}

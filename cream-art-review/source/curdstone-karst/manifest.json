@@ -1,0 +1,1002 @@
+{
+  "metatiles": [
+    {
+      "name": "cream_floor_s0_v0",
+      "pal": "cream_floor0",
+      "type": "FLOOR",
+      "coll": 0
+    },
+    {
+      "name": "cream_path_s0_v0",
+      "pal": "cream_floor0",
+      "type": "FLOOR",
+      "coll": 0
+    },
+    {
+      "name": "cream_floor_s0_v1",
+      "pal": "cream_floor0",
+      "type": "FLOOR",
+      "coll": 0
+    },
+    {
+      "name": "cream_path_s0_v1",
+      "pal": "cream_floor0",
+      "type": "FLOOR",
+      "coll": 0
+    },
+    {
+      "name": "cream_floor_s0_v2",
+      "pal": "cream_floor0",
+      "type": "FLOOR",
+      "coll": 0
+    },
+    {
+      "name": "cream_path_s0_v2",
+      "pal": "cream_floor0",
+      "type": "FLOOR",
+      "coll": 0
+    },
+    {
+      "name": "cream_floor_s0_v3",
+      "pal": "cream_floor0",
+      "type": "FLOOR",
+      "coll": 0
+    },
+    {
+      "name": "cream_path_s0_v3",
+      "pal": "cream_floor0",
+      "type": "FLOOR",
+      "coll": 0
+    },
+    {
+      "name": "cream_cliff_top_s0_v0",
+      "pal": "cream_cliff0",
+      "type": "SOLID",
+      "coll": 15
+    },
+    {
+      "name": "cream_cliff_top_s0_v1",
+      "pal": "cream_cliff0",
+      "type": "SOLID",
+      "coll": 15
+    },
+    {
+      "name": "cream_cliff_mid_s0_v0",
+      "pal": "cream_cliff0",
+      "type": "SOLID",
+      "coll": 15
+    },
+    {
+      "name": "cream_cliff_mid_s0_v1",
+      "pal": "cream_cliff0",
+      "type": "SOLID",
+      "coll": 15
+    },
+    {
+      "name": "cream_cliff_base_s0_v0",
+      "pal": "cream_cliff0",
+      "type": "SOLID",
+      "coll": 15
+    },
+    {
+      "name": "cream_cliff_base_s0_v1",
+      "pal": "cream_cliff0",
+      "type": "SOLID",
+      "coll": 15
+    },
+    {
+      "name": "cream_cliff_left_s0_v0",
+      "pal": "cream_cliff0",
+      "type": "SOLID",
+      "coll": 15
+    },
+    {
+      "name": "cream_cliff_left_s0_v1",
+      "pal": "cream_cliff0",
+      "type": "SOLID",
+      "coll": 15
+    },
+    {
+      "name": "cream_cliff_right_s0_v0",
+      "pal": "cream_cliff0",
+      "type": "SOLID",
+      "coll": 15
+    },
+    {
+      "name": "cream_cliff_right_s0_v1",
+      "pal": "cream_cliff0",
+      "type": "SOLID",
+      "coll": 15
+    },
+    {
+      "name": "cream_rim_s0",
+      "pal": "cream_floor0",
+      "type": "SOLID",
+      "coll": 15
+    },
+    {
+      "name": "cream_drop_s0",
+      "pal": "cream_floor0",
+      "type": "FLOOR",
+      "coll": 0
+    },
+    {
+      "name": "cream_climb_top_s0",
+      "pal": "cream_cliff0",
+      "type": "CLIMB",
+      "coll": 0
+    },
+    {
+      "name": "cream_climb_mid_s0",
+      "pal": "cream_cliff0",
+      "type": "CLIMB",
+      "coll": 0
+    },
+    {
+      "name": "cream_climb_bottom_s0",
+      "pal": "cream_cliff0",
+      "type": "CLIMB",
+      "coll": 0
+    },
+    {
+      "name": "cream_cave_s0_0_0",
+      "pal": "cream_cliff0",
+      "type": "SOLID",
+      "coll": 15
+    },
+    {
+      "name": "cream_cave_s0_1_0",
+      "pal": "cream_cliff0",
+      "type": "SOLID",
+      "coll": 15
+    },
+    {
+      "name": "cream_cave_s0_0_1",
+      "pal": "cream_cliff0",
+      "type": "SOLID",
+      "coll": 15
+    },
+    {
+      "name": "cream_cave_s0_1_1",
+      "pal": "cream_cliff0",
+      "type": "SOLID",
+      "coll": 15
+    },
+    {
+      "name": "cream_cave_s0_0_2",
+      "pal": "cream_cliff0",
+      "type": "MYST",
+      "coll": 10
+    },
+    {
+      "name": "cream_cave_s0_1_2",
+      "pal": "cream_cliff0",
+      "type": "MYST",
+      "coll": 5
+    },
+    {
+      "name": "cream_thorn_s0",
+      "pal": "cream_props",
+      "type": "THORN",
+      "coll": 15
+    },
+    {
+      "name": "cream_web_s0",
+      "pal": "cream_props",
+      "type": "WEB",
+      "coll": 15
+    },
+    {
+      "name": "cream_crack_s0",
+      "pal": "cream_props",
+      "type": "CRACK",
+      "coll": 15
+    },
+    {
+      "name": "cream_pit_s0",
+      "pal": "cream_floor0",
+      "type": "PIT",
+      "coll": 0
+    },
+    {
+      "name": "cream_cave_web_s0_0",
+      "pal": "cream_cliff0",
+      "type": "WEB",
+      "coll": 15
+    },
+    {
+      "name": "cream_cave_web_s0_1",
+      "pal": "cream_cliff0",
+      "type": "WEB",
+      "coll": 15
+    },
+    {
+      "name": "cream_cave_crack_s0_0",
+      "pal": "cream_cliff0",
+      "type": "CRACK",
+      "coll": 15
+    },
+    {
+      "name": "cream_cave_crack_s0_1",
+      "pal": "cream_cliff0",
+      "type": "CRACK",
+      "coll": 15
+    },
+    {
+      "name": "cream_cave_ward_s0_0",
+      "pal": "cream_cliff0",
+      "type": "SOLID",
+      "coll": 15
+    },
+    {
+      "name": "cream_cave_ward_s0_1",
+      "pal": "cream_cliff0",
+      "type": "SOLID",
+      "coll": 15
+    },
+    {
+      "name": "cream_mold_s0",
+      "pal": "cream_props",
+      "type": "FLOOR",
+      "coll": 0
+    },
+    {
+      "name": "cream_water_s0",
+      "pal": "cream_water",
+      "type": "WATER",
+      "coll": 0
+    },
+    {
+      "name": "cream_fall_s0",
+      "pal": "cream_water",
+      "type": "SOLID",
+      "coll": 15
+    },
+    {
+      "name": "cream_floor_s1_v0",
+      "pal": "cream_floor1",
+      "type": "FLOOR",
+      "coll": 0
+    },
+    {
+      "name": "cream_path_s1_v0",
+      "pal": "cream_floor1",
+      "type": "FLOOR",
+      "coll": 0
+    },
+    {
+      "name": "cream_floor_s1_v1",
+      "pal": "cream_floor1",
+      "type": "FLOOR",
+      "coll": 0
+    },
+    {
+      "name": "cream_path_s1_v1",
+      "pal": "cream_floor1",
+      "type": "FLOOR",
+      "coll": 0
+    },
+    {
+      "name": "cream_floor_s1_v2",
+      "pal": "cream_floor1",
+      "type": "FLOOR",
+      "coll": 0
+    },
+    {
+      "name": "cream_path_s1_v2",
+      "pal": "cream_floor1",
+      "type": "FLOOR",
+      "coll": 0
+    },
+    {
+      "name": "cream_floor_s1_v3",
+      "pal": "cream_floor1",
+      "type": "FLOOR",
+      "coll": 0
+    },
+    {
+      "name": "cream_path_s1_v3",
+      "pal": "cream_floor1",
+      "type": "FLOOR",
+      "coll": 0
+    },
+    {
+      "name": "cream_cliff_top_s1_v0",
+      "pal": "cream_cliff1",
+      "type": "SOLID",
+      "coll": 15
+    },
+    {
+      "name": "cream_cliff_top_s1_v1",
+      "pal": "cream_cliff1",
+      "type": "SOLID",
+      "coll": 15
+    },
+    {
+      "name": "cream_cliff_mid_s1_v0",
+      "pal": "cream_cliff1",
+      "type": "SOLID",
+      "coll": 15
+    },
+    {
+      "name": "cream_cliff_mid_s1_v1",
+      "pal": "cream_cliff1",
+      "type": "SOLID",
+      "coll": 15
+    },
+    {
+      "name": "cream_cliff_base_s1_v0",
+      "pal": "cream_cliff1",
+      "type": "SOLID",
+      "coll": 15
+    },
+    {
+      "name": "cream_cliff_base_s1_v1",
+      "pal": "cream_cliff1",
+      "type": "SOLID",
+      "coll": 15
+    },
+    {
+      "name": "cream_cliff_left_s1_v0",
+      "pal": "cream_cliff1",
+      "type": "SOLID",
+      "coll": 15
+    },
+    {
+      "name": "cream_cliff_left_s1_v1",
+      "pal": "cream_cliff1",
+      "type": "SOLID",
+      "coll": 15
+    },
+    {
+      "name": "cream_cliff_right_s1_v0",
+      "pal": "cream_cliff1",
+      "type": "SOLID",
+      "coll": 15
+    },
+    {
+      "name": "cream_cliff_right_s1_v1",
+      "pal": "cream_cliff1",
+      "type": "SOLID",
+      "coll": 15
+    },
+    {
+      "name": "cream_rim_s1",
+      "pal": "cream_floor1",
+      "type": "SOLID",
+      "coll": 15
+    },
+    {
+      "name": "cream_drop_s1",
+      "pal": "cream_floor1",
+      "type": "FLOOR",
+      "coll": 0
+    },
+    {
+      "name": "cream_climb_top_s1",
+      "pal": "cream_cliff1",
+      "type": "CLIMB",
+      "coll": 0
+    },
+    {
+      "name": "cream_climb_mid_s1",
+      "pal": "cream_cliff1",
+      "type": "CLIMB",
+      "coll": 0
+    },
+    {
+      "name": "cream_climb_bottom_s1",
+      "pal": "cream_cliff1",
+      "type": "CLIMB",
+      "coll": 0
+    },
+    {
+      "name": "cream_cave_s1_0_0",
+      "pal": "cream_cliff1",
+      "type": "SOLID",
+      "coll": 15
+    },
+    {
+      "name": "cream_cave_s1_1_0",
+      "pal": "cream_cliff1",
+      "type": "SOLID",
+      "coll": 15
+    },
+    {
+      "name": "cream_cave_s1_0_1",
+      "pal": "cream_cliff1",
+      "type": "SOLID",
+      "coll": 15
+    },
+    {
+      "name": "cream_cave_s1_1_1",
+      "pal": "cream_cliff1",
+      "type": "SOLID",
+      "coll": 15
+    },
+    {
+      "name": "cream_cave_s1_0_2",
+      "pal": "cream_cliff1",
+      "type": "MYST",
+      "coll": 10
+    },
+    {
+      "name": "cream_cave_s1_1_2",
+      "pal": "cream_cliff1",
+      "type": "MYST",
+      "coll": 5
+    },
+    {
+      "name": "cream_thorn_s1",
+      "pal": "cream_props",
+      "type": "THORN",
+      "coll": 15
+    },
+    {
+      "name": "cream_web_s1",
+      "pal": "cream_props",
+      "type": "WEB",
+      "coll": 15
+    },
+    {
+      "name": "cream_crack_s1",
+      "pal": "cream_props",
+      "type": "CRACK",
+      "coll": 15
+    },
+    {
+      "name": "cream_pit_s1",
+      "pal": "cream_floor1",
+      "type": "PIT",
+      "coll": 0
+    },
+    {
+      "name": "cream_cave_web_s1_0",
+      "pal": "cream_cliff1",
+      "type": "WEB",
+      "coll": 15
+    },
+    {
+      "name": "cream_cave_web_s1_1",
+      "pal": "cream_cliff1",
+      "type": "WEB",
+      "coll": 15
+    },
+    {
+      "name": "cream_cave_crack_s1_0",
+      "pal": "cream_cliff1",
+      "type": "CRACK",
+      "coll": 15
+    },
+    {
+      "name": "cream_cave_crack_s1_1",
+      "pal": "cream_cliff1",
+      "type": "CRACK",
+      "coll": 15
+    },
+    {
+      "name": "cream_cave_ward_s1_0",
+      "pal": "cream_cliff1",
+      "type": "SOLID",
+      "coll": 15
+    },
+    {
+      "name": "cream_cave_ward_s1_1",
+      "pal": "cream_cliff1",
+      "type": "SOLID",
+      "coll": 15
+    },
+    {
+      "name": "cream_mold_s1",
+      "pal": "cream_props",
+      "type": "FLOOR",
+      "coll": 0
+    },
+    {
+      "name": "cream_water_s1",
+      "pal": "cream_water",
+      "type": "WATER",
+      "coll": 0
+    },
+    {
+      "name": "cream_fall_s1",
+      "pal": "cream_water",
+      "type": "SOLID",
+      "coll": 15
+    },
+    {
+      "name": "cream_floor_s2_v0",
+      "pal": "cream_floor2",
+      "type": "FLOOR",
+      "coll": 0
+    },
+    {
+      "name": "cream_path_s2_v0",
+      "pal": "cream_floor2",
+      "type": "FLOOR",
+      "coll": 0
+    },
+    {
+      "name": "cream_floor_s2_v1",
+      "pal": "cream_floor2",
+      "type": "FLOOR",
+      "coll": 0
+    },
+    {
+      "name": "cream_path_s2_v1",
+      "pal": "cream_floor2",
+      "type": "FLOOR",
+      "coll": 0
+    },
+    {
+      "name": "cream_floor_s2_v2",
+      "pal": "cream_floor2",
+      "type": "FLOOR",
+      "coll": 0
+    },
+    {
+      "name": "cream_path_s2_v2",
+      "pal": "cream_floor2",
+      "type": "FLOOR",
+      "coll": 0
+    },
+    {
+      "name": "cream_floor_s2_v3",
+      "pal": "cream_floor2",
+      "type": "FLOOR",
+      "coll": 0
+    },
+    {
+      "name": "cream_path_s2_v3",
+      "pal": "cream_floor2",
+      "type": "FLOOR",
+      "coll": 0
+    },
+    {
+      "name": "cream_cliff_top_s2_v0",
+      "pal": "cream_cliff2",
+      "type": "SOLID",
+      "coll": 15
+    },
+    {
+      "name": "cream_cliff_top_s2_v1",
+      "pal": "cream_cliff2",
+      "type": "SOLID",
+      "coll": 15
+    },
+    {
+      "name": "cream_cliff_mid_s2_v0",
+      "pal": "cream_cliff2",
+      "type": "SOLID",
+      "coll": 15
+    },
+    {
+      "name": "cream_cliff_mid_s2_v1",
+      "pal": "cream_cliff2",
+      "type": "SOLID",
+      "coll": 15
+    },
+    {
+      "name": "cream_cliff_base_s2_v0",
+      "pal": "cream_cliff2",
+      "type": "SOLID",
+      "coll": 15
+    },
+    {
+      "name": "cream_cliff_base_s2_v1",
+      "pal": "cream_cliff2",
+      "type": "SOLID",
+      "coll": 15
+    },
+    {
+      "name": "cream_cliff_left_s2_v0",
+      "pal": "cream_cliff2",
+      "type": "SOLID",
+      "coll": 15
+    },
+    {
+      "name": "cream_cliff_left_s2_v1",
+      "pal": "cream_cliff2",
+      "type": "SOLID",
+      "coll": 15
+    },
+    {
+      "name": "cream_cliff_right_s2_v0",
+      "pal": "cream_cliff2",
+      "type": "SOLID",
+      "coll": 15
+    },
+    {
+      "name": "cream_cliff_right_s2_v1",
+      "pal": "cream_cliff2",
+      "type": "SOLID",
+      "coll": 15
+    },
+    {
+      "name": "cream_rim_s2",
+      "pal": "cream_floor2",
+      "type": "SOLID",
+      "coll": 15
+    },
+    {
+      "name": "cream_drop_s2",
+      "pal": "cream_floor2",
+      "type": "FLOOR",
+      "coll": 0
+    },
+    {
+      "name": "cream_climb_top_s2",
+      "pal": "cream_cliff2",
+      "type": "CLIMB",
+      "coll": 0
+    },
+    {
+      "name": "cream_climb_mid_s2",
+      "pal": "cream_cliff2",
+      "type": "CLIMB",
+      "coll": 0
+    },
+    {
+      "name": "cream_climb_bottom_s2",
+      "pal": "cream_cliff2",
+      "type": "CLIMB",
+      "coll": 0
+    },
+    {
+      "name": "cream_cave_s2_0_0",
+      "pal": "cream_cliff2",
+      "type": "SOLID",
+      "coll": 15
+    },
+    {
+      "name": "cream_cave_s2_1_0",
+      "pal": "cream_cliff2",
+      "type": "SOLID",
+      "coll": 15
+    },
+    {
+      "name": "cream_cave_s2_0_1",
+      "pal": "cream_cliff2",
+      "type": "SOLID",
+      "coll": 15
+    },
+    {
+      "name": "cream_cave_s2_1_1",
+      "pal": "cream_cliff2",
+      "type": "SOLID",
+      "coll": 15
+    },
+    {
+      "name": "cream_cave_s2_0_2",
+      "pal": "cream_cliff2",
+      "type": "MYST",
+      "coll": 10
+    },
+    {
+      "name": "cream_cave_s2_1_2",
+      "pal": "cream_cliff2",
+      "type": "MYST",
+      "coll": 5
+    },
+    {
+      "name": "cream_thorn_s2",
+      "pal": "cream_props",
+      "type": "THORN",
+      "coll": 15
+    },
+    {
+      "name": "cream_web_s2",
+      "pal": "cream_props",
+      "type": "WEB",
+      "coll": 15
+    },
+    {
+      "name": "cream_crack_s2",
+      "pal": "cream_props",
+      "type": "CRACK",
+      "coll": 15
+    },
+    {
+      "name": "cream_pit_s2",
+      "pal": "cream_floor2",
+      "type": "PIT",
+      "coll": 0
+    },
+    {
+      "name": "cream_cave_web_s2_0",
+      "pal": "cream_cliff2",
+      "type": "WEB",
+      "coll": 15
+    },
+    {
+      "name": "cream_cave_web_s2_1",
+      "pal": "cream_cliff2",
+      "type": "WEB",
+      "coll": 15
+    },
+    {
+      "name": "cream_cave_crack_s2_0",
+      "pal": "cream_cliff2",
+      "type": "CRACK",
+      "coll": 15
+    },
+    {
+      "name": "cream_cave_crack_s2_1",
+      "pal": "cream_cliff2",
+      "type": "CRACK",
+      "coll": 15
+    },
+    {
+      "name": "cream_cave_ward_s2_0",
+      "pal": "cream_cliff2",
+      "type": "SOLID",
+      "coll": 15
+    },
+    {
+      "name": "cream_cave_ward_s2_1",
+      "pal": "cream_cliff2",
+      "type": "SOLID",
+      "coll": 15
+    },
+    {
+      "name": "cream_mold_s2",
+      "pal": "cream_props",
+      "type": "FLOOR",
+      "coll": 0
+    },
+    {
+      "name": "cream_water_s2",
+      "pal": "cream_water",
+      "type": "WATER",
+      "coll": 0
+    },
+    {
+      "name": "cream_fall_s2",
+      "pal": "cream_water",
+      "type": "SOLID",
+      "coll": 15
+    },
+    {
+      "name": "cream_trial",
+      "pal": "cream_props",
+      "type": "FLOOR",
+      "coll": 0
+    },
+    {
+      "name": "cream_cache",
+      "pal": "cream_props",
+      "type": "FLOOR",
+      "coll": 0
+    },
+    {
+      "name": "cream_ward",
+      "pal": "cream_props",
+      "type": "SOLID",
+      "coll": 15
+    },
+    {
+      "name": "cream_lamp",
+      "pal": "cream_props",
+      "type": "TORCH",
+      "coll": 15
+    },
+    {
+      "name": "cream_shrine",
+      "pal": "cream_props",
+      "type": "FLOOR",
+      "coll": 0
+    },
+    {
+      "name": "cream_switch",
+      "pal": "cream_props",
+      "type": "SWITCH",
+      "coll": 0
+    },
+    {
+      "name": "cream_lamp_lit",
+      "pal": "cream_props",
+      "type": "TORCH_LIT",
+      "coll": 15
+    },
+    {
+      "name": "cream_switch_down",
+      "pal": "cream_props",
+      "type": "SWITCH",
+      "coll": 0
+    },
+    {
+      "name": "cream_chest_closed_0_0",
+      "pal": "cream_props",
+      "type": "CHEST",
+      "coll": 15
+    },
+    {
+      "name": "cream_chest_closed_1_0",
+      "pal": "cream_props",
+      "type": "CHEST",
+      "coll": 15
+    },
+    {
+      "name": "cream_chest_closed_0_1",
+      "pal": "cream_props",
+      "type": "CHEST",
+      "coll": 15
+    },
+    {
+      "name": "cream_chest_closed_1_1",
+      "pal": "cream_props",
+      "type": "CHEST",
+      "coll": 15
+    },
+    {
+      "name": "cream_chest_open_0_0",
+      "pal": "cream_props",
+      "type": "CHEST_OPEN",
+      "coll": 15
+    },
+    {
+      "name": "cream_chest_open_1_0",
+      "pal": "cream_props",
+      "type": "CHEST_OPEN",
+      "coll": 15
+    },
+    {
+      "name": "cream_chest_open_0_1",
+      "pal": "cream_props",
+      "type": "CHEST_OPEN",
+      "coll": 15
+    },
+    {
+      "name": "cream_chest_open_1_1",
+      "pal": "cream_props",
+      "type": "CHEST_OPEN",
+      "coll": 15
+    }
+  ],
+  "palettes": {
+    "cream_floor0": [
+      "#000000",
+      "#302830",
+      "#686050",
+      "#b0a080",
+      "#d8d0a8",
+      "#e8e0c0",
+      "#c8b890",
+      "#f8e8d0",
+      "#f8f8e0",
+      "#687060",
+      "#909878",
+      "#b8c090",
+      "#484048",
+      "#785080",
+      "#c068d0",
+      "#f8d8f8"
+    ],
+    "cream_floor1": [
+      "#000000",
+      "#302830",
+      "#605848",
+      "#a09878",
+      "#c8c098",
+      "#d8d8b0",
+      "#b0b080",
+      "#f0e8c8",
+      "#f8f0d8",
+      "#586048",
+      "#788860",
+      "#a8b080",
+      "#403840",
+      "#705078",
+      "#b860d0",
+      "#f0d0f8"
+    ],
+    "cream_floor2": [
+      "#000000",
+      "#281828",
+      "#585048",
+      "#989078",
+      "#b8b098",
+      "#d0c8b0",
+      "#a09880",
+      "#e0d8c0",
+      "#f0e8d0",
+      "#484848",
+      "#686858",
+      "#909078",
+      "#403048",
+      "#783898",
+      "#c850e8",
+      "#f8d8f8"
+    ],
+    "cream_cliff0": [
+      "#000000",
+      "#282028",
+      "#484038",
+      "#786850",
+      "#a09070",
+      "#c0b088",
+      "#d8c8a0",
+      "#e8e0b8",
+      "#f8f0d8",
+      "#485048",
+      "#788060",
+      "#c8a050",
+      "#483848",
+      "#785080",
+      "#c068d0",
+      "#f8e8f8"
+    ],
+    "cream_cliff1": [
+      "#000000",
+      "#282028",
+      "#403830",
+      "#686048",
+      "#888060",
+      "#a8a078",
+      "#c8c090",
+      "#e0d8a8",
+      "#f0e8c8",
+      "#404838",
+      "#687850",
+      "#c0a050",
+      "#403048",
+      "#784888",
+      "#c058d8",
+      "#f8e0f8"
+    ],
+    "cream_cliff2": [
+      "#000000",
+      "#201820",
+      "#382830",
+      "#504038",
+      "#706050",
+      "#988068",
+      "#b8a888",
+      "#d0c0a0",
+      "#f0e0c0",
+      "#383038",
+      "#585048",
+      "#c0a050",
+      "#482050",
+      "#8830a8",
+      "#d858f0",
+      "#f8d8f8"
+    ],
+    "cream_water": [
+      "#000000",
+      "#282830",
+      "#384840",
+      "#506050",
+      "#708068",
+      "#98a088",
+      "#c0c8a0",
+      "#e0e0b8",
+      "#f8f0d0",
+      "#485850",
+      "#687870",
+      "#a0b098",
+      "#483850",
+      "#784088",
+      "#b858d8",
+      "#f0d0f8"
+    ],
+    "cream_props": [
+      "#000000",
+      "#282028",
+      "#504030",
+      "#887050",
+      "#b0a080",
+      "#b88840",
+      "#d8c8a0",
+      "#e8c870",
+      "#f8f0d0",
+      "#485840",
+      "#708858",
+      "#a8b880",
+      "#483048",
+      "#8840a0",
+      "#d860e8",
+      "#f8e0f8"
+    ]
+  }
+}
