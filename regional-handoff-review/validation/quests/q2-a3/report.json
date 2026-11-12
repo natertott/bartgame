@@ -1,0 +1,1071 @@
+{
+  "source_commit": "51880a55e6ecf86728f3a0923e5547e7bdeed5a0",
+  "rom_sha256": "0dd8554384b53e618140f8c61590fc7e6a7ff0888f296ece034a95f357b34fdd",
+  "support_sha256": "5c2dfee98c73847e83d5ebfb950ee6642af032dcf14531743347659c4ad9eea0",
+  "emulator": "mGBA0.10.5",
+  "fixtures": {
+    "stored_in_raw_report": true,
+    "entries": 16,
+    "original_json_bytes": 13647
+  },
+  "harness_source_sha256": {
+    "critical_path.py": "70e3db6ccbbadcd65f25355ef2c8e5ae728112abffe3d5c278a1b5428e588159",
+    "probe.py": "63133cd3241804ed11e5673505a9609b6fa33f24a1c7f61a4ea79dad1c535f75",
+    "regional_journey_review.py": "90b4c71554eb198e948ce4459a2d5eabecf66974c90c99b3f7851e88c6ce1586",
+    "regional_native_support.py": "5c2dfee98c73847e83d5ebfb950ee6642af032dcf14531743347659c4ad9eea0",
+    "release_boundary_review.py": "1c3cff4c6eaed42f65b7c1e19f6693a78e5f4fcfd323fc57dd8f0e979ee7c0ea"
+  },
+  "input_method": "Actual key input; no gameplay-state or video assignments.",
+  "method": "Exercise real regional quests and the four-objective Earth victory in mGBA.\n\nThe normal ROM and its exact committed ABI are used. Opening gifts, NPC\nacceptance, quest actions, enemy damage, objectives and the Earth pickup use\nreal input. No inventory, health, enemy, completion, gate or terrain is assigned.\nHero position/facing are disclosed navigation fixtures. The isolated quest\nsuite additionally requests the game's ordinary regional room-load path; the\nchain suite follows actual admitted graph edges and ordinary doors instead.\nThis is a native mechanic proof using navigation fixtures, not an unassisted\nplaythrough. Private ROM/SRAM copies never open a user's save.\n",
+  "harness_sha256": "90b4c71554eb198e948ce4459a2d5eabecf66974c90c99b3f7851e88c6ce1586",
+  "private_abi": {
+    "plan_size": 13,
+    "puzzle_size": 52,
+    "puzzle_blocks": 8,
+    "puzzle_length": 19,
+    "puzzle_solution": 20,
+    "cream_climb_x": 3,
+    "cream_upper_bottom": 4,
+    "cream_lower_top": 36,
+    "world_key_cell": 337,
+    "world_gate_cell": 331,
+    "world_gate_side": 334,
+    "world_myst": 367,
+    "world_myst_flags": 392,
+    "handoff_contract_item": 42,
+    "handoff_difficulty": 10,
+    "handoff_score": 0,
+    "ldef_size": 16,
+    "ldef_flags": 12,
+    "ldef_equip": 8,
+    "legacy_item_count": 118,
+    "plan_area": 0,
+    "plan_cell": 1,
+    "plan_field_site": 2,
+    "plan_interior_site": 3,
+    "plan_event_kind": 4,
+    "plan_quest_kind": 5,
+    "plan_mechanism_variant": 6,
+    "plan_traversal_variant": 7,
+    "plan_fusion_color": 8,
+    "plan_has_wave": 9,
+    "plan_stage": 10,
+    "plan_terrace": 11,
+    "plan_field_mechanism_variant": 12,
+    "quest_kind": 0,
+    "quest_state": 1,
+    "quest_stake": 2,
+    "quest_difficulty": 3,
+    "quest_origin_area": 4,
+    "quest_origin_cell": 5,
+    "quest_target_area": 6,
+    "quest_target_cell": 7,
+    "quest_mode": 8,
+    "quest_progress": 9,
+    "quest_quota": 10,
+    "quest_wave": 11,
+    "quest_cargo_held": 12,
+    "quest_cargo_ground": 13,
+    "quest_cargo_flying": 14,
+    "quest_reserved": 15,
+    "quest_timer": 16,
+    "quest_count": 18,
+    "quest_cargo_x": 20,
+    "quest_cargo_y": 22,
+    "quest_receiver_x": 24,
+    "quest_receiver_y": 26,
+    "r_points": 2592,
+    "r_point_count": 16,
+    "r_giver": 2616,
+    "r_receiver": 2618,
+    "r_owned": 890,
+    "r_board": 15,
+    "r_plan": 0,
+    "r_wave_site": 17,
+    "r_component": 26,
+    "s_clock": 4,
+    "s_clean": 8,
+    "s_count": 37,
+    "s_site": 34,
+    "s_kind": 35,
+    "s_board_x": 66,
+    "s_board_y": 67,
+    "s_phase": 36,
+    "s_quota": 38,
+    "s_switch_mask": 49,
+    "s_goal_spawned": 68
+  },
+  "checks": [
+    {
+      "name": "three opening gifts chosen with real input",
+      "passed": true
+    },
+    {
+      "name": "seed deals requested quest onto a real regional room",
+      "passed": true
+    },
+    {
+      "name": "regional giver is physically present",
+      "passed": true
+    },
+    {
+      "name": "real NPC starts the announced regional quest",
+      "passed": true
+    },
+    {
+      "name": "quest succeeds through real mechanics",
+      "passed": true
+    },
+    {
+      "name": "completed regional quest cannot restart or pay its score twice",
+      "passed": true
+    }
+  ],
+  "scope_complete": true,
+  "errors": [],
+  "opening_choices": [
+    {
+      "round": 0,
+      "index": 0,
+      "item": 70,
+      "before": {
+        "physical_frames": 161,
+        "state": 1,
+        "area": 0,
+        "cell": 0,
+        "actor": {
+          "kind": 1,
+          "type": 0,
+          "state": 0,
+          "timer": 0,
+          "x": 200,
+          "y": 270,
+          "z": 0,
+          "speed": 0,
+          "hp": 0,
+          "coll": 0,
+          "facing": 0
+        },
+        "text": 0,
+        "health": [
+          24,
+          24
+        ],
+        "gilt": 0,
+        "bombs": 0,
+        "entitlement": 0,
+        "inn_reward": 0,
+        "inventory": {
+          "owned": [
+            8194,
+            0,
+            0,
+            0
+          ],
+          "skills": 0
+        },
+        "starting_draft": 1,
+        "service_menu": {
+          "active": 1,
+          "cursor": 0
+        },
+        "draft": {
+          "round": 0,
+          "state": 1,
+          "options": [
+            70,
+            19,
+            256
+          ]
+        },
+        "chain": {
+          "step": 0,
+          "kind": 1,
+          "state": 1,
+          "target": 109
+        },
+        "quest": {
+          "kind": 0,
+          "state": 0,
+          "origin_area": 0,
+          "origin_cell": 0,
+          "target_area": 0,
+          "target_cell": 0,
+          "progress": 0,
+          "quota": 0
+        },
+        "spots": {
+          "door": [
+            0,
+            0
+          ],
+          "npc": [
+            0,
+            0
+          ],
+          "cache": [
+            0,
+            0
+          ],
+          "mechanism": [
+            0,
+            0
+          ],
+          "flags": {
+            "door": 0,
+            "npc": 0,
+            "cache": 0,
+            "mechanism": 0
+          },
+          "terrace": 0
+        }
+      },
+      "after": {
+        "physical_frames": 171,
+        "state": 1,
+        "area": 0,
+        "cell": 0,
+        "actor": {
+          "kind": 1,
+          "type": 0,
+          "state": 0,
+          "timer": 0,
+          "x": 200,
+          "y": 270,
+          "z": 0,
+          "speed": 0,
+          "hp": 0,
+          "coll": 0,
+          "facing": 0
+        },
+        "text": 0,
+        "health": [
+          24,
+          24
+        ],
+        "gilt": 0,
+        "bombs": 0,
+        "entitlement": 0,
+        "inn_reward": 0,
+        "inventory": {
+          "owned": [
+            8194,
+            0,
+            64,
+            0
+          ],
+          "skills": 0
+        },
+        "starting_draft": 1,
+        "service_menu": {
+          "active": 1,
+          "cursor": 0
+        },
+        "draft": {
+          "round": 1,
+          "state": 1,
+          "options": [
+            89,
+            98,
+            87
+          ]
+        },
+        "chain": {
+          "step": 0,
+          "kind": 1,
+          "state": 1,
+          "target": 109
+        },
+        "quest": {
+          "kind": 0,
+          "state": 0,
+          "origin_area": 0,
+          "origin_cell": 0,
+          "target_area": 0,
+          "target_cell": 0,
+          "progress": 0,
+          "quota": 0
+        },
+        "spots": {
+          "door": [
+            0,
+            0
+          ],
+          "npc": [
+            0,
+            0
+          ],
+          "cache": [
+            0,
+            0
+          ],
+          "mechanism": [
+            0,
+            0
+          ],
+          "flags": {
+            "door": 0,
+            "npc": 0,
+            "cache": 0,
+            "mechanism": 0
+          },
+          "terrace": 0
+        }
+      }
+    },
+    {
+      "round": 1,
+      "index": 1,
+      "item": 98,
+      "before": {
+        "physical_frames": 171,
+        "state": 1,
+        "area": 0,
+        "cell": 0,
+        "actor": {
+          "kind": 1,
+          "type": 0,
+          "state": 0,
+          "timer": 0,
+          "x": 200,
+          "y": 270,
+          "z": 0,
+          "speed": 0,
+          "hp": 0,
+          "coll": 0,
+          "facing": 0
+        },
+        "text": 0,
+        "health": [
+          24,
+          24
+        ],
+        "gilt": 0,
+        "bombs": 0,
+        "entitlement": 0,
+        "inn_reward": 0,
+        "inventory": {
+          "owned": [
+            8194,
+            0,
+            64,
+            0
+          ],
+          "skills": 0
+        },
+        "starting_draft": 1,
+        "service_menu": {
+          "active": 1,
+          "cursor": 0
+        },
+        "draft": {
+          "round": 1,
+          "state": 1,
+          "options": [
+            89,
+            98,
+            87
+          ]
+        },
+        "chain": {
+          "step": 0,
+          "kind": 1,
+          "state": 1,
+          "target": 109
+        },
+        "quest": {
+          "kind": 0,
+          "state": 0,
+          "origin_area": 0,
+          "origin_cell": 0,
+          "target_area": 0,
+          "target_cell": 0,
+          "progress": 0,
+          "quota": 0
+        },
+        "spots": {
+          "door": [
+            0,
+            0
+          ],
+          "npc": [
+            0,
+            0
+          ],
+          "cache": [
+            0,
+            0
+          ],
+          "mechanism": [
+            0,
+            0
+          ],
+          "flags": {
+            "door": 0,
+            "npc": 0,
+            "cache": 0,
+            "mechanism": 0
+          },
+          "terrace": 0
+        }
+      },
+      "after": {
+        "physical_frames": 187,
+        "state": 1,
+        "area": 0,
+        "cell": 0,
+        "actor": {
+          "kind": 1,
+          "type": 0,
+          "state": 0,
+          "timer": 0,
+          "x": 200,
+          "y": 270,
+          "z": 0,
+          "speed": 0,
+          "hp": 0,
+          "coll": 0,
+          "facing": 0
+        },
+        "text": 0,
+        "health": [
+          32,
+          32
+        ],
+        "gilt": 0,
+        "bombs": 0,
+        "entitlement": 0,
+        "inn_reward": 0,
+        "inventory": {
+          "owned": [
+            8194,
+            0,
+            64,
+            4
+          ],
+          "skills": 0
+        },
+        "starting_draft": 1,
+        "service_menu": {
+          "active": 1,
+          "cursor": 0
+        },
+        "draft": {
+          "round": 2,
+          "state": 1,
+          "options": [
+            74,
+            79,
+            76
+          ]
+        },
+        "chain": {
+          "step": 0,
+          "kind": 1,
+          "state": 1,
+          "target": 109
+        },
+        "quest": {
+          "kind": 0,
+          "state": 0,
+          "origin_area": 0,
+          "origin_cell": 0,
+          "target_area": 0,
+          "target_cell": 0,
+          "progress": 0,
+          "quota": 0
+        },
+        "spots": {
+          "door": [
+            0,
+            0
+          ],
+          "npc": [
+            0,
+            0
+          ],
+          "cache": [
+            0,
+            0
+          ],
+          "mechanism": [
+            0,
+            0
+          ],
+          "flags": {
+            "door": 0,
+            "npc": 0,
+            "cache": 0,
+            "mechanism": 0
+          },
+          "terrace": 0
+        }
+      }
+    },
+    {
+      "round": 2,
+      "index": 2,
+      "item": 76,
+      "before": {
+        "physical_frames": 187,
+        "state": 1,
+        "area": 0,
+        "cell": 0,
+        "actor": {
+          "kind": 1,
+          "type": 0,
+          "state": 0,
+          "timer": 0,
+          "x": 200,
+          "y": 270,
+          "z": 0,
+          "speed": 0,
+          "hp": 0,
+          "coll": 0,
+          "facing": 0
+        },
+        "text": 0,
+        "health": [
+          32,
+          32
+        ],
+        "gilt": 0,
+        "bombs": 0,
+        "entitlement": 0,
+        "inn_reward": 0,
+        "inventory": {
+          "owned": [
+            8194,
+            0,
+            64,
+            4
+          ],
+          "skills": 0
+        },
+        "starting_draft": 1,
+        "service_menu": {
+          "active": 1,
+          "cursor": 0
+        },
+        "draft": {
+          "round": 2,
+          "state": 1,
+          "options": [
+            74,
+            79,
+            76
+          ]
+        },
+        "chain": {
+          "step": 0,
+          "kind": 1,
+          "state": 1,
+          "target": 109
+        },
+        "quest": {
+          "kind": 0,
+          "state": 0,
+          "origin_area": 0,
+          "origin_cell": 0,
+          "target_area": 0,
+          "target_cell": 0,
+          "progress": 0,
+          "quota": 0
+        },
+        "spots": {
+          "door": [
+            0,
+            0
+          ],
+          "npc": [
+            0,
+            0
+          ],
+          "cache": [
+            0,
+            0
+          ],
+          "mechanism": [
+            0,
+            0
+          ],
+          "flags": {
+            "door": 0,
+            "npc": 0,
+            "cache": 0,
+            "mechanism": 0
+          },
+          "terrace": 0
+        }
+      },
+      "after": {
+        "physical_frames": 269,
+        "state": 1,
+        "area": 0,
+        "cell": 0,
+        "actor": {
+          "kind": 1,
+          "type": 0,
+          "state": 0,
+          "timer": 0,
+          "x": 200,
+          "y": 270,
+          "z": 0,
+          "speed": 0,
+          "hp": 0,
+          "coll": 0,
+          "facing": 0
+        },
+        "text": 0,
+        "health": [
+          32,
+          32
+        ],
+        "gilt": 0,
+        "bombs": 0,
+        "entitlement": 0,
+        "inn_reward": 0,
+        "inventory": {
+          "owned": [
+            8194,
+            0,
+            4160,
+            4
+          ],
+          "skills": 16
+        },
+        "starting_draft": 0,
+        "service_menu": {
+          "active": 0,
+          "cursor": 2
+        },
+        "draft": {
+          "round": 3,
+          "state": 2,
+          "options": [
+            74,
+            79,
+            76
+          ]
+        },
+        "chain": {
+          "step": 0,
+          "kind": 1,
+          "state": 1,
+          "target": 109
+        },
+        "quest": {
+          "kind": 0,
+          "state": 0,
+          "origin_area": 0,
+          "origin_cell": 0,
+          "target_area": 0,
+          "target_cell": 0,
+          "progress": 0,
+          "quota": 0
+        },
+        "spots": {
+          "door": [
+            0,
+            0
+          ],
+          "npc": [
+            0,
+            0
+          ],
+          "cache": [
+            0,
+            0
+          ],
+          "mechanism": [
+            0,
+            0
+          ],
+          "flags": {
+            "door": 0,
+            "npc": 0,
+            "cache": 0,
+            "mechanism": 0
+          },
+          "terrace": 0
+        }
+      }
+    }
+  ],
+  "initial": {
+    "physical_frames": 272,
+    "state": 1,
+    "area": 0,
+    "cell": 0,
+    "actor": {
+      "kind": 1,
+      "type": 0,
+      "state": 0,
+      "timer": 0,
+      "x": 200,
+      "y": 270,
+      "z": 0,
+      "speed": 0,
+      "hp": 0,
+      "coll": 0,
+      "facing": 0
+    },
+    "text": 0,
+    "health": [
+      32,
+      32
+    ],
+    "gilt": 0,
+    "bombs": 0,
+    "entitlement": 0,
+    "inn_reward": 0,
+    "inventory": {
+      "owned": [
+        8194,
+        0,
+        4160,
+        4
+      ],
+      "skills": 16
+    },
+    "starting_draft": 0,
+    "service_menu": {
+      "active": 0,
+      "cursor": 2
+    },
+    "draft": {
+      "round": 3,
+      "state": 2,
+      "options": [
+        74,
+        79,
+        76
+      ]
+    },
+    "chain": {
+      "step": 0,
+      "kind": 1,
+      "state": 1,
+      "target": 109
+    },
+    "quest": {
+      "kind": 0,
+      "state": 0,
+      "origin_area": 0,
+      "origin_cell": 0,
+      "target_area": 0,
+      "target_cell": 0,
+      "progress": 0,
+      "quota": 0
+    },
+    "spots": {
+      "door": [
+        0,
+        0
+      ],
+      "npc": [
+        0,
+        0
+      ],
+      "cache": [
+        0,
+        0
+      ],
+      "mechanism": [
+        0,
+        0
+      ],
+      "flags": {
+        "door": 0,
+        "npc": 0,
+        "cache": 0,
+        "mechanism": 0
+      },
+      "terrace": 0
+    }
+  },
+  "final": {
+    "physical_frames": 652,
+    "state": 1,
+    "area": 3,
+    "cell": 18,
+    "actor": {
+      "kind": 1,
+      "type": 0,
+      "state": 0,
+      "timer": 0,
+      "x": 280,
+      "y": 270,
+      "z": 0,
+      "speed": 0,
+      "hp": 0,
+      "coll": 0,
+      "facing": 0
+    },
+    "text": 0,
+    "health": [
+      32,
+      32
+    ],
+    "gilt": 0,
+    "bombs": 0,
+    "entitlement": 0,
+    "inn_reward": 0,
+    "inventory": {
+      "owned": [
+        8194,
+        0,
+        4176,
+        4
+      ],
+      "skills": 16
+    },
+    "starting_draft": 0,
+    "service_menu": {
+      "active": 0,
+      "cursor": 2
+    },
+    "draft": {
+      "round": 3,
+      "state": 2,
+      "options": [
+        74,
+        79,
+        76
+      ]
+    },
+    "chain": {
+      "step": 0,
+      "kind": 1,
+      "state": 1,
+      "target": 109
+    },
+    "quest": {
+      "kind": 2,
+      "state": 3,
+      "origin_area": 3,
+      "origin_cell": 18,
+      "target_area": 3,
+      "target_cell": 18,
+      "progress": 0,
+      "quota": 7
+    },
+    "spots": {
+      "door": [
+        20,
+        19
+      ],
+      "npc": [
+        17,
+        16
+      ],
+      "cache": [
+        21,
+        16
+      ],
+      "mechanism": [
+        0,
+        0
+      ],
+      "flags": {
+        "door": 1,
+        "npc": 1,
+        "cache": 1,
+        "mechanism": 0
+      },
+      "terrace": 0
+    }
+  },
+  "stages": [
+    {
+      "kind": "combat observation",
+      "turn": 0,
+      "owned_component_only": true,
+      "state": {
+        "physical_frames": 358,
+        "state": 1,
+        "area": 3,
+        "cell": 18,
+        "actor": {
+          "kind": 1,
+          "type": 0,
+          "state": 0,
+          "timer": 0,
+          "x": 280,
+          "y": 270,
+          "z": 0,
+          "speed": 0,
+          "hp": 0,
+          "coll": 0,
+          "facing": 0
+        },
+        "text": 0,
+        "health": [
+          30,
+          32
+        ],
+        "gilt": 0,
+        "bombs": 0,
+        "entitlement": 0,
+        "inn_reward": 0,
+        "inventory": {
+          "owned": [
+            8194,
+            0,
+            4176,
+            4
+          ],
+          "skills": 16
+        },
+        "starting_draft": 0,
+        "service_menu": {
+          "active": 0,
+          "cursor": 2
+        },
+        "draft": {
+          "round": 3,
+          "state": 2,
+          "options": [
+            74,
+            79,
+            76
+          ]
+        },
+        "chain": {
+          "step": 0,
+          "kind": 1,
+          "state": 1,
+          "target": 109
+        },
+        "quest": {
+          "kind": 2,
+          "state": 2,
+          "origin_area": 3,
+          "origin_cell": 18,
+          "target_area": 3,
+          "target_cell": 18,
+          "progress": 0,
+          "quota": 7
+        },
+        "spots": {
+          "door": [
+            20,
+            19
+          ],
+          "npc": [
+            17,
+            16
+          ],
+          "cache": [
+            21,
+            16
+          ],
+          "mechanism": [
+            0,
+            0
+          ],
+          "flags": {
+            "door": 1,
+            "npc": 1,
+            "cache": 1,
+            "mechanism": 0
+          },
+          "terrace": 0
+        }
+      },
+      "quest": {
+        "kind": 2,
+        "state": 2,
+        "stake": 0,
+        "difficulty": 0,
+        "origin_area": 3,
+        "origin_cell": 18,
+        "target_area": 3,
+        "target_cell": 18,
+        "mode": 1,
+        "progress": 0,
+        "quota": 7,
+        "wave": 0,
+        "cargo_held": 0,
+        "cargo_ground": 1,
+        "cargo_flying": 0,
+        "reserved": 0,
+        "timer": 1789,
+        "count": 0,
+        "cargo_x": 376,
+        "cargo_y": 334,
+        "receiver_x": 472,
+        "receiver_y": 286
+      },
+      "enemies": [
+        {
+          "kind": 2,
+          "type": 18,
+          "state": 2,
+          "timer": 26,
+          "x": 280,
+          "y": 332,
+          "z": 0,
+          "speed": 128,
+          "hp": 4,
+          "coll": 0,
+          "facing": 0
+        },
+        {
+          "kind": 2,
+          "type": 17,
+          "state": 1,
+          "timer": 10,
+          "x": 440,
+          "y": 318,
+          "z": 0,
+          "speed": 32,
+          "hp": 4,
+          "coll": 0,
+          "facing": 3
+        },
+        {
+          "kind": 2,
+          "type": 10,
+          "state": 0,
+          "timer": 60,
+          "x": 72,
+          "y": 318,
+          "z": 10,
+          "speed": 256,
+          "hp": 2,
+          "coll": 0,
+          "facing": 1
+        },
+        {
+          "kind": 2,
+          "type": 18,
+          "state": 1,
+          "timer": 10,
+          "x": 258,
+          "y": 350,
+          "z": 0,
+          "speed": 128,
+          "hp": 4,
+          "coll": 0,
+          "facing": 1
+        }
+      ],
+      "wave_site": 133,
+      "wave": 0,
+      "remaining": 0
+    }
+  ],
+  "inputs": {
+    "stored_in_raw_report": true,
+    "entries": 220,
+    "original_json_bytes": 382711
+  },
+  "publication_format": "Compact review summary; outcomes and identities retained. Exact original JSON is adjacent in gzip and in native-evidence.zip.",
+  "raw_report": {
+    "file": "report.json.gz",
+    "sha256": "5af1f9d98d847735a71bdd626789ff5056eecc44a35ba217a147a479417ade2b",
+    "uncompressed_sha256": "f685e558be72a458d18071d6084b6d9042c79f4c2cc9e5bbfac0fbb3c7ed359a",
+    "uncompressed_bytes": 860514
+  }
+}

@@ -5,14 +5,17 @@ Hero navigation/facing/standing and the selected new-run seed are disclosed
 fixtures. Every trial completion, earned tool, equipment change, gate reaction,
 climb/fall/cave transition and enemy HP change comes from real game input.
 No inventory grant, player health, enemy state/health, completion, terrain,
-VRAM, palette or framebuffer is assigned. This is a mechanic proof using
+VRAM, palette or framebuffer is assigned. The final retirement check replays
+only SRAM produced by this actual summit victory in a separate cold core. This is a mechanic proof using
 navigation fixtures, not an unassisted playthrough.
 
 Use --stop-after-long-drop --seed 5 or --seed 1432 to qualify the3/4-row falls.
 """
 from pathlib import Path
-import sys,ctypes as C,json,hashlib,struct,argparse,atexit,subprocess
+import sys,ctypes as C,json,hashlib,struct,argparse,atexit,subprocess,re
 import probe as P,cream_graph_review as G
+import release_boundary_review as RB
+from regional_native_support import compile_abi
 import mgba.core,mgba.image
 parser=argparse.ArgumentParser(description=__doc__);parser.add_argument('--bundle',required=True);parser.add_argument('--out',required=True);parser.add_argument('--seed',type=lambda x:int(x,0),default=0xb4a7);parser.add_argument('--stop-after-long-drop',action='store_true');parser.add_argument('--panoramas',action='store_true');args=parser.parse_args()
 out=Path(args.out).resolve();out.mkdir(parents=True,exist_ok=True);bundle=Path(args.bundle).resolve()
@@ -36,6 +39,20 @@ def handoff_abi_offset():
  (folder/'provenance.json').write_text(json.dumps(dict(source_commit=commit,header_sha256=hashlib.sha256(header).hexdigest(),compiler_command=command,completed_offset=value),indent=2))
  return value
 completed_offset=handoff_abi_offset()
+def cream_hub_point():
+ game=Path(__file__).resolve().parents[1];commit=(bundle/'source-commit.txt').read_text().strip()
+ got=subprocess.run(['git','-C',str(game),'show',commit+':bartgame/src/hub_services.h'],capture_output=True,text=True)
+ if got.returncode:return (28*16+8,6*16+34)
+ values=[]
+ for name in ('HUB_CREAM_LADDER_X','HUB_CREAM_RETURN_Y'):
+  match=re.search(r'^#define\s+'+name+r'\s+(\d+)\s*$',got.stdout,re.M)
+  if not match:raise AssertionError('missing pinned ladder anchor '+name)
+  values.append(int(match.group(1)))
+ (out/'abi'/'hub_services.h').write_text(got.stdout)
+ return tuple(values)
+hub_point=cream_hub_point()
+try:opening_pending=P.sym('gStartingDraft')
+except KeyError:opening_pending=None
 
 def w32(c,addr,n):P.w16(c,addr,n&65535);P.w16(c,addr+2,(n>>16)&65535)
 def raw(c,addr,size):return bytes(P.r8(c,addr+i) for i in range(size))
@@ -49,11 +66,11 @@ c=mgba.core.load_path(P.ROM);c.bg_video=mgba.image.Image(240,160);c.set_video_bu
 for i in range(32768):P.w8(c,0x0e000000+i,255)
 P.run(c,45);w32(c,P.sym('gSeedOverride'),args.seed);P.press(c,'START',2,4)
 for i in range(2200):
- if P.r8(c,P.sym('gTbActive')):P.press(c,'A',2,6)
+ if P.r8(c,P.sym('gTbActive')) or (opening_pending and P.r8(c,opening_pending)):P.press(c,'A',2,18)
  else:P.run(c,4)
- if P.r8(c,P.sym('gGame'))==1 and P.r8(c,P.sym('gActors'))==1 and not P.r8(c,P.sym('gTbActive')):break
+ if P.r8(c,P.sym('gGame'))==1 and P.r8(c,P.sym('gActors'))==1 and not P.r8(c,P.sym('gTbActive')) and not (opening_pending and P.r8(c,opening_pending)):break
 check('real new run boots',status(c)['area']==0,status(c));shot(c,'sewer')
-tp(c,28*16+8,6*16+34);P.run(c,3);P.press(c,'A',2,6)
+tp(c,*hub_point);P.run(c,3);P.press(c,'A',2,6)
 for i in range(1200):
  if P.r8(c,P.sym('gTbActive')):P.press(c,'A',2,6)
  else:P.run(c,3)
@@ -261,7 +278,7 @@ for _ in range(800):
 P.run(c,80)
 check('visible entry returns to Drain without an escape item',status(c)['area']==0 and status(c)['state']==1,status(c));shot(c,'returned-to-drain')
 if status(c)['area']!=0:raise AssertionError('visible entry return failed')
-tp(c,28*16+8,6*16+34);P.run(c,3);P.press(c,'A',2,6)
+tp(c,*hub_point);P.run(c,3);P.press(c,'A',2,6)
 for _ in range(800):
  if status(c)['area']==3 and status(c)['state']==1 and not status(c)['text']:break
  if status(c)['text']:P.press(c,'A',2,6)
@@ -313,6 +330,28 @@ check('peak defeated through actual Pacci and raised sword hits',not any(e['type
 P.run(c,80);shot(c,'peak-result')
 if boss_frames:boss_frames[0].save(out/'peak-core-combat.gif',save_all=True,append_images=boss_frames[1:],duration=50,loop=0,optimize=False)
 (out/'peak-combat.json').write_text(json.dumps(dict(checks=checks,fixtures=fixtures,boss_trace=boss_trace,sha256=hashlib.sha256((bundle/'bartgame.gba').read_bytes()).hexdigest(),final=core_status()),indent=2))
+
+# Replay only the genuinely won SRAM in a separate cold emulator. This is a
+# serialization/lifecycle proof, never a written completion fixture.
+won_sram=raw(c,0x0e000000,32768)
+check('actual summit win retires its checkpoint',status(c)['state']==6 and int.from_bytes(won_sram[:4],'little')!=0x54524142)
+abi=compile_abi(bundle,out/'retirement-abi')
+cold=mgba.core.load_path(P.ROM);cold.bg_video=mgba.image.Image(240,160);cold.set_video_buffer(cold.bg_video);cold.reset()
+for i,value in enumerate(won_sram):P.w8(cold,0x0e000000+i,value)
+fixtures.append(dict(kind='cold replay of SRAM produced by actual summit victory',sha256=hashlib.sha256(won_sram).hexdigest(),bytes=len(won_sram)))
+P.run(cold,45)
+check('cold restart after actual summit win has no Continue',P.r8(cold,P.sym('gGame'))==0 and not P.r8(cold,RB.static('sTitleHasSave','game.o')))
+P.snap(cold,str(out/'peak-cold-home-after-win.png'))
+w32(cold,P.sym('gSeedOverride'),0xc0ffee);P.press(cold,'START',2,4)
+for _ in range(3000):
+ P.run(cold,1)
+ if P.r8(cold,P.sym('gGame'))==1 and P.r8(cold,P.sym('gActors'))==1 and (not opening_pending or P.r8(cold,opening_pending)):break
+check('actual Start after summit victory creates a fresh run and opening draft',P.r8(cold,P.sym('gGame'))==1 and P.r8(cold,P.sym('gGame')+1)==0 and P.r32(cold,P.sym('gWorld'))==0xc0ffee and (not opening_pending or P.r8(cold,opening_pending)))
+flags=RB.world_flags(cold)
+new_facts=dict(cream_rewards=P.r8(cold,P.sym('gCreamProgress')+abi['cream_rewards']),chain_step=P.r8(cold,P.sym('gHandoffState')+abi['handoff_contract_step']),forest_claimed=[f&8 for f in flags['flags']],forest_trials=[f&4 for f in flags['myst_flags']])
+check('new run after summit win resets regional rewards, chain and required trials',not new_facts['cream_rewards'] and not new_facts['chain_step'] and not any(new_facts['forest_claimed']) and not any(new_facts['forest_trials']),new_facts)
+P.snap(cold,str(out/'peak-cold-new-run.png'))
+
 
 review_complete=all(row['passed'] for row in checks)
 if not review_complete:raise SystemExit(1)

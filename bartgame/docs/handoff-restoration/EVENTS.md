@@ -1,288 +1,228 @@
-# Additive handoff events and the Drain annex
+# Regional handoff events, quests and run flow
 
-The existing Drain, Forest, character sprites, fixed three Forest trials,
-ordinary starting equipment, and boss win flow remain in place. The new
-optional annex uses `AREA_HANDOFF = 4`; source event IDs are appended rather
-than repurposing existing mystery-room IDs. The Drain's new annex entrance
-leads to eight working service desks. A challenge desk reaches every new
-site. Cream's three tool-trial sites use separate saved site IDs
-160–162, so optional annex completions cannot complete those trials.
+The restored vocabulary now belongs to generated Blighted Forest and Curdled
+Cream rooms. The normal Drain no longer sends the player to a challenge
+selection annex. `AREA_HANDOFF` remains an internal interior runtime and retains
+old numeric IDs for save compatibility; it is not a new region in the run.
+The approved Forest trials, original Heart win, Cream traversal graph and
+summit win remain independent, available routes.
 
-## Provenance and unfinished regional integration
+This implements the placement rule in original handoff chapter 06: events are
+node decorations in generated regions, quests have regional givers, and the
+next chain objective is dealt against current traversal facts. The earlier
+Annex was an invented access hub, not that integration. Its old mechanical
+proofs remain historical evidence; they are not relabelled as regional tests.
 
-**The Challenge Annex was an implementation invention.** The handoff did not
-specify an Annex, a challenge-selection desk, four mechanism workshops, or an
-optional Four Seals menu. These were added as a way to expose restored systems
-while retaining the existing game. Preserving existing features did not require
-putting the additions in a separate area.
+## Ordinary run loop
 
-The underlying services and mechanics have source provenance. Chapter 06,
-lines 12–18, describes hub drafts, an inn, a shop, a trophy case and hints.
-However, chapter 06, lines 116–118, explicitly places events on generated-area
-room nodes, and lines 122–143 place the seven quest types in regional content.
-Chapter 07's architecture places puzzles, NPCs and other content through the
-area generator. The Annex's menus and fixed courses are not that integration.
+A new run offers the three starting-gift rounds after the opening text. They
+add a key/tool, a reward/stat and a skill to the existing starting equipment.
+Continue does not restart the draft. Physical Drain services provide the
+Exchange, paid bed, shaped-stone broker, trophy/preferences and guide. The
+broker gives directions; actual colored fusion happens at regional NPCs,
+and gold fusion happens at the generated seal chamber. No service menu
+teleports the player to a quest or objective.
 
-The current deployment is narrower than the earlier completion claim:
+Four regional seals form an additional win route. Event, next regional wave,
+accepted quest, guardian or item requirements refer to actual generated
+field/interior site IDs. The placer uses live graph reachability, original
+Forest trial facts, inventory, solved facts and known physical cache anchors.
+A paired-memory response is eligible only after learning it; tool mechanisms
+are eligible only when their source-checked prerequisites are held. Already
+exhausted ordinary events become a regional wave or guaranteed item objective.
 
-- The seven added quest state machines start in Annex sites. Courier delivery
-  reaches the Forest, but it is an Annex-to-Forest errand, not an errand between
-  two generated regions. Wandering fusers also appear in the Forest and Cream.
-- The added memory pair, certified block boards, cleanup, portal/pocket and
-  other event variants are exposed through Annex selection. Cream uses three
-  specific generated trial sites for switches, waves and a miniboss; this does
-  not place the whole new event vocabulary throughout generated areas.
-- The new mechanism and traversal families are demonstrated in Annex courts.
-  Their physical behavior is implemented, but procedural placement of those
-  families as regional obstacles, routes and rewards remains unfinished.
-- The endless arena and adaptive four-step contract are Annex modes. They do
-  not implement regional escalating waves or a chain selecting objectives from
-  the generated world. The opening loadout draft is an optional Annex service,
-  rather than part of the ordinary run-start sequence.
-- Colored fusion consequences currently open Annex caches, a pocket and a
-  course bridge. Field fusers alone do not provide generated regional fusion
-  gates. The opt-in Cream entitlement threshold is also an implementation
-  adaptation, not a user-specified entrance requirement.
+The item objective is a guaranteed key cache on a discovered, reachable field
+anchor. It does not draw progression from chance and does not bypass a green,
+blue or red fusion gate. The final seal waits until all three actual Forest
+trials have been won and claimed, or all three Cream trial rewards earned.
+It then selects a genuine reachable guardian or a late elite; it cannot become
+an early fourth-wave shortcut. If all qualifying guardians were pre-cleared,
+one side guardian can offer a new challenge for that final seal.
 
-Existing Forest content, new field enemies and tools, the Cream's traversal
-graph and its three trials remain real game content. Native tests below still
-qualify the particular mechanics and scenes they exercised. They do not prove
-completion of the missing regional placement and run-flow integration.
+The first three seals grant Fire, Water and Wind Elements. The fourth objective
+materializes a real Earth Element pickup at its reward point. Its collection
+calls the distinct chain-win path. A player who leaves it unclaimed can return;
+the saved pending state recreates the goal. The original Heart and summit
+victories continue to work. Objective directions are in guide dialogue,
+Satchel and maps; the user-selected minimal gameplay HUD is retained. One batched reachability snapshot serves each retarget, avoiding the former repeated graph searches. Optional entitlement restrictions cannot be enabled while they would strand an accepted Cream quest, courier delivery or chain objective.
 
-## Sources and adaptations
+## Generated event sites
 
-Read alongside the repository's original migration documents:
+`regional_content.c` assigns up to 46 optional interior nodes across the two
+5×5 regions. Original entrances, boss rooms, required trials and exit corridors
+are retained. Actual dry geometry supplies the entry and its approach. A room
+with sufficient off-path space uses the existing cave, hollow or thicket
+threshold; constrained rooms use the native small hatch. Both draw and entry
+consume the same recorded anchor and actual component. Blue-fusion pockets and
+paired pockets visibly remain closed until their fact is earned.
 
-- `../../../docs/newgame/05_ITEMS_AND_ECONOMY.md`: item groups, tiers, foods, charms,
-  source shops, opening draft, hub and reward rules.
-- `../../../docs/newgame/06_CURRENT_GAME_DESIGN.md`: four-step adaptive chain, quests,
-  current event kinds, difficulty and paused meta vision.
-- `../../../docs/newgame/07_PROCGEN_DESIGN.md`: solvability, prerequisites, progress
-  before gates, bounded content and replayable seeds.
-- Original root `src/game.c`: `sQuickStartTiers`, `sQuickStartArchetypes`,
-  `sQuickStartDifficultyTiers`, food flags and unlock registry. Later live
-  source corrections take precedence over stale comments in the handoff.
-- `../../../docs/QUICKSTART_HUB.md` §3.2: the three bed prices and rewards.
+The event vocabulary includes item caches, minibosses, traders, quota waves,
+hidden pots, fairy wells, a separated Learn/Recall memory pair, three switch
+variants, certified template/maze boards, timed censers, Gust/flame cleanup,
+survival, guardians and gold seals. Twelve coherent mechanism interiors and
+three traversal interiors are dealt as real regional nodes. Small physical
+mechanisms and traversals can also decorate ordinary fields. These are
+purposeful local routes/rewards, not a menu of demonstration stations.
 
-The independent game adapts the old overworld chain into an **optional
-annex contract**. It has four reachable steps: an event, waves or a quest,
-a guaranteed key-item reward in a pocket, then a boss. Four Elements mark its seals, and completion grants the Fourfold Sword. The Forest's current
-three-trial progression and Heart victory remain intact. Completing the
-optional contract adds a reward and score; it does not replace the real win.
+Portal trials occur in approximately one run in three. Their actual three-wave
+clear wakes a distinct paired pocket. The blue-fusion pocket remains a separate
+feature and cannot be entered by the portal as an alternate fusion bypass.
+Pocket exits return through the captured regional origin; escape tools are
+supplied before entry when required. All normal scene exits remain available.
 
-The old unlock master switch was disabled by the user's earlier request
-that all content remain eligible. Ordinary mode therefore keeps all annex
-content and all twelve difficulty steps available. The Trophy desk offers
-a separately labelled opt-in entitlement challenge. Its added item-tier,
-region and difficulty caps implement the previously unbuilt meta vision;
-they are an adaptation, not a claim that the old game shipped those caps.
-The retired chest lottery remains retired.
+Forest chambers reuse the resident cave/hollow/thicket material families based
+on their room seed. Cream chambers use the shared gray stone cave vocabulary.
+Existing pixels are not repainted. Added field props stream only the small
+native frames they need, rather than loading the entire Annex prop atlas into
+every outdoor room.
 
-## Playable services
+## Regional endless waves
 
-| Desk | Actual behavior |
+Each region has a generated field wave site. It activates and refills only
+while Bloom occupies that site's verified dry component. Spawn sampling tests
+actual feet clearance, existing actors, reserved landmarks and distance from
+Bloom. Initial component enemies, new casts and their descendants are tracked;
+enemies on another Cream terrace do not become an impossible quota.
+
+The next wave increases its quota and composition difficulty, with bounded
+actor/art costs and the source role archetypes. Replacements arrive while fewer
+than three wave foes remain. After the quota and live members are both cleared,
+a pause allows ordinary clearing rewards and traversal before the next wave.
+The first regional clear has a one-time eligible reward; later waves cannot
+farm that first-clear gift. Wave five grants the special Fleet food once.
+Leaving preserves the region's wave/quota; returning resumes it. Spawn admission retries other cast members and then a bounded eligible source pool when another terrace changes a family or actor budget. All attempts retain the original verified component, feet clearance, landmark reservations and safe distance. Region-wave
+facts use sites 132/133, separate from the 50 field scene identities.
+
+## Seven regional quest forms
+
+One giver and one of seven forms are selected per run; the form varies across
+seeds. The physical giver, task objects, safe points and receiver belong to the
+loaded ordinary room. Quests persist across room changes, and timed stakes stay
+latched at acceptance. A pending courier has a distinct reserved receiver at
+the other region's arrival, with a recorded map position, not at Bloom's feet.
+
+| Quest | Field behavior |
 | --- | --- |
-| Three Gifts | Three rounds, three distinct eligible choices each: key, reward/stat, skill. Adds gifts to the ordinary starting equipment. One draft per run. |
-| Three Beds | 50 gilt restores 25% max health (minimum 8 HP); 200 restores 50% (minimum 16 HP) plus a common chest; 500 fully heals plus an uncommon chest. A 150-tick fade/sleep/rest sequence performs the healing; the promised chest persists beside the bed until claimed. Never awards a rare bed chest. |
-| Exchange | Six rolled wares plus predictable heart-piece, seed and arrow supplies. Actual gilt deduction, prerequisite checks and sold flags. Repeated heart pieces cost 25 more each, capped at 999. Cheap-shop charm caps each price at 50. |
-| Fusions | Three colors × three visibly different cut shapes. Wandering fusers also appear on clear reachable floor near Forest/Cream arrivals. Green opens a cache; blue opens a pocket cave; red opens the optional physical bridge in the traversal course. Matching halves are consumed. The first green fusion grants the Kinstone Bag, expanding matching-half capacity from 9 to 99 per color/cut. |
-| Golden seals | Four distinct golden pieces: Flow, Left, Middle, Right. The Flow half opens its physical seal; all three statue halves open their seal. Both are fused from the Golden Fusion site. No generic locked door is converted into a warp. |
-| Trophy | Score, wins, deaths, rank, optional entitlement mode and difficulty selection. |
-| Hint | Concrete clues about paths, unmarked lantern routes and tool silhouettes. |
-| Challenges | Every added event, all seven quests, endless arena, boss trial, traversal course and object course. Missing-tool cleanup/censer entries explain the prerequisite before entry. |
-| Four Seals | Inspect/travel/retire a four-step optional contract. Dedicated site instances 128–131 keep optional exploration from consuming a later contract objective. Each new seal rearms only its own instance. The key-item step guarantees the displayed item instead of relying on luck. Its four completed seals award Earth/Fire/Water/Wind Elements in order. |
+| Pot | Search the seeded marked pots with the sword or interaction; opened pots and chosen prize persist for the active quest. |
+| Hunt | Defeat 7–13 real foes within 30 seconds, with bounded current-component refills. |
+| Scavenger | Catch a moving glint on a dry path, cut its actual cover, or dig the actual eligible earth; predicate search degrades safely when a required surface/tool is absent. |
+| Stealth | Reach the far seal within 40 seconds while avoiding rotating, wall-occluded sight cones. The giver's immediate space is safe for acceptance. |
+| Carry | Lift the sound pot, survive two real mixed ambushes, and deliver it to the physical receiver. A thrown pot lands recoverably; room travel cannot leave an invisible carried-object lock. The remaining ambush quota persists across exits and refills on return; leaving cannot bypass either fight. |
+| Courier | Carry a parcel between Forest and Cream, retaining it through ordinary borders, caves, the Drain and the other area's ladder. |
+| Blocks | Solve an actual source-certified 5×5 maze board on a prepared 7×7 field footprint. Direction restrictions, no pulling, grounded movement and Select reset use the actual puzzle rules. |
 
-Colored fusions are optional soft gates. The challenge desk also provides
-an ungated way to inspect the underlying events in ordinary mode. Required
-Forest and Cream gates keep their own separate progression state.
+Failure is free at difficulty 0–3, then costs gilt, then health, then a good food
+or curse. The exact stake is announced and remains fixed for that attempt.
+Completion/reward flags are persistent, so returning cannot repeatedly claim
+a completed quest. A failed attempt can be retried at its real giver.
 
-## Event sites
+## Regional fusions and natural inventory sources
 
-| Site | Interaction and completion |
-| --- | --- |
-| Item cache | Interact with the cache; receive an eligible source-tier reward. |
-| Champion | Defeat a real appended Darknut. Failed spawn allocation cannot award an empty-room win. |
-| Stranger | Ten gilt buys a piece of heart, once. |
-| Waves | Three quota waves with role casts; complete, then collect the chest. Refill while fewer than three live until its prize is claimed. |
-| Hidden pot | Six actual liftable/breakable pots; one seeded pot reveals the prize. |
-| Fairy well | Two real fairy pickups and an interactable healing well. |
-| Memory pair | Learn and Recall rooms share a saved seeded plate sequence. Learn shows it repeatedly at predictable 60-tick beats; Recall requires entering plates in that order. An error resets input, never seals the exit. |
-| Floor plates | Seeded all-plates, neighboring-toggle, or ordered timed-sequence variants. |
-| Block template | Match the adjacent 5×5 reference using three one-cell push blocks. |
-| Block maze | Shift axis-marked blocks to open the route to the far seal. |
-| Censers | Three visible fixtures respond to actual lantern/flame hit boxes. |
-| Cleanup | Fire removes silk; Gust removes dust. Lantern alone gets silk only; Gust alone gets dust only. Neither tool means the desk explains the prerequisite. |
-| Survival | Twenty-second live encounter, then a chest. |
-| Endless arena | Continues quota waves until the player leaves, including after its first chest is claimed. Wave five grants the special Fleet food. It never continues behind a game victory overlay. |
-| Portal/pocket | A visible arch requests the new pocket interior. An escape tool is supplied **before entry** when absent. Its south return always works. |
-| Boss trial | Real Giant ChuChu or Big Octorok with the appended enemy agent's ordinary-weapon fallback. Broad 28×19 dry fighting space. |
-| Golden fusion | Two physical seals and an interior prize; the distinct golden halves open them. |
-| Traversal course | Minecart, rail, controllable parachute descent, actual upper/lower bridge collision and a red-fusion island crossing. Implemented by `handoff_mobility.c`. |
-| Object workshop | Four directly selectable mechanism courses (sites 28–31) dispatch through `handoff_objects.c`, including furniture/statues/graves, multiple doors and levers, platforms, hazards and traversal objects. |
+Green opens a local one-time field cache. Blue opens its generated secret
+pocket entrance. Red raises a physical optional crossing to a reachable island
+reward. Matching color/cut halves are consumed only at the real fuser. The
+first green fusion supplies the matching-half bag upgrade. Gold Flow and the
+three statue pieces open their actual generated seals; no ordinary locked
+world door is silently converted into a warp.
 
-Every ordinary site can be exited to the south. Existing quest rooms are
-not repopulated by these annex wave routines. A completed annex challenge
-stops spawning after its chest is claimed; only the explicitly endless
-arena continues.
+The common/uncommon/rare reward machinery is shared by field prizes, interiors,
+shops and the starting draft. Prerequisite checks use current ownership and
+capacity. Bottled butter, milk, mineral water and all six picolytes now have
+normal reward sources and require an empty owned bottle. Half milk follows
+actual milk use. Four Sword has a rare natural source after the Blue Sword,
+so clone puzzles can be revisited before a run ends; the final chain award is
+retained. Tools, skill training, bag/quiver upgrades, foods, bottle charms,
+colored/gold pieces and the 21 food effects continue to use their shared
+metadata and actual gameplay hooks.
 
-## Seven quests and announced stakes
+## State and integration contracts
 
-Pot: find one of six pots. Hunt: defeat a seeded quota of 7–13 enemies within
-30 seconds, with bounded live refills. Scavenger: catch a moving glint, cut
-its leaf pile, or use the actual Mitts dig rectangle on soft earth; the
-buried mode is not selected without Mitts. Stealth: pass rotating watchers'
-visible gaze markers and physical cover to the far seal within 40 seconds.
-Carry: Bloom really lifts and carries a pot, can throw/drop it, must recover
-it and clear two ambushes before delivering it. The marked cargo remains
-recoverable when thrown into an unsafe spot. Courier: carry a parcel to a
-reachable wandering recipient at the Forest entry; a Compass marks the
-recipient. Blocks: solve one of the certified template/axis mazes.
+`HandoffState` remains 1,240 bytes; its published layout is not changed.
+The extension-save owner appends actual discovered regional anchors in EX3
+and migrates genuine published EX2 records. Old owned items, Elements, profile
+facts and discoveries survive migration. An old Annex-only active quest is
+retired without a failure penalty, and an old optional contract becomes a
+real regional chain rather than counting Annex progress as world objectives.
 
-The quest latches its difficulty and announces its entire failure stake
-before its timer starts. Changing difficulty afterwards cannot change that
-stake. Leaving an active non-courier quest or dying forfeits it; courier
-travel is expected.
+- Sites 0–31 retain old internal scene IDs; normal menus do not select them.
+- Fields 32–81 identify the 50 ordinary regional rooms.
+- Interiors 82–127 identify up to 46 actual regional content nodes.
+- Old contract sites 128–131 are retained compatibility vocabulary.
+- Sites 132/133 store the two regions' endless-wave state and first clear.
+- Sites 160–162 remain the three separate Cream trials.
 
-| Latched difficulty | Failure stake |
-| --- | --- |
-| 0–3 | Free |
-| 4–7 | Up to 50 gilt |
-| 8–11 | Up to 100 gilt; half current HP when above one heart |
-| 12 | Up to 200 gilt; half HP; one good food charm removed, or a minor curse if none exists |
+Field `completed` bits represent quest completion; field `won` bits record
+local wave clears. Field `remaining` bits 15/14/13 store mechanism, fusion or
+traversal prizes according to exclusive room roles. Interior mechanism low
+bits retain their own optional-cache claims. No field flag can satisfy the
+three original Forest trial facts.
 
-## Items, food and modifiers
+`handoff_open_service`, `handoff_starting_draft`, `handoff_claim_inn_reward`,
+`handoff_chain_location` and `handoff_chain_text` provide real game/UI entry
+points. `handoff_suspend_region` clears transient draw/collision/movement
+ownership during multi-room falls without erasing progress. Every enemy spawn
+and child spawn calls `handoff_track_enemy`; kill accounting occurs before
+retirement. The regional context binds both area and room, so an old door or
+mechanism cannot affect generation of the next room.
 
-The 77 source tier rows retain source categories, 60/30/10 reward bands,
-requirements and non-repeatable ownership. Bag/quiver and all three
-butterflies use the later **common** source correction. Map and Compass are
-rare tool rewards. KEY is eligible in ordinary source reward drops despite
-an obsolete comment to the contrary. Four golden halves use separate
-virtual IDs and flags, never collide with legacy inventory IDs.
+## Qualification
 
-All twenty normal food bits and special Fleet exist. Foods affect sword
-knockback, speed, steadfastness, incoming knockback, enemy speed/fire
-cadence, fire/ice/shock wards, gilt/kinstone/heart drops, shop prices, rare
-luck, creeping rot, drowned sight, ember haze, edge/blunt damage and
-any-health beams. Fleet grants 120 ticks of safety on room entry. One loose
-shell grants 180 ticks. Nayru/Farore/Din stack their source incoming and
-outgoing factors; zero incoming damage remains zero. Bottle charms apply
-on drinking, not on acquiring a filled vessel. Picolytes use an explicit
-added 30-second drop bias, preserving the individual bottle vocabulary.
+The updated `tools/handoff_events_host.py` executes the actual C module:
+10,689 checks include 1,528 certified boards, 2,000 corrupt-board rejections,
+1,000 distinct draft layouts, 10,000 reward draws (including the newly reachable
+bottled sources), source-exact effects and stakes, and real-chain admission
+with explicit admitted-graph/engine spies. Negative controls cover undiscovered
+or fusion-locked item caches, unreachable targets, required regional trials,
+old-contract migration, one reachability batch per retarget, entitlement stranding controls and physical-Earth-before-win ordering. This is host
+logic evidence, not evidence of pixels, AI timing or real traversal.
 
-Modifier queries are called by the parent integration and item/enemy
-modules. Persistent inventory ownership is owned exclusively by
-`legacy_items.c`; event rewards call its real grant path. The event module
-never duplicates equipment state or writes SRAM itself.
+The original published native suites remain recorded with their own source and
+ROM hashes under `evidence/`. Regional native input, complete-chain, quest,
+mechanism, save and performance qualification is published separately for the
+final integrated ROM. Initial diagnostic candidates are not release proofs.
 
-## Waves, difficulty and meta
+`tools/regional_pairs_native.py` qualifies real green/blue/gold fusion
+consequences, paired Learn/Recall, the three-wave portal and its distinct
+pocket, and the field-wave first reward with a second-clear negative control.
+It compiles private observations from the frozen source, runs a private mGBA
+ROM/SRAM copy and records every input and fixture. Its tool and kinstone
+ownership and room-load navigation are explicit isolation fixtures; no
+completion, enemy health, terrain, clock or framebuffer values are assigned.
+The red bridge and physical mechanism suites have separate native reports.
+Colored half counts are consumed at real fusers. Gold acquisition bits remain
+historical inventory facts; `gold_fused` records which halves have been applied
+to the physical Flow/statue seals.
 
-The thirteen integer tier rows exactly match the latest Gaussian-derived
-source table. Difficulty changes tier probabilities rather than silently
-banning upper tiers. The source's ten ordinary composition archetypes plus
-its later Elite Trio use their actual minimum difficulty, role slots,
-relative shares, count scale and forced tier. A cast is rolled once per
-wave; up to five freshly selected species share a composition. One in four
-casts prefers a common Fire/Ice/Undead/Bug/Aviary flavor. Live family caps,
-killability prerequisites, dry-floor spawn checks, distance from Bloom and
-a bounded cost budget apply before real enemy creation. Theme/role fallback
-is bounded so an unavailable role cannot stall a room.
+The final paired-event suite passed **46 of 46 checks** on source
+`51880a55e6ecf86728f3a0923e5547e7bdeed5a0`, ROM SHA-256
+`0dd8554384b53e618140f8c61590fc7e6a7ff0888f296ece034a95f357b34fdd`:
 
-Wins raise difficulty by one to 12; deaths lower it with a floor of one.
-Cross-run score and win counters never reset with run inventory. Optional
-entitlement mode exposes common items immediately, uncommon items at 500
-score/one win, rare items at 1500/two wins; key tools remain exempt so a
-trial cannot be made insoluble. The optional Cream access entitlement is
-500 score/one win. Pots use 500 score and fairies one win, preserving the
-source's surviving unlock rules. The added optional difficulty cap is
-`min(12, 3 + 2*wins + score/1500)`. Ordinary mode bypasses every such gate.
+| Native case | Checks | Actual behavior and negative controls |
+| --- | --- | --- |
+| Green, blue and gold fusion | 20 | An absent half refuses fusion; matching colored halves are consumed at real NPCs. Green grants 100 gilt once across a revisit. Blue changes its actual closed door frame, admits the proper pocket and returns to the original room. Gold Flow and statue halves open their own physical barriers, unlock the final cache and retain their opened state on return. |
+| Learn and Recall | 10 | Unlearned input refuses completion. The real timed Learn animation displays the stored sequence; a wrong Recall plate fails, the correct plate sequence completes, and completion persists on revisit. |
+| Portal and paired pocket | 10 | The separate pocket door stays closed before the trial. The portal refuses premature entry, three waves die through actual sword combat, and the earned portal enters the nonblue pocket. A nested exit returns to the portal's original regional room; the pocket's ordinary door then remains open. |
+| Regional endless waves | 6 | A real first field clear grants a unique golden half. A second genuine clear after a room reload escalates the wave without duplicating that half or an anchored pickup. |
 
-## Puzzle proof and validation
-
-`tools/handoff_puzzle_pool.py` reproducibly emits 1,528 distinct native
-5×5 boards: 96 template bases and 95 maze bases, each with eight D4
-orientations. Template minimums use a feasible witness matching the exact
-assignment-distance lower bound; axis maze minimums use push-state BFS with
-canonical reachable-player components. Pushes require approaching the far
-side, obey the colored axis, cannot chain or pull, and never plug entry or
-exit. The separate Reset crystal and Select restore the certified board.
-The ring and blocks use the actual feet collider, and the board disables
-cape bypass while inside its boundary. Scavenger hiding uses the shared
-`world_hidden_find` predicate against a real cuttable/diggable surface with a
-dry reachable approach, rather than selecting an arbitrary empty tile.
-
-Validation run on 2026-11-11:
-
-- Generator: 1,000 seeded picks for each board family, **2,000 passes**;
-  certified minima 1–12 pushes.
-- Actual C host harness: **10,678 checks**, including all 1,528 witnesses,
-  2,000 deliberately corrupt boards rejected, 1,000 distinct draft sets,
-  10,000 eligible reward draws, food/charm arithmetic, announced stake
-  behavior, optional entitlement gates/caps, 16-bit golden contract rewards, and fresh contract instances after prior exploration.
-- ARM Thumb private compilation with `-Wall -Wextra -Werror` passed.
-- `HandoffState` is 1,240 bytes; transient event/menu/loose-half state is
-  about 182 bytes. Puzzle art/data stay in ROM. Parent owns final full-ROM
-  build, extension-save verification and real mGBA captures.
-
-Commands:
-
-```sh
-python3 tools/handoff_puzzle_pool.py --out src/handoff_puzzles.inc --report /tmp/handoff-puzzles.json
-python3 tools/handoff_events_host.py --report /tmp/handoff-events-host.json
-```
-
-These host checks verify game logic and proof data; they are not emulator
-renders or evidence of visual polish. Parent mGBA evidence must be labelled
-separately from the source atlas.
-
-A frozen integration-3 mGBA run also exercised the actual Drain entrance,
-three-round draft, paid inn sleep, template and axis pushes, learned/recall
-sequence including a repeated plate, and a neighboring-toggle puzzle.
-Further real inputs completed the buried Scavenger task, a continuous
-Stealth route, a Courier delivery in the real Forest entry, Hunt's actual
-8-enemy quota, and Carry's two live ambushes plus pot delivery. No enemy,
-health or completion state was written by these probes. Player position
-and facing were navigation fixtures; the Mitts were actually drafted.
-That review caught an overlay-only pot whose logical ground was not
-liftable, a row/plate-height mismatch in the menu, and the need to stop
-post-completion refills in Cream's required trial sites. These have source
-fixes, all verified in the final frozen build. The reproducible
-`tools/handoff_events_native.py` copies a ROM into a private test bundle,
-derives current extension offsets from C, and performs native interactions,
-including every pot lift/throw required to find the seeded pot.
-
-Final release revision `0b9344d781e65e304d245bd9ae4aecdbc7056837` mGBA evidence (SHA-256
-`b348cf4d628aee1abb9b71d8885a9f04094332c5252490ff2dd8f8e7cd0bf1b8`):
-services **14/14**, all seven quests **28/28**, the complete four-seal
-contract **22/22**, and actual preference-save/reset/Continue **19/19**.
-The contract completes a fresh board after its ordinary counterpart was
-already cleared, fights the real wave and boss, grants its displayed item,
-and awards all four Elements and Fourfold Sword. Preference changes restore
-both the profile and matching completed run flags after reset.
-The original sewer song (source track 1) also remained selected through a
-real annex shop open/close, with its hardware-clocked PCM position advancing
-1,280,600 → 1,354,664 → 1,429,277 samples.
-
-```sh
-python3 tools/handoff_events_native.py --out /tmp/handoff-services
-python3 tools/handoff_events_native.py --out /tmp/handoff-quests --suite quests
-python3 tools/handoff_events_native.py --out /tmp/handoff-contract --suite contract
-python3 tools/handoff_events_native.py --out /tmp/handoff-meta --suite meta
-```
+The fusion, memory and field-wave cases use seed `0xb4a7`; the optional portal
+case uses seed `1`. Reports include the exact committed ABI, ROM and harness
+hashes, all inputs, all fixture declarations and native screenshots. The memory
+report also includes an actual timed display GIF. These are isolated mechanic
+proofs with supplied tools/halves and navigation, rather than proofs of natural
+item acquisition, an unassisted full run, or exhaustive procedural coverage.
+The separate journey suite qualifies genuine regional trials and the full
+four-seal route without inventory or outcome fixtures.
 
 
-## Original added art and shared style
-
-`art/handoff_events.py` adds native 16×16, 4bpp props using the existing FX
-material bank. It introduces **31** small frames, without repainting any
-existing art: service desk/fuser, gold seal, portal, cache gleam, free and
-axis-marked blocks, floor goal/reset crystal, silk/dust, lit/unlit censer,
-four watcher directions, parcel/pot/recipient, nine distinct colored shaped
-kinstone halves and a cuttable leaf pile. Menu rows use the native 16-pixel plate height with four visible rows and scrolling, so a selected border cannot strike through its neighbor. The source cave floor, wall,
-spring and chest art are reused exactly.
-
-Local additions follow the shared art bible: one dark silhouette contour,
-short horizontal clusters, top-left gold highlights, clear warm interactable
-contrast, and teal/wine horizontal/vertical block marks. Distinct kin-half
-cutouts communicate **shape as well as color**. No new global palette,
-Bloom body animation, background floor, forest tree, old object or existing
-HUD is changed by this module. New course artwork has its own module notes.
+The production enemy-admission regression passes 14 checks for intact and
+released Acro stacks, per-family limits, the 26-unit global cost budget and
+28-actor ceiling. Six living Acro members cost six units throughout their
+stack/release lifecycle; releasing their visual formation no longer inflates
+the same six bodies to 36 units and starves another terrace's quest. New-stack
+admission still reserves six units. The unchanged regression fails against the
+previous frozen implementation, establishing the negative control. This fixes
+budget accounting without changing their AI, damage, art or animation timing.
+The separate native quest journey passes six checks for the previously
+stalled Cream Hunt at seed 51, including actual kills, refills and completion.
+Its read-only diagnostic observes live replacement targets at 5/7 kills and
+11 active budget units, versus the previous inflated 39-unit rejection.

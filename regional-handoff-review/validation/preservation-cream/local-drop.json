@@ -1,0 +1,506 @@
+{
+  "takeoff_y": 128,
+  "fixture_start_y": 124,
+  "frames": [
+    {
+      "state": 1,
+      "area": 3,
+      "cell": 20,
+      "node": 41,
+      "actor": {
+        "kind": 1,
+        "type": 0,
+        "state": 3,
+        "timer": 8,
+        "x": 176,
+        "y": 125,
+        "z": 0,
+        "speed": 320,
+        "hp": 0,
+        "coll": 0,
+        "facing": 2
+      },
+      "text": 0
+    },
+    {
+      "state": 1,
+      "area": 3,
+      "cell": 20,
+      "node": 41,
+      "actor": {
+        "kind": 1,
+        "type": 0,
+        "state": 3,
+        "timer": 6,
+        "x": 174,
+        "y": 128,
+        "z": 0,
+        "speed": 320,
+        "hp": 0,
+        "coll": 0,
+        "facing": 2
+      },
+      "text": 0
+    },
+    {
+      "state": 1,
+      "area": 3,
+      "cell": 20,
+      "node": 41,
+      "actor": {
+        "kind": 1,
+        "type": 0,
+        "state": 3,
+        "timer": 4,
+        "x": 173,
+        "y": 128,
+        "z": 0,
+        "speed": 320,
+        "hp": 0,
+        "coll": 4,
+        "facing": 2
+      },
+      "text": 0
+    },
+    {
+      "state": 1,
+      "area": 3,
+      "cell": 20,
+      "node": 41,
+      "actor": {
+        "kind": 1,
+        "type": 0,
+        "state": 3,
+        "timer": 2,
+        "x": 172,
+        "y": 128,
+        "z": 0,
+        "speed": 320,
+        "hp": 0,
+        "coll": 4,
+        "facing": 2
+      },
+      "text": 0
+    },
+    {
+      "state": 1,
+      "area": 3,
+      "cell": 20,
+      "node": 40,
+      "actor": {
+        "kind": 1,
+        "type": 0,
+        "state": 5,
+        "timer": 4,
+        "x": 176,
+        "y": 286,
+        "z": 158,
+        "speed": 320,
+        "hp": 0,
+        "coll": 4,
+        "facing": 2
+      },
+      "text": 0
+    },
+    {
+      "state": 1,
+      "area": 3,
+      "cell": 20,
+      "node": 40,
+      "actor": {
+        "kind": 1,
+        "type": 0,
+        "state": 5,
+        "timer": 7,
+        "x": 176,
+        "y": 286,
+        "z": 157,
+        "speed": 320,
+        "hp": 0,
+        "coll": 4,
+        "facing": 2
+      },
+      "text": 0
+    },
+    {
+      "state": 1,
+      "area": 3,
+      "cell": 20,
+      "node": 40,
+      "actor": {
+        "kind": 1,
+        "type": 0,
+        "state": 5,
+        "timer": 9,
+        "x": 176,
+        "y": 286,
+        "z": 154,
+        "speed": 320,
+        "hp": 0,
+        "coll": 4,
+        "facing": 2
+      },
+      "text": 0
+    },
+    {
+      "state": 1,
+      "area": 3,
+      "cell": 20,
+      "node": 40,
+      "actor": {
+        "kind": 1,
+        "type": 0,
+        "state": 5,
+        "timer": 10,
+        "x": 176,
+        "y": 286,
+        "z": 152,
+        "speed": 320,
+        "hp": 0,
+        "coll": 4,
+        "facing": 2
+      },
+      "text": 0
+    },
+    {
+      "state": 1,
+      "area": 3,
+      "cell": 20,
+      "node": 40,
+      "actor": {
+        "kind": 1,
+        "type": 0,
+        "state": 5,
+        "timer": 12,
+        "x": 176,
+        "y": 286,
+        "z": 147,
+        "speed": 320,
+        "hp": 0,
+        "coll": 4,
+        "facing": 2
+      },
+      "text": 0
+    },
+    {
+      "state": 1,
+      "area": 3,
+      "cell": 20,
+      "node": 40,
+      "actor": {
+        "kind": 1,
+        "type": 0,
+        "state": 5,
+        "timer": 14,
+        "x": 176,
+        "y": 286,
+        "z": 141,
+        "speed": 320,
+        "hp": 0,
+        "coll": 4,
+        "facing": 2
+      },
+      "text": 0
+    },
+    {
+      "state": 1,
+      "area": 3,
+      "cell": 20,
+      "node": 40,
+      "actor": {
+        "kind": 1,
+        "type": 0,
+        "state": 5,
+        "timer": 16,
+        "x": 176,
+        "y": 286,
+        "z": 133,
+        "speed": 320,
+        "hp": 0,
+        "coll": 4,
+        "facing": 2
+      },
+      "text": 0
+    },
+    {
+      "state": 1,
+      "area": 3,
+      "cell": 20,
+      "node": 40,
+      "actor": {
+        "kind": 1,
+        "type": 0,
+        "state": 5,
+        "timer": 18,
+        "x": 176,
+        "y": 286,
+        "z": 124,
+        "speed": 320,
+        "hp": 0,
+        "coll": 4,
+        "facing": 2
+      },
+      "text": 0
+    },
+    {
+      "state": 1,
+      "area": 3,
+      "cell": 20,
+      "node": 40,
+      "actor": {
+        "kind": 1,
+        "type": 0,
+        "state": 5,
+        "timer": 20,
+        "x": 176,
+        "y": 286,
+        "z": 114,
+        "speed": 320,
+        "hp": 0,
+        "coll": 4,
+        "facing": 2
+      },
+      "text": 0
+    },
+    {
+      "state": 1,
+      "area": 3,
+      "cell": 20,
+      "node": 40,
+      "actor": {
+        "kind": 1,
+        "type": 0,
+        "state": 5,
+        "timer": 22,
+        "x": 176,
+        "y": 286,
+        "z": 102,
+        "speed": 320,
+        "hp": 0,
+        "coll": 4,
+        "facing": 2
+      },
+      "text": 0
+    },
+    {
+      "state": 1,
+      "area": 3,
+      "cell": 20,
+      "node": 40,
+      "actor": {
+        "kind": 1,
+        "type": 0,
+        "state": 5,
+        "timer": 24,
+        "x": 176,
+        "y": 286,
+        "z": 88,
+        "speed": 320,
+        "hp": 0,
+        "coll": 4,
+        "facing": 2
+      },
+      "text": 0
+    },
+    {
+      "state": 1,
+      "area": 3,
+      "cell": 20,
+      "node": 40,
+      "actor": {
+        "kind": 1,
+        "type": 0,
+        "state": 5,
+        "timer": 26,
+        "x": 176,
+        "y": 286,
+        "z": 74,
+        "speed": 320,
+        "hp": 0,
+        "coll": 4,
+        "facing": 2
+      },
+      "text": 0
+    },
+    {
+      "state": 1,
+      "area": 3,
+      "cell": 20,
+      "node": 40,
+      "actor": {
+        "kind": 1,
+        "type": 0,
+        "state": 5,
+        "timer": 28,
+        "x": 176,
+        "y": 286,
+        "z": 57,
+        "speed": 320,
+        "hp": 0,
+        "coll": 4,
+        "facing": 2
+      },
+      "text": 0
+    },
+    {
+      "state": 1,
+      "area": 3,
+      "cell": 20,
+      "node": 40,
+      "actor": {
+        "kind": 1,
+        "type": 0,
+        "state": 5,
+        "timer": 30,
+        "x": 176,
+        "y": 286,
+        "z": 40,
+        "speed": 320,
+        "hp": 0,
+        "coll": 4,
+        "facing": 2
+      },
+      "text": 0
+    },
+    {
+      "state": 1,
+      "area": 3,
+      "cell": 20,
+      "node": 40,
+      "actor": {
+        "kind": 1,
+        "type": 0,
+        "state": 5,
+        "timer": 32,
+        "x": 176,
+        "y": 286,
+        "z": 21,
+        "speed": 320,
+        "hp": 0,
+        "coll": 4,
+        "facing": 2
+      },
+      "text": 0
+    },
+    {
+      "state": 1,
+      "area": 3,
+      "cell": 20,
+      "node": 40,
+      "actor": {
+        "kind": 1,
+        "type": 0,
+        "state": 5,
+        "timer": 34,
+        "x": 176,
+        "y": 286,
+        "z": 0,
+        "speed": 320,
+        "hp": 0,
+        "coll": 4,
+        "facing": 2
+      },
+      "text": 0
+    },
+    {
+      "state": 1,
+      "area": 3,
+      "cell": 20,
+      "node": 40,
+      "actor": {
+        "kind": 1,
+        "type": 0,
+        "state": 0,
+        "timer": 34,
+        "x": 176,
+        "y": 286,
+        "z": 0,
+        "speed": 0,
+        "hp": 0,
+        "coll": 4,
+        "facing": 2
+      },
+      "text": 0
+    },
+    {
+      "state": 1,
+      "area": 3,
+      "cell": 20,
+      "node": 40,
+      "actor": {
+        "kind": 1,
+        "type": 0,
+        "state": 0,
+        "timer": 34,
+        "x": 176,
+        "y": 286,
+        "z": 0,
+        "speed": 0,
+        "hp": 0,
+        "coll": 4,
+        "facing": 2
+      },
+      "text": 0
+    },
+    {
+      "state": 1,
+      "area": 3,
+      "cell": 20,
+      "node": 40,
+      "actor": {
+        "kind": 1,
+        "type": 0,
+        "state": 0,
+        "timer": 34,
+        "x": 176,
+        "y": 286,
+        "z": 0,
+        "speed": 0,
+        "hp": 0,
+        "coll": 4,
+        "facing": 2
+      },
+      "text": 0
+    },
+    {
+      "state": 1,
+      "area": 3,
+      "cell": 20,
+      "node": 40,
+      "actor": {
+        "kind": 1,
+        "type": 0,
+        "state": 0,
+        "timer": 34,
+        "x": 176,
+        "y": 286,
+        "z": 0,
+        "speed": 0,
+        "hp": 0,
+        "coll": 4,
+        "facing": 2
+      },
+      "text": 0
+    },
+    {
+      "state": 1,
+      "area": 3,
+      "cell": 20,
+      "node": 40,
+      "actor": {
+        "kind": 1,
+        "type": 0,
+        "state": 0,
+        "timer": 34,
+        "x": 176,
+        "y": 286,
+        "z": 0,
+        "speed": 0,
+        "hp": 0,
+        "coll": 4,
+        "facing": 2
+      },
+      "text": 0
+    }
+  ]
+}

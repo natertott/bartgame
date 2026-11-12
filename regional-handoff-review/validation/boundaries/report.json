@@ -1,0 +1,134 @@
+{
+  "rom_sha256": "0dd8554384b53e618140f8c61590fc7e6a7ff0888f296ece034a95f357b34fdd",
+  "source_commit": "51880a55e6ecf86728f3a0923e5547e7bdeed5a0",
+  "tool_sha256": "1c3cff4c6eaed42f65b7c1e19f6693a78e5f4fcfd323fc57dd8f0e979ee7c0ea",
+  "checks": [
+    {
+      "name": "dry ordinary-spawn route to Cream ladder approach",
+      "passed": true
+    },
+    {
+      "name": "dry ordinary-spawn route to Forest ladder approach",
+      "passed": true
+    },
+    {
+      "name": "real A enters Cream at its visible entry stairs",
+      "passed": true
+    },
+    {
+      "name": "real A on entry stairs returns below Cream wall ladder",
+      "passed": true
+    },
+    {
+      "name": "real A opens physical Drain bed offers",
+      "passed": true
+    },
+    {
+      "name": "music advances during physical Drain bed modal",
+      "passed": true
+    },
+    {
+      "name": "Drain service closes and preserves original VBlank hook",
+      "passed": true
+    },
+    {
+      "name": "service dismissal keeps Bloom in the Drain",
+      "passed": true
+    },
+    {
+      "name": "music advances during ordinary Sewer play",
+      "passed": true
+    },
+    {
+      "name": "old pause opens from real Start and chains original music hook",
+      "passed": true
+    },
+    {
+      "name": "music advances during original pause",
+      "passed": true
+    },
+    {
+      "name": "real Select opens Satchel and chains original music hook",
+      "passed": true
+    },
+    {
+      "name": "music advances during Select Satchel",
+      "passed": true
+    },
+    {
+      "name": "real R opens current Forest atlas from the Drain",
+      "passed": true
+    },
+    {
+      "name": "music advances during native atlas",
+      "passed": true
+    },
+    {
+      "name": "real A opens atlas room zoom",
+      "passed": true
+    },
+    {
+      "name": "music advances during native atlas room zoom",
+      "passed": true
+    },
+    {
+      "name": "Satchel atlas returns to play and restores music hook",
+      "passed": true
+    },
+    {
+      "name": "music advances during play after nested pause/Satchel/atlas",
+      "passed": true
+    },
+    {
+      "name": "bomb test starts with full gear and no earned trial prizes",
+      "passed": true
+    },
+    {
+      "name": "bomb actual input activates its native tool",
+      "passed": true
+    },
+    {
+      "name": "bomb cannot bypass original mandatory trial gate",
+      "passed": true
+    },
+    {
+      "name": "lamp test starts with full gear and no earned trial prizes",
+      "passed": true
+    },
+    {
+      "name": "lamp actual input activates its native tool",
+      "passed": true
+    },
+    {
+      "name": "lamp cannot bypass original mandatory trial gate",
+      "passed": true
+    },
+    {
+      "name": "cape test starts with full gear and no earned trial prizes",
+      "passed": true
+    },
+    {
+      "name": "cape actual input activates its native tool",
+      "passed": true
+    },
+    {
+      "name": "cape cannot bypass original mandatory trial gate",
+      "passed": true
+    }
+  ],
+  "trace": {
+    "stored_in_raw_report": true,
+    "entries": 4,
+    "original_json_bytes": 14827
+  },
+  "fixtures": "Native integration checks for the frozen release, without rebuilding it.\n\nOnly explicit fixtures are the deterministic title seed, player navigation\n(position/facing/safe standing point), pending normal room transitions, and a\nfull player inventory for negative trial tests. The probe never writes enemy\nstate/HP, terrain/collision, trial/completion flags, audio state or framebuffer.\nDry Sewer reachability is computed from the actual loaded Room and ROM tile\ntypes; interaction/return and modal/audio behavior use real mGBA key inputs.\n",
+  "completed": true,
+  "passed": true,
+  "publication_format": "Compact review summary; outcomes and identities retained. Exact original JSON is adjacent in gzip and in native-evidence.zip.",
+  "raw_report": {
+    "file": "report.json.gz",
+    "sha256": "933c340d36b4cc61a53965c680f1906055c13948906253050cc1b9d24c812347",
+    "uncompressed_sha256": "673381ca01b7d39e595f81dcc305217535043b23ee4412a97463f92e92e3e71c",
+    "uncompressed_bytes": 69468
+  }
+}

@@ -1,0 +1,765 @@
+{
+  "method": "Exercise generated regional mechanism entrances and physical verbs in mGBA.\n\nDisclosed fixtures: fresh private SRAM and title seed; normal pending room\ntransitions for regional survey; hero position/standing/facing; owned equipment,\nammunition and one mineral-water bottle; player invulnerability while isolating\nmechanism input. No Annex menu or direct handoff-room request is used. Actual\nregional doors, tools, levers, body movement and vehicle controls produce all\nmechanism, collision, completion and reward changes. No enemy HP/state,\ncompletion/fusion bits, terrain, palette, VRAM, clock or pixels are assigned.\n",
+  "seed": 46247,
+  "source_commit": "51880a55e6ecf86728f3a0923e5547e7bdeed5a0",
+  "rom_sha256": "0dd8554384b53e618140f8c61590fc7e6a7ff0888f296ece034a95f357b34fdd",
+  "tool_sha256": "1de971a45ff5ab0cff27ba111ba6d40d6a92bb5ef97b11916de0685c0b34adbe",
+  "checks": [
+    {
+      "name": "actual generated mechanism room vocabulary",
+      "passed": true,
+      "requires_live_hero": false,
+      "live_hero": true
+    },
+    {
+      "name": "actual admitted field traversal stamps exist",
+      "passed": true,
+      "requires_live_hero": false,
+      "live_hero": true
+    },
+    {
+      "name": "pattern-0: ordinary generated door enters own interior",
+      "passed": true,
+      "requires_live_hero": true,
+      "live_hero": true
+    },
+    {
+      "name": "pattern-0: native object slots allocated",
+      "passed": true,
+      "requires_live_hero": true,
+      "live_hero": true
+    },
+    {
+      "name": "pattern-0: exact authored ROM pixels streamed",
+      "passed": true,
+      "requires_live_hero": true,
+      "live_hero": true
+    },
+    {
+      "name": "pattern-0: native OAM and OBJ budget",
+      "passed": true,
+      "requires_live_hero": true,
+      "live_hero": true
+    },
+    {
+      "name": "pattern-1: ordinary generated door enters own interior",
+      "passed": true,
+      "requires_live_hero": true,
+      "live_hero": true
+    },
+    {
+      "name": "pattern-1: native object slots allocated",
+      "passed": true,
+      "requires_live_hero": true,
+      "live_hero": true
+    },
+    {
+      "name": "pattern-1: exact authored ROM pixels streamed",
+      "passed": true,
+      "requires_live_hero": true,
+      "live_hero": true
+    },
+    {
+      "name": "pattern-1: native OAM and OBJ budget",
+      "passed": true,
+      "requires_live_hero": true,
+      "live_hero": true
+    },
+    {
+      "name": "pattern-2: ordinary generated door enters own interior",
+      "passed": true,
+      "requires_live_hero": true,
+      "live_hero": true
+    },
+    {
+      "name": "pattern-2: native object slots allocated",
+      "passed": true,
+      "requires_live_hero": true,
+      "live_hero": true
+    },
+    {
+      "name": "pattern-2: exact authored ROM pixels streamed",
+      "passed": true,
+      "requires_live_hero": true,
+      "live_hero": true
+    },
+    {
+      "name": "pattern-2: native OAM and OBJ budget",
+      "passed": true,
+      "requires_live_hero": true,
+      "live_hero": true
+    },
+    {
+      "name": "pattern-3: ordinary generated door enters own interior",
+      "passed": true,
+      "requires_live_hero": true,
+      "live_hero": true
+    },
+    {
+      "name": "pattern-3: native object slots allocated",
+      "passed": true,
+      "requires_live_hero": true,
+      "live_hero": true
+    },
+    {
+      "name": "pattern-3: exact authored ROM pixels streamed",
+      "passed": true,
+      "requires_live_hero": true,
+      "live_hero": true
+    },
+    {
+      "name": "pattern-3: native OAM and OBJ budget",
+      "passed": true,
+      "requires_live_hero": true,
+      "live_hero": true
+    },
+    {
+      "name": "pattern-4: ordinary generated door enters own interior",
+      "passed": true,
+      "requires_live_hero": true,
+      "live_hero": true
+    },
+    {
+      "name": "pattern-4: native object slots allocated",
+      "passed": true,
+      "requires_live_hero": true,
+      "live_hero": true
+    },
+    {
+      "name": "pattern-4: exact authored ROM pixels streamed",
+      "passed": true,
+      "requires_live_hero": true,
+      "live_hero": true
+    },
+    {
+      "name": "pattern-4: native OAM and OBJ budget",
+      "passed": true,
+      "requires_live_hero": true,
+      "live_hero": true
+    },
+    {
+      "name": "pattern-5: ordinary generated door enters own interior",
+      "passed": true,
+      "requires_live_hero": true,
+      "live_hero": true
+    },
+    {
+      "name": "pattern-5: native object slots allocated",
+      "passed": true,
+      "requires_live_hero": true,
+      "live_hero": true
+    },
+    {
+      "name": "pattern-5: exact authored ROM pixels streamed",
+      "passed": true,
+      "requires_live_hero": true,
+      "live_hero": true
+    },
+    {
+      "name": "pattern-5: native OAM and OBJ budget",
+      "passed": true,
+      "requires_live_hero": true,
+      "live_hero": true
+    },
+    {
+      "name": "pattern-6: ordinary generated door enters own interior",
+      "passed": true,
+      "requires_live_hero": true,
+      "live_hero": true
+    },
+    {
+      "name": "pattern-6: native object slots allocated",
+      "passed": true,
+      "requires_live_hero": true,
+      "live_hero": true
+    },
+    {
+      "name": "pattern-6: exact authored ROM pixels streamed",
+      "passed": true,
+      "requires_live_hero": true,
+      "live_hero": true
+    },
+    {
+      "name": "pattern-6: native OAM and OBJ budget",
+      "passed": true,
+      "requires_live_hero": true,
+      "live_hero": true
+    },
+    {
+      "name": "pattern-7: ordinary generated door enters own interior",
+      "passed": true,
+      "requires_live_hero": true,
+      "live_hero": true
+    },
+    {
+      "name": "pattern-7: native object slots allocated",
+      "passed": true,
+      "requires_live_hero": true,
+      "live_hero": true
+    },
+    {
+      "name": "pattern-7: exact authored ROM pixels streamed",
+      "passed": true,
+      "requires_live_hero": true,
+      "live_hero": true
+    },
+    {
+      "name": "pattern-7: native OAM and OBJ budget",
+      "passed": true,
+      "requires_live_hero": true,
+      "live_hero": true
+    },
+    {
+      "name": "pattern-8: ordinary generated door enters own interior",
+      "passed": true,
+      "requires_live_hero": true,
+      "live_hero": true
+    },
+    {
+      "name": "pattern-8: native object slots allocated",
+      "passed": true,
+      "requires_live_hero": true,
+      "live_hero": true
+    },
+    {
+      "name": "pattern-8: exact authored ROM pixels streamed",
+      "passed": true,
+      "requires_live_hero": true,
+      "live_hero": true
+    },
+    {
+      "name": "pattern-8: native OAM and OBJ budget",
+      "passed": true,
+      "requires_live_hero": true,
+      "live_hero": true
+    },
+    {
+      "name": "pattern-9: ordinary generated door enters own interior",
+      "passed": true,
+      "requires_live_hero": true,
+      "live_hero": true
+    },
+    {
+      "name": "pattern-9: native object slots allocated",
+      "passed": true,
+      "requires_live_hero": true,
+      "live_hero": true
+    },
+    {
+      "name": "pattern-9: exact authored ROM pixels streamed",
+      "passed": true,
+      "requires_live_hero": true,
+      "live_hero": true
+    },
+    {
+      "name": "pattern-9: native OAM and OBJ budget",
+      "passed": true,
+      "requires_live_hero": true,
+      "live_hero": true
+    },
+    {
+      "name": "pattern-10: ordinary generated door enters own interior",
+      "passed": true,
+      "requires_live_hero": true,
+      "live_hero": true
+    },
+    {
+      "name": "pattern-10: native object slots allocated",
+      "passed": true,
+      "requires_live_hero": true,
+      "live_hero": true
+    },
+    {
+      "name": "pattern-10: exact authored ROM pixels streamed",
+      "passed": true,
+      "requires_live_hero": true,
+      "live_hero": true
+    },
+    {
+      "name": "pattern-10: native OAM and OBJ budget",
+      "passed": true,
+      "requires_live_hero": true,
+      "live_hero": true
+    },
+    {
+      "name": "pattern-11: ordinary generated door enters own interior",
+      "passed": true,
+      "requires_live_hero": true,
+      "live_hero": true
+    },
+    {
+      "name": "pattern-11: native object slots allocated",
+      "passed": true,
+      "requires_live_hero": true,
+      "live_hero": true
+    },
+    {
+      "name": "pattern-11: exact authored ROM pixels streamed",
+      "passed": true,
+      "requires_live_hero": true,
+      "live_hero": true
+    },
+    {
+      "name": "pattern-11: native OAM and OBJ budget",
+      "passed": true,
+      "requires_live_hero": true,
+      "live_hero": true
+    },
+    {
+      "name": "pressure: ordinary generated door enters own interior",
+      "passed": true,
+      "requires_live_hero": true,
+      "live_hero": true
+    },
+    {
+      "name": "closed gate stops ordinary northward walk",
+      "passed": true,
+      "requires_live_hero": true,
+      "live_hero": true
+    },
+    {
+      "name": "Cape cannot bypass closed mechanism gate",
+      "passed": true,
+      "requires_live_hero": true,
+      "live_hero": true
+    },
+    {
+      "name": "actual push places statue on pressure plate",
+      "passed": true,
+      "requires_live_hero": true,
+      "live_hero": true
+    },
+    {
+      "name": "normal walk reaches reward through opened pressure gate",
+      "passed": true,
+      "requires_live_hero": true,
+      "live_hero": true
+    },
+    {
+      "name": "garden: ordinary generated door enters own interior",
+      "passed": true,
+      "requires_live_hero": true,
+      "live_hero": true
+    },
+    {
+      "name": "real R reveals buried ladder",
+      "passed": true,
+      "requires_live_hero": true,
+      "live_hero": true
+    },
+    {
+      "name": "actual bottle water feeds beanstalk",
+      "passed": true,
+      "requires_live_hero": true,
+      "live_hero": true
+    },
+    {
+      "name": "actual weather turn releases garden seal",
+      "passed": true,
+      "requires_live_hero": true,
+      "live_hero": true
+    },
+    {
+      "name": "bridge: ordinary generated door enters own interior",
+      "passed": true,
+      "requires_live_hero": true,
+      "live_hero": true
+    },
+    {
+      "name": "real R raises the physical bridge",
+      "passed": true,
+      "requires_live_hero": true,
+      "live_hero": true
+    },
+    {
+      "name": "normal walking crosses raised bridge to actual goal",
+      "passed": true,
+      "requires_live_hero": true,
+      "live_hero": true
+    },
+    {
+      "name": "mirror: ordinary generated door enters own interior",
+      "passed": true,
+      "requires_live_hero": true,
+      "live_hero": true
+    },
+    {
+      "name": "real raised Mirror Shield lights receiver and opens gate",
+      "passed": true,
+      "requires_live_hero": true,
+      "live_hero": true
+    },
+    {
+      "name": "receiver gate permits actual reward walk",
+      "passed": true,
+      "requires_live_hero": true,
+      "live_hero": true
+    },
+    {
+      "name": "clones: ordinary generated door enters own interior",
+      "passed": true,
+      "requires_live_hero": true,
+      "live_hero": true
+    },
+    {
+      "name": "real jar R enters Minish form",
+      "passed": true,
+      "requires_live_hero": true,
+      "live_hero": true
+    },
+    {
+      "name": "Minish form cannot bypass closed formation gate",
+      "passed": true,
+      "requires_live_hero": true,
+      "live_hero": true
+    },
+    {
+      "name": "real jar R returns full size",
+      "passed": true,
+      "requires_live_hero": true,
+      "live_hero": true
+    },
+    {
+      "name": "held sword on staging plates creates three real copies",
+      "passed": true,
+      "requires_live_hero": true,
+      "live_hero": true
+    },
+    {
+      "name": "real formation reaches three plates and opens gate",
+      "passed": true,
+      "requires_live_hero": true,
+      "live_hero": true
+    },
+    {
+      "name": "tool-crypt: ordinary generated door enters own interior",
+      "passed": true,
+      "requires_live_hero": true,
+      "live_hero": true
+    },
+    {
+      "name": "actual sword activates strike seal",
+      "passed": true,
+      "requires_live_hero": true,
+      "live_hero": true
+    },
+    {
+      "name": "one tool cannot release three-part seal",
+      "passed": true,
+      "requires_live_hero": true,
+      "live_hero": true
+    },
+    {
+      "name": "actual arrow activates eye seal",
+      "passed": true,
+      "requires_live_hero": true,
+      "live_hero": true
+    },
+    {
+      "name": "two tools cannot release three-part seal",
+      "passed": true,
+      "requires_live_hero": true,
+      "live_hero": true
+    },
+    {
+      "name": "actual Pacci projectile flips pot and opens final seal",
+      "passed": true,
+      "requires_live_hero": true,
+      "live_hero": true
+    },
+    {
+      "name": "flipped pot R gives a real bounce",
+      "passed": true,
+      "requires_live_hero": true,
+      "live_hero": true
+    },
+    {
+      "name": "frozen: ordinary generated door enters own interior",
+      "passed": true,
+      "requires_live_hero": true,
+      "live_hero": true
+    },
+    {
+      "name": "real fire frees HO_BIG_ICE",
+      "passed": true,
+      "requires_live_hero": true,
+      "live_hero": true
+    },
+    {
+      "name": "real fire frees HO_FROZEN_FLOWER",
+      "passed": true,
+      "requires_live_hero": true,
+      "live_hero": true
+    },
+    {
+      "name": "real fire frees HO_BARREL_WEB",
+      "passed": true,
+      "requires_live_hero": true,
+      "live_hero": true
+    },
+    {
+      "name": "three actual fire contacts release cellar seal",
+      "passed": true,
+      "requires_live_hero": true,
+      "live_hero": true
+    },
+    {
+      "name": "field traversal 2 is the actual regional variant",
+      "passed": true,
+      "requires_live_hero": true,
+      "live_hero": true
+    },
+    {
+      "name": "field 2 has an actual dry collision-free perimeter",
+      "passed": true,
+      "requires_live_hero": true,
+      "live_hero": true
+    },
+    {
+      "name": "field 2 cache rejects an unearned crossing",
+      "passed": true,
+      "requires_live_hero": true,
+      "live_hero": true
+    },
+    {
+      "name": "real R launches parachute from field ledge",
+      "passed": true,
+      "requires_live_hero": true,
+      "live_hero": true
+    },
+    {
+      "name": "controlled field descent reaches dry lower shelf",
+      "passed": true,
+      "requires_live_hero": true,
+      "live_hero": true
+    },
+    {
+      "name": "field 2 crossing pays its actual cache",
+      "passed": true,
+      "requires_live_hero": true,
+      "live_hero": true
+    },
+    {
+      "name": "field 2 cache cannot pay twice",
+      "passed": true,
+      "requires_live_hero": true,
+      "live_hero": true
+    },
+    {
+      "name": "field traversal 1 is the actual regional variant",
+      "passed": true,
+      "requires_live_hero": true,
+      "live_hero": true
+    },
+    {
+      "name": "field 1 has an actual dry collision-free perimeter",
+      "passed": true,
+      "requires_live_hero": true,
+      "live_hero": true
+    },
+    {
+      "name": "ordinary arrival can leave field bridge ramp",
+      "passed": true,
+      "requires_live_hero": true,
+      "live_hero": true
+    },
+    {
+      "name": "field 1 cache rejects an unearned crossing",
+      "passed": true,
+      "requires_live_hero": true,
+      "live_hero": true
+    },
+    {
+      "name": "upper deck is a real completed field crossing",
+      "passed": true,
+      "requires_live_hero": true,
+      "live_hero": true
+    },
+    {
+      "name": "field 1 crossing pays its actual cache",
+      "passed": true,
+      "requires_live_hero": true,
+      "live_hero": true
+    },
+    {
+      "name": "field 1 cache cannot pay twice",
+      "passed": true,
+      "requires_live_hero": true,
+      "live_hero": true
+    },
+    {
+      "name": "bridge ramp returns to ground plane",
+      "passed": true,
+      "requires_live_hero": true,
+      "live_hero": true
+    },
+    {
+      "name": "actual low-bank walk passes beneath bridge",
+      "passed": true,
+      "requires_live_hero": true,
+      "live_hero": true
+    },
+    {
+      "name": "underpass earns its separate twenty-gilt cache",
+      "passed": true,
+      "requires_live_hero": true,
+      "live_hero": true
+    },
+    {
+      "name": "underpass cache cannot pay twice",
+      "passed": true,
+      "requires_live_hero": true,
+      "live_hero": true
+    },
+    {
+      "name": "red fusion has a physical field pool",
+      "passed": true,
+      "requires_live_hero": true,
+      "live_hero": true
+    },
+    {
+      "name": "unfused field island cannot yield its reward",
+      "passed": true,
+      "requires_live_hero": true,
+      "live_hero": true
+    },
+    {
+      "name": "real fuser A consumes half and raises field bridge",
+      "passed": true,
+      "requires_live_hero": true,
+      "live_hero": true
+    },
+    {
+      "name": "actual walking across fused bridge reaches island reward",
+      "passed": true,
+      "requires_live_hero": true,
+      "live_hero": true
+    },
+    {
+      "name": "dry-entry-0: ordinary generated door enters own interior",
+      "passed": true,
+      "requires_live_hero": true,
+      "live_hero": true
+    },
+    {
+      "name": "dry-entry-0: no swimming gear needed to stand at actual arrival",
+      "passed": true,
+      "requires_live_hero": true,
+      "live_hero": true
+    },
+    {
+      "name": "dry-entry-0: actual southward walking returns to parent",
+      "passed": true,
+      "requires_live_hero": true,
+      "live_hero": true
+    },
+    {
+      "name": "dry-entry-1: ordinary generated door enters own interior",
+      "passed": true,
+      "requires_live_hero": true,
+      "live_hero": true
+    },
+    {
+      "name": "dry-entry-1: no swimming gear needed to stand at actual arrival",
+      "passed": true,
+      "requires_live_hero": true,
+      "live_hero": true
+    },
+    {
+      "name": "dry-entry-1: actual southward walking returns to parent",
+      "passed": true,
+      "requires_live_hero": true,
+      "live_hero": true
+    },
+    {
+      "name": "dry-entry-2: ordinary generated door enters own interior",
+      "passed": true,
+      "requires_live_hero": true,
+      "live_hero": true
+    },
+    {
+      "name": "dry-entry-2: no swimming gear needed to stand at actual arrival",
+      "passed": true,
+      "requires_live_hero": true,
+      "live_hero": true
+    },
+    {
+      "name": "dry-entry-2: actual southward walking returns to parent",
+      "passed": true,
+      "requires_live_hero": true,
+      "live_hero": true
+    }
+  ],
+  "fixtures": {
+    "stored_in_raw_report": true,
+    "entries": 228,
+    "original_json_bytes": 21954
+  },
+  "input_trace": {
+    "stored_in_raw_report": true,
+    "entries": 1151,
+    "original_json_bytes": 585045
+  },
+  "rooms": {
+    "stored_in_raw_report": true,
+    "entries": 50,
+    "original_json_bytes": 17863
+  },
+  "views": {
+    "stored_in_raw_report": true,
+    "entries": 12,
+    "original_json_bytes": 14648
+  },
+  "observed_object_families": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    14,
+    15,
+    16,
+    17,
+    18,
+    19,
+    20,
+    21,
+    22,
+    23,
+    24,
+    25,
+    26,
+    27,
+    28,
+    29,
+    30,
+    31,
+    32,
+    33,
+    34,
+    35,
+    36,
+    37,
+    38,
+    39,
+    40,
+    41
+  ],
+  "passed": 114,
+  "total": 114,
+  "error": null,
+  "publication_format": "Compact review summary; outcomes and identities retained. Exact original JSON is adjacent in gzip and in native-evidence.zip.",
+  "raw_report": {
+    "file": "report.json.gz",
+    "sha256": "a9bc0c3f8cfd32f47c7bcd42a653d5a5ff5e56bfc01bdd378cc18d4714d66e33",
+    "uncompressed_sha256": "ceced19036e8a806a34edf456865e340b3911cc3dab623caf06a5be810318d14",
+    "uncompressed_bytes": 1330327
+  }
+}

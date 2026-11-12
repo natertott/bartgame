@@ -10,8 +10,15 @@ from pathlib import Path
 GAME=Path(__file__).resolve().parents[1]
 SHA=lambda b:hashlib.sha256(b).hexdigest()
 def clean(s):return re.sub(r'^\s*#include[^\n]*$','',s,flags=re.M)
+def validate_asset_symbols(source):
+ header=GAME/'build/gen/assets.h'
+ if not header.exists():raise FileNotFoundError('Build generated production assets before running the host fixture: '+str(header))
+ known=set(re.findall(r'^#define\s+(MT_\w+)\b',header.read_text(),re.M))|{'MT_NONE'}
+ missing=sorted(set(re.findall(r'\bMT_\w+',source))-known)
+ if missing:raise AssertionError('Production assets.h has no metatiles: '+', '.join(missing))
 def fixture():
  src=GAME/'src';c=(src/'handoff_mobility.c').read_text()
+ validate_asset_symbols(c)
  out='''#include <stdint.h>
 #include <stdio.h>
 #include <string.h>
@@ -47,16 +54,26 @@ typedef int8_t s8;typedef int16_t s16;typedef int32_t s32;typedef u8 bool8;
  for name in ('legacy_items.h','handoff_events.h','handoff_mobility.h'):out+=clean((src/name).read_text())+'\n'
  out+='typedef struct {u8 x,y;} Spot;\n'+clean((src/'world_tokens.h').read_text())+'\n'
  out+='enum {AREA_SEWER,AREA_FOREST,AREA_MYST,AREA_CREAM,AREA_HANDOFF};\n'
- for i,name in enumerate(sorted(set(re.findall(r'\bMT_\w+',c)))):out+=f'#define {name} {i+1}\n'
+ for i,name in enumerate(sorted(set(re.findall(r'\bMT_\w+',c))-{'MT_NONE'})):out+=f'#define {name} {i+1}\n'
  for i,name in enumerate(sorted(set(re.findall(r'\bSFX_\w+',c)))):out+=f'#define {name} {i+1}\n'
- out+='''#define SHEET_HANDOFF_MOBILITY 0
+ out+='''#define MT_NONE 65535
+#define TT_FLOOR 0
+#define TT_SOLID 1
+#define TT_WATER 3
+#define TT_PIT 2
+#define ROOM_MAX_W 32
+#define SHEET_HANDOFF_MOBILITY 0
 static u16 ground[32*24],overlay[32*24],keys;
+static u8 metatile_type[4096],metatile_prop[4096];
 static u32 gFrame;
 static s16 gCamX,gCamY;
 static Actor hero,*gPlayer=&hero;
 static PlayerState gPl;
 HandoffState gHandoffState;
-static struct {u8 area;} gGame;
+static struct {u8 area,cell;} gGame;
+static struct {u8 w,h;u16 underlay[1024];} gRoom={32,24};
+static int routes_valid=1,route_checks;
+bool8 regional_content_validate_routes(void){route_checks++;return routes_valid;}
 static u16 gKeysDown,gKeysHeld;
 static int kind=HS_TRAVERSAL,grants,notifies,solidity_calls;
 static u16 pixels[4096];
@@ -65,6 +82,19 @@ static const SpriteSheet sheets[]={{pixels,16,3}};
 WorldTokenNeed world_tokens_empty(void) {WorldTokenNeed n={0};n.switch_site=n.puzzle_site=255;return n;}
 bool8 world_tokens_meet(const WorldTokenNeed* n) {return (gHandoffState.fusion_flags&n->fusions)==n->fusions;}
 int handoff_current_kind(void) {return kind;}
+int handoff_current_site(void) {return HS_TRAVERSAL;}
+u16 room_get(int x,int y) {return x<0||y<0||x>=32||y>=24?MT_LH_MOB_CLIFF:ground[y*32+x];}
+u16 room_get_overlay(int x,int y) {return x<0||y<0||x>=32||y>=24?MT_NONE:overlay[y*32+x];}
+int room_type(int x,int y) {
+ u16 m=room_get(x,y);if(m==MT_LH_MOB_WATER||m==MT_LH_MOB_WET_H||m==MT_LH_MOB_WET_V||m==MT_LH_MOB_WET_SE||m==MT_LH_MOB_WET_NW||m==MT_LH_MOB_WET_STOP)return TT_WATER;
+ return m==MT_LH_MOB_CLIFF?TT_SOLID:m==MT_LH_MOB_PIT?TT_PIT:TT_FLOOR;
+}
+int room_type_px(int x,int y) {return room_type(x/16,y/16);}
+bool8 room_box_solid(int x0,int y0,int x1,int y1) {
+ for(int y=y0/16;y<=y1/16;y++)for(int x=x0/16;x<=x1/16;x++)if(room_type(x,y)==TT_SOLID)return TRUE;
+ return FALSE;
+}
+int legacy_surface_at(int x,int y) {(void)x;(void)y;return LS_NONE;}
 void room_set(int x,int y,u16 mt) {if(x>=0&&x<32&&y>=0&&y<24)ground[y*32+x]=mt;}
 void room_set_overlay(int x,int y,u16 mt) {if(x>=0&&x<32&&y>=0&&y<24)overlay[y*32+x]=mt;}
 void room_change(int x,int y,u16 mt) {room_set(x,y,mt);}

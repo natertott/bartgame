@@ -1,8 +1,9 @@
 # Curdled Cream and additive handoff restoration
 
-**Entrance repair available:** [download the corrected ROM and see natural-input
-verification](door-fix/README.md). Walking into the visible Cream arch now
-works. The original build and its evidence below retain their own identity.
+**Current release:** [regional handoff integration, second wall ladder and actual mGBA gallery](../regional-handoff-review/README.md).
+The page below records the historical `0b9344d7` build. Its Annex integration
+was unfinished; the current release deploys those features into Forest/Cream.
+The [intermediate arch repair](door-fix/README.md) retains its own older evidence.
 
 
 [Download the ROM](https://raw.githubusercontent.com/natertott/bartgame/handoff-restoration-curdled-cream/downloads/curdled-cream-0b9344d7/bartgame-0b9344d7.gba) · [ZIP](https://raw.githubusercontent.com/natertott/bartgame/handoff-restoration-curdled-cream/downloads/curdled-cream-0b9344d7/bartgame-0b9344d7.zip) · [Checksums and frozen evidence](../downloads/curdled-cream-0b9344d7/README.md)
@@ -17,7 +18,7 @@ implementation; it was not specified in the handoff. It exposes working
 services, quests and mechanism demonstrations, but much of that content has not
 been integrated into generated regional play as the handoff described. The
 earlier statement that the handoff restoration was complete was too broad.
-[What is implemented and what remains to integrate](../bartgame/docs/handoff-restoration/EVENTS.md#provenance-and-unfinished-regional-integration).
+[Historical correction and current regional deployment](../bartgame/docs/handoff-restoration/EVENTS.md).
 
 Source: `0b9344d781e65e304d245bd9ae4aecdbc7056837`.
 ROM SHA256: `b348cf4d628aee1abb9b71d8885a9f04094332c5252490ff2dd8f8e7cd0bf1b8`.

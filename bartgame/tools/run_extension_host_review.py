@@ -34,7 +34,7 @@ typedef int8_t s8;typedef int16_t s16;typedef int32_t s32;typedef u8 bool8;
 #define MAX(a,b) ((a)>(b)?(a):(b))
 typedef struct Actor Actor;
 '''
-    for name in ('cream_world.h','legacy_items.h','handoff_events.h','cream_runtime.h','journal.h','run_extension.h'):
+    for name in ('cream_world.h','roomgen.h','regional_content.h','game.h','legacy_items.h','handoff_events.h','cream_runtime.h','journal.h','run_extension.h'):
         source+=clean((src/name).read_text())+'\n'
     source+=re.search(r'u32 hash32\([^}]+\}',(src/'util.c').read_text())[0]+'\n'
     graph=(src/'cream_world.c').read_text().replace('#include "cream_world.h"','')
@@ -43,7 +43,20 @@ typedef struct Actor Actor;
 HandoffState gHandoffState;
 CreamProgress gCreamProgress;
 u8 gCreamNode,gCreamOpenEdges[CC_NODES];
-static int seeded_items,seeded_handoff,seeded_cream;
+RegionalContentDiscovery gRegionalDiscovery[RC_ROOMS];
+u8 gRegionalQuestArea;
+static int seeded_items,seeded_handoff,seeded_cream,resumed_regions,migrated_regions,resumed_quest_area;
+void regional_content_new_run(void) {memset(gRegionalDiscovery,0,sizeof(gRegionalDiscovery));gRegionalQuestArea=AREA_FOREST;}
+void handoff_resume_regional(bool8 legacy) {
+    resumed_regions++;resumed_quest_area=gRegionalQuestArea;
+    if(legacy) {
+        migrated_regions++;
+        /* Explicit interface stub: the native event test qualifies objective
+           selection. This host suite checks record fields reaching the hook. */
+        gHandoffState.contract_state=1;gHandoffState.contract_kind=HC_EVENT;
+        gHandoffState.contract_target=RC_INTERIOR_BASE;
+    }
+}
 void legacy_items_new_run(void) {memset(&gLegacyInventory,0,sizeof(gLegacyInventory));seeded_items++;}
 void legacy_items_seed_owned(void) {gLegacyInventory.owned[0]|=1u<<LI_SMITH_SWORD;}
 void handoff_new_run(u32 seed) {
@@ -71,6 +84,9 @@ static void fresh(void) {
     seed_extension(42);gHandoffState.score=100;gHandoffState.difficulty=3;gHandoffState.highest_difficulty=3;
     gHandoffState.food_mask=1;gCreamProgress.rewards=1;gCreamProgress.visited=1;
     gCreamProgress.chests[1]=1;gCreamOpenEdges[0]=1;
+    gRegionalDiscovery[0]=(RegionalContentDiscovery){{10,12},{4,5},{7,6},{8,9},63,1};
+    gRegionalDiscovery[49]=(RegionalContentDiscovery){{30,22},{4,5},{7,6},{8,9},3,0};
+    gRegionalQuestArea=AREA_CREAM;
     gLegacyInventory.owned[0]|=1u<<LI_PACCI_CANE;gLegacyInventory.bottles[0]=LI_BOTTLE_FAIRY;
 }
 static void guard_regions(void) {
@@ -84,6 +100,14 @@ static void publish_prefix(const void* record,int offset,int n,int count) {
     for(i=0;i<4&&k<count;i++,k++)ram[offset+i]=0;
     for(i=4;i<n&&k<count;i++,k++)ram[offset+i]=b[i];
     for(i=0;i<4&&k<count;i++,k++)ram[offset+i]=b[i];
+}
+static void publish_v2(const ExtraRun* from,int offset) {
+    ExtraRun* old=(ExtraRun*)(ram+offset);u32 sum;
+    memset(ram+offset,0xA7,EX_SLOT_BYTES);
+    memcpy(old,from,offsetof(ExtraRun,discovery));
+    old->version=EX_LEGACY_VERSION;old->size=EX_LEGACY_BYTES;
+    sum=sum_bytes(old,offsetof(ExtraRun,discovery));
+    memcpy(ram+offset+offsetof(ExtraRun,discovery),&sum,sizeof(sum));
 }
 int main(void) {
     int i,n,slot;
@@ -104,12 +128,15 @@ int main(void) {
     CHECK(!find_extra(0xEEEE)&&!run_extension_finished(0xEEEE));guard_regions();
     gHandoffState.score=900;gHandoffState.deaths=4;gHandoffState.difficulty=7;gHandoffState.entitlement_mode=1;
     run_profile_write();run_extension_init();CHECK(gHandoffState.score==900&&gHandoffState.deaths==4);
-    memset(&gLegacyInventory,0,sizeof(gLegacyInventory));gCreamProgress.node=49;gCreamOpenEdges[0]=0;gHandoffState.food_mask=0;
+    memset(&gLegacyInventory,0,sizeof(gLegacyInventory));gCreamProgress.node=49;gCreamOpenEdges[0]=0;gHandoffState.food_mask=0;gRegionalQuestArea=AREA_FOREST;
     CHECK(run_extension_load(0xABCD,42));
     CHECK(gHandoffState.score==900&&gHandoffState.deaths==4&&gHandoffState.difficulty==7&&gHandoffState.entitlement_mode==1);
     CHECK(gHandoffState.food_mask==1&&gCreamProgress.chests[1]==1&&gCreamOpenEdges[0]==1);
     CHECK(gLegacyInventory.owned[0]&(1u<<LI_PACCI_CANE));CHECK(gLegacyInventory.bottles[0]==LI_BOTTLE_FAIRY);
     CHECK(gCreamNode==gCreamProgress.node&&gCreamWorld.seed==gCreamProgress.seed);
+    CHECK(gRegionalDiscovery[0].door.x==10&&gRegionalDiscovery[0].cache.y==9&&gRegionalDiscovery[0].marks==63);
+    CHECK(gRegionalDiscovery[49].door.x==30&&gRegionalDiscovery[49].door.y==22);
+    CHECK(gRegionalQuestArea==AREA_CREAM&&resumed_quest_area==AREA_CREAM);
     /* Distinct complete base checksums select their own extension. */
     gCreamProgress.rewards=3;run_extension_write(0xBBBB);CHECK(run_extension_load(0xABCD,42)&&gCreamProgress.rewards==1);
     CHECK(run_extension_load(0xBBBB,42)&&gCreamProgress.rewards==3);
@@ -135,6 +162,29 @@ int main(void) {
     sExtra=a;sExtra.inventory.owned[3]=0xFFFFFFFFu;sExtra.sum=sum_bytes(&sExtra,offsetof(ExtraRun,sum));CHECK(!extra_valid());
     sExtra=a;sExtra.handoff.memory_length=7;sExtra.sum=sum_bytes(&sExtra,offsetof(ExtraRun,sum));CHECK(!extra_valid());
     sExtra=a;sExtra.handoff.difficulty=13;sExtra.sum=sum_bytes(&sExtra,offsetof(ExtraRun,sum));CHECK(!extra_valid());
+    sExtra=a;sExtra.quest_area=0;sExtra.sum=sum_bytes(&sExtra,offsetof(ExtraRun,sum));CHECK(!extra_valid());
+    sExtra=a;sExtra.quest_area=AREA_HANDOFF;sExtra.sum=sum_bytes(&sExtra,offsetof(ExtraRun,sum));CHECK(!extra_valid());
+    sExtra=a;sExtra.quest_area=AREA_FOREST;sExtra.sum=sum_bytes(&sExtra,offsetof(ExtraRun,sum));CHECK(extra_valid());
+    sExtra=a;sExtra.reserved[2]=1;sExtra.sum=sum_bytes(&sExtra,offsetof(ExtraRun,sum));CHECK(!extra_valid());
+    sExtra=a;sExtra.discovery[0].marks=128;sExtra.sum=sum_bytes(&sExtra,offsetof(ExtraRun,sum));CHECK(!extra_valid());
+    sExtra=a;sExtra.discovery[0].cache.x=32;sExtra.sum=sum_bytes(&sExtra,offsetof(ExtraRun,sum));CHECK(!extra_valid());
+    sExtra=a;sExtra.discovery[0].door.y=24;sExtra.sum=sum_bytes(&sExtra,offsetof(ExtraRun,sum));CHECK(!extra_valid());
+    sExtra=a;sExtra.discovery[49].terrace=2;sExtra.sum=sum_bytes(&sExtra,offsetof(ExtraRun,sum));CHECK(!extra_valid());
+    sExtra=a;sExtra.discovery[49].marks=64;sExtra.sum=sum_bytes(&sExtra,offsetof(ExtraRun,sum));CHECK(extra_valid());
+    sExtra=a;sExtra.discovery[49].door.x=255;sExtra.sum=sum_bytes(&sExtra,offsetof(ExtraRun,sum));CHECK(!extra_valid());
+    sExtra=a;sExtra.discovery[49].door=(Spot){255,255};sExtra.sum=sum_bytes(&sExtra,offsetof(ExtraRun,sum));CHECK(extra_valid());
+    sExtra=a;sExtra.handoff.quest.state=2;sExtra.handoff.quest.kind=HQ_COURIER;sExtra.handoff.quest.origin_area=AREA_FOREST;sExtra.handoff.quest.origin_cell=25;sExtra.sum=sum_bytes(&sExtra,offsetof(ExtraRun,sum));CHECK(!extra_valid());
+    sExtra=a;sExtra.handoff.quest.state=2;sExtra.handoff.quest.kind=HQ_COURIER;sExtra.handoff.quest.origin_area=AREA_FOREST;sExtra.handoff.quest.origin_cell=4;sExtra.handoff.quest.target_area=AREA_CREAM;sExtra.handoff.quest.target_cell=25;sExtra.sum=sum_bytes(&sExtra,offsetof(ExtraRun,sum));CHECK(!extra_valid());
+    sExtra=a;sExtra.handoff.quest.state=2;sExtra.handoff.quest.kind=HQ_COURIER;sExtra.handoff.quest.origin_area=AREA_FOREST;sExtra.handoff.quest.origin_cell=4;sExtra.handoff.quest.target_area=AREA_CREAM;sExtra.handoff.quest.target_cell=24;sExtra.sum=sum_bytes(&sExtra,offsetof(ExtraRun,sum));CHECK(extra_valid());
+    sExtra=a;sExtra.handoff.contract_kind=HC_WAVE;sExtra.handoff.contract_state=1;sExtra.handoff.contract_target=RC_INTERIOR_BASE;sExtra.sum=sum_bytes(&sExtra,offsetof(ExtraRun,sum));CHECK(!extra_valid());
+    sExtra=a;sExtra.handoff.contract_kind=HC_EVENT;sExtra.handoff.contract_state=1;sExtra.handoff.contract_target=31;sExtra.sum=sum_bytes(&sExtra,offsetof(ExtraRun,sum));CHECK(!extra_valid());
+    sExtra=a;sExtra.handoff.contract_kind=HC_ITEM;sExtra.handoff.contract_state=1;sExtra.handoff.contract_target=128;sExtra.sum=sum_bytes(&sExtra,offsetof(ExtraRun,sum));CHECK(!extra_valid());
+    sExtra=a;sExtra.handoff.contract_step=3;sExtra.handoff.contract_kind=HC_BOSS;sExtra.handoff.contract_state=0;sExtra.handoff.contract_target=0;sExtra.sum=sum_bytes(&sExtra,offsetof(ExtraRun,sum));CHECK(extra_valid());
+    /* New actionable targets use the site's namespace, not event-kind IDs. */
+    for(i=RC_FIELD_BASE;i<RC_INTERIOR_BASE+46;i++) {
+        sExtra=a;sExtra.handoff.contract_kind=HC_EVENT;sExtra.handoff.contract_state=1;sExtra.handoff.contract_target=i;
+        sExtra.sum=sum_bytes(&sExtra,offsetof(ExtraRun,sum));CHECK(extra_valid());
+    }
     /* Every incomplete byte prefix of a replacement keeps the old matching
        record. The last magic byte alone publishes the next generation. */
     sExtra=a;b=a;b.generation++;b.cream.rewards=7;b.sum=sum_bytes(&b,offsetof(ExtraRun,sum));
@@ -145,6 +195,28 @@ int main(void) {
         CHECK(find_extra(123)&&sExtra.cream.rewards==a.cream.rewards);
     }
     publish_prefix(&b,EX_BASE+slot*EX_SLOT_BYTES,n,n+4);CHECK(find_extra(123)&&sExtra.cream.rewards==7);
+    /* A published v2 record is verified at its ORIGINAL byte length and
+       checksum position. Its inventory, gates and scene facts survive; new
+       discovered positions are unknown until observed in the actual world. */
+    a=sExtra;b=a;b.generation+=2;b.handoff.contract_kind=HC_EVENT;
+    b.handoff.contract_state=1;b.handoff.contract_target=HS_POTS;
+    publish_v2(&b,EX_BASE);CHECK(find_extra(123)&&sExtra.version==EX_LEGACY_VERSION);
+    CHECK(EX_LEGACY_BYTES==1404&&sizeof(ExtraRun)==1908);
+    i=migrated_regions;memset(gRegionalDiscovery,0xCC,sizeof(gRegionalDiscovery));
+    CHECK(run_extension_load(123,42)&&migrated_regions==i+1);
+    CHECK(gLegacyInventory.bottles[0]==LI_BOTTLE_FAIRY&&gCreamProgress.rewards==7&&gCreamOpenEdges[0]==1);
+    CHECK(gHandoffState.contract_target==RC_INTERIOR_BASE&&gHandoffState.contract_state==1);
+    CHECK(gRegionalQuestArea==AREA_FOREST&&resumed_quest_area==AREA_FOREST);
+    for(i=0;i<(int)sizeof(gRegionalDiscovery);i++)CHECK(((u8*)gRegionalDiscovery)[i]==0);
+    /* Every new footer-prefix byte must leave the previous v3 checkpoint
+       available; an old checksum is not accepted as the new format. */
+    ram[EX_BASE+offsetof(ExtraRun,discovery)]^=1;
+    CHECK(find_extra(123)&&sExtra.version==EX_VERSION&&sExtra.generation==a.generation);
+    publish_v2(&b,EX_BASE);((ExtraRun*)(ram+EX_BASE))->handoff.contract_target=128;
+    {u32 sum=sum_bytes(ram+EX_BASE,offsetof(ExtraRun,discovery));memcpy(ram+EX_BASE+offsetof(ExtraRun,discovery),&sum,4);}
+    CHECK(find_extra(123)&&sExtra.version==EX_VERSION);
+    run_extension_write(123);CHECK(find_extra(123)&&sExtra.version==EX_VERSION);
+    a=sExtra;b=a;b.cream.rewards=7;
     /* Serial comparison crosses wrap for run and profile generations. */
     a.generation=0xFFFFFFFFu;a.sum=sum_bytes(&a,offsetof(ExtraRun,sum));b.generation=0;b.sum=sum_bytes(&b,offsetof(ExtraRun,sum));
     memcpy(ram+EX_BASE,&a,sizeof(a));memcpy(ram+EX_BASE+EX_SLOT_BYTES,&b,sizeof(b));
@@ -178,7 +250,7 @@ def main():
         result=subprocess.run(command,capture_output=True,text=True);(out/f'compile-{lab}.log').write_text(result.stdout+result.stderr);result.check_returncode()
         result=subprocess.run([str(binary)],capture_output=True,text=True);(out/f'run-{lab}.log').write_text(result.stdout+result.stderr);result.check_returncode()
         record=dict(lab=lab,passed=True,**json.loads(result.stdout));results.append(record);print(record,flush=True)
-    inputs=['src/run_extension.c','src/run_extension.h','src/cream_world.c','src/cream_world.h','src/cream_world_fallback.inc','src/legacy_items.h','src/handoff_events.h','src/cream_runtime.h','src/journal.h','src/util.c']
+    inputs=['src/run_extension.c','src/run_extension.h','src/cream_world.c','src/cream_world.h','src/cream_world_fallback.inc','src/legacy_items.h','src/handoff_events.h','src/cream_runtime.h','src/roomgen.h','src/regional_content.h','src/game.h','src/journal.h','src/util.c']
     report=dict(passed=True,method=__doc__,results=results,source_hashes={n:SHA((GAME/n).read_bytes()) for n in inputs},tool_sha256=SHA(Path(__file__).read_bytes()),compiled_source_sha256=SHA(src.read_bytes()))
     (out/'report.json').write_text(json.dumps(report,indent=2)+'\n')
 if __name__=='__main__':main()

@@ -1,0 +1,363 @@
+{
+  "label": "traversal-0",
+  "seed": 46247,
+  "plan": {
+    "area": 1,
+    "cell": 23,
+    "field_site": 55,
+    "interior_site": 100,
+    "event_kind": 27,
+    "quest_kind": 3,
+    "mechanism_variant": 255,
+    "traversal_variant": 0,
+    "fusion_color": 255,
+    "has_wave": 0,
+    "stage": 0,
+    "terrace": 0,
+    "field_mechanism_variant": 255
+  },
+  "source_commit": "51880a55e6ecf86728f3a0923e5547e7bdeed5a0",
+  "rom_sha256": "0dd8554384b53e618140f8c61590fc7e6a7ff0888f296ece034a95f357b34fdd",
+  "support_sha256": "5c2dfee98c73847e83d5ebfb950ee6642af032dcf14531743347659c4ad9eea0",
+  "emulator": "mGBA0.10.5",
+  "fixtures": [
+    {
+      "kind": "title seed",
+      "value": 46247
+    },
+    {
+      "kind": "ordinary regional room-load for isolated arrival case",
+      "plan": {
+        "area": 1,
+        "cell": 23,
+        "field_site": 55,
+        "interior_site": 100,
+        "event_kind": 27,
+        "quest_kind": 3,
+        "mechanism_variant": 255,
+        "traversal_variant": 0,
+        "fusion_color": 255,
+        "has_wave": 0,
+        "stage": 0,
+        "terrace": 0,
+        "field_mechanism_variant": 255
+      },
+      "before": {
+        "physical_frames": 282,
+        "state": 1,
+        "area": 0,
+        "cell": 0,
+        "actor": {
+          "kind": 1,
+          "type": 0,
+          "state": 0,
+          "timer": 0,
+          "x": 200,
+          "y": 270,
+          "z": 0,
+          "speed": 0,
+          "hp": 0,
+          "coll": 0,
+          "facing": 0
+        },
+        "text": 0,
+        "health": [
+          32,
+          32
+        ],
+        "gilt": 0,
+        "bombs": 10,
+        "entitlement": 0,
+        "inn_reward": 0,
+        "inventory": {
+          "owned": [
+            8322,
+            0,
+            512,
+            4
+          ],
+          "skills": 2
+        },
+        "starting_draft": 0,
+        "service_menu": {
+          "active": 0,
+          "cursor": 2
+        },
+        "draft": {
+          "round": 3,
+          "state": 2,
+          "options": [
+            75,
+            72,
+            73
+          ]
+        },
+        "chain": {
+          "step": 0,
+          "kind": 1,
+          "state": 1,
+          "target": 105
+        },
+        "quest": {
+          "kind": 0,
+          "state": 0,
+          "origin_area": 0,
+          "origin_cell": 0,
+          "target_area": 0,
+          "target_cell": 0,
+          "progress": 0,
+          "quota": 0
+        },
+        "spots": {
+          "door": [
+            0,
+            0
+          ],
+          "npc": [
+            0,
+            0
+          ],
+          "cache": [
+            0,
+            0
+          ],
+          "mechanism": [
+            0,
+            0
+          ],
+          "flags": {
+            "door": 0,
+            "npc": 0,
+            "cache": 0,
+            "mechanism": 0
+          },
+          "terrace": 0
+        }
+      }
+    },
+    {
+      "kind": "hero navigation/facing",
+      "x": 136,
+      "y": 280,
+      "facing": 0
+    },
+    {
+      "kind": "hero navigation/facing",
+      "x": 264,
+      "y": 334,
+      "facing": 2
+    }
+  ],
+  "harness_source_sha256": {
+    "arcade_journal_review.py": "5c857666c642da12359bab9d0d637eae5bd3ea62ff68dcfaa952287971f37a33",
+    "bloom_probe.py": "b6d493cf8e63d903ece2d438262ff3c227b69a206239e741a61c1225fcf5e690",
+    "bloom_suite_gallery.py": "738f5136c8b3e472b9482a90ccb3191d9dc7c8b6c2afc5d42575af44f2fc1bab",
+    "critical_path.py": "70e3db6ccbbadcd65f25355ef2c8e5ae728112abffe3d5c278a1b5428e588159",
+    "lift_probe.py": "9b5882862b308c0c0e172d547dfe2c9b7b0258210323823dbeeaefd4ea6d420e",
+    "probe.py": "63133cd3241804ed11e5673505a9609b6fa33f24a1c7f61a4ea79dad1c535f75",
+    "regional_arrivals_native.py": "4fd3458bbfe85e732f3251d996e676b19607c6bb4fd71b8774bbd6f7641ed14d",
+    "regional_native_support.py": "5c2dfee98c73847e83d5ebfb950ee6642af032dcf14531743347659c4ad9eea0",
+    "regional_save_native.py": "141c25f212ccb28c54cbebd672b72666a5e487c74671e0c14b001d04ad2e21f4",
+    "release_boundary_review.py": "1c3cff4c6eaed42f65b7c1e19f6693a78e5f4fcfd323fc57dd8f0e979ee7c0ea",
+    "sewer_concept_audit.py": "d975c773dfa1ba641169b30fa42128b2a6671d1f1f90ce3fb99b16c4a06d76c5",
+    "sewer_concept_review.py": "70ae1ac9c1c42d68b521d6e2653e59f225de0fa2ac4c5f1c83ebbf1a0bea5dbe",
+    "wood_probe.py": "ebf8fe5f2242621e1c34df161b53b15b51c19d11151b6d0a4fdffb44e398cb37"
+  },
+  "input_method": "Actual key input; no gameplay-state or video assignments.",
+  "initial": {
+    "physical_frames": 389,
+    "state": 1,
+    "area": 4,
+    "cell": 0,
+    "actor": {
+      "kind": 1,
+      "type": 0,
+      "state": 0,
+      "timer": 0,
+      "x": 264,
+      "y": 334,
+      "z": 0,
+      "speed": 0,
+      "hp": 0,
+      "coll": 0,
+      "facing": 0
+    },
+    "text": 0,
+    "health": [
+      32,
+      32
+    ],
+    "gilt": 0,
+    "bombs": 10,
+    "entitlement": 0,
+    "inn_reward": 0,
+    "inventory": {
+      "owned": [
+        8322,
+        0,
+        512,
+        4
+      ],
+      "skills": 2
+    },
+    "starting_draft": 0,
+    "service_menu": {
+      "active": 0,
+      "cursor": 2
+    },
+    "draft": {
+      "round": 3,
+      "state": 2,
+      "options": [
+        75,
+        72,
+        73
+      ]
+    },
+    "chain": {
+      "step": 0,
+      "kind": 1,
+      "state": 1,
+      "target": 105
+    },
+    "quest": {
+      "kind": 0,
+      "state": 0,
+      "origin_area": 0,
+      "origin_cell": 0,
+      "target_area": 0,
+      "target_cell": 0,
+      "progress": 0,
+      "quota": 0
+    },
+    "spots": {
+      "door": [
+        0,
+        0
+      ],
+      "npc": [
+        0,
+        0
+      ],
+      "cache": [
+        0,
+        0
+      ],
+      "mechanism": [
+        0,
+        0
+      ],
+      "flags": {
+        "door": 0,
+        "npc": 0,
+        "cache": 0,
+        "mechanism": 0
+      },
+      "terrace": 0
+    }
+  },
+  "final": {
+    "physical_frames": 591,
+    "state": 1,
+    "area": 1,
+    "cell": 23,
+    "actor": {
+      "kind": 1,
+      "type": 0,
+      "state": 0,
+      "timer": 0,
+      "x": 136,
+      "y": 280,
+      "z": 0,
+      "speed": 0,
+      "hp": 0,
+      "coll": 0,
+      "facing": 0
+    },
+    "text": 0,
+    "health": [
+      32,
+      32
+    ],
+    "gilt": 0,
+    "bombs": 10,
+    "entitlement": 0,
+    "inn_reward": 0,
+    "inventory": {
+      "owned": [
+        8322,
+        0,
+        512,
+        4
+      ],
+      "skills": 2
+    },
+    "starting_draft": 0,
+    "service_menu": {
+      "active": 0,
+      "cursor": 2
+    },
+    "draft": {
+      "round": 3,
+      "state": 2,
+      "options": [
+        75,
+        72,
+        73
+      ]
+    },
+    "chain": {
+      "step": 0,
+      "kind": 1,
+      "state": 1,
+      "target": 105
+    },
+    "quest": {
+      "kind": 0,
+      "state": 0,
+      "origin_area": 0,
+      "origin_cell": 0,
+      "target_area": 0,
+      "target_cell": 0,
+      "progress": 0,
+      "quota": 0
+    },
+    "spots": {
+      "door": [
+        8,
+        16
+      ],
+      "npc": [
+        19,
+        6
+      ],
+      "cache": [
+        17,
+        10
+      ],
+      "mechanism": [
+        0,
+        0
+      ],
+      "flags": {
+        "door": 1,
+        "npc": 1,
+        "cache": 1,
+        "mechanism": 0
+      },
+      "terrace": 0
+    }
+  },
+  "inputs": {
+    "stored_in_raw_report": true,
+    "entries": 362,
+    "original_json_bytes": 601032
+  },
+  "publication_format": "Compact review summary; outcomes and identities retained. Exact original JSON is adjacent in gzip and in native-evidence.zip.",
+  "raw_report": {
+    "file": "report.json.gz",
+    "sha256": "f3ae13c490c0f6015ef681d3555b45ec08f5b98b8b121f868d88956447f0707c",
+    "uncompressed_sha256": "d7d9fc731426105f011bc45044cc98bac55588b31cd76ba319537ea967aa28d3",
+    "uncompressed_bytes": 1290188
+  }
+}

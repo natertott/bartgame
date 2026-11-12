@@ -1,0 +1,468 @@
+{
+  "source_commit": "51880a55e6ecf86728f3a0923e5547e7bdeed5a0",
+  "rom_sha256": "0dd8554384b53e618140f8c61590fc7e6a7ff0888f296ece034a95f357b34fdd",
+  "records": [
+    {
+      "alias": "opening",
+      "source": "/workspace/setup/regional-integration/c4-opening",
+      "report_sha256": "c853bc43ee6a010b7a73dbacbe7acbbaa819dc053d5b562b65d62d7908ab6327",
+      "copied_files": 28,
+      "kind": "actual mGBA input/output, scoped in each report"
+    },
+    {
+      "alias": "hub",
+      "source": "/workspace/setup/regional-integration/c4-hub",
+      "report_sha256": "2b055f5996063c63f5da4fc985a4eeaf3dff390931df41da5495c18c66e81ada",
+      "copied_files": 47,
+      "kind": "actual mGBA input/output, scoped in each report",
+      "raw_report": {
+        "file": "report.json.gz",
+        "sha256": "60f5bb565cbd6d43fd24e35cb7bc95aaec4bc036d3144448994d7b244f4a8744",
+        "uncompressed_sha256": "2b055f5996063c63f5da4fc985a4eeaf3dff390931df41da5495c18c66e81ada",
+        "uncompressed_bytes": 108121
+      },
+      "published_summary_sha256": "ad6d8f1985cdbc0048405d3539563a41f0fa5bd188e63666082f7d38eb9da456"
+    },
+    {
+      "alias": "access",
+      "source": "/workspace/setup/regional-integration/c4-access",
+      "report_sha256": "34c3e9548171b930964bc7ed46d863af423f7296ef61267c8c1782316b2ff406",
+      "copied_files": 23,
+      "kind": "actual mGBA input/output, scoped in each report",
+      "raw_report": {
+        "file": "report.json.gz",
+        "sha256": "43b3c60eb41c6b9c7c903faeee22ef55698648aed3d655fdd5575e18b947e928",
+        "uncompressed_sha256": "34c3e9548171b930964bc7ed46d863af423f7296ef61267c8c1782316b2ff406",
+        "uncompressed_bytes": 2486799
+      },
+      "published_summary_sha256": "71b74a16b9265996e3b7650ab93a8569429208aff950127563ec0fd98cda0352"
+    },
+    {
+      "alias": "resources",
+      "source": "/workspace/setup/regional-integration/c4-resources",
+      "report_sha256": "e471851f9f09c9fa9e0ae29e5d40cca5b525a759278a309a8f7eece6912e555c",
+      "copied_files": 115,
+      "kind": "actual mGBA input/output, scoped in each report",
+      "raw_report": {
+        "file": "report.json.gz",
+        "sha256": "f0540b9f46ffcd3a27ec0192f755add26e596f659b8a7f04cdc9583b25b02c4c",
+        "uncompressed_sha256": "e471851f9f09c9fa9e0ae29e5d40cca5b525a759278a309a8f7eece6912e555c",
+        "uncompressed_bytes": 1387395
+      },
+      "published_summary_sha256": "1fa7e599d985b50b3fbd5fc28fbfdd3a28666574f3a646d2a22103ea3dd656f7"
+    },
+    {
+      "alias": "arrivals",
+      "source": "/workspace/setup/regional-integration/c4-arrivals2",
+      "report_sha256": "d07ddfe4e146eefa40f79e7d8d07d33d8ef4d69b2f1de0f790b6178ae368acdd",
+      "copied_files": 709,
+      "kind": "actual mGBA input/output, scoped in each report",
+      "raw_report": {
+        "file": "report.json.gz",
+        "sha256": "c009a1e62713c6b7b2e632476d09215936b0fd8385ef73597c99817a3e27990f",
+        "uncompressed_sha256": "d07ddfe4e146eefa40f79e7d8d07d33d8ef4d69b2f1de0f790b6178ae368acdd",
+        "uncompressed_bytes": 413250
+      },
+      "published_summary_sha256": "92ca96ddfe24d08e74e2412d1a6b6018d78ac92e3f0b4eb0e3733253f78235ce"
+    },
+    {
+      "alias": "quests",
+      "source": "/workspace/setup/regional-integration/quests-c4-aggregate",
+      "report_sha256": "e659a733fc5b86e434f26ae4a1d565a309d82f4a28cd4b1ebcacede7604e6899",
+      "copied_files": 191,
+      "kind": "actual mGBA input/output, scoped in each report",
+      "raw_report": {
+        "file": "report.json.gz",
+        "sha256": "c201aeefd4c1921a08460d44d280b2eda4151450b5dbfcbb43f581d24ef309f4",
+        "uncompressed_sha256": "e659a733fc5b86e434f26ae4a1d565a309d82f4a28cd4b1ebcacede7604e6899",
+        "uncompressed_bytes": 189236
+      },
+      "published_summary_sha256": "4d6806b204b173222bd2a6cbc168ec8d642579f87741cc8d1c0081a3c483faa8"
+    },
+    {
+      "alias": "chain",
+      "source": "/workspace/setup/regional-journey/c4-chain",
+      "report_sha256": "b4f075f1d9a5842672c90fbf3737283a591d6d385b21e9b06eeec198c75715c5",
+      "copied_files": 30,
+      "kind": "actual mGBA input/output, scoped in each report",
+      "raw_report": {
+        "file": "report.json.gz",
+        "sha256": "9447bf468f55b86e19054ab6b012bdf10e0de055f0a9d3bba39cf4fb53dfd27f",
+        "uncompressed_sha256": "b4f075f1d9a5842672c90fbf3737283a591d6d385b21e9b06eeec198c75715c5",
+        "uncompressed_bytes": 28292880
+      },
+      "published_summary_sha256": "700b07fc25237686ec3e47f63f7d04711098ba0454b590fc434dfccd0f53a0b4"
+    },
+    {
+      "alias": "chain-guard",
+      "source": "/workspace/setup/regional-journey/c4-guard",
+      "report_sha256": "43b950a5eba3230089bed7cef82d2fbf5238ff309ec52fc366903a50dfda695d",
+      "copied_files": 20,
+      "kind": "actual mGBA input/output, scoped in each report",
+      "raw_report": {
+        "file": "report.json.gz",
+        "sha256": "0441f648221eae38cc5fb8789b6a8f0086642b1ac3094fea90aabb50be99503d",
+        "uncompressed_sha256": "43b950a5eba3230089bed7cef82d2fbf5238ff309ec52fc366903a50dfda695d",
+        "uncompressed_bytes": 3421597
+      },
+      "published_summary_sha256": "5c5818b5f7f769726b92a5f37ac3c6e40491f4af5f6f145e2f3a666ce744acd8"
+    },
+    {
+      "alias": "quest-stakes",
+      "source": "/workspace/setup/regional-journey/c4-stakes",
+      "report_sha256": "957e115fa3da499db6e175db2f56a4509f745ac5686c03a170e53c436d3fb2a5",
+      "copied_files": 14,
+      "kind": "actual mGBA input/output, scoped in each report",
+      "raw_report": {
+        "file": "report.json.gz",
+        "sha256": "0892787031cde7cc0fb370924e428bb13a58661bd399c073ad961a834e808371",
+        "uncompressed_sha256": "957e115fa3da499db6e175db2f56a4509f745ac5686c03a170e53c436d3fb2a5",
+        "uncompressed_bytes": 942519
+      },
+      "published_summary_sha256": "a3f77df44ffc97b437651ec0655005cd703a5d7f5b9c2852911e557f12429745"
+    },
+    {
+      "alias": "maps",
+      "source": "/workspace/setup/regional-integration/maps-candidate4",
+      "report_sha256": "bafcf73f16dedcd5b9f35d19497423c9165e467ef027c3903b13c088b2d560e1",
+      "copied_files": 48,
+      "kind": "actual mGBA input/output, scoped in each report",
+      "raw_report": {
+        "file": "report.json.gz",
+        "sha256": "2527684475eefbddadf21600c09dab3ed7f651309de3b7c60ca1d81f9e85174b",
+        "uncompressed_sha256": "bafcf73f16dedcd5b9f35d19497423c9165e467ef027c3903b13c088b2d560e1",
+        "uncompressed_bytes": 3365742
+      },
+      "published_summary_sha256": "a1a87fe4489b62e2840aa4a9b03f9e997ac6f690facbea1a92df5f72c5284a9c"
+    },
+    {
+      "alias": "maps-pending",
+      "source": "/workspace/setup/regional-integration/maps-pending-candidate4",
+      "report_sha256": "c6ecae44e96ce888bf8712aa7d79a635738b326457f9605e0a51d5bde9af58be",
+      "copied_files": 26,
+      "kind": "actual mGBA input/output, scoped in each report",
+      "raw_report": {
+        "file": "report.json.gz",
+        "sha256": "9f84000243995fd5a330d14eecf3603350d0e574b17465b8821287e717230eab",
+        "uncompressed_sha256": "c6ecae44e96ce888bf8712aa7d79a635738b326457f9605e0a51d5bde9af58be",
+        "uncompressed_bytes": 1179329
+      },
+      "published_summary_sha256": "7e8809c622ef725ace4bfa47d89f26775e98ab9167678a1e0c3b46206926377b"
+    },
+    {
+      "alias": "maps-cold-cream",
+      "source": "/workspace/setup/regional-integration/maps-cold-cream-candidate4",
+      "report_sha256": "63708e7e009d91ae5c55d7a1de33a7bb8136259df65b3136598c4adbdc394299",
+      "copied_files": 27,
+      "kind": "actual mGBA input/output, scoped in each report",
+      "raw_report": {
+        "file": "report.json.gz",
+        "sha256": "6115a530fa16f728a125b0a0ec8e997d909e020e5d2b48d532bb36b9acbe8ac9",
+        "uncompressed_sha256": "63708e7e009d91ae5c55d7a1de33a7bb8136259df65b3136598c4adbdc394299",
+        "uncompressed_bytes": 6669946
+      },
+      "published_summary_sha256": "7716e1ede9915f4d1e2596317b468048482c779801f1c001041e5ae78e70b6c7"
+    },
+    {
+      "alias": "saves",
+      "source": "/workspace/setup/regional-integration/save-native-candidate4",
+      "report_sha256": "e3e366468f0ad0fc04830ac0dfd7da5dbbbafe48bfbefd072ae434ad42f64a84",
+      "copied_files": 7,
+      "kind": "actual mGBA input/output, scoped in each report"
+    },
+    {
+      "alias": "saves-original",
+      "source": "/workspace/setup/regional-integration/save-native-candidate4-original",
+      "report_sha256": "2c40662faac82d2f58df7cb8b718d1a3d293d6b334fab9d0d8bb95803c59875b",
+      "copied_files": 7,
+      "kind": "actual mGBA input/output, scoped in each report"
+    },
+    {
+      "alias": "mechanisms",
+      "source": "/workspace/setup/regional-integration/mechanisms-live-c4/main",
+      "report_sha256": "ceced19036e8a806a34edf456865e340b3911cc3dab623caf06a5be810318d14",
+      "copied_files": 94,
+      "kind": "actual mGBA input/output, scoped in each report",
+      "raw_report": {
+        "file": "report.json.gz",
+        "sha256": "a9bc0c3f8cfd32f47c7bcd42a653d5a5ff5e56bfc01bdd378cc18d4714d66e33",
+        "uncompressed_sha256": "ceced19036e8a806a34edf456865e340b3911cc3dab623caf06a5be810318d14",
+        "uncompressed_bytes": 1330327
+      },
+      "published_summary_sha256": "551e160e140e90e947a7b2b460cb911cd6b17620228d382d1d358197c9f6e09a"
+    },
+    {
+      "alias": "mechanisms-fields",
+      "source": "/workspace/setup/regional-integration/mechanisms-live-c4/fields",
+      "report_sha256": "57e2d21e13e470c7d24ba1befe1d5a354daea2e672071b07f1027adf675f58eb",
+      "copied_files": 9,
+      "kind": "actual mGBA input/output, scoped in each report",
+      "raw_report": {
+        "file": "report.json.gz",
+        "sha256": "3d903b971d2a8e0f2712399523c910a4404d32d17d9fb495be27ed90b0597a69",
+        "uncompressed_sha256": "57e2d21e13e470c7d24ba1befe1d5a354daea2e672071b07f1027adf675f58eb",
+        "uncompressed_bytes": 216394
+      },
+      "published_summary_sha256": "1f36d352bae4e69a0d58ca5f9af9226df1ca57e5bef21317f0dbdd6c34b3d612"
+    },
+    {
+      "alias": "mechanisms-lily",
+      "source": "/workspace/setup/regional-integration/mechanisms-live-c4/lily",
+      "report_sha256": "42f8e5253b9689ba3f6f863cd3e341791e1e8ebf86d1e917a33c567c2cc2dc6a",
+      "copied_files": 7,
+      "kind": "actual mGBA input/output, scoped in each report",
+      "raw_report": {
+        "file": "report.json.gz",
+        "sha256": "135fcf00d31d77fde8e62e53e87005aca7febc7feb9d59135610f3841bf7cb0b",
+        "uncompressed_sha256": "42f8e5253b9689ba3f6f863cd3e341791e1e8ebf86d1e917a33c567c2cc2dc6a",
+        "uncompressed_bytes": 112838
+      },
+      "published_summary_sha256": "fdd8b91962ee220cd0dddc69e9f794180e36ae850beacfb7dd63e38c88dac725"
+    },
+    {
+      "alias": "mechanisms-lava",
+      "source": "/workspace/setup/regional-integration/mechanisms-live-c4/lava",
+      "report_sha256": "28d098238aefe2e8a66a7489197ffaa9fbd37f6d4dc26f89aa4e39d9590cf396",
+      "copied_files": 7,
+      "kind": "actual mGBA input/output, scoped in each report",
+      "raw_report": {
+        "file": "report.json.gz",
+        "sha256": "d07d1a8a7f2db9d7ffb729e34763158a556da7399cecb3313f5d3dd9d70a65c6",
+        "uncompressed_sha256": "28d098238aefe2e8a66a7489197ffaa9fbd37f6d4dc26f89aa4e39d9590cf396",
+        "uncompressed_bytes": 112538
+      },
+      "published_summary_sha256": "ce402dcf868b5832141c92c9bae093659a8d46f61d6008ae2a8ec32c5d242d5b"
+    },
+    {
+      "alias": "mechanisms-cream",
+      "source": "/workspace/setup/regional-integration/mechanisms-live-c4/cream",
+      "report_sha256": "75311089f85c8c29ad8fe66e39801e644a2606376db0927845015f23df41f969",
+      "copied_files": 9,
+      "kind": "actual mGBA input/output, scoped in each report",
+      "raw_report": {
+        "file": "report.json.gz",
+        "sha256": "6246f8353e8b8aaa68895b3367c9cd498ec11237a35a8ab5aa6e910c4e2d6b99",
+        "uncompressed_sha256": "75311089f85c8c29ad8fe66e39801e644a2606376db0927845015f23df41f969",
+        "uncompressed_bytes": 242972
+      },
+      "published_summary_sha256": "e65d4dabe014d75e8785796d894621b364e4b55437232034af72c452f57cf95b"
+    },
+    {
+      "alias": "performance",
+      "source": "/workspace/setup/regional-integration/performance-c4",
+      "report_sha256": "8a4702a82b55aea6447fd9ee44938d3fae67215ffd143b95614578ed1532ca11",
+      "copied_files": 257,
+      "kind": "actual mGBA input/output, scoped in each report",
+      "raw_report": {
+        "file": "report.json.gz",
+        "sha256": "ba64c75adea2a7ce3ce5adcce374ee33ee88125715f72634f4d6cbb05e4c5f67",
+        "uncompressed_sha256": "8a4702a82b55aea6447fd9ee44938d3fae67215ffd143b95614578ed1532ca11",
+        "uncompressed_bytes": 27856863
+      },
+      "published_summary_sha256": "4a372e9490b02a6c9427b55e8746d7ab65cf9e79aa64dc4a5b2a66bf389ca513"
+    },
+    {
+      "alias": "boundaries",
+      "source": "/workspace/setup/regional-integration/boundaries-c4",
+      "report_sha256": "673381ca01b7d39e595f81dcc305217535043b23ee4412a97463f92e92e3e71c",
+      "copied_files": 13,
+      "kind": "actual mGBA input/output, scoped in each report",
+      "raw_report": {
+        "file": "report.json.gz",
+        "sha256": "933c340d36b4cc61a53965c680f1906055c13948906253050cc1b9d24c812347",
+        "uncompressed_sha256": "673381ca01b7d39e595f81dcc305217535043b23ee4412a97463f92e92e3e71c",
+        "uncompressed_bytes": 69468
+      },
+      "published_summary_sha256": "d5fe6078696d60d9cfa639db575c5d195613c6877fdaa2dd9d3a9ce558513e92"
+    },
+    {
+      "alias": "mitigation",
+      "source": "/workspace/setup/regional-integration/mitigation-c4",
+      "report_sha256": "4c851b435b3e9bf409d019af0477fd3715bcfee2925718be6f242755d41def27",
+      "copied_files": 10,
+      "kind": "actual mGBA input/output, scoped in each report"
+    },
+    {
+      "alias": "preservation-music",
+      "source": "/workspace/setup/regional-integration/preservation-music-c4",
+      "report_sha256": "c074bc9aa9778f6da4022c2df292961ccb5c5a457b1864e0ba1065ee5ed8a974",
+      "copied_files": 6,
+      "kind": "actual mGBA input/output, scoped in each report",
+      "raw_report": {
+        "file": "report.json.gz",
+        "sha256": "3ed3c2ebfcf5f4ea6fed58e882d4e2b3bebae41f5c0ebb3c5e93dd26db6ef65b",
+        "uncompressed_sha256": "c074bc9aa9778f6da4022c2df292961ccb5c5a457b1864e0ba1065ee5ed8a974",
+        "uncompressed_bytes": 98809
+      },
+      "published_summary_sha256": "c1065f782f0210846db81d5d72694587b3e4ea1dbfd4d0f10d95ec6b6c50dd69"
+    },
+    {
+      "alias": "preservation-victory",
+      "source": "/workspace/setup/regional-integration/preservation-victory-c4",
+      "report_sha256": "08580b53c83de52f1cc91a831c4de08e20f94ccf4dad52e6028b028323cde875",
+      "copied_files": 7,
+      "kind": "actual mGBA input/output, scoped in each report"
+    },
+    {
+      "alias": "preservation-drain",
+      "source": "/workspace/setup/regional-integration/preservation-drain-c4",
+      "report_sha256": "d5d698ee7c76dbd894c9cde3a2214361d8764aefb40b73202a47c510eff69e7c",
+      "copied_files": 15,
+      "kind": "actual mGBA input/output, scoped in each report",
+      "raw_report": {
+        "file": "report.json.gz",
+        "sha256": "feba60656a1e2b6e38a6087f1814826619c76c54040dbca883ab6eacf4319cfc",
+        "uncompressed_sha256": "d5d698ee7c76dbd894c9cde3a2214361d8764aefb40b73202a47c510eff69e7c",
+        "uncompressed_bytes": 1081213
+      },
+      "published_summary_sha256": "99e4d6000f031350e1292087a57120a00d293b9d18505b74f52ad9aff56046f1"
+    },
+    {
+      "alias": "preservation-cream",
+      "source": "/workspace/setup/regional-integration/preservation-cream-retirement-c4",
+      "report_sha256": "a28692fbdce9db5215e53566f51d6b8847e27100b980e2dad58c82747275503f",
+      "copied_files": 86,
+      "kind": "actual mGBA input/output, scoped in each report",
+      "raw_report": {
+        "file": "report.json.gz",
+        "sha256": "bca414928f449cf1570814316ad5133172e2b2aa2ae8b8cc23d0cd42e7e1e645",
+        "uncompressed_sha256": "a28692fbdce9db5215e53566f51d6b8847e27100b980e2dad58c82747275503f",
+        "uncompressed_bytes": 93425
+      },
+      "published_summary_sha256": "252b49887aa1d11b52f91f782b9bd147ee9ef586e88db84173a93d3b50c0d74f"
+    },
+    {
+      "alias": "preservation-drop3",
+      "source": "/workspace/setup/regional-integration/preservation-cream-drop5-c4",
+      "report_sha256": "6ee4063d2a5f45a1ac7663eb33f2316bbd676c0ace5bccb6395cdd2801c6e9aa",
+      "copied_files": 18,
+      "kind": "actual mGBA input/output, scoped in each report"
+    },
+    {
+      "alias": "preservation-drop4",
+      "source": "/workspace/setup/regional-integration/preservation-cream-drop1432-c4",
+      "report_sha256": "e591fa9deccd55875c15f1e80fababfa4f18040147443e0cf364a9ae5b25961c",
+      "copied_files": 21,
+      "kind": "actual mGBA input/output, scoped in each report"
+    },
+    {
+      "alias": "pairs-fusions",
+      "source": "/workspace/setup/regional-integration/pairs-c4-final-fusions",
+      "report_sha256": "0533e7e071ef09da49521c748cd3699521a06e908b814ecc1844ce379abd5c22",
+      "copied_files": 34,
+      "kind": "actual mGBA input/output, scoped in each report",
+      "raw_report": {
+        "file": "report.json.gz",
+        "sha256": "14a2e64552a659e0d416d4eb0bd953ca313e17e44345943a1519ffe3bd5f949f",
+        "uncompressed_sha256": "0533e7e071ef09da49521c748cd3699521a06e908b814ecc1844ce379abd5c22",
+        "uncompressed_bytes": 3024647
+      },
+      "published_summary_sha256": "5393c3c6112824bc0c6000bc08af7e5a0945baaed5dbd319350aaf9ec3e253ff"
+    },
+    {
+      "alias": "pairs-memory",
+      "source": "/workspace/setup/regional-integration/pairs-c4-final-memory",
+      "report_sha256": "f81b1f3b5b5f166725fe695b8a724d5804175dd4d921a19ac212c4ab22569d4b",
+      "copied_files": 19,
+      "kind": "actual mGBA input/output, scoped in each report",
+      "raw_report": {
+        "file": "report.json.gz",
+        "sha256": "b9489c2314804b6c37e9dca6dbdcbaedaddd8850e48a6e1e9b5d776734309a86",
+        "uncompressed_sha256": "f81b1f3b5b5f166725fe695b8a724d5804175dd4d921a19ac212c4ab22569d4b",
+        "uncompressed_bytes": 3992289
+      },
+      "published_summary_sha256": "50a8e3d7a6426c2da5e339bb0c55cae7e964a081b40df9d50405a1fbabb59a22"
+    },
+    {
+      "alias": "pairs-portal",
+      "source": "/workspace/setup/regional-integration/pairs-c4-final-portal",
+      "report_sha256": "ab2348b7dddd602dedcf83e47b043370b6aa87f67e8656e6bbc316150500d87f",
+      "copied_files": 21,
+      "kind": "actual mGBA input/output, scoped in each report",
+      "raw_report": {
+        "file": "report.json.gz",
+        "sha256": "be211abced5b7a2b4717e43e299fa776014220772ed042c7fb537184f6f01e37",
+        "uncompressed_sha256": "ab2348b7dddd602dedcf83e47b043370b6aa87f67e8656e6bbc316150500d87f",
+        "uncompressed_bytes": 2302137
+      },
+      "published_summary_sha256": "07adc6651b6407284a1eb08bf7fb9cdb20471e334166179160acd5ed53c7118e"
+    },
+    {
+      "alias": "pairs-wave",
+      "source": "/workspace/setup/regional-integration/pairs-c4-final-wave",
+      "report_sha256": "a5f405b977af40ad58b79648bfdcf03096af89906c143cf9c1893f32aac47429",
+      "copied_files": 16,
+      "kind": "actual mGBA input/output, scoped in each report",
+      "raw_report": {
+        "file": "report.json.gz",
+        "sha256": "725a6459e6a26d470e4469e13778a22380be83a4b00dc0a63b22f68a243e6282",
+        "uncompressed_sha256": "a5f405b977af40ad58b79648bfdcf03096af89906c143cf9c1893f32aac47429",
+        "uncompressed_bytes": 1466273
+      },
+      "published_summary_sha256": "0b34123a9c6cf9eb5ae2f9f321bddd7b1c0ed98ee854f0c741f4847271cbf4d1"
+    },
+    {
+      "alias": "placement",
+      "source": "/workspace/setup/regional-integration/c4-placement/report.json",
+      "report_sha256": "74b442198817d57da563b3c408bf8ba66dff9c22830e1bc983f64594be5c071f",
+      "kind": "host execution or native asset decode; not mGBA playthrough"
+    },
+    {
+      "alias": "reach",
+      "source": "/workspace/setup/regional-integration/c4-reach/report.json",
+      "report_sha256": "3d511daeb7e1983d9b57ae1a5b06b4e2e7cede44a12ccdf96e14d82a8cc4f77c",
+      "kind": "host execution or native asset decode; not mGBA playthrough"
+    },
+    {
+      "alias": "art",
+      "source": "/workspace/setup/regional-integration/c4-art.json",
+      "report_sha256": "4f8ff2dcd669bcfe8ed726c09195e16a09e4434cc641e43a53690affed28ddd7",
+      "kind": "host execution or native asset decode; not mGBA playthrough",
+      "raw_report": {
+        "file": "report.json.gz",
+        "sha256": "2a4d529b3338181c418c0e43cb7e2ec3eeb559f404714f928d72b73c0c3c96e5",
+        "uncompressed_sha256": "4f8ff2dcd669bcfe8ed726c09195e16a09e4434cc641e43a53690affed28ddd7",
+        "uncompressed_bytes": 220777
+      },
+      "published_summary_sha256": "774873c2873655d394d73beb190cda9be2ddc4da909efb7ee6ff540214eb21b9"
+    },
+    {
+      "alias": "host-events",
+      "source": "/workspace/setup/regional-integration/events-c4-host.json",
+      "report_sha256": "2c411a1f367102056efe296caf6618d6719c9a5c026f8fd914d35b1b7eb05653",
+      "kind": "host execution or native asset decode; not mGBA playthrough"
+    },
+    {
+      "alias": "host-budget",
+      "source": "/workspace/setup/regional-integration/legacy-spawn-budget-c4-host.json",
+      "report_sha256": "780ba394aa9e1142b7d7c81cac5ce2bb4ee63626c5addc6827a6ffc0baf9e350",
+      "kind": "host execution or native asset decode; not mGBA playthrough"
+    },
+    {
+      "alias": "host-saves",
+      "source": "/workspace/setup/regional-integration/save-host-candidate4/report.json",
+      "report_sha256": "f68fd9d69b03129777950800b2cc7f129e59cd4e841248b681a3e9b3b121b009",
+      "kind": "host execution or native asset decode; not mGBA playthrough"
+    },
+    {
+      "alias": "host-mechanisms",
+      "source": "/workspace/setup/regional-integration/host-mechanisms-c4/report.json",
+      "report_sha256": "30d17910591f893a22603db084c8ad3a4ef855705731dd0501eb5d2da58e0358",
+      "kind": "host execution or native asset decode; not mGBA playthrough"
+    },
+    {
+      "alias": "host-objects",
+      "source": "/workspace/setup/regional-integration/host-objects-c4/report.json",
+      "report_sha256": "d951f27c5c3f66e20b273a731292479af810392684184911860f764b430da134",
+      "kind": "host execution or native asset decode; not mGBA playthrough"
+    },
+    {
+      "alias": "host-mobility",
+      "source": "/workspace/setup/regional-integration/host-mobility-c4/report.json",
+      "report_sha256": "f86d62741c00a492da1f842e1914aad183815fbb3c8a2d7991fa45a640a1e9c0",
+      "kind": "host execution or native asset decode; not mGBA playthrough"
+    }
+  ],
+  "note": "Full native archive also contains audio and frozen build. No private SRAM/emulator-state files published.",
+  "publication_format": "Large report.json files are readable summaries; adjacent report.json.gz decodes to the original recorded report_sha256. All full original native reports are also in native-evidence.zip."
+}

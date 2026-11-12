@@ -1,0 +1,39 @@
+{
+  "passed": true,
+  "method": "Exercise actual additive save-extension C on private Linux SRAM.\n\nUses production serializable types and graph generation, with explicit small\ninitialization stubs for runtime-only modules. This establishes record selection,\nprofile isolation, validation and interrupted writes; it does not assert native\ncartridge power-loss behavior, base-v1/v2 migration or gameplay UI behavior.\n",
+  "results": [
+    {
+      "lab": 0,
+      "passed": true,
+      "functional_checks": 2609,
+      "protected_byte_checks": 48640,
+      "extra_bytes": 1908,
+      "profile_bytes": 32
+    },
+    {
+      "lab": 1,
+      "passed": true,
+      "functional_checks": 5,
+      "protected_byte_checks": 0,
+      "extra_bytes": 1908,
+      "profile_bytes": 32
+    }
+  ],
+  "source_hashes": {
+    "src/run_extension.c": "c2e2cd53900d7f59cad88cc4f59cf1427bc424407134f0d796cd9e65edacebd0",
+    "src/run_extension.h": "d3c8368f02025277f4cac2ca906c12bf95d6f7dce6ab17de6840658cd58bb1a0",
+    "src/cream_world.c": "6a024e86016e77b37247b68dd99672e69d04f298e9ea0e58ea92b6ace55b1d48",
+    "src/cream_world.h": "28c8cf2021515656e6fea7ae58122c04df09cc36ca06ea7bcb7f6087e963d3cb",
+    "src/cream_world_fallback.inc": "5ee91af8296715c9a1d87fd0301a31c9305fccf6f1ac352806b107fc31d08b56",
+    "src/legacy_items.h": "ea21190aaab869abe4377dc20360274570db8f2bd225c974d9c3618924791565",
+    "src/handoff_events.h": "b2b386cfdc5d99ab0e6643852ee3d4f8e209e35619c6fa54d191b5b2bb3a0cb4",
+    "src/cream_runtime.h": "20774e62565a4104f1e352d05da69e9cdf4301e5e351d8ff4d7695119831419c",
+    "src/roomgen.h": "17010974f9298759aaefbc5742e9a094aaf5cc360a56a455eb0d6d7702adf771",
+    "src/regional_content.h": "cdc22d531becfa24e804e2d43b16fb517714b305190d036f60b5572485d2754b",
+    "src/game.h": "c3edcb39198b49e5f8b692989bb1de35b94f2e55738b751146496cce13eb83a5",
+    "src/journal.h": "03dfea1eac85eb0f25d15e2c570952e33cbf2ed5dc67c9e3706e60fedb91c53b",
+    "src/util.c": "e8df1ff26b31194d375b0be31364bacd3fd95fb90d983e7dc17ff984e0a05698"
+  },
+  "tool_sha256": "fde8eebfca377057f96365b6592d758aceb047233a33b7128bfa4c37fd2ea6bc",
+  "compiled_source_sha256": "a08875586842c4d6e0b3388913e59c6b35b4050165c98e65f06842c4978df364"
+}

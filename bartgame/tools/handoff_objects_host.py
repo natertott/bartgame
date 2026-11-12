@@ -11,6 +11,7 @@ GAME=Path(__file__).resolve().parents[1]
 def clean(s):return re.sub(r'^\s*#include[^\n]*$','',s,flags=re.M)
 def fixture():
  src=(GAME/'src/handoff_objects.c').read_text()
+ M.validate_asset_symbols(src)
  prefix=M.fixture().split('/* Native traversal annex:')[0]
  # Mobility fixture definitions include many harmless inactive helper spies.
  prefix=prefix.replace('static u16 pixels[4096]','static u16 pixels[65536]')
@@ -39,6 +40,7 @@ def fixture():
 #define PJ_ARROW 3
 #define OBJ_THROWN 20
 static Actor gActors[ACTOR_MAX];
+LegacyInventory gLegacyInventory;
 typedef struct {s8 ox,oy;u8 hw,hh;} Hitbox;
 static const Hitbox gHitboxes[16]={{0,0,4,4}};
 bool8 player_sword_box(int*a,int*b,int*c,int*d){(void)a;(void)b;(void)c;(void)d;return FALSE;}
@@ -47,7 +49,7 @@ static const u8 handoff_mechanisms_frame_pal[84]={0};
 static s16 sin_table[256];
 static int clones,clone_x,clone_y,removed,healed,hurts,next_tile;
 static Actor dummy;
-bool8 room_box_solid(int x0,int y0,int x1,int y1){(void)x0;(void)y0;(void)x1;(void)y1;return FALSE;}
+
 bool8 textbox_active(void){return FALSE;}
 bool8 legacy_item_owned(int item){(void)item;return TRUE;}
 void legacy_item_remove(int item){removed=item;}

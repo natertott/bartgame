@@ -1,4 +1,35 @@
-# Traversal annex
+# Regional traversal and retained compatibility court
+
+The current regional integration is described in [Regional mechanisms](REGIONAL_MECHANISMS.md). The court descriptions below document the retained compatibility layouts; normal content is placed by the Forest/Cream generator.
+
+## Current regional qualification
+
+C4 source `51880a55e6ecf86728f3a0923e5547e7bdeed5a0` passes 23,487 regional
+host checks across both modules, including 8,382 mobility checks, plus 1,511
+retained-course traversal checks. A field stamp is transactional: the real
+post-stamp route validator must pass, or its ground/overlay/underlay is restored.
+
+The final 167/167 native bundle uses fresh seeded cores and requires a living
+player in GS_PLAY at every substantive result. It proves actual outdoor cart
+boarding/wet-rail ride/dry dismount, upper bridge and lower underpass routes,
+controlled parachute descent, refusal of unearned caches and once-only
+100/20-gilt claims. Seed 15 also proves the parachute on Cream 15's actual
+field. All three interior templates remain dry for 120 frames without
+Flippers, then return to their actual parent by southward walking. The cart
+channel ends above the ordinary south arrival/return bank.
+
+Equipment/ammunition/skills, standing/navigation, player protection and a
+decrease to 0 gilt before isolated reward accounting are disclosed fixtures.
+No player HP or completion/fusion/claim flags are assigned. The
+[main native report](../../../regional-handoff-review/validation/mechanisms/report.json),
+[cart field report](../../../regional-handoff-review/validation/mechanisms-fields/report.json)
+and [Cream field report](../../../regional-handoff-review/validation/mechanisms-cream/report.json)
+carry the traces; [Regional mechanisms](REGIONAL_MECHANISMS.md) records the
+full ROM/harness identity. Workspace originals are under
+`/workspace/setup/regional-integration/mechanisms-live-c4/`.
+Earlier depleted-health diagnostic runs are invalidated.
+
+## Historical compatibility court
 
 The Challenge desk's appended Traversal Court supplies three real movement
 systems without changing any existing Drain/Forest/Cream room artwork.

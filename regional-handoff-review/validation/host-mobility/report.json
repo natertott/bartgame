@@ -1,0 +1,18 @@
+{
+  "passed": true,
+  "method": "Run actual traversal-annex C against explicit host room/input fixtures.\n\nReal fixed-point cart/parachute motion, plane collision/priority, native tile\nplacement and once-only fusion rewards are tested. Rendering uploads/sound\nare inert spies: this is source/runtime logic evidence, not emulator imagery.\n",
+  "checks": 1511,
+  "cart_stop": 0,
+  "course_tiles": 768,
+  "source_hashes": {
+    "src/handoff_mobility.c": "7827eaffe3f602b4e98a1fb8c780c4aa5ed404f378d5466f08cdc0960db60308",
+    "src/handoff_mobility.h": "a5aab18a87b304b7468320e30193f3e6ced206139324617c2cc0f725ce8fecf1",
+    "art/handoff_mobility.py": "579e82240d7fe52a0677d6299da71f2bce7be160f76dcdcf49f95c184327e94f",
+    "src/player.h": "a18fd809d440fd8db0b51e29a1af884d34534e70889d033f9be18c7a9abb24e9",
+    "src/actor.h": "1ed4c6a78489b2872acbe9b39f84b82966aefd88da131a16ee0d72fc820ed1a2",
+    "src/legacy_items.h": "ea21190aaab869abe4377dc20360274570db8f2bd225c974d9c3618924791565",
+    "src/handoff_events.h": "b2b386cfdc5d99ab0e6643852ee3d4f8e209e35619c6fa54d191b5b2bb3a0cb4"
+  },
+  "tool_sha256": "954e99634c5de8c5f2af5bb44a175a5dd52da751075911d5b1313b7b90b2e38a",
+  "compiled_source_sha256": "4ea1615286a866990a695f11fa789e1002647d4e3e10f95709f5bfd6e261ba33"
+}

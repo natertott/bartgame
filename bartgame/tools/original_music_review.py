@@ -98,10 +98,14 @@ class Review:
         else:raise AssertionError('normal New Game did not reach Drain')
         busy=[(a,b) for a,b in trace if a['bgm']==b['bgm']==4 and a['run_frames']==b['run_frames'] and b['frame']>a['frame']]
         self.check('physical music sample clock survives busy New Game generation',bool(busy) and all(b['samples']>a['samples'] or b['loops']>a['loops'] for a,b in busy),dict(video_frames=len(trace),busy_intervals=len(busy)))
-        for _ in range(300):
-            if not P.r8(c,P.sym('gTbActive')):break
+        try:pending=P.sym('gStartingDraft')
+        except KeyError:pending=None
+        for _ in range(600):
+            if not P.r8(c,P.sym('gTbActive')) and not (pending and P.r8(c,pending)):break
             self.press('A',2,6)
+        else:raise AssertionError('opening text/gift draft did not finish through actual input')
         self.step(120)
+        self.check('real opening gift inputs finish before audio/SFX qualification',not P.r8(c,P.sym('gTbActive')) and not (pending and P.r8(c,pending)))
 
     def warp(self,cell):
         c=self.core

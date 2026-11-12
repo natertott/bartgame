@@ -1,0 +1,107 @@
+{
+  "method": "Native mGBA counterprobes for cross-system damage and modal boundaries.\n\nFixtures supply only player health, ownership, equipment, bottle contents,\nNayru ownership and navigation/facing. Real tap/release bombs supply damage;\nreal Sage interaction supplies the dialogue. No enemy HP/state, completion,\nterrain, VRAM or framebuffer is changed. This is an isolated private SRAM core.\n",
+  "rom_sha256": "0dd8554384b53e618140f8c61590fc7e6a7ff0888f296ece034a95f357b34fdd",
+  "tool_sha256": "78ed168f8f8056699b8780252f42573075fee93384a17d943c4623ff56b71275",
+  "checks": [
+    {
+      "name": "unmitigated lethal damage invokes Fairy",
+      "passed": true,
+      "observed": {
+        "hp": 24,
+        "fairy": 0,
+        "expected_hp": 24,
+        "expected_fairy": 0
+      }
+    },
+    {
+      "name": "Nayru nonlethal damage preserves Fairy",
+      "passed": true,
+      "observed": {
+        "hp": 3,
+        "fairy": 40,
+        "expected_hp": 3,
+        "expected_fairy": 40
+      }
+    },
+    {
+      "name": "Nayru lethal remainder still invokes Fairy",
+      "passed": true,
+      "observed": {
+        "hp": 24,
+        "fairy": 0,
+        "expected_hp": 24,
+        "expected_fairy": 0
+      }
+    },
+    {
+      "name": "real dialogue interrupts charge without a latent throw",
+      "passed": true,
+      "observed": {
+        "charged": 10,
+        "dialogue_charge": 0,
+        "dialogue_open": 1,
+        "ammunition": 4
+      }
+    },
+    {
+      "name": "health above ten hearts remains visible",
+      "passed": true,
+      "observed": {
+        "native_crop": [
+          0,
+          2,
+          82,
+          20
+        ],
+        "hp_max": 160,
+        "first_hp": 160,
+        "second_hp": 120,
+        "changed": true
+      }
+    },
+    {
+      "name": "unchanged health crop is stable positive control",
+      "passed": true,
+      "observed": {
+        "native_crop": [
+          0,
+          2,
+          82,
+          20
+        ],
+        "identical": true
+      }
+    },
+    {
+      "name": "health beyond twenty hearts has exact visible feedback",
+      "passed": true,
+      "observed": {
+        "native_crop": [
+          84,
+          12,
+          146,
+          20
+        ],
+        "hp_max": 168,
+        "first_hp": 168,
+        "second_hp": 164,
+        "changed": true
+      }
+    },
+    {
+      "name": "unchanged exact-health panel is stable positive control",
+      "passed": true,
+      "observed": {
+        "native_crop": [
+          84,
+          12,
+          146,
+          20
+        ],
+        "identical": true
+      }
+    }
+  ],
+  "passed": 8,
+  "total": 8
+}

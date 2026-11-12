@@ -1,0 +1,665 @@
+{
+  "method": "Exercise generated regional mechanism entrances and physical verbs in mGBA.\n\nDisclosed fixtures: fresh private SRAM and title seed; normal pending room\ntransitions for regional survey; hero position/standing/facing; owned equipment,\nammunition and one mineral-water bottle; player invulnerability while isolating\nmechanism input. No Annex menu or direct handoff-room request is used. Actual\nregional doors, tools, levers, body movement and vehicle controls produce all\nmechanism, collision, completion and reward changes. No enemy HP/state,\ncompletion/fusion bits, terrain, palette, VRAM, clock or pixels are assigned.\n",
+  "seed": 15,
+  "source_commit": "51880a55e6ecf86728f3a0923e5547e7bdeed5a0",
+  "rom_sha256": "0dd8554384b53e618140f8c61590fc7e6a7ff0888f296ece034a95f357b34fdd",
+  "tool_sha256": "1de971a45ff5ab0cff27ba111ba6d40d6a92bb5ef97b11916de0685c0b34adbe",
+  "checks": [
+    {
+      "name": "actual generated mechanism room vocabulary",
+      "passed": true,
+      "requires_live_hero": false,
+      "live_hero": true
+    },
+    {
+      "name": "actual admitted field traversal stamps exist",
+      "passed": true,
+      "requires_live_hero": false,
+      "live_hero": true
+    },
+    {
+      "name": "field traversal 1 is the actual regional variant",
+      "passed": true,
+      "requires_live_hero": true,
+      "live_hero": true
+    },
+    {
+      "name": "field 1 has an actual dry collision-free perimeter",
+      "passed": true,
+      "requires_live_hero": true,
+      "live_hero": true
+    },
+    {
+      "name": "field 1 cache rejects an unearned crossing",
+      "passed": true,
+      "requires_live_hero": true,
+      "live_hero": true
+    },
+    {
+      "name": "upper deck is a real completed field crossing",
+      "passed": true,
+      "requires_live_hero": true,
+      "live_hero": true
+    },
+    {
+      "name": "field 1 crossing pays its actual cache",
+      "passed": true,
+      "requires_live_hero": true,
+      "live_hero": true
+    },
+    {
+      "name": "field 1 cache cannot pay twice",
+      "passed": true,
+      "requires_live_hero": true,
+      "live_hero": true
+    },
+    {
+      "name": "bridge ramp returns to ground plane",
+      "passed": true,
+      "requires_live_hero": true,
+      "live_hero": true
+    },
+    {
+      "name": "actual low-bank walk passes beneath bridge",
+      "passed": true,
+      "requires_live_hero": true,
+      "live_hero": true
+    },
+    {
+      "name": "underpass earns its separate twenty-gilt cache",
+      "passed": true,
+      "requires_live_hero": true,
+      "live_hero": true
+    },
+    {
+      "name": "underpass cache cannot pay twice",
+      "passed": true,
+      "requires_live_hero": true,
+      "live_hero": true
+    },
+    {
+      "name": "field traversal 2 is the actual regional variant",
+      "passed": true,
+      "requires_live_hero": true,
+      "live_hero": true
+    },
+    {
+      "name": "field 2 has an actual dry collision-free perimeter",
+      "passed": true,
+      "requires_live_hero": true,
+      "live_hero": true
+    },
+    {
+      "name": "field 2 cache rejects an unearned crossing",
+      "passed": true,
+      "requires_live_hero": true,
+      "live_hero": true
+    },
+    {
+      "name": "real R launches parachute from field ledge",
+      "passed": true,
+      "requires_live_hero": true,
+      "live_hero": true
+    },
+    {
+      "name": "controlled field descent reaches dry lower shelf",
+      "passed": true,
+      "requires_live_hero": true,
+      "live_hero": true
+    },
+    {
+      "name": "field 2 crossing pays its actual cache",
+      "passed": true,
+      "requires_live_hero": true,
+      "live_hero": true
+    },
+    {
+      "name": "field 2 cache cannot pay twice",
+      "passed": true,
+      "requires_live_hero": true,
+      "live_hero": true
+    },
+    {
+      "name": "red fusion has a physical field pool",
+      "passed": true,
+      "requires_live_hero": true,
+      "live_hero": true
+    },
+    {
+      "name": "unfused field island cannot yield its reward",
+      "passed": true,
+      "requires_live_hero": true,
+      "live_hero": true
+    },
+    {
+      "name": "real fuser A consumes half and raises field bridge",
+      "passed": true,
+      "requires_live_hero": true,
+      "live_hero": true
+    },
+    {
+      "name": "actual walking across fused bridge reaches island reward",
+      "passed": true,
+      "requires_live_hero": true,
+      "live_hero": true
+    }
+  ],
+  "fixtures": [
+    {
+      "kind": "loadout: all tool ownership, original item flags,50 arrows,20seeds,one mineralwater bottle; swordlevel4 and learned skills"
+    },
+    {
+      "kind": "normal regional room transition request",
+      "area": 1,
+      "cell": 0
+    },
+    {
+      "kind": "normal regional room transition request",
+      "area": 1,
+      "cell": 1
+    },
+    {
+      "kind": "normal regional room transition request",
+      "area": 1,
+      "cell": 2
+    },
+    {
+      "kind": "normal regional room transition request",
+      "area": 1,
+      "cell": 3
+    },
+    {
+      "kind": "normal regional room transition request",
+      "area": 1,
+      "cell": 4
+    },
+    {
+      "kind": "normal regional room transition request",
+      "area": 1,
+      "cell": 5
+    },
+    {
+      "kind": "normal regional room transition request",
+      "area": 1,
+      "cell": 6
+    },
+    {
+      "kind": "normal regional room transition request",
+      "area": 1,
+      "cell": 7
+    },
+    {
+      "kind": "normal regional room transition request",
+      "area": 1,
+      "cell": 8
+    },
+    {
+      "kind": "normal regional room transition request",
+      "area": 1,
+      "cell": 9
+    },
+    {
+      "kind": "normal regional room transition request",
+      "area": 1,
+      "cell": 10
+    },
+    {
+      "kind": "normal regional room transition request",
+      "area": 1,
+      "cell": 11
+    },
+    {
+      "kind": "normal regional room transition request",
+      "area": 1,
+      "cell": 12
+    },
+    {
+      "kind": "normal regional room transition request",
+      "area": 1,
+      "cell": 13
+    },
+    {
+      "kind": "normal regional room transition request",
+      "area": 1,
+      "cell": 14
+    },
+    {
+      "kind": "normal regional room transition request",
+      "area": 1,
+      "cell": 15
+    },
+    {
+      "kind": "normal regional room transition request",
+      "area": 1,
+      "cell": 16
+    },
+    {
+      "kind": "normal regional room transition request",
+      "area": 1,
+      "cell": 17
+    },
+    {
+      "kind": "normal regional room transition request",
+      "area": 1,
+      "cell": 18
+    },
+    {
+      "kind": "normal regional room transition request",
+      "area": 1,
+      "cell": 19
+    },
+    {
+      "kind": "normal regional room transition request",
+      "area": 1,
+      "cell": 20
+    },
+    {
+      "kind": "normal regional room transition request",
+      "area": 1,
+      "cell": 21
+    },
+    {
+      "kind": "normal regional room transition request",
+      "area": 1,
+      "cell": 22
+    },
+    {
+      "kind": "normal regional room transition request",
+      "area": 1,
+      "cell": 23
+    },
+    {
+      "kind": "normal regional room transition request",
+      "area": 1,
+      "cell": 24
+    },
+    {
+      "kind": "normal regional room transition request",
+      "area": 3,
+      "cell": 0
+    },
+    {
+      "kind": "normal regional room transition request",
+      "area": 3,
+      "cell": 1
+    },
+    {
+      "kind": "normal regional room transition request",
+      "area": 3,
+      "cell": 2
+    },
+    {
+      "kind": "loadout: all tool ownership, original item flags,50 arrows,20seeds,one mineralwater bottle; swordlevel4 and learned skills"
+    },
+    {
+      "kind": "fresh seeded core before isolated case",
+      "label": "read-only survey continuation",
+      "boot": 1,
+      "health": 24
+    },
+    {
+      "kind": "normal regional room transition request",
+      "area": 3,
+      "cell": 3
+    },
+    {
+      "kind": "normal regional room transition request",
+      "area": 3,
+      "cell": 4
+    },
+    {
+      "kind": "normal regional room transition request",
+      "area": 3,
+      "cell": 5
+    },
+    {
+      "kind": "loadout: all tool ownership, original item flags,50 arrows,20seeds,one mineralwater bottle; swordlevel4 and learned skills"
+    },
+    {
+      "kind": "fresh seeded core before isolated case",
+      "label": "read-only survey continuation",
+      "boot": 2,
+      "health": 24
+    },
+    {
+      "kind": "normal regional room transition request",
+      "area": 3,
+      "cell": 6
+    },
+    {
+      "kind": "normal regional room transition request",
+      "area": 3,
+      "cell": 7
+    },
+    {
+      "kind": "normal regional room transition request",
+      "area": 3,
+      "cell": 8
+    },
+    {
+      "kind": "loadout: all tool ownership, original item flags,50 arrows,20seeds,one mineralwater bottle; swordlevel4 and learned skills"
+    },
+    {
+      "kind": "fresh seeded core before isolated case",
+      "label": "read-only survey continuation",
+      "boot": 3,
+      "health": 24
+    },
+    {
+      "kind": "normal regional room transition request",
+      "area": 3,
+      "cell": 9
+    },
+    {
+      "kind": "loadout: all tool ownership, original item flags,50 arrows,20seeds,one mineralwater bottle; swordlevel4 and learned skills"
+    },
+    {
+      "kind": "fresh seeded core before isolated case",
+      "label": "read-only survey continuation",
+      "boot": 4,
+      "health": 24
+    },
+    {
+      "kind": "normal regional room transition request",
+      "area": 3,
+      "cell": 10
+    },
+    {
+      "kind": "normal regional room transition request",
+      "area": 3,
+      "cell": 11
+    },
+    {
+      "kind": "loadout: all tool ownership, original item flags,50 arrows,20seeds,one mineralwater bottle; swordlevel4 and learned skills"
+    },
+    {
+      "kind": "fresh seeded core before isolated case",
+      "label": "read-only survey continuation",
+      "boot": 5,
+      "health": 24
+    },
+    {
+      "kind": "normal regional room transition request",
+      "area": 3,
+      "cell": 12
+    },
+    {
+      "kind": "normal regional room transition request",
+      "area": 3,
+      "cell": 13
+    },
+    {
+      "kind": "loadout: all tool ownership, original item flags,50 arrows,20seeds,one mineralwater bottle; swordlevel4 and learned skills"
+    },
+    {
+      "kind": "fresh seeded core before isolated case",
+      "label": "read-only survey continuation",
+      "boot": 6,
+      "health": 24
+    },
+    {
+      "kind": "normal regional room transition request",
+      "area": 3,
+      "cell": 14
+    },
+    {
+      "kind": "normal regional room transition request",
+      "area": 3,
+      "cell": 15
+    },
+    {
+      "kind": "loadout: all tool ownership, original item flags,50 arrows,20seeds,one mineralwater bottle; swordlevel4 and learned skills"
+    },
+    {
+      "kind": "fresh seeded core before isolated case",
+      "label": "read-only survey continuation",
+      "boot": 7,
+      "health": 24
+    },
+    {
+      "kind": "normal regional room transition request",
+      "area": 3,
+      "cell": 16
+    },
+    {
+      "kind": "normal regional room transition request",
+      "area": 3,
+      "cell": 17
+    },
+    {
+      "kind": "loadout: all tool ownership, original item flags,50 arrows,20seeds,one mineralwater bottle; swordlevel4 and learned skills"
+    },
+    {
+      "kind": "fresh seeded core before isolated case",
+      "label": "read-only survey continuation",
+      "boot": 8,
+      "health": 24
+    },
+    {
+      "kind": "normal regional room transition request",
+      "area": 3,
+      "cell": 18
+    },
+    {
+      "kind": "normal regional room transition request",
+      "area": 3,
+      "cell": 19
+    },
+    {
+      "kind": "loadout: all tool ownership, original item flags,50 arrows,20seeds,one mineralwater bottle; swordlevel4 and learned skills"
+    },
+    {
+      "kind": "fresh seeded core before isolated case",
+      "label": "read-only survey continuation",
+      "boot": 9,
+      "health": 24
+    },
+    {
+      "kind": "normal regional room transition request",
+      "area": 3,
+      "cell": 20
+    },
+    {
+      "kind": "loadout: all tool ownership, original item flags,50 arrows,20seeds,one mineralwater bottle; swordlevel4 and learned skills"
+    },
+    {
+      "kind": "fresh seeded core before isolated case",
+      "label": "read-only survey continuation",
+      "boot": 10,
+      "health": 24
+    },
+    {
+      "kind": "normal regional room transition request",
+      "area": 3,
+      "cell": 21
+    },
+    {
+      "kind": "normal regional room transition request",
+      "area": 3,
+      "cell": 22
+    },
+    {
+      "kind": "loadout: all tool ownership, original item flags,50 arrows,20seeds,one mineralwater bottle; swordlevel4 and learned skills"
+    },
+    {
+      "kind": "fresh seeded core before isolated case",
+      "label": "read-only survey continuation",
+      "boot": 11,
+      "health": 24
+    },
+    {
+      "kind": "normal regional room transition request",
+      "area": 3,
+      "cell": 23
+    },
+    {
+      "kind": "normal regional room transition request",
+      "area": 3,
+      "cell": 24
+    },
+    {
+      "kind": "loadout: all tool ownership, original item flags,50 arrows,20seeds,one mineralwater bottle; swordlevel4 and learned skills"
+    },
+    {
+      "kind": "fresh seeded core before isolated case",
+      "label": "field traversal 1",
+      "boot": 12,
+      "health": 24
+    },
+    {
+      "kind": "normal regional room transition request",
+      "area": 1,
+      "cell": 1
+    },
+    {
+      "kind": "hero navigation/standing/facing",
+      "area": 1,
+      "cell": 1,
+      "x": 280,
+      "y": 158,
+      "face": 0
+    },
+    {
+      "kind": "hero navigation/standing/facing",
+      "area": 1,
+      "cell": 1,
+      "x": 248,
+      "y": 222,
+      "face": 0
+    },
+    {
+      "kind": "hero navigation/standing/facing",
+      "area": 1,
+      "cell": 1,
+      "x": 280,
+      "y": 158,
+      "face": 0
+    },
+    {
+      "kind": "gilt reset before isolated reward accounting",
+      "amount": 0
+    },
+    {
+      "kind": "hero navigation/standing/facing",
+      "area": 1,
+      "cell": 1,
+      "x": 248,
+      "y": 222,
+      "face": 0
+    },
+    {
+      "kind": "hero navigation/standing/facing",
+      "area": 1,
+      "cell": 1,
+      "x": 200,
+      "y": 190,
+      "face": 0
+    },
+    {
+      "kind": "loadout: all tool ownership, original item flags,50 arrows,20seeds,one mineralwater bottle; swordlevel4 and learned skills"
+    },
+    {
+      "kind": "fresh seeded core before isolated case",
+      "label": "field traversal 2",
+      "boot": 13,
+      "health": 24
+    },
+    {
+      "kind": "normal regional room transition request",
+      "area": 3,
+      "cell": 15
+    },
+    {
+      "kind": "hero navigation/standing/facing",
+      "area": 3,
+      "cell": 15,
+      "x": 456,
+      "y": 350,
+      "face": 0
+    },
+    {
+      "kind": "hero navigation/standing/facing",
+      "area": 3,
+      "cell": 15,
+      "x": 424,
+      "y": 286,
+      "face": 0
+    },
+    {
+      "kind": "hero navigation/standing/facing",
+      "area": 3,
+      "cell": 15,
+      "x": 456,
+      "y": 350,
+      "face": 0
+    },
+    {
+      "kind": "gilt reset before isolated reward accounting",
+      "amount": 0
+    },
+    {
+      "kind": "loadout: all tool ownership, original item flags,50 arrows,20seeds,one mineralwater bottle; swordlevel4 and learned skills"
+    },
+    {
+      "kind": "fresh seeded core before isolated case",
+      "label": "red fusion",
+      "boot": 14,
+      "health": 24
+    },
+    {
+      "kind": "normal regional room transition request",
+      "area": 3,
+      "cell": 16
+    },
+    {
+      "kind": "hero navigation/standing/facing",
+      "area": 3,
+      "cell": 16,
+      "x": 424,
+      "y": 348,
+      "face": 0
+    },
+    {
+      "kind": "hero navigation/standing/facing",
+      "area": 3,
+      "cell": 16,
+      "x": 72,
+      "y": 346,
+      "face": 0
+    },
+    {
+      "kind": "one matching red kinstone half",
+      "shape": 0
+    },
+    {
+      "kind": "hero navigation/standing/facing",
+      "area": 3,
+      "cell": 16,
+      "x": 424,
+      "y": 348,
+      "face": 0
+    }
+  ],
+  "input_trace": {
+    "stored_in_raw_report": true,
+    "entries": 187,
+    "original_json_bytes": 94777
+  },
+  "rooms": {
+    "stored_in_raw_report": true,
+    "entries": 50,
+    "original_json_bytes": 17877
+  },
+  "views": [],
+  "observed_object_families": [],
+  "passed": 23,
+  "total": 23,
+  "error": null,
+  "publication_format": "Compact review summary; outcomes and identities retained. Exact original JSON is adjacent in gzip and in native-evidence.zip.",
+  "raw_report": {
+    "file": "report.json.gz",
+    "sha256": "6246f8353e8b8aaa68895b3367c9cd498ec11237a35a8ab5aa6e910c4e2d6b99",
+    "uncompressed_sha256": "75311089f85c8c29ad8fe66e39801e644a2606376db0927845015f23df41f969",
+    "uncompressed_bytes": 242972
+  }
+}

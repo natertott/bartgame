@@ -1,7 +1,8 @@
 # BARTGAME
 
 An original Game Boy Advance action game: Bloom, a small flower-and-root
-wanderer, lives in the Drain and explores a different Blighted Forest each run.
+wanderer, lives in the Drain and explores the Blighted Forest and Curdled Cream.
+Both regions generate a different puzzle each run.
 The influences are *The Minish Cap*, *Slay the Spire*, Bataille and Boorman’s
 *Excalibur*: wet filth beside brilliant brass, decay beside exquisite flowers,
 and plenty of glitter.
@@ -68,21 +69,31 @@ use `PROFILE=0`; `PROFILE=1` is development-only cycle accounting.
 The Drain is the hub, with the Billious Peddler, Pale Gatekeeper and a
 stone-framed, brass-rung ladder to the forest. The Forest and The Curdled Cream
 are the first two regions of nine; seven future regions remain unspecified.
-Two additional arches in the Drain reach the Cream and the optional Challenge
-Annex. See the [current release, controls and actual mGBA views](../curdled-cream-review/README.md)
+The second wall ladder repeats the Forest ladder's selected artwork and leads
+to Cream. See the [regional handoff release and actual mGBA views](../regional-handoff-review/README.md)
 and the [complete handoff ledger](../docs/handoff-restoration/AUDIT.md).
 
 The Cream is a separate 5×5 directed climbing puzzle: two terraces per room,
 upward climbs, lateral connections, caves and committed one-to-four-screen
 descents. Three earned tools unlock its summit route. The boss occupies a
 random top-row peak. Its original native terrain and actors append to the
-existing art pack. The Annex supplies restored gear, seven quest forms,
-solver-certified puzzle boards, shops, fusions and four mechanism courts;
-Select from the existing pause screen opens its expanded Satchel and atlas.
-The Annex and its challenge menus were invented implementation choices, not
-locations specified by the handoff. Most of those added quests and mechanisms
-currently live in Annex sites; integrating the full vocabulary into generated
-regional content remains unfinished. See the [deployment correction](docs/handoff-restoration/EVENTS.md#provenance-and-unfinished-regional-integration).
+existing art pack. Restored events, seven rotating quest forms, certified
+puzzle boards, fusers, physical mechanisms and useful crossings now belong to
+the generated regions and their cave, hollow and thicket interiors. The old
+invented Annex selection hub is absent from normal exploration; its scene IDs
+remain internal for save compatibility. Select from the existing pause screen
+opens the expanded Satchel; R resolves the current region's atlas.
+
+New runs offer three rounds of starting gifts. Physical Drain services supply
+rolled wares, three priced rests, a fusion-location broker, route hints and
+Trophy preferences. Both regions host escalating waves and once-only initial
+rewards. Four live regional objectives provide an additional Earth Element win
+route, with the final seal requiring three actual Forest or Cream trials.
+The original Heart and summit victories remain available. See
+[events and run flow](docs/handoff-restoration/EVENTS.md),
+[regional placement](docs/handoff-restoration/REGIONAL_CONTENT.md) and
+[mechanisms](docs/handoff-restoration/REGIONAL_MECHANISMS.md) for the precise
+adaptations and their verification scopes.
 
 The forest is a seeded 5×5 maze with a balanced target of 24–32 required room
 crossings. Three required trials award Blightseed Bombs, the candle/Grail Lamp

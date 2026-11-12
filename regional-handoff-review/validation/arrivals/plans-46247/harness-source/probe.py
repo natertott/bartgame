@@ -1,0 +1,219 @@
+"""BARTGAME emulator harness: boot the ROM in mGBA, press keys, read RAM by
+symbol, take screenshots.
+
+    import probe
+    c = probe.boot()
+    probe.hold(c, 'RIGHT', 60)
+    probe.snap(c, 'out.png')
+    print(probe.sym('gPl'))
+
+Symbols come from build/bartgame.map (the linker map), so a probe never
+hard-codes an address.
+"""
+import os
+import re
+import sys
+
+import mgba.core
+import mgba.image
+import mgba.log
+
+mgba.log.silence()
+
+HERE = os.path.dirname(os.path.abspath(__file__))
+ROOT = os.path.join(HERE, '..')
+ROM = os.path.join(ROOT, 'bartgame.gba')
+MAP = os.path.join(ROOT, 'build', 'bartgame.map')
+
+_syms = None
+
+
+def sym(name):
+    global _syms
+    if _syms is None:
+        _syms = {}
+        for line in open(MAP):
+            m = re.match(r'\s+0x([0-9a-f]{8,16})\s+(\w+)\s*$', line)
+            if m:
+                _syms[m.group(2)] = int(m.group(1), 16)
+    return _syms[name]
+
+
+def boot(rom=ROM, frames=30, seed=0xB4A7, start=True, finish_draft=True):
+    """Boot to the title, pin the run seed, press Start, and wait for the
+    sewer. seed=None leaves the title's own roll. start=False stays on the
+    title screen. New regional builds choose the first offer in each opening
+    round through real A inputs; finish_draft=False leaves that flow to a test.
+    Older ROMs without the opening sentinel retain their original inputs."""
+    img = mgba.image.Image(240, 160)
+    c = mgba.core.load_path(rom)
+    c.set_video_buffer(img)
+    c.bg_video = img
+    c.reset()
+    for _ in range(frames):
+        c.run_frame()
+    if not start:
+        return c
+    if seed is not None:
+        a = sym('gSeedOverride')
+        w16(c, a, seed & 0xFFFF)
+        w16(c, a + 2, seed >> 16)
+    press(c, 'START', 2, 40)
+    # Candidate-scored maze generation can span several video frames. Wait
+    # for the actual state change instead of inspecting a half-built World.
+    for _ in range(1200):
+        if c.memory.u8[sym('gGame')] != 0:
+            break
+        c.run_frame()
+    else:
+        raise RuntimeError('the ROM did not finish starting its seeded run')
+    for _ in range(40):
+        c.run_frame()
+    # the opening text box
+    press(c, 'A', 2, 20)
+    press(c, 'A', 2, 20)
+    if finish_draft:
+        try:
+            pending = sym('gStartingDraft')
+        except KeyError:
+            pending = None
+        if pending is not None:
+            for _ in range(120):
+                if not r8(c, pending):
+                    break
+                press(c, 'A', 2, 22)
+            else:
+                raise RuntimeError('the opening three-choice draft did not finish')
+    return c
+
+
+def snap(c, path):
+    img = c.bg_video
+    if hasattr(img, 'to_pil'):
+        img.to_pil().convert('RGB').save(path)
+    else:
+        with open(path, 'wb') as fh:
+            img.save_png(fh)
+
+
+def key(c, name):
+    return getattr(c, 'KEY_' + name)
+
+
+def hold(c, names, frames):
+    """Hold keys (a string or list) for N frames, then release. mGBA's
+    KEY_* constants are bit indices, passed one per argument."""
+    if isinstance(names, str):
+        names = [names]
+    ks = [key(c, n) for n in names]
+    c.set_keys(*ks)
+    for _ in range(frames):
+        c.run_frame()
+    c.clear_keys(*ks)
+
+
+# Actor field offsets (src/actor.h)
+A_STATE, A_TIMER, A_DIR, A_FACING, A_X, A_Y, A_Z, A_SPEED, A_HP, A_IFRAMES, A_COLL = 2, 4, 6, 7, 8, 12, 16, 24, 26, 28, 35
+ACTOR_SIZE = 64
+
+
+def actor(c, i):
+    a = sym('gActors') + i * ACTOR_SIZE
+    x = r32(c, a + A_X)
+    y = r32(c, a + A_Y)
+    if x >= 1 << 31:
+        x -= 1 << 32
+    if y >= 1 << 31:
+        y -= 1 << 32
+    return {'kind': r8(c, a), 'type': r8(c, a + 1), 'state': r8(c, a + A_STATE), 'timer': r8(c, a + A_TIMER),
+            'x': x >> 16, 'y': y >> 16, 'z': r32(c, a + A_Z) >> 16, 'speed': r16(c, a + A_SPEED),
+            'hp': r16(c, a + A_HP), 'coll': r8(c, a + A_COLL), 'facing': r8(c, a + A_FACING)}
+
+
+def press(c, name, hold_frames=2, release_frames=2):
+    hold(c, name, hold_frames)
+    for _ in range(release_frames):
+        c.run_frame()
+
+
+def run(c, frames):
+    for _ in range(frames):
+        c.run_frame()
+
+
+def r8(c, a):
+    return c.memory.u8[a]
+
+
+def r16(c, a):
+    v = c.memory.u8[a] | (c.memory.u8[a + 1] << 8)
+    return v - 0x10000 if v >= 0x8000 else v
+
+
+def r32(c, a):
+    return (c.memory.u8[a] | (c.memory.u8[a + 1] << 8) | (c.memory.u8[a + 2] << 16) | (c.memory.u8[a + 3] << 24))
+
+
+def w8(c, a, v):
+    c.memory.u8[a] = v & 0xFF
+
+
+def w16(c, a, v):
+    c.memory.u8[a] = v & 0xFF
+    c.memory.u8[a + 1] = (v >> 8) & 0xFF
+
+
+def player_pos(c):
+    """The player's feet point in room pixels (Actor 0: x at +8, y at +12)."""
+    a = sym('gActors')
+    x = r32(c, a + 8)
+    y = r32(c, a + 12)
+    if x >= 1 << 31:
+        x -= 1 << 32
+    if y >= 1 << 31:
+        y -= 1 << 32
+    return x >> 16, y >> 16
+
+
+if __name__ == '__main__':
+    out = sys.argv[1] if len(sys.argv) > 1 else '/tmp/bart.png'
+    c = boot()
+    run(c, 60)
+    snap(c, out)
+    print('player at', player_pos(c), '->', out)
+
+
+def hall_exit(c):
+    """the drain hole's cell in the loaded hall: the cell of type EXIT"""
+    R = sym('gRoom')
+    w, h = r8(c, R), r8(c, R + 1)
+    types = sym('metatile_type')
+    exit_t = int(open(os.path.join(ROOT, 'build', 'gen', 'assets.h')).read().split('#define TT_EXIT ')[1].split()[0])
+    for y in range(h):
+        for x in range(w):
+            mt = r16(c, R + 2 + (y * 32 + x) * 2) & 0xFFFF
+            if mt != 0xFFFF and r8(c, types + mt) == exit_t:
+                return x, y
+    raise AssertionError('the hall has no exit')
+
+
+def enter_forest(c):
+    """from the hub up into the drain hole: the hero is set at the hole's
+    mouth and walks up into it (tools/hall_probe.py walks the whole way
+    from the spawn)"""
+    ex, ey = hall_exit(c)
+    a = sym('gActors')
+    pl = sym('gPl')
+    x, y = ex * 16 + 8, (ey + 2) * 16 + 10
+    w16(c, a + 8, 0); w16(c, a + 10, x)
+    w16(c, a + 12, 0); w16(c, a + 14, y)
+    w16(c, pl + 14, x); w16(c, pl + 16, y)
+    run(c, 3)
+    hold(c, 'UP', 60)
+    run(c, 40)
+    for _ in range(600):
+        if r8(c, sym('gGame')) == 1 and r8(c, sym('gGame') + 1) == 1:
+            break
+        c.run_frame()
+    else:
+        raise RuntimeError('the forest entrance transition did not settle')

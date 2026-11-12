@@ -1,0 +1,1439 @@
+{
+  "method": "Check ordinary generated-interior arrival/return safety without Flippers.\n\nOnly fresh private SRAM, title seeds, ordinary regional room-load requests and\nhero navigation/facing are fixtures. The ordinary three opening choices are\nmade through input. No inventory, health, enemies, outcome flags, terrain,\ncollision, camera or pixels are assigned. Actual A uses generated doors and\nactual Down walks out. This is broad isolated access coverage, not unassisted\nexploration or completion of these chambers. Paired/blue locked doors are\nexcluded here and covered by the real-unlock paired-event suite.\n",
+  "source_commit": "51880a55e6ecf86728f3a0923e5547e7bdeed5a0",
+  "rom_sha256": "0dd8554384b53e618140f8c61590fc7e6a7ff0888f296ece034a95f357b34fdd",
+  "tool_sha256": "4fd3458bbfe85e732f3251d996e676b19607c6bb4fd71b8774bbd6f7641ed14d",
+  "checks": [
+    {
+      "name": "all twelve generated mechanism entrances sampled",
+      "passed": true
+    },
+    {
+      "name": "all three generated traversal entrances sampled",
+      "passed": true
+    },
+    {
+      "name": "all seventeen unsealed event families sampled",
+      "passed": true
+    },
+    {
+      "name": "event-1: ordinary loadout has no Flippers",
+      "passed": true
+    },
+    {
+      "name": "event-1: actual door enters its dealt interior",
+      "passed": true
+    },
+    {
+      "name": "event-1: standing arrival never drowns or falls",
+      "passed": true
+    },
+    {
+      "name": "event-1: arrival stays alive without a reset loop",
+      "passed": true
+    },
+    {
+      "name": "event-1: actual south exit returns to physical origin",
+      "passed": true
+    },
+    {
+      "name": "event-1: return remains usable without bounce or fall",
+      "passed": true
+    },
+    {
+      "name": "event-10: ordinary loadout has no Flippers",
+      "passed": true
+    },
+    {
+      "name": "event-10: actual door enters its dealt interior",
+      "passed": true
+    },
+    {
+      "name": "event-10: standing arrival never drowns or falls",
+      "passed": true
+    },
+    {
+      "name": "event-10: arrival stays alive without a reset loop",
+      "passed": true
+    },
+    {
+      "name": "event-10: actual south exit returns to physical origin",
+      "passed": true
+    },
+    {
+      "name": "event-10: return remains usable without bounce or fall",
+      "passed": true
+    },
+    {
+      "name": "event-11: ordinary loadout has no Flippers",
+      "passed": true
+    },
+    {
+      "name": "event-11: actual door enters its dealt interior",
+      "passed": true
+    },
+    {
+      "name": "event-11: standing arrival never drowns or falls",
+      "passed": true
+    },
+    {
+      "name": "event-11: arrival stays alive without a reset loop",
+      "passed": true
+    },
+    {
+      "name": "event-11: actual south exit returns to physical origin",
+      "passed": true
+    },
+    {
+      "name": "event-11: return remains usable without bounce or fall",
+      "passed": true
+    },
+    {
+      "name": "event-12: ordinary loadout has no Flippers",
+      "passed": true
+    },
+    {
+      "name": "event-12: actual door enters its dealt interior",
+      "passed": true
+    },
+    {
+      "name": "event-12: standing arrival never drowns or falls",
+      "passed": true
+    },
+    {
+      "name": "event-12: arrival stays alive without a reset loop",
+      "passed": true
+    },
+    {
+      "name": "event-12: actual south exit returns to physical origin",
+      "passed": true
+    },
+    {
+      "name": "event-12: return remains usable without bounce or fall",
+      "passed": true
+    },
+    {
+      "name": "event-13: ordinary loadout has no Flippers",
+      "passed": true
+    },
+    {
+      "name": "event-13: actual door enters its dealt interior",
+      "passed": true
+    },
+    {
+      "name": "event-13: standing arrival never drowns or falls",
+      "passed": true
+    },
+    {
+      "name": "event-13: arrival stays alive without a reset loop",
+      "passed": true
+    },
+    {
+      "name": "event-13: actual south exit returns to physical origin",
+      "passed": true
+    },
+    {
+      "name": "event-13: return remains usable without bounce or fall",
+      "passed": true
+    },
+    {
+      "name": "event-14: ordinary loadout has no Flippers",
+      "passed": true
+    },
+    {
+      "name": "event-14: actual door enters its dealt interior",
+      "passed": true
+    },
+    {
+      "name": "event-14: standing arrival never drowns or falls",
+      "passed": true
+    },
+    {
+      "name": "event-14: arrival stays alive without a reset loop",
+      "passed": true
+    },
+    {
+      "name": "event-14: actual south exit returns to physical origin",
+      "passed": true
+    },
+    {
+      "name": "event-14: return remains usable without bounce or fall",
+      "passed": true
+    },
+    {
+      "name": "event-2: ordinary loadout has no Flippers",
+      "passed": true
+    },
+    {
+      "name": "event-2: actual door enters its dealt interior",
+      "passed": true
+    },
+    {
+      "name": "event-2: standing arrival never drowns or falls",
+      "passed": true
+    },
+    {
+      "name": "event-2: arrival stays alive without a reset loop",
+      "passed": true
+    },
+    {
+      "name": "event-2: actual south exit returns to physical origin",
+      "passed": true
+    },
+    {
+      "name": "event-2: return remains usable without bounce or fall",
+      "passed": true
+    },
+    {
+      "name": "event-23: ordinary loadout has no Flippers",
+      "passed": true
+    },
+    {
+      "name": "event-23: actual door enters its dealt interior",
+      "passed": true
+    },
+    {
+      "name": "event-23: standing arrival never drowns or falls",
+      "passed": true
+    },
+    {
+      "name": "event-23: arrival stays alive without a reset loop",
+      "passed": true
+    },
+    {
+      "name": "event-23: actual south exit returns to physical origin",
+      "passed": true
+    },
+    {
+      "name": "event-23: return remains usable without bounce or fall",
+      "passed": true
+    },
+    {
+      "name": "event-25: ordinary loadout has no Flippers",
+      "passed": true
+    },
+    {
+      "name": "event-25: actual door enters its dealt interior",
+      "passed": true
+    },
+    {
+      "name": "event-25: standing arrival never drowns or falls",
+      "passed": true
+    },
+    {
+      "name": "event-25: arrival stays alive without a reset loop",
+      "passed": true
+    },
+    {
+      "name": "event-25: actual south exit returns to physical origin",
+      "passed": true
+    },
+    {
+      "name": "event-25: return remains usable without bounce or fall",
+      "passed": true
+    },
+    {
+      "name": "event-26: ordinary loadout has no Flippers",
+      "passed": true
+    },
+    {
+      "name": "event-26: actual door enters its dealt interior",
+      "passed": true
+    },
+    {
+      "name": "event-26: standing arrival never drowns or falls",
+      "passed": true
+    },
+    {
+      "name": "event-26: arrival stays alive without a reset loop",
+      "passed": true
+    },
+    {
+      "name": "event-26: actual south exit returns to physical origin",
+      "passed": true
+    },
+    {
+      "name": "event-26: return remains usable without bounce or fall",
+      "passed": true
+    },
+    {
+      "name": "event-3: ordinary loadout has no Flippers",
+      "passed": true
+    },
+    {
+      "name": "event-3: actual door enters its dealt interior",
+      "passed": true
+    },
+    {
+      "name": "event-3: standing arrival never drowns or falls",
+      "passed": true
+    },
+    {
+      "name": "event-3: arrival stays alive without a reset loop",
+      "passed": true
+    },
+    {
+      "name": "event-3: actual south exit returns to physical origin",
+      "passed": true
+    },
+    {
+      "name": "event-3: return remains usable without bounce or fall",
+      "passed": true
+    },
+    {
+      "name": "event-4: ordinary loadout has no Flippers",
+      "passed": true
+    },
+    {
+      "name": "event-4: actual door enters its dealt interior",
+      "passed": true
+    },
+    {
+      "name": "event-4: standing arrival never drowns or falls",
+      "passed": true
+    },
+    {
+      "name": "event-4: arrival stays alive without a reset loop",
+      "passed": true
+    },
+    {
+      "name": "event-4: actual south exit returns to physical origin",
+      "passed": true
+    },
+    {
+      "name": "event-4: return remains usable without bounce or fall",
+      "passed": true
+    },
+    {
+      "name": "event-5: ordinary loadout has no Flippers",
+      "passed": true
+    },
+    {
+      "name": "event-5: actual door enters its dealt interior",
+      "passed": true
+    },
+    {
+      "name": "event-5: standing arrival never drowns or falls",
+      "passed": true
+    },
+    {
+      "name": "event-5: arrival stays alive without a reset loop",
+      "passed": true
+    },
+    {
+      "name": "event-5: actual south exit returns to physical origin",
+      "passed": true
+    },
+    {
+      "name": "event-5: return remains usable without bounce or fall",
+      "passed": true
+    },
+    {
+      "name": "event-6: ordinary loadout has no Flippers",
+      "passed": true
+    },
+    {
+      "name": "event-6: actual door enters its dealt interior",
+      "passed": true
+    },
+    {
+      "name": "event-6: standing arrival never drowns or falls",
+      "passed": true
+    },
+    {
+      "name": "event-6: arrival stays alive without a reset loop",
+      "passed": true
+    },
+    {
+      "name": "event-6: actual south exit returns to physical origin",
+      "passed": true
+    },
+    {
+      "name": "event-6: return remains usable without bounce or fall",
+      "passed": true
+    },
+    {
+      "name": "event-7: ordinary loadout has no Flippers",
+      "passed": true
+    },
+    {
+      "name": "event-7: actual door enters its dealt interior",
+      "passed": true
+    },
+    {
+      "name": "event-7: standing arrival never drowns or falls",
+      "passed": true
+    },
+    {
+      "name": "event-7: arrival stays alive without a reset loop",
+      "passed": true
+    },
+    {
+      "name": "event-7: actual south exit returns to physical origin",
+      "passed": true
+    },
+    {
+      "name": "event-7: return remains usable without bounce or fall",
+      "passed": true
+    },
+    {
+      "name": "event-8: ordinary loadout has no Flippers",
+      "passed": true
+    },
+    {
+      "name": "event-8: actual door enters its dealt interior",
+      "passed": true
+    },
+    {
+      "name": "event-8: standing arrival never drowns or falls",
+      "passed": true
+    },
+    {
+      "name": "event-8: arrival stays alive without a reset loop",
+      "passed": true
+    },
+    {
+      "name": "event-8: actual south exit returns to physical origin",
+      "passed": true
+    },
+    {
+      "name": "event-8: return remains usable without bounce or fall",
+      "passed": true
+    },
+    {
+      "name": "event-9: ordinary loadout has no Flippers",
+      "passed": true
+    },
+    {
+      "name": "event-9: actual door enters its dealt interior",
+      "passed": true
+    },
+    {
+      "name": "event-9: standing arrival never drowns or falls",
+      "passed": true
+    },
+    {
+      "name": "event-9: arrival stays alive without a reset loop",
+      "passed": true
+    },
+    {
+      "name": "event-9: actual south exit returns to physical origin",
+      "passed": true
+    },
+    {
+      "name": "event-9: return remains usable without bounce or fall",
+      "passed": true
+    },
+    {
+      "name": "mechanism-0: ordinary loadout has no Flippers",
+      "passed": true
+    },
+    {
+      "name": "mechanism-0: actual door enters its dealt interior",
+      "passed": true
+    },
+    {
+      "name": "mechanism-0: standing arrival never drowns or falls",
+      "passed": true
+    },
+    {
+      "name": "mechanism-0: arrival stays alive without a reset loop",
+      "passed": true
+    },
+    {
+      "name": "mechanism-0: actual south exit returns to physical origin",
+      "passed": true
+    },
+    {
+      "name": "mechanism-0: return remains usable without bounce or fall",
+      "passed": true
+    },
+    {
+      "name": "mechanism-1: ordinary loadout has no Flippers",
+      "passed": true
+    },
+    {
+      "name": "mechanism-1: actual door enters its dealt interior",
+      "passed": true
+    },
+    {
+      "name": "mechanism-1: standing arrival never drowns or falls",
+      "passed": true
+    },
+    {
+      "name": "mechanism-1: arrival stays alive without a reset loop",
+      "passed": true
+    },
+    {
+      "name": "mechanism-1: actual south exit returns to physical origin",
+      "passed": true
+    },
+    {
+      "name": "mechanism-1: return remains usable without bounce or fall",
+      "passed": true
+    },
+    {
+      "name": "mechanism-10: ordinary loadout has no Flippers",
+      "passed": true
+    },
+    {
+      "name": "mechanism-10: actual door enters its dealt interior",
+      "passed": true
+    },
+    {
+      "name": "mechanism-10: standing arrival never drowns or falls",
+      "passed": true
+    },
+    {
+      "name": "mechanism-10: arrival stays alive without a reset loop",
+      "passed": true
+    },
+    {
+      "name": "mechanism-10: actual south exit returns to physical origin",
+      "passed": true
+    },
+    {
+      "name": "mechanism-10: return remains usable without bounce or fall",
+      "passed": true
+    },
+    {
+      "name": "mechanism-11: ordinary loadout has no Flippers",
+      "passed": true
+    },
+    {
+      "name": "mechanism-11: actual door enters its dealt interior",
+      "passed": true
+    },
+    {
+      "name": "mechanism-11: standing arrival never drowns or falls",
+      "passed": true
+    },
+    {
+      "name": "mechanism-11: arrival stays alive without a reset loop",
+      "passed": true
+    },
+    {
+      "name": "mechanism-11: actual south exit returns to physical origin",
+      "passed": true
+    },
+    {
+      "name": "mechanism-11: return remains usable without bounce or fall",
+      "passed": true
+    },
+    {
+      "name": "mechanism-2: ordinary loadout has no Flippers",
+      "passed": true
+    },
+    {
+      "name": "mechanism-2: actual door enters its dealt interior",
+      "passed": true
+    },
+    {
+      "name": "mechanism-2: standing arrival never drowns or falls",
+      "passed": true
+    },
+    {
+      "name": "mechanism-2: arrival stays alive without a reset loop",
+      "passed": true
+    },
+    {
+      "name": "mechanism-2: actual south exit returns to physical origin",
+      "passed": true
+    },
+    {
+      "name": "mechanism-2: return remains usable without bounce or fall",
+      "passed": true
+    },
+    {
+      "name": "mechanism-3: ordinary loadout has no Flippers",
+      "passed": true
+    },
+    {
+      "name": "mechanism-3: actual door enters its dealt interior",
+      "passed": true
+    },
+    {
+      "name": "mechanism-3: standing arrival never drowns or falls",
+      "passed": true
+    },
+    {
+      "name": "mechanism-3: arrival stays alive without a reset loop",
+      "passed": true
+    },
+    {
+      "name": "mechanism-3: actual south exit returns to physical origin",
+      "passed": true
+    },
+    {
+      "name": "mechanism-3: return remains usable without bounce or fall",
+      "passed": true
+    },
+    {
+      "name": "mechanism-4: ordinary loadout has no Flippers",
+      "passed": true
+    },
+    {
+      "name": "mechanism-4: actual door enters its dealt interior",
+      "passed": true
+    },
+    {
+      "name": "mechanism-4: standing arrival never drowns or falls",
+      "passed": true
+    },
+    {
+      "name": "mechanism-4: arrival stays alive without a reset loop",
+      "passed": true
+    },
+    {
+      "name": "mechanism-4: actual south exit returns to physical origin",
+      "passed": true
+    },
+    {
+      "name": "mechanism-4: return remains usable without bounce or fall",
+      "passed": true
+    },
+    {
+      "name": "mechanism-5: ordinary loadout has no Flippers",
+      "passed": true
+    },
+    {
+      "name": "mechanism-5: actual door enters its dealt interior",
+      "passed": true
+    },
+    {
+      "name": "mechanism-5: standing arrival never drowns or falls",
+      "passed": true
+    },
+    {
+      "name": "mechanism-5: arrival stays alive without a reset loop",
+      "passed": true
+    },
+    {
+      "name": "mechanism-5: actual south exit returns to physical origin",
+      "passed": true
+    },
+    {
+      "name": "mechanism-5: return remains usable without bounce or fall",
+      "passed": true
+    },
+    {
+      "name": "mechanism-6: ordinary loadout has no Flippers",
+      "passed": true
+    },
+    {
+      "name": "mechanism-6: actual door enters its dealt interior",
+      "passed": true
+    },
+    {
+      "name": "mechanism-6: standing arrival never drowns or falls",
+      "passed": true
+    },
+    {
+      "name": "mechanism-6: arrival stays alive without a reset loop",
+      "passed": true
+    },
+    {
+      "name": "mechanism-6: actual south exit returns to physical origin",
+      "passed": true
+    },
+    {
+      "name": "mechanism-6: return remains usable without bounce or fall",
+      "passed": true
+    },
+    {
+      "name": "mechanism-7: ordinary loadout has no Flippers",
+      "passed": true
+    },
+    {
+      "name": "mechanism-7: actual door enters its dealt interior",
+      "passed": true
+    },
+    {
+      "name": "mechanism-7: standing arrival never drowns or falls",
+      "passed": true
+    },
+    {
+      "name": "mechanism-7: arrival stays alive without a reset loop",
+      "passed": true
+    },
+    {
+      "name": "mechanism-7: actual south exit returns to physical origin",
+      "passed": true
+    },
+    {
+      "name": "mechanism-7: return remains usable without bounce or fall",
+      "passed": true
+    },
+    {
+      "name": "mechanism-8: ordinary loadout has no Flippers",
+      "passed": true
+    },
+    {
+      "name": "mechanism-8: actual door enters its dealt interior",
+      "passed": true
+    },
+    {
+      "name": "mechanism-8: standing arrival never drowns or falls",
+      "passed": true
+    },
+    {
+      "name": "mechanism-8: arrival stays alive without a reset loop",
+      "passed": true
+    },
+    {
+      "name": "mechanism-8: actual south exit returns to physical origin",
+      "passed": true
+    },
+    {
+      "name": "mechanism-8: return remains usable without bounce or fall",
+      "passed": true
+    },
+    {
+      "name": "mechanism-9: ordinary loadout has no Flippers",
+      "passed": true
+    },
+    {
+      "name": "mechanism-9: actual door enters its dealt interior",
+      "passed": true
+    },
+    {
+      "name": "mechanism-9: standing arrival never drowns or falls",
+      "passed": true
+    },
+    {
+      "name": "mechanism-9: arrival stays alive without a reset loop",
+      "passed": true
+    },
+    {
+      "name": "mechanism-9: actual south exit returns to physical origin",
+      "passed": true
+    },
+    {
+      "name": "mechanism-9: return remains usable without bounce or fall",
+      "passed": true
+    },
+    {
+      "name": "traversal-0: ordinary loadout has no Flippers",
+      "passed": true
+    },
+    {
+      "name": "traversal-0: actual door enters its dealt interior",
+      "passed": true
+    },
+    {
+      "name": "traversal-0: standing arrival never drowns or falls",
+      "passed": true
+    },
+    {
+      "name": "traversal-0: arrival stays alive without a reset loop",
+      "passed": true
+    },
+    {
+      "name": "traversal-0: actual south exit returns to physical origin",
+      "passed": true
+    },
+    {
+      "name": "traversal-0: return remains usable without bounce or fall",
+      "passed": true
+    },
+    {
+      "name": "traversal-1: ordinary loadout has no Flippers",
+      "passed": true
+    },
+    {
+      "name": "traversal-1: actual door enters its dealt interior",
+      "passed": true
+    },
+    {
+      "name": "traversal-1: standing arrival never drowns or falls",
+      "passed": true
+    },
+    {
+      "name": "traversal-1: arrival stays alive without a reset loop",
+      "passed": true
+    },
+    {
+      "name": "traversal-1: actual south exit returns to physical origin",
+      "passed": true
+    },
+    {
+      "name": "traversal-1: return remains usable without bounce or fall",
+      "passed": true
+    },
+    {
+      "name": "traversal-2: ordinary loadout has no Flippers",
+      "passed": true
+    },
+    {
+      "name": "traversal-2: actual door enters its dealt interior",
+      "passed": true
+    },
+    {
+      "name": "traversal-2: standing arrival never drowns or falls",
+      "passed": true
+    },
+    {
+      "name": "traversal-2: arrival stays alive without a reset loop",
+      "passed": true
+    },
+    {
+      "name": "traversal-2: actual south exit returns to physical origin",
+      "passed": true
+    },
+    {
+      "name": "traversal-2: return remains usable without bounce or fall",
+      "passed": true
+    }
+  ],
+  "cases": [
+    {
+      "label": "event-1",
+      "seed": 46247,
+      "plan": {
+        "area": 1,
+        "cell": 12,
+        "field_site": 44,
+        "interior_site": 91,
+        "event_kind": 1,
+        "quest_kind": 0,
+        "mechanism_variant": 255,
+        "traversal_variant": 255,
+        "fusion_color": 255,
+        "has_wave": 0,
+        "stage": 1,
+        "terrace": 0,
+        "field_mechanism_variant": 0
+      },
+      "report": "event-1/report.json"
+    },
+    {
+      "label": "event-10",
+      "seed": 46247,
+      "plan": {
+        "area": 1,
+        "cell": 11,
+        "field_site": 43,
+        "interior_site": 99,
+        "event_kind": 10,
+        "quest_kind": 0,
+        "mechanism_variant": 255,
+        "traversal_variant": 255,
+        "fusion_color": 0,
+        "has_wave": 0,
+        "stage": 0,
+        "terrace": 0,
+        "field_mechanism_variant": 255
+      },
+      "report": "event-10/report.json"
+    },
+    {
+      "label": "event-11",
+      "seed": 46247,
+      "plan": {
+        "area": 1,
+        "cell": 24,
+        "field_site": 56,
+        "interior_site": 94,
+        "event_kind": 11,
+        "quest_kind": 0,
+        "mechanism_variant": 255,
+        "traversal_variant": 255,
+        "fusion_color": 255,
+        "has_wave": 0,
+        "stage": 0,
+        "terrace": 0,
+        "field_mechanism_variant": 2
+      },
+      "report": "event-11/report.json"
+    },
+    {
+      "label": "event-12",
+      "seed": 46247,
+      "plan": {
+        "area": 1,
+        "cell": 21,
+        "field_site": 53,
+        "interior_site": 95,
+        "event_kind": 12,
+        "quest_kind": 0,
+        "mechanism_variant": 255,
+        "traversal_variant": 255,
+        "fusion_color": 255,
+        "has_wave": 1,
+        "stage": 0,
+        "terrace": 0,
+        "field_mechanism_variant": 255
+      },
+      "report": "event-12/report.json"
+    },
+    {
+      "label": "event-13",
+      "seed": 46247,
+      "plan": {
+        "area": 1,
+        "cell": 4,
+        "field_site": 36,
+        "interior_site": 90,
+        "event_kind": 13,
+        "quest_kind": 0,
+        "mechanism_variant": 255,
+        "traversal_variant": 255,
+        "fusion_color": 255,
+        "has_wave": 0,
+        "stage": 1,
+        "terrace": 0,
+        "field_mechanism_variant": 255
+      },
+      "report": "event-13/report.json"
+    },
+    {
+      "label": "event-14",
+      "seed": 46247,
+      "plan": {
+        "area": 1,
+        "cell": 7,
+        "field_site": 39,
+        "interior_site": 86,
+        "event_kind": 14,
+        "quest_kind": 0,
+        "mechanism_variant": 255,
+        "traversal_variant": 255,
+        "fusion_color": 255,
+        "has_wave": 0,
+        "stage": 1,
+        "terrace": 0,
+        "field_mechanism_variant": 0
+      },
+      "report": "event-14/report.json"
+    },
+    {
+      "label": "event-2",
+      "seed": 46247,
+      "plan": {
+        "area": 1,
+        "cell": 17,
+        "field_site": 49,
+        "interior_site": 92,
+        "event_kind": 2,
+        "quest_kind": 0,
+        "mechanism_variant": 255,
+        "traversal_variant": 255,
+        "fusion_color": 255,
+        "has_wave": 0,
+        "stage": 1,
+        "terrace": 0,
+        "field_mechanism_variant": 255
+      },
+      "report": "event-2/report.json"
+    },
+    {
+      "label": "event-23",
+      "seed": 1,
+      "plan": {
+        "area": 1,
+        "cell": 8,
+        "field_site": 40,
+        "interior_site": 96,
+        "event_kind": 23,
+        "quest_kind": 0,
+        "mechanism_variant": 255,
+        "traversal_variant": 255,
+        "fusion_color": 255,
+        "has_wave": 0,
+        "stage": 1,
+        "terrace": 0,
+        "field_mechanism_variant": 1
+      },
+      "report": "event-23/report.json"
+    },
+    {
+      "label": "event-25",
+      "seed": 46247,
+      "plan": {
+        "area": 1,
+        "cell": 19,
+        "field_site": 51,
+        "interior_site": 82,
+        "event_kind": 25,
+        "quest_kind": 0,
+        "mechanism_variant": 255,
+        "traversal_variant": 255,
+        "fusion_color": 255,
+        "has_wave": 0,
+        "stage": 1,
+        "terrace": 0,
+        "field_mechanism_variant": 0
+      },
+      "report": "event-25/report.json"
+    },
+    {
+      "label": "event-26",
+      "seed": 46247,
+      "plan": {
+        "area": 3,
+        "cell": 7,
+        "field_site": 64,
+        "interior_site": 114,
+        "event_kind": 26,
+        "quest_kind": 0,
+        "mechanism_variant": 255,
+        "traversal_variant": 255,
+        "fusion_color": 255,
+        "has_wave": 0,
+        "stage": 3,
+        "terrace": 1,
+        "field_mechanism_variant": 255
+      },
+      "report": "event-26/report.json"
+    },
+    {
+      "label": "event-3",
+      "seed": 46247,
+      "plan": {
+        "area": 1,
+        "cell": 16,
+        "field_site": 48,
+        "interior_site": 87,
+        "event_kind": 3,
+        "quest_kind": 0,
+        "mechanism_variant": 255,
+        "traversal_variant": 255,
+        "fusion_color": 255,
+        "has_wave": 0,
+        "stage": 0,
+        "terrace": 0,
+        "field_mechanism_variant": 0
+      },
+      "report": "event-3/report.json"
+    },
+    {
+      "label": "event-4",
+      "seed": 46247,
+      "plan": {
+        "area": 1,
+        "cell": 8,
+        "field_site": 40,
+        "interior_site": 88,
+        "event_kind": 4,
+        "quest_kind": 0,
+        "mechanism_variant": 255,
+        "traversal_variant": 255,
+        "fusion_color": 255,
+        "has_wave": 0,
+        "stage": 1,
+        "terrace": 0,
+        "field_mechanism_variant": 3
+      },
+      "report": "event-4/report.json"
+    },
+    {
+      "label": "event-5",
+      "seed": 46247,
+      "plan": {
+        "area": 1,
+        "cell": 15,
+        "field_site": 47,
+        "interior_site": 83,
+        "event_kind": 5,
+        "quest_kind": 0,
+        "mechanism_variant": 255,
+        "traversal_variant": 255,
+        "fusion_color": 255,
+        "has_wave": 0,
+        "stage": 2,
+        "terrace": 0,
+        "field_mechanism_variant": 255
+      },
+      "report": "event-5/report.json"
+    },
+    {
+      "label": "event-6",
+      "seed": 46247,
+      "plan": {
+        "area": 1,
+        "cell": 6,
+        "field_site": 38,
+        "interior_site": 84,
+        "event_kind": 6,
+        "quest_kind": 0,
+        "mechanism_variant": 255,
+        "traversal_variant": 255,
+        "fusion_color": 255,
+        "has_wave": 0,
+        "stage": 2,
+        "terrace": 0,
+        "field_mechanism_variant": 2
+      },
+      "report": "event-6/report.json"
+    },
+    {
+      "label": "event-7",
+      "seed": 46247,
+      "plan": {
+        "area": 1,
+        "cell": 10,
+        "field_site": 42,
+        "interior_site": 102,
+        "event_kind": 7,
+        "quest_kind": 0,
+        "mechanism_variant": 255,
+        "traversal_variant": 255,
+        "fusion_color": 255,
+        "has_wave": 0,
+        "stage": 2,
+        "terrace": 0,
+        "field_mechanism_variant": 255
+      },
+      "report": "event-7/report.json"
+    },
+    {
+      "label": "event-8",
+      "seed": 46247,
+      "plan": {
+        "area": 3,
+        "cell": 2,
+        "field_site": 59,
+        "interior_site": 111,
+        "event_kind": 8,
+        "quest_kind": 0,
+        "mechanism_variant": 255,
+        "traversal_variant": 255,
+        "fusion_color": 255,
+        "has_wave": 0,
+        "stage": 3,
+        "terrace": 0,
+        "field_mechanism_variant": 255
+      },
+      "report": "event-8/report.json"
+    },
+    {
+      "label": "event-9",
+      "seed": 46247,
+      "plan": {
+        "area": 1,
+        "cell": 3,
+        "field_site": 35,
+        "interior_site": 98,
+        "event_kind": 9,
+        "quest_kind": 0,
+        "mechanism_variant": 255,
+        "traversal_variant": 255,
+        "fusion_color": 255,
+        "has_wave": 0,
+        "stage": 2,
+        "terrace": 0,
+        "field_mechanism_variant": 255
+      },
+      "report": "event-9/report.json"
+    },
+    {
+      "label": "mechanism-0",
+      "seed": 46247,
+      "plan": {
+        "area": 1,
+        "cell": 1,
+        "field_site": 33,
+        "interior_site": 101,
+        "event_kind": 28,
+        "quest_kind": 0,
+        "mechanism_variant": 0,
+        "traversal_variant": 255,
+        "fusion_color": 255,
+        "has_wave": 0,
+        "stage": 2,
+        "terrace": 0,
+        "field_mechanism_variant": 255
+      },
+      "report": "mechanism-0/report.json"
+    },
+    {
+      "label": "mechanism-1",
+      "seed": 46247,
+      "plan": {
+        "area": 3,
+        "cell": 6,
+        "field_site": 63,
+        "interior_site": 110,
+        "event_kind": 28,
+        "quest_kind": 0,
+        "mechanism_variant": 1,
+        "traversal_variant": 255,
+        "fusion_color": 255,
+        "has_wave": 0,
+        "stage": 3,
+        "terrace": 0,
+        "field_mechanism_variant": 255
+      },
+      "report": "mechanism-1/report.json"
+    },
+    {
+      "label": "mechanism-10",
+      "seed": 46247,
+      "plan": {
+        "area": 1,
+        "cell": 9,
+        "field_site": 41,
+        "interior_site": 104,
+        "event_kind": 28,
+        "quest_kind": 0,
+        "mechanism_variant": 10,
+        "traversal_variant": 255,
+        "fusion_color": 255,
+        "has_wave": 0,
+        "stage": 1,
+        "terrace": 0,
+        "field_mechanism_variant": 255
+      },
+      "report": "mechanism-10/report.json"
+    },
+    {
+      "label": "mechanism-11",
+      "seed": 46247,
+      "plan": {
+        "area": 3,
+        "cell": 15,
+        "field_site": 72,
+        "interior_site": 113,
+        "event_kind": 28,
+        "quest_kind": 0,
+        "mechanism_variant": 11,
+        "traversal_variant": 255,
+        "fusion_color": 2,
+        "has_wave": 0,
+        "stage": 0,
+        "terrace": 0,
+        "field_mechanism_variant": 255
+      },
+      "report": "mechanism-11/report.json"
+    },
+    {
+      "label": "mechanism-2",
+      "seed": 46247,
+      "plan": {
+        "area": 1,
+        "cell": 13,
+        "field_site": 45,
+        "interior_site": 97,
+        "event_kind": 28,
+        "quest_kind": 0,
+        "mechanism_variant": 2,
+        "traversal_variant": 255,
+        "fusion_color": 255,
+        "has_wave": 0,
+        "stage": 1,
+        "terrace": 0,
+        "field_mechanism_variant": 3
+      },
+      "report": "mechanism-2/report.json"
+    },
+    {
+      "label": "mechanism-3",
+      "seed": 46247,
+      "plan": {
+        "area": 3,
+        "cell": 24,
+        "field_site": 81,
+        "interior_site": 106,
+        "event_kind": 28,
+        "quest_kind": 0,
+        "mechanism_variant": 3,
+        "traversal_variant": 255,
+        "fusion_color": 255,
+        "has_wave": 0,
+        "stage": 1,
+        "terrace": 1,
+        "field_mechanism_variant": 2
+      },
+      "report": "mechanism-3/report.json"
+    },
+    {
+      "label": "mechanism-4",
+      "seed": 46247,
+      "plan": {
+        "area": 1,
+        "cell": 0,
+        "field_site": 32,
+        "interior_site": 93,
+        "event_kind": 28,
+        "quest_kind": 0,
+        "mechanism_variant": 4,
+        "traversal_variant": 255,
+        "fusion_color": 255,
+        "has_wave": 0,
+        "stage": 2,
+        "terrace": 0,
+        "field_mechanism_variant": 2
+      },
+      "report": "mechanism-4/report.json"
+    },
+    {
+      "label": "mechanism-5",
+      "seed": 46247,
+      "plan": {
+        "area": 3,
+        "cell": 19,
+        "field_site": 76,
+        "interior_site": 125,
+        "event_kind": 28,
+        "quest_kind": 0,
+        "mechanism_variant": 5,
+        "traversal_variant": 255,
+        "fusion_color": 255,
+        "has_wave": 0,
+        "stage": 1,
+        "terrace": 1,
+        "field_mechanism_variant": 2
+      },
+      "report": "mechanism-5/report.json"
+    },
+    {
+      "label": "mechanism-6",
+      "seed": 46247,
+      "plan": {
+        "area": 1,
+        "cell": 2,
+        "field_site": 34,
+        "interior_site": 89,
+        "event_kind": 28,
+        "quest_kind": 0,
+        "mechanism_variant": 6,
+        "traversal_variant": 255,
+        "fusion_color": 255,
+        "has_wave": 0,
+        "stage": 2,
+        "terrace": 0,
+        "field_mechanism_variant": 0
+      },
+      "report": "mechanism-6/report.json"
+    },
+    {
+      "label": "mechanism-7",
+      "seed": 46247,
+      "plan": {
+        "area": 3,
+        "cell": 10,
+        "field_site": 67,
+        "interior_site": 121,
+        "event_kind": 28,
+        "quest_kind": 0,
+        "mechanism_variant": 7,
+        "traversal_variant": 255,
+        "fusion_color": 255,
+        "has_wave": 0,
+        "stage": 3,
+        "terrace": 1,
+        "field_mechanism_variant": 255
+      },
+      "report": "mechanism-7/report.json"
+    },
+    {
+      "label": "mechanism-8",
+      "seed": 46247,
+      "plan": {
+        "area": 1,
+        "cell": 18,
+        "field_site": 50,
+        "interior_site": 85,
+        "event_kind": 28,
+        "quest_kind": 0,
+        "mechanism_variant": 8,
+        "traversal_variant": 255,
+        "fusion_color": 255,
+        "has_wave": 0,
+        "stage": 1,
+        "terrace": 0,
+        "field_mechanism_variant": 3
+      },
+      "report": "mechanism-8/report.json"
+    },
+    {
+      "label": "mechanism-9",
+      "seed": 46247,
+      "plan": {
+        "area": 3,
+        "cell": 8,
+        "field_site": 65,
+        "interior_site": 117,
+        "event_kind": 28,
+        "quest_kind": 0,
+        "mechanism_variant": 9,
+        "traversal_variant": 255,
+        "fusion_color": 255,
+        "has_wave": 0,
+        "stage": 3,
+        "terrace": 1,
+        "field_mechanism_variant": 3
+      },
+      "report": "mechanism-9/report.json"
+    },
+    {
+      "label": "traversal-0",
+      "seed": 46247,
+      "plan": {
+        "area": 1,
+        "cell": 23,
+        "field_site": 55,
+        "interior_site": 100,
+        "event_kind": 27,
+        "quest_kind": 3,
+        "mechanism_variant": 255,
+        "traversal_variant": 0,
+        "fusion_color": 255,
+        "has_wave": 0,
+        "stage": 0,
+        "terrace": 0,
+        "field_mechanism_variant": 255
+      },
+      "report": "traversal-0/report.json"
+    },
+    {
+      "label": "traversal-1",
+      "seed": 46247,
+      "plan": {
+        "area": 3,
+        "cell": 17,
+        "field_site": 74,
+        "interior_site": 109,
+        "event_kind": 27,
+        "quest_kind": 0,
+        "mechanism_variant": 255,
+        "traversal_variant": 1,
+        "fusion_color": 255,
+        "has_wave": 0,
+        "stage": 1,
+        "terrace": 0,
+        "field_mechanism_variant": 255
+      },
+      "report": "traversal-1/report.json"
+    },
+    {
+      "label": "traversal-2",
+      "seed": 46247,
+      "plan": {
+        "area": 1,
+        "cell": 5,
+        "field_site": 37,
+        "interior_site": 96,
+        "event_kind": 27,
+        "quest_kind": 0,
+        "mechanism_variant": 255,
+        "traversal_variant": 2,
+        "fusion_color": 255,
+        "has_wave": 0,
+        "stage": 2,
+        "terrace": 0,
+        "field_mechanism_variant": 255
+      },
+      "report": "traversal-2/report.json"
+    }
+  ],
+  "passed": 195,
+  "total": 195,
+  "publication_format": "Compact review summary; outcomes and identities retained. Exact original JSON is adjacent in gzip and in native-evidence.zip.",
+  "raw_report": {
+    "file": "report.json.gz",
+    "sha256": "c009a1e62713c6b7b2e632476d09215936b0fd8385ef73597c99817a3e27990f",
+    "uncompressed_sha256": "d07ddfe4e146eefa40f79e7d8d07d33d8ef4d69b2f1de0f790b6178ae368acdd",
+    "uncompressed_bytes": 413250
+  }
+}

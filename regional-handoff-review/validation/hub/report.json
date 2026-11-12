@@ -1,0 +1,266 @@
+{
+  "method": "Reach ordinary Drain services and both ladders using real game controls.\n\nThe title seed and fresh private SRAM are the only fixtures. The test chooses\nthe opening gifts, walks, interacts and returns without assigning position,\nfacing, health, inventory, camera, menus, progression, terrain or pixels.\n",
+  "checks": [
+    {
+      "name": "services: three gifts chosen through real opening",
+      "passed": true
+    },
+    {
+      "name": "extended-peddler: real walk reaches interaction front",
+      "passed": true
+    },
+    {
+      "name": "extended-peddler: physical interaction opens expected service",
+      "passed": true
+    },
+    {
+      "name": "extended-peddler: service consumes item/roll input",
+      "passed": true
+    },
+    {
+      "name": "field-fusions: real walk reaches interaction front",
+      "passed": true
+    },
+    {
+      "name": "field-fusions: physical interaction opens expected service",
+      "passed": true
+    },
+    {
+      "name": "field-fusions: service consumes item/roll input",
+      "passed": true
+    },
+    {
+      "name": "regional-chain: real walk reaches interaction front",
+      "passed": true
+    },
+    {
+      "name": "regional-chain: physical interaction opens expected service",
+      "passed": true
+    },
+    {
+      "name": "regional-chain: service consumes item/roll input",
+      "passed": true
+    },
+    {
+      "name": "chain inspection does not teleport into a challenge",
+      "passed": true
+    },
+    {
+      "name": "guide-hint: real walk reaches interaction front",
+      "passed": true
+    },
+    {
+      "name": "guide-hint: physical interaction opens expected service",
+      "passed": true
+    },
+    {
+      "name": "guide-hint: service consumes item/roll input",
+      "passed": true
+    },
+    {
+      "name": "drain-inn: real walk reaches interaction front",
+      "passed": true
+    },
+    {
+      "name": "drain-inn: physical interaction opens expected service",
+      "passed": true
+    },
+    {
+      "name": "drain-inn: service consumes item/roll input",
+      "passed": true
+    },
+    {
+      "name": "inn spends earned200gilt",
+      "passed": true
+    },
+    {
+      "name": "inn restores movement and places promised chest",
+      "passed": true
+    },
+    {
+      "name": "bed chest is physically claimed in Drain",
+      "passed": true
+    },
+    {
+      "name": "drain-trophy: real walk reaches interaction front",
+      "passed": true
+    },
+    {
+      "name": "drain-trophy: physical interaction opens expected service",
+      "passed": true
+    },
+    {
+      "name": "drain-trophy: service consumes item/roll input",
+      "passed": true
+    },
+    {
+      "name": "Trophy refuses to lock an accepted Cream objective",
+      "passed": true
+    },
+    {
+      "name": "chain-set-aside: real walk reaches interaction front",
+      "passed": true
+    },
+    {
+      "name": "chain-set-aside: physical interaction opens expected service",
+      "passed": true
+    },
+    {
+      "name": "chain-set-aside: service consumes item/roll input",
+      "passed": true
+    },
+    {
+      "name": "real guide can set optional seals aside",
+      "passed": true
+    },
+    {
+      "name": "drain-trophy-uncommitted: real walk reaches interaction front",
+      "passed": true
+    },
+    {
+      "name": "drain-trophy-uncommitted: physical interaction opens expected service",
+      "passed": true
+    },
+    {
+      "name": "drain-trophy-uncommitted: service consumes item/roll input",
+      "passed": true
+    },
+    {
+      "name": "real Trophy UI changes its available preference",
+      "passed": true
+    },
+    {
+      "name": "drain-trophy-restore: real walk reaches interaction front",
+      "passed": true
+    },
+    {
+      "name": "drain-trophy-restore: physical interaction opens expected service",
+      "passed": true
+    },
+    {
+      "name": "drain-trophy-restore: service consumes item/roll input",
+      "passed": true
+    },
+    {
+      "name": "real Trophy UI restores ordinary mode",
+      "passed": true
+    },
+    {
+      "name": "cream-ladder: three gifts chosen through real opening",
+      "passed": true
+    },
+    {
+      "name": "Cream ladder has a natural dry approach",
+      "passed": true
+    },
+    {
+      "name": "walking up the second wall ladder enters Cream",
+      "passed": true
+    },
+    {
+      "name": "Cream return remains below ladder without bounce",
+      "passed": true
+    },
+    {
+      "name": "forest-ladder: three gifts chosen through real opening",
+      "passed": true
+    },
+    {
+      "name": "original Forest ladder approach remains dry",
+      "passed": true
+    },
+    {
+      "name": "original Forest ladder still enters Forest",
+      "passed": true
+    }
+  ],
+  "cases": [
+    {
+      "name": "services",
+      "path": "services",
+      "identity": {
+        "source_commit": "51880a55e6ecf86728f3a0923e5547e7bdeed5a0",
+        "rom_sha256": "0dd8554384b53e618140f8c61590fc7e6a7ff0888f296ece034a95f357b34fdd",
+        "support_sha256": "5c2dfee98c73847e83d5ebfb950ee6642af032dcf14531743347659c4ad9eea0",
+        "emulator": "mGBA0.10.5",
+        "fixtures": [
+          {
+            "kind": "title seed",
+            "value": 46247
+          }
+        ],
+        "harness_source_sha256": {
+          "critical_path.py": "70e3db6ccbbadcd65f25355ef2c8e5ae728112abffe3d5c278a1b5428e588159",
+          "probe.py": "63133cd3241804ed11e5673505a9609b6fa33f24a1c7f61a4ea79dad1c535f75",
+          "regional_hub_review.py": "a15ab6ffe8efbd818a324063144e6bc74668b9f30b33bd3ec9168edeabf42a2c",
+          "regional_native_support.py": "5c2dfee98c73847e83d5ebfb950ee6642af032dcf14531743347659c4ad9eea0",
+          "release_boundary_review.py": "1c3cff4c6eaed42f65b7c1e19f6693a78e5f4fcfd323fc57dd8f0e979ee7c0ea"
+        },
+        "input_method": "Actual key input; no gameplay-state or video assignments."
+      }
+    },
+    {
+      "name": "cream-ladder",
+      "path": "cream-ladder",
+      "identity": {
+        "source_commit": "51880a55e6ecf86728f3a0923e5547e7bdeed5a0",
+        "rom_sha256": "0dd8554384b53e618140f8c61590fc7e6a7ff0888f296ece034a95f357b34fdd",
+        "support_sha256": "5c2dfee98c73847e83d5ebfb950ee6642af032dcf14531743347659c4ad9eea0",
+        "emulator": "mGBA0.10.5",
+        "fixtures": [
+          {
+            "kind": "title seed",
+            "value": 46247
+          }
+        ],
+        "harness_source_sha256": {
+          "critical_path.py": "70e3db6ccbbadcd65f25355ef2c8e5ae728112abffe3d5c278a1b5428e588159",
+          "probe.py": "63133cd3241804ed11e5673505a9609b6fa33f24a1c7f61a4ea79dad1c535f75",
+          "regional_hub_review.py": "a15ab6ffe8efbd818a324063144e6bc74668b9f30b33bd3ec9168edeabf42a2c",
+          "regional_native_support.py": "5c2dfee98c73847e83d5ebfb950ee6642af032dcf14531743347659c4ad9eea0",
+          "release_boundary_review.py": "1c3cff4c6eaed42f65b7c1e19f6693a78e5f4fcfd323fc57dd8f0e979ee7c0ea"
+        },
+        "input_method": "Actual key input; no gameplay-state or video assignments."
+      }
+    },
+    {
+      "name": "forest-ladder",
+      "path": "forest-ladder",
+      "identity": {
+        "source_commit": "51880a55e6ecf86728f3a0923e5547e7bdeed5a0",
+        "rom_sha256": "0dd8554384b53e618140f8c61590fc7e6a7ff0888f296ece034a95f357b34fdd",
+        "support_sha256": "5c2dfee98c73847e83d5ebfb950ee6642af032dcf14531743347659c4ad9eea0",
+        "emulator": "mGBA0.10.5",
+        "fixtures": [
+          {
+            "kind": "title seed",
+            "value": 46247
+          }
+        ],
+        "harness_source_sha256": {
+          "critical_path.py": "70e3db6ccbbadcd65f25355ef2c8e5ae728112abffe3d5c278a1b5428e588159",
+          "probe.py": "63133cd3241804ed11e5673505a9609b6fa33f24a1c7f61a4ea79dad1c535f75",
+          "regional_hub_review.py": "a15ab6ffe8efbd818a324063144e6bc74668b9f30b33bd3ec9168edeabf42a2c",
+          "regional_native_support.py": "5c2dfee98c73847e83d5ebfb950ee6642af032dcf14531743347659c4ad9eea0",
+          "release_boundary_review.py": "1c3cff4c6eaed42f65b7c1e19f6693a78e5f4fcfd323fc57dd8f0e979ee7c0ea"
+        },
+        "input_method": "Actual key input; no gameplay-state or video assignments."
+      }
+    }
+  ],
+  "passed": 43,
+  "total": 43,
+  "rom_sha256": "0dd8554384b53e618140f8c61590fc7e6a7ff0888f296ece034a95f357b34fdd",
+  "tool_sha256": "a15ab6ffe8efbd818a324063144e6bc74668b9f30b33bd3ec9168edeabf42a2c",
+  "source_commit": "51880a55e6ecf86728f3a0923e5547e7bdeed5a0",
+  "limits": [
+    "These are natural service/ladder deployment checks; alternate shop offers/beds and regional event completions have separate tests."
+  ],
+  "publication_format": "Compact review summary; outcomes and identities retained. Exact original JSON is adjacent in gzip and in native-evidence.zip.",
+  "raw_report": {
+    "file": "report.json.gz",
+    "sha256": "60f5bb565cbd6d43fd24e35cb7bc95aaec4bc036d3144448994d7b244f4a8744",
+    "uncompressed_sha256": "2b055f5996063c63f5da4fc985a4eeaf3dff390931df41da5495c18c66e81ada",
+    "uncompressed_bytes": 108121
+  }
+}

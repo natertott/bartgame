@@ -1,0 +1,211 @@
+[
+  {
+    "file": "images/cream-wall-ladder.png",
+    "source": "/workspace/setup/regional-integration/c4-hub/cream-ladder/cream-ladder-approach.png",
+    "sha256": "d1feb11132b443ba33a5102ddab32d5c336b98c9aa9a714cb92716ad53ea6460",
+    "dimensions": [
+      240,
+      160
+    ],
+    "kind": "untouched actual mGBA framebuffer",
+    "rom_sha256": "0dd8554384b53e618140f8c61590fc7e6a7ff0888f296ece034a95f357b34fdd"
+  },
+  {
+    "file": "images/cream-ladder-walk.gif",
+    "source": "/workspace/setup/regional-integration/c4-hub/cream-ladder/cream-ladder-walk.gif",
+    "sha256": "cf26fdf60a60aebec079339af9c342e88cd9ea8952770e8db3685fc7a798ea89",
+    "dimensions": [
+      240,
+      160
+    ],
+    "kind": "actual captured mGBA frames",
+    "rom_sha256": "0dd8554384b53e618140f8c61590fc7e6a7ff0888f296ece034a95f357b34fdd"
+  },
+  {
+    "file": "images/starting-gift.png",
+    "source": "/workspace/setup/regional-integration/c4-opening/seed-0000b4a7/draft-round-0.png",
+    "sha256": "57d85dd885097f0cd1363e93740dcb5ef32ee18385a08ccea63ec130b4954a32",
+    "dimensions": [
+      240,
+      160
+    ],
+    "kind": "untouched actual mGBA framebuffer",
+    "rom_sha256": "0dd8554384b53e618140f8c61590fc7e6a7ff0888f296ece034a95f357b34fdd"
+  },
+  {
+    "file": "images/forest-door.png",
+    "source": "/workspace/setup/regional-integration/c4-access/forest-door-approach.png",
+    "sha256": "2ec1b697ca0cc072ec90e1bcd1a595fd4efedfc244d5e6667eb707e5afb006bb",
+    "dimensions": [
+      240,
+      160
+    ],
+    "kind": "untouched actual mGBA framebuffer",
+    "rom_sha256": "0dd8554384b53e618140f8c61590fc7e6a7ff0888f296ece034a95f357b34fdd"
+  },
+  {
+    "file": "images/forest-interior.png",
+    "source": "/workspace/setup/regional-integration/c4-access/forest-interior.png",
+    "sha256": "0fd1a19f6dfcfd3d3d9d6625493b648126f251af001581f8b410ea97b1f1ec07",
+    "dimensions": [
+      240,
+      160
+    ],
+    "kind": "untouched actual mGBA framebuffer",
+    "rom_sha256": "0dd8554384b53e618140f8c61590fc7e6a7ff0888f296ece034a95f357b34fdd"
+  },
+  {
+    "file": "images/forest-map.png",
+    "source": "/workspace/setup/regional-integration/maps-candidate4/region1-field0-overview.png",
+    "sha256": "9ff98ebe11942325e99e20a37aed48d5f14e7519cf94ccf28218a5c34c3e97b8",
+    "dimensions": [
+      240,
+      160
+    ],
+    "kind": "untouched actual mGBA framebuffer",
+    "rom_sha256": "0dd8554384b53e618140f8c61590fc7e6a7ff0888f296ece034a95f357b34fdd"
+  },
+  {
+    "file": "images/cream-map-zoom.png",
+    "source": "/workspace/setup/regional-integration/maps-candidate4/region3-field0-zoom.png",
+    "sha256": "6dc7e5e11a0cb1e8fa61e1a61861fbe5641d5d85ad0d75d377ed5a750ff58fc5",
+    "dimensions": [
+      240,
+      160
+    ],
+    "kind": "untouched actual mGBA framebuffer",
+    "rom_sha256": "0dd8554384b53e618140f8c61590fc7e6a7ff0888f296ece034a95f357b34fdd"
+  },
+  {
+    "file": "images/cream-hunt.png",
+    "source": "/workspace/setup/regional-journey/c4-q2-a3/quest-result.png",
+    "sha256": "75ed7a8edb4f5a3be6203a5986e6bc0f6abed7b6499b8fe4f404ffd8e63680ec",
+    "dimensions": [
+      240,
+      160
+    ],
+    "kind": "untouched actual mGBA framebuffer",
+    "rom_sha256": "0dd8554384b53e618140f8c61590fc7e6a7ff0888f296ece034a95f357b34fdd"
+  },
+  {
+    "file": "images/courier.png",
+    "source": "/workspace/setup/regional-journey/c4-q6-a3/quest-accepted.png",
+    "sha256": "0d7a65b5a94c9002f4bdcb34d67753e9e1def9efb33390392eac75a2aa020f2a",
+    "dimensions": [
+      240,
+      160
+    ],
+    "kind": "untouched actual mGBA framebuffer",
+    "rom_sha256": "0dd8554384b53e618140f8c61590fc7e6a7ff0888f296ece034a95f357b34fdd"
+  },
+  {
+    "file": "images/memory-recall.png",
+    "source": "/workspace/setup/regional-integration/pairs-c4-final-memory/memory-recall-complete.png",
+    "sha256": "4e5370a49cb00418ae1093b44de096e748a92794e90cf36a85cde971afe3ca21",
+    "dimensions": [
+      240,
+      160
+    ],
+    "kind": "untouched actual mGBA framebuffer",
+    "rom_sha256": "0dd8554384b53e618140f8c61590fc7e6a7ff0888f296ece034a95f357b34fdd"
+  },
+  {
+    "file": "images/green-fusion.png",
+    "source": "/workspace/setup/regional-integration/pairs-c4-final-fusions/green-claim-after.png",
+    "sha256": "3b3dfe3857b5768f9bef8977bde2fd7a420d3b9696f4636445442abf628429c5",
+    "dimensions": [
+      240,
+      160
+    ],
+    "kind": "untouched actual mGBA framebuffer",
+    "rom_sha256": "0dd8554384b53e618140f8c61590fc7e6a7ff0888f296ece034a95f357b34fdd"
+  },
+  {
+    "file": "images/blue-fusion.png",
+    "source": "/workspace/setup/regional-integration/pairs-c4-final-fusions/blue-fuse-after.png",
+    "sha256": "02564428257973dd3dca4d481f8f47dec61353b98d9737220b231a72919d5410",
+    "dimensions": [
+      240,
+      160
+    ],
+    "kind": "untouched actual mGBA framebuffer",
+    "rom_sha256": "0dd8554384b53e618140f8c61590fc7e6a7ff0888f296ece034a95f357b34fdd"
+  },
+  {
+    "file": "images/paired-pocket.png",
+    "source": "/workspace/setup/regional-integration/pairs-c4-final-portal/portal-paired-pocket-inside.png",
+    "sha256": "efbb5e583a885c0b3a4132d328c5f692b525a8118f226003be6aede26f1fc679",
+    "dimensions": [
+      240,
+      160
+    ],
+    "kind": "untouched actual mGBA framebuffer",
+    "rom_sha256": "0dd8554384b53e618140f8c61590fc7e6a7ff0888f296ece034a95f357b34fdd"
+  },
+  {
+    "file": "images/earth-pickup.png",
+    "source": "/workspace/setup/regional-journey/c4-chain/earth-waiting.png",
+    "sha256": "0efea3663d9a2e020c276069d9263c678678320ad18bfb8a6ba2f387dc9da391",
+    "dimensions": [
+      240,
+      160
+    ],
+    "kind": "untouched actual mGBA framebuffer",
+    "rom_sha256": "0dd8554384b53e618140f8c61590fc7e6a7ff0888f296ece034a95f357b34fdd"
+  },
+  {
+    "file": "images/earth-victory.png",
+    "source": "/workspace/setup/regional-journey/c4-chain/earth-victory.png",
+    "sha256": "47fbde60709a27683035d7b385f06dd1447f68c6548272758e15a335cf3bc15e",
+    "dimensions": [
+      240,
+      160
+    ],
+    "kind": "untouched actual mGBA framebuffer",
+    "rom_sha256": "0dd8554384b53e618140f8c61590fc7e6a7ff0888f296ece034a95f357b34fdd"
+  },
+  {
+    "file": "images/fresh-run.png",
+    "source": "/workspace/setup/regional-journey/c4-chain/fresh-run-after-earth-victory.png",
+    "sha256": "5bbb926720c8eb9fae1a990a4c1f8e0e84bb76cfd6cf4aa431b7aa7166e83fa4",
+    "dimensions": [
+      240,
+      160
+    ],
+    "kind": "untouched actual mGBA framebuffer",
+    "rom_sha256": "0dd8554384b53e618140f8c61590fc7e6a7ff0888f296ece034a95f357b34fdd"
+  },
+  {
+    "file": "images/bridge-underpass.gif",
+    "source": "/workspace/setup/regional-integration/mechanisms-live-c4/main/field-1.gif",
+    "sha256": "8331f4ed1280f131d0a01c178c550e3aa4b401d6164328e6f8eb73b4d437e422",
+    "dimensions": [
+      240,
+      160
+    ],
+    "kind": "actual captured mGBA frames",
+    "rom_sha256": "0dd8554384b53e618140f8c61590fc7e6a7ff0888f296ece034a95f357b34fdd"
+  },
+  {
+    "file": "images/cart-water-crossing.gif",
+    "source": "/workspace/setup/regional-integration/mechanisms-live-c4/fields/field-0.gif",
+    "sha256": "7de01338f9b48e4d5d6e5f246cf5c074541a396f447326e0884d250c4874e461",
+    "dimensions": [
+      240,
+      160
+    ],
+    "kind": "actual captured mGBA frames",
+    "rom_sha256": "0dd8554384b53e618140f8c61590fc7e6a7ff0888f296ece034a95f357b34fdd"
+  },
+  {
+    "file": "images/cream-parachute.gif",
+    "source": "/workspace/setup/regional-integration/mechanisms-live-c4/cream/field-2.gif",
+    "sha256": "ac6cc29c19ba6d68c9dfb3e13dd98f70ede30d7f62df7261ac7b101991601f01",
+    "dimensions": [
+      240,
+      160
+    ],
+    "kind": "actual captured mGBA frames",
+    "rom_sha256": "0dd8554384b53e618140f8c61590fc7e6a7ff0888f296ece034a95f357b34fdd"
+  }
+]

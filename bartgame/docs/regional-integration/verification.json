@@ -1,0 +1,80 @@
+{
+  "schema_version": 1,
+  "scope": "Owned regional integration access, placement, safety, resources and preservation qualification; other modules retain separate scoped reports.",
+  "source_commit": "51880a55e6ecf86728f3a0923e5547e7bdeed5a0",
+  "rom_sha256": "0dd8554384b53e618140f8c61590fc7e6a7ff0888f296ece034a95f357b34fdd",
+  "acceptance": "bartgame/docs/regional-integration/ACCEPTANCE.md",
+  "evidence": [
+    {
+      "id": "opening",
+      "report": "regional-handoff-review/validation/opening/report.json",
+      "original_report": "/workspace/setup/regional-integration/c4-opening/report.json",
+      "report_sha256": "c853bc43ee6a010b7a73dbacbe7acbbaa819dc053d5b562b65d62d7908ab6327",
+      "result": "18/18",
+      "scope": "Native input only; title seed and fresh private SRAM."
+    },
+    {
+      "id": "hub",
+      "report": "regional-handoff-review/validation/hub/report.json",
+      "original_report": "/workspace/setup/regional-integration/c4-hub/report.json",
+      "report_sha256": "2b055f5996063c63f5da4fc985a4eeaf3dff390931df41da5495c18c66e81ada",
+      "result": "43/43",
+      "scope": "Native walking/input only; title seed and fresh private SRAM."
+    },
+    {
+      "id": "access",
+      "report": "regional-handoff-review/validation/access/report.json",
+      "original_report": "/workspace/setup/regional-integration/c4-access/report.json",
+      "report_sha256": "34c3e9548171b930964bc7ed46d863af423f7296ef61267c8c1782316b2ff406",
+      "result": "12/12",
+      "scope": "Native walking/input only; title seed and fresh private SRAM."
+    },
+    {
+      "id": "arrivals",
+      "report": "regional-handoff-review/validation/arrivals/report.json",
+      "original_report": "/workspace/setup/regional-integration/c4-arrivals2/report.json",
+      "report_sha256": "d07ddfe4e146eefa40f79e7d8d07d33d8ef4d69b2f1de0f790b6178ae368acdd",
+      "result": "195/195; 32 classes",
+      "scope": "Native actual doors/standing/returns; seeded normal room-load and hero navigation fixtures, ordinary real opening gifts, no health/player-action-state/inventory assignments."
+    },
+    {
+      "id": "resources",
+      "report": "regional-handoff-review/validation/resources/report.json",
+      "original_report": "/workspace/setup/regional-integration/c4-resources/report.json",
+      "report_sha256": "e471851f9f09c9fa9e0ae29e5d40cca5b525a759278a309a8f7eece6912e555c",
+      "result": "210/210; 42 scenes",
+      "scope": "Native OAM/VRAM/render observations; normal room-load and hero navigation fixtures, no health/inventory/completion/camera/video assignments."
+    },
+    {
+      "id": "placement",
+      "report": "regional-handoff-review/validation/placement/report.json",
+      "original_report": "/workspace/setup/regional-integration/c4-placement/report.json",
+      "report_sha256": "74b442198817d57da563b3c408bf8ba66dff9c22830e1bc983f64594be5c071f",
+      "result": "1,024 seeds; 102,400 states; 33,324 actual field stamps",
+      "scope": "Production C worlds/rooms/planner/actual field builders; native metadata, explicit coarse8px host adapter, finite seed sample."
+    },
+    {
+      "id": "reach",
+      "report": "regional-handoff-review/validation/reach/report.json",
+      "original_report": "/workspace/setup/regional-integration/c4-reach/report.json",
+      "report_sha256": "3d511daeb7e1983d9b57ae1a5b06b4e2e7cede44a12ccdf96e14d82a8cc4f77c",
+      "result": "393,216 mask and 614,400 wrapper comparisons",
+      "scope": "Independent Python solve of exported production primitive graphs, compared to actual C reach; no production query used for expected masks."
+    },
+    {
+      "id": "art",
+      "report": "regional-handoff-review/validation/art/report.json",
+      "original_report": "/workspace/setup/regional-integration/c4-art.json",
+      "report_sha256": "4f8ff2dcd669bcfe8ed726c09195e16a09e4434cc641e43a53690affed28ddd7",
+      "result": "2,593/2,593",
+      "scope": "Exact native original frames/IDs/geometry/palette/mappings/used tile pixels; only named empty mobility-slot activations allowed."
+    }
+  ],
+  "limits": [
+    "Historical candidate/Annex reports retain their own hashes.",
+    "Finite host seeds and representative native controls do not claim all494 handoff rows or all32bit seeds are native-complete.",
+    "Specialized mechanism actions and full journey/save/performance evidence have independent reports."
+  ],
+  "current_ledger": "docs/handoff-restoration/features.json",
+  "six_named_deployment_gaps": "closed_with_separate_scoped_proof"
+}

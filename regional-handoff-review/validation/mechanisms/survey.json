@@ -1,0 +1,1652 @@
+[
+  {
+    "area": 1,
+    "cell": 0,
+    "field_site": 32,
+    "interior_site": 93,
+    "event_kind": 28,
+    "quest_kind": 0,
+    "mechanism_variant": 4,
+    "traversal_variant": 255,
+    "fusion_color": 255,
+    "has_wave": 0,
+    "stage": 2,
+    "terrace": 0,
+    "field_mechanism_variant": 2,
+    "door": [
+      25,
+      15
+    ],
+    "has_door": 1,
+    "traversal_rect": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "mechanism_rect": [
+      17,
+      12,
+      5,
+      4
+    ],
+    "mob_active": 0
+  },
+  {
+    "area": 1,
+    "cell": 1,
+    "field_site": 33,
+    "interior_site": 101,
+    "event_kind": 28,
+    "quest_kind": 0,
+    "mechanism_variant": 0,
+    "traversal_variant": 255,
+    "fusion_color": 255,
+    "has_wave": 0,
+    "stage": 2,
+    "terrace": 0,
+    "field_mechanism_variant": 255,
+    "door": [
+      22,
+      13
+    ],
+    "has_door": 1,
+    "traversal_rect": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "mechanism_rect": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "mob_active": 0
+  },
+  {
+    "area": 1,
+    "cell": 2,
+    "field_site": 34,
+    "interior_site": 89,
+    "event_kind": 28,
+    "quest_kind": 0,
+    "mechanism_variant": 6,
+    "traversal_variant": 255,
+    "fusion_color": 255,
+    "has_wave": 0,
+    "stage": 2,
+    "terrace": 0,
+    "field_mechanism_variant": 0,
+    "door": [
+      19,
+      17
+    ],
+    "has_door": 1,
+    "traversal_rect": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "mechanism_rect": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "mob_active": 0
+  },
+  {
+    "area": 1,
+    "cell": 3,
+    "field_site": 35,
+    "interior_site": 98,
+    "event_kind": 9,
+    "quest_kind": 0,
+    "mechanism_variant": 255,
+    "traversal_variant": 255,
+    "fusion_color": 255,
+    "has_wave": 0,
+    "stage": 2,
+    "terrace": 0,
+    "field_mechanism_variant": 255,
+    "door": [
+      10,
+      14
+    ],
+    "has_door": 1,
+    "traversal_rect": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "mechanism_rect": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "mob_active": 0
+  },
+  {
+    "area": 1,
+    "cell": 4,
+    "field_site": 36,
+    "interior_site": 90,
+    "event_kind": 13,
+    "quest_kind": 0,
+    "mechanism_variant": 255,
+    "traversal_variant": 255,
+    "fusion_color": 255,
+    "has_wave": 0,
+    "stage": 1,
+    "terrace": 0,
+    "field_mechanism_variant": 255,
+    "door": [
+      14,
+      13
+    ],
+    "has_door": 1,
+    "traversal_rect": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "mechanism_rect": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "mob_active": 0
+  },
+  {
+    "area": 1,
+    "cell": 5,
+    "field_site": 37,
+    "interior_site": 96,
+    "event_kind": 27,
+    "quest_kind": 0,
+    "mechanism_variant": 255,
+    "traversal_variant": 2,
+    "fusion_color": 255,
+    "has_wave": 0,
+    "stage": 2,
+    "terrace": 0,
+    "field_mechanism_variant": 255,
+    "door": [
+      23,
+      10
+    ],
+    "has_door": 1,
+    "traversal_rect": [
+      15,
+      7,
+      6,
+      5
+    ],
+    "mechanism_rect": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "mob_active": 1
+  },
+  {
+    "area": 1,
+    "cell": 6,
+    "field_site": 38,
+    "interior_site": 84,
+    "event_kind": 6,
+    "quest_kind": 0,
+    "mechanism_variant": 255,
+    "traversal_variant": 255,
+    "fusion_color": 255,
+    "has_wave": 0,
+    "stage": 2,
+    "terrace": 0,
+    "field_mechanism_variant": 2,
+    "door": [
+      23,
+      8
+    ],
+    "has_door": 1,
+    "traversal_rect": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "mechanism_rect": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "mob_active": 0
+  },
+  {
+    "area": 1,
+    "cell": 7,
+    "field_site": 39,
+    "interior_site": 86,
+    "event_kind": 14,
+    "quest_kind": 0,
+    "mechanism_variant": 255,
+    "traversal_variant": 255,
+    "fusion_color": 255,
+    "has_wave": 0,
+    "stage": 1,
+    "terrace": 0,
+    "field_mechanism_variant": 0,
+    "door": [
+      9,
+      15
+    ],
+    "has_door": 1,
+    "traversal_rect": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "mechanism_rect": [
+      21,
+      15,
+      5,
+      4
+    ],
+    "mob_active": 0
+  },
+  {
+    "area": 1,
+    "cell": 8,
+    "field_site": 40,
+    "interior_site": 88,
+    "event_kind": 4,
+    "quest_kind": 0,
+    "mechanism_variant": 255,
+    "traversal_variant": 255,
+    "fusion_color": 255,
+    "has_wave": 0,
+    "stage": 1,
+    "terrace": 0,
+    "field_mechanism_variant": 3,
+    "door": [
+      16,
+      14
+    ],
+    "has_door": 1,
+    "traversal_rect": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "mechanism_rect": [
+      9,
+      10,
+      5,
+      4
+    ],
+    "mob_active": 0
+  },
+  {
+    "area": 1,
+    "cell": 9,
+    "field_site": 41,
+    "interior_site": 104,
+    "event_kind": 28,
+    "quest_kind": 0,
+    "mechanism_variant": 10,
+    "traversal_variant": 255,
+    "fusion_color": 255,
+    "has_wave": 0,
+    "stage": 1,
+    "terrace": 0,
+    "field_mechanism_variant": 255,
+    "door": [
+      20,
+      9
+    ],
+    "has_door": 1,
+    "traversal_rect": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "mechanism_rect": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "mob_active": 0
+  },
+  {
+    "area": 1,
+    "cell": 10,
+    "field_site": 42,
+    "interior_site": 102,
+    "event_kind": 7,
+    "quest_kind": 0,
+    "mechanism_variant": 255,
+    "traversal_variant": 255,
+    "fusion_color": 255,
+    "has_wave": 0,
+    "stage": 2,
+    "terrace": 0,
+    "field_mechanism_variant": 255,
+    "door": [
+      24,
+      19
+    ],
+    "has_door": 1,
+    "traversal_rect": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "mechanism_rect": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "mob_active": 0
+  },
+  {
+    "area": 1,
+    "cell": 11,
+    "field_site": 43,
+    "interior_site": 99,
+    "event_kind": 10,
+    "quest_kind": 0,
+    "mechanism_variant": 255,
+    "traversal_variant": 255,
+    "fusion_color": 0,
+    "has_wave": 0,
+    "stage": 0,
+    "terrace": 0,
+    "field_mechanism_variant": 255,
+    "door": [
+      13,
+      12
+    ],
+    "has_door": 1,
+    "traversal_rect": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "mechanism_rect": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "mob_active": 0
+  },
+  {
+    "area": 1,
+    "cell": 12,
+    "field_site": 44,
+    "interior_site": 91,
+    "event_kind": 1,
+    "quest_kind": 0,
+    "mechanism_variant": 255,
+    "traversal_variant": 255,
+    "fusion_color": 255,
+    "has_wave": 0,
+    "stage": 1,
+    "terrace": 0,
+    "field_mechanism_variant": 0,
+    "door": [
+      19,
+      12
+    ],
+    "has_door": 1,
+    "traversal_rect": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "mechanism_rect": [
+      7,
+      16,
+      5,
+      4
+    ],
+    "mob_active": 0
+  },
+  {
+    "area": 1,
+    "cell": 13,
+    "field_site": 45,
+    "interior_site": 97,
+    "event_kind": 28,
+    "quest_kind": 0,
+    "mechanism_variant": 2,
+    "traversal_variant": 255,
+    "fusion_color": 255,
+    "has_wave": 0,
+    "stage": 1,
+    "terrace": 0,
+    "field_mechanism_variant": 3,
+    "door": [
+      24,
+      18
+    ],
+    "has_door": 1,
+    "traversal_rect": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "mechanism_rect": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "mob_active": 0
+  },
+  {
+    "area": 1,
+    "cell": 14,
+    "field_site": 46,
+    "interior_site": 103,
+    "event_kind": 24,
+    "quest_kind": 0,
+    "mechanism_variant": 255,
+    "traversal_variant": 255,
+    "fusion_color": 1,
+    "has_wave": 0,
+    "stage": 1,
+    "terrace": 0,
+    "field_mechanism_variant": 255,
+    "door": [
+      10,
+      16
+    ],
+    "has_door": 1,
+    "traversal_rect": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "mechanism_rect": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "mob_active": 0
+  },
+  {
+    "area": 1,
+    "cell": 15,
+    "field_site": 47,
+    "interior_site": 83,
+    "event_kind": 5,
+    "quest_kind": 0,
+    "mechanism_variant": 255,
+    "traversal_variant": 255,
+    "fusion_color": 255,
+    "has_wave": 0,
+    "stage": 2,
+    "terrace": 0,
+    "field_mechanism_variant": 255,
+    "door": [
+      6,
+      14
+    ],
+    "has_door": 1,
+    "traversal_rect": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "mechanism_rect": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "mob_active": 0
+  },
+  {
+    "area": 1,
+    "cell": 16,
+    "field_site": 48,
+    "interior_site": 87,
+    "event_kind": 3,
+    "quest_kind": 0,
+    "mechanism_variant": 255,
+    "traversal_variant": 255,
+    "fusion_color": 255,
+    "has_wave": 0,
+    "stage": 0,
+    "terrace": 0,
+    "field_mechanism_variant": 0,
+    "door": [
+      15,
+      12
+    ],
+    "has_door": 1,
+    "traversal_rect": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "mechanism_rect": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "mob_active": 0
+  },
+  {
+    "area": 1,
+    "cell": 17,
+    "field_site": 49,
+    "interior_site": 92,
+    "event_kind": 2,
+    "quest_kind": 0,
+    "mechanism_variant": 255,
+    "traversal_variant": 255,
+    "fusion_color": 255,
+    "has_wave": 0,
+    "stage": 1,
+    "terrace": 0,
+    "field_mechanism_variant": 255,
+    "door": [
+      20,
+      17
+    ],
+    "has_door": 1,
+    "traversal_rect": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "mechanism_rect": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "mob_active": 0
+  },
+  {
+    "area": 1,
+    "cell": 18,
+    "field_site": 50,
+    "interior_site": 85,
+    "event_kind": 28,
+    "quest_kind": 0,
+    "mechanism_variant": 8,
+    "traversal_variant": 255,
+    "fusion_color": 255,
+    "has_wave": 0,
+    "stage": 1,
+    "terrace": 0,
+    "field_mechanism_variant": 3,
+    "door": [
+      19,
+      11
+    ],
+    "has_door": 1,
+    "traversal_rect": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "mechanism_rect": [
+      10,
+      13,
+      5,
+      4
+    ],
+    "mob_active": 0
+  },
+  {
+    "area": 1,
+    "cell": 19,
+    "field_site": 51,
+    "interior_site": 82,
+    "event_kind": 25,
+    "quest_kind": 0,
+    "mechanism_variant": 255,
+    "traversal_variant": 255,
+    "fusion_color": 255,
+    "has_wave": 0,
+    "stage": 1,
+    "terrace": 0,
+    "field_mechanism_variant": 0,
+    "door": [
+      6,
+      16
+    ],
+    "has_door": 1,
+    "traversal_rect": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "mechanism_rect": [
+      9,
+      14,
+      5,
+      4
+    ],
+    "mob_active": 0
+  },
+  {
+    "area": 1,
+    "cell": 20,
+    "field_site": 52,
+    "interior_site": 255,
+    "event_kind": 255,
+    "quest_kind": 0,
+    "mechanism_variant": 255,
+    "traversal_variant": 255,
+    "fusion_color": 255,
+    "has_wave": 0,
+    "stage": 3,
+    "terrace": 0,
+    "field_mechanism_variant": 255,
+    "door": [
+      0,
+      0
+    ],
+    "has_door": 0,
+    "traversal_rect": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "mechanism_rect": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "mob_active": 0
+  },
+  {
+    "area": 1,
+    "cell": 21,
+    "field_site": 53,
+    "interior_site": 95,
+    "event_kind": 12,
+    "quest_kind": 0,
+    "mechanism_variant": 255,
+    "traversal_variant": 255,
+    "fusion_color": 255,
+    "has_wave": 1,
+    "stage": 0,
+    "terrace": 0,
+    "field_mechanism_variant": 255,
+    "door": [
+      8,
+      16
+    ],
+    "has_door": 1,
+    "traversal_rect": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "mechanism_rect": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "mob_active": 0
+  },
+  {
+    "area": 1,
+    "cell": 22,
+    "field_site": 54,
+    "interior_site": 255,
+    "event_kind": 255,
+    "quest_kind": 0,
+    "mechanism_variant": 255,
+    "traversal_variant": 255,
+    "fusion_color": 255,
+    "has_wave": 0,
+    "stage": 0,
+    "terrace": 0,
+    "field_mechanism_variant": 255,
+    "door": [
+      0,
+      0
+    ],
+    "has_door": 0,
+    "traversal_rect": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "mechanism_rect": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "mob_active": 0
+  },
+  {
+    "area": 1,
+    "cell": 23,
+    "field_site": 55,
+    "interior_site": 100,
+    "event_kind": 27,
+    "quest_kind": 3,
+    "mechanism_variant": 255,
+    "traversal_variant": 0,
+    "fusion_color": 255,
+    "has_wave": 0,
+    "stage": 0,
+    "terrace": 0,
+    "field_mechanism_variant": 255,
+    "door": [
+      8,
+      16
+    ],
+    "has_door": 1,
+    "traversal_rect": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "mechanism_rect": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "mob_active": 0
+  },
+  {
+    "area": 1,
+    "cell": 24,
+    "field_site": 56,
+    "interior_site": 94,
+    "event_kind": 11,
+    "quest_kind": 0,
+    "mechanism_variant": 255,
+    "traversal_variant": 255,
+    "fusion_color": 255,
+    "has_wave": 0,
+    "stage": 0,
+    "terrace": 0,
+    "field_mechanism_variant": 2,
+    "door": [
+      24,
+      13
+    ],
+    "has_door": 1,
+    "traversal_rect": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "mechanism_rect": [
+      13,
+      10,
+      5,
+      4
+    ],
+    "mob_active": 0
+  },
+  {
+    "area": 3,
+    "cell": 0,
+    "field_site": 57,
+    "interior_site": 108,
+    "event_kind": 11,
+    "quest_kind": 0,
+    "mechanism_variant": 255,
+    "traversal_variant": 255,
+    "fusion_color": 255,
+    "has_wave": 0,
+    "stage": 3,
+    "terrace": 0,
+    "field_mechanism_variant": 3,
+    "door": [
+      15,
+      18
+    ],
+    "has_door": 1,
+    "traversal_rect": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "mechanism_rect": [
+      23,
+      18,
+      5,
+      4
+    ],
+    "mob_active": 0
+  },
+  {
+    "area": 3,
+    "cell": 1,
+    "field_site": 58,
+    "interior_site": 115,
+    "event_kind": 6,
+    "quest_kind": 0,
+    "mechanism_variant": 255,
+    "traversal_variant": 255,
+    "fusion_color": 255,
+    "has_wave": 0,
+    "stage": 3,
+    "terrace": 1,
+    "field_mechanism_variant": 255,
+    "door": [
+      11,
+      4
+    ],
+    "has_door": 1,
+    "traversal_rect": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "mechanism_rect": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "mob_active": 0
+  },
+  {
+    "area": 3,
+    "cell": 2,
+    "field_site": 59,
+    "interior_site": 111,
+    "event_kind": 8,
+    "quest_kind": 0,
+    "mechanism_variant": 255,
+    "traversal_variant": 255,
+    "fusion_color": 255,
+    "has_wave": 0,
+    "stage": 3,
+    "terrace": 0,
+    "field_mechanism_variant": 255,
+    "door": [
+      13,
+      17
+    ],
+    "has_door": 1,
+    "traversal_rect": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "mechanism_rect": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "mob_active": 0
+  },
+  {
+    "area": 3,
+    "cell": 3,
+    "field_site": 60,
+    "interior_site": 255,
+    "event_kind": 255,
+    "quest_kind": 0,
+    "mechanism_variant": 255,
+    "traversal_variant": 255,
+    "fusion_color": 255,
+    "has_wave": 0,
+    "stage": 3,
+    "terrace": 1,
+    "field_mechanism_variant": 255,
+    "door": [
+      0,
+      0
+    ],
+    "has_door": 0,
+    "traversal_rect": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "mechanism_rect": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "mob_active": 0
+  },
+  {
+    "area": 3,
+    "cell": 4,
+    "field_site": 61,
+    "interior_site": 107,
+    "event_kind": 10,
+    "quest_kind": 0,
+    "mechanism_variant": 255,
+    "traversal_variant": 255,
+    "fusion_color": 255,
+    "has_wave": 0,
+    "stage": 3,
+    "terrace": 1,
+    "field_mechanism_variant": 255,
+    "door": [
+      4,
+      5
+    ],
+    "has_door": 1,
+    "traversal_rect": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "mechanism_rect": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "mob_active": 0
+  },
+  {
+    "area": 3,
+    "cell": 5,
+    "field_site": 62,
+    "interior_site": 112,
+    "event_kind": 9,
+    "quest_kind": 0,
+    "mechanism_variant": 255,
+    "traversal_variant": 255,
+    "fusion_color": 255,
+    "has_wave": 0,
+    "stage": 3,
+    "terrace": 0,
+    "field_mechanism_variant": 2,
+    "door": [
+      4,
+      18
+    ],
+    "has_door": 1,
+    "traversal_rect": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "mechanism_rect": [
+      24,
+      16,
+      5,
+      4
+    ],
+    "mob_active": 0
+  },
+  {
+    "area": 3,
+    "cell": 6,
+    "field_site": 63,
+    "interior_site": 110,
+    "event_kind": 28,
+    "quest_kind": 0,
+    "mechanism_variant": 1,
+    "traversal_variant": 255,
+    "fusion_color": 255,
+    "has_wave": 0,
+    "stage": 3,
+    "terrace": 0,
+    "field_mechanism_variant": 255,
+    "door": [
+      23,
+      18
+    ],
+    "has_door": 1,
+    "traversal_rect": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "mechanism_rect": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "mob_active": 0
+  },
+  {
+    "area": 3,
+    "cell": 7,
+    "field_site": 64,
+    "interior_site": 114,
+    "event_kind": 26,
+    "quest_kind": 0,
+    "mechanism_variant": 255,
+    "traversal_variant": 255,
+    "fusion_color": 255,
+    "has_wave": 0,
+    "stage": 3,
+    "terrace": 1,
+    "field_mechanism_variant": 255,
+    "door": [
+      27,
+      5
+    ],
+    "has_door": 1,
+    "traversal_rect": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "mechanism_rect": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "mob_active": 0
+  },
+  {
+    "area": 3,
+    "cell": 8,
+    "field_site": 65,
+    "interior_site": 117,
+    "event_kind": 28,
+    "quest_kind": 0,
+    "mechanism_variant": 9,
+    "traversal_variant": 255,
+    "fusion_color": 255,
+    "has_wave": 0,
+    "stage": 3,
+    "terrace": 1,
+    "field_mechanism_variant": 3,
+    "door": [
+      21,
+      6
+    ],
+    "has_door": 1,
+    "traversal_rect": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "mechanism_rect": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "mob_active": 0
+  },
+  {
+    "area": 3,
+    "cell": 9,
+    "field_site": 66,
+    "interior_site": 122,
+    "event_kind": 14,
+    "quest_kind": 0,
+    "mechanism_variant": 255,
+    "traversal_variant": 255,
+    "fusion_color": 255,
+    "has_wave": 0,
+    "stage": 3,
+    "terrace": 1,
+    "field_mechanism_variant": 0,
+    "door": [
+      25,
+      3
+    ],
+    "has_door": 1,
+    "traversal_rect": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "mechanism_rect": [
+      18,
+      3,
+      5,
+      4
+    ],
+    "mob_active": 0
+  },
+  {
+    "area": 3,
+    "cell": 10,
+    "field_site": 67,
+    "interior_site": 121,
+    "event_kind": 28,
+    "quest_kind": 0,
+    "mechanism_variant": 7,
+    "traversal_variant": 255,
+    "fusion_color": 255,
+    "has_wave": 0,
+    "stage": 3,
+    "terrace": 1,
+    "field_mechanism_variant": 255,
+    "door": [
+      22,
+      6
+    ],
+    "has_door": 1,
+    "traversal_rect": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "mechanism_rect": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "mob_active": 0
+  },
+  {
+    "area": 3,
+    "cell": 11,
+    "field_site": 68,
+    "interior_site": 126,
+    "event_kind": 12,
+    "quest_kind": 0,
+    "mechanism_variant": 255,
+    "traversal_variant": 255,
+    "fusion_color": 255,
+    "has_wave": 0,
+    "stage": 0,
+    "terrace": 1,
+    "field_mechanism_variant": 3,
+    "door": [
+      20,
+      4
+    ],
+    "has_door": 1,
+    "traversal_rect": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "mechanism_rect": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "mob_active": 0
+  },
+  {
+    "area": 3,
+    "cell": 12,
+    "field_site": 69,
+    "interior_site": 127,
+    "event_kind": 13,
+    "quest_kind": 0,
+    "mechanism_variant": 255,
+    "traversal_variant": 255,
+    "fusion_color": 255,
+    "has_wave": 0,
+    "stage": 0,
+    "terrace": 1,
+    "field_mechanism_variant": 0,
+    "door": [
+      25,
+      4
+    ],
+    "has_door": 1,
+    "traversal_rect": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "mechanism_rect": [
+      13,
+      2,
+      5,
+      4
+    ],
+    "mob_active": 0
+  },
+  {
+    "area": 3,
+    "cell": 13,
+    "field_site": 70,
+    "interior_site": 123,
+    "event_kind": 2,
+    "quest_kind": 0,
+    "mechanism_variant": 255,
+    "traversal_variant": 255,
+    "fusion_color": 255,
+    "has_wave": 0,
+    "stage": 2,
+    "terrace": 0,
+    "field_mechanism_variant": 3,
+    "door": [
+      11,
+      20
+    ],
+    "has_door": 1,
+    "traversal_rect": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "mechanism_rect": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "mob_active": 0
+  },
+  {
+    "area": 3,
+    "cell": 14,
+    "field_site": 71,
+    "interior_site": 120,
+    "event_kind": 5,
+    "quest_kind": 0,
+    "mechanism_variant": 255,
+    "traversal_variant": 255,
+    "fusion_color": 255,
+    "has_wave": 0,
+    "stage": 3,
+    "terrace": 1,
+    "field_mechanism_variant": 255,
+    "door": [
+      19,
+      4
+    ],
+    "has_door": 1,
+    "traversal_rect": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "mechanism_rect": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "mob_active": 0
+  },
+  {
+    "area": 3,
+    "cell": 15,
+    "field_site": 72,
+    "interior_site": 113,
+    "event_kind": 28,
+    "quest_kind": 0,
+    "mechanism_variant": 11,
+    "traversal_variant": 255,
+    "fusion_color": 2,
+    "has_wave": 0,
+    "stage": 0,
+    "terrace": 0,
+    "field_mechanism_variant": 255,
+    "door": [
+      10,
+      20
+    ],
+    "has_door": 1,
+    "traversal_rect": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "mechanism_rect": [
+      24,
+      17,
+      5,
+      5
+    ],
+    "mob_active": 0
+  },
+  {
+    "area": 3,
+    "cell": 16,
+    "field_site": 73,
+    "interior_site": 119,
+    "event_kind": 4,
+    "quest_kind": 0,
+    "mechanism_variant": 255,
+    "traversal_variant": 255,
+    "fusion_color": 255,
+    "has_wave": 0,
+    "stage": 0,
+    "terrace": 0,
+    "field_mechanism_variant": 255,
+    "door": [
+      28,
+      20
+    ],
+    "has_door": 1,
+    "traversal_rect": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "mechanism_rect": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "mob_active": 0
+  },
+  {
+    "area": 3,
+    "cell": 17,
+    "field_site": 74,
+    "interior_site": 109,
+    "event_kind": 27,
+    "quest_kind": 0,
+    "mechanism_variant": 255,
+    "traversal_variant": 1,
+    "fusion_color": 255,
+    "has_wave": 0,
+    "stage": 1,
+    "terrace": 0,
+    "field_mechanism_variant": 255,
+    "door": [
+      3,
+      18
+    ],
+    "has_door": 1,
+    "traversal_rect": [
+      24,
+      15,
+      6,
+      5
+    ],
+    "mechanism_rect": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "mob_active": 1
+  },
+  {
+    "area": 3,
+    "cell": 18,
+    "field_site": 75,
+    "interior_site": 118,
+    "event_kind": 8,
+    "quest_kind": 0,
+    "mechanism_variant": 255,
+    "traversal_variant": 255,
+    "fusion_color": 255,
+    "has_wave": 0,
+    "stage": 2,
+    "terrace": 1,
+    "field_mechanism_variant": 255,
+    "door": [
+      14,
+      4
+    ],
+    "has_door": 1,
+    "traversal_rect": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "mechanism_rect": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "mob_active": 0
+  },
+  {
+    "area": 3,
+    "cell": 19,
+    "field_site": 76,
+    "interior_site": 125,
+    "event_kind": 28,
+    "quest_kind": 0,
+    "mechanism_variant": 5,
+    "traversal_variant": 255,
+    "fusion_color": 255,
+    "has_wave": 0,
+    "stage": 1,
+    "terrace": 1,
+    "field_mechanism_variant": 2,
+    "door": [
+      11,
+      3
+    ],
+    "has_door": 1,
+    "traversal_rect": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "mechanism_rect": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "mob_active": 0
+  },
+  {
+    "area": 3,
+    "cell": 20,
+    "field_site": 77,
+    "interior_site": 105,
+    "event_kind": 1,
+    "quest_kind": 0,
+    "mechanism_variant": 255,
+    "traversal_variant": 255,
+    "fusion_color": 255,
+    "has_wave": 1,
+    "stage": 0,
+    "terrace": 0,
+    "field_mechanism_variant": 255,
+    "door": [
+      28,
+      19
+    ],
+    "has_door": 1,
+    "traversal_rect": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "mechanism_rect": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "mob_active": 0
+  },
+  {
+    "area": 3,
+    "cell": 21,
+    "field_site": 78,
+    "interior_site": 255,
+    "event_kind": 255,
+    "quest_kind": 0,
+    "mechanism_variant": 255,
+    "traversal_variant": 255,
+    "fusion_color": 255,
+    "has_wave": 0,
+    "stage": 0,
+    "terrace": 0,
+    "field_mechanism_variant": 255,
+    "door": [
+      0,
+      0
+    ],
+    "has_door": 0,
+    "traversal_rect": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "mechanism_rect": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "mob_active": 0
+  },
+  {
+    "area": 3,
+    "cell": 22,
+    "field_site": 79,
+    "interior_site": 124,
+    "event_kind": 3,
+    "quest_kind": 0,
+    "mechanism_variant": 255,
+    "traversal_variant": 255,
+    "fusion_color": 255,
+    "has_wave": 0,
+    "stage": 1,
+    "terrace": 1,
+    "field_mechanism_variant": 0,
+    "door": [
+      17,
+      5
+    ],
+    "has_door": 1,
+    "traversal_rect": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "mechanism_rect": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "mob_active": 0
+  },
+  {
+    "area": 3,
+    "cell": 23,
+    "field_site": 80,
+    "interior_site": 116,
+    "event_kind": 7,
+    "quest_kind": 0,
+    "mechanism_variant": 255,
+    "traversal_variant": 255,
+    "fusion_color": 255,
+    "has_wave": 0,
+    "stage": 1,
+    "terrace": 0,
+    "field_mechanism_variant": 3,
+    "door": [
+      14,
+      19
+    ],
+    "has_door": 1,
+    "traversal_rect": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "mechanism_rect": [
+      22,
+      18,
+      5,
+      4
+    ],
+    "mob_active": 0
+  },
+  {
+    "area": 3,
+    "cell": 24,
+    "field_site": 81,
+    "interior_site": 106,
+    "event_kind": 28,
+    "quest_kind": 0,
+    "mechanism_variant": 3,
+    "traversal_variant": 255,
+    "fusion_color": 255,
+    "has_wave": 0,
+    "stage": 1,
+    "terrace": 1,
+    "field_mechanism_variant": 2,
+    "door": [
+      11,
+      4
+    ],
+    "has_door": 1,
+    "traversal_rect": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "mechanism_rect": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "mob_active": 0
+  }
+]

@@ -1,0 +1,36 @@
+{
+  "source_commit": "51880a55e6ecf86728f3a0923e5547e7bdeed5a0",
+  "command": [
+    "arm-none-eabi-gcc",
+    "-mcpu=arm7tdmi",
+    "-mthumb",
+    "-O2",
+    "-fno-builtin",
+    "-DBART_FOREST_VARIANT=32",
+    "-I",
+    "/workspace/setup/regional-integration/pairs-c4-final-fusions/abi/headers",
+    "-I",
+    "/workspace/setup/regional-integration/pairs-c4-final-fusions/private-abi",
+    "-c",
+    "/workspace/setup/regional-integration/pairs-c4-final-fusions/private-abi/pairs-observe.c",
+    "-o",
+    "/workspace/setup/regional-integration/pairs-c4-final-fusions/private-abi/pairs.o"
+  ],
+  "unit_sha256": "3943e16a2b81b88de59f1286b09e2e0b0f7328e36b522217bf5f70875136639d",
+  "offsets": {
+    "memory_known": 32,
+    "memory_code": 33,
+    "memory_length": 39,
+    "fusion_flags": 25,
+    "kinstone_shapes": 76,
+    "fuser_shape": 88,
+    "gold_owned": 23,
+    "gold_fused": 24,
+    "food_mask": 16,
+    "s_memory_input": 43,
+    "s_memory_show": 44,
+    "r_door_frame": 21,
+    "inventory_level": 46,
+    "inventory_kinstones": 36
+  }
+}

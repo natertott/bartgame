@@ -1,0 +1,21 @@
+{
+  "source_commit": "51880a55e6ecf86728f3a0923e5547e7bdeed5a0",
+  "header_sha256": "b2b386cfdc5d99ab0e6643852ee3d4f8e209e35619c6fa54d191b5b2bb3a0cb4",
+  "compiler_command": [
+    "arm-none-eabi-gcc",
+    "-mthumb",
+    "-mcpu=arm7tdmi",
+    "-fno-builtin",
+    "-I",
+    "/workspace/setup/regional-integration/preservation-cream-drop1432-c4/abi",
+    "-I",
+    "/workspace/bartgame/bartgame/src",
+    "-I",
+    "/workspace/setup/regional-integration/candidate4",
+    "-c",
+    "/workspace/setup/regional-integration/preservation-cream-drop1432-c4/abi/offset.c",
+    "-o",
+    "/workspace/setup/regional-integration/preservation-cream-drop1432-c4/abi/offset.o"
+  ],
+  "completed_offset": 91
+}

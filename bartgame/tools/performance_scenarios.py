@@ -51,7 +51,7 @@ class Survey:
         try:self.root_rows=P.sym('gForestTreeRootRows')
         except KeyError:self.root_rows=None
         self.modal_statics={n:B.static_symbol(n) for n in ('sDlgState','sShopActive')}
-        self.suite=args.suite.split(',') if args.suite!='all' else ['natural','interiors','stress','actions','ui']
+        self.suite=args.suite.split(',') if args.suite!='all' else ['natural','interiors','stress','actions','ui','regional']
         self.frames=args.frames;self.started=time.time();self.fixture_points={}
         self.reference=json.loads(Path(args.reference).read_text()) if args.reference else None
         self.reference_cases={v['name']:v for v in self.reference['scenarios']} if self.reference else {}
@@ -242,6 +242,31 @@ class Survey:
                 self.warp(c,1,cell,side);point=self.safe_spot(c,name)
                 self.measure(c,name,seed,'natural','combat',dict(stage=desc['stage'],role=desc['role'],goal=cell==world['goal'],point=point))
 
+    def regional(self):
+        """Retain both actual generated shelf rosters in every Cream cell."""
+        for seed in self.args.seeds:
+            c=self.boot(seed)
+            for node in range(50):
+                cell,terrace=divmod(node,2)
+                name='cream-%08x-cell%02d-terrace%d'%(seed,cell,terrace)
+                if not self.wanted(name):continue
+                c.clear_keys(*range(10));C.dismiss(c,1000)
+                start_frame=P.r32(c,self.addrs['gFrame'])
+                start_logic=P.r32(c,self.addrs['gGame']+8)
+                for key,value in (('sNextArea',3),('sNextCell',cell),('sNextSide',0),('sTransPhase',0),('sCreamNextNode',node),('sCreamNextFacing',0),('sCreamDropRows',0)):
+                    P.w8(c,B.static_symbol(key),value)
+                for key in ('sCreamNextX','sCreamNextY'):P.w16(c,B.static_symbol(key),65535)
+                P.w8(c,self.addrs['gGame'],2)
+                for video in range(1800):
+                    c.run_frame()
+                    if C.gstate(c)==1 and C.area(c)==3 and P.r8(c,P.sym('gCreamNode'))==node:break
+                else:raise AssertionError('Cream workload transition did not settle')
+                self.transitions.append(dict(area=3,cell=cell,node=node,video_frames=video+1,vblanks=P.r32(c,self.addrs['gFrame'])-start_frame,logic_updates=P.r32(c,self.addrs['gGame']+8)-start_logic))
+                C.dismiss(c,1000);self.inventory(c);point=self.safe_spot(c,name)
+                self.measure(c,name,seed,'regional','combat',dict(natural_roster=True,requested_node=node,requested_terrace=terrace,point=point))
+        rows=[r for r in self.rows if r['kind']=='regional']
+        self.check('Cream regional workloads measured without missing gameplay updates',bool(rows) and all(r['eligible_gameplay_frames']>0 and not r['missed_gameplay_updates'] for r in rows),dict(scenarios=len(rows),eligible_frames=sum(r['eligible_gameplay_frames'] for r in rows),missed=sum(r['missed_gameplay_updates'] for r in rows)))
+
     def interiors(self):
         for seed in self.args.seeds:
             c=self.boot(seed);world=C.world(c);kinds=set();styles=set();required=set(world['key_cell'])
@@ -363,7 +388,7 @@ class Survey:
 def main():
     p=argparse.ArgumentParser(description=__doc__)
     p.add_argument('--bundle',required=True);p.add_argument('--out',required=True)
-    p.add_argument('--suite',default='all',help='all or comma-separated natural,interiors,stress,actions,ui')
+    p.add_argument('--suite',default='all',help='all or comma-separated natural,interiors,stress,actions,ui,regional')
     p.add_argument('--case',help='regular-expression selection within suites')
     p.add_argument('--frames',type=int,default=180)
     p.add_argument('--stress-mode',choices=('combat','idle'),default='combat',help='idle isolates AI/render throughput without player offense; enemy HP/AI remain live')

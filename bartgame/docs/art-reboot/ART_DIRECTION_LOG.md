@@ -1911,3 +1911,15 @@ comparison and complete real-input quest/chain evidence are recorded in the
 [regional integration notes](../regional-integration/ACCEPTANCE.md), with
 exact build identities and disclosed navigation fixtures. Historical arch
 captures above remain evidence of their own older builds.
+
+## 2026-11-12 — Traversal arrival safety
+
+**Status:** adopted local geometry correction from native testing. The new
+regional minecart chamber keeps a dry southern bank below the railway, so its
+standard arrival, respawn and return never sit over water. The rail still
+crosses visible water; the existing tile paintings are unchanged. Review must
+include a normal loadout without Flippers, positive player health and the
+actual return walk. An all-equipment fixture had masked the earlier unsafe
+arrival, so it cannot qualify this boundary. The independent regional arrival
+survey and the corrected controller review retain their separate scopes in
+the final regional qualification.

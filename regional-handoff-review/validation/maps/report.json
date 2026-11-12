@@ -1,0 +1,2709 @@
+{
+  "source_commit": "51880a55e6ecf86728f3a0923e5547e7bdeed5a0",
+  "rom_sha256": "0dd8554384b53e618140f8c61590fc7e6a7ff0888f296ece034a95f357b34fdd",
+  "support_sha256": "5c2dfee98c73847e83d5ebfb950ee6642af032dcf14531743347659c4ad9eea0",
+  "emulator": "mGBA0.10.5",
+  "fixtures": [
+    {
+      "kind": "title seed",
+      "value": 46247
+    },
+    {
+      "kind": "ordinary regional room-load request for isolated quest",
+      "area": 1,
+      "cell": 23,
+      "node": 46,
+      "before": {
+        "physical_frames": 283,
+        "state": 1,
+        "area": 0,
+        "cell": 0,
+        "actor": {
+          "kind": 1,
+          "type": 0,
+          "state": 0,
+          "timer": 0,
+          "x": 200,
+          "y": 270,
+          "z": 0,
+          "speed": 0,
+          "hp": 0,
+          "coll": 0,
+          "facing": 0
+        },
+        "text": 0,
+        "health": [
+          32,
+          32
+        ],
+        "gilt": 0,
+        "bombs": 10,
+        "entitlement": 0,
+        "inn_reward": 0,
+        "inventory": {
+          "owned": [
+            8322,
+            0,
+            512,
+            4
+          ],
+          "skills": 2
+        },
+        "starting_draft": 0,
+        "service_menu": {
+          "active": 0,
+          "cursor": 2
+        },
+        "draft": {
+          "round": 3,
+          "state": 2,
+          "options": [
+            75,
+            72,
+            73
+          ]
+        },
+        "chain": {
+          "step": 0,
+          "kind": 1,
+          "state": 1,
+          "target": 105
+        },
+        "quest": {
+          "kind": 0,
+          "state": 0,
+          "origin_area": 0,
+          "origin_cell": 0,
+          "target_area": 0,
+          "target_cell": 0,
+          "progress": 0,
+          "quota": 0
+        },
+        "spots": {
+          "door": [
+            0,
+            0
+          ],
+          "npc": [
+            0,
+            0
+          ],
+          "cache": [
+            0,
+            0
+          ],
+          "mechanism": [
+            0,
+            0
+          ],
+          "flags": {
+            "door": 0,
+            "npc": 0,
+            "cache": 0,
+            "mechanism": 0
+          },
+          "terrace": 0
+        }
+      }
+    },
+    {
+      "kind": "hero position/facing navigation",
+      "x": 136,
+      "y": 270,
+      "face": 0,
+      "before": {
+        "physical_frames": 520,
+        "state": 1,
+        "area": 1,
+        "cell": 23,
+        "actor": {
+          "kind": 1,
+          "type": 0,
+          "state": 0,
+          "timer": 0,
+          "x": 256,
+          "y": 364,
+          "z": 0,
+          "speed": 0,
+          "hp": 0,
+          "coll": 0,
+          "facing": 0
+        },
+        "text": 0,
+        "health": [
+          32,
+          32
+        ],
+        "gilt": 0,
+        "bombs": 10,
+        "entitlement": 0,
+        "inn_reward": 0,
+        "inventory": {
+          "owned": [
+            8322,
+            0,
+            512,
+            4
+          ],
+          "skills": 2
+        },
+        "starting_draft": 0,
+        "service_menu": {
+          "active": 0,
+          "cursor": 2
+        },
+        "draft": {
+          "round": 3,
+          "state": 2,
+          "options": [
+            75,
+            72,
+            73
+          ]
+        },
+        "chain": {
+          "step": 0,
+          "kind": 1,
+          "state": 1,
+          "target": 105
+        },
+        "quest": {
+          "kind": 0,
+          "state": 0,
+          "origin_area": 0,
+          "origin_cell": 0,
+          "target_area": 0,
+          "target_cell": 0,
+          "progress": 0,
+          "quota": 0
+        },
+        "spots": {
+          "door": [
+            8,
+            16
+          ],
+          "npc": [
+            19,
+            6
+          ],
+          "cache": [
+            17,
+            10
+          ],
+          "mechanism": [
+            0,
+            0
+          ],
+          "flags": {
+            "door": 1,
+            "npc": 1,
+            "cache": 1,
+            "mechanism": 0
+          },
+          "terrace": 0
+        }
+      }
+    },
+    {
+      "kind": "hero position/facing navigation",
+      "x": 264,
+      "y": 350,
+      "face": 2,
+      "before": {
+        "physical_frames": 692,
+        "state": 1,
+        "area": 4,
+        "cell": 0,
+        "actor": {
+          "kind": 1,
+          "type": 0,
+          "state": 0,
+          "timer": 0,
+          "x": 264,
+          "y": 334,
+          "z": 0,
+          "speed": 0,
+          "hp": 0,
+          "coll": 0,
+          "facing": 0
+        },
+        "text": 0,
+        "health": [
+          32,
+          32
+        ],
+        "gilt": 0,
+        "bombs": 10,
+        "entitlement": 0,
+        "inn_reward": 0,
+        "inventory": {
+          "owned": [
+            8322,
+            0,
+            512,
+            4
+          ],
+          "skills": 2
+        },
+        "starting_draft": 0,
+        "service_menu": {
+          "active": 0,
+          "cursor": 2
+        },
+        "draft": {
+          "round": 3,
+          "state": 2,
+          "options": [
+            75,
+            72,
+            73
+          ]
+        },
+        "chain": {
+          "step": 0,
+          "kind": 1,
+          "state": 1,
+          "target": 105
+        },
+        "quest": {
+          "kind": 0,
+          "state": 0,
+          "origin_area": 0,
+          "origin_cell": 0,
+          "target_area": 0,
+          "target_cell": 0,
+          "progress": 0,
+          "quota": 0
+        },
+        "spots": {
+          "door": [
+            0,
+            0
+          ],
+          "npc": [
+            0,
+            0
+          ],
+          "cache": [
+            0,
+            0
+          ],
+          "mechanism": [
+            0,
+            0
+          ],
+          "flags": {
+            "door": 0,
+            "npc": 0,
+            "cache": 0,
+            "mechanism": 0
+          },
+          "terrace": 0
+        }
+      }
+    },
+    {
+      "kind": "ordinary regional room-load request for isolated quest",
+      "area": 1,
+      "cell": 21,
+      "node": 42,
+      "before": {
+        "physical_frames": 781,
+        "state": 1,
+        "area": 1,
+        "cell": 23,
+        "actor": {
+          "kind": 1,
+          "type": 0,
+          "state": 0,
+          "timer": 0,
+          "x": 136,
+          "y": 270,
+          "z": 0,
+          "speed": 0,
+          "hp": 0,
+          "coll": 0,
+          "facing": 0
+        },
+        "text": 0,
+        "health": [
+          32,
+          32
+        ],
+        "gilt": 0,
+        "bombs": 10,
+        "entitlement": 0,
+        "inn_reward": 0,
+        "inventory": {
+          "owned": [
+            8322,
+            0,
+            512,
+            4
+          ],
+          "skills": 2
+        },
+        "starting_draft": 0,
+        "service_menu": {
+          "active": 0,
+          "cursor": 2
+        },
+        "draft": {
+          "round": 3,
+          "state": 2,
+          "options": [
+            75,
+            72,
+            73
+          ]
+        },
+        "chain": {
+          "step": 0,
+          "kind": 1,
+          "state": 1,
+          "target": 105
+        },
+        "quest": {
+          "kind": 0,
+          "state": 0,
+          "origin_area": 0,
+          "origin_cell": 0,
+          "target_area": 0,
+          "target_cell": 0,
+          "progress": 0,
+          "quota": 0
+        },
+        "spots": {
+          "door": [
+            8,
+            16
+          ],
+          "npc": [
+            19,
+            6
+          ],
+          "cache": [
+            17,
+            10
+          ],
+          "mechanism": [
+            0,
+            0
+          ],
+          "flags": {
+            "door": 1,
+            "npc": 1,
+            "cache": 1,
+            "mechanism": 0
+          },
+          "terrace": 0
+        }
+      }
+    },
+    {
+      "kind": "ordinary regional room-load request for isolated quest",
+      "area": 1,
+      "cell": 11,
+      "node": 22,
+      "before": {
+        "physical_frames": 1015,
+        "state": 1,
+        "area": 1,
+        "cell": 21,
+        "actor": {
+          "kind": 1,
+          "type": 0,
+          "state": 0,
+          "timer": 0,
+          "x": 256,
+          "y": 364,
+          "z": 0,
+          "speed": 0,
+          "hp": 0,
+          "coll": 0,
+          "facing": 0
+        },
+        "text": 0,
+        "health": [
+          32,
+          32
+        ],
+        "gilt": 0,
+        "bombs": 10,
+        "entitlement": 0,
+        "inn_reward": 0,
+        "inventory": {
+          "owned": [
+            8322,
+            0,
+            512,
+            4
+          ],
+          "skills": 2
+        },
+        "starting_draft": 0,
+        "service_menu": {
+          "active": 0,
+          "cursor": 2
+        },
+        "draft": {
+          "round": 3,
+          "state": 2,
+          "options": [
+            75,
+            72,
+            73
+          ]
+        },
+        "chain": {
+          "step": 0,
+          "kind": 1,
+          "state": 1,
+          "target": 105
+        },
+        "quest": {
+          "kind": 0,
+          "state": 0,
+          "origin_area": 0,
+          "origin_cell": 0,
+          "target_area": 0,
+          "target_cell": 0,
+          "progress": 0,
+          "quota": 0
+        },
+        "spots": {
+          "door": [
+            8,
+            16
+          ],
+          "npc": [
+            18,
+            15
+          ],
+          "cache": [
+            10,
+            18
+          ],
+          "mechanism": [
+            0,
+            0
+          ],
+          "flags": {
+            "door": 1,
+            "npc": 1,
+            "cache": 1,
+            "mechanism": 0
+          },
+          "terrace": 0
+        }
+      }
+    },
+    {
+      "kind": "ordinary regional room-load request for isolated quest",
+      "area": 1,
+      "cell": 0,
+      "node": 0,
+      "before": {
+        "physical_frames": 1252,
+        "state": 1,
+        "area": 1,
+        "cell": 11,
+        "actor": {
+          "kind": 1,
+          "type": 0,
+          "state": 0,
+          "timer": 0,
+          "x": 256,
+          "y": 364,
+          "z": 0,
+          "speed": 0,
+          "hp": 0,
+          "coll": 0,
+          "facing": 0
+        },
+        "text": 0,
+        "health": [
+          32,
+          32
+        ],
+        "gilt": 0,
+        "bombs": 10,
+        "entitlement": 0,
+        "inn_reward": 0,
+        "inventory": {
+          "owned": [
+            8322,
+            0,
+            512,
+            4
+          ],
+          "skills": 2
+        },
+        "starting_draft": 0,
+        "service_menu": {
+          "active": 0,
+          "cursor": 2
+        },
+        "draft": {
+          "round": 3,
+          "state": 2,
+          "options": [
+            75,
+            72,
+            73
+          ]
+        },
+        "chain": {
+          "step": 0,
+          "kind": 1,
+          "state": 1,
+          "target": 105
+        },
+        "quest": {
+          "kind": 0,
+          "state": 0,
+          "origin_area": 0,
+          "origin_cell": 0,
+          "target_area": 0,
+          "target_cell": 0,
+          "progress": 0,
+          "quota": 0
+        },
+        "spots": {
+          "door": [
+            13,
+            12
+          ],
+          "npc": [
+            9,
+            10
+          ],
+          "cache": [
+            17,
+            9
+          ],
+          "mechanism": [
+            0,
+            0
+          ],
+          "flags": {
+            "door": 1,
+            "npc": 1,
+            "cache": 1,
+            "mechanism": 0
+          },
+          "terrace": 0
+        }
+      }
+    },
+    {
+      "kind": "ordinary regional room-load request for isolated quest",
+      "area": 3,
+      "cell": 20,
+      "node": 40,
+      "before": {
+        "physical_frames": 1494,
+        "state": 1,
+        "area": 1,
+        "cell": 0,
+        "actor": {
+          "kind": 1,
+          "type": 0,
+          "state": 0,
+          "timer": 0,
+          "x": 256,
+          "y": 364,
+          "z": 0,
+          "speed": 0,
+          "hp": 0,
+          "coll": 0,
+          "facing": 0
+        },
+        "text": 0,
+        "health": [
+          32,
+          32
+        ],
+        "gilt": 0,
+        "bombs": 10,
+        "entitlement": 0,
+        "inn_reward": 0,
+        "inventory": {
+          "owned": [
+            8322,
+            0,
+            512,
+            4
+          ],
+          "skills": 2
+        },
+        "starting_draft": 0,
+        "service_menu": {
+          "active": 0,
+          "cursor": 2
+        },
+        "draft": {
+          "round": 3,
+          "state": 2,
+          "options": [
+            75,
+            72,
+            73
+          ]
+        },
+        "chain": {
+          "step": 0,
+          "kind": 1,
+          "state": 1,
+          "target": 105
+        },
+        "quest": {
+          "kind": 0,
+          "state": 0,
+          "origin_area": 0,
+          "origin_cell": 0,
+          "target_area": 0,
+          "target_cell": 0,
+          "progress": 0,
+          "quota": 0
+        },
+        "spots": {
+          "door": [
+            25,
+            15
+          ],
+          "npc": [
+            0,
+            0
+          ],
+          "cache": [
+            7,
+            11
+          ],
+          "mechanism": [
+            19,
+            14
+          ],
+          "flags": {
+            "door": 1,
+            "npc": 0,
+            "cache": 1,
+            "mechanism": 1
+          },
+          "terrace": 0
+        }
+      }
+    },
+    {
+      "kind": "hero position/facing navigation",
+      "x": 456,
+      "y": 318,
+      "face": 0,
+      "before": {
+        "physical_frames": 1683,
+        "state": 1,
+        "area": 3,
+        "cell": 20,
+        "actor": {
+          "kind": 1,
+          "type": 0,
+          "state": 0,
+          "timer": 0,
+          "x": 440,
+          "y": 318,
+          "z": 0,
+          "speed": 0,
+          "hp": 0,
+          "coll": 0,
+          "facing": 0
+        },
+        "text": 0,
+        "health": [
+          32,
+          32
+        ],
+        "gilt": 0,
+        "bombs": 10,
+        "entitlement": 0,
+        "inn_reward": 0,
+        "inventory": {
+          "owned": [
+            8322,
+            0,
+            528,
+            4
+          ],
+          "skills": 2
+        },
+        "starting_draft": 0,
+        "service_menu": {
+          "active": 0,
+          "cursor": 2
+        },
+        "draft": {
+          "round": 3,
+          "state": 2,
+          "options": [
+            75,
+            72,
+            73
+          ]
+        },
+        "chain": {
+          "step": 0,
+          "kind": 1,
+          "state": 1,
+          "target": 105
+        },
+        "quest": {
+          "kind": 0,
+          "state": 0,
+          "origin_area": 0,
+          "origin_cell": 0,
+          "target_area": 0,
+          "target_cell": 0,
+          "progress": 0,
+          "quota": 0
+        },
+        "spots": {
+          "door": [
+            28,
+            19
+          ],
+          "npc": [
+            28,
+            16
+          ],
+          "cache": [
+            3,
+            18
+          ],
+          "mechanism": [
+            0,
+            0
+          ],
+          "flags": {
+            "door": 1,
+            "npc": 1,
+            "cache": 1,
+            "mechanism": 0
+          },
+          "terrace": 0
+        }
+      }
+    },
+    {
+      "kind": "hero position/facing navigation",
+      "x": 264,
+      "y": 350,
+      "face": 2,
+      "before": {
+        "physical_frames": 1859,
+        "state": 1,
+        "area": 4,
+        "cell": 0,
+        "actor": {
+          "kind": 1,
+          "type": 0,
+          "state": 0,
+          "timer": 0,
+          "x": 264,
+          "y": 334,
+          "z": 0,
+          "speed": 0,
+          "hp": 0,
+          "coll": 0,
+          "facing": 0
+        },
+        "text": 0,
+        "health": [
+          32,
+          32
+        ],
+        "gilt": 0,
+        "bombs": 10,
+        "entitlement": 0,
+        "inn_reward": 0,
+        "inventory": {
+          "owned": [
+            8322,
+            0,
+            528,
+            4
+          ],
+          "skills": 2
+        },
+        "starting_draft": 0,
+        "service_menu": {
+          "active": 0,
+          "cursor": 2
+        },
+        "draft": {
+          "round": 3,
+          "state": 2,
+          "options": [
+            75,
+            72,
+            73
+          ]
+        },
+        "chain": {
+          "step": 0,
+          "kind": 1,
+          "state": 1,
+          "target": 105
+        },
+        "quest": {
+          "kind": 0,
+          "state": 0,
+          "origin_area": 0,
+          "origin_cell": 0,
+          "target_area": 0,
+          "target_cell": 0,
+          "progress": 0,
+          "quota": 0
+        },
+        "spots": {
+          "door": [
+            0,
+            0
+          ],
+          "npc": [
+            0,
+            0
+          ],
+          "cache": [
+            0,
+            0
+          ],
+          "mechanism": [
+            0,
+            0
+          ],
+          "flags": {
+            "door": 0,
+            "npc": 0,
+            "cache": 0,
+            "mechanism": 0
+          },
+          "terrace": 0
+        }
+      }
+    },
+    {
+      "kind": "ordinary regional room-load request for isolated quest",
+      "area": 3,
+      "cell": 15,
+      "node": 30,
+      "before": {
+        "physical_frames": 1911,
+        "state": 1,
+        "area": 3,
+        "cell": 20,
+        "actor": {
+          "kind": 1,
+          "type": 0,
+          "state": 0,
+          "timer": 0,
+          "x": 456,
+          "y": 318,
+          "z": 0,
+          "speed": 0,
+          "hp": 0,
+          "coll": 0,
+          "facing": 0
+        },
+        "text": 0,
+        "health": [
+          32,
+          32
+        ],
+        "gilt": 0,
+        "bombs": 10,
+        "entitlement": 0,
+        "inn_reward": 0,
+        "inventory": {
+          "owned": [
+            8322,
+            0,
+            528,
+            4
+          ],
+          "skills": 2
+        },
+        "starting_draft": 0,
+        "service_menu": {
+          "active": 0,
+          "cursor": 2
+        },
+        "draft": {
+          "round": 3,
+          "state": 2,
+          "options": [
+            75,
+            72,
+            73
+          ]
+        },
+        "chain": {
+          "step": 0,
+          "kind": 1,
+          "state": 1,
+          "target": 105
+        },
+        "quest": {
+          "kind": 0,
+          "state": 0,
+          "origin_area": 0,
+          "origin_cell": 0,
+          "target_area": 0,
+          "target_cell": 0,
+          "progress": 0,
+          "quota": 0
+        },
+        "spots": {
+          "door": [
+            28,
+            19
+          ],
+          "npc": [
+            28,
+            16
+          ],
+          "cache": [
+            3,
+            18
+          ],
+          "mechanism": [
+            0,
+            0
+          ],
+          "flags": {
+            "door": 1,
+            "npc": 1,
+            "cache": 1,
+            "mechanism": 0
+          },
+          "terrace": 0
+        }
+      }
+    },
+    {
+      "kind": "ordinary regional room-load request for isolated quest",
+      "area": 3,
+      "cell": 0,
+      "node": 0,
+      "before": {
+        "physical_frames": 2101,
+        "state": 1,
+        "area": 3,
+        "cell": 15,
+        "actor": {
+          "kind": 1,
+          "type": 0,
+          "state": 0,
+          "timer": 0,
+          "x": 184,
+          "y": 318,
+          "z": 0,
+          "speed": 0,
+          "hp": 0,
+          "coll": 0,
+          "facing": 0
+        },
+        "text": 0,
+        "health": [
+          32,
+          32
+        ],
+        "gilt": 0,
+        "bombs": 10,
+        "entitlement": 0,
+        "inn_reward": 0,
+        "inventory": {
+          "owned": [
+            8322,
+            0,
+            528,
+            4
+          ],
+          "skills": 2
+        },
+        "starting_draft": 0,
+        "service_menu": {
+          "active": 0,
+          "cursor": 2
+        },
+        "draft": {
+          "round": 3,
+          "state": 2,
+          "options": [
+            75,
+            72,
+            73
+          ]
+        },
+        "chain": {
+          "step": 0,
+          "kind": 1,
+          "state": 1,
+          "target": 105
+        },
+        "quest": {
+          "kind": 0,
+          "state": 0,
+          "origin_area": 0,
+          "origin_cell": 0,
+          "target_area": 0,
+          "target_cell": 0,
+          "progress": 0,
+          "quota": 0
+        },
+        "spots": {
+          "door": [
+            10,
+            20
+          ],
+          "npc": [
+            3,
+            19
+          ],
+          "cache": [
+            22,
+            18
+          ],
+          "mechanism": [
+            26,
+            19
+          ],
+          "flags": {
+            "door": 1,
+            "npc": 1,
+            "cache": 1,
+            "mechanism": 1
+          },
+          "terrace": 0
+        }
+      }
+    }
+  ],
+  "harness_source_sha256": {
+    "arcade_journal_review.py": "5c857666c642da12359bab9d0d637eae5bd3ea62ff68dcfaa952287971f37a33",
+    "bloom_probe.py": "b6d493cf8e63d903ece2d438262ff3c227b69a206239e741a61c1225fcf5e690",
+    "bloom_suite_gallery.py": "738f5136c8b3e472b9482a90ccb3191d9dc7c8b6c2afc5d42575af44f2fc1bab",
+    "critical_path.py": "70e3db6ccbbadcd65f25355ef2c8e5ae728112abffe3d5c278a1b5428e588159",
+    "lift_probe.py": "9b5882862b308c0c0e172d547dfe2c9b7b0258210323823dbeeaefd4ea6d420e",
+    "probe.py": "63133cd3241804ed11e5673505a9609b6fa33f24a1c7f61a4ea79dad1c535f75",
+    "regional_journey_review.py": "90b4c71554eb198e948ce4459a2d5eabecf66974c90c99b3f7851e88c6ce1586",
+    "regional_maps_native.py": "13f76461b3a07d85049b89ddba129e100ade8b5f26952a61d18397a8bb3790c3",
+    "regional_native_support.py": "5c2dfee98c73847e83d5ebfb950ee6642af032dcf14531743347659c4ad9eea0",
+    "regional_save_native.py": "141c25f212ccb28c54cbebd672b72666a5e487c74671e0c14b001d04ad2e21f4",
+    "release_boundary_review.py": "1c3cff4c6eaed42f65b7c1e19f6693a78e5f4fcfd323fc57dd8f0e979ee7c0ea",
+    "sewer_concept_audit.py": "d975c773dfa1ba641169b30fa42128b2a6671d1f1f90ce3fb99b16c4a06d76c5",
+    "sewer_concept_review.py": "70ae1ac9c1c42d68b521d6e2653e59f225de0fa2ac4c5f1c83ebbf1a0bea5dbe",
+    "wood_probe.py": "ebf8fe5f2242621e1c34df161b53b15b51c19d11151b6d0a4fdffb44e398cb37"
+  },
+  "input_method": "Actual key input; no gameplay-state or video assignments.",
+  "method": "Inspect real regional maps and return to an unchanged live scene in mGBA.\n\nThe isolated map cases request the normal regional fade/load path, with no\ninventory, health, quest, completion, terrain, camera or pixel assignment.\nDoors, overview/zoom controls and returning to play use real input. Hero\nposition/facing fixtures shorten the approach to an actual placed entrance.\nThe optional pending-trials case earns its first three objectives through the\nnormal mechanics, or consumes the exact genuine native journey checkpoint,\nbefore inspecting charts and another real Trophy checkpoint. The Cream case\naccepts and completes a courier through normal inputs and checks both the\nentitlement safety guard and the later permitted preference change.\n",
+  "harness_sha256": "13f76461b3a07d85049b89ddba129e100ade8b5f26952a61d18397a8bb3790c3",
+  "private_abi": {
+    "plan_size": 13,
+    "puzzle_size": 52,
+    "puzzle_blocks": 8,
+    "puzzle_length": 19,
+    "puzzle_solution": 20,
+    "cream_climb_x": 3,
+    "cream_upper_bottom": 4,
+    "cream_lower_top": 36,
+    "world_key_cell": 337,
+    "world_gate_cell": 331,
+    "world_gate_side": 334,
+    "world_myst": 367,
+    "world_myst_flags": 392,
+    "handoff_contract_item": 42,
+    "handoff_difficulty": 10,
+    "handoff_score": 0,
+    "ldef_size": 16,
+    "ldef_flags": 12,
+    "ldef_equip": 8,
+    "legacy_item_count": 118,
+    "plan_area": 0,
+    "plan_cell": 1,
+    "plan_field_site": 2,
+    "plan_interior_site": 3,
+    "plan_event_kind": 4,
+    "plan_quest_kind": 5,
+    "plan_mechanism_variant": 6,
+    "plan_traversal_variant": 7,
+    "plan_fusion_color": 8,
+    "plan_has_wave": 9,
+    "plan_stage": 10,
+    "plan_terrace": 11,
+    "plan_field_mechanism_variant": 12,
+    "quest_kind": 0,
+    "quest_state": 1,
+    "quest_stake": 2,
+    "quest_difficulty": 3,
+    "quest_origin_area": 4,
+    "quest_origin_cell": 5,
+    "quest_target_area": 6,
+    "quest_target_cell": 7,
+    "quest_mode": 8,
+    "quest_progress": 9,
+    "quest_quota": 10,
+    "quest_wave": 11,
+    "quest_cargo_held": 12,
+    "quest_cargo_ground": 13,
+    "quest_cargo_flying": 14,
+    "quest_reserved": 15,
+    "quest_timer": 16,
+    "quest_count": 18,
+    "quest_cargo_x": 20,
+    "quest_cargo_y": 22,
+    "quest_receiver_x": 24,
+    "quest_receiver_y": 26,
+    "r_points": 2592,
+    "r_point_count": 16,
+    "r_giver": 2616,
+    "r_receiver": 2618,
+    "r_owned": 890,
+    "r_board": 15,
+    "r_plan": 0,
+    "r_wave_site": 17,
+    "r_component": 26,
+    "s_clock": 4,
+    "s_clean": 8,
+    "s_count": 37,
+    "s_site": 34,
+    "s_kind": 35,
+    "s_board_x": 66,
+    "s_board_y": 67,
+    "s_phase": 36,
+    "s_quota": 38,
+    "s_switch_mask": 49,
+    "s_goal_spawned": 68
+  },
+  "checks": [
+    {
+      "name": "three opening gifts chosen with real input",
+      "passed": true
+    },
+    {
+      "name": "region1-field0: atlas resolves actual parent region and room",
+      "passed": true
+    },
+    {
+      "name": "region1-field0: real A opens detailed chart",
+      "passed": true
+    },
+    {
+      "name": "region1-field0: actual door anchor has its semantic icon",
+      "passed": true
+    },
+    {
+      "name": "region1-field0: actual npc anchor has its semantic icon",
+      "passed": true
+    },
+    {
+      "name": "region1-field0: overview and zoom preserve paused scene and facts",
+      "passed": true
+    },
+    {
+      "name": "region1-field0: resume restores actual room and discovered anchors",
+      "passed": true
+    },
+    {
+      "name": "actual region1 door reaches its generated interior",
+      "passed": true
+    },
+    {
+      "name": "region1 interior arrival has dry feet without Flippers",
+      "passed": true
+    },
+    {
+      "name": "region1-interior: atlas resolves actual parent region and room",
+      "passed": true
+    },
+    {
+      "name": "region1-interior: real A opens detailed chart",
+      "passed": true
+    },
+    {
+      "name": "region1-interior: actual door anchor has its semantic icon",
+      "passed": true
+    },
+    {
+      "name": "region1-interior: actual npc anchor has its semantic icon",
+      "passed": true
+    },
+    {
+      "name": "region1-interior: overview and zoom preserve paused scene and facts",
+      "passed": true
+    },
+    {
+      "name": "region1-interior: resume restores actual room and discovered anchors",
+      "passed": true
+    },
+    {
+      "name": "actual region1 interior exit returns to its parent",
+      "passed": true
+    },
+    {
+      "name": "region1-field1: atlas resolves actual parent region and room",
+      "passed": true
+    },
+    {
+      "name": "region1-field1: real A opens detailed chart",
+      "passed": true
+    },
+    {
+      "name": "region1-field1: actual door anchor has its semantic icon",
+      "passed": true
+    },
+    {
+      "name": "region1-field1: actual npc anchor has its semantic icon",
+      "passed": true
+    },
+    {
+      "name": "region1-field1: overview and zoom preserve paused scene and facts",
+      "passed": true
+    },
+    {
+      "name": "region1-field1: resume restores actual room and discovered anchors",
+      "passed": true
+    },
+    {
+      "name": "region1-field2: atlas resolves actual parent region and room",
+      "passed": true
+    },
+    {
+      "name": "region1-field2: real A opens detailed chart",
+      "passed": true
+    },
+    {
+      "name": "region1-field2: actual door anchor has its semantic icon",
+      "passed": true
+    },
+    {
+      "name": "region1-field2: actual npc anchor has its semantic icon",
+      "passed": true
+    },
+    {
+      "name": "region1-field2: overview and zoom preserve paused scene and facts",
+      "passed": true
+    },
+    {
+      "name": "region1-field2: resume restores actual room and discovered anchors",
+      "passed": true
+    },
+    {
+      "name": "region1-field3: atlas resolves actual parent region and room",
+      "passed": true
+    },
+    {
+      "name": "region1-field3: real A opens detailed chart",
+      "passed": true
+    },
+    {
+      "name": "region1-field3: actual door anchor has its semantic icon",
+      "passed": true
+    },
+    {
+      "name": "region1-field3: actual mechanism anchor has its semantic icon",
+      "passed": true
+    },
+    {
+      "name": "region1-field3: overview and zoom preserve paused scene and facts",
+      "passed": true
+    },
+    {
+      "name": "region1-field3: resume restores actual room and discovered anchors",
+      "passed": true
+    },
+    {
+      "name": "region3-field0: atlas resolves actual parent region and room",
+      "passed": true
+    },
+    {
+      "name": "region3-field0: real A opens detailed chart",
+      "passed": true
+    },
+    {
+      "name": "region3-field0: actual door anchor has its semantic icon",
+      "passed": true
+    },
+    {
+      "name": "region3-field0: actual npc anchor has its semantic icon",
+      "passed": true
+    },
+    {
+      "name": "region3-field0: active objective is tethered to its actual feature",
+      "passed": true
+    },
+    {
+      "name": "region3-field0: overview and zoom preserve paused scene and facts",
+      "passed": true
+    },
+    {
+      "name": "region3-field0: resume restores actual room and discovered anchors",
+      "passed": true
+    },
+    {
+      "name": "actual region3 door reaches its generated interior",
+      "passed": true
+    },
+    {
+      "name": "region3 interior arrival has dry feet without Flippers",
+      "passed": true
+    },
+    {
+      "name": "region3-interior: atlas resolves actual parent region and room",
+      "passed": true
+    },
+    {
+      "name": "region3-interior: real A opens detailed chart",
+      "passed": true
+    },
+    {
+      "name": "region3-interior: actual door anchor has its semantic icon",
+      "passed": true
+    },
+    {
+      "name": "region3-interior: actual npc anchor has its semantic icon",
+      "passed": true
+    },
+    {
+      "name": "region3-interior: active objective is tethered to its actual feature",
+      "passed": true
+    },
+    {
+      "name": "region3-interior: overview and zoom preserve paused scene and facts",
+      "passed": true
+    },
+    {
+      "name": "region3-interior: resume restores actual room and discovered anchors",
+      "passed": true
+    },
+    {
+      "name": "actual region3 interior exit returns to its parent",
+      "passed": true
+    },
+    {
+      "name": "region3-field1: atlas resolves actual parent region and room",
+      "passed": true
+    },
+    {
+      "name": "region3-field1: real A opens detailed chart",
+      "passed": true
+    },
+    {
+      "name": "region3-field1: actual door anchor has its semantic icon",
+      "passed": true
+    },
+    {
+      "name": "region3-field1: actual mechanism anchor has its semantic icon",
+      "passed": true
+    },
+    {
+      "name": "region3-field1: actual npc anchor has its semantic icon",
+      "passed": true
+    },
+    {
+      "name": "region3-field1: overview and zoom preserve paused scene and facts",
+      "passed": true
+    },
+    {
+      "name": "region3-field1: resume restores actual room and discovered anchors",
+      "passed": true
+    },
+    {
+      "name": "region3-field2: atlas resolves actual parent region and room",
+      "passed": true
+    },
+    {
+      "name": "region3-field2: real A opens detailed chart",
+      "passed": true
+    },
+    {
+      "name": "region3-field2: actual door anchor has its semantic icon",
+      "passed": true
+    },
+    {
+      "name": "region3-field2: actual mechanism anchor has its semantic icon",
+      "passed": true
+    },
+    {
+      "name": "region3-field2: overview and zoom preserve paused scene and facts",
+      "passed": true
+    },
+    {
+      "name": "region3-field2: resume restores actual room and discovered anchors",
+      "passed": true
+    }
+  ],
+  "scope_complete": true,
+  "errors": [],
+  "opening_choices": [
+    {
+      "round": 0,
+      "index": 0,
+      "item": 7,
+      "before": {
+        "physical_frames": 172,
+        "state": 1,
+        "area": 0,
+        "cell": 0,
+        "actor": {
+          "kind": 1,
+          "type": 0,
+          "state": 0,
+          "timer": 0,
+          "x": 200,
+          "y": 270,
+          "z": 0,
+          "speed": 0,
+          "hp": 0,
+          "coll": 0,
+          "facing": 0
+        },
+        "text": 0,
+        "health": [
+          24,
+          24
+        ],
+        "gilt": 0,
+        "bombs": 0,
+        "entitlement": 0,
+        "inn_reward": 0,
+        "inventory": {
+          "owned": [
+            8194,
+            0,
+            0,
+            0
+          ],
+          "skills": 0
+        },
+        "starting_draft": 1,
+        "service_menu": {
+          "active": 1,
+          "cursor": 0
+        },
+        "draft": {
+          "round": 0,
+          "state": 1,
+          "options": [
+            7,
+            20,
+            70
+          ]
+        },
+        "chain": {
+          "step": 0,
+          "kind": 1,
+          "state": 1,
+          "target": 105
+        },
+        "quest": {
+          "kind": 0,
+          "state": 0,
+          "origin_area": 0,
+          "origin_cell": 0,
+          "target_area": 0,
+          "target_cell": 0,
+          "progress": 0,
+          "quota": 0
+        },
+        "spots": {
+          "door": [
+            0,
+            0
+          ],
+          "npc": [
+            0,
+            0
+          ],
+          "cache": [
+            0,
+            0
+          ],
+          "mechanism": [
+            0,
+            0
+          ],
+          "flags": {
+            "door": 0,
+            "npc": 0,
+            "cache": 0,
+            "mechanism": 0
+          },
+          "terrace": 0
+        }
+      },
+      "after": {
+        "physical_frames": 182,
+        "state": 1,
+        "area": 0,
+        "cell": 0,
+        "actor": {
+          "kind": 1,
+          "type": 0,
+          "state": 0,
+          "timer": 0,
+          "x": 200,
+          "y": 270,
+          "z": 0,
+          "speed": 0,
+          "hp": 0,
+          "coll": 0,
+          "facing": 0
+        },
+        "text": 0,
+        "health": [
+          24,
+          24
+        ],
+        "gilt": 0,
+        "bombs": 10,
+        "entitlement": 0,
+        "inn_reward": 0,
+        "inventory": {
+          "owned": [
+            8322,
+            0,
+            0,
+            0
+          ],
+          "skills": 0
+        },
+        "starting_draft": 1,
+        "service_menu": {
+          "active": 1,
+          "cursor": 0
+        },
+        "draft": {
+          "round": 1,
+          "state": 1,
+          "options": [
+            89,
+            98,
+            87
+          ]
+        },
+        "chain": {
+          "step": 0,
+          "kind": 1,
+          "state": 1,
+          "target": 105
+        },
+        "quest": {
+          "kind": 0,
+          "state": 0,
+          "origin_area": 0,
+          "origin_cell": 0,
+          "target_area": 0,
+          "target_cell": 0,
+          "progress": 0,
+          "quota": 0
+        },
+        "spots": {
+          "door": [
+            0,
+            0
+          ],
+          "npc": [
+            0,
+            0
+          ],
+          "cache": [
+            0,
+            0
+          ],
+          "mechanism": [
+            0,
+            0
+          ],
+          "flags": {
+            "door": 0,
+            "npc": 0,
+            "cache": 0,
+            "mechanism": 0
+          },
+          "terrace": 0
+        }
+      }
+    },
+    {
+      "round": 1,
+      "index": 1,
+      "item": 98,
+      "before": {
+        "physical_frames": 182,
+        "state": 1,
+        "area": 0,
+        "cell": 0,
+        "actor": {
+          "kind": 1,
+          "type": 0,
+          "state": 0,
+          "timer": 0,
+          "x": 200,
+          "y": 270,
+          "z": 0,
+          "speed": 0,
+          "hp": 0,
+          "coll": 0,
+          "facing": 0
+        },
+        "text": 0,
+        "health": [
+          24,
+          24
+        ],
+        "gilt": 0,
+        "bombs": 10,
+        "entitlement": 0,
+        "inn_reward": 0,
+        "inventory": {
+          "owned": [
+            8322,
+            0,
+            0,
+            0
+          ],
+          "skills": 0
+        },
+        "starting_draft": 1,
+        "service_menu": {
+          "active": 1,
+          "cursor": 0
+        },
+        "draft": {
+          "round": 1,
+          "state": 1,
+          "options": [
+            89,
+            98,
+            87
+          ]
+        },
+        "chain": {
+          "step": 0,
+          "kind": 1,
+          "state": 1,
+          "target": 105
+        },
+        "quest": {
+          "kind": 0,
+          "state": 0,
+          "origin_area": 0,
+          "origin_cell": 0,
+          "target_area": 0,
+          "target_cell": 0,
+          "progress": 0,
+          "quota": 0
+        },
+        "spots": {
+          "door": [
+            0,
+            0
+          ],
+          "npc": [
+            0,
+            0
+          ],
+          "cache": [
+            0,
+            0
+          ],
+          "mechanism": [
+            0,
+            0
+          ],
+          "flags": {
+            "door": 0,
+            "npc": 0,
+            "cache": 0,
+            "mechanism": 0
+          },
+          "terrace": 0
+        }
+      },
+      "after": {
+        "physical_frames": 198,
+        "state": 1,
+        "area": 0,
+        "cell": 0,
+        "actor": {
+          "kind": 1,
+          "type": 0,
+          "state": 0,
+          "timer": 0,
+          "x": 200,
+          "y": 270,
+          "z": 0,
+          "speed": 0,
+          "hp": 0,
+          "coll": 0,
+          "facing": 0
+        },
+        "text": 0,
+        "health": [
+          32,
+          32
+        ],
+        "gilt": 0,
+        "bombs": 10,
+        "entitlement": 0,
+        "inn_reward": 0,
+        "inventory": {
+          "owned": [
+            8322,
+            0,
+            0,
+            4
+          ],
+          "skills": 0
+        },
+        "starting_draft": 1,
+        "service_menu": {
+          "active": 1,
+          "cursor": 0
+        },
+        "draft": {
+          "round": 2,
+          "state": 1,
+          "options": [
+            75,
+            72,
+            73
+          ]
+        },
+        "chain": {
+          "step": 0,
+          "kind": 1,
+          "state": 1,
+          "target": 105
+        },
+        "quest": {
+          "kind": 0,
+          "state": 0,
+          "origin_area": 0,
+          "origin_cell": 0,
+          "target_area": 0,
+          "target_cell": 0,
+          "progress": 0,
+          "quota": 0
+        },
+        "spots": {
+          "door": [
+            0,
+            0
+          ],
+          "npc": [
+            0,
+            0
+          ],
+          "cache": [
+            0,
+            0
+          ],
+          "mechanism": [
+            0,
+            0
+          ],
+          "flags": {
+            "door": 0,
+            "npc": 0,
+            "cache": 0,
+            "mechanism": 0
+          },
+          "terrace": 0
+        }
+      }
+    },
+    {
+      "round": 2,
+      "index": 2,
+      "item": 73,
+      "before": {
+        "physical_frames": 198,
+        "state": 1,
+        "area": 0,
+        "cell": 0,
+        "actor": {
+          "kind": 1,
+          "type": 0,
+          "state": 0,
+          "timer": 0,
+          "x": 200,
+          "y": 270,
+          "z": 0,
+          "speed": 0,
+          "hp": 0,
+          "coll": 0,
+          "facing": 0
+        },
+        "text": 0,
+        "health": [
+          32,
+          32
+        ],
+        "gilt": 0,
+        "bombs": 10,
+        "entitlement": 0,
+        "inn_reward": 0,
+        "inventory": {
+          "owned": [
+            8322,
+            0,
+            0,
+            4
+          ],
+          "skills": 0
+        },
+        "starting_draft": 1,
+        "service_menu": {
+          "active": 1,
+          "cursor": 0
+        },
+        "draft": {
+          "round": 2,
+          "state": 1,
+          "options": [
+            75,
+            72,
+            73
+          ]
+        },
+        "chain": {
+          "step": 0,
+          "kind": 1,
+          "state": 1,
+          "target": 105
+        },
+        "quest": {
+          "kind": 0,
+          "state": 0,
+          "origin_area": 0,
+          "origin_cell": 0,
+          "target_area": 0,
+          "target_cell": 0,
+          "progress": 0,
+          "quota": 0
+        },
+        "spots": {
+          "door": [
+            0,
+            0
+          ],
+          "npc": [
+            0,
+            0
+          ],
+          "cache": [
+            0,
+            0
+          ],
+          "mechanism": [
+            0,
+            0
+          ],
+          "flags": {
+            "door": 0,
+            "npc": 0,
+            "cache": 0,
+            "mechanism": 0
+          },
+          "terrace": 0
+        }
+      },
+      "after": {
+        "physical_frames": 280,
+        "state": 1,
+        "area": 0,
+        "cell": 0,
+        "actor": {
+          "kind": 1,
+          "type": 0,
+          "state": 0,
+          "timer": 0,
+          "x": 200,
+          "y": 270,
+          "z": 0,
+          "speed": 0,
+          "hp": 0,
+          "coll": 0,
+          "facing": 0
+        },
+        "text": 0,
+        "health": [
+          32,
+          32
+        ],
+        "gilt": 0,
+        "bombs": 10,
+        "entitlement": 0,
+        "inn_reward": 0,
+        "inventory": {
+          "owned": [
+            8322,
+            0,
+            512,
+            4
+          ],
+          "skills": 2
+        },
+        "starting_draft": 0,
+        "service_menu": {
+          "active": 0,
+          "cursor": 2
+        },
+        "draft": {
+          "round": 3,
+          "state": 2,
+          "options": [
+            75,
+            72,
+            73
+          ]
+        },
+        "chain": {
+          "step": 0,
+          "kind": 1,
+          "state": 1,
+          "target": 105
+        },
+        "quest": {
+          "kind": 0,
+          "state": 0,
+          "origin_area": 0,
+          "origin_cell": 0,
+          "target_area": 0,
+          "target_cell": 0,
+          "progress": 0,
+          "quota": 0
+        },
+        "spots": {
+          "door": [
+            0,
+            0
+          ],
+          "npc": [
+            0,
+            0
+          ],
+          "cache": [
+            0,
+            0
+          ],
+          "mechanism": [
+            0,
+            0
+          ],
+          "flags": {
+            "door": 0,
+            "npc": 0,
+            "cache": 0,
+            "mechanism": 0
+          },
+          "terrace": 0
+        }
+      }
+    }
+  ],
+  "initial": {
+    "physical_frames": 283,
+    "state": 1,
+    "area": 0,
+    "cell": 0,
+    "actor": {
+      "kind": 1,
+      "type": 0,
+      "state": 0,
+      "timer": 0,
+      "x": 200,
+      "y": 270,
+      "z": 0,
+      "speed": 0,
+      "hp": 0,
+      "coll": 0,
+      "facing": 0
+    },
+    "text": 0,
+    "health": [
+      32,
+      32
+    ],
+    "gilt": 0,
+    "bombs": 10,
+    "entitlement": 0,
+    "inn_reward": 0,
+    "inventory": {
+      "owned": [
+        8322,
+        0,
+        512,
+        4
+      ],
+      "skills": 2
+    },
+    "starting_draft": 0,
+    "service_menu": {
+      "active": 0,
+      "cursor": 2
+    },
+    "draft": {
+      "round": 3,
+      "state": 2,
+      "options": [
+        75,
+        72,
+        73
+      ]
+    },
+    "chain": {
+      "step": 0,
+      "kind": 1,
+      "state": 1,
+      "target": 105
+    },
+    "quest": {
+      "kind": 0,
+      "state": 0,
+      "origin_area": 0,
+      "origin_cell": 0,
+      "target_area": 0,
+      "target_cell": 0,
+      "progress": 0,
+      "quota": 0
+    },
+    "spots": {
+      "door": [
+        0,
+        0
+      ],
+      "npc": [
+        0,
+        0
+      ],
+      "cache": [
+        0,
+        0
+      ],
+      "mechanism": [
+        0,
+        0
+      ],
+      "flags": {
+        "door": 0,
+        "npc": 0,
+        "cache": 0,
+        "mechanism": 0
+      },
+      "terrace": 0
+    }
+  },
+  "final": {
+    "physical_frames": 2292,
+    "state": 1,
+    "area": 3,
+    "cell": 0,
+    "actor": {
+      "kind": 1,
+      "type": 0,
+      "state": 0,
+      "timer": 0,
+      "x": 184,
+      "y": 318,
+      "z": 0,
+      "speed": 0,
+      "hp": 0,
+      "coll": 0,
+      "facing": 0
+    },
+    "text": 0,
+    "health": [
+      28,
+      32
+    ],
+    "gilt": 0,
+    "bombs": 10,
+    "entitlement": 0,
+    "inn_reward": 0,
+    "inventory": {
+      "owned": [
+        8322,
+        0,
+        528,
+        4
+      ],
+      "skills": 2
+    },
+    "starting_draft": 0,
+    "service_menu": {
+      "active": 0,
+      "cursor": 2
+    },
+    "draft": {
+      "round": 3,
+      "state": 2,
+      "options": [
+        75,
+        72,
+        73
+      ]
+    },
+    "chain": {
+      "step": 0,
+      "kind": 1,
+      "state": 1,
+      "target": 105
+    },
+    "quest": {
+      "kind": 0,
+      "state": 0,
+      "origin_area": 0,
+      "origin_cell": 0,
+      "target_area": 0,
+      "target_cell": 0,
+      "progress": 0,
+      "quota": 0
+    },
+    "spots": {
+      "door": [
+        15,
+        18
+      ],
+      "npc": [
+        0,
+        0
+      ],
+      "cache": [
+        15,
+        20
+      ],
+      "mechanism": [
+        25,
+        20
+      ],
+      "flags": {
+        "door": 1,
+        "npc": 0,
+        "cache": 1,
+        "mechanism": 1
+      },
+      "terrace": 0
+    }
+  },
+  "stages": [],
+  "inputs": {
+    "stored_in_raw_report": true,
+    "entries": 884,
+    "original_json_bytes": 1540829
+  },
+  "map_cases": [
+    {
+      "label": "region1-field0",
+      "area": 1,
+      "cell": 23,
+      "markers": [
+        {
+          "tile_x": 8,
+          "tile_y": 16,
+          "source_x": 50,
+          "source_y": 107,
+          "x": 50,
+          "y": 107,
+          "kind": 1
+        },
+        {
+          "tile_x": 19,
+          "tile_y": 6,
+          "source_x": 105,
+          "source_y": 57,
+          "x": 105,
+          "y": 57,
+          "kind": 2
+        },
+        {
+          "tile_x": 16,
+          "tile_y": 22,
+          "source_x": 88,
+          "source_y": 138,
+          "x": 88,
+          "y": 138,
+          "kind": 0
+        }
+      ],
+      "scene_sha256": {
+        "Room": "3283290d82278274464f6e8761308a74070d83bcf6f59d334550111e76dcb420",
+        "RoomSpots": "d0c7419fa2428eceff9f490c27745601268ce3a7c1423d8b99888cb474e5a88b",
+        "RegionalContentSpots": "8f4ee80ab0f2bc622cd895792f9b46e601591d96cd4e1cc71575714ac0f85ec6",
+        "HandoffState": "a6cd98d6e5bbff2c8678a7d292ce7379acf9e8cc1bad49851761f0479c33e9c2",
+        "World": "9ae2bf6cb5b864361bcff84263ebdc42e2a5917881194d524dbb89fdb09d944c",
+        "CreamWorld": "fb2f099f9c62a418311dfec5401c98cd31d826c0b642a1d4e5d07c8d3f512de9",
+        "runtime_s": "d4672a63d4c7f87ca1768db327917bb52f3197727388f4aeb22b8760bae3e6b9",
+        "runtime_r": "4cbf8a938a9d32edff6c42929753bbc3894b2a172da20c9e305ff2dc513184f6",
+        "hero": "7f86eaf25274d8ec9cf3487027430b101d857728e35f9680833ba08f8f8fef4f",
+        "discovery": "8f8a3006ea89bbeebf25cbc395a9db1e5a86d1a695b83751b8b9f6e559b99dc7",
+        "node": "684888c0ebb17f374298b65ee2807526c066094c701bcc7ebbe1c1095f494fc1"
+      }
+    },
+    {
+      "label": "region1-interior",
+      "area": 1,
+      "cell": 23,
+      "markers": [
+        {
+          "tile_x": 8,
+          "tile_y": 16,
+          "source_x": 50,
+          "source_y": 107,
+          "x": 50,
+          "y": 107,
+          "kind": 1
+        },
+        {
+          "tile_x": 19,
+          "tile_y": 6,
+          "source_x": 105,
+          "source_y": 57,
+          "x": 105,
+          "y": 57,
+          "kind": 2
+        }
+      ],
+      "scene_sha256": {
+        "Room": "c663d7cf10d44349f90e2616d2a3ab9aae186d4264f9f38a43c7b85c0fba1148",
+        "RoomSpots": "66b4a8b2a17f0463f7427c0239106eaf710ea7129f42d184a58c50cdff614ba4",
+        "RegionalContentSpots": "659d36ca563ba4622daabb36a71dafaf6060cdcbf89bb12e75426198496d272c",
+        "HandoffState": "3a468937fb9519fb7cadddb7de37d2a50820ccde612152792da1d35ca1ef54ac",
+        "World": "9ae2bf6cb5b864361bcff84263ebdc42e2a5917881194d524dbb89fdb09d944c",
+        "CreamWorld": "fb2f099f9c62a418311dfec5401c98cd31d826c0b642a1d4e5d07c8d3f512de9",
+        "runtime_s": "245b27af2eac4b58a5a48f4dfe200fe5a78ecae3af017d4cc7dd19b59a480f3b",
+        "runtime_r": "9914ed659fb101b06905e3030dce17ce3ca751605de20d24a069f49d8c9b5bfe",
+        "hero": "a8cab79803467a5313bcba2bc151c75721e3ae469ee9db3bd462533fa9f6d268",
+        "discovery": "8f8a3006ea89bbeebf25cbc395a9db1e5a86d1a695b83751b8b9f6e559b99dc7",
+        "node": "684888c0ebb17f374298b65ee2807526c066094c701bcc7ebbe1c1095f494fc1"
+      }
+    },
+    {
+      "label": "region1-field1",
+      "area": 1,
+      "cell": 21,
+      "markers": [
+        {
+          "tile_x": 23,
+          "tile_y": 10,
+          "source_x": 125,
+          "source_y": 77,
+          "x": 125,
+          "y": 77,
+          "kind": 1
+        },
+        {
+          "tile_x": 8,
+          "tile_y": 16,
+          "source_x": 50,
+          "source_y": 107,
+          "x": 50,
+          "y": 107,
+          "kind": 1
+        },
+        {
+          "tile_x": 18,
+          "tile_y": 15,
+          "source_x": 100,
+          "source_y": 102,
+          "x": 100,
+          "y": 102,
+          "kind": 9
+        },
+        {
+          "tile_x": 16,
+          "tile_y": 22,
+          "source_x": 88,
+          "source_y": 138,
+          "x": 88,
+          "y": 138,
+          "kind": 0
+        }
+      ],
+      "scene_sha256": {
+        "Room": "25bad1d947de1c1c48b8b1d0b17654821e00f52833c535ee3cb0cf0f66cde91e",
+        "RoomSpots": "c24f16e7a4dcc6b6f8ac46b8c3ade2eac454137665e593aad1af8489fa210e57",
+        "RegionalContentSpots": "a8aa3ca87898c2b7681ce8ba54b963baca30cafa5791e168f1598af2d1e15495",
+        "HandoffState": "3a468937fb9519fb7cadddb7de37d2a50820ccde612152792da1d35ca1ef54ac",
+        "World": "37f92229dda95fa0a5d883644d32697223e59310c0e58947643f808bf09951c9",
+        "CreamWorld": "fb2f099f9c62a418311dfec5401c98cd31d826c0b642a1d4e5d07c8d3f512de9",
+        "runtime_s": "60e0c32633fe7211e3d02e5891da9876676f3171e31c3bd7803ade72c70e5498",
+        "runtime_r": "443d0d89fdb6b08db59bc506aee8128f88b71d57f3a2c0ca8405eaf2117ffbb8",
+        "hero": "7f86eaf25274d8ec9cf3487027430b101d857728e35f9680833ba08f8f8fef4f",
+        "discovery": "b450ee4f026a31fea9649d976758a2850a91c055fdf3480915abc4b1404d3b3c",
+        "node": "684888c0ebb17f374298b65ee2807526c066094c701bcc7ebbe1c1095f494fc1"
+      }
+    },
+    {
+      "label": "region1-field2",
+      "area": 1,
+      "cell": 11,
+      "markers": [
+        {
+          "tile_x": 23,
+          "tile_y": 4,
+          "source_x": 125,
+          "source_y": 47,
+          "x": 125,
+          "y": 47,
+          "kind": 1
+        },
+        {
+          "tile_x": 13,
+          "tile_y": 12,
+          "source_x": 75,
+          "source_y": 87,
+          "x": 75,
+          "y": 87,
+          "kind": 1
+        },
+        {
+          "tile_x": 9,
+          "tile_y": 10,
+          "source_x": 55,
+          "source_y": 77,
+          "x": 55,
+          "y": 77,
+          "kind": 10
+        },
+        {
+          "tile_x": 16,
+          "tile_y": 22,
+          "source_x": 88,
+          "source_y": 138,
+          "x": 88,
+          "y": 138,
+          "kind": 0
+        }
+      ],
+      "scene_sha256": {
+        "Room": "6d1683950370b29071cdfadbbf921342da6c8998b85e44dc7ba0abd0efc95acb",
+        "RoomSpots": "61afe7b950dd56ddb53ed6c142a362a35aeab1fdf84f8391d5b424c9d53711af",
+        "RegionalContentSpots": "7733cc6cd525433d2c93b1ed4db27d2c903f0e78727d31f11087c908d4cc9e15",
+        "HandoffState": "3a468937fb9519fb7cadddb7de37d2a50820ccde612152792da1d35ca1ef54ac",
+        "World": "0e997fcc0537f29efd452de3d6534fc267a7717ac08d3b9b45970ee08c480c40",
+        "CreamWorld": "fb2f099f9c62a418311dfec5401c98cd31d826c0b642a1d4e5d07c8d3f512de9",
+        "runtime_s": "673bf0061869c474635d837ac6dd4256aae7b57f4903ad41606aa012aa9ca000",
+        "runtime_r": "9ae76d43143e2c27920dac7522038a7394d8188fc6a63de59bafad660cc5a438",
+        "hero": "835cb661103077126efc4b069fc564b8cbc448afbc6d7e58a93c82a4edd2c86f",
+        "discovery": "49fc9af74238046049569b303b335774cbd50efd41eddcf6577860a0e2f24633",
+        "node": "684888c0ebb17f374298b65ee2807526c066094c701bcc7ebbe1c1095f494fc1"
+      }
+    },
+    {
+      "label": "region1-field3",
+      "area": 1,
+      "cell": 0,
+      "markers": [
+        {
+          "tile_x": 26,
+          "tile_y": 4,
+          "source_x": 140,
+          "source_y": 47,
+          "x": 140,
+          "y": 47,
+          "kind": 1
+        },
+        {
+          "tile_x": 25,
+          "tile_y": 15,
+          "source_x": 135,
+          "source_y": 102,
+          "x": 135,
+          "y": 102,
+          "kind": 1
+        },
+        {
+          "tile_x": 19,
+          "tile_y": 14,
+          "source_x": 105,
+          "source_y": 97,
+          "x": 105,
+          "y": 97,
+          "kind": 12
+        },
+        {
+          "tile_x": 16,
+          "tile_y": 22,
+          "source_x": 88,
+          "source_y": 138,
+          "x": 88,
+          "y": 138,
+          "kind": 0
+        }
+      ],
+      "scene_sha256": {
+        "Room": "0fc657b2e18ca5c172120f87c2b7b500e7fc714dfd246626624df9c178935f21",
+        "RoomSpots": "7b0ccd61fa2645c7ad3afffb739c9a241cc1f7f8ca6fbb94f442087d705d9dcc",
+        "RegionalContentSpots": "eb16ad3ed510ec365ac64b19d2da9bc5e419bb654359bc7919c3a1edd8685c00",
+        "HandoffState": "3a468937fb9519fb7cadddb7de37d2a50820ccde612152792da1d35ca1ef54ac",
+        "World": "9f32489be7d8a556d16241d27a45207183f512658c7bd981c56a2128c72ecf93",
+        "CreamWorld": "fb2f099f9c62a418311dfec5401c98cd31d826c0b642a1d4e5d07c8d3f512de9",
+        "runtime_s": "2adf305e90173be946a1cec45bf57592928d25a0eefcdb06ee327e803a718aee",
+        "runtime_r": "4d1e1b4a5233c7d4ed7f52de7670358def0bf7565b9bb97d142305757e52fb86",
+        "hero": "835cb661103077126efc4b069fc564b8cbc448afbc6d7e58a93c82a4edd2c86f",
+        "discovery": "5eca4ef5bd8229ccbb3d29ebaf5ab4916b1511d22c7119496237495fc342e5ac",
+        "node": "684888c0ebb17f374298b65ee2807526c066094c701bcc7ebbe1c1095f494fc1"
+      }
+    },
+    {
+      "label": "region3-field0",
+      "area": 3,
+      "cell": 20,
+      "markers": [
+        {
+          "tile_x": 24,
+          "tile_y": 20,
+          "source_x": 98,
+          "source_y": 81,
+          "x": 98,
+          "y": 81,
+          "ch": 67
+        },
+        {
+          "tile_x": 14,
+          "tile_y": 19,
+          "source_x": 58,
+          "source_y": 77,
+          "x": 58,
+          "y": 77,
+          "ch": 84
+        },
+        {
+          "tile_x": 28,
+          "tile_y": 19,
+          "source_x": 114,
+          "source_y": 77,
+          "x": 114,
+          "y": 77,
+          "ch": 68
+        },
+        {
+          "tile_x": 28,
+          "tile_y": 16,
+          "source_x": 114,
+          "source_y": 65,
+          "x": 114,
+          "y": 65,
+          "ch": 87
+        },
+        {
+          "tile_x": 28,
+          "tile_y": 19,
+          "source_x": 114,
+          "source_y": 77,
+          "x": 122,
+          "y": 77,
+          "ch": 79
+        }
+      ],
+      "scene_sha256": {
+        "Room": "2fca557dcf81352fc10bcd7f43ed79a240acb4604d0bd35637934c403b07d185",
+        "RoomSpots": "66b4a8b2a17f0463f7427c0239106eaf710ea7129f42d184a58c50cdff614ba4",
+        "RegionalContentSpots": "b71f5f59135c898b459e5472574bacd0db745f24583117c2129ccf1e547357c9",
+        "HandoffState": "33cdbed4e02398ced61bbcabf5fedce107f14e5f6e9452f9664343428ad3657b",
+        "World": "9f32489be7d8a556d16241d27a45207183f512658c7bd981c56a2128c72ecf93",
+        "CreamWorld": "fb2f099f9c62a418311dfec5401c98cd31d826c0b642a1d4e5d07c8d3f512de9",
+        "runtime_s": "4790b180050bcaed884f3038202094c0e11303b4e2ed2660115fec811613c387",
+        "runtime_r": "30b7225fbf80179de23c37918b3b2badf9e2e3e2bdce061317630cc846d74789",
+        "hero": "f444a70b2dcc4cbc2fd53d99cf05ef3c7d023f018b9f9c82868eb078338bda01",
+        "discovery": "682b221a2bfe6fbac9c90d160276c2f3fc7538151260d48a43aad0cbdb9e518b",
+        "node": "32ebb1abcc1c601ceb9c4e3c4faba0caa5b85bb98c4f1e6612c40faa528a91c9"
+      }
+    },
+    {
+      "label": "region3-interior",
+      "area": 3,
+      "cell": 20,
+      "markers": [
+        {
+          "tile_x": 24,
+          "tile_y": 20,
+          "source_x": 98,
+          "source_y": 81,
+          "x": 98,
+          "y": 81,
+          "ch": 67
+        },
+        {
+          "tile_x": 14,
+          "tile_y": 19,
+          "source_x": 58,
+          "source_y": 77,
+          "x": 58,
+          "y": 77,
+          "ch": 84
+        },
+        {
+          "tile_x": 28,
+          "tile_y": 19,
+          "source_x": 114,
+          "source_y": 77,
+          "x": 114,
+          "y": 77,
+          "ch": 68
+        },
+        {
+          "tile_x": 28,
+          "tile_y": 16,
+          "source_x": 114,
+          "source_y": 65,
+          "x": 114,
+          "y": 65,
+          "ch": 87
+        },
+        {
+          "tile_x": 28,
+          "tile_y": 19,
+          "source_x": 114,
+          "source_y": 77,
+          "x": 122,
+          "y": 77,
+          "ch": 79
+        }
+      ],
+      "scene_sha256": {
+        "Room": "7a17a887ea6159c1ca6d4a87c09ee95668c0dd32fe08aa1d6acce940ac2cc3cf",
+        "RoomSpots": "66b4a8b2a17f0463f7427c0239106eaf710ea7129f42d184a58c50cdff614ba4",
+        "RegionalContentSpots": "659d36ca563ba4622daabb36a71dafaf6060cdcbf89bb12e75426198496d272c",
+        "HandoffState": "fcfbe5c24aca97ae7843b51754f18495132e5ebde6b24416a0a0ed4c3dea8128",
+        "World": "9f32489be7d8a556d16241d27a45207183f512658c7bd981c56a2128c72ecf93",
+        "CreamWorld": "fb2f099f9c62a418311dfec5401c98cd31d826c0b642a1d4e5d07c8d3f512de9",
+        "runtime_s": "817b50d1ad585422d4fef520497aaf2b2d7c309615cf786f313203d0d00cfb64",
+        "runtime_r": "9914ed659fb101b06905e3030dce17ce3ca751605de20d24a069f49d8c9b5bfe",
+        "hero": "a8cab79803467a5313bcba2bc151c75721e3ae469ee9db3bd462533fa9f6d268",
+        "discovery": "682b221a2bfe6fbac9c90d160276c2f3fc7538151260d48a43aad0cbdb9e518b",
+        "node": "32ebb1abcc1c601ceb9c4e3c4faba0caa5b85bb98c4f1e6612c40faa528a91c9"
+      }
+    },
+    {
+      "label": "region3-field1",
+      "area": 3,
+      "cell": 15,
+      "markers": [
+        {
+          "tile_x": 4,
+          "tile_y": 7,
+          "source_x": 18,
+          "source_y": 29,
+          "x": 18,
+          "y": 29,
+          "ch": 72
+        },
+        {
+          "tile_x": 10,
+          "tile_y": 20,
+          "source_x": 42,
+          "source_y": 81,
+          "x": 42,
+          "y": 81,
+          "ch": 68
+        },
+        {
+          "tile_x": 3,
+          "tile_y": 19,
+          "source_x": 14,
+          "source_y": 77,
+          "x": 14,
+          "y": 77,
+          "ch": 86
+        },
+        {
+          "tile_x": 26,
+          "tile_y": 19,
+          "source_x": 106,
+          "source_y": 77,
+          "x": 106,
+          "y": 77,
+          "ch": 75
+        }
+      ],
+      "scene_sha256": {
+        "Room": "6bcd33dd5982e7a1052ad8224174ab43763f3fcd21b7d9fc2910515d579e3222",
+        "RoomSpots": "66b4a8b2a17f0463f7427c0239106eaf710ea7129f42d184a58c50cdff614ba4",
+        "RegionalContentSpots": "7f073d7b76934805012cbdcdf0d6f26458e176b19326343e2f24f2e91096c590",
+        "HandoffState": "fcfbe5c24aca97ae7843b51754f18495132e5ebde6b24416a0a0ed4c3dea8128",
+        "World": "9f32489be7d8a556d16241d27a45207183f512658c7bd981c56a2128c72ecf93",
+        "CreamWorld": "fb2f099f9c62a418311dfec5401c98cd31d826c0b642a1d4e5d07c8d3f512de9",
+        "runtime_s": "90ddc413147847d7be172ea7f6a2e4d8c9a9be2d8d52680e6f4ab5fb9e496964",
+        "runtime_r": "195fb02b01ab78c7cfb172fc67748bf12959815f17aad171c5159335be0c4c26",
+        "hero": "e5760b3e7988dab1c11d6d0d96e222483f700bd260e9046e652247d1fd25bdc4",
+        "discovery": "6a7747e0b5f99cb7c8815ee1e6a830393d9b7f6eca47603fccf693c48fb19b31",
+        "node": "9652595f37edd08c51dfa26567e6cd76e6fa2709c3e578478ca398d316837a7a"
+      }
+    },
+    {
+      "label": "region3-field2",
+      "area": 3,
+      "cell": 0,
+      "markers": [
+        {
+          "tile_x": 20,
+          "tile_y": 21,
+          "source_x": 82,
+          "source_y": 85,
+          "x": 82,
+          "y": 85,
+          "ch": 70
+        },
+        {
+          "tile_x": 24,
+          "tile_y": 6,
+          "source_x": 98,
+          "source_y": 25,
+          "x": 98,
+          "y": 25,
+          "ch": 67
+        },
+        {
+          "tile_x": 15,
+          "tile_y": 18,
+          "source_x": 62,
+          "source_y": 73,
+          "x": 62,
+          "y": 73,
+          "ch": 68
+        },
+        {
+          "tile_x": 25,
+          "tile_y": 20,
+          "source_x": 102,
+          "source_y": 81,
+          "x": 102,
+          "y": 81,
+          "ch": 75
+        }
+      ],
+      "scene_sha256": {
+        "Room": "3f1c86b9ae4561ed49ccbf2cc0df09d7210797e937c4b94859bb8316b5ec4a5b",
+        "RoomSpots": "66b4a8b2a17f0463f7427c0239106eaf710ea7129f42d184a58c50cdff614ba4",
+        "RegionalContentSpots": "eea5d278b073ac98eab0d5950b9e1df7c9729d506ae588945d75a57e500264f8",
+        "HandoffState": "fcfbe5c24aca97ae7843b51754f18495132e5ebde6b24416a0a0ed4c3dea8128",
+        "World": "9f32489be7d8a556d16241d27a45207183f512658c7bd981c56a2128c72ecf93",
+        "CreamWorld": "fb2f099f9c62a418311dfec5401c98cd31d826c0b642a1d4e5d07c8d3f512de9",
+        "runtime_s": "e6f54fedbcfa9ea38b8613937cbdf5892cdce4744834d7abe82083a62031920a",
+        "runtime_r": "5893a4356f64cf60c43650d0212113a36f498d2f9e642a9c9302e524b9feb01b",
+        "hero": "16d247dd38f3cc8d4a6ee0f256fa67a6c4a6a801babc9661df2b7d452708d9a9",
+        "discovery": "b8e3c79eaa0432e9c11279981f6306f922cb123a946785305333a34611e36f1b",
+        "node": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d"
+      }
+    }
+  ],
+  "publication_format": "Compact review summary; outcomes and identities retained. Exact original JSON is adjacent in gzip and in native-evidence.zip.",
+  "raw_report": {
+    "file": "report.json.gz",
+    "sha256": "2527684475eefbddadf21600c09dab3ed7f651309de3b7c60ca1d81f9e85174b",
+    "uncompressed_sha256": "bafcf73f16dedcd5b9f35d19497423c9165e467ef027c3903b13c088b2d560e1",
+    "uncompressed_bytes": 3365742
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "method": "Execute production regional mechanism/mobility C with explicit host fixtures.\n\nChecks actual builders, bounds, native-type semantics, protected dry perimeter,\nall42 families, tool/state counters, pressure persistence, red-fusion collision,\ncart water support/safe stops, bridge planes, descent and once-only rewards.\nThese are host logic/geometry checks, not emulator input or screenshot evidence.\n",
+  "passed": true,
+  "objects": {
+    "checks": 15105,
+    "patterns": 12,
+    "object_families": 42,
+    "seeds": 64,
+    "passed": true
+  },
+  "mobility": {
+    "checks": 8382,
+    "patterns": 3,
+    "field_builds": 384,
+    "passed": true
+  },
+  "checks": 23487,
+  "source_sha256": {
+    "src/handoff_objects.c": "feaf4b6d0e23cb6c525aa23b7d2176abfd0831048db62ba501fefb20c1901849",
+    "src/handoff_objects.h": "ba124391b595021537bf708d9f9314e7d55798e683b9762db0f6c6c36e05a269",
+    "src/handoff_mobility.c": "7827eaffe3f602b4e98a1fb8c780c4aa5ed404f378d5466f08cdc0960db60308",
+    "src/handoff_mobility.h": "a5aab18a87b304b7468320e30193f3e6ced206139324617c2cc0f725ce8fecf1",
+    "art/handoff_mobility.py": "579e82240d7fe52a0677d6299da71f2bce7be160f76dcdcf49f95c184327e94f"
+  },
+  "adapter_sha256": {
+    "tools/handoff_mobility_host.py": "954e99634c5de8c5f2af5bb44a175a5dd52da751075911d5b1313b7b90b2e38a",
+    "tools/handoff_objects_host.py": "c808d227274cc4514fa9a28b5d1a3f954b9b47536a5f31019abb099f96013834"
+  },
+  "asset_symbol_registry_sha256": "7fb84f6d7d60bb913262733afdabf7e3f7adbb01e14b2d2af5a04eccc86d2068",
+  "tool_sha256": "41e032c88d8fb9bbb18a5e8069975aca65810c6515854e040aca836b87b477c7"
+}

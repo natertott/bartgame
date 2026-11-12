@@ -1,6 +1,12 @@
 # Original-game handoff restoration audit
 
-This records the **current additive implementation, unfinished integration and qualification** for the restoration requested on 2026-11-11. All 494 entries retain a historical baseline plus a separate current status, executable evidence and test scope in [features.json](features.json). Historical baseline: `3fa7774eb72e67f155f91107a772ca1fd202fc8f`. The standalone game is `bartgame/`; the outer repository contains the TMC/QUICKSTART oracle.
+This records the **additive implementation and scoped regional integration qualification** for the restoration requested on 2026-11-11. All 494 entries retain a historical baseline plus a separate current status, executable evidence and test scope in [features.json](features.json). Historical baseline: `3fa7774eb72e67f155f91107a772ca1fd202fc8f`. The standalone game is `bartgame/`; the outer repository contains the TMC/QUICKSTART oracle.
+
+The six named regional/run-flow integration gaps are now closed in the final
+2026-11-12 build. See [current regional qualification](#current-regional-integration-2026-11-12)
+and the [verification report](../../bartgame/docs/regional-integration/VERIFICATION.md).
+The release3 section below remains historical evidence of the earlier Annex
+implementation and its correction; its old ROM hashes and native limits remain.
 
 ## Authority and scope
 
@@ -595,7 +601,7 @@ A feature needs every applicable path: obtainable/enterable through play, actual
 
 Validate seed proofs against the actual C generator. Check real room tiles and directed links, exercise input transitions, capture native 240×160 mGBA output, measure busy rooms with original music, and preserve existing art checksums. The baseline audit itself performed no build or runtime tests. The current qualification below records the subsequent implementation and measured tests.
 
-## Current implementation and scoped qualification
+## Historical release3 implementation and scoped qualification
 
 Final source: `0b9344d781e65e304d245bd9ae4aecdbc7056837`.
 Final ROM SHA-256: `b348cf4d628aee1abb9b71d8885a9f04094332c5252490ff2dd8f8e7cd0bf1b8`.
@@ -634,9 +640,9 @@ Preserving existing Forest features did not require these choices.
 The Cream's three trial sites, its climbing/cave/drop graph, new field enemies,
 tool rewards and wandering fusers are actual regional additions. This correction
 does not discard their tests or the Annex mechanics. The machine ledger now
-records deployment separately and marks the directly affected integration
+records deployment separately and marked the directly affected integration
 requirements `partial_integration`; its native evidence retains its original
-mechanical scope. See the [deployment detail](../../bartgame/docs/handoff-restoration/EVENTS.md#provenance-and-unfinished-regional-integration).
+mechanical scope. See the [current deployment detail](../../bartgame/docs/handoff-restoration/EVENTS.md).
 
 | Current qualification | Rows |
 | --- | ---: |
@@ -738,3 +744,73 @@ independent; the nine-region architecture provides future capacity.
 and each machine row retain precise current sources, source exceptions and
 separate host/native evidence. Verification artifacts are copied into the
 published review bundle; workspace report paths identify their original runs.
+
+## Current regional integration (2026-11-12)
+
+Final runtime source: `51880a55e6ecf86728f3a0923e5547e7bdeed5a0`.
+Final ROM SHA-256:
+`0dd8554384b53e618140f8c61590fc7e6a7ff0888f296ece034a95f357b34fdd`.
+
+The normal opening, Drain services and generated Forest/Cream now expose the
+restored features directly. The Cream entrance is a second Forest-style wall
+ladder. Events use actual generated entrances; seven regional quest forms,
+component-aware waves, useful colored/golden fusion gates, coherent mechanism
+rooms and local field traversal no longer depend on a selection Annex. The
+Annex was an invented packaging choice, and its old mechanical tests remain
+historical rather than being promoted into regional proof.
+
+The additional four-objective chain uses live reachability and actual regional
+content. Its final seal waits for three genuinely earned trials in Forest or
+Cream, then requires a real late guardian and the physical Earth Element
+pickup. Original Heart and Cream summit wins remain. Drafted or purchased
+tools do not bypass original trial facts. Published saves migrate to the
+1,908-byte extension-v3 record; active regional quests, actual map anchors and
+won-run retirement have native cold-core controls.
+
+All 494 baseline classifications, requirements, citations and original
+qualification records are preserved. Separate current regional proof is
+attached to the 66 affected rows. Only the five formerly partial integration
+rows are promoted to `native_sample_qualified`; the remaining individual
+native obligations are not erased.
+
+| Current qualification | Rows |
+| --- | ---: |
+| `baseline_preserved_qualified` | 23 |
+| `native_sample_qualified` | 184 |
+| `code_connected_pending_native` | 244 |
+| `host_logic_qualified_pending_native` | 10 |
+| `host_geometry_qualified_pending_native` | 9 |
+| `host_equivalence_qualified` | 1 |
+| `reference_exempt` | 21 |
+| `retired_exempt` | 2 |
+
+The six named deployment gaps are closed with these final-ROM scopes:
+
+| Evidence | Result and practical scope |
+| --- | --- |
+| [Opening](../../regional-handoff-review/validation/opening/report.json), [hub](../../regional-handoff-review/validation/hub/report.json), [natural access](../../regional-handoff-review/validation/access/report.json) | 18, 43 and 12 checks. Actual opening inputs and walking through the Drain, services, both ladders, an original Forest border and a generated doorway; physical return, both A/walking entry and actual map location. |
+| [Arrivals](../../regional-handoff-review/validation/arrivals/report.json) | 195 checks across 32 generated classes, with ordinary no-Flippers gifts, actual doors, live positive health, 60 standing frames and real south exits. Wider room-load/navigation fixtures are disclosed. |
+| [Regional quests](../../regional-handoff-review/validation/quests/report.json), [chain](../../regional-handoff-review/validation/chain/report.json), [guard](../../regional-handoff-review/validation/chain-guard/report.json), [stakes](../../regional-handoff-review/validation/quest-stakes/report.json) | 118 checks: all 13 eligible kind/origin quest cases, both courier directions with cold Continue, Carry travel/refusal/ambush continuity, a genuine earned-trial/guardian/Earth win, early trial guard and latched-stake timeout. No inventory, HP, enemy, completion, gate, terrain or video assignments. |
+| Paired [fusions](../../regional-handoff-review/validation/pairs-fusions/report.json), [memory](../../regional-handoff-review/validation/pairs-memory/report.json), [portal](../../regional-handoff-review/validation/pairs-portal/report.json), [waves](../../regional-handoff-review/validation/pairs-wave/report.json) | 46 checks. Matching half consumption, meaningful saved cache/entrance changes, Learn/Recall controls, actual portal waves and distinct pocket return, once-only first regional reward and later-wave/revisit controls. Isolated loadout/navigation fixtures are explicit. |
+| [Mechanisms](../../regional-handoff-review/validation/mechanisms/report.json) and [field](../../regional-handoff-review/validation/mechanisms-fields/report.json), [lily](../../regional-handoff-review/validation/mechanisms-lily/report.json), [lava](../../regional-handoff-review/validation/mechanisms-lava/report.json), [Cream](../../regional-handoff-review/validation/mechanisms-cream/report.json) | 167 checks from fresh cores; all 159 substantive checks require `GS_PLAY` and positive HP. All 42 families have native instance/VRAM/OAM/access coverage; representative real tool, copy, portal, bridge, field cart/parachute and island-cache actions are exercised. Minimum observed HP is 22. These cases disclose equipment/ammo/standing/immunity fixtures and a gilt decrease to avoid wallet saturation; no claim/completion/fusion flags are assigned. |
+| [Maps](../../regional-handoff-review/validation/maps/report.json), [pending trials](../../regional-handoff-review/validation/maps-pending/report.json), [Cream cold latch](../../regional-handoff-review/validation/maps-cold-cream/report.json), [saves](../../regional-handoff-review/validation/saves/report.json), [original-save migration](../../regional-handoff-review/validation/saves-original/report.json) | 64 + 14 + 18 + 37 + 37 checks, including actual tile anchors/objective tethers, child-interior parent context, complete paused-scene preservation, active tasks, stable giver region and both published extension-v2 migrations. |
+| [Production placement](../../regional-handoff-review/validation/placement/report.json), [independent reach](../../regional-handoff-review/validation/reach/report.json) | 1,024 seeds; 102,400 closed/open room states; 33,324 actual field builders; 711,476 original enemy requests retained with dry distinct feet; all required fronts/boards fit. Independent Python solves match 393,216 live reach-mask pairs and 614,400 site wrappers. |
+| [Art](../../regional-handoff-review/validation/art/report.json), [resources](../../regional-handoff-review/validation/resources/report.json) | 2,593 preservation and 210 resource checks. All original frame bytes/IDs/geometry/palettes and visible tile pictures remain; two poses append and 17 named formerly empty transport slots receive new art. The 42 native field scenes have no allocator failure, at most 608/876 world tiles and 19 OAM entries. |
+| [Preservation](../../regional-handoff-review/README.md) | 263 original music, Heart/save, Drain, earned Cream summit/cold-retirement and long-drop checks. Original game outcomes and their actual rewards are retained. |
+| [Performance](../../regional-handoff-review/validation/performance/report.json) | 128 checks, 296 scenarios and three seeds. 52,642 updates over 52,647 eligible frames: five isolated one-frame holds, no consecutive misses. All 150 Cream workloads deliver 27,000/27,000 updates; maximum OAM is 46. This is representative coverage, not a perfect-zero-slowdown claim. |
+
+Actual-C host suites additionally qualify event logic, the Acro Bandit budget
+regression, all 42 mechanism families and transport state, and serialization
+with 48,640 protected-byte checks. The [verification report](../../bartgame/docs/regional-integration/VERIFICATION.md)
+records adapters, exact source/report hashes and the finite-seed limits.
+The independent graph reference uses exported primitive graph/fact records,
+never a production query to manufacture its expected answer.
+
+Specialized native combinations remain deliberately scoped. Regional
+Scavenger cases exercise moving glints; separate cut/dig and watcher-capture
+failure variants are not claimed. The mechanism family registry and source/host
+reaction coverage are broader than the representative native action set.
+The earlier zero-HP mechanism run was invalidated and is excluded from the
+final evidence; the final mechanism reports require live positive-health
+gameplay. No statement here claims all 494 rows, all 32-bit seeds or every
+possible encounter/tool combination was exhaustively tested in mGBA.

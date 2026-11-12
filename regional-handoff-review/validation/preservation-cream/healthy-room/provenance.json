@@ -1,0 +1,180 @@
+{
+  "method": "Nine untouched240x160 mGBA camera frames;512x384 is a literal disjoint crop mosaic, not a single GBA screen.",
+  "views": [
+    {
+      "camera": [
+        0,
+        0
+      ],
+      "file": "camera-0-0.png",
+      "source_crop": [
+        0,
+        0,
+        188,
+        136
+      ],
+      "world_crop": [
+        0,
+        0,
+        188,
+        136
+      ]
+    },
+    {
+      "camera": [
+        136,
+        0
+      ],
+      "file": "camera-136-0.png",
+      "source_crop": [
+        52,
+        0,
+        188,
+        136
+      ],
+      "world_crop": [
+        188,
+        0,
+        324,
+        136
+      ]
+    },
+    {
+      "camera": [
+        272,
+        0
+      ],
+      "file": "camera-272-0.png",
+      "source_crop": [
+        52,
+        0,
+        240,
+        136
+      ],
+      "world_crop": [
+        324,
+        0,
+        512,
+        136
+      ]
+    },
+    {
+      "camera": [
+        0,
+        112
+      ],
+      "file": "camera-0-112.png",
+      "source_crop": [
+        0,
+        24,
+        188,
+        136
+      ],
+      "world_crop": [
+        0,
+        136,
+        188,
+        248
+      ]
+    },
+    {
+      "camera": [
+        136,
+        112
+      ],
+      "file": "camera-136-112.png",
+      "source_crop": [
+        52,
+        24,
+        188,
+        136
+      ],
+      "world_crop": [
+        188,
+        136,
+        324,
+        248
+      ]
+    },
+    {
+      "camera": [
+        272,
+        112
+      ],
+      "file": "camera-272-112.png",
+      "source_crop": [
+        52,
+        24,
+        240,
+        136
+      ],
+      "world_crop": [
+        324,
+        136,
+        512,
+        248
+      ]
+    },
+    {
+      "camera": [
+        0,
+        224
+      ],
+      "file": "camera-0-224.png",
+      "source_crop": [
+        0,
+        24,
+        188,
+        160
+      ],
+      "world_crop": [
+        0,
+        248,
+        188,
+        384
+      ]
+    },
+    {
+      "camera": [
+        136,
+        224
+      ],
+      "file": "camera-136-224.png",
+      "source_crop": [
+        52,
+        24,
+        188,
+        160
+      ],
+      "world_crop": [
+        188,
+        248,
+        324,
+        384
+      ]
+    },
+    {
+      "camera": [
+        272,
+        224
+      ],
+      "file": "camera-272-224.png",
+      "source_crop": [
+        52,
+        24,
+        240,
+        160
+      ],
+      "world_crop": [
+        324,
+        248,
+        512,
+        384
+      ]
+    }
+  ],
+  "clock": 256,
+  "room_unchanged": true,
+  "crop_copy_exact": true,
+  "sha256": "0dd8554384b53e618140f8c61590fc7e6a7ff0888f296ece034a95f357b34fdd"
+}

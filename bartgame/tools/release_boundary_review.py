@@ -11,6 +11,8 @@ import argparse
 import hashlib
 import json
 import shutil
+import subprocess
+import re
 from collections import deque
 from pathlib import Path
 
@@ -21,6 +23,7 @@ import critical_path as C
 checks = []
 trace = {}
 OUT = None
+CREAM_POINT = None
 
 
 def check(name, passed, observed):
@@ -145,7 +148,7 @@ def dry_sewer(c):
     result = {'room_metatiles': [w, h], 'spawn': start, 'dry_spawn': dry(*start),
               'reachable_4px_nodes': len(seen), 'cabinet': cabinet,
               'policy': 'Live Room 8px collision, player 10x8 feet box; feet hazard excludes PIT/WATER/HURT; cabinet collision included; moving NPCs excluded.'}
-    for name, target in (('cream', (456, 130)), ('annex', (280, 130))):
+    for name, target in (('Cream ladder', CREAM_POINT), ('Forest ladder', (152, 94))):
         path = []
         p = target
         if target in seen:
@@ -156,15 +159,15 @@ def dry_sewer(c):
             path.reverse()
         result[name] = {'approach': target, 'reachable': target in seen,
                         'path_length_px': max(0, len(path) - 1) * 4, 'path': path}
-        check('dry ordinary-spawn route to ' + name + ' arch', target in seen and dry(*start),
+        check('dry ordinary-spawn route to ' + name + ' approach', target in seen and dry(*start),
               {k: v for k, v in result[name].items() if k != 'path'})
     trace['sewer_reachability'] = result
 
 
 def entrances(c):
-    nav(c, 456, 130)
+    nav(c, *CREAM_POINT)
     P.run(c, 2)
-    snap(c, '01-sewer-cream-approach')
+    snap(c, '01-sewer-cream-ladder-approach')
     P.press(c, 'A', 2, 2)
     ok = settle(c, 3)
     P.run(c, 2)
@@ -174,18 +177,24 @@ def entrances(c):
     P.press(c, 'A', 2, 2)
     ok = settle(c, 0)
     P.run(c, 2)
-    returned = status(c)
-    snap(c, '03-cream-returns-matching-sewer-arch')
-    check('real A on entry stairs returns to Cream Sewer arch', ok and P.player_pos(c) == (456, 130), returned)
+    snap(c, '03-cream-returns-matching-sewer-ladder')
+    check('real A on entry stairs returns below Cream wall ladder', ok and P.player_pos(c) == CREAM_POINT, status(c))
 
-    nav(c, 280, 130)
+
+def service_modal(c):
+    initial = music(c)['gVBlankHook']
+    nav(c, 352, 254, 0)  # real Drain cot, no purchase made.
     P.run(c, 2)
-    P.press(c, 'A', 2, 2)
-    ok = settle(c, 4)
-    P.run(c, 2)
-    snap(c, '04-annex-entry')
-    check('real A enters optional Annex', ok, status(c))
-    return c
+    P.press(c, 'A', 2, 8)
+    modal = section('.ewram_bss.handoff_menu') + 14
+    check('real A opens physical Drain bed offers', P.r8(c, modal) != 0, {'mode': P.r8(c, modal), 'status': status(c)})
+    snap(c, '04-drain-bed-modal')
+    audio_span(c, 'physical Drain bed modal')
+    P.press(c, 'B', 2, 8)
+    check('Drain service closes and preserves original VBlank hook', P.r8(c, modal) == 0 and music(c)['gVBlankHook'] == initial,
+          {'mode': P.r8(c, modal), 'hook_before': initial, 'hook_after': music(c)['gVBlankHook']})
+    check('service dismissal keeps Bloom in the Drain', C.area(c) == 0, status(c))
+    snap(c, '05-drain-bed-return')
 
 
 def music(c):
@@ -211,25 +220,6 @@ def audio_span(c, label, frames=30):
           {'physical_frames': frames, 'before': before, 'after': after})
 
 
-def annex_modal_and_exit(c):
-    initial = music(c)['gVBlankHook']
-    nav(c, 200, 158, 0)  # dry approach below the Inn desk; no purchase made.
-    P.run(c, 2)
-    P.press(c, 'A', 2, 8)
-    modal = section('.ewram_bss.handoff_menu') + 14
-    check('real A opens Annex Inn modal', P.r8(c, modal) != 0, {'mode': P.r8(c, modal), 'status': status(c)})
-    snap(c, '05-annex-inn-modal')
-    audio_span(c, 'Annex Inn modal')
-    P.press(c, 'B', 2, 8)
-    check('Annex modal closes and preserves original VBlank hook', P.r8(c, modal) == 0 and music(c)['gVBlankHook'] == initial,
-          {'mode': P.r8(c, modal), 'hook_before': initial, 'hook_after': music(c)['gVBlankHook']})
-    nav(c, 264, 350, 2)
-    P.hold(c, 'DOWN', 12)
-    ok = settle(c, 0)
-    P.run(c, 2)
-    snap(c, '06-annex-returns-matching-sewer-arch')
-    check('real downward walk leaves Annex at matching Sewer arch', ok and P.player_pos(c) == (280, 130), status(c))
-
 
 def menu_audio():
     c = boot()
@@ -247,12 +237,14 @@ def menu_audio():
           {'gear': gear_state(c), 'saved_hook': P.r32(c, static('sOldHook', 'gear_menu.o'))})
     snap(c, '08-select-satchel')
     audio_span(c, 'Select Satchel')
-    P.press(c, 'R', 2, 10)
-    check('real R opens native atlas', gear_state(c) == {'sActive': 1, 'sPage': 1, 'sZoom': 0}, gear_state(c))
+    P.press(c, 'R', 2, 30)
+    chart = {'page': P.r8(c, P.sym('gMenuStudyPage')), 'zoom': P.r8(c, P.sym('gMenuStudyZoom'))}
+    check('real R opens current Forest atlas from the Drain', C.gstate(c) == 4 and chart == {'page': 2, 'zoom': 0} and not gear_state(c)['sActive'], chart)
     snap(c, '09-satchel-atlas')
     audio_span(c, 'native atlas')
-    P.press(c, 'A', 2, 10)
-    check('real A opens atlas room zoom', gear_state(c) == {'sActive': 1, 'sPage': 1, 'sZoom': 1}, gear_state(c))
+    P.press(c, 'A', 2, 30)
+    chart = {'page': P.r8(c, P.sym('gMenuStudyPage')), 'zoom': P.r8(c, P.sym('gMenuStudyZoom'))}
+    check('real A opens atlas room zoom', C.gstate(c) == 4 and chart == {'page': 2, 'zoom': 1}, chart)
     snap(c, '10-native-atlas-zoom')
     audio_span(c, 'native atlas room zoom')
     P.press(c, 'START', 2, 10)
@@ -360,11 +352,16 @@ def trial_negative():
 
 
 def main():
-    global OUT
+    global OUT, CREAM_POINT
     ap = argparse.ArgumentParser()
     ap.add_argument('--bundle', type=Path, required=True)
     ap.add_argument('--out', type=Path, required=True)
     args = ap.parse_args()
+    source = (args.bundle / 'source-commit.txt').read_text().strip()
+    repo = Path(__file__).resolve().parents[2]
+    header = subprocess.check_output(['git', '-C', str(repo), 'show', source + ':bartgame/src/hub_services.h'], text=True)
+    names = ('HUB_CREAM_LADDER_X', 'HUB_CREAM_RETURN_Y')
+    CREAM_POINT = tuple(int(re.search(r'^#define\s+' + name + r'\s+(\d+)\s*$', header, re.M)[1]) for name in names)
     OUT = args.out.resolve()
     OUT.mkdir(parents=True, exist_ok=True)
     # Separate path avoids loading or sharing another review's disk SRAM.
@@ -381,7 +378,7 @@ def main():
         c = boot()
         dry_sewer(c)
         entrances(c)
-        annex_modal_and_exit(c)
+        service_modal(c)
         menu_audio()
         trial_negative()
         completed = True

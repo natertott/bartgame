@@ -1,0 +1,31 @@
+{
+  "checks": 14,
+  "passed": 14,
+  "Acro_stack_cost": 6,
+  "global_cost_cap": 26,
+  "actor_cap": 28,
+  "method": "Execute production enemy admission for intact and released Acro stacks.\n\nHost actors and item/terrain queries are explicit fixtures. This tests the\nactual budget/cap function, not AI, rendering, native timing or room placement.\n",
+  "source_sha256": "12dd0c360568894dbe3a248a5ff93cc12c2a4db642fd6a1cc2f5d90a7d767035",
+  "tool_sha256": "323a6ce96d3157c9076cf46b96607ef979582d903a78bc25c85f5c3d5c472f94",
+  "command": [
+    "gcc",
+    "-std=gnu99",
+    "-Os",
+    "-ffunction-sections",
+    "-fdata-sections",
+    "-Wno-attributes",
+    "-I/workspace/bartgame/bartgame/src",
+    "-I/workspace/bartgame/bartgame/build/gen",
+    "/tmp/legacy-spawn-budget-8je7d3j1/review.c",
+    "-Wl,--gc-sections",
+    "-o",
+    "/tmp/legacy-spawn-budget-8je7d3j1/review"
+  ],
+  "negative_control": {
+    "commit": "8901355a71bef997f90bd76af1855e6f4b1e41c7",
+    "source_sha256": "5046c4f75fa7671e77365870271cef6913b2aaa89bb299d75322c1b19603a1bc",
+    "expected_failure": true,
+    "returncode": -6,
+    "stderr": "review: /tmp/legacy-spawn-budget-8je7d3j1/review.c:23: main: Assertion `legacy_enemy_can_spawn(LE_OCTOROK_0)' failed.\n"
+  }
+}

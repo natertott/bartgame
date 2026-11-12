@@ -24,6 +24,8 @@ def main():
     ap.add_argument('--evidence', required=True, type=Path,
                     help='JSON manifest of named native directories and host files')
     ap.add_argument('--out', required=True, type=Path)
+    ap.add_argument('--review', default='curdled-cream-review/README.md',
+                    help='Repository path of this release gallery')
     args = ap.parse_args()
     bundle, out = args.bundle.resolve(), args.out.resolve()
     config = json.loads(args.evidence.read_text())
@@ -91,6 +93,11 @@ def main():
             rel = 'qualification/' + name
             z.write(path, rel)
             record(path, rel, 'qualification/build metadata')
+        for name, filename in config.get('harness', {}).items():
+            path = Path(filename)
+            rel = 'harness/' + name
+            z.write(path, rel)
+            record(path, rel, 'exact qualification tool/source snapshot')
         manifest = dict(source_commit=source, rom_sha256=rom_hash,
                         emulator='mGBA0.10.5', files=inventory)
         z.writestr('manifest.json', json.dumps(manifest, indent=2) + '\n')
@@ -99,7 +106,7 @@ def main():
         z.write(rom, rom.name)
         z.writestr('README.txt', 'BARTGAME original standalone GBA game.\n'
                    'Source: ' + source + '\nROM SHA256: ' + rom_hash + '\n'
-                   'See the adjacent README.md and curdled-cream-review/README.md '
+                   'See the adjacent README.md and ' + args.review + ' '
                    'for controls, the feature audit and actual mGBA captures.\n')
     files = sorted(p for p in out.iterdir() if p.is_file() and p.name != 'SHA256SUMS')
     (out / 'SHA256SUMS').write_text(''.join(sha(p) + '  ' + p.name + '\n' for p in files))

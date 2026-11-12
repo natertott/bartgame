@@ -1,0 +1,15 @@
+{
+  "source_commit": "51880a55e6ecf86728f3a0923e5547e7bdeed5a0",
+  "rom_sha256": "0dd8554384b53e618140f8c61590fc7e6a7ff0888f296ece034a95f357b34fdd",
+  "rom_bytes": 10626484,
+  "profile": 0,
+  "enemy_lab": 0,
+  "emulator": "mGBA0.10.5",
+  "toolchain": "arm-none-eabi-gcc (15:14.2.rel1-1) 14.2.1 20241119",
+  "runtime_source_matches_pinned_commit": true,
+  "build_log_sha256": "4a2ae2221d93fbe1186e166ca86316aed821ed76117cd32134047000dc548ff0",
+  "review": "regional-handoff-review/README.md",
+  "native_art_baseline_source": "0b9344d781e65e304d245bd9ae4aecdbc7056837",
+  "native_art_baseline_rom_sha256": "b348cf4d628aee1abb9b71d8885a9f04094332c5252490ff2dd8f8e7cd0bf1b8",
+  "original_preservation_requirement_revision": "3fa7774eb72e67f155f91107a772ca1fd202fc8f"
+}

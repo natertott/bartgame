@@ -1,0 +1,863 @@
+{
+  "method": "Survey actual regional field allocations and visible added objects in mGBA.\n\nFresh SRAM/title seed, ordinary room-load requests and hero position/facing are\nexplicit fixtures for this broad scene survey. No owned items, health, enemy\nstate, completion flags, terrain, collision, camera or framebuffer are assigned.\nThis verifies rendering/budgets; natural exploration and mechanics have their\nown input-only suites.\n",
+  "source_commit": "51880a55e6ecf86728f3a0923e5547e7bdeed5a0",
+  "rom_sha256": "0dd8554384b53e618140f8c61590fc7e6a7ff0888f296ece034a95f357b34fdd",
+  "tool_sha256": "c89903f6c483c8a24d33a1c8c5ad1f5dd70029751598ef04996dc2c0db864926",
+  "support_sha256": "5c2dfee98c73847e83d5ebfb950ee6642af032dcf14531743347659c4ad9eea0",
+  "checks": [
+    {
+      "name": "0xb4a7/field-1-0: no native allocation failures",
+      "passed": true
+    },
+    {
+      "name": "0xb4a7/field-1-0: complete field graphics fit world tile budget",
+      "passed": true
+    },
+    {
+      "name": "0xb4a7/field-1-0: generated doorway owns actual tile storage",
+      "passed": true
+    },
+    {
+      "name": "0xb4a7/field-1-0: doorway is actually submitted to native OAM",
+      "passed": true
+    },
+    {
+      "name": "0xb4a7/field-1-0: observer did not die during survey",
+      "passed": true
+    },
+    {
+      "name": "0xb4a7/field-1-5: no native allocation failures",
+      "passed": true
+    },
+    {
+      "name": "0xb4a7/field-1-5: complete field graphics fit world tile budget",
+      "passed": true
+    },
+    {
+      "name": "0xb4a7/field-1-5: generated doorway owns actual tile storage",
+      "passed": true
+    },
+    {
+      "name": "0xb4a7/field-1-5: doorway is actually submitted to native OAM",
+      "passed": true
+    },
+    {
+      "name": "0xb4a7/field-1-5: observer did not die during survey",
+      "passed": true
+    },
+    {
+      "name": "0xb4a7/field-1-11: no native allocation failures",
+      "passed": true
+    },
+    {
+      "name": "0xb4a7/field-1-11: complete field graphics fit world tile budget",
+      "passed": true
+    },
+    {
+      "name": "0xb4a7/field-1-11: generated doorway owns actual tile storage",
+      "passed": true
+    },
+    {
+      "name": "0xb4a7/field-1-11: doorway is actually submitted to native OAM",
+      "passed": true
+    },
+    {
+      "name": "0xb4a7/field-1-11: observer did not die during survey",
+      "passed": true
+    },
+    {
+      "name": "0xb4a7/field-1-14: no native allocation failures",
+      "passed": true
+    },
+    {
+      "name": "0xb4a7/field-1-14: complete field graphics fit world tile budget",
+      "passed": true
+    },
+    {
+      "name": "0xb4a7/field-1-14: generated doorway owns actual tile storage",
+      "passed": true
+    },
+    {
+      "name": "0xb4a7/field-1-14: doorway is actually submitted to native OAM",
+      "passed": true
+    },
+    {
+      "name": "0xb4a7/field-1-14: observer did not die during survey",
+      "passed": true
+    },
+    {
+      "name": "0xb4a7/field-1-21: no native allocation failures",
+      "passed": true
+    },
+    {
+      "name": "0xb4a7/field-1-21: complete field graphics fit world tile budget",
+      "passed": true
+    },
+    {
+      "name": "0xb4a7/field-1-21: generated doorway owns actual tile storage",
+      "passed": true
+    },
+    {
+      "name": "0xb4a7/field-1-21: doorway is actually submitted to native OAM",
+      "passed": true
+    },
+    {
+      "name": "0xb4a7/field-1-21: observer did not die during survey",
+      "passed": true
+    },
+    {
+      "name": "0xb4a7/field-1-23: no native allocation failures",
+      "passed": true
+    },
+    {
+      "name": "0xb4a7/field-1-23: complete field graphics fit world tile budget",
+      "passed": true
+    },
+    {
+      "name": "0xb4a7/field-1-23: generated doorway owns actual tile storage",
+      "passed": true
+    },
+    {
+      "name": "0xb4a7/field-1-23: doorway is actually submitted to native OAM",
+      "passed": true
+    },
+    {
+      "name": "0xb4a7/field-1-23: observer did not die during survey",
+      "passed": true
+    },
+    {
+      "name": "0xb4a7/field-3-0: no native allocation failures",
+      "passed": true
+    },
+    {
+      "name": "0xb4a7/field-3-0: complete field graphics fit world tile budget",
+      "passed": true
+    },
+    {
+      "name": "0xb4a7/field-3-0: generated doorway owns actual tile storage",
+      "passed": true
+    },
+    {
+      "name": "0xb4a7/field-3-0: doorway is actually submitted to native OAM",
+      "passed": true
+    },
+    {
+      "name": "0xb4a7/field-3-0: observer did not die during survey",
+      "passed": true
+    },
+    {
+      "name": "0xb4a7/field-3-15: no native allocation failures",
+      "passed": true
+    },
+    {
+      "name": "0xb4a7/field-3-15: complete field graphics fit world tile budget",
+      "passed": true
+    },
+    {
+      "name": "0xb4a7/field-3-15: generated doorway owns actual tile storage",
+      "passed": true
+    },
+    {
+      "name": "0xb4a7/field-3-15: doorway is actually submitted to native OAM",
+      "passed": true
+    },
+    {
+      "name": "0xb4a7/field-3-15: observer did not die during survey",
+      "passed": true
+    },
+    {
+      "name": "0xb4a7/field-3-17: no native allocation failures",
+      "passed": true
+    },
+    {
+      "name": "0xb4a7/field-3-17: complete field graphics fit world tile budget",
+      "passed": true
+    },
+    {
+      "name": "0xb4a7/field-3-17: generated doorway owns actual tile storage",
+      "passed": true
+    },
+    {
+      "name": "0xb4a7/field-3-17: doorway is actually submitted to native OAM",
+      "passed": true
+    },
+    {
+      "name": "0xb4a7/field-3-17: observer did not die during survey",
+      "passed": true
+    },
+    {
+      "name": "0xb4a7/field-3-20: no native allocation failures",
+      "passed": true
+    },
+    {
+      "name": "0xb4a7/field-3-20: complete field graphics fit world tile budget",
+      "passed": true
+    },
+    {
+      "name": "0xb4a7/field-3-20: generated doorway owns actual tile storage",
+      "passed": true
+    },
+    {
+      "name": "0xb4a7/field-3-20: doorway is actually submitted to native OAM",
+      "passed": true
+    },
+    {
+      "name": "0xb4a7/field-3-20: observer did not die during survey",
+      "passed": true
+    },
+    {
+      "name": "1/field-1-3: no native allocation failures",
+      "passed": true
+    },
+    {
+      "name": "1/field-1-3: complete field graphics fit world tile budget",
+      "passed": true
+    },
+    {
+      "name": "1/field-1-3: generated doorway owns actual tile storage",
+      "passed": true
+    },
+    {
+      "name": "1/field-1-3: doorway is actually submitted to native OAM",
+      "passed": true
+    },
+    {
+      "name": "1/field-1-3: observer did not die during survey",
+      "passed": true
+    },
+    {
+      "name": "1/field-1-5: no native allocation failures",
+      "passed": true
+    },
+    {
+      "name": "1/field-1-5: complete field graphics fit world tile budget",
+      "passed": true
+    },
+    {
+      "name": "1/field-1-5: generated doorway owns actual tile storage",
+      "passed": true
+    },
+    {
+      "name": "1/field-1-5: doorway is actually submitted to native OAM",
+      "passed": true
+    },
+    {
+      "name": "1/field-1-5: observer did not die during survey",
+      "passed": true
+    },
+    {
+      "name": "1/field-1-6: no native allocation failures",
+      "passed": true
+    },
+    {
+      "name": "1/field-1-6: complete field graphics fit world tile budget",
+      "passed": true
+    },
+    {
+      "name": "1/field-1-6: generated doorway owns actual tile storage",
+      "passed": true
+    },
+    {
+      "name": "1/field-1-6: doorway is actually submitted to native OAM",
+      "passed": true
+    },
+    {
+      "name": "1/field-1-6: observer did not die during survey",
+      "passed": true
+    },
+    {
+      "name": "1/field-1-7: no native allocation failures",
+      "passed": true
+    },
+    {
+      "name": "1/field-1-7: complete field graphics fit world tile budget",
+      "passed": true
+    },
+    {
+      "name": "1/field-1-7: generated doorway owns actual tile storage",
+      "passed": true
+    },
+    {
+      "name": "1/field-1-7: doorway is actually submitted to native OAM",
+      "passed": true
+    },
+    {
+      "name": "1/field-1-7: observer did not die during survey",
+      "passed": true
+    },
+    {
+      "name": "1/field-1-12: no native allocation failures",
+      "passed": true
+    },
+    {
+      "name": "1/field-1-12: complete field graphics fit world tile budget",
+      "passed": true
+    },
+    {
+      "name": "1/field-1-12: generated doorway owns actual tile storage",
+      "passed": true
+    },
+    {
+      "name": "1/field-1-12: doorway is actually submitted to native OAM",
+      "passed": true
+    },
+    {
+      "name": "1/field-1-12: observer did not die during survey",
+      "passed": true
+    },
+    {
+      "name": "1/field-1-17: no native allocation failures",
+      "passed": true
+    },
+    {
+      "name": "1/field-1-17: complete field graphics fit world tile budget",
+      "passed": true
+    },
+    {
+      "name": "1/field-1-17: generated doorway owns actual tile storage",
+      "passed": true
+    },
+    {
+      "name": "1/field-1-17: doorway is actually submitted to native OAM",
+      "passed": true
+    },
+    {
+      "name": "1/field-1-17: observer did not die during survey",
+      "passed": true
+    },
+    {
+      "name": "1/field-3-5: no native allocation failures",
+      "passed": true
+    },
+    {
+      "name": "1/field-3-5: complete field graphics fit world tile budget",
+      "passed": true
+    },
+    {
+      "name": "1/field-3-5: generated doorway owns actual tile storage",
+      "passed": true
+    },
+    {
+      "name": "1/field-3-5: doorway is actually submitted to native OAM",
+      "passed": true
+    },
+    {
+      "name": "1/field-3-5: observer did not die during survey",
+      "passed": true
+    },
+    {
+      "name": "1/field-3-12: no native allocation failures",
+      "passed": true
+    },
+    {
+      "name": "1/field-3-12: complete field graphics fit world tile budget",
+      "passed": true
+    },
+    {
+      "name": "1/field-3-12: generated doorway owns actual tile storage",
+      "passed": true
+    },
+    {
+      "name": "1/field-3-12: doorway is actually submitted to native OAM",
+      "passed": true
+    },
+    {
+      "name": "1/field-3-12: observer did not die during survey",
+      "passed": true
+    },
+    {
+      "name": "1/field-3-13: no native allocation failures",
+      "passed": true
+    },
+    {
+      "name": "1/field-3-13: complete field graphics fit world tile budget",
+      "passed": true
+    },
+    {
+      "name": "1/field-3-13: generated doorway owns actual tile storage",
+      "passed": true
+    },
+    {
+      "name": "1/field-3-13: doorway is actually submitted to native OAM",
+      "passed": true
+    },
+    {
+      "name": "1/field-3-13: observer did not die during survey",
+      "passed": true
+    },
+    {
+      "name": "1/field-3-14: no native allocation failures",
+      "passed": true
+    },
+    {
+      "name": "1/field-3-14: complete field graphics fit world tile budget",
+      "passed": true
+    },
+    {
+      "name": "1/field-3-14: generated doorway owns actual tile storage",
+      "passed": true
+    },
+    {
+      "name": "1/field-3-14: doorway is actually submitted to native OAM",
+      "passed": true
+    },
+    {
+      "name": "1/field-3-14: observer did not die during survey",
+      "passed": true
+    },
+    {
+      "name": "1/field-3-21: no native allocation failures",
+      "passed": true
+    },
+    {
+      "name": "1/field-3-21: complete field graphics fit world tile budget",
+      "passed": true
+    },
+    {
+      "name": "1/field-3-21: generated doorway owns actual tile storage",
+      "passed": true
+    },
+    {
+      "name": "1/field-3-21: doorway is actually submitted to native OAM",
+      "passed": true
+    },
+    {
+      "name": "1/field-3-21: observer did not die during survey",
+      "passed": true
+    },
+    {
+      "name": "3/field-1-0: no native allocation failures",
+      "passed": true
+    },
+    {
+      "name": "3/field-1-0: complete field graphics fit world tile budget",
+      "passed": true
+    },
+    {
+      "name": "3/field-1-0: generated doorway owns actual tile storage",
+      "passed": true
+    },
+    {
+      "name": "3/field-1-0: doorway is actually submitted to native OAM",
+      "passed": true
+    },
+    {
+      "name": "3/field-1-0: observer did not die during survey",
+      "passed": true
+    },
+    {
+      "name": "3/field-1-7: no native allocation failures",
+      "passed": true
+    },
+    {
+      "name": "3/field-1-7: complete field graphics fit world tile budget",
+      "passed": true
+    },
+    {
+      "name": "3/field-1-7: generated doorway owns actual tile storage",
+      "passed": true
+    },
+    {
+      "name": "3/field-1-7: doorway is actually submitted to native OAM",
+      "passed": true
+    },
+    {
+      "name": "3/field-1-7: observer did not die during survey",
+      "passed": true
+    },
+    {
+      "name": "3/field-1-10: no native allocation failures",
+      "passed": true
+    },
+    {
+      "name": "3/field-1-10: complete field graphics fit world tile budget",
+      "passed": true
+    },
+    {
+      "name": "3/field-1-10: generated doorway owns actual tile storage",
+      "passed": true
+    },
+    {
+      "name": "3/field-1-10: doorway is actually submitted to native OAM",
+      "passed": true
+    },
+    {
+      "name": "3/field-1-10: observer did not die during survey",
+      "passed": true
+    },
+    {
+      "name": "3/field-1-12: no native allocation failures",
+      "passed": true
+    },
+    {
+      "name": "3/field-1-12: complete field graphics fit world tile budget",
+      "passed": true
+    },
+    {
+      "name": "3/field-1-12: generated doorway owns actual tile storage",
+      "passed": true
+    },
+    {
+      "name": "3/field-1-12: doorway is actually submitted to native OAM",
+      "passed": true
+    },
+    {
+      "name": "3/field-1-12: observer did not die during survey",
+      "passed": true
+    },
+    {
+      "name": "3/field-1-15: no native allocation failures",
+      "passed": true
+    },
+    {
+      "name": "3/field-1-15: complete field graphics fit world tile budget",
+      "passed": true
+    },
+    {
+      "name": "3/field-1-15: generated doorway owns actual tile storage",
+      "passed": true
+    },
+    {
+      "name": "3/field-1-15: doorway is actually submitted to native OAM",
+      "passed": true
+    },
+    {
+      "name": "3/field-1-15: observer did not die during survey",
+      "passed": true
+    },
+    {
+      "name": "3/field-3-4: no native allocation failures",
+      "passed": true
+    },
+    {
+      "name": "3/field-3-4: complete field graphics fit world tile budget",
+      "passed": true
+    },
+    {
+      "name": "3/field-3-4: generated doorway owns actual tile storage",
+      "passed": true
+    },
+    {
+      "name": "3/field-3-4: doorway is actually submitted to native OAM",
+      "passed": true
+    },
+    {
+      "name": "3/field-3-4: observer did not die during survey",
+      "passed": true
+    },
+    {
+      "name": "3/field-3-15: no native allocation failures",
+      "passed": true
+    },
+    {
+      "name": "3/field-3-15: complete field graphics fit world tile budget",
+      "passed": true
+    },
+    {
+      "name": "3/field-3-15: generated doorway owns actual tile storage",
+      "passed": true
+    },
+    {
+      "name": "3/field-3-15: doorway is actually submitted to native OAM",
+      "passed": true
+    },
+    {
+      "name": "3/field-3-15: observer did not die during survey",
+      "passed": true
+    },
+    {
+      "name": "3/field-3-16: no native allocation failures",
+      "passed": true
+    },
+    {
+      "name": "3/field-3-16: complete field graphics fit world tile budget",
+      "passed": true
+    },
+    {
+      "name": "3/field-3-16: generated doorway owns actual tile storage",
+      "passed": true
+    },
+    {
+      "name": "3/field-3-16: doorway is actually submitted to native OAM",
+      "passed": true
+    },
+    {
+      "name": "3/field-3-16: observer did not die during survey",
+      "passed": true
+    },
+    {
+      "name": "3/field-3-18: no native allocation failures",
+      "passed": true
+    },
+    {
+      "name": "3/field-3-18: complete field graphics fit world tile budget",
+      "passed": true
+    },
+    {
+      "name": "3/field-3-18: generated doorway owns actual tile storage",
+      "passed": true
+    },
+    {
+      "name": "3/field-3-18: doorway is actually submitted to native OAM",
+      "passed": true
+    },
+    {
+      "name": "3/field-3-18: observer did not die during survey",
+      "passed": true
+    },
+    {
+      "name": "3/field-3-21: no native allocation failures",
+      "passed": true
+    },
+    {
+      "name": "3/field-3-21: complete field graphics fit world tile budget",
+      "passed": true
+    },
+    {
+      "name": "3/field-3-21: generated doorway owns actual tile storage",
+      "passed": true
+    },
+    {
+      "name": "3/field-3-21: doorway is actually submitted to native OAM",
+      "passed": true
+    },
+    {
+      "name": "3/field-3-21: observer did not die during survey",
+      "passed": true
+    },
+    {
+      "name": "13/field-1-0: no native allocation failures",
+      "passed": true
+    },
+    {
+      "name": "13/field-1-0: complete field graphics fit world tile budget",
+      "passed": true
+    },
+    {
+      "name": "13/field-1-0: generated doorway owns actual tile storage",
+      "passed": true
+    },
+    {
+      "name": "13/field-1-0: doorway is actually submitted to native OAM",
+      "passed": true
+    },
+    {
+      "name": "13/field-1-0: observer did not die during survey",
+      "passed": true
+    },
+    {
+      "name": "13/field-1-17: no native allocation failures",
+      "passed": true
+    },
+    {
+      "name": "13/field-1-17: complete field graphics fit world tile budget",
+      "passed": true
+    },
+    {
+      "name": "13/field-1-17: generated doorway owns actual tile storage",
+      "passed": true
+    },
+    {
+      "name": "13/field-1-17: doorway is actually submitted to native OAM",
+      "passed": true
+    },
+    {
+      "name": "13/field-1-17: observer did not die during survey",
+      "passed": true
+    },
+    {
+      "name": "13/field-1-19: no native allocation failures",
+      "passed": true
+    },
+    {
+      "name": "13/field-1-19: complete field graphics fit world tile budget",
+      "passed": true
+    },
+    {
+      "name": "13/field-1-19: generated doorway owns actual tile storage",
+      "passed": true
+    },
+    {
+      "name": "13/field-1-19: doorway is actually submitted to native OAM",
+      "passed": true
+    },
+    {
+      "name": "13/field-1-19: observer did not die during survey",
+      "passed": true
+    },
+    {
+      "name": "13/field-1-21: no native allocation failures",
+      "passed": true
+    },
+    {
+      "name": "13/field-1-21: complete field graphics fit world tile budget",
+      "passed": true
+    },
+    {
+      "name": "13/field-1-21: generated doorway owns actual tile storage",
+      "passed": true
+    },
+    {
+      "name": "13/field-1-21: doorway is actually submitted to native OAM",
+      "passed": true
+    },
+    {
+      "name": "13/field-1-21: observer did not die during survey",
+      "passed": true
+    },
+    {
+      "name": "13/field-1-23: no native allocation failures",
+      "passed": true
+    },
+    {
+      "name": "13/field-1-23: complete field graphics fit world tile budget",
+      "passed": true
+    },
+    {
+      "name": "13/field-1-23: generated doorway owns actual tile storage",
+      "passed": true
+    },
+    {
+      "name": "13/field-1-23: doorway is actually submitted to native OAM",
+      "passed": true
+    },
+    {
+      "name": "13/field-1-23: observer did not die during survey",
+      "passed": true
+    },
+    {
+      "name": "13/field-1-24: no native allocation failures",
+      "passed": true
+    },
+    {
+      "name": "13/field-1-24: complete field graphics fit world tile budget",
+      "passed": true
+    },
+    {
+      "name": "13/field-1-24: generated doorway owns actual tile storage",
+      "passed": true
+    },
+    {
+      "name": "13/field-1-24: doorway is actually submitted to native OAM",
+      "passed": true
+    },
+    {
+      "name": "13/field-1-24: observer did not die during survey",
+      "passed": true
+    },
+    {
+      "name": "13/field-3-1: no native allocation failures",
+      "passed": true
+    },
+    {
+      "name": "13/field-3-1: complete field graphics fit world tile budget",
+      "passed": true
+    },
+    {
+      "name": "13/field-3-1: generated doorway owns actual tile storage",
+      "passed": true
+    },
+    {
+      "name": "13/field-3-1: doorway is actually submitted to native OAM",
+      "passed": true
+    },
+    {
+      "name": "13/field-3-1: observer did not die during survey",
+      "passed": true
+    },
+    {
+      "name": "13/field-3-2: no native allocation failures",
+      "passed": true
+    },
+    {
+      "name": "13/field-3-2: complete field graphics fit world tile budget",
+      "passed": true
+    },
+    {
+      "name": "13/field-3-2: generated doorway owns actual tile storage",
+      "passed": true
+    },
+    {
+      "name": "13/field-3-2: doorway is actually submitted to native OAM",
+      "passed": true
+    },
+    {
+      "name": "13/field-3-2: observer did not die during survey",
+      "passed": true
+    },
+    {
+      "name": "13/field-3-15: no native allocation failures",
+      "passed": true
+    },
+    {
+      "name": "13/field-3-15: complete field graphics fit world tile budget",
+      "passed": true
+    },
+    {
+      "name": "13/field-3-15: generated doorway owns actual tile storage",
+      "passed": true
+    },
+    {
+      "name": "13/field-3-15: doorway is actually submitted to native OAM",
+      "passed": true
+    },
+    {
+      "name": "13/field-3-15: observer did not die during survey",
+      "passed": true
+    },
+    {
+      "name": "13/field-3-19: no native allocation failures",
+      "passed": true
+    },
+    {
+      "name": "13/field-3-19: complete field graphics fit world tile budget",
+      "passed": true
+    },
+    {
+      "name": "13/field-3-19: generated doorway owns actual tile storage",
+      "passed": true
+    },
+    {
+      "name": "13/field-3-19: doorway is actually submitted to native OAM",
+      "passed": true
+    },
+    {
+      "name": "13/field-3-19: observer did not die during survey",
+      "passed": true
+    },
+    {
+      "name": "13/field-3-23: no native allocation failures",
+      "passed": true
+    },
+    {
+      "name": "13/field-3-23: complete field graphics fit world tile budget",
+      "passed": true
+    },
+    {
+      "name": "13/field-3-23: generated doorway owns actual tile storage",
+      "passed": true
+    },
+    {
+      "name": "13/field-3-23: doorway is actually submitted to native OAM",
+      "passed": true
+    },
+    {
+      "name": "13/field-3-23: observer did not die during survey",
+      "passed": true
+    }
+  ],
+  "cases": {
+    "stored_in_raw_report": true,
+    "entries": 42,
+    "original_json_bytes": 100362
+  },
+  "passed": 210,
+  "total": 210,
+  "publication_format": "Compact review summary; outcomes and identities retained. Exact original JSON is adjacent in gzip and in native-evidence.zip.",
+  "raw_report": {
+    "file": "report.json.gz",
+    "sha256": "f0540b9f46ffcd3a27ec0192f755add26e596f659b8a7f04cdc9583b25b02c4c",
+    "uncompressed_sha256": "e471851f9f09c9fa9e0ae29e5d40cca5b525a759278a309a8f7eece6912e555c",
+    "uncompressed_bytes": 1387395
+  }
+}

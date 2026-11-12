@@ -1,0 +1,329 @@
+{
+  "checks": [
+    {
+      "name": "real new run boots",
+      "passed": true
+    },
+    {
+      "name": "real sewer ascent enters Cream",
+      "passed": true
+    },
+    {
+      "name": "visible entry returns to Drain without an escape item",
+      "passed": true
+    },
+    {
+      "name": "Drain ascent re-enters the same generated Cream",
+      "passed": true
+    },
+    {
+      "name": "healthy-room mosaic copies actual native camera pixels",
+      "passed": true
+    },
+    {
+      "name": "healthy-room camera fixture preserves generated room/collision",
+      "passed": true
+    },
+    {
+      "name": "real graph edge reaches target",
+      "passed": true
+    },
+    {
+      "name": "real graph edge reaches target",
+      "passed": true
+    },
+    {
+      "name": "real graph edge reaches target",
+      "passed": true
+    },
+    {
+      "name": "real graph edge reaches target",
+      "passed": true
+    },
+    {
+      "name": "local drop begins at the physical takeoff lip",
+      "passed": true
+    },
+    {
+      "name": "local drop accelerates down and lands upright",
+      "passed": true
+    },
+    {
+      "name": "real graph edge reaches target",
+      "passed": true
+    },
+    {
+      "name": "real task1 opens",
+      "passed": true
+    },
+    {
+      "name": "first real trial earns Blightseeds",
+      "passed": true
+    },
+    {
+      "name": "earned item is present in real satchel",
+      "passed": true
+    },
+    {
+      "name": "real graph edge reaches target",
+      "passed": true
+    },
+    {
+      "name": "real graph edge reaches target",
+      "passed": true
+    },
+    {
+      "name": "real graph edge reaches target",
+      "passed": true
+    },
+    {
+      "name": "real graph edge reaches target",
+      "passed": true
+    },
+    {
+      "name": "real graph edge reaches target",
+      "passed": true
+    },
+    {
+      "name": "real graph edge reaches target",
+      "passed": true
+    },
+    {
+      "name": "real graph edge reaches target",
+      "passed": true
+    },
+    {
+      "name": "real tool clears generated route barrier",
+      "passed": true
+    },
+    {
+      "name": "long drop renders every intervening actual room",
+      "passed": true
+    },
+    {
+      "name": "long drop physically lands on its requested terrace",
+      "passed": true
+    },
+    {
+      "name": "real graph edge reaches target",
+      "passed": true
+    },
+    {
+      "name": "real graph edge reaches target",
+      "passed": true
+    },
+    {
+      "name": "real graph edge reaches target",
+      "passed": true
+    },
+    {
+      "name": "real graph edge reaches target",
+      "passed": true
+    },
+    {
+      "name": "real graph edge reaches target",
+      "passed": true
+    },
+    {
+      "name": "real graph edge reaches target",
+      "passed": true
+    },
+    {
+      "name": "real task2 opens",
+      "passed": true
+    },
+    {
+      "name": "trial2-wave defeated by actual attacks",
+      "passed": true
+    },
+    {
+      "name": "second real trial earns Lamp",
+      "passed": true
+    },
+    {
+      "name": "sick-room mosaic copies actual native camera pixels",
+      "passed": true
+    },
+    {
+      "name": "sick-room camera fixture preserves generated room/collision",
+      "passed": true
+    },
+    {
+      "name": "real graph edge reaches target",
+      "passed": true
+    },
+    {
+      "name": "real graph edge reaches target",
+      "passed": true
+    },
+    {
+      "name": "real graph edge reaches target",
+      "passed": true
+    },
+    {
+      "name": "real graph edge reaches target",
+      "passed": true
+    },
+    {
+      "name": "earned item is present in real satchel",
+      "passed": true
+    },
+    {
+      "name": "real tool clears generated route barrier",
+      "passed": true
+    },
+    {
+      "name": "real graph edge reaches target",
+      "passed": true
+    },
+    {
+      "name": "real graph edge reaches target",
+      "passed": true
+    },
+    {
+      "name": "real graph edge reaches target",
+      "passed": true
+    },
+    {
+      "name": "real graph edge reaches target",
+      "passed": true
+    },
+    {
+      "name": "real task3 opens",
+      "passed": true
+    },
+    {
+      "name": "trial3-darknut defeated by actual attacks",
+      "passed": true
+    },
+    {
+      "name": "third real trial earns Cape and Pacci",
+      "passed": true
+    },
+    {
+      "name": "real graph edge reaches target",
+      "passed": true
+    },
+    {
+      "name": "real graph edge reaches target",
+      "passed": true
+    },
+    {
+      "name": "real graph edge reaches target",
+      "passed": true
+    },
+    {
+      "name": "real graph edge reaches target",
+      "passed": true
+    },
+    {
+      "name": "real graph edge reaches target",
+      "passed": true
+    },
+    {
+      "name": "real graph edge reaches target",
+      "passed": true
+    },
+    {
+      "name": "real graph edge reaches target",
+      "passed": true
+    },
+    {
+      "name": "real graph edge reaches target",
+      "passed": true
+    },
+    {
+      "name": "real route reaches peak with three earned gifts",
+      "passed": true
+    },
+    {
+      "name": "peak-room mosaic copies actual native camera pixels",
+      "passed": true
+    },
+    {
+      "name": "peak-room camera fixture preserves generated room/collision",
+      "passed": true
+    },
+    {
+      "name": "earned item is present in real satchel",
+      "passed": true
+    },
+    {
+      "name": "Pacci genuinely opens the painted peak head",
+      "passed": true
+    },
+    {
+      "name": "Bloom genuinely mounts the exposed back",
+      "passed": true
+    },
+    {
+      "name": "peak defeated through actual Pacci and raised sword hits",
+      "passed": true
+    },
+    {
+      "name": "actual summit win retires its checkpoint",
+      "passed": true
+    },
+    {
+      "name": "cold restart after actual summit win has no Continue",
+      "passed": true
+    },
+    {
+      "name": "actual Start after summit victory creates a fresh run and opening draft",
+      "passed": true
+    },
+    {
+      "name": "new run after summit win resets regional rewards, chain and required trials",
+      "passed": true
+    }
+  ],
+  "fixtures": {
+    "stored_in_raw_report": true,
+    "entries": 155,
+    "original_json_bytes": 18241
+  },
+  "seed": 46247,
+  "scope_complete": true,
+  "errors": [],
+  "handoff_completed_offset": 91,
+  "harness_sha256": "9da5b7a1a33b40adb71ad32f149a90d2b02987d97dc61d35bbf9ad6dbdce244b",
+  "assets_header_sha256": "7fb84f6d7d60bb913262733afdabf7e3f7adbb01e14b2d2af5a04eccc86d2068",
+  "final": {
+    "state": 6,
+    "area": 3,
+    "cell": 3,
+    "node": 7,
+    "actor": {
+      "kind": 0,
+      "type": 0,
+      "state": 0,
+      "timer": 0,
+      "x": 0,
+      "y": 0,
+      "z": 0,
+      "speed": 0,
+      "hp": 0,
+      "coll": 0,
+      "facing": 0
+    },
+    "text": 0,
+    "rewards": 7,
+    "items": 79,
+    "hp": 18,
+    "bombs": 25,
+    "equip": [
+      14,
+      1,
+      5
+    ]
+  },
+  "sha256": "0dd8554384b53e618140f8c61590fc7e6a7ff0888f296ece034a95f357b34fdd",
+  "limitations": "Navigation fixtures select hero position, standing state and facing. Seed and erased in-memory SRAM are explicit start fixtures. All equipment choices and tools/rewards/combat use real input. No enemy HP/state, inventory grants, player health, completion, gates, terrain, palette, VRAM or framebuffer writes.",
+  "publication_format": "Compact review summary; outcomes and identities retained. Exact original JSON is adjacent in gzip and in native-evidence.zip.",
+  "raw_report": {
+    "file": "report.json.gz",
+    "sha256": "bca414928f449cf1570814316ad5133172e2b2aa2ae8b8cc23d0cd42e7e1e645",
+    "uncompressed_sha256": "a28692fbdce9db5215e53566f51d6b8847e27100b980e2dad58c82747275503f",
+    "uncompressed_bytes": 93425
+  }
+}

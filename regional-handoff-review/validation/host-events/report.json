@@ -1,0 +1,17 @@
+{
+  "passed": 10689,
+  "pool_boards": 1528,
+  "corrupt_boards_rejected": 2000,
+  "draft_seeds": 1000,
+  "reward_draws": 10000,
+  "HandoffState_bytes": 1240,
+  "method": "Compile and exercise the actual additive C module, without shared builds.\nNot a screenshot/timing substitute. Covers all proof boards and source-exact\nitem/food machinery and regional chain admission using explicit graph/engine\nfixtures. The fixture is not a replacement for actual room geometry or mGBA.\n",
+  "scope": "Actual C event/economy/puzzle and adaptive-chain functions with explicit admitted-graph, actor-spawn and UI spies. Native movement, collision, pixels and timing require the separate mGBA tests.",
+  "source_sha256": {
+    "src/handoff_events.c": "77072e305704ffda4d286197efc9c1deacd49b2d1b13c42586a668d46efdb559",
+    "src/handoff_field.inc": "197e17dcf3a1156c6f0fcb2545c5b59251de4c4c4c4c4beec78a046bca802d40",
+    "src/handoff_events.h": "b2b386cfdc5d99ab0e6643852ee3d4f8e209e35619c6fa54d191b5b2bb3a0cb4",
+    "src/legacy_items_metadata.inc": "ce005b4352cfac25fa3f6e39a0752f470e444001e3c456893f0453ee6f028b3a"
+  },
+  "tool_sha256": "ba797cc6b75938a378bddb01825d0049566298ad4781afdabdef566aa959d852"
+}

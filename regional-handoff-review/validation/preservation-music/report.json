@@ -1,0 +1,389 @@
+{
+  "method": "Qualify original music through real mGBA gameplay contexts and audio output.\n\nNavigation requests, player health restoration and the existing sword-assisted\nboss fight are disclosed fixtures. Music state, clocks, PCM, sound registers,\nDMA and frame counters are never assigned. Captures are unprocessed emulator\n16-bit stereo output. The source comparison uses the actual imported ROM PCM,\nnot synthesis of a replacement melody. Full physical-frame samples establish\nsample-clock and loop behavior even while normal logic/modal menus are busy.\n",
+  "emulator": "mGBA0.10.5",
+  "rom_sha256": "0dd8554384b53e618140f8c61590fc7e6a7ff0888f296ece034a95f357b34fdd",
+  "source_commit": "51880a55e6ecf86728f3a0923e5547e7bdeed5a0",
+  "tool_sha256": "aa2fa6e17d2ead406394cb8aaeec6e2c92796da6536c6d48252c42c864b8b808",
+  "manifest_sha256": "4f7ee0b1a0d676d379b00f8784a816dd3e72effd34c62be7e4daac7c77ba45a2",
+  "fixtures": [
+    "Seed0xb4a7 pinned before ordinary title Start; new emulator SRAM for this tool only.",
+    "Forest/goal navigation uses existing transition request fields, bypassing travel/gates but retaining real generation, actors and music selection.",
+    "Full-loop forest/boss recordings use the real pause menu to keep combat still; the menu input IRQ chains the audio heartbeat.",
+    "Player health/invulnerability restoration and coordinate-only positioning accompany real sword inputs to obtain the Grail; enemy HP/state/timers remain live.",
+    "No audio state, sample clock, source pointer, sound register, DMA register or framebuffer is injected. WAVs are raw mGBA output; PCM comparison resampling is diagnostic only."
+  ],
+  "checks": [
+    {
+      "name": "sewer original track descriptor",
+      "passed": true
+    },
+    {
+      "name": "sewer complete ROM PCM matches source-import hash",
+      "passed": true
+    },
+    {
+      "name": "sewer musical FIFO guard and ROM bounds",
+      "passed": true
+    },
+    {
+      "name": "forest original track descriptor",
+      "passed": true
+    },
+    {
+      "name": "forest complete ROM PCM matches source-import hash",
+      "passed": true
+    },
+    {
+      "name": "forest musical FIFO guard and ROM bounds",
+      "passed": true
+    },
+    {
+      "name": "boss original track descriptor",
+      "passed": true
+    },
+    {
+      "name": "boss complete ROM PCM matches source-import hash",
+      "passed": true
+    },
+    {
+      "name": "boss musical FIFO guard and ROM bounds",
+      "passed": true
+    },
+    {
+      "name": "title original track descriptor",
+      "passed": true
+    },
+    {
+      "name": "title complete ROM PCM matches source-import hash",
+      "passed": true
+    },
+    {
+      "name": "title musical FIFO guard and ROM bounds",
+      "passed": true
+    },
+    {
+      "name": "win original track descriptor",
+      "passed": true
+    },
+    {
+      "name": "win complete ROM PCM matches source-import hash",
+      "passed": true
+    },
+    {
+      "name": "win musical FIFO guard and ROM bounds",
+      "passed": true
+    },
+    {
+      "name": "title natural game context selects original catalog track",
+      "passed": true
+    },
+    {
+      "name": "title actual Timer1 samples advance at32768Hz through every physical frame",
+      "passed": true
+    },
+    {
+      "name": "title real loop observed without clock injection",
+      "passed": true
+    },
+    {
+      "name": "title loop DMA points inside the correct original ROM stream",
+      "passed": true
+    },
+    {
+      "name": "title DMA and hardware sample clocks remain enabled",
+      "passed": true
+    },
+    {
+      "name": "title actual audio is non-silent and unclipped",
+      "passed": true
+    },
+    {
+      "name": "title original mono mix routes equally to both speakers",
+      "passed": true
+    },
+    {
+      "name": "title actual waveform matches imported original ROM PCM",
+      "passed": true
+    },
+    {
+      "name": "title audible loop follows musical continuation without silent guard",
+      "passed": true
+    },
+    {
+      "name": "physical music sample clock survives busy New Game generation",
+      "passed": true
+    },
+    {
+      "name": "real opening gift inputs finish before audio/SFX qualification",
+      "passed": true
+    },
+    {
+      "name": "real sword input produces pulse1 SFX without restarting original music",
+      "passed": true
+    },
+    {
+      "name": "sewer natural game context selects original catalog track",
+      "passed": true
+    },
+    {
+      "name": "sewer actual Timer1 samples advance at32768Hz through every physical frame",
+      "passed": true
+    },
+    {
+      "name": "sewer real loop observed without clock injection",
+      "passed": true
+    },
+    {
+      "name": "sewer loop DMA points inside the correct original ROM stream",
+      "passed": true
+    },
+    {
+      "name": "sewer DMA and hardware sample clocks remain enabled",
+      "passed": true
+    },
+    {
+      "name": "sewer actual audio is non-silent and unclipped",
+      "passed": true
+    },
+    {
+      "name": "sewer original mono mix routes equally to both speakers",
+      "passed": true
+    },
+    {
+      "name": "sewer actual waveform matches imported original ROM PCM",
+      "passed": true
+    },
+    {
+      "name": "sewer audible loop follows musical continuation without silent guard",
+      "passed": true
+    },
+    {
+      "name": "real pause menu opens for clean music observation",
+      "passed": true
+    },
+    {
+      "name": "period0 menu SFX ends while original music continues",
+      "passed": true
+    },
+    {
+      "name": "forest natural game context selects original catalog track",
+      "passed": true
+    },
+    {
+      "name": "forest actual Timer1 samples advance at32768Hz through every physical frame",
+      "passed": true
+    },
+    {
+      "name": "forest real loop observed without clock injection",
+      "passed": true
+    },
+    {
+      "name": "forest loop DMA points inside the correct original ROM stream",
+      "passed": true
+    },
+    {
+      "name": "forest DMA and hardware sample clocks remain enabled",
+      "passed": true
+    },
+    {
+      "name": "forest actual audio is non-silent and unclipped",
+      "passed": true
+    },
+    {
+      "name": "forest original mono mix routes equally to both speakers",
+      "passed": true
+    },
+    {
+      "name": "forest actual waveform matches imported original ROM PCM",
+      "passed": true
+    },
+    {
+      "name": "forest audible loop follows musical continuation without silent guard",
+      "passed": true
+    },
+    {
+      "name": "real pause menu opens for clean music observation",
+      "passed": true
+    },
+    {
+      "name": "period0 menu SFX ends while original music continues",
+      "passed": true
+    },
+    {
+      "name": "boss natural game context selects original catalog track",
+      "passed": true
+    },
+    {
+      "name": "boss actual Timer1 samples advance at32768Hz through every physical frame",
+      "passed": true
+    },
+    {
+      "name": "boss real loop observed without clock injection",
+      "passed": true
+    },
+    {
+      "name": "boss loop DMA points inside the correct original ROM stream",
+      "passed": true
+    },
+    {
+      "name": "boss DMA and hardware sample clocks remain enabled",
+      "passed": true
+    },
+    {
+      "name": "boss actual audio is non-silent and unclipped",
+      "passed": true
+    },
+    {
+      "name": "boss original mono mix routes equally to both speakers",
+      "passed": true
+    },
+    {
+      "name": "boss actual waveform matches imported original ROM PCM",
+      "passed": true
+    },
+    {
+      "name": "boss audible loop follows musical continuation without silent guard",
+      "passed": true
+    },
+    {
+      "name": "Heart retains original40 HP and dies to actual sword hits",
+      "passed": true
+    },
+    {
+      "name": "real Heart death drops its Grail",
+      "passed": true
+    },
+    {
+      "name": "actual sword victory and Grail trigger original victory music",
+      "passed": true
+    },
+    {
+      "name": "win natural game context selects original catalog track",
+      "passed": true
+    },
+    {
+      "name": "win actual Timer1 samples advance at32768Hz through every physical frame",
+      "passed": true
+    },
+    {
+      "name": "win real loop observed without clock injection",
+      "passed": true
+    },
+    {
+      "name": "win loop DMA points inside the correct original ROM stream",
+      "passed": true
+    },
+    {
+      "name": "win DMA and hardware sample clocks remain enabled",
+      "passed": true
+    },
+    {
+      "name": "win actual audio is non-silent and unclipped",
+      "passed": true
+    },
+    {
+      "name": "win original mono mix routes equally to both speakers",
+      "passed": true
+    },
+    {
+      "name": "win actual waveform matches imported original ROM PCM",
+      "passed": true
+    },
+    {
+      "name": "win audible loop follows musical continuation without silent guard",
+      "passed": true
+    }
+  ],
+  "passed": 70,
+  "total": 70,
+  "scenarios": {
+    "stored_in_raw_report": true,
+    "entries": 5,
+    "original_json_bytes": 44533
+  },
+  "error": null,
+  "media": [
+    {
+      "file": "boss-context.png",
+      "sha256": "8078726c9e94cebf7416a1bbd3be61976c6370f85f007fd44511dfb90023d5c6",
+      "bytes": 4433
+    },
+    {
+      "file": "boss-loop.wav",
+      "sha256": "48bffa860788012af551bba815c2fae74a07a5d8de6fad234b8e5ce6b97a786d",
+      "bytes": 352844
+    },
+    {
+      "file": "boss-preview.wav",
+      "sha256": "d236410d6fae90a2b124dcce78f662ab08d41f2b7575de24aec019275a98a74f",
+      "bytes": 2116844
+    },
+    {
+      "file": "forest-context.png",
+      "sha256": "8078726c9e94cebf7416a1bbd3be61976c6370f85f007fd44511dfb90023d5c6",
+      "bytes": 4433
+    },
+    {
+      "file": "forest-loop.wav",
+      "sha256": "c1920a8ffc5b24d77c8a347f8cdea743e12db4ab039dd9fdd151fc0200dd6302",
+      "bytes": 352844
+    },
+    {
+      "file": "forest-preview.wav",
+      "sha256": "092fe9537b65a8394945064bb37c8d893227490922855bceb3d24e63d5e3409d",
+      "bytes": 2116844
+    },
+    {
+      "file": "sewer-context.png",
+      "sha256": "3cc27566d98757fbd6acaa1f6162c4dfff828d8052c6d2c908202dcb8594a92e",
+      "bytes": 5695
+    },
+    {
+      "file": "sewer-loop.wav",
+      "sha256": "f89aa97dcd514ee1f088c247880543884a4770bb02e1511bb02ed198476a370c",
+      "bytes": 352844
+    },
+    {
+      "file": "sewer-preview.wav",
+      "sha256": "3713a4000f5454799cebb70b52176e65d0ca906db6d41a8a94e71988b7eda1f6",
+      "bytes": 2116844
+    },
+    {
+      "file": "title-context.png",
+      "sha256": "bde259155cb705d7b117f0ef9607958762e19f3a5efcd15fc96ae286f3965e32",
+      "bytes": 7307
+    },
+    {
+      "file": "title-loop.wav",
+      "sha256": "39d20a3e852005ddf00de42ef471e1a88e14a8090f7f366e8c86775423760fc1",
+      "bytes": 352844
+    },
+    {
+      "file": "title-preview.wav",
+      "sha256": "dbde7434c47322eed29032318baa87e485fe1274098d64e892efcf0cdd324162",
+      "bytes": 2116844
+    },
+    {
+      "file": "win-context.png",
+      "sha256": "3b5ed163ecec7ae7c7756a8a9990da6751179dc3fcc6733e4f41ed20d6265c91",
+      "bytes": 2354
+    },
+    {
+      "file": "win-loop.wav",
+      "sha256": "1b3402da554c15a9d9e65afd11083758ab19fa96ff7cd49e502f77d8aac38f74",
+      "bytes": 352844
+    },
+    {
+      "file": "win-preview.wav",
+      "sha256": "f21cfeb2791e79b57fe51f2a303130bedf8b38a168428dc5db539dc1ac482498",
+      "bytes": 2116844
+    }
+  ],
+  "publication_format": "Compact review summary; outcomes and identities retained. Exact original JSON is adjacent in gzip and in native-evidence.zip.",
+  "raw_report": {
+    "file": "report.json.gz",
+    "sha256": "3ed3c2ebfcf5f4ea6fed58e882d4e2b3bebae41f5c0ebb3c5e93dd26db6ef65b",
+    "uncompressed_sha256": "c074bc9aa9778f6da4022c2df292961ccb5c5a457b1864e0ba1065ee5ed8a974",
+    "uncompressed_bytes": 98809
+  }
+}

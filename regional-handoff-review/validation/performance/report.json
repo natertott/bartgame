@@ -1,0 +1,684 @@
+{
+  "schema": 1,
+  "method": "Reproducible mGBA workload survey with natural rosters and explicit stress fixtures.\n\nNo terrain, artwork, framebuffer, enemy HP, AI or frame clock is changed. Natural\ncases retain all generated actors. Controlled stress cases explicitly replace the\nroster through the game's developer spawn request; their counts are not asserted\nas naturally generated gameplay. Player health/inventory and room positioning are\nfixtures. Raw VBlank/logic ages distinguish repeated video frames from modal or\ntransition states, which are reported separately rather than called slow logic.",
+  "emulator": "mGBA0.10.5",
+  "source_commit": "51880a55e6ecf86728f3a0923e5547e7bdeed5a0",
+  "rom_sha256": "0dd8554384b53e618140f8c61590fc7e6a7ff0888f296ece034a95f357b34fdd",
+  "tool_sha256": "861bc7f0dfc0d3c2dbb0d77e66e50c2728ab01cbc003f7f57da2a747c4ebed82",
+  "fixtures": [
+    "Seed pinned before normal title Start. Original generated terrain and room rosters retained in natural cases.",
+    "Existing transition request navigates rooms, bypassing travel/gates only for workload coverage; its generation/fade latency is separately recorded.",
+    "Player is positioned on an actually walkable central floor near the densest local enemy group. No ground tiles are edited.",
+    "Full ordinary inventory,80maximum player health,99ammo and ten hearts exercise the real HUD. Player health is restored each video frame; enemy HP, AI, timers and RNG remain live.",
+    "Natural cases never remove or inject enemies. Explicit stress cases clear only nonplayer actors, then use the existing gDbgSpawn enemy-spawn path at stated counts/types.",
+    "When --reference is supplied, the baseline planned player tile is reused; camera easing and enemy AI/HP are never forced to manufacture equal state.",
+    "Optional --warmup runs ordinary unheld simulation/health restoration before each nonmodal sample, separating steady camera workloads from arrival/camera approach.",
+    "Inputs are a fixed video-frame schedule. Faster builds may consequently advance more simulation updates; performance traces are not a claim of identical world states at equal video ages.",
+    "All screenshots are native untouched240x160 mGBA framebuffers. Modal and transition states are reported separately from expected gameplay updates."
+  ],
+  "complete": true,
+  "seeds": [
+    "0xb4a7",
+    "0xdeadbeef",
+    "0x7"
+  ],
+  "configured_frames": 180,
+  "warmup_frames": 30,
+  "reference_report_sha256": null,
+  "reference_source_commit": null,
+  "scenarios": {
+    "stored_in_raw_report": true,
+    "entries": 296,
+    "original_json_bytes": 16325938
+  },
+  "transitions": {
+    "stored_in_raw_report": true,
+    "entries": 297,
+    "original_json_bytes": 25446
+  },
+  "media": {
+    "stored_in_raw_report": true,
+    "entries": 256,
+    "original_json_bytes": 49841
+  },
+  "clips": [],
+  "checks": [
+    {
+      "name": "forest-0000b4a7-cell00 root occupancy cache matches original owner grid",
+      "passed": true
+    },
+    {
+      "name": "forest-0000b4a7-cell01 root occupancy cache matches original owner grid",
+      "passed": true
+    },
+    {
+      "name": "forest-0000b4a7-cell02 root occupancy cache matches original owner grid",
+      "passed": true
+    },
+    {
+      "name": "forest-0000b4a7-cell03 root occupancy cache matches original owner grid",
+      "passed": true
+    },
+    {
+      "name": "forest-0000b4a7-cell04 root occupancy cache matches original owner grid",
+      "passed": true
+    },
+    {
+      "name": "forest-0000b4a7-cell05 root occupancy cache matches original owner grid",
+      "passed": true
+    },
+    {
+      "name": "forest-0000b4a7-cell06 root occupancy cache matches original owner grid",
+      "passed": true
+    },
+    {
+      "name": "forest-0000b4a7-cell07 root occupancy cache matches original owner grid",
+      "passed": true
+    },
+    {
+      "name": "forest-0000b4a7-cell08 root occupancy cache matches original owner grid",
+      "passed": true
+    },
+    {
+      "name": "forest-0000b4a7-cell09 root occupancy cache matches original owner grid",
+      "passed": true
+    },
+    {
+      "name": "forest-0000b4a7-cell10 root occupancy cache matches original owner grid",
+      "passed": true
+    },
+    {
+      "name": "forest-0000b4a7-cell11 root occupancy cache matches original owner grid",
+      "passed": true
+    },
+    {
+      "name": "forest-0000b4a7-cell12 root occupancy cache matches original owner grid",
+      "passed": true
+    },
+    {
+      "name": "forest-0000b4a7-cell13 root occupancy cache matches original owner grid",
+      "passed": true
+    },
+    {
+      "name": "forest-0000b4a7-cell14 root occupancy cache matches original owner grid",
+      "passed": true
+    },
+    {
+      "name": "forest-0000b4a7-cell15 root occupancy cache matches original owner grid",
+      "passed": true
+    },
+    {
+      "name": "forest-0000b4a7-cell16 root occupancy cache matches original owner grid",
+      "passed": true
+    },
+    {
+      "name": "forest-0000b4a7-cell17 root occupancy cache matches original owner grid",
+      "passed": true
+    },
+    {
+      "name": "forest-0000b4a7-cell18 root occupancy cache matches original owner grid",
+      "passed": true
+    },
+    {
+      "name": "forest-0000b4a7-cell19 root occupancy cache matches original owner grid",
+      "passed": true
+    },
+    {
+      "name": "forest-0000b4a7-cell20 root occupancy cache matches original owner grid",
+      "passed": true
+    },
+    {
+      "name": "forest-0000b4a7-cell21 root occupancy cache matches original owner grid",
+      "passed": true
+    },
+    {
+      "name": "forest-0000b4a7-cell22 root occupancy cache matches original owner grid",
+      "passed": true
+    },
+    {
+      "name": "forest-0000b4a7-cell23 root occupancy cache matches original owner grid",
+      "passed": true
+    },
+    {
+      "name": "forest-0000b4a7-cell24 root occupancy cache matches original owner grid",
+      "passed": true
+    },
+    {
+      "name": "forest-deadbeef-cell00 root occupancy cache matches original owner grid",
+      "passed": true
+    },
+    {
+      "name": "forest-deadbeef-cell01 root occupancy cache matches original owner grid",
+      "passed": true
+    },
+    {
+      "name": "forest-deadbeef-cell02 root occupancy cache matches original owner grid",
+      "passed": true
+    },
+    {
+      "name": "forest-deadbeef-cell03 root occupancy cache matches original owner grid",
+      "passed": true
+    },
+    {
+      "name": "forest-deadbeef-cell04 root occupancy cache matches original owner grid",
+      "passed": true
+    },
+    {
+      "name": "forest-deadbeef-cell05 root occupancy cache matches original owner grid",
+      "passed": true
+    },
+    {
+      "name": "forest-deadbeef-cell06 root occupancy cache matches original owner grid",
+      "passed": true
+    },
+    {
+      "name": "forest-deadbeef-cell07 root occupancy cache matches original owner grid",
+      "passed": true
+    },
+    {
+      "name": "forest-deadbeef-cell08 root occupancy cache matches original owner grid",
+      "passed": true
+    },
+    {
+      "name": "forest-deadbeef-cell09 root occupancy cache matches original owner grid",
+      "passed": true
+    },
+    {
+      "name": "forest-deadbeef-cell10 root occupancy cache matches original owner grid",
+      "passed": true
+    },
+    {
+      "name": "forest-deadbeef-cell11 root occupancy cache matches original owner grid",
+      "passed": true
+    },
+    {
+      "name": "forest-deadbeef-cell12 root occupancy cache matches original owner grid",
+      "passed": true
+    },
+    {
+      "name": "forest-deadbeef-cell13 root occupancy cache matches original owner grid",
+      "passed": true
+    },
+    {
+      "name": "forest-deadbeef-cell14 root occupancy cache matches original owner grid",
+      "passed": true
+    },
+    {
+      "name": "forest-deadbeef-cell15 root occupancy cache matches original owner grid",
+      "passed": true
+    },
+    {
+      "name": "forest-deadbeef-cell16 root occupancy cache matches original owner grid",
+      "passed": true
+    },
+    {
+      "name": "forest-deadbeef-cell17 root occupancy cache matches original owner grid",
+      "passed": true
+    },
+    {
+      "name": "forest-deadbeef-cell18 root occupancy cache matches original owner grid",
+      "passed": true
+    },
+    {
+      "name": "forest-deadbeef-cell19 root occupancy cache matches original owner grid",
+      "passed": true
+    },
+    {
+      "name": "forest-deadbeef-cell20 root occupancy cache matches original owner grid",
+      "passed": true
+    },
+    {
+      "name": "forest-deadbeef-cell21 root occupancy cache matches original owner grid",
+      "passed": true
+    },
+    {
+      "name": "forest-deadbeef-cell22 root occupancy cache matches original owner grid",
+      "passed": true
+    },
+    {
+      "name": "forest-deadbeef-cell23 root occupancy cache matches original owner grid",
+      "passed": true
+    },
+    {
+      "name": "forest-deadbeef-cell24 root occupancy cache matches original owner grid",
+      "passed": true
+    },
+    {
+      "name": "forest-00000007-cell00 root occupancy cache matches original owner grid",
+      "passed": true
+    },
+    {
+      "name": "forest-00000007-cell01 root occupancy cache matches original owner grid",
+      "passed": true
+    },
+    {
+      "name": "forest-00000007-cell02 root occupancy cache matches original owner grid",
+      "passed": true
+    },
+    {
+      "name": "forest-00000007-cell03 root occupancy cache matches original owner grid",
+      "passed": true
+    },
+    {
+      "name": "forest-00000007-cell04 root occupancy cache matches original owner grid",
+      "passed": true
+    },
+    {
+      "name": "forest-00000007-cell05 root occupancy cache matches original owner grid",
+      "passed": true
+    },
+    {
+      "name": "forest-00000007-cell06 root occupancy cache matches original owner grid",
+      "passed": true
+    },
+    {
+      "name": "forest-00000007-cell07 root occupancy cache matches original owner grid",
+      "passed": true
+    },
+    {
+      "name": "forest-00000007-cell08 root occupancy cache matches original owner grid",
+      "passed": true
+    },
+    {
+      "name": "forest-00000007-cell09 root occupancy cache matches original owner grid",
+      "passed": true
+    },
+    {
+      "name": "forest-00000007-cell10 root occupancy cache matches original owner grid",
+      "passed": true
+    },
+    {
+      "name": "forest-00000007-cell11 root occupancy cache matches original owner grid",
+      "passed": true
+    },
+    {
+      "name": "forest-00000007-cell12 root occupancy cache matches original owner grid",
+      "passed": true
+    },
+    {
+      "name": "forest-00000007-cell13 root occupancy cache matches original owner grid",
+      "passed": true
+    },
+    {
+      "name": "forest-00000007-cell14 root occupancy cache matches original owner grid",
+      "passed": true
+    },
+    {
+      "name": "forest-00000007-cell15 root occupancy cache matches original owner grid",
+      "passed": true
+    },
+    {
+      "name": "forest-00000007-cell16 root occupancy cache matches original owner grid",
+      "passed": true
+    },
+    {
+      "name": "forest-00000007-cell17 root occupancy cache matches original owner grid",
+      "passed": true
+    },
+    {
+      "name": "forest-00000007-cell18 root occupancy cache matches original owner grid",
+      "passed": true
+    },
+    {
+      "name": "forest-00000007-cell19 root occupancy cache matches original owner grid",
+      "passed": true
+    },
+    {
+      "name": "forest-00000007-cell20 root occupancy cache matches original owner grid",
+      "passed": true
+    },
+    {
+      "name": "forest-00000007-cell21 root occupancy cache matches original owner grid",
+      "passed": true
+    },
+    {
+      "name": "forest-00000007-cell22 root occupancy cache matches original owner grid",
+      "passed": true
+    },
+    {
+      "name": "forest-00000007-cell23 root occupancy cache matches original owner grid",
+      "passed": true
+    },
+    {
+      "name": "forest-00000007-cell24 root occupancy cache matches original owner grid",
+      "passed": true
+    },
+    {
+      "name": "stress-beetles-04 root occupancy cache matches original owner grid",
+      "passed": true
+    },
+    {
+      "name": "stress-beetles-08 root occupancy cache matches original owner grid",
+      "passed": true
+    },
+    {
+      "name": "stress-beetles-12 root occupancy cache matches original owner grid",
+      "passed": true
+    },
+    {
+      "name": "stress-beetles-16 root occupancy cache matches original owner grid",
+      "passed": true
+    },
+    {
+      "name": "stress-beetles-24 root occupancy cache matches original owner grid",
+      "passed": true
+    },
+    {
+      "name": "stress-bats-04 root occupancy cache matches original owner grid",
+      "passed": true
+    },
+    {
+      "name": "stress-bats-08 root occupancy cache matches original owner grid",
+      "passed": true
+    },
+    {
+      "name": "stress-bats-12 root occupancy cache matches original owner grid",
+      "passed": true
+    },
+    {
+      "name": "stress-bats-16 root occupancy cache matches original owner grid",
+      "passed": true
+    },
+    {
+      "name": "stress-bats-24 root occupancy cache matches original owner grid",
+      "passed": true
+    },
+    {
+      "name": "stress-spitters-04 root occupancy cache matches original owner grid",
+      "passed": true
+    },
+    {
+      "name": "stress-spitters-08 root occupancy cache matches original owner grid",
+      "passed": true
+    },
+    {
+      "name": "stress-spitters-12 root occupancy cache matches original owner grid",
+      "passed": true
+    },
+    {
+      "name": "stress-spitters-16 root occupancy cache matches original owner grid",
+      "passed": true
+    },
+    {
+      "name": "stress-spitters-24 root occupancy cache matches original owner grid",
+      "passed": true
+    },
+    {
+      "name": "stress-slimes-04 root occupancy cache matches original owner grid",
+      "passed": true
+    },
+    {
+      "name": "stress-slimes-08 root occupancy cache matches original owner grid",
+      "passed": true
+    },
+    {
+      "name": "stress-slimes-12 root occupancy cache matches original owner grid",
+      "passed": true
+    },
+    {
+      "name": "stress-slimes-16 root occupancy cache matches original owner grid",
+      "passed": true
+    },
+    {
+      "name": "stress-slimes-24 root occupancy cache matches original owner grid",
+      "passed": true
+    },
+    {
+      "name": "stress-knights-04 root occupancy cache matches original owner grid",
+      "passed": true
+    },
+    {
+      "name": "stress-knights-08 root occupancy cache matches original owner grid",
+      "passed": true
+    },
+    {
+      "name": "stress-knights-12 root occupancy cache matches original owner grid",
+      "passed": true
+    },
+    {
+      "name": "stress-knights-16 root occupancy cache matches original owner grid",
+      "passed": true
+    },
+    {
+      "name": "stress-knights-24 root occupancy cache matches original owner grid",
+      "passed": true
+    },
+    {
+      "name": "stress-mixed-04 root occupancy cache matches original owner grid",
+      "passed": true
+    },
+    {
+      "name": "stress-mixed-08 root occupancy cache matches original owner grid",
+      "passed": true
+    },
+    {
+      "name": "stress-mixed-12 root occupancy cache matches original owner grid",
+      "passed": true
+    },
+    {
+      "name": "stress-mixed-16 root occupancy cache matches original owner grid",
+      "passed": true
+    },
+    {
+      "name": "stress-mixed-24 root occupancy cache matches original owner grid",
+      "passed": true
+    },
+    {
+      "name": "actions-healthy-bombs root occupancy cache matches original owner grid",
+      "passed": true
+    },
+    {
+      "name": "actions-healthy-bow root occupancy cache matches original owner grid",
+      "passed": true
+    },
+    {
+      "name": "actions-healthy-fire root occupancy cache matches original owner grid",
+      "passed": true
+    },
+    {
+      "name": "actions-healthy-lift root occupancy cache matches original owner grid",
+      "passed": true
+    },
+    {
+      "name": "actions-deep-bombs root occupancy cache matches original owner grid",
+      "passed": true
+    },
+    {
+      "name": "actions-deep-bow root occupancy cache matches original owner grid",
+      "passed": true
+    },
+    {
+      "name": "actions-deep-fire root occupancy cache matches original owner grid",
+      "passed": true
+    },
+    {
+      "name": "actions-deep-lift root occupancy cache matches original owner grid",
+      "passed": true
+    },
+    {
+      "name": "actions-heart-bombs root occupancy cache matches original owner grid",
+      "passed": true
+    },
+    {
+      "name": "actions-heart-bow root occupancy cache matches original owner grid",
+      "passed": true
+    },
+    {
+      "name": "actions-heart-fire root occupancy cache matches original owner grid",
+      "passed": true
+    },
+    {
+      "name": "actions-heart-lift root occupancy cache matches original owner grid",
+      "passed": true
+    },
+    {
+      "name": "real named wizard dialogue opens",
+      "passed": true
+    },
+    {
+      "name": "real menu items settles",
+      "passed": true
+    },
+    {
+      "name": "real menu keys settles",
+      "passed": true
+    },
+    {
+      "name": "real menu overview settles",
+      "passed": true
+    },
+    {
+      "name": "real menu zoom settles",
+      "passed": true
+    },
+    {
+      "name": "real menu overview-return settles",
+      "passed": true
+    },
+    {
+      "name": "real menu close settles",
+      "passed": true
+    },
+    {
+      "name": "real frog market opens",
+      "passed": true
+    },
+    {
+      "name": "Cream regional workloads measured without missing gameplay updates",
+      "passed": true
+    },
+    {
+      "name": "all25 natural rooms per seed measured",
+      "passed": true
+    },
+    {
+      "name": "ROM bytes remain unchanged",
+      "passed": true
+    }
+  ],
+  "passed": 128,
+  "total": 128,
+  "errors": [],
+  "summary": {
+    "scenarios": 296,
+    "natural_rooms": 75,
+    "video_frames": 53160,
+    "eligible_frames": 52647,
+    "eligible_updates": 52642,
+    "worst": [
+      {
+        "name": "forest-deadbeef-cell16",
+        "ratio": 0.9938271604938271,
+        "missed": 1,
+        "enemies": 5,
+        "oam": 24
+      },
+      {
+        "name": "forest-deadbeef-cell07",
+        "ratio": 0.9944444444444445,
+        "missed": 1,
+        "enemies": 6,
+        "oam": 23
+      },
+      {
+        "name": "forest-deadbeef-cell10",
+        "ratio": 0.9944444444444445,
+        "missed": 1,
+        "enemies": 5,
+        "oam": 26
+      },
+      {
+        "name": "stress-beetles-12",
+        "ratio": 0.9944444444444445,
+        "missed": 1,
+        "enemies": 12,
+        "oam": 28
+      },
+      {
+        "name": "actions-healthy-lift",
+        "ratio": 0.9944444444444445,
+        "missed": 1,
+        "enemies": 5,
+        "oam": 19
+      },
+      {
+        "name": "drain-0000b4a7",
+        "ratio": 1.0,
+        "missed": 0,
+        "enemies": 0,
+        "oam": 16
+      },
+      {
+        "name": "forest-0000b4a7-cell00",
+        "ratio": 1.0,
+        "missed": 0,
+        "enemies": 6,
+        "oam": 24
+      },
+      {
+        "name": "forest-0000b4a7-cell01",
+        "ratio": 1.0,
+        "missed": 0,
+        "enemies": 7,
+        "oam": 23
+      },
+      {
+        "name": "forest-0000b4a7-cell02",
+        "ratio": 1.0,
+        "missed": 0,
+        "enemies": 6,
+        "oam": 21
+      },
+      {
+        "name": "forest-0000b4a7-cell03",
+        "ratio": 1.0,
+        "missed": 0,
+        "enemies": 6,
+        "oam": 23
+      },
+      {
+        "name": "forest-0000b4a7-cell04",
+        "ratio": 1.0,
+        "missed": 0,
+        "enemies": 5,
+        "oam": 24
+      },
+      {
+        "name": "forest-0000b4a7-cell05",
+        "ratio": 1.0,
+        "missed": 0,
+        "enemies": 3,
+        "oam": 21
+      },
+      {
+        "name": "forest-0000b4a7-cell06",
+        "ratio": 1.0,
+        "missed": 0,
+        "enemies": 6,
+        "oam": 24
+      },
+      {
+        "name": "forest-0000b4a7-cell07",
+        "ratio": 1.0,
+        "missed": 0,
+        "enemies": 6,
+        "oam": 23
+      },
+      {
+        "name": "forest-0000b4a7-cell08",
+        "ratio": 1.0,
+        "missed": 0,
+        "enemies": 6,
+        "oam": 23
+      }
+    ],
+    "elapsed_seconds": 206.42
+  },
+  "publication_format": "Compact review summary; outcomes and identities retained. Exact original JSON is adjacent in gzip and in native-evidence.zip.",
+  "raw_report": {
+    "file": "report.json.gz",
+    "sha256": "ba64c75adea2a7ce3ce5adcce374ee33ee88125715f72634f4d6cbb05e4c5f67",
+    "uncompressed_sha256": "8a4702a82b55aea6447fd9ee44938d3fae67215ffd143b95614578ed1532ca11",
+    "uncompressed_bytes": 27856863
+  }
+}

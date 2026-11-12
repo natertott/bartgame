@@ -1,0 +1,9 @@
+{
+  "publication_format": "Exact original trace compressed for repository review; also included unmodified in native-evidence.zip.",
+  "raw_report": {
+    "file": "trace.json.gz",
+    "sha256": "f14be59c6a393107e8e11b809cff21f4ca9fd9eccc95e818e27fa3254026ea46",
+    "uncompressed_sha256": "84177b459b11fdc467d049907213470dcb9b2297e300f91a575368e2543da8c5",
+    "uncompressed_bytes": 3030610
+  }
+}

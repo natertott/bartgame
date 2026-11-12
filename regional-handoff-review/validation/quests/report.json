@@ -1,0 +1,478 @@
+{
+  "source_commit": "51880a55e6ecf86728f3a0923e5547e7bdeed5a0",
+  "rom_sha256": "0dd8554384b53e618140f8c61590fc7e6a7ff0888f296ece034a95f357b34fdd",
+  "method": "Mechanical aggregation of thirteen unchanged actual mGBA quest/origin reports; each child report retains inputs, fixtures, native media and provenance.",
+  "scope": "Actual native mechanic proof with hero position/facing navigation; isolated cases request ordinary regional load path. Real draft, NPCs, tools, combat, graph borders/doors, original trials, final Earth pickup, Trophy save and cold Continue. No inventory, HP, enemy/state, outcome, gate, terrain or video writes. Not an unassisted playthrough.",
+  "limits": [
+    "Only Forest accommodates the certified7x7 block field; six other quest kinds proven in both areas.",
+    "Both native Scavenger cases use the moving glint mode actually dealt. Sword-cover and dig Scavenger subvariants are not claimed by this native table.",
+    "Timed-failure/stake controls use Forest Hunt; separate watcher-capture failure and every difficulty/quest failure combination are not claimed.",
+    "Original Heart and Cream win regressions are separate from this additional Earth victory proof."
+  ],
+  "cases": [
+    {
+      "case": "q1-a1",
+      "report": "q1-a1/report.json",
+      "report_sha256": "6b53e2e4664c1e8619dde37a6df742dbfbbf76560cf0ac464ac30d4175b491c5",
+      "passed": 6,
+      "total": 6
+    },
+    {
+      "case": "q1-a3",
+      "report": "q1-a3/report.json",
+      "report_sha256": "d27bd54cd6d4ec9d57764373cd2a03dc8fdc11d4172168bdde8ec4abba980357",
+      "passed": 6,
+      "total": 6
+    },
+    {
+      "case": "q2-a1",
+      "report": "q2-a1/report.json",
+      "report_sha256": "bd8c4241a76eca5a9c23fb6fffa51826ce99f12f1d1158562fef5a6d3565710e",
+      "passed": 6,
+      "total": 6
+    },
+    {
+      "case": "q2-a3",
+      "report": "q2-a3/report.json",
+      "report_sha256": "f685e558be72a458d18071d6084b6d9042c79f4c2cc9e5bbfac0fbb3c7ed359a",
+      "passed": 6,
+      "total": 6
+    },
+    {
+      "case": "q3-a1",
+      "report": "q3-a1/report.json",
+      "report_sha256": "8d36a364a5fe239cbd4a90df1b861d97de876ce313273bcdf04fdf0733f79a56",
+      "passed": 6,
+      "total": 6
+    },
+    {
+      "case": "q3-a3",
+      "report": "q3-a3/report.json",
+      "report_sha256": "553d9536356948523d2c5e264bdbcb82b764517b010e312156405a430175b835",
+      "passed": 6,
+      "total": 6
+    },
+    {
+      "case": "q4-a1",
+      "report": "q4-a1/report.json",
+      "report_sha256": "967b9b300cdff2873e10f08338a6b752c4915f4eb9a5c5ac228c803ec18163fb",
+      "passed": 6,
+      "total": 6
+    },
+    {
+      "case": "q4-a3",
+      "report": "q4-a3/report.json",
+      "report_sha256": "a96f3ea9529255e0025f94c2b5006dafd93d2f0500026786a249a06a3838f049",
+      "passed": 6,
+      "total": 6
+    },
+    {
+      "case": "q5-a1",
+      "report": "q5-a1/report.json",
+      "report_sha256": "eed5efc27303032cc7e14bfcce109b8f0f712a0107367bb3f9bb324a7673cc5d",
+      "passed": 11,
+      "total": 11
+    },
+    {
+      "case": "q5-a3",
+      "report": "q5-a3/report.json",
+      "report_sha256": "5508af1f7d1698acaea1eba39cb60aec490498817b27e2d5f77561c093c323e2",
+      "passed": 11,
+      "total": 11
+    },
+    {
+      "case": "q6-a1",
+      "report": "q6-a1/report.json",
+      "report_sha256": "540f5333fc4672f8dcdc1db42558b64869f0dd93205ce1caecb4402e548847f0",
+      "passed": 7,
+      "total": 7
+    },
+    {
+      "case": "q6-a3",
+      "report": "q6-a3/report.json",
+      "report_sha256": "484694727072e804ebc2226a729f11b921b8569af2773e571a20e6d4f4efe8e1",
+      "passed": 7,
+      "total": 7
+    },
+    {
+      "case": "q7-a1",
+      "report": "q7-a1/report.json",
+      "report_sha256": "8ead18330f95750b4f14846dc257512e7080b8ac8bc90e75f48b71fb2c9bb8f9",
+      "passed": 6,
+      "total": 6
+    }
+  ],
+  "checks": [
+    {
+      "name": "q1-a1: three opening gifts chosen with real input",
+      "passed": true
+    },
+    {
+      "name": "q1-a1: seed deals requested quest onto a real regional room",
+      "passed": true
+    },
+    {
+      "name": "q1-a1: regional giver is physically present",
+      "passed": true
+    },
+    {
+      "name": "q1-a1: real NPC starts the announced regional quest",
+      "passed": true
+    },
+    {
+      "name": "q1-a1: quest succeeds through real mechanics",
+      "passed": true
+    },
+    {
+      "name": "q1-a1: completed regional quest cannot restart or pay its score twice",
+      "passed": true
+    },
+    {
+      "name": "q1-a3: three opening gifts chosen with real input",
+      "passed": true
+    },
+    {
+      "name": "q1-a3: seed deals requested quest onto a real regional room",
+      "passed": true
+    },
+    {
+      "name": "q1-a3: regional giver is physically present",
+      "passed": true
+    },
+    {
+      "name": "q1-a3: real NPC starts the announced regional quest",
+      "passed": true
+    },
+    {
+      "name": "q1-a3: quest succeeds through real mechanics",
+      "passed": true
+    },
+    {
+      "name": "q1-a3: completed regional quest cannot restart or pay its score twice",
+      "passed": true
+    },
+    {
+      "name": "q2-a1: three opening gifts chosen with real input",
+      "passed": true
+    },
+    {
+      "name": "q2-a1: seed deals requested quest onto a real regional room",
+      "passed": true
+    },
+    {
+      "name": "q2-a1: regional giver is physically present",
+      "passed": true
+    },
+    {
+      "name": "q2-a1: real NPC starts the announced regional quest",
+      "passed": true
+    },
+    {
+      "name": "q2-a1: quest succeeds through real mechanics",
+      "passed": true
+    },
+    {
+      "name": "q2-a1: completed regional quest cannot restart or pay its score twice",
+      "passed": true
+    },
+    {
+      "name": "q2-a3: three opening gifts chosen with real input",
+      "passed": true
+    },
+    {
+      "name": "q2-a3: seed deals requested quest onto a real regional room",
+      "passed": true
+    },
+    {
+      "name": "q2-a3: regional giver is physically present",
+      "passed": true
+    },
+    {
+      "name": "q2-a3: real NPC starts the announced regional quest",
+      "passed": true
+    },
+    {
+      "name": "q2-a3: quest succeeds through real mechanics",
+      "passed": true
+    },
+    {
+      "name": "q2-a3: completed regional quest cannot restart or pay its score twice",
+      "passed": true
+    },
+    {
+      "name": "q3-a1: three opening gifts chosen with real input",
+      "passed": true
+    },
+    {
+      "name": "q3-a1: seed deals requested quest onto a real regional room",
+      "passed": true
+    },
+    {
+      "name": "q3-a1: regional giver is physically present",
+      "passed": true
+    },
+    {
+      "name": "q3-a1: real NPC starts the announced regional quest",
+      "passed": true
+    },
+    {
+      "name": "q3-a1: quest succeeds through real mechanics",
+      "passed": true
+    },
+    {
+      "name": "q3-a1: completed regional quest cannot restart or pay its score twice",
+      "passed": true
+    },
+    {
+      "name": "q3-a3: three opening gifts chosen with real input",
+      "passed": true
+    },
+    {
+      "name": "q3-a3: seed deals requested quest onto a real regional room",
+      "passed": true
+    },
+    {
+      "name": "q3-a3: regional giver is physically present",
+      "passed": true
+    },
+    {
+      "name": "q3-a3: real NPC starts the announced regional quest",
+      "passed": true
+    },
+    {
+      "name": "q3-a3: quest succeeds through real mechanics",
+      "passed": true
+    },
+    {
+      "name": "q3-a3: completed regional quest cannot restart or pay its score twice",
+      "passed": true
+    },
+    {
+      "name": "q4-a1: three opening gifts chosen with real input",
+      "passed": true
+    },
+    {
+      "name": "q4-a1: seed deals requested quest onto a real regional room",
+      "passed": true
+    },
+    {
+      "name": "q4-a1: regional giver is physically present",
+      "passed": true
+    },
+    {
+      "name": "q4-a1: real NPC starts the announced regional quest",
+      "passed": true
+    },
+    {
+      "name": "q4-a1: quest succeeds through real mechanics",
+      "passed": true
+    },
+    {
+      "name": "q4-a1: completed regional quest cannot restart or pay its score twice",
+      "passed": true
+    },
+    {
+      "name": "q4-a3: three opening gifts chosen with real input",
+      "passed": true
+    },
+    {
+      "name": "q4-a3: seed deals requested quest onto a real regional room",
+      "passed": true
+    },
+    {
+      "name": "q4-a3: regional giver is physically present",
+      "passed": true
+    },
+    {
+      "name": "q4-a3: real NPC starts the announced regional quest",
+      "passed": true
+    },
+    {
+      "name": "q4-a3: quest succeeds through real mechanics",
+      "passed": true
+    },
+    {
+      "name": "q4-a3: completed regional quest cannot restart or pay its score twice",
+      "passed": true
+    },
+    {
+      "name": "q5-a1: three opening gifts chosen with real input",
+      "passed": true
+    },
+    {
+      "name": "q5-a1: seed deals requested quest onto a real regional room",
+      "passed": true
+    },
+    {
+      "name": "q5-a1: regional giver is physically present",
+      "passed": true
+    },
+    {
+      "name": "q5-a1: real NPC starts the announced regional quest",
+      "passed": true
+    },
+    {
+      "name": "q5-a1: carrying the pot starts a real unresolved first ambush",
+      "passed": true
+    },
+    {
+      "name": "q5-a1: ordinary exit and re-entry preserve the unresolved cargo ambush",
+      "passed": true
+    },
+    {
+      "name": "q5-a1: returning with unresolved enemies cannot deliver the cargo",
+      "passed": true
+    },
+    {
+      "name": "q5-a1: actual cargo ambush 1 remains to be fought",
+      "passed": true
+    },
+    {
+      "name": "q5-a1: actual cargo ambush 2 remains to be fought",
+      "passed": true
+    },
+    {
+      "name": "q5-a1: quest succeeds through real mechanics",
+      "passed": true
+    },
+    {
+      "name": "q5-a1: completed regional quest cannot restart or pay its score twice",
+      "passed": true
+    },
+    {
+      "name": "q5-a3: three opening gifts chosen with real input",
+      "passed": true
+    },
+    {
+      "name": "q5-a3: seed deals requested quest onto a real regional room",
+      "passed": true
+    },
+    {
+      "name": "q5-a3: regional giver is physically present",
+      "passed": true
+    },
+    {
+      "name": "q5-a3: real NPC starts the announced regional quest",
+      "passed": true
+    },
+    {
+      "name": "q5-a3: carrying the pot starts a real unresolved first ambush",
+      "passed": true
+    },
+    {
+      "name": "q5-a3: ordinary exit and re-entry preserve the unresolved cargo ambush",
+      "passed": true
+    },
+    {
+      "name": "q5-a3: returning with unresolved enemies cannot deliver the cargo",
+      "passed": true
+    },
+    {
+      "name": "q5-a3: actual cargo ambush 1 remains to be fought",
+      "passed": true
+    },
+    {
+      "name": "q5-a3: actual cargo ambush 2 remains to be fought",
+      "passed": true
+    },
+    {
+      "name": "q5-a3: quest succeeds through real mechanics",
+      "passed": true
+    },
+    {
+      "name": "q5-a3: completed regional quest cannot restart or pay its score twice",
+      "passed": true
+    },
+    {
+      "name": "q6-a1: three opening gifts chosen with real input",
+      "passed": true
+    },
+    {
+      "name": "q6-a1: seed deals requested quest onto a real regional room",
+      "passed": true
+    },
+    {
+      "name": "q6-a1: regional giver is physically present",
+      "passed": true
+    },
+    {
+      "name": "q6-a1: real NPC starts the announced regional quest",
+      "passed": true
+    },
+    {
+      "name": "q6-a1: active cross-region courier survives actual save and cold Continue",
+      "passed": true
+    },
+    {
+      "name": "q6-a1: quest succeeds through real mechanics",
+      "passed": true
+    },
+    {
+      "name": "q6-a1: completed regional quest cannot restart or pay its score twice",
+      "passed": true
+    },
+    {
+      "name": "q6-a3: three opening gifts chosen with real input",
+      "passed": true
+    },
+    {
+      "name": "q6-a3: seed deals requested quest onto a real regional room",
+      "passed": true
+    },
+    {
+      "name": "q6-a3: regional giver is physically present",
+      "passed": true
+    },
+    {
+      "name": "q6-a3: real NPC starts the announced regional quest",
+      "passed": true
+    },
+    {
+      "name": "q6-a3: active cross-region courier survives actual save and cold Continue",
+      "passed": true
+    },
+    {
+      "name": "q6-a3: quest succeeds through real mechanics",
+      "passed": true
+    },
+    {
+      "name": "q6-a3: completed regional quest cannot restart or pay its score twice",
+      "passed": true
+    },
+    {
+      "name": "q7-a1: three opening gifts chosen with real input",
+      "passed": true
+    },
+    {
+      "name": "q7-a1: seed deals requested quest onto a real regional room",
+      "passed": true
+    },
+    {
+      "name": "q7-a1: regional giver is physically present",
+      "passed": true
+    },
+    {
+      "name": "q7-a1: real NPC starts the announced regional quest",
+      "passed": true
+    },
+    {
+      "name": "q7-a1: quest succeeds through real mechanics",
+      "passed": true
+    },
+    {
+      "name": "q7-a1: completed regional quest cannot restart or pay its score twice",
+      "passed": true
+    }
+  ],
+  "passed": 90,
+  "total": 90,
+  "complete": true,
+  "errors": [],
+  "publication_format": "Compact review summary; outcomes and identities retained. Exact original JSON is adjacent in gzip and in native-evidence.zip.",
+  "raw_report": {
+    "file": "report.json.gz",
+    "sha256": "c201aeefd4c1921a08460d44d280b2eda4151450b5dbfcbb43f581d24ef309f4",
+    "uncompressed_sha256": "e659a733fc5b86e434f26ae4a1d565a309d82f4a28cd4b1ebcacede7604e6899",
+    "uncompressed_bytes": 189236
+  }
+}

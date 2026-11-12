@@ -1,4 +1,32 @@
-# Original-world mechanisms in additive courses
+# Regional mechanisms and retained compatibility layouts
+
+The current regional integration is described in [Regional mechanisms](REGIONAL_MECHANISMS.md). The court descriptions below document the retained compatibility layouts; normal content is placed by the Forest/Cream generator.
+
+## Current regional qualification
+
+C4 source `51880a55e6ecf86728f3a0923e5547e7bdeed5a0` passes 23,487 regional
+host checks across both modules, including 15,105 object checks, plus the
+277 retained-course object checks. Actual generated regional doors expose
+the 12 compact puzzle patterns and all 42 families across seeds.
+
+The final positive-health native bundle passes 167/167 checks across five
+groups. It verifies all 42 families' allocation/pixel uploads and representative
+real push, pressure, Cape/Minish refusal, copies, reflection, water/weather,
+sword/arrow/Pacci and fire contacts. It does not claim native reaction tests
+for every family solely from sprite coverage. Each substantive case uses a
+fresh seeded core, requires GS_PLAY and HP > 0, and aborts on depleted health.
+Loadout/ammunition/skills, standing/navigation, player protection and
+decreasing gilt to 0 for isolated cache accounting are explicit fixtures.
+Player HP, completion/fusion/claim flags, terrain, enemy state and pixels
+are not assigned.
+
+The [main native report](../../../regional-handoff-review/validation/mechanisms/report.json)
+and the [full scope and ROM/harness identity](REGIONAL_MECHANISMS.md) identify
+the proof. Workspace originals are
+`/workspace/setup/regional-integration/mechanisms-live-c4/{main,fields,lily,lava,cream}/report.json`.
+Earlier depleted-health diagnostic runs are invalidated.
+
+## Historical compatibility courts
 
 The Challenge desk reaches four mechanism courts, independently of the
 existing forest, Drain and mystery rooms. They use native32px canvases

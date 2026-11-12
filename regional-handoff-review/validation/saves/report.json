@@ -1,0 +1,677 @@
+{
+  "method": "Actual mGBA checkpoint, map and published-extension migration review.\n\nPrivate SRAM and the title seed are fixtures. Player position/facing fixtures\nshorten navigation to real doors and NPCs; actual input activates those doors,\naccepts quests and chooses Trophy difficulty to invoke the normal serializer.\nNo inventory, quest/chain/completion, terrain, enemy, camera or pixel writes are\nused. A second core receives the first core's complete serialized SRAM as a\ndisclosed power-cycle fixture. The old source ROM is tested independently.\n",
+  "rom_sha256": "0dd8554384b53e618140f8c61590fc7e6a7ff0888f296ece034a95f357b34fdd",
+  "published_rom_sha256": "e8df68ad63350948894742cad7e4f4085600857f26ec55aaa545b0697cd9954e",
+  "tool_sha256": "141c25f212ccb28c54cbebd672b72666a5e487c74671e0c14b001d04ad2e21f4",
+  "checks": [
+    {
+      "name": "opening draft has three real selections before exploration",
+      "passed": true,
+      "observed": null
+    },
+    {
+      "name": "generated quest giver is in a real Forest room",
+      "passed": true,
+      "observed": {
+        "area": 1,
+        "cell": 23,
+        "field_site": 55,
+        "interior_site": 101,
+        "event_kind": 28,
+        "quest_kind": 1,
+        "mechanism_variant": 1,
+        "traversal_variant": 255,
+        "fusion_color": 255,
+        "has_wave": 0,
+        "stage": 0,
+        "terrace": 0,
+        "field_mechanism_variant": 255
+      }
+    },
+    {
+      "name": "real open border reaches neighboring room",
+      "passed": true,
+      "observed": {
+        "state": 1,
+        "area": 1,
+        "cell": 23,
+        "text": 0,
+        "menu": 0,
+        "actor": {
+          "kind": 1,
+          "type": 0,
+          "state": 0,
+          "timer": 0,
+          "x": 22,
+          "y": 200,
+          "z": 0,
+          "speed": 0,
+          "hp": 0,
+          "coll": 0,
+          "facing": 1
+        }
+      }
+    },
+    {
+      "name": "giver room is reached through open regional borders",
+      "passed": true,
+      "observed": {
+        "area": 1,
+        "cell": 23,
+        "field_site": 55,
+        "interior_site": 101,
+        "event_kind": 28,
+        "quest_kind": 1,
+        "mechanism_variant": 1,
+        "traversal_variant": 255,
+        "fusion_color": 255,
+        "has_wave": 0,
+        "stage": 0,
+        "terrace": 0,
+        "field_mechanism_variant": 255
+      }
+    },
+    {
+      "name": "actual regional giver has a discovered tile anchor",
+      "passed": true,
+      "observed": {
+        "x": 6,
+        "y": 16
+      }
+    },
+    {
+      "name": "real giver input starts a regional quest",
+      "passed": true,
+      "observed": {
+        "kind": 1,
+        "state": 2,
+        "origin_area": 1,
+        "origin_cell": 23,
+        "target_area": 1,
+        "target_cell": 23,
+        "difficulty": 0,
+        "stake": 0
+      }
+    },
+    {
+      "name": "Satchel atlas resolves to the selected Forest map",
+      "passed": true,
+      "observed": {
+        "page": 2,
+        "state": {
+          "state": 4,
+          "area": 1,
+          "cell": 23,
+          "text": 0,
+          "menu": 0,
+          "actor": {
+            "kind": 1,
+            "type": 0,
+            "state": 0,
+            "timer": 0,
+            "x": 104,
+            "y": 286,
+            "z": 0,
+            "speed": 0,
+            "hp": 0,
+            "coll": 0,
+            "facing": 0
+          }
+        }
+      }
+    },
+    {
+      "name": "real A input opens the selected room detail",
+      "passed": true,
+      "observed": null
+    },
+    {
+      "name": "regional map returns to actual room",
+      "passed": true,
+      "observed": {
+        "state": 1,
+        "area": 1,
+        "cell": 23,
+        "text": 0,
+        "menu": 0,
+        "actor": {
+          "kind": 1,
+          "type": 0,
+          "state": 0,
+          "timer": 0,
+          "x": 104,
+          "y": 286,
+          "z": 0,
+          "speed": 0,
+          "hp": 0,
+          "coll": 0,
+          "facing": 0
+        }
+      }
+    },
+    {
+      "name": "real open border reaches neighboring room",
+      "passed": true,
+      "observed": {
+        "state": 1,
+        "area": 1,
+        "cell": 22,
+        "text": 0,
+        "menu": 0,
+        "actor": {
+          "kind": 1,
+          "type": 0,
+          "state": 0,
+          "timer": 0,
+          "x": 490,
+          "y": 200,
+          "z": 0,
+          "speed": 0,
+          "hp": 0,
+          "coll": 0,
+          "facing": 3
+        }
+      }
+    },
+    {
+      "name": "backtracking returns to original Forest entry",
+      "passed": true,
+      "observed": {
+        "state": 1,
+        "area": 1,
+        "cell": 22,
+        "text": 0,
+        "menu": 0,
+        "actor": {
+          "kind": 1,
+          "type": 0,
+          "state": 0,
+          "timer": 0,
+          "x": 490,
+          "y": 200,
+          "z": 0,
+          "speed": 0,
+          "hp": 0,
+          "coll": 0,
+          "facing": 3
+        }
+      }
+    },
+    {
+      "name": "original Forest entry contains its real Drain stairs",
+      "passed": true,
+      "observed": [
+        [
+          15,
+          23
+        ],
+        [
+          16,
+          23
+        ]
+      ]
+    },
+    {
+      "name": "active quest survives ordinary room changes and hub return",
+      "passed": true,
+      "observed": {
+        "kind": 1,
+        "state": 2,
+        "origin_area": 1,
+        "origin_cell": 23,
+        "target_area": 1,
+        "target_cell": 23,
+        "difficulty": 0,
+        "stake": 0
+      }
+    },
+    {
+      "name": "physical Trophy opens its actual service",
+      "passed": true,
+      "observed": {
+        "state": 1,
+        "area": 0,
+        "cell": 22,
+        "text": 0,
+        "menu": 5,
+        "actor": {
+          "kind": 1,
+          "type": 0,
+          "state": 0,
+          "timer": 0,
+          "x": 416,
+          "y": 254,
+          "z": 0,
+          "speed": 0,
+          "hp": 0,
+          "coll": 0,
+          "facing": 0
+        }
+      }
+    },
+    {
+      "name": "actual Trophy opens difficulty settings",
+      "passed": true,
+      "observed": {
+        "state": 1,
+        "area": 0,
+        "cell": 22,
+        "text": 0,
+        "menu": 9,
+        "actor": {
+          "kind": 1,
+          "type": 0,
+          "state": 0,
+          "timer": 0,
+          "x": 416,
+          "y": 254,
+          "z": 0,
+          "speed": 0,
+          "hp": 0,
+          "coll": 0,
+          "facing": 0
+        }
+      }
+    },
+    {
+      "name": "normal native save writes extension3 and its actual1908-byte payload",
+      "passed": true,
+      "observed": [
+        [
+          3,
+          1908
+        ]
+      ]
+    },
+    {
+      "name": "saved map discoveries contain actual placed features",
+      "passed": true,
+      "observed": {
+        "bytes": 500,
+        "sha256": "8df7f168bbc30ee4eeef45be025bb496fe2e70e37570f4319e7133fab88af836",
+        "plan": {
+          "area": 1,
+          "cell": 23,
+          "field_site": 55,
+          "interior_site": 101,
+          "event_kind": 28,
+          "quest_kind": 1,
+          "mechanism_variant": 1,
+          "traversal_variant": 255,
+          "fusion_color": 255,
+          "has_wave": 0,
+          "stage": 0,
+          "terrace": 0,
+          "field_mechanism_variant": 255
+        }
+      }
+    },
+    {
+      "name": "cold Continue preserves the exact regional map anchors",
+      "passed": true,
+      "observed": null
+    },
+    {
+      "name": "cold Continue preserves live quest and chain facts",
+      "passed": true,
+      "observed": {
+        "before": {
+          "kind": 1,
+          "state": 2,
+          "origin_area": 1,
+          "origin_cell": 23,
+          "target_area": 1,
+          "target_cell": 23,
+          "difficulty": 0,
+          "stake": 0
+        },
+        "after": {
+          "kind": 1,
+          "state": 2,
+          "origin_area": 1,
+          "origin_cell": 23,
+          "target_area": 1,
+          "target_cell": 23,
+          "difficulty": 0,
+          "stake": 0
+        }
+      }
+    },
+    {
+      "name": "cold Continue preserves actual earned draft inventory",
+      "passed": true,
+      "observed": null
+    },
+    {
+      "name": "cold Continue preserves run-start quest region",
+      "passed": true,
+      "observed": {
+        "before": 1,
+        "after": 1
+      }
+    },
+    {
+      "name": "cold Continue does not rerun opening draft",
+      "passed": true,
+      "observed": {
+        "state": 1,
+        "area": 0,
+        "cell": 0,
+        "text": 0,
+        "menu": 0,
+        "actor": {
+          "kind": 1,
+          "type": 0,
+          "state": 0,
+          "timer": 0,
+          "x": 200,
+          "y": 270,
+          "z": 0,
+          "speed": 0,
+          "hp": 0,
+          "coll": 0,
+          "facing": 0
+        }
+      }
+    },
+    {
+      "name": "published ROM enters its historical Annex for compatibility fixture",
+      "passed": true,
+      "observed": null
+    },
+    {
+      "name": "published optional contract is actually active",
+      "passed": true,
+      "observed": null
+    },
+    {
+      "name": "published Annex courier is actually active",
+      "passed": true,
+      "observed": {
+        "kind": 6,
+        "state": 2,
+        "origin_area": 4,
+        "origin_cell": 21,
+        "target_area": 1,
+        "target_cell": 22,
+        "difficulty": 0,
+        "stake": 0
+      }
+    },
+    {
+      "name": "published courier survives its actual return route",
+      "passed": true,
+      "observed": {
+        "kind": 6,
+        "state": 2,
+        "origin_area": 4,
+        "origin_cell": 21,
+        "target_area": 1,
+        "target_cell": 22,
+        "difficulty": 0,
+        "stake": 0
+      }
+    },
+    {
+      "name": "physical Trophy opens its actual service",
+      "passed": true,
+      "observed": {
+        "state": 1,
+        "area": 4,
+        "cell": 0,
+        "text": 0,
+        "menu": 5,
+        "actor": {
+          "kind": 1,
+          "type": 0,
+          "state": 0,
+          "timer": 0,
+          "x": 120,
+          "y": 254,
+          "z": 0,
+          "speed": 0,
+          "hp": 0,
+          "coll": 0,
+          "facing": 0
+        }
+      }
+    },
+    {
+      "name": "actual Trophy opens difficulty settings",
+      "passed": true,
+      "observed": {
+        "state": 1,
+        "area": 4,
+        "cell": 0,
+        "text": 0,
+        "menu": 9,
+        "actor": {
+          "kind": 1,
+          "type": 0,
+          "state": 0,
+          "timer": 0,
+          "x": 120,
+          "y": 254,
+          "z": 0,
+          "speed": 0,
+          "hp": 0,
+          "coll": 0,
+          "facing": 0
+        }
+      }
+    },
+    {
+      "name": "fixture is a genuine published extension2 checkpoint",
+      "passed": true,
+      "observed": [
+        [
+          2,
+          1404
+        ]
+      ]
+    },
+    {
+      "name": "published extension2 inventory survives native Continue",
+      "passed": true,
+      "observed": null
+    },
+    {
+      "name": "old Annex quest does not become a regional ghost",
+      "passed": true,
+      "observed": {
+        "kind": 0,
+        "state": 0,
+        "origin_area": 0,
+        "origin_cell": 0,
+        "target_area": 0,
+        "target_cell": 0,
+        "difficulty": 0,
+        "stake": 0
+      }
+    },
+    {
+      "name": "old optional contract migrates to actual regional target",
+      "passed": true,
+      "observed": {
+        "target": 120
+      }
+    },
+    {
+      "name": "old map has no invented discovery coordinates",
+      "passed": true,
+      "observed": null
+    },
+    {
+      "name": "published extension2 seeds a valid run-start quest region",
+      "passed": true,
+      "observed": {
+        "seed": 13,
+        "quest_area": 1
+      }
+    },
+    {
+      "name": "published profile and preferences remain byte-identical",
+      "passed": true,
+      "observed": null
+    },
+    {
+      "name": "all prior cabinet knowledge is retained",
+      "passed": true,
+      "observed": null
+    },
+    {
+      "name": "migration Continue does not start a new draft",
+      "passed": true,
+      "observed": {
+        "state": 1,
+        "area": 0,
+        "cell": 0,
+        "text": 0,
+        "menu": 0,
+        "actor": {
+          "kind": 1,
+          "type": 0,
+          "state": 0,
+          "timer": 0,
+          "x": 200,
+          "y": 270,
+          "z": 0,
+          "speed": 0,
+          "hp": 0,
+          "coll": 0,
+          "facing": 0
+        }
+      }
+    }
+  ],
+  "fixtures": [
+    {
+      "kind": "hero navigation position/facing only",
+      "x": 472,
+      "y": 200,
+      "facing": 1,
+      "area": 1,
+      "cell": 22
+    },
+    {
+      "kind": "hero navigation position/facing only",
+      "x": 104,
+      "y": 286,
+      "facing": 0,
+      "area": 1,
+      "cell": 23
+    },
+    {
+      "kind": "hero navigation position/facing only",
+      "x": 40,
+      "y": 200,
+      "facing": 3,
+      "area": 1,
+      "cell": 23
+    },
+    {
+      "kind": "hero navigation position/facing only",
+      "x": 248,
+      "y": 378,
+      "facing": 0,
+      "area": 1,
+      "cell": 22
+    },
+    {
+      "kind": "hero navigation position/facing only",
+      "x": 416,
+      "y": 254,
+      "facing": 0,
+      "area": 0,
+      "cell": 22
+    },
+    {
+      "kind": "private serialized older journal/appearance",
+      "earned": false
+    },
+    {
+      "kind": "hero navigation position/facing only",
+      "x": 280,
+      "y": 130,
+      "facing": 0,
+      "area": 0,
+      "cell": 0
+    },
+    {
+      "kind": "hero navigation position/facing only",
+      "x": 360,
+      "y": 254,
+      "facing": 0,
+      "area": 4,
+      "cell": 0
+    },
+    {
+      "kind": "hero navigation position/facing only",
+      "x": 280,
+      "y": 254,
+      "facing": 0,
+      "area": 4,
+      "cell": 0
+    },
+    {
+      "kind": "hero navigation position/facing only",
+      "x": 264,
+      "y": 354,
+      "facing": 0,
+      "area": 4,
+      "cell": 0
+    },
+    {
+      "kind": "hero navigation position/facing only",
+      "x": 280,
+      "y": 130,
+      "facing": 0,
+      "area": 0,
+      "cell": 0
+    },
+    {
+      "kind": "hero navigation position/facing only",
+      "x": 120,
+      "y": 254,
+      "facing": 0,
+      "area": 4,
+      "cell": 0
+    }
+  ],
+  "media": [
+    {
+      "file": "01-active-regional-quest.png",
+      "sha256": "dcfda0326574c014ece0ce3ae99498362299a3f74ec7a77ac30fb6163d97d12d",
+      "kind": "untouched240x160 mGBA output"
+    },
+    {
+      "file": "02-regional-forest-map.png",
+      "sha256": "0b1e030163d2688b49b55d290a52cce51259dcba5825e4a0186a5c79526612cd",
+      "kind": "untouched240x160 mGBA output"
+    },
+    {
+      "file": "03-regional-forest-detail.png",
+      "sha256": "078852e013a9607dccd66447df77f600d1bbcd7d8c2f96576ae36712a675881a",
+      "kind": "untouched240x160 mGBA output"
+    },
+    {
+      "file": "04-cold-continue.png",
+      "sha256": "b61754596aaaa77f7deae2902840be8de81c618f9d1fcf56ccec2f8d244d9c0c",
+      "kind": "untouched240x160 mGBA output"
+    },
+    {
+      "file": "05-published-v2-checkpoint.png",
+      "sha256": "dfbfc75a68c907d6e471bd723bb13861a45995690f6736b424032ac88b277c15",
+      "kind": "untouched240x160 mGBA output"
+    },
+    {
+      "file": "06-published-save-migrated.png",
+      "sha256": "cbbf6ea49ad9625a5efbe317da91bed1a0710b1b37176bd4d05775f1a4ad0737",
+      "kind": "untouched240x160 mGBA output"
+    }
+  ],
+  "passed": 37,
+  "total": 37,
+  "complete": true,
+  "error": null
+}

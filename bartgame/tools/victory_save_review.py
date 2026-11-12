@@ -23,6 +23,7 @@ import bloom_probe as B
 import critical_path as C
 import save_probe as S
 from arcade_journal_review import profile, preferences
+from regional_native_support import compile_abi
 
 SHA=lambda b:hashlib.sha256(b).hexdigest()
 SRAM=0x0E000000
@@ -45,12 +46,17 @@ class Review:
         self.defs=B.configure(SimpleNamespace(map=str(self.bundle/'bartgame.map'),assets_header=str(self.bundle/'assets.h')))
         C.mt=lambda name:self.defs['MT_'+name]
         self.rows=[];self.media=[];self.history=[];self.contexts=[]
+        try:self.opening_pending=P.sym('gStartingDraft')
+        except KeyError:self.opening_pending=None
+        self.abi=compile_abi(self.bundle,self.out/'abi') if self.opening_pending else None
+        self.begin_base=None
         self.fixtures=[
             'Independent in-memory32768-byte SRAM starts erased; valid journal/appearance records are explicit profile fixtures, not earned catalogue coverage.',
             'Ordinary death/save counterprobes set only player PS_DEAD/dead_timer; normal save serialization and title/Continue run in the ROM.',
             'Compatibility inputs alter serialized version/checksum and goal or non-goal cleared flags; no enemy or terrain is edited.',
             'The real fight bypasses maze travel with the existing transition request, supplies player health/invulnerability and positions only the player. Enemy original40HP, AI, state, flags and timers remain live.',
-            'Actual B sword inputs kill the Heart, and touching its actual spawned Grail triggers GS_WIN. Native captures remain untouched.'
+            'Actual B sword inputs kill the Heart, and touching its actual spawned Grail triggers GS_WIN. Native captures remain untouched.',
+            'New-run starting inventory is observed before the first opening gift; three default gifts are then selected by actual A inputs. Draft data is read using ARM ABI offsets compiled from the pinned source headers.'
         ]
 
     def check(self,name,ok,detail=None):
@@ -78,11 +84,15 @@ class Review:
 
     def begin(self,c,seed):
         w32(c,P.sym('gSeedOverride'),seed);self.press(c,'START',2,4)
-        ready=None
+        ready=None;self.begin_base=None
         for _ in range(2400):
-            if P.r8(c,P.sym('gTbActive')):self.press(c,'A',2,6)
+            pending=self.opening_pending and P.r8(c,self.opening_pending)
+            if pending and C.gstate(c)==1 and self.begin_base is None:
+                self.begin_base=self.inventory(c)
+                self.contexts.append(dict(kind='observed new-run inventory before any gift input',seed=seed,inventory=self.begin_base))
+            if P.r8(c,P.sym('gTbActive')) or pending:self.press(c,'A',2,6)
             else:self.run(c,4)
-            if C.gstate(c)==1 and P.r8(c,P.sym('gActors'))==1 and not P.r8(c,P.sym('gTbActive')):
+            if C.gstate(c)==1 and P.r8(c,P.sym('gActors'))==1 and not P.r8(c,P.sym('gTbActive')) and not (self.opening_pending and P.r8(c,self.opening_pending)):
                 now=P.r32(c,P.sym('gGame')+8)
                 if ready is None:ready=now
                 if now-ready>=3:return
@@ -100,13 +110,20 @@ class Review:
         self.run(c,8)
         return S.record(c)[1]
 
+    def inventory(self,c):
+        pl=P.sym('gPl')
+        return dict(hp=P.r16(c,pl),max_hp=P.r16(c,pl+2),gilt=P.r16(c,pl+4),keys=P.r8(c,pl+6),bombs=P.r8(c,pl+7),items=P.r8(c,pl+8),arrows=P.r8(c,pl+35),items2=P.r8(c,pl+36))
+
     def new_run_checks(self,c,seed,label):
         world=C.world(c);pl=P.sym('gPl');w=P.sym('gWorld')
         self.check(label+' uses new seed',P.r32(c,w)==seed,hex(P.r32(c,w)))
         self.check(label+' returns to ordinary Drain',C.area(c)==0 and C.gstate(c)==1)
         self.check(label+' Heart is alive and all gates/loot reset',all(P.r8(c,w+4+i*13+4)==0 and P.r8(c,w+4+i*13+11)&0xfe==0 for i in range(25)),world['goal'])
-        inventory=dict(hp=P.r16(c,pl),max_hp=P.r16(c,pl+2),gilt=P.r16(c,pl+4),keys=P.r8(c,pl+6),bombs=P.r8(c,pl+7),items=P.r8(c,pl+8),arrows=P.r8(c,pl+35),items2=P.r8(c,pl+36))
-        self.check(label+' restores starting inventory only',inventory==dict(hp=24,max_hp=24,gilt=0,keys=0,bombs=0,items=65,arrows=0,items2=2),inventory)
+        inventory=self.begin_base if self.opening_pending else self.inventory(c)
+        self.check(label+' restores starting inventory before opening gifts',inventory==dict(hp=24,max_hp=24,gilt=0,keys=0,bombs=0,items=65,arrows=0,items2=2),dict(pre_gift=inventory,after_real_gifts=self.inventory(c)))
+        if self.opening_pending:
+            h=P.sym('gHandoffState');a=self.abi
+            self.check(label+' finishes all three new opening rounds through actual inputs',P.r8(c,h+a['handoff_draft_round'])==3 and P.r8(c,h+a['handoff_draft_state'])==a['enum_draft_done'] and not P.r8(c,self.opening_pending))
         self.check(label+' resets run counters',P.r16(c,P.sym('gGame')+12)==0 and P.r16(c,P.sym('gGame')+14)==0)
 
     def fixture_record(self,raw,version=2,clear_goal=False,clear_other=False):
@@ -143,7 +160,7 @@ class Review:
         # serialized input proves save_load also defends the Continue path.
         c=self.fresh({0:base,PROFILE:self.profile_after_save});assert self.has_continue(c)
         write(c,SRAM,self.fixture_record(base,clear_goal=True));self.begin(c,0xbeef)
-        self.check('Continue rechecks a checkpoint retired after title draw',P.r32(c,P.sym('gWorld'))!=0xb4a7 and not P.r8(c,P.sym('gWorld')+4+C.world(c)['goal']*13+11)&0x20 and P.r16(c,pl+4)==0)
+        self.check('Continue rechecks a checkpoint retired after title draw',P.r32(c,P.sym('gWorld'))!=0xb4a7 and not P.r8(c,P.sym('gWorld')+4+C.world(c)['goal']*13+11)&0x20 and (self.begin_base['gilt']==0 if self.opening_pending else P.r16(c,pl+4)==0))
         # Separate live completed-state serialization counterprobe: no combat
         # claim here. Death must not recreate a resumable spent world.
         c=self.fresh({0:base,PROFILE:self.profile_after_save});self.begin(c,0)
@@ -216,7 +233,7 @@ class Review:
         except Exception:
             error=traceback.format_exc();print(error,flush=True);self.check('review completes',False,error)
         report=dict(method=__doc__,source_commit=(self.bundle/'source-commit.txt').read_text().strip(),rom_sha256=SHA((self.bundle/'bartgame.gba').read_bytes()),tool_sha256=SHA(Path(__file__).read_bytes()),
-                    fixtures=self.fixtures,checks=self.rows,passed=sum(r['passed'] for r in self.rows),total=len(self.rows),fight=self.history,media=self.media,error=error)
+                    fixtures=self.fixtures,opening_observations=self.contexts,checks=self.rows,passed=sum(r['passed'] for r in self.rows),total=len(self.rows),fight=self.history,media=self.media,error=error)
         (self.out/'report.json').write_text(json.dumps(report,indent=2)+'\n');print('RESULT',report['passed'],'/',report['total'],flush=True)
         return int(error is not None or report['passed']!=report['total'])
 

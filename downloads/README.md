@@ -1,6 +1,16 @@
 # BARTGAME downloads
 
-## Curdled Cream entrance repair — current release
+## Regional handoff integration — current release
+
+- [Download ROM](https://raw.githubusercontent.com/natertott/bartgame/handoff-restoration-curdled-cream/downloads/regional-handoff-51880a55/bartgame-51880a55.gba)
+- [ZIP and checksums](regional-handoff-51880a55/README.md)
+- [Actual mGBA gallery, controls and qualification](../regional-handoff-review/README.md)
+
+Events, rotating regional quests, fusions, mechanisms, waves and an additional
+four-seal ending now play in Forest/Cream. Cream uses a second Forest-style
+wall ladder. Existing art, original boss wins, music and old saves remain.
+
+## Curdled Cream entrance repair — historical build
 
 - [Download repaired ROM](https://raw.githubusercontent.com/natertott/bartgame/handoff-restoration-curdled-cream/downloads/curdled-cream-door-2bc08eca/bartgame-2bc08eca.gba)
 - [ZIP and checksums](curdled-cream-door-2bc08eca/README.md)

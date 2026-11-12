@@ -1,0 +1,9 @@
+{
+  "publication_format": "Exact original trace compressed for repository review; also included unmodified in native-evidence.zip.",
+  "raw_report": {
+    "file": "peak-combat.json.gz",
+    "sha256": "bf0e2e642f43d22f2c27cff4f92bc0168701b0dd798bae6302b3f57f2a6bdc34",
+    "uncompressed_sha256": "73d6c6f780d824f5935439c73fcce7187b8c45863787f953ea28828c44019455",
+    "uncompressed_bytes": 104268
+  }
+}

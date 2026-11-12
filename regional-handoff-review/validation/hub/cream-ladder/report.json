@@ -1,0 +1,125 @@
+{
+  "source_commit": "51880a55e6ecf86728f3a0923e5547e7bdeed5a0",
+  "rom_sha256": "0dd8554384b53e618140f8c61590fc7e6a7ff0888f296ece034a95f357b34fdd",
+  "support_sha256": "5c2dfee98c73847e83d5ebfb950ee6642af032dcf14531743347659c4ad9eea0",
+  "emulator": "mGBA0.10.5",
+  "fixtures": [
+    {
+      "kind": "title seed",
+      "value": 46247
+    }
+  ],
+  "harness_source_sha256": {
+    "critical_path.py": "70e3db6ccbbadcd65f25355ef2c8e5ae728112abffe3d5c278a1b5428e588159",
+    "probe.py": "63133cd3241804ed11e5673505a9609b6fa33f24a1c7f61a4ea79dad1c535f75",
+    "regional_hub_review.py": "a15ab6ffe8efbd818a324063144e6bc74668b9f30b33bd3ec9168edeabf42a2c",
+    "regional_native_support.py": "5c2dfee98c73847e83d5ebfb950ee6642af032dcf14531743347659c4ad9eea0",
+    "release_boundary_review.py": "1c3cff4c6eaed42f65b7c1e19f6693a78e5f4fcfd323fc57dd8f0e979ee7c0ea"
+  },
+  "input_method": "Actual key input; no gameplay-state or video assignments.",
+  "method": "Reach ordinary Drain services and both ladders using real game controls.\n\nThe title seed and fresh private SRAM are the only fixtures. The test chooses\nthe opening gifts, walks, interacts and returns without assigning position,\nfacing, health, inventory, camera, menus, progression, terrain or pixels.\n",
+  "inputs": {
+    "stored_in_raw_report": true,
+    "entries": 214,
+    "original_json_bytes": 356755
+  },
+  "final": {
+    "physical_frames": 789,
+    "state": 1,
+    "area": 0,
+    "cell": 21,
+    "actor": {
+      "kind": 1,
+      "type": 0,
+      "state": 0,
+      "timer": 0,
+      "x": 312,
+      "y": 94,
+      "z": 0,
+      "speed": 0,
+      "hp": 0,
+      "coll": 0,
+      "facing": 2
+    },
+    "text": 0,
+    "health": [
+      24,
+      24
+    ],
+    "gilt": 200,
+    "bombs": 10,
+    "entitlement": 0,
+    "inn_reward": 0,
+    "inventory": {
+      "owned": [
+        8322,
+        0,
+        33554960,
+        0
+      ],
+      "skills": 2
+    },
+    "starting_draft": 0,
+    "service_menu": {
+      "active": 0,
+      "cursor": 2
+    },
+    "draft": {
+      "round": 3,
+      "state": 2,
+      "options": [
+        75,
+        72,
+        73
+      ]
+    },
+    "chain": {
+      "step": 0,
+      "kind": 1,
+      "state": 1,
+      "target": 105
+    },
+    "quest": {
+      "kind": 0,
+      "state": 0,
+      "origin_area": 0,
+      "origin_cell": 0,
+      "target_area": 0,
+      "target_cell": 0,
+      "progress": 0,
+      "quota": 0
+    },
+    "spots": {
+      "door": [
+        0,
+        0
+      ],
+      "npc": [
+        0,
+        0
+      ],
+      "cache": [
+        0,
+        0
+      ],
+      "mechanism": [
+        0,
+        0
+      ],
+      "flags": {
+        "door": 0,
+        "npc": 0,
+        "cache": 0,
+        "mechanism": 0
+      },
+      "terrace": 0
+    }
+  },
+  "publication_format": "Compact review summary; outcomes and identities retained. Exact original JSON is adjacent in gzip and in native-evidence.zip.",
+  "raw_report": {
+    "file": "report.json.gz",
+    "sha256": "eaa0105e44e8db5ddc435e6ad8d5a31a02e596dae231fc1ea2311f297d268b84",
+    "uncompressed_sha256": "aa377bf0d55089a0aec8df41155148b2bbac6208b43c88c6cbf0b7a9feffd603",
+    "uncompressed_bytes": 764120
+  }
+}
