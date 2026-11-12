@@ -28,6 +28,7 @@ extern u16 items_sheet_tile(void);
 #endif
 #if BART_CREAM_VARIANT == 12
 #include "cream_topology.h"
+#include "cream_map_concepts.h"
 #endif
 #include "interactive.h"
 #include "ambient.h"
@@ -289,7 +290,7 @@ static void load_cream(int node,int px,int py,int facing) {
     legacy_items_room_reset();cream_runtime_enter();
     camera_update(px,py-16,TRUE);dark_off();minimap_render();handoff_room_enter(AREA_CREAM,gGame.cell);
 #if BART_CREAM_VARIANT == 12
-    cream_topology_sync();
+    cream_topology_sync();cream_map_record_heights();
 #endif
 #if BART_CREAM_VARIANT >= 7
     cream_visuals_build();
@@ -1043,7 +1044,7 @@ static void update_transition(void) {
 #if BART_CREAM_VARIANT == 12
             /* Intervening screens show the same native physical topology,
                without starting their actors, optional events or rewards. */
-            cream_topology_sync();cream_visuals_build();room_render();
+            cream_topology_sync();cream_map_record_heights();cream_visuals_build();room_render();
 #endif
             camera_update(PX(gPlayer->x),0,TRUE);dark_off();minimap_render();
         } else camera_update(px,py-16,FALSE);

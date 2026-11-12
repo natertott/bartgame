@@ -28,6 +28,26 @@ static u16* sPixels EWRAM_BSS;
 static u16 sSavedMap[16] EWRAM_BSS;
 static u16 sBackdrop;
 static bool8 sActive;
+static u8 sHeightSummary[25][3] EWRAM_BSS;
+static u32 sHeightSeed,sHeightKnown;
+static void height_seed(void) {
+    if(sHeightSeed!=gCreamWorld.seed){sHeightSeed=gCreamWorld.seed;sHeightKnown=0;}
+}
+static void height_summary(int cell,const CreamTopology* topology) {
+    int i,low=7,high=0,levels=0,count=0;
+    for(i=0;i<768;i++) {
+        int c=topology->cells[i],h=c&CT_HEIGHT_MASK;
+        if((c&CT_SUPPORT)&&!(c&CT_CLIMB)&&h<7){low=MIN(low,h);high=MAX(high,h);levels|=1<<h;}
+    }
+    for(i=0;i<7;i++)count+=(levels>>i)&1;
+    sHeightSummary[cell][0]=low==7?0:low;sHeightSummary[cell][1]=high;sHeightSummary[cell][2]=count;
+    sHeightKnown|=1u<<cell;
+}
+void cream_map_record_heights(void) {
+    height_seed();
+    if(gCreamTopology.active && gCreamTopology.cell==gCreamRoom.cell)
+        height_summary(gCreamRoom.cell,&gCreamTopology);
+}
 u8 gCreamMapConcept,gCreamMapZoom,gCreamMapCell;
 static const char* const sNames[10]={"Contour Folio","Curdstone Diorama","Geological Section","Exploded Shelves","Pilgrim Ribbon","Chamber Quilt","Surveyor Blueprint","Stained Reliquary","Cairn Locator","Plan & Escarpment"};
 const char* cream_map_name(int style){return sNames[CLAMP(style,0,9)];}
@@ -111,7 +131,7 @@ static void expand(int cell){
     }
 }
 static void prepare_data(int cell,bool8 zoom,int concept){
-    int c,t,i,x,y;CreamMapData* d=&sWork->data;memset(d,0,sizeof(*d));
+    int c,t,i,x,y;CreamMapData* d=&sWork->data;memset(d,0,sizeof(*d));height_seed();
     d->kind=sWork->kind;d->height=sWork->height;d->owner=sWork->owner;
     d->selected=CLAMP(cell,0,24);d->current=gGame.area==AREA_CREAM?gGame.cell:cream_cell(gCreamNode);d->zoom=zoom;d->concept=concept;
     if(gPlayer){d->here_x=CLAMP(PX(gPlayer->x)/16,0,31);d->here_y=CLAMP((PX(gPlayer->y)-4)/16,0,23);}
@@ -119,9 +139,9 @@ static void prepare_data(int cell,bool8 zoom,int concept){
         d->known[c]=known(c);d->visited[c]=(gCreamProgress.visited>>c)&1;
         if(!d->known[c])continue;
         d->corruption[c]=gCreamWorld.corruption[c];d->summit[c]=cream_cell(gCreamWorld.goal_node)==c;
-        d->events[c]=event_bits(c);load_plan(c);
-        {int low=7,high=0,levels=0;for(i=0;i<768;i++){int f=sWork->topology.cells[i],h=f&7;if((f&CT_SUPPORT)&&h<7){low=MIN(low,h);high=MAX(high,h);levels|=1<<h;}}
-         d->low[c]=low==7?0:low;d->high[c]=high;for(i=0;i<7;i++)d->levels[c]+=(levels>>i)&1;}
+        d->events[c]=event_bits(c);
+        if(!(sHeightKnown&(1u<<c))){load_plan(c);height_summary(c,&sWork->topology);}
+        d->low[c]=sHeightSummary[c][0];d->high[c]=sHeightSummary[c][1];d->levels[c]=sHeightSummary[c][2];
     }
     if(!d->known[d->selected]){memset(sWork->kind,CMT_WALL,768);memset(sWork->height,0,768);memset(sWork->owner,0,768);return;}
     load_plan(d->selected);expand(d->selected);
@@ -191,10 +211,15 @@ static void palette(int style){
     pal_set_bg(PAL_SLOT_MAP,p);gPalBg[0]=p[0];gPalDirty=1;
 }
 void cream_map_render(int cell,bool8 zoom,int concept){
-    int i,x,y;sPixels=menu_cream_pixel_scratch();sWork=(CMWork*)menu_cream_plan_scratch();
+    int i,x,y;bool8 entering=!sActive;
+    sPixels=menu_cream_pixel_scratch();sWork=(CMWork*)menu_cream_plan_scratch();
     if(!sActive){for(i=0;i<16;i++)sSavedMap[i]=gPalBg[PAL_SLOT_MAP*16+i];sBackdrop=gPalBg[0];sActive=TRUE;}
     gCreamMapConcept=concept%10;gCreamMapCell=CLAMP(cell,0,24);gCreamMapZoom=zoom;
-    prepare_data(cell,zoom,gCreamMapConcept);memset(sPixels,0,19200);palette(gCreamMapConcept);
+    /* Gameplay is paused: style/zoom changes reuse exactly the same terrain
+       and markers. A different selected room only needs its own pure plan. */
+    if(entering || sWork->data.selected!=gCreamMapCell)prepare_data(cell,zoom,gCreamMapConcept);
+    else{sWork->data.zoom=zoom;sWork->data.concept=gCreamMapConcept;}
+    memset(sPixels,0,19200);palette(gCreamMapConcept);
     cm_text(5,3,cream_map_name(gCreamMapConcept),CM_GOLD);cm_number(218,3,gCreamMapConcept+1,CM_PALE);
     cm_line(4,17,235,17,CM_GOLD_DIM);
     if(gCreamMapConcept<5)cream_map_forms_a(gCreamMapConcept,&sWork->data);else cream_map_forms_b(gCreamMapConcept,&sWork->data);

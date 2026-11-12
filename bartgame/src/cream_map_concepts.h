@@ -37,6 +37,8 @@ void cream_map_forms_b(int style,const CreamMapData* data);
 const char* cream_map_name(int style);
 void cream_map_render(int cell,bool8 zoom,int concept);
 void cream_map_leave(void);
+/* Cache only navigation height summaries from the actual loaded room. */
+void cream_map_record_heights(void);
 u16* menu_cream_pixel_scratch(void);
 void* menu_cream_plan_scratch(void);
 extern u8 gCreamMapConcept;
