@@ -1,0 +1,271 @@
+{
+  "method": "Host-only fixture compiles actual menu.c and metadata; extracted pure legacy functions are verbatim. Gold journal lookup uses the actual source array. No emulated gameplay or screenshots are fabricated.",
+  "source_files": {
+    "src/menu.c": "ef0ae48ca933072b8e713208f8c02062ce40993aeb2d83e49b1c6fbb89507855",
+    "src/legacy_items.c": "5dbf0ca2a07cf220972b12537a933202f2614422cd43228fe6f3db168654c60b",
+    "src/legacy_items_metadata.inc": "ce005b4352cfac25fa3f6e39a0752f470e444001e3c456893f0453ee6f028b3a",
+    "src/journal.c": "828eed29d7a6c1f786082e9d64812941e6773c9ce3c0c7e30d85059a4a8f460c",
+    "src/menu_layouts_a.c": "f786b8af57520e3c8c5bc50d03651d8282c207617f25f98b989a91a3248b6130"
+  },
+  "fixture_sha256": "15c2c74104f1b5acb0ac7b55cac18b2d5df44f8d7ad3f0b16b92da8dc0c066fd",
+  "assets_header_sha256": "8e98fd4ce0d5926027944c2f4cd9bb79aa2a31f0842912de82539a2da7bb70a0",
+  "command": [
+    "gcc",
+    "-std=c99",
+    "-O2",
+    "-w",
+    "-ffunction-sections",
+    "-fdata-sections",
+    "-I",
+    "/workspace/setup/pause-repair/host",
+    "-I",
+    "/workspace/bartgame/bartgame/src",
+    "/workspace/setup/pause-repair/host/fixture.c",
+    "-Wl,--gc-sections",
+    "-o",
+    "/workspace/setup/pause-repair/host/fixture"
+  ],
+  "checks": [
+    {
+      "name": "full tool count",
+      "passed": true,
+      "actual": 26,
+      "expected": 26
+    },
+    {
+      "name": "every tool appears exactly once",
+      "passed": true,
+      "actual": 26,
+      "expected": 26
+    },
+    {
+      "name": "full inventory leaves output guards untouched",
+      "passed": true,
+      "actual": 1,
+      "expected": 1
+    },
+    {
+      "name": "all compact IDs fit seven-bit range",
+      "passed": true,
+      "actual": 1,
+      "expected": 1
+    },
+    {
+      "name": "all D-pad moves remain within owned inventory",
+      "passed": true,
+      "actual": 1,
+      "expected": 1
+    },
+    {
+      "name": "all tool pages reachable and returnable",
+      "passed": true,
+      "actual": 26,
+      "expected": 26
+    },
+    {
+      "name": "every populated slot can navigate back to first",
+      "passed": true,
+      "actual": 1,
+      "expected": 1
+    },
+    {
+      "name": "full keepsake count",
+      "passed": true,
+      "actual": 91,
+      "expected": 91
+    },
+    {
+      "name": "every keepsake appears exactly once",
+      "passed": true,
+      "actual": 91,
+      "expected": 91
+    },
+    {
+      "name": "full inventory leaves output guards untouched",
+      "passed": true,
+      "actual": 1,
+      "expected": 1
+    },
+    {
+      "name": "all compact IDs fit seven-bit range",
+      "passed": true,
+      "actual": 1,
+      "expected": 1
+    },
+    {
+      "name": "all D-pad moves remain within owned inventory",
+      "passed": true,
+      "actual": 1,
+      "expected": 1
+    },
+    {
+      "name": "all keepsake pages reachable and returnable",
+      "passed": true,
+      "actual": 91,
+      "expected": 91
+    },
+    {
+      "name": "every populated slot can navigate back to first",
+      "passed": true,
+      "actual": 1,
+      "expected": 1
+    },
+    {
+      "name": "gold half resolves its real journal frame",
+      "passed": true,
+      "actual": 118,
+      "expected": 118
+    },
+    {
+      "name": "gold half resolves its real journal frame",
+      "passed": true,
+      "actual": 119,
+      "expected": 119
+    },
+    {
+      "name": "gold half resolves its real journal frame",
+      "passed": true,
+      "actual": 120,
+      "expected": 120
+    },
+    {
+      "name": "gold half resolves its real journal frame",
+      "passed": true,
+      "actual": 121,
+      "expected": 121
+    },
+    {
+      "name": "bow ownership uses its independent bit",
+      "passed": true,
+      "actual": 1,
+      "expected": 1
+    },
+    {
+      "name": "drain cap ownership uses its independent bit",
+      "passed": true,
+      "actual": 0,
+      "expected": 0
+    },
+    {
+      "name": "map ownership uses its independent bit",
+      "passed": true,
+      "actual": 0,
+      "expected": 0
+    },
+    {
+      "name": "astrolabe ownership uses its independent bit",
+      "passed": true,
+      "actual": 0,
+      "expected": 0
+    },
+    {
+      "name": "bow ownership uses its independent bit",
+      "passed": true,
+      "actual": 0,
+      "expected": 0
+    },
+    {
+      "name": "drain cap ownership uses its independent bit",
+      "passed": true,
+      "actual": 1,
+      "expected": 1
+    },
+    {
+      "name": "map ownership uses its independent bit",
+      "passed": true,
+      "actual": 0,
+      "expected": 0
+    },
+    {
+      "name": "astrolabe ownership uses its independent bit",
+      "passed": true,
+      "actual": 0,
+      "expected": 0
+    },
+    {
+      "name": "bow ownership uses its independent bit",
+      "passed": true,
+      "actual": 0,
+      "expected": 0
+    },
+    {
+      "name": "drain cap ownership uses its independent bit",
+      "passed": true,
+      "actual": 0,
+      "expected": 0
+    },
+    {
+      "name": "map ownership uses its independent bit",
+      "passed": true,
+      "actual": 1,
+      "expected": 1
+    },
+    {
+      "name": "astrolabe ownership uses its independent bit",
+      "passed": true,
+      "actual": 0,
+      "expected": 0
+    },
+    {
+      "name": "bow ownership uses its independent bit",
+      "passed": true,
+      "actual": 0,
+      "expected": 0
+    },
+    {
+      "name": "drain cap ownership uses its independent bit",
+      "passed": true,
+      "actual": 0,
+      "expected": 0
+    },
+    {
+      "name": "map ownership uses its independent bit",
+      "passed": true,
+      "actual": 0,
+      "expected": 0
+    },
+    {
+      "name": "astrolabe ownership uses its independent bit",
+      "passed": true,
+      "actual": 1,
+      "expected": 1
+    },
+    {
+      "name": "first pause focuses newly awarded noncore tool",
+      "passed": true,
+      "actual": 19,
+      "expected": 19
+    },
+    {
+      "name": "new passive immediately selects its owned page",
+      "passed": true,
+      "actual": 79,
+      "expected": 79
+    },
+    {
+      "name": "new gold half immediately selects its owned page",
+      "passed": true,
+      "actual": 121,
+      "expected": 121
+    },
+    {
+      "name": "counter-only Kinstones appear without a stale owned bit",
+      "passed": true,
+      "actual": 1,
+      "expected": 1
+    },
+    {
+      "name": "inventory gathering never writes acquired item flags",
+      "passed": true,
+      "actual": 0,
+      "expected": 0
+    },
+    {
+      "name": "empty tool page has no movement",
+      "passed": true,
+      "actual": 0,
+      "expected": 0
+    }
+  ],
+  "complete": true
+}

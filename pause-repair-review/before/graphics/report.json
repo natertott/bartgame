@@ -1,0 +1,287 @@
+{
+  "rom_sha256": "98d1dce7d1fa78d64a537688d44872b78e9a012585584081820a23edb2f9842e",
+  "source_commit": "48a39a9a1c0dc3fe1a0eb4fa563219eab0d104f6",
+  "seed": 1,
+  "baseline": true,
+  "images": [
+    {
+      "file": "before-pause.png",
+      "sha256": "3123ed6d927043ed26f7ea4fb542a6fd7c7f8996692843b976233bdd99ca2b2a"
+    },
+    {
+      "file": "primary-items.png",
+      "sha256": "8078726c9e94cebf7416a1bbd3be61976c6370f85f007fd44511dfb90023d5c6"
+    },
+    {
+      "file": "atlas-zoom.png",
+      "sha256": "a5194f29d24aab09f0f6aafe058945e6d4f6a9be217435d0a190a2f0b2c694a6"
+    },
+    {
+      "file": "satchel-after-atlas.png",
+      "sha256": "4f66a50874f4a1554d3e8a2b8f3398e86f83a767a97ccf3e62e133e2350eb852"
+    },
+    {
+      "file": "returned-to-world.png",
+      "sha256": "fcff690b99aa9afb962c0574686bccea97a246ffc77e6e2d89ae0ea29b1bb1a8"
+    }
+  ],
+  "residents_before": {
+    "blank": {
+      "exact": true,
+      "expected_sha256": "66687aadf862bd776c8fc18b8e9f8e20089714856ee233b3902a591d0d5f2925",
+      "actual_sha256": "66687aadf862bd776c8fc18b8e9f8e20089714856ee233b3902a591d0d5f2925",
+      "bytes": 32
+    },
+    "hud": {
+      "exact": true,
+      "expected_sha256": "815b61200b6f079ab940d2c74b6399afe73a93bd88a0a8b6833d2f58e1b0b922",
+      "actual_sha256": "815b61200b6f079ab940d2c74b6399afe73a93bd88a0a8b6833d2f58e1b0b922",
+      "bytes": 128
+    },
+    "kit": {
+      "exact": true,
+      "expected_sha256": "1f0a142cf1d31cb075544e9fe257c0695dd888bdee326f8c0ec74bd4dd3b38c6",
+      "actual_sha256": "1f0a142cf1d31cb075544e9fe257c0695dd888bdee326f8c0ec74bd4dd3b38c6",
+      "bytes": 1632
+    }
+  },
+  "residents_on_satchel": {
+    "blank": {
+      "exact": false,
+      "expected_sha256": "66687aadf862bd776c8fc18b8e9f8e20089714856ee233b3902a591d0d5f2925",
+      "actual_sha256": "8acc9cfe50f5a2743efe148baa155f3c7613c28cf4d3ce2a4033c3b75fa18fdf",
+      "bytes": 32
+    },
+    "hud": {
+      "exact": false,
+      "expected_sha256": "815b61200b6f079ab940d2c74b6399afe73a93bd88a0a8b6833d2f58e1b0b922",
+      "actual_sha256": "e9b6cfef7252b6089606eafc71f1ef7110942204248292904653629fc9f0fcdf",
+      "bytes": 128
+    },
+    "kit": {
+      "exact": false,
+      "expected_sha256": "1f0a142cf1d31cb075544e9fe257c0695dd888bdee326f8c0ec74bd4dd3b38c6",
+      "actual_sha256": "4250ee527655f5baa668f09d508959b8e81edea279a87145e10ff3fe12ce9d12",
+      "bytes": 1632
+    }
+  },
+  "residents_after": {
+    "blank": {
+      "exact": false,
+      "expected_sha256": "66687aadf862bd776c8fc18b8e9f8e20089714856ee233b3902a591d0d5f2925",
+      "actual_sha256": "8acc9cfe50f5a2743efe148baa155f3c7613c28cf4d3ce2a4033c3b75fa18fdf",
+      "bytes": 32
+    },
+    "hud": {
+      "exact": false,
+      "expected_sha256": "815b61200b6f079ab940d2c74b6399afe73a93bd88a0a8b6833d2f58e1b0b922",
+      "actual_sha256": "e9b6cfef7252b6089606eafc71f1ef7110942204248292904653629fc9f0fcdf",
+      "bytes": 128
+    },
+    "kit": {
+      "exact": false,
+      "expected_sha256": "1f0a142cf1d31cb075544e9fe257c0695dd888bdee326f8c0ec74bd4dd3b38c6",
+      "actual_sha256": "4250ee527655f5baa668f09d508959b8e81edea279a87145e10ff3fe12ce9d12",
+      "bytes": 1632
+    }
+  },
+  "room_survey": [],
+  "resources_before": {
+    "alloc_failures": 0,
+    "next_tile": 346,
+    "world_tile_limit": 876,
+    "oam_count": 4,
+    "world_oam": [
+      {
+        "i": 3,
+        "x": 140,
+        "y": 46,
+        "tile": 314,
+        "priority": 2,
+        "palette": 4,
+        "shape": 2,
+        "size": 3
+      }
+    ]
+  },
+  "resources_after": {
+    "alloc_failures": 0,
+    "next_tile": 458,
+    "world_tile_limit": 876,
+    "oam_count": 4,
+    "world_oam": [
+      {
+        "i": 3,
+        "x": 156,
+        "y": 46,
+        "tile": 314,
+        "priority": 2,
+        "palette": 4,
+        "shape": 2,
+        "size": 3
+      }
+    ]
+  },
+  "ground_before": {
+    "area": 3,
+    "sha256": "fcba479a1d91a44f0739676486ed9685577647a723880173ebe912c0b0689c55",
+    "bytes": 32768,
+    "excluded_animated_ranges": [
+      [
+        2432,
+        2560
+      ],
+      [
+        2560,
+        2688
+      ],
+      [
+        5632,
+        5760
+      ],
+      [
+        22080,
+        22208
+      ],
+      [
+        22208,
+        22336
+      ],
+      [
+        22336,
+        22464
+      ],
+      [
+        22464,
+        22592
+      ],
+      [
+        22592,
+        22720
+      ],
+      [
+        22720,
+        22848
+      ],
+      [
+        22848,
+        22976
+      ],
+      [
+        22976,
+        23104
+      ],
+      [
+        23104,
+        23232
+      ],
+      [
+        23232,
+        23360
+      ],
+      [
+        23360,
+        23488
+      ],
+      [
+        23488,
+        23616
+      ],
+      [
+        23616,
+        23744
+      ]
+    ]
+  },
+  "forest": null,
+  "checks": [
+    {
+      "name": "resident blank, heart and UI tiles match ROM before pause",
+      "passed": true,
+      "observed": {
+        "blank": {
+          "exact": true,
+          "expected_sha256": "66687aadf862bd776c8fc18b8e9f8e20089714856ee233b3902a591d0d5f2925",
+          "actual_sha256": "66687aadf862bd776c8fc18b8e9f8e20089714856ee233b3902a591d0d5f2925",
+          "bytes": 32
+        },
+        "hud": {
+          "exact": true,
+          "expected_sha256": "815b61200b6f079ab940d2c74b6399afe73a93bd88a0a8b6833d2f58e1b0b922",
+          "actual_sha256": "815b61200b6f079ab940d2c74b6399afe73a93bd88a0a8b6833d2f58e1b0b922",
+          "bytes": 128
+        },
+        "kit": {
+          "exact": true,
+          "expected_sha256": "1f0a142cf1d31cb075544e9fe257c0695dd888bdee326f8c0ec74bd4dd3b38c6",
+          "actual_sha256": "1f0a142cf1d31cb075544e9fe257c0695dd888bdee326f8c0ec74bd4dd3b38c6",
+          "bytes": 1632
+        }
+      }
+    },
+    {
+      "name": "atlas zoom preserves physical game state",
+      "passed": true,
+      "observed": null
+    },
+    {
+      "name": "atlas-to-Satchel preserves actors, inventory and progression",
+      "passed": true,
+      "observed": null
+    },
+    {
+      "name": "baseline reproduces corrupted BG0 resident tiles on Satchel return",
+      "passed": true,
+      "observed": {
+        "blank": {
+          "exact": false,
+          "expected_sha256": "66687aadf862bd776c8fc18b8e9f8e20089714856ee233b3902a591d0d5f2925",
+          "actual_sha256": "8acc9cfe50f5a2743efe148baa155f3c7613c28cf4d3ce2a4033c3b75fa18fdf",
+          "bytes": 32
+        },
+        "hud": {
+          "exact": false,
+          "expected_sha256": "815b61200b6f079ab940d2c74b6399afe73a93bd88a0a8b6833d2f58e1b0b922",
+          "actual_sha256": "e9b6cfef7252b6089606eafc71f1ef7110942204248292904653629fc9f0fcdf",
+          "bytes": 128
+        },
+        "kit": {
+          "exact": false,
+          "expected_sha256": "1f0a142cf1d31cb075544e9fe257c0695dd888bdee326f8c0ec74bd4dd3b38c6",
+          "actual_sha256": "4250ee527655f5baa668f09d508959b8e81edea279a87145e10ff3fe12ce9d12",
+          "bytes": 1632
+        }
+      }
+    },
+    {
+      "name": "pause round trip returns to living Cream gameplay",
+      "passed": true,
+      "observed": null
+    },
+    {
+      "name": "baseline reproduces persistent corrupted HUD/UI bytes after close",
+      "passed": true,
+      "observed": {
+        "blank": {
+          "exact": false,
+          "expected_sha256": "66687aadf862bd776c8fc18b8e9f8e20089714856ee233b3902a591d0d5f2925",
+          "actual_sha256": "8acc9cfe50f5a2743efe148baa155f3c7613c28cf4d3ce2a4033c3b75fa18fdf",
+          "bytes": 32
+        },
+        "hud": {
+          "exact": false,
+          "expected_sha256": "815b61200b6f079ab940d2c74b6399afe73a93bd88a0a8b6833d2f58e1b0b922",
+          "actual_sha256": "e9b6cfef7252b6089606eafc71f1ef7110942204248292904653629fc9f0fcdf",
+          "bytes": 128
+        },
+        "kit": {
+          "exact": false,
+          "expected_sha256": "1f0a142cf1d31cb075544e9fe257c0695dd888bdee326f8c0ec74bd4dd3b38c6",
+          "actual_sha256": "4250ee527655f5baa668f09d508959b8e81edea279a87145e10ff3fe12ce9d12",
+          "bytes": 1632
+        }
+      }
+    }
+  ],
+  "complete": true
+}

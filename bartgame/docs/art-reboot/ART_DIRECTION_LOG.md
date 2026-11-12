@@ -2173,3 +2173,12 @@ possessions: 129 have acquisition/state paths; 10 visible legacy entries have no
 current award route. Seven hidden helpers and Fleet's separate effect bit are
 documented in [the catalogue](../items/PLAYER_ITEM_CATALOG.md). Native
 before/after evidence and final build identity accompany the repair gallery.
+
+Completed verification: source `9080b7e1`, ROM `9b3c24cf…a5f5f`, passes all
+30 focused native mGBA checks and 40 actual-C host inventory checks. The native
+test naturally awards three items, verifies first-pause visibility and A/B/L
+equipment, surveys 25 Cream rooms and checks exact shared-graphics restoration
+through Cream, Drain and Forest. Larger inventory pagination uses disclosed
+host fixtures. Generated artwork is byte-for-byte unchanged. See the
+[repair gallery](../../../pause-repair-review/README.md) for real before/after
+frames, limits, provenance and the fixed ROM.

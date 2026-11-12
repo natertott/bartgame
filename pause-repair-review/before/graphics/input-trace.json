@@ -1,0 +1,7603 @@
+{
+  "source_commit": "48a39a9a1c0dc3fe1a0eb4fa563219eab0d104f6",
+  "rom_sha256": "98d1dce7d1fa78d64a537688d44872b78e9a012585584081820a23edb2f9842e",
+  "support_sha256": "5c2dfee98c73847e83d5ebfb950ee6642af032dcf14531743347659c4ad9eea0",
+  "emulator": "mGBA0.10.5",
+  "fixtures": [
+    {
+      "kind": "title seed",
+      "value": 1
+    },
+    {
+      "kind": "hero position/facing navigation",
+      "x": 312,
+      "y": 94,
+      "facing": 0,
+      "before": {
+        "frames": 274,
+        "clock": 263,
+        "run_frames": 173,
+        "state": 1,
+        "area": 0,
+        "cell": 0,
+        "node": 46,
+        "actor": {
+          "kind": 1,
+          "type": 0,
+          "state": 0,
+          "timer": 0,
+          "x": 200,
+          "y": 270,
+          "z": 0,
+          "speed": 0,
+          "hp": 0,
+          "coll": 0,
+          "facing": 0
+        },
+        "health": [
+          24,
+          24
+        ],
+        "text": 0,
+        "camera": [
+          80,
+          160
+        ]
+      }
+    },
+    {
+      "kind": "hero position/facing navigation",
+      "x": 72,
+      "y": 350,
+      "facing": 0,
+      "before": {
+        "frames": 360,
+        "clock": 349,
+        "run_frames": 214,
+        "state": 1,
+        "area": 3,
+        "cell": 23,
+        "node": 46,
+        "actor": {
+          "kind": 1,
+          "type": 0,
+          "state": 0,
+          "timer": 0,
+          "x": 400,
+          "y": 350,
+          "z": 0,
+          "speed": 0,
+          "hp": 0,
+          "coll": 0,
+          "facing": 0
+        },
+        "health": [
+          24,
+          24
+        ],
+        "text": 0,
+        "camera": [
+          272,
+          224
+        ]
+      }
+    }
+  ],
+  "harness_source_sha256": {
+    "cream_art_study_audit.py": "b711cf40f7916bbc305f091b3094c035d7866a6fb98b235ee93f8bef3769966c",
+    "cream_art_study_capture.py": "ca462f6c43217b1ba253e919594f1d2c66980c15f56fd8ebfdfe73aaf5bc7646",
+    "cream_depth_audit.py": "51e8b1b57030cad7007e71bc17f1a666164f23c733986282ccc1fb0847e8591a",
+    "cream_depth_capture.py": "812d8c1d0c7d09b9bffcfba191bf999b22f9a3eca1e128f6ab9ac6a493236c1a",
+    "cream_dynamic_audit.py": "314909fc5071e7095298273fbb1c82bb700a0b6d718e4dddae2fe510c4c51da1",
+    "cream_dynamic_capture.py": "90b1a2acf9aaa81b03cdc87b9408278be9018d1e750a564cf1d59a5f745e12d5",
+    "cream_graph_review.py": "8c2a7fe9fef24552c67a009c25ff44f8d304933d196498dc994b8674a0f4153d",
+    "cream_polish_audit.py": "2cdec66071c3d32be9b6ca14e209e39eb0ee3a5d11d7169b24aed154cc9f86a5",
+    "cream_polish_capture.py": "a02e2089d7ac6549a136491ae2b67c633d7783d9feeed5e57baa2b47d1e1f125",
+    "pause_inventory_capture.py": "d2613383ff5c0bf17aea0d9e6e00b27cab2d50b10c3e78aa2ad4286c3beaf26c",
+    "probe.py": "63133cd3241804ed11e5673505a9609b6fa33f24a1c7f61a4ea79dad1c535f75",
+    "regional_native_support.py": "5c2dfee98c73847e83d5ebfb950ee6642af032dcf14531743347659c4ad9eea0",
+    "sewer_concept_audit.py": "d975c773dfa1ba641169b30fa42128b2a6671d1f1f90ce3fb99b16c4a06d76c5"
+  },
+  "input_method": "Actual real keys plus individually disclosed seed, position/facing, room-load and registered-renderer fixtures.",
+  "inputs": [
+    {
+      "keys": [
+        "START"
+      ],
+      "frames": 2,
+      "initial": {
+        "physical_frames": 30,
+        "state": 0,
+        "area": 0,
+        "cell": 0,
+        "actor": {
+          "kind": 0,
+          "type": 0,
+          "state": 0,
+          "timer": 0,
+          "x": 0,
+          "y": 0,
+          "z": 0,
+          "speed": 0,
+          "hp": 0,
+          "coll": 0,
+          "facing": 0
+        },
+        "health": [
+          0,
+          0
+        ],
+        "text": 0,
+        "starting_draft": 0,
+        "draft": {
+          "round": 0,
+          "state": 0,
+          "options": [
+            0,
+            0,
+            0
+          ]
+        }
+      },
+      "final": {
+        "physical_frames": 32,
+        "state": 0,
+        "area": 0,
+        "cell": 0,
+        "actor": {
+          "kind": 0,
+          "type": 0,
+          "state": 0,
+          "timer": 0,
+          "x": 0,
+          "y": 0,
+          "z": 0,
+          "speed": 0,
+          "hp": 0,
+          "coll": 0,
+          "facing": 0
+        },
+        "health": [
+          0,
+          0
+        ],
+        "text": 0,
+        "starting_draft": 0,
+        "draft": {
+          "round": 0,
+          "state": 0,
+          "options": [
+            0,
+            0,
+            0
+          ]
+        }
+      }
+    },
+    {
+      "keys": [],
+      "frames": 44,
+      "initial": {
+        "physical_frames": 32,
+        "state": 0,
+        "area": 0,
+        "cell": 0,
+        "actor": {
+          "kind": 0,
+          "type": 0,
+          "state": 0,
+          "timer": 0,
+          "x": 0,
+          "y": 0,
+          "z": 0,
+          "speed": 0,
+          "hp": 0,
+          "coll": 0,
+          "facing": 0
+        },
+        "health": [
+          0,
+          0
+        ],
+        "text": 0,
+        "starting_draft": 0,
+        "draft": {
+          "round": 0,
+          "state": 0,
+          "options": [
+            0,
+            0,
+            0
+          ]
+        }
+      },
+      "final": {
+        "physical_frames": 76,
+        "state": 1,
+        "area": 0,
+        "cell": 0,
+        "actor": {
+          "kind": 1,
+          "type": 0,
+          "state": 0,
+          "timer": 0,
+          "x": 200,
+          "y": 270,
+          "z": 0,
+          "speed": 0,
+          "hp": 0,
+          "coll": 0,
+          "facing": 0
+        },
+        "health": [
+          24,
+          24
+        ],
+        "text": 1,
+        "starting_draft": 1,
+        "draft": {
+          "round": 0,
+          "state": 0,
+          "options": [
+            0,
+            0,
+            0
+          ]
+        }
+      }
+    },
+    {
+      "keys": [
+        "A"
+      ],
+      "frames": 2,
+      "initial": {
+        "physical_frames": 76,
+        "state": 1,
+        "area": 0,
+        "cell": 0,
+        "actor": {
+          "kind": 1,
+          "type": 0,
+          "state": 0,
+          "timer": 0,
+          "x": 200,
+          "y": 270,
+          "z": 0,
+          "speed": 0,
+          "hp": 0,
+          "coll": 0,
+          "facing": 0
+        },
+        "health": [
+          24,
+          24
+        ],
+        "text": 1,
+        "starting_draft": 1,
+        "draft": {
+          "round": 0,
+          "state": 0,
+          "options": [
+            0,
+            0,
+            0
+          ]
+        }
+      },
+      "final": {
+        "physical_frames": 78,
+        "state": 1,
+        "area": 0,
+        "cell": 0,
+        "actor": {
+          "kind": 1,
+          "type": 0,
+          "state": 0,
+          "timer": 0,
+          "x": 200,
+          "y": 270,
+          "z": 0,
+          "speed": 0,
+          "hp": 0,
+          "coll": 0,
+          "facing": 0
+        },
+        "health": [
+          24,
+          24
+        ],
+        "text": 1,
+        "starting_draft": 1,
+        "draft": {
+          "round": 0,
+          "state": 0,
+          "options": [
+            0,
+            0,
+            0
+          ]
+        }
+      }
+    },
+    {
+      "keys": [],
+      "frames": 8,
+      "initial": {
+        "physical_frames": 78,
+        "state": 1,
+        "area": 0,
+        "cell": 0,
+        "actor": {
+          "kind": 1,
+          "type": 0,
+          "state": 0,
+          "timer": 0,
+          "x": 200,
+          "y": 270,
+          "z": 0,
+          "speed": 0,
+          "hp": 0,
+          "coll": 0,
+          "facing": 0
+        },
+        "health": [
+          24,
+          24
+        ],
+        "text": 1,
+        "starting_draft": 1,
+        "draft": {
+          "round": 0,
+          "state": 0,
+          "options": [
+            0,
+            0,
+            0
+          ]
+        }
+      },
+      "final": {
+        "physical_frames": 86,
+        "state": 1,
+        "area": 0,
+        "cell": 0,
+        "actor": {
+          "kind": 1,
+          "type": 0,
+          "state": 0,
+          "timer": 0,
+          "x": 200,
+          "y": 270,
+          "z": 0,
+          "speed": 0,
+          "hp": 0,
+          "coll": 0,
+          "facing": 0
+        },
+        "health": [
+          24,
+          24
+        ],
+        "text": 1,
+        "starting_draft": 1,
+        "draft": {
+          "round": 0,
+          "state": 0,
+          "options": [
+            0,
+            0,
+            0
+          ]
+        }
+      }
+    },
+    {
+      "keys": [
+        "A"
+      ],
+      "frames": 2,
+      "initial": {
+        "physical_frames": 86,
+        "state": 1,
+        "area": 0,
+        "cell": 0,
+        "actor": {
+          "kind": 1,
+          "type": 0,
+          "state": 0,
+          "timer": 0,
+          "x": 200,
+          "y": 270,
+          "z": 0,
+          "speed": 0,
+          "hp": 0,
+          "coll": 0,
+          "facing": 0
+        },
+        "health": [
+          24,
+          24
+        ],
+        "text": 1,
+        "starting_draft": 1,
+        "draft": {
+          "round": 0,
+          "state": 0,
+          "options": [
+            0,
+            0,
+            0
+          ]
+        }
+      },
+      "final": {
+        "physical_frames": 88,
+        "state": 1,
+        "area": 0,
+        "cell": 0,
+        "actor": {
+          "kind": 1,
+          "type": 0,
+          "state": 0,
+          "timer": 0,
+          "x": 200,
+          "y": 270,
+          "z": 0,
+          "speed": 0,
+          "hp": 0,
+          "coll": 0,
+          "facing": 0
+        },
+        "health": [
+          24,
+          24
+        ],
+        "text": 1,
+        "starting_draft": 1,
+        "draft": {
+          "round": 0,
+          "state": 0,
+          "options": [
+            0,
+            0,
+            0
+          ]
+        }
+      }
+    },
+    {
+      "keys": [],
+      "frames": 8,
+      "initial": {
+        "physical_frames": 88,
+        "state": 1,
+        "area": 0,
+        "cell": 0,
+        "actor": {
+          "kind": 1,
+          "type": 0,
+          "state": 0,
+          "timer": 0,
+          "x": 200,
+          "y": 270,
+          "z": 0,
+          "speed": 0,
+          "hp": 0,
+          "coll": 0,
+          "facing": 0
+        },
+        "health": [
+          24,
+          24
+        ],
+        "text": 1,
+        "starting_draft": 1,
+        "draft": {
+          "round": 0,
+          "state": 0,
+          "options": [
+            0,
+            0,
+            0
+          ]
+        }
+      },
+      "final": {
+        "physical_frames": 96,
+        "state": 1,
+        "area": 0,
+        "cell": 0,
+        "actor": {
+          "kind": 1,
+          "type": 0,
+          "state": 0,
+          "timer": 0,
+          "x": 200,
+          "y": 270,
+          "z": 0,
+          "speed": 0,
+          "hp": 0,
+          "coll": 0,
+          "facing": 0
+        },
+        "health": [
+          24,
+          24
+        ],
+        "text": 1,
+        "starting_draft": 1,
+        "draft": {
+          "round": 0,
+          "state": 0,
+          "options": [
+            0,
+            0,
+            0
+          ]
+        }
+      }
+    },
+    {
+      "keys": [
+        "A"
+      ],
+      "frames": 2,
+      "initial": {
+        "physical_frames": 96,
+        "state": 1,
+        "area": 0,
+        "cell": 0,
+        "actor": {
+          "kind": 1,
+          "type": 0,
+          "state": 0,
+          "timer": 0,
+          "x": 200,
+          "y": 270,
+          "z": 0,
+          "speed": 0,
+          "hp": 0,
+          "coll": 0,
+          "facing": 0
+        },
+        "health": [
+          24,
+          24
+        ],
+        "text": 1,
+        "starting_draft": 1,
+        "draft": {
+          "round": 0,
+          "state": 0,
+          "options": [
+            0,
+            0,
+            0
+          ]
+        }
+      },
+      "final": {
+        "physical_frames": 98,
+        "state": 1,
+        "area": 0,
+        "cell": 0,
+        "actor": {
+          "kind": 1,
+          "type": 0,
+          "state": 0,
+          "timer": 0,
+          "x": 200,
+          "y": 270,
+          "z": 0,
+          "speed": 0,
+          "hp": 0,
+          "coll": 0,
+          "facing": 0
+        },
+        "health": [
+          24,
+          24
+        ],
+        "text": 1,
+        "starting_draft": 1,
+        "draft": {
+          "round": 0,
+          "state": 0,
+          "options": [
+            0,
+            0,
+            0
+          ]
+        }
+      }
+    },
+    {
+      "keys": [],
+      "frames": 8,
+      "initial": {
+        "physical_frames": 98,
+        "state": 1,
+        "area": 0,
+        "cell": 0,
+        "actor": {
+          "kind": 1,
+          "type": 0,
+          "state": 0,
+          "timer": 0,
+          "x": 200,
+          "y": 270,
+          "z": 0,
+          "speed": 0,
+          "hp": 0,
+          "coll": 0,
+          "facing": 0
+        },
+        "health": [
+          24,
+          24
+        ],
+        "text": 1,
+        "starting_draft": 1,
+        "draft": {
+          "round": 0,
+          "state": 0,
+          "options": [
+            0,
+            0,
+            0
+          ]
+        }
+      },
+      "final": {
+        "physical_frames": 106,
+        "state": 1,
+        "area": 0,
+        "cell": 0,
+        "actor": {
+          "kind": 1,
+          "type": 0,
+          "state": 0,
+          "timer": 0,
+          "x": 200,
+          "y": 270,
+          "z": 0,
+          "speed": 0,
+          "hp": 0,
+          "coll": 0,
+          "facing": 0
+        },
+        "health": [
+          24,
+          24
+        ],
+        "text": 1,
+        "starting_draft": 1,
+        "draft": {
+          "round": 0,
+          "state": 0,
+          "options": [
+            0,
+            0,
+            0
+          ]
+        }
+      }
+    },
+    {
+      "keys": [
+        "A"
+      ],
+      "frames": 2,
+      "initial": {
+        "physical_frames": 106,
+        "state": 1,
+        "area": 0,
+        "cell": 0,
+        "actor": {
+          "kind": 1,
+          "type": 0,
+          "state": 0,
+          "timer": 0,
+          "x": 200,
+          "y": 270,
+          "z": 0,
+          "speed": 0,
+          "hp": 0,
+          "coll": 0,
+          "facing": 0
+        },
+        "health": [
+          24,
+          24
+        ],
+        "text": 1,
+        "starting_draft": 1,
+        "draft": {
+          "round": 0,
+          "state": 0,
+          "options": [
+            0,
+            0,
+            0
+          ]
+        }
+      },
+      "final": {
+        "physical_frames": 108,
+        "state": 1,
+        "area": 0,
+        "cell": 0,
+        "actor": {
+          "kind": 1,
+          "type": 0,
+          "state": 0,
+          "timer": 0,
+          "x": 200,
+          "y": 270,
+          "z": 0,
+          "speed": 0,
+          "hp": 0,
+          "coll": 0,
+          "facing": 0
+        },
+        "health": [
+          24,
+          24
+        ],
+        "text": 1,
+        "starting_draft": 1,
+        "draft": {
+          "round": 0,
+          "state": 0,
+          "options": [
+            0,
+            0,
+            0
+          ]
+        }
+      }
+    },
+    {
+      "keys": [],
+      "frames": 8,
+      "initial": {
+        "physical_frames": 108,
+        "state": 1,
+        "area": 0,
+        "cell": 0,
+        "actor": {
+          "kind": 1,
+          "type": 0,
+          "state": 0,
+          "timer": 0,
+          "x": 200,
+          "y": 270,
+          "z": 0,
+          "speed": 0,
+          "hp": 0,
+          "coll": 0,
+          "facing": 0
+        },
+        "health": [
+          24,
+          24
+        ],
+        "text": 1,
+        "starting_draft": 1,
+        "draft": {
+          "round": 0,
+          "state": 0,
+          "options": [
+            0,
+            0,
+            0
+          ]
+        }
+      },
+      "final": {
+        "physical_frames": 116,
+        "state": 1,
+        "area": 0,
+        "cell": 0,
+        "actor": {
+          "kind": 1,
+          "type": 0,
+          "state": 0,
+          "timer": 0,
+          "x": 200,
+          "y": 270,
+          "z": 0,
+          "speed": 0,
+          "hp": 0,
+          "coll": 0,
+          "facing": 0
+        },
+        "health": [
+          24,
+          24
+        ],
+        "text": 1,
+        "starting_draft": 1,
+        "draft": {
+          "round": 0,
+          "state": 0,
+          "options": [
+            0,
+            0,
+            0
+          ]
+        }
+      }
+    },
+    {
+      "keys": [
+        "A"
+      ],
+      "frames": 2,
+      "initial": {
+        "physical_frames": 116,
+        "state": 1,
+        "area": 0,
+        "cell": 0,
+        "actor": {
+          "kind": 1,
+          "type": 0,
+          "state": 0,
+          "timer": 0,
+          "x": 200,
+          "y": 270,
+          "z": 0,
+          "speed": 0,
+          "hp": 0,
+          "coll": 0,
+          "facing": 0
+        },
+        "health": [
+          24,
+          24
+        ],
+        "text": 1,
+        "starting_draft": 1,
+        "draft": {
+          "round": 0,
+          "state": 0,
+          "options": [
+            0,
+            0,
+            0
+          ]
+        }
+      },
+      "final": {
+        "physical_frames": 118,
+        "state": 1,
+        "area": 0,
+        "cell": 0,
+        "actor": {
+          "kind": 1,
+          "type": 0,
+          "state": 0,
+          "timer": 0,
+          "x": 200,
+          "y": 270,
+          "z": 0,
+          "speed": 0,
+          "hp": 0,
+          "coll": 0,
+          "facing": 0
+        },
+        "health": [
+          24,
+          24
+        ],
+        "text": 1,
+        "starting_draft": 1,
+        "draft": {
+          "round": 0,
+          "state": 0,
+          "options": [
+            0,
+            0,
+            0
+          ]
+        }
+      }
+    },
+    {
+      "keys": [],
+      "frames": 8,
+      "initial": {
+        "physical_frames": 118,
+        "state": 1,
+        "area": 0,
+        "cell": 0,
+        "actor": {
+          "kind": 1,
+          "type": 0,
+          "state": 0,
+          "timer": 0,
+          "x": 200,
+          "y": 270,
+          "z": 0,
+          "speed": 0,
+          "hp": 0,
+          "coll": 0,
+          "facing": 0
+        },
+        "health": [
+          24,
+          24
+        ],
+        "text": 1,
+        "starting_draft": 1,
+        "draft": {
+          "round": 0,
+          "state": 0,
+          "options": [
+            0,
+            0,
+            0
+          ]
+        }
+      },
+      "final": {
+        "physical_frames": 126,
+        "state": 1,
+        "area": 0,
+        "cell": 0,
+        "actor": {
+          "kind": 1,
+          "type": 0,
+          "state": 0,
+          "timer": 0,
+          "x": 200,
+          "y": 270,
+          "z": 0,
+          "speed": 0,
+          "hp": 0,
+          "coll": 0,
+          "facing": 0
+        },
+        "health": [
+          24,
+          24
+        ],
+        "text": 1,
+        "starting_draft": 1,
+        "draft": {
+          "round": 0,
+          "state": 0,
+          "options": [
+            0,
+            0,
+            0
+          ]
+        }
+      }
+    },
+    {
+      "keys": [
+        "A"
+      ],
+      "frames": 2,
+      "initial": {
+        "physical_frames": 126,
+        "state": 1,
+        "area": 0,
+        "cell": 0,
+        "actor": {
+          "kind": 1,
+          "type": 0,
+          "state": 0,
+          "timer": 0,
+          "x": 200,
+          "y": 270,
+          "z": 0,
+          "speed": 0,
+          "hp": 0,
+          "coll": 0,
+          "facing": 0
+        },
+        "health": [
+          24,
+          24
+        ],
+        "text": 1,
+        "starting_draft": 1,
+        "draft": {
+          "round": 0,
+          "state": 0,
+          "options": [
+            0,
+            0,
+            0
+          ]
+        }
+      },
+      "final": {
+        "physical_frames": 128,
+        "state": 1,
+        "area": 0,
+        "cell": 0,
+        "actor": {
+          "kind": 1,
+          "type": 0,
+          "state": 0,
+          "timer": 0,
+          "x": 200,
+          "y": 270,
+          "z": 0,
+          "speed": 0,
+          "hp": 0,
+          "coll": 0,
+          "facing": 0
+        },
+        "health": [
+          24,
+          24
+        ],
+        "text": 1,
+        "starting_draft": 1,
+        "draft": {
+          "round": 0,
+          "state": 0,
+          "options": [
+            0,
+            0,
+            0
+          ]
+        }
+      }
+    },
+    {
+      "keys": [],
+      "frames": 8,
+      "initial": {
+        "physical_frames": 128,
+        "state": 1,
+        "area": 0,
+        "cell": 0,
+        "actor": {
+          "kind": 1,
+          "type": 0,
+          "state": 0,
+          "timer": 0,
+          "x": 200,
+          "y": 270,
+          "z": 0,
+          "speed": 0,
+          "hp": 0,
+          "coll": 0,
+          "facing": 0
+        },
+        "health": [
+          24,
+          24
+        ],
+        "text": 1,
+        "starting_draft": 1,
+        "draft": {
+          "round": 0,
+          "state": 0,
+          "options": [
+            0,
+            0,
+            0
+          ]
+        }
+      },
+      "final": {
+        "physical_frames": 136,
+        "state": 1,
+        "area": 0,
+        "cell": 0,
+        "actor": {
+          "kind": 1,
+          "type": 0,
+          "state": 0,
+          "timer": 0,
+          "x": 200,
+          "y": 270,
+          "z": 0,
+          "speed": 0,
+          "hp": 0,
+          "coll": 0,
+          "facing": 0
+        },
+        "health": [
+          24,
+          24
+        ],
+        "text": 1,
+        "starting_draft": 1,
+        "draft": {
+          "round": 0,
+          "state": 0,
+          "options": [
+            0,
+            0,
+            0
+          ]
+        }
+      }
+    },
+    {
+      "keys": [
+        "A"
+      ],
+      "frames": 2,
+      "initial": {
+        "physical_frames": 136,
+        "state": 1,
+        "area": 0,
+        "cell": 0,
+        "actor": {
+          "kind": 1,
+          "type": 0,
+          "state": 0,
+          "timer": 0,
+          "x": 200,
+          "y": 270,
+          "z": 0,
+          "speed": 0,
+          "hp": 0,
+          "coll": 0,
+          "facing": 0
+        },
+        "health": [
+          24,
+          24
+        ],
+        "text": 1,
+        "starting_draft": 1,
+        "draft": {
+          "round": 0,
+          "state": 0,
+          "options": [
+            0,
+            0,
+            0
+          ]
+        }
+      },
+      "final": {
+        "physical_frames": 138,
+        "state": 1,
+        "area": 0,
+        "cell": 0,
+        "actor": {
+          "kind": 1,
+          "type": 0,
+          "state": 0,
+          "timer": 0,
+          "x": 200,
+          "y": 270,
+          "z": 0,
+          "speed": 0,
+          "hp": 0,
+          "coll": 0,
+          "facing": 0
+        },
+        "health": [
+          24,
+          24
+        ],
+        "text": 1,
+        "starting_draft": 1,
+        "draft": {
+          "round": 0,
+          "state": 0,
+          "options": [
+            0,
+            0,
+            0
+          ]
+        }
+      }
+    },
+    {
+      "keys": [],
+      "frames": 8,
+      "initial": {
+        "physical_frames": 138,
+        "state": 1,
+        "area": 0,
+        "cell": 0,
+        "actor": {
+          "kind": 1,
+          "type": 0,
+          "state": 0,
+          "timer": 0,
+          "x": 200,
+          "y": 270,
+          "z": 0,
+          "speed": 0,
+          "hp": 0,
+          "coll": 0,
+          "facing": 0
+        },
+        "health": [
+          24,
+          24
+        ],
+        "text": 1,
+        "starting_draft": 1,
+        "draft": {
+          "round": 0,
+          "state": 0,
+          "options": [
+            0,
+            0,
+            0
+          ]
+        }
+      },
+      "final": {
+        "physical_frames": 146,
+        "state": 1,
+        "area": 0,
+        "cell": 0,
+        "actor": {
+          "kind": 1,
+          "type": 0,
+          "state": 0,
+          "timer": 0,
+          "x": 200,
+          "y": 270,
+          "z": 0,
+          "speed": 0,
+          "hp": 0,
+          "coll": 0,
+          "facing": 0
+        },
+        "health": [
+          24,
+          24
+        ],
+        "text": 1,
+        "starting_draft": 1,
+        "draft": {
+          "round": 0,
+          "state": 0,
+          "options": [
+            0,
+            0,
+            0
+          ]
+        }
+      }
+    },
+    {
+      "keys": [
+        "A"
+      ],
+      "frames": 2,
+      "initial": {
+        "physical_frames": 146,
+        "state": 1,
+        "area": 0,
+        "cell": 0,
+        "actor": {
+          "kind": 1,
+          "type": 0,
+          "state": 0,
+          "timer": 0,
+          "x": 200,
+          "y": 270,
+          "z": 0,
+          "speed": 0,
+          "hp": 0,
+          "coll": 0,
+          "facing": 0
+        },
+        "health": [
+          24,
+          24
+        ],
+        "text": 1,
+        "starting_draft": 1,
+        "draft": {
+          "round": 0,
+          "state": 0,
+          "options": [
+            0,
+            0,
+            0
+          ]
+        }
+      },
+      "final": {
+        "physical_frames": 148,
+        "state": 1,
+        "area": 0,
+        "cell": 0,
+        "actor": {
+          "kind": 1,
+          "type": 0,
+          "state": 0,
+          "timer": 0,
+          "x": 200,
+          "y": 270,
+          "z": 0,
+          "speed": 0,
+          "hp": 0,
+          "coll": 0,
+          "facing": 0
+        },
+        "health": [
+          24,
+          24
+        ],
+        "text": 1,
+        "starting_draft": 1,
+        "draft": {
+          "round": 0,
+          "state": 0,
+          "options": [
+            0,
+            0,
+            0
+          ]
+        }
+      }
+    },
+    {
+      "keys": [],
+      "frames": 8,
+      "initial": {
+        "physical_frames": 148,
+        "state": 1,
+        "area": 0,
+        "cell": 0,
+        "actor": {
+          "kind": 1,
+          "type": 0,
+          "state": 0,
+          "timer": 0,
+          "x": 200,
+          "y": 270,
+          "z": 0,
+          "speed": 0,
+          "hp": 0,
+          "coll": 0,
+          "facing": 0
+        },
+        "health": [
+          24,
+          24
+        ],
+        "text": 1,
+        "starting_draft": 1,
+        "draft": {
+          "round": 0,
+          "state": 0,
+          "options": [
+            0,
+            0,
+            0
+          ]
+        }
+      },
+      "final": {
+        "physical_frames": 156,
+        "state": 1,
+        "area": 0,
+        "cell": 0,
+        "actor": {
+          "kind": 1,
+          "type": 0,
+          "state": 0,
+          "timer": 0,
+          "x": 200,
+          "y": 270,
+          "z": 0,
+          "speed": 0,
+          "hp": 0,
+          "coll": 0,
+          "facing": 0
+        },
+        "health": [
+          24,
+          24
+        ],
+        "text": 1,
+        "starting_draft": 1,
+        "draft": {
+          "round": 0,
+          "state": 0,
+          "options": [
+            0,
+            0,
+            0
+          ]
+        }
+      }
+    },
+    {
+      "keys": [
+        "A"
+      ],
+      "frames": 2,
+      "initial": {
+        "physical_frames": 156,
+        "state": 1,
+        "area": 0,
+        "cell": 0,
+        "actor": {
+          "kind": 1,
+          "type": 0,
+          "state": 0,
+          "timer": 0,
+          "x": 200,
+          "y": 270,
+          "z": 0,
+          "speed": 0,
+          "hp": 0,
+          "coll": 0,
+          "facing": 0
+        },
+        "health": [
+          24,
+          24
+        ],
+        "text": 1,
+        "starting_draft": 1,
+        "draft": {
+          "round": 0,
+          "state": 0,
+          "options": [
+            0,
+            0,
+            0
+          ]
+        }
+      },
+      "final": {
+        "physical_frames": 158,
+        "state": 1,
+        "area": 0,
+        "cell": 0,
+        "actor": {
+          "kind": 1,
+          "type": 0,
+          "state": 0,
+          "timer": 0,
+          "x": 200,
+          "y": 270,
+          "z": 0,
+          "speed": 0,
+          "hp": 0,
+          "coll": 0,
+          "facing": 0
+        },
+        "health": [
+          24,
+          24
+        ],
+        "text": 0,
+        "starting_draft": 1,
+        "draft": {
+          "round": 0,
+          "state": 1,
+          "options": [
+            7,
+            19,
+            20
+          ]
+        }
+      }
+    },
+    {
+      "keys": [],
+      "frames": 8,
+      "initial": {
+        "physical_frames": 158,
+        "state": 1,
+        "area": 0,
+        "cell": 0,
+        "actor": {
+          "kind": 1,
+          "type": 0,
+          "state": 0,
+          "timer": 0,
+          "x": 200,
+          "y": 270,
+          "z": 0,
+          "speed": 0,
+          "hp": 0,
+          "coll": 0,
+          "facing": 0
+        },
+        "health": [
+          24,
+          24
+        ],
+        "text": 0,
+        "starting_draft": 1,
+        "draft": {
+          "round": 0,
+          "state": 1,
+          "options": [
+            7,
+            19,
+            20
+          ]
+        }
+      },
+      "final": {
+        "physical_frames": 166,
+        "state": 1,
+        "area": 0,
+        "cell": 0,
+        "actor": {
+          "kind": 1,
+          "type": 0,
+          "state": 0,
+          "timer": 0,
+          "x": 200,
+          "y": 270,
+          "z": 0,
+          "speed": 0,
+          "hp": 0,
+          "coll": 0,
+          "facing": 0
+        },
+        "health": [
+          24,
+          24
+        ],
+        "text": 0,
+        "starting_draft": 1,
+        "draft": {
+          "round": 0,
+          "state": 1,
+          "options": [
+            7,
+            19,
+            20
+          ]
+        }
+      }
+    },
+    {
+      "keys": [
+        "A"
+      ],
+      "frames": 2,
+      "initial": {
+        "physical_frames": 166,
+        "state": 1,
+        "area": 0,
+        "cell": 0,
+        "actor": {
+          "kind": 1,
+          "type": 0,
+          "state": 0,
+          "timer": 0,
+          "x": 200,
+          "y": 270,
+          "z": 0,
+          "speed": 0,
+          "hp": 0,
+          "coll": 0,
+          "facing": 0
+        },
+        "health": [
+          24,
+          24
+        ],
+        "text": 0,
+        "starting_draft": 1,
+        "draft": {
+          "round": 0,
+          "state": 1,
+          "options": [
+            7,
+            19,
+            20
+          ]
+        }
+      },
+      "final": {
+        "physical_frames": 168,
+        "state": 1,
+        "area": 0,
+        "cell": 0,
+        "actor": {
+          "kind": 1,
+          "type": 0,
+          "state": 0,
+          "timer": 0,
+          "x": 200,
+          "y": 270,
+          "z": 0,
+          "speed": 0,
+          "hp": 0,
+          "coll": 0,
+          "facing": 0
+        },
+        "health": [
+          24,
+          24
+        ],
+        "text": 0,
+        "starting_draft": 1,
+        "draft": {
+          "round": 0,
+          "state": 1,
+          "options": [
+            7,
+            19,
+            20
+          ]
+        }
+      }
+    },
+    {
+      "keys": [],
+      "frames": 8,
+      "initial": {
+        "physical_frames": 168,
+        "state": 1,
+        "area": 0,
+        "cell": 0,
+        "actor": {
+          "kind": 1,
+          "type": 0,
+          "state": 0,
+          "timer": 0,
+          "x": 200,
+          "y": 270,
+          "z": 0,
+          "speed": 0,
+          "hp": 0,
+          "coll": 0,
+          "facing": 0
+        },
+        "health": [
+          24,
+          24
+        ],
+        "text": 0,
+        "starting_draft": 1,
+        "draft": {
+          "round": 0,
+          "state": 1,
+          "options": [
+            7,
+            19,
+            20
+          ]
+        }
+      },
+      "final": {
+        "physical_frames": 176,
+        "state": 1,
+        "area": 0,
+        "cell": 0,
+        "actor": {
+          "kind": 1,
+          "type": 0,
+          "state": 0,
+          "timer": 0,
+          "x": 200,
+          "y": 270,
+          "z": 0,
+          "speed": 0,
+          "hp": 0,
+          "coll": 0,
+          "facing": 0
+        },
+        "health": [
+          24,
+          24
+        ],
+        "text": 0,
+        "starting_draft": 1,
+        "draft": {
+          "round": 1,
+          "state": 1,
+          "options": [
+            98,
+            89,
+            99
+          ]
+        }
+      }
+    },
+    {
+      "keys": [
+        "DOWN"
+      ],
+      "frames": 2,
+      "initial": {
+        "physical_frames": 176,
+        "state": 1,
+        "area": 0,
+        "cell": 0,
+        "actor": {
+          "kind": 1,
+          "type": 0,
+          "state": 0,
+          "timer": 0,
+          "x": 200,
+          "y": 270,
+          "z": 0,
+          "speed": 0,
+          "hp": 0,
+          "coll": 0,
+          "facing": 0
+        },
+        "health": [
+          24,
+          24
+        ],
+        "text": 0,
+        "starting_draft": 1,
+        "draft": {
+          "round": 1,
+          "state": 1,
+          "options": [
+            98,
+            89,
+            99
+          ]
+        }
+      },
+      "final": {
+        "physical_frames": 178,
+        "state": 1,
+        "area": 0,
+        "cell": 0,
+        "actor": {
+          "kind": 1,
+          "type": 0,
+          "state": 0,
+          "timer": 0,
+          "x": 200,
+          "y": 270,
+          "z": 0,
+          "speed": 0,
+          "hp": 0,
+          "coll": 0,
+          "facing": 0
+        },
+        "health": [
+          24,
+          24
+        ],
+        "text": 0,
+        "starting_draft": 1,
+        "draft": {
+          "round": 1,
+          "state": 1,
+          "options": [
+            98,
+            89,
+            99
+          ]
+        }
+      }
+    },
+    {
+      "keys": [],
+      "frames": 4,
+      "initial": {
+        "physical_frames": 178,
+        "state": 1,
+        "area": 0,
+        "cell": 0,
+        "actor": {
+          "kind": 1,
+          "type": 0,
+          "state": 0,
+          "timer": 0,
+          "x": 200,
+          "y": 270,
+          "z": 0,
+          "speed": 0,
+          "hp": 0,
+          "coll": 0,
+          "facing": 0
+        },
+        "health": [
+          24,
+          24
+        ],
+        "text": 0,
+        "starting_draft": 1,
+        "draft": {
+          "round": 1,
+          "state": 1,
+          "options": [
+            98,
+            89,
+            99
+          ]
+        }
+      },
+      "final": {
+        "physical_frames": 182,
+        "state": 1,
+        "area": 0,
+        "cell": 0,
+        "actor": {
+          "kind": 1,
+          "type": 0,
+          "state": 0,
+          "timer": 0,
+          "x": 200,
+          "y": 270,
+          "z": 0,
+          "speed": 0,
+          "hp": 0,
+          "coll": 0,
+          "facing": 0
+        },
+        "health": [
+          24,
+          24
+        ],
+        "text": 0,
+        "starting_draft": 1,
+        "draft": {
+          "round": 1,
+          "state": 1,
+          "options": [
+            98,
+            89,
+            99
+          ]
+        }
+      }
+    },
+    {
+      "keys": [
+        "A"
+      ],
+      "frames": 2,
+      "initial": {
+        "physical_frames": 182,
+        "state": 1,
+        "area": 0,
+        "cell": 0,
+        "actor": {
+          "kind": 1,
+          "type": 0,
+          "state": 0,
+          "timer": 0,
+          "x": 200,
+          "y": 270,
+          "z": 0,
+          "speed": 0,
+          "hp": 0,
+          "coll": 0,
+          "facing": 0
+        },
+        "health": [
+          24,
+          24
+        ],
+        "text": 0,
+        "starting_draft": 1,
+        "draft": {
+          "round": 1,
+          "state": 1,
+          "options": [
+            98,
+            89,
+            99
+          ]
+        }
+      },
+      "final": {
+        "physical_frames": 184,
+        "state": 1,
+        "area": 0,
+        "cell": 0,
+        "actor": {
+          "kind": 1,
+          "type": 0,
+          "state": 0,
+          "timer": 0,
+          "x": 200,
+          "y": 270,
+          "z": 0,
+          "speed": 0,
+          "hp": 0,
+          "coll": 0,
+          "facing": 0
+        },
+        "health": [
+          24,
+          24
+        ],
+        "text": 0,
+        "starting_draft": 1,
+        "draft": {
+          "round": 1,
+          "state": 1,
+          "options": [
+            98,
+            89,
+            99
+          ]
+        }
+      }
+    },
+    {
+      "keys": [],
+      "frames": 8,
+      "initial": {
+        "physical_frames": 184,
+        "state": 1,
+        "area": 0,
+        "cell": 0,
+        "actor": {
+          "kind": 1,
+          "type": 0,
+          "state": 0,
+          "timer": 0,
+          "x": 200,
+          "y": 270,
+          "z": 0,
+          "speed": 0,
+          "hp": 0,
+          "coll": 0,
+          "facing": 0
+        },
+        "health": [
+          24,
+          24
+        ],
+        "text": 0,
+        "starting_draft": 1,
+        "draft": {
+          "round": 1,
+          "state": 1,
+          "options": [
+            98,
+            89,
+            99
+          ]
+        }
+      },
+      "final": {
+        "physical_frames": 192,
+        "state": 1,
+        "area": 0,
+        "cell": 0,
+        "actor": {
+          "kind": 1,
+          "type": 0,
+          "state": 0,
+          "timer": 0,
+          "x": 200,
+          "y": 270,
+          "z": 0,
+          "speed": 0,
+          "hp": 0,
+          "coll": 0,
+          "facing": 0
+        },
+        "health": [
+          24,
+          24
+        ],
+        "text": 0,
+        "starting_draft": 1,
+        "draft": {
+          "round": 2,
+          "state": 1,
+          "options": [
+            79,
+            75,
+            76
+          ]
+        }
+      }
+    },
+    {
+      "keys": [
+        "DOWN"
+      ],
+      "frames": 2,
+      "initial": {
+        "physical_frames": 192,
+        "state": 1,
+        "area": 0,
+        "cell": 0,
+        "actor": {
+          "kind": 1,
+          "type": 0,
+          "state": 0,
+          "timer": 0,
+          "x": 200,
+          "y": 270,
+          "z": 0,
+          "speed": 0,
+          "hp": 0,
+          "coll": 0,
+          "facing": 0
+        },
+        "health": [
+          24,
+          24
+        ],
+        "text": 0,
+        "starting_draft": 1,
+        "draft": {
+          "round": 2,
+          "state": 1,
+          "options": [
+            79,
+            75,
+            76
+          ]
+        }
+      },
+      "final": {
+        "physical_frames": 194,
+        "state": 1,
+        "area": 0,
+        "cell": 0,
+        "actor": {
+          "kind": 1,
+          "type": 0,
+          "state": 0,
+          "timer": 0,
+          "x": 200,
+          "y": 270,
+          "z": 0,
+          "speed": 0,
+          "hp": 0,
+          "coll": 0,
+          "facing": 0
+        },
+        "health": [
+          24,
+          24
+        ],
+        "text": 0,
+        "starting_draft": 1,
+        "draft": {
+          "round": 2,
+          "state": 1,
+          "options": [
+            79,
+            75,
+            76
+          ]
+        }
+      }
+    },
+    {
+      "keys": [],
+      "frames": 4,
+      "initial": {
+        "physical_frames": 194,
+        "state": 1,
+        "area": 0,
+        "cell": 0,
+        "actor": {
+          "kind": 1,
+          "type": 0,
+          "state": 0,
+          "timer": 0,
+          "x": 200,
+          "y": 270,
+          "z": 0,
+          "speed": 0,
+          "hp": 0,
+          "coll": 0,
+          "facing": 0
+        },
+        "health": [
+          24,
+          24
+        ],
+        "text": 0,
+        "starting_draft": 1,
+        "draft": {
+          "round": 2,
+          "state": 1,
+          "options": [
+            79,
+            75,
+            76
+          ]
+        }
+      },
+      "final": {
+        "physical_frames": 198,
+        "state": 1,
+        "area": 0,
+        "cell": 0,
+        "actor": {
+          "kind": 1,
+          "type": 0,
+          "state": 0,
+          "timer": 0,
+          "x": 200,
+          "y": 270,
+          "z": 0,
+          "speed": 0,
+          "hp": 0,
+          "coll": 0,
+          "facing": 0
+        },
+        "health": [
+          24,
+          24
+        ],
+        "text": 0,
+        "starting_draft": 1,
+        "draft": {
+          "round": 2,
+          "state": 1,
+          "options": [
+            79,
+            75,
+            76
+          ]
+        }
+      }
+    },
+    {
+      "keys": [
+        "DOWN"
+      ],
+      "frames": 2,
+      "initial": {
+        "physical_frames": 198,
+        "state": 1,
+        "area": 0,
+        "cell": 0,
+        "actor": {
+          "kind": 1,
+          "type": 0,
+          "state": 0,
+          "timer": 0,
+          "x": 200,
+          "y": 270,
+          "z": 0,
+          "speed": 0,
+          "hp": 0,
+          "coll": 0,
+          "facing": 0
+        },
+        "health": [
+          24,
+          24
+        ],
+        "text": 0,
+        "starting_draft": 1,
+        "draft": {
+          "round": 2,
+          "state": 1,
+          "options": [
+            79,
+            75,
+            76
+          ]
+        }
+      },
+      "final": {
+        "physical_frames": 200,
+        "state": 1,
+        "area": 0,
+        "cell": 0,
+        "actor": {
+          "kind": 1,
+          "type": 0,
+          "state": 0,
+          "timer": 0,
+          "x": 200,
+          "y": 270,
+          "z": 0,
+          "speed": 0,
+          "hp": 0,
+          "coll": 0,
+          "facing": 0
+        },
+        "health": [
+          24,
+          24
+        ],
+        "text": 0,
+        "starting_draft": 1,
+        "draft": {
+          "round": 2,
+          "state": 1,
+          "options": [
+            79,
+            75,
+            76
+          ]
+        }
+      }
+    },
+    {
+      "keys": [],
+      "frames": 4,
+      "initial": {
+        "physical_frames": 200,
+        "state": 1,
+        "area": 0,
+        "cell": 0,
+        "actor": {
+          "kind": 1,
+          "type": 0,
+          "state": 0,
+          "timer": 0,
+          "x": 200,
+          "y": 270,
+          "z": 0,
+          "speed": 0,
+          "hp": 0,
+          "coll": 0,
+          "facing": 0
+        },
+        "health": [
+          24,
+          24
+        ],
+        "text": 0,
+        "starting_draft": 1,
+        "draft": {
+          "round": 2,
+          "state": 1,
+          "options": [
+            79,
+            75,
+            76
+          ]
+        }
+      },
+      "final": {
+        "physical_frames": 204,
+        "state": 1,
+        "area": 0,
+        "cell": 0,
+        "actor": {
+          "kind": 1,
+          "type": 0,
+          "state": 0,
+          "timer": 0,
+          "x": 200,
+          "y": 270,
+          "z": 0,
+          "speed": 0,
+          "hp": 0,
+          "coll": 0,
+          "facing": 0
+        },
+        "health": [
+          24,
+          24
+        ],
+        "text": 0,
+        "starting_draft": 1,
+        "draft": {
+          "round": 2,
+          "state": 1,
+          "options": [
+            79,
+            75,
+            76
+          ]
+        }
+      }
+    },
+    {
+      "keys": [
+        "A"
+      ],
+      "frames": 2,
+      "initial": {
+        "physical_frames": 204,
+        "state": 1,
+        "area": 0,
+        "cell": 0,
+        "actor": {
+          "kind": 1,
+          "type": 0,
+          "state": 0,
+          "timer": 0,
+          "x": 200,
+          "y": 270,
+          "z": 0,
+          "speed": 0,
+          "hp": 0,
+          "coll": 0,
+          "facing": 0
+        },
+        "health": [
+          24,
+          24
+        ],
+        "text": 0,
+        "starting_draft": 1,
+        "draft": {
+          "round": 2,
+          "state": 1,
+          "options": [
+            79,
+            75,
+            76
+          ]
+        }
+      },
+      "final": {
+        "physical_frames": 206,
+        "state": 1,
+        "area": 0,
+        "cell": 0,
+        "actor": {
+          "kind": 1,
+          "type": 0,
+          "state": 0,
+          "timer": 0,
+          "x": 200,
+          "y": 270,
+          "z": 0,
+          "speed": 0,
+          "hp": 0,
+          "coll": 0,
+          "facing": 0
+        },
+        "health": [
+          24,
+          24
+        ],
+        "text": 0,
+        "starting_draft": 1,
+        "draft": {
+          "round": 2,
+          "state": 1,
+          "options": [
+            79,
+            75,
+            76
+          ]
+        }
+      }
+    },
+    {
+      "keys": [],
+      "frames": 6,
+      "initial": {
+        "physical_frames": 206,
+        "state": 1,
+        "area": 0,
+        "cell": 0,
+        "actor": {
+          "kind": 1,
+          "type": 0,
+          "state": 0,
+          "timer": 0,
+          "x": 200,
+          "y": 270,
+          "z": 0,
+          "speed": 0,
+          "hp": 0,
+          "coll": 0,
+          "facing": 0
+        },
+        "health": [
+          24,
+          24
+        ],
+        "text": 0,
+        "starting_draft": 1,
+        "draft": {
+          "round": 2,
+          "state": 1,
+          "options": [
+            79,
+            75,
+            76
+          ]
+        }
+      },
+      "final": {
+        "physical_frames": 212,
+        "state": 1,
+        "area": 0,
+        "cell": 0,
+        "actor": {
+          "kind": 1,
+          "type": 0,
+          "state": 0,
+          "timer": 0,
+          "x": 200,
+          "y": 270,
+          "z": 0,
+          "speed": 0,
+          "hp": 0,
+          "coll": 0,
+          "facing": 0
+        },
+        "health": [
+          24,
+          24
+        ],
+        "text": 1,
+        "starting_draft": 1,
+        "draft": {
+          "round": 3,
+          "state": 2,
+          "options": [
+            79,
+            75,
+            76
+          ]
+        }
+      }
+    },
+    {
+      "keys": [
+        "A"
+      ],
+      "frames": 2,
+      "initial": {
+        "physical_frames": 212,
+        "state": 1,
+        "area": 0,
+        "cell": 0,
+        "actor": {
+          "kind": 1,
+          "type": 0,
+          "state": 0,
+          "timer": 0,
+          "x": 200,
+          "y": 270,
+          "z": 0,
+          "speed": 0,
+          "hp": 0,
+          "coll": 0,
+          "facing": 0
+        },
+        "health": [
+          24,
+          24
+        ],
+        "text": 1,
+        "starting_draft": 1,
+        "draft": {
+          "round": 3,
+          "state": 2,
+          "options": [
+            79,
+            75,
+            76
+          ]
+        }
+      },
+      "final": {
+        "physical_frames": 214,
+        "state": 1,
+        "area": 0,
+        "cell": 0,
+        "actor": {
+          "kind": 1,
+          "type": 0,
+          "state": 0,
+          "timer": 0,
+          "x": 200,
+          "y": 270,
+          "z": 0,
+          "speed": 0,
+          "hp": 0,
+          "coll": 0,
+          "facing": 0
+        },
+        "health": [
+          24,
+          24
+        ],
+        "text": 1,
+        "starting_draft": 1,
+        "draft": {
+          "round": 3,
+          "state": 2,
+          "options": [
+            79,
+            75,
+            76
+          ]
+        }
+      }
+    },
+    {
+      "keys": [],
+      "frames": 8,
+      "initial": {
+        "physical_frames": 214,
+        "state": 1,
+        "area": 0,
+        "cell": 0,
+        "actor": {
+          "kind": 1,
+          "type": 0,
+          "state": 0,
+          "timer": 0,
+          "x": 200,
+          "y": 270,
+          "z": 0,
+          "speed": 0,
+          "hp": 0,
+          "coll": 0,
+          "facing": 0
+        },
+        "health": [
+          24,
+          24
+        ],
+        "text": 1,
+        "starting_draft": 1,
+        "draft": {
+          "round": 3,
+          "state": 2,
+          "options": [
+            79,
+            75,
+            76
+          ]
+        }
+      },
+      "final": {
+        "physical_frames": 222,
+        "state": 1,
+        "area": 0,
+        "cell": 0,
+        "actor": {
+          "kind": 1,
+          "type": 0,
+          "state": 0,
+          "timer": 0,
+          "x": 200,
+          "y": 270,
+          "z": 0,
+          "speed": 0,
+          "hp": 0,
+          "coll": 0,
+          "facing": 0
+        },
+        "health": [
+          24,
+          24
+        ],
+        "text": 1,
+        "starting_draft": 1,
+        "draft": {
+          "round": 3,
+          "state": 2,
+          "options": [
+            79,
+            75,
+            76
+          ]
+        }
+      }
+    },
+    {
+      "keys": [
+        "A"
+      ],
+      "frames": 2,
+      "initial": {
+        "physical_frames": 222,
+        "state": 1,
+        "area": 0,
+        "cell": 0,
+        "actor": {
+          "kind": 1,
+          "type": 0,
+          "state": 0,
+          "timer": 0,
+          "x": 200,
+          "y": 270,
+          "z": 0,
+          "speed": 0,
+          "hp": 0,
+          "coll": 0,
+          "facing": 0
+        },
+        "health": [
+          24,
+          24
+        ],
+        "text": 1,
+        "starting_draft": 1,
+        "draft": {
+          "round": 3,
+          "state": 2,
+          "options": [
+            79,
+            75,
+            76
+          ]
+        }
+      },
+      "final": {
+        "physical_frames": 224,
+        "state": 1,
+        "area": 0,
+        "cell": 0,
+        "actor": {
+          "kind": 1,
+          "type": 0,
+          "state": 0,
+          "timer": 0,
+          "x": 200,
+          "y": 270,
+          "z": 0,
+          "speed": 0,
+          "hp": 0,
+          "coll": 0,
+          "facing": 0
+        },
+        "health": [
+          24,
+          24
+        ],
+        "text": 1,
+        "starting_draft": 1,
+        "draft": {
+          "round": 3,
+          "state": 2,
+          "options": [
+            79,
+            75,
+            76
+          ]
+        }
+      }
+    },
+    {
+      "keys": [],
+      "frames": 8,
+      "initial": {
+        "physical_frames": 224,
+        "state": 1,
+        "area": 0,
+        "cell": 0,
+        "actor": {
+          "kind": 1,
+          "type": 0,
+          "state": 0,
+          "timer": 0,
+          "x": 200,
+          "y": 270,
+          "z": 0,
+          "speed": 0,
+          "hp": 0,
+          "coll": 0,
+          "facing": 0
+        },
+        "health": [
+          24,
+          24
+        ],
+        "text": 1,
+        "starting_draft": 1,
+        "draft": {
+          "round": 3,
+          "state": 2,
+          "options": [
+            79,
+            75,
+            76
+          ]
+        }
+      },
+      "final": {
+        "physical_frames": 232,
+        "state": 1,
+        "area": 0,
+        "cell": 0,
+        "actor": {
+          "kind": 1,
+          "type": 0,
+          "state": 0,
+          "timer": 0,
+          "x": 200,
+          "y": 270,
+          "z": 0,
+          "speed": 0,
+          "hp": 0,
+          "coll": 0,
+          "facing": 0
+        },
+        "health": [
+          24,
+          24
+        ],
+        "text": 1,
+        "starting_draft": 1,
+        "draft": {
+          "round": 3,
+          "state": 2,
+          "options": [
+            79,
+            75,
+            76
+          ]
+        }
+      }
+    },
+    {
+      "keys": [
+        "A"
+      ],
+      "frames": 2,
+      "initial": {
+        "physical_frames": 232,
+        "state": 1,
+        "area": 0,
+        "cell": 0,
+        "actor": {
+          "kind": 1,
+          "type": 0,
+          "state": 0,
+          "timer": 0,
+          "x": 200,
+          "y": 270,
+          "z": 0,
+          "speed": 0,
+          "hp": 0,
+          "coll": 0,
+          "facing": 0
+        },
+        "health": [
+          24,
+          24
+        ],
+        "text": 1,
+        "starting_draft": 1,
+        "draft": {
+          "round": 3,
+          "state": 2,
+          "options": [
+            79,
+            75,
+            76
+          ]
+        }
+      },
+      "final": {
+        "physical_frames": 234,
+        "state": 1,
+        "area": 0,
+        "cell": 0,
+        "actor": {
+          "kind": 1,
+          "type": 0,
+          "state": 0,
+          "timer": 0,
+          "x": 200,
+          "y": 270,
+          "z": 0,
+          "speed": 0,
+          "hp": 0,
+          "coll": 0,
+          "facing": 0
+        },
+        "health": [
+          24,
+          24
+        ],
+        "text": 1,
+        "starting_draft": 1,
+        "draft": {
+          "round": 3,
+          "state": 2,
+          "options": [
+            79,
+            75,
+            76
+          ]
+        }
+      }
+    },
+    {
+      "keys": [],
+      "frames": 8,
+      "initial": {
+        "physical_frames": 234,
+        "state": 1,
+        "area": 0,
+        "cell": 0,
+        "actor": {
+          "kind": 1,
+          "type": 0,
+          "state": 0,
+          "timer": 0,
+          "x": 200,
+          "y": 270,
+          "z": 0,
+          "speed": 0,
+          "hp": 0,
+          "coll": 0,
+          "facing": 0
+        },
+        "health": [
+          24,
+          24
+        ],
+        "text": 1,
+        "starting_draft": 1,
+        "draft": {
+          "round": 3,
+          "state": 2,
+          "options": [
+            79,
+            75,
+            76
+          ]
+        }
+      },
+      "final": {
+        "physical_frames": 242,
+        "state": 1,
+        "area": 0,
+        "cell": 0,
+        "actor": {
+          "kind": 1,
+          "type": 0,
+          "state": 0,
+          "timer": 0,
+          "x": 200,
+          "y": 270,
+          "z": 0,
+          "speed": 0,
+          "hp": 0,
+          "coll": 0,
+          "facing": 0
+        },
+        "health": [
+          24,
+          24
+        ],
+        "text": 1,
+        "starting_draft": 1,
+        "draft": {
+          "round": 3,
+          "state": 2,
+          "options": [
+            79,
+            75,
+            76
+          ]
+        }
+      }
+    },
+    {
+      "keys": [
+        "A"
+      ],
+      "frames": 2,
+      "initial": {
+        "physical_frames": 242,
+        "state": 1,
+        "area": 0,
+        "cell": 0,
+        "actor": {
+          "kind": 1,
+          "type": 0,
+          "state": 0,
+          "timer": 0,
+          "x": 200,
+          "y": 270,
+          "z": 0,
+          "speed": 0,
+          "hp": 0,
+          "coll": 0,
+          "facing": 0
+        },
+        "health": [
+          24,
+          24
+        ],
+        "text": 1,
+        "starting_draft": 1,
+        "draft": {
+          "round": 3,
+          "state": 2,
+          "options": [
+            79,
+            75,
+            76
+          ]
+        }
+      },
+      "final": {
+        "physical_frames": 244,
+        "state": 1,
+        "area": 0,
+        "cell": 0,
+        "actor": {
+          "kind": 1,
+          "type": 0,
+          "state": 0,
+          "timer": 0,
+          "x": 200,
+          "y": 270,
+          "z": 0,
+          "speed": 0,
+          "hp": 0,
+          "coll": 0,
+          "facing": 0
+        },
+        "health": [
+          24,
+          24
+        ],
+        "text": 1,
+        "starting_draft": 1,
+        "draft": {
+          "round": 3,
+          "state": 2,
+          "options": [
+            79,
+            75,
+            76
+          ]
+        }
+      }
+    },
+    {
+      "keys": [],
+      "frames": 8,
+      "initial": {
+        "physical_frames": 244,
+        "state": 1,
+        "area": 0,
+        "cell": 0,
+        "actor": {
+          "kind": 1,
+          "type": 0,
+          "state": 0,
+          "timer": 0,
+          "x": 200,
+          "y": 270,
+          "z": 0,
+          "speed": 0,
+          "hp": 0,
+          "coll": 0,
+          "facing": 0
+        },
+        "health": [
+          24,
+          24
+        ],
+        "text": 1,
+        "starting_draft": 1,
+        "draft": {
+          "round": 3,
+          "state": 2,
+          "options": [
+            79,
+            75,
+            76
+          ]
+        }
+      },
+      "final": {
+        "physical_frames": 252,
+        "state": 1,
+        "area": 0,
+        "cell": 0,
+        "actor": {
+          "kind": 1,
+          "type": 0,
+          "state": 0,
+          "timer": 0,
+          "x": 200,
+          "y": 270,
+          "z": 0,
+          "speed": 0,
+          "hp": 0,
+          "coll": 0,
+          "facing": 0
+        },
+        "health": [
+          24,
+          24
+        ],
+        "text": 1,
+        "starting_draft": 1,
+        "draft": {
+          "round": 3,
+          "state": 2,
+          "options": [
+            79,
+            75,
+            76
+          ]
+        }
+      }
+    },
+    {
+      "keys": [
+        "A"
+      ],
+      "frames": 2,
+      "initial": {
+        "physical_frames": 252,
+        "state": 1,
+        "area": 0,
+        "cell": 0,
+        "actor": {
+          "kind": 1,
+          "type": 0,
+          "state": 0,
+          "timer": 0,
+          "x": 200,
+          "y": 270,
+          "z": 0,
+          "speed": 0,
+          "hp": 0,
+          "coll": 0,
+          "facing": 0
+        },
+        "health": [
+          24,
+          24
+        ],
+        "text": 1,
+        "starting_draft": 1,
+        "draft": {
+          "round": 3,
+          "state": 2,
+          "options": [
+            79,
+            75,
+            76
+          ]
+        }
+      },
+      "final": {
+        "physical_frames": 254,
+        "state": 1,
+        "area": 0,
+        "cell": 0,
+        "actor": {
+          "kind": 1,
+          "type": 0,
+          "state": 0,
+          "timer": 0,
+          "x": 200,
+          "y": 270,
+          "z": 0,
+          "speed": 0,
+          "hp": 0,
+          "coll": 0,
+          "facing": 0
+        },
+        "health": [
+          24,
+          24
+        ],
+        "text": 1,
+        "starting_draft": 1,
+        "draft": {
+          "round": 3,
+          "state": 2,
+          "options": [
+            79,
+            75,
+            76
+          ]
+        }
+      }
+    },
+    {
+      "keys": [],
+      "frames": 8,
+      "initial": {
+        "physical_frames": 254,
+        "state": 1,
+        "area": 0,
+        "cell": 0,
+        "actor": {
+          "kind": 1,
+          "type": 0,
+          "state": 0,
+          "timer": 0,
+          "x": 200,
+          "y": 270,
+          "z": 0,
+          "speed": 0,
+          "hp": 0,
+          "coll": 0,
+          "facing": 0
+        },
+        "health": [
+          24,
+          24
+        ],
+        "text": 1,
+        "starting_draft": 1,
+        "draft": {
+          "round": 3,
+          "state": 2,
+          "options": [
+            79,
+            75,
+            76
+          ]
+        }
+      },
+      "final": {
+        "physical_frames": 262,
+        "state": 1,
+        "area": 0,
+        "cell": 0,
+        "actor": {
+          "kind": 1,
+          "type": 0,
+          "state": 0,
+          "timer": 0,
+          "x": 200,
+          "y": 270,
+          "z": 0,
+          "speed": 0,
+          "hp": 0,
+          "coll": 0,
+          "facing": 0
+        },
+        "health": [
+          24,
+          24
+        ],
+        "text": 1,
+        "starting_draft": 1,
+        "draft": {
+          "round": 3,
+          "state": 2,
+          "options": [
+            79,
+            75,
+            76
+          ]
+        }
+      }
+    },
+    {
+      "keys": [
+        "A"
+      ],
+      "frames": 2,
+      "initial": {
+        "physical_frames": 262,
+        "state": 1,
+        "area": 0,
+        "cell": 0,
+        "actor": {
+          "kind": 1,
+          "type": 0,
+          "state": 0,
+          "timer": 0,
+          "x": 200,
+          "y": 270,
+          "z": 0,
+          "speed": 0,
+          "hp": 0,
+          "coll": 0,
+          "facing": 0
+        },
+        "health": [
+          24,
+          24
+        ],
+        "text": 1,
+        "starting_draft": 1,
+        "draft": {
+          "round": 3,
+          "state": 2,
+          "options": [
+            79,
+            75,
+            76
+          ]
+        }
+      },
+      "final": {
+        "physical_frames": 264,
+        "state": 1,
+        "area": 0,
+        "cell": 0,
+        "actor": {
+          "kind": 1,
+          "type": 0,
+          "state": 0,
+          "timer": 0,
+          "x": 200,
+          "y": 270,
+          "z": 0,
+          "speed": 0,
+          "hp": 0,
+          "coll": 0,
+          "facing": 0
+        },
+        "health": [
+          24,
+          24
+        ],
+        "text": 0,
+        "starting_draft": 0,
+        "draft": {
+          "round": 3,
+          "state": 2,
+          "options": [
+            79,
+            75,
+            76
+          ]
+        }
+      }
+    },
+    {
+      "keys": [],
+      "frames": 10,
+      "initial": {
+        "physical_frames": 264,
+        "state": 1,
+        "area": 0,
+        "cell": 0,
+        "actor": {
+          "kind": 1,
+          "type": 0,
+          "state": 0,
+          "timer": 0,
+          "x": 200,
+          "y": 270,
+          "z": 0,
+          "speed": 0,
+          "hp": 0,
+          "coll": 0,
+          "facing": 0
+        },
+        "health": [
+          24,
+          24
+        ],
+        "text": 0,
+        "starting_draft": 0,
+        "draft": {
+          "round": 3,
+          "state": 2,
+          "options": [
+            79,
+            75,
+            76
+          ]
+        }
+      },
+      "final": {
+        "physical_frames": 274,
+        "state": 1,
+        "area": 0,
+        "cell": 0,
+        "actor": {
+          "kind": 1,
+          "type": 0,
+          "state": 0,
+          "timer": 0,
+          "x": 200,
+          "y": 270,
+          "z": 0,
+          "speed": 0,
+          "hp": 0,
+          "coll": 0,
+          "facing": 0
+        },
+        "health": [
+          24,
+          24
+        ],
+        "text": 0,
+        "starting_draft": 0,
+        "draft": {
+          "round": 3,
+          "state": 2,
+          "options": [
+            79,
+            75,
+            76
+          ]
+        }
+      }
+    }
+  ],
+  "trace": [
+    {
+      "keys": [
+        "UP"
+      ],
+      "frames": 86,
+      "before": {
+        "frames": 274,
+        "clock": 263,
+        "run_frames": 173,
+        "state": 1,
+        "area": 0,
+        "cell": 0,
+        "node": 46,
+        "actor": {
+          "kind": 1,
+          "type": 0,
+          "state": 0,
+          "timer": 0,
+          "x": 312,
+          "y": 94,
+          "z": 0,
+          "speed": 0,
+          "hp": 0,
+          "coll": 0,
+          "facing": 0
+        },
+        "health": [
+          24,
+          24
+        ],
+        "text": 0,
+        "camera": [
+          80,
+          160
+        ]
+      },
+      "after": {
+        "frames": 360,
+        "clock": 349,
+        "run_frames": 214,
+        "state": 1,
+        "area": 3,
+        "cell": 23,
+        "node": 46,
+        "actor": {
+          "kind": 1,
+          "type": 0,
+          "state": 0,
+          "timer": 0,
+          "x": 400,
+          "y": 350,
+          "z": 0,
+          "speed": 0,
+          "hp": 0,
+          "coll": 0,
+          "facing": 0
+        },
+        "health": [
+          24,
+          24
+        ],
+        "text": 0,
+        "camera": [
+          272,
+          224
+        ]
+      },
+      "state_changes": [
+        {
+          "frames": 275,
+          "clock": 264,
+          "run_frames": 174,
+          "state": 1,
+          "area": 0,
+          "cell": 0,
+          "node": 46,
+          "actor": {
+            "kind": 1,
+            "type": 0,
+            "state": 0,
+            "timer": 0,
+            "x": 312,
+            "y": 92,
+            "z": 0,
+            "speed": 320,
+            "hp": 0,
+            "coll": 0,
+            "facing": 0
+          },
+          "health": [
+            24,
+            24
+          ],
+          "text": 0,
+          "camera": [
+            84,
+            156
+          ]
+        },
+        {
+          "frames": 307,
+          "clock": 296,
+          "run_frames": 206,
+          "state": 2,
+          "area": 3,
+          "cell": 23,
+          "node": 46,
+          "actor": {
+            "kind": 1,
+            "type": 0,
+            "state": 0,
+            "timer": 0,
+            "x": 312,
+            "y": 62,
+            "z": 0,
+            "speed": 320,
+            "hp": 0,
+            "coll": 0,
+            "facing": 0
+          },
+          "health": [
+            24,
+            24
+          ],
+          "text": 0,
+          "camera": [
+            180,
+            60
+          ]
+        }
+      ],
+      "minimum_health": 24,
+      "climb_frames": 0
+    },
+    {
+      "keys": [],
+      "frames": 8,
+      "before": {
+        "frames": 360,
+        "clock": 349,
+        "run_frames": 214,
+        "state": 1,
+        "area": 3,
+        "cell": 23,
+        "node": 46,
+        "actor": {
+          "kind": 1,
+          "type": 0,
+          "state": 0,
+          "timer": 0,
+          "x": 72,
+          "y": 350,
+          "z": 0,
+          "speed": 0,
+          "hp": 0,
+          "coll": 0,
+          "facing": 0
+        },
+        "health": [
+          24,
+          24
+        ],
+        "text": 0,
+        "camera": [
+          272,
+          224
+        ]
+      },
+      "after": {
+        "frames": 368,
+        "clock": 357,
+        "run_frames": 222,
+        "state": 1,
+        "area": 3,
+        "cell": 23,
+        "node": 46,
+        "actor": {
+          "kind": 1,
+          "type": 0,
+          "state": 0,
+          "timer": 0,
+          "x": 72,
+          "y": 350,
+          "z": 0,
+          "speed": 0,
+          "hp": 0,
+          "coll": 0,
+          "facing": 0
+        },
+        "health": [
+          24,
+          24
+        ],
+        "text": 0,
+        "camera": [
+          240,
+          224
+        ]
+      },
+      "state_changes": [
+        {
+          "frames": 361,
+          "clock": 350,
+          "run_frames": 215,
+          "state": 1,
+          "area": 3,
+          "cell": 23,
+          "node": 46,
+          "actor": {
+            "kind": 1,
+            "type": 0,
+            "state": 0,
+            "timer": 0,
+            "x": 72,
+            "y": 350,
+            "z": 0,
+            "speed": 0,
+            "hp": 0,
+            "coll": 0,
+            "facing": 0
+          },
+          "health": [
+            24,
+            24
+          ],
+          "text": 0,
+          "camera": [
+            268,
+            224
+          ]
+        }
+      ],
+      "minimum_health": 24,
+      "climb_frames": 0
+    },
+    {
+      "keys": [
+        "START"
+      ],
+      "frames": 2,
+      "before": {
+        "frames": 368,
+        "clock": 357,
+        "run_frames": 222,
+        "state": 1,
+        "area": 3,
+        "cell": 23,
+        "node": 46,
+        "actor": {
+          "kind": 1,
+          "type": 0,
+          "state": 0,
+          "timer": 0,
+          "x": 72,
+          "y": 350,
+          "z": 0,
+          "speed": 0,
+          "hp": 0,
+          "coll": 0,
+          "facing": 0
+        },
+        "health": [
+          24,
+          24
+        ],
+        "text": 0,
+        "camera": [
+          240,
+          224
+        ]
+      },
+      "after": {
+        "frames": 370,
+        "clock": 359,
+        "run_frames": 223,
+        "state": 1,
+        "area": 3,
+        "cell": 23,
+        "node": 46,
+        "actor": {
+          "kind": 1,
+          "type": 0,
+          "state": 0,
+          "timer": 0,
+          "x": 72,
+          "y": 350,
+          "z": 0,
+          "speed": 0,
+          "hp": 0,
+          "coll": 0,
+          "facing": 0
+        },
+        "health": [
+          24,
+          24
+        ],
+        "text": 0,
+        "camera": [
+          240,
+          224
+        ]
+      },
+      "state_changes": [
+        {
+          "frames": 369,
+          "clock": 358,
+          "run_frames": 223,
+          "state": 1,
+          "area": 3,
+          "cell": 23,
+          "node": 46,
+          "actor": {
+            "kind": 1,
+            "type": 0,
+            "state": 0,
+            "timer": 0,
+            "x": 72,
+            "y": 350,
+            "z": 0,
+            "speed": 0,
+            "hp": 0,
+            "coll": 0,
+            "facing": 0
+          },
+          "health": [
+            24,
+            24
+          ],
+          "text": 0,
+          "camera": [
+            240,
+            224
+          ]
+        }
+      ],
+      "minimum_health": 24,
+      "climb_frames": 0
+    },
+    {
+      "keys": [],
+      "frames": 60,
+      "before": {
+        "frames": 370,
+        "clock": 359,
+        "run_frames": 223,
+        "state": 1,
+        "area": 3,
+        "cell": 23,
+        "node": 46,
+        "actor": {
+          "kind": 1,
+          "type": 0,
+          "state": 0,
+          "timer": 0,
+          "x": 72,
+          "y": 350,
+          "z": 0,
+          "speed": 0,
+          "hp": 0,
+          "coll": 0,
+          "facing": 0
+        },
+        "health": [
+          24,
+          24
+        ],
+        "text": 0,
+        "camera": [
+          240,
+          224
+        ]
+      },
+      "after": {
+        "frames": 430,
+        "clock": 419,
+        "run_frames": 223,
+        "state": 4,
+        "area": 3,
+        "cell": 23,
+        "node": 46,
+        "actor": {
+          "kind": 1,
+          "type": 0,
+          "state": 0,
+          "timer": 0,
+          "x": 72,
+          "y": 350,
+          "z": 0,
+          "speed": 0,
+          "hp": 0,
+          "coll": 0,
+          "facing": 0
+        },
+        "health": [
+          24,
+          24
+        ],
+        "text": 0,
+        "camera": [
+          240,
+          224
+        ]
+      },
+      "state_changes": [
+        {
+          "frames": 371,
+          "clock": 360,
+          "run_frames": 223,
+          "state": 1,
+          "area": 3,
+          "cell": 23,
+          "node": 46,
+          "actor": {
+            "kind": 1,
+            "type": 0,
+            "state": 0,
+            "timer": 0,
+            "x": 72,
+            "y": 350,
+            "z": 0,
+            "speed": 0,
+            "hp": 0,
+            "coll": 0,
+            "facing": 0
+          },
+          "health": [
+            24,
+            24
+          ],
+          "text": 0,
+          "camera": [
+            240,
+            224
+          ]
+        }
+      ],
+      "minimum_health": 24,
+      "climb_frames": 0
+    },
+    {
+      "keys": [
+        "R"
+      ],
+      "frames": 2,
+      "before": {
+        "frames": 430,
+        "clock": 419,
+        "run_frames": 223,
+        "state": 4,
+        "area": 3,
+        "cell": 23,
+        "node": 46,
+        "actor": {
+          "kind": 1,
+          "type": 0,
+          "state": 0,
+          "timer": 0,
+          "x": 72,
+          "y": 350,
+          "z": 0,
+          "speed": 0,
+          "hp": 0,
+          "coll": 0,
+          "facing": 0
+        },
+        "health": [
+          24,
+          24
+        ],
+        "text": 0,
+        "camera": [
+          240,
+          224
+        ]
+      },
+      "after": {
+        "frames": 432,
+        "clock": 421,
+        "run_frames": 223,
+        "state": 4,
+        "area": 3,
+        "cell": 23,
+        "node": 46,
+        "actor": {
+          "kind": 1,
+          "type": 0,
+          "state": 0,
+          "timer": 0,
+          "x": 72,
+          "y": 350,
+          "z": 0,
+          "speed": 0,
+          "hp": 0,
+          "coll": 0,
+          "facing": 0
+        },
+        "health": [
+          24,
+          24
+        ],
+        "text": 0,
+        "camera": [
+          240,
+          224
+        ]
+      },
+      "state_changes": [
+        {
+          "frames": 431,
+          "clock": 420,
+          "run_frames": 223,
+          "state": 4,
+          "area": 3,
+          "cell": 23,
+          "node": 46,
+          "actor": {
+            "kind": 1,
+            "type": 0,
+            "state": 0,
+            "timer": 0,
+            "x": 72,
+            "y": 350,
+            "z": 0,
+            "speed": 0,
+            "hp": 0,
+            "coll": 0,
+            "facing": 0
+          },
+          "health": [
+            24,
+            24
+          ],
+          "text": 0,
+          "camera": [
+            240,
+            224
+          ]
+        }
+      ],
+      "minimum_health": 24,
+      "climb_frames": 0
+    },
+    {
+      "keys": [],
+      "frames": 60,
+      "before": {
+        "frames": 432,
+        "clock": 421,
+        "run_frames": 223,
+        "state": 4,
+        "area": 3,
+        "cell": 23,
+        "node": 46,
+        "actor": {
+          "kind": 1,
+          "type": 0,
+          "state": 0,
+          "timer": 0,
+          "x": 72,
+          "y": 350,
+          "z": 0,
+          "speed": 0,
+          "hp": 0,
+          "coll": 0,
+          "facing": 0
+        },
+        "health": [
+          24,
+          24
+        ],
+        "text": 0,
+        "camera": [
+          240,
+          224
+        ]
+      },
+      "after": {
+        "frames": 492,
+        "clock": 481,
+        "run_frames": 223,
+        "state": 4,
+        "area": 3,
+        "cell": 23,
+        "node": 46,
+        "actor": {
+          "kind": 1,
+          "type": 0,
+          "state": 0,
+          "timer": 0,
+          "x": 72,
+          "y": 350,
+          "z": 0,
+          "speed": 0,
+          "hp": 0,
+          "coll": 0,
+          "facing": 0
+        },
+        "health": [
+          24,
+          24
+        ],
+        "text": 0,
+        "camera": [
+          240,
+          224
+        ]
+      },
+      "state_changes": [
+        {
+          "frames": 433,
+          "clock": 422,
+          "run_frames": 223,
+          "state": 4,
+          "area": 3,
+          "cell": 23,
+          "node": 46,
+          "actor": {
+            "kind": 1,
+            "type": 0,
+            "state": 0,
+            "timer": 0,
+            "x": 72,
+            "y": 350,
+            "z": 0,
+            "speed": 0,
+            "hp": 0,
+            "coll": 0,
+            "facing": 0
+          },
+          "health": [
+            24,
+            24
+          ],
+          "text": 0,
+          "camera": [
+            240,
+            224
+          ]
+        }
+      ],
+      "minimum_health": 24,
+      "climb_frames": 0
+    },
+    {
+      "keys": [
+        "R"
+      ],
+      "frames": 2,
+      "before": {
+        "frames": 492,
+        "clock": 481,
+        "run_frames": 223,
+        "state": 4,
+        "area": 3,
+        "cell": 23,
+        "node": 46,
+        "actor": {
+          "kind": 1,
+          "type": 0,
+          "state": 0,
+          "timer": 0,
+          "x": 72,
+          "y": 350,
+          "z": 0,
+          "speed": 0,
+          "hp": 0,
+          "coll": 0,
+          "facing": 0
+        },
+        "health": [
+          24,
+          24
+        ],
+        "text": 0,
+        "camera": [
+          240,
+          224
+        ]
+      },
+      "after": {
+        "frames": 494,
+        "clock": 483,
+        "run_frames": 223,
+        "state": 4,
+        "area": 3,
+        "cell": 23,
+        "node": 46,
+        "actor": {
+          "kind": 1,
+          "type": 0,
+          "state": 0,
+          "timer": 0,
+          "x": 72,
+          "y": 350,
+          "z": 0,
+          "speed": 0,
+          "hp": 0,
+          "coll": 0,
+          "facing": 0
+        },
+        "health": [
+          24,
+          24
+        ],
+        "text": 0,
+        "camera": [
+          240,
+          224
+        ]
+      },
+      "state_changes": [
+        {
+          "frames": 493,
+          "clock": 482,
+          "run_frames": 223,
+          "state": 4,
+          "area": 3,
+          "cell": 23,
+          "node": 46,
+          "actor": {
+            "kind": 1,
+            "type": 0,
+            "state": 0,
+            "timer": 0,
+            "x": 72,
+            "y": 350,
+            "z": 0,
+            "speed": 0,
+            "hp": 0,
+            "coll": 0,
+            "facing": 0
+          },
+          "health": [
+            24,
+            24
+          ],
+          "text": 0,
+          "camera": [
+            240,
+            224
+          ]
+        }
+      ],
+      "minimum_health": 24,
+      "climb_frames": 0
+    },
+    {
+      "keys": [],
+      "frames": 1,
+      "before": {
+        "frames": 494,
+        "clock": 483,
+        "run_frames": 223,
+        "state": 4,
+        "area": 3,
+        "cell": 23,
+        "node": 46,
+        "actor": {
+          "kind": 1,
+          "type": 0,
+          "state": 0,
+          "timer": 0,
+          "x": 72,
+          "y": 350,
+          "z": 0,
+          "speed": 0,
+          "hp": 0,
+          "coll": 0,
+          "facing": 0
+        },
+        "health": [
+          24,
+          24
+        ],
+        "text": 0,
+        "camera": [
+          240,
+          224
+        ]
+      },
+      "after": {
+        "frames": 495,
+        "clock": 484,
+        "run_frames": 223,
+        "state": 4,
+        "area": 3,
+        "cell": 23,
+        "node": 46,
+        "actor": {
+          "kind": 1,
+          "type": 0,
+          "state": 0,
+          "timer": 0,
+          "x": 72,
+          "y": 350,
+          "z": 0,
+          "speed": 0,
+          "hp": 0,
+          "coll": 0,
+          "facing": 0
+        },
+        "health": [
+          24,
+          24
+        ],
+        "text": 0,
+        "camera": [
+          240,
+          224
+        ]
+      },
+      "state_changes": [
+        {
+          "frames": 495,
+          "clock": 484,
+          "run_frames": 223,
+          "state": 4,
+          "area": 3,
+          "cell": 23,
+          "node": 46,
+          "actor": {
+            "kind": 1,
+            "type": 0,
+            "state": 0,
+            "timer": 0,
+            "x": 72,
+            "y": 350,
+            "z": 0,
+            "speed": 0,
+            "hp": 0,
+            "coll": 0,
+            "facing": 0
+          },
+          "health": [
+            24,
+            24
+          ],
+          "text": 0,
+          "camera": [
+            240,
+            224
+          ]
+        }
+      ],
+      "minimum_health": 24,
+      "climb_frames": 0
+    },
+    {
+      "keys": [],
+      "frames": 1,
+      "before": {
+        "frames": 495,
+        "clock": 484,
+        "run_frames": 223,
+        "state": 4,
+        "area": 3,
+        "cell": 23,
+        "node": 46,
+        "actor": {
+          "kind": 1,
+          "type": 0,
+          "state": 0,
+          "timer": 0,
+          "x": 72,
+          "y": 350,
+          "z": 0,
+          "speed": 0,
+          "hp": 0,
+          "coll": 0,
+          "facing": 0
+        },
+        "health": [
+          24,
+          24
+        ],
+        "text": 0,
+        "camera": [
+          240,
+          224
+        ]
+      },
+      "after": {
+        "frames": 496,
+        "clock": 485,
+        "run_frames": 223,
+        "state": 4,
+        "area": 3,
+        "cell": 23,
+        "node": 46,
+        "actor": {
+          "kind": 1,
+          "type": 0,
+          "state": 0,
+          "timer": 0,
+          "x": 72,
+          "y": 350,
+          "z": 0,
+          "speed": 0,
+          "hp": 0,
+          "coll": 0,
+          "facing": 0
+        },
+        "health": [
+          24,
+          24
+        ],
+        "text": 0,
+        "camera": [
+          240,
+          224
+        ]
+      },
+      "state_changes": [
+        {
+          "frames": 496,
+          "clock": 485,
+          "run_frames": 223,
+          "state": 4,
+          "area": 3,
+          "cell": 23,
+          "node": 46,
+          "actor": {
+            "kind": 1,
+            "type": 0,
+            "state": 0,
+            "timer": 0,
+            "x": 72,
+            "y": 350,
+            "z": 0,
+            "speed": 0,
+            "hp": 0,
+            "coll": 0,
+            "facing": 0
+          },
+          "health": [
+            24,
+            24
+          ],
+          "text": 0,
+          "camera": [
+            240,
+            224
+          ]
+        }
+      ],
+      "minimum_health": 24,
+      "climb_frames": 0
+    },
+    {
+      "keys": [],
+      "frames": 1,
+      "before": {
+        "frames": 496,
+        "clock": 485,
+        "run_frames": 223,
+        "state": 4,
+        "area": 3,
+        "cell": 23,
+        "node": 46,
+        "actor": {
+          "kind": 1,
+          "type": 0,
+          "state": 0,
+          "timer": 0,
+          "x": 72,
+          "y": 350,
+          "z": 0,
+          "speed": 0,
+          "hp": 0,
+          "coll": 0,
+          "facing": 0
+        },
+        "health": [
+          24,
+          24
+        ],
+        "text": 0,
+        "camera": [
+          240,
+          224
+        ]
+      },
+      "after": {
+        "frames": 497,
+        "clock": 486,
+        "run_frames": 223,
+        "state": 4,
+        "area": 3,
+        "cell": 23,
+        "node": 46,
+        "actor": {
+          "kind": 1,
+          "type": 0,
+          "state": 0,
+          "timer": 0,
+          "x": 72,
+          "y": 350,
+          "z": 0,
+          "speed": 0,
+          "hp": 0,
+          "coll": 0,
+          "facing": 0
+        },
+        "health": [
+          24,
+          24
+        ],
+        "text": 0,
+        "camera": [
+          240,
+          224
+        ]
+      },
+      "state_changes": [
+        {
+          "frames": 497,
+          "clock": 486,
+          "run_frames": 223,
+          "state": 4,
+          "area": 3,
+          "cell": 23,
+          "node": 46,
+          "actor": {
+            "kind": 1,
+            "type": 0,
+            "state": 0,
+            "timer": 0,
+            "x": 72,
+            "y": 350,
+            "z": 0,
+            "speed": 0,
+            "hp": 0,
+            "coll": 0,
+            "facing": 0
+          },
+          "health": [
+            24,
+            24
+          ],
+          "text": 0,
+          "camera": [
+            240,
+            224
+          ]
+        }
+      ],
+      "minimum_health": 24,
+      "climb_frames": 0
+    },
+    {
+      "keys": [],
+      "frames": 1,
+      "before": {
+        "frames": 497,
+        "clock": 486,
+        "run_frames": 223,
+        "state": 4,
+        "area": 3,
+        "cell": 23,
+        "node": 46,
+        "actor": {
+          "kind": 1,
+          "type": 0,
+          "state": 0,
+          "timer": 0,
+          "x": 72,
+          "y": 350,
+          "z": 0,
+          "speed": 0,
+          "hp": 0,
+          "coll": 0,
+          "facing": 0
+        },
+        "health": [
+          24,
+          24
+        ],
+        "text": 0,
+        "camera": [
+          240,
+          224
+        ]
+      },
+      "after": {
+        "frames": 498,
+        "clock": 487,
+        "run_frames": 223,
+        "state": 4,
+        "area": 3,
+        "cell": 23,
+        "node": 46,
+        "actor": {
+          "kind": 1,
+          "type": 0,
+          "state": 0,
+          "timer": 0,
+          "x": 72,
+          "y": 350,
+          "z": 0,
+          "speed": 0,
+          "hp": 0,
+          "coll": 0,
+          "facing": 0
+        },
+        "health": [
+          24,
+          24
+        ],
+        "text": 0,
+        "camera": [
+          240,
+          224
+        ]
+      },
+      "state_changes": [
+        {
+          "frames": 498,
+          "clock": 487,
+          "run_frames": 223,
+          "state": 4,
+          "area": 3,
+          "cell": 23,
+          "node": 46,
+          "actor": {
+            "kind": 1,
+            "type": 0,
+            "state": 0,
+            "timer": 0,
+            "x": 72,
+            "y": 350,
+            "z": 0,
+            "speed": 0,
+            "hp": 0,
+            "coll": 0,
+            "facing": 0
+          },
+          "health": [
+            24,
+            24
+          ],
+          "text": 0,
+          "camera": [
+            240,
+            224
+          ]
+        }
+      ],
+      "minimum_health": 24,
+      "climb_frames": 0
+    },
+    {
+      "keys": [],
+      "frames": 1,
+      "before": {
+        "frames": 498,
+        "clock": 487,
+        "run_frames": 223,
+        "state": 4,
+        "area": 3,
+        "cell": 23,
+        "node": 46,
+        "actor": {
+          "kind": 1,
+          "type": 0,
+          "state": 0,
+          "timer": 0,
+          "x": 72,
+          "y": 350,
+          "z": 0,
+          "speed": 0,
+          "hp": 0,
+          "coll": 0,
+          "facing": 0
+        },
+        "health": [
+          24,
+          24
+        ],
+        "text": 0,
+        "camera": [
+          240,
+          224
+        ]
+      },
+      "after": {
+        "frames": 499,
+        "clock": 488,
+        "run_frames": 223,
+        "state": 4,
+        "area": 3,
+        "cell": 23,
+        "node": 46,
+        "actor": {
+          "kind": 1,
+          "type": 0,
+          "state": 0,
+          "timer": 0,
+          "x": 72,
+          "y": 350,
+          "z": 0,
+          "speed": 0,
+          "hp": 0,
+          "coll": 0,
+          "facing": 0
+        },
+        "health": [
+          24,
+          24
+        ],
+        "text": 0,
+        "camera": [
+          240,
+          224
+        ]
+      },
+      "state_changes": [
+        {
+          "frames": 499,
+          "clock": 488,
+          "run_frames": 223,
+          "state": 4,
+          "area": 3,
+          "cell": 23,
+          "node": 46,
+          "actor": {
+            "kind": 1,
+            "type": 0,
+            "state": 0,
+            "timer": 0,
+            "x": 72,
+            "y": 350,
+            "z": 0,
+            "speed": 0,
+            "hp": 0,
+            "coll": 0,
+            "facing": 0
+          },
+          "health": [
+            24,
+            24
+          ],
+          "text": 0,
+          "camera": [
+            240,
+            224
+          ]
+        }
+      ],
+      "minimum_health": 24,
+      "climb_frames": 0
+    },
+    {
+      "keys": [],
+      "frames": 1,
+      "before": {
+        "frames": 499,
+        "clock": 488,
+        "run_frames": 223,
+        "state": 4,
+        "area": 3,
+        "cell": 23,
+        "node": 46,
+        "actor": {
+          "kind": 1,
+          "type": 0,
+          "state": 0,
+          "timer": 0,
+          "x": 72,
+          "y": 350,
+          "z": 0,
+          "speed": 0,
+          "hp": 0,
+          "coll": 0,
+          "facing": 0
+        },
+        "health": [
+          24,
+          24
+        ],
+        "text": 0,
+        "camera": [
+          240,
+          224
+        ]
+      },
+      "after": {
+        "frames": 500,
+        "clock": 489,
+        "run_frames": 223,
+        "state": 4,
+        "area": 3,
+        "cell": 23,
+        "node": 46,
+        "actor": {
+          "kind": 1,
+          "type": 0,
+          "state": 0,
+          "timer": 0,
+          "x": 72,
+          "y": 350,
+          "z": 0,
+          "speed": 0,
+          "hp": 0,
+          "coll": 0,
+          "facing": 0
+        },
+        "health": [
+          24,
+          24
+        ],
+        "text": 0,
+        "camera": [
+          240,
+          224
+        ]
+      },
+      "state_changes": [
+        {
+          "frames": 500,
+          "clock": 489,
+          "run_frames": 223,
+          "state": 4,
+          "area": 3,
+          "cell": 23,
+          "node": 46,
+          "actor": {
+            "kind": 1,
+            "type": 0,
+            "state": 0,
+            "timer": 0,
+            "x": 72,
+            "y": 350,
+            "z": 0,
+            "speed": 0,
+            "hp": 0,
+            "coll": 0,
+            "facing": 0
+          },
+          "health": [
+            24,
+            24
+          ],
+          "text": 0,
+          "camera": [
+            240,
+            224
+          ]
+        }
+      ],
+      "minimum_health": 24,
+      "climb_frames": 0
+    },
+    {
+      "keys": [],
+      "frames": 1,
+      "before": {
+        "frames": 500,
+        "clock": 489,
+        "run_frames": 223,
+        "state": 4,
+        "area": 3,
+        "cell": 23,
+        "node": 46,
+        "actor": {
+          "kind": 1,
+          "type": 0,
+          "state": 0,
+          "timer": 0,
+          "x": 72,
+          "y": 350,
+          "z": 0,
+          "speed": 0,
+          "hp": 0,
+          "coll": 0,
+          "facing": 0
+        },
+        "health": [
+          24,
+          24
+        ],
+        "text": 0,
+        "camera": [
+          240,
+          224
+        ]
+      },
+      "after": {
+        "frames": 501,
+        "clock": 490,
+        "run_frames": 223,
+        "state": 4,
+        "area": 3,
+        "cell": 23,
+        "node": 46,
+        "actor": {
+          "kind": 1,
+          "type": 0,
+          "state": 0,
+          "timer": 0,
+          "x": 72,
+          "y": 350,
+          "z": 0,
+          "speed": 0,
+          "hp": 0,
+          "coll": 0,
+          "facing": 0
+        },
+        "health": [
+          24,
+          24
+        ],
+        "text": 0,
+        "camera": [
+          240,
+          224
+        ]
+      },
+      "state_changes": [
+        {
+          "frames": 501,
+          "clock": 490,
+          "run_frames": 223,
+          "state": 4,
+          "area": 3,
+          "cell": 23,
+          "node": 46,
+          "actor": {
+            "kind": 1,
+            "type": 0,
+            "state": 0,
+            "timer": 0,
+            "x": 72,
+            "y": 350,
+            "z": 0,
+            "speed": 0,
+            "hp": 0,
+            "coll": 0,
+            "facing": 0
+          },
+          "health": [
+            24,
+            24
+          ],
+          "text": 0,
+          "camera": [
+            240,
+            224
+          ]
+        }
+      ],
+      "minimum_health": 24,
+      "climb_frames": 0
+    },
+    {
+      "keys": [],
+      "frames": 1,
+      "before": {
+        "frames": 501,
+        "clock": 490,
+        "run_frames": 223,
+        "state": 4,
+        "area": 3,
+        "cell": 23,
+        "node": 46,
+        "actor": {
+          "kind": 1,
+          "type": 0,
+          "state": 0,
+          "timer": 0,
+          "x": 72,
+          "y": 350,
+          "z": 0,
+          "speed": 0,
+          "hp": 0,
+          "coll": 0,
+          "facing": 0
+        },
+        "health": [
+          24,
+          24
+        ],
+        "text": 0,
+        "camera": [
+          240,
+          224
+        ]
+      },
+      "after": {
+        "frames": 502,
+        "clock": 491,
+        "run_frames": 223,
+        "state": 4,
+        "area": 3,
+        "cell": 23,
+        "node": 46,
+        "actor": {
+          "kind": 1,
+          "type": 0,
+          "state": 0,
+          "timer": 0,
+          "x": 72,
+          "y": 350,
+          "z": 0,
+          "speed": 0,
+          "hp": 0,
+          "coll": 0,
+          "facing": 0
+        },
+        "health": [
+          24,
+          24
+        ],
+        "text": 0,
+        "camera": [
+          240,
+          224
+        ]
+      },
+      "state_changes": [
+        {
+          "frames": 502,
+          "clock": 491,
+          "run_frames": 223,
+          "state": 4,
+          "area": 3,
+          "cell": 23,
+          "node": 46,
+          "actor": {
+            "kind": 1,
+            "type": 0,
+            "state": 0,
+            "timer": 0,
+            "x": 72,
+            "y": 350,
+            "z": 0,
+            "speed": 0,
+            "hp": 0,
+            "coll": 0,
+            "facing": 0
+          },
+          "health": [
+            24,
+            24
+          ],
+          "text": 0,
+          "camera": [
+            240,
+            224
+          ]
+        }
+      ],
+      "minimum_health": 24,
+      "climb_frames": 0
+    },
+    {
+      "keys": [],
+      "frames": 1,
+      "before": {
+        "frames": 502,
+        "clock": 491,
+        "run_frames": 223,
+        "state": 4,
+        "area": 3,
+        "cell": 23,
+        "node": 46,
+        "actor": {
+          "kind": 1,
+          "type": 0,
+          "state": 0,
+          "timer": 0,
+          "x": 72,
+          "y": 350,
+          "z": 0,
+          "speed": 0,
+          "hp": 0,
+          "coll": 0,
+          "facing": 0
+        },
+        "health": [
+          24,
+          24
+        ],
+        "text": 0,
+        "camera": [
+          240,
+          224
+        ]
+      },
+      "after": {
+        "frames": 503,
+        "clock": 492,
+        "run_frames": 223,
+        "state": 4,
+        "area": 3,
+        "cell": 23,
+        "node": 46,
+        "actor": {
+          "kind": 1,
+          "type": 0,
+          "state": 0,
+          "timer": 0,
+          "x": 72,
+          "y": 350,
+          "z": 0,
+          "speed": 0,
+          "hp": 0,
+          "coll": 0,
+          "facing": 0
+        },
+        "health": [
+          24,
+          24
+        ],
+        "text": 0,
+        "camera": [
+          240,
+          224
+        ]
+      },
+      "state_changes": [
+        {
+          "frames": 503,
+          "clock": 492,
+          "run_frames": 223,
+          "state": 4,
+          "area": 3,
+          "cell": 23,
+          "node": 46,
+          "actor": {
+            "kind": 1,
+            "type": 0,
+            "state": 0,
+            "timer": 0,
+            "x": 72,
+            "y": 350,
+            "z": 0,
+            "speed": 0,
+            "hp": 0,
+            "coll": 0,
+            "facing": 0
+          },
+          "health": [
+            24,
+            24
+          ],
+          "text": 0,
+          "camera": [
+            240,
+            224
+          ]
+        }
+      ],
+      "minimum_health": 24,
+      "climb_frames": 0
+    },
+    {
+      "keys": [],
+      "frames": 1,
+      "before": {
+        "frames": 503,
+        "clock": 492,
+        "run_frames": 223,
+        "state": 4,
+        "area": 3,
+        "cell": 23,
+        "node": 46,
+        "actor": {
+          "kind": 1,
+          "type": 0,
+          "state": 0,
+          "timer": 0,
+          "x": 72,
+          "y": 350,
+          "z": 0,
+          "speed": 0,
+          "hp": 0,
+          "coll": 0,
+          "facing": 0
+        },
+        "health": [
+          24,
+          24
+        ],
+        "text": 0,
+        "camera": [
+          240,
+          224
+        ]
+      },
+      "after": {
+        "frames": 504,
+        "clock": 493,
+        "run_frames": 223,
+        "state": 4,
+        "area": 3,
+        "cell": 23,
+        "node": 46,
+        "actor": {
+          "kind": 1,
+          "type": 0,
+          "state": 0,
+          "timer": 0,
+          "x": 72,
+          "y": 350,
+          "z": 0,
+          "speed": 0,
+          "hp": 0,
+          "coll": 0,
+          "facing": 0
+        },
+        "health": [
+          24,
+          24
+        ],
+        "text": 0,
+        "camera": [
+          240,
+          224
+        ]
+      },
+      "state_changes": [
+        {
+          "frames": 504,
+          "clock": 493,
+          "run_frames": 223,
+          "state": 4,
+          "area": 3,
+          "cell": 23,
+          "node": 46,
+          "actor": {
+            "kind": 1,
+            "type": 0,
+            "state": 0,
+            "timer": 0,
+            "x": 72,
+            "y": 350,
+            "z": 0,
+            "speed": 0,
+            "hp": 0,
+            "coll": 0,
+            "facing": 0
+          },
+          "health": [
+            24,
+            24
+          ],
+          "text": 0,
+          "camera": [
+            240,
+            224
+          ]
+        }
+      ],
+      "minimum_health": 24,
+      "climb_frames": 0
+    },
+    {
+      "keys": [],
+      "frames": 1,
+      "before": {
+        "frames": 504,
+        "clock": 493,
+        "run_frames": 223,
+        "state": 4,
+        "area": 3,
+        "cell": 23,
+        "node": 46,
+        "actor": {
+          "kind": 1,
+          "type": 0,
+          "state": 0,
+          "timer": 0,
+          "x": 72,
+          "y": 350,
+          "z": 0,
+          "speed": 0,
+          "hp": 0,
+          "coll": 0,
+          "facing": 0
+        },
+        "health": [
+          24,
+          24
+        ],
+        "text": 0,
+        "camera": [
+          240,
+          224
+        ]
+      },
+      "after": {
+        "frames": 505,
+        "clock": 494,
+        "run_frames": 223,
+        "state": 4,
+        "area": 3,
+        "cell": 23,
+        "node": 46,
+        "actor": {
+          "kind": 1,
+          "type": 0,
+          "state": 0,
+          "timer": 0,
+          "x": 72,
+          "y": 350,
+          "z": 0,
+          "speed": 0,
+          "hp": 0,
+          "coll": 0,
+          "facing": 0
+        },
+        "health": [
+          24,
+          24
+        ],
+        "text": 0,
+        "camera": [
+          240,
+          224
+        ]
+      },
+      "state_changes": [
+        {
+          "frames": 505,
+          "clock": 494,
+          "run_frames": 223,
+          "state": 4,
+          "area": 3,
+          "cell": 23,
+          "node": 46,
+          "actor": {
+            "kind": 1,
+            "type": 0,
+            "state": 0,
+            "timer": 0,
+            "x": 72,
+            "y": 350,
+            "z": 0,
+            "speed": 0,
+            "hp": 0,
+            "coll": 0,
+            "facing": 0
+          },
+          "health": [
+            24,
+            24
+          ],
+          "text": 0,
+          "camera": [
+            240,
+            224
+          ]
+        }
+      ],
+      "minimum_health": 24,
+      "climb_frames": 0
+    },
+    {
+      "keys": [],
+      "frames": 1,
+      "before": {
+        "frames": 505,
+        "clock": 494,
+        "run_frames": 223,
+        "state": 4,
+        "area": 3,
+        "cell": 23,
+        "node": 46,
+        "actor": {
+          "kind": 1,
+          "type": 0,
+          "state": 0,
+          "timer": 0,
+          "x": 72,
+          "y": 350,
+          "z": 0,
+          "speed": 0,
+          "hp": 0,
+          "coll": 0,
+          "facing": 0
+        },
+        "health": [
+          24,
+          24
+        ],
+        "text": 0,
+        "camera": [
+          240,
+          224
+        ]
+      },
+      "after": {
+        "frames": 506,
+        "clock": 495,
+        "run_frames": 223,
+        "state": 4,
+        "area": 3,
+        "cell": 23,
+        "node": 46,
+        "actor": {
+          "kind": 1,
+          "type": 0,
+          "state": 0,
+          "timer": 0,
+          "x": 72,
+          "y": 350,
+          "z": 0,
+          "speed": 0,
+          "hp": 0,
+          "coll": 0,
+          "facing": 0
+        },
+        "health": [
+          24,
+          24
+        ],
+        "text": 0,
+        "camera": [
+          240,
+          224
+        ]
+      },
+      "state_changes": [
+        {
+          "frames": 506,
+          "clock": 495,
+          "run_frames": 223,
+          "state": 4,
+          "area": 3,
+          "cell": 23,
+          "node": 46,
+          "actor": {
+            "kind": 1,
+            "type": 0,
+            "state": 0,
+            "timer": 0,
+            "x": 72,
+            "y": 350,
+            "z": 0,
+            "speed": 0,
+            "hp": 0,
+            "coll": 0,
+            "facing": 0
+          },
+          "health": [
+            24,
+            24
+          ],
+          "text": 0,
+          "camera": [
+            240,
+            224
+          ]
+        }
+      ],
+      "minimum_health": 24,
+      "climb_frames": 0
+    },
+    {
+      "keys": [],
+      "frames": 1,
+      "before": {
+        "frames": 506,
+        "clock": 495,
+        "run_frames": 223,
+        "state": 4,
+        "area": 3,
+        "cell": 23,
+        "node": 46,
+        "actor": {
+          "kind": 1,
+          "type": 0,
+          "state": 0,
+          "timer": 0,
+          "x": 72,
+          "y": 350,
+          "z": 0,
+          "speed": 0,
+          "hp": 0,
+          "coll": 0,
+          "facing": 0
+        },
+        "health": [
+          24,
+          24
+        ],
+        "text": 0,
+        "camera": [
+          240,
+          224
+        ]
+      },
+      "after": {
+        "frames": 507,
+        "clock": 496,
+        "run_frames": 223,
+        "state": 4,
+        "area": 3,
+        "cell": 23,
+        "node": 46,
+        "actor": {
+          "kind": 1,
+          "type": 0,
+          "state": 0,
+          "timer": 0,
+          "x": 72,
+          "y": 350,
+          "z": 0,
+          "speed": 0,
+          "hp": 0,
+          "coll": 0,
+          "facing": 0
+        },
+        "health": [
+          24,
+          24
+        ],
+        "text": 0,
+        "camera": [
+          240,
+          224
+        ]
+      },
+      "state_changes": [
+        {
+          "frames": 507,
+          "clock": 496,
+          "run_frames": 223,
+          "state": 4,
+          "area": 3,
+          "cell": 23,
+          "node": 46,
+          "actor": {
+            "kind": 1,
+            "type": 0,
+            "state": 0,
+            "timer": 0,
+            "x": 72,
+            "y": 350,
+            "z": 0,
+            "speed": 0,
+            "hp": 0,
+            "coll": 0,
+            "facing": 0
+          },
+          "health": [
+            24,
+            24
+          ],
+          "text": 0,
+          "camera": [
+            240,
+            224
+          ]
+        }
+      ],
+      "minimum_health": 24,
+      "climb_frames": 0
+    },
+    {
+      "keys": [],
+      "frames": 2,
+      "before": {
+        "frames": 507,
+        "clock": 496,
+        "run_frames": 223,
+        "state": 4,
+        "area": 3,
+        "cell": 23,
+        "node": 46,
+        "actor": {
+          "kind": 1,
+          "type": 0,
+          "state": 0,
+          "timer": 0,
+          "x": 72,
+          "y": 350,
+          "z": 0,
+          "speed": 0,
+          "hp": 0,
+          "coll": 0,
+          "facing": 0
+        },
+        "health": [
+          24,
+          24
+        ],
+        "text": 0,
+        "camera": [
+          240,
+          224
+        ]
+      },
+      "after": {
+        "frames": 509,
+        "clock": 498,
+        "run_frames": 223,
+        "state": 4,
+        "area": 3,
+        "cell": 23,
+        "node": 46,
+        "actor": {
+          "kind": 1,
+          "type": 0,
+          "state": 0,
+          "timer": 0,
+          "x": 72,
+          "y": 350,
+          "z": 0,
+          "speed": 0,
+          "hp": 0,
+          "coll": 0,
+          "facing": 0
+        },
+        "health": [
+          24,
+          24
+        ],
+        "text": 0,
+        "camera": [
+          240,
+          224
+        ]
+      },
+      "state_changes": [
+        {
+          "frames": 508,
+          "clock": 497,
+          "run_frames": 223,
+          "state": 4,
+          "area": 3,
+          "cell": 23,
+          "node": 46,
+          "actor": {
+            "kind": 1,
+            "type": 0,
+            "state": 0,
+            "timer": 0,
+            "x": 72,
+            "y": 350,
+            "z": 0,
+            "speed": 0,
+            "hp": 0,
+            "coll": 0,
+            "facing": 0
+          },
+          "health": [
+            24,
+            24
+          ],
+          "text": 0,
+          "camera": [
+            240,
+            224
+          ]
+        }
+      ],
+      "minimum_health": 24,
+      "climb_frames": 0
+    },
+    {
+      "keys": [
+        "A"
+      ],
+      "frames": 2,
+      "before": {
+        "frames": 509,
+        "clock": 498,
+        "run_frames": 223,
+        "state": 4,
+        "area": 3,
+        "cell": 23,
+        "node": 46,
+        "actor": {
+          "kind": 1,
+          "type": 0,
+          "state": 0,
+          "timer": 0,
+          "x": 72,
+          "y": 350,
+          "z": 0,
+          "speed": 0,
+          "hp": 0,
+          "coll": 0,
+          "facing": 0
+        },
+        "health": [
+          24,
+          24
+        ],
+        "text": 0,
+        "camera": [
+          240,
+          224
+        ]
+      },
+      "after": {
+        "frames": 511,
+        "clock": 500,
+        "run_frames": 223,
+        "state": 4,
+        "area": 3,
+        "cell": 23,
+        "node": 46,
+        "actor": {
+          "kind": 1,
+          "type": 0,
+          "state": 0,
+          "timer": 0,
+          "x": 72,
+          "y": 350,
+          "z": 0,
+          "speed": 0,
+          "hp": 0,
+          "coll": 0,
+          "facing": 0
+        },
+        "health": [
+          24,
+          24
+        ],
+        "text": 0,
+        "camera": [
+          240,
+          224
+        ]
+      },
+      "state_changes": [
+        {
+          "frames": 510,
+          "clock": 499,
+          "run_frames": 223,
+          "state": 4,
+          "area": 3,
+          "cell": 23,
+          "node": 46,
+          "actor": {
+            "kind": 1,
+            "type": 0,
+            "state": 0,
+            "timer": 0,
+            "x": 72,
+            "y": 350,
+            "z": 0,
+            "speed": 0,
+            "hp": 0,
+            "coll": 0,
+            "facing": 0
+          },
+          "health": [
+            24,
+            24
+          ],
+          "text": 0,
+          "camera": [
+            240,
+            224
+          ]
+        }
+      ],
+      "minimum_health": 24,
+      "climb_frames": 0
+    },
+    {
+      "keys": [],
+      "frames": 1,
+      "before": {
+        "frames": 511,
+        "clock": 500,
+        "run_frames": 223,
+        "state": 4,
+        "area": 3,
+        "cell": 23,
+        "node": 46,
+        "actor": {
+          "kind": 1,
+          "type": 0,
+          "state": 0,
+          "timer": 0,
+          "x": 72,
+          "y": 350,
+          "z": 0,
+          "speed": 0,
+          "hp": 0,
+          "coll": 0,
+          "facing": 0
+        },
+        "health": [
+          24,
+          24
+        ],
+        "text": 0,
+        "camera": [
+          240,
+          224
+        ]
+      },
+      "after": {
+        "frames": 512,
+        "clock": 501,
+        "run_frames": 223,
+        "state": 4,
+        "area": 3,
+        "cell": 23,
+        "node": 46,
+        "actor": {
+          "kind": 1,
+          "type": 0,
+          "state": 0,
+          "timer": 0,
+          "x": 72,
+          "y": 350,
+          "z": 0,
+          "speed": 0,
+          "hp": 0,
+          "coll": 0,
+          "facing": 0
+        },
+        "health": [
+          24,
+          24
+        ],
+        "text": 0,
+        "camera": [
+          240,
+          224
+        ]
+      },
+      "state_changes": [
+        {
+          "frames": 512,
+          "clock": 501,
+          "run_frames": 223,
+          "state": 4,
+          "area": 3,
+          "cell": 23,
+          "node": 46,
+          "actor": {
+            "kind": 1,
+            "type": 0,
+            "state": 0,
+            "timer": 0,
+            "x": 72,
+            "y": 350,
+            "z": 0,
+            "speed": 0,
+            "hp": 0,
+            "coll": 0,
+            "facing": 0
+          },
+          "health": [
+            24,
+            24
+          ],
+          "text": 0,
+          "camera": [
+            240,
+            224
+          ]
+        }
+      ],
+      "minimum_health": 24,
+      "climb_frames": 0
+    },
+    {
+      "keys": [],
+      "frames": 1,
+      "before": {
+        "frames": 512,
+        "clock": 501,
+        "run_frames": 223,
+        "state": 4,
+        "area": 3,
+        "cell": 23,
+        "node": 46,
+        "actor": {
+          "kind": 1,
+          "type": 0,
+          "state": 0,
+          "timer": 0,
+          "x": 72,
+          "y": 350,
+          "z": 0,
+          "speed": 0,
+          "hp": 0,
+          "coll": 0,
+          "facing": 0
+        },
+        "health": [
+          24,
+          24
+        ],
+        "text": 0,
+        "camera": [
+          240,
+          224
+        ]
+      },
+      "after": {
+        "frames": 513,
+        "clock": 502,
+        "run_frames": 223,
+        "state": 4,
+        "area": 3,
+        "cell": 23,
+        "node": 46,
+        "actor": {
+          "kind": 1,
+          "type": 0,
+          "state": 0,
+          "timer": 0,
+          "x": 72,
+          "y": 350,
+          "z": 0,
+          "speed": 0,
+          "hp": 0,
+          "coll": 0,
+          "facing": 0
+        },
+        "health": [
+          24,
+          24
+        ],
+        "text": 0,
+        "camera": [
+          240,
+          224
+        ]
+      },
+      "state_changes": [
+        {
+          "frames": 513,
+          "clock": 502,
+          "run_frames": 223,
+          "state": 4,
+          "area": 3,
+          "cell": 23,
+          "node": 46,
+          "actor": {
+            "kind": 1,
+            "type": 0,
+            "state": 0,
+            "timer": 0,
+            "x": 72,
+            "y": 350,
+            "z": 0,
+            "speed": 0,
+            "hp": 0,
+            "coll": 0,
+            "facing": 0
+          },
+          "health": [
+            24,
+            24
+          ],
+          "text": 0,
+          "camera": [
+            240,
+            224
+          ]
+        }
+      ],
+      "minimum_health": 24,
+      "climb_frames": 0
+    },
+    {
+      "keys": [],
+      "frames": 1,
+      "before": {
+        "frames": 513,
+        "clock": 502,
+        "run_frames": 223,
+        "state": 4,
+        "area": 3,
+        "cell": 23,
+        "node": 46,
+        "actor": {
+          "kind": 1,
+          "type": 0,
+          "state": 0,
+          "timer": 0,
+          "x": 72,
+          "y": 350,
+          "z": 0,
+          "speed": 0,
+          "hp": 0,
+          "coll": 0,
+          "facing": 0
+        },
+        "health": [
+          24,
+          24
+        ],
+        "text": 0,
+        "camera": [
+          240,
+          224
+        ]
+      },
+      "after": {
+        "frames": 514,
+        "clock": 503,
+        "run_frames": 223,
+        "state": 4,
+        "area": 3,
+        "cell": 23,
+        "node": 46,
+        "actor": {
+          "kind": 1,
+          "type": 0,
+          "state": 0,
+          "timer": 0,
+          "x": 72,
+          "y": 350,
+          "z": 0,
+          "speed": 0,
+          "hp": 0,
+          "coll": 0,
+          "facing": 0
+        },
+        "health": [
+          24,
+          24
+        ],
+        "text": 0,
+        "camera": [
+          240,
+          224
+        ]
+      },
+      "state_changes": [
+        {
+          "frames": 514,
+          "clock": 503,
+          "run_frames": 223,
+          "state": 4,
+          "area": 3,
+          "cell": 23,
+          "node": 46,
+          "actor": {
+            "kind": 1,
+            "type": 0,
+            "state": 0,
+            "timer": 0,
+            "x": 72,
+            "y": 350,
+            "z": 0,
+            "speed": 0,
+            "hp": 0,
+            "coll": 0,
+            "facing": 0
+          },
+          "health": [
+            24,
+            24
+          ],
+          "text": 0,
+          "camera": [
+            240,
+            224
+          ]
+        }
+      ],
+      "minimum_health": 24,
+      "climb_frames": 0
+    },
+    {
+      "keys": [],
+      "frames": 1,
+      "before": {
+        "frames": 514,
+        "clock": 503,
+        "run_frames": 223,
+        "state": 4,
+        "area": 3,
+        "cell": 23,
+        "node": 46,
+        "actor": {
+          "kind": 1,
+          "type": 0,
+          "state": 0,
+          "timer": 0,
+          "x": 72,
+          "y": 350,
+          "z": 0,
+          "speed": 0,
+          "hp": 0,
+          "coll": 0,
+          "facing": 0
+        },
+        "health": [
+          24,
+          24
+        ],
+        "text": 0,
+        "camera": [
+          240,
+          224
+        ]
+      },
+      "after": {
+        "frames": 515,
+        "clock": 504,
+        "run_frames": 223,
+        "state": 4,
+        "area": 3,
+        "cell": 23,
+        "node": 46,
+        "actor": {
+          "kind": 1,
+          "type": 0,
+          "state": 0,
+          "timer": 0,
+          "x": 72,
+          "y": 350,
+          "z": 0,
+          "speed": 0,
+          "hp": 0,
+          "coll": 0,
+          "facing": 0
+        },
+        "health": [
+          24,
+          24
+        ],
+        "text": 0,
+        "camera": [
+          240,
+          224
+        ]
+      },
+      "state_changes": [
+        {
+          "frames": 515,
+          "clock": 504,
+          "run_frames": 223,
+          "state": 4,
+          "area": 3,
+          "cell": 23,
+          "node": 46,
+          "actor": {
+            "kind": 1,
+            "type": 0,
+            "state": 0,
+            "timer": 0,
+            "x": 72,
+            "y": 350,
+            "z": 0,
+            "speed": 0,
+            "hp": 0,
+            "coll": 0,
+            "facing": 0
+          },
+          "health": [
+            24,
+            24
+          ],
+          "text": 0,
+          "camera": [
+            240,
+            224
+          ]
+        }
+      ],
+      "minimum_health": 24,
+      "climb_frames": 0
+    },
+    {
+      "keys": [],
+      "frames": 1,
+      "before": {
+        "frames": 515,
+        "clock": 504,
+        "run_frames": 223,
+        "state": 4,
+        "area": 3,
+        "cell": 23,
+        "node": 46,
+        "actor": {
+          "kind": 1,
+          "type": 0,
+          "state": 0,
+          "timer": 0,
+          "x": 72,
+          "y": 350,
+          "z": 0,
+          "speed": 0,
+          "hp": 0,
+          "coll": 0,
+          "facing": 0
+        },
+        "health": [
+          24,
+          24
+        ],
+        "text": 0,
+        "camera": [
+          240,
+          224
+        ]
+      },
+      "after": {
+        "frames": 516,
+        "clock": 505,
+        "run_frames": 223,
+        "state": 4,
+        "area": 3,
+        "cell": 23,
+        "node": 46,
+        "actor": {
+          "kind": 1,
+          "type": 0,
+          "state": 0,
+          "timer": 0,
+          "x": 72,
+          "y": 350,
+          "z": 0,
+          "speed": 0,
+          "hp": 0,
+          "coll": 0,
+          "facing": 0
+        },
+        "health": [
+          24,
+          24
+        ],
+        "text": 0,
+        "camera": [
+          240,
+          224
+        ]
+      },
+      "state_changes": [
+        {
+          "frames": 516,
+          "clock": 505,
+          "run_frames": 223,
+          "state": 4,
+          "area": 3,
+          "cell": 23,
+          "node": 46,
+          "actor": {
+            "kind": 1,
+            "type": 0,
+            "state": 0,
+            "timer": 0,
+            "x": 72,
+            "y": 350,
+            "z": 0,
+            "speed": 0,
+            "hp": 0,
+            "coll": 0,
+            "facing": 0
+          },
+          "health": [
+            24,
+            24
+          ],
+          "text": 0,
+          "camera": [
+            240,
+            224
+          ]
+        }
+      ],
+      "minimum_health": 24,
+      "climb_frames": 0
+    },
+    {
+      "keys": [],
+      "frames": 1,
+      "before": {
+        "frames": 516,
+        "clock": 505,
+        "run_frames": 223,
+        "state": 4,
+        "area": 3,
+        "cell": 23,
+        "node": 46,
+        "actor": {
+          "kind": 1,
+          "type": 0,
+          "state": 0,
+          "timer": 0,
+          "x": 72,
+          "y": 350,
+          "z": 0,
+          "speed": 0,
+          "hp": 0,
+          "coll": 0,
+          "facing": 0
+        },
+        "health": [
+          24,
+          24
+        ],
+        "text": 0,
+        "camera": [
+          240,
+          224
+        ]
+      },
+      "after": {
+        "frames": 517,
+        "clock": 506,
+        "run_frames": 223,
+        "state": 4,
+        "area": 3,
+        "cell": 23,
+        "node": 46,
+        "actor": {
+          "kind": 1,
+          "type": 0,
+          "state": 0,
+          "timer": 0,
+          "x": 72,
+          "y": 350,
+          "z": 0,
+          "speed": 0,
+          "hp": 0,
+          "coll": 0,
+          "facing": 0
+        },
+        "health": [
+          24,
+          24
+        ],
+        "text": 0,
+        "camera": [
+          240,
+          224
+        ]
+      },
+      "state_changes": [
+        {
+          "frames": 517,
+          "clock": 506,
+          "run_frames": 223,
+          "state": 4,
+          "area": 3,
+          "cell": 23,
+          "node": 46,
+          "actor": {
+            "kind": 1,
+            "type": 0,
+            "state": 0,
+            "timer": 0,
+            "x": 72,
+            "y": 350,
+            "z": 0,
+            "speed": 0,
+            "hp": 0,
+            "coll": 0,
+            "facing": 0
+          },
+          "health": [
+            24,
+            24
+          ],
+          "text": 0,
+          "camera": [
+            240,
+            224
+          ]
+        }
+      ],
+      "minimum_health": 24,
+      "climb_frames": 0
+    },
+    {
+      "keys": [],
+      "frames": 1,
+      "before": {
+        "frames": 517,
+        "clock": 506,
+        "run_frames": 223,
+        "state": 4,
+        "area": 3,
+        "cell": 23,
+        "node": 46,
+        "actor": {
+          "kind": 1,
+          "type": 0,
+          "state": 0,
+          "timer": 0,
+          "x": 72,
+          "y": 350,
+          "z": 0,
+          "speed": 0,
+          "hp": 0,
+          "coll": 0,
+          "facing": 0
+        },
+        "health": [
+          24,
+          24
+        ],
+        "text": 0,
+        "camera": [
+          240,
+          224
+        ]
+      },
+      "after": {
+        "frames": 518,
+        "clock": 507,
+        "run_frames": 223,
+        "state": 4,
+        "area": 3,
+        "cell": 23,
+        "node": 46,
+        "actor": {
+          "kind": 1,
+          "type": 0,
+          "state": 0,
+          "timer": 0,
+          "x": 72,
+          "y": 350,
+          "z": 0,
+          "speed": 0,
+          "hp": 0,
+          "coll": 0,
+          "facing": 0
+        },
+        "health": [
+          24,
+          24
+        ],
+        "text": 0,
+        "camera": [
+          240,
+          224
+        ]
+      },
+      "state_changes": [
+        {
+          "frames": 518,
+          "clock": 507,
+          "run_frames": 223,
+          "state": 4,
+          "area": 3,
+          "cell": 23,
+          "node": 46,
+          "actor": {
+            "kind": 1,
+            "type": 0,
+            "state": 0,
+            "timer": 0,
+            "x": 72,
+            "y": 350,
+            "z": 0,
+            "speed": 0,
+            "hp": 0,
+            "coll": 0,
+            "facing": 0
+          },
+          "health": [
+            24,
+            24
+          ],
+          "text": 0,
+          "camera": [
+            240,
+            224
+          ]
+        }
+      ],
+      "minimum_health": 24,
+      "climb_frames": 0
+    },
+    {
+      "keys": [],
+      "frames": 1,
+      "before": {
+        "frames": 518,
+        "clock": 507,
+        "run_frames": 223,
+        "state": 4,
+        "area": 3,
+        "cell": 23,
+        "node": 46,
+        "actor": {
+          "kind": 1,
+          "type": 0,
+          "state": 0,
+          "timer": 0,
+          "x": 72,
+          "y": 350,
+          "z": 0,
+          "speed": 0,
+          "hp": 0,
+          "coll": 0,
+          "facing": 0
+        },
+        "health": [
+          24,
+          24
+        ],
+        "text": 0,
+        "camera": [
+          240,
+          224
+        ]
+      },
+      "after": {
+        "frames": 519,
+        "clock": 508,
+        "run_frames": 223,
+        "state": 4,
+        "area": 3,
+        "cell": 23,
+        "node": 46,
+        "actor": {
+          "kind": 1,
+          "type": 0,
+          "state": 0,
+          "timer": 0,
+          "x": 72,
+          "y": 350,
+          "z": 0,
+          "speed": 0,
+          "hp": 0,
+          "coll": 0,
+          "facing": 0
+        },
+        "health": [
+          24,
+          24
+        ],
+        "text": 0,
+        "camera": [
+          240,
+          224
+        ]
+      },
+      "state_changes": [
+        {
+          "frames": 519,
+          "clock": 508,
+          "run_frames": 223,
+          "state": 4,
+          "area": 3,
+          "cell": 23,
+          "node": 46,
+          "actor": {
+            "kind": 1,
+            "type": 0,
+            "state": 0,
+            "timer": 0,
+            "x": 72,
+            "y": 350,
+            "z": 0,
+            "speed": 0,
+            "hp": 0,
+            "coll": 0,
+            "facing": 0
+          },
+          "health": [
+            24,
+            24
+          ],
+          "text": 0,
+          "camera": [
+            240,
+            224
+          ]
+        }
+      ],
+      "minimum_health": 24,
+      "climb_frames": 0
+    },
+    {
+      "keys": [],
+      "frames": 1,
+      "before": {
+        "frames": 519,
+        "clock": 508,
+        "run_frames": 223,
+        "state": 4,
+        "area": 3,
+        "cell": 23,
+        "node": 46,
+        "actor": {
+          "kind": 1,
+          "type": 0,
+          "state": 0,
+          "timer": 0,
+          "x": 72,
+          "y": 350,
+          "z": 0,
+          "speed": 0,
+          "hp": 0,
+          "coll": 0,
+          "facing": 0
+        },
+        "health": [
+          24,
+          24
+        ],
+        "text": 0,
+        "camera": [
+          240,
+          224
+        ]
+      },
+      "after": {
+        "frames": 520,
+        "clock": 509,
+        "run_frames": 223,
+        "state": 4,
+        "area": 3,
+        "cell": 23,
+        "node": 46,
+        "actor": {
+          "kind": 1,
+          "type": 0,
+          "state": 0,
+          "timer": 0,
+          "x": 72,
+          "y": 350,
+          "z": 0,
+          "speed": 0,
+          "hp": 0,
+          "coll": 0,
+          "facing": 0
+        },
+        "health": [
+          24,
+          24
+        ],
+        "text": 0,
+        "camera": [
+          240,
+          224
+        ]
+      },
+      "state_changes": [
+        {
+          "frames": 520,
+          "clock": 509,
+          "run_frames": 223,
+          "state": 4,
+          "area": 3,
+          "cell": 23,
+          "node": 46,
+          "actor": {
+            "kind": 1,
+            "type": 0,
+            "state": 0,
+            "timer": 0,
+            "x": 72,
+            "y": 350,
+            "z": 0,
+            "speed": 0,
+            "hp": 0,
+            "coll": 0,
+            "facing": 0
+          },
+          "health": [
+            24,
+            24
+          ],
+          "text": 0,
+          "camera": [
+            240,
+            224
+          ]
+        }
+      ],
+      "minimum_health": 24,
+      "climb_frames": 0
+    },
+    {
+      "keys": [],
+      "frames": 1,
+      "before": {
+        "frames": 520,
+        "clock": 509,
+        "run_frames": 223,
+        "state": 4,
+        "area": 3,
+        "cell": 23,
+        "node": 46,
+        "actor": {
+          "kind": 1,
+          "type": 0,
+          "state": 0,
+          "timer": 0,
+          "x": 72,
+          "y": 350,
+          "z": 0,
+          "speed": 0,
+          "hp": 0,
+          "coll": 0,
+          "facing": 0
+        },
+        "health": [
+          24,
+          24
+        ],
+        "text": 0,
+        "camera": [
+          240,
+          224
+        ]
+      },
+      "after": {
+        "frames": 521,
+        "clock": 510,
+        "run_frames": 223,
+        "state": 4,
+        "area": 3,
+        "cell": 23,
+        "node": 46,
+        "actor": {
+          "kind": 1,
+          "type": 0,
+          "state": 0,
+          "timer": 0,
+          "x": 72,
+          "y": 350,
+          "z": 0,
+          "speed": 0,
+          "hp": 0,
+          "coll": 0,
+          "facing": 0
+        },
+        "health": [
+          24,
+          24
+        ],
+        "text": 0,
+        "camera": [
+          240,
+          224
+        ]
+      },
+      "state_changes": [
+        {
+          "frames": 521,
+          "clock": 510,
+          "run_frames": 223,
+          "state": 4,
+          "area": 3,
+          "cell": 23,
+          "node": 46,
+          "actor": {
+            "kind": 1,
+            "type": 0,
+            "state": 0,
+            "timer": 0,
+            "x": 72,
+            "y": 350,
+            "z": 0,
+            "speed": 0,
+            "hp": 0,
+            "coll": 0,
+            "facing": 0
+          },
+          "health": [
+            24,
+            24
+          ],
+          "text": 0,
+          "camera": [
+            240,
+            224
+          ]
+        }
+      ],
+      "minimum_health": 24,
+      "climb_frames": 0
+    },
+    {
+      "keys": [],
+      "frames": 1,
+      "before": {
+        "frames": 521,
+        "clock": 510,
+        "run_frames": 223,
+        "state": 4,
+        "area": 3,
+        "cell": 23,
+        "node": 46,
+        "actor": {
+          "kind": 1,
+          "type": 0,
+          "state": 0,
+          "timer": 0,
+          "x": 72,
+          "y": 350,
+          "z": 0,
+          "speed": 0,
+          "hp": 0,
+          "coll": 0,
+          "facing": 0
+        },
+        "health": [
+          24,
+          24
+        ],
+        "text": 0,
+        "camera": [
+          240,
+          224
+        ]
+      },
+      "after": {
+        "frames": 522,
+        "clock": 511,
+        "run_frames": 223,
+        "state": 4,
+        "area": 3,
+        "cell": 23,
+        "node": 46,
+        "actor": {
+          "kind": 1,
+          "type": 0,
+          "state": 0,
+          "timer": 0,
+          "x": 72,
+          "y": 350,
+          "z": 0,
+          "speed": 0,
+          "hp": 0,
+          "coll": 0,
+          "facing": 0
+        },
+        "health": [
+          24,
+          24
+        ],
+        "text": 0,
+        "camera": [
+          240,
+          224
+        ]
+      },
+      "state_changes": [
+        {
+          "frames": 522,
+          "clock": 511,
+          "run_frames": 223,
+          "state": 4,
+          "area": 3,
+          "cell": 23,
+          "node": 46,
+          "actor": {
+            "kind": 1,
+            "type": 0,
+            "state": 0,
+            "timer": 0,
+            "x": 72,
+            "y": 350,
+            "z": 0,
+            "speed": 0,
+            "hp": 0,
+            "coll": 0,
+            "facing": 0
+          },
+          "health": [
+            24,
+            24
+          ],
+          "text": 0,
+          "camera": [
+            240,
+            224
+          ]
+        }
+      ],
+      "minimum_health": 24,
+      "climb_frames": 0
+    },
+    {
+      "keys": [],
+      "frames": 1,
+      "before": {
+        "frames": 522,
+        "clock": 511,
+        "run_frames": 223,
+        "state": 4,
+        "area": 3,
+        "cell": 23,
+        "node": 46,
+        "actor": {
+          "kind": 1,
+          "type": 0,
+          "state": 0,
+          "timer": 0,
+          "x": 72,
+          "y": 350,
+          "z": 0,
+          "speed": 0,
+          "hp": 0,
+          "coll": 0,
+          "facing": 0
+        },
+        "health": [
+          24,
+          24
+        ],
+        "text": 0,
+        "camera": [
+          240,
+          224
+        ]
+      },
+      "after": {
+        "frames": 523,
+        "clock": 512,
+        "run_frames": 223,
+        "state": 4,
+        "area": 3,
+        "cell": 23,
+        "node": 46,
+        "actor": {
+          "kind": 1,
+          "type": 0,
+          "state": 0,
+          "timer": 0,
+          "x": 72,
+          "y": 350,
+          "z": 0,
+          "speed": 0,
+          "hp": 0,
+          "coll": 0,
+          "facing": 0
+        },
+        "health": [
+          24,
+          24
+        ],
+        "text": 0,
+        "camera": [
+          240,
+          224
+        ]
+      },
+      "state_changes": [
+        {
+          "frames": 523,
+          "clock": 512,
+          "run_frames": 223,
+          "state": 4,
+          "area": 3,
+          "cell": 23,
+          "node": 46,
+          "actor": {
+            "kind": 1,
+            "type": 0,
+            "state": 0,
+            "timer": 0,
+            "x": 72,
+            "y": 350,
+            "z": 0,
+            "speed": 0,
+            "hp": 0,
+            "coll": 0,
+            "facing": 0
+          },
+          "health": [
+            24,
+            24
+          ],
+          "text": 0,
+          "camera": [
+            240,
+            224
+          ]
+        }
+      ],
+      "minimum_health": 24,
+      "climb_frames": 0
+    },
+    {
+      "keys": [],
+      "frames": 1,
+      "before": {
+        "frames": 523,
+        "clock": 512,
+        "run_frames": 223,
+        "state": 4,
+        "area": 3,
+        "cell": 23,
+        "node": 46,
+        "actor": {
+          "kind": 1,
+          "type": 0,
+          "state": 0,
+          "timer": 0,
+          "x": 72,
+          "y": 350,
+          "z": 0,
+          "speed": 0,
+          "hp": 0,
+          "coll": 0,
+          "facing": 0
+        },
+        "health": [
+          24,
+          24
+        ],
+        "text": 0,
+        "camera": [
+          240,
+          224
+        ]
+      },
+      "after": {
+        "frames": 524,
+        "clock": 513,
+        "run_frames": 223,
+        "state": 4,
+        "area": 3,
+        "cell": 23,
+        "node": 46,
+        "actor": {
+          "kind": 1,
+          "type": 0,
+          "state": 0,
+          "timer": 0,
+          "x": 72,
+          "y": 350,
+          "z": 0,
+          "speed": 0,
+          "hp": 0,
+          "coll": 0,
+          "facing": 0
+        },
+        "health": [
+          24,
+          24
+        ],
+        "text": 0,
+        "camera": [
+          240,
+          224
+        ]
+      },
+      "state_changes": [
+        {
+          "frames": 524,
+          "clock": 513,
+          "run_frames": 223,
+          "state": 4,
+          "area": 3,
+          "cell": 23,
+          "node": 46,
+          "actor": {
+            "kind": 1,
+            "type": 0,
+            "state": 0,
+            "timer": 0,
+            "x": 72,
+            "y": 350,
+            "z": 0,
+            "speed": 0,
+            "hp": 0,
+            "coll": 0,
+            "facing": 0
+          },
+          "health": [
+            24,
+            24
+          ],
+          "text": 0,
+          "camera": [
+            240,
+            224
+          ]
+        }
+      ],
+      "minimum_health": 24,
+      "climb_frames": 0
+    },
+    {
+      "keys": [],
+      "frames": 2,
+      "before": {
+        "frames": 524,
+        "clock": 513,
+        "run_frames": 223,
+        "state": 4,
+        "area": 3,
+        "cell": 23,
+        "node": 46,
+        "actor": {
+          "kind": 1,
+          "type": 0,
+          "state": 0,
+          "timer": 0,
+          "x": 72,
+          "y": 350,
+          "z": 0,
+          "speed": 0,
+          "hp": 0,
+          "coll": 0,
+          "facing": 0
+        },
+        "health": [
+          24,
+          24
+        ],
+        "text": 0,
+        "camera": [
+          240,
+          224
+        ]
+      },
+      "after": {
+        "frames": 526,
+        "clock": 515,
+        "run_frames": 223,
+        "state": 4,
+        "area": 3,
+        "cell": 23,
+        "node": 46,
+        "actor": {
+          "kind": 1,
+          "type": 0,
+          "state": 0,
+          "timer": 0,
+          "x": 72,
+          "y": 350,
+          "z": 0,
+          "speed": 0,
+          "hp": 0,
+          "coll": 0,
+          "facing": 0
+        },
+        "health": [
+          24,
+          24
+        ],
+        "text": 0,
+        "camera": [
+          240,
+          224
+        ]
+      },
+      "state_changes": [
+        {
+          "frames": 525,
+          "clock": 514,
+          "run_frames": 223,
+          "state": 4,
+          "area": 3,
+          "cell": 23,
+          "node": 46,
+          "actor": {
+            "kind": 1,
+            "type": 0,
+            "state": 0,
+            "timer": 0,
+            "x": 72,
+            "y": 350,
+            "z": 0,
+            "speed": 0,
+            "hp": 0,
+            "coll": 0,
+            "facing": 0
+          },
+          "health": [
+            24,
+            24
+          ],
+          "text": 0,
+          "camera": [
+            240,
+            224
+          ]
+        }
+      ],
+      "minimum_health": 24,
+      "climb_frames": 0
+    },
+    {
+      "keys": [
+        "R"
+      ],
+      "frames": 2,
+      "before": {
+        "frames": 526,
+        "clock": 515,
+        "run_frames": 223,
+        "state": 4,
+        "area": 3,
+        "cell": 23,
+        "node": 46,
+        "actor": {
+          "kind": 1,
+          "type": 0,
+          "state": 0,
+          "timer": 0,
+          "x": 72,
+          "y": 350,
+          "z": 0,
+          "speed": 0,
+          "hp": 0,
+          "coll": 0,
+          "facing": 0
+        },
+        "health": [
+          24,
+          24
+        ],
+        "text": 0,
+        "camera": [
+          240,
+          224
+        ]
+      },
+      "after": {
+        "frames": 528,
+        "clock": 517,
+        "run_frames": 223,
+        "state": 4,
+        "area": 3,
+        "cell": 23,
+        "node": 46,
+        "actor": {
+          "kind": 1,
+          "type": 0,
+          "state": 0,
+          "timer": 0,
+          "x": 72,
+          "y": 350,
+          "z": 0,
+          "speed": 0,
+          "hp": 0,
+          "coll": 0,
+          "facing": 0
+        },
+        "health": [
+          24,
+          24
+        ],
+        "text": 0,
+        "camera": [
+          240,
+          224
+        ]
+      },
+      "state_changes": [
+        {
+          "frames": 527,
+          "clock": 516,
+          "run_frames": 223,
+          "state": 4,
+          "area": 3,
+          "cell": 23,
+          "node": 46,
+          "actor": {
+            "kind": 1,
+            "type": 0,
+            "state": 0,
+            "timer": 0,
+            "x": 72,
+            "y": 350,
+            "z": 0,
+            "speed": 0,
+            "hp": 0,
+            "coll": 0,
+            "facing": 0
+          },
+          "health": [
+            24,
+            24
+          ],
+          "text": 0,
+          "camera": [
+            240,
+            224
+          ]
+        }
+      ],
+      "minimum_health": 24,
+      "climb_frames": 0
+    },
+    {
+      "keys": [],
+      "frames": 80,
+      "before": {
+        "frames": 528,
+        "clock": 517,
+        "run_frames": 223,
+        "state": 4,
+        "area": 3,
+        "cell": 23,
+        "node": 46,
+        "actor": {
+          "kind": 1,
+          "type": 0,
+          "state": 0,
+          "timer": 0,
+          "x": 72,
+          "y": 350,
+          "z": 0,
+          "speed": 0,
+          "hp": 0,
+          "coll": 0,
+          "facing": 0
+        },
+        "health": [
+          24,
+          24
+        ],
+        "text": 0,
+        "camera": [
+          240,
+          224
+        ]
+      },
+      "after": {
+        "frames": 608,
+        "clock": 597,
+        "run_frames": 223,
+        "state": 4,
+        "area": 3,
+        "cell": 23,
+        "node": 46,
+        "actor": {
+          "kind": 1,
+          "type": 0,
+          "state": 0,
+          "timer": 0,
+          "x": 72,
+          "y": 350,
+          "z": 0,
+          "speed": 0,
+          "hp": 0,
+          "coll": 0,
+          "facing": 0
+        },
+        "health": [
+          24,
+          24
+        ],
+        "text": 0,
+        "camera": [
+          240,
+          224
+        ]
+      },
+      "state_changes": [
+        {
+          "frames": 529,
+          "clock": 518,
+          "run_frames": 223,
+          "state": 4,
+          "area": 3,
+          "cell": 23,
+          "node": 46,
+          "actor": {
+            "kind": 1,
+            "type": 0,
+            "state": 0,
+            "timer": 0,
+            "x": 72,
+            "y": 350,
+            "z": 0,
+            "speed": 0,
+            "hp": 0,
+            "coll": 0,
+            "facing": 0
+          },
+          "health": [
+            24,
+            24
+          ],
+          "text": 0,
+          "camera": [
+            240,
+            224
+          ]
+        }
+      ],
+      "minimum_health": 24,
+      "climb_frames": 0
+    },
+    {
+      "keys": [
+        "START"
+      ],
+      "frames": 2,
+      "before": {
+        "frames": 608,
+        "clock": 597,
+        "run_frames": 223,
+        "state": 4,
+        "area": 3,
+        "cell": 23,
+        "node": 46,
+        "actor": {
+          "kind": 1,
+          "type": 0,
+          "state": 0,
+          "timer": 0,
+          "x": 72,
+          "y": 350,
+          "z": 0,
+          "speed": 0,
+          "hp": 0,
+          "coll": 0,
+          "facing": 0
+        },
+        "health": [
+          24,
+          24
+        ],
+        "text": 0,
+        "camera": [
+          240,
+          224
+        ]
+      },
+      "after": {
+        "frames": 610,
+        "clock": 599,
+        "run_frames": 223,
+        "state": 4,
+        "area": 3,
+        "cell": 23,
+        "node": 46,
+        "actor": {
+          "kind": 1,
+          "type": 0,
+          "state": 0,
+          "timer": 0,
+          "x": 72,
+          "y": 350,
+          "z": 0,
+          "speed": 0,
+          "hp": 0,
+          "coll": 0,
+          "facing": 0
+        },
+        "health": [
+          24,
+          24
+        ],
+        "text": 0,
+        "camera": [
+          240,
+          224
+        ]
+      },
+      "state_changes": [
+        {
+          "frames": 609,
+          "clock": 598,
+          "run_frames": 223,
+          "state": 4,
+          "area": 3,
+          "cell": 23,
+          "node": 46,
+          "actor": {
+            "kind": 1,
+            "type": 0,
+            "state": 0,
+            "timer": 0,
+            "x": 72,
+            "y": 350,
+            "z": 0,
+            "speed": 0,
+            "hp": 0,
+            "coll": 0,
+            "facing": 0
+          },
+          "health": [
+            24,
+            24
+          ],
+          "text": 0,
+          "camera": [
+            240,
+            224
+          ]
+        }
+      ],
+      "minimum_health": 24,
+      "climb_frames": 0
+    },
+    {
+      "keys": [],
+      "frames": 2,
+      "before": {
+        "frames": 610,
+        "clock": 599,
+        "run_frames": 223,
+        "state": 4,
+        "area": 3,
+        "cell": 23,
+        "node": 46,
+        "actor": {
+          "kind": 1,
+          "type": 0,
+          "state": 0,
+          "timer": 0,
+          "x": 72,
+          "y": 350,
+          "z": 0,
+          "speed": 0,
+          "hp": 0,
+          "coll": 0,
+          "facing": 0
+        },
+        "health": [
+          24,
+          24
+        ],
+        "text": 0,
+        "camera": [
+          240,
+          224
+        ]
+      },
+      "after": {
+        "frames": 612,
+        "clock": 601,
+        "run_frames": 223,
+        "state": 1,
+        "area": 3,
+        "cell": 23,
+        "node": 46,
+        "actor": {
+          "kind": 1,
+          "type": 0,
+          "state": 0,
+          "timer": 0,
+          "x": 72,
+          "y": 350,
+          "z": 0,
+          "speed": 0,
+          "hp": 0,
+          "coll": 0,
+          "facing": 0
+        },
+        "health": [
+          24,
+          24
+        ],
+        "text": 0,
+        "camera": [
+          240,
+          224
+        ]
+      },
+      "state_changes": [
+        {
+          "frames": 611,
+          "clock": 600,
+          "run_frames": 223,
+          "state": 4,
+          "area": 3,
+          "cell": 23,
+          "node": 46,
+          "actor": {
+            "kind": 1,
+            "type": 0,
+            "state": 0,
+            "timer": 0,
+            "x": 72,
+            "y": 350,
+            "z": 0,
+            "speed": 0,
+            "hp": 0,
+            "coll": 0,
+            "facing": 0
+          },
+          "health": [
+            24,
+            24
+          ],
+          "text": 0,
+          "camera": [
+            240,
+            224
+          ]
+        }
+      ],
+      "minimum_health": 24,
+      "climb_frames": 0
+    },
+    {
+      "keys": [],
+      "frames": 6,
+      "before": {
+        "frames": 612,
+        "clock": 601,
+        "run_frames": 223,
+        "state": 1,
+        "area": 3,
+        "cell": 23,
+        "node": 46,
+        "actor": {
+          "kind": 1,
+          "type": 0,
+          "state": 0,
+          "timer": 0,
+          "x": 72,
+          "y": 350,
+          "z": 0,
+          "speed": 0,
+          "hp": 0,
+          "coll": 0,
+          "facing": 0
+        },
+        "health": [
+          24,
+          24
+        ],
+        "text": 0,
+        "camera": [
+          240,
+          224
+        ]
+      },
+      "after": {
+        "frames": 618,
+        "clock": 607,
+        "run_frames": 227,
+        "state": 1,
+        "area": 3,
+        "cell": 23,
+        "node": 46,
+        "actor": {
+          "kind": 1,
+          "type": 0,
+          "state": 0,
+          "timer": 0,
+          "x": 72,
+          "y": 350,
+          "z": 0,
+          "speed": 0,
+          "hp": 0,
+          "coll": 0,
+          "facing": 0
+        },
+        "health": [
+          24,
+          24
+        ],
+        "text": 0,
+        "camera": [
+          224,
+          224
+        ]
+      },
+      "state_changes": [
+        {
+          "frames": 613,
+          "clock": 602,
+          "run_frames": 223,
+          "state": 1,
+          "area": 3,
+          "cell": 23,
+          "node": 46,
+          "actor": {
+            "kind": 1,
+            "type": 0,
+            "state": 0,
+            "timer": 0,
+            "x": 72,
+            "y": 350,
+            "z": 0,
+            "speed": 0,
+            "hp": 0,
+            "coll": 0,
+            "facing": 0
+          },
+          "health": [
+            24,
+            24
+          ],
+          "text": 0,
+          "camera": [
+            240,
+            224
+          ]
+        }
+      ],
+      "minimum_health": 24,
+      "climb_frames": 0
+    }
+  ],
+  "checks": [
+    {
+      "name": "normal opening draft completed with positive health",
+      "passed": true,
+      "observed": null
+    },
+    {
+      "name": "navigation begins in living ordinary ground state",
+      "passed": true,
+      "observed": {
+        "frames": 274,
+        "clock": 263,
+        "run_frames": 173,
+        "state": 1,
+        "area": 0,
+        "cell": 0,
+        "node": 46,
+        "actor": {
+          "kind": 1,
+          "type": 0,
+          "state": 0,
+          "timer": 0,
+          "x": 200,
+          "y": 270,
+          "z": 0,
+          "speed": 0,
+          "hp": 0,
+          "coll": 0,
+          "facing": 0
+        },
+        "health": [
+          24,
+          24
+        ],
+        "text": 0,
+        "camera": [
+          80,
+          160
+        ]
+      }
+    },
+    {
+      "name": "actual UP input enters Cream through Drain ladder",
+      "passed": true,
+      "observed": null
+    },
+    {
+      "name": "navigation begins in living ordinary ground state",
+      "passed": true,
+      "observed": {
+        "frames": 360,
+        "clock": 349,
+        "run_frames": 214,
+        "state": 1,
+        "area": 3,
+        "cell": 23,
+        "node": 46,
+        "actor": {
+          "kind": 1,
+          "type": 0,
+          "state": 0,
+          "timer": 0,
+          "x": 400,
+          "y": 350,
+          "z": 0,
+          "speed": 0,
+          "hp": 0,
+          "coll": 0,
+          "facing": 0
+        },
+        "health": [
+          24,
+          24
+        ],
+        "text": 0,
+        "camera": [
+          272,
+          224
+        ]
+      }
+    }
+  ],
+  "draft_choices": [
+    {
+      "round": 0,
+      "index": 0,
+      "item": 7
+    },
+    {
+      "round": 1,
+      "index": 1,
+      "item": 89
+    },
+    {
+      "round": 2,
+      "index": 2,
+      "item": 76
+    }
+  ]
+}
