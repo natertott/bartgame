@@ -1,0 +1,13 @@
+{
+  "BART_CREAM": 6,
+  "BART_FOREST": 32,
+  "BART_SWING": 3,
+  "BART_SEWER": 9,
+  "BART_UI": 6,
+  "BART_MENU": 1,
+  "BART_HUD": 1,
+  "BART_ENEMY": 11,
+  "BART_ENEMY_LAB": 0,
+  "PROFILE": 0,
+  "rom_sha256": "2b8559c3cac89f483d3a34d48aa6eb5144a4fc2b3b7b265808b800672216a1b1"
+}

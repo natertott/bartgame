@@ -1,5 +1,11 @@
 # BARTGAME downloads
 
+## Fractured Rind — optional Cream refinement
+
+[Playable review ROM, ZIP, checksums and actual mGBA gallery](../cream-depth-review/README.md).
+Study5's palette, unequal native rock spans, clear drop ledges and destination
+shadows derived from actual traversal. Build with `BART_CREAM=6`.
+
 ## Five optional Cream art directions
 
 - [Download all five playable studies](https://raw.githubusercontent.com/natertott/bartgame/cream-art-studies/downloads/cream-art-studies-4966dab4/five-cream-art-studies.zip)

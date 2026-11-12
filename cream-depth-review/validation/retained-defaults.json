@@ -1,0 +1,15 @@
+{
+  "production_default": {
+    "BART_CREAM": 0,
+    "actual_sha256": "0dd8554384b53e618140f8c61590fc7e6a7ff0888f296ece034a95f357b34fdd",
+    "expected_sha256": "0dd8554384b53e618140f8c61590fc7e6a7ff0888f296ece034a95f357b34fdd",
+    "reproduced_after_final_changes": true
+  },
+  "previous_rind": {
+    "BART_CREAM": 5,
+    "actual_sha256": "37f4e3542454aa665597aa530857cd0121013879920f35b5ab4c7ed56748da0f",
+    "expected_sha256": "37f4e3542454aa665597aa530857cd0121013879920f35b5ab4c7ed56748da0f",
+    "note": "Rebuilt before final Cream6-only compositor/backing refinements; default and5 dispatch/link inputs unchanged."
+  },
+  "workspace_default_restored": true
+}

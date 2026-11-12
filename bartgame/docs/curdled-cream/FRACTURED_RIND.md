@@ -1,168 +1,150 @@
-# Fractured Rind: optional Cream synthesis6
+# Fractured Rind: optional Cream study 6
 
-Status: exploratory local synthesis from the user's latest review, not an
-adopted default. Build with `make -C bartgame BART_CREAM=6`; production0 and
-studies1–5 remain selectable. The
-[review gallery](../../../cream-depth-review/README.md) distinguishes source
-drawings, frozen registered room surveys and ordinary live mGBA footage.
+This exploratory local synthesis follows the user's preference for study 2's
+contrast/arches, study 3/5's wall textures and especially study 5's colors.
+Build with `make -C bartgame BART_CREAM=6`. Production 0 and studies 1–5 remain
+selectable; this pass does not adopt a new default.
 
-## User direction and material choices
+The [gallery](../../../cream-depth-review/README.md) separates source drawings,
+frozen registered room mosaics and ordinary live mGBA footage.
 
-The user selected study2's visual contrast and arch idea, study3/5's wall
-textures, and particularly study5's colors. They rejected repetitive small
-motifs, unclear blocked/drop borders and missing landing depth. This pass
-retains study5's exact eight RGB555 banks and quiet pale ground. It combines
-broader mineral planes, irregular grime seams, uneven strata and occasional
-large closed architectural reliefs. The actual cave uses study2's pointed
-construction in study5's palette roles, with an uneven broken crown.
+## Materials and composition
 
-Healthy stone has mostly dormant stress seams. Sour stone loses chips and
-develops wider bruised cracks. Deep stone exposes branching violet cores and
-small attached glints. The same underlying masses remain recognizable;
-corruption changes the stone's structure as well as its color. Ground remains
-subordinate to actors, interactables and navigation.
+Study 5's exact eight RGB555 environment banks and quiet pale ground remain.
+Broad mineral planes, unequal overhangs, irregular grime seams and fractured
+strata replace the repeated little fans. The actual cave uses study 2's pointed
+construction in study 5's palette roles, with a damaged asymmetric crown.
 
-## Compose after generating the room
+Healthy stone carries dormant stress seams. Sour stone loses chips and gains
+wider bruised cracks. Deep stone exposes branching violet cores with small
+attached glints. The same masses remain recognizable while corruption changes
+both material structure and palette. Floors remain quieter than actors,
+interactables and useful contact points.
 
-`art/cream_depth_walls.py` authors seven unequal native compositions:
+`art/cream_depth_walls.py` authors native paintings at final pixel coordinates:
 
-| Family | Native size | Purpose |
+| Family | Native size | Role |
 | --- | --- | --- |
-| Two shelf/fold faces |64×32 | Large unequal overhangs, broad lit planes and damp seams. |
-| Two fractured spans |96×32 | Long connected stress fractures and asymmetric ribs. |
-| One blind arch |64×48 | Closed rock relief, with a legible continuous backing. |
-| Two compact remnants |32×32 | Narrow leftover rock that cannot fit a full span. |
+| Two shelf/fold faces | 64×32 | Unequal overhangs and broad lit planes. |
+| Two fractured spans | 96×32 | Connected stress fractures and asymmetric ribs. |
+| One blind arch | 64×48 | Closed architectural relief with solid rock backing. |
+| Two compact remnants | 32×32 | Detail for genuinely narrow remaining wall. |
+| Continuous backing | 128×48 | Quiet strata/grime beneath and between panels. |
 
-These are drawings at their final coordinates, cut into16×16 cells after
-composition. They are not enlarged tiny tiles or downsampled illustrations.
-The quieter filler supports the large forms without adding a small repeated
-arch, crack or fan to every cell.
+The pictures are cut into 16×16 cells after drawing. They are not enlarged
+tiny tiles or downsampled illustrations. Backing phase remains continuous
+across the room face, so quiet areas do not expose a grid of small scallops.
 
-`src/cream_visuals.c` measures actual unused midface after semantic routes and
-room content have been drawn. A full panel must fit the measured rectangle;
-it is not clipped around a cave, waterfall, climb strip, gate or prop. The
-deterministic seeded choice mixes unequal96/64px spans and compact32px
-remnants according to available space, leaves quiet breaks, and permits at most one complete blind arch in
-a room when space allows. A blind arch is decorative sealed stone. Only real
-entrances receive the open cave mouth and accessible approach.
+## Fit art to actual generated wall
 
-This refines picture placement rather than regenerating the maze. Each
-replacement is rejected unless its terrain type, collision and property flags
-match the existing cell. Physical room geometry, directed route graph,
-climbing behavior, enemy/content placement and gate requirements remain under
-their existing authorities. The optional compositor is not a per-frame effect;
-the room receives its wall composition during construction and its edge/cue
-refresh after a gate changes.
+`src/cream_visuals.c` measures unused midface after semantic routes and room
+content have been drawn. A complete panel must fit its measured footprint;
+it cannot clip around a cave, waterfall, climb shaft, gate or prop. Seeded
+staggered anchors mix unequal forms, prevent an identical panel immediately
+meeting itself, and cap foreground panel coverage at three quarters of the
+available face. At most one complete blind arch appears when space permits.
+Its closed stone backing distinguishes it from a real open cave and approach.
 
-## Edges, height and destination shading
+This changes picture composition, not the maze. Substitutions must preserve
+terrain type, collision, property and glitter metadata. Existing code remains
+authoritative for geometry, directed routes, climbing, enemies/content and
+requirements. The wall composition runs during room construction; edge and
+landing refresh runs when a gate changes, not every frame.
 
-`art/cream_depth_edges.py` separates raised blocked mass from the low open drop
-sill. Neighbor-aware side returns join the blocked span; actual drop intervals
-have endcaps. An open takeoff should not have a second impassable-looking curb
-directly beneath it. Regular pale climb grips retain their exclusive meaning.
+## Ledge borders and truthful destination shade
 
-A dark seam at the bottom of the vertical face and a shallow textured floor
-toe give the wall contact with its own ground. These structural shadows are
-distinct from a drop's destination patch. Incoming directed drop edges use
-`cream_room_arrival()` to obtain the actual target feet, including cross-room
-and multi-screen routes. The original floor shading is a48×32 native master
-split into six cells, with most visible shade concentrated near the top and a
-broken shallow lower boundary. Quiet floor marks survive through it; no black
-pit contour, bright target center or arrow is added.
+`art/cream_depth_edges.py` distinguishes raised blocked rock from a low open
+sill. Neighbor-aware returns join the blocked rim; actual drop intervals have
+endcaps and no second impassable-looking curb directly below. Regular pale
+grips remain exclusive to real climbable shafts.
 
-The destination patch is applied only to compatible plain floor and path.
-Path-specific drawings retain the pressed path grain beneath the shade;
-hazards, gates and objects keep their own drawings. Routes behind clearable gates keep
-their destination cue inactive until clearing. A cape-only gap can retain its
-destination cue because acquiring the cape does not erase the physical pit.
-Read-only cache telemetry records the arrival and painted portions so native testing can
-compare the advertised landing with the real transition. It is not a second
-source of gameplay coordinates.
+The cliff toe and immediate textured floor shade describe wall contact. A
+separate landing patch marks actual incoming directed drops. Coordinates come
+from `cream_room_arrival()`, including cross-room and multi-screen routes; the
+picture cache is not a second source of gameplay destinations.
 
-Mount Crenel's viewed map helps establish plane hierarchy and the raised-rim
-versus low-sill distinction. The destination cue is the user's requested
-enhancement. The [reference note](CRENEL_REFERENCE.md) records exact inspected
-URLs, image/crop digests, blocked sources, and observations versus inference.
-No Nintendo pixels supply these original game paintings.
+The 48×32 landing master has a shallow asymmetric shadow, retained floor grain
+and a broken lower edge. It has no black pit outline, bright target or arrow.
+Compatible plain floor and paths receive their matching shaded drawings;
+path-specific variants retain the pressed route grain. Hazards, gates and
+objects keep their own drawings. Clearable gates suppress their route's
+active destination cue until opened; cape-only gaps may retain it because the
+physical pit remains after acquiring the cape. Read-only telemetry records the
+real target and painted portions for native arrival comparisons.
 
-## Independent source-art critique
+The [Mount Crenel reference note](CRENEL_REFERENCE.md) records actually viewed
+source URLs/digests and access limits. Its plane hierarchy and raised rim/low
+sill distinction inform the original art. Destination shading is the user's
+requested enhancement; no Nintendo pixels become game assets.
 
-Actually viewed before final room qualification:
-`/workspace/setup/cream-depth/source/source-atlas-3x.png` and
-`/workspace/setup/cream-depth/edges/edge-source-4x.png`, with source drawings
-enlarged by nearest neighbor. These observations are not claims about footage
-that has not yet been examined.
+## Independent final visual review
 
-- Unequal broad masses, longer fractures and one complete sealed arch are a
-  substantial compositional improvement over the previous per-cell fans.
-  Crack failure progresses across a recognizable material form. Solid/open
-  edges differ in height and silhouette without relying on tiny arrows.
-- Pale horizontal caps inside a wall can look like extra small walkable
-  shelves. In the room, vertical face, contact and lack of an approach must
-  keep these as material overhangs rather than promising a new platform.
-- The closed arch has a solid backing and seated rock, but can still attract
-  a player's attention as an entrance. Compare it beside actual caves at1×.
-  Keep the real opening's negative space and approach stronger.
-- Violet lighting is controlled rather than covering the ground. It may be
-  less intense than the user's imagined deep corruption; judge connected
-  glow against the whole dark face rather than brightening every crack.
-- The revised landing master has a shallow asymmetric silhouette and floor
-  grain. Its isolated atlas still cannot establish contact: a displaced dark
-  shape could read as a puddle or separate slab. Native arrival and local
-  cliff context are decisive, especially for distant drops.
+Actually inspected candidate 3, source `9747a925`, under
+`/workspace/setup/cream-depth/native-r3`: all three study 6 full-room mosaics,
+matched study 5 sour mosaic, and sampled 240×160 frames from the ordinary
+local-drop, one-row-drop and sour-climb GIFs. Also inspected the native source
+atlases, 3× continuous backing and earned four-row destination frame. This is
+direct visual review of those
+images and sampled motion poses, not a claim to have watched every captured
+frame or completed an unassisted playthrough.
 
-## Qualification and protected scope
+The broader quiet planes and staggered panel groups remove the conspicuous
+16px filler scallops and regular ivory-seam cadence. The room reads as pale
+walking ground separated by continuous vertical rock. The blind arch reads
+as sealed relief beside the stronger negative space of actual cave mouths.
+Landings retain ground texture under the real actor, reducing the isolated
+atlas's puddle ambiguity. The one-row clip visibly includes a partially black
+room-loading transition; it is not omitted from the timing qualification.
 
-### Initial actual-renderer review
+The finite kit still repeats recognizable panel shapes. Pale overhangs can
+look shelf-like while Bloom falls past them, although they are not physical
+intermediate platforms. Violet is controlled rather than covering the ground,
+so deep corruption remains relatively restrained. These are visual tradeoffs
+for review, not evidence of a collision defect or universal seed coverage.
 
-Viewed initial source `ed3e1480` under
-`/workspace/setup/cream-depth/native`: all three style6 registered full-room
-mosaics, matched study5 sour mosaic, and sampled 240×160 frames from the local
-drop, one-row drop and sour-climb live GIFs. The mosaics are frozen camera
-surveys; the sampled frames come from advancing ordinary input clips. This
-review does not claim to establish the unviewed timing of every frame or an
-unassisted playthrough.
+## Exact build, scope and evidence
 
-The new wall masses are much calmer than study5's dense repeated little fans;
-more of the room reads as walking field versus continuous vertical rock. The
-complete blind arch reads as sealed relief beside the actual dark cave mouth.
-Visible landing patches sit beneath the real actor at the sampled arrivals
-and retain ground texture, reducing the isolated source-atlas puddle concern.
+Source: `9747a92526fe9162d93a1ed46b8a6b8292841bb4`.
+ROM SHA256: `2b8559c3cac89f483d3a34d48aa6eb5144a4fc2b3b7b265808b800672216a1b1`.
+The optional study uses 861/1024 BG subtiles and 10/12 area banks.
 
-However, the initial placement still repeats the ivory near-vertical seam and
-oval caps of `fracture_rib` at regular intervals along the upper band. The deep
-veins make that recurrence especially visible. Larger art alone did not solve
-the compositional rhythm: the planner needs mixed priorities and staggered
-anchors rather than always fitting the same long span first. That revision is
-pending a fresh source/build/capture, so these initial pictures and checks are
-not substituted for final evidence.
+The asset/geometry audit passes 5221/5221 checks: 375 appended metatiles and
+523 source frames match their original native drawings; 64 seeds cover 1600
+layouts in closed/open states for 3200 builds. It verifies 3582 exact incoming
+anchors, 3516 active feet with shade, 66 suppressed closed cues, 3200 idempotent
+refreshes and 40 real unlocks with unchanged physical contracts. Matched
+rooms/climbs pass 61 checks, physical comparisons 38, isolated drops 26 and
+the earned four-row drop four. Production 0 is byte-exact to the published
+control, SHA256 `0dd8554384b53e618140f8c61590fc7e6a7ff0888f296ece034a95f357b34fdd`.
 
-The pale material overhangs also remain perceptually shelf-like while Bloom
-falls past them. They are not physical intermediate platforms; actual final
-arrival patches and the clear main terrace planes must carry that distinction.
-This remains an honest visual tradeoff rather than a collision defect claimed
-from still images.
+New native drawings and the optional compositor extend the study 5 utility/
+object kit, with the pointed cave. Bloom, enemies, NPCs, menus/HUD, original
+music and other regions retain their current art. This is not a redraw of all
+actors or every shared handoff object. No filtered scaling or screenshot color
+grading supplies game pixels.
 
-### Final build inputs still required
+Final reports: [asset/geometry audit](../../../cream-depth-review/validation/native-audit.json),
+[native capture/physical comparison](../../../cream-depth-review/validation/native-capture.json),
+[matched rooms/climbs](../../../cream-depth-review/validation/matched-capture.json),
+[isolated drops](../../../cream-depth-review/validation/isolated-drops.json),
+[earned long drop](../../../cream-depth-review/validation/earned-long.json),
+[visual/loading review](../../../cream-depth-review/validation/VISUAL_REVIEW.md),
+and [capture fixtures/limits](../../../cream-depth-review/validation/CAPTURE_NOTES.md).
 
-The study adds native environment drawings and the optional compositor. It
-reuses the selected study5 utility/object families, with the new pointed cave;
-it is not a redraw of all actors or all shared handoff objects. Bloom,
-enemies, NPCs, menus/HUD, original music and other regions retain their current
-art. No high-resolution generated image, filtered scaling or screenshot color
-grading becomes a game asset.
+Matched cases use seed 0xB4A7 and generated Cream seed 4030825150, with fresh
+private cores for each frozen renderer survey and each ordinary live case.
+Ordinary load requests and actor navigation/facing are disclosed fixtures.
+Health, inventory/equipment, enemies, gates, progression, terrain, palette,
+VRAM, framebuffer and player action/height are not assigned in those matched
+and isolated cores. The earned four-row proof uses the established progression
+harness, which discloses standing/height normalization at navigation waypoints.
+It traverses cells 3→8→13→18→23 and lands supported at the real shadow anchor
+(448,286). Its fixture scope differs from the matched art survey.
 
-Before publication, fill these from the final frozen build:
-
-- Source commit, build-option identity, ROM SHA256 and published download.
-- Palette/subtile budget, asset audit, room/seed coverage and protected-art/
-  production0/previous-study comparisons.
-- Final healthy/sour/deep registered mosaics and matched before/after pair.
-- Ordinary live climb, short-drop and multi-screen clips, with exact fixtures
-  and input disclosures, plus final arrival/cue checks.
-- Per-file media manifest and critique of the corrected planner in the final
-  actual-renderer images.
-
-The frozen room survey demonstrates renderer composition; live footage and
-arrival checks establish movement/cue agreement. Neither finite evidence set
-proves every possible procedural seed.
+Composition adds room-loading frames: the tested one-row drop takes 70
+physical frames versus the control's 64, six extra VBlanks (about 0.10s).
+Its 46 fall simulation ticks remain unchanged, as do the local fall's 32 ticks
+and matched climb input counts of 135/119/151. No composition runs in the
+active frame loop. Frozen room mosaics demonstrate composition, while ordinary input and arrival checks
+establish motion/cue agreement. These finite samples cannot establish every
+visual join in all procedural seeds.

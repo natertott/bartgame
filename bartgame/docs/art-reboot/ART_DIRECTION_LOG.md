@@ -1997,3 +1997,13 @@ long unequal strata. Quiet space remains composed material. The original
 small centered filler polygons are removed only in synthesis6. Boundary
 refresh visits actual rim/base profiles and drop footprints, avoiding full
 room scans; no new work is added to the active frame loop.
+
+**Final review:** source9747a925, Cream861/1024 BG subtiles and10/12 banks;
+5221 independent native/geometry checks pass, including3200 closed/open room
+builds over64 seeds. Matched ordinary climbing and local/one-row/four-row
+drops confirm positive health and truthful destination shade. The one-row
+sample adds6 room-loading VBlanks while retaining its46 simulation ticks;
+climb timing is unchanged. Default0 reproduces production exactly. The
+[gallery](../../../cream-depth-review/README.md) preserves actual live clips,
+registered room surveys, source drawings and finite-evidence limits. This
+remains a review synthesis, not a new global palette or production selection.

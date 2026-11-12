@@ -8,6 +8,9 @@ The standalone build uses original native artwork and needs no commercial ROM.
 
 New optional art studies: [five native Curdled Cream directions, actual mGBA rooms and live climbs](cream-art-review/README.md). Production art remains unchanged while these are reviewed.
 
+Latest Cream refinement: [Fractured Rind — larger rock formations, clear drop
+ledges and actual landing shadows, with playable ROM and mGBA footage](cream-depth-review/README.md).
+
 Latest playable release: [regional handoff integration, ROM and actual mGBA gallery](regional-handoff-review/README.md).
 Restored events, quests, fusions and mechanisms now live in the generated
 Forest and Cream. The Cream entrance is a second Forest-style wall ladder.

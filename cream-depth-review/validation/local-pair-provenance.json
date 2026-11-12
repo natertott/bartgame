@@ -1,0 +1,14 @@
+{
+  "label": "Two ordinary240x160 native live frames, copied side by side without resizing or pixel changes. Left=before actual DOWN; right=first upright landing.",
+  "source_rom_sha256": "2b8559c3cac89f483d3a34d48aa6eb5144a4fc2b3b7b265808b800672216a1b1",
+  "inputs": [
+    "before.png",
+    "landed.png"
+  ],
+  "input_sha256": [
+    "7f2bb09f39f9ca6b78cdba7449a6ae6b6528cd4aa0b82e094e43c4f1cd966b3d",
+    "f1ea65b84dd0ba2fea35318f227402195b413110ac236b2ed9148518177a5808"
+  ],
+  "pair_sha256": "64769aa97073bf6e1e2ebe96d82331880d8ea906d774934c9ba1d7e434312e42",
+  "copy_exact": true
+}

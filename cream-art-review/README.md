@@ -1,5 +1,8 @@
 # Five new Curdled Cream art directions
 
+**Latest review-led refinement:** [Fractured Rind synthesis6, matched rooms,
+actual drops and playable ROM](../cream-depth-review/README.md).
+
 Five complete **unselected environment alternatives**, authored at native GBA
 sizes and rendered by the actual game in mGBA. They redraw all142 Cream
 metatiles and their148 frames, plus the Cream-only return portal. Bloom, NPCs,

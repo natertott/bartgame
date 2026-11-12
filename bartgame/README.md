@@ -66,6 +66,13 @@ use `PROFILE=0`; `PROFILE=1` is development-only cycle accounting.
 
 ## Cream environment studies
 
+[Fractured Rind synthesis](../cream-depth-review/README.md) combines the selected
+study2 contrast/arches with study3/5 rock structure and study5's exact palette.
+`BART_CREAM=6` fits unequal native cliff pictures and broad backing into the
+generated room, distinguishes blocked rims from real drop sills, and shades
+actual landing coordinates. The gallery includes ordinary live short/four-room
+drops and registered room surveys. Default0 and studies1–5 remain selectable.
+
 [Five new native material directions](../cream-art-review/README.md) add shelf
 depth, clear climbing grips, stronger interactables and structural corruption.
 `BART_CREAM=1..5` builds the review alternatives; default0 retains the existing

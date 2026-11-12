@@ -1,0 +1,337 @@
+{
+  "rom_sha256": "2b8559c3cac89f483d3a34d48aa6eb5144a4fc2b3b7b265808b800672216a1b1",
+  "source_commit": "9747a92526fe9162d93a1ed46b8a6b8292841bb4",
+  "tool_sha256": "812d8c1d0c7d09b9bffcfba191bf999b22f9a3eca1e128f6ab9ac6a493236c1a",
+  "matched_capture": "/workspace/setup/cream-depth/native-r3/matched/style-6",
+  "checks": [
+    {
+      "name": "identical generated graph",
+      "passed": true
+    },
+    {
+      "name": "healthy: identical profile/features",
+      "passed": true
+    },
+    {
+      "name": "healthy: ground_types_sha256",
+      "passed": true
+    },
+    {
+      "name": "healthy: overlay_types_sha256",
+      "passed": true
+    },
+    {
+      "name": "healthy: solid_sha256",
+      "passed": true
+    },
+    {
+      "name": "healthy: overlay_occupancy_sha256",
+      "passed": true
+    },
+    {
+      "name": "healthy: climb_mask_sha256",
+      "passed": true
+    },
+    {
+      "name": "sour: identical profile/features",
+      "passed": true
+    },
+    {
+      "name": "sour: ground_types_sha256",
+      "passed": true
+    },
+    {
+      "name": "sour: overlay_types_sha256",
+      "passed": true
+    },
+    {
+      "name": "sour: solid_sha256",
+      "passed": true
+    },
+    {
+      "name": "sour: overlay_occupancy_sha256",
+      "passed": true
+    },
+    {
+      "name": "sour: climb_mask_sha256",
+      "passed": true
+    },
+    {
+      "name": "deep: identical profile/features",
+      "passed": true
+    },
+    {
+      "name": "deep: ground_types_sha256",
+      "passed": true
+    },
+    {
+      "name": "deep: overlay_types_sha256",
+      "passed": true
+    },
+    {
+      "name": "deep: solid_sha256",
+      "passed": true
+    },
+    {
+      "name": "deep: overlay_occupancy_sha256",
+      "passed": true
+    },
+    {
+      "name": "deep: climb_mask_sha256",
+      "passed": true
+    },
+    {
+      "name": "identical generated graph",
+      "passed": true
+    },
+    {
+      "name": "healthy: identical profile/features",
+      "passed": true
+    },
+    {
+      "name": "healthy: ground_types_sha256",
+      "passed": true
+    },
+    {
+      "name": "healthy: overlay_types_sha256",
+      "passed": true
+    },
+    {
+      "name": "healthy: solid_sha256",
+      "passed": true
+    },
+    {
+      "name": "healthy: overlay_occupancy_sha256",
+      "passed": true
+    },
+    {
+      "name": "healthy: climb_mask_sha256",
+      "passed": true
+    },
+    {
+      "name": "sour: identical profile/features",
+      "passed": true
+    },
+    {
+      "name": "sour: ground_types_sha256",
+      "passed": true
+    },
+    {
+      "name": "sour: overlay_types_sha256",
+      "passed": true
+    },
+    {
+      "name": "sour: solid_sha256",
+      "passed": true
+    },
+    {
+      "name": "sour: overlay_occupancy_sha256",
+      "passed": true
+    },
+    {
+      "name": "sour: climb_mask_sha256",
+      "passed": true
+    },
+    {
+      "name": "deep: identical profile/features",
+      "passed": true
+    },
+    {
+      "name": "deep: ground_types_sha256",
+      "passed": true
+    },
+    {
+      "name": "deep: overlay_types_sha256",
+      "passed": true
+    },
+    {
+      "name": "deep: solid_sha256",
+      "passed": true
+    },
+    {
+      "name": "deep: overlay_occupancy_sha256",
+      "passed": true
+    },
+    {
+      "name": "deep: climb_mask_sha256",
+      "passed": true
+    },
+    {
+      "name": "ordinary isolated drop clips pass",
+      "passed": true
+    },
+    {
+      "name": "earned four-row landing proof passes",
+      "passed": true
+    }
+  ],
+  "comparisons": [
+    {
+      "label": "control",
+      "rom_sha256": "0dd8554384b53e618140f8c61590fc7e6a7ff0888f296ece034a95f357b34fdd",
+      "report": "/workspace/setup/cream-depth/native-r3/matched/control/report.json",
+      "checks": [
+        {
+          "name": "identical generated graph",
+          "passed": true
+        },
+        {
+          "name": "healthy: identical profile/features",
+          "passed": true
+        },
+        {
+          "name": "healthy: ground_types_sha256",
+          "passed": true
+        },
+        {
+          "name": "healthy: overlay_types_sha256",
+          "passed": true
+        },
+        {
+          "name": "healthy: solid_sha256",
+          "passed": true
+        },
+        {
+          "name": "healthy: overlay_occupancy_sha256",
+          "passed": true
+        },
+        {
+          "name": "healthy: climb_mask_sha256",
+          "passed": true
+        },
+        {
+          "name": "sour: identical profile/features",
+          "passed": true
+        },
+        {
+          "name": "sour: ground_types_sha256",
+          "passed": true
+        },
+        {
+          "name": "sour: overlay_types_sha256",
+          "passed": true
+        },
+        {
+          "name": "sour: solid_sha256",
+          "passed": true
+        },
+        {
+          "name": "sour: overlay_occupancy_sha256",
+          "passed": true
+        },
+        {
+          "name": "sour: climb_mask_sha256",
+          "passed": true
+        },
+        {
+          "name": "deep: identical profile/features",
+          "passed": true
+        },
+        {
+          "name": "deep: ground_types_sha256",
+          "passed": true
+        },
+        {
+          "name": "deep: overlay_types_sha256",
+          "passed": true
+        },
+        {
+          "name": "deep: solid_sha256",
+          "passed": true
+        },
+        {
+          "name": "deep: overlay_occupancy_sha256",
+          "passed": true
+        },
+        {
+          "name": "deep: climb_mask_sha256",
+          "passed": true
+        }
+      ]
+    },
+    {
+      "label": "rind",
+      "rom_sha256": "37f4e3542454aa665597aa530857cd0121013879920f35b5ab4c7ed56748da0f",
+      "report": "/workspace/setup/cream-depth/native-r3/matched/rind/report.json",
+      "checks": [
+        {
+          "name": "identical generated graph",
+          "passed": true
+        },
+        {
+          "name": "healthy: identical profile/features",
+          "passed": true
+        },
+        {
+          "name": "healthy: ground_types_sha256",
+          "passed": true
+        },
+        {
+          "name": "healthy: overlay_types_sha256",
+          "passed": true
+        },
+        {
+          "name": "healthy: solid_sha256",
+          "passed": true
+        },
+        {
+          "name": "healthy: overlay_occupancy_sha256",
+          "passed": true
+        },
+        {
+          "name": "healthy: climb_mask_sha256",
+          "passed": true
+        },
+        {
+          "name": "sour: identical profile/features",
+          "passed": true
+        },
+        {
+          "name": "sour: ground_types_sha256",
+          "passed": true
+        },
+        {
+          "name": "sour: overlay_types_sha256",
+          "passed": true
+        },
+        {
+          "name": "sour: solid_sha256",
+          "passed": true
+        },
+        {
+          "name": "sour: overlay_occupancy_sha256",
+          "passed": true
+        },
+        {
+          "name": "sour: climb_mask_sha256",
+          "passed": true
+        },
+        {
+          "name": "deep: identical profile/features",
+          "passed": true
+        },
+        {
+          "name": "deep: ground_types_sha256",
+          "passed": true
+        },
+        {
+          "name": "deep: overlay_types_sha256",
+          "passed": true
+        },
+        {
+          "name": "deep: solid_sha256",
+          "passed": true
+        },
+        {
+          "name": "deep: overlay_occupancy_sha256",
+          "passed": true
+        },
+        {
+          "name": "deep: climb_mask_sha256",
+          "passed": true
+        }
+      ]
+    }
+  ],
+  "complete": true
+}

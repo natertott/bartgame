@@ -1,5 +1,11 @@
 # Five Curdled Cream environment studies
 
+The subsequent [Fractured Rind synthesis6](FRACTURED_RIND.md) develops the user's
+preferred2/3/5 elements with large original rock pictures, coherent128px
+backing, clear drop borders and real-arrival landing shadows. Its
+[native gallery and playable build](../../../cream-depth-review/README.md)
+are separate from these preserved five comparisons.
+
 These are **unselected alternatives**, made for the user's request for a less
 flat, more detailed mountain region. `BART_CREAM=0` retains the production art;
 `BART_CREAM=1..5` selects a complete native environment study. This is not a

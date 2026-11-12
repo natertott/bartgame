@@ -1,0 +1,1224 @@
+{
+  "checks": [
+    {
+      "name": "real new run boots",
+      "passed": true,
+      "detail": {
+        "state": 1,
+        "area": 0,
+        "cell": 0,
+        "node": 48,
+        "actor": {
+          "kind": 1,
+          "type": 0,
+          "state": 0,
+          "timer": 0,
+          "x": 200,
+          "y": 270,
+          "z": 0,
+          "speed": 0,
+          "hp": 0,
+          "coll": 0,
+          "facing": 0
+        },
+        "text": 0
+      }
+    },
+    {
+      "name": "real sewer ascent enters Cream",
+      "passed": true,
+      "detail": {
+        "state": 1,
+        "area": 3,
+        "cell": 24,
+        "node": 48,
+        "actor": {
+          "kind": 1,
+          "type": 0,
+          "state": 0,
+          "timer": 0,
+          "x": 400,
+          "y": 350,
+          "z": 0,
+          "speed": 0,
+          "hp": 0,
+          "coll": 0,
+          "facing": 0
+        },
+        "text": 0
+      }
+    },
+    {
+      "name": "visible entry returns to Drain without an escape item",
+      "passed": true,
+      "detail": {
+        "state": 1,
+        "area": 0,
+        "cell": 24,
+        "node": 48,
+        "actor": {
+          "kind": 1,
+          "type": 0,
+          "state": 0,
+          "timer": 0,
+          "x": 312,
+          "y": 94,
+          "z": 0,
+          "speed": 0,
+          "hp": 0,
+          "coll": 0,
+          "facing": 2
+        },
+        "text": 0
+      }
+    },
+    {
+      "name": "Drain ascent re-enters the same generated Cream",
+      "passed": true,
+      "detail": {
+        "state": 1,
+        "area": 3,
+        "cell": 24,
+        "node": 48,
+        "actor": {
+          "kind": 1,
+          "type": 0,
+          "state": 0,
+          "timer": 0,
+          "x": 400,
+          "y": 350,
+          "z": 0,
+          "speed": 0,
+          "hp": 0,
+          "coll": 0,
+          "facing": 0
+        },
+        "text": 0
+      }
+    },
+    {
+      "name": "real graph edge reaches target",
+      "passed": true,
+      "detail": {
+        "node": 48,
+        "index": 0,
+        "target": 49,
+        "kind": 2,
+        "status": {
+          "state": 1,
+          "area": 3,
+          "cell": 24,
+          "node": 49,
+          "actor": {
+            "kind": 1,
+            "type": 0,
+            "state": 0,
+            "timer": 0,
+            "x": 312,
+            "y": 147,
+            "z": 0,
+            "speed": 0,
+            "hp": 0,
+            "coll": 0,
+            "facing": 0
+          },
+          "text": 0,
+          "rewards": 0,
+          "items": 65,
+          "hp": 32,
+          "bombs": 0,
+          "equip": [
+            0,
+            1,
+            5
+          ]
+        }
+      }
+    },
+    {
+      "name": "real graph edge reaches target",
+      "passed": true,
+      "detail": {
+        "node": 49,
+        "index": 1,
+        "target": 47,
+        "kind": 1,
+        "status": {
+          "state": 1,
+          "area": 3,
+          "cell": 23,
+          "node": 47,
+          "actor": {
+            "kind": 1,
+            "type": 0,
+            "state": 0,
+            "timer": 0,
+            "x": 488,
+            "y": 110,
+            "z": 0,
+            "speed": 0,
+            "hp": 0,
+            "coll": 0,
+            "facing": 3
+          },
+          "text": 0,
+          "rewards": 0,
+          "items": 65,
+          "hp": 32,
+          "bombs": 0,
+          "equip": [
+            0,
+            1,
+            5
+          ]
+        }
+      }
+    },
+    {
+      "name": "real graph edge reaches target",
+      "passed": true,
+      "detail": {
+        "node": 47,
+        "index": 1,
+        "target": 36,
+        "kind": 2,
+        "status": {
+          "state": 1,
+          "area": 3,
+          "cell": 18,
+          "node": 36,
+          "actor": {
+            "kind": 1,
+            "type": 0,
+            "state": 0,
+            "timer": 0,
+            "x": 208,
+            "y": 362,
+            "z": 0,
+            "speed": 0,
+            "hp": 0,
+            "coll": 0,
+            "facing": 0
+          },
+          "text": 0,
+          "rewards": 0,
+          "items": 65,
+          "hp": 32,
+          "bombs": 0,
+          "equip": [
+            0,
+            1,
+            5
+          ]
+        }
+      }
+    },
+    {
+      "name": "real graph edge reaches target",
+      "passed": true,
+      "detail": {
+        "node": 36,
+        "index": 1,
+        "target": 37,
+        "kind": 2,
+        "status": {
+          "state": 1,
+          "area": 3,
+          "cell": 18,
+          "node": 37,
+          "actor": {
+            "kind": 1,
+            "type": 0,
+            "state": 0,
+            "timer": 0,
+            "x": 216,
+            "y": 131,
+            "z": 0,
+            "speed": 0,
+            "hp": 0,
+            "coll": 0,
+            "facing": 0
+          },
+          "text": 0,
+          "rewards": 0,
+          "items": 65,
+          "hp": 32,
+          "bombs": 0,
+          "equip": [
+            0,
+            1,
+            5
+          ]
+        }
+      }
+    },
+    {
+      "name": "real graph edge reaches target",
+      "passed": true,
+      "detail": {
+        "node": 37,
+        "index": 1,
+        "target": 26,
+        "kind": 2,
+        "status": {
+          "state": 1,
+          "area": 3,
+          "cell": 13,
+          "node": 26,
+          "actor": {
+            "kind": 1,
+            "type": 0,
+            "state": 0,
+            "timer": 0,
+            "x": 208,
+            "y": 362,
+            "z": 0,
+            "speed": 0,
+            "hp": 0,
+            "coll": 0,
+            "facing": 0
+          },
+          "text": 0,
+          "rewards": 0,
+          "items": 65,
+          "hp": 32,
+          "bombs": 0,
+          "equip": [
+            0,
+            1,
+            5
+          ]
+        }
+      }
+    },
+    {
+      "name": "real graph edge reaches target",
+      "passed": true,
+      "detail": {
+        "node": 26,
+        "index": 1,
+        "target": 28,
+        "kind": 1,
+        "status": {
+          "state": 1,
+          "area": 3,
+          "cell": 14,
+          "node": 28,
+          "actor": {
+            "kind": 1,
+            "type": 0,
+            "state": 0,
+            "timer": 0,
+            "x": 24,
+            "y": 318,
+            "z": 0,
+            "speed": 0,
+            "hp": 0,
+            "coll": 0,
+            "facing": 1
+          },
+          "text": 0,
+          "rewards": 0,
+          "items": 65,
+          "hp": 32,
+          "bombs": 0,
+          "equip": [
+            0,
+            1,
+            5
+          ]
+        }
+      }
+    },
+    {
+      "name": "real graph edge reaches target",
+      "passed": true,
+      "detail": {
+        "node": 28,
+        "index": 2,
+        "target": 39,
+        "kind": 3,
+        "status": {
+          "state": 1,
+          "area": 3,
+          "cell": 19,
+          "node": 39,
+          "actor": {
+            "kind": 1,
+            "type": 0,
+            "state": 0,
+            "timer": 34,
+            "x": 304,
+            "y": 78,
+            "z": 0,
+            "speed": 0,
+            "hp": 0,
+            "coll": 0,
+            "facing": 2
+          },
+          "text": 0,
+          "rewards": 0,
+          "items": 65,
+          "hp": 32,
+          "bombs": 0,
+          "equip": [
+            0,
+            1,
+            5
+          ]
+        }
+      }
+    },
+    {
+      "name": "local drop begins at the physical takeoff lip",
+      "passed": true,
+      "detail": {
+        "takeoff_y": 124,
+        "fixture_start_y": 124,
+        "first": {
+          "kind": 1,
+          "type": 0,
+          "state": 5,
+          "timer": 4,
+          "x": 176,
+          "y": 302,
+          "z": 177,
+          "speed": 320,
+          "hp": 0,
+          "coll": 0,
+          "facing": 2
+        }
+      }
+    },
+    {
+      "name": "local drop accelerates down and lands upright",
+      "passed": true,
+      "detail": {
+        "speed": [
+          1,
+          3,
+          5,
+          6,
+          8,
+          10,
+          11,
+          12,
+          14,
+          16,
+          18,
+          18,
+          21
+        ],
+        "landed": {
+          "kind": 1,
+          "type": 0,
+          "state": 0,
+          "timer": 0,
+          "x": 184,
+          "y": 293,
+          "z": 0,
+          "speed": 0,
+          "hp": 0,
+          "coll": 0,
+          "facing": 2
+        }
+      }
+    },
+    {
+      "name": "real graph edge reaches target",
+      "passed": true,
+      "detail": {
+        "node": 39,
+        "index": 1,
+        "target": 38,
+        "kind": 3,
+        "status": {
+          "state": 1,
+          "area": 3,
+          "cell": 19,
+          "node": 38,
+          "actor": {
+            "kind": 1,
+            "type": 0,
+            "state": 0,
+            "timer": 0,
+            "x": 184,
+            "y": 293,
+            "z": 0,
+            "speed": 0,
+            "hp": 0,
+            "coll": 0,
+            "facing": 2
+          },
+          "text": 0,
+          "rewards": 0,
+          "items": 65,
+          "hp": 30,
+          "bombs": 0,
+          "equip": [
+            0,
+            1,
+            5
+          ]
+        }
+      }
+    },
+    {
+      "name": "real task1 opens",
+      "passed": true,
+      "detail": {
+        "state": 1,
+        "area": 4,
+        "cell": 0,
+        "node": 38,
+        "actor": {
+          "kind": 1,
+          "type": 0,
+          "state": 0,
+          "timer": 0,
+          "x": 264,
+          "y": 334,
+          "z": 0,
+          "speed": 0,
+          "hp": 0,
+          "coll": 0,
+          "facing": 0
+        },
+        "text": 0,
+        "rewards": 0,
+        "items": 65,
+        "hp": 30,
+        "bombs": 0,
+        "equip": [
+          0,
+          1,
+          5
+        ]
+      }
+    },
+    {
+      "name": "first real trial earns Blightseeds",
+      "passed": true,
+      "detail": {
+        "state": 1,
+        "area": 3,
+        "cell": 19,
+        "node": 38,
+        "actor": {
+          "kind": 1,
+          "type": 0,
+          "state": 0,
+          "timer": 0,
+          "x": 232,
+          "y": 326,
+          "z": 0,
+          "speed": 0,
+          "hp": 0,
+          "coll": 0,
+          "facing": 2
+        },
+        "text": 0,
+        "rewards": 1,
+        "items": 67,
+        "hp": 30,
+        "bombs": 12,
+        "equip": [
+          0,
+          1,
+          5
+        ]
+      }
+    },
+    {
+      "name": "earned item is present in real satchel",
+      "passed": true,
+      "detail": {
+        "item": 7,
+        "possessions": [
+          1,
+          7,
+          13,
+          19,
+          68,
+          75,
+          98
+        ]
+      }
+    },
+    {
+      "name": "real graph edge reaches target",
+      "passed": true,
+      "detail": {
+        "node": 38,
+        "index": 0,
+        "target": 39,
+        "kind": 2,
+        "status": {
+          "state": 1,
+          "area": 3,
+          "cell": 19,
+          "node": 39,
+          "actor": {
+            "kind": 1,
+            "type": 0,
+            "state": 0,
+            "timer": 0,
+            "x": 312,
+            "y": 131,
+            "z": 0,
+            "speed": 0,
+            "hp": 0,
+            "coll": 0,
+            "facing": 0
+          },
+          "text": 0,
+          "rewards": 1,
+          "items": 67,
+          "hp": 30,
+          "bombs": 12,
+          "equip": [
+            2,
+            1,
+            5
+          ]
+        }
+      }
+    },
+    {
+      "name": "real graph edge reaches target",
+      "passed": true,
+      "detail": {
+        "node": 39,
+        "index": 0,
+        "target": 28,
+        "kind": 2,
+        "status": {
+          "state": 1,
+          "area": 3,
+          "cell": 14,
+          "node": 28,
+          "actor": {
+            "kind": 1,
+            "type": 0,
+            "state": 0,
+            "timer": 0,
+            "x": 304,
+            "y": 362,
+            "z": 0,
+            "speed": 0,
+            "hp": 0,
+            "coll": 0,
+            "facing": 0
+          },
+          "text": 0,
+          "rewards": 1,
+          "items": 67,
+          "hp": 30,
+          "bombs": 12,
+          "equip": [
+            2,
+            1,
+            5
+          ]
+        }
+      }
+    },
+    {
+      "name": "real graph edge reaches target",
+      "passed": true,
+      "detail": {
+        "node": 28,
+        "index": 1,
+        "target": 29,
+        "kind": 2,
+        "status": {
+          "state": 1,
+          "area": 3,
+          "cell": 14,
+          "node": 29,
+          "actor": {
+            "kind": 1,
+            "type": 0,
+            "state": 0,
+            "timer": 0,
+            "x": 312,
+            "y": 147,
+            "z": 0,
+            "speed": 0,
+            "hp": 0,
+            "coll": 0,
+            "facing": 0
+          },
+          "text": 0,
+          "rewards": 1,
+          "items": 67,
+          "hp": 30,
+          "bombs": 12,
+          "equip": [
+            2,
+            1,
+            5
+          ]
+        }
+      }
+    },
+    {
+      "name": "real graph edge reaches target",
+      "passed": true,
+      "detail": {
+        "node": 29,
+        "index": 1,
+        "target": 18,
+        "kind": 2,
+        "status": {
+          "state": 1,
+          "area": 3,
+          "cell": 9,
+          "node": 18,
+          "actor": {
+            "kind": 1,
+            "type": 0,
+            "state": 0,
+            "timer": 0,
+            "x": 304,
+            "y": 362,
+            "z": 0,
+            "speed": 0,
+            "hp": 0,
+            "coll": 0,
+            "facing": 0
+          },
+          "text": 0,
+          "rewards": 1,
+          "items": 67,
+          "hp": 30,
+          "bombs": 12,
+          "equip": [
+            2,
+            1,
+            5
+          ]
+        }
+      }
+    },
+    {
+      "name": "real graph edge reaches target",
+      "passed": true,
+      "detail": {
+        "node": 18,
+        "index": 1,
+        "target": 19,
+        "kind": 2,
+        "status": {
+          "state": 1,
+          "area": 3,
+          "cell": 9,
+          "node": 19,
+          "actor": {
+            "kind": 1,
+            "type": 0,
+            "state": 0,
+            "timer": 0,
+            "x": 312,
+            "y": 147,
+            "z": 0,
+            "speed": 0,
+            "hp": 0,
+            "coll": 0,
+            "facing": 0
+          },
+          "text": 0,
+          "rewards": 1,
+          "items": 67,
+          "hp": 30,
+          "bombs": 12,
+          "equip": [
+            2,
+            1,
+            5
+          ]
+        }
+      }
+    },
+    {
+      "name": "real graph edge reaches target",
+      "passed": true,
+      "detail": {
+        "node": 19,
+        "index": 1,
+        "target": 8,
+        "kind": 2,
+        "status": {
+          "state": 1,
+          "area": 3,
+          "cell": 4,
+          "node": 8,
+          "actor": {
+            "kind": 1,
+            "type": 0,
+            "state": 0,
+            "timer": 0,
+            "x": 304,
+            "y": 362,
+            "z": 0,
+            "speed": 0,
+            "hp": 0,
+            "coll": 0,
+            "facing": 0
+          },
+          "text": 0,
+          "rewards": 1,
+          "items": 67,
+          "hp": 30,
+          "bombs": 12,
+          "equip": [
+            2,
+            1,
+            5
+          ]
+        }
+      }
+    },
+    {
+      "name": "real graph edge reaches target",
+      "passed": true,
+      "detail": {
+        "node": 8,
+        "index": 1,
+        "target": 9,
+        "kind": 2,
+        "status": {
+          "state": 1,
+          "area": 3,
+          "cell": 4,
+          "node": 9,
+          "actor": {
+            "kind": 1,
+            "type": 0,
+            "state": 0,
+            "timer": 0,
+            "x": 312,
+            "y": 147,
+            "z": 0,
+            "speed": 0,
+            "hp": 0,
+            "coll": 0,
+            "facing": 0
+          },
+          "text": 0,
+          "rewards": 1,
+          "items": 67,
+          "hp": 30,
+          "bombs": 12,
+          "equip": [
+            2,
+            1,
+            5
+          ]
+        }
+      }
+    },
+    {
+      "name": "real graph edge reaches target",
+      "passed": true,
+      "detail": {
+        "node": 9,
+        "index": 1,
+        "target": 7,
+        "kind": 1,
+        "status": {
+          "state": 1,
+          "area": 3,
+          "cell": 3,
+          "node": 7,
+          "actor": {
+            "kind": 1,
+            "type": 0,
+            "state": 0,
+            "timer": 0,
+            "x": 488,
+            "y": 110,
+            "z": 0,
+            "speed": 0,
+            "hp": 0,
+            "coll": 0,
+            "facing": 3
+          },
+          "text": 0,
+          "rewards": 1,
+          "items": 67,
+          "hp": 30,
+          "bombs": 12,
+          "equip": [
+            2,
+            1,
+            5
+          ]
+        }
+      }
+    },
+    {
+      "name": "real tool clears generated route barrier",
+      "passed": true,
+      "detail": {
+        "node": 7,
+        "edge": 1,
+        "require": 1,
+        "kind": 3,
+        "actor": {
+          "kind": 1,
+          "type": 0,
+          "state": 0,
+          "timer": 0,
+          "x": 448,
+          "y": 122,
+          "z": 0,
+          "speed": 0,
+          "hp": 0,
+          "coll": 0,
+          "facing": 2
+        },
+        "gate_type": 0
+      }
+    },
+    {
+      "name": "long drop renders every intervening actual room",
+      "passed": true,
+      "detail": {
+        "span": 4,
+        "cells": [
+          3,
+          8,
+          13,
+          18,
+          23
+        ]
+      }
+    },
+    {
+      "name": "long drop physically lands on its requested terrace",
+      "passed": true,
+      "detail": {
+        "target": 46,
+        "landed": {
+          "state": 1,
+          "area": 3,
+          "cell": 23,
+          "node": 46,
+          "actor": {
+            "kind": 1,
+            "type": 0,
+            "state": 0,
+            "timer": 34,
+            "x": 448,
+            "y": 286,
+            "z": 0,
+            "speed": 0,
+            "hp": 0,
+            "coll": 0,
+            "facing": 2
+          },
+          "text": 0,
+          "rewards": 1,
+          "items": 67,
+          "hp": 24,
+          "bombs": 11,
+          "equip": [
+            2,
+            1,
+            5
+          ]
+        }
+      }
+    }
+  ],
+  "fixtures": [
+    {
+      "kind": "hero position/standing/facing navigation",
+      "x": 312,
+      "y": 94,
+      "frame": 194,
+      "area": 0,
+      "cell": 0
+    },
+    {
+      "kind": "hero position/standing/facing navigation",
+      "x": 400,
+      "y": 350,
+      "frame": 216,
+      "area": 3,
+      "cell": 24
+    },
+    {
+      "kind": "hero position/standing/facing navigation",
+      "x": 312,
+      "y": 94,
+      "frame": 338,
+      "area": 0,
+      "cell": 24
+    },
+    {
+      "kind": "hero position/standing/facing navigation",
+      "x": 312,
+      "y": 151,
+      "frame": 385,
+      "area": 3,
+      "cell": 24
+    },
+    {
+      "kind": "hero position/standing/facing navigation",
+      "x": 20,
+      "y": 110,
+      "frame": 417,
+      "area": 3,
+      "cell": 24
+    },
+    {
+      "kind": "hero position/standing/facing navigation",
+      "x": 216,
+      "y": 24,
+      "frame": 467,
+      "area": 3,
+      "cell": 23
+    },
+    {
+      "kind": "hero position/standing/facing navigation",
+      "x": 216,
+      "y": 135,
+      "frame": 517,
+      "area": 3,
+      "cell": 18
+    },
+    {
+      "kind": "hero position/standing/facing navigation",
+      "x": 216,
+      "y": 24,
+      "frame": 549,
+      "area": 3,
+      "cell": 18
+    },
+    {
+      "kind": "hero position/standing/facing navigation",
+      "x": 492,
+      "y": 318,
+      "frame": 599,
+      "area": 3,
+      "cell": 13
+    },
+    {
+      "kind": "hero position/standing/facing navigation",
+      "x": 304,
+      "y": 364,
+      "frame": 650,
+      "area": 3,
+      "cell": 14
+    },
+    {
+      "kind": "hero position/standing/facing navigation",
+      "x": 176,
+      "y": 124,
+      "frame": 732,
+      "area": 3,
+      "cell": 19
+    },
+    {
+      "kind": "hero position/standing/facing navigation",
+      "x": 232,
+      "y": 326,
+      "frame": 775,
+      "area": 3,
+      "cell": 19
+    },
+    {
+      "kind": "hero position/standing/facing navigation",
+      "x": 152,
+      "y": 174,
+      "frame": 819,
+      "area": 4,
+      "cell": 0
+    },
+    {
+      "kind": "hero position/standing/facing navigation",
+      "x": 216,
+      "y": 174,
+      "frame": 822,
+      "area": 4,
+      "cell": 0
+    },
+    {
+      "kind": "hero position/standing/facing navigation",
+      "x": 280,
+      "y": 174,
+      "frame": 825,
+      "area": 4,
+      "cell": 0
+    },
+    {
+      "kind": "hero position/standing/facing navigation",
+      "x": 344,
+      "y": 174,
+      "frame": 828,
+      "area": 4,
+      "cell": 0
+    },
+    {
+      "kind": "hero position/standing/facing navigation",
+      "x": 152,
+      "y": 174,
+      "frame": 831,
+      "area": 4,
+      "cell": 0
+    },
+    {
+      "kind": "hero position/standing/facing navigation",
+      "x": 280,
+      "y": 174,
+      "frame": 834,
+      "area": 4,
+      "cell": 0
+    },
+    {
+      "kind": "hero position/standing/facing navigation",
+      "x": 264,
+      "y": 350,
+      "frame": 837,
+      "area": 4,
+      "cell": 0
+    },
+    {
+      "kind": "hero position/standing/facing navigation",
+      "x": 312,
+      "y": 135,
+      "frame": 946,
+      "area": 3,
+      "cell": 19
+    },
+    {
+      "kind": "hero position/standing/facing navigation",
+      "x": 312,
+      "y": 24,
+      "frame": 978,
+      "area": 3,
+      "cell": 19
+    },
+    {
+      "kind": "hero position/standing/facing navigation",
+      "x": 312,
+      "y": 151,
+      "frame": 1028,
+      "area": 3,
+      "cell": 14
+    },
+    {
+      "kind": "hero position/standing/facing navigation",
+      "x": 312,
+      "y": 24,
+      "frame": 1060,
+      "area": 3,
+      "cell": 14
+    },
+    {
+      "kind": "hero position/standing/facing navigation",
+      "x": 312,
+      "y": 151,
+      "frame": 1110,
+      "area": 3,
+      "cell": 9
+    },
+    {
+      "kind": "hero position/standing/facing navigation",
+      "x": 312,
+      "y": 24,
+      "frame": 1142,
+      "area": 3,
+      "cell": 9
+    },
+    {
+      "kind": "hero position/standing/facing navigation",
+      "x": 312,
+      "y": 151,
+      "frame": 1192,
+      "area": 3,
+      "cell": 4
+    },
+    {
+      "kind": "hero position/standing/facing navigation",
+      "x": 20,
+      "y": 110,
+      "frame": 1224,
+      "area": 3,
+      "cell": 4
+    },
+    {
+      "kind": "hero position/standing/facing navigation",
+      "x": 448,
+      "y": 110,
+      "frame": 1251,
+      "area": 3,
+      "cell": 3
+    },
+    {
+      "kind": "hero facing navigation",
+      "facing": 2,
+      "frame": 1251
+    },
+    {
+      "kind": "hero position/standing/facing navigation",
+      "x": 448,
+      "y": 110,
+      "frame": 1288,
+      "area": 3,
+      "cell": 3
+    },
+    {
+      "kind": "hero facing navigation",
+      "facing": 2,
+      "frame": 1288
+    },
+    {
+      "kind": "hero position/standing/facing navigation",
+      "x": 448,
+      "y": 124,
+      "frame": 1342,
+      "area": 3,
+      "cell": 3
+    }
+  ],
+  "seed": 1432,
+  "scope_complete": true,
+  "errors": [],
+  "handoff_completed_offset": 91,
+  "harness_sha256": "9da5b7a1a33b40adb71ad32f149a90d2b02987d97dc61d35bbf9ad6dbdce244b",
+  "assets_header_sha256": "6bfa565446fe0bd8d147e15076234ce01c075814fbc70412931353934ae2044f",
+  "final": {
+    "state": 1,
+    "area": 3,
+    "cell": 23,
+    "node": 46,
+    "actor": {
+      "kind": 1,
+      "type": 0,
+      "state": 0,
+      "timer": 34,
+      "x": 448,
+      "y": 286,
+      "z": 0,
+      "speed": 0,
+      "hp": 0,
+      "coll": 0,
+      "facing": 2
+    },
+    "text": 0,
+    "rewards": 1,
+    "items": 67,
+    "hp": 24,
+    "bombs": 11,
+    "equip": [
+      2,
+      1,
+      5
+    ]
+  },
+  "sha256": "2b8559c3cac89f483d3a34d48aa6eb5144a4fc2b3b7b265808b800672216a1b1",
+  "limitations": "Navigation fixtures select hero position, standing state and facing. Seed and erased in-memory SRAM are explicit start fixtures. All equipment choices and tools/rewards/combat use real input. No enemy HP/state, inventory grants, player health, completion, gates, terrain, palette, VRAM or framebuffer writes."
+}

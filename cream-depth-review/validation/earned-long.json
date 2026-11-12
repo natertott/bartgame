@@ -1,0 +1,393 @@
+{
+  "rom_sha256": "2b8559c3cac89f483d3a34d48aa6eb5144a4fc2b3b7b265808b800672216a1b1",
+  "seed": 1432,
+  "observer": "Python return observer reads cache only while established harness captures a drop.",
+  "observed_harness_sha256": "9da5b7a1a33b40adb71ad32f149a90d2b02987d97dc61d35bbf9ad6dbdce244b",
+  "observer_sha256": "812d8c1d0c7d09b9bffcfba191bf999b22f9a3eca1e128f6ab9ac6a493236c1a",
+  "observations": 306,
+  "checks": [
+    {
+      "name": "earned input harness finishes requested multiroom drop",
+      "passed": true
+    },
+    {
+      "name": "actual long fall traverses at least three room rows",
+      "passed": true,
+      "observed": {
+        "span": 4,
+        "cells": [
+          3,
+          8,
+          13,
+          18,
+          23
+        ]
+      }
+    },
+    {
+      "name": "actual upright long landing has exact incoming visual anchor",
+      "passed": true,
+      "observed": {
+        "landing": {
+          "clock": 2315,
+          "state": {
+            "state": 1,
+            "area": 3,
+            "cell": 23,
+            "node": 46,
+            "actor": {
+              "kind": 1,
+              "type": 0,
+              "state": 0,
+              "timer": 34,
+              "x": 448,
+              "y": 286,
+              "z": 0,
+              "speed": 0,
+              "hp": 0,
+              "coll": 0,
+              "facing": 2
+            },
+            "text": 0
+          },
+          "landings": [
+            {
+              "x": 448,
+              "y": 286,
+              "from_node": 7,
+              "edge": 1,
+              "x0": 27,
+              "y0": 17,
+              "parts": 63,
+              "flags": 7,
+              "verified_parts": 63,
+              "final_ground_parts": [
+                {
+                  "part": 0,
+                  "cell": [
+                    27,
+                    17
+                  ],
+                  "actual_metatile": 2396,
+                  "valid_shadow_metatiles": [
+                    2396,
+                    2404,
+                    2410,
+                    2416,
+                    2422
+                  ],
+                  "actual_match": true
+                },
+                {
+                  "part": 1,
+                  "cell": [
+                    28,
+                    17
+                  ],
+                  "actual_metatile": 2397,
+                  "valid_shadow_metatiles": [
+                    2397,
+                    2405,
+                    2411,
+                    2417,
+                    2423
+                  ],
+                  "actual_match": true
+                },
+                {
+                  "part": 2,
+                  "cell": [
+                    29,
+                    17
+                  ],
+                  "actual_metatile": 2398,
+                  "valid_shadow_metatiles": [
+                    2398,
+                    2406,
+                    2412,
+                    2418,
+                    2424
+                  ],
+                  "actual_match": true
+                },
+                {
+                  "part": 3,
+                  "cell": [
+                    27,
+                    18
+                  ],
+                  "actual_metatile": 2399,
+                  "valid_shadow_metatiles": [
+                    2399,
+                    2407,
+                    2413,
+                    2419,
+                    2425
+                  ],
+                  "actual_match": true
+                },
+                {
+                  "part": 4,
+                  "cell": [
+                    28,
+                    18
+                  ],
+                  "actual_metatile": 2400,
+                  "valid_shadow_metatiles": [
+                    2400,
+                    2408,
+                    2414,
+                    2420,
+                    2426
+                  ],
+                  "actual_match": true
+                },
+                {
+                  "part": 5,
+                  "cell": [
+                    29,
+                    18
+                  ],
+                  "actual_metatile": 2401,
+                  "valid_shadow_metatiles": [
+                    2401,
+                    2409,
+                    2415,
+                    2421,
+                    2427
+                  ],
+                  "actual_match": true
+                }
+              ]
+            },
+            {
+              "x": 208,
+              "y": 78,
+              "from_node": 36,
+              "edge": 0,
+              "x0": 12,
+              "y0": 4,
+              "parts": 63,
+              "flags": 4,
+              "verified_parts": 63,
+              "final_ground_parts": [
+                {
+                  "part": 0,
+                  "cell": [
+                    12,
+                    4
+                  ],
+                  "actual_metatile": 2396,
+                  "valid_shadow_metatiles": [
+                    2396,
+                    2404,
+                    2410,
+                    2416,
+                    2422
+                  ],
+                  "actual_match": true
+                },
+                {
+                  "part": 1,
+                  "cell": [
+                    13,
+                    4
+                  ],
+                  "actual_metatile": 2397,
+                  "valid_shadow_metatiles": [
+                    2397,
+                    2405,
+                    2411,
+                    2417,
+                    2423
+                  ],
+                  "actual_match": true
+                },
+                {
+                  "part": 2,
+                  "cell": [
+                    14,
+                    4
+                  ],
+                  "actual_metatile": 2398,
+                  "valid_shadow_metatiles": [
+                    2398,
+                    2406,
+                    2412,
+                    2418,
+                    2424
+                  ],
+                  "actual_match": true
+                },
+                {
+                  "part": 3,
+                  "cell": [
+                    12,
+                    5
+                  ],
+                  "actual_metatile": 2399,
+                  "valid_shadow_metatiles": [
+                    2399,
+                    2407,
+                    2413,
+                    2419,
+                    2425
+                  ],
+                  "actual_match": true
+                },
+                {
+                  "part": 4,
+                  "cell": [
+                    13,
+                    5
+                  ],
+                  "actual_metatile": 2400,
+                  "valid_shadow_metatiles": [
+                    2400,
+                    2408,
+                    2414,
+                    2420,
+                    2426
+                  ],
+                  "actual_match": true
+                },
+                {
+                  "part": 5,
+                  "cell": [
+                    14,
+                    5
+                  ],
+                  "actual_metatile": 2401,
+                  "valid_shadow_metatiles": [
+                    2401,
+                    2409,
+                    2415,
+                    2421,
+                    2427
+                  ],
+                  "actual_match": true
+                }
+              ]
+            }
+          ]
+        },
+        "matching": [
+          {
+            "x": 448,
+            "y": 286,
+            "from_node": 7,
+            "edge": 1,
+            "x0": 27,
+            "y0": 17,
+            "parts": 63,
+            "flags": 7,
+            "verified_parts": 63,
+            "final_ground_parts": [
+              {
+                "part": 0,
+                "cell": [
+                  27,
+                  17
+                ],
+                "actual_metatile": 2396,
+                "valid_shadow_metatiles": [
+                  2396,
+                  2404,
+                  2410,
+                  2416,
+                  2422
+                ],
+                "actual_match": true
+              },
+              {
+                "part": 1,
+                "cell": [
+                  28,
+                  17
+                ],
+                "actual_metatile": 2397,
+                "valid_shadow_metatiles": [
+                  2397,
+                  2405,
+                  2411,
+                  2417,
+                  2423
+                ],
+                "actual_match": true
+              },
+              {
+                "part": 2,
+                "cell": [
+                  29,
+                  17
+                ],
+                "actual_metatile": 2398,
+                "valid_shadow_metatiles": [
+                  2398,
+                  2406,
+                  2412,
+                  2418,
+                  2424
+                ],
+                "actual_match": true
+              },
+              {
+                "part": 3,
+                "cell": [
+                  27,
+                  18
+                ],
+                "actual_metatile": 2399,
+                "valid_shadow_metatiles": [
+                  2399,
+                  2407,
+                  2413,
+                  2419,
+                  2425
+                ],
+                "actual_match": true
+              },
+              {
+                "part": 4,
+                "cell": [
+                  28,
+                  18
+                ],
+                "actual_metatile": 2400,
+                "valid_shadow_metatiles": [
+                  2400,
+                  2408,
+                  2414,
+                  2420,
+                  2426
+                ],
+                "actual_match": true
+              },
+              {
+                "part": 5,
+                "cell": [
+                  29,
+                  18
+                ],
+                "actual_metatile": 2401,
+                "valid_shadow_metatiles": [
+                  2401,
+                  2409,
+                  2415,
+                  2421,
+                  2427
+                ],
+                "actual_match": true
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "name": "actual long landing overlaps a painted landing shadow",
+      "passed": true
+    }
+  ],
+  "complete": true
+}
