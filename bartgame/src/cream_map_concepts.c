@@ -202,8 +202,11 @@ void cream_map_render(int cell,bool8 zoom,int concept){
     bg0_clear();text_flush();vram_flush_queue();gBg3Dirty=0;
     dma3_copy32(sPixels,CHARBLOCK(2),19200);
     for(y=0;y<32;y++)for(x=0;x<32;x++)SCREENBLOCK(31)[y*32+x]=(y<20&&x<30?y*30+x:0)|(PAL_SLOT_MAP<<12);
+    /* The shared display helper claims the standard menu background first.
+       Select this atlas's private character/map blocks after that helper. */
+    video_show(DCNT_BG3);
     REG_BG3CNT=BGCNT_PRIO(0)|BGCNT_CHARBASE(2)|BGCNT_SCREENBASE(31)|BGCNT_SIZE_32x32;
-    gBgScroll[3][0]=gBgScroll[3][1]=0;video_show(DCNT_BG3);
+    gBgScroll[3][0]=gBgScroll[3][1]=0;
 }
 void cream_map_leave(void){
     if(!sActive)return;
