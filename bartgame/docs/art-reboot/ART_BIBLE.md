@@ -699,7 +699,7 @@ Parchment labels retain a native dark outline for contrast.
 Use **Contour Folio (#1)** for the Cream pause map, with **Exploded Shelves
 (#4)** event presentation: red healing hearts, green folk, purple broken boss
 heart, pale caves and gold chests, quests, caches and climbs. Keep its shared
-native9px glyphs, up to two events per overview card and extra-content pips.
+native 9px glyphs, up to two events per overview card and extra-content pips.
 The overview grid, inset plan, full room contour zoom and height scale stay
 from #1; the zoom legend includes climb, drop and cave. Unknown rooms remain
 hidden and all markers retain actual room coordinates.

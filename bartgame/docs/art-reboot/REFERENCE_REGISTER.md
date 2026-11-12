@@ -463,7 +463,11 @@ historical build scope.
 
 Direct source: the user chooses pause-map #1 with icons from #4. The existing
 actual mGBA overview/zoom PNGs in `cream-heights-review/images/maps/` were
-inspected side by side. #4 uses the same9px glyphs with semantic colors,
+inspected side by side. #4 uses the same 9px glyphs with semantic colors,
 two-event groups and overflow pips; those are reused in #1's layout. No new
 external reference or replacement icon artwork is introduced. Historical
 comparison captures remain tied to their original frozen source.
+
+The [selected native gallery](../../../cream-selected-map-review/README.md)
+records the new code/ROM identity and exact comparison to 33 original #4
+marker stamps. The reference pixels were reused without repainting.

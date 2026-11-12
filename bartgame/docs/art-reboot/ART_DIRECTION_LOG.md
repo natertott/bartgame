@@ -2130,7 +2130,7 @@ The normal workspace ROM is restored to0; the downloadable review ROM enables12.
 **User selection:** pause map #1 layout with #4 icons. The original concepts
 share the same native icon glyphs; the visible difference is #1's single gold
 event versus #4's colored event groups. The selected implementation reuses
-#4's exact marker painter in #1's unchanged28×19overview cards. It supports
+#4's exact marker painter in #1's unchanged 28×19 overview cards. It supports
 two markers and extra-content pips, retains #1's inset/height zoom and adds
 the complete climb/drop/cave legend.
 
@@ -2138,5 +2138,10 @@ The standard profile12 map is fixed to the selected presentation. Review
 style cycling is removed from its controls. The title identifies The Curdled
 Cream. Normal builds now default to12; explicit historical profiles remain
 available. No terrain, generation, collision, item or combat behavior changes.
-Source/native validation and new overview/zoom screenshots will accompany
-the downloadable build in the selected-map gallery.
+[Actual mGBA overview and zoom](../../../cream-selected-map-review/README.md)
+qualify source `48a39a9a` / ROM `98d1dce7…f9842e`. All 191 focused native
+checks pass, including 33 rendered icon stamps exactly matching the historical
+#4 screenshot, all seven overview event kinds, two-event cards, overflow pips,
+fog, normal controls and the real-input Forest cache round trip. Redraws take
+9–17 hardware frames in this sample. Explicit profiles0 and10 reproduce their
+old ROM hashes; normal profile12 reproduces the selected frozen ROM.

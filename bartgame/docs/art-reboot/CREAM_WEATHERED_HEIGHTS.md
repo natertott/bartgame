@@ -19,7 +19,11 @@ colored markers. The title now names the region.
 Normal builds enable profile12. The ten alternatives below describe the
 historical review round. Current controls are D-pad to select, A to zoom,
 B to return, R for items, Select for the standard menu and Start to resume.
-L leaves the chosen map style unchanged.
+L leaves the chosen map style unchanged. The
+[selected-map gallery](../../../cream-selected-map-review/README.md) records
+the resulting native screenshots, 191 passing mGBA checks and exact icon-pixel
+comparison against the original #4 capture. Its download enables this adopted
+map; the earlier qualification below retains its historical source scope.
 
 ## Scope and native construction
 

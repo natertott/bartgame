@@ -1,0 +1,24 @@
+{
+  "checks": [
+    {
+      "profile": 0,
+      "actual": "0dd8554384b53e618140f8c61590fc7e6a7ff0888f296ece034a95f357b34fdd",
+      "expected": "0dd8554384b53e618140f8c61590fc7e6a7ff0888f296ece034a95f357b34fdd",
+      "exact": true
+    },
+    {
+      "profile": 10,
+      "actual": "0aeb7c2520bd04e593274586dfb2ae8f689add1bb8bd20f3ed43d5203268ac72",
+      "expected": "0aeb7c2520bd04e593274586dfb2ae8f689add1bb8bd20f3ed43d5203268ac72",
+      "exact": true
+    },
+    {
+      "profile": 12,
+      "actual": "98d1dce7d1fa78d64a537688d44872b78e9a012585584081820a23edb2f9842e",
+      "expected": "98d1dce7d1fa78d64a537688d44872b78e9a012585584081820a23edb2f9842e",
+      "exact": true
+    }
+  ],
+  "complete": true,
+  "default_profile": 12
+}

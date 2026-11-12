@@ -1,0 +1,4798 @@
+{
+  "rom_sha256": "98d1dce7d1fa78d64a537688d44872b78e9a012585584081820a23edb2f9842e",
+  "source_commit": "48a39a9a1c0dc3fe1a0eb4fa563219eab0d104f6",
+  "tool_sha256": "bb6ce39f8da6bc337869386eb14ae00f8fa13593479ebd7feb0232e07a564f98",
+  "sections": {
+    "charted": {
+      "rom_sha256": "98d1dce7d1fa78d64a537688d44872b78e9a012585584081820a23edb2f9842e",
+      "source_commit": "48a39a9a1c0dc3fe1a0eb4fa563219eab0d104f6",
+      "tool_sha256": "bb6ce39f8da6bc337869386eb14ae00f8fa13593479ebd7feb0232e07a564f98",
+      "seed": 46247,
+      "charted_fixture": true,
+      "fixture": "Pinned title seed, ordinary room-load requests and hero-position/facing navigation. Actual menu inputs; no rewards, discovery, terrain, health, inventory, palette or pixel results assigned.",
+      "images": [
+        {
+          "file": "overview.png",
+          "sha256": "c70ea08b14ecf2aff9697d5d7e2f8b1c2b0a39cdd1bcc34709030405310655c7",
+          "size": [
+            240,
+            160
+          ]
+        },
+        {
+          "file": "zoom.png",
+          "sha256": "b82bd459557cc72e3eab1cc560af8d7bd1a84535d6629fed83eab8857390e04b",
+          "size": [
+            240,
+            160
+          ]
+        },
+        {
+          "file": "neighbor-zoom.png",
+          "sha256": "75096520cbd9d99d808e6d078bd51a4d97b1f1e57c9476cc4aa9f776a93ea460",
+          "size": [
+            240,
+            160
+          ]
+        },
+        {
+          "file": "returned.png",
+          "sha256": "239adacdbe051c924799233bb96b728f3d34695fd8e0d999d3c02ab08e6b50f2",
+          "size": [
+            240,
+            160
+          ]
+        }
+      ],
+      "redraw_timings": [
+        {
+          "key": "R",
+          "concept": 0,
+          "zoom": 0,
+          "hardware_frames": 17
+        },
+        {
+          "key": "A",
+          "concept": 0,
+          "zoom": 1,
+          "hardware_frames": 17
+        },
+        {
+          "key": "B",
+          "concept": 0,
+          "zoom": 0,
+          "hardware_frames": 13
+        },
+        {
+          "key": "UP",
+          "concept": 0,
+          "zoom": 0,
+          "hardware_frames": 17
+        },
+        {
+          "key": "A",
+          "concept": 0,
+          "zoom": 1,
+          "hardware_frames": 17
+        },
+        {
+          "key": "R",
+          "concept": 0,
+          "zoom": 0,
+          "hardware_frames": 17
+        },
+        {
+          "key": "R",
+          "concept": 0,
+          "zoom": 0,
+          "hardware_frames": 17
+        }
+      ],
+      "native_world_restored": true,
+      "checks": [
+        {
+          "name": "normal opening draft completed with positive health",
+          "passed": true,
+          "observed": null
+        },
+        {
+          "name": "navigation begins in living ordinary ground state",
+          "passed": true,
+          "observed": {
+            "frames": 280,
+            "clock": 269,
+            "run_frames": 173,
+            "state": 1,
+            "area": 0,
+            "cell": 0,
+            "node": 42,
+            "actor": {
+              "kind": 1,
+              "type": 0,
+              "state": 0,
+              "timer": 0,
+              "x": 200,
+              "y": 270,
+              "z": 0,
+              "speed": 0,
+              "hp": 0,
+              "coll": 0,
+              "facing": 0
+            },
+            "health": [
+              32,
+              32
+            ],
+            "text": 0,
+            "camera": [
+              80,
+              160
+            ]
+          }
+        },
+        {
+          "name": "actual UP input enters Cream through Drain ladder",
+          "passed": true,
+          "observed": null
+        },
+        {
+          "name": "ordinary load selected actual generated room",
+          "passed": true,
+          "observed": {
+            "frames": 411,
+            "clock": 400,
+            "run_frames": 216,
+            "state": 1,
+            "area": 3,
+            "cell": 0,
+            "node": 0,
+            "actor": {
+              "kind": 1,
+              "type": 0,
+              "state": 0,
+              "timer": 0,
+              "x": 120,
+              "y": 222,
+              "z": 0,
+              "speed": 0,
+              "hp": 0,
+              "coll": 0,
+              "facing": 0
+            },
+            "health": [
+              32,
+              32
+            ],
+            "text": 0,
+            "camera": [
+              0,
+              118
+            ]
+          }
+        },
+        {
+          "name": "navigation begins in living ordinary ground state",
+          "passed": true,
+          "observed": {
+            "frames": 411,
+            "clock": 400,
+            "run_frames": 216,
+            "state": 1,
+            "area": 3,
+            "cell": 0,
+            "node": 0,
+            "actor": {
+              "kind": 1,
+              "type": 0,
+              "state": 0,
+              "timer": 0,
+              "x": 120,
+              "y": 222,
+              "z": 0,
+              "speed": 0,
+              "hp": 0,
+              "coll": 0,
+              "facing": 0
+            },
+            "health": [
+              32,
+              32
+            ],
+            "text": 0,
+            "camera": [
+              0,
+              118
+            ]
+          }
+        },
+        {
+          "name": "ordinary load selected actual generated room",
+          "passed": true,
+          "observed": {
+            "frames": 463,
+            "clock": 452,
+            "run_frames": 220,
+            "state": 1,
+            "area": 3,
+            "cell": 1,
+            "node": 2,
+            "actor": {
+              "kind": 1,
+              "type": 0,
+              "state": 0,
+              "timer": 0,
+              "x": 440,
+              "y": 318,
+              "z": 0,
+              "speed": 0,
+              "hp": 0,
+              "coll": 0,
+              "facing": 0
+            },
+            "health": [
+              32,
+              32
+            ],
+            "text": 0,
+            "camera": [
+              272,
+              214
+            ]
+          }
+        },
+        {
+          "name": "navigation begins in living ordinary ground state",
+          "passed": true,
+          "observed": {
+            "frames": 463,
+            "clock": 452,
+            "run_frames": 220,
+            "state": 1,
+            "area": 3,
+            "cell": 1,
+            "node": 2,
+            "actor": {
+              "kind": 1,
+              "type": 0,
+              "state": 0,
+              "timer": 0,
+              "x": 440,
+              "y": 318,
+              "z": 0,
+              "speed": 0,
+              "hp": 0,
+              "coll": 0,
+              "facing": 0
+            },
+            "health": [
+              32,
+              32
+            ],
+            "text": 0,
+            "camera": [
+              272,
+              214
+            ]
+          }
+        },
+        {
+          "name": "ordinary load selected actual generated room",
+          "passed": true,
+          "observed": {
+            "frames": 521,
+            "clock": 510,
+            "run_frames": 224,
+            "state": 1,
+            "area": 3,
+            "cell": 2,
+            "node": 4,
+            "actor": {
+              "kind": 1,
+              "type": 0,
+              "state": 0,
+              "timer": 0,
+              "x": 440,
+              "y": 318,
+              "z": 0,
+              "speed": 0,
+              "hp": 0,
+              "coll": 0,
+              "facing": 0
+            },
+            "health": [
+              32,
+              32
+            ],
+            "text": 0,
+            "camera": [
+              272,
+              214
+            ]
+          }
+        },
+        {
+          "name": "navigation begins in living ordinary ground state",
+          "passed": true,
+          "observed": {
+            "frames": 521,
+            "clock": 510,
+            "run_frames": 224,
+            "state": 1,
+            "area": 3,
+            "cell": 2,
+            "node": 4,
+            "actor": {
+              "kind": 1,
+              "type": 0,
+              "state": 0,
+              "timer": 0,
+              "x": 440,
+              "y": 318,
+              "z": 0,
+              "speed": 0,
+              "hp": 0,
+              "coll": 0,
+              "facing": 0
+            },
+            "health": [
+              32,
+              32
+            ],
+            "text": 0,
+            "camera": [
+              272,
+              214
+            ]
+          }
+        },
+        {
+          "name": "ordinary load selected actual generated room",
+          "passed": true,
+          "observed": {
+            "frames": 561,
+            "clock": 550,
+            "run_frames": 228,
+            "state": 1,
+            "area": 3,
+            "cell": 3,
+            "node": 6,
+            "actor": {
+              "kind": 1,
+              "type": 0,
+              "state": 0,
+              "timer": 0,
+              "x": 184,
+              "y": 318,
+              "z": 0,
+              "speed": 0,
+              "hp": 0,
+              "coll": 0,
+              "facing": 0
+            },
+            "health": [
+              32,
+              32
+            ],
+            "text": 0,
+            "camera": [
+              64,
+              214
+            ]
+          }
+        },
+        {
+          "name": "navigation begins in living ordinary ground state",
+          "passed": true,
+          "observed": {
+            "frames": 561,
+            "clock": 550,
+            "run_frames": 228,
+            "state": 1,
+            "area": 3,
+            "cell": 3,
+            "node": 6,
+            "actor": {
+              "kind": 1,
+              "type": 0,
+              "state": 0,
+              "timer": 0,
+              "x": 184,
+              "y": 318,
+              "z": 0,
+              "speed": 0,
+              "hp": 0,
+              "coll": 0,
+              "facing": 0
+            },
+            "health": [
+              32,
+              32
+            ],
+            "text": 0,
+            "camera": [
+              64,
+              214
+            ]
+          }
+        },
+        {
+          "name": "ordinary load selected actual generated room",
+          "passed": true,
+          "observed": {
+            "frames": 606,
+            "clock": 595,
+            "run_frames": 232,
+            "state": 1,
+            "area": 3,
+            "cell": 4,
+            "node": 8,
+            "actor": {
+              "kind": 1,
+              "type": 0,
+              "state": 0,
+              "timer": 0,
+              "x": 104,
+              "y": 190,
+              "z": 0,
+              "speed": 0,
+              "hp": 0,
+              "coll": 0,
+              "facing": 0
+            },
+            "health": [
+              32,
+              32
+            ],
+            "text": 0,
+            "camera": [
+              0,
+              86
+            ]
+          }
+        },
+        {
+          "name": "navigation begins in living ordinary ground state",
+          "passed": true,
+          "observed": {
+            "frames": 606,
+            "clock": 595,
+            "run_frames": 232,
+            "state": 1,
+            "area": 3,
+            "cell": 4,
+            "node": 8,
+            "actor": {
+              "kind": 1,
+              "type": 0,
+              "state": 0,
+              "timer": 0,
+              "x": 104,
+              "y": 190,
+              "z": 0,
+              "speed": 0,
+              "hp": 0,
+              "coll": 0,
+              "facing": 0
+            },
+            "health": [
+              32,
+              32
+            ],
+            "text": 0,
+            "camera": [
+              0,
+              86
+            ]
+          }
+        },
+        {
+          "name": "ordinary load selected actual generated room",
+          "passed": true,
+          "observed": {
+            "frames": 652,
+            "clock": 641,
+            "run_frames": 236,
+            "state": 1,
+            "area": 3,
+            "cell": 5,
+            "node": 10,
+            "actor": {
+              "kind": 1,
+              "type": 0,
+              "state": 0,
+              "timer": 0,
+              "x": 120,
+              "y": 238,
+              "z": 0,
+              "speed": 0,
+              "hp": 0,
+              "coll": 0,
+              "facing": 0
+            },
+            "health": [
+              32,
+              32
+            ],
+            "text": 0,
+            "camera": [
+              0,
+              134
+            ]
+          }
+        },
+        {
+          "name": "navigation begins in living ordinary ground state",
+          "passed": true,
+          "observed": {
+            "frames": 652,
+            "clock": 641,
+            "run_frames": 236,
+            "state": 1,
+            "area": 3,
+            "cell": 5,
+            "node": 10,
+            "actor": {
+              "kind": 1,
+              "type": 0,
+              "state": 0,
+              "timer": 0,
+              "x": 120,
+              "y": 238,
+              "z": 0,
+              "speed": 0,
+              "hp": 0,
+              "coll": 0,
+              "facing": 0
+            },
+            "health": [
+              32,
+              32
+            ],
+            "text": 0,
+            "camera": [
+              0,
+              134
+            ]
+          }
+        },
+        {
+          "name": "ordinary load selected actual generated room",
+          "passed": true,
+          "observed": {
+            "frames": 714,
+            "clock": 703,
+            "run_frames": 240,
+            "state": 1,
+            "area": 3,
+            "cell": 6,
+            "node": 12,
+            "actor": {
+              "kind": 1,
+              "type": 0,
+              "state": 0,
+              "timer": 0,
+              "x": 184,
+              "y": 318,
+              "z": 0,
+              "speed": 0,
+              "hp": 0,
+              "coll": 0,
+              "facing": 0
+            },
+            "health": [
+              32,
+              32
+            ],
+            "text": 0,
+            "camera": [
+              64,
+              214
+            ]
+          }
+        },
+        {
+          "name": "navigation begins in living ordinary ground state",
+          "passed": true,
+          "observed": {
+            "frames": 714,
+            "clock": 703,
+            "run_frames": 240,
+            "state": 1,
+            "area": 3,
+            "cell": 6,
+            "node": 12,
+            "actor": {
+              "kind": 1,
+              "type": 0,
+              "state": 0,
+              "timer": 0,
+              "x": 184,
+              "y": 318,
+              "z": 0,
+              "speed": 0,
+              "hp": 0,
+              "coll": 0,
+              "facing": 0
+            },
+            "health": [
+              32,
+              32
+            ],
+            "text": 0,
+            "camera": [
+              64,
+              214
+            ]
+          }
+        },
+        {
+          "name": "ordinary load selected actual generated room",
+          "passed": true,
+          "observed": {
+            "frames": 758,
+            "clock": 747,
+            "run_frames": 244,
+            "state": 1,
+            "area": 3,
+            "cell": 7,
+            "node": 14,
+            "actor": {
+              "kind": 1,
+              "type": 0,
+              "state": 0,
+              "timer": 0,
+              "x": 280,
+              "y": 318,
+              "z": 0,
+              "speed": 0,
+              "hp": 0,
+              "coll": 0,
+              "facing": 0
+            },
+            "health": [
+              32,
+              32
+            ],
+            "text": 0,
+            "camera": [
+              160,
+              214
+            ]
+          }
+        },
+        {
+          "name": "navigation begins in living ordinary ground state",
+          "passed": true,
+          "observed": {
+            "frames": 758,
+            "clock": 747,
+            "run_frames": 244,
+            "state": 1,
+            "area": 3,
+            "cell": 7,
+            "node": 14,
+            "actor": {
+              "kind": 1,
+              "type": 0,
+              "state": 0,
+              "timer": 0,
+              "x": 280,
+              "y": 318,
+              "z": 0,
+              "speed": 0,
+              "hp": 0,
+              "coll": 0,
+              "facing": 0
+            },
+            "health": [
+              32,
+              32
+            ],
+            "text": 0,
+            "camera": [
+              160,
+              214
+            ]
+          }
+        },
+        {
+          "name": "ordinary load selected actual generated room",
+          "passed": true,
+          "observed": {
+            "frames": 803,
+            "clock": 792,
+            "run_frames": 248,
+            "state": 1,
+            "area": 3,
+            "cell": 8,
+            "node": 16,
+            "actor": {
+              "kind": 1,
+              "type": 0,
+              "state": 0,
+              "timer": 0,
+              "x": 120,
+              "y": 206,
+              "z": 0,
+              "speed": 0,
+              "hp": 0,
+              "coll": 0,
+              "facing": 0
+            },
+            "health": [
+              32,
+              32
+            ],
+            "text": 0,
+            "camera": [
+              0,
+              102
+            ]
+          }
+        },
+        {
+          "name": "navigation begins in living ordinary ground state",
+          "passed": true,
+          "observed": {
+            "frames": 803,
+            "clock": 792,
+            "run_frames": 248,
+            "state": 1,
+            "area": 3,
+            "cell": 8,
+            "node": 16,
+            "actor": {
+              "kind": 1,
+              "type": 0,
+              "state": 0,
+              "timer": 0,
+              "x": 120,
+              "y": 206,
+              "z": 0,
+              "speed": 0,
+              "hp": 0,
+              "coll": 0,
+              "facing": 0
+            },
+            "health": [
+              32,
+              32
+            ],
+            "text": 0,
+            "camera": [
+              0,
+              102
+            ]
+          }
+        },
+        {
+          "name": "ordinary load selected actual generated room",
+          "passed": true,
+          "observed": {
+            "frames": 847,
+            "clock": 836,
+            "run_frames": 252,
+            "state": 1,
+            "area": 3,
+            "cell": 9,
+            "node": 18,
+            "actor": {
+              "kind": 1,
+              "type": 0,
+              "state": 0,
+              "timer": 0,
+              "x": 312,
+              "y": 222,
+              "z": 0,
+              "speed": 0,
+              "hp": 0,
+              "coll": 0,
+              "facing": 0
+            },
+            "health": [
+              32,
+              32
+            ],
+            "text": 0,
+            "camera": [
+              192,
+              118
+            ]
+          }
+        },
+        {
+          "name": "navigation begins in living ordinary ground state",
+          "passed": true,
+          "observed": {
+            "frames": 847,
+            "clock": 836,
+            "run_frames": 252,
+            "state": 1,
+            "area": 3,
+            "cell": 9,
+            "node": 18,
+            "actor": {
+              "kind": 1,
+              "type": 0,
+              "state": 0,
+              "timer": 0,
+              "x": 312,
+              "y": 222,
+              "z": 0,
+              "speed": 0,
+              "hp": 0,
+              "coll": 0,
+              "facing": 0
+            },
+            "health": [
+              32,
+              32
+            ],
+            "text": 0,
+            "camera": [
+              192,
+              118
+            ]
+          }
+        },
+        {
+          "name": "ordinary load selected actual generated room",
+          "passed": true,
+          "observed": {
+            "frames": 893,
+            "clock": 882,
+            "run_frames": 256,
+            "state": 1,
+            "area": 3,
+            "cell": 10,
+            "node": 20,
+            "actor": {
+              "kind": 1,
+              "type": 0,
+              "state": 0,
+              "timer": 0,
+              "x": 440,
+              "y": 318,
+              "z": 0,
+              "speed": 0,
+              "hp": 0,
+              "coll": 0,
+              "facing": 0
+            },
+            "health": [
+              32,
+              32
+            ],
+            "text": 0,
+            "camera": [
+              272,
+              214
+            ]
+          }
+        },
+        {
+          "name": "navigation begins in living ordinary ground state",
+          "passed": true,
+          "observed": {
+            "frames": 893,
+            "clock": 882,
+            "run_frames": 256,
+            "state": 1,
+            "area": 3,
+            "cell": 10,
+            "node": 20,
+            "actor": {
+              "kind": 1,
+              "type": 0,
+              "state": 0,
+              "timer": 0,
+              "x": 440,
+              "y": 318,
+              "z": 0,
+              "speed": 0,
+              "hp": 0,
+              "coll": 0,
+              "facing": 0
+            },
+            "health": [
+              32,
+              32
+            ],
+            "text": 0,
+            "camera": [
+              272,
+              214
+            ]
+          }
+        },
+        {
+          "name": "ordinary load selected actual generated room",
+          "passed": true,
+          "observed": {
+            "frames": 943,
+            "clock": 932,
+            "run_frames": 260,
+            "state": 1,
+            "area": 3,
+            "cell": 11,
+            "node": 22,
+            "actor": {
+              "kind": 1,
+              "type": 0,
+              "state": 0,
+              "timer": 0,
+              "x": 440,
+              "y": 318,
+              "z": 0,
+              "speed": 0,
+              "hp": 0,
+              "coll": 0,
+              "facing": 0
+            },
+            "health": [
+              32,
+              32
+            ],
+            "text": 0,
+            "camera": [
+              272,
+              214
+            ]
+          }
+        },
+        {
+          "name": "navigation begins in living ordinary ground state",
+          "passed": true,
+          "observed": {
+            "frames": 943,
+            "clock": 932,
+            "run_frames": 260,
+            "state": 1,
+            "area": 3,
+            "cell": 11,
+            "node": 22,
+            "actor": {
+              "kind": 1,
+              "type": 0,
+              "state": 0,
+              "timer": 0,
+              "x": 440,
+              "y": 318,
+              "z": 0,
+              "speed": 0,
+              "hp": 0,
+              "coll": 0,
+              "facing": 0
+            },
+            "health": [
+              32,
+              32
+            ],
+            "text": 0,
+            "camera": [
+              272,
+              214
+            ]
+          }
+        },
+        {
+          "name": "ordinary load selected actual generated room",
+          "passed": true,
+          "observed": {
+            "frames": 992,
+            "clock": 981,
+            "run_frames": 264,
+            "state": 1,
+            "area": 3,
+            "cell": 12,
+            "node": 24,
+            "actor": {
+              "kind": 1,
+              "type": 0,
+              "state": 0,
+              "timer": 0,
+              "x": 152,
+              "y": 222,
+              "z": 0,
+              "speed": 0,
+              "hp": 0,
+              "coll": 0,
+              "facing": 0
+            },
+            "health": [
+              32,
+              32
+            ],
+            "text": 0,
+            "camera": [
+              32,
+              118
+            ]
+          }
+        },
+        {
+          "name": "navigation begins in living ordinary ground state",
+          "passed": true,
+          "observed": {
+            "frames": 992,
+            "clock": 981,
+            "run_frames": 264,
+            "state": 1,
+            "area": 3,
+            "cell": 12,
+            "node": 24,
+            "actor": {
+              "kind": 1,
+              "type": 0,
+              "state": 0,
+              "timer": 0,
+              "x": 152,
+              "y": 222,
+              "z": 0,
+              "speed": 0,
+              "hp": 0,
+              "coll": 0,
+              "facing": 0
+            },
+            "health": [
+              32,
+              32
+            ],
+            "text": 0,
+            "camera": [
+              32,
+              118
+            ]
+          }
+        },
+        {
+          "name": "ordinary load selected actual generated room",
+          "passed": true,
+          "observed": {
+            "frames": 1052,
+            "clock": 1041,
+            "run_frames": 268,
+            "state": 1,
+            "area": 3,
+            "cell": 13,
+            "node": 26,
+            "actor": {
+              "kind": 1,
+              "type": 0,
+              "state": 0,
+              "timer": 0,
+              "x": 440,
+              "y": 318,
+              "z": 0,
+              "speed": 0,
+              "hp": 0,
+              "coll": 0,
+              "facing": 0
+            },
+            "health": [
+              32,
+              32
+            ],
+            "text": 0,
+            "camera": [
+              272,
+              214
+            ]
+          }
+        },
+        {
+          "name": "navigation begins in living ordinary ground state",
+          "passed": true,
+          "observed": {
+            "frames": 1052,
+            "clock": 1041,
+            "run_frames": 268,
+            "state": 1,
+            "area": 3,
+            "cell": 13,
+            "node": 26,
+            "actor": {
+              "kind": 1,
+              "type": 0,
+              "state": 0,
+              "timer": 0,
+              "x": 440,
+              "y": 318,
+              "z": 0,
+              "speed": 0,
+              "hp": 0,
+              "coll": 0,
+              "facing": 0
+            },
+            "health": [
+              32,
+              32
+            ],
+            "text": 0,
+            "camera": [
+              272,
+              214
+            ]
+          }
+        },
+        {
+          "name": "ordinary load selected actual generated room",
+          "passed": true,
+          "observed": {
+            "frames": 1096,
+            "clock": 1085,
+            "run_frames": 272,
+            "state": 1,
+            "area": 3,
+            "cell": 14,
+            "node": 28,
+            "actor": {
+              "kind": 1,
+              "type": 0,
+              "state": 0,
+              "timer": 0,
+              "x": 440,
+              "y": 318,
+              "z": 0,
+              "speed": 0,
+              "hp": 0,
+              "coll": 0,
+              "facing": 0
+            },
+            "health": [
+              32,
+              32
+            ],
+            "text": 0,
+            "camera": [
+              272,
+              214
+            ]
+          }
+        },
+        {
+          "name": "navigation begins in living ordinary ground state",
+          "passed": true,
+          "observed": {
+            "frames": 1096,
+            "clock": 1085,
+            "run_frames": 272,
+            "state": 1,
+            "area": 3,
+            "cell": 14,
+            "node": 28,
+            "actor": {
+              "kind": 1,
+              "type": 0,
+              "state": 0,
+              "timer": 0,
+              "x": 440,
+              "y": 318,
+              "z": 0,
+              "speed": 0,
+              "hp": 0,
+              "coll": 0,
+              "facing": 0
+            },
+            "health": [
+              32,
+              32
+            ],
+            "text": 0,
+            "camera": [
+              272,
+              214
+            ]
+          }
+        },
+        {
+          "name": "ordinary load selected actual generated room",
+          "passed": true,
+          "observed": {
+            "frames": 1144,
+            "clock": 1133,
+            "run_frames": 276,
+            "state": 1,
+            "area": 3,
+            "cell": 15,
+            "node": 30,
+            "actor": {
+              "kind": 1,
+              "type": 0,
+              "state": 0,
+              "timer": 0,
+              "x": 120,
+              "y": 222,
+              "z": 0,
+              "speed": 0,
+              "hp": 0,
+              "coll": 0,
+              "facing": 0
+            },
+            "health": [
+              32,
+              32
+            ],
+            "text": 0,
+            "camera": [
+              0,
+              118
+            ]
+          }
+        },
+        {
+          "name": "navigation begins in living ordinary ground state",
+          "passed": true,
+          "observed": {
+            "frames": 1144,
+            "clock": 1133,
+            "run_frames": 276,
+            "state": 1,
+            "area": 3,
+            "cell": 15,
+            "node": 30,
+            "actor": {
+              "kind": 1,
+              "type": 0,
+              "state": 0,
+              "timer": 0,
+              "x": 120,
+              "y": 222,
+              "z": 0,
+              "speed": 0,
+              "hp": 0,
+              "coll": 0,
+              "facing": 0
+            },
+            "health": [
+              32,
+              32
+            ],
+            "text": 0,
+            "camera": [
+              0,
+              118
+            ]
+          }
+        },
+        {
+          "name": "ordinary load selected actual generated room",
+          "passed": true,
+          "observed": {
+            "frames": 1202,
+            "clock": 1191,
+            "run_frames": 280,
+            "state": 1,
+            "area": 3,
+            "cell": 16,
+            "node": 32,
+            "actor": {
+              "kind": 1,
+              "type": 0,
+              "state": 0,
+              "timer": 0,
+              "x": 440,
+              "y": 318,
+              "z": 0,
+              "speed": 0,
+              "hp": 0,
+              "coll": 0,
+              "facing": 0
+            },
+            "health": [
+              32,
+              32
+            ],
+            "text": 0,
+            "camera": [
+              272,
+              214
+            ]
+          }
+        },
+        {
+          "name": "navigation begins in living ordinary ground state",
+          "passed": true,
+          "observed": {
+            "frames": 1202,
+            "clock": 1191,
+            "run_frames": 280,
+            "state": 1,
+            "area": 3,
+            "cell": 16,
+            "node": 32,
+            "actor": {
+              "kind": 1,
+              "type": 0,
+              "state": 0,
+              "timer": 0,
+              "x": 440,
+              "y": 318,
+              "z": 0,
+              "speed": 0,
+              "hp": 0,
+              "coll": 0,
+              "facing": 0
+            },
+            "health": [
+              32,
+              32
+            ],
+            "text": 0,
+            "camera": [
+              272,
+              214
+            ]
+          }
+        },
+        {
+          "name": "ordinary load selected actual generated room",
+          "passed": true,
+          "observed": {
+            "frames": 1250,
+            "clock": 1239,
+            "run_frames": 284,
+            "state": 1,
+            "area": 3,
+            "cell": 17,
+            "node": 34,
+            "actor": {
+              "kind": 1,
+              "type": 0,
+              "state": 0,
+              "timer": 0,
+              "x": 264,
+              "y": 206,
+              "z": 0,
+              "speed": 0,
+              "hp": 0,
+              "coll": 0,
+              "facing": 0
+            },
+            "health": [
+              32,
+              32
+            ],
+            "text": 0,
+            "camera": [
+              144,
+              102
+            ]
+          }
+        },
+        {
+          "name": "navigation begins in living ordinary ground state",
+          "passed": true,
+          "observed": {
+            "frames": 1250,
+            "clock": 1239,
+            "run_frames": 284,
+            "state": 1,
+            "area": 3,
+            "cell": 17,
+            "node": 34,
+            "actor": {
+              "kind": 1,
+              "type": 0,
+              "state": 0,
+              "timer": 0,
+              "x": 264,
+              "y": 206,
+              "z": 0,
+              "speed": 0,
+              "hp": 0,
+              "coll": 0,
+              "facing": 0
+            },
+            "health": [
+              32,
+              32
+            ],
+            "text": 0,
+            "camera": [
+              144,
+              102
+            ]
+          }
+        },
+        {
+          "name": "ordinary load selected actual generated room",
+          "passed": true,
+          "observed": {
+            "frames": 1299,
+            "clock": 1288,
+            "run_frames": 288,
+            "state": 1,
+            "area": 3,
+            "cell": 18,
+            "node": 36,
+            "actor": {
+              "kind": 1,
+              "type": 0,
+              "state": 0,
+              "timer": 0,
+              "x": 184,
+              "y": 318,
+              "z": 0,
+              "speed": 0,
+              "hp": 0,
+              "coll": 0,
+              "facing": 0
+            },
+            "health": [
+              32,
+              32
+            ],
+            "text": 0,
+            "camera": [
+              64,
+              214
+            ]
+          }
+        },
+        {
+          "name": "navigation begins in living ordinary ground state",
+          "passed": true,
+          "observed": {
+            "frames": 1299,
+            "clock": 1288,
+            "run_frames": 288,
+            "state": 1,
+            "area": 3,
+            "cell": 18,
+            "node": 36,
+            "actor": {
+              "kind": 1,
+              "type": 0,
+              "state": 0,
+              "timer": 0,
+              "x": 184,
+              "y": 318,
+              "z": 0,
+              "speed": 0,
+              "hp": 0,
+              "coll": 0,
+              "facing": 0
+            },
+            "health": [
+              32,
+              32
+            ],
+            "text": 0,
+            "camera": [
+              64,
+              214
+            ]
+          }
+        },
+        {
+          "name": "ordinary load selected actual generated room",
+          "passed": true,
+          "observed": {
+            "frames": 1352,
+            "clock": 1341,
+            "run_frames": 292,
+            "state": 1,
+            "area": 3,
+            "cell": 19,
+            "node": 38,
+            "actor": {
+              "kind": 1,
+              "type": 0,
+              "state": 0,
+              "timer": 0,
+              "x": 424,
+              "y": 222,
+              "z": 0,
+              "speed": 0,
+              "hp": 0,
+              "coll": 0,
+              "facing": 0
+            },
+            "health": [
+              32,
+              32
+            ],
+            "text": 0,
+            "camera": [
+              272,
+              118
+            ]
+          }
+        },
+        {
+          "name": "navigation begins in living ordinary ground state",
+          "passed": true,
+          "observed": {
+            "frames": 1352,
+            "clock": 1341,
+            "run_frames": 292,
+            "state": 1,
+            "area": 3,
+            "cell": 19,
+            "node": 38,
+            "actor": {
+              "kind": 1,
+              "type": 0,
+              "state": 0,
+              "timer": 0,
+              "x": 424,
+              "y": 222,
+              "z": 0,
+              "speed": 0,
+              "hp": 0,
+              "coll": 0,
+              "facing": 0
+            },
+            "health": [
+              32,
+              32
+            ],
+            "text": 0,
+            "camera": [
+              272,
+              118
+            ]
+          }
+        },
+        {
+          "name": "ordinary load selected actual generated room",
+          "passed": true,
+          "observed": {
+            "frames": 1412,
+            "clock": 1401,
+            "run_frames": 296,
+            "state": 1,
+            "area": 3,
+            "cell": 20,
+            "node": 40,
+            "actor": {
+              "kind": 1,
+              "type": 0,
+              "state": 0,
+              "timer": 0,
+              "x": 440,
+              "y": 318,
+              "z": 0,
+              "speed": 0,
+              "hp": 0,
+              "coll": 0,
+              "facing": 0
+            },
+            "health": [
+              32,
+              32
+            ],
+            "text": 0,
+            "camera": [
+              272,
+              214
+            ]
+          }
+        },
+        {
+          "name": "navigation begins in living ordinary ground state",
+          "passed": true,
+          "observed": {
+            "frames": 1412,
+            "clock": 1401,
+            "run_frames": 296,
+            "state": 1,
+            "area": 3,
+            "cell": 20,
+            "node": 40,
+            "actor": {
+              "kind": 1,
+              "type": 0,
+              "state": 0,
+              "timer": 0,
+              "x": 440,
+              "y": 318,
+              "z": 0,
+              "speed": 0,
+              "hp": 0,
+              "coll": 0,
+              "facing": 0
+            },
+            "health": [
+              32,
+              32
+            ],
+            "text": 0,
+            "camera": [
+              272,
+              214
+            ]
+          }
+        },
+        {
+          "name": "ordinary load selected actual generated room",
+          "passed": true,
+          "observed": {
+            "frames": 1463,
+            "clock": 1452,
+            "run_frames": 300,
+            "state": 1,
+            "area": 3,
+            "cell": 21,
+            "node": 42,
+            "actor": {
+              "kind": 1,
+              "type": 0,
+              "state": 0,
+              "timer": 0,
+              "x": 400,
+              "y": 350,
+              "z": 0,
+              "speed": 0,
+              "hp": 0,
+              "coll": 0,
+              "facing": 0
+            },
+            "health": [
+              32,
+              32
+            ],
+            "text": 0,
+            "camera": [
+              272,
+              224
+            ]
+          }
+        },
+        {
+          "name": "navigation begins in living ordinary ground state",
+          "passed": true,
+          "observed": {
+            "frames": 1463,
+            "clock": 1452,
+            "run_frames": 300,
+            "state": 1,
+            "area": 3,
+            "cell": 21,
+            "node": 42,
+            "actor": {
+              "kind": 1,
+              "type": 0,
+              "state": 0,
+              "timer": 0,
+              "x": 400,
+              "y": 350,
+              "z": 0,
+              "speed": 0,
+              "hp": 0,
+              "coll": 0,
+              "facing": 0
+            },
+            "health": [
+              32,
+              32
+            ],
+            "text": 0,
+            "camera": [
+              272,
+              224
+            ]
+          }
+        },
+        {
+          "name": "ordinary load selected actual generated room",
+          "passed": true,
+          "observed": {
+            "frames": 1519,
+            "clock": 1508,
+            "run_frames": 304,
+            "state": 1,
+            "area": 3,
+            "cell": 22,
+            "node": 44,
+            "actor": {
+              "kind": 1,
+              "type": 0,
+              "state": 0,
+              "timer": 0,
+              "x": 408,
+              "y": 206,
+              "z": 0,
+              "speed": 0,
+              "hp": 0,
+              "coll": 0,
+              "facing": 0
+            },
+            "health": [
+              32,
+              32
+            ],
+            "text": 0,
+            "camera": [
+              272,
+              102
+            ]
+          }
+        },
+        {
+          "name": "navigation begins in living ordinary ground state",
+          "passed": true,
+          "observed": {
+            "frames": 1519,
+            "clock": 1508,
+            "run_frames": 304,
+            "state": 1,
+            "area": 3,
+            "cell": 22,
+            "node": 44,
+            "actor": {
+              "kind": 1,
+              "type": 0,
+              "state": 0,
+              "timer": 0,
+              "x": 408,
+              "y": 206,
+              "z": 0,
+              "speed": 0,
+              "hp": 0,
+              "coll": 0,
+              "facing": 0
+            },
+            "health": [
+              32,
+              32
+            ],
+            "text": 0,
+            "camera": [
+              272,
+              102
+            ]
+          }
+        },
+        {
+          "name": "ordinary load selected actual generated room",
+          "passed": true,
+          "observed": {
+            "frames": 1565,
+            "clock": 1554,
+            "run_frames": 308,
+            "state": 1,
+            "area": 3,
+            "cell": 23,
+            "node": 46,
+            "actor": {
+              "kind": 1,
+              "type": 0,
+              "state": 0,
+              "timer": 0,
+              "x": 216,
+              "y": 302,
+              "z": 0,
+              "speed": 0,
+              "hp": 0,
+              "coll": 0,
+              "facing": 0
+            },
+            "health": [
+              32,
+              32
+            ],
+            "text": 0,
+            "camera": [
+              96,
+              198
+            ]
+          }
+        },
+        {
+          "name": "navigation begins in living ordinary ground state",
+          "passed": true,
+          "observed": {
+            "frames": 1565,
+            "clock": 1554,
+            "run_frames": 308,
+            "state": 1,
+            "area": 3,
+            "cell": 23,
+            "node": 46,
+            "actor": {
+              "kind": 1,
+              "type": 0,
+              "state": 0,
+              "timer": 0,
+              "x": 216,
+              "y": 302,
+              "z": 0,
+              "speed": 0,
+              "hp": 0,
+              "coll": 0,
+              "facing": 0
+            },
+            "health": [
+              32,
+              32
+            ],
+            "text": 0,
+            "camera": [
+              96,
+              198
+            ]
+          }
+        },
+        {
+          "name": "ordinary load selected actual generated room",
+          "passed": true,
+          "observed": {
+            "frames": 1615,
+            "clock": 1604,
+            "run_frames": 312,
+            "state": 1,
+            "area": 3,
+            "cell": 24,
+            "node": 48,
+            "actor": {
+              "kind": 1,
+              "type": 0,
+              "state": 0,
+              "timer": 0,
+              "x": 184,
+              "y": 318,
+              "z": 0,
+              "speed": 0,
+              "hp": 0,
+              "coll": 0,
+              "facing": 0
+            },
+            "health": [
+              32,
+              32
+            ],
+            "text": 0,
+            "camera": [
+              64,
+              214
+            ]
+          }
+        },
+        {
+          "name": "navigation begins in living ordinary ground state",
+          "passed": true,
+          "observed": {
+            "frames": 1615,
+            "clock": 1604,
+            "run_frames": 312,
+            "state": 1,
+            "area": 3,
+            "cell": 24,
+            "node": 48,
+            "actor": {
+              "kind": 1,
+              "type": 0,
+              "state": 0,
+              "timer": 0,
+              "x": 184,
+              "y": 318,
+              "z": 0,
+              "speed": 0,
+              "hp": 0,
+              "coll": 0,
+              "facing": 0
+            },
+            "health": [
+              32,
+              32
+            ],
+            "text": 0,
+            "camera": [
+              64,
+              214
+            ]
+          }
+        },
+        {
+          "name": "ordinary load selected actual generated room",
+          "passed": true,
+          "observed": {
+            "frames": 1661,
+            "clock": 1650,
+            "run_frames": 316,
+            "state": 1,
+            "area": 3,
+            "cell": 5,
+            "node": 10,
+            "actor": {
+              "kind": 1,
+              "type": 0,
+              "state": 0,
+              "timer": 0,
+              "x": 120,
+              "y": 238,
+              "z": 0,
+              "speed": 0,
+              "hp": 0,
+              "coll": 0,
+              "facing": 0
+            },
+            "health": [
+              32,
+              32
+            ],
+            "text": 0,
+            "camera": [
+              0,
+              134
+            ]
+          }
+        },
+        {
+          "name": "navigation begins in living ordinary ground state",
+          "passed": true,
+          "observed": {
+            "frames": 1661,
+            "clock": 1650,
+            "run_frames": 316,
+            "state": 1,
+            "area": 3,
+            "cell": 5,
+            "node": 10,
+            "actor": {
+              "kind": 1,
+              "type": 0,
+              "state": 0,
+              "timer": 0,
+              "x": 120,
+              "y": 238,
+              "z": 0,
+              "speed": 0,
+              "hp": 0,
+              "coll": 0,
+              "facing": 0
+            },
+            "health": [
+              32,
+              32
+            ],
+            "text": 0,
+            "camera": [
+              0,
+              134
+            ]
+          }
+        },
+        {
+          "name": "real START opens the pause menu",
+          "passed": true,
+          "observed": null
+        },
+        {
+          "name": "real two-page R input opens selected Cream map",
+          "passed": true,
+          "observed": null
+        },
+        {
+          "name": "atlas metadata names the real live room",
+          "passed": true,
+          "observed": null
+        },
+        {
+          "name": "unknown rooms expose no event information",
+          "passed": true,
+          "observed": null
+        },
+        {
+          "name": "native atlas heights match every actual physical room cell",
+          "passed": true,
+          "observed": null
+        },
+        {
+          "name": "native atlas owners match every actual physical room cell",
+          "passed": true,
+          "observed": null
+        },
+        {
+          "name": "native atlas player marker uses actual room position",
+          "passed": true,
+          "observed": null
+        },
+        {
+          "name": "selected production layout is Contour Folio",
+          "passed": true,
+          "observed": null
+        },
+        {
+          "name": "same seeded region has the original concept4 event contents",
+          "passed": true,
+          "observed": {
+            "current": [
+              7,
+              9,
+              3,
+              65,
+              3,
+              9,
+              9,
+              11,
+              1,
+              3,
+              25,
+              5,
+              21,
+              35,
+              3,
+              9,
+              3,
+              1,
+              13,
+              55,
+              35,
+              137,
+              7,
+              5,
+              3
+            ],
+            "reference": [
+              7,
+              9,
+              3,
+              65,
+              3,
+              9,
+              9,
+              11,
+              1,
+              3,
+              25,
+              5,
+              21,
+              35,
+              3,
+              9,
+              3,
+              1,
+              13,
+              55,
+              35,
+              137,
+              7,
+              5,
+              3
+            ]
+          }
+        },
+        {
+          "name": "adopted chest stamp in room0 exactly matches actual concept4 pixels",
+          "passed": true,
+          "observed": null
+        },
+        {
+          "name": "adopted folk stamp in room0 exactly matches actual concept4 pixels",
+          "passed": true,
+          "observed": null
+        },
+        {
+          "name": "adopted heal stamp in room1 exactly matches actual concept4 pixels",
+          "passed": true,
+          "observed": null
+        },
+        {
+          "name": "adopted chest stamp in room2 exactly matches actual concept4 pixels",
+          "passed": true,
+          "observed": null
+        },
+        {
+          "name": "adopted boss stamp in room3 exactly matches actual concept4 pixels",
+          "passed": true,
+          "observed": null
+        },
+        {
+          "name": "adopted chest stamp in room4 exactly matches actual concept4 pixels",
+          "passed": true,
+          "observed": null
+        },
+        {
+          "name": "adopted heal stamp in room5 exactly matches actual concept4 pixels",
+          "passed": true,
+          "observed": null
+        },
+        {
+          "name": "adopted heal stamp in room6 exactly matches actual concept4 pixels",
+          "passed": true,
+          "observed": null
+        },
+        {
+          "name": "adopted heal stamp in room7 exactly matches actual concept4 pixels",
+          "passed": true,
+          "observed": null
+        },
+        {
+          "name": "adopted chest stamp in room7 exactly matches actual concept4 pixels",
+          "passed": true,
+          "observed": null
+        },
+        {
+          "name": "adopted chest stamp in room9 exactly matches actual concept4 pixels",
+          "passed": true,
+          "observed": null
+        },
+        {
+          "name": "adopted heal stamp in room10 exactly matches actual concept4 pixels",
+          "passed": true,
+          "observed": null
+        },
+        {
+          "name": "adopted cache stamp in room10 exactly matches actual concept4 pixels",
+          "passed": true,
+          "observed": null
+        },
+        {
+          "name": "adopted folk stamp in room11 exactly matches actual concept4 pixels",
+          "passed": true,
+          "observed": null
+        },
+        {
+          "name": "adopted folk stamp in room12 exactly matches actual concept4 pixels",
+          "passed": true,
+          "observed": null
+        },
+        {
+          "name": "adopted cache stamp in room12 exactly matches actual concept4 pixels",
+          "passed": true,
+          "observed": null
+        },
+        {
+          "name": "adopted task stamp in room13 exactly matches actual concept4 pixels",
+          "passed": true,
+          "observed": null
+        },
+        {
+          "name": "adopted chest stamp in room13 exactly matches actual concept4 pixels",
+          "passed": true,
+          "observed": null
+        },
+        {
+          "name": "adopted chest stamp in room14 exactly matches actual concept4 pixels",
+          "passed": true,
+          "observed": null
+        },
+        {
+          "name": "adopted heal stamp in room15 exactly matches actual concept4 pixels",
+          "passed": true,
+          "observed": null
+        },
+        {
+          "name": "adopted chest stamp in room16 exactly matches actual concept4 pixels",
+          "passed": true,
+          "observed": null
+        },
+        {
+          "name": "adopted heal stamp in room18 exactly matches actual concept4 pixels",
+          "passed": true,
+          "observed": null
+        },
+        {
+          "name": "adopted folk stamp in room18 exactly matches actual concept4 pixels",
+          "passed": true,
+          "observed": null
+        },
+        {
+          "name": "adopted task stamp in room19 exactly matches actual concept4 pixels",
+          "passed": true,
+          "observed": null
+        },
+        {
+          "name": "adopted chest stamp in room19 exactly matches actual concept4 pixels",
+          "passed": true,
+          "observed": null
+        },
+        {
+          "name": "room19 retains concept4 overflow pips",
+          "passed": true,
+          "observed": {
+            "reference": [
+              [
+                255,
+                206,
+                90
+              ],
+              [
+                255,
+                206,
+                90
+              ],
+              [
+                255,
+                206,
+                90
+              ]
+            ],
+            "actual": [
+              [
+                255,
+                206,
+                90
+              ],
+              [
+                255,
+                206,
+                90
+              ],
+              [
+                255,
+                206,
+                90
+              ]
+            ]
+          }
+        },
+        {
+          "name": "adopted task stamp in room20 exactly matches actual concept4 pixels",
+          "passed": true,
+          "observed": null
+        },
+        {
+          "name": "adopted chest stamp in room20 exactly matches actual concept4 pixels",
+          "passed": true,
+          "observed": null
+        },
+        {
+          "name": "adopted heal stamp in room21 exactly matches actual concept4 pixels",
+          "passed": true,
+          "observed": null
+        },
+        {
+          "name": "adopted entry stamp in room21 exactly matches actual concept4 pixels",
+          "passed": true,
+          "observed": null
+        },
+        {
+          "name": "adopted chest stamp in room22 exactly matches actual concept4 pixels",
+          "passed": true,
+          "observed": null
+        },
+        {
+          "name": "adopted folk stamp in room22 exactly matches actual concept4 pixels",
+          "passed": true,
+          "observed": null
+        },
+        {
+          "name": "adopted folk stamp in room23 exactly matches actual concept4 pixels",
+          "passed": true,
+          "observed": null
+        },
+        {
+          "name": "adopted chest stamp in room24 exactly matches actual concept4 pixels",
+          "passed": true,
+          "observed": null
+        },
+        {
+          "name": "overview contains real differently colored chest, heal and folk markers",
+          "passed": true,
+          "observed": [
+            "boss",
+            "cache",
+            "chest",
+            "entry",
+            "folk",
+            "heal",
+            "task"
+          ]
+        },
+        {
+          "name": "multi-event rooms show both retained concept4 icons",
+          "passed": true,
+          "observed": 10
+        },
+        {
+          "name": "L keeps the selected map presentation and bitmap",
+          "passed": true,
+          "observed": null
+        },
+        {
+          "name": "ignored style cycling preserves paused game state",
+          "passed": true,
+          "observed": null
+        },
+        {
+          "name": "atlas metadata names the real live room",
+          "passed": true,
+          "observed": null
+        },
+        {
+          "name": "unknown rooms expose no event information",
+          "passed": true,
+          "observed": null
+        },
+        {
+          "name": "native atlas heights match every actual physical room cell",
+          "passed": true,
+          "observed": null
+        },
+        {
+          "name": "native atlas owners match every actual physical room cell",
+          "passed": true,
+          "observed": null
+        },
+        {
+          "name": "native atlas player marker uses actual room position",
+          "passed": true,
+          "observed": null
+        },
+        {
+          "name": "overview and room zoom share the same actual terrain and features",
+          "passed": true,
+          "observed": null
+        },
+        {
+          "name": "zoom is read-only across all live gameplay state",
+          "passed": true,
+          "observed": null
+        },
+        {
+          "name": "atlas metadata names the real live room",
+          "passed": true,
+          "observed": null
+        },
+        {
+          "name": "unknown rooms expose no event information",
+          "passed": true,
+          "observed": null
+        },
+        {
+          "name": "D-pad selects a different room without changing the live room",
+          "passed": true,
+          "observed": null
+        },
+        {
+          "name": "atlas metadata names the real live room",
+          "passed": true,
+          "observed": null
+        },
+        {
+          "name": "unknown rooms expose no event information",
+          "passed": true,
+          "observed": null
+        },
+        {
+          "name": "selected-room preview preserves paused gameplay",
+          "passed": true,
+          "observed": null
+        },
+        {
+          "name": "R item page preserves inventory and gameplay",
+          "passed": true,
+          "observed": null
+        },
+        {
+          "name": "return from items keeps the chosen map layout",
+          "passed": true,
+          "observed": null
+        },
+        {
+          "name": "START returns from map to living ordinary gameplay",
+          "passed": true,
+          "observed": null
+        },
+        {
+          "name": "all native BG2 masked cells exactly preserve actual backing",
+          "passed": true,
+          "observed": {
+            "painted_cells": 40,
+            "dynamic_subtiles": 37,
+            "capacity": 163
+          }
+        },
+        {
+          "name": "real START opens the pause menu",
+          "passed": true,
+          "observed": null
+        },
+        {
+          "name": "real two-page R input opens selected Cream map",
+          "passed": true,
+          "observed": null
+        },
+        {
+          "name": "reopened map starts in the selected presentation",
+          "passed": true,
+          "observed": null
+        },
+        {
+          "name": "Select returns to normal pause page",
+          "passed": true,
+          "observed": null
+        },
+        {
+          "name": "START returns from map to living ordinary gameplay",
+          "passed": true,
+          "observed": null
+        },
+        {
+          "name": "selected map interactions complete within the existing48frame budget",
+          "passed": true,
+          "observed": [
+            {
+              "key": "R",
+              "concept": 0,
+              "zoom": 0,
+              "hardware_frames": 17
+            },
+            {
+              "key": "A",
+              "concept": 0,
+              "zoom": 1,
+              "hardware_frames": 17
+            },
+            {
+              "key": "B",
+              "concept": 0,
+              "zoom": 0,
+              "hardware_frames": 13
+            },
+            {
+              "key": "UP",
+              "concept": 0,
+              "zoom": 0,
+              "hardware_frames": 17
+            },
+            {
+              "key": "A",
+              "concept": 0,
+              "zoom": 1,
+              "hardware_frames": 17
+            },
+            {
+              "key": "R",
+              "concept": 0,
+              "zoom": 0,
+              "hardware_frames": 17
+            },
+            {
+              "key": "R",
+              "concept": 0,
+              "zoom": 0,
+              "hardware_frames": 17
+            }
+          ]
+        }
+      ],
+      "complete": true
+    },
+    "fresh": {
+      "rom_sha256": "98d1dce7d1fa78d64a537688d44872b78e9a012585584081820a23edb2f9842e",
+      "source_commit": "48a39a9a1c0dc3fe1a0eb4fa563219eab0d104f6",
+      "tool_sha256": "bb6ce39f8da6bc337869386eb14ae00f8fa13593479ebd7feb0232e07a564f98",
+      "seed": 46247,
+      "charted_fixture": false,
+      "fixture": "Pinned title seed, ordinary room-load requests and hero-position/facing navigation. Actual menu inputs; no rewards, discovery, terrain, health, inventory, palette or pixel results assigned.",
+      "images": [
+        {
+          "file": "overview.png",
+          "sha256": "d35ed6d00d8445f0beae2b430789e93f4a3ca134ccab11eaff9a28340d69ead3",
+          "size": [
+            240,
+            160
+          ]
+        },
+        {
+          "file": "zoom.png",
+          "sha256": "62150aa0979542f8823ac46af5c89236b414ccbabce0c642b644035d755633cf",
+          "size": [
+            240,
+            160
+          ]
+        },
+        {
+          "file": "neighbor-zoom.png",
+          "sha256": "f04a9f5980f6c24300f39b231bc2d234bdc2c657e6a99a7cd1ac07b4d0add8ba",
+          "size": [
+            240,
+            160
+          ]
+        },
+        {
+          "file": "returned.png",
+          "sha256": "9eae7f458d0e61ca6248055e99ab5bffbca4db3a65d57c452eb0fc49f814d0e2",
+          "size": [
+            240,
+            160
+          ]
+        }
+      ],
+      "redraw_timings": [
+        {
+          "key": "R",
+          "concept": 0,
+          "zoom": 0,
+          "hardware_frames": 17
+        },
+        {
+          "key": "A",
+          "concept": 0,
+          "zoom": 1,
+          "hardware_frames": 17
+        },
+        {
+          "key": "B",
+          "concept": 0,
+          "zoom": 0,
+          "hardware_frames": 13
+        },
+        {
+          "key": "LEFT",
+          "concept": 0,
+          "zoom": 0,
+          "hardware_frames": 9
+        },
+        {
+          "key": "UP",
+          "concept": 0,
+          "zoom": 0,
+          "hardware_frames": 9
+        },
+        {
+          "key": "UP",
+          "concept": 0,
+          "zoom": 0,
+          "hardware_frames": 9
+        },
+        {
+          "key": "UP",
+          "concept": 0,
+          "zoom": 0,
+          "hardware_frames": 9
+        },
+        {
+          "key": "UP",
+          "concept": 0,
+          "zoom": 0,
+          "hardware_frames": 9
+        },
+        {
+          "key": "A",
+          "concept": 0,
+          "zoom": 1,
+          "hardware_frames": 9
+        },
+        {
+          "key": "R",
+          "concept": 0,
+          "zoom": 0,
+          "hardware_frames": 9
+        },
+        {
+          "key": "R",
+          "concept": 0,
+          "zoom": 0,
+          "hardware_frames": 17
+        }
+      ],
+      "native_world_restored": true,
+      "checks": [
+        {
+          "name": "normal opening draft completed with positive health",
+          "passed": true,
+          "observed": null
+        },
+        {
+          "name": "navigation begins in living ordinary ground state",
+          "passed": true,
+          "observed": {
+            "frames": 280,
+            "clock": 269,
+            "run_frames": 173,
+            "state": 1,
+            "area": 0,
+            "cell": 0,
+            "node": 42,
+            "actor": {
+              "kind": 1,
+              "type": 0,
+              "state": 0,
+              "timer": 0,
+              "x": 200,
+              "y": 270,
+              "z": 0,
+              "speed": 0,
+              "hp": 0,
+              "coll": 0,
+              "facing": 0
+            },
+            "health": [
+              32,
+              32
+            ],
+            "text": 0,
+            "camera": [
+              80,
+              160
+            ]
+          }
+        },
+        {
+          "name": "actual UP input enters Cream through Drain ladder",
+          "passed": true,
+          "observed": null
+        },
+        {
+          "name": "real START opens the pause menu",
+          "passed": true,
+          "observed": null
+        },
+        {
+          "name": "real two-page R input opens selected Cream map",
+          "passed": true,
+          "observed": null
+        },
+        {
+          "name": "atlas metadata names the real live room",
+          "passed": true,
+          "observed": null
+        },
+        {
+          "name": "unknown rooms expose no event information",
+          "passed": true,
+          "observed": null
+        },
+        {
+          "name": "native atlas heights match every actual physical room cell",
+          "passed": true,
+          "observed": null
+        },
+        {
+          "name": "native atlas owners match every actual physical room cell",
+          "passed": true,
+          "observed": null
+        },
+        {
+          "name": "native atlas player marker uses actual room position",
+          "passed": true,
+          "observed": null
+        },
+        {
+          "name": "selected production layout is Contour Folio",
+          "passed": true,
+          "observed": null
+        },
+        {
+          "name": "fresh map retains undiscovered rooms",
+          "passed": true,
+          "observed": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "name": "L keeps the selected map presentation and bitmap",
+          "passed": true,
+          "observed": null
+        },
+        {
+          "name": "ignored style cycling preserves paused game state",
+          "passed": true,
+          "observed": null
+        },
+        {
+          "name": "atlas metadata names the real live room",
+          "passed": true,
+          "observed": null
+        },
+        {
+          "name": "unknown rooms expose no event information",
+          "passed": true,
+          "observed": null
+        },
+        {
+          "name": "native atlas heights match every actual physical room cell",
+          "passed": true,
+          "observed": null
+        },
+        {
+          "name": "native atlas owners match every actual physical room cell",
+          "passed": true,
+          "observed": null
+        },
+        {
+          "name": "native atlas player marker uses actual room position",
+          "passed": true,
+          "observed": null
+        },
+        {
+          "name": "overview and room zoom share the same actual terrain and features",
+          "passed": true,
+          "observed": null
+        },
+        {
+          "name": "zoom is read-only across all live gameplay state",
+          "passed": true,
+          "observed": null
+        },
+        {
+          "name": "atlas metadata names the real live room",
+          "passed": true,
+          "observed": null
+        },
+        {
+          "name": "unknown rooms expose no event information",
+          "passed": true,
+          "observed": null
+        },
+        {
+          "name": "unknown selected room hides all terrain and markers",
+          "passed": true,
+          "observed": null
+        },
+        {
+          "name": "D-pad selects a different room without changing the live room",
+          "passed": true,
+          "observed": null
+        },
+        {
+          "name": "atlas metadata names the real live room",
+          "passed": true,
+          "observed": null
+        },
+        {
+          "name": "unknown rooms expose no event information",
+          "passed": true,
+          "observed": null
+        },
+        {
+          "name": "unknown selected room hides all terrain and markers",
+          "passed": true,
+          "observed": null
+        },
+        {
+          "name": "selected-room preview preserves paused gameplay",
+          "passed": true,
+          "observed": null
+        },
+        {
+          "name": "unvisited room zoom contains no hidden terrain or markers",
+          "passed": true,
+          "observed": null
+        },
+        {
+          "name": "R item page preserves inventory and gameplay",
+          "passed": true,
+          "observed": null
+        },
+        {
+          "name": "return from items keeps the chosen map layout",
+          "passed": true,
+          "observed": null
+        },
+        {
+          "name": "START returns from map to living ordinary gameplay",
+          "passed": true,
+          "observed": null
+        },
+        {
+          "name": "all native BG2 masked cells exactly preserve actual backing",
+          "passed": true,
+          "observed": {
+            "painted_cells": 80,
+            "dynamic_subtiles": 117,
+            "capacity": 163
+          }
+        },
+        {
+          "name": "real START opens the pause menu",
+          "passed": true,
+          "observed": null
+        },
+        {
+          "name": "real two-page R input opens selected Cream map",
+          "passed": true,
+          "observed": null
+        },
+        {
+          "name": "reopened map starts in the selected presentation",
+          "passed": true,
+          "observed": null
+        },
+        {
+          "name": "Select returns to normal pause page",
+          "passed": true,
+          "observed": null
+        },
+        {
+          "name": "START returns from map to living ordinary gameplay",
+          "passed": true,
+          "observed": null
+        },
+        {
+          "name": "selected map interactions complete within the existing48frame budget",
+          "passed": true,
+          "observed": [
+            {
+              "key": "R",
+              "concept": 0,
+              "zoom": 0,
+              "hardware_frames": 17
+            },
+            {
+              "key": "A",
+              "concept": 0,
+              "zoom": 1,
+              "hardware_frames": 17
+            },
+            {
+              "key": "B",
+              "concept": 0,
+              "zoom": 0,
+              "hardware_frames": 13
+            },
+            {
+              "key": "LEFT",
+              "concept": 0,
+              "zoom": 0,
+              "hardware_frames": 9
+            },
+            {
+              "key": "UP",
+              "concept": 0,
+              "zoom": 0,
+              "hardware_frames": 9
+            },
+            {
+              "key": "UP",
+              "concept": 0,
+              "zoom": 0,
+              "hardware_frames": 9
+            },
+            {
+              "key": "UP",
+              "concept": 0,
+              "zoom": 0,
+              "hardware_frames": 9
+            },
+            {
+              "key": "UP",
+              "concept": 0,
+              "zoom": 0,
+              "hardware_frames": 9
+            },
+            {
+              "key": "A",
+              "concept": 0,
+              "zoom": 1,
+              "hardware_frames": 9
+            },
+            {
+              "key": "R",
+              "concept": 0,
+              "zoom": 0,
+              "hardware_frames": 9
+            },
+            {
+              "key": "R",
+              "concept": 0,
+              "zoom": 0,
+              "hardware_frames": 17
+            }
+          ]
+        }
+      ],
+      "complete": true
+    },
+    "forest-cache": {
+      "rom_sha256": "98d1dce7d1fa78d64a537688d44872b78e9a012585584081820a23edb2f9842e",
+      "source_commit": "48a39a9a1c0dc3fe1a0eb4fa563219eab0d104f6",
+      "tool_sha256": "90b1a2acf9aaa81b03cdc87b9408278be9018d1e750a564cf1d59a5f745e12d5",
+      "before": {
+        "cell": 22,
+        "mask_sha256": "e8a1e267b5f204bc02562dfa75bbb60d6a4890f18f55ba455e10ffd242187e16",
+        "mask_done": 4194304,
+        "mask_bytes": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          49,
+          49,
+          49,
+          49,
+          41,
+          0,
+          0,
+          49,
+          49,
+          49,
+          49,
+          49,
+          49,
+          49,
+          49,
+          41,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          49,
+          41,
+          41,
+          41,
+          41,
+          33,
+          0,
+          49,
+          41,
+          41,
+          41,
+          41,
+          41,
+          41,
+          41,
+          41,
+          41,
+          41,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          49,
+          41,
+          41,
+          41,
+          41,
+          41,
+          49,
+          41,
+          41,
+          41,
+          41,
+          41,
+          41,
+          41,
+          41,
+          41,
+          41,
+          33,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          182,
+          49,
+          49,
+          49,
+          41,
+          41,
+          41,
+          41,
+          41,
+          41,
+          41,
+          41,
+          41,
+          41,
+          41,
+          41,
+          41,
+          41,
+          41,
+          41,
+          41,
+          41,
+          41,
+          0,
+          0,
+          49,
+          49,
+          49,
+          49,
+          49,
+          49,
+          190,
+          190,
+          41,
+          185,
+          185,
+          185,
+          185,
+          185,
+          185,
+          185,
+          185,
+          185,
+          185,
+          185,
+          185,
+          185,
+          185,
+          185,
+          185,
+          185,
+          185,
+          185,
+          185,
+          185,
+          185,
+          185,
+          185,
+          185,
+          185,
+          185,
+          185,
+          41,
+          166,
+          0,
+          41,
+          33,
+          33,
+          33,
+          33,
+          41,
+          41,
+          41,
+          33,
+          41,
+          41,
+          41,
+          41,
+          41,
+          41,
+          41,
+          185,
+          41,
+          41,
+          41,
+          41,
+          33,
+          0,
+          0,
+          41,
+          33,
+          33,
+          33,
+          33,
+          33,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          41,
+          33,
+          33,
+          0,
+          41,
+          41,
+          41,
+          41,
+          41,
+          41,
+          41,
+          185,
+          41,
+          41,
+          41,
+          33,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          41,
+          41,
+          41,
+          41,
+          41,
+          41,
+          185,
+          41,
+          41,
+          41,
+          33,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          41,
+          33,
+          33,
+          41,
+          41,
+          185,
+          41,
+          33,
+          33,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          49,
+          185,
+          185,
+          33,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          49,
+          185,
+          41,
+          33,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          49,
+          185,
+          41,
+          33,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          49,
+          49,
+          41,
+          185,
+          41,
+          33,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          49,
+          41,
+          41,
+          185,
+          41,
+          33,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          41,
+          33,
+          41,
+          41,
+          33,
+          33,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          190,
+          166,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      "after": {
+        "cell": 22,
+        "mask_sha256": "e8a1e267b5f204bc02562dfa75bbb60d6a4890f18f55ba455e10ffd242187e16",
+        "mask_done": 4194304,
+        "mask_bytes": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          49,
+          49,
+          49,
+          49,
+          41,
+          0,
+          0,
+          49,
+          49,
+          49,
+          49,
+          49,
+          49,
+          49,
+          49,
+          41,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          49,
+          41,
+          41,
+          41,
+          41,
+          33,
+          0,
+          49,
+          41,
+          41,
+          41,
+          41,
+          41,
+          41,
+          41,
+          41,
+          41,
+          41,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          49,
+          41,
+          41,
+          41,
+          41,
+          41,
+          49,
+          41,
+          41,
+          41,
+          41,
+          41,
+          41,
+          41,
+          41,
+          41,
+          41,
+          33,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          182,
+          49,
+          49,
+          49,
+          41,
+          41,
+          41,
+          41,
+          41,
+          41,
+          41,
+          41,
+          41,
+          41,
+          41,
+          41,
+          41,
+          41,
+          41,
+          41,
+          41,
+          41,
+          41,
+          0,
+          0,
+          49,
+          49,
+          49,
+          49,
+          49,
+          49,
+          190,
+          190,
+          41,
+          185,
+          185,
+          185,
+          185,
+          185,
+          185,
+          185,
+          185,
+          185,
+          185,
+          185,
+          185,
+          185,
+          185,
+          185,
+          185,
+          185,
+          185,
+          185,
+          185,
+          185,
+          185,
+          185,
+          185,
+          185,
+          185,
+          185,
+          185,
+          41,
+          166,
+          0,
+          41,
+          33,
+          33,
+          33,
+          33,
+          41,
+          41,
+          41,
+          33,
+          41,
+          41,
+          41,
+          41,
+          41,
+          41,
+          41,
+          185,
+          41,
+          41,
+          41,
+          41,
+          33,
+          0,
+          0,
+          41,
+          33,
+          33,
+          33,
+          33,
+          33,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          41,
+          33,
+          33,
+          0,
+          41,
+          41,
+          41,
+          41,
+          41,
+          41,
+          41,
+          185,
+          41,
+          41,
+          41,
+          33,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          41,
+          41,
+          41,
+          41,
+          41,
+          41,
+          185,
+          41,
+          41,
+          41,
+          33,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          41,
+          33,
+          33,
+          41,
+          41,
+          185,
+          41,
+          33,
+          33,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          49,
+          185,
+          185,
+          33,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          49,
+          185,
+          41,
+          33,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          49,
+          185,
+          41,
+          33,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          49,
+          49,
+          41,
+          185,
+          41,
+          33,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          49,
+          41,
+          41,
+          185,
+          41,
+          33,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          41,
+          33,
+          41,
+          41,
+          33,
+          33,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          190,
+          166,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      "checks": [
+        {
+          "name": "normal opening draft completed with positive health",
+          "passed": true,
+          "observed": null
+        },
+        {
+          "name": "navigation begins in living ordinary ground state",
+          "passed": true,
+          "observed": {
+            "frames": 280,
+            "clock": 269,
+            "run_frames": 173,
+            "state": 1,
+            "area": 0,
+            "cell": 0,
+            "node": 42,
+            "actor": {
+              "kind": 1,
+              "type": 0,
+              "state": 0,
+              "timer": 0,
+              "x": 200,
+              "y": 270,
+              "z": 0,
+              "speed": 0,
+              "hp": 0,
+              "coll": 0,
+              "facing": 0
+            },
+            "health": [
+              32,
+              32
+            ],
+            "text": 0,
+            "camera": [
+              80,
+              160
+            ]
+          }
+        },
+        {
+          "name": "actual UP input enters Cream through Drain ladder",
+          "passed": true,
+          "observed": null
+        },
+        {
+          "name": "navigation begins in living ordinary ground state",
+          "passed": true,
+          "observed": {
+            "frames": 368,
+            "clock": 357,
+            "run_frames": 214,
+            "state": 1,
+            "area": 3,
+            "cell": 21,
+            "node": 42,
+            "actor": {
+              "kind": 1,
+              "type": 0,
+              "state": 0,
+              "timer": 0,
+              "x": 400,
+              "y": 350,
+              "z": 0,
+              "speed": 0,
+              "hp": 0,
+              "coll": 0,
+              "facing": 0
+            },
+            "health": [
+              32,
+              32
+            ],
+            "text": 0,
+            "camera": [
+              272,
+              224
+            ]
+          }
+        },
+        {
+          "name": "ordinary transition reaches living area0",
+          "passed": true,
+          "observed": null
+        },
+        {
+          "name": "navigation begins in living ordinary ground state",
+          "passed": true,
+          "observed": {
+            "frames": 394,
+            "clock": 383,
+            "run_frames": 231,
+            "state": 1,
+            "area": 0,
+            "cell": 21,
+            "node": 42,
+            "actor": {
+              "kind": 1,
+              "type": 0,
+              "state": 0,
+              "timer": 0,
+              "x": 312,
+              "y": 94,
+              "z": 0,
+              "speed": 0,
+              "hp": 0,
+              "coll": 0,
+              "facing": 2
+            },
+            "health": [
+              32,
+              32
+            ],
+            "text": 0,
+            "camera": [
+              192,
+              0
+            ]
+          }
+        },
+        {
+          "name": "ordinary transition reaches living area1",
+          "passed": true,
+          "observed": null
+        },
+        {
+          "name": "real2R opens Forest map",
+          "passed": true,
+          "observed": null
+        },
+        {
+          "name": "Forest zoom computes the current room terrain mask",
+          "passed": true,
+          "observed": null
+        },
+        {
+          "name": "ordinary transition reaches living area1",
+          "passed": true,
+          "observed": null
+        },
+        {
+          "name": "navigation begins in living ordinary ground state",
+          "passed": true,
+          "observed": {
+            "frames": 685,
+            "clock": 674,
+            "run_frames": 270,
+            "state": 1,
+            "area": 1,
+            "cell": 22,
+            "node": 42,
+            "actor": {
+              "kind": 1,
+              "type": 0,
+              "state": 0,
+              "timer": 0,
+              "x": 256,
+              "y": 364,
+              "z": 0,
+              "speed": 0,
+              "hp": 0,
+              "coll": 0,
+              "facing": 0
+            },
+            "health": [
+              32,
+              32
+            ],
+            "text": 0,
+            "camera": [
+              136,
+              224
+            ]
+          }
+        },
+        {
+          "name": "ordinary transition reaches living area0",
+          "passed": true,
+          "observed": null
+        },
+        {
+          "name": "navigation begins in living ordinary ground state",
+          "passed": true,
+          "observed": {
+            "frames": 714,
+            "clock": 703,
+            "run_frames": 289,
+            "state": 1,
+            "area": 0,
+            "cell": 22,
+            "node": 42,
+            "actor": {
+              "kind": 1,
+              "type": 0,
+              "state": 0,
+              "timer": 0,
+              "x": 152,
+              "y": 62,
+              "z": 0,
+              "speed": 0,
+              "hp": 0,
+              "coll": 0,
+              "facing": 2
+            },
+            "health": [
+              32,
+              32
+            ],
+            "text": 0,
+            "camera": [
+              32,
+              0
+            ]
+          }
+        },
+        {
+          "name": "ordinary transition reaches living area3",
+          "passed": true,
+          "observed": null
+        },
+        {
+          "name": "real2R opens Cream graphical atlas",
+          "passed": true,
+          "observed": null
+        },
+        {
+          "name": "Cream atlas explicitly invalidates borrowed Forest masks",
+          "passed": true,
+          "observed": null
+        },
+        {
+          "name": "Cream atlas really overwrites the borrowed mask storage",
+          "passed": true,
+          "observed": null
+        },
+        {
+          "name": "ordinary transition reaches living area3",
+          "passed": true,
+          "observed": null
+        },
+        {
+          "name": "navigation begins in living ordinary ground state",
+          "passed": true,
+          "observed": {
+            "frames": 943,
+            "clock": 932,
+            "run_frames": 332,
+            "state": 1,
+            "area": 3,
+            "cell": 21,
+            "node": 42,
+            "actor": {
+              "kind": 1,
+              "type": 0,
+              "state": 0,
+              "timer": 0,
+              "x": 400,
+              "y": 350,
+              "z": 0,
+              "speed": 0,
+              "hp": 0,
+              "coll": 0,
+              "facing": 0
+            },
+            "health": [
+              32,
+              32
+            ],
+            "text": 0,
+            "camera": [
+              272,
+              224
+            ]
+          }
+        },
+        {
+          "name": "ordinary transition reaches living area0",
+          "passed": true,
+          "observed": null
+        },
+        {
+          "name": "navigation begins in living ordinary ground state",
+          "passed": true,
+          "observed": {
+            "frames": 970,
+            "clock": 959,
+            "run_frames": 349,
+            "state": 1,
+            "area": 0,
+            "cell": 21,
+            "node": 42,
+            "actor": {
+              "kind": 1,
+              "type": 0,
+              "state": 0,
+              "timer": 0,
+              "x": 312,
+              "y": 94,
+              "z": 0,
+              "speed": 0,
+              "hp": 0,
+              "coll": 0,
+              "facing": 2
+            },
+            "health": [
+              32,
+              32
+            ],
+            "text": 0,
+            "camera": [
+              192,
+              0
+            ]
+          }
+        },
+        {
+          "name": "ordinary transition reaches living area1",
+          "passed": true,
+          "observed": null
+        },
+        {
+          "name": "real2R opens Forest map",
+          "passed": true,
+          "observed": null
+        },
+        {
+          "name": "Forest zoom computes the current room terrain mask",
+          "passed": true,
+          "observed": null
+        },
+        {
+          "name": "ordinary transition reaches living area1",
+          "passed": true,
+          "observed": null
+        },
+        {
+          "name": "returning Forest map recomputes identical actual room terrain",
+          "passed": true,
+          "observed": null
+        }
+      ],
+      "complete": true,
+      "fixture": "Hero position/facing navigation to the real return stairs and both Drain ladders. All travel and menu selection uses real inputs. No discovery, inventory, health, terrain, cache bits or result writes."
+    }
+  },
+  "complete": true
+}

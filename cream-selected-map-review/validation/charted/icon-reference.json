@@ -1,0 +1,514 @@
+{
+  "reference_png": "cream-heights-review/images/maps/04-overview.png",
+  "reference_sha256": "381a856def84eefbec808e0f6122a690dc0353ca7efb10db19828122b32cb4c6",
+  "reference_data_sha256": "5f1c3f383ceb5dca5cebc114f4440198ac9ddf94eccabc2f4ed4aa5dee522737",
+  "stamps": [
+    {
+      "cell": 0,
+      "event": "chest",
+      "reference_center": [
+        23,
+        28
+      ],
+      "actual_center": [
+        21,
+        37
+      ],
+      "exact": true,
+      "reference_rgb_sha256": "fdc7b0ccded464629d461f0536f4bdda6c72ec13d533c4577d907928b180babf",
+      "actual_rgb_sha256": "fdc7b0ccded464629d461f0536f4bdda6c72ec13d533c4577d907928b180babf"
+    },
+    {
+      "cell": 0,
+      "event": "folk",
+      "reference_center": [
+        33,
+        28
+      ],
+      "actual_center": [
+        31,
+        37
+      ],
+      "exact": true,
+      "reference_rgb_sha256": "e723f36488b94e6895ebb81bd52d2dca9b5de6ce1104890ea14236244d7f5c71",
+      "actual_rgb_sha256": "e723f36488b94e6895ebb81bd52d2dca9b5de6ce1104890ea14236244d7f5c71"
+    },
+    {
+      "cell": 1,
+      "event": "heal",
+      "reference_center": [
+        72,
+        30
+      ],
+      "actual_center": [
+        56,
+        37
+      ],
+      "exact": true,
+      "reference_rgb_sha256": "7007e6d12d4073417d29e74e4b2e81b26e8c9e45ca95d84267ad812a02ea5a78",
+      "actual_rgb_sha256": "7007e6d12d4073417d29e74e4b2e81b26e8c9e45ca95d84267ad812a02ea5a78"
+    },
+    {
+      "cell": 2,
+      "event": "chest",
+      "reference_center": [
+        116,
+        28
+      ],
+      "actual_center": [
+        86,
+        37
+      ],
+      "exact": true,
+      "reference_rgb_sha256": "fdc7b0ccded464629d461f0536f4bdda6c72ec13d533c4577d907928b180babf",
+      "actual_rgb_sha256": "fdc7b0ccded464629d461f0536f4bdda6c72ec13d533c4577d907928b180babf"
+    },
+    {
+      "cell": 3,
+      "event": "boss",
+      "reference_center": [
+        160,
+        32
+      ],
+      "actual_center": [
+        116,
+        37
+      ],
+      "exact": true,
+      "reference_rgb_sha256": "9325bceff24edb0af32fdc0e916f744af63cb0bff70e1ad9d2d5ed06db0553e7",
+      "actual_rgb_sha256": "9325bceff24edb0af32fdc0e916f744af63cb0bff70e1ad9d2d5ed06db0553e7"
+    },
+    {
+      "cell": 4,
+      "event": "chest",
+      "reference_center": [
+        204,
+        28
+      ],
+      "actual_center": [
+        146,
+        37
+      ],
+      "exact": true,
+      "reference_rgb_sha256": "fdc7b0ccded464629d461f0536f4bdda6c72ec13d533c4577d907928b180babf",
+      "actual_rgb_sha256": "fdc7b0ccded464629d461f0536f4bdda6c72ec13d533c4577d907928b180babf"
+    },
+    {
+      "cell": 5,
+      "event": "heal",
+      "reference_center": [
+        28,
+        50
+      ],
+      "actual_center": [
+        26,
+        58
+      ],
+      "exact": true,
+      "reference_rgb_sha256": "7007e6d12d4073417d29e74e4b2e81b26e8c9e45ca95d84267ad812a02ea5a78",
+      "actual_rgb_sha256": "7007e6d12d4073417d29e74e4b2e81b26e8c9e45ca95d84267ad812a02ea5a78"
+    },
+    {
+      "cell": 6,
+      "event": "heal",
+      "reference_center": [
+        72,
+        52
+      ],
+      "actual_center": [
+        56,
+        58
+      ],
+      "exact": true,
+      "reference_rgb_sha256": "7007e6d12d4073417d29e74e4b2e81b26e8c9e45ca95d84267ad812a02ea5a78",
+      "actual_rgb_sha256": "7007e6d12d4073417d29e74e4b2e81b26e8c9e45ca95d84267ad812a02ea5a78"
+    },
+    {
+      "cell": 7,
+      "event": "heal",
+      "reference_center": [
+        111,
+        50
+      ],
+      "actual_center": [
+        81,
+        58
+      ],
+      "exact": true,
+      "reference_rgb_sha256": "7007e6d12d4073417d29e74e4b2e81b26e8c9e45ca95d84267ad812a02ea5a78",
+      "actual_rgb_sha256": "7007e6d12d4073417d29e74e4b2e81b26e8c9e45ca95d84267ad812a02ea5a78"
+    },
+    {
+      "cell": 7,
+      "event": "chest",
+      "reference_center": [
+        121,
+        50
+      ],
+      "actual_center": [
+        91,
+        58
+      ],
+      "exact": true,
+      "reference_rgb_sha256": "fdc7b0ccded464629d461f0536f4bdda6c72ec13d533c4577d907928b180babf",
+      "actual_rgb_sha256": "fdc7b0ccded464629d461f0536f4bdda6c72ec13d533c4577d907928b180babf"
+    },
+    {
+      "cell": 9,
+      "event": "chest",
+      "reference_center": [
+        204,
+        50
+      ],
+      "actual_center": [
+        146,
+        58
+      ],
+      "exact": true,
+      "reference_rgb_sha256": "fdc7b0ccded464629d461f0536f4bdda6c72ec13d533c4577d907928b180babf",
+      "actual_rgb_sha256": "fdc7b0ccded464629d461f0536f4bdda6c72ec13d533c4577d907928b180babf"
+    },
+    {
+      "cell": 10,
+      "event": "heal",
+      "reference_center": [
+        23,
+        72
+      ],
+      "actual_center": [
+        21,
+        80
+      ],
+      "exact": true,
+      "reference_rgb_sha256": "7007e6d12d4073417d29e74e4b2e81b26e8c9e45ca95d84267ad812a02ea5a78",
+      "actual_rgb_sha256": "7007e6d12d4073417d29e74e4b2e81b26e8c9e45ca95d84267ad812a02ea5a78"
+    },
+    {
+      "cell": 10,
+      "event": "cache",
+      "reference_center": [
+        33,
+        72
+      ],
+      "actual_center": [
+        31,
+        80
+      ],
+      "exact": true,
+      "reference_rgb_sha256": "5358032f0e943e6d72b3ca134b7234ba1e1aaa169edd59f48e16c0147754f5e1",
+      "actual_rgb_sha256": "5358032f0e943e6d72b3ca134b7234ba1e1aaa169edd59f48e16c0147754f5e1"
+    },
+    {
+      "cell": 11,
+      "event": "folk",
+      "reference_center": [
+        72,
+        72
+      ],
+      "actual_center": [
+        56,
+        80
+      ],
+      "exact": true,
+      "reference_rgb_sha256": "e723f36488b94e6895ebb81bd52d2dca9b5de6ce1104890ea14236244d7f5c71",
+      "actual_rgb_sha256": "e723f36488b94e6895ebb81bd52d2dca9b5de6ce1104890ea14236244d7f5c71"
+    },
+    {
+      "cell": 12,
+      "event": "folk",
+      "reference_center": [
+        111,
+        72
+      ],
+      "actual_center": [
+        81,
+        80
+      ],
+      "exact": true,
+      "reference_rgb_sha256": "e723f36488b94e6895ebb81bd52d2dca9b5de6ce1104890ea14236244d7f5c71",
+      "actual_rgb_sha256": "e723f36488b94e6895ebb81bd52d2dca9b5de6ce1104890ea14236244d7f5c71"
+    },
+    {
+      "cell": 12,
+      "event": "cache",
+      "reference_center": [
+        121,
+        72
+      ],
+      "actual_center": [
+        91,
+        80
+      ],
+      "exact": true,
+      "reference_rgb_sha256": "5358032f0e943e6d72b3ca134b7234ba1e1aaa169edd59f48e16c0147754f5e1",
+      "actual_rgb_sha256": "5358032f0e943e6d72b3ca134b7234ba1e1aaa169edd59f48e16c0147754f5e1"
+    },
+    {
+      "cell": 13,
+      "event": "task",
+      "reference_center": [
+        155,
+        72
+      ],
+      "actual_center": [
+        111,
+        80
+      ],
+      "exact": true,
+      "reference_rgb_sha256": "956ca64d890e6feae22cfc2a9bb5e7f9fddf540c8232a727a9900716bd8952b2",
+      "actual_rgb_sha256": "956ca64d890e6feae22cfc2a9bb5e7f9fddf540c8232a727a9900716bd8952b2"
+    },
+    {
+      "cell": 13,
+      "event": "chest",
+      "reference_center": [
+        165,
+        72
+      ],
+      "actual_center": [
+        121,
+        80
+      ],
+      "exact": true,
+      "reference_rgb_sha256": "fdc7b0ccded464629d461f0536f4bdda6c72ec13d533c4577d907928b180babf",
+      "actual_rgb_sha256": "fdc7b0ccded464629d461f0536f4bdda6c72ec13d533c4577d907928b180babf"
+    },
+    {
+      "cell": 14,
+      "event": "chest",
+      "reference_center": [
+        204,
+        72
+      ],
+      "actual_center": [
+        146,
+        80
+      ],
+      "exact": true,
+      "reference_rgb_sha256": "fdc7b0ccded464629d461f0536f4bdda6c72ec13d533c4577d907928b180babf",
+      "actual_rgb_sha256": "fdc7b0ccded464629d461f0536f4bdda6c72ec13d533c4577d907928b180babf"
+    },
+    {
+      "cell": 15,
+      "event": "heal",
+      "reference_center": [
+        28,
+        94
+      ],
+      "actual_center": [
+        26,
+        101
+      ],
+      "exact": true,
+      "reference_rgb_sha256": "7007e6d12d4073417d29e74e4b2e81b26e8c9e45ca95d84267ad812a02ea5a78",
+      "actual_rgb_sha256": "7007e6d12d4073417d29e74e4b2e81b26e8c9e45ca95d84267ad812a02ea5a78"
+    },
+    {
+      "cell": 16,
+      "event": "chest",
+      "reference_center": [
+        72,
+        94
+      ],
+      "actual_center": [
+        56,
+        101
+      ],
+      "exact": true,
+      "reference_rgb_sha256": "fdc7b0ccded464629d461f0536f4bdda6c72ec13d533c4577d907928b180babf",
+      "actual_rgb_sha256": "fdc7b0ccded464629d461f0536f4bdda6c72ec13d533c4577d907928b180babf"
+    },
+    {
+      "cell": 18,
+      "event": "heal",
+      "reference_center": [
+        155,
+        94
+      ],
+      "actual_center": [
+        111,
+        101
+      ],
+      "exact": true,
+      "reference_rgb_sha256": "7007e6d12d4073417d29e74e4b2e81b26e8c9e45ca95d84267ad812a02ea5a78",
+      "actual_rgb_sha256": "7007e6d12d4073417d29e74e4b2e81b26e8c9e45ca95d84267ad812a02ea5a78"
+    },
+    {
+      "cell": 18,
+      "event": "folk",
+      "reference_center": [
+        165,
+        94
+      ],
+      "actual_center": [
+        121,
+        101
+      ],
+      "exact": true,
+      "reference_rgb_sha256": "e723f36488b94e6895ebb81bd52d2dca9b5de6ce1104890ea14236244d7f5c71",
+      "actual_rgb_sha256": "e723f36488b94e6895ebb81bd52d2dca9b5de6ce1104890ea14236244d7f5c71"
+    },
+    {
+      "cell": 19,
+      "event": "task",
+      "reference_center": [
+        199,
+        94
+      ],
+      "actual_center": [
+        141,
+        101
+      ],
+      "exact": true,
+      "reference_rgb_sha256": "956ca64d890e6feae22cfc2a9bb5e7f9fddf540c8232a727a9900716bd8952b2",
+      "actual_rgb_sha256": "956ca64d890e6feae22cfc2a9bb5e7f9fddf540c8232a727a9900716bd8952b2"
+    },
+    {
+      "cell": 19,
+      "event": "chest",
+      "reference_center": [
+        209,
+        94
+      ],
+      "actual_center": [
+        151,
+        101
+      ],
+      "exact": true,
+      "reference_rgb_sha256": "fdc7b0ccded464629d461f0536f4bdda6c72ec13d533c4577d907928b180babf",
+      "actual_rgb_sha256": "fdc7b0ccded464629d461f0536f4bdda6c72ec13d533c4577d907928b180babf"
+    },
+    {
+      "cell": 20,
+      "event": "task",
+      "reference_center": [
+        23,
+        116
+      ],
+      "actual_center": [
+        21,
+        123
+      ],
+      "exact": true,
+      "reference_rgb_sha256": "956ca64d890e6feae22cfc2a9bb5e7f9fddf540c8232a727a9900716bd8952b2",
+      "actual_rgb_sha256": "956ca64d890e6feae22cfc2a9bb5e7f9fddf540c8232a727a9900716bd8952b2"
+    },
+    {
+      "cell": 20,
+      "event": "chest",
+      "reference_center": [
+        33,
+        116
+      ],
+      "actual_center": [
+        31,
+        123
+      ],
+      "exact": true,
+      "reference_rgb_sha256": "fdc7b0ccded464629d461f0536f4bdda6c72ec13d533c4577d907928b180babf",
+      "actual_rgb_sha256": "fdc7b0ccded464629d461f0536f4bdda6c72ec13d533c4577d907928b180babf"
+    },
+    {
+      "cell": 21,
+      "event": "heal",
+      "reference_center": [
+        67,
+        116
+      ],
+      "actual_center": [
+        51,
+        123
+      ],
+      "exact": true,
+      "reference_rgb_sha256": "7007e6d12d4073417d29e74e4b2e81b26e8c9e45ca95d84267ad812a02ea5a78",
+      "actual_rgb_sha256": "7007e6d12d4073417d29e74e4b2e81b26e8c9e45ca95d84267ad812a02ea5a78"
+    },
+    {
+      "cell": 21,
+      "event": "entry",
+      "reference_center": [
+        77,
+        116
+      ],
+      "actual_center": [
+        61,
+        123
+      ],
+      "exact": true,
+      "reference_rgb_sha256": "a846b0064e1ad0ae3d19645daf2b42fb2e114301b833a4b61d92b2f79e039b58",
+      "actual_rgb_sha256": "a846b0064e1ad0ae3d19645daf2b42fb2e114301b833a4b61d92b2f79e039b58"
+    },
+    {
+      "cell": 22,
+      "event": "chest",
+      "reference_center": [
+        111,
+        116
+      ],
+      "actual_center": [
+        81,
+        123
+      ],
+      "exact": true,
+      "reference_rgb_sha256": "fdc7b0ccded464629d461f0536f4bdda6c72ec13d533c4577d907928b180babf",
+      "actual_rgb_sha256": "fdc7b0ccded464629d461f0536f4bdda6c72ec13d533c4577d907928b180babf"
+    },
+    {
+      "cell": 22,
+      "event": "folk",
+      "reference_center": [
+        121,
+        116
+      ],
+      "actual_center": [
+        91,
+        123
+      ],
+      "exact": true,
+      "reference_rgb_sha256": "e723f36488b94e6895ebb81bd52d2dca9b5de6ce1104890ea14236244d7f5c71",
+      "actual_rgb_sha256": "e723f36488b94e6895ebb81bd52d2dca9b5de6ce1104890ea14236244d7f5c71"
+    },
+    {
+      "cell": 23,
+      "event": "folk",
+      "reference_center": [
+        160,
+        116
+      ],
+      "actual_center": [
+        116,
+        123
+      ],
+      "exact": true,
+      "reference_rgb_sha256": "e723f36488b94e6895ebb81bd52d2dca9b5de6ce1104890ea14236244d7f5c71",
+      "actual_rgb_sha256": "e723f36488b94e6895ebb81bd52d2dca9b5de6ce1104890ea14236244d7f5c71"
+    },
+    {
+      "cell": 24,
+      "event": "chest",
+      "reference_center": [
+        204,
+        116
+      ],
+      "actual_center": [
+        146,
+        123
+      ],
+      "exact": true,
+      "reference_rgb_sha256": "fdc7b0ccded464629d461f0536f4bdda6c72ec13d533c4577d907928b180babf",
+      "actual_rgb_sha256": "fdc7b0ccded464629d461f0536f4bdda6c72ec13d533c4577d907928b180babf"
+    }
+  ],
+  "represented": [
+    "boss",
+    "cache",
+    "chest",
+    "entry",
+    "folk",
+    "heal",
+    "task"
+  ],
+  "two_event_rooms": 10,
+  "overflow_rooms": 1,
+  "complete": true
+}

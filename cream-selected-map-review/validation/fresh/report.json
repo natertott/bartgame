@@ -1,0 +1,441 @@
+{
+  "rom_sha256": "98d1dce7d1fa78d64a537688d44872b78e9a012585584081820a23edb2f9842e",
+  "source_commit": "48a39a9a1c0dc3fe1a0eb4fa563219eab0d104f6",
+  "tool_sha256": "bb6ce39f8da6bc337869386eb14ae00f8fa13593479ebd7feb0232e07a564f98",
+  "seed": 46247,
+  "charted_fixture": false,
+  "fixture": "Pinned title seed, ordinary room-load requests and hero-position/facing navigation. Actual menu inputs; no rewards, discovery, terrain, health, inventory, palette or pixel results assigned.",
+  "images": [
+    {
+      "file": "overview.png",
+      "sha256": "d35ed6d00d8445f0beae2b430789e93f4a3ca134ccab11eaff9a28340d69ead3",
+      "size": [
+        240,
+        160
+      ]
+    },
+    {
+      "file": "zoom.png",
+      "sha256": "62150aa0979542f8823ac46af5c89236b414ccbabce0c642b644035d755633cf",
+      "size": [
+        240,
+        160
+      ]
+    },
+    {
+      "file": "neighbor-zoom.png",
+      "sha256": "f04a9f5980f6c24300f39b231bc2d234bdc2c657e6a99a7cd1ac07b4d0add8ba",
+      "size": [
+        240,
+        160
+      ]
+    },
+    {
+      "file": "returned.png",
+      "sha256": "9eae7f458d0e61ca6248055e99ab5bffbca4db3a65d57c452eb0fc49f814d0e2",
+      "size": [
+        240,
+        160
+      ]
+    }
+  ],
+  "redraw_timings": [
+    {
+      "key": "R",
+      "concept": 0,
+      "zoom": 0,
+      "hardware_frames": 17
+    },
+    {
+      "key": "A",
+      "concept": 0,
+      "zoom": 1,
+      "hardware_frames": 17
+    },
+    {
+      "key": "B",
+      "concept": 0,
+      "zoom": 0,
+      "hardware_frames": 13
+    },
+    {
+      "key": "LEFT",
+      "concept": 0,
+      "zoom": 0,
+      "hardware_frames": 9
+    },
+    {
+      "key": "UP",
+      "concept": 0,
+      "zoom": 0,
+      "hardware_frames": 9
+    },
+    {
+      "key": "UP",
+      "concept": 0,
+      "zoom": 0,
+      "hardware_frames": 9
+    },
+    {
+      "key": "UP",
+      "concept": 0,
+      "zoom": 0,
+      "hardware_frames": 9
+    },
+    {
+      "key": "UP",
+      "concept": 0,
+      "zoom": 0,
+      "hardware_frames": 9
+    },
+    {
+      "key": "A",
+      "concept": 0,
+      "zoom": 1,
+      "hardware_frames": 9
+    },
+    {
+      "key": "R",
+      "concept": 0,
+      "zoom": 0,
+      "hardware_frames": 9
+    },
+    {
+      "key": "R",
+      "concept": 0,
+      "zoom": 0,
+      "hardware_frames": 17
+    }
+  ],
+  "native_world_restored": true,
+  "checks": [
+    {
+      "name": "normal opening draft completed with positive health",
+      "passed": true,
+      "observed": null
+    },
+    {
+      "name": "navigation begins in living ordinary ground state",
+      "passed": true,
+      "observed": {
+        "frames": 280,
+        "clock": 269,
+        "run_frames": 173,
+        "state": 1,
+        "area": 0,
+        "cell": 0,
+        "node": 42,
+        "actor": {
+          "kind": 1,
+          "type": 0,
+          "state": 0,
+          "timer": 0,
+          "x": 200,
+          "y": 270,
+          "z": 0,
+          "speed": 0,
+          "hp": 0,
+          "coll": 0,
+          "facing": 0
+        },
+        "health": [
+          32,
+          32
+        ],
+        "text": 0,
+        "camera": [
+          80,
+          160
+        ]
+      }
+    },
+    {
+      "name": "actual UP input enters Cream through Drain ladder",
+      "passed": true,
+      "observed": null
+    },
+    {
+      "name": "real START opens the pause menu",
+      "passed": true,
+      "observed": null
+    },
+    {
+      "name": "real two-page R input opens selected Cream map",
+      "passed": true,
+      "observed": null
+    },
+    {
+      "name": "atlas metadata names the real live room",
+      "passed": true,
+      "observed": null
+    },
+    {
+      "name": "unknown rooms expose no event information",
+      "passed": true,
+      "observed": null
+    },
+    {
+      "name": "native atlas heights match every actual physical room cell",
+      "passed": true,
+      "observed": null
+    },
+    {
+      "name": "native atlas owners match every actual physical room cell",
+      "passed": true,
+      "observed": null
+    },
+    {
+      "name": "native atlas player marker uses actual room position",
+      "passed": true,
+      "observed": null
+    },
+    {
+      "name": "selected production layout is Contour Folio",
+      "passed": true,
+      "observed": null
+    },
+    {
+      "name": "fresh map retains undiscovered rooms",
+      "passed": true,
+      "observed": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "name": "L keeps the selected map presentation and bitmap",
+      "passed": true,
+      "observed": null
+    },
+    {
+      "name": "ignored style cycling preserves paused game state",
+      "passed": true,
+      "observed": null
+    },
+    {
+      "name": "atlas metadata names the real live room",
+      "passed": true,
+      "observed": null
+    },
+    {
+      "name": "unknown rooms expose no event information",
+      "passed": true,
+      "observed": null
+    },
+    {
+      "name": "native atlas heights match every actual physical room cell",
+      "passed": true,
+      "observed": null
+    },
+    {
+      "name": "native atlas owners match every actual physical room cell",
+      "passed": true,
+      "observed": null
+    },
+    {
+      "name": "native atlas player marker uses actual room position",
+      "passed": true,
+      "observed": null
+    },
+    {
+      "name": "overview and room zoom share the same actual terrain and features",
+      "passed": true,
+      "observed": null
+    },
+    {
+      "name": "zoom is read-only across all live gameplay state",
+      "passed": true,
+      "observed": null
+    },
+    {
+      "name": "atlas metadata names the real live room",
+      "passed": true,
+      "observed": null
+    },
+    {
+      "name": "unknown rooms expose no event information",
+      "passed": true,
+      "observed": null
+    },
+    {
+      "name": "unknown selected room hides all terrain and markers",
+      "passed": true,
+      "observed": null
+    },
+    {
+      "name": "D-pad selects a different room without changing the live room",
+      "passed": true,
+      "observed": null
+    },
+    {
+      "name": "atlas metadata names the real live room",
+      "passed": true,
+      "observed": null
+    },
+    {
+      "name": "unknown rooms expose no event information",
+      "passed": true,
+      "observed": null
+    },
+    {
+      "name": "unknown selected room hides all terrain and markers",
+      "passed": true,
+      "observed": null
+    },
+    {
+      "name": "selected-room preview preserves paused gameplay",
+      "passed": true,
+      "observed": null
+    },
+    {
+      "name": "unvisited room zoom contains no hidden terrain or markers",
+      "passed": true,
+      "observed": null
+    },
+    {
+      "name": "R item page preserves inventory and gameplay",
+      "passed": true,
+      "observed": null
+    },
+    {
+      "name": "return from items keeps the chosen map layout",
+      "passed": true,
+      "observed": null
+    },
+    {
+      "name": "START returns from map to living ordinary gameplay",
+      "passed": true,
+      "observed": null
+    },
+    {
+      "name": "all native BG2 masked cells exactly preserve actual backing",
+      "passed": true,
+      "observed": {
+        "painted_cells": 80,
+        "dynamic_subtiles": 117,
+        "capacity": 163
+      }
+    },
+    {
+      "name": "real START opens the pause menu",
+      "passed": true,
+      "observed": null
+    },
+    {
+      "name": "real two-page R input opens selected Cream map",
+      "passed": true,
+      "observed": null
+    },
+    {
+      "name": "reopened map starts in the selected presentation",
+      "passed": true,
+      "observed": null
+    },
+    {
+      "name": "Select returns to normal pause page",
+      "passed": true,
+      "observed": null
+    },
+    {
+      "name": "START returns from map to living ordinary gameplay",
+      "passed": true,
+      "observed": null
+    },
+    {
+      "name": "selected map interactions complete within the existing48frame budget",
+      "passed": true,
+      "observed": [
+        {
+          "key": "R",
+          "concept": 0,
+          "zoom": 0,
+          "hardware_frames": 17
+        },
+        {
+          "key": "A",
+          "concept": 0,
+          "zoom": 1,
+          "hardware_frames": 17
+        },
+        {
+          "key": "B",
+          "concept": 0,
+          "zoom": 0,
+          "hardware_frames": 13
+        },
+        {
+          "key": "LEFT",
+          "concept": 0,
+          "zoom": 0,
+          "hardware_frames": 9
+        },
+        {
+          "key": "UP",
+          "concept": 0,
+          "zoom": 0,
+          "hardware_frames": 9
+        },
+        {
+          "key": "UP",
+          "concept": 0,
+          "zoom": 0,
+          "hardware_frames": 9
+        },
+        {
+          "key": "UP",
+          "concept": 0,
+          "zoom": 0,
+          "hardware_frames": 9
+        },
+        {
+          "key": "UP",
+          "concept": 0,
+          "zoom": 0,
+          "hardware_frames": 9
+        },
+        {
+          "key": "A",
+          "concept": 0,
+          "zoom": 1,
+          "hardware_frames": 9
+        },
+        {
+          "key": "R",
+          "concept": 0,
+          "zoom": 0,
+          "hardware_frames": 9
+        },
+        {
+          "key": "R",
+          "concept": 0,
+          "zoom": 0,
+          "hardware_frames": 17
+        }
+      ]
+    }
+  ],
+  "complete": true
+}
