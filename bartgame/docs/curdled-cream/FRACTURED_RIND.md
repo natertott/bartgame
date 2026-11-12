@@ -41,8 +41,8 @@ arch, crack or fan to every cell.
 `src/cream_visuals.c` measures actual unused midface after semantic routes and
 room content have been drawn. A full panel must fit the measured rectangle;
 it is not clipped around a cave, waterfall, climb strip, gate or prop. The
-deterministic seeded choice tries larger96/64px spans before compact32px
-remnants, leaves quiet breaks, and permits at most one complete blind arch in
+deterministic seeded choice mixes unequal96/64px spans and compact32px
+remnants according to available space, leaves quiet breaks, and permits at most one complete blind arch in
 a room when space allows. A blind arch is decorative sealed stone. Only real
 entrances receive the open cave mouth and accessible approach.
 
@@ -70,8 +70,9 @@ split into six cells, with most visible shade concentrated near the top and a
 broken shallow lower boundary. Quiet floor marks survive through it; no black
 pit contour, bright target center or arrow is added.
 
-The destination patch is applied only to compatible plain floor, leaving
-paths, hazards, gates and objects intact. Routes behind clearable gates keep
+The destination patch is applied only to compatible plain floor and path.
+Path-specific drawings retain the pressed path grain beneath the shade;
+hazards, gates and objects keep their own drawings. Routes behind clearable gates keep
 their destination cue inactive until clearing. A cape-only gap can retain its
 destination cue because acquiring the cape does not erase the physical pit.
 Read-only cache telemetry records the arrival and painted portions so native testing can
@@ -112,6 +113,38 @@ that has not yet been examined.
 
 ## Qualification and protected scope
 
+### Initial actual-renderer review
+
+Viewed initial source `ed3e1480` under
+`/workspace/setup/cream-depth/native`: all three style6 registered full-room
+mosaics, matched study5 sour mosaic, and sampled 240×160 frames from the local
+drop, one-row drop and sour-climb live GIFs. The mosaics are frozen camera
+surveys; the sampled frames come from advancing ordinary input clips. This
+review does not claim to establish the unviewed timing of every frame or an
+unassisted playthrough.
+
+The new wall masses are much calmer than study5's dense repeated little fans;
+more of the room reads as walking field versus continuous vertical rock. The
+complete blind arch reads as sealed relief beside the actual dark cave mouth.
+Visible landing patches sit beneath the real actor at the sampled arrivals
+and retain ground texture, reducing the isolated source-atlas puddle concern.
+
+However, the initial placement still repeats the ivory near-vertical seam and
+oval caps of `fracture_rib` at regular intervals along the upper band. The deep
+veins make that recurrence especially visible. Larger art alone did not solve
+the compositional rhythm: the planner needs mixed priorities and staggered
+anchors rather than always fitting the same long span first. That revision is
+pending a fresh source/build/capture, so these initial pictures and checks are
+not substituted for final evidence.
+
+The pale material overhangs also remain perceptually shelf-like while Bloom
+falls past them. They are not physical intermediate platforms; actual final
+arrival patches and the clear main terrace planes must carry that distinction.
+This remains an honest visual tradeoff rather than a collision defect claimed
+from still images.
+
+### Final build inputs still required
+
 The study adds native environment drawings and the optional compositor. It
 reuses the selected study5 utility/object families, with the new pointed cave;
 it is not a redraw of all actors or all shared handoff objects. Bloom,
@@ -119,12 +152,17 @@ enemies, NPCs, menus/HUD, original music and other regions retain their current
 art. No high-resolution generated image, filtered scaling or screenshot color
 grading becomes a game asset.
 
-TBD — final source commit, build-option identity, ROM SHA256, palette/subtile
-budget, audit counts, room/seed coverage and protected-art/default comparison.
+Before publication, fill these from the final frozen build:
 
-TBD — links to final healthy/sour/deep registered mosaics, before/after pair,
-ordinary live climb/short-drop/multi-screen clips, exact fixtures/input
-disclosures, per-file media manifest and independent runtime critique. The
-frozen room survey demonstrates renderer composition; live footage and
+- Source commit, build-option identity, ROM SHA256 and published download.
+- Palette/subtile budget, asset audit, room/seed coverage and protected-art/
+  production0/previous-study comparisons.
+- Final healthy/sour/deep registered mosaics and matched before/after pair.
+- Ordinary live climb, short-drop and multi-screen clips, with exact fixtures
+  and input disclosures, plus final arrival/cue checks.
+- Per-file media manifest and critique of the corrected planner in the final
+  actual-renderer images.
+
+The frozen room survey demonstrates renderer composition; live footage and
 arrival checks establish movement/cue agreement. Neither finite evidence set
 proves every possible procedural seed.

@@ -202,6 +202,8 @@ class DepthCapture(Capture):
 
 def isolated_drops(bundle, out, seed):
     report = dict(seed=seed, rom_sha256=sha(bundle / 'bartgame.gba'), cases=[], complete=False)
+    out.mkdir(parents=True, exist_ok=True)
+    write_json(out / 'report.json', report)
     # Separate cores prevent the renderer fixture or a preceding fall from
     # changing the next test's physical state, enemies, health or clock.
     for kind in ('local', 'one-row'):
@@ -270,6 +272,7 @@ def observe_runtime(bundle, out, seed):
         detail = json.loads(long_drop.read_text())
         target = detail['frames'][-1]['node']
         upright = [row for row in observations if row['state']['node'] == target
+                   and row['state']['state'] == 1 and row['state']['actor']['kind'] == 1
                    and row['state']['actor']['z'] == 0 and row['state']['actor']['state'] == 0]
         chosen = upright[0] if upright else None
         matching = [] if chosen is None else [entry for entry in chosen['landings']
@@ -312,6 +315,9 @@ def main():
     args = parser.parse_args()
     bundle, out = Path(args.bundle).resolve(), Path(args.out).resolve()
     out.mkdir(parents=True, exist_ok=True)
+    write_json(out / 'report.json', dict(complete=False, phase='starting',
+                                        rom_sha256=sha(bundle / 'bartgame.gba'),
+                                        source_commit=(bundle / 'source-commit.txt').read_text().strip()))
     if args.observe_runtime:
         return observe_runtime(bundle, out, args.seed)
     selected = out / 'matched/style-6'

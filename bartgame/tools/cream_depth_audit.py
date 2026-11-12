@@ -115,6 +115,9 @@ class Audit:
         keys={k:v for k,v in a.defs.items() if k.startswith(('F_','SHEET_','TS_','PAL_','TT_'))}
         self.check('identifiers','frame/canvas/palette/type/tileset constants exact',all(b.defs.get(k)==v for k,v in keys.items()))
         for name in INDEX_U8+INDEX_U16:
+            if name not in a.sections:
+                self.check('metadata',name+' remains unlinked/no ROM payload',name not in b.sections)
+                continue
             old,new=a.array(name),b.array(name)
             width=2 if name in INDEX_U16 else 1
             self.check('metadata',name+' exact old-indexed prefix',len(old)==self.old_count*width and
@@ -248,14 +251,15 @@ class Audit:
         fixture=next(ast.literal_eval(n.value) for n in syntax.body if isinstance(n,ast.Assign) and
                      any(isinstance(t,ast.Name) and t.id=='FIXTURE' for t in n.targets))
         prefix=subprocess.check_output(['git','-C',str(ROOT),'rev-parse','--show-prefix'],text=True).strip()
+        repository=subprocess.check_output(['git','-C',str(ROOT),'rev-parse','--show-toplevel'],text=True).strip()
         def host(label,rom):
             directory=self.out.parent/('host-'+label);directory.mkdir(parents=True,exist_ok=True)
             commit=(rom.directory/'source-commit.txt').read_text().strip()
             def show(name):
                 return subprocess.check_output(['git','-C',str(ROOT),'show',commit+':'+prefix+'src/'+name])
-            names=subprocess.check_output(['git','-C',str(ROOT),'ls-tree','-r','--name-only',commit,'--',prefix+'src'],text=True).splitlines()
+            names=subprocess.check_output(['git','-C',repository,'ls-tree','-r','--name-only',commit,'--',prefix+'src'],text=True).splitlines()
             for name in names:
-                if name.endswith('.h'):(directory/Path(name).name).write_bytes(show(Path(name).name))
+                if name.endswith(('.h','.inc')):(directory/Path(name).name).write_bytes(show(Path(name).name))
             (directory/'assets.h').write_text(rom.header)
             sources=['cream_world.c','cream_room.c']+(['cream_visuals.c'] if label=='depth' else [])
             for name in sources:(directory/name).write_bytes(show(name))
@@ -281,6 +285,9 @@ class Audit:
         opened=[(C.c_uint8*50).in_dll(lib,'gCreamOpenEdges') for lib in (before,after)]
         meta=[{key:rom.array('metatile_'+key) for key in ('type','coll','prop','glitter')}
               for rom in (self.base,self.rom)]
+        landing_ids=struct.unpack('<18H',self.rom.array('cream_visual_landing'))
+        path_ids=struct.unpack('<72H',self.rom.array('cream_visual_landing_path'))
+        old_names={v:k for k,v in self.base.tile_ids.items()}
         count=Counter();failures=[]
         def verify(ok,name,detail):
             count[name]+=1
@@ -295,6 +302,8 @@ class Audit:
                 for values in opened:
                     for n in range(50):values[n]=gate_state
                 for cell in range(25):
+                    for values in opened:
+                        for n in range(50):values[n]=gate_state
                     detail={'seed':seed,'cell':cell,'gates':gate_state}
                     for lib in (before,after):lib.cream_room_build(cell)
                     count['room_builds']+=1
@@ -325,6 +334,11 @@ class Audit:
                         verify(bool(anchor.flags&4)==active,'shadow active only for physical admitted source',detail|{'edge':pair})
                         verify((anchor.x0,anchor.y0)==(anchor.x//16-1,anchor.y//16),'shadow follows landing feet',detail|{'edge':pair})
                         if not active:verify(anchor.parts==0,'closed source has no landing cue',detail|{'edge':pair})
+                        foot_x,foot_y=anchor.x//16,anchor.y//16
+                        if active and 0<=foot_x<32 and 0<=foot_y<24:
+                            foot_at=foot_y*32+foot_x;original=rooms[0].ground[foot_at]
+                            if old_names[original].startswith(('CREAM_FLOOR_','CREAM_PATH_')):
+                                verify(bool(anchor.parts&2),'actual landing feet receive shadow center',detail|{'edge':pair})
                         for part in range(6):
                             if not (anchor.parts>>part)&1:continue
                             xx,yy=anchor.x0+part%3,anchor.y0+part//3
@@ -339,8 +353,29 @@ class Audit:
                                        'shadow uses dry traversable substrate preserving overlay',detail|{'xy':[xx,yy],'edge':pair})
                                 verify(rooms[1].ground[at] in self.added.values(),
                                        'reported painted part is real new native art',detail|{'xy':[xx,yy]})
+                                stage=min(world.corruption[cell],2)
+                                allowed={landing_ids[stage*6+part],*[path_ids[stage*24+v*6+part] for v in range(4)]}
+                                verify(rooms[1].ground[at] in allowed,'painted shadow uses correct stage/part table',
+                                       detail|{'xy':[xx,yy],'edge':pair,'part':part})
                                 count['painted_shadow_parts']+=1
                     verify(found==expected,'drop cache no omissions/duplicates',detail)
+                    snapshot=bytes(rooms[1]);cache_snapshot=bytes(cache)[:size*C.sizeof(Landing)]
+                    after.cream_visuals_refresh()
+                    verify(bytes(rooms[1])==snapshot,'visual refresh idempotent room pixels/contracts',detail)
+                    verify(C.c_uint16.in_dll(after,'gCreamVisualLandingCount').value==size and
+                           bytes(cache)[:size*C.sizeof(Landing)]==cache_snapshot,'visual refresh idempotent landing cache',detail)
+                    if not gate_state and seed<8:
+                        for node in (cell*2,cell*2+1):
+                            for index in range(world.degree[node]):
+                                if not world.edges[node][index].require:continue
+                                before.cream_room_unlock_edge(node,index);after.cream_room_unlock_edge(node,index)
+                                unlocked=detail|{'edge':[node,index]}
+                                verify(bytes(rooms[0].solid)==bytes(rooms[1].solid),'real gate unlock collision exact',unlocked)
+                                verify(bytes(rooms[0].overlay)==bytes(rooms[1].overlay),'real gate unlock overlays exact',unlocked)
+                                for layer in ('ground','underlay'):
+                                    for key in ('type','coll','prop','glitter'):
+                                        verify(typed(rooms[0],meta[0],layer,key)==typed(rooms[1],meta[1],layer,key),
+                                               'real gate unlock '+layer+' '+key+' exact',unlocked)
         self.check('actual_C_geometry','graph/physics/room content/landing-coordinate sweep',not failures,
                    {'counts':dict(count),'failures':failures,'seeds':self.args.geometry_seeds,
                     'gate_states':'all physically closed and all physically opened',

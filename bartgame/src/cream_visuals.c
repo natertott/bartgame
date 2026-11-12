@@ -11,6 +11,7 @@ u16 gCreamVisualPanelCount,gCreamVisualPanelCells;
 u16 gCreamVisualRimCount,gCreamVisualDropCount,gCreamVisualToeCount;
 u8 gCreamVisualPanelKinds[7];
 static u8 sPanelSpace[CREAM_ROOM_W*CREAM_ROOM_H] EWRAM_BSS;
+static u32 sOriginalRows[CREAM_ROOM_H];
 
 static const u16 sMid[3][2]={
  {MT_CREAM_CLIFF_MID_S0_V0,MT_CREAM_CLIFF_MID_S0_V1},
@@ -59,6 +60,16 @@ static bool8 panel_fits(int x,int y,int p) {
     if(x<2 || y<0 || x+panel->w>30 || y+panel->h>CREAM_ROOM_H)return FALSE;
     for(dy=0;dy<panel->h;dy++)for(dx=0;dx<panel->w;dx++)
         if(sPanelSpace[(y+dy)*CREAM_ROOM_W+x+dx]!=1)return FALSE;
+    /* Alternating the same two halves is still wallpaper. The same complete
+       painting cannot immediately meet itself along either axis. */
+    for(dy=0;dy<panel->h;dy++) {
+        if(x>0 && sPanelSpace[(y+dy)*CREAM_ROOM_W+x-1]==p+2)return FALSE;
+        if(x+panel->w<CREAM_ROOM_W && sPanelSpace[(y+dy)*CREAM_ROOM_W+x+panel->w]==p+2)return FALSE;
+    }
+    for(dx=0;dx<panel->w;dx++) {
+        if(y>0 && sPanelSpace[(y-1)*CREAM_ROOM_W+x+dx]==p+2)return FALSE;
+        if(y+panel->h<CREAM_ROOM_H && sPanelSpace[(y+panel->h)*CREAM_ROOM_W+x+dx]==p+2)return FALSE;
+    }
     return TRUE;
 }
 
@@ -67,28 +78,39 @@ static void place_panel(int x,int y,int p) {
     int dx,dy;
     for(dy=0;dy<panel->h;dy++)for(dx=0;dx<panel->w;dx++) {
         substitute(x+dx,y+dy,panel->first+dy*panel->w+dx);
-        sPanelSpace[(y+dy)*CREAM_ROOM_W+x+dx]=2;
+        sPanelSpace[(y+dy)*CREAM_ROOM_W+x+dx]=p+2;
     }
     gCreamVisualPanelCount++;gCreamVisualPanelCells+=panel->w*panel->h;
     gCreamVisualPanelKinds[p]++;
 }
 
+static int original_run(int x,int y) {
+    int left=x,right=x;
+    if(y<0 || y>=CREAM_ROOM_H || !(sOriginalRows[y]&(1u<<x)))return 0;
+    while(left>2 && (sOriginalRows[y]&(1u<<(left-1))))left--;
+    while(right<29 && (sOriginalRows[y]&(1u<<(right+1))))right++;
+    return right-left+1;
+}
+
 static void wall_panels(void) {
-    int x,y,p,s=visual_stage(),best_x=-1,best_y=0,best=-32767;
+    int x,y,p,s=visual_stage(),best_x=-1,best_y=0,best=-32767,available=0,attempt;
     gCreamVisualPanelCount=gCreamVisualPanelCells=0;
     memset(gCreamVisualPanelKinds,0,sizeof(gCreamVisualPanelKinds));
     memset(sPanelSpace,0,sizeof(sPanelSpace));
+    memset(sOriginalRows,0,sizeof(sOriginalRows));
     /* Only native midface backing can host these drawings. A cave, handhold,
        raised rim, waterfall, gate or foreground object is never flattened. */
     for(y=0;y<CREAM_ROOM_H;y++)for(x=2;x<30;x++) {
-        u16 mt=room_get(x,y);
+        int index=y*ROOM_MAX_W+x;u16 mt=gRoom.ground[index];
         if((mt==sMid[s][0] || mt==sMid[s][1]) &&
-           room_get_overlay(x,y)==MT_NONE && !cream_room_feature_reserved(x,y))
+           gRoom.overlay[index]==MT_NONE && !cream_room_feature_reserved(x,y)) {
             sPanelSpace[y*CREAM_ROOM_W+x]=1;
+            sOriginalRows[y]|=1u<<x;available++;
+        }
     }
     /* One rare, large, closed blind arch. Prefer the principal cliff, and
        require its full footprint rather than clipping a repeated arch tile. */
-    if((variation(14,11)&3)!=0)for(y=0;y<CREAM_ROOM_H-2;y++)for(x=3;x<27;x++) {
+    if(available>=24 && (variation(14,11)&3)!=0)for(y=0;y<CREAM_ROOM_H-2;y++)for(x=3;x<27;x++) {
         int score;
         if(!panel_fits(x,y,4))continue;
         score=120-ABS(x+2-16)*4-ABS(y+1-11)*5+(variation(x,y)&15);
@@ -96,16 +118,35 @@ static void wall_panels(void) {
         if(score>best){best=score;best_x=x;best_y=y;}
     }
     if(best_x>=0)place_panel(best_x,best_y,4);
-    /* Unequal, native 96/64/32px masses follow the measured available face.
-       Staggered starts and quiet breaks prevent another uniform stamp grid. */
+    /* Candidate anchors span the measured faces at unequal x/y offsets.
+       A top-to-bottom first-fit would align every 32px panel in two-row bands,
+       even with many drawings. Seeded anchors break that mechanical rhythm.
+       Quiet backing deliberately occupies at least a third of the face. */
+    for(attempt=0;attempt<192 && gCreamVisualPanelCells*3<available*2;attempt++) {
+        u32 anchor=variation(attempt*3+7,attempt*11+17),n;
+        int choice[4],i,wide,variant;
+        x=2+anchor%26;y=(anchor>>8)%(CREAM_ROOM_H-1);
+        if(sPanelSpace[y*CREAM_ROOM_W+x]!=1)continue;
+        n=variation(x/5+37,y/3+43);wide=(n>>7)&1;variant=(anchor>>17)&1;
+        choice[0]=(wide?2:0)+variant;
+        choice[1]=(wide?0:2)+((anchor>>19)&1);
+        choice[2]=choice[0]^1;choice[3]=choice[1]^1;
+        for(i=0;i<4;i++) {
+            const CreamVisualPanel* panel;
+            p=choice[i];panel=&cream_visual_panels[s][p];
+            if((gCreamVisualPanelCells+panel->w*panel->h)*3>available*2)continue;
+            if(panel_fits(x,y,p)){place_panel(x,y,p);break;}
+        }
+    }
+    /* A little remainder left by packing is not automatically a new rock.
+       Compact paintings belong only to a genuinely narrow original face. */
     for(y=0;y<CREAM_ROOM_H-1;y++)for(x=2;x<30;x++) {
-        u32 n=variation(x,y);int choice[6],i;
-        if(sPanelSpace[y*CREAM_ROOM_W+x]!=1 || (n&15)==0)continue;
-        choice[0]=2+((n>>5)&1);choice[1]=(n>>9)&1;
-        choice[2]=choice[1]^1;choice[3]=choice[0]^1;
-        choice[4]=5+((n>>13)&1);choice[5]=5+(((n>>13)&1)^1);
-        /* Compact faces are a fallback for genuinely narrow leftover rock. */
-        for(i=0;i<6;i++) {p=choice[i];if(panel_fits(x,y,p)){place_panel(x,y,p);break;}}
+        int first;
+        if(sPanelSpace[y*CREAM_ROOM_W+x]!=1 || original_run(x,y)>3 || original_run(x,y+1)>3)continue;
+        if((gCreamVisualPanelCells+4)*3>available*2)continue;
+        first=5+((variation(x,y)>>13)&1);
+        if(panel_fits(x,y,first))place_panel(x,y,first);
+        else if(panel_fits(x,y,first==5?6:5))place_panel(x,y,first==5?6:5);
     }
 }
 
@@ -137,9 +178,12 @@ static int path_variant(u16 mt,int s) {
 }
 
 static void ledge_edges(void) {
-    int x,y,s=visual_stage();
+    int x,y,s=visual_stage(),terrace,i,dx;
     gCreamVisualRimCount=gCreamVisualDropCount=gCreamVisualToeCount=0;
-    for(y=0;y<CREAM_ROOM_H;y++)for(x=2;x<30;x++) {
+    /* The generated profile already identifies every possible rim/base row.
+       Do not rescan the entire room to rediscover those fifty-six cells. */
+    for(x=2;x<30;x++) {
+        y=gCreamRoom.upper_bottom[x]+1;
         u16 mt=room_get(x,y);
         if(solid_rim(mt,s)) {
             bool8 left=raised_rim_at(x-1,y,s),right=raised_rim_at(x+1,y,s);
@@ -150,20 +194,32 @@ static void ledge_edges(void) {
             else if(!left)tile=cream_visual_edge[s][0];
             else if(!right)tile=cream_visual_edge[s][1];
             if(substitute(x,y,tile) && solid_rim(tile,s))gCreamVisualRimCount++;
-        } else if(mt==sBase[s][0] || mt==sBase[s][1]) {
-            substitute(x,y,cream_visual_edge[s][4]);
         }
+        y=gCreamRoom.lower_top[x]-1;mt=room_get(x,y);
+        if(mt==sBase[s][0] || mt==sBase[s][1])substitute(x,y,cream_visual_edge[s][4]);
     }
     /* Only cells already marked by an actual directed DROP can get an open
        sill. A solid gate or cape pit keeps its existing drawing and type. */
-    for(y=0;y<CREAM_ROOM_H;y++)for(x=2;x<30;x++)if(open_drop(room_get(x,y),s)) {
-        bool8 left=open_drop(room_get(x-1,y),s),right=open_drop(room_get(x+1,y),s);
-        u16 tile=cream_visual_drop[s][(x+y)&1];
-        if(y!=CREAM_ROOM_H-1) {
-            if(!left)tile=cream_visual_edge[s][2];
-            else if(!right)tile=cream_visual_edge[s][3];
+    for(terrace=0;terrace<2;terrace++) {
+        int node=cream_node(gCreamRoom.cell,terrace);
+        for(i=0;i<cream_edge_count(node);i++) {
+            const CreamEdge* edge=cream_edge(node,i);int px,py,row,rows;
+            if(edge->kind!=CC_DROP)continue;
+            cream_room_drop_pos(node,i,&px,&py);x=(px>>4)-1;y=py>>4;
+            rows=terrace==CC_LOWER?2:1;
+            for(row=0;row<rows;row++)for(dx=0;dx<2;dx++) {
+                int tx=x+dx,ty=y+row;u16 tile;
+                bool8 left,right;
+                if(!open_drop(room_get(tx,ty),s))continue;
+                left=open_drop(room_get(tx-1,ty),s);right=open_drop(room_get(tx+1,ty),s);
+                tile=cream_visual_drop[s][(tx+ty)&1];
+                if(ty!=CREAM_ROOM_H-1) {
+                    if(!left)tile=cream_visual_edge[s][2];
+                    else if(!right)tile=cream_visual_edge[s][3];
+                }
+                if(substitute(tx,ty,tile))gCreamVisualDropCount++;
+            }
         }
-        if(substitute(x,y,tile))gCreamVisualDropCount++;
     }
     /* The wall-foot contact shade belongs to the actual floor immediately
        below a cliff base. Paths and objects keep their own clear drawings. */
