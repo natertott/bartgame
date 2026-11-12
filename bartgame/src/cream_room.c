@@ -6,6 +6,9 @@
 #include "actor.h"
 #include "util.h"
 #include "video.h"
+#if BART_CREAM_VARIANT == 6
+#include "cream_visuals.h"
+#endif
 
 CreamRoomInfo gCreamRoom;
 u8 gCreamOpenEdges[CC_NODES];
@@ -316,6 +319,9 @@ void cream_room_build(int cell) {
         if(room_type(x,y)==TT_FLOOR && (noise(x,y)&3)==0 && ABS(x-gCreamRoom.climb_x)>3)
             room_set_overlay(x,y,sMold[s]);
     }
+#if BART_CREAM_VARIANT == 6
+    cream_visuals_build();
+#endif
     room_build_solid();room_render();
 }
 
@@ -442,7 +448,13 @@ bool8 cream_room_unlock_edge(int node,int index) {
     gCreamOpenEdges[node]|=1u<<index;
     {const CreamEdge* e=cream_edge(node,index);int reverse=cream_find_edge(e->target,node);
      if(reverse>=0 && cream_edge(e->target,reverse)->require==e->require)gCreamOpenEdges[e->target]|=1u<<reverse;}
-    if(cream_cell(node)==gCreamRoom.cell) {paint_gate(node,index,TRUE);room_build_solid();room_render();}
+    if(cream_cell(node)==gCreamRoom.cell) {
+        paint_gate(node,index,TRUE);
+#if BART_CREAM_VARIANT == 6
+        cream_visuals_refresh();
+#endif
+        room_build_solid();room_render();
+    }
     return TRUE;
 }
 

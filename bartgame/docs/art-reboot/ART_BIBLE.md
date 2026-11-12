@@ -142,6 +142,18 @@ the floor; it does not become a different barrel.
 
 ## Perspective and traversability
 
+Cream's local ledge vocabulary distinguishes a raised, rooted, irregular
+blocked rim from a low, broad, worn drop sill with handed endcaps. The open
+sill belongs only to a real directed drop. A cliff-toe seam describes height;
+a destination-floor shadow describes where an actual incoming drop lands.
+Derive the latter from the gameplay arrival calculation, including multiroom
+drops, rather than projecting a guessed point below the source. Keep retained
+floor grain and a shallow irregular cast shape so it reads as shade, not a
+pit, puddle, pickup or target. Do not cover an interaction or change collision
+to make a decorative cue fit. These principles extend the existing truthful
+material vocabulary; optional Cream6's palette/compositions remain a local
+review synthesis. See [the viewed Mount Crenel reference](../curdled-cream/CRENEL_REFERENCE.md).
+
 Use a consistent three-quarter bird's-eye view: visible tops, short near-side
 faces and a small contact shadow. Canopy tops receive clustered light; their
 hanging sides are darker. A tree crown is an irregular leaf mass, not a flat

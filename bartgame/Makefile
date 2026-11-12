@@ -97,10 +97,10 @@ FOREST_STAMP := $(GEN)/forest-profile-$(BART_FOREST).stamp
 # Unselected Cream environment studies. Zero retains production artwork.
 BART_CREAM ?= 0
 ifneq ($(words $(BART_CREAM)),1)
-$(error BART_CREAM must be one integer in 0..5)
+$(error BART_CREAM must be one integer in 0..6)
 endif
-ifneq ($(BART_CREAM),$(filter $(BART_CREAM),0 1 2 3 4 5))
-$(error BART_CREAM must be one integer in 0..5)
+ifneq ($(BART_CREAM),$(filter $(BART_CREAM),0 1 2 3 4 5 6))
+$(error BART_CREAM must be one integer in 0..6)
 endif
 CREAM_STAMP := $(GEN)/cream-profile-$(BART_CREAM).stamp
 
@@ -126,6 +126,9 @@ CFLAGS += -DBART_PROFILE=$(PROFILE) -DBART_ENEMY_LAB=$(BART_ENEMY_LAB)
 PROFILE_STAMP := $(BUILD)/profile-$(PROFILE).stamp
 
 SRC_C     := $(filter-out %_iwram.c,$(wildcard src/*.c))
+ifneq ($(BART_CREAM),6)
+SRC_C     := $(filter-out src/cream_visuals.c,$(SRC_C))
+endif
 ifeq ($(PROFILE),0)
 SRC_C     := $(filter-out src/performance.c,$(SRC_C))
 endif

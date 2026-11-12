@@ -402,3 +402,18 @@ Crenel annotation guide the pass. No additional external source or imported
 sprite is claimed. All five painters author native indexed pixels directly;
 [study scope](../curdled-cream/ART_STUDIES.md) records materials, identifiers,
 protected art and review evidence. These remain unselected local alternatives.
+
+## Cream synthesis: viewed Mount Crenel map — 2026-11-12
+
+Actually inspected CandyCrystal's public Minish Cap randomizer tracker
+`images/maps/overworld.png`, pinned to commit
+`a3f1daa29a0ad5b95467e1c75209c36facc6c9a3`. The top-left Mount Crenel region
+shows pale playable tops, warm long cliff faces, dark undercuts/toes, raised
+obstructing rims and low open sill intervals. This screenshot-derived tracker
+composite's original capture/resizing is unverified; no precise collision or
+animation measurements are attributed to it. Exact viewed URL, file hash,
+inspection crop coordinates, access limits and observation/application
+distinctions are in [CRENEL_REFERENCE.md](../curdled-cream/CRENEL_REFERENCE.md).
+The original Cream synthesis adopts the plane hierarchy and clear material
+verbs; Nintendo pixels are not included in the art pack. The actual-arrival
+floor shadow is the user's addition, not inferred screenshot behavior.

@@ -228,6 +228,22 @@ mt_coll = [mt.get('coll', tiles.default_coll(mt['type'])) for mt in tiles.METATI
 for i, mt in enumerate(tiles.METATILES):
     h.append('#define MT_%s %d' % (cname(mt['name']), i))
 h.append('#define METATILE_COUNT %d' % len(tiles.METATILES))
+if cream_terrain.VARIANT == 6:
+    import cream_depth_assets as CD
+    h.append('typedef struct { u16 first; u8 w,h; } CreamVisualPanel;')
+    h.append('extern const CreamVisualPanel cream_visual_panels[3][7];')
+    c.append('const CreamVisualPanel cream_visual_panels[3][7] = {\n' + ',\n'.join(
+        '{' + ','.join('{%d,%d,%d}' % (mt_names[p['first']], p['w'], p['h']) for p in row) + '}'
+        for row in CD.TABLES['panels']) + '\n};')
+    for key, count in (('rim',2), ('drop',2), ('edge',5), ('landing',6), ('floor_toe',2)):
+        symbol = 'cream_visual_' + key
+        h.append('extern const u16 %s[3][%d];' % (symbol, count))
+        c.append('const u16 %s[3][%d] = {\n' % (symbol, count) + ',\n'.join(
+            '{' + ','.join(str(mt_names[name]) for name in row) + '}' for row in CD.TABLES[key]) + '\n};')
+    h.append('extern const u16 cream_visual_landing_path[3][4][6];')
+    c.append('const u16 cream_visual_landing_path[3][4][6] = {\n' + ',\n'.join(
+        '{' + ','.join('{' + ','.join(str(mt_names[n]) for n in row) + '}' for row in stage)
+        + '}' for stage in CD.TABLES['landing_path']) + '\n};')
 c.append(c_array_u8('metatile_type', mt_type))
 h.append('extern const u8 metatile_type[];')
 c.append(c_array_u8('metatile_coll', mt_coll))

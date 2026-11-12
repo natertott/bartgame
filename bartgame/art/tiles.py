@@ -124,3 +124,6 @@ METATILES.extend(handoff_mobility.METATILES)
 import handoff_shapes
 METATILES.extend(handoff_shapes.METATILES)
 METATILES.extend(handoff_mobility.FIELD_METATILES)
+if cream_terrain.VARIANT == 6:
+    import cream_depth_assets
+    METATILES.extend(cream_depth_assets.METATILES)

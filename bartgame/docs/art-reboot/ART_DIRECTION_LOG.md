@@ -1963,3 +1963,28 @@ wallpaper. Remaining visible repetition/busy deep Moldglass detail is recorded
 as a critique, not hidden by a fidelity statistic. See the
 [final gallery](../../../cream-art-review/README.md) for the five unselected
 options and explicit source/registered-renderer/live-footage distinctions.
+
+## 2026-11-12 — Fractured Rind synthesis and truthful drop shade
+
+**Status:** review synthesis6, default0 and studies1–5 retained. The user
+selects study2's contrast/arch concept, study3/5's wall texture, and especially
+study5's colors, while rejecting small repetitive vein/wall stamps. Preserve
+Rind's exact eight RGB555 banks and quiet floor; draw unequal native64×32,
+96×32,64×48 and32×32 rock compositions with wide strata, dark recesses,
+branching fractures and structural chips. Corruption widens existing damage
+and illuminates attached fissures rather than washing the floor purple.
+One scarce closed blind arch contrasts with actual dark, usable cave mouths.
+
+The runtime measures eligible solid cliff patches after routes/features exist
+and fits whole compositions. It preserves all physical terrain contracts.
+Raised irregular rims differ from low open directed-drop sills and endcaps.
+Cliff-foot shading is separate from dry-floor landing shade, whose anchor
+comes from the actual incoming edge's gameplay arrival calculation.
+
+New viewed reference: the pinned public Minish Cap tracker map composite
+documented in [CRENEL_REFERENCE.md](../curdled-cream/CRENEL_REFERENCE.md).
+Observed plane/rim hierarchy guides original drawings; imported Nintendo
+pixels are not game assets. Per-drop destination shade is the user's requested
+enhancement, not a feature claimed from the still image. Native source atlases,
+registered frozen room mosaics and ordinary advancing gameplay must retain
+separate labels and exact build provenance in the final review.
