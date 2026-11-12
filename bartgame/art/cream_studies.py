@@ -40,6 +40,49 @@ def install(namespace):
     for name in PAINTERS:
         namespace[name] = getattr(painter, name)
 
+    # Shared verbs override a misleading decorative symbol in a source study.
+    # A magic capability ward is not a key lock; an unlit cage has no flame.
+    def role_prop(kind='mold', stage=0, phase=0):
+        image = painter.prop(kind, stage, phase).copy()
+        draw = ImageDraw.Draw(image)
+        if kind == 'ward':
+            draw.ellipse((3, 2, 12, 14), fill=1)
+            draw.ellipse((4, 3, 11, 13), fill=12)
+            draw.line([(5, 5), (11, 5), (8, 11), (5, 5)], fill=13)
+            for x,y in ((5,5), (11,5), (8,11)):
+                draw.polygon([(x,y-2),(x+1,y),(x,y+1),(x-1,y)],fill=6)
+                draw.point((x,y-1),fill=8)
+        elif kind == 'switch' and 0 in image.getdata():
+            # The existing switch contract is opaque, rather than an overlay.
+            # Give it a complete deliberately square stone plinth.
+            image.putdata([3 if v == 0 else v for v in image.getdata()])
+            draw.line((0,0,15,0),fill=5)
+            draw.line((0,1,0,14),fill=4)
+            draw.line((0,15,15,15),fill=2)
+            draw.line((15,1,15,14),fill=2)
+        elif kind == 'lamp' and not phase:
+            if VARIANT == 3:
+                draw.rectangle((6,4,9,7),fill=2)
+                draw.line((7,6,7,7),fill=3)
+            elif VARIANT == 4:
+                draw.rectangle((5,0,10,5),fill=0)
+                draw.line((7,4,7,5),fill=3)
+            elif VARIANT == 5:
+                draw.rectangle((6,5,8,8),fill=2)
+                draw.point((7,7),fill=3)
+        return image
+    namespace['prop'] = role_prop
+    if VARIANT == 5:
+        def quiet_rind_floor(stage=0, variant=0, path=False):
+            image = painter.floor(stage, variant, path).copy()
+            if not path and variant % 4 == 0:
+                draw = ImageDraw.Draw(image)
+                draw.rectangle((0,0,7,2),fill=4)
+                draw.line([(4,10),(7,9),(9,9)],fill=3)
+                draw.line((5,11,8,10),fill=5)
+            return image
+        namespace['floor'] = quiet_rind_floor
+
 
 def return_door():
     """Cream-only return, native32x48 illustration in a legal32x64 canvas.

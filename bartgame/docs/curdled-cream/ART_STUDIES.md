@@ -9,8 +9,8 @@ selection of a new default.
 | --- | --- | --- | --- |
 | 1 | Curdstone Karst | Rounded ivory travertine/curd shelves, grouped erosion cups, brine stains and dark undercuts. | Recessed brass staples; rooted calcite rim versus open drop notch. |
 | 2 | Brine Basilica | Chipped limestone cornices, pointed recessed bays, ruined buttresses and narrow gilt details. | Regular gilt grips separate from architectural ribs; a clear parapet silhouette and dark doorway. |
-| 3 | Moldglass Crags | Olive/teal mineral plates, asymmetric facets, damp cavities and violet fractures. | Pale paired handholds in a dark cut shaft; angular permanent rims and bright temporary seals. |
-| 4 | Gilt Quarry | Broad dressed curdstone blocks, chisel cuts, ochre/ivory planes, cool shadow courses and bronze fixtures. | Deliberate grip cadence and strong shelf faces; obvious wooden/brass chest, fracture and lock. |
+| 3 | Moldglass Crags | Olive/teal mineral plates, asymmetric facets, damp cavities and violet fractures. | Pale paired handholds in a dark cut shaft; angular permanent rims and bright temporary magic seals. |
+| 4 | Gilt Quarry | Broad dressed curdstone blocks, chisel cuts, ochre/ivory planes, cool shadow courses and bronze fixtures. | Deliberate grip cadence and strong shelf faces; obvious wooden/brass chest, fracture and magic ward. |
 | 5 | Black Rind Terraces | Unequal oyster-fungus shelves, wet black backing, living green seams and purple rotten cavities. | Pale repeated pegs distinguish the climb from irregular fans; blocked caps versus an open edge. |
 
 All five redraw the142 existing Cream metatiles: floor/path variants,
@@ -76,3 +76,14 @@ external research or import another game's art.
 
 Review artifacts and exact build/capture identities will be linked from the
 repository's Cream art gallery after the native runs finish.
+
+## Native-review corrections
+
+The shared study dispatcher keeps the functional vocabulary consistent:
+capability wards show three luminous sigils rather than a false keyhole;
+opaque floor switches receive a complete stone plinth instead of black
+transparent corners; unlit Quarry/Rind/Moldglass lamps have dark interiors or
+an extinguished wick. The Rind's most common floor drawing loses a repeating
+bright corner patch that formed a conspicuous wallpaper grid in the full room.
+These corrections apply only to the optional studies. They do not change the
+physical metadata or the production-zero pictures.
