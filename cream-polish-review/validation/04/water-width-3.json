@@ -1,0 +1,2047 @@
+{
+  "width": 3,
+  "cell": 16,
+  "fall": {
+    "x": 3,
+    "y": 9,
+    "w": 3,
+    "h": 7
+  },
+  "before": {
+    "frames": 467,
+    "clock": 456,
+    "run_frames": 284,
+    "state": 1,
+    "area": 3,
+    "cell": 16,
+    "node": 32,
+    "actor": {
+      "kind": 1,
+      "type": 0,
+      "state": 0,
+      "timer": 0,
+      "x": 72,
+      "y": 270,
+      "z": 0,
+      "speed": 0,
+      "hp": 0,
+      "coll": 0,
+      "facing": 0
+    },
+    "health": [
+      32,
+      32
+    ],
+    "text": 0,
+    "camera": [
+      0,
+      166
+    ]
+  },
+  "after": {
+    "frames": 563,
+    "clock": 552,
+    "run_frames": 380,
+    "state": 1,
+    "area": 3,
+    "cell": 16,
+    "node": 32,
+    "actor": {
+      "kind": 1,
+      "type": 0,
+      "state": 0,
+      "timer": 0,
+      "x": 72,
+      "y": 264,
+      "z": 0,
+      "speed": 0,
+      "hp": 0,
+      "coll": 1,
+      "facing": 0
+    },
+    "health": [
+      28,
+      32
+    ],
+    "text": 0,
+    "camera": [
+      0,
+      160
+    ]
+  },
+  "frames": 96,
+  "minimum_health": 28,
+  "checks": [
+    {
+      "name": "normal opening draft completed with positive health",
+      "passed": true,
+      "observed": null
+    },
+    {
+      "name": "navigation begins in living ordinary ground state",
+      "passed": true,
+      "observed": {
+        "frames": 280,
+        "clock": 269,
+        "run_frames": 173,
+        "state": 1,
+        "area": 0,
+        "cell": 0,
+        "node": 42,
+        "actor": {
+          "kind": 1,
+          "type": 0,
+          "state": 0,
+          "timer": 0,
+          "x": 200,
+          "y": 270,
+          "z": 0,
+          "speed": 0,
+          "hp": 0,
+          "coll": 0,
+          "facing": 0
+        },
+        "health": [
+          32,
+          32
+        ],
+        "text": 0,
+        "camera": [
+          80,
+          160
+        ]
+      }
+    },
+    {
+      "name": "actual UP input enters Cream through Drain ladder",
+      "passed": true,
+      "observed": null
+    },
+    {
+      "name": "ordinary load selected actual generated room",
+      "passed": true,
+      "observed": {
+        "frames": 399,
+        "clock": 388,
+        "run_frames": 216,
+        "state": 1,
+        "area": 3,
+        "cell": 16,
+        "node": 32,
+        "actor": {
+          "kind": 1,
+          "type": 0,
+          "state": 0,
+          "timer": 0,
+          "x": 440,
+          "y": 318,
+          "z": 0,
+          "speed": 0,
+          "hp": 0,
+          "coll": 0,
+          "facing": 0
+        },
+        "health": [
+          32,
+          32
+        ],
+        "text": 0,
+        "camera": [
+          272,
+          214
+        ]
+      }
+    },
+    {
+      "name": "navigation begins in living ordinary ground state",
+      "passed": true,
+      "observed": {
+        "frames": 399,
+        "clock": 388,
+        "run_frames": 216,
+        "state": 1,
+        "area": 3,
+        "cell": 16,
+        "node": 32,
+        "actor": {
+          "kind": 1,
+          "type": 0,
+          "state": 0,
+          "timer": 0,
+          "x": 440,
+          "y": 318,
+          "z": 0,
+          "speed": 0,
+          "hp": 0,
+          "coll": 0,
+          "facing": 0
+        },
+        "health": [
+          32,
+          32
+        ],
+        "text": 0,
+        "camera": [
+          272,
+          214
+        ]
+      }
+    },
+    {
+      "name": "ordinary camera has naturally settled near actualwaterfall",
+      "passed": true,
+      "observed": {
+        "camera": [
+          0,
+          166
+        ],
+        "settle_frames": 68
+      }
+    },
+    {
+      "name": "ordinary water clip uses advancing positive-health simulation",
+      "passed": true,
+      "observed": null
+    },
+    {
+      "name": "water width comes from actual generated region",
+      "passed": true,
+      "observed": null
+    },
+    {
+      "name": "actual native waterfall BG2 pixels animate",
+      "passed": true,
+      "observed": null
+    },
+    {
+      "name": "ordinary water never enables frozen camera",
+      "passed": true,
+      "observed": null
+    },
+    {
+      "name": "every ordinaryclipframe visibly contains fullfallwidth and enoughbody",
+      "passed": true,
+      "observed": [
+        {
+          "frame": 0,
+          "camera": [
+            0,
+            166
+          ],
+          "fall_screen_rect": [
+            48,
+            -22,
+            96,
+            90
+          ],
+          "visible_height": 70,
+          "blue_pixels": 3002,
+          "sample_area": 3360,
+          "horizontal_complete": true,
+          "body_visible": true,
+          "blue_in_actual_image": true
+        },
+        {
+          "frame": 4,
+          "camera": [
+            0,
+            166
+          ],
+          "fall_screen_rect": [
+            48,
+            -22,
+            96,
+            90
+          ],
+          "visible_height": 70,
+          "blue_pixels": 3002,
+          "sample_area": 3360,
+          "horizontal_complete": true,
+          "body_visible": true,
+          "blue_in_actual_image": true
+        },
+        {
+          "frame": 8,
+          "camera": [
+            0,
+            166
+          ],
+          "fall_screen_rect": [
+            48,
+            -22,
+            96,
+            90
+          ],
+          "visible_height": 70,
+          "blue_pixels": 3001,
+          "sample_area": 3360,
+          "horizontal_complete": true,
+          "body_visible": true,
+          "blue_in_actual_image": true
+        },
+        {
+          "frame": 12,
+          "camera": [
+            0,
+            166
+          ],
+          "fall_screen_rect": [
+            48,
+            -22,
+            96,
+            90
+          ],
+          "visible_height": 70,
+          "blue_pixels": 3001,
+          "sample_area": 3360,
+          "horizontal_complete": true,
+          "body_visible": true,
+          "blue_in_actual_image": true
+        },
+        {
+          "frame": 16,
+          "camera": [
+            0,
+            166
+          ],
+          "fall_screen_rect": [
+            48,
+            -22,
+            96,
+            90
+          ],
+          "visible_height": 70,
+          "blue_pixels": 3002,
+          "sample_area": 3360,
+          "horizontal_complete": true,
+          "body_visible": true,
+          "blue_in_actual_image": true
+        },
+        {
+          "frame": 20,
+          "camera": [
+            0,
+            166
+          ],
+          "fall_screen_rect": [
+            48,
+            -22,
+            96,
+            90
+          ],
+          "visible_height": 70,
+          "blue_pixels": 3002,
+          "sample_area": 3360,
+          "horizontal_complete": true,
+          "body_visible": true,
+          "blue_in_actual_image": true
+        },
+        {
+          "frame": 24,
+          "camera": [
+            0,
+            166
+          ],
+          "fall_screen_rect": [
+            48,
+            -22,
+            96,
+            90
+          ],
+          "visible_height": 70,
+          "blue_pixels": 3001,
+          "sample_area": 3360,
+          "horizontal_complete": true,
+          "body_visible": true,
+          "blue_in_actual_image": true
+        },
+        {
+          "frame": 28,
+          "camera": [
+            0,
+            166
+          ],
+          "fall_screen_rect": [
+            48,
+            -22,
+            96,
+            90
+          ],
+          "visible_height": 70,
+          "blue_pixels": 3001,
+          "sample_area": 3360,
+          "horizontal_complete": true,
+          "body_visible": true,
+          "blue_in_actual_image": true
+        },
+        {
+          "frame": 32,
+          "camera": [
+            0,
+            164
+          ],
+          "fall_screen_rect": [
+            48,
+            -20,
+            96,
+            92
+          ],
+          "visible_height": 72,
+          "blue_pixels": 3014,
+          "sample_area": 3456,
+          "horizontal_complete": true,
+          "body_visible": true,
+          "blue_in_actual_image": true
+        },
+        {
+          "frame": 36,
+          "camera": [
+            0,
+            160
+          ],
+          "fall_screen_rect": [
+            48,
+            -16,
+            96,
+            96
+          ],
+          "visible_height": 76,
+          "blue_pixels": 3209,
+          "sample_area": 3648,
+          "horizontal_complete": true,
+          "body_visible": true,
+          "blue_in_actual_image": true
+        },
+        {
+          "frame": 40,
+          "camera": [
+            0,
+            160
+          ],
+          "fall_screen_rect": [
+            48,
+            -16,
+            96,
+            96
+          ],
+          "visible_height": 76,
+          "blue_pixels": 3202,
+          "sample_area": 3648,
+          "horizontal_complete": true,
+          "body_visible": true,
+          "blue_in_actual_image": true
+        },
+        {
+          "frame": 44,
+          "camera": [
+            0,
+            160
+          ],
+          "fall_screen_rect": [
+            48,
+            -16,
+            96,
+            96
+          ],
+          "visible_height": 76,
+          "blue_pixels": 3202,
+          "sample_area": 3648,
+          "horizontal_complete": true,
+          "body_visible": true,
+          "blue_in_actual_image": true
+        },
+        {
+          "frame": 48,
+          "camera": [
+            0,
+            160
+          ],
+          "fall_screen_rect": [
+            48,
+            -16,
+            96,
+            96
+          ],
+          "visible_height": 76,
+          "blue_pixels": 3202,
+          "sample_area": 3648,
+          "horizontal_complete": true,
+          "body_visible": true,
+          "blue_in_actual_image": true
+        },
+        {
+          "frame": 52,
+          "camera": [
+            0,
+            160
+          ],
+          "fall_screen_rect": [
+            48,
+            -16,
+            96,
+            96
+          ],
+          "visible_height": 76,
+          "blue_pixels": 3202,
+          "sample_area": 3648,
+          "horizontal_complete": true,
+          "body_visible": true,
+          "blue_in_actual_image": true
+        },
+        {
+          "frame": 56,
+          "camera": [
+            0,
+            160
+          ],
+          "fall_screen_rect": [
+            48,
+            -16,
+            96,
+            96
+          ],
+          "visible_height": 76,
+          "blue_pixels": 3202,
+          "sample_area": 3648,
+          "horizontal_complete": true,
+          "body_visible": true,
+          "blue_in_actual_image": true
+        },
+        {
+          "frame": 60,
+          "camera": [
+            0,
+            160
+          ],
+          "fall_screen_rect": [
+            48,
+            -16,
+            96,
+            96
+          ],
+          "visible_height": 76,
+          "blue_pixels": 3202,
+          "sample_area": 3648,
+          "horizontal_complete": true,
+          "body_visible": true,
+          "blue_in_actual_image": true
+        },
+        {
+          "frame": 64,
+          "camera": [
+            0,
+            160
+          ],
+          "fall_screen_rect": [
+            48,
+            -16,
+            96,
+            96
+          ],
+          "visible_height": 76,
+          "blue_pixels": 3202,
+          "sample_area": 3648,
+          "horizontal_complete": true,
+          "body_visible": true,
+          "blue_in_actual_image": true
+        },
+        {
+          "frame": 68,
+          "camera": [
+            0,
+            160
+          ],
+          "fall_screen_rect": [
+            48,
+            -16,
+            96,
+            96
+          ],
+          "visible_height": 76,
+          "blue_pixels": 3202,
+          "sample_area": 3648,
+          "horizontal_complete": true,
+          "body_visible": true,
+          "blue_in_actual_image": true
+        },
+        {
+          "frame": 72,
+          "camera": [
+            0,
+            160
+          ],
+          "fall_screen_rect": [
+            48,
+            -16,
+            96,
+            96
+          ],
+          "visible_height": 76,
+          "blue_pixels": 3202,
+          "sample_area": 3648,
+          "horizontal_complete": true,
+          "body_visible": true,
+          "blue_in_actual_image": true
+        },
+        {
+          "frame": 76,
+          "camera": [
+            0,
+            160
+          ],
+          "fall_screen_rect": [
+            48,
+            -16,
+            96,
+            96
+          ],
+          "visible_height": 76,
+          "blue_pixels": 3208,
+          "sample_area": 3648,
+          "horizontal_complete": true,
+          "body_visible": true,
+          "blue_in_actual_image": true
+        },
+        {
+          "frame": 80,
+          "camera": [
+            0,
+            160
+          ],
+          "fall_screen_rect": [
+            48,
+            -16,
+            96,
+            96
+          ],
+          "visible_height": 76,
+          "blue_pixels": 3209,
+          "sample_area": 3648,
+          "horizontal_complete": true,
+          "body_visible": true,
+          "blue_in_actual_image": true
+        },
+        {
+          "frame": 84,
+          "camera": [
+            0,
+            160
+          ],
+          "fall_screen_rect": [
+            48,
+            -16,
+            96,
+            96
+          ],
+          "visible_height": 76,
+          "blue_pixels": 3202,
+          "sample_area": 3648,
+          "horizontal_complete": true,
+          "body_visible": true,
+          "blue_in_actual_image": true
+        },
+        {
+          "frame": 88,
+          "camera": [
+            0,
+            160
+          ],
+          "fall_screen_rect": [
+            48,
+            -16,
+            96,
+            96
+          ],
+          "visible_height": 76,
+          "blue_pixels": 3202,
+          "sample_area": 3648,
+          "horizontal_complete": true,
+          "body_visible": true,
+          "blue_in_actual_image": true
+        },
+        {
+          "frame": 92,
+          "camera": [
+            0,
+            160
+          ],
+          "fall_screen_rect": [
+            48,
+            -16,
+            96,
+            96
+          ],
+          "visible_height": 76,
+          "blue_pixels": 3202,
+          "sample_area": 3648,
+          "horizontal_complete": true,
+          "body_visible": true,
+          "blue_in_actual_image": true
+        }
+      ]
+    }
+  ],
+  "native_water_animation": [
+    {
+      "step": 0,
+      "clock": 464,
+      "native_BG2_flow_sha256": "262494ae5d5daa57a00a82b6eb25b65b49567493cc4fb0217684ea999ec25b9c"
+    },
+    {
+      "step": 1,
+      "clock": 472,
+      "native_BG2_flow_sha256": "7d59fd8c7123c2b6111ddf720e085ea0c9d99a6f61e9a8f198801293e20c47fa"
+    },
+    {
+      "step": 2,
+      "clock": 480,
+      "native_BG2_flow_sha256": "aaa9ef42f4be925ea9a90205a26edbfd086a0d9f9dc53d3637ea5e4e7eae343f"
+    },
+    {
+      "step": 3,
+      "clock": 488,
+      "native_BG2_flow_sha256": "3be568d0460b9e42d8f59c3500cb381e629777dfbce49db1e0a99e2c22b93765"
+    },
+    {
+      "step": 4,
+      "clock": 496,
+      "native_BG2_flow_sha256": "262494ae5d5daa57a00a82b6eb25b65b49567493cc4fb0217684ea999ec25b9c"
+    },
+    {
+      "step": 5,
+      "clock": 504,
+      "native_BG2_flow_sha256": "7d59fd8c7123c2b6111ddf720e085ea0c9d99a6f61e9a8f198801293e20c47fa"
+    },
+    {
+      "step": 6,
+      "clock": 512,
+      "native_BG2_flow_sha256": "aaa9ef42f4be925ea9a90205a26edbfd086a0d9f9dc53d3637ea5e4e7eae343f"
+    },
+    {
+      "step": 7,
+      "clock": 520,
+      "native_BG2_flow_sha256": "3be568d0460b9e42d8f59c3500cb381e629777dfbce49db1e0a99e2c22b93765"
+    },
+    {
+      "step": 8,
+      "clock": 528,
+      "native_BG2_flow_sha256": "262494ae5d5daa57a00a82b6eb25b65b49567493cc4fb0217684ea999ec25b9c"
+    },
+    {
+      "step": 9,
+      "clock": 536,
+      "native_BG2_flow_sha256": "7d59fd8c7123c2b6111ddf720e085ea0c9d99a6f61e9a8f198801293e20c47fa"
+    },
+    {
+      "step": 10,
+      "clock": 544,
+      "native_BG2_flow_sha256": "aaa9ef42f4be925ea9a90205a26edbfd086a0d9f9dc53d3637ea5e4e7eae343f"
+    },
+    {
+      "step": 11,
+      "clock": 552,
+      "native_BG2_flow_sha256": "3be568d0460b9e42d8f59c3500cb381e629777dfbce49db1e0a99e2c22b93765"
+    }
+  ],
+  "ordinary_camera_settle_frames": 68,
+  "actual_frame_water_visibility": [
+    {
+      "frame": 0,
+      "camera": [
+        0,
+        166
+      ],
+      "fall_screen_rect": [
+        48,
+        -22,
+        96,
+        90
+      ],
+      "visible_height": 70,
+      "blue_pixels": 3002,
+      "sample_area": 3360,
+      "horizontal_complete": true,
+      "body_visible": true,
+      "blue_in_actual_image": true
+    },
+    {
+      "frame": 4,
+      "camera": [
+        0,
+        166
+      ],
+      "fall_screen_rect": [
+        48,
+        -22,
+        96,
+        90
+      ],
+      "visible_height": 70,
+      "blue_pixels": 3002,
+      "sample_area": 3360,
+      "horizontal_complete": true,
+      "body_visible": true,
+      "blue_in_actual_image": true
+    },
+    {
+      "frame": 8,
+      "camera": [
+        0,
+        166
+      ],
+      "fall_screen_rect": [
+        48,
+        -22,
+        96,
+        90
+      ],
+      "visible_height": 70,
+      "blue_pixels": 3001,
+      "sample_area": 3360,
+      "horizontal_complete": true,
+      "body_visible": true,
+      "blue_in_actual_image": true
+    },
+    {
+      "frame": 12,
+      "camera": [
+        0,
+        166
+      ],
+      "fall_screen_rect": [
+        48,
+        -22,
+        96,
+        90
+      ],
+      "visible_height": 70,
+      "blue_pixels": 3001,
+      "sample_area": 3360,
+      "horizontal_complete": true,
+      "body_visible": true,
+      "blue_in_actual_image": true
+    },
+    {
+      "frame": 16,
+      "camera": [
+        0,
+        166
+      ],
+      "fall_screen_rect": [
+        48,
+        -22,
+        96,
+        90
+      ],
+      "visible_height": 70,
+      "blue_pixels": 3002,
+      "sample_area": 3360,
+      "horizontal_complete": true,
+      "body_visible": true,
+      "blue_in_actual_image": true
+    },
+    {
+      "frame": 20,
+      "camera": [
+        0,
+        166
+      ],
+      "fall_screen_rect": [
+        48,
+        -22,
+        96,
+        90
+      ],
+      "visible_height": 70,
+      "blue_pixels": 3002,
+      "sample_area": 3360,
+      "horizontal_complete": true,
+      "body_visible": true,
+      "blue_in_actual_image": true
+    },
+    {
+      "frame": 24,
+      "camera": [
+        0,
+        166
+      ],
+      "fall_screen_rect": [
+        48,
+        -22,
+        96,
+        90
+      ],
+      "visible_height": 70,
+      "blue_pixels": 3001,
+      "sample_area": 3360,
+      "horizontal_complete": true,
+      "body_visible": true,
+      "blue_in_actual_image": true
+    },
+    {
+      "frame": 28,
+      "camera": [
+        0,
+        166
+      ],
+      "fall_screen_rect": [
+        48,
+        -22,
+        96,
+        90
+      ],
+      "visible_height": 70,
+      "blue_pixels": 3001,
+      "sample_area": 3360,
+      "horizontal_complete": true,
+      "body_visible": true,
+      "blue_in_actual_image": true
+    },
+    {
+      "frame": 32,
+      "camera": [
+        0,
+        164
+      ],
+      "fall_screen_rect": [
+        48,
+        -20,
+        96,
+        92
+      ],
+      "visible_height": 72,
+      "blue_pixels": 3014,
+      "sample_area": 3456,
+      "horizontal_complete": true,
+      "body_visible": true,
+      "blue_in_actual_image": true
+    },
+    {
+      "frame": 36,
+      "camera": [
+        0,
+        160
+      ],
+      "fall_screen_rect": [
+        48,
+        -16,
+        96,
+        96
+      ],
+      "visible_height": 76,
+      "blue_pixels": 3209,
+      "sample_area": 3648,
+      "horizontal_complete": true,
+      "body_visible": true,
+      "blue_in_actual_image": true
+    },
+    {
+      "frame": 40,
+      "camera": [
+        0,
+        160
+      ],
+      "fall_screen_rect": [
+        48,
+        -16,
+        96,
+        96
+      ],
+      "visible_height": 76,
+      "blue_pixels": 3202,
+      "sample_area": 3648,
+      "horizontal_complete": true,
+      "body_visible": true,
+      "blue_in_actual_image": true
+    },
+    {
+      "frame": 44,
+      "camera": [
+        0,
+        160
+      ],
+      "fall_screen_rect": [
+        48,
+        -16,
+        96,
+        96
+      ],
+      "visible_height": 76,
+      "blue_pixels": 3202,
+      "sample_area": 3648,
+      "horizontal_complete": true,
+      "body_visible": true,
+      "blue_in_actual_image": true
+    },
+    {
+      "frame": 48,
+      "camera": [
+        0,
+        160
+      ],
+      "fall_screen_rect": [
+        48,
+        -16,
+        96,
+        96
+      ],
+      "visible_height": 76,
+      "blue_pixels": 3202,
+      "sample_area": 3648,
+      "horizontal_complete": true,
+      "body_visible": true,
+      "blue_in_actual_image": true
+    },
+    {
+      "frame": 52,
+      "camera": [
+        0,
+        160
+      ],
+      "fall_screen_rect": [
+        48,
+        -16,
+        96,
+        96
+      ],
+      "visible_height": 76,
+      "blue_pixels": 3202,
+      "sample_area": 3648,
+      "horizontal_complete": true,
+      "body_visible": true,
+      "blue_in_actual_image": true
+    },
+    {
+      "frame": 56,
+      "camera": [
+        0,
+        160
+      ],
+      "fall_screen_rect": [
+        48,
+        -16,
+        96,
+        96
+      ],
+      "visible_height": 76,
+      "blue_pixels": 3202,
+      "sample_area": 3648,
+      "horizontal_complete": true,
+      "body_visible": true,
+      "blue_in_actual_image": true
+    },
+    {
+      "frame": 60,
+      "camera": [
+        0,
+        160
+      ],
+      "fall_screen_rect": [
+        48,
+        -16,
+        96,
+        96
+      ],
+      "visible_height": 76,
+      "blue_pixels": 3202,
+      "sample_area": 3648,
+      "horizontal_complete": true,
+      "body_visible": true,
+      "blue_in_actual_image": true
+    },
+    {
+      "frame": 64,
+      "camera": [
+        0,
+        160
+      ],
+      "fall_screen_rect": [
+        48,
+        -16,
+        96,
+        96
+      ],
+      "visible_height": 76,
+      "blue_pixels": 3202,
+      "sample_area": 3648,
+      "horizontal_complete": true,
+      "body_visible": true,
+      "blue_in_actual_image": true
+    },
+    {
+      "frame": 68,
+      "camera": [
+        0,
+        160
+      ],
+      "fall_screen_rect": [
+        48,
+        -16,
+        96,
+        96
+      ],
+      "visible_height": 76,
+      "blue_pixels": 3202,
+      "sample_area": 3648,
+      "horizontal_complete": true,
+      "body_visible": true,
+      "blue_in_actual_image": true
+    },
+    {
+      "frame": 72,
+      "camera": [
+        0,
+        160
+      ],
+      "fall_screen_rect": [
+        48,
+        -16,
+        96,
+        96
+      ],
+      "visible_height": 76,
+      "blue_pixels": 3202,
+      "sample_area": 3648,
+      "horizontal_complete": true,
+      "body_visible": true,
+      "blue_in_actual_image": true
+    },
+    {
+      "frame": 76,
+      "camera": [
+        0,
+        160
+      ],
+      "fall_screen_rect": [
+        48,
+        -16,
+        96,
+        96
+      ],
+      "visible_height": 76,
+      "blue_pixels": 3208,
+      "sample_area": 3648,
+      "horizontal_complete": true,
+      "body_visible": true,
+      "blue_in_actual_image": true
+    },
+    {
+      "frame": 80,
+      "camera": [
+        0,
+        160
+      ],
+      "fall_screen_rect": [
+        48,
+        -16,
+        96,
+        96
+      ],
+      "visible_height": 76,
+      "blue_pixels": 3209,
+      "sample_area": 3648,
+      "horizontal_complete": true,
+      "body_visible": true,
+      "blue_in_actual_image": true
+    },
+    {
+      "frame": 84,
+      "camera": [
+        0,
+        160
+      ],
+      "fall_screen_rect": [
+        48,
+        -16,
+        96,
+        96
+      ],
+      "visible_height": 76,
+      "blue_pixels": 3202,
+      "sample_area": 3648,
+      "horizontal_complete": true,
+      "body_visible": true,
+      "blue_in_actual_image": true
+    },
+    {
+      "frame": 88,
+      "camera": [
+        0,
+        160
+      ],
+      "fall_screen_rect": [
+        48,
+        -16,
+        96,
+        96
+      ],
+      "visible_height": 76,
+      "blue_pixels": 3202,
+      "sample_area": 3648,
+      "horizontal_complete": true,
+      "body_visible": true,
+      "blue_in_actual_image": true
+    },
+    {
+      "frame": 92,
+      "camera": [
+        0,
+        160
+      ],
+      "fall_screen_rect": [
+        48,
+        -16,
+        96,
+        96
+      ],
+      "visible_height": 76,
+      "blue_pixels": 3202,
+      "sample_area": 3648,
+      "horizontal_complete": true,
+      "body_visible": true,
+      "blue_in_actual_image": true
+    }
+  ],
+  "raw_frames": [
+    {
+      "frame": 0,
+      "file": "raw-frames/step-00/frame-0000.png",
+      "state": {
+        "frames": 468,
+        "clock": 457,
+        "run_frames": 285,
+        "state": 1,
+        "area": 3,
+        "cell": 16,
+        "node": 32,
+        "actor": {
+          "kind": 1,
+          "type": 0,
+          "state": 0,
+          "timer": 0,
+          "x": 72,
+          "y": 270,
+          "z": 0,
+          "speed": 0,
+          "hp": 0,
+          "coll": 0,
+          "facing": 0
+        },
+        "health": [
+          32,
+          32
+        ],
+        "text": 0,
+        "camera": [
+          0,
+          166
+        ]
+      }
+    },
+    {
+      "frame": 4,
+      "file": "raw-frames/step-00/frame-0004.png",
+      "state": {
+        "frames": 472,
+        "clock": 461,
+        "run_frames": 289,
+        "state": 1,
+        "area": 3,
+        "cell": 16,
+        "node": 32,
+        "actor": {
+          "kind": 1,
+          "type": 0,
+          "state": 0,
+          "timer": 0,
+          "x": 72,
+          "y": 270,
+          "z": 0,
+          "speed": 0,
+          "hp": 0,
+          "coll": 0,
+          "facing": 0
+        },
+        "health": [
+          32,
+          32
+        ],
+        "text": 0,
+        "camera": [
+          0,
+          166
+        ]
+      }
+    },
+    {
+      "frame": 8,
+      "file": "raw-frames/step-01/frame-0000.png",
+      "state": {
+        "frames": 476,
+        "clock": 465,
+        "run_frames": 293,
+        "state": 1,
+        "area": 3,
+        "cell": 16,
+        "node": 32,
+        "actor": {
+          "kind": 1,
+          "type": 0,
+          "state": 0,
+          "timer": 0,
+          "x": 72,
+          "y": 270,
+          "z": 0,
+          "speed": 0,
+          "hp": 0,
+          "coll": 0,
+          "facing": 0
+        },
+        "health": [
+          32,
+          32
+        ],
+        "text": 0,
+        "camera": [
+          0,
+          166
+        ]
+      }
+    },
+    {
+      "frame": 12,
+      "file": "raw-frames/step-01/frame-0004.png",
+      "state": {
+        "frames": 480,
+        "clock": 469,
+        "run_frames": 297,
+        "state": 1,
+        "area": 3,
+        "cell": 16,
+        "node": 32,
+        "actor": {
+          "kind": 1,
+          "type": 0,
+          "state": 0,
+          "timer": 0,
+          "x": 72,
+          "y": 270,
+          "z": 0,
+          "speed": 0,
+          "hp": 0,
+          "coll": 0,
+          "facing": 0
+        },
+        "health": [
+          32,
+          32
+        ],
+        "text": 0,
+        "camera": [
+          0,
+          166
+        ]
+      }
+    },
+    {
+      "frame": 16,
+      "file": "raw-frames/step-02/frame-0000.png",
+      "state": {
+        "frames": 484,
+        "clock": 473,
+        "run_frames": 301,
+        "state": 1,
+        "area": 3,
+        "cell": 16,
+        "node": 32,
+        "actor": {
+          "kind": 1,
+          "type": 0,
+          "state": 0,
+          "timer": 0,
+          "x": 72,
+          "y": 270,
+          "z": 0,
+          "speed": 0,
+          "hp": 0,
+          "coll": 0,
+          "facing": 0
+        },
+        "health": [
+          32,
+          32
+        ],
+        "text": 0,
+        "camera": [
+          0,
+          166
+        ]
+      }
+    },
+    {
+      "frame": 20,
+      "file": "raw-frames/step-02/frame-0004.png",
+      "state": {
+        "frames": 488,
+        "clock": 477,
+        "run_frames": 305,
+        "state": 1,
+        "area": 3,
+        "cell": 16,
+        "node": 32,
+        "actor": {
+          "kind": 1,
+          "type": 0,
+          "state": 0,
+          "timer": 0,
+          "x": 72,
+          "y": 270,
+          "z": 0,
+          "speed": 0,
+          "hp": 0,
+          "coll": 0,
+          "facing": 0
+        },
+        "health": [
+          32,
+          32
+        ],
+        "text": 0,
+        "camera": [
+          0,
+          166
+        ]
+      }
+    },
+    {
+      "frame": 24,
+      "file": "raw-frames/step-03/frame-0000.png",
+      "state": {
+        "frames": 492,
+        "clock": 481,
+        "run_frames": 309,
+        "state": 1,
+        "area": 3,
+        "cell": 16,
+        "node": 32,
+        "actor": {
+          "kind": 1,
+          "type": 0,
+          "state": 0,
+          "timer": 0,
+          "x": 72,
+          "y": 270,
+          "z": 0,
+          "speed": 0,
+          "hp": 0,
+          "coll": 0,
+          "facing": 0
+        },
+        "health": [
+          32,
+          32
+        ],
+        "text": 0,
+        "camera": [
+          0,
+          166
+        ]
+      }
+    },
+    {
+      "frame": 28,
+      "file": "raw-frames/step-03/frame-0004.png",
+      "state": {
+        "frames": 496,
+        "clock": 485,
+        "run_frames": 313,
+        "state": 1,
+        "area": 3,
+        "cell": 16,
+        "node": 32,
+        "actor": {
+          "kind": 1,
+          "type": 0,
+          "state": 0,
+          "timer": 0,
+          "x": 72,
+          "y": 270,
+          "z": 0,
+          "speed": 0,
+          "hp": 0,
+          "coll": 0,
+          "facing": 0
+        },
+        "health": [
+          32,
+          32
+        ],
+        "text": 0,
+        "camera": [
+          0,
+          166
+        ]
+      }
+    },
+    {
+      "frame": 32,
+      "file": "raw-frames/step-04/frame-0000.png",
+      "state": {
+        "frames": 500,
+        "clock": 489,
+        "run_frames": 317,
+        "state": 1,
+        "area": 3,
+        "cell": 16,
+        "node": 32,
+        "actor": {
+          "kind": 1,
+          "type": 0,
+          "state": 3,
+          "timer": 7,
+          "x": 72,
+          "y": 268,
+          "z": 0,
+          "speed": 0,
+          "hp": 0,
+          "coll": 0,
+          "facing": 0
+        },
+        "health": [
+          30,
+          32
+        ],
+        "text": 0,
+        "camera": [
+          0,
+          164
+        ]
+      }
+    },
+    {
+      "frame": 36,
+      "file": "raw-frames/step-04/frame-0004.png",
+      "state": {
+        "frames": 504,
+        "clock": 493,
+        "run_frames": 321,
+        "state": 1,
+        "area": 3,
+        "cell": 16,
+        "node": 32,
+        "actor": {
+          "kind": 1,
+          "type": 0,
+          "state": 3,
+          "timer": 3,
+          "x": 72,
+          "y": 264,
+          "z": 0,
+          "speed": 0,
+          "hp": 0,
+          "coll": 1,
+          "facing": 0
+        },
+        "health": [
+          30,
+          32
+        ],
+        "text": 0,
+        "camera": [
+          0,
+          160
+        ]
+      }
+    },
+    {
+      "frame": 40,
+      "file": "raw-frames/step-05/frame-0000.png",
+      "state": {
+        "frames": 508,
+        "clock": 497,
+        "run_frames": 325,
+        "state": 1,
+        "area": 3,
+        "cell": 16,
+        "node": 32,
+        "actor": {
+          "kind": 1,
+          "type": 0,
+          "state": 0,
+          "timer": 0,
+          "x": 72,
+          "y": 264,
+          "z": 0,
+          "speed": 0,
+          "hp": 0,
+          "coll": 1,
+          "facing": 0
+        },
+        "health": [
+          30,
+          32
+        ],
+        "text": 0,
+        "camera": [
+          0,
+          160
+        ]
+      }
+    },
+    {
+      "frame": 44,
+      "file": "raw-frames/step-05/frame-0004.png",
+      "state": {
+        "frames": 512,
+        "clock": 501,
+        "run_frames": 329,
+        "state": 1,
+        "area": 3,
+        "cell": 16,
+        "node": 32,
+        "actor": {
+          "kind": 1,
+          "type": 0,
+          "state": 0,
+          "timer": 0,
+          "x": 72,
+          "y": 264,
+          "z": 0,
+          "speed": 0,
+          "hp": 0,
+          "coll": 1,
+          "facing": 0
+        },
+        "health": [
+          30,
+          32
+        ],
+        "text": 0,
+        "camera": [
+          0,
+          160
+        ]
+      }
+    },
+    {
+      "frame": 48,
+      "file": "raw-frames/step-06/frame-0000.png",
+      "state": {
+        "frames": 516,
+        "clock": 505,
+        "run_frames": 333,
+        "state": 1,
+        "area": 3,
+        "cell": 16,
+        "node": 32,
+        "actor": {
+          "kind": 1,
+          "type": 0,
+          "state": 0,
+          "timer": 0,
+          "x": 72,
+          "y": 264,
+          "z": 0,
+          "speed": 0,
+          "hp": 0,
+          "coll": 1,
+          "facing": 0
+        },
+        "health": [
+          30,
+          32
+        ],
+        "text": 0,
+        "camera": [
+          0,
+          160
+        ]
+      }
+    },
+    {
+      "frame": 52,
+      "file": "raw-frames/step-06/frame-0004.png",
+      "state": {
+        "frames": 520,
+        "clock": 509,
+        "run_frames": 337,
+        "state": 1,
+        "area": 3,
+        "cell": 16,
+        "node": 32,
+        "actor": {
+          "kind": 1,
+          "type": 0,
+          "state": 0,
+          "timer": 0,
+          "x": 72,
+          "y": 264,
+          "z": 0,
+          "speed": 0,
+          "hp": 0,
+          "coll": 1,
+          "facing": 0
+        },
+        "health": [
+          30,
+          32
+        ],
+        "text": 0,
+        "camera": [
+          0,
+          160
+        ]
+      }
+    },
+    {
+      "frame": 56,
+      "file": "raw-frames/step-07/frame-0000.png",
+      "state": {
+        "frames": 524,
+        "clock": 513,
+        "run_frames": 341,
+        "state": 1,
+        "area": 3,
+        "cell": 16,
+        "node": 32,
+        "actor": {
+          "kind": 1,
+          "type": 0,
+          "state": 0,
+          "timer": 0,
+          "x": 72,
+          "y": 264,
+          "z": 0,
+          "speed": 0,
+          "hp": 0,
+          "coll": 1,
+          "facing": 0
+        },
+        "health": [
+          30,
+          32
+        ],
+        "text": 0,
+        "camera": [
+          0,
+          160
+        ]
+      }
+    },
+    {
+      "frame": 60,
+      "file": "raw-frames/step-07/frame-0004.png",
+      "state": {
+        "frames": 528,
+        "clock": 517,
+        "run_frames": 345,
+        "state": 1,
+        "area": 3,
+        "cell": 16,
+        "node": 32,
+        "actor": {
+          "kind": 1,
+          "type": 0,
+          "state": 0,
+          "timer": 0,
+          "x": 72,
+          "y": 264,
+          "z": 0,
+          "speed": 0,
+          "hp": 0,
+          "coll": 1,
+          "facing": 0
+        },
+        "health": [
+          30,
+          32
+        ],
+        "text": 0,
+        "camera": [
+          0,
+          160
+        ]
+      }
+    },
+    {
+      "frame": 64,
+      "file": "raw-frames/step-08/frame-0000.png",
+      "state": {
+        "frames": 532,
+        "clock": 521,
+        "run_frames": 349,
+        "state": 1,
+        "area": 3,
+        "cell": 16,
+        "node": 32,
+        "actor": {
+          "kind": 1,
+          "type": 0,
+          "state": 0,
+          "timer": 0,
+          "x": 72,
+          "y": 264,
+          "z": 0,
+          "speed": 0,
+          "hp": 0,
+          "coll": 1,
+          "facing": 0
+        },
+        "health": [
+          30,
+          32
+        ],
+        "text": 0,
+        "camera": [
+          0,
+          160
+        ]
+      }
+    },
+    {
+      "frame": 68,
+      "file": "raw-frames/step-08/frame-0004.png",
+      "state": {
+        "frames": 536,
+        "clock": 525,
+        "run_frames": 353,
+        "state": 1,
+        "area": 3,
+        "cell": 16,
+        "node": 32,
+        "actor": {
+          "kind": 1,
+          "type": 0,
+          "state": 0,
+          "timer": 0,
+          "x": 72,
+          "y": 264,
+          "z": 0,
+          "speed": 0,
+          "hp": 0,
+          "coll": 1,
+          "facing": 0
+        },
+        "health": [
+          30,
+          32
+        ],
+        "text": 0,
+        "camera": [
+          0,
+          160
+        ]
+      }
+    },
+    {
+      "frame": 72,
+      "file": "raw-frames/step-09/frame-0000.png",
+      "state": {
+        "frames": 540,
+        "clock": 529,
+        "run_frames": 357,
+        "state": 1,
+        "area": 3,
+        "cell": 16,
+        "node": 32,
+        "actor": {
+          "kind": 1,
+          "type": 0,
+          "state": 0,
+          "timer": 0,
+          "x": 72,
+          "y": 264,
+          "z": 0,
+          "speed": 0,
+          "hp": 0,
+          "coll": 1,
+          "facing": 0
+        },
+        "health": [
+          30,
+          32
+        ],
+        "text": 0,
+        "camera": [
+          0,
+          160
+        ]
+      }
+    },
+    {
+      "frame": 76,
+      "file": "raw-frames/step-09/frame-0004.png",
+      "state": {
+        "frames": 544,
+        "clock": 533,
+        "run_frames": 361,
+        "state": 1,
+        "area": 3,
+        "cell": 16,
+        "node": 32,
+        "actor": {
+          "kind": 1,
+          "type": 0,
+          "state": 3,
+          "timer": 7,
+          "x": 72,
+          "y": 264,
+          "z": 0,
+          "speed": 0,
+          "hp": 0,
+          "coll": 1,
+          "facing": 0
+        },
+        "health": [
+          28,
+          32
+        ],
+        "text": 0,
+        "camera": [
+          0,
+          160
+        ]
+      }
+    },
+    {
+      "frame": 80,
+      "file": "raw-frames/step-10/frame-0000.png",
+      "state": {
+        "frames": 548,
+        "clock": 537,
+        "run_frames": 365,
+        "state": 1,
+        "area": 3,
+        "cell": 16,
+        "node": 32,
+        "actor": {
+          "kind": 1,
+          "type": 0,
+          "state": 3,
+          "timer": 3,
+          "x": 72,
+          "y": 264,
+          "z": 0,
+          "speed": 0,
+          "hp": 0,
+          "coll": 1,
+          "facing": 0
+        },
+        "health": [
+          28,
+          32
+        ],
+        "text": 0,
+        "camera": [
+          0,
+          160
+        ]
+      }
+    },
+    {
+      "frame": 84,
+      "file": "raw-frames/step-10/frame-0004.png",
+      "state": {
+        "frames": 552,
+        "clock": 541,
+        "run_frames": 369,
+        "state": 1,
+        "area": 3,
+        "cell": 16,
+        "node": 32,
+        "actor": {
+          "kind": 1,
+          "type": 0,
+          "state": 0,
+          "timer": 0,
+          "x": 72,
+          "y": 264,
+          "z": 0,
+          "speed": 0,
+          "hp": 0,
+          "coll": 1,
+          "facing": 0
+        },
+        "health": [
+          28,
+          32
+        ],
+        "text": 0,
+        "camera": [
+          0,
+          160
+        ]
+      }
+    },
+    {
+      "frame": 88,
+      "file": "raw-frames/step-11/frame-0000.png",
+      "state": {
+        "frames": 556,
+        "clock": 545,
+        "run_frames": 373,
+        "state": 1,
+        "area": 3,
+        "cell": 16,
+        "node": 32,
+        "actor": {
+          "kind": 1,
+          "type": 0,
+          "state": 0,
+          "timer": 0,
+          "x": 72,
+          "y": 264,
+          "z": 0,
+          "speed": 0,
+          "hp": 0,
+          "coll": 1,
+          "facing": 0
+        },
+        "health": [
+          28,
+          32
+        ],
+        "text": 0,
+        "camera": [
+          0,
+          160
+        ]
+      }
+    },
+    {
+      "frame": 92,
+      "file": "raw-frames/step-11/frame-0004.png",
+      "state": {
+        "frames": 560,
+        "clock": 549,
+        "run_frames": 377,
+        "state": 1,
+        "area": 3,
+        "cell": 16,
+        "node": 32,
+        "actor": {
+          "kind": 1,
+          "type": 0,
+          "state": 0,
+          "timer": 0,
+          "x": 72,
+          "y": 264,
+          "z": 0,
+          "speed": 0,
+          "hp": 0,
+          "coll": 1,
+          "facing": 0
+        },
+        "health": [
+          28,
+          32
+        ],
+        "text": 0,
+        "camera": [
+          0,
+          160
+        ]
+      }
+    }
+  ]
+}

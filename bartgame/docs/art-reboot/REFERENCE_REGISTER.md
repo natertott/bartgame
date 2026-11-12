@@ -417,3 +417,17 @@ distinctions are in [CRENEL_REFERENCE.md](../curdled-cream/CRENEL_REFERENCE.md).
 The original Cream synthesis adopts the plane hierarchy and clear material
 verbs; Nintendo pixels are not included in the art pack. The actual-arrival
 floor shadow is the user's addition, not inferred screenshot behavior.
+
+## Cream polish review — 2026-11-12
+
+The user requests five refinements of the latest native Cream scene, more
+complete wall art, connected cast shade, projecting ledges, many cleaner
+ladder options and brighter blue waterfalls of varying width. The previously
+read tutorial matrix and actually viewed Mount Crenel reference remain the
+sources for material hierarchy and honest traversal cues. No new commercial
+artwork is imported or newly watched footage claimed. Source and actual mGBA
+inspection found opaque wall mattes, composition preceding later furniture,
+repeated ladder halves and an offscreen live capture; the
+[polish notes](../curdled-cream/POLISH_STUDIES.md) and
+[final gallery](../../../cream-polish-review/README.md) record their corrections
+and distinguish original source sheets from live/frozen renderer evidence.

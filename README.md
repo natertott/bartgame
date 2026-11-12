@@ -1,5 +1,8 @@
 # BARTGAME
 
+Latest art review: [five polished Cream variations, 15 ladder studies, blue
+waterfalls and real mGBA footage](cream-polish-review/README.md).
+
 The original standalone GBA game is in **[bartgame/](bartgame/README.md)**.
 See the [native art reboot and actual mGBA recordings](art-review/reboot/README.md),
 [playable ROM downloads](downloads/README.md), and

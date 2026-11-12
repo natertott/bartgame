@@ -282,3 +282,11 @@ docs/sim_runs.json
 # Optional native Fractured Rind review ROM.
 !/downloads/cream-depth-9747a925/fractured-rind-9747a925.gba
 !/downloads/cream-depth-9747a925/fractured-rind-9747a925.zip
+
+# Five original native Cream polish review builds.
+!/downloads/cream-polish-687e6c0e/01-pearlstone-folds.gba
+!/downloads/cream-polish-687e6c0e/02-faulted-chalk.gba
+!/downloads/cream-polish-687e6c0e/03-ribbed-karst.gba
+!/downloads/cream-polish-687e6c0e/04-weathered-curdstone.gba
+!/downloads/cream-polish-687e6c0e/05-velvet-travertine.gba
+!/downloads/cream-polish-687e6c0e/all-five.zip

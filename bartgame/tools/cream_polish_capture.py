@@ -67,6 +67,11 @@ class PolishCapture(D.DepthCapture):
         self.static=self.rom.tileset('cream')
         self.decoded={}
 
+    def state(self):
+        state=super().state()
+        state['camera']=[P.r16(self.c,P.sym('gCamX')),P.r16(self.c,P.sym('gCamY'))]
+        return state
+
     def shadows(self):return read_shadows(self.c,self.landing_layout,self.rom)
 
     def fall(self):
@@ -213,7 +218,20 @@ def waterfalls(bundle,out,seed):
         candidates=[(px,y*16+14) for y in range(fall['y']+fall['h'],min(23,fall['y']+fall['h']+5))
                     if live.tile_type(px,y*16+10)==0 and live.feet_clear(px,y*16+14)]
         if candidates:live.nav(*candidates[0],0)
-        live.advance([],8);before=live.state()
+        # Real camera easing is limited to4px/frame. Direct hero navigation
+        # from a right-hand spawn can otherwise leave the entire fall off
+        # screen for the first half of a stationary clip. Observe and wait
+        # for the game's camera; never assign camera/scroll values here.
+        settle_frames=0
+        while settle_frames<160:
+            st=live.state();cx,cy=st['camera'];actor=st['actor']
+            target=[max(0,min(272,actor['x']-120)),max(0,min(224,actor['y']-104))]
+            if [cx,cy]==target:break
+            live.advance([],1);settle_frames+=1
+        before=live.state()
+        live.check('ordinary camera has naturally settled near actualwaterfall',before['camera']==[
+            max(0,min(272,before['actor']['x']-120)),max(0,min(224,before['actor']['y']-104))],
+            dict(camera=before['camera'],settle_frames=settle_frames))
         frames=folder/'raw-frames';frames.mkdir(exist_ok=True)
         pictures=[];water_hashes=[];minimum_health=before['health'][0]
         for step in range(12):
@@ -225,6 +243,22 @@ def waterfalls(bundle,out,seed):
                              for x in range(fall['x'],fall['x']+fall['w']))
             water_hashes.append(dict(step=step,clock=live.state()['clock'],native_BG2_flow_sha256=A.digest(payload)))
         images=[im for _,im,_,_ in pictures]
+        visibility=[]
+        for index,im,st,file in pictures:
+            cx,cy=st['camera'];left=fall['x']*16-cx;right=(fall['x']+fall['w'])*16-cx
+            top=fall['y']*16-cy;bottom=(fall['y']+fall['h'])*16-cy
+            y0,y1=max(20,top),min(160,bottom)
+            horizontal=left>=0 and right<=240
+            visible_height=max(0,y1-y0)
+            enough=visible_height>=min(64,fall['h']*16-16)
+            blue=0;area=0
+            if horizontal and visible_height:
+                crop=im.crop((left,y0,right,y1));area=crop.width*crop.height
+                blue=sum(b-r>=24 and b-g>=8 for r,g,b in crop.getdata())
+            pixels=blue>=max(12,area//10) and area>0
+            visibility.append(dict(frame=index,camera=[cx,cy],fall_screen_rect=[left,top,right,bottom],
+                                   visible_height=visible_height,blue_pixels=blue,sample_area=area,
+                                   horizontal_complete=horizontal,body_visible=enough,blue_in_actual_image=pixels))
         images[0].save(folder/'flow.gif',save_all=True,append_images=images[1:],duration=67,loop=0,optimize=False)
         images[0].save(folder/'flow.png')
         after=live.state()
@@ -234,11 +268,14 @@ def waterfalls(bundle,out,seed):
         live.check('water width comes from actual generated region',live.fall()['w']==width and 1<=width<=3)
         live.check('actual native waterfall BG2 pixels animate',len({row['native_BG2_flow_sha256'] for row in water_hashes})>1)
         live.check('ordinary water never enables frozen camera',live.run.u8('gForestReviewEnabled')==0)
+        live.check('every ordinaryclipframe visibly contains fullfallwidth and enoughbody',
+                   all(v['horizontal_complete'] and v['body_visible'] and v['blue_in_actual_image'] for v in visibility),visibility)
         detail=dict(width=width,cell=cell,fall=fall,before=before,after=after,frames=96,
                     minimum_health=minimum_health,checks=live.checks,native_water_animation=water_hashes,
+                    ordinary_camera_settle_frames=settle_frames,actual_frame_water_visibility=visibility,
                     raw_frames=[dict(frame=i,file='raw-frames/'+file,state=st) for i,_,st,file in pictures])
         A.write_json(folder/'provenance.json',detail);A.write_json(folder/'input-trace.json',live.identity());cases.append(detail)
-    report=dict(seed=seed,rom_sha256=sha(bundle/'bartgame.gba'),selections=selections,cases=cases,
+    report=dict(seed=seed,rom_sha256=sha(bundle/'bartgame.gba'),tool_sha256=sha(__file__),selections=selections,cases=cases,
                 complete=all(c['passed'] for case in cases for c in case['checks']))
     A.write_json(out/'report.json',report);return report
 
@@ -282,6 +319,42 @@ def observe_runtime(bundle,out,seed):
     A.write_json(out/'report.json',report);return int(not report['complete'])
 
 
+def menu_cache(bundle,out,seed):
+    """Actual START open/close must preserve the dynamic world characters."""
+    out.mkdir(parents=True,exist_ok=True)
+    capture=PolishCapture(bundle,out/'private-core',seed)
+    capture.prepare(21)
+    before=capture.state()
+    room_before=A.raw(capture.c,P.sym('gRoom'),capture.extra['room_size'])
+    paint_before=A.raw(capture.c,P.sym('gCreamPolishWallPaint'),2048)
+    native_before=capture.composites(out/'before')
+    capture.c.bg_video.to_pil().convert('RGB').save(out/'before.png')
+    capture.advance('START',1)
+    capture.advance([],12)
+    paused=capture.state()
+    capture.check('real START opens the actual item menu',paused['state']==4 and paused['health'][0]>0,paused)
+    capture.c.bg_video.to_pil().convert('RGB').save(out/'menu.png')
+    capture.advance('START',1)
+    capture.advance([],12)
+    after=capture.state()
+    capture.check('real START closes menu to living field play',after['state']==capture.run.abi['enum_play'] and after['health'][0]>0,after)
+    capture.check('menu roundtrip preserves complete semantic room and paintmap',
+        room_before==A.raw(capture.c,P.sym('gRoom'),capture.extra['room_size']) and
+        paint_before==A.raw(capture.c,P.sym('gCreamPolishWallPaint'),2048))
+    native_after=capture.composites(out/'after')
+    capture.check('actual menu close preserves exact native BG2alpha unions',native_before['complete'] and native_after['complete'])
+    overflow=P.r16(capture.c,P.sym('gCreamPolishBlendOverflow'))
+    capture.check('menu close produces no blend overflow',overflow==0,overflow)
+    capture.check('menu probe never enables frozen camera',capture.run.u8('gForestReviewEnabled')==0)
+    capture.c.bg_video.to_pil().convert('RGB').save(out/'after.png')
+    report=dict(rom_sha256=sha(bundle/'bartgame.gba'),source_commit=(bundle/'source-commit.txt').read_text().strip(),
+        tool_sha256=sha(__file__),seed=seed,before=before,paused=paused,after=after,
+        blend_overflow=overflow,checks=capture.checks,complete=all(c['passed'] for c in capture.checks),
+        assignments='Only existing disclosed title seed, room request and hero navigation/facing; actual START input opens/closes menu. No cache/VRAM/palette assignments.')
+    A.write_json(out/'report.json',report);A.write_json(out/'input-trace.json',capture.identity())
+    return report
+
+
 def run_logged(command,path):
     path.parent.mkdir(parents=True,exist_ok=True)
     with path.open('w') as log:subprocess.run(command,stdout=log,stderr=subprocess.STDOUT,check=True)
@@ -293,9 +366,24 @@ def main():
     p.add_argument('--seed',type=lambda text:int(text,0),default=0xb4a7)
     p.add_argument('--compare',action='append',default=[],metavar='LABEL=BUNDLE')
     p.add_argument('--waterfalls',action='store_true');p.add_argument('--earned-long',action='store_true')
+    p.add_argument('--water-only',action='store_true',help='Replace only water evidence for the exact already captured ROM.')
+    p.add_argument('--menu-cache-only',action='store_true',help='Actual menu roundtrip with native alpha-cache checks.')
     p.add_argument('--observe-runtime',action='store_true',help=argparse.SUPPRESS)
     a=p.parse_args();bundle=Path(a.bundle).resolve();out=Path(a.out).resolve();out.mkdir(parents=True,exist_ok=True)
     if a.observe_runtime:return observe_runtime(bundle,out,a.seed)
+    if a.menu_cache_only:
+        report=menu_cache(bundle,out/'menu-cache',a.seed)
+        return int(not report['complete'])
+    if a.water_only:
+        water=waterfalls(bundle,out/'waterfalls',a.seed)
+        report=json.loads((out/'report.json').read_text())
+        if report['rom_sha256']!=sha(bundle/'bartgame.gba'):raise AssertionError('water-only bundle does not match existing report')
+        report['water_capture_tool_sha256']=sha(__file__)
+        report['water_capture_note']='Reframed through observed naturalcamera easing; everyactualGIFframe checked for onscreenblueflow. No game source changed.'
+        report['checks']=[c for c in report['checks'] if c['name']!='actual1/2/3wide blue falls captured']
+        report['checks'].append(dict(name='actual1/2/3wide blue falls captured',passed=water['complete']))
+        report['complete']=all(c['passed'] for c in report['checks']);A.write_json(out/'report.json',report)
+        return int(not report['complete'])
     report=dict(rom_sha256=sha(bundle/'bartgame.gba'),source_commit=(bundle/'source-commit.txt').read_text().strip(),
                 tool_sha256=sha(__file__),checks=[],comparisons=[],complete=False)
     A.write_json(out/'report.json',report)

@@ -1,5 +1,7 @@
 # Fractured Rind — Curdled Cream depth pass
 
+**Next polish pass:** [five variations, 15 ladder studies and blue waterfalls](../cream-polish-review/README.md).
+
 A sixth study combining **2's contrast and arches**, **3/5's rock textures**,
 and **5's exact palette**. Larger unequal rock formations sit over continuous
 strata; dormant cracks widen into branching violet veins as corruption grows.

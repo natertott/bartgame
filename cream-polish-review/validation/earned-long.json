@@ -1,0 +1,25 @@
+{
+  "rom_sha256": "c6e5ee43db89bdea1f75d17e0c190825169d7e1fcd0f54b08b34311b1ff7465b",
+  "seed": 1432,
+  "checks": [
+    {
+      "name": "earned input/tool harness completes long fall",
+      "passed": true
+    },
+    {
+      "name": "fall renders at least3interveningrows",
+      "passed": true
+    },
+    {
+      "name": "real landing matches exact incoming arrival",
+      "passed": true
+    },
+    {
+      "name": "actual foot stands on final verified shadow art",
+      "passed": true
+    }
+  ],
+  "observations": 301,
+  "complete": true,
+  "fixture": "Established harness standing/z waypoint normalization; real tools/rewards/gates/fall outcomes."
+}

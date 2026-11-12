@@ -1,0 +1,670 @@
+{
+  "source_commit": "687e6c0e999a8df70ef2f7db55f36b9200ddde30",
+  "capture_tool_sha256": "a02e2089d7ac6549a136491ae2b67c633d7783d9feeed5e57baa2b47d1e1f125",
+  "audit_tool_sha256": "2cdec66071c3d32be9b6ca14e209e39eb0ee3a5d11d7169b24aed154cc9f86a5",
+  "source_provenance_note": "Game/art frozen at687e6c0e; later tool-only camera-visibility and menu-cache checks are recorded by report hashes and final source commit. No game results/VRAM are assigned.",
+  "styles": [
+    {
+      "profile": 7,
+      "rom_sha256": "c6e5ee43db89bdea1f75d17e0c190825169d7e1fcd0f54b08b34311b1ff7465b",
+      "audit_passed": 6560,
+      "audit_total": 6560,
+      "host_geometry_builds": 3200,
+      "static_Cream_BG_chars": 852,
+      "area_BG_banks": 10,
+      "dynamic_blend_reserve": 128,
+      "native_dynamic_highwater": 127,
+      "matched_native_checks": 64,
+      "physical_control_comparisons": 19,
+      "isolated_drop_checks": 26,
+      "matched_cases": [
+        {
+          "name": "healthy",
+          "cell": 21,
+          "input_frames": 135,
+          "climb_frames": 128,
+          "minimum_health": 32,
+          "paint_cells": 76,
+          "dynamic_blend_chars": 126,
+          "native_BG2_alpha_union_exact": true
+        },
+        {
+          "name": "sour",
+          "cell": 18,
+          "input_frames": 119,
+          "climb_frames": 112,
+          "minimum_health": 30,
+          "paint_cells": 64,
+          "dynamic_blend_chars": 122,
+          "native_BG2_alpha_union_exact": true
+        },
+        {
+          "name": "deep",
+          "cell": 0,
+          "input_frames": 151,
+          "climb_frames": 144,
+          "minimum_health": 30,
+          "paint_cells": 64,
+          "dynamic_blend_chars": 127,
+          "native_BG2_alpha_union_exact": true
+        }
+      ],
+      "drops": [
+        {
+          "kind": "local",
+          "from_node": 43,
+          "target_node": 42,
+          "physical_frames": 32,
+          "simulation_ticks": 32,
+          "minimum_health": 32,
+          "real_landing": [
+            176,
+            302
+          ],
+          "native_ground_shadow_verified": true
+        },
+        {
+          "kind": "one-row",
+          "from_node": 32,
+          "target_node": 43,
+          "physical_frames": 74,
+          "simulation_ticks": 46,
+          "minimum_health": 32,
+          "real_landing": [
+            272,
+            110
+          ],
+          "native_ground_shadow_verified": true
+        }
+      ],
+      "waterfalls": [
+        {
+          "width": 1,
+          "cell": 12,
+          "fall": {
+            "x": 3,
+            "y": 8,
+            "w": 1,
+            "h": 8
+          },
+          "ordinary_camera_settle_frames": 16,
+          "verified_frame_samples": 24,
+          "all_frames_show_full_width_and_enough_blue_body": true,
+          "actual_native_water_pixels_animate": true,
+          "minimum_health": 32
+        },
+        {
+          "width": 2,
+          "cell": 18,
+          "fall": {
+            "x": 3,
+            "y": 10,
+            "w": 2,
+            "h": 5
+          },
+          "ordinary_camera_settle_frames": 16,
+          "verified_frame_samples": 24,
+          "all_frames_show_full_width_and_enough_blue_body": true,
+          "actual_native_water_pixels_animate": true,
+          "minimum_health": 32
+        },
+        {
+          "width": 3,
+          "cell": 16,
+          "fall": {
+            "x": 3,
+            "y": 9,
+            "w": 3,
+            "h": 7
+          },
+          "ordinary_camera_settle_frames": 68,
+          "verified_frame_samples": 24,
+          "all_frames_show_full_width_and_enough_blue_body": true,
+          "actual_native_water_pixels_animate": true,
+          "minimum_health": 28
+        }
+      ],
+      "root_native_complete": true,
+      "water_complete": true,
+      "audit_report": "/workspace/setup/cream-polish/audit-r2/style-7/native-audit.json",
+      "native_report": "/workspace/setup/cream-polish/native-r2/style-7/report.json",
+      "actual_menu_cache_roundtrip": {
+        "complete": true,
+        "checks": 14,
+        "blend_overflow": 0,
+        "state_before": 1,
+        "state_menu": 4,
+        "state_after": 1,
+        "report": "/workspace/setup/cream-polish/native-r2/style-7/menu-cache/report.json"
+      },
+      "earned_four_row_drop": {
+        "complete": true,
+        "checks": 4,
+        "report": "/workspace/setup/cream-polish/native-r2/style-7/earned-long/report.json"
+      }
+    },
+    {
+      "profile": 8,
+      "rom_sha256": "423cb552852e18dd1387fd98d68418f235e532611c386bd7a8c061aa2f602de2",
+      "audit_passed": 6559,
+      "audit_total": 6559,
+      "host_geometry_builds": 3200,
+      "static_Cream_BG_chars": 879,
+      "area_BG_banks": 10,
+      "dynamic_blend_reserve": 128,
+      "native_dynamic_highwater": 128,
+      "matched_native_checks": 64,
+      "physical_control_comparisons": 19,
+      "isolated_drop_checks": 26,
+      "matched_cases": [
+        {
+          "name": "healthy",
+          "cell": 21,
+          "input_frames": 135,
+          "climb_frames": 128,
+          "minimum_health": 32,
+          "paint_cells": 84,
+          "dynamic_blend_chars": 128,
+          "native_BG2_alpha_union_exact": true
+        },
+        {
+          "name": "sour",
+          "cell": 18,
+          "input_frames": 119,
+          "climb_frames": 112,
+          "minimum_health": 30,
+          "paint_cells": 80,
+          "dynamic_blend_chars": 128,
+          "native_BG2_alpha_union_exact": true
+        },
+        {
+          "name": "deep",
+          "cell": 0,
+          "input_frames": 151,
+          "climb_frames": 144,
+          "minimum_health": 30,
+          "paint_cells": 72,
+          "dynamic_blend_chars": 121,
+          "native_BG2_alpha_union_exact": true
+        }
+      ],
+      "drops": [
+        {
+          "kind": "local",
+          "from_node": 43,
+          "target_node": 42,
+          "physical_frames": 32,
+          "simulation_ticks": 32,
+          "minimum_health": 32,
+          "real_landing": [
+            176,
+            302
+          ],
+          "native_ground_shadow_verified": true
+        },
+        {
+          "kind": "one-row",
+          "from_node": 32,
+          "target_node": 43,
+          "physical_frames": 74,
+          "simulation_ticks": 46,
+          "minimum_health": 32,
+          "real_landing": [
+            272,
+            110
+          ],
+          "native_ground_shadow_verified": true
+        }
+      ],
+      "waterfalls": [
+        {
+          "width": 1,
+          "cell": 12,
+          "fall": {
+            "x": 3,
+            "y": 8,
+            "w": 1,
+            "h": 8
+          },
+          "ordinary_camera_settle_frames": 16,
+          "verified_frame_samples": 24,
+          "all_frames_show_full_width_and_enough_blue_body": true,
+          "actual_native_water_pixels_animate": true,
+          "minimum_health": 32
+        },
+        {
+          "width": 2,
+          "cell": 18,
+          "fall": {
+            "x": 3,
+            "y": 10,
+            "w": 2,
+            "h": 5
+          },
+          "ordinary_camera_settle_frames": 16,
+          "verified_frame_samples": 24,
+          "all_frames_show_full_width_and_enough_blue_body": true,
+          "actual_native_water_pixels_animate": true,
+          "minimum_health": 32
+        },
+        {
+          "width": 3,
+          "cell": 16,
+          "fall": {
+            "x": 3,
+            "y": 9,
+            "w": 3,
+            "h": 7
+          },
+          "ordinary_camera_settle_frames": 68,
+          "verified_frame_samples": 24,
+          "all_frames_show_full_width_and_enough_blue_body": true,
+          "actual_native_water_pixels_animate": true,
+          "minimum_health": 28
+        }
+      ],
+      "root_native_complete": true,
+      "water_complete": true,
+      "audit_report": "/workspace/setup/cream-polish/audit-r2/style-8/native-audit.json",
+      "native_report": "/workspace/setup/cream-polish/native-r2/style-8/report.json"
+    },
+    {
+      "profile": 9,
+      "rom_sha256": "a509a700886dafb41481d29f54cbe614f8ba34f0d2d2c98f37c2030319da7100",
+      "audit_passed": 6559,
+      "audit_total": 6559,
+      "host_geometry_builds": 3200,
+      "static_Cream_BG_chars": 866,
+      "area_BG_banks": 10,
+      "dynamic_blend_reserve": 128,
+      "native_dynamic_highwater": 127,
+      "matched_native_checks": 64,
+      "physical_control_comparisons": 19,
+      "isolated_drop_checks": 26,
+      "matched_cases": [
+        {
+          "name": "healthy",
+          "cell": 21,
+          "input_frames": 135,
+          "climb_frames": 128,
+          "minimum_health": 32,
+          "paint_cells": 76,
+          "dynamic_blend_chars": 127,
+          "native_BG2_alpha_union_exact": true
+        },
+        {
+          "name": "sour",
+          "cell": 18,
+          "input_frames": 119,
+          "climb_frames": 112,
+          "minimum_health": 30,
+          "paint_cells": 64,
+          "dynamic_blend_chars": 124,
+          "native_BG2_alpha_union_exact": true
+        },
+        {
+          "name": "deep",
+          "cell": 0,
+          "input_frames": 151,
+          "climb_frames": 144,
+          "minimum_health": 30,
+          "paint_cells": 64,
+          "dynamic_blend_chars": 127,
+          "native_BG2_alpha_union_exact": true
+        }
+      ],
+      "drops": [
+        {
+          "kind": "local",
+          "from_node": 43,
+          "target_node": 42,
+          "physical_frames": 32,
+          "simulation_ticks": 32,
+          "minimum_health": 32,
+          "real_landing": [
+            176,
+            302
+          ],
+          "native_ground_shadow_verified": true
+        },
+        {
+          "kind": "one-row",
+          "from_node": 32,
+          "target_node": 43,
+          "physical_frames": 74,
+          "simulation_ticks": 46,
+          "minimum_health": 32,
+          "real_landing": [
+            272,
+            110
+          ],
+          "native_ground_shadow_verified": true
+        }
+      ],
+      "waterfalls": [
+        {
+          "width": 1,
+          "cell": 12,
+          "fall": {
+            "x": 3,
+            "y": 8,
+            "w": 1,
+            "h": 8
+          },
+          "ordinary_camera_settle_frames": 16,
+          "verified_frame_samples": 24,
+          "all_frames_show_full_width_and_enough_blue_body": true,
+          "actual_native_water_pixels_animate": true,
+          "minimum_health": 32
+        },
+        {
+          "width": 2,
+          "cell": 18,
+          "fall": {
+            "x": 3,
+            "y": 10,
+            "w": 2,
+            "h": 5
+          },
+          "ordinary_camera_settle_frames": 16,
+          "verified_frame_samples": 24,
+          "all_frames_show_full_width_and_enough_blue_body": true,
+          "actual_native_water_pixels_animate": true,
+          "minimum_health": 32
+        },
+        {
+          "width": 3,
+          "cell": 16,
+          "fall": {
+            "x": 3,
+            "y": 9,
+            "w": 3,
+            "h": 7
+          },
+          "ordinary_camera_settle_frames": 68,
+          "verified_frame_samples": 24,
+          "all_frames_show_full_width_and_enough_blue_body": true,
+          "actual_native_water_pixels_animate": true,
+          "minimum_health": 28
+        }
+      ],
+      "root_native_complete": true,
+      "water_complete": true,
+      "audit_report": "/workspace/setup/cream-polish/audit-r2/style-9/native-audit.json",
+      "native_report": "/workspace/setup/cream-polish/native-r2/style-9/report.json"
+    },
+    {
+      "profile": 10,
+      "rom_sha256": "0aeb7c2520bd04e593274586dfb2ae8f689add1bb8bd20f3ed43d5203268ac72",
+      "audit_passed": 6559,
+      "audit_total": 6559,
+      "host_geometry_builds": 3200,
+      "static_Cream_BG_chars": 894,
+      "area_BG_banks": 10,
+      "dynamic_blend_reserve": 128,
+      "native_dynamic_highwater": 126,
+      "matched_native_checks": 64,
+      "physical_control_comparisons": 19,
+      "isolated_drop_checks": 26,
+      "matched_cases": [
+        {
+          "name": "healthy",
+          "cell": 21,
+          "input_frames": 135,
+          "climb_frames": 128,
+          "minimum_health": 32,
+          "paint_cells": 76,
+          "dynamic_blend_chars": 126,
+          "native_BG2_alpha_union_exact": true
+        },
+        {
+          "name": "sour",
+          "cell": 18,
+          "input_frames": 119,
+          "climb_frames": 112,
+          "minimum_health": 30,
+          "paint_cells": 64,
+          "dynamic_blend_chars": 125,
+          "native_BG2_alpha_union_exact": true
+        },
+        {
+          "name": "deep",
+          "cell": 0,
+          "input_frames": 151,
+          "climb_frames": 144,
+          "minimum_health": 30,
+          "paint_cells": 64,
+          "dynamic_blend_chars": 117,
+          "native_BG2_alpha_union_exact": true
+        }
+      ],
+      "drops": [
+        {
+          "kind": "local",
+          "from_node": 43,
+          "target_node": 42,
+          "physical_frames": 32,
+          "simulation_ticks": 32,
+          "minimum_health": 32,
+          "real_landing": [
+            176,
+            302
+          ],
+          "native_ground_shadow_verified": true
+        },
+        {
+          "kind": "one-row",
+          "from_node": 32,
+          "target_node": 43,
+          "physical_frames": 74,
+          "simulation_ticks": 46,
+          "minimum_health": 32,
+          "real_landing": [
+            272,
+            110
+          ],
+          "native_ground_shadow_verified": true
+        }
+      ],
+      "waterfalls": [
+        {
+          "width": 1,
+          "cell": 12,
+          "fall": {
+            "x": 3,
+            "y": 8,
+            "w": 1,
+            "h": 8
+          },
+          "ordinary_camera_settle_frames": 16,
+          "verified_frame_samples": 24,
+          "all_frames_show_full_width_and_enough_blue_body": true,
+          "actual_native_water_pixels_animate": true,
+          "minimum_health": 32
+        },
+        {
+          "width": 2,
+          "cell": 18,
+          "fall": {
+            "x": 3,
+            "y": 10,
+            "w": 2,
+            "h": 5
+          },
+          "ordinary_camera_settle_frames": 16,
+          "verified_frame_samples": 24,
+          "all_frames_show_full_width_and_enough_blue_body": true,
+          "actual_native_water_pixels_animate": true,
+          "minimum_health": 32
+        },
+        {
+          "width": 3,
+          "cell": 16,
+          "fall": {
+            "x": 3,
+            "y": 9,
+            "w": 3,
+            "h": 7
+          },
+          "ordinary_camera_settle_frames": 68,
+          "verified_frame_samples": 24,
+          "all_frames_show_full_width_and_enough_blue_body": true,
+          "actual_native_water_pixels_animate": true,
+          "minimum_health": 28
+        }
+      ],
+      "root_native_complete": true,
+      "water_complete": true,
+      "audit_report": "/workspace/setup/cream-polish/audit-r2/style-10/native-audit.json",
+      "native_report": "/workspace/setup/cream-polish/native-r2/style-10/report.json"
+    },
+    {
+      "profile": 11,
+      "rom_sha256": "a5e9f8da9614117d00f072bf94741a9a1e990ee658546f5f63d0d73cd94fb6aa",
+      "audit_passed": 6559,
+      "audit_total": 6559,
+      "host_geometry_builds": 3200,
+      "static_Cream_BG_chars": 892,
+      "area_BG_banks": 10,
+      "dynamic_blend_reserve": 128,
+      "native_dynamic_highwater": 126,
+      "matched_native_checks": 64,
+      "physical_control_comparisons": 19,
+      "isolated_drop_checks": 26,
+      "matched_cases": [
+        {
+          "name": "healthy",
+          "cell": 21,
+          "input_frames": 135,
+          "climb_frames": 128,
+          "minimum_health": 32,
+          "paint_cells": 60,
+          "dynamic_blend_chars": 117,
+          "native_BG2_alpha_union_exact": true
+        },
+        {
+          "name": "sour",
+          "cell": 18,
+          "input_frames": 119,
+          "climb_frames": 112,
+          "minimum_health": 30,
+          "paint_cells": 64,
+          "dynamic_blend_chars": 126,
+          "native_BG2_alpha_union_exact": true
+        },
+        {
+          "name": "deep",
+          "cell": 0,
+          "input_frames": 151,
+          "climb_frames": 144,
+          "minimum_health": 30,
+          "paint_cells": 64,
+          "dynamic_blend_chars": 125,
+          "native_BG2_alpha_union_exact": true
+        }
+      ],
+      "drops": [
+        {
+          "kind": "local",
+          "from_node": 43,
+          "target_node": 42,
+          "physical_frames": 32,
+          "simulation_ticks": 32,
+          "minimum_health": 32,
+          "real_landing": [
+            176,
+            302
+          ],
+          "native_ground_shadow_verified": true
+        },
+        {
+          "kind": "one-row",
+          "from_node": 32,
+          "target_node": 43,
+          "physical_frames": 75,
+          "simulation_ticks": 46,
+          "minimum_health": 32,
+          "real_landing": [
+            272,
+            110
+          ],
+          "native_ground_shadow_verified": true
+        }
+      ],
+      "waterfalls": [
+        {
+          "width": 1,
+          "cell": 12,
+          "fall": {
+            "x": 3,
+            "y": 8,
+            "w": 1,
+            "h": 8
+          },
+          "ordinary_camera_settle_frames": 16,
+          "verified_frame_samples": 24,
+          "all_frames_show_full_width_and_enough_blue_body": true,
+          "actual_native_water_pixels_animate": true,
+          "minimum_health": 32
+        },
+        {
+          "width": 2,
+          "cell": 18,
+          "fall": {
+            "x": 3,
+            "y": 10,
+            "w": 2,
+            "h": 5
+          },
+          "ordinary_camera_settle_frames": 16,
+          "verified_frame_samples": 24,
+          "all_frames_show_full_width_and_enough_blue_body": true,
+          "actual_native_water_pixels_animate": true,
+          "minimum_health": 32
+        },
+        {
+          "width": 3,
+          "cell": 16,
+          "fall": {
+            "x": 3,
+            "y": 9,
+            "w": 3,
+            "h": 7
+          },
+          "ordinary_camera_settle_frames": 68,
+          "verified_frame_samples": 24,
+          "all_frames_show_full_width_and_enough_blue_body": true,
+          "actual_native_water_pixels_animate": true,
+          "minimum_health": 28
+        }
+      ],
+      "root_native_complete": true,
+      "water_complete": true,
+      "audit_report": "/workspace/setup/cream-polish/audit-r2/style-11/native-audit.json",
+      "native_report": "/workspace/setup/cream-polish/native-r2/style-11/report.json",
+      "actual_menu_cache_roundtrip": {
+        "complete": true,
+        "checks": 14,
+        "blend_overflow": 0,
+        "state_before": 1,
+        "state_menu": 4,
+        "state_after": 1,
+        "report": "/workspace/setup/cream-polish/native-r2/style-11/menu-cache/report.json"
+      }
+    }
+  ],
+  "complete": true,
+  "aggregate": {
+    "audit_checks": 32796,
+    "audit_passed": 32796,
+    "host_builds": 16000,
+    "raw_Cream_seeds_per_style": 64,
+    "unique_source_area_seeds": 64,
+    "matched_rooms": 15,
+    "real_climbs": 15,
+    "real_short_drops": 10,
+    "actual_width_flow_clips": 15,
+    "verified_flow_frame_samples": 360,
+    "native_BG2_union_cells": 1036
+  }
+}

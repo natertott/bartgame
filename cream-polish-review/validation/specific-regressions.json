@@ -1,0 +1,21 @@
+[
+  {
+    "seed": 6,
+    "cell": 11,
+    "gates": 63,
+    "refresh_idempotent": true,
+    "x28_y15_to18_shade_roles": null
+  },
+  {
+    "seed": 5,
+    "cell": 23,
+    "gates": 63,
+    "refresh_idempotent": true,
+    "x28_y15_to18_shade_roles": [
+      1,
+      2,
+      3,
+      3
+    ]
+  }
+]

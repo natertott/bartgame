@@ -1,0 +1,2631 @@
+{
+  "game_art_source": "687e6c0e999a8df70ef2f7db55f36b9200ddde30",
+  "builds": [
+    {
+      "option": 1,
+      "profile": 7,
+      "file": "01-pearlstone-folds.gba",
+      "sha256": "c6e5ee43db89bdea1f75d17e0c190825169d7e1fcd0f54b08b34311b1ff7465b",
+      "source_commit": "687e6c0e999a8df70ef2f7db55f36b9200ddde30"
+    },
+    {
+      "option": 2,
+      "profile": 8,
+      "file": "02-faulted-chalk.gba",
+      "sha256": "423cb552852e18dd1387fd98d68418f235e532611c386bd7a8c061aa2f602de2",
+      "source_commit": "687e6c0e999a8df70ef2f7db55f36b9200ddde30"
+    },
+    {
+      "option": 3,
+      "profile": 9,
+      "file": "03-ribbed-karst.gba",
+      "sha256": "a509a700886dafb41481d29f54cbe614f8ba34f0d2d2c98f37c2030319da7100",
+      "source_commit": "687e6c0e999a8df70ef2f7db55f36b9200ddde30"
+    },
+    {
+      "option": 4,
+      "profile": 10,
+      "file": "04-weathered-curdstone.gba",
+      "sha256": "0aeb7c2520bd04e593274586dfb2ae8f689add1bb8bd20f3ed43d5203268ac72",
+      "source_commit": "687e6c0e999a8df70ef2f7db55f36b9200ddde30"
+    },
+    {
+      "option": 5,
+      "profile": 11,
+      "file": "05-velvet-travertine.gba",
+      "sha256": "a5e9f8da9614117d00f072bf94741a9a1e990ee658546f5f63d0d73cd94fb6aa",
+      "source_commit": "687e6c0e999a8df70ef2f7db55f36b9200ddde30"
+    }
+  ],
+  "final_capture_helper_sha256": "a02e2089d7ac6549a136491ae2b67c633d7783d9feeed5e57baa2b47d1e1f125",
+  "method": "Native indexed original art; actual mGBA0.10.5 renderer. Frozen room surveys, ordinary advancing-input clips and source sheets have distinct labels.",
+  "files": [
+    {
+      "file": "README.md",
+      "sha256": "471141879c36f5b77781a65a23b8e5c5076efd17bc84506574c6cefa61c3adb2",
+      "bytes": 10387,
+      "role": "qualification/provenance"
+    },
+    {
+      "file": "images/01-before-after.png",
+      "sha256": "64def9fe15d62842d55aed8d21cd5a407e8e890d81f503b21311eccf922abc78",
+      "bytes": 41107,
+      "size": [
+        1024,
+        406
+      ],
+      "frames": 1,
+      "role": "labelled native capture assembly"
+    },
+    {
+      "file": "images/01-climb.gif",
+      "sha256": "cad3131d4cc651b3f39e2c2ce3fa6ca2b0c69a83d46080cd47c94cbcfca7854b",
+      "bytes": 188380,
+      "size": [
+        240,
+        160
+      ],
+      "frames": 30,
+      "role": "ordinary live native frame/clip"
+    },
+    {
+      "file": "images/01-deep-climb.gif",
+      "sha256": "756dd88f04cc2d9aac04519a7ed12987757a575f13e7af9dd19c1290567a103d",
+      "bytes": 238013,
+      "size": [
+        240,
+        160
+      ],
+      "frames": 38,
+      "role": "ordinary live native frame/clip"
+    },
+    {
+      "file": "images/01-deep-climbing.png",
+      "sha256": "ca04b366a184140e21e1d4c03e26e56b6afdadd9aceb1dcdcf4ee66270d61aa6",
+      "bytes": 7488,
+      "size": [
+        240,
+        160
+      ],
+      "frames": 1,
+      "role": "ordinary live native frame/clip"
+    },
+    {
+      "file": "images/01-deep-landed.png",
+      "sha256": "a7bd889d27719887240d18c3e2485f0644333feae5008e032b008a234d3d62e3",
+      "bytes": 5849,
+      "size": [
+        240,
+        160
+      ],
+      "frames": 1,
+      "role": "ordinary live native frame/clip"
+    },
+    {
+      "file": "images/01-deep-room.png",
+      "sha256": "960dc143022a9bafc66178557a0588dcf542f45de4c2a94f27bae79cb3917fa1",
+      "bytes": 18856,
+      "size": [
+        512,
+        384
+      ],
+      "frames": 1,
+      "role": "registered frozen renderer mosaic"
+    },
+    {
+      "file": "images/01-healthy-climb.gif",
+      "sha256": "67bdb064e045febfa5b6842d04e7d59a42973087dcdca196ee2671404b157de9",
+      "bytes": 197756,
+      "size": [
+        240,
+        160
+      ],
+      "frames": 34,
+      "role": "ordinary live native frame/clip"
+    },
+    {
+      "file": "images/01-healthy-climbing.png",
+      "sha256": "5d5d449babc4dc9ea9e7ce890809ae5d86b442fd9bc8f678df626abd48a6a60b",
+      "bytes": 7074,
+      "size": [
+        240,
+        160
+      ],
+      "frames": 1,
+      "role": "ordinary live native frame/clip"
+    },
+    {
+      "file": "images/01-healthy-landed.png",
+      "sha256": "8f7648a82cb6fab9fa9653a7fd3af249de7b80a827c6ffc16be69347a11b1d25",
+      "bytes": 6784,
+      "size": [
+        240,
+        160
+      ],
+      "frames": 1,
+      "role": "ordinary live native frame/clip"
+    },
+    {
+      "file": "images/01-healthy-room.png",
+      "sha256": "842572342f00bd76397ec7f508bcb63e7506aa93b84f06ca4f6177e2af908379",
+      "bytes": 17207,
+      "size": [
+        512,
+        384
+      ],
+      "frames": 1,
+      "role": "registered frozen renderer mosaic"
+    },
+    {
+      "file": "images/01-local-before.png",
+      "sha256": "82ddaaef6bc39a21572a59402d34763ffd43ebfedcf7476f2106ff92350903a2",
+      "bytes": 6627,
+      "size": [
+        240,
+        160
+      ],
+      "frames": 1,
+      "role": "ordinary live native frame/clip"
+    },
+    {
+      "file": "images/01-local-drop.gif",
+      "sha256": "4bbce2917ff26f68e5f8796b41a66138e7f725a11b731ad057647e28c77f8ebb",
+      "bytes": 49745,
+      "size": [
+        240,
+        160
+      ],
+      "frames": 9,
+      "role": "ordinary live native frame/clip"
+    },
+    {
+      "file": "images/01-local-landed.png",
+      "sha256": "5e54c26c6fd39cba606b8a64497011e327c522efc494dc45a4e97349204898da",
+      "bytes": 6837,
+      "size": [
+        240,
+        160
+      ],
+      "frames": 1,
+      "role": "ordinary live native frame/clip"
+    },
+    {
+      "file": "images/01-one-row-before.png",
+      "sha256": "edf5c56e100d4670c4ded649b9e94c7d29914e0a2d2c8a058bda425322477ae2",
+      "bytes": 4292,
+      "size": [
+        240,
+        160
+      ],
+      "frames": 1,
+      "role": "ordinary live native frame/clip"
+    },
+    {
+      "file": "images/01-one-row-drop.gif",
+      "sha256": "27631a1ed45d172a8e6793225373d3ab024b6cc2456a60fb2aa795a351592019",
+      "bytes": 54751,
+      "size": [
+        240,
+        160
+      ],
+      "frames": 17,
+      "role": "ordinary live native frame/clip"
+    },
+    {
+      "file": "images/01-one-row-landed.png",
+      "sha256": "aa897ae7fbe7ca44307c6c12595d3e6c05d684ab16717c3c6623b19e113a171a",
+      "bytes": 6027,
+      "size": [
+        240,
+        160
+      ],
+      "frames": 1,
+      "role": "ordinary live native frame/clip"
+    },
+    {
+      "file": "images/01-sour-climb.gif",
+      "sha256": "cad3131d4cc651b3f39e2c2ce3fa6ca2b0c69a83d46080cd47c94cbcfca7854b",
+      "bytes": 188380,
+      "size": [
+        240,
+        160
+      ],
+      "frames": 30,
+      "role": "ordinary live native frame/clip"
+    },
+    {
+      "file": "images/01-sour-climbing.png",
+      "sha256": "c3721da9926279b6596ac2fbda2a69b58f391b47d3e3e4cdbb854d11e1fd0722",
+      "bytes": 7851,
+      "size": [
+        240,
+        160
+      ],
+      "frames": 1,
+      "role": "ordinary live native frame/clip"
+    },
+    {
+      "file": "images/01-sour-landed.png",
+      "sha256": "ae7e338d60218411d7f5f1a6a7f97f4b950d6b82ebd7277c3178899a7592a037",
+      "bytes": 7001,
+      "size": [
+        240,
+        160
+      ],
+      "frames": 1,
+      "role": "ordinary live native frame/clip"
+    },
+    {
+      "file": "images/01-sour-room.png",
+      "sha256": "d2f408b96851fc2b7e7c9f4192d54aaf847c2846a49754bb70d4205a7bdc2959",
+      "bytes": 19537,
+      "size": [
+        512,
+        384
+      ],
+      "frames": 1,
+      "role": "registered frozen renderer mosaic"
+    },
+    {
+      "file": "images/01-water-width-1-room.png",
+      "sha256": "23692d41bba38795dac3af6d5c49ac19098ca2496a14c06d7cf8e893752a255b",
+      "bytes": 17457,
+      "size": [
+        512,
+        384
+      ],
+      "frames": 1,
+      "role": "registered frozen renderer mosaic"
+    },
+    {
+      "file": "images/01-water-width-1.gif",
+      "sha256": "4dc1ae4cb4ca622c1974fdfe38a14f985c4e3309731c0d0c741cf32009aaf985",
+      "bytes": 53888,
+      "size": [
+        240,
+        160
+      ],
+      "frames": 24,
+      "role": "ordinary live native frame/clip"
+    },
+    {
+      "file": "images/01-water-width-1.png",
+      "sha256": "daf6c100ef86cc8ee01e5caf92ab8750706d7c09761ee7da5d8b59a554861a23",
+      "bytes": 5597,
+      "size": [
+        240,
+        160
+      ],
+      "frames": 1,
+      "role": "ordinary live native frame/clip"
+    },
+    {
+      "file": "images/01-water-width-2-room.png",
+      "sha256": "aec634f98cd5538ac0cf4f62126a64cc373a9fe56f0b0a9ddf9d45d904999c98",
+      "bytes": 19401,
+      "size": [
+        512,
+        384
+      ],
+      "frames": 1,
+      "role": "registered frozen renderer mosaic"
+    },
+    {
+      "file": "images/01-water-width-2.gif",
+      "sha256": "e8cc8260d24981b6434355cf72f7a4308b65cefcb3c2e28ceef738f6110af86b",
+      "bytes": 47979,
+      "size": [
+        240,
+        160
+      ],
+      "frames": 22,
+      "role": "ordinary live native frame/clip"
+    },
+    {
+      "file": "images/01-water-width-2.png",
+      "sha256": "d39111a9fe538ae096d44fbe13aa01d48b26185932debf2a94564aa71f45c659",
+      "bytes": 6156,
+      "size": [
+        240,
+        160
+      ],
+      "frames": 1,
+      "role": "ordinary live native frame/clip"
+    },
+    {
+      "file": "images/01-water-width-3-room.png",
+      "sha256": "9fd9c2f6faffa93d7498f8c931a6ca96d9925a46d7379e9fc6972011f43e1f82",
+      "bytes": 16649,
+      "size": [
+        512,
+        384
+      ],
+      "frames": 1,
+      "role": "registered frozen renderer mosaic"
+    },
+    {
+      "file": "images/01-water-width-3.gif",
+      "sha256": "ec419a79b7a42c1f4ae0c1ae2c8cf1bf83242dffb6c61b86da2111b2e1dba0a4",
+      "bytes": 47988,
+      "size": [
+        240,
+        160
+      ],
+      "frames": 24,
+      "role": "ordinary live native frame/clip"
+    },
+    {
+      "file": "images/01-water-width-3.png",
+      "sha256": "d1dc53718628b6cb9ea7b9da72cabf41799b72ab76f758c22a4ff69ea2b3ea68",
+      "bytes": 4939,
+      "size": [
+        240,
+        160
+      ],
+      "frames": 1,
+      "role": "ordinary live native frame/clip"
+    },
+    {
+      "file": "images/02-before-after.png",
+      "sha256": "c3836d851e5ce83c16db1a3cc5e6c53985bde281282ec1ff9b8699e32f1a49dc",
+      "bytes": 41729,
+      "size": [
+        1024,
+        406
+      ],
+      "frames": 1,
+      "role": "labelled native capture assembly"
+    },
+    {
+      "file": "images/02-climb.gif",
+      "sha256": "e3afdbbcf2b74e58a4c5db7502140ef18f6b7e051e98f35e1ca3096d114c11fe",
+      "bytes": 189538,
+      "size": [
+        240,
+        160
+      ],
+      "frames": 30,
+      "role": "ordinary live native frame/clip"
+    },
+    {
+      "file": "images/02-deep-climb.gif",
+      "sha256": "7e0d939b0359df079a9553142788d93591d140877ecf58f36542111c0b7ee88c",
+      "bytes": 245698,
+      "size": [
+        240,
+        160
+      ],
+      "frames": 38,
+      "role": "ordinary live native frame/clip"
+    },
+    {
+      "file": "images/02-deep-climbing.png",
+      "sha256": "b2c997f14158ad0e8e45c020e4ca946229bcb1b02a191baea63cb274d73e324b",
+      "bytes": 8097,
+      "size": [
+        240,
+        160
+      ],
+      "frames": 1,
+      "role": "ordinary live native frame/clip"
+    },
+    {
+      "file": "images/02-deep-landed.png",
+      "sha256": "fa8675cbe96a0d7b58eff10731ea9429fa69a281c568ad8b92bcb55beb1eadc3",
+      "bytes": 5983,
+      "size": [
+        240,
+        160
+      ],
+      "frames": 1,
+      "role": "ordinary live native frame/clip"
+    },
+    {
+      "file": "images/02-deep-room.png",
+      "sha256": "6d09af5618cb3e25648e3921860f75ad3364737269a1c8c8174283c76c500422",
+      "bytes": 19263,
+      "size": [
+        512,
+        384
+      ],
+      "frames": 1,
+      "role": "registered frozen renderer mosaic"
+    },
+    {
+      "file": "images/02-healthy-climb.gif",
+      "sha256": "baec141a30b45e5693b7b7c6d0cc7ca57b0d1318400010fdc4c30151114bde8c",
+      "bytes": 201236,
+      "size": [
+        240,
+        160
+      ],
+      "frames": 34,
+      "role": "ordinary live native frame/clip"
+    },
+    {
+      "file": "images/02-healthy-climbing.png",
+      "sha256": "e3f9e6b69e25d2e132b2473dfb783231da9b035d8dfb2af19e88d226da17fe1f",
+      "bytes": 7308,
+      "size": [
+        240,
+        160
+      ],
+      "frames": 1,
+      "role": "ordinary live native frame/clip"
+    },
+    {
+      "file": "images/02-healthy-landed.png",
+      "sha256": "edab8d43e4dfcc77512ecfc6c1c8ca318370934f9f9d5dee56da466d543546ed",
+      "bytes": 7064,
+      "size": [
+        240,
+        160
+      ],
+      "frames": 1,
+      "role": "ordinary live native frame/clip"
+    },
+    {
+      "file": "images/02-healthy-room.png",
+      "sha256": "3b4e3ebfd8b860ba31c380903d5d07a245d30561ade21c2a30c411045a96b872",
+      "bytes": 17851,
+      "size": [
+        512,
+        384
+      ],
+      "frames": 1,
+      "role": "registered frozen renderer mosaic"
+    },
+    {
+      "file": "images/02-local-before.png",
+      "sha256": "68159de91a20afcd8cdbad0e37d7cc41ca0f935e965af8c57d2a15c23927c00f",
+      "bytes": 6945,
+      "size": [
+        240,
+        160
+      ],
+      "frames": 1,
+      "role": "ordinary live native frame/clip"
+    },
+    {
+      "file": "images/02-local-drop.gif",
+      "sha256": "c3fb61527664fb199d16b981459d797125d7727a5f501ad902dc7bf0a28b708c",
+      "bytes": 50511,
+      "size": [
+        240,
+        160
+      ],
+      "frames": 9,
+      "role": "ordinary live native frame/clip"
+    },
+    {
+      "file": "images/02-local-landed.png",
+      "sha256": "1adfc2fb48e8d64449fddf59220f6ad02521cee046c3b517431082e81e8c3ba9",
+      "bytes": 6923,
+      "size": [
+        240,
+        160
+      ],
+      "frames": 1,
+      "role": "ordinary live native frame/clip"
+    },
+    {
+      "file": "images/02-one-row-before.png",
+      "sha256": "909d5bfc1f66a64d495bfd133bd7dbef851ef4cd63a74e2ebd2ff2122354900f",
+      "bytes": 4304,
+      "size": [
+        240,
+        160
+      ],
+      "frames": 1,
+      "role": "ordinary live native frame/clip"
+    },
+    {
+      "file": "images/02-one-row-drop.gif",
+      "sha256": "ca7a6127d3155d67bd7dadbe74c3aacfd9af4b1c5acd172a6b2c8f4cebf75903",
+      "bytes": 55784,
+      "size": [
+        240,
+        160
+      ],
+      "frames": 17,
+      "role": "ordinary live native frame/clip"
+    },
+    {
+      "file": "images/02-one-row-landed.png",
+      "sha256": "fda436e427967466b7e9c8471eb61fad2887d00665109cddf75b6941fc424bb5",
+      "bytes": 6551,
+      "size": [
+        240,
+        160
+      ],
+      "frames": 1,
+      "role": "ordinary live native frame/clip"
+    },
+    {
+      "file": "images/02-sour-climb.gif",
+      "sha256": "e3afdbbcf2b74e58a4c5db7502140ef18f6b7e051e98f35e1ca3096d114c11fe",
+      "bytes": 189538,
+      "size": [
+        240,
+        160
+      ],
+      "frames": 30,
+      "role": "ordinary live native frame/clip"
+    },
+    {
+      "file": "images/02-sour-climbing.png",
+      "sha256": "f77be26243e46bc3a526f127372a9eb740a9faeabf7c2dc34b029bcb722cc09a",
+      "bytes": 7967,
+      "size": [
+        240,
+        160
+      ],
+      "frames": 1,
+      "role": "ordinary live native frame/clip"
+    },
+    {
+      "file": "images/02-sour-landed.png",
+      "sha256": "87c09882a0fc9298d79698533f17fdc3152c03acc77c86e97d80cfa03fcda0d4",
+      "bytes": 7153,
+      "size": [
+        240,
+        160
+      ],
+      "frames": 1,
+      "role": "ordinary live native frame/clip"
+    },
+    {
+      "file": "images/02-sour-room.png",
+      "sha256": "e3473d58ad8604c1b4127b3affc988db652ce75fe8425d92597f9f7fba1f03a1",
+      "bytes": 19768,
+      "size": [
+        512,
+        384
+      ],
+      "frames": 1,
+      "role": "registered frozen renderer mosaic"
+    },
+    {
+      "file": "images/02-water-width-1-room.png",
+      "sha256": "4eb8537af0288ecd025c3097a1932fd75a096d7612c8dc245a6b6fa48a08c1e8",
+      "bytes": 17919,
+      "size": [
+        512,
+        384
+      ],
+      "frames": 1,
+      "role": "registered frozen renderer mosaic"
+    },
+    {
+      "file": "images/02-water-width-1.gif",
+      "sha256": "77337abb2e05962ac3f5e7a0b728814db368cca03d900f88ef46929bc202c287",
+      "bytes": 54475,
+      "size": [
+        240,
+        160
+      ],
+      "frames": 24,
+      "role": "ordinary live native frame/clip"
+    },
+    {
+      "file": "images/02-water-width-1.png",
+      "sha256": "41471c97ab9b26bdd98ca66e5100344a1b55e827af8ac5dfa5095b652458703d",
+      "bytes": 5685,
+      "size": [
+        240,
+        160
+      ],
+      "frames": 1,
+      "role": "ordinary live native frame/clip"
+    },
+    {
+      "file": "images/02-water-width-2-room.png",
+      "sha256": "fa209d4951ae0b2fc24a4a2188c75466778b1acea7da6799e1abd3388d0de754",
+      "bytes": 19634,
+      "size": [
+        512,
+        384
+      ],
+      "frames": 1,
+      "role": "registered frozen renderer mosaic"
+    },
+    {
+      "file": "images/02-water-width-2.gif",
+      "sha256": "440e6b9e11e4a092b218e35c44b19c5dae9168ca6e065a7799b9fda00bad7a12",
+      "bytes": 48452,
+      "size": [
+        240,
+        160
+      ],
+      "frames": 22,
+      "role": "ordinary live native frame/clip"
+    },
+    {
+      "file": "images/02-water-width-2.png",
+      "sha256": "edd6ca8a8ee22ed1e780ac6b3027985eb64383d66e03fd24af2e84989b2a466a",
+      "bytes": 6254,
+      "size": [
+        240,
+        160
+      ],
+      "frames": 1,
+      "role": "ordinary live native frame/clip"
+    },
+    {
+      "file": "images/02-water-width-3-room.png",
+      "sha256": "97443234f77317a5cfd93e1cba38dc3998ec1ca754679d21a3f24f0d1f2ef59a",
+      "bytes": 17185,
+      "size": [
+        512,
+        384
+      ],
+      "frames": 1,
+      "role": "registered frozen renderer mosaic"
+    },
+    {
+      "file": "images/02-water-width-3.gif",
+      "sha256": "a9923614291ef08b0e0dd4fc02943f3f4fc919ba1fb1fc394b3105e82b138cd0",
+      "bytes": 44997,
+      "size": [
+        240,
+        160
+      ],
+      "frames": 24,
+      "role": "ordinary live native frame/clip"
+    },
+    {
+      "file": "images/02-water-width-3.png",
+      "sha256": "15c0e92fa51576d592c8b9c2976b31cead210485b70fd1bc6f9cea439c52d34d",
+      "bytes": 5000,
+      "size": [
+        240,
+        160
+      ],
+      "frames": 1,
+      "role": "ordinary live native frame/clip"
+    },
+    {
+      "file": "images/03-before-after.png",
+      "sha256": "dd1cc5e17b272d1f53b9b942d7548c2855f34ad1e76d41e306e6e1abcffce38e",
+      "bytes": 41899,
+      "size": [
+        1024,
+        406
+      ],
+      "frames": 1,
+      "role": "labelled native capture assembly"
+    },
+    {
+      "file": "images/03-climb.gif",
+      "sha256": "a1e3389b530baa3d4509663244736502e18aeb719b3f15bcc1565e2ddc0f8708",
+      "bytes": 187801,
+      "size": [
+        240,
+        160
+      ],
+      "frames": 30,
+      "role": "ordinary live native frame/clip"
+    },
+    {
+      "file": "images/03-deep-climb.gif",
+      "sha256": "aaddedae99a39459fccb5f1f3335435217331dcba7ccef9af9b9128a102164a5",
+      "bytes": 238299,
+      "size": [
+        240,
+        160
+      ],
+      "frames": 38,
+      "role": "ordinary live native frame/clip"
+    },
+    {
+      "file": "images/03-deep-climbing.png",
+      "sha256": "27aec1d559dcf59049a73f9ac94ef36ee6f69a483d34223cc10a6bc799dfb7bc",
+      "bytes": 7663,
+      "size": [
+        240,
+        160
+      ],
+      "frames": 1,
+      "role": "ordinary live native frame/clip"
+    },
+    {
+      "file": "images/03-deep-landed.png",
+      "sha256": "3f7f882f20134eadcf77b03debb2e13c8819363207ec01c3ec95009a54adef0d",
+      "bytes": 5993,
+      "size": [
+        240,
+        160
+      ],
+      "frames": 1,
+      "role": "ordinary live native frame/clip"
+    },
+    {
+      "file": "images/03-deep-room.png",
+      "sha256": "0a4ed54e0e4171a4b7e97369783ecb6c6f061bf39f3ef67a6019d1a7e766872d",
+      "bytes": 19810,
+      "size": [
+        512,
+        384
+      ],
+      "frames": 1,
+      "role": "registered frozen renderer mosaic"
+    },
+    {
+      "file": "images/03-healthy-climb.gif",
+      "sha256": "37c841b6ae38b0f60b5c14a46801d69c3bb5a3d32872868f3de2e4c8744c332c",
+      "bytes": 198115,
+      "size": [
+        240,
+        160
+      ],
+      "frames": 34,
+      "role": "ordinary live native frame/clip"
+    },
+    {
+      "file": "images/03-healthy-climbing.png",
+      "sha256": "074b8004913434ee836d1ce03f9d7b02897f7fd2a9b60ea85ad3438af0692f8d",
+      "bytes": 7257,
+      "size": [
+        240,
+        160
+      ],
+      "frames": 1,
+      "role": "ordinary live native frame/clip"
+    },
+    {
+      "file": "images/03-healthy-landed.png",
+      "sha256": "8e0702a81c7b0e7ca27b94ba0743c5bc1c831896a606e8acd3fab84e8457fe17",
+      "bytes": 7110,
+      "size": [
+        240,
+        160
+      ],
+      "frames": 1,
+      "role": "ordinary live native frame/clip"
+    },
+    {
+      "file": "images/03-healthy-room.png",
+      "sha256": "d4d07fe200baf862907b30791f5af2ee459571c21f0bb0f77583a391ef654fc1",
+      "bytes": 18097,
+      "size": [
+        512,
+        384
+      ],
+      "frames": 1,
+      "role": "registered frozen renderer mosaic"
+    },
+    {
+      "file": "images/03-local-before.png",
+      "sha256": "31c19ae1fd4f97357f172bf6f5e4249b4cc92dd72c592cf54b0c0d43304ac5e5",
+      "bytes": 6757,
+      "size": [
+        240,
+        160
+      ],
+      "frames": 1,
+      "role": "ordinary live native frame/clip"
+    },
+    {
+      "file": "images/03-local-drop.gif",
+      "sha256": "9c23a55d132dde270d468b7f356305e16ea2fd33077fbe1bb4195bacab077560",
+      "bytes": 50045,
+      "size": [
+        240,
+        160
+      ],
+      "frames": 9,
+      "role": "ordinary live native frame/clip"
+    },
+    {
+      "file": "images/03-local-landed.png",
+      "sha256": "01102acb2130bf7632ca9c21d543bedd0a43143ecd0259c16046f1673be9e841",
+      "bytes": 7119,
+      "size": [
+        240,
+        160
+      ],
+      "frames": 1,
+      "role": "ordinary live native frame/clip"
+    },
+    {
+      "file": "images/03-one-row-before.png",
+      "sha256": "e0234c5a5c345c3c2e3353186c4b04ca66125e0b551df9335d7b2040035df075",
+      "bytes": 4394,
+      "size": [
+        240,
+        160
+      ],
+      "frames": 1,
+      "role": "ordinary live native frame/clip"
+    },
+    {
+      "file": "images/03-one-row-drop.gif",
+      "sha256": "9d1a76aec3039b7b9e75843b4b8f56a1c21596ae5f2c675665d5554ff92b9589",
+      "bytes": 54603,
+      "size": [
+        240,
+        160
+      ],
+      "frames": 17,
+      "role": "ordinary live native frame/clip"
+    },
+    {
+      "file": "images/03-one-row-landed.png",
+      "sha256": "d1cd74b451fcadc26d129cb49a29f439d8f8b354857f3fb5b9c6643b7232bf2c",
+      "bytes": 6221,
+      "size": [
+        240,
+        160
+      ],
+      "frames": 1,
+      "role": "ordinary live native frame/clip"
+    },
+    {
+      "file": "images/03-sour-climb.gif",
+      "sha256": "a1e3389b530baa3d4509663244736502e18aeb719b3f15bcc1565e2ddc0f8708",
+      "bytes": 187801,
+      "size": [
+        240,
+        160
+      ],
+      "frames": 30,
+      "role": "ordinary live native frame/clip"
+    },
+    {
+      "file": "images/03-sour-climbing.png",
+      "sha256": "299f1cbf180aae522fe0fb318caa2712df530651795546be35a57f637152bb0a",
+      "bytes": 7942,
+      "size": [
+        240,
+        160
+      ],
+      "frames": 1,
+      "role": "ordinary live native frame/clip"
+    },
+    {
+      "file": "images/03-sour-landed.png",
+      "sha256": "9ac9bb87712ec771a204d7ebdc23ad5eb16caa3401b1a16b7ca64c6ca04a010e",
+      "bytes": 7057,
+      "size": [
+        240,
+        160
+      ],
+      "frames": 1,
+      "role": "ordinary live native frame/clip"
+    },
+    {
+      "file": "images/03-sour-room.png",
+      "sha256": "37dfe06ae58d0a653e33f6355abed7ae64a9ba7bab09497a0d2d5955522378e5",
+      "bytes": 19958,
+      "size": [
+        512,
+        384
+      ],
+      "frames": 1,
+      "role": "registered frozen renderer mosaic"
+    },
+    {
+      "file": "images/03-water-width-1-room.png",
+      "sha256": "99dc9c845de83f791e7d836209ebe4905dbe8bd1e3c4d90ce6dc8db03db3b65f",
+      "bytes": 18335,
+      "size": [
+        512,
+        384
+      ],
+      "frames": 1,
+      "role": "registered frozen renderer mosaic"
+    },
+    {
+      "file": "images/03-water-width-1.gif",
+      "sha256": "143cb4bbc67b70a90c973c5a4cc12c16a08e6564e44ea91aa805996dc14e5d86",
+      "bytes": 54613,
+      "size": [
+        240,
+        160
+      ],
+      "frames": 24,
+      "role": "ordinary live native frame/clip"
+    },
+    {
+      "file": "images/03-water-width-1.png",
+      "sha256": "082c3975cc95bb371a33d615c2732e0cf425d5bbebd180e06dcdd88b3c8745f8",
+      "bytes": 5823,
+      "size": [
+        240,
+        160
+      ],
+      "frames": 1,
+      "role": "ordinary live native frame/clip"
+    },
+    {
+      "file": "images/03-water-width-2-room.png",
+      "sha256": "043241194f5a690c2b4b6245ca82d3fad418949622564812b6a3f33a726a4b27",
+      "bytes": 19823,
+      "size": [
+        512,
+        384
+      ],
+      "frames": 1,
+      "role": "registered frozen renderer mosaic"
+    },
+    {
+      "file": "images/03-water-width-2.gif",
+      "sha256": "3e804d17cafa71dab09ac6d6cbb03c3462926931b71031ad32e8c5a2bd69de57",
+      "bytes": 48448,
+      "size": [
+        240,
+        160
+      ],
+      "frames": 22,
+      "role": "ordinary live native frame/clip"
+    },
+    {
+      "file": "images/03-water-width-2.png",
+      "sha256": "33613ad4c80e920dfb54adf816680fb4f7194e26d982a878ab0fc1d235745f68",
+      "bytes": 6362,
+      "size": [
+        240,
+        160
+      ],
+      "frames": 1,
+      "role": "ordinary live native frame/clip"
+    },
+    {
+      "file": "images/03-water-width-3-room.png",
+      "sha256": "640eccbec1f4f6d8b283dfe135884576775ed34c0fe7227ee043816236b4d801",
+      "bytes": 17322,
+      "size": [
+        512,
+        384
+      ],
+      "frames": 1,
+      "role": "registered frozen renderer mosaic"
+    },
+    {
+      "file": "images/03-water-width-3.gif",
+      "sha256": "70aaea61e127a7f7c6afb502e377c298a0bff40d0c24408940ccde8ed18f7a90",
+      "bytes": 45593,
+      "size": [
+        240,
+        160
+      ],
+      "frames": 24,
+      "role": "ordinary live native frame/clip"
+    },
+    {
+      "file": "images/03-water-width-3.png",
+      "sha256": "29c8d69e06fde84f6283962f7f74589be912114018651e3e15103b273e6051ab",
+      "bytes": 4758,
+      "size": [
+        240,
+        160
+      ],
+      "frames": 1,
+      "role": "ordinary live native frame/clip"
+    },
+    {
+      "file": "images/04-before-after.png",
+      "sha256": "e800850e59fdf73e516a3e660e96683bf203b4acd4135c5e7045c2d6fe53b31c",
+      "bytes": 41161,
+      "size": [
+        1024,
+        406
+      ],
+      "frames": 1,
+      "role": "labelled native capture assembly"
+    },
+    {
+      "file": "images/04-climb.gif",
+      "sha256": "dd7f962b802c228178df0b00c4dd9f94a0378654a6a9a5a8d902079fa8f3a16c",
+      "bytes": 186453,
+      "size": [
+        240,
+        160
+      ],
+      "frames": 30,
+      "role": "ordinary live native frame/clip"
+    },
+    {
+      "file": "images/04-deep-climb.gif",
+      "sha256": "77593adbb91220219363572bd65c2688b4a7770d6b3c46fb5dedefd334568091",
+      "bytes": 241505,
+      "size": [
+        240,
+        160
+      ],
+      "frames": 38,
+      "role": "ordinary live native frame/clip"
+    },
+    {
+      "file": "images/04-deep-climbing.png",
+      "sha256": "18faa9d661873eead23424d8e50a264a80ec2e0a741f470b6cea9fd7f02b9b00",
+      "bytes": 7366,
+      "size": [
+        240,
+        160
+      ],
+      "frames": 1,
+      "role": "ordinary live native frame/clip"
+    },
+    {
+      "file": "images/04-deep-landed.png",
+      "sha256": "5da94fca6fd8e1dd0226fe47f88bc86b2cf868d32cfa7d6322251450c1e508f9",
+      "bytes": 5837,
+      "size": [
+        240,
+        160
+      ],
+      "frames": 1,
+      "role": "ordinary live native frame/clip"
+    },
+    {
+      "file": "images/04-deep-room.png",
+      "sha256": "96ee3c8e885a76bdc3b74fdca4b112d6c7bbc81cf408e57f5037a8bab224f46a",
+      "bytes": 18602,
+      "size": [
+        512,
+        384
+      ],
+      "frames": 1,
+      "role": "registered frozen renderer mosaic"
+    },
+    {
+      "file": "images/04-healthy-climb.gif",
+      "sha256": "5c5a6513ea006ef2cd5f384a01c04a443aac00a9795d6121a026c629eda807df",
+      "bytes": 203993,
+      "size": [
+        240,
+        160
+      ],
+      "frames": 34,
+      "role": "ordinary live native frame/clip"
+    },
+    {
+      "file": "images/04-healthy-climbing.png",
+      "sha256": "eb17e24a1ab7d324c059e7ece7d9d07c5492799aff5f80db861d8b235db12105",
+      "bytes": 7068,
+      "size": [
+        240,
+        160
+      ],
+      "frames": 1,
+      "role": "ordinary live native frame/clip"
+    },
+    {
+      "file": "images/04-healthy-landed.png",
+      "sha256": "8ba9bc25b7f84bf42b24d14d7ad76623e3fe8b1a50e47a622c0f83a94c87e78e",
+      "bytes": 6820,
+      "size": [
+        240,
+        160
+      ],
+      "frames": 1,
+      "role": "ordinary live native frame/clip"
+    },
+    {
+      "file": "images/04-healthy-room.png",
+      "sha256": "747ce97e802adc13f9ffab4390eb1271ecd541f7484990da9b41bdf4b7907841",
+      "bytes": 17164,
+      "size": [
+        512,
+        384
+      ],
+      "frames": 1,
+      "role": "registered frozen renderer mosaic"
+    },
+    {
+      "file": "images/04-local-before.png",
+      "sha256": "c28c5d1937555514218e4ae619bdc77aee0ae124e6b6feeaa049d560d22e1ab0",
+      "bytes": 6639,
+      "size": [
+        240,
+        160
+      ],
+      "frames": 1,
+      "role": "ordinary live native frame/clip"
+    },
+    {
+      "file": "images/04-local-drop.gif",
+      "sha256": "0b84a0e6832ad4852d643298f1613ae2175f54e829ca7c9b1adf84d2c477c475",
+      "bytes": 50953,
+      "size": [
+        240,
+        160
+      ],
+      "frames": 9,
+      "role": "ordinary live native frame/clip"
+    },
+    {
+      "file": "images/04-local-landed.png",
+      "sha256": "932163c22d32aeeac831c1cdbefcc22302756c0f12be89358e5a9f789bf5bc9d",
+      "bytes": 6662,
+      "size": [
+        240,
+        160
+      ],
+      "frames": 1,
+      "role": "ordinary live native frame/clip"
+    },
+    {
+      "file": "images/04-one-row-before.png",
+      "sha256": "bd48ebf80ff3838c044e8778223faf7c0560c3c74187c8ebdfd99b478c066f3c",
+      "bytes": 4109,
+      "size": [
+        240,
+        160
+      ],
+      "frames": 1,
+      "role": "ordinary live native frame/clip"
+    },
+    {
+      "file": "images/04-one-row-drop.gif",
+      "sha256": "a751bd0450ae409dbaa25b3af4c2155e4569b41112bdaa7c332c39811b3fc0ed",
+      "bytes": 55059,
+      "size": [
+        240,
+        160
+      ],
+      "frames": 17,
+      "role": "ordinary live native frame/clip"
+    },
+    {
+      "file": "images/04-one-row-landed.png",
+      "sha256": "515919712a59b45f91a42b8635ec4a9b273ad084fee04b1e598489d19f2b6a85",
+      "bytes": 5962,
+      "size": [
+        240,
+        160
+      ],
+      "frames": 1,
+      "role": "ordinary live native frame/clip"
+    },
+    {
+      "file": "images/04-sour-climb.gif",
+      "sha256": "dd7f962b802c228178df0b00c4dd9f94a0378654a6a9a5a8d902079fa8f3a16c",
+      "bytes": 186453,
+      "size": [
+        240,
+        160
+      ],
+      "frames": 30,
+      "role": "ordinary live native frame/clip"
+    },
+    {
+      "file": "images/04-sour-climbing.png",
+      "sha256": "0a82b7b5e939668da7a44383712b790c6acebd1ea3f21dd6d6303e91397080f6",
+      "bytes": 7496,
+      "size": [
+        240,
+        160
+      ],
+      "frames": 1,
+      "role": "ordinary live native frame/clip"
+    },
+    {
+      "file": "images/04-sour-landed.png",
+      "sha256": "1842112967068abaa69cef756e69a0dd020f2e92d5ccea31f0fc1c8660aa2aa1",
+      "bytes": 6780,
+      "size": [
+        240,
+        160
+      ],
+      "frames": 1,
+      "role": "ordinary live native frame/clip"
+    },
+    {
+      "file": "images/04-sour-room.png",
+      "sha256": "a9cde18e4734ee7f6fd7a15d7608ae3463b49dfed7e628d804d894af5d6918a9",
+      "bytes": 18866,
+      "size": [
+        512,
+        384
+      ],
+      "frames": 1,
+      "role": "registered frozen renderer mosaic"
+    },
+    {
+      "file": "images/04-water-width-1-room.png",
+      "sha256": "49831bec7cfa63dcbd86fbf59ca3fb2793b59ec1778dacaa2b962d1da8f5fd13",
+      "bytes": 17556,
+      "size": [
+        512,
+        384
+      ],
+      "frames": 1,
+      "role": "registered frozen renderer mosaic"
+    },
+    {
+      "file": "images/04-water-width-1.gif",
+      "sha256": "b579915eb28f8bed0967e924d1e1a07af1863e601bd68860b2de0a5bbda3401b",
+      "bytes": 55549,
+      "size": [
+        240,
+        160
+      ],
+      "frames": 24,
+      "role": "ordinary live native frame/clip"
+    },
+    {
+      "file": "images/04-water-width-1.png",
+      "sha256": "73c3269c3c7a0ec76229b2fe68b4d6749247908e1f94d54c2d51863af58d23cf",
+      "bytes": 5483,
+      "size": [
+        240,
+        160
+      ],
+      "frames": 1,
+      "role": "ordinary live native frame/clip"
+    },
+    {
+      "file": "images/04-water-width-2-room.png",
+      "sha256": "428921fe423522cd10b66a4afc400ec8cdcdc8650d34f0a00c618f3218c28164",
+      "bytes": 18741,
+      "size": [
+        512,
+        384
+      ],
+      "frames": 1,
+      "role": "registered frozen renderer mosaic"
+    },
+    {
+      "file": "images/04-water-width-2.gif",
+      "sha256": "1b28b30edeeb206d140107091decc14fecb33f4c85de237e0c38836cd15ea69f",
+      "bytes": 47116,
+      "size": [
+        240,
+        160
+      ],
+      "frames": 22,
+      "role": "ordinary live native frame/clip"
+    },
+    {
+      "file": "images/04-water-width-2.png",
+      "sha256": "2621677a9be16f4f453151f7cdd6a8bd59a9991a1c5da7895a63e092d48e3cb1",
+      "bytes": 5752,
+      "size": [
+        240,
+        160
+      ],
+      "frames": 1,
+      "role": "ordinary live native frame/clip"
+    },
+    {
+      "file": "images/04-water-width-3-room.png",
+      "sha256": "403fcfafd4fb88ec3c87bb69990464029b93fb8dea25df1275232f671efe52df",
+      "bytes": 15674,
+      "size": [
+        512,
+        384
+      ],
+      "frames": 1,
+      "role": "registered frozen renderer mosaic"
+    },
+    {
+      "file": "images/04-water-width-3.gif",
+      "sha256": "2f78f057cd8fee5f3360855da9cb5228ce7a621ac4c786f78862a7697a2f2cdf",
+      "bytes": 47256,
+      "size": [
+        240,
+        160
+      ],
+      "frames": 24,
+      "role": "ordinary live native frame/clip"
+    },
+    {
+      "file": "images/04-water-width-3.png",
+      "sha256": "78c5484a880afec824f21fe6530adb0791c5ccf5f75c2a84b844a4ee3185c826",
+      "bytes": 4428,
+      "size": [
+        240,
+        160
+      ],
+      "frames": 1,
+      "role": "ordinary live native frame/clip"
+    },
+    {
+      "file": "images/05-before-after.png",
+      "sha256": "5a191ef44cf692ea833e6f3d6086d771986636f985a69a6930b9a2aa4bc709d4",
+      "bytes": 40558,
+      "size": [
+        1024,
+        406
+      ],
+      "frames": 1,
+      "role": "labelled native capture assembly"
+    },
+    {
+      "file": "images/05-climb.gif",
+      "sha256": "fb70c43ef972dc7cb15ae0cdd655d1c035ae81c8c44b1cd4460cdce0b4cb6051",
+      "bytes": 181287,
+      "size": [
+        240,
+        160
+      ],
+      "frames": 30,
+      "role": "ordinary live native frame/clip"
+    },
+    {
+      "file": "images/05-deep-climb.gif",
+      "sha256": "2c124b8454ed814bdb7659309657e1cdede0299ae87f5c99951f1ebe0d0078b7",
+      "bytes": 233709,
+      "size": [
+        240,
+        160
+      ],
+      "frames": 38,
+      "role": "ordinary live native frame/clip"
+    },
+    {
+      "file": "images/05-deep-climbing.png",
+      "sha256": "f41827e377caed1dac0f3e54e016745c6e612bea343d3f2c532ef7b3314cd07e",
+      "bytes": 7191,
+      "size": [
+        240,
+        160
+      ],
+      "frames": 1,
+      "role": "ordinary live native frame/clip"
+    },
+    {
+      "file": "images/05-deep-landed.png",
+      "sha256": "5eb3470108dcb87e752d901554eb9080950596bb9d197cf4ca37989a1ec5d4f4",
+      "bytes": 5664,
+      "size": [
+        240,
+        160
+      ],
+      "frames": 1,
+      "role": "ordinary live native frame/clip"
+    },
+    {
+      "file": "images/05-deep-room.png",
+      "sha256": "ac3bbe82c7044c2ce56d0cd0ca29f7151a50d9a9efb34bc8585d3749cb4bee8f",
+      "bytes": 18168,
+      "size": [
+        512,
+        384
+      ],
+      "frames": 1,
+      "role": "registered frozen renderer mosaic"
+    },
+    {
+      "file": "images/05-healthy-climb.gif",
+      "sha256": "772115b11b7a2410982bfb69dc9495a21e9b942689db1bdbb3c0b9c1ed70d184",
+      "bytes": 198638,
+      "size": [
+        240,
+        160
+      ],
+      "frames": 34,
+      "role": "ordinary live native frame/clip"
+    },
+    {
+      "file": "images/05-healthy-climbing.png",
+      "sha256": "f89dcb12e1664065fd977a6d3fa89db0e3ef17bb36800c2d066a1d42be4117f3",
+      "bytes": 7074,
+      "size": [
+        240,
+        160
+      ],
+      "frames": 1,
+      "role": "ordinary live native frame/clip"
+    },
+    {
+      "file": "images/05-healthy-landed.png",
+      "sha256": "c29df3ca6345f32469592f4920931bf662e1cfea8c83b08a38e934a651c65f31",
+      "bytes": 6709,
+      "size": [
+        240,
+        160
+      ],
+      "frames": 1,
+      "role": "ordinary live native frame/clip"
+    },
+    {
+      "file": "images/05-healthy-room.png",
+      "sha256": "353b7a8c11873ee9caa4c0762222ca8959b7a010a52c9ef3e941be6c121a9034",
+      "bytes": 16235,
+      "size": [
+        512,
+        384
+      ],
+      "frames": 1,
+      "role": "registered frozen renderer mosaic"
+    },
+    {
+      "file": "images/05-local-before.png",
+      "sha256": "877f57080bf50f31abc203153a5295ede95fca064fe1670b80912910b7b40469",
+      "bytes": 6418,
+      "size": [
+        240,
+        160
+      ],
+      "frames": 1,
+      "role": "ordinary live native frame/clip"
+    },
+    {
+      "file": "images/05-local-drop.gif",
+      "sha256": "f0cf5825a562ce6dfc94b32d94ce581a0add4161a437f569a206d0b2e69f2df2",
+      "bytes": 49375,
+      "size": [
+        240,
+        160
+      ],
+      "frames": 9,
+      "role": "ordinary live native frame/clip"
+    },
+    {
+      "file": "images/05-local-landed.png",
+      "sha256": "7dbaaa055b353f6830bca900fb33ec73e559ee1cf064ce744984e3feaaf872dd",
+      "bytes": 6552,
+      "size": [
+        240,
+        160
+      ],
+      "frames": 1,
+      "role": "ordinary live native frame/clip"
+    },
+    {
+      "file": "images/05-one-row-before.png",
+      "sha256": "05fe60bf409ea1c8937193e4f7cfed3583ace345da869a1035a0f6d25a85884b",
+      "bytes": 4175,
+      "size": [
+        240,
+        160
+      ],
+      "frames": 1,
+      "role": "ordinary live native frame/clip"
+    },
+    {
+      "file": "images/05-one-row-drop.gif",
+      "sha256": "517d897d33606b6eafbed94ed220e1c760d7bc3e8e0e6d8e7dd30e9c3c459db0",
+      "bytes": 54240,
+      "size": [
+        240,
+        160
+      ],
+      "frames": 17,
+      "role": "ordinary live native frame/clip"
+    },
+    {
+      "file": "images/05-one-row-landed.png",
+      "sha256": "06491c4c41dae8de62c4a43759d80d85c559ecf4259dfc2f5a29d25a061d3f51",
+      "bytes": 5820,
+      "size": [
+        240,
+        160
+      ],
+      "frames": 1,
+      "role": "ordinary live native frame/clip"
+    },
+    {
+      "file": "images/05-sour-climb.gif",
+      "sha256": "fb70c43ef972dc7cb15ae0cdd655d1c035ae81c8c44b1cd4460cdce0b4cb6051",
+      "bytes": 181287,
+      "size": [
+        240,
+        160
+      ],
+      "frames": 30,
+      "role": "ordinary live native frame/clip"
+    },
+    {
+      "file": "images/05-sour-climbing.png",
+      "sha256": "0f2f3e2690c2813741a7771c99a17d95e3246e7767450cd48726c21f17f0f54b",
+      "bytes": 7235,
+      "size": [
+        240,
+        160
+      ],
+      "frames": 1,
+      "role": "ordinary live native frame/clip"
+    },
+    {
+      "file": "images/05-sour-landed.png",
+      "sha256": "96a0665b1f54bba55366ab2b4f031db749545801de78fd73ec87a42ebb183b12",
+      "bytes": 6518,
+      "size": [
+        240,
+        160
+      ],
+      "frames": 1,
+      "role": "ordinary live native frame/clip"
+    },
+    {
+      "file": "images/05-sour-room.png",
+      "sha256": "399b9f6dffe5a0ee0c671fb3ad3ac2b7076935f751ebc93deba67079a836f1c6",
+      "bytes": 18473,
+      "size": [
+        512,
+        384
+      ],
+      "frames": 1,
+      "role": "registered frozen renderer mosaic"
+    },
+    {
+      "file": "images/05-water-width-1-room.png",
+      "sha256": "4e36b40f147d22fcfe5681c7786098162b16dab6eb77cdf31b7c603db6a42f5e",
+      "bytes": 17095,
+      "size": [
+        512,
+        384
+      ],
+      "frames": 1,
+      "role": "registered frozen renderer mosaic"
+    },
+    {
+      "file": "images/05-water-width-1.gif",
+      "sha256": "dd42e3ad415b85cef6553062ae28e259920198671d84e0a13b726155188d1a2e",
+      "bytes": 55101,
+      "size": [
+        240,
+        160
+      ],
+      "frames": 24,
+      "role": "ordinary live native frame/clip"
+    },
+    {
+      "file": "images/05-water-width-1.png",
+      "sha256": "245c83630367601db62c0f6ae340cf6e8b3ccdb25d67fec706066d2978440019",
+      "bytes": 5493,
+      "size": [
+        240,
+        160
+      ],
+      "frames": 1,
+      "role": "ordinary live native frame/clip"
+    },
+    {
+      "file": "images/05-water-width-2-room.png",
+      "sha256": "f4c0ff0d919f4c9424e46348be696c6f6998366f9c7852849e68cad39de3a580",
+      "bytes": 18358,
+      "size": [
+        512,
+        384
+      ],
+      "frames": 1,
+      "role": "registered frozen renderer mosaic"
+    },
+    {
+      "file": "images/05-water-width-2.gif",
+      "sha256": "d6668f1b81b68a3e54bc9b32b502fdd52ef4b91bbc6f9007c7c18bed6a372b5c",
+      "bytes": 46789,
+      "size": [
+        240,
+        160
+      ],
+      "frames": 22,
+      "role": "ordinary live native frame/clip"
+    },
+    {
+      "file": "images/05-water-width-2.png",
+      "sha256": "6198b0cddafe1e3746173564732fe5e04c0979abe282b715c209038cbb25faae",
+      "bytes": 5702,
+      "size": [
+        240,
+        160
+      ],
+      "frames": 1,
+      "role": "ordinary live native frame/clip"
+    },
+    {
+      "file": "images/05-water-width-3-room.png",
+      "sha256": "01436fa2e621daf8f4b1238b7df28c164f135a0ede5a701aef24f857b4852c31",
+      "bytes": 15540,
+      "size": [
+        512,
+        384
+      ],
+      "frames": 1,
+      "role": "registered frozen renderer mosaic"
+    },
+    {
+      "file": "images/05-water-width-3.gif",
+      "sha256": "fa2b2ced1a45591659418818316706260f79aac1ba2f1978b3d709bb194c3b75",
+      "bytes": 48597,
+      "size": [
+        240,
+        160
+      ],
+      "frames": 24,
+      "role": "ordinary live native frame/clip"
+    },
+    {
+      "file": "images/05-water-width-3.png",
+      "sha256": "fcf30c9e6fc92b1be879899b0c655d53f03829eb94bf66ee8ef452efffc71e4b",
+      "bytes": 4481,
+      "size": [
+        240,
+        160
+      ],
+      "frames": 1,
+      "role": "ordinary live native frame/clip"
+    },
+    {
+      "file": "images/five-rooms.png",
+      "sha256": "16a39e217211b8035cd1def185b9f99dd6c9f68c7e994c1840261070c9138641",
+      "bytes": 95142,
+      "size": [
+        1536,
+        812
+      ],
+      "frames": 1,
+      "role": "labelled native capture assembly"
+    },
+    {
+      "file": "images/four-row-drop.gif",
+      "sha256": "a5dc137b60164214e73d571dec43b0917e4b573e4513617c4bcf5e5282e6f12d",
+      "bytes": 338823,
+      "size": [
+        240,
+        160
+      ],
+      "frames": 129,
+      "role": "ordinary live native frame/clip"
+    },
+    {
+      "file": "source/01-walls-3x.png",
+      "sha256": "badce59f05478a7b9fc3108d833907e835d6ab044fa151023718021ed5a1226a",
+      "bytes": 25185,
+      "size": [
+        1056,
+        1200
+      ],
+      "frames": 1,
+      "role": "native source art/metadata"
+    },
+    {
+      "file": "source/01-walls-native.png",
+      "sha256": "1b6acd76d6941c78955a36448e6813a989214e80170c62d2f6ff90d2a3efecdd",
+      "bytes": 15305,
+      "size": [
+        352,
+        400
+      ],
+      "frames": 1,
+      "role": "native source art/metadata"
+    },
+    {
+      "file": "source/02-walls-3x.png",
+      "sha256": "ae6146762e2710ef6e753750f04fd5241b0531fba476b12f56fecec50ce2d8e8",
+      "bytes": 25752,
+      "size": [
+        1056,
+        1200
+      ],
+      "frames": 1,
+      "role": "native source art/metadata"
+    },
+    {
+      "file": "source/02-walls-native.png",
+      "sha256": "ce372b1323830276d915d23a443a130280a7d8d8614f1cd29750efc0cc9e9e52",
+      "bytes": 15611,
+      "size": [
+        352,
+        400
+      ],
+      "frames": 1,
+      "role": "native source art/metadata"
+    },
+    {
+      "file": "source/03-walls-3x.png",
+      "sha256": "79d1424e7306ef5445d3124bb2bc18bc5c6cbdc5df26f8277d252901b98caff1",
+      "bytes": 26304,
+      "size": [
+        1056,
+        1200
+      ],
+      "frames": 1,
+      "role": "native source art/metadata"
+    },
+    {
+      "file": "source/03-walls-native.png",
+      "sha256": "a5def60cd039770e1f316e04e5fe15f2437f8320b810b7eebe0ca37714c2448f",
+      "bytes": 15852,
+      "size": [
+        352,
+        400
+      ],
+      "frames": 1,
+      "role": "native source art/metadata"
+    },
+    {
+      "file": "source/04-walls-3x.png",
+      "sha256": "daa4a82910ae5766770c7c3a073b27d99765fb6985ccc113a1105d963b98673d",
+      "bytes": 28236,
+      "size": [
+        1056,
+        1200
+      ],
+      "frames": 1,
+      "role": "native source art/metadata"
+    },
+    {
+      "file": "source/04-walls-native.png",
+      "sha256": "f142ba687c0f0778d96693588bf8082a60fff0f8d86be7a897655026c83a6f22",
+      "bytes": 17646,
+      "size": [
+        352,
+        400
+      ],
+      "frames": 1,
+      "role": "native source art/metadata"
+    },
+    {
+      "file": "source/05-walls-3x.png",
+      "sha256": "35d5ad27de720b5b7413f6eab38633cd6031f09476b18d10baa6c0826a926f9b",
+      "bytes": 27239,
+      "size": [
+        1056,
+        1200
+      ],
+      "frames": 1,
+      "role": "native source art/metadata"
+    },
+    {
+      "file": "source/05-walls-native.png",
+      "sha256": "491ffdbcf26812431ce871ef21e0d0cb3971970e3f49e63a53feffe4357d2526",
+      "bytes": 16932,
+      "size": [
+        352,
+        400
+      ],
+      "frames": 1,
+      "role": "native source art/metadata"
+    },
+    {
+      "file": "source/README.md",
+      "sha256": "d20ef743840c34f6b3761eb846cd79a0b0d23d0c9b36b053adcf5ff2e9837a54",
+      "bytes": 1334,
+      "role": "native source art/metadata"
+    },
+    {
+      "file": "source/WATER_NOTES.md",
+      "sha256": "cf35b04238baa2349852d553d31c93fbfb3252a9eb9b48eacb4f1b3e52322535",
+      "bytes": 3699,
+      "role": "native source art/metadata"
+    },
+    {
+      "file": "source/ladder-segments.png",
+      "sha256": "c9c566a428a52ff28ad4cec954b79091e79d24a6221d54888c0d7e0d35309127",
+      "bytes": 16811,
+      "size": [
+        768,
+        196
+      ],
+      "frames": 1,
+      "role": "native source art/metadata"
+    },
+    {
+      "file": "source/ladders-deep-2x.png",
+      "sha256": "3b508116041eeef5aba351a54a86b3d15466d9142c8661c30926732e25e0843a",
+      "bytes": 45416,
+      "size": [
+        1440,
+        1040
+      ],
+      "frames": 1,
+      "role": "native source art/metadata"
+    },
+    {
+      "file": "source/ladders-deep.png",
+      "sha256": "4297ec34dbd70720326b5d220f5023f978717359577274d1472a072fd16406ea",
+      "bytes": 30470,
+      "size": [
+        720,
+        520
+      ],
+      "frames": 1,
+      "role": "native source art/metadata"
+    },
+    {
+      "file": "source/ladders-healthy-2x.png",
+      "sha256": "7cd83683d73d801011e266f4801dee14843cf986f10d143f489a8652dcf12ebd",
+      "bytes": 43314,
+      "size": [
+        1440,
+        1040
+      ],
+      "frames": 1,
+      "role": "native source art/metadata"
+    },
+    {
+      "file": "source/ladders-healthy.png",
+      "sha256": "e428e7d5344e719b078701da99e257f7903412a84ae96efc3a60187206db79f7",
+      "bytes": 28438,
+      "size": [
+        720,
+        520
+      ],
+      "frames": 1,
+      "role": "native source art/metadata"
+    },
+    {
+      "file": "source/ladders-sour-2x.png",
+      "sha256": "9cee2992eff4c754fc8b9f7900bc540f14f6c96e45768b54c119b804e8f5917d",
+      "bytes": 44177,
+      "size": [
+        1440,
+        1040
+      ],
+      "frames": 1,
+      "role": "native source art/metadata"
+    },
+    {
+      "file": "source/ladders-sour.png",
+      "sha256": "95f6b1fae53c1cd1f6ed76388cc117301b3179fd5adbf98d781de9b5d3506ede",
+      "bytes": 29391,
+      "size": [
+        720,
+        520
+      ],
+      "frames": 1,
+      "role": "native source art/metadata"
+    },
+    {
+      "file": "source/waterfalls-3x.png",
+      "sha256": "bbe54b95ab09ad6c07c80db90eb2d4cdfca8bb3fb96f0f96ce7968547954890a",
+      "bytes": 27301,
+      "size": [
+        1080,
+        1575
+      ],
+      "frames": 1,
+      "role": "native source art/metadata"
+    },
+    {
+      "file": "source/waterfalls-source-animation.gif",
+      "sha256": "60633d4e4454179eb5249cbc9fbedac3b24e4741c5a9c0d368809aec54125775",
+      "bytes": 28104,
+      "size": [
+        360,
+        525
+      ],
+      "frames": 4,
+      "role": "native source art/metadata"
+    },
+    {
+      "file": "source/waterfalls.png",
+      "sha256": "c6bfa15abb7b24980cf15e245d9d6b74e7ca68c7f2b43d9bf4837df9cff6f2f2",
+      "bytes": 14957,
+      "size": [
+        360,
+        525
+      ],
+      "frames": 1,
+      "role": "native source art/metadata"
+    },
+    {
+      "file": "validation/01/build-options.json",
+      "sha256": "77318c6ed961532581335b0baa5e4c13f220c7a4098f1653be0be59457bfd454",
+      "bytes": 275,
+      "role": "qualification/provenance"
+    },
+    {
+      "file": "validation/01/deep-native-composites.json",
+      "sha256": "ce969b00cbc4d291a2d2aef0b70a34a8b2b835ca2a61b9d5d08ec55da45ada22",
+      "bytes": 34014,
+      "role": "qualification/provenance"
+    },
+    {
+      "file": "validation/01/deep-provenance.json",
+      "sha256": "bec5fc02bd614fb8af71acd6e6d880ee9390a3990f5f1d3f3abcfdbb3959c7cc",
+      "bytes": 4936,
+      "role": "qualification/provenance"
+    },
+    {
+      "file": "validation/01/geometry-audit.json",
+      "sha256": "57f63b6dfccb72193c503eaff01554f107822e3f397242b75d6ac6e1a99cded4",
+      "bytes": 1671,
+      "role": "qualification/provenance"
+    },
+    {
+      "file": "validation/01/healthy-native-composites.json",
+      "sha256": "8cbff3cbc42f38ac14442e586d686f5e24dce6e40e4ea64a200babd2b1604edb",
+      "bytes": 39769,
+      "role": "qualification/provenance"
+    },
+    {
+      "file": "validation/01/healthy-provenance.json",
+      "sha256": "dfb4f13b5d088579bdf3f2bc1d76c0c48b3050ee8bcf676d7c35b58a0369ca5c",
+      "bytes": 4940,
+      "role": "qualification/provenance"
+    },
+    {
+      "file": "validation/01/isolated-drops.json",
+      "sha256": "166033a9a41afd4d45e13b5d55504203d7bdcc4fd5bbcde64e31e58b5f40b303",
+      "bytes": 55091,
+      "role": "qualification/provenance"
+    },
+    {
+      "file": "validation/01/local-input-trace.json",
+      "sha256": "5b25067ff45018828433336a5ec99d5f2feed413f8e89a0e8a8f50ff40009f1e",
+      "bytes": 82270,
+      "role": "qualification/provenance"
+    },
+    {
+      "file": "validation/01/local-provenance.json",
+      "sha256": "34530d81cf3addfc8615a3dba7d13512cdb69a4df23c5a1a52e7cdd703aaec79",
+      "bytes": 9063,
+      "role": "qualification/provenance"
+    },
+    {
+      "file": "validation/01/matched-capture.json",
+      "sha256": "5e774a13e0472a49837b3319e0313b2557e0c1294af47daa43b7d9bc1e361905",
+      "bytes": 39312,
+      "role": "qualification/provenance"
+    },
+    {
+      "file": "validation/01/menu-after.png",
+      "sha256": "c1d889abf6da03106d401cf17f6fb7e8c46224ce8440fbf04615b64971b0b0a1",
+      "bytes": 6142,
+      "size": [
+        240,
+        160
+      ],
+      "frames": 1,
+      "role": "qualification/provenance"
+    },
+    {
+      "file": "validation/01/menu-before.png",
+      "sha256": "7b62ef00f8d84f8b8a2e6516a0387dc98af07cda126650d168d44d49d5f5d3ae",
+      "bytes": 6559,
+      "size": [
+        240,
+        160
+      ],
+      "frames": 1,
+      "role": "qualification/provenance"
+    },
+    {
+      "file": "validation/01/menu-input-trace.json",
+      "sha256": "e0b4f9f09186394d7791a8134446fbc326e144592b43ecc436d2040398ebb640",
+      "bytes": 79952,
+      "role": "qualification/provenance"
+    },
+    {
+      "file": "validation/01/menu-menu.png",
+      "sha256": "bf11c73bfea88b8f2a6081ef2dced72e8c7bb67605404876b68c53529f072809",
+      "bytes": 4410,
+      "size": [
+        240,
+        160
+      ],
+      "frames": 1,
+      "role": "qualification/provenance"
+    },
+    {
+      "file": "validation/01/menu-report.json",
+      "sha256": "d5eb1115ec0bda1ea02cf7ac956d4624d93b9d45a7b817fe7f78626cc836c182",
+      "bytes": 6528,
+      "role": "qualification/provenance"
+    },
+    {
+      "file": "validation/01/native-audit.json",
+      "sha256": "617b4b77f023314bf25c40111a60e6234ba349599a70f5270a38294937f47e81",
+      "bytes": 826960,
+      "role": "qualification/provenance"
+    },
+    {
+      "file": "validation/01/native-capture.json",
+      "sha256": "c538d54d88f74177aa980e67ced98660212b452145427653e211f3697a989bb3",
+      "bytes": 4295,
+      "role": "qualification/provenance"
+    },
+    {
+      "file": "validation/01/one-row-input-trace.json",
+      "sha256": "097ccf8f5244a5e9d2dd7b295dd85e219ffb2953c1054074fc56b91d2e3d83d6",
+      "bytes": 85017,
+      "role": "qualification/provenance"
+    },
+    {
+      "file": "validation/01/one-row-provenance.json",
+      "sha256": "ba39bc863fd5e9738623cf995f88c3190bf695403131a713b6dea07a8deca7c9",
+      "bytes": 15490,
+      "role": "qualification/provenance"
+    },
+    {
+      "file": "validation/01/sour-native-composites.json",
+      "sha256": "00c7160f82d24bb565818581c41b074c481789209bc99c7ebf1fe29cf1d8cdbd",
+      "bytes": 33993,
+      "role": "qualification/provenance"
+    },
+    {
+      "file": "validation/01/sour-provenance.json",
+      "sha256": "d32b6444015823939bb84fce257186976cf5c24b643c056c5f05f8c58cb73316",
+      "bytes": 4940,
+      "role": "qualification/provenance"
+    },
+    {
+      "file": "validation/01/water-width-1.json",
+      "sha256": "66a816ca88105ed41a6f9025f52b3a444fd6d72b0398b62ec4a4442326dbe055",
+      "bytes": 40128,
+      "role": "qualification/provenance"
+    },
+    {
+      "file": "validation/01/water-width-2.json",
+      "sha256": "7e0161a63e66f23de13126ac1ec0b0ff4af7615fefa1b44f99dcf25d0785b58c",
+      "bytes": 40129,
+      "role": "qualification/provenance"
+    },
+    {
+      "file": "validation/01/water-width-3.json",
+      "sha256": "00fe13abd7aad5072f0a5dfee1bf1a40dc95eb33387fb78db4290d3762fdfa51",
+      "bytes": 40178,
+      "role": "qualification/provenance"
+    },
+    {
+      "file": "validation/01/waterfalls.json",
+      "sha256": "b2166d77698f803c4fd5f087e7e3e29966c7d9f9b68d6b22737f999d8cf390b7",
+      "bytes": 145659,
+      "role": "qualification/provenance"
+    },
+    {
+      "file": "validation/02/build-options.json",
+      "sha256": "00a4cd693455a2f928a6dc14cc085b17418894db8c71b6ba53fdcfe1e2b4b2a5",
+      "bytes": 275,
+      "role": "qualification/provenance"
+    },
+    {
+      "file": "validation/02/deep-native-composites.json",
+      "sha256": "c7845017ac63ce25a6848b1ea78491f54a486ff79d68de72c9809b5c16e4c9fb",
+      "bytes": 38016,
+      "role": "qualification/provenance"
+    },
+    {
+      "file": "validation/02/deep-provenance.json",
+      "sha256": "cede4e43fc45563cf0453f23b03f4342ab9b13ef24af694bdbe7c9567e5e5dcc",
+      "bytes": 4936,
+      "role": "qualification/provenance"
+    },
+    {
+      "file": "validation/02/geometry-audit.json",
+      "sha256": "2c93e3e7aad270e355a27d84189aa6e23f251acd1dc87306375d6e3f642be307",
+      "bytes": 1671,
+      "role": "qualification/provenance"
+    },
+    {
+      "file": "validation/02/healthy-native-composites.json",
+      "sha256": "57ed68ac88f6f432436519327d61b279eaaac04209645b61350612a5d0cd7ffc",
+      "bytes": 43802,
+      "role": "qualification/provenance"
+    },
+    {
+      "file": "validation/02/healthy-provenance.json",
+      "sha256": "496ec2fca8bfba121228afa7f65028ff2da1ac9c84b59f1ff16f86597c7e3e03",
+      "bytes": 4940,
+      "role": "qualification/provenance"
+    },
+    {
+      "file": "validation/02/isolated-drops.json",
+      "sha256": "e7df4c3807c01b137b3fc33e67bc45c11ff448ada18b46d79b38efbdf21c1d26",
+      "bytes": 55091,
+      "role": "qualification/provenance"
+    },
+    {
+      "file": "validation/02/local-input-trace.json",
+      "sha256": "dac5748e1d8049dd32e7d3b6d2380f503acd0b9f154a5f548b6dbf0330a9219b",
+      "bytes": 82270,
+      "role": "qualification/provenance"
+    },
+    {
+      "file": "validation/02/local-provenance.json",
+      "sha256": "e7a31bf42ee39ae8b901db3d0c85ac20e8cf3d021d5daf924bd3b0ad66e58dbc",
+      "bytes": 9063,
+      "role": "qualification/provenance"
+    },
+    {
+      "file": "validation/02/matched-capture.json",
+      "sha256": "10d34c6f78bf8ef30d8f8682a20692f11d65e03fcb3d642612ee2f60746276de",
+      "bytes": 39312,
+      "role": "qualification/provenance"
+    },
+    {
+      "file": "validation/02/native-audit.json",
+      "sha256": "2566a4229c17c1cc0bbe3f20c65f5453e2f0da2d754c24c25f93266cc3b43c23",
+      "bytes": 826851,
+      "role": "qualification/provenance"
+    },
+    {
+      "file": "validation/02/native-capture.json",
+      "sha256": "1f3e94663201507f0b1a832761ac9b11ea729536c7955c755a8e864f014fedee",
+      "bytes": 4200,
+      "role": "qualification/provenance"
+    },
+    {
+      "file": "validation/02/one-row-input-trace.json",
+      "sha256": "b648d27f88e0cd197ebbf864ac48a832b10b25c533d4a1d680f387ffb5d96c55",
+      "bytes": 85017,
+      "role": "qualification/provenance"
+    },
+    {
+      "file": "validation/02/one-row-provenance.json",
+      "sha256": "b7b5c5ca15530f393d571005948b4dcb2154c76e951d079f06c392109621ddfe",
+      "bytes": 15490,
+      "role": "qualification/provenance"
+    },
+    {
+      "file": "validation/02/sour-native-composites.json",
+      "sha256": "6a698bfe2ee15b173478f5cdaf12f7b17d8ccd553307a15191fb29f6226f24b3",
+      "bytes": 42118,
+      "role": "qualification/provenance"
+    },
+    {
+      "file": "validation/02/sour-provenance.json",
+      "sha256": "81842816069b2e08d0aab91ea1e5311b76d5e20bd2e4f419ed3047530205c033",
+      "bytes": 4940,
+      "role": "qualification/provenance"
+    },
+    {
+      "file": "validation/02/water-width-1.json",
+      "sha256": "f9255d34b2f26f3d62b54c3f2227fa7b5f8bcba2ca046a362fa8f740292ef028",
+      "bytes": 40128,
+      "role": "qualification/provenance"
+    },
+    {
+      "file": "validation/02/water-width-2.json",
+      "sha256": "26236ba257f8e909b3a185056412bb618426a134eba5ebaed33e031d84ac986a",
+      "bytes": 40129,
+      "role": "qualification/provenance"
+    },
+    {
+      "file": "validation/02/water-width-3.json",
+      "sha256": "0cb5d8404c66bd83c6b493c5d2f67fdd2ac79e5ecb66d93cfa81c1d98a0d4dbf",
+      "bytes": 40178,
+      "role": "qualification/provenance"
+    },
+    {
+      "file": "validation/02/waterfalls.json",
+      "sha256": "09742f440b4473504056c6fb662251e384423e3421db73c26d66d48e1e4f4a9e",
+      "bytes": 145659,
+      "role": "qualification/provenance"
+    },
+    {
+      "file": "validation/03/build-options.json",
+      "sha256": "160db35d2fe37fb1ada2559b6bf4bb6cb83a3de056c02429fbda1c9e1ddfcf61",
+      "bytes": 275,
+      "role": "qualification/provenance"
+    },
+    {
+      "file": "validation/03/deep-native-composites.json",
+      "sha256": "292e7b96e47f7530f28f663d6d9225ad4883e96f8aaebdae050f91d01b06da0f",
+      "bytes": 34014,
+      "role": "qualification/provenance"
+    },
+    {
+      "file": "validation/03/deep-provenance.json",
+      "sha256": "97932157d19b4aad8d16b7e80756fcd750aca2ceba016118a95755fd19449894",
+      "bytes": 4936,
+      "role": "qualification/provenance"
+    },
+    {
+      "file": "validation/03/geometry-audit.json",
+      "sha256": "034a211b95d068670173e2ab6570edde7e6b1f4ab7381d6d4c3908395cc4ab95",
+      "bytes": 1671,
+      "role": "qualification/provenance"
+    },
+    {
+      "file": "validation/03/healthy-native-composites.json",
+      "sha256": "73189830da88ee21ad9de86d0dcb200d5331dbbb93f17181f9d3d70b215c658d",
+      "bytes": 39778,
+      "role": "qualification/provenance"
+    },
+    {
+      "file": "validation/03/healthy-provenance.json",
+      "sha256": "273c86e0f38f5c83ea9bfc1260b5764c5ecf50051baaa4c0f282576932496cdd",
+      "bytes": 4940,
+      "role": "qualification/provenance"
+    },
+    {
+      "file": "validation/03/isolated-drops.json",
+      "sha256": "8d7f5ce88855dfcde074478f87f6affd612a2ccf238c2c09504950a3431d2113",
+      "bytes": 55090,
+      "role": "qualification/provenance"
+    },
+    {
+      "file": "validation/03/local-input-trace.json",
+      "sha256": "b1900c1e9585f29e39a5521d77f549636b580ac9e5143ecb60a712f1e98683fd",
+      "bytes": 82270,
+      "role": "qualification/provenance"
+    },
+    {
+      "file": "validation/03/local-provenance.json",
+      "sha256": "34530d81cf3addfc8615a3dba7d13512cdb69a4df23c5a1a52e7cdd703aaec79",
+      "bytes": 9063,
+      "role": "qualification/provenance"
+    },
+    {
+      "file": "validation/03/matched-capture.json",
+      "sha256": "c99be938ace7f4cba3d4069e7371c948a94d4f565618e14d74fb46ffafdc6aa2",
+      "bytes": 39312,
+      "role": "qualification/provenance"
+    },
+    {
+      "file": "validation/03/native-audit.json",
+      "sha256": "7d653f8ec693313c00c766a4702c43cae26481d482f0ff4bbcef2dd6d56c0206",
+      "bytes": 826851,
+      "role": "qualification/provenance"
+    },
+    {
+      "file": "validation/03/native-capture.json",
+      "sha256": "6546e02239a1641ba093b4b4a72512eacbe355c76dc36988c0092ede0f7d5c6d",
+      "bytes": 4200,
+      "role": "qualification/provenance"
+    },
+    {
+      "file": "validation/03/one-row-input-trace.json",
+      "sha256": "a62811b7c826fa3e286fcd69e5e501ca01bbdab762729419b1d74f137b66ffa0",
+      "bytes": 85017,
+      "role": "qualification/provenance"
+    },
+    {
+      "file": "validation/03/one-row-provenance.json",
+      "sha256": "81f2540ed4f0e085625998229772f885dc45ace05c8b220964a758aca577a5ac",
+      "bytes": 15489,
+      "role": "qualification/provenance"
+    },
+    {
+      "file": "validation/03/sour-native-composites.json",
+      "sha256": "e863bf6074939477d31fab1f95a1a50cfd7e73c81676360e27812f643cfb0de6",
+      "bytes": 34011,
+      "role": "qualification/provenance"
+    },
+    {
+      "file": "validation/03/sour-provenance.json",
+      "sha256": "90230e466378ad0866428c542a4d1e99a56585dc95896e82d761eeee09cd6773",
+      "bytes": 4940,
+      "role": "qualification/provenance"
+    },
+    {
+      "file": "validation/03/water-width-1.json",
+      "sha256": "08ff4470444a26ce258dd688b2000584868b7e2cf9f321c1c7cac146e502d7f4",
+      "bytes": 40128,
+      "role": "qualification/provenance"
+    },
+    {
+      "file": "validation/03/water-width-2.json",
+      "sha256": "cb5bb6069274841ca7cc066dfd33add2dbc7e261c7c4798f5aaee057d72aae87",
+      "bytes": 40129,
+      "role": "qualification/provenance"
+    },
+    {
+      "file": "validation/03/water-width-3.json",
+      "sha256": "2c7fb7fc9e5c6132b519e5a8601702706eb351a09000f99048855866ef5b7395",
+      "bytes": 40178,
+      "role": "qualification/provenance"
+    },
+    {
+      "file": "validation/03/waterfalls.json",
+      "sha256": "9047adef75e46dda8b38e1de195e218755ca3c21d256bc3ccb0dcf00bd0585d2",
+      "bytes": 145659,
+      "role": "qualification/provenance"
+    },
+    {
+      "file": "validation/04/build-options.json",
+      "sha256": "382bf942b8602bd1e352c847d8e19c82b15c8e9fac0166c13c8d492890dda62b",
+      "bytes": 276,
+      "role": "qualification/provenance"
+    },
+    {
+      "file": "validation/04/deep-native-composites.json",
+      "sha256": "2e240a02847fb1974e38a52108df4dca623bded9cd4d0e59a6120bd701207999",
+      "bytes": 33935,
+      "role": "qualification/provenance"
+    },
+    {
+      "file": "validation/04/deep-provenance.json",
+      "sha256": "699535a4653a0a8c3a97e0f1a81c5b7884b0e3e533fa21e73a3d5f3dfe943a85",
+      "bytes": 5024,
+      "role": "qualification/provenance"
+    },
+    {
+      "file": "validation/04/geometry-audit.json",
+      "sha256": "6d9f688b63b84b528e0380aa0e96df81f9db66a6c34edac9d56c89cd18350319",
+      "bytes": 1671,
+      "role": "qualification/provenance"
+    },
+    {
+      "file": "validation/04/healthy-native-composites.json",
+      "sha256": "4ce55d44ecc50cdf1af57b7a03947b33d0f323a404cf8bab8d1c9638287aa0c3",
+      "bytes": 39789,
+      "role": "qualification/provenance"
+    },
+    {
+      "file": "validation/04/healthy-provenance.json",
+      "sha256": "7e233ab7eae84159736d156e8fdadef203af08eeb6c6c60f2937be87db5d6a8d",
+      "bytes": 5028,
+      "role": "qualification/provenance"
+    },
+    {
+      "file": "validation/04/isolated-drops.json",
+      "sha256": "ec83c3cf03395708e7fc4080c6408f9f70271a4103c6b1e633ee9239dac4a3b8",
+      "bytes": 58335,
+      "role": "qualification/provenance"
+    },
+    {
+      "file": "validation/04/local-input-trace.json",
+      "sha256": "080a98264441d9648f8164884415179353366fbb09d70cfb8b127de8a1e1fbe8",
+      "bytes": 83784,
+      "role": "qualification/provenance"
+    },
+    {
+      "file": "validation/04/local-provenance.json",
+      "sha256": "adc289c9392299911101b09474b524a0d38947acee37c55c3af0637b26d744b6",
+      "bytes": 9615,
+      "role": "qualification/provenance"
+    },
+    {
+      "file": "validation/04/matched-capture.json",
+      "sha256": "c443b675b320124cd64fcafd86e01db3b36fcadd2ac7c10c697005cfc8f1be94",
+      "bytes": 41471,
+      "role": "qualification/provenance"
+    },
+    {
+      "file": "validation/04/native-audit.json",
+      "sha256": "9884d9cd9845be3b047e4a878d2ac46d746bc417cc5ae16c8f401e2d7c9969e4",
+      "bytes": 826852,
+      "role": "qualification/provenance"
+    },
+    {
+      "file": "validation/04/native-capture.json",
+      "sha256": "79ab11307c0c77d9912373e4855d90f7cf91713b47847983e123ecc41e5786a3",
+      "bytes": 3952,
+      "role": "qualification/provenance"
+    },
+    {
+      "file": "validation/04/one-row-input-trace.json",
+      "sha256": "ee158b6c3f5192b9c6df895f1005408c5def18a74c925d428ef1a66aea6f578b",
+      "bytes": 86892,
+      "role": "qualification/provenance"
+    },
+    {
+      "file": "validation/04/one-row-provenance.json",
+      "sha256": "d9b6553c1134baf3b313f7c0f333f53b11e40c6e3a08a358b95b3197bad43129",
+      "bytes": 16691,
+      "role": "qualification/provenance"
+    },
+    {
+      "file": "validation/04/sour-native-composites.json",
+      "sha256": "47316bd28afc3d8bcc604257cf281938dc341280826bbea38801249f7d8be1ef",
+      "bytes": 34039,
+      "role": "qualification/provenance"
+    },
+    {
+      "file": "validation/04/sour-provenance.json",
+      "sha256": "e143c673cd5140bfb6b35674f0557a10063257cb6fdc6e44aef8331d096ba76f",
+      "bytes": 5028,
+      "role": "qualification/provenance"
+    },
+    {
+      "file": "validation/04/water-width-1.json",
+      "sha256": "1fde54621d0b087cbf6ee7383d18ac05dbd82ee9d708de27e78fc204edf00dbd",
+      "bytes": 40128,
+      "role": "qualification/provenance"
+    },
+    {
+      "file": "validation/04/water-width-2.json",
+      "sha256": "062cfcaf1ef8f8379baee2a2f4e356d30dc1140f9c19f81e2695120b947c106b",
+      "bytes": 40129,
+      "role": "qualification/provenance"
+    },
+    {
+      "file": "validation/04/water-width-3.json",
+      "sha256": "8ecd68d3a97626f1005d60ae26eb6c21adb07316415c55555cfc57839ffc49dc",
+      "bytes": 40178,
+      "role": "qualification/provenance"
+    },
+    {
+      "file": "validation/04/waterfalls.json",
+      "sha256": "bc338cd83f96052c769e7312917739833845112d8dc56e27302c318c4286230b",
+      "bytes": 145659,
+      "role": "qualification/provenance"
+    },
+    {
+      "file": "validation/05/build-options.json",
+      "sha256": "38323627115c625e8d5ddf306019d88f8e91fffaf0c80c07f93ce54510a3eee7",
+      "bytes": 276,
+      "role": "qualification/provenance"
+    },
+    {
+      "file": "validation/05/deep-native-composites.json",
+      "sha256": "e821e17419cc01ed81b0bbc7b9a73bc9c638c383d859809e9e3c51c6325ac746",
+      "bytes": 34013,
+      "role": "qualification/provenance"
+    },
+    {
+      "file": "validation/05/deep-provenance.json",
+      "sha256": "225c5c5f50356fa414b0f922d0c8fe0cc62fc6c38763c2874562dade0e4e0a07",
+      "bytes": 5024,
+      "role": "qualification/provenance"
+    },
+    {
+      "file": "validation/05/geometry-audit.json",
+      "sha256": "a96f8e7db2f5652e983143803d6be707799ef9ab9aae1d4160ab4f2b13cbc7d5",
+      "bytes": 1671,
+      "role": "qualification/provenance"
+    },
+    {
+      "file": "validation/05/healthy-native-composites.json",
+      "sha256": "32f670845d1f7e6542a49dd9dfc266957e81a9f5d252a01330bbc24ffd2b2673",
+      "bytes": 31665,
+      "role": "qualification/provenance"
+    },
+    {
+      "file": "validation/05/healthy-provenance.json",
+      "sha256": "cb68d26676f9966d0507667ea00a6b57d7e03e82b325c481bda1ed3c5031f539",
+      "bytes": 5028,
+      "role": "qualification/provenance"
+    },
+    {
+      "file": "validation/05/isolated-drops.json",
+      "sha256": "dbe9a726b685026b7984a947f4bf458f232169e23eba76b113b37aacb31eaa57",
+      "bytes": 58334,
+      "role": "qualification/provenance"
+    },
+    {
+      "file": "validation/05/local-input-trace.json",
+      "sha256": "f9c6311d77ad4ec976e99aacaca583a9b1315571f95586becfb140f2a0e9afb2",
+      "bytes": 83784,
+      "role": "qualification/provenance"
+    },
+    {
+      "file": "validation/05/local-provenance.json",
+      "sha256": "819209e372f303d82324eee748885fe0db068ae714200a7a26554a33a41df5b2",
+      "bytes": 9615,
+      "role": "qualification/provenance"
+    },
+    {
+      "file": "validation/05/matched-capture.json",
+      "sha256": "89813f1312c1fc11444ad49d2fcca9800e8225e75fc9fe2e874d610544dbc15a",
+      "bytes": 41471,
+      "role": "qualification/provenance"
+    },
+    {
+      "file": "validation/05/menu-after.png",
+      "sha256": "6de5fb8d75d4666c0793fb0e3b0a57b2825910c14479c5ee7dbf701db821df6a",
+      "bytes": 6013,
+      "size": [
+        240,
+        160
+      ],
+      "frames": 1,
+      "role": "qualification/provenance"
+    },
+    {
+      "file": "validation/05/menu-before.png",
+      "sha256": "716ec3c6f71888b3f80dcdc8d4db0cc0f2bcd33c49d1e4866f2b260dbf1b2cbd",
+      "bytes": 6330,
+      "size": [
+        240,
+        160
+      ],
+      "frames": 1,
+      "role": "qualification/provenance"
+    },
+    {
+      "file": "validation/05/menu-input-trace.json",
+      "sha256": "fb1b5b6e784d8609e2353bbcd0b85063393584662f14cd5211cb63094cc59d32",
+      "bytes": 79952,
+      "role": "qualification/provenance"
+    },
+    {
+      "file": "validation/05/menu-menu.png",
+      "sha256": "bf11c73bfea88b8f2a6081ef2dced72e8c7bb67605404876b68c53529f072809",
+      "bytes": 4410,
+      "size": [
+        240,
+        160
+      ],
+      "frames": 1,
+      "role": "qualification/provenance"
+    },
+    {
+      "file": "validation/05/menu-report.json",
+      "sha256": "88a855d84ff027ced09170b70ba98ec16d2f68cb784b05cda95f758b73ca2392",
+      "bytes": 6528,
+      "role": "qualification/provenance"
+    },
+    {
+      "file": "validation/05/native-audit.json",
+      "sha256": "ca1829c11b3fc66aae3c198377d6549fba2f964a70e4b5d36966180e7d6cd420",
+      "bytes": 826852,
+      "role": "qualification/provenance"
+    },
+    {
+      "file": "validation/05/native-capture.json",
+      "sha256": "978c163c3294139ef6111e3872d34544ed89a4fbaa7b7599c8abcfb3133451fa",
+      "bytes": 3952,
+      "role": "qualification/provenance"
+    },
+    {
+      "file": "validation/05/one-row-input-trace.json",
+      "sha256": "9dc49020e7a564523b224633556e9a94b93282d5ebe2613c9cd59040744873e6",
+      "bytes": 86892,
+      "role": "qualification/provenance"
+    },
+    {
+      "file": "validation/05/one-row-provenance.json",
+      "sha256": "b3c08ec1357295c73677b25e909a3cee1488f37b50fb96eb669f5ea7589d36b5",
+      "bytes": 16690,
+      "role": "qualification/provenance"
+    },
+    {
+      "file": "validation/05/sour-native-composites.json",
+      "sha256": "4b79649d976d233fd3363c94b87fc7e92ab76498f90dcb7fc8230cdc6c1f5080",
+      "bytes": 34047,
+      "role": "qualification/provenance"
+    },
+    {
+      "file": "validation/05/sour-provenance.json",
+      "sha256": "0544835bb37d7b3e34299b8d60ec909667a3ae409d59768f21594fdfb227e337",
+      "bytes": 5028,
+      "role": "qualification/provenance"
+    },
+    {
+      "file": "validation/05/water-width-1.json",
+      "sha256": "08ebbc755f778d29a5d6b2806be52590cc31f71d03f290353a03ee0e673cbf2a",
+      "bytes": 40128,
+      "role": "qualification/provenance"
+    },
+    {
+      "file": "validation/05/water-width-2.json",
+      "sha256": "3a375c59169e40237add5ccbd41a7ce8bc5fb74816b2c4a5c90047ed5e5a0864",
+      "bytes": 40129,
+      "role": "qualification/provenance"
+    },
+    {
+      "file": "validation/05/water-width-3.json",
+      "sha256": "06204c72d489c169a731d7827efbac1c81b2d528b13fc7d7c4f5c0954bb0ee92",
+      "bytes": 40178,
+      "role": "qualification/provenance"
+    },
+    {
+      "file": "validation/05/waterfalls.json",
+      "sha256": "27b852c1045801e667fe9e2147f0de0ee6b5207d37813b112381aebc9d33c571",
+      "bytes": 145659,
+      "role": "qualification/provenance"
+    },
+    {
+      "file": "validation/CAPTURE_NOTES.md",
+      "sha256": "9cf414e337c4ff9818a91c44558382ffa0803c8bcc28ee2535edd3e90a382d3a",
+      "bytes": 4811,
+      "role": "qualification/provenance"
+    },
+    {
+      "file": "validation/FINAL_QA.json",
+      "sha256": "debcebf8e4cd09652c4fc49b7e16281e7c2fa99b287f1408d4305c577328ed62",
+      "bytes": 19249,
+      "role": "qualification/provenance"
+    },
+    {
+      "file": "validation/INDEPENDENT_REVIEW.md",
+      "sha256": "af7ad6b67d5f1d291ea4bf6bc7da0f3fb2786beb5be125dcb06d623b7264c9c1",
+      "bytes": 5651,
+      "role": "qualification/provenance"
+    },
+    {
+      "file": "validation/earned-long.json",
+      "sha256": "0898754a4a667207fd041b89614ea2c2b6be3625a2de9e163905fb656b930cd8",
+      "bytes": 655,
+      "role": "qualification/provenance"
+    },
+    {
+      "file": "validation/long-drop.json",
+      "sha256": "fd62d72858a835c6894830abfc6a9f05d033a5d37da3aac30daa7da2dd064c36",
+      "bytes": 73189,
+      "role": "qualification/provenance"
+    },
+    {
+      "file": "validation/preservation.json",
+      "sha256": "94d0acd59cf0261b3454cb0805d94e443c3c2f4cbc165efbc964cb464e1ed7cc",
+      "bytes": 425,
+      "role": "qualification/provenance"
+    },
+    {
+      "file": "validation/specific-regressions.json",
+      "sha256": "de73c858d2a2ca075647fb7a99b2eee272e274cef849a4e3d8754c330192e75b",
+      "bytes": 293,
+      "role": "qualification/provenance"
+    }
+  ]
+}

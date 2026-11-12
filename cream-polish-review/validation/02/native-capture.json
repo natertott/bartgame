@@ -1,0 +1,182 @@
+{
+  "rom_sha256": "423cb552852e18dd1387fd98d68418f235e532611c386bd7a8c061aa2f602de2",
+  "source_commit": "687e6c0e999a8df70ef2f7db55f36b9200ddde30",
+  "tool_sha256": "8bfe65b9f7f953d3de9f26bf0bc04548e267312ac6640082ccf75a7b4b908586",
+  "checks": [
+    {
+      "name": "matched rooms/climbs/native BG2 alpha unions pass",
+      "passed": true
+    },
+    {
+      "name": "generated graph exact",
+      "passed": true
+    },
+    {
+      "name": "healthy profile/features exact",
+      "passed": true
+    },
+    {
+      "name": "healthy ground_types_sha256",
+      "passed": true
+    },
+    {
+      "name": "healthy overlay_types_sha256",
+      "passed": true
+    },
+    {
+      "name": "healthy solid_sha256",
+      "passed": true
+    },
+    {
+      "name": "healthy overlay_occupancy_sha256",
+      "passed": true
+    },
+    {
+      "name": "healthy climb_mask_sha256",
+      "passed": true
+    },
+    {
+      "name": "sour profile/features exact",
+      "passed": true
+    },
+    {
+      "name": "sour ground_types_sha256",
+      "passed": true
+    },
+    {
+      "name": "sour overlay_types_sha256",
+      "passed": true
+    },
+    {
+      "name": "sour solid_sha256",
+      "passed": true
+    },
+    {
+      "name": "sour overlay_occupancy_sha256",
+      "passed": true
+    },
+    {
+      "name": "sour climb_mask_sha256",
+      "passed": true
+    },
+    {
+      "name": "deep profile/features exact",
+      "passed": true
+    },
+    {
+      "name": "deep ground_types_sha256",
+      "passed": true
+    },
+    {
+      "name": "deep overlay_types_sha256",
+      "passed": true
+    },
+    {
+      "name": "deep solid_sha256",
+      "passed": true
+    },
+    {
+      "name": "deep overlay_occupancy_sha256",
+      "passed": true
+    },
+    {
+      "name": "deep climb_mask_sha256",
+      "passed": true
+    },
+    {
+      "name": "actual short drops land on final shade art",
+      "passed": true
+    },
+    {
+      "name": "actual1/2/3wide blue falls captured",
+      "passed": true
+    }
+  ],
+  "comparisons": [
+    {
+      "label": "control",
+      "rom_sha256": "0dd8554384b53e618140f8c61590fc7e6a7ff0888f296ece034a95f357b34fdd",
+      "checks": [
+        {
+          "name": "generated graph exact",
+          "passed": true
+        },
+        {
+          "name": "healthy profile/features exact",
+          "passed": true
+        },
+        {
+          "name": "healthy ground_types_sha256",
+          "passed": true
+        },
+        {
+          "name": "healthy overlay_types_sha256",
+          "passed": true
+        },
+        {
+          "name": "healthy solid_sha256",
+          "passed": true
+        },
+        {
+          "name": "healthy overlay_occupancy_sha256",
+          "passed": true
+        },
+        {
+          "name": "healthy climb_mask_sha256",
+          "passed": true
+        },
+        {
+          "name": "sour profile/features exact",
+          "passed": true
+        },
+        {
+          "name": "sour ground_types_sha256",
+          "passed": true
+        },
+        {
+          "name": "sour overlay_types_sha256",
+          "passed": true
+        },
+        {
+          "name": "sour solid_sha256",
+          "passed": true
+        },
+        {
+          "name": "sour overlay_occupancy_sha256",
+          "passed": true
+        },
+        {
+          "name": "sour climb_mask_sha256",
+          "passed": true
+        },
+        {
+          "name": "deep profile/features exact",
+          "passed": true
+        },
+        {
+          "name": "deep ground_types_sha256",
+          "passed": true
+        },
+        {
+          "name": "deep overlay_types_sha256",
+          "passed": true
+        },
+        {
+          "name": "deep solid_sha256",
+          "passed": true
+        },
+        {
+          "name": "deep overlay_occupancy_sha256",
+          "passed": true
+        },
+        {
+          "name": "deep climb_mask_sha256",
+          "passed": true
+        }
+      ]
+    }
+  ],
+  "complete": true,
+  "water_capture_tool_sha256": "c483d46a360ba77b3ce2c3dd399a46ae86935ee9fa8093e99640cc5a7155a6c5",
+  "water_capture_note": "Reframed through observed naturalcamera easing; everyactualGIFframe checked for onscreenblueflow. No game source changed."
+}

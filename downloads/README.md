@@ -1,5 +1,14 @@
 # BARTGAME downloads
 
+## Five Cream polish builds
+
+[Gallery, 15 ladder options and individual ROMs](../cream-polish-review/README.md)
+· [Download all five ZIP](https://raw.githubusercontent.com/natertott/bartgame/cream-art-studies/downloads/cream-polish-687e6c0e/all-five.zip)
+· [Builds and hashes](cream-polish-687e6c0e/README.md).
+
+Optional profiles7–11 add masked rock detail, projecting ledges, connected
+shadows, paired ladders and blue falls of varying width.
+
 ## Fractured Rind — optional Cream refinement
 
 [Playable review ROM, ZIP, checksums and actual mGBA gallery](../cream-depth-review/README.md).

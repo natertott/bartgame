@@ -1,0 +1,37 @@
+[
+  {
+    "option": 1,
+    "profile": 7,
+    "file": "01-pearlstone-folds.gba",
+    "sha256": "c6e5ee43db89bdea1f75d17e0c190825169d7e1fcd0f54b08b34311b1ff7465b",
+    "source_commit": "687e6c0e999a8df70ef2f7db55f36b9200ddde30"
+  },
+  {
+    "option": 2,
+    "profile": 8,
+    "file": "02-faulted-chalk.gba",
+    "sha256": "423cb552852e18dd1387fd98d68418f235e532611c386bd7a8c061aa2f602de2",
+    "source_commit": "687e6c0e999a8df70ef2f7db55f36b9200ddde30"
+  },
+  {
+    "option": 3,
+    "profile": 9,
+    "file": "03-ribbed-karst.gba",
+    "sha256": "a509a700886dafb41481d29f54cbe614f8ba34f0d2d2c98f37c2030319da7100",
+    "source_commit": "687e6c0e999a8df70ef2f7db55f36b9200ddde30"
+  },
+  {
+    "option": 4,
+    "profile": 10,
+    "file": "04-weathered-curdstone.gba",
+    "sha256": "0aeb7c2520bd04e593274586dfb2ae8f689add1bb8bd20f3ed43d5203268ac72",
+    "source_commit": "687e6c0e999a8df70ef2f7db55f36b9200ddde30"
+  },
+  {
+    "option": 5,
+    "profile": 11,
+    "file": "05-velvet-travertine.gba",
+    "sha256": "a5e9f8da9614117d00f072bf94741a9a1e990ee658546f5f63d0d73cd94fb6aa",
+    "source_commit": "687e6c0e999a8df70ef2f7db55f36b9200ddde30"
+  }
+]

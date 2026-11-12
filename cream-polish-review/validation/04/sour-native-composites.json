@@ -1,0 +1,1489 @@
+{
+  "method": "Decode frozen ROM base and alpha4bpp independently; compare exact RGB555 against actual BG2map/VRAM/palette.",
+  "rom_sha256": "0aeb7c2520bd04e593274586dfb2ae8f689add1bb8bd20f3ed43d5203268ac72",
+  "static_bg_tiles": 894,
+  "dynamic_tiles": [
+    894,
+    895,
+    896,
+    897,
+    898,
+    899,
+    900,
+    901,
+    902,
+    903,
+    904,
+    905,
+    906,
+    907,
+    908,
+    909,
+    910,
+    911,
+    912,
+    913,
+    914,
+    915,
+    916,
+    917,
+    918,
+    919,
+    920,
+    921,
+    922,
+    923,
+    924,
+    925,
+    926,
+    927,
+    928,
+    929,
+    930,
+    931,
+    932,
+    933,
+    934,
+    935,
+    936,
+    937,
+    938,
+    939,
+    940,
+    941,
+    942,
+    943,
+    944,
+    945,
+    946,
+    947,
+    948,
+    949,
+    950,
+    951,
+    952,
+    953,
+    954,
+    955,
+    956,
+    957,
+    958,
+    959,
+    960,
+    961,
+    962,
+    963,
+    964,
+    965,
+    966,
+    967,
+    968,
+    969,
+    970,
+    971,
+    972,
+    973,
+    974,
+    975,
+    976,
+    977,
+    978,
+    979,
+    980,
+    981,
+    982,
+    983,
+    984,
+    985,
+    986,
+    987,
+    988,
+    989,
+    990,
+    991,
+    992,
+    993,
+    994,
+    995,
+    996,
+    997,
+    998,
+    999,
+    1000,
+    1001,
+    1002,
+    1003,
+    1004,
+    1005,
+    1006,
+    1007,
+    1008,
+    1009,
+    1010,
+    1011,
+    1012,
+    1013,
+    1014,
+    1015,
+    1016,
+    1017,
+    1018
+  ],
+  "painted_cells": [
+    {
+      "cell": [
+        6,
+        0
+      ],
+      "base": 2964,
+      "paint": 2909,
+      "screen_entries": [
+        20500,
+        21455,
+        21456,
+        20872
+      ],
+      "expected_sha256": "95b6b16a45ecdde7baa91940ccfc91a553a65d18cabb8434f1df1839766d2ec4",
+      "actual_sha256": "95b6b16a45ecdde7baa91940ccfc91a553a65d18cabb8434f1df1839766d2ec4",
+      "exact": true
+    },
+    {
+      "cell": [
+        7,
+        0
+      ],
+      "base": 2965,
+      "paint": 2910,
+      "screen_entries": [
+        21457,
+        21458,
+        20875,
+        20876
+      ],
+      "expected_sha256": "b5d327d3de1f7efb091a4fc78efd2528e668049b3caa86db01b1c13eb1227a81",
+      "actual_sha256": "b5d327d3de1f7efb091a4fc78efd2528e668049b3caa86db01b1c13eb1227a81",
+      "exact": true
+    },
+    {
+      "cell": [
+        8,
+        0
+      ],
+      "base": 2966,
+      "paint": 2911,
+      "screen_entries": [
+        21459,
+        21460,
+        21241,
+        21242
+      ],
+      "expected_sha256": "6e332f65762d0b0c1f345bb053bf218997fff41527f4d8acbddd2e0e2a3700c1",
+      "actual_sha256": "6e332f65762d0b0c1f345bb053bf218997fff41527f4d8acbddd2e0e2a3700c1",
+      "exact": true
+    },
+    {
+      "cell": [
+        9,
+        0
+      ],
+      "base": 2967,
+      "paint": 2912,
+      "screen_entries": [
+        21461,
+        21462,
+        20883,
+        20884
+      ],
+      "expected_sha256": "da915adaa8b684ed06f7900f56a09239351e596b846270c19dc132f3ce2b3745",
+      "actual_sha256": "da915adaa8b684ed06f7900f56a09239351e596b846270c19dc132f3ce2b3745",
+      "exact": true
+    },
+    {
+      "cell": [
+        10,
+        0
+      ],
+      "base": 2968,
+      "paint": 2913,
+      "screen_entries": [
+        21463,
+        21464,
+        20887,
+        20888
+      ],
+      "expected_sha256": "e0ce325353dc966f5982f0abec9ac1b4cc18d8541162c1d89161a12369d48852",
+      "actual_sha256": "e0ce325353dc966f5982f0abec9ac1b4cc18d8541162c1d89161a12369d48852",
+      "exact": true
+    },
+    {
+      "cell": [
+        11,
+        0
+      ],
+      "base": 2961,
+      "paint": 2914,
+      "screen_entries": [
+        21465,
+        21043,
+        20889,
+        21466
+      ],
+      "expected_sha256": "e591d188cf21257f80e1228bfa52d480ed262e152fee1fb9a147efb9d1fd07ce",
+      "actual_sha256": "e591d188cf21257f80e1228bfa52d480ed262e152fee1fb9a147efb9d1fd07ce",
+      "exact": true
+    },
+    {
+      "cell": [
+        20,
+        0
+      ],
+      "base": 2962,
+      "paint": 2901,
+      "screen_entries": [
+        21046,
+        21481,
+        21482,
+        20842
+      ],
+      "expected_sha256": "a8c67d3f22bc8807d1150ca66e0084fa2e1b59c90596d92351dd63e00e5ded50",
+      "actual_sha256": "a8c67d3f22bc8807d1150ca66e0084fa2e1b59c90596d92351dd63e00e5ded50",
+      "exact": true
+    },
+    {
+      "cell": [
+        21,
+        0
+      ],
+      "base": 2963,
+      "paint": 2902,
+      "screen_entries": [
+        21483,
+        21484,
+        20845,
+        20846
+      ],
+      "expected_sha256": "7aafef04c01c8bb42148c9ed4cf6ac4360a9378a297107b99a712d9edc4eac6d",
+      "actual_sha256": "7aafef04c01c8bb42148c9ed4cf6ac4360a9378a297107b99a712d9edc4eac6d",
+      "exact": true
+    },
+    {
+      "cell": [
+        22,
+        0
+      ],
+      "base": 2964,
+      "paint": 2903,
+      "screen_entries": [
+        21402,
+        21485,
+        20849,
+        21239
+      ],
+      "expected_sha256": "ccc5b3b75ecad8cb7ae5e00fe2c51f3dfd2be502a7c76f89eef97b4aaaba1a1a",
+      "actual_sha256": "ccc5b3b75ecad8cb7ae5e00fe2c51f3dfd2be502a7c76f89eef97b4aaaba1a1a",
+      "exact": true
+    },
+    {
+      "cell": [
+        23,
+        0
+      ],
+      "base": 2965,
+      "paint": 2904,
+      "screen_entries": [
+        21486,
+        23083,
+        21487,
+        21488
+      ],
+      "expected_sha256": "9e5de31102cb35d276400543e23334684f861a202e92ad55e7fbd39d14c81efb",
+      "actual_sha256": "9e5de31102cb35d276400543e23334684f861a202e92ad55e7fbd39d14c81efb",
+      "exact": true
+    },
+    {
+      "cell": [
+        6,
+        1
+      ],
+      "base": 2972,
+      "paint": 2915,
+      "screen_entries": [
+        21467,
+        20892,
+        21468,
+        21469
+      ],
+      "expected_sha256": "4827f0465befced2089b4ef219b33939ce7c0d3feac6a3c8e081ecf5e3f053b4",
+      "actual_sha256": "4827f0465befced2089b4ef219b33939ce7c0d3feac6a3c8e081ecf5e3f053b4",
+      "exact": true
+    },
+    {
+      "cell": [
+        7,
+        1
+      ],
+      "base": 2973,
+      "paint": 2916,
+      "screen_entries": [
+        20895,
+        20896,
+        21470,
+        21471
+      ],
+      "expected_sha256": "dba8a7858d3a2663191b3a57fc28842db23e3193fb016c20612f66edfccacd6a",
+      "actual_sha256": "dba8a7858d3a2663191b3a57fc28842db23e3193fb016c20612f66edfccacd6a",
+      "exact": true
+    },
+    {
+      "cell": [
+        8,
+        1
+      ],
+      "base": 2974,
+      "paint": 2917,
+      "screen_entries": [
+        20899,
+        21243,
+        21472,
+        21473
+      ],
+      "expected_sha256": "983ef8d0e2c46f255f2cd198b5f79bacc21af889374c1b12714738b89869445b",
+      "actual_sha256": "983ef8d0e2c46f255f2cd198b5f79bacc21af889374c1b12714738b89869445b",
+      "exact": true
+    },
+    {
+      "cell": [
+        9,
+        1
+      ],
+      "base": 2975,
+      "paint": 2918,
+      "screen_entries": [
+        20903,
+        20904,
+        21474,
+        21475
+      ],
+      "expected_sha256": "fc917f41c99c0cbf202b465cd80dc0400904509eb27b97d43205d6b583a6b8e2",
+      "actual_sha256": "fc917f41c99c0cbf202b465cd80dc0400904509eb27b97d43205d6b583a6b8e2",
+      "exact": true
+    },
+    {
+      "cell": [
+        10,
+        1
+      ],
+      "base": 2976,
+      "paint": 2919,
+      "screen_entries": [
+        20907,
+        20908,
+        21476,
+        21477
+      ],
+      "expected_sha256": "9e42580b6aeb627fbbb87f246104ead05049a3bc712098256b6c9e04fdd62cf2",
+      "actual_sha256": "9e42580b6aeb627fbbb87f246104ead05049a3bc712098256b6c9e04fdd62cf2",
+      "exact": true
+    },
+    {
+      "cell": [
+        11,
+        1
+      ],
+      "base": 2969,
+      "paint": 2920,
+      "screen_entries": [
+        20911,
+        21478,
+        21479,
+        21480
+      ],
+      "expected_sha256": "503862b5e7c8eafcded456d219764b6c0f4d564284701c0e25d46410a420c60e",
+      "actual_sha256": "503862b5e7c8eafcded456d219764b6c0f4d564284701c0e25d46410a420c60e",
+      "exact": true
+    },
+    {
+      "cell": [
+        20,
+        1
+      ],
+      "base": 2970,
+      "paint": 2905,
+      "screen_entries": [
+        21489,
+        20855,
+        21490,
+        21491
+      ],
+      "expected_sha256": "aa6e674693d391703ef94561a015b6fa997208410e7ab5004a4a1697be2c813d",
+      "actual_sha256": "aa6e674693d391703ef94561a015b6fa997208410e7ab5004a4a1697be2c813d",
+      "exact": true
+    },
+    {
+      "cell": [
+        21,
+        1
+      ],
+      "base": 2971,
+      "paint": 2906,
+      "screen_entries": [
+        20858,
+        20859,
+        21492,
+        21493
+      ],
+      "expected_sha256": "532b7c8da4d9d2642c689385fd0e0c5d6fa1a1dad3ce01caa6a4905ed8346d07",
+      "actual_sha256": "532b7c8da4d9d2642c689385fd0e0c5d6fa1a1dad3ce01caa6a4905ed8346d07",
+      "exact": true
+    },
+    {
+      "cell": [
+        22,
+        1
+      ],
+      "base": 2972,
+      "paint": 2907,
+      "screen_entries": [
+        20862,
+        21240,
+        21494,
+        21495
+      ],
+      "expected_sha256": "41050029e9951d5f47080dbf8a77c67a77e0cde17f0129fa1d41936150b1c211",
+      "actual_sha256": "41050029e9951d5f47080dbf8a77c67a77e0cde17f0129fa1d41936150b1c211",
+      "exact": true
+    },
+    {
+      "cell": [
+        23,
+        1
+      ],
+      "base": 2973,
+      "paint": 2908,
+      "screen_entries": [
+        20866,
+        21496,
+        21497,
+        21498
+      ],
+      "expected_sha256": "a0add9dfb4c16d920ab91ab4056fdf9cf95d0cd0bd69bd09bc30ab2845f84230",
+      "actual_sha256": "a0add9dfb4c16d920ab91ab4056fdf9cf95d0cd0bd69bd09bc30ab2845f84230",
+      "exact": true
+    },
+    {
+      "cell": [
+        14,
+        10
+      ],
+      "base": 2972,
+      "paint": 2933,
+      "screen_entries": [
+        21063,
+        21064,
+        20500,
+        21374
+      ],
+      "expected_sha256": "ae7a7c723d10912124fe0d44a4c320081e60ca10c2db6676b7f945211765aaa1",
+      "actual_sha256": "ae7a7c723d10912124fe0d44a4c320081e60ca10c2db6676b7f945211765aaa1",
+      "exact": true
+    },
+    {
+      "cell": [
+        15,
+        10
+      ],
+      "base": 2973,
+      "paint": 2934,
+      "screen_entries": [
+        21375,
+        21376,
+        21377,
+        20963
+      ],
+      "expected_sha256": "0270a3aaf649512dd76500df924f2a4dce3fc208d50b7089a4eb9415e885da3b",
+      "actual_sha256": "0270a3aaf649512dd76500df924f2a4dce3fc208d50b7089a4eb9415e885da3b",
+      "exact": true
+    },
+    {
+      "cell": [
+        16,
+        10
+      ],
+      "base": 2974,
+      "paint": 2935,
+      "screen_entries": [
+        21378,
+        21379,
+        20966,
+        21380
+      ],
+      "expected_sha256": "3a94535249d8193c9d78ab75d87d66cdaf480e2abe9b73d9fdbee8eb7396691b",
+      "actual_sha256": "3a94535249d8193c9d78ab75d87d66cdaf480e2abe9b73d9fdbee8eb7396691b",
+      "exact": true
+    },
+    {
+      "cell": [
+        17,
+        10
+      ],
+      "base": 2975,
+      "paint": 2936,
+      "screen_entries": [
+        20481,
+        20481,
+        21381,
+        20500
+      ],
+      "expected_sha256": "070cc22480c8b14c6611b9c2ca936bc93aea9371b8c5c7d593a6fc34d51f9786",
+      "actual_sha256": "070cc22480c8b14c6611b9c2ca936bc93aea9371b8c5c7d593a6fc34d51f9786",
+      "exact": true
+    },
+    {
+      "cell": [
+        21,
+        10
+      ],
+      "base": 2971,
+      "paint": 2901,
+      "screen_entries": [
+        21063,
+        21436,
+        21437,
+        20842
+      ],
+      "expected_sha256": "0c627233511c33bc53a893c5dc7d628992c743073f678c9a5ac813cd9df6f580",
+      "actual_sha256": "0c627233511c33bc53a893c5dc7d628992c743073f678c9a5ac813cd9df6f580",
+      "exact": true
+    },
+    {
+      "cell": [
+        22,
+        10
+      ],
+      "base": 2972,
+      "paint": 2902,
+      "screen_entries": [
+        21438,
+        21439,
+        20845,
+        20846
+      ],
+      "expected_sha256": "36208052cda9947e6627ae8715c9e7224d00005f04e965c1c7a231217ff8a8a6",
+      "actual_sha256": "36208052cda9947e6627ae8715c9e7224d00005f04e965c1c7a231217ff8a8a6",
+      "exact": true
+    },
+    {
+      "cell": [
+        23,
+        10
+      ],
+      "base": 2973,
+      "paint": 2903,
+      "screen_entries": [
+        21440,
+        21441,
+        20849,
+        21239
+      ],
+      "expected_sha256": "cf00feb37fed2ba565d054f8fdb136d6807154b6db716bb7327ac37b7e2f9797",
+      "actual_sha256": "cf00feb37fed2ba565d054f8fdb136d6807154b6db716bb7327ac37b7e2f9797",
+      "exact": true
+    },
+    {
+      "cell": [
+        24,
+        10
+      ],
+      "base": 2974,
+      "paint": 2904,
+      "screen_entries": [
+        21442,
+        20481,
+        21443,
+        21444
+      ],
+      "expected_sha256": "be090a5fc6fe8750c9d2630202814fa5079929c14a3ee9309de0d86f06c9047c",
+      "actual_sha256": "be090a5fc6fe8750c9d2630202814fa5079929c14a3ee9309de0d86f06c9047c",
+      "exact": true
+    },
+    {
+      "cell": [
+        7,
+        11
+      ],
+      "base": 2957,
+      "paint": 2901,
+      "screen_entries": [
+        20500,
+        21398,
+        21399,
+        20842
+      ],
+      "expected_sha256": "ef4fd2a29e25edb32e28f902fc81981ce59024177c7c623124fff874eebce6d4",
+      "actual_sha256": "ef4fd2a29e25edb32e28f902fc81981ce59024177c7c623124fff874eebce6d4",
+      "exact": true
+    },
+    {
+      "cell": [
+        8,
+        11
+      ],
+      "base": 2958,
+      "paint": 2902,
+      "screen_entries": [
+        21400,
+        21401,
+        20845,
+        20846
+      ],
+      "expected_sha256": "25efad3cea64b08aa3bdf8d64763f1ad158cc20bf5a6c642fb0c08cea5bbdc58",
+      "actual_sha256": "25efad3cea64b08aa3bdf8d64763f1ad158cc20bf5a6c642fb0c08cea5bbdc58",
+      "exact": true
+    },
+    {
+      "cell": [
+        9,
+        11
+      ],
+      "base": 2959,
+      "paint": 2903,
+      "screen_entries": [
+        21402,
+        21403,
+        20849,
+        21239
+      ],
+      "expected_sha256": "86fe32b09127467350e8a593a852f910476fa9eb5750efa1062b862977aeb91f",
+      "actual_sha256": "86fe32b09127467350e8a593a852f910476fa9eb5750efa1062b862977aeb91f",
+      "exact": true
+    },
+    {
+      "cell": [
+        10,
+        11
+      ],
+      "base": 2960,
+      "paint": 2904,
+      "screen_entries": [
+        21404,
+        20500,
+        21405,
+        21406
+      ],
+      "expected_sha256": "48cf9a6a3af89ee198957c84651e162b231c74994a4eb6c6beea866f1a5ac438",
+      "actual_sha256": "48cf9a6a3af89ee198957c84651e162b231c74994a4eb6c6beea866f1a5ac438",
+      "exact": true
+    },
+    {
+      "cell": [
+        14,
+        11
+      ],
+      "base": 2956,
+      "paint": 2937,
+      "screen_entries": [
+        21382,
+        21383,
+        21384,
+        20972
+      ],
+      "expected_sha256": "78ab21734ee261a62bad996c5a4c35d7f91f2129d7a695759253a2aefdb8e61e",
+      "actual_sha256": "78ab21734ee261a62bad996c5a4c35d7f91f2129d7a695759253a2aefdb8e61e",
+      "exact": true
+    },
+    {
+      "cell": [
+        15,
+        11
+      ],
+      "base": 2957,
+      "paint": 2938,
+      "screen_entries": [
+        20973,
+        20974,
+        20975,
+        20976
+      ],
+      "expected_sha256": "2459cbec998310d86cd4223e4c999510ca705648c4e39e25556c597dbf5857fc",
+      "actual_sha256": "2459cbec998310d86cd4223e4c999510ca705648c4e39e25556c597dbf5857fc",
+      "exact": true
+    },
+    {
+      "cell": [
+        16,
+        11
+      ],
+      "base": 2958,
+      "paint": 2939,
+      "screen_entries": [
+        21246,
+        20978,
+        21247,
+        20980
+      ],
+      "expected_sha256": "f8a45e3ad9a000fce1f69a785b6fd3cef0b9d0adc5c7c62513f89900de45f7f2",
+      "actual_sha256": "f8a45e3ad9a000fce1f69a785b6fd3cef0b9d0adc5c7c62513f89900de45f7f2",
+      "exact": true
+    },
+    {
+      "cell": [
+        17,
+        11
+      ],
+      "base": 2959,
+      "paint": 2940,
+      "screen_entries": [
+        21385,
+        21386,
+        20983,
+        21387
+      ],
+      "expected_sha256": "4c37015e842efbb8d3d81d8902d7fcee42e3f0ad0dbcfe5d18d9e0ccf8a9854b",
+      "actual_sha256": "4c37015e842efbb8d3d81d8902d7fcee42e3f0ad0dbcfe5d18d9e0ccf8a9854b",
+      "exact": true
+    },
+    {
+      "cell": [
+        21,
+        11
+      ],
+      "base": 2955,
+      "paint": 2905,
+      "screen_entries": [
+        21445,
+        20855,
+        21446,
+        21447
+      ],
+      "expected_sha256": "96ac4c5d0cfb3917aac32edabe6639f0f8c051247557f78993e2e43a1bb60c3a",
+      "actual_sha256": "96ac4c5d0cfb3917aac32edabe6639f0f8c051247557f78993e2e43a1bb60c3a",
+      "exact": true
+    },
+    {
+      "cell": [
+        22,
+        11
+      ],
+      "base": 2956,
+      "paint": 2906,
+      "screen_entries": [
+        20858,
+        20859,
+        21448,
+        21449
+      ],
+      "expected_sha256": "a7739ea8c1ab4a2f0b6c7661a09aeaf5cd2df53c516f3019356ed34c7a05144c",
+      "actual_sha256": "a7739ea8c1ab4a2f0b6c7661a09aeaf5cd2df53c516f3019356ed34c7a05144c",
+      "exact": true
+    },
+    {
+      "cell": [
+        23,
+        11
+      ],
+      "base": 2957,
+      "paint": 2907,
+      "screen_entries": [
+        20862,
+        21240,
+        21450,
+        21451
+      ],
+      "expected_sha256": "55cb1e9297d2df69d5c8525ebff375f030ef993f5e05322013067b9376ec9ace",
+      "actual_sha256": "55cb1e9297d2df69d5c8525ebff375f030ef993f5e05322013067b9376ec9ace",
+      "exact": true
+    },
+    {
+      "cell": [
+        24,
+        11
+      ],
+      "base": 2958,
+      "paint": 2908,
+      "screen_entries": [
+        20866,
+        21452,
+        21453,
+        21454
+      ],
+      "expected_sha256": "39a9eb9b297daa54c2a46b9afe2c2ed412a7371dd13c6a6487c9a38d4a0c9830",
+      "actual_sha256": "39a9eb9b297daa54c2a46b9afe2c2ed412a7371dd13c6a6487c9a38d4a0c9830",
+      "exact": true
+    },
+    {
+      "cell": [
+        25,
+        11
+      ],
+      "base": 2959,
+      "paint": 2893,
+      "screen_entries": [
+        20500,
+        21417,
+        21418,
+        20813
+      ],
+      "expected_sha256": "6121fe10332ee61e2f01b889130c2c8d0eee70ee7a0411e1cd4f228c7b2fe44e",
+      "actual_sha256": "6121fe10332ee61e2f01b889130c2c8d0eee70ee7a0411e1cd4f228c7b2fe44e",
+      "exact": true
+    },
+    {
+      "cell": [
+        26,
+        11
+      ],
+      "base": 2960,
+      "paint": 2894,
+      "screen_entries": [
+        21419,
+        21420,
+        20816,
+        21237
+      ],
+      "expected_sha256": "9428c8a0ce516e6991d05b4e2bdb78685aeaa4cab9275642bd6b43e2bfbf9477",
+      "actual_sha256": "9428c8a0ce516e6991d05b4e2bdb78685aeaa4cab9275642bd6b43e2bfbf9477",
+      "exact": true
+    },
+    {
+      "cell": [
+        27,
+        11
+      ],
+      "base": 2953,
+      "paint": 2895,
+      "screen_entries": [
+        21421,
+        21422,
+        20820,
+        20821
+      ],
+      "expected_sha256": "722ea6cfe5fe46c06c97fa4392332c650c745c5bbff1feb1b6cde7a05a9f8d9e",
+      "actual_sha256": "722ea6cfe5fe46c06c97fa4392332c650c745c5bbff1feb1b6cde7a05a9f8d9e",
+      "exact": true
+    },
+    {
+      "cell": [
+        28,
+        11
+      ],
+      "base": 2954,
+      "paint": 2896,
+      "screen_entries": [
+        21423,
+        21033,
+        21424,
+        21425
+      ],
+      "expected_sha256": "dce0ab15a376cc63903c82ef575ff24217926ecb1f049c9de8ca1b515401a8fb",
+      "actual_sha256": "dce0ab15a376cc63903c82ef575ff24217926ecb1f049c9de8ca1b515401a8fb",
+      "exact": true
+    },
+    {
+      "cell": [
+        7,
+        12
+      ],
+      "base": 2965,
+      "paint": 2905,
+      "screen_entries": [
+        21407,
+        20855,
+        21408,
+        21409
+      ],
+      "expected_sha256": "08f935c3b0218d1629a58964d75ca4c833e5caa120471264eb60675196ce6778",
+      "actual_sha256": "08f935c3b0218d1629a58964d75ca4c833e5caa120471264eb60675196ce6778",
+      "exact": true
+    },
+    {
+      "cell": [
+        8,
+        12
+      ],
+      "base": 2966,
+      "paint": 2906,
+      "screen_entries": [
+        20858,
+        20859,
+        21410,
+        21411
+      ],
+      "expected_sha256": "c11ccd7a481111ea463ef929191be083913520eb47e16e3320e4a9576829295e",
+      "actual_sha256": "c11ccd7a481111ea463ef929191be083913520eb47e16e3320e4a9576829295e",
+      "exact": true
+    },
+    {
+      "cell": [
+        9,
+        12
+      ],
+      "base": 2967,
+      "paint": 2907,
+      "screen_entries": [
+        20862,
+        21240,
+        21412,
+        21413
+      ],
+      "expected_sha256": "24ad5e31cced9a40f15835c920e48b103ec875230b5c69417feee50915f4bc75",
+      "actual_sha256": "24ad5e31cced9a40f15835c920e48b103ec875230b5c69417feee50915f4bc75",
+      "exact": true
+    },
+    {
+      "cell": [
+        10,
+        12
+      ],
+      "base": 2968,
+      "paint": 2908,
+      "screen_entries": [
+        20866,
+        21414,
+        21415,
+        21416
+      ],
+      "expected_sha256": "b30042aae9af398109603292230866ced8e7a4de6a4b56a55940391c1b2364a8",
+      "actual_sha256": "b30042aae9af398109603292230866ced8e7a4de6a4b56a55940391c1b2364a8",
+      "exact": true
+    },
+    {
+      "cell": [
+        14,
+        12
+      ],
+      "base": 2964,
+      "paint": 2941,
+      "screen_entries": [
+        21388,
+        20986,
+        21389,
+        21390
+      ],
+      "expected_sha256": "8c680af8bcc78d1c3cd200042586943695a34d0cc95826dad0fb109ecf7eed30",
+      "actual_sha256": "8c680af8bcc78d1c3cd200042586943695a34d0cc95826dad0fb109ecf7eed30",
+      "exact": true
+    },
+    {
+      "cell": [
+        15,
+        12
+      ],
+      "base": 2965,
+      "paint": 2942,
+      "screen_entries": [
+        20989,
+        20990,
+        21391,
+        21392
+      ],
+      "expected_sha256": "4e496e0edc386651607aca0d766d06f9fafe4f29e8bcbf1f8612965ba92201b2",
+      "actual_sha256": "4e496e0edc386651607aca0d766d06f9fafe4f29e8bcbf1f8612965ba92201b2",
+      "exact": true
+    },
+    {
+      "cell": [
+        16,
+        12
+      ],
+      "base": 2966,
+      "paint": 2943,
+      "screen_entries": [
+        20993,
+        20994,
+        21393,
+        21394
+      ],
+      "expected_sha256": "66609b20a0807e1c9cdab1d5807a090dd6930d226ce5b8b8f9708bd8ada8e8a1",
+      "actual_sha256": "66609b20a0807e1c9cdab1d5807a090dd6930d226ce5b8b8f9708bd8ada8e8a1",
+      "exact": true
+    },
+    {
+      "cell": [
+        17,
+        12
+      ],
+      "base": 2967,
+      "paint": 2944,
+      "screen_entries": [
+        20997,
+        21395,
+        21396,
+        21397
+      ],
+      "expected_sha256": "125f16ee6033f5860b12f404fc07289c641f939700822f3568dc3fa0037446e0",
+      "actual_sha256": "125f16ee6033f5860b12f404fc07289c641f939700822f3568dc3fa0037446e0",
+      "exact": true
+    },
+    {
+      "cell": [
+        25,
+        12
+      ],
+      "base": 2967,
+      "paint": 2897,
+      "screen_entries": [
+        21426,
+        20826,
+        21427,
+        21428
+      ],
+      "expected_sha256": "82147208bd2398468babc54c38128c492fd0d23d20239a8484d740ffec57f828",
+      "actual_sha256": "82147208bd2398468babc54c38128c492fd0d23d20239a8484d740ffec57f828",
+      "exact": true
+    },
+    {
+      "cell": [
+        26,
+        12
+      ],
+      "base": 2968,
+      "paint": 2898,
+      "screen_entries": [
+        20829,
+        21238,
+        21429,
+        21430
+      ],
+      "expected_sha256": "39dfd575558fdceb46570a7672435f595e48f3065c36b98de61130b45aae3085",
+      "actual_sha256": "39dfd575558fdceb46570a7672435f595e48f3065c36b98de61130b45aae3085",
+      "exact": true
+    },
+    {
+      "cell": [
+        27,
+        12
+      ],
+      "base": 2961,
+      "paint": 2899,
+      "screen_entries": [
+        20833,
+        20834,
+        21431,
+        21432
+      ],
+      "expected_sha256": "917b2b2eab22ad0d256a9fd88bad53a5be017ef5b408e3e4f927735e4eff935a",
+      "actual_sha256": "917b2b2eab22ad0d256a9fd88bad53a5be017ef5b408e3e4f927735e4eff935a",
+      "exact": true
+    },
+    {
+      "cell": [
+        28,
+        12
+      ],
+      "base": 2962,
+      "paint": 2900,
+      "screen_entries": [
+        20837,
+        21433,
+        21434,
+        21435
+      ],
+      "expected_sha256": "17414f7e21d94d491abd57b30bcbd7c9be662597d56e6e66068d1cdc3b86834d",
+      "actual_sha256": "17414f7e21d94d491abd57b30bcbd7c9be662597d56e6e66068d1cdc3b86834d",
+      "exact": true
+    },
+    {
+      "cell": [
+        21,
+        13
+      ],
+      "base": 2971,
+      "paint": 2901,
+      "screen_entries": [
+        21063,
+        21436,
+        21437,
+        20842
+      ],
+      "expected_sha256": "0c627233511c33bc53a893c5dc7d628992c743073f678c9a5ac813cd9df6f580",
+      "actual_sha256": "0c627233511c33bc53a893c5dc7d628992c743073f678c9a5ac813cd9df6f580",
+      "exact": true
+    },
+    {
+      "cell": [
+        22,
+        13
+      ],
+      "base": 2972,
+      "paint": 2902,
+      "screen_entries": [
+        21438,
+        21439,
+        20845,
+        20846
+      ],
+      "expected_sha256": "36208052cda9947e6627ae8715c9e7224d00005f04e965c1c7a231217ff8a8a6",
+      "actual_sha256": "36208052cda9947e6627ae8715c9e7224d00005f04e965c1c7a231217ff8a8a6",
+      "exact": true
+    },
+    {
+      "cell": [
+        23,
+        13
+      ],
+      "base": 2973,
+      "paint": 2903,
+      "screen_entries": [
+        21440,
+        21441,
+        20849,
+        21239
+      ],
+      "expected_sha256": "cf00feb37fed2ba565d054f8fdb136d6807154b6db716bb7327ac37b7e2f9797",
+      "actual_sha256": "cf00feb37fed2ba565d054f8fdb136d6807154b6db716bb7327ac37b7e2f9797",
+      "exact": true
+    },
+    {
+      "cell": [
+        24,
+        13
+      ],
+      "base": 2974,
+      "paint": 2904,
+      "screen_entries": [
+        21442,
+        20481,
+        21443,
+        21444
+      ],
+      "expected_sha256": "be090a5fc6fe8750c9d2630202814fa5079929c14a3ee9309de0d86f06c9047c",
+      "actual_sha256": "be090a5fc6fe8750c9d2630202814fa5079929c14a3ee9309de0d86f06c9047c",
+      "exact": true
+    },
+    {
+      "cell": [
+        21,
+        14
+      ],
+      "base": 2955,
+      "paint": 2905,
+      "screen_entries": [
+        21445,
+        20855,
+        21446,
+        21447
+      ],
+      "expected_sha256": "96ac4c5d0cfb3917aac32edabe6639f0f8c051247557f78993e2e43a1bb60c3a",
+      "actual_sha256": "96ac4c5d0cfb3917aac32edabe6639f0f8c051247557f78993e2e43a1bb60c3a",
+      "exact": true
+    },
+    {
+      "cell": [
+        22,
+        14
+      ],
+      "base": 2956,
+      "paint": 2906,
+      "screen_entries": [
+        20858,
+        20859,
+        21448,
+        21449
+      ],
+      "expected_sha256": "a7739ea8c1ab4a2f0b6c7661a09aeaf5cd2df53c516f3019356ed34c7a05144c",
+      "actual_sha256": "a7739ea8c1ab4a2f0b6c7661a09aeaf5cd2df53c516f3019356ed34c7a05144c",
+      "exact": true
+    },
+    {
+      "cell": [
+        23,
+        14
+      ],
+      "base": 2957,
+      "paint": 2907,
+      "screen_entries": [
+        20862,
+        21240,
+        21450,
+        21451
+      ],
+      "expected_sha256": "55cb1e9297d2df69d5c8525ebff375f030ef993f5e05322013067b9376ec9ace",
+      "actual_sha256": "55cb1e9297d2df69d5c8525ebff375f030ef993f5e05322013067b9376ec9ace",
+      "exact": true
+    },
+    {
+      "cell": [
+        24,
+        14
+      ],
+      "base": 2958,
+      "paint": 2908,
+      "screen_entries": [
+        20866,
+        21452,
+        21453,
+        21454
+      ],
+      "expected_sha256": "39a9eb9b297daa54c2a46b9afe2c2ed412a7371dd13c6a6487c9a38d4a0c9830",
+      "actual_sha256": "39a9eb9b297daa54c2a46b9afe2c2ed412a7371dd13c6a6487c9a38d4a0c9830",
+      "exact": true
+    }
+  ],
+  "checks": [
+    {
+      "name": "native BG2 equals real backing plus alpha paint at6,0",
+      "passed": true
+    },
+    {
+      "name": "native BG2 equals real backing plus alpha paint at7,0",
+      "passed": true
+    },
+    {
+      "name": "native BG2 equals real backing plus alpha paint at8,0",
+      "passed": true
+    },
+    {
+      "name": "native BG2 equals real backing plus alpha paint at9,0",
+      "passed": true
+    },
+    {
+      "name": "native BG2 equals real backing plus alpha paint at10,0",
+      "passed": true
+    },
+    {
+      "name": "native BG2 equals real backing plus alpha paint at11,0",
+      "passed": true
+    },
+    {
+      "name": "native BG2 equals real backing plus alpha paint at20,0",
+      "passed": true
+    },
+    {
+      "name": "native BG2 equals real backing plus alpha paint at21,0",
+      "passed": true
+    },
+    {
+      "name": "native BG2 equals real backing plus alpha paint at22,0",
+      "passed": true
+    },
+    {
+      "name": "native BG2 equals real backing plus alpha paint at23,0",
+      "passed": true
+    },
+    {
+      "name": "native BG2 equals real backing plus alpha paint at6,1",
+      "passed": true
+    },
+    {
+      "name": "native BG2 equals real backing plus alpha paint at7,1",
+      "passed": true
+    },
+    {
+      "name": "native BG2 equals real backing plus alpha paint at8,1",
+      "passed": true
+    },
+    {
+      "name": "native BG2 equals real backing plus alpha paint at9,1",
+      "passed": true
+    },
+    {
+      "name": "native BG2 equals real backing plus alpha paint at10,1",
+      "passed": true
+    },
+    {
+      "name": "native BG2 equals real backing plus alpha paint at11,1",
+      "passed": true
+    },
+    {
+      "name": "native BG2 equals real backing plus alpha paint at20,1",
+      "passed": true
+    },
+    {
+      "name": "native BG2 equals real backing plus alpha paint at21,1",
+      "passed": true
+    },
+    {
+      "name": "native BG2 equals real backing plus alpha paint at22,1",
+      "passed": true
+    },
+    {
+      "name": "native BG2 equals real backing plus alpha paint at23,1",
+      "passed": true
+    },
+    {
+      "name": "native BG2 equals real backing plus alpha paint at14,10",
+      "passed": true
+    },
+    {
+      "name": "native BG2 equals real backing plus alpha paint at15,10",
+      "passed": true
+    },
+    {
+      "name": "native BG2 equals real backing plus alpha paint at16,10",
+      "passed": true
+    },
+    {
+      "name": "native BG2 equals real backing plus alpha paint at17,10",
+      "passed": true
+    },
+    {
+      "name": "native BG2 equals real backing plus alpha paint at21,10",
+      "passed": true
+    },
+    {
+      "name": "native BG2 equals real backing plus alpha paint at22,10",
+      "passed": true
+    },
+    {
+      "name": "native BG2 equals real backing plus alpha paint at23,10",
+      "passed": true
+    },
+    {
+      "name": "native BG2 equals real backing plus alpha paint at24,10",
+      "passed": true
+    },
+    {
+      "name": "native BG2 equals real backing plus alpha paint at7,11",
+      "passed": true
+    },
+    {
+      "name": "native BG2 equals real backing plus alpha paint at8,11",
+      "passed": true
+    },
+    {
+      "name": "native BG2 equals real backing plus alpha paint at9,11",
+      "passed": true
+    },
+    {
+      "name": "native BG2 equals real backing plus alpha paint at10,11",
+      "passed": true
+    },
+    {
+      "name": "native BG2 equals real backing plus alpha paint at14,11",
+      "passed": true
+    },
+    {
+      "name": "native BG2 equals real backing plus alpha paint at15,11",
+      "passed": true
+    },
+    {
+      "name": "native BG2 equals real backing plus alpha paint at16,11",
+      "passed": true
+    },
+    {
+      "name": "native BG2 equals real backing plus alpha paint at17,11",
+      "passed": true
+    },
+    {
+      "name": "native BG2 equals real backing plus alpha paint at21,11",
+      "passed": true
+    },
+    {
+      "name": "native BG2 equals real backing plus alpha paint at22,11",
+      "passed": true
+    },
+    {
+      "name": "native BG2 equals real backing plus alpha paint at23,11",
+      "passed": true
+    },
+    {
+      "name": "native BG2 equals real backing plus alpha paint at24,11",
+      "passed": true
+    },
+    {
+      "name": "native BG2 equals real backing plus alpha paint at25,11",
+      "passed": true
+    },
+    {
+      "name": "native BG2 equals real backing plus alpha paint at26,11",
+      "passed": true
+    },
+    {
+      "name": "native BG2 equals real backing plus alpha paint at27,11",
+      "passed": true
+    },
+    {
+      "name": "native BG2 equals real backing plus alpha paint at28,11",
+      "passed": true
+    },
+    {
+      "name": "native BG2 equals real backing plus alpha paint at7,12",
+      "passed": true
+    },
+    {
+      "name": "native BG2 equals real backing plus alpha paint at8,12",
+      "passed": true
+    },
+    {
+      "name": "native BG2 equals real backing plus alpha paint at9,12",
+      "passed": true
+    },
+    {
+      "name": "native BG2 equals real backing plus alpha paint at10,12",
+      "passed": true
+    },
+    {
+      "name": "native BG2 equals real backing plus alpha paint at14,12",
+      "passed": true
+    },
+    {
+      "name": "native BG2 equals real backing plus alpha paint at15,12",
+      "passed": true
+    },
+    {
+      "name": "native BG2 equals real backing plus alpha paint at16,12",
+      "passed": true
+    },
+    {
+      "name": "native BG2 equals real backing plus alpha paint at17,12",
+      "passed": true
+    },
+    {
+      "name": "native BG2 equals real backing plus alpha paint at25,12",
+      "passed": true
+    },
+    {
+      "name": "native BG2 equals real backing plus alpha paint at26,12",
+      "passed": true
+    },
+    {
+      "name": "native BG2 equals real backing plus alpha paint at27,12",
+      "passed": true
+    },
+    {
+      "name": "native BG2 equals real backing plus alpha paint at28,12",
+      "passed": true
+    },
+    {
+      "name": "native BG2 equals real backing plus alpha paint at21,13",
+      "passed": true
+    },
+    {
+      "name": "native BG2 equals real backing plus alpha paint at22,13",
+      "passed": true
+    },
+    {
+      "name": "native BG2 equals real backing plus alpha paint at23,13",
+      "passed": true
+    },
+    {
+      "name": "native BG2 equals real backing plus alpha paint at24,13",
+      "passed": true
+    },
+    {
+      "name": "native BG2 equals real backing plus alpha paint at21,14",
+      "passed": true
+    },
+    {
+      "name": "native BG2 equals real backing plus alpha paint at22,14",
+      "passed": true
+    },
+    {
+      "name": "native BG2 equals real backing plus alpha paint at23,14",
+      "passed": true
+    },
+    {
+      "name": "native BG2 equals real backing plus alpha paint at24,14",
+      "passed": true
+    },
+    {
+      "name": "room contains actual whole-panel wall paint",
+      "passed": true
+    },
+    {
+      "name": "dynamic blend subtiles fit128reserved chars",
+      "passed": true
+    }
+  ],
+  "complete": true
+}

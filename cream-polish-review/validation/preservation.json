@@ -1,0 +1,14 @@
+[
+  {
+    "profile": 6,
+    "expected": "2b8559c3cac89f483d3a34d48aa6eb5144a4fc2b3b7b265808b800672216a1b1",
+    "actual": "2b8559c3cac89f483d3a34d48aa6eb5144a4fc2b3b7b265808b800672216a1b1",
+    "exact": true
+  },
+  {
+    "profile": 0,
+    "expected": "0dd8554384b53e618140f8c61590fc7e6a7ff0888f296ece034a95f357b34fdd",
+    "actual": "0dd8554384b53e618140f8c61590fc7e6a7ff0888f296ece034a95f357b34fdd",
+    "exact": true
+  }
+]

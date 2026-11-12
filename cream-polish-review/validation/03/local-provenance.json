@@ -1,0 +1,489 @@
+{
+  "label": "Ordinary native240x160 real DOWN fall; isolated navigation/load fixtures",
+  "node": 43,
+  "edge": 0,
+  "target": 42,
+  "before": {
+    "frames": 418,
+    "clock": 407,
+    "run_frames": 249,
+    "state": 1,
+    "area": 3,
+    "cell": 21,
+    "node": 43,
+    "actor": {
+      "kind": 1,
+      "type": 0,
+      "state": 0,
+      "timer": 0,
+      "x": 176,
+      "y": 124,
+      "z": 0,
+      "speed": 0,
+      "hp": 0,
+      "coll": 0,
+      "facing": 2
+    },
+    "health": [
+      32,
+      32
+    ],
+    "text": 0
+  },
+  "after": {
+    "frames": 450,
+    "clock": 439,
+    "run_frames": 281,
+    "state": 1,
+    "area": 3,
+    "cell": 21,
+    "node": 42,
+    "actor": {
+      "kind": 1,
+      "type": 0,
+      "state": 0,
+      "timer": 34,
+      "x": 176,
+      "y": 302,
+      "z": 0,
+      "speed": 213,
+      "hp": 0,
+      "coll": 0,
+      "facing": 2
+    },
+    "health": [
+      32,
+      32
+    ],
+    "text": 0
+  },
+  "minimum_health": 32,
+  "frames": 32,
+  "source_metrics": {
+    "PanelCount": 8,
+    "PanelCells": 76,
+    "RimCount": 24,
+    "DropCount": 2,
+    "ToeCount": 26,
+    "fall": {
+      "x": 0,
+      "y": 0,
+      "w": 0,
+      "h": 0
+    },
+    "painted_wall_cells": 76
+  },
+  "landing_metrics": {
+    "PanelCount": 8,
+    "PanelCells": 76,
+    "RimCount": 24,
+    "DropCount": 2,
+    "ToeCount": 26,
+    "fall": {
+      "x": 0,
+      "y": 0,
+      "w": 0,
+      "h": 0
+    },
+    "painted_wall_cells": 76
+  },
+  "landing_cache": [
+    {
+      "x": 272,
+      "y": 110,
+      "from_node": 32,
+      "edge": 0,
+      "x0": 16,
+      "y0": 6,
+      "parts": 63,
+      "flags": 4,
+      "verified_parts": 63,
+      "final_ground_parts": [
+        {
+          "part": 0,
+          "cell": [
+            16,
+            6
+          ],
+          "actual_metatile": 2806,
+          "shade_role": 3,
+          "actual_match": true
+        },
+        {
+          "part": 1,
+          "cell": [
+            17,
+            6
+          ],
+          "actual_metatile": 2807,
+          "shade_role": 3,
+          "actual_match": true
+        },
+        {
+          "part": 2,
+          "cell": [
+            18,
+            6
+          ],
+          "actual_metatile": 2808,
+          "shade_role": 3,
+          "actual_match": true
+        },
+        {
+          "part": 3,
+          "cell": [
+            16,
+            7
+          ],
+          "actual_metatile": 2809,
+          "shade_role": 3,
+          "actual_match": true
+        },
+        {
+          "part": 4,
+          "cell": [
+            17,
+            7
+          ],
+          "actual_metatile": 2810,
+          "shade_role": 3,
+          "actual_match": true
+        },
+        {
+          "part": 5,
+          "cell": [
+            18,
+            7
+          ],
+          "actual_metatile": 2811,
+          "shade_role": 3,
+          "actual_match": true
+        }
+      ]
+    },
+    {
+      "x": 176,
+      "y": 302,
+      "from_node": 43,
+      "edge": 0,
+      "x0": 10,
+      "y0": 18,
+      "parts": 63,
+      "flags": 4,
+      "verified_parts": 63,
+      "final_ground_parts": [
+        {
+          "part": 0,
+          "cell": [
+            10,
+            18
+          ],
+          "actual_metatile": 2806,
+          "shade_role": 3,
+          "actual_match": true
+        },
+        {
+          "part": 1,
+          "cell": [
+            11,
+            18
+          ],
+          "actual_metatile": 2807,
+          "shade_role": 3,
+          "actual_match": true
+        },
+        {
+          "part": 2,
+          "cell": [
+            12,
+            18
+          ],
+          "actual_metatile": 2808,
+          "shade_role": 3,
+          "actual_match": true
+        },
+        {
+          "part": 3,
+          "cell": [
+            10,
+            19
+          ],
+          "actual_metatile": 2809,
+          "shade_role": 3,
+          "actual_match": true
+        },
+        {
+          "part": 4,
+          "cell": [
+            11,
+            19
+          ],
+          "actual_metatile": 2810,
+          "shade_role": 3,
+          "actual_match": true
+        },
+        {
+          "part": 5,
+          "cell": [
+            12,
+            19
+          ],
+          "actual_metatile": 2811,
+          "shade_role": 3,
+          "actual_match": true
+        }
+      ]
+    }
+  ],
+  "ordinary_review_camera": 0,
+  "raw_frames": [
+    {
+      "frame": 0,
+      "file": "raw-frames/frame-0000.png",
+      "state": {
+        "frames": 419,
+        "clock": 408,
+        "run_frames": 250,
+        "state": 1,
+        "area": 3,
+        "cell": 21,
+        "node": 42,
+        "actor": {
+          "kind": 1,
+          "type": 0,
+          "state": 5,
+          "timer": 4,
+          "x": 176,
+          "y": 302,
+          "z": 178,
+          "speed": 213,
+          "hp": 0,
+          "coll": 0,
+          "facing": 2
+        },
+        "health": [
+          32,
+          32
+        ],
+        "text": 0
+      }
+    },
+    {
+      "frame": 4,
+      "file": "raw-frames/frame-0004.png",
+      "state": {
+        "frames": 423,
+        "clock": 412,
+        "run_frames": 254,
+        "state": 1,
+        "area": 3,
+        "cell": 21,
+        "node": 42,
+        "actor": {
+          "kind": 1,
+          "type": 0,
+          "state": 5,
+          "timer": 8,
+          "x": 176,
+          "y": 302,
+          "z": 175,
+          "speed": 213,
+          "hp": 0,
+          "coll": 0,
+          "facing": 2
+        },
+        "health": [
+          32,
+          32
+        ],
+        "text": 0
+      }
+    },
+    {
+      "frame": 8,
+      "file": "raw-frames/frame-0008.png",
+      "state": {
+        "frames": 427,
+        "clock": 416,
+        "run_frames": 258,
+        "state": 1,
+        "area": 3,
+        "cell": 21,
+        "node": 42,
+        "actor": {
+          "kind": 1,
+          "type": 0,
+          "state": 5,
+          "timer": 12,
+          "x": 176,
+          "y": 302,
+          "z": 166,
+          "speed": 213,
+          "hp": 0,
+          "coll": 0,
+          "facing": 2
+        },
+        "health": [
+          32,
+          32
+        ],
+        "text": 0
+      }
+    },
+    {
+      "frame": 12,
+      "file": "raw-frames/frame-0012.png",
+      "state": {
+        "frames": 431,
+        "clock": 420,
+        "run_frames": 262,
+        "state": 1,
+        "area": 3,
+        "cell": 21,
+        "node": 42,
+        "actor": {
+          "kind": 1,
+          "type": 0,
+          "state": 5,
+          "timer": 16,
+          "x": 176,
+          "y": 302,
+          "z": 150,
+          "speed": 213,
+          "hp": 0,
+          "coll": 0,
+          "facing": 2
+        },
+        "health": [
+          32,
+          32
+        ],
+        "text": 0
+      }
+    },
+    {
+      "frame": 16,
+      "file": "raw-frames/frame-0016.png",
+      "state": {
+        "frames": 435,
+        "clock": 424,
+        "run_frames": 266,
+        "state": 1,
+        "area": 3,
+        "cell": 21,
+        "node": 42,
+        "actor": {
+          "kind": 1,
+          "type": 0,
+          "state": 5,
+          "timer": 20,
+          "x": 176,
+          "y": 302,
+          "z": 128,
+          "speed": 213,
+          "hp": 0,
+          "coll": 0,
+          "facing": 2
+        },
+        "health": [
+          32,
+          32
+        ],
+        "text": 0
+      }
+    },
+    {
+      "frame": 20,
+      "file": "raw-frames/frame-0020.png",
+      "state": {
+        "frames": 439,
+        "clock": 428,
+        "run_frames": 270,
+        "state": 1,
+        "area": 3,
+        "cell": 21,
+        "node": 42,
+        "actor": {
+          "kind": 1,
+          "type": 0,
+          "state": 5,
+          "timer": 24,
+          "x": 176,
+          "y": 302,
+          "z": 99,
+          "speed": 213,
+          "hp": 0,
+          "coll": 0,
+          "facing": 2
+        },
+        "health": [
+          32,
+          32
+        ],
+        "text": 0
+      }
+    },
+    {
+      "frame": 24,
+      "file": "raw-frames/frame-0024.png",
+      "state": {
+        "frames": 443,
+        "clock": 432,
+        "run_frames": 274,
+        "state": 1,
+        "area": 3,
+        "cell": 21,
+        "node": 42,
+        "actor": {
+          "kind": 1,
+          "type": 0,
+          "state": 5,
+          "timer": 28,
+          "x": 176,
+          "y": 302,
+          "z": 65,
+          "speed": 213,
+          "hp": 0,
+          "coll": 0,
+          "facing": 2
+        },
+        "health": [
+          32,
+          32
+        ],
+        "text": 0
+      }
+    },
+    {
+      "frame": 28,
+      "file": "raw-frames/frame-0028.png",
+      "state": {
+        "frames": 447,
+        "clock": 436,
+        "run_frames": 278,
+        "state": 1,
+        "area": 3,
+        "cell": 21,
+        "node": 42,
+        "actor": {
+          "kind": 1,
+          "type": 0,
+          "state": 5,
+          "timer": 32,
+          "x": 176,
+          "y": 302,
+          "z": 23,
+          "speed": 213,
+          "hp": 0,
+          "coll": 0,
+          "facing": 2
+        },
+        "health": [
+          32,
+          32
+        ],
+        "text": 0
+      }
+    }
+  ]
+}

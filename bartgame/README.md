@@ -66,6 +66,12 @@ use `PROFILE=0`; `PROFILE=1` is development-only cycle accounting.
 
 ## Cream environment studies
 
+[Five polish variations and15 ladder studies](../cream-polish-review/README.md)
+extend the review with finished rock silhouettes, projecting drop sills,
+wall-connected shade, paired ladders and animated blue1–3tile waterfalls.
+Build optional profiles with `BART_CREAM=7..11`. Earlier0–6 remain selectable;
+production0 and the previous6 ROMs reproduce exactly.
+
 [Fractured Rind synthesis](../cream-depth-review/README.md) combines the selected
 study2 contrast/arches with study3/5 rock structure and study5's exact palette.
 `BART_CREAM=6` fits unequal native cliff pictures and broad backing into the

@@ -1,0 +1,335 @@
+{
+  "rom_sha256": "a5e9f8da9614117d00f072bf94741a9a1e990ee658546f5f63d0d73cd94fb6aa",
+  "source_commit": "687e6c0e999a8df70ef2f7db55f36b9200ddde30",
+  "tool_sha256": "a02e2089d7ac6549a136491ae2b67c633d7783d9feeed5e57baa2b47d1e1f125",
+  "seed": 46247,
+  "before": {
+    "frames": 401,
+    "clock": 390,
+    "run_frames": 258,
+    "state": 1,
+    "area": 3,
+    "cell": 21,
+    "node": 42,
+    "actor": {
+      "kind": 1,
+      "type": 0,
+      "state": 0,
+      "timer": 0,
+      "x": 280,
+      "y": 266,
+      "z": 0,
+      "speed": 0,
+      "hp": 0,
+      "coll": 0,
+      "facing": 0
+    },
+    "health": [
+      32,
+      32
+    ],
+    "text": 0,
+    "camera": [
+      192,
+      162
+    ]
+  },
+  "paused": {
+    "frames": 414,
+    "clock": 403,
+    "run_frames": 259,
+    "state": 4,
+    "area": 3,
+    "cell": 21,
+    "node": 42,
+    "actor": {
+      "kind": 1,
+      "type": 0,
+      "state": 0,
+      "timer": 0,
+      "x": 280,
+      "y": 266,
+      "z": 0,
+      "speed": 0,
+      "hp": 0,
+      "coll": 0,
+      "facing": 0
+    },
+    "health": [
+      32,
+      32
+    ],
+    "text": 0,
+    "camera": [
+      192,
+      162
+    ]
+  },
+  "after": {
+    "frames": 427,
+    "clock": 416,
+    "run_frames": 266,
+    "state": 1,
+    "area": 3,
+    "cell": 21,
+    "node": 42,
+    "actor": {
+      "kind": 1,
+      "type": 0,
+      "state": 0,
+      "timer": 0,
+      "x": 280,
+      "y": 266,
+      "z": 0,
+      "speed": 0,
+      "hp": 0,
+      "coll": 0,
+      "facing": 0
+    },
+    "health": [
+      32,
+      32
+    ],
+    "text": 0,
+    "camera": [
+      164,
+      162
+    ]
+  },
+  "blend_overflow": 0,
+  "checks": [
+    {
+      "name": "normal opening draft completed with positive health",
+      "passed": true,
+      "observed": null
+    },
+    {
+      "name": "navigation begins in living ordinary ground state",
+      "passed": true,
+      "observed": {
+        "frames": 280,
+        "clock": 269,
+        "run_frames": 173,
+        "state": 1,
+        "area": 0,
+        "cell": 0,
+        "node": 42,
+        "actor": {
+          "kind": 1,
+          "type": 0,
+          "state": 0,
+          "timer": 0,
+          "x": 200,
+          "y": 270,
+          "z": 0,
+          "speed": 0,
+          "hp": 0,
+          "coll": 0,
+          "facing": 0
+        },
+        "health": [
+          32,
+          32
+        ],
+        "text": 0,
+        "camera": [
+          80,
+          160
+        ]
+      }
+    },
+    {
+      "name": "actual UP input enters Cream through Drain ladder",
+      "passed": true,
+      "observed": null
+    },
+    {
+      "name": "climb starts on dry physical floor below real shaft",
+      "passed": true,
+      "observed": {
+        "x": 280,
+        "y": 266,
+        "climb_x": 16,
+        "ground": 0
+      }
+    },
+    {
+      "name": "navigation begins in living ordinary ground state",
+      "passed": true,
+      "observed": {
+        "frames": 381,
+        "clock": 370,
+        "run_frames": 238,
+        "state": 1,
+        "area": 3,
+        "cell": 21,
+        "node": 42,
+        "actor": {
+          "kind": 1,
+          "type": 0,
+          "state": 0,
+          "timer": 0,
+          "x": 400,
+          "y": 350,
+          "z": 0,
+          "speed": 0,
+          "hp": 0,
+          "coll": 0,
+          "facing": 0
+        },
+        "health": [
+          32,
+          32
+        ],
+        "text": 0,
+        "camera": [
+          272,
+          224
+        ]
+      }
+    },
+    {
+      "name": "prepared hero remains alive below shaft",
+      "passed": true,
+      "observed": {
+        "frames": 401,
+        "clock": 390,
+        "run_frames": 258,
+        "state": 1,
+        "area": 3,
+        "cell": 21,
+        "node": 42,
+        "actor": {
+          "kind": 1,
+          "type": 0,
+          "state": 0,
+          "timer": 0,
+          "x": 280,
+          "y": 266,
+          "z": 0,
+          "speed": 0,
+          "hp": 0,
+          "coll": 0,
+          "facing": 0
+        },
+        "health": [
+          32,
+          32
+        ],
+        "text": 0,
+        "camera": [
+          192,
+          162
+        ]
+      }
+    },
+    {
+      "name": "all native BG2 masked cells exactly preserve actual backing",
+      "passed": true,
+      "observed": {
+        "painted_cells": 60,
+        "dynamic_subtiles": 117
+      }
+    },
+    {
+      "name": "real START opens the actual item menu",
+      "passed": true,
+      "observed": {
+        "frames": 414,
+        "clock": 403,
+        "run_frames": 259,
+        "state": 4,
+        "area": 3,
+        "cell": 21,
+        "node": 42,
+        "actor": {
+          "kind": 1,
+          "type": 0,
+          "state": 0,
+          "timer": 0,
+          "x": 280,
+          "y": 266,
+          "z": 0,
+          "speed": 0,
+          "hp": 0,
+          "coll": 0,
+          "facing": 0
+        },
+        "health": [
+          32,
+          32
+        ],
+        "text": 0,
+        "camera": [
+          192,
+          162
+        ]
+      }
+    },
+    {
+      "name": "real START closes menu to living field play",
+      "passed": true,
+      "observed": {
+        "frames": 427,
+        "clock": 416,
+        "run_frames": 266,
+        "state": 1,
+        "area": 3,
+        "cell": 21,
+        "node": 42,
+        "actor": {
+          "kind": 1,
+          "type": 0,
+          "state": 0,
+          "timer": 0,
+          "x": 280,
+          "y": 266,
+          "z": 0,
+          "speed": 0,
+          "hp": 0,
+          "coll": 0,
+          "facing": 0
+        },
+        "health": [
+          32,
+          32
+        ],
+        "text": 0,
+        "camera": [
+          164,
+          162
+        ]
+      }
+    },
+    {
+      "name": "menu roundtrip preserves complete semantic room and paintmap",
+      "passed": true,
+      "observed": null
+    },
+    {
+      "name": "all native BG2 masked cells exactly preserve actual backing",
+      "passed": true,
+      "observed": {
+        "painted_cells": 60,
+        "dynamic_subtiles": 117
+      }
+    },
+    {
+      "name": "actual menu close preserves exact native BG2alpha unions",
+      "passed": true,
+      "observed": null
+    },
+    {
+      "name": "menu close produces no blend overflow",
+      "passed": true,
+      "observed": 0
+    },
+    {
+      "name": "menu probe never enables frozen camera",
+      "passed": true,
+      "observed": null
+    }
+  ],
+  "complete": true,
+  "assignments": "Only existing disclosed title seed, room request and hero navigation/facing; actual START input opens/closes menu. No cache/VRAM/palette assignments."
+}

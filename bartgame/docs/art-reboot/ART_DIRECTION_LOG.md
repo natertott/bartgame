@@ -2038,3 +2038,17 @@ Native source sheets, independent ROM/geometry checks, frozen renderer surveys
 and ordinary live movement/water clips must retain separate labels and pinned
 provenance. Earlier0–6 profiles and all non-Cream artwork are protected. Final
 budgets, visual corrections and evidence belong in the polish review gallery.
+
+**Final evidence:** game/art source687e6c0e; five builds use852/879/866/894/892
+static BG characters and10 world palette banks, reserving128 characters for
+whole native silhouette composition.32,796 native/geometry checks pass over
+16,000 closed/open room builds. All five styles have three ordinary climbs,
+short drops, exact native BG-ground mask unions and visibly animated blue
+falls at all three widths. An earned four-room drop and real menu restoration
+checks retain their separate scopes. Opening water views now wait for natural
+camera settling, and every sampled clip frame proves on-screen water rather
+than merely inspecting an offscreen VRAM animation. Shader edges receive a
+small native transition; decorative mold no longer breaks floor shade, and
+stepped ledge endcaps remain stable on refresh. Load-time composition uses
+atomic budget admission and packed native rows; active frame timing and
+physical contracts stay unchanged. Default0 and previous6 reproduce exactly.
