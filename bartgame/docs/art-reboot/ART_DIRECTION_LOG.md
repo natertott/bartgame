@@ -1923,3 +1923,32 @@ actual return walk. An all-equipment fixture had masked the earlier unsafe
 arrival, so it cannot qualify this boundary. The independent regional arrival
 survey and the corrected controller review retain their separate scopes in
 the final regional qualification.
+
+## 2026-11-12 — Five Cream material and depth studies
+
+**Status:** exploratory, not adopted. The user finds the Cream flat, boring
+and lacking detail, and requests five brand-new art directions with readable
+climbing walls, ledges and interactables. `BART_CREAM=0` retains the production
+art. Five optional complete indexed environment packs explore Curdstone Karst,
+Brine Basilica, Moldglass Crags, Gilt Quarry and Black Rind Terraces.
+
+The studies spend detail on shelf volume, undercuts, material-specific planes,
+recesses and useful contact points. Floors stay quieter. Every style distinguishes
+regular bright climbing grips from irregular permanent cliff structure, blocked
+rims from open drop notches, and temporary barriers from the surrounding mass.
+All three corruption stages retain legible ground while purple light exposes
+rot in the walls. No new shared palette or enemy/Bloom style is selected.
+
+Source families are `art/cream_style_*.py`, dispatched by `cream_studies.py`.
+The Cream-only return portal adapts each native cave in the existing iron OBJ
+bank, retaining steps/down arrow. Other sprite frames and regions are protected.
+Source inspection caught that paired32px masters would be broken by the old
+sparse-variant room selector; study builds pair those halves without changing
+their identical physical collision. The solid upper rim supplies its own depth
+because that is the tile the live generator actually draws over cliff tops.
+
+See [scope and critique](../curdled-cream/ART_STUDIES.md). Native palette/budget,
+non-Cream preservation, matched whole-room captures and live climb review are
+required before presenting the five as implemented alternatives. Source sheets
+remain explicitly labelled as source art; registered camera mosaics remain
+separate from ordinary live240×160 frames.

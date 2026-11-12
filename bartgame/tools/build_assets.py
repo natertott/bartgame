@@ -790,6 +790,7 @@ ENEMY_LAB = int(os.environ.get('BART_ENEMY_LAB', '0'))
 assert ENEMY_LAB in (0, 1), 'BART_ENEMY_LAB must be0..1'
 h.append('#define BART_ENEMY_LAB %d' % ENEMY_LAB)
 h.append('#define BART_FOREST_VARIANT %d' % FOREST_CONCEPTS.VARIANT)
+h.append('#define BART_CREAM_VARIANT %d' % cream_terrain.VARIANT)
 MENU_VARIANT = int(os.environ.get('BART_MENU', '0'))
 assert 0 <= MENU_VARIANT <= 10, 'BART_MENU must be0..10'
 h.append('#define BART_MENU_VARIANT %d' % MENU_VARIANT)

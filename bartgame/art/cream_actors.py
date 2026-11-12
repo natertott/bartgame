@@ -10,6 +10,7 @@ import json
 from PIL import Image,ImageDraw,ImageFont
 import reboot_actors as A
 import reboot_core as R
+import cream_studies as CS
 
 POSES=('idle','walk1','walk2','tell','attack','recover','hurt','buried')
 FACES=('n','e','s','w')
@@ -229,7 +230,7 @@ def build_sheets():
     folk_frames['drain_bed']=A.ink_rows(drain_bed())
     folk_frames['drain_trophy']=A.ink_rows(drain_trophy())
     return [
-        dict(name='creamdoors',w=32,h=64,pal='iron',frames={'ascent':A.ink_rows(sewer_door(0)),'annex':A.ink_rows(sewer_door(1)),'return':A.ink_rows(sewer_door(2))}),
+        dict(name='creamdoors',w=32,h=64,pal='iron',frames={'ascent':A.ink_rows(sewer_door(0)),'annex':A.ink_rows(sewer_door(1)),'return':A.ink_rows(CS.return_door() if CS.VARIANT else sewer_door(2))}),
         dict(name='creamclimb',w=32,h=32,pal='hero',frames={'climb_%d'%i:A.ink_rows(climb_frame(i)) for i in range(4)}),
         dict(name='creamfolk',w=32,h=32,pal='iron',frames=folk_frames,
              frame_pal={name:'fx' if name=='drain_trophy' else 'iron' for name in folk_frames}),

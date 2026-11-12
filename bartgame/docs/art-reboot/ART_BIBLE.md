@@ -610,3 +610,14 @@ brass chest frame. Old frames and sheet IDs remain unchanged.
 Field mechanisms stream individual native frames rather than an entire study
 atlas. Existing unpainted mobility slots may become resident in the Forest;
 the old visible terrain mappings and all their referenced pixels stay intact.
+
+### Unselected Cream depth studies
+
+The five `BART_CREAM=1..5` environment directions are exploratory local studies,
+not a new shared default. They use deeper shelf undersides and coherent cliff
+planes, quiet floors, regular high-contrast climbing grips and clearly separated
+interactive silhouettes. `BART_CREAM=0` retains production art. Keep visual
+selection consistent with the actual room composer: complementary halves form
+one illustration, and the rendered rim must carry height when it replaces a
+cliff-top tile. [The study notes](../curdled-cream/ART_STUDIES.md) distinguish
+source assemblies, registered native camera mosaics and ordinary live footage.

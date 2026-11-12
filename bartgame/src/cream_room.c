@@ -288,7 +288,15 @@ void cream_room_build(int cell) {
         else if(x<2 || x>=30)room_set(x,y,sSide[s][x>=30]);
         else if(x>1 && x<30) {
             int kind=y==gCreamRoom.upper_bottom[x]+1?0:y==gCreamRoom.lower_top[x]-1?2:1;
+            /* Paired native master drawings must be installed as their
+               left/right halves; the original study used a sparse variant.
+               Only the picture changes: both IDs retain identical solids. */
+#if BART_CREAM_VARIANT > 0
+            int variant=(BART_CREAM_VARIANT==1||BART_CREAM_VARIANT==2||BART_CREAM_VARIANT==4)?(x&1):((x+y)&1);
+            room_set(x,y,sCliff[s][kind][variant]);
+#else
             room_set(x,y,sCliff[s][kind][((x/3+y/2)&7)==0]);
+#endif
         }
         if(x>1 && x<30 && y==gCreamRoom.upper_bottom[x]+1)room_set(x,y,sRim[s]);
     }

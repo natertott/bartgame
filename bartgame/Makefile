@@ -94,6 +94,16 @@ $(error BART_FOREST must be one integer in 0..32)
 endif
 FOREST_STAMP := $(GEN)/forest-profile-$(BART_FOREST).stamp
 
+# Unselected Cream environment studies. Zero retains production artwork.
+BART_CREAM ?= 0
+ifneq ($(words $(BART_CREAM)),1)
+$(error BART_CREAM must be one integer in 0..5)
+endif
+ifneq ($(BART_CREAM),$(filter $(BART_CREAM),0 1 2 3 4 5))
+$(error BART_CREAM must be one integer in 0..5)
+endif
+CREAM_STAMP := $(GEN)/cream-profile-$(BART_CREAM).stamp
+
 ARCH    := -mcpu=arm7tdmi -mtune=arm7tdmi
 CFLAGS  := $(ARCH) -O2 -g -Wall -Wno-unused-function -fno-strict-aliasing \
            -fomit-frame-pointer -ffunction-sections -fdata-sections \
@@ -189,6 +199,11 @@ $(FOREST_STAMP):
 	@rm -f $(GEN)/forest-profile-*.stamp
 	@printf '%s\n' '$(BART_FOREST)' > $@
 
+$(CREAM_STAMP):
+	@mkdir -p $(GEN)
+	@rm -f $(GEN)/cream-profile-*.stamp
+	@printf '%s\n' '$(BART_CREAM)' > $@
+
 $(HUD_STAMP):
 	@mkdir -p $(GEN)
 	@rm -f $(GEN)/hud-profile-*.stamp
@@ -199,9 +214,9 @@ $(LAB_STAMP):
 	@rm -f $(GEN)/enemy-lab-*.stamp
 	@printf '%s\n' '$(BART_ENEMY_LAB)' > $@
 
-$(GEN)/assets.c: $(ART) $(SWING_STAMP) $(SEWER_STAMP) $(UI_STAMP) $(HUD_STAMP) $(MENU_STAMP) $(ENEMY_STAMP) $(FOREST_STAMP) $(LAB_STAMP)
+$(GEN)/assets.c: $(ART) $(SWING_STAMP) $(SEWER_STAMP) $(UI_STAMP) $(HUD_STAMP) $(MENU_STAMP) $(ENEMY_STAMP) $(FOREST_STAMP) $(LAB_STAMP) $(CREAM_STAMP)
 	@mkdir -p $(GEN)
-	BART_SWING=$(BART_SWING) BART_SEWER=$(BART_SEWER) BART_UI=$(BART_UI) BART_HUD=$(BART_HUD) BART_MENU=$(BART_MENU) BART_ENEMY=$(BART_ENEMY) BART_ENEMY_LAB=$(BART_ENEMY_LAB) BART_FOREST=$(BART_FOREST) $(PYTHON) tools/build_assets.py $(GEN)
+	BART_SWING=$(BART_SWING) BART_SEWER=$(BART_SEWER) BART_UI=$(BART_UI) BART_HUD=$(BART_HUD) BART_MENU=$(BART_MENU) BART_ENEMY=$(BART_ENEMY) BART_ENEMY_LAB=$(BART_ENEMY_LAB) BART_FOREST=$(BART_FOREST) BART_CREAM=$(BART_CREAM) $(PYTHON) tools/build_assets.py $(GEN)
 
 $(GEN)/assets.h: $(GEN)/assets.c ;
 

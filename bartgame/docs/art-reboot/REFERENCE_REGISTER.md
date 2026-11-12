@@ -392,3 +392,13 @@ resident terrain, selected ladder composition and handoff native mechanism
 paintings supply the visual vocabulary. New cot/trophy frames are original
 native additions. The current source-to-acceptance mapping is in
 [regional integration acceptance](../regional-integration/ACCEPTANCE.md).
+
+## Cream depth studies — 2026-11-12
+
+The current user request supplies the brief: five completely new Cream art
+directions, stronger depth/detail/dynamism, and obvious climb/ledge/interaction
+semantics. The existing G01–G18 tutorial application matrix and recorded Mount
+Crenel annotation guide the pass. No additional external source or imported
+sprite is claimed. All five painters author native indexed pixels directly;
+[study scope](../curdled-cream/ART_STUDIES.md) records materials, identifiers,
+protected art and review evidence. These remain unselected local alternatives.

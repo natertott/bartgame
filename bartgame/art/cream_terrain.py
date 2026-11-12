@@ -230,6 +230,13 @@ def chest(opened=False):
     if not opened:d.point((16,20),fill=1);d.line((16,21,17,22),fill=1)
     return image
 
+def pit(stage=0):
+    image=floor(stage,0);d=ImageDraw.Draw(image)
+    d.ellipse((0,2,15,15),fill=2);d.ellipse((1,3,14,14),fill=1)
+    d.line((3,3,11,3),fill=7);d.line((4,14,11,14),fill=3)
+    return image
+
+
 def build():
     out=[]
     def add(name,image,pal,kind='FLOOR',coll=0,**kwargs):
@@ -249,8 +256,7 @@ def build():
             for x in range(2):add('cave_s%d_%d_%d'%(stage,x,y),door.crop((x*16,y*16,x*16+16,y*16+16)),cp,'MYST' if y==2 else 'SOLID',(10 if x==0 else 5) if y==2 else 15,prop=1)
         for kind,tt in [('thorn','THORN'),('web','WEB'),('crack','CRACK')]:
             add('%s_s%d'%(kind,stage),prop(kind,stage),'cream_props',tt,15,prop=1)
-        pit=floor(stage,0);pd=ImageDraw.Draw(pit);pd.ellipse((0,2,15,15),fill=2);pd.ellipse((1,3,14,14),fill=1);pd.line((3,3,11,3),fill=7);pd.line((4,14,11,14),fill=3)
-        add('pit_s%d'%stage,pit,fp,'PIT',0)
+        add('pit_s%d'%stage,pit(stage),fp,'PIT',0)
         for gate,tt in [('web','WEB'),('crack','CRACK'),('ward','SOLID')]:
             bottom=door.crop((0,32,32,48));bd=ImageDraw.Draw(bottom)
             overlay=prop(gate,stage)
@@ -272,6 +278,9 @@ def build():
     return out
 
 
+import cream_studies as _studies
+VARIANT=_studies.VARIANT
+_studies.install(globals())
 METATILES=build()
 
 
