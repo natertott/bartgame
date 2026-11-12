@@ -1,4 +1,4 @@
-/* Ten native graphical Cream atlas studies. All views share actual/pure
+/* Selected Cream atlas and retained native studies. All views share actual/pure
    generated terrain; drawing and navigation never mutate the run. */
 #include "cream_map_concepts.h"
 #include "cream_topology.h"
@@ -239,10 +239,11 @@ void cream_map_render(int cell,bool8 zoom,int concept){
     if(entering || sWork->data.selected!=gCreamMapCell)prepare_data(cell,zoom,gCreamMapConcept);
     else{sWork->data.zoom=zoom;sWork->data.concept=gCreamMapConcept;}
     memset(sPixels,0,19200);palette(gCreamMapConcept);
-    cm_text(5,3,cream_map_name(gCreamMapConcept),CM_GOLD);cm_number(218,3,gCreamMapConcept+1,CM_PALE);
+    cm_text(5,3,gCreamMapConcept?cream_map_name(gCreamMapConcept):"THE CURDLED CREAM",CM_GOLD);
+    if(gCreamMapConcept)cm_number(218,3,gCreamMapConcept+1,CM_PALE);
     cm_line(4,17,235,17,CM_GOLD_DIM);
     if(gCreamMapConcept<5)cream_map_forms_a(gCreamMapConcept,&sWork->data);else cream_map_forms_b(gCreamMapConcept,&sWork->data);
-    cm_line(4,147,235,147,CM_GOLD_DIM);cm_text(4,150,"L style  A zoom  B back  R items",CM_PALE);
+    cm_line(4,147,235,147,CM_GOLD_DIM);cm_text(4,150,gCreamMapConcept?"L style  A zoom  B back  R items":"D-pad room  A zoom  B back  R items",CM_PALE);
     bg0_clear();text_flush();vram_flush_queue();gBg3Dirty=0;
     dma3_copy32(sPixels,CHARBLOCK(2),19200);
     for(y=0;y<32;y++)for(x=0;x<32;x++)SCREENBLOCK(31)[y*32+x]=(y<20&&x<30?y*30+x:0)|(PAL_SLOT_MAP<<12);

@@ -693,3 +693,17 @@ Use actual endpoint interpolation to draw shafts. Cache loaded-room height
 summaries and reuse the paused selected-room snapshot when cycling styles;
 changing a diagram must not repeatedly regenerate the entire known region.
 Parchment labels retain a native dark outline for contrast.
+
+### Selected Cream pause map
+
+Use **Contour Folio (#1)** for the Cream pause map, with **Exploded Shelves
+(#4)** event presentation: red healing hearts, green folk, purple broken boss
+heart, pale caves and gold chests, quests, caches and climbs. Keep its shared
+native9px glyphs, up to two events per overview card and extra-content pips.
+The overview grid, inset plan, full room contour zoom and height scale stay
+from #1; the zoom legend includes climb, drop and cave. Unknown rooms remain
+hidden and all markers retain actual room coordinates.
+
+This selection is the normal profile12 map. Normal builds now enable12.
+L no longer cycles review styles; Select returns through the standard menu.
+Keep the original ten-design gallery as historical review evidence.

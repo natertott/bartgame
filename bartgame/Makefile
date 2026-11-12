@@ -94,8 +94,9 @@ $(error BART_FOREST must be one integer in 0..32)
 endif
 FOREST_STAMP := $(GEN)/forest-profile-$(BART_FOREST).stamp
 
-# Unselected Cream environment studies. Zero retains production artwork.
-BART_CREAM ?= 0
+# Selected Weathered Heights and Contour Folio with Exploded Shelves icons.
+# Explicit profiles0--11 retain the historical builds.
+BART_CREAM ?= 12
 ifneq ($(words $(BART_CREAM)),1)
 $(error BART_CREAM must be one integer in 0..12)
 endif

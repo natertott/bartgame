@@ -5,9 +5,21 @@ Date: 2026-11-12. Profile: `BART_CREAM=12`.
 The user selects Weathered Curdstone from polish #4, the carved Stone Steps /
 Carved Ascent / Alternating Pins directions, and waterfall #2. They ask for
 joined horizontal rock, clearly animated blue water, varied room geometry
-and ten genuinely different graphical mountain maps. This pass adopts those
-local material choices. The ten map layouts remain review alternatives;
-none has been selected as the final map.
+and ten genuinely different graphical mountain maps. The initial pass adopts
+those local material choices; the subsequent selection below adopts one map.
+
+## Adopted pause map
+
+The user subsequently selected **Contour Folio (#1) with Exploded Shelves
+(#4) icons**. This is now the standard Cream map: #1's grid, inset and contour
+zoom; #4's colored native event groups, two icons per room and extra-content
+pips; and its climb/drop/cave legend. The room zoom already used those shared
+colored markers. The title now names the region.
+
+Normal builds enable profile12. The ten alternatives below describe the
+historical review round. Current controls are D-pad to select, A to zoom,
+B to return, R for items, Select for the standard menu and Start to resume.
+L leaves the chosen map style unchanged.
 
 ## Scope and native construction
 

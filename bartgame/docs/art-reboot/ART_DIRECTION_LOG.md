@@ -2124,3 +2124,19 @@ The bank holds 861 static native characters, 163 available blend characters and
 ten palettes; carved climbs precede optional panels, which leave 16 slots for
 later structural joins. Old production0 and Weathered10 rebuild byte for byte.
 The normal workspace ROM is restored to0; the downloadable review ROM enables12.
+
+## 2026-11-12 — Selected Contour Folio with Exploded Shelves icons
+
+**User selection:** pause map #1 layout with #4 icons. The original concepts
+share the same native icon glyphs; the visible difference is #1's single gold
+event versus #4's colored event groups. The selected implementation reuses
+#4's exact marker painter in #1's unchanged28×19overview cards. It supports
+two markers and extra-content pips, retains #1's inset/height zoom and adds
+the complete climb/drop/cave legend.
+
+The standard profile12 map is fixed to the selected presentation. Review
+style cycling is removed from its controls. The title identifies The Curdled
+Cream. Normal builds now default to12; explicit historical profiles remain
+available. No terrain, generation, collision, item or combat behavior changes.
+Source/native validation and new overview/zoom screenshots will accompany
+the downloadable build in the selected-map gallery.

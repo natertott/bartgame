@@ -366,7 +366,7 @@ static void zoom_body(void) {
 }
 static void atlas(void) {
 #if BART_CREAM_VARIANT == 12
-    cream_map_render(sMapCell,sZoom,gCreamMapConcept);return;
+    cream_map_render(sMapCell,sZoom,0);return;
 #endif
     blank();bg0_canvas(&sHead,2,1,26,1);text_at(&sHead,0,0,"THE CURDLED CREAM",UI_INK_GOLD);
     bg0_canvas(&sFoot,1,19,28,1);text_at(&sFoot,0,0,sZoom?"B overview  L shelf  R satchel":"A room  L shelf  B back  R satchel",UI_INK_CREAM);
@@ -432,9 +432,6 @@ void gear_menu_update(void) {
         sPage^=1;sZoom=0;dirty=TRUE;
     }
     else if(gKeysDown&KEY_SELECT) {
-#if BART_CREAM_VARIANT == 12
-        if(sPage==GM_MAP){gCreamMapConcept=(gCreamMapConcept+9)%10;redraw();sfx_play(SFX_MENU);return;}
-#endif
         close(TRUE);return;
     } else if(sPage==GM_SATCHEL) {
         int c=sCursor;
@@ -452,14 +449,9 @@ void gear_menu_update(void) {
     } else {
         int c=sMapCell;
         if(gKeysDown&KEY_B) {if(sZoom){sZoom=0;dirty=TRUE;}else{close(TRUE);return;}}
-        if(gKeysDown&KEY_L) {
-#if BART_CREAM_VARIANT == 12
-            gCreamMapConcept=(gCreamMapConcept+1)%10;
-#else
-            sTerrace^=1;
+#if BART_CREAM_VARIANT != 12
+        if(gKeysDown&KEY_L) {sTerrace^=1;dirty=TRUE;}
 #endif
-            dirty=TRUE;
-        }
         if(!sZoom) {
             if((gKeysDown&KEY_LEFT)&&c%5)c--;
             if((gKeysDown&KEY_RIGHT)&&c%5<4)c++;

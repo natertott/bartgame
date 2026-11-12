@@ -135,11 +135,26 @@ static void ma_plan(const CreamMapData* d,int x,int y,int w,int h,bool8 markers,
     if(markers)ma_markers(d,x,y,w,h);
 }
 
+/* The selected map keeps Folio's exact grid and uses Exploded Shelves'
+   colored event vocabulary, two-icon groups and extra-content pips. */
+static void ma_contour_grid(const CreamMapData* d) {
+    int cell;
+    for(cell=0;cell<25;cell++) {
+        int x=12+(cell%5)*30,y=28+(cell/5)*108/5;
+        int ink=d->known[cell]?(d->corruption[cell]?CM_LEVEL2:CM_LEVEL1):CM_INK;
+        cm_fill(x,y,28,19,ink);
+        cm_box(x,y,28,19,cell==d->selected?CM_GOLD:CM_EDGE);
+        if(!d->known[cell])continue;
+        ma_events(d,cell,x+14,y+9);
+        if(cell==d->current)cm_fill(x+1,y+1,2,2,CM_RED);
+    }
+}
+
 /* 01 — Contour Folio: the full floor plan owns the page; contour bands and
    an elevation scale remain legible beneath a small, explicit icon legend. */
 static void ma_contours(const CreamMapData* d) {
     if(!d->zoom) {
-        ma_frame(8,24,158,116);cm_region_grid(d,12,28,150,108,0);
+        ma_frame(8,24,158,116);ma_contour_grid(d);
         cm_text(175,26,"SHELF",CM_GOLD);ma_cell_label(213,26,d->selected,CM_WHITE);
         ma_plan(d,175,42,56,42,FALSE,TRUE);ma_frame(174,41,58,44);
         ma_legend(176,93);
@@ -147,8 +162,7 @@ static void ma_contours(const CreamMapData* d) {
     } else {
         ma_frame(8,24,170,116);ma_plan(d,12,28,162,108,TRUE,TRUE);
         cm_text(188,26,"LEVEL",CM_GOLD);ma_scale(190,40,d->high[d->selected]);
-        cm_icon(191,113,CMI_CLIMB,CM_GOLD);cm_text(202,110,"UP",CM_PALE);
-        cm_icon(191,130,CMI_DROP,CM_BLIGHT);cm_text(202,127,"DOWN",CM_PALE);
+        ma_legend(187,99);
     }
 }
 

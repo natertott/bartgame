@@ -458,3 +458,12 @@ source `f4b917f7`, the exact ROM digest, actual mGBA menus/clips and independent
 source/native/geometry audits. The new evidence supersedes its preliminary
 source fixtures for live behavior. Earlier Cream galleries retain their own
 historical build scope.
+
+## Cream map selection — 2026-11-12
+
+Direct source: the user chooses pause-map #1 with icons from #4. The existing
+actual mGBA overview/zoom PNGs in `cream-heights-review/images/maps/` were
+inspected side by side. #4 uses the same9px glyphs with semantic colors,
+two-event groups and overflow pips; those are reused in #1's layout. No new
+external reference or replacement icon artwork is introduced. Historical
+comparison captures remain tied to their original frozen source.
