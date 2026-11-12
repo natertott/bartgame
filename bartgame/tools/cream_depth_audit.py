@@ -294,6 +294,7 @@ class Audit:
         landing_ids=struct.unpack('<18H',self.rom.array('cream_visual_landing'))
         path_ids=struct.unpack('<72H',self.rom.array('cream_visual_landing_path'))
         old_names={v:k for k,v in self.base.tile_ids.items()}
+        added_names={v:k for k,v in self.added.items()}
         count=Counter();failures=[]
         def verify(ok,name,detail):
             count[name]+=1
@@ -322,6 +323,26 @@ class Audit:
                             verify(typed(rooms[0],meta[0],layer,key)==typed(rooms[1],meta[1],layer,key),
                                    layer+' '+key+' exact',detail)
                     world=worlds[1]
+                    stage=min(world.corruption[cell],2)
+                    rim=self.base.defs['MT_CREAM_RIM_S%d'%stage]
+                    drop=self.base.defs['MT_CREAM_DROP_S%d'%stage]
+                    mids={self.base.defs['MT_CREAM_CLIFF_MID_S%d_V%d'%(stage,v)] for v in range(2)}
+                    bases={self.base.defs['MT_CREAM_CLIFF_BASE_S%d_V%d'%(stage,v)] for v in range(2)}
+                    for at in range(768):
+                        original,painted=rooms[0].ground[at],rooms[1].ground[at]
+                        if painted in (rim,drop):
+                            verify(False,'all old rim/drop cells receive readable new border art',detail|{'xy':[at%32,at//32]})
+                        name=added_names.get(painted,'');role=None;valid=True
+                        if '_PANEL_' in name or '_BACKING_' in name:
+                            role='large wall/backing art only on eligible original midface'
+                            valid=original in mids and rooms[0].overlay[at]==65535 and not before.cream_room_feature_reserved(at%32,at//32)
+                        elif '_RIM_' in name or '_EDGE_' in name and name.endswith(('SOLID_LEFT','SOLID_RIGHT')):
+                            role='raised border only on permanent blocked rim';valid=original==rim
+                        elif '_DROP_' in name or '_EDGE_' in name and name.endswith(('DROP_LEFT','DROP_RIGHT')):
+                            role='open sill only on actual directed DROP';valid=original==drop
+                        elif '_EDGE_' in name and name.endswith('_TOE'):
+                            role='toe face only at actual cliff base';valid=original in bases
+                        if role:verify(valid,role,detail|{'xy':[at%32,at//32],'art':name})
                     expected={(n,i) for n in range(50) for i in range(world.degree[n])
                               if world.edges[n][i].kind==3 and world.edges[n][i].target//2==cell}
                     size=C.c_uint16.in_dll(after,'gCreamVisualLandingCount').value

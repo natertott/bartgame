@@ -1988,3 +1988,12 @@ pixels are not game assets. Per-drop destination shade is the user's requested
 enhancement, not a feature claimed from the still image. Native source atlases,
 registered frozen room mosaics and ordinary advancing gameplay must retain
 separate labels and exact build provenance in the final review.
+
+Native room review found that largest-first placement repeated the same96px
+rib, and that simply leaving larger gaps exposed16px filler wallpaper.
+The final composition uses seeded staggered anchors, varied master choices,
+self-adjacency exclusion and a native128×48 low-contrast rock backing with
+long unequal strata. Quiet space remains composed material. The original
+small centered filler polygons are removed only in synthesis6. Boundary
+refresh visits actual rim/base profiles and drop footprints, avoiding full
+room scans; no new work is added to the active frame loop.
