@@ -241,7 +241,15 @@ static bool8 open_drop(u16 mt,int s) {
            mt==cream_visual_edge[s][2] || mt==cream_visual_edge[s][3];
 }
 static bool8 raised_rim_at(int x,int y,int s) {
-    return in_room(x,y) && solid_rim(room_get(x,y),s) && !open_drop(room_get(x,y-1),s);
+    if(!in_room(x,y) || !solid_rim(room_get(x,y),s))return FALSE;
+    if(open_drop(room_get(x,y-1),s))return FALSE;
+    /* The lower half of a stepped drop receives its projecting underside
+       two rows below the sill. Classify that future face now, before the
+       underside pass changes its ID, so neighboring caps do not flip on
+       the next refresh. The intervening cell is genuinely walkable. */
+    if(y==gCreamRoom.upper_bottom[x]+1 && room_type(x,y-1)==TT_FLOOR &&
+       open_drop(room_get(x,y-2),s))return FALSE;
+    return TRUE;
 }
 static bool8 quiet_floor(u16 mt,int s) {
     int i;
@@ -353,8 +361,15 @@ static void restore_shades(void) {
 }
 
 static int shade_material(int x,int y) {
-    int at,s=visual_stage(),v;u16 mt;
-    if(!in_room(x,y) || room_get_overlay(x,y)!=MT_NONE)return -1;
+    int at,s=visual_stage(),v;u16 mt,overlay;
+    if(!in_room(x,y))return -1;
+    overlay=room_get_overlay(x,y);
+    /* Mold is nonblocking attached scenery; shade belongs beneath it and
+       its original overlay remains untouched. Interactive/structural props
+       still interrupt the cast shadow instead of being painted through. */
+    if(overlay!=MT_NONE && !((overlay==MT_CREAM_MOLD_S0 ||
+       overlay==MT_CREAM_MOLD_S1 || overlay==MT_CREAM_MOLD_S2) &&
+       metatile_coll[overlay]==0))return -1;
     at=y*CREAM_ROOM_W+x;mt=room_get(x,y);v=original_floor(mt,s);
     if(v>=0){sFloorMaterial[at]=v;return v;}
     if(sShadeBase[at]!=MT_NONE && mt==sShadePaint[at])return sFloorMaterial[at]<8?sFloorMaterial[at]:-1;

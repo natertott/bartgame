@@ -299,10 +299,14 @@ def backing(style=3,stage=0):
     else:
         draw.polygon([(4,12),(19,12),(27,8),(49,8),(57,11),(80,11),(87,8),(108,8),(123,14),(123,21),(111,21),(104,18),(82,18),(75,21),(53,21),(46,17),(26,17),(20,20),(4,20)],fill=4)
         draw.polygon([(4,32),(19,32),(26,29),(48,29),(56,32),(80,32),(88,30),(112,30),(123,34),(123,40),(103,40),(96,42),(74,42),(67,38),(45,38),(38,40),(17,40),(4,37)],fill=4)
-        draw.line([(15,23),(28,24),(41,23),(50,25)],fill=2)
-        draw.line([(68,40),(78,42),(89,41)],fill=2)
-        _moss(draw,[(92,24),(99,23),(106,26),(103,29),(96,29),(90,27)])
-        _fracture(draw,[(107,17),(104,21),(106,24),(103,28),(105,31)],stage)
+        draw.line((15,23,31,23),fill=2)
+        draw.line((38,24,50,24),fill=2)
+        draw.line((69,41,88,41),fill=2)
+        # The rear bed stays quiet; the foreground masters carry the deep
+        # fissures. One subdued deposit reuses the same few native patterns
+        # at every stage rather than adding tiny competing glowing marks.
+        draw.line([(94,25),(98,24),(102,26)],fill=9)
+        draw.line((95,25,99,25),fill=10)
     return image
 
 

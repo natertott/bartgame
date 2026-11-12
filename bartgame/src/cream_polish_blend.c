@@ -30,34 +30,27 @@ static int find(u16 base,u16 paint,bool8 create) {
     return i;
 }
 
-static void rollback(int count) {
-    int i;gCreamPolishBlendCount=count;memset(sLookup,0,sizeof(sLookup));
-    for(i=0;i<count;i++) {
-        unsigned h=key_hash(sBaseKey[i],sPaintKey[i]);
-        while(sLookup[h])h=(h+1)&(HASH_SLOTS-1);
-        sLookup[h]=i+1;
+static u32 native_row(const Tileset* ts,u16 entry,int y) {
+    const u32* pixels=(const u32*)ts->tiles+(entry&1023)*8;
+    u32 word=pixels[(entry&0x800)?7-y:y];
+    if(entry&0x400) {
+        word=((word&0x0f0f0f0fu)<<4)|((word>>4)&0x0f0f0f0fu);
+        word=((word&0x00ff00ffu)<<8)|((word>>8)&0x00ff00ffu);
+        word=(word<<16)|(word>>16);
     }
-}
-
-static u8 ink(const Tileset* ts,u16 entry,int x,int y) {
-    const u8* pixels=(const u8*)ts->tiles+(entry&1023)*32;
-    if(entry&0x400)x=7-x;
-    if(entry&0x800)y=7-y;
-    return (pixels[y*4+(x>>1)]>>((x&1)*4))&15;
+    return word;
 }
 
 static void upload(const Tileset* ts,int index) {
 #ifndef CREAM_POLISH_HOST_AUDIT
-    vu16* out=CHARBLOCK(0)+(ts->tile_count+index)*16;
-    int x,y;
-    for(y=0;y<8;y++)for(x=0;x<8;x+=4) {
-        u16 word=0;int p;
-        for(p=0;p<4;p++) {
-            u8 color=ink(ts,sPaintKey[index],x+p,y);
-            if(!color)color=ink(ts,sBaseKey[index],x+p,y);
-            word|=color<<(p*4);
-        }
-        *out++=word;
+    vu32* out=(vu32*)(CHARBLOCK(0)+(ts->tile_count+index)*16);
+    int y;
+    for(y=0;y<8;y++) {
+        u32 paint=native_row(ts,sPaintKey[index],y);
+        u32 base=native_row(ts,sBaseKey[index],y);
+        u32 covered=(paint|(paint>>1)|(paint>>2)|(paint>>3))&0x11111111u;
+        covered*=15;
+        *out++=paint|(base&~covered);
     }
 #else
     (void)ts;(void)index;
@@ -73,7 +66,8 @@ void cream_polish_blend_reset(void) {
 bool8 cream_polish_blend_fits(int x,int y,u16 first,int w,int h) {
     const Tileset* ts=&tilesets[TS_CREAM];
     u16 scratch[12][4];
-    int dx,dy,q,old_count=gCreamPolishBlendCount;
+    u16 pending_base[48],pending_paint[48];
+    int dx,dy,q,new_count=0,old_count=gCreamPolishBlendCount;
     if(w*h>12 || x<0 || y<0 || x+w>CREAM_ROOM_W || y+h>CREAM_ROOM_H)return FALSE;
     for(dy=0;dy<h;dy++)for(dx=0;dx<w;dx++) {
         int at=(y+dy)*ROOM_MAX_W+x+dx,p=dy*w+dx;
@@ -87,14 +81,25 @@ bool8 cream_polish_blend_fits(int x,int y,u16 first,int w,int h) {
             else {
                 int i;
                 if((a&0xf000)!=(b&0xf000))goto reject;
-                i=find(b,a,TRUE);
-                if(i<0)goto reject;
+                i=find(b,a,FALSE);
+                if(i<0) {
+                    int n;
+                    for(n=0;n<new_count;n++)if(pending_base[n]==b && pending_paint[n]==a)break;
+                    if(n==new_count) {
+                        if(old_count+new_count>=CREAM_POLISH_BLEND_RESERVE)goto reject;
+                        pending_base[n]=b;pending_paint[n]=a;new_count++;
+                    }
+                    i=old_count+n;
+                }
                 if(ts->tile_count+i>=1024){gCreamPolishBlendOverflow++;goto reject;}
                 entry=(b&0xf000)|(ts->tile_count+i);
             }
             scratch[p][q]=entry;
         }
     }
+    /* Failed candidates perform no cache mutation/rebuild and no VRAM work.
+       This matters near a full room's character budget. */
+    for(q=0;q<new_count;q++)find(pending_base[q],pending_paint[q],TRUE);
     for(q=old_count;q<gCreamPolishBlendCount;q++)upload(ts,q);
     for(dy=0;dy<h;dy++)for(dx=0;dx<w;dx++) {
         int at=(y+dy)*ROOM_MAX_W+x+dx,p=dy*w+dx;
@@ -103,7 +108,7 @@ bool8 cream_polish_blend_fits(int x,int y,u16 first,int w,int h) {
     }
     return TRUE;
 reject:
-    rollback(old_count);gCreamPolishBlendRejected++;return FALSE;
+    gCreamPolishBlendRejected++;return FALSE;
 }
 
 const u16* cream_polish_blend_entries(int x,int y,u16 base,const Tileset* ts) {

@@ -34,22 +34,21 @@ def underside(stage=0):
 def shade(stage=0,variant=0,vertical=0,lateral=1):
     """Shade the actual underlying native floor, retaining pressed path grain."""
     im=S.floor(stage,variant%4,variant>=4).copy()
+    bayer=((0,2),(3,1))
     for y in range(16):
         for x in range(16):
-            inside=True
-            if lateral==0:inside=x>=2+(y//6)%2
-            if lateral==2:inside=x<=13-(y//7)%2
-            if vertical==2:inside=inside and y<11+(x//5)%3
+            coverage=4
+            if lateral==0:coverage=min(4,x//2)
+            if lateral==2:coverage=min(4,(15-x)//2)
+            if vertical==2:coverage=min(coverage,max(0,4-max(0,y-4)//3))
+            inside=bayer[y&1][x&1]<coverage
             if inside:
                 v=im.getpixel((x,y))
                 im.putpixel((x,y), 4 if v>=5 else 3)
     # A small number of retained grain clusters describe floor under shadow,
     # never a smooth enclosed oval or a second platform.
     d=ImageDraw.Draw(im)
-    if vertical==0:d.line((2 if lateral==0 else 0,0,13 if lateral==2 else 15,0),fill=2)
-    if vertical==2:
-        for x,y in ((3,12),(6,13),(9,12),(12,14)):
-            if (lateral!=0 or x>2) and (lateral!=2 or x<13):d.point((x,y),fill=3)
+    if vertical==0:d.line((6 if lateral==0 else 0,0,9 if lateral==2 else 15,0),fill=2)
     return im
 
 

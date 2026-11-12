@@ -104,7 +104,7 @@ class Audit(D.Audit):
         old_depth={n:i for n,i in rom.tile_ids.items() if n.startswith('CREAM_DEPTH_')}
         self.check('native_limits','polish staticCream<=896 leaving128 blendchars',ts['tile_count']<=896,ts['tile_count'])
         self.check('retained_nonresident','old Cream6 depth IDs remain blank/nonresident',
-                   all(rom.array('metatile_map_cream')[i*8:i*8+8]==bytes(8) for i in old_depth),len(old_depth))
+                   all(rom.array('metatile_map_cream')[i*8:i*8+8]==bytes(8) for i in old_depth.values()),len(old_depth))
         arrays={key:rom.array('metatile_'+key) for key in ('type','coll','prop','glitter')}
         for name,spec in source['tiles'].items():
             actual=decode_metatile(rom,ts,name);index=rom.tile_ids[name]
@@ -230,6 +230,9 @@ class Audit(D.Audit):
         meta=[{key:rom.array('metatile_'+key) for key in ('type','coll','prop','glitter')} for rom in (self.base,self.rom)]
         names=[{index:name for name,index in rom.tile_ids.items()} for rom in (self.base,self.rom)]
         counts=Counter();failures=[];widths=set()
+        shade_ids=struct.unpack('<216H',self.rom.array('cream_polish_shade'))
+        landing_ids=struct.unpack('<18H',self.rom.array('cream_visual_landing'))
+        path_ids=struct.unpack('<72H',self.rom.array('cream_visual_landing_path'))
         panel_specs=[(self.rom.tile_ids[p['first'].upper()],p['w'],p['h'])
                      for stage in self.source_data['tables']['panels'] for p in stage]
         def verify(ok,name,detail):
@@ -281,8 +284,9 @@ class Audit(D.Audit):
                             mt=rooms[0].ground[at]
                             verify(meta[0]['type'][mt]==self.base.defs['TT_FLOOR'] and meta[0]['coll'][mt]==0 and meta[0]['prop'][mt]==0,
                                    'shade only dry floor/path',detail|{'xy':[at%32,at//32]})
-                            actual_name=names[1].get(rooms[1].ground[at],'')
-                            verify(('LANDING' in actual_name if role==3 else 'SHADE' in actual_name or 'SHADOW' in actual_name),
+                            allowed=(set(landing_ids[stage*6:(stage+1)*6])|set(path_ids[stage*24:(stage+1)*24]) if role==3
+                                     else set(shade_ids[stage*72:(stage+1)*72]))
+                            verify(rooms[1].ground[at] in allowed,
                                    'shade role corresponds actual shade artwork',detail|{'xy':[at%32,at//32],'id':rooms[1].ground[at]})
                             counts['shade_cells']+=1
                     fall=Fall.in_dll(after,'gCreamPolishFall')
