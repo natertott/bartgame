@@ -177,6 +177,13 @@ static void touch_at(Actor* e,int x,int y,int hw,int hh,int damage,int status) {
 static void capture_damage(Actor* e,int amount) {
     u8 state,timer;
     if(!gPlayer||gPlayer->state==PS_DEAD||gPl.hp<=0)return;
+#if BART_CREAM_VARIANT == 12
+    if(cream_runtime_wall_attached()) {
+        gPlayer->iframes=0;
+        if(player_hurt(amount,actor_dir_to(e,gPlayer)))legacy_player_status_clear(LPS_CAPTURE);
+        return;
+    }
+#endif
     state=gPlayer->state;timer=gPlayer->timer;
     gPlayer->state=PS_NORMAL;gPlayer->iframes=0;gPl.shield_up=0;
     player_hurt(amount,actor_dir_to(e,gPlayer));

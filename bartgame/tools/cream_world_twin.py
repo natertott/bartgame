@@ -20,6 +20,7 @@ import subprocess
 import time
 
 MASK=(1<<32)-1
+WALL_FACE=8
 GAME=Path(__file__).resolve().parent.parent
 
 def mix(x):
@@ -243,28 +244,59 @@ class Twin:
             for nxt in self.onward(state):
                 if nxt not in parents:parents[nxt]=state;queue.append(nxt)
         return []
+    def mark_wall_faces(self):
+        first = mix(self.seed ^ 0x57414c4c) % 25
+        optional = None
+        selected = []
+        for offset in range(25):
+            node = 2 * ((first + offset) % 25)
+            edge = next((e for e in self.edges[node] if e[0] == node + 1), None)
+            if edge is None or edge[1:3] != [2, 0]:
+                continue
+            seen = {self.entry}
+            queue = deque(seen)
+            while queue and self.goal not in seen:
+                for candidate in self.edges[queue.popleft()]:
+                    if candidate is not edge and candidate[0] not in seen:
+                        seen.add(candidate[0])
+                        queue.append(candidate[0])
+            if self.goal not in seen:
+                selected.append(edge)
+                if len(selected) == 2:
+                    break
+            elif optional is None:
+                optional = edge
+        if len(selected) == 1 and optional is not None:
+            selected.append(optional)
+        for edge in selected:
+            edge[3] |= WALL_FACE
+        return bool(selected)
+
     @classmethod
-    def candidate(cls,seed,shape):
+    def candidate(cls,seed,shape,mark_walls=True):
         w=cls(seed);rng=Random(shape or 1)
         w.entry=2*(20+rng.pick(5));w.tree(rng);w.goal=2*rng.pick(5)+1
         if not w.long_drop(rng) or not w.required_cave(rng) or not w.missions(rng) or not w.validate():return None
+        if mark_walls and not w.mark_wall_faces():return None
         path=w.solution()
         if not 19<=len(path)<=200:return None
         w.required_rooms=len({n//2 for n in path})
         if w.required_rooms>22:return None
         w.required_steps=len(path)-1;return w
     @classmethod
-    def certified(cls,seed):
-        w=cls.candidate(0,0x4ce2a547)
+    def certified(cls,seed,mark_walls=True):
+        w=cls.candidate(0,0x4ce2a547,mark_walls=False)
         assert w is not None and w.validate()
-        w.seed=seed&MASK;w.attempts=24;w.fallback=1;return w
+        w.seed=seed&MASK;w.attempts=24;w.fallback=1
+        if mark_walls:assert w.mark_wall_faces()
+        return w
     @classmethod
-    def generate(cls,seed):
+    def generate(cls,seed,mark_walls=True):
         seed&=MASK
         for attempt in range(24):
-            w=cls.candidate(seed,mix(seed^0x43555244^(attempt*0x9e3779b9&MASK)))
+            w=cls.candidate(seed,mix(seed^0x43555244^(attempt*0x9e3779b9&MASK)),mark_walls)
             if w is not None:w.attempts=attempt+1;return w
-        return cls.certified(seed)
+        return cls.certified(seed,mark_walls)
     def serialize(self):
         out=bytearray(1392)
         struct.pack_into('<I',out,0,self.seed)
@@ -281,13 +313,16 @@ def sha(path):return hashlib.sha256(Path(path).read_bytes()).hexdigest()
 
 def main():
     p=argparse.ArgumentParser(description=__doc__);p.add_argument('--out',required=True)
-    p.add_argument('--seeds',type=int,default=1000);a=p.parse_args()
+    p.add_argument('--seeds',type=int,default=1000)
+    p.add_argument('--cream-profile',type=int,choices=range(13),default=12)
+    a=p.parse_args();mark_walls=a.cream_profile==12
     out=Path(a.out).resolve();out.mkdir(parents=True,exist_ok=True);started=time.time()
     src=[GAME/'src'/n for n in ['cream_world.c','cream_world.h','cream_world_fallback.inc']]
     hashes={str(f.relative_to(GAME)):sha(f) for f in src}
     # The comparison boundary is compiled from actual unmodified production C.
     binary=out/'cream-world.so'
-    cmd=['gcc','-shared','-fPIC','-O2','-w','-fno-builtin','-I',str(GAME/'src'),str(src[0]),'-o',str(binary)]
+    cmd=['gcc','-shared','-fPIC','-O2','-w','-fno-builtin',f'-DBART_CREAM_VARIANT={a.cream_profile}',
+         '-I',str(GAME/'src'),str(src[0]),'-o',str(binary)]
     result=subprocess.run(cmd,capture_output=True,text=True);(out/'compile.log').write_text(result.stdout+result.stderr);result.check_returncode()
     lib=ctypes.CDLL(str(binary));observed=(ctypes.c_ubyte*1392).in_dll(lib,'gCreamWorld')
     for n in ['cream_generate','cream_generate_certified']:
@@ -300,7 +335,7 @@ def main():
     symbol=next(line.split() for line in symbols.splitlines() if line.split()[-1]=='gCreamWorld')
     check('actual C world symbol is exactly1392bytes',int(symbol[1],16)==1392,int(symbol[1],16))
     def compare(seed,certificate=False):
-        w=Twin.certified(seed) if certificate else Twin.generate(seed)
+        w=Twin.certified(seed,mark_walls) if certificate else Twin.generate(seed,mark_walls)
         expected=w.serialize()  # completed BEFORE calling the C boundary
         ok=getattr(lib,'cream_generate_certified' if certificate else 'cream_generate')(seed)
         actual=bytes(observed)
@@ -331,7 +366,7 @@ def main():
     check('all long-drop spans represented',set(spans)=={2,3,4},dict(spans))
     check('production sources unchanged',hashes=={str(f.relative_to(GAME)):sha(f) for f in src})
     report={'tool':'independent Python/C whole-record generator equivalence','passed':all(c['passed'] for c in checks),
-            'checks':checks,'generated_seeds':len(seeds),'explicit_certificates':6,'record_bytes':1392,
+            'checks':checks,'cream_profile':a.cream_profile,'generated_seeds':len(seeds),'explicit_certificates':6,'record_bytes':1392,
             'compared_bytes':1392*(len(seeds)+6),'cases':cases,'attempt_histogram':dict(attempts),
             'natural_fallbacks':sum(c['fallback'] for c in cases if not c['certificate']),
             'peak_histogram':dict(peaks),'drop_span_histogram':dict(spans),'combined_record_sha256':digest.hexdigest(),

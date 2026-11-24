@@ -468,7 +468,8 @@ static void ledge_edges(void) {
         if(!dynamic_support(x,y))continue;
         above=room_get(x,y-1);
         if(above>=METATILE_COUNT || metatile_prop[above] || room_get_overlay(x,y-1)!=MT_NONE ||
-           metatile_type[above]!=TT_SOLID || metatile_coll[above]!=15)continue;
+           (metatile_type[above]!=TT_SOLID && metatile_type[above]!=TT_CREAM_WALL) ||
+           metatile_coll[above]!=15)continue;
         material=shade_material(x,y);
         if(material>=0 && stamp_shade(x,y,cream_polish_shade[s][material][0][1],1))gCreamVisualToeCount++;
     }
@@ -596,11 +597,15 @@ static bool8 stamp_shade(int x,int y,u16 tile,int role) {
 
 static bool8 supports_floor_shadow(int x,int y) {
     u16 mt;
+    u8 type;
     if(!in_room(x,y) || room_get_overlay(x,y)!=MT_NONE)return FALSE;
     mt=room_get(x,y);
+    type=metatile_type[mt];
+#if BART_CREAM_VARIANT == 12
+    if(type==TT_CREAM_WALL)type=TT_SOLID;
+#endif
     return !metatile_prop[mt] &&
-           ((metatile_type[mt]==TT_SOLID && metatile_coll[mt]==15) ||
-            metatile_type[mt]==TT_CLIMB);
+           ((type==TT_SOLID && metatile_coll[mt]==15) || type==TT_CLIMB);
 }
 
 static void landing_shadows(void) {

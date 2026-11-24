@@ -42,6 +42,19 @@ static const u16 sClimb[3][3]={
  {MT_CREAM_CLIMB_TOP_S2,MT_CREAM_CLIMB_MID_S2,MT_CREAM_CLIMB_BOTTOM_S2}
 };
 static const u16 sRim[3]={MT_CREAM_RIM_S0,MT_CREAM_RIM_S1,MT_CREAM_RIM_S2};
+#if BART_CREAM_VARIANT == 12
+static const u16 sWall[3][3][CREAM_WALL_WIDTH]={
+ {{MT_CREAM_WALL_TOP_S0_0,MT_CREAM_WALL_TOP_S0_1,MT_CREAM_WALL_TOP_S0_2,MT_CREAM_WALL_TOP_S0_3},
+  {MT_CREAM_WALL_MID_S0_0,MT_CREAM_WALL_MID_S0_1,MT_CREAM_WALL_MID_S0_2,MT_CREAM_WALL_MID_S0_3},
+  {MT_CREAM_WALL_BASE_S0_0,MT_CREAM_WALL_BASE_S0_1,MT_CREAM_WALL_BASE_S0_2,MT_CREAM_WALL_BASE_S0_3}},
+ {{MT_CREAM_WALL_TOP_S1_0,MT_CREAM_WALL_TOP_S1_1,MT_CREAM_WALL_TOP_S1_2,MT_CREAM_WALL_TOP_S1_3},
+  {MT_CREAM_WALL_MID_S1_0,MT_CREAM_WALL_MID_S1_1,MT_CREAM_WALL_MID_S1_2,MT_CREAM_WALL_MID_S1_3},
+  {MT_CREAM_WALL_BASE_S1_0,MT_CREAM_WALL_BASE_S1_1,MT_CREAM_WALL_BASE_S1_2,MT_CREAM_WALL_BASE_S1_3}},
+ {{MT_CREAM_WALL_TOP_S2_0,MT_CREAM_WALL_TOP_S2_1,MT_CREAM_WALL_TOP_S2_2,MT_CREAM_WALL_TOP_S2_3},
+  {MT_CREAM_WALL_MID_S2_0,MT_CREAM_WALL_MID_S2_1,MT_CREAM_WALL_MID_S2_2,MT_CREAM_WALL_MID_S2_3},
+  {MT_CREAM_WALL_BASE_S2_0,MT_CREAM_WALL_BASE_S2_1,MT_CREAM_WALL_BASE_S2_2,MT_CREAM_WALL_BASE_S2_3}}
+};
+#endif
 static const u16 sDrop[3]={MT_CREAM_DROP_S0,MT_CREAM_DROP_S1,MT_CREAM_DROP_S2};
 static const u16 sPit[3]={MT_CREAM_PIT_S0,MT_CREAM_PIT_S1,MT_CREAM_PIT_S2};
 static const u16 sCrack[3]={MT_CREAM_CRACK_S0,MT_CREAM_CRACK_S1,MT_CREAM_CRACK_S2};
@@ -102,6 +115,27 @@ static bool8 local_climb(void) {
     int i=cream_find_edge(lower,upper);
     return i>=0 && cream_edge(lower,i)->kind==CC_CLIMB;
 }
+
+#if BART_CREAM_VARIANT == 12
+bool8 cream_room_wall_at(int px,int py) {return room_type_px(px,py)==TT_CREAM_WALL;}
+
+bool8 cream_room_wall_bounds(const CreamRoomInfo* info,int* x0,int* y0,int* x1,int* y1) {
+    int lower=cream_node(info->cell,CC_LOWER),x,top=0,bottom=0;
+    const CreamEdge* edge=cream_edge(lower,cream_find_edge(lower,lower+1));
+    if(!edge || !(edge->flags&CC_WALL_FACE))return FALSE;
+    /* Keep the separate drop lip at columns 10–11 and hub arch at 23–26. */
+    int left=MAX(12,info->climb_x-1),right=left+CREAM_WALL_WIDTH-1;
+    for(x=left;x<=right;x++) {
+        top=MAX(top,info->upper_bottom[x]);
+        bottom=MAX(bottom,info->lower_top[x]);
+    }
+    if(x0)*x0=left;
+    if(y0)*y0=top+1;
+    if(x1)*x1=right;
+    if(y1)*y1=bottom;
+    return TRUE;
+}
+#endif
 
 void cream_room_reset_progress(void) {memset(gCreamOpenEdges,0,sizeof(gCreamOpenEdges));}
 
@@ -176,6 +210,12 @@ static void paint_gate(int node,int index,bool8 opened) {
 u16 cream_room_floor(int x,int y) {
     int t,i;
     if(!valid(x,y))return plain_floor(CLAMP(x,0,31),CLAMP(y,0,23));
+#if BART_CREAM_VARIANT == 12
+    {
+        u16 under=gRoom.underlay[y*ROOM_MAX_W+x];
+        if(under<METATILE_COUNT && metatile_type[under]==TT_CREAM_WALL)return under;
+    }
+#endif
     /* Reconstitute a framed mouth after burning/bombing its native gate. */
     for(t=0;t<2;t++) if(y==cave_y(t) && x>=6 && x<=7 && has_kind(cream_node(gCreamRoom.cell,t),CC_CAVE))
         return sCave[stage()][2][x-6];
@@ -228,6 +268,15 @@ static void profile_info(int cell,CreamRoomInfo* info) {
         info->upper_bottom[x]=peak?11:7+(bump==1?1:0)+(info->motif==2 && x>20?1:0);
         info->lower_top[x]=15+(((x+((n>>8)&7))/7)&1)+(info->motif==3 && x>20?1:0);
     }
+#if BART_CREAM_VARIANT == 12
+    {
+        int left,top,right,bottom;
+        if(cream_room_wall_bounds(info,&left,&top,&right,&bottom))for(x=left;x<=right;x++) {
+            info->upper_bottom[x]=top-1;
+            info->lower_top[x]=bottom;
+        }
+    }
+#endif
 }
 
 static void profiles(int cell) {profile_info(cell,&gCreamRoom);}
@@ -255,6 +304,15 @@ static void paint_routes(int terrace) {
             floor_rect(x,walk_y(t)-1,x+3,walk_y(t)+1,TRUE);
 #endif
         } else if(e->kind==CC_CLIMB && target==gCreamRoom.cell) {
+#if BART_CREAM_VARIANT == 12
+            int left,top,right,bottom;
+            if(cream_room_wall_bounds(&gCreamRoom,&left,&top,&right,&bottom)) {
+                for(y=top;y<=bottom;y++)for(x=left;x<=right;x++)
+                    room_set(x,y,sWall[s][y==top?0:y==bottom?2:1][x-left]);
+                floor_rect(left-1,bottom+1,right+1,walk_y(CC_LOWER),TRUE);
+                continue;
+            }
+#endif
             for(x=gCreamRoom.climb_x;x<=gCreamRoom.climb_x+1;x++) {
                 int top=gCreamRoom.upper_bottom[x]+1,bottom=gCreamRoom.lower_top[x];
                 for(y=top;y<=bottom;y++)room_set(x,y,sClimb[s][y==top?0:y==bottom?2:1]);
@@ -347,7 +405,14 @@ static void spots(int terrace) {
     if(sp->content&CC_CONTENT_HEAL)room_set_overlay(sp->heal.x,sp->heal.y,MT_CREAM_SHRINE);
     /* Lanterns mark actual climb/cave/content approaches rather than filling
        empty floor. Each has a clear standing front outside the route lane. */
-    if(local_climb() && terrace==CC_LOWER)room_set_overlay(gCreamRoom.climb_x+3,gCreamRoom.lower_top[gCreamRoom.climb_x]+1,MT_CREAM_LAMP_LIT);
+    if(local_climb() && terrace==CC_LOWER) {
+        int x=gCreamRoom.climb_x+2,y=gCreamRoom.lower_top[gCreamRoom.climb_x];
+#if BART_CREAM_VARIANT == 12
+        /* Leave the full apron beside the rock face connected. */
+        if(cream_room_wall_bounds(&gCreamRoom,NULL,NULL,&x,&y))y++;
+#endif
+        room_set_overlay(x+1,y+1,MT_CREAM_LAMP_LIT);
+    }
     if(has_kind(node,CC_CAVE))room_set_overlay(4,cave_y(terrace),MT_CREAM_LAMP_LIT);
     room_build_solid();
     sp->spawn_count=0;
@@ -418,6 +483,7 @@ void cream_room_build(int cell) {
 int cream_room_terrace_at(int px,int py,int current) {
     int x=CLAMP(px>>4,0,31),y=(py-4)>>4;
 #if BART_CREAM_VARIANT == 12
+    if(room_type(x,y)==TT_CREAM_WALL)return current;
     int legacy=y<=gCreamRoom.upper_bottom[x]?CC_UPPER:
                y>=gCreamRoom.lower_top[x]?CC_LOWER:current;
     return cream_topology_component_at(px,py,legacy);
@@ -511,7 +577,7 @@ void cream_room_arrival(int from_node,const CreamEdge* edge,int* px,int* py,int*
             arrival_profile(to,x,&upper,&lower,&cx);arrival_profile(to,x+1,&u2,&l2,&c2);
             *px=x*16+16;*py=(MAX(lower,l2)+2)*16+14;
         } else {
-            CreamRoomInfo target_info;memset(&target_info,0,sizeof(target_info));profile_info(to,&target_info);
+            CreamRoomInfo target_info;memset(&target_info,0,sizeof(target_info));target_info.cell=to;profile_info(to,&target_info);
             int top=cream_cell(gCreamWorld.goal_node)==to?2:MAX(upper_top(&target_info,cx),upper_top(&target_info,cx+1));
             *px=cx*16+16;*py=(MAX(3,top)+1)*16+14;
         }
@@ -536,6 +602,9 @@ bool8 cream_room_route(int node,int px,int py,int facing,u16 intent,CreamRoomRou
             if(target%CC_WIDTH<gCreamRoom.cell%CC_WIDTH && px<=12 && (intent&KEY_LEFT))mode=CCR_WALK;
             if(target%CC_WIDTH>gCreamRoom.cell%CC_WIDTH && px>=CREAM_ROOM_W*16-12 && (intent&KEY_RIGHT))mode=CCR_WALK;
         } else if(e->kind==CC_CLIMB) {
+#if BART_CREAM_VARIANT == 12
+            if(e->flags&CC_WALL_FACE)continue;
+#endif
             if(target==gCreamRoom.cell && actual==CC_UPPER && t==CC_LOWER)mode=CCR_LOCAL_UP;
             else if(target<gCreamRoom.cell && py<=18 && ABS(px-(gCreamRoom.climb_x*16+16))<=15 && (intent&KEY_UP))mode=CCR_CLIMB;
         } else if(e->kind==CC_DROP) {
@@ -636,6 +705,14 @@ void cream_room_preview(int cell,CreamRoomInfo* out,u8 mask[CREAM_ROOM_W*CREAM_R
                 x0=x1=left?1:30;y0=wy-1;y1=wy+1;
             } else if(e->kind==CC_CLIMB) {
                 if(target==cell) {
+#if BART_CREAM_VARIANT == 12
+                    int left,top,right,bottom;
+                    if(cream_room_wall_bounds(out,&left,&top,&right,&bottom)) {
+                        for(y=top;y<=bottom;y++)for(x=left;x<=right;x++)mask[y*32+x]=CCR_PREVIEW_WALL;
+                        for(y=bottom+1;y<=19;y++)for(x=left-1;x<=right+1;x++)mask[y*32+x]=1;
+                        continue;
+                    }
+#endif
                     for(x=cx;x<=cx+1;x++)for(y=out->upper_bottom[x]+1;y<=out->lower_top[x];y++)mask[y*32+x]=3;
                     for(y=out->lower_top[cx]+1;y<=19;y++)for(x=cx-1;x<=cx+2;x++)mask[y*32+x]=1;
 #if BART_CREAM_VARIANT == 12

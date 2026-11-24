@@ -3,7 +3,8 @@
 #include "gba.h"
 #include "actor.h"
 
-enum { PS_NORMAL, PS_ROLL, PS_ATTACK, PS_HURT, PS_FALL, PS_JUMP, PS_ITEMGET, PS_DEAD, PS_TALK, PS_FROZEN, PS_LIFT, PS_CARRY, PS_SWALLOWED, PS_CLIMB };
+enum { PS_NORMAL, PS_ROLL, PS_ATTACK, PS_HURT, PS_FALL, PS_JUMP, PS_ITEMGET, PS_DEAD, PS_TALK, PS_FROZEN, PS_LIFT, PS_CARRY, PS_SWALLOWED, PS_CLIMB, PS_WALL_ATTACK };
+enum { WALL_FALL_SUB = 4 }; /* hurt, airborne recovery and fatal fall */
 
 /* items, as bits in gPl.items */
 #define ITEM_SWORD 0x01
@@ -73,6 +74,9 @@ bool8 player_hurt(int damage, int from_dir); /* FALSE when the shield took it */
 void player_heal(int amount);
 void player_item_get(int item_bit, int sprite_frame);
 bool8 player_sword_box(int* x0, int* y0, int* x1, int* y1);
+#if BART_CREAM_VARIANT == 12
+bool8 player_try_wall_attack(int dir);
+#endif
 bool8 player_lamp_box(int* x0, int* y0, int* x1, int* y1);
 bool8 player_is_vulnerable(void);
 void player_set_pos(int px, int py);

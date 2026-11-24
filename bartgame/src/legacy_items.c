@@ -582,6 +582,11 @@ bool8 legacy_items_pre_player(void) {
         bomb_charge_cancel();return FALSE;
     }
     if(a->state==PS_DEAD||a->state==PS_FALL||a->state==PS_TALK||a->state==PS_ITEMGET||a->state==PS_SWALLOWED||a->state==PS_CLIMB)return FALSE;
+#if BART_CREAM_VARIANT == 12
+    if(a->state==PS_WALL_ATTACK)return FALSE;
+    /* Status effects may resume on the lower terrace after gravity lands Bloom. */
+    if(a->sub==WALL_FALL_SUB && a->z>0 && (a->state==PS_HURT || a->state==PS_JUMP))return FALSE;
+#endif
     if(s.status[LPS_CAPTURE]) {
         Actor* c=&gActors[s.capture_index];
         if(c->kind!=s.capture_kind||c->type!=s.capture_type||!c->hp)s.status[LPS_CAPTURE]=0;

@@ -2182,3 +2182,32 @@ through Cream, Drain and Forest. Larger inventory pagination uses disclosed
 host fixtures. Generated artwork is byte-for-byte unchanged. See the
 [repair gallery](../../../pause-repair-review/README.md) for real before/after
 frames, limits, provenance and the fixed ROM.
+
+## 2026-11-24 — Grip Bracelet rock faces
+
+**Adopted locally for Weathered Heights (profile12).** The user's climbing
+request adds a rock surface with a distinct traversal verb beside the
+mountain's existing ladders, caves, drops and multi-tier rooms. Climbable walls
+show exposed curdstone shelves on continuous darker beds. Staggered upper-left
+lips and short undercuts place the holds in the stone face and keep Bloom
+readable against it. A coherent crest and shaded toe make the traversable band
+read as one face. The existing Cream material banks carry the region's three
+elevations.
+
+`art/cream_wall_faces.py` paints three indexed 64×16 bands cut into 36 fully
+solid metatiles across the three palettes. The region compositor retains their
+rock pixels and shades supported floor at the cliff foot. Native source review
+checked the continuous joins and hold contrast at 1× and nearest-neighbour 3×.
+Shared subtiles keep the cost to 28 additional static characters, leaving
+135 dynamic characters for the room compositor. The middle band repeats on
+particularly tall faces.
+
+Native 240×160 mGBA captures at seed `0xB4A7` show Bloom against the exposed
+holds, the crest and shaded toe, and the nearby supported shelves. The runtime
+review passed all 75 checks, including the required ascent on the summit route
+and the summit victory. Its optional wall probe temporarily masked Bracelet
+ownership and positioned an existing enemy, then restored its snapshot. Real
+input drove the wall movement, sword attack and fall recovery. A second run at
+seed `1432` passed all 30 checks through a four-room descent. Both runs used
+`tools/cream_runtime_review.py` with ROM SHA-256
+`acdd10427411f9394d682d60c24ca3318bddcc34d2f1473d8e383b0ef275f06c`.

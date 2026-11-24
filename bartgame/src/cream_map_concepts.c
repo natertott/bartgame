@@ -108,6 +108,7 @@ void cm_icon(int x,int y,int kind,int ink){
     case CMI_BOSS:cm_icon(x,y,CMI_HEAL,ink);cm_line(x,y-2,x-1,y,CM_WHITE);cm_line(x-1,y,x+1,y+2,CM_WHITE);break;
     case CMI_CAVE:cm_box(x-3,y-2,7,6,ink);cm_fill(x-2,y-3,5,2,ink);cm_fill(x-1,y-1,3,5,CM_INK);cm_line(x-3,y+3,x+3,y+3,CM_PALE);break;
     case CMI_CLIMB:cm_line(x-3,y-4,x-3,y+4,ink);cm_line(x+3,y-4,x+3,y+4,ink);cm_line(x-2,y-2,x+2,y-2,ink);cm_line(x-2,y+1,x+2,y+1,ink);cm_line(x-2,y+4,x+2,y+4,ink);break;
+    case CMI_ROCK_FACE:cm_box(x-4,y-4,9,9,ink);cm_line(x-2,y+2,x,y+2,CM_WHITE);cm_line(x,y,x+2,y,CM_WHITE);cm_line(x-2,y-2,x,y-2,CM_WHITE);break;
     case CMI_DROP:cm_line(x-3,y-3,x+3,y-3,ink);cm_arrow(x,y-1,x,y+4,ink);break;
     case CMI_LOCK:cm_box(x-3,y-3,7,7,ink);cm_line(x-2,y-2,x+2,y+2,ink);cm_line(x+2,y-2,x-2,y+2,ink);break;
     case CMI_PLAYER:cm_diamond(x,y,7,7,CM_WHITE,TRUE);cm_pixel(x,y,CM_RED);break;
@@ -142,6 +143,7 @@ static void expand(int cell){
         int at=y*32+x,f=sWork->topology.cells[at],k=(f&CT_CLIMB)?CMT_CLIMB:(f&CT_SUPPORT)?((f&CT_DROP)?CMT_DROP:CMT_FLOOR):CMT_WALL;
         if(sWork->mask[at]==4)k=CMT_CAVE;
         else if(sWork->mask[at]==6)k=CMT_GATE;
+        else if(sWork->mask[at]==CCR_PREVIEW_WALL)k=CMT_CLIMB;
         if(live){u16 mt=room_get(x,y);int t=mt<METATILE_COUNT?metatile_type[mt]:TT_SOLID;
             if(t==TT_WATER)k=CMT_WATER;else if(t==TT_MYST)k=CMT_CAVE;
             else if(t==TT_PIT||t==TT_CRACK||t==TT_WEB||t==TT_THORN)k=CMT_GATE;}
@@ -174,6 +176,11 @@ static void prepare_data(int cell,bool8 zoom,int concept){
     }
     for(y=0;y<24;y++)for(x=0;x<32;x++)if(sWork->kind[y*32+x]==CMT_CAVE){mark(d,x,y,CMI_CAVE,0);while(x+1<32&&sWork->kind[y*32+x+1]==CMT_CAVE)x++;}
     for(i=0;i<sWork->topology.climbs;i++){CreamTopologyClimb* p=&sWork->topology.climb[i];mark(d,p->x,(p->top+p->bottom)/2,CMI_CLIMB,0);}
+    {
+        int left,top,right,bottom;
+        if(cream_room_wall_bounds(&sWork->info,&left,&top,&right,&bottom))
+            mark(d,(left+right)/2,(top+bottom)/2,CMI_ROCK_FACE,0);
+    }
     for(i=0;i<sWork->topology.drops;i++){CreamTopologyDrop* p=&sWork->topology.drop[i];mark(d,p->x/16,p->y/16,CMI_DROP,0);}
     {RegionalContentDiscovery r;regional_content_marks(AREA_CREAM,d->selected,&r);
      if(r.marks&RC_MARK_DOOR)mark(d,r.door.x,r.door.y,CMI_CAVE,0);

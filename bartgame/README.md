@@ -94,12 +94,15 @@ The second wall ladder repeats the Forest ladder's selected artwork and leads
 to Cream. See the [regional handoff release and actual mGBA views](../regional-handoff-review/README.md)
 and the [complete handoff ledger](../docs/handoff-restoration/AUDIT.md).
 
-The Cream is a separate 5×5 directed climbing puzzle: two terraces per room,
-upward climbs, lateral connections, caves and committed one-to-four-screen
-descents. Three earned tools unlock its summit route. The boss occupies a
-random top-row peak. Its original native terrain and actors append to the
-existing art pack. Restored events, seven rotating quest forms, certified
-puzzle boards, fusers, physical mechanisms and useful crossings now belong to
+The Cream is a separate 5×5 directed climbing puzzle with multi-tiered rooms,
+ladders, lateral connections, caves and committed one-to-four-screen descents.
+The summit route crosses marked rock faces that require the Grip Bracelet,
+which Bloom receives at the entrance. Press Up to grip a face, use the D-pad
+to climb in four directions, and use the equipped sword button to swing. A
+hit makes Bloom lose his grip. Three trial rewards open the rest of the route.
+The boss occupies a random top-row peak. Its original native terrain and actors
+append to the existing art pack. Restored events, seven rotating quest forms,
+certified puzzle boards, fusers, physical mechanisms and useful crossings now belong to
 the generated regions and their cave, hollow and thicket interiors. The old
 invented Annex selection hub is absent from normal exploration; its scene IDs
 remain internal for save compatibility. Select from the existing pause screen
@@ -221,6 +224,7 @@ python3 tools/critical_path.py --boss       # required progression through victo
 python3 tools/wood_probe.py                # bow, gathering, reflection, hub return
 python3 tools/lift_probe.py                # lift/throw and inventory controls
 python3 tools/mandatory_trials.py               # earned mandatory rewards
+python3 tools/cream_runtime_review.py --help     # Cream trials and summit route
 python3 tools/art_reboot_review.py --help   # actual screens, actions and interactions
 ```
 

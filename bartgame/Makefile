@@ -124,6 +124,8 @@ ifneq ($(PROFILE),$(filter $(PROFILE),0 1))
 $(error PROFILE must be 0 or 1)
 endif
 CFLAGS += -DBART_PROFILE=$(PROFILE) -DBART_ENEMY_LAB=$(BART_ENEMY_LAB)
+# The standalone graph also builds without generated assets in host audits.
+CFLAGS += -DBART_CREAM_VARIANT=$(BART_CREAM)
 PROFILE_STAMP := $(BUILD)/profile-$(PROFILE).stamp
 
 SRC_C     := $(filter-out %_iwram.c,$(wildcard src/*.c))

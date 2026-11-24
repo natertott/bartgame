@@ -130,3 +130,7 @@ if cream_terrain.VARIANT >= 6:
 if cream_terrain.VARIANT >= 7:
     import cream_polish_assets
     METATILES.extend(cream_polish_assets.METATILES)
+if cream_terrain.VARIANT == 12:
+    import cream_wall_faces
+    TYPES.append('CREAM_WALL')
+    METATILES.extend(cream_wall_faces.METATILES)

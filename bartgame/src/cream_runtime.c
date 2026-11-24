@@ -26,6 +26,10 @@ u8 gCreamNode;
 static u16 sClimbTile,sFolkTile[3],sDropHeight,sReturnTile;
 static u8 sClimbFrame,sDropRows,sDropClock,sRouteCooldown;
 static u8 sHadEnemies[2],sEnemyTerrace[ACTOR_MAX];
+#if BART_CREAM_VARIANT == 12
+static s16 sWallFootX,sWallFootY;
+enum { CLIMB_LADDER, CLIMB_WALL };
+#endif
 
 void cream_runtime_track_enemy(Actor* enemy,const Actor* parent) {
     if(gGame.area!=AREA_CREAM||!enemy||enemy->kind!=AK_ENEMY)return;
@@ -87,9 +91,13 @@ void cream_runtime_build(int node) {
 void cream_runtime_enter(void) {
     int t,i;
     cream_runtime_room_reset();
-    /* Every entrance has a visible climbing lesson; it cannot be stranded
-       behind a tool the player has not found in the separate Forest. */
-    if(!legacy_item_owned(LI_GRIP_RING))legacy_item_grant(LI_GRIP_RING,1);
+    /* The summit never depends on finding a random Forest reward. */
+    if(!legacy_item_owned(LI_GRIP_RING)) {
+        legacy_item_grant(LI_GRIP_RING,1);
+#if BART_CREAM_VARIANT == 12
+        textbox_open("You found the Grip Bracelet. Press Up at marked rock to grab hold.|Climb in any direction. You can swing your sword while holding on.");
+#endif
+    }
     for(t=0;t<2;t++) {
         int node=gGame.cell*2+t;
         CreamTerraceSpots* p=spots(node);
@@ -134,7 +142,78 @@ static bool8 component_change_open(int target) {
     return !edge->require || edge->require==CC_TOKEN_CAPE_PACCI ||
            (gCreamOpenEdges[gCreamNode]&(1u<<index));
 }
+
+static bool8 wall_contact(int px,int py) {
+    return cream_room_wall_at(px-5,py-4) && cream_room_wall_at(px+4,py-4);
+}
+
+/* A wall spans from one standing surface to the other. Clear the rest of
+   Bloom's feet past the seam before returning to ordinary tile collision. */
+static int wall_footing(int px,int py,int dy) {
+    while(wall_contact(px,py))py+=dy;
+    for(int i=0;i<=4;i++,py+=dy) {
+        if(room_type_px(px,py-4)!=TT_FLOOR)break;
+        if(!actor_feet_box_solid(gPlayer,px,py))return py;
+    }
+    return -1;
+}
+
+static bool8 mount_wall(Actor* a,int px,int py,int dy) {
+    if(!wall_contact(px,py+dy*7) || !legacy_item_owned(LI_GRIP_RING))return FALSE;
+    while(!wall_contact(px,py))py+=dy;
+    int foot=wall_footing(px,py,1);
+    if(foot<0)return FALSE;
+    sWallFootX=px;sWallFootY=foot;
+    a->state=PS_CLIMB;a->sub=CLIMB_WALL;a->timer=a->anim_t=0;
+    a->x=Q16(px);a->y=Q16(py);
+    a->zvel=0;a->speed=0;a->kb_timer=0;
+    gPl.sword_active=gPl.shield_up=0;
+    return TRUE;
+}
+
+static void wall_climb(Actor* a,int dy) {
+    int dx=0,dir=DIR_NONE;
+    if(dy)dir=dy<0?DIR_N:DIR_S;
+    else if(gKeysHeld&KEY_LEFT){dx=-1;dir=DIR_W;}
+    else if(gKeysHeld&KEY_RIGHT){dx=1;dir=DIR_E;}
+    if(dir!=DIR_NONE)player_face(dir_to_facing(dir));
+    if(player_try_wall_attack(dir) || dir==DIR_NONE)return;
+
+    int px=PX(a->x)+dx,py=PX(a->y)+dy;
+    if(wall_contact(px,py)) {
+        a->x=Q16(px);a->y=Q16(py);a->anim_t++;
+    } else if(dy) {
+        int floor=wall_footing(px,py,dy);
+        if(floor<0)return;
+        int target=cream_node(gGame.cell,cream_room_terrace_at(px,floor,cream_terrace(gCreamNode)));
+        if(target!=gCreamNode && !component_change_open(target))return;
+        player_set_pos(px,floor);
+        a->state=PS_NORMAL;a->sub=0;
+        gCreamNode=gCreamProgress.node=target;
+        sRouteCooldown=20;
+    }
+}
+
+bool8 cream_runtime_wall_attached(void) {
+    return gGame.area==AREA_CREAM && gPlayer->sub==CLIMB_WALL &&
+           (gPlayer->state==PS_CLIMB || gPlayer->state==PS_WALL_ATTACK);
+}
+
+bool8 cream_runtime_wall_hit(void) {
+    if(!cream_runtime_wall_attached())return FALSE;
+    Actor* a=gPlayer;
+    int px=PX(a->x),py=PX(a->y),floor=wall_footing(px,py,1);
+    if(floor<0){px=sWallFootX;floor=sWallFootY;}
+    /* The ground point becomes the lower ledge. Keep the drawn body at its
+       current height and let the normal hurt/jump gravity bring it down. */
+    player_set_pos(px,floor);
+    a->z=Q16(MAX(0,floor-py));a->zvel=a->speed=0;
+    gCreamNode=gCreamProgress.node=cream_node(gGame.cell,CC_LOWER);
+    sRouteCooldown=20;
+    return TRUE;
+}
 #endif
+
 bool8 cream_runtime_pre_player(void) {
     Actor* a=gPlayer;
     if(gGame.area!=AREA_CREAM)return FALSE;
@@ -159,16 +238,34 @@ bool8 cream_runtime_pre_player(void) {
     }
     int px=PX(a->x),py=PX(a->y),type=room_type_px(px,py-4);
     if(a->state!=PS_CLIMB) {
-        if(a->state!=PS_NORMAL||a->z||!legacy_item_owned(LI_GRIP_RING))return FALSE;
-        int probe=py-4+((gKeysHeld&KEY_UP)?-7:(gKeysHeld&KEY_DOWN)?7:0);
-        if(type!=TT_CLIMB && room_type_px(px,probe)!=TT_CLIMB)return FALSE;
-        if(!(gKeysHeld&(KEY_UP|KEY_DOWN)))return FALSE;
-        a->state=PS_CLIMB;a->z=0;gPl.sword_active=gPl.shield_up=0;
+        if(a->state!=PS_NORMAL||a->z)return FALSE;
+        bool8 wall_mounted=FALSE;
+#if BART_CREAM_VARIANT == 12
+        int mount_dy=(gKeysHeld&KEY_DOWN)?1:(gKeysHeld&KEY_UP)?-1:0;
+        wall_mounted=mount_dy && mount_wall(a,px,py,mount_dy);
+#else
+        if(!legacy_item_owned(LI_GRIP_RING))return FALSE;
+#endif
+        if(!wall_mounted) {
+            int probe=py-4+((gKeysHeld&KEY_UP)?-7:(gKeysHeld&KEY_DOWN)?7:0);
+            if(type!=TT_CLIMB && room_type_px(px,probe)!=TT_CLIMB)return FALSE;
+            if(!(gKeysHeld&(KEY_UP|KEY_DOWN)))return FALSE;
+            a->state=PS_CLIMB;a->z=0;gPl.sword_active=gPl.shield_up=0;
+#if BART_CREAM_VARIANT == 12
+            a->sub=CLIMB_LADDER;
+#endif
+        }
     }
     int dy=(gKeysHeld&KEY_DOWN)?1:(gKeysHeld&KEY_UP)?-1:0;
     if(a->iframes)a->iframes--;
     if(gPl.item_cooldown)gPl.item_cooldown--;
     if(gPl.lamp_timer)gPl.lamp_timer--;
+#if BART_CREAM_VARIANT == 12
+    if(a->sub==CLIMB_WALL) {
+        wall_climb(a,dy);
+        return TRUE;
+    }
+#endif
     if(dy) {
         int next=py+dy;
         if(!room_box_solid(px-4,next-7,px+3,next-1)) {a->y=Q16(next);a->anim_t++;}
@@ -224,6 +321,9 @@ void cream_runtime_drop(int rows) {
 }
 bool8 cream_runtime_draw_player(void) {
     if(gGame.area!=AREA_CREAM||gPlayer->state!=PS_CLIMB||sDropRows)return FALSE;
+#if BART_CREAM_VARIANT == 12
+    if(gPlayer->sub==CLIMB_WALL && gPlayer->iframes && (gFrame&2))return TRUE;
+#endif
     const SpriteSheet* sh=&sheets[SHEET_CREAMCLIMB];
     int frame=(gPlayer->anim_t>>3)&3;
     if(!sClimbTile)sClimbTile=sprite_alloc(sh->frame_tiles);
@@ -261,7 +361,15 @@ bool8 cream_runtime_interact(void) {
         return TRUE;
     }
     if((p->content&CC_CONTENT_NPC)&&near_spot(p->npc,24)) {
-        static const char*const words[]={"Climb the pale seams. A black face without handholds cannot be climbed.|Some drops pass several terraces. Look before you leap.","Purple silk closes the path. A flame opens it.|The brightest veins gather near the peak.","The caves fold the mountain. A door far above may open beside your feet.|Bring the Pacci Cane to the peak. Turn the head; strike the exposed core."};
+        static const char*const words[]={
+#if BART_CREAM_VARIANT == 12
+            "The Grip Bracelet holds on marked rock. A hit will send you tumbling.|Some drops pass several terraces. Look before you leap.",
+#else
+            "Climb the pale seams. A black face without handholds cannot be climbed.|Some drops pass several terraces. Look before you leap.",
+#endif
+            "Purple silk closes the path. A flame opens it.|The brightest veins gather near the peak.",
+            "The caves fold the mountain. A door far above may open beside your feet.|Bring the Pacci Cane to the peak. Turn the head; strike the exposed core."
+        };
         textbox_open(words[hash32(gCreamProgress.seed,node)%3]);return TRUE;
     }
     return FALSE;
@@ -277,6 +385,7 @@ void cream_runtime_update(void) {
     if(gPlayer->state!=PS_NORMAL&&gPlayer->state!=PS_CLIMB)return;
     if(gPlayer->z)return;
 #if BART_CREAM_VARIANT == 12
+    if(gPlayer->state==PS_CLIMB&&gPlayer->sub==CLIMB_WALL)return;
     /* Micro terraces belong to their existing macro graph component. Their
        short descents animate a real supported landing without inventing a
        graph edge, reloading actors, or bypassing a required route gate. */

@@ -5,9 +5,11 @@ Hero navigation/facing/standing and the selected new-run seed are disclosed
 fixtures. Every trial completion, earned tool, equipment change, gate reaction,
 climb/fall/cave transition and enemy HP change comes from real game input.
 No inventory grant, player health, enemy state/health, completion, terrain,
-VRAM, palette or framebuffer is assigned. The final retirement check replays
-only SRAM produced by this actual summit victory in a separate cold core. This is a mechanic proof using
-navigation fixtures, not an unassisted playthrough.
+VRAM, palette or framebuffer is assigned during progression. The optional
+wall probe branches from that run with disclosed inventory and enemy-position
+fixtures and restores the pre-probe emulator state. A separate cold core
+replays SRAM produced by the summit victory. Navigation fixtures select the
+approaches to the tested mechanics.
 
 Use --stop-after-long-drop --seed 5 or --seed 1432 to qualify the3/4-row falls.
 """
@@ -17,28 +19,29 @@ import probe as P,cream_graph_review as G
 import release_boundary_review as RB
 from regional_native_support import compile_abi
 import mgba.core,mgba.image
-parser=argparse.ArgumentParser(description=__doc__);parser.add_argument('--bundle',required=True);parser.add_argument('--out',required=True);parser.add_argument('--seed',type=lambda x:int(x,0),default=0xb4a7);parser.add_argument('--stop-after-long-drop',action='store_true');parser.add_argument('--panoramas',action='store_true');args=parser.parse_args()
+parser=argparse.ArgumentParser(description=__doc__);parser.add_argument('--bundle',required=True);parser.add_argument('--out',required=True);parser.add_argument('--seed',type=lambda x:int(x,0),default=0xb4a7);parser.add_argument('--stop-after-long-drop',action='store_true');parser.add_argument('--panoramas',action='store_true');parser.add_argument('--wall-mechanics',action='store_true',help='Also isolate the Grip Bracelet, movement, sword and hit reactions at a generated rock face.');args=parser.parse_args()
 out=Path(args.out).resolve();out.mkdir(parents=True,exist_ok=True);bundle=Path(args.bundle).resolve()
 P.ROM=str(bundle/'bartgame.gba');P.MAP=str(bundle/'bartgame.map');P._syms=None
 checks=[];fixtures=[];review_complete=False;fatal_errors=[];harness_sha256=hashlib.sha256(Path(__file__).read_bytes()).hexdigest()
-def handoff_abi_offset():
+def review_offsets():
  # Compile only a constant from the exact pinned header using the real ARM
  # ABI. The gameplay ROM and its RAM remain read-only during this adapter.
  game=Path(__file__).resolve().parents[1];folder=out/'abi';folder.mkdir(exist_ok=True)
  commit=(bundle/'source-commit.txt').read_text().strip()
- header=subprocess.check_output(['git','-C',str(game),'show',commit+':bartgame/src/handoff_events.h'])
- (folder/'handoff_events.h').write_bytes(header)
- source='#include "handoff_events.h"\nconst unsigned int completed_offset __attribute__((used,section(".abi")))=__builtin_offsetof(HandoffState,completed);\n'
+ hashes={}
+ for name in ('handoff_events.h','player.h'):
+  header=subprocess.check_output(['git','-C',str(game),'show',commit+':bartgame/src/'+name])
+  (folder/name).write_bytes(header);hashes[name]=hashlib.sha256(header).hexdigest()
+ source='#include "handoff_events.h"\n#include "player.h"\nconst unsigned int offsets[] __attribute__((used,section(".abi")))={__builtin_offsetof(HandoffState,completed),__builtin_offsetof(PlayerState,sword_active)};\n'
  (folder/'offset.c').write_text(source)
  command=['arm-none-eabi-gcc','-mthumb','-mcpu=arm7tdmi','-fno-builtin','-I',str(folder),'-I',str(game/'src'),'-I',str(bundle),'-c',str(folder/'offset.c'),'-o',str(folder/'offset.o')]
  built=subprocess.run(command,capture_output=True,text=True);(folder/'compile.log').write_text(built.stdout+built.stderr);built.check_returncode()
  subprocess.run(['arm-none-eabi-objcopy','-O','binary','--only-section=.abi',str(folder/'offset.o'),str(folder/'offset.bin')],check=True,capture_output=True)
  data=(folder/'offset.bin').read_bytes()
- if len(data)!=4:raise AssertionError('unexpected ARM offsetof constant size')
- value=int.from_bytes(data,'little')
- (folder/'provenance.json').write_text(json.dumps(dict(source_commit=commit,header_sha256=hashlib.sha256(header).hexdigest(),compiler_command=command,completed_offset=value),indent=2))
- return value
-completed_offset=handoff_abi_offset()
+ completed, sword_active=struct.unpack('<II',data)
+ (folder/'provenance.json').write_text(json.dumps(dict(source_commit=commit,header_sha256=hashes,compiler_command=command,completed_offset=completed,sword_active_offset=sword_active),indent=2))
+ return completed,sword_active
+completed_offset,sword_active_offset=review_offsets()
 def cream_hub_point():
  game=Path(__file__).resolve().parents[1];commit=(bundle/'source-commit.txt').read_text().strip()
  got=subprocess.run(['git','-C',str(game),'show',commit+':bartgame/src/hub_services.h'],capture_output=True,text=True)
@@ -80,6 +83,8 @@ w=world(c);print('World',w.entry_node,'->',w.goal_node,'rewards',list(w.reward_n
 (out/'initial.json').write_text(json.dumps(dict(checks=checks,fixtures=fixtures,sha256=hashlib.sha256((bundle/'bartgame.gba').read_bytes()).hexdigest(),world=G.plain(w)),indent=2))
 
 trace=[];active_capture=None;local_drop_proved=False
+wall_probed = False
+wall_steps = 0
 def drive(key,limit,pred):
  c.clear_keys(*range(10));c.set_keys(P.key(c,key))
  for i in range(limit):
@@ -115,7 +120,7 @@ def review_exception(kind,value,tb):
  fatal_errors.append(str(value));sys.__excepthook__(kind,value,tb)
 sys.excepthook=review_exception
 def save_report():
- (out/'report.json').write_text(json.dumps(dict(checks=checks,fixtures=fixtures,seed=args.seed,scope_complete=review_complete,errors=fatal_errors,handoff_completed_offset=completed_offset,harness_sha256=harness_sha256,assets_header_sha256=hashlib.sha256((bundle/'assets.h').read_bytes()).hexdigest(),final=core_status(),sha256=hashlib.sha256((bundle/'bartgame.gba').read_bytes()).hexdigest(),limitations='Navigation fixtures select hero position, standing state and facing. Seed and erased in-memory SRAM are explicit start fixtures. All equipment choices and tools/rewards/combat use real input. No enemy HP/state, inventory grants, player health, completion, gates, terrain, palette, VRAM or framebuffer writes.'),indent=2))
+ (out/'report.json').write_text(json.dumps(dict(checks=checks,fixtures=fixtures,seed=args.seed,scope_complete=review_complete,errors=fatal_errors,handoff_completed_offset=completed_offset,harness_sha256=harness_sha256,assets_header_sha256=hashlib.sha256((bundle/'assets.h').read_bytes()).hexdigest(),final=core_status(),sha256=hashlib.sha256((bundle/'bartgame.gba').read_bytes()).hexdigest(),limitations='Navigation fixtures select hero position, standing state and facing. Seed and erased in-memory SRAM are explicit start fixtures. All equipment choices and tools/rewards/combat use real input. The optional wall probe temporarily masks the owned Bracelet bit and positions an existing enemy, then restores its snapshot. No enemy HP/state, inventory grants, player health, completion, gates, terrain, palette, VRAM or framebuffer writes.'),indent=2))
 atexit.register(save_report)
 def return_from_trial():
  tp(c,16*16+8,21*16+14);P.run(c,3);drive('DOWN',100,lambda:status(c)['area']!=4);return dismiss()
@@ -137,11 +142,137 @@ def shortest(goal,tokens):
  return path[::-1]
 def type_at(x,y):
  mt=P.r16(c,P.sym('gRoom')+2+(y*32+x)*2);return P.r8(c,P.sym('metatile_type')+mt)
+
+
+def walk_lane(source, target):
+    terrace = source & 1
+    if DEFS.get('BART_CREAM_VARIANT') != 12:
+        return 6 if terrace else 19
+    # Match the seeded shared side hinge used by cream_room_walk_pos.
+    low, high = sorted((source // 2, target // 2))
+    mask = 0xffffffff
+    h = (((w.seed ^ 0x4c414e45) * 0x9e3779b1) & mask) ^ (low * 157 + high * 31 + terrace * 701 + 0x7f4a7c15)
+    h = ((h ^ (h >> 15)) * 0x85ebca77) & mask
+    h = ((h ^ (h >> 13)) * 0xc2b2ae3d) & mask
+    return (4 if terrace else 18) + ((h ^ (h >> 16)) & 3)
+
+
+def wall_approach():
+    cells = [(x, y) for y in range(24) for x in range(32)
+             if type_at(x, y) == DEFS['TT_CREAM_WALL']]
+    xs, ys = zip(*cells)
+    return (min(xs) + max(xs) + 1) * 8, (max(ys) + 1) * 16 + 7
+
+
+def probe_wall(node):
+    actor_base = P.sym('gActors')
+    attackers = [i for i in range(1, 96) if P.actor(c, i)['kind'] == 2
+                 and P.r8(c, actor_base + i * P.ACTOR_SIZE + 31) & 10 == 10
+                 and P.actor(c, i)['z'] == 0]
+    if not attackers:
+        return False
+
+    def observe():
+        return dict(core_status(), sub=P.r8(c, actor_base + 3),
+                    sword_active=P.r8(c, gp() + sword_active_offset))
+
+    def hold(key, frames):
+        states = []
+        for _ in range(frames):
+            P.hold(c, key, 1)
+            states.append(observe())
+        return states
+
+    def attached(state):
+        return state['actor']['state'] == 13 and state['sub'] == 1
+
+    def position_enemy(x, y, purpose):
+        enemy = actor_base + attackers[0] * P.ACTOR_SIZE
+        w32(c, enemy + P.A_X, x << 16)
+        w32(c, enemy + P.A_Y, y << 16)
+        fixtures.append(dict(kind='isolated wall probe positions a generated hostile enemy',
+                             purpose=purpose, node=node, enemy=attackers[0], x=x, y=y))
+
+    before = c.save_raw_state()
+    if before is None:
+        raise RuntimeError('mGBA could not snapshot the wall approach')
+    grip = P.sym('gLegacyInventory') + 8
+    grip_mask = 1 << (0x44 % 32)
+    sections = {}
+    try:
+        assert owned(0x44), 'Cream entry did not award the Grip Bracelet'
+        w32(c, grip, P.r32(c, grip) & ~grip_mask)
+        fixtures.append(dict(kind='isolated wall probe masks only the Bracelet ownership bit', node=node))
+        sections['without_bracelet'] = hold('UP', 32)
+        check('rock face refuses Up without the Grip Bracelet',
+              not any(attached(s) or s['node'] != node for s in sections['without_bracelet']),
+              sections['without_bracelet'][-1])
+        assert c.load_raw_state(before), 'mGBA could not restore the wall approach'
+
+        sections['attach'] = hold('UP', 30)
+        assert attached(observe()), 'Grip Bracelet did not attach Bloom to the wall'
+        shot(c, 'wall-climb-start')
+        for key, axis, sign in [('UP','y',-1),('RIGHT','x',1),('DOWN','y',1),('LEFT','x',-1)]:
+            initial = observe()
+            states = sections[key.lower()] = hold(key, 9)
+            distance = (states[-1]['actor'][axis] - initial['actor'][axis]) * sign
+            check('real ' + key + ' moves Bloom on the rock face',
+                  distance > 0 and all(attached(s) and s['node'] == node for s in states),
+                  dict(distance=distance,started=initial,finished=states[-1]))
+
+        # Use the live west-facing sword arc after the Left movement check.
+        before_swing = c.save_raw_state()
+        initial = observe()
+        target = P.actor(c, attackers[0])
+        position_enemy(initial['actor']['x'] - 23, initial['actor']['y'] - 4, 'sword hit')
+        swing = sections['sword'] = hold('B', 1)
+        active_seen = 0
+        while len(swing) < 35 and not attached(swing[-1]):
+            if swing[-1]['sword_active']:
+                active_seen += 1
+                if active_seen == 4:
+                    shot(c, 'wall-sword')
+            swing += hold([], 1)
+        check('real sword input runs the live swing and restores the wall grip',
+              any(s['actor']['state'] == 14 and s['sword_active'] for s in swing)
+              and attached(swing[-1]) and swing[-1]['node'] == node,
+              dict(active_frames=sum(bool(s['sword_active']) for s in swing),finished=swing[-1]))
+        after = P.actor(c, attackers[0])
+        check('sword damages a real enemy while Bloom stays on the face',
+              after['kind'] != 2 or after['hp'] < target['hp'], dict(before=target,after=after))
+        assert c.load_raw_state(before_swing), 'mGBA could not restore the wall grip'
+
+        # Position one real enemy already spawned in this room. Its own update,
+        # hitbox collision and player damage path determine the outcome.
+        start = observe()
+        position_enemy(start['actor']['x'], start['actor']['y'], 'enemy contact')
+        fall = sections['hit'] = []
+        for _ in range(60):
+            fall += hold([], 1)
+            current = fall[-1]
+            if current['hp'] < start['hp'] and current['actor']['z'] > 0 and not (out/'wall-hit.png').exists():
+                shot(c, 'wall-hit')
+            if current['actor']['z'] == 0 and current['actor']['state'] == 0:
+                break
+        landed = fall[-1]
+        check('actual enemy contact knocks Bloom from the face and he lands on the lower terrace',
+              any(s['hp'] < start['hp'] and s['actor']['z'] > 0 and not attached(s) for s in fall)
+              and landed['hp'] > 0 and landed['node'] == node and landed['actor']['state'] == 0
+              and landed['actor']['z'] == 0 and landed['actor']['y'] > start['actor']['y'],
+              dict(started=start,landed=landed))
+        shot(c, 'wall-hit-landing')
+        return True
+    finally:
+        (out/'wall-mechanics.json').write_text(json.dumps(dict(node=node,frames=sections),indent=2))
+        assert c.load_raw_state(before), 'mGBA could not restore the wall approach'
+
+
 def gate_open(n,i):return bool(P.r8(c,P.sym('gCreamOpenEdges')+n)&(1<<i))
 def use_gate(n,i,e):
  if not e.require or gate_open(n,i) or e.require==7:return
  r=P.sym('gCreamRoom');cx=P.r8(c,r+3);t=n&1;wy=6 if t else 19;other=e.target//2
  if e.kind==1:
+  wy=walk_lane(n,e.target)
   left=other%5<(n//2)%5;px=40 if left else 472;py=wy*16+14;f=3 if left else 1;gx=1 if left else 30;gy=wy
  elif e.kind==4:
   px=112;py=(wy+1)*16+14;f=0;gx=6;gy=wy
@@ -161,17 +292,32 @@ def use_gate(n,i,e):
  shot(c,'opened-gate-%d'%n)
 
 def edge(n,i):
- global active_capture,review_complete,local_drop_proved
+ global active_capture,review_complete,local_drop_proved,wall_probed,wall_steps
  if P.r16(c,gp())==0:raise AssertionError('hero died before route')
  e=w.edges[n][i];use_gate(n,i,e);r=P.sym('gCreamRoom');cx=P.r8(c,r+3);t=n&1;cell=n//2;target=e.target//2
- P.run(c,26)
+ edge_trace_start=len(trace)
+ # North ladders can wait out the previous edge cooldown while holding Up.
+ # Idling at a just-climbed rock crest needlessly exposes Bloom to its enemies.
+ if e.kind!=2 or target==cell:P.run(c,26)
  if e.kind==1:
-  left=target%5<cell%5;tp(c,20 if left else 492,(6 if t else 19)*16+14);drive('LEFT' if left else 'RIGHT',100,lambda:P.r8(c,P.sym('gCreamNode'))==e.target and status(c)['state']==1)
+  left=target%5<cell%5;tp(c,20 if left else 492,walk_lane(n,e.target)*16+14);drive('LEFT' if left else 'RIGHT',100,lambda:P.r8(c,P.sym('gCreamNode'))==e.target and status(c)['state']==1)
  elif e.kind==2:
-  if target==cell:
+  if e.flags & G.WALL_FACE:
+   tp(c,*wall_approach());face(0)
+   if args.wall_mechanics and not wall_probed:
+    wall_probed = probe_wall(n)
+   start = len(trace)
+   drive('UP',250,lambda:P.r8(c,P.sym('gCreamNode'))==e.target and status(c)['state']==1)
+   check('real Grip Bracelet climb traverses a required rock face',
+         owned(0x44) and any(row['actor']['state']==13 for row in trace[start:])
+         and P.r8(c,P.sym('gCreamNode'))==e.target,
+         dict(source=n,target=e.target,frames=len(trace)-start,status=core_status()))
+   wall_steps += 1
+  elif target==cell:
    yy=min(P.r8(c,r+4+cx),P.r8(c,r+4+cx+1));tp(c,(cx+1)*16+8,(yy+1)*16+7)
   else:tp(c,(cx+1)*16+8,24)
-  drive('UP',250,lambda:P.r8(c,P.sym('gCreamNode'))==e.target and status(c)['state']==1)
+  if not e.flags & G.WALL_FACE:
+   drive('UP',250,lambda:P.r8(c,P.sym('gCreamNode'))==e.target and status(c)['state']==1)
  elif e.kind==3:
   xx=27 if e.flags&1 else 10 if t else cx;yy=min(P.r8(c,r+4+xx),P.r8(c,r+4+xx+1)) if t else 22
   tp(c,xx*16+16,yy*16+12)
@@ -208,7 +354,12 @@ def edge(n,i):
  elif e.kind==4:
   yy=6 if t else 19;tp(c,7*16,(yy+1)*16+14);drive('UP',130,lambda:P.r8(c,P.sym('gCreamNode'))==e.target and status(c)['state']==1)
  check('real graph edge reaches target',P.r8(c,P.sym('gCreamNode'))==e.target and status(c)['area']==3,dict(node=n,index=i,target=e.target,kind=e.kind,status=core_status()))
- if P.r8(c,P.sym('gCreamNode'))!=e.target:raise AssertionError('route stalled')
+ if P.r8(c,P.sym('gCreamNode'))!=e.target:
+  failure=dict(source=n,target=e.target,kind=e.kind,climb_x=cx,frames=trace[edge_trace_start:],
+               ground_types=[[type_at(x,y) for x in range(32)] for y in range(24)])
+  (out/'stalled-edge.json').write_text(json.dumps(failure,indent=2))
+  shot(c,'stalled-edge')
+  raise AssertionError('route stalled')
  dismiss();return e
 def go(goal):
  for n,i in shortest(goal,available_tokens()):edge(n,i)
@@ -297,6 +448,10 @@ mission(1);combat('trial2-wave');return_from_trial();check('second real trial ea
 if args.panoramas:panorama('sick-room')
 mission(2);combat('trial3-darknut');return_from_trial();check('third real trial earns Cape and Pacci',reward()==7 and owned(0x12) and bool(P.r8(c,gp()+8)&8),core_status());shot(c,'earned-cape-pacci')
 go(w.goal_node);check('real route reaches peak with three earned gifts',status(c)['area']==3 and P.r8(c,P.sym('gCreamNode'))==w.goal_node,core_status());shot(c,'peak-real-arrival')
+if 'TT_CREAM_WALL' in DEFS:
+ check('real summit route uses a rock face',wall_steps>0,dict(wall_steps=wall_steps))
+if args.wall_mechanics:
+ check('wall mechanics probe found a generated face with a hostile enemy',wall_probed)
 if args.panoramas:panorama('peak-room')
 (out/'progression.json').write_text(json.dumps(dict(checks=checks,fixtures=fixtures,sha256=hashlib.sha256((bundle/'bartgame.gba').read_bytes()).hexdigest(),final=core_status()),indent=2))
 # The final encounter uses its real painted-head Pacci target and raised back.

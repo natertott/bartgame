@@ -7,6 +7,7 @@
 #define CREAM_ROOM_W 32
 #define CREAM_ROOM_H 24
 #define CREAM_SPAWN_MAX 6
+#define CREAM_WALL_WIDTH 4
 /* An explicit edge describes the visual action as well as its target. A local
    physical climb only changes the active component: it must not reload actors. */
 enum { CCR_NONE, CCR_WALK, CCR_CLIMB, CCR_DROP, CCR_CAVE, CCR_LOCAL_UP, CCR_LOCAL_DOWN };
@@ -33,6 +34,11 @@ void cream_room_reset_progress(void);
 void cream_room_build(int cell);
 u16 cream_room_floor(int tx,int ty);
 int cream_room_terrace_at(int px,int py,int current);
+#if BART_CREAM_VARIANT == 12
+/* A solid rock face can only be traversed by the wall-climbing state. */
+bool8 cream_room_wall_at(int px,int py);
+bool8 cream_room_wall_bounds(const CreamRoomInfo* info,int* x0,int* y0,int* x1,int* y1);
+#endif
 /* Optional visitors must not occupy another feature's A-interaction front. */
 bool8 cream_room_feature_reserved(int tx,int ty);
 bool8 cream_room_node_floor(int node,int tx,int ty);
@@ -44,7 +50,8 @@ bool8 cream_room_gate_cleared(int tx,int ty);
 bool8 cream_room_unlock_edge(int node,int edge_index);
 void cream_room_set_chest_open(int node,bool8 opened);
 /* Exact feature footprints/fronts for the area's reach/content validator. */
-/* Pure selected-room map data. Labels:0blocked,1lower,2upper,3climb,4cave,5drop,6gate. */
+/* Pure selected-room map data. Labels:0blocked,1lower,2upper,3ladder,4cave,5drop,6gate,7rock face. */
+enum { CCR_PREVIEW_WALL=7 };
 void cream_room_preview(int cell,CreamRoomInfo* out,u8 mask[CREAM_ROOM_W*CREAM_ROOM_H]);
 void cream_room_cave_pos(int terrace,int* px,int* py);
 void cream_room_drop_pos(int node,int edge_index,int* px,int* py);

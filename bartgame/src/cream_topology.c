@@ -33,11 +33,13 @@ static bool8 has_kind(int cell,int t,int kind) {
 }
 static void mark_features(CreamTopology* p,const CreamRoomInfo* info) {
     static const u8 flags[5]={CC_CONTENT_CHEST,CC_CONTENT_NPC,CC_CONTENT_HEAL,CC_CONTENT_CACHE,CC_CONTENT_MISSION};
-    int t,i,x;
+    int t,i,x,left,top,right,bottom;
     reserve(p,0,0,3,23);reserve(p,28,0,31,23);
     reserve(p,0,0,31,0);reserve(p,0,23,31,23);
     /* A local plateau cannot attach to the high side of a gated shaft. */
     reserve(p,info->climb_x-1,0,info->climb_x+2,23);
+    if(cream_room_wall_bounds(info,&left,&top,&right,&bottom))
+        reserve(p,left-1,top-2,right+1,bottom+2);
     for(t=0;t<2;t++) {
         const CreamTerraceSpots* sp=&info->terrace[t];
         const Spot* points[5]={&sp->chest,&sp->npc,&sp->heal,&sp->cache,&sp->mission};
@@ -62,8 +64,9 @@ static void mark_features(CreamTopology* p,const CreamRoomInfo* info) {
     {
         int lower=cream_node(info->cell,CC_LOWER),upper=lower+1,i=cream_find_edge(lower,upper);
         if(i>=0&&cream_edge(lower,i)->kind==CC_CLIMB) {
-            int y=info->lower_top[info->climb_x]+1;
-            reserve(p,info->climb_x+2,y-1,info->climb_x+4,y+1);
+            int x=info->climb_x+2,y=info->lower_top[info->climb_x];
+            if(cream_room_wall_bounds(info,NULL,NULL,&x,&y))y++;
+            reserve(p,x,y,x+2,y+2);
         }
     }
     /* Actual incoming routes retain dry supported arrivals and approaches. */
@@ -293,7 +296,7 @@ static bool8 drop_content_clear(const CreamRoomInfo* info,int owner,int x,int y)
 }
 
 static void prune_content_drops(CreamTopology* p,const CreamRoomInfo* info,const u8* mask) {
-    int i,dx,kept=0;
+    int i,j,dx,kept=0;
     for(i=0;i<p->drops;i++) {
         CreamTopologyDrop d=p->drop[i];
         int sx=d.x/16-1,sy=d.y/16,lx=d.landing_x/16-1,ly=d.landing_y/16,clear=1;
@@ -304,7 +307,12 @@ static void prune_content_drops(CreamTopology* p,const CreamRoomInfo* info,const
                !drop_content_clear(info,d.owner,sx+dx,sy)||
                !drop_content_clear(info,d.owner,lx+dx,ly))clear=0;
         }
-        if(clear)p->drop[kept++]=d;
+        if(!clear)continue;
+        /* Aligned shelves can propose two descents from the same lip. The
+           first supported landing is the only reachable drop from there. */
+        for(j=0;j<kept;j++)if(p->drop[j].x==d.x && p->drop[j].y==d.y)break;
+        if(j==kept)p->drop[kept++]=d;
+        else if(d.landing_y<p->drop[j].landing_y)p->drop[j]=d;
     }
     p->drops=kept;
     for(i=kept;i<CREAM_TOPO_LINK_MAX;i++)memset(&p->drop[i],0,sizeof(p->drop[i]));

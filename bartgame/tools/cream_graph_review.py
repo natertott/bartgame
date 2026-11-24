@@ -18,6 +18,7 @@ import time
 
 GAME=Path(__file__).resolve().parent.parent
 SHA=lambda data:hashlib.sha256(data).hexdigest()
+WALL_FACE = 8
 
 class Edge(C.Structure):
     _fields_=[('target',C.c_uint8),('kind',C.c_uint8),('require',C.c_uint8),('flags',C.c_uint8)]
@@ -35,7 +36,7 @@ def plain(w):
                 edges=[[dict(target=e.target,kind=e.kind,require=e.require,flags=e.flags)
                         for e in w.edges[n][:w.degree[n]]] for n in range(50)])
 
-def independent(w):
+def independent(w, require_walls=False):
     edges=w['edges'];rewards={node:1<<i for i,node in enumerate(w['reward_node'])}
     def claim(node,mask):
         bit=rewards.get(node,0)
@@ -79,6 +80,18 @@ def independent(w):
     assert any(e['kind']==2 for e in traversed),'no climbing in solved route'
     assert any(e['flags']&1 for e in traversed),'multi-room descent never used'
     assert any(e['kind']==4 and not e['flags']&2 for e in traversed),'required nonlocal cave never used'
+    wall_steps = sum(bool(e['flags'] & WALL_FACE) for e in traversed)
+    if require_walls:
+        assert wall_steps, 'solved route never climbs rock'
+        assert any(e['kind'] == 2 and not e['flags'] & WALL_FACE for e in traversed), 'solved route skips ladders'
+        reached = {w['entry_node']}
+        queue = deque(reached)
+        while queue:
+            for e in edges[queue.popleft()]:
+                if not e['flags'] & WALL_FACE and e['target'] not in reached:
+                    reached.add(e['target'])
+                    queue.append(e['target'])
+        assert w['goal_node'] not in reached, 'all three trial rewards allow a wall-free summit route'
     assert w['entry_node']//10==4 and w['entry_node']%2==0
     assert w['goal_node']//10==0 and w['goal_node']%2==1
     assert w['corruption'][w['goal_node']//2]==2
@@ -89,6 +102,8 @@ def independent(w):
         if len(out)<=1:assert w['content'][n]&~1,'empty dead end'
         for e in out:
             t=e['target'];assert 0<=t<50 and 0<=e['require']<=7
+            if e['flags'] & WALL_FACE:
+                assert e['kind'] == 2 and n % 2 == 0 and t == n + 1 and not e['require']
             r,c=n//10,(n//2)%5;tr,tc=t//10,(t//2)%5
             if e['kind']==1:assert r==tr and abs(c-tc)==1 and n%2==t%2
             elif e['kind']==2:assert c==tc and ((t==n+1 and n%2==0) or (tr==r-1 and n%2==1 and t%2==0))
@@ -98,7 +113,7 @@ def independent(w):
             elif e['kind']==4:assert any(x['kind']==4 and x['target']==n for x in edges[t])
             else:raise AssertionError('unknown edge verb')
     return dict(reachable_states=len(all_reached),winning_states=len(winning),
-                climbs=sum(e['kind']==2 for e in traversed),drops=sum(e['kind']==3 for e in traversed),
+                climbs=sum(e['kind']==2 for e in traversed),wall_steps=wall_steps,drops=sum(e['kind']==3 for e in traversed),
                 long_drop_spans=[e['target']//10-n//10 for (n,m),e in zip(shortest,traversed) if e['flags']&1],
                 cave_steps=sum(e['kind']==4 for e in traversed),solution=[list(s) for s in shortest])
 
@@ -129,7 +144,7 @@ def main():
             for e in edges:
                 if e['flags']&1:drop_spans[e['target']//10-n//10]+=1
         if i<a.independent:
-            result=independent(w);samples.append(dict(graph=w,independent=result))
+            result=independent(w,require_walls=True);samples.append(dict(graph=w,independent=result))
     check('actual C generator and no-trap state solver pass everyseed',True,a.seeds)
     check('deterministic graph bytes for everyseed',True,a.seeds)
     check('independent Python capability/geometry/dead-end solver passes',len(samples)==min(a.seeds,a.independent),len(samples))
@@ -139,7 +154,7 @@ def main():
     certificate=[]
     for seed in (0,1,7,0xb4a7,0xdeadbeef,0xffffffff):
         assert lib.cream_generate_certified(seed) and lib.cream_world_validate()
-        w=plain(world);certificate.append(dict(seed=seed,graph_sha256=SHA(bytes(world)),independent=independent(w)))
+        w=plain(world);certificate.append(dict(seed=seed,graph_sha256=SHA(bytes(world)),independent=independent(w,require_walls=True)))
     check('explicit solved ROM fallback independently passesallinheritedinventories',True,len(certificate))
     report=dict(method=__doc__,checks=checks,passed=sum(c['passed'] for c in checks),total=len(checks),seeds=a.seeds,
                 graph_bytes=C.sizeof(World),fallbacks=fallbacks,attempt_histogram=dict(attempts),peak_columns=dict(peaks),drop_span_histogram=dict(drop_spans),

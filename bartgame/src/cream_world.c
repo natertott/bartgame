@@ -2,6 +2,10 @@
    climbing/drop/cave puzzle, and capability-state verification. */
 #include "cream_world.h"
 
+#ifndef BART_CREAM_VARIANT
+#define BART_CREAM_VARIANT 12
+#endif
+
 CreamWorld gCreamWorld EWRAM_BSS;
 
 static u32 random_next(u32* state) {
@@ -342,6 +346,46 @@ static bool8 verify_states(void) {
     return TRUE;
 }
 
+#if BART_CREAM_VARIANT == 12
+/* Check the cut with every mission tool and even the late return cave open.
+   During selection, omit only the candidate so each chosen wall is required. */
+static bool8 summit_without_wall(const CreamEdge* candidate) {
+    u8 seen[CC_NODES]={0},queue[CC_NODES];
+    int head=0,tail=0,start=gCreamWorld.entry_node;
+    seen[start]=1;queue[tail++]=start;
+    while(head<tail) {
+        int node=queue[head++],i;
+        if(node==gCreamWorld.goal_node)return TRUE;
+        for(i=0;i<gCreamWorld.degree[node];i++) {
+            const CreamEdge* edge=&gCreamWorld.edges[node][i];
+            if(seen[edge->target] || (candidate?edge==candidate:(edge->flags&CC_WALL_FACE)))continue;
+            seen[edge->target]=1;queue[tail++]=edge->target;
+        }
+    }
+    return FALSE;
+}
+
+static void mark_wall_faces(void) {
+    CreamEdge* optional=NULL;
+    int i,marked=0,start=mix(gCreamWorld.seed^0x57414c4cu)%CC_ROOMS;
+    /* Keep surface geometry and saved edge indices stable. Two existing
+       climbs acquire rock faces; ladders and tool gates keep their lanes. */
+    for(i=0;i<CC_ROOMS && marked<2;i++) {
+        int lower=cream_node((start+i)%CC_ROOMS,CC_LOWER);
+        int index=cream_find_edge(lower,lower+1);
+        if(index<0)continue;
+        CreamEdge* edge=&gCreamWorld.edges[lower][index];
+        if(edge->kind!=CC_CLIMB || edge->require)continue;
+        if(summit_without_wall(edge)) {
+            if(!optional)optional=edge;
+            continue;
+        }
+        edge->flags|=CC_WALL_FACE;marked++;
+    }
+    if(marked==1 && optional)optional->flags|=CC_WALL_FACE;
+}
+#endif
+
 bool8 cream_world_validate(void) {
     int n,i,long_count=0,cave_count=0;
     if(gCreamWorld.entry_node>=CC_NODES || gCreamWorld.goal_node>=CC_NODES ||
@@ -357,6 +401,10 @@ bool8 cream_world_validate(void) {
         for(i=0;i<gCreamWorld.degree[n];i++) {
             const CreamEdge* e=&gCreamWorld.edges[n][i];int to=e->target,dx,dy;
             if(to>=CC_NODES || e->require>CC_TOKEN_ALL)return FALSE;
+#if BART_CREAM_VARIANT == 12
+            if((e->flags&CC_WALL_FACE) &&
+               (e->kind!=CC_CLIMB || e->require || cream_terrace(n)!=CC_LOWER || to!=n+1))return FALSE;
+#endif
             dx=col_of(to)-col_of(n);dy=row_of(to)-row_of(n);
             if(e->kind==CC_WALK) {
                 if(ABS(dx)!=1 || dy || cream_terrace(to)!=cream_terrace(n))return FALSE;
@@ -381,6 +429,9 @@ bool8 cream_world_validate(void) {
     for(i=0;i<3;i++)if(gCreamWorld.reward_node[i]>=CC_NODES ||
         gCreamWorld.stage[gCreamWorld.reward_node[i]]!=i ||
         !(gCreamWorld.content[gCreamWorld.reward_node[i]]&CC_CONTENT_MISSION))return FALSE;
+#if BART_CREAM_VARIANT == 12
+    if(summit_without_wall(NULL))return FALSE;
+#endif
     return verify_states();
 }
 
@@ -417,7 +468,11 @@ static bool8 candidate(u32 seed,u32 shape_seed) {
     gCreamWorld.entry_node=cream_node(20+pick(&state,5),CC_LOWER);
     tree(&state);
     gCreamWorld.goal_node=cream_node(pick(&state,CC_WIDTH),CC_UPPER);
-    if(!add_long_drop(&state) || !add_required_cave(&state) || !missions(&state) || !cream_world_validate())return FALSE;
+    if(!add_long_drop(&state) || !add_required_cave(&state) || !missions(&state))return FALSE;
+#if BART_CREAM_VARIANT == 12
+    mark_wall_faces();
+#endif
+    if(!cream_world_validate())return FALSE;
     length=cream_solution(0,path,sizeof(path));
     if(length<19 || length>(int)sizeof(path))return FALSE;
     for(i=0;i<length;i++)rooms|=1u<<cream_cell(path[i]);
@@ -444,5 +499,8 @@ bool8 cream_generate(u32 seed) {
 bool8 cream_generate_certified(u32 seed) {
     gCreamWorld=sCreamCertificate;
     gCreamWorld.seed=seed;
+#if BART_CREAM_VARIANT == 12
+    mark_wall_faces();
+#endif
     return cream_world_validate();
 }

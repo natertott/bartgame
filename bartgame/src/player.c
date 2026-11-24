@@ -56,6 +56,15 @@ static u8 sWalkTimer;
 static u16 sActionTile, sLastActionFrame, sShadowTile;
 static u8 sUseItem, sUseTimer, sUseLength, sUseFacing;
 
+static inline bool8 is_wall_attack(int state) {
+#if BART_CREAM_VARIANT == 12
+    return state == PS_WALL_ATTACK;
+#else
+    (void)state;
+    return FALSE;
+#endif
+}
+
 #if BART_FOREST_VARIANT >= 11
 /* A copy of existing body ink, never a new pose or a change to the hero slot. */
 static u16 sCanopyTile;
@@ -284,14 +293,20 @@ bool8 player_hurt(int damage, int from_dir) {
     if (gPl.hp < 0)
         gPl.hp = 0;
     gPl.carry = CARRY_NONE;
+    bool8 wall_fall = FALSE;
+#if BART_CREAM_VARIANT == 12
+    wall_fall = cream_runtime_wall_hit();
+#endif
     /* A hurt roll-bounce has an ordinary airborne recovery, not a cape.
        Actual jumps retain their cape/ledge/drop-in landing behaviour. */
-    if (a->z > 0 && a->state != PS_JUMP)
+    if (wall_fall)
+        a->sub = WALL_FALL_SUB;
+    else if (a->z > 0 && a->state != PS_JUMP)
         a->sub = 3;
     a->state = PS_HURT;
     a->timer = HURT_FRAMES;
     a->kb_dir = from_dir;
-    a->kb_speed = handoff_player_knockback(Q8(1.5));
+    a->kb_speed = wall_fall ? 0 : handoff_player_knockback(Q8(1.5));
     a->iframes = 30;
     gPl.sword_active = 0;
     gPl.lamp_timer = 0;
@@ -574,6 +589,32 @@ static void state_lift(void) {
     }
 }
 
+static inline void start_sword_attack(int state, int dir) {
+    Actor* a = gPlayer;
+    gPl.queued_attack = 0;
+    a->state = state;
+    a->timer = 0;
+    gPl.sword_phase = 0;
+    gPl.sword_active = 0;
+    gPl.shield_up = 0;
+    sUseTimer = 0;
+    a->speed = 0;
+    if (dir != DIR_NONE)
+        a->facing = facing_from_dir(dir, a->facing);
+#if !BLOOM_SWING_STUDY
+    sfx_play(SFX_SWORD);
+#endif
+}
+
+#if BART_CREAM_VARIANT == 12
+bool8 player_try_wall_attack(int dir) {
+    if (!(gKeysDown & player_equip_keys(EQ_SWORD)) || legacy_player_status(LPS_SILENCE))
+        return FALSE;
+    start_sword_attack(PS_WALL_ATTACK, dir);
+    return TRUE;
+}
+#endif
+
 static void state_normal(void) {
     Actor* a = gPlayer;
     int dir = input_dir();
@@ -582,19 +623,7 @@ static void state_normal(void) {
 
     /* attack, with whichever button holds the sword */
     if ((gKeysDown & player_equip_keys(EQ_SWORD)) || gPl.queued_attack) {
-        gPl.queued_attack = 0;
-        a->state = PS_ATTACK;
-        a->timer = 0;
-        gPl.sword_phase = 0;
-        gPl.sword_active = 0;
-        gPl.shield_up = 0;
-        sUseTimer = 0;
-        a->speed = 0;
-        if (dir != DIR_NONE)
-            a->facing = facing_from_dir(dir, a->facing);
-#if !BLOOM_SWING_STUDY
-        sfx_play(SFX_SWORD);
-#endif
+        start_sword_attack(PS_ATTACK, dir);
         return;
     }
     /* R: lift what stands ahead, else roll when moving */
@@ -730,7 +759,7 @@ static void state_attack(void) {
     gPl.sword_active = (t >= 2 && t <= 12);
 #endif
     if (t >= ATTACK_FRAMES) {
-        a->state = PS_NORMAL;
+        a->state = is_wall_attack(a->state) ? PS_CLIMB : PS_NORMAL;
         gPl.sword_active = 0;
         gPl.sword_phase = 0;
     }
@@ -743,6 +772,8 @@ static void state_hurt(void) {
         a->state = a->z > 0 ? PS_JUMP : PS_NORMAL;
         if (a->state == PS_JUMP)
             a->timer = 4; /* continue the airborne pose, not a new takeoff */
+        else if (a->sub == WALL_FALL_SUB)
+            a->sub = 0;
     }
 }
 
@@ -864,6 +895,12 @@ static void state_itemget(void) {
 
 static void state_dead(void) {
     Actor* a = gPlayer;
+#if BART_CREAM_VARIANT == 12
+    if (a->sub == WALL_FALL_SUB && a->z > 0) {
+        actor_gravity(a);
+        return;
+    }
+#endif
     if (gPl.dead_timer < 255)
         gPl.dead_timer++;
     a->z = 0;
@@ -910,6 +947,9 @@ void player_update(void) {
     switch (a->state) {
         case PS_NORMAL: state_normal(); break;
         case PS_ROLL: state_roll(); break;
+#if BART_CREAM_VARIANT == 12
+        case PS_WALL_ATTACK:
+#endif
         case PS_ATTACK: state_attack(); break;
         case PS_HURT: state_hurt(); break;
         case PS_FALL: state_fall(); break;
@@ -1045,7 +1085,7 @@ static void draw_action(Actor* a, bool8 behind) {
         action_frame(cape[f]+cape_step(a), sx, sy, f==FACE_W, a->prio);
         return;
     }
-    if (a->state == PS_ATTACK) {
+    if (a->state == PS_ATTACK || is_wall_attack(a->state)) {
         if (behind)
             return;
 #if BLOOM_SWING_STUDY
@@ -1090,6 +1130,7 @@ static void draw_action(Actor* a, bool8 behind) {
 
 static void draw_ground_shadow(Actor* a) {
     if (!sShadowTile || a->state == PS_FALL || a->state == PS_DEAD || a->state == PS_SWALLOWED ||
+        is_wall_attack(a->state) ||
         (a->flags & (AF_HIDDEN | AF_NOSHADOW)))
         return;
     int px = PX(a->x), py = PX(a->y);
@@ -1263,6 +1304,9 @@ void player_draw(void) {
             }
             break;
         }
+#if BART_CREAM_VARIANT == 12
+        case PS_WALL_ATTACK:
+#endif
         case PS_ATTACK:
 #if BLOOM_SWING_STUDY
             frame = F_HERO_STUDY_N0+f*8+sword_step(a->timer);
@@ -1337,7 +1381,7 @@ void player_draw(void) {
 #if BLOOM_SWING_STUDY
     {
         int x0=0,y0=0,x1=0,y1=0;
-        int step=a->state==PS_ATTACK ? sword_step(a->timer) : -1;
+        int step=(a->state==PS_ATTACK || is_wall_attack(a->state)) ? sword_step(a->timer) : -1;
         gSwordStudyRender[0]=a->state;
         gSwordStudyRender[1]=a->timer;
         gSwordStudyRender[2]=step;

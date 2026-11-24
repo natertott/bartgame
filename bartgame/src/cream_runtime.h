@@ -15,6 +15,10 @@ void cream_runtime_build(int node);
 void cream_runtime_enter(void);
 void cream_runtime_room_reset(void);
 bool8 cream_runtime_pre_player(void);
+#if BART_CREAM_VARIANT == 12
+bool8 cream_runtime_wall_attached(void);
+bool8 cream_runtime_wall_hit(void);
+#endif
 void cream_runtime_update(void);
 bool8 cream_runtime_interact(void);
 void cream_runtime_draw(void);
