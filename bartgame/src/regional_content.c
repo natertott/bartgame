@@ -3,6 +3,7 @@
    the actual loaded collision and retained once discovered. */
 #include "regional_content.h"
 #include "handoff_events.h"
+#include "card_traders.h"
 #include "world.h"
 #include "cream_world.h"
 #include "cream_room.h"
@@ -341,11 +342,11 @@ static bool8 dry(int x,int y,int terrace) {
     return !room_box_solid(x*16+3,y*16+5,x*16+12,y*16+14);
 }
 static bool8 reached(int x,int y){return x>=0&&y>=0&&x<gRoom.w&&y<gRoom.h&&(sReach[y]&(1u<<x));}
-static void component(int x,int y,int terrace) {
+static int component(int x,int y,int terrace) {
     static const s8 dx[4]={0,1,0,-1},dy[4]={-1,0,1,0};
     int head=0,tail=0,i;
     memset(sReach,0,sizeof(sReach));
-    if(!dry(x,y,terrace))return;
+    if(!dry(x,y,terrace))return 0;
     sReach[y]|=1u<<x;sQueue[tail++]=y*32+x;
     while(head<tail) {
         int at=sQueue[head++];x=at&31;y=at>>5;
@@ -355,6 +356,20 @@ static void component(int x,int y,int terrace) {
         }
     }
     memcpy(sComponents[terrace],sReach,sizeof(sReach));sComponentReady|=1u<<terrace;
+    return tail;
+}
+static void broad_component(int terrace) {
+    u32 scanned[ROOM_MAX_H]={0};
+    int best=0;
+    memset(sOriginalReach,0,sizeof(sOriginalReach));
+    for(int y=1;y<gRoom.h-1;y++)for(int x=1;x<gRoom.w-1;x++) {
+        if((scanned[y]&(1u<<x))||!dry(x,y,terrace))continue;
+        int size=component(x,y,terrace);
+        for(int row=0;row<gRoom.h;row++)scanned[row]|=sReach[row];
+        if(size>best){best=size;memcpy(sOriginalReach,sReach,sizeof(sReach));}
+    }
+    memcpy(sReach,sOriginalReach,sizeof(sReach));
+    memcpy(sComponents[terrace],sReach,sizeof(sReach));
 }
 static bool8 landmark_reserved(int x,int y) {
     int i;
@@ -424,6 +439,10 @@ static bool8 compact_point(Spot old,Spot* out) {
     }
     if(found)reserve(out->x,out->y,2,2);
     return found;
+}
+static void place_npc(Spot old) {
+    gRegionalSpots.has_npc=choose_point(old,1,0x4e504320u,&gRegionalSpots.npc);
+    if(!gRegionalSpots.has_npc)gRegionalSpots.has_npc=compact_point(old,&gRegionalSpots.npc);
 }
 static bool8 rect_ok(int x,int y,int w,int h) {
     int xx,yy;
@@ -672,7 +691,10 @@ void regional_content_place(int area,int cell) {
         }
     }
     if(x<0)for(y=2;y<gRoom.h-2;y++){for(x=2;x<gRoom.w-2;x++)if(dry(x,y,p.terrace))break;if(x<gRoom.w-2)break;}
-    component(x,y,p.terrace);
+    /* A first enemy spawn can sit on a small Cream perch. The Collector and
+       its encounter belong to the widest walkable bank of that terrace. */
+    if(p.fusion_color==2)broad_component(p.terrace);
+    else component(x,y,p.terrace);
     memcpy(sOriginalReach,sReach,sizeof(sReach));
     if(area==AREA_CREAM) {
         /* Reserve the actual directed arrivals and departure lips, rather
@@ -688,6 +710,7 @@ void regional_content_place(int area,int cell) {
             }
         }
     }
+    if(p.fusion_color==2)place_npc(record->npc);
     /* Large optional features get their coherent footprint before small
        incidental markers consume it. Givers remain outside the puzzle's
        permanent dry ring, and core geometry is never replaced wholesale. */
@@ -706,10 +729,7 @@ void regional_content_place(int area,int cell) {
         RegionalContentRect* r=gRegionalSpots.traversal_rect.w?&gRegionalSpots.traversal_rect:&gRegionalSpots.mechanism_rect;
         gRegionalSpots.mechanism.x=r->x+r->w/2;gRegionalSpots.mechanism.y=r->y+r->h/2;
     }
-    if(p.quest_kind||p.has_wave||p.fusion_color!=RC_NONE||courier) {
-        gRegionalSpots.has_npc=choose_point(record->npc,1,0x4e504320u,&gRegionalSpots.npc);
-        if(!gRegionalSpots.has_npc)gRegionalSpots.has_npc=compact_point(record->npc,&gRegionalSpots.npc);
-    }
+    if(!gRegionalSpots.has_npc&&(p.quest_kind||p.has_wave||p.fusion_color!=RC_NONE||courier))place_npc(record->npc);
     if(p.interior_site!=RC_NONE&&(record->marks&RC_MARK_COMPACT_DOOR)) {
         gRegionalSpots.has_door=compact_point(record->door,&gRegionalSpots.door);gRegionalSpots.compact_door=gRegionalSpots.has_door;
     } else if(p.interior_site!=RC_NONE) {
@@ -731,7 +751,8 @@ u8 regional_content_marks(int area,int cell,RegionalContentDiscovery* out) {
     RegionalContentPlan p;int at=regional_content_index(area,cell);u8 marks,planned=0;
     if(at<0||!out||!regional_content_get(area,cell,&p))return 0;
     *out=gRegionalDiscovery[at];marks=out->marks;
-    if(p.fusion_color!=RC_NONE&&(gHandoffState.fusion_flags&(1u<<p.fusion_color)))marks&=~RC_MARK_FUSION;
+    bool8 trading=p.fusion_color!=RC_NONE&&!card_traders_completed(CARD_TRADER_GREEN+p.fusion_color);
+    if(!trading)marks&=~RC_MARK_FUSION;
     if(gHandoffState.completed[p.field_site>>3]&(1u<<(p.field_site&7)))marks&=~RC_MARK_QUEST;
     if(!p.quest_kind&&!(gHandoffState.quest.kind==HQ_COURIER&&gHandoffState.quest.state==2&&
        gHandoffState.quest.target_area==area&&gHandoffState.quest.target_cell==cell))marks&=~RC_MARK_QUEST;
@@ -744,7 +765,7 @@ u8 regional_content_marks(int area,int cell,RegionalContentDiscovery* out) {
     if(p.has_wave)planned|=RC_MARK_WAVE;
     if(gHandoffState.quest.kind==HQ_COURIER&&gHandoffState.quest.state==2&&
        gHandoffState.quest.target_area==area&&gHandoffState.quest.target_cell==cell)planned|=RC_MARK_QUEST;
-    if(p.fusion_color!=RC_NONE&&!(gHandoffState.fusion_flags&(1u<<p.fusion_color)))planned|=RC_MARK_FUSION;
+    if(trading)planned|=RC_MARK_FUSION;
     planned|=marks&(RC_MARK_CACHE|RC_MARK_MECHANISM|RC_MARK_QUEST);
     out->marks=marks;return planned;
 }

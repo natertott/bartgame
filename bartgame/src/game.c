@@ -14,6 +14,7 @@
 #include "myst.h"
 #include "enemy.h"
 #include "objects.h"
+#include "trading_cards.h"
 #include "items.h"
 #include "boss.h"
 #include "npc.h"
@@ -44,6 +45,8 @@ extern u16 items_sheet_tile(void);
 #include "bomb_throw.h"
 #include "run_extension.h"
 #include "gear_menu.h"
+#include "card_ui.h"
+#include "card_traders.h"
 #include "regional_content.h"
 #include "hub_services.h"
 #if BART_ENEMY_LAB
@@ -375,6 +378,7 @@ void game_give_key_item(int cell) {
         gPl.bombs = 10;
     c->flags |= CF_CHEST_OPEN | CF_ITEM_TAKEN;
     player_item_get(bit, item == 1 ? F_ICON32_BOMBS : item == 2 ? F_ICON32_LAMP : F_ICON32_CLOAK);
+    trading_card_reward(CARD_REWARD_CHEST, AREA_FOREST, cell);
     textbox_open(sKeyItemText[item]);
     sfx_play(SFX_CHEST);
 }
@@ -447,6 +451,8 @@ static void give_chest(Cell* c) {
             break;
     }
     c->flags |= CF_CHEST_OPEN;
+    if (c->role != ROLE_KEYITEM)
+        trading_card_reward(CARD_REWARD_CHEST, AREA_FOREST, gGame.cell);
     sfx_play(SFX_CHEST);
 }
 
@@ -964,6 +970,7 @@ static void update_play(void) {
         if(gHandoffState.draft_state==HDRAFT_DONE)gStartingDraft=0;
         else if(handoff_starting_draft())return;
     }
+    if ((gKeysDown & KEY_SELECT) && gPlayer->state == PS_NORMAL && card_traders_try_open()) return;
     if(gPlayer->state==PS_NORMAL) {
         u16 used=hub_services_try_interact(gKeysDown);
         if(used){gKeysDown&=~used;if(!handoff_menu_active())draw_world();return;}
@@ -1119,7 +1126,9 @@ void game_update(void) {
         case GS_PLAY: update_play(); break;
         case GS_TRANSITION: update_transition(); break;
         case GS_MAP:
-            if(gear_menu_active())gear_menu_update();else menu_update();
+            if (gCardUiMode) card_ui_update();
+            else if (gear_menu_active()) gear_menu_update();
+            else menu_update();
             if (gGame.state == GS_PLAY) {
                 oam_clear();
                 draw_world();

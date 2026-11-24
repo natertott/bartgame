@@ -36,6 +36,7 @@
 #include "bomb_throw.h"
 #include "regional_content.h"
 #include "handoff_events.h"
+#include "card_ui.h"
 
 #define MAP_PAL PAL_SLOT_MAP
 #define PIC_BASE (UI_BG3 + UI_TILE_COUNT) /* the map's picture after the kit */
@@ -438,6 +439,7 @@ static void hearts_panel(void) {
     bg0_canvas(&sSide, 23, 4, 5, 7);
     vwf_text(&sSide, 3, 0, "Hearts", UI_INK_GOLD);
     vwf_text(&sSide, 3, 30, "Pieces", UI_INK_GOLD);
+    vwf_text(&sSide, 3, 46, "A Cards", UI_INK_CREAM);
     vwf_flush(&sSide, FALSE);
     for (i = 0; i < gPl.hp_max / 8 && i < 10; i++)
         bg0_put(23 + i % 5, 6 + i / 5, HT_HEART_FULL);
@@ -1338,7 +1340,7 @@ static void ms_draw(void){
             ms_text(x,3,vwf_num(b,(n+MS_PAGE_SIZE-1)/MS_PAGE_SIZE,0),UI_INK_CREAM);
         }
         if(!n)ms_textfit(12,32,200,"Nothing carried yet",UI_INK_DIM);
-        ms_textfit(7,149,226,sPage==PG_ITEMS?"A/B/L equip R page Sel satchel Start":"R page Sel satchel Start close",UI_INK_CREAM);
+        ms_textfit(7,149,226,sPage==PG_ITEMS?"A/B/L equip R page Sel satchel Start":"A cards R page Sel satchel Start",UI_INK_CREAM);
     }
     ms_assignment_line();ms_upload();ms_sync();gMenuStudyDrawFrames=gFrame-start;
 }
@@ -1368,7 +1370,7 @@ static void ms_restore(void){
     for(i=0;i<ts->anim_count;i++){const TileAnim* a=&ts->anims[i];int f;if(!a->frames||!a->speed)continue;f=(gFrame/a->speed)%a->frames;dma3_copy32(a->data+f*64,CHARBLOCK(0)+a->tile*16,128);}
     REG_BG3CNT=sStudyBg3;gAnimTiles=sStudyAnim;gVBlankHook=sStudyOldHook;
 }
-static void ms_open(void){
+static void ms_open(int page){
     int n;bool8 first;u8 idx[MS_LIST_MAX];
     sStudy=menu_study_layout(BART_MENU_VARIANT);sStudyKitReady=0;sStudyBaseReady=0;ms_cache_kit();sStudyMapReady=0;
     sStudyInputRead=sStudyInputWrite=0;sStudyHeld=~REG_KEYINPUT&KEY_ANY;sStudyOldHook=gVBlankHook;gVBlankHook=ms_input_irq;
@@ -1378,7 +1380,9 @@ static void ms_open(void){
         sStudyFocus[0]=sStudyFocus[1]=0;sMapCur=gGame.area==AREA_FOREST?gGame.cell:gWorld.entry;
         sZoom=0;sStudySeed=gWorld.seed;sStudyHaveFocus=1;
     }
-    sPage=PG_ITEMS;ms_owned_snapshot(first);n=ms_gather(sPage,idx);ms_focus_cursor(sPage,idx,n);
+    sPage=PG_ITEMS;ms_owned_snapshot(first);
+    if(page>=0)sPage=page;
+    n=ms_gather(sPage,idx);ms_focus_cursor(sPage,idx,n);
     icon32_menu_begin();bg0_clear();bg0_pool_reset_full();
     dma3_copy32((const void*)CHARBLOCK(0),sStudyWorld,sizeof(sStudyWorld));dma3_copy32((const void*)OBJ_TILE(OBJ_TILE_HUD_ICONS),sStudyHud,sizeof(sStudyHud));
     sStudyBg3=REG_BG3CNT;sStudyAnim=gAnimTiles;gAnimTiles=0;
@@ -1414,6 +1418,7 @@ static void ms_update(void){
     gKeysDown=0;if(sStudyInputRead!=sStudyInputWrite){gKeysDown=sStudyInput[sStudyInputRead];sStudyInputRead=(sStudyInputRead+1)&31;}
     if(gKeysDown&KEY_START){ms_restore();menu_close();return;}
     if(gKeysDown&KEY_SELECT){ms_restore();gear_menu_open();return;}
+    if(sPage==PG_KEYS&&(gKeysDown&KEY_A)){ms_restore();menu_close();card_ui_open_collection();return;}
     if(gKeysDown&KEY_R){
         if(sPage<PG_MAP&&n)sStudyFocus[sPage]=idx[sCursor];
         sPage=(sPage+1)%PG_COUNT;
@@ -1442,13 +1447,13 @@ static void ms_update(void){
 #endif
 
 /* -------------------------------------------------------------- open -- */
-void menu_open(void) {
+static void menu_open_page(int page) {
     bomb_charge_cancel();
 #if BART_MENU_VARIANT
-    ms_open();
+    ms_open(page);
     return;
 #endif
-    sPage = PG_ITEMS;
+    sPage = page >= 0 ? page : PG_ITEMS;
     sZoom = 0;
     sCursor = 0;
     sOverviewDone = 0;
@@ -1463,6 +1468,9 @@ void menu_open(void) {
     gGame.state = GS_MAP;
     sfx_play(SFX_MENU);
 }
+
+void menu_open(void) {menu_open_page(-1);}
+void menu_open_keys(void) {menu_open_page(PG_KEYS);}
 
 void menu_open_map_at(int cell) {
     menu_open();sPage=PG_MAP;sZoom=0;sMapCur=CLAMP(cell,0,CELLS-1);
@@ -1521,6 +1529,7 @@ void menu_update(void) {
     return;
 #else
     if(gKeysDown&KEY_SELECT){gear_menu_open();return;}
+    if(sPage==PG_KEYS&&(gKeysDown&KEY_A)){menu_close();card_ui_open_collection();return;}
 #endif
     static u8 idx[ITEM_COUNT];
     /* Restore actor palettes before submitting any icon draws for the

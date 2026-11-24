@@ -202,7 +202,7 @@ class Review:
         saved=self.trophy_save(c);d=self.discovery(c);state=self.raw(c,P.sym('gHandoffState'),self.abi.size('HandoffState'));inv=self.raw(c,P.sym('gLegacyInventory'),self.abi.size('LegacyInventory'))
         versions=[struct.unpack_from('<HH',saved,offset+12) for offset in (0x4000,0x5000) if struct.unpack_from('<I',saved,offset)[0]==0x58455243]
         size=self.abi.size('ExtraRun');quest_area=P.r8(c,P.sym('gRegionalQuestArea')) if 'gRegionalQuestArea' in P._syms else None
-        self.check('normal native save writes extension3 and its actual%d-byte payload'%size,(3,size) in versions,versions)
+        self.check('normal native save writes extension4 and its actual%d-byte payload'%size,(4,size) in versions,versions)
         self.check('saved map discoveries contain actual placed features',any(d),dict(bytes=len(d),sha256=SHA(d),plan=plan))
         (self.out/'new-checkpoint-private.bin').write_bytes(saved)
         cold=self.fresh('new-cold',saved,seed=None)

@@ -17,6 +17,7 @@
 #include "util.h"
 #include "world_tokens.h"
 #include "regional_content.h"
+#include "trading_cards.h"
 #if BART_CREAM_VARIANT == 12
 #include "cream_topology.h"
 #endif
@@ -347,10 +348,12 @@ bool8 cream_runtime_interact(void) {
         int choices[]={LI_BOOMERANG,LI_GUST_JAR,LI_MOLE_MITTS,LI_PEGASUS_BOOTS,LI_FLIPPERS,LI_POWER_BRACELETS,LI_BOW,LI_HEART_PIECE};
         int item=choices[hash32(gCreamProgress.seed,node*19)%8];
         bit_set(gCreamProgress.chests,node);cream_room_set_chest_open(node,TRUE);legacy_item_grant(item,1);
+        trading_card_reward(CARD_REWARD_CHEST,AREA_CREAM,node);
         textbox_open(legacy_item_def(item)->description);sfx_play(SFX_CHEST);return TRUE;
     }
     if((p->content&CC_CONTENT_CACHE)&&!(p->content&CC_CONTENT_CHEST)&&!bit_get(gCreamProgress.chests,node)&&near_spot(p->cache,24)) {
         bit_set(gCreamProgress.chests,node);gPl.gilt+=25;
+        trading_card_reward(CARD_REWARD_CHEST,AREA_CREAM,node);
         if(gPl.items&ITEM_BOMBS)gPl.bombs=MIN(99,gPl.bombs+3);
         room_set_overlay(p->cache.x,p->cache.y,MT_NONE);room_render();
         textbox_open("A climber's cache:25 gilt. Take the spare Blightseeds too.");sfx_play(SFX_PICKUP);return TRUE;

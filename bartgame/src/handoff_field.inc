@@ -175,7 +175,7 @@ static bool8 field_door(bool8 walking){
  }
  r.door_latch=1;
  if(!regional_content_door_open(gGame.area,gGame.cell)){
-  say(r.plan.fusion_color==1?"The blue shaped half will open this pocket entrance.":"This pocket entrance sleeps. Clear its paired portal trial elsewhere in the regions.");return TRUE;
+  say(r.plan.fusion_color==1?"The Brook Locksmith has the key to this pocket. Ask about their card collection.":"This pocket entrance sleeps. Clear its paired portal trial elsewhere in the regions.");return TRUE;
  }
  game_open_handoff(r.plan.interior_site,r.plan.event_kind);return TRUE;
 }
@@ -187,6 +187,8 @@ static void regional_enter(int area,int cell){
  r.giver=gRegionalSpots.has_npc?gRegionalSpots.npc:gRegionalSpots.has_cache?gRegionalSpots.cache:(Spot){PX(gPlayer->x)/16,PX(gPlayer->y)/16};
  start=r.giver;field_component(start);
  if(!field_has(start.x,start.y)){start.x=PX(gPlayer->x)/16;start.y=PX(gPlayer->y)/16;field_component(start);r.giver=start;}
+ if(gRegionalSpots.has_npc&&r.plan.fusion_color!=RC_NONE)
+  card_traders_place(CARD_TRADER_GREEN+r.plan.fusion_color,sx(r.giver.x),sy(r.giver.y),sy(r.giver.y)-15,r.plan.terrace);
  for(int i=0;i<6;i++){Spot p;if(field_point(i,2,&p)){r.points[r.point_count++]=p;}}
  if(!r.point_count){r.points[0]=r.giver;r.point_count=1;}
  r.receiver=r.point_count?r.points[r.point_count-1]:r.giver;
@@ -233,7 +235,7 @@ static bool8 regional_interact(void){
     handles a throw that lands inside the NPC's interaction radius. */
  if(regional_quest_local()&&q->state==2&&q->kind==HQ_CARRY&&q->cargo_ground&&!gPl.carry&&near(q->cargo_x,q->cargo_y,22)){q->cargo_ground=0;q->cargo_held=1;gPl.carry=CARRY_POT;gPlayer->state=PS_LIFT;gPlayer->timer=0;sfx_play(SFX_ITEM);return TRUE;}
  if(gRegionalSpots.has_npc&&near(sx(r.giver.x),sy(r.giver.y),24)){
-  if(r.plan.fusion_color!=RC_NONE){fuse(r.plan.fusion_color);return TRUE;}
+  if(r.plan.fusion_color!=RC_NONE){card_traders_explain(CARD_TRADER_GREEN+r.plan.fusion_color);return TRUE;}
   if(r.plan.quest_kind&&r.plan.quest_kind!=RC_NONE){
    if(HBIT(gHandoffState.completed,site)){say("Your kindness left its mark on this place.");return TRUE;}
    if(q->state==1||q->state==2){say(regional_quest_local()?"The task is still before you. Its stake has not changed.":"Finish the task you already accepted; its giver is still waiting.");return TRUE;}
@@ -241,7 +243,7 @@ static bool8 regional_interact(void){
   }
  }
  if(r.plan.fusion_color==0&&gRegionalSpots.has_cache&&near(sx(gRegionalSpots.cache.x),sy(gRegionalSpots.cache.y),24)){
-  if(!(gHandoffState.fusion_flags&1)){say("The green shaped fusion opens this field cache.");return TRUE;}
+  if(!(gHandoffState.fusion_flags&1)){say("The Moss Archivist's card trade opens this cache.");return TRUE;}
   if(!(gHandoffState.remaining[site]&0x4000)){gHandoffState.remaining[site]|=0x4000;give(LI_RUPEE100);sfx_play(SFX_CHEST);}else say("The little cache is empty.");return TRUE;
  }
  if(regional_quest_local()&&q->state==2){
@@ -304,6 +306,14 @@ static void regional_tick(void){
  if(!(gKeysHeld&KEY_UP))r.door_latch=0;
  if(field_door(TRUE))return;
  handoff_objects_update();handoff_mobility_update();
+ if(r.plan.fusion_color==2&&!r.card_golden_spawned&&!r.cadence&&
+    cream_terrace(gCreamNode)==r.plan.terrace&&card_traders_completed(CARD_TRADER_RED)&&
+    !(gTradingCardProgress.golden_defeated&(1u<<CARD_TRADER_RED))){
+  for(int i=0;i<r.point_count;i++){
+   Spot p=r.points[i];
+   if(trading_card_golden_spawn(CARD_TRADER_RED,sx(p.x),sy(p.y))){r.card_golden_spawned=1;break;}
+  }
+ }
  if(gRegionalSpots.has_mechanism&&handoff_objects_complete()&&!(gHandoffState.remaining[r.plan.field_site]&0x8000)){
   gHandoffState.remaining[r.plan.field_site]|=0x8000;field_reward(1);handoff_notify(HN_EVENT,gGame.area,gGame.cell,0);
  }

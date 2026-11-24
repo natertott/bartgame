@@ -32,6 +32,7 @@
 #include "game.h"
 #include "myst.h"
 #include "journal.h"
+#include "trading_cards.h"
 
 /* a style's tiles: its wall, the wall's face along the top and crown
    along the bottom, its floors, the floor's edges by the walls beside it
@@ -401,6 +402,7 @@ static void give_prize(void) {
         gPl.gilt = 999;
     journal_note_owned();
     gWorld.myst_flags[sCell] |= MF_DONE;
+    trading_card_reward(CARD_REWARD_CHEST, AREA_MYST, sCell);
     sfx_play(SFX_CHEST);
 }
 
@@ -427,6 +429,7 @@ void myst_tile_cleared(int tx, int ty) {
         pickup_spawn(PK_HEART, px - 8, py);
         gWorld.myst_flags[sCell] |= MF_DONE;
         sPhase = 9;
+        trading_card_reward(CARD_REWARD_EVENT, AREA_MYST, sCell);
         sfx_play(SFX_SECRET);
     }
     if (sKind == MK_BOULDERS) {
@@ -446,6 +449,7 @@ bool8 myst_stranger_trade(void) {
     gPl.gilt -= 10;
     player_heart_piece();
     gWorld.myst_flags[sCell] |= MF_DONE;
+    trading_card_reward(CARD_REWARD_EVENT, AREA_MYST, sCell);
     sfx_play(SFX_SECRET);
     return TRUE;
 }

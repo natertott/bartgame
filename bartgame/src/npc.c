@@ -22,6 +22,7 @@
 #include "npc.h"
 #include "journal.h"
 #include "myst.h"
+#include "trading_cards.h"
 
 static Actor* sTalking;
 static u8 sDlgState; /* 0 none, 1 text, 2 shop menu, 3 after-menu text */
@@ -407,7 +408,7 @@ static const ShopItem sShop[3] = {
 
 /* the third ware, arrows, is on the counter once the hero has the bow */
 static void talk_merchant(void) {
-    shop_open(F_FACE_PEDDLER, PEDDLER_SAYS("Fine goods for foul places. Touch nothing you can't afford, little petal.", "Oh. Hello.\nI sell things."), sShop,
+    shop_open(F_FACE_PEDDLER, PEDDLER_SAYS("Fine goods for foul places. Press Select by my counter if you bring cards.", "I sell things. Press Select by my counter to trade cards."), sShop,
               (gPl.items2 & ITEM2_BOW) ? 3 : 2);
     sDlgState = 2;
 }
@@ -464,6 +465,7 @@ static void talk_hermit(Actor* a) {
     }
     if (enemies_alive() == 0) {
         c->flags |= CF_QUEST_DONE;
+        trading_card_reward(CARD_REWARD_QUEST, AREA_FOREST, gGame.cell);
         sPendingReward = 1;
         reward_drop(a, PK_KEY);
         reward_drop(a, PK_GILT_BIG);
@@ -483,6 +485,7 @@ static void talk_nun(Actor* a) {
     }
     if (gPl.items & ITEM_RELIC) {
         c->flags |= CF_QUEST_DONE;
+        trading_card_reward(CARD_REWARD_QUEST, AREA_FOREST, gGame.cell);
         gPl.items &= ~ITEM_RELIC;
         gPl.hp_max += 8;
         journal_note_item(JI_HEART_CONTAINER);
@@ -508,6 +511,7 @@ static void talk_gardener(Actor* a) {
     }
     if (room_torches_unlit() == 0) {
         c->flags |= CF_QUEST_DONE;
+        trading_card_reward(CARD_REWARD_QUEST, AREA_FOREST, gGame.cell);
         reward_drop(a, PK_KEY);
         reward_drop(a, PK_GILT_BIG);
         sfx_play(SFX_SECRET);

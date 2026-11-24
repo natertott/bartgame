@@ -106,7 +106,6 @@ void handoff_cargo_thrown(Actor* object);
 bool8 handoff_cargo_land(Actor* object);
 void handoff_on_enemy_killed(int type,int px,int py);
 void handoff_track_enemy(Actor* enemy,const Actor* parent);
-void handoff_kinstone_drop(int color,int shape,int px,int py);
 int handoff_map_mark(int area,int cell); /* fuser/pocket marker, Compass only */
 
 bool8 handoff_apply_item_effect(int item,int amount);

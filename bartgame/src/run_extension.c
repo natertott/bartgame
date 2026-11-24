@@ -9,10 +9,13 @@
 #include "game.h"
 #include "util.h"
 #include "journal.h"
+#include "trading_cards.h"
+#include "card_traders.h"
 #include <stddef.h>
 #define SRAM_BYTES ((volatile u8*)0x0e000000)
 #define EX_MAGIC 0x58455243u
-#define EX_VERSION RUN_EXTENSION_VERSION /* actual map anchors append after v2 */
+#define EX_VERSION RUN_EXTENSION_VERSION
+#define EX_DISCOVERY_VERSION RUN_EXTENSION_DISCOVERY_VERSION
 #define EX_LEGACY_VERSION RUN_EXTENSION_LEGACY_VERSION
 #define PROFILE_MAGIC 0x50485242u
 #define EX_SLOT_BYTES RUN_EXTENSION_SLOT_BYTES
@@ -29,9 +32,11 @@ typedef struct {
     HandoffState handoff;
     RegionalContentDiscovery discovery[RC_ROOMS];
     u8 quest_area,reserved[3];
+    TradingCardProgress cards;
     u32 sum;
 } ExtraRun;
 #define EX_LEGACY_BYTES (offsetof(ExtraRun,discovery)+sizeof(u32))
+#define EX_DISCOVERY_BYTES (offsetof(ExtraRun,cards)+sizeof(u32))
 typedef struct {
     u32 magic,generation;
     u16 version,size;
@@ -44,6 +49,7 @@ typedef char ExtensionBeforeProfile[(EX_BASE+2*EX_SLOT_BYTES<=PROFILE_BASE)?1:-1
 typedef char ProfileBeforeJournal[(PROFILE_BASE+2*PROFILE_BYTES<=JOURNAL_SRAM_OFFSET)?1:-1];
 typedef char StableMetaPrefix[(META_BYTES==16)?1:-1];
 typedef char StablePublishedV2[(EX_LEGACY_BYTES==RUN_EXTENSION_LEGACY_BYTES)?1:-1];
+typedef char CardTradeSlotsMatch[(CARD_TRADE_SLOTS==CARD_TRADER_RED+1)?1:-1];
 static ExtraRun sExtra EWRAM_BSS;
 static u32 sGeneration,sProfileGeneration;
 static u8 sSlot,sProfileSlot,sProfileLoaded;
@@ -111,6 +117,10 @@ static bool8 extra_valid(void) {
            through the existing EWRAM buffer avoids a second 1.4KB stack copy. */
         memcpy(&old_sum,sExtra.discovery,sizeof(old_sum));
         if(sExtra.size!=EX_LEGACY_BYTES || old_sum!=sum_bytes(&sExtra,offsetof(ExtraRun,discovery)))return FALSE;
+    } else if(sExtra.version==EX_DISCOVERY_VERSION) {
+        u32 old_sum;
+        memcpy(&old_sum,&sExtra.cards,sizeof(old_sum));
+        if(sExtra.size!=EX_DISCOVERY_BYTES || old_sum!=sum_bytes(&sExtra,offsetof(ExtraRun,cards)))return FALSE;
     } else if(sExtra.version!=EX_VERSION || sExtra.size!=sizeof(sExtra) ||
               sExtra.sum!=sum_bytes(&sExtra,offsetof(ExtraRun,sum)))return FALSE;
     if (!inventory_valid(&sExtra.inventory) || !handoff_valid(&sExtra.handoff,legacy) ||
@@ -125,6 +135,12 @@ static bool8 extra_valid(void) {
         if((d->marks&~127u) || d->terrace>1)return FALSE;
         if(!discovery_spot_valid(d->door) || !discovery_spot_valid(d->npc) ||
            !discovery_spot_valid(d->mechanism) || !discovery_spot_valid(d->cache))return FALSE;
+    }
+    if(sExtra.version==EX_VERSION) {
+        const TradingCardProgress* cards=&sExtra.cards;
+        if((cards->completed >> CARD_TRADE_SLOTS) || (cards->golden_defeated & ~cards->completed) ||
+           cards->reserved[0] || cards->reserved[1])return FALSE;
+        for(i=0;i<CARD_COUNT;i++)if(cards->counts[i]>CARD_STACK_MAX)return FALSE;
     }
     return TRUE;
 }
@@ -170,6 +186,7 @@ void run_extension_write(u32 base_sum) {
     sExtra.cream=gCreamProgress;memcpy(sExtra.gates,gCreamOpenEdges,sizeof(sExtra.gates));
     sExtra.handoff=gHandoffState;memcpy(sExtra.discovery,gRegionalDiscovery,sizeof(sExtra.discovery));
     sExtra.quest_area=gRegionalQuestArea;
+    sExtra.cards=gTradingCardProgress;
     sExtra.sum=sum_bytes(&sExtra,offsetof(ExtraRun,sum));
     write_record(&sExtra,EX_BASE+(sSlot^1)*EX_SLOT_BYTES,sizeof(sExtra));
     sSlot^=1;sGeneration=sExtra.generation;run_profile_write();
@@ -199,6 +216,9 @@ bool8 run_extension_load(u32 base_sum,u32 seed) {
     gCreamNode=gCreamProgress.node;
     if(sExtra.version==EX_LEGACY_VERSION)regional_content_new_run();
     else {memcpy(gRegionalDiscovery,sExtra.discovery,sizeof(sExtra.discovery));gRegionalQuestArea=sExtra.quest_area;}
+    trading_cards_new_run();
+    if(sExtra.version==EX_VERSION)gTradingCardProgress=sExtra.cards;
+    else trading_cards_import_halves(gHandoffState.kinstone_shapes);
     handoff_resume_regional(sExtra.version==EX_LEGACY_VERSION);
     return TRUE;
 }

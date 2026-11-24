@@ -35,6 +35,8 @@ import ui_studies as UI_STUDIES  # noqa: E402
 import forest_concepts as FOREST_CONCEPTS  # noqa: E402
 import cream_terrain  # noqa: E402
 import handoff_items  # noqa: E402
+import trading_card_assets  # noqa: E402
+import trading_card_portraits  # noqa: E402
 
 # Some canonical IDs (moss, a torch, a boulder) are shared between regions.
 # A forest refinement must not repaint the Drain or mystery-room kit. Read
@@ -683,6 +685,56 @@ c.append('};')
 h.append('#define SHEET_COUNT %d' % len(sheet_names))
 h.append('extern const SpriteSheet sheets[];\n')
 print('sprites: %d sheets, %d tiles' % (len(sheet_names), sum(s[1] for s in sheet_names)))
+
+# Card vignettes and portraits occupy native BG tiles in the trading screen.
+# Each image and its own RGB555 bank stay paired in the catalogue's ID order.
+def trading_table(name, rows):
+    assert rows and rows[0] and all(len(row) == len(rows[0]) for row in rows), name
+    declaration = f'const u16 {name}[{len(rows)}][{len(rows[0])}]'
+    h.append('extern ' + declaration + ';')
+    c.append(declaration + ' ALIGN4 = {')
+    for row in rows:
+        c.append('  {')
+        for i in range(0, len(row), 16):
+            c.append('    ' + ', '.join(f'0x{value:04x}' for value in row[i:i+16]) + ',')
+        c.append('  },')
+    c.append('};')
+
+
+def trading_art(images, w, height):
+    output = []
+    for image, _ in images:
+        assert image.mode == 'P' and image.size == (w, height)
+        raw = image.tobytes()
+        assert max(raw) < 16
+        pix = [raw[i:i+w] for i in range(0, len(raw), w)]
+        output.append(bytes_to_u16(b''.join(tile_bytes(pix, x, y)
+                       for y in range(0, height, 8) for x in range(0, w, 8))))
+    return output
+
+
+def trading_palettes(palettes):
+    values = []
+    for palette in palettes:
+        assert len(palette) == 16
+        assert all(int(color[i:i+2], 16) % 8 == 0 for color in palette for i in (1, 3, 5)), palette
+        values.append([rgb15(color) for color in palette])
+    return values
+
+
+card_art = list(trading_card_assets.illustrations(48))
+card_thumbs = list(trading_card_assets.illustrations(24))
+trade_portraits = list(trading_card_portraits.portraits())
+assert len(card_art) == len(card_thumbs) == 16 and len(trade_portraits) == 5
+assert [palette for _, palette in card_art] == [palette for _, palette in card_thumbs]
+trading_table('trading_card_art', trading_art(card_art, 48, 48))
+trading_table('trading_card_thumbs', trading_art(card_thumbs, 24, 24))
+trading_table('trading_card_palettes', trading_palettes([palette for _, palette in card_art]))
+trading_table('trading_portrait_art', trading_art(trade_portraits, 48, 64))
+trading_table('trading_portrait_palettes', trading_palettes([palette for _, palette in trade_portraits]))
+palette, = trading_palettes([trading_card_assets.GROUND_PALETTE])
+c.append(c_array_u16('trading_card_ground_palette', palette))
+h.append('extern const u16 trading_card_ground_palette[16];\n')
 
 # Immutable native-body metadata keeps the canopy safeguard out of the action
 # update budget. Hero pixels/palette are protected; only their lower-band

@@ -1,6 +1,6 @@
 {
-  "audit_date": "2026-11-12",
-  "method": "Static current-source definitions and acquisition-path audit; not a 139-item runtime collection test.",
+  "audit_date": "2026-11-24",
+  "method": "Static current-source definitions and acquisition-path audit of the ordinary item journal.",
   "summary": {
     "raw_journal_slots": 146,
     "original_entries": 24,
@@ -9,8 +9,8 @@
     "visible_legacy_entries": 111,
     "gold_halves": 4,
     "visible_catalogue_entries": 139,
-    "current_acquisition_or_state_entries": 129,
-    "defined_only_visible_entries": 10,
+    "current_acquisition_or_state_entries": 127,
+    "defined_only_visible_entries": 12,
     "actual_bottle_states_without_separate_discovery": [
       "LI_BOTTLE_WATER",
       "LI_BOTTLE_HALF_MILK"
@@ -80,7 +80,7 @@
       "duplicate_of": "",
       "metadata_description": "Hold then release to throw; a tap drops. Bursts on ground impact, opens cracked walls and deals 8 HP.",
       "source_ref": "[src/journal.c](../../src/journal.c#L57)",
-      "acquisition_ref": "[src/game.c](../../src/game.c#L366)",
+      "acquisition_ref": "[src/game.c](../../src/game.c#L369)",
       "visible_ordinal": 4
     },
     {
@@ -96,7 +96,7 @@
       "duplicate_of": "",
       "metadata_description": "Burns webs and thorns; lights censers. Fire strips mummy wrappings and harms susceptible creatures.",
       "source_ref": "[src/journal.c](../../src/journal.c#L58)",
-      "acquisition_ref": "[src/game.c](../../src/game.c#L366)",
+      "acquisition_ref": "[src/game.c](../../src/game.c#L369)",
       "visible_ordinal": 5
     },
     {
@@ -112,7 +112,7 @@
       "duplicate_of": "",
       "metadata_description": "Use while moving to leap a gap. Land on safe ground beyond the hole.",
       "source_ref": "[src/journal.c](../../src/journal.c#L59)",
-      "acquisition_ref": "[src/game.c](../../src/game.c#L366)",
+      "acquisition_ref": "[src/game.c](../../src/game.c#L369)",
       "visible_ordinal": 6
     },
     {
@@ -128,7 +128,7 @@
       "duplicate_of": "",
       "metadata_description": "Worn, not equipped. Press R beside a boulder to lift it; throw it for 4 HP.",
       "source_ref": "[src/journal.c](../../src/journal.c#L60)",
-      "acquisition_ref": "[src/game.c](../../src/game.c#L437)",
+      "acquisition_ref": "[src/game.c](../../src/game.c#L441)",
       "visible_ordinal": 7
     },
     {
@@ -144,7 +144,7 @@
       "duplicate_of": "",
       "metadata_description": "Fires along your facing. Each arrow costs one shot and deals 2 enemy HP.",
       "source_ref": "[src/journal.c](../../src/journal.c#L61)",
-      "acquisition_ref": "[src/game.c](../../src/game.c#L414)",
+      "acquisition_ref": "[src/game.c](../../src/game.c#L418)",
       "visible_ordinal": 8
     },
     {
@@ -176,7 +176,7 @@
       "duplicate_of": "",
       "metadata_description": "Reveals every room's shape on the map. Discover features to learn their marks.",
       "source_ref": "[src/journal.c](../../src/journal.c#L63)",
-      "acquisition_ref": "[src/game.c](../../src/game.c#L421)",
+      "acquisition_ref": "[src/game.c](../../src/game.c#L425)",
       "visible_ordinal": 10
     },
     {
@@ -192,7 +192,7 @@
       "duplicate_of": "",
       "metadata_description": "Adds chests, the Heart and barriers to the map. Brass remembers the hidden ways.",
       "source_ref": "[src/journal.c](../../src/journal.c#L64)",
-      "acquisition_ref": "[src/game.c](../../src/game.c#L426)",
+      "acquisition_ref": "[src/game.c](../../src/game.c#L430)",
       "visible_ordinal": 11
     },
     {
@@ -208,7 +208,7 @@
       "duplicate_of": "",
       "metadata_description": "A precious thing from another chamber. Return it to the Weeping Nun.",
       "source_ref": "[src/journal.c](../../src/journal.c#L65)",
-      "acquisition_ref": "[src/objects.c](../../src/objects.c#L299)",
+      "acquisition_ref": "[src/objects.c](../../src/objects.c#L326)",
       "visible_ordinal": 12
     },
     {
@@ -224,7 +224,7 @@
       "duplicate_of": "",
       "metadata_description": "Four quarters grow one whole heart. A little life is still worth finding.",
       "source_ref": "[src/journal.c](../../src/journal.c#L66)",
-      "acquisition_ref": "[src/game.c](../../src/game.c#L395)",
+      "acquisition_ref": "[src/game.c](../../src/game.c#L399)",
       "visible_ordinal": 13
     },
     {
@@ -240,7 +240,7 @@
       "duplicate_of": "",
       "metadata_description": "Adds one heart to maximum health. One whole player heart holds 8 HP.",
       "source_ref": "[src/journal.c](../../src/journal.c#L67)",
-      "acquisition_ref": "[src/game.c](../../src/game.c#L431)",
+      "acquisition_ref": "[src/game.c](../../src/game.c#L435)",
       "visible_ordinal": 14
     },
     {
@@ -256,7 +256,7 @@
       "duplicate_of": "",
       "metadata_description": "Walk into a locked door to spend one key. A large keyhole shows its purpose.",
       "source_ref": "[src/journal.c](../../src/journal.c#L68)",
-      "acquisition_ref": "[src/game.c](../../src/game.c#L387)",
+      "acquisition_ref": "[src/game.c](../../src/game.c#L391)",
       "visible_ordinal": 15
     },
     {
@@ -272,7 +272,7 @@
       "duplicate_of": "",
       "metadata_description": "A loose heart restores 8 HP: one whole player heart. Gather it by touch or sword.",
       "source_ref": "[src/journal.c](../../src/journal.c#L69)",
-      "acquisition_ref": "[src/objects.c](../../src/objects.c#L320)",
+      "acquisition_ref": "[src/objects.c](../../src/objects.c#L350)",
       "visible_ordinal": 16
     },
     {
@@ -288,7 +288,7 @@
       "duplicate_of": "",
       "metadata_description": "A little glimmer worth one gilt. Spend it at the frog's market in the Drain.",
       "source_ref": "[src/journal.c](../../src/journal.c#L70)",
-      "acquisition_ref": "[src/objects.c](../../src/objects.c#L320)",
+      "acquisition_ref": "[src/objects.c](../../src/objects.c#L350)",
       "visible_ordinal": 17
     },
     {
@@ -304,7 +304,7 @@
       "duplicate_of": "",
       "metadata_description": "A dropped purse holds 10 gilt. Larger chest rewards may hold more. Carry up to 999.",
       "source_ref": "[src/journal.c](../../src/journal.c#L71)",
-      "acquisition_ref": "[src/objects.c](../../src/objects.c#L289)",
+      "acquisition_ref": "[src/objects.c](../../src/objects.c#L316)",
       "visible_ordinal": 18
     },
     {
@@ -320,7 +320,7 @@
       "duplicate_of": "",
       "metadata_description": "A dropped refill adds three seeds if you own blightseeds. Carry up to 30.",
       "source_ref": "[src/journal.c](../../src/journal.c#L72)",
-      "acquisition_ref": "[src/objects.c](../../src/objects.c#L290)",
+      "acquisition_ref": "[src/objects.c](../../src/objects.c#L317)",
       "visible_ordinal": 19
     },
     {
@@ -336,7 +336,7 @@
       "duplicate_of": "",
       "metadata_description": "Adds one shot for the Thorn Bow. Walls stop arrows. Carry up to 50 shots.",
       "source_ref": "[src/journal.c](../../src/journal.c#L73)",
-      "acquisition_ref": "[src/objects.c](../../src/objects.c#L306)",
+      "acquisition_ref": "[src/objects.c](../../src/objects.c#L333)",
       "visible_ordinal": 20
     },
     {
@@ -352,7 +352,7 @@
       "duplicate_of": "",
       "metadata_description": "A small tied bundle adds five shots. Ammunition never exceeds 50.",
       "source_ref": "[src/journal.c](../../src/journal.c#L74)",
-      "acquisition_ref": "[src/objects.c](../../src/objects.c#L307)",
+      "acquisition_ref": "[src/objects.c](../../src/objects.c#L334)",
       "visible_ordinal": 21
     },
     {
@@ -368,7 +368,7 @@
       "duplicate_of": "",
       "metadata_description": "A full bundle adds ten shots. The frog sells these once you have a bow.",
       "source_ref": "[src/journal.c](../../src/journal.c#L75)",
-      "acquisition_ref": "[src/npc.c](../../src/npc.c#L402)",
+      "acquisition_ref": "[src/npc.c](../../src/npc.c#L403)",
       "visible_ordinal": 22
     },
     {
@@ -384,7 +384,7 @@
       "duplicate_of": "",
       "metadata_description": "The Heart releases this when it falls. Claim the Grail to finish the journey.",
       "source_ref": "[src/journal.c](../../src/journal.c#L76)",
-      "acquisition_ref": "[src/objects.c](../../src/objects.c#L305)",
+      "acquisition_ref": "[src/objects.c](../../src/objects.c#L332)",
       "visible_ordinal": 23
     },
     {
@@ -400,7 +400,7 @@
       "duplicate_of": "",
       "metadata_description": "The frog's preserved snack costs 10 gilt and restores two player hearts.",
       "source_ref": "[src/journal.c](../../src/journal.c#L77)",
-      "acquisition_ref": "[src/npc.c](../../src/npc.c#L416)",
+      "acquisition_ref": "[src/npc.c](../../src/npc.c#L417)",
       "visible_ordinal": 24
     },
     {
@@ -447,7 +447,7 @@
         }
       ],
       "source_ref": "[src/legacy_items_metadata.inc](../../src/legacy_items_metadata.inc#L5)",
-      "acquisition_ref": "[src/handoff_events.c](../../src/handoff_events.c#L206)",
+      "acquisition_ref": "[src/handoff_events.c](../../src/handoff_events.c#L211)",
       "requirement": "LI_NONE",
       "flags": "0",
       "tier": 0,
@@ -475,7 +475,7 @@
         }
       ],
       "source_ref": "[src/legacy_items_metadata.inc](../../src/legacy_items_metadata.inc#L6)",
-      "acquisition_ref": "[src/handoff_events.c](../../src/handoff_events.c#L158)",
+      "acquisition_ref": "[src/handoff_events.c](../../src/handoff_events.c#L163)",
       "requirement": "LI_NONE",
       "flags": "0",
       "tier": 1,
@@ -503,7 +503,7 @@
         }
       ],
       "source_ref": "[src/legacy_items_metadata.inc](../../src/legacy_items_metadata.inc#L7)",
-      "acquisition_ref": "[src/handoff_events.c](../../src/handoff_events.c#L159)",
+      "acquisition_ref": "[src/handoff_events.c](../../src/handoff_events.c#L164)",
       "requirement": "LI_RED_SWORD",
       "flags": "0",
       "tier": 2,
@@ -531,7 +531,7 @@
         }
       ],
       "source_ref": "[src/legacy_items_metadata.inc](../../src/legacy_items_metadata.inc#L8)",
-      "acquisition_ref": "[src/handoff_events.c](../../src/handoff_events.c#L205)",
+      "acquisition_ref": "[src/handoff_events.c](../../src/handoff_events.c#L210)",
       "requirement": "LI_NONE",
       "flags": "LIF_REPEAT|LIF_PASSIVE",
       "tier": 1,
@@ -559,7 +559,7 @@
         }
       ],
       "source_ref": "[src/legacy_items_metadata.inc](../../src/legacy_items_metadata.inc#L9)",
-      "acquisition_ref": "[src/handoff_events.c](../../src/handoff_events.c#L160)",
+      "acquisition_ref": "[src/handoff_events.c](../../src/handoff_events.c#L165)",
       "requirement": "LI_NONE",
       "flags": "0",
       "tier": 0,
@@ -587,7 +587,7 @@
         }
       ],
       "source_ref": "[src/legacy_items_metadata.inc](../../src/legacy_items_metadata.inc#L10)",
-      "acquisition_ref": "[src/handoff_events.c](../../src/handoff_events.c#L150)",
+      "acquisition_ref": "[src/handoff_events.c](../../src/handoff_events.c#L155)",
       "requirement": "LI_NONE",
       "flags": "LIF_REPEAT",
       "tier": 0,
@@ -615,7 +615,7 @@
         }
       ],
       "source_ref": "[src/legacy_items_metadata.inc](../../src/legacy_items_metadata.inc#L11)",
-      "acquisition_ref": "[src/handoff_events.c](../../src/handoff_events.c#L154)",
+      "acquisition_ref": "[src/handoff_events.c](../../src/handoff_events.c#L159)",
       "requirement": "LI_NONE",
       "flags": "0",
       "tier": 1,
@@ -643,7 +643,7 @@
         }
       ],
       "source_ref": "[src/legacy_items_metadata.inc](../../src/legacy_items_metadata.inc#L12)",
-      "acquisition_ref": "[src/handoff_events.c](../../src/handoff_events.c#L149)",
+      "acquisition_ref": "[src/handoff_events.c](../../src/handoff_events.c#L154)",
       "requirement": "LI_NONE",
       "flags": "0",
       "tier": 0,
@@ -671,7 +671,7 @@
         }
       ],
       "source_ref": "[src/legacy_items_metadata.inc](../../src/legacy_items_metadata.inc#L13)",
-      "acquisition_ref": "[src/handoff_events.c](../../src/handoff_events.c#L169)",
+      "acquisition_ref": "[src/handoff_events.c](../../src/handoff_events.c#L174)",
       "requirement": "LI_BOW",
       "flags": "0",
       "tier": 2,
@@ -686,7 +686,7 @@
       "effect": "Throw to stun, strike switches and fetch loose pickups. It always returns.",
       "mode": "Equip A/B/L: EQ_BOOMERANG",
       "acquisition_status": "available",
-      "acquisition": "Eligible regional event/quest/cache rewards (pool tier 0). Also eligible extended-market stock. Also Cream chests.",
+      "acquisition": "Eligible regional event/quest/cache rewards (pool tier 0). Also eligible extended-market stock. Also Cream chests and the Billious Peddler card trade.",
       "duplicate_of": "",
       "metadata_description": "Throw to stun, strike switches and fetch loose pickups. It always returns.",
       "equip": "EQ_BOOMERANG",
@@ -699,7 +699,7 @@
         }
       ],
       "source_ref": "[src/legacy_items_metadata.inc](../../src/legacy_items_metadata.inc#L14)",
-      "acquisition_ref": "[src/handoff_events.c](../../src/handoff_events.c#L151)",
+      "acquisition_ref": "[src/handoff_events.c](../../src/handoff_events.c#L156)",
       "requirement": "LI_NONE",
       "flags": "0",
       "tier": 0,
@@ -727,7 +727,7 @@
         }
       ],
       "source_ref": "[src/legacy_items_metadata.inc](../../src/legacy_items_metadata.inc#L15)",
-      "acquisition_ref": "[src/handoff_events.c](../../src/handoff_events.c#L167)",
+      "acquisition_ref": "[src/handoff_events.c](../../src/handoff_events.c#L172)",
       "requirement": "LI_BOOMERANG",
       "flags": "0",
       "tier": 2,
@@ -777,7 +777,7 @@
         }
       ],
       "source_ref": "[src/legacy_items_metadata.inc](../../src/legacy_items_metadata.inc#L17)",
-      "acquisition_ref": "[src/handoff_events.c](../../src/handoff_events.c#L168)",
+      "acquisition_ref": "[src/handoff_events.c](../../src/handoff_events.c#L173)",
       "requirement": "LI_SHIELD",
       "flags": "0",
       "tier": 2,
@@ -805,7 +805,7 @@
         }
       ],
       "source_ref": "[src/legacy_items_metadata.inc](../../src/legacy_items_metadata.inc#L18)",
-      "acquisition_ref": "[src/handoff_events.c](../../src/handoff_events.c#L213)",
+      "acquisition_ref": "[src/handoff_events.c](../../src/handoff_events.c#L218)",
       "requirement": "LI_NONE",
       "flags": "0",
       "tier": 0,
@@ -833,7 +833,7 @@
         }
       ],
       "source_ref": "[src/legacy_items_metadata.inc](../../src/legacy_items_metadata.inc#L20)",
-      "acquisition_ref": "[src/handoff_events.c](../../src/handoff_events.c#L156)",
+      "acquisition_ref": "[src/handoff_events.c](../../src/handoff_events.c#L161)",
       "requirement": "LI_NONE",
       "flags": "0",
       "tier": 1,
@@ -861,7 +861,7 @@
         }
       ],
       "source_ref": "[src/legacy_items_metadata.inc](../../src/legacy_items_metadata.inc#L21)",
-      "acquisition_ref": "[src/handoff_events.c](../../src/handoff_events.c#L215)",
+      "acquisition_ref": "[src/handoff_events.c](../../src/handoff_events.c#L220)",
       "requirement": "LI_NONE",
       "flags": "0",
       "tier": 0,
@@ -889,7 +889,7 @@
         }
       ],
       "source_ref": "[src/legacy_items_metadata.inc](../../src/legacy_items_metadata.inc#L22)",
-      "acquisition_ref": "[src/handoff_events.c](../../src/handoff_events.c#L211)",
+      "acquisition_ref": "[src/handoff_events.c](../../src/handoff_events.c#L216)",
       "requirement": "LI_NONE",
       "flags": "0",
       "tier": 0,
@@ -917,7 +917,7 @@
         }
       ],
       "source_ref": "[src/legacy_items_metadata.inc](../../src/legacy_items_metadata.inc#L23)",
-      "acquisition_ref": "[src/handoff_events.c](../../src/handoff_events.c#L210)",
+      "acquisition_ref": "[src/handoff_events.c](../../src/handoff_events.c#L215)",
       "requirement": "LI_NONE",
       "flags": "0",
       "tier": 0,
@@ -945,7 +945,7 @@
         }
       ],
       "source_ref": "[src/legacy_items_metadata.inc](../../src/legacy_items_metadata.inc#L24)",
-      "acquisition_ref": "[src/handoff_events.c](../../src/handoff_events.c#L209)",
+      "acquisition_ref": "[src/handoff_events.c](../../src/handoff_events.c#L214)",
       "requirement": "LI_NONE",
       "flags": "0",
       "tier": 0,
@@ -973,7 +973,7 @@
         }
       ],
       "source_ref": "[src/legacy_items_metadata.inc](../../src/legacy_items_metadata.inc#L25)",
-      "acquisition_ref": "[src/handoff_events.c](../../src/handoff_events.c#L157)",
+      "acquisition_ref": "[src/handoff_events.c](../../src/handoff_events.c#L162)",
       "requirement": "LI_NONE",
       "flags": "0",
       "tier": 1,
@@ -1001,7 +1001,7 @@
         }
       ],
       "source_ref": "[src/legacy_items_metadata.inc](../../src/legacy_items_metadata.inc#L26)",
-      "acquisition_ref": "[src/handoff_events.c](../../src/handoff_events.c#L214)",
+      "acquisition_ref": "[src/handoff_events.c](../../src/handoff_events.c#L219)",
       "requirement": "LI_NONE",
       "flags": "0",
       "tier": 0,
@@ -1029,7 +1029,7 @@
         }
       ],
       "source_ref": "[src/legacy_items_metadata.inc](../../src/legacy_items_metadata.inc#L27)",
-      "acquisition_ref": "[src/handoff_events.c](../../src/handoff_events.c#L201)",
+      "acquisition_ref": "[src/handoff_events.c](../../src/handoff_events.c#L206)",
       "requirement": "LI_NONE",
       "flags": "LIF_REPEAT|LIF_PASSIVE",
       "tier": 0,
@@ -1057,7 +1057,7 @@
         }
       ],
       "source_ref": "[src/legacy_items_metadata.inc](../../src/legacy_items_metadata.inc#L28)",
-      "acquisition_ref": "[src/handoff_events.c](../../src/handoff_events.c#L202)",
+      "acquisition_ref": "[src/handoff_events.c](../../src/handoff_events.c#L207)",
       "requirement": "LI_NONE",
       "flags": "LIF_REPEAT|LIF_PASSIVE",
       "tier": 0,
@@ -1085,7 +1085,7 @@
         }
       ],
       "source_ref": "[src/legacy_items_metadata.inc](../../src/legacy_items_metadata.inc#L29)",
-      "acquisition_ref": "[src/handoff_events.c](../../src/handoff_events.c#L203)",
+      "acquisition_ref": "[src/handoff_events.c](../../src/handoff_events.c#L208)",
       "requirement": "LI_NONE",
       "flags": "LIF_REPEAT|LIF_PASSIVE",
       "tier": 0,
@@ -1118,7 +1118,7 @@
         }
       ],
       "source_ref": "[src/legacy_items_metadata.inc](../../src/legacy_items_metadata.inc#L31)",
-      "acquisition_ref": "[src/handoff_events.c](../../src/handoff_events.c#L143)",
+      "acquisition_ref": "[src/handoff_events.c](../../src/handoff_events.c#L148)",
       "requirement": "LI_NONE",
       "flags": "LIF_REPEAT",
       "tier": 0,
@@ -1234,7 +1234,7 @@
         }
       ],
       "source_ref": "[src/legacy_items_metadata.inc](../../src/legacy_items_metadata.inc#L36)",
-      "acquisition_ref": "[src/handoff_events.c](../../src/handoff_events.c#L134)",
+      "acquisition_ref": "[src/handoff_events.c](../../src/handoff_events.c#L139)",
       "requirement": "LI_NONE",
       "flags": "LIF_REPEAT|LIF_PASSIVE",
       "tier": 0,
@@ -1262,7 +1262,7 @@
         }
       ],
       "source_ref": "[src/legacy_items_metadata.inc](../../src/legacy_items_metadata.inc#L37)",
-      "acquisition_ref": "[src/handoff_events.c](../../src/handoff_events.c#L135)",
+      "acquisition_ref": "[src/handoff_events.c](../../src/handoff_events.c#L140)",
       "requirement": "LI_NONE",
       "flags": "LIF_REPEAT|LIF_PASSIVE",
       "tier": 0,
@@ -1312,7 +1312,7 @@
         }
       ],
       "source_ref": "[src/legacy_items_metadata.inc](../../src/legacy_items_metadata.inc#L39)",
-      "acquisition_ref": "[src/handoff_events.c](../../src/handoff_events.c#L145)",
+      "acquisition_ref": "[src/handoff_events.c](../../src/handoff_events.c#L150)",
       "requirement": "LI_NONE",
       "flags": "LIF_REPEAT|LIF_PASSIVE",
       "tier": 0,
@@ -1340,7 +1340,7 @@
         }
       ],
       "source_ref": "[src/legacy_items_metadata.inc](../../src/legacy_items_metadata.inc#L40)",
-      "acquisition_ref": "[src/handoff_events.c](../../src/handoff_events.c#L133)",
+      "acquisition_ref": "[src/handoff_events.c](../../src/handoff_events.c#L138)",
       "requirement": "LI_NONE",
       "flags": "LIF_REPEAT|LIF_PASSIVE",
       "tier": 0,
@@ -1390,7 +1390,7 @@
         }
       ],
       "source_ref": "[src/legacy_items_metadata.inc](../../src/legacy_items_metadata.inc#L42)",
-      "acquisition_ref": "[src/handoff_events.c](../../src/handoff_events.c#L136)",
+      "acquisition_ref": "[src/handoff_events.c](../../src/handoff_events.c#L141)",
       "requirement": "LI_NONE",
       "flags": "LIF_REPEAT|LIF_PASSIVE",
       "tier": 0,
@@ -1418,7 +1418,7 @@
         }
       ],
       "source_ref": "[src/legacy_items_metadata.inc](../../src/legacy_items_metadata.inc#L43)",
-      "acquisition_ref": "[src/handoff_events.c](../../src/handoff_events.c#L148)",
+      "acquisition_ref": "[src/handoff_events.c](../../src/handoff_events.c#L153)",
       "requirement": "LI_NONE",
       "flags": "LIF_REPEAT|LIF_PASSIVE",
       "tier": 0,
@@ -1446,7 +1446,7 @@
         }
       ],
       "source_ref": "[src/legacy_items_metadata.inc](../../src/legacy_items_metadata.inc#L44)",
-      "acquisition_ref": "[src/handoff_events.c](../../src/handoff_events.c#L137)",
+      "acquisition_ref": "[src/handoff_events.c](../../src/handoff_events.c#L142)",
       "requirement": "LI_NONE",
       "flags": "LIF_REPEAT|LIF_PASSIVE",
       "tier": 0,
@@ -1474,7 +1474,7 @@
         }
       ],
       "source_ref": "[src/legacy_items_metadata.inc](../../src/legacy_items_metadata.inc#L45)",
-      "acquisition_ref": "[src/handoff_events.c](../../src/handoff_events.c#L138)",
+      "acquisition_ref": "[src/handoff_events.c](../../src/handoff_events.c#L143)",
       "requirement": "LI_NONE",
       "flags": "LIF_REPEAT|LIF_PASSIVE",
       "tier": 0,
@@ -1502,7 +1502,7 @@
         }
       ],
       "source_ref": "[src/legacy_items_metadata.inc](../../src/legacy_items_metadata.inc#L46)",
-      "acquisition_ref": "[src/handoff_events.c](../../src/handoff_events.c#L139)",
+      "acquisition_ref": "[src/handoff_events.c](../../src/handoff_events.c#L144)",
       "requirement": "LI_NONE",
       "flags": "LIF_REPEAT|LIF_PASSIVE",
       "tier": 0,
@@ -1530,7 +1530,7 @@
         }
       ],
       "source_ref": "[src/legacy_items_metadata.inc](../../src/legacy_items_metadata.inc#L47)",
-      "acquisition_ref": "[src/handoff_events.c](../../src/handoff_events.c#L140)",
+      "acquisition_ref": "[src/handoff_events.c](../../src/handoff_events.c#L145)",
       "requirement": "LI_NONE",
       "flags": "LIF_REPEAT|LIF_PASSIVE",
       "tier": 0,
@@ -1558,7 +1558,7 @@
         }
       ],
       "source_ref": "[src/legacy_items_metadata.inc](../../src/legacy_items_metadata.inc#L48)",
-      "acquisition_ref": "[src/handoff_events.c](../../src/handoff_events.c#L141)",
+      "acquisition_ref": "[src/handoff_events.c](../../src/handoff_events.c#L146)",
       "requirement": "LI_NONE",
       "flags": "LIF_REPEAT|LIF_PASSIVE",
       "tier": 0,
@@ -1586,7 +1586,7 @@
         }
       ],
       "source_ref": "[src/legacy_items_metadata.inc](../../src/legacy_items_metadata.inc#L49)",
-      "acquisition_ref": "[src/handoff_events.c](../../src/handoff_events.c#L142)",
+      "acquisition_ref": "[src/handoff_events.c](../../src/handoff_events.c#L147)",
       "requirement": "LI_NONE",
       "flags": "LIF_REPEAT|LIF_PASSIVE",
       "tier": 0,
@@ -1614,7 +1614,7 @@
         }
       ],
       "source_ref": "[src/legacy_items_metadata.inc](../../src/legacy_items_metadata.inc#L50)",
-      "acquisition_ref": "[src/handoff_events.c](../../src/handoff_events.c#L184)",
+      "acquisition_ref": "[src/handoff_events.c](../../src/handoff_events.c#L189)",
       "requirement": "LI_NONE",
       "flags": "LIF_PASSIVE",
       "tier": 2,
@@ -1642,7 +1642,7 @@
         }
       ],
       "source_ref": "[src/legacy_items_metadata.inc](../../src/legacy_items_metadata.inc#L51)",
-      "acquisition_ref": "[src/handoff_events.c](../../src/handoff_events.c#L185)",
+      "acquisition_ref": "[src/handoff_events.c](../../src/handoff_events.c#L190)",
       "requirement": "LI_NONE",
       "flags": "LIF_PASSIVE",
       "tier": 2,
@@ -1670,7 +1670,7 @@
         }
       ],
       "source_ref": "[src/legacy_items_metadata.inc](../../src/legacy_items_metadata.inc#L52)",
-      "acquisition_ref": "[src/handoff_events.c](../../src/handoff_events.c#L186)",
+      "acquisition_ref": "[src/handoff_events.c](../../src/handoff_events.c#L191)",
       "requirement": "LI_NONE",
       "flags": "LIF_PASSIVE",
       "tier": 2,
@@ -1698,7 +1698,7 @@
         }
       ],
       "source_ref": "[src/legacy_items_metadata.inc](../../src/legacy_items_metadata.inc#L55)",
-      "acquisition_ref": "[src/handoff_events.c](../../src/handoff_events.c#L204)",
+      "acquisition_ref": "[src/handoff_events.c](../../src/handoff_events.c#L209)",
       "requirement": "LI_NONE",
       "flags": "LIF_PASSIVE",
       "tier": 0,
@@ -1726,7 +1726,7 @@
         }
       ],
       "source_ref": "[src/legacy_items_metadata.inc](../../src/legacy_items_metadata.inc#L56)",
-      "acquisition_ref": "[src/handoff_events.c](../../src/handoff_events.c#L199)",
+      "acquisition_ref": "[src/handoff_events.c](../../src/handoff_events.c#L204)",
       "requirement": "LI_NONE",
       "flags": "LIF_PASSIVE",
       "tier": 0,
@@ -1754,7 +1754,7 @@
         }
       ],
       "source_ref": "[src/legacy_items_metadata.inc](../../src/legacy_items_metadata.inc#L57)",
-      "acquisition_ref": "[src/handoff_events.c](../../src/handoff_events.c#L191)",
+      "acquisition_ref": "[src/handoff_events.c](../../src/handoff_events.c#L196)",
       "requirement": "LI_NONE",
       "flags": "LIF_PASSIVE",
       "tier": 0,
@@ -1782,7 +1782,7 @@
         }
       ],
       "source_ref": "[src/legacy_items_metadata.inc](../../src/legacy_items_metadata.inc#L58)",
-      "acquisition_ref": "[src/handoff_events.c](../../src/handoff_events.c#L161)",
+      "acquisition_ref": "[src/handoff_events.c](../../src/handoff_events.c#L166)",
       "requirement": "LI_NONE",
       "flags": "LIF_PASSIVE",
       "tier": 0,
@@ -1810,7 +1810,7 @@
         }
       ],
       "source_ref": "[src/legacy_items_metadata.inc](../../src/legacy_items_metadata.inc#L59)",
-      "acquisition_ref": "[src/handoff_events.c](../../src/handoff_events.c#L192)",
+      "acquisition_ref": "[src/handoff_events.c](../../src/handoff_events.c#L197)",
       "requirement": "LI_NONE",
       "flags": "LIF_PASSIVE",
       "tier": 0,
@@ -1838,7 +1838,7 @@
         }
       ],
       "source_ref": "[src/legacy_items_metadata.inc](../../src/legacy_items_metadata.inc#L60)",
-      "acquisition_ref": "[src/handoff_events.c](../../src/handoff_events.c#L193)",
+      "acquisition_ref": "[src/handoff_events.c](../../src/handoff_events.c#L198)",
       "requirement": "LI_NONE",
       "flags": "LIF_PASSIVE",
       "tier": 0,
@@ -1866,7 +1866,7 @@
         }
       ],
       "source_ref": "[src/legacy_items_metadata.inc](../../src/legacy_items_metadata.inc#L61)",
-      "acquisition_ref": "[src/handoff_events.c](../../src/handoff_events.c#L194)",
+      "acquisition_ref": "[src/handoff_events.c](../../src/handoff_events.c#L199)",
       "requirement": "LI_NONE",
       "flags": "LIF_PASSIVE",
       "tier": 0,
@@ -1894,7 +1894,7 @@
         }
       ],
       "source_ref": "[src/legacy_items_metadata.inc](../../src/legacy_items_metadata.inc#L62)",
-      "acquisition_ref": "[src/handoff_events.c](../../src/handoff_events.c#L195)",
+      "acquisition_ref": "[src/handoff_events.c](../../src/handoff_events.c#L200)",
       "requirement": "LI_NONE",
       "flags": "LIF_PASSIVE",
       "tier": 0,
@@ -1922,7 +1922,7 @@
         }
       ],
       "source_ref": "[src/legacy_items_metadata.inc](../../src/legacy_items_metadata.inc#L63)",
-      "acquisition_ref": "[src/handoff_events.c](../../src/handoff_events.c#L162)",
+      "acquisition_ref": "[src/handoff_events.c](../../src/handoff_events.c#L167)",
       "requirement": "LI_NONE",
       "flags": "LIF_PASSIVE",
       "tier": 0,
@@ -1950,7 +1950,7 @@
         }
       ],
       "source_ref": "[src/legacy_items_metadata.inc](../../src/legacy_items_metadata.inc#L64)",
-      "acquisition_ref": "[src/handoff_events.c](../../src/handoff_events.c#L196)",
+      "acquisition_ref": "[src/handoff_events.c](../../src/handoff_events.c#L201)",
       "requirement": "LI_NONE",
       "flags": "LIF_PASSIVE",
       "tier": 0,
@@ -1978,7 +1978,7 @@
         }
       ],
       "source_ref": "[src/legacy_items_metadata.inc](../../src/legacy_items_metadata.inc#L65)",
-      "acquisition_ref": "[src/handoff_events.c](../../src/handoff_events.c#L198)",
+      "acquisition_ref": "[src/handoff_events.c](../../src/handoff_events.c#L203)",
       "requirement": "LI_NONE",
       "flags": "LIF_PASSIVE",
       "tier": 0,
@@ -2022,7 +2022,7 @@
       "category": "LCAT_QUEST",
       "pool": [],
       "source_ref": "[src/legacy_items_metadata.inc](../../src/legacy_items_metadata.inc#L67)",
-      "acquisition_ref": "[src/handoff_events.c](../../src/handoff_events.c#L936)",
+      "acquisition_ref": "[src/handoff_events.c](../../src/handoff_events.c#L943)",
       "requirement": "LI_NONE",
       "flags": "LIF_PASSIVE",
       "tier": 0,
@@ -2044,7 +2044,7 @@
       "category": "LCAT_QUEST",
       "pool": [],
       "source_ref": "[src/legacy_items_metadata.inc](../../src/legacy_items_metadata.inc#L68)",
-      "acquisition_ref": "[src/handoff_events.c](../../src/handoff_events.c#L956)",
+      "acquisition_ref": "[src/handoff_events.c](../../src/handoff_events.c#L968)",
       "requirement": "LI_NONE",
       "flags": "LIF_PASSIVE",
       "tier": 0,
@@ -2066,7 +2066,7 @@
       "category": "LCAT_QUEST",
       "pool": [],
       "source_ref": "[src/legacy_items_metadata.inc](../../src/legacy_items_metadata.inc#L69)",
-      "acquisition_ref": "[src/handoff_events.c](../../src/handoff_events.c#L956)",
+      "acquisition_ref": "[src/handoff_events.c](../../src/handoff_events.c#L968)",
       "requirement": "LI_NONE",
       "flags": "LIF_PASSIVE",
       "tier": 0,
@@ -2088,7 +2088,7 @@
       "category": "LCAT_QUEST",
       "pool": [],
       "source_ref": "[src/legacy_items_metadata.inc](../../src/legacy_items_metadata.inc#L70)",
-      "acquisition_ref": "[src/handoff_events.c](../../src/handoff_events.c#L956)",
+      "acquisition_ref": "[src/handoff_events.c](../../src/handoff_events.c#L968)",
       "requirement": "LI_NONE",
       "flags": "LIF_PASSIVE",
       "tier": 0,
@@ -2116,7 +2116,7 @@
         }
       ],
       "source_ref": "[src/legacy_items_metadata.inc](../../src/legacy_items_metadata.inc#L71)",
-      "acquisition_ref": "[src/handoff_events.c](../../src/handoff_events.c#L216)",
+      "acquisition_ref": "[src/handoff_events.c](../../src/handoff_events.c#L221)",
       "requirement": "LI_NONE",
       "flags": "LIF_PASSIVE",
       "tier": 0,
@@ -2144,7 +2144,7 @@
         }
       ],
       "source_ref": "[src/legacy_items_metadata.inc](../../src/legacy_items_metadata.inc#L72)",
-      "acquisition_ref": "[src/handoff_events.c](../../src/handoff_events.c#L217)",
+      "acquisition_ref": "[src/handoff_events.c](../../src/handoff_events.c#L222)",
       "requirement": "LI_NONE",
       "flags": "LIF_PASSIVE",
       "tier": 0,
@@ -2172,7 +2172,7 @@
         }
       ],
       "source_ref": "[src/legacy_items_metadata.inc](../../src/legacy_items_metadata.inc#L73)",
-      "acquisition_ref": "[src/handoff_events.c](../../src/handoff_events.c#L212)",
+      "acquisition_ref": "[src/handoff_events.c](../../src/handoff_events.c#L217)",
       "requirement": "LI_NONE",
       "flags": "LIF_PASSIVE",
       "tier": 0,
@@ -2200,7 +2200,7 @@
         }
       ],
       "source_ref": "[src/legacy_items_metadata.inc](../../src/legacy_items_metadata.inc#L74)",
-      "acquisition_ref": "[src/handoff_events.c](../../src/handoff_events.c#L207)",
+      "acquisition_ref": "[src/handoff_events.c](../../src/handoff_events.c#L212)",
       "requirement": "LI_NONE",
       "flags": "LIF_PASSIVE",
       "tier": 0,
@@ -2228,7 +2228,7 @@
         }
       ],
       "source_ref": "[src/legacy_items_metadata.inc](../../src/legacy_items_metadata.inc#L75)",
-      "acquisition_ref": "[src/handoff_events.c](../../src/handoff_events.c#L170)",
+      "acquisition_ref": "[src/handoff_events.c](../../src/handoff_events.c#L175)",
       "requirement": "LI_NONE",
       "flags": "LIF_PASSIVE",
       "tier": 0,
@@ -2256,7 +2256,7 @@
         }
       ],
       "source_ref": "[src/legacy_items_metadata.inc](../../src/legacy_items_metadata.inc#L76)",
-      "acquisition_ref": "[src/handoff_events.c](../../src/handoff_events.c#L172)",
+      "acquisition_ref": "[src/handoff_events.c](../../src/handoff_events.c#L177)",
       "requirement": "LI_NONE",
       "flags": "LIF_PASSIVE",
       "tier": 0,
@@ -2284,7 +2284,7 @@
         }
       ],
       "source_ref": "[src/legacy_items_metadata.inc](../../src/legacy_items_metadata.inc#L77)",
-      "acquisition_ref": "[src/handoff_events.c](../../src/handoff_events.c#L173)",
+      "acquisition_ref": "[src/handoff_events.c](../../src/handoff_events.c#L178)",
       "requirement": "LI_NONE",
       "flags": "LIF_PASSIVE",
       "tier": 1,
@@ -2312,7 +2312,7 @@
         }
       ],
       "source_ref": "[src/legacy_items_metadata.inc](../../src/legacy_items_metadata.inc#L78)",
-      "acquisition_ref": "[src/handoff_events.c](../../src/handoff_events.c#L171)",
+      "acquisition_ref": "[src/handoff_events.c](../../src/handoff_events.c#L176)",
       "requirement": "LI_NONE",
       "flags": "LIF_PASSIVE",
       "tier": 0,
@@ -2340,7 +2340,7 @@
         }
       ],
       "source_ref": "[src/legacy_items_metadata.inc](../../src/legacy_items_metadata.inc#L79)",
-      "acquisition_ref": "[src/handoff_events.c](../../src/handoff_events.c#L175)",
+      "acquisition_ref": "[src/handoff_events.c](../../src/handoff_events.c#L180)",
       "requirement": "LI_NONE",
       "flags": "LIF_PASSIVE",
       "tier": 1,
@@ -2368,7 +2368,7 @@
         }
       ],
       "source_ref": "[src/legacy_items_metadata.inc](../../src/legacy_items_metadata.inc#L80)",
-      "acquisition_ref": "[src/handoff_events.c](../../src/handoff_events.c#L177)",
+      "acquisition_ref": "[src/handoff_events.c](../../src/handoff_events.c#L182)",
       "requirement": "LI_SKILL_SPIN_ATTACK",
       "flags": "LIF_PASSIVE",
       "tier": 2,
@@ -2396,7 +2396,7 @@
         }
       ],
       "source_ref": "[src/legacy_items_metadata.inc](../../src/legacy_items_metadata.inc#L81)",
-      "acquisition_ref": "[src/handoff_events.c](../../src/handoff_events.c#L176)",
+      "acquisition_ref": "[src/handoff_events.c](../../src/handoff_events.c#L181)",
       "requirement": "LI_ROCS_CAPE",
       "flags": "LIF_PASSIVE",
       "tier": 2,
@@ -2424,7 +2424,7 @@
         }
       ],
       "source_ref": "[src/legacy_items_metadata.inc](../../src/legacy_items_metadata.inc#L82)",
-      "acquisition_ref": "[src/handoff_events.c](../../src/handoff_events.c#L174)",
+      "acquisition_ref": "[src/handoff_events.c](../../src/handoff_events.c#L179)",
       "requirement": "LI_NONE",
       "flags": "LIF_PASSIVE",
       "tier": 1,
@@ -2474,7 +2474,7 @@
         }
       ],
       "source_ref": "[src/legacy_items_metadata.inc](../../src/legacy_items_metadata.inc#L84)",
-      "acquisition_ref": "[src/handoff_events.c](../../src/handoff_events.c#L208)",
+      "acquisition_ref": "[src/handoff_events.c](../../src/handoff_events.c#L213)",
       "requirement": "LI_NONE",
       "flags": "LIF_PASSIVE",
       "tier": 0,
@@ -2612,7 +2612,7 @@
         }
       ],
       "source_ref": "[src/legacy_items_metadata.inc](../../src/legacy_items_metadata.inc#L90)",
-      "acquisition_ref": "[src/handoff_events.c](../../src/handoff_events.c#L131)",
+      "acquisition_ref": "[src/handoff_events.c](../../src/handoff_events.c#L136)",
       "requirement": "LI_NONE",
       "flags": "LIF_REPEAT|LIF_PASSIVE",
       "tier": 0,
@@ -2627,7 +2627,7 @@
       "effect": "A gilt reward worth 100; carrying capacity remains 999.",
       "mode": "Passive / counter / immediate effect",
       "acquisition_status": "available",
-      "acquisition": "Eligible regional event/quest/cache rewards (pool tier 1). Also eligible extended-market stock.",
+      "acquisition": "Eligible regional event/quest/cache rewards (pool tier 1). Also eligible extended-market stock. Also paid by the Moss Archivist and found in the cache their trade opens.",
       "duplicate_of": "",
       "metadata_description": "A gilt reward worth 100; carrying capacity remains 999.",
       "equip": "EQ_NONE",
@@ -2640,7 +2640,7 @@
         }
       ],
       "source_ref": "[src/legacy_items_metadata.inc](../../src/legacy_items_metadata.inc#L91)",
-      "acquisition_ref": "[src/handoff_events.c](../../src/handoff_events.c#L144)",
+      "acquisition_ref": "[src/handoff_events.c](../../src/handoff_events.c#L149)",
       "requirement": "LI_NONE",
       "flags": "LIF_REPEAT|LIF_PASSIVE",
       "tier": 0,
@@ -2655,7 +2655,7 @@
       "effect": "A gilt reward worth 200; carrying capacity remains 999.",
       "mode": "Passive / counter / immediate effect",
       "acquisition_status": "available",
-      "acquisition": "Eligible regional event/quest/cache rewards (pool tier 2). Also eligible extended-market stock.",
+      "acquisition": "Eligible regional event/quest/cache rewards (pool tier 2). Also eligible extended-market stock. Also guaranteed on defeating the Golden Rope from a card trade.",
       "duplicate_of": "",
       "metadata_description": "A gilt reward worth 200; carrying capacity remains 999.",
       "equip": "EQ_NONE",
@@ -2668,7 +2668,7 @@
         }
       ],
       "source_ref": "[src/legacy_items_metadata.inc](../../src/legacy_items_metadata.inc#L92)",
-      "acquisition_ref": "[src/handoff_events.c](../../src/handoff_events.c#L146)",
+      "acquisition_ref": "[src/handoff_events.c](../../src/handoff_events.c#L151)",
       "requirement": "LI_NONE",
       "flags": "LIF_REPEAT|LIF_PASSIVE",
       "tier": 0,
@@ -2679,13 +2679,13 @@
       "source_namespace": "legacy",
       "source_id": 91,
       "source_token": "LI_JABBERNUT",
-      "name": "Fusion Nut",
-      "effect": "A run-long blessing: defeated enemies drop kinstones more often.",
+      "name": "Collector's Nut",
+      "effect": "Defeated enemies drop trading cards more often for the rest of this run.",
       "mode": "Passive / counter / immediate effect",
       "acquisition_status": "available",
       "acquisition": "Eligible regional event/quest/cache rewards (pool tier 1).",
       "duplicate_of": "",
-      "metadata_description": "A run-long blessing: defeated enemies drop kinstones more often.",
+      "metadata_description": "Defeated enemies drop trading cards more often for the rest of this run.",
       "equip": "EQ_NONE",
       "category": "LCAT_REWARD",
       "pool": [
@@ -2696,7 +2696,7 @@
         }
       ],
       "source_ref": "[src/legacy_items_metadata.inc](../../src/legacy_items_metadata.inc#L94)",
-      "acquisition_ref": "[src/handoff_events.c](../../src/handoff_events.c#L197)",
+      "acquisition_ref": "[src/handoff_events.c](../../src/handoff_events.c#L202)",
       "requirement": "LI_NONE",
       "flags": "LIF_PASSIVE",
       "tier": 0,
@@ -2707,18 +2707,18 @@
       "source_namespace": "legacy",
       "source_id": 92,
       "source_token": "LI_KINSTONE",
-      "name": "Kinstone",
-      "effect": "Collect green/blue/red halves in three tooth shapes per color; matched counters unlock fusions. Shaped pickups record discovery without necessarily setting this legacy owned bit.",
+      "name": "Shaped Half",
+      "effect": "A keepsake from the old matching trade.",
       "mode": "Passive / counter / immediate effect",
-      "acquisition_status": "available",
-      "acquisition": "Colored/shaped enemy drops collected into counters; discovery is recorded without necessarily setting the legacy owned bit.",
+      "acquisition_status": "defined_only_no_current_award",
+      "acquisition": "Legacy save and journal record for shaped halves. Card inventory appears in the pause menu.",
       "duplicate_of": "",
-      "metadata_description": "A colored half. Offer matching pieces to a fuser to open a soft-gated event.",
+      "metadata_description": "A keepsake from the old matching trade.",
       "equip": "EQ_NONE",
       "category": "LCAT_REWARD",
       "pool": [],
       "source_ref": "[src/legacy_items_metadata.inc](../../src/legacy_items_metadata.inc#L95)",
-      "acquisition_ref": "[src/handoff_events.c](../../src/handoff_events.c#L1166)",
+      "acquisition_ref": "[src/legacy_items.c](../../src/legacy_items.c#L132)",
       "requirement": "LI_NONE",
       "flags": "LIF_REPEAT|LIF_PASSIVE",
       "tier": 0,
@@ -2740,7 +2740,7 @@
       "category": "LCAT_REWARD",
       "pool": [],
       "source_ref": "[src/legacy_items_metadata.inc](../../src/legacy_items_metadata.inc#L96)",
-      "acquisition_ref": "[src/handoff_events.c](../../src/handoff_events.c#L261)",
+      "acquisition_ref": "[src/handoff_events.c](../../src/handoff_events.c#L266)",
       "requirement": "LI_NONE",
       "flags": "LIF_REPEAT|LIF_PASSIVE",
       "tier": 0,
@@ -2834,7 +2834,7 @@
         }
       ],
       "source_ref": "[src/legacy_items_metadata.inc](../../src/legacy_items_metadata.inc#L100)",
-      "acquisition_ref": "[src/handoff_events.c](../../src/handoff_events.c#L200)",
+      "acquisition_ref": "[src/handoff_events.c](../../src/handoff_events.c#L205)",
       "requirement": "LI_NONE",
       "flags": "LIF_REPEAT|LIF_PASSIVE",
       "tier": 0,
@@ -2862,7 +2862,7 @@
         }
       ],
       "source_ref": "[src/legacy_items_metadata.inc](../../src/legacy_items_metadata.inc#L101)",
-      "acquisition_ref": "[src/handoff_events.c](../../src/handoff_events.c#L147)",
+      "acquisition_ref": "[src/handoff_events.c](../../src/handoff_events.c#L152)",
       "requirement": "LI_NONE",
       "flags": "LIF_REPEAT|LIF_PASSIVE",
       "tier": 2,
@@ -2877,7 +2877,7 @@
       "effect": "Four quarters make a heart container.",
       "mode": "Passive / counter / immediate effect",
       "acquisition_status": "available",
-      "acquisition": "Eligible regional event/quest/cache rewards (pool tier 0). Also eligible extended-market stock. Also original heart-piece rewards, quests and Cream chests.",
+      "acquisition": "Eligible regional event/quest/cache rewards (pool tier 0). Also eligible extended-market stock. Also original heart-piece rewards, quests, Cream chests and the Golden Rope card encounter.",
       "duplicate_of": "JI_HEART_PIECE",
       "metadata_description": "Four quarters make a heart container.",
       "equip": "EQ_NONE",
@@ -2890,7 +2890,7 @@
         }
       ],
       "source_ref": "[src/legacy_items_metadata.inc](../../src/legacy_items_metadata.inc#L102)",
-      "acquisition_ref": "[src/handoff_events.c](../../src/handoff_events.c#L132)",
+      "acquisition_ref": "[src/handoff_events.c](../../src/handoff_events.c#L137)",
       "requirement": "LI_NONE",
       "flags": "LIF_REPEAT|LIF_PASSIVE",
       "tier": 0,
@@ -2918,7 +2918,7 @@
         }
       ],
       "source_ref": "[src/legacy_items_metadata.inc](../../src/legacy_items_metadata.inc#L104)",
-      "acquisition_ref": "[src/handoff_events.c](../../src/handoff_events.c#L152)",
+      "acquisition_ref": "[src/handoff_events.c](../../src/handoff_events.c#L157)",
       "requirement": "LI_NONE",
       "flags": "LIF_REPEAT|LIF_PASSIVE",
       "tier": 0,
@@ -2946,7 +2946,7 @@
         }
       ],
       "source_ref": "[src/legacy_items_metadata.inc](../../src/legacy_items_metadata.inc#L105)",
-      "acquisition_ref": "[src/handoff_events.c](../../src/handoff_events.c#L153)",
+      "acquisition_ref": "[src/handoff_events.c](../../src/handoff_events.c#L158)",
       "requirement": "LI_BOW",
       "flags": "LIF_REPEAT|LIF_PASSIVE",
       "tier": 0,
@@ -2957,18 +2957,18 @@
       "source_namespace": "legacy",
       "source_id": 103,
       "source_token": "LI_KINSTONE_BAG",
-      "name": "Kinstone Bag",
-      "effect": "Earned from the green fuser. Raises each matching half capacity from 9 to 99.",
+      "name": "Half Pouch",
+      "effect": "A keepsake pouch from the old matching trade.",
       "mode": "Passive / counter / immediate effect",
-      "acquisition_status": "available",
-      "acquisition": "Reward for a successful green-fuser match.",
+      "acquisition_status": "defined_only_no_current_award",
+      "acquisition": "Legacy save and journal record for the shaped-half pouch.",
       "duplicate_of": "",
-      "metadata_description": "Earned from the green fuser. Raises each matching half capacity from 9 to 99.",
+      "metadata_description": "A keepsake pouch from the old matching trade.",
       "equip": "EQ_NONE",
       "category": "LCAT_REWARD",
       "pool": [],
       "source_ref": "[src/legacy_items_metadata.inc](../../src/legacy_items_metadata.inc#L106)",
-      "acquisition_ref": "[src/handoff_events.c](../../src/handoff_events.c#L739)",
+      "acquisition_ref": "[src/legacy_items.c](../../src/legacy_items.c#L132)",
       "requirement": "LI_NONE",
       "flags": "LIF_PASSIVE",
       "tier": 0,
@@ -2996,7 +2996,7 @@
         }
       ],
       "source_ref": "[src/legacy_items_metadata.inc](../../src/legacy_items_metadata.inc#L107)",
-      "acquisition_ref": "[src/handoff_events.c](../../src/handoff_events.c#L187)",
+      "acquisition_ref": "[src/handoff_events.c](../../src/handoff_events.c#L192)",
       "requirement": "LI_NONE",
       "flags": "LIF_REPEAT|LIF_PASSIVE",
       "tier": 0,
@@ -3024,7 +3024,7 @@
         }
       ],
       "source_ref": "[src/legacy_items_metadata.inc](../../src/legacy_items_metadata.inc#L108)",
-      "acquisition_ref": "[src/handoff_events.c](../../src/handoff_events.c#L188)",
+      "acquisition_ref": "[src/handoff_events.c](../../src/handoff_events.c#L193)",
       "requirement": "LI_NONE",
       "flags": "LIF_REPEAT|LIF_PASSIVE",
       "tier": 0,
@@ -3052,7 +3052,7 @@
         }
       ],
       "source_ref": "[src/legacy_items_metadata.inc](../../src/legacy_items_metadata.inc#L109)",
-      "acquisition_ref": "[src/handoff_events.c](../../src/handoff_events.c#L190)",
+      "acquisition_ref": "[src/handoff_events.c](../../src/handoff_events.c#L195)",
       "requirement": "LI_NONE",
       "flags": "LIF_REPEAT|LIF_PASSIVE",
       "tier": 0,
@@ -3080,7 +3080,7 @@
         }
       ],
       "source_ref": "[src/legacy_items_metadata.inc](../../src/legacy_items_metadata.inc#L110)",
-      "acquisition_ref": "[src/handoff_events.c](../../src/handoff_events.c#L189)",
+      "acquisition_ref": "[src/handoff_events.c](../../src/handoff_events.c#L194)",
       "requirement": "LI_NONE",
       "flags": "LIF_REPEAT|LIF_PASSIVE",
       "tier": 0,
@@ -3146,7 +3146,7 @@
       "category": "LCAT_REWARD",
       "pool": [],
       "source_ref": "[src/legacy_items_metadata.inc](../../src/legacy_items_metadata.inc#L113)",
-      "acquisition_ref": "[src/handoff_events.c](../../src/handoff_events.c#L262)",
+      "acquisition_ref": "[src/handoff_events.c](../../src/handoff_events.c#L267)",
       "requirement": "LI_NONE",
       "flags": "LIF_REPEAT|LIF_PASSIVE",
       "tier": 0,
@@ -3196,7 +3196,7 @@
         }
       ],
       "source_ref": "[src/legacy_items_metadata.inc](../../src/legacy_items_metadata.inc#L115)",
-      "acquisition_ref": "[src/handoff_events.c](../../src/handoff_events.c#L181)",
+      "acquisition_ref": "[src/handoff_events.c](../../src/handoff_events.c#L186)",
       "requirement": "LI_NONE",
       "flags": "LIF_PASSIVE",
       "tier": 1,
@@ -3224,7 +3224,7 @@
         }
       ],
       "source_ref": "[src/legacy_items_metadata.inc](../../src/legacy_items_metadata.inc#L116)",
-      "acquisition_ref": "[src/handoff_events.c](../../src/handoff_events.c#L182)",
+      "acquisition_ref": "[src/handoff_events.c](../../src/handoff_events.c#L187)",
       "requirement": "LI_NONE",
       "flags": "LIF_PASSIVE",
       "tier": 1,
@@ -3252,7 +3252,7 @@
         }
       ],
       "source_ref": "[src/legacy_items_metadata.inc](../../src/legacy_items_metadata.inc#L117)",
-      "acquisition_ref": "[src/handoff_events.c](../../src/handoff_events.c#L183)",
+      "acquisition_ref": "[src/handoff_events.c](../../src/handoff_events.c#L188)",
       "requirement": "LI_NONE",
       "flags": "LIF_PASSIVE",
       "tier": 1,
@@ -3280,7 +3280,7 @@
         }
       ],
       "source_ref": "[src/legacy_items_metadata.inc](../../src/legacy_items_metadata.inc#L118)",
-      "acquisition_ref": "[src/handoff_events.c](../../src/handoff_events.c#L178)",
+      "acquisition_ref": "[src/handoff_events.c](../../src/handoff_events.c#L183)",
       "requirement": "LI_NONE",
       "flags": "LIF_PASSIVE",
       "tier": 2,
@@ -3308,7 +3308,7 @@
         }
       ],
       "source_ref": "[src/legacy_items_metadata.inc](../../src/legacy_items_metadata.inc#L119)",
-      "acquisition_ref": "[src/handoff_events.c](../../src/handoff_events.c#L179)",
+      "acquisition_ref": "[src/handoff_events.c](../../src/handoff_events.c#L184)",
       "requirement": "LI_NONE",
       "flags": "LIF_PASSIVE",
       "tier": 2,
@@ -3336,7 +3336,7 @@
         }
       ],
       "source_ref": "[src/legacy_items_metadata.inc](../../src/legacy_items_metadata.inc#L120)",
-      "acquisition_ref": "[src/handoff_events.c](../../src/handoff_events.c#L180)",
+      "acquisition_ref": "[src/handoff_events.c](../../src/handoff_events.c#L185)",
       "requirement": "LI_SKILL_GREAT_SPIN",
       "flags": "LIF_PASSIVE",
       "tier": 2,
@@ -3349,13 +3349,13 @@
       "source_token": "HANDOFF_GOLD_FLOW",
       "name": "Flow Gold Half",
       "effect": "Match the Flow seal to open its gate.",
-      "mode": "Fusion key possession",
+      "mode": "Seal key possession",
       "acquisition_status": "available",
-      "acquisition": "Eligible tier 1 regional rewards; not ordinary colored kinstone shapes.",
+      "acquisition": "Eligible tier 1 regional rewards for the optional gold seals.",
       "duplicate_of": "",
       "metadata_description": "",
       "source_ref": "[src/journal.c](../../src/journal.c#L94)",
-      "acquisition_ref": "[src/handoff_events.c](../../src/handoff_events.c#L163)",
+      "acquisition_ref": "[src/handoff_events.c](../../src/handoff_events.c#L168)",
       "visible_ordinal": 136
     },
     {
@@ -3365,13 +3365,13 @@
       "source_token": "HANDOFF_GOLD_LEFT",
       "name": "Left Gold Half",
       "effect": "Combine left, middle and right halves at a generated gold-gate interior to open the statue seal/cache.",
-      "mode": "Fusion key possession",
+      "mode": "Seal key possession",
       "acquisition_status": "available",
-      "acquisition": "Eligible tier 1 regional rewards; not ordinary colored kinstone shapes.",
+      "acquisition": "Eligible tier 1 regional rewards for the optional gold seals.",
       "duplicate_of": "",
       "metadata_description": "",
       "source_ref": "[src/journal.c](../../src/journal.c#L94)",
-      "acquisition_ref": "[src/handoff_events.c](../../src/handoff_events.c#L164)",
+      "acquisition_ref": "[src/handoff_events.c](../../src/handoff_events.c#L169)",
       "visible_ordinal": 137
     },
     {
@@ -3381,13 +3381,13 @@
       "source_token": "HANDOFF_GOLD_MIDDLE",
       "name": "Middle Gold Half",
       "effect": "Combine left, middle and right halves at a generated gold-gate interior to open the statue seal/cache.",
-      "mode": "Fusion key possession",
+      "mode": "Seal key possession",
       "acquisition_status": "available",
-      "acquisition": "Eligible tier 1 regional rewards; not ordinary colored kinstone shapes.",
+      "acquisition": "Eligible tier 1 regional rewards for the optional gold seals.",
       "duplicate_of": "",
       "metadata_description": "",
       "source_ref": "[src/journal.c](../../src/journal.c#L94)",
-      "acquisition_ref": "[src/handoff_events.c](../../src/handoff_events.c#L165)",
+      "acquisition_ref": "[src/handoff_events.c](../../src/handoff_events.c#L170)",
       "visible_ordinal": 138
     },
     {
@@ -3397,13 +3397,13 @@
       "source_token": "HANDOFF_GOLD_RIGHT",
       "name": "Right Gold Half",
       "effect": "Combine left, middle and right halves at a generated gold-gate interior to open the statue seal/cache.",
-      "mode": "Fusion key possession",
+      "mode": "Seal key possession",
       "acquisition_status": "available",
-      "acquisition": "Eligible tier 1 regional rewards; not ordinary colored kinstone shapes.",
+      "acquisition": "Eligible tier 1 regional rewards for the optional gold seals.",
       "duplicate_of": "",
       "metadata_description": "",
       "source_ref": "[src/journal.c](../../src/journal.c#L94)",
-      "acquisition_ref": "[src/handoff_events.c](../../src/handoff_events.c#L166)",
+      "acquisition_ref": "[src/handoff_events.c](../../src/handoff_events.c#L171)",
       "visible_ordinal": 139
     }
   ],
@@ -3514,17 +3514,17 @@
     {
       "token": "LI_KINSTONE_RED",
       "value": 252,
-      "effect": "Adds red kinstone count."
+      "effect": "Legacy red-half counter."
     },
     {
       "token": "LI_KINSTONE_BLUE",
       "value": 253,
-      "effect": "Adds blue kinstone count."
+      "effect": "Legacy blue-half counter."
     },
     {
       "token": "LI_KINSTONE_GREEN",
       "value": 254,
-      "effect": "Adds green kinstone count."
+      "effect": "Legacy green-half counter."
     },
     {
       "token": "LI_ENEMY_BEETLE",
@@ -3535,18 +3535,21 @@
   "source_sha256": {
     "src/legacy_items.h": "ea21190aaab869abe4377dc20360274570db8f2bd225c974d9c3618924791565",
     "src/legacy_items.c": "a5c317b912eb57fc3606b1a3cac2ad71f86344445c6f3446934ddeae885897ad",
-    "src/legacy_items_metadata.inc": "64765d384275d8fcda07203d5b2834a357c6ba1f2c9c21eee38a0e3a1be6affe",
+    "src/legacy_items_metadata.inc": "66bd01a81ec5d0ada55bd119b04bca1a1d27a5b9ec0caa5a6005ae7f279c322d",
     "src/journal.h": "03dfea1eac85eb0f25d15e2c570952e33cbf2ed5dc67c9e3706e60fedb91c53b",
     "src/journal.c": "828eed29d7a6c1f786082e9d64812941e6773c9ce3c0c7e30d85059a4a8f460c",
-    "src/handoff_events.c": "77072e305704ffda4d286197efc9c1deacd49b2d1b13c42586a668d46efdb559",
-    "src/handoff_field.inc": "197e17dcf3a1156c6f0fcb2545c5b59251de4c4c4c4c4beec78a046bca802d40",
+    "src/handoff_events.c": "6986b55b3aae4213d70e82f3f39ce2dd2fc51f19500bb3a6f6482810e5ea6c04",
+    "src/handoff_field.inc": "38f6d47f7ae897230d5998248751253508db55f4c256498320cde294d3566b34",
     "src/handoff_objects.c": "feaf4b6d0e23cb6c525aa23b7d2176abfd0831048db62ba501fefb20c1901849",
     "src/handoff_mobility.c": "7827eaffe3f602b4e98a1fb8c780c4aa5ed404f378d5466f08cdc0960db60308",
-    "src/cream_runtime.c": "ecaa2f7298da29633324994c4ae0cdfff0e926ea71638431026d8102efce64e7",
-    "src/objects.c": "9abac5c2f07837cae8cabeb44e326a5eab48e06369e135b7120ac98f3e951226",
+    "src/cream_runtime.c": "c2615cae5fcab9700eaee530b09655e463d82afd5d4fef0a20a3929227aa716e",
+    "src/objects.c": "9f4e9df2f9bf1a9a38f471d33002b0b0ad4828461cd9f27e8f6ba9935303ff1e",
     "src/player.c": "b52994d5fe487b0c7bcaef5e2497700ff81a21b7b0472316f9257dc48b1fc68a",
-    "src/npc.c": "1358a8f713b9e74b6e45cf4023ede22e81625f7383a3766f869402fc2c79d7cf",
-    "src/game.c": "6b5bd034bed0f58718d11d1c81936584921a75e886b25ad1cadef6ea3b70102b",
-    "src/regional_content.c": "f983684b321000f925cae0582fe025dfbb8ba0b8af97f6564b63beac6a865e2f"
+    "src/npc.c": "5d15e062aaddfb1c54d40b0971900ee1d97513f93e86f2c35002a1f586b22070",
+    "src/game.c": "5aef7431ee3c48c182b8dd88daefe6adc1b7fb5d3bdae283c18f88347156fd3d",
+    "src/regional_content.c": "a4e169f8bc6e4c4fdc6a8e1150fca0c1cd50b743c881bdaff9a73d31d986baf2",
+    "src/enemy.c": "f9afb02e4498524c49c8317ab06dd46ea3362a6205de62365c4b86689c15ab6c",
+    "src/trading_cards.c": "0c6b6fa6d7df1b02937df19ed5d9e4f91c70c44f540f2a8c00730eec3e24c0e5",
+    "src/card_traders.c": "e2e4039d96147fc208d4f2d7f966c7b55cb8d1da8beaf8270d0083be324cca5f"
   }
 }

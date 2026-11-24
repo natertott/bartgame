@@ -6,13 +6,14 @@
 /* projectiles */
 enum { PJ_SEED, PJ_SPORE, PJ_SHARD, PJ_ARROW };
 /* pickups: frames in the items sheet */
-enum { PK_HEART, PK_GILT, PK_BOMB, PK_GILT_BIG, PK_KEY, PK_RELIC, PK_GRAIL, PK_ARROW1, PK_ARROW5, PK_ARROW10 };
+enum { PK_HEART, PK_GILT, PK_BOMB, PK_GILT_BIG, PK_KEY, PK_RELIC, PK_GRAIL, PK_ARROW1, PK_ARROW5, PK_ARROW10, PK_TRADING_CARD };
 /* effects */
 enum { FX_PUFF, FX_CLANG, FX_BLAST, FX_FLAME, FX_SPARK, FX_BOMB_OBJ, FX_FIREFLY, FX_MOUTH };
 #define OBJ_THROWN 20 /* an AK_OBJECT type: a load in flight */
 
 Actor* proj_spawn(int type, int px, int py, int dir, int speed, int damage, bool8 from_player);
 Actor* pickup_spawn(int type, int px, int py);
+Actor* pickup_spawn_trading_card(int card, int px, int py);
 Actor* fx_spawn(int type, int px, int py);
 void drop_roll(int px, int py, u32 roll);
 void objects_update(void);

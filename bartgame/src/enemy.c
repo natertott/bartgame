@@ -22,6 +22,8 @@
 #include "cream_runtime.h"
 #include "enemy_prototypes.h"
 #include "journal.h"
+#include "text.h"
+#include "trading_cards.h"
 
 const EnemyDef gEnemyDefs[EN_EXISTING_COUNT] = {
     [EN_BEETLE] = { SHEET_BEETLE, 2, Q8(0.5), 2, HB_SMALL, AF_HITTABLE | AF_HURTS, 0 },
@@ -183,7 +185,7 @@ int enemy_pick_type(int theme, int stage, u32 roll) {
     }
 }
 
-Actor* enemy_spawn(int type, int px, int py) {
+static Actor* spawn_enemy(int type, int px, int py, bool8 track) {
     const EnemyDef* d;
     Actor* a;
     if(type<0 || type>=EN_COUNT) return NULL;
@@ -210,8 +212,10 @@ Actor* enemy_spawn(int type, int px, int py) {
     a->timer = 10 + rand_range(30);
     a->dir = rand_range(4) * 8;
     a->facing = dir_to_facing(a->dir);
-    cream_runtime_track_enemy(a,NULL);
-    handoff_track_enemy(a,NULL);
+    if (track) {
+        cream_runtime_track_enemy(a, NULL);
+        handoff_track_enemy(a, NULL);
+    }
     if (type >= EN_PROTO_ROPE) {
 #if BART_ENEMY_LAB
         if (!sSheetTile[type]) { actor_free(a); return NULL; }
@@ -230,6 +234,36 @@ Actor* enemy_spawn(int type, int px, int py) {
     return a;
 }
 
+Actor* enemy_spawn(int type, int px, int py) {
+    return spawn_enemy(type, px, py, TRUE);
+}
+
+bool8 trading_card_golden_spawn(int trader, int px, int py) {
+    if ((unsigned)trader >= CARD_TRADE_SLOTS)
+        return FALSE;
+    unsigned bit = 1u << trader;
+    if (!(gTradingCardProgress.completed & bit) || (gTradingCardProgress.golden_defeated & bit))
+        return FALSE;
+    for (int i = 1; i < ACTOR_MAX; i++) {
+        const Actor* e = &gActors[i];
+        if (e->kind == AK_ENEMY && e->type == LE_ROPE_GOLDEN_0 && e->v[5] == trader + 1)
+            return TRUE;
+    }
+    int floor = room_type_px(px, py - 4);
+    if ((floor != TT_FLOOR && floor != TT_SLOW && floor != TT_SWITCH) ||
+        room_box_solid(px - 6, py - 7, px + 5, py - 1) ||
+        (ABS(PX(gPlayer->x) - px) < 24 && ABS(PX(gPlayer->y) - py) < 24))
+        return FALSE;
+    Actor* e = spawn_enemy(LE_ROPE_GOLDEN_0, px, py, FALSE);
+    if (!e)
+        return FALSE;
+    e->speed = Q8(1.25);
+    /* Rope AI leaves this payload free. Mark the trade, even when another
+       Golden Rope from the normal roster is present in the same room. */
+    e->v[5] = trader + 1;
+    return TRUE;
+}
+
 int enemies_alive(void) {
     int i, n = 0;
     for (i = 1; i < ACTOR_MAX; i++)
@@ -245,9 +279,23 @@ void enemy_kill(Actor* e) {
 #endif
     gGame.kills++;
     fx_spawn(FX_PUFF, PX(e->x), PX(e->y) - 8);
-    drop_roll(PX(e->x), PX(e->y), rand_next());
-    sfx_play(SFX_KILL);
-    handoff_on_enemy_killed(e->type,PX(e->x),PX(e->y));
+    if (e->type == LE_ROPE_GOLDEN_0 && e->v[5]) {
+        sfx_play(SFX_KILL);
+        unsigned bit = 1u << (e->v[5] - 1);
+        if (!(gTradingCardProgress.golden_defeated & bit)) {
+            gTradingCardProgress.golden_defeated |= bit;
+            legacy_item_grant(LI_RUPEE200, 1);
+            legacy_item_grant(LI_HEART_PIECE, 1);
+            textbox_open("The Golden Rope yields 200 gilt and a Heart Piece.");
+        }
+    } else {
+        u32 roll = rand_next();
+        int px = PX(e->x), py = PX(e->y);
+        drop_roll(px, py, roll);
+        trading_card_enemy_drop(px, py, roll);
+        sfx_play(SFX_KILL);
+        handoff_on_enemy_killed(e->type, px, py);
+    }
     if(legacy_enemy_owns(e->type)) legacy_enemy_on_death(e);
     else if (e->flags & AF_BOSS)
         boss_died(e);

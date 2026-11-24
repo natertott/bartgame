@@ -26,6 +26,7 @@ const EnemyDef* enemy_definition(int type);
 void enemy_invalidate_frame(Actor* enemy);
 
 Actor* enemy_spawn(int type, int px, int py);
+bool8 trading_card_golden_spawn(int trader, int px, int py);
 void enemies_update(void);
 void enemies_draw(void);
 /* Dedicated native-frame upload queue, flushed during VBlank. */

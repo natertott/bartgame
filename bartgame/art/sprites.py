@@ -213,9 +213,11 @@ import handoff_enemies
 import handoff_events
 import handoff_mobility
 import handoff_objects
+import trading_card_assets
 for owner,module in (('cream_actors',cream_actors),('handoff_items',handoff_items),
                      ('handoff_enemies',handoff_enemies),('handoff_events',handoff_events),
-                     ('handoff_mobility',handoff_mobility),('handoff_objects',handoff_objects)):
+                     ('handoff_mobility',handoff_mobility),('handoff_objects',handoff_objects),
+                     ('trading_card_assets',trading_card_assets)):
     for sheet in module.build_sheets():
         SHEETS.append(sheet)
         for frame in sheet['frames']:

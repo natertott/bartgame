@@ -22,6 +22,10 @@
 #include "myst.h"
 #include "regional_content.h"
 #include "cream_runtime.h"
+#include "card_traders.h"
+#include "trading_cards.h"
+#include "enemy.h"
+#include "npc.h"
 
 #define HBIT(a,n) (((a)[(unsigned)(n)>>3]>>((n)&7))&1)
 #define HSET(a,n) ((a)[(unsigned)(n)>>3]|=1u<<((n)&7))
@@ -51,6 +55,7 @@ static struct {
 static struct {
     RegionalContentPlan plan;
     u8 active,quest_ready,board,point_count,wave_site,cadence,goal_spawned,door_latch,door_frame,door_sheet,door_pal,door_base,scav_dir;
+    u8 card_golden_spawned;
     u8 component[96],scav_path[768];
     u8 owned[ACTOR_MAX];
     u16 queue[768],pause,tile,door_tile,icons[32];
@@ -91,7 +96,7 @@ static void clear_bytes(void* p,int n){u8* out=p;while(n--)*out++=0;}
 static char* cat(char* p,const char* t){while(*t)*p++=*t++;*p=0;return p;}
 static char* num(char* p,int n){char tmp[12];vwf_num(tmp,n,0);return cat(p,tmp);}
 static void give(int item){
- if(item>=HANDOFF_GOLD_FLOW&&item<=HANDOFF_GOLD_RIGHT){gHandoffState.gold_owned|=1<<(item-HANDOFF_GOLD_FLOW);journal_note_gold_half(item-HANDOFF_GOLD_FLOW);journal_note_legacy_item(LI_KINSTONE);sfx_play(SFX_KEY);handoff_notify(HN_ITEM,gGame.area,gGame.cell,item);}
+ if(item>=HANDOFF_GOLD_FLOW&&item<=HANDOFF_GOLD_RIGHT){gHandoffState.gold_owned|=1<<(item-HANDOFF_GOLD_FLOW);journal_note_gold_half(item-HANDOFF_GOLD_FLOW);sfx_play(SFX_KEY);handoff_notify(HN_ITEM,gGame.area,gGame.cell,item);}
  else if(item==HANDOFF_FLEET){gHandoffState.food_mask|=1u<<HF_FLEET;s.invulnerable=120;}
  else legacy_item_grant(item,1);
 }
@@ -266,6 +271,7 @@ void handoff_new_run(u32 seed){
  u32 score=gHandoffState.score;u16 wins=gHandoffState.wins,deaths=gHandoffState.deaths,runs=gHandoffState.runs;
  u8 difficulty=gHandoffState.difficulty,highest=gHandoffState.highest_difficulty,mode=gHandoffState.entitlement_mode;
  clear_bytes(&gHandoffState,sizeof(gHandoffState));
+ trading_cards_new_run();
  gHandoffState.score=score;gHandoffState.wins=wins;gHandoffState.deaths=deaths;gHandoffState.runs=runs+1;
  gHandoffState.difficulty=MIN(12,difficulty);gHandoffState.highest_difficulty=highest;gHandoffState.entitlement_mode=mode;
  gHandoffState.rank=score>=2000?4:score>=800?3:score>=250?2:score>=50?1:0;
@@ -551,7 +557,7 @@ static void quest_start(int kind){
   }else q->mode=0;
  }
  p=cat(msg,"Contract accepted. Failure costs ");p=cat(p,q->stake==0?"nothing":q->stake==1?"up to 50 gilt":q->stake==2?"up to 100 gilt and half health":"up to 200 gilt, half health and one good charm");
- p=cat(p,". ");cat(p,kind==HQ_POT?"Find the marked pot.":kind==HQ_HUNT?"Defeat the quota within 30 seconds.":kind==HQ_SCAV?"Find the glint: catch, cut, or dig it.":kind==HQ_STEALTH?"Reach the far seal without entering the watchers' gaze.":kind==HQ_CARRY?"Lift this pot with A, carry it to the receiver, and clear both ambushes. R throws it; recover it safely.":kind==HQ_COURIER?"Deliver the parcel to the fuser at the Forest entrance. Return for your prize.":"Push the blocks to match the reference. Select resets safely.");say(msg);
+ p=cat(p,". ");cat(p,kind==HQ_POT?"Find the marked pot.":kind==HQ_HUNT?"Defeat the quota within 30 seconds.":kind==HQ_SCAV?"Find the glint: catch, cut, or dig it.":kind==HQ_STEALTH?"Reach the far seal without entering the watchers' gaze.":kind==HQ_CARRY?"Lift this pot with A, carry it to the receiver, and clear both ambushes. R throws it; recover it safely.":kind==HQ_COURIER?"Deliver the parcel to the messenger at the Forest entrance. Return for your prize.":"Push the blocks to match the reference. Select resets safely.");say(msg);
  if(kind==HQ_HUNT)refill(4);
  if(kind==HQ_COURIER)q->cargo_held=1;
 }
@@ -560,7 +566,7 @@ static void quest_start(int kind){
 enum { HM_NONE,HM_DRAFT,HM_INN,HM_SHOP,HM_FUSE,HM_TROPHY,HM_HINT,HM_CHALLENGE,HM_CONTRACT,HM_DIFFICULTY };
 static struct{u16 display,bg3,blend,alpha,brightness; s16 x,y;u8 active,cursor,top,repeat,old_anim;} m __attribute__((section(".ewram_bss.handoff_menu")));
 static int menu_count(void){return m.active==HM_DRAFT?3:m.active==HM_INN?3:m.active==HM_SHOP?6:m.active==HM_FUSE?5:m.active==HM_TROPHY?3:m.active==HM_CHALLENGE?HS_COUNT+2:m.active==HM_CONTRACT?3:m.active==HM_DIFFICULTY?13:1;}
-static const char* menu_title(void){return m.active==HM_DRAFT?"Three Gifts / choose one":m.active==HM_INN?"The Three Beds":m.active==HM_SHOP?"Peddler Exchange":m.active==HM_FUSE?"Shaped Stone Broker":m.active==HM_TROPHY?"Trophy & Entitlements":m.active==HM_HINT?"A Quiet Hint":m.active==HM_CHALLENGE?"Optional Challenges":m.active==HM_DIFFICULTY?"Difficulty 0 to 12":"Four-step Contract";}
+static const char* menu_title(void){return m.active==HM_DRAFT?"Three Gifts / choose one":m.active==HM_INN?"The Three Beds":m.active==HM_SHOP?"Peddler Exchange":m.active==HM_FUSE?"Card & Seal Broker":m.active==HM_TROPHY?"Trophy & Entitlements":m.active==HM_HINT?"A Quiet Hint":m.active==HM_CHALLENGE?"Optional Challenges":m.active==HM_DIFFICULTY?"Difficulty 0 to 12":"Four-step Contract";}
 static void menu_close(void){
  gAnimTiles=m.old_anim;bg0_clear();gBg3Dirty=0;REG_BG3CNT=m.bg3;gBgScroll[3][0]=m.x;gBgScroll[3][1]=m.y;
  room_render();video_show(m.display);REG_BLDCNT=m.blend;REG_BLDALPHA=m.alpha;REG_BLDY=m.brightness;m.active=0;gKeysDown=0;
@@ -673,7 +679,7 @@ static void menu_row(int index,char* out){
  case HM_DRAFT:p=cat(p,item_name(gHandoffState.draft[index]));break;
  case HM_INN:p=cat(p,index==0?"Plain bed / 50 gilt":index==1?"Soft bed + common / 200 gilt":"Canopy bed + uncommon / 500 gilt");break;
  case HM_SHOP:{int cost=gHandoffState.prices[index]+(index==0?25*gHandoffState.heart_purchases:0);p=cat(p,gHandoffState.shop_bought&(1<<index)?"SOLD":item_name(gHandoffState.stock[index]));p=cat(p," / ");p=num(p,handoff_shop_price(MIN(999,cost)));break;}
- case HM_FUSE:{static const char*const names[]={"Locate green fuser","Locate blue fuser","Locate red fuser","Locate Flow gold seal","Locate three gold statues"};p=cat(p,names[index]);break;}
+ case HM_FUSE:{static const char*const names[]={"Locate Moss Archivist","Locate Brook Locksmith","Locate Rind Collector","Locate Flow gold seal","Locate three gold statues"};p=cat(p,names[index]);break;}
  case HM_TROPHY:p=cat(p,index==0?"View rank and record":index==1?"Toggle optional entitlement challenge":"Choose run difficulty");break;
  case HM_CHALLENGE:p=cat(p,index+1<HS_COUNT?sSiteNames[index+1]:index==HS_COUNT-1?"Moving Crossing Workshop":index==HS_COUNT?"Secrets & Weather Workshop":"Tool Targets Workshop");break;
  case HM_DIFFICULTY:p=cat(p,"Difficulty ");p=num(p,index);p=cat(p,index==gHandoffState.difficulty?" / current":"");break;
@@ -686,7 +692,7 @@ static const char* menu_note(void){
  if(m.active==HM_DRAFT){const LegacyItemDef*d=legacy_item_def(gHandoffState.draft[m.cursor]);return d?d->description:"A golden half opens an optional fusion gate.";}
  if(m.active==HM_INN)return m.cursor==0?"Restore 25% max health; at least one heart.":m.cursor==1?"Restore 50%; at least two hearts. Common chest.":"Restore all health. Uncommon chest; never rare.";
  if(m.active==HM_SHOP){const LegacyItemDef*d=legacy_item_def(gHandoffState.stock[m.cursor]);return d?d->description:"A practical supply.";}
- if(m.active==HM_FUSE)return "The broker points to real fusers and seals. Meet them in the regions to join your halves.";
+ if(m.active==HM_FUSE)return "Find a trader and press Select when a card floats above their head.";
  if(m.active==HM_CHALLENGE)return "Optional annex rooms preserve every existing Forest trial. Exit south whenever safe.";
  if(m.active==HM_HINT)return "Paths tell one story. Lanterns can tell another. A keyhole, cracked rock, web or gap each asks for its tool.";
  if(m.active==HM_CONTRACT)return "Four adaptive steps: event, waves/quest, key item, boss. Current regions and boss wins are unchanged.";
@@ -732,24 +738,21 @@ bool8 handoff_claim_inn_reward(void){
 }
 bool8 handoff_menu_active(void){return m.active!=0;}
 static void fuse(int index){
- if(index<3){int shape=gHandoffState.fuser_shape[index];
-  if(gHandoffState.fusion_flags&(1<<index)){say("This fuser's shortcut is already open.");return;}
-  if(!gHandoffState.kinstone_shapes[index][shape]){char msg[130];char*p=cat(msg,"This fuser needs a ");p=cat(p,index==0?"green":index==1?"blue":"red");p=cat(p,shape==0?" upper-right tooth":" lower-right tooth");if(shape==1)p=cat(msg,index==0?"This fuser needs a green left tooth":index==1?"This fuser needs a blue left tooth":"This fuser needs a red left tooth");cat(p," half. No match; the fuser will wait.");say(msg);return;}
-  gHandoffState.kinstone_shapes[index][shape]--;if(gLegacyInventory.kinstones[index])gLegacyInventory.kinstones[index]--;
-  gHandoffState.fusion_flags|=1<<index;give(index==0?LI_KINSTONE_BAG:index==1?LI_RUPEE100:LI_BOTTLE1);
-  say(index==0?"Two halves meet. The green cache in this region opens.":index==1?"Two halves meet. The blue pocket entrance in this region opens.":"Two halves meet. The broken crossing in this region rises.");
- }else if(index==3){if(!(gHandoffState.gold_owned&1)){say("The Flow seal needs its gold half.");return;}gHandoffState.gold_fused|=1;say("The golden Flow seal opens.");}
- else{if((gHandoffState.gold_owned&14)!=14){say("Three statue halves are needed: left, middle and right.");return;}gHandoffState.gold_fused|=14;say("Three golden statues awaken. Their final cache opens.");}
+ if(index==3){if(!(gHandoffState.gold_owned&1)){say("The Flow seal needs its gold half.");return;}gHandoffState.gold_fused|=1;say("The golden Flow seal opens.");}
+ else if(index==4){if((gHandoffState.gold_owned&14)!=14){say("Three statue halves are needed: left, middle and right.");return;}gHandoffState.gold_fused|=14;say("Three golden statues awaken. Their final cache opens.");}
+ else return;
  sfx_play(SFX_SECRET);
 }
 static void fusion_hint(int index){
- RegionalContentPlan p;char message[180],*out=message;bool8 found;
+ static char message[180] EWRAM_BSS;
+ RegionalContentPlan p;char*out=message;bool8 found;
  if(index<3)found=regional_content_fusion(index,&p);
  else found=regional_content_find(HS_GOLD_GATE,-1,FALSE,&p);
- if(!found){say("No stone voice answers yet. Explore a region and return.");return;}
- out=cat(out,index==0?"The green fuser waits in ":index==1?"The blue fuser waits in ":index==2?"The red fuser waits in ":index==3?"Bring the Flow gold half to the sealed chamber in ":"Bring left, middle and right gold halves to the statues in ");
+ if(!found){say("No one sent word from that part of the region yet. Explore and return.");return;}
+ if(index<3){out=cat(out,card_traders_name(CARD_TRADER_GREEN+index));out=cat(out," waits in ");}
+ else out=cat(out,index==3?"Bring the Flow gold half to the sealed chamber in ":"Bring left, middle and right gold halves to the statues in ");
  out=cat(out,p.area==AREA_FOREST?"Forest ":"Cream ");out=num(out,p.cell%5+1);out=cat(out,",");out=num(out,p.cell/5+1);out=cat(out,".");
- if(index<3){out=cat(out," Its cut is ");out=cat(out,gHandoffState.fuser_shape[index]==0?"upper-right.":gHandoffState.fuser_shape[index]==1?"left.":"lower-right.");}
+ if(index<3){out=cat(out," Requests ");out=cat(out,gTradingCards[card_traders_request(CARD_TRADER_GREEN+index)].name);cat(out,".");}
  say(message);
 }
 void handoff_menu_update(void){
@@ -800,10 +803,7 @@ enum { HA_DESK,HA_FUSER,HA_GOLD,HA_PORTAL,HA_TOKEN,HA_BLOCK_FREE,HA_BLOCK_H,
  HA_BLOCK_V,HA_GOAL,HA_RESET,HA_WEB,HA_DUST,HA_TORCH_OFF,HA_TORCH_LIT,
  HA_WATCH_N,HA_WATCH_E,HA_WATCH_S,HA_WATCH_W,HA_PARCEL,HA_POT,HA_RECIPIENT,
  HA_GREEN_HALF,HA_GREEN_1,HA_GREEN_2,HA_BLUE_HALF,HA_BLUE_1,HA_BLUE_2,HA_RED_HALF,HA_RED_1,HA_RED_2,HA_LEAF,HA_COUNT };
-typedef struct{ s16 x,y;u8 color,shape,age,active;} LooseHalf;
-static LooseHalf sHalves[8] __attribute__((section(".ewram_bss.handoff_halves")));
 static u16 sFieldTile __attribute__((section(".ewram_bss.handoff_field_tile")));
-static u16 sHalfTile[3][3] __attribute__((section(".ewram_bss.handoff_half_tiles")));
 static bool8 inside_hand(void){return gGame.area==AREA_HANDOFF;}
 static void paint_border(void){
  int x,y;room_clear(32,24,MT_CAVE_FLOOR0);
@@ -836,7 +836,7 @@ void handoff_build(int site,int kind,u32 seed){
  if(site>=HANDOFF_OBJECT_SITE1&&site<=HANDOFF_OBJECT_SITE3){kind=HS_OBJECT_COURSE;seed=(seed&~0x300u)|((site-HANDOFF_OBJECT_SITE1+1)<<8);}
  else if(kind==HS_OBJECT_COURSE)seed&=~0x300u;
  s.board_x=7;s.board_y=8;s.site=CLAMP(site,0,255);s.kind=CLAMP(kind,0,HS_COUNT-1);s.seed=seed;s.clock=0;s.phase=0;s.count=0;s.quota=0;s.timer=0;s.plate=255;s.last_plate=255;s.memory_input=0;s.memory_show=0;s.exit=0;s.request=255;s.clean=0;s.switch_mask=0;s.cast_count=0;s.goal_spawned=0;s.prize=HBIT(gHandoffState.won,s.site);s.recipient_x=s.recipient_y=-1;
- rng_seed(&s.rng,hash32(seed,site+kind*257));clear_bytes(sHalves,sizeof(sHalves));clear_bytes(sHalfTile,sizeof(sHalfTile));
+ rng_seed(&s.rng,hash32(seed,site+kind*257));
  tiles_load(TS_MYST);paint_border();
  if(board_kind()){
   int base=s.kind==HS_BLOCK_MAZE?768:s.kind==HS_QUEST_BLOCKS?(rng_range(&s.rng,2)?768:0):0;
@@ -874,6 +874,7 @@ void handoff_start_pos(int* x,int* y){
  if(board_kind()){const HandoffPuzzle*p=handoff_puzzle(gHandoffPuzzleIndex);*x=sx(BOARD_X+p->entry%5);*y=sy(BOARD_Y+p->entry/5);}
 }
 void handoff_enter(void){
+ card_traders_room_reset();
  s.scene_active=1;sFieldTile=0;s.cadence=0;
  if(s.kind==HS_OBJECT_COURSE){s.tile=0;handoff_objects_enter();return;}
  if(s.kind==HS_TRAVERSAL){s.tile=0;return;}
@@ -910,20 +911,26 @@ static bool8 flood_from_hero(int tx,int ty){
  return TRUE;
 }
 void handoff_suspend_region(void){
+ card_traders_room_reset();
  clear_bytes(&r,sizeof(r));handoff_objects_reset();handoff_mobility_reset();
- sFieldTile=0;s.recipient_x=s.recipient_y=-1;clear_bytes(sHalves,sizeof(sHalves));
+ sFieldTile=0;s.recipient_x=s.recipient_y=-1;
 }
 void handoff_room_enter(int area,int cell){
+ card_traders_room_reset();
  handoff_objects_reset();handoff_mobility_reset();clear_bytes(&r,sizeof(r));
  s.scene_active=0;sFieldTile=0;s.recipient_x=s.recipient_y=-1;
- clear_bytes(sHalves,sizeof(sHalves));clear_bytes(sHalfTile,sizeof(sHalfTile));
  if(FOOD(HF_FLEET))s.invulnerable=MAX(s.invulnerable,120);
  if(!gPlayer)return;
  if(area==AREA_FOREST||area==AREA_CREAM)regional_enter(area,cell);
+ else if(area==AREA_SEWER){
+  Actor* peddler=actor_find(AK_NPC,NPC_MERCHANT);
+  if(peddler)card_traders_place(CARD_TRADER_PEDDLER,PX(peddler->x),PX(peddler->y),PX(peddler->y)-24,0);
+ }
 }
 int handoff_map_mark(int area,int cell){
- int i;if(!legacy_item_owned(LI_COMPASS)||(area!=AREA_FOREST&&area!=AREA_CREAM))return 0;
- for(i=0;i<3;i++)if(gHandoffState.fuser_cell[i]==cell&&!(gHandoffState.fusion_flags&(1<<i)))return 1;
+ RegionalContentPlan p;
+ if(!legacy_item_owned(LI_COMPASS)||!regional_content_get(area,cell,&p))return 0;
+ if(p.fusion_color!=RC_NONE&&!card_traders_completed(CARD_TRADER_GREEN+p.fusion_color))return 1;
  if(gHandoffState.quest.kind==HQ_COURIER&&gHandoffState.quest.state==2&&gHandoffState.quest.target_area==area&&gHandoffState.quest.target_cell==cell)return 2;
  return 0;
 }
@@ -937,6 +944,11 @@ static void materialize_goal(void){
 }
 void handoff_notify(int kind,int area,int cell,int item){
  int match=0,site=255,c=gHandoffState.contract_kind;
+ if(kind==HN_QUEST)trading_card_reward(CARD_REWARD_QUEST,area,cell);
+ /* Annex quest completion reports both the quest and its enclosing event. */
+ else if(kind==HN_WAVE||kind==HN_BOSS||
+         (kind==HN_EVENT&&(area!=AREA_HANDOFF||s.kind<HS_QUEST_POT||s.kind>HS_QUEST_BLOCKS)))
+  trading_card_reward(CARD_REWARD_EVENT,area,cell);
  if(gHandoffState.contract_state!=1)return;
  if(gHandoffState.contract_step==4){
   if(kind==HN_ITEM&&item==LI_EARTH_ELEMENT){gHandoffState.contract_state=2;gHandoffState.contract_target=0;gHandoffState.score+=200;refresh_rank();give(LI_FOURSWORD);game_win_chain();}
@@ -957,21 +969,6 @@ void handoff_notify(int kind,int area,int cell,int item){
   else{gHandoffState.contract_kind=HC_ITEM;gHandoffState.contract_item=LI_EARTH_ELEMENT;materialize_goal();}
  }
 }
-void handoff_kinstone_drop(int color,int shape,int px,int py){
- int i;color=CLAMP(color,0,2);shape=CLAMP(shape,0,2);
- for(i=0;i<8;i++)if(!sHalves[i].active){
-  if(!inside_hand()&&!sHalfTile[color][shape]){
-   const SpriteSheet*sh=&sheets[SHEET_HANDOFF];
-   int frame=HA_GREEN_HALF+color*3+shape;
-   u16 tile=sprite_alloc(4);
-   if(!tile)return; /* optional drop never exists without a visible frame */
-   sHalfTile[color][shape]=tile;
-   vram_queue(sh->tiles+frame*sh->frame_tiles*16,OBJ_TILE(tile),128);
-  }
-  sHalves[i].x=px;sHalves[i].y=py;sHalves[i].color=color;sHalves[i].shape=shape;
-  sHalves[i].age=0;sHalves[i].active=1;break;
- }
-}
 void handoff_on_enemy_killed(int type,int px,int py){
  HandoffQuest*q=&gHandoffState.quest;
  if(!inside_hand())regional_enemy_killed(type,px,py);
@@ -980,7 +977,6 @@ void handoff_on_enemy_killed(int type,int px,int py){
   if(q->state==2&&q->kind==HQ_HUNT&&q->origin_cell==s.site){q->count++;if(q->count>=q->quota)quest_win();}
   if(s.kind==HS_BOSS&&type>=LE_GIANT_CHUCHU_GREEN)finish();
  }
- if((hash32(gFrame,type)&31)<(FOOD(HF_DROP_KINSTONES)?6u:1u))handoff_kinstone_drop(hash32(gFrame,type)%3,hash32(type,gFrame)%3,px,py);
 }
 void handoff_tile_cleared(int tx,int ty){
  int i;if(!inside_hand())return;
@@ -1066,7 +1062,7 @@ bool8 handoff_try_interact(void){
   if(q->state==2&&q->kind==HQ_COURIER&&q->target_area==gGame.area&&q->target_cell==gGame.cell){
    q->state=3;gHandoffState.score+=30;refresh_rank();give(random_reward(1));handoff_notify(HN_QUEST,gGame.area,gGame.cell,0);
    HSET(gHandoffState.completed,HS_QUEST_COURIER);HSET(gHandoffState.won,HS_QUEST_COURIER);say("Parcel delivered. Your reward is safe. Return to the annex for the sealed cache.");
-  }else fuse(MIN(2,s.visited_courier));return TRUE;
+  }else card_traders_explain(CARD_TRADER_GREEN+MIN(2,s.visited_courier));return TRUE;
  }
  if(!inside_hand())return FALSE;
  if(s.kind==HS_TRAVERSAL)return handoff_mobility_interact();
@@ -1082,9 +1078,9 @@ bool8 handoff_try_interact(void){
   /* Physical examples of optional soft fusion gates; opening never edits a
      pre-existing room gate. */
   if(near(sx(5),sy(5),24)){
-   if(gHandoffState.fusion_flags&1){s.request=HS_ITEM;return TRUE;}say("A green shaped fusion half opens this cache.");return TRUE;}
+   if(gHandoffState.fusion_flags&1){s.request=HS_ITEM;return TRUE;}say("Trade with the Moss Archivist to open this cache.");return TRUE;}
   if(near(sx(25),sy(5),24)){
-   if(gHandoffState.fusion_flags&2){s.request=HS_PORTAL;return TRUE;}say("A blue shaped fusion half opens this pocket cave.");return TRUE;}
+   if(gHandoffState.fusion_flags&2){s.request=HS_PORTAL;return TRUE;}say("Trade with the Brook Locksmith to open this pocket.");return TRUE;}
   return FALSE;
  }
  if(s.prize&&near(sx(NODE_X),sy(NODE_Y),22)){claim();return TRUE;}
@@ -1123,7 +1119,7 @@ bool8 handoff_try_interact(void){
    if(q->wave<2||enemies_alive()){say("Keep the pot safe until both ambushes are clear.");return TRUE;}
    q->cargo_held=0;gPl.carry=CARRY_NONE;gPlayer->state=PS_NORMAL;quest_win();say("Not a crack. A careful delivery earns its keep.");return TRUE;}
  }
- if(q->kind==HQ_COURIER&&q->state==2&&s.kind==HS_QUEST_COURIER&&near(sx(8),sy(17),24)){say("Take the parcel to the wandering fuser at the Forest entry. It is marked with the Compass.");return TRUE;}
+ if(q->kind==HQ_COURIER&&q->state==2&&s.kind==HS_QUEST_COURIER&&near(sx(8),sy(17),24)){say("Take the parcel to the messenger at the Forest entry. The Compass marks their location.");return TRUE;}
  if(q->state==4&&q->origin_cell==s.site&&near(sx(8),sy(17),24)){quest_start(q->kind);return TRUE;}
  return FALSE;
 }
@@ -1160,12 +1156,6 @@ void handoff_update(void){
  /* These effects are local visual overlays; normal menu/text blending remains
     in charge. The root applies handoff_visual_dim in its world video pass. */
  if(FOOD(HF_CURSE_BLUR)&&gGame.state==GS_PLAY){REG_MOSAIC=0x0011;REG_BG2CNT|=0x0040;}else if(gGame.state==GS_PLAY){REG_BG2CNT&=~0x0040;}
- for(i=0;i<8;i++)if(sHalves[i].active){
-  if(sHalves[i].age<255)sHalves[i].age++;
-  if(sHalves[i].age>12&&near(sHalves[i].x,sHalves[i].y,12)){
-   int c=sHalves[i].color,a=sHalves[i].shape;sHalves[i].active=0;journal_note_legacy_item(LI_KINSTONE);gHandoffState.kinstone_shapes[c][a]=MIN(legacy_item_owned(LI_KINSTONE_BAG)?99:9,gHandoffState.kinstone_shapes[c][a]+1);gLegacyInventory.kinstones[c]=MIN(999,gLegacyInventory.kinstones[c]+1);sfx_play(SFX_PICKUP);
-  }
- }
  if(s.sleep_timer){
   s.sleep_timer--;
   if(s.sleep_timer==90){player_heal(s.sleep_choice==0?MAX(8,gPl.hp_max/4):s.sleep_choice==1?MAX(16,gPl.hp_max/2):gPl.hp_max);if(s.sleep_choice){gHandoffState.inn_reward=random_reward(s.sleep_choice-1);if(inside_hand())room_change_overlay(12,10,MT_MYST_CHEST);}}
@@ -1219,12 +1209,9 @@ void handoff_update(void){
 void handoff_draw(void){
  int i;HandoffQuest*q=&gHandoffState.quest;
  if(!inside_hand()){
+  card_traders_draw();
   regional_draw();
   if(s.recipient_x>=0&&sFieldTile)draw_sprite(s.recipient_x-8-gCamX,s.recipient_y-16-gCamY,SHEET_HANDOFF,sFieldTile,0,0,1,PAL_OBJ_FX);
-  for(i=0;i<8;i++)if(sHalves[i].active){
-   LooseHalf*h=&sHalves[i];u16 tile=sHalfTile[h->color][h->shape];
-   if(tile)draw_sprite(h->x-8-gCamX,h->y-16-gCamY,SHEET_HANDOFF,tile,0,0,1,PAL_OBJ_FX);
-  }
   return;
  }
  if(s.kind==HS_TRAVERSAL){handoff_mobility_draw();return;}
@@ -1259,7 +1246,6 @@ void handoff_draw(void){
   if(q->kind==HQ_CARRY){if(q->cargo_ground)draw_prop(HA_POT,q->cargo_x,q->cargo_y,1);draw_prop(HA_RECIPIENT,q->receiver_x,q->receiver_y,1);}
   if(q->kind==HQ_COURIER)draw_prop(HA_PARCEL,sx(8),sy(17),1);
  }
- for(i=0;i<8;i++)if(sHalves[i].active)draw_prop(HA_GREEN_HALF+sHalves[i].color*3+sHalves[i].shape,sHalves[i].x,sHalves[i].y,1);
 }
 #include "handoff_field.inc"
 bool8 handoff_wants_exit(void){return s.exit;}

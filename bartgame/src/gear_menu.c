@@ -276,7 +276,7 @@ static void map_side(void) {
             if(flags&RC_MARK_DOOR)paired_legend(&count,"D Door",UI_INK_CREAM);
             if(flags&RC_MARK_WAVE)paired_legend(&count,"W Wave",UI_INK_CREAM);
             if(flags&RC_MARK_MECHANISM)paired_legend(&count,"K Work",UI_INK_CREAM);
-            if(flags&RC_MARK_FUSION)paired_legend(&count,"V Fuse",UI_INK_CREAM);
+            if(flags&RC_MARK_FUSION)paired_legend(&count,"V Cards",UI_INK_CREAM);
             if((flags&RC_MARK_CACHE)||(content&CC_CONTENT_CACHE))paired_legend(&count,"G Cache",UI_INK_CREAM);
             if((content&CC_CONTENT_CHEST)&&!bit(gCreamProgress.chests,node))paired_legend(&count,"C Chest",UI_INK_CREAM);
             if(content&CC_CONTENT_NPC)paired_legend(&count,"F Folk",UI_INK_CREAM);

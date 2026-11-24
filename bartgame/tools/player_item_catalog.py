@@ -73,8 +73,6 @@ DIRECT = {
     'LI_ARROWS10': ('Fixed stock in the extended Drain exchange:25 gilt.', 'src/handoff_events.c', 'gHandoffState.stock[2]=LI_ARROWS10'),
     'LI_ARROWS5': ('Emergency refill in regional mechanism interior pattern10 when bow-owned and out of arrows.', 'src/handoff_objects.c', 'sObj.pattern==10&&'),
     'LI_FAIRY': ('Fairy-well interior pickups or defeated Spark enemies; catchable in a bottle.', 'src/legacy_enemies.c', 'if(f==LF_SPARK) legacy_item_spawn(LI_FAIRY'),
-    'LI_KINSTONE': ('Colored/shaped enemy drops collected into counters; discovery is recorded without necessarily setting the legacy owned bit.', 'src/handoff_events.c', 'gHandoffState.kinstone_shapes[c][a]=MIN'),
-    'LI_KINSTONE_BAG': ('Reward for a successful green-fuser match.', 'src/handoff_events.c', 'give(index==0?LI_KINSTONE_BAG'),
 }
 
 EXTRA = {
@@ -86,12 +84,14 @@ EXTRA = {
     'LI_BOW': 'Also Forest bow chests and Cream chests.',
     'LI_MAP': 'Also original Forest map chests.',
     'LI_POWER_BRACELETS': 'Also original Root Gauntlet chests and Cream chests.',
-    'LI_BOOMERANG': 'Also Cream chests.',
+    'LI_BOOMERANG': 'Also Cream chests and the Billious Peddler card trade.',
     'LI_GUST_JAR': 'Also Cream chests.',
     'LI_MOLE_MITTS': 'Also Cream chests.',
     'LI_PEGASUS_BOOTS': 'Also Cream chests.',
     'LI_FLIPPERS': 'Also Cream chests.',
-    'LI_HEART_PIECE': 'Also original heart-piece rewards, quests and Cream chests.',
+    'LI_HEART_PIECE': 'Also original heart-piece rewards, quests, Cream chests and the Golden Rope card encounter.',
+    'LI_RUPEE100': 'Also paid by the Moss Archivist and found in the cache their trade opens.',
+    'LI_RUPEE200': 'Also guaranteed on defeating the Golden Rope from a card trade.',
     'LI_HEART_CONTAINER': 'Also original Forest chest/quest rewards.',
     'LI_COMPASS': 'Same map-marker effect as the original Astrolabe, which also has Forest chests.',
 }
@@ -116,6 +116,8 @@ PREREQ = {
 }
 
 NO_ROUTE = {
+    'LI_KINSTONE': 'Legacy save and journal record for shaped halves. Card inventory appears in the pause menu.',
+    'LI_KINSTONE_BAG': 'Legacy save and journal record for the shaped-half pouch.',
     'LI_BOTTLE_EMPTY': 'An empty vessel is obtainable through Glass Bottle; this distinct legacy award ID is not used.',
     'LI_SHELLS': 'Its3-second protective effect is implemented, but no current award source was found.',
     'LI_DUNGEON_MAP': 'Map of the Wood supplies the same effect; this separate legacy ID is not awarded.',
@@ -183,7 +185,6 @@ EFFECT = {
     'LI_SHELLS': 'If granted: adds shell counter and180ticks of protection. No current award route was found.',
     'LI_SHELLS30': 'Adds30shells and immediately activates the run-long rare-reward blessing. Reward eligibility is once per run despite repeat metadata.',
     'LI_SKILL_LONG_SPIN': 'Doubles charged spin duration from34to68ticks. Actual eligibility requires Spin Attack, not the metadata description\'s Great Spin.',
-    'LI_KINSTONE': 'Collect green/blue/red halves in three tooth shapes per color; matched counters unlock fusions. Shaped pickups record discovery without necessarily setting this legacy owned bit.',
     'LI_ARROW_BUTTERFLY': 'Cuts ordinary bow recovery from16to8ticks.',
     'LI_SKILL_FAST_SPIN': 'Lowers spin-charge threshold from80to40ticks.',
     'LI_SKILL_FAST_SPLIT': 'Lowers clone split-pad charge threshold from80to40ticks; requires Fourfold Sword to produce companions.',
@@ -268,7 +269,7 @@ def main():
     for i, token in enumerate(('HANDOFF_GOLD_FLOW','HANDOFF_GOLD_LEFT','HANDOFF_GOLD_MIDDLE','HANDOFF_GOLD_RIGHT')):
         entries.append(dict(journal_id=jid['JI_GOLD_FLOW']+i, source_namespace='gold_half', source_id=0x100+i, source_token=token,
             name=gold_names[i], effect='Match the Flow seal to open its gate.' if i==0 else 'Combine left, middle and right halves at a generated gold-gate interior to open the statue seal/cache.',
-            mode='Fusion key possession', acquisition_status='available', acquisition='Eligible tier 1 regional rewards; not ordinary colored kinstone shapes.',
+            mode='Seal key possession', acquisition_status='available', acquisition='Eligible tier 1 regional rewards for the optional gold seals.',
             duplicate_of='', metadata_description='', source_ref=ref('src/journal.c','static const JournalEntry sGoldHalves'),
             acquisition_ref=ref('src/handoff_events.c','{'+token+',')))
     entries.sort(key=lambda e:e['journal_id'])
@@ -284,16 +285,17 @@ def main():
     assert summary['visible_catalogue_entries'] == 139 and summary['raw_journal_slots']==146
     paths=['src/legacy_items.h','src/legacy_items.c','src/legacy_items_metadata.inc','src/journal.h','src/journal.c',
            'src/handoff_events.c','src/handoff_field.inc','src/handoff_objects.c','src/handoff_mobility.c',
-           'src/cream_runtime.c','src/objects.c','src/player.c','src/npc.c','src/game.c','src/regional_content.c']
+           'src/cream_runtime.c','src/objects.c','src/player.c','src/npc.c','src/game.c','src/regional_content.c',
+           'src/enemy.c','src/trading_cards.c','src/card_traders.c']
     sources={p:hashlib.sha256((ROOT/p).read_bytes()).hexdigest() for p in paths}
-    result=dict(audit_date='2026-11-12', method='Static current-source definitions and acquisition-path audit; not a 139-item runtime collection test.',
+    result=dict(audit_date='2026-11-24', method='Static current-source definitions and acquisition-path audit of the ordinary item journal.',
         summary=summary, entries=entries, hidden_legacy_slots=hidden,
         extra_available_effects=[dict(token='HANDOFF_FLEET',value=0x104,name='Fleet / Golden Croissant',
             acquisition='Complete five regional field waves.',storage='gHandoffState.food_mask bit HF_FLEET',
             effect='Brief protection on future room entry; no separate visible item-journal entry.')],
-        special_drop_codes=[dict(token='LI_KINSTONE_RED',value=0xFC,effect='Adds red kinstone count.'),
-            dict(token='LI_KINSTONE_BLUE',value=0xFD,effect='Adds blue kinstone count.'),
-            dict(token='LI_KINSTONE_GREEN',value=0xFE,effect='Adds green kinstone count.'),
+        special_drop_codes=[dict(token='LI_KINSTONE_RED',value=0xFC,effect='Legacy red-half counter.'),
+            dict(token='LI_KINSTONE_BLUE',value=0xFD,effect='Legacy blue-half counter.'),
+            dict(token='LI_KINSTONE_GREEN',value=0xFE,effect='Legacy green-half counter.'),
             dict(token='LI_ENEMY_BEETLE',value=0xFF,effect='Spawns a beetle; not inventory.')],
         source_sha256=sources)
     OUT.mkdir(parents=True,exist_ok=True)
@@ -315,10 +317,10 @@ def write_markdown(entries, hidden, summary):
         '|+4|Gold fusion halves, stored outside the ordinary legacy item IDs.|',
         '|**139**|**Visible catalogue entries:24+118−7+4.**|',
         '|146|Raw saved journal IDs before filtering.|',
-        '|129|Visible entries with a current acquisition path or reachable bottle-content state.|',
-        '|10|Visible legacy entries with no current award route found; listed below.|','',
+        f'|{summary["current_acquisition_or_state_entries"]}|Visible entries with a current acquisition path or reachable bottle-content state.|',
+        f'|{summary["defined_only_visible_entries"]}|Visible legacy entries with no current award route found.|','',
         'This report audits the current C source and generated reward paths. It is a static availability audit, not a claim that all items were collected in one playthrough. Seed, progression, choices, prerequisites and optional entitlement settings affect which items appear in a run.','',
-        'Audit date:2026-11-12. [CSV](PLAYER_ITEM_CATALOG.csv) · [JSON, including source hashes](PLAYER_ITEM_CATALOG.json)','',
+        'Audited November 24, 2026. [CSV](PLAYER_ITEM_CATALOG.csv) · [JSON, including source hashes](PLAYER_ITEM_CATALOG.json)','',
         '## How to read the list','',
         '- **#** is the visible1-based arcade ordinal, not a serialized inventory ID. **Journal** is its stable raw saved ID. The JSON/CSV also include source namespace, token and numeric item ID.',
         '- **Available** includes starting equipment, rewards, purchases, world drops, fusions and reachable bottle states. The catalogue deliberately contains aliases: Sword/Hopeful Sword, Root Gauntlet/Power Bracelets, Astrolabe/Compass, several map/heart/key entries and multiple refill quantities.',
@@ -340,7 +342,7 @@ def write_markdown(entries, hidden, summary):
             status='**No current award route:** ' if e['acquisition_status']=='defined_only_no_current_award' else ''
             name=f"[{e['name']}](../../src/{'journal.c' if namespace in ('original','gold_half') else 'legacy_items_metadata.inc'}#L{line('src/journal.c' if namespace in ('original','gold_half') else 'src/legacy_items_metadata.inc','['+e['source_token']+']' if namespace!='gold_half' else 'static const JournalEntry sGoldHalves')})"
             lines.append('|%d|%d|%s|%s|%s%s %s|'%(e['visible_ordinal'],e['journal_id'],name,effect.replace('|','/'),status,e['acquisition'],e['acquisition_ref']))
-    lines += ['', '## The ten visible entries with no current award route','',
+    lines += ['', '## Visible entries with no current award route','',
         'These are not hidden by the catalogue filter. Most are stale alternate award IDs whose effect is already provided by another item. The visible list can therefore show undiscovered entries that current ordinary play cannot award.','',
         '|Legacy ID|Name|Current finding|','|---|---|---|']
     for e in entries:
@@ -354,12 +356,12 @@ def write_markdown(entries, hidden, summary):
         lines.append('|`%s` /0x%02X|%s|%s|'%(e['source_token'],e['legacy_id'],e['name'],reasons[e['source_token']]))
     lines += ['', '## Available effects and variants outside the139 count','',
         '- **Fleet / Golden Croissant (`HANDOFF_FLEET=0x104`)** is a real additional run blessing. Completing five field waves awards it; it provides brief protection on later room entry. It is represented by an effect bit, not a separate visible journal item. See '+ref('src/handoff_field.inc','give(HANDOFF_FLEET)')+'.',
-        '- **Ordinary kinstones** have three colors and three tooth shapes per color. Their nine matched counters belong to the one Kinstone catalogue entry. The four gold halves are separate and are already counted above.',
-        '- Legacy drop codes **0xFC/0xFD/0xFE** add red/blue/green kinstones; **0xFF** spawns a beetle. They are not four more ordinary inventory IDs. Normal shaped drops use their own physical pickup path.',
+        '- **Trading Cards** have their own inventory and inspection screen. The old shaped-half counters and journal IDs remain readable in earlier saves. The four quest-specific gold halves are counted in this journal.',
+        '- Legacy codes **0xFC/0xFD/0xFE** update shaped-half counters. **0xFF** spawns a beetle.',
         '- Bushes, rocks, boulders, pots and liftable enemies are temporary carried world objects, not extra item-catalogue possessions.','',
         '## Implementation details that matter','',
         '1. **Water and Half Milk are usable but can remain undiscovered as separate legacy entries.** Filling a vessel and drinking the first milk half directly update `bottles[]`; those assignments do not call the item/journal grant path. Their usable contents exist even if their duplicate arcade entry remains unknown.',
-        '2. **Bottle charms activate on drinking.** Nayru/Farore/Din awards first occupy an empty vessel. Picolytes also activate on drinking and last1,800 active update ticks, about30seconds at60updates/second. Current biases: red→hearts; orange→hearts/gilt; yellow→gilt; green→all bias categories; blue→kinstones; white→rare rewards.',
+        '2. **Bottle charms activate on drinking.** Nayru, Farore and Din awards first occupy an empty vessel. Picolytes last 1,800 active update ticks, about 30 seconds at 60 updates per second. Red favors hearts, orange favors hearts and gilt, yellow favors gilt, blue favors trading cards, green boosts all categories, and white favors rare rewards.',
         '3. **The original and legacy ammunition paths use different caps.** Legacy grants respect upgraded bags/quivers (seeds30/50/70/99; arrows50/65/80/99). Original loose pickups, original frog purchases and some original chest paths still clamp seeds to30 or arrows to50. A refill can therefore reduce an upgraded stock above those original caps. The report describes each path rather than claiming all refill sources use upgrades.',
         '4. **Enduring Blade is a blessing-path sword record.** Its current eligible award sets the any-health beam blessing and returns before the ordinary sword-level assignment; Red/Blue affect charged spin strength, not base normal-cut damage.',
         '5. **Long Spin eligibility differs from its text.** The metadata says Great Spin; the live reward predicate checks Spin Attack. Once learned it doubles spin duration34→68ticks.',
@@ -373,7 +375,6 @@ def write_markdown(entries, hidden, summary):
     text='\n'.join(lines)
     for old,new in replacements.items():
         text=text.replace(old,new)
-    text=text.replace('Audit date:2026-11-12.', 'Audit date: 2026-11-12.')
     text='\n'.join('| '+' | '.join(c.strip() for c in row.strip('|').split('|'))+' |' if row.startswith('|') else row for row in text.split('\n'))
     (OUT/'PLAYER_ITEM_CATALOG.md').write_text(text)
 

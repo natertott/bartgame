@@ -17,6 +17,8 @@
 #include "legacy_enemies.h"
 #include "handoff_events.h"
 #include "handoff_objects.h"
+#include "trading_cards.h"
+#include "text.h"
 
 static u16 sItemsTile, sFxTile, sProjTile, sLiftTile, sArrowTile, sMouthTile, sPickTile, sIconTile;
 #define ICON_CACHE_SLOTS 7
@@ -135,6 +137,7 @@ int icon32_frame_palette(int frame) {
 void objects_room_reset(void) {
     sItemsTile = sFxTile = sProjTile = sLiftTile = sArrowTile = sMouthTile = sPickTile = sIconTile = 0;
     icon32_menu_end();
+    trading_cards_room_reset();
     ensure_sheets();
 }
 
@@ -240,21 +243,45 @@ static void proj_update(Actor* a) {
 }
 
 /* ----------------------------------------------------------- pickups -- */
-Actor* pickup_spawn(int type, int px, int py) {
-    ensure_sheets();
+static Actor* pickup_body(int type, int px, int py) {
     Actor* a = actor_new(AK_PICKUP, type, px, py);
     if (!a)
         return NULL;
-    actor_set_sheet(a, SHEET_PICK32, sPickTile);
-    static const u8 frames[] = { F_PICK32_HEART, F_PICK32_GILT, F_PICK32_BOMB_PICKUP, F_PICK32_GILT_BIG, F_PICK32_KEY, F_PICK32_RELIC, F_PICK32_GRAIL,
-                                 F_PICK32_ARROW1, F_PICK32_ARROW5, F_PICK32_ARROW10 };
-    a->frame = frames[type];
-    a->pal = pick32_frame_pal[a->frame];
     a->hitbox = HB_SMALL;
-    a->timer = 0;
     a->z = Q16(8);
     a->zvel = Q16(1.0);
     a->prio = 2;
+    return a;
+}
+
+Actor* pickup_spawn(int type, int px, int py) {
+    static const u8 frames[] = { F_PICK32_HEART, F_PICK32_GILT, F_PICK32_BOMB_PICKUP, F_PICK32_GILT_BIG, F_PICK32_KEY, F_PICK32_RELIC, F_PICK32_GRAIL,
+                                 F_PICK32_ARROW1, F_PICK32_ARROW5, F_PICK32_ARROW10 };
+    if ((unsigned)type >= sizeof(frames))
+        return NULL;
+    ensure_sheets();
+    Actor* a = pickup_body(type, px, py);
+    if (!a)
+        return NULL;
+    actor_set_sheet(a, SHEET_PICK32, sPickTile);
+    a->frame = frames[type];
+    a->pal = pick32_frame_pal[a->frame];
+    return a;
+}
+
+Actor* pickup_spawn_trading_card(int card, int px, int py) {
+    if ((unsigned)card >= CARD_COUNT)
+        return NULL;
+    u16 tile = trading_cards_world_tile();
+    if (!tile)
+        return NULL;
+    Actor* a = pickup_body(PK_TRADING_CARD, px, py);
+    if (!a)
+        return NULL;
+    actor_set_sheet(a, SHEET_TRADING_CARD, tile);
+    a->frame = F_TRADING_CARD_COMMON + gTradingCards[card].rarity;
+    a->pal = PAL_OBJ_PORTRAIT;
+    a->v[3] = card;
     return a;
 }
 
@@ -306,6 +333,9 @@ static void pickup_update(Actor* a) {
             case PK_ARROW1: gPl.arrows += 1; sfx_play(SFX_PICKUP); break;
             case PK_ARROW5: gPl.arrows += 5; sfx_play(SFX_PICKUP); break;
             case PK_ARROW10: gPl.arrows += 10; sfx_play(SFX_PICKUP); break;
+            case PK_TRADING_CARD:
+                if (trading_card_grant(a->v[3])) sfx_play(SFX_PICKUP);
+                break;
         }
         if (gPl.arrows > 50)
             gPl.arrows = 50;
@@ -333,7 +363,6 @@ void drop_roll(int px, int py, u32 roll) {
     /* Food/picolyte bonuses add to the selected drop; unbuffed drops retain
        their original exact roll and allocation order. */
     if(handoff_drop_bias(0)&&((roll>>4)&3)==0)pickup_spawn(PK_GILT,px-5,py);
-    if(handoff_drop_bias(1)&&((roll>>6)&3)==0)handoff_kinstone_drop((roll>>12)%3,(roll>>15)%3,px+5,py);
     if(handoff_drop_bias(2)&&((roll>>8)&3)==0)pickup_spawn(PK_HEART,px,py+5);
     if(handoff_drop_bias(3)&&((roll>>10)&15)==0)pickup_spawn(PK_GILT_BIG,px,py-5);
 }
@@ -663,6 +692,7 @@ void objects_draw_hand(bool8 behind) {
 
 void objects_draw(void) {
     int i;
+    bool8 card_palette_loaded = FALSE;
     for (i = 1; i < ACTOR_MAX; i++) {
         Actor* a = &gActors[i];
         /* Reject unrelated pool entries before the release-overlap test;
@@ -672,6 +702,14 @@ void objects_draw(void) {
             continue;
         if(a->kind==AK_PROJ && legacy_projectile_draw(a)) continue;
         if(legacy_items_actor_owned(a)){legacy_items_actor_draw(a);continue;}
+        if (a->kind == AK_PICKUP && a->type == PK_TRADING_CARD) {
+            if (textbox_active())
+                continue;
+            if (!card_palette_loaded) {
+                trading_cards_world_palette();
+                card_palette_loaded = TRUE;
+            }
+        }
         if(a->kind==AK_OBJECT && a->type==OBJ_IMPACT_BOMB) {bomb_throw_draw(a);continue;}
         if (player_release_overlap(a))
             continue;
@@ -698,4 +736,5 @@ void objects_draw(void) {
                 journal_note_pickup(a->type);
         }
     }
+    trading_cards_draw_notice();
 }

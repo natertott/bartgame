@@ -2211,3 +2211,43 @@ input drove the wall movement, sword attack and fall recovery. A second run at
 seed `1432` passed all 30 checks through a four-room descent. Both runs used
 `tools/cream_runtime_review.py` with ROM SHA-256
 `acdd10427411f9394d682d60c24ca3318bddcc34d2f1473d8e383b0ef275f06c`.
+
+## 2026-11-24 — Trading card illustrations and portraits
+
+**Adopted for the card collection and trader interface.** The user's trading
+request establishes a field card with a consistent silhouette and four rarity
+colors. A green, cyan-blue, indigo-blue, or gold rim identifies the rarity.
+The 8×8 glyph shares its card outline and pale mark across all four variants.
+The album images repeat the rim color on clipped paper corners. Nearby
+traders show an animated thought cloud with that same card glyph.
+
+The trade screen pairs a 48×64 Bloom portrait on the left with a 48×64 trader
+portrait on the right. Both face the wanted card and selectable offer in the
+center. The binder presents the collection and opens larger card art on
+inspection. The panels use native tile maps with the selected game UI skin.
+The four trader portraits carry their world identities through the Peddler's
+eyes and apron, the Moss Archivist's ledger, the Brook Locksmith's key, and
+the Rind Collector's curdstone specimen.
+
+The original BARTGAME art in `reboot_actors.py`, `sewer_concepts_npcs.py`,
+`hud_gilt_items.py`, `forest_trees_terrain.py`, `enemy_studies_small.py`,
+`enemy_studies_heavy.py`, `enemy_heart.py`, `cream_actors.py`, and
+`handoff_items.py` supplied the subjects' silhouette and material cues.
+`art/trading_card_assets.py` and
+`art/trading_card_portraits.py` author the new images in indexed RGB555 banks.
+Sixteen 48×48 vignettes and their 24×24 native thumbnails share per-subject
+banks. The smaller paths are rasterized at their final size. The field bubble
+uses the existing FX bank, while the card glyph uses the portrait slot when
+no dialogue needs that slot. `tools/build_assets.py` packs the illustrations
+and portraits as 4bpp tiles alongside the existing art.
+
+The source review checked every full illustration, thumbnail, portrait, and
+ground rarity at native size. The small card needs its saturated rim to carry
+the rarity against field terrain. The 1× atlas was a source assembly.
+
+Actual mGBA frames show the Peddler's animated thought bubble, all four trades,
+and one illustrated inspection at each rarity. The trade frames show both
+portraits facing toward the offer. `tools/trading_cards_native.py` passed
+65 checks on seed `0xB4A7` using disclosed navigation and roll fixtures.
+The reviewed ROM SHA-256 is
+`53f58dbff612c4e1a49c9391e7deb915962aac238cdf4a25268158e4776a3773`.

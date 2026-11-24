@@ -102,14 +102,14 @@ to climb in four directions, and use the equipped sword button to swing. A
 hit makes Bloom lose his grip. Three trial rewards open the rest of the route.
 The boss occupies a random top-row peak. Its original native terrain and actors
 append to the existing art pack. Restored events, seven rotating quest forms,
-certified puzzle boards, fusers, physical mechanisms and useful crossings now belong to
+certified puzzle boards, card traders, physical mechanisms and useful crossings now belong to
 the generated regions and their cave, hollow and thicket interiors. The old
 invented Annex selection hub is absent from normal exploration; its scene IDs
 remain internal for save compatibility. Select from the existing pause screen
 opens the expanded Satchel; R resolves the current region's atlas.
 
 New runs offer three rounds of starting gifts. Physical Drain services supply
-rolled wares, three priced rests, a fusion-location broker, route hints and
+rolled wares, three priced rests, a card and seal broker, route hints and
 Trophy preferences. Both regions host escalating waves and once-only initial
 rewards. Four live regional objectives provide an additional Earth Element win
 route, with the final seal requiring three actual Forest or Cream trials.
@@ -135,6 +135,25 @@ Death saves a resumable run to SRAM; victory retires the completed run, so the
 next play starts a new seed. Extended gear, both regional maps and preferences
 use a separate checksummed save extension, retaining the earlier save format.
 
+## Trading Cards
+
+Collect 16 illustrated cards showing BARTGAME's characters, equipment,
+creatures, and places. Enemies drop them at random, and chests, quests, and
+events can award cards. Common cards are green, uncommon cards are bright
+blue, rare cards are deep blue, and ultra-rare cards are gold. Regional waves
+offer repeat chances to find a particular card.
+
+A thought bubble appears above an available trader as Bloom approaches.
+Press **Select** nearby to see their request, browse your collection, and
+offer a card with **A**. A match spends one copy. Trades can award equipment,
+open a cache or pocket door, or release the Golden Rope. Defeating it earns
+200 gilt and a Heart Piece. Some traders wait for more kills, a return visit,
+or a quiet moment.
+
+From **Start**, open **Key Items** and choose **Cards** to browse your holdings.
+Press **A** to inspect a card's illustration and description. Card counts
+and completed trades are saved with the current run.
+
 ## Controls
 
 | Button | Action |
@@ -145,6 +164,7 @@ use a separate checksummed save extension, retaining the earlier save format.
 | L | Use/hold assigned item. Initially the Bark Shield; guarding fixes facing and slows walking. |
 | R | Roll while walking; lift while standing; throw a carried object. |
 | Start | Open/close the item, key-item and map pages. |
+| Select near a trader | Open a trade when a thought bubble appears. |
 | Select in pause | Open the expanded Satchel; A/B/L assign, R opens its atlas, Select returns to the original pause. |
 
 Assign items to A/B/L in the pause menu. The sword cuts bushes, gathers nearby
@@ -225,6 +245,7 @@ python3 tools/wood_probe.py                # bow, gathering, reflection, hub ret
 python3 tools/lift_probe.py                # lift/throw and inventory controls
 python3 tools/mandatory_trials.py               # earned mandatory rewards
 python3 tools/cream_runtime_review.py --help     # Cream trials and summit route
+python3 tools/trading_cards_native.py --help    # card sources, trades, golden encounter and save
 python3 tools/art_reboot_review.py --help   # actual screens, actions and interactions
 ```
 
