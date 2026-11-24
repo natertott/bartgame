@@ -1,5 +1,13 @@
 # BARTGAME downloads
 
+## Trading Cards and Curdled Cream wall climbing
+
+[Download the playable GBA ROM](https://raw.githubusercontent.com/natertott/bartgame/cream-art-studies/downloads/trading-cards-0a51e2ea/bartgame-trading-cards.gba).
+This standalone build comes from `0a51e2ea` and passed 65 Trading Card checks
+and 75 Curdled Cream regression checks in mGBA 0.10.5.
+
+SHA-256 `53f58dbff612c4e1a49c9391e7deb915962aac238cdf4a25268158e4776a3773`
+
 ## Five Cream polish builds
 
 [Gallery, 15 ladder options and individual ROMs](../cream-polish-review/README.md)
