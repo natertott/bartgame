@@ -53,13 +53,13 @@ static PickupSlot sPickups[ACTOR_MAX] EWRAM_BSS;
 static u8 sPickupCount;
 static u16 sToolTile,sMiniTile;
 static struct {
-    u16 status[LPS_COUNT],gust_charge,sword_charge;
+    u16 status[LPS_COUNT],gust_charge,sword_charge,sword_charge_key;
     s16 before_x,before_y,ice_x,ice_y;
     s32 before_fx,before_fy;
     s16 clone_x[3],clone_y[3];
     u8 minish,spin,spin_age,spin_face,beam_latch,boots_charge,dash,clone_mode;
     u8 capture_index,capture_kind,capture_type,clones,split_pads,split_ready;
-    u8 dive,sink,gust_load,jar_held,old_floor,stamina;
+    u8 dive,sink,gust_load,jar_held,old_floor,stamina,roll_sword_until;
 } s EWRAM_BSS;
 
 static const u8 sEqItem[EQ_TOTAL]={
@@ -420,8 +420,17 @@ bool8 legacy_clone_position(int index,int* x,int* y) {
     *x=s.clone_x[index];*y=s.clone_y[index];return TRUE;
 }
 void legacy_player_on_hurt(void) {
-    s.sword_charge=s.boots_charge=s.gust_charge=0;s.dash=s.spin=s.clones=s.clone_mode=0;
+    s.sword_charge=s.sword_charge_key=s.boots_charge=s.gust_charge=0;
+    s.dash=s.spin=s.clones=s.clone_mode=s.roll_sword_until=0;
     bomb_charge_cancel();
+}
+bool8 legacy_player_try_roll_sword(void) {
+    if(!(gLegacyInventory.skills&SKILL_ROLL))return FALSE;
+    if(gPlayer->timer>=s.roll_sword_until) {
+        s.roll_sword_until=gPlayer->timer+12;
+        sfx_play(SFX_SWORD);
+    }
+    return TRUE;
 }
 int legacy_player_incoming_damage(int damage) {
     int i;
@@ -543,14 +552,16 @@ static void clone_combat(void) {
         Actor body=*gPlayer;body.x=Q16(s.clone_x[ci]);body.y=Q16(s.clone_y[ci]);
         if(sword) {
             handoff_tool_box(LE_HIT_SWORD,x0+dx,y0+dy,x1+dx,y1+dy);
-            react_cut_box(x0+dx,y0+dy,x1+dx,y1+dy);
+            react_cut_sword(dx,dy);
         }
         for(ei=1;ei<ACTOR_MAX;ei++) {
             Actor* e=&gActors[ei];if(e->kind!=AK_ENEMY)continue;
-            if((e->flags&AF_HURTS)&&actors_overlap(e,&body)) {s.clones=s.clone_mode=0;return;}
+            if((e->flags&AF_HURTS)&&actors_combat_overlap(e,&body,COMBAT_CONTACT_DEPTH)) {s.clones=s.clone_mode=0;return;}
             if(!sword||e->iframes)continue;
-            if(legacy_enemy_hit_parts(e,x0+dx,y0+dy,x1+dx,y1+dy,LE_HIT_SWORD,damage,facing_to_dir(gPlayer->facing)))continue;
-            if((e->flags&AF_HITTABLE)&&actor_box_overlap(e,x0+dx,y0+dy,x1+dx,y1+dy))legacy_item_hit(e,LE_HIT_SWORD,damage,actor_dir_to(&body,e),handoff_sword_knockback(Q8(1.5)));
+            int from=actor_dir_to(&body,e);
+            if(legacy_enemy_sword_parts(e,&body,damage,from))continue;
+            if((e->flags&AF_HITTABLE)&&player_sword_hits_actor_from(&body,e))
+                legacy_item_hit(e,LE_HIT_SWORD,damage,from,handoff_sword_knockback(Q8(1.5)));
         }
     }
 }
@@ -578,7 +589,8 @@ bool8 legacy_items_pre_player(void) {
     s.before_x=PX(a->x);s.before_y=PX(a->y);s.before_fx=a->x;s.before_fy=a->y;
     for(i=0;i<LPS_COUNT;i++)if(s.status[i])s.status[i]--;
     if(handoff_mobility_busy()) {
-        s.dash=s.spin=s.clones=s.clone_mode=s.dive=s.jar_held=0;s.sword_charge=s.gust_charge=s.boots_charge=0;
+        s.dash=s.spin=s.clones=s.clone_mode=s.dive=s.jar_held=s.roll_sword_until=0;
+        s.sword_charge=s.sword_charge_key=s.gust_charge=s.boots_charge=0;
         bomb_charge_cancel();return FALSE;
     }
     if(a->state==PS_DEAD||a->state==PS_FALL||a->state==PS_TALK||a->state==PS_ITEMGET||a->state==PS_SWALLOWED||a->state==PS_CLIMB)return FALSE;
@@ -657,6 +669,7 @@ bool8 legacy_items_pre_player(void) {
 void legacy_items_post_player(void) {
     if(handoff_mobility_busy())return;
     Actor* a=gPlayer;int px=PX(a->x),py=PX(a->y)-1,surface=legacy_surface_at(px,py);
+    if(a->state!=PS_ROLL||a->timer>s.roll_sword_until)s.roll_sword_until=0;
     if(a->state==PS_DEAD||a->state==PS_FALL||a->state==PS_CLIMB)return;
     if(a->state==PS_NORMAL&&!a->z) {
         int type=room_type_px(px,py);
@@ -692,7 +705,7 @@ void legacy_items_post_player(void) {
     if((gLegacyInventory.skills&SKILL_DOWN)&&(sword_keys()&gKeysHeld)&&a->state==PS_JUMP&&a->zvel<0&&PX(a->z)<=16) {
         affect_box(px-10,py-12,px+10,py+4,LE_HIT_SWORD,handoff_outgoing_damage(gLegacyInventory.sword_level>=3?6:4),Q8(1));
     }
-    if((gLegacyInventory.skills&SKILL_ROLL)&&a->state==PS_ROLL&&a->timer>=4&&a->timer<16) {
+    if(s.roll_sword_until) {
         int x,y;front_center(14,&x,&y);
         int along=a->facing==FACE_N||a->facing==FACE_S;
         affect_box(x-(along?4:8),y-(along?8:4),x+(along?4:8),y+(along?8:4),LE_HIT_SWORD,handoff_outgoing_damage(gLegacyInventory.sword_level>=4?6:4),Q8(1.5));
@@ -700,38 +713,62 @@ void legacy_items_post_player(void) {
     split_update(surface);clone_combat();
 }
 
+static void sword_charge_update(void) {
+    Actor* a=gPlayer;
+    if(!(gLegacyInventory.skills&(SKILL_SPIN|SKILL_FOUR))||s.spin||s.dash||s.dive||
+       s.status[LPS_SILENCE]||s.status[LPS_FREEZE]||s.status[LPS_SHOCK]||
+       s.status[LPS_CAPTURE]||s.status[LPS_BURN]||a->z||
+       (a->state!=PS_ATTACK&&a->state!=PS_NORMAL)) {
+        s.sword_charge=s.sword_charge_key=0;
+        return;
+    }
+
+    u16 keys=sword_keys();
+    if(a->state==PS_ATTACK) {
+        if(!a->timer) {
+            u16 held=gKeysHeld&keys;
+            s.sword_charge=0;
+            s.sword_charge_key=held&-held;
+        }
+        if(!(gKeysHeld&s.sword_charge_key))s.sword_charge_key=0;
+        return;
+    }
+
+    if(!(s.sword_charge_key&keys)) {
+        s.sword_charge=s.sword_charge_key=0;
+        return;
+    }
+    if(gKeysHeld&s.sword_charge_key) {
+        if(s.sword_charge<240)s.sword_charge++;
+        return;
+    }
+
+    int need=gLegacyInventory.skills&SKILL_FAST_SPIN?40:80;
+    if(s.clones&&!s.clone_mode)s.clone_mode=1;
+    else if(s.sword_charge>=need&&(gLegacyInventory.skills&SKILL_SPIN)) {
+        s.spin=gLegacyInventory.skills&SKILL_LONG_SPIN?68:34;s.spin_age=0;s.spin_face=a->facing;
+        gPl.sword_active=0;sfx_play(SFX_SWORD);
+    }
+    s.sword_charge=s.sword_charge_key=0;
+}
+
 void legacy_items_update(void) {
     if(handoff_mobility_busy())return;
     Actor* a=gPlayer;int i,px=PX(a->x),py=PX(a->y),surface=legacy_surface_at(px,py-1);
-    u16 sk=sword_keys(),held=sk&gKeysHeld;
-    /* Preserve the selected step-and-cut's ordinary timing and hitbox.
-       Charge begins during recovery, and only the new release spin takes
-       movement ownership; a tap always remains the existing swing. */
-    if((gLegacyInventory.skills&(SKILL_SPIN|SKILL_FOUR))&&!s.spin&&!s.status[LPS_SILENCE]&&(a->state==PS_NORMAL||a->state==PS_ATTACK)) {
-        if(held) {if(s.sword_charge<240)s.sword_charge++;}
-        else if(s.sword_charge) {
-            int need=gLegacyInventory.skills&SKILL_FAST_SPIN?40:80;
-            if(s.clones&&!s.clone_mode)s.clone_mode=1;
-            else if(s.sword_charge>=need&&(gLegacyInventory.skills&SKILL_SPIN)) {
-                s.spin=gLegacyInventory.skills&SKILL_LONG_SPIN?68:34;s.spin_age=0;s.spin_face=a->facing;
-                a->state=PS_NORMAL;gPl.sword_active=0;sfx_play(SFX_SWORD);
-            }
-            s.sword_charge=0;
-        }
-    }else if(!held)s.sword_charge=0;
+    /* Held input owns a charge only once its ordinary cut completes. */
+    sword_charge_update();
     if(gPl.sword_active&&!s.beam_latch) {
         bool8 full=gPl.hp==gPl.hp_max||handoff_beam_any_health();
         bool8 peril=(gLegacyInventory.skills&SKILL_PERIL)&&gPl.hp<=8;
         if(((gLegacyInventory.skills&SKILL_BEAM)&&full)||peril)projectile(LP_BEAM,handoff_outgoing_damage(2));
         s.beam_latch=1;
-        if(gLegacyInventory.skills&SKILL_ROCK) {
-            int x0,y0,x1,y1,tx,ty;
-            if(player_sword_box(&x0,&y0,&x1,&y1))for(ty=y0>>4;ty<=y1>>4;ty++)for(tx=x0>>4;tx<=x1>>4;tx++) {
-                int type=room_type(tx,ty);
-                if(type==TT_LIFT1)room_break_lift(tx,ty);
-            }
-            int x,y;front_center(16,&x,&y);if(legacy_surface_at(x,y)==LS_DASH_WALL)clear_surface(x>>4,y>>4);
-        }
+    }
+    if(gPl.sword_active&&(gLegacyInventory.skills&SKILL_ROCK)) {
+        int x,y;
+        front_center(16,&x,&y);
+        int tx=x>>4,ty=y>>4;
+        if(legacy_surface_at(x,y)==LS_DASH_WALL && player_sword_hits_box(tx*16,ty*16,tx*16+15,ty*16+15))
+            clear_surface(tx,ty);
     }
     if(a->state!=PS_ATTACK&&!gPl.sword_active)s.beam_latch=0;
     if(gPl.lamp_timer) {
@@ -798,7 +835,7 @@ bool8 legacy_player_draw_override(void) {
 void legacy_items_draw(void) {
     Actor* a=gPlayer;int px=PX(a->x),py=PX(a->y)-PX(a->z),i;
     if(a->state==PS_DEAD)return;
-    if((gLegacyInventory.skills&SKILL_ROLL)&&a->state==PS_ROLL&&a->timer>=4&&a->timer<16) {
+    if(a->state==PS_ROLL&&s.roll_sword_until) {
         int x,y;front_center(14,&x,&y);draw_tool_frame(20+a->facing,x,y,1);
     }
     if(s.spin) {

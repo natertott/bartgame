@@ -201,16 +201,9 @@ static void proj_update(Actor* a) {
         return;
     }
     if (!a->v[0]) {
-        if (actors_overlap(a, gPlayer) && player_is_vulnerable()) {
-            player_hurt(a->damage, a->dir);
-            actor_free(a);
-            return;
-        }
-        /* the sword turns seeds and spores back the way the hero faces,
-           his now; a shard it only breaks */
-        int x0, y0, x1, y1;
-        if (player_sword_box(&x0, &y0, &x1, &y1) && actor_box_overlap(a, x0, y0, x1, y1)) {
-            fx_spawn(FX_CLANG, px, py);
+        /* The leading blade can intercept a shot on the frame it reaches Bloom. */
+        if (player_sword_hits_actor(a)) {
+            fx_spawn(FX_CLANG, px, py - PX(a->z));
             sfx_play(SFX_BUMP);
             if (a->type == PJ_SHARD) {
                 actor_free(a);
@@ -220,20 +213,24 @@ static void proj_update(Actor* a) {
             a->speed = Q8(3.0);
             a->v[0] = 1;
             a->timer = 0;
+        } else if (actors_combat_overlap(a, gPlayer, COMBAT_CONTACT_DEPTH) && player_is_vulnerable()) {
+            player_hurt(a->damage, a->dir);
+            actor_free(a);
         }
     } else {
         /* the hero's: it hurts the first monster it meets */
-        int i;
+        int i, x0, y0, x1, y1;
+        int kind = a->type == PJ_ARROW ? LE_HIT_ARROW : LE_HIT_REFLECTED;
+        actor_hurtbox(a, &x0, &y0, &x1, &y1);
         for (i = 1; i < ACTOR_MAX; i++) {
             Actor* e = &gActors[i];
             if (e->kind != AK_ENEMY || e->iframes)
                 continue;
-            const Hitbox* hb=&gHitboxes[a->hitbox];
-            int cx=PX(a->x)+hb->ox,cy=PX(a->y)+hb->oy;
-            bool8 parts=legacy_enemy_owns(e->type)&&legacy_enemy_hit_parts(e,cx-hb->hw,cy-hb->hh,cx+hb->hw-1,cy+hb->hh-1,a->type==PJ_ARROW?LE_HIT_ARROW:LE_HIT_REFLECTED,a->damage,a->dir);
-            if (parts || ((e->flags&AF_HITTABLE)&&actors_overlap(a, e))) {
+            bool8 parts = legacy_enemy_owns(e->type) && actor_combat_layer(a, e) &&
+                legacy_enemy_hit_parts(e, x0, y0, x1, y1, kind, a->damage, a->dir);
+            if (parts || ((e->flags & AF_HITTABLE) && actors_combat_overlap(a, e, COMBAT_CONTACT_DEPTH))) {
                 if(!parts)
-                legacy_item_hit(e,a->type==PJ_ARROW?LE_HIT_ARROW:LE_HIT_REFLECTED,a->damage,a->dir,Q8(1.5));
+                    legacy_item_hit(e, kind, a->damage, a->dir, Q8(1.5));
                 fx_spawn(FX_SPARK, px, py);
                 actor_free(a);
                 return;
@@ -305,9 +302,7 @@ static void pickup_update(Actor* a) {
         }
     }
     /* the hero gathers it by touch, or with a sword swing that reaches it */
-    int sx0, sy0, sx1, sy1;
-    bool8 reached = actors_overlap(a, gPlayer) ||
-                    (player_sword_box(&sx0, &sy0, &sx1, &sy1) && actor_box_overlap(a, sx0, sy0, sx1, sy1));
+    bool8 reached = actors_overlap(a, gPlayer) || player_sword_hits_actor(a);
     if (a->timer > 6 && reached) {
         journal_note_pickup(a->type);
         switch (a->type) {
@@ -534,7 +529,7 @@ static void thrown_break(Actor* a) {
 }
 
 static void thrown_update(Actor* a) {
-    int i;
+    int i, x0, y0, x1, y1;
     actor_move_free(a, a->speed, a->dir);
     a->z += a->zvel;
     a->zvel -= Q16(0.125);
@@ -548,16 +543,16 @@ static void thrown_update(Actor* a) {
         thrown_break(a);
         return;
     }
+    actor_hurtbox(a, &x0, &y0, &x1, &y1);
     for (i = 1; i < ACTOR_MAX; i++) {
         Actor* e = &gActors[i];
         if (e->kind != AK_ENEMY || e->iframes)
             continue;
-        const Hitbox* hb=&gHitboxes[a->hitbox];
-        int cx=PX(a->x)+hb->ox,cy=PX(a->y)+hb->oy;
-        bool8 parts=legacy_enemy_owns(e->type)&&legacy_enemy_hit_parts(e,cx-hb->hw,cy-hb->hh,cx+hb->hw-1,cy+hb->hh-1,LE_HIT_THROWN,a->damage,a->dir);
-        if (parts || ((e->flags&AF_HITTABLE)&&actors_overlap(a, e))) {
+        bool8 parts = legacy_enemy_owns(e->type) && actor_combat_layer(a, e) &&
+            legacy_enemy_hit_parts(e, x0, y0, x1, y1, LE_HIT_THROWN, a->damage, a->dir);
+        if (parts || ((e->flags & AF_HITTABLE) && actors_combat_overlap(a, e, COMBAT_CONTACT_DEPTH))) {
             if(!parts)
-            legacy_item_hit(e,LE_HIT_THROWN,a->damage,a->dir,Q8(1.5));
+                legacy_item_hit(e, LE_HIT_THROWN, a->damage, a->dir, Q8(1.5));
             thrown_break(a);
             return;
         }

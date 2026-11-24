@@ -82,12 +82,7 @@ void items_update(void) {
             }
         }
     }
-    /* the sword cuts thorns */
-    {
-        int x0, y0, x1, y1;
-        if (player_sword_box(&x0, &y0, &x1, &y1))
-            react_cut_box(x0, y0, x1, y1);
-    }
+    react_cut_sword(0, 0);
     /* keys in doors: walking into a locked door */
     if (a->state == PS_NORMAL && a->coll) {
         int px = PX(a->x), py = PX(a->y) - 6;

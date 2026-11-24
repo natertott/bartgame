@@ -9,6 +9,7 @@ bool8 room_door_unlock(int tx, int ty);
 void room_torch_light(int tx, int ty);
 void room_thorn_cut(int tx, int ty);
 void react_cut_box(int x0, int y0, int x1, int y1);
+void react_cut_sword(int dx, int dy);
 void react_burn_box(int x0, int y0, int x1, int y1);
 /* Invalidated by every room mutation and full render, including previews. */
 extern u8 gRoomTorchesDirty;

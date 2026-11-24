@@ -32,7 +32,7 @@
       "duplicate_of": "",
       "metadata_description": "A hopeful little blade. Deals 2 HP per hit. Cuts bushes and bats seeds back.",
       "source_ref": "[src/journal.c](../../src/journal.c#L54)",
-      "acquisition_ref": "[src/player.c](../../src/player.c#L92)",
+      "acquisition_ref": "[src/player.c](../../src/player.c#L96)",
       "visible_ordinal": 1
     },
     {
@@ -48,7 +48,7 @@
       "duplicate_of": "",
       "metadata_description": "Hold it toward a threat. Blocks frontal bites and seeds. Your back stays exposed.",
       "source_ref": "[src/journal.c](../../src/journal.c#L55)",
-      "acquisition_ref": "[src/player.c](../../src/player.c#L92)",
+      "acquisition_ref": "[src/player.c](../../src/player.c#L96)",
       "visible_ordinal": 2
     },
     {
@@ -160,7 +160,7 @@
       "duplicate_of": "",
       "metadata_description": "Equip and use it to return to the Drain. The way home waits beneath your feet.",
       "source_ref": "[src/journal.c](../../src/journal.c#L62)",
-      "acquisition_ref": "[src/player.c](../../src/player.c#L103)",
+      "acquisition_ref": "[src/player.c](../../src/player.c#L107)",
       "visible_ordinal": 9
     },
     {
@@ -208,7 +208,7 @@
       "duplicate_of": "",
       "metadata_description": "A precious thing from another chamber. Return it to the Weeping Nun.",
       "source_ref": "[src/journal.c](../../src/journal.c#L65)",
-      "acquisition_ref": "[src/objects.c](../../src/objects.c#L326)",
+      "acquisition_ref": "[src/objects.c](../../src/objects.c#L321)",
       "visible_ordinal": 12
     },
     {
@@ -272,7 +272,7 @@
       "duplicate_of": "",
       "metadata_description": "A loose heart restores 8 HP: one whole player heart. Gather it by touch or sword.",
       "source_ref": "[src/journal.c](../../src/journal.c#L69)",
-      "acquisition_ref": "[src/objects.c](../../src/objects.c#L350)",
+      "acquisition_ref": "[src/objects.c](../../src/objects.c#L345)",
       "visible_ordinal": 16
     },
     {
@@ -288,7 +288,7 @@
       "duplicate_of": "",
       "metadata_description": "A little glimmer worth one gilt. Spend it at the frog's market in the Drain.",
       "source_ref": "[src/journal.c](../../src/journal.c#L70)",
-      "acquisition_ref": "[src/objects.c](../../src/objects.c#L350)",
+      "acquisition_ref": "[src/objects.c](../../src/objects.c#L345)",
       "visible_ordinal": 17
     },
     {
@@ -304,7 +304,7 @@
       "duplicate_of": "",
       "metadata_description": "A dropped purse holds 10 gilt. Larger chest rewards may hold more. Carry up to 999.",
       "source_ref": "[src/journal.c](../../src/journal.c#L71)",
-      "acquisition_ref": "[src/objects.c](../../src/objects.c#L316)",
+      "acquisition_ref": "[src/objects.c](../../src/objects.c#L311)",
       "visible_ordinal": 18
     },
     {
@@ -320,7 +320,7 @@
       "duplicate_of": "",
       "metadata_description": "A dropped refill adds three seeds if you own blightseeds. Carry up to 30.",
       "source_ref": "[src/journal.c](../../src/journal.c#L72)",
-      "acquisition_ref": "[src/objects.c](../../src/objects.c#L317)",
+      "acquisition_ref": "[src/objects.c](../../src/objects.c#L312)",
       "visible_ordinal": 19
     },
     {
@@ -336,7 +336,7 @@
       "duplicate_of": "",
       "metadata_description": "Adds one shot for the Thorn Bow. Walls stop arrows. Carry up to 50 shots.",
       "source_ref": "[src/journal.c](../../src/journal.c#L73)",
-      "acquisition_ref": "[src/objects.c](../../src/objects.c#L333)",
+      "acquisition_ref": "[src/objects.c](../../src/objects.c#L328)",
       "visible_ordinal": 20
     },
     {
@@ -352,7 +352,7 @@
       "duplicate_of": "",
       "metadata_description": "A small tied bundle adds five shots. Ammunition never exceeds 50.",
       "source_ref": "[src/journal.c](../../src/journal.c#L74)",
-      "acquisition_ref": "[src/objects.c](../../src/objects.c#L334)",
+      "acquisition_ref": "[src/objects.c](../../src/objects.c#L329)",
       "visible_ordinal": 21
     },
     {
@@ -384,7 +384,7 @@
       "duplicate_of": "",
       "metadata_description": "The Heart releases this when it falls. Claim the Grail to finish the journey.",
       "source_ref": "[src/journal.c](../../src/journal.c#L76)",
-      "acquisition_ref": "[src/objects.c](../../src/objects.c#L332)",
+      "acquisition_ref": "[src/objects.c](../../src/objects.c#L327)",
       "visible_ordinal": 23
     },
     {
@@ -419,7 +419,7 @@
       "category": "LCAT_WEAPON",
       "pool": [],
       "source_ref": "[src/legacy_items_metadata.inc](../../src/legacy_items_metadata.inc#L4)",
-      "acquisition_ref": "[src/player.c](../../src/player.c#L92)",
+      "acquisition_ref": "[src/player.c](../../src/player.c#L96)",
       "requirement": "LI_NONE",
       "flags": "0",
       "tier": 0,
@@ -749,7 +749,7 @@
       "category": "LCAT_WEAPON",
       "pool": [],
       "source_ref": "[src/legacy_items_metadata.inc](../../src/legacy_items_metadata.inc#L16)",
-      "acquisition_ref": "[src/player.c](../../src/player.c#L92)",
+      "acquisition_ref": "[src/player.c](../../src/player.c#L96)",
       "requirement": "LI_NONE",
       "flags": "0",
       "tier": 0,
@@ -1284,7 +1284,7 @@
       "category": "LCAT_REWARD",
       "pool": [],
       "source_ref": "[src/legacy_items_metadata.inc](../../src/legacy_items_metadata.inc#L38)",
-      "acquisition_ref": "[src/legacy_items.c](../../src/legacy_items.c#L508)",
+      "acquisition_ref": "[src/legacy_items.c](../../src/legacy_items.c#L517)",
       "requirement": "LI_NONE",
       "flags": "LIF_REPEAT|LIF_PASSIVE",
       "tier": 0,
@@ -1362,7 +1362,7 @@
       "category": "LCAT_REWARD",
       "pool": [],
       "source_ref": "[src/legacy_items_metadata.inc](../../src/legacy_items_metadata.inc#L41)",
-      "acquisition_ref": "[src/legacy_items.c](../../src/legacy_items.c#L489)",
+      "acquisition_ref": "[src/legacy_items.c](../../src/legacy_items.c#L498)",
       "requirement": "LI_NONE",
       "flags": "LIF_REPEAT|LIF_PASSIVE",
       "tier": 0,
@@ -2212,12 +2212,12 @@
       "source_id": 72,
       "source_token": "LI_SKILL_SPIN_ATTACK",
       "name": "Spin Attack",
-      "effect": "Hold a sword button to charge, then release a circular slash.",
+      "effect": "Hold the sword button through the swing to charge. Release for a circular slash.",
       "mode": "Learned passive action",
       "acquisition_status": "available",
       "acquisition": "Eligible regional event/quest/cache rewards (pool tier 0). Also eligible extended-market stock.",
       "duplicate_of": "",
-      "metadata_description": "Hold a sword button to charge, then release a circular slash.",
+      "metadata_description": "Hold the sword button through the swing to charge. Release for a circular slash.",
       "equip": "EQ_NONE",
       "category": "LCAT_SKILL",
       "pool": [
@@ -2240,12 +2240,12 @@
       "source_id": 73,
       "source_token": "LI_SKILL_ROLL_ATTACK",
       "name": "Roll Attack",
-      "effect": "A trained roll carries a forward sword thrust into nearby foes.",
+      "effect": "Time a sword press during a roll to thrust forward.",
       "mode": "Learned passive action",
       "acquisition_status": "available",
       "acquisition": "Eligible regional event/quest/cache rewards (pool tier 0). Also eligible extended-market stock.",
       "duplicate_of": "",
-      "metadata_description": "A trained roll carries a forward sword thrust into nearby foes.",
+      "metadata_description": "Time a sword press during a roll to thrust forward.",
       "equip": "EQ_NONE",
       "category": "LCAT_SKILL",
       "pool": [
@@ -2296,12 +2296,12 @@
       "source_id": 75,
       "source_token": "LI_SKILL_ROCK_BREAKER",
       "name": "Rock Breaker",
-      "effect": "Sword cuts now break small stones and pots within the real blade contact box.",
+      "effect": "Your sword can now break small stones and pots it hits.",
       "mode": "Learned passive action",
       "acquisition_status": "available",
       "acquisition": "Eligible regional event/quest/cache rewards (pool tier 0). Also eligible extended-market stock.",
       "duplicate_of": "",
-      "metadata_description": "Sword cuts now break small stones and pots within the real blade contact box.",
+      "metadata_description": "Your sword can now break small stones and pots it hits.",
       "equip": "EQ_NONE",
       "category": "LCAT_SKILL",
       "pool": [
@@ -2806,7 +2806,7 @@
       "category": "LCAT_REWARD",
       "pool": [],
       "source_ref": "[src/legacy_items_metadata.inc](../../src/legacy_items_metadata.inc#L99)",
-      "acquisition_ref": "[src/legacy_enemies.c](../../src/legacy_enemies.c#L1128)",
+      "acquisition_ref": "[src/legacy_enemies.c](../../src/legacy_enemies.c#L1140)",
       "requirement": "LI_NONE",
       "flags": "LIF_REPEAT|LIF_PASSIVE",
       "tier": 0,
@@ -3533,9 +3533,9 @@
     }
   ],
   "source_sha256": {
-    "src/legacy_items.h": "ea21190aaab869abe4377dc20360274570db8f2bd225c974d9c3618924791565",
-    "src/legacy_items.c": "a5c317b912eb57fc3606b1a3cac2ad71f86344445c6f3446934ddeae885897ad",
-    "src/legacy_items_metadata.inc": "66bd01a81ec5d0ada55bd119b04bca1a1d27a5b9ec0caa5a6005ae7f279c322d",
+    "src/legacy_items.h": "e4ddfa5bee35b83ca41f57c5c12ea4168e42f0061cc38a7d9d08dba4b67f0eab",
+    "src/legacy_items.c": "a952939cf60f03af2415631af48f018074da4b64e8da50782af6ab19990a5d44",
+    "src/legacy_items_metadata.inc": "1c7951c9af3b904cf4f6ececb462de15aa169380325d08269255f55f5791043b",
     "src/journal.h": "03dfea1eac85eb0f25d15e2c570952e33cbf2ed5dc67c9e3706e60fedb91c53b",
     "src/journal.c": "828eed29d7a6c1f786082e9d64812941e6773c9ce3c0c7e30d85059a4a8f460c",
     "src/handoff_events.c": "6986b55b3aae4213d70e82f3f39ce2dd2fc51f19500bb3a6f6482810e5ea6c04",
@@ -3543,12 +3543,12 @@
     "src/handoff_objects.c": "feaf4b6d0e23cb6c525aa23b7d2176abfd0831048db62ba501fefb20c1901849",
     "src/handoff_mobility.c": "7827eaffe3f602b4e98a1fb8c780c4aa5ed404f378d5466f08cdc0960db60308",
     "src/cream_runtime.c": "c2615cae5fcab9700eaee530b09655e463d82afd5d4fef0a20a3929227aa716e",
-    "src/objects.c": "9f4e9df2f9bf1a9a38f471d33002b0b0ad4828461cd9f27e8f6ba9935303ff1e",
-    "src/player.c": "b52994d5fe487b0c7bcaef5e2497700ff81a21b7b0472316f9257dc48b1fc68a",
+    "src/objects.c": "1f02ab251bf498c50d4acc7d86e1b79e92b6a0ebb1493e53ed850a4fc26e8898",
+    "src/player.c": "da07e9358d5c25fb0876520b91cba1b872768ea83b41fa05679087a63d2f0544",
     "src/npc.c": "5d15e062aaddfb1c54d40b0971900ee1d97513f93e86f2c35002a1f586b22070",
     "src/game.c": "5aef7431ee3c48c182b8dd88daefe6adc1b7fb5d3bdae283c18f88347156fd3d",
     "src/regional_content.c": "a4e169f8bc6e4c4fdc6a8e1150fca0c1cd50b743c881bdaff9a73d31d986baf2",
-    "src/enemy.c": "f9afb02e4498524c49c8317ab06dd46ea3362a6205de62365c4b86689c15ab6c",
+    "src/enemy.c": "41d63ea243b68f14aed9dc03ddba1f5f17475e3523b6e81e89b7479bdead570f",
     "src/trading_cards.c": "0c6b6fa6d7df1b02937df19ed5d9e4f91c70c44f540f2a8c00730eec3e24c0e5",
     "src/card_traders.c": "e2e4039d96147fc208d4f2d7f966c7b55cb8d1da8beaf8270d0083be324cca5f"
   }

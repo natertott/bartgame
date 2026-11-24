@@ -12,6 +12,7 @@
 #include "myst.h"
 #include "cream_room.h"
 #include "handoff_events.h"
+#include "legacy_items.h"
 #include "text.h"
 
 static u32 sTrialWarningFrame;
@@ -168,15 +169,32 @@ void room_break_lift(int tx, int ty) {
         drop_roll(tx * 16 + 8, ty * 16 + 12, hash32(ty, tx));
 }
 
+static void cut_tile(int tx, int ty, bool8 rock_breaker) {
+    int type = room_type(tx, ty);
+    if (type == TT_THORN)
+        room_thorn_cut(tx, ty);
+    else if (type == TT_LIFT1 && (rock_breaker || room_get(tx, ty) == MT_BUSH))
+        room_break_lift(tx, ty);
+}
+
 void react_cut_box(int x0, int y0, int x1, int y1) {
-    int tx, ty;
-    for (ty = y0 >> 4; ty <= (y1 >> 4); ty++)
-        for (tx = x0 >> 4; tx <= (x1 >> 4); tx++) {
-            if (room_type(tx, ty) == TT_THORN)
-                room_thorn_cut(tx, ty);
-            else if (room_type(tx, ty) == TT_LIFT1 && room_get(tx, ty) == MT_BUSH)
-                room_break_lift(tx, ty);
+    for (int ty = y0 >> 4; ty <= (y1 >> 4); ty++)
+        for (int tx = x0 >> 4; tx <= (x1 >> 4); tx++)
+            cut_tile(tx, ty, FALSE);
+}
+
+void react_cut_sword(int dx, int dy) {
+    int x0, y0, x1, y1;
+    if (!player_sword_box(&x0, &y0, &x1, &y1))
+        return;
+    bool8 rock_breaker = legacy_item_owned(LI_SKILL_ROCK_BREAKER);
+    for (int ty = (y0 + dy) >> 4; ty <= ((y1 + dy) >> 4); ty++) {
+        for (int tx = (x0 + dx) >> 4; tx <= ((x1 + dx) >> 4); tx++) {
+            int x = tx * 16 - dx, y = ty * 16 - dy;
+            if (player_sword_hits_box(x, y, x + 15, y + 15))
+                cut_tile(tx, ty, rock_breaker);
         }
+    }
 }
 
 void react_burn_box(int x0, int y0, int x1, int y1) {

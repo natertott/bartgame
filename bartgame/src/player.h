@@ -73,7 +73,12 @@ extern volatile u16 gForestV3Visibility[12];
 bool8 player_hurt(int damage, int from_dir); /* FALSE when the shield took it */
 void player_heal(int amount);
 void player_item_get(int item_bit, int sprite_frame);
+/* Bounds select nearby candidates. Hit queries test the blade and its sweep. */
 bool8 player_sword_box(int* x0, int* y0, int* x1, int* y1);
+bool8 player_sword_hits_box(int x0, int y0, int x1, int y1);
+bool8 player_sword_hits_box_from(const Actor* source, int x0, int y0, int x1, int y1);
+bool8 player_sword_hits_actor(const Actor* target);
+bool8 player_sword_hits_actor_from(const Actor* source, const Actor* target);
 #if BART_CREAM_VARIANT == 12
 bool8 player_try_wall_attack(int dir);
 #endif

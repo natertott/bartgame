@@ -168,8 +168,8 @@ static int lane(Actor* e,int width,int range) {
     return d;
 }
 static void touch_at(Actor* e,int x,int y,int hw,int hh,int damage,int status) {
-    if(!gPlayer || !player_is_vulnerable() || PX(gPlayer->z)>12) return;
-    if(actor_box_overlap(gPlayer,x-hw,y-hh,x+hw,y+hh) && player_hurt(damage,actor_dir_to(e,gPlayer)))
+    if(!gPlayer || !player_is_vulnerable() || !actor_combat_near(e,gPlayer,COMBAT_CONTACT_DEPTH))return;
+    if(actor_hurtbox_overlap(gPlayer,x-hw,y-hh,x+hw,y+hh) && player_hurt(damage,actor_dir_to(e,gPlayer)))
         if(status>=0) legacy_player_status_apply(status,status==LPS_FREEZE?90:status==LPS_BURN?120:45);
 }
 /* Source bites use the existing charm/food/fairy/death damage pipeline.
@@ -416,15 +416,27 @@ static void jelly_ai(Actor* e,int f) {
     hop_ai(e,16,1,Q16(2));
     if(e->v[0] && e->state!=ST_TELL) pose(e,LP_TELL);
 }
+
+static void knight_strike(Actor* e,int f) {
+    /* The native handoff poses put the spear on the right shoulder and the
+       greatsword through four different lanes. Omit the gripped handles. */
+    static const s8 blade[4][4]={{-1,-32,7,-18},{8,-18,15,-12},{1,-13,6,-2},{-16,-18,-4,-12}};
+    static const s8 spear[4][4]={{5,-32,11,-16},{6,-19,15,-11},{5,-13,11,-1},{-16,-19,-7,-11}};
+    const s8* rect=(f==LF_DARKNUT?blade:spear)[e->facing];
+    if(!player_is_vulnerable() || !actor_combat_near(e,gPlayer,COMBAT_CONTACT_DEPTH))return;
+    int x=PX(e->x),y=PX(e->y)-PX(e->z);
+    if(actor_hurtbox_overlap(gPlayer,x+rect[0],y+rect[1],x+rect[2],y+rect[3]))
+        player_hurt(f==LF_DARKNUT?4:2,facing_to_dir(e->facing));
+}
+
 static void knight_ai(Actor* e,int f) {
     int form=legacy_enemy_def(e->type)->form;
     if(e->state==ST_TELL) {
         pose(e,LP_TELL);
         if(elapsed(e)) begin(e,ST_ATTACK,f==LF_DARKNUT?14:18,LP_ATTACK);
     } else if(e->state==ST_ATTACK) {
-        int d=facing_to_dir(e->facing),reach=f==LF_SPEAR_MOBLIN?23:18;
-        int x=PX(e->x)+((SIN(d*8)*reach)>>14),y=PX(e->y)-7-((COS(d*8)*reach)>>14);
-        pose(e,LP_ATTACK);move(e,f==LF_DARKNUT?96:192,d);touch_at(e,x,y,8,8,f==LF_DARKNUT?4:2,-1);
+        pose(e,LP_ATTACK);move(e,f==LF_DARKNUT?96:192,facing_to_dir(e->facing));
+        knight_strike(e,f);
         if(elapsed(e)) begin(e,ST_RECOVER,form>=2?24:40,LP_RECOVER);
     } else if(e->state==ST_RECOVER) {
         pose(e,LP_RECOVER);if(elapsed(e)) {aim(e);begin(e,ST_ROAM,40,LP_IDLE);}
@@ -1062,7 +1074,7 @@ bool8 legacy_enemy_accept_hit(Actor* e,int kind,int* damage,int from_dir) {
 bool8 legacy_enemy_contact(Actor* e) {
     int f=family(e),ticks=0;
     if(e->v[1] || e->state==ST_CARRY || e->state==ST_CURL) return TRUE;
-    if(PX(gPlayer->z)>12 || e->state==ST_RECOVER || e->state==ST_EXPOSED) return FALSE;
+    if(e->state==ST_RECOVER || e->state==ST_EXPOSED) return FALSE;
     if(f==LF_BEETLE && e->state!=ST_CAPTURE) {
         legacy_player_status_apply(LPS_SLOW,180);e->flags&=~AF_HURTS;begin(e,ST_CAPTURE,180,LP_ATTACK);sfx_play(SFX_BUMP);return TRUE;
     }
@@ -1129,8 +1141,11 @@ void legacy_enemy_on_death(Actor* e) {
     if(e->flags&AF_BOSS) game_legacy_boss_defeated(e->type);
 }
 
-static bool8 box_hits(int x0,int y0,int x1,int y1,int x,int y,int hw,int hh) {
-    return !(x+hw<x0||x-hw>x1||y+hh<y0||y-hh>y1);
+typedef struct {int x0,y0,x1,y1;const Actor* sword_source;} PartStrike;
+
+static bool8 part_overlap(const PartStrike* strike,int x,int y,int hw,int hh) {
+    if(strike->sword_source)return player_sword_hits_box_from(strike->sword_source,x-hw,y-hh,x+hw,y+hh);
+    return !(x+hw<strike->x0||x-hw>strike->x1||y+hh<strike->y0||y-hh>strike->y1);
 }
 static void part_hurt(Actor* e,int damage,int from_dir) {
     if(damage<=0||e->iframes) return;
@@ -1139,7 +1154,7 @@ static void part_hurt(Actor* e,int damage,int from_dir) {
     if(e->hp<=0) enemy_kill(e);
     else {begin(e,ST_RAGE,120,LP_ATTACK);e->dir=(from_dir+8)&31;}
 }
-bool8 legacy_enemy_hit_parts(Actor* e,int x0,int y0,int x1,int y1,int kind,int damage,int from_dir) {
+static bool8 hit_parts(Actor* e,const PartStrike* strike,int kind,int damage,int from_dir) {
     int f=family(e),x,y,r,i,n;
     EnemyTrail* t;
     if(e->iframes||!(e->flags&AF_HITTABLE)) return FALSE;
@@ -1148,7 +1163,7 @@ bool8 legacy_enemy_hit_parts(Actor* e,int x0,int y0,int x1,int y1,int kind,int d
         n=f==LF_MOLDWORM?8:f==LF_MADDERPILLAR?6:4;
         for(i=n;i>0;i--) {
             trail_pos(t,MIN(i*3,TRAIL_LEN-1),&x,&y);y-=7;
-            if(!box_hits(x0,y0,x1,y1,x,y,6,6)) continue;
+            if(!part_overlap(strike,x,y,6,6)) continue;
             if(f==LF_MOLDWORM && i<n) return blocked(e),TRUE;
             if(i==n && actual_damage(kind)) {
                 if(f==LF_MADDERPILLAR && e->state==ST_RAGE) {blocked(e);return TRUE;}
@@ -1160,7 +1175,7 @@ bool8 legacy_enemy_hit_parts(Actor* e,int x0,int y0,int x1,int y1,int kind,int d
     }
     if(f==LF_GLEEROK && e->state!=ST_EXPOSED) {
         gleerok_head(e,&x,&y);
-        if(box_hits(x0,y0,x1,y1,x,y,8,10)) {
+        if(part_overlap(strike,x,y,8,10)) {
             if(kind==LE_HIT_PACCI && front_hit(e,from_dir)) {expose(e,210);sfx_play(SFX_SECRET);}
             else blocked(e);
             return TRUE;
@@ -1168,9 +1183,10 @@ bool8 legacy_enemy_hit_parts(Actor* e,int x0,int y0,int x1,int y1,int kind,int d
     }
     if(f==LF_GLEEROK && e->state==ST_EXPOSED) {
         x=PX(e->x);y=PX(e->y)-24;
-        /* player_sword_box already includes Bloom's displayed z offset. */
-        if(box_hits(x0,y0,x1,y1,x,y,7,8)) {
-            if((kind==LE_HIT_SWORD&&PX(gPlayer->z)>=12)||kind==LE_HIT_ARROW||kind==LE_HIT_BEAM||kind==LE_HIT_BOMB) {
+        /* The back has its own exposed, elevated target. */
+        if(part_overlap(strike,x,y,7,8)) {
+            const Actor* source=strike->sword_source?strike->sword_source:gPlayer;
+            if((kind==LE_HIT_SWORD&&PX(source->z)>=12)||kind==LE_HIT_ARROW||kind==LE_HIT_BEAM||kind==LE_HIT_BOMB) {
                 int hp=e->hp;part_hurt(e,damage,from_dir);
                 if(e->kind==AK_ENEMY) {e->state=ST_EXPOSED;e->timer=MIN(210,e->timer+30);if(hp!=e->hp) pose(e,LP_HURT);}
             } else blocked(e);
@@ -1180,16 +1196,29 @@ bool8 legacy_enemy_hit_parts(Actor* e,int x0,int y0,int x1,int y1,int kind,int d
     if(f==LF_SCISSORS && e->state==ST_ATTACK) {
         int d=facing_to_dir(e->facing);
         x=PX(e->x)+((SIN(d*8)*19)>>14);y=PX(e->y)-7-((COS(d*8)*19)>>14);
-        if(box_hits(x0,y0,x1,y1,x,y,8,6)) {if(kind==LE_HIT_BOOMERANG||kind==LE_HIT_PACCI) {e->v[1]=60;begin(e,ST_RECOVER,90,LP_RECOVER);}else blocked(e);return TRUE;}
+        if(part_overlap(strike,x,y,8,6)) {if(kind==LE_HIT_BOOMERANG||kind==LE_HIT_PACCI) {e->v[1]=60;begin(e,ST_RECOVER,90,LP_RECOVER);}else blocked(e);return TRUE;}
     }
     if(f==LF_BALL_CHAIN||f==LF_UNKNOWN4D) {
         flail_point(e,&x,&y,&r);
-        if(box_hits(x0,y0,x1,y1,x,y,7,7)) {
+        if(part_overlap(strike,x,y,7,7)) {
             if(kind==LE_HIT_BOOMERANG||kind==LE_HIT_PACCI) {e->v[1]=45;begin(e,ST_RECOVER,60,LP_RECOVER);}
             blocked(e);return TRUE;
         }
     }
     return FALSE;
+}
+
+bool8 legacy_enemy_hit_parts(Actor* e,int x0,int y0,int x1,int y1,int kind,int damage,int from_dir) {
+    PartStrike strike={x0,y0,x1,y1,NULL};
+    return hit_parts(e,&strike,kind,damage,from_dir);
+}
+
+bool8 legacy_enemy_sword_parts(Actor* e,const Actor* source,int damage,int from_dir) {
+    if(family(e)==LF_GLEEROK && e->state==ST_EXPOSED) {
+        if(!actor_combat_layer(source,e))return FALSE;
+    } else if(!actor_combat_near(source,e,COMBAT_SWORD_DEPTH))return FALSE;
+    PartStrike strike={.sword_source=source};
+    return hit_parts(e,&strike,LE_HIT_SWORD,damage,from_dir);
 }
 
 void legacy_enemy_extra_draw(Actor* e) {
@@ -1286,7 +1315,7 @@ int legacy_enemy_pick(int tier,u32 roll) {
 }
 
 bool8 legacy_projectile_update(Actor* p) {
-    int type=p->type,px,py,x0,y0,x1,y1,i;
+    int type=p->type,px,py,i;
     if(type<96||type>103) return FALSE;
     if(elapsed(p)) {actor_free(p);return TRUE;}
     if(type==LPR_BOMB) {
@@ -1301,12 +1330,11 @@ bool8 legacy_projectile_update(Actor* p) {
         fx_spawn(FX_SPARK,px,py-6);actor_free(p);return TRUE;
     }
     if(!p->v[0]) {
-        bool8 contact=actors_overlap(p,gPlayer);
-        bool8 blade=player_sword_box(&x0,&y0,&x1,&y1) && actor_box_overlap(p,x0,y0,x1,y1);
+        bool8 contact=actors_combat_overlap(p,gPlayer,COMBAT_CONTACT_DEPTH);
         bool8 shield=contact && gPl.shield_up && front_hit(gPlayer,p->dir);
-        if((type==LPR_STONE||type==LPR_BONE) && (blade||shield)) {
-            p->dir=facing_to_dir(gPlayer->facing);p->speed=768;p->v[0]=1;p->timer=90;p->z=0;
-            fx_spawn(FX_CLANG,px,py-6);sfx_play(SFX_BUMP);return TRUE;
+        if((type==LPR_STONE||type==LPR_BONE) && (shield||player_sword_hits_actor(p))) {
+            p->dir=facing_to_dir(gPlayer->facing);p->speed=768;p->v[0]=1;p->timer=90;
+            fx_spawn(FX_CLANG,px,py-PX(p->z)-6);sfx_play(SFX_BUMP);return TRUE;
         }
         if(shield && type!=LPR_WIND) {fx_spawn(FX_CLANG,px,py-6);actor_free(p);return TRUE;}
         if(contact && player_is_vulnerable()) {
@@ -1321,11 +1349,14 @@ bool8 legacy_projectile_update(Actor* p) {
             actor_free(p);return TRUE;
         }
     } else {
+        int x0,y0,x1,y1;
+        actor_hurtbox(p,&x0,&y0,&x1,&y1);
         for(i=1;i<ACTOR_MAX;i++) {
             Actor* e=&gActors[i];
-            if(e->kind!=AK_ENEMY || !(e->flags&AF_HITTABLE) || e->iframes) continue;
-            if(legacy_enemy_owns(e->type) && legacy_enemy_hit_parts(e,px-4,py-10,px+4,py-2,LE_HIT_REFLECTED,p->damage,p->dir)) {actor_free(p);return TRUE;}
-            if(actors_overlap(p,e)) {legacy_item_hit(e,LE_HIT_REFLECTED,p->damage,p->dir,0);actor_free(p);return TRUE;}
+            if(e->kind!=AK_ENEMY || !(e->flags&AF_HITTABLE) || e->iframes ||
+               !actor_combat_near(p,e,COMBAT_CONTACT_DEPTH))continue;
+            if(legacy_enemy_owns(e->type) && legacy_enemy_hit_parts(e,x0,y0,x1,y1,LE_HIT_REFLECTED,p->damage,p->dir)) {actor_free(p);return TRUE;}
+            if(actor_hurtbox_overlap(e,x0,y0,x1,y1)) {legacy_item_hit(e,LE_HIT_REFLECTED,p->damage,p->dir,0);actor_free(p);return TRUE;}
         }
     }
     return TRUE;

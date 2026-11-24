@@ -15,8 +15,9 @@ Start with the [actual mGBA gallery](../art-review/reboot/README.md),
 Historical `forest-review` galleries describe earlier builds.
 
 Bloom now uses the selected **Step-and-cut** sword swing: whole-body weight
-transfer, a four-update preparation, seven damaging updates and seven recovery
-updates. Body, blade and damage bounds share one clock in every facing.
+transfer and a 15-update sequence with contact from ages 2 through 9. Body,
+blade and directional contact share one clock. See the [combat and controls
+study](docs/COMBAT_MECHANICS.md) for the handoff references and native checks.
 The [five comparison studies](docs/SWORD_STUDIES.md) remain available explicitly.
 
 [The selected interfaces and enemy studies](../art-review/appearance-enemy-studies/README.md)
@@ -238,6 +239,7 @@ symbols. Run `--help` for frozen-ROM/map paths and output options.
 
 ```sh
 python3 tools/art_reboot_probe.py --help    # ownership, hardware and native scale
+python3 tools/combat_contacts_native.py --help  # directional hitboxes, depth, guarding and roll
 python3 tools/sword_study_probe.py --help   # selected sword timing, hardware poses and contacts
 python3 tools/bloom_suite_probe.py --help   # broader actions; --skip-before omits historical trace comparison
 python3 tools/critical_path.py --boss       # required progression through victory

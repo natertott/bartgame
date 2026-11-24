@@ -4,8 +4,8 @@ Real button swings use a disclosed local physical-floor fixture, never gallery
 art. Ordinary debug-spawned beetles retain their native HP; AI/position/flags
 are isolated for one-update inclusive-boundary tests. No HP, damage, enemy-death
 or reward flags are injected. Hardware body/weapon bytes identify the prepared
-snapshot actually uploaded, rather than assuming that current logic is already
-on screen. Source masks define inclusive AABBs, not per-pixel collision.
+snapshot actually uploaded. Current ROMs check source masks with a one-pixel
+contact margin. Archived ROMs check their earlier inclusive rectangles.
 """
 import argparse
 from collections import Counter
@@ -17,6 +17,7 @@ import sys
 import probe as P
 import critical_path as C
 import bloom_probe as B
+import lift_probe as L
 import wood_probe as W
 
 ROOT=Path(__file__).resolve().parent.parent
@@ -52,10 +53,17 @@ class Study:
         self.defs=B.configure(args);self.coverage=json.loads(Path(args.coverage).read_text())
         self.meta=self.coverage['sword_study'];self.variant=self.meta['id']
         self.profile=S.profile(self.variant);self.geom=self.meta['geometry']
+        try:
+            self.mask_at=P.sym('bloom_swing_masks')
+        except KeyError:
+            self.mask_at=None
+            if self.variant==3:
+                self.profile['durations']=[2,2,2,3,2,2,2,3]
         self.phases=self.meta['age_phase'];self.active=self.meta['age_active']
         self.total=len(self.phases);self.checks=[];self.traces=[];self.contacts=[];self.forward_contacts=[]
         self.rom_sha=digest(Path(P.ROM).read_bytes())
-        self.c=B.boot(P.ROM,int(args.seed,0));B.floor_fixture(self.c,self.defs)
+        self.c=P.boot(rom=P.ROM,seed=int(args.seed,0));C.dismiss(self.c)
+        L.warp(self.c,C.world(self.c)['entry'],2);B.floor_fixture(self.c,self.defs)
         self.a=P.sym('gActors');self.pl=P.sym('gPl')
         self.snapshot_at=P.sym('gSwordStudyRender')
         self.sequence_at=P.sym('gSwordStudyRenderSequence')
@@ -138,6 +146,12 @@ class Study:
                            [signed(v,8) for v in B.bytes_at(c,P.sym('bloom_swing_origin')+(facing*8+phase)*2,2)]==origin)
                 self.check(label+' ROM inclusive bounds are source bounds',
                            [signed(v,8) for v in B.bytes_at(c,P.sym('bloom_swing_hit')+(facing*8+phase)*4,4)]==bounds)
+                if self.mask_at is not None:
+                    start=self.mask_at+(facing*8+phase)*128
+                    ink=self.contact_pixels(facing,phase)
+                    packed=[sum(1<<x for x in range(32) if (x,y) in ink) for y in range(32)]
+                    self.check(label+' native contact mask matches the authored cut and its edge margin',
+                               [P.r32(c,start+4*y) for y in range(32)]==packed)
                 if self.profile['active_flags'][phase]:
                     got=[origin[0]+box[0],origin[1]+box[1],origin[0]+box[2]-1,origin[1]+box[3]-1] if box else None
                     self.check(label+' damaging mask exactly defines inclusive bounds',got==bounds)
@@ -173,9 +187,10 @@ class Study:
                                now['fx_frame']==self.meta['fx_frame_base']+facing*8+self.phases[age])
                     if now['active']:
                         box=self.geom['bounds'][facing][now['phase']]
-                        expected=[now['foot_x']+box[0],now['foot_y']-now['z']+box[1],
-                                  now['foot_x']+box[2],now['foot_y']-now['z']+box[3]]
-                        self.check(face+f' age{age} snapshot carries actual world damage box',
+                        margin=int(self.mask_at is not None)
+                        expected=[now['foot_x']+box[0]-margin,now['foot_y']-now['z']+box[1]-margin,
+                                  now['foot_x']+box[2]+margin,now['foot_y']-now['z']+box[3]+margin]
+                        self.check(face+f' age{age} snapshot carries the broad world contact bounds',
                                    [now[k] for k in ('x0','y0','x1','y1')]==expected)
                 hero=B.hero_oam(c);effect=B.effect(c,self.action_tile)
                 body_blob=B.bytes_at(c,0x06010000,512)
@@ -231,24 +246,55 @@ class Study:
             if P.r32(self.c,P.sym('gGame')+8)!=before:return
         raise AssertionError('game did not advance an update')
 
+    def contact_pixels(self,facing,phase):
+        mask=S.damage_mask(self.variant,FACES[facing],phase)
+        ink={(x,y) for y in range(32) for x in range(32) if mask.getpixel((x,y))}
+        return {(x+dx,y+dy) for x,y in ink for dx,dy in ((0,0),(1,0),(-1,0),(0,1),(0,-1))
+                if 0<=x+dx<32 and 0<=y+dy<32}
+
+    def expected_mask_hit(self,facing,phase,target):
+        ox,oy=self.geom['origins'][facing][phase]
+        tx,ty=target
+        return any(tx-5 <= x+ox <= tx+4 and ty-11 <= y+oy <= ty-2
+                   for x,y in self.contact_pixels(facing,phase))
+
     def boundary_contacts(self):
         for facing,face in enumerate(FACES):
+            blank_corner=None
             for phase,active in enumerate(self.profile['active_flags']):
                 if not active:continue
                 age=self.phases.index(phase);bounds=self.geom['bounds'][facing][phase]
+                if self.mask_at is not None:
+                    x0,y0,x1,y1=bounds
+                    candidates=((x,y) for x in (x0-4,x1+5) for y in (y0+2,y1+11))
+                    if blank_corner is None:
+                        blank_corner=next(((phase,age,x,y) for x,y in candidates
+                                           if not self.expected_mask_hit(facing,phase,(x,y))),None)
                 for edge,(dx,dy),(ox,oy) in B.boundary_targets(facing,bounds):
                     for outside in (False,True):
                         self.reset(facing);index,at,hp=self.spawn_frozen()
                         self.start();self.advance_to(age-1)
-                        x=256+dx+(ox if outside else 0);y=230+dy+(oy if outside else 0)
+                        tx=dx+(ox if outside else 0);ty=dy+(oy if outside else 0)
+                        x=256+tx;y=230+ty
                         self.target_at(at,x,y);self.single_update()
                         state=B.live(self.c);after=P.actor(self.c,index)
                         hit=after['kind']!=2 or after['hp']<hp
-                        label=face+f' phase{phase} {edge} '+('one pixel outside misses' if outside else 'inclusive edge hits')
-                        self.check(label,hit==(not outside) and state['timer']==age and state['phase']==phase and bool(state['active']),
+                        expected=(self.expected_mask_hit(facing,phase,(tx,ty)) if self.mask_at is not None else not outside)
+                        label=face+f' phase{phase} {edge} '+('near outer edge' if outside else 'at inclusive edge')
+                        self.check(label,hit==expected and state['timer']==age and state['phase']==phase and bool(state['active']),
                                    {'age':state['timer'],'target':[x,y],'before_hp':hp,'after_kind':after['kind'],'after_hp':after['hp']})
                         self.contacts.append({'facing':face,'phase':phase,'age':age,'edge':edge,'outside':outside,
-                                              'target':[x,y],'hit':hit,'native_hp_before':hp,'native_hp_after':after['hp']})
+                                              'target':[x,y],'hit':hit,'expected_hit':expected,
+                                              'native_hp_before':hp,'native_hp_after':after['hp']})
+            if self.mask_at is not None:
+                assert blank_corner is not None, (face,'no empty diagonal corner inside the broad bounds')
+                phase,age,x,y=blank_corner
+                self.reset(facing);index,at,hp=self.spawn_frozen()
+                self.start();self.advance_to(age-1);self.target_at(at,256+x,230+y);self.single_update()
+                after=P.actor(self.c,index)
+                self.check(face+' misses a target in the empty diagonal corner of the broad bounds',
+                           after['kind']==2 and after['hp']==hp and B.live(self.c)['active'],
+                           {'phase':phase,'target_foot':[256+x,230+y],'hp_after':after['hp']})
 
     def forward_contact_sanity(self):
         """A complete ordinary swing must reach a nearby threat straight ahead.

@@ -1,8 +1,9 @@
 /* BARTGAME: the player. The Bloom, half man half plant, moves like Link.
 
    Constants are TMC's (docs/newgame/12_FROM_SCRATCH_ENGINE.md):
-     walk 1.25 px/f, roll 24 frames (3.0, then 2.0, ramping back to 3.0),
-     sword uses the selected shared body/blade/contact clock (18 frames for
+     walk 1.25 px/f, guard 0.75, roll 26 movement updates (3.0, then 2.0,
+     then +0.125 per update),
+     sword uses the selected shared body/blade/contact clock (15 updates for
      Step-and-cut), knockback 1.5 px/f for 8 frames with 30 iframes,
      gravity 0.125 px/f^2, cape jump zvel 2.0, pit fall costs 2. */
 #include "gba.h"
@@ -36,7 +37,10 @@ PlayerState gPl;
 static u8 sCarryEnemy;
 
 #define WALK_SPEED Q8(1.25)
-#define ROLL_FRAMES 24
+#define GUARD_SPEED Q8(0.75)
+/* The final 0xC1 cue advances the last roll step before recovery. */
+#define ROLL_FRAMES 26
+#define ROLL_RECOVERY_AGE 18
 #if BLOOM_SWING_STUDY
 #define ATTACK_FRAMES BLOOM_SWING_FRAMES
 #else
@@ -252,7 +256,7 @@ bool8 player_is_vulnerable(void) {
     if(legacy_player_submerged())return FALSE;
     if (a->iframes)
         return FALSE;
-    if (a->state == PS_ROLL && a->timer < 18)
+    if (a->state == PS_ROLL && a->timer <= ROLL_RECOVERY_AGE)
         return FALSE;
     if (a->state == PS_HURT || a->state == PS_FALL || a->state == PS_DEAD || a->state == PS_ITEMGET || a->state == PS_SWALLOWED)
         return FALSE;
@@ -309,6 +313,7 @@ bool8 player_hurt(int damage, int from_dir) {
     a->kb_speed = wall_fall ? 0 : handoff_player_knockback(Q8(1.5));
     a->iframes = 30;
     gPl.sword_active = 0;
+    gPl.queued_attack = 0;
     gPl.lamp_timer = 0;
     sfx_play(SFX_HURT);
     if (gPl.hp == 0) {
@@ -354,9 +359,7 @@ void player_item_get(int item_bit, int sprite_frame) {
     sfx_play(SFX_ITEM);
 }
 
-/* A single pose clock drives native blade pixels and their contact box.
-   The art builder derives these inclusive bounds from the damaging blade
-   and its short trail, excluding the grip and guard. */
+/* The chosen facing and pose own both the blade drawing and contact. */
 static int sword_step(int age) {
 #if BLOOM_SWING_STUDY
     return bloom_swing_age_phase[CLAMP(age,0,ATTACK_FRAMES-1)];
@@ -365,22 +368,72 @@ static int sword_step(int age) {
 #endif
 }
 
-static void sword_bounds(int* x0, int* y0, int* x1, int* y1) {
-    Actor* a = gPlayer;
+static int sword_pose(const Actor* actor) {
 #if BLOOM_SWING_STUDY
-    const s8* r = &bloom_swing_hit[(a->facing*8+sword_step(a->timer))*4];
+    return actor->facing * BLOOM_SWING_PHASES + sword_step(actor->timer);
 #else
-    const s8* r = &bloom_sword_hit[(a->facing*5+sword_step(a->timer))*4];
+    return actor->facing * 5 + sword_step(actor->timer);
 #endif
-    int px = PX(a->x), py = PX(a->y)-PX(a->z);
-    *x0 = px+r[0]; *y0 = py+r[1]; *x1 = px+r[2]; *y1 = py+r[3];
 }
 
 bool8 player_sword_box(int* x0, int* y0, int* x1, int* y1) {
     if (!gPl.sword_active)
         return FALSE;
-    sword_bounds(x0, y0, x1, y1);
+    int pose = sword_pose(gPlayer);
+#if BLOOM_SWING_STUDY
+    const s8* bounds = &bloom_swing_hit[pose * 4];
+#else
+    const s8* bounds = &bloom_sword_hit[pose * 4];
+#endif
+    int x = PX(gPlayer->x), y = PX(gPlayer->y) - PX(gPlayer->z);
+    *x0 = x + bounds[0] - 1;
+    *y0 = y + bounds[1] - 1;
+    *x1 = x + bounds[2] + 1;
+    *y1 = y + bounds[3] + 1;
     return TRUE;
+}
+
+static bool8 sword_overlaps(const Actor* source, int x0, int y0, int x1, int y1) {
+    int pose = sword_pose(source);
+#if BLOOM_SWING_STUDY
+    const s8* origin = &bloom_swing_origin[pose * 2];
+    const u32* rows = bloom_swing_masks[pose];
+#else
+    const s8* origin = &bloom_sword_origin[source->facing * 2];
+    const u32* rows = bloom_sword_masks[pose];
+#endif
+    int x = PX(source->x) + origin[0];
+    int y = PX(source->y) - PX(source->z) + origin[1];
+    int left = MAX(0, x0 - x), right = MIN(31, x1 - x);
+    int top = MAX(0, y0 - y), bottom = MIN(31, y1 - y);
+    if (left > right || top > bottom)
+        return FALSE;
+
+    u32 columns = (~0u << left) & (~0u >> (31 - right));
+    for (int row = top; row <= bottom; row++)
+        if (rows[row] & columns)
+            return TRUE;
+    return FALSE;
+}
+
+bool8 player_sword_hits_box(int x0, int y0, int x1, int y1) {
+    return player_sword_hits_box_from(gPlayer, x0, y0, x1, y1);
+}
+
+bool8 player_sword_hits_box_from(const Actor* source, int x0, int y0, int x1, int y1) {
+    return gPl.sword_active && sword_overlaps(source, x0, y0, x1, y1);
+}
+
+bool8 player_sword_hits_actor_from(const Actor* source, const Actor* target) {
+    if (!gPl.sword_active || !actor_combat_near(source, target, COMBAT_SWORD_DEPTH))
+        return FALSE;
+    int x0, y0, x1, y1;
+    actor_hurtbox(target, &x0, &y0, &x1, &y1);
+    return sword_overlaps(source, x0, y0, x1, y1);
+}
+
+bool8 player_sword_hits_actor(const Actor* target) {
+    return player_sword_hits_actor_from(gPlayer, target);
 }
 
 void player_item_pose(int item) {
@@ -635,10 +688,8 @@ static void state_normal(void) {
             a->timer = 0;
             sUseTimer = 0;
             gPl.shield_up = 0;
-            a->dir = (a->facing * 8);
-            if ((dir & 7) == 0)
-                a->dir = dir;
-            a->facing = dir_to_facing(a->dir);
+            gPl.push_timer = 0;
+            player_face(facing_from_dir(dir, a->facing));
             sfx_play(SFX_ROLL);
             return;
         }
@@ -666,7 +717,7 @@ static void state_normal(void) {
         } else {
             gPl.push_timer = 0;
         }
-        a->speed = legacy_player_walk_speed(handoff_walk_speed(gPl.shield_up ? WALK_SPEED / 2 : WALK_SPEED));
+        a->speed = legacy_player_walk_speed(handoff_walk_speed(gPl.shield_up ? GUARD_SPEED : WALK_SPEED));
         actor_move(a, a->speed, dir);
         sWalkTimer++;
     }
@@ -698,8 +749,14 @@ static void state_roll(void) {
         sfx_play(SFX_BUMP);
         return;
     }
-    if ((gKeysDown & player_equip_keys(EQ_SWORD)) && t >= 18)
-        gPl.queued_attack = 1;
+    if (gKeysDown & player_equip_keys(EQ_SWORD)) {
+        /* The reference opens the trained sword action briefly mid-roll and
+           again in recovery; ordinary swings can be buffered in the tail. */
+        bool8 recovery = t >= ROLL_RECOVERY_AGE;
+        bool8 can_thrust = ((t >= 4 && t < 7) || recovery) && t < ROLL_FRAMES - 1;
+        if ((!can_thrust || !legacy_player_try_roll_sword()) && recovery)
+            gPl.queued_attack = 1;
+    }
     if (++a->timer >= ROLL_FRAMES) {
         a->state = PS_NORMAL;
         a->timer = 0;
@@ -969,9 +1026,8 @@ void player_update(void) {
         sUseTimer = 0;
 }
 
-/* Jumps with the Petal Cloak: forward 1.25, zvel 2.0, 32 frames in the
-   air, so 40 px: two and a half tiles. A one-tile chasm is cleared from
-   anywhere within a tile and a half of its edge. */
+/* The Petal Cloak commits to its launch direction. A clear cardinal jump
+   travels 42.5px over 34 movement updates with an initial z velocity of 2. */
 void player_cloak_jump(void) {
     Actor* a = gPlayer;
     if (a->state != PS_NORMAL)
@@ -1362,10 +1418,8 @@ void player_draw(void) {
                 break;
             }
             if (a->state == PS_NORMAL && gPl.shield_up) {
-                /* Guarding moves at half speed, so the feet take twice as
-                   long to complete the same stride while the shield stays
-                   planted at the hand. */
-                int step = a->speed && sWalkTimer ? (sWalkTimer / 14) & 3 : 0;
+                /* Pace the guarded root steps to its slower movement. */
+                int step = a->speed && sWalkTimer ? (sWalkTimer / 12) & 3 : 0;
                 frame = step == 1 ? sGuardStep[0][f] : step == 3 ? sGuardStep[1][f] : sGuardFrame[f];
                 break;
             }

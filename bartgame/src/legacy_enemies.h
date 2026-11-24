@@ -131,6 +131,7 @@ int legacy_enemy_platform_height(int px,int py);
 bool8 legacy_enemy_accept_hit(Actor* enemy,int kind,int* damage,int from_dir);
 /* TRUE consumes contact instead of normal contact damage. */
 bool8 legacy_enemy_contact(Actor* enemy);
+bool8 legacy_enemy_sword_parts(Actor* enemy,const Actor* source,int damage,int from_dir);
 void legacy_enemy_on_death(Actor* enemy);
 void legacy_enemy_extra_draw(Actor* enemy);
 /* Resolves segmented tail/mandible/flail collision before ordinary body hit.

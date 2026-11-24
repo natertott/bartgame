@@ -94,6 +94,14 @@ bool8 IWRAM_CODE actor_feet_box_solid(const Actor* a, int px, int py);
 void actor_gravity(Actor* a);
 bool8 actors_overlap(const Actor* a, const Actor* b);
 bool8 actor_box_overlap(const Actor* a, int x0, int y0, int x1, int y1);
+/* Combat is measured in displayed world pixels. Movement and interactions
+   continue to use an actor's feet and unprojected utility box. */
+enum { COMBAT_CONTACT_DEPTH=10, COMBAT_SWORD_DEPTH=12 };
+void actor_hurtbox(const Actor* a, int* x0, int* y0, int* x1, int* y1);
+bool8 actor_hurtbox_overlap(const Actor* a, int x0, int y0, int x1, int y1);
+bool8 actor_combat_layer(const Actor* a, const Actor* b);
+bool8 actor_combat_near(const Actor* a, const Actor* b, int depth);
+bool8 actors_combat_overlap(const Actor* a, const Actor* b, int depth);
 int actor_dir_to(const Actor* a, const Actor* b);
 int actor_dist2(const Actor* a, const Actor* b);
 int dir_to_facing(int dir);

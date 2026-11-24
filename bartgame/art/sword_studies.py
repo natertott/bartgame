@@ -31,7 +31,7 @@ _PROFILES={
   crouch=[0,1,1,0,0,1,1,0],step=[0,0,0,1,2,2,1,0],spread=[0,1,1,2,2,2,1,0]),
  3:dict(id=3,slug='step-and-cut',name='Step-and-cut',
   description='A deliberate forward root step and diagonal cut; drawn footwork has no world lunge.',
-  durations=[2,2,2,3,2,2,2,3],active_flags=[False,False,True,True,True,False,False,False],
+  durations=[1,1,2,3,3,1,2,2],active_flags=[False,False,True,True,True,False,False,False],
   angles=[-88,-78,-38,-4,31,51,43,27],length=17,
   weight=[0,-1,0,2,3,2,1,0],twist=[0,-1,-1,0,1,1,0,0],
   crouch=[0,1,1,0,0,1,1,0],step=[0,0,1,3,3,3,1,0],spread=[0,0,0,1,1,1,0,0]),

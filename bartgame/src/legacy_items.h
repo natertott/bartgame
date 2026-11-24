@@ -204,6 +204,7 @@ void legacy_player_capture(Actor* captor,int ticks);
 int legacy_player_status(int kind);
 void legacy_player_status_clear(int kind);
 void legacy_player_on_hurt(void);
+bool8 legacy_player_try_roll_sword(void);
 bool8 legacy_clone_position(int index,int* x,int* y);
 bool8 legacy_minish_gap_at(int px,int py);
 

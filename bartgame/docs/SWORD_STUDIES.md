@@ -1,12 +1,13 @@
 # Sword studies and the selected Step-and-cut
 
 The user selected **variation 3, Step-and-cut**, for the game. Normal `make`
-and direct asset generation now select it by default (`BART_SWING=3`). Its
-reviewed poses, timing and matching contact geometry are unchanged from the
-comparison prototype. The other profiles remain explicit comparison options.
+and direct asset generation select it by default (`BART_SWING=3`). This page
+records the original comparison release. The current build uses the same
+poses with a 15-update clock and contacts derived from the visible blade.
+[Current combat and controls](COMBAT_MECHANICS.md)
 
-The previous sword (`BART_SWING=0`) produces the same ROM bytes as the earlier
-art reboot, SHA256
+For that release, the previous sword (`BART_SWING=0`) reproduced the earlier
+art reboot, SHA-256
 `41dc680068c094416e92152d4c22637c10d6a055d2bee63ce7700c419490e92d`.
 
 Start with the [actual mGBA comparison gallery](../../art-review/sword-studies/README.md)

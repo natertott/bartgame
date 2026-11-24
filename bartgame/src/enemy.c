@@ -126,6 +126,41 @@ void enemy_invalidate_frame(Actor* e) {
 /* enemy states */
 enum { ES_IDLE, ES_WALK, ES_CHASE, ES_PAUSE, ES_SPIT, ES_HOP, ES_WINDUP, ES_SWING, ES_RECOVER, ES_DIE, ES_REST, ES_FLY };
 
+typedef struct {
+    int x, y, frame;
+    bool8 hflip, vflip;
+} KnightBlade;
+
+/* World-space origin of the same native blade drawn over the Confessor. */
+static KnightBlade knight_blade_pose(const Actor* e) {
+    static const s8 hand[4][2]={{5,-17},{7,-16},{4,-13},{-8,-16}};
+    int facing=e->facing;
+    bool8 raised=e->state==ES_WINDUP;
+    bool8 vertical=raised || facing==FACE_N || facing==FACE_S;
+    KnightBlade pose;
+    pose.frame=vertical ? F_KSWORD_BLADE_S : F_KSWORD_BLADE_E;
+    pose.hflip=facing==FACE_W;
+    pose.vflip=vertical && (raised || facing==FACE_N);
+    int grip_x=vertical ? 8 : 2, grip_y=vertical ? 2 : 8;
+    if(pose.hflip)grip_x=15-grip_x;
+    if(pose.vflip)grip_y=15-grip_y;
+    pose.x=PX(e->x)+hand[facing][0]-grip_x;
+    pose.y=PX(e->y)-PX(e->z)+hand[facing][1]-grip_y;
+    return pose;
+}
+
+static bool8 knight_blade_hits(const Actor* e,const Actor* target) {
+    if (e->timer<3 || e->timer>10 || !actor_combat_near(e,target,COMBAT_CONTACT_DEPTH))return FALSE;
+    KnightBlade pose=knight_blade_pose(e);
+    /* The cutting part starts beyond the guard. Its maximum thickness gives
+       the thin steel a predictable, forgiving contact lane. */
+    bool8 vertical=pose.frame==F_KSWORD_BLADE_S;
+    int x0=5,y0=vertical?6:5,x1=vertical?10:15,y1=vertical?15:10;
+    if(pose.hflip){int left=15-x1;x1=15-x0;x0=left;}
+    if(pose.vflip){int top=15-y1;y1=15-y0;y0=top;}
+    return actor_hurtbox_overlap(target,pose.x+x0,pose.y+y0,pose.x+x1,pose.y+y1);
+}
+
 void enemy_load_sheets_for_theme(int theme) {
     int i;
     (void)theme;
@@ -586,24 +621,15 @@ static void knight_update(Actor* e) {
                 sfx_play(SFX_SWORD);
             }
             break;
-        case ES_SWING: {
-            /* the blade's box in front */
-            int px = PX(e->x), py = PX(e->y) - 10;
-            int x0, y0, x1, y1;
-            switch (e->facing) {
-                case FACE_N: x0 = px - 10; x1 = px + 10; y0 = py - 26; y1 = py - 6; break;
-                case FACE_S: x0 = px - 10; x1 = px + 10; y0 = py + 2; y1 = py + 22; break;
-                case FACE_E: x0 = px + 6; x1 = px + 26; y0 = py - 10; y1 = py + 10; break;
-                default: x0 = px - 26; x1 = px - 6; y0 = py - 10; y1 = py + 10; break;
-            }
-            if (e->timer > 3 && e->timer < 12 && actor_box_overlap(gPlayer, x0, y0, x1, y1))
+        case ES_SWING:
+            if(e->timer)e->timer--;
+            if (knight_blade_hits(e,gPlayer))
                 player_hurt(4, facing_to_dir(e->facing));
-            if (--e->timer == 0) {
+            if (e->timer == 0) {
                 e->state = ES_RECOVER;
                 e->timer = 24;
             }
             break;
-        }
         case ES_RECOVER:
             if (--e->timer == 0) {
                 e->state = ES_CHASE;
@@ -655,8 +681,6 @@ static void enemy_common(Actor* e) {
 
 void enemies_update(void) {
     int i;
-    int sx0, sy0, sx1, sy1;
-    bool8 sword = player_sword_box(&sx0, &sy0, &sx1, &sy1);
     for (i = 1; i < ACTOR_MAX; i++) {
         Actor* e = &gActors[i];
         if (e->kind != AK_ENEMY)
@@ -664,21 +688,22 @@ void enemies_update(void) {
         if (e->iframes)
             e->iframes--;
         enemy_common(e);
-        if (e->kind != AK_ENEMY)
-            continue; /* died in its update */
+        if (e->kind != AK_ENEMY || (e->flags & AF_HIDDEN))
+            continue;
         /* the sword */
-        if (sword && !e->iframes) {
+        if (gPl.sword_active && !e->iframes) {
             int from = actor_dir_to(gPlayer, e);
             int damage=handoff_outgoing_damage(legacy_player_outgoing_damage(gPl.sword_dmg));
-            bool8 parts=legacy_enemy_owns(e->type) && legacy_enemy_hit_parts(e,sx0,sy0,sx1,sy1,LE_HIT_SWORD,damage,from);
-            if(!parts && (e->flags&AF_HITTABLE) && actor_box_overlap(e,sx0,sy0,sx1,sy1))
+            bool8 parts=legacy_enemy_owns(e->type) && legacy_enemy_sword_parts(e,gPlayer,damage,from);
+            if(!parts && (e->flags&AF_HITTABLE) && player_sword_hits_actor(e))
                 legacy_item_hit(e,LE_HIT_SWORD,damage,from,handoff_sword_knockback(Q8(1.5)));
             if (e->kind != AK_ENEMY)
                 continue;
         }
         /* contact: the hero is knocked back, and the biter recoils too
            (TMC: the enemy side of the matrix gets 1.0 px/f) */
-        if ((e->flags & AF_HURTS) && player_is_vulnerable() && actors_overlap(e, gPlayer)) {
+        bool8 contact=(e->flags&(AF_HURTS|AF_SOLID)) && actors_combat_overlap(e,gPlayer,COMBAT_CONTACT_DEPTH);
+        if (contact && (e->flags & AF_HURTS) && player_is_vulnerable()) {
             if(legacy_enemy_owns(e->type) && legacy_enemy_contact(e)) continue;
             player_hurt(e->damage, actor_dir_to(e, gPlayer));
             if (!(e->flags & AF_BOSS) && e->type != EN_KNIGHT) {
@@ -688,7 +713,7 @@ void enemies_update(void) {
             }
         }
         /* a solid enemy pushes the player out */
-        if ((e->flags & AF_SOLID) && actors_overlap(e, gPlayer) && gPlayer->state != PS_HURT) {
+        if (contact && (e->flags & AF_SOLID) && gPlayer->state != PS_HURT) {
             int d = actor_dir_to(e, gPlayer);
             actor_move(gPlayer, Q8(1.0), d);
         }
@@ -699,24 +724,16 @@ static void knight_draw_sword(Actor* e) {
     if ((e->flags & AF_HIDDEN) || (e->iframes && (gFrame & 2)))
         return;
     if(gOamCount>=128)return;
-    static const s8 hand[4][2]={{5,-17},{7,-16},{4,-13},{-8,-16}};
-    int px = PX(e->x) - gCamX, py = PX(e->y) - PX(e->z) - gCamY;
-    int raised=e->state==ES_WINDUP, f=e->facing, hflip=f==FACE_W;
-    int vertical=raised || f==FACE_N || f==FACE_S;
-    int frame=vertical ? F_KSWORD_BLADE_S : F_KSWORD_BLADE_E;
-    int vflip=vertical && (raised || f==FACE_N);
-    int gx=vertical ? 8 : 2, gy=vertical ? 2 : 8;
-    if(hflip)gx=15-gx;
-    if(vflip)gy=15-gy;
-    int sx=px+hand[f][0]-gx,sy=py+hand[f][1]-gy;
+    KnightBlade pose=knight_blade_pose(e);
+    int sx=pose.x-gCamX,sy=pose.y-gCamY;
     const SpriteSheet* sh=&sheets[SHEET_KSWORD];
     /* Cull the blade by its own canvas, independently of its owner's body:
        an offscreen Confessor can still swing a visible sword into view. */
     if(sx<=-sh->w || sx>=240 || sy<=-sh->h || sy>=160)return;
     int priority=room_prop_priority(PX(e->x),PX(e->y),PX(e->z),16,28,e->prio);
     int before=gOamCount;
-    draw_sprite(sx, sy, SHEET_KSWORD, sKswordTile, frame, hflip, priority, sheets[SHEET_KSWORD].pal);
-    if (vflip && gOamCount>before)
+    draw_sprite(sx, sy, SHEET_KSWORD, sKswordTile, pose.frame, pose.hflip, priority, sheets[SHEET_KSWORD].pal);
+    if (pose.vflip && gOamCount>before)
         gOam[gOamCount - 1].attr1 |= ATTR1_VFLIP;
 }
 

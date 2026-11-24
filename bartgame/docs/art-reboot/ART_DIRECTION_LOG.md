@@ -2251,3 +2251,19 @@ portraits facing toward the offer. `tools/trading_cards_native.py` passed
 65 checks on seed `0xB4A7` using disclosed navigation and roll fixtures.
 The reviewed ROM SHA-256 is
 `53f58dbff612c4e1a49c9391e7deb915962aac238cdf4a25268158e4776a3773`.
+
+## 2026-11-24 — Step-and-cut contact and timing
+
+**Adopted for ordinary sword swings.** The combat request calls for Bloom's
+visible reach to agree with the damage in each facing. The selected
+Step-and-cut drawings retain their roots, grip and sweep. `art/sword_studies.py`
+retimes the existing poses to 15 updates. `tools/build_assets.py` derives
+the contact rows from the steel and short sweep, with a one-pixel margin.
+Enemy body volumes exclude wing and equipment extremes. The Confessor's
+attack traces the blade past the hilt.
+
+The original handoff and the Minish Cap, Oracle and Link's Awakening routines
+establish the shared body, weapon and contact clock. The native GBA probe
+matches the authored weapon pixels to hardware sprites and observed damage
+for each facing. The margin gives grazing strikes a pixel of tolerance while
+keeping the corners beyond the sweep safe. [Reference sources and native probe methods](../COMBAT_MECHANICS.md)

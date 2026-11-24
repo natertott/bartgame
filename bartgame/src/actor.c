@@ -10,6 +10,10 @@
 #include "handoff_objects.h"
 #include "hub_services.h"
 #include "legacy_items.h"
+#if BART_CREAM_VARIANT == 12
+#include "cream_topology.h"
+#include "game.h"
+#endif
 #if BART_FOREST_VARIANT >= 6
 #include "player.h"
 #endif
@@ -233,6 +237,61 @@ bool8 actor_box_overlap(const Actor* a, int x0, int y0, int x1, int y1) {
     int ax0, ay0, ax1, ay1;
     actor_box(a, &ax0, &ay0, &ax1, &ay1);
     return !(ax1 < x0 || x1 < ax0 || ay1 < y0 || y1 < ay0);
+}
+
+void actor_hurtbox(const Actor* a, int* x0, int* y0, int* x1, int* y1) {
+    /* Stable body volumes exclude feet/wing extremes and cosmetic pixels.
+       The regular hitbox still owns movement and interaction footprints. */
+    static const Hitbox bloom = {0,-10,5,8};
+    static const Hitbox tiny_bloom = {0,-3,2,3};
+    static const Hitbox torso = {0,-8,6,7};
+    static const Hitbox tall = {0,-14,6,12};
+    const Hitbox* hb = &gHitboxes[a->hitbox];
+    if (a->kind == AK_PLAYER)
+        hb = legacy_player_minish() ? &tiny_bloom : &bloom;
+    else if (a->kind == AK_ENEMY) {
+        switch (a->hitbox) {
+            case HB_MED: hb = &torso; break;
+            case HB_TALL: hb = &tall; break;
+        }
+    }
+    int cx = PX(a->x) + hb->ox, cy = PX(a->y) - PX(a->z) + hb->oy;
+    *x0 = cx - hb->hw;
+    *x1 = cx + hb->hw - 1;
+    *y0 = cy - hb->hh;
+    *y1 = cy + hb->hh - 1;
+}
+
+bool8 actor_hurtbox_overlap(const Actor* a, int x0, int y0, int x1, int y1) {
+    int ax0, ay0, ax1, ay1;
+    actor_hurtbox(a, &ax0, &ay0, &ax1, &ay1);
+    return !(ax1 < x0 || x1 < ax0 || ay1 < y0 || y1 < ay0);
+}
+
+bool8 actor_combat_layer(const Actor* a, const Actor* b) {
+#if BART_CREAM_VARIANT == 12
+    if (gGame.area == AREA_CREAM) {
+        int first=cream_topology_height_at(PX(a->x)>>4,(PX(a->y)-4)>>4);
+        int second=cream_topology_height_at(PX(b->x)>>4,(PX(b->y)-4)>>4);
+        /* Unknown support and route ladders use the body projection and
+           z test. A climber can trade blows across the lip while attached. */
+        if(first>=0 && first<7 && second>=0 && second<7 && first!=second)return FALSE;
+    }
+#else
+    (void)a;
+    (void)b;
+#endif
+    return TRUE;
+}
+
+bool8 actor_combat_near(const Actor* a, const Actor* b, int depth) {
+    return ABS(PX(a->z)-PX(b->z)) <= depth && actor_combat_layer(a,b);
+}
+
+bool8 actors_combat_overlap(const Actor* a, const Actor* b, int depth) {
+    int x0, y0, x1, y1;
+    actor_hurtbox(a,&x0,&y0,&x1,&y1);
+    return actor_hurtbox_overlap(b,x0,y0,x1,y1) && actor_combat_near(a,b,depth);
 }
 
 /* 32-step direction from a to b (atan2 on an 8-way coarse grid refined). */

@@ -30,6 +30,7 @@ import sprites  # noqa: E402
 import title  # noqa: E402
 import rooms  # noqa: E402
 import reboot_actors  # noqa: E402
+import sword_studies  # noqa: E402
 import sewer_concepts as SC  # noqa: E402
 import ui_studies as UI_STUDIES  # noqa: E402
 import forest_concepts as FOREST_CONCEPTS  # noqa: E402
@@ -794,9 +795,27 @@ if FOREST_CONCEPTS.CANOPY_ROUND:
         c.append('    {' + ','.join(map(str, row)) + '},')
     c.append('};')
 
-# The same native painter supplies the blade, its render origin and the
-# phase-specific collision rectangle. No independent reach table can drift
-# away from the compact actor or grow into a permanent range-outline cage.
+# Pack the native blade and trail as one word per row. Allow one pixel at
+# their edges so a moving target does not have to land on the exact steel.
+def emit_sword_masks(name, phases, damage_mask):
+    h.append(f'extern const u32 {name}[{4 * phases}][32];')
+    c.append(f'const u32 {name}[{4 * phases}][32] ALIGN4 = {{')
+    for face in 'nesw':
+        for phase in range(phases):
+            mask = damage_mask(face, phase)
+            assert mask.size == (32, 32)
+            rows = [sum(1 << x for x in range(32) if mask.getpixel((x, y)))
+                    for y in range(32)]
+            expanded = []
+            for y, row in enumerate(rows):
+                above = rows[y - 1] if y else 0
+                below = rows[y + 1] if y < 31 else 0
+                expanded.append((row | row << 1 | row >> 1 | above | below) & 0xffffffff)
+            c.append('    {' + ', '.join(f'0x{row:08x}u' for row in expanded) + '},')
+    c.append('};')
+
+
+# The same native painter supplies the blade, render origin and contact rows.
 sword_geometry = reboot_actors.sword_geometry()
 origins = [value for pair in sword_geometry['origins'] for value in pair]
 hitboxes = [value for facing in sword_geometry['bounds'] for phase in facing for value in phase]
@@ -805,6 +824,8 @@ for name, values in (('bloom_sword_origin', origins), ('bloom_sword_hit', hitbox
     assert all(-128 <= value <= 127 for value in values), name
     c.append('const s8 %s[%d] ALIGN4 = { %s };' % (name, len(values), ', '.join(map(str, values))))
     h.append('extern const s8 %s[];' % name)
+if not sprites.SWING_VARIANT:
+    emit_sword_masks('bloom_sword_masks', 5, reboot_actors.sword_damage_mask)
 
 # Experimental studies append native poses without replacing the production
 # frames. One generated age clock drives body, blade and contact together.
@@ -836,6 +857,8 @@ if sprites.SWING_VARIANT:
         assert all(-128<=v<=127 for v in values),name
         c.append('const s8 %s[%d] ALIGN4 = { %s };' % (name,len(values),', '.join(map(str,values))))
         h.append('extern const s8 %s[];' % name)
+    emit_sword_masks('bloom_swing_masks', 8,
+                     lambda face, phase: sword_studies.damage_mask(sprites.SWING_VARIANT, face, phase))
     sword_study_metadata={**profile,'geometry':geometry,'age_phase':age_phase,
                           'age_active':age_active,'body_frame_base':101,'fx_frame_base':47}
 
