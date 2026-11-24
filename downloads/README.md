@@ -1,5 +1,22 @@
 # BARTGAME downloads
 
+## Bloom combat and controls
+
+[Download the playable GBA ROM](https://raw.githubusercontent.com/natertott/bartgame/cream-art-studies/downloads/combat-ab82d2a5/bartgame-combat.gba).
+This standalone build comes from `ab82d2a5`. The sword follows the visible
+blade in all four facings, and enemy contacts account for body shape and
+elevation. Bloom's guard speed, roll timing, and sword technique inputs follow
+the Minish Cap handoff. [Combat and controls study](../bartgame/docs/COMBAT_MECHANICS.md)
+
+mGBA 0.10.5 passed 62 focused combat and movement checks, 724 sword art and
+contact checks, 105 Cream checks across two seeds, 65 Trading Cards checks,
+and 19 item checks. The combat probes use declared position and loadout
+fixtures and measure the effects of real button input.
+The older presentation probe reports the same eight planted-bomb and lift
+timing mismatches on this build and the prior Trading Cards ROM.
+
+SHA-256 `8ebe1707d9a3153a7d79a76bbaa38416354a1480385f3b1df094b97a54931358`
+
 ## Trading Cards and Curdled Cream wall climbing
 
 [Download the playable GBA ROM](https://raw.githubusercontent.com/natertott/bartgame/cream-art-studies/downloads/trading-cards-0a51e2ea/bartgame-trading-cards.gba).
