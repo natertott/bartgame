@@ -2287,3 +2287,8 @@ one RGB555 bank. `tools/build_assets.py` packs their native maps. A source
 assembly checked the full composition, a 32-pixel exhibit and sample text
 at 240×160. `art/arcade_cabinet.py` changes the in-world marquee to CASE in
 both original frames. A pixel comparison confines the edit to that 15×5 mark.
+
+Actual mGBA frames show the new marquee, sealed and earned milestones, found
+items, creature notes and a traded card with zero copies held. The native
+case probe passed 59 interaction and persistence checks. The release source
+and ROM digest appear with the [native gallery](../../../art-review/trophy-case/README.md).

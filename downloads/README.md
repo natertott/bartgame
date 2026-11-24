@@ -1,5 +1,17 @@
 # BARTGAME downloads
 
+## The Drain Trophy Case
+
+[Download the playable GBA ROM](https://raw.githubusercontent.com/natertott/bartgame/cream-art-studies/downloads/trophy-case-936db7c9/bartgame-trophy-case.gba).
+This standalone build comes from `936db7c9`. It simplifies the Drain and adds
+a native Trophy Case for milestones, items, creatures and Trading Cards. Face
+the north-bank cabinet and press A. [Native screenshots and case controls](../art-review/trophy-case/README.md)
+
+The ROM passed the Trophy Case, legacy save, Trading Cards, Cream, combat and
+item checks in mGBA 0.10.5.
+
+SHA-256 `e7dcc0fa3571a4703cfb10e36f09032fae1c4cad42586100ffcc6f59e824a9fc`
+
 ## Bloom combat and controls
 
 [Download the playable GBA ROM](https://raw.githubusercontent.com/natertott/bartgame/cream-art-studies/downloads/combat-ab82d2a5/bartgame-combat.gba).
