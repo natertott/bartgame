@@ -1,6 +1,7 @@
 /* Original additive challenge annex and handoff systems. No existing event,
    region, player art or default loadout is replaced. */
 #include "handoff_events.h"
+#include "arcade.h"
 #include "legacy_items.h"
 #include "legacy_enemies.h"
 #include "player.h"
@@ -330,21 +331,30 @@ int handoff_pick_enemy(int d,int role,u32 roll){
 }
 /* Opt-in entitlement rules never affect the ordinary world or required tool
    trials. The source's paused meta vision is exposed as a separate contract. */
+bool8 handoff_entitlement_earned(enum HandoffEntitlement kind){
+ switch(kind){
+ case HENT_FIELD:return gHandoffState.score>=500||gHandoffState.wins>=1;
+ case HENT_POTS:return gHandoffState.score>=500;
+ case HENT_FAIRY:return gHandoffState.wins>=1;
+ case HENT_ADVANCED:return gHandoffState.score>=1500||gHandoffState.wins>=2;
+ }
+ return FALSE;
+}
 bool8 handoff_item_unlocked(int item){
  const LegacyItemDef*d=legacy_item_def(item);if(!gHandoffState.entitlement_mode||!d)return TRUE;
  if(d->category&LCAT_KEY)return TRUE;
  if(d->tier==0)return TRUE;
- return d->tier==1?(gHandoffState.score>=500||gHandoffState.wins>=1):(gHandoffState.score>=1500||gHandoffState.wins>=2);
+ return handoff_entitlement_earned(d->tier==1?HENT_FIELD:HENT_ADVANCED);
 }
 bool8 handoff_event_unlocked(int kind){
  if(!gHandoffState.entitlement_mode)return TRUE;
- if(kind==HS_POTS||kind==HS_QUEST_POT)return gHandoffState.score>=500;
- if(kind==HS_FAIRY)return gHandoffState.wins>=1;
- if(kind==HS_PORTAL||kind==HS_POCKET||kind==HS_BOSS)return gHandoffState.score>=1500||gHandoffState.wins>=2;
- if(kind==HS_MEMORY_SHOW||kind==HS_MEMORY_INPUT||kind==HS_BLOCK_TEMPLATE||kind==HS_BLOCK_MAZE||(kind>=HS_QUEST_HUNT&&kind<=HS_QUEST_BLOCKS))return gHandoffState.score>=500||gHandoffState.wins>=1;
+ if(kind==HS_POTS||kind==HS_QUEST_POT)return handoff_entitlement_earned(HENT_POTS);
+ if(kind==HS_FAIRY)return handoff_entitlement_earned(HENT_FAIRY);
+ if(kind==HS_PORTAL||kind==HS_POCKET||kind==HS_BOSS)return handoff_entitlement_earned(HENT_ADVANCED);
+ if(kind==HS_MEMORY_SHOW||kind==HS_MEMORY_INPUT||kind==HS_BLOCK_TEMPLATE||kind==HS_BLOCK_MAZE||(kind>=HS_QUEST_HUNT&&kind<=HS_QUEST_BLOCKS))return handoff_entitlement_earned(HENT_FIELD);
  return TRUE;
 }
-bool8 handoff_region_unlocked(int area){return !gHandoffState.entitlement_mode||area!=AREA_CREAM||gHandoffState.score>=500||gHandoffState.wins>=1;}
+bool8 handoff_region_unlocked(int area){return !gHandoffState.entitlement_mode||area!=AREA_CREAM||handoff_entitlement_earned(HENT_FIELD);}
 int handoff_difficulty_cap(void){return gHandoffState.entitlement_mode?MIN(12,3+2*gHandoffState.wins+gHandoffState.score/1500):12;}
 u8 handoff_switch_facts(int site){if((unsigned)site>=HANDOFF_SITE_LIMIT)return 0;if(HBIT(gHandoffState.completed,site))return 0xFF;return gGame.area==AREA_HANDOFF&&s.site==site&&s.kind==HS_SWITCHES?s.switch_mask:0;}
 
@@ -563,10 +573,10 @@ static void quest_start(int kind){
 }
 /* The themed selection desk is a real transaction UI. It shares the approved
    menu frame/palette; no new global screen state or enlarged HUD is required. */
-enum { HM_NONE,HM_DRAFT,HM_INN,HM_SHOP,HM_FUSE,HM_TROPHY,HM_HINT,HM_CHALLENGE,HM_CONTRACT,HM_DIFFICULTY };
+enum { HM_NONE,HM_DRAFT,HM_INN,HM_SHOP,HM_FUSE,HM_TROPHY,HM_HINT,HM_CHALLENGE,HM_CONTRACT,HM_DIFFICULTY,HM_RUN_OPTIONS };
 static struct{u16 display,bg3,blend,alpha,brightness; s16 x,y;u8 active,cursor,top,repeat,old_anim;} m __attribute__((section(".ewram_bss.handoff_menu")));
-static int menu_count(void){return m.active==HM_DRAFT?3:m.active==HM_INN?3:m.active==HM_SHOP?6:m.active==HM_FUSE?5:m.active==HM_TROPHY?3:m.active==HM_CHALLENGE?HS_COUNT+2:m.active==HM_CONTRACT?3:m.active==HM_DIFFICULTY?13:1;}
-static const char* menu_title(void){return m.active==HM_DRAFT?"Three Gifts / choose one":m.active==HM_INN?"The Three Beds":m.active==HM_SHOP?"Peddler Exchange":m.active==HM_FUSE?"Card & Seal Broker":m.active==HM_TROPHY?"Trophy & Entitlements":m.active==HM_HINT?"A Quiet Hint":m.active==HM_CHALLENGE?"Optional Challenges":m.active==HM_DIFFICULTY?"Difficulty 0 to 12":"Four-step Contract";}
+static int menu_count(void){return m.active==HM_DRAFT?3:m.active==HM_INN?3:m.active==HM_SHOP?6:m.active==HM_FUSE?5:m.active==HM_TROPHY?3:m.active==HM_CHALLENGE?HS_COUNT+2:m.active==HM_CONTRACT?3:m.active==HM_DIFFICULTY?13:m.active==HM_RUN_OPTIONS?2:1;}
+static const char* menu_title(void){return m.active==HM_DRAFT?"Three Gifts / choose one":m.active==HM_INN?"The Three Beds":m.active==HM_SHOP?"Peddler Exchange":m.active==HM_FUSE?"Card & Seal Broker":m.active==HM_TROPHY?"Trophy & Entitlements":m.active==HM_HINT?"A Quiet Hint":m.active==HM_CHALLENGE?"Optional Challenges":m.active==HM_DIFFICULTY?"Difficulty 0 to 12":m.active==HM_RUN_OPTIONS?"Run Options":"Four-step Contract";}
 static void menu_close(void){
  gAnimTiles=m.old_anim;bg0_clear();gBg3Dirty=0;REG_BG3CNT=m.bg3;gBgScroll[3][0]=m.x;gBgScroll[3][1]=m.y;
  room_render();video_show(m.display);REG_BLDCNT=m.blend;REG_BLDALPHA=m.alpha;REG_BLDY=m.brightness;m.active=0;gKeysDown=0;
@@ -681,6 +691,10 @@ static void menu_row(int index,char* out){
  case HM_SHOP:{int cost=gHandoffState.prices[index]+(index==0?25*gHandoffState.heart_purchases:0);p=cat(p,gHandoffState.shop_bought&(1<<index)?"SOLD":item_name(gHandoffState.stock[index]));p=cat(p," / ");p=num(p,handoff_shop_price(MIN(999,cost)));break;}
  case HM_FUSE:{static const char*const names[]={"Locate Moss Archivist","Locate Brook Locksmith","Locate Rind Collector","Locate Flow gold seal","Locate three gold statues"};p=cat(p,names[index]);break;}
  case HM_TROPHY:p=cat(p,index==0?"View rank and record":index==1?"Toggle optional entitlement challenge":"Choose run difficulty");break;
+ case HM_RUN_OPTIONS:
+  if(index==0)p=cat(p,gHandoffState.entitlement_mode?"Optional challenge mode / On":"Optional challenge mode / Off");
+  else{p=cat(p,"Run difficulty / ");p=num(p,gHandoffState.difficulty);}
+  break;
  case HM_CHALLENGE:p=cat(p,index+1<HS_COUNT?sSiteNames[index+1]:index==HS_COUNT-1?"Moving Crossing Workshop":index==HS_COUNT?"Secrets & Weather Workshop":"Tool Targets Workshop");break;
  case HM_DIFFICULTY:p=cat(p,"Difficulty ");p=num(p,index);p=cat(p,index==gHandoffState.difficulty?" / current":"");break;
  case HM_CONTRACT:p=cat(p,index==0?"Inspect current regional seal":index==1?"Read route directions":"Set aside regional seals");break;
@@ -696,6 +710,7 @@ static const char* menu_note(void){
  if(m.active==HM_CHALLENGE)return "Optional annex rooms preserve every existing Forest trial. Exit south whenever safe.";
  if(m.active==HM_HINT)return "Paths tell one story. Lanterns can tell another. A keyhole, cracked rock, web or gap each asks for its tool.";
  if(m.active==HM_CONTRACT)return "Four adaptive steps: event, waves/quest, key item, boss. Current regions and boss wins are unchanged.";
+ if(m.active==HM_RUN_OPTIONS)return m.cursor==0?"Earn access to harder difficulties through wins and score.":"Set regional wave odds and stakes for future quests.";
  if(m.active==HM_DIFFICULTY)return "Higher difficulty changes regional wave odds and announced quest stakes. Zero is a gentle first run.";
  return "Ranks unlock optional challenge access, never remove tools or access from the existing game.";
 }
@@ -710,7 +725,9 @@ static void menu_paint(void){
   vwf_text(&c,3,row*16+3,label,index==m.cursor?UI_INK_HIGH:UI_INK_CREAM);
  }
  vwf_flush(&c,FALSE);bg0_canvas(&c,2,15,26,3);vwf_block(&c,0,0,208,10,menu_note(),UI_INK_CREAM,2);
- p=cat(status,"A Choose  B Back    Gilt ");num(p,gPl.gilt);vwf_text(&c,0,19,status,UI_INK_GOLD);vwf_flush(&c,FALSE);gBg3Dirty=1;
+ p=cat(status,"A Choose  B Back");
+ if(m.active!=HM_RUN_OPTIONS&&m.active!=HM_DIFFICULTY){p=cat(p,"    Gilt ");num(p,gPl.gilt);}
+ vwf_text(&c,0,19,status,UI_INK_GOLD);vwf_flush(&c,FALSE);gBg3Dirty=1;
 }
 static void menu_open(int kind){
  if(m.active)return;
@@ -719,18 +736,17 @@ static void menu_open(int kind){
  REG_BG3CNT=BGCNT_PRIO(3)|BGCNT_CHARBASE(3)|BGCNT_SCREENBASE(22)|BGCNT_SIZE_32x32;gBgScroll[3][0]=gBgScroll[3][1]=0;REG_BLDCNT=REG_BLDY=0;
  ui_backdrop_open();video_show(DCNT_MODE0|DCNT_BG0|DCNT_BG3|DCNT_OBJ|DCNT_OBJ_1D);menu_paint();gKeysDown=0;sfx_play(SFX_MENU);
 }
-bool8 handoff_open_service(int service){
- static const u8 modes[]={HM_NONE,HM_DRAFT,HM_INN,HM_SHOP,HM_FUSE,HM_TROPHY,HM_HINT,HM_CONTRACT,HM_DIFFICULTY};
- if(service<HRS_DRAFT||service>HRS_DIFFICULTY||m.active||textbox_active())return FALSE;
- if(service==HRS_DRAFT){
-  if(gHandoffState.draft_state==HDRAFT_DONE){say("Your three starting gifts are already chosen.");return TRUE;}
-  if(!gHandoffState.draft_state){gHandoffState.draft_state=HDRAFT_RUNNING;gHandoffState.draft_round=0;roll_draft();}
- }
- menu_open(modes[service]);return TRUE;
+bool8 handoff_open_run_options(void){
+ if(gGame.area!=AREA_SEWER||m.active||textbox_active())return FALSE;
+ menu_open(HM_RUN_OPTIONS);return TRUE;
+}
+static void open_draft(void){
+ if(!gHandoffState.draft_state){gHandoffState.draft_state=HDRAFT_RUNNING;gHandoffState.draft_round=0;roll_draft();}
+ menu_open(HM_DRAFT);
 }
 bool8 handoff_starting_draft(void){
  if(gGame.area!=AREA_SEWER||gHandoffState.draft_state==HDRAFT_DONE||textbox_active()||m.active)return FALSE;
- return handoff_open_service(HRS_DRAFT);
+ open_draft();return TRUE;
 }
 bool8 handoff_claim_inn_reward(void){
  int item=gHandoffState.inn_reward;if(!item)return FALSE;
@@ -755,11 +771,28 @@ static void fusion_hint(int index){
  if(index<3){out=cat(out," Requests ");out=cat(out,gTradingCards[card_traders_request(CARD_TRADER_GREEN+index)].name);cat(out,".");}
  say(message);
 }
+static void toggle_entitlement_mode(void){
+ if(entitlement_would_strand_cream()){
+  say("Finish your current Cream quest or seal before enabling this restriction. Its accepted task stays available.");
+  return;
+ }
+ gHandoffState.entitlement_mode^=1;
+ gHandoffState.difficulty=MIN(gHandoffState.difficulty,handoff_difficulty_cap());
+ save_write();
+ say(gHandoffState.entitlement_mode?"Optional entitlement challenges enabled. Existing world features remain available.":"Optional entitlement challenges disabled.");
+}
 void handoff_menu_update(void){
  u16 move=gKeysDown&(KEY_UP|KEY_DOWN);bool8 dirty=FALSE;
  if(!m.active)return;
  oam_clear();
- if(gKeysDown&(KEY_B|KEY_START)){menu_close();return;}
+ if(gKeysDown&(KEY_B|KEY_START)){
+  int mode=m.active;
+  bool8 back=(gKeysDown&KEY_B)!=0;
+  menu_close();
+  if(back&&mode==HM_RUN_OPTIONS)arcade_open();
+  else if(back&&mode==HM_DIFFICULTY&&gGame.area==AREA_SEWER)handoff_open_run_options();
+  return;
+ }
  if(!move&&(gKeysHeld&(KEY_UP|KEY_DOWN))){if(m.repeat)m.repeat--;else{move=gKeysHeld;m.repeat=5;}}else m.repeat=16;
  if(move){int old=m.cursor;m.cursor=CLAMP((int)m.cursor+((move&KEY_UP)?-1:1),0,menu_count()-1);if(m.cursor<m.top)m.top=m.cursor;if(m.cursor>=m.top+4)m.top=m.cursor-3;dirty=old!=m.cursor;}
  if(gKeysDown&KEY_A){int mode=m.active,choice=m.cursor;menu_close();
@@ -777,9 +810,13 @@ void handoff_menu_update(void){
    gPl.gilt-=price;give(gHandoffState.stock[choice]);if(choice==0)gHandoffState.heart_purchases++;else if(choice>2)gHandoffState.shop_bought|=1<<choice;return;}
   case HM_FUSE:fusion_hint(choice);return;
   case HM_TROPHY:
-   if(choice==1){if(entitlement_would_strand_cream()){say("Finish your current Cream quest or seal before enabling this restriction. Its accepted task stays available.");return;}gHandoffState.entitlement_mode^=1;gHandoffState.difficulty=MIN(gHandoffState.difficulty,handoff_difficulty_cap());save_write();say(gHandoffState.entitlement_mode?"Optional entitlement challenges enabled. Existing world features remain available.":"Optional entitlement challenges disabled.");}
+   if(choice==1)toggle_entitlement_mode();
    else if(choice==2)menu_open(HM_DIFFICULTY);
    else{char msg[130];char*p=cat(msg,"Rank ");p=num(p,gHandoffState.rank);p=cat(p," / score ");p=num(p,gHandoffState.score);p=cat(p," / wins ");p=num(p,gHandoffState.wins);p=cat(p," / deaths ");p=num(p,gHandoffState.deaths);cat(p,". Ranks: 50, 250, 800, 2000 points.");say(msg);}return;
+  case HM_RUN_OPTIONS:
+   if(choice==0)toggle_entitlement_mode();
+   else menu_open(HM_DIFFICULTY);
+   return;
   case HM_DIFFICULTY:
    if(choice>handoff_difficulty_cap()){say("That optional difficulty is beyond this save's entitlement cap. Wins and score raise the cap; ordinary mode offers all twelve steps.");return;}
    gHandoffState.difficulty=choice;save_write();say("Optional challenge difficulty set. Accepted quests keep their announced stakes.");return;
@@ -1072,7 +1109,7 @@ bool8 handoff_try_interact(void){
   static const u8 service[8]={HM_DRAFT,HM_INN,HM_SHOP,HM_FUSE,HM_TROPHY,HM_HINT,HM_CHALLENGE,HM_CONTRACT};
   for(i=0;i<8;i++)if(near(sx(sDesk[i][0]),sy(sDesk[i][1]),22)){
    if(i==0){if(gHandoffState.draft_state==HDRAFT_DONE){say("You already chose three gifts this run.");return TRUE;}
-    if(!gHandoffState.draft_state){gHandoffState.draft_state=HDRAFT_RUNNING;gHandoffState.draft_round=0;roll_draft();}}
+    open_draft();return TRUE;}
    menu_open(service[i]);return TRUE;
   }
   /* Physical examples of optional soft fusion gates; opening never edits a

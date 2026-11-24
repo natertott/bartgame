@@ -1007,6 +1007,39 @@ c.append(c_array_u16('hud_tiles', bytes_to_u16(data)))
 h.append('extern const u16 hud_tiles[];')
 h.append('#define HUD_TILE_COUNT %d\n' % len(ui_kit.HUD_TILES))
 
+# --------------------------------------------------------- trophy case --
+import trophy_case_art  # noqa: E402
+
+trophy_set = Tileset(limit=256)
+for name, image, size in (
+    ('trophy_case_map', trophy_case_art.browser(), (240, 160)),
+    ('trophy_case_detail_map', trophy_case_art.detail(), (240, 160)),
+    ('trophy_case_focus', trophy_case_art.row(selected=True), (112, 16)),
+    ('trophy_case_tab_focus', trophy_case_art.tab(selected=True), (56, 16)),
+    ('trophy_case_sealed', trophy_case_art.sealed(20), (32, 32)),
+    ('trophy_case_detail_sealed', trophy_case_art.sealed(14), (32, 32)),
+):
+    w, height = size
+    assert image.mode == 'P' and image.size == size
+    pixels = image.tobytes()
+    assert max(pixels) < 16
+    rows = [pixels[i:i+w] for i in range(0, len(pixels), w)]
+    entries = []
+    for y in range(0, height, 8):
+        for x in range(0, w, 8):
+            tile, flip_x, flip_y = trophy_set.add(rows, x, y)
+            entries.append(tile | (flip_x << 10) | (flip_y << 11))
+    c.append(c_array_u16(name, entries))
+    h.append(f'extern const u16 {name}[{len(entries)}];')
+
+assert len(trophy_case_art.PALETTE) == 16
+assert all(int(color[i:i+2], 16) % 8 == 0 for color in trophy_case_art.PALETTE for i in (1, 3, 5))
+c.append(c_array_u16('trophy_case_palette', [rgb15(color) for color in trophy_case_art.PALETTE]))
+c.append(c_array_u16('trophy_case_tiles', bytes_to_u16(b''.join(trophy_set.tiles))))
+h.append('extern const u16 trophy_case_palette[16];')
+h.append(f'#define TROPHY_CASE_TILE_COUNT {len(trophy_set.tiles)}')
+h.append('extern const u16 trophy_case_tiles[TROPHY_CASE_TILE_COUNT * 16];\n')
+
 # --------------------------------------------------------------- title --
 title_bitmap = title.render_bitmap()
 assert len(title_bitmap) == title.WIDTH * title.HEIGHT

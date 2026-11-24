@@ -8,7 +8,6 @@
 #include "cabinet.h"
 #include "handoff_events.h"
 #include "handoff_objects.h"
-#include "hub_services.h"
 #include "legacy_items.h"
 #if BART_CREAM_VARIANT == 12
 #include "cream_topology.h"
@@ -103,7 +102,6 @@ bool8 IWRAM_CODE actor_feet_box_solid(const Actor* a, int px, int py) {
     if (gCabinetActive && a->kind==AK_PLAYER &&
         cabinet_box_solid(cx-hw,cy-hh,cx+hw-1,cy+hh-1)) return TRUE;
     if(a->kind==AK_PLAYER && handoff_box_solid(cx-hw,cy-hh,cx+hw-1,cy+hh-1)) return TRUE;
-    if(a->kind==AK_PLAYER && hub_services_box_solid(cx-hw,cy-hh,cx+hw-1,cy+hh-1)) return TRUE;
     if(a->kind!=AK_PLAYER && handoff_objects_box_solid(cx-hw,cy-hh,cx+hw-1,cy+hh-1)) return TRUE;
     if(a->kind==AK_PLAYER && legacy_player_minish()) {
         int x,y;

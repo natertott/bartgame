@@ -22,8 +22,7 @@ enum { HF_SWORD_KNOCKBACK, HF_WALK_SPEED, HF_STEADFAST, HF_CURSE_KNOCKBACK,
        HF_SWORD_EDGE, HF_CURSE_BLUNT, HF_BEAM_ANY, HF_FLEET, HF_COUNT };
 enum { HC_NAYRU=1, HC_FARORE=2, HC_DIN=4 };
 enum { HDRAFT_NONE, HDRAFT_RUNNING, HDRAFT_DONE };
-/* Ordinary Drain services; these never select or warp to content rooms. */
-enum { HRS_DRAFT=1,HRS_INN,HRS_SHOP,HRS_FUSE,HRS_TROPHY,HRS_HINT,HRS_CHAIN,HRS_DIFFICULTY };
+enum HandoffEntitlement { HENT_FIELD, HENT_POTS, HENT_FAIRY, HENT_ADVANCED };
 #define HTOOL_DIG 32
 #define HTOOL_WATER 33
 #define HANDOFF_FLEET 0x104
@@ -91,8 +90,9 @@ int handoff_current_kind(void);
 int handoff_site_kind(int site);
 bool8 handoff_menu_active(void);
 void handoff_menu_update(void);
-bool8 handoff_open_service(int service);
 bool8 handoff_starting_draft(void);
+bool8 handoff_open_run_options(void);
+/* Redeem a pending reward from a saved run that paid for the old inn. */
 bool8 handoff_claim_inn_reward(void);
 bool8 handoff_chain_location(int* area,int* cell,int* tx,int* ty);
 void handoff_chain_text(char* out,int capacity);
@@ -123,6 +123,7 @@ int handoff_drop_bias(int kind); /* gilt0, kinstone1, heart2, rare3 */
 int handoff_visual_dim(void);
 int handoff_pick_enemy(int difficulty,int role_mask,u32 roll);
 bool8 handoff_item_unlocked(int item);
+bool8 handoff_entitlement_earned(enum HandoffEntitlement kind);
 bool8 handoff_event_unlocked(int kind);
 bool8 handoff_region_unlocked(int area);
 int handoff_difficulty_cap(void);

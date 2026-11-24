@@ -17,11 +17,10 @@ proofs remain historical evidence; they are not relabelled as regional tests.
 
 A new run offers the three starting-gift rounds after the opening text. They
 add a key/tool, a reward/stat and a skill to the existing starting equipment.
-Continue does not restart the draft. Physical Drain services provide the
-Exchange, paid bed, shaped-stone broker, trophy/preferences and guide. The
-broker gives directions; actual colored fusion happens at regional NPCs,
-and gold fusion happens at the generated seal chamber. No service menu
-teleports the player to a quest or objective.
+Continue resumes the earned gifts and grants any pending reward from an older
+paid stay. The Drain houses the Billious Peddler, the Wizard, and the Trophy
+Case. Run options open from the case. Colored card trades take place with
+regional NPCs, and gold fusion takes place at generated seal chambers.
 
 Four regional seals form an additional win route. Event, next regional wave,
 accepted quest, guardian or item requirements refer to actual generated
@@ -157,7 +156,7 @@ traversal prizes according to exclusive room roles. Interior mechanism low
 bits retain their own optional-cache claims. No field flag can satisfy the
 three original Forest trial facts.
 
-`handoff_open_service`, `handoff_starting_draft`, `handoff_claim_inn_reward`,
+`handoff_open_run_options`, `handoff_starting_draft`, `handoff_claim_inn_reward`,
 `handoff_chain_location` and `handoff_chain_text` provide real game/UI entry
 points. `handoff_suspend_region` clears transient draw/collision/movement
 ownership during multi-room falls without erasing progress. Every enemy spawn

@@ -8,13 +8,7 @@
 #define HUB_CREAM_LADDER_FOOT 71
 #define HUB_CREAM_RETURN_Y 94
 
-/* Call build after the original Drain definition loads; enter after the
-   ordinary player/NPC sprite allocations. Other areas remain inert. */
+/* Stamp the second ladder after loading the authored Drain terrain. */
 void hub_services_build(void);
-void hub_services_enter(void);
-/* Returns the A/R input actually consumed by a physical service. */
-u16 hub_services_try_interact(u16 pressed);
-void hub_services_draw(bool8 front);
-bool8 hub_services_box_solid(int x0,int y0,int x1,int y1);
 
 #endif

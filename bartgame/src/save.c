@@ -103,7 +103,10 @@ bool8 save_exists(void) {
     return FALSE;
 #endif
     sram_read(&sFile, sizeof(SaveFile));
-    return file_continuable();
+    if (!file_continuable())
+        return FALSE;
+    run_extension_recover_trophies(sFile.sum,sFile.world.seed);
+    return TRUE;
 }
 
 /* Old runs stored a free overworld item chest and an unrelated optional
@@ -161,6 +164,8 @@ void save_erase(void) {
 #if BART_ENEMY_LAB
     return;
 #endif
+    /* Publish the earned route and win record before retiring the checkpoint. */
+    run_profile_write();
     int i;
     for (i = 0; i < 8; i++)
         SRAM[i] = 0;

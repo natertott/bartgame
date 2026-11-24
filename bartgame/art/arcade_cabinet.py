@@ -42,19 +42,19 @@ def paint(frame='idle'):
     d.polygon([(7, 20), (22, 20), (25, 22), (6, 22)], fill=5)
     d.line((7, 20, 21, 20), fill=9)
     d.line((6, 23, 6, 28), fill=6)
-    # The recessed marquee has one short gleaming edge. "PLAY" is literal
+    # The recessed marquee has one short gleaming edge. "CASE" is literal
     # native3x5 lettering, not a reduced font or a decorative pseudo-script.
     d.rectangle((6, 22, 24, 29), fill=7)
     d.line((7, 22, 22, 22), fill=10)
     d.line((7, 23, 7, 27), fill=9)
     d.rectangle((8, 23, 22, 27), fill=10)
     glyphs = {
-        'P': ('110', '101', '110', '100', '100'),
-        'L': ('100', '100', '100', '100', '111'),
+        'C': ('011', '100', '100', '100', '011'),
         'A': ('010', '101', '111', '101', '101'),
-        'Y': ('101', '101', '010', '010', '010'),
+        'S': ('011', '100', '010', '001', '110'),
+        'E': ('111', '100', '110', '100', '111'),
     }
-    for index, letter in enumerate('PLAY'):
+    for index, letter in enumerate('CASE'):
         for y, row in enumerate(glyphs[letter]):
             for x, pixel in enumerate(row):
                 if pixel == '1': d.point((8+index*4+x, 23+y), fill=2)

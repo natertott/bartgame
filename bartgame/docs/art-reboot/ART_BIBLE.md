@@ -571,6 +571,13 @@ opening an entry does not grant its item, spawn its enemy or unlock a fact.
 Discoveries survive new runs and deaths in their own versioned profile record;
 run saves and appearance settings remain independent.
 
+The November 24 Trophy Case builds on that cabinet. Its in-world marquee
+reads CASE. Four tabs share a dedicated oxidized and brass frame with a wine
+focus plate, a glass-front exhibit and an ivory text field. Milestones name
+their objectives, and sealed discoveries use a shared lock. Run options live
+behind Start in the case. The added merchant stalls, cot, and separate trophy
+cup have been retired from the Drain. [Trophy Case design and controls](../TROPHY_CASE.md)
+
 ### Additive mountain area and handoff restoration
 
 The Curdled Cream uses warm ivory curds, ochre strata, mold greens and darker
@@ -631,9 +638,9 @@ art is stamped; decorative mold or flowers may be cleared inside that pocket,
 but existing landmarks, interactions, mandatory gates and arrival routes are
 protected. No map icon or planned feature can substitute for visible geometry.
 
-New Drain services reuse the selected visual vocabulary. A small physical cot
-and trophy append new frames; the bedside reward chest reuses the existing
-brass chest frame. Old frames and sheet IDs remain unchanged.
+The original handoff added a small physical cot and trophy using new frames,
+and a bedside reward chest using the existing brass chest frame. Those frames
+remain in the historical art pack.
 Field mechanisms stream individual native frames rather than an entire study
 atlas. Existing unpainted mobility slots may become resident in the Forest;
 the old visible terrain mappings and all their referenced pixels stay intact.

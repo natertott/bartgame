@@ -9,10 +9,13 @@
 #define RUN_EXTENSION_LEGACY_BYTES 1404u
 #define RUN_PROFILE_SRAM_BASE 0x7D00u
 #define RUN_PROFILE_SLOT_BYTES 128u
+#define RUN_PROFILE_LEGACY_VERSION 1u
+#define RUN_PROFILE_VERSION 2u
 void run_extension_init(void);
 void run_extension_write(u32 base_sum);
 bool8 run_extension_load(u32 base_sum,u32 seed);
 bool8 run_extension_finished(u32 base_sum);
+void run_extension_recover_trophies(u32 base_sum,u32 seed);
 void run_extension_erase(void);
 void run_profile_write(void);
 #endif

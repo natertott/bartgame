@@ -479,3 +479,13 @@ The reproduction uses actual opening-draft gifts and ordinary Cream map/menu
 inputs. Read-only native memory is compared with the ROM's resident HUD and
 UI-kit art to identify the overwrite. Existing selected Workbench and item
 art are preserved; no external art reference or replacement sprites are added.
+
+## Trophy Case — 2026-11-24
+
+The user requested a simpler Drain and a rebuilt collection interface. The
+team read Nintendo's GameCube and Wii Metroid Prime manuals, the Smash Bros.
+Dojo Trophy Gallery and Challenges pages, the Wii U Smash electronic menu
+instructions, and the *Kirby and the Forgotten Land* developer interview.
+The [case study](../TROPHY_CASE.md) records the layouts, controls and
+collection practices used for the design. The cabinet and all exhibit art
+come from BARTGAME's native source.

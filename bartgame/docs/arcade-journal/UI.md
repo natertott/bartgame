@@ -1,5 +1,7 @@
 # Memory cabinet interface
 
+This page records the original Memory Cabinet. See the [current Trophy Case](../TROPHY_CASE.md).
+
 The Drain cabinet opens a collection journal, using the current Winebound
 Folio, Mossbound Fieldbook or Ivory Reliquary construction and independently
 selected colors. This extends the existing selected interface; it introduces

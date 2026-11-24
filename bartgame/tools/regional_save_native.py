@@ -3,7 +3,7 @@
 
 Private SRAM and the title seed are fixtures. Player position/facing fixtures
 shorten navigation to real doors and NPCs; actual input activates those doors,
-accepts quests and chooses Trophy difficulty to invoke the normal serializer.
+accepts quests and chooses Trophy Case difficulty to invoke the normal serializer.
 No inventory, quest/chain/completion, terrain, enemy, camera or pixel writes are
 used. A second core receives the first core's complete serialized SRAM as a
 disclosed power-cycle fixture. The old source ROM is tested independently.
@@ -187,10 +187,19 @@ class Review:
         x,y=found[0];self.normal(c);self.nav(c,x*16+8,y*16+10);P.run(c,3);self.settle(c,0)
     def trophy_save(self,c,old=False):
         self.normal(c)
-        if old:self.nav(c,120,254)
-        else:self.nav(c,416,254)
-        self.press(c,'A',2,12);self.check('physical Trophy opens its actual service',self.mode(c)==5,self.state(c))
-        self.press(c,'DOWN');self.press(c,'DOWN');self.press(c,'A',2,12)
+        if old or 'gArcadeEntry' not in P._syms:
+            self.nav(c,120 if old else 416,254)
+            self.press(c,'A',2,12)
+            self.check('historical Trophy Cup opens its settings',self.mode(c)==5,self.state(c))
+            self.press(c,'DOWN')
+        else:
+            x=P.r16(c,P.sym('gCabinetX'));y=P.r16(c,P.sym('gCabinetY'))
+            self.nav(c,x,y+20)
+            self.press(c,'A',2,12)
+            self.check('physical Trophy Case opens its catalogue',C.gstate(c)==7,self.state(c))
+            self.press(c,'START',2,12)
+            self.check('Trophy Case Start opens saved challenge settings',self.mode(c)==10,self.state(c))
+        self.press(c,'DOWN');self.press(c,'A',2,12)
         self.check('actual Trophy opens difficulty settings',self.mode(c)==9,self.state(c))
         self.press(c,'A',2,12);self.settle(c,0 if not old else 4)
         return self.raw(c,SRAM,32768)

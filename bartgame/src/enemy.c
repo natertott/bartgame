@@ -24,6 +24,7 @@
 #include "journal.h"
 #include "text.h"
 #include "trading_cards.h"
+#include "trophy_data.h"
 
 const EnemyDef gEnemyDefs[EN_EXISTING_COUNT] = {
     [EN_BEETLE] = { SHEET_BEETLE, 2, Q8(0.5), 2, HB_SMALL, AF_HITTABLE | AF_HURTS, 0 },
@@ -321,6 +322,7 @@ void enemy_kill(Actor* e) {
             gTradingCardProgress.golden_defeated |= bit;
             legacy_item_grant(LI_RUPEE200, 1);
             legacy_item_grant(LI_HEART_PIECE, 1);
+            trophy_note_golden_victory(e->v[5] - 1);
             textbox_open("The Golden Rope yields 200 gilt and a Heart Piece.");
         }
     } else {

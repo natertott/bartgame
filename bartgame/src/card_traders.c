@@ -9,6 +9,7 @@
 #include "room.h"
 #include "sound.h"
 #include "text.h"
+#include "trophy_data.h"
 #include "trading_cards.h"
 #include "util.h"
 #include "video.h"
@@ -129,6 +130,7 @@ bool8 card_traders_accept(int trader, int card) {
         response = "A fine print. You've already got my boomerang, so here's 100 gilt.";
     }
     if (reward != LI_NONE) legacy_item_grant(reward, 1);
+    trophy_note_trade(trader, card);
     sfx_play(SFX_SECRET);
     textbox_open(response);
     return TRUE;

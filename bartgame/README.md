@@ -88,9 +88,11 @@ keep review rendering separate from gameplay footage.
 
 ## Current game
 
-The Drain is the hub, with the Billious Peddler, Pale Gatekeeper and a
-stone-framed, brass-rung ladder to the forest. The Forest and The Curdled Cream
-are the first two regions of nine; seven future regions remain unspecified.
+The Drain is the hub, with the Billious Peddler, the Wizard, and the Trophy
+Case. The Peddler sells supplies and trades cards, and the Wizard explains
+the trials. Press A at the north-bank Trophy Case to browse milestones, items,
+creatures and cards. See the [Trophy Case controls and reference study](docs/TROPHY_CASE.md).
+The Forest and The Curdled Cream are the first two regions of nine.
 The second wall ladder repeats the Forest ladder's selected artwork and leads
 to Cream. See the [regional handoff release and actual mGBA views](../regional-handoff-review/README.md)
 and the [complete handoff ledger](../docs/handoff-restoration/AUDIT.md).
@@ -109,10 +111,8 @@ invented Annex selection hub is absent from normal exploration; its scene IDs
 remain internal for save compatibility. Select from the existing pause screen
 opens the expanded Satchel; R resolves the current region's atlas.
 
-New runs offer three rounds of starting gifts. Physical Drain services supply
-rolled wares, three priced rests, a card and seal broker, route hints and
-Trophy preferences. Both regions host escalating waves and once-only initial
-rewards. Four live regional objectives provide an additional Earth Element win
+New runs offer three rounds of starting gifts. Both regions host escalating
+waves and once-only initial rewards. Four regional objectives provide an Earth Element win
 route, with the final seal requiring three actual Forest or Cream trials.
 The original Heart and summit victories remain available. See
 [events and run flow](docs/handoff-restoration/EVENTS.md),
@@ -248,6 +248,7 @@ python3 tools/lift_probe.py                # lift/throw and inventory controls
 python3 tools/mandatory_trials.py               # earned mandatory rewards
 python3 tools/cream_runtime_review.py --help     # Cream trials and summit route
 python3 tools/trading_cards_native.py --help    # card sources, trades, golden encounter and save
+python3 tools/trophy_case_native.py --help      # Drain interactions, Trophy Case and profile persistence
 python3 tools/art_reboot_review.py --help   # actual screens, actions and interactions
 ```
 

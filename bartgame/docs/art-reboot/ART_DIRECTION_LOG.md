@@ -2267,3 +2267,23 @@ establish the shared body, weapon and contact clock. The native GBA probe
 matches the authored weapon pixels to hardware sprites and observed damage
 for each facing. The margin gives grazing strikes a pixel of tolerance while
 keeping the corners beyond the sweep safe. [Reference sources and native probe methods](../COMBAT_MECHANICS.md)
+
+## 2026-11-24 — Drain trophy cabinet
+
+**Adopted for the Drain trophy case.** The user's trophy case overhaul calls
+for a readable collection view and closer inspection that belong to the hub.
+The browser sets five label rows beside a glazed exhibit with an object on a
+brass shelf. Inspection keeps a narrow exhibit on the left and gives the
+description the wider right panel. Both views keep category tabs above the
+content and controls below. Selected tabs and rows use wine-colored insets
+and restrained brass glints against the oxidized teal cabinet.
+
+`art/trophy_case_art.py` adapts the native brass, teal and wine materials of
+`art/reboot_core.py` and `art/reboot_ui.py` to this cabinet. The hardware
+backdrops retain open label surfaces and put glass reflections at the edges
+of the exhibit. Hidden records show an unlit brass lock on the same shelf.
+The panels, locks and selection overlays occupy 167 shared 8×8 GBA tiles in
+one RGB555 bank. `tools/build_assets.py` packs their native maps. A source
+assembly checked the full composition, a 32-pixel exhibit and sample text
+at 240×160. `art/arcade_cabinet.py` changes the in-world marquee to CASE in
+both original frames. A pixel comparison confines the edit to that 15×5 mark.

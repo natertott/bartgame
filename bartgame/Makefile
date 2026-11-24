@@ -169,7 +169,7 @@ ART       := $(wildcard art/reboot_*.py) art/reboot_contracts.json tools/build_a
              $(wildcard art/forest_trees*.py) $(wildcard art/forest_cohesion*.py) \
              $(wildcard art/hud_gilt*.py) $(wildcard art/enemy_prototypes*.py) \
              art/arcade_cabinet.py $(wildcard art/cream_*.py) $(wildcard art/handoff_*.py) \
-             $(wildcard art/trading_card_*.py)
+             $(wildcard art/trading_card_*.py) art/trophy_case_art.py
 
 OBJS := $(patsubst src/%.c,$(BUILD)/%.o,$(SRC_C)) \
         $(patsubst src/%.c,$(BUILD)/%.o,$(SRC_IWRAM)) \

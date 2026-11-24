@@ -6,6 +6,7 @@
 #include "player.h"
 #include "room.h"
 #include "text.h"
+#include "trophy_data.h"
 #include "util.h"
 #include "video.h"
 
@@ -55,6 +56,7 @@ bool8 trading_card_grant(int id) {
     if ((unsigned)id >= CARD_COUNT || trading_card_count(id) >= CARD_STACK_MAX)
         return FALSE;
     gTradingCardProgress.counts[id]++;
+    trophy_note_card(id);
     sNoticeCard = id;
     sNoticeTicks = 54;
     return TRUE;

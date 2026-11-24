@@ -1,330 +1,505 @@
-/* The Drain's memory cabinet: familiar native folio frames around a compact
-   collection index and a readable full-notes page. Browsing borrows only the
-   face's reserved OBJ window, never growing the world's sprite allocation. */
-#include "gba.h"
-#include "video.h"
-#include "actor.h"
-#include "room.h"
-#include "game.h"
-#include "text.h"
-#include "ui.h"
-#include "sound.h"
-#include "journal.h"
+/* The Drain Trophy Case reads the permanent journal and expedition records.
+   The case backdrop and exhibit own separate BG layers. The exhibit borrows
+   no world OBJ slots and never changes a discovery or inventory by browsing. */
 #include "arcade.h"
+#include "game.h"
+#include "handoff_events.h"
+#include "journal.h"
+#include "room.h"
+#include "sound.h"
+#include "text.h"
+#include "trading_cards.h"
+#include "trophy_data.h"
+#include "ui.h"
+#include "video.h"
 
-#define ARCADE_ROWS 6
-#define PREVIEW_TILE OBJ_TILE_FACE
-#define PREVIEW_PAL PAL_OBJ_PORTRAIT
-#define PREVIEW_MAX_TILES 32
+enum { TAB_MILESTONES, TAB_ITEMS, TAB_CREATURES, TAB_CARDS, TAB_COUNT };
+enum { ROWS = 5, NO_ENTRY = 255, TEXT_WIDTH = 132, NOTE_PITCH = 10 };
+enum {
+    CASE_PAL = 8, EXHIBIT_PAL = 9, EXHIBIT_MAP = 30,
+    EXHIBIT_WIDTH = 8, EXHIBIT_HEIGHT = 7,
+    EXHIBIT_BLANK = TROPHY_CASE_TILE_COUNT, EXHIBIT_TILE = EXHIBIT_BLANK + 1
+};
+enum { MUTED = 15, GOLD = 12, IVORY = 13 };
+_Static_assert(EXHIBIT_TILE + EXHIBIT_WIDTH * EXHIBIT_HEIGHT <= (EXHIBIT_MAP - 24) * 64,
+               "Trophy art and its screenblock must not overlap");
+_Static_assert((int)JI_COUNT < NO_ENTRY && JOURNAL_ENEMY_COUNT < NO_ENTRY && (int)CARD_COUNT < NO_ENTRY,
+               "Trophy entry IDs must fit in a byte");
+_Static_assert(78 + 24 + 187 + 38 <= 384 - (UI_BG0 + UI_TILE_COUNT),
+               "Trophy detail text must fit in BG0's full-screen pool");
+
+typedef struct {
+    const char* name;
+    const char* notes;
+    u8 sheet, frame, palette, hp, damage;
+    bool8 found;
+} Exhibit;
 
 u8 gArcadePage, gArcadeCursor, gArcadeTop, gArcadeDetail, gArcadeSeen;
+u8 gArcadeEntry, gArcadeCount, gArcadeFilter;
 u8 gArcadePreviewSheet, gArcadePreviewFrame, gArcadePreviewSourcePalette;
 u16 gArcadePreviewTiles;
 
-static u8 sActive, sCursor[2], sTop[2], sRepeat, sOldAnim;
-static u16 sOldDisplay, sOldBg3, sOldBlend, sOldAlpha, sOldBrightness;
-static s16 sOldScroll[2];
-static u16 sJournalRevision;
-static u16 sWorldPreviewPal[16] ALIGN4;
-static u32 sWorldPreview[PREVIEW_MAX_TILES * 8] EWRAM_BSS;
-static Canvas sHeader, sList, sInfo, sNote, sFooter;
+static const char* const sTabs[TAB_COUNT] = { "Milestones", "Items", "Creatures", "Cards" };
+static const char* const sRarities[CARD_RARITY_COUNT] = { "Common", "Uncommon", "Rare", "Ultra-rare" };
+static u8 sCursor[TAB_COUNT], sOrder[NO_ENTRY], sRepeat, sFound, sTotal, sNoteOffset, sNoteLimit;
+static u8 sOldAnim;
+static u16 sDisplay, sBg1, sBg3, sBlend, sAlpha, sBrightness;
+static s16 sScroll[2][2];
+static u16 sPalettes[3][16] EWRAM_BSS ALIGN4;
+static u16 sExhibitMap[32 * 32] EWRAM_BSS ALIGN4;
+static u32 sExhibitPixels[EXHIBIT_WIDTH * EXHIBIT_HEIGHT * 8] EWRAM_BSS;
 
-static int entry_count(void) {
-    return journal_list_count(gArcadePage);
-}
-
-static bool8 seen(int index) {
-    int raw=journal_list_id(gArcadePage,index);
-    return gArcadePage ? journal_enemy_seen(raw) : journal_item_seen(raw);
-}
-
-/* No undiscovered name, stat, frame or palette reaches presentation code. */
-static const JournalEntry* entry(int index,JournalEntry* storage) {
-    if (!seen(index)) return NULL;
-    return journal_entry(gArcadePage,journal_list_id(gArcadePage,index),storage) ? storage : NULL;
-}
-
-static char* append(char* out, const char* text) {
-    while (*text) *out++ = *text++;
-    *out = 0;
-    return out;
-}
-
-static char* append_num(char* out, int value) {
-    char number[8];
-    vwf_num(number, value, 0);
-    return append(out, number);
-}
-
-static void count_label(char* out, const char* name, int found, int total) {
-    out = append(out, name);
-    out = append(out, " ");
-    out = append_num(out, found);
-    out = append(out, "/");
-    append_num(out, total);
-}
-
-static void fit_text(Canvas* c, int x, int y, int width, const char* text, int ink) {
-    char line[64];
-    int n = 0, pixels = 0, dots = vwf_width("...");
-    if (vwf_width(text) <= width) {
-        vwf_text(c, x, y, text, ink);
-        return;
+static int tab_count(void) {
+    switch (gArcadePage) {
+        case TAB_MILESTONES: return trophy_milestone_count();
+        case TAB_ITEMS: return journal_list_count(0);
+        case TAB_CREATURES: return journal_list_count(1);
+        default: return CARD_COUNT;
     }
-    while (text[n] && n < (int)sizeof(line)-4) {
-        int advance = vwf_advance((u8)text[n]);
-        if (pixels + advance + dots > width) break;
-        pixels += advance;
-        line[n] = text[n];
-        n++;
+}
+
+static Exhibit exhibit(int id) {
+    Exhibit result = {0};
+    if (id == NO_ENTRY) return result;
+    if (gArcadePage == TAB_MILESTONES) {
+        TrophyMilestone entry;
+        if (trophy_milestone_entry(id, &entry))
+            result = (Exhibit){entry.name, entry.description, entry.sheet, entry.frame, entry.palette, 0, 0, entry.earned};
+    } else if (gArcadePage == TAB_CARDS) {
+        if (!trophy_card_seen(id)) return result;
+        const TradingCardDef* card = &gTradingCards[id];
+        result = (Exhibit){card->name, card->description, NO_ENTRY, id, card->rarity, 0, 0, TRUE};
+    } else {
+        JournalEntry entry;
+        bool8 found = gArcadePage == TAB_ITEMS ? journal_item_seen(id) : journal_enemy_seen(id);
+        if (found && journal_entry(gArcadePage - TAB_ITEMS, id, &entry))
+            result = (Exhibit){entry.name, entry.description, entry.sheet, entry.frame,
+                               entry.palette, entry.hp, entry.damage, TRUE};
     }
-    line[n++] = '.'; line[n++] = '.'; line[n++] = '.'; line[n] = 0;
-    vwf_text(c, x, y, line, ink);
+    return result;
 }
 
 static void sync_cursor(void) {
-    int count = entry_count();
-    if (sCursor[gArcadePage] >= count)
-        sCursor[gArcadePage] = count ? count-1 : 0;
-    if (sTop[gArcadePage] > sCursor[gArcadePage])
-        sTop[gArcadePage] = sCursor[gArcadePage];
-    if (sCursor[gArcadePage] >= sTop[gArcadePage] + ARCADE_ROWS)
-        sTop[gArcadePage] = sCursor[gArcadePage] - ARCADE_ROWS + 1;
-    sTop[gArcadePage] = MIN(sTop[gArcadePage], MAX(0, count-ARCADE_ROWS));
-    gArcadeCursor = sCursor[gArcadePage];
-    gArcadeTop = sTop[gArcadePage];
-    gArcadeSeen = seen(gArcadeCursor);
+    int index = MIN(sCursor[gArcadePage], MAX(0, gArcadeCount - 1));
+    sCursor[gArcadePage] = index;
+    gArcadeCursor = index;
+    gArcadeTop = index / ROWS * ROWS;
+    gArcadeEntry = gArcadeCount ? sOrder[index] : NO_ENTRY;
+    gArcadeSeen = exhibit(gArcadeEntry).found;
 }
 
-static void load_preview(void) {
-    JournalEntry storage;
-    const JournalEntry* e = entry(gArcadeCursor,&storage);
-    const SpriteSheet* sh;
-    const u16 *pixels, *palette;
-    gArcadePreviewTiles = 0;
-    gArcadePreviewSheet = gArcadePreviewFrame = gArcadePreviewSourcePalette = 0xFF;
-    if (!e) return;
-    sh = &sheets[e->sheet];
-    if (!sh->frame_tiles || sh->frame_tiles > PREVIEW_MAX_TILES ||
-        (int)e->frame * sh->frame_tiles + sh->frame_tiles > sh->tile_count)
-        return;
-    pixels = sh->tiles + (int)e->frame * sh->frame_tiles * 16;
-    palette = pal_obj + (int)e->palette * 16;
-    /* Menu illustrations own their exact inks. All world bodies retain
-       their native material-bank indices and actual final-size pixels. */
-    if (e->sheet == SHEET_ICON32) {
-        pixels = icon32_exact_tiles + (int)e->frame * sh->frame_tiles * 16;
-        palette = icon32_exact_pal + (int)e->frame * 16;
+static void build_list(int keep) {
+    sTotal = tab_count();
+    sFound = 0;
+    gArcadeCount = 0;
+    for (int i = 0; i < sTotal; i++) {
+        int id = i;
+        if (gArcadePage == TAB_ITEMS || gArcadePage == TAB_CREATURES)
+            id = journal_list_id(gArcadePage - TAB_ITEMS, i);
+        bool8 found = exhibit(id).found;
+        sFound += found;
+        if (gArcadeFilter && !found) continue;
+        if (id == keep) sCursor[gArcadePage] = gArcadeCount;
+        sOrder[gArcadeCount++] = id;
     }
-    vram_queue(pixels, OBJ_TILE(PREVIEW_TILE), sh->frame_tiles * 32);
-    pal_set_obj(PREVIEW_PAL, palette);
-    gArcadePreviewSheet = e->sheet;
-    gArcadePreviewFrame = e->frame;
-    gArcadePreviewSourcePalette = e->palette;
-    gArcadePreviewTiles = sh->frame_tiles;
+    sync_cursor();
 }
 
-static void flush_canvas(Canvas* c) {
-    vwf_flush(c, FALSE);
+static int number(Canvas* canvas, int x, int y, int value, int ink) {
+    char text[12];
+    return vwf_text(canvas, x, y, vwf_num(text, value, 0), ink);
+}
+
+static void centered(Canvas* canvas, int x, int y, int width, const char* text, int ink) {
+    vwf_text(canvas, x + MAX(0, (width - vwf_width(text)) / 2), y, text, ink);
+}
+
+static void fit(Canvas* canvas, int x, int y, int width, const char* text, int ink) {
+    if (vwf_width(text) <= width) {
+        vwf_text(canvas, x, y, text, ink);
+        return;
+    }
+    char line[64];
+    int n = MIN(vwf_fit(text, width - vwf_width("...") - 2), (int)sizeof(line) - 4);
+    for (int i = 0; i < n; i++) line[i] = text[i];
+    line[n++] = '.';
+    line[n++] = '.';
+    line[n++] = '.';
+    line[n] = 0;
+    vwf_text(canvas, x, y, line, ink);
+}
+
+static void place_backdrop(const u16* map, int x, int y, int w, int h) {
+    for (int row = 0; row < h; row++)
+        for (int col = 0; col < w; col++)
+            gBg3[(y + row) * 32 + x + col] = *map++ | (CASE_PAL << 12);
+}
+
+static void exhibit_map(const Exhibit* selected) {
+    u16 blank = EXHIBIT_BLANK | (EXHIBIT_PAL << 12);
+    memset32(sExhibitMap, (u32)blank * 0x10001u, sizeof(sExhibitMap));
+    gArcadePreviewTiles = 0;
+    gArcadePreviewSheet = gArcadePreviewFrame = gArcadePreviewSourcePalette = NO_ENTRY;
+    if (!selected->found && gArcadeCount) {
+        const u16* stamp = gArcadeDetail ? trophy_case_detail_sealed : trophy_case_sealed;
+        int left = gArcadeDetail ? 4 : 20;
+        for (int y = 0; y < 4; y++)
+            for (int x = 0; x < 4; x++)
+                sExhibitMap[(7 + y) * 32 + left + x] = *stamp++ | (CASE_PAL << 12);
+    } else if (selected->found) {
+        int width, height;
+        const u16* tiles;
+        const u16* colors;
+        if (gArcadePage == TAB_CARDS) {
+            width = height = 48;
+            tiles = trading_card_art[selected->frame];
+            colors = trading_card_palettes[selected->frame];
+        } else {
+            const SpriteSheet* sheet = &sheets[selected->sheet];
+            width = sheet->w;
+            height = sheet->h;
+            if (!sheet->frame_tiles || (selected->frame + 1) * sheet->frame_tiles > sheet->tile_count) goto done;
+            if (selected->sheet == SHEET_ICON32) {
+                tiles = icon32_exact_tiles + selected->frame * sheet->frame_tiles * 16;
+                colors = icon32_exact_pal + selected->frame * 16;
+            } else {
+                tiles = sheet->tiles + selected->frame * sheet->frame_tiles * 16;
+                colors = pal_obj + selected->palette * 16;
+            }
+        }
+        int side = MAX(width, height);
+        int extent = side <= 16 ? side * 2 : MIN(side, gArcadeDetail ? 48 : 40);
+        int w = width * extent / side, h = height * extent / side;
+        int left = (gArcadeDetail ? 30 : 36) - w / 2;
+        int top = 50 - h; /* Pixels bottom-align to the brass shelf at y82. */
+        Canvas art;
+        vwf_canvas_obj(&art, sExhibitPixels, 0, EXHIBIT_WIDTH, EXHIBIT_HEIGHT);
+        vwf_clear(&art, 0);
+        const u32* source = (const u32*)tiles;
+        int source_tw = width / 8;
+        u8 sample[48];
+        for (int x = 0; x < w; x++) sample[x] = x * width / w;
+        for (int y = 0; y < h; y++) {
+            int sy = y * height / h;
+            const u32* source_row = source + (sy / 8) * source_tw * 8 + sy % 8;
+            for (int x = 0; x < w; x++) {
+                int sx = sample[x];
+                vwf_pixel(&art, left + x, top + y, (source_row[(sx / 8) * 8] >> (sx % 8 * 4)) & 15);
+            }
+        }
+        pal_set_bg(EXHIBIT_PAL, colors);
+        vram_queue(sExhibitPixels, CHARBLOCK(3) + EXHIBIT_TILE * 16, sizeof(sExhibitPixels));
+        const int preview_x = gArcadeDetail ? 2 : 18;
+        for (int y = 0; y < EXHIBIT_HEIGHT; y++)
+            for (int x = 0; x < EXHIBIT_WIDTH; x++)
+                sExhibitMap[(4 + y) * 32 + preview_x + x] = (EXHIBIT_TILE + y * EXHIBIT_WIDTH + x) | (EXHIBIT_PAL << 12);
+        gArcadePreviewSheet = selected->sheet;
+        gArcadePreviewFrame = selected->frame;
+        gArcadePreviewSourcePalette = selected->palette;
+        gArcadePreviewTiles = EXHIBIT_WIDTH * EXHIBIT_HEIGHT;
+    }
+done:
+    vram_queue(sExhibitMap, SCREENBLOCK(EXHIBIT_MAP), sizeof(sExhibitMap));
 }
 
 static void draw_header(void) {
-    char label[40];
-    int page;
-    bg0_canvas(&sHeader, 1, 1, 28, 2);
-    for (page = 0; page < 2; page++) {
-        int x = page * 112;
-        count_label(label, page ? "Enemies" : "Items",
-                    journal_list_found(page), journal_list_count(page));
-        ui_plate_px(&sHeader, x, 0, 14, page == gArcadePage ? PL_TABON : PL_TAB);
-        vwf_text(&sHeader, x + (112-vwf_width(label))/2, 4, label,
-                 page == gArcadePage ? UI_INK_HIGH : UI_INK_CREAM);
+    Canvas header, tabs;
+    bg0_canvas(&header, 2, 1, 26, 1);
+    vwf_text(&header, 2, 0, "TROPHY CASE", IVORY);
+    char value[12];
+    const char* label = gArcadeFilter ? "Found only" : "All entries";
+    int x = 207 - vwf_width(label);
+    vwf_text(&header, x, 0, label, GOLD);
+    const char* count_word = gArcadePage == TAB_MILESTONES ? " earned" : " found";
+    x -= vwf_width(count_word) + 12;
+    vwf_text(&header, x, 0, count_word, IVORY);
+    if (gArcadePage == TAB_MILESTONES || gArcadePage == TAB_CARDS) {
+        const char* total = vwf_num(value, sTotal, 0);
+        x -= vwf_width(total) + 1;
+        vwf_text(&header, x, 0, total, IVORY);
+        x -= 5;
+        vwf_text(&header, x, 0, "/", GOLD);
     }
-    flush_canvas(&sHeader);
+    const char* found = vwf_num(value, sFound, 0);
+    vwf_text(&header, x - vwf_width(found) - 1, 0, found, IVORY);
+    vwf_flush(&header, FALSE);
+    bg0_canvas(&tabs, 1, 2, 26, 2);
+    for (int i = 0; i < TAB_COUNT; i++) {
+        centered(&tabs, i * 56, 3, 56, sTabs[i], i == gArcadePage ? IVORY : GOLD);
+    }
+    vwf_flush(&tabs, FALSE);
 }
 
-static void draw_index(void) {
-    JournalEntry chosenStorage,rowStorage;
-    const JournalEntry* chosen = entry(gArcadeCursor,&chosenStorage);
-    int row;
-    ui_frame(gBg3, UI_BG3, 1, 4, 14, 14, FR_PANEL);
-    ui_frame(gBg3, UI_BG3, 15, 4, 14, 14, FR_PANEL);
-    bg0_canvas(&sList, 2, 5, 11, 12);
-    for (row = 0; row < ARCADE_ROWS && gArcadeTop+row < entry_count(); row++) {
-        int index = gArcadeTop+row;
-        const JournalEntry* e = entry(index,&rowStorage);
-        int ink = e ? UI_INK_CREAM : UI_INK_DIM;
-        if (index == gArcadeCursor) {
-            ui_plate_px(&sList, 0, row * 16, 11, PL_TABON);
-            ink = UI_INK_HIGH;
+static const char* status(const Exhibit* selected) {
+    if (gArcadeEntry == NO_ENTRY) return "No entries";
+    if (!selected->found) return gArcadePage == TAB_MILESTONES ? "Unearned" : "Undiscovered";
+    if (gArcadePage == TAB_CARDS) return sRarities[selected->palette];
+    return gArcadePage == TAB_MILESTONES ? "Earned" : "Recorded";
+}
+
+static void draw_index(const Exhibit* selected) {
+    Canvas list, plaque;
+    bg0_canvas(&list, 2, 4, 11, 13);
+    for (int row = 0; row < ROWS && gArcadeTop + row < gArcadeCount; row++) {
+        int index = gArcadeTop + row;
+        const Exhibit item = exhibit(sOrder[index]);
+        if (item.found) {
+            vwf_pixel(&list, 1, 15 + 16 * row, GOLD);
+            vwf_pixel(&list, 2, 14 + 16 * row, GOLD);
+            vwf_pixel(&list, 2, 15 + 16 * row, IVORY);
+            vwf_pixel(&list, 2, 16 + 16 * row, GOLD);
+            vwf_pixel(&list, 3, 15 + 16 * row, GOLD);
         }
-        fit_text(&sList, 4, row * 16 + 4, 80, e ? e->name : "???", ink);
+        fit(&list, 7, 11 + 16 * row, 80, item.name ? item.name : "Undiscovered",
+            item.found || index == gArcadeCursor ? IVORY : MUTED);
     }
-    flush_canvas(&sList);
-    bg0_canvas(&sInfo, 17, 5, 11, 4);
-    if (chosen) {
-        vwf_block(&sInfo, 0, 1, 88, 10, chosen->name, UI_INK_GOLD, 2);
-        if (gArcadePage) {
-            char stats[40];
-            if(chosen->hp==255)append(stats,"Special defenses");
-            else {
-                char* out=append(stats,"HP ");
-                out=append_num(out,chosen->hp);out=append(out," / touch ");
-                append_num(out,chosen->damage);
-            }
-            fit_text(&sInfo, 0, 22, 88, stats, UI_INK_CREAM);
+    if (!gArcadeCount) centered(&list, 0, 37, 88, "No discoveries yet", IVORY);
+    if (gArcadePage == TAB_MILESTONES) {
+        int x = vwf_text(&list, 0, 92, "Rank ", GOLD);
+        x = number(&list, x, 92, gHandoffState.rank, IVORY);
+        x = number(&list, x + 5, 92, MIN(gHandoffState.score, 999999u), IVORY);
+        vwf_text(&list, x, 92, " pts", GOLD);
+    }
+    if (gArcadeCount) {
+        char size[12], pos[12];
+        vwf_num(size, gArcadeCount, 0);
+        vwf_num(pos, gArcadeCursor + 1, 0);
+        int x = 88 - vwf_width(size) - vwf_width(pos) - 8;
+        x = vwf_text(&list, x, 92, pos, IVORY);
+        x = vwf_text(&list, x, 92, "/", GOLD);
+        vwf_text(&list, x, 92, size, IVORY);
+    }
+    vwf_flush(&list, FALSE);
+
+    bg0_canvas(&plaque, 17, 12, 11, 4);
+    if (selected->name)
+        vwf_block(&plaque, 0, 4, 88, 9, selected->name, IVORY, 2);
+    else
+        centered(&plaque, 0, 4, 88, gArcadeCount ? "Sealed exhibit" : "Empty shelf", IVORY);
+    centered(&plaque, 0, 23, 88, status(selected), selected->found ? GOLD : MUTED);
+    vwf_flush(&plaque, FALSE);
+}
+
+static const char* next_note_line(const char* text, int* length) {
+    *length = vwf_fit(text, TEXT_WIDTH);
+    text += *length;
+    while (*text == ' ' || *text == '\n' || *text == '|') text++;
+    return text;
+}
+
+static void draw_notes(const Exhibit* selected) {
+    Canvas note, plaque;
+    bg0_canvas(&plaque, 2, 12, 8, 3);
+    centered(&plaque, 0, 5, 64, status(selected), GOLD);
+    if (gArcadePage == TAB_CARDS && selected->found) {
+        int x = vwf_text(&plaque, 2, 18, "Held ", IVORY);
+        number(&plaque, x, 18, trading_card_count(gArcadeEntry), IVORY);
+    }
+    vwf_flush(&plaque, FALSE);
+
+    bg0_canvas(&note, 11, 4, 17, 11);
+    vwf_block(&note, 2, 3, TEXT_WIDTH, NOTE_PITCH, selected->name ? selected->name : "Sealed exhibit", IVORY, 2);
+    const char* words = selected->notes;
+    int y = 31;
+    if (gArcadePage == TAB_CREATURES && selected->found) {
+        if (selected->hp == 255) vwf_text(&note, 2, y, "Special defenses", GOLD);
+        else {
+            int x = vwf_text(&note, 2, y, "HP ", GOLD);
+            x = number(&note, x, y, selected->hp, IVORY);
+            x = vwf_text(&note, x + 7, y, "Contact ", GOLD);
+            number(&note, x, y, selected->damage, IVORY);
         }
-    } else {
-        vwf_text(&sInfo, 30, 1, "???", UI_INK_DIM);
-        vwf_text(&sInfo, 0, 22, "Not recorded", UI_INK_DIM);
+        y += 13;
     }
-    flush_canvas(&sInfo);
-    bg0_canvas(&sNote, 17, 14, 11, 3);
-    if (!chosen)
-        vwf_block(&sNote, 0, 0, 88, 10, "Encounter it to reveal this memory.", UI_INK_DIM, 2);
-    else if (sheets[chosen->sheet].h <= 32)
-        vwf_block(&sNote, 0, 0, 88, 10, gArcadePage ? "A: combat notes" : "A: item notes", UI_INK_CREAM, 2);
-    flush_canvas(&sNote);
-    bg0_canvas(&sFooter, 2, 18, 26, 2);
-    fit_text(&sFooter, 0, 3, 208, "L/R Tabs  D-pad Browse  A Notes  B Exit", UI_INK_CREAM);
-    flush_canvas(&sFooter);
+    if (!words) words = gArcadePage == TAB_CARDS ? "Find or receive this card to open its record."
+                        : gArcadePage == TAB_ITEMS ? "Discover this item to open its record."
+                        : "Encounter this creature to open its record.";
+    int visible_lines = (80 - y) / NOTE_PITCH + 1;
+    int lines = 0;
+    for (const char* p = words; *p; ) {
+        int length;
+        p = next_note_line(p, &length);
+        lines++;
+    }
+    sNoteLimit = MAX(0, lines - visible_lines);
+    sNoteOffset = MIN(sNoteOffset, sNoteLimit);
+    for (int line = 0; line < sNoteOffset; line++) {
+        int length;
+        words = next_note_line(words, &length);
+    }
+    for (int line = 0; line < visible_lines && *words; line++) {
+        char buffer[64];
+        int length;
+        const char* next = next_note_line(words, &length);
+        length = MIN(length, (int)sizeof(buffer) - 1);
+        for (int i = 0; i < length; i++) buffer[i] = words[i];
+        buffer[length] = 0;
+        vwf_text(&note, 2, y + line * NOTE_PITCH, buffer, IVORY);
+        words = next;
+    }
+    vwf_flush(&note, FALSE);
 }
 
-static void draw_notes(void) {
-    JournalEntry storage;
-    const JournalEntry* e = entry(gArcadeCursor,&storage);
-    char label[40];
-    /* Unlike the compact index, the full notes never truncate an entry's
-       name or description. Native image, stat units and text have their
-       own spaces. The largest Heart view stays within its64px hardware box. */
-    bg0_canvas(&sHeader, 2, 1, 26, 2);
-    fit_text(&sHeader, 0, 3, 208, e ? e->name : "An unrecorded memory", UI_INK_GOLD);
-    flush_canvas(&sHeader);
-    ui_frame(gBg3, UI_BG3, 2, 5, 8, 11, e ? FR_SLOT : FR_EMPTY);
-    ui_frame(gBg3, UI_BG3, 10, 4, 19, 13, FR_PANEL);
-    bg0_canvas(&sInfo, 11, 5, 17, 11);
-    if (!e) {
-        vwf_block(&sInfo, 0, 4, 136, 11,
-                  "Explore the wood. This memory appears after you encounter it.", UI_INK_DIM, 7);
-    } else if (gArcadePage) {
-        char* out;
-        if(e->hp==255)append(label,"Special defenses");
-        else {out=append(label,"Health: ");out=append_num(out,e->hp);append(out," HP");}
-        vwf_text(&sInfo, 0, 0, label, UI_INK_HIGH);
-        out = append(label, "Touch: ");
-        out = append_num(out, e->damage);
-        append(out, " HP");
-        vwf_text(&sInfo, 0, 11, label, UI_INK_CREAM);
-        vwf_text(&sInfo, 0, 22, "One heart = 8 HP", UI_INK_DIM);
-        vwf_block(&sInfo, 0, 36, 136, 10, e->description, UI_INK_CREAM, 5);
+static void draw_footer(void) {
+    Canvas foot;
+    if (gArcadeDetail) {
+        bg0_canvas(&foot, 5, 17, 19, 2);
+        centered(&foot, 0, sNoteLimit ? 0 : 4, 152, "Left/Right  Exhibit    B  Back", IVORY);
+        if (sNoteLimit) centered(&foot, 0, 8, 152, "Up/Down  Notes", GOLD);
     } else {
-        vwf_block(&sInfo, 0, 4, 136, 11, e->description, UI_INK_CREAM, 7);
+        bg0_canvas(&foot, 2, 17, 26, 2);
+        centered(&foot, 0, 0, 208, "L/R Tabs   Up/Down Browse   A Inspect   B Exit", IVORY);
+        centered(&foot, 0, 8, 208, "Left/Right Page   Select Filter   Start Options", GOLD);
     }
-    flush_canvas(&sInfo);
-    bg0_canvas(&sFooter, 2, 18, 26, 2);
-    fit_text(&sFooter, 0, 3, 208, "D-pad Entry  B Index  Start Leave", UI_INK_CREAM);
-    flush_canvas(&sFooter);
+    vwf_flush(&foot, FALSE);
 }
 
-static void draw_page(void) {
+static void redraw(void) {
+    const Exhibit selected = exhibit(gArcadeEntry);
     bg0_clear();
     bg0_pool_reset_full();
-    ui_backdrop_clear();
-    ui_frame(gBg3, UI_BG3, 0, 0, 30, 20, FR_PANEL);
-    if (gArcadeDetail) draw_notes();
-    else { draw_header(); draw_index(); }
+    place_backdrop(gArcadeDetail ? trophy_case_detail_map : trophy_case_map, 0, 0, 30, 20);
+    place_backdrop(trophy_case_tab_focus, 1 + 7 * gArcadePage, 2, 7, 2);
+    if (!gArcadeDetail && gArcadeCount)
+        place_backdrop(trophy_case_focus, 1, 5 + 2 * (gArcadeCursor - gArcadeTop), 14, 2);
     gBg3Dirty = 1;
-    sJournalRevision = gJournalRevision;
-}
-
-static void draw_preview(void) {
-    int cx, cy;
-    const SpriteSheet* sh;
-    if (!gArcadePreviewTiles) return;
-    sh = &sheets[gArcadePreviewSheet];
-    cx = gArcadeDetail ? 48 : 180;
-    cy = gArcadeDetail ? 84 : sh->h > 32 ? 100 : 92;
-    draw_sprite(cx-sh->w/2, cy-sh->h/2, gArcadePreviewSheet,
-                PREVIEW_TILE, 0, 0, 0, PREVIEW_PAL);
+    draw_header();
+    if (gArcadeDetail) draw_notes(&selected);
+    else draw_index(&selected);
+    draw_footer();
+    exhibit_map(&selected);
 }
 
 static void arcade_close(void) {
-    dma3_copy32(sWorldPreview, OBJ_TILE(PREVIEW_TILE), sizeof(sWorldPreview));
-    pal_set_obj(PREVIEW_PAL, sWorldPreviewPal);
+    vram_flush_queue();
+    REG_DISPCNT = DCNT_BLANK;
+    REG_BG1CNT = sBg1;
+    REG_BG3CNT = sBg3;
+    for (int axis = 0; axis < 2; axis++) {
+        gBgScroll[1][axis] = sScroll[0][axis];
+        gBgScroll[3][axis] = sScroll[1][axis];
+    }
+    gAnimTiles = sOldAnim;
+    pal_set_bg(CASE_PAL, sPalettes[0]);
+    pal_set_bg(EXHIBIT_PAL, sPalettes[1]);
+    pal_set_bg(UI_PAL, sPalettes[2]);
     bg0_clear();
     gBg3Dirty = 0;
-    gAnimTiles = sOldAnim;
-    REG_BG3CNT = sOldBg3;
-    gBgScroll[3][0] = sOldScroll[0];
-    gBgScroll[3][1] = sOldScroll[1];
-    gGame.state = GS_PLAY;
     room_render();
-    video_show(sOldDisplay);
-    REG_BLDCNT = sOldBlend;
-    REG_BLDALPHA = sOldAlpha;
-    REG_BLDY = sOldBrightness;
-    sActive = 0;
+    text_flush();
+    video_flush();
+    video_show(sDisplay);
+    REG_BLDCNT = sBlend;
+    REG_BLDALPHA = sAlpha;
+    REG_BLDY = sBrightness;
+    gGame.state = GS_PLAY;
     gKeysDown = 0;
-    sfx_play(SFX_MENU);
 }
 
 void arcade_open(void) {
-    if (sActive) return;
-    sOldDisplay = REG_DISPCNT;
-    sOldBg3 = REG_BG3CNT;
-    sOldScroll[0] = gBgScroll[3][0]; sOldScroll[1] = gBgScroll[3][1];
-    sOldBlend = REG_BLDCNT; sOldAlpha = REG_BLDALPHA; sOldBrightness = REG_BLDY;
+    if (arcade_active()) return;
+    vram_flush_queue();
+    sDisplay = REG_DISPCNT;
+    sBg1 = REG_BG1CNT;
+    sBg3 = REG_BG3CNT;
+    sBlend = REG_BLDCNT;
+    sAlpha = REG_BLDALPHA;
+    sBrightness = REG_BLDY;
     sOldAnim = gAnimTiles;
-    dma3_copy32((const void*)OBJ_TILE(PREVIEW_TILE), sWorldPreview, sizeof(sWorldPreview));
-    memcpy32(sWorldPreviewPal, gPalObj + PREVIEW_PAL * 16, sizeof(sWorldPreviewPal));
-    gAnimTiles = 0;
-    REG_BG3CNT = BGCNT_PRIO(3)|BGCNT_CHARBASE(3)|BGCNT_SCREENBASE(22)|BGCNT_SIZE_32x32;
-    gBgScroll[3][0] = gBgScroll[3][1] = 0;
+    for (int axis = 0; axis < 2; axis++) {
+        sScroll[0][axis] = gBgScroll[1][axis];
+        sScroll[1][axis] = gBgScroll[3][axis];
+        gBgScroll[1][axis] = gBgScroll[3][axis] = 0;
+    }
+    memcpy32(sPalettes[0], gPalBg + CASE_PAL * 16, 32);
+    memcpy32(sPalettes[1], gPalBg + EXHIBIT_PAL * 16, 32);
+    memcpy32(sPalettes[2], gPalBg + UI_PAL * 16, 32);
+    REG_DISPCNT = DCNT_BLANK;
+    REG_BG1CNT = BGCNT_PRIO(1) | BGCNT_CHARBASE(3) | BGCNT_SCREENBASE(EXHIBIT_MAP);
+    REG_BG3CNT = BGCNT_PRIO(3) | BGCNT_CHARBASE(3) | BGCNT_SCREENBASE(22);
     REG_BLDCNT = REG_BLDY = 0;
-    ui_backdrop_open();
+    gAnimTiles = 0;
+    pal_set_bg(CASE_PAL, trophy_case_palette);
+    pal_set_bg(UI_PAL, trophy_case_palette);
+    dma3_copy32(trophy_case_tiles, CHARBLOCK(3), sizeof(trophy_case_tiles));
+    dma3_fill32(0, CHARBLOCK(3) + EXHIBIT_BLANK * 16, 32);
     gGame.state = GS_ARCADE;
-    video_show(DCNT_BG0|DCNT_BG3|DCNT_OBJ);
-    sActive = 1; sRepeat = 0; gArcadeDetail = 0;
-    sync_cursor(); load_preview(); draw_page(); draw_preview();
+    gArcadeDetail = 0;
+    sRepeat = 0;
+    sNoteOffset = 0;
     gKeysDown = 0;
+    build_list(NO_ENTRY);
+    redraw();
+    vram_flush_queue();
+    text_flush();
+    video_flush();
+    video_show(DCNT_BG0 | DCNT_BG1 | DCNT_BG3);
     sfx_play(SFX_MENU);
 }
 
-bool8 arcade_active(void) { return sActive; }
+bool8 arcade_active(void) {
+    return gGame.state == GS_ARCADE;
+}
+
+static u16 case_movement(void) {
+    u16 pressed = gKeysDown & KEY_DPAD;
+    u16 held = gKeysHeld & KEY_DPAD;
+    if (pressed || !held) sRepeat = 18;
+    else if (sRepeat) sRepeat--;
+    else {
+        sRepeat = 4;
+        return held;
+    }
+    return pressed;
+}
 
 void arcade_update(void) {
-    u16 movement = gKeysDown & (KEY_UP|KEY_DOWN|KEY_LEFT|KEY_RIGHT);
-    int old = gArcadeCursor, next = old;
-    bool8 dirty = FALSE;
-    if (!sActive) return;
-    if (gKeysDown & KEY_START) { arcade_close(); return; }
     if (gKeysDown & KEY_B) {
-        if (!gArcadeDetail) { arcade_close(); return; }
-        gArcadeDetail = 0; dirty = TRUE;
-    } else if (gKeysDown & (KEY_L|KEY_R)) {
-        gArcadePage ^= 1;
-        gArcadeDetail = 0;
-        sync_cursor(); load_preview(); dirty = TRUE;
-    } else if ((gKeysDown & KEY_A) && !gArcadeDetail) {
-        gArcadeDetail = 1; dirty = TRUE;
-    } else {
-        u16 held = gKeysHeld & (KEY_UP|KEY_DOWN|KEY_LEFT|KEY_RIGHT);
-        if (movement || !held) sRepeat = 18;
-        else if (sRepeat) sRepeat--;
-        else { movement = held; sRepeat = 4; }
-        if (movement & KEY_UP) next--;
-        else if (movement & KEY_DOWN) next++;
-        else if (movement & KEY_LEFT) next -= gArcadeDetail ? 1 : ARCADE_ROWS;
-        else if (movement & KEY_RIGHT) next += gArcadeDetail ? 1 : ARCADE_ROWS;
-        next = CLAMP(next, 0, MAX(0, entry_count()-1));
-        if (next != old) {
-            sCursor[gArcadePage] = next;
-            sync_cursor(); load_preview(); dirty = TRUE;
+        if (!gArcadeDetail) arcade_close();
+        else {
+            gArcadeDetail = 0;
+            redraw();
         }
+    } else if (!gArcadeDetail && (gKeysDown & KEY_START)) {
+        arcade_close();
+        handoff_open_run_options();
+    } else if (gKeysDown & (KEY_L | KEY_R)) {
+        gArcadePage = (gArcadePage + ((gKeysDown & KEY_R) ? 1 : TAB_COUNT - 1)) % TAB_COUNT;
+        gArcadeDetail = 0;
+        build_list(NO_ENTRY);
+        redraw();
+    } else if (!gArcadeDetail && (gKeysDown & KEY_SELECT)) {
+        gArcadeFilter ^= 1;
+        build_list(gArcadeEntry);
+        redraw();
+    } else if (!gArcadeDetail && (gKeysDown & KEY_A) && gArcadeCount) {
+        gArcadeDetail = 1;
+        sNoteOffset = 0;
+        redraw();
+    } else {
+        u16 movement = case_movement();
+        if (!movement) return;
+        if (gArcadeDetail && !(movement & (KEY_LEFT | KEY_RIGHT))) {
+            int offset = CLAMP(sNoteOffset + ((movement & KEY_UP) ? -1 : 1), 0, sNoteLimit);
+            if (offset == sNoteOffset) return;
+            sNoteOffset = offset;
+            redraw();
+            sfx_play(SFX_MENU);
+            return;
+        }
+        int step = gArcadeDetail ? 1 : ROWS;
+        int next = gArcadeCursor;
+        if (movement & KEY_LEFT) next -= step;
+        else if (movement & KEY_RIGHT) next += step;
+        else if (movement & KEY_UP) next--;
+        else if (movement & KEY_DOWN) next++;
+        next = CLAMP(next, 0, MAX(0, gArcadeCount - 1));
+        if (next == gArcadeCursor) return;
+        sCursor[gArcadePage] = next;
+        sNoteOffset = 0;
+        sync_cursor();
+        redraw();
     }
-    if (sJournalRevision != gJournalRevision) {
-        sync_cursor(); load_preview(); dirty = TRUE;
-    }
-    if (dirty) { draw_page(); sfx_play(SFX_MENU); }
-    draw_preview();
+    sfx_play(SFX_MENU);
 }

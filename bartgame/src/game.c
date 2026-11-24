@@ -15,6 +15,7 @@
 #include "enemy.h"
 #include "objects.h"
 #include "trading_cards.h"
+#include "trophy_data.h"
 #include "items.h"
 #include "boss.h"
 #include "npc.h"
@@ -214,7 +215,6 @@ static void load_sewer(int at_drain) {
     player_init(sx, sy, facing);
     legacy_items_room_reset();
     handoff_room_enter(AREA_SEWER,0);
-    hub_services_enter();
     camera_update(sx, sy - 16, TRUE);
     dark_off();
     minimap_render();
@@ -778,7 +778,12 @@ static void continue_run(void) {
     fade_start(0, 1);
     video_show(DCNT_BG0 | DCNT_BG1 | DCNT_BG2 | DCNT_OBJ);
     bgm_play(BGM_SEWER);
-    textbox_open("You wake in the drain again. The wood remembers what you opened, and so do you.");
+    if (handoff_claim_inn_reward()) {
+        save_write();
+        textbox_open("You wake in the drain again. The wood remembers what you opened.|Your pending reward is in your satchel.");
+    } else {
+        textbox_open("You wake in the drain again. The wood remembers what you opened, and so do you.");
+    }
 }
 
 static void update_title(void) {
@@ -817,17 +822,18 @@ static void update_title(void) {
 static u16 sWinTimer;
 static u8 sWinKind;
 
-static void finish_run(int kind) {
+static void finish_run(enum TrophyVictory kind) {
     sWinKind=kind;
     handoff_on_win();
+    trophy_note_victory(kind);
     save_erase(); /* Victory retires this run; journal/settings are separate. */
     gGame.state = GS_WIN;
     sWinTimer = 0;
     fade_start(16, 1);
     bgm_play(BGM_WIN);
 }
-void game_win(void) {finish_run(gCreamProgress.boss_dead?1:0);}
-void game_win_chain(void) {finish_run(2);}
+void game_win(void) {finish_run(gCreamProgress.boss_dead?TROPHY_VICTORY_SUMMIT:TROPHY_VICTORY_GRAIL);}
+void game_win_chain(void) {finish_run(TROPHY_VICTORY_SEALS);}
 
 static void update_win(void) {
     sWinTimer++;
@@ -838,9 +844,9 @@ static void update_win(void) {
     if (sWinTimer == 40) {
         static Canvas plate, body, stats, press;
         int secs = gGame.run_frames / 60, i, x;
-        const char* heading=sWinKind==2?"The four seals shine":sWinKind==1?"The summit is stilled":"The Heart is cut";
-        const char* line1=sWinKind==2?"Earth answers the wandering root.":sWinKind==1?"The mountain exhales, slowly.":"The wood breathes again, slowly.";
-        const char* line2=sWinKind==2?"Gilt and rot share a final light.":sWinKind==1?"A violet flame sleeps in the curd.":"Somewhere a king stops dreaming.";
+        const char* heading=sWinKind==TROPHY_VICTORY_SEALS?"The four seals shine":sWinKind==TROPHY_VICTORY_SUMMIT?"The summit is stilled":"The Heart is cut";
+        const char* line1=sWinKind==TROPHY_VICTORY_SEALS?"Earth answers the wandering root.":sWinKind==TROPHY_VICTORY_SUMMIT?"The mountain exhales, slowly.":"The wood breathes again, slowly.";
+        const char* line2=sWinKind==TROPHY_VICTORY_SEALS?"Gilt and rot share a final light.":sWinKind==TROPHY_VICTORY_SUMMIT?"A violet flame sleeps in the curd.":"Somewhere a king stops dreaming.";
         char buf[12];
         u16* m;
         actors_clear();
@@ -914,7 +920,6 @@ static void draw_world(void) {
     PERF_CALL(PF_GLITTER_FRONT,ambient_draw(TRUE));
     PERF_CALL(PF_FOLK_FRONT,npcs_draw_front());
     cabinet_draw(TRUE);
-    hub_services_draw(TRUE);
     PERF_CALL(PF_INTERACTIVE_BACK,interactive_draw(FALSE));
     PERF_CALL(PF_PLAYER_DRAW,player_draw());
     legacy_items_draw();
@@ -923,7 +928,6 @@ static void draw_world(void) {
     PERF_CALL(PF_FOLK_DRAW,npcs_draw());
     PERF_CALL(PF_OBJECTS_DRAW,objects_draw());
     cabinet_draw(FALSE);
-    hub_services_draw(FALSE);
     PERF_CALL(PF_INTERACTIVE_FRONT,interactive_draw(TRUE));
     PERF_CALL(PF_GLITTER_BACK,ambient_draw(FALSE));
 }
@@ -971,10 +975,6 @@ static void update_play(void) {
         else if(handoff_starting_draft())return;
     }
     if ((gKeysDown & KEY_SELECT) && gPlayer->state == PS_NORMAL && card_traders_try_open()) return;
-    if(gPlayer->state==PS_NORMAL) {
-        u16 used=hub_services_try_interact(gKeysDown);
-        if(used){gKeysDown&=~used;if(!handoff_menu_active())draw_world();return;}
-    }
     if((gKeysDown&KEY_A)&&gPlayer->state==PS_CARRY&&handoff_try_interact()) {gKeysDown&=~KEY_A;if(!handoff_menu_active())draw_world();return;}
     if((gKeysDown&KEY_A)&&gPlayer->state==PS_NORMAL) {
         if(sewer_use_new_door(FALSE)){gKeysDown&=~KEY_A;return;}

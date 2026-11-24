@@ -11,6 +11,7 @@
 #include "journal.h"
 #include "trading_cards.h"
 #include "card_traders.h"
+#include "trophy_data.h"
 #include <stddef.h>
 #define SRAM_BYTES ((volatile u8*)0x0e000000)
 #define EX_MAGIC 0x58455243u
@@ -23,6 +24,7 @@
 #define PROFILE_BASE RUN_PROFILE_SRAM_BASE
 #define PROFILE_BYTES RUN_PROFILE_SLOT_BYTES
 #define META_BYTES offsetof(HandoffState,food_mask)
+#define PROFILE_LEGACY_SIZE (offsetof(MetaRecord,trophies)+sizeof(u32))
 typedef struct {
     u32 magic,generation,base_sum;
     u16 version,size;
@@ -41,6 +43,7 @@ typedef struct {
     u32 magic,generation;
     u16 version,size;
     u8 meta[META_BYTES];
+    TrophyProgress trophies;
     u32 sum;
 } MetaRecord;
 typedef char ExtraFitsSlot[(sizeof(ExtraRun)<=EX_SLOT_BYTES)?1:-1];
@@ -48,6 +51,8 @@ typedef char ProfileFitsSlot[(sizeof(MetaRecord)<=PROFILE_BYTES)?1:-1];
 typedef char ExtensionBeforeProfile[(EX_BASE+2*EX_SLOT_BYTES<=PROFILE_BASE)?1:-1];
 typedef char ProfileBeforeJournal[(PROFILE_BASE+2*PROFILE_BYTES<=JOURNAL_SRAM_OFFSET)?1:-1];
 typedef char StableMetaPrefix[(META_BYTES==16)?1:-1];
+typedef char StableProfileV1[(PROFILE_LEGACY_SIZE==32)?1:-1];
+typedef char StableProfileV2[(sizeof(MetaRecord)==40)?1:-1];
 typedef char StablePublishedV2[(EX_LEGACY_BYTES==RUN_EXTENSION_LEGACY_BYTES)?1:-1];
 typedef char CardTradeSlotsMatch[(CARD_TRADE_SLOTS==CARD_TRADER_RED+1)?1:-1];
 static ExtraRun sExtra EWRAM_BSS;
@@ -145,8 +150,15 @@ static bool8 extra_valid(void) {
     return TRUE;
 }
 static bool8 profile_valid(const MetaRecord* p) {
-    return p->magic==PROFILE_MAGIC && p->version==1 && p->size==sizeof(*p) &&
-           meta_valid(p->meta) && p->sum==sum_bytes(p,offsetof(MetaRecord,sum));
+    if (p->magic!=PROFILE_MAGIC || !meta_valid(p->meta))
+        return FALSE;
+    if (p->version==RUN_PROFILE_LEGACY_VERSION) {
+        u32 old_sum;
+        memcpy(&old_sum,&p->trophies,sizeof(old_sum));
+        return p->size==PROFILE_LEGACY_SIZE && old_sum==sum_bytes(p,offsetof(MetaRecord,trophies));
+    }
+    return p->version==RUN_PROFILE_VERSION && p->size==sizeof(*p) &&
+           trophy_progress_valid(&p->trophies) && p->sum==sum_bytes(p,offsetof(MetaRecord,sum));
 }
 static bool8 find_extra(u32 base_sum) {
     int i,best=-1;u32 generation=0;
@@ -165,14 +177,20 @@ void run_extension_init(void) {
         }
     }
     memset(&gHandoffState,0,META_BYTES);
-    if (sProfileLoaded) {memcpy(&gHandoffState,best.meta,META_BYTES);sProfileGeneration=best.generation;}
+    memset(&gTrophyProgress,0,sizeof(gTrophyProgress));
+    if (sProfileLoaded) {
+        memcpy(&gHandoffState,best.meta,META_BYTES);
+        sProfileGeneration=best.generation;
+        if (best.version==RUN_PROFILE_VERSION) gTrophyProgress=best.trophies;
+    }
 }
 void run_profile_write(void) {
 #if !BART_ENEMY_LAB
     MetaRecord record;
     memset(&record,0,sizeof(record));record.magic=PROFILE_MAGIC;
-    record.generation=sProfileGeneration+1;record.version=1;record.size=sizeof(record);
+    record.generation=sProfileGeneration+1;record.version=RUN_PROFILE_VERSION;record.size=sizeof(record);
     memcpy(record.meta,&gHandoffState,META_BYTES);
+    record.trophies=gTrophyProgress;
     record.sum=sum_bytes(&record,offsetof(MetaRecord,sum));
     write_record(&record,PROFILE_BASE+(sProfileSlot^1)*PROFILE_BYTES,sizeof(record));
     sProfileSlot^=1;sProfileGeneration=record.generation;sProfileLoaded=TRUE;
@@ -195,6 +213,22 @@ void run_extension_write(u32 base_sum) {
 #endif
 }
 bool8 run_extension_finished(u32 base_sum) {return find_extra(base_sum)&&sExtra.cream.boss_dead;}
+static void recover_checkpoint_profile(const TradingCardProgress* cards) {
+    /* A complete checkpoint can also restore a lost cross-run profile.
+       Never replace a valid profile's later score or preferences. */
+    bool8 changed=trophy_recover_cards(cards);
+    if (!sProfileLoaded) {
+        memcpy(&gHandoffState,&sExtra.handoff,META_BYTES);
+        changed=TRUE;
+    }
+    if (changed) run_profile_write();
+}
+void run_extension_recover_trophies(u32 base_sum,u32 seed) {
+    /* Salvage proven discoveries before the player can choose New Game. */
+    if (find_extra(base_sum) && sExtra.version==EX_VERSION &&
+        sExtra.cream.seed==hash32(seed,0x43524541u))
+        recover_checkpoint_profile(&sExtra.cards);
+}
 static void seed_extension(u32 seed) {
     legacy_items_new_run();legacy_items_seed_owned();handoff_new_run(seed);cream_runtime_new_run(seed);
     regional_content_new_run();
@@ -211,7 +245,6 @@ bool8 run_extension_load(u32 base_sum,u32 seed) {
     if (!cream_generate(sExtra.cream.seed)) {seed_extension(seed);return FALSE;}
     gLegacyInventory=sExtra.inventory;gCreamProgress=sExtra.cream;gHandoffState=sExtra.handoff;
     if (sProfileLoaded) memcpy(&gHandoffState,meta,META_BYTES);
-    else run_profile_write(); /* Recover a lost profile from a complete run. */
     memcpy(gCreamOpenEdges,sExtra.gates,sizeof(sExtra.gates));
     gCreamNode=gCreamProgress.node;
     if(sExtra.version==EX_LEGACY_VERSION)regional_content_new_run();
@@ -219,6 +252,7 @@ bool8 run_extension_load(u32 base_sum,u32 seed) {
     trading_cards_new_run();
     if(sExtra.version==EX_VERSION)gTradingCardProgress=sExtra.cards;
     else trading_cards_import_halves(gHandoffState.kinstone_shapes);
+    recover_checkpoint_profile(&gTradingCardProgress);
     handoff_resume_regional(sExtra.version==EX_LEGACY_VERSION);
     return TRUE;
 }
@@ -226,6 +260,5 @@ void run_extension_erase(void) {
 #if !BART_ENEMY_LAB
     int slot,i;
     for(slot=0;slot<2;slot++)for(i=0;i<4;i++)SRAM_BYTES[EX_BASE+slot*EX_SLOT_BYTES+i]=0;
-    run_profile_write();
 #endif
 }
